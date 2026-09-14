@@ -1,52 +1,59 @@
 # 07 — Roadmap (Mini Open-Source Program, Isambard-AI)
 
-Supersedes the lab-scale roadmap (see git history / ADR-0001). Scale: 1–3
-people, free GH200 compute, ~$0–2k cash, 2–3 quarters to a working demo.
+Supersedes the lab-scale roadmap (ADR-0001). Scale: 1–3 people, Isambard-AI
+compute, ~$0–2k cash.
 
-## Q1 — Foundations + fast demo
+## ⚠️ The binding constraint: allocation terminates 2026-10-21
 
-- [ ] **W1: aarch64 environment bring-up** on Isambard (PyTorch, transformers,
-      audio stack, vLLM/SGLang ARM builds) — blocks everything
-- [ ] Micro-turn tokenizer/streamer (200 ms grid) — `tokenizer/`
-- [ ] Synthetic interaction factory v0: scripted interruption/silence/timing
-      scenarios → open TTS → grid-aligned → judge filter — `data/synthetic/`
-- [ ] **PersonaPlex quick demo** (duplex works out of box) to validate serving
-      loop and give the interactivity reference
-- [ ] Eval harness v0: latency sim + FD-bench-style scenarios — `evals/`
-- [ ] Delegation boundary: `<delegate>` → async RPC → Kimi API → streamed
-      re-integration (works with an unmodified base model first)
+Confirmed 2026-09-14 (BriCS portal): **4,974 node-hours** on Isambard-AI
+Phase 2 (~19,900 GH200-hours), **~5 weeks remaining**. The hours are ample;
+the deadline is not. Everything below is reordered around it.
 
-### Gate A (end Q1): PersonaPlex-based duplex demo with live delegation working end-to-end.
+## Week 1–2 — Bring-up + duplex bake-off (Gate A)
 
-## Q2 — The Duplex Live model
+- [ ] **Issue #1:** aarch64 environment (container, PyTorch/transformers ARM,
+      vLLM or llama.cpp fallback) on one node
+- [ ] **Issue #4:** PersonaPlex 7B + MiniCPM-o 4.5 demos; measure turn-taking
+      latency, barge-in, speak/listen control; record baseline sessions;
+      read MiniCPM-o's TDM/interleaved-decoder code (Layer-A reference)
+- [ ] **Issue #5:** delegation boundary v0 — `<delegate>` → async RPC → Kimi
+      API → streamed re-integration (works with unmodified base model)
+- [ ] **Issue #2:** tick-grid tokenizer/streamer (80 ms) + Layer-A driver spec
+      finalized against MiniCPM-o findings
+- [ ] **Issue #3:** synthetic factory v0 starts producing grid-aligned data
 
-- [ ] Qwen3-Omni duplex fine-tune per `docs/08-duplex-finetune-recipe.md`
-      (Phase 1 frozen-backbone, then Phase 2 full FT + replay)
-- [ ] Timing tokens + silence-loss training; anti-collapse monitoring
-- [ ] Internal timing/proactivity evals (TimeSpeak/CueSpeak-style, mini versions)
-- [ ] Single-node serving demo: streaming session + WebRTC on one GH200
-- [ ] Head-to-head: our fine-tune vs PersonaPlex on interactivity; vs base
-      Qwen3-Omni on intelligence (no-regression gate)
+**Gate A:** recorded duplex demo with live delegation + baseline metrics.
 
-### Gate B (end Q2): fine-tuned Qwen3-Omni matches PersonaPlex interactivity with clearly higher intelligence, OR a documented interactivity ceiling justifies Track 2 scratch.
+## Week 3–5 — The Duplex Live model (before allocation expires)
 
-## Q3 (conditional) — Scratch track
+- [ ] **Issue #7:** Qwen3-Omni Layer-A implementation + Phase-1 fine-tune
+      (frozen backbone, new token embeddings, tick driver)
+- [ ] **Issue #6:** eval harness v0 gating every checkpoint
+- [ ] Phase-2 full FT if Phase 1 lands early; text replay to protect reasoning
+- [ ] Head-to-head: ours vs PersonaPlex vs MiniCPM-o on interactivity;
+      vs base Qwen3-Omni on intelligence (no-regression gate)
 
-- [ ] 1B pilot (native micro-turn format, encoder-free audio path) — days of compute
-- [ ] 3B main run only with debugged data pipeline + evals (~2–4 wks on 32–64 GH200s)
-- [ ] Matched-scale comparison vs fine-tune track → write up
+**Gate B (by 2026-10-21):** our fine-tune matches PersonaPlex interactivity
+with clearly higher intelligence → model v1. If not, document the ceiling.
 
-## Team / budget
+## After the allocation (conditional)
 
-| Item | Scale |
-|---|---|
-| People | 1–3 |
-| Compute | Isambard-AI allocation (free); biggest single job ~80 GH200-days |
-| Cash | ~$0–2k (TTS APIs if used, data misc) |
+- Scratch 1–3B track only with a new/renewed allocation and a documented
+  fine-tune ceiling. Not plannable inside the current window.
+
+## Compute budget vs. plan
+
+| Item | Est. node-hours | % of 4,974 |
+|---|---|---|
+| Bring-up + smoke tests | 20–50 | ~1% |
+| Bake-off demos + baselines | 10–30 | <1% |
+| Synthetic factory (TTS + judging on GH200) | 50–200 | ~2–4% |
+| Qwen3-Omni Phase-1 FT (4–8 nodes × days) | 100–800 | ~2–16% |
+| Phase-2 full FT | 200–1,500 | ~4–30% |
+| Eval/iteration slack | remainder | — |
 
 ## First actions (this week)
 
-1. Confirm Isambard allocation details (GPU-hours, partition, container policy).
-2. aarch64 bring-up spike.
-3. PersonaPlex weights download + license review (NVIDIA OML).
-4. Tokenizer/streamer scaffolding in `tokenizer/`.
+1. Run `runbooks/01-isambard-bringup.md` on Isambard.
+2. Run `runbooks/02-personaplex-test.md` (then the MiniCPM-o equivalent).
+3. File results back into Issues #1/#4.
