@@ -19,6 +19,8 @@ plan. It exists so the architecture stays understandable beyond chat sessions.
 
 ## Changelog
 
+- **v3 (2026-09-14):** allocation-deadline banner — 4,974 node-hours,
+  terminates 2026-10-21; week-by-week execution plan; runbook pointers.
 - **v2 (2026-09-14):** added §1½ three-layer duplex model (capability/policy/
   clock) + "the trick" (80 ms tick serialization); added MiniCPM-o 4.5 as fast
   path candidate; converted all timing from 200 ms micro-turns to the native

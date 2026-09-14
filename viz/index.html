@@ -55,7 +55,12 @@
 <header>
   <h1>Duplex <span>Live</span> — Base Model Candidates & Test-Time Flow</h1>
   <div class="sub">Mini open-source program · Isambard-AI (GH200, aarch64) target · September 2026</div>
-  <div class="sub" style="color:var(--accent2)">⟳ Living document — this page is updated as architecture decisions land (see <code>viz/GOVERNANCE.md</code> in the repo). Current: v2, adds the three-layer duplex model + MiniCPM-o 4.5.</div>
+  <div class="sub" style="color:var(--accent2)">⟳ Living document — updated as decisions land (see <code>viz/GOVERNANCE.md</code>). Current: v3, adds the allocation deadline and execution plan.</div>
+  <div style="margin-top:14px;background:rgba(245,158,11,.12);border:1px solid var(--warn);border-radius:10px;padding:12px 16px;font-size:13.5px">
+    ⏳ <b style="color:var(--warn)">Binding constraint:</b> Isambard-AI allocation = <b>4,974 node-hours</b> (~19,900 GH200-hours), <b>terminates 2026-10-21</b> (~5 weeks). Hours are ample; the deadline is not.
+    <b>Wk 1–2:</b> bring-up (Issue #1) + PersonaPlex &amp; MiniCPM-o bake-off (#4) + delegation v0 (#5).
+    <b>Wk 3–5:</b> Qwen3-Omni Layer-A + Phase-1 fine-tune (#7) with eval gating (#6) → model v1 before expiry. Runbooks: <code>runbooks/01</code> (bring-up), <code>runbooks/02</code> (duplex tests).
+  </div>
 </header>
 
 <section id="candidates">
