@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Duplex Live — Candidates & Test-Time Architecture</title>
+<style>
+  :root{
+    --bg:#0b0e14; --panel:#121826; --panel2:#0f1420; --line:#22304a;
+    --txt:#e8eef7; --dim:#8fa1bd; --accent:#4f8cff; --accent2:#34d399;
+    --warn:#f59e0b; --purple:#a78bfa; --pink:#f472b6; --cyan:#22d3ee;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;line-height:1.55}
+  header{padding:40px 24px 24px;max-width:1180px;margin:0 auto}
+  h1{font-size:28px;letter-spacing:-.02em}
+  h1 span{color:var(--accent)}
+  .sub{color:var(--dim);margin-top:6px;font-size:14px}
+  section{max-width:1180px;margin:0 auto;padding:24px}
+  h2{font-size:20px;margin-bottom:6px}
+  .note{color:var(--dim);font-size:13px;margin-bottom:16px}
+  /* ---------- table ---------- */
+  .tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--panel)}
+  table{width:100%;border-collapse:collapse;font-size:13px;min-width:980px}
+  th,td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--dim);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.05em;background:var(--panel2)}
+  tr:last-child td{border-bottom:none}
+  tr.pick td{background:rgba(79,140,255,.07)}
+  .tag{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:600}
+  .t-open{background:rgba(52,211,153,.15);color:var(--accent2)}
+  .t-caution{background:rgba(245,158,11,.15);color:var(--warn)}
+  .t-research{background:rgba(167,139,250,.15);color:var(--purple)}
+  .stars{color:var(--warn);white-space:nowrap;font-size:12px}
+  .rec{font-size:11px;color:var(--accent);font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+  .why{margin-top:18px;background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--accent2);border-radius:10px;padding:16px 18px;font-size:13.5px}
+  .why b{color:var(--accent2)}
+  /* ---------- flow viz ---------- */
+  .stage{position:relative;border:1px solid var(--line);border-radius:14px;background:radial-gradient(1200px 500px at 50% -10%,#16203a 0%,var(--panel2) 60%);padding:8px 8px 0;overflow:hidden}
+  .controls{display:flex;gap:10px;align-items:center;padding:14px 16px;flex-wrap:wrap}
+  button{background:var(--accent);color:#fff;border:none;border-radius:8px;padding:8px 16px;font-weight:600;font-size:13px;cursor:pointer}
+  button.ghost{background:transparent;border:1px solid var(--line);color:var(--txt)}
+  button:hover{filter:brightness(1.12)}
+  .scenario{font-size:13px;color:var(--dim)}
+  #flow{width:100%;display:block}
+  .legend{display:flex;gap:18px;flex-wrap:wrap;padding:12px 16px 16px;font-size:12px;color:var(--dim)}
+  .dotk{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:middle}
+  /* ---------- detail panel ---------- */
+  .detail{margin-top:16px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;min-height:96px;font-size:13.5px}
+  .detail h3{font-size:15px;margin-bottom:6px}
+  .detail p{color:var(--dim)}
+  .detail .mono{font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--cyan)}
+  /* micro-turn ticker */
+  .ticker{margin-top:16px;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:12px 16px;font-family:ui-monospace,Menlo,monospace;font-size:13px;overflow-x:auto;white-space:nowrap}
+  .tk-in{color:var(--cyan)} .tk-out{color:var(--accent2)} .tk-sil{color:var(--dim)} .tk-del{color:var(--pink)} .tk-res{color:var(--purple)}
+  footer{max-width:1180px;margin:0 auto;padding:20px 24px 48px;color:var(--dim);font-size:12px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Duplex <span>Live</span> — Base Model Candidates & Test-Time Flow</h1>
+  <div class="sub">Mini open-source program · Isambard-AI (GH200, aarch64) target · September 2026</div>
+</header>
+
+<section id="candidates">
+  <h2>1 · Candidate base models</h2>
+  <div class="note">Stars are relative within this list (duplex behavior = works full-duplex out of the box). Latency class = feasibility of sub-second speech on one GH200.</div>
+  <div class="tblwrap">
+  <table>
+    <thead><tr>
+      <th>Model</th><th>Params</th><th>Intelligence</th><th>Duplex out-of-box</th><th>Latency class</th><th>License / weights</th><th>Role in our program</th>
+    </tr></thead>
+    <tbody>
+      <tr class="pick">
+        <td><b>Qwen3-Omni</b><br><span style="color:var(--dim)">Qwen team</span></td>
+        <td>30B MoE<br>~3B active</td>
+        <td class="stars">★★★★★<br><span style="color:var(--dim)">Qwen3-class reasoning</span></td>
+        <td class="stars">★★☆<br><span style="color:var(--dim)">streaming A/V in, audio out; turn-oriented — we fine-tune duplex in</span></td>
+        <td>Excellent<br><span style="color:var(--dim)">3B active/token</span></td>
+        <td><span class="tag t-open">Apache-2.0</span><br>weights on HF</td>
+        <td><span class="rec">Primary — intelligence-max track</span></td>
+      </tr>
+      <tr class="pick">
+        <td><b>PersonaPlex 7B</b><br><span style="color:var(--dim)">NVIDIA, Jan 2026</span></td>
+        <td>7B dense</td>
+        <td class="stars">★★★<br><span style="color:var(--dim)">Moshi/Helium backbone</span></td>
+        <td class="stars">★★★★★<br><span style="color:var(--dim)">true full-duplex + role/voice control; current open SOTA for duplex behavior</span></td>
+        <td>Excellent</td>
+        <td><span class="tag t-caution">MIT code · NVIDIA OML weights</span><br>on CC-BY-4.0 Moshi base</td>
+        <td><span class="rec">Duplex reference + fast demo track</span></td>
+      </tr>
+      <tr>
+        <td><b>Moshi 7B</b><br><span style="color:var(--dim)">Kyutai, 2024</span></td>
+        <td>7B dense</td>
+        <td class="stars">★★</td>
+        <td class="stars">★★★★<br><span style="color:var(--dim)">original open full-duplex; aging intelligence</span></td>
+        <td>Excellent</td>
+        <td><span class="tag t-open">CC-BY-4.0</span></td>
+        <td>Baseline / ablation reference</td>
+      </tr>
+      <tr>
+        <td><b>GLM-4-Voice</b><br><span style="color:var(--dim)">Zhipu</span></td>
+        <td>9B dense</td>
+        <td class="stars">★★★</td>
+        <td class="stars">★★★<br><span style="color:var(--dim)">streaming speech, near-duplex</span></td>
+        <td>Good</td>
+        <td><span class="tag t-caution">Open weights</span><br>verify current license</td>
+        <td>Alternate candidate</td>
+      </tr>
+      <tr>
+        <td><b>Qwen2.5-Omni 7B</b><br><span style="color:var(--dim)">Qwen, 2025</span></td>
+        <td>7B dense</td>
+        <td class="stars">★★★☆</td>
+        <td class="stars">★★☆<br><span style="color:var(--dim)">streaming, Thinker-Talker; superseded by Qwen3-Omni</span></td>
+        <td>Good</td>
+        <td><span class="tag t-open">Apache-2.0</span></td>
+        <td>Fallback if Qwen3-Omni port to aarch64 is painful</td>
+      </tr>
+      <tr>
+        <td><b>Llama-Omni / Freeze-Omni</b><br><span style="color:var(--dim)">research, 2024–25</span></td>
+        <td>8B dense</td>
+        <td class="stars">★★★<br><span style="color:var(--dim)">Llama-3.1-class</span></td>
+        <td class="stars">★★☆<br><span style="color:var(--dim)">low-latency speech, not truly duplex</span></td>
+        <td>Good</td>
+        <td><span class="tag t-research">Llama license / research</span></td>
+        <td>Not recommended (license + weaker duplex)</td>
+      </tr>
+      <tr>
+        <td><b>DuplexOmni</b><br><span style="color:var(--dim)">arXiv, June 2026</span></td>
+        <td>~7B class</td>
+        <td class="stars">★★★☆</td>
+        <td class="stars">★★★★<br><span style="color:var(--dim)">listen/see/think/speak duplex — closest published design to ours</span></td>
+        <td>Unknown</td>
+        <td><span class="tag t-research">Verify weights release</span></td>
+        <td>Watchlist — mine the paper for the micro-turn recipe</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="why">
+    <b>Why is PersonaPlex in the list when it wasn't in the original plan?</b>
+    Because it was released in January 2026 — after the first version of the plan was written. It matters for two reasons:
+    (1) it is currently the best <i>open</i> demonstration of true full-duplex behavior (no VAD, natural barge-in/backchannels), so it is the reference point our Qwen3-Omni fine-tune must match on interactivity;
+    (2) its training recipe — synthetic conversations rendered with open TTS (Chatterbox/Tortoise) — independently validates our synthetic interaction-dynamics factory, the riskiest part of our data plan.
+    Caveat: it stacks three licenses (MIT code, NVIDIA Open Model License weights, CC-BY Moshi base), so it is a research reference, not a deployment base, until the NVIDIA terms are reviewed.
+    <br><br>
+    <b>Bottom line:</b> fine-tune <b>Qwen3-Omni 30B-A3B</b> for the intelligence-max duplex model; keep <b>PersonaPlex</b> as the duplex-behavior reference and the quick demo path. Delegate to Kimi API (or a self-hosted open model) behind the async boundary.
+  </div>
+</section>
+
+<section id="arch">
+  <h2>2 · Test-time architecture — interactive flow</h2>
+  <div class="note">Press ▶ to run a scenario: the user asks a question mid-conversation that needs deep reasoning. Watch the media loop keep flowing while delegation runs off-path. Click any node for details.</div>
+  <div class="stage">
+    <div class="controls">
+      <button id="play">▶ Run scenario</button>
+      <button id="reset" class="ghost">Reset</button>
+      <span class="scenario">Scenario: user asks “Summarize the paper I uploaded yesterday” → core stalls gracefully, delegates, weaves the answer back in.</span>
+    </div>
+    <svg id="flow" viewBox="0 0 1160 560" preserveAspectRatio="xMidYMid meet"></svg>
+    <div class="legend">
+      <span><span class="dotk" style="background:var(--cyan)"></span>input media (user → model)</span>
+      <span><span class="dotk" style="background:var(--accent2)"></span>output media (model → user)</span>
+      <span><span class="dotk" style="background:var(--pink)"></span>delegation request (async)</span>
+      <span><span class="dotk" style="background:var(--purple)"></span>delegated result (streamed)</span>
+      <span><span class="dotk" style="background:var(--dim)"></span>silence / timing micro-turns</span>
+    </div>
+  </div>
+
+  <div class="ticker" id="ticker">micro-turn stream: <span class="tk-sil">press ▶</span></div>
+
+  <div class="detail" id="detail">
+    <h3>Click a node</h3>
+    <p>Every box on the live path has a hard latency budget (~200 ms per micro-turn). Everything behind the async boundary can take seconds without the user hearing a gap.</p>
+  </div>
+</section>
+
+<footer>
+  Duplex Live · architecture grounded in OpenAI's GPT-Live engineering writeup and Thinking Machines' interaction-models post · visualization for the mini open-source program (Qwen3-Omni / PersonaPlex track, Isambard-AI GH200).
+</footer>
+
+<script>
+const SVG = document.getElementById('flow');
+const NS = 'http://www.w3.org/2000/svg';
+const COLORS = {in:'#22d3ee', out:'#34d399', del:'#f472b6', res:'#a78bfa', sil:'#8fa1bd'};
+
+const NODES = {
+  user:     {x:60,  y:230, w:130, h:100, label:'USER',            sub:'speaks / listens', color:'#4f8cff',
+    detail:['The human in the loop', 'Speaks and listens simultaneously — can barge in at any moment. The system never asks them to wait their turn.']},
+  transport:{x:250, y:230, w:150, h:100, label:'TRANSPORT',       sub:'WebRTC-class', color:'#22d3ee',
+    detail:['Media transport', 'Low-latency audio frames both directions. Survives packet loss, jitter, clock drift; subtly stretches audio rather than dropping frames. Startup uses pre-negotiated parameters so the first packet can materialize the session.']},
+  frontend: {x:250, y:60,  w:150, h:80,  label:'MEDIA FRONTEND',  sub:'Go/Rust service', color:'#22d3ee',
+    detail:['Media frontend', 'Frames audio onto the 200 ms micro-turn grid, forwards chunks to the inference session. Separate from all application logic — a slow tool call can never stall it.']},
+  core:     {x:480, y:180, w:220, h:200, label:'DUPLEX CORE',     sub:'Qwen3-Omni 30B-A3B fine-tune', color:'#4f8cff',
+    detail:['Duplex core model', 'Consumes and produces interleaved 200 ms micro-turns (in₀ out₀ in₁ out₁ …). Learns when to speak, stay silent, backchannel, get interrupted, and delegate. Timing tokens give it a direct sense of elapsed time. Emits a <delegate> token + rich context package when deep reasoning is needed.']},
+  session:  {x:480, y:420, w:220, h:80,  label:'STREAMING SESSION', sub:'persistent GPU sequence', color:'#22d3ee',
+    detail:['Stateful streaming session', 'Each 200 ms chunk is appended into a persistent KV sequence in GPU memory — no re-prefill per chunk. Compaction and instance handoff happen as warm-replacement cutovers with zero audible interruption.']},
+  boundary: {x:790, y:100, w:150, h:70,  label:'ASYNC BOUNDARY',  sub:'RPC · never blocks media', color:'#f472b6',
+    detail:['Async RPC boundary', 'The hard wall between live path and application logic. Delegation requests cross it; the media loop does not wait for what is on the other side.']},
+  brain:    {x:990, y:60,  w:150, h:120, label:'BACKGROUND MODEL', sub:'Kimi API / open 32B+', color:'#a78bfa',
+    detail:['Background reasoning model', 'Pre-warmed at session start (context prefilled, stable session affinity, prompt caching). Does search, multi-step reasoning, tool use. Latency budget: first useful result < 3 s p50. Results stream back to the core, which decides when to weave them into speech.']},
+  tools:    {x:990, y:230, w:150, h:70,  label:'TOOLS / SEARCH',  sub:'web, code, files', color:'#a78bfa',
+    detail:['Tools', 'Called by the background model, off the live path.']},
+  seg:      {x:790, y:300, w:150, h:70,  label:'SEGMENTATION',    sub:'streams → messages', color:'#8fa1bd',
+    detail:['Discrete-view derivation', 'Turns the continuous overlapping stream into provisional→final user/assistant messages for UI, logging, analytics and safety — without imposing turns on the model.']},
+};
+
+const EDGES = [
+  {from:'user', to:'transport', dir:'in',  label:'mic audio'},
+  {from:'transport', to:'user', dir:'out', label:'speaker audio', dy:26},
+  {from:'transport', to:'frontend', dir:'in'},
+  {from:'frontend', to:'core', dir:'in', label:'200 ms chunks'},
+  {from:'core', to:'transport', dir:'out', label:'speech frames'},
+  {from:'core', to:'session', dir:'sil', label:'KV append'},
+  {from:'core', to:'boundary', dir:'del', label:'<delegate> + context'},
+  {from:'boundary', to:'brain', dir:'del'},
+  {from:'brain', to:'tools', dir:'res'},
+  {from:'brain', to:'core', dir:'res', label:'streamed result', curve:true},
+  {from:'core', to:'seg', dir:'sil'},
+];
+
+function center(n){const d=NODES[n];return {x:d.x+d.w/2, y:d.y+d.h/2};}
+function edgePoint(n, toward){
+  const d=NODES[n]; const c=center(n); const t=center(toward);
+  const dx=t.x-c.x, dy=t.y-c.y;
+  const sx = dx!==0 ? (d.w/2)*Math.sign(dx) : 0;
+  const sy = dy!==0 ? (d.h/2)*Math.sign(dy) : 0;
+  if (Math.abs(dx)/d.w > Math.abs(dy)/d.h) return {x:c.x+sx, y:c.y + dy*(Math.abs(sx)/(Math.abs(dx)||1))};
+  return {x:c.x + dx*(Math.abs(sy)/(Math.abs(dy)||1)), y:c.y+sy};
+}
+
+const edgeEls = [];
+EDGES.forEach((e,i)=>{
+  const a=edgePoint(e.from,e.to), b=edgePoint(e.to,e.from);
+  const off = e.dy||0;
+  let d;
+  if(e.curve){
+    const mx=(a.x+b.x)/2, my=Math.min(a.y,b.y)-90;
+    d=`M ${a.x} ${a.y} Q ${mx} ${my} ${b.x} ${b.y}`;
+  } else {
+    d=`M ${a.x} ${a.y+off} L ${b.x} ${b.y+off}`;
+  }
+  const p=document.createElementNS(NS,'path');
+  p.setAttribute('d',d);
+  p.setAttribute('stroke',COLORS[e.dir]);
+  p.setAttribute('stroke-width','1.6');
+  p.setAttribute('fill','none');
+  p.setAttribute('opacity','0.45');
+  p.setAttribute('stroke-dasharray', e.dir==='del'||e.dir==='res' ? '6 5':'none');
+  SVG.appendChild(p);
+  edgeEls.push({def:e, el:p, len:0});
+});
+edgeEls.forEach(e=>{ e.len = e.el.getTotalLength(); });
+
+edgeEls.forEach(e=>{
+  if(!e.def.label) return;
+  const mid = e.el.getPointAtLength(e.len/2);
+  const t=document.createElementNS(NS,'text');
+  t.setAttribute('x',mid.x); t.setAttribute('y',mid.y-8);
+  t.setAttribute('fill','#8fa1bd'); t.setAttribute('font-size','11');
+  t.setAttribute('text-anchor','middle');
+  t.textContent=e.def.label;
+  SVG.appendChild(t);
+});
+
+Object.entries(NODES).forEach(([key,n])=>{
+  const g=document.createElementNS(NS,'g');
+  g.style.cursor='pointer';
+  const r=document.createElementNS(NS,'rect');
+  r.setAttribute('x',n.x); r.setAttribute('y',n.y);
+  r.setAttribute('width',n.w); r.setAttribute('height',n.h);
+  r.setAttribute('rx','12');
+  r.setAttribute('fill','#121826');
+  r.setAttribute('stroke',n.color); r.setAttribute('stroke-width','1.8');
+  r.setAttribute('opacity','0.96');
+  g.appendChild(r);
+  const t=document.createElementNS(NS,'text');
+  t.setAttribute('x',n.x+n.w/2); t.setAttribute('y',n.y+n.h/2-6);
+  t.setAttribute('fill','#e8eef7'); t.setAttribute('font-size','13'); t.setAttribute('font-weight','700');
+  t.setAttribute('text-anchor','middle'); t.textContent=n.label;
+  g.appendChild(t);
+  const s=document.createElementNS(NS,'text');
+  s.setAttribute('x',n.x+n.w/2); s.setAttribute('y',n.y+n.h/2+14);
+  s.setAttribute('fill','#8fa1bd'); s.setAttribute('font-size','10.5');
+  s.setAttribute('text-anchor','middle'); s.textContent=n.sub;
+  g.appendChild(s);
+  g.addEventListener('click',()=>{
+    document.getElementById('detail').innerHTML =
+      `<h3 style="color:${n.color}">${n.detail[0]}</h3><p>${n.detail[1]}</p>` +
+      (key==='core' ? `<p class="mono">token view: [in₀][out₀][in₁][out₁][in₂][&lt;delegate&gt;][out₂]…</p>` : '');
+  });
+  SVG.appendChild(g);
+  n._el = r;
+});
+
+const particles = [];
+function spawn(edgeIdx, color, speed){
+  const e = edgeEls[edgeIdx];
+  const dot=document.createElementNS(NS,'circle');
+  dot.setAttribute('r','5'); dot.setAttribute('fill',color);
+  dot.setAttribute('opacity','0.95');
+  SVG.appendChild(dot);
+  particles.push({e, t:0, speed, dot});
+}
+function tick(){
+  for(let i=particles.length-1;i>=0;i--){
+    const p=particles[i];
+    p.t += p.speed;
+    if(p.t>=1){ p.dot.remove(); particles.splice(i,1); continue; }
+    const pt = p.e.el.getPointAtLength(p.t*p.e.len);
+    p.dot.setAttribute('cx',pt.x); p.dot.setAttribute('cy',pt.y);
+  }
+  requestAnimationFrame(tick);
+}
+tick();
+
+const ticker = document.getElementById('ticker');
+let timers = [];
+function clearTimers(){ timers.forEach(clearInterval); timers=[]; }
+function glow(key, color, on){ NODES[key]._el.setAttribute('stroke-width', on?'3.5':'1.8'); NODES[key]._el.style.filter = on?`drop-shadow(0 0 10px ${color})`:''; }
+
+const TICKS = [
+  ['tk-in','in'], ['tk-out','out'], ['tk-in','in'], ['tk-sil','·sil·'], ['tk-in','in'],
+  ['tk-del','&lt;delegate&gt;'], ['tk-out','out:"let me check"'], ['tk-in','in'], ['tk-sil','·sil·'],
+  ['tk-res','⇐result'], ['tk-out','out:"the paper shows…"'], ['tk-in','in'], ['tk-out','out'],
+];
+function startScenario(){
+  clearTimers();
+  timers.push(setInterval(()=>spawn(0,COLORS.in,0.012), 380));
+  timers.push(setInterval(()=>spawn(4,COLORS.out,0.012), 460));
+  timers.push(setInterval(()=>spawn(2,COLORS.in,0.010), 500));
+  timers.push(setInterval(()=>spawn(3,COLORS.in,0.010), 420));
+  timers.push(setInterval(()=>spawn(5,COLORS.sil,0.008), 800));
+  timers.push(setInterval(()=>spawn(10,COLORS.sil,0.006), 1400));
+  glow('core','#4f8cff',true);
+
+  setTimeout(()=>{
+    glow('boundary','#f472b6',true); glow('brain','#a78bfa',true);
+    timers.push(setInterval(()=>spawn(6,COLORS.del,0.008), 300));
+    timers.push(setInterval(()=>spawn(7,COLORS.del,0.010), 320));
+    setTimeout(()=>{ timers.push(setInterval(()=>spawn(8,COLORS.res,0.008), 380)); }, 1200);
+  }, 2500);
+  setTimeout(()=>{
+    timers.push(setInterval(()=>spawn(9,COLORS.res,0.006), 420));
+    glow('boundary','#f472b6',false);
+  }, 6000);
+
+  let i=0;
+  ticker.innerHTML='micro-turn stream: ';
+  timers.push(setInterval(()=>{
+    const [cls,txt]=TICKS[i%TICKS.length]; i++;
+    const s=document.createElement('span');
+    s.className=cls; s.textContent='['+txt+'] ';
+    ticker.appendChild(s);
+    ticker.scrollLeft=ticker.scrollWidth;
+  }, 700));
+}
+
+document.getElementById('play').addEventListener('click', startScenario);
+document.getElementById('reset').addEventListener('click', ()=>{
+  clearTimers(); particles.forEach(p=>p.dot.remove()); particles.length=0;
+  Object.keys(NODES).forEach(k=>glow(k,'',false));
+  ticker.innerHTML='micro-turn stream: <span class="tk-sil">press ▶</span>';
+});
+</script>
+</body>
+</html>
