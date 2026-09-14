@@ -1,60 +1,52 @@
-# 07 — Roadmap, Staffing, Budget
+# 07 — Roadmap (Mini Open-Source Program, Isambard-AI)
 
-## Milestones
+Supersedes the lab-scale roadmap (see git history / ADR-0001). Scale: 1–3
+people, free GH200 compute, ~$0–2k cash, 2–3 quarters to a working demo.
 
-### Q1 — Foundations
-- [ ] Micro-turn tokenizer/streamer + alignment data toolchain
-- [ ] Base model selection (license, MoE, latency benchmarks) — **Decision D1**
-- [ ] Eval harness v0 (FD-bench-style + latency simulation) in CI
-- [ ] Duplex CPT run #1 on open base; first simultaneous listen/speak demo
-- [ ] Serving: streaming-session prototype (persistent GPU sequence)
+## Q1 — Foundations + fast demo
 
-### Q2 — Phase A complete → **Gate 1**
-- [ ] Duplex SFT + preference training; delegation protocol with a frontier background model
-- [ ] Serving: handoff + compaction without media interruption; WebRTC-class transport
-- [ ] Internal interactivity benchmarks (TimeSpeak/CueSpeak/RepCount-style) live
-- [ ] v0 product demo; human eval round 1
-- [ ] **Gate 1 review:** latency < 600 ms p50, interactivity ≥ 60, 10-min stable sessions → fund Phase B
+- [ ] **W1: aarch64 environment bring-up** on Isambard (PyTorch, transformers,
+      audio stack, vLLM/SGLang ARM builds) — blocks everything
+- [ ] Micro-turn tokenizer/streamer (200 ms grid) — `tokenizer/`
+- [ ] Synthetic interaction factory v0: scripted interruption/silence/timing
+      scenarios → open TTS → grid-aligned → judge filter — `data/synthetic/`
+- [ ] **PersonaPlex quick demo** (duplex works out of box) to validate serving
+      loop and give the interactivity reference
+- [ ] Eval harness v0: latency sim + FD-bench-style scenarios — `evals/`
+- [ ] Delegation boundary: `<delegate>` → async RPC → Kimi API → streamed
+      re-integration (works with an unmodified base model first)
 
-### Q3–Q4 — Scratch track spin-up
-- [ ] 1–3B scaling-law runs; scratch mixture fixed → **Gate 2**
-- [ ] Batch-invariant kernels + trainer–sampler bitwise alignment
-- [ ] Synthetic interaction data factory at full throughput
+### Gate A (end Q1): PersonaPlex-based duplex demo with live delegation working end-to-end.
 
-### Q5–Q8 — Phase B main run
-- [ ] Main scratch pretraining (30–80B MoE / 3–8B active)
-- [ ] Post-training + safety battery; shadow test against Phase A model
-- [ ] **Gate 3:** scratch model ≥ Phase A model on interactivity, ≥ on intelligence → cut over
+## Q2 — The Duplex Live model
 
-## Team (core, ~14–20)
+- [ ] Qwen3-Omni duplex fine-tune per `docs/08-duplex-finetune-recipe.md`
+      (Phase 1 frozen-backbone, then Phase 2 full FT + replay)
+- [ ] Timing tokens + silence-loss training; anti-collapse monitoring
+- [ ] Internal timing/proactivity evals (TimeSpeak/CueSpeak-style, mini versions)
+- [ ] Single-node serving demo: streaming session + WebRTC on one GH200
+- [ ] Head-to-head: our fine-tune vs PersonaPlex on interactivity; vs base
+      Qwen3-Omni on intelligence (no-regression gate)
 
-| Area | Headcount |
+### Gate B (end Q2): fine-tuned Qwen3-Omni matches PersonaPlex interactivity with clearly higher intelligence, OR a documented interactivity ceiling justifies Track 2 scratch.
+
+## Q3 (conditional) — Scratch track
+
+- [ ] 1B pilot (native micro-turn format, encoder-free audio path) — days of compute
+- [ ] 3B main run only with debugged data pipeline + evals (~2–4 wks on 32–64 GH200s)
+- [ ] Matched-scale comparison vs fine-tune track → write up
+
+## Team / budget
+
+| Item | Scale |
 |---|---|
-| Pretraining / architecture | 4–6 |
-| Data (alignment toolchain, synthetic factory, licensing) | 3–4 |
-| Serving / infrastructure (streaming sessions, transport, kernels) | 4–5 |
-| Eval & safety | 2–3 |
-| Product / UX (session UX, discrete-view derivation) | 1–2 |
+| People | 1–3 |
+| Compute | Isambard-AI allocation (free); biggest single job ~80 GH200-days |
+| Cash | ~$0–2k (TTS APIs if used, data misc) |
 
-## Budget shape (order-of-magnitude)
+## First actions (this week)
 
-| Item | Phase A | Phase B |
-|---|---|---|
-| Compute | $1.5M–$5M | $15M–$60M (main run + scaling runs) |
-| Data licensing & collection | $0.5M–$2M | $1M–$3M |
-| Team (annualized) | dominant cost either way | — |
-
-## Go / No-Go summary
-
-| Gate | Question | If NO |
-|---|---|---|
-| D1 (Q1) | Which open base? | Re-benchmark candidates |
-| Gate 1 (Q2) | Does duplex adaptation hit interactivity targets? | Fix data/training; do **not** start scratch run |
-| Gate 2 (Q4) | Is the scratch mixture validated at small scale? | Iterate at 1–3B |
-| Gate 3 (Q8) | Does the scratch model beat the adapted one? | Ship Phase A model; re-plan Phase B scale |
-
-## Immediate next actions
-
-1. Stand up repo scaffolding: `tokenizer/`, `data/`, `training/`, `serving/`, `evals/`.
-2. Open tracking issues for each Q1 milestone.
-3. Base-model bake-off: shortlist 3 candidates, run latency + intelligence benchmarks, record D1 as an ADR.
+1. Confirm Isambard allocation details (GPU-hours, partition, container policy).
+2. aarch64 bring-up spike.
+3. PersonaPlex weights download + license review (NVIDIA OML).
+4. Tokenizer/streamer scaffolding in `tokenizer/`.
