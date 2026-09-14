@@ -2,59 +2,67 @@
 
 The data problem is the program's real moat. Duplex interaction data — time-aligned, overlapping, multi-modal — barely exists in the wild at scale.
 
+## The PersonaPlex recipe (validated template — refine from docs/notes)
+
+PersonaPlex (NVIDIA, Jan 2026) shows the two-tier structure that works at our scale:
+
+1. **Real conversational speech:** Fisher English corpus — ~2,000 h of natural telephone conversations (LDC-licensed; check our institutional access via Bristol). Provides genuine turn dynamics, overlap, backchannels.
+2. **Synthetic assistant-role conversations:** scripted persona/task dialogs rendered with open TTS (they used Chatterbox/Tortoise). Provides coverage of assistant-side behaviors real corpora lack (helpfulness patterns, instruction following, refusals).
+
+We adopt the same two tiers, plus a third for our novel capabilities:
+
+3. **Interaction-dynamics + delegation scenarios** (our addition): interruption taxonomy, silence semantics, simultaneous speech, timed tasks, `<delegate>` scenarios, speech retraction — fully synthetic, fully controllable.
+
 ## Data layers
 
-### Layer 1: Intelligence foundation (mostly solved by base choice)
-- Phase A: inherited from open-source base; we add domain SFT only.
-- Phase B: standard text/code/math pretraining mixture (licensed + synthetic), sized per scaling-law runs at 1–3B before the main run.
+### Layer 1: Intelligence foundation
+- Inherited from the base model (Qwen3-Omni / MiniCPM-o). We add text replay only, to prevent regression during duplex fine-tuning.
 
-### Layer 2: Duplex conversation corpus (the hard part)
+### Layer 2: Duplex conversation corpus (real)
 
-Target: tens of thousands of hours of **time-aligned two-channel (or multi-channel) conversation**, plus aligned video where available.
-
-| Source | Volume potential | Duplex quality | Notes |
+| Source | Volume | Duplex quality | Access |
 |---|---|---|---|
-| Recorded human conversations (call-center style, licensed) | High | High | Natural overlap, backchannels, interruptions; consent/licensing work required |
-| Podcasts / interviews / talk shows (licensed) | Medium | Medium-High | Good turn dynamics; clean audio needed for micro-turn alignment |
-| Meetings / panel discussions | Medium | High | Multi-speaker overlap; harder attribution |
-| Synthetic duplex via TTS + scripted interaction dynamics | Very high | Tunable | The scaling lever — see below |
-| Human-in-the-loop sessions with our own v0 model | Growing | Perfectly on-distribution | Flywheel starts after Phase A ships |
+| **Fisher English** (telephone conversations) | ~2,000 h | High (natural overlap/backchannels) | LDC license — check Bristol institutional access; do not pirate |
+| Podcasts / interviews (licensed) | Medium | Medium-high | licensing work |
+| Meetings / panels | Medium | High overlap, harder attribution | later |
+| Sessions with our own demos (PersonaPlex/MiniCPM-o bake-off recordings) | Growing | On-distribution | free, starts Week 1–2 (Issue #4 recordings!) |
 
-**Alignment requirement:** every stream must be micro-turn aligned (200 ms grid) with precise timestamps, speaker attribution, and overlap preserved — not segmented into turns. Build the alignment toolchain (forced alignment, diarization with overlap, QC) in Quarter 1; it gates everything.
+**Alignment requirement:** every stream micro-turn/tick aligned (80 ms grid), precise timestamps, overlap preserved — not segmented into turns. The alignment toolchain (Issue #2/#3) gates everything.
 
-### Layer 3: Synthetic interaction dynamics
+### Layer 3: Synthetic interaction dynamics (the scaling lever)
 
-Real conversations give texture; synthetic data gives coverage of rare-but-critical behaviors:
+- **Assistant-role conversations** (PersonaPlex-style): persona + task scripts → multi-voice open TTS (Qwen3-TTS / Chatterbox class) → naturalistic prosody.
+- **Interruption taxonomy:** barge-in to correct / change topic / to-ignore; collaborative overlap; backchannels.
+- **Silence semantics:** thinking pause vs. end-of-thought vs. inviting response.
+- **Simultaneous speech:** live translation, commentary, pronunciation correction.
+- **Time-aware tasks:** timers, pacing, "every N seconds" instructions.
+- **Delegation scenarios:** conversations where delegating is correct, with graceful stalls and streamed re-integration examples.
+- **Speech retraction:** user barges in mid-assistant-speech; clean yield + resume/revise.
+- **Refusal/over-refusal speech data** via TTS over text refusal distributions (docs/06).
 
-- **Interruption taxonomy:** barge-in to correct, barge-in to change topic, barge-in the model should ignore, collaborative overlap, backchannels.
-- **Silence semantics:** thinking pause vs. finished thought vs. inviting the model to speak — generated with controllable prosody.
-- **Simultaneous speech:** live translation, sports commentary, pronunciation correction overlays.
-- **Time-aware tasks:** timers, pacing, "every N seconds" instructions (mirrors TML's TimeSpeak/CueSpeak evals — train distribution must cover the capability, not the test).
-- **Delegation scenarios:** conversations where the right move is to consult the background model, with streamed result re-integration examples.
-- **Refusal/over-refusal speech data** via TTS over text refusal distributions (see `06-safety.md`).
+Pipeline: script scenarios → TTS with overlap → render onto 80 ms grid → judge filter. **Rule: no closed-API outputs in training data (ADR-0002).**
 
-Pipeline: script interaction scenarios → multi-voice TTS with naturalistic prosody/overlap → render onto the 200 ms micro-turn grid → filter with model-based quality judges.
+### Layer 4: Video-grounded streams (later; MiniCPM-o/Qwen3-Omni both support vision)
 
-### Layer 4: Video-grounded streams
+- Action counting, temporal start/stop callouts, proactive-moment QA.
 
-- Action-centric video with audio instructions (rep counting, temporal start/stop callouts — Charades-style but as *training* streams).
-- Screen-sharing / co-browsing style video+speech for the collaboration use case.
-- Proactive-visual-moment data: questions whose answers appear at specific video timestamps.
-
-## Mixture plan (Phase A duplex adaptation)
+## Mixture plan (Phase A duplex fine-tune)
 
 | Component | Share (tokens) |
 |---|---|
-| Duplex real conversations | 35% |
-| Synthetic interaction dynamics | 25% |
-| Text intelligence replay (base-model distribution) | 25% |
+| Real duplex conversations (Fisher + licensed) | 35% |
+| Synthetic assistant-role + interaction dynamics | 25% |
+| Text intelligence replay | 25% |
 | Video-grounded streams | 10% |
 | Safety/refusal speech | 5% |
 
-Anti-forgetting: always replay base-distribution text; audit intelligence benchmarks at every checkpoint.
-
 ## Governance
 
-- Provenance tracking per stream; licensed vs. synthetic tagging in metadata.
-- PII scrubbing on all recorded audio; voice-consent registry for any cloned/contributed voices.
-- Dedup against eval sets (contamination checks on FD-bench-style and audio intelligence benchmarks).
+- Provenance tracking per stream; license tag in metadata.
+- PII scrubbing on recorded audio; voice-consent registry.
+- Dedup against eval sets every drop.
+
+## References
+
+- PersonaPlex training breakdown video (Fisher + synthetic assistant roles): https://www.youtube.com/watch?v=n_m0fqp8xwQ
+- NVIDIA PersonaPlex page: https://research.nvidia.com/labs/adlr/personaplex/
