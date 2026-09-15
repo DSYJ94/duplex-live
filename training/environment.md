@@ -61,14 +61,37 @@ Qwen3-Omni-30B-A3B thinker, one GH200 120GB (`runs/qwen_smoke.py` on Isambard):
 - load 24.7s from Lustre | generate 16 tok in 1.98s (~8 tok/s, single stream)
 - peak memory 64.6 GB — fits with ~55 GB headroom for talker/code2wav/KV
 - reply correct ("duplex online"); requires Gotcha-2 workaround
-- PersonaPlex-7B-v1 weights: pending user's HF token (NVIDIA OML gate)
+
+MiniCPM-o 4.5, one GH200 (`runs/minicpm_smoke.py` on Isambard):
+
+- load 9.8s | TTS (Token2wav) initialized | `as_duplex()` OK | chat 1.2s
+- peak memory 25.8 GB
+- requires its own overlay (below) — **do not run under transformers 5.x**
+
+## MiniCPM-o overlay (`pylibs-minicpm`)
+
+`/projects/u6si/duplex-live/pylibs-minicpm` — the HF remote code pins
+`transformers==4.51.0`, which conflicts with the main overlay. Use:
+
+```bash
+--env PYTHONPATH=$DL/pylibs-minicpm:$DL/pylibs   # minicpm first
+```
+
+Contents (all pip `--target`, torch/nvidia/triton stripped after install):
+transformers 4.51.0, torchaudio 2.8.0 (`--no-deps`), minicpmo-utils 1.0.6
+(`--no-deps` — its `[all]` extra has a self-conflicting librosa pin),
+stepaudio2/Token2wav deps (`--no-deps`): onnxruntime 1.30.0, hyperpyyaml 1.2.3,
+**ruamel.yaml 0.17.40** (hyperpyyaml needs the pre-0.18 YAML API), s3tokenizer
+0.3.0, diffusers, pynvml, xxhash. `decord` (video) not installed — T1–T6 is
+audio-only; install when the omni/video path is needed. Token2wav auto-fetches
+5 small asset files from HF on first `init_tts()`.
 
 ## Model weights (HF cache: $DL/models/hf-cache)
 
-- `Qwen/Qwen3-Omni-30B-A3B-Instruct` — Apache-2.0, ungated
-- `openbmb/MiniCPM-o-4_5` — Apache-2.0, ungated
-- `nvidia/personaplex-7b-v1` — **gated**: requires HF account + NVIDIA OML
-  acceptance at huggingface.co/nvidia/personaplex-7b-v1, then `HF_TOKEN`
+- `Qwen/Qwen3-Omni-30B-A3B-Instruct` — Apache-2.0, ungated ✅ staged
+- `openbmb/MiniCPM-o-4_5` — Apache-2.0, ungated ✅ staged
+- `nvidia/personaplex-7b-v1` — gated (NVIDIA OML accepted) ✅ staged; token at
+  `$DL/.hf_token` (chmod 600, never commit)
 
 ## Notes
 

@@ -9,9 +9,10 @@ Read this first in a fresh chat. Everything below is decided and documented.
   (load 24.7s, 64.6 GB peak, correct generation). Env definition:
   `training/environment.md` — **read the two gotchas before any GPU work**
   (pylibs torch shadowing; MoE needs `experts_implementation="batched_mm"`).
-- **Models staged** in HF cache on Lustre: Qwen3-Omni-30B-A3B, MiniCPM-o-4.5.
-  PersonaPlex-7B-v1 gated — waiting on user to accept NVIDIA OML + place
-  token at `/projects/u6si/duplex-live/.hf_token`.
+- **Models staged + smoke-passed** (HF cache on Lustre): Qwen3-Omni-30B-A3B,
+  MiniCPM-o-4.5 (duplex conversion verified — separate `pylibs-minicpm`
+  overlay, transformers 4.51.0 pinned), PersonaPlex-7B-v1 (gated; token lives
+  at `/projects/u6si/duplex-live/.hf_token`).
 - **Isambard workspace**: `/projects/u6si/duplex-live/` (`repo/` = git clone,
   read-write via deploy key; `models/hf-cache`, `pylibs/`, `runs/`, `logs/`).
   Container: `/projects/u6si/containers/latentsprites-pytorch-25.05.sif`.
