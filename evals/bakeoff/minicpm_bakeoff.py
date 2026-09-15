@@ -173,12 +173,12 @@ def run_duplex_test(duplex, name: str, timeline: np.ndarray, out_dir: Path,
 
 
 TESTS = {
-    # T1: ten questions with 8 s gaps
-    "t1": ([(2 + i * 8, f"t1_q{i}") for i in range(1, 11)], 2 + 9 * 8 + 12),
+    # T1: ten questions with 15 s gaps (8 s was too tight — answers overlapped)
+    "t1": ([(2 + i * 15, f"t1_q{i}") for i in range(1, 11)], 2 + 9 * 15 + 15),
     # T2: bait question, interrupt ~12 s into the answer
     "t2": ([(2, "t2_bait"), (16, "t2_interrupt")], 40),
-    # T3: question, then three backchannels during the answer
-    "t3": ([(2, "t1_q9"), (10, "t3_bc1"), (14, "t3_bc2"), (18, "t3_bc3")], 32),
+    # T3: long-answer bait, three backchannels squarely mid-answer
+    "t3": ([(2, "t2_bait"), (10, "t3_bc1"), (16, "t3_bc2"), (22, "t3_bc3")], 45),
     # T4: sentence part 1, 3 s silence, part 2
     "t4": ([(2, "t4_part1"), (9, "t4_part2")], 28),
     # T5: background-only chatter, user never addresses the model
