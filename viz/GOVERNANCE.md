@@ -19,6 +19,10 @@ plan. It exists so the architecture stays understandable beyond chat sessions.
 
 ## Changelog
 
+- **v4 (2026-09-15):** bring-up complete — Issue #1 closed. ARM env verified
+  (NGC 25.05 + pylibs overlay, `training/environment.md`); Qwen3-Omni-30B-A3B
+  thinker smoke test passed on one GH200 (64.6 GB peak, MoE via `batched_mm`).
+  PersonaPlex gated → awaiting HF token; MiniCPM-o bake-off unblocked.
 - **v3 (2026-09-14):** allocation-deadline banner — 4,974 node-hours,
   terminates 2026-10-21; week-by-week execution plan; runbook pointers.
 - **v2 (2026-09-14):** added §1½ three-layer duplex model (capability/policy/

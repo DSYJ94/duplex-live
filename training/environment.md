@@ -28,9 +28,15 @@ Issue #1. ARM-native stack for all duplex-live work on GH200 nodes.
 - soundfile 0.14.0, librosa 0.11.0, qwen-omni-utils 0.0.9
 - numpy 1.26.4, scipy 1.17.1
 
-**Gotcha:** pip `--target` pulled a generic torch 2.14.0 + CUDA-13 wheels that
+**Gotcha 1:** pip `--target` pulled a generic torch 2.14.0 + CUDA-13 wheels that
 shadow the NGC build — these were manually removed. Re-installs into `pylibs`
 must use `--no-deps` or be followed by `rm -rf pylibs/torch* pylibs/nvidia_*`.
+
+**Gotcha 2 (MoE on GH200):** torch 2.8's native `torch._grouped_mm` kernel
+asserts on GH200 (`prepare_grouped_gemm_data: delta % align == 0`). Any MoE
+model (Qwen3-Omni thinker, A3B experts) must load with
+`experts_implementation="batched_mm"` in `from_pretrained`. Applies to Layer-A
+fine-tune too — put it in the training config, not just ad-hoc scripts.
 
 ## Usage pattern
 
@@ -47,6 +53,15 @@ srun --nodes=1 --gpus=1 --cpus-per-gpu=8 --time=04:00:00 \
 
 Verified: `torch.cuda.is_available()=True`, GH200 120GB visible, all overlay
 imports resolve (torch from NGC, transformers from pylibs).
+
+## Smoke test results (2026-09-15)
+
+Qwen3-Omni-30B-A3B thinker, one GH200 120GB (`runs/qwen_smoke.py` on Isambard):
+
+- load 24.7s from Lustre | generate 16 tok in 1.98s (~8 tok/s, single stream)
+- peak memory 64.6 GB — fits with ~55 GB headroom for talker/code2wav/KV
+- reply correct ("duplex online"); requires Gotcha-2 workaround
+- PersonaPlex-7B-v1 weights: pending user's HF token (NVIDIA OML gate)
 
 ## Model weights (HF cache: $DL/models/hf-cache)
 

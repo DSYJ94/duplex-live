@@ -1,6 +1,22 @@
-# HANDOFF — where we are (2026-09-14)
+# HANDOFF — where we are (2026-09-15)
 
 Read this first in a fresh chat. Everything below is decided and documented.
+
+## Current status
+
+- **Runbook 00/01: DONE.** Agentic SSH live via `ssh u6si.aip2.isambard`;
+  ARM env verified on GH200; Qwen3-Omni-30B-A3B thinker smoke test passed
+  (load 24.7s, 64.6 GB peak, correct generation). Env definition:
+  `training/environment.md` — **read the two gotchas before any GPU work**
+  (pylibs torch shadowing; MoE needs `experts_implementation="batched_mm"`).
+- **Models staged** in HF cache on Lustre: Qwen3-Omni-30B-A3B, MiniCPM-o-4.5.
+  PersonaPlex-7B-v1 gated — waiting on user to accept NVIDIA OML + place
+  token at `/projects/u6si/duplex-live/.hf_token`.
+- **Isambard workspace**: `/projects/u6si/duplex-live/` (`repo/` = git clone,
+  read-write via deploy key; `models/hf-cache`, `pylibs/`, `runs/`, `logs/`).
+  Container: `/projects/u6si/containers/latentsprites-pytorch-25.05.sif`.
+- Login-node background processes are reaped on SSH logout — long jobs must
+  be `sbatch` scripts (see `dl-models.slurm` in the workspace).
 
 ## The program
 
@@ -23,20 +39,22 @@ TML interaction-model class) at mini open-source scale on Isambard-AI.
 ## Hard constraint
 
 Isambard-AI Phase 2 allocation: **4,974 node-hours, terminates 2026-10-21**
-(~5 weeks). Weeks 1–2: bring-up + bake-off + delegation v0. Weeks 3–5:
-Layer-A + Phase-1 fine-tune → model v1.
+(~5 weeks from 2026-09-14). Weeks 1–2: bring-up + bake-off + delegation v0.
+Weeks 3–5: Layer-A + Phase-1 fine-tune → model v1.
 
 ## Next actions (in order)
 
-1. Runbook 00 — SSH key + ControlMaster + VS Code Remote-SSH; then say "go"
-   and Kimi does the agentic bring-up (`ssh isambard`, env discovery).
-2. Runbook 01 — Isambard bring-up (Issue #1).
-3. Runbook 02 — PersonaPlex + MiniCPM-o bake-off (Issue #4); recordings become
-   our first training data (docs/02).
+1. Runbook 02 — MiniCPM-o 4.5 duplex test (Issue #4 part 2; unblocked now) +
+   code-reading notes → `docs/notes-minicpm-layera.md`.
+2. PersonaPlex test (Issue #4 part 1) — starts once user places HF token.
+3. Then Issue #5 (delegation v0) / #3 (synthetic factory v0) / #2 (micro-turn
+   tokenizer) per the board.
 
 ## Repo conventions
 
 - Task board: GitHub Issues #1–#7.
 - `viz/index.html` is the living visualization — every decision updates it
-  (viz/GOVERNANCE.md). Local editable copy: workspace `duplex-live-viz/`.
+  (viz/GOVERNANCE.md). Repo copy is canonical (local editable copy
+  `duplex-live-viz/` does not exist yet).
 - Local clone (OneDrive-synced): `~/Library/CloudStorage/OneDrive-Personal/Shared GitHub Repos/duplex-live`
+- Isambard clone: `/projects/u6si/duplex-live/repo` — keep both pushed in sync.
