@@ -19,7 +19,8 @@ set -euo pipefail
 DL=/projects/u6si/duplex-live
 export HF_HOME=$DL/models/hf-cache
 export TMPDIR=$DL/tmp
-OVERLAY=$DL/pylibs-minicpm
+# self-contained overlay for the demo (needs numpy>=2.2; pylibs-minicpm pins 1.26.4)
+OVERLAY=$DL/pylibs-mcpmdemo
 CONTAINER=/projects/u6si/containers/latentsprites-pytorch-25.05.sif
 DEMO=$DL/mcpm-demo
 
