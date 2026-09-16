@@ -4,20 +4,22 @@ Read this first in a fresh chat. Everything below is decided and documented.
 
 ## Current status
 
-- **Runbook 00/01: DONE.** Agentic SSH live via `ssh u6si.aip2.isambard`;
-  ARM env verified on GH200; Qwen3-Omni-30B-A3B thinker smoke test passed
-  (load 24.7s, 64.6 GB peak, correct generation). Env definition:
-  `training/environment.md` — **read the two gotchas before any GPU work**
-  (pylibs torch shadowing; MoE needs `experts_implementation="batched_mm"`).
-- **Models staged + smoke-passed** (HF cache on Lustre): Qwen3-Omni-30B-A3B,
-  MiniCPM-o-4.5 (duplex conversion verified — separate `pylibs-minicpm`
-  overlay, transformers 4.51.0 pinned), PersonaPlex-7B-v1 (gated; token lives
-  at `/projects/u6si/duplex-live/.hf_token`).
+- **Runbook 00/01: DONE (Issue #1 closed).** Agentic SSH via
+  `ssh u6si.aip2.isambard` (Clifton cert — re-auth when it lapses); ARM env
+  verified on GH200; Qwen3-Omni thinker smoke passed. Env definition incl.
+  all gotchas: `training/environment.md` — read before any GPU work.
+- **Runbook 02: DONE (Issue #4 closed).** Both references measured on one
+  scripted T1–T5 protocol (`evals/baselines/`): PersonaPlex passes the 3 s
+  thinking pause, MiniCPM-o passes backchannels; **both fail addressee
+  detection (T5)** → factory target. Layer-A code notes:
+  `docs/notes-minicpm-layera.md`. Recordings on Lustre (`runs/bakeoff*`) =
+  data seed.
+- **Overlays**: `pylibs` (Qwen, transformers 5.17), `pylibs-minicpm`
+  (transformers 4.51 pinned), `pylibs-pplex` (moshi; sphn source-built —
+  recipe in environment.md + `pplex-build.slurm`).
 - **Isambard workspace**: `/projects/u6si/duplex-live/` (`repo/` = git clone,
-  read-write via deploy key; `models/hf-cache`, `pylibs/`, `runs/`, `logs/`).
-  Container: `/projects/u6si/containers/latentsprites-pytorch-25.05.sif`.
-- Login-node background processes are reaped on SSH logout — long jobs must
-  be `sbatch` scripts (see `dl-models.slurm` in the workspace).
+  read-write via deploy key; `models/hf-cache`, `runs/`, `logs/`, `tools/`).
+  Login-node background processes are reaped — long jobs must be `sbatch`.
 
 ## The program
 
@@ -45,11 +47,16 @@ Weeks 3–5: Layer-A + Phase-1 fine-tune → model v1.
 
 ## Next actions (in order)
 
-1. Runbook 02 — MiniCPM-o 4.5 duplex test (Issue #4 part 2; unblocked now) +
-   code-reading notes → `docs/notes-minicpm-layera.md`.
-2. PersonaPlex test (Issue #4 part 1) — starts once user places HF token.
-3. Then Issue #5 (delegation v0) / #3 (synthetic factory v0) / #2 (micro-turn
-   tokenizer) per the board.
+1. Issue #3 — synthetic interaction-dynamics factory v0. Required scenario
+   classes from the bake-off: hold-floor during thinking pauses (T4),
+   addressee discrimination (T5), backchannel tolerance (T3), barge-in
+   yield (T2). PersonaPlex/Qwen3-Omni talker as data voices.
+2. Issue #2 — micro-turn tokenizer/streamer (80 ms grid; notes in
+   docs/notes-minicpm-layera.md §1–3, §7).
+3. Issue #5 — delegation boundary v0 (Kimi API) and #6 — eval harness v0
+   (seed: `evals/bakeoff/minicpm_bakeoff.py` + per-chunk telemetry).
+4. Week 3+: Issue #7 — Layer-A on Qwen3-Omni + Phase-1 fine-tune
+   (`experts_implementation="batched_mm"` mandatory).
 
 ## Repo conventions
 
