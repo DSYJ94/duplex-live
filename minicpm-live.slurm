@@ -43,7 +43,16 @@ APPT="apptainer exec --nv --bind /projects,/lus,/home \
 if [ ! -f "$OVERLAY/.minicpm-demo-deps-ok" ]; then
     echo "[setup] installing demo requirements into $OVERLAY"
     # NGC container pins numpy==1.26.4 via /etc/pip/constraint.txt; demo needs numpy>=2.2
-    $APPT pip install --target="$OVERLAY" -r requirements.txt
+    # minicpmo-utils pins librosa==0.9.0 (broken on modern setuptools; demo needs >=0.10.2)
+    # -> install it --no-deps plus its remaining deps manually.
+    grep -v "minicpmo-utils" requirements.txt > /tmp/mcpm-reqs.txt
+    $APPT pip install --target="$OVERLAY" -r /tmp/mcpm-reqs.txt
+    $APPT pip install --target="$OVERLAY" --no-deps \
+        "minicpmo-utils==1.0.6" "pillow==10.4.0" "moviepy==2.1.2" \
+        "einops==0.8.1" hyperpyyaml onnx "onnxruntime<=1.21.0,>=1.18.0" "scipy>=1.10.0"
+    # decord==0.6.0 (video decoding) has no aarch64 wheel; try, tolerate failure
+    $APPT pip install --target="$OVERLAY" --no-deps "decord==0.6.0" \
+        || echo "[setup] WARN: decord unavailable, video input may not work"
     # never let pip shadow the container torch stack
     rm -rf "$OVERLAY"/torch "$OVERLAY"/torch-* "$OVERLAY"/nvidia_* "$OVERLAY"/triton*
     touch "$OVERLAY/.minicpm-demo-deps-ok"
