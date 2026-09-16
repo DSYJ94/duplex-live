@@ -45,8 +45,11 @@ if [ ! -f "$OVERLAY/.minicpm-demo-deps-ok" ]; then
     # NGC container pins numpy==1.26.4 via /etc/pip/constraint.txt; demo needs numpy>=2.2
     # minicpmo-utils pins librosa==0.9.0 (broken on modern setuptools; demo needs >=0.10.2)
     # -> install it --no-deps plus its remaining deps manually.
-    grep -v "minicpmo-utils" requirements.txt > /tmp/mcpm-reqs.txt
+    # container torch 2.8 is built against numpy 1.x ("Numpy is not available" with 2.x),
+    # so drop the demo's numpy>=2.2 pin and install numpy==1.26.4 explicitly.
+    grep -v -e "minicpmo-utils" -e "numpy>=" requirements.txt > /tmp/mcpm-reqs.txt
     $APPT pip install --target="$OVERLAY" -r /tmp/mcpm-reqs.txt
+    $APPT pip install --target="$OVERLAY" "numpy==1.26.4"
     $APPT pip install --target="$OVERLAY" --no-deps \
         "minicpmo-utils==1.0.6" "pillow==10.4.0" "moviepy==2.1.2" \
         "einops==0.8.1" hyperpyyaml onnx "onnxruntime<=1.21.0,>=1.18.0" "scipy>=1.10.0"
