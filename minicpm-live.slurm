@@ -42,27 +42,33 @@ APPT="apptainer exec --nv --bind /projects,/lus,/home \
 # ---- deps (once) ----
 if [ ! -f "$OVERLAY/.minicpm-demo-deps-ok" ]; then
     echo "[setup] installing demo requirements into $OVERLAY"
-    # NGC container pins numpy==1.26.4 via /etc/pip/constraint.txt; demo needs numpy>=2.2
-    # minicpmo-utils pins librosa==0.9.0 (broken on modern setuptools; demo needs >=0.10.2)
-    # -> install it --no-deps plus its remaining deps manually.
-    # container torch 2.8 is built against numpy 1.x ("Numpy is not available" with 2.x),
-    # so drop the demo's numpy>=2.2 pin and install numpy==1.26.4 explicitly.
+    # Known conflicts, worked out interactively (see git history):
+    #  - NGC container pins numpy==1.26.4 via /etc/pip/constraint.txt (neutralized
+    #    via PIP_CONSTRAINT=/dev/null in APPT); container torch 2.8 is built against
+    #    numpy 1.x anyway, so numpy 1.26.4 wins over the demo's numpy>=2.2 pin.
+    #  - scipy>=1.15 uses np.long (numpy-2-only) -> pin scipy==1.14.1.
+    #  - minicpmo-utils pins librosa==0.9.0 (broken on modern setuptools; demo needs
+    #    >=0.10.2) -> install it --no-deps plus its remaining deps manually.
+    #  - stepaudio2-minicpmo (Token2Wav vocoder) pulls torch 2.11 / torchaudio 2.11 /
+    #    tokenizers 0.23 / hf-hub 1.x -> purge and repin to the container-compatible set.
     grep -v -e "minicpmo-utils" -e "numpy>=" requirements.txt > /tmp/mcpm-reqs.txt
     $APPT pip install --target="$OVERLAY" -r /tmp/mcpm-reqs.txt
-    # -r resolution pulls numpy 2.x; container torch needs numpy 1.x -> purge + reinstall
-    rm -rf "$OVERLAY"/numpy "$OVERLAY"/numpy.libs "$OVERLAY"/numpy-*.dist-info "$OVERLAY"/~numpy*
-    $APPT pip install --target="$OVERLAY" --no-deps "numpy==1.26.4"
-    # scipy>=1.15 uses np.long (numpy-2-only); pin last numpy-1.26-compatible release
-    rm -rf "$OVERLAY"/scipy "$OVERLAY"/scipy-*.dist-info "$OVERLAY"/scipy.libs
-    $APPT pip install --target="$OVERLAY" --no-deps "scipy==1.14.1"
     $APPT pip install --target="$OVERLAY" --no-deps \
         "minicpmo-utils==1.0.6" "pillow==10.4.0" "moviepy==2.1.2" \
-        "einops==0.8.1" hyperpyyaml onnx "onnxruntime<=1.21.0,>=1.18.0" "scipy>=1.10.0"
+        "einops==0.8.1" hyperpyyaml onnx "onnxruntime<=1.21.0,>=1.18.0"
+    $APPT pip install --target="$OVERLAY" -q stepaudio2-minicpmo || true
     # decord==0.6.0 (video decoding) has no aarch64 wheel; try, tolerate failure
     $APPT pip install --target="$OVERLAY" --no-deps "decord==0.6.0" \
         || echo "[setup] WARN: decord unavailable, video input may not work"
-    # never let pip shadow the container torch stack
-    rm -rf "$OVERLAY"/torch "$OVERLAY"/torch-* "$OVERLAY"/nvidia_* "$OVERLAY"/triton*
+    # purge everything that shadows the container torch stack / numpy-1.x ABI
+    rm -rf "$OVERLAY"/{torch,torch-*,torchaudio*,functorch,torchgen,triton*,nvidia_*} \
+           "$OVERLAY"/{numpy,numpy.libs,numpy-*.dist-info,~numpy*} \
+           "$OVERLAY"/{scipy,scipy-*.dist-info,scipy.libs} \
+           "$OVERLAY"/{tokenizers,tokenizers-*.dist-info} \
+           "$OVERLAY"/{huggingface_hub,huggingface_hub-*.dist-info}
+    $APPT pip install --target="$OVERLAY" --no-deps \
+        "numpy==1.26.4" "scipy==1.14.1" "torchaudio==2.8.0" \
+        "tokenizers==0.21.2" "huggingface-hub==0.36.1"
     touch "$OVERLAY/.minicpm-demo-deps-ok"
 fi
 
