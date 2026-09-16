@@ -36,11 +36,13 @@ APPT="apptainer exec --nv --bind /projects,/lus,/home \
     --env PYTHONPATH=$OVERLAY \
     --env HF_HOME=$HF_HOME --env TMPDIR=$TMPDIR \
     --env HF_TOKEN=$(cat $DL/.hf_token) \
+    --env PIP_CONSTRAINT=/dev/null \
     $CONTAINER"
 
 # ---- deps (once) ----
 if [ ! -f "$OVERLAY/.minicpm-demo-deps-ok" ]; then
     echo "[setup] installing demo requirements into $OVERLAY"
+    # NGC container pins numpy==1.26.4 via /etc/pip/constraint.txt; demo needs numpy>=2.2
     $APPT pip install --target="$OVERLAY" -r requirements.txt
     # never let pip shadow the container torch stack
     rm -rf "$OVERLAY"/torch "$OVERLAY"/torch-* "$OVERLAY"/nvidia_* "$OVERLAY"/triton*
