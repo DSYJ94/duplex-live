@@ -49,7 +49,9 @@ if [ ! -f "$OVERLAY/.minicpm-demo-deps-ok" ]; then
     # so drop the demo's numpy>=2.2 pin and install numpy==1.26.4 explicitly.
     grep -v -e "minicpmo-utils" -e "numpy>=" requirements.txt > /tmp/mcpm-reqs.txt
     $APPT pip install --target="$OVERLAY" -r /tmp/mcpm-reqs.txt
-    $APPT pip install --target="$OVERLAY" "numpy==1.26.4"
+    # -r resolution pulls numpy 2.x; container torch needs numpy 1.x -> purge + reinstall
+    rm -rf "$OVERLAY"/numpy "$OVERLAY"/numpy.libs "$OVERLAY"/numpy-*.dist-info "$OVERLAY"/~numpy*
+    $APPT pip install --target="$OVERLAY" --no-deps "numpy==1.26.4"
     $APPT pip install --target="$OVERLAY" --no-deps \
         "minicpmo-utils==1.0.6" "pillow==10.4.0" "moviepy==2.1.2" \
         "einops==0.8.1" hyperpyyaml onnx "onnxruntime<=1.21.0,>=1.18.0" "scipy>=1.10.0"
