@@ -52,6 +52,9 @@ if [ ! -f "$OVERLAY/.minicpm-demo-deps-ok" ]; then
     # -r resolution pulls numpy 2.x; container torch needs numpy 1.x -> purge + reinstall
     rm -rf "$OVERLAY"/numpy "$OVERLAY"/numpy.libs "$OVERLAY"/numpy-*.dist-info "$OVERLAY"/~numpy*
     $APPT pip install --target="$OVERLAY" --no-deps "numpy==1.26.4"
+    # scipy>=1.15 uses np.long (numpy-2-only); pin last numpy-1.26-compatible release
+    rm -rf "$OVERLAY"/scipy "$OVERLAY"/scipy-*.dist-info "$OVERLAY"/scipy.libs
+    $APPT pip install --target="$OVERLAY" --no-deps "scipy==1.14.1"
     $APPT pip install --target="$OVERLAY" --no-deps \
         "minicpmo-utils==1.0.6" "pillow==10.4.0" "moviepy==2.1.2" \
         "einops==0.8.1" hyperpyyaml onnx "onnxruntime<=1.21.0,>=1.18.0" "scipy>=1.10.0"
