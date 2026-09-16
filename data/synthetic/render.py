@@ -50,11 +50,13 @@ def snapshot_assets() -> Path:
 
 def load_model():
     import librosa  # noqa: F401  (model remote code expects it)
-    from transformers import AutoModelForCausalLM, AutoTokenizer
+    from transformers import AutoModel, AutoTokenizer
 
     model_id = "openbmb/MiniCPM-o-4_5"
     tok = AutoTokenizer.from_pretrained(model_id, trust_remote_code=True)
-    model = AutoModelForCausalLM.from_pretrained(
+    # AutoModel (not AutoModelForCausalLM): matches runs/minicpm_smoke.py —
+    # pylibs-minicpm has no accelerate for the CausalLM init path
+    model = AutoModel.from_pretrained(
         model_id, trust_remote_code=True, init_tts=True,
         torch_dtype=torch.bfloat16, attn_implementation="sdpa",
     ).cuda().eval()
