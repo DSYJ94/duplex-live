@@ -86,6 +86,38 @@ stepaudio2/Token2wav deps (`--no-deps`): onnxruntime 1.30.0, hyperpyyaml 1.2.3,
 audio-only; install when the omni/video path is needed. Token2wav auto-fetches
 5 small asset files from HF on first `init_tts()`.
 
+## PersonaPlex overlay (`pylibs-pplex`)
+
+`/projects/u6si/duplex-live/pylibs-pplex` — moshi (from the cloned
+`$DL/personaplex/moshi`) + deps. Use:
+
+```bash
+--env PYTHONPATH=$DL/pylibs-pplex --env TMPDIR=$DL/tmp
+```
+
+**sphn must be built from source** (Kyutai ships no Linux-aarch64 wheel, and
+`moshi/offline.py` imports it directly — cannot skip). Recipe (automated in
+`$DL/pplex-build.slurm`):
+
+1. rustup minimal → `$DL/tools/cargo` + `$DL/tools/rustup`
+2. libopus-dev headers: `apt download`/`dpkg -x` won't run on the Cray host —
+   curl the arm64 .deb from ports.ubuntu.com and `dpkg -x` **inside the
+   container** → `$DL/tools/opus`; sed the `prefix=` in the extracted opus.pc
+3. `pip install --target=... "sphn==0.1.12"` (moshi pins `<0.2`) with
+   `PKG_CONFIG_PATH`/`LIBRARY_PATH`/`C_INCLUDE_PATH` at the extracted prefix,
+   `PATH` including cargo, and **`TMPDIR` inside /projects** — maturin's temp
+   path defaults to `/local/user/<uid>` which doesn't exist in the container
+   namespace
+4. `pip install --target=... $DL/personaplex/moshi`, then strip torch*/nvidia_*
+
+moshi pins `torch<2.5`; we strip the pip torch and run it on NGC torch 2.8 —
+works (offline inference verified). Voice prompts: `voices.tgz` from the HF
+repo, extracted to `$DL/models/personaplex-voices/voices/` (18 presets).
+Offline replay: `python -m moshi.offline --voice-prompt NATF2.pt
+--voice-prompt-dir ... --input-wav X --output-wav Y --output-text Z`
+($DL/pplex-bakeoff.slurm). Output JSON is a frame-aligned token list
+(PAD/EPAD, no timestamps) — use output-WAV energy for latency analysis.
+
 ## Model weights (HF cache: $DL/models/hf-cache)
 
 - `Qwen/Qwen3-Omni-30B-A3B-Instruct` — Apache-2.0, ungated ✅ staged
