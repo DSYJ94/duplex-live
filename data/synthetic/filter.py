@@ -180,8 +180,8 @@ def judge_scenario(pipe, sc_dir: Path, tl) -> dict:
         voice = ev.voice or voice_of.get(ev.ch)
         wav_path = sc_dir / "utterances" / f"{i:02d}_{ev.ch}.wav"
         if not wav_path.exists():
-            per_utt.append({"ch": ev.ch, "voice": voice,
-                            "missing": str(wav_path.name), "wer": 1.0})
+            per_utt.append({"ch": ev.ch, "voice": voice, "wer": 1.0,
+                            "gate_fail": f"missing render: {wav_path.name}"})
             continue
         ref, trunc = ref_for_event(ev)
         audio, sr = sf.read(wav_path, dtype="float32")
