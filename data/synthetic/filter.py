@@ -189,6 +189,7 @@ def judge_scenario(pipe, sc_dir: Path, tl) -> dict:
             audio = audio.mean(axis=1)
         if sr != 16000:
             audio = librosa.resample(audio, orig_sr=sr, target_sr=16000)
+            sr = 16000
         if float(np.max(np.abs(audio))) < 1e-4:
             hyp = ""
         else:
