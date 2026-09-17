@@ -33,7 +33,9 @@ cd "$REPO"
 
 echo "[synth] generating timelines -> $TL_DIR"
 mkdir -p "$TL_DIR" "$OUT_DIR"
-$APPT python -m data.synthetic.scenarios --out "$TL_DIR" --per-class "$PER_CLASS" --seed "$SEED"
+SC_ARGS=""
+[ -n "${BANKS:-}" ] && [ -f "$BANKS" ] && SC_ARGS="--banks $BANKS"
+$APPT python -m data.synthetic.scenarios --out "$TL_DIR" --per-class "$PER_CLASS" --seed "$SEED" $SC_ARGS
 
 ASSETS=$(ls -d $HF_HOME/hub/models--openbmb--MiniCPM-o-4_5/snapshots/*/assets | head -1)
 VJ=$DL/models/voices/voices.json

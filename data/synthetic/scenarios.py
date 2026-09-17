@@ -10,7 +10,9 @@ Usage:  python -m data.synthetic.scenarios --out timelines/ --per-class 2
 from __future__ import annotations
 
 import argparse
+import json
 import random
+import sys
 from pathlib import Path
 
 from .timeline import Event, GRID_MS, Timeline
@@ -431,12 +433,32 @@ GENERATORS = {
 }
 
 
+def apply_banks(path: Path) -> None:
+    """Load a banks.json sidecar (from banks_llm.py) over the seed banks.
+
+    Generators read module globals at call time, so setattr swaps the banks
+    in place; the hand-written seeds in this file stay canonical.
+    """
+    data = json.loads(Path(path).read_text())["banks"]
+    me = sys.modules[__name__]
+    for k, v in data.items():
+        if not hasattr(me, k):
+            raise ValueError(f"unknown bank name in {path}: {k}")
+        setattr(me, k, v)
+        print(f"[banks] {k}: {len(v)} expanded items")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", default="timelines")
     ap.add_argument("--per-class", type=int, default=4)
     ap.add_argument("--seed", type=int, default=17)
+    ap.add_argument("--banks", default=None,
+                    help="banks.json from data.synthetic.banks_llm")
     args = ap.parse_args()
+
+    if args.banks:
+        apply_banks(Path(args.banks))
 
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
