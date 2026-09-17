@@ -38,9 +38,39 @@ SHORT_MAX_S = 4.0       # "mm-hm" should never run longer than this
 
 # ---------------------------------------------------------------- text utils
 
+_ONES = ["zero", "one", "two", "three", "four", "five", "six", "seven",
+         "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen",
+         "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"]
+_TENS = {2: "twenty", 3: "thirty", 4: "forty", 5: "fifty", 6: "sixty",
+         7: "seventy", 8: "eighty", 9: "ninety"}
+
+
+def _num2words(n: int) -> str:
+    if n < 20:
+        return _ONES[n]
+    if n < 100:
+        return _TENS[n // 10] + (" " + _ONES[n % 10] if n % 10 else "")
+    if n < 1000:
+        return _ONES[n // 100] + " hundred" + \
+            (" " + _num2words(n % 100) if n % 100 else "")
+    return _num2words(n // 1000) + " thousand" + \
+        (" " + _num2words(n % 1000) if n % 1000 else "")
+
+
+def _expand_numerals(text: str) -> str:
+    """Whisper writes '$300' where the script says 'three hundred dollars'
+    (and 'One minute' vs '1 minute.'). Expand both sides to words so WER
+    measures speech errors, not formatting."""
+    t = re.sub(r"\$(\d+)", r"\1 dollars ", text)
+    t = re.sub(r"(\d+)\s*%", r"\1 percent ", t)
+    return re.sub(r"\d+", lambda m: _num2words(int(m.group())), t)
+
+
 def norm_words(text: str) -> list[str]:
-    """Lowercase alphanumeric tokens (ASR-hypothesis normalization)."""
-    return re.sub(r"[^a-z0-9 ]+", " ", text.lower()).split()
+    """Lowercase alphanumeric tokens with numerals expanded (ASR-hypothesis
+    normalization)."""
+    return re.sub(r"[^a-z0-9 ]+", " ",
+                  _expand_numerals(text.lower())).split()
 
 
 def wer(ref: list[str], hyp: list[str]) -> float:

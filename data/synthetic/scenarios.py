@@ -348,13 +348,18 @@ def gen_delegation(rng: random.Random, idx: int) -> Timeline:
 
 SILENCE_SETS = [
     # (end-of-thought answer, follow-up, thinking opener, completion) — the pause
-    # after the opener means "I'm composing", the pause after the answer means "done"
-    ("So the answer is forty two.", "Okay. And why is that?", "Well,",
+    # after the opener means "I'm composing", the pause after the answer means
+    # "done". Openers are 4+ words: 1-2-word prompts make the TTS babble
+    # (measured: "Well," -> 3.1 s + drift, "Let me think." -> 4.5 s).
+    ("So the answer is forty two.", "Okay. And why is that?",
+     "Well, let me see,",
      "because the computation was designed that way."),
     ("The train leaves at six, not seven.", "Six? Are you sure about that?",
-     "Let me think.", "Yes, six. The timetable changed back in May."),
+     "Let me think that through,",
+     "yes, six. The timetable changed back in May."),
     ("It costs about three hundred dollars.", "Three hundred? For that?",
-     "Hang on,", "I said about. The base model is two fifty."),
+     "Hang on, let me check,",
+     "I said about. The base model is two fifty."),
 ]
 
 
