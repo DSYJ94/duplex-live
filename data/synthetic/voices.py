@@ -57,7 +57,7 @@ def extract(tar: Path, out_dir: Path) -> list[dict]:
         by_spk: dict[str, list[tarfile.TarInfo]] = {}
         speakers_raw = None
         for m in tf:
-            if m.name.endswith("SPEAKERS.txt"):
+            if m.name.upper().endswith("SPEAKERS.TXT"):
                 speakers_raw = m
                 continue
             if m.name.endswith(".flac") and "/test-clean/" in m.name:
