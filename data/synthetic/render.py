@@ -90,15 +90,40 @@ def load_voice_pool(voices_json: Path | None, assets: Path) -> dict[str, Path]:
     return pool
 
 
-def assign_voices(tl, pool: dict[str, Path], anchor_prob: float) -> dict[str, str]:
+def load_registers(voices_json: Path | None) -> dict[str, str]:
+    """key -> low/mid/high F0 band, from voices_f0.json (pyin-measured,
+    staged by the one-off measurement script next to voices.json)."""
+    if voices_json is None:
+        return {}
+    f0p = Path(voices_json).parent / "voices_f0.json"
+    if not f0p.exists():
+        return {}
+    d = json.loads(f0p.read_text())
+    reg = {e["key"]: e["register"] for e in d.get("anchors", [])}
+    reg.update({e["key"]: e.get("register") for e in d.get("pool", [])
+                if e.get("register")})
+    return reg
+
+
+def assign_voices(tl, pool: dict[str, Path], anchor_prob: float,
+                  registers: dict[str, str] | None = None) -> dict[str, str]:
     """One distinct voice per channel, deterministic in scenario_id, so
-    timelines stay voice-agnostic and renders are reproducible."""
+    timelines stay voice-agnostic and renders are reproducible. The user
+    and assistant voices must differ in F0 register when measurable —
+    same-register pairs are hard to attribute when auditioning the mix."""
+    registers = registers or {}
     rng = random.Random(f"voices:{tl.scenario_id}")
     chs = sorted({e.ch for e in tl.events if e.text and e.kind != "marker"})
     picks: dict[str, str] = {}
     for ch in chs:
         anchor = CH_DEFAULT_VOICE.get(ch, "user")
         cand = [k for k in pool if k not in picks.values()]
+        other = {"user": "assistant", "assistant": "user"}.get(ch)
+        if other and other in picks and registers.get(picks[other]):
+            diff_band = [k for k in cand
+                         if registers.get(k) != registers.get(picks[other])]
+            if diff_band:
+                cand = diff_band
         if anchor in cand and rng.random() < anchor_prob:
             picks[ch] = anchor
         else:
@@ -109,7 +134,8 @@ def assign_voices(tl, pool: dict[str, Path], anchor_prob: float) -> dict[str, st
 
 def render_timeline(model, tl, out_dir: Path, assets: Path, manifest,
                     pool: dict[str, Path] | None = None,
-                    anchor_prob: float = 0.5) -> None:
+                    anchor_prob: float = 0.5,
+                    registers: dict[str, str] | None = None) -> None:
     import librosa
 
     sc_dir = out_dir / tl.scenario_id
@@ -118,7 +144,7 @@ def render_timeline(model, tl, out_dir: Path, assets: Path, manifest,
 
     if pool is None:
         pool = {k: assets / rel for k, rel in VOICES.items()}
-    channel_voice = assign_voices(tl, pool, anchor_prob)
+    channel_voice = assign_voices(tl, pool, anchor_prob, registers)
     tl.meta["voices"] = channel_voice
 
     refs: dict[str, np.ndarray] = {}
@@ -277,8 +303,11 @@ def main() -> None:
     print(f"{len(files)} timelines to render")
 
     pool = load_voice_pool(Path(args.voices) if args.voices else None, assets)
+    registers = load_registers(Path(args.voices) if args.voices else None)
     print(f"voice pool: {len(pool)} voices"
-          + (" (anchors only)" if len(pool) == len(VOICES) else ""), flush=True)
+          + (" (anchors only)" if len(pool) == len(VOICES) else "")
+          + (f", {len(registers)} with F0 register" if registers else ""),
+          flush=True)
 
     model, _ = load_model()
     with open(out / "manifest.jsonl", "a") as mf:
@@ -286,7 +315,8 @@ def main() -> None:
             tl = Timeline.load(f)
             print(f"[render] {tl.scenario_id} ({tl.scenario_class})", flush=True)
             render_timeline(model, tl, out, assets, mf,
-                            pool=pool, anchor_prob=args.anchor_prob)
+                            pool=pool, anchor_prob=args.anchor_prob,
+                            registers=registers)
     print("done")
 
 
