@@ -31,7 +31,7 @@ from pathlib import Path
 import numpy as np
 
 GRID_MS = 80
-MS_PER_WORD_EST = 350  # TTS rate estimate for truncation-aware ref text
+MS_PER_WORD_EST = 320  # TTS rate estimate for truncation-aware ref text
 
 
 # ---------------------------------------------------------------- text utils
@@ -135,26 +135,17 @@ def utt_for(tl, sc_dir: Path, ev) -> Path:
 
 # ---------------------------------------------------------------- judge pass
 
-def ref_text_for_channel(tl, ch: str) -> tuple[str, bool]:
-    """Intended text for one channel, time-ordered; truncated events contribute
-    their estimated spoken prefix. Returns (text, has_truncation)."""
-    parts: list[str] = []
-    trunc = False
-    speech = sorted([e for e in tl.events if e.text and e.kind != "marker"
-                     and e.ch == ch],
-                    key=lambda e: e.actual_start_ms or 0)
-    for ev in speech:
-        if is_truncated(ev):
-            trunc = True
-            words = ev.text.split()
-            kept_ms = ev.actual_end_ms - ev.actual_start_ms
-            est_full_ms = max(len(words) * MS_PER_WORD_EST, 1)
-            frac = min(1.0, kept_ms / est_full_ms)
-            k = max(1, int(round(len(words) * frac)))
-            parts.append(" ".join(words[:k]))
-        else:
-            parts.append(ev.text)
-    return " ".join(parts), trunc
+def ref_for_event(ev) -> tuple[str, bool]:
+    """Intended text for one rendered event; truncated events contribute their
+    estimated spoken prefix. Returns (text, was_truncated)."""
+    if not is_truncated(ev):
+        return ev.text, False
+    words = ev.text.split()
+    kept_ms = ev.actual_end_ms - ev.actual_start_ms
+    est_full_ms = max(len(words) * MS_PER_WORD_EST, 1)
+    frac = min(1.0, kept_ms / est_full_ms)
+    k = max(1, int(round(len(words) * frac)))
+    return " ".join(words[:k]), True
 
 
 def load_asr(model_id: str):
@@ -168,19 +159,28 @@ def load_asr(model_id: str):
         model=model_id,
         torch_dtype=torch.bfloat16,
         device="cuda",
-        chunk_length_s=30,
     )
 
 
 def judge_scenario(pipe, sc_dir: Path, tl) -> dict:
+    """Per-utterance round trip: transcribe each rendered utterance wav and
+    compare with its own text (truncation-aware). Judging whole stems instead
+    makes whisper hallucinate over long silences (timed_task) and mixes
+    backchannel tokens into every channel — the per-utterance wavs isolate
+    exactly what we want to measure: each TTS render."""
     import librosa
     import soundfile as sf
 
-    out: dict = {}
-    for stem in sorted(sc_dir.glob("stem_*.wav")):
-        ch = stem.stem.removeprefix("stem_")
-        ref, trunc = ref_text_for_channel(tl, ch)
-        audio, sr = sf.read(stem, dtype="float32")
+    per_utt: list[dict] = []
+    speech = [e for e in tl.events if e.text and e.kind != "marker"]
+    for i, ev in enumerate(speech):
+        wav_path = sc_dir / "utterances" / f"{i:02d}_{ev.ch}.wav"
+        if not wav_path.exists():
+            per_utt.append({"ch": ev.ch, "missing": str(wav_path.name),
+                            "wer": 1.0})
+            continue
+        ref, trunc = ref_for_event(ev)
+        audio, sr = sf.read(wav_path, dtype="float32")
         if audio.ndim > 1:
             audio = audio.mean(axis=1)
         if sr != 16000:
@@ -190,10 +190,26 @@ def judge_scenario(pipe, sc_dir: Path, tl) -> dict:
         else:
             hyp = pipe(audio, language="en", task="transcribe")["text"]
         w = wer(norm_words(ref), norm_words(hyp))
-        out[ch] = {"wer": round(w, 3),
-                   "truncated_ref": trunc,
-                   "ref": ref[:160], "hyp": str(hyp)[:160]}
-    return out
+        per_utt.append({"ch": ev.ch, "wer": round(w, 3),
+                        "truncated_ref": trunc, "kind": ev.kind,
+                        "ref": ref[:120], "hyp": str(hyp)[:120]})
+
+    # channel + scenario aggregates weighted by ref word count
+    def agg(items):
+        num = den = 0
+        for it in items:
+            n = len(norm_words(it.get("ref", "")))
+            num += it["wer"] * n
+            den += n
+        return round(num / den, 3) if den else (1.0 if items else 0.0)
+
+    chans = sorted({it["ch"] for it in per_utt})
+    return {
+        "per_utterance": per_utt,
+        "wer_by_channel": {ch: agg([i for i in per_utt if i["ch"] == ch])
+                           for ch in chans},
+        "wer": agg(per_utt),
+    }
 
 
 # ---------------------------------------------------------------- main
@@ -226,12 +242,12 @@ def main() -> None:
 
             issues, info = rule_checks(tl, sc_dir)
 
-            wers = {}
+            judged = None
             if pipe is not None:
-                wers = judge_scenario(pipe, sc_dir, tl)
-                for ch, d in wers.items():
-                    if d["wer"] > args.wer_channel:
-                        issues.append(f"wer_{ch}: {d['wer']:.3f}")
+                judged = judge_scenario(pipe, sc_dir, tl)
+                for ch, w in judged["wer_by_channel"].items():
+                    if w > args.wer_channel:
+                        issues.append(f"wer_{ch}: {w:.3f}")
 
             verdict = "pass" if not issues else "fail"
             if verdict == "pass":
@@ -241,8 +257,10 @@ def main() -> None:
                    "scenario_class": row["scenario_class"],
                    "verdict": verdict, "issues": issues, **info,
                    "asr_model": None if pipe is None else args.asr_model,
-                   "channel_wer": {k: v["wer"] for k, v in wers.items()},
-                   "asr_detail": wers}
+                   "wer": None if judged is None else judged["wer"],
+                   "wer_by_channel": (None if judged is None
+                                      else judged["wer_by_channel"]),
+                   "asr_detail": judged}
             rf.write(json.dumps(rec, ensure_ascii=False) + "\n")
             print(f"  [{verdict}] {row['scenario_id']}"
                   + (f" :: {issues}" if issues else ""), flush=True)

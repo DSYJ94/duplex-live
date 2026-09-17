@@ -34,8 +34,11 @@ mkdir -p "$TL_DIR" "$OUT_DIR"
 $APPT python -m data.synthetic.scenarios --out "$TL_DIR" --per-class "$PER_CLASS"
 
 ASSETS=$(ls -d $HF_HOME/hub/models--openbmb--MiniCPM-o-4_5/snapshots/*/assets | head -1)
-echo "[synth] rendering with ref voices from $ASSETS -> $OUT_DIR"
+VJ=$DL/models/voices/voices.json
+VARGS=""
+[ -f "$VJ" ] && VARGS="--voices $VJ --anchor-prob ${ANCHOR_PROB:-0.5}"
+echo "[synth] rendering with ref voices from $ASSETS -> $OUT_DIR (pool: $VARGS)"
 $APPT python -m data.synthetic.render \
-    --timelines "$TL_DIR" --out "$OUT_DIR" --assets "$ASSETS"
+    --timelines "$TL_DIR" --out "$OUT_DIR" --assets "$ASSETS" $VARGS
 
 echo "[synth] done. manifest: $OUT_DIR/manifest.jsonl"

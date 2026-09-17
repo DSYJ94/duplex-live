@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import random
 import sys
 from pathlib import Path
 
@@ -27,7 +28,8 @@ import torch
 SR = 24000
 GRID_MS = 80
 
-# voice key -> reference clip in the MiniCPM-o HF snapshot assets/
+# anchor voice key -> reference clip in the MiniCPM-o HF snapshot assets/
+# (proven clones; the pool from data.synthetic.voices adds diversity)
 VOICES = {
     "assistant": "system_ref_audio.wav",
     "user": "HT_ref_audio.wav",
@@ -77,19 +79,54 @@ def tts_utterance(model, text: str, ref_audio: np.ndarray, out_path: Path) -> No
                output_audio_path=str(out_path))
 
 
-def render_timeline(model, tl, out_dir: Path, assets: Path, manifest) -> None:
+def load_voice_pool(voices_json: Path | None, assets: Path) -> dict[str, Path]:
+    """voice key -> 16 kHz reference clip. Anchors are the 3 proven MiniCPM-o
+    asset clones; voices.json (from data.synthetic.voices) adds the
+    LibriSpeech CC-BY-4.0 pool. Missing/absent json -> anchors only."""
+    pool = {k: assets / rel for k, rel in VOICES.items()}
+    if voices_json is not None and Path(voices_json).exists():
+        for e in json.loads(Path(voices_json).read_text()):
+            pool[e["key"]] = Path(e["path"])
+    return pool
+
+
+def assign_voices(tl, pool: dict[str, Path], anchor_prob: float) -> dict[str, str]:
+    """One distinct voice per channel, deterministic in scenario_id, so
+    timelines stay voice-agnostic and renders are reproducible."""
+    rng = random.Random(f"voices:{tl.scenario_id}")
+    chs = sorted({e.ch for e in tl.events if e.text and e.kind != "marker"})
+    picks: dict[str, str] = {}
+    for ch in chs:
+        anchor = CH_DEFAULT_VOICE.get(ch, "user")
+        cand = [k for k in pool if k not in picks.values()]
+        if anchor in cand and rng.random() < anchor_prob:
+            picks[ch] = anchor
+        else:
+            non_anchor = [k for k in cand if k != anchor] or cand
+            picks[ch] = rng.choice(non_anchor)
+    return picks
+
+
+def render_timeline(model, tl, out_dir: Path, assets: Path, manifest,
+                    pool: dict[str, Path] | None = None,
+                    anchor_prob: float = 0.5) -> None:
     import librosa
 
     sc_dir = out_dir / tl.scenario_id
     utt_dir = sc_dir / "utterances"
     utt_dir.mkdir(parents=True, exist_ok=True)
 
+    if pool is None:
+        pool = {k: assets / rel for k, rel in VOICES.items()}
+    channel_voice = assign_voices(tl, pool, anchor_prob)
+    tl.meta["voices"] = channel_voice
+
     refs: dict[str, np.ndarray] = {}
 
     def ref_for(ev) -> np.ndarray:
-        key = ev.voice or CH_DEFAULT_VOICE.get(ev.ch, "user")
+        key = ev.voice or channel_voice.get(ev.ch, CH_DEFAULT_VOICE.get(ev.ch, "user"))
         if key not in refs:
-            wav, _ = librosa.load(assets / VOICES[key], sr=16000, mono=True)
+            wav, _ = librosa.load(pool[key], sr=16000, mono=True)
             refs[key] = wav
         return refs[key]
 
@@ -163,6 +200,7 @@ def render_timeline(model, tl, out_dir: Path, assets: Path, manifest) -> None:
         "sr": SR,
         "grid_ms": GRID_MS,
         "duration_ms": total_ms,
+        "voices": channel_voice,
         **tl.overlap_stats(),
         "tts_engine": "openbmb/MiniCPM-o-4_5 (Apache-2.0) zero-shot voice-cloned TTS",
         "license": "synthetic; open models only (ADR-0002); no closed-API content",
@@ -175,6 +213,10 @@ def main() -> None:
     ap.add_argument("--timelines", required=True)
     ap.add_argument("--out", required=True)
     ap.add_argument("--assets", default=None)
+    ap.add_argument("--voices", default=None,
+                    help="voices.json from data.synthetic.voices (pool mode)")
+    ap.add_argument("--anchor-prob", type=float, default=0.5,
+                    help="probability a channel keeps its proven anchor voice")
     ap.add_argument("--only", default=None, help="scenario_id substring filter")
     args = ap.parse_args()
 
@@ -190,12 +232,17 @@ def main() -> None:
         files = [f for f in files if args.only in f.name]
     print(f"{len(files)} timelines to render")
 
+    pool = load_voice_pool(Path(args.voices) if args.voices else None, assets)
+    print(f"voice pool: {len(pool)} voices"
+          + (" (anchors only)" if len(pool) == len(VOICES) else ""), flush=True)
+
     model, _ = load_model()
     with open(out / "manifest.jsonl", "a") as mf:
         for f in files:
             tl = Timeline.load(f)
             print(f"[render] {tl.scenario_id} ({tl.scenario_class})", flush=True)
-            render_timeline(model, tl, out, assets, mf)
+            render_timeline(model, tl, out, assets, mf,
+                            pool=pool, anchor_prob=args.anchor_prob)
     print("done")
 
 
