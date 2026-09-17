@@ -20,12 +20,21 @@ We adopt the same two tiers, plus a third for our novel capabilities:
 
 ### Layer 2: Duplex conversation corpus (real)
 
+Candidate audit (2026-09-17; web-verified):
+
 | Source | Volume | Duplex quality | Access |
 |---|---|---|---|
+| **CANDOR** (video-chat strangers; flagship pick) | 850 h, 1,656 convos, 7M words + dynamics measures | High — built for turn-taking research | TalkBank CABank research access; no native word timestamps → Candor-LR (arXiv 2609.10394) alignment or own forced aligner |
 | **Fisher English** (telephone conversations) | ~2,000 h | High (natural overlap/backchannels) | LDC license — check Bristol institutional access; do not pirate |
+| **k2-fsa/OpenDialog** (in-the-wild, EN+ZH) | ~6,800 h (5,074 EN) | Medium-high (in-the-wild noise) | CC-BY-NC-4.0 — research OK, **taints commercial release**: needs an ADR before entering the mixture |
 | Podcasts / interviews (licensed) | Medium | Medium-high | licensing work |
-| Meetings / panels | Medium | High overlap, harder attribution | later |
-| Sessions with our own demos (PersonaPlex/MiniCPM-o bake-off recordings) | Growing | On-distribution | free, starts Week 1–2 (Issue #4 recordings!) |
+| Meetings / panels (AMI/ICSI free; harder attribution) | Medium | High overlap | later |
+| Sessions with our own demos (PersonaPlex/MiniCPM-o bake-off recordings) | Growing | On-distribution | free, started Week 1–2 (Issue #4 recordings) |
+
+Plan: CANDOR as flagship real corpus + Fisher via Bristol LDC pilot; all
+Layer-2 sources need the 80 ms forced-alignment toolchain (Issue #2). Copy
+the construction pipelines from DuplexChat (arXiv 2607.04941) and Nakata et
+al. (SIGDIAL 2026) — both recover speaker-separated overlapping tracks.
 
 **Alignment requirement:** every stream micro-turn/tick aligned (80 ms grid), precise timestamps, overlap preserved — not segmented into turns. The alignment toolchain (Issue #2/#3) gates everything.
 
