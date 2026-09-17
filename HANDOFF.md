@@ -123,6 +123,14 @@ Weeks 3–5: Layer-A + Phase-1 fine-tune → model v1.
 ## Repo conventions
 
 - Task board: GitHub Issues #1–#7.
+- **Voice-sample audit loop (user request, 2026-09-17): anything that
+  produces audio must be audible to the user via the localhost gallery.**
+  After every render/filter/voice step: rsync the batch + any voice assets
+  to local `runs/` (recipes in `viz/listen.py` docstring), make sure
+  `python -m viz.listen` is running, and tell the user there is new audio
+  at **http://localhost:8765** (they refresh; pages read the synced dirs
+  live). The server is a detached nohup process — check
+  `pgrep -f viz.listen` and restart on port 8765 if the Mac rebooted.
 - `viz/index.html` is the living visualization — every decision updates it
   (viz/GOVERNANCE.md). Repo copy is canonical (local editable copy
   `duplex-live-viz/` does not exist yet).

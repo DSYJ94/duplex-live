@@ -36,6 +36,10 @@ apptainer exec --bind /projects ... $SIF python -m data.synthetic.voices --dl $D
 #          + manifest.jsonl + filter_report.jsonl + train_manifest.jsonl
 ```
 
+After every render/filter step: rsync the batch to local `runs/` (recipes
+in `viz/listen.py`) and ping the user — the localhost gallery at
+http://localhost:8765 (`python -m viz.listen`) is how audio gets audited.
+
 Quick local check (no GPU): `python -m data.synthetic.scenarios --out /tmp/tl --per-class 1`
 
 ## Known limitations (v0.2)
