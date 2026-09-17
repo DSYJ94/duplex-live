@@ -145,28 +145,12 @@ def render_timeline(model, tl, out_dir: Path, assets: Path, manifest,
         print(f"  [{tl.scenario_id}] {ev.ch} @{ev.actual_start_ms}ms "
               f"{dur_ms}ms: {ev.text[:40]!r}", flush=True)
 
-    # 1.5 same-channel repair: TTS can overrun the generator's duration
-    #     estimate (measured 72–105 ms/char); push later same-channel events
-    #     so a stem never sums two utterances. Cross-channel timing is never
-    #     touched — overlap there is the point.
-    by_ch: dict[str, list] = {}
-    for ev in speech:
-        by_ch.setdefault(ev.ch, []).append(ev)
-    for ch, evs in by_ch.items():
-        evs.sort(key=lambda e: e.actual_start_ms)
-        for prev, cur in zip(evs, evs[1:]):
-            min_start = prev.actual_end_ms + GRID_MS
-            if cur.actual_start_ms < min_start:
-                shift = min_start - cur.actual_start_ms
-                cur.note = (cur.note + "; " if cur.note else "") + \
-                    f"pushed {shift}ms (overrun repair)"
-                print(f"  [{tl.scenario_id}] repair: {cur.ch} event pushed "
-                      f"{shift}ms (prev overran estimate)", flush=True)
-                cur.actual_start_ms = min_start
-                cur.actual_end_ms += shift
-
     # 2. retraction cut: any utterance overlapped by a barge_in on another
-    #    channel is truncated at the barge instant (clean yield) with a short fade
+    #    channel is truncated at the barge instant (clean yield) with a short
+    #    fade. MUST run before the repair below — the repair schedules
+    #    same-channel events against post-cut ends (bug found by user
+    #    audition 2026-09-17: yield pushed past the un-cut story end ->
+    #    12-21 s reply latency after barge-ins)
     barges = [e for e in speech if e.kind == "barge_in"]
     for ev in speech:
         if ev.kind == "barge_in":
@@ -187,6 +171,27 @@ def render_timeline(model, tl, out_dir: Path, assets: Path, manifest,
             ev.actual_end_ms = round(cut_at / GRID_MS) * GRID_MS
             ev.note = (ev.note + "; " if ev.note else "") + f"truncated at barge-in {cut_at}ms"
             print(f"  [{tl.scenario_id}] cut {ev.ch} utterance at {cut_at}ms (barge-in)", flush=True)
+
+    # 3. same-channel repair: TTS can overrun the generator's duration
+    #     estimate (measured 72–105 ms/char); push later same-channel events
+    #     so a stem never sums two utterances. Cross-channel timing is never
+    #     touched — overlap there is the point. Post-cut ends are what get
+    #     mixed, so repairs are computed against them.
+    by_ch: dict[str, list] = {}
+    for ev in speech:
+        by_ch.setdefault(ev.ch, []).append(ev)
+    for ch, evs in by_ch.items():
+        evs.sort(key=lambda e: e.actual_start_ms)
+        for prev, cur in zip(evs, evs[1:]):
+            min_start = prev.actual_end_ms + GRID_MS
+            if cur.actual_start_ms < min_start:
+                shift = min_start - cur.actual_start_ms
+                cur.note = (cur.note + "; " if cur.note else "") + \
+                    f"pushed {shift}ms (overrun repair)"
+                print(f"  [{tl.scenario_id}] repair: {cur.ch} event pushed "
+                      f"{shift}ms (prev overran estimate)", flush=True)
+                cur.actual_start_ms = min_start
+                cur.actual_end_ms += shift
 
     # 3. mix
     total_ms = tl.duration_ms() + 1000

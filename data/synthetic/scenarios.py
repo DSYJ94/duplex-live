@@ -309,8 +309,10 @@ def gen_barge_in(rng: random.Random, idx: int) -> Timeline:
     barge_at = t + rng.randint(2500, 4500)
     barge, yield_text = rng.choice(BARGE_INS)
     tl.add(Event(U, barge_at, barge, "barge_in"))
-    tl.add(Event(A, barge_at + _q(1500), yield_text, "utterance",
-                 note="clean yield + revised response"))
+    # realistic reaction-time distribution to the barge instant (the barge
+    # utterance is still being spoken — overlap is intended cross-channel)
+    tl.add(Event(A, barge_at + _q(rng.randint(900, 1800)), yield_text,
+                 "utterance", note="clean yield + revised response"))
     tl.meta["barge_at_ms"] = barge_at
     return tl
 

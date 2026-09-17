@@ -124,6 +124,34 @@ SPEC: dict[str, dict] = {
 
 ALLOWED_INTERVALS = {5000, 8000, 10000, 15000, 20000, 30000, 60000}
 
+# numeric-consistency guard: an LLM-generated timed-topic request that names
+# a count ("for two rounds") or a span ("for thirty seconds") must agree
+# with the callout list — semantics the structural validator can't see
+_NUM_WORDS = {"one": 1, "two": 2, "three": 3, "four": 4, "five": 5, "six": 6,
+              "seven": 7, "eight": 8, "nine": 9, "ten": 10, "eleven": 11,
+              "twelve": 12, "twenty": 20, "thirty": 30, "forty": 40,
+              "forty five": 45, "fifty": 50, "sixty": 60}
+_N_ALT = r"(\d+|" + "|".join(k.replace(" ", r"[ -]") for k in _NUM_WORDS) + r")"
+_COUNT_RE = re.compile(rf"\bfor {_N_ALT} (rounds?|times?|reps?|callouts?)\b")
+_SPAN_RE = re.compile(rf"\bfor {_N_ALT} (minutes?|seconds?)\b")
+
+
+def _n(s: str) -> int:
+    return int(s) if s.isdigit() else _NUM_WORDS[s]
+
+
+def _timed_numbers_ok(req: str, interval_ms: int, n_callouts: int) -> bool:
+    low = req.lower()
+    for m in _COUNT_RE.finditer(low):
+        if _n(m.group(1)) != n_callouts:
+            return False
+    for m in _SPAN_RE.finditer(low):
+        unit_s = 60 if m.group(2).startswith("minute") else 1
+        span_s = n_callouts * interval_ms // 1000
+        if _n(m.group(1)) * unit_s != span_s:  # exact: phrases are templated
+            return False
+    return True
+
 
 def seeds_for(bank: str) -> list:
     import data.synthetic.scenarios as sc
@@ -166,7 +194,8 @@ def validate(bank: str, item) -> bool:
         name, req, interval, callouts = item
         return (_text_ok(name, 2, 22) and _text_ok(req, 45, 180)
                 and interval in ALLOWED_INTERVALS and 3 <= len(callouts) <= 5
-                and all(_text_ok(c, 2, 44) for c in callouts))
+                and all(_text_ok(c, 2, 44) for c in callouts)
+                and _timed_numbers_ok(req, interval, len(callouts)))
     if sh == "quad":  # SILENCE_SETS — opener >=4 words (TTS babble guard)
         return (len(item) == 4 and _text_ok(item[0], 20, 70)
                 and _text_ok(item[1], 12, 60) and item[1].strip().endswith("?")
