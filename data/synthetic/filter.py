@@ -173,11 +173,13 @@ def judge_scenario(pipe, sc_dir: Path, tl) -> dict:
 
     per_utt: list[dict] = []
     speech = [e for e in tl.events if e.text and e.kind != "marker"]
+    voice_of = tl.meta.get("voices", {})
     for i, ev in enumerate(speech):
+        voice = ev.voice or voice_of.get(ev.ch)
         wav_path = sc_dir / "utterances" / f"{i:02d}_{ev.ch}.wav"
         if not wav_path.exists():
-            per_utt.append({"ch": ev.ch, "missing": str(wav_path.name),
-                            "wer": 1.0})
+            per_utt.append({"ch": ev.ch, "voice": voice,
+                            "missing": str(wav_path.name), "wer": 1.0})
             continue
         ref, trunc = ref_for_event(ev)
         audio, sr = sf.read(wav_path, dtype="float32")
@@ -190,11 +192,11 @@ def judge_scenario(pipe, sc_dir: Path, tl) -> dict:
         else:
             hyp = pipe(audio, language="en", task="transcribe")["text"]
         w = wer(norm_words(ref), norm_words(hyp))
-        per_utt.append({"ch": ev.ch, "wer": round(w, 3),
+        per_utt.append({"ch": ev.ch, "voice": voice, "wer": round(w, 3),
                         "truncated_ref": trunc, "kind": ev.kind,
                         "ref": ref[:120], "hyp": str(hyp)[:120]})
 
-    # channel + scenario aggregates weighted by ref word count
+    # channel / voice / scenario aggregates weighted by ref word count
     def agg(items):
         num = den = 0
         for it in items:
@@ -203,11 +205,14 @@ def judge_scenario(pipe, sc_dir: Path, tl) -> dict:
             den += n
         return round(num / den, 3) if den else (1.0 if items else 0.0)
 
-    chans = sorted({it["ch"] for it in per_utt})
+    def group(key):
+        keys = sorted({it[key] for it in per_utt if it.get(key)})
+        return {k: agg([i for i in per_utt if i.get(key) == k]) for k in keys}
+
     return {
         "per_utterance": per_utt,
-        "wer_by_channel": {ch: agg([i for i in per_utt if i["ch"] == ch])
-                           for ch in chans},
+        "wer_by_channel": group("ch"),
+        "wer_by_voice": group("voice"),
         "wer": agg(per_utt),
     }
 
