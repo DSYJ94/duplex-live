@@ -59,9 +59,18 @@ Read this first in a fresh chat. Everything below is decided and documented.
   serves locally synced batches (mixed/stems/per-utterance players joined
   with WER + whisper hypotheses) + voice pool; rsync recipes in its
   docstring; refresh after each sync.
-  Next: hours-scale **content composition** (banks carry ~64 unique
-  scenarios) — recommended: open-LLM bank expansion under ADR-0002 with
-  strict templates, gated by the same filter; then 50–100 h generation.
+  Next: hours-scale generation. **Content composition SOLVED (2026-09-17):**
+  `data/synthetic/banks_llm.py` + `banks-expand.slurm` expand every bank via
+  Qwen3-Omni-30B (Apache-2.0, ADR-0002-compliant; batched generation OOMs
+  on GH200 MoE grouped buffer at batch≥2 — auto-halves to batch 1, ~100 min
+  for ~200 validated items, checkpoint per bank + top-up resume). First
+  expanded banks (`runs/banks/banks.json`: 198 items across 11 banks) smoke
+  batch `runs/banks-smoke/` = **15/16 pass** — LLM content survives the
+  full render+filter loop. Known residual: LLM sometimes miscounts cadence
+  in TIMED_TOPICS requests ("two rounds" + 4 callouts) — validator can't
+  check semantics; add a numeric-consistency guard or spot-audit before
+  the hours-scale run. Then: PER_CLASS↑ big batch (target 50–100 h ≈
+  35–70 GPU-h), over-render ~15% for filter attrition.
 - **Overlays**: `pylibs` (Qwen, transformers 5.17, +whisper judge),
   `pylibs-minicpm` (transformers 4.51 pinned, +accelerate 1.12),
   `pylibs-pplex` (moshi; sphn source-built — recipe in environment.md),
