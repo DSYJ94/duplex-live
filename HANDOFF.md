@@ -47,14 +47,21 @@ Read this first in a fresh chat. Everything below is decided and documented.
      banks expanded (15 explain / 10 stories / 12 hard questions / 8 timed
      topics / 9 barge pairs; paired barge/yield texts; timed-task requests
      match delivered cadence).
-  **In flight**: v0.2 validation batch `runs/synth-v02/` (32 scenarios,
-  seed 41, voice pool on) — render job, then `AUDIO=$DL/runs/synth-v02/audio
-  sbatch repo/synth-filter.slurm`. Check `squeue` +
-  `$DL/logs/synth-{render,filter}-*.out`. The filter's `wer_by_voice` tells
-  us which pool voices clone badly — drop those keys from voices.json.
-  Next after that: hours-scale generation (needs parameterized scenario
-  composition — banks alone won't carry 6-12k scenarios) + throughput check
-  (v0.1: ~1-1.5 GPU-h per 32 scenarios).
+  **v0.2 VALIDATED (2026-09-17)**: batch `runs/synth-v02/` (32 scenarios,
+  17.3 min, seed 41) → **28/32 pass (87.5%)**, 0 same-channel collisions
+  (7 TTS overruns auto-repaired at mix time), voice pool validated (39
+  LibriSpeech voices ≤ 0.074 weighted WER vs anchors 0.042–0.105, no
+  pruning needed). Remaining fails = genuine defects the gate caught
+  (backchannel TTS babble on 1–2-word prompts, marginal WER outliers) —
+  attrition covered by over-render. **Throughput: ~0.7 GPU-h per audio-hour
+  → 50 h ≈ 35 GPU-h; compute is not the bottleneck.**
+  **Audit by ear**: `python -m viz.listen` → http://localhost:8765 —
+  serves locally synced batches (mixed/stems/per-utterance players joined
+  with WER + whisper hypotheses) + voice pool; rsync recipes in its
+  docstring; refresh after each sync.
+  Next: hours-scale **content composition** (banks carry ~64 unique
+  scenarios) — recommended: open-LLM bank expansion under ADR-0002 with
+  strict templates, gated by the same filter; then 50–100 h generation.
 - **Overlays**: `pylibs` (Qwen, transformers 5.17, +whisper judge),
   `pylibs-minicpm` (transformers 4.51 pinned, +accelerate 1.12),
   `pylibs-pplex` (moshi; sphn source-built — recipe in environment.md),
@@ -102,9 +109,9 @@ Weeks 3–5: Layer-A + Phase-1 fine-tune → model v1.
 
 ## Next actions (in order)
 
-1. Issue #3 — close the loop on the v0.2 batch (filter it, prune bad pool
-   voices via `wer_by_voice`), then hours-scale generation: parameterized
-   scenario composition + throughput optimization, target 50–100 h.
+1. Issue #3 — hours-scale content composition (open-LLM bank expansion,
+   ADR-0002-compliant, template-constrained, gated by the existing filter),
+   then 50–100 h generation (≈35–70 GPU-h; budget is fine).
 2. Issue #2 — micro-turn tokenizer/streamer (80 ms grid; notes in
    docs/notes-minicpm-layera.md §1–3, §7). Gates grid-alignment of factory
    output and the training sampler.
