@@ -304,7 +304,7 @@ def main() -> None:
     for bank in todo:
         print(f"[expand] {bank}", flush=True)
         banks[bank] = expand_bank(model, proc, bank, rng,
-                                  initial=banks.get(b))
+                                  initial=banks.get(bank))
         out.write_text(json.dumps({"provenance": provenance, "banks": banks},
                                   ensure_ascii=False, indent=1))  # checkpoint
     print(f"done in {time.time() - t0:.0f}s -> {out}")
