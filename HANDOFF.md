@@ -55,6 +55,16 @@ Read this first in a fresh chat. Everything below is decided and documented.
   (backchannel TTS babble on 1–2-word prompts, marginal WER outliers) —
   attrition covered by over-render. **Throughput: ~0.7 GPU-h per audio-hour
   → 50 h ≈ 35 GPU-h; compute is not the bottleneck.**
+  **Fidelity policies (2026-09-17, from user audition of banks-smoke):**
+  (1) render order is cut → barge-yield push → same-channel repair → mix
+  (repair-before-cut shipped 12–21 s reply gaps — user caught a 21,120 ms
+  one); (2) **barge-yield policy**: assistant speech never starts during a
+  realized `barge_in` — pushed to barge actual end +240 ms (human
+  turn-taking offset; trains clean yield, never talk-over-interrupter);
+  (3) filter gates `yield_latency` (>2500 ms) AND `yield_overlap`
+  (<−160 ms) so neither failure ships unheard; (4) TIMED_TOPICS bank items
+  must be numerically consistent (count nouns == callout count, "for N
+  seconds" == span) — banks.json pruned 24→22 timed topics.
   **Audit by ear**: `python -m viz.listen` → http://localhost:8765 —
   serves locally synced batches (mixed/stems/per-utterance players joined
   with WER + whisper hypotheses) + voice pool; rsync recipes in its
