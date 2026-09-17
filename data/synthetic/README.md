@@ -33,7 +33,6 @@ Quick local check (no GPU): `python -m data.synthetic.scenarios --out /tmp/tl --
   are only for placing *subsequent* intended starts).
 - Quality filter (judge pass) not yet wired; v0 filter = duration/clipping
   sanity in the manifest.
-- Barge-in retraction currently *schedules* the revised reply; the truncated
-  assistant utterance is not yet cut at the barge instant in the mix (the
-  overlap is naturalistic, but the "clean yield" must be enforced at mix time
-  in v0.1).
+- Barge-in retraction is enforced at mix time (v0.1): any utterance overlapped
+  by a `barge_in` event on another channel is truncated at the barge instant
+  with a 100 ms fade, and the manifest records the cut.

@@ -108,7 +108,30 @@ def render_timeline(model, tl, out_dir: Path, assets: Path, manifest) -> None:
         print(f"  [{tl.scenario_id}] {ev.ch} @{ev.actual_start_ms}ms "
               f"{dur_ms}ms: {ev.text[:40]!r}", flush=True)
 
-    # 2. mix
+    # 2. retraction cut: any utterance overlapped by a barge_in on another
+    #    channel is truncated at the barge instant (clean yield) with a short fade
+    barges = [e for e in speech if e.kind == "barge_in"]
+    for ev in speech:
+        if ev.kind == "barge_in":
+            continue
+        cut_at = None
+        for b in barges:
+            if b.ch != ev.ch and ev.actual_start_ms < b.actual_start_ms < ev.actual_end_ms:
+                cut_at = b.actual_start_ms if cut_at is None else min(cut_at, b.actual_start_ms)
+        if cut_at is not None:
+            audio, sr = sf.read(out_dir / ev.wav, dtype="float32")
+            if audio.ndim > 1:
+                audio = audio.mean(axis=1)
+            keep = int((cut_at - ev.actual_start_ms) / 1000 * sr)
+            fade = int(0.1 * sr)
+            if keep > fade:
+                audio[keep - fade:keep] *= np.linspace(1.0, 0.0, fade)
+            sf.write(out_dir / ev.wav, audio[:keep], sr)
+            ev.actual_end_ms = round(cut_at / GRID_MS) * GRID_MS
+            ev.note = (ev.note + "; " if ev.note else "") + f"truncated at barge-in {cut_at}ms"
+            print(f"  [{tl.scenario_id}] cut {ev.ch} utterance at {cut_at}ms (barge-in)", flush=True)
+
+    # 3. mix
     total_ms = tl.duration_ms() + 1000
     n = int(total_ms / 1000 * SR)
     channels = sorted({e.ch for e in speech})
