@@ -256,7 +256,9 @@ def judge_scenario(pipe, sc_dir: Path, tl) -> dict:
         else:
             hyp = pipe(audio, language="en", task="transcribe")["text"]
         w = wer(norm_words(ref), norm_words(hyp))
-        n_ref = len(norm_words(ref))
+        rw, hw = norm_words(ref), norm_words(hyp)
+        n_ref, n_hyp = len(rw), len(hw)
+        extra = n_hyp - n_ref  # >0 means words that are not in the script
         dur_s = len(audio) / sr
         entry = {"ch": ev.ch, "voice": voice, "wer": round(w, 3),
                  "n_ref": n_ref, "dur_s": round(dur_s, 2),
@@ -267,6 +269,17 @@ def judge_scenario(pipe, sc_dir: Path, tl) -> dict:
         # ASR tokenization — gate them on duration (TTS babble runs long)
         if n_ref <= SHORT_REF_WORDS and dur_s > SHORT_MAX_S:
             entry["gate_fail"] = f"babble: {ev.ch} {dur_s:.1f}s for {n_ref}-word ref"
+        # insertion gate: TTS sometimes hallucinates trailing words
+        # ("Tell me a story." -> "... Doctor." — user-auditioned 2026-09-17).
+        # WER can't catch a single extra word on a short prompt (1/4 = .25
+        # < .30), so gate on the extra-word count directly: >=2 anywhere,
+        # >=1 on short refs (<=6 words) where babble concentrates.
+        # Truncated refs are prefix estimates — skip them.
+        if not trunc:
+            if extra >= 2:
+                entry["gate_fail"] = f"tail_babble: {extra} extra words ({hw[n_ref:]})"
+            elif extra == 1 and n_ref <= 6:
+                entry["gate_fail"] = f"tail_babble: extra word {hw[-1]!r}"
         per_utt.append(entry)
 
     gate_fails = [it["gate_fail"] for it in per_utt if "gate_fail" in it]
