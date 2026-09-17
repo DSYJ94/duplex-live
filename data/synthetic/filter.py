@@ -121,9 +121,11 @@ def rule_checks(tl, sc_dir: Path) -> tuple[list[str], dict]:
                         f"same_channel_collision: {ch} events at "
                         f"{a.actual_start_ms}/{b.actual_start_ms}ms overlap {ov}ms")
 
-    # barge-in response latency: the yield must follow the barge promptly —
-    # shipping long gaps would train slow-reaction behaviour (found by user
-    # audition 2026-09-17: a repair-ordering bug shipped 12–21 s gaps)
+    # barge-in response latency: the yield must neither trail the barge
+    # (slow-reaction behaviour) nor talk over it (hard-to-interrupt
+    # behaviour). Expect the reply ~240 ms after the barge's actual end.
+    # (found by user audition 2026-09-17: a repair-ordering bug shipped
+    # 12–21 s gaps)
     for b in speech:
         if b.kind != "barge_in" or b.actual_end_ms is None:
             continue
@@ -135,6 +137,9 @@ def rule_checks(tl, sc_dir: Path) -> tuple[list[str], dict]:
             if gap > 2500:
                 issues.append(f"yield_latency: {gap}ms gap after barge-in "
                               f"(reply at {r.actual_start_ms}ms)")
+            elif gap < -2 * GRID_MS:
+                issues.append(f"yield_overlap: reply at {r.actual_start_ms}ms "
+                              f"talks over barge-in (ends {b.actual_end_ms}ms)")
 
     # barge-in cut placement: truncated event must end at (quantized) barge
     # instant and its stem snippet must match the kept duration

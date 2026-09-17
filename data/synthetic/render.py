@@ -172,6 +172,25 @@ def render_timeline(model, tl, out_dir: Path, assets: Path, manifest,
             ev.note = (ev.note + "; " if ev.note else "") + f"truncated at barge-in {cut_at}ms"
             print(f"  [{tl.scenario_id}] cut {ev.ch} utterance at {cut_at}ms (barge-in)", flush=True)
 
+    # 2.5 barge-yield policy: assistant speech never talks over a barge-in —
+    #     any other-channel utterance starting DURING a barge_in is pushed to
+    #     the barge's actual end + 240 ms (human turn-taking offset). The
+    #     generator can't know the realized barge duration; render time can.
+    #     Trains clean-yield behaviour, never the talk-over-interrupter one.
+    for b in barges:
+        b_end = b.actual_end_ms
+        for ev in speech:
+            if ev.ch == b.ch or ev.kind == "barge_in":
+                continue
+            if b.actual_start_ms <= ev.actual_start_ms < b_end:
+                shift = (b_end + 240) - ev.actual_start_ms
+                ev.note = (ev.note + "; " if ev.note else "") + \
+                    f"pushed {shift}ms (barge-yield policy)"
+                print(f"  [{tl.scenario_id}] barge-yield: {ev.ch} event pushed "
+                      f"{shift}ms behind barge end {b_end}ms", flush=True)
+                ev.actual_start_ms += shift
+                ev.actual_end_ms += shift
+
     # 3. same-channel repair: TTS can overrun the generator's duration
     #     estimate (measured 72–105 ms/char); push later same-channel events
     #     so a stem never sums two utterances. Cross-channel timing is never
