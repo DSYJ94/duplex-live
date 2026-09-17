@@ -24,13 +24,16 @@ Read this first in a fresh chat. Everything below is decided and documented.
   worse untuned); PersonaPlex live = genuinely duplex but hard to interrupt
   with the default persona (scripted T2 replay yielded ≤0.5 s). Conclusion:
   neither reference is a product — they are the behavioral bar + tooling.
-- **Synthetic factory v0: BUILT + verified (Issue #3, in progress).**
+- **Synthetic factory v0.1: BUILT + verified (Issue #3, in progress).**
   `data/synthetic/`: 80 ms grid Timeline, 8 scenario classes (hold_floor,
   addressee, backchannel, barge_in+retraction, timed_task, delegation,
   silence_semantics, simultaneous), MiniCPM-o zero-shot voice-cloned TTS
   renderer (3 voices) → mixed/stems/manifest on Lustre (`runs/synth/`).
-  Smoke: all 8 classes render correctly. Next: scale hours, cut truncated
-  utterance at barge instant, model-based quality filter.
+  v0.1: barge-in truncation enforced at mix time. Scale render of 32
+  scenarios (PER_CLASS=4) submitted 2026-09-17 (`synth-render.slurm`;
+  check `squeue`/`logs/synth-render-*.out` before rerunning — wipe
+  `runs/synth/` first, manifest appends). Next: model-based quality filter,
+  wider voice pool, then hours-scale generation.
 - **Overlays**: `pylibs` (Qwen, transformers 5.17), `pylibs-minicpm`
   (transformers 4.51 pinned, +accelerate 1.12), `pylibs-pplex` (moshi; sphn
   source-built — recipe in environment.md), `pylibs-mcpmdemo` (live demo).
