@@ -32,6 +32,8 @@ import numpy as np
 
 GRID_MS = 80
 MS_PER_WORD_EST = 320  # TTS rate estimate for truncation-aware ref text
+SHORT_REF_WORDS = 4     # <= this many words: duration gate instead of WER
+SHORT_MAX_S = 4.0       # "mm-hm" should never run longer than this
 
 
 # ---------------------------------------------------------------- text utils
@@ -192,15 +194,28 @@ def judge_scenario(pipe, sc_dir: Path, tl) -> dict:
         else:
             hyp = pipe(audio, language="en", task="transcribe")["text"]
         w = wer(norm_words(ref), norm_words(hyp))
-        per_utt.append({"ch": ev.ch, "voice": voice, "wer": round(w, 3),
-                        "truncated_ref": trunc, "kind": ev.kind,
-                        "ref": ref[:120], "hyp": str(hyp)[:120]})
+        n_ref = len(norm_words(ref))
+        dur_s = len(audio) / sr
+        entry = {"ch": ev.ch, "voice": voice, "wer": round(w, 3),
+                 "n_ref": n_ref, "dur_s": round(dur_s, 2),
+                 "truncated_ref": trunc, "kind": ev.kind,
+                 "gate": "duration" if n_ref <= SHORT_REF_WORDS else "wer",
+                 "ref": ref[:120], "hyp": str(hyp)[:120]}
+        # short refs ("mm-hm", spelled syllables) don't round-trip through
+        # ASR tokenization — gate them on duration (TTS babble runs long)
+        if n_ref <= SHORT_REF_WORDS and dur_s > SHORT_MAX_S:
+            entry["gate_fail"] = f"babble: {dur_s:.1f}s for {n_ref}-word ref"
+        per_utt.append(entry)
 
-    # channel / voice / scenario aggregates weighted by ref word count
+    gate_fails = [it["gate_fail"] for it in per_utt if "gate_fail" in it]
+
+    # channel / voice / scenario aggregates weighted by ref word count,
+    # over WER-gated utterances only
     def agg(items):
+        items = [it for it in items if it.get("gate") == "wer"]
         num = den = 0
         for it in items:
-            n = len(norm_words(it.get("ref", "")))
+            n = it["n_ref"]
             num += it["wer"] * n
             den += n
         return round(num / den, 3) if den else (1.0 if items else 0.0)
@@ -211,6 +226,7 @@ def judge_scenario(pipe, sc_dir: Path, tl) -> dict:
 
     return {
         "per_utterance": per_utt,
+        "gate_fails": gate_fails,
         "wer_by_channel": group("ch"),
         "wer_by_voice": group("voice"),
         "wer": agg(per_utt),
@@ -253,6 +269,7 @@ def main() -> None:
                 for ch, w in judged["wer_by_channel"].items():
                     if w > args.wer_channel:
                         issues.append(f"wer_{ch}: {w:.3f}")
+                issues += judged["gate_fails"]
 
             verdict = "pass" if not issues else "fail"
             if verdict == "pass":

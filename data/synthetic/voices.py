@@ -34,7 +34,8 @@ import tarfile
 import urllib.request
 from pathlib import Path
 
-URL = "https://us.openslr.org/resources/12/test-clean.tar.gz"
+URL = "https://www.openslr.org/resources/12/test-clean.tar.gz"
+# (the us. mirror serves a cert with a hostname mismatch — verified 2026-09-17)
 MIN_S, MAX_S = 6.0, 10.0
 LICENSE = "LibriSpeech test-clean, CC-BY-4.0 (openslr.org/12)"
 
