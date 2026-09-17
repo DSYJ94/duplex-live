@@ -217,6 +217,17 @@ def judge_scenario(pipe, sc_dir: Path, tl) -> dict:
         audio, sr = sf.read(wav_path, dtype="float32")
         if audio.ndim > 1:
             audio = audio.mean(axis=1)
+        dur_raw_s = len(audio) / sr
+        if dur_raw_s > 30:
+            # pathological babble (longest legit text ≈ 25 s); also keeps
+            # whisper out of long-form mode, which needs timestamp tokens
+            per_utt.append({"ch": ev.ch, "voice": voice, "n_ref": 0,
+                            "dur_s": round(dur_raw_s, 2), "wer": 1.0,
+                            "kind": ev.kind, "gate": "duration",
+                            "ref": ref[:120], "hyp": "",
+                            "gate_fail": f"babble: {ev.ch} {dur_raw_s:.1f}s "
+                                         f"(>30s cap)"})
+            continue
         if sr != 16000:
             audio = librosa.resample(audio, orig_sr=sr, target_sr=16000)
             sr = 16000
@@ -235,7 +246,7 @@ def judge_scenario(pipe, sc_dir: Path, tl) -> dict:
         # short refs ("mm-hm", spelled syllables) don't round-trip through
         # ASR tokenization — gate them on duration (TTS babble runs long)
         if n_ref <= SHORT_REF_WORDS and dur_s > SHORT_MAX_S:
-            entry["gate_fail"] = f"babble: {dur_s:.1f}s for {n_ref}-word ref"
+            entry["gate_fail"] = f"babble: {ev.ch} {dur_s:.1f}s for {n_ref}-word ref"
         per_utt.append(entry)
 
     gate_fails = [it["gate_fail"] for it in per_utt if "gate_fail" in it]

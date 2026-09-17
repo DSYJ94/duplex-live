@@ -145,6 +145,26 @@ def render_timeline(model, tl, out_dir: Path, assets: Path, manifest,
         print(f"  [{tl.scenario_id}] {ev.ch} @{ev.actual_start_ms}ms "
               f"{dur_ms}ms: {ev.text[:40]!r}", flush=True)
 
+    # 1.5 same-channel repair: TTS can overrun the generator's duration
+    #     estimate (measured 72–105 ms/char); push later same-channel events
+    #     so a stem never sums two utterances. Cross-channel timing is never
+    #     touched — overlap there is the point.
+    by_ch: dict[str, list] = {}
+    for ev in speech:
+        by_ch.setdefault(ev.ch, []).append(ev)
+    for ch, evs in by_ch.items():
+        evs.sort(key=lambda e: e.actual_start_ms)
+        for prev, cur in zip(evs, evs[1:]):
+            min_start = prev.actual_end_ms + GRID_MS
+            if cur.actual_start_ms < min_start:
+                shift = min_start - cur.actual_start_ms
+                cur.note = (cur.note + "; " if cur.note else "") + \
+                    f"pushed {shift}ms (overrun repair)"
+                print(f"  [{tl.scenario_id}] repair: {cur.ch} event pushed "
+                      f"{shift}ms (prev overran estimate)", flush=True)
+                cur.actual_start_ms = min_start
+                cur.actual_end_ms += shift
+
     # 2. retraction cut: any utterance overlapped by a barge_in on another
     #    channel is truncated at the barge instant (clean yield) with a short fade
     barges = [e for e in speech if e.kind == "barge_in"]
