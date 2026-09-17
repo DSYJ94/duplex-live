@@ -262,21 +262,30 @@ def main() -> None:
     rng = random.Random(args.seed)
     model, proc = load_model()
 
-    banks = {}
-    todo = args.banks.split(",") if args.banks else list(SPEC)
+    out = Path(args.out)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    provenance = {
+        "model": MODEL_ID, "license": "Apache-2.0 (ADR-0002: open only)",
+        "seed": args.seed, "generated": time.strftime("%Y-%m-%d"),
+    }
+
+    # resume support: existing banks under the same seed are kept, so a
+    # SLURM timeout mid-run costs only the bank in flight
+    banks: dict = {}
+    if out.exists():
+        prev = json.loads(out.read_text())
+        if prev.get("provenance", {}).get("seed") == args.seed:
+            banks = prev.get("banks", {})
+            print(f"[resume] keeping {len(banks)} banks from {out}", flush=True)
+
+    todo = [b for b in (args.banks.split(",") if args.banks else list(SPEC))
+            if b not in banks]
     t0 = time.time()
     for bank in todo:
         print(f"[expand] {bank}", flush=True)
         banks[bank] = expand_bank(model, proc, bank, rng)
-    out = Path(args.out)
-    out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps({
-        "provenance": {
-            "model": MODEL_ID, "license": "Apache-2.0 (ADR-0002: open only)",
-            "seed": args.seed, "generated": time.strftime("%Y-%m-%d"),
-        },
-        "banks": banks,
-    }, ensure_ascii=False, indent=1))
+        out.write_text(json.dumps({"provenance": provenance, "banks": banks},
+                                  ensure_ascii=False, indent=1))  # checkpoint
     print(f"done in {time.time() - t0:.0f}s -> {out}")
     for k, v in banks.items():
         print(f"  {k}: {len(v)}")
