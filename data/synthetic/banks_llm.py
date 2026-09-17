@@ -31,21 +31,21 @@ MODEL_ID = "Qwen/Qwen3-Omni-30B-A3B-Instruct"
 # (1-2-word prompts make the TTS babble — measured, see SILENCE_SETS note).
 SPEC: dict[str, dict] = {
     "EXPLAIN": {
-        "target": 40, "per_call": 6,
+        "target": 24, "per_call": 6,
         "rules": "a plain-English explanation passage of ONE everyday or "
                  "technical concept, 300-500 characters, 3-5 sentences, no "
                  "headings, no lists, no quotes, no emoji, ends with a period",
         "bounds": (260, 560), "shape": "str",
     },
     "STORIES": {
-        "target": 40, "per_call": 6,
+        "target": 24, "per_call": 6,
         "rules": "a warm micro-story with a named person and a small "
                  "surprise, 200-360 characters, 3-4 sentences, present or "
                  "past tense, ends with a period",
         "bounds": (160, 420), "shape": "str",
     },
     "QUESTIONS_HARD": {
-        "target": 30, "per_call": 6,
+        "target": 18, "per_call": 6,
         "rules": "a single hard technical question demanding a trade-off "
                  "analysis, 120-280 characters, ends with a question mark",
         "bounds": (90, 320), "shape": "str",
@@ -57,7 +57,7 @@ SPEC: dict[str, dict] = {
         "bounds": (2, 12), "shape": "str",
     },
     "BARGE_INS": {
-        "target": 30, "per_call": 5,
+        "target": 18, "per_call": 5,
         "rules": "a JSON array of PAIRS [barge_in, yield]: barge_in is what "
                  "an interrupting user says mid-story (25-90 chars); yield "
                  "is the assistant's clean, story-agnostic answer to THAT "
@@ -193,7 +193,12 @@ def load_model():
     return model, proc
 
 
-def chat(model, proc, prompt: str, rng: random.Random) -> str:
+def chat_batch(model, proc, prompt: str, batch: int = 4,
+               max_new_tokens: int = 1600) -> list[str]:
+    """Same prompt, batched rows (do_sample makes each row different).
+    Single-stream 30B-A3B runs ~8 tok/s on GH200 — batching is the only
+    way expansion fits a wall-clock budget (first run: 2.5 banks in 2 h
+    unbatched)."""
     msgs = [{"role": "user", "content": [{"type": "text", "text": prompt}]}]
     try:
         text = proc.apply_chat_template(msgs, add_generation_prompt=True,
@@ -201,14 +206,23 @@ def chat(model, proc, prompt: str, rng: random.Random) -> str:
     except TypeError:  # template without the kwarg
         text = proc.apply_chat_template(msgs, add_generation_prompt=True,
                                         tokenize=False)
-    import torch
-    inputs = proc(text=[text], return_tensors="pt").to(model.device)
-    out = model.generate(**inputs, do_sample=True, temperature=0.9,
-                         top_p=0.95, max_new_tokens=2400,
-                         pad_token_id=proc.tokenizer.pad_token_id)
-    gen = out[0][inputs["input_ids"].shape[1]:]
-    s = proc.decode(gen, skip_special_tokens=True)
-    return re.sub(r"<think>.*?</think>", "", s, flags=re.S).strip()
+    tok = proc.tokenizer
+    old_side = tok.padding_side
+    tok.padding_side = "left"
+    try:
+        inputs = proc(text=[text] * batch, return_tensors="pt",
+                      padding=True).to(model.device)
+        out = model.generate(**inputs, do_sample=True, temperature=0.9,
+                             top_p=0.95, max_new_tokens=max_new_tokens,
+                             pad_token_id=tok.pad_token_id)
+    finally:
+        tok.padding_side = old_side
+    gens = out[:, inputs["input_ids"].shape[1]:]
+    strips = []
+    for g in gens:
+        s = proc.decode(g, skip_special_tokens=True)
+        strips.append(re.sub(r"<think>.*?</think>", "", s, flags=re.S).strip())
+    return strips
 
 
 def parse_items(raw: str) -> list:
@@ -223,31 +237,37 @@ def parse_items(raw: str) -> list:
         return []
 
 
-def expand_bank(model, proc, bank: str, rng: random.Random) -> list:
+def expand_bank(model, proc, bank: str, rng: random.Random,
+                initial: list | None = None) -> list:
     spec = SPEC[bank]
     seeds = seeds_for(bank)
     example = json.dumps(seeds[:3] if len(seeds) >= 3 else seeds,
                          ensure_ascii=False, indent=1)
-    keep, seen = [], set(map(str.lower, map(json.dumps, seeds)))
-    calls = 0
-    while len(keep) < spec["target"] and calls < spec["target"] * 2:
-        calls += 1
-        prompt = (
-            f"You are writing content banks for a spoken-dialogue dataset. "
-            f"Write {spec['per_call']} NEW items.\n"
-            f"Item requirements: {spec['rules']}.\n"
-            f"Style example (for tone and length only — do not copy them):\n"
-            f"{example}\n"
-            f"Respond with ONLY a JSON array of {spec['per_call']} items, "
-            f"no numbering, no commentary.")
-        for item in parse_items(chat(model, proc, prompt, rng)):
-            key = json.dumps(item, ensure_ascii=False).lower()
-            if key in seen or not validate(bank, item):
-                continue
-            seen.add(key)
-            keep.append(item)
-        print(f"  [{bank}] {len(keep)}/{spec['target']} after {calls} calls",
-              flush=True)
+    prompt = (
+        f"You are writing content banks for a spoken-dialogue dataset. "
+        f"Write {spec['per_call']} NEW items.\n"
+        f"Item requirements: {spec['rules']}.\n"
+        f"Style example (for tone and length only — do not copy them):\n"
+        f"{example}\n"
+        f"Respond with ONLY a JSON array of {spec['per_call']} items, "
+        f"no numbering, no commentary.")
+    keep = list(initial or [])
+    seen = set(map(str.lower, map(json.dumps, seeds)))
+    for it in keep:
+        seen.add(json.dumps(it, ensure_ascii=False).lower())
+    rounds = 0
+    max_rounds = 8
+    while len(keep) < spec["target"] and rounds < max_rounds:
+        rounds += 1
+        for raw in chat_batch(model, proc, prompt):
+            for item in parse_items(raw):
+                key = json.dumps(item, ensure_ascii=False).lower()
+                if key in seen or not validate(bank, item):
+                    continue
+                seen.add(key)
+                keep.append(item)
+        print(f"  [{bank}] {len(keep)}/{spec['target']} after {rounds} "
+              f"batched rounds", flush=True)
     return keep
 
 
@@ -279,11 +299,12 @@ def main() -> None:
             print(f"[resume] keeping {len(banks)} banks from {out}", flush=True)
 
     todo = [b for b in (args.banks.split(",") if args.banks else list(SPEC))
-            if b not in banks]
+            if len(banks.get(b, [])) < SPEC[b]["target"]]
     t0 = time.time()
     for bank in todo:
         print(f"[expand] {bank}", flush=True)
-        banks[bank] = expand_bank(model, proc, bank, rng)
+        banks[bank] = expand_bank(model, proc, bank, rng,
+                                  initial=banks.get(b))
         out.write_text(json.dumps({"provenance": provenance, "banks": banks},
                                   ensure_ascii=False, indent=1))  # checkpoint
     print(f"done in {time.time() - t0:.0f}s -> {out}")
