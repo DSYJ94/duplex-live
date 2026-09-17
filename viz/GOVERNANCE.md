@@ -19,6 +19,13 @@ plan. It exists so the architecture stays understandable beyond chat sessions.
 
 ## Changelog
 
+- **v5 (2026-09-17):** bake-off closed (#4: both references fail addressee
+  detection T5 — they are the behavioral bar, not the product); synthetic
+  factory v0.2 (#3): 8 scenario classes rendered on the 80 ms grid with
+  barge-in truncation at mix time, whisper-large-v3-turbo per-utterance
+  quality gate (rule checks + WER), LibriSpeech CC-BY-4.0 voice pool +
+  conservative same-channel scheduling. Header/banner refreshed to wk 1–2
+  actuals.
 - **v4 (2026-09-15):** bring-up complete — Issue #1 closed. ARM env verified
   (NGC 25.05 + pylibs overlay, `training/environment.md`); Qwen3-Omni-30B-A3B
   thinker smoke test passed on one GH200 (64.6 GB peak, MoE via `batched_mm`).
