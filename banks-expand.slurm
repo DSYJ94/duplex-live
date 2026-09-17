@@ -4,7 +4,7 @@
 #SBATCH --account=brics.u6si
 #SBATCH --nodes=1
 #SBATCH --gres=gpu:1
-#SBATCH --time=02:00:00
+#SBATCH --time=03:00:00
 #SBATCH --output=logs/banks-expand-%j.out
 #
 # Open-LLM content-bank expansion (Issue #3, hours-scale composition).

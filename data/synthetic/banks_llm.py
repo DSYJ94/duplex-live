@@ -238,7 +238,7 @@ def parse_items(raw: str) -> list:
 
 
 def expand_bank(model, proc, bank: str, rng: random.Random,
-                initial: list | None = None) -> list:
+                initial: list | None = None, batch: int = 4) -> list:
     spec = SPEC[bank]
     seeds = seeds_for(bank)
     example = json.dumps(seeds[:3] if len(seeds) >= 3 else seeds,
@@ -259,7 +259,7 @@ def expand_bank(model, proc, bank: str, rng: random.Random,
     max_rounds = 8
     while len(keep) < spec["target"] and rounds < max_rounds:
         rounds += 1
-        for raw in chat_batch(model, proc, prompt):
+        for raw in chat_batch(model, proc, prompt, batch=batch):
             for item in parse_items(raw):
                 key = json.dumps(item, ensure_ascii=False).lower()
                 if key in seen or not validate(bank, item):
@@ -267,14 +267,31 @@ def expand_bank(model, proc, bank: str, rng: random.Random,
                 seen.add(key)
                 keep.append(item)
         print(f"  [{bank}] {len(keep)}/{spec['target']} after {rounds} "
-              f"batched rounds", flush=True)
+              f"batched rounds (batch={batch})", flush=True)
     return keep
+
+
+def expand_bank_resilient(model, proc, bank, rng, initial, batch):
+    """OOM on GH200: the MoE batched_mm grouped buffer grows with the batch
+    (measured: +57 GiB at batch 4). Halve and retry; batch 1 is the proven
+    unbatched path."""
+    import torch
+    while True:
+        try:
+            return expand_bank(model, proc, bank, rng, initial, batch), batch
+        except torch.OutOfMemoryError:
+            torch.cuda.empty_cache()
+            if batch == 1:
+                raise
+            batch //= 2
+            print(f"[oom] {bank}: retrying with batch={batch}", flush=True)
 
 
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", required=True)
     ap.add_argument("--seed", type=int, default=7)
+    ap.add_argument("--batch", type=int, default=4)
     ap.add_argument("--banks", default=None, help="comma list (default all)")
     args = ap.parse_args()
 
@@ -301,10 +318,11 @@ def main() -> None:
     todo = [b for b in (args.banks.split(",") if args.banks else list(SPEC))
             if len(banks.get(b, [])) < SPEC[b]["target"]]
     t0 = time.time()
+    batch = args.batch
     for bank in todo:
         print(f"[expand] {bank}", flush=True)
-        banks[bank] = expand_bank(model, proc, bank, rng,
-                                  initial=banks.get(bank))
+        banks[bank], batch = expand_bank_resilient(
+            model, proc, bank, rng, banks.get(bank), batch)
         out.write_text(json.dumps({"provenance": provenance, "banks": banks},
                                   ensure_ascii=False, indent=1))  # checkpoint
     print(f"done in {time.time() - t0:.0f}s -> {out}")
