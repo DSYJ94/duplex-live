@@ -20,8 +20,10 @@ export PYTHONPATH=$DL/pylibs-minicpm:$REPO
 CONTAINER=/projects/u6si/containers/latentsprites-pytorch-25.05.sif
 
 PER_CLASS=${PER_CLASS:-4}
-TL_DIR=$DL/runs/synth/timelines
-OUT_DIR=$DL/runs/synth/audio
+SEED=${SEED:-17}
+OUT_BASE=${OUT_BASE:-runs/synth}   # e.g. OUT_BASE=runs/synth-v02 sbatch ...
+TL_DIR=$DL/$OUT_BASE/timelines
+OUT_DIR=$DL/$OUT_BASE/audio
 
 APPT="apptainer exec --nv --bind /projects,/lus,/home \
     --env PYTHONPATH=$PYTHONPATH --env HF_HOME=$HF_HOME --env TMPDIR=$TMPDIR \
@@ -31,7 +33,7 @@ cd "$REPO"
 
 echo "[synth] generating timelines -> $TL_DIR"
 mkdir -p "$TL_DIR" "$OUT_DIR"
-$APPT python -m data.synthetic.scenarios --out "$TL_DIR" --per-class "$PER_CLASS"
+$APPT python -m data.synthetic.scenarios --out "$TL_DIR" --per-class "$PER_CLASS" --seed "$SEED"
 
 ASSETS=$(ls -d $HF_HOME/hub/models--openbmb--MiniCPM-o-4_5/snapshots/*/assets | head -1)
 VJ=$DL/models/voices/voices.json
