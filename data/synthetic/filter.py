@@ -353,6 +353,7 @@ def main() -> None:
             rec = {"scenario_id": row["scenario_id"],
                    "scenario_class": row["scenario_class"],
                    "verdict": verdict, "issues": issues, **info,
+                   "engine": row.get("engine"),
                    "asr_model": None if pipe is None else args.asr_model,
                    "wer": None if judged is None else judged["wer"],
                    "wer_by_channel": (None if judged is None

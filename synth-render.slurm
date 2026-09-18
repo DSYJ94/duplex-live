@@ -45,11 +45,13 @@ $APPT python -m data.synthetic.scenarios --out "$TL_DIR" --per-class "$PER_CLASS
 
 ASSETS=$(ls -d $HF_HOME/hub/models--openbmb--MiniCPM-o-4_5/snapshots/*/assets | head -1)
 VJ=$DL/models/voices/voices.json
+CACHE=${CACHE:-$DL/runs/clip-cache}
 VARGS=""
 [ -f "$VJ" ] && VARGS="--voices $VJ --anchor-prob ${ANCHOR_PROB:-0.5}"
-echo "[synth] rendering with engine=$ENGINE, ref voices from $ASSETS -> $OUT_DIR (pool: $VARGS)"
+echo "[synth] rendering with engine=$ENGINE, ref voices from $ASSETS -> $OUT_DIR (pool: $VARGS, cache: $CACHE)"
 $APPT python -m data.synthetic.render \
-    --timelines "$TL_DIR" --out "$OUT_DIR" --assets "$ASSETS" --engine "$ENGINE" $VARGS
+    --timelines "$TL_DIR" --out "$OUT_DIR" --assets "$ASSETS" --engine "$ENGINE" \
+    --clip-cache "$CACHE" $VARGS
 
 echo "[synth] done. manifest: $OUT_DIR/manifest.jsonl"
 

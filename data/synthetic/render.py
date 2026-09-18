@@ -16,8 +16,10 @@ training data. PersonaPlex outputs must NEVER be used here.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import random
+import shutil
 import sys
 from pathlib import Path
 
@@ -27,6 +29,7 @@ import torch
 
 SR = 24000
 GRID_MS = 80
+SHORT_CACHE_WORDS = 6  # <= this many words: memoize renders per (voice, text)
 
 # anchor voice key -> reference clip in the MiniCPM-o HF snapshot assets/
 # (proven clones; the pool from data.synthetic.voices adds diversity)
@@ -179,11 +182,16 @@ def assign_voices(tl, pool: dict[str, Path], anchor_prob: float,
     return picks
 
 
+def cache_key(voice_key: str, text: str, engine: str = "") -> str:
+    return f"{engine + '__' if engine else ''}{voice_key}__{hashlib.sha1(f'{voice_key}|{engine}|{text}'.encode()).hexdigest()[:16]}.wav"
+
+
 def render_timeline(engine, tl, out_dir: Path, assets: Path, manifest,
                     pool: dict[str, Path] | None = None,
                     anchor_prob: float = 0.5,
                     registers: dict[str, str] | None = None,
-                    engine_name: str = "minicpm") -> None:
+                    engine_name: str = "minicpm",
+                    clip_cache: Path | None = None) -> None:
     sc_dir = out_dir / tl.scenario_id
     utt_dir = sc_dir / "utterances"
     utt_dir.mkdir(parents=True, exist_ok=True)
@@ -197,11 +205,29 @@ def render_timeline(engine, tl, out_dir: Path, assets: Path, manifest,
         return ev.voice or channel_voice.get(
             ev.ch, CH_DEFAULT_VOICE.get(ev.ch, "user"))
 
-    # 1. render every speech event
+    # 1. render every speech event. Short refs (<=6 words: backchannels,
+    #    callouts) are babble-prone dice rolls — memoize each (voice, text)
+    #    render in the clip cache. Bad clips get purged by the filter
+    #    (purge_cache.py) and re-roll on the next render; passing clips
+    #    freeze. Mix-time cuts still apply to the copied wavs as usual.
     speech = [e for e in tl.events if e.text and e.kind != "marker"]
+    cache_hits = 0
     for i, ev in enumerate(speech):
         utt = utt_dir / f"{i:02d}_{ev.ch}.wav"
-        engine.tts(ev.text, pool[ref_key(ev)], utt)
+        vk = ref_key(ev)
+        cached = (clip_cache / cache_key(vk, ev.text, engine_name)
+                  if clip_cache is not None
+                  and len(ev.text.split()) <= SHORT_CACHE_WORDS else None)
+        if cached is not None and cached.exists():
+            shutil.copyfile(cached, utt)
+            cache_hits += 1
+        else:
+            engine.tts(ev.text, pool[vk], utt)
+            if cached is not None:
+                shutil.copyfile(utt, cached)
+    if clip_cache is not None and speech:
+        print(f"  [{tl.scenario_id}] clip-cache hits {cache_hits}/{len(speech)}",
+              flush=True)
         audio, sr = sf.read(utt, dtype="float32")
         if audio.ndim > 1:
             audio = audio.mean(axis=1)
@@ -332,6 +358,9 @@ def main() -> None:
     ap.add_argument("--engine", default="minicpm",
                     choices=["minicpm", "chatterbox"],
                     help="TTS engine (see load_engine; overlays differ)")
+    ap.add_argument("--clip-cache", default=None,
+                    help="memoize <=6-word renders per (voice, text); purge "
+                         "bad entries with purge_cache.py after filtering")
     ap.add_argument("--only", default=None, help="scenario_id substring filter")
     args = ap.parse_args()
 
@@ -355,13 +384,19 @@ def main() -> None:
           flush=True)
 
     engine = load_engine(args.engine)
+    clip_cache = Path(args.clip_cache) if args.clip_cache else None
+    if clip_cache is not None:
+        clip_cache.mkdir(parents=True, exist_ok=True)
+        n = len(list(clip_cache.glob("*.wav")))
+        print(f"clip-cache: {clip_cache} ({n} validated clips)", flush=True)
     with open(out / "manifest.jsonl", "a") as mf:
         for f in files:
             tl = Timeline.load(f)
             print(f"[render] {tl.scenario_id} ({tl.scenario_class})", flush=True)
             render_timeline(engine, tl, out, assets, mf,
                             pool=pool, anchor_prob=args.anchor_prob,
-                            registers=registers, engine_name=args.engine)
+                            registers=registers, engine_name=args.engine,
+                            clip_cache=clip_cache)
     print("done")
 
 
