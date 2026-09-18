@@ -73,15 +73,20 @@ Read this first in a fresh chat. Everything below is decided and documented.
   1h24m GPU (0.85 GPU-h/audio-h), 182/256 pass (71%), WER median 0.018 /
   p90 0.111.** Failure profile is ONE engine limit: MiniCPM-o TTS babbles
   on 1–2-word prompts (tail_babble ×147; backchannel 32/32, timed_task
-  29/32 fails). **Second engine staged: Chatterbox (Apache-2.0)** —
-  overlay `pylibs-chatterbox` (torch-stripped, weights in hf-cache, native
-  24 kHz), renderer refactored to pluggable engines (`--engine
-  {minicpm,chatterbox}` in render.py, `ENGINE=` in synth-render.slurm;
-  same voice pool + all mix-time policies + same filter). Head-to-head
-  same-16 smoke: **Chatterbox 14/16 with timed_task 2/2** (MiniCPM's worst
-  classes) — engine-mix batches (batch-level engine choice) is the
-  intended fix; Sesame CSM-1B fits the same abstraction later (needs the
-  mimi codec stack — present in pylibs-pplex).
+  29/32 fails). **Second engine staged and winning: Chatterbox
+  (Apache-2.0)** — overlay `pylibs-chatterbox` (torch-stripped, weights in
+  hf-cache, native 24 kHz), renderer refactored to pluggable engines
+  (`--engine {minicpm,chatterbox}` in render.py, `ENGINE=` in
+  synth-render.slurm; same voice pool + all mix-time policies + same
+  filter). **`synth-big2` (Chatterbox, 256 scen., seed 303): 210/256
+  (82%), WER median 0.000, timed_task 8 vs 29 fails, backchannel 23 vs 32;
+  register-distinct voices active. ENGINE-MIX TOTAL: 2.84 h gate-passed
+  (392 scenarios).** Next factory optimization: pre-validated clip-cache
+  for ≤6-word refs (kills the residual backchannel babble). Sesame CSM-1B
+  fits the same abstraction later (mimi codec stack present in
+  pylibs-pplex). **Render jobs self-chain their filter via `afterok`** —
+  batches finish server-side through cert lapses; only the rsync-to-gallery
+  step needs the agent.
   **Gate set added 2026-09-17/18 (from user auditions):** yield_latency
   >2500ms, yield_overlap <−160ms, insertion gate (tail_babble: ≥2 extra
   words anywhere, ≥1 on ≤6-word refs — caught a hallucinated "Doctor"),
