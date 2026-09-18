@@ -52,3 +52,10 @@ $APPT python -m data.synthetic.render \
     --timelines "$TL_DIR" --out "$OUT_DIR" --assets "$ASSETS" --engine "$ENGINE" $VARGS
 
 echo "[synth] done. manifest: $OUT_DIR/manifest.jsonl"
+
+# self-chain the quality filter (afterok) so batches finish end-to-end
+# without an outside driver — cert lapses no longer stall the pipeline
+FILTER_JOB=$(sbatch --parsable --dependency=afterok:$SLURM_JOB_ID \
+    --export=ALL,AUDIO=$OUT_DIR \
+    -o $DL/logs/synth-filter-%j.out repo/synth-filter.slurm)
+echo "[synth] chained filter job: $FILTER_JOB (afterok:$SLURM_JOB_ID)"
