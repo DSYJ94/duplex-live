@@ -69,18 +69,25 @@ Read this first in a fresh chat. Everything below is decided and documented.
   serves locally synced batches (mixed/stems/per-utterance players joined
   with WER + whisper hypotheses) + voice pool; rsync recipes in its
   docstring; refresh after each sync.
-  Next: hours-scale generation. **Content composition SOLVED (2026-09-17):**
-  `data/synthetic/banks_llm.py` + `banks-expand.slurm` expand every bank via
-  Qwen3-Omni-30B (Apache-2.0, ADR-0002-compliant; batched generation OOMs
-  on GH200 MoE grouped buffer at batch≥2 — auto-halves to batch 1, ~100 min
-  for ~200 validated items, checkpoint per bank + top-up resume). First
-  expanded banks (`runs/banks/banks.json`: 198 items across 11 banks) smoke
-  batch `runs/banks-smoke/` = **15/16 pass** — LLM content survives the
-  full render+filter loop. Known residual: LLM sometimes miscounts cadence
-  in TIMED_TOPICS requests ("two rounds" + 4 callouts) — validator can't
-  check semantics; add a numeric-consistency guard or spot-audit before
-  the hours-scale run. Then: PER_CLASS↑ big batch (target 50–100 h ≈
-  35–70 GPU-h), over-render ~15% for filter attrition.
+  **Hours-scale begun (2026-09-18): `synth-big1` = 256 scenarios, 2.2 h,
+  1h24m GPU (0.85 GPU-h/audio-h), 182/256 pass (71%), WER median 0.018 /
+  p90 0.111.** Failure profile is ONE engine limit: MiniCPM-o TTS babbles
+  on 1–2-word prompts (tail_babble ×147; backchannel 32/32, timed_task
+  29/32 fails). **Second engine staged: Chatterbox (Apache-2.0)** —
+  overlay `pylibs-chatterbox` (torch-stripped, weights in hf-cache, native
+  24 kHz), renderer refactored to pluggable engines (`--engine
+  {minicpm,chatterbox}` in render.py, `ENGINE=` in synth-render.slurm;
+  same voice pool + all mix-time policies + same filter). Head-to-head
+  same-16 smoke: **Chatterbox 14/16 with timed_task 2/2** (MiniCPM's worst
+  classes) — engine-mix batches (batch-level engine choice) is the
+  intended fix; Sesame CSM-1B fits the same abstraction later (needs the
+  mimi codec stack — present in pylibs-pplex).
+  **Gate set added 2026-09-17/18 (from user auditions):** yield_latency
+  >2500ms, yield_overlap <−160ms, insertion gate (tail_babble: ≥2 extra
+  words anywhere, ≥1 on ≤6-word refs — caught a hallucinated "Doctor"),
+  barge-yield policy pushes assistant speech behind realized barge end
+  +240 ms (render-side, step 2.5, AFTER cut), user/assistant voices must
+  differ in F0 register (voices_f0.json, pyin-measured).
 - **Overlays**: `pylibs` (Qwen, transformers 5.17, +whisper judge),
   `pylibs-minicpm` (transformers 4.51 pinned, +accelerate 1.12),
   `pylibs-pplex` (moshi; sphn source-built — recipe in environment.md),
