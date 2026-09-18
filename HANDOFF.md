@@ -80,9 +80,13 @@ Read this first in a fresh chat. Everything below is decided and documented.
   synth-render.slurm; same voice pool + all mix-time policies + same
   filter). **`synth-big2` (Chatterbox, 256 scen., seed 303): 210/256
   (82%), WER median 0.000, timed_task 8 vs 29 fails, backchannel 23 vs 32;
-  register-distinct voices active. ENGINE-MIX TOTAL: 2.84 h gate-passed
-  (392 scenarios).** Next factory optimization: pre-validated clip-cache
-  for ≤6-word refs (kills the residual backchannel babble). Sesame CSM-1B
+  register-distinct voices active. Night 2026-09-18: big3 (chatterbox,
+  206/256) + big4 (minicpm, 178/256) — engine rates stable (CB ~81%,
+  MCPM ~70.5%). **FACTORY TOTAL: 5.81 h gate-passed / 776 scenarios
+  (runs/synth-big{1..4}).** Clip-cache for ≤6-word renders LANDED, active
+  from the next batch (`--clip-cache`, engine-scoped keys;
+  `purge_cache.py` closes the loop — bad keys re-roll, passing clips
+  freeze). Sesame CSM-1B
   fits the same abstraction later (mimi codec stack present in
   pylibs-pplex). **Render jobs self-chain their filter via `afterok`** —
   batches finish server-side through cert lapses; only the rsync-to-gallery
