@@ -16,7 +16,13 @@ DL=/projects/u6si/duplex-live
 REPO=$DL/repo
 export HF_HOME=$DL/models/hf-cache
 export TMPDIR=$DL/tmp
-export PYTHONPATH=$DL/pylibs-minicpm:$REPO
+ENGINE=${ENGINE:-minicpm}   # minicpm | chatterbox
+case "$ENGINE" in
+  minicpm)    OVERLAY=$DL/pylibs-minicpm:$DL/pylibs ;;
+  chatterbox) OVERLAY=$DL/pylibs-chatterbox:$DL/pylibs-minicpm:$DL/pylibs ;;
+  *) echo "unknown ENGINE $ENGINE"; exit 1 ;;
+esac
+export PYTHONPATH=$OVERLAY:$REPO
 CONTAINER=/projects/u6si/containers/latentsprites-pytorch-25.05.sif
 
 PER_CLASS=${PER_CLASS:-4}
@@ -41,8 +47,8 @@ ASSETS=$(ls -d $HF_HOME/hub/models--openbmb--MiniCPM-o-4_5/snapshots/*/assets | 
 VJ=$DL/models/voices/voices.json
 VARGS=""
 [ -f "$VJ" ] && VARGS="--voices $VJ --anchor-prob ${ANCHOR_PROB:-0.5}"
-echo "[synth] rendering with ref voices from $ASSETS -> $OUT_DIR (pool: $VARGS)"
+echo "[synth] rendering with engine=$ENGINE, ref voices from $ASSETS -> $OUT_DIR (pool: $VARGS)"
 $APPT python -m data.synthetic.render \
-    --timelines "$TL_DIR" --out "$OUT_DIR" --assets "$ASSETS" $VARGS
+    --timelines "$TL_DIR" --out "$OUT_DIR" --assets "$ASSETS" --engine "$ENGINE" $VARGS
 
 echo "[synth] done. manifest: $OUT_DIR/manifest.jsonl"

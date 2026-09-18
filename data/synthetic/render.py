@@ -79,6 +79,53 @@ def tts_utterance(model, text: str, ref_audio: np.ndarray, out_path: Path) -> No
                output_audio_path=str(out_path))
 
 
+# ---------------------------------------------------------------- engines
+# A renderer engine turns (text, voice-ref clip path) into a wav. All engines
+# share the voice pool, timelines, mix-time policies and the filter — only
+# the vocoder differs. ADR-0002: open engines only.
+
+class MiniCPMEngine:
+    """openbmb/MiniCPM-o-4_5 zero-shot voice-cloned TTS (proven v0-v0.2)."""
+
+    def __init__(self):
+        self.model, _ = load_model()
+
+    def tts(self, text: str, ref_wav: Path, out_path: Path) -> None:
+        import librosa
+        ref, _ = librosa.load(str(ref_wav), sr=16000, mono=True)
+        tts_utterance(self.model, text, ref, out_path)
+
+
+class ChatterboxEngine:
+    """resemble-ai/chatterbox (Apache-2.0) zero-shot cloning with prosody
+    controls — the engine class the PersonaPlex recipe was validated with.
+    Runs under the pylibs-chatterbox overlay."""
+
+    def __init__(self):
+        from chatterbox.tts import ChatterboxTTS
+
+        self.model = ChatterboxTTS.from_pretrained(device="cuda")
+
+    def tts(self, text: str, ref_wav: Path, out_path: Path) -> None:
+        import soundfile as sf
+        import torch
+
+        wav = self.model.generate(text, audio_prompt_path=str(ref_wav),
+                                  exaggeration=0.4, cfg_weight=0.3,
+                                  temperature=0.6)
+        if isinstance(wav, torch.Tensor):
+            wav = wav.squeeze().cpu().numpy()
+        sf.write(str(out_path), wav, self.model.sr)
+
+
+def load_engine(name: str):
+    if name == "minicpm":
+        return MiniCPMEngine()
+    if name == "chatterbox":
+        return ChatterboxEngine()
+    raise ValueError(f"unknown engine {name!r} (minicpm | chatterbox)")
+
+
 def load_voice_pool(voices_json: Path | None, assets: Path) -> dict[str, Path]:
     """voice key -> 16 kHz reference clip. Anchors are the 3 proven MiniCPM-o
     asset clones; voices.json (from data.synthetic.voices) adds the
@@ -132,12 +179,11 @@ def assign_voices(tl, pool: dict[str, Path], anchor_prob: float,
     return picks
 
 
-def render_timeline(model, tl, out_dir: Path, assets: Path, manifest,
+def render_timeline(engine, tl, out_dir: Path, assets: Path, manifest,
                     pool: dict[str, Path] | None = None,
                     anchor_prob: float = 0.5,
-                    registers: dict[str, str] | None = None) -> None:
-    import librosa
-
+                    registers: dict[str, str] | None = None,
+                    engine_name: str = "minicpm") -> None:
     sc_dir = out_dir / tl.scenario_id
     utt_dir = sc_dir / "utterances"
     utt_dir.mkdir(parents=True, exist_ok=True)
@@ -147,20 +193,15 @@ def render_timeline(model, tl, out_dir: Path, assets: Path, manifest,
     channel_voice = assign_voices(tl, pool, anchor_prob, registers)
     tl.meta["voices"] = channel_voice
 
-    refs: dict[str, np.ndarray] = {}
-
-    def ref_for(ev) -> np.ndarray:
-        key = ev.voice or channel_voice.get(ev.ch, CH_DEFAULT_VOICE.get(ev.ch, "user"))
-        if key not in refs:
-            wav, _ = librosa.load(pool[key], sr=16000, mono=True)
-            refs[key] = wav
-        return refs[key]
+    def ref_key(ev) -> str:
+        return ev.voice or channel_voice.get(
+            ev.ch, CH_DEFAULT_VOICE.get(ev.ch, "user"))
 
     # 1. render every speech event
     speech = [e for e in tl.events if e.text and e.kind != "marker"]
     for i, ev in enumerate(speech):
         utt = utt_dir / f"{i:02d}_{ev.ch}.wav"
-        tts_utterance(model, ev.text, ref_for(ev), utt)
+        engine.tts(ev.text, pool[ref_key(ev)], utt)
         audio, sr = sf.read(utt, dtype="float32")
         if audio.ndim > 1:
             audio = audio.mean(axis=1)
@@ -271,6 +312,7 @@ def render_timeline(model, tl, out_dir: Path, assets: Path, manifest,
         "grid_ms": GRID_MS,
         "duration_ms": total_ms,
         "voices": channel_voice,
+        "engine": engine_name,
         **tl.overlap_stats(),
         "tts_engine": "openbmb/MiniCPM-o-4_5 (Apache-2.0) zero-shot voice-cloned TTS",
         "license": "synthetic; open models only (ADR-0002); no closed-API content",
@@ -287,6 +329,9 @@ def main() -> None:
                     help="voices.json from data.synthetic.voices (pool mode)")
     ap.add_argument("--anchor-prob", type=float, default=0.5,
                     help="probability a channel keeps its proven anchor voice")
+    ap.add_argument("--engine", default="minicpm",
+                    choices=["minicpm", "chatterbox"],
+                    help="TTS engine (see load_engine; overlays differ)")
     ap.add_argument("--only", default=None, help="scenario_id substring filter")
     args = ap.parse_args()
 
@@ -309,14 +354,14 @@ def main() -> None:
           + (f", {len(registers)} with F0 register" if registers else ""),
           flush=True)
 
-    model, _ = load_model()
+    engine = load_engine(args.engine)
     with open(out / "manifest.jsonl", "a") as mf:
         for f in files:
             tl = Timeline.load(f)
             print(f"[render] {tl.scenario_id} ({tl.scenario_class})", flush=True)
-            render_timeline(model, tl, out, assets, mf,
+            render_timeline(engine, tl, out, assets, mf,
                             pool=pool, anchor_prob=args.anchor_prob,
-                            registers=registers)
+                            registers=registers, engine_name=args.engine)
     print("done")
 
 
