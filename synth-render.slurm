@@ -59,5 +59,5 @@ echo "[synth] done. manifest: $OUT_DIR/manifest.jsonl"
 # without an outside driver — cert lapses no longer stall the pipeline
 FILTER_JOB=$(sbatch --parsable --dependency=afterok:$SLURM_JOB_ID \
     --export=ALL,AUDIO=$OUT_DIR \
-    -o $DL/logs/synth-filter-%j.out repo/synth-filter.slurm)
+    -o $DL/logs/synth-filter-%j.out $DL/repo/synth-filter.slurm)
 echo "[synth] chained filter job: $FILTER_JOB (afterok:$SLURM_JOB_ID)"
