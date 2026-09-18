@@ -36,6 +36,35 @@ Layer-2 sources need the 80 ms forced-alignment toolchain (Issue #2). Copy
 the construction pipelines from DuplexChat (arXiv 2607.04941) and Nakata et
 al. (SIGDIAL 2026) — both recover speaker-separated overlapping tracks.
 
+### Layer-2 collector targets (user-directed "YouTube anyway", 2026-09-18)
+
+Posture: CC-BY / public-domain targets ONLY, per-clip provenance ledger
+(source URL, license, license snapshot), purge-ability by source, and
+preference for sanctioned download paths. Content license ≠ platform ToS:
+bulk downloading from YouTube breaches its ToS even for CC-BY uploads
+(contract, not copyright); UK CDPA s.29A covers non-commercial TDM
+analysis copies. Ranked by cleanliness × duplex value:
+
+1. **Interview podcasts via public RSS** — cleanest: RSS enclosures are the
+   intended distribution channel; two-host interviews are genuine duplex
+   (interruptions, overlap, backchannels). Filter by license metadata
+   (Podcast Index); prefer CC-BY feeds; log feed+episode+license.
+2. **C-SPAN call-ins** (US federal work → public domain) — caller-host
+   exchanges are exactly barge-in/backchannel dynamics.
+3. **UK Parliament audio** (Open Parliament Licence) — debate + Points of
+   Order interruptions; chamber audio is two-speaker-dominant segments.
+4. **YouTube CC-BY filter results** — interview/podcast-clip channels;
+   provenance = video id + Data-API license field. Residual platform-ToS
+   caveat accepted deliberately (user call, 2026-09-18).
+5. **Court oral arguments** (PD: Oyez/SCOTUS, various appeals courts) —
+   advocate-judge exchanges, heavy interruption.
+6. Internet Archive oral histories / university CC-BY lecture archives —
+   monologic, filler value only.
+Avoid: TED (CC-BY-NC-ND), music-bearing uploads, anything without a
+machine-checkable license claim. Every collected clip must carry license
+metadata into the manifest before it may enter any training mixture
+(ADR-0002 provenance discipline applies to real audio too).
+
 **Alignment requirement:** every stream micro-turn/tick aligned (80 ms grid), precise timestamps, overlap preserved — not segmented into turns. The alignment toolchain (Issue #2/#3) gates everything.
 
 ### Layer 3: Synthetic interaction dynamics (the scaling lever)
