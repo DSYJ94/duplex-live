@@ -69,9 +69,21 @@ Read this first in a fresh chat. Everything below is decided and documented.
   serves locally synced batches (mixed/stems/per-utterance players joined
   with WER + whisper hypotheses) + voice pool; rsync recipes in its
   docstring; refresh after each sync.
+  **ACCELERATED (2026-09-19, user call):** multi-worker GPU rendering
+  (`--slice` shards + manifest merge + atomic cache publishes; chatterbox
+  4 workers/GPU, minicpm 2) ≈3.5× batch throughput; **big7–10 queued in
+  parallel** (seeds 707-710). Barge-in audition follow-up measured: pre-
+  barge assistant silence median 0 ms / p90 0 ms across 96 scenarios in
+  big5/2/1 — barges land mid-speech, not after predictive pauses; the
+  perceived pause = prosodic dip/outlier, NOT a pipeline bug, arguably
+  naturalistic. Layer-A (#7) starts EARLY (~Sep 22) instead of Sep 28 —
+  all dependencies (tokenizer, factory data, eval gate, delegation brain)
+  are at v0-done.
   **Hours-scale begun (2026-09-18): `synth-big1` = 256 scenarios, 2.2 h,
   1h24m GPU (0.85 GPU-h/audio-h), 182/256 pass (71%), WER median 0.018 /
-  p90 0.111.** Failure profile is ONE engine limit: MiniCPM-o TTS babbles
+  p90 0.111.** Factory total through big6: **8.80 h gate-passed / 1,168
+  scenarios** (big5 = 216/256, 84% — best yet, first clip-cache batch).
+  Failure profile is ONE engine limit: MiniCPM-o TTS babbles
   on 1–2-word prompts (tail_babble ×147; backchannel 32/32, timed_task
   29/32 fails). **Second engine staged and winning: Chatterbox
   (Apache-2.0)** — overlay `pylibs-chatterbox` (torch-stripped, weights in
