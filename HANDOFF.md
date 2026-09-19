@@ -81,8 +81,9 @@ Read this first in a fresh chat. Everything below is decided and documented.
   are at v0-done.
   **Hours-scale begun (2026-09-18): `synth-big1` = 256 scenarios, 2.2 h,
   1h24m GPU (0.85 GPU-h/audio-h), 182/256 pass (71%), WER median 0.018 /
-  p90 0.111.** Factory total through big6: **8.80 h gate-passed / 1,168
-  scenarios** (big5 = 216/256, 84% — best yet, first clip-cache batch).
+  p90 0.111.** Factory total through big14: **21.45 h gate-passed / 2,813
+  scenarios** (pass rates climbing with the clip-cache: big11 = 227/256 =
+  89% chatterbox, minicpm up to 79% in big12).
   Failure profile is ONE engine limit: MiniCPM-o TTS babbles
   on 1–2-word prompts (tail_babble ×147; backchannel 32/32, timed_task
   29/32 fails). **Second engine staged and winning: Chatterbox
