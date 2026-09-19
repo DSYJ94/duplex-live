@@ -93,6 +93,14 @@ def page_index(runs: Path, voices_dir: Path) -> str:
             f' {verdict_html}'
             f'<div class="meta">{len(rows)} scenarios · {total_min:.1f} min · '
             f'{esc(audio_dir)}</div></div>')
+    evals = []
+    for t1 in sorted(runs.glob("*/t1/model_out.wav")):
+        ename = t1.parent.parent.name
+        ntests = len([d for d in t1.parent.parent.iterdir()
+                      if d.is_dir() and (d / "model_out.wav").exists()])
+        evals.append(f'<div class="card"><a href="/batch/{ename}"><b>{ename}</b>'
+                     f'</a> <span class="badge b-dim">eval session</span>'
+                     f'<div class="meta">{ntests} tests · user_in vs model_out</div></div>')
     vcard = ""
     if (voices_dir / "voices.json").exists():
         n = len(json.loads((voices_dir / "voices.json").read_text()))
@@ -105,7 +113,7 @@ def page_index(runs: Path, voices_dir: Path) -> str:
 <h1>🏭 Synthetic factory — listening gallery</h1>
 <div class="sub">Local copies synced from Isambard · refresh after each
 <code>rsync</code> · audio 24 kHz (pool refs 16 kHz)</div>
-{''.join(cards)}{vcard}
+{''.join(cards)}{''.join(evals)}{vcard}
 </body></html>"""
 
 
