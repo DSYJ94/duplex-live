@@ -159,12 +159,22 @@ Weeks 3–5: Layer-A + Phase-1 fine-tune → model v1.
 4. If Qwen3.5+ Omni ships open weights: candidate Layer-A base swap
    (docs/notes-qwen-live.md watch item).
 
+**Issue #5 v0 DONE (2026-09-19):** `serving/delegation/` — async boundary
+(fire() 0.1 ms vs a 5 s brain; non-blocking poll(); pre-warmed session;
+<3 s p50 first-chunk budget; ADR-0002 by construction). Backends: Mock
+validated; Kimi (OpenAI-compatible SSE, needs key, base_url swappable to
+self-hosted vLLM); ACP client spec-correct but live handshake pending
+(local claude/codex builds predate --acp). Remaining: live Kimi run,
+<delegate> interception in the Layer-A tick loop (#7).
+
 **Issue #6 v0 DONE (2026-09-19):** `evals/harness/` — T-protocol replay
 harness; reproduces every bake-off finding from the raw recordings
 (MiniCPM: T3 pass / T2 5040ms / T5 14.6s engaged; PersonaPlex: T4 pass /
 T5 7.5s; both T1 p50 >2s). Metrics run on the 80 ms grid — same cadence
-as the factory gates; this is the Layer-A checkpoint gate. Remaining:
-live Target wiring + factory-stimulus adapter + gating script.
+as the factory gates; this is the Layer-A checkpoint gate. LIVE PATH
+ADDED same day: MiniCPMDuplexTarget behind the Target seam (frameHash
+chunk telemetry), `run.py --live minicpm` drives + scores in one command
+(`evals-live.slurm`) — baselines and live runs share one metrics path.
 
 **Issue #2 v0 DONE (2026-09-19):** `tokenizer/` — 80 ms micro-turn grid +
 interleaved serializer + reserved vocab + SPEC.md contract; round-trip and
