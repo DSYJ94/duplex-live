@@ -114,7 +114,37 @@ def page_batch(runs: Path, name: str) -> str | None:
     if not (audio_dir / "manifest.jsonl").exists():
         audio_dir = runs / name
         if not (audio_dir / "manifest.jsonl").exists():
-            return None
+            eval_page = _page_eval_session(runs, name)
+            return eval_page
+
+
+def _page_eval_session(runs: Path, name: str) -> str | None:
+    """Harness live-session layout: <root>/<name>/t*/{user_in,model_out}.wav"""
+    root = runs / name
+    tests = sorted(d for d in root.iterdir()
+                   if d.is_dir() and (d / "model_out.wav").exists()
+                   and d.name.startswith("t"))
+    if not tests:
+        return None
+    blocks = []
+    for t in tests:
+        players = []
+        for wav in ["user_in.wav", "model_out.wav"]:
+            p = t / wav
+            if p.exists():
+                players.append(
+                    f'<div class="meta">{wav} {audio_tag(quote(str(p.relative_to(runs))))}</div>')
+        blocks.append(f'<div class="card"><b>{t.name}</b> '
+                      f'<span class="badge b-dim">eval session</span>'
+                      f'{"".join(players)}</div>')
+    return f"""<!doctype html><html><head><meta charset="utf-8">
+<title>{esc(name)} · listen</title><style>{CSS}</style></head><body>
+<a href="/">← batches</a>
+<h1>{esc(name)}</h1>
+<div class="sub">Live eval session — stimulus (user_in) vs system output
+(model_out) per test; scored by evals/harness (see harness_report.json)</div>
+{''.join(blocks)}
+</body></html>"""
     rows = load_jsonl(audio_dir / "manifest.jsonl")
     rep = {r["scenario_id"]: r for r in load_jsonl(audio_dir / "filter_report.jsonl")} \
         if (audio_dir / "filter_report.jsonl").exists() else {}
