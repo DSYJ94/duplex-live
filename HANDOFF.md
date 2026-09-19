@@ -144,16 +144,25 @@ Weeks 3–5: Layer-A + Phase-1 fine-tune → model v1.
 
 ## Next actions (in order)
 
-1. Issue #3 — hours-scale content composition (open-LLM bank expansion,
-   ADR-0002-compliant, template-constrained, gated by the existing filter),
-   then 50–100 h generation (≈35–70 GPU-h; budget is fine).
-2. Issue #2 — micro-turn tokenizer/streamer (80 ms grid; notes in
-   docs/notes-minicpm-layera.md §1–3, §7). Gates grid-alignment of factory
-   output and the training sampler.
-3. Issue #5 — delegation boundary v0 (Kimi API) and #6 — eval harness v0
-   (seed: `evals/bakeoff/minicpm_bakeoff.py` + per-chunk telemetry).
-4. Week 3+: Issue #7 — Layer-A on Qwen3-Omni + Phase-1 fine-tune
-   (`experts_implementation="batched_mm"` mandatory).
+1. Issue #3 — keep the factory accumulating (big5/big6 rendering; batches
+   self-chain render→filter→purge; rsync + audition via viz.listen). Then
+   Issue #5 — delegation boundary v0; ACP is the preferred shape
+   (docs/notes-qwen-live.md) over a Kimi-specific adapter. Issue #6 — eval
+   harness v0 (steal the frameHash/ACK diagnostics pattern from qwen-live).
+2. Issue #7 — Layer-A on Qwen3-Omni + Phase-1 fine-tune (start ~Sep 28;
+   `experts_implementation="batched_mm"` mandatory). Training sampler
+   consumes tokenizer/ + factory train_manifests. Demo option: serve
+   Layer-A behind a DashScope-realtime-compatible endpoint → qwen-live
+   Host/daemon as free demo client (docs/notes-qwen-live.md).
+3. Layer-2 alignment toolchain (CANDOR/Fisher/PMQs collector output →
+   separation → 80 ms grid) once Layer-A training shape is stable.
+4. If Qwen3.5+ Omni ships open weights: candidate Layer-A base swap
+   (docs/notes-qwen-live.md watch item).
+
+**Issue #2 v0 DONE (2026-09-19):** `tokenizer/` — 80 ms micro-turn grid +
+interleaved serializer + reserved vocab + SPEC.md contract; round-trip and
+invariants verified over all 8 local batches (860 scenarios). Upgrades
+queued: forced word alignment, BPE-level sampler tokens.
 
 ## Repo conventions
 
