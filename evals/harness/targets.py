@@ -65,9 +65,11 @@ class MiniCPMDuplexTarget(Target):
             init_vision=True, init_audio=True, init_tts=True).eval().cuda()
         self.model.init_tts()
         self.duplex = self.model.as_duplex()
-        self.duplex.prepare(prefix_system_prompt="Streaming Omni Conversation.",
-                            ref_audio=ref_audio,
-                            prompt_wav_path=str(self.assets / voice))
+        self.duplex.prepare(
+            prefix_system_prompt="Streaming Omni Conversation. "
+            "Always reply in English only.",
+            ref_audio=ref_audio,
+            prompt_wav_path=str(self.assets / voice))
 
     def feed(self, chunk: np.ndarray) -> dict:
         import time
