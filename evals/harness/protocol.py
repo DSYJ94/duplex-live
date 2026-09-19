@@ -46,3 +46,13 @@ THRESH = {
     "false_engagement_max_s": 2.0,       # T5 total output speech
     "pause_resume": True,                # T4: model resumes after own pause
 }
+
+# live-run stimulus layouts (prompt stems from the bake-off Phase A synth;
+# recordings exist at runs/bakeoff/prompts on the cluster)
+LIVE_TESTS = {
+    "t1": ([(2 + i * 15, f"t1_q{i}") for i in range(1, 11)], 2 + 9 * 15 + 15),
+    "t2": ([(2, "t2_bait"), (16, "t2_interrupt")], 40),
+    "t3": ([(2, "t2_bait"), (10, "t3_bc1"), (16, "t3_bc2"), (22, "t3_bc3")], 45),
+    "t4": ([(2, "t4_part1"), (9, "t4_part2")], 28),
+    "t5": ([(2, "t5_bg1"), (8, "t5_bg2")], 22),
+}

@@ -96,11 +96,32 @@ def replay(root: Path, tests: list[str]) -> list[dict]:
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--replay", required=True, help="recordings root")
+    ap.add_argument("--replay", help="recordings root (offline metrics)")
+    ap.add_argument("--live", default=None,
+                    help="'minicpm' — drive a live target, then score it")
+    ap.add_argument("--out", default=None, help="live output root")
+    ap.add_argument("--prompts", default=None,
+                    help="stimulus prompts dir (bake-off Phase A layout)")
+    ap.add_argument("--assets", default=None, help="MiniCPM snapshot assets")
     ap.add_argument("--tests", default="t1,t2,t3,t4,t5")
     args = ap.parse_args()
-    root = Path(args.replay)
     tests = [t for t in args.tests.split(",") if t]
+
+    if args.live == "minicpm":
+        from evals.harness.protocol import LIVE_TESTS
+        from evals.harness.targets import MiniCPMDuplexTarget, run_live
+
+        out_root = Path(args.out or "runs/harness-live")
+        prompts = Path(args.prompts or "runs/bakeoff/prompts")
+        assets = Path(args.assets)
+        tgt = MiniCPMDuplexTarget()
+        tgt.prepare(assets=assets)
+        run_live(tgt, {t: LIVE_TESTS[t] for t in tests}, out_root, prompts)
+        args.replay = str(out_root)
+
+    if not args.replay:
+        ap.error("--replay or --live required")
+    root = Path(args.replay)
     rows = replay(root, tests)
 
     outp = root / "harness_report.json"
