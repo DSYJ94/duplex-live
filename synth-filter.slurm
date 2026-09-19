@@ -34,4 +34,12 @@ cd "$REPO"
 echo "[filter] judging $AUDIO with $ASR_MODEL"
 $APPT python -m data.synthetic.filter --audio "$AUDIO" --asr-model "$ASR_MODEL"
 
+# close the clip-cache loop: gate-failed short clips get purged so they
+# re-roll on the next render; passing clips stay frozen (no-op if unused)
+CACHE=${CACHE:-$DL/runs/clip-cache}
+if [ -d "$CACHE" ]; then
+    $APPT python -m data.synthetic.purge_cache --cache "$CACHE" \
+        --reports "$AUDIO/filter_report.jsonl" || true
+fi
+
 echo "[filter] done. report: $AUDIO/filter_report.jsonl"
