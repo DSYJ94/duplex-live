@@ -81,9 +81,11 @@ Read this first in a fresh chat. Everything below is decided and documented.
   are at v0-done.
   **Hours-scale begun (2026-09-18): `synth-big1` = 256 scenarios, 2.2 h,
   1h24m GPU (0.85 GPU-h/audio-h), 182/256 pass (71%), WER median 0.018 /
-  p90 0.111.** Factory total through big26: **42.69 h gate-passed / 5,436
-  scenarios** (wave pass rates: chatterbox 88-91%, minicpm 81-83%).
-  big27-30 = the closing wave to 50 h.
+  p90 0.111.** **VOLUME TARGET CLOSED (2026-09-19): 50.43 h gate-passed /
+  6,388 scenarios across big1–31** (chatterbox 53%, minicpm 47%; all 42
+  voices; class coverage 274–942 per class — lighter classes flagged for
+  Phase-1 sampler weighting). Factory now runs on-demand for Phase-1;
+  quality tail (class rebalance, optional Sesame engine) as needed.
   Failure profile is ONE engine limit: MiniCPM-o TTS babbles
   on 1–2-word prompts (tail_babble ×147; backchannel 32/32, timed_task
   29/32 fails). **Second engine staged and winning: Chatterbox
