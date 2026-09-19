@@ -159,6 +159,13 @@ Weeks 3–5: Layer-A + Phase-1 fine-tune → model v1.
 4. If Qwen3.5+ Omni ships open weights: candidate Layer-A base swap
    (docs/notes-qwen-live.md watch item).
 
+**Issue #6 v0 DONE (2026-09-19):** `evals/harness/` — T-protocol replay
+harness; reproduces every bake-off finding from the raw recordings
+(MiniCPM: T3 pass / T2 5040ms / T5 14.6s engaged; PersonaPlex: T4 pass /
+T5 7.5s; both T1 p50 >2s). Metrics run on the 80 ms grid — same cadence
+as the factory gates; this is the Layer-A checkpoint gate. Remaining:
+live Target wiring + factory-stimulus adapter + gating script.
+
 **Issue #2 v0 DONE (2026-09-19):** `tokenizer/` — 80 ms micro-turn grid +
 interleaved serializer + reserved vocab + SPEC.md contract; round-trip and
 invariants verified over all 8 local batches (860 scenarios). Upgrades
