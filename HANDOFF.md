@@ -81,9 +81,9 @@ Read this first in a fresh chat. Everything below is decided and documented.
   are at v0-done.
   **Hours-scale begun (2026-09-18): `synth-big1` = 256 scenarios, 2.2 h,
   1h24m GPU (0.85 GPU-h/audio-h), 182/256 pass (71%), WER median 0.018 /
-  p90 0.111.** Factory total through big18: **28.12 h gate-passed / 3,673
-  scenarios** (wave pass rates: chatterbox 86-89%, minicpm 78-82% — the
-  clip-cache converged both engines).
+  p90 0.111.** Factory total through big22: **35.40 h gate-passed / 4,550
+  scenarios** (wave pass rates: chatterbox 86-90%, minicpm 81-82%).
+  big23-26 in flight; ~2 waves to the 50 h done-when.
   Failure profile is ONE engine limit: MiniCPM-o TTS babbles
   on 1–2-word prompts (tail_babble ×147; backchannel 32/32, timed_task
   29/32 fails). **Second engine staged and winning: Chatterbox
