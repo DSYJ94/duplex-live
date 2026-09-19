@@ -225,9 +225,6 @@ def render_timeline(engine, tl, out_dir: Path, assets: Path, manifest,
             engine.tts(ev.text, pool[vk], utt)
             if cached is not None:
                 shutil.copyfile(utt, cached)
-    if clip_cache is not None and speech:
-        print(f"  [{tl.scenario_id}] clip-cache hits {cache_hits}/{len(speech)}",
-              flush=True)
         audio, sr = sf.read(utt, dtype="float32")
         if audio.ndim > 1:
             audio = audio.mean(axis=1)
@@ -237,6 +234,9 @@ def render_timeline(engine, tl, out_dir: Path, assets: Path, manifest,
         ev.wav = str(utt.relative_to(out_dir))
         print(f"  [{tl.scenario_id}] {ev.ch} @{ev.actual_start_ms}ms "
               f"{dur_ms}ms: {ev.text[:40]!r}", flush=True)
+    if clip_cache is not None and speech:
+        print(f"  [{tl.scenario_id}] clip-cache hits {cache_hits}/{len(speech)}",
+              flush=True)
 
     # 2. retraction cut: any utterance overlapped by a barge_in on another
     #    channel is truncated at the barge instant (clean yield) with a short
