@@ -46,12 +46,31 @@ $APPT python -m data.synthetic.scenarios --out "$TL_DIR" --per-class "$PER_CLASS
 ASSETS=$(ls -d $HF_HOME/hub/models--openbmb--MiniCPM-o-4_5/snapshots/*/assets | head -1)
 VJ=$DL/models/voices/voices.json
 CACHE=${CACHE:-$DL/runs/clip-cache}
+# workers share one GPU: chatterbox is ~3GB (4 fit), minicpm ~26GB (2 fit)
+WORKERS=${WORKERS:-$([ "$ENGINE" = chatterbox ] && echo 4 || echo 2)}
 VARGS=""
 [ -f "$VJ" ] && VARGS="--voices $VJ --anchor-prob ${ANCHOR_PROB:-0.5}"
-echo "[synth] rendering with engine=$ENGINE, ref voices from $ASSETS -> $OUT_DIR (pool: $VARGS, cache: $CACHE)"
-$APPT python -m data.synthetic.render \
-    --timelines "$TL_DIR" --out "$OUT_DIR" --assets "$ASSETS" --engine "$ENGINE" \
-    --clip-cache "$CACHE" $VARGS
+echo "[synth] engine=$ENGINE, $WORKERS workers/GPU -> $OUT_DIR (pool: $VARGS, cache: $CACHE)"
+
+if [ "$WORKERS" = "1" ]; then
+    $APPT python -m data.synthetic.render \
+        --timelines "$TL_DIR" --out "$OUT_DIR" --assets "$ASSETS" --engine "$ENGINE" \
+        --clip-cache "$CACHE" $VARGS
+else
+    pids=""
+    for k in $(seq 0 $((WORKERS - 1))); do
+        $APPT python -m data.synthetic.render \
+            --timelines "$TL_DIR" --out "$OUT_DIR" --assets "$ASSETS" --engine "$ENGINE" \
+            --clip-cache "$CACHE" --slice "$k/$WORKERS" $VARGS \
+            > "$DL/logs/render-$(basename $OUT_BASE)-w$k.log" 2>&1 &
+        pids="$pids $!"
+    done
+    fail=0
+    for p in $pids; do wait "$p" || fail=1; done
+    [ $fail = 1 ] && { echo "[synth] a worker failed — see logs/render-*-w*.log"; exit 1; }
+    cat $OUT_DIR/manifest.part*of$WORKERS.jsonl >> $OUT_DIR/manifest.jsonl
+    rm -f $OUT_DIR/manifest.part*of$WORKERS.jsonl
+fi
 
 echo "[synth] done. manifest: $OUT_DIR/manifest.jsonl"
 

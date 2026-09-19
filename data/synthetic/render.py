@@ -18,6 +18,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import random
 import shutil
 import sys
@@ -224,7 +225,11 @@ def render_timeline(engine, tl, out_dir: Path, assets: Path, manifest,
         else:
             engine.tts(ev.text, pool[vk], utt)
             if cached is not None:
-                shutil.copyfile(utt, cached)
+                # atomic publish: concurrent workers may render the same
+                # (engine, voice, text) — tmp+replace avoids torn copies
+                tmp = cached.with_suffix(f".tmp{os.getpid()}")
+                shutil.copyfile(utt, tmp)
+                os.replace(tmp, cached)
         audio, sr = sf.read(utt, dtype="float32")
         if audio.ndim > 1:
             audio = audio.mean(axis=1)
@@ -361,6 +366,12 @@ def main() -> None:
     ap.add_argument("--clip-cache", default=None,
                     help="memoize <=6-word renders per (voice, text); purge "
                          "bad entries with purge_cache.py after filtering")
+    ap.add_argument("--slice", default=None,
+                    help="K/N — render only files[K::N] (multi-worker mode; "
+                         "each worker writes its own manifest shard)")
+    ap.add_argument("--manifest-name", default=None,
+                    help="manifest filename (default manifest.jsonl; shards "
+                         "use manifest.partK.jsonl and are merged by the job)")
     ap.add_argument("--only", default=None, help="scenario_id substring filter")
     args = ap.parse_args()
 
@@ -374,6 +385,14 @@ def main() -> None:
     files = sorted(Path(args.timelines).glob("*.json"))
     if args.only:
         files = [f for f in files if args.only in f.name]
+    manifest_name = args.manifest_name
+    if args.slice:
+        k, n = (int(x) for x in args.slice.split("/"))
+        files = files[k::n]
+        manifest_name = manifest_name or f"manifest.part{k}of{n}.jsonl"
+        print(f"worker slice {k}/{n}: {len(files)} scenarios")
+    elif manifest_name is None:
+        manifest_name = "manifest.jsonl"
     print(f"{len(files)} timelines to render")
 
     pool = load_voice_pool(Path(args.voices) if args.voices else None, assets)
@@ -389,7 +408,7 @@ def main() -> None:
         clip_cache.mkdir(parents=True, exist_ok=True)
         n = len(list(clip_cache.glob("*.wav")))
         print(f"clip-cache: {clip_cache} ({n} validated clips)", flush=True)
-    with open(out / "manifest.jsonl", "a") as mf:
+    with open(out / manifest_name, "a") as mf:
         for f in files:
             tl = Timeline.load(f)
             print(f"[render] {tl.scenario_id} ({tl.scenario_class})", flush=True)
