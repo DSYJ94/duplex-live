@@ -15,6 +15,7 @@ set -euo pipefail
 DL=/projects/u6si/duplex-live
 REPO=$DL/repo
 export HF_HOME=$DL/models/hf-cache TMPDIR=$DL/tmp PYTHONPATH=$DL/pylibs:$REPO
+export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 
 STEPS=${STEPS:-32}
 

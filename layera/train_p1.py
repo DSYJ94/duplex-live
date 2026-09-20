@@ -47,6 +47,10 @@ def main() -> None:
     model = Qwen3OmniMoeThinkerForConditionalGeneration.from_pretrained(
         "Qwen/Qwen3-Omni-30B-A3B-Instruct", dtype="bfloat16", device_map="auto",
         attn_implementation="sdpa", experts_implementation="batched_mm")
+    # backward must reach the embedding table at the bottom; without
+    # checkpointing the batched_mm expert path keeps a ~12 GiB scratch per
+    # layer and OOMs on step 1 (95 GiB GH200). Recompute instead of store.
+    model.gradient_checkpointing_enable()
     proc = AutoProcessor.from_pretrained("Qwen/Qwen3-Omni-30B-A3B-Instruct")
     n_old = len(proc.tokenizer)
     register_into(proc.tokenizer)
