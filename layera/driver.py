@@ -49,23 +49,38 @@ class TickDriver:
     # ------------------------------------------------------------ one beat
     def feed_audio(self, pcm_16k: np.ndarray) -> float:
         """Put one slice of user audio into the running memory.
-        Returns the wall-clock seconds this took."""
+        Returns the wall-clock seconds this took.
+
+        First beat pays the chat-template envelope once; every later beat
+        appends ONLY the raw audio placeholder span — re-wrapping the
+        envelope per beat both wastes the budget and teaches the stream
+        to emit envelope markers (<|im_start|>...)."""
         import torch
 
         t0 = time.time()
-        convo = [{"role": "user", "content": [
-            {"type": "audio"},
-            {"type": "text", "text": "(listening)"},
-        ]}]
-        text = self.proc.apply_chat_template(convo, add_generation_prompt=False,
-                                            tokenize=False)
-        # audio goes in its own processor slot; the template's audio
-        # placeholder then expands to match the feature count exactly.
-        # (no sampling_rate kwarg — pcm is already 16k and the extractor
-        # rejects list-valued rates)
-        inputs = self.proc(text=[text], audio=[pcm_16k],
-                           return_tensors="pt",
-                           padding=True).to(self.model.device)
+        if self.cache is None:
+            convo = [{"role": "user", "content": [
+                {"type": "audio"},
+                {"type": "text", "text": "(listening)"},
+            ]}]
+            text = self.proc.apply_chat_template(
+                convo, add_generation_prompt=False, tokenize=False)
+            inputs = self.proc(text=[text], audio=[pcm_16k],
+                               return_tensors="pt",
+                               padding=True).to(self.model.device)
+        else:
+            feats = self.proc.feature_extractor(
+                [pcm_16k], return_tensors="pt",
+                device=str(self.model.device))
+            n = int(feats["attention_mask"].sum())
+            ids = torch.full((1, n), self.model.config.audio_token_id,
+                             dtype=torch.long, device=self.model.device)
+            inputs = {"input_ids": ids,
+                      "input_features": feats["input_features"].to(
+                          self.model.device, dtype=self.model.dtype
+                          if hasattr(self.model, "dtype") else None),
+                      "feature_attention_mask": feats["attention_mask"].to(
+                          self.model.device)}
         with torch.no_grad():
             out = self.model(**inputs, past_key_values=self.cache, use_cache=True)
         self.cache = out.past_key_values
@@ -79,7 +94,11 @@ class TickDriver:
         import torch
 
         t0 = time.time()
-        nxt = int(self.pending_logits[0, -1].argmax())
+        logits = self.pending_logits[0, -1].clone()
+        # never emit chat-envelope/special markers — M1 speaks content only
+        for tid in self.proc.tokenizer.all_special_ids:
+            logits[tid] = float("-inf")
+        nxt = int(logits.argmax())
         self.generated.append(nxt)
         tok = torch.tensor([[nxt]], device=self.model.device)
         with torch.no_grad():
@@ -87,7 +106,8 @@ class TickDriver:
                              use_cache=True)
         self.cache = out.past_key_values
         self.pending_logits = out.logits
-        return time.time() - t0, self.proc.tokenizer.decode([nxt])
+        return time.time() - t0, self.proc.tokenizer.decode(
+            [nxt], skip_special_tokens=True)
 
 
 def run(stem_path: Path, endpoint_s: float, max_s: float) -> dict:
