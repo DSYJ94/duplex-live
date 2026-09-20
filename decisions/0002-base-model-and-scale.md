@@ -43,9 +43,11 @@ open-source version of GPT-Live / TML interaction models.
 - Async RPC boundary; background model = Kimi API for the demo, swappable to a
   self-hosted open 32B+ model later.
 - Legal note: base-model licenses (Apache-2.0/MIT/CC-BY) do not restrict which
-  external services the system calls at inference. Bright line: closed-API
+  external services the system calls at inference. Bright line (SUPERSEDED 2026-09-20 by ADR-0003): closed-API
   outputs may flow through the live path but **never into the training corpus**
   (provider ToS). Synthetic training data comes from self-hosted open models.
+  → ADR-0003 replaces this ban with provenance classes
+  (open / closed-labeled / closed-content).
 
 ### Track 2 — From-scratch (gated, months 3–6)
 - 1B pilot → 3B main run, native micro-turn format, encoder-free audio pathway.
