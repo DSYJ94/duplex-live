@@ -70,10 +70,11 @@ def encode_audio(model, proc, pcm: np.ndarray, window_s: float = 4.0):
         inputs = proc(text=["<|audio_pad|>"], audio=[chunk],
                       return_tensors="pt", padding=True).to(model.device)
         ids = inputs["input_ids"]
+        pad_id = proc.tokenizer.convert_tokens_to_ids("<|audio_pad|>")
         with torch.no_grad():
             full = model(**inputs, use_cache=False, output_hidden_states=True)
         h = full.hidden_states[-1][0]
-        n_tok = int((ids[0] == model.config.audio_token_id).sum())
+        n_tok = int((ids[0] == pad_id).sum())
         feats.append(h[-n_tok:].cpu())
         counts.append(n_tok)
     return torch.cat(feats), counts
