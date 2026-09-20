@@ -41,6 +41,7 @@ class TickDriver:
         ).eval()
         self.proc = AutoProcessor.from_pretrained(model_id)
         self.cache = None
+        self.pending_logits = None  # the model's next-guess from the last step
         self.generated: list[int] = []
         print(f"[load] thinker ready in {time.time() - t0:.1f}s "
               f"(VRAM {torch.cuda.memory_allocated() / 1e9:.1f} GB)", flush=True)
@@ -68,21 +69,24 @@ class TickDriver:
         with torch.no_grad():
             out = self.model(**inputs, past_key_values=self.cache, use_cache=True)
         self.cache = out.past_key_values
+        self.pending_logits = out.logits
         return time.time() - t0
 
     def decode_one(self) -> tuple[float, str]:
-        """Let the model emit exactly one token. Returns (seconds, text)."""
+        """Let the model emit exactly one token. Returns (seconds, text).
+        Samples from the pending next-guess (set by the last audio step),
+        then feeds the chosen token to refresh the guess."""
         import torch
 
         t0 = time.time()
-        last = self.generated[-1] if self.generated else None
-        tok = torch.tensor([[last]], device=self.model.device) if last is not None else None
+        nxt = int(self.pending_logits[0, -1].argmax())
+        self.generated.append(nxt)
+        tok = torch.tensor([[nxt]], device=self.model.device)
         with torch.no_grad():
             out = self.model(input_ids=tok, past_key_values=self.cache,
                              use_cache=True)
         self.cache = out.past_key_values
-        nxt = int(out.logits[0, -1].argmax())
-        self.generated.append(nxt)
+        self.pending_logits = out.logits
         return time.time() - t0, self.proc.tokenizer.decode([nxt])
 
 
