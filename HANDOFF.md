@@ -143,6 +143,14 @@ The references define the bar; they are not the product.
 
 ## Key decisions (ADRs in decisions/)
 
+- **ADR-0003 (2026-09-20, supersedes ADR-0002's bright line):** provenance
+  classes replace the closed-API training ban — open / closed-labeled /
+  closed-content (owner sign-off). Jev may label training data; streams
+  tagged at creation; purge-by-provenance retained. TypeSafe Jev wired:
+  `evals/harness/jev_scorer.py` (use case 1 live — semantic verdicts
+  alongside energy metrics), SDK overlay `pylibs-typesafe`, key at
+  `$DL/.typesafe_key`. Use cases 2-4 (bank audit, sampler scores, Layer-2
+  labeling) queued.
 - **One product model:** Qwen3-Omni 30B-A3B (Apache-2.0) — fine-tune duplex in
   via the Layer-A spec (docs/09): 80 ms tick loop, interleaved causal stream,
   new `<sil>`/timing/`<delegate>`/`<yield>` embeddings. Backbone frozen Phase 1.
