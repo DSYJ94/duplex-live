@@ -65,22 +65,13 @@ class TickDriver:
             ]}]
             text = self.proc.apply_chat_template(
                 convo, add_generation_prompt=False, tokenize=False)
-            inputs = self.proc(text=[text], audio=[pcm_16k],
-                               return_tensors="pt",
-                               padding=True).to(self.model.device)
         else:
-            feats = self.proc.feature_extractor(
-                [pcm_16k], return_tensors="pt",
-                device=str(self.model.device))
-            n = int(feats["attention_mask"].sum())
-            ids = torch.full((1, n), self.model.config.audio_token_id,
-                             dtype=torch.long, device=self.model.device)
-            inputs = {"input_ids": ids,
-                      "input_features": feats["input_features"].to(
-                          self.model.device, dtype=self.model.dtype
-                          if hasattr(self.model, "dtype") else None),
-                      "feature_attention_mask": feats["attention_mask"].to(
-                          self.model.device)}
+            # bare placeholder — the processor expands it to the exact
+            # feature count; no chat envelope junk between beats
+            text = "<|audio|>"
+        inputs = self.proc(text=[text], audio=[pcm_16k],
+                           return_tensors="pt",
+                           padding=True).to(self.model.device)
         with torch.no_grad():
             out = self.model(**inputs, past_key_values=self.cache, use_cache=True)
         self.cache = out.past_key_values
