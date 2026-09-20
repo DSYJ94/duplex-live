@@ -124,8 +124,9 @@ def main() -> None:
         attn_implementation="sdpa", experts_implementation="batched_mm").eval()
     proc = AutoProcessor.from_pretrained("Qwen/Qwen3-Omni-30B-A3B-Instruct")
     added = register_into(proc.tokenizer)
-    print(f"[prep] registered {len(added)} duplex tokens "
-          f"({added[0]}..{added[-1]})", flush=True)
+    print(f"[prep] registered {added} duplex token types "
+          f"(first id: {proc.tokenizer.convert_tokens_to_ids('<sil>')})",
+          flush=True)
 
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
