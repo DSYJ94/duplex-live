@@ -59,9 +59,11 @@ class TickDriver:
         text = self.proc.apply_chat_template(convo, add_generation_prompt=False,
                                             tokenize=False)
         # audio goes in its own processor slot; the template's audio
-        # placeholder then expands to match the feature count exactly
+        # placeholder then expands to match the feature count exactly.
+        # (no sampling_rate kwarg — pcm is already 16k and the extractor
+        # rejects list-valued rates)
         inputs = self.proc(text=[text], audio=[pcm_16k],
-                           sampling_rate=[16000], return_tensors="pt",
+                           return_tensors="pt",
                            padding=True).to(self.model.device)
         with torch.no_grad():
             out = self.model(**inputs, past_key_values=self.cache, use_cache=True)
