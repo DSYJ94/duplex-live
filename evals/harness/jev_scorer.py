@@ -115,7 +115,7 @@ def main() -> None:
     from typesafe_sdk import TypeSafeClient
 
     session = Path(args.session)
-    client = TypeSafeClient(model="jev")
+    client = TypeSafeClient(model="jev-latest")
     rows = {}
     for t in [x for x in args.tests.split(",") if x]:
         text = transcript(session, t)
