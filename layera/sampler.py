@@ -56,11 +56,13 @@ def build_from_grid(sc_dir: Path, tok) -> dict:
 
 def collate(seq: dict, shard: dict, embed_layer) -> dict:
     """inputs_embeds with frozen ear-features scattered into pad slots."""
-    ids = torch.tensor([seq["ids"]], dtype=torch.long)
+    ids = torch.tensor([seq["ids"]], dtype=torch.long,
+                       device=embed_layer.weight.device)
     embeds = embed_layer(ids).clone()
     feats = shard["audio_feats"]
     n = min(len(seq["audio_pos"]), feats.shape[0])
-    pos = torch.tensor(seq["audio_pos"][:n])
+    pos = torch.tensor(seq["audio_pos"][:n], device=embeds.device)
     embeds[0, pos] = feats[:n].to(embeds.dtype).to(embeds.device)
-    labels = torch.tensor([seq["labels"]], dtype=torch.long)
+    labels = torch.tensor([seq["labels"]], dtype=torch.long,
+                          device=embeds.device)
     return {"inputs_embeds": embeds, "labels": labels}
