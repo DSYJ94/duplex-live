@@ -198,6 +198,13 @@ queued: forced word alignment, BPE-level sampler tokens.
 
 ## Repo conventions
 
+- **Communication (user rule, 2026-09-20): plain language always.** Explain
+  any technical term or jargon the first time it appears in a reply
+  (barge-in = user interrupting; WER = word error rate, how different the
+  transcription is from the script; overlay = a folder of extra Python
+  packages we prepend so cluster jobs find them; KV cache = the model's
+  running memory of the conversation). Keep tables/numbers, label them in
+  everyday words. Applies to ALL agents working in this repo.
 - Task board: GitHub Issues #1–#7.
 - **Voice-sample audit loop (user request, 2026-09-17): anything that
   produces audio must be audible to the user via the localhost gallery.**
