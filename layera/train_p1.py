@@ -46,7 +46,13 @@ def main() -> None:
 
     model = Qwen3OmniMoeThinkerForConditionalGeneration.from_pretrained(
         "Qwen/Qwen3-Omni-30B-A3B-Instruct", dtype="bfloat16", device_map="auto",
-        attn_implementation="sdpa", experts_implementation="batched_mm")
+        attn_implementation="sdpa",
+        # eager experts for TRAINING ONLY: batched_mm gathers per-token
+        # expert weights (~24 GiB up + ~12 GiB down alive together per
+        # layer) and OOMs the 95 GiB GH200 once backward must hold them;
+        # eager loops experts one at a time (~6 MiB each). Inference jobs
+        # keep batched_mm for speed.
+        experts_implementation="eager")
     proc = AutoProcessor.from_pretrained("Qwen/Qwen3-Omni-30B-A3B-Instruct")
     n_old = len(proc.tokenizer)
     register_into(proc.tokenizer)
@@ -135,7 +141,11 @@ def main() -> None:
             if step >= args.steps:
                 break
 
+    # text_config.tie_word_embeddings is False -> embed and head are
+    # SEPARATE tensors; both new-row deltas must be saved or the trained
+    # head is lost on reload.
     torch.save({"emb_delta_new_rows": emb_w[n_old:].detach().cpu(),
+                "head_delta_new_rows": head_w[n_old:].detach().cpu(),
                 "n_old": n_old, "steps": step, "args": vars(args)},
                out / "p1_checkpoint.pt")
     print(f"[p1] done: {step} steps, final loss {losses[-1]:.4f} -> {out}")
