@@ -67,7 +67,7 @@ def encode_audio(model, proc, pcm: np.ndarray, window_s: float = 4.0):
         chunk = pcm[i:i + n]
         if len(chunk) < 800:  # <50ms tail: skip
             break
-        inputs = proc(text=["<|audio|>"], audio=[chunk],
+        inputs = proc(text=["<|audio_pad|>"], audio=[chunk],
                       return_tensors="pt", padding=True).to(model.device)
         ids = inputs["input_ids"]
         with torch.no_grad():
