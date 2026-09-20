@@ -47,10 +47,6 @@ def main() -> None:
     model = Qwen3OmniMoeThinkerForConditionalGeneration.from_pretrained(
         "Qwen/Qwen3-Omni-30B-A3B-Instruct", dtype="bfloat16", device_map="auto",
         attn_implementation="sdpa", experts_implementation="batched_mm")
-    # backward must reach the embedding table at the bottom; without
-    # checkpointing the batched_mm expert path keeps a ~12 GiB scratch per
-    # layer and OOMs on step 1 (95 GiB GH200). Recompute instead of store.
-    model.gradient_checkpointing_enable()
     proc = AutoProcessor.from_pretrained("Qwen/Qwen3-Omni-30B-A3B-Instruct")
     n_old = len(proc.tokenizer)
     register_into(proc.tokenizer)
@@ -74,6 +70,21 @@ def main() -> None:
         w.requires_grad_(True)
         w.register_hook(lambda g: mask_old_rows(g, n_old))
     model.cuda().train()
+    # backward must reach the embedding table at the bottom; without
+    # checkpointing the batched_mm expert path keeps a ~12 GiB scratch per
+    # layer and OOMs (95 GiB GH200). Enable AFTER .train() — the per-layer
+    # check is `flag and self.training` — then verify the flag actually
+    # landed on the decoder layers (first run silently didn't).
+    model.gradient_checkpointing_enable()
+    flagged = sum(1 for m in model.modules()
+                  if getattr(m, "gradient_checkpointing", False))
+    n_layers = sum(1 for m in model.modules()
+                   if isinstance(m, torch.nn.Module)
+                   and "DecoderLayer" in type(m).__name__)
+    print(f"[p1] checkpoint flags set on {flagged} modules "
+          f"({n_layers} decoder layers); training={model.training}",
+          flush=True)
+    assert flagged > 0, "gradient checkpointing did not engage"
 
     shards = sorted(Path(args.shards).glob("*.pt"))
     batch = Path(args.batch)
@@ -98,6 +109,11 @@ def main() -> None:
                 continue
             batch_in = collate(seq, shard, model.get_input_embeddings())
             batch_in = {k: v.to(model.device) for k, v in batch_in.items()}
+            if step == 0:
+                print(f"[p1] mem before fwd: "
+                      f"{torch.cuda.memory_allocated()/1e9:.1f} GB, "
+                      f"seq len {batch_in['inputs_embeds'].shape[1]}",
+                      flush=True)
             out_logits = model(**batch_in, use_cache=False).logits
             # causal shift: logits[t] predicts labels[t+1]
             logits = out_logits[:, :-1]
