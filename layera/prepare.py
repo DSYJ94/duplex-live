@@ -76,7 +76,11 @@ def encode_audio(model, proc, pcm: np.ndarray, window_s: float = 4.0):
                 input_features=inputs["input_features"],
                 feature_attention_mask=inputs["feature_attention_mask"],
                 return_dict=True).last_hidden_state
-        feats.append(tower[0, -n_tok:].float().cpu())
+        # the mask path returns flat [tokens, hidden]; reshape handles both
+        tower = tower.reshape(-1, tower.shape[-1])
+        assert tower.shape[1] == model.config.hidden_size, \
+            f"tower hidden {tower.shape[1]} != thinker {model.config.hidden_size}"
+        feats.append(tower[-n_tok:].float().cpu())
         counts.append(n_tok)
     return torch.cat(feats), counts
 
