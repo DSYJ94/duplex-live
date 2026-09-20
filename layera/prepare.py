@@ -57,10 +57,10 @@ def mix_in_slot(sc_dir: Path, n_ticks: int) -> np.ndarray:
 
 
 def encode_audio(model, proc, pcm: np.ndarray, window_s: float = 4.0):
-    """Run the ear (AuT) over the whole in-slot stream in windows; returns
-    (features, n_tokens_per_window). Features are the thinker's hidden
-    states at the audio-placeholder positions (the text is just the bare
-    placeholder, so the span is at the end of each window)."""
+    """Run the ear (AuT tower) over the in-slot stream in windows; returns
+    per-window tower outputs (what the thinker scatters into <|audio_pad|>
+    positions — verified in its forward). Phase-1 v1 keeps the ear frozen,
+    so precomputed outputs are the training inputs."""
     n = int(16000 * window_s)
     feats, counts = [], []
     for i in range(0, len(pcm), n):
@@ -69,13 +69,14 @@ def encode_audio(model, proc, pcm: np.ndarray, window_s: float = 4.0):
             break
         inputs = proc(text=["<|audio_pad|>"], audio=[chunk],
                       return_tensors="pt", padding=True).to(model.device)
-        ids = inputs["input_ids"]
-        pad_id = proc.tokenizer.convert_tokens_to_ids("<|audio_pad|>")
+        n_tok = int((inputs["input_ids"][0]
+                     == proc.tokenizer.convert_tokens_to_ids("<|audio_pad|>")).sum())
         with torch.no_grad():
-            full = model(**inputs, use_cache=False, output_hidden_states=True)
-        h = full.hidden_states[-1][0]
-        n_tok = int((ids[0] == pad_id).sum())
-        feats.append(h[-n_tok:].cpu())
+            tower = model.get_audio_features(
+                input_features=inputs["input_features"],
+                feature_attention_mask=inputs["feature_attention_mask"],
+                return_dict=True).last_hidden_state
+        feats.append(tower[0, -n_tok:].float().cpu())
         counts.append(n_tok)
     return torch.cat(feats), counts
 
