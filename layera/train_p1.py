@@ -43,6 +43,13 @@ def main() -> None:
                     help="also weight <yield> — same rarity problem "
                          "(v4 probe: 0%% on held-out; v5 showed yield "
                          "responds to data, timing only to weight)")
+    ap.add_argument("--class-cost", type=float, default=0.0,
+                    help="per-CLASS cost (v8): rare tokens cost this much "
+                         "both when correct AND when wrongly predicted at "
+                         "any position. v3 thief analysis: sil 'damage' = "
+                         "t+30s over-firing at sil positions (584/588 "
+                         "steals); per-position weights boost only the "
+                         "up-push — this adds the down-push")
     ap.add_argument("--out", default="runs/p1-v1")
     args = ap.parse_args()
 
@@ -145,14 +152,29 @@ def main() -> None:
             # causal shift: logits[t] predicts labels[t+1]
             logits = out_logits[:, :-1]
             labels = batch_in["labels"][:, 1:]
-            per_tok = torch.nn.functional.cross_entropy(
-                logits.reshape(-1, logits.shape[-1]).float(),
-                labels.reshape(-1), ignore_index=-100, reduction="none")
-            w = torch.ones_like(per_tok)
-            is_rare = (labels.reshape(-1).unsqueeze(-1)
-                       == rare_ids.unsqueeze(0)).any(-1)
-            w = w.masked_fill(is_rare, args.timing_weight)
-            loss = (per_tok * w).sum() / w.sum()
+            if args.class_cost > 1.0:
+                # per-CLASS cost CE (v8): L_t = sum_j c_j p_j - c_{y_t}.
+                # Rare tokens cost extra BOTH as the correct answer AND as
+                # a wrong prediction anywhere — suppresses the t+30s
+                # over-firing at sil positions that broke v3, while
+                # keeping the up-push that taught timing.
+                V = logits.shape[-1]
+                logp = torch.log_softmax(logits.reshape(-1, V).float(), -1)
+                y = labels.reshape(-1)
+                cost = torch.ones(V, device=logits.device,
+                                  dtype=logp.dtype)
+                cost[rare_ids] = args.class_cost
+                L = (logp.exp() * cost).sum(-1) - cost[y.clamp(min=0)]
+                loss = L[y.ne(-100)].mean()
+            else:
+                per_tok = torch.nn.functional.cross_entropy(
+                    logits.reshape(-1, logits.shape[-1]).float(),
+                    labels.reshape(-1), ignore_index=-100, reduction="none")
+                w = torch.ones_like(per_tok)
+                is_rare = (labels.reshape(-1).unsqueeze(-1)
+                           == rare_ids.unsqueeze(0)).any(-1)
+                w = w.masked_fill(is_rare, args.timing_weight)
+                loss = (per_tok * w).sum() / w.sum()
             opt.zero_grad(set_to_none=True)
             loss.backward()
             opt.step()
