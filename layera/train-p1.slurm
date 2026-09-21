@@ -23,6 +23,7 @@ SHARDS=${SHARDS:-$DL/runs/shards}
 TIMING_WEIGHT=${TIMING_WEIGHT:-50.0}
 EXTRA=()
 [ -n "${TIMING_WEIGHT:-}" ] && EXTRA+=(--timing-weight "$TIMING_WEIGHT")
+[ -n "${WEIGHT_YIELD:-}" ] && EXTRA+=(--weight-yield)
 
 apptainer exec --nv --bind /projects,/lus,/home \
     --env PYTHONPATH=$PYTHONPATH --env HF_HOME=$HF_HOME --env TMPDIR=$TMPDIR \
