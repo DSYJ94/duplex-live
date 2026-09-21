@@ -42,11 +42,30 @@ Pass the token exam AND the conversation gate:
 answer, t5 engaged 22.0 s with background speech. t3 "passes" as a
 metric artifact (counts quiet-downs; v3 never goes quiet).
 
-Log counters tell the real story: in EVERY test the model emits
-word-type beats in 100% of chunks (constant tone, listen=False
-throughout), decodable text ≈ 0 (one chunk emitted `<|im_start|>`), and
-it never once chose sil/yield/timing in the live domain. **v3 live =
-one uninterrupted utterance.**
+## Live-gate result #2: same v3 ckpt, format-fixed harness (6763486)
+
+Two harness bugs found and fixed along the way (first two rerun
+attempts died revealing them):
+1. **Cross-test session leak** — the thinker's KV memory, audio buffer
+   and beat clock carried from test to test. T2's beats stamped at
+   t≈152 s into a 40 s tape (render crash); T3 "babble" (562 word
+   beats) was the model continuing T1's stale conversation, not
+   responding to backchannels. Fix: `Target.reset()` per test — T3
+   babble collapsed to **3 word beats**.
+2. **Tape overflow** — window tails put the last beats a step past the
+   timeline; render() now pads one tone-length.
+
+**Clean verdict: PASS 2/5** — t3 ✓ (quiet through backchannels), t5 ✓
+(false engagement 0.72 s vs 22.0 s pre-fix!). Fails are now MODEL
+quality, not plumbing: t1 answered but p50 14.9 s late (sparse word
+beats — 9 per test), t2 never spoke after the barge, t4 answered
+during part 1 of the two-parter (48 word beats of real text from
+chunk 3). Live profile: safe-and-quiet, under-speaks, interrupts
+early. Timing over-firing visible but silent (79/9/8 timing beats per
+test — no metric cost yet).
+
+The harness now measures the MODEL. Next question: does a better
+checkpoint (v10, light thief tax) move t1/t2/t4?
 
 ## Free-run diagnostic (6762966 crashed on a type slip → 6762979, v3 ckpt)
 

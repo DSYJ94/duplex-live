@@ -164,6 +164,15 @@ Read this first in a fresh chat. Everything below is decided and documented.
   into <|audio_pad|> slots, one beat per feature, timestamped output
   tape). Live-gate rerun on the same v3 ckpt = the A/B. Full tables:
   EXPERIMENTS.md.**
+  **LIVE GATE #2 (v3, format-fixed + per-test reset, 6763486): PASS 2/5
+  — t3 ✓, t5 ✓ (0.72 s vs 22.0 s pre-fix); t1 answers but p50 14.9 s
+  late, t2 silent after barge, t4 answers during part 1. Two harness
+  bugs fixed en route: cross-test session leak (KV/clock carried
+  between tests — T3's "babble" was stale-conversation continuation;
+  Target.reset() per test collapsed it 562→3 word beats) and render
+  tape overflow. Failures are now MODEL quality (sparse/early
+  speech), not plumbing. Timing over-firing: 79/9/8 timing beats per
+  test, silent — no metric cost yet.**
   **v9 VERDICT (6758553→6758554, k1 w50 + thief-penalty 10): FAILED —
   over-suppression ("the Monk"): sil 99.9–100% acc / prob 0.958–0.995
   (best ever) but t+30s, t+5s, yield, words ALL ≈0.000. The tax fires at
