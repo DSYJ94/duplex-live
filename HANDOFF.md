@@ -114,7 +114,11 @@ Read this first in a fresh chat. Everything below is decided and documented.
   + timed_task shards oversampled 5× (`runs/shards-v5`)**. Probes use
   env inheritance (NOT `--export`) for comma values — `--export` splits
   on commas, which silently truncated CLASSES=timed_task,barge_in to
-  timed_task in probe 6746780. Checkpoints kept:
+  timed_task in probe 6746780. **probe-p1.slurm GOTCHA: always pass
+  SHARDS_DIR** — without it the probe silently includes TRAINING rows
+  (header prints "training set was 0 shards"); first v4/v5 probe attempt
+  (6749312/6749314) was discarded for exactly this. Corrected:
+  6751164 (v4) / 6751180 (v5). Checkpoints kept:
   runs/p1-v1-32step, runs/p1-v2-400step-unweighted, runs/p1-v3, p1-v4, p1-v5.
   **Hours-scale begun (2026-09-18): `synth-big1` = 256 scenarios, 2.2 h,
   1h24m GPU (0.85 GPU-h/audio-h), 182/256 pass (71%), WER median 0.018 /
