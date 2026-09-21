@@ -180,6 +180,17 @@ Read this first in a fresh chat. Everything below is decided and documented.
   pen 10 swamped w50. Dial bracketed: pen 0 → timing learns + ~150
   steals/lesson; pen 10 → nothing. Next probe: pen 2. Ledger +
   post-mortems: EXPERIMENTS.md.**
+  **v10 VERDICT (6762715→6762716, k1 w50 + thief-penalty 2): rare-token
+  thief FIXED (1–2 steals/lesson, bar ≲5) and sil is the best of any
+  w50 run (99.2–100% acc, prob 0.93–0.98) — but the tax's cliff sits
+  between pen 0 and pen 2: t+30s died anyway (prob 0.003–0.013, 0/6),
+  t+5s weak (prob 0.010–0.352, 0/4), yield 0. THE BOTTLENECK MOVED: the
+  dominant exam error is now <sil> eating word positions (21–30/lesson)
+  and words are below even unweighted v2 (0–19.4% vs v2's 20–48%) —
+  every weighted run degraded speaking. The gate's failing tests (t1/t2/
+  t4) are speaking failures; passing (t3/t5) are quiet tests. Live gate
+  on v10 launched for the A/B (6763949). DECISION POINT: next GPU-hours
+  go to word-beat reliability, not more rare-token/countdown surgery.**
   **EVAL-GATE PATH BUILT (2026-09-21, pre-verdict): `layera/duplex.py`
   (DuplexThinker — M1 append-only tick loop + checkpoint deltas +
   trained-model emission decisions; mask = chat envelope only, the

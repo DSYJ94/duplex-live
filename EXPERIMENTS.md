@@ -35,6 +35,11 @@ Pass the token exam AND the conversation gate:
 | v7 | 6756309 → 6756310 | 80 shards × **w30** | 0% prob 0.014–0.032 ❌ | **learned**: 1/6 at 100% (prob 0.772), rest 0.047–0.372 | 95.0–99.8% ✓ (mild thief: 4–5 steals/lesson) | 0% | ok | t+5s crosses between w10–w30; t+30s needs ~w50; non-monotonic: t+30s DROPPED vs w10 (frequent t+5s grabs capacity first) |
 | v8 | 6756384 → 6756385 | 80 shards × **class-cost 50** | 0% prob 0.000 | 0% prob 0.000 | 99.3–100% but prob **flat 0.250** everywhere | prob 0.250, acc 0 | ~0 | **FAILED — math bug (below). Loss was label-blind; model only learned "never say rare words"** |
 | **v9** | 6758553 → 6758554 | 80 shards × **w50 + thief-penalty 10** | 0% prob 0.000 | 0% prob 0.000–0.001 | **99.9–100% ✓ prob 0.958–0.995 (best ever)** | 0% | 0.00–0.13 ❌ | **OVER-SUPPRESSED — "the Monk": perfect silence, everything else dead. The tax fires at every non-rare spot (~1500/lesson) vs the up-push's ~1, so pen 10 swamped w50. Bracket: pen 0 → timing 50% + ~150 steals/lesson; pen 10 → nothing. Next: pen 2** |
+| **v10** | 6762715 → 6762716 | 80 shards × **w50 + thief-penalty 2** | 0% prob 0.003–0.013 ❌ (0/6) | alive but weak: prob 0.010–0.352, acc 0/4 | **99.2–100% ✓✓ prob 0.932–0.982** | 0% | 0–19.4%, and `<sil>` steals 21–30 word spots/lesson | **Rare-token thief FIXED** (1–2 steals/lesson, bar was ≲5). But the tax's cliff sits between pen 0 and pen 2: t+30s died anyway. New finding: the dominant error is now `<sil>` eating WORD positions — under-speaking is the live gate's real bottleneck (t1/t2/t4) |
+
+Penalty dial, fully bracketed at w50: **pen 0** → t+30s 50% + ~150 steals; **pen 2** → sil perfect, rare-thief fixed, t+5s weak, t+30s dead; **pen 10** → nothing. The cliff is between 0 and 2; bisecting it buys t+30s recall that the free-run diagnostic already showed needs gold priming to fire live — low value for the gate.
+
+**The bottleneck moved.** Words: v2 (unweighted) 20–48% acc — every weighted run since degraded speaking (v3 halved, v9 zeroed, v10 0–19%). The gate's failing tests (t1 answers late, t2 silent post-barge, t4 early on two-parter) are all SPEAKING-decision failures; the passing ones (t3/t5) are quiet tests. Next lever is word-beat reliability, not more rare-token surgery.
 
 ## Live-gate result #1: v3 (T1–T5, job 6762718, runs/harness-layera-p1-v3)
 
