@@ -101,10 +101,21 @@ Read this first in a fresh chat. Everything below is decided and documented.
   (`prepare.slurm PER_CLASS=10`), 400 steps ≈ 57 min, loss → 0.19.**
   Probe v2 (6745751, timed_task held-out): `<sil>` 99.4–99.7%, word
   pieces 20–48%, **`<t+Ns>` STILL 0%** — root cause: ~30 timing positions
-  in ~50k graded (0.06%). Fix in flight: class-weighted CE (timing 50×,
-  `train_p1.py`). v3 = job 6746779 (STEPS=400, OUT=runs/p1-v3) chained
-  with probe 6746780 (CLASSES=timed_task,barge_in). Checkpoints kept:
-  runs/p1-v1-32step, runs/p1-v2-400step-unweighted, runs/p1-v3 (v3).
+  in ~50k graded (0.06%). NOTE: v2 trained into `runs/p1-v1` (default OUT
+  before parametrization) and was renamed; the true v1 32-step checkpoint
+  survives in `runs/p1-v1-32step` (verified via the `args` dict saved
+  inside each checkpoint).
+  **v3 (job 6746779, timing×50 weighted CE): MIXED — `<t+30s>` 0%→50%
+  acc (prob ~0.55) on held-out, FIRST timing learning; but cost: `<sil>`
+  99.5%→53.8/67.7% on 2 of 4 held-out scenarios, words roughly halved.
+  The 50× push drags the shared context; everything else pays.**
+  Dose-response pair in flight (one dial each, ~75 min): **v4 =
+  TIMING_WEIGHT=10** (job pair via runs/p1-v4); **v5 = TIMING_WEIGHT=1
+  + timed_task shards oversampled 5× (`runs/shards-v5`)**. Probes use
+  env inheritance (NOT `--export`) for comma values — `--export` splits
+  on commas, which silently truncated CLASSES=timed_task,barge_in to
+  timed_task in probe 6746780. Checkpoints kept:
+  runs/p1-v1-32step, runs/p1-v2-400step-unweighted, runs/p1-v3, p1-v4, p1-v5.
   **Hours-scale begun (2026-09-18): `synth-big1` = 256 scenarios, 2.2 h,
   1h24m GPU (0.85 GPU-h/audio-h), 182/256 pass (71%), WER median 0.018 /
   p90 0.111.** **VOLUME TARGET CLOSED (2026-09-19): 50.43 h gate-passed /

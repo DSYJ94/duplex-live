@@ -33,6 +33,10 @@ def main() -> None:
     ap.add_argument("--batch", required=True, help="factory batch (grids+stems)")
     ap.add_argument("--steps", type=int, default=32)
     ap.add_argument("--lr", type=float, default=1e-3)
+    ap.add_argument("--timing-weight", type=float, default=50.0,
+                    help="loss weight on <t+Ns> positions; 1.0 = plain CE "
+                         "(v3: 50x taught <t+30s> 0->50%% but cost <sil> "
+                         "99->54-68%% and halved words on held-out)")
     ap.add_argument("--out", default="runs/p1-v1")
     args = ap.parse_args()
 
@@ -137,7 +141,7 @@ def main() -> None:
             w = torch.ones_like(per_tok)
             is_timing = (labels.reshape(-1).unsqueeze(-1)
                          == timing_ids.unsqueeze(0)).any(-1)
-            w = w.masked_fill(is_timing, 50.0)
+            w = w.masked_fill(is_timing, args.timing_weight)
             loss = (per_tok * w).sum() / w.sum()
             opt.zero_grad(set_to_none=True)
             loss.backward()
