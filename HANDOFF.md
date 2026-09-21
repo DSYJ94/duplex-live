@@ -152,6 +152,13 @@ Read this first in a fresh chat. Everything below is decided and documented.
   Single-variable change from v3. FULL ABLATION LEDGER: EXPERIMENTS.md
   (per-run recipes, exam numbers, verdicts — keep current with every
   run).**
+  **v9 VERDICT (6758553→6758554, k1 w50 + thief-penalty 10): FAILED —
+  over-suppression ("the Monk"): sil 99.9–100% acc / prob 0.958–0.995
+  (best ever) but t+30s, t+5s, yield, words ALL ≈0.000. The tax fires at
+  every non-rare position (~1500/lesson) vs the up-push's ~1/lesson, so
+  pen 10 swamped w50. Dial bracketed: pen 0 → timing learns + ~150
+  steals/lesson; pen 10 → nothing. Next probe: pen 2. Ledger +
+  post-mortems: EXPERIMENTS.md.**
   **EVAL-GATE PATH BUILT (2026-09-21, pre-verdict): `layera/duplex.py`
   (DuplexThinker — M1 append-only tick loop + checkpoint deltas +
   trained-model emission decisions; mask = chat envelope only, the
