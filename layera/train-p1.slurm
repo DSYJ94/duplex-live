@@ -25,6 +25,7 @@ EXTRA=()
 [ -n "${TIMING_WEIGHT:-}" ] && EXTRA+=(--timing-weight "$TIMING_WEIGHT")
 [ -n "${WEIGHT_YIELD:-}" ] && EXTRA+=(--weight-yield)
 [ -n "${CLASS_COST:-}" ] && EXTRA+=(--class-cost "$CLASS_COST")
+[ -n "${THIEF_PENALTY:-}" ] && EXTRA+=(--thief-penalty "$THIEF_PENALTY")
 
 apptainer exec --nv --bind /projects,/lus,/home \
     --env PYTHONPATH=$PYTHONPATH --env HF_HOME=$HF_HOME --env TMPDIR=$TMPDIR \

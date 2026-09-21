@@ -133,10 +133,25 @@ Read this first in a fresh chat. Everything below is decided and documented.
   same pattern). Timing recall fine; precision broken. Per-position
   weights boost the up-push but the down-push at sil positions stays
   weight 1.**
-  **v8 IN FLIGHT (6756384→6756385): --class-cost 50 — per-CLASS cost CE
-  (L_t = Σ_j c_j·p_j − c_{y_t}): rare tokens cost extra as the correct
-  answer AND as a wrong prediction anywhere. v3's timing teaching + the
-  missing down-push. Standard 80-shard mix, 400 steps.**
+  **v7 VERDICT (6756309→6756310, k1 w30): t+5s LEARNED (1/6 scenarios
+  100% acc prob 0.772; rest 0.047–0.372) with MILD over-firing (4–5
+  sil steals/lesson — ~100× better than v3); t+30s NOT learned (prob
+  0.014–0.032 — LOWER than v4's 0.15: at this dose the frequent t+5s
+  grabs capacity first); sil 95.0–99.8%; yield 0%. Thresholds: t+5s
+  crosses between w10 and w30; t+30s needs ~w50.**
+  **v8 VERDICT (6756384→6756385, k1 class-cost 50): FAILED — label-blind
+  loss. ∂L/∂z_k = p_k(c_k − E[c]); the −c_y term is a CONSTANT so the
+  correct answer never enters the gradient — the only learnable content
+  was "suppress rare tokens everywhere". Exam: t+*s prob 0.000 in all 8
+  scenarios; sil acc 99.3–100% but prob flat 0.250 everywhere (learned
+  constant, zero context); yield prob 0.250 acc 0; words ~0.
+  --class-cost kept for the record; superseded by --thief-penalty.**
+  **v9 LAUNCHED (2026-09-21): k1 w50 + --thief-penalty 10 — v3's proven
+  up-push (label-dependent weighted CE) + a separate down-push taxing
+  rare-token mass ONLY where the label is not rare (the thief's turf).
+  Single-variable change from v3. FULL ABLATION LEDGER: EXPERIMENTS.md
+  (per-run recipes, exam numbers, verdicts — keep current with every
+  run).**
   **EVAL-GATE PATH BUILT (2026-09-21, pre-verdict): `layera/duplex.py`
   (DuplexThinker — M1 append-only tick loop + checkpoint deltas +
   trained-model emission decisions; mask = chat envelope only, the
@@ -147,7 +162,7 @@ Read this first in a fresh chat. Everything below is decided and documented.
   chunk) + `evals/layera-live.slurm` (CKPT env, TESTS env). Run:
   `sbatch evals/layera-live.slurm` after a cluster `git pull`. Replay
   metrics score T1–T5 from the wav envelope exactly as for MiniCPM.**
-  v7 midpoint (k1, w30) running 6756309→6756310.
+  (v7/v8 done — verdicts above; per-run ledger lives in EXPERIMENTS.md.)
   Probes use
   env inheritance (NOT `--export`) for comma values — `--export` splits
   on commas, which silently truncated CLASSES=timed_task,barge_in to

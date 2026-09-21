@@ -44,12 +44,21 @@ def main() -> None:
                          "(v4 probe: 0%% on held-out; v5 showed yield "
                          "responds to data, timing only to weight)")
     ap.add_argument("--class-cost", type=float, default=0.0,
-                    help="per-CLASS cost (v8): rare tokens cost this much "
-                         "both when correct AND when wrongly predicted at "
-                         "any position. v3 thief analysis: sil 'damage' = "
-                         "t+30s over-firing at sil positions (584/588 "
-                         "steals); per-position weights boost only the "
-                         "up-push — this adds the down-push")
+                    help="per-CLASS cost (v8). RESULT: label-blind — "
+                         "dL/dz_k = p_k(c_k - E[c]) and -c_y is a constant, "
+                         "so the correct answer never enters the gradient; "
+                         "the model only learns 'never emit rare tokens' "
+                         "(v8 probe: t+*s prob 0.000, sil/yield stuck at a "
+                         "flat 0.250 in every scenario). Superseded by "
+                         "--thief-penalty (v9)")
+    ap.add_argument("--thief-penalty", type=float, default=0.0,
+                    help="v9: down-push on rare-token probability mass at "
+                         "positions whose label is NOT a rare token. The "
+                         "correct v8: the 50x up-push stays in the weighted "
+                         "CE (label-dependent), the thief tax is separate "
+                         "and only fires where rare tokens are wrong — "
+                         "v3's failure was exactly that (t+30s stealing "
+                         "584/588 sil spots)")
     ap.add_argument("--out", default="runs/p1-v1")
     args = ap.parse_args()
 
@@ -175,6 +184,23 @@ def main() -> None:
                            == rare_ids.unsqueeze(0)).any(-1)
                 w = w.masked_fill(is_rare, args.timing_weight)
                 loss = (per_tok * w).sum() / w.sum()
+                if args.thief_penalty > 0:
+                    # v9 down-push: how much probability the model puts on
+                    # rare tokens at positions whose label is NOT rare
+                    # (thief territory). logsumexp form avoids building the
+                    # full (N, V) probability matrix.
+                    V = logits.shape[-1]
+                    z = logits.reshape(-1, V).float()
+                    logZ = torch.logsumexp(z, -1)
+                    zr = z[:, rare_ids]
+                    rare_mass = torch.exp(torch.logsumexp(zr, -1) - logZ)
+                    y = labels.reshape(-1)
+                    y_rare = (y.unsqueeze(-1)
+                              == rare_ids.unsqueeze(0)).any(-1)
+                    valid = y.ne(-100)
+                    pen = (rare_mass * (~y_rare).float()
+                           * valid.float()).sum() / valid.sum()
+                    loss = loss + args.thief_penalty * pen
             opt.zero_grad(set_to_none=True)
             loss.backward()
             opt.step()
