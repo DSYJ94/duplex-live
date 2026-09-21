@@ -93,10 +93,18 @@ Read this first in a fresh chat. Everything below is decided and documented.
   Also: thinker `text_config.tie_word_embeddings=False` → embed and head
   are SEPARATE tensors; checkpoint saves both deltas
   (emb_delta_new_rows + head_delta_new_rows). Jobs: 6728087/6728254/6728411
-  OOMed, **6728455 (eager) outcome unverified — check
-  `repo/logs/p1-train-6728455.out` + `runs/p1-v1/train.jsonl` on next
-  SSH.** Goal: first gradient + loss curve, then scale shards (LIMIT=8
-  now) and steps toward the eval-harness gate.
+  OOMed, 6728455 (eager) SUCCEEDED (32 steps, loss 10.4→~0.9).
+  **Probe v1 (held-out, job 6742556): `<sil>` 0% → 95–98% acc on unseen
+  lessons; word pieces improved (not a silence collapse); `<t+Ns>` 0% —
+  data gap (those lessons contained almost no timing tokens).**
+  **v2 (job 6742755, 2026-09-21): 80 class-balanced shards
+  (`prepare.slurm PER_CLASS=10`), 400 steps ≈ 57 min, loss → 0.19.**
+  Probe v2 (6745751, timed_task held-out): `<sil>` 99.4–99.7%, word
+  pieces 20–48%, **`<t+Ns>` STILL 0%** — root cause: ~30 timing positions
+  in ~50k graded (0.06%). Fix in flight: class-weighted CE (timing 50×,
+  `train_p1.py`). v3 = job 6746779 (STEPS=400, OUT=runs/p1-v3) chained
+  with probe 6746780 (CLASSES=timed_task,barge_in). Checkpoints kept:
+  runs/p1-v1-32step, runs/p1-v2-400step-unweighted, runs/p1-v3 (v3).
   **Hours-scale begun (2026-09-18): `synth-big1` = 256 scenarios, 2.2 h,
   1h24m GPU (0.85 GPU-h/audio-h), 182/256 pass (71%), WER median 0.018 /
   p90 0.111.** **VOLUME TARGET CLOSED (2026-09-19): 50.43 h gate-passed /
