@@ -18,6 +18,8 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
+from collections import defaultdict
 from pathlib import Path
 
 import numpy as np
@@ -117,6 +119,9 @@ def main() -> None:
     ap.add_argument("--batch", required=True, help="factory batch dir (audio/)")
     ap.add_argument("--out", required=True)
     ap.add_argument("--limit", type=int, default=8)
+    ap.add_argument("--per-class", type=int, default=None,
+                    help="N scenarios per class (class = id prefix before "
+                         "the trailing number) instead of --limit total")
     args = ap.parse_args()
 
     from transformers import AutoProcessor, Qwen3OmniMoeThinkerForConditionalGeneration
@@ -139,7 +144,19 @@ def main() -> None:
     out.mkdir(parents=True, exist_ok=True)
     batch = Path(args.batch)
     rows = [json.loads(l) for l in open(batch / "train_manifest.jsonl")]
-    for i, row in enumerate(rows[:args.limit]):
+    if args.per_class:
+        groups: dict[str, list] = defaultdict(list)
+        for row in rows:
+            cls = re.sub(r"-\d+$", "", row["scenario_id"])
+            groups[cls].append(row)
+        picked = []
+        for cls in sorted(groups):
+            picked.extend(groups[cls][:args.per_class])
+        print(f"[prep] per-class {args.per_class}: {len(picked)} scenarios "
+              f"across {len(groups)} classes", flush=True)
+    else:
+        picked = rows[:args.limit]
+    for row in picked:
         sc_dir = batch / row["dir"]
         shard = prepare_scenario(model, proc, sc_dir, proc.tokenizer)
         torch.save(shard, out / f"{shard['scenario_id']}.pt")
