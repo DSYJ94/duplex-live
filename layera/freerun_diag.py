@@ -71,6 +71,7 @@ def main() -> None:
     mask_ids = [i for i in proc.tokenizer.all_special_ids
                 if i not in duplex_ids]
     pad_id = proc.tokenizer.convert_tokens_to_ids("<|audio_pad|>")
+    tok_conv = proc.tokenizer.convert_tokens_to_ids
     emb_layer = model.get_input_embeddings()
 
     # ---- ear token-rate alignment -------------------------------------
@@ -137,15 +138,18 @@ def main() -> None:
             for tid in mask_ids:
                 logits[tid] = float("-inf")
             tok_pick = int(logits.argmax())
-            gold_tok = grid.ticks[i].emission
-            gold = gold_tok if gold_tok in ALL_SPECIAL else "<word>"
-            if gold == SIL:
-                gold = "<sil>"
+            gold_name = grid.ticks[i].emission
+            if gold_name in ALL_SPECIAL:
+                gold_id = tok_conv(gold_name)
+                gold = "<sil>" if gold_name == SIL else gold_name
+            else:
+                gold_id = None
+                gold = "<word>"
             kind = kind_of(tok_pick)
             e = per[gold]
             e[0] += 1
-            ok = (kind == "word") if gold == "<word>" else \
-                (tok_pick == gold_tok)
+            ok = (kind == "word") if gold_id is None else \
+                (tok_pick == gold_id)
             e[1] += int(ok)
             if not ok:
                 e[2][name_of.get(tok_pick, kind)] += 1
@@ -154,10 +158,8 @@ def main() -> None:
                 recovered += 1
                 wrong_streak = 0
             # feed the emission (gold or own) back into the KV
-            feed_tok = gold_tok if (not free and gold_tok in ALL_SPECIAL) \
+            feed_tok = gold_id if (not free and gold_id is not None) \
                 else tok_pick
-            if not free and gold == "<word>":
-                feed_tok = tok_pick  # words stay as-is (BPE not replayed)
             e_out = emb_layer(torch.tensor([[feed_tok]],
                                            device=model.device))
             with torch.no_grad():
