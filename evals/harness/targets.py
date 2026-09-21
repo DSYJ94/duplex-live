@@ -41,6 +41,9 @@ class Target(abc.ABC):
     def finish(self) -> dict:  # optional teardown
         return {}
 
+    def reset(self) -> None:  # fresh session between tests
+        return None
+
 
 class MiniCPMDuplexTarget(Target):
     """MiniCPM-o 4.5 duplex session (1 s chunks), as in the bake-off."""
@@ -191,6 +194,11 @@ class LayerATarget(Target):
                     "is_listen": not self._speaking})
         return rec
 
+    def reset(self) -> None:
+        self.thinker.reset()
+        self._placed = []
+        self._speaking = False
+
     def render(self, total_s: float) -> np.ndarray:
         """Assemble model_out.wav from the placed speaking beats. One
         tone-length of headroom: the last beats can sit a step past the
@@ -209,6 +217,8 @@ def run_live(target: Target, tests: dict, out_root: Path,
     import librosa
 
     for name, (spec, total_s) in tests.items():
+        if hasattr(target, "reset"):
+            target.reset()  # fresh session per test — no cross-talk
         out_dir = out_root / name
         out_dir.mkdir(parents=True, exist_ok=True)
         timeline = np.zeros(total_s * SR_IN, dtype=np.float32)

@@ -150,6 +150,12 @@ class DuplexThinker:
         self.cache = out.past_key_values
         return tok, t_s, time.time() - t0
 
+    def reset(self) -> None:
+        """Fresh session: clear KV memory, audio buffer, and clock."""
+        self.cache = None
+        self._pcm = np.zeros(0, dtype=np.float32)
+        self._t_s = 0.0
+
     def feed_audio(self, pcm_16k: np.ndarray) -> list[tuple[int, float]]:
         """Absorb user audio; one decision per ear feature. Returns
         (token, audio_t_s) pairs — timestamps let the harness place
