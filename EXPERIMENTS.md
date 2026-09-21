@@ -36,6 +36,30 @@ Pass the token exam AND the conversation gate:
 | v8 | 6756384 → 6756385 | 80 shards × **class-cost 50** | 0% prob 0.000 | 0% prob 0.000 | 99.3–100% but prob **flat 0.250** everywhere | prob 0.250, acc 0 | ~0 | **FAILED — math bug (below). Loss was label-blind; model only learned "never say rare words"** |
 | **v9** | 6758553 → 6758554 | 80 shards × **w50 + thief-penalty 10** | 0% prob 0.000 | 0% prob 0.000–0.001 | **99.9–100% ✓ prob 0.958–0.995 (best ever)** | 0% | 0.00–0.13 ❌ | **OVER-SUPPRESSED — "the Monk": perfect silence, everything else dead. The tax fires at every non-rare spot (~1500/lesson) vs the up-push's ~1, so pen 10 swamped w50. Bracket: pen 0 → timing 50% + ~150 steals/lesson; pen 10 → nothing. Next: pen 2** |
 
+## Live-gate result #1: v3 (T1–T5, job 6762718, runs/harness-layera-p1-v3)
+
+**FAIL 1/5** — t1 no answers, t2 never replied after barge, t4 no part2
+answer, t5 engaged 22.0 s with background speech. t3 "passes" as a
+metric artifact (counts quiet-downs; v3 never goes quiet).
+
+Log counters tell the real story: in EVERY test the model emits
+word-type beats in 100% of chunks (constant tone, listen=False
+throughout), decodable text ≈ 0 (one chunk emitted `<|im_start|>`), and
+it never once chose sil/yield/timing in the live domain. **v3 live =
+one uninterrupted utterance.**
+
+**Root-cause candidates (free-run diagnostic pending):**
+1. *Acoustic domain shift* — the exam is teacher-forced on factory TTS;
+   the live prompts are bake-off voices (different level/character).
+2. *Exposure bias* — the exam feeds gold history; live, the model eats
+   its own wrong beats. One babble flips the context and nothing in
+   training taught it to return to `<sil>` from a dirty context.
+   Either way the lesson stands: **the teacher-forced exam is
+   necessary but not sufficient — free-running behavior needs its own
+   bar.** Cheap decode-side note: in Phase-1 the specific old-vocab
+   word emitted does not matter (voice is M2; tone = decision), so the
+   gate only needs WHEN, not WHAT.
+
 ## The v8 post-mortem (why class-cost failed)
 
 Intended: rare tokens cost extra BOTH when correct (up-push) AND when
