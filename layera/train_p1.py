@@ -59,6 +59,16 @@ def main() -> None:
                          "and only fires where rare tokens are wrong — "
                          "v3's failure was exactly that (t+30s stealing "
                          "584/588 sil spots)")
+    ap.add_argument("--word-weight", type=float, default=1.0,
+                    help="v11: loss weight on WORD positions (labels that "
+                         "are regular-vocab tokens). <sil> covers ~95%%+ "
+                         "of graded ticks, so every model — even "
+                         "unweighted v2 — learns a silence attractor and "
+                         "mutes live (all three gates 2/5, t1 zero word "
+                         "beats). Same lever that taught timing, aimed at "
+                         "speaking. Bracket per cliffs-not-slopes: 3, "
+                         "then 10 if words don't move, 1.5 if sil "
+                         "control breaks")
     ap.add_argument("--out", default="runs/p1-v1")
     args = ap.parse_args()
 
@@ -183,6 +193,13 @@ def main() -> None:
                 is_rare = (labels.reshape(-1).unsqueeze(-1)
                            == rare_ids.unsqueeze(0)).any(-1)
                 w = w.masked_fill(is_rare, args.timing_weight)
+                if args.word_weight != 1.0:
+                    # v11 speak-up: word-label positions (regular-vocab
+                    # gold, i.e. < n_old) vs the 95%-silence background.
+                    # Disjoint from rare positions by construction.
+                    y = labels.reshape(-1)
+                    is_word = y.ne(-100) & y.lt(n_old)
+                    w = w.masked_fill(is_word, args.word_weight)
                 loss = (per_tok * w).sum() / w.sum()
                 if args.thief_penalty > 0:
                     # v9 down-push: how much probability the model puts on
