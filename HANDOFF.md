@@ -199,6 +199,16 @@ Read this first in a fresh chat. Everything below is decided and documented.
   v2 (unweighted best-speaker, no timing) live gate launched (6764321)
   — if it beats 2/5 the T-gate needs only word+sil decisions and the
   recipe question becomes "inject timing without damaging speaking".**
+  **LIVE GATE #4 (v2 baseline, 6764321): PASS 2/5 — ALL THREE ckpts
+  pass 2/5; the gate is bottlenecked on speech production, not style.
+  v2 is the only one that ever replied post-barge (1600 ms vs 800 bar;
+  barge→sil 1760 ms) but it ALSO mutes on t1 (0 beats) and misplaces
+  speech on t5 (10 word beats into background chatter, 0.48 s). So
+  under-speaking is STRUCTURAL: sil covers ~95%+ of training ticks and
+  every model, even unweighted, learns a silence attractor. Full
+  three-way table: EXPERIMENTS.md. Next lever: weighted-CE on WORD
+  positions (weight 1 today vs 95% sil background), doses bracketed.
+  AWAITING USER DECISION on the next training run (stop-agreement).**
   **EVAL-GATE PATH BUILT (2026-09-21, pre-verdict): `layera/duplex.py`
   (DuplexThinker — M1 append-only tick loop + checkpoint deltas +
   trained-model emission decisions; mask = chat envelope only, the

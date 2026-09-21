@@ -92,6 +92,32 @@ UNDER-SPEAKING, and the unweighted v2 (words 20–48%, sil 99.4%, zero
 timing knowledge) has never been live-gated. The T-tests need only
 word+silence decisions — v2's strengths. Result pending (6764321).
 
+## Live-gate result #4: v2 baseline (6764321) — the three-way picture
+
+| test | v3 (w50) | v10 (w50+pen2) | v2 (unweighted) | bar |
+|------|----------|----------------|-----------------|-----|
+| t1 answers | late, p50 14.9 s | **mute (0 beats)** | **mute (0 beats)** | p50 ≤1500 ms |
+| t2 reply post-barge | never | never | **replied 1600 ms**; barge→sil 1760 | ≤800 ms |
+| t3 backchannels | PASS | PASS | PASS | 0 yields |
+| t4 two-parter | spoke during part 1 | mute | 1 beat, no part 2 | part 2 answered |
+| t5 background | PASS 0.72 s | PASS 0.0 s | PASS 0.48 s | ≤2.0 s |
+| word beats total | ~45 | **0** | 25 (but 10 on t5 — misplacing) | — |
+
+**Verdict: all three pass 2/5. The gate is bottlenecked on speech
+PRODUCTION, not style.** v2 is the only checkpoint that ever replied
+after a barge (1600 ms — exists, 2× too slow). But v2 also MUTES on t1,
+so under-speaking is structural, not a weighting artifact: `<sil>` covers
+~95%+ of training ticks, so every model learns a silence attractor it
+can't break out of at inference — even the unweighted one. v2 also shows
+the opposite failure (10 word beats on t5, engaging background speech).
+
+**Decision point for the next training run:** the lever that fits is
+the proven weighted-CE applied to WORD positions (currently weight 1
+against a 95% silence background). Doses bracketed per the
+cliffs-not-slopes rule. Each dose ≈ 1.1 GPU-h (55 min train + 10 min
+exam), and the exam now predicts the gate, so only borderline exams
+need the gate rerun.
+
 ## Free-run diagnostic (6762966 crashed on a type slip → 6762979, v3 ckpt)
 
 Replays held-out factory lessons in the EXACT training format, twice:
