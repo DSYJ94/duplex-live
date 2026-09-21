@@ -28,6 +28,12 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--batch", required=True, help="factory batch (grids+stems)")
     ap.add_argument("--ckpt", required=True)
+    ap.add_argument("--shards", default=None,
+                    help="training shard dir — those scenario ids are "
+                         "excluded from probing")
+    ap.add_argument("--classes", default=None,
+                    help="comma list of class prefixes to probe "
+                         "(e.g. timed_task,barge_in); default = manifest order")
     ap.add_argument("--skip", type=int, default=8,
                     help="manifest rows to skip (0..skip-1 = training set)")
     ap.add_argument("--limit", type=int, default=4)
@@ -75,10 +81,23 @@ def main() -> None:
 
     batch = Path(args.batch)
     rows = [json.loads(l) for l in open(batch / "train_manifest.jsonl")]
-    held = rows[args.skip:args.skip + args.limit]
+    train_ids = set()
+    if args.shards:
+        train_ids = {Path(s).stem for s in Path(args.shards).glob("*.pt")}
+    held = []
+    for r in rows:
+        sid = r["scenario_id"]
+        if sid in train_ids:
+            continue
+        if args.classes and not sid.startswith(
+                tuple(c.strip() for c in args.classes.split(","))):
+            continue
+        held.append(r)
+        if len(held) >= args.limit:
+            break
     print(f"[probe] {len(held)} held-out scenarios "
-          f"(rows {args.skip}..{args.skip + len(held) - 1}; "
-          f"training set was rows 0..{args.skip - 1})", flush=True)
+          f"(classes={args.classes or 'all'}; "
+          f"training set was {len(train_ids)} shards)", flush=True)
 
     report = {}
     for r in held:
