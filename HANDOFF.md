@@ -137,6 +137,16 @@ Read this first in a fresh chat. Everything below is decided and documented.
   (L_t = Σ_j c_j·p_j − c_{y_t}): rare tokens cost extra as the correct
   answer AND as a wrong prediction anywhere. v3's timing teaching + the
   missing down-push. Standard 80-shard mix, 400 steps.**
+  **EVAL-GATE PATH BUILT (2026-09-21, pre-verdict): `layera/duplex.py`
+  (DuplexThinker — M1 append-only tick loop + checkpoint deltas +
+  trained-model emission decisions; mask = chat envelope only, the
+  duplex ids MUST stay decodable since register_into marks them special)
+  + `evals/harness/targets.py` LayerATarget (1 s chunk → 12-13 ticks;
+  word beats emit a synthetic 220 Hz tone — voice is M2 — so the energy
+  metrics measure speaking DECISIONS; n_timing/n_yield logged per
+  chunk) + `evals/layera-live.slurm` (CKPT env, TESTS env). Run:
+  `sbatch evals/layera-live.slurm` after a cluster `git pull`. Replay
+  metrics score T1–T5 from the wav envelope exactly as for MiniCPM.**
   v7 midpoint (k1, w30) running 6756309→6756310.
   Probes use
   env inheritance (NOT `--export`) for comma values — `--export` splits
