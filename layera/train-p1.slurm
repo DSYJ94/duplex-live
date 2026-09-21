@@ -18,11 +18,12 @@ export HF_HOME=$DL/models/hf-cache TMPDIR=$DL/tmp PYTHONPATH=$DL/pylibs:$REPO
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 
 STEPS=${STEPS:-32}
+OUT=${OUT:-$DL/runs/p1-v1}
 
 apptainer exec --nv --bind /projects,/lus,/home \
     --env PYTHONPATH=$PYTHONPATH --env HF_HOME=$HF_HOME --env TMPDIR=$TMPDIR \
     /projects/u6si/containers/latentsprites-pytorch-25.05.sif \
     python -u -m layera.train_p1 --shards $DL/runs/shards \
-    --batch $DL/runs/synth-big7/audio --steps "$STEPS" --out $DL/runs/p1-v1
+    --batch $DL/runs/synth-big7/audio --steps "$STEPS" --out "$OUT"
 
-echo "[p1] checkpoint: $DL/runs/p1-v1"
+echo "[p1] checkpoint: $OUT"

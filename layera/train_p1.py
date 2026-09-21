@@ -42,7 +42,7 @@ def main() -> None:
 
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
     from layera.sampler import build_from_grid, collate
-    from tokenizer.vocab import register_into
+    from tokenizer.vocab import register_into, TIMING_BUCKETS_S
 
     model = Qwen3OmniMoeThinkerForConditionalGeneration.from_pretrained(
         "Qwen/Qwen3-Omni-30B-A3B-Instruct", dtype="bfloat16", device_map="auto",
@@ -92,6 +92,13 @@ def main() -> None:
           flush=True)
     assert flagged > 0, "gradient checkpointing did not engage"
 
+    # class-weighted loss: timing tokens are ~0.06% of graded positions
+    # (a handful per lesson vs hundreds of <sil>), so plain CE never moves
+    # them — v2 probe: <sil> 99.5% on held-out, <t+Ns> 0%. Weight them up.
+    timing_ids = torch.tensor(
+        [proc.tokenizer.convert_tokens_to_ids(f"<t+{n}s>")
+         for n in TIMING_BUCKETS_S], device=model.device)
+
     shards = sorted(Path(args.shards).glob("*.pt"))
     batch = Path(args.batch)
     rows = [json.loads(l) for l in open(batch / "train_manifest.jsonl")]
@@ -124,9 +131,14 @@ def main() -> None:
             # causal shift: logits[t] predicts labels[t+1]
             logits = out_logits[:, :-1]
             labels = batch_in["labels"][:, 1:]
-            loss = torch.nn.functional.cross_entropy(
+            per_tok = torch.nn.functional.cross_entropy(
                 logits.reshape(-1, logits.shape[-1]).float(),
-                labels.reshape(-1), ignore_index=-100)
+                labels.reshape(-1), ignore_index=-100, reduction="none")
+            w = torch.ones_like(per_tok)
+            is_timing = (labels.reshape(-1).unsqueeze(-1)
+                         == timing_ids.unsqueeze(0)).any(-1)
+            w = w.masked_fill(is_timing, 50.0)
+            loss = (per_tok * w).sum() / w.sum()
             opt.zero_grad(set_to_none=True)
             loss.backward()
             opt.step()
