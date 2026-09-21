@@ -120,10 +120,17 @@ Read this first in a fresh chat. Everything below is decided and documented.
   timing learns); concentrating it in weight (v3) breaks <sil>; yield
   responds to data-spread. <yield> was a second rarity token (≈0.02% of
   graded) no weighting covered until now.**
-  **v6 IN FLIGHT (train 6751788 → probe 6751789): spread the ~50×
-  effective boost — `runs/shards-v6` (160 shards: timed_task AND
-  barge_in oversampled 5×), TIMING_WEIGHT=10, --weight-yield (new flag;
-  rare-token set = timing buckets + yield), STEPS=400, OUT=runs/p1-v6.**
+  **v6 RESULT (k5×w10 + yield weight): spread-boost FAILED. t+30s prob
+  0.000 exactly (same as unweighted) — adding data at fixed weight KILLED
+  the timing signal w10 alone had (v4: 0.15). Sil perfect (97-100%),
+  words best of any run (0.10-0.39), yield weaker than v5 (max 0.35).
+  DATA×WEIGHT law is dead; verified via checkpoint-args that the run
+  matched its design. Suspected AdamW scale-invariance weirdness — the
+  weight dial does not behave like a plain multiplier.**
+  **IN FLIGHT: thief probe 6756308** (v3 ckpt + new failure-argmax
+  histogram: WHAT token steals sil's positions in the two damaged
+  scenarios — name the thief before picking the lever) **and v7 midpoint
+  bisect 6756309→6756310** (k1 data, TIMING_WEIGHT=30, 400 steps).
   Probes use
   env inheritance (NOT `--export`) for comma values — `--export` splits
   on commas, which silently truncated CLASSES=timed_task,barge_in to
