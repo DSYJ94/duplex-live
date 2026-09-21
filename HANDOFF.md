@@ -209,6 +209,12 @@ Read this first in a fresh chat. Everything below is decided and documented.
   three-way table: EXPERIMENTS.md. Next lever: weighted-CE on WORD
   positions (weight 1 today vs 95% sil background), doses bracketed.
   AWAITING USER DECISION on the next training run (stop-agreement).**
+  **USER DECISION (2026-09-21): speak-up dose approved. v11 LAUNCHED
+  (6765121 → exam 6765122, chained afterok): w50 + thief-pen 2 +
+  --word-weight 3. Bracket plan: words flat on exam → 10; sil breaks →
+  1.5. Exam is the decision instrument; live gate rerun only if the
+  exam moves. New dial lives in train_p1.py (--word-weight) +
+  train-p1.slurm (WORD_WEIGHT env).**
   **EVAL-GATE PATH BUILT (2026-09-21, pre-verdict): `layera/duplex.py`
   (DuplexThinker — M1 append-only tick loop + checkpoint deltas +
   trained-model emission decisions; mask = chat envelope only, the

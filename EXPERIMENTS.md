@@ -41,6 +41,16 @@ Penalty dial, fully bracketed at w50: **pen 0** → t+30s 50% + ~150 steals; **p
 
 **The bottleneck moved.** Words: v2 (unweighted) 20–48% acc — every weighted run since degraded speaking (v3 halved, v9 zeroed, v10 0–19%). The gate's failing tests (t1 answers late, t2 silent post-barge, t4 early on two-parter) are all SPEAKING-decision failures; the passing ones (t3/t5) are quiet tests. Next lever is word-beat reliability, not more rare-token surgery.
 
+## v11 — the speak-up dose (user-approved direction, 2026-09-21)
+
+**Recipe: w50 + thief-pen 2 + `--word-weight 3` (jobs 6765121 → 6765122).**
+The same weighted-CE lever that taught timing, aimed at speaking: word-label
+positions (regular-vocab gold, < n_old) get loss weight 3 vs the ~95%
+silence background. Disjoint from rare positions by construction. Bracket
+plan per cliffs-not-slopes: words don't move on the exam → raise to 10;
+sil control breaks → drop to 1.5. Exam is the decision instrument (it
+predicts the gate — see live-gate #3); gate rerun only if the exam moves.
+
 ## Live-gate result #1: v3 (T1–T5, job 6762718, runs/harness-layera-p1-v3)
 
 **FAIL 1/5** — t1 no answers, t2 never replied after barge, t4 no part2
