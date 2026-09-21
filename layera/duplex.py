@@ -1,19 +1,27 @@
-"""DuplexThinker: a Phase-1 checkpoint behind a live tick loop.
+"""DuplexThinker v2: a Phase-1 checkpoint behind a live tick loop.
 
-M1's TickDriver proved audio can enter DURING generation (append-only KV).
-This is that loop with the two Phase-1 upgrades: the trained duplex-token
-rows are loaded from a checkpoint, and each beat's emission is the
-MODEL's decision instead of a scripted endpoint — <sil> keeps it quiet,
-word pieces speak, <yield> cuts speech when interrupted.
+v2 feeds audio EXACTLY like training. The freerun diagnostic (job
+6762979) showed why that matters: in the training format the checkpoint
+free-runs clean silence (sil acc 0.944 self-fed vs 0.383 teacher-forced
+on held-out timed_task-017); through the old chat-template/processor
+path the same checkpoint babbled old-vocab fragments 100% of the time.
+Format was the bug, not the model.
+
+The v2 contract (mirrors layera/prepare.encode_audio + sampler):
+  - no chat envelope — the stream starts at position 0
+  - audio enters as <|audio_pad|> embeddings overwritten by ear
+    (AuT tower) features computed over 4 s windows, ~52 feats per
+    window; one decision beat per feature
+  - each beat: audio feature in -> emission argmax (chat-envelope
+    specials masked, duplex tokens compete) -> emission embedding fed
+    back into the KV
 
 Voice-out (talker/code2wav) is M2: speaking beats are represented by a
 synthetic tone upstream (evals/harness LayerATarget) so energy metrics
-measure WHEN the model talks, not what it sounds like. Ticks are not
-real-time paced here — the harness replays offline; per-tick wall time is
-logged so serving-phase latency work stays measurable.
-
-  python -c "from layera.duplex import DuplexThinker; \
-             DuplexThinker('runs/p1-v3/p1_checkpoint.pt')"
+measure WHEN the model talks. Beats carry their audio timestamp so the
+harness can place output at the right wall-clock offset despite the
+windowed feature lag. Not real-time paced — the harness replays
+offline; per-beat wall time is logged for serving-phase work.
 """
 
 from __future__ import annotations
@@ -27,6 +35,8 @@ import numpy as np
 TICK_MS = 80
 SR_IN = 16000
 TICK_SAMPLES = int(SR_IN * TICK_MS / 1000)  # 1280
+WINDOW_S = 4.0
+WINDOW_SAMPLES = int(SR_IN * WINDOW_S)
 
 
 class DuplexThinker:
@@ -40,7 +50,7 @@ class DuplexThinker:
 
         t0 = time.time()
         # batched_mm experts for INFERENCE (eager is the training-only
-        # memory fix — see train_p1.py); append-only KV like M1
+        # memory fix — see train_p1.py)
         self.model = Qwen3OmniMoeThinkerForConditionalGeneration.from_pretrained(
             model_id, dtype="bfloat16", device_map="auto",
             attn_implementation="sdpa", experts_implementation="batched_mm",
@@ -59,24 +69,31 @@ class DuplexThinker:
             emb[self.n_old:] = mean.to(emb.dtype)
             head = self.model.lm_head.weight
             head[self.n_old:] = mean.to(head.dtype)
-        ck = torch.load(ckpt_path, weights_only=False, map_location="cpu")
-        with torch.no_grad():
-            emb[self.n_old:] = ck["emb_delta_new_rows"].to(emb.device, emb.dtype)
+            ck = torch.load(ckpt_path, weights_only=False,
+                            map_location="cpu")
+            emb[self.n_old:] = ck["emb_delta_new_rows"].to(emb.device,
+                                                           emb.dtype)
             head[self.n_old:] = ck["head_delta_new_rows"].to(head.device,
                                                              head.dtype)
 
         # chat-envelope specials only — the snapshot is taken AFTER
         # registration, so filter OUT the duplex ids: they must stay
-        # decodable (M1 masked all specials; M1 predates trained rows)
+        # decodable
         duplex_ids = set(range(self.n_old, len(self.proc.tokenizer)))
         self.mask_ids = [i for i in self.proc.tokenizer.all_special_ids
                          if i not in duplex_ids]
         self.name_of = {i: self.proc.tokenizer.convert_ids_to_tokens(i)
                         for i in duplex_ids}
+        self.pad_id = self.proc.tokenizer.convert_tokens_to_ids(
+            "<|audio_pad|>")
+        self.emb_layer = self.model.get_input_embeddings()
         self.cache = None
-        self.pending_logits = None
+        self._pcm = np.zeros(0, dtype=np.float32)
+        self._t_s = 0.0  # audio time of the next feature
         print(f"[duplex] {ckpt_path} loaded ({time.time() - t0:.0f}s), "
-              f"{len(duplex_ids)} duplex tokens live", flush=True)
+              f"{len(duplex_ids)} duplex tokens live "
+              f"(training-format stream, {WINDOW_S:.0f}s windows)",
+              flush=True)
 
     def kind_of(self, tok_id: int) -> str:
         if tok_id < self.n_old:
@@ -90,44 +107,77 @@ class DuplexThinker:
             return "timing"
         return "control"  # <delegate>/<barge-in>: logged; M2 acts on them
 
-    def feed_tick(self, pcm_16k: np.ndarray) -> float:
-        """One 80 ms slice of user audio into the running memory."""
+    def _encode_window(self, pcm: np.ndarray):
+        """Ear features for one window — layera/prepare.encode_audio's
+        exact recipe (same text prompt, same tower call, same tail)."""
         import torch
 
-        t0 = time.time()
-        if self.cache is None:
-            convo = [{"role": "user", "content": [
-                {"type": "audio"},
-                {"type": "text", "text": "(listening)"},
-            ]}]
-            text = self.proc.apply_chat_template(
-                convo, add_generation_prompt=False, tokenize=False)
-        else:
-            text = "<|audio|>"  # bare placeholder: append-only beats
-        inputs = self.proc(text=[text], audio=[pcm_16k],
+        inputs = self.proc(text=["<|audio_pad|>"], audio=[pcm],
                            return_tensors="pt", padding=True
                            ).to(self.model.device)
+        n_tok = int((inputs["input_ids"][0] == self.pad_id).sum())
         with torch.no_grad():
-            out = self.model(**inputs, past_key_values=self.cache,
-                             use_cache=True)
-        self.cache = out.past_key_values
-        self.pending_logits = out.logits
-        return time.time() - t0
+            tower = self.model.get_audio_features(
+                input_features=inputs["input_features"],
+                feature_attention_mask=inputs["feature_attention_mask"],
+                return_dict=True).last_hidden_state
+        tower = tower.reshape(-1, tower.shape[-1])
+        return tower[-n_tok:]
 
-    def decide(self) -> tuple[int, float]:
-        """One emission beat: the model's own choice. Chat-envelope
-        specials are masked; the trained duplex tokens compete."""
+    def _beat(self, feat, t_s: float) -> tuple[int, float, float]:
+        """One decision beat: audio feature in, argmax emission out,
+        emission embedding fed back. Returns (token, audio_t_s, wall_s)."""
         import torch
 
         t0 = time.time()
-        logits = self.pending_logits[0, -1].clone()
+        e_in = self.emb_layer(
+            torch.tensor([[self.pad_id]], device=self.model.device)
+        ).clone()
+        e_in[0, 0] = feat.to(e_in.dtype)
+        with torch.no_grad():
+            out = self.model(inputs_embeds=e_in,
+                             past_key_values=self.cache, use_cache=True)
+        self.cache = out.past_key_values
+        logits = out.logits[0, -1].clone()
         for tid in self.mask_ids:
             logits[tid] = float("-inf")
         tok = int(logits.argmax())
-        step = torch.tensor([[tok]], device=self.model.device)
+        e_out = self.emb_layer(
+            torch.tensor([[tok]], device=self.model.device))
         with torch.no_grad():
-            out = self.model(input_ids=step, past_key_values=self.cache,
-                             use_cache=True)
+            out = self.model(inputs_embeds=e_out,
+                             past_key_values=self.cache, use_cache=True)
         self.cache = out.past_key_values
-        self.pending_logits = out.logits
-        return tok, time.time() - t0
+        return tok, t_s, time.time() - t0
+
+    def feed_audio(self, pcm_16k: np.ndarray) -> list[tuple[int, float]]:
+        """Absorb user audio; one decision per ear feature. Returns
+        (token, audio_t_s) pairs — timestamps let the harness place
+        output despite the windowed feature lag."""
+        self._pcm = np.concatenate(
+            [self._pcm, pcm_16k.astype(np.float32)])
+        beats: list[tuple[int, float]] = []
+        while len(self._pcm) >= WINDOW_SAMPLES:
+            win, self._pcm = (self._pcm[:WINDOW_SAMPLES],
+                              self._pcm[WINDOW_SAMPLES:])
+            feats = self._encode_window(win)
+            step = WINDOW_S / max(len(feats), 1)
+            for i in range(len(feats)):
+                tok, _t, _w = self._beat(feats[i], self._t_s)
+                beats.append((tok, self._t_s))
+                self._t_s += step
+        return beats
+
+    def finish(self) -> list[tuple[int, float]]:
+        """Flush the final partial window (encode_audio encodes tails
+        down to 800 samples and skips shorter)."""
+        beats: list[tuple[int, float]] = []
+        if len(self._pcm) >= 800:
+            feats = self._encode_window(self._pcm)
+            step = (len(self._pcm) / SR_IN) / max(len(feats), 1)
+            for i in range(len(feats)):
+                tok, _t, _w = self._beat(feats[i], self._t_s)
+                beats.append((tok, self._t_s))
+                self._t_s += step
+        self._pcm = np.zeros(0, dtype=np.float32)
+        return beats

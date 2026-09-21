@@ -152,6 +152,18 @@ Read this first in a fresh chat. Everything below is decided and documented.
   Single-variable change from v3. FULL ABLATION LEDGER: EXPERIMENTS.md
   (per-run recipes, exam numbers, verdicts — keep current with every
   run).**
+  **LIVE GATE #1 (v3, 6762718): FAIL 1/5 — constant tone, zero decodable
+  words, never sil/yield/timing. FREE-RUN DIAGNOSTIC (6762979, v3 ckpt,
+  training-format replay): free-run is CLEAN (sil 0.92–0.94 self-fed vs
+  0.38–0.40 gold-forced; zero chatter; 81–110 recoveries to sil) → the
+  live babble was the HARNESS FORMAT (chat envelope + processor
+  <|audio|> path), not the model. Also: forced gold t+30s history PRIMES
+  the thief (675 sil steals); free-run never fires t+30s at all (0/6) —
+  it needs the primer. FIX: duplex.py v2 + LayerATarget v2 — live now
+  mirrors prepare.encode_audio (no envelope, 4 s-window ear features
+  into <|audio_pad|> slots, one beat per feature, timestamped output
+  tape). Live-gate rerun on the same v3 ckpt = the A/B. Full tables:
+  EXPERIMENTS.md.**
   **v9 VERDICT (6758553→6758554, k1 w50 + thief-penalty 10): FAILED —
   over-suppression ("the Monk"): sil 99.9–100% acc / prob 0.958–0.995
   (best ever) but t+30s, t+5s, yield, words ALL ≈0.000. The tax fires at

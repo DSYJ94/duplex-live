@@ -116,51 +116,43 @@ def _tone_80ms() -> np.ndarray:
 class LayerATarget(Target):
     """Phase-1 duplex thinker behind the Target seam (Issue #7).
 
-    Each 1 s chunk is cut into 80 ms ticks. Every tick: user audio enters
-    the KV (append-only), then the TRAINED model decides the beat —
-    <sil> stays quiet, word pieces speak (tone), <yield>/<t+Ns> are
-    logged and stay silent. Countdown/timing behavior lives in the log
-    (n_timing per chunk) until the T7 timed metrics land."""
+    v2: the thinker sees audio in the EXACT training format (no chat
+    envelope; ear features over 4 s windows; one decision per feature —
+    see layera/duplex.py and the freerun diagnostic in EXPERIMENTS.md).
+    Beats arrive with their audio timestamp, so speaking decisions are
+    placed on an output tape at the right wall-clock offset regardless
+    of the windowed feature lag; render() assembles model_out.wav.
+    Word beats speak (tone), <sil> ends turns, <yield>/<t+Ns> are
+    logged and stay silent."""
 
     name = "layera-p1"
 
     def __init__(self):
         self.thinker = None
-        self._buf = np.zeros(0, dtype=np.float32)
         self._speaking = False
         self._tone = None
+        self._placed = []  # (out-sample offset) of each spoken beat
 
     def prepare(self, ckpt, **kw) -> None:
         import sys
 
         sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
-        from layera.duplex import DuplexThinker, TICK_SAMPLES
-        self._tick_n = TICK_SAMPLES
+        from layera.duplex import DuplexThinker
         self._tone = _tone_80ms()
         self.thinker = DuplexThinker(str(ckpt))
 
-    def feed(self, chunk: np.ndarray) -> dict:
-        import time
-
-        t0 = time.time()
-        self._buf = np.concatenate([self._buf,
-                                    chunk.astype(np.float32)])
-        texts = []
-        n_yield = n_timing = n_control = 0
-        wav_out = []
+    def _apply(self, beats) -> dict:
+        texts, n_yield, n_timing, n_control = [], 0, 0, 0
         end_of_turn = False
-        ticks = 0
-        while len(self._buf) >= self._tick_n:
-            tick_pcm = self._buf[:self._tick_n]
-            self._buf = self._buf[self._tick_n:]
-            self.thinker.feed_tick(tick_pcm)
-            tok, _s = self.thinker.decide()
-            ticks += 1
+        out_samples = 0
+        for tok, t_s in beats:
             kind = self.thinker.kind_of(tok)
             if kind == "word":
                 self._speaking = True
                 texts.append(self.thinker.proc.tokenizer.decode([tok]))
-                wav_out.append(self._tone)
+                start = int(t_s * SR_OUT)
+                self._placed.append(start)
+                out_samples += len(self._tone)
             elif kind == "sil":
                 if self._speaking:
                     end_of_turn = True
@@ -174,16 +166,38 @@ class LayerATarget(Target):
             else:  # <delegate>/<barge-in> or unexpected
                 n_control += 1
                 self._speaking = False
-        wav = np.concatenate(wav_out) if wav_out else np.zeros(0, np.float32)
-        return {"wall_s": round(time.time() - t0, 3), "ticks": ticks,
-                "text": "".join(texts).strip(),
-                "is_listen": not self._speaking,
+        return {"text": "".join(texts).strip(),
                 "end_of_turn": end_of_turn,
                 "n_yield": n_yield, "n_timing": n_timing,
-                "n_control": n_control,
-                "out_samples": int(len(wav)),
-                "chunk_sha16": chunk_hash(chunk),
-                "_wav": wav}
+                "n_control": n_control, "out_samples": out_samples}
+
+    def feed(self, chunk: np.ndarray) -> dict:
+        import time
+
+        t0 = time.time()
+        beats = self.thinker.feed_audio(chunk)
+        rec = self._apply(beats)
+        rec.update({"wall_s": round(time.time() - t0, 3),
+                    "ticks": len(beats),
+                    "is_listen": not self._speaking,
+                    "chunk_sha16": chunk_hash(chunk),
+                    "_wav": np.zeros(0, np.float32)})
+        return rec
+
+    def finish(self) -> dict:
+        beats = self.thinker.finish()
+        rec = self._apply(beats)
+        rec.update({"ticks": len(beats),
+                    "is_listen": not self._speaking})
+        return rec
+
+    def render(self, total_s: float) -> np.ndarray:
+        """Assemble model_out.wav from the placed speaking beats."""
+        n = int(np.ceil(total_s * SR_OUT)) + len(self._tone)
+        tape = np.zeros(n, dtype=np.float32)
+        for start in self._placed:
+            tape[start:start + len(self._tone)] += self._tone
+        return tape
 
 
 def run_live(target: Target, tests: dict, out_root: Path,
@@ -212,15 +226,25 @@ def run_live(target: Target, tests: dict, out_root: Path,
                     chunk = np.concatenate(
                         [chunk, np.zeros(SR_IN - len(chunk), np.float32)])
                 rec = target.feed(chunk)
-                wav = rec.pop("_wav")
+                wav = rec.pop("_wav", None)
                 rec["chunk"], rec["t_s"] = c, c
                 rows.append(rec)
                 logf.write(json.dumps(rec) + "\n")
-                if len(wav):
+                if wav is not None and len(wav):
                     out_audio.append(wav)
                 if c % 20 == 0 or rec["text"].strip():
                     print(f"[{name}] chunk {c:4d} listen={rec['is_listen']} "
                           f"text={rec['text'][:50]!r}", flush=True)
-        if out_audio:
+            fin = target.finish() if hasattr(target, "finish") else {}
+            if fin:
+                fin["chunk"], fin["t_s"] = len(rows), len(rows)
+                rows.append(fin)
+                logf.write(json.dumps(fin) + "\n")
+        total_s = len(timeline) / SR_IN
+        if hasattr(target, "render"):
+            wav_out = target.render(total_s)
+            if len(wav_out):
+                sf.write(out_dir / "model_out.wav", wav_out, SR_OUT)
+        elif out_audio:
             sf.write(out_dir / "model_out.wav", np.concatenate(out_audio), SR_OUT)
         print(f"[{name}] live run done -> {out_dir}", flush=True)

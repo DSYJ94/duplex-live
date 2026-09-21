@@ -48,17 +48,42 @@ throughout), decodable text ≈ 0 (one chunk emitted `<|im_start|>`), and
 it never once chose sil/yield/timing in the live domain. **v3 live =
 one uninterrupted utterance.**
 
-**Root-cause candidates (free-run diagnostic pending):**
-1. *Acoustic domain shift* — the exam is teacher-forced on factory TTS;
-   the live prompts are bake-off voices (different level/character).
-2. *Exposure bias* — the exam feeds gold history; live, the model eats
-   its own wrong beats. One babble flips the context and nothing in
-   training taught it to return to `<sil>` from a dirty context.
-   Either way the lesson stands: **the teacher-forced exam is
-   necessary but not sufficient — free-running behavior needs its own
-   bar.** Cheap decode-side note: in Phase-1 the specific old-vocab
-   word emitted does not matter (voice is M2; tone = decision), so the
-   gate only needs WHEN, not WHAT.
+## Free-run diagnostic (6762966 crashed on a type slip → 6762979, v3 ckpt)
+
+Replays held-out factory lessons in the EXACT training format, twice:
+forced (gold history — should match the probe) and free (self-history).
+Ear-rate alignment: 52 tokens/4 s window vs 50 ticks (ratio 1.04 — the
+sampler's one-feature-per-tick assumption holds, small edge effect).
+
+| lesson | mode | sil acc | t+30s | words | recoveries to sil |
+|--------|------|---------|-------|-------|-------------------|
+| timed_task-017 | forced | 0.383 (t+30s x675 steals) | 4/4 | 0/17 | — |
+| timed_task-017 | **free** | **0.944** | 0/4 | 0/17 | 81 |
+| timed_task-029-ish | forced | 0.398 (t+30s x666, t+60s x99) | 2/2 | 0/13 | — |
+| timed_task-029-ish | **free** | **0.922** | 0/2 | 0/13 | 110 |
+
+**Verdict — the format was the bug, not the model:**
+1. Free-running in the training format is CLEAN: ~93% silence, ZERO
+   chatter, and the model recovers to `<sil>` after its own wrong beats
+   (81–110 times). Exposure bias is a non-issue at Phase-1.
+2. Forced mode shows the thief's mechanism: gold t+30s beats in the
+   history PRIME more t+30s (675 sil steals); free-running never emits
+   the first t+30s, so nothing gets primed (the flip side: free-run
+   countdowns 0/6 — v3 needs the gold primer to fire t+30s at all).
+3. The live loop fed a DIFFERENT format: chat template + "(listening)"
+   envelope + processor `<|audio|>` per-tick path. The checkpoint
+   learned the bare stream, so in chat-wrap it did the chat-brain
+   thing: tried to answer, forever.
+
+**Fix (duplex.py v2 + LayerATarget v2): live now mirrors
+prepare.encode_audio exactly — no envelope, 4 s-window ear features
+scattered into `<|audio_pad|>` slots, one beat per feature, beats
+timestamped so output lands at the right wall-clock offset. Live gate
+rerun on the SAME v3 checkpoint = the A/B.**
+
+Cheap decode-side note: in Phase-1 the specific old-vocab word emitted
+does not matter (voice is M2; tone = decision), so the gate only needs
+WHEN, not WHAT.
 
 ## The v8 post-mortem (why class-cost failed)
 
