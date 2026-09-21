@@ -109,9 +109,22 @@ Read this first in a fresh chat. Everything below is decided and documented.
   acc (prob ~0.55) on held-out, FIRST timing learning; but cost: `<sil>`
   99.5%→53.8/67.7% on 2 of 4 held-out scenarios, words roughly halved.
   The 50× push drags the shared context; everything else pays.**
-  Dose-response pair in flight (one dial each, ~75 min): **v4 =
-  TIMING_WEIGHT=10** (job pair via runs/p1-v4); **v5 = TIMING_WEIGHT=1
-  + timed_task shards oversampled 5× (`runs/shards-v5`)**. Probes use
+  Dose-response COMPLETE (all probes corrected, SHARDS_DIR set,
+  classes=timed_task,barge_in, 8 held-out each):
+  - v2 (1×/1×): t+30s 0% prob 0 | sil 99.5% | yield 0%
+  - v4 (k1×w10): t+30s 0% prob 0.15 | sil 97-100% ✓ | yield 0%
+  - v3 (k1×w50): t+30s 50% ✓ | sil 53-98% ❌ | yield untested
+  - v5 (k5×w1): t+30s 0% prob 0.000 | sil 97-100% ✓ | yield PARTIAL
+    (1/6 scenarios 100%, others prob 0.03-0.76 — first yield learning)
+  **Conclusion: only the DATA×WEIGHT product matters (~50 effective =
+  timing learns); concentrating it in weight (v3) breaks <sil>; yield
+  responds to data-spread. <yield> was a second rarity token (≈0.02% of
+  graded) no weighting covered until now.**
+  **v6 IN FLIGHT (train 6751788 → probe 6751789): spread the ~50×
+  effective boost — `runs/shards-v6` (160 shards: timed_task AND
+  barge_in oversampled 5×), TIMING_WEIGHT=10, --weight-yield (new flag;
+  rare-token set = timing buckets + yield), STEPS=400, OUT=runs/p1-v6.**
+  Probes use
   env inheritance (NOT `--export`) for comma values — `--export` splits
   on commas, which silently truncated CLASSES=timed_task,barge_in to
   timed_task in probe 6746780. **probe-p1.slurm GOTCHA: always pass
