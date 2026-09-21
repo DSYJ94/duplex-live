@@ -127,10 +127,17 @@ Read this first in a fresh chat. Everything below is decided and documented.
   DATA×WEIGHT law is dead; verified via checkpoint-args that the run
   matched its design. Suspected AdamW scale-invariance weirdness — the
   weight dial does not behave like a plain multiplier.**
-  **IN FLIGHT: thief probe 6756308** (v3 ckpt + new failure-argmax
-  histogram: WHAT token steals sil's positions in the two damaged
-  scenarios — name the thief before picking the lever) **and v7 midpoint
-  bisect 6756309→6756310** (k1 data, TIMING_WEIGHT=30, 400 steps).
+  **THIEF NAMED (6756308, v3 rerun with failure-argmax histogram): the
+  sil "damage" was never broken silence — it is <t+30s> OVER-FIRING at
+  sil positions (029: 584/588 sil failures = t+30s steals; 014/017/018
+  same pattern). Timing recall fine; precision broken. Per-position
+  weights boost the up-push but the down-push at sil positions stays
+  weight 1.**
+  **v8 IN FLIGHT (6756384→6756385): --class-cost 50 — per-CLASS cost CE
+  (L_t = Σ_j c_j·p_j − c_{y_t}): rare tokens cost extra as the correct
+  answer AND as a wrong prediction anywhere. v3's timing teaching + the
+  missing down-push. Standard 80-shard mix, 400 steps.**
+  v7 midpoint (k1, w30) running 6756309→6756310.
   Probes use
   env inheritance (NOT `--export`) for comma values — `--export` splits
   on commas, which silently truncated CLASSES=timed_task,barge_in to
