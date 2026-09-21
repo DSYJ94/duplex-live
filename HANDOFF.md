@@ -79,6 +79,24 @@ Read this first in a fresh chat. Everything below is decided and documented.
   naturalistic. Layer-A (#7) starts EARLY (~Sep 22) instead of Sep 28 —
   all dependencies (tokenizer, factory data, eval gate, delegation brain)
   are at v0-done.
+  **Layer-A Phase-1 status (2026-09-21): shards + trainer built; first
+  gradient chain in flight.** M1 driver done (audio flows during
+  generation, append-only KV; feed+decode p50 144 ms vs 80 ms budget —
+  polish deferred to serving, off critical path). `layera/prepare.py`
+  shards verified: ~1.04 audio tokens/tick (13 tok/s ear rate ✓).
+  Training OOM chain (3 jobs, root-caused — do NOT repeat): batched_mm
+  experts keep ~24 GiB (gate_up) + ~12 GiB (down) per-token expert
+  gathers alive per layer → 59 GiB model + 35.7 GiB = the whole 95 GiB
+  card; gradient checkpointing does NOT fix it (backward recompute holds
+  all gathers). Fix: `experts_implementation="eager"` for TRAINING jobs
+  (per-expert loop, ~6 MiB); keep batched_mm for inference jobs.
+  Also: thinker `text_config.tie_word_embeddings=False` → embed and head
+  are SEPARATE tensors; checkpoint saves both deltas
+  (emb_delta_new_rows + head_delta_new_rows). Jobs: 6728087/6728254/6728411
+  OOMed, **6728455 (eager) outcome unverified — check
+  `repo/logs/p1-train-6728455.out` + `runs/p1-v1/train.jsonl` on next
+  SSH.** Goal: first gradient + loss curve, then scale shards (LIMIT=8
+  now) and steps toward the eval-harness gate.
   **Hours-scale begun (2026-09-18): `synth-big1` = 256 scenarios, 2.2 h,
   1h24m GPU (0.85 GPU-h/audio-h), 182/256 pass (71%), WER median 0.018 /
   p90 0.111.** **VOLUME TARGET CLOSED (2026-09-19): 50.43 h gate-passed /
