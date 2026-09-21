@@ -191,6 +191,14 @@ Read this first in a fresh chat. Everything below is decided and documented.
   t4) are speaking failures; passing (t3/t5) are quiet tests. Live gate
   on v10 launched for the A/B (6763949). DECISION POINT: next GPU-hours
   go to word-beat reliability, not more rare-token/countdown surgery.**
+  **LIVE GATE #3 (v10, 6763949): PASS 2/5 but MORE muted than v3 — 0
+  word beats in all five tests (v3: ~9/test), 1 timing beat total; t5
+  false engagement improved to 0.0 s, but t1 has no answers at all.
+  THE EXAM PREDICTS THE GATE: word-slot sil-steals on the 10-min exam
+  mapped exactly to live muting — the exam is now a trusted gate proxy.
+  v2 (unweighted best-speaker, no timing) live gate launched (6764321)
+  — if it beats 2/5 the T-gate needs only word+sil decisions and the
+  recipe question becomes "inject timing without damaging speaking".**
   **EVAL-GATE PATH BUILT (2026-09-21, pre-verdict): `layera/duplex.py`
   (DuplexThinker — M1 append-only tick loop + checkpoint deltas +
   trained-model emission decisions; mask = chat envelope only, the

@@ -72,6 +72,26 @@ test — no metric cost yet).
 The harness now measures the MODEL. Next question: does a better
 checkpoint (v10, light thief tax) move t1/t2/t4?
 
+## Live-gate result #3: v10 (6763949) — and the exam→gate mapping validated
+
+**PASS 2/5 (t3, t5 — same as v3) but strictly more muted:** t5 false
+engagement 0.0 s (v3: 0.72 s), yet t1 has **no answers at all** (v3:
+answered, 14.9 s late), t4 no part-2 answer (v3: spoke during part 1),
+t2 unchanged (silent post-barge). Beat census: **0 word beats in ALL
+five tests** (v3: ~9/test, 48 real-text beats in t4), 1 timing beat
+total, 0 yields.
+
+**The exam predicts the gate.** v10's word-slot sil-steals (21–30/lesson
+on the exam) mapped exactly to live muting; v3's sparse words mapped to
+late/sparse answers. The 10-minute held-out exam is now a trusted proxy
+for the 8-minute gate — future runs need only the exam unless it's
+borderline.
+
+Both gates point the same way: the w50 family's remaining defect is
+UNDER-SPEAKING, and the unweighted v2 (words 20–48%, sil 99.4%, zero
+timing knowledge) has never been live-gated. The T-tests need only
+word+silence decisions — v2's strengths. Result pending (6764321).
+
 ## Free-run diagnostic (6762966 crashed on a type slip → 6762979, v3 ckpt)
 
 Replays held-out factory lessons in the EXACT training format, twice:
