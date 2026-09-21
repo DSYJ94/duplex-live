@@ -1,6 +1,30 @@
-# HANDOFF — where we are (2026-09-17)
+# HANDOFF — where we are (2026-09-21)
 
 Read this first in a fresh chat. Everything below is decided and documented.
+
+## The frontier right now (2026-09-21)
+
+- **Phase-1 training is a dose-response study through v11.** The ablation
+  ledger with every recipe, exam number and verdict is **EXPERIMENTS.md** —
+  read it before proposing any new run. Training is ~1.1 GPU-h per dose
+  (55 min train + 10 min held-out exam), and **the exam predicts the live
+  gate** (validated on v10: its exam word-slot sil-steals mapped exactly to
+  live muting), so the exam is the default decision instrument; rerun the
+  T1–T5 gate only when the exam moves.
+- **All three live-gated checkpoints (v2 unweighted, v3 w50, v10 w50+tax)
+  pass exactly 2/5**, and the shared failure is UNDER-SPEAKING: silence is
+  ~95% of training ticks, so every model learns a silence attractor — even
+  unweighted v2 mutes on t1 (0 word beats). v3 is still the only checkpoint
+  that fires a countdown (t+30s, 50% exam) and speaks live; v10 fixed the
+  rare-token thief (1–2/lesson) at the cost of all timing and all speech.
+- **In flight: v11, the speak-up dose** (user-approved 2026-09-21):
+  w50 + thief-pen 2 + `--word-weight 3` (train 6765121 → exam 6765122,
+  chained). Read-out rule: words flat on exam → word-weight 10; sil breaks
+  → 1.5; exam improves → live gate on v11.
+- **Where this goes after v11:** if the speak-up lever works, the Phase-1
+  checkpoint target is "v10's quiet control + v2-level speaking + some
+  timing"; if it cliffs too, the fallback is data-side (word-denser
+  lessons) or accepting v3 and moving up the stack (M2 real voice, serving).
 
 ## Current status
 
