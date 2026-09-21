@@ -18,7 +18,7 @@ from __future__ import annotations
 
 import argparse
 import json
-from collections import defaultdict
+from collections import Counter, defaultdict
 from pathlib import Path
 
 import torch
@@ -124,7 +124,9 @@ def main() -> None:
 
             labels = torch.tensor(seq["labels"], device=logits.device)
             id2name = {v: k for k, v in spec_names.items()}
-            per_type = defaultdict(lambda: [0, 0, 0.0])  # n, correct, prob
+            # [n, correct, prob_sum, thief Counter] — thief = what the
+            # model predicted instead, at positions this type lost
+            per_type = defaultdict(lambda: [0, 0, 0.0, Counter()])
             for t, lab in enumerate(labels):
                 if int(lab) == -100:
                     continue
@@ -135,18 +137,27 @@ def main() -> None:
                 e[0] += 1
                 e[1] += int(int(pred.argmax()) == int(lab))
                 e[2] += float(probs[int(lab)])
-            res[tag] = {k: {"n": v[0], "acc": round(v[1] / v[0], 3),
-                            "mean_prob": round(v[2] / v[0], 3)}
-                        for k, v in sorted(per_type.items())}
+                if int(pred.argmax()) != int(lab):
+                    e[3][id2name.get(int(pred.argmax()), "<bpe-word>")] += 1
+            res[tag] = {}
+            for k, v in sorted(per_type.items()):
+                row = {"n": v[0], "acc": round(v[1] / v[0], 3),
+                       "mean_prob": round(v[2] / v[0], 3)}
+                if v[3] and tag == "after":
+                    row["thief"] = ", ".join(
+                        f"{name} x{c}" for name, c in v[3].most_common(3))
+                res[tag][k] = row
         report[seq["scenario_id"]] = res
         print(f"[probe] {seq['scenario_id']}:", flush=True)
         for kind in sorted({k for t in res.values() for k in t}):
             b = res["before"].get(kind, {"acc": 0, "mean_prob": 0, "n": 0})
             a = res["after"].get(kind, {"acc": 0, "mean_prob": 0, "n": 0})
-            print(f"    {kind:12s} n={a.get('n', b.get('n', 0)):3d}  "
-                  f"acc {b['acc']:5.3f} -> {a['acc']:5.3f}   "
-                  f"prob {b['mean_prob']:5.3f} -> {a['mean_prob']:5.3f}",
-                  flush=True)
+            line = (f"    {kind:12s} n={a.get('n', b.get('n', 0)):3d}  "
+                    f"acc {b['acc']:5.3f} -> {a['acc']:5.3f}   "
+                    f"prob {b['mean_prob']:5.3f} -> {a['mean_prob']:5.3f}")
+            if a.get("thief"):
+                line += f"  <- {a['thief']}"
+            print(line, flush=True)
 
     out = Path(args.out) if args.out else Path(args.ckpt).parent / "probe.json"
     out.write_text(json.dumps(report, indent=1))
