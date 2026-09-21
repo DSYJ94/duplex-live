@@ -98,7 +98,10 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--replay", help="recordings root (offline metrics)")
     ap.add_argument("--live", default=None,
-                    help="'minicpm' — drive a live target, then score it")
+                    help="'minicpm' or 'layera' — drive a live target, "
+                         "then score it")
+    ap.add_argument("--ckpt", default=None,
+                    help="layera Phase-1 checkpoint (runs/p1-vX/p1_checkpoint.pt)")
     ap.add_argument("--out", default=None, help="live output root")
     ap.add_argument("--prompts", default=None,
                     help="stimulus prompts dir (bake-off Phase A layout)")
@@ -116,6 +119,19 @@ def main() -> None:
         assets = Path(args.assets)
         tgt = MiniCPMDuplexTarget()
         tgt.prepare(assets=assets)
+        run_live(tgt, {t: LIVE_TESTS[t] for t in tests}, out_root, prompts)
+        args.replay = str(out_root)
+
+    if args.live == "layera":
+        from evals.harness.protocol import LIVE_TESTS
+        from evals.harness.targets import LayerATarget, run_live
+
+        if not args.ckpt:
+            ap.error("--live layera requires --ckpt")
+        out_root = Path(args.out or "runs/harness-layera")
+        prompts = Path(args.prompts or "runs/bakeoff/prompts")
+        tgt = LayerATarget()
+        tgt.prepare(ckpt=args.ckpt)
         run_live(tgt, {t: LIVE_TESTS[t] for t in tests}, out_root, prompts)
         args.replay = str(out_root)
 

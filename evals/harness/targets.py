@@ -97,6 +97,95 @@ class MiniCPMDuplexTarget(Target):
                 "_wav": wav}
 
 
+def _tone_80ms() -> np.ndarray:
+    """Quiet 220 Hz sine, 4 ms raised-cosine edges, at the 24 kHz out
+    rate — a deliberately synthetic stand-in for the M2 voice, so the
+    energy metrics measure the model's speaking DECISIONS."""
+    sr = 24000
+    n = int(sr * 0.08)
+    t = np.arange(n) / sr
+    w = (0.06 * np.sin(2 * np.pi * 220 * t)).astype(np.float32)
+    edge = int(sr * 0.004)
+    ramp = 0.5 * (1 - np.cos(np.pi * np.arange(edge) / edge)).astype(np.float32)
+    env = np.ones(n, np.float32)
+    env[:edge] = ramp
+    env[-edge:] = ramp[::-1]
+    return w * env
+
+
+class LayerATarget(Target):
+    """Phase-1 duplex thinker behind the Target seam (Issue #7).
+
+    Each 1 s chunk is cut into 80 ms ticks. Every tick: user audio enters
+    the KV (append-only), then the TRAINED model decides the beat —
+    <sil> stays quiet, word pieces speak (tone), <yield>/<t+Ns> are
+    logged and stay silent. Countdown/timing behavior lives in the log
+    (n_timing per chunk) until the T7 timed metrics land."""
+
+    name = "layera-p1"
+
+    def __init__(self):
+        self.thinker = None
+        self._buf = np.zeros(0, dtype=np.float32)
+        self._speaking = False
+        self._tone = None
+
+    def prepare(self, ckpt, **kw) -> None:
+        import sys
+
+        sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+        from layera.duplex import DuplexThinker, TICK_SAMPLES
+        self._tick_n = TICK_SAMPLES
+        self._tone = _tone_80ms()
+        self.thinker = DuplexThinker(str(ckpt))
+
+    def feed(self, chunk: np.ndarray) -> dict:
+        import time
+
+        t0 = time.time()
+        self._buf = np.concatenate([self._buf,
+                                    chunk.astype(np.float32)])
+        texts = []
+        n_yield = n_timing = n_control = 0
+        wav_out = []
+        end_of_turn = False
+        ticks = 0
+        while len(self._buf) >= self._tick_n:
+            tick_pcm = self._buf[:self._tick_n]
+            self._buf = self._buf[self._tick_n:]
+            self.thinker.feed_tick(tick_pcm)
+            tok, _s = self.thinker.decide()
+            ticks += 1
+            kind = self.thinker.kind_of(tok)
+            if kind == "word":
+                self._speaking = True
+                texts.append(self.thinker.proc.tokenizer.decode([tok]))
+                wav_out.append(self._tone)
+            elif kind == "sil":
+                if self._speaking:
+                    end_of_turn = True
+                self._speaking = False
+            elif kind == "yield":
+                n_yield += 1
+                self._speaking = False
+            elif kind == "timing":
+                n_timing += 1
+                self._speaking = False
+            else:  # <delegate>/<barge-in> or unexpected
+                n_control += 1
+                self._speaking = False
+        wav = np.concatenate(wav_out) if wav_out else np.zeros(0, np.float32)
+        return {"wall_s": round(time.time() - t0, 3), "ticks": ticks,
+                "text": "".join(texts).strip(),
+                "is_listen": not self._speaking,
+                "end_of_turn": end_of_turn,
+                "n_yield": n_yield, "n_timing": n_timing,
+                "n_control": n_control,
+                "out_samples": int(len(wav)),
+                "chunk_sha16": chunk_hash(chunk),
+                "_wav": wav}
+
+
 def run_live(target: Target, tests: dict, out_root: Path,
              prompts_dir: Path) -> None:
     """Drive a live target through the T-protocol; write replay-layout
