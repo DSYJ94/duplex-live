@@ -192,12 +192,14 @@ class LayerATarget(Target):
         return rec
 
     def render(self, total_s: float) -> np.ndarray:
-        """Assemble model_out.wav from the placed speaking beats."""
-        n = int(np.ceil(total_s * SR_OUT)) + len(self._tone)
-        tape = np.zeros(n, dtype=np.float32)
+        """Assemble model_out.wav from the placed speaking beats. One
+        tone-length of headroom: the last beats can sit a step past the
+        timeline edge (window tails)."""
+        n = int(np.ceil(total_s * SR_OUT))
+        tape = np.zeros(n + len(self._tone), dtype=np.float32)
         for start in self._placed:
             tape[start:start + len(self._tone)] += self._tone
-        return tape
+        return tape[:n]
 
 
 def run_live(target: Target, tests: dict, out_root: Path,
