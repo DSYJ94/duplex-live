@@ -230,6 +230,45 @@ What the honest instruments change vs the old "all three pass 2/5":
   of four models) — which is exactly what the sil-bias sweep tests
   without retraining.
 
+## Decode sweep (6777066, v11 ckpt, free-run self-history)
+
+Sil-bias subtracts from the `<sil>` logit at decode — a pure inference
+knob, no training. Free-run over held-out lessons with word
+continuation ON, 4 lessons, ~900-tick cap (actual ~150–170):
+word-onset hits = gold word ticks where the model speaks on the exact
+tick; false speech = speaking at non-gold ticks.
+
+| sil-bias | exact word-onset hits (of 83) | false-speech ticks (sum) | `<t+5s>` thief fires |
+|---:|---:|---:|---:|
+| 0 | 54 | 183 | 0 |
+| 1 | 50 | 169 | 5 |
+| 2 | 60 | 195 | 3 |
+| 4 | 71 | 215 | 3 |
+| 8 | 81 | 229 | 5 |
+| 16 | ~81 | ~233 | ~2 |
+
+Reading:
+
+- **The knob is a clean monotone threshold**: bias buys exact word
+  onsets with chatter (54→81 exact, 183→229 false from 0→8). No
+  cliff, no sweet spot on lesson evidence alone.
+- **barge_in-017 is the "held-back" profile — and bias unlocks it**:
+  0/19 exact word onsets at bias 0 (sil acc 0.677 — mostly silent,
+  like the live gate's v11) → 17/19 at bias 8, 19/19 at 16. The other
+  three lessons speak early-but-imprecise at bias 0 and sharpen with
+  bias. So a model that holds back too much CAN be released by
+  decoding alone.
+- **Chatter is decode-irreducible**: ~40–58 false-speech ticks per
+  ~13 s lesson even at bias 0. On synthetic-voice lessons v11
+  OVER-speaks — the opposite of its tone-gate muting. The under/
+  over-speaking split is STIMULUS-DOMAIN (voice-like lessons vs pure
+  tones), not a decode threshold. Whether bias also unlocks the tone
+  side is tested by the live gate at bias 0/4 (job 6777591).
+- Small cost: the `<t+5s>` thief re-appears at bias ≥1 (1–5 fires).
+- Sweep gap (recurring LIMIT trap): `--limit 4` with two classes took
+  the first 4 matching = all barge_in; timed_task lessons absent.
+  LIMIT is total scenarios across classes.
+
 ## Free-run diagnostic (6762966 crashed on a type slip → 6762979, v3 ckpt)
 
 Replays held-out factory lessons in the EXACT training format, twice:
