@@ -18,9 +18,22 @@ Read this first in a fresh chat. Everything below is decided and documented.
   that fires a countdown (t+30s, 50% exam) and speaks live; v10 fixed the
   rare-token thief (1–2/lesson) at the cost of all timing and all speech.
 - **In flight: v11, the speak-up dose** (user-approved 2026-09-21):
-  w50 + thief-pen 2 + `--word-weight 3` (train 6765121 → exam 6765122,
-  chained). Read-out rule: words flat on exam → word-weight 10; sil breaks
-  → 1.5; exam improves → live gate on v11.
+  w50 + thief-pen 2 + `--word-weight 3`. **RESULT (2026-09-22): the exam
+  moved decisively — words 0.185–0.387 (v2-level restored), t+30s
+  partially back (1/4, prob 0.426), barge-class silence kept; cost: the
+  t+30s thief re-empowered on the countdown-dense lesson (251 steals).
+  Live gate: PASS 2/5, beat census v2-shaped (sparse, misplaced speech;
+  mute on t1/t2). Exam tracks the AMOUNT of speaking, not placement.**
+- **External adversarial review landed (CODEX_PLAN.md, 2026-09-21) and
+  VERIFIED accurate** — gate scoring marks are offset from the actual
+  stimulus, t2's bar conflicts with the trained reply schedule, three
+  tones can pass 5/5, v5/v6 "5× data" was actually unbalanced
+  re-exposure, our "free-run never fires t+30s" claim was wrong (it
+  fires 159× at wrong positions), and the spec's AuT adapter was never
+  built. **All gate verdicts are provisional until the marks fix;
+  adoption of the review's recommendations is pending the owner's
+  decision (proposed order: ledger corrections → gate repair →
+  decoding sweep → stream-contract fix → next dose).**
 - **Where this goes after v11:** if the speak-up lever works, the Phase-1
   checkpoint target is "v10's quiet control + v2-level speaking + some
   timing"; if it cliffs too, the fallback is data-side (word-denser

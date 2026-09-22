@@ -36,7 +36,7 @@ Pass the token exam AND the conversation gate:
 | v8 | 6756384 → 6756385 | 80 shards × **class-cost 50** | 0% prob 0.000 | 0% prob 0.000 | 99.3–100% but prob **flat 0.250** everywhere | prob 0.250, acc 0 | ~0 | **FAILED — math bug (below). Loss was label-blind; model only learned "never say rare words"** |
 | **v9** | 6758553 → 6758554 | 80 shards × **w50 + thief-penalty 10** | 0% prob 0.000 | 0% prob 0.000–0.001 | **99.9–100% ✓ prob 0.958–0.995 (best ever)** | 0% | 0.00–0.13 ❌ | **OVER-SUPPRESSED — "the Monk": perfect silence, everything else dead. The tax fires at every non-rare spot (~1500/lesson) vs the up-push's ~1, so pen 10 swamped w50. Bracket: pen 0 → timing 50% + ~150 steals/lesson; pen 10 → nothing. Next: pen 2** |
 | **v10** | 6762715 → 6762716 | 80 shards × **w50 + thief-penalty 2** | 0% prob 0.003–0.013 ❌ (0/6) | alive but weak: prob 0.010–0.352, acc 0/4 | **99.2–100% ✓✓ prob 0.932–0.982** | 0% | 0–19.4%, and `<sil>` steals 21–30 word spots/lesson | **Rare-token thief FIXED** (1–2 steals/lesson, bar was ≲5). But the tax's cliff sits between pen 0 and pen 2: t+30s died anyway. New finding: the dominant error is now `<sil>` eating WORD positions — under-speaking is the live gate's real bottleneck (t1/t2/t4) |
-| **v11** | 6765121 → 6765122 | w50 + pen 2 + **word-weight 3** | pending | pending | pending | pending | pending | **IN FLIGHT (user-approved).** The speak-up dose: same weighted-CE lever aimed at speaking (word-label positions graded 3× vs the ~95% silence background). Read-out: words flat → weight 10; sil breaks → 1.5; exam moves → live gate |
+| **v11** | 6765121 → 6765122 (+full exam 6771503, gate 6771504) | w50 + pen 2 + **word-weight 3** | **1/4 ✓ prob 0.426** on 029; 0/4 on 017 (thief 251) | 0/3 firing, prob 0.067–0.317 | 95.0–99.2% ✓ barge; 76.7% ❌ on 017 (thief), 99.8% on 029 | 0% | **0.185–0.387 ✓ (v2-level restored)** | **Speak-up dose WORKED on the exam** — words ~v2-level, partial t+30s recall returned, barge-class silence kept. Cost: the thief re-empowered on the countdown-dense lesson (017: 251 t+30s steals, sil 76.7%). Best exam profile of any run. Gate: PASS 2/5 (below) |
 
 Penalty dial, fully bracketed at w50: **pen 0** → t+30s 50% + ~150 steals; **pen 2** → sil perfect, rare-thief fixed, t+5s weak, t+30s dead; **pen 10** → nothing. The cliff is between 0 and 2; bisecting it buys t+30s recall that the free-run diagnostic already showed needs gold priming to fire live — low value for the gate.
 
@@ -128,6 +128,33 @@ against a 95% silence background). Doses bracketed per the
 cliffs-not-slopes rule. Each dose ≈ 1.1 GPU-h (55 min train + 10 min
 exam), and the exam now predicts the gate, so only borderline exams
 need the gate rerun.
+
+## Live-gate result #5: v11 (6771504) — exam predicts speaking LEVEL, not PLACEMENT
+
+**PASS 2/5** (t3, t5 @ 0.48 s). Beat census is v2-shaped again: t1 = 0
+beats (mute through 10 questions), t2 = 0, t4 = 4 beats with
+`premature_answer: true` (spoke during part 1), t5 = 10 beats of
+background engagement (0.48 s, under the 2.0 s bar).
+
+**Refined exam→gate rule (two observations each way):** the exam
+*catches catastrophic regressions* (v10: sil-dominant exam → fully
+mute) and *tracks the amount of speaking* (v11: exam words restored to
+v2 level → live speech restored to v2 level: sparse, misplaced) — but
+it does **not** predict placement (when to start/stop), which is what
+t1/t2/t4 actually fail on. Teacher-forced next-token accuracy cannot
+see self-fed timing decisions.
+
+**Caveat on all gate verdicts #1–#5:** an external adversarial review
+(CODEX_PLAN.md, 2026-09-21) demonstrated from source that the gate's
+scoring marks are offset from the actual stimulus (t1 questions
+audible at 17…152 s but scored at 2…137 s), that latency is measured
+from question START although questions end ~2.5 s later, that three
+placed tones can pass 5/5, and that the t2 800 ms bar is measured from
+interruption onset while the training data schedules replies ~2.3–5 s
+after onset. Verification confirmed the offsets in source and the
+exposure/rounding/freerun claims exactly. **All gate PASS/FAIL counts
+are provisional until the marks fix lands; beat censuses remain
+informative.**
 
 ## Free-run diagnostic (6762966 crashed on a type slip → 6762979, v3 ckpt)
 
