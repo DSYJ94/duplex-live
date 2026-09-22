@@ -259,11 +259,16 @@ Reading:
   bias. So a model that holds back too much CAN be released by
   decoding alone.
 - **Chatter is decode-irreducible**: ~40–58 false-speech ticks per
-  ~13 s lesson even at bias 0. On synthetic-voice lessons v11
-  OVER-speaks — the opposite of its tone-gate muting. The under/
-  over-speaking split is STIMULUS-DOMAIN (voice-like lessons vs pure
-  tones), not a decode threshold. Whether bias also unlocks the tone
-  side is tested by the live gate at bias 0/4 (job 6777591).
+  ~13 s lesson even at bias 0. On held-out lessons v11 OVER-speaks —
+  the opposite of its gate muting. **CORRECTION (same day): this is
+  NOT a tones-vs-voice domain gap — the gate prompts were checked and
+  are already MiniCPM-TTS voice (t1_q1.wav: envelope CV 0.367;
+  rendered by the bake-off's `synth_user_prompts`). The real split is
+  SEEN script vs UNSEEN wording: the held-out lessons reuse trained
+  utterances (Codex F3), so free-run "over-speaking" there is partly
+  script recall, while the gate's questions are unseen phrasing and
+  the model falls back to the silence attractor. The clean test for
+  that reading is the unseen-wording gate (job after 6777591).**
 - Small cost: the `<t+5s>` thief re-appears at bias ≥1 (1–5 fires).
 - Sweep gap (recurring LIMIT trap): `--limit 4` with two classes took
   the first 4 matching = all barge_in; timed_task lessons absent.
