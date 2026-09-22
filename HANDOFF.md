@@ -51,6 +51,13 @@ Read this first in a fresh chat. Everything below is decided and documented.
   vs 1.5 s), part-2 handback, and amount/control coupling are
   training-side and now measured separately. Old gate numbers are
   start-anchored history.**
+- **Unseen-wording gate is now the selection instrument (2026-09-22,
+  job 6781995): v11's bias-4 speaking was script recall — 0/10
+  answered on new questions, chatter through the whole background
+  tape. v3 keeps the most real behaviour: 2/10 on unseen wording at
+  p50 280 ms (timing circuit intact, coverage is the failure) and
+  clean t3+t5. MORE weight on the same 80 lessons is the least
+  supported next step; data-side or capacity (Codex F5-2/F5-3) lead.**
 - **Where this goes after v11:** if the speak-up lever works, the Phase-1
   checkpoint target is "v10's quiet control + v2-level speaking + some
   timing"; if it cliffs too, the fallback is data-side (word-denser

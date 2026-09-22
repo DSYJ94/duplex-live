@@ -314,6 +314,41 @@ Findings:
   ran to the 8-piece cap — the breaker usually fires but not always;
   consider a soft cap (~4) if runaway pieces show up in M2 voice.
 
+## Unseen-wording gate (6781995) — v11's speaking does NOT generalise
+
+The gate prompts were already TTS voice, so the fair question is seen
+script vs unseen wording. Same T-protocol shapes, new questions/bait/
+backchannels/parts/background (zero phrase-bank overlap, same user
+voice; prompts at runs/bakeoff/prompts-unseen).
+
+| test (bar) | v3 bias 0 — seen → unseen | v11 bias 4 — seen → unseen |
+|---|---|---|
+| t1 answered (≥8/10) | 4/10 → **2/10**, p50 280 ms | 5/10 → **0/10** |
+| t2 reply after barge end | never → 2560 ms | 1920 ms → broke early (720 ms) |
+| t3 yields | PASS → PASS | 1 yield → **2 yields** |
+| t4 part-2 answer | FAIL → FAIL (premature) | FAIL → FAIL (silent) |
+| t5 background | PASS → PASS | 8.96 s → **22.0 s (whole tape)** |
+
+Findings:
+
+- **v11's bias-4 speaking was script recall, not conversation.** On
+  unseen wording it answers zero questions and chatters through the
+  entire background test. The w50+tax2+ww3 dose taught phrase-level
+  replay plus a fragile decode threshold — the exam gains were
+  script-level and did not survive new phrasing.
+- **v3 keeps the most real behaviour**: halves on unseen questions
+  (2/10) but when it speaks it is FAST — p50 280 ms from question end
+  (human ~250 ms; bar 1500 ms). The turn-taking TIMING circuit
+  exists in v3; coverage (2/10) is what fails. It also stays silent
+  through unseen background speech (t5 PASS at bias 0 — the only
+  config of six today with t3+t5 both clean AND some t1 speech).
+- **Implication for the next dose**: adding more weight to the same
+  80 lessons (v12 ww6…) is now the LEAST supported direction — v11
+  shows that path buys recall, not generalisation. The evidence now
+  favours data-side (more distinct conversations / word-denser
+  lessons — Codex F5-3) or capacity (adapter test — F5-2), decided
+  with this unseen gate as the selection instrument.
+
 ## Free-run diagnostic (6762966 crashed on a type slip → 6762979, v3 ckpt)
 
 Replays held-out factory lessons in the EXACT training format, twice:
