@@ -19,8 +19,12 @@ import time
 from pathlib import Path
 
 UNSEEN = {
+    # KEYS ARE THE PROTOCOL STEM NAMES — run.py's LIVE_TESTS loads
+    # prompts_dir/<stem>.wav; the WORDING is what's unseen. First
+    # render used u* keys and the gate crashed on missing t*.wav
+    # (job 6781379); the cluster copies were renamed, not re-rendered.
     # T1: ten unseen factual questions (15 s cadence, like t1)
-    **{f"u1_q{i}": q for i, q in enumerate([
+    **{f"t1_q{i}": q for i, q in enumerate([
         "What is twelve plus nine?",
         "How many days are in a leap year?",
         "What planet is closest to the sun?",
@@ -33,30 +37,21 @@ UNSEEN = {
         "What language is spoken in Brazil?",
     ], start=1)},
     # T2: long-answer bait + interruption, unseen topic
-    "u2_bait": "Give me a long, detailed overview of how coffee is "
+    "t2_bait": "Give me a long, detailed overview of how coffee is "
                "grown and harvested, from the plant to the cup.",
-    "u2_interrupt": "Hold on — skip ahead. Just tell me which country "
+    "t2_interrupt": "Hold on — skip ahead. Just tell me which country "
                     "exports the most coffee, one sentence.",
     # T3: backchannels (model must NOT yield)
-    "u3_bc1": "Right, right.",
-    "u3_bc2": "Mm, okay.",
-    "u3_bc3": "Yeah, go on.",
+    "t3_bc1": "Right, right.",
+    "t3_bc2": "Mm, okay.",
+    "t3_bc3": "Yeah, go on.",
     # T4: two halves of one request, unseen topic
-    "u4_part1": "Could you tell me, um, what exactly...",
-    "u4_part2": "...the difference between a virus and a bacterium "
+    "t4_part1": "Could you tell me, um, what exactly...",
+    "t4_part2": "...the difference between a virus and a bacterium "
                 "is, in one sentence?",
     # T5: background speech, model never addressed
-    "u5_bg1": "Did you catch the bus this morning? It was packed again.",
-    "u5_bg2": "Yeah, and then it was late leaving the stop, like always.",
-}
-
-# same layouts as protocol.LIVE_TESTS, stems swapped
-LIVE_TESTS_UNSEEN = {
-    "t1": ([(2 + i * 15, f"u1_q{i}") for i in range(1, 11)], 158),
-    "t2": ([(2, "u2_bait"), (16, "u2_interrupt")], 40),
-    "t3": ([(2, "u2_bait"), (10, "u3_bc1"), (16, "u3_bc2"), (22, "u3_bc3")], 45),
-    "t4": ([(2, "u4_part1"), (9, "u4_part2")], 28),
-    "t5": ([(2, "u5_bg1"), (8, "u5_bg2")], 22),
+    "t5_bg1": "Did you catch the bus this morning? It was packed again.",
+    "t5_bg2": "Yeah, and then it was late leaving the stop, like always.",
 }
 
 
