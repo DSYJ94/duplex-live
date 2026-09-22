@@ -269,6 +269,46 @@ Reading:
   the first 4 matching = all barge_in; timed_task lessons absent.
   LIMIT is total scenarios across classes.
 
+## Live gate under decode bias (6777591, v11 + repaired instruments)
+
+Same checkpoint, same session code, two decode points. bias 0 vs the
+original gate #5 isolates the stream-contract change (continuation +
+sil-run end-of-turn); bias 4 is the mid-dial point from the sweep.
+
+| test (bar) | v11 bias 0 (contract-fixed) | v11 bias 4 |
+|---|---|---|
+| t1 — ≥8/10 answered, p50 ≤1500 ms from q-end | **FAIL** 0/10 | **FAIL** 5/10, p50 3120 ms |
+| t2 — reply ≤800 ms from barge END | **FAIL** never | **FAIL** 1920 ms |
+| t3 — never yield | PASS | **FAIL** (1 yield) |
+| t4 — answer after part-2 END | **FAIL** (premature) | **FAIL** (silent at part 2) |
+| t5 — ignore background | **FAIL** 5.84 s | **FAIL** 8.96 s |
+
+Findings:
+
+- **The live muting was substantially a DECODE THRESHOLD.** bias 4
+  takes question-end answers 0/10 → 5/10 and produces this
+  checkpoint's first-ever post-barge reply (1920 ms; bar 800; v2's is
+  1520 ms). The model could speak on tones all along — the argmax was
+  falling a hair short of `<sil>`→word flips at every beat.
+- **The costs arrive exactly as the sweep predicted**: more speaking
+  ⇒ background chatter (t5 0.48→8.96 s) and one backchannel yield.
+  There is no sweet spot on this dial yet — amount and control move
+  together. sil-bias is a REPORTING knob for diagnosis, not a fix.
+- **What decoding cannot touch**: reply latency (3.1 s vs 1.5 s bar),
+  part-2 turn handback (absent at every bias), and the amount/control
+  coupling. Those are training-side (dose/data) — and the next dose
+  decision now measures each of them separately with honest
+  instruments.
+- Contract trace (same job): multi-piece word events present in live
+  ([pad w1 w2] shape — `[(4, 8), (9, 8)]` = two 8-piece events);
+  952 live features vs 915 training ticks (1.04×, the window
+  surplus); beat-vs-tick offset CONSTANT across all three printed
+  windows (the per-window step resets — no cumulative drift; the
+  printed 2.846 s "delta" is an index artifact: beats include
+  continuation pieces, ticks don't). Note: both multi-piece events
+  ran to the 8-piece cap — the breaker usually fires but not always;
+  consider a soft cap (~4) if runaway pieces show up in M2 voice.
+
 ## Free-run diagnostic (6762966 crashed on a type slip → 6762979, v3 ckpt)
 
 Replays held-out factory lessons in the EXACT training format, twice:

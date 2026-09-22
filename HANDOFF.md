@@ -39,9 +39,18 @@ Read this first in a fresh chat. Everything below is decided and documented.
   in `layera/duplex.py`, plumbed through the harness;
   `freerun_diag.py` rewritten free-mode-only with the same knobs;
   `layera/contract_trace.py` prints the training-vs-live token
-  streams. **In flight: CPU rescore of all old gate recordings +
-  sil-bias sweep (v11, 0/1/2/4/8/16) + contract trace on the
-  cluster.** Old gate PASS/FAIL numbers are start-anchored history.
+  streams. **All five points EXECUTED and answered (2026-09-22):**
+  rescored verdict table (v2/v3/v10/v11 under honest instruments —
+  the old "2/5 each" was composition noise), decode sweep (monotone
+  dial: bias buys onset exactness with chatter; held-back lesson 017
+  unlocked 0/19→19/19), and the live gate at bias 0/4: **v11's live
+  muting was substantially a decode threshold** — bias 4 takes
+  question-end answers 0/10→5/10 and produces the first post-barge
+  reply (1920 ms), with the predicted costs (background chatter,
+  one yield). Decode is a diagnosis knob, not a fix: latency (3.1 s
+  vs 1.5 s), part-2 handback, and amount/control coupling are
+  training-side and now measured separately. Old gate numbers are
+  start-anchored history.**
 - **Where this goes after v11:** if the speak-up lever works, the Phase-1
   checkpoint target is "v10's quiet control + v2-level speaking + some
   timing"; if it cliffs too, the fallback is data-side (word-denser
