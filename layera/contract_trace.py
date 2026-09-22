@@ -45,11 +45,14 @@ def main() -> None:
     from layera.prepare import mix_in_slot
     from layera.sampler import build_from_grid
     from tokenizer.grid import from_scenario_dir
+    from tokenizer.vocab import register_into
     from transformers import AutoProcessor
 
     proc = AutoProcessor.from_pretrained(
         "Qwen/Qwen3-Omni-30B-A3B-Instruct")
     tok = proc.tokenizer
+    register_into(tok)  # duplex ids must exist or convert_tokens_to_ids
+                        # returns None for <sil>/<t+Ns>/... (job 6777066)
     pad_id = tok.convert_tokens_to_ids("<|audio_pad|>")
     n_old = len(tok)
 
