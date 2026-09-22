@@ -20,11 +20,13 @@ REPO=$DL/repo
 export TMPDIR=$DL/tmp PYTHONPATH=$DL/pylibs:$REPO
 
 CONTAINER=/projects/u6si/containers/latentsprites-pytorch-25.05.sif
+# runs/ lives under $DL, NOT under repo/ — absolute paths (first submit
+# skipped every dir and "completed" in 5 s)
 DIRS=(
-  runs/harness-layera-p1-v2-400step-unweighted
-  runs/harness-layera-p1-v3
-  runs/harness-layera-p1-v10
-  runs/harness-layera-p1-v11
+  $DL/runs/harness-layera-p1-v2-400step-unweighted
+  $DL/runs/harness-layera-p1-v3
+  $DL/runs/harness-layera-p1-v10
+  $DL/runs/harness-layera-p1-v11
 )
 
 cd "$REPO"
