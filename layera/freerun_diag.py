@@ -45,6 +45,10 @@ def main() -> None:
                     help="subtract from the <sil> logit (decode sweep)")
     ap.add_argument("--max-pieces", type=int, default=8,
                     help="cap on continuation pieces per word event")
+    ap.add_argument("--scenarios", default=None,
+                    help="comma-separated scenario_ids — replay EXACTLY "
+                         "these (may include trained lessons; capacity "
+                         "test needs to probe the trained conversations)")
     args = ap.parse_args()
 
     from transformers import AutoProcessor, Qwen3OmniMoeThinkerForConditionalGeneration
@@ -73,6 +77,18 @@ def main() -> None:
     with torch.no_grad():
         emb[n_old:] = ck["emb_delta_new_rows"].to(emb.device, emb.dtype)
         head[n_old:] = ck["head_delta_new_rows"].to(head.device, head.dtype)
+    adapter = None
+    if ck.get("adapter_state"):
+        ad_dim = int(ck.get("args", {}).get("adapter_dim", 256))
+        hid = emb.shape[1]  # embedding width — no config-path guessing
+        adapter = torch.nn.Sequential(
+            torch.nn.Linear(hid, ad_dim), torch.nn.GELU(),
+            torch.nn.Linear(ad_dim, hid))
+        adapter.load_state_dict(ck["adapter_state"])
+        adapter = adapter.to(model.device).eval()
+        print(f"[freerun] audio adapter loaded "
+              f"({sum(p.numel() for p in adapter.parameters())} params)",
+              flush=True)
 
     duplex_ids = set(range(n_old, len(proc.tokenizer)))
     name_of = {i: proc.tokenizer.convert_ids_to_tokens(i)
@@ -99,16 +115,24 @@ def main() -> None:
     train_ids = ({Path(s).stem for s in Path(args.shards).glob("*.pt")}
                  if args.shards else set())
     held = []
-    for r in rows:
-        sid = r["scenario_id"]
-        if sid in train_ids:
-            continue
-        if args.classes and not sid.startswith(
-                tuple(c.strip() for c in args.classes.split(","))):
-            continue
-        held.append(r)
-        if len(held) >= args.limit:
-            break
+    if args.scenarios:
+        want = [s.strip() for s in args.scenarios.split(",") if s.strip()]
+        by_sid = {r["scenario_id"]: r for r in rows}
+        missing = [s for s in want if s not in by_sid]
+        if missing:
+            raise SystemExit(f"[freerun] scenarios not in manifest: {missing}")
+        held = [by_sid[s] for s in want]
+    else:
+        for r in rows:
+            sid = r["scenario_id"]
+            if sid in train_ids:
+                continue
+            if args.classes and not sid.startswith(
+                    tuple(c.strip() for c in args.classes.split(","))):
+                continue
+            held.append(r)
+            if len(held) >= args.limit:
+                break
     print(f"[freerun] {len(held)} held-out scenarios "
           f"(classes={args.classes}; training={len(train_ids)} shards; "
           f"sil_bias={args.sil_bias:g}, max_pieces={args.max_pieces})",
@@ -172,6 +196,8 @@ def main() -> None:
         grid = from_scenario_dir(sc_dir)
         pcm = mix_in_slot(sc_dir, grid.n_ticks)
         feats, counts = encode_audio(model, proc, pcm)
+        if adapter is not None:
+            feats = adapter(feats.to(torch.float32)).to(feats.dtype)
         print(f"[freerun] {grid.scenario_id}: {grid.n_ticks} ticks, "
               f"{feats.shape[0]} ear tokens, windows={counts[:3]}...",
               flush=True)

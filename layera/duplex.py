@@ -80,6 +80,24 @@ class DuplexThinker:
             head[self.n_old:] = ck["head_delta_new_rows"].to(head.device,
                                                              head.dtype)
 
+        # capacity-test arm (Codex F5-2): checkpoints trained with
+        # --adapter carry a small trainable MLP applied to ear features
+        # before they enter the stream — apply it here exactly as
+        # training did
+        self.adapter = None
+        if ck.get("adapter_state"):
+            ad_dim = int(ck.get("args", {}).get("adapter_dim", 256))
+            hid = emb.shape[1]  # embedding width — no config-path guessing
+            ad = torch.nn.Sequential(
+                torch.nn.Linear(hid, ad_dim),
+                torch.nn.GELU(),
+                torch.nn.Linear(ad_dim, hid))
+            ad.load_state_dict(ck["adapter_state"])
+            self.adapter = ad.to(self.model.device).eval()
+            print(f"[duplex] audio adapter loaded "
+                  f"({sum(p.numel() for p in self.adapter.parameters())} "
+                  f"params, dim {ad_dim})", flush=True)
+
         # chat-envelope specials only — the snapshot is taken AFTER
         # registration, so filter OUT the duplex ids: they must stay
         # decodable
@@ -129,7 +147,10 @@ class DuplexThinker:
                 feature_attention_mask=inputs["feature_attention_mask"],
                 return_dict=True).last_hidden_state
         tower = tower.reshape(-1, tower.shape[-1])
-        return tower[-n_tok:]
+        tower = tower[-n_tok:]
+        if self.adapter is not None:
+            tower = self.adapter(tower.to(torch.float32)).to(tower.dtype)
+        return tower
 
     def _clean_argmax(self, logits) -> int:
         """Argmax over the live emission vocabulary: chat-envelope

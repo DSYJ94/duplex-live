@@ -54,15 +54,23 @@ def build_from_grid(sc_dir: Path, tok) -> dict:
             "scenario_id": grid.scenario_id}
 
 
-def collate(seq: dict, shard: dict, embed_layer) -> dict:
-    """inputs_embeds with frozen ear-features scattered into pad slots."""
+def collate(seq: dict, shard: dict, embed_layer, adapter=None) -> dict:
+    """inputs_embeds with frozen ear-features scattered into pad slots.
+    adapter (capacity test, Codex F5-2): optional small trainable module
+    applied to the ear features BEFORE they enter the stream — the spec's
+    AuT-adapter idea. None = the 10-rows-only arm."""
     ids = torch.tensor([seq["ids"]], dtype=torch.long,
                        device=embed_layer.weight.device)
     embeds = embed_layer(ids).clone()
     feats = shard["audio_feats"]
     n = min(len(seq["audio_pos"]), feats.shape[0])
     pos = torch.tensor(seq["audio_pos"][:n], device=embeds.device)
-    embeds[0, pos] = feats[:n].to(embeds.dtype).to(embeds.device)
+    f = feats[:n].to(embeds.device)
+    if adapter is not None:
+        f = adapter(f.to(torch.float32)).to(embeds.dtype)
+    else:
+        f = f.to(embeds.dtype)
+    embeds[0, pos] = f
     labels = torch.tensor([seq["labels"]], dtype=torch.long,
                           device=embeds.device)
     return {"inputs_embeds": embeds, "labels": labels}

@@ -69,6 +69,18 @@ def main() -> None:
                          "speaking. Bracket per cliffs-not-slopes: 3, "
                          "then 10 if words don't move, 1.5 if sil "
                          "control breaks")
+    ap.add_argument("--adapter", action="store_true",
+                    help="capacity test (Codex F5-2): also train a small "
+                         "audio-adapter MLP (hidden-size -> --adapter-dim "
+                         "-> hidden-size) on the ear features, instead of "
+                         "rows-only. ~1M params vs ~41k. Answers whether "
+                         "the 10-row approach can learn conversation "
+                         "behavior at all")
+    ap.add_argument("--adapter-dim", type=int, default=256)
+    ap.add_argument("--lessons", default=None,
+                    help="comma-separated scenario_ids — capacity-test "
+                         "mode: train ONLY these (e.g. the 4 probe "
+                         "conversations), ignore the rest of the shard dir")
     ap.add_argument("--out", default="runs/p1-v1")
     args = ap.parse_args()
 
@@ -143,7 +155,27 @@ def main() -> None:
     batch = Path(args.batch)
     rows = [json.loads(l) for l in open(batch / "train_manifest.jsonl")]
     by_id = {r["scenario_id"]: r for r in rows}
-    opt = torch.optim.AdamW([emb_w, head_w], lr=args.lr)
+    want = ({s.strip() for s in args.lessons.split(",") if s.strip()}
+            if args.lessons else None)
+    if want is not None:
+        # capacity mode: drop unwanted shards BEFORE the loop — with 4
+        # lessons and hundreds of steps, sweep-skipping would re-load the
+        # whole shard dir every pass (~100x wasted I/O)
+        shards = [sp for sp in shards if sp.stem in want]
+        print(f"[p1] capacity mode: training only {[sp.stem for sp in shards]}",
+              flush=True)
+    adapter = None
+    if args.adapter:
+        dim = emb_w.shape[1]  # embedding width — no config-path guessing
+        adapter = torch.nn.Sequential(
+            torch.nn.Linear(dim, args.adapter_dim), torch.nn.GELU(),
+            torch.nn.Linear(args.adapter_dim, dim)).cuda()
+        print(f"[p1] ADAPTER arm: {sum(p.numel() for p in adapter.parameters())}"
+              f" trainable adapter params (dim {args.adapter_dim})",
+              flush=True)
+    opt = torch.optim.AdamW(
+        [emb_w, head_w] + (list(adapter.parameters()) if adapter else []),
+        lr=args.lr)
 
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
@@ -157,10 +189,13 @@ def main() -> None:
             sid = shard["scenario_id"]
             if sid not in by_id:
                 continue
+            if want is not None and sid not in want:
+                continue
             seq = build_from_grid(batch / by_id[sid]["dir"], proc.tokenizer)
             if len(seq["ids"]) < 8:
                 continue
-            batch_in = collate(seq, shard, model.get_input_embeddings())
+            batch_in = collate(seq, shard, model.get_input_embeddings(),
+                               adapter=adapter)
             batch_in = {k: v.to(model.device) for k, v in batch_in.items()}
             if step == 0:
                 print(f"[p1] mem before fwd: "
@@ -235,10 +270,13 @@ def main() -> None:
     # text_config.tie_word_embeddings is False -> embed and head are
     # SEPARATE tensors; both new-row deltas must be saved or the trained
     # head is lost on reload.
-    torch.save({"emb_delta_new_rows": emb_w[n_old:].detach().cpu(),
-                "head_delta_new_rows": head_w[n_old:].detach().cpu(),
-                "n_old": n_old, "steps": step, "args": vars(args)},
-               out / "p1_checkpoint.pt")
+    ck = {"emb_delta_new_rows": emb_w[n_old:].detach().cpu(),
+          "head_delta_new_rows": head_w[n_old:].detach().cpu(),
+          "n_old": n_old, "steps": step, "args": vars(args)}
+    if adapter is not None:
+        ck["adapter_state"] = {k: v.detach().cpu()
+                               for k, v in adapter.state_dict().items()}
+    torch.save(ck, out / "p1_checkpoint.pt")
     print(f"[p1] done: {step} steps, final loss {losses[-1]:.4f} -> {out}")
 
 
