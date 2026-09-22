@@ -202,6 +202,34 @@ numbers; a CPU rescore job over the existing recordings
 the corrected table. Decode sweep (v11, sil-bias 0/1/2/4/8/16, free
 mode, 4 held-out lessons) submitted alongside.**
 
+### Rescored verdict table (job 6777210, repaired instruments)
+
+| test (bar) | v2 unweighted | v3 w50 | v10 w50+tax2 | v11 w50+tax2+ww3 |
+|---|---|---|---|---|
+| t1 — ≥8/10 answered, p50 ≤1500 ms from question END | **FAIL** 0/10 | **FAIL** 4/10, p50 2200 ms | **FAIL** 0/10 | **FAIL** 0/10 |
+| t2 — reply ≤800 ms from barge END | **FAIL** 1520 ms | **FAIL** never replied | **FAIL** never replied | **FAIL** never replied |
+| t3 — never yield to backchannels | PASS | PASS | PASS | PASS |
+| t4 — answer after part-2 END | **FAIL** | **FAIL** | **FAIL** | **FAIL** |
+| t5 — ignore background | PASS | PASS | PASS | PASS |
+
+What the honest instruments change vs the old "all three pass 2/5":
+
+- **The pass counts stayed 2/5 but the composition moved** — the old
+  t2 PASS was scoring noise; under end-anchoring **nobody but v2
+  replies after a barge at all**, and v2's real reply is 1520 ms
+  (bar 800; trained schedule is barge end +240 ms). Slow-but-there,
+  not passing.
+- **v3 is the only checkpoint that answers questions at their ends
+  live** (4/10, p50 2.2 s — right structure, too slow and too sparse).
+  v10/v11 answer **zero** — v11's exam-level speaking went to wrong
+  places (t4 premature beats, t5 background beats), confirming the
+  placement problem is not fixed by any dose so far.
+- t4 is universally failed: **no checkpoint resumes after the user
+  finishes part 2.** Nobody has turn-handback yet.
+- Under-speaking remains the top defect (0/10 question ends on three
+  of four models) — which is exactly what the sil-bias sweep tests
+  without retraining.
+
 ## Free-run diagnostic (6762966 crashed on a type slip → 6762979, v3 ckpt)
 
 Replays held-out factory lessons in the EXACT training format, twice:
