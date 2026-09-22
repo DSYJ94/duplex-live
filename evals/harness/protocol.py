@@ -16,8 +16,12 @@ from dataclasses import dataclass, field
 
 # seconds; generous defaults — replay metrics refine from the wavs
 T_PROTOCOL: dict[str, dict] = {
+    # t1 marks corrected 2026-09-22: the audio places files t1_q1..t1_q10
+    # at 17..152 s (LIVE_TESTS and the bake-off driver both use
+    # 2 + i*15 for i in 1..10); the old marks (2..137) were offset by one
+    # file slot and the 152 s question fell past the old 152 s tape.
     "t1": {"intent": "baseline turn-taking: 10 questions, 15 s gaps",
-           "marks": {"q": [2 + i * 15 for i in range(10)]}, "total_s": 158},
+           "marks": {"q": [17 + i * 15 for i in range(10)]}, "total_s": 158},
     "t2": {"intent": "barge-in: long-answer bait, interrupt at 16 s",
            "marks": {"bait": [2], "barge": [16]}, "total_s": 40},
     "t3": {"intent": "backchannels mid-answer (model must NOT yield)",
@@ -39,9 +43,11 @@ FACTORY_TESTS = {
 
 # verdict thresholds (ms / bool)
 THRESH = {
-    "reply_after_barge_max_ms": 800,     # bar: PersonaPlex ≤500 scripted
-    "barge_to_silence_max_ms": 800,
-    "response_latency_p50_max_ms": 1500,
+    "reply_after_barge_max_ms": 800,     # from barge END (trained schedule
+                                         # is barge end +240 ms; humans ~250)
+    "barge_to_silence_max_ms": 800,      # from barge ONSET (stop-fast)
+    "response_latency_p50_max_ms": 1500, # from question END
+    "t1_min_answered": 8,                # of 10 questions
     "backchannel_yield_max_count": 0,
     "false_engagement_max_s": 2.0,       # T5 total output speech
     "pause_resume": True,                # T4: model resumes after own pause
@@ -50,7 +56,9 @@ THRESH = {
 # live-run stimulus layouts (prompt stems from the bake-off Phase A synth;
 # recordings exist at runs/bakeoff/prompts on the cluster)
 LIVE_TESTS = {
-    "t1": ([(2 + i * 15, f"t1_q{i}") for i in range(1, 11)], 2 + 9 * 15 + 15),
+    # t1 total 158 s (was 152 — the 152 s question was truncated to zero
+    # length at the tape edge; corrected 2026-09-22)
+    "t1": ([(2 + i * 15, f"t1_q{i}") for i in range(1, 11)], 158),
     "t2": ([(2, "t2_bait"), (16, "t2_interrupt")], 40),
     "t3": ([(2, "t2_bait"), (10, "t3_bc1"), (16, "t3_bc2"), (22, "t3_bc3")], 45),
     "t4": ([(2, "t4_part1"), (9, "t4_part2")], 28),

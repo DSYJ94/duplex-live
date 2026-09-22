@@ -28,6 +28,10 @@ from evals.harness.metrics import chunk_hash  # noqa: E402
 SR_IN = 16000
 SR_OUT = 24000
 
+# <sil> ticks of continuous silence that count as end-of-turn while
+# speaking (~770-800 ms — the gap that separates turns in the lessons)
+SIL_RUN_TICKS = 10
+
 
 class Target(abc.ABC):
     name = "abstract"
@@ -133,16 +137,19 @@ class LayerATarget(Target):
     def __init__(self):
         self.thinker = None
         self._speaking = False
+        self._sil_run = 0
         self._tone = None
         self._placed = []  # (out-sample offset) of each spoken beat
 
-    def prepare(self, ckpt, **kw) -> None:
+    def prepare(self, ckpt, sil_bias: float = 0.0, max_pieces: int = 8,
+                **kw) -> None:
         import sys
 
         sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
         from layera.duplex import DuplexThinker
         self._tone = _tone_80ms()
-        self.thinker = DuplexThinker(str(ckpt))
+        self.thinker = DuplexThinker(str(ckpt), sil_bias=sil_bias,
+                                     max_pieces=max_pieces)
 
     def _apply(self, beats) -> dict:
         texts, n_yield, n_timing, n_control = [], 0, 0, 0
@@ -151,24 +158,35 @@ class LayerATarget(Target):
         for tok, t_s in beats:
             kind = self.thinker.kind_of(tok)
             if kind == "word":
+                self._sil_run = 0
                 self._speaking = True
                 texts.append(self.thinker.proc.tokenizer.decode([tok]))
                 start = int(t_s * SR_OUT)
                 self._placed.append(start)
                 out_samples += len(self._tone)
             elif kind == "sil":
-                if self._speaking:
+                # repaired 2026-09-22 (stream contract, F2): a single <sil>
+                # tick does NOT mean the voice stopped — in training 9,314
+                # of 27,429 <sil> ticks sit INSIDE assistant speech (piece
+                # gaps, word boundaries). Turn ends only after a sustained
+                # silence run (~10 ticks = 770-800 ms), matching the
+                # end-of-turn pattern in the lessons.
+                self._sil_run += 1
+                if self._speaking and self._sil_run >= SIL_RUN_TICKS:
                     end_of_turn = True
-                self._speaking = False
+                    self._speaking = False
             elif kind == "yield":
                 n_yield += 1
                 self._speaking = False
+                self._sil_run = 0
             elif kind == "timing":
                 n_timing += 1
                 self._speaking = False
+                self._sil_run = 0
             else:  # <delegate>/<barge-in> or unexpected
                 n_control += 1
                 self._speaking = False
+                self._sil_run = 0
         return {"text": "".join(texts).strip(),
                 "end_of_turn": end_of_turn,
                 "n_yield": n_yield, "n_timing": n_timing,
@@ -198,6 +216,7 @@ class LayerATarget(Target):
         self.thinker.reset()
         self._placed = []
         self._speaking = False
+        self._sil_run = 0
 
     def render(self, total_s: float) -> np.ndarray:
         """Assemble model_out.wav from the placed speaking beats. One

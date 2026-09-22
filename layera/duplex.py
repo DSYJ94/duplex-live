@@ -41,12 +41,16 @@ WINDOW_SAMPLES = int(SR_IN * WINDOW_S)
 
 class DuplexThinker:
     def __init__(self, ckpt_path: str,
-                 model_id: str = "Qwen/Qwen3-Omni-30B-A3B-Instruct"):
+                 model_id: str = "Qwen/Qwen3-Omni-30B-A3B-Instruct",
+                 sil_bias: float = 0.0, max_pieces: int = 8):
         import torch
         from transformers import AutoProcessor, Qwen3OmniMoeThinkerForConditionalGeneration
 
         sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
         from tokenizer.vocab import register_into
+
+        self.sil_bias = float(sil_bias)
+        self.max_pieces = int(max_pieces)
 
         t0 = time.time()
         # batched_mm experts for INFERENCE (eager is the training-only
@@ -84,6 +88,8 @@ class DuplexThinker:
                          if i not in duplex_ids]
         self.name_of = {i: self.proc.tokenizer.convert_ids_to_tokens(i)
                         for i in duplex_ids}
+        self.sil_id = next(i for i in duplex_ids
+                           if self.name_of[i] == "<sil>")
         self.pad_id = self.proc.tokenizer.convert_tokens_to_ids(
             "<|audio_pad|>")
         self.emb_layer = self.model.get_input_embeddings()
@@ -92,7 +98,8 @@ class DuplexThinker:
         self._t_s = 0.0  # audio time of the next feature
         print(f"[duplex] {ckpt_path} loaded ({time.time() - t0:.0f}s), "
               f"{len(duplex_ids)} duplex tokens live "
-              f"(training-format stream, {WINDOW_S:.0f}s windows)",
+              f"(training-format stream, {WINDOW_S:.0f}s windows, "
+              f"sil_bias={self.sil_bias:g}, max_pieces={self.max_pieces})",
               flush=True)
 
     def kind_of(self, tok_id: int) -> str:
@@ -124,6 +131,20 @@ class DuplexThinker:
         tower = tower.reshape(-1, tower.shape[-1])
         return tower[-n_tok:]
 
+    def _clean_argmax(self, logits) -> int:
+        """Argmax over the live emission vocabulary: chat-envelope
+        specials masked; <sil> penalised by sil_bias (decode-time knob —
+        the model's 92%-silence training prior makes it win ties it
+        should lose; the sweep asks whether subtracting from the <sil>
+        logit restores speech without retraining)."""
+        import torch
+
+        for tid in self.mask_ids:
+            logits[tid] = float("-inf")
+        if self.sil_bias:
+            logits[self.sil_id] -= self.sil_bias
+        return int(logits.argmax())
+
     def _beat(self, feat, t_s: float) -> tuple[int, float, float]:
         """One decision beat: audio feature in, argmax emission out,
         emission embedding fed back. Returns (token, audio_t_s, wall_s)."""
@@ -138,10 +159,7 @@ class DuplexThinker:
             out = self.model(inputs_embeds=e_in,
                              past_key_values=self.cache, use_cache=True)
         self.cache = out.past_key_values
-        logits = out.logits[0, -1].clone()
-        for tid in self.mask_ids:
-            logits[tid] = float("-inf")
-        tok = int(logits.argmax())
+        tok = self._clean_argmax(out.logits[0, -1].clone())
         e_out = self.emb_layer(
             torch.tensor([[tok]], device=self.model.device))
         with torch.no_grad():
@@ -150,11 +168,49 @@ class DuplexThinker:
         self.cache = out.past_key_values
         return tok, t_s, time.time() - t0
 
+    def _continue_word(self, tok: int, t_s: float) -> list[int]:
+        """Word continuation — the stream-contract fix (Codex F2).
+        Training emits multi-piece words CONSECUTIVELY after one audio
+        input ([pad w1 w2] then the next pad; 33.6% of training words
+        have >1 piece). The old live loop fed one piece, then the next
+        audio feature — a sequence shape training never shows. This
+        feeds each emitted piece and predicts the next position with no
+        new audio, matching training exactly; the first non-word breaker
+        (usually <sil>) is DISCARDED, not fed — training has no token
+        between a word's last piece and the next audio pad. Returns the
+        extra pieces (first piece already placed by _beat)."""
+        pieces = []
+        while len(pieces) + 1 < self.max_pieces:
+            import torch
+
+            e = self.emb_layer(
+                torch.tensor([[tok]], device=self.model.device))
+            with torch.no_grad():
+                out = self.model(inputs_embeds=e,
+                                 past_key_values=self.cache, use_cache=True)
+            self.cache = out.past_key_values
+            nxt = self._clean_argmax(out.logits[0, -1].clone())
+            if self.kind_of(nxt) != "word":
+                break  # breaker: drop it, the next feature decides anew
+            pieces.append(nxt)
+            tok = nxt
+        return pieces
+
     def reset(self) -> None:
         """Fresh session: clear KV memory, audio buffer, and clock."""
         self.cache = None
         self._pcm = np.zeros(0, dtype=np.float32)
         self._t_s = 0.0
+
+    def _run_feature(self, feat, t_s: float) -> list[tuple[int, float]]:
+        """One feature -> its beat plus any word-continuation pieces
+        (all at the same audio timestamp, as in training)."""
+        tok, _t, _w = self._beat(feat, t_s)
+        beats = [(tok, t_s)]
+        if self.kind_of(tok) == "word":
+            for piece in self._continue_word(tok, t_s):
+                beats.append((piece, t_s))
+        return beats
 
     def feed_audio(self, pcm_16k: np.ndarray) -> list[tuple[int, float]]:
         """Absorb user audio; one decision per ear feature. Returns
@@ -169,8 +225,7 @@ class DuplexThinker:
             feats = self._encode_window(win)
             step = WINDOW_S / max(len(feats), 1)
             for i in range(len(feats)):
-                tok, _t, _w = self._beat(feats[i], self._t_s)
-                beats.append((tok, self._t_s))
+                beats.extend(self._run_feature(feats[i], self._t_s))
                 self._t_s += step
         return beats
 
@@ -182,8 +237,7 @@ class DuplexThinker:
             feats = self._encode_window(self._pcm)
             step = (len(self._pcm) / SR_IN) / max(len(feats), 1)
             for i in range(len(feats)):
-                tok, _t, _w = self._beat(feats[i], self._t_s)
-                beats.append((tok, self._t_s))
+                beats.extend(self._run_feature(feats[i], self._t_s))
                 self._t_s += step
         self._pcm = np.zeros(0, dtype=np.float32)
         return beats

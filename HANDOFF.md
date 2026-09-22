@@ -1,8 +1,8 @@
-# HANDOFF — where we are (2026-09-21)
+# HANDOFF — where we are (2026-09-22)
 
 Read this first in a fresh chat. Everything below is decided and documented.
 
-## The frontier right now (2026-09-21)
+## The frontier right now (2026-09-22)
 
 - **Phase-1 training is a dose-response study through v11.** The ablation
   ledger with every recipe, exam number and verdict is **EXPERIMENTS.md** —
@@ -25,15 +25,23 @@ Read this first in a fresh chat. Everything below is decided and documented.
   Live gate: PASS 2/5, beat census v2-shaped (sparse, misplaced speech;
   mute on t1/t2). Exam tracks the AMOUNT of speaking, not placement.**
 - **External adversarial review landed (CODEX_PLAN.md, 2026-09-21) and
-  VERIFIED accurate** — gate scoring marks are offset from the actual
-  stimulus, t2's bar conflicts with the trained reply schedule, three
-  tones can pass 5/5, v5/v6 "5× data" was actually unbalanced
-  re-exposure, our "free-run never fires t+30s" claim was wrong (it
-  fires 159× at wrong positions), and the spec's AuT adapter was never
-  built. **All gate verdicts are provisional until the marks fix;
-  adoption of the review's recommendations is pending the owner's
-  decision (proposed order: ledger corrections → gate repair →
-  decoding sweep → stream-contract fix → next dose).**
+  VERIFIED accurate; the owner APPROVED the 5-point adoption plan
+  (2026-09-22). Executed:** (1) ledger corrections committed (v5/v6
+  exposure, freerun 159-steals, rounding); (2) **gate instruments
+  repaired** — marks aligned to true stimulus positions, latencies
+  anchored at utterance END, unanswered questions counted (t1 needs
+  ≥8/10 answered), t2 reply from barge END, t4 talk-over = premature,
+  `<sil>`-run (not single tick) ends a turn, 16 kHz/24 kHz framing bug
+  fixed — all guarded by `evals/harness/test_gate_regressions.py`
+  (three-tone cheat now FAILS, honest traces PASS, all green);
+  (3) **decode knobs live**: `--sil-bias` + word continuation
+  (`[pad w1 w2]`, the training contract for 33.6% multi-piece words)
+  in `layera/duplex.py`, plumbed through the harness;
+  `freerun_diag.py` rewritten free-mode-only with the same knobs;
+  `layera/contract_trace.py` prints the training-vs-live token
+  streams. **In flight: CPU rescore of all old gate recordings +
+  sil-bias sweep (v11, 0/1/2/4/8/16) + contract trace on the
+  cluster.** Old gate PASS/FAIL numbers are start-anchored history.
 - **Where this goes after v11:** if the speak-up lever works, the Phase-1
   checkpoint target is "v10's quiet control + v2-level speaking + some
   timing"; if it cliffs too, the fallback is data-side (word-denser
@@ -157,13 +165,16 @@ Read this first in a fresh chat. Everything below is decided and documented.
   timing learns); concentrating it in weight (v3) breaks <sil>; yield
   responds to data-spread. <yield> was a second rarity token (≈0.02% of
   graded) no weighting covered until now.**
-  **v6 RESULT (k5×w10 + yield weight): spread-boost FAILED. t+30s prob
-  0.000 exactly (same as unweighted) — adding data at fixed weight KILLED
-  the timing signal w10 alone had (v4: 0.15). Sil perfect (97-100%),
-  words best of any run (0.10-0.39), yield weaker than v5 (max 0.35).
-  DATA×WEIGHT law is dead; verified via checkpoint-args that the run
-  matched its design. Suspected AdamW scale-invariance weirdness — the
-  weight dial does not behave like a plain multiplier.**
+  **v6 RESULT (CORRECTED 2026-09-22: the run changed THREE things vs
+  v4, not one — shards-v6 visit counts barge 150×/timed 100×/others
+  20–30×, yield weighting ON, and unshuffled sorted order changes the
+  last class seen; "k5" never meant 5× distinct data): t+30s prob 0.000
+  (printed; rounded to 3 dp) — the w10 timing signal (v4: 0.15) was
+  gone. Sil perfect (97-100%), words best of any run (0.10-0.39),
+  yield weaker than v5 (max 0.35). The original "DATA×WEIGHT law is
+  dead" conclusion is CONFOUNDED — no clean single-variable
+  attribution. Suspected AdamW scale-invariance weirdness stands as a
+  hypothesis only.**
   **THIEF NAMED (6756308, v3 rerun with failure-argmax histogram): the
   sil "damage" was never broken silence — it is <t+30s> OVER-FIRING at
   sil positions (029: 584/588 sil failures = t+30s steals; 014/017/018
@@ -195,8 +206,10 @@ Read this first in a fresh chat. Everything below is decided and documented.
   0.38–0.40 gold-forced; zero chatter; 81–110 recoveries to sil) → the
   live babble was the HARNESS FORMAT (chat envelope + processor
   <|audio|> path), not the model. Also: forced gold t+30s history PRIMES
-  the thief (675 sil steals); free-run never fires t+30s at all (0/6) —
-  it needs the primer. FIX: duplex.py v2 + LayerATarget v2 — live now
+  the thief (675 sil steals); free-run scores 0/6 at gold t+30s
+  positions BUT fires t+30s 159× at wrong sil positions (61+98,
+  corrected 2026-09-22 — the "needs the primer" story is not
+  supported). FIX: duplex.py v2 + LayerATarget v2 — live now
   mirrors prepare.encode_audio (no envelope, 4 s-window ear features
   into <|audio_pad|> slots, one beat per feature, timestamped output
   tape). Live-gate rerun on the same v3 ckpt = the A/B. Full tables:

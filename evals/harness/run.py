@@ -57,11 +57,22 @@ def verdict(test: str, m: dict) -> str:
         return "PASS" if s <= THRESH["false_engagement_max_s"] \
             else f"FAIL (engaged {s}s with background speech)"
     if test == "t1":
+        # repaired 2026-09-22: latency is measured from question END (it
+        # was anchored at question start, demanding mid-question replies),
+        # and unanswered questions no longer vanish from the median — an
+        # assistant that answers 0 questions must FAIL even with a lucky
+        # single fast reply. Pass needs >= t1_min_answered AND p50 in bar.
+        n = m.get("n_answered", 0)
+        if n == 0:
+            return "FAIL (answered 0 questions)"
         p50 = m.get("response_latency_p50_ms")
-        if p50 is None:
-            return "FAIL (no answers)"
-        return "PASS" if p50 <= THRESH["response_latency_p50_max_ms"] \
-            else f"FAIL (p50 {p50} ms)"
+        pre = m.get("premature_over_questions", 0)
+        need = THRESH["t1_min_answered"]
+        if n < need:
+            return f"FAIL (answered {n}/{m.get('n_questions', '?')} questions, need {need})"
+        if p50 is None or p50 > THRESH["response_latency_p50_max_ms"]:
+            return f"FAIL (p50 {p50} ms > {THRESH['response_latency_p50_max_ms']} from question end)"
+        return "PASS" + (f" ({pre} premature)" if pre else "")
     return "n/a"
 
 
@@ -71,10 +82,10 @@ def replay(root: Path, tests: list[str]) -> list[dict]:
         d = root / t
         spec = T_PROTOCOL[t]
         out, sr = load_wav(d / "model_out.wav")
-        inp = None
+        inp, in_sr = None, None
         if (d / "user_in.wav").exists():
-            inp, _ = load_wav(d / "user_in.wav")
-        m = metrics.measure(t, spec["marks"], out, sr, inp)
+            inp, in_sr = load_wav(d / "user_in.wav")
+        m = metrics.measure(t, spec["marks"], out, sr, inp, in_sr=in_sr)
         m["verdict"] = verdict(t, m)
         # telemetry aggregates when the target logged chunks (MiniCPM)
         logp = d / "log.jsonl"
@@ -107,6 +118,13 @@ def main() -> None:
                     help="stimulus prompts dir (bake-off Phase A layout)")
     ap.add_argument("--assets", default=None, help="MiniCPM snapshot assets")
     ap.add_argument("--tests", default="t1,t2,t3,t4,t5")
+    # decode-time knobs for the layera target (the sil-bias sweep)
+    ap.add_argument("--sil-bias", type=float, default=0.0,
+                    help="subtract this from the <sil> logit at decode "
+                         "(0 = off; sweep 1..16)")
+    ap.add_argument("--max-pieces", type=int, default=8,
+                    help="cap on word beats per word event (word "
+                         "continuation loop)")
     args = ap.parse_args()
     tests = [t for t in args.tests.split(",") if t]
 
@@ -131,7 +149,8 @@ def main() -> None:
         out_root = Path(args.out or "runs/harness-layera")
         prompts = Path(args.prompts or "runs/bakeoff/prompts")
         tgt = LayerATarget()
-        tgt.prepare(ckpt=args.ckpt)
+        tgt.prepare(ckpt=args.ckpt, sil_bias=args.sil_bias,
+                    max_pieces=args.max_pieces)
         run_live(tgt, {t: LIVE_TESTS[t] for t in tests}, out_root, prompts)
         args.replay = str(out_root)
 

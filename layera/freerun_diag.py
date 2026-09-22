@@ -1,21 +1,26 @@
-"""Free-run diagnostic: teacher-forced exam vs live behavior, in isolation.
+"""Free-run diagnostic v2 (2026-09-22): self-history replay ONLY.
 
-Plain words: the exam feeds the model the CORRECT history (gold answers
-so far) and checks its next answer — that can look great even while live
-behavior (where the model must eat its OWN answers) falls apart. This
-script replays held-out lessons in the exact training format but lets
-the model's own emissions ride along in the context, then compares:
+The old forced/free split is retired: the diagnostic's forced mode fed
+the model's OWN word predictions back (gold word -> gold_id=None ->
+self-feed; Codex review F3), so it was never the probe's teacher
+forcing, and probe_p1.py already is the true forced reference. This
+script is free-mode only: exact training format, the model's own
+emissions fed back, one decision per tick — now with the SAME decode
+knobs as live (sil-bias, word continuation), so what it measures is
+what the harness runs.
 
-  forced  = gold history (should match the probe: sil ~95%+)
-  free    = self-history (does it chatter? does it recover to <sil>?)
-
-It also prints the ear's token-rate alignment (one feature per 80 ms
-tick is what the sampler assumes; anything else means training saw
-time-warped audio).
+Per held-out lesson it reports:
+  - per-gold-kind accuracy + top steals (what replaced <sil>, etc.)
+  - word-onset hits: of the gold word ticks, how many the model speaks
+    on the exact tick / within +-1 s — the number that predicts the
+    gate's answered-question and latency bars
+  - false speech: gold-<sil> ticks where the model speaks (chatter)
+  - timing-token fires at wrong positions (the thief, self-history)
+  - word continuation pieces (the [pad w1 w2] contract, exercised)
 
   python -m layera.freerun_diag --batch runs/synth-big7/audio \
-      --ckpt runs/p1-v3/p1_checkpoint.pt --shards runs/shards \
-      --classes timed_task --limit 2
+      --ckpt runs/p1-v11/p1_checkpoint.pt --shards runs/shards \
+      --classes timed_task,barge_in --limit 4 --sil-bias 4
 """
 
 from __future__ import annotations
@@ -36,6 +41,10 @@ def main() -> None:
     ap.add_argument("--classes", default=None)
     ap.add_argument("--limit", type=int, default=2)
     ap.add_argument("--max-ticks", type=int, default=1600)
+    ap.add_argument("--sil-bias", type=float, default=0.0,
+                    help="subtract from the <sil> logit (decode sweep)")
+    ap.add_argument("--max-pieces", type=int, default=8,
+                    help="cap on continuation pieces per word event")
     args = ap.parse_args()
 
     from transformers import AutoProcessor, Qwen3OmniMoeThinkerForConditionalGeneration
@@ -70,9 +79,17 @@ def main() -> None:
                for i in duplex_ids}
     mask_ids = [i for i in proc.tokenizer.all_special_ids
                 if i not in duplex_ids]
+    sil_id = next(i for i in duplex_ids if name_of[i] == "<sil>")
     pad_id = proc.tokenizer.convert_tokens_to_ids("<|audio_pad|>")
     tok_conv = proc.tokenizer.convert_tokens_to_ids
     emb_layer = model.get_input_embeddings()
+
+    def clean_argmax(logits) -> int:
+        for tid in mask_ids:
+            logits[tid] = float("-inf")
+        if args.sil_bias:
+            logits[sil_id] -= args.sil_bias
+        return int(logits.argmax())
 
     # ---- ear token-rate alignment -------------------------------------
     from tokenizer.grid import from_scenario_dir
@@ -93,10 +110,10 @@ def main() -> None:
         if len(held) >= args.limit:
             break
     print(f"[freerun] {len(held)} held-out scenarios "
-          f"(classes={args.classes}; training={len(train_ids)} shards)",
+          f"(classes={args.classes}; training={len(train_ids)} shards; "
+          f"sil_bias={args.sil_bias:g}, max_pieces={args.max_pieces})",
           flush=True)
 
-    # alignment on the FIRST lesson's audio: full stream + first window
     sc0 = batch / held[0]["dir"]
     grid0 = from_scenario_dir(sc0)
     pcm0 = mix_in_slot(sc0, grid0.n_ticks)
@@ -118,13 +135,11 @@ def main() -> None:
             return "control"
         return "word"
 
-    def run_lesson(sc_dir, n_ticks, feats, free: bool):
-        """Replay one lesson tick-by-tick. free=False feeds the gold
-        emission back (teacher forcing); free=True feeds the model's own
-        pick. Returns per-gold-kind stats + recovery counts."""
-        per = defaultdict(lambda: [0, 0, Counter()])
-        wrong_streak = 0
-        recovered = missed = 0
+    def run_lesson(feats, n_ticks):
+        """Free-run one lesson tick-by-tick, feeding every emission back
+        (word continuation included, exactly as live). Returns per-tick
+        first picks + continuation piece count."""
+        picks, pieces = [], 0
         cache = None
         for i in range(min(n_ticks, args.max_ticks)):
             e_in = emb_layer(torch.tensor([[pad_id]], device=model.device)
@@ -134,39 +149,23 @@ def main() -> None:
                 out = model(inputs_embeds=e_in, past_key_values=cache,
                             use_cache=True)
             cache = out.past_key_values
-            logits = out.logits[0, -1].clone()
-            for tid in mask_ids:
-                logits[tid] = float("-inf")
-            tok_pick = int(logits.argmax())
-            gold_name = grid.ticks[i].emission
-            if gold_name in ALL_SPECIAL:
-                gold_id = tok_conv(gold_name)
-                gold = "<sil>" if gold_name == SIL else gold_name
-            else:
-                gold_id = None
-                gold = "<word>"
-            kind = kind_of(tok_pick)
-            e = per[gold]
-            e[0] += 1
-            ok = (kind == "word") if gold_id is None else \
-                (tok_pick == gold_id)
-            e[1] += int(ok)
-            if not ok:
-                e[2][name_of.get(tok_pick, kind)] += 1
-                wrong_streak += 1
-            elif wrong_streak and gold == "<sil>":
-                recovered += 1
-                wrong_streak = 0
-            # feed the emission (gold or own) back into the KV
-            feed_tok = gold_id if (not free and gold_id is not None) \
-                else tok_pick
-            e_out = emb_layer(torch.tensor([[feed_tok]],
-                                           device=model.device))
-            with torch.no_grad():
-                out = model(inputs_embeds=e_out, past_key_values=cache,
-                            use_cache=True)
-            cache = out.past_key_values
-        return per, recovered
+            tok = clean_argmax(out.logits[0, -1].clone())
+            picks.append(tok)
+            # continuation: keep emitting pieces of the same word event;
+            # the first non-word breaker is discarded, never fed
+            while kind_of(tok) == "word" and pieces + 1 < args.max_pieces:
+                e_out = emb_layer(torch.tensor([[tok]], device=model.device))
+                with torch.no_grad():
+                    out = model(inputs_embeds=e_out,
+                                past_key_values=cache, use_cache=True)
+                cache = out.past_key_values
+                nxt = clean_argmax(out.logits[0, -1].clone())
+                if kind_of(nxt) != "word":
+                    break
+                pieces += 1
+                picks.append(None)  # continuation: no new tick decision
+                tok = nxt
+        return picks, pieces
 
     for r in held:
         sc_dir = batch / r["dir"]
@@ -179,19 +178,53 @@ def main() -> None:
         if feats.shape[0] < grid.n_ticks:
             print(f"[freerun]   WARNING: fewer ear tokens than ticks — "
                   f"training saw time-compressed audio", flush=True)
-        for tag, free in (("forced", False), ("free", True)):
-            per, rec = run_lesson(sc_dir, grid.n_ticks, feats, free)
-            print(f"[freerun]   {tag}:", flush=True)
-            for g in sorted(per):
-                n, ok, th = per[g]
-                line = (f"    gold {g:8s} n={n:4d}  acc {ok / n:5.3f}")
-                if th:
-                    line += "  <- " + ", ".join(
-                        f"{k} x{c}" for k, c in th.most_common(3))
-                print(line, flush=True)
-            if free:
-                print(f"[freerun]   sil recoveries after wrong beats: "
-                      f"{rec}", flush=True)
+        picks, pieces = run_lesson(feats, grid.n_ticks)
+        # first pick per tick = the tick's decision
+        tick_picks = [p for p in picks if p is not None]
+
+        per = defaultdict(lambda: [0, 0, Counter()])
+        gold_word_ticks, spoken = [], []
+        for i in range(len(tick_picks)):
+            gold_name = grid.ticks[i].emission
+            gold = "<word>" if gold_name not in ALL_SPECIAL else \
+                ("<sil>" if gold_name == SIL else gold_name)
+            pick = tick_picks[i]
+            kind = kind_of(pick)
+            if kind == "word":
+                spoken.append(i)
+            e = per[gold]
+            e[0] += 1
+            gold_is_word = gold == "<word>"
+            ok = (kind == "word") if gold_is_word else \
+                (pick == tok_conv(gold))
+            e[1] += int(ok)
+            if not ok:
+                e[2][name_of.get(pick, kind)] += 1
+            if gold_is_word:
+                gold_word_ticks.append(i)
+
+        # word-onset hits: exact tick, or any speech within +-1 s
+        near_w = set()
+        for w in gold_word_ticks:
+            near_w.update(range(max(0, w - 2), w + 13))
+        spoken_set = set(spoken)
+        exact = sum(1 for w in gold_word_ticks if w in spoken_set)
+        near = sum(1 for w in gold_word_ticks if w in near_w)
+        false_speech = sum(1 for i in spoken if i not in near_w)
+        n_word = len(gold_word_ticks)
+
+        print(f"[freerun]   free (self-history):", flush=True)
+        for g in sorted(per):
+            n, ok, th = per[g]
+            line = f"    gold {g:8s} n={n:4d}  acc {ok / n:5.3f}"
+            if th:
+                line += "  <- " + ", ".join(
+                    f"{k} x{c}" for k, c in th.most_common(3))
+            print(line, flush=True)
+        print(f"[freerun]   WORD ONSETS: {exact}/{n_word} exact, "
+              f"{near}/{n_word} within +-1s; false speech at "
+              f"{false_speech} non-gold ticks; "
+              f"{pieces} continuation pieces", flush=True)
     print("[freerun] done", flush=True)
 
 

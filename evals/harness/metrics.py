@@ -74,22 +74,73 @@ def speech_seconds(mask: np.ndarray) -> float:
     return mask.sum() * GRID_MS / 1000
 
 
+def stimulus_bounds_from_activity(in_wav: np.ndarray, sr: int,
+                                  starts: list[float]) -> list[tuple[float, float]]:
+    """(start, end) of each stimulus utterance, read off the input
+    activity: the first activity run extending past each mark's onset.
+    Run starts are the ground truth for question boundaries too —
+    rounding the nominal marks disagrees with the detected run by a tick
+    on half-second marks, which let the next question's audio count as
+    the previous question's answer. Marks with no audible stimulus fall
+    back to (mark, mark)."""
+    in_mask = activity(frame_rms(in_wav, sr))
+    rr = runs(in_mask)
+    out = []
+    for s_s in starts:
+        st = round(s_s * 1000 / GRID_MS)
+        hit = None
+        for rs, re_ in rr:
+            if re_ > st:  # first run that extends past the mark
+                hit = (rs, re_)
+                break
+        if hit is None:
+            hit = (st, st)
+        out.append((hit[0] * GRID_MS / 1000, hit[1] * GRID_MS / 1000))
+    return out
+
+
 def measure(test: str, marks: dict, out_wav: np.ndarray, sr: int,
-            in_wav: np.ndarray | None = None) -> dict:
+            in_wav: np.ndarray | None = None,
+            stim_ends: dict[str, list[float]] | None = None,
+            in_sr: int | None = None) -> dict:
     """Compute the metric set for one replayed test. Times are seconds;
-    *_ms metrics are the headline numbers."""
+    *_ms metrics are the headline numbers.
+
+    Answering latencies are anchored at the END of the user utterance
+    (questions/parts/barge) — repaired 2026-09-22: they were anchored at
+    utterance START, which demands answering before the user finishes
+    and let three well-placed tones pass every test. Ends come from
+    stim_ends when given, else derived from the input activity, else
+    (no input at all) fall back to the mark itself. in_sr is the input
+    sample rate (user_in.wav is 16 kHz, model_out.wav 24 kHz — framing
+    the input at the output rate stretched time by 1.5x)."""
     out_mask = activity(frame_rms(out_wav, sr))
+
+    def bounds(kind: str) -> list[tuple[int, int]]:
+        """[(start_tick, end_tick)] per stimulus utterance."""
+        if stim_ends and kind in stim_ends:
+            return [(round(s * 1000 / GRID_MS), round(e * 1000 / GRID_MS))
+                    for s, e in stim_ends[kind]]
+        if in_wav is not None:
+            return [(round(s * 1000 / GRID_MS), round(e * 1000 / GRID_MS))
+                    for s, e in stimulus_bounds_from_activity(
+                        in_wav, in_sr or sr, marks[kind])]
+        return [(round(s * 1000 / GRID_MS),) * 2 for s in marks[kind]]
+
     res = {"test": test, "out_speech_s": round(speech_seconds(out_mask), 2)}
 
     if test == "t2":
         barge_t = marks["barge"][0]
         bt = round(barge_t * 1000 / GRID_MS)
-        # barge -> model went silent
+        barge_end = bounds("barge")[0][1]
+        # barge onset -> model went silent (stop-fast; unchanged anchor)
         sil = offset_after(out_mask, bt - 2)
         res["barge_to_silence_ms"] = (sil - bt) * GRID_MS if sil else None
-        # barge -> model speaks again (the revised answer)
-        reply = onset_after(out_mask, bt + 6)
-        res["reply_after_barge_ms"] = (reply - bt) * GRID_MS if reply else None
+        # barge END -> model speaks again (the revised answer)
+        reply = onset_after(out_mask, barge_end)
+        res["reply_after_barge_ms"] = ((reply - barge_end) * GRID_MS
+                                       if reply else None)
+        res["reply_anchor"] = "barge_end"
         # did the model ever stop BEFORE the barge (it shouldn't — bait)?
         early_sil = offset_after(out_mask, int(marks["bait"][0] * 1000 / GRID_MS) + 12,
                                  min_sil=12)
@@ -105,27 +156,41 @@ def measure(test: str, marks: dict, out_wav: np.ndarray, sr: int,
         res["backchannel_yields"] = yields
 
     elif test == "t4":
-        part2_t = round(marks["part"][1] * 1000 / GRID_MS)
-        # model answer to part1 should END (turn complete), and the total
-        # output should include a reply after part2 — resume driven by user
-        reply2 = onset_after(out_mask, part2_t - 2)
+        part2_end = bounds("part")[1][1]
+        # a part-2 answer must START after the user finished part 2
+        reply2 = onset_after(out_mask, part2_end)
         res["answered_part2"] = bool(reply2)
-        # premature answer between part1 and part2 (before user finished):
-        early = onset_after(out_mask, round(marks["part"][0] * 1000 / GRID_MS) + 8)
-        res["premature_answer"] = bool(early and early < part2_t - 10)
+        # premature: any onset after part-1 gets going but before part-2
+        # ENDS (covers both talking over the stall and over part 2 itself)
+        p1_start = bounds("part")[0][0]
+        early = onset_after(out_mask, p1_start)
+        res["premature_answer"] = bool(early is not None and early < part2_end)
+        res["answer_anchor"] = "part2_end"
 
     elif test == "t5":
         res["false_engagement_s"] = res["out_speech_s"]
 
     elif test == "t1":
-        lats = []
-        for q_s in marks["q"]:
-            on = onset_after(out_mask, round(q_s * 1000 / GRID_MS) + 2)
-            if on is not None:
-                lats.append((on - round(q_s * 1000 / GRID_MS)) * GRID_MS)
+        qb = bounds("q")
+        lats, unanswered, premature = [], [], 0
+        for i, (qs, qe) in enumerate(qb):
+            nxt = qb[i + 1][0] if i + 1 < len(qb) else len(out_mask)
+            on = onset_after(out_mask, qe)
+            if on is not None and on < nxt:
+                lats.append((on - qe) * GRID_MS)
+            else:
+                unanswered.append(i)
+            po = onset_after(out_mask, qs)
+            if po is not None and po < qe:
+                premature += 1
+        res["n_questions"] = len(qb)
+        res["n_answered"] = len(lats)
+        res["unanswered_questions"] = unanswered
+        res["premature_over_questions"] = premature
         if lats:
             res["response_latency_ms"] = sorted(lats)
             res["response_latency_p50_ms"] = int(np.median(lats))
+        res["latency_anchor"] = "question_end"
     return res
 
 

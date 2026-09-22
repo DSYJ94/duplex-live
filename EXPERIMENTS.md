@@ -30,8 +30,8 @@ Pass the token exam AND the conversation gate:
 | v2 | 6742755 → 6745751 | 80 balanced shards ×1 | 0% prob 0.000 | — | 99.4–99.7% ✓ | 0% | 20–48% | Baseline: rare tokens (0.06% of positions) never win plain scoring |
 | v4 | — → 6751164 | 80 shards × **w10** | 0% prob 0.15 | — | 97–100% ✓ | 0% | ok | w10 warms timing, safe — but not enough |
 | v3 | 6746779 → (+6756308 thief) | 80 shards × **w50** | **50% ✓** prob 0.55 | — | 53–98% ❌ | untested | halved | 50× TEACHES timing; the cost is precision (thief below) |
-| v5 | 6749313 → 6751180 | **5× data** ×1 (shards-v5) | 0% prob 0.000 | — | 97–100% ✓ | PARTIAL (1/6 at 100%, rest 0.03–0.76) | ok | `<yield>` responds to data spread, timing does not |
-| v6 | — → 6754413 | 5× data × w10 +yield (shards-v6) | 0% prob **0.000 exactly** | — | 97–100% ✓ | weaker than v5 | best (0.10–0.39) | DATA×WEIGHT "law" is DEAD — adding data at fixed weight killed the w10 signal |
+| v5 | 6749313 → 6751180 | re-exposure shards-v5 ×1 — **corrected 2026-09-22: NOT 5× distinct data.** 80 distinct lessons, uneven visits: timed-task 150×, barge 40×, others 30–40× (verified from train.jsonl) | 0% prob 0.000 | — | 97–100% ✓ | PARTIAL (1/6 at 100%, rest 0.03–0.76) | ok | `<yield>` responds to data spread, timing does not |
+| v6 | — → 6754413 | shards-v6 × w10 +yield — **corrected 2026-09-22: THREE changes vs v4, not one:** visits barge 150×/timed 100×/others 20–30×, yield weighting ON, and unshuffled sorted order changes the final class seen. Confounded comparison | 0% prob 0.000 (printed; rounded to 3 dp) | — | 97–100% ✓ | weaker than v5 | best (0.10–0.39) | Observed: w10 timing signal (v4: 0.15) gone. Original "DATA×WEIGHT law is DEAD" conclusion is CONFOUNDED — exposure, order and yield-weight changed together; no clean single-variable attribution |
 | v7 | 6756309 → 6756310 | 80 shards × **w30** | 0% prob 0.014–0.032 ❌ | **learned**: 1/6 at 100% (prob 0.772), rest 0.047–0.372 | 95.0–99.8% ✓ (mild thief: 4–5 steals/lesson) | 0% | ok | t+5s crosses between w10–w30; t+30s needs ~w50; non-monotonic: t+30s DROPPED vs w10 (frequent t+5s grabs capacity first) |
 | v8 | 6756384 → 6756385 | 80 shards × **class-cost 50** | 0% prob 0.000 | 0% prob 0.000 | 99.3–100% but prob **flat 0.250** everywhere | prob 0.250, acc 0 | ~0 | **FAILED — math bug (below). Loss was label-blind; model only learned "never say rare words"** |
 | **v9** | 6758553 → 6758554 | 80 shards × **w50 + thief-penalty 10** | 0% prob 0.000 | 0% prob 0.000–0.001 | **99.9–100% ✓ prob 0.958–0.995 (best ever)** | 0% | 0.00–0.13 ❌ | **OVER-SUPPRESSED — "the Monk": perfect silence, everything else dead. The tax fires at every non-rare spot (~1500/lesson) vs the up-push's ~1, so pen 10 swamped w50. Bracket: pen 0 → timing 50% + ~150 steals/lesson; pen 10 → nothing. Next: pen 2** |
@@ -156,6 +156,52 @@ exposure/rounding/freerun claims exactly. **All gate PASS/FAIL counts
 are provisional until the marks fix lands; beat censuses remain
 informative.**
 
+## Gate instruments REPAIRED (2026-09-22, Codex F1/F2) — rescore pending
+
+The caveat above is now fixed in `evals/harness/` (protocol, metrics,
+run, targets) and guarded by `test_gate_regressions.py` (CPU-only,
+all cases green):
+
+- **Marks aligned**: t1 scored at the questions' true positions
+  (17…152 s); t1 tape lengthened 152→158 s (the last question was
+  being truncated at the tape edge). Latency measured from question
+  **END** (derived from user_in.wav activity, not a table).
+- **Unanswered questions counted**: `n_answered` must be ≥8 of 10 AND
+  p50-from-question-end ≤ 1500 ms. A model answering 0 questions now
+  FAILS even if one reply was lucky-fast (the old median hid it).
+- **t2 reply measured from barge END** (trained schedule is barge end
+  +240 ms); stop-fast stays from barge ONSET. The old start anchor
+  made every honest model false-FAIL the reply bar.
+- **t4 answered_part2 after part-2 END**; talking over part 2 now
+  counts as premature (it used to count as answering).
+- **Three-tone cheat killed** (regression-test case: tone at each
+  question START scores 0 answered, 10 premature → FAIL).
+- **Rate bug found while repairing**: user_in.wav (16 kHz) was framed
+  at the output rate (24 kHz), stretching derived input events 1.5×;
+  input is now framed at its own rate.
+- **Stream-contract half-fix in the target**: a single `<sil>` tick no
+  longer ends a turn in the live target — ~10 consecutive sil beats
+  (~770–800 ms) do, matching training (9,314 of 27,429 `<sil>` ticks
+  sit INSIDE assistant speech).
+- **Decode knobs live** in `layera/duplex.py`: `--sil-bias` (subtract
+  from the `<sil>` logit at decode) and `--max-pieces` word
+  continuation ([pad w1 w2] — pieces consecutive after ONE heard
+  token, breaker discarded, exactly the training contract; 33.6% of
+  training words are multi-piece). `run.py` plumbs both;
+  `freerun_diag.py` rewritten free-mode-only with the same knobs (the
+  old forced mode fed self word-predictions — retired as flawed;
+  probe_p1.py is the true forced reference) and now reports word-onset
+  hits (exact / ±1 s), false-speech ticks, continuation pieces.
+- `layera/contract_trace.py` added: prints training-format vs live
+  token streams for one lesson, position by position, plus the
+  52-feats-vs-50-ticks clock table — evidence, not assertions.
+
+**All previously recorded gate verdicts #1–#5 are start-anchored
+numbers; a CPU rescore job over the existing recordings
+(runs/harness-layera-p1-v2-400step-unweighted/-v3/-v10/-v11) produces
+the corrected table. Decode sweep (v11, sil-bias 0/1/2/4/8/16, free
+mode, 4 held-out lessons) submitted alongside.**
+
 ## Free-run diagnostic (6762966 crashed on a type slip → 6762979, v3 ckpt)
 
 Replays held-out factory lessons in the EXACT training format, twice:
@@ -170,18 +216,28 @@ sampler's one-feature-per-tick assumption holds, small edge effect).
 | timed_task-029-ish | forced | 0.398 (t+30s x666, t+60s x99) | 2/2 | 0/13 | — |
 | timed_task-029-ish | **free** | **0.922** | 0/2 | 0/13 | 110 |
 
-**Verdict — the format was the bug, not the model:**
-1. Free-running in the training format is CLEAN: ~93% silence, ZERO
-   chatter, and the model recovers to `<sil>` after its own wrong beats
-   (81–110 times). Exposure bias is a non-issue at Phase-1.
-2. Forced mode shows the thief's mechanism: gold t+30s beats in the
-   history PRIME more t+30s (675 sil steals); free-running never emits
-   the first t+30s, so nothing gets primed (the flip side: free-run
-   countdowns 0/6 — v3 needs the gold primer to fire t+30s at all).
+**Verdict — corrected 2026-09-22 (external review caught an overstated
+claim; raw log re-checked):**
+1. Free-running in the training format is CLEANER than forced (~93%
+   silence, zero chatter, 81–110 self-recoveries), but the earlier claim
+   "free-run never fires t+30s" was **wrong as phrased**: at the gold
+   t+30s positions it scores 0/6, yet it fires t+30s **159× at wrong
+   `<sil>` positions** in free mode (61 on 017, 98 on 029 — verified in
+   freerun-6762979.out). The "gold primer" mechanism story is NOT
+   supported. What survives: free-run theft is ~10× lower than forced
+   (159 vs 675+666 per lesson) — self-history reduces but does not
+   eliminate the thief.
+2. Forced mode here was NOT a true teacher-forced replay for words: the
+   diagnostic fed the model's own word predictions back even in forced
+   mode (gold word → `gold_id=None` → self-feed, freerun_diag.py:141/:160).
+   Forced reference numbers should come from probe_p1 (true
+   teacher-forcing) instead; the flawed forced mode is retired.
 3. The live loop fed a DIFFERENT format: chat template + "(listening)"
    envelope + processor `<|audio|>` per-tick path. The checkpoint
    learned the bare stream, so in chat-wrap it did the chat-brain
-   thing: tried to answer, forever.
+   thing: tried to answer, forever. (This finding stands — see also
+   the stream-contract section below: the match was still imperfect for
+   multi-piece words.)
 
 **Fix (duplex.py v2 + LayerATarget v2): live now mirrors
 prepare.encode_audio exactly — no envelope, 4 s-window ear features
@@ -232,10 +288,26 @@ silence stays weight 1. This is what v9's tax fixes.
 - **Checkpoint provenance:** each `p1_checkpoint.pt` stores its `args`
   dict — the definitive record of what any run actually was (v2 was
   found hiding in `runs/p1-v1` this way).
-- **This setup has CLIFFS, not slopes** — v6 (k5×w10) and v9 (pen 10)
-  both landed timing at prob 0.000 EXACTLY, and v9's words also died.
-  Dials near a cliff need bracketing (bisect between the last working
-  and first dead dose), not extrapolation.
+- **This setup has CLIFFS, not slopes** — v6 (shards-v6 ×w10) and v9
+  (pen 10) both landed timing at printed prob 0.000 (rounded to 3 dp —
+  anything < 0.0005; "exactly zero" was an overclaim, corrected
+  2026-09-22), and v9's words also died. Treat dials near the cliff
+  with bracketing (bisect between the last working and first dead
+  dose), not extrapolation — but note the external review's caveat:
+  discrete argmax flips can look like cliffs while underlying scores
+  move smoothly.
+- **Loss normalization caveat (external review, verified):** the
+  weighted-CE term divides by the weight sum over ALL positions
+  (including audio/ignored positions), while the thief penalty divides
+  by graded positions only (`train_p1.py`). Internally consistent
+  across runs at fixed recipe, but the cross-term scale between CE and
+  penalty is arbitrary — do not interpret `thief_penalty` doses as
+  comparable across recipes.
+- **"5× data" never meant 5× distinct data** — v5/v6 re-visited the
+  same 80 lessons with uneven per-class visit counts (v5: timed 150×,
+  barge 40×, others 30–40×; v6: barge 150×, timed 100×, others 20–30×;
+  verified from train.jsonl). Any future data-side claims must report
+  actual per-class visit counts, not shard-file multipliers.
 
 Checkpoints preserved: `runs/p1-v1-32step`, `runs/p1-v2-400step-unweighted`
 (renamed from p1-v1), `runs/p1-v3` … `runs/p1-v8`.
