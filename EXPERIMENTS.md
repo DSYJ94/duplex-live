@@ -501,10 +501,38 @@ guarded by `evals/harness/test_freerun_metrics.py`, and the repair
 job runs it before GPU time). tt-001's per-kind block had already
 printed pre-crash, which is where the pole-swap was first seen.
 
-**Probe 2 (cap-sh2) — one-lever delta: + `--word-weight 3`** (the
-ladder's speech lever). Question: does ww3 restore speaking while SH
-holds the silence gate? PASS would be the first config ever to hold
-both poles at once — the Phase-1 fix candidate.
+**Probe 2 (cap-sh2, job 6820759) — one-lever delta: + `--word-weight
+3`. Speech partially returns; the countdown-token thief returns with
+it. Bar still FAILED (25/68 = 37% exact vs 90%):**
+
+| lesson set | cap-sh (probe 1) | cap-sh2 (probe 2) |
+|---|---|---|
+| barge lessons: exact onsets | 0/21, 0/20 | **13/21, 10/20** |
+| barge lessons: sil acc | 0.53–0.65 | 0.57 (both) |
+| timed_task: exact onsets | 1/14, 0/13 | 1/14, 1/13 |
+| timed_task: sil acc | 0.91–0.97 | **0.34** (`<t+30s>` ×505, `<t+10s>` ×318 steals) |
+| chatter | ~0 everywhere | ~0 trained; one held-out at 140 ticks |
+
+First config where speaking and stopping COEXIST (barge lessons: words
+at 50–62% accuracy with silence holding at 57%). But on the word-dense
+timed_task lessons the countdown tokens — which carry timing-weight 50
+in every one of these runs — eat most positions once speech is
+re-enabled. This is the SAME thief that broke the ladder's best
+speaker (v11: 251 steals on the countdown-dense lesson), now reproduced
+in miniature on the 4-lesson rig, and plausibly self-reinforcing under
+self-history (the model's own wrong picks are fed back as inputs).
+
+**Probe 3 (cap-sh3, job 6827932) — one-lever delta: +
+`--thief-penalty 2`** (the ladder's v9 counter, part of v11's best
+recipe). Question: does the thief penalty protect the timed_task
+lessons while self-history + word-weight hold the poles?
+
+Audition renders (owner request, job 6827931): all three checkpoints
+free-run the 4 trained conversations with `--save-picks`, and
+`evals/render_model_audio.py` speaks each model's words (factory TTS
+voice) at the exact ticks chosen, over the in-slot audio —
+`runs/model-audio-cap-rows` (chatterer), `-cap-sh` (muted),
+`-cap-sh2` (first coexistence) for the localhost gallery.
 
 ## Free-run diagnostic (6762966 crashed on a type slip → 6762979, v3 ckpt)
 

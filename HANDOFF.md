@@ -73,15 +73,28 @@ Read this first in a fresh chat. Everything below is decided and documented.
   branch of Codex's completion criterion fired (adapter did not
   learn) — the rows-only ladder is not the thing to end; the thing to
   change is what training exposes the model to.**
-- **Self-history probe 1 ANSWERED (2026-09-23, jobs 6816545/6820600,
-  EXPERIMENTS.md "Self-history probe"): the exposure lever WORKS —
-  first lever ever to move free-run silence to 58–96% (trained AND
-  held-out) — but unweighted it swings to the MUTE pole (exact onsets
-  1.5%, chatter ~0) with a new `<t+2s>` thief. Probe 2 (cap-sh2, job
-  6820759) adds `--word-weight 3`: if speaking returns while silence
-  holds, that config passes a bar NO model has ever passed (onsets
-  ≥90% + chatter <10% on trained 4) and becomes the Phase-1 fix
-  candidate to scale to the 80-lesson ladder.**
+- **Self-history probe series (2026-09-23, EXPERIMENTS.md "Self-history
+  probe"): the exposure lever WORKS but has a split personality.**
+  Probe 1 (cap-sh, self-history 0.5, unweighted): first lever ever to
+  move free-run silence to 58–96% (trained AND held-out) — but it
+  swings to the MUTE pole (exact word onsets 1.5%) with a new `<t+2s>`
+  thief. Probe 2 (cap-sh2, + word-weight 3, job 6820759): **speech
+  PARTIALLY returns on the barge lessons (13/21 and 10/20 exact,
+  word acc 0.50–0.62, silence holding ~57% — the first config where
+  speaking and stopping coexist), but the t+30s/t+10s thief eats the
+  timed_task lessons (silence 34%, up to 505 steals; total exact
+  onsets 25/68 = 37% vs the 90% bar). FAIL, but the shape is right.**
+  Probe 3 (cap-sh3, job 6827932) adds `--thief-penalty 2` (v11's
+  recipe + self-history) — currently training. Pass bar (trained 4):
+  exact onsets ≥90% AND chatter <10% of silence ticks. If it passes,
+  the candidate is scaling self-history training to the 80-lesson
+  ladder (next GPU-spend decision for the owner).
+- **Listenable checkpoints (owner request, 2026-09-23, job 6827931):
+  audition renders of cap-rows / cap-sh / cap-sh2 free-running the 4
+  trained conversations — the model's words spoken by TTS at the exact
+  ticks it chose, over the conversation audio — into
+  `runs/model-audio-*` (gallery layout). rsync to the Mac, then
+  `python -m viz.listen` → http://localhost:8765.**
 - **Where this goes after v11:** if the speak-up lever works, the Phase-1
   checkpoint target is "v10's quiet control + v2-level speaking + some
   timing"; if it cliffs too, the fallback is data-side (word-denser
