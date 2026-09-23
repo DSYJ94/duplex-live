@@ -74,6 +74,11 @@ def main() -> None:
                     help="comma-separated scenario_ids — replay EXACTLY "
                          "these (may include trained lessons; capacity "
                          "test needs to probe the trained conversations)")
+    ap.add_argument("--save-picks", default=None,
+                    help="directory for per-scenario JSON of the model's "
+                         "word events (onset tick + token ids + text) — "
+                         "the input to evals/render_model_audio.py, which "
+                         "turns a run into listenable audio")
     args = ap.parse_args()
 
     from transformers import AutoProcessor, Qwen3OmniMoeThinkerForConditionalGeneration
@@ -187,8 +192,11 @@ def main() -> None:
     def run_lesson(feats, n_ticks):
         """Free-run one lesson tick-by-tick, feeding every emission back
         (word continuation included, exactly as live). Returns per-tick
-        first picks + continuation piece count."""
+        first picks + continuation piece count + word events
+        ([{tick, ids}] — one entry per spoken word, pieces included;
+        the save-picks JSON and the audio renderer both need them)."""
         picks, pieces = [], 0
+        events: list[dict] = []
         cache = None
         for i in range(min(n_ticks, args.max_ticks)):
             e_in = emb_layer(torch.tensor([[pad_id]], device=model.device)
@@ -200,6 +208,8 @@ def main() -> None:
             cache = out.past_key_values
             tok = clean_argmax(out.logits[0, -1].clone())
             picks.append(tok)
+            if kind_of(tok) == "word":
+                events.append({"tick": i, "ids": [tok]})
             # continuation: keep emitting pieces of the same word event;
             # the first non-word breaker is discarded, never fed
             while kind_of(tok) == "word" and pieces + 1 < args.max_pieces:
@@ -213,8 +223,9 @@ def main() -> None:
                     break
                 pieces += 1
                 picks.append(None)  # continuation: no new tick decision
+                events[-1]["ids"].append(nxt)
                 tok = nxt
-        return picks, pieces
+        return picks, pieces, events
 
     for r in held:
         sc_dir = batch / r["dir"]
@@ -234,7 +245,16 @@ def main() -> None:
         if feats.shape[0] < grid.n_ticks:
             print(f"[freerun]   WARNING: fewer ear tokens than ticks — "
                   f"training saw time-compressed audio", flush=True)
-        picks, pieces = run_lesson(feats, grid.n_ticks)
+        picks, pieces, events = run_lesson(feats, grid.n_ticks)
+        if args.save_picks:
+            outdir = Path(args.save_picks)
+            outdir.mkdir(parents=True, exist_ok=True)
+            for ev in events:
+                ev["text"] = proc.tokenizer.decode(ev["ids"]).strip()
+            (outdir / f"{grid.scenario_id}.json").write_text(
+                json.dumps({"scenario_id": grid.scenario_id,
+                            "n_ticks": grid.n_ticks, "words": events},
+                           indent=1))
         # first pick per tick = the tick's decision
         tick_picks = [p for p in picks if p is not None]
 
