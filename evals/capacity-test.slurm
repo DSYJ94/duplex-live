@@ -52,8 +52,8 @@ for ARM in cap-rows cap-adapter; do
         /projects/u6si/containers/latentsprites-pytorch-25.05.sif \
         python -m layera.freerun_diag --batch "$BATCH" \
         --ckpt $DL/runs/$ARM/p1_checkpoint.pt --shards "$SHARDS" \
-        --scenarios "$IDS" --max-ticks 900 \
-        2>&1 | grep -E "freerun|gold |WORD ONSETS"
+        --scenarios "$IDS" --max-ticks 900
+        # (no pipe grep — it ate a traceback in 6792730; slurm log keeps all)
   done
 done
 echo "capacity test done"
