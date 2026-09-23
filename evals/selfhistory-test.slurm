@@ -1,20 +1,18 @@
 #!/bin/bash
-#SBATCH --job-name=dl-sh4
+#SBATCH --job-name=dl-sh4b
 #SBATCH --partition=workq
 #SBATCH --account=brics.u6si
 #SBATCH --nodes=1
 #SBATCH --gres=gpu:1
 #SBATCH --time=04:00:00
-#SBATCH --output=logs/dl-sh4-%j.out
+#SBATCH --output=logs/dl-sh4b-%j.out
 
-# SELF-HISTORY PROBE (exposure fix, owner-approved 2026-09-23): the
-# capacity test (6792730/6814321) showed neither rows-only nor adapter
-# learns 4 conversations free-run — both trained TEACHER-FORCED and were
-# graded FREE-RUN. This probe interleaves self-history steps (every 2nd
-# step): the model free-runs the lesson against itself (no grad), then
-# trains with its OWN emission tokens as input and GOLD labels — it
-# learns to recover from its own chatter. Rows-only recipe otherwise
-# identical to capacity arm A (400 steps, unweighted CE, lr 1e-3).
+# SELF-HISTORY PROBE 2 (cap-sh2): probe 1 (cap-sh, jobs 6816545/6820600)
+# proved the exposure lever moves free-run silence harder than anything
+# before (sil acc 58-96%) but unweighted it lands on the MUTE pole
+# (exact onsets ~1.5%). One-lever delta here: + --word-weight 3, the
+# ladder's speech lever. Same rig otherwise (400 steps, lr 1e-3,
+# timing-weight 50 default as in every capacity arm).
 # Pass bar (free-run, trained 4): >=90% exact word-onset hits AND
 # chatter <10% of silence ticks. Held-out 4 informational. FULL LOG —
 # no grep pipes (they ate a traceback in 6792730).
@@ -37,18 +35,18 @@ apptainer exec --nv --bind /projects,/lus,/home \
     --env PYTHONPATH=$PYTHONPATH --env HF_HOME=$HF_HOME --env TMPDIR=$TMPDIR \
     /projects/u6si/containers/latentsprites-pytorch-25.05.sif \
     python -m layera.train_p1 --shards "$SHARDS" --batch "$BATCH" \
-    --steps 400 --lessons "$TRAIN4" --self-history 0.5 --sh-refresh 8 \
-    --out $DL/runs/cap-sh
+    --steps 400 --lessons "$TRAIN4" --self-history 0.5 --sh-refresh 8 --word-weight 3 \
+    --out $DL/runs/cap-sh2
 
 for SET in "trained $TRAIN4" "heldout $HELD4"; do
   set -- $SET
   TAG=$1; IDS=$2
-  echo "===== free-run cap-sh on $TAG conversations ====="
+  echo "===== free-run cap-sh2 on $TAG conversations ====="
   apptainer exec --nv --bind /projects,/lus,/home \
       --env PYTHONPATH=$PYTHONPATH --env HF_HOME=$HF_HOME --env TMPDIR=$TMPDIR \
       /projects/u6si/containers/latentsprites-pytorch-25.05.sif \
       python -m layera.freerun_diag --batch "$BATCH" \
-      --ckpt $DL/runs/cap-sh/p1_checkpoint.pt --shards "$SHARDS" \
+      --ckpt $DL/runs/cap-sh2/p1_checkpoint.pt --shards "$SHARDS" \
       --scenarios "$IDS" --max-ticks 900
 done
 echo "self-history probe done"

@@ -463,6 +463,49 @@ scripts silently discards the lines that matter most in a crash (the
 exception type/message). Only traceback FRAMES whose path matched
 "freerun" survived. No grep on diagnostic pipes from here on.
 
+## Self-history probe (exposure fix) — jobs 6816545 + 6820600, probe 2 in flight
+
+`train_p1 --self-history F` (owner-approved 2026-09-23): each step
+free-runs the lesson against itself (no grad, live-exact decode) and —
+with probability F — trains on ITS OWN emission tokens as input with
+GOLD labels. Audio and targets unchanged; only emission-slot inputs
+become on-policy. Own history refreshed every 8 SH-steps per lesson.
+Recipe: rows-only, 400 steps, timing-weight 50 (argparse default, as
+in every capacity arm), F=0.5, the same 4 conversations and pass bar.
+
+**Probe 1 (cap-sh, unweighted) — FAILS the bar on the mute pole, and
+the silence gate finally MOVES:**
+
+| metric | arm A (rows, TF only) | cap-sh (rows + SH 0.5) |
+|---|---|---|
+| sil acc, trained 4 | 0.007–0.061 | **0.583–0.965** |
+| sil acc, held-out 4 | 0.008–0.059 | **0.579–0.926** |
+| exact word onsets | 67/68 (98.5%) | **1/68 (1.5%)** |
+| chatter (sil ticks w/ speech) | 33–88% | **0–7%** |
+
+Reading: exposure to its own output is the first lever that ever
+taught free-run silence at this strength (v2's 0.944 was the prior
+best) — the exposure-bias hypothesis is CONFIRMED as the silence
+mechanism. But unweighted, recovery-from-chatter degenerates into
+"always shut up": on trained lessons the model now mutes where it
+should speak (word acc 0–7%). The ladder's pole problem in a new
+guise: this lever lands on the OPPOSITE pole from arm A.
+NEW wrinkle: a `<t+2s>` thief (up to 144 steals/lesson, held-out
+included) — plausibly self-reinforcing, since SH feeds the model's
+own wrong picks back as inputs.
+
+Probe 1 mechanics: training ran clean (400/400 steps); both evals
+then died at the WORD ONSETS print — the vacuous-metric refactor had
+left a NameError (a `py_compile`-invisible runtime break; fixed +
+guarded by `evals/harness/test_freerun_metrics.py`, and the repair
+job runs it before GPU time). tt-001's per-kind block had already
+printed pre-crash, which is where the pole-swap was first seen.
+
+**Probe 2 (cap-sh2) — one-lever delta: + `--word-weight 3`** (the
+ladder's speech lever). Question: does ww3 restore speaking while SH
+holds the silence gate? PASS would be the first config ever to hold
+both poles at once — the Phase-1 fix candidate.
+
 ## Free-run diagnostic (6762966 crashed on a type slip → 6762979, v3 ckpt)
 
 Replays held-out factory lessons in the EXACT training format, twice:
