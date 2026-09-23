@@ -349,6 +349,38 @@ Findings:
   lessons — Codex F5-3) or capacity (adapter test — F5-2), decided
   with this unseen gate as the selection instrument.
 
+## External reference: "How OpenAI Built GPT-Live" (ByteByteGo, 2026-09-22)
+
+Owner-supplied teardown (interviews with Zahan Malkani + Justin Uberti)
+of OpenAI's full-duplex voice system. Integrates as VALIDATION + a
+serving-phase map; contains nothing on training technique (our
+exposure-bias thread is ours to solve).
+
+Validates our design bets by name:
+
+- **80 ms full-duplex clock, silence-as-token** — Moshi cited as the
+  reference ("roughly one frame every 80 milliseconds; silence is
+  simply another token"). Exactly our tick loop + `<sil>`.
+- **Turn-taking INSIDE the model** — the separate turn-detector of
+  generations 1–2 is named as the source of unnaturalness; moving
+  endpointing + barge-in into model behaviour is the fix. That is our
+  `<sil>`/`<yield>` design, and the article's eval framing ("each
+  decision scored like a prediction: endpointing, barge-in") is
+  exactly our repaired gate's t1/t2.
+- **Delegation = talking/thinking split** — small fast voice model
+  `<delegate>`s to a frontier model and keeps chatting. Our
+  `<delegate>` token exists but is unimplemented (M2+); the article is
+  the design source for that phase: live path audio-only, async path
+  for delegation/tools, frontier-model prefill warming, one-RTT
+  session setup (WARP), session affinity + managed handoff, p999 tail
+  engineering (a p95 event fires several times/minute on a continuous
+  stream), capacity in concurrent sessions.
+
+Also useful framing for gate design: "users hear the worst frame" —
+per-decision misses (a premature interruption) are the unit of
+quality, which is how our per-question answered/premature counting
+already works. No changes to Phase-1 plans from this source.
+
 ## Capacity test (Codex F5-2, owner-approved) — jobs 6792730, 6814111, 6814321
 
 Question before any next dose: can the 10-row approach (v1 recipe,
