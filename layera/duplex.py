@@ -149,7 +149,12 @@ class DuplexThinker:
         tower = tower.reshape(-1, tower.shape[-1])
         tower = tower[-n_tok:]
         if self.adapter is not None:
-            tower = self.adapter(tower.to(torch.float32)).to(tower.dtype)
+            # anchor to the adapter's device, not model.device — under
+            # device_map="auto" the tower output and model.device can
+            # disagree, and F.linear can't cross devices
+            ad_dev = next(self.adapter.parameters()).device
+            tower = self.adapter(tower.to(ad_dev, torch.float32)
+                                 ).to(tower.dtype)
         return tower
 
     def _clean_argmax(self, logits) -> int:

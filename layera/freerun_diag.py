@@ -197,7 +197,12 @@ def main() -> None:
         pcm = mix_in_slot(sc_dir, grid.n_ticks)
         feats, counts = encode_audio(model, proc, pcm)
         if adapter is not None:
-            feats = adapter(feats.to(torch.float32)).to(feats.dtype)
+            # encode_audio returns CPU feats by design (prepare.py line
+            # 86); the adapter lives on model.device. F.linear can't
+            # cross devices (setitem/copy_ can — why the rows-only arm
+            # never tripped this). Move the INPUT to the adapter.
+            ad_dev = next(adapter.parameters()).device
+            feats = adapter(feats.to(ad_dev, torch.float32)).to(feats.dtype)
         print(f"[freerun] {grid.scenario_id}: {grid.n_ticks} ticks, "
               f"{feats.shape[0]} ear tokens, windows={counts[:3]}...",
               flush=True)
