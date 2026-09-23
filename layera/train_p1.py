@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import random
 import time
 from pathlib import Path
 
@@ -81,6 +82,25 @@ def main() -> None:
                     help="comma-separated scenario_ids — capacity-test "
                          "mode: train ONLY these (e.g. the 4 probe "
                          "conversations), ignore the rest of the shard dir")
+    ap.add_argument("--self-history", type=float, default=0.0,
+                    help="self-history probe (exposure fix): each step "
+                         "trains on the model's OWN free-run history with "
+                         "this probability (0.5 -> half the steps). The "
+                         "capacity test (6792730/6814321) indicted "
+                         "teacher-forcing: models graded free-run never "
+                         "see their own chatter in training. Audio pads "
+                         "and gold LABELS are unchanged — only the input "
+                         "tokens at emission slots become on-policy. "
+                         "Random draw, not a stride: the shard loop "
+                         "restarts every pass, so a fixed stride would "
+                         "give shards PERMANENT roles")
+    ap.add_argument("--sh-refresh", type=int, default=8,
+                    help="recollect the model's own history only every "
+                         "Nth self-history step per lesson (one free-run "
+                         "pass costs one forward per ear feature)")
+    ap.add_argument("--max-pieces", type=int, default=8,
+                    help="cap on continuation pieces when free-running "
+                         "for self-history (matches live decode)")
     ap.add_argument("--out", default="runs/p1-v1")
     args = ap.parse_args()
 
@@ -177,6 +197,84 @@ def main() -> None:
         [emb_w, head_w] + (list(adapter.parameters()) if adapter else []),
         lr=args.lr)
 
+    # ---- self-history plumbing (exposure fix) --------------------------
+    # Decode mirrors live/freerun exactly: chat-envelope specials masked,
+    # word continuation fed back, first non-word breaker dropped.
+    pad_id = proc.tokenizer.convert_tokens_to_ids("<|audio_pad|>")
+    duplex_range = range(n_old, len(proc.tokenizer))
+    name_of = {i: proc.tokenizer.convert_ids_to_tokens(i)
+               for i in duplex_range}
+    sh_mask_ids = [i for i in proc.tokenizer.all_special_ids
+                   if i not in duplex_range]
+
+    def sh_kind(tok: int) -> str:
+        if tok < n_old:
+            return "word"
+        return "sil" if name_of[tok] == "<sil>" else "special"
+
+    emb_layer = model.get_input_embeddings()
+
+    @torch.no_grad()
+    def own_history(feats, n_ticks, sid: str):
+        """Free-run the lesson (no grad): one decision per ear feature,
+        continuations fed back. Returns per-tick own token lists
+        ([first_pick, *pieces]) — the model's real behaviour."""
+        was_training = model.training
+        model.eval()
+        try:
+            own, cache = [], None
+            for _i in range(min(len(feats), n_ticks)):
+                e_in = emb_layer(
+                    torch.tensor([[pad_id]], device=model.device)).clone()
+                e_in[0, 0] = feats[_i].to(e_in.dtype)
+                out = model(inputs_embeds=e_in,
+                            past_key_values=cache, use_cache=True)
+                cache = out.past_key_values
+                logits = out.logits[0, -1].clone()
+                for tid in sh_mask_ids:
+                    logits[tid] = float("-inf")
+                tok = int(logits.argmax())
+                picks = [tok]
+                if sh_kind(tok) == "word":
+                    while len(picks) < args.max_pieces:
+                        e = emb_layer(torch.tensor(
+                            [[picks[-1]]], device=model.device))
+                        out = model(inputs_embeds=e,
+                                    past_key_values=cache, use_cache=True)
+                        cache = out.past_key_values
+                        logits = out.logits[0, -1].clone()
+                        for tid in sh_mask_ids:
+                            logits[tid] = float("-inf")
+                        nxt = int(logits.argmax())
+                        if sh_kind(nxt) != "word":
+                            break
+                        picks.append(nxt)
+                own.append(picks)
+        finally:
+            model.train(was_training)
+        n_words = sum(1 for p in own if sh_kind(p[0]) == "word")
+        print(f"[p1] SH recollect {sid}: {len(own)} own ticks, "
+              f"{n_words} word-first picks", flush=True)
+        return own
+
+    def apply_own(seq: dict, own) -> dict:
+        """Overwrite input ids at emission slots with the model's own
+        picks, slot by slot. Extra own pieces beyond the gold skeleton
+        are dropped; unfilled slots keep gold. LABELS untouched — the
+        target stays what the model SHOULD have said."""
+        ids = list(seq["ids"])
+        pos = seq["audio_pos"]
+        for t, pad_pos in enumerate(pos):
+            if t >= len(own):
+                break
+            end = pos[t + 1] if t + 1 < len(pos) else len(ids)
+            for j, slot in enumerate(range(pad_pos + 1, end)):
+                if j < len(own[t]):
+                    ids[slot] = own[t][j]
+        return dict(seq, ids=ids)
+
+    sh_state: dict = {}  # sid -> [own_history, steps_since_recollect]
+
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
     log = open(out / "train.jsonl", "a")
@@ -192,6 +290,18 @@ def main() -> None:
             if want is not None and sid not in want:
                 continue
             seq = build_from_grid(batch / by_id[sid]["dir"], proc.tokenizer)
+            if len(seq["ids"]) < 8:
+                continue
+            if args.self_history > 0 and \
+                    random.random() < args.self_history:
+                st = sh_state.setdefault(sid, [None, args.sh_refresh])
+                if st[0] is None or st[1] >= args.sh_refresh:
+                    st[0] = own_history(
+                        shard["audio_feats"].to(model.device),
+                        len(seq["audio_pos"]), sid)
+                    st[1] = 0
+                st[1] += 1
+                seq = apply_own(seq, st[0])
             if len(seq["ids"]) < 8:
                 continue
             batch_in = collate(seq, shard, model.get_input_embeddings(),
