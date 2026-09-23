@@ -349,6 +349,88 @@ Findings:
   lessons — Codex F5-3) or capacity (adapter test — F5-2), decided
   with this unseen gate as the selection instrument.
 
+## Capacity test (Codex F5-2, owner-approved) — jobs 6792730, 6814111, 6814321
+
+Question before any next dose: can the 10-row approach (v1 recipe,
+~41k trainable params) learn FOUR short conversations at all, vs the
+same budget plus a small trainable audio adapter (~1M params,
+2048→256→2048 MLP on ear features — the spec's AuT-adapter idea)?
+Deliberate OVERFIT probe — capacity, not generalisation. Both arms:
+400 steps, unweighted CE, lr 1e-3, same 4 lessons (timed_task-001/004,
+barge_in-000/004). Selection instrument = free-run replay
+(self-history) on the trained 4, bar ≥90% exact word-onset hits with
+chatter <10% of silence ticks; held-out 4 (008/013/012/016)
+informational.
+
+**Arm A (rows-only) — job 6792730, checkpoint runs/cap-rows:**
+
+| metric | trained 4 | held-out 4 |
+|---|---|---|
+| word onsets, exact | **67/68 (98.5%)** | **67/69 (97.1%)** |
+| gold `<word>` acc | 57/58–100% per lesson | 89–100% per lesson |
+| false speech (share of sil ticks) | 81%, 88%, 44%, 33% | 80%, 69%, 49%, 44% |
+
+Split verdict: the 10 rows learn WHAT to say and EXACTLY WHEN (word
+acc ~100%, onset timing near-perfect — and it transfers to unseen
+conversations), but they cannot learn to STOP: `<sil>` acc 0.7–6%,
+the model babbles lesson words over most of the timeline. The composite
+bar (onsets ≥90% AND chatter <10%) FAILS on chatter. Notably worse
+silence than even v2 (sil acc 0.944 self-fed): unweighted CE on 4
+word-dense short lessons leaves the silence gate unmoved while the
+word rows saturate.
+
+**Arm B (rows + adapter) — training completed; free-run re-run
+cleanly by repair job 6814321 after a device fix (ckpt
+runs/cap-adapter, 1,050,880 adapter params):**
+
+| metric | trained 4 | held-out 4 |
+|---|---|---|
+| word onsets, exact | 0/14, 0/13, 14/21, 4/20 = **18/68 (26%)** | 13/15, 10/15, 4/21, 0/19 |
+| sil acc | **1.000, 1.000**, 0.53, 0.65 | 0.17, 0.34, 0.68, 1.000 |
+| false speech (sil ticks) | **0, 0**, 26, 25 | 426, 188, 23, 0 |
+
+**Verdict: NEITHER arm learns the four conversations — composite bar
+failed both ways, with complementary failure modes.** Rows-only
+places words near-perfectly (98.5% exact onsets, held-out 97.1%) but
+cannot learn to stop (chatter 33–88%). The adapter learns to stop —
+so well it goes FULLY MUTE on the two timed_task lessons (sil acc
+1.000, word acc 0.000, zero false speech) and drags exact onsets to
+26%. Small-parameter capacity is NOT the missing ingredient for word
+placement; the missing ingredient is free-run speech/silence GATING,
+and each lever trades one failure for the other.
+
+Triangulating with the ladder's history:
+
+- v2 (w50, 80 lessons): silence gate works free-run (sil acc 0.944)
+  but MUTES — the opposite pole of arm A. So rows CAN learn gating;
+  the dose decides which way it falls, and no dose so far has landed
+  silence AND speech together in free-run.
+- v11 (w50+tax2+ww3): got speech back, but as script recall.
+- Both capacity arms trained TEACHER-FORCED and are graded FREE-RUN
+  (self-history). Both failing at the same join — the model never
+  sees its own chatter during training — points at exposure bias as
+  the common cause, not parameter budget and not (only) dose.
+
+This does NOT match either anticipated branch of Codex's completion
+criterion ("if the adapter learns and rows cannot, end the rows-only
+ladder"): the adapter did not learn either. Capacity, as probed, is
+exonerated for word placement (41k params suffice to memorize
+placement on 4 conversations) and the adapter is not a free upgrade
+(it mutes under this recipe — though unweighted CE on 95%-silence
+lessons all but invites the muting solution; a weighted adapter arm
+is untested).
+
+Metric bug found reading these logs: freerun_diag's "within ±1s"
+counted gold ticks inside their OWN window — vacuously true (a fully
+muted run "hit" 14/14). Exact-onset numbers are unaffected; the
+event-level near metric is fixed post-hoc (any speech within ±1 s of
+the gold tick). Numbers quoted above all use the exact metric.
+
+Gotcha bought twice now: piping job output through `grep` in slurm
+scripts silently discards the lines that matter most in a crash (the
+exception type/message). Only traceback FRAMES whose path matched
+"freerun" survived. No grep on diagnostic pipes from here on.
+
 ## Free-run diagnostic (6762966 crashed on a type slip → 6762979, v3 ckpt)
 
 Replays held-out factory lessons in the EXACT training format, twice:

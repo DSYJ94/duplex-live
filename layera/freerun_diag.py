@@ -234,13 +234,18 @@ def main() -> None:
             if gold_is_word:
                 gold_word_ticks.append(i)
 
-        # word-onset hits: exact tick, or any speech within +-1 s
+        # word-onset hits: the exact gold tick, or (event-level) ANY
+        # speech within +-1 s of the gold tick. The old "near" counted
+        # gold ticks inside their OWN window — vacuously true, e.g. a
+        # fully muted run scored 14/14 (caught in the capacity test).
+        near = 0
+        for w in gold_word_ticks:
+            lo, hi = max(0, w - 2), w + 13
+            if any(lo <= s < hi for s in spoken):
+                near += 1
         near_w = set()
         for w in gold_word_ticks:
             near_w.update(range(max(0, w - 2), w + 13))
-        spoken_set = set(spoken)
-        exact = sum(1 for w in gold_word_ticks if w in spoken_set)
-        near = sum(1 for w in gold_word_ticks if w in near_w)
         false_speech = sum(1 for i in spoken if i not in near_w)
         n_word = len(gold_word_ticks)
 

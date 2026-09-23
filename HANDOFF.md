@@ -1,8 +1,8 @@
-# HANDOFF — where we are (2026-09-22)
+# HANDOFF — where we are (2026-09-23)
 
 Read this first in a fresh chat. Everything below is decided and documented.
 
-## The frontier right now (2026-09-22)
+## The frontier right now (2026-09-23)
 
 - **Phase-1 training is a dose-response study through v11.** The ablation
   ledger with every recipe, exam number and verdict is **EXPERIMENTS.md** —
@@ -58,6 +58,21 @@ Read this first in a fresh chat. Everything below is decided and documented.
   p50 280 ms (timing circuit intact, coverage is the failure) and
   clean t3+t5. MORE weight on the same 80 lessons is the least
   supported next step; data-side or capacity (Codex F5-2/F5-3) lead.**
+- **Capacity test ANSWERED (2026-09-23, jobs 6792730/6814111/6814321,
+  EXPERIMENTS.md "Capacity test"): NEITHER small lever learns 4
+  conversations free-run. Rows-only (~41k params): word placement is
+  saturated — 98.5% exact onsets, 97.1% on HELD-OUT conversations —
+  but cannot learn silence (chatter 33–88% of sil ticks). Rows+adapter
+  (~1M): learns silence TOO well — fully mute on 2/4 trained lessons,
+  exact onsets 26%. Complementary failures at the same join point at
+  TEACHER-FORCED vs FREE-RUN exposure (the model never sees its own
+  chatter in training) as the common cause — capacity is exonerated
+  for placement, the adapter is not a free upgrade. Also fixed:
+  freerun's ±1s metric was vacuous (window contained its own gold
+  tick), adapter-vs-CPU-feats device crash. NEITHER anticipated
+  branch of Codex's completion criterion fired (adapter did not
+  learn) — the rows-only ladder is not the thing to end; the thing to
+  change is what training exposes the model to.**
 - **Where this goes after v11:** if the speak-up lever works, the Phase-1
   checkpoint target is "v10's quiet control + v2-level speaking + some
   timing"; if it cliffs too, the fallback is data-side (word-denser
