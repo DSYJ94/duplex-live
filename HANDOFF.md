@@ -73,6 +73,15 @@ Read this first in a fresh chat. Everything below is decided and documented.
   branch of Codex's completion criterion fired (adapter did not
   learn) — the rows-only ladder is not the thing to end; the thing to
   change is what training exposes the model to.**
+- **Self-history probe 1 ANSWERED (2026-09-23, jobs 6816545/6820600,
+  EXPERIMENTS.md "Self-history probe"): the exposure lever WORKS —
+  first lever ever to move free-run silence to 58–96% (trained AND
+  held-out) — but unweighted it swings to the MUTE pole (exact onsets
+  1.5%, chatter ~0) with a new `<t+2s>` thief. Probe 2 (cap-sh2, job
+  6820759) adds `--word-weight 3`: if speaking returns while silence
+  holds, that config passes a bar NO model has ever passed (onsets
+  ≥90% + chatter <10% on trained 4) and becomes the Phase-1 fix
+  candidate to scale to the 80-lesson ladder.**
 - **Where this goes after v11:** if the speak-up lever works, the Phase-1
   checkpoint target is "v10's quiet control + v2-level speaking + some
   timing"; if it cliffs too, the fallback is data-side (word-denser
