@@ -30,10 +30,35 @@ import json
 from collections import Counter, defaultdict
 from pathlib import Path
 
-import torch
+
+def word_onset_stats(gold_word_ticks, spoken) -> tuple[int, int, int, int]:
+    """(exact, near, false_speech, n_word) — the capacity-test metrics.
+
+    exact: the model's first pick lands on the exact gold word tick.
+    near (event-level): ANY speech within +-1 s of the gold tick.
+    false_speech: speech at ticks not near any gold word (chatter).
+    History: the original "near" counted gold ticks inside their OWN
+    window — vacuously true (a fully muted run "hit" 14/14); and a
+    2026-09-23 refactor left the print referencing a deleted variable
+    (NameError killed job 6816545's evals). Both now guarded by
+    evals/harness/test_freerun_metrics.py."""
+    near_w = set()
+    for w in gold_word_ticks:
+        near_w.update(range(max(0, w - 2), w + 13))
+    spoken_set = set(spoken)
+    exact = sum(1 for w in gold_word_ticks if w in spoken_set)
+    near = 0
+    for w in gold_word_ticks:
+        lo, hi = max(0, w - 2), w + 13
+        if any(lo <= s < hi for s in spoken):
+            near += 1
+    false_speech = sum(1 for i in spoken if i not in near_w)
+    return exact, near, false_speech, len(gold_word_ticks)
 
 
 def main() -> None:
+    import torch
+
     ap = argparse.ArgumentParser()
     ap.add_argument("--batch", required=True)
     ap.add_argument("--ckpt", required=True)
@@ -234,20 +259,8 @@ def main() -> None:
             if gold_is_word:
                 gold_word_ticks.append(i)
 
-        # word-onset hits: the exact gold tick, or (event-level) ANY
-        # speech within +-1 s of the gold tick. The old "near" counted
-        # gold ticks inside their OWN window — vacuously true, e.g. a
-        # fully muted run scored 14/14 (caught in the capacity test).
-        near = 0
-        for w in gold_word_ticks:
-            lo, hi = max(0, w - 2), w + 13
-            if any(lo <= s < hi for s in spoken):
-                near += 1
-        near_w = set()
-        for w in gold_word_ticks:
-            near_w.update(range(max(0, w - 2), w + 13))
-        false_speech = sum(1 for i in spoken if i not in near_w)
-        n_word = len(gold_word_ticks)
+        exact, near, false_speech, n_word = word_onset_stats(
+            gold_word_ticks, spoken)
 
         print(f"[freerun]   free (self-history):", flush=True)
         for g in sorted(per):
