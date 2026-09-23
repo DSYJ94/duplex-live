@@ -84,16 +84,25 @@ Read this first in a fresh chat. Everything below is decided and documented.
   speaking and stopping coexist), but the t+30s/t+10s thief eats the
   timed_task lessons (silence 34%, up to 505 steals; total exact
   onsets 25/68 = 37% vs the 90% bar). FAIL, but the shape is right.**
-  Probe 3 (cap-sh3, job 6827932) adds `--thief-penalty 2` (v11's
-  recipe + self-history) — currently training. Pass bar (trained 4):
-  exact onsets ≥90% AND chatter <10% of silence ticks. If it passes,
-  the candidate is scaling self-history training to the 80-lesson
-  ladder (next GPU-spend decision for the owner).
-- **Listenable checkpoints (owner request, 2026-09-23, job 6827931):
-  audition renders of cap-rows / cap-sh / cap-sh2 free-running the 4
-  trained conversations — the model's words spoken by TTS at the exact
-  ticks it chose, over the conversation audio — into
-  `runs/model-audio-*` (gallery layout). rsync to the Mac, then
+  Probe 3 (cap-sh3, job 6827932) added `--thief-penalty 2` (v11's
+  recipe + self-history): **FAILED WORSE — the tax re-muted the model
+  (4/68 = 5.9% exact, 2/4 lessons fully silent) while the thief
+  SURVIVED (42 t+30s steals) — the same cliff the ladder hit at v10:
+  penalty buys quiet, not precision.** Probe series verdict: the
+  exposure lever works and word-weight 3 revives speech, but the
+  config is knife-edge dose-response, not a stable fix.
+  **DECISION POINT (owner): next lever = word-weight dose scan (1.5/6)
+  under self-history, cut the self-history feedback share (F 0.25 —
+  the mute looks self-reinforcing: its own silence comes back as
+  input, and 95% of gold labels agree), or data-side word-denser
+  lessons (Codex F5-3) attacking the 95%-silence root.**
+- **Listenable checkpoints (owner request, 2026-09-23): audition
+  renders of the four capacity/self-history checkpoints free-running
+  the 4 trained conversations — the model's words spoken by TTS at the
+  exact ticks it chose, over the conversation audio — into
+  `runs/model-audio-*` (gallery layout). First job (6827931) died on a
+  MiniCPM-o TTS internal crash mid-word; renderer now skips bad words
+  (retry once, then continue). rsync to the Mac, then
   `python -m viz.listen` → http://localhost:8765.**
 - **Where this goes after v11:** if the speak-up lever works, the Phase-1
   checkpoint target is "v10's quiet control + v2-level speaking + some

@@ -463,7 +463,7 @@ scripts silently discards the lines that matter most in a crash (the
 exception type/message). Only traceback FRAMES whose path matched
 "freerun" survived. No grep on diagnostic pipes from here on.
 
-## Self-history probe (exposure fix) — jobs 6816545 + 6820600, probe 2 in flight
+## Self-history probe (exposure fix) — jobs 6816545 + 6820600 + 6827932, 3 probes COMPLETE
 
 `train_p1 --self-history F` (owner-approved 2026-09-23): each step
 free-runs the lesson against itself (no grad, live-exact decode) and —
@@ -522,17 +522,52 @@ speaker (v11: 251 steals on the countdown-dense lesson), now reproduced
 in miniature on the 4-lesson rig, and plausibly self-reinforcing under
 self-history (the model's own wrong picks are fed back as inputs).
 
-**Probe 3 (cap-sh3, job 6827932) — one-lever delta: +
+**Probe 3 (cap-sh3, job 6827932, 3h10m) — one-lever delta: +
 `--thief-penalty 2`** (the ladder's v9 counter, part of v11's best
 recipe). Question: does the thief penalty protect the timed_task
 lessons while self-history + word-weight hold the poles?
+**ANSWER: NO — the tax re-muted the model. FAILED (4/68 = 5.9%
+exact vs 90%), WORSE than probe 2's 37%:**
 
-Audition renders (owner request, job 6827931): all three checkpoints
-free-run the 4 trained conversations with `--save-picks`, and
+| metric | cap-sh2 (probe 2) | cap-sh3 (probe 3) |
+|---|---|---|
+| exact onsets, trained 4 | 25/68 (37%) | **4/68 (5.9%)** — t-001 0/14, t-004 0/13, b-000 4/21, b-004 0/20 |
+| exact onsets, held-out 4 | (18/21 best) | 5/70 — only b-016 alive (5/19 exact, 14/19 near, 26 chatter) |
+| full mutes (trained) | 0 | **2/4** (t-004, b-004: sil acc 1.000, zero speech) |
+| t+30s thief at sil positions | ×505 (t lessons) | **still ×42 on t-001** — the tax did NOT remove it |
+
+The dose-response cliff replicated in miniature: exactly as the
+ladder's thief-penalty 2 (v10) killed v3's speaking and timing, pen 2
+on the 4-lesson rig suppressed the words the word-weight lever had
+just revived — while the thief itself survived free-run. The tax buys
+quiet, not precision. One encouraging crumb: b-000 fired its gold
+`<t+10s>` correctly (acc 1.000, 1/1) — the first correct timing-token
+fire anywhere in the free-run series.
+
+**Probe series verdict (3 probes): the exposure lever genuinely moves
+free-run silence (probe 1), and word-weight 3 genuinely revives speech
+on top of it (probe 2, the only both-poles coexistence) — but the
+config sits on a knife edge: +penalty 2 (probe 3) or −word-weight
+(probe 1) collapses to a pole. Dose-response, not a stable fix. The
+next move is a decision point (owner): word-weight dose scan (1.5 / 6)
+under SH, cut SH's feedback share (F 0.5→0.25 — the mute may be
+self-reinforcing: the model's own silence gets fed back as input and
+95% of gold labels agree with it), or the data-side fix (Codex F5-3,
+word-denser lessons) which attacks the 95%-silence root directly.**
+
+Audition renders (owner request, job 6827931 → FAILED 18:47, refixed):
+all three checkpoints free-run the 4 trained conversations with
+`--save-picks` (picks survived; renders died), and
 `evals/render_model_audio.py` speaks each model's words (factory TTS
 voice) at the exact ticks chosen, over the in-slot audio —
 `runs/model-audio-cap-rows` (chatterer), `-cap-sh` (muted),
-`-cap-sh2` (first coexistence) for the localhost gallery.
+`-cap-sh2` (first coexistence), `-cap-sh3` (re-muted) for the
+localhost gallery. 6827931's failure: MiniCPM-o TTS crashed INSIDE its
+own model code mid-word (`llm_embeds + hidden_embeds` 2048 vs 2047 —
+its 2048-code cap), leaving no wav; `sf.read` then died on the missing
+file and `set -e` killed the job. Fix: per-word try/except + one
+retry in the renderer — an audition tool must skip one bad word, not
+lose the batch.
 
 ## Free-run diagnostic (6762966 crashed on a type slip → 6762979, v3 ckpt)
 

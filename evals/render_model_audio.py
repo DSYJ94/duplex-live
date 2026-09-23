@@ -64,9 +64,32 @@ def main() -> None:
 
     out_audio = Path(args.out) / "audio"
     manifest = []
-    # one TTS call per unique word, reused across placements/scenarios
-    said: dict[str, np.ndarray] = {}
+    # one TTS call per unique word, reused across placements/scenarios;
+    # a failed synthesis is cached as None (skipped everywhere) — this
+    # is an audition tool, one bad word must not lose the batch
+    said: dict[str, np.ndarray | None] = {}
     tmp = Path(tempfile.mkdtemp(prefix="render-model-audio-"))
+
+    def synthesize(text: str) -> np.ndarray | None:
+        """TTS one word -> float32 mono at SR, or None after a retry."""
+        for attempt in (1, 2):
+            wp = tmp / f"w{len(said)}-{attempt}.wav"
+            try:
+                engine.tts(text, str(ref_wav), str(wp))
+                x, sr = sf.read(wp, dtype="float32")
+            except Exception as exc:  # MiniCPM-o crashes inside its own
+                # model code on rare words (2048-code cap off-by-one,
+                # job 6827931) and leaves no file behind
+                print(f"[render]   tts failed ({attempt}/2) for "
+                      f"{text!r}: {exc}", flush=True)
+                continue
+            if x.ndim > 1:
+                x = x.mean(axis=1)
+            if sr != SR:  # engine renders at its own rate
+                t = np.arange(0, len(x)) * (SR / sr)
+                x = np.interp(t, np.arange(0, len(x)), x)
+            return x.astype(np.float32)
+        return None
 
     n_scen = 0
     for pj in sorted(picks_dir.glob("*.json")):
@@ -81,19 +104,14 @@ def main() -> None:
             if not text:
                 continue
             if text not in said:
-                wp = tmp / f"w{len(said)}.wav"
-                engine.tts(text, str(ref_wav), str(wp))
-                x, sr = sf.read(wp, dtype="float32")
-                if x.ndim > 1:
-                    x = x.mean(axis=1)
-                if sr != SR:  # engine renders at its own rate
-                    t = np.arange(0, len(x)) * (SR / sr)
-                    x = np.interp(t, np.arange(0, len(x)), x)
-                said[text] = x.astype(np.float32)
+                said[text] = synthesize(text)
+            clip = said[text]
+            if clip is None:
+                continue
             s = w["tick"] * TICK_SAMPLES
-            e = min(s + len(said[text]), len(pcm))
+            e = min(s + len(clip), len(pcm))
             if e > s:
-                pcm[s:e] += said[text][:e - s]
+                pcm[s:e] += clip[:e - s]
         peak = float(np.max(np.abs(pcm))) or 1.0
         if peak > 0.95:
             pcm *= 0.95 / peak
