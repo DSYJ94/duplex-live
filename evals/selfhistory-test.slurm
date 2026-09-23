@@ -1,17 +1,17 @@
 #!/bin/bash
-#SBATCH --job-name=dl-sh4b
+#SBATCH --job-name=dl-sh4c
 #SBATCH --partition=workq
 #SBATCH --account=brics.u6si
 #SBATCH --nodes=1
 #SBATCH --gres=gpu:1
 #SBATCH --time=04:00:00
-#SBATCH --output=logs/dl-sh4b-%j.out
+#SBATCH --output=logs/dl-sh4c-%j.out
 
-# SELF-HISTORY PROBE 2 (cap-sh2): probe 1 (cap-sh, jobs 6816545/6820600)
-# proved the exposure lever moves free-run silence harder than anything
-# before (sil acc 58-96%) but unweighted it lands on the MUTE pole
-# (exact onsets ~1.5%). One-lever delta here: + --word-weight 3, the
-# ladder's speech lever. Same rig otherwise (400 steps, lr 1e-3,
+# SELF-HISTORY PROBE 3 (cap-sh3): probe 1 (cap-sh): mutes (onsets 1.5%). probe 2 (cap-sh2, job 6820759):
+# speech partially returns (barge lessons 10-13/21 exact, silence ~57%)
+# but the t+30s/t+10s thief eats the timed_task lessons (sil 34%, 505 steals).
+# One-lever delta: + --thief-penalty 2 (the ladder's v9 counter, part of
+# v11's best recipe). Same rig otherwise (400 steps, lr 1e-3,
 # timing-weight 50 default as in every capacity arm).
 # Pass bar (free-run, trained 4): >=90% exact word-onset hits AND
 # chatter <10% of silence ticks. Held-out 4 informational. FULL LOG —
@@ -35,18 +35,18 @@ apptainer exec --nv --bind /projects,/lus,/home \
     --env PYTHONPATH=$PYTHONPATH --env HF_HOME=$HF_HOME --env TMPDIR=$TMPDIR \
     /projects/u6si/containers/latentsprites-pytorch-25.05.sif \
     python -m layera.train_p1 --shards "$SHARDS" --batch "$BATCH" \
-    --steps 400 --lessons "$TRAIN4" --self-history 0.5 --sh-refresh 8 --word-weight 3 \
-    --out $DL/runs/cap-sh2
+    --steps 400 --lessons "$TRAIN4" --self-history 0.5 --sh-refresh 8 --word-weight 3 --thief-penalty 2 \
+    --out $DL/runs/cap-sh3
 
 for SET in "trained $TRAIN4" "heldout $HELD4"; do
   set -- $SET
   TAG=$1; IDS=$2
-  echo "===== free-run cap-sh2 on $TAG conversations ====="
+  echo "===== free-run cap-sh3 on $TAG conversations ====="
   apptainer exec --nv --bind /projects,/lus,/home \
       --env PYTHONPATH=$PYTHONPATH --env HF_HOME=$HF_HOME --env TMPDIR=$TMPDIR \
       /projects/u6si/containers/latentsprites-pytorch-25.05.sif \
       python -m layera.freerun_diag --batch "$BATCH" \
-      --ckpt $DL/runs/cap-sh2/p1_checkpoint.pt --shards "$SHARDS" \
+      --ckpt $DL/runs/cap-sh3/p1_checkpoint.pt --shards "$SHARDS" \
       --scenarios "$IDS" --max-ticks 900
 done
 echo "self-history probe done"
