@@ -588,13 +588,30 @@ types give the word and silence poles comparable rates:
 - Both feed the existing render→filter→gallery pipeline unchanged
   (`synth-render.slurm` gained a `--classes` passthrough, `CLASSES=`
   env; batch `runs/synth-dense1`, per-class 8, seed 907, chatterbox).
+- **REALIZED density (grid audit, `evals/grid_density_audit.py`,
+  2026-09-24): 12% word / 88% sil — NOT the 40%+ the 72%-speech
+  design suggested.** The emission contract is one word label per
+  spoken word (~1 tick / 400 ms of speech), so natural speaking rate
+  caps word ticks at ~20–24% even at 100% speech density. Honest
+  before/after: old batch total 7% word / 92% sil, with timed_task
+  deserts at 1–2% and barge_in already 11–15%; dense batch uniform
+  11–14%. Net: deserts gone, ~2× overall word rate, 88% sil is
+  structural to the labeling contract. CONSEQUENCE: the data lever
+  alone probably cannot equalize the poles — the loss side
+  (word-weight) multiplies whatever density exists (12%×3 = 36%
+  effective in probe 5; ww 6 → 72%). Re-labeling speech-active ticks
+  would be a SPEC change — bigger decision, not taken now.
 - Timing-token design note: the grid timestamps an assistant onset by
   ITS OWN silence gap, so dense answers carry small-bucket `<t+5s>`/
   `<t+10s>` at EVERY answer onset — dense, correct-position fires
   instead of rare, over-weighted ones. The thief feeds on rarity.
-- Next (after owner audition): shard the dense batch, probe 5 = the
-  probe-2 recipe (self-history 0.5 + word-weight 3) on a 4-dense-lesson
-  rig, same pass bar.
+- Filter: 12/16 pass (dense_barge-007 cut_misplaced — barge estimate
+  drifted past the realized chunk end; dense_dialog-003 tail_babble
+  "sure"; 2 more above). Normal attrition, over-render covers.
+- **Probe 5 (dense-sh1, job 6843717, chained after sharding 6843694):
+  the probe-2 recipe verbatim (SH 0.5, refresh 8, ww 3, NO penalty)
+  on 4 dense lessons — ONE changed variable: the data.** Same pass
+  bar; held-out 4 informational.
 
 ## Free-run diagnostic (6762966 crashed on a type slip → 6762979, v3 ckpt)
 
