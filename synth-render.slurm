@@ -41,6 +41,7 @@ echo "[synth] generating timelines -> $TL_DIR"
 mkdir -p "$TL_DIR" "$OUT_DIR"
 SC_ARGS=""
 [ -n "${BANKS:-}" ] && [ -f "$BANKS" ] && SC_ARGS="--banks $BANKS"
+[ -n "${CLASSES:-}" ] && SC_ARGS="$SC_ARGS --classes $CLASSES"
 $APPT python -m data.synthetic.scenarios --out "$TL_DIR" --per-class "$PER_CLASS" --seed "$SEED" $SC_ARGS
 
 ASSETS=$(ls -d $HF_HOME/hub/models--openbmb--MiniCPM-o-4_5/snapshots/*/assets | head -1)

@@ -102,6 +102,52 @@ EXPLAIN = [
 
 BACKCHANNELS = ["mm-hm", "yeah", "right", "uh-huh", "okay", "I see", "sure", "mhm", "got it"]
 
+# Dense-dialog content: short prompts (4-9 words, above the 1-2-word TTS
+# babble zone) and 15-40-word answers, so a 7-exchange lesson runs ~60 s
+# with assistant speech covering most of the clock. Hand-written (ADR-0002).
+DENSE_QA = [
+    ("What's the fastest way to cool a cup of coffee?",
+     "Stir it. Stirring brings the hot liquid to the surface constantly, which dumps heat far faster than blowing on it."),
+    ("Why do my ears pop on a plane?",
+     "Cabin pressure drops as you climb, and the air trapped behind your eardrum expands until a swallow lets it escape."),
+    ("Is it cheaper to leave the heating on low all day?",
+     "No. Heat lost is proportional to the difference from outside, so a warm empty house leaks more than one that reheats when you return."),
+    ("Why does my phone battery hate the cold?",
+     "Cold slows the chemical reactions inside the cell, so the voltage sags and the phone reads a nearly full battery as empty."),
+    ("What actually happens when I clear my cache?",
+     "The saved copies of files get deleted, so the next visit fetches everything fresh — slower first load, and stale junk is gone."),
+    ("Why is it warmer by the sea in winter?",
+     "Water holds enormous heat and releases it slowly, so coastal air stays milder than inland air even through the same cold night."),
+    ("Do loud sounds damage speakers or just distort?",
+     "Both. Distortion comes first, but sustained volume overheats the fine coil inside, and heat is what actually kills the speaker."),
+    ("Why do onions make me cry?",
+     "Cutting an onion releases a sulphur compound that drifts up, mixes with the water on your eye, and forms a mild acid. Tears are the rinse."),
+    ("What's the point of airplane mode?",
+     "It switches off the radios that hunt for signals. Searching burns battery fast, and a transmitter can interfere with cockpit instruments."),
+    ("Why does bread go stale faster in the fridge?",
+     "Cold makes the starch molecules fold back into crystals, which is what staling actually is. The freezer, oddly, pauses it completely."),
+    ("How do noise-cancelling headphones work?",
+     "A microphone samples the outside noise, the electronics generate the exact opposite waveform, and the two cancel before reaching your ear."),
+    ("Why do I see lightning before I hear thunder?",
+     "Light travels nearly a million times faster than sound. The flash is instant; the rumble takes about three seconds to cover each kilometre."),
+    ("What makes chili peppers hot?",
+     "A chemical called capsaicin binds to the same receptors that report actual burning heat. Nothing is damaged — it's a false alarm you can enjoy."),
+    ("Why is my reflection upside down in a spoon?",
+     "The inside of the spoon curves inward, which flips the light rays vertically as well as horizontally, inverting the image."),
+    ("Can a microwave heat things unevenly on purpose?",
+     "It's an accident of standing waves: hot and cold spots form at fixed distances. The rotating plate exists to smear the food through them."),
+    ("Why do wheels look like they spin backwards?",
+     "A camera samples frames at fixed intervals, and a wheel that turns almost exactly one spoke-width per frame lands where it started — or just short."),
+    ("What's the difference between a virus and bacteria?",
+     "Bacteria are living cells that eat and divide; antibiotics poison that machinery. Viruses are bare instructions that hijack your cells, so the tactics differ."),
+    ("Why does my voice sound different in recordings?",
+     "You normally hear yourself partly through bone, which boosts the low tones. A recording is only the air-conducted version, so it sounds thinner and higher."),
+    ("How does a fridge make things cold?",
+     "It doesn't add cold. A fluid inside absorbs heat from the cabinet as it evaporates, then a pump squeezes it outside, where the heat escapes."),
+    ("Why do I get sleepy after a big meal?",
+     "Blood flow shifts toward digestion, and hormones released by a full gut signal the rest of the body to wind down. Size matters more than content."),
+]
+
 QUESTIONS_HARD = [
     "Can you compare the consistency guarantees of Raft and Paxos, and tell me which "
     "one I'd want for a globally distributed ledger and why?",
@@ -423,12 +469,93 @@ def gen_simultaneous(rng: random.Random, idx: int) -> Timeline:
     return tl
 
 
+DENSE_OPENERS = [
+    "Walk me through how this works.",
+    "Explain the whole thing to me from the top.",
+    "I've got a few minutes — take me through it.",
+    "Go slow, and walk me through it properly.",
+]
+
+DENSE_BARGES = [
+    ("Sorry, sorry — slower. You lost me in the middle.",
+     "Of course. Let me redo that middle step more slowly."),
+    ("Quick check first: does that hold for big files too?",
+     "Good question. Yes, though the overhead grows, so most systems cap the size."),
+    ("Hmm, wait. Can you give me a real example of that?",
+     "Sure. Think of a library, and the index is the card catalogue at the front desk."),
+    ("Hold on — define that last term you just used.",
+     "Right. The simplest version: it's just a label for how many items are in play."),
+    ("Actually, skip ahead. What's the bottom line here?",
+     "Bottom line: it works, it's quick, and it has run in production for decades."),
+    ("Sorry to interrupt — how long does this usually take?",
+     "Not long. For the sizes you care about, well under a second."),
+]
+
+
+def gen_dense_dialog(rng: random.Random, idx: int) -> Timeline:
+    """Word-dense Q/A (the data-side fix for the pole collapse): rapid
+    exchanges with NO long gaps — assistant speech covers most of the
+    timeline, so <word> and <sil> meet at anything like equal rates
+    instead of 5% vs 95%. Assistant self-gaps are user-turn-length
+    (2–5 s), so answer onsets carry SMALL <t+Ns> tokens densely and at
+    correct positions — de-rarifying the timing tokens the thief lives on."""
+    tl = Timeline(f"dense_dialog-{idx:03d}", "dense_dialog")
+    t = 0
+    pairs = rng.sample(range(len(DENSE_QA)), min(7, len(DENSE_QA)))
+    for k in pairs:
+        u, a = DENSE_QA[k]
+        tl.add(Event(U, t, u, "utterance"))
+        t += _est_ms(u) + rng.randint(200, 400)
+        tl.add(Event(A, t, a, "utterance"))
+        if a.count(" ") > 18 and rng.random() < 0.4:
+            tl.add(Event(U, t + rng.randint(1500, 3000),
+                         rng.choice(BACKCHANNELS), "backchannel", gain=0.7))
+        t += _est_ms(a) + rng.randint(200, 400)
+    tl.meta["exchanges"] = len(pairs)
+    return tl
+
+
+def gen_dense_barge(rng: random.Random, idx: int) -> Timeline:
+    """Barge-in during DENSE speech: three tight chunks of an
+    explanation (300–600 ms micro-gaps — no timing tokens between
+    chunks), an interruption mid-flow, clean yield, short revised
+    answer. The yield teacher without the story-monologue dead air.
+    Nothing is scheduled past the barge: the renderer truncates the
+    chunk in progress at the barge instant."""
+    tl = Timeline(f"dense_barge-{idx:03d}", "dense_barge")
+    opener = rng.choice(DENSE_OPENERS)
+    tl.add(Event(U, 0, opener, "utterance"))
+    words = rng.choice(EXPLAIN).split()
+    third = len(words) // 3
+    chunks = [" ".join(words[:third]),
+              " ".join(words[third:2 * third]),
+              " ".join(words[2 * third:])]
+    t = _est_ms(opener) + 400
+    barge, reply = rng.choice(DENSE_BARGES)
+    cut_chunk = rng.choice([2, 3])  # barge lands mid chunk 2 or 3
+    for j, chunk in enumerate(chunks, start=1):
+        tl.add(Event(A, t, chunk, "utterance"))
+        if j == cut_chunk:
+            barge_at = t + rng.randint(1500, max(2000, _est_ms(chunk) // 2))
+            break
+        t += _est_ms(chunk) + rng.randint(300, 600)
+    tl.add(Event(U, barge_at, barge, "barge_in"))
+    # realistic reaction time from the barge instant; the renderer's
+    # barge-yield policy re-anchors this after the realized barge end
+    tl.add(Event(A, barge_at + _q(rng.randint(900, 1800)), reply, "utterance",
+                 note="clean yield + revised response"))
+    tl.meta["barge_at_ms"] = barge_at
+    return tl
+
+
 GENERATORS = {
     "hold_floor": gen_hold_floor,
     "addressee": gen_addressee,
     "backchannel": gen_backchannel,
     "barge_in": gen_barge_in,
     "timed_task": gen_timed_task,
+    "dense_dialog": gen_dense_dialog,
+    "dense_barge": gen_dense_barge,
     "delegation": gen_delegation,
     "silence_semantics": gen_silence_semantics,
     "simultaneous": gen_simultaneous,
@@ -457,16 +584,28 @@ def main() -> None:
     ap.add_argument("--seed", type=int, default=17)
     ap.add_argument("--banks", default=None,
                     help="banks.json from data.synthetic.banks_llm")
+    ap.add_argument("--classes", default=None,
+                    help="comma list — generate ONLY these classes "
+                         "(default: all registered generators)")
     args = ap.parse_args()
 
     if args.banks:
         apply_banks(Path(args.banks))
+
+    want = ([c.strip() for c in args.classes.split(",") if c.strip()]
+            if args.classes else None)
+    unknown = [c for c in (want or []) if c not in GENERATORS]
+    if unknown:
+        raise SystemExit(f"[scenarios] unknown classes: {unknown} "
+                         f"(known: {', '.join(GENERATORS)})")
 
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
     rng = random.Random(args.seed)
     n = 0
     for cls, gen in GENERATORS.items():
+        if want and cls not in want:
+            continue
         for i in range(args.per_class):
             tl = gen(rng, i)
             tl.save(out / f"{tl.scenario_id}.json")

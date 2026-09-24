@@ -22,6 +22,7 @@ import argparse
 import html
 import json
 import mimetypes
+import socket
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import quote, unquote, urlparse
@@ -312,6 +313,25 @@ class Handler(BaseHTTPRequestHandler):
         self._send(404, b"not found", "text/plain")
 
 
+class DualStackServer(ThreadingHTTPServer):
+    """Listens on ::1 AND 127.0.0.1 with one socket. Some browsers
+    resolve localhost to ::1 first and refuse to fall back
+    (ERR_CONNECTION_REFUSED, owner report 2026-09-24) — the old
+    IPv4-only bind locked exactly those browsers out."""
+
+    # class attribute: the socket is created from it in __init__,
+    # BEFORE server_bind runs
+    address_family = socket.AF_INET6
+    daemon_threads = True
+
+    def server_bind(self):
+        try:
+            self.socket.setsockopt(socket.IPPROTO_IPV6, socket.IPV6_V6ONLY, 0)
+        except OSError:
+            pass  # dual-stack unsupported here; ::1 still served
+        super().server_bind()
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--runs", default="runs")
@@ -323,7 +343,10 @@ def main() -> None:
     Handler.voices = Path(args.voices) if args.voices else Path(args.runs) / "voices"
     url = f"http://localhost:{args.port}"
     print(f"listening gallery: {url}  (runs={Handler.runs}, voices={Handler.voices})")
-    ThreadingHTTPServer(("127.0.0.1", args.port), Handler).serve_forever()
+    try:
+        DualStackServer(("::", args.port), Handler).serve_forever()
+    except OSError:  # no IPv6 on this machine — plain IPv4 loopback
+        ThreadingHTTPServer(("127.0.0.1", args.port), Handler).serve_forever()
 
 
 if __name__ == "__main__":
