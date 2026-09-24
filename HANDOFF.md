@@ -91,11 +91,17 @@ Read this first in a fresh chat. Everything below is decided and documented.
   penalty buys quiet, not precision.** Probe series verdict: the
   exposure lever works and word-weight 3 revives speech, but the
   config is knife-edge dose-response, not a stable fix.
-  **DECISION POINT (owner): next lever = word-weight dose scan (1.5/6)
-  under self-history, cut the self-history feedback share (F 0.25 —
-  the mute looks self-reinforcing: its own silence comes back as
-  input, and 95% of gold labels agree), or data-side word-denser
-  lessons (Codex F5-3) attacking the 95%-silence root.**
+- **OWNER DECISION (2026-09-24): the next lever is the DATA side —
+  word-dense lessons attacking the ~95%-silence root.** Built and
+  committed: `dense_dialog` (rapid Q/A, 71–72% assistant speech, new
+  hand-written 20-pair bank) and `dense_barge` (interruption teacher
+  in the dense regime, 90%+ speech), both through the existing
+  render→filter pipeline (`CLASSES=` env in synth-render.slurm).
+  Batch `synth-dense1` (per-class 8, seed 907, chatterbox) rendered
+  2026-09-24. NEXT: owner audition via the gallery → shard the batch
+  → probe 5 = probe-2 recipe (self-history 0.5 + word-weight 3) on a
+  4-dense-lesson rig, same pass bar → if it passes, scale to the
+  80-lesson ladder with dense classes mixed in.
 - **Listenable checkpoints (owner request, 2026-09-23): audition
   renders of the four capacity/self-history checkpoints free-running
   the 4 trained conversations — the model's words spoken by TTS at the
@@ -103,7 +109,10 @@ Read this first in a fresh chat. Everything below is decided and documented.
   `runs/model-audio-*` (gallery layout). First job (6827931) died on a
   MiniCPM-o TTS internal crash mid-word; renderer now skips bad words
   (retry once, then continue). rsync to the Mac, then
-  `python -m viz.listen` → http://localhost:8765.**
+  `python -m viz.listen` → http://localhost:8765. The gallery now
+  binds BOTH loopbacks (dual-stack socket): some browsers resolve
+  localhost to ::1 first and showed ERR_CONNECTION_REFUSED against the
+  old IPv4-only bind (fixed 2026-09-24).**
 - **Where this goes after v11:** if the speak-up lever works, the Phase-1
   checkpoint target is "v10's quiet control + v2-level speaking + some
   timing"; if it cliffs too, the fallback is data-side (word-denser

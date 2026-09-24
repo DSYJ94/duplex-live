@@ -569,6 +569,33 @@ file and `set -e` killed the job. Fix: per-word try/except + one
 retry in the renderer — an audition tool must skip one bad word, not
 lose the batch.
 
+## Word-dense lessons (data-side fix) — owner-approved 2026-09-24, batch synth-dense1
+
+After the probe series mapped the knife edge (exposure + word-weight
+swing between poles, penalty re-mutes), the owner chose the data-side
+lever: **the root cause is that ~95% of every training tick is
+`<sil>`** — no training dial reliably beats those odds. New lesson
+types give the word and silence poles comparable rates:
+
+- **`dense_dialog`** (`gen_dense_dialog`): 7 rapid-fire Q/A exchanges
+  from a new hand-written 20-pair bank (`DENSE_QA`, ADR-0002 — no
+  closed-API content), 200–400 ms gaps. Measured on the scheduled
+  timelines: **71–72% assistant speech**, ~110 s span.
+- **`dense_barge`** (`gen_dense_barge`): three 300–600 ms-gap chunks
+  of an EXPLAIN text, barge mid-chunk 2/3 from `DENSE_BARGES`,
+  clean-yield reply; nothing scheduled past the barge (the renderer
+  truncates the chunk in progress). **93–105% assistant speech**.
+- Both feed the existing render→filter→gallery pipeline unchanged
+  (`synth-render.slurm` gained a `--classes` passthrough, `CLASSES=`
+  env; batch `runs/synth-dense1`, per-class 8, seed 907, chatterbox).
+- Timing-token design note: the grid timestamps an assistant onset by
+  ITS OWN silence gap, so dense answers carry small-bucket `<t+5s>`/
+  `<t+10s>` at EVERY answer onset — dense, correct-position fires
+  instead of rare, over-weighted ones. The thief feeds on rarity.
+- Next (after owner audition): shard the dense batch, probe 5 = the
+  probe-2 recipe (self-history 0.5 + word-weight 3) on a 4-dense-lesson
+  rig, same pass bar.
+
 ## Free-run diagnostic (6762966 crashed on a type slip → 6762979, v3 ckpt)
 
 Replays held-out factory lessons in the EXACT training format, twice:
