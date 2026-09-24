@@ -4,10 +4,14 @@
 #SBATCH --account=brics.u6si
 #SBATCH --nodes=1
 #SBATCH --gres=gpu:1
-#SBATCH --time=04:00:00
+#SBATCH --time=08:00:00
 #SBATCH --output=logs/dl-dense1-%j.out
 
 # PROBE 5 (dense-sh1): the DATA-side fix, owner-approved 2026-09-24.
+# FIRST ATTEMPT (6843717) hit the 4h wall at ~step 240/400 — dense
+# lessons are 2-3x longer than the sparse rig's (1400 vs 560-915
+# ticks), ~50 s/step, no mid-training checkpoint survives. Retry with
+# 8h walltime, same config.
 # Probes 1-3 on the sparse rig mapped a knife edge (SH mutes / +ww3
 # coexists at 37% / +pen re-mutes); root cause = ~95% sil ticks. The
 # dense batch (synth-dense1) lifts word ticks from 7% to 12% overall
