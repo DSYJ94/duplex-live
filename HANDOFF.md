@@ -98,10 +98,16 @@ Read this first in a fresh chat. Everything below is decided and documented.
   in the dense regime, 90%+ speech), both through the existing
   render→filter pipeline (`CLASSES=` env in synth-render.slurm).
   Batch `synth-dense1` (per-class 8, seed 907, chatterbox) rendered
-  2026-09-24. NEXT: owner audition via the gallery → shard the batch
-  → probe 5 = probe-2 recipe (self-history 0.5 + word-weight 3) on a
-  4-dense-lesson rig, same pass bar → if it passes, scale to the
-  80-lesson ladder with dense classes mixed in.
+  2026-09-24. Probe 5 (probe-2 recipe verbatim on the 4-dense-lesson
+  rig, job 6849442) COMPLETED and scored 2026-09-25: **FAIL on onsets
+  (17/304 = 5.6% exact vs 90% bar), PASS on chatter (7.5%, just under
+  the 10% bar).** Not muted — that's new — but placement is
+  uncorrelated with gold: the ±1 s hit rate (52%) is at/below what its
+  own chatter would produce by chance. Right amount, wrong places.
+  NEXT: owner decision — word-weight 6 probe on the dense rig
+  (pre-registered next dose, ~5 h GPU), or treat the labeling contract
+  (one word tick per spoken word) as the suspect and discuss the spec
+  change. Audition audio for dense-sh1 → `runs/model-audio-dense-sh1`.
 - **Listenable checkpoints (owner request, 2026-09-23): audition
   renders of the four capacity/self-history checkpoints free-running
   the 4 trained conversations — the model's words spoken by TTS at the

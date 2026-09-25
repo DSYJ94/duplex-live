@@ -728,5 +728,55 @@ planned essential maintenance (status page: updates after 16:00 BST).
 Window overlaps probe 5's retry (6849442, started 15:27 on 09-24,
 8 h budget, needed until ~22:30): if maintenance drained the system
 before it finished, the job died mid-run again and needs resubmit #3;
-if it started after ~22:30, results are on disk. Unknown until the
-cluster returns — the watcher (5-min polls) will land the verdict.
+if it started after ~22:30, results are on disk. Resolved 2026-09-25:
+the job FINISHED at 05:02:49, ~2.5 h before the outage cut access —
+no rerun was needed. Verdict below.
+
+## Probe 5 verdict (dense-sh1, job 6849442, 2026-09-25)
+
+Training finished in 05:02:49 under the 8-hour wall (attempt 1's 4-hour
+timeout was the only real problem). Pass bar (trained 4): ≥90% exact
+word-onset hits AND chatter <10% of silence ticks.
+
+| lesson             | exact onsets    | within ±1 s | word-on-silence chatter |
+|--------------------|-----------------|-------------|-------------------------|
+| dense_dialog-001   | 5/99  = 5.1%    | 33/99       | 48/798  = 6.0%          |
+| dense_dialog-004   | 7/103 = 6.8%    | 74/103      | 69/793  = 8.7%          |
+| dense_barge-001    | 3/63  = 4.8%    | 36/63       | 25/384  = 6.5%          |
+| dense_barge-004    | 2/39  = 5.1%    | 16/39       | 26/263  = 9.9%          |
+| **trained total**  | **17/304 = 5.6%** | 52%       | 168/2238 = 7.5%         |
+| held-out total     | 14/291 = 4.8%   | 34%         | 185/2180 = 8.5%         |
+
+**VERDICT: FAIL the onsets bar; PASS the chatter bar.** But the
+failure signature changed qualitatively vs probe 3:
+
+1. **Not muted anymore.** Every lesson speaks; chatter sits just under
+   the 10% bar on all four trained lessons. Probe 3 had two fully
+   silent lessons at 5.9% exact.
+2. **Placement, not timing smear, is the failure.** The "within ±1 s"
+   numbers look encouraging but are at or BELOW chance: with ~7.5%
+   chatter spread uniformly, a 15-tick ±1 s window would catch a stray
+   word ~70% of the time (1−0.925¹⁵) — dialog-004's 72% is chance,
+   the rest are under. Direct check: on dialog-001 only 15 of the 48
+   silence-position words were within ±1 s of any gold onset, so ~25%
+   of the model's off-gold speech sits near gold — about what random
+   placement against 12% gold density predicts. The model speaks
+   roughly half the right TOTAL amount (mid-run self-play: 5.4% word
+   ticks vs 12% gold) but its word starts are uncorrelated with gold
+   onsets.
+3. Yields 0/3 (each dense barge lesson has one); the small-bucket
+   timing tokens dense data feeds (t+5s/t+10s) mostly missed at tiny n;
+   the t+thief still nips (19 t+10s steals on dialog-001's silence).
+
+Dose-response arc across the probe series: **mute (probe 3) →
+under-speaks: right amount, wrong places (probe 5).** Dense data +
+word-weight 3 coaxed speech out but taught no onset placement.
+
+Decision tree (pre-registered above) lands between "partial" and "no
+change". The pre-registered next dose is word-weight 6 on the dense
+rig (~72% effective word share; ~5 h GPU). Caveat for the owner:
+placement being uncorrelated means ww6's realistic best case is "right
+amount, still wrong places" — if a dose does not sharpen placement,
+the remaining suspect is the labeling contract itself (one word tick
+per spoken word ≈ 1 tick per 400 ms of speech, structurally capping
+word ticks at ~20%), which is a SPEC change, not another dose.
