@@ -173,12 +173,15 @@ def page_batch(runs: Path, name: str) -> str | None:
                      f"<th>listen</th><th>note</th></tr>{''.join(utt_rows)}</table>"
                      if utt_rows else "")
 
+        # model-audio manifests (render_model_audio) carry no class/duration
+        cls_html = (f' <span class="badge b-dim">{esc(row["scenario_class"])}</span>'
+                    if "scenario_class" in row else "")
+        dur_html = (f'<span class="meta num">· {(row["duration_ms"] / 1000):.1f}s · '
+                    f'overlap {row.get("overlap_ms", 0)}ms</span>'
+                    if "duration_ms" in row else "")
         blocks.append(
             f'<div class="card" id="{esc(row["scenario_id"])}">'
-            f'<b>{esc(row["scenario_id"])}</b> <span class="badge b-dim">'
-            f'{esc(row["scenario_class"])}</span> {badge}'
-            f'<span class="meta num">· {(row["duration_ms"] / 1000):.1f}s · '
-            f'overlap {row.get("overlap_ms", 0)}ms</span>'
+            f'<b>{esc(row["scenario_id"])}</b>{cls_html} {badge}{dur_html}'
             f'<div class="meta">voices: {voices or "anchors (v0.1 batch)"}</div>'
             f'<div class="issues">{issues}</div>{players}{utt_table}</div>')
 
