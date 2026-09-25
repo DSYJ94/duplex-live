@@ -43,7 +43,12 @@ def main() -> None:
     ap.add_argument("--engine", default="minicpm")
     ap.add_argument("--voice", default=None,
                     help="reference voice for the model's words "
-                         "(default: the bakeoff USER_VOICE anchor)")
+                         "(default: each scenario's own assistant voice "
+                         "from its timeline meta, falling back to the "
+                         "bakeoff USER_VOICE anchor)")
+    ap.add_argument("--voices-pool", default=None,
+                    help="voice pool dir (default: <batch>/../../voices, "
+                         "i.e. runs/voices for a runs/synth-*/audio batch)")
     args = ap.parse_args()
 
     import sys
@@ -55,7 +60,17 @@ def main() -> None:
 
     engine = load_engine(args.engine)
     assets = find_assets()
-    ref_wav = Path(args.voice) if args.voice else assets / USER_VOICE
+    default_ref = Path(args.voice) if args.voice else assets / USER_VOICE
+    pool = (Path(args.voices_pool) if args.voices_pool
+            else Path(args.batch).parents[1] / "voices")
+
+    def resolve_voice(key: str) -> Path | None:
+        for cand in (pool / "librispeech" / f"{key}.wav",
+                     pool / "anchors" / f"{key}.wav",
+                     pool / f"{key}.wav"):
+            if cand.exists():
+                return cand
+        return None
 
     picks_dir = Path(args.picks)
     batch = Path(args.batch)
@@ -64,13 +79,13 @@ def main() -> None:
 
     out_audio = Path(args.out) / "audio"
     manifest = []
-    # one TTS call per unique word, reused across placements/scenarios;
+    # one TTS call per unique (voice, word), reused across placements;
     # a failed synthesis is cached as None (skipped everywhere) — this
     # is an audition tool, one bad word must not lose the batch
-    said: dict[str, np.ndarray | None] = {}
+    said: dict[tuple[str, str], np.ndarray | None] = {}
     tmp = Path(tempfile.mkdtemp(prefix="render-model-audio-"))
 
-    def synthesize(text: str) -> np.ndarray | None:
+    def synthesize(text: str, ref_wav: Path) -> np.ndarray | None:
         """TTS one word -> float32 mono at SR, or None after a retry."""
         for attempt in (1, 2):
             wp = tmp / f"w{len(said)}-{attempt}.wav"
@@ -99,13 +114,24 @@ def main() -> None:
             print(f"[render] {sid}: not in manifest, skipped")
             continue
         pcm = mix_in_slot(batch / by_sid[sid]["dir"], ev["n_ticks"])
+        # clone from the voice that speaks this lesson's ASSISTANT line,
+        # so the audition sounds like the person who was supposed to talk
+        # (the MiniCPM-o bundled demo clip is a deep voice — owner noted
+        # it as "weird" 2026-09-25); fall back to the bakeoff anchor
+        ref_wav = default_ref
+        if args.voice is None:
+            tl_p = batch / by_sid[sid]["dir"] / "timeline.actual.json"
+            if tl_p.exists():
+                vkey = (json.loads(tl_p.read_text()).get("meta", {})
+                        .get("voices", {}).get("assistant"))
+                ref_wav = (vkey and resolve_voice(vkey)) or default_ref
         for w in ev["words"]:
             text = w["text"].strip()
             if not text:
                 continue
-            if text not in said:
-                said[text] = synthesize(text)
-            clip = said[text]
+            if (str(ref_wav), text) not in said:
+                said[(str(ref_wav), text)] = synthesize(text, ref_wav)
+            clip = said[(str(ref_wav), text)]
             if clip is None:
                 continue
             s = w["tick"] * TICK_SAMPLES
