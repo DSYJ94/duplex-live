@@ -722,3 +722,11 @@ silence stays weight 1. This is what v9's tax fixes.
 
 Checkpoints preserved: `runs/p1-v1-32step`, `runs/p1-v2-400step-unweighted`
 (renamed from p1-v1), `runs/p1-v3` … `runs/p1-v8`.
+
+**Cluster outage note (2026-09-25):** all Isambard services offline for
+planned essential maintenance (status page: updates after 16:00 BST).
+Window overlaps probe 5's retry (6849442, started 15:27 on 09-24,
+8 h budget, needed until ~22:30): if maintenance drained the system
+before it finished, the job died mid-run again and needs resubmit #3;
+if it started after ~22:30, results are on disk. Unknown until the
+cluster returns — the watcher (5-min polls) will land the verdict.
