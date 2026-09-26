@@ -130,6 +130,22 @@ Read this first in a fresh chat. Everything below is decided and documented.
   NEXT: build shards-dense2 → probe 7 (dense-pt1): SH 0.5/ww 1.0 on
   the same dense rig, pass bar ≥90% exact run-onsets + <10% chatter →
   audition + matched-voice render as usual.
+- **PROBE 7 VERDICT (dense-pt1 = v2 + ww 1.0, job 6885910): FAIL —
+  re-muted on balanced labels.** 3 of 4 trained lessons emit `<sil>`
+  on every speech tick (speak acc 0.000, speech F1 0.000);
+  dense_barge-004 babbles `<speak>` (acc 0.849 but false speech on
+  166 quiet ticks, word acc 0.026). Held-out F1 0.00–0.16. Dose law
+  now clean across BOTH contracts: ww1 → mute (probes 1, 7), ww3 →
+  speaks (probes 2, 5), ww6 → babble+thief (probe 6). Label balance
+  is NOT the mute attractor — loss shape is (sil/speak = one cheap
+  token; words = the whole BPE vocab). Input-evidence insight: the
+  model never hears itself, so its own history is the only self-speech
+  evidence — under SH a collapsed model feeds itself silence.
+  Step-8 recollect: untrained model picks words everywhere (450/450);
+  by end it learned sil mastery and let go of speech. NEXT: owner
+  decision — probe 8 = v2 + ww 3 (the only recipe that ever spoke,
+  single variable vs probe 7) vs SH 0 (always-gold history while
+  learning) vs move up the stack.
 - **Listenable checkpoints (owner request, 2026-09-23): audition
   renders of the four capacity/self-history checkpoints free-running
   the 4 trained conversations — the model's words spoken by TTS at the

@@ -858,3 +858,42 @@ trained 4 — same numbers as before, attached to the v2 definitions.
 timing-weight 50, ww 1.0) on the SAME trained/held dense 4, shards
 rebuilt under v2 (`shards-dense2`). Comparable only to future v2 runs;
 v1 probe numbers stay the historical record.
+
+## Probe 7 verdict (dense-pt1 = v2 labels + ww 1.0, job 6885910, 2026-09-26)
+
+Completed 03:58:26 (v2 shard build: 12 shards, 1:07). Pass bar (v2):
+≥90% exact run-onsets AND false speech <10% of quiet ticks.
+
+| trained lesson   | speak acc | word acc | speech F1 | behaviour |
+|------------------|-----------|----------|-----------|-----------|
+| dense_dialog-001 | 0.000     | 0.000    | 0.000     | fully muted (355 speak ticks → sil) |
+| dense_dialog-004 | 0.000     | 0.000    | 0.000     | fully muted (461 → sil) |
+| dense_barge-001  | 0.000     | 0.016    | 0.029     | muted |
+| dense_barge-004  | 0.849     | 0.026    | 0.263     | babbles <speak> (166 speech ticks on quiet; its 3/3 exact onsets are saturation) |
+
+Held-out: two muted (F1 0.00/0.00), two partial (0.09/0.16).
+
+**VERDICT: FAIL — re-muted on balanced labels.** The v2 contract
+removed the label-imbalance excuse and the model STILL collapsed to
+silence at ww 1.0. The dose-response law now reads clean across BOTH
+contracts: ww 1 mutes (probes 1, 7), ww 3 speaks at half rate (probes
+2, 5), ww 6 babbles + thief (probe 6). The attractor is not label
+balance — it is the loss SHAPE: <sil> and <speak> are single tokens
+(cheap to master), while the word pole is the whole BPE vocab
+(individually rare); the fastest loss reduction is to perfect the
+cheap poles and abandon the diverse one.
+
+**Deeper finding (input-evidence):** the model never hears itself —
+the in-slot audio carries only user + background. Its own history is
+the ONLY self-speech evidence, so under self-history training a
+collapsed model keeps feeding itself silence. Step-8 recollect shows
+the untrained model says words everywhere (450/450 picks are word
+tokens); by end of training it has learned sil mastery and let go of
+speech. Self-history amplifies whatever the model currently does.
+
+**Probe 8 candidates (owner decision):** (a) v2 + ww 3 — the only
+recipe that ever produced a speaking model, now on labels with 5x the
+speech signal; single variable vs probe 7. (b) SH 0 (pure teacher
+forcing) — the model always sees GOLD history, so self-speech evidence
+is complete while learning; exposure (SH) becomes a later curriculum
+step. Not mutually exclusive; (a) has the track record.
