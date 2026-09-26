@@ -780,3 +780,42 @@ amount, still wrong places" — if a dose does not sharpen placement,
 the remaining suspect is the labeling contract itself (one word tick
 per spoken word ≈ 1 tick per 400 ms of speech, structurally capping
 word ticks at ~20%), which is a SPEC change, not another dose.
+
+## Probe 6 verdict (dense-sh2 = word-weight 6, job 6865063, 2026-09-26)
+
+Owner-approved next dose, one changed variable vs probe 5: ww 3 → 6.
+Completed 06:28:08. Same pass bar.
+
+| lesson             | exact onsets   | within ±1 s | silence acc | word-on-sil chatter |
+|--------------------|----------------|-------------|-------------|---------------------|
+| dense_dialog-001   | 10/99 = 10.1%  | 76%         | 0.328       | 125/798 = 15.7%     |
+| dense_dialog-004   | 2/103 = 1.9%   | 34%         | 0.223       | 66/793 = 8.3%       |
+| dense_barge-001    | 0/63 = 0%      | 10%         | 0.984       | 6/384 = 1.6%        |
+| dense_barge-004    | 2/39 = 5.1%    | 21%         | 0.437       | 40/263 = 15.2%      |
+| **trained total**  | **14/304 = 4.6%** | —        | —           | **237/2238 = 10.6%**|
+| held-out total     | 16/291 = 5.5%  | —           | —           | 256/2180 = 11.7%    |
+
+**VERDICT: FAIL both bars — the dose went the WRONG way.**
+
+1. Placement did not sharpen: exact onsets 4.6% (vs 5.6% at ww3, bar
+   90%). The dialog-001 ±1s jump to 76% is window saturation, not
+   skill — with 15.7% word chatter PLUS a <t+5s> flood, a 15-tick
+   ±1 s window catches something almost always.
+2. The <t+5s> THIEF exploded: 375+512+0+106 = 993 timing-token steals
+   on trained silence ticks (probe 5: 19 on one lesson). Dense data
+   made t+5s plentiful and ww6's word pressure pushed mass into its
+   neighbor. Silence accuracy collapsed 0.91 → 0.22–0.44.
+3. Bistable per lesson: dialog-004/barge-004 FLOOD (t+5s everywhere),
+   barge-001 SHUT UP (0.984 sil but 0/63 words). The dose response
+   isn't even a slope — lessons fall off the same cliff in opposite
+   directions.
+
+Dose ladder complete: ww3 = right amount, wrong places; ww6 = more
+wrong words AND a broken quiet pole. **More loss-side dosing is
+refuted.** Per the pre-registered tree, the labeling contract is now
+the prime suspect: one word label per spoken word (~1 tick per 400 ms)
+structurally caps word ticks at ~12–20%, so the grid the model learns
+on is ~85% silence with sparse, tick-exact onsets — and cranking word
+weight trades placement for noise instead of teaching placement.
+Next decision belongs to the owner: re-label per-tick speech (SPEC
+change) vs move up the stack and accept Layer-A timing as-is.

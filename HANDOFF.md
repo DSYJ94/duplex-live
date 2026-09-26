@@ -108,6 +108,16 @@ Read this first in a fresh chat. Everything below is decided and documented.
   (pre-registered next dose, ~5 h GPU), or treat the labeling contract
   (one word tick per spoken word) as the suspect and discuss the spec
   change. Audition audio for dense-sh1 → `runs/model-audio-dense-sh1`.
+- **PROBE 6 (dense-sh2 = ww6, job 6865063, 2026-09-26): FAIL both
+  bars — dose went the wrong way.** Exact onsets 4.6% (worse than
+  ww3's 5.6%), chatter 10.6% (over bar), and the <t+5s> thief
+  exploded onto silence (993 steals; silence acc 0.91 → 0.22–0.44;
+  one lesson bistably went near-mute instead). Loss-side dosing is
+  REFUTED; per the pre-registered tree the labeling contract (one word
+  tick per spoken word, ~85% of grid ticks are silence) is now the
+  prime suspect. NEXT: owner decision — per-tick speech re-labeling
+  (SPEC change, rebuild shards + one probe ~5 h) vs move up the stack
+  (M2) accepting Layer-A timing as-is.
 - **Listenable checkpoints (owner request, 2026-09-23): audition
   renders of the four capacity/self-history checkpoints free-running
   the 4 trained conversations — the model's words spoken by TTS at the
