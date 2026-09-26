@@ -61,15 +61,26 @@ def main() -> None:
     engine = load_engine(args.engine)
     assets = find_assets()
     default_ref = Path(args.voice) if args.voice else assets / USER_VOICE
-    pool = (Path(args.voices_pool) if args.voices_pool
-            else Path(args.batch).parents[1] / "voices")
+    pool = (Path(args.voices_pool) if args.voices_pool else None)
+
+    def voice_roots():
+        # the pool has two layouts: the local Mac gallery copy at
+        # runs/voices, and the cluster's render-time pool at
+        # $DL/models/voices (job 6884705 fell back to the deep demo
+        # clip because only runs/voices was searched)
+        roots = [pool] if pool else [
+            Path(args.batch).parents[1] / "voices",
+            Path(args.batch).parents[2] / "models" / "voices",
+        ]
+        return [r for r in roots if r is not None]
 
     def resolve_voice(key: str) -> Path | None:
-        for cand in (pool / "librispeech" / f"{key}.wav",
-                     pool / "anchors" / f"{key}.wav",
-                     pool / f"{key}.wav"):
-            if cand.exists():
-                return cand
+        for root in voice_roots():
+            for cand in (root / "librispeech" / f"{key}.wav",
+                         root / "anchors" / f"{key}.wav",
+                         root / f"{key}.wav"):
+                if cand.exists():
+                    return cand
         return None
 
     picks_dir = Path(args.picks)
@@ -125,6 +136,7 @@ def main() -> None:
                 vkey = (json.loads(tl_p.read_text()).get("meta", {})
                         .get("voices", {}).get("assistant"))
                 ref_wav = (vkey and resolve_voice(vkey)) or default_ref
+        print(f"[render] {sid}: model voice = {ref_wav.name}", flush=True)
         for w in ev["words"]:
             text = w["text"].strip()
             if not text:
