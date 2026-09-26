@@ -258,8 +258,10 @@ def main() -> None:
         finally:
             model.train(was_training)
         n_words = sum(1 for p in own if sh_kind(p[0]) == "word")
+        n_speech = sum(1 for p in own if sh_kind(p[0]) in ("word", "speak"))
         print(f"[p1] SH recollect {sid}: {len(own)} own ticks, "
-              f"{n_words} word-first picks", flush=True)
+              f"{n_speech} speech-first picks ({n_words} word-first)",
+              flush=True)
         return own
 
     def apply_own(seq: dict, own) -> dict:
