@@ -21,7 +21,7 @@ import sys
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from tokenizer.grid import GRID_MS, GridSequence, Tick  # noqa: E402
-from tokenizer.vocab import DELEGATE, SIL, YIELD  # noqa: E402
+from tokenizer.vocab import DELEGATE, SIL, SPEAK, YIELD  # noqa: E402
 
 
 def to_jsonl(grid: GridSequence) -> str:
@@ -72,6 +72,8 @@ def to_compact(grid: GridSequence) -> str:
             c = "D"
         elif t.emission.startswith("<t+"):
             c = "T"
+        elif t.emission == SPEAK:
+            c = "A"  # v2: the continue-voicing emission IS the A column
         elif t.emission != SIL:
             c = "W"
         elif t.speech_active:

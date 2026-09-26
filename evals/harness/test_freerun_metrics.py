@@ -14,7 +14,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
-from layera.freerun_diag import word_onset_stats
+from layera.freerun_diag import speech_run_onsets, word_onset_stats
+from tokenizer.vocab import ALL_SPECIAL, SIL, SPEAK
 
 
 def check(name, got, want):
@@ -45,6 +46,24 @@ def main() -> None:
     # one late answer: speech 8 ticks (640 ms) after gold tick 50 —
     # not exact, but inside its +-1s window (ticks 48..62)
     check("late-but-close", word_onset_stats([50], [58]), (0, 1, 0, 1))
+
+    # ---- v2 contract: speech_run_onsets --------------------------------
+    # a run = consecutive word/<speak> ticks; every other special is
+    # quiet. runs start where quiet -> speech transitions happen.
+    em = [SIL, SIL, "hello", SPEAK, SPEAK, SIL, "<t+5s>",
+          "yes", SPEAK, "<yield>", SIL]
+    check("v2 run onsets", speech_run_onsets(em), [2, 7])
+    # v1-style grid (no <speak> yet): words alone are 1-tick runs
+    check("v1 words only", speech_run_onsets([SIL, "a", SIL, "b"]), [1, 3])
+    # fully muted gold: no onsets
+    check("all quiet", speech_run_onsets([SIL, "<t+10s>", SIL]), [])
+    # speech at tick 0 starts a run; yield ends it
+    check("leading run",
+          speech_run_onsets(["hi", SPEAK, "<yield>", SIL, "ok"]), [0, 4])
+    # <speak> really is in the registered specials (serving + training
+    # must agree on this) and sil is not speech for run purposes
+    assert SPEAK in ALL_SPECIAL and SIL in ALL_SPECIAL
+    print("  ok <speak> registered in ALL_SPECIAL")
 
     print("test_freerun_metrics: all green")
 

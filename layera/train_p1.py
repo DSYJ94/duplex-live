@@ -210,7 +210,12 @@ def main() -> None:
     def sh_kind(tok: int) -> str:
         if tok < n_old:
             return "word"
-        return "sil" if name_of[tok] == "<sil>" else "special"
+        name = name_of[tok]
+        if name == "<sil>":
+            return "sil"
+        if name == "<speak>":
+            return "speak"
+        return "special"
 
     emb_layer = model.get_input_embeddings()
 

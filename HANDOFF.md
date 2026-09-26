@@ -118,6 +118,18 @@ Read this first in a fresh chat. Everything below is decided and documented.
   prime suspect. NEXT: owner decision — per-tick speech re-labeling
   (SPEC change, rebuild shards + one probe ~5 h) vs move up the stack
   (M2) accepting Layer-A timing as-is.
+- **OWNER DECISION (2026-09-26): v2 label contract — per-tick speech.**
+  New `<speak>` token (tokenizer/vocab.py): every tick inside an
+  assistant utterance is WORD or `<speak>`; between-utterance gaps keep
+  true `<sil>`; only SIL upgrades so timing tokens/yields keep their
+  slots. Realized density: speech labels 59.7% vs sil 39.9% (was
+  12%/88%). word-weight back to 1.0 (it only compensated v1 sparsity).
+  freerun_diag v2 metrics: run-onsets + speech P/R/F1 (unit tests in
+  evals/harness/test_freerun_metrics.py, all green). Old shards (v1
+  labels) stay valid for v1 comparisons; `shards-dense2` = v2 rebuild.
+  NEXT: build shards-dense2 → probe 7 (dense-pt1): SH 0.5/ww 1.0 on
+  the same dense rig, pass bar ≥90% exact run-onsets + <10% chatter →
+  audition + matched-voice render as usual.
 - **Listenable checkpoints (owner request, 2026-09-23): audition
   renders of the four capacity/self-history checkpoints free-running
   the 4 trained conversations — the model's words spoken by TTS at the

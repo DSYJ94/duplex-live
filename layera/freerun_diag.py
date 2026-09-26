@@ -27,8 +27,27 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from collections import Counter, defaultdict
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from tokenizer.vocab import ALL_SPECIAL, SIL, SPEAK  # noqa: E402
+
+
+def speech_run_onsets(emissions) -> list[int]:
+    """Ticks where a maximal gold SPEECH run starts (v2 contract: a run
+    is consecutive word/<speak> ticks). These are the onset positions
+    the onset metric scores — under per-tick labels, gold word ticks
+    alone would be mid-word positions, not onsets."""
+    out = []
+    prev_speech = False
+    for i, e in enumerate(emissions):
+        speech = (e == SPEAK) or (e not in ALL_SPECIAL)
+        if speech and not prev_speech:
+            out.append(i)
+        prev_speech = speech
+    return out
 
 
 def word_onset_stats(gold_word_ticks, spoken) -> tuple[int, int, int, int]:
@@ -182,6 +201,8 @@ def main() -> None:
             name = name_of[tok_id]
             if name == "<sil>":
                 return "sil"
+            if name == "<speak>":
+                return "speak"
             if name.startswith("<t+"):
                 return "timing"
             if name == "<yield>":
@@ -259,14 +280,15 @@ def main() -> None:
         tick_picks = [p for p in picks if p is not None]
 
         per = defaultdict(lambda: [0, 0, Counter()])
-        gold_word_ticks, spoken = [], []
+        gold_speech, spoken, gold_names = [], [], []
         for i in range(len(tick_picks)):
             gold_name = grid.ticks[i].emission
+            gold_names.append(gold_name)
             gold = "<word>" if gold_name not in ALL_SPECIAL else \
                 ("<sil>" if gold_name == SIL else gold_name)
             pick = tick_picks[i]
             kind = kind_of(pick)
-            if kind == "word":
+            if kind in ("word", "speak"):
                 spoken.append(i)
             e = per[gold]
             e[0] += 1
@@ -277,10 +299,20 @@ def main() -> None:
             if not ok:
                 e[2][name_of.get(pick, kind)] += 1
             if gold_is_word:
-                gold_word_ticks.append(i)
+                gold_speech.append(i)
 
-        exact, near, false_speech, n_word = word_onset_stats(
-            gold_word_ticks, spoken)
+        # v2 metrics: onsets = gold speech-run starts; the dense
+        # headline is per-tick speech P/R/F1; chatter counts the
+        # model's speech on ticks whose gold is genuinely quiet
+        onsets = speech_run_onsets(gold_names)
+        exact, near, _, n_onset = word_onset_stats(onsets, spoken)
+        gs, sp = set(gold_speech), set(spoken)
+        hit = len(gs & sp)
+        precision = hit / len(sp) if sp else 0.0
+        recall = hit / len(gs) if gs else 0.0
+        f1 = (2 * precision * recall / (precision + recall)
+              if precision + recall else 0.0)
+        chatter = sum(1 for i in spoken if i not in gs)
 
         print(f"[freerun]   free (self-history):", flush=True)
         for g in sorted(per):
@@ -290,9 +322,11 @@ def main() -> None:
                 line += "  <- " + ", ".join(
                     f"{k} x{c}" for k, c in th.most_common(3))
             print(line, flush=True)
-        print(f"[freerun]   WORD ONSETS: {exact}/{n_word} exact, "
-              f"{near}/{n_word} within +-1s; false speech at "
-              f"{false_speech} non-gold ticks; "
+        print(f"[freerun]   SPEECH: P {precision:.3f}  R {recall:.3f}  "
+              f"F1 {f1:.3f}; false speech on {chatter} quiet ticks",
+              flush=True)
+        print(f"[freerun]   WORD ONSETS: {exact}/{n_onset} exact, "
+              f"{near}/{n_onset} within +-1s; "
               f"{pieces} continuation pieces", flush=True)
     print("[freerun] done", flush=True)
 

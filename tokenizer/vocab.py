@@ -10,6 +10,7 @@ tick loop.
 from __future__ import annotations
 
 SIL = "<sil>"
+SPEAK = "<speak>"          # keep voicing: inside an utterance, no new word
 YIELD = "<yield>"          # stop speaking, listen (after barge-in)
 DELEGATE = "<delegate>"    # fire async RPC at the boundary
 BARGE_IN = "<barge-in>"    # in-stream marker: other channel barged in
@@ -18,7 +19,12 @@ BARGE_IN = "<barge-in>"    # in-stream marker: other channel barged in
 # event that follows a >= 1 s gap, bucketed. Buckets are seconds.
 TIMING_BUCKETS_S = (1, 2, 5, 10, 30, 60)
 
-ALL_SPECIAL = [SIL, YIELD, DELEGATE, BARGE_IN] + \
+# v2 label contract (2026-09-26, ADR-0004): every tick inside an
+# assistant utterance carries WORD (a new word starts) or SPEAK (the
+# current voicing continues) — the v1 contract labeled continuations
+# <sil>, structurally making the grid ~88% silence and starving the
+# word pole (EXPERIMENTS.md probes 5-6: loss-side dosing refuted).
+ALL_SPECIAL = [SIL, SPEAK, YIELD, DELEGATE, BARGE_IN] + \
     [f"<t+{n}s>" for n in TIMING_BUCKETS_S]
 
 

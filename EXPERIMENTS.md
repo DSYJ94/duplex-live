@@ -819,3 +819,42 @@ on is ~85% silence with sparse, tick-exact onsets — and cranking word
 weight trades placement for noise instead of teaching placement.
 Next decision belongs to the owner: re-label per-tick speech (SPEC
 change) vs move up the stack and accept Layer-A timing as-is.
+
+## v2 label contract: per-tick speech (ADR-0004, owner-approved 2026-09-26)
+
+**Decision:** re-label the emission contract. Every tick inside an
+assistant utterance now carries `WORD` (a new word starts) or the new
+`<speak>` (continue current voicing), instead of v1's one word tick per
+word with `<sil>` on every continuation tick. Between-utterance gaps
+keep true `<sil>` (that is the barge-in surface); timing tokens and
+yields keep their slots (only SIL upgrades to SPEAK, so nothing
+existing changes meaning).
+
+**Why:** probes 5-6 refuted loss-side dosing on a grid that is ~88%
+silence by construction (one word label per ~400 ms of speech). The
+model reasonably learned the silence; word weight only traded placement
+for noise. Per-tick labels give gradient signal on every spoken tick
+and make "when to start" the natural boundary.
+
+**Realized density (grid audit re-run, 12-lesson dense batch):**
+word 12.0% + speak 47.7% = **speech labels 59.7% vs sil 39.9%**
+(v1: 12% / 88%). Poles near-balanced with zero deserts; timing tokens
+unchanged at 0.35%.
+
+**Recipe consequence:** word-weight returns to 1.0 — its only purpose
+was compensating v1 label sparsity, which the contract change removes
+keeping ww3 would triple an already-balanced class (probe 6 showed
+where excess word pressure goes). SH 0.5 + refresh 8 and timing-weight
+50 stay. ONE conceptual variable: the labels.
+
+**Metrics (freerun_diag v2):** onsets are now gold SPEECH-RUN starts
+(first tick after quiet) — `speech_run_onsets`, unit-tested; new
+`SPEECH: P/R/F1` line scores per-tick speech activity; chatter counts
+model speech on genuinely-quiet gold ticks. **Pass bar (probe 7):
+≥90% exact run-onset hits AND chatter <10% of quiet ticks** on the
+trained 4 — same numbers as before, attached to the v2 definitions.
+
+**Probe 7 (dense-pt1)** = probe-2 recipe base (SH 0.5, refresh 8,
+timing-weight 50, ww 1.0) on the SAME trained/held dense 4, shards
+rebuilt under v2 (`shards-dense2`). Comparable only to future v2 runs;
+v1 probe numbers stay the historical record.

@@ -29,16 +29,19 @@ def main() -> None:
 
     batch = Path(args.batch)
     rows = [json.loads(l) for l in open(batch / "train_manifest.jsonl")]
-    hdr = f"{'scenario':<18s} {'ticks':>6s} {'word':>6s} {'sil':>6s} {'t+tok':>7s} {'yield':>6s}"
+    hdr = (f"{'scenario':<18s} {'ticks':>6s} {'word':>6s} {'speak':>6s} "
+           f"{'sil':>6s} {'t+tok':>7s} {'yield':>6s}")
     print(hdr)
-    tot = dict(w=0, s=0, t=0, n=0)
+    tot = dict(w=0, k=0, s=0, t=0, n=0)
     for r in rows:
         g = from_scenario_dir(batch / r["dir"])
-        w = s = t = y = 0
+        w = k = s = t = y = 0
         for tick in g.ticks:
             e = tick.emission
             if e == "<sil>":
                 s += 1
+            elif e == "<speak>":
+                k += 1
             elif e.startswith("<t+"):
                 t += 1
             elif e.startswith("<"):
@@ -46,13 +49,15 @@ def main() -> None:
             else:
                 w += 1
         n = g.n_ticks
-        tot["w"] += w; tot["s"] += s; tot["t"] += t; tot["n"] += n
-        print(f"{g.scenario_id:<18s} {n:6d} {w / n:6.0%} {s / n:6.0%} "
-              f"{t / n:7.1%} {y:6d}")
+        for key, v in (("w", w), ("k", k), ("s", s), ("t", t), ("n", n)):
+            tot[key] += v
+        print(f"{g.scenario_id:<18s} {n:6d} {w / n:6.0%} {k / n:6.0%} "
+              f"{s / n:6.0%} {t / n:7.1%} {y:6d}")
     n = tot["n"]
     if n:
         print(f"{'TOTAL':<18s} {n:6d} {tot['w'] / n:6.0%} "
-              f"{tot['s'] / n:6.0%} {tot['t'] / n:7.1%}")
+              f"{tot['k'] / n:6.0%} {tot['s'] / n:6.0%} "
+              f"{tot['t'] / n:7.1%}")
 
 
 if __name__ == "__main__":

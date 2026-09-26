@@ -126,6 +126,8 @@ class DuplexThinker:
         name = self.name_of[tok_id]
         if name == "<sil>":
             return "sil"
+        if name == "<speak>":
+            return "speak"  # v2 contract: keep voicing, no new word
         if name == "<yield>":
             return "yield"
         if name.startswith("<t+"):

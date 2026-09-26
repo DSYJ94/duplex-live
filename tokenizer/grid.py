@@ -6,10 +6,11 @@ speech-continuation state, and in-stream markers. This is the canonical
 intermediate between the synthetic factory and the training sampler —
 audio frames (AuT slots) attach to ticks by index at training time.
 
-Emission per tick is exactly one of (docs/09 §1):
+Emission per tick is exactly one of (docs/09 §1, as amended by
+ADR-0004 / v2 label contract):
   a word        -> forwarded to the Talker (speech continues)
-  <sil>         -> no new text; Talker silent (or continuing prior voicing,
-                   carried by speech_active)
+  <speak>       -> keep voicing: inside an utterance, no new word
+  <sil>         -> no new text; Talker silent (between utterances)
   <yield>       -> retraction: flush pending codec frames (barge-in)
   <delegate>    -> async boundary fires
   <t+Ns>        -> explicit timestamp after a >= 1 s assistant gap
@@ -26,7 +27,7 @@ from pathlib import Path
 import sys
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from tokenizer.vocab import BARGE_IN, DELEGATE, SIL, YIELD, timing_token  # noqa: E402
+from tokenizer.vocab import BARGE_IN, DELEGATE, SIL, SPEAK, YIELD, timing_token  # noqa: E402
 
 GRID_MS = 80
 
@@ -62,10 +63,11 @@ class GridSequence:
             "user_ticks": sum(t.user_in for t in self.ticks),
             "speech_ticks": sum(t.speech_active for t in self.ticks),
             "overlap_ticks": sum(t.user_in and t.speech_active for t in self.ticks),
+            "speak_ticks": sum(t.emission == SPEAK for t in self.ticks),
             "yield_events": sum(t.emission == YIELD for t in self.ticks),
             "delegate_events": sum(t.emission == DELEGATE for t in self.ticks),
             "words": sum(1 for t in self.ticks
-                         if t.emission not in (SIL, YIELD, DELEGATE)
+                         if t.emission not in (SIL, SPEAK, YIELD, DELEGATE)
                          and not t.emission.startswith("<t+")),
         }
 
@@ -183,10 +185,21 @@ def build_grid(tl, audio: dict[str, str] | None = None) -> GridSequence:
             if i < n_ticks:
                 ticks[i].emission = w
 
+    # v2 label contract (ADR-0004): a tick inside an assistant utterance
+    # that carries no word and no special is an explicit CONTINUE-
+    # SPEAKING emission, not silence. Utterance-span ticks only — the
+    # gaps BETWEEN utterances keep their true <sil> (they are real
+    # assistant quiet, the barge-in surface). Timing tokens and yields
+    # already on a tick keep their slot (only SIL upgrades).
+    for t in ticks:
+        if t.speech_active and t.emission == SIL:
+            t.emission = SPEAK
+
     return GridSequence(
         scenario_id=tl.scenario_id, scenario_class=tl.scenario_class,
         n_ticks=n_ticks, ticks=ticks,
-        audio=audio or {}, meta=tl.meta)
+        audio=audio or {}, meta={**tl.meta,
+                                 "label_contract": "v2-per-tick-speech"})
 
 
 def from_scenario_dir(sc_dir: Path) -> GridSequence:
