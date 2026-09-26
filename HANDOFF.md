@@ -127,9 +127,14 @@ Read this first in a fresh chat. Everything below is decided and documented.
 ## Current status
 
 - **Runbook 00/01: DONE (Issue #1 closed).** Agentic SSH via
-  `ssh u6si.aip2.isambard` (Clifton cert auto-renews on auth attempts; if
-  `Permission denied (publickey)` just retry after a minute — cert window is
-  12 h). ARM env verified on GH200; Qwen3-Omni thinker smoke passed. Env
+  `ssh u6si.aip2.isambard` (Clifton cert window is 12 h and does NOT
+  auto-renew on attempts — corrected 2026-09-26 after an expired cert
+  blocked all ssh for 5 h while jobs ran fine on the nodes. On
+  `Permission denied (publickey)`: check
+  `ssh-keygen -L -f ~/Library/Caches/clifton/u6si.aip2.isambard-cert.pub | grep Valid`;
+  renewal needs the owner to run `clifton auth` and approve the Keycloak
+  device URL in a browser within the code's few-minute lifetime). ARM
+  env verified on GH200; Qwen3-Omni thinker smoke passed. Env
   definition incl. all gotchas: `training/environment.md` — read before any
   GPU work.
 - **Runbook 02: DONE (Issue #4 closed).** Both references measured on one
