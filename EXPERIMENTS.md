@@ -1064,3 +1064,56 @@ chatter 20-40% but recall collapses (0.90 -> 0.46 on barge-001) and
 onsets degrade. **The chatter is not a marginal-logit artifact — no
 decode-time band-aid reaches the bar.** Confirms probe 10's
 curriculum (training-side exposure) as the only real fix.
+
+## Probe 10 verdict — curriculum step 2 failed BOTH ways (job 6906391, 2026-09-27)
+
+dense-pt4 = init from dense-pt3 rows (probe 9's solved placement) +
+SH 0.5 for 200 steps: the model's first lived exposure to its own
+speech, supposed to graft quiet-discipline onto perfect placement.
+Pass bar unchanged: >=90% exact run-onsets AND <10% chatter.
+
+**FAILED, and lost probe 9's win on top:**
+
+| lesson | probe 9 exact onsets | probe 10 exact onsets | chatter (false speech / quiet ticks) |
+|---|---|---|---|
+| dialog-001 (trained) | 5/5 | **0/5 — fully mute** | 1/443 (mute, not disciplined) |
+| dialog-004 (trained) | 5/5 | 3/5 | 179/332 = 54% |
+| barge-001 (trained) | 4/4 | 1/4 | 34/160 = 21% |
+| barge-004 (trained) | 3/3 | 1/3 | 56/137 = 41% |
+| dialog-002 (held) | 1/4 | 2/4 | 216/345 = 63% |
+| dialog-005 (held) | 5/5 | **0/5 — fully mute** | 0/398 (mute) |
+| barge-002 (held) | 3/3 | 1/3 | 32/98 = 33% |
+| barge-005 (held) | 3/3 | 0/3 | 82/160 = 51% |
+
+Speech precision 0.00–0.15 everywhere. Two lessons latched the mute
+attractor (gold <speak> acc 0.000, all-<sil>); the rest kept the
+chatter attractor. Neither lesson of the curriculum's premise
+("exposure after placement forms is gentle") survived.
+
+**Why (training log): the self-exposure source itself was the
+poison.** SH recollection re-runs the CURRENT in-training model every
+~8 steps to build histories, and its picks flip-flopped between the
+two attractors: early recollections ~all-chatter (dialog-001:
+1275–1285 of 1344 ticks speech-first), step ~152 fully MUTE (2 of
+1344), step ~176 chatter again (390/450), step ~184 mute (2/304).
+Training thus saw contradictory self-histories — "my history is
+constant chatter, gold says hush" and "my history is silence, gold
+says talk" — and the placement mapping eroded under them. Loss looked
+healthy (3.56 -> 0.85): the usual loss-shape trap, cheap sil/speak
+tokens dominating the average.
+
+**Verdict: the bounded ladder's curriculum step is falsified. Per the
+owner endpoint rule (probe 8 bullet): redesign, not more probes of
+this shape.** The two decisive facts for the redesign: (1) teacher
+forcing gives perfect placement but no self-model — the model has
+never seen a correct "after I speak" history (probe 9); (2) raw
+self-exposure poisons training because the exposed histories are the
+two degenerate attractors, not graded mistakes (this probe). Redesign
+target = the EXPOSURE DISTRIBUTION: construct self-history from the
+GOLD speech schedule (gold words as word-tokens at gold ticks, gold
+silences as targets) instead of recollected free-run — decode-
+consistent context ("my last word was X, the user is talking") with a
+clean distribution, and no recollection loop (faster runs). Fallbacks
+if that half-works: explicit speaking-state input channel; decode-side
+min-gap rules as an audition stopgap only (constant sil-bias already
+ruled out).

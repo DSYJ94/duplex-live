@@ -173,6 +173,19 @@ Read this first in a fresh chat. Everything below is decided and documented.
   says a SPEAKING model at ~57 ms/forward cannot sustain the 80 ms
   budget during words — decode speed is the M2 problem the moment
   Layer A delivers a speaker.
+- **PROBE 10 VERDICT (dense-pt4 = pt3 rows + SH 0.5, job 6906391):
+  CURRICULUM FAILED — placement decayed AND chatter remained.** Exact
+  onsets 5/5 5/5 4/4 3/3 -> 0/5 3/5 1/4 1/3 (trained), two lessons
+  fully mute; recollection log shows the in-training model flip-
+  flopping chatter <-> mute across self-exposure recollections
+  (1285/1344 speech-first -> 2/1344 -> 390/450 -> 2/304), so training
+  saw contradictory self-histories and lost the placement it started
+  with. Per the endpoint rule: REDESIGN, not more probes. Redesign
+  target = the exposure distribution: gold-schedule self-history
+  (gold words at gold ticks in history, gold silences as targets)
+  instead of recollected free-run. Decision brought to owner
+  2026-09-27. Audition renderer fixed for chatter era (soft limiter +
+  solo model.wav per scenario; dense-pt3 re-render = job 6908524).
 - **Listenable checkpoints (owner request, 2026-09-23): audition
   renders of the four capacity/self-history checkpoints free-running
   the 4 trained conversations — the model's words spoken by TTS at the
