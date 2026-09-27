@@ -1054,3 +1054,13 @@ Decode-side companion (same job batch): signed --sil-bias sweep on
 dense-pt3 (negative = add to the sil logit = suppress chatter) to map
 the placement/chatter tradeoff available at decode time without any
 training.
+
+## Decode-side sweep on dense-pt3 (job 6906393, 2026-09-27)
+
+Signed --sil-bias (negative = add to the <sil> logit = suppress) on
+the 4 trained lessons: -0.5/-1.0 leave chatter essentially unchanged
+(onsets intact); -2 trims ~5-20% and costs the first onset; -4 cuts
+chatter 20-40% but recall collapses (0.90 -> 0.46 on barge-001) and
+onsets degrade. **The chatter is not a marginal-logit artifact — no
+decode-time band-aid reaches the bar.** Confirms probe 10's
+curriculum (training-side exposure) as the only real fix.
