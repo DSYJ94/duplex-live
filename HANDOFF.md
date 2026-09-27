@@ -146,6 +146,19 @@ Read this first in a fresh chat. Everything below is decided and documented.
   decision — probe 8 = v2 + ww 3 (the only recipe that ever spoke,
   single variable vs probe 7) vs SH 0 (always-gold history while
   learning) vs move up the stack.
+- **OWNER STRATEGY (2026-09-27): bounded ladder + M2 in parallel;
+  the allocation must NOT lapse.** Allocation ends 2026-10-21. Goal:
+  by ~2026-10-14, a model that speaks and takes turns audibly
+  correctly through the M2 live serving loop, with remaining node-hours
+  spent on the full-data run that gets there. Layer A is worth
+  perfecting ONLY insofar as it fixes the live duplex experience by
+  ear (owner's condition); if the ladder can't get there, pivot the
+  hours instead of grinding probes. Probe 8 (dense-pt2 = v2 + ww 3,
+  job 6901314) is the MUTING ENDPOINT: speaks → ladder moves to
+  placement; mutes → ww exhausted, next is SH 0 (teacher forcing);
+  if SH 0 also fails → redesign, not more probes. Probe 7's audition
+  render is on the gallery (runs/model-audio-dense-pt1, matched
+  voices; mostly-quiet samples as expected, barge-004 babbles).
 - **Listenable checkpoints (owner request, 2026-09-23): audition
   renders of the four capacity/self-history checkpoints free-running
   the 4 trained conversations — the model's words spoken by TTS at the
