@@ -930,3 +930,38 @@ Levers, cheapest first: torch.compile the tick forward (also damps the
 shapes/KV padding — real engineering), or streaming pieces across
 ticks (design change in the decode contract). Timing the next parity
 rerun against probe 8: measure on a checkpoint that actually speaks.
+
+## M2 milestone 1.5: kernel/compile bench (job 6904171, 2026-09-27)
+
+dense_barge-004 (316 ticks, the one trained lesson emitting word
+pieces), dense-pt1 ckpt. Parity (dry-vs-paced, same config) = 0
+mismatches in every variant.
+
+| variant | p50 / p999 (ms) | vs ref: argmax flips | verdict |
+|---|---|---|---|
+| batched_mm (ref) | 57.9 / 460 | — | stays the serving kernel |
+| eager experts | 169.0 / 1348 | 185/316 (58.5%) | REJECTED: 3x slower AND computationally different |
+| eager + compile | 218.1 / 1742 | 155/316 (49.1%) | REJECTED: worse still |
+
+The docs/04 gather+GEMV advice does NOT transfer to this
+transformers-on-GH200 stack: the eager expert path is 3x slower at
+batch-1 and — the bigger finding — flips over half the argmax picks,
+so it is not even the same function (routing/tie-break numerics
+differ; whatever the cause, it is disqualified twice over).
+torch.compile(dynamic) added overhead on top.
+
+**The budget arithmetic this forces:** single-token ticks fit (57.9
+of 80 ms). But a k-piece word costs k+1 extra forwards inside one
+tick (pieces sequential; the next ear feature depends on them — no
+reordering possible). At speaking rates that is fatal: a model
+picking words on 30% of ticks at ~2 pieces/tick averages ~91 ms per
+80 ms tick — the loop falls behind permanently. If probe 8 produces a
+speaking model, decode speed becomes THE M2 problem. Lever hierarchy
+then: (a) measure real piece stats on the speaking model (may be ≪
+the fear), (b) live piece cap (behaviour change, measurable), (c)
+decode speedup — CUDA graphs (~1.3-1.5x, likely not enough alone),
+fp8/KV quantization, (d) accept bounded lag during self-speech with
+the catch-up arithmetic (57 ms decode vs 80 ms arrival recovers 23
+ms/tick) — audible as ~0.4 s reaction lag after long words, which
+lands exactly on barge-ins. Next measurement therefore rides on probe
+8's checkpoint.
