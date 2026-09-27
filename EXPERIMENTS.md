@@ -897,3 +897,36 @@ speech signal; single variable vs probe 7. (b) SH 0 (pure teacher
 forcing) — the model always sees GOLD history, so self-speech evidence
 is complete while learning; exposure (SH) becomes a later curriculum
 step. Not mutually exclusive; (a) has the track record.
+
+## M2 milestone 1: real-time tick parity (m2/parity.py, job 6901381, 2026-09-27)
+
+The docs/04 shadow test, milestone 1: run the exact offline free-run
+decode twice per lesson — DRY (as fast as GPU allows) and PACE (tick i
+due at t0+(i+1)*80 ms; slips cascade as in a real session) — on the 4
+trained dense lessons, dense-pt1 checkpoint.
+
+| lesson          | ticks | pieces | adherence | compute p50/p999 (ms) | parity |
+|-----------------|-------|--------|-----------|-----------------------|--------|
+| dense_dialog-001| 1398  | 0      | 99.93%    | 55.4 / 65.3           | 0 diff |
+| dense_dialog-004| 1453  | 0      | 99.38%    | 55.9 / 110.3          | 0 diff |
+| dense_barge-001 |  468  | 12     | 89.96%    | 55.9 / 390.5          | 0 diff |
+| dense_barge-004 |  316  | 10     | 88.61%    | 55.8 / 444.0          | 0 diff |
+
+**PARITY: PASS everywhere — the clock does not change what the model
+says.** The incremental KV-cached loop paced in real time is
+bit-identical to the offline decode every probe was scored with. The
+serving skeleton is sound; a human can be wired to it without changing
+the model's behaviour.
+
+**LATENCY: the word-continuation loop is the schedule breaker.** One
+tick's forward is ~56 ms (24 ms headroom under 80). But a word event
+runs its piece loop SYNCHRONOUSLY inside the tick — up to 8 forwards,
+p999 390–444 ms — and each overrun cascades ~4 late ticks (88–90%
+adherence on the barge lessons). The muted probe-7 model barely emits
+words; a SPEAKING model (if probe 8 delivers one) would hit this
+constantly, so piece latency is first-class for the Oct 14 goal.
+Levers, cheapest first: torch.compile the tick forward (also damps the
+~110 ms jitter spikes on dialog-004), CUDA graphs (needs static
+shapes/KV padding — real engineering), or streaming pieces across
+ticks (design change in the decode contract). Timing the next parity
+rerun against probe 8: measure on a checkpoint that actually speaks.
