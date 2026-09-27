@@ -125,6 +125,7 @@ def main() -> None:
             print(f"[render] {sid}: not in manifest, skipped")
             continue
         pcm = mix_in_slot(batch / by_sid[sid]["dir"], ev["n_ticks"])
+        solo = np.zeros_like(pcm)  # model words only — clean listen
         # clone from the voice that speaks this lesson's ASSISTANT line,
         # so the audition sounds like the person who was supposed to talk
         # (the MiniCPM-o bundled demo clip is a deep voice — owner noted
@@ -150,12 +151,30 @@ def main() -> None:
             e = min(s + len(clip), len(pcm))
             if e > s:
                 pcm[s:e] += clip[:e - s]
-        peak = float(np.max(np.abs(pcm))) or 1.0
-        if peak > 0.95:
-            pcm *= 0.95 / peak
+                solo[s:e] += clip[:e - s]
+        # Chatter runs (probe 9: up to ~8 model words stacked per
+        # instant) push the summed peak far past full scale; the old
+        # whole-mix normalization then crushed EVERYTHING by the worst
+        # pileup's factor — owner heard "groaning deep noise, model
+        # speech soft in the background" (dense-pt3, 2026-09-27). Soft-
+        # limit instead: untouched below the knee, tanh-bent above it —
+        # bed and sparse words keep natural loudness, pileups duck.
+        for buf in (pcm, solo):
+            THR = 0.7
+            absb = np.abs(buf)
+            hot = absb > THR
+            if hot.any():
+                over = absb[hot]
+                buf[hot] = (np.sign(buf[hot])
+                            * (THR + (1.0 - THR)
+                               * np.tanh((over - THR) / (1.0 - THR))))
+            peak = float(np.max(absb)) or 1.0
+            if peak > 0.95:
+                buf *= 0.95 / peak
         sc = out_audio / sid
         sc.mkdir(parents=True, exist_ok=True)
         sf.write(sc / "mixed.wav", pcm, SR, subtype="PCM_16")
+        sf.write(sc / "model.wav", solo, SR, subtype="PCM_16")
         manifest.append({"scenario_id": sid, "dir": sid,
                          "n_words": len(ev["words"]),
                          "voices": {"model": "tts(" + ref_wav.name + ")"}})
