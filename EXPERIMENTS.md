@@ -1005,3 +1005,52 @@ only self-speech evidence, and under SH 0.5 half the steps train
 against its own dithering (the recollect arcs show it). Teacher
 forcing gives complete, correct context while the placement mapping
 forms; exposure becomes a later curriculum step. Pass bar unchanged.
+
+## Probe 9 verdict (dense-pt3 = v2 + ww3 + SH 0, job 6905339, 2026-09-27)
+
+ONE variable vs probe 8: self-history 0.5 -> 0 (pure teacher forcing —
+the placement probe). 400 steps in 1:05 (SH recollection free-runs
+were most of the old wall-clock). **The placement battle is DECIDED:
+teacher forcing taught placement, and it generalizes.**
+
+| lesson (trained) | word acc | exact run-onsets | sil acc | F1 |
+|------------------|----------|------------------|---------|----|
+| dense_dialog-001 | 0.697    | **5/5**          | 0.165   | 0.202 |
+| dense_dialog-004 | 1.000    | **5/5**          | 0.018   | 0.208 |
+| dense_barge-001  | 0.984    | **4/4**          | 0.019   | 0.250 |
+| dense_barge-004  | 0.974    | **3/3**          | 0.022   | 0.225 |
+
+Held-out word acc 0.74–0.98 (dialog-002 0.742 with 1/4 exact onsets;
+others 5/5, 3/3, 3/3). First probe ever with real, exact, generalized
+onset placement — the input-evidence prediction held: give the model
+complete, correct context and the placement mapping forms.
+
+**The failure inverted: chatter.** The quiet-discipline collapsed —
+gold <sil> acc 0.006–0.357 (was 0.75–0.94), gold <speak> acc ~0.00
+(the model never learned to CONTINUE with <speak>; it launches new
+words instead), false speech on 261–786 quiet ticks per lesson,
+precision ~0.11–0.14. Plain words: it now says the right words at the
+right word-ticks, AND babbles words through every gap. Under clean
+gold context the ww3 word pole (3x weight, high-entropy, now
+placeable) overran the two cheap poles; <sil>/<speak> precision was
+the price.
+
+**Reading: the control axes are SEPARATING.** Muting (probe 7),
+placement (probe 9 — solved by context quality), and quiet-discipline
+(now the sole remaining battle) are distinct mechanisms, each movable
+by its own lever. Probe 9's chatter is the expected phase-1 artifact
+of the exposure curriculum: the model has never SEEN its own words in
+context (SH 0), so it has no self-consistent "after I speak, hush"
+policy. The curriculum's step 2 is exactly that experience.
+
+**Probe 10 (dense-pt4) = curriculum step 2: init from dense-pt3,
++SH 0.5, 200 steps.** Needs --init-ckpt resume support in train_p1
+(added this session). Hypothesis: exposure AFTER placement forms
+preserves the onsets while re-teaching silence from lived context —
+SH corrupted probes 7/8 because speech wasn't learned yet; the order
+was the problem, not the mechanism. Pass bar unchanged: >=90% exact
+onsets AND <10% chatter.
+Decode-side companion (same job batch): signed --sil-bias sweep on
+dense-pt3 (negative = add to the sil logit = suppress chatter) to map
+the placement/chatter tradeoff available at decode time without any
+training.

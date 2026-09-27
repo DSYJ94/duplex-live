@@ -101,6 +101,13 @@ def main() -> None:
     ap.add_argument("--max-pieces", type=int, default=8,
                     help="cap on continuation pieces when free-running "
                          "for self-history (matches live decode)")
+    ap.add_argument("--init-ckpt", default=None,
+                    help="curriculum phase 2: start the new-row deltas "
+                         "from a p1_checkpoint (emb+head) instead of "
+                         "mean-init. Why: probe 9 showed placement forms "
+                         "under pure teacher forcing but chatter needs "
+                         "exposure — resume the rows and turn SH on, "
+                         "rather than re-learning both from scratch")
     ap.add_argument("--out", default="runs/p1-v1")
     args = ap.parse_args()
 
@@ -133,6 +140,17 @@ def main() -> None:
         head = model.lm_head.weight if hasattr(model, "lm_head") else \
             model.get_output_embeddings().weight
         head[n_old:] = mean.to(head.dtype)
+    if args.init_ckpt:
+        # curriculum resume: overwrite the mean-init with a previous
+        # phase's trained rows (same delta keys the checkpoint saves)
+        prev = torch.load(args.init_ckpt, weights_only=False)
+        with torch.no_grad():
+            emb[n_old:] = prev["emb_delta_new_rows"].to(
+                emb.device, emb.dtype)
+            head[n_old:] = prev["head_delta_new_rows"].to(
+                head.device, head.dtype)
+        print(f"[p1] INIT from {args.init_ckpt} "
+              f"(previous run: {prev.get('steps')} steps)", flush=True)
 
     # freeze the world, then unfreeze only embed+head with row masking
     for p in model.parameters():
