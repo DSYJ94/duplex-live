@@ -965,3 +965,43 @@ the catch-up arithmetic (57 ms decode vs 80 ms arrival recovers 23
 ms/tick) — audible as ~0.4 s reaction lag after long words, which
 lands exactly on barge-ins. Next measurement therefore rides on probe
 8's checkpoint.
+
+## Probe 8 verdict (dense-pt2 = v2 + ww 3.0, job 6901314, 2026-09-27)
+
+Same rig as probe 7; ONE variable: word-weight 1.0 -> 3.0 (the muting
+endpoint probe, owner strategy 2026-09-27). 400 steps, final loss
+0.9060 (probe 7: 1.2756 — ww3 pushed further down, mostly by feeding
+the speak/word poles).
+
+| trained lesson   | speak acc | word acc | speech F1 | chatter |
+|------------------|-----------|----------|-----------|---------|
+| dense_dialog-001 | 0.304     | 0.051    | 0.177     | 221 ticks |
+| dense_dialog-004 | 0.104     | 0.029    | 0.161     | 125     |
+| dense_barge-001  | 0.062     | 0.016    | 0.062     | 30      |
+| dense_barge-004  | 0.151     | 0.051    | 0.157     | 55      |
+
+Held-out F1: 0.046 / 0.000 (dialog-005 fully re-muted) / 0.196 / 0.070.
+
+**VERDICT: FAIL the pass bar — and the muting question is ANSWERED.**
+ww3 revives speech under v2 (speak acc 0.000 -> 0.30 on dialog-001);
+the model now CAN speak. What it cannot do is PLACE speech: word acc
+0.02-0.05 everywhere (still ~random), exact run-onsets 3/5, 3/5, 1/4,
+1/3 (bar: >=90%), chatter 9-13%+ of ticks on the revived lessons (bar:
+<10%). The failure mode moved from "won't speak" to "speaks at the
+wrong times" — per the owner's endpoint rule, the ladder SHIFTS TO
+PLACEMENT.
+
+Dose law, final form (v2 labels): ww1 -> mute (probe 7); ww3 ->
+partial revival, misplaced (probe 8); (v1: ww3 spoke at the right
+rate with random placement — probe 5; ww6 babbled — probe 6).
+Mid-training arc (SH recollections): all-word babble at step 8 ->
+dithering mid-training -> late collapse on barge-004 (53/304) — the
+same bistable arc, softened.
+
+**Probe 9 (dense-pt3) = v2 + ww3 + SH 0** — single variable vs probe
+8 (self-history 0.5 -> 0). Rationale: the strongest PLACEMENT
+hypothesis is context corruption — the model's own history is its
+only self-speech evidence, and under SH 0.5 half the steps train
+against its own dithering (the recollect arcs show it). Teacher
+forcing gives complete, correct context while the placement mapping
+forms; exposure becomes a later curriculum step. Pass bar unchanged.

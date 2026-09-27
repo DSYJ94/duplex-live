@@ -159,6 +159,20 @@ Read this first in a fresh chat. Everything below is decided and documented.
   if SH 0 also fails → redesign, not more probes. Probe 7's audition
   render is on the gallery (runs/model-audio-dense-pt1, matched
   voices; mostly-quiet samples as expected, barge-004 babbles).
+- **PROBE 8 VERDICT (dense-pt2 = v2 + ww3, job 6901314): FAIL pass
+  bar — but the MUTING QUESTION IS ANSWERED: ww3 revives speech
+  (speak acc 0.000→0.30 on dialog-001); the model cannot PLACE it
+  (word acc 0.02–0.05 ~random, exact onsets 1–3 of 3–5, chatter over
+  bar). Failure moved from "won't speak" to "speaks at wrong times" →
+  per the owner endpoint rule the ladder SHIFTS TO PLACEMENT. Next:
+  probe 9 (dense-pt3) = v2 + ww3 + SH 0 (single variable vs probe 8):
+  teacher forcing gives complete self-speech context while placement
+  forms; exposure later. M2 milestone 1 landed in parallel: real-time
+  tick parity PASS (clock changes nothing); kernel bench: batched_mm
+  stays (eager 3× slower AND 58% argmax flips); piece-loop arithmetic
+  says a SPEAKING model at ~57 ms/forward cannot sustain the 80 ms
+  budget during words — decode speed is the M2 problem the moment
+  Layer A delivers a speaker.
 - **Listenable checkpoints (owner request, 2026-09-23): audition
   renders of the four capacity/self-history checkpoints free-running
   the 4 trained conversations — the model's words spoken by TTS at the
