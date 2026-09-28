@@ -639,3 +639,14 @@ queued: forced word alignment, BPE-level sampler tokens.
   Base model proposes words on ~91% of quiet ticks — the speech-rate
   prior itself is the residual problem (gate round 3 w/ iterated
   DAgger is the training-side candidate).
+- **GATE2 COMPOSITE VERDICT (job 6922786): decode dial EXHAUSTED.**
+  gate2@0.5 + min-gap 8/16 + user-gate fixed chatter as projected
+  (held lessons all 5.2-9.7%, under bar) but strangled responses:
+  min-gap counts from EVERY accepted word and gold words arrive every
+  ~4-5 ticks inside a response, so follow-up words are blocked, the
+  fed-back sil diverges the run, exact onsets 2/17 trained / 0/15
+  held, recall 0.93 -> 0.19. Four configs now mapped: gate1=mute,
+  gate2=chatter, gate2+rules=strangled, rules-alone=compromise. You
+  cannot rule your way out of a wrong prior. What's left: training
+  (gate round 3, iterated DAgger w/ quiet rebalance) or acceptance
+  (M2 on gate2@0.5 + user-gate). Decision brought to owner.

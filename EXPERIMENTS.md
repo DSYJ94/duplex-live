@@ -1282,3 +1282,33 @@ dialog-005 4/5, barge-002 2/3, barge-005 2/3; chatter 52-82%.
   (exact -> near). Arms: TRAIN4 gap 8 (save-picks) / gap 16, HELD4
   gap 8; all thr 0.5 + user-gate hold 3. If chatter lands <10% with
   >=90% exact, gate2+rules is the first full-bar decode config.
+
+## GATE2 COMPOSITE (min-gap + user-gate) — verdict (2026-09-28, job 6922786)
+
+gate2@0.5 + min-gap 8/16 + user-gate hold 3. All thr 0.5.
+
+| arm | dialog-001 | dialog-004 | barge-001 | barge-004 |
+|---|---|---|---|---|
+| TRAIN gap 8 | 1/5 exact, 13% chatter, R 0.19 | 1/5, 33%, R 0.50 | 0/4, 6.5%, R 0.05 | 0/3, 9.4%, R 0.21 |
+| TRAIN gap 16 | 1/5 exact, 6.9%, R 0.11 | 1/5, 25%, R 0.36 | 0/4, 2.3%, R 0.03 | 0/3, 3.8%, R 0.03 |
+| HELD gap 8 (all 4 lessons) | 0/15 exact, chatter 5.2-9.7% (all under bar), near 11/15 | | | |
+
+- **The chatter half delivered; the responses died.** Exact onsets
+  collapsed to 2/17 trained, 0/15 held, and recall collapsed with them
+  (dialog-001 R 0.929 -> 0.192). Mechanism: min-gap counts from EVERY
+  accepted word, and gold words inside a response arrive every ~4-5
+  ticks — gap 8 blocks the response's own follow-up words, the fed-
+  back <sil> diverges the trajectory, and the utterance dies after one
+  word. Starts survive (5/5 near on dialog-001); the speaking doesn't.
+- Also: gap 8 only halved dialog-004's chatter (553 -> 263), not the
+  projected /9 — blocked re-picks come back after the gap because the
+  prior re-asserts. On dialog lessons the composite fails BOTH halves
+  at once. HELD chatter passes everywhere (5.2-9.7%) — but 0/15 exact.
+- **THE DECODE DIAL IS EXHAUSTED.** Four configs now mapped end to
+  end: gate1 = mute; gate2 = chatter; gate2+rules = strangled
+  responses; rules-alone = audible compromise, never bar-passing. The
+  four-point law at decode level: you cannot rule your way out of a
+  wrong prior. Remaining levers are training-side (gate round 3:
+  gate2-in-loop buffer, quiet-side rebalance) or acceptance (best
+  audible config into M2 — gate2@0.5 + user-gate: near-perfect
+  onsets, murmur between turns bounded live by the energy gate).
