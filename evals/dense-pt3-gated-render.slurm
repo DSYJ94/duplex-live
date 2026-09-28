@@ -10,15 +10,16 @@
 # RENDER-ONLY fix for dl-dgate (6911470): the gated free-run finished
 # and --save-picks wrote runs/picks-dense-pt3-gated, but the TTS stage
 # died on `ImportError: minicpmo` — the job's PYTHONPATH lacked the
-# pylibs-minicpmo overlay (dense-audition5/6 have it; I copied the
-# probe-11 header instead). Render the existing picks with the right
-# env. FULL LOG — no grep.
+# TTS overlay. First re-submit (6911492) still failed because I wrote
+# the overlay name wrong: it is pylibs-minicpm (no "o"), as in
+# dense-audition5/6. Render the existing picks with the right env.
+# FULL LOG — no grep.
 
 set -euo pipefail
 
 DL=/projects/u6si/duplex-live
 REPO=$DL/repo
-export HF_HOME=$DL/models/hf-cache TMPDIR=$DL/tmp PYTHONPATH=$DL/pylibs-minicpmo:$DL/pylibs:$REPO
+export HF_HOME=$DL/models/hf-cache TMPDIR=$DL/tmp PYTHONPATH=$DL/pylibs-minicpm:$DL/pylibs:$REPO
 
 BATCH=$DL/runs/synth-dense1/audio
 
