@@ -31,6 +31,8 @@ import sys
 from collections import Counter, defaultdict
 from pathlib import Path
 
+import numpy as np
+
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from tokenizer.vocab import ALL_SPECIAL, SIL, SPEAK  # noqa: E402
 
@@ -98,6 +100,20 @@ def main() -> None:
                          "word events (onset tick + token ids + text) — "
                          "the input to evals/render_model_audio.py, which "
                          "turns a run into listenable audio")
+    ap.add_argument("--min-gap-ticks", type=int, default=0,
+                    help="STOPGAP decode rule (owner-approved audition "
+                         "aid, 2026-09-28): block word-FIRST picks within "
+                         "N ticks of the previous word onset (0 = off). "
+                         "A word already in flight always completes")
+    ap.add_argument("--user-gate", action="store_true",
+                    help="STOPGAP decode rule: block word-FIRST picks "
+                         "while the in-slot energy (user + background, "
+                         "the model's own voice is never in its ears — "
+                         "what a live mic sees) says the user is "
+                         "speaking, plus a short hold after")
+    ap.add_argument("--gate-hold", type=int, default=5,
+                    help="ticks to keep blocking after user energy "
+                         "drops (with --user-gate; 5 ticks = 400 ms)")
     args = ap.parse_args()
 
     from transformers import AutoProcessor, Qwen3OmniMoeThinkerForConditionalGeneration
@@ -210,15 +226,20 @@ def main() -> None:
             return "control"
         return "word"
 
-    def run_lesson(feats, n_ticks):
+    def run_lesson(feats, n_ticks, blocked=None):
         """Free-run one lesson tick-by-tick, feeding every emission back
         (word continuation included, exactly as live). Returns per-tick
         first picks + continuation piece count + word events
         ([{tick, ids}] — one entry per spoken word, pieces included;
-        the save-picks JSON and the audio renderer both need them)."""
+        the save-picks JSON and the audio renderer both need them).
+        blocked (optional): per-tick user-speech mask for the stopgap
+        decode rules; word-FIRST picks are gated by it and by the
+        min-gap, while a word already in flight always completes."""
         picks, pieces = [], 0
         events: list[dict] = []
         cache = None
+        last_onset = -10**9
+        n_gap_block = n_gate_block = 0
         for i in range(min(n_ticks, args.max_ticks)):
             e_in = emb_layer(torch.tensor([[pad_id]], device=model.device)
                              ).clone()
@@ -228,6 +249,15 @@ def main() -> None:
                             use_cache=True)
             cache = out.past_key_values
             tok = clean_argmax(out.logits[0, -1].clone())
+            if kind_of(tok) == "word":
+                if i - last_onset < args.min_gap_ticks:
+                    tok = sil_id
+                    n_gap_block += 1
+                elif blocked is not None and blocked[i]:
+                    tok = sil_id
+                    n_gate_block += 1
+                else:
+                    last_onset = i
             picks.append(tok)
             if kind_of(tok) == "word":
                 events.append({"tick": i, "ids": [tok]})
@@ -246,6 +276,9 @@ def main() -> None:
                 picks.append(None)  # continuation: no new tick decision
                 events[-1]["ids"].append(nxt)
                 tok = nxt
+        if n_gap_block or n_gate_block:
+            print(f"[freerun]   stopgap rules: {n_gap_block} gap-blocks, "
+                  f"{n_gate_block} user-gate blocks", flush=True)
         return picks, pieces, events
 
     for r in held:
@@ -266,7 +299,26 @@ def main() -> None:
         if feats.shape[0] < grid.n_ticks:
             print(f"[freerun]   WARNING: fewer ear tokens than ticks — "
                   f"training saw time-compressed audio", flush=True)
-        picks, pieces, events = run_lesson(feats, grid.n_ticks)
+        blocked = None
+        if args.user_gate:
+            # per-tick in-slot RMS: user speech vs background. The
+            # model's own voice is never in its ears, so this is
+            # exactly what a live mic-side VAD would see. Threshold =
+            # midpoint of the lesson's quiet and loud levels.
+            arr = np.asarray([
+                float(np.sqrt(np.mean(
+                    pcm[i * 1280:(i + 1) * 1280] ** 2)))
+                for i in range(grid.n_ticks)])
+            thr = float(0.5 * (np.percentile(arr, 25)
+                               + np.percentile(arr, 95)))
+            hot = arr > thr
+            blocked = np.zeros(grid.n_ticks, dtype=bool)
+            last = -10**9
+            for i in range(grid.n_ticks):
+                if hot[i]:
+                    last = i
+                blocked[i] = (i - last) <= args.gate_hold
+        picks, pieces, events = run_lesson(feats, grid.n_ticks, blocked)
         if args.save_picks:
             outdir = Path(args.save_picks)
             outdir.mkdir(parents=True, exist_ok=True)

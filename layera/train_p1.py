@@ -28,6 +28,71 @@ def mask_old_rows(grad, n_old: int):
     return g
 
 
+CORRUPT_STATS = [0, 0]  # samples corrupted, emission slots overwritten
+
+
+def corrupt_gold(seq: dict, sh_kind, rng=random) -> dict:
+    """Self-history redesign after probe 10 (2026-09-28). Recollected
+    self-histories only ever covered the two degenerate attractors
+    (all-chatter / all-mute — the recollection log flip-flopped
+    1285/1344 -> 2/1344 picks), so training saw contradictory stories
+    about itself and probe 9's placement eroded. Instead: corrupt the
+    GOLD history the way decode actually drifts, keeping the mistakes
+    small and graded —
+
+      chatter burst: a run of quiet ticks whose <sil> slot becomes a
+        word-first pick (the exact decode-chatter signature: one new
+        word per tick),
+      early onset: a word's first piece bleeding into the preceding
+        quiet tick (decode starts the word before the gold turn).
+
+    LABELS stay gold — every corrupted sample is a small mistake with
+    its own correction as the target ("I just babbled -> hush"; "I
+    started early -> still hit the real onset"). ~1% of slots per
+    lesson, so the placement signal keeps its clean-gold backbone."""
+    ids = list(seq["ids"])
+    pos = seq["audio_pos"]
+    ticks = []  # (first_slot, end_slot, kind) per tick
+    for t, p in enumerate(pos):
+        end = pos[t + 1] if t + 1 < len(pos) else len(ids)
+        if end - p >= 2:
+            ticks.append((p + 1, end, sh_kind(ids[p + 1])))
+    piece_ids = [j for s, e, k in ticks if k == "word" for j in ids[s:e]]
+    quiet_runs, cur = [], []
+    for i, (s, e, k) in enumerate(ticks):
+        if k == "sil":
+            cur.append(i)
+        elif cur:
+            quiet_runs.append(cur)
+            cur = []
+    if cur:
+        quiet_runs.append(cur)
+    if not piece_ids or not quiet_runs:
+        return dict(seq)
+    n = 0
+    if rng.random() < 0.75:
+        run = rng.choice(quiet_runs)
+        k = rng.randint(1, min(12, len(run)))
+        start = rng.randint(0, len(run) - k)
+        for i in run[start:start + k]:
+            ids[ticks[i][0]] = rng.choice(piece_ids)
+            n += 1
+    if rng.random() < 0.35:
+        for i, (s, e, k) in enumerate(ticks):
+            if (k == "word" and i > 0 and ticks[i - 1][2] == "sil"
+                    and rng.random() < 0.5):
+                ids[ticks[i - 1][0]] = ids[s]
+                n += 1
+                break
+    if n:
+        CORRUPT_STATS[0] += 1
+        CORRUPT_STATS[1] += n
+        if CORRUPT_STATS[0] % 100 == 0:
+            print(f"[p1] corrupt-gold: {CORRUPT_STATS[0]} samples "
+                  f"corrupted, {CORRUPT_STATS[1]} slots", flush=True)
+    return dict(seq, ids=ids)
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--shards", required=True)
@@ -98,6 +163,17 @@ def main() -> None:
                     help="recollect the model's own history only every "
                          "Nth self-history step per lesson (one free-run "
                          "pass costs one forward per ear feature)")
+    ap.add_argument("--sh-mode", choices=["recollect", "corrupt"],
+                    default="recollect",
+                    help="self-history source (probe 11 redesign, "
+                         "2026-09-28): recollect = free-run the current "
+                         "model and train on its picks — probe 10 showed "
+                         "that flip-flops between the chatter and mute "
+                         "attractors and erodes placement. corrupt = "
+                         "bounded corruption of the GOLD history (word-"
+                         "first chatter bursts in quiet stretches, word "
+                         "starts bleeding early); labels stay gold so "
+                         "every corrupted sample teaches the recovery")
     ap.add_argument("--max-pieces", type=int, default=8,
                     help="cap on continuation pieces when free-running "
                          "for self-history (matches live decode)")
@@ -319,14 +395,17 @@ def main() -> None:
                 continue
             if args.self_history > 0 and \
                     random.random() < args.self_history:
-                st = sh_state.setdefault(sid, [None, args.sh_refresh])
-                if st[0] is None or st[1] >= args.sh_refresh:
-                    st[0] = own_history(
-                        shard["audio_feats"].to(model.device),
-                        len(seq["audio_pos"]), sid)
-                    st[1] = 0
-                st[1] += 1
-                seq = apply_own(seq, st[0])
+                if args.sh_mode == "corrupt":
+                    seq = corrupt_gold(seq, sh_kind)
+                else:
+                    st = sh_state.setdefault(sid, [None, args.sh_refresh])
+                    if st[0] is None or st[1] >= args.sh_refresh:
+                        st[0] = own_history(
+                            shard["audio_feats"].to(model.device),
+                            len(seq["audio_pos"]), sid)
+                        st[1] = 0
+                    st[1] += 1
+                    seq = apply_own(seq, st[0])
             if len(seq["ids"]) < 8:
                 continue
             batch_in = collate(seq, shard, model.get_input_embeddings(),
