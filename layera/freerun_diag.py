@@ -34,7 +34,8 @@ from pathlib import Path
 import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from tokenizer.vocab import ALL_SPECIAL, SIL, SPEAK  # noqa: E402
+from tokenizer.vocab import (  # noqa: E402
+    ALL_SPECIAL, SIL, SPEAK, is_speech_emission)
 
 
 def speech_run_onsets(emissions) -> list[int]:
@@ -45,7 +46,7 @@ def speech_run_onsets(emissions) -> list[int]:
     out = []
     prev_speech = False
     for i, e in enumerate(emissions):
-        speech = (e == SPEAK) or (e not in ALL_SPECIAL)
+        speech = is_speech_emission(e)
         if speech and not prev_speech:
             out.append(i)
         prev_speech = speech
@@ -75,6 +76,38 @@ def word_onset_stats(gold_word_ticks, spoken) -> tuple[int, int, int, int]:
             near += 1
     false_speech = sum(1 for i in spoken if i not in near_w)
     return exact, near, false_speech, len(gold_word_ticks)
+
+
+def speech_pr(sp, gs) -> tuple[float, float, float]:
+    """(precision, recall, F1) of the spoken-tick set against a
+    gold-speech set — shared by the legacy and v3 speech lines so the
+    arithmetic can't drift between them."""
+    hit = len(gs & sp)
+    precision = hit / len(sp) if sp else 0.0
+    recall = hit / len(gs) if gs else 0.0
+    f1 = (2 * precision * recall / (precision + recall)
+          if precision + recall else 0.0)
+    return precision, recall, f1
+
+
+def user_block_mask(pcm, n_ticks: int, hold: int):
+    """STOPGAP user-gate mask (owner-approved audition aid): per-tick
+    in-slot RMS -> speech-hot ticks (above the midpoint of the
+    lesson's p25/p95 energy) block word-first picks for themselves
+    plus `hold` ticks after. The model's own voice is never in its
+    ears, so this is exactly what a live mic-side VAD sees."""
+    arr = np.asarray([
+        float(np.sqrt(np.mean(pcm[i * 1280:(i + 1) * 1280] ** 2)))
+        for i in range(n_ticks)])
+    thr = float(0.5 * (np.percentile(arr, 25) + np.percentile(arr, 95)))
+    hot = arr > thr
+    blocked = np.zeros(n_ticks, dtype=bool)
+    last = -10**9
+    for i in range(n_ticks):
+        if hot[i]:
+            last = i
+        blocked[i] = (i - last) <= hold
+    return blocked
 
 
 def main() -> None:
@@ -347,23 +380,7 @@ def main() -> None:
                   f"training saw time-compressed audio", flush=True)
         blocked = None
         if args.user_gate:
-            # per-tick in-slot RMS: user speech vs background. The
-            # model's own voice is never in its ears, so this is
-            # exactly what a live mic-side VAD would see. Threshold =
-            # midpoint of the lesson's quiet and loud levels.
-            arr = np.asarray([
-                float(np.sqrt(np.mean(
-                    pcm[i * 1280:(i + 1) * 1280] ** 2)))
-                for i in range(grid.n_ticks)])
-            thr = float(0.5 * (np.percentile(arr, 25)
-                               + np.percentile(arr, 95)))
-            hot = arr > thr
-            blocked = np.zeros(grid.n_ticks, dtype=bool)
-            last = -10**9
-            for i in range(grid.n_ticks):
-                if hot[i]:
-                    last = i
-                blocked[i] = (i - last) <= args.gate_hold
+            blocked = user_block_mask(pcm, grid.n_ticks, args.gate_hold)
         gold_onsets = set(speech_run_onsets(
             [t.emission for t in grid.ticks]))
         picks, pieces, events = run_lesson(feats, grid.n_ticks, blocked,
@@ -382,6 +399,7 @@ def main() -> None:
 
         per = defaultdict(lambda: [0, 0, Counter()])
         gold_speech, spoken, gold_names = [], [], []
+        gold_speak = []
         for i in range(len(tick_picks)):
             gold_name = grid.ticks[i].emission
             gold_names.append(gold_name)
@@ -401,6 +419,8 @@ def main() -> None:
                 e[2][name_of.get(pick, kind)] += 1
             if gold_is_word:
                 gold_speech.append(i)
+            elif gold == SPEAK:
+                gold_speak.append(i)
 
         # v2 metrics: onsets = gold speech-run starts; the dense
         # headline is per-tick speech P/R/F1; chatter counts the
@@ -409,10 +429,7 @@ def main() -> None:
         exact, near, _, n_onset = word_onset_stats(onsets, spoken)
         gs, sp = set(gold_speech), set(spoken)
         hit = len(gs & sp)
-        precision = hit / len(sp) if sp else 0.0
-        recall = hit / len(gs) if gs else 0.0
-        f1 = (2 * precision * recall / (precision + recall)
-              if precision + recall else 0.0)
+        precision, recall, f1 = speech_pr(sp, gs)
         chatter = sum(1 for i in spoken if i not in gs)
 
         print(f"[freerun]   free (self-history):", flush=True)
@@ -426,6 +443,19 @@ def main() -> None:
         print(f"[freerun]   SPEECH: P {precision:.3f}  R {recall:.3f}  "
               f"F1 {f1:.3f}; false speech on {chatter} quiet ticks",
               flush=True)
+        # v3 (2026-09-28 test audit): the legacy line above scores
+        # <speak>-continuation ticks as quiet, so CORRECT continuation
+        # speech counted as chatter (gate1 dialog-004 @0.35: 217 of its
+        # 350 "chatter" ticks were speak-gold; corrected 44% -> 38%,
+        # no verdict flips anywhere). v3 counts every speech-gold tick
+        # (word OR <speak>) on both sides. Legacy lines stay verbatim
+        # for cross-probe comparability.
+        gs3 = gs | set(gold_speak)
+        p3, r3, f13 = speech_pr(sp, gs3)
+        chatter3 = sum(1 for i in spoken if i not in gs3)
+        print(f"[freerun]   SPEECH v3 (speak-gold=speech): "
+              f"P {p3:.3f}  R {r3:.3f}  F1 {f13:.3f}; false speech on "
+              f"{chatter3} genuinely-quiet ticks", flush=True)
         print(f"[freerun]   WORD ONSETS: {exact}/{n_onset} exact, "
               f"{near}/{n_onset} within +-1s; "
               f"{pieces} continuation pieces", flush=True)

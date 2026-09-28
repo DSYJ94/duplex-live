@@ -39,6 +39,26 @@ def timing_token(gap_ms: int) -> str | None:
     return f"<t+{TIMING_BUCKETS_S[-1]}s>"
 
 
+def is_speech_emission(name: str) -> bool:
+    """The ONE definition of "should anyone be speaking this tick?",
+    from the gold emission NAME: a word (any non-special name) or
+    <speak> (voicing continues) is speech; <sil>, <yield>, <delegate>,
+    <barge-in>, <t+Ns> are quiet. Kept here because three sites
+    hand-rolled it and could drift: freerun_diag speech_run_onsets /
+    v3 speech metrics, train_gate per-tick gate labels, train_gate
+    dagger rollout labels (2026-09-28 test audit)."""
+    return name == SPEAK or name not in ALL_SPECIAL
+
+
+def is_speech_tok(tok: int, n_old: int, name_of) -> bool:
+    """Same question from the token id in an emission slot: ids below
+    n_old are BPE word pieces; duplex ids are speech only when <speak>.
+    Mirrors is_speech_emission for the token-level sites."""
+    if tok < n_old:
+        return True
+    return name_of[tok] == SPEAK
+
+
 def register_into(tokenizer) -> list[int]:
     """Add the reserved tokens to a HF tokenizer; returns new token ids.
     Call before model.resize_token_embeddings()."""

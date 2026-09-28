@@ -105,7 +105,8 @@ def main() -> None:
     from layera.sampler import build_from_grid
     from layera.prepare import encode_audio, mix_in_slot
     from tokenizer.grid import from_scenario_dir
-    from tokenizer.vocab import ALL_SPECIAL, SPEAK, register_into
+    from tokenizer.vocab import (  # noqa: E402
+        is_speech_emission, is_speech_tok, register_into)
 
     model = Qwen3OmniMoeThinkerForConditionalGeneration.from_pretrained(
         "Qwen/Qwen3-Omni-30B-A3B-Instruct", dtype="bfloat16",
@@ -240,8 +241,7 @@ def main() -> None:
                     n_prop += 1
                     em = grid.ticks[i].emission
                     buf_h.append(h_tick)
-                    buf_y.append(1 if (em == SPEAK or em not in ALL_SPECIAL)
-                                 else 0)
+                    buf_y.append(1 if is_speech_emission(em) else 0)
                     if roll_gate is not None:
                         p = float(torch.sigmoid(
                             roll_gate(h_tick.unsqueeze(0))[0]))
@@ -291,9 +291,10 @@ def main() -> None:
                 continue
             pos = seq["audio_pos"]
             # per-tick gate labels from the GOLD emission, captured
-            # BEFORE corruption touches the inputs
-            tick_lab = [1 if sh_kind(seq["ids"][p + 1]) in ("word", "speak")
-                        else 0 for p in pos]
+            # BEFORE corruption touches the inputs (same speech
+            # definition as the freerun metrics — tokenizer.vocab)
+            tick_lab = [1 if is_speech_tok(seq["ids"][p + 1], n_old,
+                                           name_of) else 0 for p in pos]
             if args.corrupt_prob > 0 and \
                     random.random() < args.corrupt_prob:
                 seq = corrupt_gold(seq, sh_kind)
