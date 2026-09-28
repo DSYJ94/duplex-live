@@ -86,10 +86,12 @@ def main() -> None:
     model = Qwen3OmniMoeThinkerForConditionalGeneration.from_pretrained(
         "Qwen/Qwen3-Omni-30B-A3B-Instruct", dtype="bfloat16",
         device_map="auto", attn_implementation="sdpa",
-        # forward-only (no backward reaches the backbone), so the fast
-        # inference expert path is safe here — the eager switch exists
-        # only because training must hold gathered expert weights
-        experts_implementation="batched_mm").eval()
+        # eager experts even though this is forward-only: batched_mm
+        # gathers per-token expert weights and at training sequence
+        # lengths (~2800 tokens) that is a single ~43 GiB allocation
+        # on top of the ~60 GiB model — OOM (job 6912797). Eager loops
+        # experts one at a time (~6 MiB each), same as train_p1
+        experts_implementation="eager").eval()
     proc = AutoProcessor.from_pretrained("Qwen/Qwen3-Omni-30B-A3B-Instruct")
     n_old = len(proc.tokenizer)
     register_into(proc.tokenizer)
