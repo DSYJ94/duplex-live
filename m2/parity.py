@@ -102,9 +102,19 @@ def load_model(ckpt_path: Path, experts: str = "batched_mm"):
 
 class Decoder:
     """The tick loop's brain: everything per-decision that live and the
-    free-run must share to stay in lockstep."""
+    free-run must share to stay in lockstep.
 
-    def __init__(self, model, proc, adapter, max_pieces: int, n_old: int):
+    gate/cap mirror freerun_diag's serving decode (M2.2a): when a gate
+    checkpoint is loaded, a word-first pick counts only if the activity
+    gate agrees — queried on the SAME hidden state the word head used
+    (the lm_head pre-hook `cap`), same precedence: activity block, then
+    the per-tick user-speech mask. The gate is a deterministic function
+    of the tick state, so dry and paced passes stay in lockstep and the
+    parity gate keeps its meaning; the MLP cost lands in compute_ms,
+    which is the point (latency truth for the config we would serve)."""
+
+    def __init__(self, model, proc, adapter, max_pieces: int, n_old: int,
+                 gate=None, gate_threshold: float = 0.5, cap=None):
         import torch
         self.torch = torch
         self.model = model
@@ -121,6 +131,12 @@ class Decoder:
                          if i < self.n_old]
         self.pad_id = proc.tokenizer.convert_tokens_to_ids("<|audio_pad|>")
         self.emb = model.get_input_embeddings()
+        self.gate = gate
+        self.gate_threshold = gate_threshold
+        self.cap = cap
+        self.sil_id = next((i for i, n in self.name_of.items()
+                            if n == "<sil>"), None)
+        self.n_gate_block = 0
 
     def kind_of(self, tok: int) -> str:
         if tok >= self.n_old:
@@ -142,10 +158,13 @@ class Decoder:
             logits[tid] = float("-inf")
         return int(logits.argmax())
 
-    def tick(self, feat, cache):
+    def tick(self, feat, cache, user_blocked: bool = False):
         """One tick: ear feature in, decision + continuation pieces out.
         Returns (pick, n_pieces, cache). Body mirrors freerun_diag
-        run_lesson — the first non-word breaker is discarded."""
+        run_lesson — the first non-word breaker is discarded, and with
+        the serving decode the word-first pick must pass the activity
+        gate and clear the user-speech mask (a word already in flight
+        always completes, same as live)."""
         torch = self.torch
         e_in = self.emb(torch.tensor(
             [[self.pad_id]], device=self.model.device)).clone()
@@ -155,6 +174,14 @@ class Decoder:
                              use_cache=True)
         cache = out.past_key_values
         pick = self.clean_argmax(out.logits[0, -1].clone())
+        if pick < self.n_old and self.gate is not None:
+            p = float(torch.sigmoid(self.gate(
+                self.cap["h"][0, -1].detach().unsqueeze(0))[0]))
+            if p < self.gate_threshold:
+                pick = self.sil_id
+                self.n_gate_block += 1
+            elif user_blocked:
+                pick = self.sil_id
         pieces = 0
         tok = pick
         while self.kind_of(tok) == "word" and pieces + 1 < self.max_pieces:
@@ -171,12 +198,14 @@ class Decoder:
         return pick, pieces, cache
 
 
-def run_pass(dec: Decoder, feats, paced: bool, tick_s: float):
+def run_pass(dec: Decoder, feats, paced: bool, tick_s: float,
+             blocked=None):
     """One full lesson. paced=False: as fast as possible (the dry
     reference). paced=True: tick i starts no earlier than its due time
     t0 + (i+1)*tick_s; a tick that overruns pushes the next one late
-    and the slip cascades. Returns (first_picks, records); per tick:
-    {tick, compute_ms, n_pieces[, start_delay_ms, late]}."""
+    and the slip cascades. blocked (optional): per-tick user-speech
+    mask, same source as the free-run. Returns (first_picks, records);
+    per tick: {tick, compute_ms, n_pieces[, start_delay_ms, late]}."""
     t0 = time.monotonic()
     picks, records, cache = [], [], None
     for i in range(len(feats)):
@@ -187,8 +216,10 @@ def run_pass(dec: Decoder, feats, paced: bool, tick_s: float):
             if now < deadline:
                 time.sleep(deadline - now)
             start_delay_ms = (time.monotonic() - deadline) * 1000
+        ub = bool(blocked[i]) if blocked is not None and i < len(blocked) \
+            else False
         c0 = time.monotonic()
-        pick, n_pieces, cache = dec.tick(feats[i], cache)
+        pick, n_pieces, cache = dec.tick(feats[i], cache, user_blocked=ub)
         c1 = time.monotonic()
         rec = {"tick": i, "compute_ms": round((c1 - c0) * 1000, 3),
                "n_pieces": n_pieces}
@@ -232,6 +263,20 @@ def main() -> None:
                          "reports per-tick divergence against it "
                          "(information only; the parity GATE stays "
                          "dry-vs-paced under THIS config)")
+    ap.add_argument("--gate-ckpt", default=None,
+                    help="aux activity gate checkpoint (M2.2a: parity "
+                         "on the SERVING decode — a word-first pick "
+                         "counts only if the gate agrees, exactly as "
+                         "freerun_diag --gate-ckpt)")
+    ap.add_argument("--gate-threshold", type=float, default=0.5)
+    ap.add_argument("--user-gate", action="store_true",
+                    help="stopgap user-speech mask from the scenario "
+                         "pcm (needs --batch), same user_block_mask as "
+                         "the free-run")
+    ap.add_argument("--gate-hold", type=int, default=3)
+    ap.add_argument("--batch", default=None,
+                    help="scenario batch dir (train_manifest.jsonl) — "
+                         "required with --user-gate")
     ap.add_argument("--out", default="runs/m2-parity")
     args = ap.parse_args()
 
@@ -250,7 +295,39 @@ def main() -> None:
     if args.compile:
         model = torch.compile(model, dynamic=True)
         print("[m2] torch.compile ON (dynamic)", flush=True)
-    dec = Decoder(model, proc, adapter, args.max_pieces, n_old)
+
+    # serving decode: the activity gate reads the lm_head-input hidden
+    # state — same capture hook as freerun_diag / train_gate
+    cap: dict = {}
+    model.lm_head.register_forward_pre_hook(
+        lambda mod, inp: cap.__setitem__("h", inp[0]))
+    gate = None
+    if args.gate_ckpt:
+        from layera.train_gate import GateHead
+        gk = torch.load(args.gate_ckpt, weights_only=False)
+        gate = GateHead(model.get_input_embeddings().weight.shape[1],
+                        int(gk["gate_dim"])).to(model.device).eval()
+        gate.load_state_dict(gk["gate"])
+        for p in gate.parameters():
+            p.requires_grad_(False)
+        print(f"[m2] activity gate loaded from {args.gate_ckpt} "
+              f"(threshold {args.gate_threshold:g})", flush=True)
+
+    blocked_by_sid = None
+    if args.user_gate:
+        if not args.batch:
+            raise SystemExit("[m2] --user-gate needs --batch")
+        from layera.freerun_diag import user_block_mask
+        from layera.prepare import mix_in_slot
+        rows = [json.loads(l) for l in
+                open(Path(args.batch) / "train_manifest.jsonl")]
+        blocked_by_sid = {r["scenario_id"]: Path(args.batch) / r["dir"]
+                          for r in rows}
+        print(f"[m2] user-gate ON (hold {args.gate_hold}, "
+              f"{len(blocked_by_sid)} scenarios in batch)", flush=True)
+
+    dec = Decoder(model, proc, adapter, args.max_pieces, n_old,
+                  gate=gate, gate_threshold=args.gate_threshold, cap=cap)
 
     shard_paths = []
     for s in args.scenarios.split(","):
@@ -274,27 +351,43 @@ def main() -> None:
             feats = feats.to(model.device)
         n = len(feats)
 
+        blocked = None
+        if blocked_by_sid is not None:
+            sc = blocked_by_sid[sid]
+            # n*1280 samples (feats run ~4% longer than the audio grid;
+            # the zero tail is quiet and harmless to the RMS quantiles)
+            pcm = mix_in_slot(sc, n)
+            blocked = user_block_mask(pcm, len(pcm) // 1280,
+                                      args.gate_hold)
+
+        dec.n_gate_block = 0
         dec.tick(feats[0], None)  # warmup: compile + kernels untimed
-        dry_picks, _ = run_pass(dec, feats, paced=False, tick_s=tick_s)
-        pace_picks, recs = run_pass(dec, feats, paced=True, tick_s=tick_s)
+        dry_picks, _ = run_pass(dec, feats, paced=False, tick_s=tick_s,
+                                blocked=blocked)
+        pace_picks, recs = run_pass(dec, feats, paced=True, tick_s=tick_s,
+                                    blocked=blocked)
 
         mismatch = sum(1 for a, b in zip(dry_picks, pace_picks) if a != b)
         compute = [r["compute_ms"] for r in recs]
         late = sum(1 for r in recs if r.get("late"))
         adherence = 100.0 * (1 - late / max(n, 1))
         pieces = sum(r["n_pieces"] for r in recs)
+        gate_blk = f", {dec.n_gate_block} gate blocks" \
+            if gate is not None else ""
         print(f"[m2] {sid}: {n} ticks, {pieces} continuation pieces | "
               f"adherence {adherence:.2f}% ({late} late) | "
               f"compute p50 {pct(compute, .5):.1f} "
               f"p95 {pct(compute, .95):.1f} "
               f"p999 {pct(compute, .999):.1f} ms "
-              f"max {max(compute):.1f} ms | parity mismatches {mismatch}",
+              f"max {max(compute):.1f} ms | parity mismatches {mismatch}"
+              f"{gate_blk}",
               flush=True)
         (out / f"{sid}.jsonl").write_text(
             "\n".join(json.dumps(r) for r in recs) + "\n")
         all_recs.append({"scenario_id": sid, "n_ticks": n,
                          "late": late, "adherence": adherence,
                          "mismatch": mismatch, "pieces": pieces,
+                         "gate_blocks": dec.n_gate_block,
                          "p50_ms": pct(compute, .5),
                          "p95_ms": pct(compute, .95),
                          "p999_ms": pct(compute, .999),
