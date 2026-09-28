@@ -186,6 +186,19 @@ Read this first in a fresh chat. Everything below is decided and documented.
   instead of recollected free-run. Decision brought to owner
   2026-09-27. Audition renderer fixed for chatter era (soft limiter +
   solo model.wav per scenario; dense-pt3 re-render = job 6908524).
+- **PROBE 11 VERDICT (dense-pt5 = pt3 rows + corrupt-gold SH 0.5, job
+  6911469): FAILED the bar, but the trade-off is now LAW.** Corruption
+  taught recovery (sil acc 0.5-0.9 vs probe 9's ~0-0.36) yet exact
+  placement decayed again (2/5 3/5 1/4 1/3) and chatter stayed 65-94%
+  of quiet ticks. Three-point law: the placement mapping lives exactly
+  in clean-gold history; ANY training-side history corruption erodes
+  it ~1:1 against discipline. Bottleneck looks structural (one head,
+  one delta, ww3 word pole) -> decision brought to owner 2026-09-28
+  (aux activity gate vs speaking-state channel vs stopgap+scale).
+  Stopgap audition LANDED: pt3 + min-gap 4 + user-energy gate (hold
+  3) = all onsets within +-1s, chatter cut 3-10x, words 297-887 ->
+  60-188; gallery: runs/model-audio-dense-pt3-gated. TTS overlay dir
+  is pylibs-minicpm (no "o") — two jobs died on the wrong name.
 - **Listenable checkpoints (owner request, 2026-09-23): audition
   renders of the four capacity/self-history checkpoints free-running
   the 4 trained conversations — the model's words spoken by TTS at the

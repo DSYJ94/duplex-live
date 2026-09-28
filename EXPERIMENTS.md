@@ -1117,3 +1117,50 @@ clean distribution, and no recollection loop (faster runs). Fallbacks
 if that half-works: explicit speaking-state input channel; decode-side
 min-gap rules as an audition stopgap only (constant sil-bias already
 ruled out).
+
+## Probe 11 verdict — corrupt-gold exposure: discipline moved, placement still pays (job 6911469, 2026-09-28)
+
+dense-pt5 = init dense-pt3 rows + SH 0.5 with --sh-mode corrupt (gold
+histories with bounded decode-realistic corruption: word-first chatter
+bursts in quiet stretches, word starts bleeding early; labels gold).
+Ran in 38 min — corruption needs no recollection loop (probe 10 took
+3h20). Loss 0.94 -> 0.63, healthy arc.
+
+**FAILED the pass bar, but the axes moved in a lawful way:**
+
+| lesson | probe 9 onsets | probe 11 onsets | probe 9 sil acc | probe 11 sil acc | probe 11 false speech / quiet |
+|---|---|---|---|---|---|
+| dialog-001 (tr) | 5/5 | 2/5 | 0.006 | **0.510** | 415/443 |
+| dialog-004 (tr) | 5/5 | 3/5 | 0.357 | **0.639** | 274/332 |
+| barge-001 (tr) | 4/4 | 1/4 | ~0.1 | **0.762** | 104/160 |
+| barge-004 (tr) | 3/3 | 1/3 | ~0.2 | **0.504** | 125/137 |
+| dialog-005 (held) | 5/5 | 0/5 (near-mute) | — | 0.912 | 42/398 |
+
+Quiet-discipline genuinely improved (sil acc 0.5-0.9 vs probe 9's
+~0.0-0.36; dialog-005 held nearly silent with only 42 false-speech
+ticks) — the corruption samples DID teach "I just babbled -> hush".
+But exact placement decayed again (5/5 5/5 4/4 3/3 -> 2/5 3/5 1/4
+1/3), gold word acc fell (0.70-1.00 -> 0.30-0.55), and chatter stays
+far over the <10% bar. <speak> acc ~0 everywhere — still never
+continues, only launches.
+
+**The three-point law (probes 9/10/11): the placement mapping lives
+EXACTLY in the clean-gold history distribution.** Any corruption of
+that history during training — recollected attractor garbage (10) or
+graded synthetic mistakes (11) — erodes it, and the discipline gain
+trades against it roughly 1:1. Training-side exposure has now been
+tried in its two pure forms; both pay for quiet-discipline with
+placement. The bottleneck looks STRUCTURAL, not distributional: one
+softmax head + one embedding-delta carries both skills, and the ww3
+word pole keeps the speech-rate prior high no matter what the history
+says.
+
+**Stopgap landed in parallel (owner-approved):** dense-pt3 + decode
+rules (min-gap 4 ticks + user-energy gate, hold 3 — gold turn gaps
+are >=400 ms so no legit onset is blocked) — onsets 5/5 5/5 4/4 3/3
+within +-1s (exact ticks blur 1-2), chatter cut 3-10x (786 -> 162
+worst lesson), total words 297-887 -> 60-188 per lesson. Audition on
+the gallery: runs/model-audio-dense-pt3-gated (rules are a demo patch
+— hand-coded turn-taking, not learned). Operational note: TTS
+overlay dir is pylibs-minicpm (no "o"); two jobs died on a wrong name
+before the render-only fix (6911492 -> 6911511).
