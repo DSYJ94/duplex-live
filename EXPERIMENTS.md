@@ -1230,3 +1230,55 @@ pt3 actually VISITS — its own free-run rollouts on TRAIN4 with gold
 labels attached (DAgger-style, ~40 min) — so the all-sil-history-at-
 onset state is in-distribution with the right label. This tests the
 diagnosis directly; if scores separate there, Layer A has its recipe.
+
+## GATE ROUND 2 (DAgger) — verdict (2026-09-28, job 6916784, 33:36)
+
+Recipe: free-run TRAIN4 exactly as decode does with gate1 ACTIVE at
+0.35, record the hidden state at every word-first proposal tick with
+its GOLD label (buffer: 2400 states, 61.88% speech, pos_weight 0.6),
+train the gate on that buffer mixed with gate1's gold/corrupt stream
+(acc 0.990, buf acc 0.957). Sweep identical to gate1 for direct
+comparison. Chatter numbers below are the LEGACY metric (job ran
+pre-v3; v3 reads somewhat lower, direction unchanged).
+
+| threshold | dialog-001 | dialog-004 | barge-001 | barge-004 |
+|---|---|---|---|---|
+| 0.35 | 5/5 exact, 81% chatter | 5/5, 84% | 2/4, 44% | 3/3, 74% |
+| 0.5  | 5/5 exact, 77% chatter | 5/5, 69% | 3/4, 31% | 3/3, 57% |
+| 0.65 | 5/5 exact, 78% chatter | 5/5, 65% | 0/4, 14% | 1/3, 26% |
+
+HELD @0.5: dialog-002 1/4 exact (4/4 near; only 1 of 4 onsets even
+got a word-first proposal — base-model proposal failure, not gate),
+dialog-005 4/5, barge-002 2/3, barge-005 2/3; chatter 52-82%.
+
+- **The diagnosis was right, and the failure moved walls.** Gate P at
+  gold onsets: 0.66-1.00 everywhere it was <0.35 in gate1 (dialog-001:
+  1.00/0.77/0.99/0.77/1.00 at 0.35 — full mute GONE). Exact onsets at
+  0.5 on TRAIN4: 16/17 (94%, bar-passing; gate1's best anywhere: 3/16).
+- **But quiet-side discipline regressed to the other wall**: chatter
+  31-77% trained, 52-82% held (bar: <10%). Threshold is nearly flat on
+  dialog lessons (0.35->0.65: 81->78%) — this is not a tuning problem.
+  Round 2 traded the mute wall for the chatter wall; the pass bar is
+  still failed on the chatter half.
+- Why: on-policy states fix RANKING (the states decode visits now
+  carry the right labels), but 2400 buffered states vs 529k gate
+  params is memorization territory (buf acc 0.957), and the quiet side
+  does not generalize across lessons. Gate2 also reveals the scale of
+  the base model's speech-rate prior: it proposes a word on ~91% of
+  quiet ticks (dialog-001@0.5: 614 accepted + 114 blocked) and the
+  gate passes ~84% of quiet-tick proposals.
+- Gate1 audition record (job 6916786, gallery batches
+  model-audio-dense-pt3-gate035 / -gate-combo): arm A gate-only 0.35
+  = half-mute + residual chatter; **arm B gate1 + stopgap rules
+  (min-gap 4, user-gate hold 3) = FULL MUTE, 0/21 exact** — the rules
+  compound gate1's over-blocking instead of rescuing it. Stopgap is
+  dead as a gate1 patch.
+- Composite probe (job 6922786, RUNNING at write time): min-gap
+  divides word-first chatter by ~gap (accepted word re-arms
+  last_onset; continuation pieces do NOT consume tick slots, so gap
+  arithmetic holds). Gold speech-RUN gaps are >= 93 ticks on every
+  lesson, so gaps 8/16 cannot clip a real response start; the only
+  risk is a chatter accept sitting <gap ticks before a gold onset
+  (exact -> near). Arms: TRAIN4 gap 8 (save-picks) / gap 16, HELD4
+  gap 8; all thr 0.5 + user-gate hold 3. If chatter lands <10% with
+  >=90% exact, gate2+rules is the first full-bar decode config.

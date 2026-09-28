@@ -624,3 +624,18 @@ queued: forced word alignment, BPE-level sampler tokens.
   `duplex-live-viz/` does not exist yet).
 - Local clone (OneDrive-synced): `~/Library/CloudStorage/OneDrive-Personal/Shared GitHub Repos/duplex-live`
 - Isambard clone: `/projects/u6si/duplex-live/repo` — keep both pushed in sync.
+- **GATE 2 (DAgger) VERDICT (job 6916784): diagnosis confirmed — mute
+  fixed, onsets 16/17 exact at thr 0.5 (bar-passing) — but chatter
+  regressed to the other wall (31-77% trained, 52-82% held; bar <10%),
+  threshold-flat on dialog lessons. Bar still FAILED.** Round 2
+  free-ran TRAIN4 with gate1 active, buffered 2400 on-policy proposal
+  states with gold labels, retrained; gate P at gold onsets jumped to
+  0.66-1.00 (gate1: <0.35). Gate1+stopgap-rules audition (6916786):
+  FULL MUTE, 0/21 exact — rules compound gate1's over-blocking;
+  gallery batches model-audio-dense-pt3-gate035 / -gate-combo.
+  Composite probe 6922786 (gate2@0.5 + min-gap 8/16 + user-gate
+  hold 3) measures the last decode-side lever: gap divides chatter
+  ~1:gap, gold run-gaps >=93 ticks so responses can't be clipped.
+  Base model proposes words on ~91% of quiet ticks — the speech-rate
+  prior itself is the residual problem (gate round 3 w/ iterated
+  DAgger is the training-side candidate).
