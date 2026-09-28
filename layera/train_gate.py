@@ -89,6 +89,9 @@ def main() -> None:
     ap.add_argument("--rollout-threshold", type=float, default=0.35,
                     help="gate threshold used during a --dagger-gate "
                          "rollout")
+    ap.add_argument("--buffer-batch", type=int, default=256,
+                    help="on-policy buffer states sampled per step into "
+                         "the loss")
     ap.add_argument("--lr", type=float, default=1e-3)
     ap.add_argument("--gate-dim", type=int, default=256)
     ap.add_argument("--init-ckpt", required=True,
@@ -323,7 +326,8 @@ def main() -> None:
                 # visits, gold labels; pos_weight rebalances the heavy
                 # quiet majority (pt3 proposes words on most ticks and
                 # nearly all of those are chatter = label 0)
-                idx = torch.randint(0, len(buf_y), (256,), device=H.device)
+                idx = torch.randint(0, len(buf_y),
+                                    (args.buffer_batch,), device=H.device)
                 loss = loss + F.binary_cross_entropy_with_logits(
                     gate(H[idx]), Y[idx], pos_weight=pw)
             opt.zero_grad()
