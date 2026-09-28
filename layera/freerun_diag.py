@@ -114,6 +114,14 @@ def main() -> None:
     ap.add_argument("--gate-hold", type=int, default=5,
                     help="ticks to keep blocking after user energy "
                          "drops (with --user-gate; 5 ticks = 400 ms)")
+    ap.add_argument("--gate-ckpt", default=None,
+                    help="aux activity-gate checkpoint (train_gate.py): "
+                         "a word-FIRST pick is accepted only if this "
+                         "head's P(speech) >= --gate-threshold. Learned "
+                         "quiet discipline in parameters separate from "
+                         "the frozen placement model")
+    ap.add_argument("--gate-threshold", type=float, default=0.5,
+                    help="P(speech) cut for --gate-ckpt word accepts")
     args = ap.parse_args()
 
     from transformers import AutoProcessor, Qwen3OmniMoeThinkerForConditionalGeneration
@@ -164,6 +172,24 @@ def main() -> None:
     pad_id = proc.tokenizer.convert_tokens_to_ids("<|audio_pad|>")
     tok_conv = proc.tokenizer.convert_tokens_to_ids
     emb_layer = model.get_input_embeddings()
+
+    gate = None
+    cap_h = {}  # the tick forward's lm_head input when the gate is on
+    if args.gate_ckpt:
+        from layera.train_gate import GateHead
+
+        g = torch.load(args.gate_ckpt, weights_only=False)
+        gate = GateHead(emb_layer.weight.shape[1],
+                        int(g["gate_dim"])).to(model.device).eval()
+        gate.load_state_dict(g["gate"])
+        # capture the hidden state feeding the word head: the tick
+        # forward's lm_head input, read immediately after each tick
+        # decision (continuation forwards overwrite it, harmlessly)
+        model.lm_head.register_forward_pre_hook(
+            lambda mod, inp: cap_h.__setitem__("h", inp[0]))
+        print(f"[freerun] activity gate loaded from {args.gate_ckpt} "
+              f"(base {g.get('base_ckpt', '?')}, threshold "
+              f"{args.gate_threshold:g})", flush=True)
 
     def clean_argmax(logits) -> int:
         for tid in mask_ids:
@@ -239,7 +265,7 @@ def main() -> None:
         events: list[dict] = []
         cache = None
         last_onset = -10**9
-        n_gap_block = n_gate_block = 0
+        n_gap_block = n_user_block = n_act_block = 0
         for i in range(min(n_ticks, args.max_ticks)):
             e_in = emb_layer(torch.tensor([[pad_id]], device=model.device)
                              ).clone()
@@ -250,12 +276,20 @@ def main() -> None:
             cache = out.past_key_values
             tok = clean_argmax(out.logits[0, -1].clone())
             if kind_of(tok) == "word":
+                if gate is not None:
+                    # learned quiet discipline: the activity gate sits
+                    # on the same hidden state the word head just used
+                    p = float(torch.sigmoid(
+                        gate(cap_h["h"][0, -1].unsqueeze(0))[0]))
+                    if p < args.gate_threshold:
+                        tok = sil_id
+                        n_act_block += 1
                 if i - last_onset < args.min_gap_ticks:
                     tok = sil_id
                     n_gap_block += 1
                 elif blocked is not None and blocked[i]:
                     tok = sil_id
-                    n_gate_block += 1
+                    n_user_block += 1
                 else:
                     last_onset = i
             picks.append(tok)
@@ -276,9 +310,10 @@ def main() -> None:
                 picks.append(None)  # continuation: no new tick decision
                 events[-1]["ids"].append(nxt)
                 tok = nxt
-        if n_gap_block or n_gate_block:
-            print(f"[freerun]   stopgap rules: {n_gap_block} gap-blocks, "
-                  f"{n_gate_block} user-gate blocks", flush=True)
+        if n_gap_block or n_user_block or n_act_block:
+            print(f"[freerun]   decode gates: {n_gap_block} gap-blocks, "
+                  f"{n_user_block} user-gate blocks, "
+                  f"{n_act_block} activity-gate blocks", flush=True)
         return picks, pieces, events
 
     for r in held:
