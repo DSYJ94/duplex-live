@@ -199,6 +199,24 @@ Read this first in a fresh chat. Everything below is decided and documented.
   3) = all onsets within +-1s, chatter cut 3-10x, words 297-887 ->
   60-188; gallery: runs/model-audio-dense-pt3-gated. TTS overlay dir
   is pylibs-minicpm (no "o") — two jobs died on the wrong name.
+- **GATE 1 VERDICT (aux activity gate on FROZEN dense-pt3, job
+  6912904): a real learned muting dial, but its scores don't rank gold
+  onsets above chatter — bar still FAILED.** Gate trains cleanly
+  (acc 0.990; first try 6912797 OOMed: batched_mm gathers ~43 GiB at
+  training seq lengths — eager experts, same as train_p1). Sweep
+  (thr 0.35/0.5/0.65 trained; 0.5 held): dialog-001/dialog-002 FULLY
+  MUTED at every threshold (gold onsets score <0.35 — gate P printed
+  per-onset now), other lessons chatter 8.8-44% (barge-001@0.65 passes
+  the chatter half alone at 8.8%) but exact onsets 0-2 per lesson
+  nowhere near >=90%. Four-point law (9/10/11/gate1): the trap follows
+  the training-STATE distribution, not the parameter grouping — the
+  gate only saw gold + bounded synthetic-corrupt states, decode visits
+  pt3's own compounded states (all-sil history at first onset,
+  always labeled 0 in training, true label 1). Audition render
+  submitted (dl-dgaud): gate-0.35-only + gate+stopgap-rules combos,
+  full TRAIN4, -> runs/model-audio-dense-pt3-gate035 / -gate-combo.
+  Candidate next (owner decision): DAgger-style gate round 2 — train
+  on pt3's own free-run rollout states with gold labels (~40 min).
 - **Listenable checkpoints (owner request, 2026-09-23): audition
   renders of the four capacity/self-history checkpoints free-running
   the 4 trained conversations — the model's words spoken by TTS at the

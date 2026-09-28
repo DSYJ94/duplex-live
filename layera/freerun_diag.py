@@ -252,7 +252,7 @@ def main() -> None:
             return "control"
         return "word"
 
-    def run_lesson(feats, n_ticks, blocked=None):
+    def run_lesson(feats, n_ticks, blocked=None, gold_onsets=None):
         """Free-run one lesson tick-by-tick, feeding every emission back
         (word continuation included, exactly as live). Returns per-tick
         first picks + continuation piece count + word events
@@ -266,6 +266,7 @@ def main() -> None:
         cache = None
         last_onset = -10**9
         n_gap_block = n_user_block = n_act_block = 0
+        gate_proposals: list[tuple[int, float]] = []
         for i in range(min(n_ticks, args.max_ticks)):
             e_in = emb_layer(torch.tensor([[pad_id]], device=model.device)
                              ).clone()
@@ -280,7 +281,8 @@ def main() -> None:
                     # learned quiet discipline: the activity gate sits
                     # on the same hidden state the word head just used
                     p = float(torch.sigmoid(
-                        gate(cap_h["h"][0, -1].unsqueeze(0))[0]))
+                        gate(cap_h["h"][0, -1].detach().unsqueeze(0))[0]))
+                    gate_proposals.append((i, p))
                     if p < args.gate_threshold:
                         tok = sil_id
                         n_act_block += 1
@@ -314,6 +316,15 @@ def main() -> None:
             print(f"[freerun]   decode gates: {n_gap_block} gap-blocks, "
                   f"{n_user_block} user-gate blocks, "
                   f"{n_act_block} activity-gate blocks", flush=True)
+        if gate is not None and gold_onsets:
+            # WHY the gate passes/blocks: its own P at the gold speech
+            # onsets (gate1 lesson: dialog gold onsets scored below
+            # chatter states on other lessons -> full mute)
+            at = {t: p for t, p in gate_proposals if t in gold_onsets}
+            if at:
+                print(f"[freerun]   gate P at gold onsets: "
+                      + ", ".join(f"{t}:{at[t]:.2f}"
+                                  for t in sorted(at)), flush=True)
         return picks, pieces, events
 
     for r in held:
@@ -353,7 +364,10 @@ def main() -> None:
                 if hot[i]:
                     last = i
                 blocked[i] = (i - last) <= args.gate_hold
-        picks, pieces, events = run_lesson(feats, grid.n_ticks, blocked)
+        gold_onsets = set(speech_run_onsets(
+            [t.emission for t in grid.ticks]))
+        picks, pieces, events = run_lesson(feats, grid.n_ticks, blocked,
+                                           gold_onsets)
         if args.save_picks:
             outdir = Path(args.save_picks)
             outdir.mkdir(parents=True, exist_ok=True)

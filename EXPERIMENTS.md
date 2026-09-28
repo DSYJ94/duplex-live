@@ -1164,3 +1164,69 @@ the gallery: runs/model-audio-dense-pt3-gated (rules are a demo patch
 — hand-coded turn-taking, not learned). Operational note: TTS
 overlay dir is pylibs-minicpm (no "o"); two jobs died on a wrong name
 before the render-only fix (6911492 -> 6911511).
+
+## Gate 1 verdict (2026-09-28, job 6912904 dl-gate1) — a real muting dial, but its scores don't rank gold onsets above chatter
+
+Owner decision after probe 11: separate quiet-gate head on the FROZEN
+dense-pt3 trunk (placement untouchable; discipline in its own 528,897
+params). train_gate.py: binary "should anyone be speaking this tick?"
+on the same per-tick hidden state that feeds the word head, plain
+balanced CE, half the samples on probe-11 corrupt-gold histories.
+Decode (freerun_diag --gate-ckpt): a word-FIRST pick counts only if
+the model proposes it AND gate P(speech) >= threshold.
+
+Training is healthy: acc 0.990, loss 0.038 at step 200 (335 s), pred
+rate 0.59 vs gold speech 0.59 — no bias. First submission (6912797)
+OOMed at 60 s: batched_mm gathers per-token expert weights, a single
+42.89 GiB alloc at training seq lengths; eager experts fixed it.
+
+Threshold sweep (trained lessons; chatter = false-speech ticks /
+quiet ticks, onsets = gold speech-run starts):
+
+| lesson (quiet ticks)  | 0.35 chatter | 0.5  | 0.65 | exact 0.35/0.5/0.65 | +-1s 0.35 |
+|-----------------------|--------------|------|------|---------------------|-----------|
+| dense_dialog-001 (801)| 0% (MUTE)    | 0%   | 0%   | 0/5, 0/5, 0/5       | 0/5       |
+| dense_dialog-004 (797)| 44%          | 30%  | 21%  | 1/5, 1/5, 1/5       | 4/5       |
+| dense_barge-001 (387) | 28%          | 16%  | 8.8% | 2/4, 2/4, 2/4       | 4/4       |
+| dense_barge-004 (265) | 33%          | 24%  | 17%  | 0/3, 0/3, 0/3       | 3/3       |
+
+Held-out at 0.5: dialog-002 MUTE (chatter 1%, onsets 0/4, +-1s 1/4);
+dialog-005 18% (0/5, 3/5); barge-002 14% (1/3, 3/3); barge-005 MUTE
+(0%, 0/3, 0/3). Pass bar (>=90% exact onsets AND <10% chatter):
+FAILED everywhere — no threshold passes both halves on any lesson,
+though barge-001@0.65 passes the chatter half alone.
+
+Reading:
+- The gate IS a learned muting dial: baseline pt3 chatter on
+  dialog-001 was 786/801 = 98% of quiet ticks; the gate takes it to 0%,
+  and the still-talking lessons drop 2-3x. Cheaper and smoother than
+  the hand rules on barge lessons.
+- But the dial moves onsets and chatter TOGETHER per lesson — there is
+  no operating point that keeps onsets and kills chatter, because the
+  scores are wrong, not just the cut: on dialog-001/dialog-002 the
+  gate blocks EVERY word-first pick at the loosest threshold (0.35),
+  i.e. gold onsets score <0.35 while chatter states on OTHER dialog
+  lessons score >0.35. The score does not rank "real turn onset" above
+  "chatter" on self-history states.
+- Root cause is the same off-distribution trap, one level up: the gate
+  only ever saw gold histories and BOUNDED synthetic corruptions.
+  Decode visits pt3's own compounded states — e.g. dialog-001's first
+  gold onset arrives under an all-<sil> self-history, a state whose
+  training labels were always 0 (quiet stretches) but whose true label
+  here is 1. The trap follows the training-STATE distribution, not the
+  parameter grouping — four-point law now (9/10/11/gate1): whatever
+  you train, states off the training distribution break the skill.
+- freerun_diag now prints "gate P at gold onsets: tick:P ..." per
+  lesson to verify this tick-by-tick.
+
+Pre-agreed branch for half-works: audition render (dl-dgaud) — arm A
+gate-only 0.35 (the literal render; dialog-001's mute is audible),
+arm B gate 0.35 + approved stopgap rules (min-gap 4, user-gate, hold
+3), both full TRAIN4 lessons with picks + TTS into
+runs/model-audio-dense-pt3-gate035 / -gate-combo.
+
+Candidate next experiment (owner decision): train the gate on states
+pt3 actually VISITS — its own free-run rollouts on TRAIN4 with gold
+labels attached (DAgger-style, ~40 min) — so the all-sil-history-at-
+onset state is in-distribution with the right label. This tests the
+diagnosis directly; if scores separate there, Layer A has its recipe.
