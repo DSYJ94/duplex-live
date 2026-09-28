@@ -18,14 +18,20 @@
 # freerun_diag now also prints the gate's own P at the gold speech
 # onsets (gate1 diagnosis: dialog gold onsets score below chatter
 # states on other lessons -> full mute; the print verifies it
-# tick-by-tick). TTS overlay is pylibs-minicpm (no "o"). FULL LOG —
+# tick-by-tick). PYTHONPATH IS PER-STAGE: the TTS overlay
+# pylibs-minicpm vendors its own transformers (no
+# Qwen3OmniMoeThinkerForConditionalGeneration) — exported job-wide it
+# shadows the real one and killed 6913565 at 18 s; freerun gets
+# pylibs:$REPO, only the render stage gets the overlay. FULL LOG —
 # no grep.
 
 set -euo pipefail
 
 DL=/projects/u6si/duplex-live
 REPO=$DL/repo
-export HF_HOME=$DL/models/hf-cache TMPDIR=$DL/tmp PYTHONPATH=$DL/pylibs-minicpm:$DL/pylibs:$REPO
+export HF_HOME=$DL/models/hf-cache TMPDIR=$DL/tmp
+FREE_PP=$DL/pylibs:$REPO
+TTS_PP=$DL/pylibs-minicpm:$DL/pylibs:$REPO
 
 BATCH=$DL/runs/synth-dense1/audio
 TRAIN4="dense_dialog-001,dense_dialog-004,dense_barge-001,dense_barge-004"
@@ -38,7 +44,7 @@ run_arm () {
   local NAME=$1; shift
   echo "===== free-run pt3+gate $NAME (full TRAIN4, save picks) ====="
   apptainer exec --nv --bind /projects,/lus,/home \
-      --env PYTHONPATH=$PYTHONPATH --env HF_HOME=$HF_HOME --env TMPDIR=$TMPDIR \
+      --env PYTHONPATH=$FREE_PP --env HF_HOME=$HF_HOME --env TMPDIR=$TMPDIR \
       /projects/u6si/containers/latentsprites-pytorch-25.05.sif \
       python -m layera.freerun_diag --batch "$BATCH" \
       --ckpt "$CKPT" --shards $DL/runs/shards-dense2 \
@@ -46,7 +52,7 @@ run_arm () {
       --save-picks $DL/runs/picks-$NAME "$@"
   echo "===== render $NAME to audio ====="
   apptainer exec --nv --bind /projects,/lus,/home \
-      --env PYTHONPATH=$PYTHONPATH --env HF_HOME=$HF_HOME --env TMPDIR=$TMPDIR \
+      --env PYTHONPATH=$TTS_PP --env HF_HOME=$HF_HOME --env TMPDIR=$TMPDIR \
       /projects/u6si/containers/latentsprites-pytorch-25.05.sif \
       python -m evals.render_model_audio --picks $DL/runs/picks-$NAME \
       --batch "$BATCH" --out $DL/runs/model-audio-$NAME
