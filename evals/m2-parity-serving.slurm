@@ -34,15 +34,16 @@ TRAIN4="dense_dialog-001,dense_dialog-004,dense_barge-001,dense_barge-004"
 
 cd "$REPO"
 
-run_arm () {  # $1 tag  $2 extra flags
-  echo "===== m2.2a parity arm $1 ====="
+run_arm () {  # $1 tag; the rest = extra freerun flags, verbatim
+  local TAG=$1; shift
+  echo "===== m2.2a parity arm $TAG ====="
   apptainer exec --nv --bind /projects,/lus,/home \
       --env PYTHONPATH=$PYTHONPATH --env HF_HOME=$HF_HOME --env TMPDIR=$TMPDIR \
       /projects/u6si/containers/latentsprites-pytorch-25.05.sif \
       python -m m2.parity --ckpt "$CKPT" --shards "$SHARDS" \
       --scenarios "$TRAIN4" --gate-ckpt "$GATE" --gate-threshold 0.5 \
       --user-gate --gate-hold 3 --batch "$BATCH" \
-      --out $DL/runs/m2-parity-serving-$1 $2
+      --out $DL/runs/m2-parity-serving-$TAG "$@"
 }
 
 run_arm batched --save-picks $DL/runs/picks-m2-serving
