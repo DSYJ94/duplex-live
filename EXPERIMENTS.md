@@ -1312,3 +1312,41 @@ gate2@0.5 + min-gap 8/16 + user-gate hold 3. All thr 0.5.
   gate2-in-loop buffer, quiet-side rebalance) or acceptance (best
   audible config into M2 — gate2@0.5 + user-gate: near-perfect
   onsets, murmur between turns bounded live by the energy gate).
+
+## GATE ROUND 3 (12-shard DAgger) — verdict (2026-09-29, job 6952939)
+
+Buffer: 10,119 states from ALL 12 training lessons (60.6% speech),
+rollout with gate2 active @0.5, buffer batch 512; trained to acc
+0.985, buffer acc 0.869 (round 2: 0.957 on 2400 states — with 4x the
+states the gate is NOT memorizing; it still fails). First submission
+timed out at 2h (12-min/lesson rollout; walltime now 4h).
+
+| threshold | dialog-001 | dialog-004 | barge-001 | barge-004 |
+|---|---|---|---|---|
+| 0.35 | 0/5 exact, 28% chatter | 0/5, 60% | 2/4, 68% | 1/3, 50% |
+| 0.5  | 0/5 exact, 18% chatter | 0/5, (692 blk) | — | — |
+| 0.65 | 0/5 exact, 8.6% | 0/5, 6.4% | 1/4, 26% | 0/3, 26% |
+
+HELD @0.5: exact 0/4, 2/5, 0/3, 0/3; chatter 21-28%. Gate P at gold
+onsets: mostly 0.01-0.35 (recognition GONE — round 2 had 0.66-1.00).
+
+- **Round 3 landed BETWEEN the two walls: partial hush, lost
+  placement.** Three rounds = three operating points on ONE frontier:
+  gate1 (gold states) = mute pole; gate2 (4-lesson DAgger) = chatter
+  pole with perfect placement (16/17); gate3 (12-lesson DAgger, 10k
+  states) = middle, good at neither. The recipe family does not
+  break the trade-off — it moves the operating point. FIVE-POINT LAW
+  (probes 9/10/11, gates 1/2/3): the aux gate reads the SAME trunk
+  state the word head misreads; "real turn-start vs chatter" is not
+  separable from that state alone, whatever the training recipe.
+- v3 metric note: at 0.65 the genuinely-quiet half nearly passes
+  (trained 1.9-6.0%, held 3/4 lessons under bar) but R 0.15-0.46 and
+  0-2/15 exact — the polite-but-nearly-mute pole. Not usable.
+- **Consequence for the plan**: the murmur will not be fixed inside
+  this gate family. The law's own remedy is state-coverage = MORE
+  LESSONS = the scaling run (layer 3) — which the allocation's
+  remaining hours are for anyway. Demo config stays gate2@0.5 +
+  user-gate (perfect placement, murmur bounded live by the energy
+  rule). One genuinely-new cheap hypothesis remains: gate input =
+  trunk state + user-audio energy (the human cue the current gate
+  never sees) — round 4, ~1 GPU-hr, optional.
