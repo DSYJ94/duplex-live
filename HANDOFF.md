@@ -650,3 +650,16 @@ queued: forced word alignment, BPE-level sampler tokens.
   cannot rule your way out of a wrong prior. What's left: training
   (gate round 3, iterated DAgger w/ quiet rebalance) or acceptance
   (M2 on gate2@0.5 + user-gate). Decision brought to owner.
+- **M2.2a RESULT (job 6923669): parity property HOLDS on the serving
+  decode — paced vs dry picks identical, 0 mismatches on all 4
+  TRAIN4 lessons with gate2@0.5 + user-gate in the loop; picks-m2-
+  serving saved as the live-loop reference. The speed gate FAILED,
+  now precisely measured: quiet ticks p50 55.3 ms (fits 80 ms);
+  SPEAKING ticks p50 417 ms, p95 ~430 ms, max ~497 ms (piece loop,
+  ~3.3 pieces/tick avg) -> adherence 3.8-10%.** Milestone 2b
+  (decisions on time, pieces in arrears) is the validated fix;
+  eager/compile kernel bench deferred into the 2b job (job exited
+  at arm 1 under set -e; the loop shape changes in 2b anyway).
+  Gate round 3 first submission timed out at 2h (12-lesson rollout
+  ~12 min/lesson; 9/12 collected, no checkpoint) -> walltime 4h,
+  resubmitted.

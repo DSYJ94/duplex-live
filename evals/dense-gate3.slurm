@@ -4,7 +4,7 @@
 #SBATCH --account=brics.u6si
 #SBATCH --nodes=1
 #SBATCH --gres=gpu:1
-#SBATCH --time=02:00:00
+#SBATCH --time=04:00:00
 #SBATCH --output=logs/dl-gate3-%j.out
 
 # GATE ROUND 3 (owner decision 2026-09-28: "both in parallel" with M2).
