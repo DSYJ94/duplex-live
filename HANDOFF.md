@@ -663,3 +663,12 @@ queued: forced word alignment, BPE-level sampler tokens.
   Gate round 3 first submission timed out at 2h (12-lesson rollout
   ~12 min/lesson; 9/12 collected, no checkpoint) -> walltime 4h,
   resubmitted.
+- **GATE 3 VERDICT (12-shard DAgger, job 6952939, 10,119 states):
+  FIVE-POINT LAW — three gate rounds are three operating points on
+  ONE frontier (gate1=mute pole, gate2=chatter pole w/ perfect
+  placement, gate3=middle: held chatter 21-28% but onset P collapsed
+  to 0.01-0.35, exact 0-2/15). Buffer acc 0.869 (not memorizing) and
+  still fails -> the trunk state alone cannot separate turn-start
+  from chatter in this recipe family. Murmur fix = state coverage =
+  the scaling run. Demo config: gate2@0.5 + user-gate. Optional
+  round-4 hypothesis: gate input += user-audio energy.**
