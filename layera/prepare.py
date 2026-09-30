@@ -158,6 +158,12 @@ def main() -> None:
         picked = rows[:args.limit]
     for row in picked:
         sc_dir = batch / row["dir"]
+        # resume: skip scenarios already sharded, so a timed-out job
+        # resumes on resubmit (same pattern as the render clip cache)
+        if (out / f"{row['scenario_id']}.pt").exists():
+            print(f"[prep] {row['scenario_id']}: shard exists, skipping",
+                  flush=True)
+            continue
         shard = prepare_scenario(model, proc, sc_dir, proc.tokenizer)
         torch.save(shard, out / f"{shard['scenario_id']}.pt")
         print(f"[prep] {shard['scenario_id']}: {shard['n_ticks']} ticks, "

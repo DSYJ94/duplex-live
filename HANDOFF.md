@@ -672,3 +672,61 @@ queued: forced word alignment, BPE-level sampler tokens.
   from chatter in this recipe family. Murmur fix = state coverage =
   the scaling run. Demo config: gate2@0.5 + user-gate. Optional
   round-4 hypothesis: gate input += user-audio energy.**
+
+## 2026-09-30 — scaling run prepared (owner-approved "scaling run + M2")
+
+One command launches the whole chain, cert-lapse-proof (each stage
+self-chains the next with sbatch --dependency=afterok):
+`sbatch evals/scale1-data.slurm`
+1. **scale1-data** (12h): banks (Qwen3-Omni text-only, ADR-clean;
+   reused if present) -> 240 dense timelines (120/class, seed 23 —
+   dense_dialog+dense_barge ONLY, the classes every probe measured)
+   -> MiniCPM render, 2 workers. Timeout-safe: clip cache resumes;
+   then chains filter -> shard jobs.
+2. **scale1-shard** (12h): prepare over filter-passed lessons;
+   resume-safe (skips existing shard .pt files — new). Chains train.
+3. **scale1-train** (24h): probe-9 recipe UNCHANGED (v2 labels,
+   ww3, SH0) on ~224 lessons, 2000 steps (~9 passes/lesson vs
+   probe9's ~100 — same recipe, coverage instead of memorization),
+   --save-every 200 (new; tmp+rename atomic). Held-out = idx
+   113-120/class, closing free-run on 4 of them. Calibrate STEPS
+   vs probe9 elapsed (sacct 6905339) before first submit; resume
+   = TRAIN_INIT=<ckpt>.
+Trainer changes: train_p1 --save-every; prepare skip-existing.
+BEFORE SUBMIT: `! clifton auth` (cert lapsed again), git pull on
+cluster, md5sum check, then check walltime caps + probe9 elapsed.
+
+### Research passes (2 background agents, 2026-09-30) — what prior work says
+
+**Serving side (M2):** Moshi's Mimi codec = 80ms causal frames,
+zero lookahead, 200ms end-to-end — our 80ms tick is a published,
+working design point. Rolling-window incremental encode = standard
+cached-left-context streaming; the hard 4s drop-oldest truncation
+is OUR untested part (M2.3). Piece bank = "limited-domain
+concatenative/unit-selection synthesis", a named 30-year-old
+technique; known join artifacts (pitch/phase/energy mismatch) with
+cheap mitigations: cut units at pitch epochs + short crossfade.
+Barge-in in deployed stacks = cut at output-buffer granularity
+(~20-100ms), hard cut with a few-ms gain ramp; no one fades.
+**M2 actionables: 2c piece bank should cut at pitch epochs and
+crossfade joins; barge-in per-piece check matches practice.**
+
+**Training side (scaling run):** field floor for real duplex
+behavior is ~2,000 REAL hours (Fisher; Moshi: 7M hours mono did
+NOT buy placement — it needed Fisher + RL). Largest synthetic
+push: SyncLLM 212k synthetic hours (helped meaningfulness; timing
+still collapsed out-of-domain 0.43 -> 0.23). Our 240 lessons ≈
+single-digit AUDIO-hours — tiny in hours, but (a) our trunk is
+already fully speech+language-capable (we train ONLY 10 timing
+tokens), (b) our lessons are saturated with turn-taking events
+(Fisher hours are sparse in them), (c) direction is precedented
+(synthetic duplex-format data at scale helps), magnitude untested.
+Aux turn-taking heads on frozen trunk states ARE published
+(Freeze-Omni: linear 3-state head on hidden states — near-identical
+to our gate); our exact failure mode (can't split turn-start from
+chatter on those states) is NOT published; nearest analog dGSLM
+answered nearly every pause (TOR 0.93). Kyutai's own fix for
+timing was RL with timing rewards (interrupt latency 1.38 -> 0.46s)
+— the known complement if scaling alone lands short. Behavior-
+balanced mixtures are the other lever (our scenario classes ARE
+that taxonomy; currently only the 2 dense classes scale).

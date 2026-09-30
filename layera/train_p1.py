@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import random
 import time
 from pathlib import Path
@@ -185,6 +186,11 @@ def main() -> None:
                          "exposure — resume the rows and turn SH on, "
                          "rather than re-learning both from scratch")
     ap.add_argument("--out", default="runs/p1-v1")
+    ap.add_argument("--save-every", type=int, default=0,
+                    help="periodic checkpoint every N steps (0 = only "
+                         "at the end). Why: a long run killed by a "
+                         "timeout keeps its trained rows instead of "
+                         "losing everything (gate-3 lesson)")
     args = ap.parse_args()
 
     from transformers import AutoProcessor, Qwen3OmniMoeThinkerForConditionalGeneration
@@ -382,6 +388,23 @@ def main() -> None:
     step = 0
     t0 = time.time()
     losses = []
+
+    def save_ckpt(step):
+        # text_config.tie_word_embeddings is False -> embed and head are
+        # SEPARATE tensors; both new-row deltas must be saved or the
+        # trained head is lost on reload.
+        ck = {"emb_delta_new_rows": emb_w[n_old:].detach().cpu(),
+              "head_delta_new_rows": head_w[n_old:].detach().cpu(),
+              "n_old": n_old, "steps": step, "args": vars(args)}
+        if adapter is not None:
+            ck["adapter_state"] = {k: v.detach().cpu()
+                                   for k, v in adapter.state_dict().items()}
+        # tmp + rename: a kill mid-save leaves the previous good
+        # checkpoint, not a truncated file
+        tmp = out / "p1_checkpoint.pt.tmp"
+        torch.save(ck, tmp)
+        os.replace(tmp, out / "p1_checkpoint.pt")
+
     while step < args.steps:
         for sp in shards:
             shard = torch.load(sp, weights_only=False)
@@ -478,19 +501,13 @@ def main() -> None:
             if step % 8 == 0:
                 print(f"[p1] step {step}: loss {sum(losses[-8:])/8:.4f} "
                       f"({time.time()-t0:.0f}s)", flush=True)
+            if args.save_every and step % args.save_every == 0:
+                save_ckpt(step)
+                print(f"[p1] checkpoint saved @ step {step}", flush=True)
             if step >= args.steps:
                 break
 
-    # text_config.tie_word_embeddings is False -> embed and head are
-    # SEPARATE tensors; both new-row deltas must be saved or the trained
-    # head is lost on reload.
-    ck = {"emb_delta_new_rows": emb_w[n_old:].detach().cpu(),
-          "head_delta_new_rows": head_w[n_old:].detach().cpu(),
-          "n_old": n_old, "steps": step, "args": vars(args)}
-    if adapter is not None:
-        ck["adapter_state"] = {k: v.detach().cpu()
-                               for k, v in adapter.state_dict().items()}
-    torch.save(ck, out / "p1_checkpoint.pt")
+    save_ckpt(step)
     print(f"[p1] done: {step} steps, final loss {losses[-1]:.4f} -> {out}")
 
 
