@@ -730,3 +730,47 @@ timing was RL with timing rewards (interrupt latency 1.38 -> 0.46s)
 — the known complement if scaling alone lands short. Behavior-
 balanced mixtures are the other lever (our scenario classes ARE
 that taxonomy; currently only the 2 dense classes scale).
+
+## 2026-09-30 (later) — SCALE1 CHAIN LAUNCHED + RL plan + ADR amended
+
+**Chain is RUNNING.** Data job 6960233; watcher armed (stage
+transitions + terminal states; chain is cert-lapse-proof internally).
+Calibration measured before launch: probe9 = 400 steps / 1h05m35s
+(~10 s/step) -> 2000 steps ≈ 5.5 h (24 h budget fine); shard
+encoder = 12 lessons / 67 s (~5 s/lesson -> ~20 min for 240);
+prior render 4.5 min warm; clip cache holds 2,753 clips; workq
+MaxTime=UNLIMITED. md5 verified all 7 touched files local==cluster.
+
+**ADR-0003 Amendment A (2026-09-30): closed-content cleared
+generally** — enterprise agreement licenses closed-API content for
+training; provenance tags stay as hygiene, not a gate. Agent rule:
+stop citing public provider terms here (owner: they are not the
+current authority). Wave-2 option now open: content banks from the
+ChatGPT API (same banks.json format, banks-gpt module = small) —
+decide at wave 2; the running chain uses Qwen3-Omni banks.
+
+### RL exploration (owner 2026-09-30: "explore the right policy and
+### training method while we have compute")
+
+Two-probe ladder, cheapest first, START AFTER scale1 reads out:
+- **RL-probe 1 — head-DAgger (~hours, reuses gate-2/3 machinery).**
+  train_gate's DAgger rollout already produces (on-policy state,
+  label) pairs; relabel them GOLD for the WORD HEAD and train the
+  head rows on that buffer (new small trainer, e.g.
+  layera/train_head_dagger.py; save rollout states once to
+  runs/dagger-states). Rationale: chatter = the ~91% quiet-word
+  prior never corrected on visited states; DAgger gives exposure
+  WITHOUT poisoned context (self-history probes failed on corrupt
+  inputs; this keeps inputs real, labels gold — exactly what fixed
+  placement ranking in gate round 2). Pass bar v2 unchanged: held
+  chatter <10% AND exact onsets >=90%.
+- **RL-probe 2 — segment GRPO with timing rewards (~1-2 GPU-days to
+  first signal; Kyutai's published lever).** Mine short behavior-
+  dense segments (60-120 ticks around pauses/interrupts) from
+  timelines; K=8 group rollouts per segment; reward = bar-v2 metrics
+  (exact onset +, chatter −, mute −); group-normalized advantage;
+  update ONLY the 10 new-token rows (+gate). Kyutai precedent:
+  interrupt latency 1.38 -> 0.46 s. Cost wall = full-lesson rollouts
+  (12 min/lesson) — segments are the fix; batch the K samples.
+- Decision rule: probe 1 first. Chatter fixed -> stop. Partial ->
+  GRPO. Both fit the allocation before it ends 2026-10-21.
