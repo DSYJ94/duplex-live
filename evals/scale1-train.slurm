@@ -56,8 +56,23 @@ apptainer exec --nv --bind /projects,/lus,/home \
     --lessons "$TRAIN_LIST" $INIT_ARGS \
     --out "$OUT"
 
-echo "===== free-run on 4 held-out lessons (diagnostic: pt1 alone is expected to murmur; gates come after) ====="
-HELD="dense_dialog-113,dense_dialog-115,dense_barge-113,dense_barge-115"
+echo "===== free-run on held-out lessons (diagnostic: pt1 alone is expected to murmur; gates come after) ====="
+# pick up to 2 held-out lessons per class (idx 113-120) that actually
+# HAVE shards — the filter can kill specific lessons, and a fixed name
+# list crashed the diagnostic in round 1 (only 8 shards existed)
+HELD=""
+for cls in dense_dialog dense_barge; do
+    n=0
+    for i in $(seq 113 120); do
+        id=$(printf '%s-%03d' "$cls" "$i")
+        if [ -f "$SHARDS/$id.pt" ] && [ "$n" -lt 2 ]; then
+            HELD="$HELD,$id"; n=$((n + 1))
+        fi
+    done
+done
+HELD=${HELD#,}
+[ -n "$HELD" ] || { echo "no held-out shards found in $SHARDS"; exit 1; }
+echo "held-out freerun lessons: $HELD"
 apptainer exec --nv --bind /projects,/lus,/home \
     --env PYTHONPATH=$PYTHONPATH --env HF_HOME=$HF_HOME --env TMPDIR=$TMPDIR \
     /projects/u6si/containers/latentsprites-pytorch-25.05.sif \
