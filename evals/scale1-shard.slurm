@@ -27,7 +27,7 @@ apptainer exec --nv --bind /projects,/lus,/home \
     --env PYTHONPATH=$PYTHONPATH --env HF_HOME=$HF_HOME --env TMPDIR=$TMPDIR \
     /projects/u6si/containers/latentsprites-pytorch-25.05.sif \
     python -m layera.prepare --batch $DL/runs/synth-scale1/audio \
-        --out $DL/runs/shards-scale1
+        --out $DL/runs/shards-scale1 --per-class 999
 
 SHARD_JOB=$(sbatch --parsable --dependency=afterok:$SLURM_JOB_ID \
     -o $DL/logs/dl-sc1train-%j.out $DL/repo/evals/scale1-train.slurm)
