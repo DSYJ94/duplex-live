@@ -774,3 +774,27 @@ Two-probe ladder, cheapest first, START AFTER scale1 reads out:
   (12 min/lesson) — segments are the fix; batch the K samples.
 - Decision rule: probe 1 first. Chatter fixed -> stop. Partial ->
   GRPO. Both fit the allocation before it ends 2026-10-21.
+
+## 2026-10-01 — scale1 verdict (FAIL), chain postmortem, gate1-on-scale1 launched
+
+- **Scale1 readout: the pass bar failed both halves** (5/17 exact
+  onsets, false speech 41-75%, one fully-mute held lesson). 33x
+  coverage on the unchanged recipe did not break the five-point
+  frontier — same trade at scale, per-lesson pole mixing. Full table
+  in EXPERIMENTS.md "SCALE1 (the scaling run)".
+- **Three chain incidents, all fixed + pushed**: shard --limit 8 bug
+  (commit 9cc4213, invalid 8-lesson train cancelled ~2.5 GPU-h in);
+    rerender manifest-append duplication (scale1-rerender.slurm);
+  dialogroll part-file naming (globbed). Dialog filter collapse is
+  SYSTEMATIC (base-rate clip babble; re-rolls +5/round, exhausted).
+  Render-side per-clip ASR check = the queued fix if dialog coverage
+  matters. Gallery: runs/synth-scale1 synced (240 lessons audible).
+- **LAUNCHED: evals/scale1-gate1.slurm** — gate round 1 on the scaled
+  trunk (runs/scale1-pt1), UNGATED 8-lesson DAgger rollout (4 dialog +
+  4 barge), sweep mirrors gate rounds 1-3, held = the same 4 lessons
+  for direct comparison with the ungated verdict.
+- **Next after gate1-on-scale1 reads out**: RL-probe 1 head-DAgger
+  (train_gate rollout states -> gold labels for the WORD head rows;
+  needs layera/train_head_dagger.py written), then RL-probe 2 segment
+  GRPO per the plan above. M2 2b (piece-budget scheduling) still the
+  parallel track toward the Oct-14 audible goal.

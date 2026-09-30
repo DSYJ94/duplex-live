@@ -1350,3 +1350,41 @@ onsets: mostly 0.01-0.35 (recognition GONE — round 2 had 0.66-1.00).
   rule). One genuinely-new cheap hypothesis remains: gate input =
   trunk state + user-audio energy (the human cue the current gate
   never sees) — round 4, ~1 GPU-hr, optional.
+
+## SCALE1 (the scaling run) — verdict (2026-10-01, job 6971323, 5h55m)
+
+Coverage 33x on the UNCHANGED probe-9 recipe (v2 labels, ww3, SH0):
+131 filter-passed training lessons (111 dense_barge + 20 dense_dialog;
+240 rendered, filter passed 141) x 2000 steps (~15 passes/lesson),
+loss 5.2 -> 0.74. Held-out free-run UNGATED (self-history, the same
+instrument as every probe verdict), on the same 4 held lessons the
+closing diagnostic picks:
+
+| lesson | exact onsets | within +-1s | false speech (quiet ticks) |
+|---|---|---|---|
+| dense_dialog-116 | 3/5 | 5/5 | 249/452 = 55% |
+| dense_dialog-118 | 2/5 | 5/5 | 330/442 = 75% |
+| dense_barge-113 | 0/3 | 1/3 | 86/141 = 61% |
+| dense_barge-114 | 0/4 | 0/4 | 0% (FULL MUTE, 0 words, 271 sil-steals) |
+
+**VERDICT: FAIL both bar halves — 5/17 exact (29% vs >=90%), false
+speech 41-75% (vs <10%).** 33x more lessons did NOT break the
+five-point frontier: the run lands BETWEEN the poles lesson-by-lesson
+(3 chatter lessons + 1 mute lesson in the same checkpoint) — the same
+one-frontier trade the gate rounds mapped, now at scale. Notable:
++-1s placement is 10/10 on held dialog lessons (the timing circuit
+scales; it is the speech/silence discipline that does not).
+
+Run postmortem (chain bugs, all fixed + committed):
+- shard stage inherited prepare's default --limit 8 -> first train ran
+  on 8 lessons, cancelled, fixed via --per-class 999 (9cc4213).
+- filter collapsed dense_dialog: 19/120 round 1 (tail_babble on single
+  MiniCPM clips; lesson WER fine 0.04; NO culprit voice — base-rate
+  babble x dialog's many assistant clips). Re-roll rounds recover only
+  ~+5/roll (round 2: 24, round 3: 29) — re-roll lever EXHAUSTED.
+  Queued fix if dialog coverage matters: per-clip ASR check + retry
+  inside render.
+
+Next per plan: gate DAgger on the scaled trunk (evals/scale1-gate1.slurm,
+UNGATED 8-lesson rollout — can the 33x states split turn-start from
+chatter where dense-pt3 states could not), then RL-probe 1 (head-DAgger).
