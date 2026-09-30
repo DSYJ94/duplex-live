@@ -37,10 +37,11 @@ APPT="apptainer exec --nv --bind /projects,/lus,/home \
     --env PYTHONPATH=$PYTHONPATH --env HF_HOME=$HF_HOME --env TMPDIR=$TMPDIR \
     $CONTAINER"
 
-# failing dialog lessons from the CURRENT filter report
-FAILING=$($APPT python - <<'PY'
-import json, pathlib
-rep = [json.loads(l) for l in open("runs/synth-scale1/audio/filter_report.jsonl")]
+# failing dialog lessons from the CURRENT filter report (absolute paths:
+# job cwd is $REPO, data lives under $DL/runs)
+FAILING=$($APPT python - <<PY
+import json
+rep = [json.loads(l) for l in open("$DL/runs/synth-scale1/audio/filter_report.jsonl")]
 ids = [r["scenario_id"] for r in rep
        if r["scenario_class"] == "dense_dialog" and r["verdict"] == "fail"]
 print("\n".join(ids))
