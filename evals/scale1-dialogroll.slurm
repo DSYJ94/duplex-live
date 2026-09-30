@@ -75,11 +75,13 @@ $APPT python -m data.synthetic.render \
 # lessons. mv is atomic — a concurrently-running reader never sees a
 # partial manifest.
 $APPT python - <<PY
-import json, os
+import json, os, glob
 fail = set("""$FAILING""".split())
 keep = [json.loads(l) for l in open("$OUT_DIR/manifest.keep.jsonl")]
 kept = [r for r in keep if r["scenario_id"] not in fail]
-part = [json.loads(l) for l in open("$OUT_DIR/manifest.part1of1.jsonl")]
+part = []
+for p in glob.glob("$OUT_DIR/manifest.part*of1.jsonl"):
+    part += [json.loads(l) for l in open(p)]
 ids = [r["scenario_id"] for r in kept + part]
 assert len(ids) == len(set(ids)) == 240, f"manifest reassembly: {len(ids)} rows"
 with open("$OUT_DIR/manifest.jsonl.tmp", "w") as f:
