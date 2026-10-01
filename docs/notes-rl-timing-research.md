@@ -88,6 +88,81 @@ Four failure modes of naive GRPO with verifiable rewards, and fixes:
   segments) but cheap to include.
 - **Overlong truncation gaming**: n/a for fixed-length segments.
 
+## Mitigations IN PLACE (2026-10-01, pre-compute) — the side-effect
+## defenses, built before any GRPO launch
+
+Principle: the reward cannot see the side effects, so the eval must —
+and it must GATE, not just report.
+
+1. **Regression gate — BUILT** (`layera/panel.py`, validated against
+   the gate1 log: reproduces the 0/17 held verdict + flags exactly).
+   Parses freerun_diag logs (retroactive: works on every past/future
+   freerun without re-running), reports per-lesson exact / +-1s /
+   v3-chatter / R3 / full-mute, and pairs candidate-vs-baseline
+   occurrences. Gates: exact or +-1s fraction drops >5pt, chatter
+   rises >50 ticks, or a NEW full-mute pole (baseline mutes are the
+   bar's problem, not a candidate side effect; recovered mutes named).
+   Exit code gates slurm steps. Every RL readout runs
+   `--gate-vs scale1-baseline-log`.
+
+2. **Fresh held-out designation** — barge-115, barge-117, barge-119
+   (sharded, never used in ANY gate/scale/probe decision) are RESERVED;
+   no eval touches them before final readouts. GAP, honestly recorded:
+   NO fresh dialog lessons exist — of held-split dialog 113-120 only
+   116/118 have shards (the tail_babble filter collapse hit held dialog
+   too), and both are already selection-burned. Fix rides on the
+   owner-decision re-render (per-clip ASR check + fresh dialog held
+   lessons reserved from birth).
+
+3. **Reward arithmetic pinned (shortening and mute must LOSE money)** —
+   proposed rates: onset +1.0 exact / +0.3 within +-1s; chatter
+   -0.02/false-quiet-tick; missed answer -0.5; word recall +2.0 x R.
+   Segment-level checks (a ~15 s segment ~= 187 ticks):
+     full honest answer  ~= +1.0 + 1.8 - ~0      ~= +2.7
+     short answer (R~0.3) = +1.0 + 0.6            = +1.6  < full
+     all-mute             = -0.5                  < any speaking policy
+     chatter-everywhere   ~= +0.3 + 1.8 - 2.4..-3.7 < 0
+   So completing lines strictly beats shortening (recall term's
+   +1.4 marginal > ~0.2 in-window chatter exposure), speaking strictly
+   beats muting, and timed speech strictly beats chatter. train_grpo.py
+   MUST assert these inequalities at startup with the configured rates
+   — if a rate edit breaks a domination, launch refuses.
+
+4. **Training-time leashes (built into train_grpo.py at construction)**:
+   log KL-to-reference every step; abort if KL > 10x its initial value
+   (recipe mismatch = stop, not tune). Log policy entropy; entropy
+   < 20% of initial = mute-attractor forming = stop. DAPO dynamic
+   sampling resamples zero-advantage groups so mute-collapse cannot
+   hide as "no gradient".
+
+5. **Staged spend**: GRPO pilot first (small segment pool, a few
+   hours, panel-gated) -> owner go/no-go -> only then the 1-2 GPU-day
+   run. Kill switches above apply to the pilot too.
+
+6. **Human gate**: fixed gallery per readout (TRAIN4 + HELD4; + FRESH
+   at final) rendered via evals/render_model_audio.py and listened via
+   `python3 -m viz.listen`. The ear catches grid-legal-but-awful
+   behavior no token-stream scorer sees.
+
+7. **Parity rule (standing)**: any RL checkpoint entering the demo
+   config triggers an M2.2a parity re-run — noted now so it cannot
+   bite at demo time.
+
+8. **Critical assessment recorded** (owner challenge, 2026-10-01):
+   Kyutai is a prior, not gospel — their RL SHARPENED existing behavior
+   (ours must often CREATE it: barge-010 raw pass = 0 proposals,
+   dialog-012 = 2); their numbers are calibrated to 32xH100 full-FT;
+   their data realism (human timing statistics) does not transfer to
+   our scripted gold; their eval breadth caught their sycophancy
+   regression and we are only now building ours (#1 above). GRPO's
+   honest role here: FINISHER, not creator — dialog base rates are
+   non-zero (something to amplify: scale1 held dialog 5/17 exact,
+   10/10 +-1s placement); barge base rate ~0 (DAgger must raise it
+   first — probe 1 is exactly that). GRPO is justified as the only
+   tool optimizing the trajectory-level bar directly (per-tick
+   imitation compounds errors over 900 ticks and plateaus below the
+   90% bar), NOT by exploration breadth (our gold is near-unique).
+
 ## What was checked and did NOT change the plan
 
 - Q-network/critic: not needed at outcome-reward granularity (group
