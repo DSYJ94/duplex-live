@@ -198,7 +198,10 @@ def main() -> None:
 
     # ---- train ONLY the duplex head rows ------------------------------
     W = model.lm_head.weight                             # [V, d] frozen
-    W_frozen = W.detach()
+    # rollout states are captured fp32 (job 7001927: fp32 h @ bf16 W
+    # refuses to run) — train the head in fp32 throughout, cast back
+    # to bf16 only at checkpoint save. W is ~151k x 2048 fp32 = 1.2 GB.
+    W_frozen = W.detach().float()
     dW = torch.nn.Parameter(W[n_old:].detach().float().clone())
     opt = torch.optim.AdamW([dW], lr=args.lr)
     idx = torch.tensor(duplex_ids, device=H.device)
