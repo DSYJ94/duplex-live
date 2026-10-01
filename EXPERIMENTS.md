@@ -1388,3 +1388,31 @@ Run postmortem (chain bugs, all fixed + committed):
 Next per plan: gate DAgger on the scaled trunk (evals/scale1-gate1.slurm,
 UNGATED 8-lesson rollout — can the 33x states split turn-start from
 chatter where dense-pt3 states could not), then RL-probe 1 (head-DAgger).
+
+## GATE ROUND 1 ON SCALED TRUNK (scale1-gate1) — verdict (2026-10-01, job 6975066, 1:50)
+
+UNGATED DAgger on runs/scale1-pt1: 8-lesson rollout (4 dialog + 4
+barge), 4,374 word-first proposal states (59.8% speech), gate 529k
+params, 200 steps, acc 0.988 / buffer acc 0.930 (not memorizing).
+Sweep identical to gate rounds 1-3; held = the same 4 lessons as the
+scale1 ungated freerun.
+
+- Trained lessons: SAME per-lesson pole-mixing as the base model — one
+  lesson full-mute at every threshold (0 speech, 0/5), two near-mute
+  (R 0.01-0.06), one chatter pole (R 0.71, onsets 2-3/4 exact, false
+  speech massive). Threshold barely moves anything (0.35->0.65: R
+  0.709->0.727 on the chatter lesson).
+- HELD @0.5: 0/17 exact onsets total; 2 lessons fully mute, 1 chatter
+  (222 false-speech ticks), 1 near-mute. VERDICT: FAIL — bar v2 needs
+  >=90% exact AND <10% false speech; got 0% / mixed.
+- **The five-point law EXTENDS TO THE SCALED STATES: 33x coverage does
+  not make trunk-state-only separation possible for this gate family.**
+  Gate P at gold onsets is bimodal per lesson (1.00 on lessons where it
+  recognizes, 0.02-0.09 where it doesn't) — a lesson-level property,
+  not a state-level one.
+- Standing conclusions after scale1 + gate1-on-scale1: (a) placement/
+  timing scales with coverage; (b) speech/silence discipline does not,
+  via recipe-scaling OR gate-DAgger on these states. Remaining levers
+  per plan: RL-probe 1 head-DAgger (word-HEAD rows on dagger states —
+  different head than the gate), RL-probe 2 segment GRPO, gate input
+  += user-audio energy (round-4 hypothesis).
