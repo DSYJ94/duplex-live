@@ -1416,3 +1416,50 @@ scale1 ungated freerun.
   per plan: RL-probe 1 head-DAgger (word-HEAD rows on dagger states —
   different head than the gate), RL-probe 2 segment GRPO, gate input
   += user-audio energy (round-4 hypothesis).
+
+## RL-PROBE 1 (head-DAgger on scaled trunk) — FAIL, with a decisive finding
+(2026-10-02, jobs 7001927 -> crash -> 7003278; panel log in repo logs
+dl-sc1hd1-7003278.out)
+
+Recipe: 8-lesson raw-decode DAgger rollout on scale1-pt1 (4,374
+word-first-proposal states saved to runs/dagger-states/scale1.pt; 556
+word-gold = 12.7%, 3,818 control-gold), train ONLY the 11 duplex head
+rows, full-vocab CE, 300 steps (~12 s). UNGATED freerun on TRAIN4 +
+HELD4. Job 7001927 crashed at train start (fp32 states @ bf16 W —
+fixed bdaae6e) AFTER saving the buffer; relaunch resumed via --states.
+
+HELD4 paired vs the scale1 closing freerun (layera/panel.py, FAIL 3
+lesson-gates):
+  lesson          scale1 (base)     probe-1           gate
+  dialog-116      3/5 exact, 5/5±1s 0/5, 2/5          FAIL (all 3)
+  dialog-118      2/5 exact, 5/5±1s 0/5, 2/5          FAIL
+  barge-113       0/3, 1/3 (chatter)1/3, 2/3          PASS (marginal)
+  barge-114       0/4 FULL MUTE     2/4, 4/4±1s       FAIL chatter 54>0
+TRAIN4 (no ungated baseline; report-only): dialog-001/010 0/5, 2/5±1s
+(<speak>-chatter pole); barge-001 2/4; barge-004 3/4, 4/4±1s, and the
+ONLY lesson still emitting words (7 continuation pieces).
+
+**The finding: the <speak> collapse.** On 7 of 8 lessons continuation
+pieces went to ZERO and gold <word> accuracy to 0.000 with <speak>
+stealing word slots (barge-114: 58 of 66 word-gold ticks). The head
+training moved the speech/quiet competition but the model re-picked
+WHICH token embodies speech: <speak> (trainable duplex row) now
+out-competes words (frozen rows) at word ticks, and the piece
+continuation contract only follows WORD tokens — so the model became
+lexically silent BY CONSTRUCTION while the scorer still counts <speak>
+as speech. The barge "gains" are unverified by ear; the dialog
+regression alone fails the probe. Per-lesson pole mixing PERSISTS
+through head-row retraining — dialog-116 flipped to a <speak>-chatter
+pole, dialog-118 to a mute-ish pole (<speak>-><sil> x287). Five-point
+law survives its strongest attack yet: editing the readout at the
+source still re-arranges, not separates, the poles.
+
+Implications (owner decision 2026-10-02):
+1. GRPO on the 11 rows is contra-indicated as-is: shared linear-readout
+   ceiling now empirically demonstrated, AND the scorer counts
+   <speak>-only speech -> GRPO would farm exactly this loophole.
+2. Any future reward/bar MUST require lexical content (word event with
+   pieces) for speech/onset credit — "bar v3: lexical-verified onsets".
+3. The pre-declared escalation rung is licensed: LoRA-DAgger (probe
+   1b) adds nonlinear trunk capacity; saved hidden states are stale
+   under a changed trunk -> on-policy re-roll required (~4 h, 1 GPU).
