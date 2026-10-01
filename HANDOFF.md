@@ -798,3 +798,61 @@ Two-probe ladder, cheapest first, START AFTER scale1 reads out:
   needs layera/train_head_dagger.py written), then RL-probe 2 segment
   GRPO per the plan above. M2 2b (piece-budget scheduling) still the
   parallel track toward the Oct-14 audible goal.
+
+## 2026-10-01 (part 2) — gate1-on-scale1 FAIL, RL plan hardened, probe 1 running, mitigants in place
+
+- **Gate1-on-scale1 verdict: FAIL** (commit 47a52c2). 0/17 held exact;
+  gate P at gold onsets bimodal PER LESSON (0.98-1.00 vs 0.02-0.09) =
+  lesson-level property. The five-point law EXTENDS to the 33x scaled
+  states: the trunk state alone cannot separate turn-start from
+  chatter, and a side gate cannot fix it. Full table in EXPERIMENTS.md.
+- **RL plan reviewed against research BEFORE compute** (f274f9d,
+  docs/notes-rl-timing-research.md): Kyutai's full-duplex RL paper
+  (arXiv 2606.11167 — G=16 GRPO, reward-decoupled normalization,
+  context curriculum, joint-axis batches, interrupt latency 1.38->0.46s)
+  + DAPO failure modes (arXiv 2503.14476). 10 adoptions recorded.
+  Critical assessment (owner challenge): Kyutai is a prior, not gospel
+  — their RL SHARPENED existing behavior, ours must CREATE it (raw
+  passes here range from 1,161 word-proposals/lesson to ZERO); GRPO's
+  honest role = FINISHER on dialog (base rates non-zero), starved on
+  barge until DAgger injects behavior; the judge-free inversion stands
+  (scripted gold makes their LLM judge unnecessary).
+- **RL-probe 1 (head-DAgger) RUNNING**: job 7001927 on scale1-pt1,
+  8-lesson raw-decode rollout -> train ONLY the 11 duplex head rows
+  (layera/train_head_dagger.py, commit 35426b3) -> UNGATED freerun on
+  TRAIN4 + the same HELD4 as scale1 (direct comparison). Rollout
+  polarization CONFIRMS per-lesson pole mixing live: dialog-001/010
+  ~1,100 proposal states (chatter pole), barge-010 = 0 and
+  dialog-012 = 2 (mute pole — DAgger gets NO states there: it cannot
+  correct trajectories the model never leaves; known blindspot).
+  Buffer ~3,600 states, chatter-side dominant. Readout ~2h from 13:20
+  local.
+- **Mitigants IN PLACE (7f45ef0)**, per the owner's risk review:
+  - layera/panel.py — the regression GATE. Parses freerun logs
+    (retroactive), reports exact/+-1s/chatter3/R3/full-mute per
+    lesson, pairs candidate-vs-baseline; FAIL on exact/+-1s drop
+    >5pt, chatter +50 ticks, or a NEW full-mute (baseline mutes are
+    the bar's problem). Validated: reproduces gate1's 0/17 held
+    verdict from the real log; self-gate passes. EVERY RL readout
+    runs --gate-vs <scale1 baseline log>.
+  - Fresh set RESERVED: barge-115/117/119 (never eval'd). GAP: no
+    fresh DIALOG lessons exist (held dialog collapsed too; only
+    116/118 sharded, both selection-burned) — fix rides the
+    re-render decision below.
+  - Reward arithmetic PINNED (notes #3): full +2.7 vs shortened +1.6
+    vs mute -0.5 vs chatter <0; train_grpo.py MUST assert the
+    dominations at startup or refuse to launch.
+  - Leashes: KL logged every step (abort >10x initial), entropy
+    floor (abort <20% initial), DAPO dynamic sampling for
+    zero-advantage groups. Staged: pilot (hours, panel-gated) ->
+    owner go/no-go -> 1-2 GPU-day run. Gallery audition via
+    render_model_audio + viz.listen at every readout. Parity rule:
+    any RL checkpoint in the demo config -> M2.2a re-run.
+- **Pending owner decisions (bundled at probe-1 readout)**:
+  (a) GRPO go/no-go on the panel-gated probe-1 numbers — if probe 1
+  stalls, the decision is the LoRA escalation (notes #9), NOT more
+  11-row spend; (b) dialog re-render with per-clip ASR check + NEW
+  fresh dialog held lessons (fixes the 29/120 filter collapse AND the
+  freshness gap; GRPO wants the segment pool either way).
+- **Parallel always**: M2 2b (piece-budget scheduling) — the live
+  loop is on the critical path to Oct-14 regardless of RL.
