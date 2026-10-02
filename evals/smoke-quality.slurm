@@ -27,28 +27,32 @@ ASSETS=$(ls -d $HF_HOME/hub/models--openbmb--MiniCPM-o-4_5/snapshots/*/assets | 
 VJ=$DL/models/voices/voices.json
 VARGS=""
 [ -f "$VJ" ] && VARGS="--voices $VJ --anchor-prob 0.5"
-APPT="apptainer exec --nv --bind /projects,/lus,/home \
-    --env PYTHONPATH=$PYTHONPATH --env HF_HOME=$HF_HOME --env TMPDIR=$TMPDIR \
-    $CONTAINER"
+# function, not a variable: PYTHONPATH is re-exported per stage and the
+# container must see the value current at CALL time
+appt() {
+    apptainer exec --nv --bind /projects,/lus,/home \
+        --env PYTHONPATH=$PYTHONPATH --env HF_HOME=$HF_HOME --env TMPDIR=$TMPDIR \
+        $CONTAINER "$@"
+}
 
 echo "===== smoke 1/4: render with judge + trim (dense_dialog-000, dense_barge-004) ====="
 export PYTHONPATH=$DL/pylibs-minicpm:$DL/pylibs:$REPO
-$APPT python -m data.synthetic.render \
+appt python -m data.synthetic.render \
     --timelines $DL/runs/synth-scale1/timelines --out $DL/tmp/smoke-q/audio \
     --assets "$ASSETS" --engine minicpm --only dense_ \
     --repair 1 --clip-cache $DL/tmp/smoke-q/cache $VARGS
 
 echo "===== smoke 2/4: filter (independent re-verify) ====="
 export PYTHONPATH=$DL/pylibs:$REPO
-$APPT python -m data.synthetic.filter --audio $DL/tmp/smoke-q/audio
+appt python -m data.synthetic.filter --audio $DL/tmp/smoke-q/audio
 
 echo "===== smoke 3/4: timing audit (fresh, trimmed audio) ====="
-$APPT python -m data.synthetic.timing_audit --batch $DL/tmp/smoke-q/audio
+appt python -m data.synthetic.timing_audit --batch $DL/tmp/smoke-q/audio
 
 echo "===== smoke 4/4: quality stamp + consumer gate ====="
-$APPT python -m data.synthetic.quality --batch $DL/tmp/smoke-q/audio \
+appt python -m data.synthetic.quality --batch $DL/tmp/smoke-q/audio \
     --timing $DL/tmp/smoke-q/audio/timing_report.jsonl
-$APPT python - <<'PYEOF'
+appt python - <<'PYEOF'
 from data.synthetic.quality import assert_verified, DataNotVerified
 try:
     recs = assert_verified("/projects/u6si/duplex-live/tmp/smoke-q/audio",
