@@ -114,7 +114,9 @@ class Decoder:
     which is the point (latency truth for the config we would serve)."""
 
     def __init__(self, model, proc, adapter, max_pieces: int, n_old: int,
-                 gate=None, gate_threshold: float = 0.5, cap=None):
+                 gate=None, gate_threshold: float = 0.5, cap=None,
+                 piece_mode: str = "inline", pieces_per_tick: int = 4,
+                 user_cut: bool = False):
         import torch
         self.torch = torch
         self.model = model
@@ -137,6 +139,31 @@ class Decoder:
         self.sil_id = next((i for i, n in self.name_of.items()
                             if n == "<sil>"), None)
         self.n_gate_block = 0
+        # Milestone 2b (piece-budget scheduling): "inline" is the
+        # M2.2a contract — a word pick runs its whole continuation
+        # inside the same tick (measured: speaking ticks p50 417 ms,
+        # nowhere near 80 ms). "arrears" makes the ear-frame DECISION
+        # the only latency-critical work of a tick: the model's own
+        # word tokens are owed to the cache and drain on the following
+        # ticks, pieces_per_tick forwards per tick, BEFORE the next ear
+        # frame (so whenever the backlog fits the budget, the cache
+        # order is exactly the inline order and the picks match; runs
+        # longer than the budget interleave with ear frames — the
+        # divergence vs the inline reference is printed). The drain
+        # rule is deliberately NOT deadline-aware: dry and paced passes
+        # must take the same path or the parity gate loses meaning.
+        # user_cut (arrears only): a per-piece user-speech check — when
+        # the user starts talking, the remaining pieces are dropped
+        # (the model is cut off mid-word) instead of finishing the
+        # word.
+        if piece_mode not in ("inline", "arrears"):
+            raise ValueError(f"unknown piece_mode {piece_mode!r}")
+        self.piece_mode = piece_mode
+        self.pieces_per_tick = pieces_per_tick
+        self.user_cut = user_cut
+        self.pending: list[int] = []   # word tokens owed to the cache
+        self.n_dropped_user = 0        # pieces dropped by a barge-in cut
+        self.n_user_cuts = 0
 
     def kind_of(self, tok: int) -> str:
         if tok >= self.n_old:
@@ -158,14 +185,27 @@ class Decoder:
             logits[tid] = float("-inf")
         return int(logits.argmax())
 
+    def _feed(self, cache, tok: int):
+        """One forward that inserts an already-decided word token;
+        returns (cache, next pick)."""
+        e = self.emb(self.torch.tensor(
+            [[tok]], device=self.model.device))
+        out = self.model(inputs_embeds=e, past_key_values=cache,
+                         use_cache=True)
+        return out.past_key_values, \
+            int(self.clean_argmax(out.logits[0, -1].clone()))
+
     def tick(self, feat, cache, user_blocked: bool = False):
         """One tick: ear feature in, decision + continuation pieces out.
         Returns (pick, n_pieces, cache). Body mirrors freerun_diag
         run_lesson — the first non-word breaker is discarded, and with
         the serving decode the word-first pick must pass the activity
         gate and clear the user-speech mask (a word already in flight
-        always completes, same as live)."""
+        always completes, same as live — except in arrears mode with
+        user_cut, where the barge-in cuts the word instead)."""
         torch = self.torch
+        if self.piece_mode == "arrears":
+            return self._tick_arrears(feat, cache, user_blocked)
         e_in = self.emb(torch.tensor(
             [[self.pad_id]], device=self.model.device)).clone()
         e_in[0, 0] = feat.to(e_in.dtype)
@@ -185,17 +225,50 @@ class Decoder:
         pieces = 0
         tok = pick
         while self.kind_of(tok) == "word" and pieces + 1 < self.max_pieces:
-            e_out = self.emb(torch.tensor([[tok]], device=self.model.device))
-            with torch.no_grad():
-                out = self.model(inputs_embeds=e_out,
-                                 past_key_values=cache, use_cache=True)
-            cache = out.past_key_values
-            nxt = self.clean_argmax(out.logits[0, -1].clone())
+            cache, nxt = self._feed(cache, tok)
             if self.kind_of(nxt) != "word":
                 break
             pieces += 1
             tok = nxt
         return pick, pieces, cache
+
+    def _tick_arrears(self, feat, cache, user_blocked: bool):
+        """The 2b tick. 1) drain owed word tokens (fixed budget, the
+        same rule every tick so dry == paced), each insertion cut short
+        if the user started talking and user_cut is on; 2) ear frame
+        in, decision out — a word pick is QUEUED, not run, so the tick
+        costs one forward plus at most pieces_per_tick drains."""
+        torch = self.torch
+        n_drain = 0
+        while self.pending and n_drain < self.pieces_per_tick:
+            if user_blocked and self.user_cut:
+                self.n_dropped_user += len(self.pending)
+                self.n_user_cuts += 1
+                self.pending = []
+                break
+            cache, nxt = self._feed(cache, self.pending.pop(0))
+            n_drain += 1
+            if self.kind_of(nxt) == "word":
+                self.pending.append(nxt)
+        e_in = self.emb(torch.tensor(
+            [[self.pad_id]], device=self.model.device)).clone()
+        e_in[0, 0] = feat.to(e_in.dtype)
+        with torch.no_grad():
+            out = self.model(inputs_embeds=e_in, past_key_values=cache,
+                             use_cache=True)
+        cache = out.past_key_values
+        pick = self.clean_argmax(out.logits[0, -1].clone())
+        if pick < self.n_old and self.gate is not None:
+            p = float(torch.sigmoid(self.gate(
+                self.cap["h"][0, -1].detach().unsqueeze(0))[0]))
+            if p < self.gate_threshold:
+                pick = self.sil_id
+                self.n_gate_block += 1
+            elif user_blocked:
+                pick = self.sil_id
+        if self.kind_of(pick) == "word":
+            self.pending.append(pick)
+        return pick, n_drain, cache
 
 
 def run_pass(dec: Decoder, feats, paced: bool, tick_s: float,
@@ -207,6 +280,12 @@ def run_pass(dec: Decoder, feats, paced: bool, tick_s: float,
     mask, same source as the free-run. Returns (first_picks, records);
     per tick: {tick, compute_ms, n_pieces[, start_delay_ms, late]}."""
     t0 = time.monotonic()
+    # per-pass decoder state reset: pending pieces and cut counters
+    # must start clean or the dry pass leaks its queue into the paced
+    # pass (and the second scenario inherits the first's)
+    dec.pending = []
+    dec.n_dropped_user = 0
+    dec.n_user_cuts = 0
     picks, records, cache = [], [], None
     for i in range(len(feats)):
         deadline = t0 + (i + 1) * tick_s
@@ -222,7 +301,8 @@ def run_pass(dec: Decoder, feats, paced: bool, tick_s: float,
         pick, n_pieces, cache = dec.tick(feats[i], cache, user_blocked=ub)
         c1 = time.monotonic()
         rec = {"tick": i, "compute_ms": round((c1 - c0) * 1000, 3),
-               "n_pieces": n_pieces}
+               "n_pieces": n_pieces,
+               "backlog": len(getattr(dec, "pending", []))}
         if paced:
             rec["start_delay_ms"] = round(start_delay_ms, 3)
             rec["late"] = start_delay_ms > LATE_GRACE_MS
@@ -274,6 +354,23 @@ def main() -> None:
                          "pcm (needs --batch), same user_block_mask as "
                          "the free-run")
     ap.add_argument("--gate-hold", type=int, default=3)
+    ap.add_argument("--piece-mode", default="inline",
+                    choices=["inline", "arrears"],
+                    help="inline: continuation pieces run inside the "
+                         "picking tick (M2.2a contract; speaking ticks "
+                         "measured 417 ms). arrears: the milestone-2b "
+                         "scheduler — the ear-frame decision is the "
+                         "only latency-critical work; the model's word "
+                         "tokens drain on later ticks, at most "
+                         "--pieces-per-tick forwards per tick, before "
+                         "the next ear frame so cache order tracks the "
+                         "inline order whenever the backlog fits")
+    ap.add_argument("--pieces-per-tick", type=int, default=4)
+    ap.add_argument("--user-cut", action="store_true",
+                    help="arrears only: a per-piece user-speech check — "
+                         "the user talking drops the remaining pieces "
+                         "(model cut off mid-word) instead of letting "
+                         "words in flight complete")
     ap.add_argument("--batch", default=None,
                     help="scenario batch dir (train_manifest.jsonl) — "
                          "required with --user-gate")
@@ -327,7 +424,14 @@ def main() -> None:
               f"{len(blocked_by_sid)} scenarios in batch)", flush=True)
 
     dec = Decoder(model, proc, adapter, args.max_pieces, n_old,
-                  gate=gate, gate_threshold=args.gate_threshold, cap=cap)
+                  gate=gate, gate_threshold=args.gate_threshold, cap=cap,
+                  piece_mode=args.piece_mode,
+                  pieces_per_tick=args.pieces_per_tick,
+                  user_cut=args.user_cut)
+    print(f"[m2] piece mode {args.piece_mode}"
+          + (f" (pieces_per_tick={args.pieces_per_tick}"
+             f", user_cut={args.user_cut})"
+             if args.piece_mode == "arrears" else ""), flush=True)
 
     shard_paths = []
     for s in args.scenarios.split(","):
@@ -374,13 +478,27 @@ def main() -> None:
         pieces = sum(r["n_pieces"] for r in recs)
         gate_blk = f", {dec.n_gate_block} gate blocks" \
             if gate is not None else ""
-        print(f"[m2] {sid}: {n} ticks, {pieces} continuation pieces | "
+        # 2b arrears accounting: decision ticks (no drains) are the
+        # latency-critical ones; backlog shows whether the piece queue
+        # keeps up
+        dec_ticks = [r["compute_ms"] for r in recs
+                     if r["n_pieces"] == 0]
+        bl = [r["backlog"] for r in recs]
+        arrears = ""
+        if args.piece_mode == "arrears":
+            arrears = (f" | decision-only ticks {len(dec_ticks)}/{n} "
+                       f"p50 {pct(dec_ticks, .5) if dec_ticks else 0:.1f}"
+                       f" p95 {pct(dec_ticks, .95) if dec_ticks else 0:.1f}"
+                       f" ms | backlog avg {sum(bl) / max(n, 1):.2f}"
+                       f" max {max(bl)} | user cuts {dec.n_user_cuts}"
+                       f" ({dec.n_dropped_user} pieces dropped)")
+        print(f"[m2] {sid}: {n} ticks, {pieces} piece-feeds | "
               f"adherence {adherence:.2f}% ({late} late) | "
               f"compute p50 {pct(compute, .5):.1f} "
               f"p95 {pct(compute, .95):.1f} "
               f"p999 {pct(compute, .999):.1f} ms "
               f"max {max(compute):.1f} ms | parity mismatches {mismatch}"
-              f"{gate_blk}",
+              f"{gate_blk}{arrears}",
               flush=True)
         (out / f"{sid}.jsonl").write_text(
             "\n".join(json.dumps(r) for r in recs) + "\n")
@@ -388,6 +506,10 @@ def main() -> None:
                          "late": late, "adherence": adherence,
                          "mismatch": mismatch, "pieces": pieces,
                          "gate_blocks": dec.n_gate_block,
+                         "piece_mode": args.piece_mode,
+                         "pieces_per_tick": args.pieces_per_tick,
+                         "backlog_max": max(bl),
+                         "user_cuts": dec.n_user_cuts,
                          "p50_ms": pct(compute, .5),
                          "p95_ms": pct(compute, .95),
                          "p999_ms": pct(compute, .999),
