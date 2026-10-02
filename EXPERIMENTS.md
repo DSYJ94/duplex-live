@@ -10,6 +10,63 @@ how much of its confidence it put on the right token, on average.)
 quizzed on 8 lessons it NEVER saw (held-out). A run only counts if it
 passes on unseen lessons — that is generalization, not memorization.
 
+## THE SHORT VERSION (plain English, updated 2026-10-02)
+
+**The problem:** the model cannot tell when it is its turn to speak.
+On conversations it has never heard, it either butts in while the
+user is still talking, or sits silent when it should answer — and it
+almost never starts talking at exactly the right moment. Every fix so
+far only trades one mistake for the other: make it quieter and it
+misses its turns; let it talk and it interrupts. Nothing has fixed
+the timing itself.
+
+**What we proved on 2026-10-02 (two experiments, full entries below):**
+
+1. **D1 — the timing sense is not inside the model.** We trained
+   small pattern-detectors ("probes") to find one thought in the
+   model's internal numbers: "it is my turn to speak now." A working
+   detector scores near 1.0; a useless one scores 0.5 (coin flip).
+   Every detector — simple or fancy, inside one lesson, across
+   lessons, on lessons it never saw — scored coin flip. All the
+   earlier "reader" failures happened for this one reason: **there
+   was never anything there to read.** That family of fixes is closed
+   for good (including the LoRA add-on idea).
+2. **UGATE — even a fully external fix lands on the same trade.** A
+   loudness meter ("is the user talking right now?") blocked the
+   model from starting a word while the user speaks. Interruptions
+   halved (the meter works) but the model then started its turns too
+   late or missed them, and on user-heavy conversations the meter's
+   cutoff — chosen from that conversation's own loudness levels —
+   lands inside the user's speech, so the model got blocked almost
+   always and went completely silent. A meter that knows only
+   loudness cannot know whose turn it is.
+
+**The conclusion:** the timing problem is in the TRAINING DATA, not
+in the fixes. Our answer key says "model speaks at tick t" because
+the *script* says so — nobody ever checked that the *audio* matches
+the script clip by clip. A model trained on a mismatched answer key
+learns broken timing, and that is exactly what we observe.
+
+**Was the previous data prepared well?** Partly — and the gaps are
+now the main suspect:
+- The voices are good and whole-conversation checks passed (4% word
+  error). But checking stopped at the conversation level.
+- Individual clips were never checked. 120 practice conversations
+  were rendered; only 29 passed the conversation-level filter. We
+  treated the 91 failures as bad luck and re-rolled, instead of
+  finding the bad clips.
+- The timing answer key was never checked at all. Today's
+  inside-the-model result (D1) is exactly what mismatched timing
+  labels predict.
+
+**The solution (proposed, waiting on owner go-ahead):**
+1. **Audit the data first (cheap, minutes):** run speech-to-text on
+   every clip, compare with the script, drop or re-render bad clips,
+   rebuild the practice conversations with a verified answer key.
+2. **Build the live loop (M2) in parallel:** mic in, speech out, one
+   80 ms tick at a time. That is the path to something audible now,
+   with the model we already have.
+
 ## Decision rule for the Phase-1 checkpoint
 
 Pass the token exam AND the conversation gate:
@@ -1466,8 +1523,22 @@ Implications (owner decision 2026-10-02):
 
 ## D1: STATE DIAGNOSIS — no turn-start signal in the trunk states (2026-10-02, job 7019983, 85s)
 
-The check that arbitrates the root-cause theories BEFORE any more
-training (owner-approved): linear + MLP probes on the SAVED 4,374
+**Plain words:** do the model's internal numbers contain the thought
+"it is my turn to speak now"? We trained small detectors ("probes")
+to find that thought. A good detector scores near 1.0; a useless one
+scores 0.5 (a coin flip). **Every detector we built scored coin
+flip** — simple or fancy (MLP = a many-layer detector that can find
+patterns a simple one misses), within a single lesson, across
+lessons, and on lessons it never trained on ("leave-one-lesson-out",
+the test that decides whether a fix could work on new conversations).
+So the timing sense we kept trying to read out was never in the
+model. All earlier reader failures (gate rounds 1–3, linear and head
+variants) failed for this one reason, and no reader training can ever
+work: there is nothing to read. This also kills the planned LoRA
+experiment (a small add-on trained while the big model stays frozen)
+— an add-on reads the same numbers, and the numbers hold nothing.
+
+The detailed check, for the record: linear + MLP probes on the SAVED 4,374
 free-run states of scale1-pt1 (job 7001927 rollout; gold =
 script-clock emission label, train_head_dagger.py:161). Tasks:
 T1 word-vs-quiet (gold<n_old), T2 speech-vs-quiet (word|<speak>),
@@ -1520,6 +1591,28 @@ labels reward / what the model hears — not another readout of the
 same states.
 
 ## UGATE: the direct-path composition — same frontier, external mechanism (2026-10-02, job 7019984, ~2h)
+
+**Plain words:** this fix does not touch the model at all. A loudness
+meter (voice-activity detection: "is the user talking right now?")
+listens to the user's audio; while the meter says "talking", the
+model is not allowed to start a new word (words already underway
+finish). On the four exam conversations the model never trained on:
+interruptions HALVED — the meter really works — but the model then
+started its turns too late or missed them (its one-second answer
+window shrank from 5/5 hits to 2/5 on dialog-116), and on the
+user-heavy "barge" conversations the meter went wrong in a predictable
+way: its cutoff is chosen from the loudness levels *of that same
+conversation*, and when the user talks most of the time, even the
+"quiet" cutoff sits inside speech — so the model was blocked almost
+always and barge-113 went completely silent (the audio gallery
+confirms: zero model words). Trying a longer block (hold 12 ticks vs
+5) changed nothing. **Same trade as every other fix: quieter, but
+wrong. A meter that knows only loudness cannot know whose turn it
+is.** On the model's practice conversations the results were fine
+(dialog-001 4/5, barge-004 4/4) — the meter does not break what
+already works; it just cannot create turn-taking that isn't there.
+
+The detailed run, for the record:
 
 The owner-directed "target the problem directly" job: scale1-pt1
 (placement solved) + the one untapped INDEPENDENT channel (mic-energy

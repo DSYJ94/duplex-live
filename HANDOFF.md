@@ -859,6 +859,28 @@ Two-probe ladder, cheapest first, START AFTER scale1 reads out:
 
 ## 2026-10-02 (evening) — D1 + UGATE: the two decisive negatives; model-side levers CLOSED
 
+**Plain words — the problem, the finding, the fix.**
+*Problem:* the model cannot tell when it is its turn to speak — it
+interrupts or it goes silent, and it rarely starts at the right
+moment. Every fix so far just trades one mistake for the other.
+*What today proved:* (1) the sense of timing was never built inside
+the model — detectors looking for it in the model's internal numbers
+all scored coin-flip, so "train a small reader" fixes (LoRA included)
+can never work; (2) a loudness meter that mutes the model while the
+user talks halves interruptions but makes turns late/missed, and on
+user-heavy conversations it silences the model completely. *Root
+cause:* the training answer key ("model speaks at tick t") comes from
+the written script and was never checked against the actual audio,
+clip by clip. The model learned broken timing because the answer key
+is probably broken. *Solution, in order:* (1) audit the data —
+speech-to-text every clip, compare with the script, drop/re-render
+bad clips, rebuild the practice set (minutes of compute, no
+training); (2) build the M2 live loop (mic in, speech out) in
+parallel — that is the path to something audible by ~Oct 14 with the
+model we have. *Was the old data prepared well?* Voices yes,
+conversation-level checks yes, individual clips and the timing
+answer key no — and that is the gap to close first.
+
 Jobs 7019983 (D1 diag, 85s) + 7019984 (ugate direct-path, ~2h), both
 COMPLETED after the PYTHONPATH=$DL/pylibs fix (7a2fd08; both new
 scripts had dropped pylibs — transformers unresolved, died in ~10s).
