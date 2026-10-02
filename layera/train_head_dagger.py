@@ -124,7 +124,16 @@ def main() -> None:
         shards = sorted(Path(args.shards).glob("*.pt"))
         rows = [json.loads(l)
                 for l in open(Path(args.batch) / "train_manifest.jsonl")]
+        # fail-closed data rule: no shard without a passing quality record
+        from data.synthetic.quality import checked_rows
+        rows = checked_rows(Path(args.batch), rows, role="DAgger readout training")
         by_id = {r["scenario_id"]: r for r in rows}
+        unverified = [sp.stem for sp in shards if sp.stem not in by_id]
+        if unverified:
+            raise SystemExit(
+                f"[dagger] FAIL-CLOSED STOP: {len(unverified)} shard(s) have "
+                f"no verified conversation (first: {unverified[0]}) — "
+                f"re-prepare from a verified batch.")
         want = ({s.strip() for s in args.lessons.split(",") if s.strip()}
                 if args.lessons else None)
         if want is not None:

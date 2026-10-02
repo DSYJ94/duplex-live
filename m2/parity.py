@@ -416,8 +416,11 @@ def main() -> None:
             raise SystemExit("[m2] --user-gate needs --batch")
         from layera.freerun_diag import user_block_mask
         from layera.prepare import mix_in_slot
+        from data.synthetic.quality import checked_rows
         rows = [json.loads(l) for l in
                 open(Path(args.batch) / "train_manifest.jsonl")]
+        # fail-closed data rule: live-loop runs only on verified lessons
+        rows = checked_rows(Path(args.batch), rows, role="m2 live loop")
         blocked_by_sid = {r["scenario_id"]: Path(args.batch) / r["dir"]
                           for r in rows}
         print(f"[m2] user-gate ON (hold {args.gate_hold}, "

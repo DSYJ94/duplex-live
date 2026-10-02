@@ -236,6 +236,9 @@ def main() -> None:
 
     batch = Path(args.batch)
     rows = [json.loads(l) for l in open(batch / "train_manifest.jsonl")]
+    # fail-closed data rule: free-run verdicts only on verified conversations
+    from data.synthetic.quality import checked_rows
+    rows = checked_rows(batch, rows, role="free-run diagnostics")
     train_ids = ({Path(s).stem for s in Path(args.shards).glob("*.pt")}
                  if args.shards else set())
     held = []

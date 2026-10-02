@@ -144,6 +144,11 @@ def main() -> None:
     out.mkdir(parents=True, exist_ok=True)
     batch = Path(args.batch)
     rows = [json.loads(l) for l in open(batch / "train_manifest.jsonl")]
+    # fail-closed data rule: shards are the answer keys — no conversation
+    # without a passing quality record (per-clip ASR bar + timing audit)
+    # may become one
+    from data.synthetic.quality import checked_rows
+    rows = checked_rows(batch, rows, role="shard preparation")
     if args.per_class:
         groups: dict[str, list] = defaultdict(list)
         for row in rows:

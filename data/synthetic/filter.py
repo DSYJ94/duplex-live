@@ -187,6 +187,28 @@ def utt_for(tl, sc_dir: Path, ev) -> Path:
 
 # ---------------------------------------------------------------- judge pass
 
+# fail-closed PER-CLIP word-error bar (owner directive 2026-10-02). The old
+# gate only aggregated per channel at 0.30 and killed whole lessons; the
+# audit (evals/data_quality_audit.py) showed 94/141 "passing" conversations
+# carried individual clips above 0.15. Every clip ASR can judge must now
+# clear this bar — at render time (repair) and at stamp time (quality).
+PER_CLIP_WER_BAR = 0.15
+
+
+def clip_passes(u: dict, wer_bar: float = PER_CLIP_WER_BAR) -> bool:
+    """The fail-closed PER-CLIP bar: no hard gate failure, and word error
+    within the bar for any clip ASR can judge (wer-gated, non-truncated).
+    Short duration-gated refs ("mm-hm") pass on the duration gate alone —
+    whisper cannot round-trip them, so WER is meaningless there. Truncated
+    refs are estimated spoken prefixes — exempt from the bar, never from
+    gate failures."""
+    if u.get("gate_fail"):
+        return False
+    if u.get("gate") != "wer" or u.get("truncated_ref"):
+        return True
+    return u.get("wer", 1.0) <= wer_bar
+
+
 def ref_for_event(ev) -> tuple[str, bool]:
     """Intended text for one rendered event; truncated events contribute their
     estimated spoken prefix. Returns (text, was_truncated)."""
@@ -214,73 +236,80 @@ def load_asr(model_id: str):
     )
 
 
+def judge_clip(pipe, wav_path: Path, ev, voice: str | None) -> dict:
+    """Round-trip ONE rendered utterance wav: transcribe, compare with its
+    own text (truncation-aware), return the per-clip verdict dict. Shared by
+    the batch filter (judge_scenario) and render-time repair (render.py
+    --repair) — one judge, two callers, so a clip the render loop repairs is
+    judged by exactly the rule the filter will re-apply."""
+    import librosa
+    import soundfile as sf
+
+    if not wav_path.exists():
+        return {"ch": ev.ch, "voice": voice, "wer": 1.0,
+                "gate_fail": f"missing render: {wav_path.name}"}
+    ref, trunc = ref_for_event(ev)
+    audio, sr = sf.read(wav_path, dtype="float32")
+    if audio.ndim > 1:
+        audio = audio.mean(axis=1)
+    dur_raw_s = len(audio) / sr
+    if dur_raw_s > 30:
+        # pathological babble (longest legit text ≈ 25 s); also keeps
+        # whisper out of long-form mode, which needs timestamp tokens
+        return {"ch": ev.ch, "voice": voice, "n_ref": 0,
+                "dur_s": round(dur_raw_s, 2), "wer": 1.0,
+                "kind": ev.kind, "gate": "duration",
+                "ref": ref[:120], "hyp": "",
+                "gate_fail": f"babble: {ev.ch} {dur_raw_s:.1f}s "
+                             f"(>30s cap)"}
+    if sr != 16000:
+        audio = librosa.resample(audio, orig_sr=sr, target_sr=16000)
+        sr = 16000
+    if float(np.max(np.abs(audio))) < 1e-4:
+        hyp = ""
+    else:
+        hyp = pipe(audio, language="en", task="transcribe")["text"]
+    w = wer(norm_words(ref), norm_words(hyp))
+    rw, hw = norm_words(ref), norm_words(hyp)
+    n_ref, n_hyp = len(rw), len(hw)
+    extra = n_hyp - n_ref  # >0 means words that are not in the script
+    dur_s = len(audio) / sr
+    entry = {"ch": ev.ch, "voice": voice, "wer": round(w, 3),
+             "n_ref": n_ref, "dur_s": round(dur_s, 2),
+             "truncated_ref": trunc, "kind": ev.kind,
+             "gate": "duration" if n_ref <= SHORT_REF_WORDS else "wer",
+             "ref": ref[:120], "hyp": str(hyp)[:120]}
+    # short refs ("mm-hm", spelled syllables) don't round-trip through
+    # ASR tokenization — gate them on duration (TTS babble runs long)
+    if n_ref <= SHORT_REF_WORDS and dur_s > SHORT_MAX_S:
+        entry["gate_fail"] = f"babble: {ev.ch} {dur_s:.1f}s for {n_ref}-word ref"
+    # insertion gate: TTS sometimes hallucinates trailing words
+    # ("Tell me a story." -> "... Doctor." — user-auditioned 2026-09-17).
+    # WER can't catch a single extra word on a short prompt (1/4 = .25
+    # < .30), so gate on the extra-word count directly: >=2 anywhere,
+    # >=1 on short refs (<=6 words) where babble concentrates.
+    # Truncated refs are prefix estimates — skip them.
+    if not trunc:
+        if extra >= 2:
+            entry["gate_fail"] = f"tail_babble: {extra} extra words ({hw[n_ref:]})"
+        elif extra == 1 and n_ref <= 6:
+            entry["gate_fail"] = f"tail_babble: extra word {hw[-1]!r}"
+    return entry
+
+
 def judge_scenario(pipe, sc_dir: Path, tl) -> dict:
     """Per-utterance round trip: transcribe each rendered utterance wav and
     compare with its own text (truncation-aware). Judging whole stems instead
     makes whisper hallucinate over long silences (timed_task) and mixes
     backchannel tokens into every channel — the per-utterance wavs isolate
     exactly what we want to measure: each TTS render."""
-    import librosa
-    import soundfile as sf
-
     per_utt: list[dict] = []
     speech = [e for e in tl.events if e.text and e.kind != "marker"]
     voice_of = tl.meta.get("voices", {})
     for i, ev in enumerate(speech):
         voice = ev.voice or voice_of.get(ev.ch)
         wav_path = sc_dir / "utterances" / f"{i:02d}_{ev.ch}.wav"
-        if not wav_path.exists():
-            per_utt.append({"ch": ev.ch, "voice": voice, "wer": 1.0,
-                            "gate_fail": f"missing render: {wav_path.name}"})
-            continue
-        ref, trunc = ref_for_event(ev)
-        audio, sr = sf.read(wav_path, dtype="float32")
-        if audio.ndim > 1:
-            audio = audio.mean(axis=1)
-        dur_raw_s = len(audio) / sr
-        if dur_raw_s > 30:
-            # pathological babble (longest legit text ≈ 25 s); also keeps
-            # whisper out of long-form mode, which needs timestamp tokens
-            per_utt.append({"ch": ev.ch, "voice": voice, "n_ref": 0,
-                            "dur_s": round(dur_raw_s, 2), "wer": 1.0,
-                            "kind": ev.kind, "gate": "duration",
-                            "ref": ref[:120], "hyp": "",
-                            "gate_fail": f"babble: {ev.ch} {dur_raw_s:.1f}s "
-                                         f"(>30s cap)"})
-            continue
-        if sr != 16000:
-            audio = librosa.resample(audio, orig_sr=sr, target_sr=16000)
-            sr = 16000
-        if float(np.max(np.abs(audio))) < 1e-4:
-            hyp = ""
-        else:
-            hyp = pipe(audio, language="en", task="transcribe")["text"]
-        w = wer(norm_words(ref), norm_words(hyp))
-        rw, hw = norm_words(ref), norm_words(hyp)
-        n_ref, n_hyp = len(rw), len(hw)
-        extra = n_hyp - n_ref  # >0 means words that are not in the script
-        dur_s = len(audio) / sr
-        entry = {"ch": ev.ch, "voice": voice, "wer": round(w, 3),
-                 "n_ref": n_ref, "dur_s": round(dur_s, 2),
-                 "truncated_ref": trunc, "kind": ev.kind,
-                 "gate": "duration" if n_ref <= SHORT_REF_WORDS else "wer",
-                 "ref": ref[:120], "hyp": str(hyp)[:120]}
-        # short refs ("mm-hm", spelled syllables) don't round-trip through
-        # ASR tokenization — gate them on duration (TTS babble runs long)
-        if n_ref <= SHORT_REF_WORDS and dur_s > SHORT_MAX_S:
-            entry["gate_fail"] = f"babble: {ev.ch} {dur_s:.1f}s for {n_ref}-word ref"
-        # insertion gate: TTS sometimes hallucinates trailing words
-        # ("Tell me a story." -> "... Doctor." — user-auditioned 2026-09-17).
-        # WER can't catch a single extra word on a short prompt (1/4 = .25
-        # < .30), so gate on the extra-word count directly: >=2 anywhere,
-        # >=1 on short refs (<=6 words) where babble concentrates.
-        # Truncated refs are prefix estimates — skip them.
-        if not trunc:
-            if extra >= 2:
-                entry["gate_fail"] = f"tail_babble: {extra} extra words ({hw[n_ref:]})"
-            elif extra == 1 and n_ref <= 6:
-                entry["gate_fail"] = f"tail_babble: extra word {hw[-1]!r}"
-        per_utt.append(entry)
+        per_utt.append(judge_clip(pipe, wav_path, ev, voice))
 
     gate_fails = [it["gate_fail"] for it in per_utt if "gate_fail" in it]
 

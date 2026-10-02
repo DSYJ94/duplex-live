@@ -187,12 +187,28 @@ def cache_key(voice_key: str, text: str, engine: str = "") -> str:
     return f"{engine + '__' if engine else ''}{voice_key}__{hashlib.sha1(f'{voice_key}|{engine}|{text}'.encode()).hexdigest()[:16]}.wav"
 
 
+class ClipUnrepaired(Exception):
+    """A clip still fails the per-clip judge after --repair re-speaks — the
+    conversation is REJECTED (no mix, no manifest row). Fail-closed data
+    rule (owner directive 2026-10-02): never ship a lesson with a known-bad
+    clip; the conversation can be re-rendered later with fresh dice."""
+
+    def __init__(self, idx: int, ev, verdict: dict, attempts: int):
+        self.idx, self.ev, self.verdict, self.attempts = idx, ev, verdict, attempts
+        why = verdict.get("gate_fail") or "wer %s" % verdict.get("wer")
+        super().__init__(
+            f"clip {idx:02d}_{ev.ch} still failing after {attempts} "
+            f"re-speak(s): {why} — rejecting conversation")
+
+
 def render_timeline(engine, tl, out_dir: Path, assets: Path, manifest,
                     pool: dict[str, Path] | None = None,
                     anchor_prob: float = 0.5,
                     registers: dict[str, str] | None = None,
                     engine_name: str = "minicpm",
-                    clip_cache: Path | None = None) -> None:
+                    clip_cache: Path | None = None,
+                    asr_pipe=None, repair: int = 2,
+                    wer_bar: float | None = None) -> None:
     sc_dir = out_dir / tl.scenario_id
     utt_dir = sc_dir / "utterances"
     utt_dir.mkdir(parents=True, exist_ok=True)
@@ -206,30 +222,64 @@ def render_timeline(engine, tl, out_dir: Path, assets: Path, manifest,
         return ev.voice or channel_voice.get(
             ev.ch, CH_DEFAULT_VOICE.get(ev.ch, "user"))
 
-    # 1. render every speech event. Short refs (<=6 words: backchannels,
-    #    callouts) are babble-prone dice rolls — memoize each (voice, text)
-    #    render in the clip cache. Bad clips get purged by the filter
-    #    (purge_cache.py) and re-roll on the next render; passing clips
-    #    freeze. Mix-time cuts still apply to the copied wavs as usual.
+    # 1. render every speech event — and JUDGE each render as it lands
+    #    (fail-closed data rule, owner directive 2026-10-02). The same
+    #    per-clip ASR judge the batch filter applies runs here at render
+    #    time: a failing clip is re-spoken (--repair attempts, fresh dice
+    #    each try) BEFORE it can reach the mix, the clip cache, or the
+    #    manifest. A clip that still fails exhausts the conversation —
+    #    ClipUnrepaired rejects it upstream. Short refs (<=6 words:
+    #    backchannels, callouts) are babble-prone dice rolls — passing
+    #    renders memoize per (voice, text); ONLY judged-passing clips enter
+    #    the cache, and cached clips are re-judged on reuse (the cache may
+    #    hold clips rendered before this rule existed).
+    from data.synthetic.filter import (PER_CLIP_WER_BAR, clip_passes,  # noqa: E402
+                                       judge_clip)
+    wer_bar = PER_CLIP_WER_BAR if wer_bar is None else wer_bar
+
     speech = [e for e in tl.events if e.text and e.kind != "marker"]
     cache_hits = 0
+    clip_reports: list[dict] = []
     for i, ev in enumerate(speech):
         utt = utt_dir / f"{i:02d}_{ev.ch}.wav"
         vk = ref_key(ev)
         cached = (clip_cache / cache_key(vk, ev.text, engine_name)
                   if clip_cache is not None
                   and len(ev.text.split()) <= SHORT_CACHE_WORDS else None)
-        if cached is not None and cached.exists():
-            shutil.copyfile(cached, utt)
-            cache_hits += 1
-        else:
-            engine.tts(ev.text, pool[vk], utt)
-            if cached is not None:
-                # atomic publish: concurrent workers may render the same
-                # (engine, voice, text) — tmp+replace avoids torn copies
-                tmp = cached.with_suffix(f".tmp{os.getpid()}")
-                shutil.copyfile(utt, tmp)
-                os.replace(tmp, cached)
+        attempt = 0
+        from_cache = cached is not None and cached.exists()
+        while True:
+            if from_cache:
+                shutil.copyfile(cached, utt)
+                cache_hits += 1
+            else:
+                engine.tts(ev.text, pool[vk], utt)
+            if asr_pipe is None:  # --repair 0: old behaviour, no judge
+                break
+            verdict = judge_clip(asr_pipe, utt, ev, vk)
+            if clip_passes(verdict, wer_bar):
+                break
+            attempt += 1
+            if attempt > repair:
+                raise ClipUnrepaired(i, ev, verdict, attempt - 1)
+            if from_cache:
+                cached.unlink()  # purge the bad entry: no other scenario
+                from_cache = False  # may reuse it
+            print(f"  [{tl.scenario_id}] repair: {ev.ch} clip failed judge "
+                  f"({verdict.get('gate_fail') or 'wer %s' % verdict.get('wer')}), "
+                  f"re-speaking ({attempt}/{repair})", flush=True)
+        if cached is not None and not from_cache:
+            # atomic publish: judged-PASSING clips only (concurrent workers
+            # may render the same (engine, voice, text) — tmp+replace avoids
+            # torn copies)
+            tmp = cached.with_suffix(f".tmp{os.getpid()}")
+            shutil.copyfile(utt, tmp)
+            os.replace(tmp, cached)
+        clip_reports.append({
+            "idx": i, "ch": ev.ch, "attempts": attempt,
+            "wer": verdict.get("wer") if asr_pipe is not None else None,
+            "gate_fail": verdict.get("gate_fail"),
+        } if asr_pipe is not None else {"idx": i, "ch": ev.ch})
         audio, sr = sf.read(utt, dtype="float32")
         if audio.ndim > 1:
             audio = audio.mean(axis=1)
@@ -242,6 +292,17 @@ def render_timeline(engine, tl, out_dir: Path, assets: Path, manifest,
     if clip_cache is not None and speech:
         print(f"  [{tl.scenario_id}] clip-cache hits {cache_hits}/{len(speech)}",
               flush=True)
+    if asr_pipe is not None:
+        n_repaired = sum(1 for r in clip_reports if r.get("attempts"))
+        (sc_dir / "render_quality.json").write_text(json.dumps({
+            "scenario_id": tl.scenario_id,
+            "asr_judge": "openai/whisper-large-v3-turbo",
+            "wer_bar": wer_bar, "repair_attempts": repair,
+            "n_clips": len(clip_reports), "n_repaired": n_repaired,
+            "clips": clip_reports,
+        }, ensure_ascii=False, indent=1))
+        print(f"  [{tl.scenario_id}] judged {len(clip_reports)} clips, "
+              f"repaired {n_repaired} (bar {wer_bar})", flush=True)
 
     # 2. retraction cut: any utterance overlapped by a barge_in on another
     #    channel is truncated at the barge instant (clean yield) with a short
@@ -364,8 +425,16 @@ def main() -> None:
                     choices=["minicpm", "chatterbox"],
                     help="TTS engine (see load_engine; overlays differ)")
     ap.add_argument("--clip-cache", default=None,
-                    help="memoize <=6-word renders per (voice, text); purge "
-                         "bad entries with purge_cache.py after filtering")
+                    help="memoize <=6-word renders per (voice, text); only "
+                         "judged-passing clips enter (bad entries purge "
+                         "themselves at render time)")
+    ap.add_argument("--repair", type=int, default=2,
+                    help="re-speak attempts per clip when the ASR judge "
+                         "fails it (fail-closed data rule; 0 = judge off, "
+                         "old behaviour)")
+    ap.add_argument("--wer-bar", type=float, default=None,
+                    help="per-clip word-error bar for the render-time judge "
+                         "(default: filter.PER_CLIP_WER_BAR = 0.15)")
     ap.add_argument("--slice", default=None,
                     help="K/N — render only files[K::N] (multi-worker mode; "
                          "each worker writes its own manifest shard)")
@@ -407,16 +476,46 @@ def main() -> None:
     if clip_cache is not None:
         clip_cache.mkdir(parents=True, exist_ok=True)
         n = len(list(clip_cache.glob("*.wav")))
-        print(f"clip-cache: {clip_cache} ({n} validated clips)", flush=True)
+        print(f"clip-cache: {clip_cache} ({n} clips; each is re-judged on "
+              f"use, bad entries purge themselves)", flush=True)
+
+    # render-time ASR judge (fail-closed data rule): same open whisper the
+    # batch filter uses, loaded once, runs alongside the TTS on the GPU
+    asr_pipe = None
+    if args.repair > 0:
+        from data.synthetic.filter import load_asr
+        asr_pipe = load_asr("openai/whisper-large-v3-turbo")
+        print(f"render-time judge ON: whisper-large-v3-turbo, --repair "
+              f"{args.repair} re-speak(s) per clip, bar "
+              f"{args.wer_bar if args.wer_bar is not None else 0.15}",
+              flush=True)
+
+    n_rendered = n_rejected = 0
     with open(out / manifest_name, "a") as mf:
         for f in files:
             tl = Timeline.load(f)
             print(f"[render] {tl.scenario_id} ({tl.scenario_class})", flush=True)
-            render_timeline(engine, tl, out, assets, mf,
-                            pool=pool, anchor_prob=args.anchor_prob,
-                            registers=registers, engine_name=args.engine,
-                            clip_cache=clip_cache)
-    print("done")
+            try:
+                render_timeline(engine, tl, out, assets, mf,
+                                pool=pool, anchor_prob=args.anchor_prob,
+                                registers=registers, engine_name=args.engine,
+                                clip_cache=clip_cache, asr_pipe=asr_pipe,
+                                repair=args.repair, wer_bar=args.wer_bar)
+                n_rendered += 1
+            except ClipUnrepaired as e:
+                # fail-closed: the conversation ships BROKEN or not at all —
+                # no mix, no manifest row, a REJECTED note with the evidence
+                sc_dir = out / tl.scenario_id
+                (sc_dir / "REJECTED.json").write_text(json.dumps({
+                    "scenario_id": tl.scenario_id,
+                    "reason": str(e),
+                    "clip": e.verdict,
+                    "attempts": e.attempts,
+                }, ensure_ascii=False, indent=1))
+                n_rejected += 1
+                print(f"[render] REJECTED {tl.scenario_id}: {e}", flush=True)
+    print(f"done: {n_rendered} rendered, {n_rejected} REJECTED "
+          f"(fail-closed: rejected conversations write no manifest row)")
 
 
 if __name__ == "__main__":

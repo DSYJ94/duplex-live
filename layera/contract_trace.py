@@ -65,6 +65,9 @@ def main() -> None:
 
     batch = Path(args.batch)
     rows = [json.loads(l) for l in open(batch / "train_manifest.jsonl")]
+    # fail-closed data rule: contract traces only on verified conversations
+    from data.synthetic.quality import checked_rows
+    rows = checked_rows(batch, rows, role="contract tracing")
     train_ids = ({Path(s).stem for s in Path(args.shards).glob("*.pt")}
                  if args.shards else set())
     cand = []

@@ -1707,3 +1707,60 @@ B. M2 live loop as the critical path to "audible by ~Oct 14": causal
    end-to-end. Bar v2 on current gold is not the product.
 Audio renders of both ugate arms queued (job 7020187) for the ear
 check per standing rule.
+
+## DATA GATE — the fail-closed rule is now CODE, with the audit numbers (2026-10-02, later)
+
+**Plain words:** You said: fix the training data, and never again let a
+job run on bad data — no proceeding when conversations or timing labels
+have failures. That is now enforced in code, and the first measuring
+stick (a new audit tool) tells us exactly how bad the old batch was.
+
+**The numbers (new tool `evals/data_quality_audit.py` on scale1's 240
+conversations):**
+- Only 141/240 passed the OLD factory filter. dense_barge: 117/120
+  (fine). dense_dialog: 24/120 (20% — the collapse, now explained).
+- Why conversations died: "tail_babble" (the TTS adds words that are
+  not in the script) fired 192 times. 39 of the 99 dropped
+  conversations had exactly ONE bad clip — the perfect case for
+  repair (re-speak that one clip, keep the conversation).
+- Worse: of the 141 "passing" conversations, 94 carried individual
+  clips above the strict per-clip bar (15% word error). The old gate
+  only averaged per channel at 30%, so garbled clips hid inside
+  passing lessons. These are clips the model practised on where up to
+  80% of the words do not match the script.
+
+**What is now in the code (all committed this session):**
+1. **Repair-in-render** (`data/synthetic/render.py --repair 2`): every
+   clip is speech-to-text-checked the moment it is spoken, by the SAME
+   whisper judge the filter uses. A failing clip is re-spoken (2
+   tries, fresh dice); a clip that still fails REJECTS its whole
+   conversation — no mix, no manifest row, a REJECTED.json with the
+   evidence. Only judged-good clips enter the clip cache, and cached
+   clips are re-judged on reuse (old cache entries included).
+2. **Timing audit** (`data/synthetic/timing_audit.py`): whisper word
+   timestamps vs the answer key's estimated word placement, per
+   assistant clip (only assistant words are answer-key labels — user
+   speech is the model's INPUT, which is the real audio itself).
+   Writes timing_report.jsonl per conversation.
+3. **Quality stamp** (`data/synthetic/quality.py`): folds clip
+   verdicts + timing verdicts into quality.jsonl — one record per
+   conversation, schema dl-quality-v1. Verified means: every clip
+   passed AND timing passed.
+4. **Startup asserts in every consumer** (8 of them): prepare,
+   train_p1, train_gate, train_head_dagger, freerun_diag, probe_p1,
+   contract_trace, m2/parity — each now ABORTS with a plain message
+   if any conversation it is about to load has no verified record.
+   train_p1/train_gate additionally refuse shards with no verified
+   conversation (the stale-shard hole, closed). No flags, no
+   overrides: fail-closed.
+
+**The old batch under the new gate:** only 127/240 conversations pass
+the clip bar (barge 108/120, dialog 19/120) and NONE is fully verified
+yet (timing audit has not run on it). The old batch is dead for
+training purposes — as intended.
+
+**The fix is already running:** job chain `scale1-quality.slurm`
+re-renders the SAME timelines with the judge on (validated clip cache
+carries over, so cost is bounded), then chains filter -> timing audit
+-> stamp. It STOPS there: re-sharding + retraining wait for the
+quality stamp and the owner's go.

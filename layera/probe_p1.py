@@ -81,6 +81,9 @@ def main() -> None:
 
     batch = Path(args.batch)
     rows = [json.loads(l) for l in open(batch / "train_manifest.jsonl")]
+    # fail-closed data rule: probe numbers only on verified conversations
+    from data.synthetic.quality import checked_rows
+    rows = checked_rows(batch, rows, role="p1 probing")
     train_ids = set()
     if args.shards:
         train_ids = {Path(s).stem for s in Path(args.shards).glob("*.pt")}

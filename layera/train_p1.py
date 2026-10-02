@@ -274,7 +274,20 @@ def main() -> None:
     shards = sorted(Path(args.shards).glob("*.pt"))
     batch = Path(args.batch)
     rows = [json.loads(l) for l in open(batch / "train_manifest.jsonl")]
+    # fail-closed data rule: every shard about to be trained on must carry
+    # a passing quality record (per-clip ASR bar + timing audit) — abort,
+    # never skip silently (the stale-shard lesson)
+    from data.synthetic.quality import checked_rows
+    rows = checked_rows(batch, rows, role="p1 training")
     by_id = {r["scenario_id"]: r for r in rows}
+    unverified = [sp.stem for sp in shards if sp.stem not in by_id]
+    if unverified:
+        raise SystemExit(
+            f"[p1] FAIL-CLOSED STOP: {len(unverified)} shard(s) in "
+            f"{args.shards} have no verified conversation in the batch "
+            f"(first: {unverified[0]}) — stale shards from an unverified "
+            f"render. Re-prepare the shards from a verified batch.")
+    shards = [sp for sp in shards if sp.stem in by_id]
     want = ({s.strip() for s in args.lessons.split(",") if s.strip()}
             if args.lessons else None)
     if want is not None:

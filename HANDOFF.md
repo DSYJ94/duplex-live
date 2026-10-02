@@ -49,6 +49,23 @@ and asserts that stop consumers loading unverified lessons.)
 The live loop (M2) inherits the same rule: any result it reports only
 counts on conversations with verified answer keys.
 
+**IMPLEMENTED 2026-10-02 (later — all four pieces, in code):**
+- repair-in-render: `data/synthetic/render.py --repair 2` (per-clip
+  whisper judge at TTS time, re-speak on fail, REJECT the conversation
+  if a clip still fails; only passing clips enter the clip cache);
+- timing audit: `data/synthetic/timing_audit.py` (whisper word
+  timestamps vs the answer key's word placement, per assistant clip);
+- quality stamp: `data/synthetic/quality.py` (quality.jsonl, schema
+  dl-quality-v1 — verified = every clip passed AND timing passed);
+- startup asserts: prepare, train_p1, train_gate, train_head_dagger,
+  freerun_diag, probe_p1, contract_trace, m2/parity all abort with a
+  plain message on any unverified lesson (train_p1/train_gate also
+  refuse stale shards). No override flags — fail-closed.
+Audit of the OLD batch (evals/data_quality_audit.py): 127/240 pass the
+clip bar; 39 of 99 dropped conversations had exactly one bad clip
+(repair converts them); 94 of 141 "passing" ones carried over-bar
+clips. Re-render chain with the judge on: evals/scale1-quality.slurm.
+
 ## The frontier right now (2026-09-23)
 
 - **Phase-1 training is a dose-response study through v11.** The ablation
@@ -971,3 +988,65 @@ data. Remaining levers are objective-level only:
   {held,train}; rsync + viz.listen before believing the FAIL.
 - Fresh-set rule unchanged: barge-115/117/119 NEVER eval'd before
   final readouts.
+
+## 2026-10-02 (later) — FAIL-CLOSED DATA RULE implemented in code + the audit numbers
+
+**Plain TL;DR:** You ordered the training data fixed so bad data can
+never silently proceed again. It is now code, not promises: every clip
+is checked while it is spoken and re-spoken if bad; every conversation
+gets a quality record; the word-timing answer key gets audited against
+the real audio; and all eight training/eval entry points REFUSE to
+start unless every lesson they load has a passing record. On the old
+batch the new audit shows: only 127/240 conversations would qualify
+(dialogs 19/120 — the TTS "tail babble" failure was the killer), and
+39 dropped conversations had exactly one bad clip — exactly what
+repair-in-render recovers. A re-render of the same timelines with the
+judge on is queued (scale1-quality.slurm -> filter -> timing audit ->
+stamp), and it deliberately STOPS before training.
+
+**Jobs:** none running for this yet at entry-writing time (chain about
+to be submitted; 2b bench 7026771 still running separately — bench is
+engineering-only, unaffected by the gate).
+
+**Where the code lives:**
+- `data/synthetic/render.py` — repair-in-render (--repair N, default
+  2; REJECTED.json per rejected conversation; cache = passing clips
+  only, re-judged on reuse).
+- `data/synthetic/timing_audit.py` — whisper word timestamps vs grid
+  placement (assistant clips only — user words are input audio, not
+  answer-key labels; input timing is correct by construction).
+- `data/synthetic/quality.py` — quality.jsonl stamp + assert_verified /
+  checked_rows; schema dl-quality-v1; per-clip bar
+  filter.PER_CLIP_WER_BAR = 0.15 (single definition in filter.py,
+  shared by render-time judge, batch filter, and stamp).
+- Consumers wired: layera/{prepare,train_p1,train_gate,
+  train_head_dagger,freerun_diag,probe_p1,contract_trace}.py + m2/
+  parity.py — checked_rows/abort on unverified lessons; train_p1 and
+  train_gate also refuse stale shards.
+
+**Audit numbers (runs/synth-scale1, 240 conversations):**
+- Old filter: 141 passed / 99 dropped. dense_barge 117/120,
+  dense_dialog 24/120 (20%).
+- Drop causes: tail_babble x192 (TTS adds non-script words),
+  cut_misplaced x2, babble x2.
+- Bad clips per dropped conversation: 1 -> 39 convs, 2 -> 31,
+  3 -> 17, 4 -> 8, 5 -> 2.
+- Passed lessons under the strict per-clip bar (0.15): 127/240
+  (barge 108/120, dialog 19/120); 94 of the 141 "passing" ones carried
+  over-bar clips (max clip WER 0.80).
+- Over-bar clips are mostly long assistant clips (77 of 105 have 7+
+  words) — real garbling, not a short-clip ASR artifact.
+
+**What happens next (in order):**
+1. scale1-quality chain: re-render (judge on, cache carries) ->
+   filter -> timing audit -> stamp. READ quality.jsonl when it lands.
+2. If verified yield is healthy: re-shard the NEW batch (prepare now
+   gates on the stamp) and retrain p1 — the first training run ever
+   on fully verified data. Old scale1 batch is dead for training.
+3. M2 track continues in parallel on its own discipline: 2b bench
+   readout (job 7026771), causal VAD, parity re-run — verdicts only
+   on verified keys once the new batch exists.
+4. Ear-clock fix (52-vs-50) still owed in the live loop.
+
+**Fresh-set rule unchanged:** barge-115/117/119 NEVER eval'd before
+final readouts.
