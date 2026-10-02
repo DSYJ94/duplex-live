@@ -187,6 +187,35 @@ def cache_key(voice_key: str, text: str, engine: str = "") -> str:
     return f"{engine + '__' if engine else ''}{voice_key}__{hashlib.sha1(f'{voice_key}|{engine}|{text}'.encode()).hexdigest()[:16]}.wav"
 
 
+def trim_silence(wav_path: Path) -> int:
+    """Trim leading/trailing silence from a TTS clip, in place. MiniCPM-o
+    pads multi-second room-tone tails (measured 2026-10-02: 2.3 s of speech
+    inside a 5.0 s clip) — the answer key spreads words across the MEASURED
+    clip span, so an untrimmed tail smears every answer-key word late,
+    growing through the clip (80 ms at the first word to ~1 s at the end),
+    and inflates the barge-yield pushes with phantom duration. Returns ms
+    trimmed. Keeps a ~40 ms pad each side so fades and onsets survive."""
+    audio, sr = sf.read(wav_path, dtype="float32")
+    if audio.ndim > 1:
+        audio = audio.mean(axis=1)
+    frame = int(0.02 * sr)
+    n = len(audio) // frame
+    if n == 0:
+        return 0
+    rms = np.sqrt((audio[: n * frame].reshape(n, frame) ** 2).mean(axis=1))
+    thresh = max(1e-3, 0.005 * float(rms.max()))
+    loud = np.nonzero(rms > thresh)[0]
+    if len(loud) == 0:
+        return 0  # all quiet: leave it for the judge to fail
+    pad = 2  # frames of pad each side
+    a = max(0, (int(loud[0]) - pad) * frame)
+    b = min(len(audio), (int(loud[-1]) + 1 + pad) * frame)
+    if a == 0 and b == len(audio):
+        return 0
+    sf.write(wav_path, audio[a:b], sr)
+    return round((len(audio) - (b - a)) / sr * 1000)
+
+
 class ClipUnrepaired(Exception):
     """A clip still fails the per-clip judge after --repair re-speaks — the
     conversation is REJECTED (no mix, no manifest row). Fail-closed data
@@ -254,6 +283,10 @@ def render_timeline(engine, tl, out_dir: Path, assets: Path, manifest,
                 cache_hits += 1
             else:
                 engine.tts(ev.text, pool[vk], utt)
+            trim_ms = trim_silence(utt)
+            if trim_ms >= 100:
+                print(f"  [{tl.scenario_id}] trimmed {trim_ms}ms silence "
+                      f"from {ev.ch} clip {i:02d}", flush=True)
             if asr_pipe is None:  # --repair 0: old behaviour, no judge
                 break
             verdict = judge_clip(asr_pipe, utt, ev, vk)
