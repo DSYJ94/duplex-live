@@ -26,7 +26,7 @@ set -euo pipefail
 
 DL=/projects/u6si/duplex-live
 REPO=$DL/repo
-export HF_HOME=$DL/models/hf-cache TMPDIR=$DL/tmp PYTHONPATH=$REPO
+export HF_HOME=$DL/models/hf-cache TMPDIR=$DL/tmp PYTHONPATH=$DL/pylibs:$REPO
 
 SHARDS=$DL/runs/shards-scale1
 BATCH=$DL/runs/synth-scale1/audio
