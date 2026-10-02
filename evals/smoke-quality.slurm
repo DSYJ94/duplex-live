@@ -42,6 +42,6 @@ export PYTHONPATH=$DL/pylibs:$REPO
 apptainer exec --nv --bind /projects,/lus,/home \
     --env PYTHONPATH=$PYTHONPATH --env HF_HOME=$HF_HOME --env TMPDIR=$TMPDIR \
     $CONTAINER \
-    python -m data.synthetic.timing_audit --batch $DL/runs/synth-scale1 --limit 2
+    python -m data.synthetic.timing_audit --batch $DL/runs/synth-scale1/audio --limit 2
 
 echo "smoke done"
