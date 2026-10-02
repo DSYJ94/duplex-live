@@ -6,6 +6,12 @@ we tried so we never re-buy the same lesson. (Plain-language rule
 applies: acc = how often the model's top pick was the right token; prob =
 how much of its confidence it put on the right token, on average.)
 
+**Writing convention (owner instruction, 2026-10-02):** every new
+entry starts with a "Plain words:" paragraph — what is the problem,
+what did we do, what did we find, what does it mean — readable on its
+own; technical detail and numbers go below it. Every technical term
+gets a plain gloss the first time it appears.
+
 **What "the exam" is:** every run trains on 80 factory lessons, then is
 quizzed on 8 lessons it NEVER saw (held-out). A run only counts if it
 passes on unseen lessons — that is generalization, not memorization.

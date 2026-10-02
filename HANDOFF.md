@@ -2,6 +2,16 @@
 
 Read this first in a fresh chat. Everything below is decided and documented.
 
+**Writing convention (owner instruction, 2026-10-02 — applies to every
+entry anyone adds to this file or EXPERIMENTS.md):** plain English
+first. Each entry leads with a "Plain words:" paragraph that answers,
+in order: **What is the problem? What did we do? What did we find?
+What is the solution/next step?** Technical terms get a short plain
+gloss the first time (e.g. "held-out lessons — conversations the
+model never trained on"). Detail and numbers go below the plain
+paragraph as the record. EXPERIMENTS.md keeps a top "THE SHORT
+VERSION" section, updated whenever the overall conclusion changes.
+
 ## The frontier right now (2026-09-23)
 
 - **Phase-1 training is a dose-response study through v11.** The ablation
