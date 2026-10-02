@@ -1463,3 +1463,118 @@ Implications (owner decision 2026-10-02):
 3. The pre-declared escalation rung is licensed: LoRA-DAgger (probe
    1b) adds nonlinear trunk capacity; saved hidden states are stale
    under a changed trunk -> on-policy re-roll required (~4 h, 1 GPU).
+
+## D1: STATE DIAGNOSIS — no turn-start signal in the trunk states (2026-10-02, job 7019983, 85s)
+
+The check that arbitrates the root-cause theories BEFORE any more
+training (owner-approved): linear + MLP probes on the SAVED 4,374
+free-run states of scale1-pt1 (job 7001927 rollout; gold =
+script-clock emission label, train_head_dagger.py:161). Tasks:
+T1 word-vs-quiet (gold<n_old), T2 speech-vs-quiet (word|<speak>),
+T3 lesson-identity (8-way). Splits: per-lesson 5-fold / pooled
+5-fold / leave-one-lesson-out (LOO = the decisive one). No 30B model
+loaded; pure torch on one GPU.
+
+| task | probe | per-lesson | pooled | LOO |
+|---|---|---|---|---|
+| T1 word-vs-quiet | linear | 0.562 | 0.599 | 0.520 |
+| T1 word-vs-quiet | MLP    | 0.536 | 0.573 | 0.526 |
+| T2 speech-vs-quiet | linear | 0.560 | 0.600 | 0.525 |
+| T2 speech-vs-quiet | MLP    | 0.540 | 0.574 | 0.508 |
+
+AUC 0.5 = chance. **EVERY cell is at chance — including per-lesson,
+where gate1 once found local signal (and where the pre-registered
+"lesson-local basins" theory predicted strong signal).** MLP is NOT
+above linear: there is no nonlinear structure either. Per the
+pre-registered decision rule (both weak everywhere): no signal in the
+states at all -> **readout training is dead in its STRONGEST form —
+not "doesn't transfer across lessons" but "nothing to read out".**
+This retro-explains all three failed readout attacks with one cause
+(gate-MLP rounds 1-3, linear head-DAgger, head-DAgger CE word-acc
+0.000): the target was never in the state.
+
+Falsification checks run before accepting the negative:
+- Pairing functional? head-DAgger CE TRAINED on these very states to
+  acc 0.577 (ctl 0.661) — garbage/misaligned inputs cannot train to
+  that. Yes, functional.
+- Correct pairing semantics? gold IS the script-clock label at the
+  same tick as the free-run state (train_head_dagger.py:161). Yes —
+  so the chance AUC says: **the free-run model's speech schedule has
+  decoupled from the script clock.** At ticks where the script says
+  "speak", the model is usually mid-silence-basin; at its own speech
+  ticks the script usually says quiet. The state encodes the model's
+  OWN pole, not the script's clock — and no readout of that state can
+  recover a clock the model never represented.
+- T3 is UNINFORMATIVE (design flaw, noted honestly): the plain-CE
+  8-way probe collapsed to predicting the majority lesson (acc 0.000
+  vs majority 1.000) on the imbalanced tick distribution. History-
+  basin theory is neither confirmed nor denied by T3 — but it no
+  longer matters: the main question is answered at T1/T2.
+
+**Consequence: the LoRA science shot (probe 1b) is CONTRA-INDICATED.**
+There is no readout signal for LoRA capacity to express; DAgger
+labels are script-clock labels, and D1 shows those labels are
+unreadable from free-run states. GRPO stays retired (would reinforce
+the same poles). The remaining levers are objective-level: what the
+labels reward / what the model hears — not another readout of the
+same states.
+
+## UGATE: the direct-path composition — same frontier, external mechanism (2026-10-02, job 7019984, ~2h)
+
+The owner-directed "target the problem directly" job: scale1-pt1
+(placement solved) + the one untapped INDEPENDENT channel (mic-energy
+VAD user-gate, energy from the batch user track — the model's own
+voice is never in its ears, so this mask sees exactly what a live mic
+sees). --user-gate --gate-hold {5,12} on HELD4 + hold 5 on TRAIN4,
+NO min-gap (demo-config policy parity), no training, picks saved.
+Panel vs the scale1 closing freerun (job 6971323):
+
+| lesson (HELD) | scale1 base | ugate hold=5 | ugate hold=12 | gate |
+|---|---|---|---|---|
+| dialog-116 | 3/5, 5/5+-1s, chat 156 | 1/5, 2/5+-1s, chat 94 | 1/5, 2/5+-1s, chat 93 | FAIL exact+-1s |
+| dialog-118 | 2/5, 5/5+-1s, chat 184 | 2/5, 3/5+-1s, chat 119 | 2/5, 3/5+-1s, chat 125 | FAIL +-1s |
+| barge-113 | 0/3, 1/3+-1s, chat 50 | FULL MUTE | FULL MUTE | FAIL new mute pole |
+| barge-114 | FULL MUTE | FULL MUTE | FULL MUTE | PASS (already mute) |
+
+VERDICT: **FAIL, 3/4 held gates at BOTH holds.** Mechanism, from the
+gate-block counts (51-102 blocks/dialog, 10/barge) and the per-gold
+rows:
+1. Chatter suppression WORKS as designed (dialog false-speech ~halved,
+   156->94, 184->119). The channel is real and the gate does gate.
+2. Onsets pay for it: blocking the word-FIRST pick at a hot-mic tick
+   consumes the true onset; gate-hold pushes the retry past the +-1s
+   window (dialog-116 5/5->2/5 within +-1s).
+3. On dense-user (barge) lessons the within-lesson p25/p95 threshold
+   SATURATES: user speech dominates the RMS distribution, so p25
+   already sits inside speech -> block nearly everything -> NEW full
+   mute on barge-113. Same failure at hold 5 and 12 (hold is not the
+   knob; the threshold estimator is).
+TRAIN4 (report-only): dialog-001 4/5, barge-004 4/4 (5/5+-1s pre-
+gate-era numbers), barge-001 2/4 — matches or beats the gate-MLP
+configs on the same lessons; dialog-010 0/5 R 0.01 is its PRE-EXISTING
+near-mute pole (R 0.01-0.06 in every scale1-era run), not a gate
+regression (only 2 gate blocks fired there).
+
+**The convergent finding (the third and decisive confirmation):**
+- training recipes re-arrange the poles (five-point law, 33x scale);
+- readout training has nothing to read (D1: chance everywhere);
+- an EXogenous, independent gate lands on the SAME frontier — it can
+  only re-allocate errors (chatter <-> mute <-> late), because the
+  model underneath still does not know WHEN.
+The mute<->chatter frontier is therefore a property of the TASK
+(labeling: script-clock gold over audio whose labels were never
+verified per-clip — 29/120 dialogs survived the filter) + a model
+that cannot represent the script clock, NOT of any particular
+mechanism. No fourth mechanism on top of this objective will move it.
+
+Standing paths (owner decision, 2026-10-02):
+A. Label-quality audit FIRST (cheap, near-free): per-clip ASR of the
+   rendered assistant clips vs script (the filter's own lesson-WER
+   tooling at clip granularity), then the already-queued dialog
+   re-render with per-clip ASR check + FRESH held dialogs. D1's
+   decoupling is exactly what inconsistent gold predicts.
+B. M2 live loop as the critical path to "audible by ~Oct 14": causal
+   VAD + 2b piece-budget scheduling; the demo composite already ran
+   end-to-end. Bar v2 on current gold is not the product.
+Audio renders of both ugate arms queued (job 7020187) for the ear
+check per standing rule.
