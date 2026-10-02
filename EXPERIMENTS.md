@@ -47,38 +47,61 @@ the timing itself.
    always and went completely silent. A meter that knows only
    loudness cannot know whose turn it is.
 
-**The conclusion:** the timing problem is in the TRAINING DATA, not
-in the fixes. Our answer key says "model speaks at tick t" because
-the *script* says so — nobody ever checked that the *audio* matches
-the script clip by clip. A model trained on a mismatched answer key
-learns broken timing, and that is exactly what we observe.
+**The conclusion (corrected 2026-10-02, after mapping the data
+factory end to end):** the timing problem is in the TRAINING DATA
+PIPELINE, and the precise gaps are now known:
+- The filter DOES speech-to-text every clip (a Whisper model, per
+  clip) — content *detection* exists. But a single bad clip rejects
+  the WHOLE conversation, and nothing repairs it: the renderer speaks
+  each clip exactly once (no retry at render time), and the only
+  feedback loop was "purge the clip cache and re-roll whole
+  conversations", which recovered just +5 dialogs per round before
+  stalling at 29/120. The pipeline proceeds by DROPPING conversations
+  — leaving smaller, selection-biased training sets — instead of
+  fixing the clip that failed.
+- Word timing inside a clip is ESTIMATED (characters → milliseconds,
+  a documented v0 placeholder in the label builder), never audited
+  against the clip's real word timestamps.
+- The model's ear clock runs ~4% fast versus the 80 ms tick clock
+  (52 ear tokens vs 50 ticks per 4 s), silently absorbed by
+  truncation in the sampler — enough drift to smear timing over a
+  30 s history.
 
-**Was the previous data prepared well?** Partly — and the gaps are
-now the main suspect:
-- The voices are good and whole-conversation checks passed (4% word
-  error). But checking stopped at the conversation level.
-- Individual clips were never checked. 120 practice conversations
-  were rendered; only 29 passed the conversation-level filter. We
-  treated the 91 failures as bad luck and re-rolled, instead of
-  finding the bad clips.
-- The timing answer key was never checked at all. Today's
-  inside-the-model result (D1) is exactly what mismatched timing
-  labels predict.
+**Was the previous data prepared well?** Partly — now measured
+precisely:
+- Content detection: strong (per-clip Whisper round-trip, per-channel
+  word-error rates, babble gates; passing lessons show ~4% word
+  error).
+- Content repair: absent — one bad clip killed the conversation
+  (this exact mechanism collapsed the dialogs to 29/120).
+- Timing labels: derived from MEASURED clip durations (smarter than
+  we thought), but word placement inside clips is an estimate and was
+  never audited; plus the 4% ear-clock mismatch above.
 
 **The solution (owner go-ahead 2026-10-02, both in parallel, under
 the FAIL-CLOSED DATA RULE — see HANDOFF.md):**
 1. **Fix the training data, and make bad data impossible to miss
-   again:** speech-to-text every clip against its script; check the
-   timing answer key against the actual audio on the model's 80 ms
-   grid; re-render bad clips automatically, reject conversations that
-   still fail; every training/eval job asserts at startup that its
-   lessons carry a passing quality record and aborts otherwise. No
-   more proceeding on unverified conversations — the rule is enforced
-   in code, not in promises.
+   again.** Four concrete changes, mapped against the real pipeline:
+   (a) *repair-in-render* — move the filter's per-clip check INSIDE
+   the render loop: a clip that fails is re-spoken immediately (a few
+   retries); a conversation is rejected only if a clip still fails —
+   this converts the 29/120 dialog collapse into yield;
+   (b) *word-timing audit* — Whisper word timestamps per clip vs the
+   label builder's estimated placement; conversations whose word
+   onsets drift beyond tolerance are re-labeled from the measured
+   times or rejected;
+   (c) *ear-clock fix* — stop silently truncating the 4% ear-token
+   surplus; align the ear token rate to the tick grid;
+   (d) *fail-closed asserts* — every training/evaluation job checks
+   at startup that its lessons carry a passing quality record (clip
+   verdicts + timing audit) and aborts otherwise. No more proceeding
+   on unverified conversations — enforced in code, not promises.
 2. **Build the live loop (M2) in parallel,** with the same discipline:
    its results only count on conversations with verified answer keys.
    Mic in, speech out, one 80 ms tick at a time — the path to
-   something audible now, with the model we already have.
+   something audible now, with the model we already have. The 2b
+   scheduler (decisions on time, pieces in arrears) is implemented
+   and its measurement job is queued (see HANDOFF 2026-10-02).
 
 ## Decision rule for the Phase-1 checkpoint
 

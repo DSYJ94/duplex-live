@@ -14,17 +14,25 @@ VERSION" section, updated whenever the overall conclusion changes.
 
 ## THE FAIL-CLOSED DATA RULE (owner directive, 2026-10-02 — standing policy)
 
-**Plain words:** we once trained on conversations whose timing labels
-were never checked against the actual audio, and only found out
-weeks later. That must never happen again. Nothing proceeds — no
-training run, no evaluation, no re-roll, no live-loop verdict — on
-conversations that have not been verified, piece by piece.
+**Plain words:** we trained on a data set that the pipeline kept only
+by dropping whole conversations (91 of 240 rendered), whose word
+timing inside clips was estimated rather than measured, and whose ear
+clock drifted ~4% from the tick clock. Those gaps only surfaced weeks
+later, after they had shaped every result. That must never happen
+again. Nothing proceeds — no training run, no evaluation, no re-roll,
+no live-loop verdict — on conversations that have not been verified,
+piece by piece. (Precision note from the factory map, same day: the
+filter already speech-to-texts every clip — detection exists; what
+was missing is REPAIR at render time, word-level timing verification,
+and asserts that stop consumers loading unverified lessons.)
 
 "Verified" means ALL of:
-1. **Every clip says what the script says.** Each rendered clip is
-   checked by speech-to-text against its script line; a clip that
-   mismatches is re-rendered automatically (a few retries), and a
-   conversation whose clips still fail is REJECTED, never kept.
+1. **Every clip says what the script says — and is FIXED where it
+   fails.** Each rendered clip is checked by speech-to-text against
+   its script line (the check already exists in the filter; it must
+   run inside the render loop); a clip that mismatches is re-spoken
+   immediately (a few retries), and a conversation whose clips still
+   fail is REJECTED, never kept.
 2. **The timing answer key matches the real audio.** For every turn:
    the audio must actually contain speech where the key says someone
    speaks, and quiet where it says quiet, measured on the model's own
