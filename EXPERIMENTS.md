@@ -65,13 +65,20 @@ now the main suspect:
   inside-the-model result (D1) is exactly what mismatched timing
   labels predict.
 
-**The solution (proposed, waiting on owner go-ahead):**
-1. **Audit the data first (cheap, minutes):** run speech-to-text on
-   every clip, compare with the script, drop or re-render bad clips,
-   rebuild the practice conversations with a verified answer key.
-2. **Build the live loop (M2) in parallel:** mic in, speech out, one
-   80 ms tick at a time. That is the path to something audible now,
-   with the model we already have.
+**The solution (owner go-ahead 2026-10-02, both in parallel, under
+the FAIL-CLOSED DATA RULE — see HANDOFF.md):**
+1. **Fix the training data, and make bad data impossible to miss
+   again:** speech-to-text every clip against its script; check the
+   timing answer key against the actual audio on the model's 80 ms
+   grid; re-render bad clips automatically, reject conversations that
+   still fail; every training/eval job asserts at startup that its
+   lessons carry a passing quality record and aborts otherwise. No
+   more proceeding on unverified conversations — the rule is enforced
+   in code, not in promises.
+2. **Build the live loop (M2) in parallel,** with the same discipline:
+   its results only count on conversations with verified answer keys.
+   Mic in, speech out, one 80 ms tick at a time — the path to
+   something audible now, with the model we already have.
 
 ## Decision rule for the Phase-1 checkpoint
 

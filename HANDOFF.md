@@ -12,6 +12,35 @@ model never trained on"). Detail and numbers go below the plain
 paragraph as the record. EXPERIMENTS.md keeps a top "THE SHORT
 VERSION" section, updated whenever the overall conclusion changes.
 
+## THE FAIL-CLOSED DATA RULE (owner directive, 2026-10-02 — standing policy)
+
+**Plain words:** we once trained on conversations whose timing labels
+were never checked against the actual audio, and only found out
+weeks later. That must never happen again. Nothing proceeds — no
+training run, no evaluation, no re-roll, no live-loop verdict — on
+conversations that have not been verified, piece by piece.
+
+"Verified" means ALL of:
+1. **Every clip says what the script says.** Each rendered clip is
+   checked by speech-to-text against its script line; a clip that
+   mismatches is re-rendered automatically (a few retries), and a
+   conversation whose clips still fail is REJECTED, never kept.
+2. **The timing answer key matches the real audio.** For every turn:
+   the audio must actually contain speech where the key says someone
+   speaks, and quiet where it says quiet, measured on the model's own
+   80 ms tick grid. Any turn that fails the check rejects the
+   conversation.
+3. **The verification is recorded.** Each conversation carries a
+   quality record (per-clip results, per-turn timing results,
+   pass/fail). Training and evaluation jobs ASSERT at startup that
+   every lesson they load has a passing record — and abort if not.
+   The batch report states how many conversations were rendered,
+   passed, failed, and why. Re-rolls inside the render are automatic
+   and recorded; there are no silent retries.
+
+The live loop (M2) inherits the same rule: any result it reports only
+counts on conversations with verified answer keys.
+
 ## The frontier right now (2026-09-23)
 
 - **Phase-1 training is a dose-response study through v11.** The ablation
