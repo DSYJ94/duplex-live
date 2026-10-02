@@ -856,3 +856,49 @@ Two-probe ladder, cheapest first, START AFTER scale1 reads out:
   freshness gap; GRPO wants the segment pool either way).
 - **Parallel always**: M2 2b (piece-budget scheduling) — the live
   loop is on the critical path to Oct-14 regardless of RL.
+
+## 2026-10-02 (evening) — D1 + UGATE: the two decisive negatives; model-side levers CLOSED
+
+Jobs 7019983 (D1 diag, 85s) + 7019984 (ugate direct-path, ~2h), both
+COMPLETED after the PYTHONPATH=$DL/pylibs fix (7a2fd08; both new
+scripts had dropped pylibs — transformers unresolved, died in ~10s).
+
+**D1 (EXPERIMENTS.md "D1: STATE DIAGNOSIS")**: linear+MLP probes on
+the 4,374 saved free-run states, ALL cells at chance (per-lesson,
+pooled, AND leave-one-lesson-out; MLP=linear). Verdict: no turn-start
+signal in the trunk states at all. Readout training dead in its
+strongest form; retro-explains gate-MLP 1-3 + linear head-DAgger +
+head-DAgger CE with one cause (the free-run speech schedule has
+DECOUPLED from the script clock; the state encodes the model's own
+pole, not the script's clock). **LoRA probe-1b CONTRA-INDICATED
+(there is nothing for it to read out).** GRPO stays retired.
+
+**UGATE (EXPERIMENTS.md "UGATE")**: scale1-pt1 + mic-energy VAD
+user-gate on HELD4 — FAIL 3/4 gates at both holds. Chatter ~halves
+(the channel is real) but onsets pay (116: 5/5->2/5 +-1s) and
+dense-user barge lessons saturate the within-lesson percentile
+threshold -> barge-113 NEW full mute (barge-114 was already mute).
+TRAIN4 fine (dialog-001 4/5, barge-004 4/4; dialog-010 is its
+pre-existing pole). Third confirmation of the same conclusion:
+**the mute<->chatter frontier is a property of the TASK (script-clock
+gold over never-per-clip-verified audio) + a model that cannot
+represent the script clock — no mechanism on top moves it.**
+
+**State of the ladder**: recipes (5-point law at 33x), readouts (D1:
+chance), exogenous gating (ugate: same frontier) — ALL CLOSED with
+data. Remaining levers are objective-level only:
+- A. Label-quality audit (near-free): per-clip ASR vs script on the
+  rendered assistant clips (clip granularity version of the filter's
+  lesson-WER), then the pending dialog re-render + FRESH held
+  dialogs. D1's decoupling is exactly what inconsistent gold predicts.
+- B. M2 live loop = critical path to audible-by-Oct-14: causal VAD
+  (absolute or running floor, NOT per-lesson percentiles — ugate
+  showed why), 2b piece-budget scheduling (the 417ms wall),
+  parity-gated promotion. The demo composite already ran end-to-end.
+- 4% ear-clock skew (52 ear tokens vs 50 ticks per 4s) is a known
+  wart of the right size (~150ms over 30s history) to smear onset
+  information — fix belongs in the M2 live loop regardless.
+- Audio of both ugate arms: job 7020187 -> runs/model-audio-ugate-
+  {held,train}; rsync + viz.listen before believing the FAIL.
+- Fresh-set rule unchanged: barge-115/117/119 NEVER eval'd before
+  final readouts.
