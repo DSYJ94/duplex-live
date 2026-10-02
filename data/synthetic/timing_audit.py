@@ -140,7 +140,13 @@ def audit_scenario(pipe, sc_dir: Path, bar_ms: float) -> dict:
         audio, sr = sf.read(wav_path, dtype="float32")
         if audio.ndim > 1:
             audio = audio.mean(axis=1)
-        if len(audio) / sr > 30:
+        if sr != 16000:
+            # TTS wavs are 24 kHz; whisper's extractor assumes 16 kHz —
+            # without resampling every word time is stretched 1.5x
+            # (smoke lesson, 2026-10-02: p50 offsets of whole seconds)
+            import librosa
+            audio = librosa.resample(audio, orig_sr=sr, target_sr=16000)
+        if len(audio) / 16000 > 30:
             continue
         out = pipe(audio, language="en", task="transcribe",
                    return_timestamps="word")
