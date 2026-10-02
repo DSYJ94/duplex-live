@@ -236,6 +236,27 @@ def load_asr(model_id: str):
     )
 
 
+_ASR_KW: dict | None = None  # probed once per process
+
+
+def asr_call(pipe, audio) -> str:
+    """Transcribe one numpy clip, with the language/task hint when the
+    installed transformers supports it. The main pylibs overlay does; the
+    older pylibs-minicpm overlay (render-time judge) predates those
+    kwargs — probe once, remember, stay compatible on both."""
+    global _ASR_KW
+    if _ASR_KW is None:
+        try:
+            pipe(np.zeros(1600, dtype=np.float32),
+                 language="en", task="transcribe")
+            _ASR_KW = {"language": "en", "task": "transcribe"}
+        except TypeError:
+            _ASR_KW = {}
+    if _ASR_KW:
+        return pipe(audio, **_ASR_KW)["text"]
+    return pipe(audio)["text"]
+
+
 def judge_clip(pipe, wav_path: Path, ev, voice: str | None) -> dict:
     """Round-trip ONE rendered utterance wav: transcribe, compare with its
     own text (truncation-aware), return the per-clip verdict dict. Shared by
@@ -268,7 +289,7 @@ def judge_clip(pipe, wav_path: Path, ev, voice: str | None) -> dict:
     if float(np.max(np.abs(audio))) < 1e-4:
         hyp = ""
     else:
-        hyp = pipe(audio, language="en", task="transcribe")["text"]
+        hyp = asr_call(pipe, audio)
     w = wer(norm_words(ref), norm_words(hyp))
     rw, hw = norm_words(ref), norm_words(hyp)
     n_ref, n_hyp = len(rw), len(hw)
