@@ -4,7 +4,7 @@
 #SBATCH --account=brics.u6si
 #SBATCH --nodes=1
 #SBATCH --gres=gpu:1
-#SBATCH --time=00:45:00
+#SBATCH --time=01:00:00
 #SBATCH --output=logs/dl-smokeq-%j.out
 
 # SMOKE for the full fail-closed chain (2026-10-02, rev 3): render TWO
@@ -35,11 +35,17 @@ appt() {
         $CONTAINER "$@"
 }
 
-echo "===== smoke 1/4: render with judge + trim (dense_dialog-000, dense_barge-004) ====="
+echo "===== smoke 1/4: render with judge + trim (one dialog + one barge lesson) ====="
 export PYTHONPATH=$DL/pylibs-minicpm:$DL/pylibs:$REPO
+# NB: --only is a filename SUBSTRING filter — "dense_" matches ALL 240
+# dense timelines (the rev-3 timeout lesson); name the lessons exactly
 appt python -m data.synthetic.render \
     --timelines $DL/runs/synth-scale1/timelines --out $DL/tmp/smoke-q/audio \
-    --assets "$ASSETS" --engine minicpm --only dense_ \
+    --assets "$ASSETS" --engine minicpm --only dense_dialog-000 \
+    --repair 1 --clip-cache $DL/tmp/smoke-q/cache $VARGS
+appt python -m data.synthetic.render \
+    --timelines $DL/runs/synth-scale1/timelines --out $DL/tmp/smoke-q/audio \
+    --assets "$ASSETS" --engine minicpm --only dense_barge-004 \
     --repair 1 --clip-cache $DL/tmp/smoke-q/cache $VARGS
 
 echo "===== smoke 2/4: filter (independent re-verify) ====="
