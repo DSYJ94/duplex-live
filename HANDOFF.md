@@ -1103,3 +1103,42 @@ serve a 3B-active-param model — the gap is per-call overhead, not maths:
 Job 7032343 (evals/m2-voice5x.slurm) measures compile@1gpu, shard4+
 compile, shard4-plain against the recorded baseline (386 ms p50
 speaking tick, backlog ~1300, dense_dialog-001). Parity must stay 0.
+
+## 2026-10-03 (evening) — FIRST VERIFIED CORPUS LANDED; training started; two bugs the gate caught
+
+**Plain TL;DR:** The re-render chain finished: **153 of 184 rendered
+conversations are fully VERIFIED** (barge 115/120, dialog 38/64) —
+every clip within the 0.15 word-error bar, timing labels RE-WRITTEN
+from measured audio (p95 40 ms after re-label). The old batch is dead:
+its 141 "passes" included 94 with garbled clips and zero verified
+timing. Sharding the 153 took 3 minutes; training (probe-9 recipe,
+unchanged) is running as job 7034470 after two startup failures the
+fail-closed design CAUGHT (that is it working):
+1. manifest alignment bug — the stamp's verified flag was read before
+   the timing fold-in, so 2 timing-FAILED lessons stayed in
+   train_manifest; the shard job's startup assert stopped on them.
+   Fixed (verified flag now read after the fold); manifest = exactly
+   the verified 153, backup in train_manifest.all.jsonl.
+2. CheckpointError on training step 1 — gradient checkpointing's
+   strict recompute check trips when the MoE router flips a bf16 tie
+   between forward and recompute (per-expert counts 485 vs 484).
+   Fixed with use_reentrant=True.
+
+**Voice-wall attempt 1 verdict (owner-approved 5x compute):**
+- shard4-plain: 489 ms p50 speaking tick; shard4+compile: 785 ms —
+  BOTH WORSE than one GPU (386 ms). Pipeline-sharding across GPUs adds
+  per-token interconnect hops; wrong tool for latency-bound decode.
+- compile@1gpu: OOM'd (compile buffers + 30B model > 95 GB; heavy
+  fragmentation). Retry running (job 7034277) with
+  expandable_segments allocator.
+- Parity 0 everywhere; decision ticks 59 ms (1 GPU) remain the
+  proven floor.
+
+**Files:** runs/synth-scale1-q/audio (quality.jsonl, timing_report.jsonl,
+train_manifest.jsonl = 153); runs/shards-scale1-q (153 shards);
+evals/scale1q-{shard,train}.slurm; evals/m2-compile-retry.slurm.
+
+**Next:** read train job 7034470 (free-run diagnostic on held-out
+verified lessons runs at its end); compile-retry verdict; then the
+cheap re-pass over the 56 render-rejected conversations (clip cache
+makes it cheap) to top up dialog count.
