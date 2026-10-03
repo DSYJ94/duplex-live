@@ -133,8 +133,16 @@ def stamp_batch(batch_dir: Path, wer_bar: float,
     mpath = batch_dir / "train_manifest.jsonl"
     if mpath.is_file():
         rows = [json.loads(l) for l in open(mpath)]
-        kept = [r for r in rows
+        # dedup keeping first occurrence — recovery-pass renders APPEND
+        # rows, so a lesson recovered on a later pass can appear twice
+        # (found 2026-10-04: 4 duplicates; downstream whitelists are
+        # unique so nothing was harmed, but counts must be true)
+        seen: set[str] = set()
+        uniq = [r for r in rows if not (r["scenario_id"] in seen
+                                        or seen.add(r["scenario_id"]))]
+        kept = [r for r in uniq
                 if verified_by_id.get(r["scenario_id"], False)]
+        n_dup = len(rows) - len(uniq)
         if len(kept) != len(rows):
             backup = batch_dir / "train_manifest.all.jsonl"
             if not backup.is_file():
@@ -144,9 +152,10 @@ def stamp_batch(batch_dir: Path, wer_bar: float,
                 for r in kept:
                     mf.write(json.dumps(r, ensure_ascii=False) + "\n")
             print(f"[quality] train_manifest.jsonl aligned to the stamp: "
-                  f"{len(kept)}/{len(rows)} rows kept (backup: "
-                  f"train_manifest.all.jsonl) — dropped rows failed the "
-                  f"per-clip bar or the timing audit")
+                  f"{len(kept)}/{len(rows)} rows kept"
+                  + (f", {n_dup} duplicate(s) removed" if n_dup else "")
+                  + f" (backup: train_manifest.all.jsonl) — dropped rows "
+                  f"failed the per-clip bar or the timing audit")
     print(f"[quality] {batch_dir}: {n_ok}/{len(reports)} conversations "
           f"VERIFIED (per-clip bar {wer_bar}, timing "
           f"{'audited' if timing else 'NOT audited'}) — see quality.jsonl")
