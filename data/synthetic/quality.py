@@ -83,11 +83,13 @@ def stamp_batch(batch_dir: Path, wer_bar: float,
             timing[r["scenario_id"]] = r
 
     n_ok = n_clip_ok = 0
+    verified_by_id: dict[str, bool] = {}
     with open(batch_dir / "quality.jsonl", "w") as qf:
         for r in reports:
             ok, reasons = verdict_from_report(r, wer_bar)
             n_clip_ok += ok
             sid = r["scenario_id"]
+            verified_by_id[sid] = ok
             t = timing.get(sid, {})
             t_state = ("ok" if t.get("timing") == "ok"
                        else "fail" if t.get("timing") == "fail" else "missing")
@@ -119,6 +121,29 @@ def stamp_batch(batch_dir: Path, wer_bar: float,
                "timing_audited": bool(timing)}
     (batch_dir / "quality_summary.json").write_text(
         json.dumps(summary, indent=1) + "\n")
+
+    # align the training manifest with the stamp: train_manifest.jsonl
+    # becomes the VERIFIED rows only (the filter knows clips, not timing;
+    # its 155-pass may exceed the stamp's verified count). Loud, backed
+    # up, recorded — consumers keep reading train_manifest.jsonl and the
+    # fail-closed aborts stay armed for true staleness.
+    mpath = batch_dir / "train_manifest.jsonl"
+    if mpath.is_file():
+        rows = [json.loads(l) for l in open(mpath)]
+        kept = [r for r in rows
+                if verified_by_id.get(r["scenario_id"], False)]
+        if len(kept) != len(rows):
+            backup = batch_dir / "train_manifest.all.jsonl"
+            if not backup.is_file():
+                import shutil
+                shutil.copyfile(mpath, backup)
+            with open(mpath, "w") as mf:
+                for r in kept:
+                    mf.write(json.dumps(r, ensure_ascii=False) + "\n")
+            print(f"[quality] train_manifest.jsonl aligned to the stamp: "
+                  f"{len(kept)}/{len(rows)} rows kept (backup: "
+                  f"train_manifest.all.jsonl) — dropped rows failed the "
+                  f"per-clip bar or the timing audit")
     print(f"[quality] {batch_dir}: {n_ok}/{len(reports)} conversations "
           f"VERIFIED (per-clip bar {wer_bar}, timing "
           f"{'audited' if timing else 'NOT audited'}) — see quality.jsonl")
