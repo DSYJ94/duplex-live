@@ -1142,3 +1142,21 @@ evals/scale1q-{shard,train}.slurm; evals/m2-compile-retry.slurm.
 verified lessons runs at its end); compile-retry verdict; then the
 cheap re-pass over the 56 render-rejected conversations (clip cache
 makes it cheap) to top up dialog count.
+
+## 2026-10-03 (night) — FINAL corpus: 163 verified; sampled re-speaks; corpus frozen
+
+**Plain TL;DR:** Two recovery passes later the verified corpus is FROZEN
+at **163 conversations** (barge 115, dialog 48) — every clip within the
+0.15 word-error bar, every timing label measured from audio. Recovery
+mechanics learned: greedy TTS is near-deterministic, so identical
+retries re-babble the same words (pass 1: 10/56 recovered); sampled
+re-speaks with rising temperature (attempt>0) do better (pass 2:
+11/45), but ~45 texts babble under any dice — diminishing returns,
+stopped there. The batch is self-consistent: train_manifest.jsonl =
+exactly the 163 verified (re-stamped after every pass).
+NOTE: training job 7035090 trains on the 153 shards built BEFORE the
+recoveries — the 10 extra lessons are a top-up for any FUTURE run, not
+this one (restarting for +6% data mid-run buys nothing).
+
+Training: step 1608/2000, loss 0.63 — the free-run diagnostic on
+held-out verified lessons runs automatically at the end (~1h).
