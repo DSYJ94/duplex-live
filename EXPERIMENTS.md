@@ -1818,3 +1818,29 @@ remaining wall is the model/loop side: ear-clock alignment, then the
 gate round on this trunk. Numbers above are the first in this project
 measured on answer keys that are actually correct, so from here,
 changes move REAL numbers.
+
+## SCALE1-Q2 — THE EAR-CLOCK FIX (2026-10-04, job 7039869, 3h30m)
+
+**Plain words:** The model could not tell when to speak. We fixed the
+data — it helped some, not enough. Then we fixed the model's HEARING:
+its ear produced 52 sound-snapshots per 4 seconds while the clock
+ticks 50 times; the surplus was silently discarded, so everything it
+heard drifted 4% late through every conversation — like dubbing that
+slowly slips out of sync. After aligning the ear to the clock (same
+data, same recipe, ONE change), the model went from near-mute to
+answering on time.
+
+Same 4 held-out lessons, before -> after (speech recall / exact word
+onsets):
+- dense_dialog-116: 0.14 -> **0.93** recall; onsets 0/5 -> **5/5 exact**
+- dense_barge-113: 0.48 -> **0.89** recall; onsets 2/4 -> **3/4 exact**
+- dense_barge-114: 0.36 -> **0.61** recall; F1 0.53 -> **0.70**
+- dense_dialog-114: F1 0.31 -> 0.46; onsets 2/5 exact
+
+**The honest trade:** precision fell — the model now OVER-speaks
+(starts words in ~15% of quiet moments it should stay silent in).
+Recall up from ~0.15 to ~0.9, precision down to ~0.65 (v3-framed).
+That is exactly the chatter-vs-quiet operating point the GATE round
+exists to pick — and the gate on this trunk trained while these
+numbers were measured. Turn-taking is no longer a hearing problem;
+it is a threshold problem, and thresholds are what gates do.

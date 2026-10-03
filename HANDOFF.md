@@ -1227,3 +1227,17 @@ alignment; corpus = all 163 verified) chains after the smoke test.
 gate round). On smoke green: scale1q2 shard -> train chain (163
 lessons, ear aligned, end-of-job held-out diagnostic directly
 comparable to last night's).
+
+## 2026-10-04 (later) — EAR-CLOCK VERDICT: hearing was the wall
+
+**Plain TL;DR:** One variable changed (ear resampled 52->50 onto the
+tick grid; shards rebuilt; same 159 verified lessons, same recipe).
+Held-out free-run, before -> after: dialog-116 recall 0.14 -> 0.93
+with 5/5 exact onsets; barge-113 0.48 -> 0.89; barge-114 F1 0.53 ->
+0.70. The timing sense was in the model all along — it could not hear
+the clock. New state: over-speaking (low precision) — the gate round
+(job 7039828, COMPLETED, log unread: Clifton cert lapsed again mid-
+read) is the operating-point tool. NEXT: read gate log after `!
+clifton auth`, then pick the operating point and build the audible
+demo composite (causal VAD + arrears + batched_mm) on the q2
+checkpoint ($DL/runs/scale1-q2-pt1/p1_checkpoint.pt).
