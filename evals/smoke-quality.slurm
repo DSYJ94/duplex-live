@@ -41,7 +41,7 @@ export PYTHONPATH=$DL/pylibs-minicpm:$DL/pylibs:$REPO
 # dense timelines (the rev-3 timeout lesson); name the lessons exactly
 appt python -m data.synthetic.render \
     --timelines $DL/runs/synth-scale1/timelines --out $DL/tmp/smoke-q/audio \
-    --assets "$ASSETS" --engine minicpm --only dense_dialog-000 \
+    --assets "$ASSETS" --engine minicpm --only dense_dialog-003 \
     --repair 1 --clip-cache $DL/tmp/smoke-q/cache $VARGS
 appt python -m data.synthetic.render \
     --timelines $DL/runs/synth-scale1/timelines --out $DL/tmp/smoke-q/audio \
@@ -52,8 +52,8 @@ echo "===== smoke 2/4: filter (independent re-verify) ====="
 export PYTHONPATH=$DL/pylibs:$REPO
 appt python -m data.synthetic.filter --audio $DL/tmp/smoke-q/audio
 
-echo "===== smoke 3/4: timing audit (fresh, trimmed audio) ====="
-appt python -m data.synthetic.timing_audit --batch $DL/tmp/smoke-q/audio
+echo "===== smoke 3/4: timing audit + RELABEL (fresh, trimmed audio) ====="
+appt python -m data.synthetic.timing_audit --batch $DL/tmp/smoke-q/audio --relabel
 
 echo "===== smoke 4/4: quality stamp + consumer gate ====="
 appt python -m data.synthetic.quality --batch $DL/tmp/smoke-q/audio \
