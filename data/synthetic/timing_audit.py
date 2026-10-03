@@ -177,12 +177,45 @@ def audit_scenario(pipe, sc_dir: Path, bar_ms: float,
             entry["p50_ms"] = round(statistics.median(offsets), 1)
             entry["max_ms"] = round(max(offsets), 1)
             all_offsets.extend(offsets)
-        if relabel and len(matched) == len(words):
-            # every answer-key word has a measured onset: re-label.
+        if relabel and (hyp or matched):
+            # Re-label from measured onsets. Content is already verified
+            # by the per-clip WER gate, so positional alignment is safe:
+            #  - transcript length == word count: use whisper's onset for
+            #    every word positionally (a stray textual mismatch, e.g.
+            #    15/16 words, must not block the whole clip — smoke
+            #    lesson 2026-10-03: those clips stayed on the bad estimate)
+            #  - lengths differ: anchor on textual matches, interpolate
+            #    the rest linearly between anchors
             # Truncated events keep only the voiced prefix (cut audio).
-            ev.word_onsets_ms = [round(t0 * 1000) for _, t0 in matched]
-            entry["relabeled"] = True
-            relabeled += 1
+            if len(hyp) == len(words):
+                onsets = [round(t0 * 1000) for _, t0 in hyp]
+                how = "positional"
+            else:
+                anchor = {k: t0 for k, t0 in matched}
+                onsets = []
+                for k in range(len(words)):
+                    if k in anchor:
+                        onsets.append(round(anchor[k] * 1000))
+                        continue
+                    lo = max((j for j in anchor if j < k), default=None)
+                    hi = min((j for j in anchor if j > k), default=None)
+                    if lo is not None and hi is not None:
+                        span = (hi - lo) or 1
+                        onsets.append(round(
+                            (anchor[lo] + (anchor[hi] - anchor[lo])
+                             * (k - lo) / span) * 1000))
+                    elif lo is not None:  # trailing words trail the last anchor
+                        onsets.append(round((anchor[lo] + 0.3) * 1000))
+                    elif hi is not None:  # leading words precede the first
+                        onsets.append(round(max(0.0, anchor[hi] - 0.3) * 1000))
+                    else:
+                        onsets = []  # no anchors at all: leave estimated
+                        break
+                how = "interpolated" if onsets else "skipped"
+            if onsets:
+                ev.word_onsets_ms = onsets
+                entry["relabeled"] = how
+                relabeled += 1
         clips.append(entry)
 
     if relabel and relabeled:
