@@ -70,7 +70,8 @@ def load_model():
     return model, tok
 
 
-def tts_utterance(model, text: str, ref_audio: np.ndarray, out_path: Path) -> None:
+def tts_utterance(model, text: str, ref_audio: np.ndarray, out_path: Path,
+                  do_sample: bool = False, temperature: float = 0.1) -> None:
     import librosa
 
     model.reset_session()
@@ -78,8 +79,9 @@ def tts_utterance(model, text: str, ref_audio: np.ndarray, out_path: Path) -> No
         {"role": "system", "content": [SYS_PRE, ref_audio, SYS_POST]},
         {"role": "user", "content": [READ_PROMPT + text]},
     ]
-    model.chat(msgs=msgs, do_sample=False, max_new_tokens=2048,
-               use_tts_template=True, generate_audio=True, temperature=0.1,
+    model.chat(msgs=msgs, do_sample=do_sample, max_new_tokens=2048,
+               use_tts_template=True, generate_audio=True,
+               temperature=temperature,
                output_audio_path=str(out_path))
 
 
@@ -94,10 +96,22 @@ class MiniCPMEngine:
     def __init__(self):
         self.model, _ = load_model()
 
-    def tts(self, text: str, ref_wav: Path, out_path: Path) -> None:
+    def tts(self, text: str, ref_wav: Path, out_path: Path,
+            attempt: int = 0) -> None:
         import librosa
+
+        # attempt 0 = the proven near-greedy decode (reproducible
+        # renders). attempt > 0 = a RE-SPEAK after a judge failure: the
+        # greedy decode is effectively deterministic, so an identical
+        # retry re-babbles the same words (recovery pass 2026-10-03:
+        # 30/56 rejected conversations failed identically across 3
+        # retries). Sample instead, and turn the temperature UP with
+        # each attempt so the dice actually change.
+        do_sample = attempt > 0
+        temperature = min(0.1 + 0.4 * attempt, 0.9)
         ref, _ = librosa.load(str(ref_wav), sr=16000, mono=True)
-        tts_utterance(self.model, text, ref, out_path)
+        tts_utterance(self.model, text, ref, out_path,
+                      do_sample=do_sample, temperature=temperature)
 
 
 class ChatterboxEngine:
@@ -282,7 +296,7 @@ def render_timeline(engine, tl, out_dir: Path, assets: Path, manifest,
                 shutil.copyfile(cached, utt)
                 cache_hits += 1
             else:
-                engine.tts(ev.text, pool[vk], utt)
+                engine.tts(ev.text, pool[vk], utt, attempt=attempt)
             trim_ms = trim_silence(utt)
             if trim_ms >= 100:
                 print(f"  [{tl.scenario_id}] trimmed {trim_ms}ms silence "
