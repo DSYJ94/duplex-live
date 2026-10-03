@@ -98,11 +98,24 @@ MS_PER_WORD_EST = 320
 
 
 def _word_ticks(text: str, start_ms: int, end_ms: int,
-                truncated: bool) -> list[tuple[int, str]]:
-    """Words placed on ticks; for truncated (cut) utterances, words beyond
-    the cut were never voiced — place over the estimated FULL span and keep
-    only what landed before the cut tick (retraction semantics)."""
+                truncated: bool, ev=None) -> list[tuple[int, str]]:
+    """Words placed on ticks. When the event carries MEASURED word onsets
+    (timing audit --relabel; ev.word_onsets_ms, ms from the clip's start),
+    the answer key follows the real audio: word k sits at the tick of its
+    measured onset. Otherwise char-proportional placement over the span
+    (v0 alignment). For truncated (cut) utterances without measurements,
+    words beyond the cut were never voiced — place over the estimated FULL
+    span and keep only what landed before the cut tick (retraction)."""
     words = text.split()
+    onsets = getattr(ev, "word_onsets_ms", None) if ev is not None else None
+    if onsets and len(onsets) == len(words):
+        return [(round((start_ms + on) / GRID_MS), w)
+                for w, on in zip(words, onsets)]
+    if onsets and truncated and 0 < len(onsets) < len(words):
+        # measured onsets for the KEPT prefix; the remaining words were
+        # never voiced (cut at barge-in) — nothing to place for them
+        return [(round((start_ms + on) / GRID_MS), w)
+                for w, on in zip(words, onsets)]
     if not truncated:
         return _place_words(words, start_ms, end_ms)
     est_end = start_ms + max(len(words) * MS_PER_WORD_EST, end_ms - start_ms)
@@ -178,7 +191,7 @@ def build_grid(tl, audio: dict[str, str] | None = None) -> GridSequence:
                 ticks[i].speech_active = True
         trunc = "truncated at barge-in" in (ev.note or "")
         for tick_i, w in _word_ticks(ev.text, ev.actual_start_ms,
-                                     ev.actual_end_ms, trunc):
+                                     ev.actual_end_ms, trunc, ev=ev):
             i = tick_i
             while i < n_ticks and not _free(i):
                 i += 1

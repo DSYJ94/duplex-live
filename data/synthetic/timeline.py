@@ -28,6 +28,12 @@ class Event:
     actual_start_ms: int | None = None
     actual_end_ms: int | None = None
     wav: str | None = None
+    # filled in by the timing audit (--relabel): MEASURED onset of each
+    # word in `text`, ms from the START OF THIS EVENT'S CLIP (not the
+    # timeline). When present, the grid builder places answer-key words at
+    # these times instead of the char-proportional estimate (fail-closed
+    # data rule: the answer key follows the real audio, not an estimate).
+    word_onsets_ms: list[int] | None = None
 
     def quantized_start(self) -> int:
         return round(self.start_ms / GRID_MS) * GRID_MS

@@ -93,7 +93,7 @@ def grid_words_by_event(tl) -> tuple[list, list[tuple[int, int, str]]]:
     for ei, ev in enumerate(asst):
         trunc = "truncated at barge-in" in (ev.note or "")
         for tick_i, w in _word_ticks(ev.text, ev.actual_start_ms,
-                                     ev.actual_end_ms, trunc):
+                                     ev.actual_end_ms, trunc, ev=ev):
             i = tick_i
             while i < n and not free(i):
                 i += 1
@@ -108,9 +108,16 @@ def _bare(w: str) -> str:
     return "".join(c for c in w.lower() if c.isalpha())
 
 
-def audit_scenario(pipe, sc_dir: Path, bar_ms: float) -> dict:
+def audit_scenario(pipe, sc_dir: Path, bar_ms: float,
+                   relabel: bool = False) -> dict:
     """Word-timestamp check for ONE conversation. Returns the
-    timing_report.jsonl record (timing: ok|fail)."""
+    timing_report.jsonl record (timing: ok|fail). With relabel=True,
+    assistant clips whose grid words ALL matched the ASR words get their
+    measured onsets written into the timeline (ev.word_onsets_ms) — the
+    answer key then follows the real audio instead of the char-
+    proportional estimate (fail-closed data rule: re-label from measured
+    times) — and the scenario is re-measured from the saved timeline to
+    confirm what the grid will actually hold."""
     import soundfile as sf
 
     sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -128,6 +135,7 @@ def audit_scenario(pipe, sc_dir: Path, bar_ms: float) -> dict:
 
     clips: list[dict] = []
     all_offsets: list[float] = []
+    relabeled = 0
     for ei, ev in enumerate(asst):
         words = by_ev.get(ei, [])
         if len(words) < 2:
@@ -154,12 +162,14 @@ def audit_scenario(pipe, sc_dir: Path, bar_ms: float) -> dict:
                if c.get("timestamp") and c["timestamp"][0] is not None]
         n = min(len(words), len(hyp))
         offsets: list[float] = []
+        matched: list[tuple[int, float]] = []  # (grid word idx, onset s)
         for k in range(n):
             tick, w = words[k]
             txt, t0 = hyp[k]
             if _bare(w) != _bare(txt):
-                continue  # index misalignment: skip the pair, keep counting
+                continue  # index misalignment: skip the pair
             offsets.append(abs(tick * G - (ev.actual_start_ms + t0 * 1000)))
+            matched.append((k, t0))
         entry = {"idx": idx_of[id(ev)], "ch": ev.ch, "n_grid": len(words),
                  "n_asr": len(hyp), "n_checked": len(offsets),
                  "truncated": "truncated at barge-in" in (ev.note or "")}
@@ -167,7 +177,20 @@ def audit_scenario(pipe, sc_dir: Path, bar_ms: float) -> dict:
             entry["p50_ms"] = round(statistics.median(offsets), 1)
             entry["max_ms"] = round(max(offsets), 1)
             all_offsets.extend(offsets)
+        if relabel and len(matched) == len(words):
+            # every answer-key word has a measured onset: re-label.
+            # Truncated events keep only the voiced prefix (cut audio).
+            ev.word_onsets_ms = [round(t0 * 1000) for _, t0 in matched]
+            entry["relabeled"] = True
+            relabeled += 1
         clips.append(entry)
+
+    if relabel and relabeled:
+        tl.save(sc_dir / "timeline.actual.json")
+        base = audit_scenario(pipe, sc_dir, bar_ms, relabel=False)
+        base["relabeled"] = True
+        base["n_relabeled"] = relabeled
+        return base
 
     offs = sorted(all_offsets)
 
@@ -199,6 +222,12 @@ def main() -> None:
                          "at most this many ms (p95 of a conversation)")
     ap.add_argument("--limit", type=int, default=None,
                     help="audit only the first N conversations (smoke)")
+    ap.add_argument("--relabel", action="store_true",
+                    help="write measured word onsets into the timeline "
+                         "(re-label the answer key from the real audio), "
+                         "then re-measure to confirm — fail-closed rule: "
+                         "re-label from measured times, reject if that "
+                         "fails")
     args = ap.parse_args()
 
     from data.synthetic.quality import SCHEMA  # schema echo only
@@ -215,7 +244,8 @@ def main() -> None:
     with open(batch / "timing_report.jsonl", "w") as tf:
         for row in rows:
             sc_dir = batch / row["dir"]
-            rec = audit_scenario(pipe, sc_dir, args.offset_bar_ms)
+            rec = audit_scenario(pipe, sc_dir, args.offset_bar_ms,
+                                 relabel=args.relabel)
             rec["schema"] = SCHEMA
             tf.write(json.dumps(rec, ensure_ascii=False) + "\n")
             tf.flush()
@@ -231,11 +261,16 @@ def main() -> None:
                      else "160-240" if m < 240 else "240-400" if m < 400
                      else ">400")
                 hist[b] = hist.get(b, 0) + 1
+            note = (f", re-labeled {rec['n_relabeled']} clips"
+                    if rec.get("relabeled") else "")
             print(f"[timing] {rec['scenario_id']}: {rec['timing']} "
                   f"(checked {rec['n_words_checked']} words, p95 "
-                  f"{rec['p95_ms']}ms, max {rec['max_ms']}ms)", flush=True)
+                  f"{rec['p95_ms']}ms, max {rec['max_ms']}ms{note})",
+                  flush=True)
     print(f"[timing] done: {n_ok} ok, {n_fail} FAIL "
-          f"(bar p95 <= {args.offset_bar_ms:g}ms)")
+          f"(bar p95 <= {args.offset_bar_ms:g}ms)"
+          + (" — answer keys re-labeled from measured onsets"
+             if args.relabel else ""))
     print("[timing] worst-offset distribution over clips "
           "(evidence for setting the bar):")
     for b in ("<80", "80-160", "160-240", "240-400", ">400"):

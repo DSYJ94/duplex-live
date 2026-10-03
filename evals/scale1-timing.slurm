@@ -32,8 +32,9 @@ APPT="apptainer exec --nv --bind /projects,/lus,/home \
 
 cd "$REPO"
 
-echo "[timing] auditing $AUDIO (bar p95 <= ${BAR}ms)"
-$APPT python -m data.synthetic.timing_audit --batch "$AUDIO" --offset-bar-ms "$BAR"
+echo "[timing] auditing $AUDIO (bar p95 <= ${BAR}ms; re-label from measured onsets ON)"
+$APPT python -m data.synthetic.timing_audit --batch "$AUDIO" \
+    --offset-bar-ms "$BAR" --relabel
 
 echo "[timing] stamping quality records (per-clip bar + timing) -> quality.jsonl"
 $APPT python -m data.synthetic.quality --batch "$AUDIO" --timing "$AUDIO/timing_report.jsonl"
