@@ -256,7 +256,7 @@ def main() -> None:
         # not bitwise deterministic) -> per-expert token counts differ
         # by 1 -> CheckpointError. Hit on the verified batch 2026-10-03
         # (485 vs 484, step 1); reentrant recomputes without the check.
-        use_reentrant=True)
+        gradient_checkpointing_kwargs={"use_reentrant": True})
     flagged = sum(1 for m in model.modules()
                   if getattr(m, "gradient_checkpointing", False))
     n_layers = sum(1 for m in model.modules()
