@@ -89,7 +89,6 @@ def stamp_batch(batch_dir: Path, wer_bar: float,
             ok, reasons = verdict_from_report(r, wer_bar)
             n_clip_ok += ok
             sid = r["scenario_id"]
-            verified_by_id[sid] = ok
             t = timing.get(sid, {})
             t_state = ("ok" if t.get("timing") == "ok"
                        else "fail" if t.get("timing") == "fail" else "missing")
@@ -103,6 +102,10 @@ def stamp_batch(batch_dir: Path, wer_bar: float,
                     reasons = reasons + ["timing answer key not audited against "
                                          "real audio (run data.synthetic."
                                          "timing_audit)"]
+            # AFTER the timing fold-in: this is the flag the manifest
+            # alignment trusts (bug found 2026-10-03 — setting it before
+            # kept clip-verified/timing-failed rows in train_manifest)
+            verified_by_id[sid] = ok
             rec = {"schema": SCHEMA, "scenario_id": sid,
                    "scenario_class": r.get("scenario_class"),
                    "asr_judge": r.get("asr_model"),
