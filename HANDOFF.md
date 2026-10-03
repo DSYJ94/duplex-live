@@ -1088,3 +1088,18 @@ owner's go.
 TTS texts babble persistently across retries (dialog-000 clip
 15_user: 8 extra words twice; --repair 2 in the real chain gives one
 more dice roll, then the conversation is REJECTED with evidence).
+
+## 2026-10-03 (later) — OWNER APPROVAL: 5x compute for the voice wall, on Isambard
+
+**Plain words:** The 2b bench showed the live loop can DECIDE inside the
+80 ms tick but VOICING word-dense turns costs ~5x the compute budget on
+one GPU. The owner approved spending that compute ("approved on the 5x
+compute needed, use isambard"). Two stacked levers, because the
+measured ~80 ms per word token is ~10x worse than this hardware should
+serve a 3B-active-param model — the gap is per-call overhead, not maths:
+1. torch.compile on the decode path (parity.py --compile existed but
+   was never benched);
+2. sharding the model across 4 GH200s.
+Job 7032343 (evals/m2-voice5x.slurm) measures compile@1gpu, shard4+
+compile, shard4-plain against the recorded baseline (386 ms p50
+speaking tick, backlog ~1300, dense_dialog-001). Parity must stay 0.
