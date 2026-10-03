@@ -1050,3 +1050,40 @@ engineering-only, unaffected by the gate).
 
 **Fresh-set rule unchanged:** barge-115/117/119 NEVER eval'd before
 final readouts.
+
+## 2026-10-03 — 2b bench verdict + timing RE-LABEL implemented
+
+**Plain TL;DR:** Two results. (1) The 80 ms live loop's DECIDE half
+fits real time — 59 ms per decision tick with the batched_mm kernel
+(eager kernel: 165 ms, eliminated). The VOICE half is the wall: dense
+speech needs ~5x more compute per tick than the budget on this
+checkpoint; parity is perfect everywhere (the scheduler never changes
+what the model says). (2) The timing answer key is now RE-LABELED from
+measured audio: the timing audit writes whisper-measured word onsets
+into the timeline (word_onsets_ms), the grid builder uses them instead
+of the char-proportional estimate, and the audit re-measures to
+confirm. Root causes fixed along the way: TTS clips carried multi-
+second silence tails (trimmed at render now — a 5.0 s clip held 2.3 s
+of speech), and the audit itself had a 24k-vs-16k sampling-rate bug.
+
+**2b bench numbers (job 7026771, 5 arms, TRAIN4):**
+- decision-only ticks p50: batched_mm 59 ms / eager 165 ms — kernel
+  choice settled (batched_mm).
+- speaking ticks on dense_dialog-001: best 386 ms p50 (arrears ppt4
+  batched_mm) vs 80 ms budget; backlog max ~1300 pieces; word density
+  ~6.6/tick vs ~80 ms/word compute. Voicing dense turns in real time
+  needs spec-decode or sparser turns — decision for the demo plan.
+- arrears scheduler parity: 0 mismatches in all 5 arms — promote.
+
+**Fail-closed chain state:** smoke proved render-judge -> filter ->
+timing audit -> stamp -> consumer gate end to end (gate correctly
+HELD on unverified data). One more smoke with --relabel running
+(job 7031799); on green, the full scale1 re-render chain goes in
+(evals/scale1-quality.slurm -> filter -> timing+relabel+stamp). It
+stops before training: re-shard + retrain wait for the stamp and the
+owner's go.
+
+**Known render behaviour (fail-closed working as designed):** some
+TTS texts babble persistently across retries (dialog-000 clip
+15_user: 8 extra words twice; --repair 2 in the real chain gives one
+more dice roll, then the conversation is REJECTED with evidence).

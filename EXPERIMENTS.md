@@ -1764,3 +1764,30 @@ re-renders the SAME timelines with the judge on (validated clip cache
 carries over, so cost is bounded), then chains filter -> timing audit
 -> stamp. It STOPS there: re-sharding + retraining wait for the
 quality stamp and the owner's go.
+
+## M2 2b BENCH — decisions on time, voicing is the wall (2026-10-03, job 7026771, 4h16m, 5 arms)
+
+**Plain words:** The live loop splits each 80 ms tick into two jobs:
+DECIDE (the ear listens, the model picks its next action) and VOICE
+(actually emitting its word tokens). We tested the scheduler that
+makes DECIDE the only time-critical job, against two maths kernels and
+four piece budgets. Result: **deciding fits real time, voicing dense
+speech does not — on this checkpoint, with one GPU.**
+
+Numbers (dense_dialog-001, the word-heaviest lesson; all arms parity
+0 mismatches — the scheduler never changes what the model says):
+- DECIDE-only ticks: p50 **59 ms** with the batched_mm kernel —
+  comfortably inside the 80 ms tick. With the eager kernel the same
+  ticks take 165 ms: eager is out, batched_mm is the keeper.
+- VOICE ticks on dense speech: best arm (4 pieces/tick, batched_mm)
+  spends p50 **386 ms per speaking tick** and the backlog of owed words
+  grows to ~1300. The script simply demands ~6.6 words per tick; the
+  model needs ~80 ms per word. That is ~5x over budget — arithmetic,
+  not tuning.
+- Quiet lessons (dialog-010, barge-004) already run 94-99% on time.
+
+**What this means for the audible demo (due ~Oct 14):** the loop CAN
+decide in real time; the voice channel lags only when the script is
+word-dense. Paths: sparser demo turns, speculative piece decode, or
+accept lag on dense turns. Fail-closed note: engineering bench only —
+no model-quality verdict until the re-rendered verified batch lands.
