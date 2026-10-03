@@ -1180,3 +1180,50 @@ this is a LOWER bound. Data quality is retired as the suspect.
 3. M2 audible demo with the scale1-q checkpoint (causal VAD + arrears
    + batched_mm; decisions fit 59 ms/tick; voice-dense turns lag).
 Checkpoint: $DL/runs/scale1-q-pt1/p1_checkpoint.pt.
+
+## 2026-10-04 — EAR-CLOCK FIX + blind-spot sweep (owner: "leave no blind spots")
+
+**Plain words:** The last known fault in what the model HEARS is being
+fixed: its ear produced 52 sound-snapshots per 4 seconds while the
+clock ticks 50 times — the extra 2 were silently thrown away each
+window, so everything the model heard drifted 4% late through every
+conversation. The fix resamples the ear onto the clock grid in the one
+place all consumers share. Retrain (one variable changed: the ear
+alignment; corpus = all 163 verified) chains after the smoke test.
+
+**Blind-spot sweep — every confound either CLOSED or tracked:**
+1. ear-clock 52-vs-50 — CLOSED (encode_audio resamples; smoke job
+   7039827 asserts feats == ticks; q2 shards rebuilt from scratch —
+   the old shards carry the skew and are dead).
+2. clip content — CLOSED (per-clip 0.15 bar, repair-in-render,
+   fail-closed asserts in all 8 consumers).
+3. timing labels — CLOSED (measured onsets; relabel+re-audit).
+4. stale shards — CLOSED (train aborts on unverified; q2 chain
+   re-encodes).
+5. held-out freshness — intact (113-120 held; 115/117/119 NEVER
+   evaluated — final-readout reserve).
+6. class imbalance — TRACKED, deliberate this round: 115 barge vs
+   48 dialog, and dialogs are the weak class. One variable per round
+   (this round: ear alignment). NEXT ROUND's lever: oversample
+   dialogs in the training list.
+7. <speak> never predicted in free-run — TRACKED, pre-existing across
+   every checkpoint; argmax is sil-dominated. The sil_bias sweep in
+   freerun_diag finds the operating point — RUN it on the q2
+   diagnostic instead of argmax-only.
+8. self-history compounding — TRACKED: the free-run diagnostic is the
+   hardest setting. Also run contract_trace on the q2 checkpoint
+   (training-stream vs live-stream parity — isolates label-following
+   from compounding).
+9. timing-audit circularity — RECORDED: post-relabel, the audit
+   re-measures with the same whisper that wrote the labels, so
+   "timing ok" is by construction; the real anchor is whisper's
+   timestamp accuracy (~50-100 ms) vs the 80 ms grid. Acceptable,
+   known, written down.
+10. whisper-as-judge bias — RECORDED: a systematically misheard word
+    fails SAFE (rejection), never passes bad clips.
+
+**Running:** ear smoke 7039827; gate round on the verified trunk
+(scale1q-gate1, job 7039828 — instrument continuity with every prior
+gate round). On smoke green: scale1q2 shard -> train chain (163
+lessons, ear aligned, end-of-job held-out diagnostic directly
+comparable to last night's).
