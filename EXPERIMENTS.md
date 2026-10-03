@@ -1791,3 +1791,30 @@ decide in real time; the voice channel lags only when the script is
 word-dense. Paths: sparser demo turns, speculative piece decode, or
 accept lag on dense turns. Fail-closed note: engineering bench only —
 no model-quality verdict until the re-rendered verified batch lands.
+
+## SCALE1-Q — first training on FULLY VERIFIED data (2026-10-03, job 7035090, 3h29m)
+
+**Plain words:** We retrained with the exact same recipe as before —
+the ONLY change is the data: 153 conversations where every clip
+matches its script and every timing label is measured from the real
+audio (the first corpus in this project where that is true). The
+question was: was bad data the reason the model cannot tell when to
+speak? Answer: **bad data was A reason, not THE reason.**
+
+Held-out free-run (4 verified lessons the model never trained on):
+- Dialog lessons: still near-mute — the model starts only ~15% of the
+  words it should (recall 0.14-0.19) and misses most onsets (0-1 of 5).
+- Barge lessons (user talks a lot, assistant interjects briefly):
+  the bright spot — "is the assistant speaking" F1 0.53-0.60, word
+  accuracy 0.36-0.41, and 2-4 of 4 word starts land within ±1 s
+  (2 of 4 exactly right on barge-113).
+- The ear-clock skew (52 vs 50 tokens per 4 s) is STILL in the loop —
+  flagged by the diagnostic, fix not yet applied. It smears onset
+  information over the history, so this readout is a LOWER bound on
+  what clean alignment could give.
+
+**What this settles:** data quality is no longer the suspect — the
+remaining wall is the model/loop side: ear-clock alignment, then the
+gate round on this trunk. Numbers above are the first in this project
+measured on answer keys that are actually correct, so from here,
+changes move REAL numbers.

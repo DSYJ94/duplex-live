@@ -1160,3 +1160,23 @@ this one (restarting for +6% data mid-run buys nothing).
 
 Training: step 1608/2000, loss 0.63 — the free-run diagnostic on
 held-out verified lessons runs automatically at the end (~1h).
+
+## 2026-10-03 (late) — scale1-q training verdict: data was A reason, not THE reason
+
+**Plain TL;DR:** First training run on fully verified data (153
+lessons, recipe unchanged, job 7035090, loss 4.15 -> 0.60). Held-out
+free-run: dialogs still near-mute (word recall 0.14-0.19, onsets
+0-1/5); barges moderate-to-decent (speech F1 0.53-0.60, word acc
+0.36-0.41, onsets 2-4/4 within 1 s). The ear-clock skew (52-vs-50,
+printed by the diagnostic) is still unfixed and confounds onsets —
+this is a LOWER bound. Data quality is retired as the suspect.
+
+**Next in order (per the standing plan):**
+1. EAR-CLOCK FIX (sampler.py assumes 50 ear tokens / 4 s; the tower
+   emits 52 — resample or tick-align), then one more training round —
+   time for exactly one more full round before the allocation ends.
+2. Gate round on the scale1-q trunk (train_gate) in parallel — the
+   demonstrated frontier mover; no retrain needed.
+3. M2 audible demo with the scale1-q checkpoint (causal VAD + arrears
+   + batched_mm; decisions fit 59 ms/tick; voice-dense turns lag).
+Checkpoint: $DL/runs/scale1-q-pt1/p1_checkpoint.pt.
