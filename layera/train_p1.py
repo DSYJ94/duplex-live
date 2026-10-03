@@ -249,7 +249,14 @@ def main() -> None:
     # layer and OOMs (95 GiB GH200). Enable AFTER .train() — the per-layer
     # check is `flag and self.training` — then verify the flag actually
     # landed on the decoder layers (first run silently didn't).
-    model.gradient_checkpointing_enable()
+    model.gradient_checkpointing_enable(
+        # reentrant mode: the non-reentrant default STRICTLY compares
+        # saved vs recomputed activation metadata, and the MoE route
+        # gates can flip a tie between the two passes (bf16 matmul is
+        # not bitwise deterministic) -> per-expert token counts differ
+        # by 1 -> CheckpointError. Hit on the verified batch 2026-10-03
+        # (485 vs 484, step 1); reentrant recomputes without the check.
+        use_reentrant=True)
     flagged = sum(1 for m in model.modules()
                   if getattr(m, "gradient_checkpointing", False))
     n_layers = sum(1 for m in model.modules()
