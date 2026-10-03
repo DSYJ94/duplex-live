@@ -1077,9 +1077,10 @@ of speech), and the audit itself had a 24k-vs-16k sampling-rate bug.
 
 **Fail-closed chain state:** smoke proved render-judge -> filter ->
 timing audit -> stamp -> consumer gate end to end (gate correctly
-HELD on unverified data). One more smoke with --relabel running
-(job 7031799); on green, the full scale1 re-render chain goes in
-(evals/scale1-quality.slurm -> filter -> timing+relabel+stamp). It
+HELD on unverified data). The --relabel smoke came back GREEN (barge-004: all 4 assistant
+clips re-labeled, p95 offset 40 ms, stamp 1/1 VERIFIED, consumer gate
+OPEN) and the full scale1 re-render chain is LAUNCHED (job 7032050 ->
+filter -> timing+relabel+stamp, 240 conversations, --repair 2). It
 stops before training: re-shard + retrain wait for the stamp and the
 owner's go.
 
