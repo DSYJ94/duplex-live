@@ -461,8 +461,8 @@ def main() -> None:
         blocked = None
         if blocked_by_sid is not None:
             sc = blocked_by_sid[sid]
-            # n*1280 samples (feats run ~4% longer than the audio grid;
-            # the zero tail is quiet and harmless to the RMS quantiles)
+            # n == n_ticks exactly since the ear-clock fix (encode_audio
+            # resamples tower tokens onto the tick grid); n*1280 samples
             pcm = mix_in_slot(sc, n)
             blocked = user_block_mask(pcm, len(pcm) // 1280,
                                       args.gate_hold)

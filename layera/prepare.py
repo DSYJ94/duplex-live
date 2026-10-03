@@ -60,10 +60,23 @@ def mix_in_slot(sc_dir: Path, n_ticks: int) -> np.ndarray:
 
 def encode_audio(model, proc, pcm: np.ndarray, window_s: float = 4.0):
     """Run the ear (AuT tower) over the in-slot stream in windows; returns
-    per-window tower outputs (what the thinker scatters into <|audio_pad|>
-    positions — verified in its forward). Phase-1 v1 keeps the ear frozen,
-    so precomputed outputs are the training inputs."""
+    TICK-ALIGNED tower outputs (what the thinker scatters into
+    <|audio_pad|> positions — verified in its forward). Phase-1 v1 keeps
+    the ear frozen, so precomputed outputs are the training inputs.
+
+    EAR-CLOCK FIX (2026-10-03): the tower emits ~52 tokens per 4 s
+    window while the tick grid holds 50 — every consumer (sampler,
+    free-run, live loop) feeds one token per tick, so the surplus was
+    silently truncated: a 4% skew, up to 160 ms of within-window
+    misalignment, drifting onset information across the history. Here,
+    and only here, each window's tokens are resampled onto the tick
+    grid by nearest-time gather — tokens map to their nearest tick's
+    time centre; ~2 tokens per window are dropped/kept by proximity
+    instead of losing the window tail. pcm is tick-quantized
+    (n_ticks*1280 samples), so ticks-per-window is exact.
+    """
     n = int(16000 * window_s)
+    per_tick = int(16000 * GRID_MS / 1000)  # 1280 samples
     feats, counts = [], []
     for i in range(0, len(pcm), n):
         chunk = pcm[i:i + n]
@@ -83,8 +96,20 @@ def encode_audio(model, proc, pcm: np.ndarray, window_s: float = 4.0):
         thinker_hidden = model.get_input_embeddings().weight.shape[1]
         assert tower.shape[1] == thinker_hidden, \
             f"tower hidden {tower.shape[1]} != thinker {thinker_hidden}"
-        feats.append(tower[-n_tok:].float().cpu())
-        counts.append(n_tok)
+        toks = tower[-n_tok:]
+        n_ticks_win = len(chunk) // per_tick
+        if n_tok != n_ticks_win:
+            # nearest-time gather: tick t takes the token whose time
+            # centre is closest
+            idx = ((torch.arange(n_ticks_win, device=toks.device,
+                                 dtype=torch.float32) + 0.5)
+                   * (n_tok / n_ticks_win) - 0.5).round().clamp(
+                       0, n_tok - 1).long()
+            toks = toks[idx]
+            counts.append(int(n_tok))  # keep the raw rate for the record
+        else:
+            counts.append(n_tok)
+        feats.append(toks.float().cpu())
     return torch.cat(feats), counts
 
 

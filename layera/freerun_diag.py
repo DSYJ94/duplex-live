@@ -271,8 +271,9 @@ def main() -> None:
     inputs = proc(text=["<|audio_pad|>"], audio=[pcm0[:16000 * 4]],
                   return_tensors="pt", padding=True)
     n_win = int((inputs["input_ids"][0] == pad_id).sum())
-    print(f"[freerun] ALIGNMENT: ticks/4s = 50, ear tokens/4s = {n_win} "
-          f"(sampler assumes equal; ratio {n_win / 50:.2f})", flush=True)
+    print(f"[freerun] ALIGNMENT: tick grid 50/4s; tower emits ~{n_win}/4s "
+          f"(raw rate; encode_audio resamples onto the tick grid — "
+          f"ear-clock fix 2026-10-03)", flush=True)
 
     def kind_of(tok_id: int) -> str:
         if tok_id >= n_old:
