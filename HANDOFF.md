@@ -1241,3 +1241,20 @@ read) is the operating-point tool. NEXT: read gate log after `!
 clifton auth`, then pick the operating point and build the audible
 demo composite (causal VAD + arrears + batched_mm) on the q2
 checkpoint ($DL/runs/scale1-q2-pt1/p1_checkpoint.pt).
+
+## 2026-10-04 (night) — operating point picked: gate thr=0.10; demo audio rendering
+
+**Plain TL;DR:** The gate threshold sweep on TRAIN4 (protocol: tune on
+burned lessons, ONE held-out shot) says thr=0.10 is the only setting
+where EVERY lesson works: v3 F1 0.71-0.80 across all four, dialog
+chatter cut 22-47% vs ungated, barges at or near their best. Higher
+thresholds trade one lesson for another (thr=0.35: dialog-001 F1 0.79
+but dialog-010 COLLAPSES to 0.02 — the gate never fires there). The
+gate is a mild prior, not a hard blocker. Held-out confirmation at
+thr=0.10 + factory-TTS render of the picks is running (job 7063645) —
+audio lands in $DL/runs/demo-q2/audio for rsync + viz.listen.
+
+**Also this session:** q2 live-loop smoke COMPLETED (parity 0 on all
+TRAIN4 lessons, decision ticks 57-62 ms); the q-gate round proved the
+instrument but was paired with the wrong (skewed-ear) trunk — q2 gate
+retrained (job 7060708).
