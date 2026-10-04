@@ -52,6 +52,6 @@ apptainer exec --nv --bind /projects,/lus,/home \
     $CONTAINER \
     python -m evals.render_model_audio --picks "$OUT/picks" \
     --batch "$BATCH" --out "$OUT/audio" --engine minicpm $VARGS \
-    --repair 2
+   
 
 echo "demo audio done: $OUT/audio — rsync + viz.listen per the standing rule"
