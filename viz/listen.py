@@ -141,7 +141,8 @@ def page_batch(runs: Path, name: str) -> str | None:
         issues = "".join(f"<div>{esc(i)}</div>" for i in r.get("issues", []))
         players = " ".join(
             f'<div class="meta">{esc(p)} {audio_tag(quote(str(sc.relative_to(runs)) + "/" + p))}</div>'
-            for p in ["mixed.wav"] + sorted(x.name for x in sc.glob("stem_*.wav"))
+            for p in (["model.wav", "mixed.wav"]
+                      + sorted(x.name for x in sc.glob("stem_*.wav")))
             if (sc / p).exists())
 
         utt_rows = []
