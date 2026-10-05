@@ -1258,3 +1258,16 @@ audio lands in $DL/runs/demo-q2/audio for rsync + viz.listen.
 TRAIN4 lessons, decision ticks 57-62 ms); the q-gate round proved the
 instrument but was paired with the wrong (skewed-ear) trunk — q2 gate
 retrained (job 7060708).
+
+## 2026-10-05 — the listen verdict: timing real, content degenerate; honest demo rebuilt
+
+**Plain TL;DR:** Owner audition caught the groan: free-run picks are
+93% digit-soup ("0","9",".") — TTS read it as a drone. Corrected the
+record: ALL "word acc" numbers in diagnostics are PLACEMENT (started
+a word at the gold tick), not content. Timing holds (ear-clock fix);
+content was never trained (teacher-forced phase 1). Gallery now lists
+model.wav. The honest demo (model onsets + script words, missed turns
+= gaps) is building (job 7113366 -> runs/demo-q2/audio-timing).
+Word-content generation remains the Talker's job — out of trunk scope;
+for the Oct-14 demo, script words at model onsets is the claim we can
+defend.

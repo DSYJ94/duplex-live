@@ -1844,3 +1844,21 @@ That is exactly the chatter-vs-quiet operating point the GATE round
 exists to pick — and the gate on this trunk trained while these
 numbers were measured. Turn-taking is no longer a hearing problem;
 it is a threshold problem, and thresholds are what gates do.
+
+## THE FIRST LISTEN — what the ear caught that the metrics hid (2026-10-05, owner audition)
+
+**Plain words:** The owner listened to the demo and heard two things
+the numbers had hidden. (1) The gallery never listed model.wav —
+fixed. (2) Deep groaning under the conversation: the model's free-run
+word picks are ~93% degenerate single characters ("0", "9", "."), and
+the TTS read the digit stream as a drone. This forces an honest
+correction to every "word accuracy" number in this file: the
+diagnostic's gold-<word> accuracy measures whether the model STARTED
+A WORD at the right tick (placement), never WHICH word. Timing is
+real and fixed; free-run CONTENT was never trained — phase-1 is
+teacher-forced, the words were always handed to the model, and the
+Talker that would generate them is not in this trunk. The audible
+demo is therefore rebuilt honestly: the MODEL'S turn onsets + the
+SCRIPT'S words (evals/build_timing_demo.py) — turns the model missed
+are gaps; turns it invented are skipped and reported. What the demo
+proves is turn-taking; it does not claim word generation.
