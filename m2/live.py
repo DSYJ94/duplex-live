@@ -199,9 +199,9 @@ def main() -> None:
                 speaking = {"idx": i, "pos": 0}
                 rec["turns"].append({"tick": t, "t_ms": t * GRID_MS,
                                      "utterance": i,
-                                     "text": utterances[i]["text"][:60]})
+                                     "text": utterances[i].text[:60]})
                 print(f"[live] {sid} t={t*GRID_MS/1000:6.1f}s TURN "
-                      f"#{i}: {utterances[i]['text'][:40]!r}", flush=True)
+                      f"#{i}: {utterances[i].text[:40]!r}", flush=True)
             # yield: cut playback (barge-in behaviour)
             if name == "<yield>" and speaking:
                 rec["yields"] += 1
