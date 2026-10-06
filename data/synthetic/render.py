@@ -173,13 +173,22 @@ class ElevenLabsEngine:
             self.session = requests.Session()
         vid = self.DEFAULT_VOICES.get(vk, self.DEFAULT_VOICES["assistant"])
         stability = 0.4 + 0.15 * min(attempt, 2)
-        r = self.session.post(
-            f"https://api.elevenlabs.io/v1/text-to-speech/{vid}",
-            headers={"xi-api-key": self.key},
-            json={"text": text, "model_id": self.model,
-                  "voice_settings": {"stability": stability,
-                                     "similarity_boost": 0.75}},
-            params={"output_format": "pcm_16000"}, timeout=120)
+        import time as _time
+        for backoff in (0, 5, 20, 60):
+            if backoff:
+                _time.sleep(backoff)
+            r = self.session.post(
+                f"https://api.elevenlabs.io/v1/text-to-speech/{vid}",
+                headers={"xi-api-key": self.key},
+                json={"text": text, "model_id": self.model,
+                      "voice_settings": {"stability": stability,
+                                         "similarity_boost": 0.75}},
+                params={"output_format": "pcm_16000"}, timeout=120)
+            if r.status_code == 200:
+                break
+            # 429/5xx retry with backoff; anything else is real
+            if r.status_code not in (429, 500, 502, 503):
+                r.raise_for_status()
         r.raise_for_status()
         import numpy as np
         audio = np.frombuffer(r.content, dtype="<i2").astype("float32") / 32768.0
