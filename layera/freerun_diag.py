@@ -463,6 +463,27 @@ def main() -> None:
         print(f"[freerun]   WORD ONSETS: {exact}/{n_onset} exact, "
               f"{near}/{n_onset} within +-1s; "
               f"{pieces} continuation pieces", flush=True)
+        # CONTENT metric (2026-10-06, the GPT-live gap): what the model
+        # SAYS in free run vs the script — every earlier "word acc" in
+        # this file is PLACEMENT (started a word at a gold tick), which
+        # the digit-soup demo proved measures nothing about content.
+        # Free-run WER over the concatenated word streams, filter's own
+        # normalizer (digits expand, so "0" != "zero" slips through as
+        # an error — correct).
+        from data.synthetic.filter import norm_words as _nw, wer as _wer
+        gold_words = [t.emission for t in grid.ticks
+                      if t.emission not in ALL_SPECIAL
+                      and not t.emission.startswith("<t+")]
+        model_words = []
+        for ev in events:
+            txt = ev.get("text") or proc.tokenizer.decode(
+                ev.get("ids", [])).strip()
+            if txt:
+                model_words.append(txt)
+        w = _wer(_nw(" ".join(gold_words)), _nw(" ".join(model_words)))
+        print(f"[freerun]   FREE-RUN WORD WER: {w:.3f} "
+              f"(0 = says the script; 1+ = garbage — the digit soup "
+              f"scored ~1). THE content metric.", flush=True)
     print("[freerun] done", flush=True)
 
 
