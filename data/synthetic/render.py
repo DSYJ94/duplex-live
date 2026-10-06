@@ -97,7 +97,7 @@ class MiniCPMEngine:
         self.model, _ = load_model()
 
     def tts(self, text: str, ref_wav: Path, out_path: Path,
-            attempt: int = 0) -> None:
+            attempt: int = 0, vk: str = "assistant") -> None:
         import librosa
 
         # attempt 0 = the proven near-greedy decode (reproducible
@@ -124,7 +124,8 @@ class ChatterboxEngine:
 
         self.model = ChatterboxTTS.from_pretrained(device="cuda")
 
-    def tts(self, text: str, ref_wav: Path, out_path: Path) -> None:
+    def tts(self, text: str, ref_wav: Path, out_path: Path,
+            attempt: int = 0, vk: str = "assistant") -> None:
         import soundfile as sf
         import torch
 
@@ -136,12 +137,64 @@ class ChatterboxEngine:
         sf.write(str(out_path), wav, self.model.sr)
 
 
+class ElevenLabsEngine:
+    """ElevenLabs TTS API. ADR-0003 Amendment A: closed-API training
+    content is permitted under the owner's enterprise agreement —
+    provenance rides in the manifest's engine field. Why an API engine
+    at all (2026-10-06): volume. The duplex-timing field floor is
+    ~2,000 audio-hours; our corpus is single digits, and the open TTS
+    babbles away ~60% of dialogs. This engine renders WITHOUT cluster
+    GPUs (they stay on training), at far higher per-clip reliability.
+    pcm_16000 output matches the factory grid natively. --voice-pool
+    keys: elevenlabs voice ids (defaults below are the general library
+    free tier; swap for the account's)."""
+
+    DEFAULT_VOICES = {
+        "assistant": "21m00Tcm4TlvDq8ikWAM",   # Rachel
+        "user": "AZnzlk1XvdvUeBnXmlld",        # Domi
+        "background": "EXAVITQu4vr4xnSDxMaL",  # Sarah
+    }
+
+    def __init__(self):
+        import os
+        self.key = os.environ.get("ELEVENLABS_API_KEY")
+        if not self.key:
+            raise RuntimeError(
+                "ELEVENLABS_API_KEY not set — source the key file "
+                "before this job (never commit it)")
+        self.model = os.environ.get("ELEVENLABS_MODEL", "eleven_turbo_v2_5")
+        self.session = None
+
+    def tts(self, text: str, ref_wav: Path, out_path: Path,
+            attempt: int = 0, vk: str = "assistant") -> None:
+        import soundfile as sf
+        if self.session is None:
+            import requests
+            self.session = requests.Session()
+        vid = self.DEFAULT_VOICES.get(vk, self.DEFAULT_VOICES["assistant"])
+        stability = 0.4 + 0.15 * min(attempt, 2)
+        r = self.session.post(
+            f"https://api.elevenlabs.io/v1/text-to-speech/{vid}",
+            headers={"xi-api-key": self.key},
+            json={"text": text, "model_id": self.model,
+                  "voice_settings": {"stability": stability,
+                                     "similarity_boost": 0.75}},
+            params={"output_format": "pcm_16000"}, timeout=120)
+        r.raise_for_status()
+        import numpy as np
+        audio = np.frombuffer(r.content, dtype="<i2").astype("float32") / 32768.0
+        sf.write(str(out_path), audio, 16000)
+
+
 def load_engine(name: str):
     if name == "minicpm":
         return MiniCPMEngine()
     if name == "chatterbox":
         return ChatterboxEngine()
-    raise ValueError(f"unknown engine {name!r} (minicpm | chatterbox)")
+    if name == "elevenlabs":
+        return ElevenLabsEngine()
+    raise ValueError(f"unknown engine {name!r} "
+                     "(minicpm | chatterbox | elevenlabs)")
 
 
 def load_voice_pool(voices_json: Path | None, assets: Path) -> dict[str, Path]:
@@ -296,7 +349,7 @@ def render_timeline(engine, tl, out_dir: Path, assets: Path, manifest,
                 shutil.copyfile(cached, utt)
                 cache_hits += 1
             else:
-                engine.tts(ev.text, pool[vk], utt, attempt=attempt)
+                engine.tts(ev.text, pool[vk], utt, attempt=attempt, vk=vk)
             trim_ms = trim_silence(utt)
             if trim_ms >= 100:
                 print(f"  [{tl.scenario_id}] trimmed {trim_ms}ms silence "
@@ -469,7 +522,7 @@ def main() -> None:
     ap.add_argument("--anchor-prob", type=float, default=0.5,
                     help="probability a channel keeps its proven anchor voice")
     ap.add_argument("--engine", default="minicpm",
-                    choices=["minicpm", "chatterbox"],
+                    choices=["minicpm", "chatterbox", "elevenlabs"],
                     help="TTS engine (see load_engine; overlays differ)")
     ap.add_argument("--clip-cache", default=None,
                     help="memoize <=6-word renders per (voice, text); only "
