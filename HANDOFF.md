@@ -1285,3 +1285,17 @@ no per-lesson percentiles. Gallery: live-demo batch next to
 timing-demo. Remaining to the mic demo: bridge real mic/speaker over
 SSH (audio pipes) + realtime pacing (--realtime exists, unpaced for
 speed in this run). Code: m2/live.py.
+
+## 2026-10-06 (night) — MIC DEMO READY (pipe test passed, job 7135100)
+
+**Plain TL;DR:** The stdin/stdout streaming legs are proven: a 109.6 s
+mic-format stream through `cat raw | m2.live --source stdin --sink
+stdout` came back as 109.6 s of clean model audio, 7/7 turns taken IN
+REAL TIME, logs confined to stderr. The owner-facing demo is
+`demo/mic-demo.sh` (sox mic | ssh srun | sox speaker; needs `brew
+install sox`; LESSON=dense_dialog-116 by default; Ctrl-C ends).
+Known demo behaviours for the ear: answers are the scripted bank
+(words out of scope this phase); every user turn-in cuts the answer
+(yield) — in the dense lessons the user does come back quickly, so
+cuts are often correct, but the yield trigger may be hair-trigger;
+turn-taking is the claim being demonstrated.
