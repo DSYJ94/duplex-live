@@ -101,6 +101,16 @@ def main() -> None:
                          "bypassed (quick replies; timing review 2026-10-06)")
     ap.add_argument("--realtime", action="store_true",
                     help="pace to wall-clock 80 ms ticks (demo mode)")
+    ap.add_argument("--source", choices=["stem", "stdin"], default="stem",
+                    help="stem = the lesson's user wav (simulated); "
+                         "stdin = raw int16 16k mono from a real mic "
+                         "(the demo pipe: mic | ssh ... | speaker)")
+    ap.add_argument("--sink", choices=["files", "stdout"],
+                    default="files",
+                    help="files = write wavs to --out; stdout = stream "
+                         "the model's voice as raw int16 16k mono (the "
+                         "return leg of the demo pipe; logs go to "
+                         "stderr)")
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
 
@@ -158,19 +168,51 @@ def main() -> None:
         spoken = 0
         rec = {"scenario_id": sid, "turns": [], "yields": 0,
                "ticks": n_ticks}
-        out_pcm = np.zeros(n_ticks * PER_TICK, dtype=np.float32)
+        out_pcm = np.zeros(0, dtype=np.float32)  # grows per tick
         clip_data = {i: load_stem_mono(p, 10 ** 9) for i, p in
                      enumerate(clips)}
         emb = model.get_input_embeddings()
         pad_id = proc.tokenizer.convert_tokens_to_ids("<|audio_pad|>")
 
+        # stdin mode: one conversation, unbounded, fed by the mic pipe.
+        # Blocking reads pace the loop (a tick happens when 80 ms of
+        # sound has arrived — real time by construction); Ctrl-C ends.
+        live = args.source == "stdin"
+        max_ticks = 10 ** 9 if live else n_ticks
+        # stdout sink: dup fd 1 for raw audio, then send ALL prints to
+        # stderr — otherwise a log line lands mid-stream in the speaker
+        if args.sink == "stdout":
+            import os
+            fd = os.dup(1)
+            sink = os.fdopen(fd, "wb", buffering=0)
+            sys.stdout = sys.stderr
+        else:
+            sink = None
+
+        def read_mic_chunk() -> np.ndarray:
+            want = PER_TICK * 2  # int16 mono
+            buf = b""
+            while len(buf) < want:
+                got = sys.stdin.buffer.read(want - len(buf))
+                if not got:
+                    raise EOFError("mic stream ended")
+                buf += got
+            return np.frombuffer(buf, dtype="<i2").astype(
+                np.float32) / 32768.0
+
         t0 = time.monotonic()
-        for t in range(n_ticks):
+        for t in range(max_ticks):
             if args.realtime:
                 dl = t0 + (t + 1) * GRID_MS / 1000 - time.monotonic()
                 if dl > 0:
                     time.sleep(dl)
-            chunk = user_pcm[t * PER_TICK:(t + 1) * PER_TICK]
+            if live:
+                try:
+                    chunk = read_mic_chunk()
+                except EOFError:
+                    break
+            else:
+                chunk = user_pcm[t * PER_TICK:(t + 1) * PER_TICK]
             window_pcm = np.concatenate([window_pcm, chunk])[-WINDOW_TICKS * PER_TICK:]
             if (t + 1) % WINDOW_TICKS == 0 and len(window_pcm) == WINDOW_TICKS * PER_TICK:
                 from layera.prepare import encode_audio
@@ -209,7 +251,8 @@ def main() -> None:
                       f"(cut utterance #{speaking['idx']})", flush=True)
                 speaking = None
                 spoken += 1  # the cut utterance counts as consumed
-            # advance playback (audio placed on the output grid)
+            # advance playback: this tick's model-voice samples -> sink
+            tick_out = np.zeros(PER_TICK, dtype=np.float32)
             if speaking:
                 cd = clip_data[speaking["idx"]]
                 n = min(PER_TICK, len(cd) - speaking["pos"])
@@ -217,30 +260,39 @@ def main() -> None:
                     speaking = None
                     spoken += 1
                 else:
-                    fade = min(n, int(0.05 * SR))
-                    out_pcm[t * PER_TICK:t * PER_TICK + n] += \
-                        cd[speaking["pos"]:speaking["pos"] + n]
+                    tick_out[:n] += cd[speaking["pos"]:speaking["pos"] + n]
                     speaking["pos"] += n
             if user_on and speaking and speaking["pos"] > int(0.3 * SR):
-                # user barges in: cut with a short fade (clean yield)
+                # user barges in: cut (clean yield) from next tick
                 rec["yields"] += 1
                 speaking = None
                 spoken += 1
-        peak = float(np.max(np.abs(out_pcm))) or 1.0
-        if peak > 0.95:
-            out_pcm *= 0.95 / peak
-        import soundfile as sf
-        sf.write(out_dir / f"{sid}_model.wav", out_pcm, SR)
-        mixed = out_pcm + user_pcm[:len(out_pcm)]
-        peak = float(np.max(np.abs(mixed))) or 1.0
-        if peak > 0.95:
-            mixed *= 0.95 / peak
-        sf.write(out_dir / f"{sid}_mixed.wav", mixed, SR)
+            if sink is not None:
+                # the return leg: raw int16 to the pipe (the speaker
+                # side plays it); stdout is AUDIO now — all logs must
+                # go to stderr
+                sink.write((tick_out * 32767.0).astype("<i2").tobytes())
+                sink.flush()
+            else:
+                out_pcm = np.concatenate([out_pcm, tick_out])
+        if sink is None:
+            peak = float(np.max(np.abs(out_pcm))) or 1.0
+            if peak > 0.95:
+                out_pcm *= 0.95 / peak
+            import soundfile as sf
+            sf.write(out_dir / f"{sid}_model.wav", out_pcm, SR)
+            mixed = out_pcm + user_pcm[:len(out_pcm)]
+            peak = float(np.max(np.abs(mixed))) or 1.0
+            if peak > 0.95:
+                mixed *= 0.95 / peak
+            sf.write(out_dir / f"{sid}_mixed.wav", mixed, SR)
         rec["n_turns"] = len(rec["turns"])
         rec["n_gold"] = len(clips)
         summary.append(rec)
         print(f"[live] {sid}: {len(rec['turns'])}/{len(clips)} turns "
               f"voiced, {rec['yields']} yields", flush=True)
+        if live:
+            break  # one conversation per stdin session
     (out_dir / "live_report.json").write_text(
         json.dumps(summary, indent=1))
     print("[live] done — listen: rsync + python -m viz.listen")
