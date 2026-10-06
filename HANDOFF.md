@@ -1271,3 +1271,17 @@ model.wav. The honest demo (model onsets + script words, missed turns
 Word-content generation remains the Talker's job — out of trunk scope;
 for the Oct-14 demo, script words at model onsets is the claim we can
 defend.
+
+## 2026-10-06 — SIMULATED-LIVE LOOP RUNS END TO END (job 7132354, 21 min)
+
+**Plain TL;DR:** The dress rehearsal works. One program: user audio
+streams in 80 ms ticks -> ear windows on the tick grid -> q2 checkpoint
++ gate decide every tick -> the turns the model starts are voiced with
+whole-utterance clips (natural prosody) -> yields and user barge-ins
+cut playback with a fade. Results on the held-out four: dialog-116
+7/7 turns, dialog-114 7/7 (the weak lesson — the gate-grace window for
+quick replies WORKS), barge-113 2/3, barge-114 2/4. Causal floor VAD,
+no per-lesson percentiles. Gallery: live-demo batch next to
+timing-demo. Remaining to the mic demo: bridge real mic/speaker over
+SSH (audio pipes) + realtime pacing (--realtime exists, unpaced for
+speed in this run). Code: m2/live.py.
