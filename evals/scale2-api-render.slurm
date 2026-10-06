@@ -58,7 +58,7 @@ for k in 0 1 2 3; do
         python -m data.synthetic.render \
         --timelines "$DL/tmp/sc2api-in" --out "$OUT_DIR" \
         --engine elevenlabs --clip-cache "$CACHE" --slice "$k/4" \
-        --repair 3 \
+        --repair ${REPAIR:-3} \
         > "$DL/logs/render-sc2api-w$k.log" 2>&1
     ) &
 done
