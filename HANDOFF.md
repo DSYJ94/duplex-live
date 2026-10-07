@@ -1313,3 +1313,16 @@ script (ls|head closes the pipe -> exit 141 -> silent abort; replaced
 with a counting loop), a doubled container path, and a missing
 module-level librosa. OpenAI key rejected as invalid (ends V2jC) —
 banks provider built and waiting for a working key.
+
+## 2026-10-07 (later) — the outage pipeline: local Mac data factory
+
+**Plain TL;DR:** Isambard went down until 22:00 BST mid-push. The data
+factory moved to this Mac: torch made optional in render.py, a local
+venv (.venv-api) runs the whole API path. NEW OpenAI key VALIDATED —
+GPT-4o wrote frontier banks (banks-openai.json), 130 fresh dialog
+timelines from them, and 130 ElevenLabs dialogs rendered locally
+(100% ship rate, zero GPU). Total API corpus now 250 dialogs (120 on
+cluster + 130 local, ~$80 credits total). Auto-handoff armed: on
+cluster return — deploy key (bizhleg0c), push local batch + queue its
+filter->timing->stamp chain (bkikgqq6z). Then: shard all verified
+corpora, launch the self-history training round.
