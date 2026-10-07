@@ -27,7 +27,11 @@ from pathlib import Path
 import librosa
 import numpy as np
 import soundfile as sf
-import torch
+try:  # torch is only needed by GPU engines (minicpm); API/CPU
+    # engines must run torch-free (local Mac renders, 2026-10-07)
+    import torch
+except ImportError:
+    torch = None
 
 SR = 24000
 GRID_MS = 80
