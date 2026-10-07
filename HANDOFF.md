@@ -1299,3 +1299,17 @@ Known demo behaviours for the ear: answers are the scripted bank
 (yield) — in the dense lessons the user does come back quickly, so
 cuts are often correct, but the yield trigger may be hair-trigger;
 turn-taking is the claim being demonstrated.
+
+## 2026-10-07 — maintenance window + the API volume lever PROVEN
+
+**Plain TL;DR:** A 2-day cluster reservation (Oct 6-8) froze all GPU
+jobs (research run + open-engine top-up queued, auto-fire at window
+end). The ElevenLabs arm ran on the LOGIN node instead (pure API):
+**120/120 dialogs shipped, ZERO render rejections** vs the open TTS's
+~60% dialog rejection. Cost ≈ $40 of creator credits. Verification
+chain (filter -> timing+relabel -> stamp) pre-queued to fire when GPUs
+return. Bugs fixed en route: SIGPIPE+pipefail killed the launcher
+script (ls|head closes the pipe -> exit 141 -> silent abort; replaced
+with a counting loop), a doubled container path, and a missing
+module-level librosa. OpenAI key rejected as invalid (ends V2jC) —
+banks provider built and waiting for a working key.
