@@ -28,6 +28,28 @@ from data.synthetic.banks_llm import (  # noqa: E402
 
 
 def ask(session, model: str, prompt: str, key: str) -> str:
+    """gpt-5-pro and friends live on /v1/responses; older models on
+    chat/completions. Try responses first, fall back."""
+    for backoff in (0, 5, 20):
+        if backoff:
+            time.sleep(backoff)
+        r = session.post(
+            "https://api.openai.com/v1/responses",
+            headers={"Authorization": f"Bearer {key}"},
+            json={"model": model, "input": prompt},
+            timeout=300)
+        if r.status_code == 200:
+            out = r.json().get("output", [])
+            for blk in out:
+                if blk.get("type") == "message":
+                    for c in blk.get("content", []):
+                        if c.get("type") == "output_text":
+                            return c["text"]
+            return ""
+        if r.status_code == 404:  # model not on responses -> chat
+            break
+        if r.status_code not in (429, 500, 502, 503):
+            r.raise_for_status()
     for backoff in (0, 5, 20):
         if backoff:
             time.sleep(backoff)
@@ -35,8 +57,7 @@ def ask(session, model: str, prompt: str, key: str) -> str:
             "https://api.openai.com/v1/chat/completions",
             headers={"Authorization": f"Bearer {key}"},
             json={"model": model,
-                  "messages": [{"role": "user", "content": prompt}],
-                  "temperature": 0.9},
+                  "messages": [{"role": "user", "content": prompt}]},
             timeout=120)
         if r.status_code == 200:
             return r.json()["choices"][0]["message"]["content"]
