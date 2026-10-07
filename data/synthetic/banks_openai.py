@@ -37,7 +37,7 @@ def ask(session, model: str, prompt: str, key: str) -> str:
             "https://api.openai.com/v1/responses",
             headers={"Authorization": f"Bearer {key}"},
             json={"model": model, "input": prompt},
-            timeout=300)
+            timeout=1200)
         if r.status_code == 200:
             out = r.json().get("output", [])
             for blk in out:
