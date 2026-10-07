@@ -153,6 +153,18 @@ def main() -> None:
                          "head's P(speech) >= --gate-threshold. Learned "
                          "quiet discipline in parameters separate from "
                          "the frozen placement model")
+    ap.add_argument("--top-p", type=float, default=1.0,
+                    help="decode hygiene (survey 2026-10-08 #1): nucleus "
+                         "sampling at free-run picks; 1.0 = argmax (old "
+                         "behaviour). Tests whether the digit soup is "
+                         "degenerate DECODING rather than a missing skill")
+    ap.add_argument("--temperature", type=float, default=1.0)
+    ap.add_argument("--rep-pen", type=float, default=1.0,
+                    help="penalise tokens already emitted this lesson "
+                         "(classic anti-repetition; 1.0 = off)")
+    ap.add_argument("--no-junk", action="store_true",
+                    help="mask single non-letter tokens (digits, punct, "
+                         "byte fallbacks) — the digit soup tokens")
     ap.add_argument("--gate-threshold", type=float, default=0.5,
                     help="P(speech) cut for --gate-ckpt word accepts")
     args = ap.parse_args()
@@ -224,12 +236,41 @@ def main() -> None:
               f"(base {g.get('base_ckpt', '?')}, threshold "
               f"{args.gate_threshold:g})", flush=True)
 
+    # decode-hygiene state (survey 2026-10-08): junk ids = tokens whose
+    # text is a single non-letter character (digits, punctuation, byte
+    # fallbacks) — exactly the digit-soup vocabulary
+    junk_ids = None
+    if args.no_junk:
+        junk_ids = [i for i in range(len(proc.tokenizer))
+                    if (t := proc.tokenizer.decode([i]).strip())
+                    and len(t) == 1 and not t.isalpha()]
+    emitted: dict[int, int] = {}
+
     def clean_argmax(logits) -> int:
         for tid in mask_ids:
             logits[tid] = float("-inf")
         if args.sil_bias:
             logits[sil_id] -= args.sil_bias
-        return int(logits.argmax())
+        if junk_ids:
+            for tid in junk_ids:
+                logits[tid] = float("-inf")
+        if args.rep_pen > 1.0:
+            for tid, n in emitted.items():
+                logits[tid] -= args.rep_pen * n
+        if args.top_p < 1.0:
+            lp = torch.log_softmax(logits.float(), -1)
+            probs = lp.exp()
+            sorted_p, sorted_i = probs.sort(descending=True)
+            keep = torch.cumsum(sorted_p, 0) <= args.top_p
+            keep[0] = True  # always keep the top token
+            pool = sorted_i[keep]
+            choice = pool[int(torch.multinomial(
+                probs[pool] / probs[pool].sum(), 1))]
+            emitted[choice] = emitted.get(choice, 0) + 1
+            return int(choice)
+        pick = int(logits.argmax())
+        emitted[pick] = emitted.get(pick, 0) + 1
+        return pick
 
     # ---- ear token-rate alignment -------------------------------------
     from tokenizer.grid import from_scenario_dir
