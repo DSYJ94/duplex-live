@@ -4,7 +4,7 @@
 #SBATCH --account=brics.u6si
 #SBATCH --nodes=1
 #SBATCH --gres=gpu:1
-#SBATCH --time=08:00:00
+#SBATCH --time=24:00:00
 #SBATCH --output=logs/dl-sq2res-%j.out
 
 # RESEARCH RUN on the EAR-ALIGNED trunk (owner directive 2026-10-06:
@@ -34,7 +34,9 @@ SHARDS=$DL/runs/shards-scale1-q2
 BATCH=$DL/runs/synth-scale1-q/audio
 BASE=$DL/runs/scale1-q2-pt1/p1_checkpoint.pt
 OUT=$DL/runs/scale1-q2-headdag
-ROLL="dense_dialog-001,dense_dialog-010,dense_dialog-012,dense_dialog-020,dense_barge-001,dense_barge-004,dense_barge-007,dense_barge-010"
+# TRIMMED 2026-10-09: the chatty q2 trunk makes rollouts ~5x slower
+# than the old mute trunk (16h timeout lesson) — 4 lessons, 24h budget
+ROLL="dense_dialog-001,dense_dialog-010,dense_barge-001,dense_barge-004"
 TRAIN4="dense_dialog-001,dense_dialog-010,dense_barge-001,dense_barge-004"
 
 cd "$REPO"
