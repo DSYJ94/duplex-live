@@ -1326,3 +1326,21 @@ cluster + 130 local, ~$80 credits total). Auto-handoff armed: on
 cluster return — deploy key (bizhleg0c), push local batch + queue its
 filter->timing->stamp chain (bkikgqq6z). Then: shard all verified
 corpora, launch the self-history training round.
+
+## 2026-10-09 — outage week: science settled, fleet broken, auto-resume armed
+
+**Plain TL;DR:** All questions that could be answered without GPUs are
+answered. DECODE FIXES RULED OUT (hygiene arms all WORSE than argmax:
+WER 3.6-6.7 vs 0.9) — the digit soup is exposure bias, the DAgger
+round is the one remaining fix, rollouts trimmed (4 lessons, 24h).
+Corpus: ~1,090 conversations rendered (730 API incl. GPT-5 banks,
+300 open top-up, 159 verified in use) — verification chains written.
+THE BLOCKER: Isambard fleet-wide GPU driver failure since Oct 8
+(Error 803 on every probe: 0/24, 0/8, 0/2; ~85 nodes drained).
+Auto-resume loop re-armed: probes every 20 min, first healthy node
+submits research run + all verification chains automatically.
+Survey committed at docs/research/2026-10-08-duplex-approach-survey.md
+(8 ranked recs; DuplexChat 282kh open corpus = the synthetic-ceiling
+breaker for VAP/gate training, next after the DAgger round).
+Clock: goal Oct 20, allocation ends Oct 21 — fleet repair is the
+entire remaining risk.
