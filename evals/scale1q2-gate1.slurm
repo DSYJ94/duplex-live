@@ -26,7 +26,7 @@ set -euo pipefail
 
 DL=/projects/u6si/duplex-live
 REPO=$DL/repo
-export HF_HOME=$DL/models/hf-cache TMPDIR=$DL/tmp PYTHONPATH=$DL/pylibs:$REPO
+export HF_HOME=$DL/models/hf-cache TMPDIR=$DL/tmp PYTHONPATH=$DL/pylibs-new:$REPO
 
 SHARDS=$DL/runs/shards-scale1-q2
 BATCH=$DL/runs/synth-scale1-q/audio
@@ -49,7 +49,7 @@ cd "$REPO"
 echo "===== scale1 gate round 1: 8-lesson UNGATED dagger rollout ====="
 apptainer exec --nv --bind /projects,/lus,/home \
     --env PYTHONPATH=$PYTHONPATH --env HF_HOME=$HF_HOME --env TMPDIR=$TMPDIR \
-    /projects/u6si/containers/latentsprites-pytorch-25.05.sif \
+    /projects/u6si/duplex-live/pytorch-new.sif \
     python -m layera.train_gate --shards "$SHARDS" --batch "$BATCH" \
     --steps 200 --corrupt-prob 0.5 --dagger \
     --buffer-batch 512 \
@@ -61,7 +61,7 @@ for TH in 0.35 0.5 0.65; do
   echo "===== free-run scale1+gate1 thr=$TH on trained lessons ====="
   apptainer exec --nv --bind /projects,/lus,/home \
       --env PYTHONPATH=$PYTHONPATH --env HF_HOME=$HF_HOME --env TMPDIR=$TMPDIR \
-      /projects/u6si/containers/latentsprites-pytorch-25.05.sif \
+      /projects/u6si/duplex-live/pytorch-new.sif \
       python -m layera.freerun_diag --batch "$BATCH" \
       --ckpt "$BASE" --shards "$SHARDS" \
       --scenarios "$TRAIN4" --max-ticks 900 \
@@ -72,7 +72,7 @@ done
 echo "===== free-run scale1+gate1 thr=0.5 on heldout lessons ====="
 apptainer exec --nv --bind /projects,/lus,/home \
     --env PYTHONPATH=$PYTHONPATH --env HF_HOME=$HF_HOME --env TMPDIR=$TMPDIR \
-    /projects/u6si/containers/latentsprites-pytorch-25.05.sif \
+    /projects/u6si/duplex-live/pytorch-new.sif \
     python -m layera.freerun_diag --batch "$BATCH" \
     --ckpt "$BASE" --shards "$SHARDS" \
     --scenarios "$HELD4" --max-ticks 900 \

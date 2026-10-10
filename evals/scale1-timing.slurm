@@ -20,8 +20,8 @@ set -euo pipefail
 DL=/projects/u6si/duplex-live
 REPO=$DL/repo
 export HF_HOME=$DL/models/hf-cache TMPDIR=$DL/tmp
-export PYTHONPATH=$DL/pylibs:$REPO
-CONTAINER=/projects/u6si/containers/latentsprites-pytorch-25.05.sif
+export PYTHONPATH=$DL/pylibs-new:$REPO
+CONTAINER=/projects/u6si/duplex-live/pytorch-new.sif
 
 AUDIO=${AUDIO:?AUDIO env var required (batch dir with train_manifest.jsonl)}
 BAR=${BAR:-200}   # ms; p95 answer-key-vs-audio offset a conversation tolerates

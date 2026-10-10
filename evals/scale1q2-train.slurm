@@ -31,7 +31,7 @@ set -euo pipefail
 
 DL=/projects/u6si/duplex-live
 REPO=$DL/repo
-export HF_HOME=$DL/models/hf-cache TMPDIR=$DL/tmp PYTHONPATH=$DL/pylibs:$REPO
+export HF_HOME=$DL/models/hf-cache TMPDIR=$DL/tmp PYTHONPATH=$DL/pylibs-new:$REPO
 
 SHARDS=$DL/runs/shards-scale1-q2
 BATCH=$DL/runs/synth-scale1-q/audio
@@ -54,7 +54,7 @@ INIT_ARGS=""
 echo "===== scale1 train: $STEPS steps, ww3, SH0, $(echo "$TRAIN_LIST" | tr ',' '\n' | wc -l | tr -d ' ') lessons ====="
 apptainer exec --nv --bind /projects,/lus,/home \
     --env PYTHONPATH=$PYTHONPATH --env HF_HOME=$HF_HOME --env TMPDIR=$TMPDIR \
-    /projects/u6si/containers/latentsprites-pytorch-25.05.sif \
+    /projects/u6si/duplex-live/pytorch-new.sif \
     python -m layera.train_p1 --shards "$SHARDS" --batch "$BATCH" \
     --steps "$STEPS" --word-weight 3.0 --save-every 200 \
     --lessons "$TRAIN_LIST" $INIT_ARGS \
@@ -79,7 +79,7 @@ HELD=${HELD#,}
 echo "held-out freerun lessons: $HELD"
 apptainer exec --nv --bind /projects,/lus,/home \
     --env PYTHONPATH=$PYTHONPATH --env HF_HOME=$HF_HOME --env TMPDIR=$TMPDIR \
-    /projects/u6si/containers/latentsprites-pytorch-25.05.sif \
+    /projects/u6si/duplex-live/pytorch-new.sif \
     python -m layera.freerun_diag --batch "$BATCH" \
     --ckpt "$OUT/p1_checkpoint.pt" --shards "$SHARDS" \
     --scenarios "$HELD" --max-ticks 900

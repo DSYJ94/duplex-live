@@ -20,7 +20,7 @@ set -euo pipefail
 
 DL=/projects/u6si/duplex-live
 REPO=$DL/repo
-export HF_HOME=$DL/models/hf-cache TMPDIR=$DL/tmp PYTHONPATH=$DL/pylibs:$REPO
+export HF_HOME=$DL/models/hf-cache TMPDIR=$DL/tmp PYTHONPATH=$DL/pylibs-new:$REPO
 
 CKPT=$DL/runs/scale1-q2-pt1/p1_checkpoint.pt
 GATE=$DL/runs/scale1-q2-gate1/gate_checkpoint.pt
@@ -30,7 +30,7 @@ HELD="dense_dialog-116,dense_barge-113,dense_barge-114,dense_dialog-114"
 cd "$REPO"
 apptainer exec --nv --bind /projects,/lus,/home \
     --env PYTHONPATH=$PYTHONPATH --env HF_HOME=$HF_HOME --env TMPDIR=$TMPDIR \
-    /projects/u6si/containers/latentsprites-pytorch-25.05.sif \
+    /projects/u6si/duplex-live/pytorch-new.sif \
     python -m m2.live --ckpt "$CKPT" --batch "$BATCH" \
     --scenarios "$HELD" --gate-ckpt "$GATE" --gate-threshold 0.10 \
     --gate-grace 6 --out $DL/runs/live-q2

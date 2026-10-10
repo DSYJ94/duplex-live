@@ -18,8 +18,8 @@ set -euo pipefail
 
 DL=/projects/u6si/duplex-live
 REPO=$DL/repo
-export HF_HOME=$DL/models/hf-cache TMPDIR=$DL/tmp PYTHONPATH=$DL/pylibs:$REPO
-CONTAINER=/projects/u6si/containers/latentsprites-pytorch-25.05.sif
+export HF_HOME=$DL/models/hf-cache TMPDIR=$DL/tmp PYTHONPATH=$DL/pylibs-new:$REPO
+CONTAINER=/projects/u6si/duplex-live/pytorch-new.sif
 
 BATCH=$DL/runs/synth-scale1-q/audio
 SHARDS=$DL/runs/shards-scale1-q2

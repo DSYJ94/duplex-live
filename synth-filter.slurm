@@ -19,8 +19,8 @@ DL=/projects/u6si/duplex-live
 REPO=$DL/repo
 export HF_HOME=$DL/models/hf-cache
 export TMPDIR=$DL/tmp
-export PYTHONPATH=$DL/pylibs:$REPO
-CONTAINER=/projects/u6si/containers/latentsprites-pytorch-25.05.sif
+export PYTHONPATH=$DL/pylibs-new:$REPO
+CONTAINER=/projects/u6si/duplex-live/pytorch-new.sif
 
 AUDIO=${AUDIO:-$DL/runs/synth/audio}
 ASR_MODEL=${ASR_MODEL:-openai/whisper-large-v3-turbo}

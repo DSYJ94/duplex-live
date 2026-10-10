@@ -21,13 +21,13 @@ set -euo pipefail
 
 DL=/projects/u6si/duplex-live
 REPO=$DL/repo
-export HF_HOME=$DL/models/hf-cache TMPDIR=$DL/tmp PYTHONPATH=$DL/pylibs:$REPO
+export HF_HOME=$DL/models/hf-cache TMPDIR=$DL/tmp PYTHONPATH=$DL/pylibs-new:$REPO
 
 cd "$REPO"
 
 apptainer exec --nv --bind /projects,/lus,/home \
     --env PYTHONPATH=$PYTHONPATH --env HF_HOME=$HF_HOME --env TMPDIR=$TMPDIR \
-    /projects/u6si/containers/latentsprites-pytorch-25.05.sif \
+    /projects/u6si/duplex-live/pytorch-new.sif \
     python -m layera.prepare --batch $DL/runs/synth-scale1-q/audio \
         --out $DL/runs/shards-scale1-q2 --per-class 999
 
