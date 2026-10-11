@@ -1862,3 +1862,19 @@ demo is therefore rebuilt honestly: the MODEL'S turn onsets + the
 SCRIPT'S words (evals/build_timing_demo.py) — turns the model missed
 are gaps; turns it invented are skipped and reported. What the demo
 proves is turn-taking; it does not claim word generation.
+
+## GATE 1 VERDICT — content is closed for this phase (2026-10-11, arm B, job 7249649+7260780)
+
+**Plain words:** The final experiment is in. Training on 434 verified
+conversations with corrupted self-history did NOT teach the model to
+speak its own words — and it made the dialog lessons mute (recall
+0.02-0.03) while one barge lesson babbled more than ever (WER 2.46 vs
+0.96 baseline). With decode fixes ruled out earlier and the readout
+path closed twice, the conclusion is final: free-run word CONTENT
+needs the next architecture phase (Talker wiring or real-audio scale
+or RL-after-real-SFT), not another round on this trunk. What the
+round DID confirm: placement skills remain trainable and robust
+(barge-113: 4/4 exact onsets even in this configuration).
+Serving datum: the new NGC-25.10 stack's raw single-token forward is
+115ms p50 (vs ~59ms decisions on the old stack) — kernel regression
+worth one look before any serving claims.
