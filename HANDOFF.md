@@ -1344,3 +1344,18 @@ Survey committed at docs/research/2026-10-08-duplex-approach-survey.md
 breaker for VAP/gate training, next after the DAgger round).
 Clock: goal Oct 20, allocation ends Oct 21 — fleet repair is the
 entire remaining risk.
+
+## 2026-10-11 (later) — full-burn plan AMENDED (owner): core problems over RL
+
+**Plain TL;DR:** Owner amendment: "do RL only if it makes sense — it
+reinforces good outcomes that already exist. If we can use the compute
+on jobs that fix the core problems, do that instead." Amended plan:
+RL demoted to conditional polish (only if arm B lands partial content
+AND integration is secure). Spare compute goes to the three core
+fixes: (1) content — arm B verdict imminent; (2) delegation+streaming
+corpus — chain running (job 7257640, 100 lessons); (3) THE SERVING
+WALL — reactivated: raw-forward micro-bench launched (7260758) to
+decide between CUDA-graph fix (overhead-bound) vs speculative decode
+(kernel-bound). Delegation-answer recorded: data with the right shape
+(delegation/timed_task classes, staged onsets) + mixed round + loop
+logic = how streaming-in becomes part of the model.
