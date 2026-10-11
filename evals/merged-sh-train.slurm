@@ -67,7 +67,8 @@ apptainer exec --nv --bind /projects,/lus,/home \
     /projects/u6si/duplex-live/pytorch-new.sif \
     python -m layera.train_p1 --shards "$SHARDS" --batch "$BATCH" \
     --steps "$STEPS" --word-weight 3.0 --save-every 200 \
-        --self-history ${SH_DOSE} --sh-mode recollect \
+        --self-history ${SH_DOSE} --sh-mode ${SH_MODE:-recollect} \
+        --sh-refresh ${SH_REFRESH:-8} \
     --lessons "$TRAIN_LIST" $INIT_ARGS \
     --out "$OUT"
 
