@@ -73,5 +73,12 @@ data pipeline, and evaluation instruments all carry over as-is.
 - Checkpoints: `runs/scale1-q2-pt1` (the delivered model),
   `runs/scale1-q2-gate1` (its gate)
 
-*Allocation ends 2026-10-21. Fresh-set lessons (barge-115/117/119)
-evaluated exactly once, as reserved, on the delivered model.*
+**The fresh-set verdict (2026-10-12, one shot, as reserved all
+project).** On barge-115/117/119 — never trained on, never evaluated
+until now — the delivered model scored F1 0.80/0.86/0.80, recall
+0.87/0.99/0.95, and word onsets 12/12 within one second (9/12
+exact). Content WER ~1.9, the documented limit. Turn-taking
+generalizes; that is the project's result.
+
+*Allocation ends 2026-10-21. Remaining: balanced-delegation round
+verdict (in flight), final gallery refresh, hand-back.*
