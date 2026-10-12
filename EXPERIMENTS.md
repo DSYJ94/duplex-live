@@ -1878,3 +1878,15 @@ round DID confirm: placement skills remain trainable and robust
 Serving datum: the new NGC-25.10 stack's raw single-token forward is
 115ms p50 (vs ~59ms decisions on the old stack) — kernel regression
 worth one look before any serving claims.
+
+## DELEGATION ROUNDS — both negative, finding final (2026-10-12, jobs 7333494/7356783)
+
+**Plain words:** Two attempts to add delegation/streaming behaviors by
+mixing them into training. First (81 lessons): dense turn-taking
+broke (146 false <delegate>s on one lesson). Second (diluted 1:6,
+800 steps): still broke (dense recall 0.03-0.18). The <delegate>
+emission itself fires at the right tick (1/1 in both) — the skill is
+learnable, but not mixable into this trunk at any ratio we could
+afford. Next phase: staged curriculum or a separated emission head.
+DELIVERED MODEL: scale1-q2-pt1 (frozen). Fresh-set final: F1
+0.80-0.86, recall up to 0.99, onsets 12/12 within 1s.
