@@ -23,6 +23,9 @@ SOURCES = [  # (prefix, shards_dir, batch_audio_dir)
     ("a1", DL / "shards-synth-scale2-api", DL / "synth-scale2-api/audio"),
     ("a2", DL / "shards-synth-scale2-api-local", DL / "synth-scale2-api-local/audio"),
     ("a3", DL / "shards-synth-scale3-api", DL / "synth-scale3-api/audio"),
+    # delegation round: APPEND mode (2026-10-12) — reuse the same merged
+    # view, adding d_/t_ prefixed delegation + timed_task lessons
+    ("d", DL / "shards-deleg", DL / "synth-deleg/audio"),
 ]
 OUT_SHARDS = DL / "shards-merged"
 OUT_BATCH = DL / "corpus-merged"
