@@ -25,12 +25,8 @@ done
 apptainer exec --bind /projects,/lus,/home "$DL/pytorch-new.sif" \
     python -m pip install --no-deps --only-binary=:all: --disable-pip-version-check \
     --target "$OVERLAY" 'torchaudio==2.9.0'
-# TorchAudio 2.9 delegates WAV loading to TorchCodec. Version 0.9 matches
-# Torch 2.9; the CPU wheel is sufficient for reference-WAV decoding.
-apptainer exec --bind /projects,/lus,/home "$DL/pytorch-new.sif" \
-    python -m pip install --no-deps --only-binary=:all: --disable-pip-version-check \
-    --index-url https://download.pytorch.org/whl/cpu \
-    --target "$OVERLAY" 'torchcodec==0.9.0'
+# Matching TorchCodec 0.9 has no ARM wheel in the CPU index. The probe uses
+# explicit SoundFile WAV loading; TorchAudio resampling and features are intact.
 MODEL="$DL/models/hf-cache/hub/models--openbmb--MiniCPM-o-4_5/snapshots/503e754207c94da6bb26850b4469f367c9ea3582"
 git rev-parse HEAD
 apptainer exec --nv --bind /projects,/lus,/home \

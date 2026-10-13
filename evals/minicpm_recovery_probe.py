@@ -12,6 +12,29 @@ import time
 from pathlib import Path
 
 
+def read_reference_wav(uri, frame_offset=0, num_frames=-1, normalize=True,
+                       channels_first=True, format=None, buffer_size=4096, backend=None):
+    """Normalized PCM WAV reader for the two Token2wav reference-file reads.
+
+    TorchAudio 2.9 moved even backend='soundfile' to unavailable TorchCodec.
+    Scope is local WAV files only; no network, compression or integer mode.
+    Resampling and mel features remain in the original TorchAudio code.
+    """
+    import numpy as np
+    import soundfile as sf
+    if Path(uri).suffix.lower() != ".wav" or format not in (None, "wav", "WAV"):
+        raise ValueError("Reference compatibility reader accepts only local WAV")
+    if not normalize or backend not in (None, "soundfile") or frame_offset < 0 or num_frames < -1:
+        raise ValueError("Unsupported reference audio read options")
+    with sf.SoundFile(uri) as source:
+        if source.format not in ("WAV", "WAVEX", "RF64"):
+            raise ValueError("Reference file is not PCM WAV")
+        source.seek(frame_offset)
+        pcm = source.read(frames=num_frames, dtype="float32", always_2d=True)
+        rate = source.samplerate
+    return np.ascontiguousarray(pcm.T if channels_first else pcm), rate
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--batch", type=Path, required=True)
@@ -33,6 +56,13 @@ def main():
     from transformers import AutoModel
 
     args.out.mkdir(parents=True, exist_ok=False)
+    def wav_load(*pos, **kw):
+        array, rate = read_reference_wav(*pos, **kw)
+        return torch.from_numpy(array), rate
+
+    # Explicit process-local compatibility adapter, recorded in the environment.
+    # Both s3tokenizer and Token2wav call this for their reference WAV.
+    torchaudio.load = wav_load
     voice = args.model / "assets" / "HT_ref_audio.wav"
     # Test the same decoder Token2wav will use before loading model weights.
     voice_pcm, voice_sr = torchaudio.load(str(voice))
@@ -55,6 +85,7 @@ def main():
     torch.manual_seed(424242)
     env = {"mode": "paced-native-duplex-replay", "torch": torch.__version__,
            "torchaudio": torchaudio.__version__,
+           "reference_wav_loader": "soundfile normalized PCM; TorchAudio resampling unchanged",
            "torch_path": torch.__file__, "transformers": transformers.__version__,
            "model_snapshot": str(args.model), "gpu": torch.cuda.get_device_name(),
            "commit": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
