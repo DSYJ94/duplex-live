@@ -44,6 +44,7 @@ def run_pair(manifest, batch, prefix, single_mode=None, request_aligned=False):
     from moshi.models import loaders, LMGen, LMModel
     from moshi.inference_utils.utils import get_condition_tensors, get_conditioning_remote_async
     from data.synthetic.quality import checked_rows
+    from evals.moshi_rag_reference_step import apply_reference_frame
 
     torch.manual_seed(424242)
     scenario = "dense_dialog-001"
@@ -169,6 +170,7 @@ def run_pair(manifest, batch, prefix, single_mode=None, request_aligned=False):
                                     if index < 100 else None)
                         if index == 0:
                             generation.step(codes)
+                        condition_l1 = apply_reference_frame(generation)
                         tokens = generation.step(codes)
                         text, audio = "", None
                         if tokens is not None:
@@ -205,13 +207,18 @@ def run_pair(manifest, batch, prefix, single_mode=None, request_aligned=False):
                                   "samples": 0 if audio is None else len(audio), "playback_start_s": playback,
                                   "generated_token_sha256": token_hash,
                                   "text_token_id": None if tokens is None else int(tokens[0, 0, 0])}
-                        record.update(user_code_sha256=input_code_hash, cuda_rng_before_step_sha256=rng_hash)
+                        record.update(user_code_sha256=input_code_hash, cuda_rng_before_step_sha256=rng_hash,
+                                      active_reference_l1=condition_l1)
                         records.append(record)
                         stream.write(json.dumps(record) + "\n")
                         stream.flush()
         if not len(output) or (mode == "delayed-reference" and not any(e["event"] == "reference_injected" for e in events)):
             raise RuntimeError("Missing speech or reference injection")
         sf.write(out / "model.wav", output, mimi.sample_rate)
+        applied_frames = sum(r["active_reference_l1"] > 0 for r in records)
+        delivered_rows = sum(e["shape"][1] for e in events if e["event"] == "reference_injected")
+        if applied_frames != delivered_rows:
+            raise RuntimeError(f"Reference rows queued={delivered_rows}, applied={applied_frames}")
         waiting = []
         intervals = []
         for event in events:
@@ -228,6 +235,7 @@ def run_pair(manifest, batch, prefix, single_mode=None, request_aligned=False):
                   "max_input_backlog_s": max(r["input_backlog_s"] for r in records),
                   "model_rag_trigger_frames": [r["chunk"] for r in records if r["text_token_id"] == 4],
                   "request_aligned": request_aligned, "fixture_selection": "ordered known questions; no semantic task routing",
+                  "reference_rows_queued": delivered_rows, "reference_rows_applied": applied_frames,
                   "learned_delegation_tested": False, "semantic_review": "pending", "human_listening": "pending"}
         (out / "report.json").write_text(json.dumps(report, indent=2) + "\n")
         (out / "manifest.jsonl").write_text(json.dumps({"scenario_id": scenario, "dir": ".",
