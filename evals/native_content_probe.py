@@ -55,6 +55,8 @@ def main() -> None:
     import soundfile as sf
     import torch
     import transformers
+    from math import gcd
+    from scipy.signal import resample_poly
     from transformers import Qwen3OmniMoeForConditionalGeneration, Qwen3OmniMoeProcessor
 
     torch.manual_seed(424242)
@@ -81,8 +83,13 @@ def main() -> None:
     with (args.out / "results.jsonl").open("w") as results, (args.out / "manifest.jsonl").open("w") as manifest:
         for case in cases:
             waveform, sr = sf.read(case["audio"], dtype="float32")
-            if waveform.ndim != 1 or sr != 16000:
-                raise ValueError(f"Expected verified mono 16k clip, got {waveform.shape}, {sr}")
+            if waveform.ndim != 1 or sr <= 0:
+                raise ValueError(f"Expected verified mono clip, got {waveform.shape}, {sr}")
+            source_sr = sr
+            if sr != 16000:
+                factor = gcd(sr, 16000)
+                waveform = resample_poly(waveform, 16000 // factor, sr // factor).astype(np.float32)
+                sr = 16000
             for modality in ("text", "audio"):
                 sid = f"{case['id']}-{modality}"
                 dest = args.out / sid
@@ -111,6 +118,7 @@ def main() -> None:
                 answer = proc.batch_decode(answer_ids, skip_special_tokens=True)[0]
                 rec = {"id": sid, "modality": modality, "question": case["text"],
                        "input_sha256": case["sha256"], "answer": answer,
+                       "source_sample_rate": source_sr, "model_sample_rate": sr,
                        "generation_wall_s": elapsed, "answer_tokens": int(answer_ids.shape[-1]),
                        "hit_text_cap": answer_ids.shape[-1] >= 96,
                        "audio_s": None, "semantic_verdict": "pending review"}
