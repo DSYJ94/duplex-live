@@ -246,7 +246,12 @@ def main():
     audit["peak_memory_bytes"] = training_peak
     audit["canonical_check_peak_memory_bytes"] = torch.cuda.max_memory_allocated()
     (args.out / "training-report.json").write_text(json.dumps(audit, indent=2)+"\n")
-    print(json.dumps({k: v for k, v in audit.items() if k not in ("native_model", "trainable", "final_adapter_hashes", "base_load_missing_adapter_keys")}), flush=True)
+    brief = {k: v for k, v in audit.items() if k not in (
+        "native_model", "trainable", "final_adapter_hashes", "base_load_missing_adapter_keys",
+        "optimizer_steps", "sample_paths")}
+    brief["optimizer_step_count"] = len(audit["optimizer_steps"])
+    brief["processed_sample_count"] = len(audit["sample_paths"])
+    print(json.dumps(brief), flush=True)
     if torch.distributed.is_initialized():
         torch.distributed.destroy_process_group()
 

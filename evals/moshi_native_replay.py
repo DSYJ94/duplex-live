@@ -36,6 +36,7 @@ def main():
     torch.manual_seed(424242)
     mimi = cp.get_mimi(device="cuda").eval()
     lm = cp.get_moshi(device="cuda", dtype=torch.bfloat16, fuse_lora=False).eval()
+    lm.requires_grad_(False)
     if args.adapter:
         expected = {n for n, _ in lm.named_parameters() if ".lora_A." in n or ".lora_B." in n}
         if set(load_file(args.adapter)) != expected:
@@ -71,6 +72,9 @@ def main():
         env["cold_kernel_warmup_s"] = time.monotonic()-warmup_start
         mimi.reset_streaming()
         generation.reset_streaming()
+        # Initialization and warmup must not consume the evaluated sample stream.
+        torch.manual_seed(424242)
+        env["sampling_seed_reset_after_warmup"] = True
         (args.out / "environment.json").write_text(json.dumps(env, indent=2)+"\n")
         # Use the real native stream; no answer bank or teacher-forced history.
         start = time.monotonic()
