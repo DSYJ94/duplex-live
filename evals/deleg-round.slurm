@@ -58,8 +58,8 @@ for d in $DL/runs/shards-merged/d_*.pt; do
 done
 TRAIN_LIST=${TRAIN_LIST#,}
 
-INIT_ARGS=""
-[ -n "$INIT" ] && INIT_ARGS="--init-ckpt $INIT"
+INIT_ARGS=()
+[ -z "$INIT" ] || INIT_ARGS=(--init-ckpt "$INIT")
 
 echo "===== scale1 train: $STEPS steps, ww3, SH0, $(echo "$TRAIN_LIST" | tr ',' '\n' | wc -l | tr -d ' ') lessons ====="
 apptainer exec --nv --bind /projects,/lus,/home \
@@ -67,8 +67,7 @@ apptainer exec --nv --bind /projects,/lus,/home \
     /projects/u6si/duplex-live/pytorch-new.sif \
     python -m layera.train_p1 --shards "$SHARDS" --batch "$BATCH" \
     --steps "$STEPS" --word-weight 3.0 --save-every 200 \
-        
-    --lessons "$TRAIN_LIST" $INIT_ARGS \
+    --lessons "$TRAIN_LIST" "${INIT_ARGS[@]}" \
     --out "$OUT"
 
 echo "===== free-run on held-out lessons (diagnostic: pt1 alone is expected to murmur; gates come after) ====="
@@ -79,7 +78,7 @@ HELD=""
 for cls in dense_dialog dense_barge; do
     n=0
     for i in $(seq 113 120); do
-        id=$(printf '%s-%03d' "$cls" "$i")
+        id=$(printf 'q2_%s-%03d' "$cls" "$i")
         if [ -f "$SHARDS/$id.pt" ] && [ "$n" -lt 2 ]; then
             HELD="$HELD,$id"; n=$((n + 1))
         fi

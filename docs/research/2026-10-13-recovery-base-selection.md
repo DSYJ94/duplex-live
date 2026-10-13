@@ -1,0 +1,130 @@
+# Recovery base selection — 2026-10-13
+
+Plain words: the next useful step is to run an already speaking duplex model on our tasks, before spending the remaining allocation adapting another model into that capability. **MoshiRAG is the first delegation baseline; MiniCPM-o 4.5 is the strongest alternative to test for general conversation.** Plain Moshi has the clearest official fine-tuning path. PersonaPlex is a useful speech-quality comparator. Qwen remains a diagnostic and possible recovery route, but connecting its speech decoder cannot establish that our custom stream produces sensible answers.
+
+This is a source audit and proposed decision, not a benchmark result. No GPU jobs were launched for this note. Sources were checked on 13 October 2026; upstream `main` links can change, so pin the actual source and model revisions before execution.
+
+## What the target requires
+
+Plain words: success means answering with meaningful new speech, hearing a correction during that speech, and completing background work without abandoning the conversation.
+
+Thinking Machines describes continuous 200 ms input/output micro-turns and an asynchronous background model with shared conversation context. It explicitly includes integrating results while interaction continues. Its design is useful guidance; the blog is not a released training recipe we can reproduce in eight days. Measure meaning, timing and completed work together. [Thinking Machines system description](https://thinkingmachines.ai/blog/interaction-models/)
+
+The local handoff reports successful turn timing but failed free-run word content and delegation mixing. `layera/train_p1.py:237` freezes the model and permits gradients only through new embedding/head rows; old vocabulary rows are masked. This is not a general fine-tune of the language core. The note in `HANDOFF.md` suggesting Talker or more scale as the next move is a hypothesis, not a demonstrated remedy. Preserve that checkpoint as a timing baseline.
+
+## What is actually released
+
+| Candidate | Released capability established by primary sources | Practical decision |
+|---|---|---|
+| MoshiRAG | Weights, live and offline inference; a retrieval trigger and a streaming reference-conditioning path | First baseline for speech plus asynchronous delegation. Training integration still needs work. |
+| MiniCPM-o 4.5 | Weights and native duplex audio/video/text-to-speech inference | First alternative for conversational content. Verify timed audio fine-tuning before allocating a training run. |
+| Moshi | Native two-stream speech and official LoRA/full fine-tuning | Clearest trainable fallback; adding result conditioning is additional work. |
+| PersonaPlex | Moshi-derived full-duplex weights with voice and role prompts | Speech-quality comparator. Official inference release does not establish turnkey fine-tuning or live result injection. |
+| Qwen3-Omni | Thinker/Talker weights, speech generation and audio function-call example | Run native baseline to isolate damage from custom streaming. Native generation alone does not demonstrate continual input while output runs. |
+
+The table's engineering priorities are recommendations, supported by the release details below.
+
+### MoshiRAG: the closest released starting point
+
+Plain words: this model already contains the difficult bridge between an ongoing voice conversation and arriving background text.
+
+The official repository provides a duplex front end, an asynchronous text backend, and a reference encoder. Its trigger sends conversation text to the backend; returned references condition later speech. It cautions that retrieval delays above about three seconds hurt quality. This is evidence for a useful starting point, not proof of long-running task management. [Official repository](https://github.com/kyutai-labs/moshi-rag)
+
+The checkpoint is English and has a single voice. Its card names frozen ARC-Encoder components and a separate streaming ASR dependency. The card lists CC-BY-4.0 weights. [Model card](https://huggingface.co/kyutai/moshika-rag-pytorch-bf16)
+
+The model repository totals approximately **15.8 GB**: `model.safetensors` is 15.4 GB and the Mimi checkpoint approximately 385 MB, plus configuration/tokenizer files. This excludes additional models fetched by dependencies. [Actual file list](https://huggingface.co/kyutai/moshika-rag-pytorch-bf16/tree/main)
+
+Training in the paper updates the speech model while freezing the reference encoder; it uses timed reference arrival and reference dropout, with about 47,770 hours of synthetic speech. That scale is a reason to reuse the released weights. It does not imply our 515 lessons can recreate them. [Paper, training and data tables](https://arxiv.org/html/2604.12928v1)
+
+**Executable seams and caveats:**
+
+- `inference_utils/utils.py` loads the model with `force_streaming_sum=True`. Setting `REFERENCE_ENCODER_URL` omits the reference conditioner from the front-end model and calls the separate service's `/embed` endpoint. [Loader and encoder client](https://raw.githubusercontent.com/kyutai-labs/moshi-rag/main/moshi/moshi/inference_utils/utils.py)
+- `InferenceJob._async_update_reference` installs encoded text through `lm_gen.update_streaming_sum_tensors(per_slot)`. Its trace records trigger, retrieval and conditioning steps and saves generated WAV. However, the offline output loop explicitly waits while retrieval is pending, then represents elapsed retrieval time in frames. **Offline output is not evidence that the live system remains responsive during retrieval.** [Offline session implementation](https://raw.githubusercontent.com/kyutai-labs/moshi-rag/main/moshi/moshi/inference_utils/inference_job.py)
+- `RAGManager` creates a background task, tracks reference history, and cancels an existing request on a new trigger. Replace or wrap the text backend at this boundary for a bounded task executor; retain explicit task identity and stale-result rejection. Multi-task orchestration is our extension. [RAG manager](https://raw.githubusercontent.com/kyutai-labs/moshi-rag/main/moshi/moshi/inference_utils/rag_manager.py)
+- The live `Channel` owns independent audio queues and retrieval state. Test this path with deliberately slow results, new user instructions, cancellation and errors. [Live channel](https://raw.githubusercontent.com/kyutai-labs/moshi-rag/main/moshi/moshi/inference_utils/channel.py)
+- `LMModel.forward` has a training entry point, but `forward_text` currently asserts a one-step sequence when streaming conditioning is supplied. **The stock whole-sequence Moshi trainer is not established as compatible with timed MoshiRAG conditioning.** Before adapting, demonstrate a differentiable batch with correctly timed references, finite gradients and checkpoint reload. [Model implementation](https://raw.githubusercontent.com/kyutai-labs/moshi-rag/main/moshi/moshi/models/lm.py)
+
+### MiniCPM-o 4.5: real duplex release, incomplete training evidence
+
+Plain words: this is a credible ready-made conversation model; the existence of general fine-tuning support does not prove the specific duplex training loop we need.
+
+OpenBMB provides the 9B model, native `as_duplex()` examples, and SDPA as an attention option. It acknowledges speech mispronunciation, mixed languages, and limits in duplex capability. [Official release and examples](https://github.com/OpenBMB/MiniCPM-V)
+
+The published duplex implementation accepts `text_list` in `streaming_prefill`, providing a candidate context-injection point. Its documentation describes one-second prefill calls. In the inspected source, mixed audio/text processing saves `pending_logits` from audio, then feeds text without refreshing those logits; text-only mode does refresh them. Static inference: the first generated token may use pre-injection logits. Verify before depending on this path, and do not advertise 80 ms decisions merely because the enclosing project uses that tick. [Published implementation, duplex prefill/generate](https://huggingface.co/openbmb/MiniCPM-o-4_5/raw/main/modeling_minicpmo.py)
+
+The repository's fine-tuning README describes image/conversation examples and older model versions. Its training script explicitly sets `init_audio=False` and `init_tts=False`. These particular scripts are not evidence for end-to-end duplex speech fine-tuning. Other supported frameworks may provide relevant paths, but no verified timed-duplex recipe was established in this audit. [Fine-tuning guide](https://raw.githubusercontent.com/OpenBMB/MiniCPM-V/main/finetune/readme.md), [Training source](https://raw.githubusercontent.com/OpenBMB/MiniCPM-V/main/finetune/finetune.py)
+
+### Moshi and PersonaPlex
+
+Plain words: plain Moshi has a concrete official adaptation recipe; PersonaPlex improves the baseline choice but adds compatibility questions.
+
+Kyutai's trainer supports LoRA and full fine-tuning, with stereo conversations (assistant left, user right) and timestamped transcripts. The published example reports 39.6 GB peak allocation on one H100. This supports a bounded GH200 smoke-test proposal, not a GH200 speed prediction. It also warns that shortening training segments can hurt sustained conversation. [Official Moshi fine-tuning repository](https://github.com/kyutai-labs/moshi-finetune)
+
+NVIDIA releases PersonaPlex inference, offline WAV evaluation, voice prompts and role prompts. It is based on Moshi, with MIT code and NVIDIA Open Model License weights. The inspected release does not supply an official matching training recipe or documented mid-session background-result interface. Do not treat third-party PersonaPlex trainer forks as proof that Kyutai's unmodified trainer loads it correctly. [Official PersonaPlex release](https://github.com/NVIDIA/personaplex)
+
+### Qwen: speech output and content recovery are different experiments
+
+Plain words: first find out whether the original model answers correctly; then establish what our stream format changed.
+
+Qwen's released Instruct model contains Thinker and Talker; the Thinking variant contains Thinker only. The official examples cover generated speech and audio function calls and warn that Transformers MoE inference can be slow. They do not establish our custom continuous listening/speaking loop. [Official Qwen3-Omni repository](https://github.com/QwenLM/Qwen3-Omni)
+
+Run the same fresh spoken questions through: (1) unchanged native Thinker with its standard template; (2) native Thinker plus Talker; (3) the custom streamed checkpoint, comparing generated text before speech rendering. If (1) is coherent and (3) is not, examine formatting, audio representation, history and trainable capacity. A Talker connection can repair an absent speech path; it cannot be assumed to repair incorrect linguistic content. Train a small backbone adaptation only after a small-set content experiment proves it can learn and retain answers in free running use.
+
+## ARM/GH200 execution constraints
+
+Plain words: install each candidate separately and first prove it imports, loads and speaks in the working container.
+
+The local handoff identifies `pytorch-new.sif` / NGC 25.10 with container Torch 2.9 as the working base; the old container fails after the driver update. Existing MiniCPM and PersonaPlex environments must be inspected rather than assumed reusable. Preserve the working Qwen overlay.
+
+MoshiRAG declares Torch `>=2.2,<2.10`, Transformers **4.55.3**, Hugging Face Hub `<1`, xformers `>=0.0.33.post2`, and Linux bitsandbytes. Torch 2.9 is nominally in range, but the current Qwen Transformers 5.17 overlay conflicts. These dependencies do not establish ARM wheel availability or binary compatibility. Use an isolated overlay, keep container Torch, and verify imports plus one CUDA operation before downloading every model. [MoshiRAG dependency manifest](https://raw.githubusercontent.com/kyutai-labs/moshi-rag/main/moshi/pyproject.toml)
+
+For the bounded first run, use Python 3.11+ because the inference code calls `asyncio.TaskGroup`. Once the package is installed, the module is `python -m moshi.run_inference`; the README's nested `moshi.moshi` invocation depends on checkout layout. `--use-gt-reference` reads `gt_reference_text` from a WAV's adjacent JSON, isolating result use from backend answer quality. The code still constructs local ASR. Require a timeout and generated output. [Offline entry point](https://raw.githubusercontent.com/kyutai-labs/moshi-rag/main/moshi/moshi/run_inference.py)
+
+Local ASR defaults to `kyutai/stt-1b-en_fr-candle` and loads through the same Moshi stack. Its own model and codec requirements add to the download/memory footprint. [Local ASR implementation](https://raw.githubusercontent.com/kyutai-labs/moshi-rag/main/moshi/moshi/stt/local_stt.py)
+
+## Falsifiable gates before substantial training
+
+Plain words: spend compute on candidates that already demonstrate the required behavior, then improve their measured weaknesses.
+
+These are proposed acceptance gates, not achieved scores or literature claims:
+
+1. **Base speech:** 20 fresh questions, at least 16 substantively correct audible answers, no answer bank; archive input/output PCM and exact generated text. Human listening is required alongside ASR.
+2. **Actual duplex:** 20 correction/interrupt scenarios, at least 16 correct uses of new information; report stop latency and answer correctness separately. In ten-minute sessions, capture input while speaking and show no growing processing backlog.
+3. **Background result use:** 20 controlled tasks with previously unavailable facts and 0.5, 2, 5 and 15 second return delays. Require at least 18 correct incorporations, no claims of a result before it arrives, and zero stale/cancelled-result application. Include speech during pending work. Report each delay bucket; a pass only at 0.5 seconds is insufficient.
+4. **Trainability:** overfit 16 approved conversations with timed references; reload the saved model and run it without teacher forcing. Then evaluate fresh content and interruption cases. No broad run until content improves without loss of baseline turn-taking.
+5. **Selection:** rank the measured candidates by joint speech meaning, interactivity and task success; use latency and training effort to break ties. Do not choose on timing F1 alone.
+
+Treat the claimed 16,000 available GPU-hours and 21 October deadline as inputs requiring live accounting verification. Even eight complete days would require about 84 continuously occupied GPUs to consume 16,000 hours; a four-GPU run for eight days consumes only 768. Allocation, queue capacity and useful parallel experiments are separate constraints. Start with capped single-node baselines, then assign larger runs from measured throughput and passing gates. Spend no budget recreating released pretraining merely to use the allocation.
+
+The recommended first decision is therefore **MoshiRAG baseline plus MiniCPM comparison, with native Qwen diagnosis retained**. The winning adaptation target remains conditional on actual audible results and a verified training step. The principal unknown is whether long-delay background work can be taught without damaging continuous conversation; neither retrieval demos nor our old delegation-token emission experiment settles it.
+
+## Minimal MoshiRAG execution plan — source checked, not yet run
+
+Plain words: a completely local test is possible, but `--use-gt-reference` alone does not disable every backend call. Prove the reference encoder works first.
+
+**Import audit:** bitsandbytes is imported inside quantized `QLinear` operations, so the BF16 path can omit it. Gradio is imported only for the tunnel option in the server. In contrast, ARC imports xformers at module load and directly calls its attention kernel; it has no working SDPA fallback in the inspected implementation. Gradium is eagerly imported even when local ASR is selected, so its package is still needed unless that import is made lazy. [Quantization](https://raw.githubusercontent.com/kyutai-labs/moshi-rag/main/moshi/moshi/utils/quantize.py), [ARC encoder](https://raw.githubusercontent.com/kyutai-labs/moshi-rag/main/moshi/moshi/conditioners/arc_encoder.py), [Gradium module](https://raw.githubusercontent.com/kyutai-labs/moshi-rag/main/moshi/moshi/stt/gradium_stt.py)
+
+The reference-generator constructor warms up its configured LLM, and `ServerState.warmup()` does so again, including in offline runs. For a controlled-reference test, explicitly point `LLM_BASE_URL` at a local test server returning a valid chat-completion object, or modify the adapter to skip constructing/warming the unused backend. A local stub establishes conditioning and concurrency, not actual task execution. [Reference generator](https://raw.githubusercontent.com/kyutai-labs/moshi-rag/main/moshi/moshi/reference/llm_reference_generator.py), [Server initialization](https://raw.githubusercontent.com/kyutai-labs/moshi-rag/main/moshi/moshi/server.py)
+
+The encoder service builds only conditioners from the speech checkpoint, then loads their external encoder weights. It can run on the same GPU if memory permits. A separate GPU isolates interference; CPU is an accepted argument but the xformers kernel path must be proved before claiming CPU support. Bind services to localhost. [Encoder service](https://raw.githubusercontent.com/kyutai-labs/moshi-rag/main/moshi/moshi/server_conditioner.py)
+
+Proposed order inside the working ARM container:
+
+1. Clone/pin upstream outside the project package path. Create a separate `venv --system-site-packages`, with the Qwen `PYTHONPATH` unset. Retain NGC Torch. Inspect a pip dry-run report for every dependency install; reject proposed Torch/CUDA replacement. Install the checked-out Moshi package with `--no-deps` only after satisfying its actual imports. Use Python 3.11 or newer.
+2. Verify `torch.__file__`, version, CUDA operation, `transformers==4.55.3`, `moshi.__file__`, `sphn`, `gradium`, `fastapi`, `uvicorn`, and `moshi.conditioners.arc_encoder`. Execute a small BF16 xformers `memory_efficient_attention` call with `BlockDiagonalMask`, rather than trusting an import alone. Do not assume an ARM wheel exists or build it in the live Qwen environment.
+3. Download/pin `kyutai/moshika-rag-pytorch-bf16`, its configured ARC encoder, and local ASR dependencies. The default ARC dependency is `kyutai/ARC4_Encoder_Llama`. [Checkpoint loader](https://raw.githubusercontent.com/kyutai-labs/moshi-rag/main/moshi/moshi/models/loaders.py)
+4. Start the conditioner, using a verified local model directory in `$MOSHI_MODEL_DIR`:
+
+```sh
+python -m moshi.server_conditioner \
+  --config "$MOSHI_MODEL_DIR/config.json" \
+  --moshi-weight "$MOSHI_MODEL_DIR/model.safetensors" \
+  --conditioner reference_with_time --cuda-device 0 \
+  --host 127.0.0.1 --port 8001
+```
+
+5. Point the backend to a local test server or local reasoning model; do not set a public endpoint for this smoke test. Set `REFERENCE_ENCODER_URL=http://127.0.0.1:8001`, `LLM_BASE_URL=http://127.0.0.1:8002/v1`, `LLM_API_KEY=local-test`, and an appropriate `LLM_MODEL_NAME`. First call `/embed` and validate the returned safetensors.
+6. For content only, run `python -m moshi.run_inference --input-dir "$PROBE_INPUT" --output-dir "$PROBE_OUTPUT" --use-gt-reference --batch-size 1 --max-consecutive-silence-frames 40`, under an external time limit. Use a verified mono user WAV plus adjacent JSON reference. Cache downloads first; use exact model paths/revisions rather than silently changing weights.
+7. For concurrency, run `python -m moshi.server --host 127.0.0.1 --port 8998 --batch-size 1 --init-active-speaker user --rag-timeout 20`. Omit `--gradium-stt` and `--gradio-tunnel`; use local ASR and an SSH-forwarded client. Send paced audio through `/api/chat`, record receive and playback times, and delay local backend replies by 0.5/2/5/15 seconds. Verify ongoing input consumption, output delivery, and updated-answer content. Avoid using the offline loop as this measurement.
+
+No package lock, ARM binary compatibility, GPU memory envelope, live run or benchmark result has been established by these commands. Resolving those is the bounded baseline experiment; training starts only after it succeeds.
