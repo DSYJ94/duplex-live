@@ -351,9 +351,288 @@
     "text_review": "Generated bread answer uses supplied starch-retrogradation mechanism. This is one controlled reference-use example, not actual research, learned dispatch, cancellation handling or generalization."
   },
   "allocated_gpu_time": {
-    "jobs": 8,
-    "gpu_seconds": 514,
-    "gpu_hours": 0.14277777777777778,
-    "method": "Slurm top-level jobs only, each gres/gpu=1; includes failed environment attempts. Not remaining allocation balance."
+    "jobs": 39,
+    "gpu_seconds": 3936,
+    "gpu_hours": 1.0933333333333333,
+    "initial_probes_gpu_seconds": 514,
+    "native_continuation_gpu_seconds": 2076,
+    "reference_continuation_gpu_seconds": 1346,
+    "method": "Top-level allocated single-GPU Slurm jobs only, including failed experiments; excludes one CPU model-download job and two unallocated dependency cancellations. Not remaining project balance.",
+    "reference_accounting": "runs/recovery-20261013/moshi-reference-accounting.txt"
+  },
+  "native_moshi_training": {
+    "job": "7380505",
+    "optimizer_steps": 64,
+    "train_conversations": 16,
+    "diagnostic_eval_conversations": 4,
+    "independent_generalization": false,
+    "trainable_count": 24242176,
+    "changed_adapter_tensors": 674,
+    "frozen_base_unchanged": true,
+    "reload": {
+      "reload_ok": true,
+      "max_abs_logit_error": {
+        "text": 0.0,
+        "audio": 0.0
+      },
+      "reference_precision": "float32, TF32 off, checkpointing off, no_compile",
+      "adapter_keys": 674,
+      "module": "/projects/u6si/duplex-live/vendor/moshi-e6a55d2722a65870ef52a6c9f6ecfc0e90f38362/moshi/moshi/models/loaders.py"
+    },
+    "quality_improvement_established": false,
+    "human_listening": "pending",
+    "evidence": "runs/moshi-training-7380505"
+  },
+  "moshi_rag_encoder": {
+    "job": "7386266",
+    "access_verified": true,
+    "tokenizer_revision": "0cb88a4f764b7a12671c53f0838cd831a0843b95",
+    "strict_inference_weight_coverage": {
+      "speech_keys": 2,
+      "arc_keys": 239,
+      "overlap": [],
+      "unused_checkpoint_tensors": {
+        "embedder.cont_tok.0.weight": [
+          1,
+          3072
+        ],
+        "embedder.rec_tok.0.weight": [
+          1,
+          3072
+        ]
+      },
+      "complete_keys": 239,
+      "strict_load": true
+    },
+    "requests": [
+      {
+        "index": 0,
+        "token_count": 0,
+        "shape": [
+          1,
+          1,
+          4096
+        ],
+        "dtype": "torch.float32",
+        "http_seconds": 0.050030034966766834
+      },
+      {
+        "index": 1,
+        "token_count": 7,
+        "shape": [
+          1,
+          2,
+          4096
+        ],
+        "dtype": "torch.float32",
+        "http_seconds": 0.05117838899604976
+      },
+      {
+        "index": 2,
+        "token_count": 20,
+        "shape": [
+          1,
+          5,
+          4096
+        ],
+        "dtype": "torch.float32",
+        "http_seconds": 0.05865796690341085
+      },
+      {
+        "index": 3,
+        "token_count": 7,
+        "shape": [
+          1,
+          2,
+          4096
+        ],
+        "dtype": "torch.float32",
+        "http_seconds": 0.05081641499418765
+      },
+      {
+        "index": 4,
+        "token_count": 361,
+        "shape": [
+          1,
+          91,
+          4096
+        ],
+        "dtype": "torch.float32",
+        "http_seconds": 0.063740647980012
+      }
+    ],
+    "repeat_max_abs_error": 0.0,
+    "peak_allocated_bytes": 14932377600,
+    "passed": true,
+    "evidence": "runs/moshi-reference-7386266/report.json",
+    "scope": "reference encoder and HTTP transport; no speech or task-dispatch acceptance"
+  },
+  "moshi_rag_initial_speech": {
+    "job": "7386447",
+    "reference_injected_s": 30.080355518963188,
+    "result_ready_s": 30.06349466298707,
+    "packets_while_waiting": 126,
+    "text_packets_while_waiting": 40,
+    "causal_pair_valid": false,
+    "reason": "Different text-token histories before worker starts; longer warmup job7387021 also failed generated-token equality gate.",
+    "reference_use_established": false,
+    "text_review": "Generated answers were wrong, but this is not evidence against the encoder or conditioned model: the replay omitted apply_pending_streaming_sum_condition.",
+    "asr_audit_job": "7386830",
+    "asr_note": "Full-clip ASR produced repetitions with timestamps beyond file duration over a near-silent tail. Do not interpret WER1.3585 as demonstrated repeated spoken words. Original WAV preserved; tail-trimmed diagnostic added.",
+    "human_listening": "pending",
+    "reference_use_verdict": "invalid: replay queued reference rows but never applied them to LMGen active conditioning"
+  },
+  "moshi_rag_reproducibility": {
+    "longer_warmup_job": "7387021",
+    "fresh_process_job": "7387196",
+    "eager_job": "7387230",
+    "paired_history_established": false,
+    "fresh_first_different_frame": 62,
+    "eager_first_different_frame": 72,
+    "eager_first_100_input_code_hashes_match": true,
+    "eager_first_100_rng_hashes_match": true,
+    "eager_initial_rng_hashes_match": true,
+    "eager_compute_p50_s": [
+      0.13151790399570018,
+      0.14478246902581304
+    ],
+    "eager_max_backlog_s": [
+      39.372963097994216,
+      49.28987321804743
+    ],
+    "cause_established": false,
+    "interpretation": "Neither longer warmup, fresh processes nor disabling CUDA graphs/compile established bit-identical stochastic BF16 histories. No single paired-seed causal reference-use claim. Eager timing fails live acceptance.",
+    "causal_boundary": "Actual worker-start frame, not nominal input time; corrected audit still rejects both fresh and eager runs.",
+    "scope_note": "These replay histories predate the reference-row application fix; their pre-worker divergence and traced input/RNG observations remain valid, but reference-use verdicts are invalid."
+  },
+  "moshi_rag_reference_application_fix": {
+    "omission": "Replay called update_streaming_sum_tensors and step, but not apply_pending_streaming_sum_condition.",
+    "upstream_operation": "moshi/inference_utils/batch_runner.py:99",
+    "helper": "evals/moshi_rag_reference_step.py",
+    "checks": "Every queued row equals active conditioning before generation; no stale condition after end; total queued rows equals applied nonzero frames.",
+    "regression": "evals/harness/test_rag_reference_step.py",
+    "previous_reference_use_verdicts_invalid": true,
+    "cpu_regression": {
+      "tests": 2,
+      "passed": true,
+      "duration_s": 0.041
+    }
+  },
+  "moshi_rag_corrected_speech": {
+    "job": "7387777",
+    "audit_job": "7387786",
+    "reference_rows_queued": 33,
+    "reference_rows_applied": 33,
+    "compute_p50_s": 0.016512400470674038,
+    "compute_p95_s": 0.01862482539145276,
+    "max_input_backlog_s": 0.07812201899010685,
+    "task_events": [
+      {
+        "event": "worker_started",
+        "at_s": 3.85790241509676,
+        "chunk": 47,
+        "task_id": "lightning",
+        "delay_s": 0.1,
+        "trigger": "native rag token"
+      },
+      {
+        "event": "reference_injected",
+        "request_at_s": 3.9581839200109243,
+        "ready_at_s": 4.03079054900445,
+        "at_s": 4.0805206570075825,
+        "chunk": 50,
+        "shape": [
+          1,
+          6,
+          4096
+        ],
+        "reference": "You see lightning before hearing thunder because light travels much faster than sound. Both come from the same lightning event.",
+        "task_id": "lightning"
+      },
+      {
+        "event": "worker_started",
+        "at_s": 18.57854983198922,
+        "chunk": 231,
+        "task_id": "fridge",
+        "delay_s": 0.1,
+        "trigger": "native rag token"
+      },
+      {
+        "event": "reference_injected",
+        "request_at_s": 18.6788196900161,
+        "ready_at_s": 18.746630681096576,
+        "at_s": 18.800355906016193,
+        "chunk": 234,
+        "shape": [
+          1,
+          10,
+          4096
+        ],
+        "reference": "A fridge uses a vapor-compression refrigerant cycle to move heat from inside to outside. The refrigerant evaporates to absorb heat inside, then is compressed and condenses to release heat outside.",
+        "task_id": "fridge"
+      },
+      {
+        "event": "worker_started",
+        "at_s": 35.21838342607953,
+        "chunk": 439,
+        "task_id": "bread",
+        "delay_s": 10.0,
+        "trigger": "native rag token"
+      },
+      {
+        "event": "reference_injected",
+        "request_at_s": 45.218569400021806,
+        "ready_at_s": 45.27054251800291,
+        "at_s": 45.28035049000755,
+        "chunk": 565,
+        "shape": [
+          1,
+          10,
+          4096
+        ],
+        "reference": "Bread goes stale faster in the fridge mainly because refrigeration speeds up starch retrogradation. Starch molecules reorganize and firm the crumb. It is not simply drying out.",
+        "task_id": "bread"
+      },
+      {
+        "event": "worker_started",
+        "at_s": 52.33625764306635,
+        "chunk": 653,
+        "task_id": "noise",
+        "delay_s": 0.1,
+        "trigger": "native rag token"
+      },
+      {
+        "event": "reference_injected",
+        "request_at_s": 52.43644856510218,
+        "ready_at_s": 52.505920121097006,
+        "at_s": 52.56044906901661,
+        "chunk": 656,
+        "shape": [
+          1,
+          7,
+          4096
+        ],
+        "reference": "Active noise-cancelling headphones use microphones to measure surrounding noise and produce an opposing sound wave that reduces it through destructive interference.",
+        "task_id": "noise"
+      }
+    ],
+    "text": " Oh, that's interesting. Lightning is faster than loud thunder. That's why you see it first. Pretty cool, right? Good question! It's all about how fridges work. Fridges use a gas to evaporate and remove heat, then compress it to release it. It's a simple cycle. Does that make sense? That's a really good point to notice. Bread goes stale faster in the fridge because it's dried out by the evaporation of the gas. It's a trade-off, I suppose. They're super useful! They work by blocking sounds with a dynamic cancelled signal. It's pretty clever technology. They",
+    "text_packets_during_worker_intervals": 40,
+    "request_selection": "Four known questions by native request order; fixed reviewed facts, no actual research or semantic task routing.",
+    "reference_application_verified": true,
+    "long_delay_acceptance": false,
+    "verdict": "Wrong bread explanation completed before the delayed reference; only I suppose followed its arrival, with no correction.",
+    "asr_time_bounds_valid": false,
+    "asr_note": "Core answers match text, but full-clip ASR invents repetitions beyond recording end. Do not treat full WER as valid speech-quality evidence.",
+    "human_listening": "pending",
+    "microphone_acceptance": false,
+    "causal_pair_claim": false,
+    "gallery": "http://localhost:8766/batch/moshi-rag-speech-7387777-delayed-reference",
+    "bread_first_active_frame": {
+      "chunk": 565,
+      "input_consumed_s": 45.28006115509197,
+      "packet_available_s": 45.29645124007948,
+      "active_reference_l1": 808.4581298828125
+    }
   }
 }

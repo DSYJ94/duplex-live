@@ -261,20 +261,102 @@ manager pass on the cluster, including revision propagation into the encoding
 child task. These are delivery safeguards, not evidence of learned dispatch
 or natural-language cancellation.
 
-The owner can approve access at
-https://huggingface.co/meta-llama/Llama-3.2-3B-Instruct, then run the ephemeral
-Mac wizard `bash /tmp/duplex-hf-access.sh`. It starts a fresh browser login on
-Isambard using the same account, saves credentials only in the cluster model
-cache, and does not collect tokens in chat or the repository. The earlier
-five-minute device code expired. After authorization, verify the pinned
- tokenizer download before running the bounded reference-encoder test.
+The owner completed access and cluster browser authentication on 2026-10-13.
+Actual pinned tokenizer files downloaded successfully. Credentials remain in
+the cluster model cache; no tokens are recorded in chat or the repository.
+
+Reference probe 7386266 passed complete inference-weight coverage and actual
+localhost HTTP encoding. All 239 required keys are present; two released ARC
+tensors (`embedder.cont_tok.0.weight`, `embedder.rec_tok.0.weight`, each [1,3072])
+are absent from and unused by the pinned inference source. Only those explicit
+extras are omitted. Empty references intentionally emit zero vectors; nonempty
+references must be finite and nonzero. Seven-, twenty- and 361-token references
+returned [1,2,4096], [1,5,4096], [1,91,4096] tensors in 51–64 ms. Repeated text
+produced identical values. Peak allocation: 14,932,377,600 bytes. This is an
+encoder/transport test, not spoken use or delegation acceptance. Earlier jobs
+7385889/7386158 failed overly strict probe assertions and remain recorded.
+
+**Correction to all early reference-use verdicts:** the replay queued embeddings
+with `update_streaming_sum_tensors`, then called `step` without the upstream
+batch runner's explicit `apply_pending_streaming_sum_condition` operation.
+Consequently jobs 7386447, 7387021, 7387196, 7387230 and 7387611 never applied
+those reference rows to the language-model input. Their worker timing and
+speech artifacts remain real, but their failure to repeat supplied facts is
+not evidence against the conditioned model or encoder. Do not carry those
+negative reference-use verdicts forward.
+
+`evals/moshi_rag_reference_step.py` now applies and verifies each row before
+generation, checks clearing after the reference ends, and the replay requires
+queued-row and applied-frame counts to match. The regression uses the real
+upstream queue/consume methods on CPU and detects an omitted application.
+
+Separately, seeded BF16 histories varied before worker launch: longer warmup
+7387021, fresh processes 7387196, and no CUDA graphs/compilation 7387230 did not
+establish token-identical prefixes. In 7387230, the first 100 user-code and
+traced CUDA RNG hashes matched, yet generated tokens differed from frame 72.
+The cause remains unestablished. Eager processing p50 was 0.132–0.145 seconds
+per 80 ms frame and backlog reached 39–49 seconds; that mode fails live use.
+The corrected CPU causal audit uses the actual worker-start frame, rather
+than confusing wall-clock and consumed-input time, and still rejects the
+known fresh-process and eager histories. A seed alone is not a causal control.
+
+Request-aligned 7387611 queued three fixture references after native RAG tokens
+at frames 47, 231 and 439; its ten-second bread result was queued at 45.280 s.
+Actual audio transcription agrees with text (WER 0.0084), but this run predates
+the application fix and cannot establish reference use. The corrected run and its scope are recorded below.
+These are reviewed fixed facts selected by known request order, not actual
+research, semantic tool routing or generalized learned delegation.
+
+Audio audit 7386830 transcribed the generated WAVs, confirming the core wrong
+answers, but the full-clip reference transcription also hallucinated repetitive
+words with timestamps beyond the recording length over a near-silent tail.
+Its large WER is not proof of actual repeated speech. Original audio/report
+remain intact; a separate tail-trimmed ASR diagnostic now records the inspected
+input duration and timestamp validity. Human listening remains open. The WAVs
+are available in the local gallery, e.g.
+`http://localhost:8766/batch/moshi-rag-speech-7386447-delayed-reference`.
+
+### Corrected request-aligned speech — application passes, late answer fails
+
+Job **7387777 completed**. Four native retrieval-request tokens launched workers
+for known questions; fixtures supply reviewed facts by request order, not actual
+research or semantic tool routing. The replay verifies all **33 queued rows
+were applied** to the active conditioning input before generation. Two CPU
+regressions against real upstream methods pass (0.041 s), including omitted
+application detection and clearing after the last row.
+
+Median/p95 frame processing: **0.0165 / 0.0186 s** for 80 ms input frames.
+Maximum input backlog: **0.0781 s**. This is paced frame processing, not
+microphone/network/playback acceptance or response-start latency.
+
+The bread worker started at 35.218 s and returned at 45.271 s; its condition
+was queued at 45.280 s and applied in frame 565. The model had already given a wrong drying/gas
+explanation. After arrival it only appended “I suppose”, with no correction
+before the next question. **Long-delay result incorporation still fails this
+case.** It must learn to defer unsupported answers and return to completed work.
+Earlier negative reference-use claims from the missing-application harness are
+invalid; this corrected negative result has actual row-consumption evidence.
+
+Audio audit **7387786 completed**. Core answer words agree with text, including
+the wrong bread mechanism, but the last truncated answer provokes ASR
+repetitions/timestamps beyond recording length. Its full-clip WER is therefore
+not valid speech-quality evidence (`asr_time_bounds_valid=false`). Original
+WAVs and reports remain intact. Human listening is pending; corrected audio:
+`http://localhost:8766/batch/moshi-rag-speech-7387777-delayed-reference`.
+No causal paired-seed improvement or generalized delegation claim is made.
 
 All recovery jobs are terminal as of this update. Initial probes consumed
-514 allocated GPU-seconds; this continuation consumed 2,076. Combined:
-2,590 seconds / approximately **0.72 GPU-hours**. This is allocated job time,
-not a verified remaining project balance. No large training run has started.
+514 allocated GPU-seconds; native continuation 2,076; reference continuation
+1,346. Combined: **3,936 seconds / 1.093 GPU-hours**, across 39 allocated
+single-GPU jobs. Failed jobs count; one CPU model download and two unallocated
+dependency cancellations do not. This is job allocation time, not a verified
+remaining project balance. No large training run has started.
 
-Next: verify official tokenizer access and full reference encoding, then test
-actual asynchronous reference delivery/use in native duplex speech. Prepare
-fresh scenario-family and voice splits and review audible content before any
-large training allocation. Keep the native base and all failed evidence.
+Next: introduce fresh held-out reference facts (including facts unavailable
+from pretraining), replace request-order fixtures with an actual background
+worker, and implement/verify causal timed-reference training. Prioritize
+waiting, interruption/cancellation and post-result correction, then evaluate
+multiple samples with reviewed labels. Seed equality alone is not an inference
+control in this setup. Do not scale the reused 16-example native corpus or
+select a production model on diagnostic loss. Keep the native baselines and
+all failed evidence; microphone/playback and human voice acceptance remain open.

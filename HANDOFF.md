@@ -15,14 +15,26 @@ container (job 7377673), but reaches 3.10 seconds of input backlog and gives a
 wrong bread-staling explanation. Jobs and exact limitations are recorded in
 the recovery plan. Neither candidate has passed product acceptance.
 
-Native Moshi now has a verified 64-step adaptation pilot (7380505): frozen
-weights unchanged, adapters saved/reloaded exactly, canonical float32 logits
-identical. Its loss fell but spoken content remains poor. MoshiRAG's ARC
-attention kernel works on GH200; four reference lifecycle tests pass. Full
-reference encoding awaits owner-authorized access to Meta's Llama 3.2 tokenizer.
-The owner has a browser-login wizard; no credentials belong in this repo.
-Recovery consumption so far is approximately 0.72 allocated GPU-hours, not a
-verified remaining balance. Read the recovery plan before scheduling more.
+Native Moshi has a verified 64-step adaptation pilot (7380505): frozen weights
+unchanged, exact saved adapters and canonical float32 reload logits. Lower loss
+did not establish useful spoken content. Meta tokenizer access is now verified;
+the full ARC encoder and actual HTTP path pass (7386266).
+
+The first reference replay omitted the upstream per-frame application step;
+discard its negative reference-use verdicts. Corrected 7387777 applied all
+33 reference rows, processed 80 ms frames in 16.5/18.6 ms p50/p95, and reached
+78 ms maximum input backlog. It still answered incorrectly before a ten-second
+bread result, then failed to correct itself afterward. This is fixed-fact
+request-order integration, not actual research or general task routing. Human
+listening, microphone acceptance, fresh content tests and timed-reference
+training remain open. ASR timestamps for the last cut-off answer are invalid;
+keep original audio and do not accept its aggregate WER as a quality verdict.
+
+Seeded BF16 histories varied even with fresh processes and eager execution;
+input-code and traced RNG hashes matched in the diagnostic. Cause unestablished;
+no single-run causal pair claim. Recovery consumption is **1.093 allocated
+GPU-hours**, not a verified remaining balance. No large training run or
+production selection. Read the recovery plan before scheduling more.
 
 ## HISTORICAL STATE — prior phase, superseded by the recovery above
 

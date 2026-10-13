@@ -1978,3 +1978,32 @@ MoshiRAG kernel job 7379661 passes on GH200. Four actual-upstream reference
 lifecycle regressions now pass; full encoder/reference use awaits the gated
 Meta tokenizer. All jobs are terminal. Combined recovery allocation: 2,590
 GPU-seconds (0.72 GPU-h). No broad training or production selection.
+
+## ARC + NATIVE REQUESTS — encoder/application pass, late-answer behavior fails (2026-10-13)
+
+Owner-approved Meta tokenizer access verified by actual pinned-file download.
+ARC probe 7386266 passes strict inference-weight coverage, finite nonempty
+embeddings and actual HTTP delivery (51–64 ms). Only two source-unused released
+checkpoint tensors are omitted explicitly; no inference weights are missing.
+
+Correction: speech probes 7386447/7387021/7387196/7387230/7387611 queued
+references but omitted the upstream runner's explicit per-frame application.
+Their negative reference-use verdicts are invalid. Seeded pre-worker variation
+remains real; longer warmup, fresh processes and eager execution did not prove
+identical histories. Eager input-code and traced RNG hashes matched, but output
+tokens differed. Cause unestablished. Eager backlog 39–49 s fails live use.
+
+The omission is fixed with two actual-upstream CPU regressions and framewise
+application/clearing checks. Corrected 7387777 applied all 33 reference rows.
+Four native RAG requests launched ordered fixed-fact workers; frame processing
+p50/p95 16.5/18.6 ms, max input backlog 78 ms. Ten-second bread result arrived
+45.271 s and was queued at 45.280 s, then applied in frame 565, after a wrong bread explanation; no correction
+followed before the next request. Long-delay behavior fails this case. No
+actual research, semantic routing or general learned-delegation claim.
+
+Audio audit 7387786 confirms core answer words, but ASR invents repetitions at
+the truncated final answer beyond file length; full WER is not a valid quality
+verdict. Original WAVs are in the listening gallery; human review remains open.
+Total recovery allocation: 3,936 GPU-seconds / 1.093 GPU-hours, including failed
+runs. All jobs terminal. Next: fresh reference-fact holdouts, real worker
+integration, and causal timed-reference adaptation; no broad training selected.
