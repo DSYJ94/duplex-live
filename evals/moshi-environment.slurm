@@ -40,7 +40,9 @@ PY="$ENV_DIR/bin/python"
 export PATH="$ENV_DIR/bin:$PATH" CARGO_BUILD_JOBS=8
 # pip build isolation prepends its own CMake 4; Rust's cmake crate honors
 # this explicit binary path even inside that temporary build environment.
-export CMAKE="$ENV_DIR/bin/cmake"
+export CMAKE
+CMAKE=$("$PY" -c 'import cmake; print(cmake.CMAKE_BIN_DIR + "/cmake")')
+"$CMAKE" --version
 "$PY" -m evals.moshi_environment_setup \
     --requirements "$DL/repo/evals/moshi-rag-requirements.txt" --out "$OUT"
 # Build against this exact NGC Torch ABI; never install a replacement Torch.

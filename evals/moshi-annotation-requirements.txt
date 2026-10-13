@@ -1,0 +1,6 @@
+# Plain words: use the native trainer's word-alignment method on approved audio.
+numpy==2.2.6
+whisper-timestamped==1.15.9
+openai-whisper==20250625
+soundfile
+scipy

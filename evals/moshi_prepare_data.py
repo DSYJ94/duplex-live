@@ -22,6 +22,7 @@ def main():
     ap.add_argument("--out", type=Path, required=True)
     ap.add_argument("--train-count", type=int, default=16)
     ap.add_argument("--eval-count", type=int, default=4)
+    ap.add_argument("--alignment-backend", choices=["hf", "timestamped"], default="timestamped")
     args = ap.parse_args()
     if args.train_count < 1 or args.eval_count < 1:
         ap.error("Positive train/eval counts required")
@@ -40,7 +41,15 @@ def main():
         raise RuntimeError("Not enough candidate conversations within the bounded duration")
     checked_rows(args.batch, candidates, role="native Moshi data conversion")
     args.out.mkdir(parents=True, exist_ok=False)
-    asr = load_asr("openai/whisper-large-v3-turbo")
+    if args.alignment_backend == "hf":
+        asr = load_asr("openai/whisper-large-v3-turbo")
+        asr_revision = getattr(asr.model.config, "_commit_hash", None)
+    else:
+        import whisper_timestamped as whisper
+        import importlib.metadata
+        asr = whisper.load_model("turbo", device="cuda")
+        asr_revision = {"model": "OpenAI whisper turbo", "whisper": importlib.metadata.version("openai-whisper"),
+                        "timestamped": importlib.metadata.version("whisper-timestamped")}
     accepted = []
     rejects = []
     for row in candidates:
@@ -48,9 +57,10 @@ def main():
         source = args.batch / row["dir"]
         timeline = json.loads((source / "timeline.actual.json").read_text())
         try:
-            if any(e["ch"] not in ("assistant", "user") or e["kind"] != "utterance"
+            if any(e["ch"] not in ("assistant", "user")
+                   or (e["ch"] == "assistant" and e["kind"] != "utterance")
                    for e in timeline["events"]):
-                raise ValueError("Smoke requires two speakers and complete utterances")
+                raise ValueError("Smoke requires two speakers and complete assistant utterances")
             assistant, sr = sf.read(source / "stem_assistant.wav", dtype="float32")
             user, user_sr = sf.read(source / "stem_user.wav", dtype="float32")
             if sr != 24000 or sr != user_sr or assistant.ndim != 1 or user.shape != assistant.shape:
@@ -70,8 +80,15 @@ def main():
                 clip = assistant[round(start * sr):round(end * sr)]
                 gcd = math.gcd(sr, 16000)
                 pcm = resample_poly(clip, 16000 // gcd, sr // gcd).astype(np.float32)
-                aligned = asr({"array": pcm, "sampling_rate": 16000}, return_timestamps="word",
-                              generate_kwargs={"language": "english", "task": "transcribe"})
+                if args.alignment_backend == "hf":
+                    aligned = asr({"array": pcm, "sampling_rate": 16000}, return_timestamps="word",
+                                  generate_kwargs={"language": "english", "task": "transcribe"})
+                else:
+                    result = whisper.transcribe(asr, pcm, language="en", vad=False,
+                                                best_of=5, beam_size=5, temperature=0., verbose=None)
+                    aligned = {"text": result["text"], "chunks": [
+                        {"text": w["text"], "timestamp": (w["start"], w["end"])}
+                        for segment in result["segments"] for w in segment["words"]]}
                 error_rate = wer(norm_words(event["text"]), norm_words(aligned["text"]))
                 if error_rate > .08:
                     raise ValueError(f"Word-alignment transcript fails: WER={error_rate}")
@@ -82,7 +99,7 @@ def main():
                 for word in chunks:
                     a, b = word["timestamp"]
                     if a is None or b is None or not 0 <= a < b <= end-start+.08:
-                        raise ValueError("Invalid measured word interval")
+                        raise ValueError(f"Invalid measured word interval {word!r}, clip duration={end-start}")
                     local.append([word["text"].strip(), [start+a, min(start+b, end)], "SPEAKER_MAIN"])
                 words.extend(local)
                 audits.append({"start_s": start, "end_s": end, "expected": event["text"],
@@ -102,7 +119,7 @@ def main():
                              "source_assistant_sha256": sha256(source / "stem_assistant.wav"),
                              "source_user_sha256": sha256(source / "stem_user.wav"),
                              "wav_sha256": sha256(wav), "sidecar_sha256": sha256(sidecar),
-                             "alignment_method": "Whisper word timestamps on approved assistant stem crops",
+                             "alignment_method": f"Whisper {args.alignment_backend} word intervals on approved assistant stem crops",
                              "utterance_audits": audits})
             print(json.dumps({"event": "accepted", "id": sid, "n_words": len(words)}), flush=True)
         except ValueError as error:
@@ -120,7 +137,7 @@ def main():
     (args.out / "summary.json").write_text(json.dumps({
         "schema": "dl-moshi-ingestion-v1", "verified": True,
         "train_count": args.train_count, "eval_count": args.eval_count,
-        "asr_revision": getattr(asr.model.config, "_commit_hash", None),
+        "asr_revision": asr_revision,
         "commit": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
         "independent_generalization_split": False,
         "human_listening": "pending", "manifest_sha256": {
