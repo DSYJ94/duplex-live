@@ -35,7 +35,9 @@ def main():
     args.out = args.out.resolve()
     rows = [json.loads(line) for line in (args.batch / "train_manifest.jsonl").read_text().splitlines()]
     candidates = sorted((r for r in rows if r.get("scenario_class") == "dense_dialog"
-                         and r.get("duration_ms", 0) <= 100000), key=lambda r: r["scenario_id"])
+                         and r.get("duration_ms", 0) <= 180000), key=lambda r: r["scenario_id"])
+    if len(candidates) < args.train_count + args.eval_count:
+        raise RuntimeError("Not enough candidate conversations within the bounded duration")
     checked_rows(args.batch, candidates, role="native Moshi data conversion")
     args.out.mkdir(parents=True, exist_ok=False)
     asr = load_asr("openai/whisper-large-v3-turbo")
@@ -57,7 +59,7 @@ def main():
             if not np.isfinite(stereo).all() or np.max(np.abs(stereo)) > 1:
                 raise ValueError("Nonfinite or clipped stems")
             duration = len(assistant) / sr
-            if duration > 100 or abs(duration - row["duration_ms"] / 1000) > .08:
+            if duration > 180 or abs(duration - row["duration_ms"] / 1000) > .08:
                 raise ValueError("Decoded duration differs from approved manifest")
             words = []
             audits = []

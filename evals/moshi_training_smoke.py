@@ -112,7 +112,7 @@ def main():
                               "tokenizer_path": str(model_dir / "tokenizer_spm_32k_3.model"),
                               "config_path": str(base_config)},
               "full_finetuning": False, "lora": {"enable": True, "rank": 8, "scaling": 2., "ft_embed": False},
-              "duration_sec": 100, "batch_size": 1, "num_microbatches": 4, "max_steps": 4,
+              "duration_sec": 180, "batch_size": 1, "num_microbatches": 4, "max_steps": 4,
               "gradient_checkpointing": True, "param_dtype": "bfloat16",
               "first_codebook_weight_multiplier": 100., "text_padding_weight": .5,
               "optim": {"lr": 2e-6, "weight_decay": .1, "pct_start": .5},

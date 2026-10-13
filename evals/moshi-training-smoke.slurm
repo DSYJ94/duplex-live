@@ -33,7 +33,7 @@ apptainer exec --nv --bind /projects,/lus,/home --env PYTHONPATH="$DL/repo" \
     --env HF_HOME="$DL/models/hf-cache" "$DL/pytorch-new.sif" bash -eu <<'CONTAINER'
 python -m venv --system-site-packages "$ENV_DIR"
 PY="$ENV_DIR/bin/python"
-"$PY" -m pip install --no-deps 'cmake==3.31.6'
+"$PY" -m pip install --ignore-installed --no-deps 'cmake==3.31.6'
 export PATH="$ENV_DIR/bin:$PATH" CARGO_BUILD_JOBS=8 CMAKE="$ENV_DIR/bin/cmake"
 "$PY" -m evals.moshi_environment_setup --requirements "$DL/repo/evals/moshi-training-requirements.txt" --out "$ENV_OUT"
 export PYTHONPATH="$NATIVE/moshi:$TRAINER:$DL/repo" PYTHONDONTWRITEBYTECODE=1

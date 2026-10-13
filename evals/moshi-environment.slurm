@@ -36,7 +36,7 @@ python -m venv --system-site-packages "$ENV_DIR"
 PY="$ENV_DIR/bin/python"
 # sphn's bundled Opus declares an old CMake minimum; NGC CMake 4 rejects it.
 # Keep this build tool inside the venv and ahead of the container binary.
-"$PY" -m pip install --no-deps 'cmake==3.31.6'
+"$PY" -m pip install --ignore-installed --no-deps 'cmake==3.31.6'
 export PATH="$ENV_DIR/bin:$PATH" CARGO_BUILD_JOBS=8
 # pip build isolation prepends its own CMake 4; Rust's cmake crate honors
 # this explicit binary path even inside that temporary build environment.
