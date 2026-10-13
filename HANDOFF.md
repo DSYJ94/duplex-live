@@ -10,9 +10,12 @@ the historical delegation-mixture comparison (both launchers dropped their
 selection/init/output arguments). The tracked launcher is repaired with a
 regression test. Native, unchanged Qwen now generates six coherent speech
 samples, all ASR-roundtripping at zero word error, but this batch path is not
-live. Jobs and exact limitations are recorded in the recovery plan.
+live. Native MiniCPM now completes a 60-second paced duplex replay on the new
+container (job 7377673), but reaches 3.10 seconds of input backlog and gives a
+wrong bread-staling explanation. Jobs and exact limitations are recorded in
+the recovery plan. Neither candidate has passed product acceptance.
 
-## STATE OF THE PROJECT — read this first
+## HISTORICAL STATE — prior phase, superseded by the recovery above
 
 **Plain summary:** duplex-live set out to build a live duplex voice
 model on Qwen3-Omni-30B-A3B (80 ms tick loop, Isambard GH200s). The
@@ -57,9 +60,10 @@ docs/FINAL-REPORT.md; every experiment: EXPERIMENTS.md (dated).
   torch/nvidia/triton PACKAGES AND THEIR .dist-info were purged so the
   container's own torch 2.9 wins — leaving dist-info causes an
   AuxRequest ImportError)
-- All GPU-path slurm scripts were retargeted (evals/*, synth-filter).
-  The minicpm render path (pylibs-minicpm) is NOT retargeted and does
-  not run on the new stack.
+- Historical GPU-path slurm scripts were retargeted (evals/*, synth-filter).
+  The old minicpm render path (pylibs-minicpm) is NOT retargeted. The new
+  `evals/minicpm-recovery-probe.slurm` works on the new container using an
+  isolated overlay and tested reference-WAV reader; see the recovery plan.
 - KEYS: $DL/keys/elevenlabs.env + openai.env (chmod 600; creator-tier
   ElevenLabs credits nearly exhausted; OpenAI key valid, gpt-5-pro
   needs the /v1/responses API — banks_openai.py handles both)

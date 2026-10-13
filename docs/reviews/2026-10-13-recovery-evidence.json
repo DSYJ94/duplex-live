@@ -243,7 +243,8 @@
     "Development fixture: three unique questions in two modalities; not six independent questions.",
     "Human listening pending; ASR agreement does not grade semantics or prosody.",
     "Full-generation times are not streaming first-packet latency.",
-    "Clock probe uses real control flow and fake model/encoder; no GPU inference."
+    "Clock probe uses real control flow and fake model/encoder; no GPU inference.",
+    "Native MiniCPM evidence is 60-second paced replay; real microphone/network, interruption, human audio quality and trained delegation are untested."
   ],
   "clock_probe_after_demo_input_repairs": {
     "evidence": "synthetic control-flow probe of actual m2.live.main; no model inference",
@@ -261,5 +262,98 @@
     "delegation_launcher": "selection, initialization and output arguments plus prefixed held-out IDs; shell execution regression passed",
     "live_quality": "missing or unverified quality record aborts before model loading; regression passed",
     "live_clip_length": "answer clips retain native length; no one-billion-sample silence padding; regression passed"
+  },
+  "minicpm_baseline": {
+    "job": "7377673",
+    "environment": {
+      "mode": "paced-native-duplex-replay",
+      "torch": "2.9.0a0+145a3a7bda.nv25.10",
+      "torchaudio": "2.9.0",
+      "reference_wav_loader": "soundfile normalized PCM; TorchAudio resampling unchanged",
+      "torch_path": "/usr/local/lib/python3.12/dist-packages/torch/__init__.py",
+      "transformers": "4.51.0",
+      "model_snapshot": "/projects/u6si/duplex-live/models/hf-cache/hub/models--openbmb--MiniCPM-o-4_5/snapshots/503e754207c94da6bb26850b4469f367c9ea3582",
+      "gpu": "NVIDIA GH200 120GB",
+      "commit": "c2a13a04908f61d15e0ceb6fdb4cdf89ae2eed37",
+      "seconds": 60,
+      "scenario": "dense_dialog-001",
+      "semantic_verdict": "pending review",
+      "microphone_acceptance": false
+    },
+    "report": {
+      "schema": "dl-native-duplex-replay-v1",
+      "seconds": 60,
+      "max_input_backlog_s": 3.095024752023164,
+      "final_input_backlog_s": 2.4130115850130096,
+      "compute_p50_s": 0.4765566229762044,
+      "compute_p95_s": 1.768317043353454,
+      "text": "    Light travels faster  than sound, so  you see lightning  first.              It removes heat  from inside and moves  it outside  the fridge using a  refrigeration cycle.              The cold makes st  uff dry out more quickly.                They detect  surrounding sounds  and  play opposite wave  s to cancel them out.   ",
+      "semantic_verdict": "pending review",
+      "human_listening": "pending"
+    },
+    "text_review": "Lightning, refrigerator and headphone answers are responsive; bread answer incorrectly explains faster staling as drying. Human listening pending."
+  },
+  "minicpm_controlled_context": {
+    "job": "7378025",
+    "environment": {
+      "mode": "paced-native-duplex-replay",
+      "torch": "2.9.0a0+145a3a7bda.nv25.10",
+      "torchaudio": "2.9.0",
+      "reference_wav_loader": "soundfile normalized PCM; TorchAudio resampling unchanged",
+      "torch_path": "/usr/local/lib/python3.12/dist-packages/torch/__init__.py",
+      "transformers": "4.51.0",
+      "model_snapshot": "/projects/u6si/duplex-live/models/hf-cache/hub/models--openbmb--MiniCPM-o-4_5/snapshots/503e754207c94da6bb26850b4469f367c9ea3582",
+      "gpu": "NVIDIA GH200 120GB",
+      "commit": "502c9fb2257358f3f6ef683c6b07c0b5c0a7ba77",
+      "seconds": 60,
+      "scenario": "dense_dialog-001",
+      "semantic_verdict": "pending review",
+      "microphone_acceptance": false,
+      "background_result_mode": "controlled fixture; no learned dispatch"
+    },
+    "report": {
+      "schema": "dl-native-duplex-replay-v1",
+      "seconds": 60,
+      "max_input_backlog_s": 3.9132306529791094,
+      "final_input_backlog_s": 3.6805085859959945,
+      "compute_p50_s": 0.5256614759855438,
+      "compute_p95_s": 1.7943323360377688,
+      "task_events": [
+        {
+          "event": "task_started",
+          "task_id": "bread-reference-001",
+          "at_s": 20.000062493956648
+        },
+        {
+          "event": "result_injected",
+          "task_id": "bread-reference-001",
+          "ready_at_s": 30.000337878998835,
+          "at_s": 30.467081500974018,
+          "chunk": 26,
+          "prefill_ok": true
+        }
+      ],
+      "learned_delegation_tested": false,
+      "text": "    Light travels faster  than sound, so  you see lightning  first.              It removes heat  from inside and moves  it outside  using  a refrigerant cycle.              Refrigeration  speeds up  starch retrogradation,  causing bread  to become firmer and  stale more quickly.            They use microphones  to detect external  sounds and  then produce  an  opposite sound wave  to cancel them  out.",
+      "semantic_verdict": "pending review",
+      "human_listening": "pending"
+    },
+    "fixture": {
+      "task_id": "bread-reference-001",
+      "fire_at_s": 20,
+      "delay_s": 10,
+      "text": "[Background research result for the bread question. This is reference information, not a new user turn.] Refrigeration accelerates starch retrogradation: starch molecules recrystallize, making bread firm and stale. It is not simply that cold air dries bread faster. Use this result when answering the user about bread in the fridge. [End background result.]",
+      "purpose": "Controlled result-injection probe against the native baseline's incorrect drying explanation. Fixed reference text is not actual agent research, learned dispatch, or a training example."
+    },
+    "processing_packets_during_worker_wait": 7,
+    "speaking_packets_during_worker_wait": 6,
+    "ready_to_injected_s": 0.4667436219751835,
+    "text_review": "Generated bread answer uses supplied starch-retrogradation mechanism. This is one controlled reference-use example, not actual research, learned dispatch, cancellation handling or generalization."
+  },
+  "allocated_gpu_time": {
+    "jobs": 8,
+    "gpu_seconds": 514,
+    "gpu_hours": 0.14277777777777778,
+    "method": "Slurm top-level jobs only, each gres/gpu=1; includes failed environment attempts. Not remaining allocation balance."
   }
 }

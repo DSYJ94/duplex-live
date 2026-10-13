@@ -1,8 +1,9 @@
 """Plain words: replay verified audio through native duplex speech generation.
 
-Records the actual time each output packet becomes available. No scripted
-answers, VAD turn controller, timing checkpoint, or gold assistant words enter
-the model. This is paced replay, not a microphone/network acceptance test.
+Records the actual time each output packet becomes available. Baseline mode
+supplies only user audio. Optional result-fixture mode supplies explicit
+background reference text to test context delivery, not learned delegation.
+This is paced replay, not a microphone/network acceptance test.
 """
 import argparse
 import json

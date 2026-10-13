@@ -1891,7 +1891,7 @@ held-out claims are invalid; poor outputs remain observations, not evidence
 that the intended mixtures cannot work. The delivered q2 checkpoint remains
 a separate historical reference. See `docs/RECOVERY_PLAN.md`.
 
-**Plain words:** Two attempts to add delegation/streaming behaviors by
+**Superseded original interpretation (not a valid mixture verdict):** Two attempts to add delegation/streaming behaviors by
 mixing them into training. First (81 lessons): dense turn-taking
 broke (146 false <delegate>s on one lesson). Second (diluted 1:6,
 800 steps): still broke (dense recall 0.03-0.18). The <delegate>
@@ -1932,3 +1932,29 @@ timed output and asynchronous-result tests; then a small checkpoint-reloaded
 training pilot. No large training run has started in this continuation.
 Current plan: `docs/RECOVERY_PLAN.md`; machine-readable evidence:
 `docs/reviews/2026-10-13-recovery-evidence.json`.
+
+## NATIVE DUPLEX + DELAYED CONTEXT — working component, latency still fails (2026-10-13)
+
+**Plain words:** MiniCPM-o 4.5 now runs its own duplex speech on the new
+container. Job 7377673 replayed 60 seconds of verified user audio and generated
+four answers. Processing was 0.477 s p50 / 1.768 s p95 per one-second chunk,
+but input backlog reached 3.095 s. Its bread answer incorrectly blamed drying.
+
+Job 7378025 used the same seed/input plus a fixed reference delivered by a
+worker after a ten-second delay. Seven packets completed while the worker
+waited, six in speaking mode. The result was ready at 30.000 s and injected
+at 30.467 s through a separate text prefill. The generated bread answer then
+used the supplied starch-retrogradation mechanism. This is positive evidence
+for nonblocking result delivery and use on one case, not learned task dispatch
+or actual background research. Cancellation, stale results and fresh tasks
+remain untested. Backlog reached 3.913 s (final 3.681 s); processing p50/p95
+was 0.526/1.794 s. Both runs still fail the intended live latency requirement.
+
+Earlier jobs 7377413/7377469/7377588 exposed audio-decoder dependency problems.
+The working launcher retains container Torch, isolates dependencies and uses a
+tested process-local normalized-WAV reader; TorchAudio features are unchanged.
+Both complete runs have packet logs, environment/commit records and generated
+WAVs in the listening gallery. Human listening remains pending. All eight
+recovery jobs together used 514 allocated GPU-seconds (0.143 GPU-h). No broad
+training has started. Next: MoshiRAG live baseline and a small reloaded native
+Moshi adaptation pilot, with fresh evaluation splits before scale-up.

@@ -12,6 +12,8 @@ the previous phase.
 | Check | Evidence | Meaning |
 |---|---|---|
 | Native Qwen content and voice | Job 7377200: three questions, each in text and audio; all six produce coherent generated text and nonempty speech. Job 7377265: ASR word error 0.0 for all six. | The untouched base can answer and speak. These development questions are a component check, not a generalization benchmark or live acceptance. Human audition remains pending. |
+| Native MiniCPM duplex | Job 7377673: 60-second paced replay, four generated answers; processing p50 0.477 s and p95 1.768 s per one-second input chunk; max backlog 3.095 s | Native words and speech work on the new container, but this is not real-time acceptance. Bread-staling answer incorrectly attributes it to drying. Human audition remains pending. |
+| Controlled delayed context | Job 7378025: 10 s worker wait, seven processed packets (six speaking) during wait; result injected 0.467 s after ready; bread answer uses supplied mechanism | Positive reference-delivery/use check on one example. No learned dispatch, actual research or stale-result rejection tested. Max input backlog 3.913 s remains unacceptable. |
 | Native Qwen speed | 12.29–17.94 seconds to finish each 3.98–8.54 second audio answer; Transformers 5.17 / NGC 25.10 / GH200 | This batch generation path is not ready for live use. These are full-generation times, not first-packet latency measurements. |
 | Existing microphone clock | `python -m evals.live_contract_probe`: actual `m2.live.main`, fake model/ear, numbered input ticks; first 49 ticks have no audio feature, subsequent features are 3,920 ms old | The 80 ms decision cadence conceals four-second input buffering. This synthetic control-flow result does not measure encoder receptive field or actual microphone hardware. |
 | Delegation comparison | Full logs of jobs 7333494 and 7356783, plus executable launcher regression | Both scripts lost `--lessons`, `--init-ckpt`, and `--out`. Both consumed the default merged shard selection and saved to `runs/p1-v1`. The claimed mixture comparison and held-out designation do not establish those hypotheses. |
@@ -20,13 +22,18 @@ the previous phase.
 | Environment | Job 7377265: clean container CUDA works; xformers absent | Qwen's overlay is working. MoshiRAG needs a separate dependency setup and ARC attention-kernel check. |
 | Data availability | Primary-source review in the linked research note | DuplexChat is metadata and a reconstruction pipeline, not a downloadable collection of prepared two-channel audio. |
 
-Local evidence: `runs/recovery-20261013/`, `runs/native-content-7377200/`.
+Local evidence: `runs/recovery-20261013/`, `runs/native-content-7377200/`,
+`runs/minicpm-recovery-7377673/`, `runs/minicpm-recovery-7378025/`.
 Generated speech is exposed by `python -m viz.listen --runs runs --port 8766` at
-`http://localhost:8766/batch/native-content-7377200`.
+`http://localhost:8766/batch/native-content-7377200` and
+`http://localhost:8766/batch/minicpm-recovery-7377673`; delayed-context comparison:
+`http://localhost:8766/batch/minicpm-recovery-7378025`.
 
-The three completed initial jobs consumed approximately 0.062 allocated GPU-hours
-(51 + 135 + 36 GPU-seconds), including the first probe's sample-rate failure.
+Eight bounded jobs consumed approximately **0.143 allocated GPU-hours**
+(514 GPU-seconds), including failed environment attempts. Jobs 7377148, 7377200,
+7377265, 7377413, 7377469, 7377588, 7377673 and 7378025 are all terminal.
 This is Slurm allocation time for these jobs, not the project's billing balance.
+No recovery training or other recovery GPU job is currently running.
 
 ## Direction and decision gates
 
@@ -121,7 +128,8 @@ silently repeating a tiny corpus or launching an unverified distributed run.
 | Generated-speech ASR check | Complete, job 7377265 | Six samples at WER 0.0; no claim of human voice-quality review |
 | Microphone schedule repro | Complete; known failure retained | Replace the delayed stream contract in the selected native path |
 | Delegation launcher repair | Regression passes | Do not reuse the historical ratio verdict as evidence |
-| MiniCPM native duplex replay | Jobs 7377413/7377469 exposed missing audio-decoder dependencies; bounded retry prepared | TorchAudio 2.9 requires TorchCodec; install only matching ARM wheels into a job-specific overlay. No measured baseline yet. |
+| MiniCPM native duplex replay | Complete, job 7377673; earlier jobs exposed missing decoder dependencies | Tested process-local PCM WAV reader; TorchAudio features and container Torch unchanged. Improve backlog and assess interruptions before acceptance. |
+| MiniCPM delayed context injection | Complete, job 7378025; reference used, processing continues | One fixed result only. Add real dispatch, delayed/cancelled results and fresh tasks; reduce backlog. |
 | MoshiRAG live delegation baseline | Source seams checked; environment not ready | Isolated dependencies; real xformers ARC kernel; live delayed-result replay |
 | Training dataset/split and pilot | Pending baseline decision | Native format plus provenance and independent held-out manifest |
 | Broad training | Not started | Only after small reloaded free-run pilot passes |
@@ -131,3 +139,62 @@ Source-backed selection and execution details:
 The Thinking Machines reference describes the behavior target; reproducing its
 276B-parameter system is not a credible use of this allocation.
 [Primary reference](https://thinkingmachines.ai/blog/interaction-models/).
+
+### Exact current continuation commands
+
+**Plain words:** these commands validate local repairs and reproduce bounded
+cluster probes. Inspect the latest job and ledger before submitting duplicates.
+
+```sh
+.venv-api/bin/python -m unittest evals.harness.test_live_inputs \
+  evals.harness.test_slurm_launch_contract evals.harness.test_reference_wav
+.venv-api/bin/python -m evals.live_contract_probe
+# The clock command intentionally exits 1 until the delayed path is replaced.
+python3 -m viz.listen --runs runs --port 8766
+```
+
+Deploy only through local commit/push, cluster `git pull --ff-only`, and checksum
+comparison. Cluster working directory: `/projects/u6si/duplex-live/repo`.
+
+```sh
+sbatch evals/native-content-probe.slurm          # 1 GPU, 45 minute cap
+sbatch evals/minicpm-recovery-probe.slurm        # 1 GPU, 30 minute cap
+sbatch --export=ALL,RESULT_FIXTURE=/projects/u6si/duplex-live/repo/evals/fixtures/bread_background_result.json \
+  evals/minicpm-recovery-probe.slurm            # controlled delayed context
+sbatch --export=ALL,PROBE_DIR=/projects/u6si/duplex-live/runs/native-content-JOB \
+  evals/recovery-environment.slurm              # 1 GPU, 15 minute cap
+```
+
+Fetch complete logs before filtering. Probe directories use job IDs and refuse
+overwrite. The MiniCPM launcher creates a job-specific dependency overlay and
+retains the base Torch/CUDA packages. Its WAV-reader accommodation is necessary
+because [TorchAudio 2.9 switched its load function to TorchCodec](https://docs.pytorch.org/audio/stable/generated/torchaudio.load.html);
+the attempted [matching TorchCodec version](https://github.com/meta-pytorch/torchcodec#compatibility-with-torch-versions)
+had no ARM CPU wheel in the queried index (job 7377588). Package import is
+insufficient: actual reference decoding, model generation and output audition
+are the checks.
+
+## Immediate continuation
+
+**Plain words:** the next independent work is the MoshiRAG live baseline and a
+small native Moshi training smoke. MiniCPM now provides a working comparison,
+not a final architecture selection. Its general fine-tuning scripts do not
+yet establish timed duplex training support.
+
+1. Build an isolated MoshiRAG environment; verify ARC xformers on the actual
+   GH200 before downloading more than the required pinned weights. Run the
+   live path with delayed local references; do not treat its blocking offline
+   retrieval example as concurrent delegation.
+2. Prove the official native Moshi training path on 16 verified conversations:
+   validate assistant-left/user-right audio and word alignments, perform a
+   backward step, save/reload, then generate with its own history. Report
+   missing checkpoint keys rather than accepting a partial load silently.
+3. Prepare a fresh split across scenario families and speakers before candidate
+   tuning. Audit the existing synthetic material for suitability; the prior
+   515-example collection is not an untouched evaluation reserve.
+4. Profile MiniCPM speaking versus listening compute and playback buffering.
+   One-second input chunks and the measured 3–4 second backlog currently miss
+   the target; do not label median compute alone as conversational latency.
+
+See the research note for exact official sources, data schemas and environment
+constraints. Human audition of all new audio remains open.
