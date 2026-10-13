@@ -67,6 +67,13 @@ def main():
             # Same precedence as upstream: speech conditioner first, ARC second.
             # Unlike its strict=False calls, require complete final coverage.
             expected = set(module.state_dict())
+            # These exact released ARC tensors are absent from, and never read
+            # by, the pinned inference transformer. Upstream ignores them via
+            # strict=False. Document this exception and reject every other key.
+            unused = {"embedder.cont_tok.0.weight", "embedder.rec_tok.0.weight"}
+            if set(state) - expected != unused:
+                raise RuntimeError(f"Unexpected ARC extras: {sorted(set(state)-expected)}")
+            unused_shapes = {k: list(state.pop(k).shape) for k in sorted(unused)}
             if set(state) != expected:
                 raise RuntimeError(f"Incomplete merged encoder: missing={sorted(expected-set(state))}, "
                                    f"unexpected={sorted(set(state)-expected)}")
@@ -77,6 +84,7 @@ def main():
                 raise RuntimeError("Nonfinite encoder weight")
             report["weights"] = {"speech_keys": len(speech_keys), "arc_keys": len(arc_keys),
                                  "overlap": sorted(speech_keys & arc_keys),
+                                 "unused_checkpoint_tensors": unused_shapes,
                                  "complete_keys": len(expected), "strict_load": True}
 
     start = time.monotonic()
