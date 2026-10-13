@@ -42,6 +42,8 @@ CMAKE=$("$PY" -c 'import cmake; print(cmake.CMAKE_BIN_DIR + "/cmake")')
 "$CMAKE" --version
 "$PY" -m evals.moshi_environment_setup --requirements "$DL/repo/evals/moshi-training-requirements.txt" --out "$ENV_OUT"
 export PYTHONPATH="$NATIVE/moshi:$TRAINER:$DL/repo" PYTHONDONTWRITEBYTECODE=1
+export TRITON_LIBCUDA_PATH
+TRITON_LIBCUDA_PATH=$("$PY" -m evals.cuda_linker_path --out "$ENV_OUT/driver")
 "$PY" -c 'import sphn,torch,moshi; print("native-env", torch.__version__,torch.__file__,moshi.__file__); assert hasattr(sphn,"dataset_jsonl")'
 "$PY" -m torch.distributed.run --standalone --nproc_per_node=1 \
     -m evals.moshi_training_smoke --trainer "$TRAINER" --data "$DATA_DIR" \
