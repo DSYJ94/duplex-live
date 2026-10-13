@@ -1,16 +1,113 @@
-# HANDOFF — where we are (2026-09-23)
+# HANDOFF — where we are (updated 2026-10-13 for agent succession)
 
-Read this first in a fresh chat. Everything below is decided and documented.
+## STATE OF THE PROJECT — read this first
 
-**Writing convention (owner instruction, 2026-10-02 — applies to every
-entry anyone adds to this file or EXPERIMENTS.md):** plain English
-first. Each entry leads with a "Plain words:" paragraph that answers,
-in order: **What is the problem? What did we do? What did we find?
-What is the solution/next step?** Technical terms get a short plain
-gloss the first time (e.g. "held-out lessons — conversations the
-model never trained on"). Detail and numbers go below the plain
-paragraph as the record. EXPERIMENTS.md keeps a top "THE SHORT
-VERSION" section, updated whenever the overall conclusion changes.
+**Plain summary:** duplex-live set out to build a live duplex voice
+model on Qwen3-Omni-30B-A3B (80 ms tick loop, Isambard GH200s). The
+project is COMPLETE for this allocation (ends 2026-10-21; all
+experiments closed by 2026-10-12). WHAT SHIPPED: a model that hears in
+time and takes turns correctly, live through a microphone — final
+reserved evaluation on never-touched lessons: F1 0.80-0.86, recall up
+to 0.99, word onsets 12/12 within 1 s, zero interruptions. WHAT DID
+NOT: free-run word CONTENT (digit soup; three fixes ruled out with
+evidence — needs the Talker wired or next-phase scale) and
+delegation-mixing (emission learnable, but mixing classes into
+training breaks turn-taking at any ratio tried). Full narrative:
+docs/FINAL-REPORT.md; every experiment: EXPERIMENTS.md (dated).
+
+## Where everything lives (cluster $DL=/projects/u6si/duplex-live)
+
+- DELIVERED MODEL: $DL/runs/scale1-q2-pt1/p1_checkpoint.pt + its gate
+  $DL/runs/scale1-q2-gate1/gate_checkpoint.pt (use gate-threshold 0.10)
+- MIC DEMO: repo demo/mic-demo.sh (sox mic | ssh srun | speaker; needs
+  `brew install sox`; LESSON env picks the answer bank)
+- GALLERY: local `python -m viz.listen --runs <dir>` (batches must be
+  <runs>/<batch-name>/manifest.jsonl — one dir level, model.wav now
+  listed). Local copies under runs/ (demo-q2, live-q2, ...)
+- CORPORA (all fail-closed verified, quality.jsonl in each):
+  synth-scale1-q/audio (159, the training corpus), synth-scale2-api
+  (45), synth-scale2-api-local (52), synth-scale3-api (178),
+  synth-deleg (81). MERGED VIEW: runs/shards-merged + runs/corpus-merged
+  (515 lessons, prefixed ids q2_/a1_/a2_/a3_/d_)
+- SURVEY: docs/research/2026-10-08-duplex-approach-survey.md (cited,
+  8 ranked recs; rec #3 DuplexChat 282kh real audio is the next-phase
+  data move)
+
+## ENVIRONMENT — the container saga (critical, current)
+
+- The fleet drivers were updated 2026-10-06 (580.173.02) and the OLD
+  container (/projects/u6si/containers/latentsprites-pytorch-25.05.sif)
+  FAILS on it everywhere (CUDA Error 803). DO NOT USE IT.
+- USE: $DL/pytorch-new.sif (NGC nvcr.io/nvidia/pytorch:25.10-py3,
+  pulled arm64 ON A COMPUTE NODE — login-node mksquashfs dies on
+  thread limits; Docker-Hub pytorch tags are amd64-only) + overlay
+  $DL/pylibs-new (transformers 5.17.0, accelerate 1.15.0; the pip
+  torch/nvidia/triton PACKAGES AND THEIR .dist-info were purged so the
+  container's own torch 2.9 wins — leaving dist-info causes an
+  AuxRequest ImportError)
+- All GPU-path slurm scripts were retargeted (evals/*, synth-filter).
+  The minicpm render path (pylibs-minicpm) is NOT retargeted and does
+  not run on the new stack.
+- KEYS: $DL/keys/elevenlabs.env + openai.env (chmod 600; creator-tier
+  ElevenLabs credits nearly exhausted; OpenAI key valid, gpt-5-pro
+  needs the /v1/responses API — banks_openai.py handles both)
+- Login-node python is 3.6 — always run inside the container.
+- Node health is mixed after maintenance; if a job dies in <60s check
+  for Error 803 first, then pin to a node that works (sacct NodeList
+  of a surviving job).
+
+## Standing rules (owner-set, keep them)
+
+1. Plain language ALWAYS — every md entry leads with "Plain words:"
+   answering problem/did/found/means. The owner has enforced this
+   repeatedly.
+2. Cluster code changes: local commit+push, cluster git pull, md5
+   verify. Never scp code.
+3. Full logs on cluster jobs; greps only after fetching.
+4. FAIL-CLOSED DATA RULE (owner directive 2026-10-02): nothing trains
+   or evaluates on unverified lessons; consumers assert quality
+   stamps at startup (data/synthetic/quality.py). Keep it.
+5. ADR-0003 Amended A: closed-API content PERMITTED under the owner's
+   enterprise agreement; keep provenance tags; never re-raise public
+   ToS.
+6. Anything producing voice must be audible via viz.listen before
+   being believed.
+7. Git: do NOT push with Claude co-author attribution (owner global
+   instruction).
+8. FRESH-SET RULE: barge-115/117/119 were reserved for one final
+   evaluation — IT HAS BEEN SPENT (2026-10-12, verdict above). They
+   are no longer reserved.
+
+## Open items (next phase, none blocking hand-back)
+
+- Word content: wire the Qwen3-Omni Talker into the loop OR real-audio
+  scale-up (DuplexChat) OR RL only AFTER supervised content exists
+- Delegation/streaming: emission is learnable (fires 1/1 at the right
+  tick) but class-mixing breaks turn-taking at 1:2 AND 1:6 ratios —
+  needs staged curriculum or a separated head
+- Serving wall: dense turns ~5x over the 80 ms budget; note the new
+  stack's raw forward is 115 ms p50 (vs ~59 ms decisions on the old
+  stack) — kernel regression worth investigating before serving claims
+- VAP referee (survey rec #2): untrained; DuplexChat download never
+  started
+
+## Known gotchas (each cost real time — check here first)
+
+- evals/deleg-round.slurm + deleg-round-balanced.slurm carry broken
+  --out/--lessons lines from a sed edit (training SUCCEEDS, checkpoint
+  lands in repo-relative runs/p1-v1/, then the script dies at the
+  diagnostic line "--lessons: command not found"). Run the end-of-job
+  diagnostic STANDALONE via layera.freerun_diag (see jobs 7260780 /
+  7363080 for the exact pattern).
+- Merged-corpus held-out ids are PREFIXED (q2_dense_dialog-113, not
+  dense_dialog-113) — the train script's held-out finder and any
+  --scenarios list must use the prefix.
+- Self-history recollect mode is ~35x slower (chatty trunk rollouts);
+  corrupt mode runs full speed but did not fix content.
+- The chat-via-ssh --wrap pattern breaks on nested $( ) — write slurm
+  files instead.
+
+---
 
 ## THE FAIL-CLOSED DATA RULE (owner directive, 2026-10-02 — standing policy)
 
