@@ -16,7 +16,7 @@ test -f "$DL/runs/moshi-rag-speech-${RAG_SPEECH_JOB}-delayed-reference/report.js
 git rev-parse HEAD
 apptainer exec --nv --bind /projects,/lus,/home --env PYTHONPATH="$DL/repo" \
     "$DL/pytorch-new.sif" "$DL/envs/moshi-annotation-7379026/bin/python" -u \
-    -m evals.moshi_speech_audit \
+    -m evals.moshi_speech_audit --trim-trailing-silence \
     --runs "$DL/runs/moshi-rag-speech-${RAG_SPEECH_JOB}-base" \
            "$DL/runs/moshi-rag-speech-${RAG_SPEECH_JOB}-delayed-reference" \
     --out "$DL/runs/moshi-rag-speech-audit-${SLURM_JOB_ID}"
