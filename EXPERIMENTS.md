@@ -1958,3 +1958,23 @@ WAVs in the listening gallery. Human listening remains pending. All eight
 recovery jobs together used 514 allocated GPU-seconds (0.143 GPU-h). No broad
 training has started. Next: MoshiRAG live baseline and a small reloaded native
 Moshi adaptation pilot, with fresh evaluation splits before scale-up.
+
+## NATIVE MOSHI PILOTS — training verified, content not improved (2026-10-13)
+
+Jobs 7380342 and 7380505 pass strict base loading, finite/nonzero adapter
+gradients, unchanged frozen-weight hashes, exact saved-adapter hashes and
+fresh-process canonical float32 logit comparison (0.0 difference). The earlier
+7379340 BF16 comparison failed; diagnostic 7379832 found exact weights but
+its numerical discrepancy is not fully explained. Keep that failed verdict.
+
+Job 7380505 trained 64 steps over 16 reused conversations, with four diagnostic
+examples. Loss 1.9321053 versus the four-step pilot's 2.20383549 is not proof
+of generalization or useful spoken content. Generated answers remain weak.
+Paced 80 ms frame processing p50/p95 was 0.0220/0.0236 s; this is not response
+latency. Human listening and fresh evaluation remain open. Latest sampling
+seed placement is corrected after warmup; historical outputs predate that fix.
+
+MoshiRAG kernel job 7379661 passes on GH200. Four actual-upstream reference
+lifecycle regressions now pass; full encoder/reference use awaits the gated
+Meta tokenizer. All jobs are terminal. Combined recovery allocation: 2,590
+GPU-seconds (0.72 GPU-h). No broad training or production selection.

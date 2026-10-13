@@ -15,6 +15,15 @@ container (job 7377673), but reaches 3.10 seconds of input backlog and gives a
 wrong bread-staling explanation. Jobs and exact limitations are recorded in
 the recovery plan. Neither candidate has passed product acceptance.
 
+Native Moshi now has a verified 64-step adaptation pilot (7380505): frozen
+weights unchanged, adapters saved/reloaded exactly, canonical float32 logits
+identical. Its loss fell but spoken content remains poor. MoshiRAG's ARC
+attention kernel works on GH200; four reference lifecycle tests pass. Full
+reference encoding awaits owner-authorized access to Meta's Llama 3.2 tokenizer.
+The owner has a browser-login wizard; no credentials belong in this repo.
+Recovery consumption so far is approximately 0.72 allocated GPU-hours, not a
+verified remaining balance. Read the recovery plan before scheduling more.
+
 ## HISTORICAL STATE — prior phase, superseded by the recovery above
 
 **Plain summary:** duplex-live set out to build a live duplex voice

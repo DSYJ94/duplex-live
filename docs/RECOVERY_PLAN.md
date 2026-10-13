@@ -33,7 +33,8 @@ Eight bounded jobs consumed approximately **0.143 allocated GPU-hours**
 (514 GPU-seconds), including failed environment attempts. Jobs 7377148, 7377200,
 7377265, 7377413, 7377469, 7377588, 7377673 and 7378025 are all terminal.
 This is Slurm allocation time for these jobs, not the project's billing balance.
-No recovery training or other recovery GPU job is currently running.
+The initial eight jobs are terminal. Current follow-on job states are tracked
+below; their time is not included in this initial 0.143 GPU-h figure.
 
 ## Direction and decision gates
 
@@ -130,8 +131,8 @@ silently repeating a tiny corpus or launching an unverified distributed run.
 | Delegation launcher repair | Regression passes | Do not reuse the historical ratio verdict as evidence |
 | MiniCPM native duplex replay | Complete, job 7377673; earlier jobs exposed missing decoder dependencies | Tested process-local PCM WAV reader; TorchAudio features and container Torch unchanged. Improve backlog and assess interruptions before acceptance. |
 | MiniCPM delayed context injection | Complete, job 7378025; reference used, processing continues | One fixed result only. Add real dispatch, delayed/cancelled results and fresh tasks; reduce backlog. |
-| MoshiRAG live delegation baseline | Pinned weights downloaded (7378305); official Llama tokenizer access denied. Isolated environment build 7379025 running after diagnosed source-build issues | Actual ARC kernel and tokenizer access, then live delayed-result replay |
-| Training dataset/split and pilot | Native data conversion 7379026 running; executable guarded pilot committed | 16 train + 4 diagnostic conversations, audited intervals, finite backward step, save/reload and speech retention. This is not a fresh generalization split. |
+| MoshiRAG live delegation baseline | Pinned weights downloaded (7378305); environment 7379661 passed actual ARC CUDA attention (max SDPA difference 0.0). Official Llama tokenizer access remains denied | Authorize account; verify tokenizer, then live delayed-result replay |
+| Training dataset/split and pilot | Data 7379026 passed. Pilot 7379340 completed four finite optimizer steps, changed 674 adapter tensors and preserved frozen weights; reload comparison failed its 0.05 tolerance | Exact-weight/mode diagnostic 7379832 and native speech comparison 7379833. These 16/4 folds are diagnostics, not fresh generalization. |
 | Broad training | Not started | Only after small reloaded free-run pilot passes |
 
 Source-backed selection and execution details:
@@ -199,39 +200,81 @@ yet establish timed duplex training support.
 See the research note for exact official sources, data schemas and environment
 constraints. Human audition of all new audio remains open.
 
-## Native Moshi continuation — in progress
+## Native Moshi continuation — verified training, quality remains open
 
-**Plain words:** exact weights are now local. Training remains gated on valid
-word intervals; failed conversions have not been admitted to the trainer.
+**Plain words:** native Moshi now trains, saves and reloads correctly on GH200.
+A 64-step pilot reduced diagnostic loss, but generated answers remain weak.
+Do not scale this corpus or select a model on this loss result.
 
-- Model acquisition job 7378305 completed: native Moshi, MoshiRAG, ARC and
-  local ASR are pinned and hashed in `runs/moshi-models-7378305/model-manifest.json`.
-  The official Llama 3.2 tokenizer returned `GatedRepoError`; owner access was
-  requested asynchronously. That blocks reference encoding, not native Moshi.
-- Environment jobs 7378179/7378259/7378351/7378463 stopped on the Opus/CMake
-  source-build boundary. pip's isolated build imports override a Python CMake
-  launcher; the latest job uses the actual pinned ELF binary. Existing Torch
-  environments are untouched. Job 7379025 is the current bounded retry.
-- Conversion 7378330 stopped before annotation because the assumed <=100 s
-  length selected no examples. Actual dialogs are 104.84–116.20 s. Conversion
-  7378464 rejected user backchannels under an overly narrow event rule and
-  rejected zero-width HF word intervals; only one passed, so training stopped.
-  Job 7379026 uses the official trainer's WhisperTimestamped alignment method
-  and accepts verified user backchannels while retaining complete assistant
-  utterances, interval validity, transcript agreement and source approval.
-- The committed pilot rechecks all source approval records and artifact hashes,
-  requires disjoint 16/4 manifests, audits strict base loading and adapter
-  gradients, hashes every frozen parameter, and compares fresh-process reload
-  logits. Native speech replay compares the untouched model with the adapter.
-  A successful plumbing test will not be reported as a quality improvement.
+- Model acquisition 7378305 pinned and hashed native Moshi, MoshiRAG, ARC and
+  local ASR: `runs/moshi-models-7378305/model-manifest.json`. Meta's official
+  Llama 3.2 tokenizer returned `GatedRepoError`; reference encoding awaits
+  owner-approved access. Native Moshi does not need that tokenizer.
+- Conversion 7379026 accepted 20 conversations (16 train / four diagnostic
+  evaluation), totaling 2,237.36 seconds. Highest retained utterance WER: 0.05.
+  Twenty-two candidates were rejected. Actual durations are 104.84–116.20 s;
+  native segments round to 120 s. WhisperTimestamped supplies assistant word
+  intervals. Source approval, source/converted hashes and word audits are
+  rechecked before training. These reused examples are not a fresh family- or
+  voice-disjoint generalization test. Human audition remains pending.
+- Native trainer commit `2acc879fe7c48f885a18f6cc9548bccb2674d87b` and Moshi
+  `e6a55d2722a65870ef52a6c9f6ecfc0e90f38362` run without replacing container
+  Torch/CUDA. LoRA rank eight trains 24,242,176 parameters / 674 tensors.
+  Frozen base weights remain byte-identical; adapter gradients are finite and
+  nonzero. Training peak allocation: 23,544,080,896 bytes.
+- Four-step job 7379340 trained and saved, then failed its provisional BF16
+  logit comparison (text 0.125 / audio 0.375). Diagnostic 7379832 established
+  exact saved/reloaded adapter and base values. The numerical discrepancy's
+  cause is not fully established. No passing stamp was assigned to that job.
+- Jobs 7380342 (four steps) and 7380505 (64 steps, learning rate 1e-5) passed
+  exact saved-adapter hashes and fresh-process canonical logit comparison:
+  float32, TF32 disabled, checkpointing disabled, compilation disabled;
+  maximum text/audio difference 0.0 against a 0.001 bound. This verifies
+  serialization under that execution mode, not BF16 logit equivalence.
+  Voice generation still uses BF16. Saved adapters are not optimizer-resumable
+  training checkpoints.
+- Job 7380505 diagnostic loss was 1.9321053 versus 2.20383549 after four steps.
+  First/last epoch mean training losses: 2.082494 / 1.813906. Sixteen passes
+  over sixteen examples do not establish generalization. Its spoken answers
+  contain clear content errors; no quality improvement is established.
+- Its 40-second paced replay processed 80 ms frames at 0.0220 s median /
+  0.0236 s p95, with maximum input backlog 0.000196 s. Those are frame compute
+  times, not response-start or end-to-end conversational latency. Microphone,
+  interruption and network acceptance remain untested. Actual speech audit
+  7380455 confirms intelligibility on the earlier four-step comparison (WER
+  0.0737 base / 0.0206 adapter), not semantic correctness.
+- The latest replay code freezes inference parameters and resets sampling
+  seed after warmup. Earlier saved speech comparisons predate that correction;
+  they are exploratory rather than strictly paired sampling comparisons.
 
-Exact submission once the new data job passes:
+MoshiRAG environment 7379661 built xformers from pinned source on ARM/GH200
+and verified the actual BF16 ARC attention kernel against SDPA (max error 0.0).
+Pinned upstream source is imported directly because its Hatch package rejects
+`../README.md`. Websockets was subsequently installed in the isolated runtime;
+container Torch remains unchanged. Full ARC encoding and reference use have
+not run yet.
 
-```sh
-sbatch --export=ALL,DATA_DIR=/projects/u6si/duplex-live/runs/moshi-data-JOB,MODEL_MANIFEST=/projects/u6si/duplex-live/runs/moshi-models-7378305/model-manifest.json \
-  evals/moshi-training-smoke.slurm
-```
+The actual upstream reference callback reproduced an old encoding overwriting
+its replacement. `evals/moshi_rag_runtime.py` now rejects superseded, cancelled
+and reused-session results. Four tests against the actual upstream channel and
+manager pass on the cluster, including revision propagation into the encoding
+child task. These are delivery safeguards, not evidence of learned dispatch
+or natural-language cancellation.
 
-Each training pilot is one GPU with a 45-minute cap. The script preserves the
-container GPU stack, pins plain Moshi/trainer source separately from MoshiRAG,
-and refuses overwrite. Do not submit until the data summary says verified.
+The owner can approve access at
+https://huggingface.co/meta-llama/Llama-3.2-3B-Instruct, then run the ephemeral
+Mac wizard `bash /tmp/duplex-hf-access.sh`. It starts a fresh browser login on
+Isambard using the same account, saves credentials only in the cluster model
+cache, and does not collect tokens in chat or the repository. The earlier
+five-minute device code expired. After authorization, verify the pinned
+ tokenizer download before running the bounded reference-encoder test.
+
+All recovery jobs are terminal as of this update. Initial probes consumed
+514 allocated GPU-seconds; this continuation consumed 2,076. Combined:
+2,590 seconds / approximately **0.72 GPU-hours**. This is allocated job time,
+not a verified remaining project balance. No large training run has started.
+
+Next: verify official tokenizer access and full reference encoding, then test
+actual asynchronous reference delivery/use in native duplex speech. Prepare
+fresh scenario-family and voice splits and review audible content before any
+large training allocation. Keep the native base and all failed evidence.
