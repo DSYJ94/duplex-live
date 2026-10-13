@@ -29,9 +29,14 @@ apptainer exec --bind /projects,/lus,/home "$DL/pytorch-new.sif" \
 # explicit SoundFile WAV loading; TorchAudio resampling and features are intact.
 MODEL="$DL/models/hf-cache/hub/models--openbmb--MiniCPM-o-4_5/snapshots/503e754207c94da6bb26850b4469f367c9ea3582"
 git rev-parse HEAD
+EXTRA=()
+if [ -n "${RESULT_FIXTURE:-}" ]; then
+    EXTRA=(--result-fixture "$RESULT_FIXTURE")
+fi
 apptainer exec --nv --bind /projects,/lus,/home \
     --env PYTHONPATH="$OVERLAY:$DL/repo" --env HF_HOME="$DL/models/hf-cache" \
     --env HF_HUB_OFFLINE=1 --env TRANSFORMERS_OFFLINE=1 \
     "$DL/pytorch-new.sif" python -u -m evals.minicpm_recovery_probe \
     --batch "$DL/runs/synth-scale1-q/audio" --scenario dense_dialog-001 \
-    --model "$MODEL" --seconds 60 --out "$DL/runs/minicpm-recovery-${SLURM_JOB_ID}"
+    --model "$MODEL" --seconds 60 --out "$DL/runs/minicpm-recovery-${SLURM_JOB_ID}" \
+    "${EXTRA[@]}"

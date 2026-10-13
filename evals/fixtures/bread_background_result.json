@@ -1,0 +1,7 @@
+{
+  "task_id": "bread-reference-001",
+  "fire_at_s": 20,
+  "delay_s": 10,
+  "text": "[Background research result for the bread question. This is reference information, not a new user turn.] Refrigeration accelerates starch retrogradation: starch molecules recrystallize, making bread firm and stale. It is not simply that cold air dries bread faster. Use this result when answering the user about bread in the fridge. [End background result.]",
+  "purpose": "Controlled result-injection probe against the native baseline's incorrect drying explanation. Fixed reference text is not actual agent research, learned dispatch, or a training example."
+}

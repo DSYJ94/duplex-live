@@ -7,7 +7,9 @@ the model. This is paced replay, not a microphone/network acceptance test.
 import argparse
 import json
 import math
+import queue
 import subprocess
+import threading
 import time
 from pathlib import Path
 
@@ -42,6 +44,8 @@ def main():
     ap.add_argument("--seconds", type=int, default=60)
     ap.add_argument("--model", type=Path, required=True)
     ap.add_argument("--out", type=Path, required=True)
+    ap.add_argument("--result-fixture", type=Path,
+                    help="controlled delayed context test; not learned task routing")
     args = ap.parse_args()
     if not 1 <= args.seconds <= 600:
         ap.error("--seconds must be between 1 and 600")
@@ -56,6 +60,14 @@ def main():
     from transformers import AutoModel
 
     args.out.mkdir(parents=True, exist_ok=False)
+    task_fixture = None
+    if args.result_fixture:
+        task_fixture = json.loads(args.result_fixture.read_text())
+        if (not isinstance(task_fixture.get("text"), str)
+                or not 0 <= task_fixture["fire_at_s"] < args.seconds
+                or not 0 <= task_fixture["delay_s"] < args.seconds - task_fixture["fire_at_s"]):
+            raise ValueError("Invalid bounded background-result fixture")
+        (args.out / "result_fixture.json").write_text(json.dumps(task_fixture, indent=2) + "\n")
     def wav_load(*pos, **kw):
         array, rate = read_reference_wav(*pos, **kw)
         return torch.from_numpy(array), rate
@@ -91,6 +103,7 @@ def main():
            "commit": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
            "seconds": args.seconds, "scenario": args.scenario,
            "semantic_verdict": "pending review", "microphone_acceptance": False}
+    env["background_result_mode"] = "controlled fixture; no learned dispatch" if task_fixture else None
     (args.out / "environment.json").write_text(json.dumps(env, indent=2) + "\n")
     model = AutoModel.from_pretrained(
         str(args.model), trust_remote_code=True, local_files_only=True,
@@ -105,14 +118,41 @@ def main():
     records = []
     torch.cuda.synchronize()
     start = time.monotonic()
+    result_queue = queue.Queue()
+    task_started = False
+    task_events = []
+
+    def deliver_result():
+        # A slow external task is simulated on a worker; inference never waits.
+        time.sleep(task_fixture["delay_s"])
+        result_queue.put({"ready_at_s": time.monotonic()-start, **task_fixture})
+
     with (args.out / "packets.jsonl").open("w") as log:
         for c in range(args.seconds):
             # Chunk c is available only after second c+1, never beforehand.
             due = c + 1
             time.sleep(max(0, start + due - time.monotonic()))
             before = time.monotonic()
+            if task_fixture and not task_started and before-start >= task_fixture["fire_at_s"]:
+                task_started = True
+                task_events.append({"event": "task_started", "task_id": task_fixture["task_id"],
+                                    "at_s": before-start})
+                threading.Thread(target=deliver_result, daemon=True).start()
             with torch.inference_mode():
                 pre = duplex.streaming_prefill(audio_waveform=pcm[c*16000:(c+1)*16000])
+                try:
+                    delivered = result_queue.get_nowait()
+                except queue.Empty:
+                    delivered = None
+                if delivered is not None:
+                    # A separate text prefill refreshes pending_logits in the
+                    # published API; mixed audio/text prefill does not.
+                    injected = duplex.streaming_prefill(text_list=[delivered["text"]])
+                    event = {"event": "result_injected", "task_id": delivered["task_id"],
+                             "ready_at_s": delivered["ready_at_s"], "at_s": time.monotonic()-start,
+                             "chunk": c, "prefill_ok": injected.get("success")}
+                    task_events.append(event)
+                    print(json.dumps(event), flush=True)
                 result = duplex.streaming_generate(prompt_wav_path=str(voice))
             torch.cuda.synchronize()
             completed = time.monotonic()
@@ -149,6 +189,7 @@ def main():
               "final_input_backlog_s": records[-1]["input_backlog_s"],
               "compute_p50_s": float(np.median([r["compute_s"] for r in records])),
               "compute_p95_s": float(np.percentile([r["compute_s"] for r in records], 95)),
+              "task_events": task_events, "learned_delegation_tested": False,
               "text": " ".join(r["text"] or "" for r in records),
               "semantic_verdict": "pending review", "human_listening": "pending"}
     (args.out / "report.json").write_text(json.dumps(report, indent=2) + "\n")
