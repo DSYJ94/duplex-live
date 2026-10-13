@@ -27,7 +27,7 @@ class ReferenceRaceTest(unittest.IsolatedAsyncioTestCase):
         channel.slot_idx = 0
         channel._log = logging.getLogger("reference-race-test")
         channel.server = SimpleNamespace(batch_size=1, reference_encoder_url="local-test",
-            runner=SimpleNamespace(lm_gen=SimpleNamespace(update_streaming_sum_tensors=
+            slots=[channel], runner=SimpleNamespace(lm_gen=SimpleNamespace(lm_model=SimpleNamespace(dim=4), update_streaming_sum_tensors=
                                   lambda values: applied.append(float(values[0][0, 0])))))
         async def encoder(text, **kwargs):
             if text == "old":
