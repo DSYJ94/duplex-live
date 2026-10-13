@@ -29,6 +29,8 @@ if [ ! -d "$ATTENTION" ]; then
     git clone --depth 1 --branch v0.0.33.post2 https://github.com/facebookresearch/xformers.git "$ATTENTION"
     git -C "$ATTENTION" submodule update --init --depth 1 third_party/cutlass
 fi
+# Packaging reads flash_attn metadata even when its GPU kernels are disabled.
+git -C "$ATTENTION" submodule update --init --depth 1 third_party/flash-attention
 test "$(git -C "$ATTENTION" rev-parse HEAD)" = "$XFORMERS_COMMIT"
 git rev-parse HEAD
 export DL OUT ENV_DIR SOURCE ATTENTION
