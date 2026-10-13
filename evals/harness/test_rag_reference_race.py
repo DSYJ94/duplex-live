@@ -14,6 +14,24 @@ import moshi.inference_utils.channel as upstream
 
 
 class ReferenceRaceTest(unittest.IsolatedAsyncioTestCase):
+    async def test_real_trigger_propagates_revision_into_encoding_child(self):
+        from evals.moshi_rag_runtime import VersionedRAGManager, reference_revision
+        class Generator:
+            async def generate_reference_text(self, context, history, **kwargs):
+                return context, "bounded reference", 1, "test"
+        seen = []
+        async with VersionedRAGManager(reference_generator=Generator()) as manager:
+            async with asyncio.TaskGroup() as group:
+                async def encode_child():
+                    await asyncio.sleep(0)
+                    seen.append(reference_revision.get())
+                async def callback(text, label):
+                    group.create_task(encode_child())
+                await manager.trigger(group, handle_reference_fn=callback,
+                                      context_provider=lambda: "conversation snapshot")
+            self.assertEqual(seen, [manager.revision])
+            self.assertEqual(manager.revision, 1)
+
     async def test_reset_rejects_encoding_already_in_flight(self):
         from evals.moshi_rag_runtime import SafeChannel, VersionedRAGManager, reference_revision
         import evals.moshi_rag_runtime as guarded
