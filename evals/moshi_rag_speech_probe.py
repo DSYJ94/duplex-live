@@ -25,19 +25,12 @@ def run_pair(manifest, batch, prefix, single_mode=None):
         if path.exists():
             raise RuntimeError("Refusing overwrite of speech manifest")
         path.write_text(json.dumps(manifest, indent=2) + "\n")
-        prefixes = []
         for mode in ("base", "delayed-reference"):
             subprocess.run([sys.executable, "-u", "-m", "evals.moshi_rag_speech_probe",
                             "--manifest", str(path), "--batch", str(batch),
                             "--prefix", str(prefix), "--mode", mode], check=True)
-            records = [json.loads(line) for line in Path(f"{prefix}-{mode}/packets.jsonl").read_text().splitlines()]
-            prefixes.append([r["generated_token_sha256"] for r in records if r["input_available_s"] < 20])
-        differences = [i for i, (a, b) in enumerate(zip(*prefixes)) if a != b]
-        verdict = {"prefix_equal": prefixes[0] == prefixes[1], "fresh_processes": True,
-                   "frames": len(prefixes[0]), "different_frames": differences}
-        Path(f"{prefix}-prefix-comparison.json").write_text(json.dumps(verdict, indent=2) + "\n")
-        if not verdict["prefix_equal"]:
-            raise RuntimeError("Fresh-process pre-reference histories differ; comparison is invalid")
+        from evals.moshi_rag_prefix_audit import verify_prefix
+        verify_prefix(prefix)
         return
     import numpy as np
     import soundfile as sf
