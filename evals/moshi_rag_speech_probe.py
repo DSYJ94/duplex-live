@@ -9,6 +9,7 @@ import concurrent.futures
 import hashlib
 import json
 import math
+import os
 import subprocess
 import sys
 import time
@@ -106,6 +107,8 @@ def run_pair(manifest, batch, prefix, single_mode=None):
                "commit": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
                "seed": 424242, "sampling_seed_reset_after_warmup": True, "warmup_frames": 16,
                "fresh_process": True,
+               "cuda_graph_disabled": bool(os.environ.get("NO_CUDA_GRAPH", "")),
+               "torch_compile_disabled": bool(os.environ.get("NO_TORCH_COMPILE", "")),
                "reference_mode": mode, "microphone_acceptance": False, "seconds": seconds}
         (out / "environment.json").write_text(json.dumps(env, indent=2) + "\n")
         records, events, output = [], [], np.zeros(0, dtype=np.float32)
@@ -125,6 +128,8 @@ def run_pair(manifest, batch, prefix, single_mode=None):
                 mimi.reset_streaming()
                 generation.reset_streaming()
                 torch.manual_seed(424242)
+                env["initial_cuda_rng_sha256"] = hashlib.sha256(torch.cuda.get_rng_state().numpy().tobytes()).hexdigest()
+                (out / "environment.json").write_text(json.dumps(env, indent=2) + "\n")
                 start = time.monotonic()
 
                 def worker():
@@ -151,6 +156,9 @@ def run_pair(manifest, batch, prefix, single_mode=None):
                                            "chunk": index, "shape": list(tensor.shape), "reference": reference})
                             injected = True
                         codes = mimi.encode(torch.from_numpy(pcm[index * frame:(index + 1) * frame]).cuda()[None, None])
+                        input_code_hash = hashlib.sha256(codes.detach().cpu().numpy().tobytes()).hexdigest()
+                        rng_hash = (hashlib.sha256(torch.cuda.get_rng_state().numpy().tobytes()).hexdigest()
+                                    if index < 100 else None)
                         if index == 0:
                             generation.step(codes)
                         tokens = generation.step(codes)
@@ -177,6 +185,7 @@ def run_pair(manifest, batch, prefix, single_mode=None):
                                   "samples": 0 if audio is None else len(audio), "playback_start_s": playback,
                                   "generated_token_sha256": token_hash,
                                   "text_token_id": None if tokens is None else int(tokens[0, 0, 0])}
+                        record.update(user_code_sha256=input_code_hash, cuda_rng_before_step_sha256=rng_hash)
                         records.append(record)
                         stream.write(json.dumps(record) + "\n")
                         stream.flush()

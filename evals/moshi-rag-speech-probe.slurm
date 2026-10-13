@@ -19,6 +19,8 @@ apptainer exec --nv --bind /projects,/lus,/home \
   --env PYTHONPATH="$SOURCE/moshi:$DL/repo" --env PYTHONDONTWRITEBYTECODE=1 \
   --env HF_HOME="$DL/models/hf-cache" --env HF_HUB_OFFLINE=1 \
   --env TRANSFORMERS_OFFLINE=1 --env OMP_NUM_THREADS=8 \
+  --env NO_CUDA_GRAPH="${PROBE_NO_CUDA_GRAPH:-}" \
+  --env NO_TORCH_COMPILE="${PROBE_NO_TORCH_COMPILE:-}" \
   "$DL/pytorch-new.sif" bash -eu <<'CONTAINER'
 PY="$DL/envs/moshi-rag-7379661/bin/python"
 export TRITON_LIBCUDA_PATH
