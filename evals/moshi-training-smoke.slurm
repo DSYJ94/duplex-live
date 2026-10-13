@@ -27,10 +27,12 @@ done
 ENV_DIR="$DL/envs/moshi-native-${SLURM_JOB_ID}"
 OUT="$DL/runs/moshi-training-${SLURM_JOB_ID}"
 ENV_OUT="$DL/runs/moshi-training-env-${SLURM_JOB_ID}"
+BUILD_TMP="$DL/tmp/moshi-native-build-${SLURM_JOB_ID}"
+mkdir -p "$BUILD_TMP"
 export DL NATIVE TRAINER ENV_DIR OUT ENV_OUT DATA_DIR MODEL_MANIFEST
 git rev-parse HEAD
 apptainer exec --nv --bind /projects,/lus,/home --env PYTHONPATH="$DL/repo" \
-    --env HF_HOME="$DL/models/hf-cache" "$DL/pytorch-new.sif" bash -eu <<'CONTAINER'
+    --env TMPDIR="$BUILD_TMP" --env HF_HOME="$DL/models/hf-cache" "$DL/pytorch-new.sif" bash -eu <<'CONTAINER'
 python -m venv --system-site-packages "$ENV_DIR"
 PY="$ENV_DIR/bin/python"
 "$PY" -m pip install --ignore-installed --no-deps 'cmake==3.31.6'

@@ -15,7 +15,9 @@ MOSHI_COMMIT=8c6dfc101b7871baa428424bcdc583b74fb561d9
 XFORMERS_COMMIT=41531cee4ca4e21f703968b31ffabda3d028f8fc
 SOURCE="$DL/vendor/moshi-rag-$MOSHI_COMMIT"
 ATTENTION="$DL/vendor/xformers-$XFORMERS_COMMIT"
+BUILD_TMP="$DL/tmp/moshi-build-${SLURM_JOB_ID}"
 mkdir -p "$DL/vendor" "$DL/envs"
+mkdir -p "$BUILD_TMP"
 mkdir "$OUT"
 if [ ! -d "$SOURCE" ]; then
     git clone https://github.com/kyutai-labs/moshi-rag.git "$SOURCE"
@@ -31,7 +33,7 @@ test "$(git -C "$ATTENTION" rev-parse HEAD)" = "$XFORMERS_COMMIT"
 git rev-parse HEAD
 export DL OUT ENV_DIR SOURCE ATTENTION
 apptainer exec --nv --bind /projects,/lus,/home \
-    --env PYTHONPATH= "$DL/pytorch-new.sif" bash -eu <<'CONTAINER'
+    --env PYTHONPATH= --env TMPDIR="$BUILD_TMP" "$DL/pytorch-new.sif" bash -eu <<'CONTAINER'
 python -m venv --system-site-packages "$ENV_DIR"
 PY="$ENV_DIR/bin/python"
 # sphn's bundled Opus declares an old CMake minimum; NGC CMake 4 rejects it.
