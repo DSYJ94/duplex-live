@@ -5,6 +5,7 @@ use, not learned delegation, microphone latency or real research execution.
 """
 import asyncio
 import concurrent.futures
+import hashlib
 import json
 import math
 import subprocess
@@ -71,6 +72,7 @@ def run_pair(manifest, batch, prefix):
                  "retrogradation. Starch molecules reorganize and firm the crumb. It is not simply drying out.")
     worker_delay = 10.0
     fire_at = 20.0
+    baseline_prefix = None
     for mode in ("base", "delayed-reference"):
         out = Path(f"{prefix}-{mode}")
         out.mkdir(parents=True, exist_ok=False)
@@ -78,7 +80,7 @@ def run_pair(manifest, batch, prefix):
         env = {"mode": "native-MoshiRAG-paced-replay", "model": manifest["rag"],
                "source": loaders.__file__, "load_audit": load_audit,
                "commit": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
-               "seed": 424242, "sampling_seed_reset_after_warmup": True,
+               "seed": 424242, "sampling_seed_reset_after_warmup": True, "warmup_frames": 16,
                "reference_mode": mode, "microphone_acceptance": False, "seconds": seconds}
         (out / "environment.json").write_text(json.dumps(env, indent=2) + "\n")
         records, events, output = [], [], np.zeros(0, dtype=np.float32)
@@ -86,7 +88,10 @@ def run_pair(manifest, batch, prefix):
         injected = False
         with concurrent.futures.ThreadPoolExecutor(max_workers=1) as pool:
             with mimi.streaming(1), generation.streaming(1), torch.inference_mode():
-                for _ in range(4):
+                # Complete lazy compilation and CUDA-graph capture before the
+                # evaluated sampling stream. Four frames did not establish a
+                # paired prefix; require actual token equality below.
+                for _ in range(16):
                     codes = mimi.encode(torch.zeros(1, 1, frame, device="cuda"))
                     tokens = generation.step(codes)
                     if tokens is not None:
@@ -139,10 +144,13 @@ def run_pair(manifest, batch, prefix):
                             offset = max(len(output), math.ceil(completed * mimi.sample_rate))
                             playback = offset / mimi.sample_rate
                             output = np.concatenate([np.pad(output, (0, offset - len(output))), audio])
+                        token_hash = None if tokens is None else hashlib.sha256(
+                            tokens.detach().cpu().numpy().tobytes()).hexdigest()
                         record = {"chunk": index, "input_available_s": due, "input_consumed_s": before - start,
                                   "packet_available_s": completed, "compute_s": completed - (before - start),
                                   "input_backlog_s": before - start - due, "text": text,
-                                  "samples": 0 if audio is None else len(audio), "playback_start_s": playback}
+                                  "samples": 0 if audio is None else len(audio), "playback_start_s": playback,
+                                  "generated_token_sha256": token_hash}
                         records.append(record)
                         stream.write(json.dumps(record) + "\n")
                         stream.flush()
@@ -155,6 +163,7 @@ def run_pair(manifest, batch, prefix):
         report = {"text": "".join(r["text"] for r in records), "task_events": events,
                   "packets_while_worker_waited": len(waiting),
                   "audio_packets_while_worker_waited": sum(r["samples"] > 0 for r in waiting),
+                  "text_packets_while_worker_waited": sum(bool(r["text"].strip()) for r in waiting),
                   "compute_p50_s": float(np.median([r["compute_s"] for r in records])),
                   "compute_p95_s": float(np.percentile([r["compute_s"] for r in records], 95)),
                   "max_input_backlog_s": max(r["input_backlog_s"] for r in records),
@@ -163,3 +172,15 @@ def run_pair(manifest, batch, prefix):
         (out / "manifest.jsonl").write_text(json.dumps({"scenario_id": scenario, "dir": ".",
             "scenario_class": "native-MoshiRAG-reference-replay", "duration_ms": seconds * 1000}) + "\n")
         print(json.dumps({"mode": mode, **report}), flush=True)
+        # Verify paired history before the worker starts. A seed declaration
+        # alone cannot establish equal speech/text history under CUDA graphs.
+        current_prefix = [r["generated_token_sha256"] for r in records if r["input_available_s"] < fire_at]
+        if baseline_prefix is None:
+            baseline_prefix = current_prefix
+        else:
+            differences = [i for i, (a, b) in enumerate(zip(baseline_prefix, current_prefix)) if a != b]
+            verdict = {"prefix_equal": baseline_prefix == current_prefix,
+                       "frames": len(current_prefix), "different_frames": differences}
+            Path(f"{prefix}-prefix-comparison.json").write_text(json.dumps(verdict, indent=2) + "\n")
+            if not verdict["prefix_equal"]:
+                raise RuntimeError("Pre-reference speech/text token histories differ; comparison is invalid")
