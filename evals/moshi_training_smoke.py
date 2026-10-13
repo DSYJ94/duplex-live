@@ -8,6 +8,7 @@ import argparse
 import copy
 import hashlib
 import json
+import math
 import subprocess
 import sys
 from pathlib import Path
@@ -24,6 +25,13 @@ def validate_data(data):
     ingestion = json.loads((data / "ingestion.json").read_text())
     if not summary.get("verified") or len(ingestion["accepted"]) != 20:
         raise RuntimeError("Native smoke requires twenty approved aligned examples")
+    identities = {(r["source_batch"], r["scenario_id"]) for r in ingestion["accepted"]}
+    if len(identities) != 20 or any(not r.get("verified") for r in ingestion["accepted"]):
+        raise RuntimeError("Duplicate or unapproved native example")
+    splits = [[json.loads(line)["path"] for line in (data / name).read_text().splitlines()]
+              for name in ("train16.jsonl", "eval4.jsonl")]
+    if len(splits[0]) != 16 or len(splits[1]) != 4 or len(set(splits[0]+splits[1])) != 20:
+        raise RuntimeError("Native train/eval manifests are not disjoint 16/4 examples")
     for name, digest in summary["manifest_sha256"].items():
         if file_hash(data / name) != digest:
             raise RuntimeError("Converted manifest changed after verification")
@@ -105,6 +113,10 @@ def main():
     args.out.mkdir(parents=True, exist_ok=False)
     base_config = args.out / "base-config.json"
     base_config.write_text(json.dumps(copy.deepcopy(loaders._lm_kwargs), indent=2)+"\n")
+    accepted = json.loads((args.data / "ingestion.json").read_text())["accepted"]
+    segment_seconds = 10 * math.ceil(max(r["duration"] for r in accepted) / 10)
+    if segment_seconds > 180:
+        raise RuntimeError("Pilot exceeds bounded conversation length")
     config = {"data": {"train_data": str(args.data / "train16.jsonl"),
                        "eval_data": str(args.data / "eval4.jsonl"), "shuffle": False},
               "moshi_paths": {"hf_repo_id": None, "moshi_path": str(model_dir / "model.safetensors"),
@@ -112,7 +124,7 @@ def main():
                               "tokenizer_path": str(model_dir / "tokenizer_spm_32k_3.model"),
                               "config_path": str(base_config)},
               "full_finetuning": False, "lora": {"enable": True, "rank": 8, "scaling": 2., "ft_embed": False},
-              "duration_sec": 180, "batch_size": 1, "num_microbatches": 4, "max_steps": 4,
+              "duration_sec": segment_seconds, "batch_size": 1, "num_microbatches": 4, "max_steps": 4,
               "gradient_checkpointing": True, "param_dtype": "bfloat16",
               "first_codebook_weight_multiplier": 100., "text_padding_weight": .5,
               "optim": {"lr": 2e-6, "weight_decay": .1, "pct_start": .5},
