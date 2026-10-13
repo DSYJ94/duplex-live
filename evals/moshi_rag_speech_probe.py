@@ -16,7 +16,7 @@ import time
 from pathlib import Path
 
 
-def run_pair(manifest, batch, prefix, single_mode=None):
+def run_pair(manifest, batch, prefix, single_mode=None, request_aligned=False):
     if single_mode is None:
         # A stream reset in the same process did not reproduce the evaluated
         # prefix, even with longer warmup. Isolate CUDA/compiled/model state;
@@ -25,10 +25,15 @@ def run_pair(manifest, batch, prefix, single_mode=None):
         if path.exists():
             raise RuntimeError("Refusing overwrite of speech manifest")
         path.write_text(json.dumps(manifest, indent=2) + "\n")
-        for mode in ("base", "delayed-reference"):
-            subprocess.run([sys.executable, "-u", "-m", "evals.moshi_rag_speech_probe",
+        for mode in (("delayed-reference",) if request_aligned else ("base", "delayed-reference")):
+            command = [sys.executable, "-u", "-m", "evals.moshi_rag_speech_probe",
                             "--manifest", str(path), "--batch", str(batch),
-                            "--prefix", str(prefix), "--mode", mode], check=True)
+                            "--prefix", str(prefix), "--mode", mode]
+            if request_aligned:
+                command.append("--request-aligned")
+            subprocess.run(command, check=True)
+        if request_aligned:
+            return  # Standalone task/reference correctness, not a causal pair.
         from evals.moshi_rag_prefix_audit import verify_prefix
         verify_prefix(prefix)
         return
@@ -91,6 +96,12 @@ def run_pair(manifest, batch, prefix, single_mode=None):
                  "retrogradation. Starch molecules reorganize and firm the crumb. It is not simply drying out.")
     worker_delay = 10.0
     fire_at = 20.0
+    fixtures = [
+        ("lightning", "You see lightning before hearing thunder because light travels much faster than sound. Both come from the same lightning event.", 0.1),
+        ("fridge", "A fridge uses a vapor-compression refrigerant cycle to move heat from inside to outside. The refrigerant evaporates to absorb heat inside, then is compressed and condenses to release heat outside.", 0.1),
+        ("bread", reference, 10.0),
+        ("noise", "Active noise-cancelling headphones use microphones to measure surrounding noise and produce an opposing sound wave that reduces it through destructive interference.", 0.1),
+    ]
     for mode in (single_mode,):
         out = Path(f"{prefix}-{mode}")
         out.mkdir(parents=True, exist_ok=False)
@@ -103,10 +114,13 @@ def run_pair(manifest, batch, prefix, single_mode=None):
                "cuda_graph_disabled": bool(os.environ.get("NO_CUDA_GRAPH", "")),
                "torch_compile_disabled": bool(os.environ.get("NO_TORCH_COMPILE", "")),
                "reference_mode": mode, "microphone_acceptance": False, "seconds": seconds}
+        env["request_aligned"] = request_aligned
         (out / "environment.json").write_text(json.dumps(env, indent=2) + "\n")
         records, events, output = [], [], np.zeros(0, dtype=np.float32)
         pending = None
         injected = False
+        active_reference, active_task = reference, "fixed-bread"
+        requested = 0
         with concurrent.futures.ThreadPoolExecutor(max_workers=1) as pool:
             with mimi.streaming(1), generation.streaming(1), torch.inference_mode():
                 # Complete lazy compilation and CUDA-graph capture before the
@@ -125,10 +139,10 @@ def run_pair(manifest, batch, prefix, single_mode=None):
                 (out / "environment.json").write_text(json.dumps(env, indent=2) + "\n")
                 start = time.monotonic()
 
-                def worker():
-                    time.sleep(worker_delay)
+                def worker(reference_text=reference, delay=worker_delay):
+                    time.sleep(delay)
                     request_start = time.monotonic() - start
-                    tensor = asyncio.run(get_conditioning_remote_async(reference, "http://127.0.0.1:18001", timeout=60))
+                    tensor = asyncio.run(get_conditioning_remote_async(reference_text, "http://127.0.0.1:18001", timeout=60))
                     return tensor, request_start, time.monotonic() - start
 
                 with (out / "packets.jsonl").open("w") as stream:
@@ -136,8 +150,8 @@ def run_pair(manifest, batch, prefix, single_mode=None):
                         due = (index + 1) / mimi.frame_rate
                         time.sleep(max(0, start + due - time.monotonic()))
                         before = time.monotonic()
-                        if mode == "delayed-reference" and pending is None and before - start >= fire_at:
-                            events.append({"event": "worker_started", "at_s": before - start})
+                        if mode == "delayed-reference" and not request_aligned and pending is None and before - start >= fire_at:
+                            events.append({"event": "worker_started", "at_s": before - start, "task_id": active_task})
                             pending = pool.submit(worker)
                         if pending is not None and pending.done() and not injected:
                             tensor, requested, ready = pending.result()
@@ -146,7 +160,8 @@ def run_pair(manifest, batch, prefix, single_mode=None):
                             generation.update_streaming_sum_tensors([tensor.squeeze(0)])
                             events.append({"event": "reference_injected", "request_at_s": requested,
                                            "ready_at_s": ready, "at_s": time.monotonic() - start,
-                                           "chunk": index, "shape": list(tensor.shape), "reference": reference})
+                                           "chunk": index, "shape": list(tensor.shape), "reference": active_reference,
+                                           "task_id": active_task})
                             injected = True
                         codes = mimi.encode(torch.from_numpy(pcm[index * frame:(index + 1) * frame]).cuda()[None, None])
                         input_code_hash = hashlib.sha256(codes.detach().cpu().numpy().tobytes()).hexdigest()
@@ -163,6 +178,18 @@ def run_pair(manifest, batch, prefix, single_mode=None):
                             audio = mimi.decode(tokens[:, 1:]).detach().float().cpu().numpy().reshape(-1)
                         torch.cuda.synchronize()
                         completed = time.monotonic() - start
+                        if request_aligned and tokens is not None and int(tokens[0, 0, 0]) == 4:
+                            if pending is not None and not injected:
+                                raise RuntimeError("Overlapping model requests exceed this ordered fixture's scope")
+                            if requested >= len(fixtures):
+                                raise RuntimeError("More model requests than reviewed fixture answers")
+                            active_task, active_reference, delay = fixtures[requested]
+                            requested += 1
+                            events.append({"event": "worker_started", "at_s": completed,
+                                           "chunk": index, "task_id": active_task, "delay_s": delay,
+                                           "trigger": "native rag token"})
+                            pending = pool.submit(worker, active_reference, delay)
+                            injected = False
                         playback = None
                         if audio is not None:
                             if not np.isfinite(audio).all():
@@ -182,12 +209,16 @@ def run_pair(manifest, batch, prefix, single_mode=None):
                         records.append(record)
                         stream.write(json.dumps(record) + "\n")
                         stream.flush()
-        if not len(output) or (mode == "delayed-reference" and not injected):
+        if not len(output) or (mode == "delayed-reference" and not any(e["event"] == "reference_injected" for e in events)):
             raise RuntimeError("Missing speech or reference injection")
         sf.write(out / "model.wav", output, mimi.sample_rate)
         waiting = []
-        if events:
-            waiting = [r for r in records if events[0]["at_s"] <= r["packet_available_s"] < events[1]["ready_at_s"]]
+        intervals = []
+        for event in events:
+            if event["event"] == "reference_injected":
+                beginning = next(s for s in events if s["event"] == "worker_started" and s["task_id"] == event["task_id"])
+                intervals.append((beginning["at_s"], event["ready_at_s"]))
+        waiting = [r for r in records if any(a <= r["packet_available_s"] < b for a, b in intervals)]
         report = {"text": "".join(r["text"] for r in records), "task_events": events,
                   "packets_while_worker_waited": len(waiting),
                   "audio_packets_while_worker_waited": sum(r["samples"] > 0 for r in waiting),
@@ -196,6 +227,7 @@ def run_pair(manifest, batch, prefix, single_mode=None):
                   "compute_p95_s": float(np.percentile([r["compute_s"] for r in records], 95)),
                   "max_input_backlog_s": max(r["input_backlog_s"] for r in records),
                   "model_rag_trigger_frames": [r["chunk"] for r in records if r["text_token_id"] == 4],
+                  "request_aligned": request_aligned, "fixture_selection": "ordered known questions; no semantic task routing",
                   "learned_delegation_tested": False, "semantic_review": "pending", "human_listening": "pending"}
         (out / "report.json").write_text(json.dumps(report, indent=2) + "\n")
         (out / "manifest.jsonl").write_text(json.dumps({"scenario_id": scenario, "dir": ".",
@@ -209,5 +241,6 @@ if __name__ == "__main__":
     parser.add_argument("--batch", type=Path, required=True)
     parser.add_argument("--prefix", type=Path, required=True)
     parser.add_argument("--mode", choices=("base", "delayed-reference"), required=True)
+    parser.add_argument("--request-aligned", action="store_true")
     args = parser.parse_args()
-    run_pair(json.loads(args.manifest.read_text()), args.batch, args.prefix, args.mode)
+    run_pair(json.loads(args.manifest.read_text()), args.batch, args.prefix, args.mode, args.request_aligned)

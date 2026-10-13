@@ -23,6 +23,8 @@ apptainer exec --nv --bind /projects,/lus,/home \
   --env NO_TORCH_COMPILE="${PROBE_NO_TORCH_COMPILE:-}" \
   "$DL/pytorch-new.sif" bash -eu <<'CONTAINER'
 PY="$DL/envs/moshi-rag-7379661/bin/python"
+OPTIONS=()
+if [ "${SPEECH_REQUEST_ALIGNED:-0}" = 1 ]; then OPTIONS+=(--request-aligned); fi
 export TRITON_LIBCUDA_PATH
 TRITON_LIBCUDA_PATH=$("$PY" -m evals.cuda_linker_path --out "$DL/runs/moshi-rag-driver-${SLURM_JOB_ID}")
 "$PY" -u -m evals.moshi_reference_probe \
@@ -30,5 +32,5 @@ TRITON_LIBCUDA_PATH=$("$PY" -m evals.cuda_linker_path --out "$DL/runs/moshi-rag-
   --tokenizer "$DL/models/hf-cache/hub/models--meta-llama--Llama-3.2-3B-Instruct/snapshots/0cb88a4f764b7a12671c53f0838cd831a0843b95" \
   --out "$DL/runs/moshi-rag-reference-${SLURM_JOB_ID}" \
   --speech-batch "$DL/runs/synth-scale1-q/audio" \
-  --speech-prefix "$DL/runs/moshi-rag-speech-${SLURM_JOB_ID}"
+  --speech-prefix "$DL/runs/moshi-rag-speech-${SLURM_JOB_ID}" "${OPTIONS[@]}"
 CONTAINER

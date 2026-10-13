@@ -11,12 +11,16 @@ set -euo pipefail
 [[ "$RAG_SPEECH_JOB" =~ ^[0-9]+$ ]]
 DL=/projects/u6si/duplex-live
 cd "$DL/repo"
-test -f "$DL/runs/moshi-rag-speech-${RAG_SPEECH_JOB}-base/report.json"
+RUNS=()
+if [ "${RAG_SINGLE:-0}" != 1 ]; then
+    test -f "$DL/runs/moshi-rag-speech-${RAG_SPEECH_JOB}-base/report.json"
+    RUNS+=("$DL/runs/moshi-rag-speech-${RAG_SPEECH_JOB}-base")
+fi
 test -f "$DL/runs/moshi-rag-speech-${RAG_SPEECH_JOB}-delayed-reference/report.json"
+RUNS+=("$DL/runs/moshi-rag-speech-${RAG_SPEECH_JOB}-delayed-reference")
 git rev-parse HEAD
 apptainer exec --nv --bind /projects,/lus,/home --env PYTHONPATH="$DL/repo" \
     "$DL/pytorch-new.sif" "$DL/envs/moshi-annotation-7379026/bin/python" -u \
     -m evals.moshi_speech_audit --trim-trailing-silence \
-    --runs "$DL/runs/moshi-rag-speech-${RAG_SPEECH_JOB}-base" \
-           "$DL/runs/moshi-rag-speech-${RAG_SPEECH_JOB}-delayed-reference" \
+    --runs "${RUNS[@]}" \
     --out "$DL/runs/moshi-rag-speech-audit-${SLURM_JOB_ID}"

@@ -17,6 +17,7 @@ def main():
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--speech-batch", type=Path)
     parser.add_argument("--speech-prefix", type=Path)
+    parser.add_argument("--request-aligned", action="store_true")
     args = parser.parse_args()
     args.out.mkdir(parents=True, exist_ok=False)
     import torch
@@ -148,7 +149,7 @@ def main():
             if args.speech_prefix is None:
                 raise RuntimeError("Speech replay needs an output prefix")
             from evals.moshi_rag_speech_probe import run_pair
-            run_pair(manifest, args.speech_batch, args.speech_prefix)
+            run_pair(manifest, args.speech_batch, args.speech_prefix, request_aligned=args.request_aligned)
     finally:
         server.should_exit = True
         thread.join(timeout=10)
