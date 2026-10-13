@@ -21,3 +21,4 @@ setuptools
 wheel
 ninja
 cmake==3.31.6
+websockets==15.0.1
