@@ -20,6 +20,11 @@ for source in "$DL/pylibs-minicpm/"*; do
     esac
     ln -s "$source" "$OVERLAY/$name"
 done
+# Token2wav needs torchaudio. Install only its matching-version ARM wheel into
+# this disposable overlay; --no-deps cannot replace container Torch/CUDA.
+apptainer exec --bind /projects,/lus,/home "$DL/pytorch-new.sif" \
+    python -m pip install --no-deps --only-binary=:all: --disable-pip-version-check \
+    --target "$OVERLAY" 'torchaudio==2.9.0'
 MODEL="$DL/models/hf-cache/hub/models--openbmb--MiniCPM-o-4_5/snapshots/503e754207c94da6bb26850b4469f367c9ea3582"
 git rev-parse HEAD
 apptainer exec --nv --bind /projects,/lus,/home \

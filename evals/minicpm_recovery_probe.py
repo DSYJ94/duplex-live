@@ -27,6 +27,7 @@ def main():
     import numpy as np
     import soundfile as sf
     import torch
+    import torchaudio
     import transformers
     from scipy.signal import resample_poly
     from transformers import AutoModel
@@ -48,6 +49,7 @@ def main():
     pcm = pcm[:args.seconds * 16000]
     torch.manual_seed(424242)
     env = {"mode": "paced-native-duplex-replay", "torch": torch.__version__,
+           "torchaudio": torchaudio.__version__,
            "torch_path": torch.__file__, "transformers": transformers.__version__,
            "model_snapshot": str(args.model), "gpu": torch.cuda.get_device_name(),
            "commit": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
