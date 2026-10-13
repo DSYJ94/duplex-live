@@ -123,8 +123,10 @@ def main():
             elapsed = time.monotonic() - request_start
             if tensor.ndim != 3 or tensor.shape[0] != 1 or tensor.shape[1] == 0 or tensor.shape[2] != config["dim"]:
                 raise RuntimeError(f"Invalid embedding shape: {tuple(tensor.shape)}")
-            if not torch.isfinite(tensor).all() or tensor.abs().sum() == 0:
-                raise RuntimeError("Invalid/empty encoder values")
+            # The official empty-reference branch deliberately emits zero
+            # vectors. Require a signal only when actual text was supplied.
+            if not torch.isfinite(tensor).all() or (text and tensor.abs().sum() == 0):
+                raise RuntimeError(f"Invalid encoder values for request {index}")
             records.append({"index": index, "text": text, "token_count": len(tokenizer.encode(text, add_special_tokens=False)),
                             "shape": list(tensor.shape), "dtype": str(tensor.dtype), "http_seconds": elapsed})
             outputs.append(tensor)
