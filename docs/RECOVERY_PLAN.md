@@ -130,8 +130,8 @@ silently repeating a tiny corpus or launching an unverified distributed run.
 | Delegation launcher repair | Regression passes | Do not reuse the historical ratio verdict as evidence |
 | MiniCPM native duplex replay | Complete, job 7377673; earlier jobs exposed missing decoder dependencies | Tested process-local PCM WAV reader; TorchAudio features and container Torch unchanged. Improve backlog and assess interruptions before acceptance. |
 | MiniCPM delayed context injection | Complete, job 7378025; reference used, processing continues | One fixed result only. Add real dispatch, delayed/cancelled results and fresh tasks; reduce backlog. |
-| MoshiRAG live delegation baseline | Source seams checked; environment not ready | Isolated dependencies; real xformers ARC kernel; live delayed-result replay |
-| Training dataset/split and pilot | Pending baseline decision | Native format plus provenance and independent held-out manifest |
+| MoshiRAG live delegation baseline | Pinned weights downloaded (7378305); official Llama tokenizer access denied. Isolated environment build 7379025 running after diagnosed source-build issues | Actual ARC kernel and tokenizer access, then live delayed-result replay |
+| Training dataset/split and pilot | Native data conversion 7379026 running; executable guarded pilot committed | 16 train + 4 diagnostic conversations, audited intervals, finite backward step, save/reload and speech retention. This is not a fresh generalization split. |
 | Broad training | Not started | Only after small reloaded free-run pilot passes |
 
 Source-backed selection and execution details:
@@ -198,3 +198,40 @@ yet establish timed duplex training support.
 
 See the research note for exact official sources, data schemas and environment
 constraints. Human audition of all new audio remains open.
+
+## Native Moshi continuation — in progress
+
+**Plain words:** exact weights are now local. Training remains gated on valid
+word intervals; failed conversions have not been admitted to the trainer.
+
+- Model acquisition job 7378305 completed: native Moshi, MoshiRAG, ARC and
+  local ASR are pinned and hashed in `runs/moshi-models-7378305/model-manifest.json`.
+  The official Llama 3.2 tokenizer returned `GatedRepoError`; owner access was
+  requested asynchronously. That blocks reference encoding, not native Moshi.
+- Environment jobs 7378179/7378259/7378351/7378463 stopped on the Opus/CMake
+  source-build boundary. pip's isolated build imports override a Python CMake
+  launcher; the latest job uses the actual pinned ELF binary. Existing Torch
+  environments are untouched. Job 7379025 is the current bounded retry.
+- Conversion 7378330 stopped before annotation because the assumed <=100 s
+  length selected no examples. Actual dialogs are 104.84–116.20 s. Conversion
+  7378464 rejected user backchannels under an overly narrow event rule and
+  rejected zero-width HF word intervals; only one passed, so training stopped.
+  Job 7379026 uses the official trainer's WhisperTimestamped alignment method
+  and accepts verified user backchannels while retaining complete assistant
+  utterances, interval validity, transcript agreement and source approval.
+- The committed pilot rechecks all source approval records and artifact hashes,
+  requires disjoint 16/4 manifests, audits strict base loading and adapter
+  gradients, hashes every frozen parameter, and compares fresh-process reload
+  logits. Native speech replay compares the untouched model with the adapter.
+  A successful plumbing test will not be reported as a quality improvement.
+
+Exact submission once the new data job passes:
+
+```sh
+sbatch --export=ALL,DATA_DIR=/projects/u6si/duplex-live/runs/moshi-data-JOB,MODEL_MANIFEST=/projects/u6si/duplex-live/runs/moshi-models-7378305/model-manifest.json \
+  evals/moshi-training-smoke.slurm
+```
+
+Each training pilot is one GPU with a 45-minute cap. The script preserves the
+container GPU stack, pins plain Moshi/trainer source separately from MoshiRAG,
+and refuses overwrite. Do not submit until the data summary says verified.
