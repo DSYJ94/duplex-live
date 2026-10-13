@@ -33,6 +33,11 @@ def main():
     from transformers import AutoModel
 
     args.out.mkdir(parents=True, exist_ok=False)
+    voice = args.model / "assets" / "HT_ref_audio.wav"
+    # Test the same decoder Token2wav will use before loading model weights.
+    voice_pcm, voice_sr = torchaudio.load(str(voice))
+    if voice_pcm.numel() == 0 or voice_sr <= 0:
+        raise ValueError("Reference voice did not decode")
     def read_audio(path, rate):
         x, sr = sf.read(path, dtype="float32")
         if x.ndim != 1:
@@ -62,7 +67,6 @@ def main():
         init_vision=False, init_audio=True, init_tts=True).eval().cuda()
     model.init_tts()
     duplex = model.as_duplex()
-    voice = args.model / "assets" / "HT_ref_audio.wav"
     duplex.prepare(prefix_system_prompt="Streaming Omni Conversation. Respond briefly in English.",
                    ref_audio=read_audio(voice, 16000), prompt_wav_path=str(voice))
     sf.write(args.out / "stem_user.wav", pcm, 16000)
