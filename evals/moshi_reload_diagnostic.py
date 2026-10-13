@@ -1,6 +1,7 @@
 """Plain words: separate saved-weight errors from native inference-path rounding."""
 import argparse
 import json
+import re
 from pathlib import Path
 
 
@@ -15,7 +16,7 @@ def main():
     from safetensors.torch import load_file
     from moshi.models import loaders
     from moshi.utils.compile import no_compile
-    from evals.moshi_training_smoke import logits_sample, tensor_hashes
+    from evals.moshi_training_smoke import logits_sample
 
     args.out.mkdir(parents=True, exist_ok=False)
     native = Path(json.loads(args.model_manifest.read_text())["native"]["path"])
@@ -34,11 +35,28 @@ def main():
         raise RuntimeError("Reloaded adapter differs from saved bytes")
     frozen_mismatches = []
     with safe_open(native / "model.safetensors", framework="pt", device="cpu") as source:
+        source_keys = set(source.keys())
         for name, parameter in model.named_parameters():
             if name in loaded_adapter:
                 continue
             base_name = name.replace(".frozen_W.", ".")
-            expected = source.get_tensor(base_name).to(parameter.dtype)
+            if base_name in source_keys:
+                expected = source.get_tensor(base_name)
+            else:
+                # Apply the pinned official attention load hook's legacy
+                # combined-projection -> per-step projection transformation.
+                match = re.fullmatch(r"(.*\.)(in_projs|out_projs)\.(\d+)\.weight", base_name)
+                if match is None:
+                    raise RuntimeError(f"Unknown base weight mapping: {base_name}")
+                prefix, kind, index = match.groups()
+                legacy_names = ("in_proj_weight", "in_proj.weight") if kind == "in_projs" else ("out_proj.weight",)
+                legacy = next((prefix+n for n in legacy_names if prefix+n in source_keys), None)
+                if legacy is None:
+                    raise RuntimeError(f"Missing legacy projection: {base_name}")
+                value = source.get_tensor(legacy)
+                module = model.get_submodule(prefix[:-1])
+                expected = value.view(module.mult, -1, *value.shape[1:])[int(index)]
+            expected = expected.to(parameter.dtype)
             if not torch.equal(parameter.detach().cpu(), expected):
                 frozen_mismatches.append(name)
     if frozen_mismatches:
