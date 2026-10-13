@@ -22,6 +22,7 @@ class ReferenceRaceTest(unittest.IsolatedAsyncioTestCase):
             VersionedRAGManager = None
         channel = object.__new__(SafeChannel)
         old_ready = asyncio.Event()
+        old_started = asyncio.Event()
         applied = []
         channel.slot_idx = 0
         channel._log = logging.getLogger("reference-race-test")
@@ -30,6 +31,7 @@ class ReferenceRaceTest(unittest.IsolatedAsyncioTestCase):
                                   lambda values: applied.append(float(values[0][0, 0])))))
         async def encoder(text, **kwargs):
             if text == "old":
+                old_started.set()
                 await old_ready.wait()
                 return torch.full((1, 1, 4), 1.)
             return torch.full((1, 1, 4), 2.)
@@ -46,12 +48,14 @@ class ReferenceRaceTest(unittest.IsolatedAsyncioTestCase):
             token = guarded.reference_revision.set(1)
             old = asyncio.create_task(channel._async_update_reference("old"))
             guarded.reference_revision.reset(token)
+            await old_started.wait()
             channel.rag_manager.revision = 2
             token = guarded.reference_revision.set(2)
             await channel._async_update_reference("new")
             guarded.reference_revision.reset(token)
         else:
             old = asyncio.create_task(channel._async_update_reference("old"))
+            await old_started.wait()
             await channel._async_update_reference("new")
         old_ready.set()
         await old
