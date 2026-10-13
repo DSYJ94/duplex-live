@@ -30,6 +30,7 @@ ENV_OUT="$DL/runs/moshi-training-env-${SLURM_JOB_ID}"
 BUILD_TMP="$DL/tmp/moshi-native-build-${SLURM_JOB_ID}"
 mkdir -p "$BUILD_TMP"
 export DL NATIVE TRAINER ENV_DIR OUT ENV_OUT DATA_DIR MODEL_MANIFEST
+export PILOT_STEPS="${PILOT_STEPS:-4}" PILOT_LR="${PILOT_LR:-0.000002}"
 git rev-parse HEAD
 apptainer exec --nv --bind /projects,/lus,/home --env PYTHONPATH="$DL/repo" \
     --env TMPDIR="$BUILD_TMP" --env HF_HOME="$DL/models/hf-cache" "$DL/pytorch-new.sif" bash -eu <<'CONTAINER'
@@ -47,16 +48,17 @@ TRITON_LIBCUDA_PATH=$("$PY" -m evals.cuda_linker_path --out "$ENV_OUT/driver")
 "$PY" -c 'import sphn,torch,moshi; print("native-env", torch.__version__,torch.__file__,moshi.__file__); assert hasattr(sphn,"dataset_jsonl")'
 "$PY" -m torch.distributed.run --standalone --nproc_per_node=1 \
     -m evals.moshi_training_smoke --trainer "$TRAINER" --data "$DATA_DIR" \
-    --model-manifest "$MODEL_MANIFEST" --out "$OUT"
+    --model-manifest "$MODEL_MANIFEST" --out "$OUT" --steps "$PILOT_STEPS" --lr "$PILOT_LR"
 "$PY" -m evals.moshi_training_smoke --reload --trainer "$TRAINER" --data "$DATA_DIR" \
-    --model-manifest "$MODEL_MANIFEST" --out "$OUT"
+    --model-manifest "$MODEL_MANIFEST" --out "$OUT" --steps "$PILOT_STEPS" --lr "$PILOT_LR"
+CHECKPOINT=$(printf '%06d' "$PILOT_STEPS")
 SCENARIO=$("$PY" -c 'import json,os; from pathlib import Path; d=json.loads((Path(os.environ["DATA_DIR"])/"ingestion.json").read_text()); print(d["accepted"][16]["scenario_id"])')
 COMMON=(--model-manifest "$MODEL_MANIFEST" --batch "$DL/runs/synth-scale1-q/audio" --scenario "$SCENARIO" --seconds 40)
 "$PY" -m evals.moshi_native_replay "${COMMON[@]}" --config "$OUT/base-config.json" \
     --out "$DL/runs/moshi-base-${SLURM_JOB_ID}"
 "$PY" -m evals.moshi_native_replay "${COMMON[@]}" \
-    --config "$OUT/train/checkpoints/checkpoint_000004/consolidated/config.json" \
-    --adapter "$OUT/train/checkpoints/checkpoint_000004/consolidated/lora.safetensors" \
+    --config "$OUT/train/checkpoints/checkpoint_$CHECKPOINT/consolidated/config.json" \
+    --adapter "$OUT/train/checkpoints/checkpoint_$CHECKPOINT/consolidated/lora.safetensors" \
     --out "$DL/runs/moshi-adapter-${SLURM_JOB_ID}"
 "$PY" -m pip freeze > "$ENV_OUT/pip-freeze.txt"
 CONTAINER

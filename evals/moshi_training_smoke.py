@@ -65,6 +65,33 @@ def logits_sample(model, codes):
             "audio": result.logits[..., :64, :64].float().cpu()}
 
 
+def canonical_logits(model, codes):
+    """Use the same precise arithmetic for serialization checks in both processes.
+
+    BF16 execution-path differences are measured separately by the diagnostic;
+    they must not be confused with changes in serialized parameter values.
+    """
+    import torch
+    from moshi.utils.compile import no_compile
+    previous = [(p, p.dtype, p.requires_grad) for p in model.parameters()]
+    flags = (model.transformer.checkpointing, model.depformer.checkpointing,
+             torch.backends.cuda.matmul.allow_tf32, torch.backends.cudnn.allow_tf32)
+    try:
+        for p, _, _ in previous:
+            p.requires_grad = False
+            p.data = p.data.float()
+        model.transformer.checkpointing = model.depformer.checkpointing = False
+        torch.backends.cuda.matmul.allow_tf32 = torch.backends.cudnn.allow_tf32 = False
+        with no_compile():
+            return logits_sample(model, codes)
+    finally:
+        for p, dtype, grad in previous:
+            p.data = p.data.to(dtype)
+            p.requires_grad = grad
+        (model.transformer.checkpointing, model.depformer.checkpointing,
+         torch.backends.cuda.matmul.allow_tf32, torch.backends.cudnn.allow_tf32) = flags
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--trainer", type=Path, required=True)
@@ -72,7 +99,11 @@ def main():
     ap.add_argument("--model-manifest", type=Path, required=True)
     ap.add_argument("--out", type=Path, required=True)
     ap.add_argument("--reload", action="store_true")
+    ap.add_argument("--steps", type=int, default=4)
+    ap.add_argument("--lr", type=float, default=2e-6)
     args = ap.parse_args()
+    if not 4 <= args.steps <= 256 or not 0 < args.lr <= 1e-4:
+        ap.error("Pilot requires 4–256 steps and learning rate in (0, 1e-4]")
     validate_data(args.data)
     import torch
     import yaml
@@ -92,7 +123,7 @@ def main():
             lora_weights=adapter)
 
     if args.reload:
-        checkpoint = args.out / "train/checkpoints/checkpoint_000004/consolidated"
+        checkpoint = args.out / f"train/checkpoints/checkpoint_{args.steps:06d}/consolidated"
         state = torch.load(args.out / "fixed-logits.pt", map_location="cpu", weights_only=True)
         model = info(checkpoint / "config.json", checkpoint / "lora.safetensors").get_moshi(
             device="cuda", dtype=torch.bfloat16, fuse_lora=False).eval()
@@ -100,11 +131,16 @@ def main():
         actual_keys = set(load_file(checkpoint / "lora.safetensors"))
         if actual_keys != expected_keys:
             raise RuntimeError("Saved adapter key set differs from training parameters")
-        sample = logits_sample(model, state["codes"])
+        saved = load_file(checkpoint / "lora.safetensors")
+        audit = json.loads((args.out / "training-report.json").read_text())
+        if tensor_hashes(saved.items()) != audit["final_adapter_hashes"]:
+            raise RuntimeError("Saved adapter values differ from post-training tensors")
+        sample = canonical_logits(model, state["codes"])
         errors = {k: float((sample[k]-state[k]).abs().max().item()) for k in sample}
-        if any(not torch.isfinite(sample[k]).all() or errors[k] > .05 for k in sample):
+        if any(not torch.isfinite(sample[k]).all() or errors[k] > .001 for k in sample):
             raise RuntimeError(f"Fresh-process reload differs: {errors}")
         report = {"reload_ok": True, "max_abs_logit_error": errors,
+                  "reference_precision": "float32, TF32 off, checkpointing off, no_compile",
                   "adapter_keys": len(expected_keys), "module": loaders.__file__}
         (args.out / "reload-report.json").write_text(json.dumps(report, indent=2)+"\n")
         print(json.dumps(report), flush=True)
@@ -124,10 +160,10 @@ def main():
                               "tokenizer_path": str(model_dir / "tokenizer_spm_32k_3.model"),
                               "config_path": str(base_config)},
               "full_finetuning": False, "lora": {"enable": True, "rank": 8, "scaling": 2., "ft_embed": False},
-              "duration_sec": segment_seconds, "batch_size": 1, "num_microbatches": 4, "max_steps": 4,
+              "duration_sec": segment_seconds, "batch_size": 1, "num_microbatches": 4, "max_steps": args.steps,
               "gradient_checkpointing": True, "param_dtype": "bfloat16",
               "first_codebook_weight_multiplier": 100., "text_padding_weight": .5,
-              "optim": {"lr": 2e-6, "weight_decay": .1, "pct_start": .5},
+              "optim": {"lr": args.lr, "weight_decay": .1, "pct_start": .5},
               "seed": 0, "log_freq": 1, "do_eval": True, "eval_freq": 0,
               "do_ckpt": True, "ckpt_freq": 0, "save_adapters": True, "num_ckpt_keep": 1,
               "run_dir": str(args.out / "train"), "overwrite_run_dir": False}
@@ -199,15 +235,18 @@ def main():
         raise RuntimeError("Frozen base parameters changed")
     final_adapter = tensor_hashes((n, p) for n, p in model.named_parameters() if p.requires_grad)
     audit["changed_adapter_tensors"] = sum(v != captured["initial_adapter"][n] for n, v in final_adapter.items())
-    if not audit["changed_adapter_tensors"] or len(audit["optimizer_steps"]) != 4:
+    if not audit["changed_adapter_tensors"] or len(audit["optimizer_steps"]) != args.steps:
         raise RuntimeError("Adapter update count invalid")
-    logits = logits_sample(model, captured["codes"])
+    audit["final_adapter_hashes"] = final_adapter
+    training_peak = torch.cuda.max_memory_allocated()
+    logits = canonical_logits(model, captured["codes"])
     torch.save({"codes": captured["codes"], "adapter_keys": sorted(audit["trainable"]), **logits},
                args.out / "fixed-logits.pt")
     audit["frozen_base_unchanged"] = True
-    audit["peak_memory_bytes"] = torch.cuda.max_memory_allocated()
+    audit["peak_memory_bytes"] = training_peak
+    audit["canonical_check_peak_memory_bytes"] = torch.cuda.max_memory_allocated()
     (args.out / "training-report.json").write_text(json.dumps(audit, indent=2)+"\n")
-    print(json.dumps({k: v for k, v in audit.items() if k not in ("native_model", "trainable", "base_load_missing_adapter_keys")}), flush=True)
+    print(json.dumps({k: v for k, v in audit.items() if k not in ("native_model", "trainable", "final_adapter_hashes", "base_load_missing_adapter_keys")}), flush=True)
     if torch.distributed.is_initialized():
         torch.distributed.destroy_process_group()
 
