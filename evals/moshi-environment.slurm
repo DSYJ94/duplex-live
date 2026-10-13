@@ -52,7 +52,9 @@ CMAKE=$("$PY" -c 'import cmake; print(cmake.CMAKE_BIN_DIR + "/cmake")')
 # Build against this exact NGC Torch ABI; never install a replacement Torch.
 export MAX_JOBS=8 TORCH_CUDA_ARCH_LIST=9.0 XFORMERS_DISABLE_FLASH_ATTN=1
 timeout 1500 "$PY" -m pip install --no-deps --no-build-isolation "$ATTENTION"
-"$PY" -m pip install --no-deps --no-build-isolation "$SOURCE/moshi"
+# Upstream Hatch metadata references ../README.md, rejected by current Hatch.
+# Use the unchanged pinned source directly, as in the native training pilot.
+export PYTHONPATH="$SOURCE/moshi:$DL/repo" PYTHONDONTWRITEBYTECODE=1
 "$PY" -m evals.moshi_environment_setup --verify \
     --requirements "$DL/repo/evals/moshi-rag-requirements.txt" --out "$OUT"
 printf '%s\n' "$ENV_DIR" > "$OUT/env-path.txt"
