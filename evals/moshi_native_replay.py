@@ -61,6 +61,17 @@ def main():
     records = []
     output = np.zeros(0, dtype=np.float32)
     with mimi.streaming(1), generation.streaming(1), torch.inference_mode():
+        warmup_start = time.monotonic()
+        for _ in range(4):
+            warm_codes = mimi.encode(torch.zeros(1, 1, frame_size, device="cuda"))
+            warm_tokens = generation.step(warm_codes)
+            if warm_tokens is not None:
+                mimi.decode(warm_tokens[:, 1:])
+        torch.cuda.synchronize()
+        env["cold_kernel_warmup_s"] = time.monotonic()-warmup_start
+        mimi.reset_streaming()
+        generation.reset_streaming()
+        (args.out / "environment.json").write_text(json.dumps(env, indent=2)+"\n")
         # Use the real native stream; no answer bank or teacher-forced history.
         start = time.monotonic()
         with (args.out / "packets.jsonl").open("w") as log:
