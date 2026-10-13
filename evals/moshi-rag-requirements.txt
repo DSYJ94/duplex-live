@@ -1,0 +1,22 @@
+# Plain words: isolated inference dependencies; keep NGC Torch/CUDA intact.
+# BF16 avoids optional bitsandbytes; no public tunnel or Gradio in this probe.
+numpy==2.2.6
+safetensors==0.6.2
+huggingface-hub==0.34.4
+einops==0.8.1
+sentencepiece==0.2.1
+sounddevice==0.5.0
+sphn==0.2.1
+aiohttp==3.11.18
+openai==2.26.0
+transformers==4.55.3
+msgpack==1.1.2
+gradium
+fastapi
+uvicorn
+soundfile
+scipy
+hatchling
+setuptools
+wheel
+ninja
