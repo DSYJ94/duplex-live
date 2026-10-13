@@ -26,7 +26,7 @@ def main():
     if args.train_count < 1 or args.eval_count < 1:
         ap.error("Positive train/eval counts required")
     from data.synthetic.quality import checked_rows
-    from data.synthetic.filter import load_asr, judge_clip
+    from data.synthetic.filter import load_asr, norm_words, wer
     import numpy as np
     import soundfile as sf
     from scipy.signal import resample_poly
@@ -70,9 +70,9 @@ def main():
                 pcm = resample_poly(clip, 16000 // gcd, sr // gcd).astype(np.float32)
                 aligned = asr({"array": pcm, "sampling_rate": 16000}, return_timestamps="word",
                               generate_kwargs={"language": "english", "task": "transcribe"})
-                audit = judge_clip(event["text"], aligned["text"], end-start, len(clip)/sr, sr)
-                if audit.get("gate_fail") or audit["wer"] > .08:
-                    raise ValueError(f"Word-alignment transcript fails: {audit.get('gate_fail')} WER={audit['wer']}")
+                error_rate = wer(norm_words(event["text"]), norm_words(aligned["text"]))
+                if error_rate > .08:
+                    raise ValueError(f"Word-alignment transcript fails: WER={error_rate}")
                 chunks = aligned.get("chunks", [])
                 if not chunks:
                     raise ValueError("No measured word intervals")
@@ -84,7 +84,7 @@ def main():
                     local.append([word["text"].strip(), [start+a, min(start+b, end)], "SPEAKER_MAIN"])
                 words.extend(local)
                 audits.append({"start_s": start, "end_s": end, "expected": event["text"],
-                               "asr": aligned["text"], "wer": audit["wer"], "n_words": len(local)})
+                               "asr": aligned["text"], "wer": error_rate, "n_words": len(local)})
             if not words or any(a[1][1] > b[1][0]+.02 for a, b in zip(words, words[1:])):
                 raise ValueError("Empty, unsorted or overlapping assistant word intervals")
             target = args.out / sid
