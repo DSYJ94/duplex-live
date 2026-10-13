@@ -14,6 +14,64 @@ import moshi.inference_utils.channel as upstream
 
 
 class ReferenceRaceTest(unittest.IsolatedAsyncioTestCase):
+    async def test_reset_rejects_encoding_already_in_flight(self):
+        from evals.moshi_rag_runtime import SafeChannel, VersionedRAGManager, reference_revision
+        import evals.moshi_rag_runtime as guarded
+        channel = object.__new__(SafeChannel)
+        channel.slot_idx = 0
+        channel._log = logging.getLogger("reference-cancel-test")
+        applied = []
+        channel.server = SimpleNamespace(batch_size=1, reference_encoder_url="local-test", slots=[channel],
+            runner=SimpleNamespace(lm_gen=SimpleNamespace(lm_model=SimpleNamespace(dim=4),
+                update_streaming_sum_tensors=lambda values: applied.append(values))))
+        channel.rag_manager = VersionedRAGManager(reference_generator=None)
+        channel.rag_manager.revision = 1
+        started, finish = asyncio.Event(), asyncio.Event()
+        async def encoder(**kwargs):
+            started.set()
+            await finish.wait()
+            return torch.ones(1, 1, 4)
+        previous = guarded.get_conditioning_remote_async
+        guarded.get_conditioning_remote_async = encoder
+        self.addCleanup(setattr, guarded, "get_conditioning_remote_async", previous)
+        token = reference_revision.set(1)
+        work = asyncio.create_task(channel._async_update_reference("cancelled"))
+        reference_revision.reset(token)
+        await started.wait()
+        channel.rag_manager.reset()
+        finish.set()
+        await work
+        self.assertEqual(applied, [])
+
+    async def test_reused_slot_rejects_old_session_encoding(self):
+        from evals.moshi_rag_runtime import SafeChannel, VersionedRAGManager, reference_revision
+        import evals.moshi_rag_runtime as guarded
+        channel = object.__new__(SafeChannel)
+        channel.slot_idx = 0
+        channel._log = logging.getLogger("reference-session-test")
+        applied = []
+        channel.server = SimpleNamespace(batch_size=1, reference_encoder_url="local-test", slots=[channel],
+            runner=SimpleNamespace(lm_gen=SimpleNamespace(lm_model=SimpleNamespace(dim=4),
+                update_streaming_sum_tensors=lambda values: applied.append(values))))
+        channel.rag_manager = VersionedRAGManager(reference_generator=None)
+        channel.rag_manager.revision = 1
+        started, finish = asyncio.Event(), asyncio.Event()
+        async def encoder(**kwargs):
+            started.set()
+            await finish.wait()
+            return torch.ones(1, 1, 4)
+        previous = guarded.get_conditioning_remote_async
+        guarded.get_conditioning_remote_async = encoder
+        self.addCleanup(setattr, guarded, "get_conditioning_remote_async", previous)
+        token = reference_revision.set(1)
+        work = asyncio.create_task(channel._async_update_reference("old session"))
+        reference_revision.reset(token)
+        await started.wait()
+        channel.server.slots[0] = object()
+        finish.set()
+        await work
+        self.assertEqual(applied, [])
+
     async def test_old_encoding_cannot_overwrite_new_result(self):
         try:
             from evals.moshi_rag_runtime import SafeChannel, VersionedRAGManager
