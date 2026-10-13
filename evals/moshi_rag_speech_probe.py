@@ -4,16 +4,40 @@ Called by the audited reference service probe. This tests delivery and speech
 use, not learned delegation, microphone latency or real research execution.
 """
 import asyncio
+import argparse
 import concurrent.futures
 import hashlib
 import json
 import math
 import subprocess
+import sys
 import time
 from pathlib import Path
 
 
-def run_pair(manifest, batch, prefix):
+def run_pair(manifest, batch, prefix, single_mode=None):
+    if single_mode is None:
+        # A stream reset in the same process did not reproduce the evaluated
+        # prefix, even with longer warmup. Isolate CUDA/compiled/model state;
+        # keep the actual HTTP encoder alive in the parent process.
+        path = Path(f"{prefix}-model-manifest.json")
+        if path.exists():
+            raise RuntimeError("Refusing overwrite of speech manifest")
+        path.write_text(json.dumps(manifest, indent=2) + "\n")
+        prefixes = []
+        for mode in ("base", "delayed-reference"):
+            subprocess.run([sys.executable, "-u", "-m", "evals.moshi_rag_speech_probe",
+                            "--manifest", str(path), "--batch", str(batch),
+                            "--prefix", str(prefix), "--mode", mode], check=True)
+            records = [json.loads(line) for line in Path(f"{prefix}-{mode}/packets.jsonl").read_text().splitlines()]
+            prefixes.append([r["generated_token_sha256"] for r in records if r["input_available_s"] < 20])
+        differences = [i for i, (a, b) in enumerate(zip(*prefixes)) if a != b]
+        verdict = {"prefix_equal": prefixes[0] == prefixes[1], "fresh_processes": True,
+                   "frames": len(prefixes[0]), "different_frames": differences}
+        Path(f"{prefix}-prefix-comparison.json").write_text(json.dumps(verdict, indent=2) + "\n")
+        if not verdict["prefix_equal"]:
+            raise RuntimeError("Fresh-process pre-reference histories differ; comparison is invalid")
+        return
     import numpy as np
     import soundfile as sf
     import torch
@@ -73,7 +97,7 @@ def run_pair(manifest, batch, prefix):
     worker_delay = 10.0
     fire_at = 20.0
     baseline_prefix = None
-    for mode in ("base", "delayed-reference"):
+    for mode in (single_mode,):
         out = Path(f"{prefix}-{mode}")
         out.mkdir(parents=True, exist_ok=False)
         sf.write(out / "stem_user.wav", pcm, mimi.sample_rate)
@@ -81,6 +105,7 @@ def run_pair(manifest, batch, prefix):
                "source": loaders.__file__, "load_audit": load_audit,
                "commit": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
                "seed": 424242, "sampling_seed_reset_after_warmup": True, "warmup_frames": 16,
+               "fresh_process": True,
                "reference_mode": mode, "microphone_acceptance": False, "seconds": seconds}
         (out / "environment.json").write_text(json.dumps(env, indent=2) + "\n")
         records, events, output = [], [], np.zeros(0, dtype=np.float32)
@@ -150,7 +175,8 @@ def run_pair(manifest, batch, prefix):
                                   "packet_available_s": completed, "compute_s": completed - (before - start),
                                   "input_backlog_s": before - start - due, "text": text,
                                   "samples": 0 if audio is None else len(audio), "playback_start_s": playback,
-                                  "generated_token_sha256": token_hash}
+                                  "generated_token_sha256": token_hash,
+                                  "text_token_id": None if tokens is None else int(tokens[0, 0, 0])}
                         records.append(record)
                         stream.write(json.dumps(record) + "\n")
                         stream.flush()
@@ -167,6 +193,7 @@ def run_pair(manifest, batch, prefix):
                   "compute_p50_s": float(np.median([r["compute_s"] for r in records])),
                   "compute_p95_s": float(np.percentile([r["compute_s"] for r in records], 95)),
                   "max_input_backlog_s": max(r["input_backlog_s"] for r in records),
+                  "model_rag_trigger_frames": [r["chunk"] for r in records if r["text_token_id"] == 4],
                   "learned_delegation_tested": False, "semantic_review": "pending", "human_listening": "pending"}
         (out / "report.json").write_text(json.dumps(report, indent=2) + "\n")
         (out / "manifest.jsonl").write_text(json.dumps({"scenario_id": scenario, "dir": ".",
@@ -184,3 +211,13 @@ def run_pair(manifest, batch, prefix):
             Path(f"{prefix}-prefix-comparison.json").write_text(json.dumps(verdict, indent=2) + "\n")
             if not verdict["prefix_equal"]:
                 raise RuntimeError("Pre-reference speech/text token histories differ; comparison is invalid")
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--manifest", type=Path, required=True)
+    parser.add_argument("--batch", type=Path, required=True)
+    parser.add_argument("--prefix", type=Path, required=True)
+    parser.add_argument("--mode", choices=("base", "delayed-reference"), required=True)
+    args = parser.parse_args()
+    run_pair(json.loads(args.manifest.read_text()), args.batch, args.prefix, args.mode)
