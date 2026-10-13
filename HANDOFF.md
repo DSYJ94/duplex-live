@@ -1,5 +1,17 @@
 # HANDOFF — where we are (updated 2026-10-13 for agent succession)
 
+## ACTIVE CONTINUATION — 2026-10-13 recovery
+
+**Plain words:** the owner has reopened the work to build meaningful duplex
+speech with delegation. Start at [docs/RECOVERY_PLAN.md](docs/RECOVERY_PLAN.md).
+The older "COMPLETE" statement below closes the prior timing-only phase.
+New checks found 3.92 s stale audio in the microphone scheduler and invalidated
+the historical delegation-mixture comparison (both launchers dropped their
+selection/init/output arguments). The tracked launcher is repaired with a
+regression test. Native, unchanged Qwen now generates six coherent speech
+samples, all ASR-roundtripping at zero word error, but this batch path is not
+live. Jobs and exact limitations are recorded in the recovery plan.
+
 ## STATE OF THE PROJECT — read this first
 
 **Plain summary:** duplex-live set out to build a live duplex voice

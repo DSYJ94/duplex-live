@@ -50,7 +50,7 @@ WINDOW_TICKS = 50                    # 4 s of ticks per ear window
 VAD_HOLD_TICKS = 8                   # 640 ms hangover after user sound
 
 
-def load_stem_mono(path: Path, n_samples: int) -> np.ndarray:
+def load_stem_mono(path: Path, n_samples: int | None = None) -> np.ndarray:
     import soundfile as sf
     x, sr = sf.read(path, dtype="float32")
     if x.ndim > 1:
@@ -58,6 +58,8 @@ def load_stem_mono(path: Path, n_samples: int) -> np.ndarray:
     if sr != SR:
         import librosa
         x = librosa.resample(x, orig_sr=sr, target_sr=SR)
+    if n_samples is None:
+        return x
     buf = np.zeros(n_samples, dtype=np.float32)
     buf[:min(len(buf), len(x))] = x[:len(buf)]
     return buf
@@ -114,6 +116,11 @@ def main() -> None:
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
 
+    from data.synthetic.quality import checked_rows
+    checked_rows(Path(args.batch),
+                 [{"scenario_id": s.strip()} for s in args.scenarios.split(",")],
+                 role="live demo")
+
     import torch
     from m2.parity import Decoder, load_model
     from data.synthetic.timeline import Timeline
@@ -169,7 +176,7 @@ def main() -> None:
         rec = {"scenario_id": sid, "turns": [], "yields": 0,
                "ticks": n_ticks}
         out_pcm = np.zeros(0, dtype=np.float32)  # grows per tick
-        clip_data = {i: load_stem_mono(p, 10 ** 9) for i, p in
+        clip_data = {i: load_stem_mono(p) for i, p in
                      enumerate(clips)}
         emb = model.get_input_embeddings()
         pad_id = proc.tokenizer.convert_tokens_to_ids("<|audio_pad|>")

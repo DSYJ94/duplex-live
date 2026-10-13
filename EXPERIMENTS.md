@@ -1879,7 +1879,17 @@ Serving datum: the new NGC-25.10 stack's raw single-token forward is
 115ms p50 (vs ~59ms decisions on the old stack) — kernel regression
 worth one look before any serving claims.
 
-## DELEGATION ROUNDS — both negative, finding final (2026-10-12, jobs 7333494/7356783)
+## DELEGATION ROUNDS — historical negative result; comparison invalidated 2026-10-13 (jobs 7333494/7356783)
+
+**Correction, 2026-10-13:** full job logs and a shell-execution regression
+confirm that a blank continuation line dropped `--lessons`, `--init-ckpt`,
+and `--out` from BOTH training commands. They ran 1500/800 steps on the
+default merged selection, without the intended checkpoint initialization,
+and saved to `runs/p1-v1`. The intended 81-vs-30 lesson mix was not the
+executed experiment. Consequently the ratio comparison and those candidates'
+held-out claims are invalid; poor outputs remain observations, not evidence
+that the intended mixtures cannot work. The delivered q2 checkpoint remains
+a separate historical reference. See `docs/RECOVERY_PLAN.md`.
 
 **Plain words:** Two attempts to add delegation/streaming behaviors by
 mixing them into training. First (81 lessons): dense turn-taking
@@ -1890,3 +1900,35 @@ learnable, but not mixable into this trunk at any ratio we could
 afford. Next phase: staged curriculum or a separated emission head.
 DELIVERED MODEL: scale1-q2-pt1 (frozen). Fresh-set final: F1
 0.80-0.86, recall up to 0.99, onsets 12/12 within 1s.
+
+## RECOVERY BASELINE — native words and speech work; live contract still fails (2026-10-13)
+
+**Plain words:** The owner reopened the work for the complete duplex/delegation
+goal. We tested the untouched Qwen base using its native prompt and full
+Thinker/Talker path before choosing another training run. Three verified user
+questions, each tested as text and audio, produced six coherent spoken answers.
+Whisper recovered the generated text with zero word errors in all six. This
+proves a small component path, not generalization, human voice quality, or live
+duplex performance. Full-generation time was 12.29–17.94 seconds per answer.
+
+- Job 7377148: first diagnostic stopped on a 24 kHz source clip; no result.
+- Job 7377200: native content/speech probe completed in 2m15s; explicit input
+  resampling, seed, model revision and full outputs retained.
+- Job 7377265: speech audit plus clean-container CUDA check completed in 36s;
+  xformers is absent (MoshiRAG environment work remains).
+- `evals.live_contract_probe` executed the actual `m2.live.main` scheduler with
+  numbered fixture ticks and a fake model/encoder: no features for 49 ticks,
+  then consistently 3,920 ms old input. Exit 1 against the 200 ms age budget.
+  This is control-flow evidence, not a GPU measurement. The prior 80 ms cadence
+  does not establish low end-to-end latency.
+- Fixed missing startup quality checks and billion-sample answer-clip padding
+  in `m2/live.py`, guarded by `evals.harness.test_live_inputs`. The audio-delay
+  failure remains; changing it requires a matching training/inference path.
+- Full delegation logs invalidated the claimed mixture comparison; correction
+  is recorded directly above its historical verdict.
+
+Next decision: already-duplex native candidates (MiniCPM and MoshiRAG), with
+timed output and asynchronous-result tests; then a small checkpoint-reloaded
+training pilot. No large training run has started in this continuation.
+Current plan: `docs/RECOVERY_PLAN.md`; machine-readable evidence:
+`docs/reviews/2026-10-13-recovery-evidence.json`.

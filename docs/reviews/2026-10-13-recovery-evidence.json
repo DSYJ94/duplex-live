@@ -1,0 +1,265 @@
+{
+  "date": "2026-10-13",
+  "clock_probe": {
+    "evidence": "synthetic control-flow probe of actual m2.live.main; no model inference",
+    "tick_ms": 80,
+    "first_feature_decision_tick": 49,
+    "first_feature_source_tick": 0,
+    "feature_age_min_ms": 3920,
+    "feature_age_max_ms": 3920,
+    "decisions_without_audio_features": 49,
+    "total_decisions": 101,
+    "quality_stamp_absent_but_loop_ran": true,
+    "note": "Age excludes encoding, inference, transport and playback time.",
+    "within_age_budget": false
+  },
+  "native_job": "7377200",
+  "speech_audit_job": "7377265",
+  "environment": {
+    "schema": "dl-native-content-v1",
+    "mode": "turn-based-component-probe",
+    "git_commit": "946a9e47f06d0073036dde426efbe0b94ae98640",
+    "model": "Qwen/Qwen3-Omni-30B-A3B-Instruct",
+    "torch": "2.9.0a0+145a3a7bda.nv25.10",
+    "transformers": "5.17.0",
+    "machine": "aarch64",
+    "gpu": "NVIDIA GH200 120GB",
+    "seed": 424242,
+    "audio_output": true,
+    "semantic_verdict": "pending review",
+    "duplex_acceptance": false,
+    "model_commit": "26291f793822fb6be9555850f06dfe95f2d7e695",
+    "device_map": {}
+  },
+  "native_cases": [
+    {
+      "id": "dense_dialog-001-u00-text",
+      "modality": "text",
+      "question": "Why do I see lightning before I hear thunder?",
+      "input_sha256": "96984424684ad3f5348dc7e99be593308a53ad4b9bfe6982c7f74aee18140bb2",
+      "answer": "You see lightning before you hear thunder because light travels much faster than sound.",
+      "source_sample_rate": 24000,
+      "model_sample_rate": 16000,
+      "generation_wall_s": 12.568058739008848,
+      "answer_tokens": 16,
+      "hit_text_cap": false,
+      "audio_s": 3.976875,
+      "semantic_verdict": "pending review",
+      "audio_rms": 0.041697077453136444
+    },
+    {
+      "id": "dense_dialog-001-u00-audio",
+      "modality": "audio",
+      "question": "Why do I see lightning before I hear thunder?",
+      "input_sha256": "96984424684ad3f5348dc7e99be593308a53ad4b9bfe6982c7f74aee18140bb2",
+      "answer": "You see lightning before hearing thunder because light travels much faster than sound.",
+      "source_sample_rate": 24000,
+      "model_sample_rate": 16000,
+      "generation_wall_s": 12.292789041996002,
+      "answer_tokens": 15,
+      "hit_text_cap": false,
+      "audio_s": 5.016875,
+      "semantic_verdict": "pending review",
+      "audio_rms": 0.05577864125370979
+    },
+    {
+      "id": "dense_dialog-001-u01-text",
+      "modality": "text",
+      "question": "How does a fridge make things cold?",
+      "input_sha256": "915c395935ad32e322c6b951ccb84931a1f6b0d96bc679e3e064c675b2a4a438",
+      "answer": "A fridge makes things cold by removing heat from inside using a refrigerant that absorbs heat and releases it outside through coils.",
+      "source_sample_rate": 24000,
+      "model_sample_rate": 16000,
+      "generation_wall_s": 14.730825893988367,
+      "answer_tokens": 25,
+      "hit_text_cap": false,
+      "audio_s": 7.976875,
+      "semantic_verdict": "pending review",
+      "audio_rms": 0.050490714609622955
+    },
+    {
+      "id": "dense_dialog-001-u01-audio",
+      "modality": "audio",
+      "question": "How does a fridge make things cold?",
+      "input_sha256": "915c395935ad32e322c6b951ccb84931a1f6b0d96bc679e3e064c675b2a4a438",
+      "answer": "A fridge makes things cold by using a refrigerant that absorbs heat from inside the fridge and releases it outside through coils.",
+      "source_sample_rate": 24000,
+      "model_sample_rate": 16000,
+      "generation_wall_s": 14.292883077985607,
+      "answer_tokens": 25,
+      "hit_text_cap": false,
+      "audio_s": 6.776875,
+      "semantic_verdict": "pending review",
+      "audio_rms": 0.05441964790225029
+    },
+    {
+      "id": "dense_dialog-001-u02-text",
+      "modality": "text",
+      "question": "Why does bread go stale faster in the fridge?",
+      "input_sha256": "ef79a2b574175d32051f942235dbe4e5d3f833da6e879441de49394ee9087c84",
+      "answer": "Bread goes stale faster in the fridge because the cold temperature accelerates the retrogradation of starch, causing it to lose moisture and become hard.",
+      "source_sample_rate": 24000,
+      "model_sample_rate": 16000,
+      "generation_wall_s": 15.3433521699626,
+      "answer_tokens": 30,
+      "hit_text_cap": false,
+      "audio_s": 8.296875,
+      "semantic_verdict": "pending review",
+      "audio_rms": 0.05240825563669205
+    },
+    {
+      "id": "dense_dialog-001-u02-audio",
+      "modality": "audio",
+      "question": "Why does bread go stale faster in the fridge?",
+      "input_sha256": "ef79a2b574175d32051f942235dbe4e5d3f833da6e879441de49394ee9087c84",
+      "answer": "Bread goes stale faster in the fridge because the cold temperature accelerates the retrogradation of starch, causing it to lose moisture and become hard.",
+      "source_sample_rate": 24000,
+      "model_sample_rate": 16000,
+      "generation_wall_s": 17.93700897000963,
+      "answer_tokens": 30,
+      "hit_text_cap": false,
+      "audio_s": 8.536875,
+      "semantic_verdict": "pending review",
+      "audio_rms": 0.04768765717744827
+    }
+  ],
+  "speech_audit": [
+    {
+      "id": "dense_dialog-001-u00-text",
+      "generated_text": "You see lightning before you hear thunder because light travels much faster than sound.",
+      "speech_audit": {
+        "ch": "assistant",
+        "voice": "Ethan",
+        "wer": 0.0,
+        "n_ref": 14,
+        "dur_s": 3.98,
+        "truncated_ref": false,
+        "kind": "utterance",
+        "gate": "wer",
+        "ref": "You see lightning before you hear thunder because light travels much faster than sound.",
+        "hyp": " You see lightning before you hear thunder because light travels much faster than sound."
+      },
+      "asr_roundtrip_pass": true,
+      "semantic_verdict": "pending review",
+      "human_listening": "pending"
+    },
+    {
+      "id": "dense_dialog-001-u00-audio",
+      "generated_text": "You see lightning before hearing thunder because light travels much faster than sound.",
+      "speech_audit": {
+        "ch": "assistant",
+        "voice": "Ethan",
+        "wer": 0.0,
+        "n_ref": 13,
+        "dur_s": 5.02,
+        "truncated_ref": false,
+        "kind": "utterance",
+        "gate": "wer",
+        "ref": "You see lightning before hearing thunder because light travels much faster than sound.",
+        "hyp": " You see, lightning before hearing thunder because light travels much faster than sound,"
+      },
+      "asr_roundtrip_pass": true,
+      "semantic_verdict": "pending review",
+      "human_listening": "pending"
+    },
+    {
+      "id": "dense_dialog-001-u01-text",
+      "generated_text": "A fridge makes things cold by removing heat from inside using a refrigerant that absorbs heat and releases it outside through coils.",
+      "speech_audit": {
+        "ch": "assistant",
+        "voice": "Ethan",
+        "wer": 0.0,
+        "n_ref": 22,
+        "dur_s": 7.98,
+        "truncated_ref": false,
+        "kind": "utterance",
+        "gate": "wer",
+        "ref": "A fridge makes things cold by removing heat from inside using a refrigerant that absorbs heat and releases it outside th",
+        "hyp": " A fridge makes things cold by removing heat from inside using a refrigerant that absorbs heat and releases it outside t"
+      },
+      "asr_roundtrip_pass": true,
+      "semantic_verdict": "pending review",
+      "human_listening": "pending"
+    },
+    {
+      "id": "dense_dialog-001-u01-audio",
+      "generated_text": "A fridge makes things cold by using a refrigerant that absorbs heat from inside the fridge and releases it outside through coils.",
+      "speech_audit": {
+        "ch": "assistant",
+        "voice": "Ethan",
+        "wer": 0.0,
+        "n_ref": 22,
+        "dur_s": 6.78,
+        "truncated_ref": false,
+        "kind": "utterance",
+        "gate": "wer",
+        "ref": "A fridge makes things cold by using a refrigerant that absorbs heat from inside the fridge and releases it outside throu",
+        "hyp": " A fridge makes things cold by using a refrigerant that absorbs heat from inside the fridge and releases it outside thro"
+      },
+      "asr_roundtrip_pass": true,
+      "semantic_verdict": "pending review",
+      "human_listening": "pending"
+    },
+    {
+      "id": "dense_dialog-001-u02-text",
+      "generated_text": "Bread goes stale faster in the fridge because the cold temperature accelerates the retrogradation of starch, causing it to lose moisture and become hard.",
+      "speech_audit": {
+        "ch": "assistant",
+        "voice": "Ethan",
+        "wer": 0.0,
+        "n_ref": 24,
+        "dur_s": 8.3,
+        "truncated_ref": false,
+        "kind": "utterance",
+        "gate": "wer",
+        "ref": "Bread goes stale faster in the fridge because the cold temperature accelerates the retrogradation of starch, causing it ",
+        "hyp": " Bread goes stale faster in the fridge because the cold temperature accelerates the retrogradation of starch, causing it"
+      },
+      "asr_roundtrip_pass": true,
+      "semantic_verdict": "pending review",
+      "human_listening": "pending"
+    },
+    {
+      "id": "dense_dialog-001-u02-audio",
+      "generated_text": "Bread goes stale faster in the fridge because the cold temperature accelerates the retrogradation of starch, causing it to lose moisture and become hard.",
+      "speech_audit": {
+        "ch": "assistant",
+        "voice": "Ethan",
+        "wer": 0.0,
+        "n_ref": 24,
+        "dur_s": 8.54,
+        "truncated_ref": false,
+        "kind": "utterance",
+        "gate": "wer",
+        "ref": "Bread goes stale faster in the fridge because the cold temperature accelerates the retrogradation of starch, causing it ",
+        "hyp": " Bread goes stale faster in the fridge because the cold temperature accelerates the retrogradation of starch, causing it"
+      },
+      "asr_roundtrip_pass": true,
+      "semantic_verdict": "pending review",
+      "human_listening": "pending"
+    }
+  ],
+  "limitations": [
+    "Development fixture: three unique questions in two modalities; not six independent questions.",
+    "Human listening pending; ASR agreement does not grade semantics or prosody.",
+    "Full-generation times are not streaming first-packet latency.",
+    "Clock probe uses real control flow and fake model/encoder; no GPU inference."
+  ],
+  "clock_probe_after_demo_input_repairs": {
+    "evidence": "synthetic control-flow probe of actual m2.live.main; no model inference",
+    "tick_ms": 80,
+    "first_feature_decision_tick": 49,
+    "first_feature_source_tick": 0,
+    "feature_age_min_ms": 3920,
+    "feature_age_max_ms": 3920,
+    "decisions_without_audio_features": 49,
+    "total_decisions": 101,
+    "note": "Age excludes encoding, inference, transport and playback time.",
+    "within_age_budget": false
+  },
+  "repairs": {
+    "delegation_launcher": "selection, initialization and output arguments plus prefixed held-out IDs; shell execution regression passed",
+    "live_quality": "missing or unverified quality record aborts before model loading; regression passed",
+    "live_clip_length": "answer clips retain native length; no one-billion-sample silence padding; regression passed"
+  }
+}

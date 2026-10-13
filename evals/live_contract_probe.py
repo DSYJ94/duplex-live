@@ -72,6 +72,10 @@ def probe() -> dict:
             "scenario_id": "probe", "scenario_class": "probe", "events": [
                 {"ch": "user", "start_ms": 0, "text": "clock fixture",
                  "actual_start_ms": 0, "actual_end_ms": 8000}]}))
+        # Synthetic test fixture only; never exported as training data.
+        (root / "quality.jsonl").write_text(json.dumps({
+            "schema": "dl-quality-v1", "scenario_id": "probe",
+            "verified": True, "timing": "ok"}) + "\n")
         # Real main reads this function; numbered ticks replace PCM amplitudes.
         def numbered_audio(path, n_samples):
             return np.repeat(np.arange(n_samples // live.PER_TICK, dtype=np.float32), live.PER_TICK)
@@ -91,7 +95,6 @@ def probe() -> dict:
             "feature_age_min_ms": min(ages), "feature_age_max_ms": max(ages),
             "decisions_without_audio_features": len(decisions) - len(with_features),
             "total_decisions": len(decisions),
-            "quality_stamp_absent_but_loop_ran": True,
             "note": "Age excludes encoding, inference, transport and playback time."}
 
 

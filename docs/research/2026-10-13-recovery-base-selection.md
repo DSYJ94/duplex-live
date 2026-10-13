@@ -128,3 +128,68 @@ python -m moshi.server_conditioner \
 7. For concurrency, run `python -m moshi.server --host 127.0.0.1 --port 8998 --batch-size 1 --init-active-speaker user --rag-timeout 20`. Omit `--gradium-stt` and `--gradio-tunnel`; use local ASR and an SSH-forwarded client. Send paced audio through `/api/chat`, record receive and playback times, and delay local backend replies by 0.5/2/5/15 seconds. Verify ongoing input consumption, output delivery, and updated-answer content. Avoid using the offline loop as this measurement.
 
 No package lock, ARM binary compatibility, GPU memory envelope, live run or benchmark result has been established by these commands. Resolving those is the bounded baseline experiment; training starts only after it succeeds.
+
+## Training data: what can actually be acquired and trained
+
+Plain words: DuplexChat's advertised 282,000 English hours are pointers to podcast audio, not a ready-to-download speech corpus. Start with a tiny existing Moshi-format dataset to verify training, then reconstruct a measured, approved subset with independent evaluation speakers and conversations.
+
+### DuplexChat availability and conversion
+
+The Hugging Face release contains **metadata only**: the English compressed manifest is approximately 508 MB and indexes 15,304,412 dialogues / 282,634 hours. Each row identifies a source episode URL and dialogue interval. Its MIT license covers released metadata/code; it does not grant rights to the source podcasts. Record the source publisher's applicable permission/license in the acquisition manifest rather than treating the MIT label as an audio license. [Released files](https://huggingface.co/datasets/sarulab-speech/DuplexChat/tree/main), [Dataset card](https://huggingface.co/datasets/sarulab-speech/DuplexChat/blame/main/README.md), [Official reconstruction guide and licensing scope](https://github.com/sarulab-speech/DuplexChat)
+
+Reconstruction downloads each episode, converts to 16 kHz mono, slices the intervals and separates speakers using gated DialogueSidon weights. It emits stereo MP3 plus `meta.json` in WebDataset archives, **without word transcripts or `diarization.json`**. No new diarization pass is necessary. Left/right represent two separated speakers, not predetermined assistant/user roles. The official environment requires Python 3.12 or newer, CUDA and ffmpeg; keep it separate from inference. [Reconstruction source](https://raw.githubusercontent.com/sarulab-speech/DuplexChat/master/scripts/reconstruct_dataset.py), [Dependency manifest](https://raw.githubusercontent.com/sarulab-speech/DuplexChat/master/pyproject.toml)
+
+DialogueSidon loads exported Torch programs, so their compatibility with NGC Torch 2.9 on ARM must be demonstrated. Separation uses random noise, splits long clips into overlapping windows and attempts to maintain channel identity. Pin revisions and seeds, preserve source/output hashes, and inspect leakage and speaker swaps. Do not promise byte-identical reconstruction or assume the output sample rate equals the 16 kHz intermediate; read the returned rate. [Separation implementation](https://raw.githubusercontent.com/sarulab-speech/DuplexChat/master/src/duplexchat_pipe/separate.py)
+
+Proposed bounded acquisition:
+
+1. Download the English metadata only. Stream-filter an allowlist of usable sources into a **small `.jsonl.gz`** with a deterministic seed, provenance fields and a hard duration budget. Assign split groups before selecting clips. Aim initially for 10 usable hours across multiple shows, with approximately 8/1/1 train/validation/test hours; expand to 50 only after measured reconstruction quality and throughput.
+2. Verify DialogueSidon access and one export load/kernel in the isolated environment. Run two selected episodes first, then process the already bounded manifest:
+
+```sh
+python scripts/reconstruct_dataset.py \
+  --manifest bounded_en_10h.jsonl.gz --output reconstructed_10h \
+  --num-shards 1 --shard-index 0 --limit-episodes 2
+```
+
+3. Remove `--limit-episodes` after the smoke passes. That option is applied **after** grouping the manifest in memory, so it does not safely bound a full-manifest load. Track failed sources and successfully accepted duration: partial failures can still produce exit code zero. Keep shard count fixed when resuming. [Loader, limit and failure behavior](https://raw.githubusercontent.com/sarulab-speech/DuplexChat/master/scripts/reconstruct_dataset.py)
+4. Decode accepted clips to aligned stereo WAV, map the selected assistant to the left channel, resample both channels together to the target codec's rate (24 kHz for standard Mimi), and annotate assistant words. Preserve silence, overlap and shared time origin. Role-swapped copies must stay in the original split, with transcripts regenerated for the new assistant channel.
+
+### Exact Moshi input and checkpoint constraints
+
+Plain words: each training example is a stereo conversation with an adjacent word-timing file; arbitrary dialogue JSON is insufficient.
+
+Use an absolute-path JSONL manifest such as:
+
+```json
+{"path":"/data/approved/conversation_001.wav","duration":24.52}
+```
+
+The adjacent `/data/approved/conversation_001.json` contains assistant words with seconds measured from the start of that WAV:
+
+```json
+{"alignments":[["Hello",[0.5,0.9],"SPEAKER_MAIN"],["there.",[0.95,1.3],"SPEAKER_MAIN"]]}
+```
+
+The official annotator reads channel zero and produces this sidecar. Within an allocated worker, `python annotate.py train.jsonl --local --lang en --whisper_model medium` runs locally; omitting `--local` invokes its Slurm submission logic. Do not run this proposed GPU command on a login node. [Annotator](https://raw.githubusercontent.com/kyutai-labs/moshi-finetune/main/annotate.py)
+
+Require chronological alignments and timestamps within the clip. The interleaver performs a binary search before sorting, so unsorted input is unsafe. Training uses assistant-left/user-right audio and `keep_main_only=True` text supervision; user speech remains an audio input. Sidecar `text_conditions` support does not establish a valid timed MoshiRAG training format. [Interleaver](https://raw.githubusercontent.com/kyutai-labs/moshi-finetune/main/finetune/data/interleaver.py), [Dataset loader](https://raw.githubusercontent.com/kyutai-labs/moshi-finetune/main/finetune/data/dataset.py), [Training entry point](https://raw.githubusercontent.com/kyutai-labs/moshi-finetune/main/train.py)
+
+The official example targets **`kyutai/moshiko-pytorch-bf16`** and supports LoRA or full adaptation of the language/audio model while Mimi stays frozen. Its sample config disables evaluation; explicitly enable it and supply `eval_data`. Start with 16 approved examples, a small batch, checkpoint reload and free-running speech evaluation. The package pins **Torch 2.6 and sphn 0.1.12**, conflicting with the current Torch 2.9/MoshiRAG stack. Pin trainer and Moshi revisions and validate an isolated compatibility patch rather than installing its dependencies over the working container. [Example config](https://raw.githubusercontent.com/kyutai-labs/moshi-finetune/main/example/moshi_7B.yaml), [Trainer dependencies](https://raw.githubusercontent.com/kyutai-labs/moshi-finetune/main/pyproject.toml)
+
+Neither PersonaPlex nor MoshiRAG is verified as a drop-in checkpoint for this trainer. The loader uses `strict=False`; successful loading alone does not establish compatibility. Review missing/unexpected keys, tensor shapes, conditioning behavior, a backward step and saved-checkpoint inference. MoshiRAG's timed conditioning limitation identified above still needs an explicit training implementation. [Wrapped model and loading](https://raw.githubusercontent.com/kyutai-labs/moshi-finetune/main/finetune/wrapped_model.py)
+
+### Immediate smoke data and independent evaluation
+
+Plain words: DailyTalk can prove the trainer works today; it cannot prove generalization to new voices or realistic interruptions.
+
+Kyutai publishes **DailyTalkContiguous**, approximately 13.8 GB, with stereo conversations, timestamps and a JSONL manifest already suited to Moshi. Select 16 manifest entries and their paired WAV/JSON files before requesting a larger snapshot. The dataset is labeled CC-BY-SA 4.0. Its conversations concatenate DailyTalk turns; the original corpus was performed by only **two actors**. It cannot supply three voice-disjoint folds, and concatenated turns do not establish naturally occurring overlap. Use it for ingestion, optimizer and speech-retention smoke tests only. [Kyutai dataset and files](https://huggingface.co/datasets/kyutai/DailyTalkContiguous/tree/main), [Kyutai dataset card](https://huggingface.co/datasets/kyutai/DailyTalkContiguous), [Original DailyTalk paper, collection procedure](https://arxiv.org/html/2207.01063)
+
+Proposed split/quality contract for the actual experiment:
+
+- Group the existing synthetic lessons by original conversation, scenario family, repeated answer bank, near-duplicate transcript, source utterance hashes and TTS voice ID **before** augmentation or splitting. Different filenames do not establish independence.
+- For podcasts, keep whole episodes and related shows together; audit recurring speakers across feeds. Manifest speaker labels are episode-local, so show-disjoint alone cannot be advertised as voice-disjoint. Reserve unseen user voices and scenario families. If the assistant voice is deliberately fixed, state that controlled factor explicitly; evaluate new assistant voices separately only if claiming that ability.
+- Reject missing provenance, corrupt/channel-misaligned audio, excessive leakage, unreliable word timing and undetected speaker swaps. Listen to a stratified sample including overlap. Publish accepted duration by split, voice and source plus rejected counts, and retain explicit quality approvals.
+- Add separate, freshly authored delegation episodes with delayed returns, cancellation, correction and failure. Podcasts supply interaction behavior; they do not teach a task lifecycle. Hold out task families and result facts, and never expose a result in model context before its recorded arrival.
+
+These are source-verified acquisition and training proposals, not completed downloads, permission determinations, ARM compatibility tests or training results. The next concrete experiment is a 16-example native Moshi training smoke plus a two-episode DuplexChat reconstruction smoke, independently of the live-baseline selection.
