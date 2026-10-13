@@ -154,11 +154,11 @@ def run_pair(manifest, batch, prefix, single_mode=None, request_aligned=False):
                             events.append({"event": "worker_started", "at_s": before - start, "task_id": active_task})
                             pending = pool.submit(worker)
                         if pending is not None and pending.done() and not injected:
-                            tensor, requested, ready = pending.result()
+                            tensor, request_at, ready = pending.result()
                             if tensor.ndim != 3 or tensor.shape[0] != 1 or tensor.shape[2] != lm.dim or not torch.isfinite(tensor).all():
                                 raise RuntimeError("Invalid delivered reference")
                             generation.update_streaming_sum_tensors([tensor.squeeze(0)])
-                            events.append({"event": "reference_injected", "request_at_s": requested,
+                            events.append({"event": "reference_injected", "request_at_s": request_at,
                                            "ready_at_s": ready, "at_s": time.monotonic() - start,
                                            "chunk": index, "shape": list(tensor.shape), "reference": active_reference,
                                            "task_id": active_task})
