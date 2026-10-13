@@ -193,3 +193,91 @@ Proposed split/quality contract for the actual experiment:
 - Add separate, freshly authored delegation episodes with delayed returns, cancellation, correction and failure. Podcasts supply interaction behavior; they do not teach a task lifecycle. Hold out task families and result facts, and never expose a result in model context before its recorded arrival.
 
 These are source-verified acquisition and training proposals, not completed downloads, permission determinations, ARM compatibility tests or training results. The next concrete experiment is a 16-example native Moshi training smoke plus a two-episode DuplexChat reconstruction smoke, independently of the live-baseline selection.
+
+## Native Moshi smoke using our existing verified audio
+
+Plain words: we can test whether a native speech model trains and reloads without waiting for new data. This is a plain Moshi engineering smoke; adapting the retrieval model still needs a different conditioning path.
+
+### Pin the base and make the data conversion explicit
+
+The verified HF revision of `kyutai/moshiko-pytorch-bf16` is **`2bfc9ae6e89079a5cc7ed2a68436010d91a3d289`**. It contains `model.safetensors`, `tokenizer-e351c8d8-checkpoint125.safetensors` and `tokenizer_spm_32k_3.model`; there is no `config.json`. It is ungated, with CC-BY 4.0 weights. [Model metadata and revision](https://huggingface.co/api/models/kyutai/moshiko-pytorch-bf16)
+
+Trainer YAML exposes local model paths but no revision argument. Download those three files at the explicit revision, record hashes, and set all paths locally. Generate `base-config.json` from a deep copy of `moshi.models.loaders._lm_kwargs` in the pinned **plain Moshi** checkout. Record both code commit IDs and this config hash; no immutable code commit was resolved by this web audit. With `hf_repo_id: null` and all four local paths, the inspected loader avoids its config download/fallback. [Path arguments](https://raw.githubusercontent.com/kyutai-labs/moshi-finetune/main/finetune/args.py), [Checkpoint loader](https://raw.githubusercontent.com/kyutai-labs/moshi/main/moshi/moshi/models/loaders.py)
+
+Conversion requirements from this repository's actual code:
+
+- Select 16 conversations only after `data.synthetic.quality.checked_rows(..., require_timing=True)` passes against each source batch; retain source IDs and evidence hashes. Run the same check again at training startup.
+- Stack `stem_assistant.wav` as channel zero and `stem_user.wav` as channel one. Both are already positioned on the same 24 kHz timeline. **Do not use `mixed.wav`**, which sums assistant and user. Initially select conversations without background speech; adding a third speaker needs an explicit microphone-mixture policy. Check channel lengths, clipping and duration against decoded samples, not just manifest fields.
+- `timeline.actual.json` provides actual event offsets and sometimes `word_onsets_ms`; it does not provide full measured word intervals. The timing relabeler can interpolate missing onsets. Therefore do not manufacture word ends or present all stored onsets as measured. Re-annotate the final left stem with the official annotator, compare words against the verified audible text, and review truncated barge-in utterances. Preserve only spoken words, omitting our control-token labels and unsounded scripted tails.
+
+Local evidence: [renderer](../../data/synthetic/render.py), [timeline schema](../../data/synthetic/timeline.py), [timing audit](../../data/synthetic/timing_audit.py), [quality startup gate](../../data/synthetic/quality.py). Use the stereo/sidecar schema above. Keep four additional approved conversations in a separate smoke evaluation manifest; these are engineering diagnostics until their family/voice independence is established.
+
+### Concrete bounded configuration
+
+Plain words: use one GPU, a small adapter and a few optimizer steps; verify every layer of the path before trying to improve quality.
+
+Proposed `smoke.yaml`, with `/data/...` replaced by actual absolute paths. Each of the selected 16 conversations must fit within 100 seconds so four microbatches over four steps cover all 16 once with `shuffle: false`:
+
+```yaml
+data:
+  train_data: /data/moshi-smoke/train16.jsonl
+  eval_data: /data/moshi-smoke/eval4.jsonl
+  shuffle: false
+moshi_paths:
+  hf_repo_id: null
+  moshi_path: /data/moshiko-pinned/model.safetensors
+  mimi_path: /data/moshiko-pinned/tokenizer-e351c8d8-checkpoint125.safetensors
+  tokenizer_path: /data/moshiko-pinned/tokenizer_spm_32k_3.model
+  config_path: /data/moshiko-pinned/base-config.json
+full_finetuning: false
+lora:
+  enable: true
+  rank: 8
+  scaling: 2.0
+  ft_embed: false
+duration_sec: 100
+batch_size: 1
+num_microbatches: 4
+max_steps: 4
+gradient_checkpointing: true
+param_dtype: bfloat16
+first_codebook_weight_multiplier: 100.0
+text_padding_weight: 0.5
+optim:
+  lr: 2.0e-6
+  weight_decay: 0.1
+  pct_start: 0.5
+seed: 0
+log_freq: 1
+do_eval: true
+eval_freq: 0
+do_ckpt: true
+ckpt_freq: 0
+save_adapters: true
+num_ckpt_keep: 1
+run_dir: /data/moshi-smoke/run-unique
+overwrite_run_dir: false
+```
+
+Inside an allocated GH200 worker, invoke `torchrun --standalone --nproc_per_node=1 train.py --config /data/moshi-smoke/smoke.yaml`. Single-GPU loading bypasses FSDP, but distributed initialization/barriers still require `torchrun`. For the smallest plumbing-only pass, use one microbatch per step and four steps; this does not cover all 16 conversations. Avoid arbitrary one/two-step OneCycle schedules without checking their phase boundaries. This rank/schedule is a proposed smoke setting, not a tuned recipe. [Training entry point](https://raw.githubusercontent.com/kyutai-labs/moshi-finetune/main/train.py), [Single-GPU branch](https://raw.githubusercontent.com/kyutai-labs/moshi-finetune/main/finetune/wrapped_model.py)
+
+`eval_freq: 0` deliberately means final evaluation only. The trainer constructs a finite evaluation generator once and reuses it: a later evaluation can be empty. Its evaluator also counts the batch that triggers its 40-batch cap before breaking. Four evaluation conversations under 100 seconds avoid that cap. Before longer training, reconstruct the iterator for each evaluation and count processed batches correctly. [Evaluator](https://raw.githubusercontent.com/kyutai-labs/moshi-finetune/main/finetune/eval.py), [Finite dataset iteration](https://raw.githubusercontent.com/kyutai-labs/moshi-finetune/main/finetune/data/dataset.py)
+
+### Strict load, backward and reload acceptance
+
+Plain words: an output checkpoint file is insufficient; prove that intended weights changed and the saved adapter reproduces them.
+
+1. Capture `load_state_dict`'s incompatible keys in a bounded trainer patch. For base loading into LoRA, permit missing keys **only** from the model's exact `lora_A`/`lora_B` parameter set, and require zero unexpected keys. Standard LoRA load hooks remap base `weight` to `frozen_W.weight`. Require no meta parameters, finite tensors and the expected shapes; log trainable parameter names/counts. [LoRA load hook](https://raw.githubusercontent.com/kyutai-labs/moshi/main/moshi/moshi/modules/lora.py)
+2. Before stepping, require nonempty text/audio loss masks and finite losses. After backward require finite gradients and at least one nonzero adapter gradient; after stepping require changed adapter weights and unchanged frozen base weights. Zero gradients in some initial LoRA matrices can be legitimate, so do not demand every tensor change. Capture memory and elapsed time. Preserve the trainer's FP32 optimizer copies when adapting its code. [Mixed precision handling](https://raw.githubusercontent.com/kyutai-labs/moshi-finetune/main/finetune/mixed_precision.py)
+3. Expected output is `run-unique/checkpoints/checkpoint_000004/consolidated/{lora.safetensors,config.json}`. The current save method writes weights/config only despite accepting an optimizer; it is not a resumable optimizer checkpoint. Compare saved adapter keys exactly against the trainable parameter set. [Checkpoint writer](https://raw.githubusercontent.com/kyutai-labs/moshi-finetune/main/finetune/checkpointing.py)
+4. Start a fresh process. Build `CheckpointInfo` with the three original local files, saved `config.json`, and explicit `lora_weights=.../lora.safetensors`; call `get_moshi`. Ensure the saved config says LoRA enabled, rank 8, scaling 2. Pre-check that every expected adapter key is present, because the loader rejects unexpected adapter keys but does not explicitly reject all missing adapter keys. Compare fixed-input logits against the pre-save model within measured BF16 numerical tolerance, then generate audible speech from user-only audio. Loss/serialization success is not content quality. [Adapter loading](https://raw.githubusercontent.com/kyutai-labs/moshi/main/moshi/moshi/models/loaders.py)
+
+### ARM compatibility and the retrieval-model boundary
+
+Plain words: the old trainer and current speech package disagree even before GPU compatibility is considered.
+
+Current plain Moshi requires `sphn>=0.2,<0.3`; the trainer pins `sphn==0.1.12`. This conflict exists even without MoshiRAG. Preserve NGC Torch 2.9, torchaudio and Triton, install a separate pinned Moshi/trainer checkout without dependency replacement, and test the selected sphn version's `dataset_jsonl`, `.seq`, `.shuffle` and returned `data/unpadded_len/start_time_sec/path` fields on one converted conversation. Then run CUDA SDPA forward/backward and Mimi encode before the full smoke. Plain Moshi attention uses Torch SDPA; it does not introduce ARC's mandatory xformers kernel. [Current Moshi dependencies](https://raw.githubusercontent.com/kyutai-labs/moshi/main/moshi/pyproject.toml), [Attention implementation](https://raw.githubusercontent.com/kyutai-labs/moshi/main/moshi/moshi/modules/transformer.py)
+
+Do not silently substitute the concurrently installed MoshiRAG package under the same `moshi` import. Log module paths. In MoshiRAG, nonempty streaming reference conditioning asserts sequence length one, while ordinary training supplies whole sequences. Its conditioners also intentionally retain FP32, which conflicts with the plain trainer's blanket BF16 conversion/assertions. A retrieval adaptation needs a causal per-frame condition schedule plus an intentional mixed-dtype policy, validated against framewise inference; dropping the condition to make backward pass is not a delegation-training result. [MoshiRAG conditioning and model initialization](https://raw.githubusercontent.com/kyutai-labs/moshi-rag/main/moshi/moshi/models/lm.py)
+
+This plan has not been executed. No additional data, model files, packages or GPU jobs were acquired or launched during this source audit.
