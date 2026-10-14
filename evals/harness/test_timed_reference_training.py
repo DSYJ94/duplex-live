@@ -1,6 +1,7 @@
 """Test causal conditioning against the actual pinned native transformer."""
 import io
 import unittest
+from types import SimpleNamespace
 
 import torch
 from moshi.models import LMModel
@@ -17,6 +18,40 @@ def tiny_model():
 
 
 class TimedReferenceTest(unittest.TestCase):
+    def test_speaker_prefix_matches_serving_and_keeps_target_alignment(self):
+        from moshi.models.lm import _delay_sequence
+        torch.manual_seed(47)
+        model = tiny_model()
+        codes = torch.randint(0, 16, (1, 3, 12))
+        prefix = torch.randn(1, 2, 16)
+        reference = torch.zeros(1, 12, 16)
+        reference[:, 5:8] = torch.randn(1, 3, 16)
+        model.fuser = SimpleNamespace(get_sum=lambda _: None, get_cross=lambda _: None,
+            get_prepend=lambda _: prefix, get_streaming_sum=lambda _: None)
+        initial = model._get_initial_token()
+        delayed = _delay_sequence(model.delays, codes, initial)
+        sequence = torch.cat([initial, delayed], dim=2)[..., :-1]
+        with torch.no_grad(), no_compile():
+            result = forward_with_reference(model, codes, reference, {"speaker": prefix})
+            expected = []
+            with model.streaming(1):
+                model.forward_text(sequence_emb=prefix)
+                for index in range(12):
+                    _, logits = model.forward_text(sequence=sequence[..., index:index+1],
+                        streaming_sum_condition=reference[:, index:index+1])
+                    expected.append(logits)
+            self.assertEqual(result.text_logits.shape, (1, 1, 12, 32))
+            torch.testing.assert_close(result.text_logits, torch.cat(expected, dim=2), atol=2e-5, rtol=2e-5)
+            self.assertEqual(result.logits.shape, (1, 2, 12, 16))
+            without_prefix = forward_with_reference(model, codes, reference)
+            self.assertGreater((result.text_logits-without_prefix.text_logits).abs().max().item(), 1e-5)
+        model.train()
+        model.transformer.checkpointing = True
+        with no_compile():
+            result = forward_with_reference(model, codes, reference, {"speaker": prefix})
+            result.text_logits[result.text_mask].square().mean().backward()
+            self.assertTrue(torch.isfinite(model.text_linear.weight.grad).all())
+
     def test_rows_wait_for_ready_and_stop_at_cancellation(self):
         times = torch.tensor([0., .08, .16, .24, .32, .40])
         result = reference_schedule(times, [{"ready_at_s": .17,
