@@ -63,8 +63,8 @@ def main():
             inputs = processor(text=[prompt], return_tensors="pt", padding=True).to(model.device)
             started = time.monotonic()
             with torch.inference_mode():
-                tokens = model.generate(**inputs, max_new_tokens=256, do_sample=False,
-                                        return_audio=False)
+                tokens = model.generate(**inputs, thinker_max_new_tokens=256,
+                                        thinker_do_sample=False, return_audio=False)
             torch.cuda.synchronize()
             text = processor.batch_decode(tokens[:, inputs.input_ids.shape[1]:], skip_special_tokens=True)[0]
             try:
