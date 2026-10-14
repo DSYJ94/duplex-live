@@ -63,7 +63,8 @@ def main():
             inputs = processor(text=[prompt], return_tensors="pt", padding=True).to(model.device)
             started = time.monotonic()
             with torch.inference_mode():
-                tokens = model.thinker.generate(**inputs, max_new_tokens=256, do_sample=False)
+                tokens = model.generate(**inputs, max_new_tokens=256, do_sample=False,
+                                        return_audio=False)
             torch.cuda.synchronize()
             text = processor.batch_decode(tokens[:, inputs.input_ids.shape[1]:], skip_special_tokens=True)[0]
             try:
@@ -81,6 +82,7 @@ def main():
     report = {"model": model_id, "model_commit": getattr(model.config, "_commit_hash", None),
         "repo_commit": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
         "probe_source_sha256": sha256(__file__), "cases": len(results),
+        "generation_path": "native model.generate, return_audio=False, default thinker EOS 151645",
         "policy_matches": sum(r["policy_match"] for r in results),
         "invalid_outputs": sum(not r["valid_json"] for r in results),
         "missed_required_delegation": sum(r["expected_policy_route"] == "delegate" and r["selected_route"] != "delegate" for r in results),

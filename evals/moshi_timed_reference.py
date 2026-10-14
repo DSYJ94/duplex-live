@@ -3,8 +3,6 @@
 The encoder stays frozen. Each row reaches exactly one temporal transformer
 step, as in the inference queue. No new model parameters or checkpoint keys.
 """
-from types import MethodType
-
 
 def reference_schedule(frame_times, arrivals, dim):
     """Map completed encoder results onto model-step availability times.
@@ -43,43 +41,58 @@ Overlapping deliveries are rejected until training data specifies replacement.
 
 
 def forward_with_reference(model, codes, reference, conditions=None):
-    """Use the native training forward with a per-step reference addition.
+    """Preserve native token delays, prefix positions and prediction masks.
 
-This training-only wrapper is not safe for concurrent use of the same model.
-The native embedding sum handles dtype conversion before transformer execution.
-The addition happens before checkpointed transformer layers, so recomputation
-uses the same conditioned input even after this method is restored.
+Serving consumes the speaker prefix as embeddings before token frames. Build
+that same causal sequence for parallel training, then remove prefix outputs
+before the native depth decoder and target alignment. Nothing mutates the model.
 """
     import torch
+    from moshi.models.lm import LMOutput, _delay_sequence, _undelay_sequence
+    if codes.ndim != 3 or codes.shape[1] != model.num_codebooks:
+        raise ValueError("Codes must match the native codebook layout")
     if reference.shape != (codes.shape[0], codes.shape[-1], model.dim):
         raise ValueError("Reference must match [batch, model steps, model dimension]")
     if reference.requires_grad or not torch.isfinite(reference).all():
         raise ValueError("Reference encoder must remain frozen and finite")
-    if getattr(model, "_timed_reference_active", False):
-        raise RuntimeError("Nested/concurrent timed-reference forward")
-    original = model.forward_text
-    had_instance_method = "forward_text" in model.__dict__
-    previous_instance_method = model.__dict__.get("forward_text")
-
-    def conditioned(self, sequence=None, sequence_emb=None, sum_condition=None,
-                    cross_attention_src=None, streaming_sum_condition=None):
-        if sequence is None or sequence_emb is not None or sequence.shape[-1] != reference.shape[1]:
-            raise ValueError("Unexpected training sequence/prepend layout")
-        if streaming_sum_condition is not None and streaming_sum_condition.numel():
+    initial = model._get_initial_token().expand(codes.shape[0], -1, -1)
+    delayed = torch.cat([initial, _delay_sequence(model.delays, codes, initial)], dim=2)
+    sequence = delayed[..., :-1]
+    embedded = None
+    for index in range(model.num_audio_codebooks):
+        audio = model.emb[index](sequence[:, index + model.audio_offset])
+        embedded = audio if embedded is None else embedded + audio
+    text = model.text_emb(sequence[:, 0])
+    embedded = text if embedded is None else embedded + text
+    prefix, cross = None, None
+    if conditions is not None:
+        if model.fuser is None:
+            raise ValueError("Conditions require the native fuser")
+        existing_stream = model.fuser.get_streaming_sum(conditions)
+        if existing_stream is not None and existing_stream.numel():
             raise ValueError("Do not combine whole-sequence and streaming references")
-        combined = reference.to(device=sequence.device, dtype=self.dtype)
-        if sum_condition is not None:
-            combined = combined + sum_condition.to(combined)
-        return original(sequence=sequence, sum_condition=combined,
-                        cross_attention_src=cross_attention_src, streaming_sum_condition=None)
-
-    model._timed_reference_active = True
-    model.forward_text = MethodType(conditioned, model)
-    try:
-        return model(codes=codes, condition_tensors=conditions)
-    finally:
-        if had_instance_method:
-            model.forward_text = previous_instance_method
-        else:
-            del model.forward_text
-        del model._timed_reference_active
+        static = model.fuser.get_sum(conditions)
+        if static is not None:
+            embedded = embedded + static.to(embedded)
+        prefix = model.fuser.get_prepend(conditions)
+        cross = model.fuser.get_cross(conditions)
+    # Match serving arithmetic: sum static conditions, then the current row.
+    embedded = embedded + reference.to(embedded)
+    prefix_length = 0
+    if prefix is not None and prefix.shape[1]:
+        if prefix.ndim != 3 or prefix.shape[0] != codes.shape[0] or prefix.shape[2] != model.dim:
+            raise ValueError("Invalid native speaker prefix")
+        prefix_length = prefix.shape[1]
+        embedded = torch.cat([prefix.to(embedded), embedded], dim=1)
+    hidden, text_logits = model.forward_text(sequence_emb=embedded, cross_attention_src=cross)
+    hidden = hidden[:, prefix_length:]
+    text_logits = text_logits[:, :, prefix_length:]
+    if hidden.shape[1] != codes.shape[-1]:
+        raise RuntimeError("Prefix changed audio target alignment")
+    audio_logits = model.forward_depformer_training(delayed[..., 1:], hidden)
+    audio_logits, audio_mask = _undelay_sequence(
+        model.delays[model.audio_offset:model.audio_offset + model.dep_q], audio_logits, fill_value=float("NaN"))
+    audio_mask &= codes[:, model.audio_offset:model.audio_offset + model.dep_q] != model.zero_token_id
+    text_logits, text_mask = _undelay_sequence(model.delays[:1], text_logits, fill_value=float("NaN"))
+    text_mask &= codes[:, :1] != model.zero_token_id
+    return LMOutput(audio_logits, audio_mask, text_logits, text_mask)
