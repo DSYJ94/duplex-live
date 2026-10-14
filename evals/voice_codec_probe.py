@@ -6,7 +6,9 @@ grants a data-quality approval. Keep the original and reconstructed WAVs audible
 import argparse
 import datetime
 import json
+import os
 import subprocess
+import sys
 from pathlib import Path
 
 from evals.moshi_model_download import sha256
@@ -43,6 +45,11 @@ def main():
     if len(clip) != stop-start or float(np.sqrt(np.mean(clip**2))) < .001:
         raise RuntimeError("Missing or silent development reference excerpt")
     args.out.mkdir(parents=True, exist_ok=False)
+    # Native Mimi compiles its streaming attention too. Reuse the same
+    # job-local driver linker repair as PersonaPlex generation.
+    os.environ["TRITON_LIBCUDA_PATH"] = subprocess.check_output([
+        sys.executable, "-m", "evals.cuda_linker_path", "--out", str(args.out / "driver")],
+        text=True).strip()
     sf.write(args.out / "reference.wav", clip, rate, subtype="FLOAT")
     weight = args.model / "tokenizer-e351c8d8-checkpoint125.safetensors"
     mimi = loaders.get_mimi(weight, device="cuda").eval().requires_grad_(False)
