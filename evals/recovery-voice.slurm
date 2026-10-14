@@ -17,6 +17,10 @@ export DL SOURCE
 export RECOVERY_VOICE_DATA="${RECOVERY_VOICE_DATA:?Verified conversion required}"
 export RECOVERY_VOICE_SCENARIO="${RECOVERY_VOICE_SCENARIO:-recovery-validation-000}"
 export RECOVERY_VOICE_ADAPTER="${RECOVERY_VOICE_ADAPTER:-}"
+if [ -n "$RECOVERY_VOICE_ADAPTER" ] && [ ! -f "$RECOVERY_VOICE_ADAPTER" ]; then
+  echo "RECOVERY_VOICE_ADAPTER must name the saved lora.safetensors file" >&2
+  exit 2
+fi
 set -a
 source "$DL/keys/openai.env"
 set +a
