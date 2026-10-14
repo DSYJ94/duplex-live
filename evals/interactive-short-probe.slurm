@@ -14,6 +14,7 @@ cd /projects/u6si/duplex-live/repo
 case "${1:?Choose rag, personaplex or qwen}" in
   rag) SCRIPT=evals/moshi-rag-training-proof.slurm ;;
   rag-reload) SCRIPT=evals/moshi-rag-reload-only.slurm ;;
+  recovery-data) SCRIPT=evals/recovery-prepare-data.slurm ;;
   personaplex) SCRIPT=evals/personaplex-recovery.slurm ;;
   qwen) SCRIPT=evals/qwen-delegation-probe.slurm ;;
   *) exit 2 ;;
