@@ -66,12 +66,29 @@ def main():
         root = f"lychee-voice-{args.lychee_job}"
         card("Lychee-FD with synthetic marin reference", root+"/model.wav",
              "Strictly loaded native model and published vocoder, offline audition. No paced or delegation qualification.", root+"/report.json")
+    alternatives = "".join(cards)
+    cards.clear()
+    if args.gpt_live_job:
+        root = f"gpt-live-replay-{args.gpt_live_job}/t1"
+        card("GPT-Live voice only", root+"/packet-stream.wav",
+             "Start here. Original generated speech without inserted network gaps. Voice-quality reference, not a latency demonstration.", root+"/report.json")
+    card("PersonaPlex original NATF2", "personaplex-recovery-7402673/t1/model_out.wav",
+         "Your preferred model so far, with the audible artifacts you reported. This exporter already joins speech frames continuously.")
+    if args.custom_persona_job:
+        root = f"voice-quality-{args.custom_persona_job}/synthetic-marin"
+        card("PersonaPlex with synthetic voice reference", root+"/t1/model_out.wav",
+             "Only the voice prompt changes. Its factual answers still fail; listen specifically for clicks and broken speech.", root+"/summary.json")
+    if args.lychee_job:
+        root = f"lychee-voice-{args.lychee_job}"
+        card("Lychee-FD alternative", root+"/model.wav",
+             "Another native duplex model. Offline voice audition only; no delegation or live acceptance yet.", root+"/report.json")
     page = '<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
     page += '<title>Voice diagnostics</title><style>body{max-width:1100px;margin:32px auto;padding:0 20px;background:#10141c;color:#e7ecf5;font:16px/1.5 system-ui}section{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}article{padding:20px;background:#1a2230;border:1px solid #354157;border-radius:12px}audio{width:100%}p{color:#b9c5d8}a{color:#9dc3ff}</style>'
-    page += '<h1>Voice diagnostics</h1><p>The owner rejected both current PersonaPlex and MoshiRAG voices. None of these new probes has been accepted. Compare naturalness, clarity, rhythm and artifacts separately from answer correctness.</p>'
-    page += '<h2>Does the codec preserve an acceptable voice?</h2><section>'+controls+'</section>'
-    page += '<h2>Check clicks introduced by playback timing</h2><section>'+playback+'</section>'
-    page += '<h2>Generated speech on the same four science questions</h2><p>Different models may answer differently. Only completed local recordings appear below. These are development auditions, not a controlled full-task ranking.</p><section>'+''.join(cards)+'</section>'
+    page += '<h1>Compare the audio artifacts</h1><p>Start with the players below. PersonaPlex is preferred over MoshiRAG, but clicks and broken speech remain unacceptable. These new probes are not yet accepted. Judge the sound separately from factual correctness.</p>'
+    page += '<section>'+''.join(cards)+'</section>'
+    page += '<details><summary>Codec controls: same words, different decoder execution</summary><section>'+controls+'</section></details>'
+    page += '<details><summary>Playback timing controls</summary><section>'+playback+'</section></details>'
+    page += '<details><summary>Other voices on the same four science questions</summary><p>Different models may answer differently. Only completed local recordings appear below. These are development auditions, not a full-task ranking.</p><section>'+alternatives+'</section></details>'
     page += '<p><a href="/audio/voice-comparison/index.html">Earlier task comparisons</a> · <a href="/">Full gallery</a></p></html>'
     out = args.runs / "voice-diagnostics" / "index.html"
     out.parent.mkdir(parents=True, exist_ok=True)

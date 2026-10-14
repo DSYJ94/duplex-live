@@ -102,12 +102,15 @@ def main():
         "model_class": "Training_package.Code.Models.LycheeFD.LycheeFD with strict loading wrapper",
         "compatibility": "explicit alias for absent official runtime module; PCM-only TorchAudio loader",
         "bf16_environment_rule": compatibility,
+        "align_audio_input": True,
+        "input_clock": "published application: alternating audio-patch/audio-pad slots, 25Hz control clock",
         "training_approved": False, "learned_delegation_tested": False,
         "voice_provenance": provenance,
     }
     (args.out / "environment.json").write_text(json.dumps(environment, indent=2)+"\n")
     framework = SingleTurnGenerationFramework("V9", str(model_path),
-        device="cuda", attn_implementation="sdpa", torch_dtype=torch.bfloat16)
+        device="cuda", attn_implementation="sdpa", torch_dtype=torch.bfloat16,
+        align_audio_input=True)
     (args.out / "loading.json").write_text(json.dumps(loading_receipt, indent=2)+"\n")
     pcm, rate = sf.read(args.batch / "dense_dialog-001" / "stem_user.wav", dtype="float32")
     if pcm.ndim != 1 or len(pcm) < 60*rate or not np.isfinite(pcm).all():
@@ -118,7 +121,9 @@ def main():
     sf.write(args.out / "user_in.wav", audio, 16000)
     started = time.monotonic()
     with torch.inference_mode():
-        events = framework.full_chunk_stream_offline_generation(audio)
+        generated = framework.full_chunk_stream_offline_generation(audio, return_raw_trace=True)
+    events = generated["events"]
+    (args.out / "native-trace.json").write_text(json.dumps(generated["trace"])+"\n")
     (args.out / "events.json").write_text(json.dumps(events, indent=2)+"\n")
     # Release the large speech LM before loading the separate published vocoder.
     del framework
