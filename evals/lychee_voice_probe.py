@@ -35,6 +35,8 @@ def main():
     import torch
     import torchaudio
     import transformers
+    from evals.lychee_environment_check import configure_bf16
+    compatibility = configure_bf16()
     from scipy.signal import resample_poly
     from data.synthetic.quality import checked_rows
     from evals.minicpm_recovery_probe import read_reference_wav
@@ -96,6 +98,7 @@ def main():
         "mode": "official offline multi-head generation; no paced or microphone claim",
         "model_class": "Training_package.Code.Models.LycheeFD.LycheeFD with strict loading wrapper",
         "compatibility": "explicit alias for absent official runtime module; PCM-only TorchAudio loader",
+        "bf16_environment_rule": compatibility,
         "training_approved": False, "learned_delegation_tested": False,
         "voice_provenance": provenance,
     }

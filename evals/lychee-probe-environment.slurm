@@ -20,4 +20,4 @@ apptainer exec --bind /projects,/lus,/home "$DL/pytorch-new.sif" \
 apptainer exec --bind /projects,/lus,/home \
   --env PYTHONPATH="$OUT:$DL/tmp/minicpm-recovery-7377673:$DL/repo" \
   --env PYTHONDONTWRITEBYTECODE=1 "$DL/pytorch-new.sif" \
-  python -c 'import torch, torchaudio, transformers, peft, datasets, librosa, s3tokenizer, onnxruntime, hyperpyyaml; print("Torch",torch.__version__,torch.__file__); print("Transformers",transformers.__version__); print("ARM dependency imports passed")'
+  python -m evals.lychee_environment_check

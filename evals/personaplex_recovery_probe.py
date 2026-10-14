@@ -3,6 +3,7 @@
 Offline replay establishes content and voice only, not wall-clock live latency.
 """
 import argparse
+import importlib.metadata
 import json
 import math
 import os
@@ -63,6 +64,7 @@ def main():
         "assets": {str(p): {"sha256": sha256(p), "bytes": p.stat().st_size} for p in assets}}
     env["voice_conditioning"] = {"path": str(args.voice), "provenance": voice_provenance,
                                  "training_approved": False}
+    env["pyloudnorm"] = importlib.metadata.version("pyloudnorm") if voice_provenance else None
     (args.out / "environment.json").write_text(json.dumps(env, indent=2) + "\n")
     pcm, sr = sf.read(args.batch / scenario / "stem_user.wav", dtype="float32")
     if pcm.ndim != 1 or not np.isfinite(pcm).all() or len(pcm) < 60 * sr:
