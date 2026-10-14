@@ -30,10 +30,11 @@ async def run(args):
         from evals.recovery_worker import RecordWorld
         conversion = validate_conversion(args.conversion)
         row = next(r for r in conversion["accepted"] if r["scenario_id"] == scenario)
-        if row["split"] != "validation" or Path(conversion["source_batch"]) != args.batch:
-            raise RuntimeError("Fresh comparison must use the approved validation source")
+        required_split = "train" if args.purpose == "teacher" else "validation"
+        if row["split"] != required_split or Path(conversion["source_batch"]) != args.batch:
+            raise RuntimeError("Teacher/comparison source does not match its sealed fold")
         metadata = json.loads(Path(row["path"]).with_suffix(".json").read_text())["timeline"]["meta"]
-        world = RecordWorld({metadata["project"]:{metadata["field"]:metadata["phrase"]}})
+        world = RecordWorld({metadata["project"]:{metadata["field"]:metadata["phrase"]}}) if metadata["phrase"] else RecordWorld({})
     args.out.mkdir(parents=True, exist_ok=False)
     key = os.environ["OPENAI_API_KEY"]
     source = args.batch / scenario / "stem_user.wav"
@@ -55,7 +56,9 @@ async def run(args):
         "fresh_holdout": False, "microphone_acceptance": False,
         "matched_backend_comparison": False, "worker": "actual Responses reasoning on received transcripts",
         "input_seconds": seconds, "added_silence_seconds": 15,
-        "scenario":scenario,"actual_record_tools":world is not None}
+        "scenario":scenario,"actual_record_tools":world is not None,"purpose":args.purpose,
+        "provenance_class":"closed-content","source_model":"gpt-live-1","created_date":"2026-10-14",
+        "training_approved":False}
     (args.out / "environment.json").write_text(json.dumps(env, indent=2) + "\n")
     headers = {"Authorization": "Bearer " + key,
         "OpenAI-Safety-Identifier": hashlib.sha256(b"duplex-live-evaluation").hexdigest()}
@@ -193,6 +196,7 @@ def main():
     parser.add_argument("--backend", default="gpt-6-luna")
     parser.add_argument("--scenario",default="dense_dialog-001")
     parser.add_argument("--conversion",type=Path)
+    parser.add_argument("--purpose",choices=("comparison","teacher"),default="comparison")
     asyncio.run(run(parser.parse_args()))
 
 
