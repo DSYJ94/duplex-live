@@ -7,6 +7,12 @@ from evals.moshi_model_download import sha256
 def validate_conversion(data):
     from data.synthetic.quality import checked_rows
     receipt = json.loads((data / "ingestion.json").read_text())
+    if receipt.get("schema") == "dl-composed-native-v1":
+        from evals.recovery_compose_data import validate_composition
+        return validate_composition(data,receipt)
+    if receipt.get("schema") == "dl-teacher-native-v1":
+        from evals.recovery_teacher_convert import validate_teacher_conversion
+        return validate_teacher_conversion(data,receipt)
     batch = Path(receipt["source_batch"])
     if sha256(batch / "quality.jsonl") != receipt["source_quality_sha256"] or sha256(
             batch / "specifications.json") != receipt["sealed_specs_sha256"]:

@@ -2,6 +2,7 @@
 import copy
 import unittest
 from evals.recovery_teacher_quality import assess
+from evals.recovery_teacher_convert import measured_timeline
 
 
 class TeacherQualityTests(unittest.TestCase):
@@ -39,6 +40,35 @@ class TeacherQualityTests(unittest.TestCase):
     def test_invalid_measured_interval_rejected(self):
         self.speech["asr_segments"][0]["words"][0]["end"] = float("nan")
         self.assertFalse(assess(self.speech,self.events,self.meta,"private",self.session)["speech_and_fact_checks_pass"])
+
+
+class TeacherGridTests(unittest.TestCase):
+    def setUp(self):
+        self.source = {"events":[{"ch":"user","start_ms":0,"actual_start_ms":0,
+            "actual_end_ms":1000,"text":"Check project Birch."}],"meta":{"kind":"private"}}
+        self.words = [{"text":"Checked","start":3.,"end":3.3},{"text":"blue","start":3.4,"end":3.7}]
+
+    def test_actual_word_clock_retained(self):
+        timeline,offset = measured_timeline("teacher",self.words,self.source,[{"received_at_s":2.13}],[])
+        event = next(e for e in timeline.events if e.ch == "assistant" and e.kind == "utterance")
+        self.assertEqual(event.word_onsets_ms,[0,400])
+        self.assertLessEqual(offset,40)
+        marker = next(e for e in timeline.events if e.kind == "marker")
+        self.assertGreaterEqual(marker.start_ms,2130)
+
+    def test_causal_input_guard(self):
+        with self.assertRaisesRegex(ValueError,"predates"):
+            measured_timeline("teacher",self.words,self.source,[{"received_at_s":.8}],[])
+
+    def test_no_invented_subword_intervals(self):
+        self.words[0]["text"] = "checked blue"
+        with self.assertRaisesRegex(ValueError,"own measured interval"):
+            measured_timeline("teacher",self.words,self.source,[],[])
+
+    def test_actual_collision_bar_retained(self):
+        words = [{"text":str(i),"start":3.,"end":3.2} for i in range(5)]
+        with self.assertRaisesRegex(ValueError,"lost|200ms"):
+            measured_timeline("teacher",words,self.source,[],[])
 
 
 if __name__ == "__main__":

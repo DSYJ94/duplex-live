@@ -2174,3 +2174,27 @@ reference influence. Single-slot repeated controls are the next diagnostic.
 Next jobs: 7410566 weighted-128 generated voice; 7410567 matched weighted-32 workq
 comparison. Independent teacher speech/fact audit is committed next. Human voice
 preference pending at the focused local comparison page; no product model selected.
+
+## 2026-10-14 — Captured reference proof and first spoken result
+
+Single-slot 7410621 remains inconclusive under the normal attention backend:
+control-repeat error .1875, reference-prefix error .125. Deterministic math SDPA
+7410675 passes with both errors exactly 0.0 and post-reference difference 5.6953125
+(actual frozen ARC injected at 6.32 s). This isolates reference transport through
+captured temporal inference; it is not a free-running task or latency result.
+Production attention remains unchanged.
+
+Voice 7410566 fails before generation because its launch argument named a
+directory rather than lora.safetensors. Broken pending cancellation/simple jobs
+7410623/7410624 were cancelled before compute, replaced by 7410642/7410643.
+Correct private replay 7410641 completes, requests actual record reads at 5.14
+and 12.76 s, applies ten ARC rows and speaks yellow circle. It also guesses red
+early and repeats answers. Verdict FAIL. ASR audit 7410741 confirms actual speech
+with WER .01695 and valid timestamps. Full recordings/receipts are local.
+
+Matched weighted-32 workq 7410567 was held, replaced by bounded interactive
+7410830, then cancelled; no duplicate GPU work. GPT-Live teacher GPU audit
+7410622 was likewise replaced by explicit CPU 7410766 with the same judge and
+threshold. Train-only measured conversion/composition is committed, with no
+word interpolation, 200 ms grid bar and unchanged sealed validation/test rows.
+Independent audio/fact approval and native codec/marker checks still gate use.

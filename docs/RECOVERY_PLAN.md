@@ -20,8 +20,12 @@ Native rank-8 LoRA training 7408323 completes 32 updates and exact fresh-process
 reload (text/audio error 0.0). Weighted 128-update workq run 7408653 also completes
 with exact reload, 674 changed adapter tensors and unchanged frozen weights.
 It weights delegation-token targets by 10 and checked-result words by 3; this
-is a development objective comparison, not a quality verdict. Its speech replay
-is job 7410566. Matched weighted 32-update workq comparison is 7410567.
+is a development objective comparison, not a quality verdict. Corrected speech
+replay 7410641 includes yellow circle but guesses red first and repeats answers;
+it fails the task. Audit 7410741 confirms this in audio, WER .01695 with valid
+word/segment bounds. 7410566 failed on a directory passed instead of the adapter
+file; a preflight guard now catches that. Matched weighted-32 workq 7410567 was
+replaced by bounded exploratory interactive 7410830 without duplicate compute.
 
 Generated validation replay of released base 7408188 and 32-update candidate
 7408416 both dispatch actual `gpt-6-luna` record workers and apply returned ARC
@@ -38,10 +42,19 @@ calls and four simple answers without delegation. Raw recordings remain
 unapproved. Independent word/fact checks and native timing conversion are next;
 no validation/test replay may be added to training.
 
-Captured-inference reference tests 7409127/7410405 are inconclusive: two batch
+Captured-inference reference tests 7409127/7410405/7410621 are inconclusive: two batch
 slots differ before reference injection, even with identical teacher-forced
 histories. A repeated single-slot test now requires exact control repeatability
-and unchanged causal prefixes before claiming reference influence.
+and unchanged causal prefixes before claiming reference influence. Deterministic
+math-SDPA single-slot test 7410675 now passes: repeat/prefix errors both 0.0,
+post-reference maximum difference 5.6953. This proves transport through captured
+native temporal inference, not free-running speech success or production latency.
+
+GPU teacher audit 7410622 was replaced by explicit CPU audit 7410766 using the
+same judge/bar; no silent model fallback. Teacher conversion preserves measured
+word onsets and actual worker receipt times in a separate immutable train-only
+corpus. Composition requires child approvals and keeps all base validation/test
+rows unchanged. Native codec token/marker collision checks remain required.
 
 Listening: http://localhost:8766/audio/voice-comparison/index.html . The owner
 has been given the link; voice preference remains pending. No candidate has

@@ -9,12 +9,16 @@ semantic workers, not Qwen control-row scale-up or pretraining from scratch.
 38 strictly approved scenes encoded in 7408223. Native 32-update 7408323 and
 weighted 128-update 7408653 both save/reload exactly; generated base and first
 32-update replay both omit returned private facts. 128-update speech replay
-7410566 and matched weighted 32-update training 7410567 follow.
+7410641 includes the correct private fact, but guesses red early and repeats it;
+independent audit 7410741 confirms the speech. It fails the task. Matched weighted
+32-update interactive 7410830 replaces pending workq 7410567 without duplication.
 Twelve GPT-Live TRAIN-only teacher recordings are raw, not approved; resumed
 CPU collection 7409126 completed. Independent speech/fact/grid checks must
 precede training. Keep validation/test audio sealed. All source/hash and
 mixed-dtype reload guards remain mandatory. Captured reference counterfactual
-needs exact single-slot repeatability after inconclusive paired-slot tests.
+passes with deterministic math SDPA in 7410675: control repeat/prefix errors 0.0,
+post-reference difference 5.6953. This engineering proof is not generated quality.
+Teacher audit is explicitly CPU job 7410766; raw source remains immutable.
 Voice audition: http://localhost:8766/audio/voice-comparison/index.html .
 No backbone or checkpoint has passed product acceptance. Historical entries
 and GPU-hour totals below must not be reported as current state.
