@@ -108,6 +108,7 @@ async def run(args):
                                 if not world.deliverable(receipt):
                                     record({"type":"local.worker.stale","task_id":delegation_id})
                                     return
+                                world.mark_ready(receipt)
                             text = result["content"]
                             data = {"usage": [e["usage"] for e in result["events"]],"id":result["events"][-1]["response_id"]}
                             record({"type":"local.worker.tool_result","task_id":delegation_id,"result":result})

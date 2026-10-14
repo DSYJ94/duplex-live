@@ -2,6 +2,8 @@
 import argparse
 import asyncio
 import json
+import os
+import socket
 import subprocess
 import threading
 import time
@@ -114,13 +116,20 @@ def main():
             raise RuntimeError("Nonfinite warmup")
     upstream._service = service
     # Actual localhost TCP transport and upstream endpoint/consumer, not a stub.
-    server = uvicorn.Server(uvicorn.Config(upstream.app, host="127.0.0.1", port=18001,
+    listener = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+    listener.bind(("127.0.0.1",0))
+    listener.listen(128)
+    reference_url = f"http://127.0.0.1:{listener.getsockname()[1]}"
+    os.environ["RECOVERY_REFERENCE_URL"] = reference_url
+    report["reference_url"] = reference_url
+    server = uvicorn.Server(uvicorn.Config(upstream.app, host="127.0.0.1", port=listener.getsockname()[1],
                                           log_level="warning"))
-    thread = threading.Thread(target=server.run, daemon=True)
+    thread = threading.Thread(target=server.run,kwargs={"sockets":[listener]},daemon=True)
     thread.start()
     deadline = time.monotonic() + 20
     while not server.started:
         if not thread.is_alive() or time.monotonic() > deadline:
+            listener.close()
             raise RuntimeError("Encoder HTTP startup failed")
         time.sleep(0.05)
     texts = ["", "The access code is cobalt.",
@@ -132,7 +141,7 @@ def main():
         outputs, records = [], []
         for index, text in enumerate(texts):
             request_start = time.monotonic()
-            tensor = await get_conditioning_remote_async(text, "http://127.0.0.1:18001", timeout=60)
+            tensor = await get_conditioning_remote_async(text,reference_url,timeout=60)
             elapsed = time.monotonic() - request_start
             if tensor.ndim != 3 or tensor.shape[0] != 1 or tensor.shape[1] == 0 or tensor.shape[2] != config["dim"]:
                 raise RuntimeError(f"Invalid embedding shape: {tuple(tensor.shape)}")
@@ -197,6 +206,7 @@ def main():
     finally:
         server.should_exit = True
         thread.join(timeout=10)
+        listener.close()
 
 
 if __name__ == "__main__":

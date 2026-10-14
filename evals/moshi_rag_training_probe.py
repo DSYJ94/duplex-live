@@ -2,6 +2,7 @@
 import argparse
 import asyncio
 import json
+import os
 import subprocess
 from pathlib import Path
 
@@ -80,7 +81,7 @@ def main():
     codes = codes.to("cuda")
     reference = asyncio.run(get_conditioning_remote_async(
         "A checked result says bread firms because starch retrogradation reorganizes its structure, not simply drying out.",
-        "http://127.0.0.1:18001", timeout=60)).detach()
+        os.environ.get("RECOVERY_REFERENCE_URL","http://127.0.0.1:18001"), timeout=60)).detach()
     times = torch.arange(codes.shape[-1], dtype=torch.float64, device="cuda") * .08
     timeline = reference_schedule(times, [{"ready_at_s": 4., "rows": reference[0]}], model.dim)[None]
     if args.steps:

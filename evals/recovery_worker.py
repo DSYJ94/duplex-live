@@ -30,7 +30,7 @@ class RecordWorld:
     def reserve(self, task_id, context=None):
         with self.lock:
             revision = self.tasks.get(task_id, {}).get("revision", 0) + 1
-            self.tasks[task_id] = {"revision":revision,"cancelled":False,"context":context}
+            self.tasks[task_id] = {"revision":revision,"cancelled":False,"phase":"pending","context":context}
             return revision
 
     def read(self, task_id, project, field, expected_revision=None):
@@ -46,7 +46,7 @@ class RecordWorld:
                 revision = expected_revision
             receipt = {"task_id":task_id,"revision":revision,"tool":"lookup_record", "project":project,"field":field,
                 "value":self.records[project][field],"read_only":True,"executed":True}
-            self.tasks[task_id].update(operation="lookup_record",project=project,field=field)
+            self.tasks[task_id].update(operation="lookup_record",phase="running",project=project,field=field)
             self.receipts.append(receipt)
             return receipt
 
@@ -71,6 +71,12 @@ class RecordWorld:
             receipts = [self.cancel(t) for t in task_ids]
             return {"tool":"cancel_lookup","cancelled":True,"task_ids":task_ids,"receipts":receipts}
 
+    def mark_ready(self,receipt):
+        with self.lock:
+            if not self.deliverable(receipt):
+                raise WorkerSuperseded("Cancelled or replaced lookup cannot become ready")
+            self.tasks[receipt["task_id"]]["phase"] = "result_ready"
+
 
 def tool(name,description,properties):
     return {"type":"function","name":name,"description":description,"strict":True,
@@ -91,7 +97,8 @@ def run_worker(context,world,task_id,model="gpt-6-luna",expected_revision=None):
     with world.lock:
         available = {"records":{p:list(fields) for p,fields in world.records.items()},
             "tasks":{name:state.copy() for name,state in world.tasks.items() if not state["cancelled"] and name != task_id}}
-    instructions = ("Help a live voice assistant with the latest request in its transcript. "
+    instructions = ("Help a live voice assistant with only the latest USER request in its chronological transcript. "
+        "Do not repeat older pending or completed lookups merely because the voice assistant has not spoken their results. "
         "Answer simple general knowledge without tools. Private records require lookup_record; never invent their contents. "
         "Clarify missing project or field. Honor negation and corrections. Cancel only identified existing tasks. "
         "The current dispatch is not a cancellation target. When duplicate active lookups belong to the cancelled request, "

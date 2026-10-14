@@ -8,11 +8,13 @@ import asyncio
 import concurrent.futures
 import json
 import math
+import os
 import time
 from pathlib import Path
 from evals.moshi_model_download import sha256
 from evals.recovery_data import validate_conversion
 from evals.recovery_worker import RecordWorld,run_worker,WorkerSuperseded
+from evals.recovery_context import causal_dialogue
 
 
 def main(argv=None):
@@ -73,7 +75,8 @@ def main(argv=None):
             time.sleep(max(0.,start+triggered+delay-time.monotonic()))
             if not world.deliverable(receipt):
                 raise WorkerSuperseded("Completed lookup was cancelled before reference delivery")
-        rows = asyncio.run(get_conditioning_remote_async(result["content"],"http://127.0.0.1:18001",timeout=60))
+            world.mark_ready(receipt)
+        rows = asyncio.run(get_conditioning_remote_async(result["content"],os.environ.get("RECOVERY_REFERENCE_URL","http://127.0.0.1:18001"),timeout=60))
         return result,rows,receipt,time.monotonic()-start
     with concurrent.futures.ThreadPoolExecutor(max_workers=3) as pool:
         with mimi.streaming(1),gen.streaming(1),torch.inference_mode():
@@ -141,8 +144,7 @@ def main(argv=None):
                             events.append({"event":"request_limit_reached","at_s":elapsed})
                         else:
                             words = [w for w in sidecar["user_words"] if w["end_s"] <= due]
-                            context = [{"role":"user","text":" ".join(w["text"] for w in words)},
-                                {"role":"assistant","text":"".join(p["text"] for p in packets)}]
+                            context = causal_dialogue(sidecar,due,packets,elapsed)
                             task_id = "request-"+str(index)
                             revision = world.reserve(task_id,context=context)
                             futures[task_id] = (pool.submit(worker,context,task_id,revision,elapsed),revision)
@@ -162,6 +164,7 @@ def main(argv=None):
         "compute_p95_s":float(np.percentile([p["compute_s"] for p in packets],95)),
         "max_input_backlog_s":max(p["input_backlog_s"] for p in packets),
         "context_source":"measured completed user words: causal transcript oracle, not live ASR",
+        "context_format":"separate chronological user utterances and generated assistant chunks",
         "routing":"native speech model requests work; API worker selects semantic operation and arguments",
         "complete_task_success":"pending grading","human_listening":"pending","microphone_acceptance":False}
     (args.out / "report.json").write_text(json.dumps(report,indent=2)+"\n")

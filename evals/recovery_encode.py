@@ -3,6 +3,7 @@ import argparse
 import asyncio
 import json
 import math
+import os
 import sys
 from pathlib import Path
 from evals.moshi_model_download import sha256
@@ -92,7 +93,7 @@ def main(argv=None):
             markers.append(index)
         arrivals = []
         for item in sidecar["reference_arrivals"]:
-            rows = asyncio.run(get_conditioning_remote_async(item["text"],"http://127.0.0.1:18001",timeout=60))
+            rows = asyncio.run(get_conditioning_remote_async(item["text"],os.environ.get("RECOVERY_REFERENCE_URL","http://127.0.0.1:18001"),timeout=60))
             arrivals.append({**item,"rows":rows[0].detach().cpu()})
         reference = reference_schedule(torch.arange(codes.shape[-1],dtype=torch.float64)*.08,arrivals,4096)[None]
         name = row["scenario_id"] + ".pt"

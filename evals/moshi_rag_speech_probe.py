@@ -143,7 +143,7 @@ def run_pair(manifest, batch, prefix, single_mode=None, request_aligned=False):
                 def worker(reference_text=reference, delay=worker_delay):
                     time.sleep(delay)
                     request_start = time.monotonic() - start
-                    tensor = asyncio.run(get_conditioning_remote_async(reference_text, "http://127.0.0.1:18001", timeout=60))
+                    tensor = asyncio.run(get_conditioning_remote_async(reference_text,os.environ.get("RECOVERY_REFERENCE_URL","http://127.0.0.1:18001"),timeout=60))
                     return tensor, request_start, time.monotonic() - start
 
                 with (out / "packets.jsonl").open("w") as stream:
