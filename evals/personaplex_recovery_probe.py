@@ -5,7 +5,9 @@ Offline replay establishes content and voice only, not wall-clock live latency.
 import argparse
 import json
 import math
+import os
 import subprocess
+import sys
 import time
 from pathlib import Path
 
@@ -39,6 +41,8 @@ def main():
         "model.safetensors", "tokenizer-e351c8d8-checkpoint125.safetensors",
         "tokenizer_spm_32k_3.model", "config.json")] + [args.voice]
     args.out.mkdir(parents=True, exist_ok=False)
+    os.environ["TRITON_LIBCUDA_PATH"] = subprocess.check_output([
+        sys.executable, "-m", "evals.cuda_linker_path", "--out", str(args.out / "driver")], text=True).strip()
     env = {"model_revision": args.model.name, "source_commit": subprocess.check_output(
         ["git", "-C", str(args.source), "rev-parse", "HEAD"], text=True).strip(),
         "repo_commit": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
