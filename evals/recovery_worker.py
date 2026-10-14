@@ -85,6 +85,20 @@ def run_worker(context,world,task_id,model="gpt-6-luna"):
         return data
     response = request({**base,"input":json.dumps(context)})
     calls = [item for item in response["output"] if item["type"] == "function_call"]
+    if not calls:
+        planning_text = " ".join(part["text"] for item in response["output"] if item["type"] == "message"
+            for part in item.get("content",[]) if part["type"] == "output_text")
+        plan = json.loads(planning_text)
+        required_tool = {"delegate":"lookup_record","cancel":"cancel_lookup"}.get(plan["route"])
+        if required_tool:
+            # Routing JSON is a plan, not a tool receipt. Execute the selected
+            # phase explicitly; the model still supplies identifying arguments.
+            response = request({**base,"previous_response_id":response["id"],
+                "input":"Execute the selected tool now. Do not repeat the acknowledgement.",
+                "tool_choice":{"type":"function","name":required_tool}})
+            calls = [item for item in response["output"] if item["type"] == "function_call"]
+            if not calls:
+                raise WorkerContractError("Required execution phase returned no tool call",{"events":events,"plan":plan})
     receipts = []
     if calls:
         if len(calls) != 1:
@@ -108,4 +122,6 @@ def run_worker(context,world,task_id,model="gpt-6-luna"):
         raise WorkerContractError("Delegation reported without actual record execution",result)
     if parsed["route"] == "cancel" and not any(r["tool"] == "cancel_lookup" for r in receipts):
         raise WorkerContractError("Cancellation reported without actual task cancellation",result)
+    if receipts and parsed["route"] != {"lookup_record":"delegate","cancel_lookup":"cancel"}[receipts[0]["tool"]]:
+        raise WorkerContractError("Executed tool and reported route disagree",result)
     return result
