@@ -7,7 +7,98 @@ authorized by the owner's 13 October request to get the best result using the
 remaining Isambard allocation. Historical completion statements apply only to
 the previous phase.
 
-## Current execution — 14 October, native teacher pilot evaluated
+## Current execution — 14 October, audible artifacts and voice alternatives
+
+**Owner feedback:** PersonaPlex is definitely better than the corrected MoshiRAG
+voice, but both remain unacceptable because of crackling, clicks or broken speech.
+This is a relative preference, not acceptance. No product model qualifies. Clifton
+access is restored and verified by actual SSH; do not request another sign-in.
+
+### Recording fault found; perceptual cause still under investigation
+
+The availability-aligned recorder starts each packet as soon as possible without
+a startup buffer. The old Moshi recording can be reproduced sample-for-sample
+from its packet ledger: it inserts two underruns (silence when the next packet
+is late), totaling 122.54 ms, largest 82.96 ms. A causal 160 ms startup buffer
+preserves every generated sample and removes both underruns. Originals and
+original latency evidence stay intact. This does not prove every click is fixed.
+PersonaPlex's official offline exporter already concatenates frames continuously,
+so this fault cannot explain its artifacts. The gallery serves byte-identical
+WAVs; PersonaPlex and GPT-Live have no clipped samples or sample-rate mismatch.
+
+Fresh GPT-Live replay now writes original, buffered and raw-packet diagnostic WAVs
+plus exact packet availability/underrun receipts. Raw packet concatenation is a
+voice diagnostic, never a wall-clock timing claim. Future native recovery replays
+also preserve both views. New buffering has three regression tests, including
+the requirement to retain real stalls rather than hiding them.
+
+Eight-codebook Mimi reconstruction 7414595 preserves the 10-second reference's
+240,000 samples with zero padding. CPU decoder control 7415051 decodes the exact
+same tokens without compilation: RMS difference from compiled GPU 0.0000311,
+maximum 0.002305. This is numerical evidence, not a perceptual verdict. GPU
+uncompiled control and the custom PersonaPlex prompt run in 7415052. The codec
+control uses the original arrival-aligned GPT-Live recording, which may itself
+contain recording gaps; do not treat it as a pristine voice-quality ceiling.
+
+Listening: http://localhost:8766/audio/voice-diagnostics/index.html . Builder:
+`python -m evals.build_voice_diagnostics --quality-job 7414595 ...` . Only completed
+local recordings appear. NATF1/NATM1 auditions in 7414595 finish, but still give
+incorrect bread-staling answers; changing voice does not fix intelligence.
+Custom-prompt attempts expose missing `pyloudnorm`, then its `future` dependency;
+the job-local overlay now supplies both and checks imports before model loading.
+Failed and completed conditions remain separate, immutable artifacts.
+
+### Training supervision corrected, without claiming a trained improvement
+
+The previous result-weight limitation below is now fixed. Private and clarify
+scenes can weight exactly the checked phrase's actual native subwords, verified
+against independent measured words and the result-ready time. Missing/reordered
+tokens or premature phrases fail closed. Cancellation keeps its last-utterance
+acknowledgement scope. `--result-scope last-utterance` explicitly reproduces the
+historical objective; the new default is `measured-phrase`.
+
+The regression reproduces the old whole-stream mistake before the fix, then passes.
+CPU audit 7414927 checks all 23 eligible TRAIN/validation scenes, excluding sealed
+test labels. The six natural private teachers now select 2–3 checked subwords,
+rather than weighting their entire 34–55-token responses. No optimizer steps have
+run with this revised objective. Current relevant local suite: 36 tests pass.
+
+### Alternative native model, assets prepared rather than accepted
+
+Lychee-FD releases a 13B native duplex checkpoint plus a separate Step-Audio-2-mini
+vocoder and training code. See the [official model card](https://huggingface.co/HIT-TMG/Lychee-FD)
+and [source](https://github.com/HITsz-TMG/Lychee-FD). Asset job 7414609 pins model
+`ac06087bef70b33d4dfebf63a3eadadb4e024f33`, vocoder
+`e36fdd5d71e0ea22f09dd94bbab9bfc544ca1e36` and source
+`7bb1068c59b578e1f8e65fb762cd26708c14cc6d`, recording every file hash.
+The packaged HF auto-map points at the simplex class without the checkpoint's
+acoustic/control/merge branches; its offline runtime also imports an absent
+module. Our explicit bridge selects the released native training implementation
+and rejects every missing, unexpected or mismatched weight. No silent fallback.
+
+Environment attempts 7414719/7414866 fail on an unused optional TorchAO API, then
+missing datasets. A fresh isolated overlay explicitly disables only optional
+quantization discovery for ordinary BF16 loading, adds dataset dependencies and
+checks actual native source imports on CPU before releasing the GPU dependency.
+7415053/7415054 are the current environment/native audition chain. No Lychee
+audible result or latency/tool-selection qualification is claimed yet.
+
+### Retrieved sampling results and protected backups
+
+Both previously unread temperature-.2 jobs completed. Audit 7414528 confirms
+7412588 says only “yellow”, omitting “circle” and the science answer (WER 0).
+7412590 has bad spoken content (WER 0.2174, valid time bounds), premature private
+claims and a late native cancellation request at 22.58 s after the user's cancel
+ends at 19.42 s. Actual cancellation eventually succeeds in the application, but
+after the private reference was already queued at 22.48 s. Neither replay passes.
+
+All 48 mixed code/audio payloads remain backed up. Previously interrupted parent
+metadata retrieval is complete; all three parent conversion ingestion hashes
+match their cache receipts. Canonical cluster paths/hashes remain unchanged.
+No additional authorization is needed for this work. Normal bulk/training stays
+on workq; the interactive reservation is only bounded diagnosis/audition work.
+
+## Earlier execution — 14 October, native teacher pilot evaluated
 
 **Current verdict:** no product model qualifies. Native training and exact
 serialization now work; generated speech still fails task selection, waiting,
@@ -108,7 +199,7 @@ single-slot fused-attention tests are inconclusive. Production attention remains
 unchanged; this isolates reference transport, not free-running task success.
 27 current local causal/context/cancellation/alignment regressions pass.
 
-### Actual input needed and continuation
+### Earlier access interruption and continuation — superseded above
 
 Listening: http://localhost:8766/audio/voice-comparison/index.html . Top row is
 GPT-Live / PersonaPlex / corrected MoshiRAG on the same four science questions,

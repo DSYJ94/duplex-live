@@ -70,6 +70,7 @@ def main(argv=None):
     sf.write(args.out / "stem_user.wav",pcm,rate)
     world = RecordWorld({metadata["project"]:{metadata["field"]:metadata["phrase"]}}) if metadata["phrase"] else RecordWorld({})
     events,packets,output = [],[],np.zeros(0,dtype=np.float32)
+    audio_packets = []
     futures,completed,active = {},[],None
     delay = max(0.,(metadata.get("planned_lookup_ready_s") or 0)-(metadata.get("lookup_trigger_s") or 0))
     start = None
@@ -133,6 +134,7 @@ def main(argv=None):
                     applied = apply_reference_frame(gen)
                     tokens = gen.step(codes)
                     text,token = "",None
+                    audio_available, playback, samples = None, None, 0
                     if tokens is not None:
                         token = int(tokens[0,0,0])
                         if token >= 5:
@@ -140,8 +142,11 @@ def main(argv=None):
                         wave = mimi.decode(tokens[:,1:]).detach().float().cpu().numpy().reshape(-1)
                         if not np.isfinite(wave).all():
                             raise RuntimeError("Nonfinite generated speech")
-                        offset = max(len(output),math.ceil((time.monotonic()-start)*rate))
+                        audio_available = time.monotonic()-start
+                        offset = max(len(output),math.ceil(audio_available*rate))
                         output = np.concatenate([np.pad(output,(0,offset-len(output))),wave])
+                        audio_packets.append((audio_available, wave))
+                        playback, samples = offset/rate, len(wave)
                     torch.cuda.synchronize()
                     elapsed = time.monotonic()-start
                     if token == 4:
@@ -157,11 +162,18 @@ def main(argv=None):
                                 "latest_user_word_end_s":max((w["end_s"] for w in words),default=None),"context":context,
                                 "trigger":"native model RAG token"})
                     packet = {"frame":index,"input_available_s":due,"input_consumed_s":before,"packet_available_s":elapsed,
-                        "compute_s":elapsed-before,"input_backlog_s":before-due,"text":text,"token":token,"reference_l1":applied}
+                        "compute_s":elapsed-before,"input_backlog_s":before-due,"text":text,"token":token,"reference_l1":applied,
+                        "audio_available_s":audio_available,"playback_start_s":playback,"samples":samples}
                     packets.append(packet)
                     log.write(json.dumps(packet)+"\n")
                     log.flush()
     sf.write(args.out / "model.wav",output,rate)
+    if audio_packets:
+        from evals.audio_playout import render_packets
+        buffered, playout = render_packets(audio_packets, rate, .16)
+        sf.write(args.out / "model-buffered.wav", buffered, rate)
+        sf.write(args.out / "packet-stream.wav", np.concatenate([p for _,p in audio_packets]), rate)
+        (args.out / "playout.json").write_text(json.dumps(playout, indent=2)+"\n")
     report = {"scenario":args.scenario,"split":"validation","adapter":str(args.adapter) if args.adapter else None,
         "text_temperature":gen.temp_text,"audio_temperature":gen.temp,
         "text":"".join(p["text"] for p in packets),"events":events,"tool_receipts":world.receipts,

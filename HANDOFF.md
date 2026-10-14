@@ -1,6 +1,6 @@
 # HANDOFF — where we are (updated 2026-10-14 for agent succession)
 
-## Current continuation — 2026-10-14, access refresh needed
+## Current continuation — 2026-10-14, audible artifacts under investigation
 
 Start at [docs/RECOVERY_PLAN.md](docs/RECOVERY_PLAN.md), current execution section.
 Owner authorizes needed compute before expiry and asks to continue until actual
@@ -22,23 +22,34 @@ component 7411885 passes 8/8 with 3 actual reads; this is not native intelligenc
 Self-cancellation bug reproduced/fixed; native missed dispatch remains unsolved.
 Causal dialogue context excludes future words/GT assistant answers; still an
 oracle, not live ASR. Single-context voice and job-local HTTP ports work. Current
-27 local causal/context/atomic-cancel/alignment tests pass. Captured reference
+36 relevant local causal/context/atomic-cancel/alignment/playout tests pass. Captured reference
 proof 7410675 repeat/prefix errors 0.0, post-injection change 5.6953.
 
-Clifton expired at 19:30:50 UTC on 14 October. Agent launched renewal; Chrome
-Isambard sign-in awaits owner's provider/login. If expired, run `clifton auth`
-again. Pending text-temperature .2 probes: 7412588 private, 7412590 cancel. Status
-unread: retrieve full logs/artifacts after login; do not duplicate jobs.
-All code through 61d667a was pushed/pulled; this handoff update needs cluster pull
-once access returns. No new compute authorization required.
+Clifton renewal is verified by live SSH. Temperature-.2 probes 7412588/7412590
+both fail; the latter eventually dispatches real cancellation, but too late.
+Speech audit 7414528 and full recordings/logs are retrieved. Do not rerun duplicates.
 
-Listening: http://localhost:8766/audio/voice-comparison/index.html . Voice
-preference pending. All 48 mixed codes and 48 audio/sidecars are backed up locally
-with matching hashes; parent metadata archive is incomplete after expiry. Exact
-resume priorities and objective limitation (teacher result weight covers whole
-assistant stream) are in the recovery plan. Historical completion statements and
-GPU-hour snapshots below are superseded; latest terminal snapshot is 2.136667
-allocated GPU-hours through 7412064, not remaining balance.
+Owner prefers PersonaPlex over MoshiRAG but rejects both audio qualities, specifically
+clicks/crackling/broken speech. Recorder repair proves the old Moshi capture inserts
+two underruns totaling 122.54 ms; a causal 160 ms startup buffer removes both with
+identical generated samples. PersonaPlex's offline exporter is already continuous,
+so its artifacts remain unexplained. Never claim all clicks fixed from this result.
+CPU Mimi decoder control 7415051 differs from compiled GPU by RMS 0.0000311;
+GPU no-compile control/custom voice retry 7415052 and fresh buffered GPT-Live
+7415050 are in progress. New listening page:
+http://localhost:8766/audio/voice-diagnostics/index.html .
+
+Private-result objective now uses exact measured checked-phrase subwords rather
+than whole natural teacher streams. CPU audit 7414927 passes 23 TRAIN/validation
+scenes; test labels untouched. No optimizer steps with the revised scope yet.
+Lychee-FD assets 7414609 are downloaded/pinned; environment/native-audition chain
+7415053/7415054 is unqualified. Missing optional dependencies are recorded, not
+hidden. Read the recovery plan for strict loading and exact job/path details.
+
+All 48 mixed codes/audio scenes plus parent metadata are backed up; three parent
+ingestion hashes match. Historical completion statements/GPU-hour snapshots below
+are superseded; 2.136667 hours through 7412064 excludes subsequent work and is not
+remaining balance. No new compute authorization is required.
 
 ## ACTIVE CONTINUATION — 2026-10-13 recovery
 

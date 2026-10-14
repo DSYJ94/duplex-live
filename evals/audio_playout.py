@@ -49,7 +49,7 @@ def main():
         end = offset+row["samples"]
         if offset < cursor or end > len(audio) or np.count_nonzero(audio[cursor:offset]):
             raise RuntimeError("Packet ledger does not exactly cover captured PCM and inserted zeros")
-        packets.append((row["packet_available_s"], audio[offset:end]))
+        packets.append((row.get("audio_available_s", row["packet_available_s"]), audio[offset:end]))
         cursor = end
     if cursor != len(audio):
         raise RuntimeError("Packet ledger leaves unaccounted audio")
