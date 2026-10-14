@@ -15,6 +15,11 @@ case "${1:?Choose rag, personaplex or qwen}" in
   rag) SCRIPT=evals/moshi-rag-training-proof.slurm ;;
   rag-reload) SCRIPT=evals/moshi-rag-reload-only.slurm ;;
   recovery-data) SCRIPT=evals/recovery-prepare-data.slurm ;;
+  recovery-encode) SCRIPT=evals/recovery-encode.slurm ;;
+  recovery-pilot)
+    test "${RECOVERY_STEPS:-32}" -le 32
+    SCRIPT=evals/recovery-train.slurm ;;
+  recovery-voice) SCRIPT=evals/recovery-voice.slurm ;;
   personaplex) SCRIPT=evals/personaplex-recovery.slurm ;;
   qwen) SCRIPT=evals/qwen-delegation-probe.slurm ;;
   *) exit 2 ;;

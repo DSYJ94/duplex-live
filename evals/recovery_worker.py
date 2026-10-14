@@ -7,6 +7,7 @@ backend component is a hybrid bridge, not proof of learned speech-model routing.
 import json
 import os
 import time
+import threading
 
 
 class WorkerContractError(RuntimeError):
@@ -15,35 +16,50 @@ class WorkerContractError(RuntimeError):
         self.result = result
 
 
+class WorkerSuperseded(RuntimeError):
+    pass
+
+
 class RecordWorld:
     def __init__(self, records):
         self.records = records
         self.tasks = {}
         self.receipts = []
+        self.lock = threading.RLock()
 
-    def reserve(self, task_id):
-        revision = self.tasks.get(task_id, {}).get("revision", 0) + 1
-        self.tasks[task_id] = {"revision":revision,"cancelled":False}
-        return revision
+    def reserve(self, task_id, context=None):
+        with self.lock:
+            revision = self.tasks.get(task_id, {}).get("revision", 0) + 1
+            self.tasks[task_id] = {"revision":revision,"cancelled":False,"context":context}
+            return revision
 
-    def read(self, task_id, project, field):
-        if project not in self.records or field not in self.records[project]:
-            raise ValueError("Tool requested an unknown project or record field")
-        revision = self.reserve(task_id)
-        receipt = {"task_id":task_id,"revision":revision,"tool":"lookup_record", "project":project,"field":field,
-            "value":self.records[project][field],"read_only":True,"executed":True}
-        self.receipts.append(receipt)
-        return receipt
+    def read(self, task_id, project, field, expected_revision=None):
+        with self.lock:
+            if project not in self.records or field not in self.records[project]:
+                raise ValueError("Tool requested an unknown project or record field")
+            if expected_revision is None:
+                revision = self.reserve(task_id)
+            else:
+                state = self.tasks.get(task_id)
+                if not state or state["cancelled"] or state["revision"] != expected_revision:
+                    raise WorkerSuperseded("Task was cancelled or replaced before record execution")
+                revision = expected_revision
+            receipt = {"task_id":task_id,"revision":revision,"tool":"lookup_record", "project":project,"field":field,
+                "value":self.records[project][field],"read_only":True,"executed":True}
+            self.receipts.append(receipt)
+            return receipt
 
     def cancel(self, task_id):
-        if task_id not in self.tasks or self.tasks[task_id]["cancelled"]:
-            raise ValueError("No active task to cancel")
-        self.tasks[task_id]["cancelled"] = True
-        return {"task_id":task_id,"revision":self.tasks[task_id]["revision"],"tool":"cancel_lookup","cancelled":True}
+        with self.lock:
+            if task_id not in self.tasks or self.tasks[task_id]["cancelled"]:
+                raise ValueError("No active task to cancel")
+            self.tasks[task_id]["cancelled"] = True
+            return {"task_id":task_id,"revision":self.tasks[task_id]["revision"],"tool":"cancel_lookup","cancelled":True}
 
     def deliverable(self, receipt):
-        state = self.tasks.get(receipt["task_id"])
-        return bool(state and not state["cancelled"] and state["revision"] == receipt["revision"])
+        with self.lock:
+            state = self.tasks.get(receipt["task_id"])
+            return bool(state and not state["cancelled"] and state["revision"] == receipt["revision"])
 
 
 def tool(name,description,properties):
@@ -51,7 +67,7 @@ def tool(name,description,properties):
         "parameters":{"type":"object","properties":properties,"required":list(properties),"additionalProperties":False}}
 
 
-def run_worker(context,world,task_id,model="gpt-6-luna"):
+def run_worker(context,world,task_id,model="gpt-6-luna",expected_revision=None):
     import requests
     key = os.environ.get("OPENAI_API_KEY")
     if not key:
@@ -61,13 +77,15 @@ def run_worker(context,world,task_id,model="gpt-6-luna"):
         tool("cancel_lookup","Cancel an identified active lookup and reject its future result.",{"task_id":{"type":"string"}})]
     schema = {"type":"object","properties":{"route":{"type":"string","enum":["answer","clarify","delegate","cancel"]},
         "content":{"type":"string"}},"required":["route","content"],"additionalProperties":False}
+    with world.lock:
+        available = {"records":{p:list(fields) for p,fields in world.records.items()},
+            "tasks":{name:state.copy() for name,state in world.tasks.items() if not state["cancelled"]}}
     instructions = ("Help a live voice assistant with the latest request in its transcript. "
         "Answer simple general knowledge without tools. Private records require lookup_record; never invent their contents. "
         "Clarify missing project or field. Honor negation and corrections. Cancel only an identified active task. "
         "Use route delegate after a record tool, cancel after cancellation, otherwise answer or clarify. "
         "Do not say a lookup or cancellation completed until its tool receipt is present. Reply in at most 60 words. "
-        "Available project/field names and active tasks: " + json.dumps({"records":{p:list(fields) for p,fields in world.records.items()},
-            "tasks":{name:state for name,state in world.tasks.items() if not state["cancelled"]}}))
+        "Available project/field names and active tasks: " + json.dumps(available))
     base = {"model":model,"instructions":instructions,"tools":tools,"parallel_tool_calls":False,
         "max_output_tokens":2048,"reasoning":{"effort":"low"},
         "text":{"format":{"type":"json_schema","name":"worker_result","strict":True,"schema":schema}}}
@@ -109,7 +127,7 @@ def run_worker(context,world,task_id,model="gpt-6-luna"):
         call = calls[0]
         arguments = json.loads(call["arguments"])
         if call["name"] == "lookup_record":
-            receipt = world.read(task_id,**arguments)
+            receipt = world.read(task_id,**arguments,expected_revision=expected_revision)
             selected_route = "delegate"
         elif call["name"] == "cancel_lookup":
             receipt = world.cancel(**arguments)

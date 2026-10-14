@@ -2,7 +2,7 @@ import unittest
 import json
 import types
 from unittest.mock import patch
-from evals.recovery_worker import RecordWorld,run_worker
+from evals.recovery_worker import RecordWorld,run_worker,WorkerSuperseded
 
 
 class RecordGuards(unittest.TestCase):
@@ -25,6 +25,14 @@ class RecordGuards(unittest.TestCase):
         world = RecordWorld({"Cedar":{"badge":"violet triangle"}})
         with self.assertRaises(ValueError):
             world.read("task","unknown","badge")
+        self.assertEqual(world.receipts,[])
+
+    def test_cancel_before_record_execution_cannot_resurrect_task(self):
+        world = RecordWorld({"Cedar":{"badge":"violet triangle"}})
+        revision = world.reserve("task")
+        world.cancel("task")
+        with self.assertRaises(WorkerSuperseded):
+            world.read("task","Cedar","badge",expected_revision=revision)
         self.assertEqual(world.receipts,[])
 
     def test_delegation_acknowledgement_requires_real_execution(self):
