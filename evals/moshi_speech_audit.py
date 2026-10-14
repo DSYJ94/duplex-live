@@ -17,6 +17,7 @@ def main():
     ap.add_argument("--live-runs", nargs="+", type=Path, default=[])
     ap.add_argument("--out", type=Path, required=True)
     ap.add_argument("--trim-trailing-silence", action="store_true")
+    ap.add_argument("--device",choices=("cuda","cpu"),default="cuda")
     args = ap.parse_args()
     if not args.runs and not args.live_runs:
         ap.error("At least one native or GPT-Live run is required")
@@ -26,7 +27,7 @@ def main():
     from scipy.signal import resample_poly
     from data.synthetic.filter import norm_words, wer
     args.out.mkdir(parents=True, exist_ok=False)
-    model = whisper.load_model("turbo", device="cuda")
+    model = whisper.load_model("turbo", device=args.device)
     results = []
     for run,kind in [(r,"native") for r in args.runs]+[(r,"GPT-Live") for r in args.live_runs]:
         wav = run / ("model.wav" if kind == "native" else "model_out.wav")
@@ -70,7 +71,7 @@ def main():
         print(json.dumps({k: v for k, v in record.items() if k != "asr_segments"}), flush=True)
     (args.out / "report.json").write_text(json.dumps({"schema": "dl-native-speech-audit-v1",
         "whisper": importlib.metadata.version("openai-whisper"),
-        "timestamped": importlib.metadata.version("whisper-timestamped"), "results": results}, indent=2)+"\n")
+        "timestamped": importlib.metadata.version("whisper-timestamped"), "device":args.device,"results": results}, indent=2)+"\n")
 
 
 if __name__ == "__main__":

@@ -106,12 +106,13 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--batch",type=Path,required=True)
     parser.add_argument("--out",type=Path,required=True)
+    parser.add_argument("--device",choices=("cuda","cpu"),default="cuda")
     args = parser.parse_args()
     manifest = validate_teacher(args.batch)
     # Existing independent audio auditor preserves the original WAV and only
     # trims trailing quiet for Whisper. It does not grant training approval.
     from evals.moshi_speech_audit import main as audit
-    sys.argv = [sys.argv[0],"--out",str(args.out),"--trim-trailing-silence","--live-runs",*[
+    sys.argv = [sys.argv[0],"--out",str(args.out),"--device",args.device,"--trim-trailing-silence","--live-runs",*[
         str(args.batch / record["dir"]) for record in manifest["recordings"]]]
     audit()
     speech = json.loads((args.out / "report.json").read_text())["results"]
