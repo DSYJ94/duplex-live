@@ -13,7 +13,10 @@ cd "$DL/repo"
 set -a
 source "$DL/keys/openai.env"
 set +a
+OPTIONS=()
+OUT="$DL/runs/recovery-curriculum-${SLURM_JOB_ID}"
+if [ -n "${RECOVERY_RESUME_DIR:-}" ]; then OUT="$RECOVERY_RESUME_DIR"; OPTIONS+=(--resume); fi
 apptainer exec --bind /projects,/lus,/home \
   --env PYTHONPATH="$DL/repo" --env PYTHONDONTWRITEBYTECODE=1 \
   "$DL/pytorch-new.sif" "$DL/envs/moshi-rag-7379661/bin/python" \
-  -u -m data.synthetic.recovery_curriculum --out "$DL/runs/recovery-curriculum-${SLURM_JOB_ID}"
+  -u -m data.synthetic.recovery_curriculum --out "$OUT" "${OPTIONS[@]}"

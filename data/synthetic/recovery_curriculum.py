@@ -89,18 +89,23 @@ def synthesize(text, voice, path):
     for attempt, backoff in enumerate((0, 1, 5)):
         if backoff:
             time.sleep(backoff)
-        response = requests.post("https://api.openai.com/v1/audio/speech",
-            headers={"Authorization": "Bearer " + key}, timeout=90,
-            json={"model": MODEL, "input": text, "voice": voice, "response_format": "wav",
-                  "instructions": "Speak naturally in clear conversational English. Read exactly the supplied words, without additions."})
+        try:
+            response = requests.post("https://api.openai.com/v1/audio/speech",
+                headers={"Authorization": "Bearer " + key}, timeout=90,
+                json={"model": MODEL, "input": text, "voice": voice, "response_format": "wav",
+                      "instructions": "Speak naturally in clear conversational English. Read exactly the supplied words, without additions."})
+        except (requests.exceptions.Timeout, requests.exceptions.ConnectionError):
+            continue
         if response.status_code == 200:
             path.write_bytes(response.content)
             pcm, rate = sf.read(path)
             if pcm.ndim != 1 or len(pcm) < rate*.1 or len(pcm) > rate*30:
                 raise RuntimeError("Invalid generated clip dimensions/duration")
-            return {"request_id": response.headers.get("x-request-id"), "source_model": MODEL,
+            receipt = {"request_id": response.headers.get("x-request-id"), "source_model": MODEL,
                 "voice": voice, "sha256": hashlib.sha256(response.content).hexdigest(),
                 "attempt": attempt, "sample_rate": rate, "seconds": len(pcm)/rate}
+            path.with_suffix(".receipt.json").write_text(json.dumps(receipt)+"\n")
+            return receipt
         if response.status_code not in (429, 500, 502, 503):
             raise RuntimeError(f"Speech API rejected request: HTTP {response.status_code}")
     raise RuntimeError("Speech API retries exhausted")
@@ -171,27 +176,65 @@ def assemble(scene, out, receipts):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--out", type=Path, required=True)
+    parser.add_argument("--resume", action="store_true")
     args = parser.parse_args()
     scenes = specifications()
-    args.out.mkdir(parents=True, exist_ok=False)
-    (args.out / "specifications.json").write_text(json.dumps(scenes, indent=2)+"\n")
+    if args.resume:
+        if (args.out / "quality.jsonl").exists():
+            raise RuntimeError("Do not mutate a corpus after quality stamping")
+        if json.loads((args.out / "specifications.json").read_text()) != json.loads(json.dumps(scenes)):
+            raise RuntimeError("Cannot resume a changed split/specification")
+    else:
+        args.out.mkdir(parents=True, exist_ok=False)
+        (args.out / "specifications.json").write_text(json.dumps(scenes, indent=2)+"\n")
     work = []
     for scene in scenes:
         directory = args.out / scene["scenario_id"] / "utterances"
-        directory.mkdir(parents=True)
+        directory.mkdir(parents=True, exist_ok=args.resume)
         for index,(role,text) in enumerate(scene["utterances"]):
             work.append((scene, index, role, text, directory / f"{index:02d}_{role}.wav"))
     receipts = {s["scenario_id"]: {} for s in scenes}
     if len(work) > 200 or sum(len(w[3]) for w in work) > 10000:
         raise RuntimeError("Curriculum exceeds bounded generation budget")
-    # Verify this project's model and both role voices before issuing the batch.
-    for scene,index,role,text,path in work[:2]:
+    remaining = []
+    if args.resume:
+        import soundfile as sf
+        import numpy as np
+        for scene,index,role,text,path in work:
+            if not path.exists():
+                remaining.append((scene,index,role,text,path))
+                continue
+            pcm,rate = sf.read(path)
+            if pcm.ndim != 1 or not np.isfinite(pcm).all() or not .1 <= len(pcm)/rate <= 30:
+                raise RuntimeError("Resume encountered an invalid saved clip")
+            sidecar = path.with_suffix(".receipt.json")
+            digest = hashlib.sha256(path.read_bytes()).hexdigest()
+            if sidecar.exists():
+                receipt = json.loads(sidecar.read_text())
+                if receipt["sha256"] != digest or receipt["voice"] != scene[role+"_voice"] or receipt["source_model"] != MODEL:
+                    raise RuntimeError("Saved clip provenance changed")
+            else:
+                receipt = {"source_model":MODEL,"voice":scene[role+"_voice"],"sha256":digest,
+                    "request_id":None,"sample_rate":rate,"seconds":len(pcm)/rate,
+                    "receipt_recovered_from": "interrupted pinned generation; request ID was not persisted"}
+                sidecar.write_text(json.dumps(receipt)+"\n")
+            receipts[scene["scenario_id"]][index] = receipt
+    else:
+        remaining = list(work)
+    print(json.dumps({"reused_unverified_clips":len(work)-len(remaining),"remaining_requests":len(remaining)}),flush=True)
+    # Verify model and voices before issuing the first batch.
+    for scene,index,role,text,path in remaining[:2]:
         receipts[scene["scenario_id"]][index] = synthesize(text,scene[role+"_voice"],path)
     with concurrent.futures.ThreadPoolExecutor(max_workers=3) as pool:
-        futures = {pool.submit(synthesize, text, scene[role+"_voice"], path): (scene,index) for scene,index,role,text,path in work[2:]}
+        futures = {pool.submit(synthesize, text, scene[role+"_voice"], path): (scene,index) for scene,index,role,text,path in remaining[2:]}
         for future in concurrent.futures.as_completed(futures):
             scene,index = futures[future]
-            receipts[scene["scenario_id"]][index] = future.result()
+            try:
+                receipts[scene["scenario_id"]][index] = future.result()
+            except Exception:
+                for pending in futures:
+                    pending.cancel()
+                raise
             print(json.dumps({"rendered": scene["scenario_id"], "clip": index}), flush=True)
     rows = [assemble(scene,args.out,receipts[scene["scenario_id"]]) for scene in scenes]
     (args.out / "manifest.jsonl").write_text("".join(json.dumps(r)+"\n" for r in rows))
