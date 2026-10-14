@@ -7,6 +7,52 @@ authorized by the owner's 13 October request to get the best result using the
 remaining Isambard allocation. Historical completion statements apply only to
 the previous phase.
 
+## Architecture and training direction — clarified 14 October 2026
+
+**Decision:** adapt a released, pretrained full-duplex speech model and connect
+it to a separate reasoning/tool worker. This is supervised fine-tuning, not
+pretraining from scratch. MoshiRAG is the working reference-integration candidate;
+the final voice backbone is still conditional on audible quality and interaction
+comparisons, including PersonaPlex. Do not assume their conditioning interfaces
+or checkpoints are interchangeable.
+
+The old Qwen path trained new control-token embedding/output rows while freezing
+the language core. It established timing behavior but not useful self-generated
+spoken content. Preserve it as a baseline; it is not the main scale-up recipe.
+Qwen remains a candidate backend/teacher and an unchanged speech/content
+reference. No new Qwen layer-training campaign has been started in recovery.
+
+The completed 64-step adaptation pilot trained LoRA adapters on plain Moshi,
+using 16 reused conversations. It verified gradients, frozen-weight preservation
+and serialization, not quality improvement. The corrected reference replay used
+released MoshiRAG weights with inference-harness repairs, not newly trained
+MoshiRAG weights. Training with causally timed reference results is still to be
+implemented and verified.
+
+After backbone selection, start with adapters inside the pretrained transformer.
+Expand to selected pretrained blocks or broader fine-tuning only when evaluations
+show adapters are insufficient. These remain fine-tuning approaches. The target
+is useful speech plus waiting, interruption, cancellation, and returning to late
+results without fabricated early answers. Do not use lower training loss as
+acceptance or scale the tiny reused pilot corpus.
+
+The owner authorized GPT-Live as the reference on 14 October. Benchmark GPT-Live
+itself, separately from Realtime API measurements. Use matching conversational
+tasks and, where possible, the same client-delegation worker/facts/delays to
+isolate voice and interaction quality. API/account access is not yet verified.
+Official architecture and client delegation:
+https://developers.openai.com/api/docs/guides/live
+https://developers.openai.com/api/docs/guides/live-delegation
+
+Owner listening feedback on the corrected replay: “sounds okay not great”.
+Record this as one informal audition, not a completed blind voice comparison.
+
+Immediate sequence: (1) GPT-Live reference plus voice-backbone comparison;
+(2) actual context-based backend requests and results with task IDs/revisions;
+(3) fresh split conversations with timed result supervision;
+(4) verified timed-reference backward/save/reload and a bounded adaptation;
+(5) joint content/voice/duplex/delegation evaluation, then larger training.
+
 ## What the first recovery checks established
 
 | Check | Evidence | Meaning |
