@@ -7,6 +7,50 @@ authorized by the owner's 13 October request to get the best result using the
 remaining Isambard allocation. Historical completion statements apply only to
 the previous phase.
 
+## Current execution — 14 October, after native optimizer recovery
+
+The conditioned four-update engineering checkpoint is now verified. Fresh
+process 7407067 reloads all native adapters while preserving the speaker
+conditioner's mixed precision; text and audio logits both match exactly
+(maximum absolute error 0.0). Prefix-aware native tests pass all six cases in
+7406692. The earlier optimizer job 7406181 failed at reload, not during its four
+updates; the repaired reload uses that saved checkpoint without retraining it.
+This is serialization evidence, not audible quality improvement.
+
+Fresh synthetic corpus generation completed in resumed CPU job 7407148, reusing
+181 unfinished-batch clips and generating one missing clip. The corpus has
+40 conversations, 182 utterances and 733.76 seconds of conversation canvas.
+Source is pinned `gpt-4o-mini-tts-2025-12-15`; assistant voice marin is shared
+across folds, while script families and user voices are split in advance.
+The source directory is `runs/recovery-curriculum-7406244` on Isambard. None of
+this corpus is approved merely because rendering completed.
+
+Verification job 7407250 was submitted to workq. It checks every user and
+assistant clip with Whisper timestamps, requires native-conversion WER <=0.08,
+and requires exact assistant word-position agreement before assigning measured
+onsets. It replays the actual emission grid and retains the existing 200 ms
+timing bar. Rejected conversations cannot enter conversion or training. Approved
+stereo is assistant left / user right. The conversion retains sealed train,
+validation and test membership and records source/artifact hashes.
+
+Next: frozen Mimi/ARC encoding, then a bounded 32-update native LoRA pilot from
+the released RAG base with zero-output adapter initialization. All reference
+rows enter only after their recorded result arrival. Include general answers,
+clarification, private facts, pending conversation and cancellation. Require
+source approval/hash checks again at startup, unchanged frozen weights, finite
+gradients and fresh-process reload. Teacher-forced validation is diagnostic;
+test episodes stay outside training/selection. Qualify generated speech and
+actual semantic dispatch separately before enlarging the corpus or GPU campaign.
+
+Normal training and corpus jobs remain on workq. Interactive reservation is for
+bounded debugging/exploration, not bulk generation or production training.
+GPT-Live access and speech replay are verified (7400621/7400991); its worker path
+still needs an actual delegation call. Qwen's corrected strict routing probe
+7402864 achieved 11/20 manually labelled development cases, with 8 invalid
+outputs and 6 missed required delegations. It is not a qualified semantic router.
+PersonaPlex 7402673 produced an audition but answered bread staling incorrectly.
+The backbone decision remains conditional on audible and task-quality evidence.
+
 ## Architecture and training direction — clarified 14 October 2026
 
 **Decision:** adapt a released, pretrained full-duplex speech model and connect

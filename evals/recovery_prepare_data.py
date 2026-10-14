@@ -110,7 +110,7 @@ def main():
             sf.write(target / "conversation.wav", np.stack([assistant,user],axis=1),rate,subtype="FLOAT")
             (target / "conversation.json").write_text(json.dumps({"alignments":alignments,"user_words":user_words,
                 "reference_arrivals":timeline.meta["reference_arrivals"],"timeline":timeline.to_dict()},indent=2)+"\n")
-            converted.append({**row,"path":str(target / "conversation.wav"),"duration":len(assistant)/rate,
+            converted.append({**row,"verified":True,"path":str(target / "conversation.wav"),"duration":len(assistant)/rate,
                 "wav_sha256":sha256(target / "conversation.wav"),"sidecar_sha256":sha256(target / "conversation.json"),
                 "source_timeline_sha256":sha256(source / "timeline.actual.json"),
                 "source_assistant_sha256":sha256(source / "stem_assistant.wav"),

@@ -2093,3 +2093,40 @@ for a one-GPU retry. Total recorded terminal recovery GPU allocation is now
 One-GPU Qwen retry 7402749 submitted via the interactive reservation with
 110 GiB host RAM. Interactive starts measured from Slurm Submit/Start timestamps
 were 1 second (7402644), 2 seconds (7402673), and 0 seconds (7402713).
+
+## 2026-10-14 — Native conditioned optimizer and exact fresh reload
+
+Prefix-aware tiny-model regression 7402827 reproduced the released prepend
+failure. Repaired whole-sequence embedding construction retains the speaker
+prefix and native delays/target masks. Jobs 7402863, 7406083 and 7406692 pass
+four, five and six progressively strengthened native CPU tests respectively.
+Full released-weight backward 7402880 completes using the actual ARC HTTP
+reference encoder; no optimizer or quality candidate was produced by that job.
+
+Native LoRA rank-8 optimizer pilot 7406181 performs four finite updates on a
+reused ten-second engineering sample and saves the adapters/optimizer. It then
+fails at reload because the upstream convenience loader casts two float32
+speaker-conditioner adapters and the frozen conditioner to bfloat16. The exact
+loader preserves each tensor dtype. Fresh process 7407067 passes with maximum
+text/audio logit error 0.0 on the same saved checkpoint. Frozen weights stayed
+unchanged. Adapter SHA256:
+`188bb071747f0839f37342f023d5b8e65e038ec84b789f2c41e9a46d8ae0efd0`.
+This establishes train/save/reload correctness, not speech quality.
+
+Qwen 7402749 completed but used incorrect direct-generation stopping behavior;
+18/20 outputs violated strict JSON. Correct native wrapper retry 7402864 gives
+11/20 manually labelled routing cases, 8 invalid outputs and 6 missed required
+delegations. This prompted text diagnostic is not learned duplex delegation.
+
+Fresh TTS generation 7406244 failed after a request timeout. Resume 7407148
+completes with 181 reused unverified clips and one newly generated clip: 40
+scenes, 182 clips, 733.76 seconds of canvas. Voice/model provenance is recorded.
+Sealed folds: 24 train, 8 validation, 8 test; assistant voice is shared, script
+families and user voices disjoint. Verification 7407250 submitted on workq;
+no data or quality-training pass is attributed to its submission.
+
+Verdict: native conditioned adapter serialization repaired; fresh data approval,
+generated-speech improvement and real semantic worker dispatch remain open.
+Terminal GPU jobs 7402749/7402864/7402880/7406181/7407067 add 679 GPU-seconds
+to the previously recorded 4139: 4818 seconds / 1.338333 allocated GPU-hours.
+CPU/TTS jobs and interactive billing premiums are separate from this total.
