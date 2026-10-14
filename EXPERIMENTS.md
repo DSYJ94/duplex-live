@@ -2130,3 +2130,47 @@ generated-speech improvement and real semantic worker dispatch remain open.
 Terminal GPU jobs 7402749/7402864/7402880/7406181/7407067 add 679 GPU-seconds
 to the previously recorded 4139: 4818 seconds / 1.338333 allocated GPU-hours.
 CPU/TTS jobs and interactive billing premiums are separate from this total.
+
+## 2026-10-14 — Fresh native training and actual worker comparison
+
+Immutable repaired TTS source 7407535 has 38/40 strictly approved scenes in
+verification 7407554 (23 train/8 validation/7 test). All four behaviors remain
+in every fold. Original workq verification 7407250 and held original downstream
+jobs 7407385/7407396 were cancelled after replacements; no rejected data trained.
+Frozen native Mimi/interleaver/ARC cache 7408223 preserves all measured tokens.
+
+First 32-update training 7408245 fails before its first optimizer step because
+no_compile ended before checkpointed backward. Fixed 7408323 completes 32 steps,
+674 changed adapters, unchanged frozen weights and fresh-process text/audio
+logit errors 0.0. SHA256 d628e63b402b08ef19add3eb13ff6865dae179d5f86e950e7699f0e58cb32708.
+Weighted workq 7408653 completes 128 steps (225 allocated GPU-seconds), delegation
+weight 10/result-word weight 3, exact fresh reload 0.0. Adapter SHA256
+9e3cbd1fd24c4bf1bf29a9b7de075018cfa30423c2d73955cd1123796f2ebe98.
+No generated quality claim follows from teacher-forced loss improvements.
+
+Actual semantic worker 7407536 passes 8/8 backend development cases with three
+real read-only record calls. Plan-versus-post-tool response handling and required
+execution guard repaired earlier failures; this is not native speech judgment.
+Released-base voice 7408188 starts the private worker at 26.10 s; native 32-update
+7408416 starts at 12.74 s. Both apply all returned ARC rows but omit yellow circle.
+Base claims completion early. One replay cannot establish a causal learned timing
+gain. Whisper audit 7408487 confirms generated omissions, valid word/segment
+timings, WER 0/.0189 respectively. GPT-Live actual comparison 7408224 calls the
+record tool, returns yellow circle in audible speech, and answers science;
+Whisper WER .0256. None is general product qualification or a human voice score.
+
+Raw GPT-Live teacher CPU 7408766 fails after one completed recording on a floating
+sample-length comparison. Integer sample-count regression and safe unverified
+resume preserve the completed record, archive incomplete attempts and verify all
+hashes. 7409126 completes twelve TRAIN-only scenes (8 private delegations, 4 simple
+without delegation). Native conversion/grid approval still required. Held-out
+audio is excluded. Actual API retry usage is separate from allocated GPU hours.
+
+Captured reference tests 7408865 fail on unexported DL, 7409127 on divergent paired
+histories, and 7410405 on pre-injection slot differences .125 despite fixed approved
+histories (post-reference difference 5.625). These are INCONCLUSIVE, not a proven
+reference influence. Single-slot repeated controls are the next diagnostic.
+
+Next jobs: 7410566 weighted-128 generated voice; 7410567 matched weighted-32 workq
+comparison. Independent teacher speech/fact audit is committed next. Human voice
+preference pending at the focused local comparison page; no product model selected.

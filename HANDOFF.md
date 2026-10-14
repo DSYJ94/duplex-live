@@ -1,5 +1,24 @@
 # HANDOFF — where we are (updated 2026-10-13 for agent succession)
 
+## Current continuation — 2026-10-14 fresh native adaptation
+
+Read the current section of [docs/RECOVERY_PLAN.md](docs/RECOVERY_PLAN.md).
+Owner authorizes needed compute before expiry and asks to continue until input
+is actually needed. This is pretrained native speech fine-tuning with actual
+semantic workers, not Qwen control-row scale-up or pretraining from scratch.
+38 strictly approved scenes encoded in 7408223. Native 32-update 7408323 and
+weighted 128-update 7408653 both save/reload exactly; generated base and first
+32-update replay both omit returned private facts. 128-update speech replay
+7410566 and matched weighted 32-update training 7410567 follow.
+Twelve GPT-Live TRAIN-only teacher recordings are raw, not approved; resumed
+CPU collection 7409126 completed. Independent speech/fact/grid checks must
+precede training. Keep validation/test audio sealed. All source/hash and
+mixed-dtype reload guards remain mandatory. Captured reference counterfactual
+needs exact single-slot repeatability after inconclusive paired-slot tests.
+Voice audition: http://localhost:8766/audio/voice-comparison/index.html .
+No backbone or checkpoint has passed product acceptance. Historical entries
+and GPU-hour totals below must not be reported as current state.
+
 ## ACTIVE CONTINUATION — 2026-10-13 recovery
 
 **Plain words:** the owner has reopened the work to build meaningful duplex

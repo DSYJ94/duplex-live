@@ -7,7 +7,50 @@ authorized by the owner's 13 October request to get the best result using the
 remaining Isambard allocation. Historical completion statements apply only to
 the previous phase.
 
-## Current execution — 14 October, after native optimizer recovery
+## Current execution — 14 October, after fresh-data training
+
+The immutable repaired corpus `recovery-repaired-7407535` passes strict measured
+speech/grid verification for 38/40 scenes in 7407554: 23 train, 8 validation,
+7 test. Both rejected scenes stay excluded. Every fold retains private lookup,
+simple answers, clarification and cancellation. Frozen Mimi/ARC encoding
+7408223 preserves every measured assistant token and only applies reference
+rows after recorded arrivals. Source and derived hashes are checked at startup.
+
+Native rank-8 LoRA training 7408323 completes 32 updates and exact fresh-process
+reload (text/audio error 0.0). Weighted 128-update workq run 7408653 also completes
+with exact reload, 674 changed adapter tensors and unchanged frozen weights.
+It weights delegation-token targets by 10 and checked-result words by 3; this
+is a development objective comparison, not a quality verdict. Its speech replay
+is job 7410566. Matched weighted 32-update workq comparison is 7410567.
+
+Generated validation replay of released base 7408188 and 32-update candidate
+7408416 both dispatch actual `gpt-6-luna` record workers and apply returned ARC
+rows, but both omit the correct private result. The base also claims completion
+prematurely. Independent speech audit 7408487 confirms those omissions in audio;
+ASR agreement is not human voice grading. These use causally available measured
+user transcripts as a diagnostic oracle, not live microphone/STT acceptance.
+
+GPT-Live fresh comparison 7408224 executes the actual record tool and audibly
+returns the correct validation fact (yellow circle) while answering lightning
+versus thunder. This is one development scene. Raw train-only teacher collection
+7408766, resumed in 7409126, completes twelve recordings: eight private worker
+calls and four simple answers without delegation. Raw recordings remain
+unapproved. Independent word/fact checks and native timing conversion are next;
+no validation/test replay may be added to training.
+
+Captured-inference reference tests 7409127/7410405 are inconclusive: two batch
+slots differ before reference injection, even with identical teacher-forced
+histories. A repeated single-slot test now requires exact control repeatability
+and unchanged causal prefixes before claiming reference influence.
+
+Listening: http://localhost:8766/audio/voice-comparison/index.html . The owner
+has been given the link; voice preference remains pending. No candidate has
+passed general reasoning, cancellation, fresh full-task or microphone acceptance.
+Normal training/bulk jobs stay on workq; interactive reservation is only for
+bounded development checks. Historical GPU totals below are dated snapshots,
+not current allocation balance.
+
+## Earlier execution — 14 October, after native optimizer recovery
 
 The conditioned four-update engineering checkpoint is now verified. Fresh
 process 7407067 reloads all native adapters while preserving the speaker

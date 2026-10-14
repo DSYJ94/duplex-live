@@ -1,7 +1,7 @@
-"""Paired native LMGen slots verify references reach captured inference logits.
+"""Repeat one native LMGen slot to isolate captured reference influence.
 
-Both slots share identical input and greedy generated histories until only the
-second receives real frozen ARC rows. This is an engineering counterfactual,
+Three passes share identical approved text/audio histories. Two controls must
+repeat exactly; only the third receives real frozen ARC rows. This is a counterfactual,
 not an audible reference-use or task-success qualification.
 """
 import argparse
@@ -21,49 +21,58 @@ def main():
     import torch
     from moshi.models import LMGen
     from moshi.inference_utils.utils import get_condition_tensors
-    from evals.moshi_rag_reference_step import apply_reference_frame
     receipt = validate_cache(args.cache)
     row = next(r for r in receipt["examples"] if r["scenario_id"] == "recovery-validation-000")
     state = torch.load(args.cache / row["file"],map_location="cpu",weights_only=True)
     arrival = state["arrivals"][0]
     injection_frame = math.ceil(arrival["ready_at_s"]/.08)
     lm = load_base(json.loads(args.manifest.read_text())).eval()
-    records = []
+    logits_history = []
     def hook(logits):
         if not torch.isfinite(logits).all():
             raise RuntimeError("Nonfinite captured inference logits")
-        records.append({"max_abs_logit_difference":float((logits[0]-logits[1]).abs().max()),
-            "slot_top_tokens":[int(v) for v in logits[:,0,0].argmax(-1)]})
+        logits_history.append(logits.detach().float().cpu().clone())
     cursor = [0]
     def same_text_history(tokens):
         tokens.fill_(int(state["codes"][0,0,cursor[0]]))
     gen = LMGen(lm,use_sampling=False,force_streaming_sum=True,on_text_logits_hook=hook,on_text_hook=same_text_history,
-        condition_tensors=get_condition_tensors("moshi",lm,2,1.,first_speaker="user"))
-    source = state["codes"][:,lm.dep_q+1:].cuda().expand(2,-1,-1)
-    assistant = state["codes"][:,1:lm.dep_q+1].cuda().expand(2,-1,-1)
-    with gen.streaming(2),torch.inference_mode():
+        condition_tensors=get_condition_tensors("moshi",lm,1,1.,first_speaker="user"))
+    source = state["codes"][:,lm.dep_q+1:].cuda()
+    assistant = state["codes"][:,1:lm.dep_q+1].cuda()
+    histories = []
+    with gen.streaming(1),torch.inference_mode():
         for _ in range(16):
             gen.step(source[...,:1],depformer_replace_tokens=assistant[...,:1])
-        gen.reset_streaming()
-        records.clear()
-        for frame in range(source.shape[-1]):
-            cursor[0] = frame
-            if frame == injection_frame:
-                gen.update_streaming_sum_tensors([None,arrival["rows"]])
-            gen.apply_pending_streaming_sum_condition(torch.ones(2,dtype=torch.bool))
-            active = gen._streaming_state.condition_streaming_sum
-            if active[0].count_nonzero():
-                raise RuntimeError("Reference leaked into the control slot")
-            gen.step(source[...,frame:frame+1],depformer_replace_tokens=assistant[...,frame:frame+1])
-            records[-1].update(frame=frame,reference_l1_slot1=float(active[1].float().abs().sum()))
+        for pass_index in range(3):
+            gen.reset_streaming()
+            # Native reset handles model/history state, but not the reference
+            # queue. Clear both explicitly between controlled experiments.
+            gen._streaming_state.pending_streaming_sums = [None]
+            gen._streaming_state.condition_streaming_sum.zero_()
+            logits_history.clear()
+            for frame in range(source.shape[-1]):
+                cursor[0] = frame
+                if pass_index == 2 and frame == injection_frame:
+                    gen.update_streaming_sum_tensors([arrival["rows"]])
+                gen.apply_pending_streaming_sum_condition(torch.ones(1,dtype=torch.bool))
+                active = gen._streaming_state.condition_streaming_sum
+                if (pass_index < 2 or frame < injection_frame) and active.count_nonzero():
+                    raise RuntimeError("Reference leaked into a control or causal prefix")
+                gen.step(source[...,frame:frame+1],depformer_replace_tokens=assistant[...,frame:frame+1])
+            histories.append(list(logits_history))
+    records = [{"frame":i,"max_abs_logit_difference":float((a-b).abs().max()),
+        "control_repeat_max_abs_error":float((a-c).abs().max()),
+        "control_top_token":int(a.flatten().argmax()),"reference_top_token":int(b.flatten().argmax())}
+        for i,(a,c,b) in enumerate(zip(*histories))]
+    repeat = max(r["control_repeat_max_abs_error"] for r in records)
     before = max(r["max_abs_logit_difference"] for r in records[:injection_frame])
     after = max(r["max_abs_logit_difference"] for r in records[injection_frame:])
     args.out.mkdir(parents=True,exist_ok=False)
-    report = {"same_slot_prefix_max_abs_error":before,"post_reference_max_abs_difference":after,
+    report = {"control_repeat_max_abs_error":repeat,"same_slot_prefix_max_abs_error":before,"post_reference_max_abs_difference":after,
         "injection_frame":injection_frame,"injection_time_s":injection_frame*.08,
         "reference_rows":len(arrival["rows"]),"cuda_graphs":True,"greedy_sampling":True,
-        "assistant_history":"identical approved teacher-forced text and audio in both slots; no free-run quality claim",
-        "complete_task_success_tested":False,"records":records,"passed":before==0. and after>.001}
+        "assistant_history":"identical approved teacher-forced text and audio in three single-slot passes; no free-run quality claim",
+        "complete_task_success_tested":False,"records":records,"passed":repeat==0. and before==0. and after>.001}
     (args.out / "report.json").write_text(json.dumps(report,indent=2)+"\n")
     print(json.dumps({k:v for k,v in report.items() if k != "records"}),flush=True)
     if not report["passed"]:
