@@ -48,10 +48,14 @@ def main():
     parser.add_argument("--manifest",type=Path,required=True)
     parser.add_argument("--out",type=Path,required=True)
     parser.add_argument("--steps",type=int,default=32)
+    parser.add_argument("--rag-weight",type=float,default=1.)
+    parser.add_argument("--result-weight",type=float,default=1.)
     parser.add_argument("--reload",action="store_true")
     args = parser.parse_args()
     if not 4 <= args.steps <= 128:
         parser.error("Bounded fresh pilot requires 4–128 optimizer steps")
+    if not 1 <= args.rag_weight <= 16 or not 1 <= args.result_weight <= 8:
+        parser.error("Control/result weights exceed the bounded development range")
     cache = validate_cache(args.cache)
     manifest = json.loads(args.manifest.read_text())
     model = load_base(manifest)
@@ -88,6 +92,15 @@ def main():
         text_logits = result.text_logits[result.text_mask].float()
         nll = F.cross_entropy(text_logits,text_target,reduction="none")
         weights = torch.where(text_target == 3,.5,1.)
+        weights[text_target == 4] *= args.rag_weight
+        result_words = torch.zeros_like(text_target,dtype=torch.bool)
+        if row["kind"] in ("private","clarify","cancel"):
+            sidecar = json.loads((Path(cache["conversion"]) / row["scenario_id"] / "conversation.json").read_text())
+            last = [e for e in sidecar["timeline"]["events"] if e["ch"] == "assistant" and e["kind"] == "utterance"][-1]
+            times = torch.arange(codes.shape[-1],device=codes.device)*.08
+            result_window = ((times >= last["actual_start_ms"]/1000)&(times < last["actual_end_ms"]/1000))[None,None]
+            result_words = result_window.expand_as(result.text_mask)[result.text_mask] & (text_target >= 5)
+            weights[result_words] *= args.result_weight
         text_loss = (nll*weights).sum()/weights.sum()
         targets = codes[:,model.audio_offset:model.audio_offset+model.dep_q]
         audio_losses = []
@@ -102,6 +115,7 @@ def main():
         metrics = {"id":row["scenario_id"],"text":float(text_loss.detach()),"speech":float(speech_loss.detach()),
             "word_nll":float(nll[word_mask].mean().detach()) if word_mask.any() else None,
             "rag_nll":float(nll[rag_mask].mean().detach()) if rag_mask.any() else None,
+            "result_word_nll":float(nll[result_words].mean().detach()) if result_words.any() else None,
             "rag_target_count":int(rag_mask.sum()),"rag_predicted_count":int((predicted==4).sum()),
             "rag_true_positive":int(((predicted==4)&rag_mask).sum())}
         return text_loss+speech_loss,metrics
@@ -145,6 +159,7 @@ def main():
         "commit":subprocess.check_output(["git","rev-parse","HEAD"],text=True).strip(),
         "model":manifest["rag"],"cache":str(args.cache),"cache_sha256":sha256(args.cache / "cache.json"),
         "rank":8,"scaling":2.,"trainable_count":sum(p.numel() for p in trainable.values()),
+        "rag_weight":args.rag_weight,"result_word_weight":args.result_weight,
         "zero_adapter_logit_errors":zero_error,"validation_before":evaluate("before"),"losses":[],
         "test_fold_used_for_training_or_selection":False,"human_listening":"pending","quality_qualified":False}
     order = []
