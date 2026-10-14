@@ -2031,4 +2031,3 @@ entry. No result or GPU-hours are attributed to an unallocated queued job.
 
 Verdict: actual reference recording available; backbone choice, delegation
 selection and timed-reference training remain open. See `docs/RECOVERY_PLAN.md`.
-
