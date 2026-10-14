@@ -55,6 +55,50 @@ Immediate sequence: (1) GPT-Live reference plus voice-backbone comparison;
 
 ## What the first recovery checks established
 
+### Base intelligence and delegation selection — 14 October
+
+**Plain words:** released duplex weights exist, but sufficient judgment for our
+product has not been established. Moshi has an official adaptation recipe;
+PersonaPlex demonstrates role following and conversational knowledge, while its
+release does not establish a matching turnkey fine-tuning recipe. MoshiRAG
+already accepts asynchronously arriving reference text. This makes it an
+integration candidate, not a proven intelligence or voice winner.
+
+Delegation selection is now a separate gate from successful result delivery.
+Evaluate four kinds of requests: simple answers available to the model; private
+or current facts requiring a tool; multi-step reasoning requiring a worker;
+and ambiguous requests requiring clarification. Include follow-up corrections,
+negation, and requests to cancel. Report missed delegation, needless delegation,
+unsupported answers, clarification quality, and complete task success separately.
+Do not use reported model confidence as proof it knows an answer.
+
+Train the selection decision together with the spoken behavior: acknowledge the
+request, ask for missing inputs, continue hearing, wait without inventing a result,
+and incorporate or correct the answer when evidence returns. Application task
+IDs, revisions and result guards complement learned selection; they do not prove
+the speech model learned it. A separate semantic router is a possible bridge,
+but any such result must be labelled a hybrid rather than native model delegation.
+
+Qwen's existing control experiment remains a timing baseline. Native Qwen's
+coherent answers justify keeping it as a backend/content candidate. Restoring its
+language and speech components does not itself solve continuous incoming audio,
+causal training, or concurrent task results. A deeper Qwen adaptation is a valid
+alternative if the native duplex candidates fail joint gates; the previous
+new-token-row recipe alone is not that alternative.
+
+Cluster access restored and commit `ad2c474` synced with matching SHA256. New
+comparison scripts are committed at `9cfa3af`; access launcher repaired at
+`7e41781`. CPU job 7400572 stopped before making an API request because of a
+malformed shell line; replacement CPU job 7400621 submitted. PersonaPlex job
+7400573 is capped at one GPU for 15 minutes and uses pinned existing source and
+weights, approved `dense_dialog-001` audio plus ten seconds of silence. This is
+an offline development audition, not a fresh holdout or live latency benchmark.
+Results and job accounting will be appended after complete logs are retrieved.
+
+Sources: [NVIDIA PersonaPlex](https://research.nvidia.com/labs/adlr/personaplex/),
+[MoshiRAG release](https://github.com/kyutai-labs/moshi-rag),
+[GPT-Live client delegation](https://developers.openai.com/api/docs/guides/live-delegation).
+
 | Check | Evidence | Meaning |
 |---|---|---|
 | Native Qwen content and voice | Job 7377200: three questions, each in text and audio; all six produce coherent generated text and nonempty speech. Job 7377265: ASR word error 0.0 for all six. | The untouched base can answer and speak. These development questions are a component check, not a generalization benchmark or live acceptance. Human audition remains pending. |
