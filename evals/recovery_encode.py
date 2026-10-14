@@ -21,6 +21,26 @@ def marker_frame(event,frame_rate):
     return frame
 
 
+def native_word_timing(text_codes,alignments,encode_word,frame_rate):
+    """Check actual native token positions, beyond the separate word grid."""
+    positions = [i for i,token in enumerate(text_codes) if token not in (-1,0,3,4)]
+    expected,firsts = [],[]
+    for word,interval,speaker in alignments:
+        if speaker != "SPEAKER_MAIN": continue
+        tokens = list(encode_word(word.strip()))
+        if not tokens or any(token < 5 for token in tokens):
+            raise RuntimeError("Measured word has no ordinary native vocabulary tokens")
+        firsts.append((len(expected),interval[0]))
+        expected.extend(tokens)
+    if [text_codes[i] for i in positions] != expected:
+        raise RuntimeError("Native interleaver dropped or reordered measured assistant tokens")
+    offsets = [abs(positions[index]/frame_rate-onset)*1000 for index,onset in firsts]
+    if not offsets or not all(math.isfinite(offset) for offset in offsets) or max(offsets) > 200:
+        raise RuntimeError(f"Native first-word token timing exceeds 200ms: {max(offsets,default=None)}")
+    return {"max_first_word_offset_ms":max(offsets),"offset_bar_ms":200,"word_count":len(firsts),
+        "method":"Actual native first subword frame against every independent measured word onset"}
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--data",type=Path,required=True)
@@ -60,11 +80,7 @@ def main(argv=None):
         codes = InterleavedTokenizer(mimi,interleaver,row["duration"])(audio.T,0.,row["path"]).codes
         if codes.shape[:2] != (1,17):
             raise RuntimeError("Unexpected native codebook layout")
-        expected = [token for word,_,speaker in sidecar["alignments"] if speaker == "SPEAKER_MAIN"
-                    for token in tokenizer.encode(word.strip())]
-        actual = [token for token in codes[0,0].tolist() if token not in (-1,0,3)]
-        if actual != expected:
-            raise RuntimeError("Native interleaver dropped or reordered measured assistant tokens")
+        timing = native_word_timing(codes[0,0].tolist(),sidecar["alignments"],tokenizer.encode,mimi.frame_rate)
         markers = []
         for event in sidecar["timeline"]["events"]:
             if event["kind"] != "marker":
@@ -83,6 +99,7 @@ def main(argv=None):
         torch.save({"codes":codes.cpu(),"reference":reference,"arrivals":arrivals,"markers":markers},args.out / name)
         receipt["examples"].append({"scenario_id":row["scenario_id"],"split":row["split"],"file":name,
             "sha256":sha256(args.out / name),"frames":codes.shape[-1],"markers":markers,
+            "native_word_timing":timing,
             "reference_rows":int((reference.abs().sum(-1)>0).sum()),"kind":sidecar["timeline"]["meta"]["kind"]})
         (args.out / "cache.json").write_text(json.dumps(receipt,indent=2)+"\n")
         print(json.dumps(receipt["examples"][-1]),flush=True)
