@@ -1,27 +1,44 @@
-# HANDOFF — where we are (updated 2026-10-13 for agent succession)
+# HANDOFF — where we are (updated 2026-10-14 for agent succession)
 
-## Current continuation — 2026-10-14 fresh native adaptation
+## Current continuation — 2026-10-14, access refresh needed
 
-Read the current section of [docs/RECOVERY_PLAN.md](docs/RECOVERY_PLAN.md).
-Owner authorizes needed compute before expiry and asks to continue until input
-is actually needed. This is pretrained native speech fine-tuning with actual
-semantic workers, not Qwen control-row scale-up or pretraining from scratch.
-38 strictly approved scenes encoded in 7408223. Native 32-update 7408323 and
-weighted 128-update 7408653 both save/reload exactly; generated base and first
-32-update replay both omit returned private facts. 128-update speech replay
-7410641 includes the correct private fact, but guesses red early and repeats it;
-independent audit 7410741 confirms the speech. It fails the task. Matched weighted
-32-update interactive 7410830 replaces pending workq 7410567 without duplication.
-Twelve GPT-Live TRAIN-only teacher recordings are raw, not approved; resumed
-CPU collection 7409126 completed. Independent speech/fact/grid checks must
-precede training. Keep validation/test audio sealed. All source/hash and
-mixed-dtype reload guards remain mandatory. Captured reference counterfactual
-passes with deterministic math SDPA in 7410675: control repeat/prefix errors 0.0,
-post-reference difference 5.6953. This engineering proof is not generated quality.
-Teacher audit is explicitly CPU job 7410766; raw source remains immutable.
-Voice audition: http://localhost:8766/audio/voice-comparison/index.html .
-No backbone or checkpoint has passed product acceptance. Historical entries
-and GPU-hour totals below must not be reported as current state.
+Start at [docs/RECOVERY_PLAN.md](docs/RECOVERY_PLAN.md), current execution section.
+Owner authorizes needed compute before expiry and asks to continue until actual
+input is needed. **No model qualifies yet.** This is native pretrained speech
+LoRA fine-tuning with real semantic workers, not pretraining or Qwen row scale-up.
+
+38 strict TTS scenes plus 10 independently approved GPT-Live TRAIN teachers make
+33 train / 8 validation / 7 test. Exact source/word/grid/native-token clock checks
+pass; no held-out audio trains. Original base codes are reused. Single-context
+encoding 7411513 works on `Exclusive_Process` GPU; 128-update teacher training
+7411514 saves/reloads with text/audio errors 0.0 and unchanged frozen weights.
+Checkpoint SHA 104bcd641351e03f8bf7da6f00477bf63c9d8a4f369a75c5d1b9bd7247753093.
+
+Corrected context gives one private read and correct value in 7411889, but adds
+unsupported claims. 7411886 simple delegates unnecessarily, 7411887 skips needed
+clarification/invents books, 7411888 misses cancellation. These are failures.
+Audit 7412064 private tail is invalid: do not use aggregate WER. Backend API
+component 7411885 passes 8/8 with 3 actual reads; this is not native intelligence.
+Self-cancellation bug reproduced/fixed; native missed dispatch remains unsolved.
+Causal dialogue context excludes future words/GT assistant answers; still an
+oracle, not live ASR. Single-context voice and job-local HTTP ports work. Current
+27 local causal/context/atomic-cancel/alignment tests pass. Captured reference
+proof 7410675 repeat/prefix errors 0.0, post-injection change 5.6953.
+
+Clifton expired at 19:30:50 UTC on 14 October. Agent launched renewal; Chrome
+Isambard sign-in awaits owner's provider/login. If expired, run `clifton auth`
+again. Pending text-temperature .2 probes: 7412588 private, 7412590 cancel. Status
+unread: retrieve full logs/artifacts after login; do not duplicate jobs.
+All code through 61d667a was pushed/pulled; this handoff update needs cluster pull
+once access returns. No new compute authorization required.
+
+Listening: http://localhost:8766/audio/voice-comparison/index.html . Voice
+preference pending. All 48 mixed codes and 48 audio/sidecars are backed up locally
+with matching hashes; parent metadata archive is incomplete after expiry. Exact
+resume priorities and objective limitation (teacher result weight covers whole
+assistant stream) are in the recovery plan. Historical completion statements and
+GPU-hour snapshots below are superseded; latest terminal snapshot is 2.136667
+allocated GPU-hours through 7412064, not remaining balance.
 
 ## ACTIVE CONTINUATION — 2026-10-13 recovery
 

@@ -7,61 +7,141 @@ authorized by the owner's 13 October request to get the best result using the
 remaining Isambard allocation. Historical completion statements apply only to
 the previous phase.
 
-## Current execution — 14 October, after fresh-data training
+## Current execution — 14 October, native teacher pilot evaluated
 
-The immutable repaired corpus `recovery-repaired-7407535` passes strict measured
-speech/grid verification for 38/40 scenes in 7407554: 23 train, 8 validation,
-7 test. Both rejected scenes stay excluded. Every fold retains private lookup,
-simple answers, clarification and cancellation. Frozen Mimi/ARC encoding
-7408223 preserves every measured assistant token and only applies reference
-rows after recorded arrivals. Source and derived hashes are checked at startup.
+**Current verdict:** no product model qualifies. Native training and exact
+serialization now work; generated speech still fails task selection, waiting,
+clarification and cancellation. Do not promote teacher-forced loss or component
+accuracy to model acceptance.
 
-Native rank-8 LoRA training 7408323 completes 32 updates and exact fresh-process
-reload (text/audio error 0.0). Weighted 128-update workq run 7408653 also completes
-with exact reload, 674 changed adapter tensors and unchanged frozen weights.
-It weights delegation-token targets by 10 and checked-result words by 3; this
-is a development objective comparison, not a quality verdict. Corrected speech
-replay 7410641 includes yellow circle but guesses red first and repeats answers;
-it fails the task. Audit 7410741 confirms this in audio, WER .01695 with valid
-word/segment bounds. 7410566 failed on a directory passed instead of the adapter
-file; a preflight guard now catches that. Matched weighted-32 workq 7410567 was
-replaced by bounded exploratory interactive 7410830 without duplicate compute.
+### Data and checkpoints
 
-Generated validation replay of released base 7408188 and 32-update candidate
-7408416 both dispatch actual `gpt-6-luna` record workers and apply returned ARC
-rows, but both omit the correct private result. The base also claims completion
-prematurely. Independent speech audit 7408487 confirms those omissions in audio;
-ASR agreement is not human voice grading. These use causally available measured
-user transcripts as a diagnostic oracle, not live microphone/STT acceptance.
+Repaired TTS verification 7407554 approves 38/40 scenes: 23 train, 8 validation,
+7 test, retaining all four behaviors in every fold. Original rejected scenes
+remain excluded. Frozen native Mimi/ARC cache 7408223 preserves every word.
+Read-only audit `recovery-native-code-timing-base-20261014` checks actual first
+subword frames for all 38 scenes: maximum offset 80 ms against the unchanged
+200 ms bar. This supplements the separate measured-word grid audit.
 
-GPT-Live fresh comparison 7408224 executes the actual record tool and audibly
-returns the correct validation fact (yellow circle) while answering lightning
-versus thunder. This is one development scene. Raw train-only teacher collection
-7408766, resumed in 7409126, completes twelve recordings: eight private worker
-calls and four simple answers without delegation. Raw recordings remain
-unapproved. Independent word/fact checks and native timing conversion are next;
-no validation/test replay may be added to training.
+GPT-Live teacher collection 7408766, resumed in 7409126, records twelve approved
+TRAIN stimuli. Independent CPU audit 7410766 passes ten recordings (six private,
+four simple); two fail exact spoken-word position matching and remain excluded.
+Immutable conversion/composition 7410969 gives 33 train / 8 validation / 7 test.
+Validation/test content and membership remain unchanged. Raw recordings stay
+unapproved; only derived rows passing every source, word, fact and timing guard
+enter training. Recorded input is checked against approved audio plus silent tail.
 
-Captured-inference reference tests 7409127/7410405/7410621 are inconclusive: two batch
-slots differ before reference injection, even with identical teacher-forced
-histories. A repeated single-slot test now requires exact control repeatability
-and unchanged causal prefixes before claiming reference influence. Deterministic
-math-SDPA single-slot test 7410675 now passes: repeat/prefix errors both 0.0,
-post-reference maximum difference 5.6953. This proves transport through captured
-native temporal inference, not free-running speech success or production latency.
+Teacher encoding 7411223 fails before codec loading: a second CUDA process cannot
+open the GPU. Single-context retry 7411513 completes on a GPU reporting
+`Exclusive_Process`, while retaining the actual HTTP reference endpoint. It
+encodes only the ten new recordings and reuses all 38 hash-verified base codes.
+Every new native first-subword clock and control-marker collision check passes.
 
-GPU teacher audit 7410622 was replaced by explicit CPU audit 7410766 using the
-same judge/bar; no silent model fallback. Teacher conversion preserves measured
-word onsets and actual worker receipt times in a separate immutable train-only
-corpus. Composition requires child approvals and keeps all base validation/test
-rows unchanged. Native codec token/marker collision checks remain required.
+| Checkpoint | Training | Generated development result |
+|---|---|---|
+| 7408323 | 32 updates, unweighted control/result objective | 7408416 omits returned private fact |
+| 7410830 | Matched 32 updates, RAG weight 10/result utterance weight 3 | 7411280 guesses white and invents a book |
+| 7408653 | 128 updates on original approved train fold, same weights | 7410641 uses yellow circle later, guesses red early and repeats |
+| 7411514 | 128 updates on approved teacher mixture, same weights | 7411691 omits fact; corrected-context 7411889 uses it but adds unsupported claims |
 
-Listening: http://localhost:8766/audio/voice-comparison/index.html . The owner
-has been given the link; voice preference remains pending. No candidate has
-passed general reasoning, cancellation, fresh full-task or microphone acceptance.
-Normal training/bulk jobs stay on workq; interactive reservation is only for
-bounded development checks. Historical GPU totals below are dated snapshots,
-not current allocation balance.
+All four save/reload exactly (maximum canonical text/audio logit errors 0.0),
+change 674 adapter tensors and preserve frozen weights. Latest adapter SHA256:
+`104bcd641351e03f8bf7da6f00477bf63c9d8a4f369a75c5d1b9bd7247753093`.
+These are rank-8 native adapters (24,242,176 trainable parameters), not pretraining
+or a new Qwen row/layer campaign. Candidate outcomes vary; single replays do not
+establish causal learning gains.
+
+**Objective limitation:** result weight currently covers the last assistant
+utterance. Natural teachers use one measured event for their whole assistant
+stream, so all their spoken words receive that weight. Their reported
+`result_word_nll` is not private-fact accuracy. Refine this scope before enlarging
+or increasing the objective.
+
+### Real worker and generated behavior
+
+Actual `gpt-6-luna` backend regression 7411885 passes eight policy/tool contracts,
+with three real read-only record calls. This is backend development evidence.
+Native model RAG requests still require a stronger semantic worker to select
+operations/arguments; do not call this a native-only intelligence result.
+
+Cancellation 7411020 exposes a real application bug: the API worker cancels its
+own newly reserved dispatch, leaving older lookups deliverable. Current dispatch
+is now excluded from selectable tasks and rejected as a cancellation target.
+Batch cancellation validates every selected existing ID before changing state;
+related duplicates can be cancelled together while unrelated work is preserved.
+The captured self-cancellation regression fails before the fix and passes after.
+Actual API cancellation component 7411442 passes. Native replay 7411443 never
+requests cancellation, so the repaired application cannot honour that request.
+
+Worker context previously flattened all user turns into one message, producing
+repeated private reads when a science question followed. Separate chronological
+utterances and already-generated assistant chunks now preserve the latest user
+request. Ready-phase metadata is exposed without leaking private values early.
+The helper excludes future words and scripted assistant answers. Context remains
+a measured transcript oracle, not real streaming ASR or microphone acceptance.
+
+| Latest teacher checkpoint, corrected context | Evidence | Verdict |
+|---|---|---|
+| Private 7411889 | One actual private read; yellow circle spoken after ready; unsupported private claims and extra request | Fail overall |
+| Simple 7411886 | Two unnecessary native work requests; unclear salt answer | Fail |
+| Clarify 7411887 | Omits missing-project clarification; invents book discussion; later reads correct record | Fail |
+| Cancel 7411888 | No cancellation dispatch; premature checked/private claims; result delivered after cancel request | Fail |
+
+The four replays finish on normal/interactive nodes, including two simultaneous
+jobs on nid010336. Each HTTP server now owns an ephemeral loopback port, preventing
+cross-job endpoint collisions. Single-context voice execution supports exclusive
+GPUs. Compute p95 is 22.36–24.35 ms per 80 ms frame; maximum backlog across this
+matrix is 33.4 ms. This measures software replay throughput, not real microphone
+or general interaction acceptance.
+
+Independent speech audit 7412064 confirms the simple/clarify/cancel speech with
+valid time bounds. Private 7411889 has an invalid hallucinated tail, so discard
+its aggregate WER and do not promote that ASR result to quality evidence. Its
+bounded early word intervals show yellow circle at 10.48–11.08 s after the
+actual result was ready at 8.55 s; no whole-task pass follows. GPT-Live development
+reference 7408224 uses the actual tool, answers science and returns yellow circle.
+It is one successful development scene, not general qualification.
+
+Captured-inference proof 7410675 passes with deterministic math SDPA: repeated
+control/prefix errors 0.0, post-reference difference 5.6953. Earlier paired and
+single-slot fused-attention tests are inconclusive. Production attention remains
+unchanged; this isolates reference transport, not free-running task success.
+27 current local causal/context/cancellation/alignment regressions pass.
+
+### Actual input needed and continuation
+
+Listening: http://localhost:8766/audio/voice-comparison/index.html . Top row is
+GPT-Live / PersonaPlex / corrected MoshiRAG on the same four science questions,
+assistant output only. Owner voice preference remains pending.
+
+Clifton certificate expired at 19:30:50 UTC / 21:30:50 Amsterdam on 14 October.
+SSH now fails `Permission denied (publickey)`. Renewal was launched with
+`clifton auth --open-browser true --show-qr false --write-config false`; the
+Chrome Isambard page awaits the owner's identity-provider sign-in. If that flow
+expires, restart `clifton auth`. Do not infer authentication from elapsed time.
+
+Inference-only text-temperature .2 probes 7412588 (private) and 7412590 (cancel)
+were submitted before access failed. Their status/results are unread. After
+reauthentication, check existing jobs, fetch COMPLETE logs/artifacts, then audit
+speech before comparing. Do not submit duplicates merely because access lapsed.
+No new compute permission is needed; the owner's authorization persists.
+
+Local backups contain all 48 code tensors and all 48 audio/sidecar scenes with
+matching content hashes, plus checkpoints, raw teacher audio and evaluations.
+Parent approval/cache metadata backup is incomplete because SSH expired during
+retrieval. See `runs/recovery-20261014/local-backup-report.json`; retrieve parent
+metadata after login. Preserve canonical source hashes and recorded cluster paths.
+Latest complete allocation snapshot through 7412064: 80 terminal GPU jobs,
+7,692 allocated GPU-seconds / 2.136667 GPU-hours, including failures/cancellations.
+This excludes the last two probes, billing premium, CPU/API costs and does not
+verify the remaining project balance or expiry date.
+
+Next priorities: choose voice backbone using the audition; broaden real grounded
+waiting/clarification/cancellation examples; test temporal jitter/counterfactual
+values against recurring late requests; refine private-result supervision; then
+replace transcript oracle with actual streaming ASR and fresh full-task gates.
+Keep test episodes sealed. Do not scale solely from loss or intent-head accuracy.
+Normal bulk/training remains on workq; interactive is bounded development only.
 
 ## Earlier execution — 14 October, after native optimizer recovery
 
@@ -127,8 +207,9 @@ using 16 reused conversations. It verified gradients, frozen-weight preservation
 and serialization, not quality improvement. The corrected reference replay used
 released MoshiRAG weights with inference-harness repairs, not newly trained
 MoshiRAG weights. A causally timed training adapter now passes native CPU tests;
-full released-weight backward is queued, and an optimizer/save/reload pilot
-with timed results remains to be implemented and verified.
+released-weight backward and native conditioned optimizer/save/reload now pass.
+Generated task behavior remains unqualified; the current execution section above
+records the fresh-data and teacher pilots.
 
 After backbone selection, start with adapters inside the pretrained transformer.
 Expand to selected pretrained blocks or broader fine-tuning only when evaluations

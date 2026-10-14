@@ -2198,3 +2198,76 @@ Matched weighted-32 workq 7410567 was held, replaced by bounded interactive
 threshold. Train-only measured conversion/composition is committed, with no
 word interpolation, 200 ms grid bar and unchanged sealed validation/test rows.
 Independent audio/fact approval and native codec/marker checks still gate use.
+
+## 2026-10-14 — Approved natural teachers, exclusive GPU fix, behavior failures
+
+CPU speech/fact audit 7410766 accepts 10/12 raw GPT-Live TRAIN recordings (six
+private/four simple); two exact measured-word mismatches stay excluded. Derived
+conversion/composition 7410969 yields 33 train/8 validation/7 test. Original
+held-out rows are unchanged. Recorded input is verified against approved user
+stimulus plus silence; current approval checks re-run at ingestion startup.
+
+Teacher encode 7411223 fails before codec loading because a second process cannot
+open the GPU. Its dependent training 7411224 is cancelled without allocation.
+Single-context 7411513 completes on `Exclusive_Process` while using the actual
+HTTP encoder, adds ten native teacher caches and reuses 38 verified base caches.
+Actual first-subword timing is checked in addition to the measured word grid;
+all ten pass. CPU structural audit of all 38 base caches passes, max offset 80 ms.
+
+Teacher-mixture training 7411514 completes 128 updates: 674 changed adapters,
+unchanged frozen weights, fresh text/audio logit errors 0.0. SHA256
+104bcd641351e03f8bf7da6f00477bf63c9d8a4f369a75c5d1b9bd7247753093.
+Generated 7411691 still omits the private value despite three real record reads.
+The result-utterance weight covers the entire merged teacher assistant stream;
+`result_word_nll` for that source is not private-phrase accuracy. Narrow the
+supervision scope before enlarging this objective.
+
+Matched weighted-32 7410830 saves/reloads exactly (SHA
+7f4e3831ae83f00d5b8074a7da3c95466dd55c0d871b5a4055cabf4a9c42f294).
+Generated 7411280 invents a white marker and a book. Verdict FAIL.
+Simple original weighted-128 replay 7410643 answers salt without worker calls,
+but cancellation 7411020 guesses location and speaks red star after cancellation.
+Its actual backend cancels request-325 (its own cancellation dispatch), leaving
+older lookups live. Captured self-cancel test is red before fix, green after.
+Existing-task selection excludes current dispatch; atomic selected-ID batches
+preserve unrelated work and reject invalid targets without partial changes.
+Actual API cancellation component 7411442 passes. Native 7411443 never dispatches
+cancellation, so that replay does not prove end-to-end cancellation repair.
+
+Scheduling race: intended pending replacement 7410642 had started before the
+move; it was cancelled after 104 allocated GPU-seconds, then rerun as 7411020.
+Count that allocation. Do not describe it as a zero-compute pending replacement.
+Check state both before and after holding a job; do not cancel a running job
+merely to move its queue.
+
+Chronological user turns and generated assistant chunks replace flattened user
+history. Actual ready-phase metadata helps the worker avoid repeated old reads;
+future words and scripted assistant answers remain excluded. Context is still
+an oracle, not real ASR. Backend regression 7411885 passes 8/8 policy and 8/8 tool
+contracts with three actual reads. Native speech judgment remains unqualified.
+Job-local ephemeral HTTP endpoints and single-process voice allow parallel
+replays, including 7411886/7411887 on nid010336, with no cross-job port collision.
+
+Teacher checkpoint matrix: 7411889 private uses yellow circle after one actual
+read but adds unsupported claims; 7411886 simple requests work twice and gives
+an unclear answer; 7411887 skips clarification and invents books; 7411888 misses
+cancellation and makes premature private/completion claims. All fail overall.
+Compute p95 22.36–24.35 ms/80 ms, max input backlog 33.4 ms. This is software
+throughput, not microphone or general task acceptance. Audit 7412064 retains all
+recordings; private aggregate WER is invalid because Whisper hallucinates a tail
+outside real time bounds. Keep that failure explicit. Early bounded words place
+yellow circle at 10.48–11.08 s after actual ready 8.55 s; no whole-task pass follows.
+
+27 current local context/cancellation/alignment regressions pass. Inference-only
+text-temperature .2 probes 7412588 private and 7412590 cancel were submitted;
+results are unread after Clifton expiry at 19:30:50 UTC. Renewal launched; owner's
+identity-provider sign-in is needed. Do not duplicate unknown-state jobs.
+
+Complete accounting snapshot through 7412064: 80 terminal GPU allocations,
+7692 GPU-seconds / 2.136667 GPU-hours, including failures/cancellations. This is
+not remaining project balance and excludes the last two probes, billing premium
+and CPU/API costs. Local backups verify all 48 code tensors and 48 audio/sidecars;
+parent metadata archive is incomplete after expiry. Latest code through 61d667a
+was pushed and pulled; this ledger/handoff update requires cluster pull after
+login. No candidate is delivered as a qualified model. Voice preference pending
+at http://localhost:8766/audio/voice-comparison/index.html .
