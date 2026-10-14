@@ -46,6 +46,7 @@ class RecordWorld:
                 revision = expected_revision
             receipt = {"task_id":task_id,"revision":revision,"tool":"lookup_record", "project":project,"field":field,
                 "value":self.records[project][field],"read_only":True,"executed":True}
+            self.tasks[task_id].update(operation="lookup_record",project=project,field=field)
             self.receipts.append(receipt)
             return receipt
 
@@ -61,6 +62,15 @@ class RecordWorld:
             state = self.tasks.get(receipt["task_id"])
             return bool(state and not state["cancelled"] and state["revision"] == receipt["revision"])
 
+    def cancel_many(self,task_ids):
+        with self.lock:
+            if not isinstance(task_ids,list) or not task_ids or any(not isinstance(t,str) for t in task_ids) or len(set(task_ids)) != len(task_ids):
+                raise ValueError("Cancellation requires distinct existing task IDs")
+            if any(t not in self.tasks or self.tasks[t]["cancelled"] for t in task_ids):
+                raise ValueError("Every cancellation target must be active; nothing was changed")
+            receipts = [self.cancel(t) for t in task_ids]
+            return {"tool":"cancel_lookup","cancelled":True,"task_ids":task_ids,"receipts":receipts}
+
 
 def tool(name,description,properties):
     return {"type":"function","name":name,"description":description,"strict":True,
@@ -74,15 +84,18 @@ def run_worker(context,world,task_id,model="gpt-6-luna",expected_revision=None):
         raise RuntimeError("Backend API credential unavailable")
     tools = [tool("lookup_record","Read an identified private project field. Ask for missing identification before calling.",
         {"project":{"type":"string"},"field":{"type":"string"}}),
-        tool("cancel_lookup","Cancel an identified active lookup and reject its future result.",{"task_id":{"type":"string"}})]
+        tool("cancel_lookup","Cancel the identified existing lookups. Include all related duplicates, excluding unrelated work.",
+            {"task_ids":{"type":"array","items":{"type":"string"},"minItems":1}})]
     schema = {"type":"object","properties":{"route":{"type":"string","enum":["answer","clarify","delegate","cancel"]},
         "content":{"type":"string"}},"required":["route","content"],"additionalProperties":False}
     with world.lock:
         available = {"records":{p:list(fields) for p,fields in world.records.items()},
-            "tasks":{name:state.copy() for name,state in world.tasks.items() if not state["cancelled"]}}
+            "tasks":{name:state.copy() for name,state in world.tasks.items() if not state["cancelled"] and name != task_id}}
     instructions = ("Help a live voice assistant with the latest request in its transcript. "
         "Answer simple general knowledge without tools. Private records require lookup_record; never invent their contents. "
-        "Clarify missing project or field. Honor negation and corrections. Cancel only an identified active task. "
+        "Clarify missing project or field. Honor negation and corrections. Cancel only identified existing tasks. "
+        "The current dispatch is not a cancellation target. When duplicate active lookups belong to the cancelled request, "
+        "select all their IDs in one cancellation call; preserve unrelated work. Assistant speech is not a verified tool receipt. "
         "Use route delegate after a record tool, cancel after cancellation, otherwise answer or clarify. "
         "Do not say a lookup or cancellation completed until its tool receipt is present. Reply in at most 60 words. "
         "Available project/field names and active tasks: " + json.dumps(available))
@@ -130,7 +143,12 @@ def run_worker(context,world,task_id,model="gpt-6-luna",expected_revision=None):
             receipt = world.read(task_id,**arguments,expected_revision=expected_revision)
             selected_route = "delegate"
         elif call["name"] == "cancel_lookup":
-            receipt = world.cancel(**arguments)
+            # Legacy single-ID captured events remain readable for regression
+            # checks. New strict tool calls use the explicit array contract.
+            targets = [arguments["task_id"]] if set(arguments) == {"task_id"} else arguments.get("task_ids")
+            if not isinstance(targets,list) or task_id in targets or any(t not in available["tasks"] for t in targets):
+                raise WorkerContractError("Cancellation must target existing work, not its own dispatch",{"events":events,"arguments":arguments})
+            receipt = world.cancel_many(targets)
             selected_route = "cancel"
         else:
             raise RuntimeError("Unknown backend tool")

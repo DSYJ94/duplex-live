@@ -2,10 +2,44 @@ import unittest
 import json
 import types
 from unittest.mock import patch
-from evals.recovery_worker import RecordWorld,run_worker,WorkerSuperseded
+from evals.recovery_worker import RecordWorld,run_worker,WorkerSuperseded,WorkerContractError
 
 
 class RecordGuards(unittest.TestCase):
+    def test_cancel_selected_duplicates_preserves_unrelated_work(self):
+        world = RecordWorld({"Cedar":{"badge":"violet triangle"},"Birch":{"badge":"silver circle"}})
+        first = world.read("first","Cedar","badge")
+        duplicate = world.read("duplicate","Cedar","badge")
+        unrelated = world.read("unrelated","Birch","badge")
+        receipt = world.cancel_many(["first","duplicate"])
+        self.assertEqual(receipt["task_ids"],["first","duplicate"])
+        self.assertFalse(world.deliverable(first))
+        self.assertFalse(world.deliverable(duplicate))
+        self.assertTrue(world.deliverable(unrelated))
+
+    def test_cancel_batch_failure_changes_nothing(self):
+        world = RecordWorld({"Cedar":{"badge":"violet triangle"}})
+        first = world.read("first","Cedar","badge")
+        with self.assertRaises(ValueError):
+            world.cancel_many(["first","unknown"])
+        self.assertTrue(world.deliverable(first))
+
+    def test_cancel_dispatch_cannot_cancel_itself(self):
+        world = RecordWorld({"Cedar":{"badge":"violet triangle"}})
+        record = world.read("lookup","Cedar","badge")
+        revision = world.reserve("cancel-dispatch")
+        responses = [{"id":"execute","status":"completed","output":[{"type":"function_call",
+            "name":"cancel_lookup","call_id":"cancel1","arguments":json.dumps({"task_id":"cancel-dispatch"})}]},
+            {"id":"finish","status":"completed","output":[{"type":"message","content":[{
+                "type":"output_text","text":json.dumps({"route":"cancel","content":"Cancelled."})}]}]}]
+        def post(*args,**kwargs):
+            return types.SimpleNamespace(status_code=200,json=lambda:responses.pop(0))
+        with patch.dict("sys.modules",{"requests":types.SimpleNamespace(post=post)}),patch.dict("os.environ",{"OPENAI_API_KEY":"test-placeholder"}):
+            with self.assertRaises(WorkerContractError):
+                run_worker([{"role":"user","text":"Cancel that lookup."}],world,"cancel-dispatch",expected_revision=revision)
+        self.assertTrue(world.deliverable(record))
+        self.assertFalse(world.tasks["cancel-dispatch"]["cancelled"])
+
     def test_cancel_rejects_result_that_completed_before_delivery(self):
         world = RecordWorld({"Cedar":{"badge":"violet triangle"}})
         old = world.read("task","Cedar","badge")
