@@ -30,6 +30,7 @@ def main():
     parser.add_argument("--voice-scenario", default="recovery-validation-000")
     parser.add_argument("--voice-adapter", type=Path)
     parser.add_argument("--in-process-voice",action="store_true")
+    parser.add_argument("--voice-text-temperature",type=float)
     args = parser.parse_args()
     args.out.mkdir(parents=True, exist_ok=False)
     import torch
@@ -182,6 +183,8 @@ def main():
                 "--scenario",args.voice_scenario]
             if args.voice_adapter:
                 voice_args += ["--adapter",str(args.voice_adapter)]
+            if args.voice_text_temperature is not None:
+                voice_args += ["--text-temperature",str(args.voice_text_temperature)]
             if args.in_process_voice:
                 from evals.recovery_voice import main as voice
                 voice(voice_args)

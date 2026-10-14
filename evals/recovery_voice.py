@@ -24,7 +24,10 @@ def main(argv=None):
     parser.add_argument("--out",type=Path,required=True)
     parser.add_argument("--scenario",required=True)
     parser.add_argument("--adapter",type=Path)
+    parser.add_argument("--text-temperature",type=float)
     args = parser.parse_args(argv)
+    if args.text_temperature is not None and not .05 <= args.text_temperature <= 1.:
+        parser.error("Diagnostic text temperature must be within .05–1.0")
     import numpy as np
     import soundfile as sf
     import torch
@@ -54,8 +57,10 @@ def main(argv=None):
         config_path=rag / "config.json")
     mimi = info.get_mimi(device="cuda").eval().requires_grad_(False)
     tokenizer = info.get_text_tokenizer()
+    generation_config = dict(info.lm_gen_config)
+    if args.text_temperature is not None: generation_config["temp_text"] = args.text_temperature
     gen = LMGen(lm,condition_tensors=get_condition_tensors("moshi",lm,1,1.,first_speaker="user"),
-        force_streaming_sum=True,**info.lm_gen_config)
+        force_streaming_sum=True,**generation_config)
     audio,rate = sf.read(row["path"],dtype="float32",always_2d=True)
     if rate != mimi.sample_rate or audio.shape[1] != 2:
         raise RuntimeError("Invalid approved native input")
@@ -158,6 +163,7 @@ def main(argv=None):
                     log.flush()
     sf.write(args.out / "model.wav",output,rate)
     report = {"scenario":args.scenario,"split":"validation","adapter":str(args.adapter) if args.adapter else None,
+        "text_temperature":gen.temp_text,"audio_temperature":gen.temp,
         "text":"".join(p["text"] for p in packets),"events":events,"tool_receipts":world.receipts,
         "reference_applied_frames":sum(p["reference_l1"]>0 for p in packets),
         "compute_p50_s":float(np.median([p["compute_s"] for p in packets])),
