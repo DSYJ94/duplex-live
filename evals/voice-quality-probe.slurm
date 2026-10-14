@@ -21,7 +21,10 @@ OVERLAY="$DL/tmp/voice-quality-${SLURM_JOB_ID}"
 mkdir "$OVERLAY"
 apptainer exec --bind /projects,/lus,/home "$DL/pytorch-new.sif" \
   python -m pip install --no-deps --only-binary=:all: --disable-pip-version-check \
-  --target "$OVERLAY" 'pyloudnorm==0.1.1'
+  --target "$OVERLAY" 'pyloudnorm==0.1.1' 'future==1.0.0'
+apptainer exec --bind /projects,/lus,/home \
+  --env PYTHONPATH="$OVERLAY:$DL/envs/moshi-rag-7379661/lib/python3.12/site-packages" \
+  "$DL/pytorch-new.sif" python -c 'import pyloudnorm; from future.utils import iteritems; print("Native voice normalization dependencies passed")'
 run_python() {
   apptainer exec --nv --bind /projects,/lus,/home \
     --env PYTHONPATH="$OVERLAY:$SOURCE/moshi:$DL/envs/moshi-rag-7379661/lib/python3.12/site-packages:$DL/repo" \

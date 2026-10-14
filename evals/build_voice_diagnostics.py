@@ -11,6 +11,9 @@ def main():
     ap.add_argument("--minicpm-job", type=int)
     ap.add_argument("--custom-persona-job", type=int)
     ap.add_argument("--lychee-job", type=int)
+    ap.add_argument("--gpt-live-job", type=int)
+    ap.add_argument("--codec-cpu-job", type=int)
+    ap.add_argument("--codec-cuda-job", type=int)
     args = ap.parse_args()
     cards = []
 
@@ -25,7 +28,22 @@ def main():
          "10 seconds of the synthetic marin voice. Continuous original audio, without resynthesis.")
     card("Same excerpt through Mimi", f"{prefix}/codec/mimi-roundtrip.wav",
          "Exactly the same words, encoded and decoded through the native eight-codebook codec. No speech model generation.")
+    for device, job in (("CPU", args.codec_cpu_job), ("GPU", args.codec_cuda_job)):
+        if job:
+            card("Same codec tokens, uncompiled " + device, f"voice-codec-decode-{job}/decoded.wav",
+                 "The same captured codec tokens decoded without compilation; changes no words or model weights.",
+                 f"voice-codec-decode-{job}/report.json")
     controls = "".join(cards)
+    cards.clear()
+    card("Moshi original capture", "moshi-rag-speech-7387777-delayed-reference/model.wav",
+         "Existing capture inserts two buffer underruns totaling 123 ms. Model quality remains unaccepted.")
+    card("Same Moshi PCM, 160 ms startup buffer", "moshi-playout-diagnostic-20261014/buffered.wav",
+         "The exact original generated samples, with a causal startup buffer. Removes both recorded underruns; not proof all clicks are fixed.")
+    if args.gpt_live_job:
+        root = f"gpt-live-replay-{args.gpt_live_job}/t1"
+        card("Fresh GPT-Live, 160 ms startup buffer", root+"/model_out-buffered.wav",
+             "Fresh actual API replay. Packet ledger retains arrival times and all underruns.", root+"/report.json")
+    playback = "".join(cards)
     cards.clear()
     card("GPT-Live reference", "gpt-live-replay-7400991/t1/model_out.wav",
          "The original four-question development replay.")
@@ -50,6 +68,7 @@ def main():
     page += '<title>Voice diagnostics</title><style>body{max-width:1100px;margin:32px auto;padding:0 20px;background:#10141c;color:#e7ecf5;font:16px/1.5 system-ui}section{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}article{padding:20px;background:#1a2230;border:1px solid #354157;border-radius:12px}audio{width:100%}p{color:#b9c5d8}a{color:#9dc3ff}</style>'
     page += '<h1>Voice diagnostics</h1><p>The owner rejected both current PersonaPlex and MoshiRAG voices. None of these new probes has been accepted. Compare naturalness, clarity, rhythm and artifacts separately from answer correctness.</p>'
     page += '<h2>Does the codec preserve an acceptable voice?</h2><section>'+controls+'</section>'
+    page += '<h2>Check clicks introduced by playback timing</h2><section>'+playback+'</section>'
     page += '<h2>Generated speech on the same four science questions</h2><p>Different models may answer differently. Only completed local recordings appear below. These are development auditions, not a controlled full-task ranking.</p><section>'+''.join(cards)+'</section>'
     page += '<p><a href="/audio/voice-comparison/index.html">Earlier task comparisons</a> · <a href="/">Full gallery</a></p></html>'
     out = args.runs / "voice-diagnostics" / "index.html"

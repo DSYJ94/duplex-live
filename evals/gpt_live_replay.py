@@ -184,16 +184,25 @@ async def run(args):
                         task.cancel()
                     await asyncio.gather(sender, *tasks.values(), return_exceptions=True)
     # Align returned audio to local receipt/playback availability, not input time.
-    output, cursor = [], 0
-    for arrival, data in audio:
-        offset = max(cursor, math.ceil(arrival * 24000))
-        output.extend([np.zeros(offset - cursor, dtype="<i2"), np.frombuffer(data, dtype="<i2")])
-        cursor = offset + len(data) // 2
-    sf.write(args.out / "model_out.wav", np.concatenate(output) if output else np.zeros(1), 24000)
+    playout = None
+    if audio:
+        from evals.audio_playout import render_packets
+        pcm_packets = [(arrival, np.frombuffer(data, dtype="<i2")) for arrival, data in audio]
+        original, unbuffered = render_packets(pcm_packets, 24000, 0)
+        buffered, playout = render_packets(pcm_packets, 24000, .16)
+        sf.write(args.out / "model_out.wav", original, 24000)
+        sf.write(args.out / "model_out-buffered.wav", buffered, 24000)
+        sf.write(args.out / "packet-stream.wav", np.concatenate([p for _, p in pcm_packets]), 24000)
+        (args.out / "playout.json").write_text(json.dumps({"unbuffered": unbuffered,
+            "buffered": playout, "raw_pcm_sha256": hashlib.sha256(b"".join(d for _, d in audio)).hexdigest(),
+            "packet_stream_timing": "diagnostic only; excludes network arrival gaps"}, indent=2)+"\n")
+    else:
+        sf.write(args.out / "model_out.wav", np.zeros(1), 24000)
     (args.out / "transcripts.json").write_text(json.dumps(transcripts, indent=2) + "\n")
     report = {"session_finalized": finalized, "usage": usage, "audio_packets": len(audio),
         "delegations": len(tasks), "errors": errors, "human_listening": "pending",
         "voice_or_delegation_quality_pass": False}
+    report["buffered_playout_underruns"] = None if playout is None else playout["underrun_count"]
     (args.out / "report.json").write_text(json.dumps(report, indent=2) + "\n")
     print(json.dumps(report), flush=True)
     if not finalized or not audio or errors:

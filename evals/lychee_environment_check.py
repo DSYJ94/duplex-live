@@ -24,6 +24,14 @@ def main():
     import s3tokenizer
     import onnxruntime
     import hyperpyyaml
+    import matplotlib.pyplot
+    import sys
+    from pathlib import Path
+    from evals.lychee_model_download import SOURCE_COMMIT
+    source = Path("/projects/u6si/duplex-live/vendor") / ("lychee-fd-" + SOURCE_COMMIT)
+    sys.path.insert(0, str(source))
+    from Training_package.Code.Models.LycheeFD import LycheeFD, LycheeFDConfig
+    from lychee_fd.runtime.hf_v9_generation import SingleTurnGenerationFramework
     print(json.dumps({**rule, "torch": torch.__version__, "torch_file": torch.__file__,
                       "torchaudio": torchaudio.__version__, "imports_passed": True}), flush=True)
 

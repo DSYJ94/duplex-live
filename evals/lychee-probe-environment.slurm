@@ -17,6 +17,9 @@ mkdir "$OUT"
 apptainer exec --bind /projects,/lus,/home "$DL/pytorch-new.sif" \
   python -m pip install --no-deps --only-binary=:all: --disable-pip-version-check \
   --target "$OUT" 'transformers==4.57.6' 'tokenizers==0.22.2' 'peft==0.17.1' 'accelerate==1.10.1'
+apptainer exec --bind /projects,/lus,/home "$DL/pytorch-new.sif" \
+  python -m pip install --only-binary=:all: --disable-pip-version-check \
+  --target "$OUT" 'datasets==4.4.1' 'numpy==2.2.6' 'huggingface-hub==0.35.3' 'pandas==2.3.3'
 apptainer exec --bind /projects,/lus,/home \
   --env PYTHONPATH="$OUT:$DL/tmp/minicpm-recovery-7377673:$DL/repo" \
   --env PYTHONDONTWRITEBYTECODE=1 "$DL/pytorch-new.sif" \
