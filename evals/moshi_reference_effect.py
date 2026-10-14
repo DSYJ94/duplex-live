@@ -7,6 +7,7 @@ not an audible reference-use or task-success qualification.
 import argparse
 import json
 import math
+import os
 from pathlib import Path
 from evals.recovery_data import validate_cache
 from evals.recovery_train import load_base
@@ -18,7 +19,13 @@ def main():
     parser.add_argument("--manifest",type=Path,required=True)
     parser.add_argument("--out",type=Path,required=True)
     args = parser.parse_args()
+    os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG",":4096:8")
     import torch
+    torch.use_deterministic_algorithms(True)
+    torch.backends.cuda.enable_flash_sdp(False)
+    torch.backends.cuda.enable_mem_efficient_sdp(False)
+    torch.backends.cuda.enable_cudnn_sdp(False)
+    torch.backends.cuda.enable_math_sdp(True)
     from moshi.models import LMGen
     from moshi.inference_utils.utils import get_condition_tensors
     receipt = validate_cache(args.cache)
@@ -71,6 +78,7 @@ def main():
     report = {"control_repeat_max_abs_error":repeat,"same_slot_prefix_max_abs_error":before,"post_reference_max_abs_difference":after,
         "injection_frame":injection_frame,"injection_time_s":injection_frame*.08,
         "reference_rows":len(arrival["rows"]),"cuda_graphs":True,"greedy_sampling":True,
+        "attention_backend":"math SDPA, deterministic algorithms required; diagnostic only, no production latency claim",
         "assistant_history":"identical approved teacher-forced text and audio in three single-slot passes; no free-run quality claim",
         "complete_task_success_tested":False,"records":records,"passed":repeat==0. and before==0. and after>.001}
     (args.out / "report.json").write_text(json.dumps(report,indent=2)+"\n")
