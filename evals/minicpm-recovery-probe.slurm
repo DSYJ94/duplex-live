@@ -33,6 +33,10 @@ EXTRA=()
 if [ -n "${RESULT_FIXTURE:-}" ]; then
     EXTRA=(--result-fixture "$RESULT_FIXTURE")
 fi
+if [ -n "${VOICE_REFERENCE:-}" ]; then
+    : "${VOICE_PROVENANCE:?Custom synthetic voice requires its provenance receipt}"
+    EXTRA+=(--voice "$VOICE_REFERENCE" --voice-provenance "$VOICE_PROVENANCE")
+fi
 apptainer exec --nv --bind /projects,/lus,/home \
     --env PYTHONPATH="$OVERLAY:$DL/repo" --env HF_HOME="$DL/models/hf-cache" \
     --env HF_HUB_OFFLINE=1 --env TRANSFORMERS_OFFLINE=1 \

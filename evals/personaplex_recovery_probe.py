@@ -28,8 +28,19 @@ def main():
     parser.add_argument("--source", type=Path, required=True)
     parser.add_argument("--model", type=Path, required=True)
     parser.add_argument("--voice", type=Path, required=True)
+    parser.add_argument("--voice-provenance", type=Path,
+                        help="Required codec receipt when conditioning on a synthetic reference WAV")
     parser.add_argument("--out", type=Path, required=True)
     args = parser.parse_args()
+    voice_provenance = None
+    if args.voice.suffix.lower() != ".pt":
+        if args.voice.suffix.lower() != ".wav" or not args.voice_provenance:
+            parser.error("Custom WAV conditioning requires --voice-provenance")
+        voice_provenance = json.loads(args.voice_provenance.read_text())
+        if (voice_provenance.get("schema") != "dl-voice-codec-probe-v1"
+                or voice_provenance.get("reference_sha256") != sha256(args.voice)
+                or voice_provenance.get("source_model") != "gpt-live-1"):
+            raise RuntimeError("Custom synthetic voice reference does not match its receipt")
     scenario = "dense_dialog-001"
     checked_rows(args.batch, [{"scenario_id": scenario}], role="PersonaPlex development comparison")
     expected = args.source / "moshi" / "moshi" / "__init__.py"
@@ -50,6 +61,8 @@ def main():
         "input_scenario": scenario, "fresh_holdout": False, "paced": False,
         "microphone_acceptance": False, "input_seconds": 60, "added_silence_seconds": 10,
         "assets": {str(p): {"sha256": sha256(p), "bytes": p.stat().st_size} for p in assets}}
+    env["voice_conditioning"] = {"path": str(args.voice), "provenance": voice_provenance,
+                                 "training_approved": False}
     (args.out / "environment.json").write_text(json.dumps(env, indent=2) + "\n")
     pcm, sr = sf.read(args.batch / scenario / "stem_user.wav", dtype="float32")
     if pcm.ndim != 1 or not np.isfinite(pcm).all() or len(pcm) < 60 * sr:

@@ -45,6 +45,8 @@ def main():
     ap.add_argument("--seconds", type=int, default=60)
     ap.add_argument("--model", type=Path, required=True)
     ap.add_argument("--out", type=Path, required=True)
+    ap.add_argument("--voice", type=Path, help="Optional synthetic development reference WAV")
+    ap.add_argument("--voice-provenance", type=Path)
     ap.add_argument("--result-fixture", type=Path,
                     help="controlled delayed context test; not learned task routing")
     args = ap.parse_args()
@@ -76,7 +78,17 @@ def main():
     # Explicit process-local compatibility adapter, recorded in the environment.
     # Both s3tokenizer and Token2wav call this for their reference WAV.
     torchaudio.load = wav_load
-    voice = args.model / "assets" / "HT_ref_audio.wav"
+    voice = args.voice or args.model / "assets" / "HT_ref_audio.wav"
+    voice_provenance = None
+    if args.voice:
+        from evals.moshi_model_download import sha256
+        if not args.voice_provenance:
+            ap.error("Custom voice requires --voice-provenance")
+        voice_provenance = json.loads(args.voice_provenance.read_text())
+        if (voice_provenance.get("schema") != "dl-voice-codec-probe-v1"
+                or voice_provenance.get("reference_sha256") != sha256(voice)
+                or voice_provenance.get("source_model") != "gpt-live-1"):
+            raise RuntimeError("Custom synthetic voice reference does not match its receipt")
     # Test the same decoder Token2wav will use before loading model weights.
     voice_pcm, voice_sr = torchaudio.load(str(voice))
     if voice_pcm.numel() == 0 or voice_sr <= 0:
@@ -105,6 +117,9 @@ def main():
            "seconds": args.seconds, "scenario": args.scenario,
            "semantic_verdict": "pending review", "microphone_acceptance": False}
     env["background_result_mode"] = "controlled fixture; no learned dispatch" if task_fixture else None
+    from evals.moshi_model_download import sha256
+    env["voice_conditioning"] = {"path": str(voice), "sha256": sha256(voice),
+                                 "provenance": voice_provenance, "training_approved": False}
     (args.out / "environment.json").write_text(json.dumps(env, indent=2) + "\n")
     model = AutoModel.from_pretrained(
         str(args.model), trust_remote_code=True, local_files_only=True,

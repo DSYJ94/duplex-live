@@ -23,6 +23,7 @@ case "${1:?Choose rag, personaplex or qwen}" in
   recovery-audit) SCRIPT=evals/recovery-speech-audit.slurm ;;
   reference-effect) SCRIPT=evals/moshi-reference-effect.slurm ;;
   personaplex) SCRIPT=evals/personaplex-recovery.slurm ;;
+  voice-quality) SCRIPT=evals/voice-quality-probe.slurm ;;
   qwen) SCRIPT=evals/qwen-delegation-probe.slurm ;;
   *) exit 2 ;;
 esac
