@@ -9,7 +9,8 @@
 #SBATCH --output=logs/dl-live-access-%j.out
 set -euo pipefail
 DL=/projects/u6si/duplex-live
-cd "$DL/repo"+# Load the existing project credential inside the trusted cluster shell.
+cd "$DL/repo"
+# Load the existing project credential inside the trusted cluster shell.
 set -a
 source "$DL/keys/openai.env"
 set +a
