@@ -3,6 +3,7 @@
 set -euo pipefail
 DL=/projects/u6si/duplex-live
 SOURCE="$DL/vendor/moshi-rag-8c6dfc101b7871baa428424bcdc583b74fb561d9"
+export DL SOURCE
 cd "$DL/repo"
 apptainer exec --nv --bind /projects,/lus,/home \
   --env PYTHONPATH="$SOURCE/moshi:$DL/repo" --env HF_HOME="$DL/models/hf-cache" \

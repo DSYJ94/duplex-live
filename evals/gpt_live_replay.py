@@ -14,6 +14,15 @@ import time
 from pathlib import Path
 
 
+def audio_sample_count(samples,rate,seconds):
+    if rate <= 0 or not 0 < seconds <= 90:
+        raise ValueError("Invalid bounded approved input length")
+    wanted = round(rate*seconds)
+    if wanted < 1 or samples < wanted:
+        raise ValueError("Approved input is missing requested samples")
+    return wanted
+
+
 async def run(args):
     import aiohttp
     import numpy as np
@@ -40,10 +49,11 @@ async def run(args):
     source = args.batch / scenario / "stem_user.wav"
     pcm, sr = sf.read(source, dtype="float32")
     seconds = len(pcm)/sr if args.conversion else 60
-    if pcm.ndim != 1 or not np.isfinite(pcm).all() or not 0 < seconds <= 90 or len(pcm) < sr * seconds:
+    if pcm.ndim != 1 or not np.isfinite(pcm).all():
         raise RuntimeError("Invalid approved input audio")
+    selected_samples = audio_sample_count(len(pcm),sr,seconds)
     divisor = math.gcd(sr, 24000)
-    pcm = resample_poly(pcm[:round(sr * seconds)], 24000 // divisor, sr // divisor)
+    pcm = resample_poly(pcm[:selected_samples], 24000 // divisor, sr // divisor)
     pcm = np.concatenate([pcm, np.zeros(15 * 24000)])
     sf.write(args.out / "user_in.wav", pcm, 24000)
     pcm16 = (np.clip(pcm, -1, 1) * 32767).astype("<i2")
