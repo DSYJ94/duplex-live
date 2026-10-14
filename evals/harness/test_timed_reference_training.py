@@ -18,6 +18,22 @@ def tiny_model():
 
 
 class TimedReferenceTest(unittest.TestCase):
+    def test_native_lora_zero_start_preserves_pretrained_outputs(self):
+        from moshi.models.loaders import get_lora_moshi
+        torch.manual_seed(49)
+        model = tiny_model()
+        codes = torch.randint(0, 16, (1, 3, 12))
+        reference = torch.randn(1, 12, 16)
+        with torch.no_grad(), no_compile():
+            before = forward_with_reference(model, codes, reference)
+            model = get_lora_moshi(model, None, lora_rank=2, lora_scaling=2., device="cpu", fuse_lora=False)
+            for name, parameter in model.named_parameters():
+                if ".lora_B." in name:
+                    parameter.zero_()
+            after = forward_with_reference(model, codes, reference)
+            torch.testing.assert_close(before.text_logits, after.text_logits, equal_nan=True, atol=0, rtol=0)
+            torch.testing.assert_close(before.logits, after.logits, equal_nan=True, atol=0, rtol=0)
+
     def test_speaker_prefix_matches_serving_and_keeps_target_alignment(self):
         from moshi.models.lm import _delay_sequence
         torch.manual_seed(47)

@@ -14,6 +14,7 @@ cd "$DL/repo"
 SOURCE="$DL/vendor/moshi-rag-8c6dfc101b7871baa428424bcdc583b74fb561d9"
 test "$(git -C "$SOURCE" rev-parse HEAD)" = 8c6dfc101b7871baa428424bcdc583b74fb561d9
 export DL SOURCE
+export RAG_PILOT_STEPS="${RAG_PILOT_STEPS:-0}"
 apptainer exec --nv --bind /projects,/lus,/home \
   --env PYTHONPATH="$SOURCE/moshi:$DL/repo" --env PYTHONDONTWRITEBYTECODE=1 \
   --env HF_HOME="$DL/models/hf-cache" --env HF_HUB_OFFLINE=1 \
@@ -26,5 +27,6 @@ TRITON_LIBCUDA_PATH=$("$PY" -m evals.cuda_linker_path --out "$DL/runs/rag-traini
   --manifest "$DL/runs/moshi-models-7378305/model-manifest.json" \
   --tokenizer "$DL/models/hf-cache/hub/models--meta-llama--Llama-3.2-3B-Instruct/snapshots/0cb88a4f764b7a12671c53f0838cd831a0843b95" \
   --out "$DL/runs/rag-training-reference-${SLURM_JOB_ID}" \
-  --training-proof "$DL/runs/rag-training-proof-${SLURM_JOB_ID}"
+  --training-proof "$DL/runs/rag-training-proof-${SLURM_JOB_ID}" \
+  --training-steps "$RAG_PILOT_STEPS"
 CONTAINER
