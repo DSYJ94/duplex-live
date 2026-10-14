@@ -2089,3 +2089,7 @@ host-memory cgroup during checkpoint loading (50 GPU-seconds; no routing cases
 completed). The launcher's host-memory request is increased from 64 to 110 GiB
 for a one-GPU retry. Total recorded terminal recovery GPU allocation is now
 4139 seconds / 1.149722 hours, excluding the upcoming retry and billing premium.
+
+One-GPU Qwen retry 7402749 submitted via the interactive reservation with
+110 GiB host RAM. Interactive starts measured from Slurm Submit/Start timestamps
+were 1 second (7402644), 2 seconds (7402673), and 0 seconds (7402713).

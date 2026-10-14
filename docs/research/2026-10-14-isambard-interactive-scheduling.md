@@ -71,3 +71,9 @@ producing a 4096-versus-128 shape mismatch. This is a training integration
 failure exposed by faster execution, not a scheduling failure. Do not drop the
 prepend condition to claim training/inference parity. Prefix-aware training
 still needs implementation and verification.
+
+Slurm Submit/Start timestamps subsequently confirmed waits of 1, 2 and 0 seconds
+for 7402644, 7402673 and 7402713 respectively. The third was a bounded Qwen
+routing diagnostic that ran out of host memory during loading; its one-GPU
+110 GiB retry is 7402749. These measured starts establish the benefit for these
+probes, not a general wait-time guarantee or permission for bulk compute here.
