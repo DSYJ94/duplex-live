@@ -8,6 +8,28 @@ def adapter_parameters(model):
     return {n: p for n, p in model.named_parameters() if ".lora_A." in n or ".lora_B." in n}
 
 
+def load_adapter_exact(model, path, rank=8, scaling=2., device="cuda"):
+    """Preserve the released conditioner's float32 weights and adapter dtypes.
+
+The upstream file-loading convenience method casts every adapter and the whole
+model to one dtype. RAG's speaker projection intentionally has a different dtype.
+Reuse native adapter construction, then assign the complete saved tensors exactly.
+"""
+    from safetensors.torch import load_file
+    from moshi.models.loaders import get_lora_moshi
+    if adapter_parameters(model):
+        raise RuntimeError("Adapter loading requires an unadapted base")
+    model = get_lora_moshi(model, None, lora_rank=rank, lora_scaling=scaling, device=device, fuse_lora=False)
+    saved = load_file(path, device=str(device))
+    if set(saved) != set(adapter_parameters(model)):
+        raise RuntimeError("Incomplete or unexpected adapter checkpoint keys")
+    missing = set(model.state_dict()) - set(saved)
+    result = model.load_state_dict(saved, strict=False, assign=True)
+    if result.unexpected_keys or set(result.missing_keys) != missing:
+        raise RuntimeError("Adapter assignment coverage mismatch")
+    return model
+
+
 def precise_sample(model, codes, reference):
     import torch
     from moshi.utils.compile import no_compile
@@ -133,8 +155,7 @@ def verify_reload(model, out):
     saved = load_file(out / "lora.safetensors")
     if tensor_hashes(saved.items()) != report["adapter_hashes"]:
         raise RuntimeError("Saved adapters differ from trained values")
-    model = get_lora_moshi(model, out / "lora.safetensors", lora_rank=8, lora_scaling=2.,
-                           device="cuda", dtype=torch.bfloat16, fuse_lora=False)
+    model = load_adapter_exact(model, out / "lora.safetensors")
     if set(adapter_parameters(model)) != set(report["adapter_keys"]) or any(p.is_meta for p in model.parameters()):
         raise RuntimeError("Reloaded adapter coverage is incomplete")
     if tensor_hashes(adapter_parameters(model).items()) != report["adapter_hashes"]:

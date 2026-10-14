@@ -1,5 +1,6 @@
 """Test causal conditioning against the actual pinned native transformer."""
 import io
+import tempfile
 import unittest
 from types import SimpleNamespace
 
@@ -18,6 +19,38 @@ def tiny_model():
 
 
 class TimedReferenceTest(unittest.TestCase):
+    def test_mixed_dtype_conditioner_adapter_reload_is_exact(self):
+        from pathlib import Path
+        from safetensors.torch import save_file
+        from moshi.models.loaders import get_lora_moshi
+        from evals.moshi_rag_adapter_pilot import load_adapter_exact, adapter_parameters
+        from evals.moshi_training_smoke import tensor_hashes
+        model = tiny_model().bfloat16()
+        model.condition_provider = torch.nn.Module()
+        speaker = torch.nn.Module()
+        speaker.output_proj = torch.nn.Linear(16, 16, bias=False).float()
+        model.condition_provider.conditioners = torch.nn.ModuleDict({"first_speaker": speaker})
+        base = {n:t.clone() for n,t in model.state_dict().items()}
+        model = get_lora_moshi(model, None, lora_rank=2, lora_scaling=2., device="cpu", fuse_lora=False)
+        adapters = adapter_parameters(model)
+        expected = tensor_hashes(adapters.items())
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory)/"lora.safetensors"
+            save_file({n:p.detach().contiguous() for n,p in adapters.items()}, path)
+            reloaded = tiny_model().bfloat16()
+            reloaded.condition_provider = torch.nn.Module()
+            speaker = torch.nn.Module()
+            speaker.output_proj = torch.nn.Linear(16, 16, bias=False).float()
+            reloaded.condition_provider.conditioners = torch.nn.ModuleDict({"first_speaker": speaker})
+            reloaded.load_state_dict(base)
+            reloaded = load_adapter_exact(reloaded, path, rank=2, scaling=2., device="cpu")
+            self.assertEqual(expected, tensor_hashes(adapter_parameters(reloaded).items()))
+            self.assertEqual(reloaded.condition_provider.conditioners["first_speaker"].output_proj.frozen_W.weight.dtype, torch.float32)
+            for name, parameter in reloaded.named_parameters():
+                original_name = name.replace(".frozen_W", "")
+                if original_name in base:
+                    torch.testing.assert_close(parameter, base[original_name], atol=0, rtol=0)
+
     def test_native_lora_zero_start_preserves_pretrained_outputs(self):
         from moshi.models.loaders import get_lora_moshi
         torch.manual_seed(49)
