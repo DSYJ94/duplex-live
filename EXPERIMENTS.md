@@ -2067,9 +2067,19 @@ training/inference parity remains open. Do not omit the prefix to declare a pass
 
 PersonaPlex 7400573 failed after 27 allocated GPU-seconds because the runtime
 CUDA linker library was absent from Triton's search path. The existing job-local
-linker helper is now used; repaired interactive probe 7402673 is running.
-Qwen 7401909 remains pending in workq. Retrieve full logs before analysis;
+linker helper is now used; repaired interactive probe 7402673 completed in
+67 GPU-seconds with 70 seconds of generated audio. Its transcript gives a wrong
+moisture-loss explanation of bread staling; audible quality is not yet graded.
+Qwen replacement 7402713 was accepted in the interactive reservation and its
+held workq duplicate 7401909 was cancelled. Retrieve full logs before analysis;
 7402644 and 7400573 logs are local in runs/recovery-20261014/.
 
 Verdict: interactive scheduling works and accelerates debugging. No new quality
 candidate or full-weight training pass is established by these failed probes.
+
+PersonaPlex artifacts are local at `runs/personaplex-recovery-7402673/` and
+available in the gallery; both input/output players were verified. Newly
+terminal GPU allocations 7400573/7402644/7402673 add 153 GPU-seconds, taking
+recorded recovery consumption to 4089 seconds / 1.135833 GPU-hours before any
+Qwen replacement allocation. Interactive billing is separate; this is not the
+remaining project balance.

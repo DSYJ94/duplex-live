@@ -300,10 +300,16 @@ training implementation must be checked against serving execution.
 
 PersonaPlex 7400573 failed after 27 GPU-seconds during compiler warmup because
 Triton could not find the runtime CUDA linker library. The existing job-local
-driver-linker helper is now wired into this probe; repair queued as 7402673
-through the interactive reservation. Original pending proof 7401863 was held,
-then cancelled after its interactive replacement started. Qwen 7401909 remains
-on workq. Monitor hidden jobs with `squeue --me --all`.
+driver-linker helper is now wired into this probe; interactive repair 7402673
+completed in 67 allocated GPU-seconds. It generated 70 seconds of audio in
+45.095 seconds including model load. This is offline throughput, not live
+latency. Its bread answer incorrectly attributes staling to moisture loss;
+voice quality requires audition. Both tracks are available at
+http://localhost:8766/batch/personaplex-recovery-7402673 .
+Original pending proof 7401863 was held, then cancelled after its replacement
+started. Qwen replacement 7402713 was accepted in the interactive reservation;
+its held workq duplicate 7401909 was cancelled. Monitor hidden jobs with
+`squeue --me --all`.
 
 The interactive pool is for short development work, not bulk training. Long
 training stays on workq. Official documentation states a 50% node-hour premium;
