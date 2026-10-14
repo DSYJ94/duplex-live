@@ -2053,3 +2053,23 @@ GPU-hours. Do not report any of these queued GPU probes as passed.
 Verdict: causal conditioning passes native CPU engineering checks; full-weight
 training, real delegation and fresh audible improvement remain open. Complete
 CPU logs are retrieved under `runs/recovery-20261014/`.
+
+## 2026-10-14 — Interactive scheduling verified; full-weight prefix failure
+
+Plain words: the official interactive reservation starts short development work
+without the normal queue delay. Job 7402644 started on a GH200 at the first
+follow-up check. Original held 7401863 was cancelled to avoid duplicate work.
+The native ARC HTTP encoder passed again, but whole-sequence speech training
+failed before backward: a first-speaker embedding of dimension 4096 was being
+concatenated with 128 token-code time steps. The CPU reference tests remain
+valid; they did not exercise this released prepend conditioner. Prefix-aware
+training/inference parity remains open. Do not omit the prefix to declare a pass.
+
+PersonaPlex 7400573 failed after 27 allocated GPU-seconds because the runtime
+CUDA linker library was absent from Triton's search path. The existing job-local
+linker helper is now used; repaired interactive probe 7402673 is running.
+Qwen 7401909 remains pending in workq. Retrieve full logs before analysis;
+7402644 and 7400573 logs are local in runs/recovery-20261014/.
+
+Verdict: interactive scheduling works and accelerates debugging. No new quality
+candidate or full-weight training pass is established by these failed probes.

@@ -1,6 +1,8 @@
 # Faster short probes on Isambard-AI Phase 2
 
-Checked 14 October 2026 against official documentation. No jobs changed during this research.
+Plain words: official guidance confirms a faster reservation for short probes.
+Checked 14 October 2026 against official documentation; live execution findings
+are recorded below.
 
 **Yes: the `interactive` reservation offers a separate route for short debugging and exploratory work. It is appropriate for our bounded backward and voice probes; production training stays on `workq`.** Faster starts are the intended benefit, not a guaranteed start time. [BriCS advanced guide](https://docs.isambard.ac.uk/user-documentation/guides/slurm-advanced/)
 
@@ -37,8 +39,35 @@ scontrol show job JOBID
 sacct -j JOBID --format=JobID,State,Partition,Elapsed,ExitCode
 ```
 
-The hidden partition does not appear in ordinary `squeue --me`. Inspect the submitted job's effective partition, QoS and reservation; expected values are `interactive`, `interactive_qos`, and `interactive`. [BriCS advanced guide](https://docs.isambard.ac.uk/user-documentation/guides/slurm-advanced/), [BriCS scheduling reference](https://docs.isambard.ac.uk/user-documentation/information/job-scheduling/)
+The hidden partition does not appear in ordinary `squeue --me`. Inspect the
+submitted job's effective partition and reservation (`interactive`) and the
+partition's policy (`interactive_qos`). The live job may retain the account's
+job QoS `normal`; that is separate from the partition QoS applied by the site.
+[BriCS advanced guide](https://docs.isambard.ac.uk/user-documentation/guides/slurm-advanced/),
+[BriCS scheduling reference](https://docs.isambard.ac.uk/user-documentation/information/job-scheduling/)
 
 Slurm supports changing a job's `ReservationName`, but BriCS does not document whether updating an existing pending `workq` job reruns its automatic partition/QoS selection. **Do not assume `scontrol update JobId=... ReservationName=interactive` is safe.** For an urgent short probe, submit a correctly constructed replacement, verify its receipt and effective settings, then cancel the original pending probe while preventing duplicate execution. Preserve old/new IDs and dependency changes. Routine cancellation/resubmission loses queue age, so retain normal training jobs rather than repeatedly resubmitting them. [Slurm scontrol reference](https://slurm.schedmd.com/scontrol.html), [BriCS queue FAQ](https://docs.isambard.ac.uk/user-documentation/faqs/)
 
 For longer checkpointed training, request realistic time and resources on `workq`; `--time-min` can help backfill only when the training process can save and resume within the smaller assigned walltime. [BriCS advanced guide](https://docs.isambard.ac.uk/user-documentation/guides/slurm-advanced/)
+
+## Live check — 14 October
+
+Plain words: the reservation worked for this account. Committed wrapper
+`evals/interactive-short-probe.slurm` selects the reservation without specifying
+a partition or QoS. It directly executes one allowed committed probe payload;
+the payload's SBATCH comments are ignored by bash. Code was pushed and pulled,
+and its SHA256 matched before submission.
+
+Replacement 7402644 was submitted at 11:00:45 UTC and was running on GH200
+`nid010689` at the first subsequent check. `scontrol -a show partition interactive`
+verified `QoS=interactive_qos`, `Hidden=YES`, `ReqResv=YES`, `PriorityTier=2`.
+The job reported `Partition=interactive`, `Reservation=interactive`, `QOS=normal`.
+Held original 7401863 was cancelled after the replacement started; no duplicate
+compute ran. Repaired short PersonaPlex probe was then submitted as 7402673.
+
+7402644 subsequently failed in the native whole-sequence forward: the model's
+first-speaker prepend embedding was concatenated with integer token codes,
+producing a 4096-versus-128 shape mismatch. This is a training integration
+failure exposed by faster execution, not a scheduling failure. Do not drop the
+prepend condition to claim training/inference parity. Prefix-aware training
+still needs implementation and verification.

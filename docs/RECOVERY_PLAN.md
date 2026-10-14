@@ -287,6 +287,29 @@ silently repeating a tiny corpus or launching an unverified distributed run.
 
 ## Execution tracker
 
+### Interactive reservation follow-up — 14 October
+
+Plain words: the faster short-work route is verified live. See
+[interactive scheduling research](research/2026-10-14-isambard-interactive-scheduling.md).
+Native CPU checks still pass, but full-weight training has exposed another seam:
+the released first-speaker prepend condition is an embedding, while the native
+whole-sequence forward attempts to concatenate it with integer codes. Job
+7402644 failed on a 4096-versus-128 dimension mismatch before backward. Do not
+claim full-weight gradients or omit this prefix just to pass. A prefix-aware
+training implementation must be checked against serving execution.
+
+PersonaPlex 7400573 failed after 27 GPU-seconds during compiler warmup because
+Triton could not find the runtime CUDA linker library. The existing job-local
+driver-linker helper is now wired into this probe; repair queued as 7402673
+through the interactive reservation. Original pending proof 7401863 was held,
+then cancelled after its interactive replacement started. Qwen 7401909 remains
+on workq. Monitor hidden jobs with `squeue --me --all`.
+
+The interactive pool is for short development work, not bulk training. Long
+training stays on workq. Official documentation states a 50% node-hour premium;
+track actual Slurm allocation and billing fields separately, not as an assumed
+remaining GPU-hour balance.
+
 | Work | State | Next evidence |
 |---|---|---|
 | Current handoff, source and job-log audit | Done for initial scope | Continue to challenge claims against actual commands/results |
