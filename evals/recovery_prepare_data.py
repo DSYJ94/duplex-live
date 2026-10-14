@@ -99,7 +99,8 @@ def main():
         timings.append({"scenario_id":sid,"timing":"ok" if timing_ok else "fail", "max_offset_ms":max(offsets,default=None),
             "offset_bar_ms":200,"method":"Whisper measured intervals, exact script position match, actual emission-grid replay", "issues":issues})
         reports.append({"scenario_id":sid,"scenario_class":row["scenario_class"],"asr_model":judge,
-            "asr_detail":{"per_utterance":clips},"rule_issues":issues,"stats":stats})
+            "asr_detail":{"per_utterance":clips},"rule_issues":issues,"issues":issues,"stats":stats,
+            "verdict":"pass" if timing_ok else "fail"})
         if timing_ok:
             target = args.out / sid
             target.mkdir()
