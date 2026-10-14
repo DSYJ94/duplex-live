@@ -21,6 +21,7 @@ case "${1:?Choose rag, personaplex or qwen}" in
     SCRIPT=evals/recovery-train.slurm ;;
   recovery-voice) SCRIPT=evals/recovery-voice.slurm ;;
   recovery-audit) SCRIPT=evals/recovery-speech-audit.slurm ;;
+  reference-effect) SCRIPT=evals/moshi-reference-effect.slurm ;;
   personaplex) SCRIPT=evals/personaplex-recovery.slurm ;;
   qwen) SCRIPT=evals/qwen-delegation-probe.slurm ;;
   *) exit 2 ;;
