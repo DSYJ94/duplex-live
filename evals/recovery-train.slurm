@@ -18,6 +18,7 @@ export RECOVERY_CACHE="${RECOVERY_CACHE:?Verified encoded cache required}"
 export RECOVERY_STEPS="${RECOVERY_STEPS:-32}"
 export RECOVERY_RAG_WEIGHT="${RECOVERY_RAG_WEIGHT:-1}"
 export RECOVERY_RESULT_WEIGHT="${RECOVERY_RESULT_WEIGHT:-1}"
+export RECOVERY_RESULT_SCOPE="${RECOVERY_RESULT_SCOPE:-measured-phrase}"
 apptainer exec --nv --bind /projects,/lus,/home \
   --env PYTHONPATH="$SOURCE/moshi:$DL/repo" --env PYTHONDONTWRITEBYTECODE=1 \
   --env HF_HOME="$DL/models/hf-cache" --env HF_HUB_OFFLINE=1 \
@@ -28,7 +29,8 @@ export TRITON_LIBCUDA_PATH
 TRITON_LIBCUDA_PATH=$("$PY" -m evals.cuda_linker_path --out "$DL/runs/recovery-train-driver-${SLURM_JOB_ID}")
 ARGS=(--cache "$RECOVERY_CACHE" --manifest "$DL/runs/moshi-models-7378305/model-manifest.json" \
   --out "$DL/runs/recovery-training-${SLURM_JOB_ID}" --steps "$RECOVERY_STEPS" \
-  --rag-weight "$RECOVERY_RAG_WEIGHT" --result-weight "$RECOVERY_RESULT_WEIGHT")
+  --rag-weight "$RECOVERY_RAG_WEIGHT" --result-weight "$RECOVERY_RESULT_WEIGHT" \
+  --result-scope "$RECOVERY_RESULT_SCOPE")
 "$PY" -u -m evals.recovery_train "${ARGS[@]}"
 "$PY" -u -m evals.recovery_train "${ARGS[@]}" --reload
 CONTAINER

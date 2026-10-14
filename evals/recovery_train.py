@@ -11,6 +11,7 @@ import sys
 from pathlib import Path
 from evals.moshi_model_download import sha256
 from evals.recovery_data import validate_cache
+from evals.recovery_result_scope import private_result_frames, last_utterance_frames
 
 
 def load_base(manifest):
@@ -50,6 +51,7 @@ def main():
     parser.add_argument("--steps",type=int,default=32)
     parser.add_argument("--rag-weight",type=float,default=1.)
     parser.add_argument("--result-weight",type=float,default=1.)
+    parser.add_argument("--result-scope", choices=("measured-phrase", "last-utterance"), default="measured-phrase")
     parser.add_argument("--reload",action="store_true")
     args = parser.parse_args()
     if not 4 <= args.steps <= 128:
@@ -59,6 +61,8 @@ def main():
     cache = validate_cache(args.cache)
     manifest = json.loads(args.manifest.read_text())
     model = load_base(manifest)
+    import sentencepiece
+    tokenizer = sentencepiece.SentencePieceProcessor(str(Path(manifest["rag"]["path"]) / "tokenizer_spm_32k_3.model"))
     if args.reload:
         from evals.moshi_rag_adapter_pilot import verify_reload
         verify_reload(model,args.out)
@@ -96,9 +100,13 @@ def main():
         result_words = torch.zeros_like(text_target,dtype=torch.bool)
         if row["kind"] in ("private","clarify","cancel"):
             sidecar = json.loads((Path(cache["conversion"]) / row["scenario_id"] / "conversation.json").read_text())
-            last = [e for e in sidecar["timeline"]["events"] if e["ch"] == "assistant" and e["kind"] == "utterance"][-1]
-            times = torch.arange(codes.shape[-1],device=codes.device)*.08
-            result_window = ((times >= last["actual_start_ms"]/1000)&(times < last["actual_end_ms"]/1000))[None,None]
+            text_codes = codes[0, 0].tolist()
+            if row["kind"] in ("private", "clarify") and args.result_scope == "measured-phrase":
+                indices = private_result_frames(sidecar, text_codes, tokenizer.encode)
+            else:
+                indices = last_utterance_frames(sidecar, text_codes)
+            result_window = torch.zeros_like(result.text_mask)
+            result_window[..., indices] = True
             result_words = result_window.expand_as(result.text_mask)[result.text_mask] & (text_target >= 5)
             weights[result_words] *= args.result_weight
         text_loss = (nll*weights).sum()/weights.sum()
@@ -160,6 +168,7 @@ def main():
         "model":manifest["rag"],"cache":str(args.cache),"cache_sha256":sha256(args.cache / "cache.json"),
         "rank":8,"scaling":2.,"trainable_count":sum(p.numel() for p in trainable.values()),
         "rag_weight":args.rag_weight,"result_word_weight":args.result_weight,
+        "result_scope":args.result_scope,
         "zero_adapter_logit_errors":zero_error,"validation_before":evaluate("before"),"losses":[],
         "test_fold_used_for_training_or_selection":False,"human_listening":"pending","quality_qualified":False}
     order = []
