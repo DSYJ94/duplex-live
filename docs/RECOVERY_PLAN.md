@@ -309,7 +309,10 @@ http://localhost:8766/batch/personaplex-recovery-7402673 .
 Original pending proof 7401863 was held, then cancelled after its replacement
 started. Qwen replacement 7402713 was accepted in the interactive reservation;
 its held workq duplicate 7401909 was cancelled. Monitor hidden jobs with
-`squeue --me --all`.
+`squeue --me --all`. Qwen 7402713 subsequently hit the host-memory limit while
+loading weights, before any routing result. Its 64 GiB request is now 110 GiB,
+matching the larger memory needed by the native baseline; retry uses the same
+one-GPU diagnostic, not a larger training run.
 
 The interactive pool is for short development work, not bulk training. Long
 training stays on workq. Official documentation states a 50% node-hour premium;

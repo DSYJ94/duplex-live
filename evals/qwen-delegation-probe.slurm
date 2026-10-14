@@ -5,7 +5,7 @@
 #SBATCH --nodes=1
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=8
-#SBATCH --mem=64G
+#SBATCH --mem=110G
 #SBATCH --time=00:20:00
 #SBATCH --output=logs/dl-qwen-delegation-%j.out
 set -euo pipefail

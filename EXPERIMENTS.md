@@ -2083,3 +2083,9 @@ terminal GPU allocations 7400573/7402644/7402673 add 153 GPU-seconds, taking
 recorded recovery consumption to 4089 seconds / 1.135833 GPU-hours before any
 Qwen replacement allocation. Interactive billing is separate; this is not the
 remaining project balance.
+
+Qwen 7402713 started in the same second as submission, then was killed by the
+host-memory cgroup during checkpoint loading (50 GPU-seconds; no routing cases
+completed). The launcher's host-memory request is increased from 64 to 110 GiB
+for a one-GPU retry. Total recorded terminal recovery GPU allocation is now
+4139 seconds / 1.149722 hours, excluding the upcoming retry and billing premium.
