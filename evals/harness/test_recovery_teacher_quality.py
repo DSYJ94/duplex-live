@@ -1,7 +1,9 @@
 """Teacher data must reject missing words, early facts and unnecessary workers."""
 import copy
 import unittest
-from evals.recovery_teacher_quality import assess
+import tempfile
+from pathlib import Path
+from evals.recovery_teacher_quality import assess,validate_input_audio
 from evals.recovery_teacher_convert import measured_timeline
 
 
@@ -13,7 +15,7 @@ class TeacherQualityTests(unittest.TestCase):
         self.meta = {"project":"Birch North","field":"badge phrase","phrase":"blue circle"}
         self.events = [{"type":"session.delegation.created"},{"type":"local.worker.tool_result",
             "received_at_s":10.,"task_id":"work","result":{"content":"Blue circle.","receipts":[{
-                "executed":True,"read_only":True,"tool":"lookup_record",**self.meta,"value":"blue circle"}]}}]
+                "executed":True,"read_only":True,"tool":"lookup_record",**self.meta,"value":"blue circle"}]}} ,{"type":"session.closed"}]
         self.session = {"session_finalized":True,"errors":[]}
 
     def test_receipt_and_measured_words_required(self):
@@ -40,6 +42,26 @@ class TeacherQualityTests(unittest.TestCase):
     def test_invalid_measured_interval_rejected(self):
         self.speech["asr_segments"][0]["words"][0]["end"] = float("nan")
         self.assertFalse(assess(self.speech,self.events,self.meta,"private",self.session)["speech_and_fact_checks_pass"])
+
+    def test_actual_event_finalization_required(self):
+        self.events.pop()
+        self.assertFalse(assess(self.speech,self.events,self.meta,"private",self.session)["speech_and_fact_checks_pass"])
+
+    def test_teacher_input_must_match_approved_audio(self):
+        import numpy as np
+        import soundfile as sf
+        with tempfile.TemporaryDirectory() as temp:
+            source = Path(temp)/"source.wav"
+            recorded = Path(temp)/"recorded.wav"
+            expected = np.full(2400,.2,dtype=np.float32)
+            sf.write(source,expected,24000,subtype="FLOAT")
+            actual = np.concatenate([expected,np.zeros(15*24000,dtype=np.float32)])
+            sf.write(recorded,actual,24000,subtype="FLOAT")
+            validate_input_audio(recorded,source)
+            actual[0] = .8
+            sf.write(recorded,actual,24000,subtype="FLOAT")
+            with self.assertRaisesRegex(RuntimeError,"differs"):
+                validate_input_audio(recorded,source)
 
 
 class TeacherGridTests(unittest.TestCase):

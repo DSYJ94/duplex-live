@@ -39,6 +39,9 @@ def validate_conversion(data):
 
 def validate_cache(cache):
     receipt = json.loads((cache / "cache.json").read_text())
+    if receipt.get("schema") == "dl-composed-cache-v1":
+        from evals.recovery_compose_cache import validate_cache_composition
+        return validate_cache_composition(cache,receipt)
     conversion = Path(receipt["conversion"])
     validate_conversion(conversion)
     if sha256(conversion / "ingestion.json") != receipt["ingestion_sha256"]:

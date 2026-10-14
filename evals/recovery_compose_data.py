@@ -18,6 +18,8 @@ def validate_composition(data,receipt):
     base,teacher = children
     if base.get("schema") in ("dl-teacher-native-v1","dl-composed-native-v1") or teacher.get("schema") != "dl-teacher-native-v1":
         raise RuntimeError("Composition source roles changed")
+    if len(teacher["accepted"]) < 4 or {r["kind"] for r in teacher["accepted"]} != {"private","simple"}:
+        raise RuntimeError("Insufficient independently approved private/simple teachers")
     expected = base["accepted"]+teacher["accepted"]
     if any(row["split"] != "train" for row in teacher["accepted"]) or receipt["accepted"] != expected or len({r["scenario_id"] for r in expected}) != len(expected):
         raise RuntimeError("Teacher data changed the held-out folds or collided with base scenes")

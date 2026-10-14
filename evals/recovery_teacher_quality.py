@@ -13,6 +13,17 @@ from evals.recovery_data import validate_conversion
 from evals.recovery_prepare_data import spoken_words
 
 
+def validate_input_audio(recorded,source):
+    import numpy as np
+    import soundfile as sf
+    actual,rate = sf.read(recorded,dtype="float32")
+    expected,expected_rate = sf.read(source,dtype="float32")
+    if rate != 24000 or expected_rate != rate or actual.ndim != 1 or expected.ndim != 1 or not np.isfinite(actual).all():
+        raise RuntimeError("Invalid teacher input audio")
+    if len(actual) != len(expected)+15*rate or np.max(np.abs(actual[:len(expected)]-expected)) > 1/32768 or np.count_nonzero(actual[len(expected):]):
+        raise RuntimeError("Recorded teacher input differs from approved stimulus plus silent tail")
+
+
 def validate_teacher(batch):
     manifest = json.loads((batch / "teacher.json").read_text())
     if manifest["fold"] != "train" or manifest["source_model"] != "gpt-live-1":
@@ -36,6 +47,7 @@ def validate_teacher(batch):
         environment = json.loads((folder / "environment.json").read_text())
         if environment["purpose"] != "teacher" or environment["training_approved"] is not False or environment["input_sha256"] != row["source_user_sha256"]:
             raise RuntimeError("Teacher purpose/stimulus receipt changed")
+        validate_input_audio(folder / "user_in.wav",Path(source["source_batch"]) / row["dir"] / "stem_user.wav")
     if len(ids) != manifest["maximum_sessions"] or len(ids) != 12:
         raise RuntimeError("Incomplete bounded teacher collection")
     return manifest
@@ -47,6 +59,8 @@ def assess(speech,events,metadata,kind,session):
     words = [w for segment in speech["asr_segments"] for w in segment.get("words",[])]
     if not session["session_finalized"] or session["errors"]:
         reasons.append("Session failed or did not finalize")
+    if not any(e["type"] == "session.closed" for e in events) or any(e["type"] in ("error","worker_failure") for e in events):
+        reasons.append("Actual event log lacks a clean finalized session")
     if not words or speech["wer_against_model_text"] > .08:
         reasons.append("Speech agreement exceeds the unchanged per-clip WER bar")
     if spoken_words(speech["model_text"]) != [token for w in words for token in spoken_words(w["text"])]:
