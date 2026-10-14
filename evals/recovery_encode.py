@@ -9,6 +9,18 @@ from evals.moshi_model_download import sha256
 from evals.recovery_data import validate_conversion
 
 
+def marker_frame(event,frame_rate):
+    if event.get("kind") != "marker" or event.get("text") or frame_rate <= 0:
+        raise ValueError("Only silent control markers use declared schedule times")
+    timestamp = event["start_ms"]
+    if not isinstance(timestamp,(int,float)) or not math.isfinite(timestamp) or timestamp < 0:
+        raise ValueError("Invalid declared control time")
+    frame = round(timestamp / 1000 * frame_rate)
+    if abs(frame * 1000 / frame_rate - timestamp) > .001:
+        raise ValueError("Control marker is not on the native frame grid")
+    return frame
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--data",type=Path,required=True)
@@ -57,7 +69,7 @@ def main():
         for event in sidecar["timeline"]["events"]:
             if event["kind"] != "marker":
                 continue
-            index = round(event["actual_start_ms"] / 1000 * mimi.frame_rate)
+            index = marker_frame(event,mimi.frame_rate)
             if not 0 <= index < codes.shape[-1] or int(codes[0,0,index]) not in (0,3):
                 raise RuntimeError("Native delegation marker collides with a measured word")
             codes[0,0,index] = 4
