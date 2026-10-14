@@ -10,6 +10,7 @@ import os
 import subprocess
 import sys
 import time
+from contextlib import nullcontext
 from pathlib import Path
 
 from evals.moshi_model_download import sha256
@@ -21,7 +22,7 @@ def main():
     import torch
     import moshi
     from scipy.signal import resample_poly
-    from moshi.offline import run_inference
+    from moshi import offline
     from data.synthetic.quality import checked_rows
 
     parser = argparse.ArgumentParser(description=__doc__)
@@ -32,6 +33,7 @@ def main():
     parser.add_argument("--voice-provenance", type=Path,
                         help="Required codec receipt when conditioning on a synthetic reference WAV")
     parser.add_argument("--out", type=Path, required=True)
+    parser.add_argument("--paced", action="store_true", help="Pace native user frames; retain packet availability receipts")
     args = parser.parse_args()
     voice_provenance = None
     if args.voice.suffix.lower() != ".pt":
@@ -59,7 +61,7 @@ def main():
         ["git", "-C", str(args.source), "rev-parse", "HEAD"], text=True).strip(),
         "repo_commit": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
         "torch": torch.__version__, "torch_file": torch.__file__, "cuda": torch.version.cuda,
-        "input_scenario": scenario, "fresh_holdout": False, "paced": False,
+        "input_scenario": scenario, "fresh_holdout": False, "paced": args.paced,
         "microphone_acceptance": False, "input_seconds": 60, "added_silence_seconds": 10,
         "assets": {str(p): {"sha256": sha256(p), "bytes": p.stat().st_size} for p in assets}}
     env["voice_conditioning"] = {"path": str(args.voice), "provenance": voice_provenance,
@@ -77,7 +79,10 @@ def main():
     trial.mkdir()
     sf.write(trial / "user_in.wav", pcm, 24000)
     started = time.monotonic()
-    run_inference(input_wav=str(trial / "user_in.wav"), output_wav=str(trial / "model_out.wav"),
+    from evals.personaplex_pacing import paced_export
+    capture = paced_export(offline, trial, torch.cuda.synchronize) if args.paced else nullcontext({})
+    with capture as paced_report:
+      offline.run_inference(input_wav=str(trial / "user_in.wav"), output_wav=str(trial / "model_out.wav"),
         output_text=str(trial / "output.json"),
         text_prompt="You are a wise and friendly teacher. Answer questions or provide advice in a clear and engaging way.",
         voice_prompt_path=str(args.voice), tokenizer_path=str(assets[2]),
@@ -92,7 +97,8 @@ def main():
     summary = {"wall_seconds_including_load": time.monotonic() - started,
         "output_seconds": len(audio) / rate,
         "generated_text": "".join(t for t in tokens if t not in ("EPAD", "PAD", "BOS", "EOS")),
-        "voice_quality_verdict": "human audition required", "live_acceptance": False}
+        "voice_quality_verdict": "human audition required", "live_acceptance": False,
+        "paced": paced_report}
     (args.out / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
     print(json.dumps(summary), flush=True)
 

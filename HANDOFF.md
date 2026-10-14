@@ -1,6 +1,6 @@
 # HANDOFF — where we are (updated 2026-10-14 for agent succession)
 
-## Current continuation — 2026-10-14, audible artifacts under investigation
+## Current continuation — 2026-10-14, custom voices accepted; intelligence still open
 
 Start at [docs/RECOVERY_PLAN.md](docs/RECOVERY_PLAN.md), current execution section.
 Owner authorizes needed compute before expiry and asks to continue until actual
@@ -29,29 +29,31 @@ Clifton renewal is verified by live SSH. Temperature-.2 probes 7412588/7412590
 both fail; the latter eventually dispatches real cancellation, but too late.
 Speech audit 7414528 and full recordings/logs are retrieved. Do not rerun duplicates.
 
-Owner prefers PersonaPlex over MoshiRAG but rejects both audio qualities, specifically
-clicks/crackling/broken speech. Recorder repair proves the old Moshi capture inserts
-two underruns totaling 122.54 ms; a causal 160 ms startup buffer removes both with
-identical generated samples. PersonaPlex's offline exporter is already continuous,
-so its artifacts remain unexplained. Never claim all clicks fixed from this result.
-CPU Mimi decoder control 7415051 differs from compiled GPU by RMS 0.0000311;
-GPU no-compile control/custom voice 7415052 and fresh GPT-Live 7415050 complete.
-GPU RMS decoder difference is 0.00001817. GPT-Live still has 66 underruns after
-160 ms startup buffering; use its packet-stream WAV only for voice quality,
-never timing acceptance. PersonaPlex custom prompt still gives bad factual
-answers. MiniCPM custom voice 7415165 answers only one question and reaches
-6.229 s backlog. New listening page:
-http://localhost:8766/audio/voice-diagnostics/index.html .
+Owner now accepts both **PersonaPlex with the synthetic marin reference (7415052)**
+and **Lychee-FD (7415325)** as sounding like GPT-Live. Original PersonaPlex NATF2
+is rejected as muffled/radio-like. This is voice-quality acceptance on development
+recordings, not factual, delegation or real-time acceptance. Keep this reference
+and its hashes fixed for the next comparisons; no further listening choice blocks work.
+Listening: http://localhost:8766/audio/voice-diagnostics/index.html .
 
-Private-result objective now uses exact measured checked-phrase subwords rather
-than whole natural teacher streams. CPU audit 7414927 passes 23 TRAIN/validation
-scenes; test labels untouched. No optimizer steps with the revised scope yet.
-Lychee-FD assets 7414609 are downloaded/pinned; environment/native-audition chain
-7415053 succeeds. CPU preflight 7415211 matches all 982 names/shapes. GPU 7415227
-strictly loads but stays silent: its wrapper used the wrong audio/control clock
-alignment. Corrected 7415325 depends on real CPU red/green clock check 7415324;
-results unread at this update. Missing optional dependencies and wrapper failures
-are recorded, not hidden. Read the recovery plan for exact job/path details.
+Recorder repair removes two old Moshi underruns with identical generated PCM;
+PersonaPlex already concatenates native frames. Fresh GPT-Live 7415050 still has
+66 underruns with a 160 ms startup buffer; raw packet-stream WAV is quality-only.
+CPU/GPU uncompiled Mimi decoder differences are small; no large numerical
+compiler divergence found. PersonaPlex custom voice gives poor factual answers.
+Lychee strictly loads all 982 tensors, generates four answers with corrected native
+input clock (real CPU red/green 7415324), but also gets bread staling wrong.
+Its offline generation plus vocoder takes 229.47 s for 70 s input; not a paced pass.
+MiniCPM 7415165 answers one question and reaches 6.229 s backlog.
+
+Revised measured-phrase objective passes CPU audit 7414927 and now has a completed
+128-update pilot **7415494** on the same 33 TRAIN scenes. Fresh-process reload:
+text/audio errors exactly 0.0; adapter SHA
+0263c20d64a7649c9efd43a659e4fb31503e36c553071128531f78738577dc9f.
+Four dependent development checks: private 7415517, simple 7415519, clarify 7415521,
+cancel 7415522. Retrieve full outputs before interpreting behavior.
+Next: pace the accepted PersonaPlex setup, compare native intelligence/latency,
+and prove a causal worker-result interface before larger fine-tuning.
 
 All 48 mixed codes/audio scenes plus parent metadata are backed up; three parent
 ingestion hashes match. Historical completion statements/GPU-hour snapshots below

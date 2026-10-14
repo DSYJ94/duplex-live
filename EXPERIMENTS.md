@@ -2357,3 +2357,21 @@ Focused listening: http://localhost:8766/audio/voice-diagnostics/index.html .
 The top players compare raw GPT-Live voice, original PersonaPlex and the actual
 custom voice condition; technical controls are collapsed below. Canonical
 continuation and exact paths: docs/RECOVERY_PLAN.md and HANDOFF.md.
+
+
+## 2026-10-14 — Owner accepts custom PersonaPlex and Lychee voice quality
+
+**Plain words:** the custom synthetic-reference PersonaPlex (7415052) and corrected
+Lychee-FD (7415325) both sound like GPT-Live to the owner. Original NATF2 sounds
+muffled/radio-like and remains rejected. This closes the listening choice for
+this stage; intelligence, real-time speed and delegation are still unqualified.
+Lychee strictly loads all 982 tensors and speaks four science answers, with the
+bread-staling answer wrong. Offline generation plus vocoder: 229.47 s / 70 s input.
+Keep the accepted synthetic reference fixed and test causal background-result
+integration and paced performance before selecting the larger fine-tuning run.
+
+Revised measured-phrase training 7415494 completes 128 updates in 3m37s. Fresh
+process reload text/audio max errors are 0.0; adapter SHA
+0263c20d64a7649c9efd43a659e4fb31503e36c553071128531f78738577dc9f.
+Dependent development jobs: private 7415517, simple 7415519, clarify 7415521,
+cancel 7415522. Completion or exact reload alone is not a behavior pass.

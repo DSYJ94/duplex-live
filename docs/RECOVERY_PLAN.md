@@ -7,12 +7,14 @@ authorized by the owner's 13 October request to get the best result using the
 remaining Isambard allocation. Historical completion statements apply only to
 the previous phase.
 
-## Current execution — 14 October, audible artifacts and voice alternatives
+## Current execution — 14 October, accepted voices and remaining behavior work
 
-**Owner feedback:** PersonaPlex is definitely better than the corrected MoshiRAG
-voice, but both remain unacceptable because of crackling, clicks or broken speech.
-This is a relative preference, not acceptance. No product model qualifies. Clifton
-access is restored and verified by actual SSH; do not request another sign-in.
+**Plain words:** the owner now accepts PersonaPlex with the synthetic GPT-Live
+marin reference (7415052) and Lychee-FD (7415325): both sound like GPT-Live on
+these development recordings. Original PersonaPlex NATF2 is rejected as muffled,
+like radio speech. Preserve the accepted reference and receipts. No further
+voice preference is needed before continuing. Neither model has passed full-task
+intelligence, delegation or paced microphone acceptance. Clifton access is verified.
 
 ### Recording fault found; perceptual cause still under investigation
 
@@ -50,7 +52,7 @@ incorrect bread-staling answers; changing voice does not fix intelligence.
 Custom-prompt attempts expose missing `pyloudnorm`, then its `future` dependency;
 the job-local overlay now supplies both and checks imports before model loading.
 7415052 produces a real custom synthetic-marin audition; its factual answers
-remain poor. No human voice acceptance has been inferred.
+remain poor. The owner accepts its voice quality; factual answers remain a failure.
 Failed and completed conditions remain separate, immutable artifacts.
 
 ### Training supervision corrected, without claiming a trained improvement
@@ -65,10 +67,14 @@ historical objective; the new default is `measured-phrase`.
 The regression reproduces the old whole-stream mistake before the fix, then passes.
 CPU audit 7414927 checks all 23 eligible TRAIN/validation scenes, excluding sealed
 test labels. The six natural private teachers now select 2–3 checked subwords,
-rather than weighting their entire 34–55-token responses. No optimizer steps have
-run with this revised objective. Current relevant local suite: 36 tests pass.
+rather than weighting their entire 34–55-token responses. A matched 128-update pilot 7415494 has now completed with this revised objective.
+Fresh-process reload text/audio errors are 0.0; adapter SHA
+`0263c20d64a7649c9efd43a659e4fb31503e36c553071128531f78738577dc9f`.
+Development replays: private 7415517, simple 7415519, clarify 7415521, cancel 7415522.
+No generated-behavior improvement is inferred from training/reload. Current relevant
+local suite: 36 tests pass.
 
-### Alternative native model, assets prepared rather than accepted
+### Lychee native voice accepted; speed and delegation remain open
 
 Lychee-FD releases a 13B native duplex checkpoint plus a separate Step-Audio-2-mini
 vocoder and training code. See the [official model card](https://huggingface.co/HIT-TMG/Lychee-FD)
@@ -92,9 +98,12 @@ mismatched weights, but produces no speech. This is not a valid model-quality
 comparison: the wrapper inherited `align_audio_input=False`, while the published
 app explicitly uses `True`, alternating audio-patch/pad slots. The real CPU clock
 regression 7415324 must reject five input slots per 400 ms and accept ten, matching
-the 25 Hz control clock. Corrected replay 7415325 depends on that check and retains
-all native text/speech/control token traces. No Lychee audible result or
-latency/tool-selection qualification is claimed yet.
+the 25 Hz control clock. CPU check 7415324 passes the real native preprocessing red/green check. Corrected
+replay 7415325 completes, retaining all native text/speech/control token traces.
+All 982 tensors load exactly. It speaks four answers, getting bread staling wrong;
+the owner accepts its voice quality as matching the GPT-Live reference. Generation
+including the separate vocoder takes 229.47 s for 70 s of input. This offline
+result does not pass real-time or tool-selection qualification.
 
 Fresh GPT-Live 7415050 completes with 753 packets, zero API errors/delegations,
 and correct science answers in its transcript. The unbuffered capture has 76

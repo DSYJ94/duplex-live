@@ -54,7 +54,7 @@ def main():
     for voice in ("NATF1", "NATM1", "synthetic-marin"):
         root = f"voice-quality-{args.custom_persona_job}" if voice == "synthetic-marin" and args.custom_persona_job else prefix
         card("PersonaPlex " + voice, f"{root}/{voice}/t1/model_out.wav",
-             "Same model, input, prompt and sampling as NATF2; only voice conditioning changes. Not yet human accepted.",
+             "Same model, input, prompt and sampling as NATF2; only voice conditioning changes. Synthetic-marin voice accepted by owner on 14 October; other voices unqualified.",
              f"{root}/{voice}/summary.json")
     card("MiniCPM original voice", "minicpm-recovery-7377673/model.wav",
          "Existing native duplex replay. Previous latency and factual failures remain; voice audition only.")
@@ -73,18 +73,18 @@ def main():
         card("GPT-Live voice only", root+"/packet-stream.wav",
              "Start here. Original generated speech without inserted network gaps. Voice-quality reference, not a latency demonstration.", root+"/report.json")
     card("PersonaPlex original NATF2", "personaplex-recovery-7402673/t1/model_out.wav",
-         "Your preferred model so far, with the audible artifacts you reported. This exporter already joins speech frames continuously.")
+         "Rejected by owner as muffled, like radio speech. This exporter already joins speech frames continuously.")
     if args.custom_persona_job:
         root = f"voice-quality-{args.custom_persona_job}/synthetic-marin"
         card("PersonaPlex with synthetic voice reference", root+"/t1/model_out.wav",
-             "Only the voice prompt changes. Its factual answers still fail; listen specifically for clicks and broken speech.", root+"/summary.json")
+             "Voice quality accepted by owner as comparable to GPT-Live. Factual answers still fail; delegation and real-time use remain unqualified.", root+"/summary.json")
     if args.lychee_job:
         root = f"lychee-voice-{args.lychee_job}"
-        card("Lychee-FD alternative", root+"/model.wav",
-             "Another native duplex model. Offline voice audition only; no delegation or live acceptance yet.", root+"/report.json")
+        card("Lychee-FD — accepted voice", root+"/utterance-000.wav",
+             "Voice quality accepted by owner as comparable to GPT-Live. First response excerpt; full recording below. Offline audition, no delegation or live acceptance.", root+"/report.json")
     page = '<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
     page += '<title>Voice diagnostics</title><style>body{max-width:1100px;margin:32px auto;padding:0 20px;background:#10141c;color:#e7ecf5;font:16px/1.5 system-ui}section{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}article{padding:20px;background:#1a2230;border:1px solid #354157;border-radius:12px}audio{width:100%}p{color:#b9c5d8}a{color:#9dc3ff}</style>'
-    page += '<h1>Compare the audio artifacts</h1><p>Start with the players below. PersonaPlex is preferred over MoshiRAG, but clicks and broken speech remain unacceptable. These new probes are not yet accepted. Judge the sound separately from factual correctness.</p>'
+    page += '<h1>Compare the audio artifacts</h1><p>The owner accepts the custom PersonaPlex and Lychee voices as comparable to GPT-Live. Original NATF2 is muffled and rejected. Voice acceptance is separate from intelligence, delegation and real-time performance.</p>'
     page += '<section>'+''.join(cards)+'</section>'
     page += '<details><summary>Codec controls: same words, different decoder execution</summary><section>'+controls+'</section></details>'
     page += '<details><summary>Playback timing controls</summary><section>'+playback+'</section></details>'
