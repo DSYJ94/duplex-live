@@ -60,6 +60,9 @@ class TimedReferenceTest(unittest.TestCase):
             zero = forward_with_reference(model, codes, torch.zeros_like(reference))
             torch.testing.assert_close(baseline.text_logits, zero.text_logits, equal_nan=True)
             result = forward_with_reference(model, codes, reference)
+            torch.testing.assert_close(result.text_logits[..., :5, :], baseline.text_logits[..., :5, :],
+                                       equal_nan=True, atol=0, rtol=0)
+            self.assertGreater((result.text_logits[..., 5:, :] - baseline.text_logits[..., 5:, :]).abs().max().item(), 1e-5)
             loss = result.text_logits[result.text_mask].square().mean()
             loss.backward()
             expected_grads = {n: p.grad.clone() for n, p in model.named_parameters() if p.grad is not None}
