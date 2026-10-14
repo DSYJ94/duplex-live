@@ -95,6 +95,33 @@ weights, approved `dense_dialog-001` audio plus ten seconds of silence. This is
 an offline development audition, not a fresh holdout or live latency benchmark.
 Results and job accounting will be appended after complete logs are retrieved.
 
+**First GPT-Live reference completed:** access job 7400621 verified an actual
+`gpt-live-1` session. Replay 7400991 finalized successfully with 77 seconds of
+session usage, 752 returned audio packets, zero delegation requests and zero
+API errors. All four user questions appear in the received transcript; the
+assistant transcript gives substantive explanations of lightning, refrigeration,
+starch retrogradation and noise cancellation. This development transcript
+contrasts with MoshiRAG's wrong bread explanation, but does not constitute blind
+voice grading or a fresh general intelligence benchmark. No backend request
+occurred, so this run does not validate the new worker path or delegation judgment
+on tasks requiring help. There was no supplied answer bank or injected reference.
+
+Original PCM/WAV, transcript fragments, complete timestamped session events and
+usage receipt are local and on cluster under `runs/gpt-live-replay-7400991/`.
+The restored listening gallery exposes both tracks:
+http://localhost:8766/batch/gpt-live-replay-7400991 .
+PersonaPlex 7400573 remained pending for resources at the latest check; do not
+claim its refreshed comparison has run. No additional GPU allocation has yet
+been recorded for today's probes. API seconds are separate from GPU accounting.
+
+**Training seam inspected:** pinned MoshiRAG `LMModel.forward_text` accepts
+streaming reference conditioning only when both the condition and sequence
+length are one. Passing its inference conditioner unchanged into whole-sequence
+training will assert. Implement and compare a causally aligned whole-sequence
+condition against one-frame execution before gradient/save/reload checks;
+never broadcast a late result across earlier training frames. This is still
+unimplemented, not a running training experiment.
+
 Sources: [NVIDIA PersonaPlex](https://research.nvidia.com/labs/adlr/personaplex/),
 [MoshiRAG release](https://github.com/kyutai-labs/moshi-rag),
 [GPT-Live client delegation](https://developers.openai.com/api/docs/guides/live-delegation).

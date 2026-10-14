@@ -2007,3 +2007,28 @@ verdict. Original WAVs are in the listening gallery; human review remains open.
 Total recovery allocation: 3,936 GPU-seconds / 1.093 GPU-hours, including failed
 runs. All jobs terminal. Next: fresh reference-fact holdouts, real worker
 integration, and causal timed-reference adaptation; no broad training selected.
+# 2026-10-14 — Actual GPT-Live reference and renewed comparison
+
+Plain words: GPT-Live access and an audible reference replay now work with the
+existing cluster credentials. CPU access attempt 7400572 failed on a malformed
+working-directory line before any API request; corrected 7400621 completed.
+Paced replay 7400991 completed with 77 seconds usage, 752 audio packets, no API
+errors and no delegation on four general-knowledge questions. Received text
+contains correct starch-retrogradation reasoning. Speech quality still needs
+human audition; these are reused development inputs, not independent holdouts.
+No backend call occurred, so the context-based worker code is unvalidated by
+this run. The replay is a voice reference, not a matched-worker comparison.
+
+Artifacts: `runs/gpt-live-replay-7400991/`, full retrieved CPU logs in
+`runs/recovery-20261014/`, and gallery
+http://localhost:8766/batch/gpt-live-replay-7400991 .
+
+PersonaPlex refresh 7400573 is capped at one GPU for 15 minutes, uses pinned
+source 3428dfd95309a7f3c84fd93259ded0f810d1ff91 and weights
+fdaf4090a61cb315c138a1faee287ffd6c716309, with the same approved 60-second user
+stem plus ten seconds of silence. It remains pending for resources at this
+entry. No result or GPU-hours are attributed to an unallocated queued job.
+
+Verdict: actual reference recording available; backbone choice, delegation
+selection and timed-reference training remain open. See `docs/RECOVERY_PLAN.md`.
+
