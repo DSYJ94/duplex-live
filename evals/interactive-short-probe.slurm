@@ -27,6 +27,7 @@ case "${1:?Choose rag, personaplex or qwen}" in
   codec-decode) SCRIPT=evals/voice-codec-decode.slurm ;;
   voice-audio-debug) SCRIPT=evals/voice-audio-debug.slurm ;;
   minicpm) SCRIPT=evals/minicpm-recovery-probe.slurm ;;
+  lychee) SCRIPT=evals/lychee-voice-probe.slurm ;;
   qwen) SCRIPT=evals/qwen-delegation-probe.slurm ;;
   *) exit 2 ;;
 esac

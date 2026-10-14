@@ -41,8 +41,10 @@ def main():
          "The exact original generated samples, with a causal startup buffer. Removes both recorded underruns; not proof all clicks are fixed.")
     if args.gpt_live_job:
         root = f"gpt-live-replay-{args.gpt_live_job}/t1"
+        card("Fresh GPT-Live voice only", root+"/packet-stream.wav",
+             "Every original generated sample joined continuously to isolate voice quality from network gaps. Not a live timing demonstration.", root+"/report.json")
         card("Fresh GPT-Live, 160 ms startup buffer", root+"/model_out-buffered.wav",
-             "Fresh actual API replay. Packet ledger retains arrival times and all underruns.", root+"/report.json")
+             "Fresh actual API replay. Buffering still leaves underruns here; inspect the voice-only player to judge the model sound.", root+"/report.json")
     playback = "".join(cards)
     cards.clear()
     card("GPT-Live reference", "gpt-live-replay-7400991/t1/model_out.wav",
