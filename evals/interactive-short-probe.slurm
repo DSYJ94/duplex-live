@@ -24,6 +24,7 @@ case "${1:?Choose rag, personaplex or qwen}" in
   reference-effect) SCRIPT=evals/moshi-reference-effect.slurm ;;
   personaplex) SCRIPT=evals/personaplex-recovery.slurm ;;
   personaplex-paced) SCRIPT=evals/personaplex-paced.slurm ;;
+  personaplex-reference) SCRIPT=evals/personaplex-reference.slurm ;;
   voice-quality) SCRIPT=evals/voice-quality-probe.slurm ;;
   codec-decode) SCRIPT=evals/voice-codec-decode.slurm ;;
   voice-audio-debug) SCRIPT=evals/voice-audio-debug.slurm ;;
