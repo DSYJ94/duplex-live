@@ -18,6 +18,7 @@ def main():
     parser.add_argument("--speech-batch", type=Path)
     parser.add_argument("--speech-prefix", type=Path)
     parser.add_argument("--request-aligned", action="store_true")
+    parser.add_argument("--training-proof", type=Path)
     args = parser.parse_args()
     args.out.mkdir(parents=True, exist_ok=False)
     import torch
@@ -145,6 +146,12 @@ def main():
         report["peak_allocated_bytes"] = torch.cuda.max_memory_allocated()
         (args.out / "report.json").write_text(json.dumps(report, indent=2) + "\n")
         print(json.dumps({k: v for k, v in report.items() if k not in ("tokenizer", "weights")}), flush=True)
+        if args.training_proof:
+            subprocess.run([__import__("sys").executable, "-u", "-m", "evals.moshi_rag_training_probe",
+                "--manifest", str(args.manifest),
+                "--data", "/projects/u6si/duplex-live/runs/moshi-data-7379026",
+                "--native-run", "/projects/u6si/duplex-live/runs/moshi-training-7380505",
+                "--out", str(args.training_proof)], check=True)
         if args.speech_batch:
             if args.speech_prefix is None:
                 raise RuntimeError("Speech replay needs an output prefix")

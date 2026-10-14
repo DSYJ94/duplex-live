@@ -9,7 +9,7 @@ from evals.moshi_timed_reference import forward_with_reference, reference_schedu
 
 
 def tiny_model():
-    return LMModel(dim=16, n_q=2, dep_q=1, card=16, text_card=32,
+    return LMModel(dim=16, n_q=2, dep_q=2, card=16, text_card=32,
         delays=[0, 0, 1], num_heads=2, num_layers=2, hidden_scale=2,
         depformer_dim=16, depformer_num_heads=2, depformer_num_layers=1,
         depformer_dim_feedforward=32, positional_embedding="rope", depformer_pos_emb="rope",
