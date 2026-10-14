@@ -141,7 +141,7 @@ def assemble(scene, out, receipts):
         events[-1].actual_end_ms = events[-1].actual_start_ms + round(len(audio[-1][2])/24)
         audio[-1] = (audio[-1][0], round(events[-1].actual_start_ms*24), audio[-1][2])
         events.append(Event("assistant", round(cancellation*1000), kind="marker", note="delegate cancellation"))
-        end = max(end, ready + 2.)
+        end = max(end, ready + 2., audio[-1][1]/24000 + len(audio[-1][2])/24000)
     elif scene["kind"] != "simple":
         arrivals = [{"ready_at_s": ready, "text": f"The checked {scene['field']} for project {scene['project']} is {scene['phrase']}.", "task_id": scene["scenario_id"]}]
     if trigger is not None:
@@ -182,8 +182,13 @@ def main():
         for index,(role,text) in enumerate(scene["utterances"]):
             work.append((scene, index, role, text, directory / f"{index:02d}_{role}.wav"))
     receipts = {s["scenario_id"]: {} for s in scenes}
+    if len(work) > 200 or sum(len(w[3]) for w in work) > 10000:
+        raise RuntimeError("Curriculum exceeds bounded generation budget")
+    # Verify this project's model and both role voices before issuing the batch.
+    for scene,index,role,text,path in work[:2]:
+        receipts[scene["scenario_id"]][index] = synthesize(text,scene[role+"_voice"],path)
     with concurrent.futures.ThreadPoolExecutor(max_workers=3) as pool:
-        futures = {pool.submit(synthesize, text, scene[role+"_voice"], path): (scene,index) for scene,index,role,text,path in work}
+        futures = {pool.submit(synthesize, text, scene[role+"_voice"], path): (scene,index) for scene,index,role,text,path in work[2:]}
         for future in concurrent.futures.as_completed(futures):
             scene,index = futures[future]
             receipts[scene["scenario_id"]][index] = future.result()
