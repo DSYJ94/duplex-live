@@ -15,14 +15,14 @@ from evals.recovery_data import validate_conversion
 from evals.recovery_worker import RecordWorld,run_worker,WorkerSuperseded
 
 
-def main():
+def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--data",type=Path,required=True)
     parser.add_argument("--manifest",type=Path,required=True)
     parser.add_argument("--out",type=Path,required=True)
     parser.add_argument("--scenario",required=True)
     parser.add_argument("--adapter",type=Path)
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
     import numpy as np
     import soundfile as sf
     import torch

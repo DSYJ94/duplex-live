@@ -27,6 +27,7 @@ def main():
     parser.add_argument("--voice-out", type=Path)
     parser.add_argument("--voice-scenario", default="recovery-validation-000")
     parser.add_argument("--voice-adapter", type=Path)
+    parser.add_argument("--in-process-voice",action="store_true")
     args = parser.parse_args()
     args.out.mkdir(parents=True, exist_ok=False)
     import torch
@@ -168,12 +169,15 @@ def main():
         if args.voice_data:
             if args.voice_out is None:
                 raise RuntimeError("Voice evaluation needs a fresh output directory")
-            command = [__import__("sys").executable,"-u","-m","evals.recovery_voice",
-                "--data",str(args.voice_data),"--manifest",str(args.manifest),"--out",str(args.voice_out),
+            voice_args = ["--data",str(args.voice_data),"--manifest",str(args.manifest),"--out",str(args.voice_out),
                 "--scenario",args.voice_scenario]
             if args.voice_adapter:
-                command += ["--adapter",str(args.voice_adapter)]
-            subprocess.run(command,check=True)
+                voice_args += ["--adapter",str(args.voice_adapter)]
+            if args.in_process_voice:
+                from evals.recovery_voice import main as voice
+                voice(voice_args)
+            else:
+                subprocess.run([__import__("sys").executable,"-u","-m","evals.recovery_voice",*voice_args],check=True)
         if args.training_proof:
             command = [__import__("sys").executable, "-u", "-m", "evals.moshi_rag_training_probe",
                 "--manifest", str(args.manifest),

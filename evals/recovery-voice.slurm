@@ -17,6 +17,7 @@ export DL SOURCE
 export RECOVERY_VOICE_DATA="${RECOVERY_VOICE_DATA:?Verified conversion required}"
 export RECOVERY_VOICE_SCENARIO="${RECOVERY_VOICE_SCENARIO:-recovery-validation-000}"
 export RECOVERY_VOICE_ADAPTER="${RECOVERY_VOICE_ADAPTER:-}"
+export RECOVERY_VOICE_IN_PROCESS="${RECOVERY_VOICE_IN_PROCESS:-1}"
 if [ -n "$RECOVERY_VOICE_ADAPTER" ] && [ ! -f "$RECOVERY_VOICE_ADAPTER" ]; then
   echo "RECOVERY_VOICE_ADAPTER must name the saved lora.safetensors file" >&2
   exit 2
@@ -38,5 +39,6 @@ ARGS=(--manifest "$DL/runs/moshi-models-7378305/model-manifest.json" \
   --voice-data "$RECOVERY_VOICE_DATA" --voice-out "$DL/runs/recovery-voice-${SLURM_JOB_ID}/t1" \
   --voice-scenario "$RECOVERY_VOICE_SCENARIO")
 if [ -n "$RECOVERY_VOICE_ADAPTER" ]; then ARGS+=(--voice-adapter "$RECOVERY_VOICE_ADAPTER"); fi
+if [ "$RECOVERY_VOICE_IN_PROCESS" = 1 ]; then ARGS+=(--in-process-voice); fi
 "$PY" -u -m evals.moshi_reference_probe "${ARGS[@]}"
 CONTAINER
