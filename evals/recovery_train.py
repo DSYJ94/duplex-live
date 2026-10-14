@@ -153,10 +153,13 @@ def main():
             order = random.sample(train,len(train))
         row = order.pop()
         optimizer.zero_grad(set_to_none=True)
-        loss,metrics = loss_and_metrics(row)
-        if not torch.isfinite(loss):
-            raise RuntimeError("Nonfinite fresh training loss")
-        loss.backward()
+        # Checkpoint recomputation must use the same compile setting as forward.
+        # Ending no_compile before backward changes the saved tensor graph.
+        with no_compile():
+            loss,metrics = loss_and_metrics(row)
+            if not torch.isfinite(loss):
+                raise RuntimeError("Nonfinite fresh training loss")
+            loss.backward()
         gradients = [p.grad for p in trainable.values() if p.grad is not None]
         if not gradients or any(not torch.isfinite(g).all() for g in gradients) or not any(g.count_nonzero() for g in gradients):
             raise RuntimeError("Invalid adapter gradients")
