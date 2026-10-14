@@ -34,22 +34,27 @@ def main():
             raise RuntimeError("Nonfinite captured inference logits")
         records.append({"max_abs_logit_difference":float((logits[0]-logits[1]).abs().max()),
             "slot_top_tokens":[int(v) for v in logits[:,0,0].argmax(-1)]})
-    gen = LMGen(lm,use_sampling=False,force_streaming_sum=True,on_text_logits_hook=hook,
+    cursor = [0]
+    def same_text_history(tokens):
+        tokens.fill_(int(state["codes"][0,0,cursor[0]]))
+    gen = LMGen(lm,use_sampling=False,force_streaming_sum=True,on_text_logits_hook=hook,on_text_hook=same_text_history,
         condition_tensors=get_condition_tensors("moshi",lm,2,1.,first_speaker="user"))
     source = state["codes"][:,lm.dep_q+1:].cuda().expand(2,-1,-1)
+    assistant = state["codes"][:,1:lm.dep_q+1].cuda().expand(2,-1,-1)
     with gen.streaming(2),torch.inference_mode():
         for _ in range(16):
-            gen.step(source[...,:1])
+            gen.step(source[...,:1],depformer_replace_tokens=assistant[...,:1])
         gen.reset_streaming()
         records.clear()
         for frame in range(source.shape[-1]):
+            cursor[0] = frame
             if frame == injection_frame:
                 gen.update_streaming_sum_tensors([None,arrival["rows"]])
             gen.apply_pending_streaming_sum_condition(torch.ones(2,dtype=torch.bool))
             active = gen._streaming_state.condition_streaming_sum
             if active[0].count_nonzero():
                 raise RuntimeError("Reference leaked into the control slot")
-            gen.step(source[...,frame:frame+1])
+            gen.step(source[...,frame:frame+1],depformer_replace_tokens=assistant[...,frame:frame+1])
             records[-1].update(frame=frame,reference_l1_slot1=float(active[1].float().abs().sum()))
     before = max(r["max_abs_logit_difference"] for r in records[:injection_frame])
     after = max(r["max_abs_logit_difference"] for r in records[injection_frame:])
@@ -57,6 +62,7 @@ def main():
     report = {"same_slot_prefix_max_abs_error":before,"post_reference_max_abs_difference":after,
         "injection_frame":injection_frame,"injection_time_s":injection_frame*.08,
         "reference_rows":len(arrival["rows"]),"cuda_graphs":True,"greedy_sampling":True,
+        "assistant_history":"identical approved teacher-forced text and audio in both slots; no free-run quality claim",
         "complete_task_success_tested":False,"records":records,"passed":before==0. and after>.001}
     (args.out / "report.json").write_text(json.dumps(report,indent=2)+"\n")
     print(json.dumps({k:v for k,v in report.items() if k != "records"}),flush=True)
