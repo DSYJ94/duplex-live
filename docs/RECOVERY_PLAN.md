@@ -26,8 +26,9 @@ The completed 64-step adaptation pilot trained LoRA adapters on plain Moshi,
 using 16 reused conversations. It verified gradients, frozen-weight preservation
 and serialization, not quality improvement. The corrected reference replay used
 released MoshiRAG weights with inference-harness repairs, not newly trained
-MoshiRAG weights. Training with causally timed reference results is still to be
-implemented and verified.
+MoshiRAG weights. A causally timed training adapter now passes native CPU tests;
+full released-weight backward is queued, and an optimizer/save/reload pilot
+with timed results remains to be implemented and verified.
 
 After backbone selection, start with adapters inside the pretrained transformer.
 Expand to selected pretrained blocks or broader fine-tuning only when evaluations
@@ -119,8 +120,9 @@ streaming reference conditioning only when both the condition and sequence
 length are one. Passing its inference conditioner unchanged into whole-sequence
 training will assert. Implement and compare a causally aligned whole-sequence
 condition against one-frame execution before gradient/save/reload checks;
-never broadcast a late result across earlier training frames. This is still
-unimplemented, not a running training experiment.
+never broadcast a late result across earlier training frames. The native CPU
+proof and queued full-weight test described below now address this seam; there
+is still no completed optimizer run with timed references.
 
 Sources: [NVIDIA PersonaPlex](https://research.nvidia.com/labs/adlr/personaplex/),
 [MoshiRAG release](https://github.com/kyutai-labs/moshi-rag),
@@ -215,6 +217,52 @@ already achieved or claims of parity with commercial systems.
   trained-on lessons cannot serve as a fresh reserve.
 
 ## Compute and calendar
+
+### Seven-day execution window — owner confirmed 14 October
+
+**Plain words:** the owner confirmed seven days remain and authorized all
+available compute needed for the best result. Treat 21 October as the working
+end date; the precise cluster expiry time and authoritative remaining balance
+are still not verified. No further approval is needed for ordinary bounded
+experiments, preparation or useful scale-up within that authorization.
+
+Use independent jobs in parallel. Increase training GPU count from measured
+throughput and data volume once the conditioned training and checkpoint path
+pass; allocation size alone is not evidence that repeating the old corpus will
+help. Preserve time to export the best checkpoint, dependencies, logs and demo
+before cluster access expires.
+
+| Window | Intended work | Required evidence |
+|---|---|---|
+| 14–15 October | Backbone comparison, causal training proof, actual worker and fresh-data preparation | Audible outputs, native conditioning parity, real-weight finite gradients, saved/reloaded adaptation, provenance and split manifests |
+| 15–17 October | Timed-result and delegation-selection supervised pilots | Fresh improvement in answers, waiting, correction, cancellation and routing; no lost duplex capability |
+| 17–19 October | Parallel selected training and data expansion | Useful learning curves, sufficient varied approved data, distributed execution correctness and measured scaling |
+| 19–20 October | Independent joint evaluation and serving integration | Task completion, audible quality, interruption and backlog measurements with failures retained |
+| Before expiry | Freeze and export best validated result and reproducible demo | Checkpoint hashes, standalone environment, complete evidence and copies outside Isambard |
+
+These are execution targets, not completed milestones or promised quality scores.
+At today's queue check there were no idle nodes; many nodes were down/reserved.
+Three independent single-GPU probes are queued: PersonaPlex 7400573, actual
+MoshiRAG conditioned backward 7401863, and native Qwen policy routing 7401909.
+Do not count pending jobs as allocated GPU consumption.
+
+**Causal training implementation:** `evals/moshi_timed_reference.py` maps encoder
+rows to the first eligible model frame, clears on an explicit cancellation time,
+and rejects ambiguous overlapping deliveries. The training wrapper adds the
+timed rows before the temporal transformer without changing checkpoint keys.
+CPU job 7401774 passed all three tests on the actual pinned MoshiRAG model code:
+whole-sequence versus one-frame conditioning, future-result non-leakage, finite
+gradients including checkpoint recomputation and saved/reloaded tiny-model logits.
+Initial CPU job 7401729 failed because its tiny depth model used an unsupported
+one-codebook configuration; the corrected model uses two. Strengthened effect
+checks passed in rerun 7401911, including unchanged earlier logits and changed
+later logits when reference rows arrive. Tiny-model proof is not full-weight adaptation.
+
+GPU proof 7401863 uses the actual audited ARC HTTP encoder and released speech
+weights with a short approved development code sample. It checks backward
+gradients, performs no optimizer step and saves no candidate. Native Qwen
+7401909 tests 20 manually specified text-policy cases (answer/clarify/delegate/
+cancel), not spoken routing or task completion. Both scopes must remain explicit.
 
 **Plain words:** the owner reports more than 16,000 GPU-hours available. Treat
 16,000 as a working ceiling, not a target to burn. The recorded allocation expiry

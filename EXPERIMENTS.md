@@ -2031,3 +2031,25 @@ entry. No result or GPU-hours are attributed to an unallocated queued job.
 
 Verdict: actual reference recording available; backbone choice, delegation
 selection and timed-reference training remain open. See `docs/RECOVERY_PLAN.md`.
+
+## 2026-10-14 — Causal reference training seam and parallel probes
+
+Plain words: the owner confirmed seven days remain and authorized needed compute.
+Whole-sequence training can now receive reference rows only after their completion
+time. Native CPU job 7401774 passes three tests: comparison with one-frame native
+execution, no future-reference leakage, and backward/checkpoint-reload checks.
+These use a tiny model constructed from real pinned source, not released weights.
+Initial 7401729 failed on an unsupported one-codebook test fixture; fixed to two.
+Strengthened reference-effect assertions also pass in 7401911: reference rows
+change later predictions without changing earlier predictions.
+
+Full released-weight backward proof 7401863 is queued behind the passing test,
+using the real ARC HTTP encoder and verified development data. It performs no
+optimizer update and does not produce a quality candidate. Independent native
+Qwen text-policy diagnostic 7401909 and PersonaPlex audition 7400573 are also
+queued. GPU capacity is presently unavailable; pending jobs have no allocated
+GPU-hours. Do not report any of these queued GPU probes as passed.
+
+Verdict: causal conditioning passes native CPU engineering checks; full-weight
+training, real delegation and fresh audible improvement remain open. Complete
+CPU logs are retrieved under `runs/recovery-20261014/`.
