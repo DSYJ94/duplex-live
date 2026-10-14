@@ -13,7 +13,8 @@ cd "$DL/repo"
 set -a
 source "$DL/keys/openai.env"
 set +a
+export WORKER_CASE="${WORKER_CASE:-}"
 apptainer exec --bind /projects,/lus,/home \
   --env PYTHONPATH="$DL/repo" --env PYTHONDONTWRITEBYTECODE=1 \
   "$DL/pytorch-new.sif" "$DL/envs/moshi-rag-7379661/bin/python" \
-  -u -m evals.recovery_worker_probe --out "$DL/runs/recovery-worker-${SLURM_JOB_ID}"
+  -u -m evals.recovery_worker_probe --out "$DL/runs/recovery-worker-${SLURM_JOB_ID}" --case "$WORKER_CASE"

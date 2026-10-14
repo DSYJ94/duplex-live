@@ -3,12 +3,13 @@ import argparse
 import json
 import secrets
 from pathlib import Path
-from evals.recovery_worker import RecordWorld,run_worker
+from evals.recovery_worker import RecordWorld,run_worker,WorkerContractError
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--out",type=Path,required=True)
+    parser.add_argument("--case")
     args = parser.parse_args()
     args.out.mkdir(parents=True,exist_ok=False)
     cases = [
@@ -23,12 +24,18 @@ def main():
     ]
     results = []
     for identity,request,expected,project in cases:
+        if args.case and identity != args.case:
+            continue
         # New nonce values per episode ensure the tool, rather than parameters,
         # is the only possible source. Project names may repeat across episodes.
         records = {p:{"badge phrase":"test "+secrets.token_hex(6)} for p in ("Cedar","Birch")}
         world = RecordWorld(records)
         world.reserve("pending-check")
-        result = run_worker([{"role":"user","text":request}],world,"probe-"+identity)
+        try:
+            result = run_worker([{"role":"user","text":request}],world,"probe-"+identity)
+        except WorkerContractError as error:
+            (args.out / "failure.json").write_text(json.dumps({"error":str(error),"result":error.result},indent=2)+"\n")
+            raise
         tool_ok = (len(result["receipts"]) == 1 and result["receipts"][0].get("project") == project
             and records[project]["badge phrase"] in result["content"]) if project else not any(
                 r["tool"] == "lookup_record" for r in result["receipts"])

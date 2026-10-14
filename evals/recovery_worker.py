@@ -9,6 +9,12 @@ import os
 import time
 
 
+class WorkerContractError(RuntimeError):
+    def __init__(self,message,result):
+        super().__init__(message)
+        self.result = result
+
+
 class RecordWorld:
     def __init__(self, records):
         self.records = records
@@ -97,8 +103,9 @@ def run_worker(context,world,task_id,model="gpt-6-luna"):
     content = " ".join(part["text"] for item in response["output"] if item["type"] == "message"
         for part in item.get("content",[]) if part["type"] == "output_text")
     parsed = json.loads(content)
+    result = {**parsed,"receipts":receipts,"events":events,"task_id":task_id,"speech_model_routing":False}
     if parsed["route"] == "delegate" and not any(r["tool"] == "lookup_record" for r in receipts):
-        raise RuntimeError("Delegation reported without actual record execution")
+        raise WorkerContractError("Delegation reported without actual record execution",result)
     if parsed["route"] == "cancel" and not any(r["tool"] == "cancel_lookup" for r in receipts):
-        raise RuntimeError("Cancellation reported without actual task cancellation")
-    return {**parsed,"receipts":receipts,"events":events,"task_id":task_id,"speech_model_routing":False}
+        raise WorkerContractError("Cancellation reported without actual task cancellation",result)
+    return result
