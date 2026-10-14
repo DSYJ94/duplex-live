@@ -12,6 +12,13 @@ from pathlib import Path
 from evals.moshi_model_download import sha256
 
 
+def spoken_words(text):
+    """Only orthographic variants with identical spoken words; no synonyms."""
+    from data.synthetic.filter import norm_words
+    variants = {"canceled":"cancelled","traveling":"travelling"}
+    return [variants.get(word,word) for word in norm_words(text)]
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--batch", type=Path, required=True)
@@ -56,7 +63,7 @@ def main():
             pcm = resample_poly(audio, 16000//divisor, rate//divisor).astype(np.float32)
             result = whisper.transcribe(model, pcm, language="en", vad=False,
                 best_of=5, beam_size=5, temperature=0., verbose=None)
-            error = wer(norm_words(event.text), norm_words(result["text"]))
+            error = wer(spoken_words(event.text), spoken_words(result["text"]))
             words = [w for segment in result["segments"] for w in segment["words"]]
             fail = None
             if not words or error > .08:
@@ -70,7 +77,7 @@ def main():
             if event.ch == "assistant":
                 # Grid labels retain script words only when every position matches.
                 if len(words) != len(event.text.split()) or any(
-                    norm_words(w["text"]) != norm_words(expected)
+                    spoken_words(w["text"]) != spoken_words(expected)
                     for w, expected in zip(words, event.text.split())):
                     fail = "Assistant script and measured word positions do not match exactly"
                 if fail is None:
@@ -111,7 +118,7 @@ def main():
             sf.write(target / "conversation.wav", np.stack([assistant,user],axis=1),rate,subtype="FLOAT")
             (target / "conversation.json").write_text(json.dumps({"alignments":alignments,"user_words":user_words,
                 "reference_arrivals":timeline.meta["reference_arrivals"],"timeline":timeline.to_dict()},indent=2)+"\n")
-            converted.append({**row,"verified":True,"path":str(target / "conversation.wav"),"duration":len(assistant)/rate,
+            converted.append({**row,"verified":True,"kind":timeline.meta["kind"],"path":str(target / "conversation.wav"),"duration":len(assistant)/rate,
                 "wav_sha256":sha256(target / "conversation.wav"),"sidecar_sha256":sha256(target / "conversation.json"),
                 "source_timeline_sha256":sha256(source / "timeline.actual.json"),
                 "source_assistant_sha256":sha256(source / "stem_assistant.wav"),
@@ -123,6 +130,7 @@ def main():
     checked_rows(args.batch,converted,role="fresh native RAG conversion")
     receipt = {"source_batch":str(args.batch),"source_quality_sha256":sha256(args.batch / "quality.jsonl"),
         "sealed_specs_sha256":sha256(args.batch / "specifications.json"),"asr_judge":judge,"quality":quality,
+        "orthographic_normalization":{"canceled":"cancelled","traveling":"travelling"},
         "accepted":converted,"human_listening":"pending","independent_script_folds":True}
     (args.out / "ingestion.json").write_text(json.dumps(receipt,indent=2)+"\n")
     for split, minimum in (("train",16),("validation",4),("test",4)):
@@ -130,6 +138,8 @@ def main():
         (args.out / f"{split}.jsonl").write_text("".join(json.dumps(r)+"\n" for r in examples))
         if len(examples) < minimum:
             raise RuntimeError(f"Insufficient verified {split} examples: {len(examples)} < {minimum}")
+        if {r["kind"] for r in examples} != {"private","simple","clarify","cancel"}:
+            raise RuntimeError(f"Missing required behavior in verified {split} fold")
     print(json.dumps({"accepted":len(converted),"total":len(rows),"out":str(args.out)}),flush=True)
 
 

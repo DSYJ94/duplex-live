@@ -81,14 +81,17 @@ def run_worker(context,world,task_id,model="gpt-6-luna"):
         if data.get("status") != "completed":
             raise RuntimeError("Backend did not complete within the token budget")
         events.append({"response_id":data["id"],"model":data.get("model"),"usage":data.get("usage"),
-            "seconds":time.monotonic()-start,"output":data.get("output",[])})
+            "seconds":time.monotonic()-start,"output":[{k:v for k,v in item.items() if k != "encrypted_content"}
+                for item in data.get("output",[])]})
         return data
     response = request({**base,"input":json.dumps(context)})
     calls = [item for item in response["output"] if item["type"] == "function_call"]
+    selected_route = None
     if not calls:
         planning_text = " ".join(part["text"] for item in response["output"] if item["type"] == "message"
             for part in item.get("content",[]) if part["type"] == "output_text")
         plan = json.loads(planning_text)
+        selected_route = plan["route"]
         required_tool = {"delegate":"lookup_record","cancel":"cancel_lookup"}.get(plan["route"])
         if required_tool:
             # Routing JSON is a plan, not a tool receipt. Execute the selected
@@ -107,8 +110,10 @@ def run_worker(context,world,task_id,model="gpt-6-luna"):
         arguments = json.loads(call["arguments"])
         if call["name"] == "lookup_record":
             receipt = world.read(task_id,**arguments)
+            selected_route = "delegate"
         elif call["name"] == "cancel_lookup":
             receipt = world.cancel(**arguments)
+            selected_route = "cancel"
         else:
             raise RuntimeError("Unknown backend tool")
         receipts.append(receipt)
@@ -117,11 +122,14 @@ def run_worker(context,world,task_id,model="gpt-6-luna"):
     content = " ".join(part["text"] for item in response["output"] if item["type"] == "message"
         for part in item.get("content",[]) if part["type"] == "output_text")
     parsed = json.loads(content)
+    final_response_route = parsed["route"]
+    # A worker may correctly call its post-tool factual response an answer.
+    # Preserve the original dispatch decision separately from that final phase.
+    parsed["route"] = selected_route or final_response_route
     result = {**parsed,"receipts":receipts,"events":events,"task_id":task_id,"speech_model_routing":False}
+    result["final_response_route"] = final_response_route
     if parsed["route"] == "delegate" and not any(r["tool"] == "lookup_record" for r in receipts):
         raise WorkerContractError("Delegation reported without actual record execution",result)
     if parsed["route"] == "cancel" and not any(r["tool"] == "cancel_lookup" for r in receipts):
         raise WorkerContractError("Cancellation reported without actual task cancellation",result)
-    if receipts and parsed["route"] != {"lookup_record":"delegate","cancel_lookup":"cancel"}[receipts[0]["tool"]]:
-        raise WorkerContractError("Executed tool and reported route disagree",result)
     return result

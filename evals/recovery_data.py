@@ -26,6 +26,8 @@ def validate_conversion(data):
         actual = [json.loads(line) for line in (data / f"{split}.jsonl").read_text().splitlines()]
         if actual != [r for r in rows if r["split"] == split]:
             raise RuntimeError("Converted fold membership changed")
+        if {r.get("kind") for r in actual} != {"private","simple","clarify","cancel"}:
+            raise RuntimeError("A verified fold lacks required behavior supervision")
     return receipt
 
 

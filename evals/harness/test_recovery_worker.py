@@ -35,7 +35,7 @@ class RecordGuards(unittest.TestCase):
             {"id":"plan","status":"completed","output":[message("delegate","I will check.")]},
             {"id":"execute","status":"completed","output":[{"type":"function_call","name":"lookup_record",
                 "call_id":"call1","arguments":json.dumps({"project":"Cedar","field":"badge"})}]},
-            {"id":"finish","status":"completed","output":[message("delegate","The badge is violet triangle.")]},
+            {"id":"finish","status":"completed","output":[message("answer","The badge is violet triangle.")]},
         ]
         payloads = []
         def post(url,headers,json,timeout):
@@ -45,6 +45,8 @@ class RecordGuards(unittest.TestCase):
             result = run_worker([{"text":"Check Cedar's badge"}],world,"task")
         self.assertEqual(len(world.receipts),1)
         self.assertEqual(result["receipts"][0]["value"],"violet triangle")
+        self.assertEqual(result["route"],"delegate")
+        self.assertEqual(result["final_response_route"],"answer")
         self.assertEqual(payloads[1]["tool_choice"],{"type":"function","name":"lookup_record"})
         self.assertNotIn("violet triangle",str(payloads[:2]))
         self.assertIn("violet triangle",str(payloads[2]))
