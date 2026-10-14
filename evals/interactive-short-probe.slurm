@@ -20,6 +20,7 @@ case "${1:?Choose rag, personaplex or qwen}" in
     test "${RECOVERY_STEPS:-32}" -le 32
     SCRIPT=evals/recovery-train.slurm ;;
   recovery-voice) SCRIPT=evals/recovery-voice.slurm ;;
+  recovery-audit) SCRIPT=evals/recovery-speech-audit.slurm ;;
   personaplex) SCRIPT=evals/personaplex-recovery.slurm ;;
   qwen) SCRIPT=evals/qwen-delegation-probe.slurm ;;
   *) exit 2 ;;

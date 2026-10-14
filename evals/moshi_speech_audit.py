@@ -13,10 +13,13 @@ from pathlib import Path
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--runs", nargs="+", type=Path, required=True)
+    ap.add_argument("--runs", nargs="+", type=Path, default=[])
+    ap.add_argument("--live-runs", nargs="+", type=Path, default=[])
     ap.add_argument("--out", type=Path, required=True)
     ap.add_argument("--trim-trailing-silence", action="store_true")
     args = ap.parse_args()
+    if not args.runs and not args.live_runs:
+        ap.error("At least one native or GPT-Live run is required")
     import numpy as np
     import soundfile as sf
     import whisper_timestamped as whisper
@@ -25,8 +28,8 @@ def main():
     args.out.mkdir(parents=True, exist_ok=False)
     model = whisper.load_model("turbo", device="cuda")
     results = []
-    for run in args.runs:
-        wav = run / "model.wav"
+    for run,kind in [(r,"native") for r in args.runs]+[(r,"GPT-Live") for r in args.live_runs]:
+        wav = run / ("model.wav" if kind == "native" else "model_out.wav")
         pcm, sr = sf.read(wav, dtype="float32")
         if pcm.ndim != 1 or not np.isfinite(pcm).all():
             raise ValueError("Invalid generated mono speech")
@@ -45,7 +48,10 @@ def main():
             audio = audio[:min(len(audio), active[-1] + frame + 4000)]
         result = whisper.transcribe(model, audio, language="en", vad=False,
                                     beam_size=5, best_of=5, temperature=0., verbose=None)
-        predicted = json.loads((run / "report.json").read_text())["text"]
+        if kind == "native":
+            predicted = json.loads((run / "report.json").read_text())["text"]
+        else:
+            predicted = "".join(p["text"] for p in json.loads((run / "transcripts.json").read_text()) if p["speaker"] == "assistant")
         record = {"run": str(run), "wav_sha256": hashlib.sha256(wav.read_bytes()).hexdigest(),
                   "audio_duration_s": len(pcm)/sr, "model_text": predicted,
                   "asr_input_duration_s": len(audio)/16000,
@@ -54,9 +60,12 @@ def main():
                   "asr_text": result["text"], "asr_segments": result["segments"],
                   "wer_against_model_text": wer(norm_words(predicted), norm_words(result["text"])),
                   "semantic_review": "pending", "human_listening": "pending"}
+        record["source_kind"] = kind
         record["asr_time_bounds_valid"] = all(
             0 <= segment["start"] < segment["end"] <= len(audio)/16000 + 0.04
             for segment in result["segments"])
+        record["asr_word_bounds_valid"] = all(0 <= word["start"] < word["end"] <= len(audio)/16000+.04
+            for segment in result["segments"] for word in segment.get("words",[]))
         results.append(record)
         print(json.dumps({k: v for k, v in record.items() if k != "asr_segments"}), flush=True)
     (args.out / "report.json").write_text(json.dumps({"schema": "dl-native-speech-audit-v1",
