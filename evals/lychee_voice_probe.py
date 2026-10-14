@@ -69,6 +69,9 @@ def main():
         def from_pretrained(cls, path, **kwargs):
             if Path(path).resolve() != model_path.resolve():
                 raise RuntimeError("Unexpected checkpoint path")
+            # One allocated GH200 fits the checkpoint. Explicit placement avoids
+            # automatic splitting/offload of the custom control/acoustic heads.
+            kwargs["device_map"] = {"": 0}
             model, info = super().from_pretrained(path, **kwargs,
                 local_files_only=True, output_loading_info=True)
             loading_receipt.update(info)
