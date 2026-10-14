@@ -35,21 +35,29 @@ two underruns totaling 122.54 ms; a causal 160 ms startup buffer removes both wi
 identical generated samples. PersonaPlex's offline exporter is already continuous,
 so its artifacts remain unexplained. Never claim all clicks fixed from this result.
 CPU Mimi decoder control 7415051 differs from compiled GPU by RMS 0.0000311;
-GPU no-compile control/custom voice retry 7415052 and fresh buffered GPT-Live
-7415050 are in progress. New listening page:
+GPU no-compile control/custom voice 7415052 and fresh GPT-Live 7415050 complete.
+GPU RMS decoder difference is 0.00001817. GPT-Live still has 66 underruns after
+160 ms startup buffering; use its packet-stream WAV only for voice quality,
+never timing acceptance. PersonaPlex custom prompt still gives bad factual
+answers. MiniCPM custom voice 7415165 answers only one question and reaches
+6.229 s backlog. New listening page:
 http://localhost:8766/audio/voice-diagnostics/index.html .
 
 Private-result objective now uses exact measured checked-phrase subwords rather
 than whole natural teacher streams. CPU audit 7414927 passes 23 TRAIN/validation
 scenes; test labels untouched. No optimizer steps with the revised scope yet.
 Lychee-FD assets 7414609 are downloaded/pinned; environment/native-audition chain
-7415053/7415054 is unqualified. Missing optional dependencies are recorded, not
-hidden. Read the recovery plan for strict loading and exact job/path details.
+7415053 succeeds. CPU preflight 7415211 matches all 982 names/shapes. GPU 7415227
+strictly loads but stays silent: its wrapper used the wrong audio/control clock
+alignment. Corrected 7415325 depends on real CPU red/green clock check 7415324;
+results unread at this update. Missing optional dependencies and wrapper failures
+are recorded, not hidden. Read the recovery plan for exact job/path details.
 
 All 48 mixed codes/audio scenes plus parent metadata are backed up; three parent
 ingestion hashes match. Historical completion statements/GPU-hour snapshots below
-are superseded; 2.136667 hours through 7412064 excludes subsequent work and is not
-remaining balance. No new compute authorization is required.
+are superseded; latest snapshot through 7415227 is 2.403333 physical GPU hours,
+excluding CPU allocation billing/premiums and pending jobs. This is not remaining
+balance. No new compute authorization is required.
 
 ## ACTIVE CONTINUATION — 2026-10-13 recovery
 

@@ -36,7 +36,10 @@ Eight-codebook Mimi reconstruction 7414595 preserves the 10-second reference's
 240,000 samples with zero padding. CPU decoder control 7415051 decodes the exact
 same tokens without compilation: RMS difference from compiled GPU 0.0000311,
 maximum 0.002305. This is numerical evidence, not a perceptual verdict. GPU
-uncompiled control and the custom PersonaPlex prompt run in 7415052. The codec
+uncompiled control and custom PersonaPlex prompt complete in 7415052. GPU
+uncompiled RMS difference is 0.00001817, maximum 0.0003555. These differences do
+not establish perceptual transparency, but do not suggest a large decoder
+compilation divergence. The codec
 control uses the original arrival-aligned GPT-Live recording, which may itself
 contain recording gaps; do not treat it as a pristine voice-quality ceiling.
 
@@ -46,6 +49,8 @@ local recordings appear. NATF1/NATM1 auditions in 7414595 finish, but still give
 incorrect bread-staling answers; changing voice does not fix intelligence.
 Custom-prompt attempts expose missing `pyloudnorm`, then its `future` dependency;
 the job-local overlay now supplies both and checks imports before model loading.
+7415052 produces a real custom synthetic-marin audition; its factual answers
+remain poor. No human voice acceptance has been inferred.
 Failed and completed conditions remain separate, immutable artifacts.
 
 ### Training supervision corrected, without claiming a trained improvement
@@ -80,8 +85,31 @@ Environment attempts 7414719/7414866 fail on an unused optional TorchAO API, the
 missing datasets. A fresh isolated overlay explicitly disables only optional
 quantization discovery for ordinary BF16 loading, adds dataset dependencies and
 checks actual native source imports on CPU before releasing the GPU dependency.
-7415053/7415054 are the current environment/native audition chain. No Lychee
-audible result or latency/tool-selection qualification is claimed yet.
+7415053 passes all dependency and actual native-source imports. CPU preflight
+7415211 checks all 982 checkpoint tensor names/shapes, with no GPU/weight loading;
+every one matches. GPU 7415227 strictly loads with no missing, unexpected or
+mismatched weights, but produces no speech. This is not a valid model-quality
+comparison: the wrapper inherited `align_audio_input=False`, while the published
+app explicitly uses `True`, alternating audio-patch/pad slots. The real CPU clock
+regression 7415324 must reject five input slots per 400 ms and accept ten, matching
+the 25 Hz control clock. Corrected replay 7415325 depends on that check and retains
+all native text/speech/control token traces. No Lychee audible result or
+latency/tool-selection qualification is claimed yet.
+
+Fresh GPT-Live 7415050 completes with 753 packets, zero API errors/delegations,
+and correct science answers in its transcript. The unbuffered capture has 76
+underruns / 1.312 s; 160 ms startup buffering leaves 66 / 1.152 s. Thus the simple
+startup buffer does **not** fix this network stream. Its exact PCM packet stream
+is also exported separately for voice-only audition, excluding transport gaps
+without claiming real-time playback. The focused page now starts with that
+reference, original PersonaPlex NATF2 and the custom PersonaPlex condition;
+technical controls/older candidates are collapsed below.
+
+MiniCPM custom-voice replay 7415165 answers only the first science question in
+its generated text. Compute p50/p95 0.452/1.836 s per one-second input;
+maximum backlog 6.229 s. Source capture is reproduced exactly from packet
+receipts; buffering leaves eight underruns. This is neither a content nor a
+latency pass, regardless of its voice audition.
 
 ### Retrieved sampling results and protected backups
 
@@ -95,6 +123,13 @@ after the private reference was already queued at 22.48 s. Neither replay passes
 All 48 mixed code/audio payloads remain backed up. Previously interrupted parent
 metadata retrieval is complete; all three parent conversion ingestion hashes
 match their cache receipts. Canonical cluster paths/hashes remain unchanged.
+Accounting snapshot through 7415227: 89 terminal jobs with allocated GPUs,
+8,652 physical GPU-seconds / 2.403333 hours. It excludes CPU allocation billing,
+interactive premiums and the pending corrected replay, and is not a remaining
+balance. [Official accounting](https://docs.isambard.ac.uk/user-documentation/guides/accounting/)
+uses node hours (four GPU-hours per node hour) and exposes actual project credits
+in the Awards Portal. That separate portal is not signed in; the owner's reported
+remaining allocation/expiry is still the planning input, not a newly verified balance.
 No additional authorization is needed for this work. Normal bulk/training stays
 on workq; the interactive reservation is only bounded diagnosis/audition work.
 

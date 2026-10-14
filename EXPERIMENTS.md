@@ -2271,3 +2271,89 @@ parent metadata archive is incomplete after expiry. Latest code through 61d667a
 was pushed and pulled; this ledger/handoff update requires cluster pull after
 login. No candidate is delivered as a qualified model. Voice preference pending
 at http://localhost:8766/audio/voice-comparison/index.html .
+
+## 2026-10-14 — owner rejects audible artifacts; packet/codec controls and native alternative
+
+**Plain words:** the owner prefers PersonaPlex over MoshiRAG, but reports clicks,
+crackling and broken speech in both. Neither voice is accepted. We separated
+recording gaps from generated sound, compared the same codec tokens on CPU/GPU,
+made additional real auditions, fixed an overly broad training weight, and
+prepared a strictly loaded alternative model. These checks do not deliver a
+qualified voice or delegation model. Authentication is restored and verified.
+
+### Completed evidence
+
+| Job / artifact | What happened | Meaning |
+|---|---|---|
+| 7412588 / 7412590 | Both temperature-.2 replays complete; all logs/audio retrieved after renewal | No duplicate submissions |
+| 7414528 | Speech audit: private WER 0 but says only yellow; cancel WER .2174 with valid bounds | Both tasks fail; lower text temperature does not repair them |
+| 7414519 | First codec reconstruction fails after 58 GPU-seconds on the known linker-path issue | Applied the existing job-local CUDA linker repair |
+| 7414595 | Codec reconstruction and NATF1/NATM1 auditions finish; custom prompt fails on missing pyloudnorm | Full allocation 233 GPU-seconds, including the failed condition; do not discard completed controls |
+| 7414865 | Custom prompt fails after 87 GPU-seconds on pyloudnorm's missing future dependency | Isolated overlay now supplies both and verifies imports before loading models |
+| 7415052 | Uncompiled GPU decoder control and custom PersonaPlex prompt both finish, 111 GPU-seconds | Real custom voice recording exists; factual answers remain wrong |
+| 7415051 | CPU decodes the same 240,000 samples / eight-codebook token stream without compilation | RMS difference from compiled GPU .00003106, maximum .002305; no perceptual pass implied |
+| 7415052 decoder | Same GPU tokens without compilation | RMS difference .00001817, maximum .0003555; large compilation divergence is not supported by this control |
+| local moshi-playout-diagnostic-20261014 | Exact old capture reproduced from ledger; two inserted-silence gaps total 122.54 ms | A causal 160 ms startup buffer removes both while preserving every model sample |
+| 7415050 | Fresh actual GPT-Live: 77 API seconds, 753 audio packets, zero errors/delegations | Transcript answers all four science questions correctly; still one development replay |
+| 7415050 playout | Original capture 76 underruns / 1.312 s; 160 ms buffer leaves 66 / 1.152 s | Startup buffering alone does not fix this transport stream; raw PCM exported separately for voice-only audition |
+| 7415165 | Native MiniCPM with synthetic-marin reference; 97 GPU-seconds | Only the first science answer; p50/p95 .452/1.836 s per second of input, maximum backlog 6.229 s; fails content/latency |
+| 7414927 | CPU checked-phrase supervision audit passes all 23 eligible TRAIN/validation scenes | Sealed test labels excluded; six natural teachers weight 2–3 actual phrase subwords instead of 34–55 whole-stream tokens |
+| 7414609 | CPU downloads pinned Lychee-FD model/vocoder/source and hashes all files | Evaluation assets, not a model qualification |
+| 7414719 / 7414866 | Isolated CPU environment checks fail on optional TorchAO API, then missing datasets | No dependent GPU jobs run; no global Torch/library replacement |
+| 7415053 | Isolated environment and actual native-source imports pass | BF16 only; optional unused quantization discovery explicitly disabled |
+| 7415211 | CPU preflight matches every one of 982 native checkpoint names/shapes | No weights loaded or GPU used; no half-duplex class silently substituted |
+| 7415227 | Native model loads with zero missing/unexpected/mismatched weights, but emits no events; 92 GPU-seconds | Wrapper used wrong audio/control alignment; not an audible model comparison |
+| 7415324 | Real native preprocessing: old setting yields five slots/400 ms and fails; published alignment yields ten and passes | The wrapper must match the native 25 Hz control clock |
+
+Corrected native Lychee audition 7415325 depends on the real clock check and
+retains text/speech/control token traces. Result pending at this entry; do not
+claim it sounds better. Pins: source 7bb1068c59b578e1f8e65fb762cd26708c14cc6d,
+model ac06087bef70b33d4dfebf63a3eadadb4e024f33, separate vocoder
+e36fdd5d71e0ea22f09dd94bbab9bfc544ca1e36. The explicit compatibility bridge uses
+the released training implementation because HF's packaged automatic loader
+names a simplex class and the serving runtime imports an absent module. Strict
+name/shape/loaded-weight checks prevent dropping the extra branches.
+
+### Scope, scheduling and records
+
+PersonaPlex's published offline exporter already concatenates generated frames
+continuously, so the demonstrated playout gaps do not explain its reported
+artifacts. The gallery returns exact WAV bytes. PersonaPlex and GPT-Live are
+mono 24 kHz, finite, without clipped samples. Do not infer perceptual quality
+from these signal checks or ASR agreement. The original GPT-Live excerpt used
+for codec/voice prompts is arrival-aligned and may contain transport gaps; it
+is not a pristine codec ceiling. The fresh raw PCM stream is an explicitly
+untimed diagnostic, not evidence of live latency. Future GPT-Live/native recovery
+captures keep original timing WAVs plus buffered/raw versions and exact receipts.
+
+Temperature-.2 cancellation does issue a real cancel request at 22.58 s after
+the user's request ends at 19.42 s. The actual lookup was already queued at
+22.48 s; application cancellation completes later. This exercises the repaired
+application but still fails timely native cancellation and spoken content.
+
+The checked-phrase loss regression fails on the historical whole-stream mask and
+passes after the fix, including guards against premature/missing/reordered
+subwords. New default scope is measured-phrase; last-utterance explicitly
+reproduces old experiments. No optimizer run with this changed scope is claimed.
+Relevant local suite: 36 tests pass, including causal context, cancellation,
+source/timing alignment, reference WAV/sample counts and playout stalls.
+
+Pending-only or dependency cancellations 7414520, 7414537, 7414608, 7414721,
+7414812, 7414867 and 7415054 consume zero allocated GPU time. 7414520 was an audit
+payload accidentally submitted without its intended GPU/time flags; it was held,
+rechecked as pending, cancelled, and replaced by bounded 7414528. Moving pending
+7414812 to the reservation hit QOSMaxSubmitJobPerUserLimit; no QoS bypass was used.
+7415165 was submitted after the slot freed. Never cancel a running job to move
+queues. Interactive work here is finite diagnosis/audition, not bulk training.
+
+Physical allocation snapshot through 7415227: 89 terminal GPU jobs, 8,652 GPU-seconds
+/ 2.403333 hours, including failures/cancellations. Excludes CPU allocation billing,
+interactive premiums and pending corrected replay; not remaining project credits.
+Full sacct export and computed receipt are local under recovery-20261014.
+All 48 mixed code/audio payloads remain hash-matched locally; interrupted parent
+metadata retrieval is complete and all three parent ingestion hashes match.
+
+Focused listening: http://localhost:8766/audio/voice-diagnostics/index.html .
+The top players compare raw GPT-Live voice, original PersonaPlex and the actual
+custom voice condition; technical controls are collapsed below. Canonical
+continuation and exact paths: docs/RECOVERY_PLAN.md and HANDOFF.md.
