@@ -22,6 +22,7 @@ def main():
     parser.add_argument("--training-steps", type=int, default=0)
     parser.add_argument("--encode-data", type=Path)
     parser.add_argument("--encoded-out", type=Path)
+    parser.add_argument("--in-process-encode",action="store_true")
     parser.add_argument("--voice-data", type=Path)
     parser.add_argument("--voice-out", type=Path)
     parser.add_argument("--voice-scenario", default="recovery-validation-000")
@@ -156,9 +157,14 @@ def main():
         if args.encode_data:
             if args.encoded_out is None:
                 raise RuntimeError("Data encoding needs a fresh output directory")
-            subprocess.run([__import__("sys").executable,"-u","-m","evals.recovery_encode",
-                "--data",str(args.encode_data),"--manifest",str(args.manifest),
-                "--out",str(args.encoded_out)],check=True)
+            encoder_args = ["--data",str(args.encode_data),"--manifest",str(args.manifest),"--out",str(args.encoded_out)]
+            if args.in_process_encode:
+                # Share one CUDA context, including on exclusive-process GPUs.
+                # The frozen reference server still uses the real HTTP endpoint.
+                from evals.recovery_encode import main as encode
+                encode(encoder_args)
+            else:
+                subprocess.run([__import__("sys").executable,"-u","-m","evals.recovery_encode",*encoder_args],check=True)
         if args.voice_data:
             if args.voice_out is None:
                 raise RuntimeError("Voice evaluation needs a fresh output directory")

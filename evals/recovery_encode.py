@@ -21,12 +21,12 @@ def marker_frame(event,frame_rate):
     return frame
 
 
-def main():
+def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--data",type=Path,required=True)
     parser.add_argument("--manifest",type=Path,required=True)
     parser.add_argument("--out",type=Path,required=True)
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
     import torch
     import soundfile as sf
     from moshi.models import loaders

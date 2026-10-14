@@ -13,6 +13,8 @@ DL=/projects/u6si/duplex-live
 cd "$DL/repo"
 : "${RECOVERY_MIXED_DATA:?Approved composed conversion required}"
 export DL RECOVERY_MIXED_DATA
+export RECOVERY_ENCODER_IN_PROCESS=1
+nvidia-smi --query-gpu=index,uuid,compute_mode,memory.used --format=csv,noheader
 # Encode only new teacher audio; do not recompute the frozen approved base.
 bash evals/recovery-encode.slurm
 apptainer exec --bind /projects,/lus,/home --env PYTHONPATH="$DL/repo" \
