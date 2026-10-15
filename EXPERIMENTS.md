@@ -3467,3 +3467,49 @@ fresh from released weights (not an eight-step warm start) and balances all48
 TRAIN scenes for128 updates. Native proof, corpus/voice hashes and layout audit
 are required gates; factual and speech quality remain separate forthcoming
 comparisons. Thirty local worker/ASR/ownership/playout regressions pass.
+
+
+## 2026-10-15 — Reject broad pilot; isolate native padding and request policy
+
+Plain words:128 updates do not qualify the Context actor.7455712 trains all48
+scenes in52.08s with34.06GB peak allocated, frozen hashes unchanged and exact
+fresh FP32 reload. SHA12635510464a68aeceea7ab2826da10b33750377306b6ca68bf794941d3918b2.
+Native7455763–76 compares private000/001 paired worlds and simple004/005,
+clarify006,cancel007 with zero-wrapper controls. Six of eight pilot cases have
+zero or one sampled word and no RET. Pencil005 improves in isolation; cancel
+still fails. Thirteen independent audits7455873–85 record the quiet/failed
+outputs; Whisper's “You” on silence is not trustworthy audible speech evidence.
+Zero clarification7455773 tries a private read before user identification and
+is correctly blocked. New native error handling retains the failed verdict,
+receipts and diagnostics, supplies a nonspoken failure/clarification notice and
+continues input/PCM. Thirty-three local relevant regressions pass.
+
+Teacher calibration7455921 uses only48 TRAIN histories. Word NLL1.887→1.299,
+top1 .549→.666; private-phrase NLL .439→.430/top1 .789→.779. RET target NLL
+20.06→7.87 but remains0/40top1. Its probability on ordinary word slots falls
+.0413→.00178. The old report key `eot` is a diagnostic naming mistake: ID0 is
+**end-of-padding**, not end of utterance. Existing Interleaver adds0 before
+speech following padding; native Context preparation uses3 everywhere else.
+Actual ordinary-word first frames match floor(ASR onset*12.5), except when
+queued collisions delay them. Do not invent a fixed80ms shift.
+
+Native codec7456232 compares the same approved20.08s PCM across old batch2,
+Context batch2, Context offline batch1 and Context streaming batch1. Both batch2
+speaker outputs exactly match cache251x8 IDs. Context offline user differs in
+only two residual-code entries; streaming differs per head[3,12,14,17,17,15,16,5],
+with zero shift best and first any-head mismatch at9.44s. Semantic agreement is
+98.8%; this is one TRAIN spot-check, not complete streaming identity. Causal
+codec history/precision remains a separate long-context check.7456078 initially
+failed on omitted Triton driver linkage; fixed6232 performs actual measurement.
+
+Padding-only preflight7456094 maps0→3 without changing words/audio/RET frames
+or result clocks. All5,372 forced native input IDs match its clean oracle, and
+eight finite updates plus exact fresh reload pass. SHA63f7d31c0e31eed5de5d1173607263142ea3bb893a84d49468e822211cc3f8c0.
+Its128-step bounded ablation7456282 starts from released weights and is submitted;
+no improvement is claimed. The new source explicitly records the changed padding
+convention. RET policy is still the old actual/declared dispatch annotation,
+not the native paper's pre-lead marker. Any later change must preserve actual
+source clocks and label new policy targets as derived, with user information
+and receipt causality checked. Unqualified development failures remain excluded
+from supervision. Pending-state-only7455886/87 and recovery7455888/89 fail
+behavior; do not scale prompt variants or the rejected128 checkpoint.

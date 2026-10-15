@@ -57,13 +57,54 @@ that is a delivery-contract failure, not evidence the foreground ignored a
 supplied value. A new worker guard rejects empty backend text before delivery.
 Independent audits 7455646–53 are complete; details are in EXPERIMENTS.md.
 
-Bounded 128-update pilot 7455712 starts fresh from released weights and cycles
-all 48 approved TRAIN examples with balanced private/simple/clarify/cancel
-sampling. It reuses the exact preflight voice, gates on proof/reload/history
-hashes, and disables cuDNN attention explicitly. It is running; no new quality
-result is claimed. Next: actual-ASR paired worlds plus ordinary/clarify/cancel
-controls, independent speech audits and actual provided-user-code checks at
-result spans. No scaling beyond this pilot without free-running evidence.
+Pilot 7455712 completes 128 updates across all 48 TRAIN scenes, with exact
+fresh reload and unchanged frozen weights (SHA
+`12635510464a68aeceea7ab2826da10b33750377306b6ca68bf794941d3918b2`).
+**Reject it for scaling:** 7455763–76 show silence/no RET on six of its eight
+private/control cases, one isolated improved pencil answer and failed cancellation.
+Thirteen speech audits 7455873–85 retain those failures, including silence-floor
+failures/Whisper's unreliable “You” on quiet output. Backend zero-control
+7455773 also aborts on an attempted read without user identification; the guard
+blocks it. New error handling preserves the failure and supplies an unspoken
+notice while continuing PCM. All such recovered failures remain failed cases.
+
+Teacher calibration7455921: ordinary-word TRAIN NLL improves1.887→1.299,
+private-phrase NLL .439→.430, but RET top1 is0/40 even after128 updates.
+RET probability at ordinary-word slots falls .0413→.00178, suppressing the
+natural native requests. Do not describe improved teacher fit as live competence.
+The diagnostic's old key `eot` actually means **EPAD/end of padding**, not end
+of utterance. Native Context preparation uses PAD3 without those EPAD0 tokens;
+old Moshi Interleaver adds them. There is no inherent80ms word shift: the direct
+check finds the same floor timing, with only collision-induced delays.
+
+Codec audit7456232: native batch-two encoding exactly matches both cached
+speakers for251 frames. Native streaming user IDs differ in3/251 semantic frames
+and5–17/251 other-head frames, predominantly later/silent regions. First any-head
+difference is9.44s, after this TRAIN scene's first request. No broad role/clock
+shift is found; zero-shift agreement is best. Do not claim full streaming ID
+identity or silently shift/re-encode targets. Audit7456078 failed before measurement
+because its standalone entry omitted the known Triton driver helper;6232 fixes it.
+
+Padding-only preflight7456094 replaces EPAD0 with PAD3, retaining every measured
+word, audio code, RET position and receipt clock. It passes integrated native
+history, all-gradient/frozen-base checks, eight updates and exact fresh reload.
+SHA `63f7d31c0e31eed5de5d1173607263142ea3bb893a84d49468e822211cc3f8c0`;
+new data SHA75c8a6dee846420b3319984fc40b041240d0ca109bbda616f967bef3568e5796.
+Bounded padding-only128 ablation7456282 is submitted from the same released
+weights; no quality result exists yet. Test it before any further scale.
+
+One explicit pending-state diagnostic7455886/87 improves acknowledgement of
+waiting but still omits both results and hallucinates physics. Reject more
+prompt-only tuning. Clarification-recovery7455888/89 remains behaviorally bad.
+Next, if padding alone fails, separate the native request-label policy from old
+actual teacher dispatch times and collect approved actual-student histories;
+do not invent request/word timestamps or train on development failures.
+
+The current Clifton public certificate was freshly checked: valid until
+16 October10:39:50 Berlin (08:39:50UTC), superseding the earlier expiry note.
+An SSH attempt reported “No route to host” at the login bastion; that is a
+network failure, not evidence the certificate expired. Retry bounded requests;
+do not ask for reauthentication while the verified certificate remains valid.
 
 The older Lychee work below remains useful evidence and a fallback:
 
