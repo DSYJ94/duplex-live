@@ -41,6 +41,8 @@ def main():
     from evals.moshi_training_smoke import tensor_hashes
     from evals.context_training_data import load_training
     from evals.context_training_loss import loss_fn
+    from evals.context_training_parity import precise_native, depth_parity
+    from evals.personaplex_depth import native_depth_context
     from evals.lychee_context import BASE_INSTRUCTIONS
     torch.backends.cudnn.enabled = False
     assets = json.loads(args.assets.read_text()); source = Path(assets['source']); weights = Path(assets['path'])
@@ -60,7 +62,7 @@ def main():
     args.out.mkdir(exist_ok=args.reload)
     os.environ.update(CS_BASE_DIR=str(args.base), CS_WEIGHTS_DIR=str(weights), CS_VOICES_DIR=str(weights / 'voices'))
     os.environ['TRITON_LIBCUDA_PATH'] = subprocess.check_output([sys.executable, '-m', 'evals.cuda_linker_path',
-        '--out', str(args.out / 'driver')], text=True).strip()
+        '--out', str(args.out / ('driver-reload' if args.reload else 'driver'))], text=True).strip()
     sys.path.insert(0, str(source))
     from contextspan.model.weights import load_model
     from contextspan.model.sequence_convention import persona_prefix
@@ -98,8 +100,14 @@ def main():
     def tensors(example):
         return {k: example[k].cuda()[None] for k in ('codes', 'text_mask', 'audio_mask', 'user_target_mask')}
     fixed = tensors(first)
+    depth_check = None
+    if not args.reload:
+        span = first['record']['spans'][0]
+        boundary = first['record']['real_to_virtual'][span['inject_frame']]
+        depth_check = depth_parity(lm, fixed['codes'], [boundary-2, boundary-1, boundary])
+        (args.out / 'native-parity.json').write_text(json.dumps(depth_check, indent=2) + '\n')
     def precise(batch):
-        with torch.no_grad(), torch.autocast('cuda', dtype=torch.bfloat16):
+        with torch.no_grad(), precise_native(lm), native_depth_context(lm):
             return logits_digests(lm.forward_train(batch['codes']))
     frozen = tensor_hashes(lm.named_parameters())
     baseline = precise(fixed) if not args.reload else None
@@ -147,7 +155,7 @@ def main():
     for step in range(args.steps):
         example = order[step % len(order)]; batch = tensors(example)
         optimizer.zero_grad(set_to_none=True)
-        with checkpoint_language_layers(lm), torch.autocast('cuda', dtype=torch.bfloat16):
+        with checkpoint_language_layers(lm), native_depth_context(lm), torch.autocast('cuda', dtype=torch.bfloat16):
             out = lm.forward_train(batch['codes'])
             loss, detail = loss_fn(out, **batch, lm=lm)
             if not torch.isfinite(loss): raise RuntimeError('Nonfinite loss before backward')
@@ -173,12 +181,14 @@ def main():
     if expected == baseline: raise RuntimeError('Eight updates did not affect native outputs')
     save_file({n: p.detach().cpu().contiguous() for n, p in learned.items()}, args.out / 'adapters.safetensors')
     report = {'schema': 'dl-context-adapter-proof-v1', 'source_commit': SOURCE_COMMIT,
+        'repo_commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip(),
         'assets_manifest_sha256': sha256(args.assets), 'base_hashes': MODEL_HASHES,
         'voice_reference_sha256': sha256(args.voice_reference), 'voice_sha256': sha256(args.out / 'voice.pt'),
         'data_sha256': sha256(args.out / 'data.json'), 'checkpoint_sha256': sha256(args.out / 'adapters.safetensors'),
         'adapter_modules': modules, 'last_layers': 4, 'rank': 8, 'scaling': 2.,
         'raw_QKV_adapted': False, 'trainable_parameters': sum(p.numel() for p in learned.values()),
         'zero_adapter_all_valid_logits_exact': True, 'adapter_construction_rng_preserved': True,
+        'canonical_logits_dtype': 'float32', 'native_depth_parity': depth_check,
         'frozen_weights_unchanged': True, 'frozen_hashes': frozen, 'optimizer_steps': len(steps),
         'expected_logits': expected, 'baseline_logits': baseline, 'steps': steps,
         'peak_allocated_bytes': torch.cuda.max_memory_allocated(), 'peak_reserved_bytes': torch.cuda.max_memory_reserved(),

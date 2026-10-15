@@ -19,6 +19,7 @@ def before_engine(engine_module, proof, disabled=False):
     digest = sha256(proof / 'adapters.safetensors')
     if (report['schema'] != 'dl-context-adapter-proof-v1' or not report['passed']
             or not report['frozen_weights_unchanged'] or not report['zero_adapter_all_valid_logits_exact']
+            or not report['native_depth_parity']['passed'] or report['canonical_logits_dtype'] != 'float32'
             or not reload['passed'] or not reload['fresh_process'] or not reload['all_valid_logits_exact']
             or report['source_commit'] != SOURCE_COMMIT or report['checkpoint_sha256'] != digest
             or reload['checkpoint_sha256'] != digest or report['rank'] != 8 or report['scaling'] != 2.
