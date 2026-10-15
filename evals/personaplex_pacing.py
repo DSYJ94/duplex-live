@@ -9,7 +9,7 @@ from contextlib import contextmanager
 
 
 @contextmanager
-def paced_export(offline, out, synchronize):
+def paced_export(offline, out, synchronize, before_frame=None):
     import numpy as np
     import soundfile as sf
     from evals.audio_playout import render_packets
@@ -33,6 +33,8 @@ def paced_export(offline, out, synchronize):
                    "input_consumed_s": before, "input_backlog_s": before - due,
                    "audio_available_s": None, "samples": 0, "tokens": None}
             state["current"] = row
+            if before_frame is not None:
+                before_frame(row, rows)
             yield chunk
             synchronize()
             row["compute_s"] = time.monotonic() - state["start"] - before
