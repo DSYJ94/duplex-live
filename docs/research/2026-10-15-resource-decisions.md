@@ -143,3 +143,18 @@ before CE. This implements an ownership-mask seam, not waveform AEC or measured
 echo suppression. No larger run is authorized by component fit alone; require
 finite gradients, unchanged frozen hashes, fresh reload and native free-running
 retention checks.
+
+
+## Execution update — 16 October
+
+Plain words: Context Spanning is now an owner-accepted voice, while result use
+and control remain unqualified. Native 16-head training has passed finite
+gradient, frozen-weight, exact fresh-reload and teacher-forced input/temporal
+checks. The earlier128 pilots fail actual generation and must not be scaled.
+Native request labels are now separated from actual worker dispatch clocks,
+with explicit TRAIN-only causal guards; the eight-update variant still fails
+private result use. Actual native student histories are being collected as
+unapproved conditioning, with all past labels excluded from future supervision.
+See HANDOFF.md and EXPERIMENTS.md for job IDs, measured results and the current
+Isambard access block. The loss ownership mask is implemented; waveform AEC
+and microphone double-talk performance are still untested.

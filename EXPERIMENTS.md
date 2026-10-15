@@ -3550,3 +3550,40 @@ changes or future labels. Only explicit approved TRAIN scenes are permitted.
 The recorded history is unapproved conditioning; a future assembler must mask
 every past label and independently check its new continuation. No failed
 validation case is reused for this collection.
+
+
+## 2026-10-16 — Native request labels; actual student histories; access block
+
+Plain words: all48 TRAIN scenes pass the native-prelead conversion. All40 RET
+labels move.16–.80s later (median.44s), without changing source dispatch clocks,
+words, audio or actual result arrival times. Preflight7457079 completes eight
+finite updates and exact fresh FP32 reload; SHA
+`0b20cc01db2174fb114201f81e41cdf0ddeb5373d3f72edfc3efca898ba59716`,
+data SHA7c0a3c6f42675766b0a3edb4569dcad1ad40a8619a21215d11330107d9926aef.
+Integrated history/temporal checks pass with zero text-top1 disagreements.
+
+Native7457163–70 all sample nonempty text and make1–2 requests, but four private cases omit
+their requested values.001 consults the backend for physics after missing the
+record request. Clarify006 guesses an unidentified project (blocked by the
+worker guard) and says M room. Cancel007 emits no later request to cancel.
+Simple005 correctly explains graphite;004 adds an E F T preface before a broadly
+correct dissolution answer. All real input is retained; only cancel007 has10
+samples of simulated-playout underrun. No fresh holdout or microphone pass is
+claimed; independent new speech audits have not yet run.
+
+Raw conditioning collectors7457161/62 complete approved TRAIN000/008, with
+1x17x780/626 delayed input IDs and501/355 actual graph calls, plus direct
+prefix and2/1 span forwards. Metadata's contiguous call/frame accounting and
+source code pins are checked locally. Both have zero playout underruns. Raw
+`.pt` file hash/load verification and independently checked future targets remain
+required; neither recording is supervised data. Thirty relevant local causal,
+worker, ASR and playout tests pass in `.venv-api`; system Python lacks NumPy.
+
+The latest bastion trace explicitly says “Not allowed at this time” before
+authentication. No native-policy128/calibration submission returned a job ID.
+Automatic connection recovery stops pending the owner's manual access check,
+in accordance with the official Isambard agent access guidance. Certificate
+expiry remains16 October10:39:50 Berlin. Next batch is concretely prepared in
+`evals/context-native-policy-next.sh`; syntax/hash constants are locally checked,
+but this helper has not executed remotely. It gates a bounded pilot and its
+eight dependent behavior replays on the saved, verified preflight.

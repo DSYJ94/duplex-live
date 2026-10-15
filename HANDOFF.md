@@ -1,4 +1,4 @@
-# HANDOFF — where we are (updated 2026-10-15 for active recovery)
+# HANDOFF — where we are (updated 2026-10-16 for active recovery)
 
 ## Current execution — 15 October, Context Spanning adaptation proof
 
@@ -22,8 +22,9 @@ its sampled text. Accepted voice quality does not waive this speech failure.
 First-frame latency and some warm-run playout underruns also remain unresolved.
 These are reused development scenes, not fresh qualification holdouts.
 
-Next is a bounded eight-update native Context Spanning adapter proof, not
-foundation pretraining. Revalidate the 48 approved TRAIN scenes across caches
+We have completed bounded native Context Spanning adapter proofs and rejected
+two128-step recipes; the latest request-policy8-step model is also unqualified.
+This is adaptation of released weights, not foundation pretraining. Revalidate the 48 approved TRAIN scenes across caches
 7411513, 7434926 and 7435538; retain ordinary, private, clarify and cancel cases.
 Use complete clean 17-row sequences, measured word times, approved result
 arrival times, native context-span assembly and clean user-target ownership.
@@ -105,11 +106,43 @@ before the next measured lead, checks arrived user identification/cancellation,
 rejects a request after receipt, and keeps words/audio/receipt times unchanged.
 No held-out example enters this derivation. Require all48 checks before updates.
 Preflight7457079 validates all48 derived TRAIN sequences and completes eight
-finite updates; fresh reload is still being retrieved. A TRAIN-only native
-history collector is prepared to record actual direct-prefix/span and graph
+finite updates, exact fresh FP32 reload and integrated temporal/input checks.
+All40 RET targets move later by.16–.80s (median.44s); source clocks stay fixed.
+SHA0b20cc01db2174fb114201f81e41cdf0ddeb5373d3f72edfc3efca898ba59716.
+Native7457163–70 all sample nonempty text and emit1–2 RET, but four private cases omit their
+values;001 requests only the later physics answer. Clarify006 makes an early
+unidentified-project read (correctly blocked) and invents M room. Cancellation
+is still not followed. Simple005 gives a correct graphite explanation;004 has
+an irrelevant E F T preface. All input is retained; only cancel007 has10 samples
+of simulated-playout underrun. These are development failures, not qualification.
+
+A TRAIN-only native history collector is prepared to record actual direct-prefix/span and graph
 inputs, source/voice/code hashes and real-to-virtual receipt boundaries. These
 are raw conditioning only, never approved target labels; every past label must
 be masked before any independently checked future continuation can train.
+First collectors7457161/62 complete private TRAIN000/simple008: exact contiguous
+call accounting1x17x780/626,501/355 actual graph calls plus direct prefix and2/1
+receipt spans. Zero playout underruns. Neither recording is approved supervision.
+The access problem is now explicit: a fresh verbose SSH trace receives
+**“Not allowed at this time”** from ai.login.isambard.ac.uk before key
+authentication. Stop automated connection recovery. The verified certificate
+is still valid until16 October10:39:50 Berlin; do not misdiagnose expiry.
+The owner has been asked to test the ordinary SSH command manually. Official
+[agent access guidance](https://docs.isambard.ac.uk/user-documentation/guides/using_ai_agents/)
+says, “Do not use automation to recover from access or policy issues.”
+No persistent control connection was established, and SSH configuration is unchanged.
+Prepared native-policy128/calibration submissions returned no job IDs and were
+refused during connection establishment; do not call them running.
+
+After authorised access is restored, the concrete reviewed next batch is
+[evals/context-native-policy-next.sh](evals/context-native-policy-next.sh):
+verify pinned9b411d0 source, preflight7457079 SHA/data/voice/reload/history gates,
+submit one128 pilot, one TRAIN calibration and eight afterok-dependent native
+checks. It creates submission receipts and refuses a duplicate invocation.
+On the cluster, review the file after `git pull --ff-only`, then run
+`bash evals/context-native-policy-next.sh`. The helper itself has only local
+syntax checks; it has not run on the cluster. No further owner voice vote is
+needed until a behaviorally credible new candidate is available.
 
 One explicit pending-state diagnostic7455886/87 improves acknowledgement of
 waiting but still omits both results and hallucinates physics. Reject more
