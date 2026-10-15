@@ -18,6 +18,7 @@ def main():
     for name in ("data", "model", "voice", "source", "out"):
         ap.add_argument("--"+name, type=Path, required=True)
     ap.add_argument("--index", type=int, required=True)
+    ap.add_argument("--instructions", choices=("teacher", "records-v1"), default="teacher")
     args = ap.parse_args()
     import torch
     import numpy as np
@@ -27,6 +28,8 @@ def main():
     from evals.personaplex_train import MODEL_HASHES
     from evals.recovery_data import validate_conversion
     from evals.personaplex_policy import action_targets
+    from evals.personaplex_prompts import prompt_receipt
+    role = prompt_receipt(args.instructions)
     if (Path(moshi.__file__).resolve() != (args.source / "moshi/moshi/__init__.py").resolve()
             or subprocess.check_output(["git", "-C", str(args.source), "rev-parse", "HEAD"], text=True).strip()
             != "3428dfd95309a7f3c84fd93259ded0f810d1ff91"
@@ -86,7 +89,7 @@ def main():
     try:
         offline.run_inference(input_wav=str(args.out / "user_in.wav"), output_wav=str(args.out / "model.wav"),
             output_text=str(args.out / "output.json"),
-            text_prompt="You are a wise and friendly teacher. Answer questions or provide advice in a clear and engaging way.",
+            text_prompt=role["text"],
             voice_prompt_path=str(args.voice), tokenizer_path=str(args.model / "tokenizer_spm_32k_3.model"),
             moshi_weight=str(args.model / "model.safetensors"), mimi_weight=str(args.model / "tokenizer-e351c8d8-checkpoint125.safetensors"),
             hf_repo="nvidia/personaplex-7b-v1", device="cuda", seed=42424242,
@@ -111,6 +114,7 @@ def main():
         "model_hashes":MODEL_HASHES, "voice_sha256":sha256(args.voice), "input_sha256":sha256(args.out / "user_in.wav"),
         "states_sha256":sha256(args.out / "states.pt"), "output_sha256":sha256(args.out / "model.wav"),
         "frames":len(hidden), "action_targets":sum(v != 0 for v in targets),
+        "role_prompt":role,
         "text":"".join(t for t in tokens if t not in ("EPAD", "PAD", "BOS", "EOS")),
         "assistant_history":"native sampled text and audio, not supplied targets", "reference_supplied":False,
         "speech_targets_approved":False, "purpose":"TRAIN-only foreground action states",

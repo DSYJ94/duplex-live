@@ -23,6 +23,7 @@ def main():
     from evals.recovery_data import validate_conversion
     from evals.personaplex_train import MODEL_HASHES
     from evals.personaplex_policy import action_targets
+    from evals.personaplex_prompts import prompt_receipt
     from evals.personaplex_bundle import PersonaBundle
     from moshi.models import loaders
     from moshi.utils.compile import no_compile, no_cuda_graph
@@ -36,10 +37,14 @@ def main():
     data = validate_conversion(args.data)
     expected = {r["scenario_id"]:r for r in data["accepted"] if r["split"] == "train"}
     reports = sorted(p for root in args.states for p in root.glob("*/report.json"))
-    features, labels, receipts, seen = [], [], [], set()
+    features, labels, receipts, seen, roles = [], [], [], set(), []
     for path in reports:
         report = json.loads(path.read_text())
         row = report["source_row"]
+        role = report.get("role_prompt", prompt_receipt("teacher"))
+        if role != prompt_receipt(role["name"]):
+            raise RuntimeError("Unknown or changed native role instructions")
+        roles.append(role)
         sid = row["scenario_id"]
         if (report["schema"] != "dl-personaplex-self-history-v1" or not report["passed"]
                 or report["heldout_used"] or report["reference_supplied"] or report["speech_targets_approved"]
@@ -74,6 +79,8 @@ def main():
         seen.add(sid)
     if len(expected) != 23 or seen != set(expected):
         raise RuntimeError("Native policy fit requires all 23 approved TRAIN scenes exactly once")
+    if any(role != roles[0] for role in roles):
+        raise RuntimeError("Mixed native role prompts in one policy-state fit")
     parent = json.loads((args.parent / "report.json").read_text())
     reload = json.loads((args.parent / "reload-report.json").read_text())
     if (not parent["language_frozen"] or not parent["passed"] or not reload["passed"]
@@ -139,6 +146,7 @@ def main():
     report = {**parent, "schema":"dl-personaplex-joint-train-v1", "parent_checkpoint":{
         "path":str(args.parent), "sha256":parent["checkpoint_sha256"], "report_sha256":sha256(args.parent / "report.json")},
         "policy_refit":True, "policy_optimizer_steps":args.steps, "policy_training":receipts,
+        "policy_prompt":roles[0],
         "policy_losses":losses, "policy_label_clock":"approved single markers; ignore two neighboring idle frames; no added positives",
         "policy_training_feature_frame_count":sum(json.loads(Path(r["path"]).read_text())["frames"] for r in receipts),
         "parent_speech_errors":errors, "parent_speech_and_reference_weights_unchanged":True,

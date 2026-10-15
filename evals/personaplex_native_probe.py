@@ -24,6 +24,7 @@ def main():
     ap.add_argument("--dispatch-mode", choices=("native", "scheduled-diagnostic"), default="native")
     ap.add_argument("--result-input", choices=("arc", "spoken-text"), default="arc",
                     help="Spoken-text is an explicit hybrid diagnostic, not learned result integration")
+    ap.add_argument("--instructions", choices=("teacher", "records-v1"), default="teacher")
     args = ap.parse_args()
     import numpy as np
     import soundfile as sf
@@ -60,6 +61,12 @@ def main():
         raise RuntimeError("Native development probe requires an approved untrained validation scene")
     if args.dispatch_mode != "native" and (row["kind"] != "private" or args.zero_adapters):
         raise ValueError("Scheduled diagnostic requires a trained private validation probe")
+    from evals.personaplex_prompts import prompt_receipt
+    role = prompt_receipt(args.instructions)
+    if args.instructions != "teacher" and args.result_input != "spoken-text":
+        raise ValueError("Changed role prompt is only qualified for the explicit worker-text diagnostic")
+    if args.dispatch_mode == "native" and trained.get("policy_prompt", prompt_receipt("teacher")) != role:
+        raise RuntimeError("Native policy was trained under a different role prompt")
     sidecar = json.loads(Path(row["path"]).with_suffix(".json").read_text())
     metadata = sidecar["timeline"]["meta"]
     args.out.mkdir(parents=True, exist_ok=False)
@@ -81,6 +88,7 @@ def main():
         "arc_manifest_sha256":sha256(args.manifest), "native_action_choice":args.dispatch_mode == "native",
         "scheduled_dispatch":args.dispatch_mode != "native", "zero_adapters":args.zero_adapters,
         "result_input":args.result_input, "worker_text_forced":args.result_input == "spoken-text",
+        "role_prompt":role,
         "inference_text_pace":"manual four frames per word, never training timestamps" if args.result_input == "spoken-text" else None,
         "oracle_reference_rows":False, "backend_context":"causal measured user words and generated assistant tokens; not live ASR",
         "fresh_holdout":False, "microphone_acceptance":False, "action_threshold":.5,
@@ -218,7 +226,7 @@ def main():
             with paced_export(offline, args.out, torch.cuda.synchronize, before_frame) as timing:
                 offline.run_inference(input_wav=str(args.out / "user_in.wav"), output_wav=str(args.out / "model_out.wav"),
                     output_text=str(args.out / "output.json"),
-                    text_prompt="You are a wise and friendly teacher. Answer questions or provide advice in a clear and engaging way.",
+                    text_prompt=role["text"],
                     voice_prompt_path=str(args.voice), tokenizer_path=str(args.model / "tokenizer_spm_32k_3.model"),
                     moshi_weight=str(args.model / "model.safetensors"), mimi_weight=str(args.model / "tokenizer-e351c8d8-checkpoint125.safetensors"),
                     hf_repo="nvidia/personaplex-7b-v1", device="cuda", seed=42424242,
@@ -237,6 +245,7 @@ def main():
         "checkpoint_sha256":checkpoint_sha, "native_action_choice":args.dispatch_mode == "native",
         "scheduled_dispatch":args.dispatch_mode != "native", "zero_adapters":args.zero_adapters,
         "result_input":args.result_input, "worker_text_forced":args.result_input == "spoken-text",
+        "role_prompt":role,
         "backend_context":"causal measured-word oracle; not live ASR", "worker_events":events,
         "worker_dispatches":len(jobs), "unobserved_workers":sum(not j["observed"] for j in jobs.values()),
         "task_success":"pending independent speech/receipt grading", "quality_qualified":False, "microphone_acceptance":False}

@@ -2706,3 +2706,19 @@ write its inherited /local/user/... temporary path inside the container. Set a
 job-local temporary directory under the already bound project filesystem. This
 is still a build-environment failure before model/native-kernel qualification;
 no evidence yet that the released runtime is incompatible with ARM/CUDA13.
+
+**Plain words — actual worker words enter the native text stream:** hybrid
+7436519 contains the real returned yellow-circle result, 7436520 contains the
+actual clarification, and 7436521 contains cancellation confirmation after a real
+receipt. None is a task pass: native speech invents private details beforehand,
+misses later continuation, or makes unsupported claims. Independent speech audit
+7436865 is submitted; generated token text alone does not prove intelligibility.
+
+All previous native comparisons used the accepted generic teacher role. New
+records-v1 instructions explicitly forbid invented private values/premature
+completion, require clarification, and permit independent conversation while
+waiting. The synthetic voice WAV is unchanged. This new role is restricted to
+explicit worker-text diagnostics; ARC training prefix is not silently changed.
+Native action heads must match the exact recorded role under which their
+self-history states were collected. A scheduled private diagnostic can isolate
+the role change while a new TRAIN-only policy-state collection is prepared.
