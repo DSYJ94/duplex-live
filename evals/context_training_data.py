@@ -43,8 +43,9 @@ def load_training(caches, spm, prefix, max_frames=1100):
                 raise RuntimeError('Invalid native target range')
             timing = native_word_timing(codes[0].tolist(), side['alignments'], spm.encode, 12.5)
             markers = [marker_frame(e, 12.5) for e in side['timeline']['events'] if e['kind'] == 'marker']
-            if markers != sample['markers'] or markers != row['markers'] or (
-                    codes[0] == 4).nonzero().flatten().tolist() != markers:
+            if (markers != sample['markers'] or markers != row['markers']
+                    or len(set(markers)) != len(markers) or (
+                    codes[0] == 4).nonzero().flatten().tolist() != sorted(markers)):
                 raise RuntimeError('RET labels differ from approved silent control events')
             arrivals = [{k: v for k, v in a.items() if k != 'rows'} for a in sample['arrivals']]
             if arrivals != side['reference_arrivals']:

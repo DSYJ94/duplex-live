@@ -45,6 +45,8 @@ def main():
     ap.add_argument('--backend-mode',choices=('scheduled','native-asr'),default='scheduled')
     ap.add_argument('--asr-python',type=Path)
     ap.add_argument('--warm-audio',action='store_true')
+    ap.add_argument('--adapter-proof',type=Path)
+    ap.add_argument('--adapter-disabled',action='store_true')
     args=ap.parse_args()
     if args.backend_mode=='native-asr':
         devices=os.environ.get('CUDA_VISIBLE_DEVICES','').split(',')
@@ -89,14 +91,17 @@ def main():
     if unsafe:raise RuntimeError('Checkpoint requires unsupported pickle globals: '+repr(unsafe))
     sys.path.insert(0,str(source))
     from contextspan.model.engine import Engine,seed_all
+    import contextspan.model.engine as engine_module
+    from evals.context_adapter_load import before_engine
     from contextspan.model.weights import load_voice
     import inspect
     if Path(inspect.getfile(Engine)).resolve()!=(source/'contextspan/model/engine.py').resolve():
         raise RuntimeError('Wrong Context Spanning engine module imported')
     records=[];started=time.monotonic()
-    with audited_loads(records):
-        engine=Engine(checkpoint=str(checkpoint),device='cuda',temp=.8,temp_text=.7)
-        voice=load_voice('main')
+    with before_engine(engine_module,args.adapter_proof,args.adapter_disabled) as adapter:
+        with audited_loads(records):
+            engine=Engine(checkpoint=str(checkpoint),device='cuda',temp=.8,temp_text=.7)
+            voice=load_voice('main')
     lm_loads=[r for r in records if r['module_identity']==id(engine.lm)]
     if (type(engine.lm).load_state_dict is not torch.nn.Module.load_state_dict
             or not lm_loads or not lm_loads[-1]['strict'] or lm_loads[-1]['missing'] or lm_loads[-1]['unexpected']):
@@ -110,7 +115,14 @@ def main():
             raise RuntimeError('Accepted synthetic voice provenance changed')
         reference,voice_rate=sf.read(args.voice_reference,dtype='float32')
         if reference.ndim!=1 or not np.isfinite(reference).all():raise RuntimeError('Invalid synthetic reference')
-        voice=engine.clone_voice(reference,voice_rate)
+        if args.adapter_proof:
+            if adapter['voice_reference_sha256']!=sha256(args.voice_reference):
+                raise RuntimeError('Adapter training voice differs from audition voice')
+            voice=torch.load(args.adapter_proof/'voice.pt',map_location='cpu',weights_only=True)['codes']
+        else:
+            voice=engine.clone_voice(reference,voice_rate)
+    elif args.adapter_proof:
+        raise RuntimeError('Adapter comparisons require the exact accepted synthetic voice codes')
     warm=None
     if args.warm_audio:
         began=time.monotonic()
@@ -122,7 +134,7 @@ def main():
     loading={'loads':records,'final_lm_strict':True,'dep_q':engine.lm.dep_q,
         'model_load_and_prefix_s':time.monotonic()-started,'pickle_globals':unsafe,
         'assets_manifest_sha256':sha256(args.assets),'base_hashes':MODEL_HASHES,
-        'voice':args.voice,'voice_codes_shape':list(voice.shape),'input_warmup':warm,
+        'voice':args.voice,'voice_codes_shape':list(voice.shape),'input_warmup':warm,'adapter':adapter,
         'torch':torch.__version__,'torch_file':torch.__file__,'cuda':torch.version.cuda}
     (args.out/'loading.json').write_text(json.dumps(loading,indent=2)+'\n')
     world=RecordWorld({meta['project']:{meta['field']:args.private_value}})

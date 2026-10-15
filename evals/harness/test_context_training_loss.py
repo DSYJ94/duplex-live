@@ -21,7 +21,7 @@ class ContextLossTest(unittest.TestCase):
         loss, report = loss_fn(out, codes, mask, mask, mask, lm)
         self.assertTrue(torch.isfinite(loss))
         self.assertEqual(report['target_counts'], dict(text=3, assistant_audio=24,
-            clean_user_audio=24, user_targets_excluded_by_ownership=0))
+            clean_user_audio=24, user_targets_excluded_by_ownership=0, per_audio_head=[3]*16))
 
     def test_user_attribution_preserves_assistant_and_real_overlap(self):
         out, codes, mask, lm = self.fixture()
