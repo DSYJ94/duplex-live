@@ -3025,3 +3025,11 @@ Every source sample is accounted for. Artifact: runs/lychee-playout-7443647-buff
 This is a recorded component replay; concurrent LM/vocoder/transport and human
 voice quality remain unverified. Full-transcript WER can include intentionally
 cancelled tails, so distinguish that from actual text/audio disagreement.
+
+**Plain words — startup input warmup prepared:** the first native paced trace
+spends 1.141s in first-call mel preprocessing and 0.302s in the first audio encoder
+call. An optional pre-user warmup processes only 400ms of zeros through those
+front-end functions. It never creates a conversation, reads user samples or
+generates LM tokens; CPU/CUDA RNG and absence of an active request are checked.
+The warmed baseline must measure actual backlog again rather than subtracting
+startup time from an existing result. No cached user/audio prefix is reused.

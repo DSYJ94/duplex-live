@@ -17,6 +17,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__)
     for name in ('assets','batch','runtime','preflight','out'):
         ap.add_argument('--'+name,type=Path,required=True)
+    ap.add_argument('--warm-input',action='store_true')
     ap.add_argument('--worker-context',action='store_true')
     ap.add_argument('--static-context-diagnostic',action='store_true')
     ap.add_argument('--result-response',choices=('model','application-event-diagnostic'),default='model')
@@ -83,6 +84,10 @@ def main():
     (args.out/'loading.json').write_text(json.dumps(loading,indent=2)+'\n')
     if loading['model'] is None or loading['audio'] is None:
         raise RuntimeError('Released backend did not run strict full model/audio loading in this process')
+    if args.warm_input:
+        from evals.lychee_warmup import warm_input
+        environment['input_warmup']=warm_input(framework)
+        (args.out/'environment.json').write_text(json.dumps(environment,indent=2)+'\n')
     if args.worker_context:
         from evals.lychee_worker import run
         from evals.lychee_vllm_loading import audited_side_tokens
@@ -96,12 +101,14 @@ def main():
     audio=resample_poly(pcm[:60*rate],16000//divisor,rate//divisor).astype(np.float32)
     audio=np.pad(audio,(0,10*16000));sf.write(args.out/'user_in.wav',audio,16000)
     from evals.lychee_paced import run_incremental
-    with torch.inference_mode():
+    from evals.lychee_vllm_loading import audited_side_tokens
+    with torch.inference_mode(),audited_side_tokens(framework.vllm_engine) as side_audit:
         generated,timing=run_incremental(framework,audio,args.out)
     (args.out/'native-trace.json').write_text(json.dumps(generated['trace'])+'\n')
     (args.out/'events.json').write_text(json.dumps(generated['events'],indent=2)+'\n')
     report={'text':' '.join(e['text'] for e in generated['events']),'paced_tokens':timing,
-        'strict_loading':loading,'live_pcm_tested':False,'microphone_acceptance':False,
+        'strict_loading':loading,'native_side_token_audit':side_audit,
+        'input_warmup':environment.get('input_warmup'),'live_pcm_tested':False,'microphone_acceptance':False,
         'quality_qualified':False,'learned_delegation_tested':False}
     (args.out/'report.json').write_text(json.dumps(report,indent=2)+'\n')
     print(json.dumps(report),flush=True)
