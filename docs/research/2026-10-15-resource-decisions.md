@@ -106,3 +106,40 @@ zero causal-playout underruns. First-frame stalls and incorrect follow-up physic
 remain. The next probe connects native retrieval markers to actual arrived-audio
 recognition and real backend execution; backend tool choice stays external.
 No new training or complete-task qualification follows from these component runs.
+
+
+## 2026-10-15 — Context voice accepted; native result use still fails
+
+Plain words: the owner reports Context Spanning's synthetic-reference voice is
+“as good or better” than the accepted smooth Lychee recording. This selects a
+voice candidate only. Scheduled-dispatch probes 7454283–85 say their actual
+private values. Native-RET, actual-ASR and actual-backend probes 7454442–44
+(warmed) and 7454577–79 (cold) all recognize the project and obtain the right
+actual tool result, but only 7454578 samples the correct value. Other replies
+invent/omit it and ordinary physics answers remain unreliable. All speech words,
+starts and acoustic tokens are sampled; specific tool choice remains external.
+
+Full-stream independent audits 7454749–58 yield WER respectively 0, .0208, 0,
+.0517, 0, .0182, .0667, .0635, 0 and 1.7568. The final synthetic-voice native
+run repeats audible material absent from its text; it fails speech behavior.
+Other intelligible recordings do not pass factual/delegation gates. Full LM+PCM
+runs together at p95 28.5–35ms per 80ms frame. Cold released first-frame stalls
+remain roughly 2.8–3s; cold synthetic maximum backlog is about .505s. Warming
+full Engine.step removes most cold cost but does not consistently preserve
+continuity or behavior: warmed native purple/synthetic captures contain 406/2052
+causal-playout underrun samples. Cold native controls have zero underruns.
+First cold/warm text divergence precedes actual result insertion; different
+nodes/caches/numerical execution remain confounds. No proven RNG-only bug or
+quality-preserving warmup fix is claimed.
+
+The next implementation is a bounded eight-update TRAIN-only Context adapter
+proof: native 16-head aligned loss, four final temporal layers plus text head,
+rank eight with A nonzero/B zero, base frozen, sampling RNG preserved during
+construction. Reuse approved clean native caches after every source approval,
+fold, artifact, word-timing and receipt check. No arbitrary crop or held-out
+failure becomes supervision. User loss targets the clean separate user stem,
+retaining genuine overlap; prefix/span targets and invalid IDs are excluded
+before CE. This implements an ownership-mask seam, not waveform AEC or measured
+echo suppression. No larger run is authorized by component fit alone; require
+finite gradients, unchanged frozen hashes, fresh reload and native free-running
+retention checks.

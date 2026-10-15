@@ -1,11 +1,39 @@
 # HANDOFF — where we are (updated 2026-10-15 for active recovery)
 
-## Current execution — 15 October, native Lychee and actual audio
+## Current execution — 15 October, Context Spanning adaptation proof
 
-Plain words: no complete model qualifies. Continue the owner's authorised work
-until actual input is needed; the allocation expires in about six days. The
-accepted development voices are PersonaPlex synthetic marin and Lychee. Use
-[docs/LYCHEE_NEXT_STAGE.md](docs/LYCHEE_NEXT_STAGE.md) for the next actions.
+Plain words: no complete model qualifies. The owner says Context Spanning with
+the synthetic reference is “as good or better” than smooth Lychee. Keep both as
+accepted development voices, not factual/delegation passes. Continue authorised
+work until actual input is needed; allocation expires around 21 October.
+
+Context Spanning is now the leading native duplex candidate. Its pinned released
+checkpoint strictly loads all 475 LM keys and 16 audio heads. The first three
+scheduled-dispatch/measured-word component probes 7454283–85 speak the actual
+private values; they do not test native retrieval. Six subsequent native-RET →
+actual arrived-audio Whisper → actual backend runs 7454442–44 and 7454577–79
+recognize the right project and obtain the correct actual private value, but
+only 7454578 samples that value correctly. Other foreground replies omit or
+invent facts. Warmup is not the sole cause: the cold controls also fail.
+
+Independent speech audits 7454749–58 cover ten Context captures. Nine have WER
+0–0.0667; 7454579 has WER 1.7568 with repetitive audible speech absent from
+its sampled text. Accepted voice quality does not waive this speech failure.
+First-frame latency and some warm-run playout underruns also remain unresolved.
+These are reused development scenes, not fresh qualification holdouts.
+
+Next is a bounded eight-update native Context Spanning adapter proof, not
+foundation pretraining. Revalidate the 48 approved TRAIN scenes across caches
+7411513, 7434926 and 7435538; retain ordinary, private, clarify and cancel cases.
+Use complete clean 17-row sequences, measured word times, approved result
+arrival times, native context-span assembly and clean user-target ownership.
+Require zero-adapter logits/RNG parity, finite nonzero gradients, frozen-base
+hashes and exact fresh-process reload before any larger training. See
+[training seams](docs/research/2026-10-15-context-training-seams.md) and
+[resource decisions](docs/research/2026-10-15-resource-decisions.md).
+The eight-update proof is prepared; no result is claimed yet.
+
+The older Lychee work below remains useful evidence and a fallback:
 
 The released Qwen-based Lychee model runs through its native custom-vLLM backend
 with all 982 checkpoint tensors accounted for. Warm-input baseline 7451709 keeps
@@ -67,8 +95,8 @@ New owner resources are reviewed in
 CPU loss-scope audit 7454206 passes all 15 examples; there is no user-audio loss
 in the current pilot. Concurrent worker speech audits confirm the actual values,
 but yellow WER 0.1111 and earlier playback gaps still fail the gates. Context
-Spanning assets 7454205 and a bounded native span audition are next; this is a
-new trained backend-text mechanism, not our older system-prefix refresh.
+Spanning assets and actual native-ASR probes are complete as summarized above.
+Its released backend-text mechanism is distinct from our older prefix refresh.
 
 Code moves through Git only. New jobs use clean immutable worktrees and exact
 commits. Fetch full logs before local filtering. Preserve unrelated pyc, roadmap
