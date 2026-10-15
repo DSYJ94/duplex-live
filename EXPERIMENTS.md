@@ -3287,3 +3287,21 @@ sampled subword, catches guesses that finish after result delivery, and never
 promotes matching text to correct claims, actual speech or full-task success.
 Two timing/echo regressions pass. The 200ms environment field is also explicitly
 scoped to the older Moshi interleaver; Lychee word-offset quality is unqualified.
+
+
+**Plain words — fixed-state deployment check:** jobs 7453748/49/50 restore
+three approved TRAIN histories and supply only the teacher start-speaking
+control, with no future word/acoustic tokens. All native input IDs and full
+first-layer embeddings equal the actual training tensors exactly (error 0).
+Base produces the correct private value in one of three; both 64/128 adapters
+produce all three correct short record sentences. This proves the learned
+weights can run natively on these exact TRAIN states, not held-out task success.
+The next bounded diagnostic activates a checked adapter only for an actual
+returned-result response, leaving prior conversation on the base. It requires
+exact disabled-adapter baseline replay before any adoption, rebuilds KV at each
+switch, and discloses application-controlled response timing. No outcome yet.
+
+**Plain words — owner audio feedback:** the owner reports concurrent capture
+7452017 "Sounds smooth". Retain the causal two-GPU recording as the working
+audio baseline. This feedback does not approve its factual errors, delegation
+behavior, browser/device playback or a microphone product.

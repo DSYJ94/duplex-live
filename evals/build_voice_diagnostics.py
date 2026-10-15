@@ -103,7 +103,7 @@ def main():
             gaps=playout['within_utterance_underrun_samples']/24000
             card('Lychee — simultaneous model and speech decoder',root+'/vocoder/model.wav',
                 f'Actual two-GPU concurrent capture with fixed 240ms buffering per utterance and actual interruption receipts. '
-                f'Measured within-utterance gaps: {gaps:.3f}s. Factual errors remain; this tests playback, not delegation or a live microphone.',root+'/report.json')
+                f'Measured within-utterance gaps: {gaps:.3f}s. Owner feedback on 15 October: sounds smooth. Factual errors remain; this tests playback, not delegation or a live microphone.',root+'/report.json')
             concurrent='<h2 id="concurrent">New concurrent audio capture</h2><section>'+''.join(cards)+'</section>'
         cards[:]=original
     page = '<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'

@@ -23,6 +23,9 @@ def run(framework, args, loading, side_audit):
     from evals.lychee_context import create_session,refresh_session,role_text
     from evals.lychee_paced import run_incremental
     from evals.lychee_delivery import QuietDelivery
+    from evals.lychee_result_turn import ResultTurn
+    conditional=args.semantic_activation=='result-response'
+    result_turn=ResultTurn()
     delivery=QuietDelivery(args.result_delivery)
     data=validate_conversion(args.data)
     row=next(r for r in data['accepted'] if r['scenario_id']==args.scenario)
@@ -66,11 +69,19 @@ def run(framework, args, loading, side_audit):
         def before(current,frame,prior):
             nonlocal future
             if static:return current
+            refreshed=False
             begin=round(frame['input_start_s']*16000);end=round(frame['input_available_s']*16000)
             holder['user_chunk_quiet']=float(np.sqrt(np.mean(audio[begin:end].astype(np.float32)**2)))<.0015
             can_deliver=delivery.observe(holder['user_chunk_quiet'],current.get_listening_state())
             if 'start' not in holder:holder['start']=time.monotonic()-frame['input_consumed_s']
             now=time.monotonic()-holder['start']
+            if conditional and result_turn.should_restore(current.get_listening_state()):
+                from evals.lychee_semantic_switch import set_active
+                switch=set_active(framework,False)
+                current,proof=refresh_session(current,role_text(actual))
+                result_turn.restored();holder['result_wakeup_pending']=False;refreshed=True
+                events.append({'event':'semantic_result_turn_restored_base','at_s':now,
+                    'switch':switch,'preservation':proof,'spoken_value_correctness_verified':False})
             if future is not None and future.done() and not holder.get('observed') and can_deliver:
                 result,ready=future.result();holder['observed']=True
                 receipt=result['receipts'][0]
@@ -79,7 +90,8 @@ def run(framework, args, loading, side_audit):
                     'field':receipt['field'],'value':receipt['value'],'received_at_s':now}]
                 began=time.monotonic()
                 current,proof=refresh_session(current,role_text(actual))
-                holder['result_wakeup_pending']=args.result_response=='application-event-diagnostic'
+                refreshed=True
+                holder['result_wakeup_pending']=args.result_response=='application-event-diagnostic' and not conditional
                 events.append({'event':'actual_result_context_applied','ready_at_s':ready-holder['start'],
                     'observed_at_s':now,'delivery_hold_s':now-(ready-holder['start']),
                     'native_state_at_delivery':current.get_listening_state(),
@@ -97,8 +109,19 @@ def run(framework, args, loading, side_audit):
                 actual[:]=[{'status':'pending','task_id':'lookup','project':meta['project'],'field':meta['field']}]
                 began=time.monotonic()
                 current,proof=refresh_session(current,role_text(actual))
+                refreshed=True
                 events.append({'event':'pending_context_applied','observed_at_s':now,
                     'context_rebuild_s':time.monotonic()-began,'preservation':proof})
+            if conditional and result_turn.eligible(holder.get('observed',False),refreshed,
+                    current.get_listening_state(),delivery.quiet_chunks):
+                from evals.lychee_semantic_switch import set_active
+                switch=set_active(framework,True)
+                current,proof=refresh_session(current,role_text(actual))
+                result_turn.activate();holder['result_wakeup_pending']=True
+                events.append({'event':'semantic_result_turn_activated','at_s':now,
+                    'native_state':'l','quiet_arrived_chunks':delivery.quiet_chunks,
+                    'switch':switch,'preservation':proof,'application_chose_result_turn':True,
+                    'word_or_acoustic_tokens_forced':False})
             if args.collect_training_state and actual and actual[0]['status']=='completed':
                 from evals.lychee_training_state import save
                 captured_frame={**frame,'snapshot_elapsed_s':time.monotonic()-holder['start']}
@@ -108,14 +131,24 @@ def run(framework, args, loading, side_audit):
                         and delivery.quiet_chunks>=2):
                     holder['idle_snapshot']=save(current,args.out,'actual-idle-state',row,captured_frame,actual[0],role_text(actual))
             return current
+        def event_received(record):
+            result_turn.observe(record['event'])
+            if sender:sender.event(record)
         try:
             from evals.lychee_wakeup import result_response_event
             response_event=result_response_event(holder,events) if args.result_response=='application-event-diagnostic' else nullcontext()
             with response_event:
                 generated,timing=run_incremental(framework,audio,args.out,before_chunk=before,session=session,
-                    on_start=started,on_event=sender.event if sender else None)
+                    on_start=started,on_event=event_received if conditional or sender else None)
                 if sender:sender.finish(holder['start'])
         finally:
+            if conditional and result_turn.active:
+                from evals.lychee_semantic_switch import set_active
+                switch=set_active(framework,False)
+                events.append({'event':'semantic_restore_after_session_closed','switch':switch,
+                    'result_turn_started':result_turn.started,'result_turn_finished':result_turn.finished,
+                    'natural_restore_boundary_reached':False})
+                result_turn.restored()
             (args.out/'worker-events.json').write_text(json.dumps(events,indent=2)+'\n')
     if not holder.get('observed'):raise RuntimeError('Actual worker never reached native language context')
     if args.collect_training_state and not holder.get('idle_snapshot'):
@@ -134,6 +167,10 @@ def run(framework, args, loading, side_audit):
         'worker_events':events,'scheduled_dispatch':not static,'native_foreground_tool_choice':False,
         'actual_worker_results_supplied':not static,'spoken_result_use_verified':False,'oracle_private_values_supplied':static,'assistant_output_tokens_forced':any(e['event']=='application_response_start_control' for e in events),
         'word_or_acoustic_tokens_forced':False,'result_response_mode':args.result_response,
+        'semantic_activation_mode':args.semantic_activation,
+        'application_chooses_semantic_result_turn':conditional,
+        'semantic_result_turn_attempted':result_turn.attempted,
+        'semantic_result_turn_started':result_turn.started,'semantic_result_turn_finished':result_turn.finished,
         'result_delivery_mode':args.result_delivery,'application_schedules_result_delivery':args.result_delivery!='immediate',
         'native_speaking_control_forced':any(e['event']=='application_response_start_control' for e in events),
         'context_channel':'static supplied reference at start; oracle diagnostic' if static else 'nonspoken native instruction prefix rebuilt after actual receipt',

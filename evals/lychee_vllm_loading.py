@@ -4,7 +4,7 @@ import json
 
 
 @contextmanager
-def strict_loading(model_path, semantic_adapter=None, semantic_proof=None):
+def strict_loading(model_path, semantic_adapter=None, semantic_proof=None, switchable=False):
     from lychee_fd.vllm_integration import model_lychee, engine
     from vllm.model_executor.model_loader.weight_utils import default_weight_loader
     index = json.loads((model_path/'model.safetensors.index.json').read_text())['weight_map']
@@ -13,6 +13,7 @@ def strict_loading(model_path, semantic_adapter=None, semantic_proof=None):
     if semantic_adapter is not None:
         from evals.lychee_semantic_loading import plan
         projections,receipt['semantic_adapter']=plan(semantic_adapter,semantic_proof)
+    if switchable and not projections:raise RuntimeError('A switchable native model requires a checked semantic adapter')
     original_model = model_lychee.LycheeDuplexForVLLM.load_weights
     original_audio = engine.AudioPreprocessor._load_weights
 
@@ -22,6 +23,7 @@ def strict_loading(model_path, semantic_adapter=None, semantic_proof=None):
         params = dict(self.named_parameters())
         loads = {name:set() for name in params}
         source_loaded, sources, active = set(),set(),[None]
+        base_sources={};switch_reloads=[]
         originals = []
         for name,param in params.items():
             had_loader = hasattr(param,'weight_loader')
@@ -33,6 +35,8 @@ def strict_loading(model_path, semantic_adapter=None, semantic_proof=None):
                 _old(p,value,*args,**kwargs)
                 loads[_name].add(shard)
                 source_loaded.add(active[0])
+                if switchable and active[0] in base_sources:
+                    switch_reloads.append((_name,p,_old,base_sources[active[0]],args,kwargs))
             originals.append((param,had_loader,old))
             param.weight_loader = tracked
         def tracked_weights():
@@ -42,6 +46,7 @@ def strict_loading(model_path, semantic_adapter=None, semantic_proof=None):
                 sources.add(name);active[0]=name
                 if projections:
                     from evals.lychee_semantic_loading import merge
+                    if switchable and name in projections:base_sources[name]=value.detach()
                     value=merge(name,value,projections,receipt['semantic_adapter'])
                 yield name,value
             active[0]=None
@@ -57,6 +62,10 @@ def strict_loading(model_path, semantic_adapter=None, semantic_proof=None):
             applied=receipt['semantic_adapter']['applied_source_weights']
             if set(applied)!=set(projections) or not any(r['changed_bf16_elements'] for r in applied.values()):
                 raise RuntimeError('Native semantic merge did not apply every intended source matrix')
+            if switchable:
+                if len(switch_reloads)!=len(projections):raise RuntimeError('Incomplete original semantic shard retention')
+                from evals.lychee_semantic_switch import NativeSemanticSwitch
+                self._dl_semantic_switch=NativeSemanticSwitch(switch_reloads,receipt['semantic_adapter'])
         expected_aux = {name for name in index if name.startswith(('model.encoder.','encoder.',
             'model.adapter.','adapter.','model.merge_model.model.embed_tokens.',
             'model.merge_model.embed_tokens.','merge_model.model.embed_tokens.','merge_model.embed_tokens.'))}

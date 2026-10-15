@@ -43,9 +43,22 @@ Paired TRAIN histories 7452946–58 and causal assembly 7453119 complete
 15 usable examples. Both 64/128-step pilots 7453182/83 preserve frozen branches
 but their cold actual-worker replays fail: they invent room temperatures, and
 one value echo describes lightning instead of the record. Ordinary answers also
-drift. Do not scale this recipe. Next is exact fixed-state native continuation
-and input comparison to distinguish deployment/target mismatch from changed
-earlier student history. Keep held-out data excluded from all training.
+drift. Do not scale this recipe. Fixed-state TRAIN continuations 7453748–50
+now show exact native input IDs and embeddings (maximum error 0). Both adapters
+return all three supplied private values correctly; base returns one of three.
+These teacher-started TRAIN component checks do not qualify live behavior.
+
+Next diagnosis keeps the base weights during ordinary conversation, activating
+the checked adapter only for one application-started result reply after a real
+receipt, native listening state and two arrived quiet chunks. Every switch
+aborts the old KV request, preserves history/audio/clock/RNG and rebuilds it.
+First require the disabled adapter to reproduce every baseline token, then test
+both actual counterfactual worlds. This is a disclosed application policy, not
+learned turn choice or delegation. Keep held-out data excluded from training.
+
+The owner listened to concurrent capture 7452017 and said "Sounds smooth" on
+15 October. Retain it as the development audio baseline; factual accuracy,
+worker behavior and microphone acceptance remain separate unresolved gates.
 
 Code moves through Git only. New jobs use clean immutable worktrees and exact
 commits. Fetch full logs before local filtering. Preserve unrelated pyc, roadmap

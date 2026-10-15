@@ -27,6 +27,7 @@ def main():
     ap.add_argument('--codec-audit',type=Path)
     ap.add_argument('--semantic-adapter',type=Path)
     ap.add_argument('--semantic-proof',type=Path)
+    ap.add_argument('--semantic-activation',choices=('always','result-response'),default='always')
     ap.add_argument('--fixed-state-data',type=Path)
     ap.add_argument('--fixed-state-histories',type=Path,nargs='+')
     ap.add_argument('--fixed-state-scenarios',nargs='+')
@@ -41,6 +42,10 @@ def main():
     args=ap.parse_args()
     if bool(args.semantic_adapter)!=bool(args.semantic_proof):
         ap.error('A semantic adapter needs its complete implementation proof')
+    if args.semantic_activation!='always' and (not args.semantic_adapter or args.training_states
+            or args.collect_training_state or args.fixed_state_data
+            or (args.worker_context and args.result_response!='application-event-diagnostic')):
+        ap.error('Result-response switching requires a checked adapter and disclosed application response event')
     if args.fixed_state_data and (not args.fixed_state_histories or not args.fixed_state_scenarios
             or args.worker_context or args.training_states or args.event_socket):
         ap.error('Fixed TRAIN state diagnosis is separate from live/worker collection')
@@ -112,9 +117,13 @@ def main():
         'response_start_latency_tested':False}
     (args.out/'environment.json').write_text(json.dumps(environment,indent=2)+'\n')
     torch.manual_seed(424242)
-    with strict_loading(model_path,args.semantic_adapter,args.semantic_proof) as loading:
+    with strict_loading(model_path,args.semantic_adapter,args.semantic_proof,
+            switchable=args.semantic_activation=='result-response') as loading:
         framework=VLLMGenerationFramework('FD',str(model_path),device='cuda',torch_dtype=torch.bfloat16,
             align_audio_input=True,gpu_memory_utilization=.65,max_model_len=8192,enforce_eager=True)
+    if args.semantic_activation=='result-response':
+        from evals.lychee_semantic_switch import initialize
+        initialize(framework)
     (args.out/'loading.json').write_text(json.dumps(loading,indent=2)+'\n')
     if args.semantic_adapter and loading['semantic_adapter']['base_assets_manifest_sha256']!=sha256(args.assets):
         raise RuntimeError('Semantic proof belongs to a different base assets manifest')
@@ -169,6 +178,7 @@ def main():
         'input_warmup':environment.get('input_warmup'),'live_pcm_tested':False,'microphone_acceptance':False,
         'concurrent_pcm_transport_requested':bool(sender),'native_transport_messages_sent':sender.sent if sender else 0,
         'forward_captures':captured,'timing_invalidated_by_synchronous_capture':args.forward_capture,
+        'semantic_activation_mode':args.semantic_activation,
         'quality_qualified':False,'learned_delegation_tested':False}
     (args.out/'report.json').write_text(json.dumps(report,indent=2)+'\n')
     print(json.dumps(report),flush=True)
