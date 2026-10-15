@@ -6,6 +6,7 @@ Backend context uses measured user words, not live ASR. This cannot qualify nati
 foreground delegation choice or a microphone product.
 """
 import concurrent.futures
+from contextlib import nullcontext
 import hashlib
 import json
 import time
@@ -57,6 +58,8 @@ def run(framework, args, loading, side_audit):
         def before(current,frame,prior):
             nonlocal future
             if static:return current
+            begin=round(frame['input_start_s']*16000);end=round(frame['input_available_s']*16000)
+            holder['user_chunk_quiet']=float(np.sqrt(np.mean(audio[begin:end].astype(np.float32)**2)))<.0015
             if 'start' not in holder:holder['start']=time.monotonic()-frame['input_consumed_s']
             now=time.monotonic()-holder['start']
             if future is not None and future.done() and not holder.get('observed'):
@@ -67,6 +70,7 @@ def run(framework, args, loading, side_audit):
                     'field':receipt['field'],'value':receipt['value'],'received_at_s':now}]
                 began=time.monotonic()
                 current,proof=refresh_session(current,role_text(actual))
+                holder['result_wakeup_pending']=args.result_response=='application-event-diagnostic'
                 events.append({'event':'actual_result_context_applied','ready_at_s':ready-holder['start'],
                     'observed_at_s':now,'context_rebuild_s':time.monotonic()-began,'result':result,'preservation':proof})
             if future is None and frame['input_available_s']>=trigger:
@@ -85,7 +89,10 @@ def run(framework, args, loading, side_audit):
                     'context_rebuild_s':time.monotonic()-began,'preservation':proof})
             return current
         try:
-            generated,timing=run_incremental(framework,audio,args.out,before_chunk=before,session=session)
+            from evals.lychee_wakeup import result_response_event
+            response_event=result_response_event(holder,events) if args.result_response=='application-event-diagnostic' else nullcontext()
+            with response_event:
+                generated,timing=run_incremental(framework,audio,args.out,before_chunk=before,session=session)
         finally:
             (args.out/'worker-events.json').write_text(json.dumps(events,indent=2)+'\n')
     if not holder.get('observed'):raise RuntimeError('Actual worker never reached native language context')
@@ -95,7 +102,9 @@ def run(framework, args, loading, side_audit):
         'native_side_token_audit':side_audit,
         'scenario':args.scenario,'world_sha256':hashlib.sha256(json.dumps(world_data,sort_keys=True).encode()).hexdigest(),
         'worker_events':events,'scheduled_dispatch':not static,'native_foreground_tool_choice':False,
-        'actual_worker_results_supplied':not static,'spoken_result_use_verified':False,'oracle_private_values_supplied':static,'assistant_output_tokens_forced':False,
+        'actual_worker_results_supplied':not static,'spoken_result_use_verified':False,'oracle_private_values_supplied':static,'assistant_output_tokens_forced':any(e['event']=='application_response_start_control' for e in events),
+        'word_or_acoustic_tokens_forced':False,'result_response_mode':args.result_response,
+        'native_speaking_control_forced':any(e['event']=='application_response_start_control' for e in events),
         'context_channel':'static supplied reference at start; oracle diagnostic' if static else 'nonspoken native instruction prefix rebuilt after actual receipt',
         'backend_context':'none; static reference diagnostic' if static else 'causal measured user words and generated native text; not live ASR',
         'live_pcm_tested':False,'microphone_acceptance':False,'quality_qualified':False,'training_approved':False,

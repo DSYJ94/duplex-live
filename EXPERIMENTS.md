@@ -3002,3 +3002,26 @@ explicitly oracle-at-start, performs no worker call, and can only test whether
 the base reads context; it cannot qualify delegation or causal result integration.
 Actual mode still uses real receipts and sampled output/control tokens. This
 separates reference comprehension from late-result response/refresh behavior.
+
+**Plain words — static reference works, actual late result still omitted:**
+7450548/50 correctly generate yellow circle and purple diamond respectively
+when supplied at the start (explicit oracle controls). Actual late-return
+7450551/53 still omit both values. The model can read/speak supplied context;
+causal continuation needs further diagnosis. A disclosed client-response event
+will force one allowed future start-speaking control after a real result when
+already-arrived user audio is quiet. No past token, word or acoustic output is
+forced. This is application-controlled timing, not learned model turn-taking or
+foreground delegation qualification. Both actual worlds must be checked.
+
+**Plain words — reproducible playback defect fixed:** a test of two separated
+utterances reproduces the old one-time-buffer defect (160 spurious gap samples
+in the second utterance). Buffering every utterance fixes it; seven playout
+regressions pass, including genuine stall visibility, cancellation of queued old
+PCM, and preservation of unrelated speech. Actual hop8 trace 7443647 reproduces
+its original WAV exactly before re-rendering. Fixed per-utterance 240ms buffering
+and recorded native interruption stops render 1,155,920 samples, cancel 26,800
+queued samples before playback, and leave zero within-utterance underrun samples.
+Every source sample is accounted for. Artifact: runs/lychee-playout-7443647-buffer240.
+This is a recorded component replay; concurrent LM/vocoder/transport and human
+voice quality remain unverified. Full-transcript WER can include intentionally
+cancelled tails, so distinguish that from actual text/audio disagreement.

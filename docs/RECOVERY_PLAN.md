@@ -16,38 +16,41 @@ like radio speech. Preserve the accepted reference and receipts. No further
 voice preference is needed before continuing. Neither model has passed full-task
 intelligence, delegation or paced microphone acceptance. Clifton access is verified.
 
-**Latest continuation — 15 October, no model qualifies:** do not promote the
-feedback or paired-grounding checkpoints. Feedback 7440181 fails all four native
-development probes 7440326–29. Matched zero-policy-gradient runs 7440657/58 also
-fail their five native probes each (7440909–18). Their implementation and fresh
-reload checks pass, but speech facts, clarification and cancellation do not.
-A new bounded neutral-ready/paired pilot **7441177** masks ready and prefix
-feedback to exact zero so ordinary speech and initial routing stay identical to
-the parent before any actual worker dispatch. Language and action weights remain
-frozen; the full ready-state reference-free logit check must be exactly zero.
-Do not treat unchanged base weights alone as preservation of ordinary answers.
+**Current continuation — 15 October, no full model qualifies:** start with
+[docs/LYCHEE_NEXT_STAGE.md](docs/LYCHEE_NEXT_STAGE.md) and the latest experiment
+entries. The official Qwen-based Lychee custom-vLLM backend now builds and runs:
+7441742 strictly accounts for all 982 checkpoint tensors, with no missing packed
+branch shards. Seventy seconds of paced input takes 70.523s, p95 compute 297ms per
+400ms chunk. Initial backlog reaches 1.280s. This proves token execution, not
+concurrent audio, factual task success or microphone acceptance.
 
-The isolated official Lychee custom-vLLM wheel **7439917** now builds:
-SHA `1ed23f49f799377401882da464e0dfcc6fd9d53773a48d709a6ef8db5fa8bf0e`.
-Actual CUDA RMSNorm **7440908** passes nine FP32/BF16/FP16 width checks against
-FP64/PyTorch, then package import fails on absent msgspec. CPU dependency job
-**7441175** installs only the explicit released-lock subset with --no-deps into
-an isolated overlay; prior 7441041 stopped on absent optional TorchAudio metadata
-before installing anything. `lychee-vllm-preflight.slurm` accepts
-`LYCHEE_BUILD_JOB=7439917,LYCHEE_RUNTIME_DEPS_JOB=<passed CPU job>`. After its
-actual import proof, `lychee-vllm-probe.slurm` requires that preflight job and the
-same CPU overlay. Its strict wrapper accounts for every source tensor and every
-packed branch shard, rejects incomplete audio encoder/adapter loading, and
-explicitly discloses unused merge token embeddings. None of this has yet passed
-full model loading, attention execution, paced token speed or streamed PCM.
-Released timing uses 400ms windows and ten 40ms control slots per chunk; default
-vocoder event batching is 25 tokens. Measure response-start latency separately;
-the existing 200ms bar checks first-subword alignment to measured word onsets.
+Offline vocoder 7443260 decodes its four responses in 2.450s. Streaming replays
+7443646/47 finish using the accepted synthetic voice; hop8 reduces gaps, but each
+new utterance needs its own startup buffer. The measured worst required buffer
+is 204ms for this hop8 trace; a fixed 240ms per-utterance renderer is being checked
+against the exact original PCM and actual native interruption times. Do not hide
+stalls or count deliberate inter-utterance silence as an underrun. No live PCM
+product is accepted. The separate 200ms encoding bar measures first-subword
+alignment to independent word onsets; it is not response-start latency.
 
-Verified native policy state collections, approved two-scene controls, build wheel
-and numerical proof are backed up locally. Full current logs are additionally in
-`runs/recovery-continuation-20261015/`. Existing unrelated pyc and roadmap changes
-remain untouched. Continue until actual owner input is needed; current SSH works.
+Actual-worker prefix tests 7443841/42 and 7448884/87 preserve all prior native
+conversation tokens, arrived audio/cache/clock and RNG, but omit the returned
+values. All actual model audio/control outputs are present with zero token-path
+fallbacks. New matched tests 7450548/50 provide static references (oracle-at-start,
+no worker, comprehension diagnostic only); 7450551/53 use actual late receipts.
+Both worlds use the same question, with yellow circle or purple diamond, and
+clarify the already-authorised synthetic read-only exercise. No output word or
+speaking-control token is forced. No validation data enters training. Interpret
+these results before adding response wakeup or planning native grounding SFT.
+
+PersonaPlex remains a voice/speed reference; its adaptation and result-use
+recipes fail native tasks even when reload and TRAIN reference margins pass.
+The native wrapper now preserves the sampling RNG around parameter construction;
+old nominally seeded controls consumed extra CUDA draws. Neutral-ready weights
+preserve ordinary fixed-input logits exactly but do not establish task quality.
+Use immutable clean git worktrees (DL_TASK_SOURCE/DL_TASK_COMMIT) for new jobs.
+SSH works; continue until actual owner input is needed. Preserve unrelated pyc,
+roadmap and cluster files. Standing rules and earlier evidence remain below.
 
 **Plain words — 15 October, active continuation:** custom PersonaPlex and
 Lychee voices remain accepted for development quality only; no complete model
