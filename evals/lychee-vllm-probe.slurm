@@ -33,6 +33,7 @@ if [ "${LYCHEE_WORKER_DIAG:-0}" = 1 ]; then
  source "$DL/keys/openai.env"
  set +a
  EXTRA+=(--worker-context --data "$DL/runs/recovery-data-7407554" --scenario "$LYCHEE_SCENARIO")
+ if [ "${LYCHEE_STATIC_CONTEXT:-0}" = 1 ]; then EXTRA+=(--static-context-diagnostic); fi
  if [ -n "${LYCHEE_PRIVATE_VALUE:-}" ]; then EXTRA+=(--private-value "$LYCHEE_PRIVATE_VALUE"); fi
 fi
 apptainer exec --nv --bind /projects,/lus,/home \

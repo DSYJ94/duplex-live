@@ -36,7 +36,12 @@ def run(framework, args, loading, side_audit):
     audio=np.pad(audio,(0,20*16000));sf.write(args.out/'user_in.wav',audio,16000)
     first=next(e for e in sidecar['timeline']['events'] if e['ch']=='user' and e['kind']=='utterance')
     trigger=first['actual_end_ms']/1000+.16
-    initial=role_text()
+    static=args.static_context_diagnostic
+    initial=role_text([{'status':'completed','project':meta['project'],'field':meta['field'],'value':value}]) if static else role_text()
+    if static:
+        holder['observed']=True
+        events.append({'event':'static_oracle_context_at_start','project':meta['project'],'field':meta['field'],'value':value,
+            'purpose':'reference-reading control only; not real-time result integration'})
     session=create_session(framework,initial,start_speak_token_factor=1.,start_listen_token_factor=1.,
         bc_speak_token_factor=1.,end_speak_token_factor=1.,audio_incremental_mode=True)
     if framework.vllm_engine._effective_prefix_caching:
@@ -51,6 +56,7 @@ def run(framework, args, loading, side_audit):
     with concurrent.futures.ThreadPoolExecutor(max_workers=1) as pool:
         def before(current,frame,prior):
             nonlocal future
+            if static:return current
             if 'start' not in holder:holder['start']=time.monotonic()-frame['input_consumed_s']
             now=time.monotonic()-holder['start']
             if future is not None and future.done() and not holder.get('observed'):
@@ -88,10 +94,10 @@ def run(framework, args, loading, side_audit):
     report={'text':' '.join(e['text'] for e in generated['events']),'paced_tokens':timing,'strict_loading':loading,
         'native_side_token_audit':side_audit,
         'scenario':args.scenario,'world_sha256':hashlib.sha256(json.dumps(world_data,sort_keys=True).encode()).hexdigest(),
-        'worker_events':events,'scheduled_dispatch':True,'native_foreground_tool_choice':False,
-        'actual_worker_results_supplied':True,'spoken_result_use_verified':False,'oracle_private_values_supplied':False,'assistant_output_tokens_forced':False,
-        'context_channel':'nonspoken native instruction prefix rebuilt after actual receipt',
-        'backend_context':'causal measured user words and generated native text; not live ASR',
+        'worker_events':events,'scheduled_dispatch':not static,'native_foreground_tool_choice':False,
+        'actual_worker_results_supplied':not static,'spoken_result_use_verified':False,'oracle_private_values_supplied':static,'assistant_output_tokens_forced':False,
+        'context_channel':'static supplied reference at start; oracle diagnostic' if static else 'nonspoken native instruction prefix rebuilt after actual receipt',
+        'backend_context':'none; static reference diagnostic' if static else 'causal measured user words and generated native text; not live ASR',
         'live_pcm_tested':False,'microphone_acceptance':False,'quality_qualified':False,'training_approved':False,
         'task_success':'pending independent spoken-value and receipt grading'}
     (args.out/'report.json').write_text(json.dumps(report,indent=2)+'\n')

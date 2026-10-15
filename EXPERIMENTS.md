@@ -2991,3 +2991,14 @@ prefix: distinguish a currently pending lookup from a now-completed authoritativ
 record, and explicitly mark earlier lack-of-access statements outdated. Both
 worlds must still depend on actual returned values. Output words, acoustic tokens
 and speaking-control state remain sampled; no response-start override is added.
+
+**Plain words — explicit completion still not spoken:** 7448884/87 again pass
+history/audio/RNG preservation and actual audio/control output audits, but omit
+both completed private values. The base invents an authorisation requirement in
+its refusal. The next matched diagnostic clarifies the already-authorised
+read-only synthetic exercise and compares static supplied reference against
+actual late worker receipt, with the same role wording. Static reference is
+explicitly oracle-at-start, performs no worker call, and can only test whether
+the base reads context; it cannot qualify delegation or causal result integration.
+Actual mode still uses real receipts and sampled output/control tokens. This
+separates reference comprehension from late-result response/refresh behavior.
