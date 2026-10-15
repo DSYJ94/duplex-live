@@ -7,7 +7,7 @@ import json
 import time
 
 
-def run_incremental(framework, audio, out, profiler=None, before_chunk=None, on_event=None, session=None):
+def run_incremental(framework, audio, out, profiler=None, before_chunk=None, on_event=None, session=None, on_start=None):
     import numpy as np
     import torch
     session = session or framework.create_incremental_stream_session(
@@ -15,6 +15,7 @@ def run_incremental(framework, audio, out, profiler=None, before_chunk=None, on_
         bc_speak_token_factor=1., end_speak_token_factor=1., audio_incremental_mode=True)
     rows, events = [], []
     started = time.monotonic()
+    if on_start is not None:on_start(started)
     size = 6400
     try:
         with (out / "incremental-events.jsonl").open("w") as log:

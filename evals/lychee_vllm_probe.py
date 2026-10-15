@@ -18,6 +18,7 @@ def main():
     for name in ('assets','batch','runtime','preflight','out'):
         ap.add_argument('--'+name,type=Path,required=True)
     ap.add_argument('--warm-input',action='store_true')
+    ap.add_argument('--event-socket',type=Path)
     ap.add_argument('--worker-context',action='store_true')
     ap.add_argument('--static-context-diagnostic',action='store_true')
     ap.add_argument('--result-response',choices=('model','application-event-diagnostic'),default='model')
@@ -28,6 +29,8 @@ def main():
     args=ap.parse_args()
     if args.worker_context and (not args.data or not args.scenario):
         ap.error('Actual worker context requires approved development data/scenario')
+    if args.event_socket and args.worker_context:
+        ap.error('Concurrent PCM transport currently supports the native baseline only')
     if args.result_response!='model' and (not args.worker_context or args.static_context_diagnostic):
         ap.error('Application response event requires actual late-worker diagnostic, never static context')
     if args.result_delivery!='immediate' and (not args.worker_context or args.static_context_diagnostic):
@@ -105,13 +108,26 @@ def main():
     audio=np.pad(audio,(0,10*16000));sf.write(args.out/'user_in.wav',audio,16000)
     from evals.lychee_paced import run_incremental
     from evals.lychee_vllm_loading import audited_side_tokens
-    with torch.inference_mode(),audited_side_tokens(framework.vllm_engine) as side_audit:
-        generated,timing=run_incremental(framework,audio,args.out)
+    sender=None;epoch=[]
+    if args.event_socket:
+        from evals.lychee_transport import EventSender
+        sender=EventSender(args.event_socket)
+    def started(value):
+        epoch.append(value)
+        if sender:sender.start(value)
+    try:
+        with torch.inference_mode(),audited_side_tokens(framework.vllm_engine) as side_audit:
+            generated,timing=run_incremental(framework,audio,args.out,on_start=started,
+                on_event=sender.event if sender else None)
+        if sender:sender.finish(epoch[0])
+    finally:
+        if sender:sender.close()
     (args.out/'native-trace.json').write_text(json.dumps(generated['trace'])+'\n')
     (args.out/'events.json').write_text(json.dumps(generated['events'],indent=2)+'\n')
     report={'text':' '.join(e['text'] for e in generated['events']),'paced_tokens':timing,
         'strict_loading':loading,'native_side_token_audit':side_audit,
         'input_warmup':environment.get('input_warmup'),'live_pcm_tested':False,'microphone_acceptance':False,
+        'concurrent_pcm_transport_requested':bool(sender),'native_transport_messages_sent':sender.sent if sender else 0,
         'quality_qualified':False,'learned_delegation_tested':False}
     (args.out/'report.json').write_text(json.dumps(report,indent=2)+'\n')
     print(json.dumps(report),flush=True)
