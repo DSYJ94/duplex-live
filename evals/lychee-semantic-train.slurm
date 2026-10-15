@@ -30,4 +30,5 @@ apptainer exec --nv --bind /projects,/lus,/home \
  --data "$DL/runs/lychee-training-inputs-$LYCHEE_TRAINING_INPUTS_JOB" \
  --source-data "$DL/runs/recovery-data-7407554" --history-roots "${STATES[@]}" \
  --codec-data "$DL/runs/lychee-codec-data-7452500" --codec-audit "$DL/runs/lychee-codec-audit-7452502" \
- --steps 8 --out "$DL/runs/lychee-semantic-proof-${SLURM_JOB_ID}"
+ --steps 8 --attention-backend "${LYCHEE_TRAIN_ATTENTION:-default}" \
+ --out "$DL/runs/lychee-semantic-proof-${SLURM_JOB_ID}"

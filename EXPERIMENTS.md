@@ -3178,3 +3178,11 @@ no relaxed gradient or quality condition is introduced. Explicit native weight
 merging is also prepared but cannot consume an unproved checkpoint. It verifies
 all 28 post-branch matrices, records BF16 rounding and does not claim exact
 parity with dynamic adapters. No new native task result exists yet.
+
+**Plain words — gradient failure reproduced:** 7452921 identifies NaNs in all
+28,672 entries of layer24 q_proj A at finite CE 1.95237; the gradient exists.
+No optimizer step occurs. Matched diagnostics will change only SDPA kernel
+selection: cuDNN disabled, or FP32-accumulating math attention. Both retain all
+zero/frozen/gradient/reload checks and the same data/seed/rank/lr. Default failure
+is preserved. The backend must be recorded in any checkpoint; no nonfinite
+replacement or relaxed proof gate is allowed.

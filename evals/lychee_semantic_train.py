@@ -14,9 +14,15 @@ def main():
     for name in ('assets','data','source-data','codec-data','codec-audit','out'):ap.add_argument('--'+name,type=Path,required=True)
     ap.add_argument('--history-roots',type=Path,nargs='+',required=True)
     ap.add_argument('--steps',type=int,default=8)
+    ap.add_argument('--attention-backend',choices=('default','no-cudnn','math'),default='default')
     args=ap.parse_args()
     if not 1<=args.steps<=8:raise ValueError('This stage permits at most eight implementation-proof updates')
     import torch
+    if args.attention_backend!='default':torch.backends.cuda.enable_cudnn_sdp(False)
+    if args.attention_backend=='math':
+        torch.backends.cuda.enable_flash_sdp(False)
+        torch.backends.cuda.enable_mem_efficient_sdp(False)
+        torch.backends.cuda.enable_math_sdp(True)
     from torch.nn import functional as F
     from evals.lychee_environment_check import configure_bf16
     configure_bf16()
@@ -112,21 +118,25 @@ def main():
         value=loss(examples[step%len(examples)])
         if not torch.isfinite(value):raise RuntimeError('Nonfinite native semantic loss')
         value.backward()
+        failures=[]
         for name,module in modules.items():
             for key in ('a','b'):
                 grad=getattr(module,key).grad
                 if grad is None or not torch.isfinite(grad).all():
-                    print(json.dumps({'gradient_failure':name+'.'+key,'step':step+1,'finite_loss':float(value),
+                    failures.append({'gradient_failure':name+'.'+key,'step':step+1,'finite_loss':float(value.detach()),
                         'gradient_missing':grad is None,'gradient_nan':int(torch.isnan(grad).sum()) if grad is not None else None,
-                        'gradient_inf':int(torch.isinf(grad).sum()) if grad is not None else None}),flush=True)
-                    raise RuntimeError('Missing/nonfinite semantic gradient: '+name+'.'+key)
+                        'gradient_inf':int(torch.isinf(grad).sum()) if grad is not None else None})
+                    continue
                 if bool(grad.abs().sum()>0):seen.add(name+'.'+key)
+        if failures:
+            print(json.dumps({'attention_backend':args.attention_backend,'gradient_failures':failures}),flush=True)
+            raise RuntimeError('Missing/nonfinite semantic gradients; see exact tensor report')
         if any(p.grad is not None for p in model.parameters() if not p.requires_grad):
             raise RuntimeError('A frozen native parameter received gradients')
         norm=torch.nn.utils.clip_grad_norm_(parameters,1.)
         if not math.isfinite(float(norm)) or float(norm)<=0:raise RuntimeError('Invalid semantic gradient norm')
-        optimizer.step();losses.append(float(value))
-        print(json.dumps({'step':step+1,'loss':float(value),'gradient_norm':float(norm)}),flush=True)
+        optimizer.step();losses.append(float(value.detach()))
+        print(json.dumps({'step':step+1,'loss':float(value.detach()),'gradient_norm':float(norm)}),flush=True)
     if args.steps>1 and len(seen)!=len(parameters):raise RuntimeError('Some intended semantic tensors never received nonzero gradients')
     frozen_after=frozen_hash(model)
     if frozen_before!=frozen_after:raise RuntimeError('Frozen pretrained parameters changed')
@@ -139,6 +149,7 @@ def main():
         'scale':1.,'state':state_dict(modules),'frozen_sha256':frozen_after,
         'base_assets_manifest_sha256':sha256(args.assets),'semantic_data_sha256':sha256(args.data/'semantic-data.json'),
         'steps':args.steps,'quality_qualified':False}
+    checkpoint['training_attention_backend']=args.attention_backend
     torch.save(checkpoint,args.out/'adapter.pt')
     detach(model,modules);del optimizer,parameters,modules
     fresh=attach(model,8)
@@ -154,6 +165,7 @@ def main():
         'data_sha256':sha256(args.data/'semantic-data.json'),'strict_hf_loading':loading,
         'repo_commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),
         'native_merged_deployment_tested':False,'task_success_tested':False,'quality_qualified':False,
+        'training_attention_backend':args.attention_backend,
         'scope':'native semantic implementation proof; raw speech/control compared on one identical teacher-forced input'}
     (args.out/'report.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result),flush=True)
 
