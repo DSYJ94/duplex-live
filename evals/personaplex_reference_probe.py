@@ -17,6 +17,8 @@ def main():
     ap.add_argument("--cache", type=Path, required=True)
     ap.add_argument("--model", type=Path, required=True)
     ap.add_argument("--out", type=Path, required=True)
+    ap.add_argument("--voice", type=Path)
+    ap.add_argument("--voice-provenance", type=Path)
     args = ap.parse_args()
     os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG", ":4096:8")
     import torch
@@ -24,6 +26,14 @@ def main():
     from moshi.utils.compile import no_compile
     from evals.personaplex_reference import ReferenceBridge
     from evals.recovery_data import validate_cache
+    if bool(args.voice) != bool(args.voice_provenance):
+        ap.error("Voice prompt and synthetic provenance must be supplied together")
+    if args.voice:
+        receipt = json.loads(args.voice_provenance.read_text())
+        if (receipt.get("schema") != "dl-voice-codec-probe-v1"
+                or receipt.get("reference_sha256") != sha256(args.voice)
+                or receipt.get("source_model") != "gpt-live-1"):
+            raise RuntimeError("Accepted synthetic voice prompt provenance changed")
     torch.use_deterministic_algorithms(True)
     torch.backends.cuda.enable_flash_sdp(False)
     torch.backends.cuda.enable_mem_efficient_sdp(False)
@@ -40,6 +50,10 @@ def main():
         raise RuntimeError("Missing genuine before/after reference window")
     args.out.mkdir(parents=True, exist_ok=False)
     lm = loaders.get_moshi_lm(args.model / "model.safetensors", device="cuda").eval().requires_grad_(False)
+    mimi = loaders.get_mimi(args.model / "tokenizer-e351c8d8-checkpoint125.safetensors", "cuda") if args.voice else None
+    import sentencepiece
+    from moshi.offline import wrap_with_system_tags
+    tokenizer = sentencepiece.SentencePieceProcessor(str(args.model / "tokenizer_spm_32k_3.model"))
     codes = sample["codes"][..., :count].cuda()
     bridge = ReferenceBridge(arrival["rows"].shape[-1], lm.dim, rank=64,
                              device=lm.device, dtype=next(lm.parameters()).dtype).eval()
@@ -55,7 +69,12 @@ def main():
                     bridge.down.weight[i, i] = 1
                     bridge.up.weight[i, i] = .1
         hook = lm.transformer.register_forward_pre_hook(bridge.temporal_input) if "bridge" in mode or mode == "positive-control" else None
-        gen = LMGen(lm, device="cuda", use_sampling=False, return_logits=True)
+        gen = LMGen(lm, device="cuda", use_sampling=False, return_logits=True,
+                    audio_silence_frame_cnt=6, sample_rate=24000, frame_rate=12.5)
+        if args.voice:
+            gen.load_voice_prompt(str(args.voice))
+            gen.text_prompt_tokens = tokenizer.encode(wrap_with_system_tags(
+                "You are a wise and friendly teacher. Answer questions or provide advice in a clear and engaging way."))
         history = []
         try:
             with gen.streaming(1), torch.inference_mode(), no_compile():
@@ -63,6 +82,9 @@ def main():
                 for _ in range(8):
                     gen.step(codes[:, 9:, :1], moshi_tokens=codes[:, 1:9, :1], text_token=codes[:, 0, 0])
                 gen.reset_streaming()
+                if mimi is not None:
+                    with mimi.streaming(1):
+                        gen.step_system_prompts(mimi)
                 for frame in range(count):
                     bridge.clear()
                     offset = frame - injection
@@ -99,7 +121,12 @@ def main():
         "attention": "deterministic math SDPA, native CUDA graphs; diagnostic not latency",
         "history": "identical approved teacher-forced text and audio; native delay logic",
         "positive_control": "manually assigned rank-64 projection, not trained or qualified",
-        "voice_prompt_tested": False, "native_delegation_token_assumed": False,
+        "voice_prompt_tested": bool(args.voice),
+        "voice_sha256": sha256(args.voice) if args.voice else None,
+        "native_token_4_piece": tokenizer.id_to_piece(4),
+        "tokenizer_sha256": sha256(args.model / "tokenizer_spm_32k_3.model"),
+        "mimi_sha256": sha256(args.model / "tokenizer-e351c8d8-checkpoint125.safetensors"),
+        "native_delegation_token_assumed": False,
         "free_running_reference_use_tested": False, "optimizer_steps": 0,
         "passed": repeat == 0 and zero == 0 and prefix == 0 and after > .001}
     (args.out / "report.json").write_text(json.dumps(report, indent=2) + "\n")
