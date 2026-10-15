@@ -1,47 +1,5 @@
 # HANDOFF — where we are (updated 2026-10-15 for active recovery)
 
-
-**15 October, actual engine boundary checked:** 7451814/15 (immediate) and
-7451816/17 (idle/quiet delivery) verify both pending and completed system prefixes
-at the real vLLM add-request boundary. All four still omit the actual returned
-value. Both quiet-delivery runs hold the completed result until 29.2s, adding
-19.8–20.1s. Do not adopt that delay or repeat prompt/timing-only variants as a fix.
-Native result-integration adaptation and a native HF/vLLM forward comparison are
-next; static reading success does not establish late-result competence.
-
-Warmed baseline 7451709 completes 70s of paced input in 70.521s, p95 compute
-301ms/400ms, maximum input backlog 18.5ms (previously 1.280s). All text, acoustic
-and control token arrays are exactly equal to original 7441742. Warmup itself
-takes 1.339s before input, preserving sampling RNG and creating no conversation.
-
-Concurrent LM/PCM capture is now implemented for two separately assigned GPUs,
-with isolated dependency overlays, a bounded local socket/queue, and independent
-receipt of actual interruption controls while the vocoder is busy. It measures
-PCM availability during actual LM execution. The final WAV simulates fixed
-240ms causal playout; no audio device/browser/microphone acceptance is implied.
-Every native codec unit must be consumed or explicitly cancelled. Startup,
-transport, bounded-queue and child-process failures are fatal. Eight local socket,
-delivery and playout regressions pass. The actual concurrent GPU job is next.
-
-
-**15 October, result-integration diagnosis:** static reference controls
-7450548/50 correctly say both private values. Actual late receipts 7450551/53
-omit them, and the disclosed application response-start controls 7450827/28
-also omit them. This rules out a missing response-start event as a sufficient
-fix. New diagnostics audit the exact fresh system prefix at the actual vLLM
-add-request boundary and compare immediate delivery with delivery when the
-assistant is listening and two already-arrived 400ms user chunks are quiet.
-The latter is explicitly application scheduling; all words/acoustics remain
-sampled. Keep backend-ready, context-delivery and response clocks separate.
-Neither variation enters training. Warm-input benchmark 7451709 is submitted.
-
-Per-utterance playout replay is now verified: fixed 240ms buffering produces
-zero within-utterance gaps for trace 7443647, preserves every played PCM sample,
-and cancels 26,800 queued samples at actual native interruption times. This is
-component replay only. ASR audit 7450830 gives full-transcript WER 0.2763 for
-both offline and repaired playout; intentionally cancelled tails and spoken
-number formatting need separate analysis. This does not pass the 0.08 bar.
-
 ## Current execution — 15 October, native Lychee and actual audio
 
 Plain words: no complete model qualifies. Continue the owner's authorised work

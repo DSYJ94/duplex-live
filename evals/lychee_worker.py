@@ -26,8 +26,9 @@ def run(framework, args, loading, side_audit):
     delivery=QuietDelivery(args.result_delivery)
     data=validate_conversion(args.data)
     row=next(r for r in data['accepted'] if r['scenario_id']==args.scenario)
-    if row['split']!='validation' or row['kind']!='private':
-        raise RuntimeError('Worker-context diagnostic requires an approved private validation scene')
+    required_split='train' if args.collect_training_state else 'validation'
+    if row['split']!=required_split or row['kind']!='private':
+        raise RuntimeError('Worker-context mode requires approved private '+required_split+' scene')
     sidecar=json.loads(Path(row['path']).with_suffix('.json').read_text());meta=sidecar['timeline']['meta']
     value=args.private_value or meta['phrase']
     if not value or len(value.split())!=2:raise ValueError('Development world requires one two-word value')
@@ -93,6 +94,14 @@ def run(framework, args, loading, side_audit):
                 current,proof=refresh_session(current,role_text(actual))
                 events.append({'event':'pending_context_applied','observed_at_s':now,
                     'context_rebuild_s':time.monotonic()-began,'preservation':proof})
+            if args.collect_training_state and actual and actual[0]['status']=='completed':
+                from evals.lychee_training_state import save
+                captured_frame={**frame,'snapshot_elapsed_s':time.monotonic()-holder['start']}
+                if not holder.get('ready_snapshot'):
+                    holder['ready_snapshot']=save(current,args.out,'actual-ready-state',row,captured_frame,actual[0],role_text(actual))
+                if (not holder.get('idle_snapshot') and current.get_listening_state()=='l'
+                        and delivery.quiet_chunks>=2):
+                    holder['idle_snapshot']=save(current,args.out,'actual-idle-state',row,captured_frame,actual[0],role_text(actual))
             return current
         try:
             from evals.lychee_wakeup import result_response_event
@@ -102,6 +111,8 @@ def run(framework, args, loading, side_audit):
         finally:
             (args.out/'worker-events.json').write_text(json.dumps(events,indent=2)+'\n')
     if not holder.get('observed'):raise RuntimeError('Actual worker never reached native language context')
+    if args.collect_training_state and not holder.get('idle_snapshot'):
+        raise RuntimeError('Actual TRAIN trajectory never reached a quiet native listening boundary after completion')
     if any(not e['preservation'].get('actual_engine_request_verified') for e in events if 'preservation' in e):
         raise RuntimeError('Refreshed instructions were not verified at actual native engine boundary')
     (args.out/'native-trace.json').write_text(json.dumps(generated['trace'])+'\n')
@@ -109,6 +120,9 @@ def run(framework, args, loading, side_audit):
     report={'text':' '.join(e['text'] for e in generated['events']),'paced_tokens':timing,'strict_loading':loading,
         'native_side_token_audit':side_audit,
         'scenario':args.scenario,'world_sha256':hashlib.sha256(json.dumps(world_data,sort_keys=True).encode()).hexdigest(),
+        'source_split':row['split'],'actual_training_history_collected':args.collect_training_state,
+        'training_state_collection_invalidates_timing':args.collect_training_state,
+        'training_state_snapshots':[holder[k] for k in ('ready_snapshot','idle_snapshot') if k in holder],
         'worker_events':events,'scheduled_dispatch':not static,'native_foreground_tool_choice':False,
         'actual_worker_results_supplied':not static,'spoken_result_use_verified':False,'oracle_private_values_supplied':static,'assistant_output_tokens_forced':any(e['event']=='application_response_start_control' for e in events),
         'word_or_acoustic_tokens_forced':False,'result_response_mode':args.result_response,

@@ -92,3 +92,17 @@ lychee-vllm-deps-7441737. Separate vocoder overlay lychee-probe-7415053 plus
 minicpm-recovery-7377673. Exclusive_Process requires two separately assigned
 GPUs for concurrent processes. Never overwrite the container Torch or the
 accepted overlays. lychee-concurrent.slurm enforces immutable job source.
+
+
+**Plain words — native data stage completed:** S3 conversion 7452500 reads
+48 approved TRAIN scenarios and creates 125 measured speech segments. Independent
+round-trip audit 7452502 accepts 106 under WER <=0.08 and rejects 19; no threshold
+is relaxed. These are codec-intelligibility results, not approved native training
+windows or task success. Keep failed segments excluded. Native model histories
+will be collected using actual workers and sampled control from approved private
+TRAIN scenes, preserving both the ready moment and the first subsequent quiet
+native listening boundary. Snapshots retain all actual sampled body tokens,
+arrived audio features/embeddings/tail and actual receipt clocks. They contain
+no gold future labels yet. Validation/test history is rejected before tensor
+access; future/unreceived results are rejected. State collection invalidates
+latency qualification. Two collection-boundary regressions pass.

@@ -22,6 +22,7 @@ def main():
     ap.add_argument('--event-socket',type=Path)
     ap.add_argument('--forward-capture',action='store_true')
     ap.add_argument('--worker-context',action='store_true')
+    ap.add_argument('--collect-training-state',action='store_true')
     ap.add_argument('--static-context-diagnostic',action='store_true')
     ap.add_argument('--result-response',choices=('model','application-event-diagnostic'),default='model')
     ap.add_argument('--result-delivery',choices=('immediate','idle-quiet-diagnostic'),default='immediate')
@@ -31,6 +32,9 @@ def main():
     args=ap.parse_args()
     if args.worker_context and (not args.data or not args.scenario):
         ap.error('Actual worker context requires approved development data/scenario')
+    if args.collect_training_state and (not args.worker_context or args.static_context_diagnostic
+            or args.private_value or args.result_response!='model' or args.result_delivery!='immediate'):
+        ap.error('TRAIN history requires actual worker, unchanged world, sampled control and immediate receipt')
     if args.event_socket and args.worker_context:
         ap.error('Concurrent PCM transport currently supports the native baseline only')
     if args.forward_capture and (args.event_socket or args.worker_context):

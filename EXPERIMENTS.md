@@ -3117,3 +3117,17 @@ native assembly checks. Source/fold/word validity failures are fatal. Two source
 word-bound regressions pass. No new data are invented; no validation/test audio
 is processed. Native semantic adaptation should begin with layers 24–27 only,
 after the speech/control branch points, subject to an actual preservation proof.
+
+
+**Plain words — native data stage completed:** S3 conversion 7452500 reads
+48 approved TRAIN scenarios and creates 125 measured speech segments. Independent
+round-trip audit 7452502 accepts 106 under WER <=0.08 and rejects 19; no threshold
+is relaxed. These are codec-intelligibility results, not approved native training
+windows or task success. Keep failed segments excluded. Native model histories
+will be collected using actual workers and sampled control from approved private
+TRAIN scenes, preserving both the ready moment and the first subsequent quiet
+native listening boundary. Snapshots retain all actual sampled body tokens,
+arrived audio features/embeddings/tail and actual receipt clocks. They contain
+no gold future labels yet. Validation/test history is rejected before tensor
+access; future/unreceived results are rejected. State collection invalidates
+latency qualification. Two collection-boundary regressions pass.
