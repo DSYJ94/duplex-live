@@ -17,6 +17,8 @@ def main():
     ap.add_argument("--live-runs", nargs="+", type=Path, default=[])
     ap.add_argument("--out", type=Path, required=True)
     ap.add_argument("--trim-trailing-silence", action="store_true")
+    ap.add_argument("--keep-silent-failures", action="store_true",
+                    help="Retain silent clips as explicit failed records and audit later clips")
     ap.add_argument("--device",choices=("cuda","cpu"),default="cuda")
     args = ap.parse_args()
     if not args.runs and not args.live_runs:
@@ -37,6 +39,7 @@ def main():
         g = math.gcd(sr, 16000)
         audio = resample_poly(pcm, 16000//g, sr//g).astype(np.float32)
         original_samples = len(audio)
+        silent_failure = False
         if args.trim_trailing_silence:
             # Keep the original WAV intact. Whisper can hallucinate repeated
             # words over a long quiet tail; trim only that tail for this
@@ -45,10 +48,13 @@ def main():
             active = [i for i in range(0, len(audio), frame)
                       if float(np.sqrt(np.mean(audio[i:i+frame] ** 2))) > 0.001]
             if not active:
-                raise RuntimeError("Generated audio has no signal above the diagnostic silence floor")
-            audio = audio[:min(len(audio), active[-1] + frame + 4000)]
-        result = whisper.transcribe(model, audio, language="en", vad=False,
-                                    beam_size=5, best_of=5, temperature=0., verbose=None)
+                if not args.keep_silent_failures:
+                    raise RuntimeError("Generated audio has no signal above the diagnostic silence floor")
+                silent_failure = True
+            else:
+                audio = audio[:min(len(audio), active[-1] + frame + 4000)]
+        result = {"text": "", "segments": []} if silent_failure else whisper.transcribe(
+            model, audio, language="en", vad=False, beam_size=5, best_of=5, temperature=0., verbose=None)
         if kind == "native":
             predicted = json.loads((run / "report.json").read_text())["text"]
         else:
@@ -62,6 +68,8 @@ def main():
                   "wer_against_model_text": wer(norm_words(predicted), norm_words(result["text"])),
                   "semantic_review": "pending", "human_listening": "pending"}
         record["source_kind"] = kind
+        if silent_failure:
+            record["audit_failure"] = "Generated audio has no signal above the diagnostic silence floor"
         record["asr_time_bounds_valid"] = all(
             0 <= segment["start"] < segment["end"] <= len(audio)/16000 + 0.04
             for segment in result["segments"])

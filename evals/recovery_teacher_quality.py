@@ -90,6 +90,8 @@ def validate_teacher(batch):
 def assess(speech,events,metadata,kind,session):
     """Measured audio words are the labels; never invent missing word onsets."""
     reasons = []
+    if speech.get("audit_failure"):
+        reasons.append(speech["audit_failure"])
     words = [w for segment in speech["asr_segments"] for w in segment.get("words",[])]
     if not session["session_finalized"] or session["errors"]:
         reasons.append("Session failed or did not finalize")
@@ -194,7 +196,7 @@ def main():
     # Existing independent audio auditor preserves the original WAV and only
     # trims trailing quiet for Whisper. It does not grant training approval.
     from evals.moshi_speech_audit import main as audit
-    sys.argv = [sys.argv[0],"--out",str(args.out),"--device",args.device,"--trim-trailing-silence","--live-runs",*[
+    sys.argv = [sys.argv[0],"--out",str(args.out),"--device",args.device,"--trim-trailing-silence","--keep-silent-failures","--live-runs",*[
         str(args.batch / record["dir"]) for record in manifest["recordings"]]]
     audit()
     speech = json.loads((args.out / "report.json").read_text())["results"]

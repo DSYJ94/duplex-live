@@ -12,13 +12,16 @@ DL=/projects/u6si/duplex-live
 cd "$DL/repo"
 : "${TEACHER_CHECKS:?Independent teacher check file required}"
 export DL TEACHER_CHECKS
+export TEACHER_CONVERT_ONLY="${TEACHER_CONVERT_ONLY:-0}"
 apptainer exec --bind /projects,/lus,/home \
   --env PYTHONPATH="$DL/repo" --env PYTHONDONTWRITEBYTECODE=1 \
   "$DL/pytorch-new.sif" bash -eu <<'CONTAINER'
 PY="$DL/envs/moshi-annotation-7379026/bin/python"
 "$PY" -u -m evals.recovery_teacher_convert --checks "$TEACHER_CHECKS" \
   --out "$DL/runs/recovery-teacher-data-${SLURM_JOB_ID}"
+if [ "$TEACHER_CONVERT_ONLY" != 1 ]; then
 "$PY" -u -m evals.recovery_compose_data --base "$DL/runs/recovery-data-7407554" \
   --teacher "$DL/runs/recovery-teacher-data-${SLURM_JOB_ID}" \
   --out "$DL/runs/recovery-mixed-data-${SLURM_JOB_ID}"
+fi
 CONTAINER
