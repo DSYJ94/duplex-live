@@ -22,6 +22,7 @@ def main():
     ap.add_argument('--event-socket',type=Path)
     ap.add_argument('--forward-capture',action='store_true')
     ap.add_argument('--training-states',type=Path,nargs='+')
+    ap.add_argument('--training-source-data',type=Path,nargs='+',default=[])
     ap.add_argument('--codec-data',type=Path)
     ap.add_argument('--codec-audit',type=Path)
     ap.add_argument('--semantic-adapter',type=Path)

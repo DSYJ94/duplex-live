@@ -20,8 +20,14 @@ def run(framework,args,loading):
     from evals.lychee_context import create_session
     from evals.lychee_semantic_layout import continuation
     from lychee_fd.vllm_integration.model_lychee import LycheeDuplexState as state
-    source=validate_conversion(args.data)
-    approved={r['scenario_id']:r for r in source['accepted'] if r['split']=='train' and r['kind']=='private'}
+    approved={};source_ingestions=[]
+    for path in [args.data,*args.training_source_data]:
+        source=validate_conversion(path)
+        source_ingestions.append({'path':str(path),'sha256':sha256(path/'ingestion.json')})
+        for row in source['accepted']:
+            if row['split']!='train' or row['kind']!='private':continue
+            if row['scenario_id'] in approved:raise RuntimeError('Duplicate approved TRAIN scenario')
+            approved[row['scenario_id']]=row
     manifest=json.loads((args.codec_data/'manifest.json').read_text())
     audit=json.loads((args.codec_audit/'report.json').read_text())
     checks=json.loads((args.codec_audit/'checks.json').read_text())
@@ -150,7 +156,8 @@ def run(framework,args,loading):
             del captured,prefix,embeddings,extra
     if not examples:raise RuntimeError('No causal native semantic training examples passed')
     result={'schema':'dl-lychee-native-semantic-data-v1','source_ingestion_sha256':sha256(args.data/'ingestion.json'),
+        'source_ingestions':source_ingestions,
         'codec_manifest_sha256':sha256(args.codec_data/'manifest.json'),'codec_checks_sha256':sha256(args.codec_audit/'checks.json'),
         'native_loading':loading,'examples':examples,'rejected':rejected,'training_approved':True,
-        'approval_scope':'bounded semantic implementation proof; not corpus scale, native routing or full-task success'}
+        'approval_scope':'bounded semantic implementation and behavior pilot; not corpus scale, native routing or full-task success'}
     (args.out/'semantic-data.json').write_text(json.dumps(result,indent=2)+'\n')

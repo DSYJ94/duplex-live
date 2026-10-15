@@ -153,3 +153,15 @@ raw speech/control hidden outputs for the same input, changed text logits and
 exact fresh-adapter reload. Every data consumer revalidates source quality and
 hashes of native units, independent audits and actual student histories. A pass
 would prove implementation only, not task performance or merged native deployment.
+
+
+**Plain words — eight updates do not fix late results:** cold native
+7452981/83 (model timing) and 7452984/85 (one disclosed response event) still
+omit yellow circle and purple diamond. All native merges and strict loading
+complete; wording changes but no task improvement is claimed. This was one
+implementation-proof pass over seven examples, not a trained release. Do not
+promote it. Paired native history collection 7452946–58 completes all 13 actual
+counterfactual TRAIN worlds. The next bounded behavior pilot will use those
+additional histories only where native codec/gold and causal assembly checks
+pass, before comparing a finite number of training lengths. Actual ordinary
+answers and speech must also be rechecked before promotion.

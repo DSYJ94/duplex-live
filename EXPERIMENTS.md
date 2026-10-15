@@ -3218,3 +3218,15 @@ operator profiling records the actual selected SDPA operations and backward
 names. Every bad gradient remains recorded; all gradients are then cleared and
 the chosen finite backend must pass the original eight-update proof. This
 separates kernel availability from the cross-node difference in earlier runs.
+
+
+**Plain words — eight updates do not fix late results:** cold native
+7452981/83 (model timing) and 7452984/85 (one disclosed response event) still
+omit yellow circle and purple diamond. All native merges and strict loading
+complete; wording changes but no task improvement is claimed. This was one
+implementation-proof pass over seven examples, not a trained release. Do not
+promote it. Paired native history collection 7452946–58 completes all 13 actual
+counterfactual TRAIN worlds. The next bounded behavior pilot will use those
+additional histories only where native codec/gold and causal assembly checks
+pass, before comparing a finite number of training lengths. Actual ordinary
+answers and speech must also be rechecked before promotion.

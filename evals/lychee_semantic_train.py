@@ -13,7 +13,8 @@ from evals.lychee_model_download import SOURCE_COMMIT
 
 def main():
     ap=argparse.ArgumentParser(description=__doc__)
-    for name in ('assets','data','source-data','codec-data','codec-audit','out'):ap.add_argument('--'+name,type=Path,required=True)
+    for name in ('assets','data','codec-data','codec-audit','out'):ap.add_argument('--'+name,type=Path,required=True)
+    ap.add_argument('--source-data',type=Path,nargs='+',required=True)
     ap.add_argument('--history-roots',type=Path,nargs='+',required=True)
     ap.add_argument('--steps',type=int,default=8)
     ap.add_argument('--attention-backend',choices=('default','no-cudnn','math'),default='default')
@@ -35,9 +36,13 @@ def main():
     data=json.loads((args.data/'semantic-data.json').read_text())
     if data['schema']!='dl-lychee-native-semantic-data-v1' or data['training_approved'] is not True:
         raise RuntimeError('Causal native semantic data approval required')
-    validate_conversion(args.source_data)
-    if (sha256(args.source_data/'ingestion.json')!=data['source_ingestion_sha256']
-            or sha256(args.codec_data/'manifest.json')!=data['codec_manifest_sha256']
+    sources=data.get('source_ingestions',[{'path':str(args.source_data[0]),'sha256':data['source_ingestion_sha256']}])
+    if {r['path'] for r in sources}!={str(p) for p in args.source_data}:
+        raise RuntimeError('Semantic training needs every approved source conversion')
+    for source in sources:
+        path=Path(source['path']);validate_conversion(path)
+        if sha256(path/'ingestion.json')!=source['sha256']:raise RuntimeError('Source approval changed')
+    if (sha256(args.codec_data/'manifest.json')!=data['codec_manifest_sha256']
             or sha256(args.codec_audit/'checks.json')!=data['codec_checks_sha256']):
         raise RuntimeError('Source approvals changed after native target assembly')
     codec_checks=json.loads((args.codec_audit/'checks.json').read_text())
