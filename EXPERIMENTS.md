@@ -3210,3 +3210,11 @@ Cold native BF16 merging must account for all 28 intended weight matrices and
 retain the strict all-982-source-tensor loading receipt. Run both actual worlds
 with native/model timing and with the disclosed single client-response event.
 All words/audio remain sampled; dispatch is scheduled. No task success claimed.
+
+**Plain words — attention diagnosis within one GPU prepared:** optional first-
+backward comparison runs default, no-cuDNN and math on the same zero-initialized
+adapters, same data and same allocated GPU, without any optimizer step. CPU
+operator profiling records the actual selected SDPA operations and backward
+names. Every bad gradient remains recorded; all gradients are then cleared and
+the chosen finite backend must pass the original eight-update proof. This
+separates kernel availability from the cross-node difference in earlier runs.

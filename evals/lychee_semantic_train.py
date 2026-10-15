@@ -2,6 +2,8 @@
 import argparse
 import json
 import math
+import os
+import platform
 import subprocess
 import sys
 from pathlib import Path
@@ -15,14 +17,16 @@ def main():
     ap.add_argument('--history-roots',type=Path,nargs='+',required=True)
     ap.add_argument('--steps',type=int,default=8)
     ap.add_argument('--attention-backend',choices=('default','no-cudnn','math'),default='default')
+    ap.add_argument('--compare-attention-backends',action='store_true')
     args=ap.parse_args()
     if not 1<=args.steps<=8:raise ValueError('This stage permits at most eight implementation-proof updates')
     import torch
-    if args.attention_backend!='default':torch.backends.cuda.enable_cudnn_sdp(False)
-    if args.attention_backend=='math':
-        torch.backends.cuda.enable_flash_sdp(False)
-        torch.backends.cuda.enable_mem_efficient_sdp(False)
+    def configure_attention(mode):
+        torch.backends.cuda.enable_cudnn_sdp(mode=='default')
+        torch.backends.cuda.enable_flash_sdp(mode!='math')
+        torch.backends.cuda.enable_mem_efficient_sdp(mode!='math')
         torch.backends.cuda.enable_math_sdp(True)
+    configure_attention(args.attention_backend)
     from torch.nn import functional as F
     from evals.lychee_environment_check import configure_bf16
     configure_bf16()
@@ -109,6 +113,30 @@ def main():
         raise RuntimeError('Adapter construction changed sampling RNG')
     zero=heads(examples[0]);zero_errors={k:float((original[k]-zero[k]).abs().max()) for k in original}
     if any(zero_errors.values()):raise RuntimeError('Zero semantic adapter changed native reference outputs')
+    kernel_comparison=[]
+    if args.compare_attention_backends:
+        for mode in ('default','no-cudnn','math'):
+            configure_attention(mode);model.zero_grad(set_to_none=True)
+            with torch.profiler.profile(activities=[torch.profiler.ProfilerActivity.CPU]) as profile:
+                measured=loss(examples[0]);measured.backward()
+            failures=[]
+            for name,module in modules.items():
+                for key in ('a','b'):
+                    grad=getattr(module,key).grad
+                    if grad is None or not torch.isfinite(grad).all():
+                        failures.append({'tensor':name+'.'+key,'missing':grad is None,
+                            'nan':int(torch.isnan(grad).sum()) if grad is not None else None,
+                            'inf':int(torch.isinf(grad).sum()) if grad is not None else None})
+            kernel_comparison.append({'backend':mode,'loss':float(measured.detach()),
+                'gradient_failures':failures,'optimizer_step_performed':False,
+                'actual_attention_ops':[{'name':e.key,'calls':e.count} for e in profile.key_averages()
+                    if 'scaled_dot_product' in e.key]})
+        model.zero_grad(set_to_none=True);configure_attention(args.attention_backend)
+        hardware={'node':os.environ.get('SLURMD_NODENAME',platform.node()),'gpu':torch.cuda.get_device_name(),
+            'torch':torch.__version__,'cuda':torch.version.cuda,'cudnn':torch.backends.cudnn.version()}
+        (args.out/'kernel-comparison.json').write_text(json.dumps({'same_model_and_gpu':True,
+            'hardware':hardware,'comparisons':kernel_comparison},indent=2)+'\n')
+        print(json.dumps({'same_gpu_kernel_comparisons':kernel_comparison,'hardware':hardware}),flush=True)
     frozen_before=frozen_hash(model)
     parameters=[p for module in modules.values() for p in (module.a,module.b)]
     optimizer=torch.optim.AdamW(parameters,lr=1e-4,weight_decay=0)
@@ -166,6 +194,7 @@ def main():
         'repo_commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),
         'native_merged_deployment_tested':False,'task_success_tested':False,'quality_qualified':False,
         'training_attention_backend':args.attention_backend,
+        'same_gpu_attention_comparisons':kernel_comparison,
         'scope':'native semantic implementation proof; raw speech/control compared on one identical teacher-forced input'}
     (args.out/'report.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result),flush=True)
 

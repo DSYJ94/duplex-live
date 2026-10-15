@@ -18,6 +18,8 @@ test "$(git -C "$DL_TASK_SOURCE" rev-parse HEAD)" = "$DL_TASK_COMMIT"
 test -z "$(git -C "$DL_TASK_SOURCE" status --porcelain)"
 cd "$DL_TASK_SOURCE"
 STATES=()
+EXTRA=()
+if [ "${LYCHEE_COMPARE_ATTENTION:-0}" = 1 ]; then EXTRA+=(--compare-attention-backends); fi
 for J in 7452624 7452625 7452626 7452627 7452628 7452629 7452630 7452631; do
  STATES+=("$DL/runs/lychee-vllm-probe-$J")
 done
@@ -30,5 +32,5 @@ apptainer exec --nv --bind /projects,/lus,/home \
  --data "$DL/runs/lychee-training-inputs-$LYCHEE_TRAINING_INPUTS_JOB" \
  --source-data "$DL/runs/recovery-data-7407554" --history-roots "${STATES[@]}" \
  --codec-data "$DL/runs/lychee-codec-data-7452500" --codec-audit "$DL/runs/lychee-codec-audit-7452502" \
- --steps 8 --attention-backend "${LYCHEE_TRAIN_ATTENTION:-default}" \
+ --steps 8 --attention-backend "${LYCHEE_TRAIN_ATTENTION:-default}" "${EXTRA[@]}" \
  --out "$DL/runs/lychee-semantic-proof-${SLURM_JOB_ID}"
