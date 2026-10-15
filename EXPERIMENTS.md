@@ -2532,3 +2532,13 @@ source hashes. Its separate action head preserves approved control clocks;
 two tests reject missing/misaligned markers and distinguish cancellation.
 Eight-update native pilot is prepared for engineering validation and fresh-process
 text/audio/action reload, not larger training or model qualification yet.
+
+**Plain words — pilot and paired encoding:** native pilot 7434925 performs four
+updates then fails on a later native undefined acoustic target; no final model
+or reload is produced. The native interleaver uses -1 for undefined padding.
+Loss now excludes only native undefined/initial tokens, records excluded counts
+per codebook and rejects any other out-of-range value. The original targets and
+WAVs are unchanged. The fresh retry must complete and reload before inference.
+Paired encoding **7434926** completes all 13 with native first-word errors at most
+100ms, below the unchanged 200ms bar. These may now join the 33 approved TRAIN
+scenes as a separately hashed cache, with old validation/test folds unchanged.

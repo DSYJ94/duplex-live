@@ -136,7 +136,18 @@ def main():
         weights = torch.where(text_target >= 5, 1., .1)
         weights[:, phrase] *= 2.
         text_loss = (text_nll*weights).sum()/weights.sum()
-        audio_losses = [F.cross_entropy(output["audio"][:, q].flatten(0, 1), fixed["targets"][:, 1+q].flatten()) for q in range(8)]
+        audio_losses, excluded_audio = [], []
+        for q in range(8):
+            target = fixed["targets"][:, 1+q]
+            if (target < -1).any() or (target > lm.card).any():
+                raise RuntimeError("Unknown native audio supervision token: "+row["scenario_id"])
+            # Native interleaver uses -1 for undefined padding; the initial
+            # token (card) can condition the model but is not an acoustic class.
+            valid = (target >= 0) & (target < lm.card)
+            if not valid.any():
+                raise RuntimeError("No valid native audio target")
+            audio_losses.append(F.cross_entropy(output["audio"][:, q][valid], target[valid]))
+            excluded_audio.append(int((~valid).sum()))
         audio_loss = (100*audio_losses[0]+sum(audio_losses[1:]))/107
         policy_nll = F.cross_entropy(output["policy"].flatten(0, 1), actions.flatten(), reduction="none").view_as(actions)
         positive = actions != 0
@@ -145,6 +156,7 @@ def main():
         metrics = {"scenario":row["scenario_id"], "kind":row["kind"], "text_nll":float(text_loss.detach()),
             "word_nll":float(text_nll[text_target >= 5].mean().detach()), "audio_nll":float(audio_loss.detach()),
             "policy_nll":float(policy_loss.detach()), "action_targets":int(positive.sum()),
+            "excluded_undefined_audio_targets":excluded_audio,
             "action_predictions":int((predicted != 0).sum()), "correct_action_frames":int(((predicted == actions)&positive).sum()),
             "phrase_nll":float(text_nll[:, phrase].mean().detach()) if phrase else None}
         return text_loss+audio_loss+.2*policy_loss, metrics
