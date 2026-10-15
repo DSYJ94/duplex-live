@@ -2943,3 +2943,23 @@ DL_TASK_COMMIT; the payload verifies the exact clean commit and uses that path
 for Python imports. This avoids queued jobs importing later main-checkout edits.
 Submit from the main repo so existing Slurm log paths remain stable. Deploy code
 through git only; artifact/log backups remain separate.
+
+**Plain words — native speech decoding completed, streaming adapter import fixed:**
+immutable-source offline vocoder 7443260 decodes the four native responses in
+2.450 seconds (quality-only placement, not live PCM). Streaming replay 7443262/64
+stops before decoding because the published adapter class is named
+StreamingDecoder; the caller used an incorrect class name. Correct that exact
+import and retain both failures. The retry must also account for every native
+codec token exactly once, including any actually interrupted unplayed tail.
+
+Sampling-preserved PersonaPlex 7441744–53 confirms constructor CUDA RNG advance
+and successful restoration. Task speech still fails private values, clarification
+and cancellation; do not promote the neutral-ready checkpoint. The paired TRAIN
+objective improves 16/16 reference margins (mean 4.723) while native task behavior
+still fails, another direct teacher-history/free-run distinction. Prioritize the
+now-operational Qwen-based Lychee path: test actual completed worker text in its
+nonspoken instruction context, with every already-arrived user-audio cache and
+native speech/control token preserved. First use scheduled dispatch only as an
+explicit result-integration diagnostic, then require learned native dispatch.
+No word forcing, oracle private values or held-out training is authorized by
+that diagnostic. This interface is proposed and still needs a preservation proof.

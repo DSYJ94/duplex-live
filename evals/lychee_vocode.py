@@ -84,14 +84,14 @@ def main():
         provenance['output_timing']='offline placement by native token positions; not actual availability'
     else:
         from transformers import AutoTokenizer
-        from lychee_fd.runtime.vllm_generation import RealtimeEventAdapter
+        from lychee_fd.runtime.vllm_generation import StreamingDecoder
         from evals.audio_playout import render_packets
         duplex=Path(assets['models']['duplex']['path']);config=json.loads((duplex/'config.json').read_text())
         tokenizer=AutoTokenizer.from_pretrained(duplex,local_files_only=True,trust_remote_code=True)
         fw=SimpleNamespace(text_pad_token_id=config['text_pad_token_id'],
             tts_pad_id=tokenizer(['<tts_pad>']).input_ids[0][0],
             stoken_delay_token_id=config['stoken_delay_token_id'],stoken_pad_token_id=config['stoken_pad_token_id'])
-        adapter=RealtimeEventAdapter(tokenizer,fw,tts_chunk_size=1)
+        adapter=StreamingDecoder(tokenizer,fw,tts_chunk_size=1)
         lookahead=int(getattr(vocoder.flow,'pre_lookahead_len',3))
         # Published startup warmup; caches are reset before real output. No user
         # waveform or future generated tokens enter this warmup.
@@ -137,6 +137,8 @@ def main():
                     active=None
         if active is not None:raise RuntimeError('Native trace did not finalize its last speaking event')
         if not packets:raise RuntimeError('Streaming vocoder emitted no PCM')
+        if consumed+interrupted!=sum(len(e['audio']) for e in events):
+            raise RuntimeError('Streaming decoder did not account for every native codec token exactly once')
         audio,ledger=render_packets(packets,24000,.16)
         per_event={key:render_packets(value,24000,.16)[1] for key,value in groups.items() if value}
         provenance.update(hop_tokens=args.hop,lookahead_tokens=lookahead,
