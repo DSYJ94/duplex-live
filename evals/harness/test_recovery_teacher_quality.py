@@ -47,6 +47,44 @@ class TeacherQualityTests(unittest.TestCase):
         self.events.pop()
         self.assertFalse(assess(self.speech,self.events,self.meta,"private",self.session)["speech_and_fact_checks_pass"])
 
+    def test_clarification_before_identification_and_lookup_after_it(self):
+        self.meta["source_events"] = [
+            {"ch":"user","kind":"utterance","actual_start_ms":0,"actual_end_ms":1000},
+            {"ch":"user","kind":"utterance","actual_start_ms":5000,"actual_end_ms":6000}]
+        text = "Which project? Liquid gas. Blue circle."
+        times = [2., 2.3, 7., 7.3, 12., 12.3]
+        self.speech["model_text"] = text
+        self.speech["asr_segments"][0]["words"] = [
+            {"text":word,"start":start,"end":start+.2} for word,start in zip(text.split(),times)]
+        self.events[0]["received_at_s"] = 6.5
+        self.assertTrue(assess(self.speech,self.events,self.meta,"clarify",self.session)["speech_and_fact_checks_pass"])
+        self.events[0]["received_at_s"] = 4.
+        self.assertIn("Private lookup dispatched before project identification completed",
+            assess(self.speech,self.events,self.meta,"clarify",self.session)["reasons"])
+
+    def test_cancel_requires_actual_receipt_before_acknowledgement(self):
+        text = "Light travels faster than sound. Cancelled."
+        self.speech["model_text"] = text
+        self.speech["asr_segments"][0]["words"] = [
+            {"text":w,"start":12+i*.3,"end":12.2+i*.3} for i,w in enumerate(text.split())]
+        self.events = [
+            {"type":"session.delegation.created","received_at_s":2.,"delegation":{"id":"lookup"}},
+            {"type":"session.delegation.created","received_at_s":8.,"delegation":{"id":"cancel"}},
+            {"type":"local.worker.tool_result","received_at_s":10.,"task_id":"cancel",
+             "result":{"content":"Cancelled.","receipts":[{"tool":"cancel_lookup","cancelled":True,"task_ids":["lookup"]}]}},
+            {"type":"session.closed"}]
+        self.assertTrue(assess(self.speech,self.events,self.meta,"cancel",self.session)["speech_and_fact_checks_pass"])
+        self.events[2]["received_at_s"] = 19.
+        self.assertIn("Spoken cancellation acknowledgement missing or predates actual receipt",
+            assess(self.speech,self.events,self.meta,"cancel",self.session)["reasons"])
+
+    def test_cancel_rejects_incomplete_target_set(self):
+        self.test_cancel_requires_actual_receipt_before_acknowledgement()
+        self.events[2]["received_at_s"] = 10.
+        self.events.insert(1,{"type":"session.delegation.created","received_at_s":3.,"delegation":{"id":"duplicate"}})
+        self.assertIn("Cancellation receipt does not cancel all prior related lookups",
+            assess(self.speech,self.events,self.meta,"cancel",self.session)["reasons"])
+
     def test_teacher_input_must_match_approved_audio(self):
         import numpy as np
         import soundfile as sf

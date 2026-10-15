@@ -48,7 +48,13 @@ def validate_teacher(batch):
         if environment["purpose"] != "teacher" or environment["training_approved"] is not False or environment["input_sha256"] != row["source_user_sha256"]:
             raise RuntimeError("Teacher purpose/stimulus receipt changed")
         validate_input_audio(folder / "user_in.wav",Path(source["source_batch"]) / row["dir"] / "stem_user.wav")
-    if len(ids) != manifest["maximum_sessions"] or len(ids) != 12:
+    if manifest.get("collection_schema") == "dl-control-teacher-v2":
+        expected = {r["scenario_id"] for r in source["accepted"] if r["split"] == "train" and r["kind"] in ("clarify", "cancel")}
+        if len(expected) != 7 or ids != expected or set(manifest["selected_ids"]) != expected or manifest.get("scope") != "control":
+            raise RuntimeError("Control teacher scope differs from approved TRAIN scenes")
+    elif len(ids) != 12 or manifest.get("scope", "legacy") != "legacy":
+        raise RuntimeError("Historical teacher scope changed")
+    if len(ids) != manifest["maximum_sessions"]:
         raise RuntimeError("Incomplete bounded teacher collection")
     return manifest
 
@@ -76,7 +82,7 @@ def assess(speech,events,metadata,kind,session):
     tokens = [token for token,_ in flat]
     starts = [e for e in events if e["type"] == "session.delegation.created"]
     arrivals = []
-    if kind == "private":
+    if kind in ("private", "clarify"):
         results = [e for e in events if e["type"] == "local.worker.tool_result"]
         if len(starts) != 1 or len(results) != 1:
             reasons.append("Private task lacks exactly one actual worker result")
@@ -97,7 +103,41 @@ def assess(speech,events,metadata,kind,session):
             if any(tokens[i] in colours and tokens[i+1] in shapes and tokens[i:i+2] != target for i in range(len(tokens)-1)):
                 reasons.append("Spoken answer contains a contradictory private phrase")
             arrivals = [{"ready_at_s":ready,"text":result["result"]["content"],"task_id":result["task_id"]}]
-        required = [{"light"},{"faster"},{"sound"}]
+        if kind == "clarify":
+            user = [e for e in metadata["source_events"] if e["ch"] == "user" and e.get("kind", "utterance") == "utterance"]
+            if len(user) < 2:
+                raise RuntimeError("Clarification source lacks measured identification")
+            identifying_end = user[1]["actual_end_ms"]/1000
+            identifying_start = user[1]["actual_start_ms"]/1000
+            question_tokens = [token for token, start in flat if start < identifying_start]
+            if not {"which", "project"}.issubset(question_tokens):
+                reasons.append("No measured project clarification before user identification")
+            if any(e["received_at_s"] < identifying_end for e in starts):
+                reasons.append("Private lookup dispatched before project identification completed")
+            required = [{"liquid"}, {"gas"}]
+        else:
+            required = [{"light"},{"faster"},{"sound"}]
+    elif kind == "cancel":
+        results = [e for e in events if e["type"] == "local.worker.tool_result"]
+        cancellations = [(e, r) for e in results for r in e["result"]["receipts"] if r.get("tool") == "cancel_lookup"]
+        if len(cancellations) != 1 or not cancellations[0][1].get("cancelled"):
+            reasons.append("Cancellation lacks exactly one actual successful tool receipt")
+        else:
+            event, receipt = cancellations[0]
+            targets = set(receipt.get("task_ids", []))
+            prior = {e["delegation"]["id"] for e in starts if e["received_at_s"] < event["received_at_s"] and e["delegation"]["id"] != event["task_id"]}
+            if not prior or targets != prior:
+                reasons.append("Cancellation receipt does not cancel all prior related lookups")
+            acknowledgements = [start for token,start in flat if token == "cancelled"]
+            if not acknowledgements or any(start < event["received_at_s"] for start in acknowledgements):
+                reasons.append("Spoken cancellation acknowledgement missing or predates actual receipt")
+            arrivals = [{"ready_at_s":event["received_at_s"], "text":event["result"]["content"], "task_id":event["task_id"]}]
+        if any(r.get("tool") == "lookup_record" for e in results for r in e["result"]["receipts"]):
+            reasons.append("Cancelled lookup result was delivered")
+        target = spoken_words(metadata["phrase"])
+        if any(tokens[i:i+len(target)] == target for i in range(len(tokens)-len(target)+1)):
+            reasons.append("Private result was spoken in cancellation scene")
+        required = [{"light"}, {"faster"}, {"sound"}]
     elif kind == "simple":
         if starts or any(e["type"].startswith("local.worker.") for e in events):
             reasons.append("Simple task unnecessarily delegated")
@@ -108,7 +148,7 @@ def assess(speech,events,metadata,kind,session):
         elif "triangle" in question: required = [{"three"}]
         else: raise RuntimeError("No independently specified fact check for this teacher question")
     else:
-        raise RuntimeError("This teacher pass permits only private and simple training scenes")
+        raise RuntimeError("Unknown bounded teacher scene kind")
     if any(not set(tokens).intersection(group) for group in required):
         reasons.append("Required independently specified answer facts absent in measured speech")
     return {"speech_and_fact_checks_pass":not reasons,"reasons":reasons,"measured_words":words,

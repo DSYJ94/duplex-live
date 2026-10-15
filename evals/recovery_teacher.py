@@ -9,21 +9,29 @@ import json
 import shutil
 from pathlib import Path
 from types import SimpleNamespace
+from datetime import datetime, timezone
 from evals.recovery_data import validate_conversion
 from evals.moshi_model_download import sha256
 from evals.gpt_live_replay import run
 
 
-async def generate(data,out,resume=False):
+async def generate(data,out,resume=False,scope="legacy"):
     receipt = validate_conversion(data)
     selected = [r for r in receipt["accepted"] if r["split"] == "train" and r["kind"] == "private"] + [
         r for r in receipt["accepted"] if r["split"] == "train" and r["kind"] == "simple"][:4]
     if len(selected) != 12:
         raise RuntimeError("Bounded teacher pass requires eight private and four simple approved train stimuli")
+    if scope == "control":
+        selected = [r for r in receipt["accepted"] if r["split"] == "train" and r["kind"] in ("clarify", "cancel")]
+        if len(selected) != 7:
+            raise RuntimeError("Control teacher pass requires the seven approved clarify/cancel TRAIN stimuli")
     manifest = {"purpose":"raw training teacher recordings, not quality-approved", "source_conversion":str(data),
         "source_ingestion_sha256":sha256(data / "ingestion.json"), "source_model":"gpt-live-1",
-        "created_date":"2026-10-14","provenance_class":"closed-content","fold":"train",
-        "concurrent_sessions":2,"maximum_sessions":12,"recordings":[]}
+        "created_date":datetime.now(timezone.utc).date().isoformat(),"provenance_class":"closed-content","fold":"train",
+        "concurrent_sessions":2,"maximum_sessions":len(selected),"recordings":[]}
+    if scope == "control":
+        manifest.update(collection_schema="dl-control-teacher-v2", scope="control",
+                        selected_ids=[r["scenario_id"] for r in selected])
     if resume:
         if (out / "quality.jsonl").exists():
             raise RuntimeError("Cannot resume a stamped teacher corpus")
@@ -31,6 +39,8 @@ async def generate(data,out,resume=False):
         for key in ("source_conversion","source_ingestion_sha256","source_model","fold","maximum_sessions"):
             if previous[key] != manifest[key]:
                 raise RuntimeError("Teacher source or generation scope changed")
+        if previous.get("scope", "legacy") != scope or previous.get("selected_ids") != manifest.get("selected_ids"):
+            raise RuntimeError("Teacher selection changed")
         manifest = previous
         for record in manifest["recordings"]:
             folder = out / record["dir"]
@@ -78,8 +88,9 @@ def main():
     parser.add_argument("--data",type=Path,required=True)
     parser.add_argument("--out",type=Path,required=True)
     parser.add_argument("--resume",action="store_true")
+    parser.add_argument("--scope",choices=("legacy", "control"),default="legacy")
     args = parser.parse_args()
-    asyncio.run(generate(args.data,args.out,args.resume))
+    asyncio.run(generate(args.data,args.out,args.resume,args.scope))
 
 
 if __name__ == "__main__":

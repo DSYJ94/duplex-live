@@ -15,6 +15,7 @@ source "$DL/keys/openai.env"
 set +a
 OUT="${TEACHER_RESUME_DIR:-$DL/runs/recovery-teacher-${SLURM_JOB_ID}}"
 ARGS=()
+if [ "${TEACHER_SCOPE:-legacy}" = control ]; then ARGS+=(--scope control); fi
 if [ -n "${TEACHER_RESUME_DIR:-}" ]; then ARGS+=(--resume); fi
 apptainer exec --bind /projects,/lus,/home \
   --env PYTHONPATH="$DL/repo" --env PYTHONDONTWRITEBYTECODE=1 \

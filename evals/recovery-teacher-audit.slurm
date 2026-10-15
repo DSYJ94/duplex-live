@@ -11,8 +11,9 @@
 set -euo pipefail
 DL=/projects/u6si/duplex-live
 cd "$DL/repo"
+TEACHER_BATCH="${TEACHER_BATCH:-$DL/runs/recovery-teacher-7408766}"
 apptainer exec --nv --bind /projects,/lus,/home \
   --env PYTHONPATH="$DL/repo" --env PYTHONDONTWRITEBYTECODE=1 --env OMP_NUM_THREADS=8 \
   "$DL/pytorch-new.sif" "$DL/envs/moshi-annotation-7379026/bin/python" -u \
-  -m evals.recovery_teacher_quality --batch "$DL/runs/recovery-teacher-7408766" \
+  -m evals.recovery_teacher_quality --batch "$TEACHER_BATCH" \
   --out "$DL/runs/recovery-teacher-audit-${SLURM_JOB_ID}"
