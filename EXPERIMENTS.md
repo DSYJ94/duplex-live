@@ -2636,3 +2636,15 @@ GPU hidden-state capture per 80ms frame, no worker references. Only existing
 approved action clocks label states; generated words/audio are never speech
 training labels. It must prove full frame coverage and retained source hashes
 before a separate action-only fit can use it. No held-out audio is collected.
+
+**Plain words — self-history and Lychee measurements:** native policy collection
+7435849_0 passes all 501 frame/state checks on TRAIN-000, with exact model/voice
+pins and sampled assistant history. No generated speech labels are approved.
+The remaining 22 TRAIN scenes are submitted with at most four concurrent GPUs.
+Lychee profiler 7435718 completes: two 400ms chunks show 40,733 cudaLaunchKernel
+and 10,666 cuLaunchKernelEx calls, plus substantial repeated cuDNN attention setup
+on single-query decode shapes. This is profiled diagnostic evidence, not latency
+acceptance. A separate unprofiled experiment disables only cuDNN SDPA and compares
+actual BF16 decode tensors against cuDNN and float32 math; no model, sampling or
+cache change. Official backend/numerical reference:
+https://docs.pytorch.org/docs/2.9/generated/torch.nn.functional.scaled_dot_product_attention.html .

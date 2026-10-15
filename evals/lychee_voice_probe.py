@@ -28,11 +28,14 @@ def main():
     ap.add_argument("--paced", action="store_true", help="Use released incremental HF runtime; measure token processing, vocode afterward")
     ap.add_argument("--encoder-memo", action="store_true", help="Bounded native encoder cache; requires --paced")
     ap.add_argument("--profile", action="store_true", help="Profile two incremental chunks; timings are diagnostic")
+    ap.add_argument("--no-cudnn-sdpa", action="store_true", help="Isolate attention planning cost; capture actual decode tensor comparisons")
     args = ap.parse_args()
     if args.encoder_memo and not args.paced:
         ap.error("Encoder memo benchmark requires the paced incremental runtime")
     if args.profile and (not args.paced or args.encoder_memo):
         ap.error("Profile the unchanged paced runtime, without the unqualified memo experiment")
+    if args.no_cudnn_sdpa and (not args.paced or args.encoder_memo or args.profile):
+        ap.error("Attention-kernel comparison requires unprofiled native paced input, without memo")
     provenance = json.loads(args.voice_provenance.read_text())
     if (provenance.get("schema") != "dl-voice-codec-probe-v1"
             or provenance.get("reference_sha256") != sha256(args.voice)
@@ -115,6 +118,7 @@ def main():
         "align_audio_input": True,
         "encoder_memo": args.encoder_memo,
         "operator_profile":args.profile,
+        "cudnn_sdpa_disabled_experiment":args.no_cudnn_sdpa,
         "input_clock": "published application: alternating audio-patch/audio-pad slots, 25Hz control clock",
         "training_approved": False, "learned_delegation_tested": False,
         "voice_provenance": provenance,
@@ -140,8 +144,14 @@ def main():
             scope = encoder_memo(framework.model._model) if args.encoder_memo else nullcontext({})
             from evals.lychee_profile import incremental_profile
             profiling = incremental_profile(args.out) if args.profile else nullcontext(None)
-            with scope as memo_stats, profiling as profiler:
+            from evals.lychee_attention import without_cudnn_attention
+            attention = without_cudnn_attention() if args.no_cudnn_sdpa else nullcontext({})
+            with scope as memo_stats, profiling as profiler, attention as attention_report:
                 generated, paced_report = run_incremental(framework, audio, args.out, profiler)
+            if args.no_cudnn_sdpa:
+                (args.out / "attention-report.json").write_text(json.dumps(attention_report, indent=2)+"\n")
+                if not attention_report["probes"]:
+                    raise RuntimeError("Attention experiment captured no actual decode tensor checks")
             paced_report["encoder_memo"] = memo_stats
             (args.out / "paced-report.json").write_text(json.dumps(paced_report, indent=2)+"\n")
         else:
