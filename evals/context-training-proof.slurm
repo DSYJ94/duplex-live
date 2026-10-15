@@ -33,6 +33,13 @@ run_container() {
   --env PYTHONDONTWRITEBYTECODE=1 --env OMP_NUM_THREADS=8 \
   "$DL/pytorch-new.sif" python -u "$@"
 }
+if [ "${CONTEXT_CODEC_AUDIT:-0}" = 1 ]; then
+ run_container -m evals.context_codec_audit \
+  --assets "$DL/runs/context-spanning-assets-7454205/manifest.json" \
+  --base "$DL/models/hf-cache/hub/models--nvidia--personaplex-7b-v1/snapshots/fdaf4090a61cb315c138a1faee287ffd6c716309" \
+  --cache "$DL/runs/recovery-mixed-codes-7411513" --out "$DL/runs/context-codec-audit-${SLURM_JOB_ID}"
+ exit 0
+fi
 run_container -m unittest evals.harness.test_context_training_loss
 if [ "${CONTEXT_TEACHER_AUDIT:-0}" = 1 ]; then
  run_container -m evals.context_training_proof "${ARGS[@]}" \
