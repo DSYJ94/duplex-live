@@ -2673,3 +2673,10 @@ with NGC 2.9/CUDA13 must be demonstrated, not assumed. A built wheel alone is
 not enough: require native kernel execution and complete strict multi-head model
 loading before any paced inference claim. Primary source is the pinned README
 and third_party/vllm, commit 7bb1068c59b578e1f8e65fb762cd26708c14cc6d.
+
+**Plain words — first vLLM attempt stops in source acquisition:** 7436166 cannot
+materialize missing blobs from a local shared clone of the filtered asset repo;
+setup.py is absent, so native compilation never starts. This is not an ARM/CUDA
+compatibility verdict. Fetch the exact same commit from its actual upstream
+promisor remote into an isolated sparse checkout and require build files before
+entering the container. Existing accepted source/model environments are unchanged.
