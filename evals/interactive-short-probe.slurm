@@ -25,6 +25,7 @@ case "${1:?Choose rag, personaplex or qwen}" in
   personaplex) SCRIPT=evals/personaplex-recovery.slurm ;;
   personaplex-paced) SCRIPT=evals/personaplex-paced.slurm ;;
   personaplex-reference) SCRIPT=evals/personaplex-reference.slurm ;;
+  personaplex-bridge) SCRIPT=evals/personaplex-bridge-pilot.slurm ;;
   voice-quality) SCRIPT=evals/voice-quality-probe.slurm ;;
   codec-decode) SCRIPT=evals/voice-codec-decode.slurm ;;
   voice-audio-debug) SCRIPT=evals/voice-audio-debug.slurm ;;

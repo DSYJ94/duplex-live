@@ -2375,3 +2375,43 @@ process reload text/audio max errors are 0.0; adapter SHA
 0263c20d64a7649c9efd43a659e4fb31503e36c553071128531f78738577dc9f.
 Dependent development jobs: private 7415517, simple 7415519, clarify 7415521,
 cancel 7415522. Completion or exact reload alone is not a behavior pass.
+
+
+### 15 October continuation — accepted voice paced; bridge engineering proof
+
+**Plain words:** accepted custom PersonaPlex runs at 30.47/32.46 ms median/95th
+percentile per 80 ms input frame (7415855). Maximum input backlog is 161.12 ms;
+a 160 ms startup buffer leaves one 50.71 ms playback gap. This is promising
+compute speed, not clean microphone acceptance. Native science answers still fail.
+The replay changes no native model, prompt, sampling or generated-frame export;
+additional WAVs retain real packet availability and an untimed PCM diagnostic.
+
+Revised MoshiRAG objective pilot 7415494 still fails all four development tasks:
+7415517 gives only yellow, invents/repeats room claims and rereads the record;
+7415519 answers salt dissolution but dispatches two unnecessary workers;
+7415521 skips clarification and invents marker facts; 7415522 never cancels.
+Independent audit 7415856 has valid measured word bounds and respective WER
+0.03125 / 0.02326 / 0.06667 / 0.0. Intelligibility does not rescue task failures.
+Do not scale this recipe based on lower loss or exact reload.
+
+PersonaPlex reference proof 7415929 passes on actual native single-slot generation
+with CUDA graphs and identical teacher-forced histories: repeat, zero-initialized
+projection and causal prefix errors all 0.0; manually enabled positive projection
+changes post-result logits by 1.25. The rank-64 bridge maps frozen ARC rows into
+PersonaPlex's temporal input. This proves a compatible causal data path, not learned
+result use, speech quality, or native delegation. It assumes no native RAG token.
+That first proof omits the voice prompt; a further run checks the exact accepted
+synthetic voice and system prefix before any larger fine-tuning.
+
+
+**Plain words:** native bridge proof 7427733 repeats the check with the exact
+accepted synthetic voice and system prompt. Repeat, zero-projection and causal
+prefix errors remain 0.0; the deliberately enabled positive projection changes
+post-result logits by 1.1875. Native token 4 is `<0x00>`, not a tool command.
+PersonaPlex and the approved cache have identical tokenizer and Mimi hashes.
+The next bounded engineering pilot trains only the rank-64 reference bridge on
+one independently verified TRAIN result phrase, with the actual native delayed
+voice/system prefix captured from LMGen. It replaces old RAG markers with native
+padding, checks streaming/whole-sequence equivalence before gradients, freezes
+and hashes the speech weights, and requires exact fresh-process bridge reload.
+No routing, generalization or free-running speech acceptance follows from that pilot.

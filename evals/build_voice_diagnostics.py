@@ -82,6 +82,9 @@ def main():
         root = f"lychee-voice-{args.lychee_job}"
         card("Lychee-FD — accepted voice", root+"/utterance-000.wav",
              "Voice quality accepted by owner as comparable to GPT-Live. First response excerpt; full recording below. Offline audition, no delegation or live acceptance.", root+"/report.json")
+    card("PersonaPlex paced native replay", "personaplex-paced-7415855/t1/model-buffered.wav",
+         "Same accepted voice setup paced at microphone speed. 32.46 ms p95 compute per 80 ms frame; one 50.71 ms playback gap remains. No delegation qualification.",
+         "personaplex-paced-7415855/t1/paced-report.json")
     page = '<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
     page += '<title>Voice diagnostics</title><style>body{max-width:1100px;margin:32px auto;padding:0 20px;background:#10141c;color:#e7ecf5;font:16px/1.5 system-ui}section{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}article{padding:20px;background:#1a2230;border:1px solid #354157;border-radius:12px}audio{width:100%}p{color:#b9c5d8}a{color:#9dc3ff}</style>'
     page += '<h1>Compare the audio artifacts</h1><p>The owner accepts the custom PersonaPlex and Lychee voices as comparable to GPT-Live. Original NATF2 is muffled and rejected. Voice acceptance is separate from intelligence, delegation and real-time performance.</p>'
