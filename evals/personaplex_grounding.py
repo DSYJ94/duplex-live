@@ -57,7 +57,7 @@ class PairedGrounding:
         def nll(reference):
             embedded = bundle.model.embed_codes(inputs)
             embedded = embedded + bundle.bridge.transform(reference).to(embedded)
-            embedded = embedded + bundle.control(states).to(embedded)
+            embedded = embedded + bundle.feedback_embedding(states).to(embedded)
             _, text = bundle.model.forward_embeddings(embedded)
             return -text[0,0,-1].log_softmax(-1)[token]
         right,other = nll(correct),nll(wrong)

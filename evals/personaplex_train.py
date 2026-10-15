@@ -31,6 +31,8 @@ def main():
     ap.add_argument("--freeze-language", action="store_true",
                     help="Train reference/action modules only, preserving native speech without reference")
     ap.add_argument("--control-feedback", action="store_true")
+    ap.add_argument("--neutral-ready", action="store_true",
+        help="Preserve pretrained behavior exactly before any actual worker dispatch")
     ap.add_argument("--paired-grounding", action="store_true")
     ap.add_argument("--policy-weight", type=float, choices=(0., .2), default=.2,
         help="Zero keeps teacher-history action loss diagnostic for a frozen self-history head")
@@ -39,6 +41,8 @@ def main():
     args = ap.parse_args()
     if args.control_feedback and (not args.freeze_language or not args.freeze_policy):
         ap.error("Initial feedback experiment must preserve language adapters and the action head")
+    if args.neutral_ready and not args.control_feedback:
+        ap.error("Neutral ready state requires causal feedback")
     if args.paired_grounding and not args.control_feedback:
         ap.error("Paired grounding requires the bounded causal feedback architecture")
     if not 8 <= args.steps <= 128 or args.steps % 8:
@@ -84,7 +88,8 @@ def main():
     lm = loaders.get_moshi_lm(args.model / "model.safetensors", device="cuda", dtype=torch.float32).eval().requires_grad_(False)
     reload_report = json.loads((args.out / "report.json").read_text()) if args.reload else None
     control_feedback = reload_report.get("control_feedback", False) if args.reload else args.control_feedback
-    bundle = PersonaBundle(lm, control_feedback=control_feedback)
+    neutral_ready = reload_report.get("neutral_ready", False) if args.reload else args.neutral_ready
+    bundle = PersonaBundle(lm, control_feedback=control_feedback, neutral_ready=neutral_ready)
     parent = None
     if args.init_checkpoint and not args.reload:
         parent = json.loads((args.init_checkpoint / "report.json").read_text())
@@ -99,6 +104,8 @@ def main():
                 or parent["template_sha256"] != sha256(args.template / "fixed-reference.pt")
                 or parent.get("policy_prompt", prompt_receipt("teacher")) != prompt_receipt("teacher")):
             raise RuntimeError("Warm-start parent did not pass native pins/reload or uses a different role")
+        if neutral_ready and parent.get("control_feedback", False) and not parent.get("neutral_ready", False):
+            raise RuntimeError("Cannot silently change an already-trained parent's ready-state semantics")
         state = load_file(args.init_checkpoint / "adapters.safetensors", device="cuda")
         if control_feedback and "control.weight" not in state:
             state["control.weight"] = torch.zeros_like(bundle.control.weight)
@@ -219,6 +226,8 @@ def main():
     # actual ready/pending states intentionally change body logits after learning.
     if control_feedback:
         reference_free["control_states"] = torch.zeros_like(reference_free["control_states"])
+        if neutral_ready:
+            reference_free["control_states"][:,prefix:] = 1
     reference_free_before = precise(reference_free) if args.freeze_language else None
     # Native proof established the adapter implementation; this run additionally
     # checks its own zero-initialized bundle against the frozen base text/audio.
@@ -231,7 +240,7 @@ def main():
             embedded = lm.embed_codes(fixed["inputs"])
             embedded = embedded + bundle.bridge.transform(fixed["reference"]).to(embedded)
             if parent.get("control_feedback", False):
-                embedded = embedded + bundle.control(fixed["control_states"]).to(embedded)
+                embedded = embedded + bundle.feedback_embedding(fixed["control_states"]).to(embedded)
             h, t = lm.forward_embeddings(embedded)
         a = native_audio_logits(lm, fixed["targets"], h[:, prefix:])
         zero_errors = {"text":float((before["text"]-t[:, :, prefix:]).abs().max()), "audio":float((before["audio"]-a).abs().max())}
@@ -249,7 +258,7 @@ def main():
         "trainable_count":sum(p.numel() for p in learned.values() if p.requires_grad),
         "saved_parameter_count":sum(p.numel() for p in learned.values()), "replaced_linears":bundle.replaced,
         "language_frozen":args.freeze_language, "policy_frozen":args.freeze_policy,
-        "control_feedback":control_feedback, "control_states":list(CONTROL_STATES) if control_feedback else None,
+        "control_feedback":control_feedback, "neutral_ready":neutral_ready, "control_states":list(CONTROL_STATES) if control_feedback else None,
         "action_target_schema":ACTION_TARGET_SCHEMA, "policy_loss_weight":args.policy_weight,
         "parent_checkpoint":None if parent is None else {"path":str(args.init_checkpoint),
             "sha256":parent["checkpoint_sha256"], "report_sha256":sha256(args.init_checkpoint / "report.json"),
@@ -269,7 +278,9 @@ def main():
             return [grounding.loss(bundle,i)[1] for i in range(len(grounding.pairs))]
     if grounding is not None:
         report["paired_grounding"]["before"] = grounding_audit()
-    pools = {k:[] for k in ("private", "simple", "clarify", "cancel")}
+    pools = {k:[] for k in ("private", "simple", "clarify", "cancel") if not (neutral_ready and k == "simple")}
+    report["optimizer_training_kinds"] = list(pools)
+    report["simple_examples_retention_only"] = neutral_ready
     started = time.monotonic()
     for step in range(args.steps):
         kind = list(pools)[step % len(pools)]
@@ -297,10 +308,10 @@ def main():
         control_gradient = None
         if control_feedback:
             control_gradient = float(bundle.control.weight.grad.norm()) if bundle.control.weight.grad is not None else 0.
-            if not control_gradient > 0. or bundle.control.weight.grad[0].count_nonzero():
+            if not control_gradient > 0. or bundle.control.weight.grad[:2 if neutral_ready else 1].count_nonzero():
                 raise RuntimeError("Missing causal feedback gradient or prefix state received a gradient")
         optimizer.step()
-        if control_feedback and bundle.control.weight[0].count_nonzero():
+        if control_feedback and bundle.control.weight[:2 if neutral_ready else 1].count_nonzero():
             raise RuntimeError("Feedback changed the fixed native voice prefix")
         metrics.update(control_gradient_norm=control_gradient)
         metrics.update(step=step+1, gradient_norm=float(norm), elapsed_s=time.monotonic()-started)
@@ -319,9 +330,9 @@ def main():
     if args.freeze_language:
         after = precise(reference_free)
         errors = {n:float((after[n]-reference_free_before[n]).abs().max()) for n in ("text", "audio")}
-        report["feedback_disabled_speech_errors" if control_feedback else "reference_free_speech_errors"] = errors
+        report["ready_state_speech_errors" if neutral_ready else "feedback_disabled_speech_errors" if control_feedback else "reference_free_speech_errors"] = errors
         if control_feedback:
-            report["prefix_control_embedding_exact_zero"] = not bool(bundle.control.weight[0].count_nonzero())
+            report["prefix_control_embedding_exact_zero"] = not bool(bundle.control.weight[:2 if neutral_ready else 1].count_nonzero())
         if max(errors.values()) != 0.:
             raise RuntimeError("Reference/action-only training changed reference-free speech")
     report["changed_tensors"] = sum(initial[n] != digest for n,digest in tensor_hashes(learned.items()).items())

@@ -19,6 +19,7 @@ if [ -n "${PERSONA_EXTRA_CACHE:-}" ]; then ARGS+=(--cache "$PERSONA_EXTRA_CACHE"
 if [ -n "${PERSONA_CONTROL_CACHE:-}" ]; then ARGS+=(--cache "$PERSONA_CONTROL_CACHE"); fi
 if [ "${PERSONA_FREEZE_LANGUAGE:-0}" = 1 ]; then ARGS+=(--freeze-language); fi
 if [ "${PERSONA_PAIRED_GROUNDING:-0}" = 1 ]; then ARGS+=(--paired-grounding); fi
+if [ "${PERSONA_NEUTRAL_READY:-0}" = 1 ]; then ARGS+=(--neutral-ready); fi
 if [ "${PERSONA_FEEDBACK:-0}" = 1 ]; then ARGS+=(--control-feedback --freeze-policy); fi
 if [ -n "${PERSONA_INIT_CHECKPOINT:-}" ]; then ARGS+=(--init-checkpoint "$PERSONA_INIT_CHECKPOINT"); fi
 if [ -n "${PERSONA_POLICY_WEIGHT:-}" ]; then ARGS+=(--policy-weight "$PERSONA_POLICY_WEIGHT"); fi

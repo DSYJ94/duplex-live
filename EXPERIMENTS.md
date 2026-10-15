@@ -2851,3 +2851,20 @@ msgspec is absent. Full model loading, attention execution, speech and real-time
 PCM remain untested. A separate CPU-only dependency overlay installs an explicit
 subset of the pinned official lock with --no-deps; Torch/CUDA/Triton and the
 accepted HF voice overlay remain untouched. Original failure evidence is kept.
+
+**Plain words — both matched grounding candidates rejected:** native checks
+7440909–7440913 (no contrast, 7440657) and 7440914–7440918 (paired, 7440658) fail
+private facts/clarification/cancellation, and some ordinary answers degrade or go
+silent. Their checkpoints reload exactly; implementation success is not behavior.
+An always-on learned ready-state vector changes the whole dialogue even before
+any dispatch. A new optional neutral-ready variant masks both prefix and ready
+states to exact zero. Reference-free ready-state text/audio must remain exactly
+unchanged; language and policy weights stay frozen. Simple examples become
+retention diagnostics with no meaningless zero-gradient optimizer steps. Only
+actual pending/result/cancellation states can learn feedback. This is a more
+specific preservation invariant, not a claim it resolves result grounding.
+
+Dependency setup 7441041 stops before installation because the bare container
+has no TorchAudio distribution metadata (the voice environment supplies it in
+an overlay). Protected-stack checks now preserve absent packages as absent;
+no GPU dependency is installed or replaced to satisfy this bookkeeping check.

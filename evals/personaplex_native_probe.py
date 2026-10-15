@@ -95,7 +95,7 @@ def main():
         "arc_manifest_sha256":sha256(args.manifest), "native_action_choice":args.dispatch_mode == "native",
         "scheduled_dispatch":args.dispatch_mode != "native", "zero_adapters":args.zero_adapters,
         "result_input":args.result_input, "worker_text_forced":args.result_input == "spoken-text",
-        "role_prompt":role, "control_feedback":control_feedback,
+        "role_prompt":role, "control_feedback":control_feedback, "neutral_ready":trained.get("neutral_ready", False),
         "inference_text_pace_frames":args.worker_word_frames if args.result_input == "spoken-text" else None,
         "worker_handoff":args.worker_handoff,
         "worker_handoff_rule":"five arrived quiet user/output frames; pause worker text on user speech" if args.worker_handoff == "quiet" else None,
@@ -119,7 +119,7 @@ def main():
 
     def load_foreground(*pos, **kw):
         lm = original_loader(*pos, **kw).eval().requires_grad_(False)
-        bundle = PersonaBundle(lm, control_feedback=control_feedback)
+        bundle = PersonaBundle(lm, control_feedback=control_feedback, neutral_ready=trained.get("neutral_ready", False))
         if not args.zero_adapters:
             bundle.load_learned(load_file(args.checkpoint / "adapters.safetensors", device="cuda"))
         bundle.eval().requires_grad_(False)
@@ -293,7 +293,7 @@ def main():
         "checkpoint_sha256":checkpoint_sha, "native_action_choice":args.dispatch_mode == "native",
         "scheduled_dispatch":args.dispatch_mode != "native", "zero_adapters":args.zero_adapters,
         "result_input":args.result_input, "worker_text_forced":args.result_input == "spoken-text",
-        "role_prompt":role, "control_feedback":control_feedback,
+        "role_prompt":role, "control_feedback":control_feedback, "neutral_ready":trained.get("neutral_ready", False),
         "worker_word_frames":args.worker_word_frames, "worker_handoff":args.worker_handoff,
         "backend_context":"causal measured-word oracle; not live ASR", "worker_events":events,
         "worker_dispatches":len(jobs), "unobserved_workers":sum(not j["observed"] for j in jobs.values()),

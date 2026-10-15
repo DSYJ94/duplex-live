@@ -11,7 +11,7 @@ from evals.personaplex_depth import native_audio_logits
 
 
 class PersonaBundle(nn.Module):
-    def __init__(self, model, control_feedback=False):
+    def __init__(self, model, control_feedback=False, neutral_ready=False):
         super().__init__()
         self.model = model.eval().requires_grad_(False)
         self.replaced = install_adapters(model)
@@ -20,6 +20,9 @@ class PersonaBundle(nn.Module):
         nn.init.zeros_(self.policy.weight)
         with torch.no_grad():
             self.policy.bias.copy_(torch.tensor([2., 0., 0.], device=model.device))
+        self.neutral_ready = neutral_ready
+        if neutral_ready and not control_feedback:
+            raise ValueError("Neutral ready state requires causal client feedback")
         self.control = None
         if control_feedback:
             from evals.personaplex_control import CONTROL_STATES
@@ -38,10 +41,16 @@ class PersonaBundle(nn.Module):
             raise ValueError("Unknown or disabled native client feedback")
         self.active_control.fill_(state)
 
+    def feedback_embedding(self, states):
+        value = self.control(states)
+        if self.neutral_ready:
+            value = value * (states >= 2).unsqueeze(-1)
+        return value
+
     def temporal_input(self, module, inputs):
         embedded = self.bridge.temporal_input(module, inputs)[0]
         if self.control is not None:
-            embedded = embedded + self.control(self.active_control).to(embedded)
+            embedded = embedded + self.feedback_embedding(self.active_control).to(embedded)
         return (embedded,)
 
     def load_learned(self, state):
@@ -60,7 +69,7 @@ class PersonaBundle(nn.Module):
         if self.control is not None:
             if control_states is None or control_states.shape != inputs[:, 0].shape:
                 raise ValueError("Missing or misaligned causal client feedback")
-            embedded = embedded + self.control(control_states).to(embedded)
+            embedded = embedded + self.feedback_embedding(control_states).to(embedded)
         elif control_states is not None:
             raise ValueError("Feedback supplied to an unconfigured native model")
         hidden, text = self.model.forward_embeddings(embedded)

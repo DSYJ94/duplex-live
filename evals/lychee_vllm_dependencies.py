@@ -28,11 +28,17 @@ def main():
     if {line.split('==')[0] for line in pins}!=PACKAGES:
         raise RuntimeError('Pinned CPU runtime dependencies missing from released lock')
     protected=('torch','torchaudio','torchvision','triton')
-    before={name:importlib.metadata.version(name) for name in protected}
+    def versions():
+        result={}
+        for name in protected:
+            try: result[name]=importlib.metadata.version(name)
+            except importlib.metadata.PackageNotFoundError: result[name]=None
+        return result
+    before=versions()
     args.out.mkdir(exist_ok=False)
     subprocess.run([sys.executable,'-m','pip','install','--no-deps','--only-binary=:all:',
         '--disable-pip-version-check','--target',str(args.target),'--report',str(args.out/'pip-report.json'),*pins],check=True)
-    if before!={name:importlib.metadata.version(name) for name in protected}:
+    if before!=versions():
         raise RuntimeError('Protected container GPU stack changed')
     record={'schema':'dl-lychee-vllm-dependencies-v1','source_commit':SOURCE_COMMIT,
         'lock_sha256':sha256(lock),'pins':pins,'target':str(args.target),'protected_gpu_stack':before,
