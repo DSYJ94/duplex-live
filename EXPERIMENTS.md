@@ -3131,3 +3131,21 @@ arrived audio features/embeddings/tail and actual receipt clocks. They contain
 no gold future labels yet. Validation/test history is rejected before tensor
 access; future/unreceived results are rejected. State collection invalidates
 latency qualification. Two collection-boundary regressions pass.
+
+
+**Plain words — actual student history ready for native semantic assembly:**
+7452624–31 complete all eight approved private TRAIN scenes. Every run stores an
+actual completed-result snapshot and a later native listening snapshot, with
+all sampled student history and received audio preserved. All omit the value;
+these are useful error contexts, not successful candidates. Native replay now
+captures the actual complete prefill on the next arrived user chunk, then
+appends a verified gold reply only where all remaining real user audio is quiet.
+The quiet extension is an explicit training augmentation, never an inference
+result. Native S-S/detect/sleep/K-S/S-L grammar and all S3 units must round-trip
+through the native decoder exactly. Only future words and EOT receive loss;
+all old history and speech/control labels are masked. Every first target is
+after the actual receipt and the snapshot clock. Gold speech must have exact
+independent transcript agreement (stronger than the 0.08 corpus bar) and contain
+the actual returned value. Missing or failed gold segments remain excluded.
+A layout regression checks future timing, native boundaries and codec retention.
+Native GPU assembly and an adapter gradient/preservation/reload proof are next.

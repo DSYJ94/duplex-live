@@ -21,6 +21,9 @@ def main():
     ap.add_argument('--warm-input',action='store_true')
     ap.add_argument('--event-socket',type=Path)
     ap.add_argument('--forward-capture',action='store_true')
+    ap.add_argument('--training-states',type=Path,nargs='+')
+    ap.add_argument('--codec-data',type=Path)
+    ap.add_argument('--codec-audit',type=Path)
     ap.add_argument('--worker-context',action='store_true')
     ap.add_argument('--collect-training-state',action='store_true')
     ap.add_argument('--static-context-diagnostic',action='store_true')
@@ -32,6 +35,9 @@ def main():
     args=ap.parse_args()
     if args.worker_context and (not args.data or not args.scenario):
         ap.error('Actual worker context requires approved development data/scenario')
+    if args.training_states and (not args.data or not args.codec_data or not args.codec_audit
+            or args.worker_context or args.event_socket or args.forward_capture):
+        ap.error('Native training assembly needs source approval, codec audit and actual TRAIN states as a separate mode')
     if args.collect_training_state and (not args.worker_context or args.static_context_diagnostic
             or args.private_value or args.result_response!='model' or args.result_delivery!='immediate'):
         ap.error('TRAIN history requires actual worker, unchanged world, sampled control and immediate receipt')
@@ -62,7 +68,7 @@ def main():
     imported=json.loads((args.preflight/'python-import.json').read_text())
     if (not kernels['passed'] or not imported['passed'] or sha256(args.runtime/'vllm/_C.abi3.so')!=kernels['library_sha256']):
         raise RuntimeError('Actual native kernel/import proof is missing or changed')
-    if not args.worker_context:
+    if not args.worker_context and not args.training_states:
         checked_rows(args.batch,[{'scenario_id':'dense_dialog-001'}],role='Lychee released backend benchmark')
     assets=json.loads(args.assets.read_text());source=Path(assets['source'])
     if (assets['source_commit']!=SOURCE_COMMIT or subprocess.check_output(['git','-C',str(source),'rev-parse','HEAD'],text=True).strip()!=SOURCE_COMMIT
@@ -102,6 +108,10 @@ def main():
         from evals.lychee_warmup import warm_input
         environment['input_warmup']=warm_input(framework)
         (args.out/'environment.json').write_text(json.dumps(environment,indent=2)+'\n')
+    if args.training_states:
+        from evals.lychee_training_inputs import run
+        run(framework,args,loading)
+        return
     if args.worker_context:
         from evals.lychee_worker import run
         from evals.lychee_vllm_loading import audited_side_tokens
