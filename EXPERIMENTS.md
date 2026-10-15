@@ -2722,3 +2722,15 @@ explicit worker-text diagnostics; ARC training prefix is not silently changed.
 Native action heads must match the exact recorded role under which their
 self-history states were collected. A scheduled private diagnostic can isolate
 the role change while a new TRAIN-only policy-state collection is prepared.
+
+**Plain words — CUDA13 native API correction:** 7436650 reaches native CUDA
+compilation and fails on removed cub::Sum/Max operators. NVIDIA's CCCL3 migration
+guide specifies cuda::std::plus, cuda::maximum and cuda::minimum replacements.
+A recorded compatibility script checks the exact six original source hashes,
+changes only these names/includes in the isolated build checkout, and records
+after hashes plus diff SHA. It never modifies the accepted vendor checkout or
+weights. Native numerical tests and strict complete model loading remain required.
+Independent audio audit 7436865 rejects direct spoken-text forcing: WER .2941,
+.0857 and .20; the returned private words are not reliably spoken as written.
+These samples remain diagnostic and unapproved. The new role test 7437019 and
+matching TRAIN-only policy-state collection 7437020 are running. No model passes.

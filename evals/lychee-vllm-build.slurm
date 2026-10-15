@@ -45,12 +45,13 @@ print(json.dumps(record),flush=True)
 PY
 python -m pip install --no-deps --target "$OUT/build-deps" \
  cmake==3.31.6 ninja==1.11.1.3 setuptools-scm==8.3.1
-export PYTHONPATH="$OUT/build-deps"
+export PYTHONPATH="$OUT/build-deps:$DL/repo"
 export PATH="$OUT/build-deps/bin:$PATH"
 export MAX_JOBS=8 NVCC_THREADS=1 TORCH_CUDA_ARCH_LIST=9.0 VLLM_TARGET_DEVICE=cuda
 export SETUPTOOLS_SCM_PRETEND_VERSION=0.6.5+lychee
 export CMAKE_BUILD_PARALLEL_LEVEL=8
 export VLLM_FETCHCONTENT_BASE_DIR="$OUT/fetch-content"
+python -m evals.lychee_cuda13_compat --source "$BUILD" --out "$OUT/compatibility.json"
 python -m pip wheel --no-build-isolation --no-deps \
  --wheel-dir "$OUT/wheels" "$BUILD/third_party/vllm"
 python - <<'PY'
