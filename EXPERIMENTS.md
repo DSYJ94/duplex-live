@@ -2761,3 +2761,27 @@ turn timing. Six native frames per inferred word are tested instead of four.
 No such inference slots are approved word-time training labels. The goal is to
 separate abrupt utterance interruption/pace from a fundamental speech decoder
 limitation; unchanged immediate/four-frame controls remain available.
+
+**Plain words — causal feedback experiment, 15 October:** quiet handoff trials
+7437911/12/13/14 still fail content/receipt timing. The separate action head can
+start a worker, but the speech transformer has no explicit pending/cancel state.
+An optional zero-initialized six-state embedding now supplies only dispatched
+client state and actually observed receipts. Chosen actions affect the following
+frame, never their own neural input. Prefix state stays identically zero. The
+bounded experiment warm-starts the generic-role self-history head 7436033, freezes
+language adapters and policy weights, and trains the bridge/state inputs only.
+It must preserve feedback-disabled speech exactly and fresh-process reload all
+outputs exactly before native free-running tests. This is a hypothesis, not a
+fix established by speech quality or task success.
+
+A real label defect was also found: historical teacher cancellation 020 retained
+generic delegate notes for both calls. Derivation v2 uses its strictly bounded
+lookup-then-cancel chronology and actual receipt; a regression failed before the
+fix and passes after. Immutable approved data is unchanged. Future conversions
+retain the actual distinction directly. Existing checkpoints are not relabeled
+as if they had trained with this correction.
+
+Lychee build 7437283 compiles and links all 116 native targets after the recorded
+CUDA13 reduction-name migration, then fails while copying FlashAttention Python
+files into a missing package directory. This is a packaging failure; no native
+kernel or complete model-loading qualification has passed yet.

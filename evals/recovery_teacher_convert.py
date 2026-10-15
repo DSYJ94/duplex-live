@@ -31,7 +31,10 @@ def measured_timeline(sid,words,source_timeline,delegations,arrivals):
             if received < first_end:
                 raise ValueError("Teacher delegation predates complete sealed private question")
             marker = math.ceil(received/.08)*80
-            events.append(Event("assistant",marker,kind="marker",note="delegate actual teacher worker"))
+            cancel = (source_timeline["meta"].get("kind") == "cancel" and
+                any(a["task_id"] == delegation["delegation"]["id"] for a in arrivals))
+            events.append(Event("assistant",marker,kind="marker",
+                note="delegate actual teacher cancellation" if cancel else "delegate actual teacher lookup"))
     metadata = {**source_timeline["meta"],"scenario_id":sid,"split":"train","source_model":"gpt-live-1",
         "reference_arrivals":arrivals,"verified":False,"teacher_audio":True,
         "timing_scope":"measured output WAV words and actual client tool-result receipt times"}

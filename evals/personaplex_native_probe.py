@@ -59,6 +59,9 @@ def main():
             or max(reload["errors"].values()) != 0. or trained["checkpoint_sha256"] != checkpoint_sha
             or reload["checkpoint_sha256"] != checkpoint_sha or trained["voice_sha256"] != sha256(args.voice)):
         raise RuntimeError("Native joint checkpoint did not pass exact fresh-process reload")
+    control_feedback = trained.get("control_feedback", False)
+    if control_feedback and (args.result_input != "arc" or args.instructions != "teacher"):
+        raise ValueError("Causal state feedback is only trained for native ARC and the original role")
     data = validate_conversion(args.data)
     row = next(r for r in data["accepted"] if r["scenario_id"] == args.scenario)
     if row["split"] != "validation" or row["scenario_id"] in trained["training_scenarios"]:
@@ -92,7 +95,7 @@ def main():
         "arc_manifest_sha256":sha256(args.manifest), "native_action_choice":args.dispatch_mode == "native",
         "scheduled_dispatch":args.dispatch_mode != "native", "zero_adapters":args.zero_adapters,
         "result_input":args.result_input, "worker_text_forced":args.result_input == "spoken-text",
-        "role_prompt":role,
+        "role_prompt":role, "control_feedback":control_feedback,
         "inference_text_pace_frames":args.worker_word_frames if args.result_input == "spoken-text" else None,
         "worker_handoff":args.worker_handoff,
         "worker_handoff_rule":"five arrived quiet user/output frames; pause worker text on user speech" if args.worker_handoff == "quiet" else None,
@@ -116,7 +119,7 @@ def main():
 
     def load_foreground(*pos, **kw):
         lm = original_loader(*pos, **kw).eval().requires_grad_(False)
-        bundle = PersonaBundle(lm)
+        bundle = PersonaBundle(lm, control_feedback=control_feedback)
         if not args.zero_adapters:
             bundle.load_learned(load_file(args.checkpoint / "adapters.safetensors", device="cuda"))
         bundle.eval().requires_grad_(False)
@@ -130,7 +133,7 @@ def main():
         holder.update(bundle=bundle, policy_logits=policy_logits,
             reference_bridge=reference_bridge,
             force_token=torch.zeros(1, dtype=torch.long, device="cuda"), force_text=False,
-            bridge_hook=lm.transformer.register_forward_pre_hook(reference_bridge.temporal_input),
+            bridge_hook=lm.transformer.register_forward_pre_hook(bundle.temporal_input if control_feedback else reference_bridge.temporal_input),
             policy_hook=lm.text_linear.register_forward_pre_hook(capture_policy))
         return lm
 
@@ -149,7 +152,7 @@ def main():
 
     started, edge, last_dispatch = None, 0, -10.
     with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
-        def before_frame(frame, prior):
+        def update_frame(frame, prior):
             nonlocal started, edge, last_dispatch
             if started is None:
                 started = time.monotonic()-frame["input_consumed_s"]
@@ -248,11 +251,21 @@ def main():
             task_id = f"native-{len(jobs)}"
             revision = world.reserve(task_id, context=context)
             dispatch = time.monotonic()
-            jobs[task_id] = {"future":pool.submit(work, task_id, context, revision, dispatch), "observed":False}
+            jobs[task_id] = {"future":pool.submit(work, task_id, context, revision, dispatch), "observed":False, "action":action}
             last_dispatch = now
             action_record["dispatched"] = True
             events.append({"event":"worker_started", "task_id":task_id, "at_s":now,
                 "action":action, "context":context, "input_available_s":frame["input_available_s"]})
+
+        def before_frame(frame, prior):
+            update_frame(frame, prior)
+            if control_feedback:
+                from evals.personaplex_control import live_feedback_state, CONTROL_STATES
+                with world.lock:
+                    cancelled = {identity for identity,task in world.tasks.items() if task["cancelled"]}
+                state = live_feedback_state(jobs, cancelled, events)
+                holder["bundle"].set_control(state)
+                frame["client_feedback_state"] = CONTROL_STATES[state]
 
         offline.loaders.get_moshi_lm = load_foreground
         if args.result_input == "spoken-text":
@@ -280,7 +293,7 @@ def main():
         "checkpoint_sha256":checkpoint_sha, "native_action_choice":args.dispatch_mode == "native",
         "scheduled_dispatch":args.dispatch_mode != "native", "zero_adapters":args.zero_adapters,
         "result_input":args.result_input, "worker_text_forced":args.result_input == "spoken-text",
-        "role_prompt":role,
+        "role_prompt":role, "control_feedback":control_feedback,
         "worker_word_frames":args.worker_word_frames, "worker_handoff":args.worker_handoff,
         "backend_context":"causal measured-word oracle; not live ASR", "worker_events":events,
         "worker_dispatches":len(jobs), "unobserved_workers":sum(not j["observed"] for j in jobs.values()),

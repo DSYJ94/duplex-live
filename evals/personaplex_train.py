@@ -30,7 +30,12 @@ def main():
     ap.add_argument("--reload", action="store_true")
     ap.add_argument("--freeze-language", action="store_true",
                     help="Train reference/action modules only, preserving native speech without reference")
+    ap.add_argument("--control-feedback", action="store_true")
+    ap.add_argument("--freeze-policy", action="store_true")
+    ap.add_argument("--init-checkpoint", type=Path)
     args = ap.parse_args()
+    if args.control_feedback and (not args.freeze_language or not args.freeze_policy):
+        ap.error("Initial feedback experiment must preserve language adapters and the action head")
     if not 8 <= args.steps <= 128 or args.steps % 8:
         ap.error("Development run requires 8-128 steps in blocks of eight")
     import torch
@@ -42,7 +47,8 @@ def main():
     from evals.personaplex_bundle import PersonaBundle
     from evals.personaplex_adapters import checkpoint_language_layers
     from evals.personaplex_history import delayed_history, delayed_targets
-    from evals.personaplex_policy import action_targets
+    from evals.personaplex_policy import action_targets, ACTION_TARGET_SCHEMA
+    from evals.personaplex_control import feedback_schedule, CONTROL_STATES
     from evals.recovery_data import validate_cache
     from evals.recovery_result_scope import private_result_frames
     from evals.moshi_training_smoke import tensor_hashes
@@ -71,7 +77,29 @@ def main():
         sys.executable, "-m", "evals.cuda_linker_path", "--out",
         str(args.out / ("driver-reload" if args.reload else "driver"))], text=True).strip()
     lm = loaders.get_moshi_lm(args.model / "model.safetensors", device="cuda", dtype=torch.float32).eval().requires_grad_(False)
-    bundle = PersonaBundle(lm)
+    reload_report = json.loads((args.out / "report.json").read_text()) if args.reload else None
+    control_feedback = reload_report.get("control_feedback", False) if args.reload else args.control_feedback
+    bundle = PersonaBundle(lm, control_feedback=control_feedback)
+    parent = None
+    if args.init_checkpoint and not args.reload:
+        parent = json.loads((args.init_checkpoint / "report.json").read_text())
+        parent_reload = json.loads((args.init_checkpoint / "reload-report.json").read_text())
+        from evals.personaplex_prompts import prompt_receipt
+        digest = sha256(args.init_checkpoint / "adapters.safetensors")
+        if (parent["schema"] != "dl-personaplex-joint-train-v1" or not parent["passed"]
+                or not parent["frozen_weights_unchanged"] or not parent_reload["passed"]
+                or not parent_reload["fresh_process"] or max(parent_reload["errors"].values()) != 0.
+                or parent["checkpoint_sha256"] != digest or parent_reload["checkpoint_sha256"] != digest
+                or parent["model_hashes"] != MODEL_HASHES or parent["voice_sha256"] != sha256(args.voice)
+                or parent["template_sha256"] != sha256(args.template / "fixed-reference.pt")
+                or parent.get("policy_prompt", prompt_receipt("teacher")) != prompt_receipt("teacher")):
+            raise RuntimeError("Warm-start parent did not pass native pins/reload or uses a different role")
+        state = load_file(args.init_checkpoint / "adapters.safetensors", device="cuda")
+        if control_feedback and "control.weight" not in state:
+            state["control.weight"] = torch.zeros_like(bundle.control.weight)
+        bundle.load_learned(state)
+    if args.freeze_policy:
+        bundle.policy.requires_grad_(False)
     if args.freeze_language:
         from evals.personaplex_adapters import adapter_parameters
         for parameter in adapter_parameters(lm).values():
@@ -131,6 +159,9 @@ def main():
         actions = action_targets(sample["codes"][0, 0].tolist(), sidecar["timeline"])
         phrase = private_result_frames(sidecar, clean[0, 0].tolist(), tokenizer.encode) if row["kind"] in ("private", "clarify") else []
         fixed = {"inputs": inputs.cuda(), "targets": targets.cuda(), "reference": reference.cuda(), "prefix_frames": prefix}
+        if control_feedback:
+            states = feedback_schedule(actions, sidecar["reference_arrivals"], row["kind"])
+            fixed["control_states"] = torch.tensor([[0]*prefix+states], device="cuda")
         return fixed, torch.tensor([actions], device="cuda"), phrase
 
     def loss_metrics(row):
@@ -176,15 +207,25 @@ def main():
 
     frozen = tensor_hashes((n,p) for n,p in lm.named_parameters() if not p.requires_grad)
     initial = tensor_hashes(learned.items())
+    frozen_learned = tensor_hashes((n,p) for n,p in learned.items() if not p.requires_grad)
     fixed, _, _ = prepare(next(r for r in train if r["kind"] == "private"))
     reference_free = {**fixed, "reference":torch.zeros_like(fixed["reference"])}
+    # Disabling new feedback must preserve the warm-start voice exactly. The
+    # actual ready/pending states intentionally change body logits after learning.
+    if control_feedback:
+        reference_free["control_states"] = torch.zeros_like(reference_free["control_states"])
     reference_free_before = precise(reference_free) if args.freeze_language else None
     # Native proof established the adapter implementation; this run additionally
     # checks its own zero-initialized bundle against the frozen base text/audio.
     with torch.inference_mode(), no_compile(), no_cuda_graph():
         before = bundle(**fixed)
         from evals.personaplex_depth import native_audio_logits
-        h, t = lm.forward_codes(fixed["inputs"])
+        if parent is None:
+            h, t = lm.forward_codes(fixed["inputs"])
+        else:
+            embedded = lm.embed_codes(fixed["inputs"])
+            embedded = embedded + bundle.bridge.transform(fixed["reference"]).to(embedded)
+            h, t = lm.forward_embeddings(embedded)
         a = native_audio_logits(lm, fixed["targets"], h[:, prefix:])
         zero_errors = {"text":float((before["text"]-t[:, :, prefix:]).abs().max()), "audio":float((before["audio"]-a).abs().max())}
     del before,h,t,a
@@ -192,7 +233,7 @@ def main():
         raise RuntimeError("Initial bundle changed frozen native speech outputs")
     optimizer = torch.optim.AdamW([
         {"params":[p for n,p in learned.items() if n.startswith("language.") and p.requires_grad], "lr":2e-5},
-        {"params":[p for n,p in learned.items() if not n.startswith("language.")], "lr":1e-3}], weight_decay=0.)
+        {"params":[p for n,p in learned.items() if not n.startswith("language.") and p.requires_grad], "lr":1e-3}], weight_decay=0.)
     report = {"schema":"dl-personaplex-joint-train-v1", "repo_commit":subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
         "model_hashes":MODEL_HASHES, "voice_sha256":sha256(args.voice), "proof_sha256":sha256(args.proof / "report.json"),
         "template_sha256":sha256(args.template / "fixed-reference.pt"), "prefix_frames":prefix,
@@ -200,7 +241,12 @@ def main():
         "training_scenarios":[r["scenario_id"] for r in train], "test_fold_used_for_training_or_selection":False,
         "trainable_count":sum(p.numel() for p in learned.values() if p.requires_grad),
         "saved_parameter_count":sum(p.numel() for p in learned.values()), "replaced_linears":bundle.replaced,
-        "language_frozen":args.freeze_language,
+        "language_frozen":args.freeze_language, "policy_frozen":args.freeze_policy,
+        "control_feedback":control_feedback, "control_states":list(CONTROL_STATES) if control_feedback else None,
+        "action_target_schema":ACTION_TARGET_SCHEMA,
+        "parent_checkpoint":None if parent is None else {"path":str(args.init_checkpoint),
+            "sha256":parent["checkpoint_sha256"], "report_sha256":sha256(args.init_checkpoint / "report.json"),
+            "optimizer_steps":parent["optimizer_steps"]},
         "zero_errors":zero_errors, "validation_before":evaluate("before"), "losses":[],
         "policy_classes":["idle", "delegate", "cancel"], "acoustic_parameters_frozen":True,
         "native_routing_qualified":False, "quality_qualified":False}
@@ -225,7 +271,15 @@ def main():
         norm = torch.nn.utils.clip_grad_norm_(list(learned.values()), 1.)
         if not torch.isfinite(norm):
             raise RuntimeError("Nonfinite joint gradient norm")
+        control_gradient = None
+        if control_feedback:
+            control_gradient = float(bundle.control.weight.grad.norm()) if bundle.control.weight.grad is not None else 0.
+            if not control_gradient > 0. or bundle.control.weight.grad[0].count_nonzero():
+                raise RuntimeError("Missing causal feedback gradient or prefix state received a gradient")
         optimizer.step()
+        if control_feedback and bundle.control.weight[0].count_nonzero():
+            raise RuntimeError("Feedback changed the fixed native voice prefix")
+        metrics.update(control_gradient_norm=control_gradient)
         metrics.update(step=step+1, gradient_norm=float(norm), elapsed_s=time.monotonic()-started)
         report["losses"].append(metrics)
         print(json.dumps(metrics), flush=True)
@@ -233,11 +287,16 @@ def main():
             save_file({n:p.detach().cpu().contiguous() for n,p in learned.items()}, args.out / f"step-{step+1:04d}.safetensors")
     if frozen != tensor_hashes((n,p) for n,p in lm.named_parameters() if not p.requires_grad):
         raise RuntimeError("Frozen native speech weights changed")
+    if frozen_learned != tensor_hashes((n,p) for n,p in learned.items() if not p.requires_grad):
+        raise RuntimeError("Frozen learned language/action parameters changed")
+    report["frozen_learned_unchanged"] = True
     report["validation_after"] = evaluate("after")
     if args.freeze_language:
         after = precise(reference_free)
         errors = {n:float((after[n]-reference_free_before[n]).abs().max()) for n in ("text", "audio")}
-        report["reference_free_speech_errors"] = errors
+        report["feedback_disabled_speech_errors" if control_feedback else "reference_free_speech_errors"] = errors
+        if control_feedback:
+            report["prefix_control_embedding_exact_zero"] = not bool(bundle.control.weight[0].count_nonzero())
         if max(errors.values()) != 0.:
             raise RuntimeError("Reference/action-only training changed reference-free speech")
     report["changed_tensors"] = sum(initial[n] != digest for n,digest in tensor_hashes(learned.items()).items())
