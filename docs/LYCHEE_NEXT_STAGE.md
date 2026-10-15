@@ -124,3 +124,23 @@ independent transcript agreement (stronger than the 0.08 corpus bar) and contain
 the actual returned value. Missing or failed gold segments remain excluded.
 A layout regression checks future timing, native boundaries and codec retention.
 Native GPU assembly and an adapter gradient/preservation/reload proof are next.
+
+
+**Plain words — native semantic inputs passed:** 7452831 builds seven causal
+TRAIN examples from the actual collected native listening histories. The eighth
+source has no exactly transcribed native gold reply and stays excluded. Actual
+prefills contain 759–979 tokens; 8–9 future text/EOT targets per example begin at
+25.2–34.8s, after the corresponding real worker returns at 8.8–11.6s. Native
+word/code/control decoding reproduces each gold reply and all codec units exactly.
+The quiet future is explicitly an augmentation, not an inference result. No
+optimizer ran in this assembly.
+
+A bounded eight-update semantic LoRA proof is prepared on main layers 24–27
+only, after speech/control fork at 24/20. It freezes every base parameter and
+uses only future semantic text loss on approved native inputs. It must establish
+zero-adapter identity, preserved CPU/CUDA construction RNG, finite nonzero
+gradients in all intended tensors, identical frozen parameter hashes, unchanged
+raw speech/control hidden outputs for the same input, changed text logits and
+exact fresh-adapter reload. Every data consumer revalidates source quality and
+hashes of native units, independent audits and actual student histories. A pass
+would prove implementation only, not task performance or merged native deployment.
