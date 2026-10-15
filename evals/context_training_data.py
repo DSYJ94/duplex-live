@@ -9,7 +9,7 @@ from pathlib import Path
 from evals.moshi_model_download import sha256
 
 
-def load_training(caches, spm, prefix, max_frames=1100):
+def load_training(caches, spm, prefix, max_frames=1100, text_padding='legacy-epad0'):
     import torch
     from contextspan.model.sequence_convention import assemble_training_sequence, context_span_ids
     from evals.recovery_data import validate_cache, validate_conversion
@@ -17,6 +17,8 @@ def load_training(caches, spm, prefix, max_frames=1100):
     from evals.recovery_result_scope import private_result_frames
     from evals.personaplex_train import MODEL_HASHES
     examples, records, seen, waves = [], [], set(), set()
+    if text_padding not in ('legacy-epad0', 'context-pad3'):
+        raise ValueError('Unknown explicit text-padding convention')
     for cache in caches:
         receipt = validate_cache(cache)
         data = validate_conversion(Path(receipt['conversion']))
@@ -63,6 +65,9 @@ def load_training(caches, spm, prefix, max_frames=1100):
                 spans.append({'inject_frame': frame, 'reference': arrival['text']})
             if len({s['inject_frame'] for s in spans}) != len(spans):
                 raise RuntimeError('Ambiguous simultaneous spans require explicit ordering')
+            epad_count = int((codes[0] == 0).sum())
+            if text_padding == 'context-pad3':
+                codes[0, codes[0] == 0] = 3
             assembled, tmask, amask = assemble_training_sequence(
                 codes, torch.ones(codes.shape[1], dtype=torch.bool), spans, spm)
             # Verify every real text token survives, with only masked span tokens added.
@@ -90,8 +95,11 @@ def load_training(caches, spm, prefix, max_frames=1100):
                     else 'approved declared synthetic schedule',
                 'user_targets': 'clean separate user stem, including silence and overlap',
                 'echo_only_user_targets_excluded': 0}
+            if text_padding == 'context-pad3':
+                record.update(text_padding_convention=text_padding, epad0_replaced_by_pad3=epad_count,
+                    source_dispatch_times_changed=False, measured_word_targets_changed=False)
             examples.append({'codes': assembled, 'text_mask': tmask, 'audio_mask': amask,
-                'user_target_mask': amask.clone(), 'record': record})
+                'user_target_mask': amask.clone(), 'record': record, 'clean_codes': codes})
             records.append(record)
     if len(examples) < 16 or {r['kind'] for r in records} != {'private', 'simple', 'clarify', 'cancel'}:
         raise RuntimeError('Insufficient TRAIN retention/control coverage')

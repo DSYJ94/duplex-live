@@ -34,6 +34,8 @@ def main():
     ap.add_argument('--teacher-audit', type=Path, action='append')
     ap.add_argument('--reload', action='store_true')
     ap.add_argument('--history-audit-only', action='store_true')
+    ap.add_argument('--history-audit', action='store_true')
+    ap.add_argument('--text-padding', choices=('legacy-epad0','context-pad3'), default='legacy-epad0')
     args = ap.parse_args()
     if args.steps == 128 and (not args.pilot_preflight or not args.layout_audit):
         ap.error('Bounded pilot requires the passed eight-update proof and native history audit')
@@ -118,7 +120,7 @@ def main():
         torch.save({'codes': voice}, args.out / 'voice.pt')
     del mimi
     prefix = persona_prefix(BASE_INSTRUCTIONS, voice, spm)
-    examples, records = load_training(args.cache, spm, prefix)
+    examples, records = load_training(args.cache, spm, prefix, text_padding=args.text_padding)
     (args.out / 'data.json').write_text(json.dumps(records, indent=2) + '\n')
     if parent and (parent['data_sha256'] != sha256(args.out / 'data.json')
             or parent['voice_reference_sha256'] != sha256(args.voice_reference)):
@@ -136,17 +138,19 @@ def main():
         return
     # Fixed complete TRAIN private case; no random window or validation-derived labels.
     first = next(e for e in examples if e['record']['kind'] == 'private')
-    if args.history_audit_only:
+    if args.history_audit_only or args.history_audit:
         from evals.context_history_audit import audit
         sample = torch.load(Path(first['record']['cache']) / (first['record']['id'] + '.pt'),
             map_location='cpu', weights_only=True)
+        sample['codes'] = first['clean_codes'][None]
         result = audit(lm, spm, prefix, first, sample)
         result.update(source_commit=SOURCE_COMMIT, data_sha256=sha256(args.out / 'data.json'),
             layout_code_sha256=sha256(Path(__file__).with_name('context_native_layout.py')),
             repo_commit=subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip())
         (args.out / 'history-audit.json').write_text(json.dumps(result, indent=2) + '\n')
         print(json.dumps(result), flush=True)
-        return
+        if args.history_audit_only: return
+        if not result['candidate_passed']: raise RuntimeError('Integrated actual history audit failed')
     def tensors(example):
         return {k: example[k].cuda()[None] for k in ('codes', 'text_mask', 'audio_mask', 'user_target_mask')}
     fixed = tensors(first)
@@ -255,6 +259,7 @@ def main():
         'pilot_preflight': str(args.pilot_preflight) if parent else None,
         'initialization': 'released checkpoint, fresh zero-B adapters; preflight is a gate, not warm start',
         'user_loss': 'clean separate user stem, assistant semantic weight 1, other 15 heads .02',
+        'text_padding_convention': args.text_padding,
         'waveform_AEC_tested': False, 'base_audio_parameters_frozen': True,
         'audio_behavior_preservation_proven': False, 'quality_qualified': False, 'passed': True}
     (args.out / 'report.json').write_text(json.dumps(report, indent=2) + '\n')

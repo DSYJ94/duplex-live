@@ -43,7 +43,7 @@ def audit(lm, spm, examples, checkpoints):
             with torch.no_grad():
                 for name, p in learned.items(): p.copy_(state[name])
         groups = {name: dict(count=0, nll_sum=0., top1_correct=0, pad_probability_sum=0., ret_probability_sum=0.)
-            for name in ('ordinary_word', 'private_phrase', 'padding', 'eot', 'ret')}
+            for name in ('ordinary_word', 'private_phrase', 'padding', 'end_padding', 'ret')}
         for e, phrase in prepared:
             codes = e['codes'].cuda()[None]
             initial = lm._get_initial_token()
@@ -54,7 +54,7 @@ def audit(lm, spm, examples, checkpoints):
             targets = codes[:, 0]
             valid = valid[:, 0] & e['text_mask'].cuda()[None] & (targets >= 0)
             masks = {'ordinary_word': targets >= 5, 'private_phrase': phrase.cuda()[None],
-                'padding': targets == 3, 'eot': targets == 0, 'ret': targets == 4}
+                'padding': targets == 3, 'end_padding': targets == 0, 'ret': targets == 4}
             for name, mask in masks.items():
                 keep = mask & valid
                 if not keep.any(): continue
