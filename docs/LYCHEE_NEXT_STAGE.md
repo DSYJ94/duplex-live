@@ -39,9 +39,13 @@ default attention path. Matched no-cuDNN 7452937 and math 7452938 pass eight
 updates: 2,883,584 trainable parameters in main layers 24–27, unchanged frozen
 hashes, zero same-input speech/control drift and exact fresh-adapter reload.
 Checkpoint 7452937 SHA 5c238a774042eee2596350b53fd04afd83ea689b8ed470475001e7636adf7965.
-No task improvement is claimed yet. Next are cold native weight-merge and
-actual-worker comparisons in both validation worlds. Paired TRAIN histories
-7452946–58 are also collecting. Keep held-out data excluded from all training.
+Paired TRAIN histories 7452946–58 and causal assembly 7453119 complete
+15 usable examples. Both 64/128-step pilots 7453182/83 preserve frozen branches
+but their cold actual-worker replays fail: they invent room temperatures, and
+one value echo describes lightning instead of the record. Ordinary answers also
+drift. Do not scale this recipe. Next is exact fixed-state native continuation
+and input comparison to distinguish deployment/target mismatch from changed
+earlier student history. Keep held-out data excluded from all training.
 
 Code moves through Git only. New jobs use clean immutable worktrees and exact
 commits. Fetch full logs before local filtering. Preserve unrelated pyc, roadmap
@@ -184,3 +188,23 @@ Both arms retain zero/frozen/branch/gradient/reload gates and cannot qualify
 quality from loss. Their native actual-worker replays and ordinary answers
 must decide whether this recipe improves the task. No corpus-scale run is
 justified yet; no failed-gradient checkpoint is allowed.
+
+
+**Plain words — both longer semantic pilots fail actual tasks:** native
+7453230/38/39/40 (64) and 7453242/43/44/45 (128) invent room temperatures rather
+than returning the room marker. One 64-step client-event run says "The lightning
+is purple diamond", which is a literal value echo with the wrong referent and
+is not a correct result. Ordinary 7453241/46 also change science answers. No
+pilot qualifies; do not increase epochs or corpus scale on this recipe.
+
+Next diagnosis replays a saved approved TRAIN prefix with its supplied future
+S-S event and no supplied future word/acoustic code. It compares actual native
+first-layer input embeddings with the exact training tensor, then lets native
+words/speech codes run freely. Compare base, 64 and 128 on two original TRAIN
+records and a paired world. This separates mismatched inputs/deployment from
+on-policy trajectory drift; it cannot qualify native turn choice or live tasks.
+A literal text diagnostic separately attributes private words to their FIRST
+sampled subword, catches guesses that finish after result delivery, and never
+promotes matching text to correct claims, actual speech or full-task success.
+Two timing/echo regressions pass. The 200ms environment field is also explicitly
+scoped to the older Moshi interleaver; Lychee word-offset quality is unqualified.

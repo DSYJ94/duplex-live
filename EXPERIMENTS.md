@@ -3267,3 +3267,23 @@ semantic checkpoint. The parent records real receipts and distinguishes its
 scheduled dispatch/forced response control from native model choice. Only the
 LM child receives the API credential. No concurrent-worker outcome is claimed
 until the two-GPU job completes; this is not a microphone/browser trial.
+
+
+**Plain words — both longer semantic pilots fail actual tasks:** native
+7453230/38/39/40 (64) and 7453242/43/44/45 (128) invent room temperatures rather
+than returning the room marker. One 64-step client-event run says "The lightning
+is purple diamond", which is a literal value echo with the wrong referent and
+is not a correct result. Ordinary 7453241/46 also change science answers. No
+pilot qualifies; do not increase epochs or corpus scale on this recipe.
+
+Next diagnosis replays a saved approved TRAIN prefix with its supplied future
+S-S event and no supplied future word/acoustic code. It compares actual native
+first-layer input embeddings with the exact training tensor, then lets native
+words/speech codes run freely. Compare base, 64 and 128 on two original TRAIN
+records and a paired world. This separates mismatched inputs/deployment from
+on-policy trajectory drift; it cannot qualify native turn choice or live tasks.
+A literal text diagnostic separately attributes private words to their FIRST
+sampled subword, catches guesses that finish after result delivery, and never
+promotes matching text to correct claims, actual speech or full-task success.
+Two timing/echo regressions pass. The 200ms environment field is also explicitly
+scoped to the older Moshi interleaver; Lychee word-offset quality is unqualified.

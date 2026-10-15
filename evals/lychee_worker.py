@@ -141,4 +141,7 @@ def run(framework, args, loading, side_audit):
         'live_pcm_tested':False,'microphone_acceptance':False,'quality_qualified':False,'training_approved':False,
         'task_success':'pending independent spoken-value and receipt grading'}
     (args.out/'report.json').write_text(json.dumps(report,indent=2)+'\n')
+    if not static:
+        from evals.lychee_text_value_audit import audit
+        print(json.dumps({'literal_text_diagnostic':audit(args.out,framework.tokenizer,framework)}),flush=True)
     print(json.dumps({k:v for k,v in report.items() if k not in ('worker_events','strict_loading')}),flush=True)

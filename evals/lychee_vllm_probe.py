@@ -27,6 +27,9 @@ def main():
     ap.add_argument('--codec-audit',type=Path)
     ap.add_argument('--semantic-adapter',type=Path)
     ap.add_argument('--semantic-proof',type=Path)
+    ap.add_argument('--fixed-state-data',type=Path)
+    ap.add_argument('--fixed-state-histories',type=Path,nargs='+')
+    ap.add_argument('--fixed-state-scenarios',nargs='+')
     ap.add_argument('--worker-context',action='store_true')
     ap.add_argument('--collect-training-state',action='store_true')
     ap.add_argument('--static-context-diagnostic',action='store_true')
@@ -38,6 +41,9 @@ def main():
     args=ap.parse_args()
     if bool(args.semantic_adapter)!=bool(args.semantic_proof):
         ap.error('A semantic adapter needs its complete implementation proof')
+    if args.fixed_state_data and (not args.fixed_state_histories or not args.fixed_state_scenarios
+            or args.worker_context or args.training_states or args.event_socket):
+        ap.error('Fixed TRAIN state diagnosis is separate from live/worker collection')
     if args.semantic_adapter and (args.training_states or args.collect_training_state):
         ap.error('New student data collection pins the unadapted base at this stage')
     if args.worker_context and (not args.data or not args.scenario):
@@ -75,7 +81,7 @@ def main():
     imported=json.loads((args.preflight/'python-import.json').read_text())
     if (not kernels['passed'] or not imported['passed'] or sha256(args.runtime/'vllm/_C.abi3.so')!=kernels['library_sha256']):
         raise RuntimeError('Actual native kernel/import proof is missing or changed')
-    if not args.worker_context and not args.training_states:
+    if not args.worker_context and not args.training_states and not args.fixed_state_data:
         checked_rows(args.batch,[{'scenario_id':'dense_dialog-001'}],role='Lychee released backend benchmark')
     assets=json.loads(args.assets.read_text());source=Path(assets['source'])
     if (assets['source_commit']!=SOURCE_COMMIT or subprocess.check_output(['git','-C',str(source),'rev-parse','HEAD'],text=True).strip()!=SOURCE_COMMIT
@@ -102,7 +108,8 @@ def main():
         'assets_manifest_sha256':sha256(args.assets),'native_kernel_library_sha256':kernels['library_sha256'],
         'enforce_eager':True,'align_audio_input':True,'live_audio_or_delegation_qualified':False,
         'released_control_chunk_slots':10,'control_slot_seconds':.04,'input_window_seconds':.4,
-        'native_training_first_subword_offset_bar_ms':200,'response_start_latency_tested':False}
+        'moshi_interleaver_first_subword_offset_bar_ms':200,'lychee_text_word_offset_qualified':False,
+        'response_start_latency_tested':False}
     (args.out/'environment.json').write_text(json.dumps(environment,indent=2)+'\n')
     torch.manual_seed(424242)
     with strict_loading(model_path,args.semantic_adapter,args.semantic_proof) as loading:
@@ -119,6 +126,10 @@ def main():
         (args.out/'environment.json').write_text(json.dumps(environment,indent=2)+'\n')
     if args.training_states:
         from evals.lychee_training_inputs import run
+        run(framework,args,loading)
+        return
+    if args.fixed_state_data:
+        from evals.lychee_fixed_state import run
         run(framework,args,loading)
         return
     if args.worker_context:
