@@ -2648,3 +2648,13 @@ acceptance. A separate unprofiled experiment disables only cuDNN SDPA and compar
 actual BF16 decode tensors against cuDNN and float32 math; no model, sampling or
 cache change. Official backend/numerical reference:
 https://docs.pytorch.org/docs/2.9/generated/torch.nn.functional.scaled_dot_product_attention.html .
+
+**Plain words — action-only fitting prepared:** native self-history states are
+being collected for the 23 original TRAIN scenes (smoke 7435849 plus array
+7435911). A separate 512-update linear action-head fit is prepared, using only
+those captured states and approved control clocks. It leaves every speech and
+reference parameter identical to frozen-language parent 7435667, checks parent
+text/audio logits exactly, and requires another fresh-process reload. Neighboring
+idle frames within 160ms of a single declared action are ignored, not relabeled;
+no added positive actions, speech labels or word timestamps. Whole-task native
+replays remain mandatory. Lychee attention-only comparison is job 7435951.
