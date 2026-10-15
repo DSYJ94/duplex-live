@@ -66,7 +66,8 @@ def main():
     if not args.reload:
         args.out.mkdir(parents=True, exist_ok=False)
     os.environ["TRITON_LIBCUDA_PATH"] = subprocess.check_output([
-        sys.executable, "-m", "evals.cuda_linker_path", "--out", str(args.out / "driver")], text=True).strip()
+        sys.executable, "-m", "evals.cuda_linker_path", "--out",
+        str(args.out / ("driver-reload" if args.reload else "driver"))], text=True).strip()
     lm = loaders.get_moshi_lm(args.model / "model.safetensors", device="cuda", dtype=torch.float32).eval().requires_grad_(False)
     bundle = PersonaBundle(lm)
     learned = bundle.learned_parameters()

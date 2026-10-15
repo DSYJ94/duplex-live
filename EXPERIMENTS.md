@@ -2555,3 +2555,11 @@ their original whitespace. Two real worker-call regression checks reject invente
 project identification and retain valid split-word user identification. Thirty
 related worker/protocol/teacher/context/action tests pass; live control/model
 behavior still requires fresh API recordings and independent audits.
+
+**Plain words — eight updates completed:** 7435021 saves a checkpoint after all
+eight joint updates (37.16GB peak GPU allocation), with frozen base hashes
+unchanged. The subsequent fresh-process check stops before model loading because
+its job-local driver directory already exists. Fix uses a separate reload driver
+directory; a reload-only job can verify the existing checkpoint without training
+it again. Saved SHA c4fc44a6fa17d363f7629bb202be1950f9a49ffab4ad1b0f5491a115558f9612.
+No generated-speech or routing pass is inferred from these eight updates.

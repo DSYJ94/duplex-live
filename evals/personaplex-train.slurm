@@ -20,8 +20,16 @@ ARGS+=(--model "$DL/models/hf-cache/hub/models--nvidia--personaplex-7b-v1/snapsh
  --voice "$DL/runs/voice-quality-7414595/codec/reference.wav"
  --template "$DL/runs/personaplex-bridge-7428894"
  --proof "$DL/runs/personaplex-history-7434702"
- --steps "${PERSONA_STEPS:-8}" --out "$DL/runs/personaplex-train-${SLURM_JOB_ID}")
-for MODE in train reload; do
+ --steps "${PERSONA_STEPS:-8}" --out "${PERSONA_RELOAD_DIR:-$DL/runs/personaplex-train-${SLURM_JOB_ID}}")
+MODES=(train reload)
+if [ "${PERSONA_RELOAD_ONLY:-0}" = 1 ]; then
+ : "${PERSONA_RELOAD_DIR:?Existing checkpoint directory required}"
+ MODES=(reload)
+elif [ -n "${PERSONA_RELOAD_DIR:-}" ]; then
+ echo 'Existing checkpoint directory can only be used for reload' >&2
+ exit 1
+fi
+for MODE in "${MODES[@]}"; do
  EXTRA=()
  if [ "$MODE" = reload ]; then EXTRA=(--reload); fi
  apptainer exec --nv --bind /projects,/lus,/home \
