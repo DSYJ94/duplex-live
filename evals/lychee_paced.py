@@ -7,10 +7,10 @@ import json
 import time
 
 
-def run_incremental(framework, audio, out, profiler=None):
+def run_incremental(framework, audio, out, profiler=None, before_chunk=None, on_event=None, session=None):
     import numpy as np
     import torch
-    session = framework.create_incremental_stream_session(
+    session = session or framework.create_incremental_stream_session(
         start_speak_token_factor=1., start_listen_token_factor=1.,
         bc_speak_token_factor=1., end_speak_token_factor=1., audio_incremental_mode=True)
     rows, events = [], []
@@ -23,10 +23,15 @@ def run_incremental(framework, audio, out, profiler=None):
                 due = end/16000
                 time.sleep(max(0., started+due-time.monotonic()))
                 before = time.monotonic()-started
+                if before_chunk is not None:
+                    session = before_chunk(session, {"input_available_s":due,"input_consumed_s":before,
+                        "input_start_s":offset/16000}, events)
                 for event in session.advance_stream(audio[offset:end], audio_is_incremental=True,
                         emit_generation_complete=False, flush_audio_tail=end == len(audio)):
                     record = {"available_s": time.monotonic()-started, "input_available_s": due,
                               "event": event}
+                    if on_event is not None:
+                        on_event(record)
                     # Released runtime events contain only JSON primitives.
                     log.write(json.dumps(record)+"\n")
                     if event["type"] == "speaking_token":

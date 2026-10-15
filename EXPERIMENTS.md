@@ -2963,3 +2963,17 @@ native speech/control token preserved. First use scheduled dispatch only as an
 explicit result-integration diagnostic, then require learned native dispatch.
 No word forcing, oracle private values or held-out training is authorized by
 that diagnostic. This interface is proposed and still needs a preservation proof.
+
+**Plain words — actual-text context interface prepared:** an inference-only
+Lychee diagnostic keeps the approved user waveform and every native text,
+acoustic and control token, while rebuilding only its nonspoken instruction
+prefix after an actual pending dispatch or completed receipt. Existing audio
+features/tail, next audio clock, relative speech mapping and RNG must survive
+exactly; unsafe text-only KV prefix caching is rejected. A paired different-value
+world test will check actual response dependence. Dispatch is scheduled and
+explicitly not a learned foreground choice. Backend context remains the measured
+word oracle. No assistant word/audio output is forced; no validation data enters
+training. The next runs must establish preservation and spoken correctness.
+The published constrained-model sampling path is recorded and its actual audio/
+control outputs are required at every step; missing outputs cause an error
+instead of an undocumented alternate-token fallback.

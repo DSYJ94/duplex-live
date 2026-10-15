@@ -98,3 +98,27 @@ def strict_loading(model_path):
     finally:
         model_lychee.LycheeDuplexForVLLM.load_weights=original_model
         engine.AudioPreprocessor._load_weights=original_audio
+
+
+@contextmanager
+def audited_side_tokens(engine):
+    """Require the released default's actual model-side audio/control outputs."""
+    if engine._strict_native_side_tokens:
+        raise RuntimeError('This experiment pins the released constrained-model sampling path')
+    cls=type(engine);descriptor=cls.__dict__['_extract_model_side_tokens']
+    original=engine._extract_model_side_tokens
+    record={'mode':'released constrained-model audio/control heads','steps':0,'fallbacks':0,
+        'text_only_prefix_cache_enabled':bool(engine._effective_prefix_caching)}
+    if record['text_only_prefix_cache_enabled']:
+        raise RuntimeError('Audio-dependent KV prefix reuse is unsafe')
+    def read():
+        values=original();record['steps']+=1
+        if any(v is None for v in values):
+            record['fallbacks']+=1
+            raise RuntimeError('Missing actual model-side audio/control token; do not fall back silently')
+        return values
+    cls._extract_model_side_tokens=staticmethod(read)
+    try:
+        yield record
+    finally:
+        cls._extract_model_side_tokens=descriptor

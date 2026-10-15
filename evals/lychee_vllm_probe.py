@@ -17,7 +17,15 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__)
     for name in ('assets','batch','runtime','preflight','out'):
         ap.add_argument('--'+name,type=Path,required=True)
+    ap.add_argument('--worker-context',action='store_true')
+    ap.add_argument('--data',type=Path)
+    ap.add_argument('--scenario')
+    ap.add_argument('--private-value')
     args=ap.parse_args()
+    if args.worker_context and (not args.data or not args.scenario):
+        ap.error('Actual worker context requires approved development data/scenario')
+    if args.private_value and not args.worker_context:
+        ap.error('Counterfactual private value is only an actual-worker diagnostic world')
     import numpy as np
     import soundfile as sf
     import torch
@@ -33,7 +41,8 @@ def main():
     imported=json.loads((args.preflight/'python-import.json').read_text())
     if (not kernels['passed'] or not imported['passed'] or sha256(args.runtime/'vllm/_C.abi3.so')!=kernels['library_sha256']):
         raise RuntimeError('Actual native kernel/import proof is missing or changed')
-    checked_rows(args.batch,[{'scenario_id':'dense_dialog-001'}],role='Lychee released backend benchmark')
+    if not args.worker_context:
+        checked_rows(args.batch,[{'scenario_id':'dense_dialog-001'}],role='Lychee released backend benchmark')
     assets=json.loads(args.assets.read_text());source=Path(assets['source'])
     if (assets['source_commit']!=SOURCE_COMMIT or subprocess.check_output(['git','-C',str(source),'rev-parse','HEAD'],text=True).strip()!=SOURCE_COMMIT
             or subprocess.check_output(['git','-C',str(source),'status','--porcelain'],text=True)):
@@ -68,6 +77,12 @@ def main():
     (args.out/'loading.json').write_text(json.dumps(loading,indent=2)+'\n')
     if loading['model'] is None or loading['audio'] is None:
         raise RuntimeError('Released backend did not run strict full model/audio loading in this process')
+    if args.worker_context:
+        from evals.lychee_worker import run
+        from evals.lychee_vllm_loading import audited_side_tokens
+        with audited_side_tokens(framework.vllm_engine) as audit:
+            run(framework,args,loading,audit)
+        return
     pcm,rate=sf.read(args.batch/'dense_dialog-001/stem_user.wav',dtype='float32')
     if pcm.ndim!=1 or len(pcm)<60*rate or not np.isfinite(pcm).all():
         raise RuntimeError('Invalid approved user input')
