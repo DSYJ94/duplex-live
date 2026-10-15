@@ -28,6 +28,7 @@ fi
 RUNTIME="$DL/envs/lychee-vllm-$LYCHEE_PREFLIGHT_JOB"
 EXTRA=()
 if [ "${LYCHEE_WARM_INPUT:-0}" = 1 ]; then EXTRA+=(--warm-input); fi
+if [ "${LYCHEE_FORWARD_CAPTURE:-0}" = 1 ]; then EXTRA+=(--forward-capture); fi
 if [ "${LYCHEE_WORKER_DIAG:-0}" = 1 ]; then
  : "${LYCHEE_SCENARIO:?Private development scenario required}"
  set -a

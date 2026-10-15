@@ -3080,3 +3080,16 @@ PCM availability during actual LM execution. The final WAV simulates fixed
 Every native codec unit must be consumed or explicitly cancelled. Startup,
 transport, bounded-queue and child-process failures are fatal. Eight local socket,
 delivery and playout regressions pass. The actual concurrent GPU job is next.
+
+**15 October — concurrent capture and graph comparison:** concurrent two-GPU
+job 7452017 is submitted from immutable c2bb062. No outcome claimed yet.
+A separate optional native prefill capture preserves actual full input embeddings,
+raw three-head logits and the actually sampled next text for merge conditioning.
+It does not edit output tokens or RNG. Synchronous projection/copies invalidate
+its timing figures. Three captured fresh prefills (including speech history)
+will be replayed through the strictly loaded released HF training graph, with
+identical embeddings and historical/current next-text merge conditioning.
+Report full-vocabulary max/RMS error, KL, top-one agreement and top-20 overlap;
+do not fit an acceptance tolerance after seeing errors. Shared input embeddings
+isolate graph/branch/head behavior; this does not validate the input encoder or
+incremental KV. No optimizer run or new training checkpoint exists yet.

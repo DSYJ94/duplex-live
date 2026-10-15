@@ -8,6 +8,7 @@ import math
 import subprocess
 import sys
 import types
+from contextlib import nullcontext
 from pathlib import Path
 from evals.moshi_model_download import sha256
 from evals.lychee_model_download import SOURCE_COMMIT
@@ -19,6 +20,7 @@ def main():
         ap.add_argument('--'+name,type=Path,required=True)
     ap.add_argument('--warm-input',action='store_true')
     ap.add_argument('--event-socket',type=Path)
+    ap.add_argument('--forward-capture',action='store_true')
     ap.add_argument('--worker-context',action='store_true')
     ap.add_argument('--static-context-diagnostic',action='store_true')
     ap.add_argument('--result-response',choices=('model','application-event-diagnostic'),default='model')
@@ -31,6 +33,8 @@ def main():
         ap.error('Actual worker context requires approved development data/scenario')
     if args.event_socket and args.worker_context:
         ap.error('Concurrent PCM transport currently supports the native baseline only')
+    if args.forward_capture and (args.event_socket or args.worker_context):
+        ap.error('Synchronous forward capture is a separate baseline diagnostic')
     if args.result_response!='model' and (not args.worker_context or args.static_context_diagnostic):
         ap.error('Application response event requires actual late-worker diagnostic, never static context')
     if args.result_delivery!='immediate' and (not args.worker_context or args.static_context_diagnostic):
@@ -116,7 +120,9 @@ def main():
         epoch.append(value)
         if sender:sender.start(value)
     try:
-        with torch.inference_mode(),audited_side_tokens(framework.vllm_engine) as side_audit:
+        from evals.lychee_forward_capture import capture_prefills
+        capture=capture_prefills(framework.vllm_engine,args.out/'prefills') if args.forward_capture else nullcontext([])
+        with torch.inference_mode(),audited_side_tokens(framework.vllm_engine) as side_audit,capture as captured:
             generated,timing=run_incremental(framework,audio,args.out,on_start=started,
                 on_event=sender.event if sender else None)
         if sender:sender.finish(epoch[0])
@@ -128,6 +134,7 @@ def main():
         'strict_loading':loading,'native_side_token_audit':side_audit,
         'input_warmup':environment.get('input_warmup'),'live_pcm_tested':False,'microphone_acceptance':False,
         'concurrent_pcm_transport_requested':bool(sender),'native_transport_messages_sent':sender.sent if sender else 0,
+        'forward_captures':captured,'timing_invalidated_by_synchronous_capture':args.forward_capture,
         'quality_qualified':False,'learned_delegation_tested':False}
     (args.out/'report.json').write_text(json.dumps(report,indent=2)+'\n')
     print(json.dumps(report),flush=True)
