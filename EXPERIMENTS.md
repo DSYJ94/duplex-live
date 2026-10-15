@@ -2803,3 +2803,20 @@ available before that decision. Nearby teacher assistant acoustic context is
 masked with captured native prefix context in this branch, while user input is
 unchanged. The model must prefer the real returned value over a different world;
 teacher-forced margin improvement still requires native spoken holdouts.
+
+**Plain words — state feedback alone does not qualify:** 128-update 7440181
+reloads exactly (SHA 2383d56bb6303259acde6caacaa1a3de6bb53ce94228f06900971fed9c912e31).
+All four native development replays 7440326/27/28/29 fail text/action evidence:
+wrong private value, an unnecessary simple-question call, incomplete clarification,
+and no successful native cancellation. Eight-update 7440182 also invents a
+private value. No independent speech pass is inferred. Eight-update paired pilot
+7440322 passes exact reload (SHA a641d25a99ee170c34d81da9722830e4f726d6e60ee1cc3ee7926e81e801a19e).
+Its first private subword initially favors the wrong reference, confirming the
+reference-use defect even on approved TRAIN material. This pilot is not accepted.
+
+The next comparison preserves the self-history head and makes teacher-history
+policy loss diagnostic (weight zero): its large teacher-forced loss otherwise
+pushes new state inputs toward teacher feature states that differ from actual
+self-history. Compare 128 updates with/without the paired grounding objective;
+all other pins and approved sources remain the same. This is a new hypothesis,
+not a claim that suppressing this loss resolves native routing or speech.

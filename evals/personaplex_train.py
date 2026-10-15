@@ -32,6 +32,8 @@ def main():
                     help="Train reference/action modules only, preserving native speech without reference")
     ap.add_argument("--control-feedback", action="store_true")
     ap.add_argument("--paired-grounding", action="store_true")
+    ap.add_argument("--policy-weight", type=float, choices=(0., .2), default=.2,
+        help="Zero keeps teacher-history action loss diagnostic for a frozen self-history head")
     ap.add_argument("--freeze-policy", action="store_true")
     ap.add_argument("--init-checkpoint", type=Path)
     args = ap.parse_args()
@@ -200,7 +202,7 @@ def main():
             "excluded_undefined_audio_targets":excluded_audio,
             "action_predictions":int((predicted != 0).sum()), "correct_action_frames":int(((predicted == actions)&positive).sum()),
             "phrase_nll":float(text_nll[:, phrase].mean().detach()) if phrase else None}
-        return text_loss+audio_loss+.2*policy_loss, metrics
+        return text_loss+audio_loss+args.policy_weight*policy_loss, metrics
 
     def evaluate(label):
         with torch.inference_mode(), no_compile(), no_cuda_graph():
@@ -248,7 +250,7 @@ def main():
         "saved_parameter_count":sum(p.numel() for p in learned.values()), "replaced_linears":bundle.replaced,
         "language_frozen":args.freeze_language, "policy_frozen":args.freeze_policy,
         "control_feedback":control_feedback, "control_states":list(CONTROL_STATES) if control_feedback else None,
-        "action_target_schema":ACTION_TARGET_SCHEMA,
+        "action_target_schema":ACTION_TARGET_SCHEMA, "policy_loss_weight":args.policy_weight,
         "parent_checkpoint":None if parent is None else {"path":str(args.init_checkpoint),
             "sha256":parent["checkpoint_sha256"], "report_sha256":sha256(args.init_checkpoint / "report.json"),
             "optimizer_steps":parent["optimizer_steps"]},
@@ -262,6 +264,11 @@ def main():
     report["paired_grounding"] = None if grounding is None else {
         "weight":.3, "every_steps":2, "pairs":grounding.receipts,
         "scope":"first measured private subword; negative reference conditioning only"}
+    def grounding_audit():
+        with torch.inference_mode(), no_compile(), no_cuda_graph():
+            return [grounding.loss(bundle,i)[1] for i in range(len(grounding.pairs))]
+    if grounding is not None:
+        report["paired_grounding"]["before"] = grounding_audit()
     pools = {k:[] for k in ("private", "simple", "clarify", "cancel")}
     started = time.monotonic()
     for step in range(args.steps):
@@ -307,6 +314,8 @@ def main():
         raise RuntimeError("Frozen learned language/action parameters changed")
     report["frozen_learned_unchanged"] = True
     report["validation_after"] = evaluate("after")
+    if grounding is not None:
+        report["paired_grounding"]["after"] = grounding_audit()
     if args.freeze_language:
         after = precise(reference_free)
         errors = {n:float((after[n]-reference_free_before[n]).abs().max()) for n in ("text", "audio")}
