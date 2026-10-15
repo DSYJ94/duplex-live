@@ -31,11 +31,14 @@ def main():
     ap.add_argument("--freeze-language", action="store_true",
                     help="Train reference/action modules only, preserving native speech without reference")
     ap.add_argument("--control-feedback", action="store_true")
+    ap.add_argument("--paired-grounding", action="store_true")
     ap.add_argument("--freeze-policy", action="store_true")
     ap.add_argument("--init-checkpoint", type=Path)
     args = ap.parse_args()
     if args.control_feedback and (not args.freeze_language or not args.freeze_policy):
         ap.error("Initial feedback experiment must preserve language adapters and the action head")
+    if args.paired_grounding and not args.control_feedback:
+        ap.error("Paired grounding requires the bounded causal feedback architecture")
     if not 8 <= args.steps <= 128 or args.steps % 8:
         ap.error("Development run requires 8-128 steps in blocks of eight")
     import torch
@@ -225,6 +228,8 @@ def main():
         else:
             embedded = lm.embed_codes(fixed["inputs"])
             embedded = embedded + bundle.bridge.transform(fixed["reference"]).to(embedded)
+            if parent.get("control_feedback", False):
+                embedded = embedded + bundle.control(fixed["control_states"]).to(embedded)
             h, t = lm.forward_embeddings(embedded)
         a = native_audio_logits(lm, fixed["targets"], h[:, prefix:])
         zero_errors = {"text":float((before["text"]-t[:, :, prefix:]).abs().max()), "audio":float((before["audio"]-a).abs().max())}
@@ -250,6 +255,13 @@ def main():
         "zero_errors":zero_errors, "validation_before":evaluate("before"), "losses":[],
         "policy_classes":["idle", "delegate", "cancel"], "acoustic_parameters_frozen":True,
         "native_routing_qualified":False, "quality_qualified":False}
+    grounding = None
+    if args.paired_grounding:
+        from evals.personaplex_grounding import PairedGrounding
+        grounding = PairedGrounding(train, prepare, template, prefix, tokenizer)
+    report["paired_grounding"] = None if grounding is None else {
+        "weight":.3, "every_steps":2, "pairs":grounding.receipts,
+        "scope":"first measured private subword; negative reference conditioning only"}
     pools = {k:[] for k in ("private", "simple", "clarify", "cancel")}
     started = time.monotonic()
     for step in range(args.steps):
@@ -260,6 +272,10 @@ def main():
         optimizer.zero_grad(set_to_none=True)
         with no_compile(), no_cuda_graph(), checkpoint_language_layers(lm):
             loss, metrics = loss_metrics(row)
+            if grounding is not None and step % 2 == 0:
+                pair_loss, pair_metrics = grounding.loss(bundle, step//2)
+                loss = loss+.3*pair_loss
+                metrics["paired_grounding"] = pair_metrics
             if not torch.isfinite(loss):
                 raise RuntimeError("Nonfinite native joint loss")
             loss.backward()

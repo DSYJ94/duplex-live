@@ -2785,3 +2785,21 @@ Lychee build 7437283 compiles and links all 116 native targets after the recorde
 CUDA13 reduction-name migration, then fails while copying FlashAttention Python
 files into a missing package directory. This is a packaging failure; no native
 kernel or complete model-loading qualification has passed yet.
+
+**Plain words — feedback implementation pilot passed:** 7439916 completes eight
+updates with finite nonzero state gradients, frozen base/language/action hashes,
+zero prefix embedding, and feedback-disabled text/audio changes exactly 0.0.
+Fresh-process reload text/audio/policy errors are all 0.0. Checkpoint SHA
+`a0ddb339e713975e6eb5167ecbb40f4a7634f7a239c8d7be3a514bad7631d415`.
+This proves implementation only. Native worker replay 7440182 and the bounded
+128-update feedback stage 7440181 are launched. No behavioral pass is implied.
+
+The next optional grounding objective contrasts already-approved different-value
+TRAIN worlds for exactly the same original user question/project/field. It
+predicts only the first measured private subword; the incorrect reference remains
+negative conditioning, never positive speech. Both references retain their own
+actual receipt clocks, and a pair is excluded if the negative stream is not fully
+available before that decision. Nearby teacher assistant acoustic context is
+masked with captured native prefix context in this branch, while user input is
+unchanged. The model must prefer the real returned value over a different world;
+teacher-forced margin improvement still requires native spoken holdouts.
