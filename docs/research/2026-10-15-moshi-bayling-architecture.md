@@ -227,3 +227,88 @@ audible; delayed echo, gain changes and partial cancellation must be covered.
 Record the actual render reference, microphone/AEC signals and timeline. A loss
 mask unit check establishes ownership only; it does not establish acoustic echo
 cancellation or full-duplex task success.
+
+## Follow-up: bounded Engine loading audit
+
+Plain words: a strict tensor-only probe can use the released native Engine
+without starting ASR, a router or MCP tools. The source does not prove the
+downloaded checkpoint is compatible with restricted unpickling; that remains a
+local inspection step. No model files were downloaded and no jobs ran for this
+follow-up.
+
+At source commit `79df302fa2820cae10c61bb2b7f302c52edb6ed2`, the final
+`lm.load_state_dict(sd)` resolves through
+[`LMModel`](https://github.com/mindlogic-ai/Context-Spanning/blob/79df302fa2820cae10c61bb2b7f302c52edb6ed2/contextspan/moshi/models/lm.py)
+→ `StreamingContainer` →
+[`StreamingModule`](https://github.com/mindlogic-ai/Context-Spanning/blob/79df302fa2820cae10c61bb2b7f302c52edb6ed2/contextspan/moshi/modules/streaming.py)
+→ `torch.nn.Module`. None overrides `load_state_dict`. Proposed runtime assertion:
+`type(lm).load_state_dict is torch.nn.Module.load_state_dict`. The final call
+therefore has default strict key checking, with no extra `assign` argument.
+Capture the returned missing/unexpected-key lists and compare expected tensor
+shapes and loaded values; do not use this conclusion to excuse the earlier
+base loader's compatibility behavior.
+
+The base loader counts keys matching `linears.<integer>.weight` in safetensor
+headers to select `dep_q`. Its non-safetensor and exception fallback is 16.
+It can duplicate depth attention tensors and copy heads 0–7 into missing heads
+8–15 before its non-strict `assign=True` load. Fail if those paths are required
+unexpectedly for the pinned accepted PersonaPlex base. Final checkpoint shape
+checking then constrains the released model to the constructed head layout.
+Source configuration alone does not establish the actual checkpoint head count.
+[Loader source](https://github.com/mindlogic-ai/Context-Spanning/blob/79df302fa2820cae10c61bb2b7f302c52edb6ed2/contextspan/moshi/models/loaders.py).
+
+The Hugging Face public
+[expanded file metadata](https://huggingface.co/api/models/mindlogicinc/context-spanning-7b/tree/e62a4494a295ff8cee345451cf40aae85719a9f5?recursive=true&expand=true)
+resolves model revision `e62a4494a295ff8cee345451cf40aae85719a9f5` and records:
+
+| File | Bytes | SHA-256 from LFS metadata |
+| --- | --- | --- |
+| `context_spanning_7b.pt` | 16,743,028,866 | `32a4dec8ea8feb28d20ce485f0e49a09b118413aaaebdd182379db41cd441fcc` |
+| `voices/main.pt` | 3,198 | `83aa916e3ad1b4a8edb38626d2697f6c6c12b25c7ca104bddb36e74e176d442c` |
+
+The checkpoint's pickle-import scan was **unscanned**, with an empty import
+list. That is missing evidence, not a declaration that no unsafe globals exist.
+The [model card](https://huggingface.co/mindlogicinc/context-spanning-7b/blob/e62a4494a295ff8cee345451cf40aae85719a9f5/README.md)
+describes `{"model": state_dict}` in BF16 and voice tensor dictionaries; it
+does not document unusual Python objects or a required allowlist.
+
+The native weight loader explicitly requests `weights_only=False`. For the
+probe, retain restricted loading: first use
+`torch.serialization.get_unsafe_globals_in_checkpoint(path)` to inspect a local
+artifact, then try `torch.load(path, map_location='cpu', weights_only=True)`.
+Static scanning may miss dynamically constructed classes. If the restricted
+load fails, inspect the actual error; do not infer incompatibility from the
+vendor's unrestricted flag. `TORCH_FORCE_WEIGHTS_ONLY_LOAD=1` overrides even an
+explicit false argument in official Torch 2.9 source, allowing an unchanged
+vendor call to remain restricted. Confirm this behavior in the actual NGC
+Torch build. Record any required, individually reviewed global rather than
+automatically allowlisting everything returned by a scanner.
+[Torch serialization implementation](https://github.com/pytorch/pytorch/blob/v2.9.0/torch/serialization.py).
+
+For the GH200 import/probe environment:
+
+- Core model imports require Torch, NumPy, `sphn`, SentencePiece,
+  Hugging Face Hub, safetensors and einops. `sphn` is imported eagerly by the
+  vendored LM. The existing Persona overlay is a candidate, not a verified
+  environment for this new source. Print each module's origin/version and
+  assert container Torch is still selected. Do not introduce a second Torch
+  wheel via the older environment's site-packages.
+- Importing `contextspan.model.Engine` traverses the vendored model package;
+  it does not import the full CLI's backend stack. Voice cloning lazily needs
+  `pyloudnorm`, and non-24kHz cloning needs librosa. `soundfile` is needed by our
+  WAV harness. MCP, web serving, denoising and separate ASR dependencies are
+  unnecessary for a direct-Engine scheduled-result component test.
+- The vendored transformer uses standard Torch functions and einops rather
+  than our Lychee custom vLLM extension. Its
+  [compile helper](https://github.com/mindlogic-ai/Context-Spanning/blob/79df302fa2820cae10c61bb2b7f302c52edb6ed2/contextspan/moshi/utils/compile.py)
+  supports `NO_TORCH_COMPILE=1` and `NO_CUDA_GRAPH=1`. A first finite-output
+  check may explicitly disable both; report that as an eager diagnostic and
+  repeat native timing under the selected serving settings. Existing
+  `evals.cuda_linker_path` handles the known Apptainer `libcuda.so` discovery
+  issue if compile is enabled; it is not evidence that this source was tested.
+
+One further inference distinction: a 16-head native depth model can still
+receive observed user codes through its provided-token mask while generating
+assistant audio. Predicted head availability, training loss ownership and
+runtime externally forced observations are three separate properties. The
+probe must log all three before modifying any echo-related training mask.

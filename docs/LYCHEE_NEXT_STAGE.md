@@ -62,6 +62,14 @@ The owner listened to concurrent capture 7452017 and said "Sounds smooth" on
 15 October. Retain it as the development audio baseline; factual accuracy,
 worker behavior and microphone acceptance remain separate unresolved gates.
 
+New owner resources are reviewed in
+[the decision note](research/2026-10-15-resource-decisions.md).
+CPU loss-scope audit 7454206 passes all 15 examples; there is no user-audio loss
+in the current pilot. Concurrent worker speech audits confirm the actual values,
+but yellow WER 0.1111 and earlier playback gaps still fail the gates. Context
+Spanning assets 7454205 and a bounded native span audition are next; this is a
+new trained backend-text mechanism, not our older system-prefix refresh.
+
 Code moves through Git only. New jobs use clean immutable worktrees and exact
 commits. Fetch full logs before local filtering. Preserve unrelated pyc, roadmap
 and cluster files. Earlier notes below record historical stages and may be stale.

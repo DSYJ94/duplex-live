@@ -3322,3 +3322,30 @@ end. Those are unresolved task failures. No spoken-value claim follows from
 sampled text. Next is the 64-step checkpoint in actual two-GPU concurrent capture
 for both private worlds, with independent transcription of complete utterances.
 Interrupted and input-exhausted utterances are recorded exclusions, not passes.
+
+
+**Plain words — owner resources reviewed and next candidate prepared:**
+[The decision note](docs/research/2026-10-15-resource-decisions.md) covers all ten
+links, with separate primary-source architecture, alternatives and AEC reviews.
+BayLing uses flattened 10:5:10 blocks and zero user-target loss; Moshi uses
+summed stream embeddings and time/depth factorization. Current Lychee semantic
+training has no user loss to mask. The new assistant-target ownership guard
+checks actual sourced text/EOT and causal receipt clocks without modifying
+inputs/attention. CPU audit 7454206 passes all 15 examples (170 assistant targets,
+zero user/audio/history targets). This is not an AEC effectiveness result.
+
+Concurrent captures 7454091/93 speak both correct private values. Independent
+complete-utterance audits 7454208/09 find purple WER 0 and yellow WER 0.1111,
+so yellow fails the 0.08 intelligibility bar despite the correctly heard value.
+Earlier replies have 4564/3380 actual gap samples; result utterances have zero.
+These remain failed full-task/continuity candidates. Baseline 7454087 and audit
+7454207 retain zero gaps and exact ASR for both complete utterances; its factual
+bread answer remains wrong.
+
+Context Spanning assets job 7454205 fetches public source
+79df302fa2820cae10c61bb2b7f302c52edb6ed2 and model revision
+e62a4494a295ff8cee345451cf40aae85719a9f5. A bounded native probe is prepared:
+strict final full LM load, safe tensor-only checkpoint load, native 80ms steps,
+actual worker receipts, span-only injection without a forced response start,
+all real input retained, and causal PCM playout. Native retrieval choice and
+microphone acceptance are separate future checks. No probe result exists yet.

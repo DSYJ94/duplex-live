@@ -93,6 +93,9 @@ near-end/far-end/double-talk tests are still required.
    cases. Keep sealed test material excluded; current repeated validation scene
    is development evidence, not a fresh held-out qualification.
 
-The new target guard and research notes are implemented locally. Asset download,
-CPU corpus audit and revised speech-audit jobs are the next submitted checks;
-this document makes no claim that their results exist yet.
+The target guard is committed. CPU audit 7454206 verifies all 15 examples and
+170 assistant-only targets without modifying inputs or labels. Speech audits
+7454207/08/09 confirm both complete baseline utterances at WER 0; the yellow
+result has WER 0.1111 (fails 0.08), purple WER 0. Earlier playback gaps remain.
+Context Spanning assets are downloading in 7454205; the native probe is prepared,
+with no inference result claimed yet.
