@@ -2504,3 +2504,9 @@ the unstreamed helper includes it. A batched-only compatibility mask is being
 tested against every native codebook; vendor source and streaming inference
 remain unchanged. The original discrepancy is retained in the new report.
 Paired teacher 7434240 completes all 32 raw recordings; audit 7434249 is running.
+
+**Plain words — follow-up 7434638:** stops before gradient work because the
+compatibility check assumed depth context 8 from loader options. Native LMModel
+explicitly overrides it to None, giving a 16-slot ring. This is a failed source
+assumption, not a numerical pass. The next comparison uses the actual 16-slot
+boundary (batched context 15), still preserving unmodified per-codebook errors.
