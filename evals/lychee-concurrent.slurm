@@ -20,6 +20,7 @@ if [ -n "${LYCHEE_SEMANTIC_JOB:-}" ]; then
  [[ "$LYCHEE_SEMANTIC_JOB" =~ ^[0-9]+$ ]]
  EXTRA+=(--semantic-adapter "$DL/runs/lychee-semantic-proof-$LYCHEE_SEMANTIC_JOB/adapter.pt"
   --semantic-proof "$DL/runs/lychee-semantic-proof-$LYCHEE_SEMANTIC_JOB/report.json")
+ EXTRA+=(--semantic-activation "${LYCHEE_SEMANTIC_ACTIVATION:-always}")
 fi
 if [ "${LYCHEE_WORKER_DIAG:-0}" = 1 ]; then
  : "${LYCHEE_SCENARIO:?Actual-worker scenario required}"

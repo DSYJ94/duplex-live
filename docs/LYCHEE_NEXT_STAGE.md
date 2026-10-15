@@ -52,8 +52,10 @@ Next diagnosis keeps the base weights during ordinary conversation, activating
 the checked adapter only for one application-started result reply after a real
 receipt, native listening state and two arrived quiet chunks. Every switch
 aborts the old KV request, preserves history/audio/clock/RNG and rebuilds it.
-First require the disabled adapter to reproduce every baseline token, then test
-both actual counterfactual worlds. This is a disclosed application policy, not
+Disabled-adapter 7454004 now reproduces every baseline token exactly.
+Actual-worker 7454007/09/10/11 produce the correct room-marker sentence in all
+four counterfactual replays, but initial access denial and 14.8–16.4s activation
+delay remain. Next: concurrent two-GPU audio plus independent speech audit. This is a disclosed application policy, not
 learned turn choice or delegation. Keep held-out data excluded from training.
 
 The owner listened to concurrent capture 7452017 and said "Sounds smooth" on

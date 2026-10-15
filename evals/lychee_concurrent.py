@@ -20,9 +20,11 @@ def main():
     ap.add_argument('--result-response',choices=('model','application-event-diagnostic'),default='model')
     ap.add_argument('--semantic-adapter',type=Path)
     ap.add_argument('--semantic-proof',type=Path)
+    ap.add_argument('--semantic-activation',choices=('always','result-response'),default='always')
     args=ap.parse_args()
     if args.worker_context and (not args.data or not args.scenario):ap.error('Actual worker capture needs approved data/scenario')
     if bool(args.semantic_adapter)!=bool(args.semantic_proof):ap.error('Adapter and native implementation proof are both required')
+    if args.semantic_activation!='always' and not args.semantic_adapter:ap.error('Conditional activation requires a checked adapter')
     if not args.worker_context and (args.private_value or args.result_response!='model'):
         ap.error('Private world and response event are actual-worker diagnostics only')
     devices=os.environ.get('CUDA_VISIBLE_DEVICES','').split(',')
@@ -55,7 +57,7 @@ def main():
             if args.worker_context:
                 lm_flags+=['--worker-context',*flags(('data','scenario','result-response'))]
                 if args.private_value:lm_flags+=flags(('private-value',))
-            if args.semantic_adapter:lm_flags+=flags(('semantic-adapter','semantic-proof'))
+            if args.semantic_adapter:lm_flags+=flags(('semantic-adapter','semantic-proof','semantic-activation'))
             lm=spawn('evals.lychee_vllm_probe',devices[0],'DL_LM_PYTHONPATH',lm_flags)
             deadline=time.monotonic()+600
             while any(child.poll() is None for child in children):
@@ -80,12 +82,14 @@ def main():
                 'wall_including_both_model_loads_s':time.monotonic()-began,
                 'microphone_acceptance':False,'browser_playback_tested':False,'audio_device_tested':False,
                 'native_delegation_tested':False,'quality_qualified':False,'training_approved':False}
+            result['semantic_activation_mode']=model['semantic_activation_mode']
             if args.worker_context:
                 result.update(scheduled_worker_dispatch=model['scheduled_dispatch'],
                     actual_worker_results_supplied=model['actual_worker_results_supplied'],
                     native_foreground_tool_choice=model['native_foreground_tool_choice'],
                     result_response_mode=model['result_response_mode'],
                     native_speaking_control_forced=model['native_speaking_control_forced'],
+                    application_chooses_semantic_result_turn=model['application_chooses_semantic_result_turn'],
                     worker_events=model['worker_events'],spoken_result_use_verified=False)
             (args.out/'report.json').write_text(json.dumps(result,indent=2)+'\n')
             print(json.dumps({k:v for k,v in result.items() if k!='pcm_capture'}),flush=True)

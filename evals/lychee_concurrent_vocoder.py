@@ -67,6 +67,8 @@ def main():
                     else:raise RuntimeError('Unknown concurrent transport message')
                     log.write(json.dumps({'received_s':arrived,'message':message})+'\n');log.flush()
                     for event in decoder.feed(raw):
+                        if event['type']=='event_end':
+                            event['source_ended_by_input_exhaustion']=raw['type']=='generation_complete'
                         # A control stop is received independently of a busy TTS
                         # GPU. Late old PCM is capped at this causal receipt time.
                         if event['type']=='event_end' and event.get('interrupt'):
@@ -81,7 +83,7 @@ def main():
         finally:
             reader_done.set()
     thread=threading.Thread(target=receive,daemon=True);thread.start()
-    packets=[];rows=[];groups={};active=None;buffer=[];expected=0;consumed=0;cancelled=0
+    packets=[];rows=[];groups={};utterances=[];active=None;buffer=[];expected=0;consumed=0;cancelled=0
     def emit(tokens,last,advance,due):
         nonlocal consumed,cancelled
         if active in state['stops']:
@@ -122,6 +124,10 @@ def main():
                 if active!=event['event_id']:raise RuntimeError('Native event identity lost')
                 expected+=len(event['stoken_ids'])
                 if groups[active]!=len(event['stoken_ids']):raise RuntimeError('Streaming decoder lost codec units')
+                utterances.append({'event_id':active,'text':event['text'],'event_end_received_s':due,
+                    'native_interrupt':bool(event.get('interrupt')),
+                    'source_ended_by_input_exhaustion':event['source_ended_by_input_exhaustion'],
+                    'source_codec_units':len(event['stoken_ids'])})
                 if event.get('interrupt') or active in state['stops']:
                     cancelled+=len(buffer)
                 elif buffer:emit(buffer,True,len(buffer),due)
@@ -136,6 +142,7 @@ def main():
     sf.write(args.out/'packet-stream.wav',np.concatenate([p['pcm'] for p in packets]),24000)
     (args.out/'pcm-packets.jsonl').write_text(''.join(json.dumps(row)+'\n' for row in rows))
     (args.out/'playout.json').write_text(json.dumps(playout,indent=2)+'\n')
+    (args.out/'utterance-events.json').write_text(json.dumps(utterances,indent=2)+'\n')
     report={**provenance,'schema':'dl-lychee-concurrent-pcm-v1','hop_tokens':args.hop,
         'lookahead_tokens':lookahead,'actual_concurrent_lm_execution':True,
         'pcm_availability_measured':True,'playout_mode':'causal fixed-buffer simulation from actual concurrent availability',

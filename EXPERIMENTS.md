@@ -3305,3 +3305,20 @@ switch, and discloses application-controlled response timing. No outcome yet.
 7452017 "Sounds smooth". Retain the causal two-GPU recording as the working
 audio baseline. This feedback does not approve its factual errors, delegation
 behavior, browser/device playback or a microphone product.
+
+
+**Plain words — result-turn activation resolves this development text failure:**
+disabled-adapter 7454004 reproduces every native text, speech and control token
+from baseline 7441742 exactly. Cold worker runs 7454007/09 (64) and 7454010/11
+(128) all say the correct room-marker sentence for the actual yellow-circle or
+purple-diamond world, after delivery with no other colour/shape guesses. Each
+uses 20 native packed parameters, preserves sampling RNG, aborts/rebuilds KV and
+verifies the refreshed actual engine prefix on both activation and restoration.
+This is application-selected reply timing, not native delegation or turn choice.
+
+The initial base reply still incorrectly denies access, and activation waits
+14.8–16.4 seconds after result context delivery for the earlier physics reply to
+end. Those are unresolved task failures. No spoken-value claim follows from
+sampled text. Next is the 64-step checkpoint in actual two-GPU concurrent capture
+for both private worlds, with independent transcription of complete utterances.
+Interrupted and input-exhausted utterances are recorded exclusions, not passes.
