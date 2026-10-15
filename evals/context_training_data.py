@@ -9,7 +9,8 @@ from pathlib import Path
 from evals.moshi_model_download import sha256
 
 
-def load_training(caches, spm, prefix, max_frames=1100, text_padding='legacy-epad0'):
+def load_training(caches, spm, prefix, max_frames=1100, text_padding='legacy-epad0',
+                  request_policy='source-dispatch'):
     import torch
     from contextspan.model.sequence_convention import assemble_training_sequence, context_span_ids
     from evals.recovery_data import validate_cache, validate_conversion
@@ -19,6 +20,9 @@ def load_training(caches, spm, prefix, max_frames=1100, text_padding='legacy-epa
     examples, records, seen, waves = [], [], set(), set()
     if text_padding not in ('legacy-epad0', 'context-pad3'):
         raise ValueError('Unknown explicit text-padding convention')
+    if request_policy not in ('source-dispatch', 'native-prelead') or (
+            request_policy == 'native-prelead' and text_padding != 'context-pad3'):
+        raise ValueError('Native request conversion requires explicit Context padding')
     for cache in caches:
         receipt = validate_cache(cache)
         data = validate_conversion(Path(receipt['conversion']))
@@ -68,6 +72,12 @@ def load_training(caches, spm, prefix, max_frames=1100, text_padding='legacy-epa
             epad_count = int((codes[0] == 0).sum())
             if text_padding == 'context-pad3':
                 codes[0, codes[0] == 0] = 3
+            policy_records = None
+            if request_policy == 'native-prelead':
+                from evals.context_request_policy import native_prelead
+                text, policy_records = native_prelead(codes[0].tolist(), side, spm.encode)
+                codes[0] = torch.tensor(text, dtype=codes.dtype)
+                native_word_timing(codes[0].tolist(), side['alignments'], spm.encode, 12.5)
             assembled, tmask, amask = assemble_training_sequence(
                 codes, torch.ones(codes.shape[1], dtype=torch.bool), spans, spm)
             # Verify every real text token survives, with only masked span tokens added.
@@ -98,6 +108,9 @@ def load_training(caches, spm, prefix, max_frames=1100, text_padding='legacy-epa
             if text_padding == 'context-pad3':
                 record.update(text_padding_convention=text_padding, epad0_replaced_by_pad3=epad_count,
                     source_dispatch_times_changed=False, measured_word_targets_changed=False)
+            if policy_records is not None:
+                record.update(request_policy=request_policy, derived_requests=policy_records,
+                    reference_arrival_times_changed=False, source_annotations_rewritten=False)
             examples.append({'codes': assembled, 'text_mask': tmask, 'audio_mask': amask,
                 'user_target_mask': amask.clone(), 'record': record, 'clean_codes': codes})
             records.append(record)

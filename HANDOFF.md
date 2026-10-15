@@ -93,11 +93,17 @@ new data SHA75c8a6dee846420b3319984fc40b041240d0ca109bbda616f967bef3568e5796.
 Padding-only128 ablation7456282 passes128 finite updates across all48 scenes,
 unchanged frozen hashes and exact fresh-process FP32 reload. SHA
 `3e9d4011a23858e505878c43a7b2ffbf8af4cda89480ad4776ecd660d006c13c`.
-Eight actual native-ASR behavior tests7456656–63 are submitted: private000/001
-with paired worlds, simple004/005, clarify006 and cancel007. No behavioral
-improvement is claimed before those finish. A separate canonical temporal
-logit comparison now extends the existing input-ID history check; this checks
-whether streamed prefix/span processing matches batched training computation.
+Reject7456282 for scaling too: native7456656–63 all emit empty text and zero
+RET across private000/001 paired worlds, simple004/005, clarify006 and cancel007.
+Canonical temporal audit7456824 passes complete-prefix/first-span inputs, hidden
+states (max error.0003052) and text logits (.00009883, zero top1 disagreements).
+This removes a measured early temporal-computation mismatch as an explanation;
+production graphs, free-running exposure and all-span parity remain unproven.
+Next native-prelead conversion explicitly separates the request target from the
+immutable actual teacher dispatch clock. It places RET in an unoccupied frame
+before the next measured lead, checks arrived user identification/cancellation,
+rejects a request after receipt, and keeps words/audio/receipt times unchanged.
+No held-out example enters this derivation. Require all48 checks before updates.
 
 One explicit pending-state diagnostic7455886/87 improves acknowledgement of
 waiting but still omits both results and hallucinates physics. Reject more

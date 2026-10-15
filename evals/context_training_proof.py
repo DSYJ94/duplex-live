@@ -38,6 +38,7 @@ def main():
     ap.add_argument('--history-logits', action='store_true',
         help='Also compare canonical streamed and batched temporal outputs in the history audit')
     ap.add_argument('--text-padding', choices=('legacy-epad0','context-pad3'), default='legacy-epad0')
+    ap.add_argument('--request-policy', choices=('source-dispatch','native-prelead'), default='source-dispatch')
     args = ap.parse_args()
     if args.history_logits and not (args.history_audit or args.history_audit_only):
         ap.error('Temporal history logits require a history audit')
@@ -124,7 +125,8 @@ def main():
         torch.save({'codes': voice}, args.out / 'voice.pt')
     del mimi
     prefix = persona_prefix(BASE_INSTRUCTIONS, voice, spm)
-    examples, records = load_training(args.cache, spm, prefix, text_padding=args.text_padding)
+    examples, records = load_training(args.cache, spm, prefix, text_padding=args.text_padding,
+        request_policy=args.request_policy)
     (args.out / 'data.json').write_text(json.dumps(records, indent=2) + '\n')
     if parent and (parent['data_sha256'] != sha256(args.out / 'data.json')
             or parent['voice_reference_sha256'] != sha256(args.voice_reference)):
@@ -268,6 +270,7 @@ def main():
         'initialization': 'released checkpoint, fresh zero-B adapters; preflight is a gate, not warm start',
         'user_loss': 'clean separate user stem, assistant semantic weight 1, other 15 heads .02',
         'text_padding_convention': args.text_padding,
+        'request_policy': args.request_policy,
         'waveform_AEC_tested': False, 'base_audio_parameters_frozen': True,
         'audio_behavior_preservation_proven': False, 'quality_qualified': False, 'passed': True}
     (args.out / 'report.json').write_text(json.dumps(report, indent=2) + '\n')

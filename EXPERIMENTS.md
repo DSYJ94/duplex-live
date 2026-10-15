@@ -3529,3 +3529,14 @@ history check compares streamed hidden states and text logits with the complete
 batched input, beyond the already measured exact token IDs. It does not change
 training or inference behavior and does not establish production graph parity.
 Owner voice feedback for7454285 is recorded on the listening page.
+
+
+Plain words: native7456656–63 all sample empty text and zero RET. Reject the
+padding-only pilot for scale. Temporal audit7456824 passes FP32/math with all
+17x316 input IDs exact, maximum hidden error.0003051758, maximum text-logit
+error.0000988245 and zero top1 disagreements. This is a forced TRAIN component
+through one span, not a production graph/free-running qualification.
+The next conversion derives native pre-lead controls separately from source
+worker clocks, preserving every word/audio/arrival target. It requires arrived
+user identification, complete cancellation instruction, no collision and no
+receipt preceding its request. Validation/test labels remain forbidden.
