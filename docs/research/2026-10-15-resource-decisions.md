@@ -97,5 +97,12 @@ The target guard is committed. CPU audit 7454206 verifies all 15 examples and
 170 assistant-only targets without modifying inputs or labels. Speech audits
 7454207/08/09 confirm both complete baseline utterances at WER 0; the yellow
 result has WER 0.1111 (fails 0.08), purple WER 0. Earlier playback gaps remain.
-Context Spanning assets are downloading in 7454205; the native probe is prepared,
-with no inference result claimed yet.
+Context Spanning assets 7454205 are complete: source commit and public model
+revision are pinned, and checkpoint SHA matches the publisher's LFS digest.
+Native probes 7454283/84 test two actual private worlds; 7454285 uses the accepted
+synthetic reference voice. All three strictly load 16 native audio heads and generate the actual private
+value without a forced response start, with p95 29.7–34.0ms per 80ms frame and
+zero causal-playout underruns. First-frame stalls and incorrect follow-up physics
+remain. The next probe connects native retrieval markers to actual arrived-audio
+recognition and real backend execution; backend tool choice stays external.
+No new training or complete-task qualification follows from these component runs.

@@ -42,7 +42,15 @@ def main():
     ap.add_argument('--voice',choices=('released','accepted-synthetic'),default='released')
     ap.add_argument('--voice-reference',type=Path)
     ap.add_argument('--voice-provenance',type=Path)
+    ap.add_argument('--backend-mode',choices=('scheduled','native-asr'),default='scheduled')
+    ap.add_argument('--asr-python',type=Path)
+    ap.add_argument('--warm-audio',action='store_true')
     args=ap.parse_args()
+    if args.backend_mode=='native-asr':
+        devices=os.environ.get('CUDA_VISIBLE_DEVICES','').split(',')
+        if len(devices)!=2 or len(set(devices))!=2 or not args.asr_python:
+            ap.error('Native-ASR consultation requires two distinct assigned GPUs and its isolated Python')
+        os.environ['CUDA_VISIBLE_DEVICES']=devices[0];args.asr_gpu=devices[1]
     import numpy as np
     import soundfile as sf
     import torch
@@ -103,14 +111,25 @@ def main():
         reference,voice_rate=sf.read(args.voice_reference,dtype='float32')
         if reference.ndim!=1 or not np.isfinite(reference).all():raise RuntimeError('Invalid synthetic reference')
         voice=engine.clone_voice(reference,voice_rate)
+    warm=None
+    if args.warm_audio:
+        began=time.monotonic()
+        for _ in range(16):engine.step(np.zeros(engine.frame_size,dtype=np.float32))
+        torch.cuda.synchronize();warm={'frames':16,'seconds':time.monotonic()-began,
+            'before_conversation_seed_reset':True,'all_streams_reset_afterwards':True}
     seed_all(42424242);engine.reset();engine.set_persona(BASE_INSTRUCTIONS,voice)
     torch.cuda.synchronize()
     loading={'loads':records,'final_lm_strict':True,'dep_q':engine.lm.dep_q,
         'model_load_and_prefix_s':time.monotonic()-started,'pickle_globals':unsafe,
         'assets_manifest_sha256':sha256(args.assets),'base_hashes':MODEL_HASHES,
-        'voice':args.voice,'voice_codes_shape':list(voice.shape)}
+        'voice':args.voice,'voice_codes_shape':list(voice.shape),'input_warmup':warm,
+        'torch':torch.__version__,'torch_file':torch.__file__,'cuda':torch.version.cuda}
     (args.out/'loading.json').write_text(json.dumps(loading,indent=2)+'\n')
     world=RecordWorld({meta['project']:{meta['field']:args.private_value}})
+    if args.backend_mode=='native-asr':
+        from evals.context_spanning_native import run
+        run(engine,user,world,args,loading)
+        return
     first=next(e for e in side['timeline']['events'] if e['ch']=='user' and e['kind']=='utterance')
     trigger=first['actual_end_ms']/1000+.16
     rows=[];tokens=[];packets=[];events=[];future=None;observed=False

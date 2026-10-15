@@ -3349,3 +3349,24 @@ strict final full LM load, safe tensor-only checkpoint load, native 80ms steps,
 actual worker receipts, span-only injection without a forced response start,
 all real input retained, and causal PCM playout. Native retrieval choice and
 microphone acceptance are separate future checks. No probe result exists yet.
+
+
+**Plain words — released Context Spanning works as a late-result component:**
+assets 7454205 match pinned publisher checkpoint/voice hashes. Native 7454283/84
+(released voice, two values) and 7454285 (accepted synthetic voice) strictly load
+16 audio heads with tensor-only deserialization and no unsafe pickle globals.
+All 960,000 actual user samples are processed; all three generated texts state
+the supplied private value without a forced response start. Native model and PCM
+run together at p95 29.7–34.0ms/80ms; fixed 160ms causal playout has zero underruns.
+These are scheduled-dispatch/measured-word backend component tests, not native
+retrieval qualification or independently transcribed speech acceptance.
+
+All three emit two native retrieval markers, but this first probe services only
+one scheduled lookup; follow-up physics is wrong or incomplete. Released-voice
+first-frame compute is 2.758/2.814s; accepted synthetic first frame is 0.389s.
+Actual span prefill is 105–121ms. Next warm actual encoder/decoder frames before
+resetting every stream and conversation seed; then connect sampled retrieval
+markers to Whisper recognition of actually arrived PCM on a second isolated GPU
+and the actual backend. The new path has no measured/reference transcript and
+no scripted dispatch; the backend still chooses the specific tool. Preserve the
+speaker-specific target policy before any new model training.

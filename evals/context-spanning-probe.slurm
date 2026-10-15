@@ -21,6 +21,11 @@ cd "$DL_TASK_SOURCE"
 set -a
 source "$DL/keys/openai.env"
 set +a
+EXTRA=()
+if [ "${CONTEXT_BACKEND_MODE:-scheduled}" = native-asr ]; then
+ EXTRA+=(--backend-mode native-asr --asr-python "$DL/envs/moshi-annotation-7379026/bin/python")
+fi
+if [ "${CONTEXT_WARM_AUDIO:-0}" = 1 ]; then EXTRA+=(--warm-audio); fi
 apptainer exec --nv --bind /projects,/lus,/home \
  --env PYTHONPATH="$DL/tmp/voice-quality-7415052:$DL/envs/moshi-rag-7379661/lib/python3.12/site-packages:$DL_TASK_SOURCE" \
  --env HF_HOME="$DL/models/hf-cache" --env HF_HUB_OFFLINE=1 \
@@ -32,4 +37,4 @@ apptainer exec --nv --bind /projects,/lus,/home \
  --voice "${CONTEXT_VOICE:-released}" \
  --voice-reference "$DL/runs/voice-quality-7414595/codec/reference.wav" \
  --voice-provenance "$DL/runs/voice-quality-7414595/codec/report.json" \
- --out "$DL/runs/context-spanning-probe-${SLURM_JOB_ID}"
+ --out "$DL/runs/context-spanning-probe-${SLURM_JOB_ID}" "${EXTRA[@]}"
