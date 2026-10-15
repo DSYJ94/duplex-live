@@ -2843,3 +2843,11 @@ bound. The next check compares both native CUDA and PyTorch FP32 against an
 FP64 reduction, using explicit FP32 absolute/relative 2e-6 tolerance; BF16/FP16
 retain the two-epsilon magnitude-scaled bound. This checks ordinary parallel
 reduction rounding, not speech quality; no model acceptance bar is changed.
+
+**Plain words — native CUDA reduction tests passed:** 7440908 passes all nine
+RMSNorm probes (512/1024/3584 widths, FP32/BF16/FP16) against both native-precision
+PyTorch and FP64 reductions. Its subsequent patched-package import fails because
+msgspec is absent. Full model loading, attention execution, speech and real-time
+PCM remain untested. A separate CPU-only dependency overlay installs an explicit
+subset of the pinned official lock with --no-deps; Torch/CUDA/Triton and the
+accepted HF voice overlay remain untouched. Original failure evidence is kept.

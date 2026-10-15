@@ -14,8 +14,14 @@ cd "$DL/repo"
 : "${LYCHEE_BUILD_JOB:?Successful isolated backend build required}"
 [[ "$LYCHEE_BUILD_JOB" =~ ^[0-9]+$ ]]
 BUILD="$DL/runs/lychee-vllm-build-$LYCHEE_BUILD_JOB"
+DEPS=""
+if [ -n "${LYCHEE_RUNTIME_DEPS_JOB:-}" ]; then
+ [[ "$LYCHEE_RUNTIME_DEPS_JOB" =~ ^[0-9]+$ ]]
+ DEPS="$DL/envs/lychee-vllm-deps-$LYCHEE_RUNTIME_DEPS_JOB"
+ test -f "$DL/runs/lychee-vllm-deps-$LYCHEE_RUNTIME_DEPS_JOB/report.json"
+fi
 RUNTIME="$DL/envs/lychee-vllm-${SLURM_JOB_ID}"
-export DL BUILD RUNTIME
+export DL BUILD RUNTIME DEPS
 apptainer exec --nv --bind /projects,/lus,/home \
  --env PYTHONDONTWRITEBYTECODE=1 --env OMP_NUM_THREADS=8 \
  "$DL/pytorch-new.sif" bash -eu <<'CONTAINER'
@@ -28,7 +34,7 @@ if not record['built'] or hashlib.sha256(wheel.read_bytes()).hexdigest()!=row['s
  raise RuntimeError('Build/wheel receipt mismatch')
 subprocess.run([sys.executable,'-m','pip','install','--no-deps','--target',os.environ['RUNTIME'],str(wheel)],check=True)
 PY
-export PYTHONPATH="$RUNTIME:$DL/envs/lychee-probe-7415053:$DL/tmp/minicpm-recovery-7377673:$DL/repo"
+export PYTHONPATH="$RUNTIME:$DEPS:$DL/envs/lychee-probe-7415053:$DL/tmp/minicpm-recovery-7377673:$DL/repo"
 python -u -m evals.lychee_vllm_preflight --runtime "$RUNTIME" --build "$BUILD" \
  --out "$DL/runs/lychee-vllm-preflight-${SLURM_JOB_ID}"
 CONTAINER
