@@ -30,6 +30,7 @@ if [ -n "${CONTEXT_ADAPTER_JOB:-}" ]; then
  [[ "$CONTEXT_ADAPTER_JOB" =~ ^[0-9]+$ ]]
  EXTRA+=(--adapter-proof "$DL/runs/context-training-proof-$CONTEXT_ADAPTER_JOB")
  if [ "${CONTEXT_ADAPTER_DISABLED:-0}" = 1 ]; then EXTRA+=(--adapter-disabled); fi
+ if [ "${CONTEXT_ADAPTER_ZERO:-0}" = 1 ]; then EXTRA+=(--adapter-zero); fi
 fi
 if [ -n "${CONTEXT_LAYOUT_AUDIT_JOB:-}" ]; then
  [[ "$CONTEXT_LAYOUT_AUDIT_JOB" =~ ^[0-9]+$ ]]

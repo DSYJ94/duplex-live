@@ -5,15 +5,16 @@ from evals.moshi_model_download import sha256
 
 
 @contextmanager
-def before_engine(engine_module, proof, disabled=False):
+def before_engine(engine_module, proof, disabled=False, zero=False):
     import torch
     from safetensors.torch import load_file
     from evals.context_spanning_download import SOURCE_COMMIT
     from evals.personaplex_adapters import install_adapters, adapter_parameters
     if proof is None:
-        if disabled: raise RuntimeError('Disabled comparison requires a verified adapter proof')
+        if disabled or zero: raise RuntimeError('Adapter comparison requires a verified adapter proof')
         yield None
         return
+    if disabled and zero: raise RuntimeError('Choose disabled or zero adapter comparison')
     report = json.loads((proof / 'report.json').read_text())
     reload = json.loads((proof / 'reload-report.json').read_text())
     digest = sha256(proof / 'adapters.safetensors')
@@ -39,13 +40,14 @@ def before_engine(engine_module, proof, disabled=False):
             learned = adapter_parameters(lm)
             if names != report['adapter_modules'] or set(state) != set(learned):
                 raise RuntimeError('Cold adapter module/key coverage differs')
-            with torch.no_grad():
-                for n, p in learned.items(): p.copy_(state[n])
+            if not zero:
+                with torch.no_grad():
+                    for n, p in learned.items(): p.copy_(state[n])
             lm.requires_grad_(False).eval()
         calls.append(True)
         return lm, mimi, spm
     engine_module.load_model = load
-    evidence = {'proof': str(proof), 'checkpoint_sha256': digest, 'disabled': disabled,
+    evidence = {'proof': str(proof), 'checkpoint_sha256': digest, 'disabled': disabled, 'zero': zero,
         'installed_before_native_graphs': not disabled, 'voice_codes_sha256': report['voice_sha256'],
         'voice_reference_sha256': report['voice_reference_sha256'], 'quality_qualified': False}
     try:

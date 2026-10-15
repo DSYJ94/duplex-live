@@ -47,6 +47,7 @@ def main():
     ap.add_argument('--warm-audio',action='store_true')
     ap.add_argument('--adapter-proof',type=Path)
     ap.add_argument('--adapter-disabled',action='store_true')
+    ap.add_argument('--adapter-zero',action='store_true')
     ap.add_argument('--layout-audit',type=Path,
         help='Explicit native-layout candidate; require a successful actual input trace')
     args=ap.parse_args()
@@ -100,7 +101,7 @@ def main():
     if Path(inspect.getfile(Engine)).resolve()!=(source/'contextspan/model/engine.py').resolve():
         raise RuntimeError('Wrong Context Spanning engine module imported')
     records=[];started=time.monotonic()
-    with before_engine(engine_module,args.adapter_proof,args.adapter_disabled) as adapter:
+    with before_engine(engine_module,args.adapter_proof,args.adapter_disabled,args.adapter_zero) as adapter:
         with audited_loads(records):
             engine=Engine(checkpoint=str(checkpoint),device='cuda',temp=.8,temp_text=.7)
             voice=load_voice('main')

@@ -43,5 +43,21 @@ class ContextLossTest(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, 'virtual/prefix'):
             loss_fn(out, codes, mask, mask, torch.ones_like(mask), lm)
 
+    def test_excluded_user_origin_has_zero_gradient_without_suppressing_assistant(self):
+        out, codes, mask, lm = self.fixture()
+        out.logits.requires_grad_(True)
+        ownership = mask.clone(); ownership[:, 2] = False
+        loss, _ = loss_fn(out, codes, mask, mask, ownership, lm)
+        loss.backward()
+        self.assertEqual(int(torch.count_nonzero(out.logits.grad[:, 8:, 2])), 0)
+        self.assertGreater(int(torch.count_nonzero(out.logits.grad[:, :8, 2])), 0)
+        self.assertGreater(int(torch.count_nonzero(out.logits.grad[:, 8:, 1])), 0)
+
+    def test_missing_native_head_is_rejected(self):
+        out, codes, mask, lm = self.fixture()
+        out.mask[:, 15] = False
+        with self.assertRaisesRegex(RuntimeError, 'required native audio head'):
+            loss_fn(out, codes, mask, mask, mask, lm)
+
 
 if __name__ == '__main__': unittest.main()
