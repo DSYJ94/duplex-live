@@ -2820,3 +2820,16 @@ pushes new state inputs toward teacher feature states that differ from actual
 self-history. Compare 128 updates with/without the paired grounding objective;
 all other pins and approved sources remain the same. This is a new hypothesis,
 not a claim that suppressing this loss resolves native routing or speech.
+
+**Plain words — matched grounding stage:** 7440657 runs 128 updates with frozen
+language/action weights and no teacher-history policy gradient; 7440658 adds
+paired grounding with identical pins/data/seed and the same policy-loss setting.
+Both require exact reload and new native development checks. Local causal-state,
+paired-world, teacher approval, receipt, context and cancellation regressions pass
+37/37. These unit checks do not grade model behavior.
+
+The pinned Lychee config uses ten 40ms control slots per chunk, and its released
+runtime buffers 400ms audio windows. Its default event-to-vocoder adapter flushes
+25 speech tokens at a time. Token throughput alone will not establish the existing
+200ms first-word requirement. A shorter timing/PCM path must be separately
+measured and qualified; no threshold is changed by porting the released backend.

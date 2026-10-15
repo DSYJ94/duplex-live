@@ -43,6 +43,8 @@ def main():
     print(json.dumps(record),flush=True)
     # A successful library import alone is insufficient. Check the patched
     # Python package separately, allowing missing dependencies to fail visibly.
+    from evals.lychee_environment_check import configure_bf16
+    configure_bf16()
     vllm = importlib.import_module('vllm')
     if not Path(vllm.__file__).resolve().is_relative_to(args.runtime.resolve()):
         raise RuntimeError('Imported a different vLLM implementation')
