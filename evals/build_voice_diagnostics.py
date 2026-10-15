@@ -66,6 +66,9 @@ def main():
         root = f"lychee-voice-{args.lychee_job}"
         card("Lychee-FD with synthetic marin reference", root+"/model.wav",
              "Strictly loaded native model and published vocoder, offline audition. No paced or delegation qualification.", root+"/report.json")
+    card("PersonaPlex actual-worker bridge — result use fails", "personaplex-worker-7429163/model-buffered.wav",
+         "Actual API record read returns yellow circle and all reference rows arrive. Generated text omits the value; eight-step bridge is not qualified. Scheduled dispatch, no native routing claim.",
+         "personaplex-worker-7429163/report.json")
     alternatives = "".join(cards)
     cards.clear()
     if args.gpt_live_job:

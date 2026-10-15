@@ -2437,3 +2437,41 @@ pending. QOSMaxSubmitJobPerUserLimit rejected additional interactive submissions
 without allocating GPUs; a normal workq submission accepts actual-worker probe
 7429089. It uses the trained bridge and a real API record read/frozen ARC encoder,
 with an explicitly scheduled diagnostic request, not learned native routing.
+
+
+## 2026-10-15 — Real worker transport succeeds; spoken result use fails
+
+**Plain words:** 7429089 stops before generation because a new asset check wrongly
+requires an ARC config.json that its manifest never declared. The correction
+iterates declared files, still requires weights and verifies hashes; path preflight
+passes. Corrected 7429163 executes an actual yellow-circle lookup, finishes frozen
+ARC encoding at 10.294 s, and applies all three rows after completion. Its text
+does not give the checked value. No native routing was claimed: dispatch is
+scheduled after measured input. Thus the eight-step bridge remains an engineering
+pilot, with no useful free-running result-use pass. p95 compute 31.65 ms/80 ms;
+max backlog 117.19 ms and one 7.75 ms buffered gap. Native audio audit pending.
+
+Lychee native incremental 7428971 takes 243.26 s / 70 s with 174.63 s max backlog
+and p95 1.781 s/400 ms. Bounded encoder memo 7429187 avoids 1,279 encodes but still
+takes 214.04 s (143.96 s backlog). All three native token streams differ between
+runs; no unchanged-behavior or pure-encoder parity established. Do not adopt it.
+
+Control-teacher 7429356 collects all seven approved TRAIN clarification/cancellation
+stimuli. Independent audit 7429624 queued; result unread. New gates demand actual
+receipts before cancellation acknowledgements and clarification before identity.
+Two additional world-lineage tests and three control-timing/receipt tests pass,
+alongside the historical teacher checks. Native history proof 7429698 is submitted
+on another TRAIN scene; its result is unread at the authentication boundary.
+
+Paired counterfactual teacher code is prepared/committed, **not submitted**: 32 raw
+sessions, four different private values per identical approved TRAIN question, two
+concurrent sessions. Provenance, immutable source question, declared world hash,
+actual record receipt and strict measured words all remain required. This targets
+result dependence rather than project-to-value memorization. API budget is already
+authorized. Clifton expires at 10:29 Berlin; SSH public-key rejection blocks the
+cluster pull/submission and retrieval. Renewal is started with identity-provider
+page open; owner must sign in. No new permissions/configuration changes requested.
+
+**Plain words — local verification:** 41 related tests pass, including the new
+control-teacher causality and counterfactual-world lineage guards. No local tests
+are claimed as native voice, intelligence or complete-task acceptance.

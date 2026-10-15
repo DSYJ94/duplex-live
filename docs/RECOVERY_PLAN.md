@@ -16,6 +16,16 @@ like radio speech. Preserve the accepted reference and receipts. No further
 voice preference is needed before continuing. Neither model has passed full-task
 intelligence, delegation or paced microphone acceptance. Clifton access is verified.
 
+**Plain words — current blocker, 15 October 10:29 Berlin:** the Clifton SSH
+certificate expired. Live SSH now returns `Permission denied (publickey)`;
+renewal is running, with the usual identity-provider page left open for the owner.
+No permissions or SSH configuration changes requested. Latest local code is
+committed/pushed; **paired teacher generation is prepared but NOT submitted**.
+After sign-in: verify SSH, cluster `git pull --ff-only`, retrieve full logs/results
+for history proof 7429698 and control-teacher audit 7429624, then submit
+`evals/counterfactual-teacher.slurm` and dependent teacher audit with its new batch.
+Do not resubmit already completed native probes or 7-scene teacher collection.
+
 **Plain words — 15 October, current engineering stage:** accepted custom
 PersonaPlex voice is the leading integration candidate; Lychee remains a viable
 voice alternative. Neither is product qualified. Paced PersonaPlex 7415855 has
@@ -29,10 +39,11 @@ The phrase loss changes from 9.2622 at step 1 to 5.2089 at step 8; this is an
 engineering result, not generalization or spoken task success. Native token 4
 is a byte token; separate routing must be trained rather than assuming RAG support.
 
-**Active next checks:** native HF incremental Lychee **7428971** measures token
+**Completed/next checks:** native HF incremental Lychee **7428971** measures token
 processing with only already-arrived 400 ms audio chunks; vocoding is afterward,
 so it cannot establish live audio latency. PersonaPlex actual-worker replay
-**7429089** uses real API/record-tool receipts and frozen ARC rows through the
+**7429089** fails a manifest assumption (ARC has no standalone config); corrected
+**7429163** uses real API/record-tool receipts and frozen ARC rows through the
 trained bridge, with a scheduled diagnostic dispatch and causal measured words.
 It explicitly does **not** test native delegation choice or live ASR. Interactive
 submissions while another reservation job runs can hit QOSMaxSubmitJobPerUserLimit;
@@ -935,3 +946,41 @@ voice/system prefix captured from LMGen. It replaces old RAG markers with native
 padding, checks streaming/whole-sequence equivalence before gradients, freezes
 and hashes the speech weights, and requires exact fresh-process bridge reload.
 No routing, generalization or free-running speech acceptance follows from that pilot.
+
+
+### 15 October — delivered result still not used; new data prepared
+
+**Plain words:** actual worker 7429163 reads yellow circle with a real receipt,
+finishes ARC encoding at 10.294 s, then applies all three rows at 10.323, 10.400
+and 10.480 s. Generated text omits yellow circle and instead asks the user about
+the colour. Therefore the eight-step projection is not a useful result-use model.
+Independent audio transcription remains to be run. Native routing is explicitly
+untested: the dispatch is diagnostic/scheduled. p95 compute 31.65 ms/80 ms frame,
+maximum backlog 117.19 ms, one buffered gap 7.75 ms. Voice remains audible locally.
+
+Lychee incremental 7428971: 243.26 s / 70 s input, 174.63 s maximum backlog,
+p95 1.781 s per 400 ms chunk. Encoder-memo experiment 7429187 avoids 1,279
+repeated encodes, but still takes 214.04 s with 143.96 s backlog. All three native
+token streams differ from baseline; pure repeated encoder/logit parity was not
+established. Do not adopt the cache or claim unchanged behavior. Both HF paths
+fail live speed. Accepted Lychee voice is retained as an alternative audition.
+
+Control teachers 7429356 collect all seven approved clarify/cancel TRAIN scenes;
+independent word/timing/receipt audit 7429624 was queued, result not yet retrieved.
+New checks require a clarification before identification, no premature lookup,
+actual cancellation receipts before acknowledgements and no cancelled fact delivery.
+A separate 32-session paired-private batch is ready: four different declared
+private worlds per identical approved TRAIN user question, two concurrent API
+sessions, no held-out stimuli. All worlds/receipts/audio hashes are checked and
+all targets remain unapproved until the same strict speech, fact and clock gates
+pass. Resume preserves completed recordings and archives incomplete attempts.
+Launch `evals/counterfactual-teacher.slurm` after authentication; no job ID exists.
+
+Native delayed-history proof 7429698 compares the reusable prefix construction
+against actual LMGen on a different TRAIN scene. Retrieve its full result before
+using fast histories for multi-example training. Local related suite is verified
+separately below; exact tests and results remain evidence, not model qualification.
+
+**Plain words — local verification:** 41 related tests pass, including the new
+control-teacher causality and counterfactual-world lineage guards. No local tests
+are claimed as native voice, intelligence or complete-task acceptance.
