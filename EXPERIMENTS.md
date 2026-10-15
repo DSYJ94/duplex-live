@@ -2510,3 +2510,25 @@ compatibility check assumed depth context 8 from loader options. Native LMModel
 explicitly overrides it to None, giving a 16-slot ring. This is a failed source
 assumption, not a numerical pass. The next comparison uses the actual 16-slot
 boundary (batched context 15), still preserving unmodified per-codebook errors.
+
+
+## 2026-10-15 — Native joint proof passes; thirteen paired teachers converted
+
+**Plain words:** 7434702 proves exact native delayed inputs/targets, text error
+0.0000763 and audio error 0.000124. The original unmodified batch discrepancy
+is confined to depth codebook 16 (0.71628); batched context 15 matches the actual
+16-slot native streaming cache, without vendor or streaming inference changes.
+The explicit gated-feed-forward path gives every intended adapter a finite,
+nonzero output gradient. Both zero-adapter errors are exactly 0.0; no optimizer
+updates occur in this proof. 3,500,032 language-adapter parameters are checked.
+
+Paired audit 7434696 independently checks all 32; 13 pass, 19 fail. Silent audio
+is explicitly failed, never supplied invented words. Regression checks exercise
+the real audit loop on silent then audible clips and confirm silence rejection.
+Conversion 7434749 stamps all 13 with unchanged WER .08 and measured word clocks;
+native encoding remains required. A new trainer accepts multiple independently
+validated caches, forbids extra held-out folds/duplicate IDs, and keeps explicit
+source hashes. Its separate action head preserves approved control clocks;
+two tests reject missing/misaligned markers and distinguish cancellation.
+Eight-update native pilot is prepared for engineering validation and fresh-process
+text/audio/action reload, not larger training or model qualification yet.

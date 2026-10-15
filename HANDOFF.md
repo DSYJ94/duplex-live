@@ -7,6 +7,23 @@ Owner authorizes needed compute before expiry and asks to continue until actual
 input is needed. **No model qualifies yet.** This is native pretrained speech
 LoRA fine-tuning with real semantic workers, not pretraining or Qwen row scale-up.
 
+**Plain words — 15 October, native joint training cleared:** proof **7434702**
+passes with text/audio errors 0.0000763 / 0.000124, exact delayed inputs/targets,
+zero adapter effect and finite nonzero gradients in all 25 intended output
+adapters. The batched-only depth mask matches the pinned streaming cache's
+16-slot boundary; the source and streaming model stay unchanged. Prior failures
+7434416/7434638 remain recorded. This proves implementation, not task quality.
+Paired-private collection 7434240 completes 32 raw recordings. Audit 7434696
+rejects 19 and accepts 13; conversion **7434749** verifies all 13 under unchanged
+speech and 200ms timing bars. Encoding/native grid checks remain required.
+Silent teacher responses now become explicit failed records, allowing the rest
+of the batch to be checked; the old aborted audit 7434249 is preserved.
+A bounded eight-update native PersonaPlex pilot is prepared: final-eight-layer
+LoRA, a zero-initialized reference bridge and separate idle/delegate/cancel head;
+Mimi, depth weights and raw QKV remain frozen. It must save and reload exactly
+before any generated-speech conclusions. Extra paired data can enter only after
+its native code checks pass. No model qualifies; no owner input currently needed.
+
 **Plain words — 15 October 11:43 Berlin, access restored:** renewed Clifton
 certificate is verified by actual SSH and valid until 23:42 Berlin. Paired-private
 teacher job **7434240** is running (32 raw TRAIN-only sessions, four worlds per
