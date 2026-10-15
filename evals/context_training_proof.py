@@ -31,6 +31,7 @@ def main():
     ap.add_argument('--steps', type=int, choices=(8, 128), default=8)
     ap.add_argument('--pilot-preflight', type=Path)
     ap.add_argument('--layout-audit', type=Path)
+    ap.add_argument('--teacher-audit', type=Path, action='append')
     ap.add_argument('--reload', action='store_true')
     ap.add_argument('--history-audit-only', action='store_true')
     args = ap.parse_args()
@@ -101,8 +102,8 @@ def main():
     if (provenance['schema'] != 'dl-voice-codec-probe-v1' or provenance['source_model'] != 'gpt-live-1'
             or provenance['reference_sha256'] != sha256(args.voice_reference)):
         raise RuntimeError('Changed accepted synthetic voice provenance')
-    if args.reload or parent:
-        voice_source = args.out if args.reload else args.pilot_preflight
+    if args.reload or parent or args.teacher_audit:
+        voice_source = args.out if args.reload else (args.pilot_preflight if parent else args.teacher_audit[0])
         if parent and not args.reload and sha256(voice_source / 'voice.pt') != parent['voice_sha256']:
             raise RuntimeError('Changed preflight voice codes')
         voice = torch.load(voice_source / 'voice.pt', map_location='cpu', weights_only=True)['codes']
@@ -122,6 +123,17 @@ def main():
     if parent and (parent['data_sha256'] != sha256(args.out / 'data.json')
             or parent['voice_reference_sha256'] != sha256(args.voice_reference)):
         raise RuntimeError('Pilot corpus/voice differs from verified preflight')
+    if args.teacher_audit:
+        for path in args.teacher_audit:
+            original = json.loads((path / 'report.json').read_text())
+            if (original['data_sha256'] != sha256(args.out / 'data.json')
+                    or original['voice_sha256'] != sha256(voice_source / 'voice.pt')):
+                raise RuntimeError('Diagnostic corpus/voice differs from training')
+        from evals.context_teacher_audit import audit
+        result = audit(lm, spm, examples, args.teacher_audit)
+        (args.out / 'teacher-audit.json').write_text(json.dumps(result, indent=2) + '\n')
+        print(json.dumps(result), flush=True)
+        return
     # Fixed complete TRAIN private case; no random window or validation-derived labels.
     first = next(e for e in examples if e['record']['kind'] == 'private')
     if args.history_audit_only:

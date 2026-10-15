@@ -34,6 +34,12 @@ run_container() {
   "$DL/pytorch-new.sif" python -u "$@"
 }
 run_container -m unittest evals.harness.test_context_training_loss
+if [ "${CONTEXT_TEACHER_AUDIT:-0}" = 1 ]; then
+ run_container -m evals.context_training_proof "${ARGS[@]}" \
+  --teacher-audit "$DL/runs/context-training-proof-7455157" \
+  --teacher-audit "$DL/runs/context-training-proof-7455712"
+ exit 0
+fi
 if [ "${CONTEXT_HISTORY_AUDIT:-0}" = 1 ]; then
  run_container -m evals.context_training_proof "${ARGS[@]}" --history-audit-only
  exit 0
