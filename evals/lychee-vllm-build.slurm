@@ -14,20 +14,26 @@ cd "$DL/repo"
 SOURCE="$DL/vendor/lychee-fd-7bb1068c59b578e1f8e65fb762cd26708c14cc6d"
 COMMIT=7bb1068c59b578e1f8e65fb762cd26708c14cc6d
 OUT="$DL/runs/lychee-vllm-build-${SLURM_JOB_ID}"
-BUILD="$DL/tmp/lychee-vllm-source-${SLURM_JOB_ID}"
+BUILD="$DL/tmp/lychee-vllm-source-${LYCHEE_BUILD_RESUME_JOB:-$SLURM_JOB_ID}"
+if [ -n "${LYCHEE_BUILD_RESUME_JOB:-}" ]; then
+ [[ "$LYCHEE_BUILD_RESUME_JOB" =~ ^[0-9]+$ ]]
+fi
 test "$(git -C "$SOURCE" rev-parse HEAD)" = "$COMMIT"
 test -z "$(git -C "$SOURCE" status --porcelain)"
 mkdir "$OUT"
 mkdir "$OUT/tmp"
 export TMPDIR="$OUT/tmp"
+if [ -z "${LYCHEE_BUILD_RESUME_JOB:-}" ]; then
 git init "$BUILD"
 git -C "$BUILD" remote add origin https://github.com/HITsz-TMG/Lychee-FD.git
 git -C "$BUILD" fetch --depth=1 --filter=blob:none origin "$COMMIT"
 git -C "$BUILD" sparse-checkout set third_party/vllm
 git -C "$BUILD" checkout --detach "$COMMIT"
+fi
+test "$(git -C "$BUILD" rev-parse HEAD)" = "$COMMIT"
 test -f "$BUILD/third_party/vllm/setup.py"
 test -f "$BUILD/third_party/vllm/pyproject.toml"
-export DL OUT BUILD
+export DL OUT BUILD LYCHEE_BUILD_RESUME_JOB
 apptainer exec --nv --bind /projects,/lus,/home \
  --env TMPDIR="$OUT/tmp" \
  --env PYTHONDONTWRITEBYTECODE=1 --env OMP_NUM_THREADS=8 \
@@ -51,7 +57,26 @@ export MAX_JOBS=8 NVCC_THREADS=1 TORCH_CUDA_ARCH_LIST=9.0 VLLM_TARGET_DEVICE=cud
 export SETUPTOOLS_SCM_PRETEND_VERSION=0.6.5+lychee
 export CMAKE_BUILD_PARALLEL_LEVEL=8
 export VLLM_FETCHCONTENT_BASE_DIR="$OUT/fetch-content"
-python -m evals.lychee_cuda13_compat --source "$BUILD" --out "$OUT/compatibility.json"
+if [ -z "${LYCHEE_BUILD_RESUME_JOB:-}" ]; then
+ python -m evals.lychee_cuda13_compat --source "$BUILD" --out "$OUT/compatibility.json"
+else
+ python - <<'PYRESUME'
+import hashlib,json,os,subprocess
+from pathlib import Path
+base=Path(os.environ['BUILD']); out=Path(os.environ['OUT'])
+old=Path(os.environ['DL'])/'runs'/('lychee-vllm-build-'+os.environ['LYCHEE_BUILD_RESUME_JOB'])/'compatibility.json'
+record=json.loads(old.read_text())
+for row in record['files']:
+ if hashlib.sha256((base/'third_party/vllm'/row['file']).read_bytes()).hexdigest()!=row['after_sha256']:
+  raise RuntimeError('Compiled source no longer matches recorded CUDA13 migration')
+if hashlib.sha256(subprocess.check_output(['git','-C',str(base),'diff','--binary'])).hexdigest()!=record['diff_sha256']:
+ raise RuntimeError('Resumed build checkout has additional tracked changes')
+(out/'compatibility.json').write_bytes(old.read_bytes())
+PYRESUME
+fi
+# The pinned setup.py copies generated FlashAttention Python files here but
+# does not create their destination; preserve all compiled targets on retry.
+mkdir -p "$BUILD/third_party/vllm/vllm/vllm_flash_attn"
 python -m pip wheel --no-build-isolation --no-deps \
  --wheel-dir "$OUT/wheels" "$BUILD/third_party/vllm"
 python - <<'PY'
@@ -62,7 +87,8 @@ for p in (out/'wheels').glob('*.whl'):
  rows.append({'file':p.name,'bytes':p.stat().st_size,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()})
 if len(rows)!=1: raise RuntimeError('Expected one locally built patched vLLM wheel')
 (out/'build-report.json').write_text(json.dumps({'built':True,'wheels':rows,
- 'torch_replaced':False,'runtime_or_model_load_tested':False},indent=2)+'\n')
+ 'torch_replaced':False,'runtime_or_model_load_tested':False,
+ 'resumed_build_job':os.environ.get('LYCHEE_BUILD_RESUME_JOB') or None},indent=2)+'\n')
 print(json.dumps(rows),flush=True)
 PY
 CONTAINER
