@@ -10,7 +10,13 @@
 #SBATCH --output=logs/dl-lychee-kernels-%j.out
 set -euo pipefail
 DL=/projects/u6si/duplex-live
-cd "$DL/repo"
+TASK_SOURCE="${DL_TASK_SOURCE:-$DL/repo}"
+if [ "$TASK_SOURCE" != "$DL/repo" ]; then
+ : "${DL_TASK_COMMIT:?Immutable worktree commit required}"
+ test "$(git -C "$TASK_SOURCE" rev-parse HEAD)" = "$DL_TASK_COMMIT"
+ test -z "$(git -C "$TASK_SOURCE" status --porcelain)"
+fi
+cd "$TASK_SOURCE"
 : "${LYCHEE_BUILD_JOB:?Successful isolated backend build required}"
 [[ "$LYCHEE_BUILD_JOB" =~ ^[0-9]+$ ]]
 BUILD="$DL/runs/lychee-vllm-build-$LYCHEE_BUILD_JOB"
@@ -21,7 +27,7 @@ if [ -n "${LYCHEE_RUNTIME_DEPS_JOB:-}" ]; then
  test -f "$DL/runs/lychee-vllm-deps-$LYCHEE_RUNTIME_DEPS_JOB/report.json"
 fi
 RUNTIME="$DL/envs/lychee-vllm-${SLURM_JOB_ID}"
-export DL BUILD RUNTIME DEPS
+export DL BUILD RUNTIME DEPS TASK_SOURCE
 apptainer exec --nv --bind /projects,/lus,/home \
  --env PYTHONDONTWRITEBYTECODE=1 --env OMP_NUM_THREADS=8 \
  "$DL/pytorch-new.sif" bash -eu <<'CONTAINER'
@@ -34,7 +40,7 @@ if not record['built'] or hashlib.sha256(wheel.read_bytes()).hexdigest()!=row['s
  raise RuntimeError('Build/wheel receipt mismatch')
 subprocess.run([sys.executable,'-m','pip','install','--no-deps','--target',os.environ['RUNTIME'],str(wheel)],check=True)
 PY
-export PYTHONPATH="$RUNTIME:$DEPS:$DL/envs/lychee-probe-7415053:$DL/tmp/minicpm-recovery-7377673:$DL/repo"
+export PYTHONPATH="$RUNTIME:$DEPS:$DL/envs/lychee-probe-7415053:$DL/tmp/minicpm-recovery-7377673:$TASK_SOURCE"
 python -u -m evals.lychee_vllm_preflight --runtime "$RUNTIME" --build "$BUILD" \
  --out "$DL/runs/lychee-vllm-preflight-${SLURM_JOB_ID}"
 CONTAINER

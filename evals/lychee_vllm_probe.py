@@ -59,7 +59,7 @@ def main():
         'assets_manifest_sha256':sha256(args.assets),'native_kernel_library_sha256':kernels['library_sha256'],
         'enforce_eager':True,'align_audio_input':True,'live_audio_or_delegation_qualified':False,
         'released_control_chunk_slots':10,'control_slot_seconds':.04,'input_window_seconds':.4,
-        'first_word_target_seconds':.2,'first_word_target_tested':False}
+        'native_training_first_subword_offset_bar_ms':200,'response_start_latency_tested':False}
     (args.out/'environment.json').write_text(json.dumps(environment,indent=2)+'\n')
     torch.manual_seed(424242)
     with strict_loading(model_path) as loading:

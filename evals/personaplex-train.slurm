@@ -10,7 +10,13 @@
 #SBATCH --output=logs/dl-persona-train-%j.out
 set -euo pipefail
 DL=/projects/u6si/duplex-live
-cd "$DL/repo"
+TASK_SOURCE="${DL_TASK_SOURCE:-$DL/repo}"
+if [ "$TASK_SOURCE" != "$DL/repo" ]; then
+ : "${DL_TASK_COMMIT:?Immutable worktree commit required}"
+ test "$(git -C "$TASK_SOURCE" rev-parse HEAD)" = "$DL_TASK_COMMIT"
+ test -z "$(git -C "$TASK_SOURCE" status --porcelain)"
+fi
+cd "$TASK_SOURCE"
 test "$(git -C "$DL/personaplex" rev-parse HEAD)" = 3428dfd95309a7f3c84fd93259ded0f810d1ff91
 test -z "$(git -C "$DL/personaplex" status --porcelain)"
 export CUBLAS_WORKSPACE_CONFIG=:4096:8
@@ -40,7 +46,7 @@ for MODE in "${MODES[@]}"; do
  EXTRA=()
  if [ "$MODE" = reload ]; then EXTRA=(--reload); fi
  apptainer exec --nv --bind /projects,/lus,/home \
-  --env PYTHONPATH="$DL/tmp/voice-quality-7415052:$DL/personaplex/moshi:$DL/envs/moshi-rag-7379661/lib/python3.12/site-packages:$DL/repo" \
+  --env PYTHONPATH="$DL/tmp/voice-quality-7415052:$DL/personaplex/moshi:$DL/envs/moshi-rag-7379661/lib/python3.12/site-packages:$TASK_SOURCE" \
   --env HF_HOME="$DL/models/hf-cache" --env HF_HUB_OFFLINE=1 \
   --env PYTHONDONTWRITEBYTECODE=1 --env OMP_NUM_THREADS=8 \
   "$DL/pytorch-new.sif" python -u -m evals.personaplex_train "${ARGS[@]}" "${EXTRA[@]}"

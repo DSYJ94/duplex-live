@@ -2830,9 +2830,10 @@ paired-world, teacher approval, receipt, context and cancellation regressions pa
 
 The pinned Lychee config uses ten 40ms control slots per chunk, and its released
 runtime buffers 400ms audio windows. Its default event-to-vocoder adapter flushes
-25 speech tokens at a time. Token throughput alone will not establish the existing
-200ms first-word requirement. A shorter timing/PCM path must be separately
-measured and qualified; no threshold is changed by porting the released backend.
+25 speech tokens at a time. Token throughput alone will not establish conversational response latency. The
+existing 200ms first-subword bar measures training alignment to actual word
+onsets. Response-start timing, input backlog and streamed PCM must be measured
+separately; no threshold is changed by porting the released backend.
 
 **Plain words — released backend wheel now built:** 7439917 succeeds, wheel
 `vllm-0.6.5+lychee.cu130-cp312-cp312-linux_aarch64.whl`, SHA
@@ -2915,3 +2916,30 @@ native integration loader and then stops on absent sentencepiece imported by
 its generic GGUF loader. Add the released sentencepiece lock pin; no checkpoint
 weights have yet been loaded or silently omitted. The successful import proof
 is distinct from model/attention/speech acceptance.
+
+**Plain words — timing terminology correction:** the earlier continuation text
+incorrectly called 200ms a response-start target. `recovery_encode.native_word_timing`
+checks each native first-subword frame against its independent measured word
+onset (maximum offset 200ms). It does not measure the gap from user speech end
+to assistant speech start. Historical live input-age/backlog gates are separate
+again. Correct the new runtime metadata/docs so this training threshold is not
+used as an invented end-to-end latency requirement. Actual response/PCM latency
+still needs measurement against the desired conversational behavior.
+
+**Plain words — released full-model backend runs at paced token rate:** 7441742
+strictly accounts for all 982 checkpoint tensors: 488 native packed-model source
+weights, 487 encoder, six audio adapter, and one explicitly unused merge token
+embedding. All 329 native parameter/shard groups load, with no side-head fallback;
+encoder/adapter state keys and shapes load strictly. Seventy seconds of arrived
+input runs in 70.523 seconds, four responses/1304 speaking-token events; p50/p95
+compute .278/.297 seconds per .400-second chunk. Initial preprocessing/encoder
+startup produces max backlog 1.280 seconds. This is paced tokens, not live PCM,
+voice quality, semantic success or microphone acceptance. New offline and
+recorded-arrival streaming-vocoder checks preserve the accepted synthetic voice
+and published lookahead/overlap rules; all returned codec values must be valid.
+
+Future long jobs may select an immutable git worktree with DL_TASK_SOURCE and
+DL_TASK_COMMIT; the payload verifies the exact clean commit and uses that path
+for Python imports. This avoids queued jobs importing later main-checkout edits.
+Submit from the main repo so existing Slurm log paths remain stable. Deploy code
+through git only; artifact/log backups remain separate.

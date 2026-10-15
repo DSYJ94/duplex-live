@@ -32,7 +32,8 @@ packed branch shard, rejects incomplete audio encoder/adapter loading, and
 explicitly discloses unused merge token embeddings. None of this has yet passed
 full model loading, attention execution, paced token speed or streamed PCM.
 Released timing uses 400ms windows and ten 40ms control slots per chunk; default
-vocoder event batching is 25 tokens. The 200ms first-word bar remains unchanged.
+vocoder event batching is 25 tokens. Measure response-start latency separately;
+the existing 200ms bar checks first-subword alignment to measured word onsets.
 
 Verified native policy state collections, approved two-scene controls, build wheel
 and numerical proof are backed up locally. Full current logs are additionally in

@@ -10,7 +10,13 @@
 #SBATCH --output=logs/dl-persona-native-%j.out
 set -euo pipefail
 DL=/projects/u6si/duplex-live
-cd "$DL/repo"
+TASK_SOURCE="${DL_TASK_SOURCE:-$DL/repo}"
+if [ "$TASK_SOURCE" != "$DL/repo" ]; then
+ : "${DL_TASK_COMMIT:?Immutable worktree commit required}"
+ test "$(git -C "$TASK_SOURCE" rev-parse HEAD)" = "$DL_TASK_COMMIT"
+ test -z "$(git -C "$TASK_SOURCE" status --porcelain)"
+fi
+cd "$TASK_SOURCE"
 : "${PERSONA_CHECKPOINT:?Verified native joint checkpoint required}"
 : "${PERSONA_SCENARIO:?Approved validation scenario required}"
 set -a
@@ -25,7 +31,7 @@ if [ -n "${PERSONA_INSTRUCTIONS:-}" ]; then EXTRA+=(--instructions "$PERSONA_INS
 if [ -n "${PERSONA_WORD_FRAMES:-}" ]; then EXTRA+=(--worker-word-frames "$PERSONA_WORD_FRAMES"); fi
 if [ -n "${PERSONA_WORKER_HANDOFF:-}" ]; then EXTRA+=(--worker-handoff "$PERSONA_WORKER_HANDOFF"); fi
 apptainer exec --nv --bind /projects,/lus,/home \
- --env PYTHONPATH="$DL/tmp/voice-quality-7415052:$DL/personaplex/moshi:$DL/envs/moshi-rag-7379661/lib/python3.12/site-packages:$DL/repo" \
+ --env PYTHONPATH="$DL/tmp/voice-quality-7415052:$DL/personaplex/moshi:$DL/envs/moshi-rag-7379661/lib/python3.12/site-packages:$TASK_SOURCE" \
  --env HF_HOME="$DL/models/hf-cache" --env HF_HUB_OFFLINE=1 --env TRANSFORMERS_OFFLINE=1 \
  --env PYTHONDONTWRITEBYTECODE=1 --env OMP_NUM_THREADS=8 \
  "$DL/pytorch-new.sif" python -u -m evals.personaplex_native_probe \
