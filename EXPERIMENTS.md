@@ -2868,3 +2868,15 @@ Dependency setup 7441041 stops before installation because the bare container
 has no TorchAudio distribution metadata (the voice environment supplies it in
 an overlay). Protected-stack checks now preserve absent packages as absent;
 no GPU dependency is installed or replaced to satisfy this bookkeeping check.
+
+**Plain words — neutral-ready pilot preserves the intended baseline:** 7441177
+passes eight updates, exact ready-state reference-free text/audio, frozen hashes,
+and fresh-process text/audio/policy reload all 0.0. SHA
+`4dd2e719871e4819f8010e3b99f4612063d0929765124a061949cfbb478db69a`.
+128-update 7441316 and native checks 7441318/20/21/23/24 are submitted; no task
+verdict is implied. CPU dependency 7441175 installs successfully without changing
+the GPU stack. Backend preflight 7441242 then reveals the older HF overlay pulled
+PyArrow26, which requires NumPy2, while the released vLLM lock requires NumPy1.26.
+Add the same lock's PyArrow22 to the new isolated CPU subset; preserve the accepted
+HF overlay and its working NumPy2/PyArrow26 environment. Failed dependent runtime
+7441244 must not run as if its import proof passed.

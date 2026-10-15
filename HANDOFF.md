@@ -1,4 +1,4 @@
-# HANDOFF — where we are (updated 2026-10-14 for agent succession)
+# HANDOFF — where we are (updated 2026-10-15 for active recovery)
 
 ## Current continuation — 2026-10-14, custom voices accepted; intelligence still open
 
@@ -6,6 +6,38 @@ Start at [docs/RECOVERY_PLAN.md](docs/RECOVERY_PLAN.md), current execution secti
 Owner authorizes needed compute before expiry and asks to continue until actual
 input is needed. **No model qualifies yet.** This is native pretrained speech
 LoRA fine-tuning with real semantic workers, not pretraining or Qwen row scale-up.
+
+**Latest continuation — 15 October, no model qualifies:** do not promote the
+feedback or paired-grounding checkpoints. Feedback 7440181 fails all four native
+development probes 7440326–29. Matched zero-policy-gradient runs 7440657/58 also
+fail their five native probes each (7440909–18). Their implementation and fresh
+reload checks pass, but speech facts, clarification and cancellation do not.
+A new bounded neutral-ready/paired pilot **7441177** masks ready and prefix
+feedback to exact zero so ordinary speech and initial routing stay identical to
+the parent before any actual worker dispatch. Language and action weights remain
+frozen; the full ready-state reference-free logit check must be exactly zero.
+Do not treat unchanged base weights alone as preservation of ordinary answers.
+
+The isolated official Lychee custom-vLLM wheel **7439917** now builds:
+SHA `1ed23f49f799377401882da464e0dfcc6fd9d53773a48d709a6ef8db5fa8bf0e`.
+Actual CUDA RMSNorm **7440908** passes nine FP32/BF16/FP16 width checks against
+FP64/PyTorch, then package import fails on absent msgspec. CPU dependency job
+**7441175** installs only the explicit released-lock subset with --no-deps into
+an isolated overlay; prior 7441041 stopped on absent optional TorchAudio metadata
+before installing anything. `lychee-vllm-preflight.slurm` accepts
+`LYCHEE_BUILD_JOB=7439917,LYCHEE_RUNTIME_DEPS_JOB=<passed CPU job>`. After its
+actual import proof, `lychee-vllm-probe.slurm` requires that preflight job and the
+same CPU overlay. Its strict wrapper accounts for every source tensor and every
+packed branch shard, rejects incomplete audio encoder/adapter loading, and
+explicitly discloses unused merge token embeddings. None of this has yet passed
+full model loading, attention execution, paced token speed or streamed PCM.
+Released timing uses 400ms windows and ten 40ms control slots per chunk; default
+vocoder event batching is 25 tokens. The 200ms first-word bar remains unchanged.
+
+Verified native policy state collections, approved two-scene controls, build wheel
+and numerical proof are backed up locally. Full current logs are additionally in
+`runs/recovery-continuation-20261015/`. Existing unrelated pyc and roadmap changes
+remain untouched. Continue until actual owner input is needed; current SSH works.
 
 **Plain words — 15 October, active continuation:** custom PersonaPlex and
 Lychee voices remain accepted for development quality only; no complete model
