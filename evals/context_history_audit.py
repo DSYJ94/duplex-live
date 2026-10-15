@@ -4,7 +4,7 @@ Teacher-forced TRAIN component only. No words are generated for evaluation.
 """
 
 
-def audit(lm, spm, prefix, example, sample):
+def audit(lm, spm, prefix, example, sample, compare_logits=False):
     import torch
     from contextspan.moshi.models import LMGen
     from contextspan.moshi.models.lm import _delay_sequence
@@ -24,9 +24,13 @@ def audit(lm, spm, prefix, example, sample):
     original = lm.forward_codes
     for aligned in (False, True):
         observed = []
+        outputs = []
         def capture(value):
             observed.append(value.detach().cpu().clone())
-            return original(value)
+            result = original(value)
+            if aligned and compare_logits:
+                outputs.append(tuple(v.detach().cpu().clone() for v in result))
+            return result
         lm.forward_codes = capture
         try:
             with torch.no_grad(), no_compile(), no_cuda_graph():
@@ -62,6 +66,31 @@ def audit(lm, spm, prefix, example, sample):
             'startup_dropped_oracle_mismatches_per_channel': (actual != dropped).sum((0, 2)).tolist(),
             'actual_input_sha256': __import__('hashlib').sha256(actual.numpy().tobytes()).hexdigest(),
             'expected_input_sha256': __import__('hashlib').sha256(expected.numpy().tobytes()).hexdigest()}
+        if aligned and compare_logits:
+            if next(lm.parameters()).dtype != torch.float32:
+                raise RuntimeError('Temporal parity requires the canonical FP32 math path')
+            with torch.no_grad(), no_compile(), no_cuda_graph():
+                batch = original(expected.to(lm.device))
+            comparisons = {}
+            for index, (name, time_dim) in enumerate((('hidden', 1), ('text_logits', 2))):
+                streamed = torch.cat([o[index] for o in outputs], dim=time_dim)
+                batched = batch[index].detach().cpu()
+                if streamed.shape != batched.shape or not (
+                        torch.isfinite(streamed).all() and torch.isfinite(batched).all()):
+                    raise RuntimeError('Invalid native temporal parity outputs')
+                error = (streamed - batched).abs()
+                comparisons[name] = {'maximum_absolute_error': float(error.max()),
+                    'mean_absolute_error': float(error.mean()), 'shape': list(streamed.shape)}
+                if name == 'text_logits':
+                    comparisons[name]['top1_disagreements'] = int(
+                        (streamed.argmax(-1) != batched.argmax(-1)).sum())
+            results['aligned_candidate']['temporal_parity'] = {
+                'dtype': 'float32, math attention, no compilation or CUDA graphs',
+                'threshold': .001, 'comparisons': comparisons,
+                'passed': not bool(mismatch.any()) and all(
+                    c['maximum_absolute_error'] <= .001 for c in comparisons.values()),
+                'scope': 'complete prefix, first TRAIN request span and two following real frames',
+                'production_graph_or_free_running_quality_tested': False}
     return {'schema': 'dl-context-native-history-audit-v1', 'source_split': 'train',
         'scenario': example['record']['id'], 'clean_real_frames_used': stop,
         'span': span, 'native_default_unchanged': True,

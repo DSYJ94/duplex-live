@@ -90,8 +90,14 @@ word, audio code, RET position and receipt clock. It passes integrated native
 history, all-gradient/frozen-base checks, eight updates and exact fresh reload.
 SHA `63f7d31c0e31eed5de5d1173607263142ea3bb893a84d49468e822211cc3f8c0`;
 new data SHA75c8a6dee846420b3319984fc40b041240d0ca109bbda616f967bef3568e5796.
-Bounded padding-only128 ablation7456282 is submitted from the same released
-weights; no quality result exists yet. Test it before any further scale.
+Padding-only128 ablation7456282 passes128 finite updates across all48 scenes,
+unchanged frozen hashes and exact fresh-process FP32 reload. SHA
+`3e9d4011a23858e505878c43a7b2ffbf8af4cda89480ad4776ecd660d006c13c`.
+Eight actual native-ASR behavior tests7456656–63 are submitted: private000/001
+with paired worlds, simple004/005, clarify006 and cancel007. No behavioral
+improvement is claimed before those finish. A separate canonical temporal
+logit comparison now extends the existing input-ID history check; this checks
+whether streamed prefix/span processing matches batched training computation.
 
 One explicit pending-state diagnostic7455886/87 improves acknowledgement of
 waiting but still omits both results and hallucinates physics. Reject more

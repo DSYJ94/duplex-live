@@ -3513,3 +3513,19 @@ source clocks and label new policy targets as derived, with user information
 and receipt causality checked. Unqualified development failures remain excluded
 from supervision. Pending-state-only7455886/87 and recovery7455888/89 fail
 behavior; do not scale prompt variants or the rejected128 checkpoint.
+
+
+## 2026-10-15 — Padding ablation and temporal computation check
+
+Plain words: padding-only128 pilot7456282 passes the technical training gates,
+not behavioral qualification. It sees all48 TRAIN scenes in52.49s, with unchanged
+frozen hashes and exact fresh-process FP32 reload. Checkpoint SHA
+`3e9d4011a23858e505878c43a7b2ffbf8af4cda89480ad4776ecd660d006c13c`;
+data SHA75c8a6dee846420b3319984fc40b041240d0ca109bbda616f967bef3568e5796.
+Native tests7456656–63 use the same saved voice and compare private000/001 paired
+values plus simple004/005, clarification006 and cancellation007. Existing
+zero-wrapper controls remain separate. A new optional canonical FP32/math
+history check compares streamed hidden states and text logits with the complete
+batched input, beyond the already measured exact token IDs. It does not change
+training or inference behavior and does not establish production graph parity.
+Owner voice feedback for7454285 is recorded on the listening page.

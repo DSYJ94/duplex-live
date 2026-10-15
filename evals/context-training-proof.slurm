@@ -24,6 +24,7 @@ ARGS=(--assets "$DL/runs/context-spanning-assets-7454205/manifest.json"
  --out "$DL/runs/context-training-proof-${SLURM_JOB_ID}")
 if [ "${CONTEXT_TEXT_PADDING:-legacy-epad0}" = context-pad3 ]; then ARGS+=(--text-padding context-pad3); fi
 if [ "${CONTEXT_INTEGRATED_HISTORY:-0}" = 1 ]; then ARGS+=(--history-audit); fi
+if [ "${CONTEXT_HISTORY_LOGITS:-0}" = 1 ]; then ARGS+=(--history-logits); fi
 if [ "${CONTEXT_PILOT:-0}" = 1 ]; then
  ARGS+=(--steps 128 --pilot-preflight "$DL/runs/context-training-proof-${CONTEXT_PREFLIGHT_JOB:-7455157}"
   --layout-audit "$DL/runs/context-training-proof-${CONTEXT_LAYOUT_AUDIT_JOB:-7455458}/history-audit.json")

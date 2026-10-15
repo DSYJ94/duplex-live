@@ -121,15 +121,17 @@ def main():
             voice='synthetic reference' if report['loading']['voice']=='accepted-synthetic' else 'released voice'
             mode=('Native backend-request marker and actual arrived-audio ASR. The backend chooses tools.'
                 if not report['scheduled_dispatch'] else 'Scheduled actual worker; measured-word backend context.')
+            judgment=('Owner feedback on 15 October: as good as or better than smooth Lychee. '
+                if job == 7454285 else 'This recording has no separate owner voice judgment. ')
             note=(f'{mode} Fixed 160ms causal playback buffer; '
                 f"{report['playout']['underrun_samples']/24000:.3f}s measured underruns. "
-                'Voice judgment pending; factual/task errors remain under review. No microphone/device trial.')
+                f'{judgment}Factual/task errors remain; no microphone/device trial.')
             card(f'Context Spanning — {voice} ({job})',root+'/model.wav',note,root+'/report.json')
         context='<h2 id="context">Context Spanning auditions</h2><section>'+''.join(cards)+'</section>'
         cards[:]=original
     page = '<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
     page += '<title>Voice diagnostics</title><style>body{max-width:1100px;margin:32px auto;padding:0 20px;background:#10141c;color:#e7ecf5;font:16px/1.5 system-ui}section{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}article{padding:20px;background:#1a2230;border:1px solid #354157;border-radius:12px}audio{width:100%}p{color:#b9c5d8}a{color:#9dc3ff}</style>'
-    page += '<h1>Compare the audio artifacts</h1><p>The owner accepts the custom PersonaPlex and Lychee voices as comparable to GPT-Live. Original NATF2 is muffled and rejected. Voice acceptance is separate from intelligence, delegation and real-time performance.</p>'
+    page += '<h1>Compare the audio artifacts</h1><p>The owner accepts the custom PersonaPlex and Lychee voices as comparable to GPT-Live, and Context Spanning with the synthetic reference at least as good as smooth Lychee. Original NATF2 is muffled and rejected. Voice acceptance is separate from intelligence, delegation and real-time performance.</p>'
     page += '<section>'+''.join(cards)+'</section>'
     page += concurrent
     page += context

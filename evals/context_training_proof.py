@@ -35,8 +35,12 @@ def main():
     ap.add_argument('--reload', action='store_true')
     ap.add_argument('--history-audit-only', action='store_true')
     ap.add_argument('--history-audit', action='store_true')
+    ap.add_argument('--history-logits', action='store_true',
+        help='Also compare canonical streamed and batched temporal outputs in the history audit')
     ap.add_argument('--text-padding', choices=('legacy-epad0','context-pad3'), default='legacy-epad0')
     args = ap.parse_args()
+    if args.history_logits and not (args.history_audit or args.history_audit_only):
+        ap.error('Temporal history logits require a history audit')
     if args.steps == 128 and (not args.pilot_preflight or not args.layout_audit):
         ap.error('Bounded pilot requires the passed eight-update proof and native history audit')
     parent = None
@@ -143,7 +147,11 @@ def main():
         sample = torch.load(Path(first['record']['cache']) / (first['record']['id'] + '.pt'),
             map_location='cpu', weights_only=True)
         sample['codes'] = first['clean_codes'][None]
-        result = audit(lm, spm, prefix, first, sample)
+        if args.history_logits:
+            with precise_native(lm):
+                result = audit(lm, spm, prefix, first, sample, compare_logits=True)
+        else:
+            result = audit(lm, spm, prefix, first, sample)
         result.update(source_commit=SOURCE_COMMIT, data_sha256=sha256(args.out / 'data.json'),
             layout_code_sha256=sha256(Path(__file__).with_name('context_native_layout.py')),
             repo_commit=subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip())
