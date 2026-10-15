@@ -115,7 +115,11 @@ def main():
         for name,module in modules.items():
             for key in ('a','b'):
                 grad=getattr(module,key).grad
-                if grad is None or not torch.isfinite(grad).all():raise RuntimeError('Missing/nonfinite semantic gradient')
+                if grad is None or not torch.isfinite(grad).all():
+                    print(json.dumps({'gradient_failure':name+'.'+key,'step':step+1,'finite_loss':float(value),
+                        'gradient_missing':grad is None,'gradient_nan':int(torch.isnan(grad).sum()) if grad is not None else None,
+                        'gradient_inf':int(torch.isinf(grad).sum()) if grad is not None else None}),flush=True)
+                    raise RuntimeError('Missing/nonfinite semantic gradient: '+name+'.'+key)
                 if bool(grad.abs().sum()>0):seen.add(name+'.'+key)
         if any(p.grad is not None for p in model.parameters() if not p.requires_grad):
             raise RuntimeError('A frozen native parameter received gradients')

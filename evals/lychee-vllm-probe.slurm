@@ -29,6 +29,11 @@ RUNTIME="$DL/envs/lychee-vllm-$LYCHEE_PREFLIGHT_JOB"
 EXTRA=()
 if [ "${LYCHEE_WARM_INPUT:-0}" = 1 ]; then EXTRA+=(--warm-input); fi
 if [ "${LYCHEE_FORWARD_CAPTURE:-0}" = 1 ]; then EXTRA+=(--forward-capture); fi
+if [ -n "${LYCHEE_SEMANTIC_JOB:-}" ]; then
+ [[ "$LYCHEE_SEMANTIC_JOB" =~ ^[0-9]+$ ]]
+ EXTRA+=(--semantic-adapter "$DL/runs/lychee-semantic-proof-$LYCHEE_SEMANTIC_JOB/adapter.pt"
+   --semantic-proof "$DL/runs/lychee-semantic-proof-$LYCHEE_SEMANTIC_JOB/report.json")
+fi
 if [ "${LYCHEE_WORKER_DIAG:-0}" = 1 ]; then
  : "${LYCHEE_SCENARIO:?Private development scenario required}"
  set -a

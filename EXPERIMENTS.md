@@ -3169,3 +3169,12 @@ raw speech/control hidden outputs for the same input, changed text logits and
 exact fresh-adapter reload. Every data consumer revalidates source quality and
 hashes of native units, independent audits and actual student histories. A pass
 would prove implementation only, not task performance or merged native deployment.
+
+**Plain words — native semantic proof stopped safely:** 7452899 loads the
+complete HF model and passes zero-adapter equality, then rejects a missing or
+nonfinite gradient before the first optimizer step. No checkpoint is produced.
+The next diagnostic identifies the exact tensor and missing/NaN/Inf counts;
+no relaxed gradient or quality condition is introduced. Explicit native weight
+merging is also prepared but cannot consume an unproved checkpoint. It verifies
+all 28 post-branch matrices, records BF16 rounding and does not claim exact
+parity with dynamic adapters. No new native task result exists yet.

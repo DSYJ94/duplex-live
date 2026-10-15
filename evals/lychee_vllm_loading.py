@@ -4,11 +4,15 @@ import json
 
 
 @contextmanager
-def strict_loading(model_path):
+def strict_loading(model_path, semantic_adapter=None, semantic_proof=None):
     from lychee_fd.vllm_integration import model_lychee, engine
     from vllm.model_executor.model_loader.weight_utils import default_weight_loader
     index = json.loads((model_path/'model.safetensors.index.json').read_text())['weight_map']
     receipt = {'model':None,'audio':None,'checkpoint_tensor_count':len(index)}
+    projections={}
+    if semantic_adapter is not None:
+        from evals.lychee_semantic_loading import plan
+        projections,receipt['semantic_adapter']=plan(semantic_adapter,semantic_proof)
     original_model = model_lychee.LycheeDuplexForVLLM.load_weights
     original_audio = engine.AudioPreprocessor._load_weights
 
@@ -36,6 +40,9 @@ def strict_loading(model_path):
                 if name not in index or name in sources:
                     raise RuntimeError('Unexpected or duplicate checkpoint tensor: '+name)
                 sources.add(name);active[0]=name
+                if projections:
+                    from evals.lychee_semantic_loading import merge
+                    value=merge(name,value,projections,receipt['semantic_adapter'])
                 yield name,value
             active[0]=None
         try:
@@ -46,6 +53,10 @@ def strict_loading(model_path):
                 else: delattr(param,'weight_loader')
         if sources != set(index):
             raise RuntimeError('Released engine did not visit the complete checkpoint')
+        if projections:
+            applied=receipt['semantic_adapter']['applied_source_weights']
+            if set(applied)!=set(projections) or not any(r['changed_bf16_elements'] for r in applied.values()):
+                raise RuntimeError('Native semantic merge did not apply every intended source matrix')
         expected_aux = {name for name in index if name.startswith(('model.encoder.','encoder.',
             'model.adapter.','adapter.','model.merge_model.model.embed_tokens.',
             'model.merge_model.embed_tokens.','merge_model.model.embed_tokens.','merge_model.embed_tokens.'))}

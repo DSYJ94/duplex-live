@@ -24,6 +24,8 @@ def main():
     ap.add_argument('--training-states',type=Path,nargs='+')
     ap.add_argument('--codec-data',type=Path)
     ap.add_argument('--codec-audit',type=Path)
+    ap.add_argument('--semantic-adapter',type=Path)
+    ap.add_argument('--semantic-proof',type=Path)
     ap.add_argument('--worker-context',action='store_true')
     ap.add_argument('--collect-training-state',action='store_true')
     ap.add_argument('--static-context-diagnostic',action='store_true')
@@ -33,6 +35,10 @@ def main():
     ap.add_argument('--scenario')
     ap.add_argument('--private-value')
     args=ap.parse_args()
+    if bool(args.semantic_adapter)!=bool(args.semantic_proof):
+        ap.error('A semantic adapter needs its complete implementation proof')
+    if args.semantic_adapter and (args.training_states or args.collect_training_state):
+        ap.error('New student data collection pins the unadapted base at this stage')
     if args.worker_context and (not args.data or not args.scenario):
         ap.error('Actual worker context requires approved development data/scenario')
     if args.training_states and (not args.data or not args.codec_data or not args.codec_audit
@@ -98,10 +104,12 @@ def main():
         'native_training_first_subword_offset_bar_ms':200,'response_start_latency_tested':False}
     (args.out/'environment.json').write_text(json.dumps(environment,indent=2)+'\n')
     torch.manual_seed(424242)
-    with strict_loading(model_path) as loading:
+    with strict_loading(model_path,args.semantic_adapter,args.semantic_proof) as loading:
         framework=VLLMGenerationFramework('FD',str(model_path),device='cuda',torch_dtype=torch.bfloat16,
             align_audio_input=True,gpu_memory_utilization=.65,max_model_len=8192,enforce_eager=True)
     (args.out/'loading.json').write_text(json.dumps(loading,indent=2)+'\n')
+    if args.semantic_adapter and loading['semantic_adapter']['base_assets_manifest_sha256']!=sha256(args.assets):
+        raise RuntimeError('Semantic proof belongs to a different base assets manifest')
     if loading['model'] is None or loading['audio'] is None:
         raise RuntimeError('Released backend did not run strict full model/audio loading in this process')
     if args.warm_input:
