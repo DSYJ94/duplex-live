@@ -3186,3 +3186,12 @@ selection: cuDNN disabled, or FP32-accumulating math attention. Both retain all
 zero/frozen/gradient/reload checks and the same data/seed/rank/lr. Default failure
 is preserved. The backend must be recorded in any checkpoint; no nonfinite
 replacement or relaxed proof gate is allowed.
+
+**Plain words — collect counterfactual native histories independently:** the
+13 previously approved paired-private TRAIN teachers can use the same guarded
+actual-worker collection through their own conversion receipt. This exposes the
+native student to actual different returned values for shared questions, rather
+than treating reference-reading or seven repeated facts as general grounding.
+No source/counterfactual/held-out data are relabelled. Native S3/gold and causal
+assembly checks still decide which collected histories may train. This read-only
+collection can proceed while the gradient-kernel diagnostics run.

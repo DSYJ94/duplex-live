@@ -39,7 +39,7 @@ if [ "${LYCHEE_WORKER_DIAG:-0}" = 1 ]; then
  set -a
  source "$DL/keys/openai.env"
  set +a
- EXTRA+=(--worker-context --data "$DL/runs/recovery-data-7407554" --scenario "$LYCHEE_SCENARIO")
+ EXTRA+=(--worker-context --data "${LYCHEE_WORKER_DATA:-$DL/runs/recovery-data-7407554}" --scenario "$LYCHEE_SCENARIO")
  if [ "${LYCHEE_COLLECT_TRAIN_STATE:-0}" = 1 ]; then EXTRA+=(--collect-training-state); fi
  if [ -n "${LYCHEE_RESULT_RESPONSE:-}" ]; then EXTRA+=(--result-response "$LYCHEE_RESULT_RESPONSE"); fi
  if [ -n "${LYCHEE_RESULT_DELIVERY:-}" ]; then EXTRA+=(--result-delivery "$LYCHEE_RESULT_DELIVERY"); fi
