@@ -18,7 +18,7 @@ def run(engine,user,world,args,loading):
     import soundfile as sf
     import torch
     from evals.context_spanning_asr import context as recognized_context
-    from evals.recovery_worker import run_worker
+    from evals.recovery_worker import run_worker,WorkerContractError
     from evals.audio_playout import render_packets
     env=os.environ.copy();env['CUDA_VISIBLE_DEVICES']=args.asr_gpu
     env.pop('OPENAI_API_KEY',None)
@@ -37,9 +37,14 @@ def run(engine,user,world,args,loading):
                 raise RuntimeError('ASR request/source clock mismatch')
         context=recognized_context(recognized,due,assistant,available)
         with world.lock:world.tasks[identity]['context']=context
-        result=run_worker(context,world,identity,expected_revision=revision)
-        for receipt in result['receipts']:
-            if receipt['tool']=='lookup_record':world.mark_ready(receipt)
+        try:
+            result=run_worker(context,world,identity,expected_revision=revision)
+        except WorkerContractError as error:
+            from evals.context_backend_failure import notice
+            result=notice(error,identity)
+        if result['route']!='error':
+            for receipt in result['receipts']:
+                if receipt['tool']=='lookup_record':world.mark_ready(receipt)
         return result,recognized,context,time.monotonic()
     try:
         asr_ready=json.loads(process.stdout.readline())
@@ -60,7 +65,8 @@ def run(engine,user,world,args,loading):
                                     'exception':str(future.exception()) if future.exception() else None})
                                 continue
                             result,recognized,context,ready_at=future.result();del pending[identity]
-                            record={'event':'backend_result_ready','task_id':identity,'result':result,
+                            record={'event':'backend_request_failed' if result['route']=='error' else 'backend_result_ready',
+                                'task_id':identity,'result':result,
                                 'asr':recognized,'context':context,'ready_at_s':ready_at-epoch}
                             with world.lock:state=world.tasks[identity]
                             if state['cancelled']:
@@ -69,9 +75,10 @@ def run(engine,user,world,args,loading):
                                 if any(not world.deliverable(r) for r in result['receipts'] if r['tool']=='lookup_record'):
                                     raise RuntimeError('Stale actual record receipt')
                                 frames=engine.inject_context_span(result['content'])
-                                record.update(disposition='actual backend text injected',applied_at_s=time.monotonic()-epoch,
+                                record.update(disposition='failure notice supplied; no verified result' if result['route']=='error'
+                                    else 'actual backend text injected',applied_at_s=time.monotonic()-epoch,
                                     prefill_ms=engine.last_prefill_ms,virtual_span_frames=frames)
-                                with world.lock:world.tasks[identity]['phase']='delivered'
+                                with world.lock:world.tasks[identity]['phase']='failed' if result['route']=='error' else 'delivered'
                             events.append(record)
                         chunk=user[offset:end]
                         if len(chunk)<engine.frame_size:chunk=np.pad(chunk,(0,engine.frame_size-len(chunk)))
@@ -122,6 +129,7 @@ def run(engine,user,world,args,loading):
         'scenario':args.scenario,'source_split':'validation','fresh_holdout':False,'worker_events':events,
         'scheduled_dispatch':False,'native_foreground_backend_request':True,'native_foreground_tool_choice':False,
         'explicit_pending_status':args.pending_status,
+        'backend_contract_failures':sum(e['event']=='backend_request_failed' for e in events),
         'backend_context':'actual arrived user PCM recognized by Whisper turbo; no measured/reference transcript',
         'distinct_lm_asr_gpu_processes':True,'native_retrieval_markers':sum(r['native_retrieval_marker'] for r in rows),
         'asr_environment':asr_ready,

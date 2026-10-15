@@ -152,13 +152,13 @@ def main():
     seed_all(42424242);engine.reset();engine.set_persona(BASE_INSTRUCTIONS,voice)
     torch.cuda.synchronize()
     loading={'loads':records,'final_lm_strict':True,'dep_q':engine.lm.dep_q,
+        'scenario':args.scenario,'scenario_kind':row['kind'],
         'model_load_and_prefix_s':time.monotonic()-started,'pickle_globals':unsafe,
         'assets_manifest_sha256':sha256(args.assets),'base_hashes':MODEL_HASHES,
         'voice':args.voice,'voice_codes_shape':list(voice.shape),'input_warmup':warm,'adapter':adapter,'layout':layout,
         'torch':torch.__version__,'torch_file':torch.__file__,'cuda':torch.version.cuda}
     (args.out/'loading.json').write_text(json.dumps(loading,indent=2)+'\n')
     world=RecordWorld({meta['project']:{meta['field']:args.private_value}} if row['kind']!='simple' else {})
-    loading['scenario_kind']=row['kind']
     if args.backend_mode=='native-asr':
         from evals.context_spanning_native import run
         run(engine,user,world,args,loading)
