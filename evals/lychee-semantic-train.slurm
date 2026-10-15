@@ -18,11 +18,23 @@ test "$(git -C "$DL_TASK_SOURCE" rev-parse HEAD)" = "$DL_TASK_COMMIT"
 test -z "$(git -C "$DL_TASK_SOURCE" status --porcelain)"
 cd "$DL_TASK_SOURCE"
 STATES=()
+SOURCES=("$DL/runs/recovery-data-7407554")
 EXTRA=()
 if [ "${LYCHEE_COMPARE_ATTENTION:-0}" = 1 ]; then EXTRA+=(--compare-attention-backends); fi
 for J in 7452624 7452625 7452626 7452627 7452628 7452629 7452630 7452631; do
  STATES+=("$DL/runs/lychee-vllm-probe-$J")
 done
+if [ "${LYCHEE_PAIRED_HISTORIES:-0}" = 1 ]; then
+ SOURCES+=("$DL/runs/recovery-teacher-data-7434749")
+ for J in 7452946 7452947 7452948 7452949 7452950 7452951 7452952 7452953 7452954 7452955 7452956 7452957 7452958; do
+  STATES+=("$DL/runs/lychee-vllm-probe-$J")
+ done
+fi
+if [ "${LYCHEE_TRAIN_STAGE:-proof}" = pilot ]; then
+ : "${LYCHEE_REFERENCE_PROOF_JOB:?Passing native implementation proof required}"
+ [[ "$LYCHEE_REFERENCE_PROOF_JOB" =~ ^[0-9]+$ ]]
+ EXTRA+=(--stage pilot --reference-proof "$DL/runs/lychee-semantic-proof-$LYCHEE_REFERENCE_PROOF_JOB/report.json")
+fi
 apptainer exec --nv --bind /projects,/lus,/home \
  --env PYTHONPATH="$DL/envs/lychee-probe-7415053:$DL/tmp/minicpm-recovery-7377673:$DL_TASK_SOURCE" \
  --env HF_HOME="$DL/models/hf-cache" --env HF_HUB_OFFLINE=1 --env TRANSFORMERS_OFFLINE=1 \
@@ -30,7 +42,7 @@ apptainer exec --nv --bind /projects,/lus,/home \
  "$DL/pytorch-new.sif" python -u -m evals.lychee_semantic_train \
  --assets "$DL/runs/lychee-assets-7414609/manifest.json" \
  --data "$DL/runs/lychee-training-inputs-$LYCHEE_TRAINING_INPUTS_JOB" \
- --source-data "$DL/runs/recovery-data-7407554" --history-roots "${STATES[@]}" \
+ --source-data "${SOURCES[@]}" --history-roots "${STATES[@]}" \
  --codec-data "$DL/runs/lychee-codec-data-7452500" --codec-audit "$DL/runs/lychee-codec-audit-7452502" \
- --steps 8 --attention-backend "${LYCHEE_TRAIN_ATTENTION:-default}" "${EXTRA[@]}" \
+ --steps "${LYCHEE_TRAIN_STEPS:-8}" --attention-backend "${LYCHEE_TRAIN_ATTENTION:-no-cudnn}" "${EXTRA[@]}" \
  --out "$DL/runs/lychee-semantic-proof-${SLURM_JOB_ID}"

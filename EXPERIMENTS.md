@@ -3230,3 +3230,22 @@ counterfactual TRAIN worlds. The next bounded behavior pilot will use those
 additional histories only where native codec/gold and causal assembly checks
 pass, before comparing a finite number of training lengths. Actual ordinary
 answers and speech must also be rechecked before promotion.
+
+
+**Plain words — same-GPU backward cause isolated:** 7453014 uses nid010035,
+GH200 120GB, Torch 2.9.0a0+145a3a7bda.nv25.10, CUDA13 and cuDNN91400. The
+same zero adapters/input on that GPU give 44 invalid-gradient tensors through
+aten::_scaled_dot_product_cudnn_attention_backward; efficient attention and
+math give zero. CPU profiling confirms actual selected operators. Clearing
+probe gradients and training with cuDNN SDPA disabled reproduces all eight
+losses and checkpoint SHA exactly from 7452937. Training now defaults to the
+verified efficient path. Serving still uses its separate native custom backend.
+
+Paired assembly 7453119 passes 15 causal native examples from 21 collected
+TRAIN histories; six without exact native gold transcripts remain excluded.
+A bounded pilot permits only 64/128 updates after the passing implementation
+proof, rechecking every original source approval and exact frozen base hash.
+Both arms retain zero/frozen/branch/gradient/reload gates and cannot qualify
+quality from loss. Their native actual-worker replays and ordinary answers
+must decide whether this recipe improves the task. No corpus-scale run is
+justified yet; no failed-gradient checkpoint is allowed.

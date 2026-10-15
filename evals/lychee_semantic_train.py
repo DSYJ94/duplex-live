@@ -17,10 +17,22 @@ def main():
     ap.add_argument('--source-data',type=Path,nargs='+',required=True)
     ap.add_argument('--history-roots',type=Path,nargs='+',required=True)
     ap.add_argument('--steps',type=int,default=8)
-    ap.add_argument('--attention-backend',choices=('default','no-cudnn','math'),default='default')
+    ap.add_argument('--stage',choices=('proof','pilot'),default='proof')
+    ap.add_argument('--reference-proof',type=Path)
+    ap.add_argument('--attention-backend',choices=('default','no-cudnn','math'),default='no-cudnn')
     ap.add_argument('--compare-attention-backends',action='store_true')
     args=ap.parse_args()
-    if not 1<=args.steps<=8:raise ValueError('This stage permits at most eight implementation-proof updates')
+    reference=None
+    if args.stage=='proof':
+        if not 1<=args.steps<=8:raise ValueError('Implementation proof permits at most eight updates')
+    else:
+        if args.steps not in (64,128) or not args.reference_proof or args.attention_backend=='default':
+            raise ValueError('Bounded pilot requires 64/128 updates, a passing implementation proof and a finite attention backend')
+        reference=json.loads(args.reference_proof.read_text())
+        if (not reference.get('passed') or reference['frozen_before_sha256']!=reference['frozen_after_sha256']
+                or any(reference['zero_adapter_errors'].values()) or any(reference['post_update_raw_branch_errors'].values())
+                or any(reference['fresh_adapter_reload_errors'].values())):
+            raise RuntimeError('Bounded pilot requires a passing native implementation proof')
     import torch
     def configure_attention(mode):
         torch.backends.cuda.enable_cudnn_sdp(mode=='default')
@@ -143,6 +155,8 @@ def main():
             'hardware':hardware,'comparisons':kernel_comparison},indent=2)+'\n')
         print(json.dumps({'same_gpu_kernel_comparisons':kernel_comparison,'hardware':hardware}),flush=True)
     frozen_before=frozen_hash(model)
+    if reference and frozen_before!=reference['frozen_after_sha256']:
+        raise RuntimeError('Pilot base parameters differ from passing implementation proof')
     parameters=[p for module in modules.values() for p in (module.a,module.b)]
     optimizer=torch.optim.AdamW(parameters,lr=1e-4,weight_decay=0)
     seen=set();losses=[]
@@ -183,6 +197,8 @@ def main():
         'base_assets_manifest_sha256':sha256(args.assets),'semantic_data_sha256':sha256(args.data/'semantic-data.json'),
         'steps':args.steps,'quality_qualified':False}
     checkpoint['training_attention_backend']=args.attention_backend
+    checkpoint['training_stage']=args.stage
+    checkpoint['reference_implementation_proof_sha256']=sha256(args.reference_proof) if reference else None
     torch.save(checkpoint,args.out/'adapter.pt')
     detach(model,modules);del optimizer,parameters,modules
     fresh=attach(model,8)
@@ -199,6 +215,7 @@ def main():
         'repo_commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),
         'native_merged_deployment_tested':False,'task_success_tested':False,'quality_qualified':False,
         'training_attention_backend':args.attention_backend,
+        'training_stage':args.stage,'reference_implementation_proof_sha256':sha256(args.reference_proof) if reference else None,
         'same_gpu_attention_comparisons':kernel_comparison,
         'scope':'native semantic implementation proof; raw speech/control compared on one identical teacher-forced input'}
     (args.out/'report.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result),flush=True)
