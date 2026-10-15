@@ -2604,3 +2604,14 @@ max measured first-word error 100ms. New targets are 48 TRAIN total across three
 hashed caches, with base validation/test folds unchanged. Next controlled tests
 freeze language adaptation, compare baseline speech and isolate actual result
 integration from the native head using an explicitly scheduled diagnostic.
+
+**Plain words — controlled follow-up running:** frozen-language reference/action
+training 7435667 uses all 48 approved TRAIN scenes; it must prove reference-free
+speech unchanged exactly. Unadapted private/simple comparisons 7435670/7435669
+and the trained scheduled-worker diagnostic 7435671 are running. The latter
+explicitly does not test native routing. Independent audio audit payload records
+silent clips as failed rather than aborting remaining clips. Lychee operator
+profiling is prepared on its unchanged incremental runtime: two chunks after
+warmup, no memo/cache/sampling changes. Profiled times are diagnostic, never a
+latency acceptance benchmark. API follows the official PyTorch 2.9 profiler docs:
+https://docs.pytorch.org/docs/2.9/profiler.html .

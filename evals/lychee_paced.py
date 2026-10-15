@@ -7,7 +7,7 @@ import json
 import time
 
 
-def run_incremental(framework, audio, out):
+def run_incremental(framework, audio, out, profiler=None):
     import numpy as np
     import torch
     session = framework.create_incremental_stream_session(
@@ -37,6 +37,8 @@ def run_incremental(framework, audio, out):
                     "input_consumed_s": before, "compute_s": elapsed-before,
                     "input_backlog_s": before-due, "input_samples": end-offset})
                 log.flush()
+                if profiler is not None:
+                    profiler.step()
         prefix = session.get_prefix()
     finally:
         session.close()
@@ -53,6 +55,7 @@ def run_incremental(framework, audio, out):
         "wall_seconds_excluding_load_and_vocoder": time.monotonic()-started,
         "spoken_token_events": len(events), "response_events": len(decoded),
         "live_audio_tested": False, "vocoder_mode": "after LM benchmark, offline quality only"}
+    stats["operator_profile_enabled"] = profiler is not None
     (out / "paced-report.json").write_text(json.dumps(stats, indent=2)+"\n")
     print(json.dumps(stats), flush=True)
     return {"events": decoded, "trace": trace}, stats

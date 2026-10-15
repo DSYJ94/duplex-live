@@ -27,9 +27,12 @@ def main():
     ap.add_argument("--out", type=Path, required=True)
     ap.add_argument("--paced", action="store_true", help="Use released incremental HF runtime; measure token processing, vocode afterward")
     ap.add_argument("--encoder-memo", action="store_true", help="Bounded native encoder cache; requires --paced")
+    ap.add_argument("--profile", action="store_true", help="Profile two incremental chunks; timings are diagnostic")
     args = ap.parse_args()
     if args.encoder_memo and not args.paced:
         ap.error("Encoder memo benchmark requires the paced incremental runtime")
+    if args.profile and (not args.paced or args.encoder_memo):
+        ap.error("Profile the unchanged paced runtime, without the unqualified memo experiment")
     provenance = json.loads(args.voice_provenance.read_text())
     if (provenance.get("schema") != "dl-voice-codec-probe-v1"
             or provenance.get("reference_sha256") != sha256(args.voice)
@@ -111,6 +114,7 @@ def main():
         "bf16_environment_rule": compatibility,
         "align_audio_input": True,
         "encoder_memo": args.encoder_memo,
+        "operator_profile":args.profile,
         "input_clock": "published application: alternating audio-patch/audio-pad slots, 25Hz control clock",
         "training_approved": False, "learned_delegation_tested": False,
         "voice_provenance": provenance,
@@ -134,8 +138,10 @@ def main():
             from evals.lychee_paced import run_incremental
             from evals.lychee_encoder_memo import encoder_memo
             scope = encoder_memo(framework.model._model) if args.encoder_memo else nullcontext({})
-            with scope as memo_stats:
-                generated, paced_report = run_incremental(framework, audio, args.out)
+            from evals.lychee_profile import incremental_profile
+            profiling = incremental_profile(args.out) if args.profile else nullcontext(None)
+            with scope as memo_stats, profiling as profiler:
+                generated, paced_report = run_incremental(framework, audio, args.out, profiler)
             paced_report["encoder_memo"] = memo_stats
             (args.out / "paced-report.json").write_text(json.dumps(paced_report, indent=2)+"\n")
         else:

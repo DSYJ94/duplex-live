@@ -19,6 +19,7 @@ cd "$DL/repo"
 EXTRA=()
 if [ "${LYCHEE_PACED:-0}" = 1 ]; then EXTRA=(--paced); fi
 if [ "${LYCHEE_ENCODER_MEMO:-0}" = 1 ]; then EXTRA+=(--encoder-memo); fi
+if [ "${LYCHEE_PROFILE:-0}" = 1 ]; then EXTRA+=(--profile); fi
 apptainer exec --nv --bind /projects,/lus,/home \
   --env PYTHONPATH="$DL/envs/lychee-probe-$LYCHEE_ENV_JOB:$DL/tmp/minicpm-recovery-7377673:$DL/repo" \
   --env HF_HOME="$DL/models/hf-cache" --env HF_HUB_OFFLINE=1 --env TRANSFORMERS_OFFLINE=1 \
