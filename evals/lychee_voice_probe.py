@@ -24,6 +24,7 @@ def main():
     ap.add_argument("--voice", type=Path, required=True)
     ap.add_argument("--voice-provenance", type=Path, required=True)
     ap.add_argument("--out", type=Path, required=True)
+    ap.add_argument("--paced", action="store_true", help="Use released incremental HF runtime; measure token processing, vocode afterward")
     args = ap.parse_args()
     provenance = json.loads(args.voice_provenance.read_text())
     if (provenance.get("schema") != "dl-voice-codec-probe-v1"
@@ -86,6 +87,8 @@ def main():
     bridge.LycheeDuplexForCausalLM = StrictLycheeFD
     sys.modules[bridge.__name__] = bridge
     from lychee_fd.runtime.hf_v9_generation import SingleTurnGenerationFramework
+    if args.paced:
+        from lychee_fd.runtime.hf_v9_realtime import HFRealtimeV9GenerationFramework as SingleTurnGenerationFramework
 
     def wav_load(*pos, **kw):
         pcm, rate = read_reference_wav(*pos, **kw)
@@ -98,7 +101,7 @@ def main():
         "source_commit": SOURCE_COMMIT, "repo_commit": subprocess.check_output(
             ["git", "rev-parse", "HEAD"], text=True).strip(),
         "torch": torch.__version__, "transformers": transformers.__version__,
-        "mode": "official offline multi-head generation; no paced or microphone claim",
+        "mode": "official HF incremental token benchmark; offline vocoder" if args.paced else "official offline multi-head generation; no paced or microphone claim",
         "model_class": "Training_package.Code.Models.LycheeFD.LycheeFD with strict loading wrapper",
         "compatibility": "explicit alias for absent official runtime module; PCM-only TorchAudio loader",
         "bf16_environment_rule": compatibility,
@@ -120,8 +123,13 @@ def main():
     audio = np.pad(audio, (0, 10*16000))
     sf.write(args.out / "user_in.wav", audio, 16000)
     started = time.monotonic()
+    paced_report = None
     with torch.inference_mode():
-        generated = framework.full_chunk_stream_offline_generation(audio, return_raw_trace=True)
+        if args.paced:
+            from evals.lychee_paced import run_incremental
+            generated, paced_report = run_incremental(framework, audio, args.out)
+        else:
+            generated = framework.full_chunk_stream_offline_generation(audio, return_raw_trace=True)
     events = generated["events"]
     (args.out / "native-trace.json").write_text(json.dumps(generated["trace"])+"\n")
     (args.out / "events.json").write_text(json.dumps(events, indent=2)+"\n")
@@ -153,7 +161,8 @@ def main():
         "wall_seconds_including_vocoder": time.monotonic()-started,
         "voice_reference": str(reference), "voice_reference_sha256": sha256(reference),
         "loading": loading_receipt, "human_voice_verdict": "pending",
-        "paced": False, "live_acceptance": False}
+        "paced_tokens": paced_report, "paced": args.paced, "live_acceptance": False,
+        "vocoder_is_offline": True}
     (args.out / "report.json").write_text(json.dumps(report, indent=2)+"\n")
     print(json.dumps(report), flush=True)
 

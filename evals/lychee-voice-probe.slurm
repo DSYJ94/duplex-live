@@ -16,6 +16,8 @@ cd "$DL/repo"
 : "${VOICE_REFERENCE:?Synthetic development voice required}"
 : "${VOICE_PROVENANCE:?Voice receipt required}"
 [[ "$LYCHEE_ASSETS_JOB" =~ ^[0-9]+$ && "$LYCHEE_ENV_JOB" =~ ^[0-9]+$ ]]
+EXTRA=()
+if [ "${LYCHEE_PACED:-0}" = 1 ]; then EXTRA=(--paced); fi
 apptainer exec --nv --bind /projects,/lus,/home \
   --env PYTHONPATH="$DL/envs/lychee-probe-$LYCHEE_ENV_JOB:$DL/tmp/minicpm-recovery-7377673:$DL/repo" \
   --env HF_HOME="$DL/models/hf-cache" --env HF_HUB_OFFLINE=1 --env TRANSFORMERS_OFFLINE=1 \
@@ -24,4 +26,4 @@ apptainer exec --nv --bind /projects,/lus,/home \
   --assets "$DL/runs/lychee-assets-$LYCHEE_ASSETS_JOB/manifest.json" \
   --batch "$DL/runs/synth-scale1-q/audio" \
   --voice "$VOICE_REFERENCE" --voice-provenance "$VOICE_PROVENANCE" \
-  --out "$DL/runs/lychee-voice-${SLURM_JOB_ID}"
+  --out "$DL/runs/lychee-voice-${SLURM_JOB_ID}" "${EXTRA[@]}"
