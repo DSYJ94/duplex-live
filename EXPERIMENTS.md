@@ -2734,3 +2734,14 @@ Independent audio audit 7436865 rejects direct spoken-text forcing: WER .2941,
 .0857 and .20; the returned private words are not reliably spoken as written.
 These samples remain diagnostic and unapproved. The new role test 7437019 and
 matching TRAIN-only policy-state collection 7437020 are running. No model passes.
+
+**Plain words — test unspoken native lexical memory separately:** direct word
+forcing disrupts the generated audio in the generic role. A separate diagnostic
+adds each completed worker subword's frozen native text embedding to one streamed
+temporal input. It never forces the model's output text/audio, never drops user
+audio, and rejects cancelled tails. This uses the model's own vocabulary/basis,
+not the unaligned ARC encoder, and has no learned integration weights. It remains
+experimental and must pass actual spoken result use; no semantic compatibility
+or qualification is assumed from adding embeddings. The accepted voice and
+speech parameters stay fixed. New role prefix and native policy still need
+matching re-evaluation; scheduled diagnostics remain explicitly marked.

@@ -22,7 +22,7 @@ def main():
     ap.add_argument("--scenario", required=True)
     ap.add_argument("--zero-adapters", action="store_true", help="Unadapted speech comparison; head remains idle")
     ap.add_argument("--dispatch-mode", choices=("native", "scheduled-diagnostic"), default="native")
-    ap.add_argument("--result-input", choices=("arc", "spoken-text"), default="arc",
+    ap.add_argument("--result-input", choices=("arc", "spoken-text", "native-text-memory"), default="arc",
                     help="Spoken-text is an explicit hybrid diagnostic, not learned result integration")
     ap.add_argument("--instructions", choices=("teacher", "records-v1"), default="teacher")
     args = ap.parse_args()
@@ -63,7 +63,7 @@ def main():
         raise ValueError("Scheduled diagnostic requires a trained private validation probe")
     from evals.personaplex_prompts import prompt_receipt
     role = prompt_receipt(args.instructions)
-    if args.instructions != "teacher" and args.result_input != "spoken-text":
+    if args.instructions != "teacher" and args.result_input == "arc":
         raise ValueError("Changed role prompt is only qualified for the explicit worker-text diagnostic")
     if args.dispatch_mode == "native" and trained.get("policy_prompt", prompt_receipt("teacher")) != role:
         raise RuntimeError("Native policy was trained under a different role prompt")
@@ -114,12 +114,17 @@ def main():
         if not args.zero_adapters:
             bundle.load_learned(load_file(args.checkpoint / "adapters.safetensors", device="cuda"))
         bundle.eval().requires_grad_(False)
+        reference_bridge = bundle.bridge
+        if args.result_input == "native-text-memory":
+            from evals.personaplex_text_memory import NativeTextMemory
+            reference_bridge = NativeTextMemory(lm.text_emb, tokenizer.encode)
         policy_logits = torch.tensor([[2., 0., 0.]], device="cuda")
         def capture_policy(module, inputs):
             policy_logits.copy_(bundle.policy(inputs[0][:, -1].float()))
         holder.update(bundle=bundle, policy_logits=policy_logits,
+            reference_bridge=reference_bridge,
             force_token=torch.zeros(1, dtype=torch.long, device="cuda"), force_text=False,
-            bridge_hook=lm.transformer.register_forward_pre_hook(bundle.bridge.temporal_input),
+            bridge_hook=lm.transformer.register_forward_pre_hook(reference_bridge.temporal_input),
             policy_hook=lm.text_linear.register_forward_pre_hook(capture_policy))
         return lm
 
@@ -144,7 +149,8 @@ def main():
                 started = time.monotonic()-frame["input_consumed_s"]
             now = time.monotonic()-started
             bundle = holder["bundle"]
-            bundle.bridge.clear()
+            reference_bridge = holder["reference_bridge"]
+            reference_bridge.clear()
             for task_id, item in jobs.items():
                 if item["observed"] or not item["future"].done():
                     continue
@@ -164,6 +170,8 @@ def main():
                 torch.save(reference, args.out / f"reference-{task_id}.pt")
                 if args.result_input == "arc":
                     pending.extend((task_id, r, receipt) for r in reference)
+                elif args.result_input == "native-text-memory":
+                    reference_bridge.append(task_id, result["content"], receipt)
                 else:
                     text_queue.append(task_id, result["content"], receipt)
                 events.append({"event":"worker_completed", "task_id":task_id, "ready_at_s":ready-started,
@@ -171,9 +179,15 @@ def main():
             pending[:] = [p for p in pending if p[2] is None or world.deliverable(p[2])]
             if pending:
                 task_id, reference, _ = pending.pop(0)
-                bundle.bridge.set_row(reference)
+                reference_bridge.set_row(reference)
                 events.append({"event":"reference_applied", "task_id":task_id, "frame":frame["frame"], "at_s":now})
-            frame["reference_l1"] = float(bundle.bridge.active.abs().sum())
+            if args.result_input == "native-text-memory":
+                memory = reference_bridge.advance(world.deliverable)
+                if memory is not None:
+                    task_id, token = memory
+                    events.append({"event":"native_text_memory", "task_id":task_id,
+                        "frame":frame["frame"], "token":token, "at_s":now})
+            frame["reference_l1"] = float(reference_bridge.active.abs().sum())
             holder["force_text"] = False
             if args.result_input == "spoken-text":
                 forced = text_queue.pop(world.deliverable)
