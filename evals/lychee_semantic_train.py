@@ -95,6 +95,11 @@ def main():
     root=Path(assets['models']['duplex']['path'])
     for name,record in assets['models']['duplex']['files'].items():
         if sha256(root/name)!=record['sha256']:raise RuntimeError('Pinned base checkpoint changed')
+    from transformers import AutoTokenizer
+    from evals.lychee_loss_scope import audit as audit_loss_scope
+    tokenizer=AutoTokenizer.from_pretrained(root,local_files_only=True,trust_remote_code=True)
+    loss_scope=[audit_loss_scope(item,row,tokenizer) for item,row in zip(examples,data['examples'])]
+    print(json.dumps({'loss_ownership_audit':loss_scope,'user_loss_mask_would_change_targets':False}),flush=True)
     args.out.mkdir(exist_ok=False);sys.path.insert(0,str(source))
     from Training_package.Code.Models.LycheeFD import LycheeFD
     torch.manual_seed(424242)
@@ -217,6 +222,7 @@ def main():
         'training_attention_backend':args.attention_backend,
         'training_stage':args.stage,'reference_implementation_proof_sha256':sha256(args.reference_proof) if reference else None,
         'same_gpu_attention_comparisons':kernel_comparison,
+        'loss_ownership_audit':loss_scope,'waveform_aec_tested':False,
         'scope':'native semantic implementation proof; raw speech/control compared on one identical teacher-forced input'}
     (args.out/'report.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result),flush=True)
 

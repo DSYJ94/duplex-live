@@ -1,6 +1,7 @@
-"""Export only complete, uncancelled speech from actual concurrent playout.
+"""Export complete, uncancelled speech from actual concurrent playout.
 
-The source packet samples must equal the actual final playout samples exactly.
+Each source packet must equal its actual final playout samples exactly. Audible
+gaps remain in exported clips and are reported as failed continuity evidence.
 Interrupted or input-exhausted utterances remain recorded exclusions, not passes.
 """
 import argparse
@@ -30,7 +31,8 @@ def export(capture, out):
     for row in rows:
         size=row['samples']
         if not isinstance(size,int) or size<0:raise RuntimeError('Invalid packet sample count')
-        groups.setdefault(row['event_id'],[]).append(raw[offset:offset+size]);offset+=size
+        if size:groups.setdefault(row['event_id'],[]).append(raw[offset:offset+size])
+        offset+=size
     if offset!=len(raw):raise RuntimeError('Packet ledger does not cover all source samples')
     bindings={name:sha256(source/name) for name in ('report.json','utterance-events.json',
         'pcm-packets.jsonl','packet-stream.wav','model.wav')}
@@ -45,25 +47,33 @@ def export(capture, out):
                 or details is None or details['actual_stop_s'] is not None):
             excluded.append({'event':event,'reason':'interrupted, input-exhausted or no played PCM'})
             continue
-        if (not event['text'].strip() or details['within_utterance_underrun_samples']
-                or details['source_samples']!=details['played_samples']):
+        if (not event['text'].strip() or details['source_samples']!=details['played_samples']):
             raise RuntimeError('Uncancelled native utterance has incomplete text/PCM playout')
         pcm=np.concatenate(groups[identity])
         if len(pcm)!=details['source_samples']:raise RuntimeError('Per-utterance sample count mismatch')
-        begin=details['packets'][0]['playback_start_sample']
-        if not np.array_equal(pcm,played[begin:begin+len(pcm)]):
-            raise RuntimeError('Source packet PCM differs from actual contiguous playout')
+        begin=details['packets'][0]['playback_start_sample'];cursor=0
+        for packet in details['packets']:
+            start=packet['playback_start_sample'];size=packet['samples']
+            if not np.array_equal(pcm[cursor:cursor+size],played[start:start+size]):
+                raise RuntimeError('Source packet PCM differs from actual playout')
+            cursor+=size
+        if cursor!=len(pcm):raise RuntimeError('Played packet ledger lost source samples')
+        end=details['packets'][-1]['playback_start_sample']+details['packets'][-1]['samples']
+        clip=played[begin:end]
         folder=out/identity;folder.mkdir()
-        sf.write(folder/'model.wav',pcm,rate,subtype='PCM_16')
+        sf.write(folder/'model.wav',clip,rate,subtype='PCM_16')
         result={'schema':'dl-concurrent-complete-utterance-v1','text':event['text'],
             'event':event,'source_capture':str(capture),'source_bindings':bindings,
-            'source_sample_range':[begin,begin+len(pcm)],'sample_equality_verified':True,
+            'source_sample_range':[begin,end],'sample_equality_verified':True,
+            'actual_within_utterance_gap_samples':details['within_utterance_underrun_samples'],
+            'audio_continuity_pass':details['within_utterance_underrun_samples']==0,
             'training_approved':False,'task_success_verified':False,
             'audio_sha256':sha256(folder/'model.wav')}
         (folder/'report.json').write_text(json.dumps(result,indent=2)+'\n')
         accepted.append(str(folder))
     if set(groups)-seen:raise RuntimeError('PCM without actual final utterance metadata')
     manifest={'schema':'dl-concurrent-utterance-export-v1','source_bindings':bindings,
+        'capture_continuity_pass':report['playout']['within_utterance_underrun_samples']==0,
         'accepted':accepted,'excluded':excluded,'training_approved':False,'task_success_verified':False}
     (out/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
     (out/'audit-runs.txt').write_text(''.join(path+'\n' for path in accepted))

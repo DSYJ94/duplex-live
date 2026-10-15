@@ -18,9 +18,9 @@ class ConcurrentUtteranceExportTest(unittest.TestCase):
         sf.write(source/'model.wav',np.concatenate([pcm[:2],np.zeros(2),pcm]),24000,subtype='PCM_16')
         details={f'evt-{i}':{'actual_stop_s':1 if i==1 else None,
             'within_utterance_underrun_samples':0,'source_samples':4,'played_samples':2 if i==1 else 4,
-            'packets':[{'playback_start_sample':0 if i==1 else 4}]} for i in (1,2)}
+            'packets':[{'playback_start_sample':0 if i==1 else 4,'samples':4}]} for i in (1,2)}
         report={'schema':'dl-lychee-concurrent-pcm-v1','actual_concurrent_lm_execution':True,
-            'playout':{'sample_accounting_exact':True,'events':details},'audio_sha256':sha256(source/'model.wav')}
+            'playout':{'sample_accounting_exact':True,'events':details,'within_utterance_underrun_samples':0},'audio_sha256':sha256(source/'model.wav')}
         (source/'report.json').write_text(json.dumps(report))
         (source/'pcm-packets.jsonl').write_text(''.join(json.dumps({'event_id':f'evt-{i}','samples':4})+'\n' for i in (1,2)))
         (source/'utterance-events.json').write_text(json.dumps([{'event_id':f'evt-{i}',
@@ -47,6 +47,26 @@ class ConcurrentUtteranceExportTest(unittest.TestCase):
                 file.write(json.dumps({'event_id':'evt-2','samples':1})+'\n')
             with self.assertRaisesRegex(RuntimeError,'cover all source samples'):
                 export(root/'capture',root/'export')
+
+    def test_audible_gap_remains_in_clip_and_fails_continuity(self):
+        import numpy as np
+        import soundfile as sf
+        with tempfile.TemporaryDirectory() as temp:
+            root=Path(temp);source=self.fixture(root)
+            played,_=sf.read(source/'model.wav')
+            sf.write(source/'model.wav',np.insert(played,6,np.zeros(3)),24000,subtype='PCM_16')
+            report=json.loads((source/'report.json').read_text())
+            report['audio_sha256']=sha256(source/'model.wav')
+            report['playout']['within_utterance_underrun_samples']=3
+            event=report['playout']['events']['evt-2'];event['within_utterance_underrun_samples']=3
+            event['packets']=[{'playback_start_sample':4,'samples':2},{'playback_start_sample':9,'samples':2}]
+            (source/'report.json').write_text(json.dumps(report))
+            export(root/'capture',root/'export')
+            result=json.loads((root/'export/evt-2/report.json').read_text())
+            self.assertFalse(result['audio_continuity_pass'])
+            clip,_=sf.read(root/'export/evt-2/model.wav')
+            self.assertEqual(len(clip),7)
+            self.assertTrue((clip[2:5]==0).all())
 
 
 if __name__=='__main__':unittest.main()
