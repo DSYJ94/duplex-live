@@ -2475,3 +2475,16 @@ page open; owner must sign in. No new permissions/configuration changes requeste
 **Plain words — local verification:** 41 related tests pass, including the new
 control-teacher causality and counterfactual-world lineage guards. No local tests
 are claimed as native voice, intelligence or complete-task acceptance.
+
+
+## 2026-10-15 — Renewed access; paired teachers running; control targets rejected
+
+**Plain words:** SSH renewal is verified at 11:43 Berlin. Cluster pulls committed
+code; new paired-private teacher job 7434240 runs 32 TRAIN-only sessions. Independent
+strict speech/fact/receipt audit 7434249 depends on its successful completion.
+Native history 7429698 passes: prepared inputs on TRAIN-001 exactly match actual
+LMGen, using the accepted 162-frame prefix captured on TRAIN-000. No held-out labels
+train. This permits efficient multi-example preparation, not model qualification.
+Control audit 7429624 rejects all seven raw teachers; none enters training. Inspect
+complete events for missing clarification, premature/wrong lookups and cancellation
+without receipts followed by private disclosure before choosing the repair.

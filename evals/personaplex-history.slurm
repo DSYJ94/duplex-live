@@ -3,6 +3,8 @@
 set -euo pipefail
 DL=/projects/u6si/duplex-live
 cd "$DL/repo"
+EXTRA=()
+if [ "${PERSONA_JOINT_LOGITS:-0}" = 1 ]; then EXTRA=(--joint-logits); fi
 apptainer exec --nv --bind /projects,/lus,/home \
   --env PYTHONPATH="$DL/tmp/voice-quality-7415052:$DL/personaplex/moshi:$DL/envs/moshi-rag-7379661/lib/python3.12/site-packages:$DL/repo" \
   --env HF_HOME="$DL/models/hf-cache" --env HF_HUB_OFFLINE=1 \
@@ -12,4 +14,4 @@ apptainer exec --nv --bind /projects,/lus,/home \
   --model "$DL/models/hf-cache/hub/models--nvidia--personaplex-7b-v1/snapshots/fdaf4090a61cb315c138a1faee287ffd6c716309" \
   --voice "$DL/runs/voice-quality-7414595/codec/reference.wav" \
   --template "$DL/runs/personaplex-bridge-7428894" \
-  --out "$DL/runs/personaplex-history-${SLURM_JOB_ID}"
+  --out "$DL/runs/personaplex-history-${SLURM_JOB_ID}" "${EXTRA[@]}"

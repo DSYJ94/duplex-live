@@ -16,15 +16,20 @@ like radio speech. Preserve the accepted reference and receipts. No further
 voice preference is needed before continuing. Neither model has passed full-task
 intelligence, delegation or paced microphone acceptance. Clifton access is verified.
 
-**Plain words — current blocker, 15 October 10:29 Berlin:** the Clifton SSH
-certificate expired. Live SSH now returns `Permission denied (publickey)`;
-renewal is running, with the usual identity-provider page left open for the owner.
-No permissions or SSH configuration changes requested. Latest local code is
-committed/pushed; **paired teacher generation is prepared but NOT submitted**.
-After sign-in: verify SSH, cluster `git pull --ff-only`, retrieve full logs/results
-for history proof 7429698 and control-teacher audit 7429624, then submit
-`evals/counterfactual-teacher.slurm` and dependent teacher audit with its new batch.
-Do not resubmit already completed native probes or 7-scene teacher collection.
+**Plain words — 15 October 11:43 Berlin, access restored:** renewed Clifton
+certificate is verified by actual SSH and valid until 23:42 Berlin. Paired-private
+teacher job **7434240** is running (32 raw TRAIN-only sessions, four worlds per
+question); independent strict audit **7434249** is queued after success. Neither
+raw generation nor audit completion alone approves targets for training.
+
+Native history proof **7429698 passes exactly** on another TRAIN scene: every
+prepared native input agrees, including the 162-frame accepted voice/system
+prefix (shape 1 x 17 x 402). Template SHA
+`8b34f2acd3b43da0d9c3eb6f5c84cab0506aeec1134d6603c978db5467a04cd0`.
+Control-teacher audit **7429624 rejects all seven** scenes. Clarification failures
+include missing questions/premature or wrong record reads; cancellations lack real
+cancel receipts and disclose the supposedly cancelled result. Keep all seven out.
+Inspect complete event logs before changing the client/worker contract.
 
 **Plain words — 15 October, current engineering stage:** accepted custom
 PersonaPlex voice is the leading integration candidate; Lychee remains a viable

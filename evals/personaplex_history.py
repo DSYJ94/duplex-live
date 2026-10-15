@@ -20,3 +20,14 @@ def delayed_history(template_inputs, prefix_frames, codes, delays):
         tail[:, channel, :boundary] = template_inputs[:, channel, prefix_frames:prefix_frames+boundary]
         tail[:, channel, boundary:] = clean[:, channel, :clean.shape[-1]-boundary]
     return torch.cat([template_inputs[..., :prefix_frames], tail], dim=-1), clean
+
+
+def delayed_targets(template_inputs, prefix_frames, clean_codes, delays):
+    """Current native targets, including delayed acoustic streams at the boundary."""
+    import torch
+    result = torch.empty_like(clean_codes)
+    for channel, delay in enumerate(delays):
+        boundary = min(delay, clean_codes.shape[-1])
+        result[:, channel, :boundary] = template_inputs[:, channel, prefix_frames+1:prefix_frames+1+boundary]
+        result[:, channel, boundary:] = clean_codes[:, channel, :clean_codes.shape[-1]-boundary]
+    return result
