@@ -3407,3 +3407,23 @@ before CE. This implements an ownership-mask seam, not waveform AEC or measured
 echo suppression. No larger run is authorized by component fit alone; require
 finite gradients, unchanged frozen hashes, fresh reload and native free-running
 retention checks.
+
+
+**Plain words — training proof guards reject two attempts before updates:**
+7455033 stops at RET-marker validation: source/cache lists retain event order,
+while token positions are chronological. Keep source-list equality and reject
+duplicates, but compare positions against the sorted list; valid cancel scenes
+contain e.g. [220,61]. Retry 7455068 revalidates all 48 approved TRAIN scenes and
+fails zero-adapter BF16 logit identity before any optimizer update. Compiled
+versus replaced gating arithmetic is a candidate explanation, not proven yet.
+
+7455157 adds precise FP32 eager/math checks, a fresh-process reload gate and
+native per-head depth comparisons at three frames around a result span.
+Pinned Context source retains the older ring cache's final-head mismatch:
+streaming excludes the oldest depth slot at q15 while unrestricted batch
+training includes it. The batch-only context15 compatibility shim must show
+<=.001 FP32 error on every head before optimization; native inference/source
+remain unchanged. Keep this implementation correction separate from any
+answer-quality claim. The cold adapter reader requires proof/reload hashes and
+installs adapters before Engine creates its native CUDA graphs; matched disabled
+and trained comparisons use the same saved accepted-reference voice codes.

@@ -176,3 +176,68 @@ fresh actual-ASR/tool development cases, paired values, ordinary answers and
 interruptions with speech transcription/listening. Preserve implementation
 proof, TRAIN fit and live-task qualification as separate verdicts. Stop scaling
 if factual use improves only on teacher histories or damages accepted voice.
+
+## Additional parity seams found before scaling
+
+Plain words: batch-to-batch zero/reload equality does not yet establish that
+the training graph sees the same history as native streaming inference. Source
+inspection identifies three narrowly testable differences. No GPU job or
+source change was made for this analysis.
+
+**Depth head 15.** The pinned transformer still uses the ring-cache
+`delta <= 0` position rule. With a 16-slot depth ring, the final query at
+position 15 labels slot zero as future position 16 and excludes it. Batched
+depth attention with `context=None` includes position zero. Consequently:
+
+| Depth query | Native streaming visible positions | Unmodified batch positions |
+| --- | --- | --- |
+| 0–14 | 0 through query | 0 through query |
+| 15 | 1–15 | 0–15 |
+
+The existing `evals.personaplex_depth.native_depth_context` compatibility
+context of 15 on the **unstreamed** path is a candidate match, not an inference
+change. Verify per-head logits on identical hidden states and forced preceding
+codes before adoption. Directly this concerns the last user acoustic head;
+shared-gradient effects do not establish it as the cause of factual failures.
+[Pinned attention source](https://github.com/mindlogic-ai/Context-Spanning/blob/79df302fa2820cae10c61bb2b7f302c52edb6ed2/contextspan/moshi/modules/transformer.py).
+
+**Startup prefix.** Let the forced native prefix columns be `C0...C(P-1)`.
+At offset zero, `prepare_step_input` replaces the cache with initial tokens
+and returns no forward. At offset one, delay-one initialization also replaces
+the delayed acoustic values from C0. Thus C0 is omitted on all 17 rows.
+The formal temporal inputs subsequently correspond to an explicit initial
+column followed by delayed `C1...C(P-1)`. Native `forward_train` instead
+prepends initial tokens to every supplied clean column. A candidate exact
+training mapping is therefore `persona_prefix[:, 1:]` plus every real frame,
+reducing prefix and real-to-virtual offsets by one. This drops only the native
+startup's first synthetic prompt column, never real user audio. Verify actual
+input IDs and temporal positions, not just decoded prompt text.
+[Pinned LMGen](https://github.com/mindlogic-ai/Context-Spanning/blob/79df302fa2820cae10c61bb2b7f302c52edb6ed2/contextspan/moshi/models/lm.py),
+[prefix prefill](https://github.com/mindlogic-ai/Context-Spanning/blob/79df302fa2820cae10c61bb2b7f302c52edb6ed2/contextspan/model/prefix_prefill.py).
+
+**Span boundary.** The clean assembler moves the preceding real frame's
+acoustic rows 2–8 and 10–16 into the last span column, so delay-one places them
+in the first delayed real column after the span. The native prefill fills
+inserted delayed columns with placeholders; its Engine readout compensation
+restores one pending assistant semantic code, not those 14 acoustic rows.
+A pure-Python integer simulation of the published write/delay rules, after
+startup correction, finds a difference in precisely those rows when the first
+post-span real column is later consumed. This is structural evidence, not an
+actual loaded-model numerical result. Do not copy future assistant cache rows
+as a fix: user acoustic rows can already be provided while the corresponding
+assistant acoustic codes may not yet have been sampled.
+[Span prefill](https://github.com/mindlogic-ai/Context-Spanning/blob/79df302fa2820cae10c61bb2b7f302c52edb6ed2/contextspan/model/context_span_block.py),
+[Engine](https://github.com/mindlogic-ai/Context-Spanning/blob/79df302fa2820cae10c61bb2b7f302c52edb6ed2/contextspan/model/engine.py).
+
+The smallest combined check is one actual accepted voice/persona prefix, two
+forced real frames, one short injected reference and two further forced real
+frames. Capture the actual temporal input columns and RoPE/KV positions at
+each native `forward_codes` call. Compare against initial-plus-delayed clean
+assembly, first without and then with the proposed one-column startup mapping.
+At both span boundaries compare all 17 rows, state offsets and provided masks;
+compare hidden/text logits after input equality and all 16 forced depth logits
+separately. Use real TRAIN codes and a distinctive reference rather than all
+silence, which can hide a moved/dropped acoustic row. The prefix and span
+component comparisons should consume no random samples; if using the native
+sampling loop, preserve/report RNG separately. Do not scale training while
+these differences remain unmeasured or accidentally hidden by masked losses.

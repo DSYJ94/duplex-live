@@ -31,6 +31,10 @@ if [ -n "${CONTEXT_ADAPTER_JOB:-}" ]; then
  EXTRA+=(--adapter-proof "$DL/runs/context-training-proof-$CONTEXT_ADAPTER_JOB")
  if [ "${CONTEXT_ADAPTER_DISABLED:-0}" = 1 ]; then EXTRA+=(--adapter-disabled); fi
 fi
+if [ -n "${CONTEXT_LAYOUT_AUDIT_JOB:-}" ]; then
+ [[ "$CONTEXT_LAYOUT_AUDIT_JOB" =~ ^[0-9]+$ ]]
+ EXTRA+=(--layout-audit "$DL/runs/context-training-proof-$CONTEXT_LAYOUT_AUDIT_JOB/history-audit.json")
+fi
 apptainer exec --nv --bind /projects,/lus,/home \
  --env PYTHONPATH="$DL/tmp/voice-quality-7415052:$DL/envs/moshi-rag-7379661/lib/python3.12/site-packages:$DL_TASK_SOURCE" \
  --env HF_HOME="$DL/models/hf-cache" --env HF_HUB_OFFLINE=1 \

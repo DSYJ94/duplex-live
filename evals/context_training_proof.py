@@ -29,6 +29,7 @@ def main():
     ap.add_argument('--cache', type=Path, action='append', required=True)
     ap.add_argument('--steps', type=int, choices=(8,), default=8)
     ap.add_argument('--reload', action='store_true')
+    ap.add_argument('--history-audit-only', action='store_true')
     args = ap.parse_args()
     import numpy as np
     import soundfile as sf
@@ -45,6 +46,7 @@ def main():
     from evals.personaplex_depth import native_depth_context
     from evals.lychee_context import BASE_INSTRUCTIONS
     torch.backends.cudnn.enabled = False
+    torch.backends.cuda.enable_cudnn_sdp(False)
     assets = json.loads(args.assets.read_text()); source = Path(assets['source']); weights = Path(assets['path'])
     if (assets['source_commit'] != SOURCE_COMMIT or assets['revision'] != MODEL_REVISION
             or subprocess.check_output(['git', '-C', str(source), 'rev-parse', 'HEAD'], text=True).strip() != SOURCE_COMMIT
@@ -97,6 +99,17 @@ def main():
     (args.out / 'data.json').write_text(json.dumps(records, indent=2) + '\n')
     # Fixed complete TRAIN private case; no random window or validation-derived labels.
     first = next(e for e in examples if e['record']['kind'] == 'private')
+    if args.history_audit_only:
+        from evals.context_history_audit import audit
+        sample = torch.load(Path(first['record']['cache']) / (first['record']['id'] + '.pt'),
+            map_location='cpu', weights_only=True)
+        result = audit(lm, spm, prefix, first, sample)
+        result.update(source_commit=SOURCE_COMMIT, data_sha256=sha256(args.out / 'data.json'),
+            layout_code_sha256=sha256(Path(__file__).with_name('context_native_layout.py')),
+            repo_commit=subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip())
+        (args.out / 'history-audit.json').write_text(json.dumps(result, indent=2) + '\n')
+        print(json.dumps(result), flush=True)
+        return
     def tensors(example):
         return {k: example[k].cuda()[None] for k in ('codes', 'text_mask', 'audio_mask', 'user_target_mask')}
     fixed = tensors(first)
@@ -189,6 +202,7 @@ def main():
         'raw_QKV_adapted': False, 'trainable_parameters': sum(p.numel() for p in learned.values()),
         'zero_adapter_all_valid_logits_exact': True, 'adapter_construction_rng_preserved': True,
         'canonical_logits_dtype': 'float32', 'native_depth_parity': depth_check,
+        'cudnn_attention_enabled': torch.backends.cuda.cudnn_sdp_enabled(),
         'frozen_weights_unchanged': True, 'frozen_hashes': frozen, 'optimizer_steps': len(steps),
         'expected_logits': expected, 'baseline_logits': baseline, 'steps': steps,
         'peak_allocated_bytes': torch.cuda.max_memory_allocated(), 'peak_reserved_bytes': torch.cuda.max_memory_reserved(),

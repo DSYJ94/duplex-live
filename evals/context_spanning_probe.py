@@ -47,6 +47,8 @@ def main():
     ap.add_argument('--warm-audio',action='store_true')
     ap.add_argument('--adapter-proof',type=Path)
     ap.add_argument('--adapter-disabled',action='store_true')
+    ap.add_argument('--layout-audit',type=Path,
+        help='Explicit native-layout candidate; require a successful actual input trace')
     args=ap.parse_args()
     if args.backend_mode=='native-asr':
         devices=os.environ.get('CUDA_VISIBLE_DEVICES','').split(',')
@@ -107,6 +109,16 @@ def main():
             or not lm_loads or not lm_loads[-1]['strict'] or lm_loads[-1]['missing'] or lm_loads[-1]['unexpected']):
         raise RuntimeError('Final Context Spanning checkpoint did not strictly cover native LM')
     if engine.frame_size!=1920 or engine.frame_rate!=12.5:raise RuntimeError('Native frame clock changed')
+    layout=None
+    if args.layout_audit:
+        layout=json.loads(args.layout_audit.read_text())
+        if (not layout['candidate_passed'] or layout['source_commit']!=SOURCE_COMMIT
+                or layout['layout_code_sha256']!=sha256(Path(__file__).with_name('context_native_layout.py'))):
+            raise RuntimeError('Native-layout candidate lacks matching actual input parity')
+        from evals.context_native_layout import install
+        install(engine)
+        layout={'audit_sha256':sha256(args.layout_audit),'native_layout':'bootstrap prefix and preserve provided acoustics',
+            'native_input_parity_passed':True,'quality_qualified':False}
     if args.voice=='accepted-synthetic':
         if not args.voice_reference or not args.voice_provenance:raise RuntimeError('Synthetic voice provenance required')
         receipt=json.loads(args.voice_provenance.read_text())
@@ -134,7 +146,7 @@ def main():
     loading={'loads':records,'final_lm_strict':True,'dep_q':engine.lm.dep_q,
         'model_load_and_prefix_s':time.monotonic()-started,'pickle_globals':unsafe,
         'assets_manifest_sha256':sha256(args.assets),'base_hashes':MODEL_HASHES,
-        'voice':args.voice,'voice_codes_shape':list(voice.shape),'input_warmup':warm,'adapter':adapter,
+        'voice':args.voice,'voice_codes_shape':list(voice.shape),'input_warmup':warm,'adapter':adapter,'layout':layout,
         'torch':torch.__version__,'torch_file':torch.__file__,'cuda':torch.version.cuda}
     (args.out/'loading.json').write_text(json.dumps(loading,indent=2)+'\n')
     world=RecordWorld({meta['project']:{meta['field']:args.private_value}})

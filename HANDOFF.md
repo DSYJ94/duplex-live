@@ -31,7 +31,13 @@ Require zero-adapter logits/RNG parity, finite nonzero gradients, frozen-base
 hashes and exact fresh-process reload before any larger training. See
 [training seams](docs/research/2026-10-15-context-training-seams.md) and
 [resource decisions](docs/research/2026-10-15-resource-decisions.md).
-The eight-update proof is prepared; no result is claimed yet.
+Proof 7455033 stops before updates on a source-event-order comparison bug;
+7455068 passes all 48 TRAIN provenance checks, then stops before updates on
+BF16 zero-adapter logit differences. Current 7455157 adds FP32 eager/math
+canonical checks and an actual per-head streaming comparison. Source review
+finds the known ring-cache final-head context mismatch persists in this fork;
+its batch-only context15 compatibility must pass measured native parity before
+training. No update or numerical fix is claimed until the report exists.
 
 The older Lychee work below remains useful evidence and a fallback:
 
