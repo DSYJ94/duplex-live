@@ -9,6 +9,7 @@ import math
 from pathlib import Path
 from evals.moshi_model_download import sha256
 from evals.recovery_teacher_quality import validate_teacher,assess
+from evals.teacher_world import teacher_metadata
 
 
 def measured_timeline(sid,words,source_timeline,delegations,arrivals):
@@ -64,8 +65,9 @@ def validate_teacher_conversion(data,receipt):
         record = decision["raw_record"]
         folder = raw / record["dir"]
         source_timeline = json.loads(Path(record["source_row"]["path"]).with_suffix(".json").read_text())["timeline"]
+        raw_manifest = json.loads((raw / "teacher.json").read_text())
         reviewed = assess(spoken[decision["scenario_id"]],[json.loads(line) for line in (folder / "events.jsonl").read_text().splitlines()],
-            {**source_timeline["meta"],"source_events":source_timeline["events"]},row["kind"],
+            {**teacher_metadata(record, source_timeline["meta"], raw_manifest["source_ingestion_sha256"]),"source_events":source_timeline["events"]},row["kind"],
             json.loads((folder / "report.json").read_text()))
         if not reviewed["speech_and_fact_checks_pass"] or reviewed["measured_words"] != decision["measured_words"]:
             raise RuntimeError("Teacher no longer passes current speech/fact/timing checks")
@@ -99,6 +101,7 @@ def main():
         raise RuntimeError("Teacher judge/source hashes changed")
     args.out.mkdir(parents=True,exist_ok=False)
     speech = {Path(r["run"]).name:r for r in json.loads((args.checks.parent / "report.json").read_text())["results"]}
+    raw_manifest = json.loads((raw / "teacher.json").read_text())
     rows,reports,timings,rejected = [],[],[],[]
     for result in checks["results"]:
         if not result["speech_and_fact_checks_pass"]:
@@ -107,6 +110,7 @@ def main():
         record = result["raw_record"]
         original = record["source_row"]
         source_sidecar = json.loads(Path(original["path"]).with_suffix(".json").read_text())
+        source_sidecar["timeline"]["meta"] = teacher_metadata(record, source_sidecar["timeline"]["meta"], raw_manifest["source_ingestion_sha256"])
         sid = "teacher-"+result["scenario_id"]
         try:
             timeline,offset = measured_timeline(sid,result["measured_words"],source_sidecar["timeline"],

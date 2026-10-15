@@ -11,6 +11,7 @@ from pathlib import Path
 from evals.moshi_model_download import sha256
 from evals.recovery_data import validate_conversion
 from evals.recovery_prepare_data import spoken_words
+from evals.teacher_world import recording_id, teacher_metadata
 
 
 def validate_input_audio(recorded,source):
@@ -35,7 +36,7 @@ def validate_teacher(batch):
     ids = set()
     for record in manifest["recordings"]:
         row = record["source_row"]
-        sid = row["scenario_id"]
+        sid = recording_id(record)
         if sid in ids or row["split"] != "train" or row not in source["accepted"]:
             raise RuntimeError("Teacher has duplicate, unapproved or held-out stimuli")
         ids.add(sid)
@@ -47,8 +48,35 @@ def validate_teacher(batch):
         environment = json.loads((folder / "environment.json").read_text())
         if environment["purpose"] != "teacher" or environment["training_approved"] is not False or environment["input_sha256"] != row["source_user_sha256"]:
             raise RuntimeError("Teacher purpose/stimulus receipt changed")
+        if "world_override" in record:
+            metadata = json.loads(Path(row["path"]).with_suffix(".json").read_text())["timeline"]["meta"]
+            teacher_metadata(record, metadata, manifest["source_ingestion_sha256"])
+            if environment.get("record_world_override") != record["world_override"]:
+                raise RuntimeError("Counterfactual recording uses a different world")
+        elif environment.get("record_world_override"):
+            raise RuntimeError("Undeclared teacher world override")
         validate_input_audio(folder / "user_in.wav",Path(source["source_batch"]) / row["dir"] / "stem_user.wav")
-    if manifest.get("collection_schema") == "dl-control-teacher-v2":
+    if manifest.get("collection_schema") == "dl-counterfactual-teacher-v3":
+        variants = {v["variant_id"]:v for v in manifest["variants"]}
+        if len(variants) != 32 or ids != set(variants) or manifest.get("scope") != "counterfactual-private":
+            raise RuntimeError("Incomplete or changed counterfactual teacher scope")
+        from collections import Counter
+        counts = Counter()
+        pairs = set()
+        for record in manifest["recordings"]:
+            row = record["source_row"]
+            variant = variants[recording_id(record)]
+            if row["kind"] != "private" or any(record.get(k) != variant[k] for k in ("source_row", "world_override")):
+                raise RuntimeError("Counterfactual variant differs from sealed declaration")
+            pair = (row["scenario_id"], record["world_override"]["world"]["phrase"])
+            if pair in pairs:
+                raise RuntimeError("Duplicate counterfactual world")
+            pairs.add(pair)
+            counts[row["scenario_id"]] += 1
+        expected_sources = {r["scenario_id"] for r in source["accepted"] if r["split"] == "train" and r["kind"] == "private"}
+        if set(counts) != expected_sources or any(count != 4 for count in counts.values()):
+            raise RuntimeError("Counterfactual source pairing changed")
+    elif manifest.get("collection_schema") == "dl-control-teacher-v2":
         expected = {r["scenario_id"] for r in source["accepted"] if r["split"] == "train" and r["kind"] in ("clarify", "cancel")}
         if len(expected) != 7 or ids != expected or set(manifest["selected_ids"]) != expected or manifest.get("scope") != "control":
             raise RuntimeError("Control teacher scope differs from approved TRAIN scenes")
@@ -174,10 +202,10 @@ def main():
     for record,spoken in zip(manifest["recordings"],speech):
         folder = args.batch / record["dir"]
         timeline = json.loads(Path(record["source_row"]["path"]).with_suffix(".json").read_text())["timeline"]
-        metadata = {**timeline["meta"],"source_events":timeline["events"]}
+        metadata = {**teacher_metadata(record, timeline["meta"], manifest["source_ingestion_sha256"]),"source_events":timeline["events"]}
         result = assess(spoken,[json.loads(line) for line in (folder / "events.jsonl").read_text().splitlines()],
             metadata,record["source_row"]["kind"],json.loads((folder / "report.json").read_text()))
-        results.append({"scenario_id":record["source_row"]["scenario_id"],"raw_record":record,**result})
+        results.append({"scenario_id":recording_id(record),"raw_record":record,**result})
         print(json.dumps({k:v for k,v in results[-1].items() if k not in ("raw_record","measured_words","reference_arrivals","delegation_events")}),flush=True)
     (args.out / "teacher_checks.json").write_text(json.dumps({"schema":"dl-teacher-speech-facts-v1",
         "raw_batch":str(args.batch),"raw_manifest_sha256":sha256(args.batch / "teacher.json"),

@@ -12,6 +12,7 @@ import os
 import subprocess
 import time
 from pathlib import Path
+from evals.moshi_model_download import sha256
 
 
 def audio_sample_count(samples,rate,seconds):
@@ -43,6 +44,13 @@ async def run(args):
         if row["split"] != required_split or Path(conversion["source_batch"]) != args.batch:
             raise RuntimeError("Teacher/comparison source does not match its sealed fold")
         metadata = json.loads(Path(row["path"]).with_suffix(".json").read_text())["timeline"]["meta"]
+        world_override = None
+        if getattr(args, "record_world", None):
+            if args.purpose != "teacher" or row["kind"] != "private":
+                raise RuntimeError("Counterfactual worlds require approved private TRAIN teacher stimuli")
+            from evals.teacher_world import apply_world
+            metadata, world_override = apply_world(args.record_world, metadata, scenario,
+                                                    sha256(args.conversion / "ingestion.json"))
         world = RecordWorld({metadata["project"]:{metadata["field"]:metadata["phrase"]}}) if metadata["phrase"] else RecordWorld({})
     args.out.mkdir(parents=True, exist_ok=False)
     key = os.environ["OPENAI_API_KEY"]
@@ -70,6 +78,9 @@ async def run(args):
         "provenance_class":"closed-content","source_model":"gpt-live-1","created_date":"2026-10-14",
         "training_approved":False}
     (args.out / "environment.json").write_text(json.dumps(env, indent=2) + "\n")
+    if args.conversion and world_override:
+        env["record_world_override"] = world_override
+        (args.out / "environment.json").write_text(json.dumps(env, indent=2)+"\n")
     headers = {"Authorization": "Bearer " + key,
         "OpenAI-Safety-Identifier": hashlib.sha256(b"duplex-live-evaluation").hexdigest()}
     transcripts, audio, tasks, errors = [], [], {}, []
