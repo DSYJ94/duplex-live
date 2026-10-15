@@ -7,6 +7,28 @@ Owner authorizes needed compute before expiry and asks to continue until actual
 input is needed. **No model qualifies yet.** This is native pretrained speech
 LoRA fine-tuning with real semantic workers, not pretraining or Qwen row scale-up.
 
+**Plain words — 15 October, current engineering stage:** accepted custom
+PersonaPlex voice is the leading integration candidate; Lychee remains a viable
+voice alternative. Neither is product qualified. Paced PersonaPlex 7415855 has
+32.46 ms p95 compute per 80 ms frame, with one 50.71 ms gap after buffering.
+Reference proof 7427733 passes with the exact accepted voice/system prefix.
+Bridge pilot **7428894** trains eight updates on one approved TRAIN phrase only:
+frozen speech hashes unchanged; streaming/full-forward error 0.0001847;
+zero bridge and reference-free prefix errors 0.0; fresh-process reload error 0.0.
+Bridge SHA `76db170d7f15085ba1241d127f67e48a5b92f4b973f183dc3ab1901b7077f919`.
+The phrase loss changes from 9.2622 at step 1 to 5.2089 at step 8; this is an
+engineering result, not generalization or spoken task success. Native token 4
+is a byte token; separate routing must be trained rather than assuming RAG support.
+
+**Active next checks:** native HF incremental Lychee **7428971** measures token
+processing with only already-arrived 400 ms audio chunks; vocoding is afterward,
+so it cannot establish live audio latency. PersonaPlex actual-worker replay
+**7429089** uses real API/record-tool receipts and frozen ARC rows through the
+trained bridge, with a scheduled diagnostic dispatch and causal measured words.
+It explicitly does **not** test native delegation choice or live ASR. Interactive
+submissions while another reservation job runs can hit QOSMaxSubmitJobPerUserLimit;
+normal workq accepted 7429089 without changing QoS or cancelling running work.
+
 38 strict TTS scenes plus 10 independently approved GPT-Live TRAIN teachers make
 33 train / 8 validation / 7 test. Exact source/word/grid/native-token clock checks
 pass; no held-out audio trains. Original base codes are reused. Single-context

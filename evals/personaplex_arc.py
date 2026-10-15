@@ -31,8 +31,12 @@ def load_encoder(source, manifest_path, tokenizer_path, out):
         raise RuntimeError("ARC import replaced foreground Moshi")
     manifest = json.loads(manifest_path.read_text())
     for label in ("rag", "arc"):
-        for name in ("config.json", "model.safetensors"):
-            if sha256(Path(manifest[label]["path"]) / name) != manifest[label]["files"][name]["sha256"]:
+        if "model.safetensors" not in manifest[label]["files"]:
+            raise RuntimeError("Encoder manifest omits required weights")
+        for name, record in manifest[label]["files"].items():
+            if name not in ("config.json", "model.safetensors"):
+                continue
+            if sha256(Path(manifest[label]["path"]) / name) != record["sha256"]:
                 raise RuntimeError("Pinned encoder asset changed")
     config = json.loads((Path(manifest["rag"]["path"]) / "config.json").read_text())
     config["conditioners"]["reference_with_time"]["multi_arc_encoder"].update(tokenizer_name=str(tokenizer_path), hf_repo=None)

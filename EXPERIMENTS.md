@@ -2415,3 +2415,25 @@ voice/system prefix captured from LMGen. It replaces old RAG markers with native
 padding, checks streaming/whole-sequence equivalence before gradients, freezes
 and hashes the speech weights, and requires exact fresh-process bridge reload.
 No routing, generalization or free-running speech acceptance follows from that pilot.
+
+
+## 2026-10-15 — Native accepted-voice bridge can train and reload
+
+**Plain words:** the reference bridge now receives actual gradients while the
+PersonaPlex speech model remains frozen. Pilot 7428894 uses one strictly approved
+TRAIN phrase, the accepted synthetic voice prefix as context only, and no held-out
+training. Native delayed inputs/targets are captured directly from LMGen; old RAG
+control markers are replaced by native padding. Streaming versus full-sequence
+training predictions differ by at most 0.0001847 in float32. Zero bridge and
+reference-free prefix errors are exactly 0.0. Frozen speech hashes match. Eight
+steps move phrase loss 9.2622 to 5.2089; no free-running quality claim follows.
+Fresh-process reload is exact (0.0), bridge SHA
+76db170d7f15085ba1241d127f67e48a5b92f4b973f183dc3ab1901b7077f919.
+
+Lychee incremental benchmark 7428971 supplies only arrived 400 ms user chunks,
+retains all native streams/events, and uses the published HF incremental runtime.
+It measures speech-LM tokens; separate subsequent vocoding stays offline. Results
+pending. QOSMaxSubmitJobPerUserLimit rejected additional interactive submissions
+without allocating GPUs; a normal workq submission accepts actual-worker probe
+7429089. It uses the trained bridge and a real API record read/frozen ARC encoder,
+with an explicitly scheduled diagnostic request, not learned native routing.
