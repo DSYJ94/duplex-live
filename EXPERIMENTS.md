@@ -2658,3 +2658,18 @@ text/audio logits exactly, and requires another fresh-process reload. Neighborin
 idle frames within 160ms of a single declared action are ignored, not relabeled;
 no added positive actions, speech labels or word timestamps. Whole-task native
 replays remain mandatory. Lychee attention-only comparison is job 7435951.
+
+**Plain words — use the released low-latency backend:** Lychee without cuDNN SDPA
+7435951 reduces token processing from 243.26s to 165.85s per 70s input, but still
+has 97.49s backlog; not a realtime pass. Actual BF16 tensor probes differ from
+cuDNN by at most .0078125 and have comparable float32 error. This does not prove
+full-model trace parity or quality. The published Lychee realtime path is the
+patched multi-stream vLLM backend, not the measured HF path; its README reports
+about 2.96x speaking-round speedup. Thus HF slowness does not rule out Lychee.
+Prepare an isolated ARM/GH200 build of the exact released patched vLLM source
+against the working NGC Torch, without replacing Torch or altering accepted
+model/source environments. The release expects Torch 2.5.1/vLLM 0.6.5; compatibility
+with NGC 2.9/CUDA13 must be demonstrated, not assumed. A built wheel alone is
+not enough: require native kernel execution and complete strict multi-head model
+loading before any paced inference claim. Primary source is the pinned README
+and third_party/vllm, commit 7bb1068c59b578e1f8e65fb762cd26708c14cc6d.
