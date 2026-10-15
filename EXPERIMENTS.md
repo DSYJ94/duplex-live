@@ -3093,3 +3093,27 @@ Report full-vocabulary max/RMS error, KL, top-one agreement and top-20 overlap;
 do not fit an acceptance tolerance after seeing errors. Shared input embeddings
 isolate graph/branch/head behavior; this does not validate the input encoder or
 incremental KV. No optimizer run or new training checkpoint exists yet.
+
+**Plain words — native graph and concurrent audio results:** capture 7452224 /
+HF comparison 7452225 match all nine raw-head top-one predictions at 11/440/840
+positions, with strict full HF checkpoint loading. Maximum RMS logit error
+0.1219, KL 0.00863; no fitted tolerance or numerical identity claim. Shared input
+embeddings isolate the graph, not the audio frontend/incremental KV. Actual
+control masking is not part of the full-vocabulary top-one comparison.
+Concurrent 7452017 verifies exact baseline native token equality, real concurrent
+PCM availability, zero within-utterance gaps with fixed 240ms playout and exact
+1258-unit accounting. Its old nested vocoder_mode string is a stale hardcoded
+label; parent/receiver evidence proves concurrency, and later code corrects that
+label without changing the immutable artifact. Owner listening is requested on
+the refreshed page while independent work continues.
+
+**Plain words — native S3 data stage prepared:** only the 48 approved TRAIN
+scenarios can be re-encoded. Actual measured gaps split speech segments; >28s
+continuous segments are explicitly excluded in this bounded codec diagnostic.
+Every source word interval/hash and actual result receipt is retained, and the
+native tokenizer/vocoder weights and accepted reference are pinned. All outputs
+remain training_approved=false until independent S3 speech auditing AND causal
+native assembly checks. Source/fold/word validity failures are fatal. Two source
+word-bound regressions pass. No new data are invented; no validation/test audio
+is processed. Native semantic adaptation should begin with layers 24–27 only,
+after the speech/control branch points, subject to an actual preservation proof.

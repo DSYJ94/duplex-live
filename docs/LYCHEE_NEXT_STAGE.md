@@ -1,105 +1,94 @@
 # Native Lychee continuation
 
+## Current execution — 15 October, native Lychee and actual audio
 
-**15 October, actual engine boundary checked:** 7451814/15 (immediate) and
-7451816/17 (idle/quiet delivery) verify both pending and completed system prefixes
-at the real vLLM add-request boundary. All four still omit the actual returned
-value. Both quiet-delivery runs hold the completed result until 29.2s, adding
-19.8–20.1s. Do not adopt that delay or repeat prompt/timing-only variants as a fix.
-Native result-integration adaptation and a native HF/vLLM forward comparison are
-next; static reading success does not establish late-result competence.
+Plain words: no complete model qualifies. Continue the owner's authorised work
+until actual input is needed; the allocation expires in about six days. The
+accepted development voices are PersonaPlex synthetic marin and Lychee. Use
+[docs/LYCHEE_NEXT_STAGE.md](docs/LYCHEE_NEXT_STAGE.md) for the next actions.
 
-Warmed baseline 7451709 completes 70s of paced input in 70.521s, p95 compute
-301ms/400ms, maximum input backlog 18.5ms (previously 1.280s). All text, acoustic
-and control token arrays are exactly equal to original 7441742. Warmup itself
-takes 1.339s before input, preserving sampling RNG and creating no conversation.
+The released Qwen-based Lychee model runs through its native custom-vLLM backend
+with all 982 checkpoint tensors accounted for. Warm-input baseline 7451709 keeps
+maximum input backlog to 18.5ms; every text, speech and control token equals the
+original 7441742 baseline. Concurrent two-GPU capture 7452017 completes 70s of
+paced input in 70.540s with p95 model compute 299ms/400ms, maximum backlog 72.7ms,
+1258 codec units accounted for and zero within-utterance gaps under fixed 240ms
+per-utterance causal playout. It actually generates LM tokens and PCM together;
+the final WAV simulates playout. Browser/audio-device/microphone use is untested.
+The baseline still makes factual errors and is not a qualified voice assistant.
 
-Concurrent LM/PCM capture is now implemented for two separately assigned GPUs,
-with isolated dependency overlays, a bounded local socket/queue, and independent
-receipt of actual interruption controls while the vocoder is busy. It measures
-PCM availability during actual LM execution. The final WAV simulates fixed
-240ms causal playout; no audio device/browser/microphone acceptance is implied.
-Every native codec unit must be consumed or explicitly cancelled. Startup,
-transport, bounded-queue and child-process failures are fatal. Eight local socket,
-delivery and playout regressions pass. The actual concurrent GPU job is next.
+Static fact controls 7450548/50 say both private values. Actual late-return
+7451814/15 and idle/quiet delivery 7451816/17 omit both values despite verified
+fresh prefixes at the actual engine request boundary. Quiet delivery adds about
+20s and is rejected. More prompt/timing-only variants are not the next step.
+
+Native capture 7452224 and HF comparison 7452225 compare all three raw heads
+at three fresh prefills using identical embeddings and correct next-text merge
+conditioning. All nine raw top-one predictions match; RMS logit differences are
+0.0379–0.1219, KL 0.000153–0.00863. This is evidence of similar graph behavior,
+not numerical identity, actual masked control agreement or incremental-KV proof.
+
+Next: native S3 round trips and independent speech audits of the 48 approved
+TRAIN scenes; causal result-ready training views with actual student history;
+then a bounded native semantic-adapter proof before training scale-up. Persona
+adaptations remain failed references. All source data remains immutable, no
+held-out content enters training, and no Lychee optimizer run exists yet.
+
+Code moves through Git only. New jobs use clean immutable worktrees and exact
+commits. Fetch full logs before local filtering. Preserve unrelated pyc, roadmap
+and cluster files. Earlier notes below record historical stages and may be stale.
 
 
-**15 October, result-integration diagnosis:** static reference controls
-7450548/50 correctly say both private values. Actual late receipts 7450551/53
-omit them, and the disclosed application response-start controls 7450827/28
-also omit them. This rules out a missing response-start event as a sufficient
-fix. New diagnostics audit the exact fresh system prefix at the actual vLLM
-add-request boundary and compare immediate delivery with delivery when the
-assistant is listening and two already-arrived 400ms user chunks are quiet.
-The latter is explicitly application scheduling; all words/acoustics remain
-sampled. Keep backend-ready, context-delivery and response clocks separate.
-Neither variation enters training. Warm-input benchmark 7451709 is submitted.
+## Native training design
 
-Per-utterance playout replay is now verified: fixed 240ms buffering produces
-zero within-utterance gaps for trace 7443647, preserves every played PCM sample,
-and cancels 26,800 queued samples at actual native interruption times. This is
-component replay only. ASR audit 7450830 gives full-transcript WER 0.2763 for
-both offline and repaired playout; intentionally cancelled tails and spoken
-number formatting need separate analysis. This does not pass the 0.08 bar.
+Plain words: use the pretrained duplex model; do not pretrain a new foundation
+model or revive the old Qwen row model. The current failure is late result use.
+Training must include actual student history, including its prior refusal, and
+actual pending/completed client context. Teacher-only history has already failed
+to transfer in the Persona experiments.
 
-15 October 2026. No full-task or microphone model qualifies.
+The 28-layer text backbone forks into the four-layer speech branch after layer
+24 and the control branch after layer 20. A first semantic adapter can affect
+only main layers 24–27, leaving raw speech/control branch outputs unchanged for
+identical inputs. Text-selected merge conditioning can still produce different
+speech naturally when words change. This preservation needs an actual native
+zero/update/reload proof; it is not yet implemented or a task-success claim.
 
-The released custom-vLLM backend now works on the isolated CUDA13 build. Run
-7441742 accounts for all 982 source tensors (488 model, 487 encoder, six adapter,
-one explicitly unused merge token embedding). All 329 packed parameter/shard
-groups load; side-head weight copying is not used. It generates four responses
-and 1304 speech-token events from 70 seconds of paced input in 70.523 seconds.
-Compute p95 is 297ms per 400ms chunk. Initial backlog is 1.280s; this is token
-processing, with no concurrent PCM or microphone claim.
+Re-encode only verified TRAIN speech with the actual pinned 25Hz S3 tokenizer
+and accepted vocoder. Keep measured source words, source hashes and real worker
+receipt times. Independently transcribe each round trip under the unchanged
+0.08 WER bar. A codec pass is not native training approval. Do not silently
+accept missing words, truncated speech, invalid units or failed source stamps.
 
-The existing 200ms native encoding check is alignment of each first subword to
-its measured word onset. It is not a response-start latency target. Keep response
-start, input backlog, PCM availability and within-utterance playback gaps separate.
+The 200ms first-subword check in recovery_encode is for the Moshi interleaver.
+Lychee's published layout emits text ahead of delayed speech, and cannot be
+called a pass on that Moshi check. Source word onsets still need independent
+verification. Measure Lychee's actual text/audio relationship explicitly. In
+particular, a private fact's first text token must not precede the actual worker
+receipt, even if the audible word occurs after it. Native training views must
+mask earlier loss and ensure causality at the native text token, not merely the
+audio word. Preserve all real user audio and report any declared PCM transforms.
 
-Offline vocoder 7443260 decodes the generated speech in 2.450 seconds using the
-accepted synthetic voice. This is quality-only placement. Streaming replay
-7443262/64 failed on an incorrect adapter name; corrected immutable-source jobs
-7443646 (hop25) and 7443647 (hop8) use the actual published StreamingDecoder,
-lookahead-three overlap and cache rules. They must count every unique codec token
-and preserve actual recorded arrivals. This remains a component replay, not
-simultaneous speech-model/vocoder execution. The new tests use decoder batch one;
-the application defaults are decoder batch ten and vocoder hop25. Raw default
-StreamingDecoder's constructor uses batch25. Do not conflate those settings.
+## Audio and runtime reproduction
 
-Actual-worker diagnostic 7443841 (yellow circle) and 7443842 (purple diamond)
-use the same approved private validation question. Work is scheduled after the
-arrived first user utterance, and the backend uses causal measured words rather
-than ASR. Pending state and then the actual returned record enter only through
-the native nonspoken system prefix. Every existing text/acoustic/control token,
-relative speech mapping, arrived audio feature/tail, next input clock and RNG
-must survive the prefix rebuild. Prefix KV caching is disabled because its keys
-do not include audio. All output words and acoustic tokens remain sampled.
-These tests cannot establish native foreground delegation choice. No validation
-audio, transcript, world or generated answer enters training.
+Plain words: the concurrent recording is available at
+http://localhost:8766/audio/voice-diagnostics/index.html#concurrent . The owner
+has not rated this new capture yet; the accepted older audition remains visible.
+It uses hop8, lookahead3, decoder batch1 and fixed 240ms per-utterance playout.
+1258 units = 1240 consumed + 18 cancelled before vocoding. The final playout
+retains 1,156,285 PCM samples and cancels 26,435 before playback at actual received
+interruption controls. Local socket p95 transport delay is 0.079ms; maximum is
+79.97ms. Source token arrays exactly equal the original standalone baseline.
 
-If context preservation fails, fix the exact interface before interpreting its
-speech. If it passes, independently transcribe the generated audio and compare
-spoken values with actual receipts in both worlds, including premature guesses.
-If it actually uses both returned values correctly, use this text-context path
-for the native routing/data stage. Do not assume ARC alignment or a pretrained
-tool policy. Native foreground choice, clarification and cancellation still need
-TRAIN-only training and fresh full-task evaluation.
+The old paced-report vocoder_mode text is hardcoded to offline in 7452017's LM
+subreport. The concurrent receiver/parent evidence is authoritative for this
+run; subsequent code labels external event transport separately. Keep the old
+artifact immutable. Full-transcript audit 7450830 of earlier recordings reports
+WER 0.2763 and is not a pass; cancelled tails and number formatting remain to be
+separated from actual text/audio disagreement.
 
-For PCM, first verify the published streaming vocoder at recorded token arrivals,
-then connect concurrent processes on two allocated GPUs (Exclusive_Process).
-Keep the verified LM/CPU overlay separate from the accepted HF/vocoder overlay.
-Warm up before real user input, close/reset the warm session and keep prefix
-caching disabled. Preserve all actual user samples and measure both LM backlog
-and audio availability. No offline vocoder or concatenated quality WAV counts as
-an end-to-end real-time pass.
-
-PersonaPlex remains a voice/speed reference. Its small adaptation runs, causal
-state feedback and paired-grounding recipes fail actual private-result use.
-Its native wrapper now preserves RNG across adapter construction; legacy seeded
-replays consumed extra CUDA random draws and are not matched raw-model controls.
-Sampling-preserved 7441744–53 still fails task speech. Do not scale those recipes
-merely because frozen hashes, reload, teacher loss or TRAIN reference margins pass.
-
-All new long jobs should run from a clean immutable git worktree using
-DL_TASK_SOURCE and DL_TASK_COMMIT. Submit from the main repo to retain the usual
-Slurm log directory. Code deploys through git; artifacts/logs may be rsynced.
+Native vLLM runtime: envs/lychee-vllm-7441739 with CPU dependencies
+lychee-vllm-deps-7441737. Separate vocoder overlay lychee-probe-7415053 plus
+minicpm-recovery-7377673. Exclusive_Process requires two separately assigned
+GPUs for concurrent processes. Never overwrite the container Torch or the
+accepted overlays. lychee-concurrent.slurm enforces immutable job source.

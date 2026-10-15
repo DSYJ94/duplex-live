@@ -60,7 +60,7 @@ def run_incremental(framework, audio, out, profiler=None, before_chunk=None, on_
         "maximum_input_backlog_s": max(r["input_backlog_s"] for r in rows),
         "wall_seconds_excluding_load_and_vocoder": time.monotonic()-started,
         "spoken_token_events": len(events), "response_events": len(decoded),
-        "live_audio_tested": False, "vocoder_mode": "after LM benchmark, offline quality only"}
+        "live_audio_tested": False, "vocoder_mode": "event callback active; concurrent PCM requires separate receiver proof" if on_event is not None else "after LM benchmark, offline quality only"}
     stats["operator_profile_enabled"] = profiler is not None
     (out / "paced-report.json").write_text(json.dumps(stats, indent=2)+"\n")
     print(json.dumps(stats), flush=True)

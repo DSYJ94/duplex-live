@@ -1,98 +1,45 @@
 # Duplex recovery — active from 13 October 2026
 
 
-**15 October, actual engine boundary checked:** 7451814/15 (immediate) and
-7451816/17 (idle/quiet delivery) verify both pending and completed system prefixes
-at the real vLLM add-request boundary. All four still omit the actual returned
-value. Both quiet-delivery runs hold the completed result until 29.2s, adding
-19.8–20.1s. Do not adopt that delay or repeat prompt/timing-only variants as a fix.
-Native result-integration adaptation and a native HF/vLLM forward comparison are
-next; static reading success does not establish late-result competence.
+## Current execution — 15 October, native Lychee and actual audio
 
-Warmed baseline 7451709 completes 70s of paced input in 70.521s, p95 compute
-301ms/400ms, maximum input backlog 18.5ms (previously 1.280s). All text, acoustic
-and control token arrays are exactly equal to original 7441742. Warmup itself
-takes 1.339s before input, preserving sampling RNG and creating no conversation.
+Plain words: no complete model qualifies. Continue the owner's authorised work
+until actual input is needed; the allocation expires in about six days. The
+accepted development voices are PersonaPlex synthetic marin and Lychee. Use
+[docs/LYCHEE_NEXT_STAGE.md](docs/LYCHEE_NEXT_STAGE.md) for the next actions.
 
-Concurrent LM/PCM capture is now implemented for two separately assigned GPUs,
-with isolated dependency overlays, a bounded local socket/queue, and independent
-receipt of actual interruption controls while the vocoder is busy. It measures
-PCM availability during actual LM execution. The final WAV simulates fixed
-240ms causal playout; no audio device/browser/microphone acceptance is implied.
-Every native codec unit must be consumed or explicitly cancelled. Startup,
-transport, bounded-queue and child-process failures are fatal. Eight local socket,
-delivery and playout regressions pass. The actual concurrent GPU job is next.
+The released Qwen-based Lychee model runs through its native custom-vLLM backend
+with all 982 checkpoint tensors accounted for. Warm-input baseline 7451709 keeps
+maximum input backlog to 18.5ms; every text, speech and control token equals the
+original 7441742 baseline. Concurrent two-GPU capture 7452017 completes 70s of
+paced input in 70.540s with p95 model compute 299ms/400ms, maximum backlog 72.7ms,
+1258 codec units accounted for and zero within-utterance gaps under fixed 240ms
+per-utterance causal playout. It actually generates LM tokens and PCM together;
+the final WAV simulates playout. Browser/audio-device/microphone use is untested.
+The baseline still makes factual errors and is not a qualified voice assistant.
 
+Static fact controls 7450548/50 say both private values. Actual late-return
+7451814/15 and idle/quiet delivery 7451816/17 omit both values despite verified
+fresh prefixes at the actual engine request boundary. Quiet delivery adds about
+20s and is rejected. More prompt/timing-only variants are not the next step.
 
-**15 October, result-integration diagnosis:** static reference controls
-7450548/50 correctly say both private values. Actual late receipts 7450551/53
-omit them, and the disclosed application response-start controls 7450827/28
-also omit them. This rules out a missing response-start event as a sufficient
-fix. New diagnostics audit the exact fresh system prefix at the actual vLLM
-add-request boundary and compare immediate delivery with delivery when the
-assistant is listening and two already-arrived 400ms user chunks are quiet.
-The latter is explicitly application scheduling; all words/acoustics remain
-sampled. Keep backend-ready, context-delivery and response clocks separate.
-Neither variation enters training. Warm-input benchmark 7451709 is submitted.
+Native capture 7452224 and HF comparison 7452225 compare all three raw heads
+at three fresh prefills using identical embeddings and correct next-text merge
+conditioning. All nine raw top-one predictions match; RMS logit differences are
+0.0379–0.1219, KL 0.000153–0.00863. This is evidence of similar graph behavior,
+not numerical identity, actual masked control agreement or incremental-KV proof.
 
-Per-utterance playout replay is now verified: fixed 240ms buffering produces
-zero within-utterance gaps for trace 7443647, preserves every played PCM sample,
-and cancels 26,800 queued samples at actual native interruption times. This is
-component replay only. ASR audit 7450830 gives full-transcript WER 0.2763 for
-both offline and repaired playout; intentionally cancelled tails and spoken
-number formatting need separate analysis. This does not pass the 0.08 bar.
+Next: native S3 round trips and independent speech audits of the 48 approved
+TRAIN scenes; causal result-ready training views with actual student history;
+then a bounded native semantic-adapter proof before training scale-up. Persona
+adaptations remain failed references. All source data remains immutable, no
+held-out content enters training, and no Lychee optimizer run exists yet.
 
-**Plain words:** the requested product is a model that generates useful speech,
-keeps hearing while speaking, and delegates work while the conversation continues.
-The previous timing prototype does not meet that goal. This continuation is
-authorized by the owner's 13 October request to get the best result using the
-remaining Isambard allocation. Historical completion statements apply only to
-the previous phase.
+Code moves through Git only. New jobs use clean immutable worktrees and exact
+commits. Fetch full logs before local filtering. Preserve unrelated pyc, roadmap
+and cluster files. Earlier notes below record historical stages and may be stale.
 
-## Current execution — 14 October, accepted voices and remaining behavior work
-
-**Plain words:** the owner now accepts PersonaPlex with the synthetic GPT-Live
-marin reference (7415052) and Lychee-FD (7415325): both sound like GPT-Live on
-these development recordings. Original PersonaPlex NATF2 is rejected as muffled,
-like radio speech. Preserve the accepted reference and receipts. No further
-voice preference is needed before continuing. Neither model has passed full-task
-intelligence, delegation or paced microphone acceptance. Clifton access is verified.
-
-**Current continuation — 15 October, no full model qualifies:** start with
-[docs/LYCHEE_NEXT_STAGE.md](docs/LYCHEE_NEXT_STAGE.md) and the latest experiment
-entries. The official Qwen-based Lychee custom-vLLM backend now builds and runs:
-7441742 strictly accounts for all 982 checkpoint tensors, with no missing packed
-branch shards. Seventy seconds of paced input takes 70.523s, p95 compute 297ms per
-400ms chunk. Initial backlog reaches 1.280s. This proves token execution, not
-concurrent audio, factual task success or microphone acceptance.
-
-Offline vocoder 7443260 decodes its four responses in 2.450s. Streaming replays
-7443646/47 finish using the accepted synthetic voice; hop8 reduces gaps, but each
-new utterance needs its own startup buffer. The measured worst required buffer
-is 204ms for this hop8 trace; a fixed 240ms per-utterance renderer is being checked
-against the exact original PCM and actual native interruption times. Do not hide
-stalls or count deliberate inter-utterance silence as an underrun. No live PCM
-product is accepted. The separate 200ms encoding bar measures first-subword
-alignment to independent word onsets; it is not response-start latency.
-
-Actual-worker prefix tests 7443841/42 and 7448884/87 preserve all prior native
-conversation tokens, arrived audio/cache/clock and RNG, but omit the returned
-values. All actual model audio/control outputs are present with zero token-path
-fallbacks. New matched tests 7450548/50 provide static references (oracle-at-start,
-no worker, comprehension diagnostic only); 7450551/53 use actual late receipts.
-Both worlds use the same question, with yellow circle or purple diamond, and
-clarify the already-authorised synthetic read-only exercise. No output word or
-speaking-control token is forced. No validation data enters training. Interpret
-these results before adding response wakeup or planning native grounding SFT.
-
-PersonaPlex remains a voice/speed reference; its adaptation and result-use
-recipes fail native tasks even when reload and TRAIN reference margins pass.
-The native wrapper now preserves the sampling RNG around parameter construction;
-old nominally seeded controls consumed extra CUDA draws. Neutral-ready weights
-preserve ordinary fixed-input logits exactly but do not establish task quality.
-Use immutable clean git worktrees (DL_TASK_SOURCE/DL_TASK_COMMIT) for new jobs.
-SSH works; continue until actual owner input is needed. Preserve unrelated pyc,
-roadmap and cluster files. Standing rules and earlier evidence remain below.
+## Historical continuation notes
 
 **Plain words — 15 October, active continuation:** custom PersonaPlex and
 Lychee voices remain accepted for development quality only; no complete model

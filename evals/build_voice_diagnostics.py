@@ -1,6 +1,7 @@
 """Build the local listening comparison from existing, completed probe artifacts."""
 import argparse
 import html
+import json
 from pathlib import Path
 
 
@@ -11,6 +12,7 @@ def main():
     ap.add_argument("--minicpm-job", type=int)
     ap.add_argument("--custom-persona-job", type=int)
     ap.add_argument("--lychee-job", type=int)
+    ap.add_argument("--concurrent-job", type=int)
     ap.add_argument("--gpt-live-job", type=int)
     ap.add_argument("--codec-cpu-job", type=int)
     ap.add_argument("--codec-cuda-job", type=int)
@@ -88,10 +90,27 @@ def main():
     card("PersonaPlex paced native replay", "personaplex-paced-7415855/t1/model-buffered.wav",
          "Same accepted voice setup paced at microphone speed. 32.46 ms p95 compute per 80 ms frame; one 50.71 ms playback gap remains. No delegation qualification.",
          "personaplex-paced-7415855/t1/paced-report.json")
+    concurrent=''
+    if args.concurrent_job:
+        original=cards[:];cards.clear()
+        root=f'lychee-concurrent-{args.concurrent_job}'
+        report_path=args.runs/root/'report.json'
+        if report_path.is_file():
+            report=json.loads(report_path.read_text())
+            audio=report['pcm_capture'];playout=audio['playout']
+            if not audio['actual_concurrent_lm_execution'] or not playout['sample_accounting_exact']:
+                raise RuntimeError('Concurrent listening artifact lacks execution/accounting evidence')
+            gaps=playout['within_utterance_underrun_samples']/24000
+            card('Lychee — simultaneous model and speech decoder',root+'/vocoder/model.wav',
+                f'Actual two-GPU concurrent capture with fixed 240ms buffering per utterance and actual interruption receipts. '
+                f'Measured within-utterance gaps: {gaps:.3f}s. Factual errors remain; this tests playback, not delegation or a live microphone.',root+'/report.json')
+            concurrent='<h2 id="concurrent">New concurrent audio capture</h2><section>'+''.join(cards)+'</section>'
+        cards[:]=original
     page = '<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
     page += '<title>Voice diagnostics</title><style>body{max-width:1100px;margin:32px auto;padding:0 20px;background:#10141c;color:#e7ecf5;font:16px/1.5 system-ui}section{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}article{padding:20px;background:#1a2230;border:1px solid #354157;border-radius:12px}audio{width:100%}p{color:#b9c5d8}a{color:#9dc3ff}</style>'
     page += '<h1>Compare the audio artifacts</h1><p>The owner accepts the custom PersonaPlex and Lychee voices as comparable to GPT-Live. Original NATF2 is muffled and rejected. Voice acceptance is separate from intelligence, delegation and real-time performance.</p>'
     page += '<section>'+''.join(cards)+'</section>'
+    page += concurrent
     page += '<details><summary>Codec controls: same words, different decoder execution</summary><section>'+controls+'</section></details>'
     page += '<details><summary>Playback timing controls</summary><section>'+playback+'</section></details>'
     page += '<details><summary>Other voices on the same four science questions</summary><p>Different models may answer differently. Only completed local recordings appear below. These are development auditions, not a full-task ranking.</p><section>'+alternatives+'</section></details>'
