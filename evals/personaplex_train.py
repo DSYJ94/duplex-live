@@ -28,6 +28,8 @@ def main():
     ap.add_argument("--cache", type=Path, action="append", required=True)
     ap.add_argument("--steps", type=int, default=8)
     ap.add_argument("--reload", action="store_true")
+    ap.add_argument("--freeze-language", action="store_true",
+                    help="Train reference/action modules only, preserving native speech without reference")
     args = ap.parse_args()
     if not 8 <= args.steps <= 128 or args.steps % 8:
         ap.error("Development run requires 8-128 steps in blocks of eight")
@@ -70,6 +72,10 @@ def main():
         str(args.out / ("driver-reload" if args.reload else "driver"))], text=True).strip()
     lm = loaders.get_moshi_lm(args.model / "model.safetensors", device="cuda", dtype=torch.float32).eval().requires_grad_(False)
     bundle = PersonaBundle(lm)
+    if args.freeze_language:
+        from evals.personaplex_adapters import adapter_parameters
+        for parameter in adapter_parameters(lm).values():
+            parameter.requires_grad_(False)
     learned = bundle.learned_parameters()
 
     def precise(fixed):
@@ -171,6 +177,8 @@ def main():
     frozen = tensor_hashes((n,p) for n,p in lm.named_parameters() if not p.requires_grad)
     initial = tensor_hashes(learned.items())
     fixed, _, _ = prepare(next(r for r in train if r["kind"] == "private"))
+    reference_free = {**fixed, "reference":torch.zeros_like(fixed["reference"])}
+    reference_free_before = precise(reference_free) if args.freeze_language else None
     # Native proof established the adapter implementation; this run additionally
     # checks its own zero-initialized bundle against the frozen base text/audio.
     with torch.inference_mode(), no_compile(), no_cuda_graph():
@@ -183,14 +191,16 @@ def main():
     if max(zero_errors.values()) != 0.:
         raise RuntimeError("Initial bundle changed frozen native speech outputs")
     optimizer = torch.optim.AdamW([
-        {"params":[p for n,p in learned.items() if n.startswith("language.")], "lr":2e-5},
+        {"params":[p for n,p in learned.items() if n.startswith("language.") and p.requires_grad], "lr":2e-5},
         {"params":[p for n,p in learned.items() if not n.startswith("language.")], "lr":1e-3}], weight_decay=0.)
     report = {"schema":"dl-personaplex-joint-train-v1", "repo_commit":subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
         "model_hashes":MODEL_HASHES, "voice_sha256":sha256(args.voice), "proof_sha256":sha256(args.proof / "report.json"),
         "template_sha256":sha256(args.template / "fixed-reference.pt"), "prefix_frames":prefix,
         "sources":[{"cache":str(p), "sha256":sha256(p / "cache.json")} for p,_ in caches],
         "training_scenarios":[r["scenario_id"] for r in train], "test_fold_used_for_training_or_selection":False,
-        "trainable_count":sum(p.numel() for p in learned.values()), "replaced_linears":bundle.replaced,
+        "trainable_count":sum(p.numel() for p in learned.values() if p.requires_grad),
+        "saved_parameter_count":sum(p.numel() for p in learned.values()), "replaced_linears":bundle.replaced,
+        "language_frozen":args.freeze_language,
         "zero_errors":zero_errors, "validation_before":evaluate("before"), "losses":[],
         "policy_classes":["idle", "delegate", "cancel"], "acoustic_parameters_frozen":True,
         "native_routing_qualified":False, "quality_qualified":False}
@@ -224,6 +234,12 @@ def main():
     if frozen != tensor_hashes((n,p) for n,p in lm.named_parameters() if not p.requires_grad):
         raise RuntimeError("Frozen native speech weights changed")
     report["validation_after"] = evaluate("after")
+    if args.freeze_language:
+        after = precise(reference_free)
+        errors = {n:float((after[n]-reference_free_before[n]).abs().max()) for n in ("text", "audio")}
+        report["reference_free_speech_errors"] = errors
+        if max(errors.values()) != 0.:
+            raise RuntimeError("Reference/action-only training changed reference-free speech")
     report["changed_tensors"] = sum(initial[n] != digest for n,digest in tensor_hashes(learned.items()).items())
     save_file({n:p.detach().cpu().contiguous() for n,p in learned.items()}, args.out / "adapters.safetensors")
     fixed = {k:v.cpu() if isinstance(v, torch.Tensor) else v for k,v in fixed.items()}

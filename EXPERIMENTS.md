@@ -2581,3 +2581,26 @@ probabilities and blocked repeats are retained. Actual workers use causal user
 word context (diagnostic oracle, not live ASR), execute read-only tools and encode
 only completed results. Cancelled/stale rows are rejected before application.
 No assistant ground-truth words or oracle reference values feed generation.
+
+
+## 2026-10-15 — Native checkpoint works technically, fails free-running behavior
+
+**Plain words:** 128-update 7435379 completes on 46 TRAIN scenes with frozen
+base hashes unchanged; fresh-process text/audio/action errors all 0.0. Checkpoint
+SHA 44cb8b5b64838afd370f93fa2d2e9fc73bace43e5c971027941bf039ac9a547f;
+37.49GB peak allocation. That does not qualify the model. Native replays
+7435517/18/19/20/22 all fail on generated text/actions. Private-000 only says
+"I'll check" without dispatch; Private-002 invents a circle; simple/clarify are
+text-silent; cancellation repeats "record" without a successful cancellation.
+Independent audio checks remain required. p95 native frame compute stays
+30.45-35.60ms/80ms, but one private run has a 174.42ms buffered gap. No live pass.
+Eight-update 7435380 also fails with no native dispatch and invented facts.
+
+Backend-only regression 7435106 passes all 8 cases, 3 actual record reads.
+Explicit client protocol yields 2/7 accepted control teachers in 7435484; other
+5 remain rejected. Resumed failed recordings retain originals under incomplete/.
+Conversion 7435530 and native encoding 7435538 verify both accepted controls,
+max measured first-word error 100ms. New targets are 48 TRAIN total across three
+hashed caches, with base validation/test folds unchanged. Next controlled tests
+freeze language adaptation, compare baseline speech and isolate actual result
+integration from the native head using an explicitly scheduled diagnostic.

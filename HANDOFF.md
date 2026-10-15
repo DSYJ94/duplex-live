@@ -7,6 +7,24 @@ Owner authorizes needed compute before expiry and asks to continue until actual
 input is needed. **No model qualifies yet.** This is native pretrained speech
 LoRA fine-tuning with real semantic workers, not pretraining or Qwen row scale-up.
 
+**Plain words — 15 October, behavior failure and next controlled tests:** native
+128-update **7435379** saves/reloads with text/audio/action errors 0.0 and frozen
+base hashes unchanged; SHA `44cb8b5b64838afd370f93fa2d2e9fc73bace43e5c971027941bf039ac9a547f`.
+Its five free-running development checks **7435517/18/19/20/22 all fail** in
+model text/action evidence: missing reads, invented/incomplete facts, silence,
+and no successful cancellation. Audio audit is still required; no success claim.
+Eight-update native replay 7435380 also fails with no dispatch. Native action
+choices are real; workers still use causal measured transcript context, not ASR.
+Do not scale the language-adapter recipe. Next tests compare zero-adapter speech,
+a real scheduled-worker diagnostic (explicitly not native routing), and a model
+with language weights frozen, training only reference integration/action choice.
+The frozen-language run must prove reference-free text/audio unchanged exactly.
+Revised control batch 7435049 (resumed by 7435472) completes seven raw scenes;
+audit 7435484 accepts only two. Conversion 7435530 and native encoding 7435538
+verify both, at most 100ms word error. They may join the separately hashed 13
+paired teachers and original 33 TRAIN scenes (48 total); held-out folds unchanged.
+Backend component 7435106 passes 8/8 actual API/tool cases, not speech routing.
+
 **Plain words — 15 October, native joint training cleared:** proof **7434702**
 passes with text/audio errors 0.0000763 / 0.000124, exact delayed inputs/targets,
 zero adapter effect and finite nonzero gradients in all 25 intended output

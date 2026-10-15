@@ -16,6 +16,9 @@ cd "$DL/repo"
 set -a
 source "$DL/keys/openai.env"
 set +a
+EXTRA=()
+if [ "${PERSONA_ZERO_ADAPTERS:-0}" = 1 ]; then EXTRA+=(--zero-adapters); fi
+if [ -n "${PERSONA_DISPATCH_MODE:-}" ]; then EXTRA+=(--dispatch-mode "$PERSONA_DISPATCH_MODE"); fi
 apptainer exec --nv --bind /projects,/lus,/home \
  --env PYTHONPATH="$DL/tmp/voice-quality-7415052:$DL/personaplex/moshi:$DL/envs/moshi-rag-7379661/lib/python3.12/site-packages:$DL/repo" \
  --env HF_HOME="$DL/models/hf-cache" --env HF_HUB_OFFLINE=1 --env TRANSFORMERS_OFFLINE=1 \
@@ -29,4 +32,4 @@ apptainer exec --nv --bind /projects,/lus,/home \
  --arc-source "$DL/vendor/moshi-rag-8c6dfc101b7871baa428424bcdc583b74fb561d9" \
  --manifest "$DL/runs/moshi-models-7378305/model-manifest.json" \
  --arc-tokenizer "$DL/models/hf-cache/hub/models--meta-llama--Llama-3.2-3B-Instruct/snapshots/0cb88a4f764b7a12671c53f0838cd831a0843b95" \
- --out "$DL/runs/personaplex-native-${SLURM_JOB_ID}"
+ --out "$DL/runs/personaplex-native-${SLURM_JOB_ID}" "${EXTRA[@]}"

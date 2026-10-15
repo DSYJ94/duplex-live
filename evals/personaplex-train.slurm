@@ -16,6 +16,8 @@ test -z "$(git -C "$DL/personaplex" status --porcelain)"
 export CUBLAS_WORKSPACE_CONFIG=:4096:8
 ARGS=(--cache "$DL/runs/recovery-mixed-codes-7411513")
 if [ -n "${PERSONA_EXTRA_CACHE:-}" ]; then ARGS+=(--cache "$PERSONA_EXTRA_CACHE"); fi
+if [ -n "${PERSONA_CONTROL_CACHE:-}" ]; then ARGS+=(--cache "$PERSONA_CONTROL_CACHE"); fi
+if [ "${PERSONA_FREEZE_LANGUAGE:-0}" = 1 ]; then ARGS+=(--freeze-language); fi
 ARGS+=(--model "$DL/models/hf-cache/hub/models--nvidia--personaplex-7b-v1/snapshots/fdaf4090a61cb315c138a1faee287ffd6c716309"
  --voice "$DL/runs/voice-quality-7414595/codec/reference.wav"
  --template "$DL/runs/personaplex-bridge-7428894"

@@ -20,6 +20,8 @@ def main():
     for name in ("source", "model", "voice", "data", "checkpoint", "arc-source", "manifest", "arc-tokenizer", "out"):
         ap.add_argument("--"+name, type=Path, required=True)
     ap.add_argument("--scenario", required=True)
+    ap.add_argument("--zero-adapters", action="store_true", help="Unadapted speech comparison; head remains idle")
+    ap.add_argument("--dispatch-mode", choices=("native", "scheduled-diagnostic"), default="native")
     args = ap.parse_args()
     import numpy as np
     import soundfile as sf
@@ -54,6 +56,8 @@ def main():
     row = next(r for r in data["accepted"] if r["scenario_id"] == args.scenario)
     if row["split"] != "validation" or row["scenario_id"] in trained["training_scenarios"]:
         raise RuntimeError("Native development probe requires an approved untrained validation scene")
+    if args.dispatch_mode != "native" and (row["kind"] != "private" or args.zero_adapters):
+        raise ValueError("Scheduled diagnostic requires a trained private validation probe")
     sidecar = json.loads(Path(row["path"]).with_suffix(".json").read_text())
     metadata = sidecar["timeline"]["meta"]
     args.out.mkdir(parents=True, exist_ok=False)
@@ -70,8 +74,9 @@ def main():
     environment = {"repo_commit":subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
         "checkpoint_sha256":checkpoint_sha, "voice_sha256":sha256(args.voice), "model_hashes":MODEL_HASHES,
         "scenario":args.scenario, "kind":row["kind"], "input_sha256":sha256(args.out / "user_in.wav"),
-        "arc_manifest_sha256":sha256(args.manifest), "native_action_choice":True,
-        "scheduled_dispatch":False, "oracle_reference_rows":False, "backend_context":"causal measured user words and generated assistant tokens; not live ASR",
+        "arc_manifest_sha256":sha256(args.manifest), "native_action_choice":args.dispatch_mode == "native",
+        "scheduled_dispatch":args.dispatch_mode != "native", "zero_adapters":args.zero_adapters,
+        "oracle_reference_rows":False, "backend_context":"causal measured user words and generated assistant tokens; not live ASR",
         "fresh_holdout":False, "microphone_acceptance":False, "action_threshold":.5,
         "repeat_guard":"one dispatch per non-idle action edge; 1.2 second minimum interval",
         "torch":torch.__version__}
@@ -82,7 +87,8 @@ def main():
     def load_foreground(*pos, **kw):
         lm = original_loader(*pos, **kw).eval().requires_grad_(False)
         bundle = PersonaBundle(lm)
-        bundle.load_learned(load_file(args.checkpoint / "adapters.safetensors", device="cuda"))
+        if not args.zero_adapters:
+            bundle.load_learned(load_file(args.checkpoint / "adapters.safetensors", device="cuda"))
         bundle.eval().requires_grad_(False)
         policy_logits = torch.tensor([[2., 0., 0.]], device="cuda")
         def capture_policy(module, inputs):
@@ -151,6 +157,12 @@ def main():
             actions.append(action_record)
             eligible = action != 0 and action != edge and now-last_dispatch >= 1.2
             edge = action
+            if args.dispatch_mode == "scheduled-diagnostic":
+                first_user = next(e for e in sidecar["timeline"]["events"] if e["ch"] == "user" and e["kind"] == "utterance")
+                eligible = not jobs and frame["input_available_s"] >= first_user["actual_end_ms"]/1000+.16
+                if eligible:
+                    action = 1
+                    action_record["scheduled_diagnostic_override"] = True
             if not eligible:
                 return
             active = any(not item["observed"] for item in jobs.values())
@@ -190,7 +202,8 @@ def main():
     tokens = json.loads((args.out / "output.json").read_text())
     report = {"schema":"dl-personaplex-native-probe-v1", "scenario":args.scenario, "kind":row["kind"],
         "text":"".join(t for t in tokens if t not in ("EPAD", "PAD", "BOS", "EOS")), "timing":timing,
-        "checkpoint_sha256":checkpoint_sha, "native_action_choice":True, "scheduled_dispatch":False,
+        "checkpoint_sha256":checkpoint_sha, "native_action_choice":args.dispatch_mode == "native",
+        "scheduled_dispatch":args.dispatch_mode != "native", "zero_adapters":args.zero_adapters,
         "backend_context":"causal measured-word oracle; not live ASR", "worker_events":events,
         "worker_dispatches":len(jobs), "unobserved_workers":sum(not j["observed"] for j in jobs.values()),
         "task_success":"pending independent speech/receipt grading", "quality_qualified":False, "microphone_acceptance":False}
