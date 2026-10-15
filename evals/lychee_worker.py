@@ -22,6 +22,8 @@ def run(framework, args, loading, side_audit):
     from evals.recovery_worker import RecordWorld,run_worker
     from evals.lychee_context import create_session,refresh_session,role_text
     from evals.lychee_paced import run_incremental
+    from evals.lychee_delivery import QuietDelivery
+    delivery=QuietDelivery(args.result_delivery)
     data=validate_conversion(args.data)
     row=next(r for r in data['accepted'] if r['scenario_id']==args.scenario)
     if row['split']!='validation' or row['kind']!='private':
@@ -60,9 +62,10 @@ def run(framework, args, loading, side_audit):
             if static:return current
             begin=round(frame['input_start_s']*16000);end=round(frame['input_available_s']*16000)
             holder['user_chunk_quiet']=float(np.sqrt(np.mean(audio[begin:end].astype(np.float32)**2)))<.0015
+            can_deliver=delivery.observe(holder['user_chunk_quiet'],current.get_listening_state())
             if 'start' not in holder:holder['start']=time.monotonic()-frame['input_consumed_s']
             now=time.monotonic()-holder['start']
-            if future is not None and future.done() and not holder.get('observed'):
+            if future is not None and future.done() and not holder.get('observed') and can_deliver:
                 result,ready=future.result();holder['observed']=True
                 receipt=result['receipts'][0]
                 if not world.deliverable(receipt):raise RuntimeError('Stale tool receipt cannot enter native instructions')
@@ -72,7 +75,10 @@ def run(framework, args, loading, side_audit):
                 current,proof=refresh_session(current,role_text(actual))
                 holder['result_wakeup_pending']=args.result_response=='application-event-diagnostic'
                 events.append({'event':'actual_result_context_applied','ready_at_s':ready-holder['start'],
-                    'observed_at_s':now,'context_rebuild_s':time.monotonic()-began,'result':result,'preservation':proof})
+                    'observed_at_s':now,'delivery_hold_s':now-(ready-holder['start']),
+                    'native_state_at_delivery':current.get_listening_state(),
+                    'quiet_arrived_chunks':delivery.quiet_chunks,
+                    'context_rebuild_s':time.monotonic()-began,'result':result,'preservation':proof})
             if future is None and frame['input_available_s']>=trigger:
                 generated=[{'text':framework.tokenizer.decode([r['event']['text_token']],skip_special_tokens=True),
                     'packet_available_s':r['available_s']} for r in prior
@@ -96,6 +102,8 @@ def run(framework, args, loading, side_audit):
         finally:
             (args.out/'worker-events.json').write_text(json.dumps(events,indent=2)+'\n')
     if not holder.get('observed'):raise RuntimeError('Actual worker never reached native language context')
+    if any(not e['preservation'].get('actual_engine_request_verified') for e in events if 'preservation' in e):
+        raise RuntimeError('Refreshed instructions were not verified at actual native engine boundary')
     (args.out/'native-trace.json').write_text(json.dumps(generated['trace'])+'\n')
     (args.out/'events.json').write_text(json.dumps(generated['events'],indent=2)+'\n')
     report={'text':' '.join(e['text'] for e in generated['events']),'paced_tokens':timing,'strict_loading':loading,
@@ -104,6 +112,7 @@ def run(framework, args, loading, side_audit):
         'worker_events':events,'scheduled_dispatch':not static,'native_foreground_tool_choice':False,
         'actual_worker_results_supplied':not static,'spoken_result_use_verified':False,'oracle_private_values_supplied':static,'assistant_output_tokens_forced':any(e['event']=='application_response_start_control' for e in events),
         'word_or_acoustic_tokens_forced':False,'result_response_mode':args.result_response,
+        'result_delivery_mode':args.result_delivery,'application_schedules_result_delivery':args.result_delivery!='immediate',
         'native_speaking_control_forced':any(e['event']=='application_response_start_control' for e in events),
         'context_channel':'static supplied reference at start; oracle diagnostic' if static else 'nonspoken native instruction prefix rebuilt after actual receipt',
         'backend_context':'none; static reference diagnostic' if static else 'causal measured user words and generated native text; not live ASR',

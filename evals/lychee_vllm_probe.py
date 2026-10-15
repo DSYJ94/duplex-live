@@ -21,6 +21,7 @@ def main():
     ap.add_argument('--worker-context',action='store_true')
     ap.add_argument('--static-context-diagnostic',action='store_true')
     ap.add_argument('--result-response',choices=('model','application-event-diagnostic'),default='model')
+    ap.add_argument('--result-delivery',choices=('immediate','idle-quiet-diagnostic'),default='immediate')
     ap.add_argument('--data',type=Path)
     ap.add_argument('--scenario')
     ap.add_argument('--private-value')
@@ -29,6 +30,8 @@ def main():
         ap.error('Actual worker context requires approved development data/scenario')
     if args.result_response!='model' and (not args.worker_context or args.static_context_diagnostic):
         ap.error('Application response event requires actual late-worker diagnostic, never static context')
+    if args.result_delivery!='immediate' and (not args.worker_context or args.static_context_diagnostic):
+        ap.error('Delayed delivery is an actual-worker application scheduling diagnostic only')
     if args.static_context_diagnostic and not args.worker_context:
         ap.error('Static reference is a disclosed private-context diagnostic only')
     if args.private_value and not args.worker_context:

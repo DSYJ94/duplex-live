@@ -5,6 +5,26 @@ clock is preserved. No assistant output token is forced. Runtime tests must
 establish actual result use; preservation alone does not qualify this interface.
 """
 import hashlib
+import json
+
+
+def audit_next_request(engine, system_ids, proof):
+    """Check the actual new vLLM request, rather than just a session tensor."""
+    original=engine._add_request_compat
+    if getattr(original,'_dl_context_audit',False):
+        raise RuntimeError('Previous instruction refresh never reached a native request')
+    proof['actual_engine_request_verified']=False
+    def checked(request_id, input_ids, *args, **kwargs):
+        engine._add_request_compat=original
+        if list(input_ids[:len(system_ids)])!=system_ids:
+            raise RuntimeError('Native request did not receive refreshed system prefix')
+        result=original(request_id,input_ids,*args,**kwargs)
+        proof.update(actual_engine_request_verified=True,actual_engine_request_id=str(request_id),
+            actual_engine_prompt_tokens=len(input_ids),
+            actual_engine_prompt_sha256=hashlib.sha256(json.dumps(input_ids).encode()).hexdigest())
+        return result
+    checked._dl_context_audit=True
+    engine._add_request_compat=checked
 
 BASE_INSTRUCTIONS = (
     'You are a helpful English voice assistant in an authorised read-only synthetic records exercise. '
@@ -79,9 +99,11 @@ def refresh_session(session, instructions):
             or not torch.equal(cpu_rng,torch.get_rng_state()) or not torch.equal(gpu_rng,torch.cuda.get_rng_state())):
         fresh.close()
         raise RuntimeError('Instruction refresh changed native history, audio clock or sampling RNG')
-    return fresh,{'schema':'dl-lychee-context-preservation-v1','body_tokens_preserved':True,
+    proof={'schema':'dl-lychee-context-preservation-v2','body_tokens_preserved':True,
         'audio_input_tokens_preserved':restored['audio_input_token_count'],
         'actual_partial_audio_samples_preserved':len(tail),'next_audio_clock_preserved':state['next_chunk_pos'],
         'sampling_rng_preserved':True,'speech_mapping_indices_shifted_with_prefix':True,'old_system_tokens':old_system,'new_system_tokens':fresh.system_input_length,
         'instructions_sha256':hashlib.sha256(instructions.encode()).hexdigest(),
         'assistant_tokens_forced':False,'full_task_qualified':False}
+    audit_next_request(framework.vllm_engine,fresh.prefix_input_ids[0].detach().cpu().tolist(),proof)
+    return fresh,proof

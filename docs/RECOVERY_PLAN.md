@@ -1,5 +1,24 @@
 # Duplex recovery — active from 13 October 2026
 
+
+**15 October, result-integration diagnosis:** static reference controls
+7450548/50 correctly say both private values. Actual late receipts 7450551/53
+omit them, and the disclosed application response-start controls 7450827/28
+also omit them. This rules out a missing response-start event as a sufficient
+fix. New diagnostics audit the exact fresh system prefix at the actual vLLM
+add-request boundary and compare immediate delivery with delivery when the
+assistant is listening and two already-arrived 400ms user chunks are quiet.
+The latter is explicitly application scheduling; all words/acoustics remain
+sampled. Keep backend-ready, context-delivery and response clocks separate.
+Neither variation enters training. Warm-input benchmark 7451709 is submitted.
+
+Per-utterance playout replay is now verified: fixed 240ms buffering produces
+zero within-utterance gaps for trace 7443647, preserves every played PCM sample,
+and cancels 26,800 queued samples at actual native interruption times. This is
+component replay only. ASR audit 7450830 gives full-transcript WER 0.2763 for
+both offline and repaired playout; intentionally cancelled tails and spoken
+number formatting need separate analysis. This does not pass the 0.08 bar.
+
 **Plain words:** the requested product is a model that generates useful speech,
 keeps hearing while speaking, and delegates work while the conversation continues.
 The previous timing prototype does not meet that goal. This continuation is
