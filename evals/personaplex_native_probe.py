@@ -1,0 +1,203 @@
+"""Paced native speech/action replay with real asynchronous workers.
+
+The foreground hears arrived audio and chooses actions with its learned head.
+Backend transcript context is a causal measured-word oracle, explicitly not live
+ASR. No scheduled dispatch, reference oracle, or supplied assistant answer.
+"""
+import argparse
+import concurrent.futures
+import json
+import os
+import subprocess
+import sys
+import time
+from pathlib import Path
+from evals.moshi_model_download import sha256
+
+
+def main():
+    ap = argparse.ArgumentParser(description=__doc__)
+    for name in ("source", "model", "voice", "data", "checkpoint", "arc-source", "manifest", "arc-tokenizer", "out"):
+        ap.add_argument("--"+name, type=Path, required=True)
+    ap.add_argument("--scenario", required=True)
+    args = ap.parse_args()
+    import numpy as np
+    import soundfile as sf
+    import torch
+    import sentencepiece
+    import moshi
+    from moshi import offline
+    from safetensors.torch import load_file
+    from evals.personaplex_train import MODEL_HASHES
+    from evals.personaplex_bundle import PersonaBundle
+    from evals.personaplex_arc import load_encoder
+    from evals.personaplex_pacing import paced_export
+    from evals.recovery_data import validate_conversion
+    from evals.recovery_context import causal_dialogue
+    from evals.recovery_worker import RecordWorld, run_worker, WorkerSuperseded
+    if (Path(moshi.__file__).resolve() != (args.source / "moshi/moshi/__init__.py").resolve()
+            or subprocess.check_output(["git", "-C", str(args.source), "rev-parse", "HEAD"], text=True).strip()
+            != "3428dfd95309a7f3c84fd93259ded0f810d1ff91"
+            or subprocess.check_output(["git", "-C", str(args.source), "status", "--porcelain"], text=True)):
+        raise RuntimeError("Native foreground source changed")
+    if any(sha256(args.model / name) != digest for name,digest in MODEL_HASHES.items()):
+        raise RuntimeError("Native speech assets changed")
+    trained = json.loads((args.checkpoint / "report.json").read_text())
+    reload = json.loads((args.checkpoint / "reload-report.json").read_text())
+    checkpoint_sha = sha256(args.checkpoint / "adapters.safetensors")
+    if (trained["schema"] != "dl-personaplex-joint-train-v1" or not trained["passed"]
+            or not trained["frozen_weights_unchanged"] or not reload["passed"] or not reload["fresh_process"]
+            or max(reload["errors"].values()) != 0. or trained["checkpoint_sha256"] != checkpoint_sha
+            or reload["checkpoint_sha256"] != checkpoint_sha or trained["voice_sha256"] != sha256(args.voice)):
+        raise RuntimeError("Native joint checkpoint did not pass exact fresh-process reload")
+    data = validate_conversion(args.data)
+    row = next(r for r in data["accepted"] if r["scenario_id"] == args.scenario)
+    if row["split"] != "validation" or row["scenario_id"] in trained["training_scenarios"]:
+        raise RuntimeError("Native development probe requires an approved untrained validation scene")
+    sidecar = json.loads(Path(row["path"]).with_suffix(".json").read_text())
+    metadata = sidecar["timeline"]["meta"]
+    args.out.mkdir(parents=True, exist_ok=False)
+    os.environ["TRITON_LIBCUDA_PATH"] = subprocess.check_output([
+        sys.executable, "-m", "evals.cuda_linker_path", "--out", str(args.out / "driver")], text=True).strip()
+    encoder = load_encoder(args.arc_source, args.manifest, args.arc_tokenizer, args.out)
+    tokenizer = sentencepiece.SentencePieceProcessor(str(args.model / "tokenizer_spm_32k_3.model"))
+    pcm, rate = sf.read(row["path"], dtype="float32", always_2d=True)
+    if rate != 24000 or pcm.shape[1] != 2 or not np.isfinite(pcm).all():
+        raise RuntimeError("Invalid approved native user audio")
+    pcm = np.concatenate([pcm[:, 1], np.zeros(20*rate, dtype=np.float32)])
+    sf.write(args.out / "user_in.wav", pcm, rate)
+    world = RecordWorld({metadata["project"]:{metadata["field"]:metadata["phrase"]}}) if metadata["phrase"] else RecordWorld({})
+    environment = {"repo_commit":subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
+        "checkpoint_sha256":checkpoint_sha, "voice_sha256":sha256(args.voice), "model_hashes":MODEL_HASHES,
+        "scenario":args.scenario, "kind":row["kind"], "input_sha256":sha256(args.out / "user_in.wav"),
+        "arc_manifest_sha256":sha256(args.manifest), "native_action_choice":True,
+        "scheduled_dispatch":False, "oracle_reference_rows":False, "backend_context":"causal measured user words and generated assistant tokens; not live ASR",
+        "fresh_holdout":False, "microphone_acceptance":False, "action_threshold":.5,
+        "repeat_guard":"one dispatch per non-idle action edge; 1.2 second minimum interval",
+        "torch":torch.__version__}
+    (args.out / "environment.json").write_text(json.dumps(environment, indent=2)+"\n")
+    events, actions, jobs, pending, holder = [], [], {}, [], {}
+    original_loader = offline.loaders.get_moshi_lm
+
+    def load_foreground(*pos, **kw):
+        lm = original_loader(*pos, **kw).eval().requires_grad_(False)
+        bundle = PersonaBundle(lm)
+        bundle.load_learned(load_file(args.checkpoint / "adapters.safetensors", device="cuda"))
+        bundle.eval().requires_grad_(False)
+        policy_logits = torch.tensor([[2., 0., 0.]], device="cuda")
+        def capture_policy(module, inputs):
+            policy_logits.copy_(bundle.policy(inputs[0][:, -1].float()))
+        holder.update(bundle=bundle, policy_logits=policy_logits,
+            bridge_hook=lm.transformer.register_forward_pre_hook(bundle.bridge.temporal_input),
+            policy_hook=lm.text_linear.register_forward_pre_hook(capture_policy))
+        return lm
+
+    def work(task_id, context, revision, dispatch):
+        result = run_worker(context, world, task_id, expected_revision=revision)
+        receipt = next((r for r in result["receipts"] if r["tool"] == "lookup_record"), None)
+        if receipt:
+            delay = max(0.,(metadata.get("planned_lookup_ready_s") or 0)-(metadata.get("lookup_trigger_s") or 0))
+            time.sleep(max(0.,dispatch+delay-time.monotonic()))
+            world.mark_ready(receipt)
+        with torch.inference_mode():
+            reference = encoder.encode(result["content"]).detach().float().cpu()
+        if reference.ndim != 3 or reference.shape[0] != 1 or reference.shape[-1] != 4096 or not torch.isfinite(reference).all():
+            raise RuntimeError("Invalid completed worker reference")
+        return result, reference[0], receipt, time.monotonic()
+
+    started, edge, last_dispatch = None, 0, -10.
+    with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
+        def before_frame(frame, prior):
+            nonlocal started, edge, last_dispatch
+            if started is None:
+                started = time.monotonic()-frame["input_consumed_s"]
+            now = time.monotonic()-started
+            bundle = holder["bundle"]
+            bundle.bridge.clear()
+            for task_id, item in jobs.items():
+                if item["observed"] or not item["future"].done():
+                    continue
+                item["observed"] = True
+                try:
+                    result, reference, receipt, ready = item["future"].result()
+                except WorkerSuperseded:
+                    events.append({"event":"worker_stale", "task_id":task_id, "observed_at_s":now})
+                    continue
+                except Exception as error:
+                    events.append({"event":"worker_failed", "task_id":task_id, "observed_at_s":now,
+                        "error_type":type(error).__name__, "error":str(error)})
+                    continue
+                if receipt and not world.deliverable(receipt):
+                    events.append({"event":"worker_stale", "task_id":task_id, "observed_at_s":now})
+                    continue
+                torch.save(reference, args.out / f"reference-{task_id}.pt")
+                pending.extend((task_id, r, receipt) for r in reference)
+                events.append({"event":"worker_completed", "task_id":task_id, "ready_at_s":ready-started,
+                    "observed_at_s":now, "rows":len(reference), "result":result})
+            pending[:] = [p for p in pending if p[2] is None or world.deliverable(p[2])]
+            if pending:
+                task_id, reference, _ = pending.pop(0)
+                bundle.bridge.set_row(reference)
+                events.append({"event":"reference_applied", "task_id":task_id, "frame":frame["frame"], "at_s":now})
+            frame["reference_l1"] = float(bundle.bridge.active.abs().sum())
+            if frame["frame"] == 0:
+                return  # The prefix is conditioning, never a user action.
+            probabilities = holder["policy_logits"].softmax(-1)[0].cpu().tolist()
+            action = int(np.argmax(probabilities))
+            if probabilities[action] < .5:
+                action = 0
+            action_record = {"frame":frame["frame"], "at_s":now, "probabilities":probabilities, "action":action,
+                "input_available_s":frame["input_available_s"], "dispatched":False}
+            actions.append(action_record)
+            eligible = action != 0 and action != edge and now-last_dispatch >= 1.2
+            edge = action
+            if not eligible:
+                return
+            active = any(not item["observed"] for item in jobs.values())
+            if (action == 1 and active) or (action == 2 and not active) or len(jobs) >= 6:
+                action_record["blocked"] = "pending task state or bounded session dispatch cap"
+                return
+            generated = [{"text":tokenizer.id_to_piece(r["tokens"][0]).replace("▁", " "),
+                "packet_available_s":r["audio_available_s"]} for r in prior
+                if r["tokens"] and r["tokens"][0] >= 5 and r["audio_available_s"] is not None]
+            context = causal_dialogue(sidecar, frame["input_available_s"], generated, frame["input_consumed_s"])
+            task_id = f"native-{len(jobs)}"
+            revision = world.reserve(task_id, context=context)
+            dispatch = time.monotonic()
+            jobs[task_id] = {"future":pool.submit(work, task_id, context, revision, dispatch), "observed":False}
+            last_dispatch = now
+            action_record["dispatched"] = True
+            events.append({"event":"worker_started", "task_id":task_id, "at_s":now,
+                "action":action, "context":context, "input_available_s":frame["input_available_s"]})
+
+        offline.loaders.get_moshi_lm = load_foreground
+        try:
+            with paced_export(offline, args.out, torch.cuda.synchronize, before_frame) as timing:
+                offline.run_inference(input_wav=str(args.out / "user_in.wav"), output_wav=str(args.out / "model_out.wav"),
+                    output_text=str(args.out / "output.json"),
+                    text_prompt="You are a wise and friendly teacher. Answer questions or provide advice in a clear and engaging way.",
+                    voice_prompt_path=str(args.voice), tokenizer_path=str(args.model / "tokenizer_spm_32k_3.model"),
+                    moshi_weight=str(args.model / "model.safetensors"), mimi_weight=str(args.model / "tokenizer-e351c8d8-checkpoint125.safetensors"),
+                    hf_repo="nvidia/personaplex-7b-v1", device="cuda", seed=42424242,
+                    temp_audio=.8, temp_text=.7, topk_audio=250, topk_text=25, greedy=False, save_voice_prompt_embeddings=False)
+        finally:
+            offline.loaders.get_moshi_lm = original_loader
+            for name in ("bridge_hook", "policy_hook"):
+                if name in holder:
+                    holder[name].remove()
+            (args.out / "events.json").write_text(json.dumps(events, indent=2)+"\n")
+            (args.out / "actions.jsonl").write_text("".join(json.dumps(a)+"\n" for a in actions))
+    tokens = json.loads((args.out / "output.json").read_text())
+    report = {"schema":"dl-personaplex-native-probe-v1", "scenario":args.scenario, "kind":row["kind"],
+        "text":"".join(t for t in tokens if t not in ("EPAD", "PAD", "BOS", "EOS")), "timing":timing,
+        "checkpoint_sha256":checkpoint_sha, "native_action_choice":True, "scheduled_dispatch":False,
+        "backend_context":"causal measured-word oracle; not live ASR", "worker_events":events,
+        "worker_dispatches":len(jobs), "unobserved_workers":sum(not j["observed"] for j in jobs.values()),
+        "task_success":"pending independent speech/receipt grading", "quality_qualified":False, "microphone_acceptance":False}
+    (args.out / "report.json").write_text(json.dumps(report, indent=2)+"\n")
+    (args.out / "model.wav").symlink_to("model_out.wav")
+    print(json.dumps({k:v for k,v in report.items() if k != "worker_events"}), flush=True)
+
+
+if __name__ == "__main__":
+    main()

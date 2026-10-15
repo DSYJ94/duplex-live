@@ -2563,3 +2563,21 @@ its job-local driver directory already exists. Fix uses a separate reload driver
 directory; a reload-only job can verify the existing checkpoint without training
 it again. Saved SHA c4fc44a6fa17d363f7629bb202be1950f9a49ffab4ad1b0f5491a115558f9612.
 No generated-speech or routing pass is inferred from these eight updates.
+
+**Plain words — exact reload verified:** fresh-process job 7435228 reloads
+7435021 with text/audio/policy max errors all 0.0. Native joint checkpoint SHA
+c4fc44a6fa17d363f7629bb202be1950f9a49ffab4ad1b0f5491a115558f9612.
+The eight-update implementation pilot is complete; behavior remains unqualified.
+Real backend regression 7435106 completes all eight cases; its summary is to be
+retrieved. Explicit control collection 7435049 records five scenes, then stops on
+one worker-contract failure; dependent audit 7435108 is cancelled automatically.
+This is a partial raw corpus, not approved supervision. Inspect received context
+and improve error evidence before resuming only missing recordings.
+
+A native-action replay is prepared: the learned head reads the previous temporal
+state, with no scheduled trigger. A stable GPU action buffer is captured with
+native graphs; the client reads it only between arrived audio frames. All action
+probabilities and blocked repeats are retained. Actual workers use causal user
+word context (diagnostic oracle, not live ASR), execute read-only tools and encode
+only completed results. Cancelled/stale rows are rejected before application.
+No assistant ground-truth words or oracle reference values feed generation.
