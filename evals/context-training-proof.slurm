@@ -22,6 +22,10 @@ ARGS=(--assets "$DL/runs/context-spanning-assets-7454205/manifest.json"
  --cache "$DL/runs/recovery-mixed-codes-7411513"
  --cache "$DL/runs/recovery-codes-7434926" --cache "$DL/runs/recovery-codes-7435538"
  --out "$DL/runs/context-training-proof-${SLURM_JOB_ID}")
+if [ "${CONTEXT_PILOT:-0}" = 1 ]; then
+ ARGS+=(--steps 128 --pilot-preflight "$DL/runs/context-training-proof-7455157"
+  --layout-audit "$DL/runs/context-training-proof-7455458/history-audit.json")
+fi
 run_container() {
  apptainer exec --nv --bind /projects,/lus,/home \
   --env PYTHONPATH="$DL/tmp/voice-quality-7415052:$DL/envs/moshi-rag-7379661/lib/python3.12/site-packages:$DL_TASK_SOURCE" \

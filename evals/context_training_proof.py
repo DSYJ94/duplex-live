@@ -3,6 +3,7 @@ import argparse
 import hashlib
 import json
 import os
+import random
 from pathlib import Path
 import subprocess
 import sys
@@ -27,10 +28,27 @@ def main():
     for name in ('assets', 'base', 'voice_reference', 'voice_provenance', 'out'):
         ap.add_argument('--' + name.replace('_', '-'), type=Path, required=True)
     ap.add_argument('--cache', type=Path, action='append', required=True)
-    ap.add_argument('--steps', type=int, choices=(8,), default=8)
+    ap.add_argument('--steps', type=int, choices=(8, 128), default=8)
+    ap.add_argument('--pilot-preflight', type=Path)
+    ap.add_argument('--layout-audit', type=Path)
     ap.add_argument('--reload', action='store_true')
     ap.add_argument('--history-audit-only', action='store_true')
     args = ap.parse_args()
+    if args.steps == 128 and (not args.pilot_preflight or not args.layout_audit):
+        ap.error('Bounded pilot requires the passed eight-update proof and native history audit')
+    parent = None
+    if args.pilot_preflight:
+        parent = json.loads((args.pilot_preflight / 'report.json').read_text())
+        reload = json.loads((args.pilot_preflight / 'reload-report.json').read_text())
+        layout = json.loads(args.layout_audit.read_text())
+        if (not parent['passed'] or parent['optimizer_steps'] != 8 or not parent['frozen_weights_unchanged']
+                or not reload['passed'] or not reload['all_valid_logits_exact']
+                or parent['checkpoint_sha256'] != sha256(args.pilot_preflight / 'adapters.safetensors')
+                or reload['checkpoint_sha256'] != parent['checkpoint_sha256']
+                or not layout['candidate_passed']
+                or layout['data_sha256'] != parent['data_sha256']
+                or layout['layout_code_sha256'] != sha256(Path(__file__).with_name('context_native_layout.py'))):
+            raise RuntimeError('Unverified pilot preflight or layout audit')
     import numpy as np
     import soundfile as sf
     import torch
@@ -83,8 +101,12 @@ def main():
     if (provenance['schema'] != 'dl-voice-codec-probe-v1' or provenance['source_model'] != 'gpt-live-1'
             or provenance['reference_sha256'] != sha256(args.voice_reference)):
         raise RuntimeError('Changed accepted synthetic voice provenance')
-    if args.reload:
-        voice = torch.load(args.out / 'voice.pt', map_location='cpu', weights_only=True)['codes']
+    if args.reload or parent:
+        voice_source = args.out if args.reload else args.pilot_preflight
+        if parent and not args.reload and sha256(voice_source / 'voice.pt') != parent['voice_sha256']:
+            raise RuntimeError('Changed preflight voice codes')
+        voice = torch.load(voice_source / 'voice.pt', map_location='cpu', weights_only=True)['codes']
+        if not args.reload: torch.save({'codes': voice}, args.out / 'voice.pt')
     else:
         pcm, rate = sf.read(args.voice_reference, dtype='float32')
         if rate != mimi.sample_rate or pcm.ndim != 1 or not np.isfinite(pcm).all():
@@ -97,6 +119,9 @@ def main():
     prefix = persona_prefix(BASE_INSTRUCTIONS, voice, spm)
     examples, records = load_training(args.cache, spm, prefix)
     (args.out / 'data.json').write_text(json.dumps(records, indent=2) + '\n')
+    if parent and (parent['data_sha256'] != sha256(args.out / 'data.json')
+            or parent['voice_reference_sha256'] != sha256(args.voice_reference)):
+        raise RuntimeError('Pilot corpus/voice differs from verified preflight')
     # Fixed complete TRAIN private case; no random window or validation-derived labels.
     first = next(e for e in examples if e['record']['kind'] == 'private')
     if args.history_audit_only:
@@ -161,8 +186,14 @@ def main():
     optimizer = torch.optim.AdamW(list(learned.values()), lr=2e-5, weight_decay=0.)
     # Deliberate retention-balanced feasibility order; this is not convergence training.
     kinds = ['private', 'simple', 'clarify', 'cancel']
-    order = [max((e for e in examples if e['record']['kind'] == kind), key=lambda e: e['codes'].shape[1])
-             for kind in kinds]
+    if args.steps == 8:
+        order = [max((e for e in examples if e['record']['kind'] == kind), key=lambda e: e['codes'].shape[1])
+                 for kind in kinds]
+    else:
+        groups = {kind: [e for e in examples if e['record']['kind'] == kind] for kind in kinds}
+        rng = random.Random(17)
+        for group in groups.values(): rng.shuffle(group)
+        order = [groups[kinds[s % 4]][(s // 4) % len(groups[kinds[s % 4]])] for s in range(args.steps)]
     steps = []; start = time.monotonic(); seen_a = seen_b = False
     torch.cuda.reset_peak_memory_stats()
     for step in range(args.steps):
@@ -208,6 +239,9 @@ def main():
         'peak_allocated_bytes': torch.cuda.max_memory_allocated(), 'peak_reserved_bytes': torch.cuda.max_memory_reserved(),
         'training_seconds': time.monotonic() - start, 'train_examples': len(examples),
         'maximum_frames': max(e['codes'].shape[1] for e in examples),
+        'training_examples_seen': len({s['id'] for s in steps}),
+        'pilot_preflight': str(args.pilot_preflight) if parent else None,
+        'initialization': 'released checkpoint, fresh zero-B adapters; preflight is a gate, not warm start',
         'user_loss': 'clean separate user stem, assistant semantic weight 1, other 15 heads .02',
         'waveform_AEC_tested': False, 'base_audio_parameters_frozen': True,
         'audio_behavior_preservation_proven': False, 'quality_qualified': False, 'passed': True}
