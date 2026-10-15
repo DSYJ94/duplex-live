@@ -21,6 +21,8 @@ if [ "${PERSONA_ZERO_ADAPTERS:-0}" = 1 ]; then EXTRA+=(--zero-adapters); fi
 if [ -n "${PERSONA_DISPATCH_MODE:-}" ]; then EXTRA+=(--dispatch-mode "$PERSONA_DISPATCH_MODE"); fi
 if [ -n "${PERSONA_RESULT_INPUT:-}" ]; then EXTRA+=(--result-input "$PERSONA_RESULT_INPUT"); fi
 if [ -n "${PERSONA_INSTRUCTIONS:-}" ]; then EXTRA+=(--instructions "$PERSONA_INSTRUCTIONS"); fi
+if [ -n "${PERSONA_WORD_FRAMES:-}" ]; then EXTRA+=(--worker-word-frames "$PERSONA_WORD_FRAMES"); fi
+if [ -n "${PERSONA_WORKER_HANDOFF:-}" ]; then EXTRA+=(--worker-handoff "$PERSONA_WORKER_HANDOFF"); fi
 apptainer exec --nv --bind /projects,/lus,/home \
  --env PYTHONPATH="$DL/tmp/voice-quality-7415052:$DL/personaplex/moshi:$DL/envs/moshi-rag-7379661/lib/python3.12/site-packages:$DL/repo" \
  --env HF_HOME="$DL/models/hf-cache" --env HF_HUB_OFFLINE=1 --env TRANSFORMERS_OFFLINE=1 \

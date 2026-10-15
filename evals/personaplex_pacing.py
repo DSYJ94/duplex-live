@@ -32,6 +32,8 @@ def paced_export(offline, out, synchronize, before_frame=None):
             row = {"frame": index, "input_available_s": due,
                    "input_consumed_s": before, "input_backlog_s": before - due,
                    "audio_available_s": None, "samples": 0, "tokens": None}
+            array = chunk.detach().cpu().numpy() if hasattr(chunk, "detach") else np.asarray(chunk)
+            row["input_rms"] = float(np.sqrt(np.mean(array.astype(np.float32)**2)))
             state["current"] = row
             if before_frame is not None:
                 before_frame(row, rows)
@@ -51,7 +53,8 @@ def paced_export(offline, out, synchronize, before_frame=None):
             raise RuntimeError("Unexpected native PersonaPlex audio clock")
         available = time.monotonic() - state["start"]
         row.update(audio_available_s=available, samples=len(pcm),
-                   tokens=tokens.detach().cpu().reshape(-1).tolist())
+                   tokens=tokens.detach().cpu().reshape(-1).tolist(),
+                   audio_rms=float(np.sqrt(np.mean(pcm.astype(np.float32)**2))))
         packets.append((available, pcm.copy()))
         return pcm
 

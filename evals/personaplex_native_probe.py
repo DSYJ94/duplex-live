@@ -25,7 +25,11 @@ def main():
     ap.add_argument("--result-input", choices=("arc", "spoken-text", "native-text-memory"), default="arc",
                     help="Spoken-text is an explicit hybrid diagnostic, not learned result integration")
     ap.add_argument("--instructions", choices=("teacher", "records-v1"), default="teacher")
+    ap.add_argument("--worker-word-frames", type=int, choices=range(3,9), default=4)
+    ap.add_argument("--worker-handoff", choices=("immediate", "quiet"), default="immediate")
     args = ap.parse_args()
+    if args.worker_handoff == "quiet" and args.result_input != "spoken-text":
+        raise ValueError("Quiet worker handoff only applies to explicit spoken-text conditioning")
     import numpy as np
     import soundfile as sf
     import torch
@@ -65,7 +69,7 @@ def main():
     role = prompt_receipt(args.instructions)
     if args.instructions != "teacher" and args.result_input == "arc":
         raise ValueError("Changed role prompt is only qualified for the explicit worker-text diagnostic")
-    if args.dispatch_mode == "native" and trained.get("policy_prompt", prompt_receipt("teacher")) != role:
+    if args.dispatch_mode == "native" and not args.zero_adapters and trained.get("policy_prompt", prompt_receipt("teacher")) != role:
         raise RuntimeError("Native policy was trained under a different role prompt")
     sidecar = json.loads(Path(row["path"]).with_suffix(".json").read_text())
     metadata = sidecar["timeline"]["meta"]
@@ -75,7 +79,7 @@ def main():
     encoder = load_encoder(args.arc_source, args.manifest, args.arc_tokenizer, args.out) if args.result_input == "arc" else None
     tokenizer = sentencepiece.SentencePieceProcessor(str(args.model / "tokenizer_spm_32k_3.model"))
     from evals.personaplex_result_text import WorkerTextQueue
-    text_queue = WorkerTextQueue(tokenizer.encode)
+    text_queue = WorkerTextQueue(tokenizer.encode, args.worker_word_frames)
     pcm, rate = sf.read(row["path"], dtype="float32", always_2d=True)
     if rate != 24000 or pcm.shape[1] != 2 or not np.isfinite(pcm).all():
         raise RuntimeError("Invalid approved native user audio")
@@ -89,7 +93,9 @@ def main():
         "scheduled_dispatch":args.dispatch_mode != "native", "zero_adapters":args.zero_adapters,
         "result_input":args.result_input, "worker_text_forced":args.result_input == "spoken-text",
         "role_prompt":role,
-        "inference_text_pace":"manual four frames per word, never training timestamps" if args.result_input == "spoken-text" else None,
+        "inference_text_pace_frames":args.worker_word_frames if args.result_input == "spoken-text" else None,
+        "worker_handoff":args.worker_handoff,
+        "worker_handoff_rule":"five arrived quiet user/output frames; pause worker text on user speech" if args.worker_handoff == "quiet" else None,
         "oracle_reference_rows":False, "backend_context":"causal measured user words and generated assistant tokens; not live ASR",
         "fresh_holdout":False, "microphone_acceptance":False, "action_threshold":.5,
         "repeat_guard":"one dispatch per non-idle action edge; 1.2 second minimum interval",
@@ -190,13 +196,28 @@ def main():
             frame["reference_l1"] = float(reference_bridge.active.abs().sum())
             holder["force_text"] = False
             if args.result_input == "spoken-text":
-                forced = text_queue.pop(world.deliverable)
+                user_quiet = frame["input_rms"] < .0015
+                last = prior[-1] if prior else {}
+                agent_quiet = (last.get("audio_rms", 1.) < .0015 and last.get("tokens")
+                    and last["tokens"][0] in (0,3))
+                holder["user_quiet_frames"] = holder.get("user_quiet_frames", 0)+1 if user_quiet else 0
+                holder["agent_quiet_frames"] = holder.get("agent_quiet_frames", 0)+1 if agent_quiet else 0
+                allowed = args.worker_handoff == "immediate" or (holder["user_quiet_frames"] >= 5
+                    and (holder.get("worker_text_active", False) or holder["agent_quiet_frames"] >= 5))
+                forced = text_queue.pop(world.deliverable) if allowed else None
                 if forced is not None:
                     task_id, token = forced
+                    holder["worker_text_active"] = True
                     holder["force_token"].fill_(token)
                     holder["force_text"] = True
                     events.append({"event":"worker_text_forced", "task_id":task_id,
                         "frame":frame["frame"], "token":token, "at_s":now})
+                elif holder.get("worker_text_active", False) and text_queue.queue and not user_quiet:
+                    holder["force_token"].fill_(3)
+                    holder["force_text"] = True
+                    events.append({"event":"worker_text_paused_for_user", "frame":frame["frame"], "at_s":now})
+                elif not text_queue.queue:
+                    holder["worker_text_active"] = False
             if frame["frame"] == 0:
                 return  # The prefix is conditioning, never a user action.
             probabilities = holder["policy_logits"].softmax(-1)[0].cpu().tolist()
@@ -260,6 +281,7 @@ def main():
         "scheduled_dispatch":args.dispatch_mode != "native", "zero_adapters":args.zero_adapters,
         "result_input":args.result_input, "worker_text_forced":args.result_input == "spoken-text",
         "role_prompt":role,
+        "worker_word_frames":args.worker_word_frames, "worker_handoff":args.worker_handoff,
         "backend_context":"causal measured-word oracle; not live ASR", "worker_events":events,
         "worker_dispatches":len(jobs), "unobserved_workers":sum(not j["observed"] for j in jobs.values()),
         "task_success":"pending independent speech/receipt grading", "quality_qualified":False, "microphone_acceptance":False}

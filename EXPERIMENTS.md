@@ -2745,3 +2745,19 @@ experimental and must pass actual spoken result use; no semantic compatibility
 or qualification is assumed from adding embeddings. The accepted voice and
 speech parameters stay fixed. New role prefix and native policy still need
 matching re-evaluation; scheduled diagnostics remain explicitly marked.
+
+**Plain words — role/policy and handoff:** records-v1 policy fit 7437285 saves and
+fresh-process reloads exactly; parent fixed-input text/audio errors are 0.0.
+Checkpoint SHA d54927fdf45567f974e3dfb65a882e69ab80962b1d061c5b7ec16ab431242f82.
+Untrained lexical-memory 7437466/67 still fails to use the actual private value;
+adding native embeddings alone is not enough. New-role direct-text 7437019 audibly
+mentions yellow circle but inserts extra/changed words (WER .1622); still reject.
+
+Next explicit hybrid test waits for five already-arrived quiet user and assistant
+frames before starting completed worker text, then pauses that text on caller
+speech. Every input sample still reaches the native model. Quiet uses measured
+PCM energy, not future words; this handoff is an application rule, not learned
+turn timing. Six native frames per inferred word are tested instead of four.
+No such inference slots are approved word-time training labels. The goal is to
+separate abrupt utterance interruption/pace from a fundamental speech decoder
+limitation; unchanged immediate/four-frame controls remain available.
