@@ -2887,3 +2887,23 @@ then finds absent OpenAI SDK types imported by vLLM's generic chat utilities.
 Add only the released lock's openai, jiter and distro CPU dependencies. This is
 an import dependency, not a new provider call or a switch of the foreground model.
 The blocked 7441411 dependent benchmark must be replaced after a passing import.
+
+**Plain words — sampling comparison confound found:** the pinned exporter seeds
+before loading the foreground. Native adapter/head construction initializes random
+Linear weights and therefore advances CUDA sampling RNG even when their speech
+effect is zero or immediately overwritten by a checkpoint. The self-history
+collector uses the raw loader and does not consume those extra draws. New native
+probes preserve CPU/CUDA RNG around construction/loading, record whether the
+constructor advanced each RNG, and assert native RNG restoration. A disclosed
+legacy mode retains the old behavior for comparison. Earlier outputs remain
+failed evidence; they are not retrospectively labeled matched seeded controls.
+This correction does not assert BF16 bit repeatability or solve task quality.
+
+Neutral-ready 7441316 reloads exactly (SHA
+694143ac54b15f3caa5519dafbacd35e871c9cfc6d3aab4347b01af9abcde86d).
+Old-sampling native 7441318/20/21/23/24 still fail: private000 omits the real
+value; private002 says green square after an actual orange-circle receipt; simple
+content is wrong; clarification is absent; real cancellation occurs but spoken
+confirmation/continuation remains inadequate. No model is promoted. The new
+sampling-preserved comparison must precede conclusions about the accepted raw
+voice/model versus the collected self-history policy.

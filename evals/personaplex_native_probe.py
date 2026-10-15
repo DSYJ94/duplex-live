@@ -6,6 +6,7 @@ ASR. No scheduled dispatch, reference oracle, or supplied assistant answer.
 """
 import argparse
 import concurrent.futures
+from contextlib import nullcontext
 import json
 import os
 import subprocess
@@ -20,6 +21,8 @@ def main():
     for name in ("source", "model", "voice", "data", "checkpoint", "arc-source", "manifest", "arc-tokenizer", "out"):
         ap.add_argument("--"+name, type=Path, required=True)
     ap.add_argument("--scenario", required=True)
+    ap.add_argument("--construction-rng", choices=("preserve", "legacy"), default="preserve",
+                    help="Preserve native sampling RNG across parameter construction; legacy is diagnostic only")
     ap.add_argument("--zero-adapters", action="store_true", help="Unadapted speech comparison; head remains idle")
     ap.add_argument("--dispatch-mode", choices=("native", "scheduled-diagnostic"), default="native")
     ap.add_argument("--result-input", choices=("arc", "spoken-text", "native-text-memory"), default="arc",
@@ -119,9 +122,25 @@ def main():
 
     def load_foreground(*pos, **kw):
         lm = original_loader(*pos, **kw).eval().requires_grad_(False)
-        bundle = PersonaBundle(lm, control_feedback=control_feedback, neutral_ready=trained.get("neutral_ready", False))
-        if not args.zero_adapters:
-            bundle.load_learned(load_file(args.checkpoint / "adapters.safetensors", device="cuda"))
+        # The vendor seeds before calling this loader. Creating Linear adapters
+        # advances CUDA RNG even if their learned effect is zero. Preserve the
+        # actual native sample stream used by the unadapted state collector.
+        cpu_rng, gpu_rng = torch.get_rng_state(), torch.cuda.get_rng_state(lm.device)
+        context = torch.random.fork_rng(devices=[torch.cuda.current_device()]) if args.construction_rng == "preserve" else nullcontext()
+        with context:
+            bundle = PersonaBundle(lm, control_feedback=control_feedback, neutral_ready=trained.get("neutral_ready", False))
+            if not args.zero_adapters:
+                bundle.load_learned(load_file(args.checkpoint / "adapters.safetensors", device="cuda"))
+            advanced = {"cpu":not torch.equal(cpu_rng,torch.get_rng_state()),
+                "cuda":not torch.equal(gpu_rng,torch.cuda.get_rng_state(lm.device))}
+        restored = {"cpu":torch.equal(cpu_rng,torch.get_rng_state()),
+            "cuda":torch.equal(gpu_rng,torch.cuda.get_rng_state(lm.device))}
+        if args.construction_rng == "preserve" and not all(restored.values()):
+            raise RuntimeError("Native adapter construction changed the sampled baseline RNG")
+        holder["construction_rng"] = {"mode":args.construction_rng,"constructor_advanced_rng":advanced,
+            "native_rng_restored":restored}
+        environment["construction_rng"] = holder["construction_rng"]
+        (args.out / "environment.json").write_text(json.dumps(environment,indent=2)+"\n")
         bundle.eval().requires_grad_(False)
         reference_bridge = bundle.bridge
         if args.result_input == "native-text-memory":
@@ -297,6 +316,7 @@ def main():
         "worker_word_frames":args.worker_word_frames, "worker_handoff":args.worker_handoff,
         "backend_context":"causal measured-word oracle; not live ASR", "worker_events":events,
         "worker_dispatches":len(jobs), "unobserved_workers":sum(not j["observed"] for j in jobs.values()),
+        "construction_rng":holder["construction_rng"],
         "task_success":"pending independent speech/receipt grading", "quality_qualified":False, "microphone_acceptance":False}
     (args.out / "report.json").write_text(json.dumps(report, indent=2)+"\n")
     (args.out / "model.wav").symlink_to("model_out.wav")

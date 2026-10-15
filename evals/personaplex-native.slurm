@@ -17,6 +17,7 @@ set -a
 source "$DL/keys/openai.env"
 set +a
 EXTRA=()
+if [ -n "${PERSONA_CONSTRUCTION_RNG:-}" ]; then EXTRA+=(--construction-rng "$PERSONA_CONSTRUCTION_RNG"); fi
 if [ "${PERSONA_ZERO_ADAPTERS:-0}" = 1 ]; then EXTRA+=(--zero-adapters); fi
 if [ -n "${PERSONA_DISPATCH_MODE:-}" ]; then EXTRA+=(--dispatch-mode "$PERSONA_DISPATCH_MODE"); fi
 if [ -n "${PERSONA_RESULT_INPUT:-}" ]; then EXTRA+=(--result-input "$PERSONA_RESULT_INPUT"); fi
