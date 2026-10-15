@@ -22,6 +22,8 @@ def main():
     ap.add_argument("--scenario", required=True)
     ap.add_argument("--zero-adapters", action="store_true", help="Unadapted speech comparison; head remains idle")
     ap.add_argument("--dispatch-mode", choices=("native", "scheduled-diagnostic"), default="native")
+    ap.add_argument("--result-input", choices=("arc", "spoken-text"), default="arc",
+                    help="Spoken-text is an explicit hybrid diagnostic, not learned result integration")
     args = ap.parse_args()
     import numpy as np
     import soundfile as sf
@@ -63,8 +65,10 @@ def main():
     args.out.mkdir(parents=True, exist_ok=False)
     os.environ["TRITON_LIBCUDA_PATH"] = subprocess.check_output([
         sys.executable, "-m", "evals.cuda_linker_path", "--out", str(args.out / "driver")], text=True).strip()
-    encoder = load_encoder(args.arc_source, args.manifest, args.arc_tokenizer, args.out)
+    encoder = load_encoder(args.arc_source, args.manifest, args.arc_tokenizer, args.out) if args.result_input == "arc" else None
     tokenizer = sentencepiece.SentencePieceProcessor(str(args.model / "tokenizer_spm_32k_3.model"))
+    from evals.personaplex_result_text import WorkerTextQueue
+    text_queue = WorkerTextQueue(tokenizer.encode)
     pcm, rate = sf.read(row["path"], dtype="float32", always_2d=True)
     if rate != 24000 or pcm.shape[1] != 2 or not np.isfinite(pcm).all():
         raise RuntimeError("Invalid approved native user audio")
@@ -76,6 +80,8 @@ def main():
         "scenario":args.scenario, "kind":row["kind"], "input_sha256":sha256(args.out / "user_in.wav"),
         "arc_manifest_sha256":sha256(args.manifest), "native_action_choice":args.dispatch_mode == "native",
         "scheduled_dispatch":args.dispatch_mode != "native", "zero_adapters":args.zero_adapters,
+        "result_input":args.result_input, "worker_text_forced":args.result_input == "spoken-text",
+        "inference_text_pace":"manual four frames per word, never training timestamps" if args.result_input == "spoken-text" else None,
         "oracle_reference_rows":False, "backend_context":"causal measured user words and generated assistant tokens; not live ASR",
         "fresh_holdout":False, "microphone_acceptance":False, "action_threshold":.5,
         "repeat_guard":"one dispatch per non-idle action edge; 1.2 second minimum interval",
@@ -83,6 +89,16 @@ def main():
     (args.out / "environment.json").write_text(json.dumps(environment, indent=2)+"\n")
     events, actions, jobs, pending, holder = [], [], {}, [], {}
     original_loader = offline.loaders.get_moshi_lm
+    original_gen = offline.LMGen
+
+    class WorkerTextLMGen(original_gen):
+        def step(self, input_tokens=None, moshi_tokens=None, text_token=None, return_embeddings=False):
+            if holder.get("force_text", False):
+                if text_token is not None:
+                    raise RuntimeError("Worker text cannot replace native prefix/teacher text")
+                text_token = holder["force_token"]
+            return super().step(input_tokens=input_tokens, moshi_tokens=moshi_tokens,
+                text_token=text_token, return_embeddings=return_embeddings)
 
     def load_foreground(*pos, **kw):
         lm = original_loader(*pos, **kw).eval().requires_grad_(False)
@@ -94,6 +110,7 @@ def main():
         def capture_policy(module, inputs):
             policy_logits.copy_(bundle.policy(inputs[0][:, -1].float()))
         holder.update(bundle=bundle, policy_logits=policy_logits,
+            force_token=torch.zeros(1, dtype=torch.long, device="cuda"), force_text=False,
             bridge_hook=lm.transformer.register_forward_pre_hook(bundle.bridge.temporal_input),
             policy_hook=lm.text_linear.register_forward_pre_hook(capture_policy))
         return lm
@@ -106,7 +123,7 @@ def main():
             time.sleep(max(0.,dispatch+delay-time.monotonic()))
             world.mark_ready(receipt)
         with torch.inference_mode():
-            reference = encoder.encode(result["content"]).detach().float().cpu()
+            reference = encoder.encode(result["content"]).detach().float().cpu() if encoder is not None else torch.empty(1, 0, 4096)
         if reference.ndim != 3 or reference.shape[0] != 1 or reference.shape[-1] != 4096 or not torch.isfinite(reference).all():
             raise RuntimeError("Invalid completed worker reference")
         return result, reference[0], receipt, time.monotonic()
@@ -137,7 +154,10 @@ def main():
                     events.append({"event":"worker_stale", "task_id":task_id, "observed_at_s":now})
                     continue
                 torch.save(reference, args.out / f"reference-{task_id}.pt")
-                pending.extend((task_id, r, receipt) for r in reference)
+                if args.result_input == "arc":
+                    pending.extend((task_id, r, receipt) for r in reference)
+                else:
+                    text_queue.append(task_id, result["content"], receipt)
                 events.append({"event":"worker_completed", "task_id":task_id, "ready_at_s":ready-started,
                     "observed_at_s":now, "rows":len(reference), "result":result})
             pending[:] = [p for p in pending if p[2] is None or world.deliverable(p[2])]
@@ -146,6 +166,15 @@ def main():
                 bundle.bridge.set_row(reference)
                 events.append({"event":"reference_applied", "task_id":task_id, "frame":frame["frame"], "at_s":now})
             frame["reference_l1"] = float(bundle.bridge.active.abs().sum())
+            holder["force_text"] = False
+            if args.result_input == "spoken-text":
+                forced = text_queue.pop(world.deliverable)
+                if forced is not None:
+                    task_id, token = forced
+                    holder["force_token"].fill_(token)
+                    holder["force_text"] = True
+                    events.append({"event":"worker_text_forced", "task_id":task_id,
+                        "frame":frame["frame"], "token":token, "at_s":now})
             if frame["frame"] == 0:
                 return  # The prefix is conditioning, never a user action.
             probabilities = holder["policy_logits"].softmax(-1)[0].cpu().tolist()
@@ -183,6 +212,8 @@ def main():
                 "action":action, "context":context, "input_available_s":frame["input_available_s"]})
 
         offline.loaders.get_moshi_lm = load_foreground
+        if args.result_input == "spoken-text":
+            offline.LMGen = WorkerTextLMGen
         try:
             with paced_export(offline, args.out, torch.cuda.synchronize, before_frame) as timing:
                 offline.run_inference(input_wav=str(args.out / "user_in.wav"), output_wav=str(args.out / "model_out.wav"),
@@ -194,6 +225,7 @@ def main():
                     temp_audio=.8, temp_text=.7, topk_audio=250, topk_text=25, greedy=False, save_voice_prompt_embeddings=False)
         finally:
             offline.loaders.get_moshi_lm = original_loader
+            offline.LMGen = original_gen
             for name in ("bridge_hook", "policy_hook"):
                 if name in holder:
                     holder[name].remove()
@@ -204,6 +236,7 @@ def main():
         "text":"".join(t for t in tokens if t not in ("EPAD", "PAD", "BOS", "EOS")), "timing":timing,
         "checkpoint_sha256":checkpoint_sha, "native_action_choice":args.dispatch_mode == "native",
         "scheduled_dispatch":args.dispatch_mode != "native", "zero_adapters":args.zero_adapters,
+        "result_input":args.result_input, "worker_text_forced":args.result_input == "spoken-text",
         "backend_context":"causal measured-word oracle; not live ASR", "worker_events":events,
         "worker_dispatches":len(jobs), "unobserved_workers":sum(not j["observed"] for j in jobs.values()),
         "task_success":"pending independent speech/receipt grading", "quality_qualified":False, "microphone_acceptance":False}

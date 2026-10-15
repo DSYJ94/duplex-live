@@ -2680,3 +2680,23 @@ setup.py is absent, so native compilation never starts. This is not an ARM/CUDA
 compatibility verdict. Fetch the exact same commit from its actual upstream
 promisor remote into an isolated sparse checkout and require build files before
 entering the container. Existing accepted source/model environments are unchanged.
+
+**Plain words — native self-history head improves actual action choice:** 7436033
+fits only the action head on all 23 approved TRAIN self-histories. Speech/reference
+weights match parent exactly; fixed-input text/audio errors 0.0 and fresh-process
+text/audio/policy reload errors 0.0. SHA
+11ce28b70c936be367e0cde24b85a2093e34412cb5e03feb3ae0f68fc1a85c8a.
+Development 7436134 requests an actual yellow-circle read; 7436137 makes no worker
+call on the simple question; 7436139's worker returns clarification without a
+private read; 7436140 cancels native-0 with an actual receipt and rejects its late
+result as stale. These are useful action-component results, not full-task passes.
+Speech still gives wrong/private unsupported claims and premature cancellation
+language. Backend context remains the causal measured-word oracle, not live ASR.
+
+An explicitly disclosed spoken-text diagnostic is prepared. Only completed real
+worker text may force native text slots while user audio continues through the
+same native model. Manual inference word pacing is not a measured training label;
+these outputs never enter training by default. This is hybrid text conditioning,
+not evidence of learned ARC integration. Cancelled result tails are rejected by
+actual receipt revisions. Three queue tests cover token order, partial cancellation
+and atomic rejection of undefined words. Unmodified ARC mode remains default.
