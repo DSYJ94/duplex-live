@@ -38,6 +38,8 @@ def main():
     from contextspan.model.weights import load_mimi
     from contextspan.model.weights import load_tokenizer
     args.out.mkdir(exist_ok=False)
+    os.environ['TRITON_LIBCUDA_PATH']=subprocess.check_output([sys.executable,'-m','evals.cuda_linker_path',
+        '--out',str(args.out/'driver')],text=True).strip()
     records=[]
     with audited_loads(records): mimi=load_mimi('cuda').eval().requires_grad_(False)
     with torch.no_grad():
