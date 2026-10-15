@@ -2700,3 +2700,9 @@ these outputs never enter training by default. This is hybrid text conditioning,
 not evidence of learned ARC integration. Cancelled result tails are rejected by
 actual receipt revisions. Three queue tests cover token order, partial cancellation
 and atomic rejection of undefined words. Unmodified ARC mode remains default.
+
+**Plain words — vLLM source now complete:** 7436322 reaches CMake, but nvcc cannot
+write its inherited /local/user/... temporary path inside the container. Set a
+job-local temporary directory under the already bound project filesystem. This
+is still a build-environment failure before model/native-kernel qualification;
+no evidence yet that the released runtime is incompatible with ARM/CUDA13.

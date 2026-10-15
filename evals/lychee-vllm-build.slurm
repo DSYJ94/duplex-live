@@ -18,6 +18,8 @@ BUILD="$DL/tmp/lychee-vllm-source-${SLURM_JOB_ID}"
 test "$(git -C "$SOURCE" rev-parse HEAD)" = "$COMMIT"
 test -z "$(git -C "$SOURCE" status --porcelain)"
 mkdir "$OUT"
+mkdir "$OUT/tmp"
+export TMPDIR="$OUT/tmp"
 git init "$BUILD"
 git -C "$BUILD" remote add origin https://github.com/HITsz-TMG/Lychee-FD.git
 git -C "$BUILD" fetch --depth=1 --filter=blob:none origin "$COMMIT"
@@ -27,6 +29,7 @@ test -f "$BUILD/third_party/vllm/setup.py"
 test -f "$BUILD/third_party/vllm/pyproject.toml"
 export DL OUT BUILD
 apptainer exec --nv --bind /projects,/lus,/home \
+ --env TMPDIR="$OUT/tmp" \
  --env PYTHONDONTWRITEBYTECODE=1 --env OMP_NUM_THREADS=8 \
  "$DL/pytorch-new.sif" bash -eu <<'CONTAINER'
 python - <<'PY'
