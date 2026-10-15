@@ -2907,3 +2907,11 @@ content is wrong; clarification is absent; real cancellation occurs but spoken
 confirmation/continuation remains inadequate. No model is promoted. The new
 sampling-preserved comparison must precede conclusions about the accepted raw
 voice/model versus the collected self-history policy.
+
+**Plain words — patched backend Python import now passes:** CPU dependency
+7441555 and preflight 7441556 succeed, with actual CUDA numerical probes and the
+custom MultiHeadRequestState package import. Full-model job 7441557 reaches the
+native integration loader and then stops on absent sentencepiece imported by
+its generic GGUF loader. Add the released sentencepiece lock pin; no checkpoint
+weights have yet been loaded or silently omitted. The successful import proof
+is distinct from model/attention/speech acceptance.
