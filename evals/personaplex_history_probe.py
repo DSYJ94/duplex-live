@@ -68,18 +68,23 @@ def main():
             if args.joint_logits:
                 logits_history.append(tuple(v.detach().cpu() for v in output[1]))
     actual = torch.cat(observed, dim=-1)
-    passed = actual.shape == expected.shape and torch.equal(actual, expected)
+    inputs_equal = actual.shape == expected.shape and torch.equal(actual, expected)
+    passed = inputs_equal
     expected_targets = delayed_targets(template["inputs"], report["prefix_frames"], codes.cpu(), lm.delays)
     target_equal = torch.equal(torch.cat(targets, dim=-1)[..., actual_prefix:], expected_targets)
     joint_errors = None
     adapter_proof = None
     if args.joint_logits:
+        from evals.personaplex_depth import native_audio_logits
         with torch.inference_mode(), no_compile(), no_cuda_graph():
             hidden, text = lm.forward_codes(expected.cuda())
             hidden, text = hidden[:, actual_prefix:], text[:, :, actual_prefix:]
-            audio = lm.forward_depformer_training(expected_targets.cuda(), hidden)
+            original_audio = lm.forward_depformer_training(expected_targets.cuda(), hidden)
+            audio = native_audio_logits(lm, expected_targets.cuda(), hidden)
+        stream_audio = torch.stack([v[1] for v in logits_history], dim=2)
+        original_audio_errors = (original_audio.cpu()-stream_audio).abs().amax(dim=(0, 2, 3)).tolist()
         joint_errors = {"text": float((text.cpu()-torch.cat([v[0] for v in logits_history], dim=2)).abs().max()),
-            "audio": float((audio.cpu()-torch.stack([v[1] for v in logits_history], dim=2)).abs().max())}
+            "audio": float((audio.cpu()-stream_audio).abs().max())}
         from evals.personaplex_adapters import install_adapters, adapter_parameters, GatedReferenceBridge, checkpoint_language_layers
         replaced = install_adapters(lm)
         bridge = GatedReferenceBridge(4096, lm.dim, rank=64, device="cuda", dtype=torch.float32)
@@ -89,7 +94,7 @@ def main():
             embedded = lm.embed_codes(expected.cuda()) + bridge.transform(reference)
             adapted_hidden, adapted_text = lm.forward_embeddings(embedded)
             adapted_hidden, adapted_text = adapted_hidden[:, actual_prefix:], adapted_text[:, :, actual_prefix:]
-            return adapted_text, lm.forward_depformer_training(expected_targets.cuda(), adapted_hidden)
+            return adapted_text, native_audio_logits(lm, expected_targets.cuda(), adapted_hidden)
 
         with torch.inference_mode(), no_compile(), no_cuda_graph():
             same_text, same_audio = adapted()
@@ -110,6 +115,7 @@ def main():
         adapter_proof = {"zero_errors": zero_errors, "replaced_linears": replaced,
             "adapter_parameters": sum(p.numel() for p in params.values()),
             "all_output_adapter_gradients_nonzero_finite": all(b_grads.values()),
+            "output_adapter_gradients": b_grads,
             "bridge_gradients_nonzero_finite": all(bridge_grads.values()),
             "frozen_gradients_absent": all(p.grad is None for p in lm.parameters() if not p.requires_grad),
             "optimizer_steps": 0}
@@ -118,9 +124,10 @@ def main():
     result = {"schema": "dl-personaplex-history-proof-v1", "passed": passed,
         "source_scenario": row["scenario_id"], "split": "train", "heldout_labels_used": False,
         "template_training_scenarios": report["training_scenarios"], "prefix_frames": actual_prefix,
-        "input_shape": list(actual.shape), "all_delayed_inputs_exact": passed,
+        "input_shape": list(actual.shape), "all_delayed_inputs_exact": inputs_equal,
         "all_delayed_targets_exact": target_equal, "joint_logit_errors": joint_errors,
         "adapter_proof": adapter_proof,
+        "unmodified_batched_audio_errors_by_codebook": original_audio_errors if args.joint_logits else None,
         "cache_sha256": sha256(args.cache / "cache.json"),
         "template_sha256": sha256(args.template / "fixed-reference.pt"), "voice_sha256": sha256(args.voice),
         "quality_tested": False}

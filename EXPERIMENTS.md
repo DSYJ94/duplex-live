@@ -2488,3 +2488,19 @@ train. This permits efficient multi-example preparation, not model qualification
 Control audit 7429624 rejects all seven raw teachers; none enters training. Inspect
 complete events for missing clarification, premature/wrong lookups and cancellation
 without receipts followed by private disclosure before choosing the repair.
+
+
+## 2026-10-15 — Joint PersonaPlex proof catches native training seams
+
+**Plain words:** joint proof 7434416 makes no optimizer updates. Delayed targets
+match exactly and text-logit error is 0.0000763, but audio error is 0.71628.
+Zero adapters preserve both outputs exactly, yet some adapter gradients are
+absent. The proof correctly fails; do not launch training from this result.
+Source inspection finds native gated feed-forward code reads raw weights,
+bypassing child Linear forwards. Its explicit adapter-aware forward retains
+the frozen parameter names and needs native zero-output and gradient checks.
+The pinned streaming depth cache excludes its oldest slot when full, whereas
+the unstreamed helper includes it. A batched-only compatibility mask is being
+tested against every native codebook; vendor source and streaming inference
+remain unchanged. The original discrepancy is retained in the new report.
+Paired teacher 7434240 completes all 32 raw recordings; audit 7434249 is running.

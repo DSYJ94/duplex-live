@@ -5,6 +5,7 @@ layers, plus the text head. NVIDIA uses a raw QKV parameter; do not silently
 pretend a Linear replacement adapts it. Acoustic model parameters stay frozen.
 """
 import math
+from types import MethodType
 from contextlib import contextmanager
 import torch
 from torch import nn
@@ -44,6 +45,16 @@ def install_adapters(model, last_layers=8):
                 replaced.append(path)
             else:
                 visit(child, path)
+        # Native ActivationGating calls F.linear on the two raw weights, so
+        # replacing its children alone silently bypasses their adapters.
+        if isinstance(getattr(module, "linear_in", None), AdapterLinear) and isinstance(
+                getattr(module, "linear_out", None), AdapterLinear):
+            def gating_forward(self, x):
+                x = self.linear_in(x)
+                batch, frames, _ = x.shape
+                x = x.view(batch, frames, 2, -1)
+                return self.linear_out(self.activation(x[..., 0, :]) * x[..., 1, :])
+            module.forward = MethodType(gating_forward, module)
 
     first = len(model.transformer.layers)-last_layers
     for index in range(first, len(model.transformer.layers)):
