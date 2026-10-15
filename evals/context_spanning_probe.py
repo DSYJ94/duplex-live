@@ -79,7 +79,10 @@ def main():
         if sha256(args.base/name)!=digest:raise RuntimeError('PersonaPlex base asset changed')
     data=validate_conversion(args.data)
     row=next(r for r in data['accepted'] if r['scenario_id']==args.scenario)
-    if row['split']!='validation' or row['kind']!='private':raise RuntimeError('Approved development private scene required')
+    if row['split']!='validation' or row['kind'] not in ('private','simple','clarify','cancel'):
+        raise RuntimeError('Approved development behavior scene required')
+    if row['kind']!='private' and args.backend_mode!='native-asr':
+        raise RuntimeError('Control scenes require native backend decisions and actual ASR')
     if len(args.private_value.split())!=2:raise RuntimeError('Expected declared two-word development value')
     side=json.loads(Path(row['path']).with_suffix('.json').read_text());meta=side['timeline']['meta']
     audio,rate=sf.read(row['path'],dtype='float32',always_2d=True)
@@ -120,6 +123,8 @@ def main():
         install(engine)
         layout={'audit_sha256':sha256(args.layout_audit),'native_layout':'bootstrap prefix and preserve provided acoustics',
             'native_input_parity_passed':True,'quality_qualified':False}
+        from evals.context_span_trace import attach
+        layout['actual_free_running_span_checks']=attach(engine)
     if args.voice=='accepted-synthetic':
         if not args.voice_reference or not args.voice_provenance:raise RuntimeError('Synthetic voice provenance required')
         receipt=json.loads(args.voice_provenance.read_text())
@@ -150,7 +155,8 @@ def main():
         'voice':args.voice,'voice_codes_shape':list(voice.shape),'input_warmup':warm,'adapter':adapter,'layout':layout,
         'torch':torch.__version__,'torch_file':torch.__file__,'cuda':torch.version.cuda}
     (args.out/'loading.json').write_text(json.dumps(loading,indent=2)+'\n')
-    world=RecordWorld({meta['project']:{meta['field']:args.private_value}})
+    world=RecordWorld({meta['project']:{meta['field']:args.private_value}} if row['kind']!='simple' else {})
+    loading['scenario_kind']=row['kind']
     if args.backend_mode=='native-asr':
         from evals.context_spanning_native import run
         run(engine,user,world,args,loading)

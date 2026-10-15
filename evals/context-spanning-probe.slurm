@@ -44,6 +44,7 @@ apptainer exec --nv --bind /projects,/lus,/home \
  --assets "$DL/runs/context-spanning-assets-$CONTEXT_ASSETS_JOB/manifest.json" \
  --base "$DL/models/hf-cache/hub/models--nvidia--personaplex-7b-v1/snapshots/fdaf4090a61cb315c138a1faee287ffd6c716309" \
  --data "$DL/runs/recovery-data-7407554" --private-value "$CONTEXT_PRIVATE_VALUE" \
+ --scenario "${CONTEXT_SCENARIO:-recovery-validation-000}" \
  --voice "${CONTEXT_VOICE:-released}" \
  --voice-reference "$DL/runs/voice-quality-7414595/codec/reference.wav" \
  --voice-provenance "$DL/runs/voice-quality-7414595/codec/report.json" \

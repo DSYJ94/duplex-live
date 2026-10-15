@@ -106,6 +106,21 @@ class RecordGuards(unittest.TestCase):
                 run_worker(context,world,"task")
         self.assertEqual(world.receipts, [])
 
+    def test_actual_tool_receipt_does_not_make_blank_backend_text_deliverable(self):
+        world = RecordWorld({"Cedar":{"badge":"violet triangle"}})
+        responses = [
+            {"id":"execute","status":"completed","output":[{"type":"function_call","name":"lookup_record",
+                "call_id":"call1","arguments":json.dumps({"project":"Cedar","field":"badge"})}]},
+            {"id":"finish","status":"completed","output":[{"type":"message","content":[{
+                "type":"output_text","text":json.dumps({"route":"answer","content":"  "})}]}]},
+        ]
+        def post(*args, **kwargs):
+            return types.SimpleNamespace(status_code=200,json=lambda:responses.pop(0))
+        with patch.dict("sys.modules",{"requests":types.SimpleNamespace(post=post)}),patch.dict("os.environ",{"OPENAI_API_KEY":"test-placeholder"}):
+            with self.assertRaisesRegex(WorkerContractError, 'empty result text'):
+                run_worker([{"role":"user","text":"Check Cedar's badge"}],world,"task")
+        self.assertEqual(world.receipts[0]['value'], 'violet triangle')
+
     def test_user_deltas_are_reconstructed_without_invented_spaces(self):
         context = [{"speaker":"user", "text":part} for part in ("Project Ce", "dar", " North.")]
         self.assertTrue(project_identified_by_user(context, "Cedar North"))

@@ -3427,3 +3427,43 @@ remain unchanged. Keep this implementation correction separate from any
 answer-quality claim. The cold adapter reader requires proof/reload hashes and
 installs adapters before Engine creates its native CUDA graphs; matched disabled
 and trained comparisons use the same saved accepted-reference voice codes.
+
+
+**Plain words — native proof and actual history comparison pass; behavior does not:**
+7455157 completes eight finite updates on four complete TRAIN examples after
+revalidating the 48-scene corpus. Rank-eight adapters in last four temporal
+output/FFN layers and text head contain 1,894,400 parameters; raw QKV/depth/codec
+parameters stay frozen. Base hashes are unchanged. Peak allocated/reserved are
+34,061,415,936 / 43,130,028,032 bytes; measured training/checking section is
+31.90s. Fresh process exactly reproduces all valid FP32 text/audio logits.
+Checkpoint SHA d2086be61657383141510a234ae5f3b51325ffb315d7d7b048ded2845c53455b.
+FP32 native depth comparisons show old head15 errors .07553/.07886/.19199;
+batch-only context15 gives all-head maximum error <=9.54e-6.
+
+7455458 actually captures released prefix/span/live model input IDs. Source
+startup omits first prefix C0; after correcting that oracle, ten observed
+acoustic entries still differ near the span. Candidate prefix bootstrap plus
+restoration only of pending explicitly provided delay1 codes makes all 5,372
+IDs (17x316) exact. Generated/unprovided assistant acoustics are never copied.
+This is a single-span forced-TRAIN layout check, not full graph/logit parity or
+production speech acceptance; actual free-running provided-user traces follow.
+
+7455516/17/18/19 are released/layout-only/zero-wrapper/eight-update yellow;
+7455520/21/22/23 are their purple counterparts. All process 960,000 real samples,
+have zero fixed-160ms simulated-playout underruns, p95 .0288–.0341s per 80ms,
+and cold backlog 2.81–3.07s. They remain task failures: released yellow says the
+value alongside invented prices; layout-only yellow omits the shape; eight-step
+yellow invents $179; eight-step purple states its actual value but gives a bad
+physics explanation. Eight updates are a feasibility proof, not learned-task
+success. Zero-purple7455522 executes the correct private read but backend
+content is empty; mark that delivery invalid instead of assigning the value
+omission to the foreground. New worker-contract regression rejects empty text.
+
+Speech audits 7455646–53 report WER respectively .13699/.01639/.11667/.02041/
+0/.04054/.01449/.01471. Numeric formatting partly explains money mismatches;
+7455648 also fails ASR time/word bounds and has unfinished trailing speech.
+No full-task or real-microphone claim follows. Bounded pilot7455712 starts
+fresh from released weights (not an eight-step warm start) and balances all48
+TRAIN scenes for128 updates. Native proof, corpus/voice hashes and layout audit
+are required gates; factual and speech quality remain separate forthcoming
+comparisons. Thirty local worker/ASR/ownership/playout regressions pass.

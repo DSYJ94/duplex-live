@@ -31,13 +31,39 @@ Require zero-adapter logits/RNG parity, finite nonzero gradients, frozen-base
 hashes and exact fresh-process reload before any larger training. See
 [training seams](docs/research/2026-10-15-context-training-seams.md) and
 [resource decisions](docs/research/2026-10-15-resource-decisions.md).
-Proof 7455033 stops before updates on a source-event-order comparison bug;
-7455068 passes all 48 TRAIN provenance checks, then stops before updates on
-BF16 zero-adapter logit differences. Current 7455157 adds FP32 eager/math
-canonical checks and an actual per-head streaming comparison. Source review
-finds the known ring-cache final-head context mismatch persists in this fork;
-its batch-only context15 compatibility must pass measured native parity before
-training. No update or numerical fix is claimed until the report exists.
+Proof 7455033 stops before updates on marker-list order; 7455068 passes
+48-scene provenance but fails BF16 zero-adapter identity. Corrected proof
+7455157 completes eight finite updates on four complete TRAIN conversations,
+1,894,400 adapter parameters, frozen base unchanged, 34.06GB peak allocated and
+exact fresh-process FP32 logits. Checkpoint SHA
+`d2086be61657383141510a234ae5f3b51325ffb315d7d7b048ded2845c53455b`.
+Native depth q15 errors .0755–.192 become <=9.54e-6 with batch-only context15.
+
+Actual history audit 7455458 captures native inputs through a complete voice/
+persona prefix, 70 real frames and an approved receipt span. Released inputs
+omit the first prefix column and lose some pending acoustic values at the span.
+The explicit candidate bootstraps the prefix and preserves only delay1 codes
+whose provided flags are true; all 17x316 actual input IDs then match the clean
+training oracle exactly. This is teacher-forced input-layout parity, not a
+production graph/logit/quality pass. Real free-running pending assistant codes
+must never be copied as if observed.
+
+Matched native-ASR tests 7455516–23 compare released, layout-only, zero-wrapper
+and eight-update models for two private values using identical saved voice codes.
+All have zero causal-playout underruns, but none passes the complete task.
+The trained purple run says its actual value; trained yellow invents money.
+One zero-purple backend executes the actual read but returns empty text, so
+that is a delivery-contract failure, not evidence the foreground ignored a
+supplied value. A new worker guard rejects empty backend text before delivery.
+Independent audits 7455646–53 are complete; details are in EXPERIMENTS.md.
+
+Bounded 128-update pilot 7455712 starts fresh from released weights and cycles
+all 48 approved TRAIN examples with balanced private/simple/clarify/cancel
+sampling. It reuses the exact preflight voice, gates on proof/reload/history
+hashes, and disables cuDNN attention explicitly. It is running; no new quality
+result is claimed. Next: actual-ASR paired worlds plus ordinary/clarify/cancel
+controls, independent speech audits and actual provided-user-code checks at
+result spans. No scaling beyond this pilot without free-running evidence.
 
 The older Lychee work below remains useful evidence and a fallback:
 

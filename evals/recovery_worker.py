@@ -185,6 +185,8 @@ def run_worker(context,world,task_id,model="gpt-6-luna",expected_revision=None):
     parsed["route"] = selected_route or final_response_route
     result = {**parsed,"receipts":receipts,"events":events,"task_id":task_id,"speech_model_routing":False}
     result["final_response_route"] = final_response_route
+    if not isinstance(parsed.get("content"), str) or not parsed["content"].strip():
+        raise WorkerContractError("Backend returned empty result text; do not inject an empty context span",result)
     if parsed["route"] == "delegate" and not any(r["tool"] == "lookup_record" for r in receipts):
         raise WorkerContractError("Delegation reported without actual record execution",result)
     if parsed["route"] == "cancel" and not any(r["tool"] == "cancel_lookup" for r in receipts):
