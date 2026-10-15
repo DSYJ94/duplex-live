@@ -12,7 +12,7 @@ from pathlib import Path
 from evals.lychee_model_download import SOURCE_COMMIT
 from evals.moshi_model_download import sha256
 
-PACKAGES = set('numpy pyarrow airportsdata astor blake3 cloudpickle compressed-tensors depyf dill diskcache fastapi gguf interegular jsonschema jsonschema-specifications lark llvmlite lm-format-enforcer mistral-common msgspec nest-asyncio numba nvidia-ml-py outlines outlines-core partial-json-parser prometheus-fastapi-instrumentator py-cpuinfo pycountry pydantic-extra-types ray referencing rpds-py starlette tiktoken uvicorn'.split())
+PACKAGES = set('openai jiter distro numpy pyarrow airportsdata astor blake3 cloudpickle compressed-tensors depyf dill diskcache fastapi gguf interegular jsonschema jsonschema-specifications lark llvmlite lm-format-enforcer mistral-common msgspec nest-asyncio numba nvidia-ml-py outlines outlines-core partial-json-parser prometheus-fastapi-instrumentator py-cpuinfo pycountry pydantic-extra-types ray referencing rpds-py starlette tiktoken uvicorn'.split())
 
 
 def main():

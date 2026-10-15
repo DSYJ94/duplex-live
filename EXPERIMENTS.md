@@ -2880,3 +2880,10 @@ PyArrow26, which requires NumPy2, while the released vLLM lock requires NumPy1.2
 Add the same lock's PyArrow22 to the new isolated CPU subset; preserve the accepted
 HF overlay and its working NumPy2/PyArrow26 environment. Failed dependent runtime
 7441244 must not run as if its import proof passed.
+
+**Plain words — Arrow pin resolved:** CPU overlay 7441408 succeeds. Preflight
+7441410 again passes actual CUDA probes and progresses beyond the Arrow import,
+then finds absent OpenAI SDK types imported by vLLM's generic chat utilities.
+Add only the released lock's openai, jiter and distro CPU dependencies. This is
+an import dependency, not a new provider call or a switch of the foreground model.
+The blocked 7441411 dependent benchmark must be replaced after a passing import.
