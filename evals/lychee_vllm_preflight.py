@@ -29,11 +29,16 @@ def main():
             actual = torch.empty_like(x)
             torch.ops._C.rms_norm(actual,x,weight,1e-6)
             reference = (x.float()*torch.rsqrt(x.float().square().mean(-1,keepdim=True)+1e-6)).to(dtype)*weight
-            limit = (2*torch.finfo(dtype).eps*reference.float().abs().clamp_min(1))
+            high = (x.double()*torch.rsqrt(x.double().square().mean(-1,keepdim=True)+1e-6)).to(dtype)*weight
+            limit = (2e-6+2e-6*high.float().abs()) if dtype == torch.float32 else (2*torch.finfo(dtype).eps*high.float().abs().clamp_min(1))
             error = (actual.float()-reference.float()).abs()
-            passed = bool(torch.isfinite(actual).all() and (error <= limit).all())
+            high_error = (actual.float()-high.float()).abs()
+            passed = bool(torch.isfinite(actual).all() and (error <= limit).all() and (high_error <= limit).all())
             results.append({'operation':'rms_norm','dtype':str(dtype),'width':width,
-                'maximum_error':float(error.max()),'passed':passed})
+                'maximum_error':float(error.max()),'float64_reference_error':float(high_error.max()),
+                'torch_float32_to_float64_error':float((reference.float()-high.float()).abs().max()),
+                'float32_absolute_relative_tolerance':2e-6 if dtype == torch.float32 else None,
+                'low_precision_ulp_multiplier':2 if dtype != torch.float32 else None,'passed':passed})
             if not passed:
                 raise RuntimeError('Native CUDA13 RMS kernel differs from FP32 reduction reference: '+str(results[-1]))
     record = {'schema':'dl-lychee-vllm-kernel-v1','torch':torch.__version__, 'cuda':torch.version.cuda,

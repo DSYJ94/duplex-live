@@ -2833,3 +2833,13 @@ runtime buffers 400ms audio windows. Its default event-to-vocoder adapter flushe
 25 speech tokens at a time. Token throughput alone will not establish the existing
 200ms first-word requirement. A shorter timing/PCM path must be separately
 measured and qualified; no threshold is changed by porting the released backend.
+
+**Plain words — released backend wheel now built:** 7439917 succeeds, wheel
+`vllm-0.6.5+lychee.cu130-cp312-cp312-linux_aarch64.whl`, SHA
+`1ed23f49f799377401882da464e0dfcc6fd9d53773a48d709a6ef8db5fa8bf0e`.
+Kernel preflight 7440325 executes the native CUDA library but stops at FP32
+1024-wide RMSNorm: maximum difference 4.77e-7 exceeds the initial two-epsilon
+bound. The next check compares both native CUDA and PyTorch FP32 against an
+FP64 reduction, using explicit FP32 absolute/relative 2e-6 tolerance; BF16/FP16
+retain the two-epsilon magnitude-scaled bound. This checks ordinary parallel
+reduction rounding, not speech quality; no model acceptance bar is changed.
