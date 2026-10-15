@@ -8,6 +8,7 @@ import json
 import os
 import time
 import threading
+import re
 
 
 class WorkerContractError(RuntimeError):
@@ -18,6 +19,16 @@ class WorkerContractError(RuntimeError):
 
 class WorkerSuperseded(RuntimeError):
     pass
+
+
+def project_identified_by_user(context, project):
+    """Available record names and assistant guesses do not identify a project."""
+    explicit = " ".join(e.get("text", "") for e in context if e.get("role") == "user")
+    # GPT-Live supplies text deltas, including their original whitespace.
+    deltas = "".join(e.get("text", "") for e in context if e.get("speaker") == "user")
+    normalize = lambda s: " ".join(re.findall(r"[a-z0-9]+", s.casefold()))
+    needle = normalize(project)
+    return bool(needle and any(" "+needle+" " in " "+normalize(text)+" " for text in (explicit, deltas)))
 
 
 class RecordWorld:
@@ -101,6 +112,7 @@ def run_worker(context,world,task_id,model="gpt-6-luna",expected_revision=None):
         "Do not repeat older pending or completed lookups merely because the voice assistant has not spoken their results. "
         "Answer simple general knowledge without tools. Private records require lookup_record; never invent their contents. "
         "Clarify missing project or field. Honor negation and corrections. Cancel only identified existing tasks. "
+        "Available record names are not user identification; never select a project the user has not identified. "
         "The current dispatch is not a cancellation target. When duplicate active lookups belong to the cancelled request, "
         "select all their IDs in one cancellation call; preserve unrelated work. Assistant speech is not a verified tool receipt. "
         "Use route delegate after a record tool, cancel after cancellation, otherwise answer or clarify. "
@@ -147,6 +159,8 @@ def run_worker(context,world,task_id,model="gpt-6-luna",expected_revision=None):
         call = calls[0]
         arguments = json.loads(call["arguments"])
         if call["name"] == "lookup_record":
+            if not project_identified_by_user(context, arguments["project"]):
+                raise WorkerContractError("Private project was not identified by the user", {"events":events,"arguments":arguments})
             receipt = world.read(task_id,**arguments,expected_revision=expected_revision)
             selected_route = "delegate"
         elif call["name"] == "cancel_lookup":

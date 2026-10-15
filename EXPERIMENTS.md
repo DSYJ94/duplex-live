@@ -2542,3 +2542,16 @@ WAVs are unchanged. The fresh retry must complete and reload before inference.
 Paired encoding **7434926** completes all 13 with native first-word errors at most
 100ms, below the unchanged 200ms bar. These may now join the 33 approved TRAIN
 scenes as a separately hashed cache, with old validation/test folds unchanged.
+
+**Plain words — control contract repair prepared:** raw control 7429356/7429624
+remains rejected. Its events contain acknowledgements but no client cancellation
+requests. New optional, versioned client-control-v1 instructions explicitly require
+requesting cancellation and awaiting its receipt, and asking which project before
+private dispatch. It applies only to control TRAIN teachers and is pinned in each
+recording's environment; old collection prompts remain unchanged. A worker guard
+also forbids reading a private project that the user never identified, even if it
+is the only available record or the assistant guessed it. User text deltas retain
+their original whitespace. Two real worker-call regression checks reject invented
+project identification and retain valid split-word user identification. Thirty
+related worker/protocol/teacher/context/action tests pass; live control/model
+behavior still requires fresh API recordings and independent audits.

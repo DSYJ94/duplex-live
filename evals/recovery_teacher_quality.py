@@ -46,6 +46,12 @@ def validate_teacher(batch):
             if sha256(folder / name) != record[key]:
                 raise RuntimeError("Raw teacher artifact changed")
         environment = json.loads((folder / "environment.json").read_text())
+        if manifest.get("teacher_protocol") or environment.get("teacher_protocol"):
+            from evals.teacher_protocol import validate_protocol
+            expected_instructions = validate_protocol(manifest.get("teacher_protocol"), "teacher", row["kind"])
+            if (environment.get("teacher_protocol") != manifest["teacher_protocol"]
+                    or environment["session_config"]["instructions"] != expected_instructions):
+                raise RuntimeError("Teacher client-control protocol receipt changed")
         if environment["purpose"] != "teacher" or environment["training_approved"] is not False or environment["input_sha256"] != row["source_user_sha256"]:
             raise RuntimeError("Teacher purpose/stimulus receipt changed")
         if "world_override" in record:

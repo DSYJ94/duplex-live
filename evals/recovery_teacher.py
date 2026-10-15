@@ -15,7 +15,7 @@ from evals.moshi_model_download import sha256
 from evals.gpt_live_replay import run
 
 
-async def generate(data,out,resume=False,scope="legacy"):
+async def generate(data,out,resume=False,scope="legacy",protocol=None):
     receipt = validate_conversion(data)
     selected = [r for r in receipt["accepted"] if r["split"] == "train" and r["kind"] == "private"] + [
         r for r in receipt["accepted"] if r["split"] == "train" and r["kind"] == "simple"][:4]
@@ -32,6 +32,12 @@ async def generate(data,out,resume=False,scope="legacy"):
     if scope == "control":
         manifest.update(collection_schema="dl-control-teacher-v2", scope="control",
                         selected_ids=[r["scenario_id"] for r in selected])
+    if protocol:
+        from evals.teacher_protocol import validate_protocol
+        if scope != "control":
+            raise ValueError("Client-control protocol is not a legacy teacher change")
+        validate_protocol(protocol, "teacher", selected[0]["kind"])
+        manifest["teacher_protocol"] = protocol
     if resume:
         if (out / "quality.jsonl").exists():
             raise RuntimeError("Cannot resume a stamped teacher corpus")
@@ -41,6 +47,8 @@ async def generate(data,out,resume=False,scope="legacy"):
                 raise RuntimeError("Teacher source or generation scope changed")
         if previous.get("scope", "legacy") != scope or previous.get("selected_ids") != manifest.get("selected_ids"):
             raise RuntimeError("Teacher selection changed")
+        if previous.get("teacher_protocol") != protocol:
+            raise RuntimeError("Teacher client-control protocol changed")
         manifest = previous
         for record in manifest["recordings"]:
             folder = out / record["dir"]
@@ -66,7 +74,7 @@ async def generate(data,out,resume=False,scope="legacy"):
                     destination = archive / f"{row['scenario_id']}-{index}"
                 shutil.move(str(out / row["scenario_id"]),destination)
             args = SimpleNamespace(batch=Path(receipt["source_batch"]),conversion=data,scenario=row["scenario_id"],
-                purpose="teacher",backend="gpt-6-luna",out=out / row["scenario_id"])
+                purpose="teacher",backend="gpt-6-luna",out=out / row["scenario_id"],teacher_protocol=protocol)
             await run(args)
             manifest["recordings"].append({"source_row":row,"dir":row["scenario_id"],
                 "environment_sha256":sha256(args.out / "environment.json"),"events_sha256":sha256(args.out / "events.jsonl"),
@@ -89,8 +97,9 @@ def main():
     parser.add_argument("--out",type=Path,required=True)
     parser.add_argument("--resume",action="store_true")
     parser.add_argument("--scope",choices=("legacy", "control"),default="legacy")
+    parser.add_argument("--protocol", choices=("client-control-v1",))
     args = parser.parse_args()
-    asyncio.run(generate(args.data,args.out,args.resume,args.scope))
+    asyncio.run(generate(args.data,args.out,args.resume,args.scope,args.protocol))
 
 
 if __name__ == "__main__":

@@ -2,7 +2,7 @@ import unittest
 import json
 import types
 from unittest.mock import patch
-from evals.recovery_worker import RecordWorld,run_worker,WorkerSuperseded,WorkerContractError
+from evals.recovery_worker import RecordWorld,run_worker,WorkerSuperseded,WorkerContractError,project_identified_by_user
 
 
 class RecordGuards(unittest.TestCase):
@@ -84,7 +84,7 @@ class RecordGuards(unittest.TestCase):
             payloads.append(json)
             return types.SimpleNamespace(status_code=200,json=lambda:responses.pop(0))
         with patch.dict("sys.modules",{"requests":types.SimpleNamespace(post=post)}),patch.dict("os.environ",{"OPENAI_API_KEY":"test-placeholder"}):
-            result = run_worker([{"text":"Check Cedar's badge"}],world,"task")
+            result = run_worker([{"role":"user","text":"Check Cedar's badge"}],world,"task")
         self.assertEqual(len(world.receipts),1)
         self.assertEqual(result["receipts"][0]["value"],"violet triangle")
         self.assertEqual(result["route"],"delegate")
@@ -92,6 +92,24 @@ class RecordGuards(unittest.TestCase):
         self.assertEqual(payloads[1]["tool_choice"],{"type":"function","name":"lookup_record"})
         self.assertNotIn("violet triangle",str(payloads[:2]))
         self.assertIn("violet triangle",str(payloads[2]))
+
+    def test_available_project_or_assistant_guess_cannot_authorize_read(self):
+        world = RecordWorld({"Cedar North":{"badge":"violet triangle"}})
+        call = {"type":"function_call", "name":"lookup_record", "call_id":"call1",
+            "arguments":json.dumps({"project":"Cedar North", "field":"badge"})}
+        def post(*args, **kwargs):
+            return types.SimpleNamespace(status_code=200,json=lambda:{"id":"wrong", "status":"completed", "output":[call]})
+        context = [{"role":"user", "text":"What is the badge?"},
+                   {"role":"assistant", "text":"It must be Cedar North."}]
+        with patch.dict("sys.modules",{"requests":types.SimpleNamespace(post=post)}),patch.dict("os.environ",{"OPENAI_API_KEY":"test-placeholder"}):
+            with self.assertRaisesRegex(WorkerContractError, "not identified"):
+                run_worker(context,world,"task")
+        self.assertEqual(world.receipts, [])
+
+    def test_user_deltas_are_reconstructed_without_invented_spaces(self):
+        context = [{"speaker":"user", "text":part} for part in ("Project Ce", "dar", " North.")]
+        self.assertTrue(project_identified_by_user(context, "Cedar North"))
+        self.assertFalse(project_identified_by_user(context, "Cedar South"))
 
 
 if __name__ == "__main__":

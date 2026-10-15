@@ -11,6 +11,7 @@ import math
 import os
 import subprocess
 import time
+from datetime import datetime, timezone
 from pathlib import Path
 from evals.moshi_model_download import sha256
 
@@ -68,6 +69,10 @@ async def run(args):
     config = {"model": "gpt-live-1", "delegation": {"type": "client"},
         "instructions": "Be a helpful, concise English voice assistant. Answer straightforward general knowledge yourself. Delegate when you need factual checking or more reasoning. Do not guess or claim a delegated result before it returns. Keep listening while work is pending.",
         "audio": {"format": {"type": "audio/pcm", "rate": 24000}, "output": {"voice": "marin"}}}
+    protocol = getattr(args, "teacher_protocol", None)
+    if protocol:
+        from evals.teacher_protocol import validate_protocol
+        config["instructions"] = validate_protocol(protocol, args.purpose, row["kind"])
     env = {"session_config": config, "backend_model": args.backend,
         "input_sha256": hashlib.sha256(source.read_bytes()).hexdigest(),
         "repo_commit": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
@@ -75,8 +80,10 @@ async def run(args):
         "matched_backend_comparison": False, "worker": "actual Responses reasoning on received transcripts",
         "input_seconds": seconds, "added_silence_seconds": 15,
         "scenario":scenario,"actual_record_tools":world is not None,"purpose":args.purpose,
-        "provenance_class":"closed-content","source_model":"gpt-live-1","created_date":"2026-10-14",
+        "provenance_class":"closed-content","source_model":"gpt-live-1","created_date":datetime.now(timezone.utc).date().isoformat(),
         "training_approved":False}
+    if protocol:
+        env["teacher_protocol"] = protocol
     (args.out / "environment.json").write_text(json.dumps(env, indent=2) + "\n")
     if args.conversion and world_override:
         env["record_world_override"] = world_override
