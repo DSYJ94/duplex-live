@@ -2615,3 +2615,24 @@ profiling is prepared on its unchanged incremental runtime: two chunks after
 warmup, no memo/cache/sampling changes. Profiled times are diagnostic, never a
 latency acceptance benchmark. API follows the official PyTorch 2.9 profiler docs:
 https://docs.pytorch.org/docs/2.9/profiler.html .
+
+**Plain words — preserve speech and fix state mismatch:** frozen-language
+7435667 completes 128 updates over 48 approved TRAIN scenes, training 540,675
+new parameters. Reference-free text/audio errors before/after are both 0.0;
+fresh-process text/audio/action reload errors are all 0.0. SHA
+86dd746f0051f6b399b458b43462af25c7e6a5bc8b01892c864359a3da77da3e.
+Native checks 7435824/25/26/27 and scheduled-result diagnostic 7435828 run next.
+Unadapted simple 7435669 answers the question that 7435519 leaves silent,
+confirming a language-adaptation regression. Scheduled trained 7435671 gives
+wrong/incomplete facts despite an actual worker, so result use also fails.
+Independent speech audit 7435717 confirms the spoken failures; near-silent clips
+produce short Whisper hallucinations and WER 1.0, not evidence of actual answers.
+
+Teacher-forced routing on 7435379 hits many validation action frames, while
+free-running 7435517/19/20 never dispatch. This is a supplied-history mismatch,
+not policy qualification. A native self-history collector is prepared: original
+approved TRAIN user audio only, real sampled assistant text/audio, stable native
+GPU hidden-state capture per 80ms frame, no worker references. Only existing
+approved action clocks label states; generated words/audio are never speech
+training labels. It must prove full frame coverage and retained source hashes
+before a separate action-only fit can use it. No held-out audio is collected.
