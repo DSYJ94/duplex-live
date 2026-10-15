@@ -16,6 +16,36 @@ like radio speech. Preserve the accepted reference and receipts. No further
 voice preference is needed before continuing. Neither model has passed full-task
 intelligence, delegation or paced microphone acceptance. Clifton access is verified.
 
+**Plain words — 15 October, active continuation:** custom PersonaPlex and
+Lychee voices remain accepted for development quality only; no complete model
+passes. Generic-role self-history policy **7436033** reloads exactly and its
+native replays **7436134/37/39/40** demonstrate actual lookup, simple no-call,
+clarification-without-private-read, and real cancellation receipts. Spoken facts,
+waiting, and continuation still fail. SHA
+`11ce28b70c936be367e0cde24b85a2093e34412cb5e03feb3ae0f68fc1a85c8a`.
+The matching records-role head **7437285** also reloads exactly but does not
+qualify behavior. Direct worker-text forcing, untrained native text memory, and
+quiet handoff **7437911/12/13/14** do not fix unsupported completion/facts. All
+remain explicitly experimental; backend context is a causal measured-word oracle,
+not live ASR.
+
+Current native experiment **7439916** warm-starts 7436033, freezes language and
+action weights, and trains causal client-state embeddings plus the reference
+bridge on the 48 approved TRAIN scenes. Prefix state is fixed zero; a selected
+action enters only the next frame, and results enter only at actual receipt time.
+Eight updates have run with finite nonzero state gradients; preservation/reload
+and actual free-running behavior are required. Historical teacher cancel label
+020 is now derived correctly from its bounded two-call chronology (v2); approved
+source data is immutable and older checkpoints retain their original lineage.
+
+Lychee official custom-vLLM build **7437283** compiles/links all 116 CUDA targets
+with the recorded isolated CUDA13 operation-name migration, then fails on a
+missing generated Python package directory. **7439917** resumes those verified
+compiled sources with the directory correction. Native kernel numerical tests,
+complete checkpoint loading, paced tokens, and actual streamed PCM are still
+required; compilation does not establish a viable real-time runtime. No owner
+input is needed now; Clifton renewal was verified and existing access continues.
+
 **Plain words — 15 October, behavior failure and next controlled tests:** native
 128-update **7435379** saves/reloads with text/audio/action errors 0.0 and frozen
 base hashes unchanged; SHA `44cb8b5b64838afd370f93fa2d2e9fc73bace43e5c971027941bf039ac9a547f`.
