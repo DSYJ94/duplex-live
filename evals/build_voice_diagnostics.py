@@ -13,6 +13,7 @@ def main():
     ap.add_argument("--custom-persona-job", type=int)
     ap.add_argument("--lychee-job", type=int)
     ap.add_argument("--concurrent-job", type=int)
+    ap.add_argument("--context-jobs",type=int,nargs='*',default=[])
     ap.add_argument("--gpt-live-job", type=int)
     ap.add_argument("--codec-cpu-job", type=int)
     ap.add_argument("--codec-cuda-job", type=int)
@@ -106,11 +107,32 @@ def main():
                 f'Measured within-utterance gaps: {gaps:.3f}s. Owner feedback on 15 October: sounds smooth. Factual errors remain; this tests playback, not delegation or a live microphone.',root+'/report.json')
             concurrent='<h2 id="concurrent">New concurrent audio capture</h2><section>'+''.join(cards)+'</section>'
         cards[:]=original
+    context=''
+    if args.context_jobs:
+        from evals.moshi_model_download import sha256
+        original=cards[:];cards.clear()
+        for job in args.context_jobs:
+            root=f'context-spanning-probe-{job}';folder=args.runs/root
+            if not (folder/'report.json').is_file() or not (folder/'model.wav').is_file():continue
+            report=json.loads((folder/'report.json').read_text())
+            if (not report['actual_lm_and_pcm_executed_together']
+                    or sha256(folder/'model.wav')!=report['audio_sha256']):
+                raise RuntimeError('Context Spanning listening evidence changed')
+            voice='synthetic reference' if report['loading']['voice']=='accepted-synthetic' else 'released voice'
+            mode=('Native backend-request marker and actual arrived-audio ASR. The backend chooses tools.'
+                if not report['scheduled_dispatch'] else 'Scheduled actual worker; measured-word backend context.')
+            note=(f'{mode} Fixed 160ms causal playback buffer; '
+                f"{report['playout']['underrun_samples']/24000:.3f}s measured underruns. "
+                'Voice judgment pending; factual/task errors remain under review. No microphone/device trial.')
+            card(f'Context Spanning — {voice} ({job})',root+'/model.wav',note,root+'/report.json')
+        context='<h2 id="context">Context Spanning auditions</h2><section>'+''.join(cards)+'</section>'
+        cards[:]=original
     page = '<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
     page += '<title>Voice diagnostics</title><style>body{max-width:1100px;margin:32px auto;padding:0 20px;background:#10141c;color:#e7ecf5;font:16px/1.5 system-ui}section{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}article{padding:20px;background:#1a2230;border:1px solid #354157;border-radius:12px}audio{width:100%}p{color:#b9c5d8}a{color:#9dc3ff}</style>'
     page += '<h1>Compare the audio artifacts</h1><p>The owner accepts the custom PersonaPlex and Lychee voices as comparable to GPT-Live. Original NATF2 is muffled and rejected. Voice acceptance is separate from intelligence, delegation and real-time performance.</p>'
     page += '<section>'+''.join(cards)+'</section>'
     page += concurrent
+    page += context
     page += '<details><summary>Codec controls: same words, different decoder execution</summary><section>'+controls+'</section></details>'
     page += '<details><summary>Playback timing controls</summary><section>'+playback+'</section></details>'
     page += '<details><summary>Other voices on the same four science questions</summary><p>Different models may answer differently. Only completed local recordings appear below. These are development auditions, not a full-task ranking.</p><section>'+alternatives+'</section></details>'

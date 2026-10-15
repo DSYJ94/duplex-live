@@ -312,3 +312,36 @@ receive observed user codes through its provided-token mask while generating
 assistant audio. Predicted head availability, training loss ownership and
 runtime externally forced observations are three separate properties. The
 probe must log all three before modifying any echo-related training mask.
+
+## Follow-up: full-model warmup changes the observed trajectory
+
+Plain words: the full-model warmup is a confounded comparison, not a proven
+sampling-RNG bug. Parent-run observations: cold scheduled 7454283/4/5 report
+their actual values; warm scheduled 7454445 omits its value. The first text
+difference between 7454283 and 7454445 occurs at input time 6.32s, before
+result injection at wall times 8.92s and 10.34s; both first retrieval markers
+occur at input time 5.44s. Node differences and numerical/compile-cache effects
+remain uncontrolled. Warm native-ASR correctly recognizes the project and
+executes the correct tool/value, so that observed failure cannot be assigned
+to ASR recognition.
+
+Source inspection establishes that full `Engine.step` warms model sampling as
+well as codecs. Reset recreates streaming states and graph wrappers, but does
+not clear process-wide compiled kernels. The
+[sampler](https://github.com/mindlogic-ai/Context-Spanning/blob/79df302fa2820cae10c61bb2b7f302c52edb6ed2/contextspan/moshi/utils/sampling.py)
+uses the default CUDA generator for exponential sampling, with no separate
+explicit generator. Official
+[Torch CUDA RNG source](https://github.com/pytorch/pytorch/blob/v2.9.0/aten/src/ATen/cuda/CUDAGeneratorImpl.cpp)
+resets seed/offset on manual seeding and advances RNG at graph replay. Thus,
+sampling during a discarded warm conversation alone does not prove persistent
+RNG advance after reseeding.
+
+Recommended next controlled comparison: warm only `user_mimi.encode(zeros)`
+and `mimi.decode(silence_codes)` before conversation input, record unchanged
+CPU/CUDA RNG, reset the two codec streams and leave LMGen untouched. Verify
+actual codec IDs, pre-frame RNG, raw logits and sampled token streams up to the
+first divergence. Identical RNG with different logits points toward a
+numerical/state difference; different input codes points toward the frontend.
+Align result application to the same input boundary for the component control,
+while reporting actual backend arrival separately. This is a proposed
+diagnosis, not a demonstrated fix or evidence to reject the checkpoint.
