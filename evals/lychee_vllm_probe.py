@@ -48,8 +48,8 @@ def main():
     if args.collect_training_state and (not args.worker_context or args.static_context_diagnostic
             or args.private_value or args.result_response!='model' or args.result_delivery!='immediate'):
         ap.error('TRAIN history requires actual worker, unchanged world, sampled control and immediate receipt')
-    if args.event_socket and args.worker_context:
-        ap.error('Concurrent PCM transport currently supports the native baseline only')
+    if args.event_socket and args.collect_training_state:
+        ap.error('Concurrent PCM capture is separate from TRAIN state collection')
     if args.forward_capture and (args.event_socket or args.worker_context):
         ap.error('Synchronous forward capture is a separate baseline diagnostic')
     if args.result_response!='model' and (not args.worker_context or args.static_context_diagnostic):

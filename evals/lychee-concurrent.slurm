@@ -15,6 +15,21 @@ DL=/projects/u6si/duplex-live
 test "$(git -C "$DL_TASK_SOURCE" rev-parse HEAD)" = "$DL_TASK_COMMIT"
 test -z "$(git -C "$DL_TASK_SOURCE" status --porcelain)"
 cd "$DL_TASK_SOURCE"
+EXTRA=()
+if [ -n "${LYCHEE_SEMANTIC_JOB:-}" ]; then
+ [[ "$LYCHEE_SEMANTIC_JOB" =~ ^[0-9]+$ ]]
+ EXTRA+=(--semantic-adapter "$DL/runs/lychee-semantic-proof-$LYCHEE_SEMANTIC_JOB/adapter.pt"
+  --semantic-proof "$DL/runs/lychee-semantic-proof-$LYCHEE_SEMANTIC_JOB/report.json")
+fi
+if [ "${LYCHEE_WORKER_DIAG:-0}" = 1 ]; then
+ : "${LYCHEE_SCENARIO:?Actual-worker scenario required}"
+ set -a
+ source "$DL/keys/openai.env"
+ set +a
+ EXTRA+=(--worker-context --data "$DL/runs/recovery-data-7407554" --scenario "$LYCHEE_SCENARIO"
+  --result-response "${LYCHEE_RESULT_RESPONSE:-model}")
+ if [ -n "${LYCHEE_PRIVATE_VALUE:-}" ]; then EXTRA+=(--private-value "$LYCHEE_PRIVATE_VALUE"); fi
+fi
 RUNTIME="$DL/envs/lychee-vllm-7441739"
 DEPS="$DL/envs/lychee-vllm-deps-7441737"
 LM="$RUNTIME:$DEPS:$DL/envs/lychee-probe-7415053:$DL/tmp/minicpm-recovery-7377673:$DL_TASK_SOURCE"
@@ -30,4 +45,4 @@ apptainer exec --nv --bind /projects,/lus,/home \
  --preflight "$DL/runs/lychee-vllm-preflight-7441739" \
  --voice "$DL/runs/voice-quality-7414595/codec/reference.wav" \
  --voice-provenance "$DL/runs/voice-quality-7414595/codec/report.json" \
- --out "$DL/runs/lychee-concurrent-${SLURM_JOB_ID}"
+ --out "$DL/runs/lychee-concurrent-${SLURM_JOB_ID}" "${EXTRA[@]}"

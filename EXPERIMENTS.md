@@ -3249,3 +3249,21 @@ Both arms retain zero/frozen/branch/gradient/reload gates and cannot qualify
 quality from loss. Their native actual-worker replays and ordinary answers
 must decide whether this recipe improves the task. No corpus-scale run is
 justified yet; no failed-gradient checkpoint is allowed.
+
+**Plain words — paired semantic pilots completed, behavior still untested:**
+7453182 (64 updates) / 7453183 (128) pass every native implementation gate
+on 15 verified examples. Their first 64 losses match exactly. Both keep the
+same frozen SHA, zero same-input raw speech/control drift, all finite/nonzero
+adapter gradients and exact fresh-adapter reload. Checkpoints:
+64 = 41c627145683a514981ce04e0471af5228cd4ad0ccd22cfd27d49b2a79bb001f;
+128 = f1be05e12c92ee74e54c0225d79dd3c602ed7a179a2bb626e448ca0cd2e1a892.
+No quality or native result-use success follows from low training loss. Next
+are matched actual-worker worlds under native and disclosed response-event
+timing, plus unchanged ordinary science inputs for each arm.
+
+Concurrent transport now supports that same actual-worker path with a shared
+monotonic input epoch, arrived-audio context refresh and optional explicit
+semantic checkpoint. The parent records real receipts and distinguishes its
+scheduled dispatch/forced response control from native model choice. Only the
+LM child receives the API credential. No concurrent-worker outcome is claimed
+until the two-GPU job completes; this is not a microphone/browser trial.

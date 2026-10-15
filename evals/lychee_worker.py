@@ -57,7 +57,12 @@ def run(framework, args, loading, side_audit):
             raise RuntimeError('Private diagnostic worker did not execute the actual intended record')
         world.mark_ready(receipts[0])
         return result,time.monotonic()
-    with concurrent.futures.ThreadPoolExecutor(max_workers=1) as pool:
+    from evals.lychee_transport import EventSender
+    transport=EventSender(args.event_socket) if args.event_socket else nullcontext()
+    with transport as sender,concurrent.futures.ThreadPoolExecutor(max_workers=1) as pool:
+        def started(epoch):
+            holder['start']=epoch
+            if sender:sender.start(epoch)
         def before(current,frame,prior):
             nonlocal future
             if static:return current
@@ -107,7 +112,9 @@ def run(framework, args, loading, side_audit):
             from evals.lychee_wakeup import result_response_event
             response_event=result_response_event(holder,events) if args.result_response=='application-event-diagnostic' else nullcontext()
             with response_event:
-                generated,timing=run_incremental(framework,audio,args.out,before_chunk=before,session=session)
+                generated,timing=run_incremental(framework,audio,args.out,before_chunk=before,session=session,
+                    on_start=started,on_event=sender.event if sender else None)
+                if sender:sender.finish(holder['start'])
         finally:
             (args.out/'worker-events.json').write_text(json.dumps(events,indent=2)+'\n')
     if not holder.get('observed'):raise RuntimeError('Actual worker never reached native language context')
@@ -120,6 +127,7 @@ def run(framework, args, loading, side_audit):
     report={'text':' '.join(e['text'] for e in generated['events']),'paced_tokens':timing,'strict_loading':loading,
         'native_side_token_audit':side_audit,
         'scenario':args.scenario,'world_sha256':hashlib.sha256(json.dumps(world_data,sort_keys=True).encode()).hexdigest(),
+        'concurrent_pcm_transport_requested':bool(sender),'native_transport_messages_sent':sender.sent if sender else 0,
         'source_split':row['split'],'actual_training_history_collected':args.collect_training_state,
         'training_state_collection_invalidates_timing':args.collect_training_state,
         'training_state_snapshots':[holder[k] for k in ('ready_snapshot','idle_snapshot') if k in holder],

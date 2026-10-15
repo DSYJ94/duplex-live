@@ -13,7 +13,18 @@ def main():
     ap=argparse.ArgumentParser(description=__doc__)
     for name in ('assets','batch','runtime','preflight','voice','voice-provenance','out'):
         ap.add_argument('--'+name,type=Path,required=True)
+    ap.add_argument('--worker-context',action='store_true')
+    ap.add_argument('--data',type=Path)
+    ap.add_argument('--scenario')
+    ap.add_argument('--private-value')
+    ap.add_argument('--result-response',choices=('model','application-event-diagnostic'),default='model')
+    ap.add_argument('--semantic-adapter',type=Path)
+    ap.add_argument('--semantic-proof',type=Path)
     args=ap.parse_args()
+    if args.worker_context and (not args.data or not args.scenario):ap.error('Actual worker capture needs approved data/scenario')
+    if bool(args.semantic_adapter)!=bool(args.semantic_proof):ap.error('Adapter and native implementation proof are both required')
+    if not args.worker_context and (args.private_value or args.result_response!='model'):
+        ap.error('Private world and response event are actual-worker diagnostics only')
     devices=os.environ.get('CUDA_VISIBLE_DEVICES','').split(',')
     if len(devices)!=2 or len(set(devices))!=2 or any(not d for d in devices):
         raise RuntimeError('Exactly two distinct assigned GPUs required for Exclusive_Process mode')
@@ -24,6 +35,7 @@ def main():
         def spawn(module,device,overlay,extra):
             env=os.environ.copy();env['CUDA_VISIBLE_DEVICES']=device
             env['PYTHONPATH']=os.environ[overlay]
+            if module.endswith('_vocoder'):env.pop('OPENAI_API_KEY',None)
             log=(args.out/(module.rsplit('.',1)[-1]+'.log')).open('w');handles.append(log)
             child=subprocess.Popen([sys.executable,'-u','-m',module,*extra],env=env,stdout=log,stderr=subprocess.STDOUT)
             children.append(child);return child
@@ -38,9 +50,13 @@ def main():
                 if tts.poll() is not None:raise RuntimeError('Vocoder startup failed; inspect its complete log')
                 if time.monotonic()-began>150:raise RuntimeError('Vocoder readiness timeout')
                 time.sleep(.2)
-            lm=spawn('evals.lychee_vllm_probe',devices[0],'DL_LM_PYTHONPATH',
-                flags(('assets','batch','runtime','preflight'))+['--warm-input','--event-socket',str(socket_path),
-                    '--out',str(args.out/'lm')])
+            lm_flags=flags(('assets','batch','runtime','preflight'))+['--warm-input','--event-socket',str(socket_path),
+                    '--out',str(args.out/'lm')]
+            if args.worker_context:
+                lm_flags+=['--worker-context',*flags(('data','scenario','result-response'))]
+                if args.private_value:lm_flags+=flags(('private-value',))
+            if args.semantic_adapter:lm_flags+=flags(('semantic-adapter','semantic-proof'))
+            lm=spawn('evals.lychee_vllm_probe',devices[0],'DL_LM_PYTHONPATH',lm_flags)
             deadline=time.monotonic()+600
             while any(child.poll() is None for child in children):
                 if any(child.poll() not in (None,0) for child in children):
@@ -64,6 +80,13 @@ def main():
                 'wall_including_both_model_loads_s':time.monotonic()-began,
                 'microphone_acceptance':False,'browser_playback_tested':False,'audio_device_tested':False,
                 'native_delegation_tested':False,'quality_qualified':False,'training_approved':False}
+            if args.worker_context:
+                result.update(scheduled_worker_dispatch=model['scheduled_dispatch'],
+                    actual_worker_results_supplied=model['actual_worker_results_supplied'],
+                    native_foreground_tool_choice=model['native_foreground_tool_choice'],
+                    result_response_mode=model['result_response_mode'],
+                    native_speaking_control_forced=model['native_speaking_control_forced'],
+                    worker_events=model['worker_events'],spoken_result_use_verified=False)
             (args.out/'report.json').write_text(json.dumps(result,indent=2)+'\n')
             print(json.dumps({k:v for k,v in result.items() if k!='pcm_capture'}),flush=True)
         finally:
