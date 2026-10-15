@@ -148,7 +148,13 @@ async def run(args):
                         record({"type": "local.worker.cancelled", "task_id": delegation_id})
                         raise
                     except Exception as error:
-                        errors.append({"type": "worker_failure", "task_id": delegation_id, "error_type": type(error).__name__})
+                        failure = {"type": "worker_failure", "task_id": delegation_id,
+                            "error_type": type(error).__name__, "error": str(error)}
+                        if hasattr(error, "result"):
+                            name = "worker-failure-"+hashlib.sha256(delegation_id.encode()).hexdigest()[:16]+".json"
+                            (args.out / name).write_text(json.dumps(error.result, indent=2)+"\n")
+                            failure.update(details_file=name, details_sha256=sha256(args.out / name))
+                        errors.append(failure)
                         record(errors[-1])
                         await ws.send(json.dumps({"type": "session.thinking.append",
                             "delegation_id": delegation_id, "content": "The backend failed. No verified result is available."}))
