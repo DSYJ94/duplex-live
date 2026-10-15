@@ -36,6 +36,7 @@ def main():
     os.environ['CS_BASE_DIR']=str(args.base)
     sys.path.insert(0,str(source))
     from contextspan.model.weights import load_mimi
+    from contextspan.model.weights import load_tokenizer
     args.out.mkdir(exist_ok=False)
     records=[]
     with audited_loads(records): mimi=load_mimi('cuda').eval().requires_grad_(False)
@@ -48,6 +49,16 @@ def main():
                 live.append(mimi.encode(torch.tensor(audio[f:f+1920,1].copy(),device='cuda')[None,None]).cpu())
         online=torch.cat(live,dim=2)
     side=json.loads(Path(origin['path']).with_suffix('.json').read_text())
+    spm=load_tokenizer()
+    positions=[i for i,t in enumerate(expected[0].tolist()) if t>=5]
+    word_timing=[];offset=0
+    for word,interval,speaker in side['alignments']:
+        if speaker!='SPEAKER_MAIN':continue
+        n=len(spm.encode(word.strip()))
+        word_timing.append({'word':word,'measured_onset_s':interval[0],
+            'cached_first_frame':positions[offset], 'context_floor_frame':int(interval[0]*12.5),
+            'cached_minus_context_floor':positions[offset]-int(interval[0]*12.5)})
+        offset+=n
     active=torch.zeros(expected.shape[1],dtype=torch.bool)
     for e in side['timeline']['events']:
         if e['ch']=='user' and e['kind']=='utterance':
@@ -79,6 +90,9 @@ def main():
         'old_cache_vs_context_streaming_user':compare(online[0],target),
         'context_offline_vs_streaming_user':compare(online[0],offline[0]),
         'diagnostic_shift_agreement_per_head':shifts,'targets_shifted':False,'optimizer_steps':0}
+    report['text_convention']={'padding3_count':int((expected[0]==3).sum()),
+        'end_padding0_count':int((expected[0]==0).sum()),'source_ret_frames':row['markers'],
+        'ordinary_words':word_timing}
     (args.out/'report.json').write_text(json.dumps(report,indent=2)+'\n')
     print(json.dumps(report),flush=True)
 
