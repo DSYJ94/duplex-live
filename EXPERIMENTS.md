@@ -2977,3 +2977,17 @@ training. The next runs must establish preservation and spoken correctness.
 The published constrained-model sampling path is recorded and its actual audio/
 control outputs are required at every step; missing outputs cause an error
 instead of an undocumented alternate-token fallback.
+
+**Plain words — first native context interface preserves state but not result use:**
+7443841/42 use real paired-world reads and pass all history/audio/RNG preservation
+checks with zero alternate side-token fallbacks. The model keeps saying the
+lookup is pending instead of reliably stating its completed value. Context
+preservation alone is insufficient. In these early report files the field
+actual_worker_results_used means supplied into context, not verified spoken use;
+new reports say supplied and explicitly leave spoken use unverified.
+
+Test clearer current-state language in place of JSON/timestamps in the nonspoken
+prefix: distinguish a currently pending lookup from a now-completed authoritative
+record, and explicitly mark earlier lack-of-access statements outdated. Both
+worlds must still depend on actual returned values. Output words, acoustic tokens
+and speaking-control state remain sampled; no response-start override is added.

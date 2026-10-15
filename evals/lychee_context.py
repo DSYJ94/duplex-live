@@ -16,10 +16,18 @@ BASE_INSTRUCTIONS = (
 
 
 def role_text(receipts=()):
-    import json
     content=BASE_INSTRUCTIONS
-    if receipts:
-        content+='\nActual client worker state, observed during this conversation:\n'+json.dumps(list(receipts),ensure_ascii=False)
+    for receipt in receipts:
+        if receipt['status']=='pending':
+            content+=f"\nCURRENT CLIENT STATE: a lookup of {receipt['field']} for {receipt['project']} is running. The value has not returned yet."
+        elif receipt['status']=='completed':
+            content+=(f"\nCURRENT CLIENT STATE: the lookup has now completed successfully. "
+                f"The actual {receipt['field']} for {receipt['project']} is {receipt['value']}. "
+                "This authoritative value is available to you now. Tell the user this result, "
+                "as well as answering their independent question. Earlier statements that you "
+                "lack access or are waiting are now outdated.")
+        else:
+            raise ValueError('Unknown actual client receipt state')
     return '<|BOT|>system\n'+content+'<|EOT|>'
 
 

@@ -89,7 +89,7 @@ def run(framework, args, loading, side_audit):
         'native_side_token_audit':side_audit,
         'scenario':args.scenario,'world_sha256':hashlib.sha256(json.dumps(world_data,sort_keys=True).encode()).hexdigest(),
         'worker_events':events,'scheduled_dispatch':True,'native_foreground_tool_choice':False,
-        'actual_worker_results_used':True,'oracle_private_values_supplied':False,'assistant_output_tokens_forced':False,
+        'actual_worker_results_supplied':True,'spoken_result_use_verified':False,'oracle_private_values_supplied':False,'assistant_output_tokens_forced':False,
         'context_channel':'nonspoken native instruction prefix rebuilt after actual receipt',
         'backend_context':'causal measured user words and generated native text; not live ASR',
         'live_pcm_tested':False,'microphone_acceptance':False,'quality_qualified':False,'training_approved':False,
