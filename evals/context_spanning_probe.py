@@ -48,6 +48,8 @@ def main():
     ap.add_argument('--adapter-proof',type=Path)
     ap.add_argument('--adapter-disabled',action='store_true')
     ap.add_argument('--adapter-zero',action='store_true')
+    ap.add_argument('--pending-status',action='store_true',
+        help='Supply actual request-started/delivery-pending state as a context span; diagnostic')
     ap.add_argument('--layout-audit',type=Path,
         help='Explicit native-layout candidate; require a successful actual input trace')
     args=ap.parse_args()

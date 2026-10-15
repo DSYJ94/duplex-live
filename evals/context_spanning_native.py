@@ -96,6 +96,14 @@ def run(engine,user,world,args,loading):
                             events.append({'event':'native_backend_requested','task_id':identity,'at_s':available,
                                 'input_available_s':due,'input_samples':end,'audio_sha256':sha256(path),
                                 'native_trigger':True,'reference_transcript_supplied':False})
+                            if args.pending_status:
+                                reference=('The current backend request is awaiting a reply. '
+                                    'No verified answer for this request has been delivered yet.')
+                                frames=engine.inject_context_span(reference)
+                                events.append({'event':'backend_pending_status_applied','task_id':identity,
+                                    'applied_at_s':time.monotonic()-epoch,'virtual_span_frames':frames,
+                                    'reference':reference,'source':'actual native request dispatch; no result supplied',
+                                    'word_or_acoustic_tokens_forced':False})
             finally:
                 for identity,future in pending.items():
                     events.append({'event':'input_exhausted_with_backend_pending','task_id':identity,'done_at_input_end':future.done()})
@@ -113,6 +121,7 @@ def run(engine,user,world,args,loading):
     report={'schema':'dl-context-spanning-native-asr-v1','text':engine.decode_text(tokens),'loading':loading,
         'scenario':args.scenario,'source_split':'validation','fresh_holdout':False,'worker_events':events,
         'scheduled_dispatch':False,'native_foreground_backend_request':True,'native_foreground_tool_choice':False,
+        'explicit_pending_status':args.pending_status,
         'backend_context':'actual arrived user PCM recognized by Whisper turbo; no measured/reference transcript',
         'distinct_lm_asr_gpu_processes':True,'native_retrieval_markers':sum(r['native_retrieval_marker'] for r in rows),
         'asr_environment':asr_ready,
