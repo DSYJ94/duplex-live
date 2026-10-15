@@ -46,9 +46,12 @@ if [ "${CONTEXT_CODEC_AUDIT:-0}" = 1 ]; then
 fi
 run_container -m unittest evals.harness.test_context_training_loss
 if [ "${CONTEXT_TEACHER_AUDIT:-0}" = 1 ]; then
- run_container -m evals.context_training_proof "${ARGS[@]}" \
-  --teacher-audit "$DL/runs/context-training-proof-7455157" \
-  --teacher-audit "$DL/runs/context-training-proof-7455712"
+ AUDITS=()
+ for J in ${CONTEXT_TEACHER_AUDIT_JOBS:-7455157 7455712}; do
+  [[ "$J" =~ ^[0-9]+$ ]]
+  AUDITS+=(--teacher-audit "$DL/runs/context-training-proof-$J")
+ done
+ run_container -m evals.context_training_proof "${ARGS[@]}" "${AUDITS[@]}"
  exit 0
 fi
 if [ "${CONTEXT_HISTORY_AUDIT:-0}" = 1 ]; then

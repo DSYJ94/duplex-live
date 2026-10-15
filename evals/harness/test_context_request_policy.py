@@ -57,6 +57,7 @@ class RequestPolicyTest(unittest.TestCase):
              'actual_end_ms': 4000, 'text': 'Cancel that lookup.'},
             {'ch': 'assistant', 'kind': 'marker', 'start_ms': 3600, 'text': ''}]
         side['alignments'].append(['Cancelled', [4., 4.1], 'SPEAKER_MAIN'])
+        side['user_words'].append({'text': 'Cancel', 'start_s': 3.1, 'end_s': 3.5})
         encode = {'Check': [10], 'now': [11], 'Cancelled': [15]}.__getitem__
         with self.assertRaisesRegex(RuntimeError, 'complete user instruction'):
             native_prelead(codes, side, encode)
@@ -64,6 +65,9 @@ class RequestPolicyTest(unittest.TestCase):
         result, records = native_prelead(codes, side, encode)
         self.assertEqual([f for f, t in enumerate(result) if t == 4], [24, 49])
         self.assertEqual(records[1]['operation'], 'cancel')
+        side['user_words'].pop()
+        with self.assertRaisesRegex(RuntimeError, 'complete user instruction'):
+            native_prelead(codes, side, encode)
 
     def test_prelead_collision_never_drops_a_spoken_token(self):
         codes, side = self.scene()

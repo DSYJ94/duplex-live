@@ -3540,3 +3540,13 @@ The next conversion derives native pre-lead controls separately from source
 worker clocks, preserving every word/audio/arrival target. It requires arrived
 user identification, complete cancellation instruction, no collision and no
 receipt preceding its request. Validation/test labels remain forbidden.
+
+
+Plain words: native-policy preflight7457079 accepts all48 TRAIN conversions and
+completes eight finite updates with frozen weights unchanged; retrieval of its
+fresh reload is pending. A separate actual-history collector records graph
+inputs outside graph capture and direct prefix/span inputs, without sampling
+changes or future labels. Only explicit approved TRAIN scenes are permitted.
+The recorded history is unapproved conditioning; a future assembler must mask
+every past label and independently check its new continuation. No failed
+validation case is reused for this collection.

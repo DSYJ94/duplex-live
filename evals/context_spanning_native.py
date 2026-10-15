@@ -74,14 +74,23 @@ def run(engine,user,world,args,loading):
                             else:
                                 if any(not world.deliverable(r) for r in result['receipts'] if r['tool']=='lookup_record'):
                                     raise RuntimeError('Stale actual record receipt')
-                                frames=engine.inject_context_span(result['content'])
+                                history=getattr(engine,'_dl_student_history',None)
+                                if history:history.mode='span'
+                                try:
+                                    frames=engine.inject_context_span(result['content'])
+                                finally:
+                                    if history:history.mode='live'
                                 record.update(disposition='failure notice supplied; no verified result' if result['route']=='error'
                                     else 'actual backend text injected',applied_at_s=time.monotonic()-epoch,
                                     prefill_ms=engine.last_prefill_ms,virtual_span_frames=frames)
+                                if history:
+                                    record['history_virtual_frames_after_span']=history.frames
                                 with world.lock:world.tasks[identity]['phase']='failed' if result['route']=='error' else 'delivered'
                             events.append(record)
                         chunk=user[offset:end]
                         if len(chunk)<engine.frame_size:chunk=np.pad(chunk,(0,engine.frame_size-len(chunk)))
+                        history=getattr(engine,'_dl_student_history',None)
+                        history_before=history.frames if history else None
                         result=engine.step(chunk);torch.cuda.synchronize();available=time.monotonic()-epoch
                         tokens.append(result['text_token']);pcm=result['agent_pcm']
                         if pcm is not None:
@@ -92,6 +101,9 @@ def run(engine,user,world,args,loading):
                             'available_s':available,'compute_s':available-before,'input_backlog_s':before-due,
                             'input_samples':end-offset,'output_samples':0 if pcm is None else len(pcm),
                             'text_token':result['text_token'],'native_retrieval_marker':result['is_ret']}
+                        if history:
+                            row.update(history_virtual_frames_before_step=history_before,
+                                history_virtual_frames_after_step=history.frames)
                         rows.append(row);log.write(json.dumps(row)+'\n');log.flush()
                         if result['is_ret']:
                             count=sum(e['event']=='native_backend_requested' for e in events)
@@ -106,7 +118,11 @@ def run(engine,user,world,args,loading):
                             if args.pending_status:
                                 reference=('The current backend request is awaiting a reply. '
                                     'No verified answer for this request has been delivered yet.')
-                                frames=engine.inject_context_span(reference)
+                                if history:history.mode='span'
+                                try:
+                                    frames=engine.inject_context_span(reference)
+                                finally:
+                                    if history:history.mode='live'
                                 events.append({'event':'backend_pending_status_applied','task_id':identity,
                                     'applied_at_s':time.monotonic()-epoch,'virtual_span_frames':frames,
                                     'reference':reference,'source':'actual native request dispatch; no result supplied',
@@ -125,8 +141,11 @@ def run(engine,user,world,args,loading):
     output,playout=render_packets(packets,24000,.16)
     sf.write(args.out/'model.wav',output,24000)
     sf.write(args.out/'packet-stream.wav',np.concatenate([p for _,p in packets]),24000)
+    history=getattr(engine,'_dl_student_history',None)
+    history_receipt=history.finish() if history else None
     report={'schema':'dl-context-spanning-native-asr-v1','text':engine.decode_text(tokens),'loading':loading,
-        'scenario':args.scenario,'source_split':'validation','fresh_holdout':False,'worker_events':events,
+        'scenario':args.scenario,'source_split':args.source_split,'fresh_holdout':False,'worker_events':events,
+        'student_history':history_receipt,
         'scheduled_dispatch':False,'native_foreground_backend_request':True,'native_foreground_tool_choice':False,
         'explicit_pending_status':args.pending_status,
         'backend_contract_failures':sum(e['event']=='backend_request_failed' for e in events),

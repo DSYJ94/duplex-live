@@ -104,6 +104,12 @@ immutable actual teacher dispatch clock. It places RET in an unoccupied frame
 before the next measured lead, checks arrived user identification/cancellation,
 rejects a request after receipt, and keeps words/audio/receipt times unchanged.
 No held-out example enters this derivation. Require all48 checks before updates.
+Preflight7457079 validates all48 derived TRAIN sequences and completes eight
+finite updates; fresh reload is still being retrieved. A TRAIN-only native
+history collector is prepared to record actual direct-prefix/span and graph
+inputs, source/voice/code hashes and real-to-virtual receipt boundaries. These
+are raw conditioning only, never approved target labels; every past label must
+be masked before any independently checked future continuation can train.
 
 One explicit pending-state diagnostic7455886/87 improves acknowledgement of
 waiting but still omits both results and hallucinates physics. Reject more

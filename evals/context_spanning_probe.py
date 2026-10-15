@@ -50,6 +50,8 @@ def main():
     ap.add_argument('--adapter-zero',action='store_true')
     ap.add_argument('--pending-status',action='store_true',
         help='Supply actual request-started/delivery-pending state as a context span; diagnostic')
+    ap.add_argument('--train-history',action='store_true',
+        help='Capture actual native conditioning on approved TRAIN stimuli; never supervised past labels')
     ap.add_argument('--layout-audit',type=Path,
         help='Explicit native-layout candidate; require a successful actual input trace')
     args=ap.parse_args()
@@ -81,8 +83,12 @@ def main():
         if sha256(args.base/name)!=digest:raise RuntimeError('PersonaPlex base asset changed')
     data=validate_conversion(args.data)
     row=next(r for r in data['accepted'] if r['scenario_id']==args.scenario)
-    if row['split']!='validation' or row['kind'] not in ('private','simple','clarify','cancel'):
+    expected_split='train' if args.train_history else 'validation'
+    if row['split']!=expected_split or row['kind'] not in ('private','simple','clarify','cancel'):
         raise RuntimeError('Approved development behavior scene required')
+    if args.train_history and args.backend_mode!='native-asr':
+        raise RuntimeError('Student histories require actual native requests and arrived-audio ASR')
+    args.source_split=row['split']
     if row['kind']!='private' and args.backend_mode!='native-asr':
         raise RuntimeError('Control scenes require native backend decisions and actual ASR')
     if len(args.private_value.split())!=2:raise RuntimeError('Expected declared two-word development value')
@@ -149,7 +155,25 @@ def main():
         for _ in range(16):engine.step(np.zeros(engine.frame_size,dtype=np.float32))
         torch.cuda.synchronize();warm={'frames':16,'seconds':time.monotonic()-began,
             'before_conversation_seed_reset':True,'all_streams_reset_afterwards':True}
-    seed_all(42424242);engine.reset();engine.set_persona(BASE_INSTRUCTIONS,voice)
+    seed_all(42424242);engine.reset()
+    history=None
+    if args.train_history:
+        from evals.context_student_history import Recorder
+        torch.save({'codes':voice.detach().cpu()},args.out/'student-voice.pt')
+        history=Recorder(engine,args.out,{
+            'split':row['split'],'scenario':row['scenario_id'],'kind':row['kind'],
+            'conversion':str(args.data),'ingestion_sha256':sha256(args.data/'ingestion.json'),
+            'wav_sha256':row['wav_sha256'],'sidecar_sha256':row['sidecar_sha256'],
+            'assets_manifest_sha256':sha256(args.assets),
+            'voice_codes_sha256':sha256(args.out/'student-voice.pt'),
+            'recorder_code_sha256':sha256(Path(__file__).with_name('context_student_history.py')),
+            'probe_code_sha256':sha256(Path(__file__)),
+            'native_run_code_sha256':sha256(Path(__file__).with_name('context_spanning_native.py')),
+            'repo_commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()})
+    engine.set_persona(BASE_INSTRUCTIONS,voice)
+    if history:
+        history.mode='live'
+        engine._dl_student_history=history
     torch.cuda.synchronize()
     loading={'loads':records,'final_lm_strict':True,'dep_q':engine.lm.dep_q,
         'scenario':args.scenario,'scenario_kind':row['kind'],
@@ -159,6 +183,9 @@ def main():
         'torch':torch.__version__,'torch_file':torch.__file__,'cuda':torch.version.cuda}
     (args.out/'loading.json').write_text(json.dumps(loading,indent=2)+'\n')
     world=RecordWorld({meta['project']:{meta['field']:args.private_value}} if row['kind']!='simple' else {})
+    if history:
+        history.source['declared_counterfactual_world']=world.records
+        history.source['world_available_to_model_before_actual_receipt']=False
     if args.backend_mode=='native-asr':
         from evals.context_spanning_native import run
         run(engine,user,world,args,loading)

@@ -62,7 +62,8 @@ def native_prelead(text_codes, side, encode, frame_rate=12.5):
         else:
             cancels = [e for e in side['timeline']['events'] if e['ch'] == 'user'
                 and e['kind'] == 'utterance' and 'cancel' in e['text'].casefold()]
-            if len(cancels) != 1 or cancels[0]['actual_end_ms'] / 1000 > time_s:
+            heard_cancel = any(e['role'] == 'user' and 'cancel' in e['text'].casefold() for e in context)
+            if len(cancels) != 1 or cancels[0]['actual_end_ms'] / 1000 > time_s or not heard_cancel:
                 raise RuntimeError('Derived cancellation predates its complete user instruction')
         derived[target] = 4
         records.append({'operation': operation, 'source_dispatch_frame': old,

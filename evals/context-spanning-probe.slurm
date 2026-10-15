@@ -27,6 +27,7 @@ if [ "${CONTEXT_BACKEND_MODE:-scheduled}" = native-asr ]; then
 fi
 if [ "${CONTEXT_WARM_AUDIO:-0}" = 1 ]; then EXTRA+=(--warm-audio); fi
 if [ "${CONTEXT_PENDING_STATUS:-0}" = 1 ]; then EXTRA+=(--pending-status); fi
+if [ "${CONTEXT_TRAIN_HISTORY:-0}" = 1 ]; then EXTRA+=(--train-history); fi
 if [ -n "${CONTEXT_ADAPTER_JOB:-}" ]; then
  [[ "$CONTEXT_ADAPTER_JOB" =~ ^[0-9]+$ ]]
  EXTRA+=(--adapter-proof "$DL/runs/context-training-proof-$CONTEXT_ADAPTER_JOB")
