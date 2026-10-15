@@ -29,11 +29,20 @@ conditioning. All nine raw top-one predictions match; RMS logit differences are
 0.0379–0.1219, KL 0.000153–0.00863. This is evidence of similar graph behavior,
 not numerical identity, actual masked control agreement or incremental-KV proof.
 
-Next: native S3 round trips and independent speech audits of the 48 approved
-TRAIN scenes; causal result-ready training views with actual student history;
-then a bounded native semantic-adapter proof before training scale-up. Persona
-adaptations remain failed references. All source data remains immutable, no
-held-out content enters training, and no Lychee optimizer run exists yet.
+Native S3 conversion 7452500 yields 125 segments from 48 approved TRAIN scenes;
+audit 7452502 accepts 106 and excludes 19. Actual student histories 7452624–31
+support seven causal native semantic examples (7452831), with all past loss
+masked and private text targets after actual results. The eighth lacks exact
+native gold transcript agreement and is excluded.
+
+First semantic proofs 7452899/7452921 reject NaN gradients before updates on the
+default attention path. Matched no-cuDNN 7452937 and math 7452938 pass eight
+updates: 2,883,584 trainable parameters in main layers 24–27, unchanged frozen
+hashes, zero same-input speech/control drift and exact fresh-adapter reload.
+Checkpoint 7452937 SHA 5c238a774042eee2596350b53fd04afd83ea689b8ed470475001e7636adf7965.
+No task improvement is claimed yet. Next are cold native weight-merge and
+actual-worker comparisons in both validation worlds. Paired TRAIN histories
+7452946–58 are also collecting. Keep held-out data excluded from all training.
 
 Code moves through Git only. New jobs use clean immutable worktrees and exact
 commits. Fetch full logs before local filtering. Preserve unrelated pyc, roadmap

@@ -3195,3 +3195,18 @@ than treating reference-reading or seven repeated facts as general grounding.
 No source/counterfactual/held-out data are relabelled. Native S3/gold and causal
 assembly checks still decide which collected histories may train. This read-only
 collection can proceed while the gradient-kernel diagnostics run.
+
+**Plain words — native semantic implementation now passes:** no-cuDNN 7452937
+and math 7452938 both complete eight updates on identical data/seed/recipe. Both
+train all 56 intended tensors (2,883,584 parameters), preserve zero-adapter text /
+speech / control exactly, preserve frozen SHA 97006db0d1e74178277b1c474f5bb85200c40d7c9e36997a073369d475e77098,
+preserve same-input raw speech/control outputs exactly after updates, and reload
+fresh adapters exactly. Default 7452899/7452921 fail before updates; same-GPU
+kernel diagnosis can further separate backend from node differences. Use the
+no-cuDNN checkpoint as the first native deployment diagnostic, not a qualified
+model: SHA 5c238a774042eee2596350b53fd04afd83ea689b8ed470475001e7636adf7965.
+The math checkpoint SHA is 6e01535ec100429936ce1cac4ee2c22477e09a115d0926ecbcbf8697b7498d5d.
+Cold native BF16 merging must account for all 28 intended weight matrices and
+retain the strict all-982-source-tensor loading receipt. Run both actual worlds
+with native/model timing and with the disclosed single client-response event.
+All words/audio remain sampled; dispatch is scheduled. No task success claimed.
