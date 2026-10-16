@@ -18,6 +18,16 @@ passes on unseen lessons — that is generalization, not memorization.
 
 ## 16 October 2026 — actual-history corrections, still no qualified model
 
+Plain words: corrected loss run7475992 reaches136 updates and reloads exactly,
+but the native task failures remain. TRAIN000 and changed private validation
+000/001 do not give complete correct values; pencil005 text is correct;
+clarify006 fails; cancel007 hits an invalid-tool argument. Reject scaling this
+three-conversation recipe. Source90ef8eb preserves invalid calls as failed
+backend results instead of crashing PCM, with16 passing regression tests.
+The next raw-data collection targets actual TRAIN simple008/009, clarify016,
+cancel020 (7476737–40). Earlier7476271/76/79/81 were private004–007, not controls;
+3005c58 adds an expected-kind guard. No new raw history is an approved label.
+
 Plain words: a source comparison identifies an actual training mismatch:
 upstream includes PAD3 silence with0.5 weight, while our early continuation
 mask discarded it. New sourcead82745 retains capture verification unchanged,

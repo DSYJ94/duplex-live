@@ -8,6 +8,30 @@ freeze recipe by17 October12:00Berlin and stop new training by18 October18:00.
 See [dated delivery plan](docs/DELIVERY_PLAN_2026-10-19.md). Time-box small
 experiments; this deadline does not waive causal-data, voice or task gates.
 
+Plain words: corrected recipe7475992 (136 total updates) PASSES exact reload
+but FAILS native private-result use, including TRAIN000. Native7476104/05/06
+are wrong/missing complete values;7476107 gives the correct pencil/graphite
+text;7476108 fails clarification;7476109 stops on an invalid backend record
+argument. Do not scale this three-conversation recipe or call it qualified.
+Source90ef8eb fixes that runtime crash by turning rejected tool arguments into
+explicit failed results, never success receipts;16 regression tests pass.
+
+Plain words: cloud export now passes all3 independent data approvals inside an
+isolated amd64 Docker container, without Isambard filesystem access. Python
+open tracing missed libsndfile's native reads; added286 scene-audio files
+(612MB), hash/size checked, alongside845 observed files (1.24GB). Both manifests
+and restored audit results live in `runs/cloud-export-20261016`. The corrected
+8/136-update checkpoints, required temporal preflight, accepted voice reference,
+all3 future components and raw student histories are included. Actual amd64 GPU
+model resume and model-weight transfer verification remain pending.
+
+Plain words: further raw TRAIN data must cover controls, not only private facts.
+Initial captures7476271/76/79/81 completed but TRAIN004–007 are PRIVATE scenes
+(fold numbering differs from validation), so they are not control evidence.
+Corrected collector3005c58 adds an explicit expected-kind guard. Verified TRAIN
+control captures7476737/38/39/40 are simple008/simple009/clarify016/cancel020.
+They are conditioning evidence only, with no automatic optimizer approval.
+
 Plain words: the current stage corrects a confirmed loss mismatch. Upstream
 `contextspan/training/finetune.py` lines38–51 trains real PAD3 silence at half
 weight; our sparse early mask excluded it. Sourcead82745 independently verifies
