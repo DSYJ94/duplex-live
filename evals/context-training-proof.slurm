@@ -23,7 +23,9 @@ ARGS=(--assets "$DL/runs/context-spanning-assets-7454205/manifest.json"
  --cache "$DL/runs/recovery-codes-7434926" --cache "$DL/runs/recovery-codes-7435538"
  --out "$DL/runs/context-training-proof-${SLURM_JOB_ID}")
 if [ "${CONTEXT_TEXT_PADDING:-legacy-epad0}" = context-pad3 ]; then ARGS+=(--text-padding context-pad3); fi
-if [ "${CONTEXT_REQUEST_POLICY:-source-dispatch}" = native-prelead ]; then ARGS+=(--request-policy native-prelead); fi
+if [ "${CONTEXT_REQUEST_POLICY:-source-dispatch}" != source-dispatch ]; then
+ ARGS+=(--request-policy "$CONTEXT_REQUEST_POLICY")
+fi
 if [ "${CONTEXT_INTEGRATED_HISTORY:-0}" = 1 ]; then ARGS+=(--history-audit); fi
 if [ "${CONTEXT_HISTORY_LOGITS:-0}" = 1 ]; then ARGS+=(--history-logits); fi
 if [ "${CONTEXT_PILOT:-0}" = 1 ]; then

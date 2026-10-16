@@ -38,7 +38,7 @@ def main():
     ap.add_argument('--history-logits', action='store_true',
         help='Also compare canonical streamed and batched temporal outputs in the history audit')
     ap.add_argument('--text-padding', choices=('legacy-epad0','context-pad3'), default='legacy-epad0')
-    ap.add_argument('--request-policy', choices=('source-dispatch','native-prelead'), default='source-dispatch')
+    ap.add_argument('--request-policy', choices=('source-dispatch','native-prelead','native-prelead-epad'), default='source-dispatch')
     args = ap.parse_args()
     if args.history_logits and not (args.history_audit or args.history_audit_only):
         ap.error('Temporal history logits require a history audit')

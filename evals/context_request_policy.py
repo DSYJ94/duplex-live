@@ -74,3 +74,30 @@ def native_prelead(text_codes, side, encode, frame_rate=12.5):
     if [t for t in derived if t >= 5] != [t for t in source if t >= 5]:
         raise RuntimeError('Request conversion changed measured words')
     return derived, records
+
+
+def native_prelead_epad(text_codes, side, encode, frame_rate=12.5):
+    """Retain observed native EPAD0 -> RET4 -> first-word ordering.
+
+    Ordinary end-padding cues stay in place. Where RET occupies the existing
+    lead's EPAD slot, move that cue one earlier empty frame; never move a word.
+    """
+    source = list(text_codes)
+    derived, records = native_prelead([3 if t == 0 else t for t in source], side, encode, frame_rate)
+    for frame, token in enumerate(source):
+        if token == 0 and derived[frame] != 4:
+            derived[frame] = 0
+    for record in records:
+        ret = record['derived_request_frame']
+        epad = ret - 1
+        if (epad < 0 or derived[epad] not in (0, 3)
+                or not (source[ret] == 0 or (source[ret] == 4 and source[epad] == 0))):
+            raise RuntimeError('Native EPAD/RET order cannot preserve the measured lead without collision')
+        derived[epad] = 0
+        original_epad = ret if source[ret] == 0 else epad
+        record.update(source_end_padding_frame=original_epad, derived_end_padding_frame=epad,
+            end_padding_shift_frames=epad - original_epad,
+            label_provenance='derived observed EPAD0 RET4 lead order; actual dispatch clock unchanged')
+    if derived.count(0) != source.count(0):
+        raise RuntimeError('Request conversion lost an existing end-padding cue')
+    return derived, records

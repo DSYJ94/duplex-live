@@ -1,6 +1,6 @@
 import copy
 import unittest
-from evals.context_request_policy import native_prelead
+from evals.context_request_policy import native_prelead, native_prelead_epad
 
 
 class RequestPolicyTest(unittest.TestCase):
@@ -28,6 +28,18 @@ class RequestPolicyTest(unittest.TestCase):
         self.assertEqual(side, before)
         self.assertEqual(records[0]['source_dispatch_frame'], 20)
         self.assertFalse(records[0]['actual_worker_dispatch_remeasured'])
+
+    def test_epad_ret_variant_retains_other_word_cues(self):
+        codes, side = self.scene()
+        codes[24], codes[30] = 0, 0
+        result, records = native_prelead_epad(codes, side, {'Check': [10], 'now': [11]}.__getitem__)
+        self.assertEqual(result[23:27], [0, 4, 10, 11])
+        self.assertEqual(result[30], 0)
+        self.assertEqual(records[0]['derived_end_padding_frame'], 23)
+        codes[23] = 12
+        side['alignments'].insert(0, ['Earlier', [1.84, 1.9], 'SPEAKER_MAIN'])
+        with self.assertRaisesRegex(RuntimeError, 'EPAD/RET'):
+            native_prelead_epad(codes, side, {'Earlier': [12], 'Check': [10], 'now': [11]}.__getitem__)
 
     def test_project_must_be_in_arrived_user_words(self):
         codes, side = self.scene()

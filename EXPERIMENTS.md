@@ -3587,3 +3587,21 @@ expiry remains16 October10:39:50 Berlin. Next batch is concretely prepared in
 `evals/context-native-policy-next.sh`; syntax/hash constants are locally checked,
 but this helper has not executed remotely. It gates a bounded pilot and its
 eight dependent behavior replays on the saved, verified preflight.
+
+
+## 2026-10-16 — Access restored; PAD3 calibration and observed EPAD ordering
+
+Plain words: renewed Clifton works over normal SSH at07:46UTC. Certificate
+expires21:46:11Berlin. The prepared batch submits pilot7463729, calibration
+7463730 and eight native dependents7463731/33/34/35/36/37/38/39. Pilot reload
+passes; SHA7a6894b3604209188e0446b7df68686e2d0d99ed7d2f5a79d77b5a6cd9c1e51f.
+No behavioral improvement is claimed before those tests finish.
+
+Calibration7463730 uses all48 PAD3/native-prelead TRAIN histories. Zero→8-step
+word NLL11.339→11.206, private NLL10.426→10.322, RET NLL20.545→20.499/top1
+0/40. This differs from the old legacy-label diagnostic, so do not call it
+regression on identical inputs. Direct free-running accepted captures7454283/85
+contain29/46 EPAD0 tokens, including0→4→first-word at both native RET events.
+The next explicit variant retains those cues, repositions the lead cue one
+empty frame before derived RET and preserves other EPAD/word/audio targets.
+Seven pure causal/conversion regressions pass; full-corpus/GPU checks follow.

@@ -20,8 +20,9 @@ def load_training(caches, spm, prefix, max_frames=1100, text_padding='legacy-epa
     examples, records, seen, waves = [], [], set(), set()
     if text_padding not in ('legacy-epad0', 'context-pad3'):
         raise ValueError('Unknown explicit text-padding convention')
-    if request_policy not in ('source-dispatch', 'native-prelead') or (
-            request_policy == 'native-prelead' and text_padding != 'context-pad3'):
+    if request_policy not in ('source-dispatch', 'native-prelead', 'native-prelead-epad') or (
+            request_policy == 'native-prelead' and text_padding != 'context-pad3') or (
+            request_policy == 'native-prelead-epad' and text_padding != 'legacy-epad0'):
         raise ValueError('Native request conversion requires explicit Context padding')
     for cache in caches:
         receipt = validate_cache(cache)
@@ -73,9 +74,10 @@ def load_training(caches, spm, prefix, max_frames=1100, text_padding='legacy-epa
             if text_padding == 'context-pad3':
                 codes[0, codes[0] == 0] = 3
             policy_records = None
-            if request_policy == 'native-prelead':
-                from evals.context_request_policy import native_prelead
-                text, policy_records = native_prelead(codes[0].tolist(), side, spm.encode)
+            if request_policy != 'source-dispatch':
+                from evals.context_request_policy import native_prelead, native_prelead_epad
+                convert = native_prelead_epad if request_policy == 'native-prelead-epad' else native_prelead
+                text, policy_records = convert(codes[0].tolist(), side, spm.encode)
                 codes[0] = torch.tensor(text, dtype=codes.dtype)
                 native_word_timing(codes[0].tolist(), side['alignments'], spm.encode, 12.5)
             assembled, tmask, amask = assemble_training_sequence(

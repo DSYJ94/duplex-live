@@ -1,6 +1,28 @@
 # HANDOFF — where we are (updated 2026-10-16 for active recovery)
 
-## Current execution — 15 October, Context Spanning adaptation proof
+## Current execution — 16 October, access restored and native-convention checks
+
+Plain words: the owner renewed Clifton and authorised retry. Normal SSH works
+at07:46UTC/09:46Berlin on16 October; current certificate expires21:46:11Berlin.
+The previous pre-auth access block below is historical, not a current blocker.
+Prepared batch ran successfully:128 pilot7463729, TRAIN calibration7463730 and
+native dependent tests7463731/33/34/35/36/37/38/39. Pilot passes exact fresh
+reload; checkpoint SHA7a6894b3604209188e0446b7df68686e2d0d99ed7d2f5a79d77b5a6cd9c1e51f.
+Behavior results are still being retrieved. Saved preflight7457079 is now fully
+backed locally, with adapter/data/voice hashes checked.
+
+Calibration7463730 on the PAD3/pre-lead corpus has ordinary-word NLL11.339→11.206
+and private-phrase NLL10.426→10.322 after8 updates; RET top1 remains0/40.
+These figures must not be compared as an unchanged-label learning curve against
+the old legacy-padding diagnostic. Direct accepted native captures7454283/85
+contain29/46 EPAD0 tokens and both show EPAD0→RET4→first word. A new explicit
+`native-prelead-epad` conversion retains ordinary EPAD cues and moves only a
+lead's cue into an empty frame before its derived RET. Every source and derived
+cue frame is recorded; no words/audio/receipt clocks move. Require all48 causal
+checks and an integrated8-step proof before any larger run. Published convenience
+preparation's PAD3-only format is not proof the checkpoint prefers that format.
+
+### Earlier recovery evidence — 15 October
 
 Plain words: no complete model qualifies. The owner says Context Spanning with
 the synthetic reference is “as good or better” than smooth Lychee. Keep both as
