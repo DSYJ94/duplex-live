@@ -172,6 +172,7 @@ def main():
     ap.add_argument('--source-commit',required=True)
     ap.add_argument('--early-window',action='store_true',help='Plan a complete future before any student reply; CPU only')
     ap.add_argument('--request-policy',choices=('source-dispatch','native-prelead-epad'),default='source-dispatch')
+    ap.add_argument('--audit-early-capture',type=Path)
     ap.add_argument('--cache',type=Path,action='append',required=True)
     args=ap.parse_args()
     args.out.mkdir(exist_ok=False)
@@ -184,15 +185,19 @@ def main():
     voice=torch.load(args.history/'student-voice.pt',weights_only=True)['codes']
     examples,_=load_training(args.cache,spm,persona_prefix(BASE_INSTRUCTIONS,voice,spm),request_policy=args.request_policy)
     try:
-        result,_=plan(args.history,args.data,examples,spm)
-        if args.early_window:
-            from evals.context_early_plan import plan as early_plan
-            result,_=early_plan(result,examples)
+        if args.audit_early_capture:
+            from evals.context_early_validate import validate as validate_early
+            result,_=validate_early(args.audit_early_capture,args.data,args.assets,examples,spm,voice)
+        else:
+            result,_=plan(args.history,args.data,examples,spm)
+            if args.early_window:
+                from evals.context_early_plan import plan as early_plan
+                result,_=early_plan(result,examples)
         result['eligible_for_strict_replay']=True
     except RuntimeError as error:
         result={'eligible_for_strict_replay':False,'reason':str(error),
             'training_approved':False,'gold_targets_created':False}
-    (args.out/'future-plan.json').write_text(json.dumps(result,indent=2)+'\n')
+    (args.out/('early-future-audit.json' if args.audit_early_capture else 'future-plan.json')).write_text(json.dumps(result,indent=2)+'\n')
     print(json.dumps(result),flush=True)
 
 
