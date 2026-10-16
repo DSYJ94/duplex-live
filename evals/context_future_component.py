@@ -1,6 +1,7 @@
 """Approved teacher sentence after verified actual student history; text-only component."""
 import json
 import math
+import subprocess
 from pathlib import Path
 from evals.moshi_model_download import sha256
 from evals.context_actual_targets import matching_user_stimulus, actual_private_receipt, sentence_target, captured_packets
@@ -80,7 +81,8 @@ def plan(history, data, examples, spm):
     if selected is None:raise RuntimeError('No verified quiet corrective boundary without an already-spoken value')
     i,receipt=selected
     result={'schema':'dl-context-actual-future-plan-v1','actual_history':str(history),
-        'actual_history_sha256':record['sha256'],'actual_report_sha256':sha256(history/'report.json'),
+        'actual_history_sha256':record['sha256'],
+        'actual_history_manifest_sha256':sha256(history/'student-history.json'),'actual_report_sha256':sha256(history/'report.json'),
         'actual_generated_audio_sha256':report['audio_sha256'],
         'quiet_boundary_audio_source':'verified model.wav and completely checked packet ledger',
         'teacher':example['record'],'selection':selection,'matching_approved_teacher_count':len(candidates),
@@ -138,7 +140,11 @@ def generate(engine,saved,index,rows,pcm,gold,manifest,out):
     torch.save({'delayed_inputs':torch.cat(inputs,dim=2),'hidden':torch.cat(features,dim=1),
         'text_targets':gold[0],'text_mask':text_mask,'provided':flags,
         'native_current_targets':target,'approved_assistant_codes':gold[1:9]},file)
-    result={**manifest,'schema':'dl-context-actual-future-component-v1','file':file.name,'sha256':sha256(file),
+    result={**manifest,'schema':'dl-context-actual-future-component-v1',
+        'builder_commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),
+        'builder_code_sha256':{name:sha256(Path(__file__).with_name(name)) for name in (
+            'context_future_component.py','context_actual_targets.py','context_engine_replay.py')},
+        'actual_restart_gate_sha256':sha256(out/'engine-replay-before-future.json'),'file':file.name,'sha256':sha256(file),
         'actual_engine_restart_passed':True,'all_future_user_codes_match_actual_capture':True,
         'native_pending_assistant_residuals_sampled_not_relabelled':True,
         'past_label_count':0,'future_word_targets':int((gold[0]>=5).sum()),

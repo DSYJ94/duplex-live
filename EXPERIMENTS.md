@@ -3774,3 +3774,14 @@ record current hidden/text targets. Pending pre-cut residuals stay unprovided
 and sampled. All past labels remain absent. This initial component has no
 audio loss, no optimizer and no voice/task qualification. Four more math TRAIN
 collectors7465804–07 are submitted in approved worlds000–003.
+
+
+Plain words: CPU eligibility finds three corrective candidates:7465804 (cut324,
+32 future frames, orange square),7465806 (cut221,56frames,purple triangle),
+and7465807 (cut256,35frames,orange triangle).7465805 is excluded because its
+correct value was already spoken; do not teach unnecessary repetition. Native
+dependency overlay is required for SentencePiece even in CPU-only checks.
+Quiet selection now derives packets from hash-verified model.wav and requires
+complete ledger/gap/sample/clock accounting; it does not trust an unhashed
+packet-stream side file. Eleven related local guards pass. GPU cut/replay and
+forced-future ownership validation follow; no optimizer has used these plans.
