@@ -18,6 +18,20 @@ passes on unseen lessons — that is generalization, not memorization.
 
 ## 16 October 2026 — actual-history corrections, still no qualified model
 
+
+Plain words: corrective ordinary-answer preparation is now sourcec35f8fb.
+Observe-only mode records natural simple TRAIN histories without backend
+execution or answer-bearing spans; it cannot qualify a task or approve labels.
+Captures7486102/04/05/06 correspond to TRAIN008/009/010/011, with exact zero-proof
+voice/layout7463825 and expected-kind=simple. First validate all four with
+`evals.context_history_validate` at collector commit
+`c35f8fbbcfa402ad43683d474ab66a1ac39ce292`, then add separate ordinary-answer
+future eligibility. Private receipt checks must remain unchanged. Metadata
+feasibility of the old four raw histories found answer-bearing spans during
+three teacher replies; report is `simple-control-feasibility.json` in the local
+continuation directory. New captures are raw conditioning only, not training.
+
+
 Plain words: early17 October — targeted state/payload tests finished. Native
 pending-status runs7485621/22 produce the correct orange square/teal star;
 independent CPU speech audit7485697 confirms both complete values (word error

@@ -224,3 +224,16 @@ sources and actual arrived user speech, with separate eligibility rules for
 non-factual actions. The fact-only receipt gate must not be weakened to smuggle
 in unsupported control labels. In parallel, measure request delay, pre-receipt
 speech and post-receipt value use separately. No qualified native model exists.
+
+
+Plain words: corrective ordinary-answer preparation is now sourcec35f8fb.
+Observe-only mode records natural simple TRAIN histories without backend
+execution or answer-bearing spans; it cannot qualify a task or approve labels.
+Captures7486102/04/05/06 correspond to TRAIN008/009/010/011, with exact zero-proof
+voice/layout7463825 and expected-kind=simple. First validate all four with
+`evals.context_history_validate` at collector commit
+`c35f8fbbcfa402ad43683d474ab66a1ac39ce292`, then add separate ordinary-answer
+future eligibility. Private receipt checks must remain unchanged. Metadata
+feasibility of the old four raw histories found answer-bearing spans during
+three teacher replies; report is `simple-control-feasibility.json` in the local
+continuation directory. New captures are raw conditioning only, not training.
