@@ -31,6 +31,9 @@ def run(lm, spm, voice, examples, args):
     if args.actual_temporal_audit:
         from evals.context_actual_temporal import audit
         return audit(lm,args.actual_head_data,components,audits,args.out)
+    if args.actual_temporal_fit:
+        from evals.context_actual_train import run as fit
+        return fit(lm,spm,voice,examples,components,audits,args)
     # Already normalized native features. No second delay, transformer, or out_norm.
     x = torch.cat([c['hidden'][0,c['text_mask']] for c in components]).cuda()
     y = torch.cat([c['text_targets'][c['text_mask']] for c in components]).cuda()

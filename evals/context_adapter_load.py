@@ -30,6 +30,22 @@ def before_engine(engine_module, proof, disabled=False, zero=False):
             and data['schema'] == 'dl-context-result-head-data-v1' and data['all_component_audits_passed']
             and data['past_loss_targets'] == data['audio_loss_targets'] == 0
             and bool(data['components']) and all(c['passed'] for c in data['components']))
+    elif report['schema'] == 'dl-context-actual-adapter-proof-v1':
+        data = json.loads((proof/'data.json').read_text())
+        from pathlib import Path
+        preflight = Path(report['actual_temporal_preflight'])/'actual-temporal-audit.json'
+        gate = json.loads(preflight.read_text())
+        specific = (report['last_layers'] == 4 and report['optimizer_steps'] == 8
+            and report['zero_adapter_native_batch_logits_exact'] and report['all_actual_temporal_audits_passed']
+            and report['all_component_audits_passed'] and report['past_loss_targets'] == report['audio_loss_targets'] == 0
+            and report['base_audio_parameters_frozen'] and report['actual_temporal_audit_sha256'] == sha256(preflight)
+            and gate['passed'] and gate['data_sha256'] == report['data_sha256']
+            and data['all_component_audits_passed'] and bool(data['components'])
+            and all(c['passed'] for c in data['components'])
+            and {r['kind'] for r in report['retention_examples']} == {'private','simple','clarify','cancel'}
+            and reload['schema'] == 'dl-context-actual-adapter-reload-v1'
+            and reload['all_valid_logits_exact'] and reload['actual'] == report['expected_logits']
+            and reload['data_sha256'] == report['data_sha256'])
     elif report['schema'] == 'dl-context-adapter-proof-v1':
         specific = (report['zero_adapter_all_valid_logits_exact'] and report['native_depth_parity']['passed']
             and report['canonical_logits_dtype'] == 'float32' and reload['all_valid_logits_exact'])

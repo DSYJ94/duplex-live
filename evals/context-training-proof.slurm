@@ -74,6 +74,11 @@ if [ -n "${CONTEXT_ACTUAL_HEAD_JOBS:-}" ]; then
   run_container -m evals.context_training_proof "${ARGS[@]}" "${HEAD[@]}" --actual-temporal-audit
   exit 0
  fi
+ if [ "${CONTEXT_ACTUAL_TEMPORAL_FIT:-0}" = 1 ]; then
+  : "${CONTEXT_ACTUAL_TEMPORAL_PREFLIGHT_JOB:?Passed matching temporal audit required}"
+  [[ "$CONTEXT_ACTUAL_TEMPORAL_PREFLIGHT_JOB" =~ ^[0-9]+$ ]]
+  HEAD+=(--actual-temporal-fit --actual-temporal-preflight "$DL/runs/context-training-proof-$CONTEXT_ACTUAL_TEMPORAL_PREFLIGHT_JOB")
+ fi
  run_container -m evals.context_training_proof "${ARGS[@]}" "${HEAD[@]}"
  run_container -m evals.context_training_proof "${ARGS[@]}" "${HEAD[@]}" --reload
  exit 0
