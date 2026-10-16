@@ -58,6 +58,13 @@ def run(lm, voice, histories, data, assets, source_commit, warm_graphs=True):
 
     from evals.context_execution import snapshot as execution_snapshot
     execution = execution_snapshot(lm)
+    from evals.context_execution import restore_attention
+    executions = [r.get('execution') for r in records]
+    if any(e is not None for e in executions):
+        if any(e is None or e != executions[0] for e in executions):
+            raise RuntimeError('Actual restart batch mixes execution settings')
+        restore_attention(executions[0])
+        execution = execution_snapshot(lm)
     results = []
     for path, record, check in zip(histories, records, checks):
         saved = torch.load(path / 'student-history.pt', map_location='cpu', weights_only=True)

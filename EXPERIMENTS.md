@@ -3686,3 +3686,12 @@ prefix (hidden max0.25, text max0.1875). The first following input is exact;
 the second differs after sampled audio divergence. RNG is downstream of the
 first observed mismatch. Source/execution settings need explicit recording.
 Cold numerical replay is submitted separately; no approval threshold changes.
+
+
+Plain words: cold numerical7464626 still differs from the first prefix, ruling
+out replay warmup alone. Same-label TRAIN calibration7464552 shows128 steps
+fit ordinary words (NLL1.897→1.308) while native behavior worsens; this supports
+the teacher/student-history mismatch diagnosis, not scaling dense training.
+Next single-variable numerical control selects Torch math attention for both
+actual capture and replay. The native default is preserved; weights, user audio
+and sampling settings are unchanged. Execution flags are now explicitly saved.

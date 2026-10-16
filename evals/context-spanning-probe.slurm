@@ -22,6 +22,7 @@ set -a
 source "$DL/keys/openai.env"
 set +a
 EXTRA=()
+if [ "${CONTEXT_MATH_ATTENTION:-0}" = 1 ]; then EXTRA+=(--math-attention); fi
 if [ "${CONTEXT_BACKEND_MODE:-scheduled}" = native-asr ]; then
  EXTRA+=(--backend-mode native-asr --asr-python "$DL/envs/moshi-annotation-7379026/bin/python")
 fi

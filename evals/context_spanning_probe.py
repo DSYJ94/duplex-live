@@ -50,6 +50,8 @@ def main():
     ap.add_argument('--adapter-zero',action='store_true')
     ap.add_argument('--pending-status',action='store_true',
         help='Supply actual request-started/delivery-pending state as a context span; diagnostic')
+    ap.add_argument('--math-attention', action='store_true',
+        help='Explicit numerical replay diagnostic; use Torch math attention only')
     ap.add_argument('--train-history',action='store_true',
         help='Capture actual native conditioning on approved TRAIN stimuli; never supervised past labels')
     ap.add_argument('--layout-audit',type=Path,
@@ -63,6 +65,9 @@ def main():
     import numpy as np
     import soundfile as sf
     import torch
+    if args.math_attention:
+        from evals.context_execution import math_attention
+        math_attention()
     from evals.personaplex_train import MODEL_HASHES
     from evals.recovery_data import validate_conversion
     from evals.recovery_context import causal_dialogue
