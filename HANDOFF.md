@@ -8,6 +8,22 @@ freeze recipe by17 October12:00Berlin and stop new training by18 October18:00.
 See [dated delivery plan](docs/DELIVERY_PLAN_2026-10-19.md). Time-box small
 experiments; this deadline does not waive causal-data, voice or task gates.
 
+Plain words: the owner requires continued training and development after expiry,
+across AWS/GCP/Modal/Nebius/Runpod; destination undecided. No paid resources
+provisioned. `portable/context` contains the pinned amd64 CUDA recipe; local
+Docker build is in progress, not verified. Atomic optimizer/adapter/RNG state
+support is in immutable f3804c6; interrupted/uninterrupted CPU tests pass.
+New full-model state reload and destination GPU validation are still required.
+Exact resume binds the same source/data/recipe; do not change those silently.
+
+Plain words: early captures7467981/7468102/7468611 completed. First independent
+CPU audit passes88 text targets, including request, with no past/span/audio loss.
+Three-component temporal audit7469288 uses the short interactive reservation;
+pending workq duplicate7469148 was cancelled first. Early manifests remain
+quarantined; separate independent audit controls eligibility. No new native
+behavior success is claimed. All8 head-only validation tests7467595–7467602
+completed; their outputs reject head-only proof7466440 as a useful candidate.
+
 Plain words: temporal7467496 PASSES exact fresh reload and is backed locally
 with adapter/data/voice/packaged-audit hashes checked. Native7467590 gets actual
 results (backend failures0, RET2) but omits orange square. Independent speech

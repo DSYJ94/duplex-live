@@ -1,0 +1,15 @@
+# Recreate native wheels on the target architecture; preserve the NGC Torch stack.
+numpy==2.2.6
+safetensors==0.6.2
+einops==0.8.1
+sentencepiece==0.2.1
+huggingface-hub==0.34.4
+sphn==0.2.1
+soundfile==0.13.1
+pyloudnorm==0.1.1
+future==1.0.0
+scipy==1.16.2
+librosa==0.11.0
+requests==2.32.5
+packaging==25.0
+PyYAML==6.0.3

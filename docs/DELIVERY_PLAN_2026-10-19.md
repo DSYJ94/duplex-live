@@ -41,6 +41,14 @@ Public model weights can be restored from their pinned revisions; custom data
 and checkpoints have first priority. The deliverable must not require an
 active Isambard allocation merely to inspect or recover it.
 
+The owner has not chosen a destination provider. Training and inference must
+remain portable to AWS, GCP, Modal, Nebius or Runpod. Include optimizer moments,
+completed updates, RNG states and exact recipe/data/source identity so work can
+continue after expiry. No paid destination resources are provisioned yet.
+See [portable environment](../portable/context/README.md). The source supports
+atomic per-update state saving; exact interrupted/uninterrupted CPU tests pass.
+An actual model-state resume and amd64 GPU validation remain pending.
+
 ## Starting evidence on16 October
 
 Accepted Context Spanning synthetic-reference voice remains the leading voice.
@@ -48,5 +56,7 @@ No candidate yet passes the full delegation/control task. Actual late-correction
 components and head/temporal engineering proofs pass serialization and numerical
 checks; temporal adapter7467496 still omits the private answer in native7467590.
 Independent speech audit7467658 finds WER0.0222, so intelligibility does not
-resolve the factual failure. Early capture7467981 is quarantined pending its
-own artifact audit and has no optimizer approval.
+resolve the factual failure. Early captures7467981/7468102/7468611 completed;
+the first passes its independent CPU audit with88 text targets and no past,
+span or audio loss. Three-component temporal audit7469148 is queued. Capture
+manifests stay quarantined; separate independent audit determines eligibility.

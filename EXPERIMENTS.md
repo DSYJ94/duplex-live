@@ -18,6 +18,16 @@ passes on unseen lessons — that is generalization, not memorization.
 
 ## 16 October 2026 — actual-history corrections, still no qualified model
 
+Plain words: the complete early continuation now starts before the student's
+first reply, retaining the original user audio and result-arrival clock. Three
+native captures7467981/7468102/7468611 completed; first independent audit passes
+88 text targets with zero past/span/audio losses. Temporal audit7469288 is
+pending; no training or free-running improvement is inferred from captures.
+The new checkpoint helper also passes exact interrupted-versus-uninterrupted
+CPU continuation and rejects changed data. Full-model optimizer-state resume
+and amd64 GPU continuation remain unverified. Provider-neutral image recipe is
+in `portable/context`; no paid cloud resources have been provisioned.
+
 Plain words: training on complete teacher conversations improved prediction on
 those conversations while damaging free-running behavior. We now keep the actual
 student conversation as conditioning and add only a separately approved teacher
