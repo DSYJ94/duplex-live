@@ -186,7 +186,8 @@ def main():
             prefix = persona_prefix(BASE_INSTRUCTIONS, voice, spm)
             examples, records = load_training(args.cache, spm, prefix, text_padding=args.text_padding,
                 request_policy=args.request_policy)
-            manifest, gold = plan(args.actual_replay[0], args.actual_source_data, examples, spm)
+            manifest, gold = plan(args.actual_replay[0], args.actual_source_data, examples, spm,
+                early=args.actual_early_window)
             if args.actual_early_window:
                 from evals.context_early_plan import plan as early_plan
                 manifest,gold = early_plan(manifest,examples)

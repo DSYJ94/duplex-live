@@ -7,7 +7,7 @@ from evals.moshi_model_download import sha256
 from evals.context_actual_targets import matching_user_stimulus, actual_private_receipt, sentence_target, captured_packets
 
 
-def plan(history, data, examples, spm):
+def plan(history, data, examples, spm, early=False):
     import numpy as np
     import soundfile as sf
     from evals.recovery_data import validate_conversion
@@ -15,8 +15,9 @@ def plan(history, data, examples, spm):
     record=json.loads((history/'student-history.json').read_text())
     conversion=validate_conversion(data)
     actual=next(r for r in conversion['accepted'] if r['scenario_id']==record['source']['scenario'])
-    if actual['split']!='train' or actual['kind']!='private':
-        raise RuntimeError('Initial actual-future component is private TRAIN only')
+    kinds = ('private','clarify') if early else ('private',)
+    if actual['split']!='train' or actual['kind'] not in kinds:
+        raise RuntimeError('Actual fact futures require eligible private/clarification TRAIN data')
     side=json.loads(Path(actual['path']).with_suffix('.json').read_text())
     project=side['timeline']['meta']['project'];field=side['timeline']['meta']['field']
     world=record['source']['declared_counterfactual_world']
@@ -27,7 +28,7 @@ def plan(history, data, examples, spm):
     candidates=[];sources_by_cache={}
     for example in examples:
         r=example['record']
-        if r['kind']!='private' or r['source_model']!='gpt-live-1':continue
+        if r['kind']!=actual['kind'] or r['source_model']!='gpt-live-1':continue
         cache=Path(r['cache']);cache_receipt=json.loads((cache/'cache.json').read_text())
         if cache not in sources_by_cache:
             approved=validate_conversion(Path(cache_receipt['conversion']))
@@ -62,8 +63,11 @@ def plan(history, data, examples, spm):
     quiet=[len(part)>0 and float(np.sqrt(np.mean(part**2)))<.005 and row['text_token'] in (0,3)
         for row,part in zip(rows,packets)]
     last_user=max(w['end_s'] for w in side['user_words'])
-    selected=None
-    for i in range(len(rows)-length-3):
+    selected = (0,actual_private_receipt(events,project,field,value,rows[-1]['input_available_s'])) if early else None
+    # A late correction needs a quiet gap and must not repeat an already-spoken
+    # fact. An early continuation instead independently checks a silent prefix
+    # before every student reply, and its original teacher clock after receipt.
+    for i in ([] if early else range(len(rows)-length-3)):
         if rows[i]['input_available_s']<last_user+.4 or not all(quiet[i:i+5]):continue
         # No actual context span can be silently dropped from the future interval.
         if any(rows[j+1]['history_virtual_frames_before_step']!=rows[j]['history_virtual_frames_after_step']
@@ -84,7 +88,8 @@ def plan(history, data, examples, spm):
         'actual_history_sha256':record['sha256'],
         'actual_history_manifest_sha256':sha256(history/'student-history.json'),'actual_report_sha256':sha256(history/'report.json'),
         'actual_generated_audio_sha256':report['audio_sha256'],
-        'quiet_boundary_audio_source':'verified model.wav and completely checked packet ledger',
+        'quiet_boundary_audio_source':'not required; early prefix/receipt clocks checked separately' if early
+            else 'verified model.wav and completely checked packet ledger',
         'teacher':example['record'],'selection':selection,'matching_approved_teacher_count':len(candidates),
         'world':world,'actual_private_receipt':receipt,'replay_cut_index':i,
         'future_first_real_frame':i+3,'future_frames':length,'all_past_labels_masked':True,
@@ -189,7 +194,7 @@ def main():
             from evals.context_early_validate import validate as validate_early
             result,_=validate_early(args.audit_early_capture,args.data,args.assets,examples,spm,voice)
         else:
-            result,_=plan(args.history,args.data,examples,spm)
+            result,_=plan(args.history,args.data,examples,spm,early=args.early_window)
             if args.early_window:
                 from evals.context_early_plan import plan as early_plan
                 result,_=early_plan(result,examples)
