@@ -106,12 +106,29 @@ def validate(folder, data, assets, examples, spm, voice):
             if not torch.equal(inputs[0,:2,v],gold[:2,n-1]):raise RuntimeError('Future text/semantic input delay changed')
         if n>=2 and v-indices[n-2]==2:
             if not torch.equal(inputs[0,2:9,v],gold[2:9,n-2]):raise RuntimeError('Future residual input delay changed')
-    value = next(iter(next(iter(m['world'].values())).values()))
-    phrase = spm.encode(value); positions = (gold[0]>=5).nonzero().flatten().tolist()
-    ids = gold[0,positions].tolist()
-    matches = [i for i in range(len(ids)-len(phrase)+1) if ids[i:i+len(phrase)]==phrase]
-    if len(matches) != 1:raise RuntimeError('Ambiguous first private fact in complete teacher future')
-    fact_frame = indices[positions[matches[0]]]
+    # Cache construction encodes each measured word separately, including quotes.
+    # Encoding the entire unquoted value can produce different SentencePiece IDs.
+    # Locate the fact in the independently selected measured sentence instead.
+    from evals.recovery_data import validate_conversion
+    from evals.recovery_prepare_data import spoken_words
+    cache_record = json.loads((Path(m['teacher']['cache'])/'cache.json').read_text())
+    teacher = next(r for r in validate_conversion(Path(cache_record['conversion']))['accepted']
+        if r['scenario_id'] == m['teacher']['id'])
+    side = json.loads(Path(teacher['path']).with_suffix('.json').read_text())
+    words = [a[0] for a in side['alignments'] if a[2] == 'SPEAKER_MAIN']
+    selection = late['selection']; left = selection['source_first_word_index']
+    sentence = words[left:selection['source_end_word_index']]
+    value = next(iter(next(iter(m['world'].values())).values())); phrase = spoken_words(value)
+    starts = [i for i in range(len(sentence))
+        if spoken_words(' '.join(sentence[i:i+len(phrase)])) == phrase]
+    if not phrase or len(starts) != 1:raise RuntimeError('Ambiguous measured private fact')
+    ordinal = sum(len(spm.encode(w.strip())) for w in words[:left+starts[0]])
+    example = next(e for e in examples if e['record'] == m['teacher'])
+    source_frame = int((example['clean_codes'][0]>=5).nonzero().flatten()[ordinal])
+    if not (selection['source_start_frame'] <= source_frame < selection['source_end_frame']
+            and begin <= source_frame < end):
+        raise RuntimeError('Measured private fact outside approved future sentence')
+    fact_frame = indices[source_frame-begin]
     result = {'schema':'dl-context-early-future-audit-v1','component':str(folder),'passed':True,
         'capture_manifest_sha256':sha256(folder/'early-future.json'),'tensor_sha256':m['sha256'],
         'restart_gate_sha256':m['actual_restart_gate_sha256'],'source_history_sha256':source['history_sha256'],
