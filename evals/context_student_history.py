@@ -13,6 +13,7 @@ class Recorder:
             raise RuntimeError('Student-history collection is TRAIN-only')
         self.engine, self.folder, self.source = engine, folder, source
         self.chunks, self.calls, self.frames, self.states = [], [], 0, []
+        self.temporal_outputs = []
         self.mode = 'prefix'
         self.active = False
         self.forward = engine.lm.forward_codes
@@ -32,6 +33,9 @@ class Recorder:
             try:
                 saved = value.detach().cpu().clone()
                 result = original(value)
+                self.temporal_outputs.append({
+                    'hidden': result[0][:, -1:].detach().cpu().clone(),
+                    'text_logits': result[1][:, :, -1:].detach().cpu().clone()})
                 self.chunks.append(saved)
                 self.calls.append({'path': path, 'mode': self.mode, 'start': self.frames,
                     'frames': value.shape[2]})
@@ -68,8 +72,8 @@ class Recorder:
         path = self.folder / 'student-history.pt'
         if len(self.states) != sum(c['mode'] == 'live' for c in self.calls):
             raise RuntimeError('Actual generator snapshots do not cover every real frame')
-        torch.save({'delayed_inputs': inputs, 'states': self.states}, path)
-        result = {'schema': 'dl-context-student-history-v2', 'source_split': 'train',
+        torch.save({'delayed_inputs': inputs, 'states': self.states, 'temporal_outputs': self.temporal_outputs}, path)
+        result = {'schema': 'dl-context-student-history-v3', 'source_split': 'train',
             'source': self.source, 'file': path.name, 'sha256': sha256(path),
             'shape': list(inputs.shape), 'calls': self.calls,
             'conditioning_only': True, 'past_labels_must_all_be_masked': True,

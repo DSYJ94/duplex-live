@@ -14,7 +14,7 @@ def validate(folder, data, assets, source_commit):
     report = json.loads((folder / 'report.json').read_text())
     record = json.loads((folder / 'student-history.json').read_text())
     source = record['source']
-    if (record['schema'] not in ('dl-context-student-history-v1','dl-context-student-history-v2')
+    if (record['schema'] not in ('dl-context-student-history-v1','dl-context-student-history-v2','dl-context-student-history-v3')
             or record['source_split'] != 'train'
             or source['split'] != 'train' or report['source_split'] != 'train'
             or record['training_approved'] is not False or report['training_approved'] is not False
@@ -50,7 +50,9 @@ def validate(folder, data, assets, source_commit):
         raise RuntimeError('Actual history or recording hash changed')
     saved = torch.load(folder / record['file'], map_location='cpu', weights_only=True)
     inputs = saved['delayed_inputs']
-    keys = {'delayed_inputs', 'states'} if record['schema'].endswith('v2') else {'delayed_inputs'}
+    keys = {'delayed_inputs'}
+    if not record['schema'].endswith('v1'): keys.add('states')
+    if record['schema'].endswith('v3'): keys.add('temporal_outputs')
     if (set(saved) != keys or list(inputs.shape) != record['shape']
             or inputs.shape[:2] != (1, 17) or inputs.dtype != torch.int64
             or (inputs < -1).any() or (inputs[:, 0] > 32000).any() or (inputs[:, 1:] > 2048).any()):
@@ -78,7 +80,7 @@ def validate(folder, data, assets, source_commit):
         if (call['start'] != row['history_virtual_frames_before_step']
                 or call['start'] + 1 != row['history_virtual_frames_after_step']):
             raise RuntimeError('Real input frame no longer maps to its actual native forward')
-    if record['schema'].endswith('v2'):
+    if not record['schema'].endswith('v1'):
         if len(saved['states']) != len(rows) or not record['snapshot_after_every_real_frame']:
             raise RuntimeError('Incomplete actual generator snapshots')
         for state, row in zip(saved['states'], rows):
@@ -91,6 +93,14 @@ def validate(folder, data, assets, source_commit):
             pos = state['offset'] % state['cache'].shape[2]
             if state['provided'][:, 1:9, pos].any() or int(state['provided'][:, 9:17, pos].sum()) != 7:
                 raise RuntimeError('Unobserved assistant acoustics were marked provided')
+    if record['schema'].endswith('v3'):
+        if len(saved['temporal_outputs']) != len(calls):
+            raise RuntimeError('Temporal numerical evidence does not cover every native forward')
+        for output in saved['temporal_outputs']:
+            if (set(output) != {'hidden', 'text_logits'} or output['hidden'].shape != (1, 1, 4096)
+                    or output['text_logits'].shape not in ((1, 1, 1, 32000), (1, 1, 1, 32001))
+                    or not all(torch.isfinite(v).all() for v in output.values())):
+                raise RuntimeError('Invalid actual temporal output evidence')
     return {'scenario': source['scenario'], 'shape': record['shape'], 'live_forwards': len(live),
         'actual_spans': len(spans), 'history_sha256': record['sha256'],
         'report_sha256': sha256(folder / 'report.json'), 'raw_integrity_passed': True,

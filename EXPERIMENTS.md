@@ -3653,3 +3653,11 @@ from step1. No histories are approved for gold targets. Ranked hypotheses:
 (1) warm graph path differs from original cold capture, (2) replay numerical
 differences alter sampled acoustics, (3) unrecorded depth state. Next experiment
 changes only graph warmup; acceptance remains complete next-state equality.
+
+
+Plain words: cold-graph diagnostic7464272 also fails assistant-acoustic exactness,
+while text/ownership/clocks/global RNG still match. Warmup alone is not the
+fix. Prepare v3 collectors saving each actual native call's final hidden vector
+and text logits outside the graph. Replay will compare these before sampling
+to separate temporal numerical differences from depth/sampler state. Raw
+conditioning and all future targets remain unapproved; thresholds are unchanged.

@@ -14,7 +14,7 @@ def run(lm, voice, histories, data, assets, source_commit, warm_graphs=True):
     from evals.personaplex_adapters import install_adapters
     checks = [validate(p, data, assets, source_commit) for p in histories]
     records = [json.loads((p / 'student-history.json').read_text()) for p in histories]
-    if any(r['schema'] != 'dl-context-student-history-v2' for r in records):
+    if any(r['schema'] not in ('dl-context-student-history-v2','dl-context-student-history-v3') for r in records):
         raise RuntimeError('Actual restart gate needs recorded generator snapshots')
     for path in histories:
         report = json.loads((path / 'report.json').read_text())
@@ -87,12 +87,23 @@ def run(lm, voice, histories, data, assets, source_commit, warm_graphs=True):
                 positions, after_reset = temporal_state()
                 if pointers != after_reset or any(positions.values()):
                     raise RuntimeError('In-place reset changed KV storage or retained temporal positions')
-                for call in record['calls']:
+                numerical = []
+                def compare(call_index, output):
+                    if 'temporal_outputs' not in saved: return
+                    expected = saved['temporal_outputs'][call_index]
+                    actual = {'hidden': output[0][:, -1:].detach().cpu(),
+                        'text_logits': output[1][:, :, -1:].detach().cpu()}
+                    numerical.append({'call': call_index, **{key: {
+                        'exact': torch.equal(actual[key], expected[key]),
+                        'max_abs': float((actual[key].float()-expected[key].float()).abs().max())}
+                        for key in actual}})
+                for call_index, call in enumerate(record['calls']):
                     begin, end = call['start'], call['start'] + call['frames']
                     if begin >= boundary: break
                     if end > boundary: raise RuntimeError('Restart boundary cuts a captured native forward')
                     inputs = saved['delayed_inputs'][:, :, begin:end].to(lm.device)
-                    (state.graphed_main if call['path'] == 'graph' else lm.forward_codes)(inputs)
+                    output = (state.graphed_main if call['path'] == 'graph' else lm.forward_codes)(inputs)
+                    compare(call_index, output)
                 positions, after_replay = temporal_state()
                 if pointers != after_replay or any(v != boundary for v in positions.values()):
                     raise RuntimeError('Actual temporal replay changed KV storage or frame positions')
@@ -103,6 +114,18 @@ def run(lm, voice, histories, data, assets, source_commit, warm_graphs=True):
                 state.offset = snapshot['offset']
                 torch.set_rng_state(snapshot['cpu_rng'])
                 torch.cuda.set_rng_state(snapshot['cuda_rng'])
+                original_main = state.graphed_main
+                next_calls = [i for i,c in enumerate(record['calls']) if c['start'] >= boundary]
+                next_index = iter(next_calls)
+                def checked_main(value):
+                    i = next(next_index)
+                    original = saved['delayed_inputs'][:, :, record['calls'][i]['start']:record['calls'][i]['start']+1]
+                    if not torch.equal(value.cpu(), original):
+                        raise RuntimeError('Actual next temporal input differs before the sampled continuation')
+                    output = original_main(value)
+                    compare(i, output)
+                    return output
+                state.graphed_main = checked_main
                 steps = []
                 for following in (index+1, index+2):
                     expected = saved['states'][following]
@@ -119,7 +142,7 @@ def run(lm, voice, histories, data, assets, source_commit, warm_graphs=True):
                 passed = all(all(s[k] for k in ('cache_exact','provided_exact','offset_exact',
                     'cpu_rng_exact','cuda_rng_exact','returned_text_exact')) for s in steps)
         results.append({'history': str(path), 'source': check, 'real_frame_index': index,
-            'virtual_boundary': boundary, 'steps': steps, 'passed': passed})
+            'virtual_boundary': boundary, 'steps': steps, 'temporal_numerics': numerical, 'passed': passed})
     return {'schema': 'dl-context-actual-restart-gate-v1', 'results': results,
         'graph_warmup_before_replay': warm_graphs,
         'passed': all(r['passed'] for r in results), 'training_approved': False,
