@@ -42,6 +42,7 @@ def main():
     ap.add_argument('--resume-training',type=Path,help='Exact adapter/optimizer/RNG state for the same approved recipe/data')
     ap.add_argument('--actual-fit-updates',type=int,choices=(8,32,128,512),default=8)
     ap.add_argument('--actual-source-commit')
+    ap.add_argument('--actual-teacher-id')
     ap.add_argument('--actual-future-component', action='store_true')
     ap.add_argument('--actual-early-window', action='store_true')
     ap.add_argument('--actual-engine-replay', action='store_true')
@@ -56,6 +57,8 @@ def main():
     ap.add_argument('--text-padding', choices=('legacy-epad0','context-pad3'), default='legacy-epad0')
     ap.add_argument('--request-policy', choices=('source-dispatch','native-prelead','native-prelead-epad'), default='source-dispatch')
     args = ap.parse_args()
+    if args.actual_teacher_id and not args.actual_early_window:
+        ap.error('Explicit teacher selection is specific to early future capture')
     if (args.resume_training or args.actual_fit_updates != 8) and not args.actual_temporal_fit:
         ap.error('Resume/update budget is specific to the actual temporal trainer')
     if args.actual_fit_updates != 8 and not args.resume_training:
@@ -187,7 +190,7 @@ def main():
             examples, records = load_training(args.cache, spm, prefix, text_padding=args.text_padding,
                 request_policy=args.request_policy)
             manifest, gold = plan(args.actual_replay[0], args.actual_source_data, examples, spm,
-                early=args.actual_early_window)
+                early=args.actual_early_window,teacher_id=args.actual_teacher_id)
             if args.actual_early_window:
                 from evals.context_early_plan import plan as early_plan
                 manifest,gold = early_plan(manifest,examples)

@@ -16,7 +16,7 @@ def plan(late, examples):
     rows = [json.loads(line) for line in (history/'events.jsonl').read_text().splitlines()]
     example = next(e for e in examples if e['record'] == late['teacher'])
     clean = example['clean_codes']
-    actual_first = next(i for i,r in enumerate(rows) if r['text_token'] >= 4)
+    actual_first = next((i for i,r in enumerate(rows) if r['text_token'] >= 4),len(rows))
     teacher_first = int((clean[0]>=4).nonzero()[0])
     if any(abs(row['input_start_s']-i*.08)>1e-7 for i,row in enumerate(rows)):
         raise RuntimeError('Early composition needs the unchanged absolute real-frame clock')

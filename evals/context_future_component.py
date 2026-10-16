@@ -7,7 +7,7 @@ from evals.moshi_model_download import sha256
 from evals.context_actual_targets import matching_user_stimulus, actual_private_receipt, sentence_target, captured_packets
 
 
-def plan(history, data, examples, spm, early=False):
+def plan(history, data, examples, spm, early=False, teacher_id=None):
     import numpy as np
     import soundfile as sf
     from evals.recovery_data import validate_conversion
@@ -28,6 +28,7 @@ def plan(history, data, examples, spm, early=False):
     candidates=[];sources_by_cache={}
     for example in examples:
         r=example['record']
+        if teacher_id is not None and r['id'] != teacher_id:continue
         if r['kind']!=actual['kind'] or r['source_model']!='gpt-live-1':continue
         cache=Path(r['cache']);cache_receipt=json.loads((cache/'cache.json').read_text())
         if cache not in sources_by_cache:
@@ -176,6 +177,7 @@ def main():
         ap.add_argument('--'+key,type=Path,required=True)
     ap.add_argument('--source-commit',required=True)
     ap.add_argument('--early-window',action='store_true',help='Plan a complete future before any student reply; CPU only')
+    ap.add_argument('--teacher-id',help='Bind planning to one independently approved exact-user teacher')
     ap.add_argument('--request-policy',choices=('source-dispatch','native-prelead-epad'),default='source-dispatch')
     ap.add_argument('--audit-early-capture',type=Path)
     ap.add_argument('--cache',type=Path,action='append',required=True)
@@ -194,7 +196,7 @@ def main():
             from evals.context_early_validate import validate as validate_early
             result,_=validate_early(args.audit_early_capture,args.data,args.assets,examples,spm,voice)
         else:
-            result,_=plan(args.history,args.data,examples,spm,early=args.early_window)
+            result,_=plan(args.history,args.data,examples,spm,early=args.early_window,teacher_id=args.teacher_id)
             if args.early_window:
                 from evals.context_early_plan import plan as early_plan
                 result,_=early_plan(result,examples)

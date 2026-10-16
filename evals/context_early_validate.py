@@ -15,7 +15,8 @@ def validate(folder, data, assets, examples, spm, voice):
     m = json.loads((folder/'early-future.json').read_text()); history = Path(m['actual_history'])
     record = json.loads((history/'student-history.json').read_text())
     source = validate_history(history,data,assets,record['source']['repo_commit'])
-    late,_ = late_plan(history,data,examples,spm,early=True); expected,gold = plan(late,examples)
+    late,_ = late_plan(history,data,examples,spm,early=True,teacher_id=m['teacher']['id'])
+    expected,gold = plan(late,examples)
     expected['gold_targets_created'] = True
     if any(m.get(k) != v for k,v in expected.items() if k != 'schema'):
         raise RuntimeError('Early capture differs from independently revalidated TRAIN plan')
