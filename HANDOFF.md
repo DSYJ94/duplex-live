@@ -22,7 +22,8 @@ correct fixed voice/layout, so this is a legitimate rejection for scaling the
 three-conversation136-update recipe. New loader789d3f3 restores the checkpoint's
 required native layout and MATH attention automatically, exactly once;7480107
 runs without explicit layout/math flags and still gives the wrong private value.
-Its prefix equivalence needs verification before claiming exact loader parity.
+All51 saved prefix tensors match the explicit-protocol run7479192 exactly;
+this verifies that prefix only, not the complete generated trajectory.
 
 Plain words: corrected25-case collection7479198 completed. Eligibility report
 `context-matched25-eligibility-9c5dc2047dc4019a6f39a5efc10894fdfe2586fa`
@@ -30,7 +31,8 @@ approves13 cases for gated fact-future capture, not for optimization. It rejects
 unsupported ordinary/cancellation targets and cases without a valid silent
 prefix/measured sentence/actual matching receipt. All13 teacher-audio future
 captures7479955 completed, restart gates pass; independent temporal audit7480420
-is queued. Real job IDs:7480269,7480270,7480273,7480275,7480280,7480281,7480282,
+is running, followed only on success by eight-update/reload proof7480433.
+Real job IDs:7480269,7480270,7480273,7480275,7480280,7480281,7480282,
 7480283,7480289,7480290,7480292,7480295,7479955. Do not use the old7477252 map.
 
 Plain words: native-audio futures7479546/47 pass independent ownership/delay
@@ -38,11 +40,17 @@ and TRAIN-only audits. Assistant audio is naturally sampled; approved teacher
 TEXT is forced, and real source receipts are replayed. CPU speech audit7480258
 recovers the intended Purple Triangle/orange triangle values, with word errors.
 This is a rendering diagnostic, not native reasoning or live delegation success.
-The13-case native-audio counterpart7480417 is queued, sourcee150524; interactive
-first-source7479666 remains pending and is not evidence of faster scheduling.
-Next: audit both datasets, then separate eight-update/reload proofs before any
+All13 native-audio counterparts7480417 completed with restart gates passing,
+sourcee150524. Independent temporal audit7480482 and CPU speech check7480484 are
+queued; eight-update/reload proof7480483 depends on successful audit7480482.
+Native real job IDs:7480443,7480444,7480445,7480446,7480447,7480449,7480454,
+7480455,7480463,7480464,7480465,7480466,7480417. Interactive first-source7479666
+remains pending and is not evidence of faster scheduling. Neither broader
+corpus has optimizer approval until its own independent audit passes.
+Next: inspect both audits and separate eight-update/reload proofs before any
 bounded continuation. New data/source is a new stage, never a silent exact resume.
 
+### Earlier 16 October notes — current statuses above supersede these
 
 Plain words: owner confirms compute ends in5 days and requires readiness1–2
 days before. Delivery target is19 October,20 October recovery/export buffer;

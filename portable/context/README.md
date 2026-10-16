@@ -90,3 +90,14 @@ native layout and MATH attention automatically. The historical `ad82745` source
 requires explicit layout audit `runs/context-training-proof-7463825/history-audit.json`
 and its recorded voice. Do not mix an unwrapped released-model trajectory into
 the current actual-history trainer.
+
+The exported directory has a `SHA256SUMS` list for its `tree` directory. On a
+Linux destination, verify the transferred files before restoring source checkouts:
+
+```sh
+cd /mnt/cloud-export-20261016/tree
+sha256sum --check ../SHA256SUMS
+```
+
+This establishes file integrity against the saved export. It does not approve
+new captured trajectories for training or replace the destination GPU audits.
