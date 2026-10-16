@@ -3643,3 +3643,13 @@ The next diagnostic replays actual consumed direct/graph calls, restores cache
 ownership and RNG, and requires two unforced following steps to match the
 recorded snapshots. It creates no gold targets or optimizer updates and makes
 no PCM/microphone restart claim. See the dated actual-context source review.
+
+
+Plain words: restart7464207 fails its strict gate. Both recorded TRAIN histories
+pass raw integrity and replay clock/storage checks. Two next frames match all
+provided masks, offsets, RNG and delayed returned text. Assistant acoustic cache
+IDs diverge: orange is exact at step1 then2 residuals differ; purple differs
+from step1. No histories are approved for gold targets. Ranked hypotheses:
+(1) warm graph path differs from original cold capture, (2) replay numerical
+differences alter sampled acoustics, (3) unrecorded depth state. Next experiment
+changes only graph warmup; acceptance remains complete next-state equality.

@@ -7,7 +7,7 @@ No PCM, user encoder or microphone restart is claimed.
 import json
 
 
-def run(lm, voice, histories, data, assets, source_commit):
+def run(lm, voice, histories, data, assets, source_commit, warm_graphs=True):
     import torch
     from contextspan.moshi.models import LMGen
     from evals.context_history_validate import validate
@@ -80,7 +80,8 @@ def run(lm, voice, histories, data, assets, source_commit):
             with gen.streaming(1):
                 state = gen._streaming_state
                 graphs = (id(state.graphed_main), id(state.graphed_depth))
-                for _ in range(16): gen.step(input_tokens=user_codes(snapshot))
+                if warm_graphs:
+                    for _ in range(16): gen.step(input_tokens=user_codes(snapshot))
                 _, pointers = temporal_state()
                 gen.reset_streaming()
                 positions, after_reset = temporal_state()
@@ -120,5 +121,6 @@ def run(lm, voice, histories, data, assets, source_commit):
         results.append({'history': str(path), 'source': check, 'real_frame_index': index,
             'virtual_boundary': boundary, 'steps': steps, 'passed': passed})
     return {'schema': 'dl-context-actual-restart-gate-v1', 'results': results,
+        'graph_warmup_before_replay': warm_graphs,
         'passed': all(r['passed'] for r in results), 'training_approved': False,
         'gold_targets_created': False, 'PCM_or_microphone_restart_tested': False}

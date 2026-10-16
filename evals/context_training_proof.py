@@ -35,6 +35,7 @@ def main():
     ap.add_argument('--actual-replay', type=Path, action='append')
     ap.add_argument('--actual-source-data', type=Path)
     ap.add_argument('--actual-source-commit')
+    ap.add_argument('--actual-cold-graphs', action='store_true')
     ap.add_argument('--reload', action='store_true')
     ap.add_argument('--history-audit-only', action='store_true')
     ap.add_argument('--history-audit', action='store_true')
@@ -133,7 +134,7 @@ def main():
     if args.actual_replay:
         from evals.context_actual_replay import run
         result = run(lm, voice, args.actual_replay, args.actual_source_data,
-            args.assets, args.actual_source_commit)
+            args.assets, args.actual_source_commit, warm_graphs=not args.actual_cold_graphs)
         (args.out / 'actual-replay.json').write_text(json.dumps(result, indent=2) + '\n')
         print(json.dumps(result), flush=True)
         if not result['passed']: raise RuntimeError('Actual unforced token restart failed')

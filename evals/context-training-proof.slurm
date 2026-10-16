@@ -49,6 +49,7 @@ fi
 if [ -n "${CONTEXT_ACTUAL_REPLAY_JOBS:-}" ]; then
  : "${CONTEXT_ACTUAL_SOURCE_COMMIT:?Actual collector commit required}"
  ACTUAL=()
+ if [ "${CONTEXT_ACTUAL_COLD_GRAPHS:-0}" = 1 ]; then ACTUAL+=(--actual-cold-graphs); fi
  for J in $CONTEXT_ACTUAL_REPLAY_JOBS; do
   [[ "$J" =~ ^[0-9]+$ ]]
   ACTUAL+=(--actual-replay "$DL/runs/context-spanning-probe-$J")
