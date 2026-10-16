@@ -52,6 +52,11 @@ def plan(late, examples):
     private = [s for s in spans if s['event'] == late['actual_private_receipt']]
     if len(private) != 1 or late['selection']['source_start_frame'] <= private[0]['real_frame']:
         raise RuntimeError('Approved private sentence would start before its actual delivered context')
+    selected = words[late['selection']['source_first_word_index']:late['selection']['source_end_word_index']]
+    onset = min(w[1][0] for w in selected)
+    delivered = max(private[0]['event']['applied_at_s'],rows[private[0]['real_frame']]['input_available_s'])
+    if not math.isfinite(onset) or onset < delivered+.24:
+        raise RuntimeError('Measured private speech lacks a 240ms margin after the actual receipt')
     # No marker was consumed in the actual prefix. A target request must still
     # precede the provided private receipt on this newly composed future clock.
     requests = (clean[0,begin:private[0]['real_frame']] == 4).nonzero()
@@ -70,6 +75,8 @@ def plan(late, examples):
         'future_user_pcm_is_allowed_to_contain_real_speech':True,
         'future_recorded_receipts':spans,'future_receipts_replayed_not_dispatched':True,
         'first_private_sentence_source_frame':late['selection']['source_start_frame'],
+        'private_sentence_measured_onset_s':onset,'actual_private_receipt_input_clock_s':delivered,
+        'minimum_private_speech_margin_after_receipt_s':.24,
         'past_loss_targets':0,'audio_loss_targets':0,'gold_targets_created':False,
         'training_approved':False,'free_running_delegation_qualified':False,
         'composition':'actual silent prefix, approved teacher future on original real clock, observed source user PCM and actual receipt boundaries'}

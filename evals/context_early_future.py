@@ -89,7 +89,9 @@ def generate(engine, saved, index, rows, pcm, gold, manifest, out):
     current = torch.cat(current_targets,dim=2); flags = torch.cat(provided,dim=2)
     if (not torch.equal(current[0,0],gold[0]) or not flags[:,0:2].all()
             or not flags[:,9:17].all() or len(real_to_virtual) != gold.shape[1]
-            or len(applied) != len(spans)):
+            or len(applied) != len(spans) or not torch.equal(current[0,1],gold[1])
+            or flags[:,2:9,0].any() or not flags[:,2:9,1:].all()
+            or not torch.equal(current[0,2:9,1:],gold[2:9,:-1])):
         raise RuntimeError('Incomplete early-future target ownership or receipt coverage')
     file = out/'early-future.pt'
     torch.save({'delayed_inputs':torch.cat(inputs,dim=2),'hidden':torch.cat(hidden,dim=1),
