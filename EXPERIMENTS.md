@@ -3723,3 +3723,12 @@ only process-global kernel priming: reproduce Engine constructor's four sine
 steps and eight-column span before creating the fresh conversation stream.
 Native stream reset does not clear lazy compiled closures. This is a tested
 hypothesis only when the next gate returns; no root cause is claimed yet.
+
+
+Plain words: replay loader currently re-encodes the accepted reference before
+creating LMGen. Actual zero-wrapper captures load verified voice.pt and skip
+that encoding. Mimi also calls shared lazy RoPE code, so equal resulting voice
+IDs do not imply equal process compilation history. Add an explicit recorded-
+voice diagnostic that verifies its captured hash and reuses the exact codes;
+ordinary training defaults remain unchanged. Test it separately after the
+native-constructor priming control, with all source histories immutable.

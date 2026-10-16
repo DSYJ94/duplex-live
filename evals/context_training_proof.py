@@ -35,6 +35,7 @@ def main():
     ap.add_argument('--actual-replay', type=Path, action='append')
     ap.add_argument('--actual-source-data', type=Path)
     ap.add_argument('--actual-source-commit')
+    ap.add_argument('--actual-recorded-voice', action='store_true')
     ap.add_argument('--actual-native-priming', action='store_true')
     ap.add_argument('--actual-cold-graphs', action='store_true')
     ap.add_argument('--reload', action='store_true')
@@ -48,6 +49,8 @@ def main():
     if args.actual_replay and (not args.actual_source_data or not args.actual_source_commit
             or args.reload or args.pilot_preflight or args.teacher_audit):
         ap.error('Actual restart needs explicit source data/commit and a separate diagnostic run')
+    if args.actual_recorded_voice and not args.actual_replay:
+        ap.error('Recorded actual voice is a separate restart diagnostic only')
     if args.history_logits and not (args.history_audit or args.history_audit_only):
         ap.error('Temporal history logits require a history audit')
     if args.steps == 128 and (not args.pilot_preflight or not args.layout_audit):
@@ -117,7 +120,15 @@ def main():
     if (provenance['schema'] != 'dl-voice-codec-probe-v1' or provenance['source_model'] != 'gpt-live-1'
             or provenance['reference_sha256'] != sha256(args.voice_reference)):
         raise RuntimeError('Changed accepted synthetic voice provenance')
-    if args.reload or parent or args.teacher_audit:
+    if args.actual_recorded_voice:
+        history = args.actual_replay[0]
+        record = json.loads((history / 'student-history.json').read_text())
+        voice_file = history / 'student-voice.pt'
+        if sha256(voice_file) != record['source']['voice_codes_sha256']:
+            raise RuntimeError('Actual recorded voice provenance changed')
+        voice = torch.load(voice_file, map_location='cpu', weights_only=True)['codes']
+        torch.save({'codes': voice}, args.out / 'voice.pt')
+    elif args.reload or parent or args.teacher_audit:
         voice_source = args.out if args.reload else (args.pilot_preflight if parent else args.teacher_audit[0])
         if parent and not args.reload and sha256(voice_source / 'voice.pt') != parent['voice_sha256']:
             raise RuntimeError('Changed preflight voice codes')
