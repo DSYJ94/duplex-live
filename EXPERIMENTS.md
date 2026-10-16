@@ -16,6 +16,46 @@ gets a plain gloss the first time it appears.
 quizzed on 8 lessons it NEVER saw (held-out). A run only counts if it
 passes on unseen lessons — that is generalization, not memorization.
 
+## 16 October 2026 — actual-history corrections, still no qualified model
+
+Plain words: training on complete teacher conversations improved prediction on
+those conversations while damaging free-running behavior. We now keep the actual
+student conversation as conditioning and add only a separately approved teacher
+sentence after a verified quiet boundary and delivered matching private result.
+Exact full native Engine restart is required before creating any future targets.
+This changes the training data path; it does not establish a useful model.
+
+- Components7466157/60/63: actual TRAIN histories7465804/06/07, exact restart
+  through327/224/259 real frames. Future lengths32/56/35; eligible text labels
+  12/23/21. Past and audio loss labels both zero. History001 already said the
+  correct value and is excluded. Full hashes, builder/source commits, approved
+  teacher lineage, user PCM, measured word spacing and real receipt checked.
+- Head-only proof7466440:8 updates; exact fresh-process FP32 and native-BF16
+  feature logits; frozen parameters unchanged. Adapter SHA
+  `0c70dde5983d272a7c3772f23808a7c50fff6f2487642d0b573a807584ca6563`.
+  Native text negative log probability (lower is better)1.819252→1.819245;
+  first fact-token accuracy was already3/3 under earlier teacher speech.
+  Verdict: valid engineering proof, negligible fit gain, no result-use claim.
+- Zero-update temporal audit7467209: all3 pass streamed/batched FP32 MATH
+  comparison, maximum text errors0.00004745/0.00004911/0.00005651 versus
+  threshold0.001; all causal prefix errors0. Captured BF16 versus FP32 hidden
+  differences0.346/0.284/0.238 are separate diagnostics, not relaxed native
+  restart gates. Already-delayed inputs are never delayed a second time.
+- Actual temporal proof7467496:8 native-BF16 updates, last4 rank8 temporal
+  adapters plus text head; independent approved TRAIN retention examples from
+  all4 kinds. Retention penalizes changes to the base text distribution (KL,
+  a distribution-distance measure) and internal states (10x mean squared
+  difference). All actual past/audio labels absent, base speech weights frozen.
+  Updates finish; peak GPU17,633,427,968 bytes. Check full final reload and
+  native7467526 before accepting any behavioral improvement. No held-out exam
+  or voice-quality pass follows from fitting3 TRAIN corrections.
+
+All3 components, source histories, head proof and temporal audit are backed
+locally with hashes checked. Full logs and submission receipts are in
+`runs/recovery-continuation-20261016`. Native head-only development batch
+7467049/51/53/55/57/59/62/64 remains in workq. Short engineering checks use the
+documented interactive reservation; routine batch work stays in workq.
+
 ## THE SHORT VERSION (plain English, updated 2026-10-02)
 
 **The problem:** the model cannot tell when it is its turn to speak.
