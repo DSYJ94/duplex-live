@@ -60,6 +60,21 @@ route=delegate with executed receipts; plain reasoning uses route=answer.
 These selectors alone approve no dataset or optimization. New proof/history
 artifacts are backed locally; full source/evidence remains immutable by job ID.
 
+Plain words: exact full Engine MATH replay7465797 PASSES all189 frames:
+actual input IDs, temporal hidden/text values, sampled cache/provided values,
+clocks and CPU/CUDA RNG. No tolerance or sample-equality requirement relaxed.
+Recorded voice reuse plus both codec operations and matching math attention
+are needed together. This qualifies the bounded history/data seam only.
+
+Plain words: four further MATH TRAIN histories7465804–07 collect approved
+worlds000 orange square/001 orange diamond/002 purple triangle/003 orange
+triangle. Future-data code2c4cfd7 first plans same-user/same-world complete
+teacher sentences at a quiet failed-reply boundary, then repeats strict replay
+at that cut before native forced-gold future generation. Past labels stay absent;
+initial residuals stay sampled. Plans/targets/optimization remain pending.
+CPU-only eligibility can run with `python -m evals.context_future_component`;
+it loads approved code caches and hashes but performs no model forward.
+
 ### Earlier recovery evidence — 15 October
 
 Plain words: no complete model qualifies. The owner says Context Spanning with
