@@ -16,6 +16,31 @@ support is in immutable f3804c6; interrupted/uninterrupted CPU tests pass.
 New full-model state reload and destination GPU validation are still required.
 Exact resume binds the same source/data/recipe; do not change those silently.
 
+Plain words: corrected independent CPU audits pass all3 early captures with
+88/76/68 text targets. Old audit7469288 stopped before any optimizer because
+unquoted whole-value token matching disagreed with measured per-word slots;
+0e0e363 uses the already verified measured sentence/word positions instead.
+Corrected temporal7469530 PASSES all3 streamed/batched FP32 checks (maximum text
+errors0.00007629/0.00006056/0.00008321) and causal prefix errors0.
+Eight-update7474819 and resumed32-update7475099 (40 total) PASS exact separate
+reload, optimizer/RNG restoration and frozen-weight checks. Both are backed
+locally with state/adapter/data hashes verified. Their training commit is
+0e0e3634ea258761d2d9f16df6e3347ce9150834; exact resume must retain that commit.
+Native7475190 still fails the full orange-square answer after8 updates. The
+40-update development batch7475396/98/5400/02/04/06/08/10 is queued/running.
+Invalid voice launch7475100 was cancelled and replaced with accepted-synthetic;
+no result is taken from it. The corrected7475190 started in workq, so no
+interactive duplicate was submitted.
+
+Plain words: provider-neutral `portable/context/train.sh` runs the same
+audit/fit/resume commands without Slurm. Docker's first base-image download
+failed in its local layer store; retry is in progress, so amd64 build/GPU
+validation is still pending. Offline read inventory completed, identifying845
+observed files (1.24GB), and their transfer is in progress. This is not yet a
+complete dependency-closure/restore proof. A verified complete vendor Git bundle
+(27.6MB) and repository-history bundle are backed locally. Reconstruct standalone
+source checkouts, not linked worktree .git files pointing to the old host.
+
 Plain words: early captures7467981/7468102/7468611 completed. First independent
 CPU audit passes88 text targets, including request, with no past/span/audio loss.
 Three-component temporal audit7469288 uses the short interactive reservation;

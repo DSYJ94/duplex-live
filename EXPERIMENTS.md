@@ -18,6 +18,18 @@ passes on unseen lessons — that is generalization, not memorization.
 
 ## 16 October 2026 — actual-history corrections, still no qualified model
 
+Plain words: corrected early audits approve88/76/68 text targets. The complete
+continuation needs measured per-word positions to locate the first fact;
+whole-value tokenization can differ at punctuation. Corrected source0e0e363
+passes numerical audit7469530 on all3 components: largest text error0.00008321,
+causal prefix error0. Eight-update7474819 passes actual model, optimizer and RNG
+reload. Native7475190 still gives a wrong/partial private answer. Resumed run
+7475099 adds32 updates (40 total), passes separate reload and keeps base weights
+unchanged; training word prediction improves but free-running success remains
+unproven. Development batch7475396/98/5400/02/04/06/08/10 is submitted.
+Custom checkpoints are backed locally with hashes checked. No native model is
+qualified by these engineering or teacher-conditioned scores.
+
 Plain words: the complete early continuation now starts before the student's
 first reply, retaining the original user audio and result-arrival clock. Three
 native captures7467981/7468102/7468611 completed; first independent audit passes

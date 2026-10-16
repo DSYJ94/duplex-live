@@ -47,7 +47,10 @@ completed updates, RNG states and exact recipe/data/source identity so work can
 continue after expiry. No paid destination resources are provisioned yet.
 See [portable environment](../portable/context/README.md). The source supports
 atomic per-update state saving; exact interrupted/uninterrupted CPU tests pass.
-An actual model-state resume and amd64 GPU validation remain pending.
+Actual model runs7474819 and7475099 also pass fresh-process optimizer/RNG and
+prediction reload. An amd64 GPU continuation remains pending. The portable
+launcher supports audit/fit/resume without Slurm; no provider choice is required
+to prepare or export it.
 
 ## Starting evidence on16 October
 

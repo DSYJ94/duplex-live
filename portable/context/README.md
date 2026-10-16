@@ -24,6 +24,13 @@ approved raw data and caches, captured histories, audit reports and checkpoints.
 An adapter alone is insufficient. Data export and dependency-closure verification
 remain work in progress.
 
+Recreate source checkouts from the saved Git bundle rather than copying linked
+worktree `.git` files: those can point back to the old host. For each checkpoint's
+required source commit, clone the bundle into `worktrees/recovery-COMMIT` and
+check out that commit detached. Preserve the complete history for provenance
+checks. Recreate the pinned vendor checkout with its Git metadata too. The
+container bind supplies the original absolute artifact paths.
+
 Before a GPU run, check imports and checkpoint-state tests using the **same source
 commit as the checkpoint**. Set `SOURCE` to that restored immutable checkout:
 
