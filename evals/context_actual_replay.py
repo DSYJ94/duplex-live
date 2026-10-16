@@ -7,7 +7,7 @@ No PCM, user encoder or microphone restart is claimed.
 import json
 
 
-def run(lm, voice, histories, data, assets, source_commit, warm_graphs=True):
+def run(lm, voice, histories, data, assets, source_commit, warm_graphs=True, native_priming=False):
     import torch
     from contextspan.moshi.models import LMGen
     from evals.context_history_validate import validate
@@ -84,6 +84,20 @@ def run(lm, voice, histories, data, assets, source_commit, warm_graphs=True):
         boundary = snapshot['virtual_frames']
         if boundary >= 3000: raise RuntimeError('Restart component exceeds pinned temporal context')
         with torch.no_grad():
+            if native_priming:
+                # Match Engine.__init__'s process-global lazy-kernel priming.
+                # Resetting streams does not reset those compiled closures.
+                from contextspan.model.sequence_convention import (SILENCE_TOKENS, SINE_TOKENS,
+                    SPAN_OPEN_ID, SPAN_CLOSE_ID, TEXT_PAD)
+                from contextspan.model.context_span_block import prefill
+                primer = LMGen(lm, device=str(lm.device), temp=.8, temp_text=.7,
+                    sample_rate=24000, frame_rate=12.5)
+                with primer.streaming(1):
+                    sine = torch.tensor(SINE_TOKENS, device=lm.device)[None, :, None]
+                    silence = torch.tensor(SILENCE_TOKENS, device=lm.device)[None, :, None]
+                    for _ in range(4): primer.step(input_tokens=sine)
+                    prefill(primer, [SPAN_OPEN_ID] + [TEXT_PAD]*6 + [SPAN_CLOSE_ID], silence, sine)
+                del primer
             gen = LMGen(lm, device=str(lm.device), temp=.8, temp_text=.7,
                 sample_rate=24000, frame_rate=12.5)
             with gen.streaming(1):
@@ -170,6 +184,6 @@ def run(lm, voice, histories, data, assets, source_commit, warm_graphs=True):
         results.append({'execution': execution, 'source_execution': record.get('execution'), 'history': str(path), 'source': check, 'real_frame_index': index,
             'virtual_boundary': boundary, 'steps': steps, 'temporal_numerics': numerical, 'next_input_checks': next_input_checks, 'prefix_numerics': prefix_numerics, 'passed': passed})
     return {'schema': 'dl-context-actual-restart-gate-v1', 'results': results,
-        'graph_warmup_before_replay': warm_graphs,
+        'graph_warmup_before_replay': warm_graphs, 'native_constructor_priming': native_priming,
         'passed': all(r['passed'] for r in results), 'training_approved': False,
         'gold_targets_created': False, 'PCM_or_microphone_restart_tested': False}

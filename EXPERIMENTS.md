@@ -3713,3 +3713,13 @@ warmup nor attention selection alone explains it. Next capture records cloned
 per-embedding and per-layer prefix outputs to find the first numerical
 divergence. Hooks run only on the direct prefix; source/default model behavior
 and the strict restart requirement are preserved.
+
+
+Plain words: prefix trace7464778/replay7464781 matches all saved last-column
+embeddings, transformer input and layer0. The first saved difference is layer1
+(max0.00048828125), growing to output norm0.25. Earlier columns are not yet
+traced, so this does not prove all layer0 values match. Next replay changes
+only process-global kernel priming: reproduce Engine constructor's four sine
+steps and eight-column span before creating the fresh conversation stream.
+Native stream reset does not clear lazy compiled closures. This is a tested
+hypothesis only when the next gate returns; no root cause is claimed yet.
