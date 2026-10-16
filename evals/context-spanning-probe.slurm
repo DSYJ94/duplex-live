@@ -27,6 +27,9 @@ if [ "${CONTEXT_MATH_ATTENTION:-0}" = 1 ]; then EXTRA+=(--math-attention); fi
 if [ "${CONTEXT_BACKEND_MODE:-scheduled}" = native-asr ]; then
  EXTRA+=(--backend-mode native-asr --asr-python "$DL/envs/moshi-annotation-7379026/bin/python")
 fi
+if [ "${CONTEXT_BACKEND_MODE:-scheduled}" = observe-only ]; then
+ EXTRA+=(--backend-mode observe-only)
+fi
 if [ "${CONTEXT_WARM_AUDIO:-0}" = 1 ]; then EXTRA+=(--warm-audio); fi
 if [ "${CONTEXT_PENDING_STATUS:-0}" = 1 ]; then EXTRA+=(--pending-status); fi
 if [ "${CONTEXT_TRAIN_HISTORY:-0}" = 1 ]; then EXTRA+=(--train-history); fi

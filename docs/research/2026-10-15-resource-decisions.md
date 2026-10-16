@@ -158,3 +158,69 @@ unapproved conditioning, with all past labels excluded from future supervision.
 See HANDOFF.md and EXPERIMENTS.md for job IDs, measured results and the current
 Isambard access block. The loss ownership mask is implemented; waveform AEC
 and microphone double-talk performance are still untested.
+
+
+## 16 October, late — Isambard remains the priority
+
+Plain words: the owner explicitly prioritises a good Isambard result and rejects
+additional compute as an assumed source of gains. Cloud GPU validation is on
+hold; the previously approved $25 cap remains for later validation only. No
+cloud resources have been launched. Keep the export, but focus experiments on
+observed failure mechanisms within the remaining allocation.
+
+Plain words: both paired13-case continuations (7480819 teacher acoustics,
+7480820 own acoustics) reach136 updates, preserve frozen weights and reload
+prediction/optimizer/RNG state exactly. Their training losses fall from
+0.981 to0.684 and1.260 to0.881 respectively, but neither qualifies on native
+conversation controls. Correct text after a prior invented private answer does
+not constitute success. Do not expand these recipes on training loss alone.
+
+Plain words: actual-worker evidence identifies a separate interface failure.
+In native7480841 the real receipt contains Alder North's `teal star`, but the
+backend prose answers only the later physics question. The runtime previously
+injected that prose alone, omitting the successful record value. Source3e42038
+preserves verified, current, actually executed lookup facts alongside backend
+prose and records the exact injected span. Cancelled/replaced/unrecorded
+receipts are rejected; errors remain failure notices. All21 focused worker,
+failure and payload tests pass. Native improvement is not established yet.
+This implements the Context Spanning principle of supplying external information
+explicitly; it is not additional model training or forced spoken output.
+
+Plain words: the practical benefits from the links are the owner-accepted
+Context Spanning voice candidate, native delay/span conventions, explicit
+speaker/target ownership and timing/retention evaluation. BayLing's 10:5:10
+layout and timing-preference optimisation have NOT been reproduced here.
+The current adaptation supervises only future assistant text; user/audio loss
+is zero. The earlier16-head trainer has a clean-user ownership mask. Neither
+is evidence of waveform echo suppression or tested microphone double-talk.
+Full video captions remained inaccessible; only metadata/description was
+reviewed, so the video is not claimed as a fully reproduced recipe.
+
+
+## 17 October — measured pending-state result and remaining control gap
+
+
+Plain words: early17 October — targeted state/payload tests finished. Native
+pending-status runs7485621/22 produce the correct orange square/teal star;
+independent CPU speech audit7485697 confirms both complete values (word error
+against sampled text0.0606/0.0270). No spoken text/audio/start is forced. Without
+pending status7485619/20 still invent D138/six. Receipt-only changes do not
+establish safe waiting. This is improved private-result behavior, not complete
+conversation qualification: TRAIN000 still omits the intervening physics answer.
+
+Plain words: broader pending-state controls remain failures.7485698 gives correct
+pencil/graphite text;7485699 is incoherent about evaporation and7485700 ignores
+cancellation. Actual cancel-scene backend requests see only audio BEFORE the
+cancellation, so no cancellation tool is dispatched. Zero-adapter baselines
+7485702/7485755 also fail the private cases; ASR/backend timing differs, so this
+does not isolate the contribution of training.7485701 was rejected for missing
+TRAIN-scene authorization flag and is not a model result;7485755 is its retry.
+
+Plain words: do not expand the failed private-only recipe. Its13 new supervised
+continuations are private facts; other behavior kinds are base-distribution
+retention, not corrective supervision. Next training work must explicitly
+approve ordinary/clarification/cancellation request/timing targets from TRAIN
+sources and actual arrived user speech, with separate eligibility rules for
+non-factual actions. The fact-only receipt gate must not be weakened to smuggle
+in unsupported control labels. In parallel, measure request delay, pre-receipt
+speech and post-receipt value use separately. No qualified native model exists.

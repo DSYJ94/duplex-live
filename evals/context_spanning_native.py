@@ -13,6 +13,70 @@ import time
 from evals.moshi_model_download import sha256
 
 
+def observe_only(engine,user,args,loading):
+    """Record raw simple TRAIN conditioning without supplying answer-bearing spans.
+
+    Native request markers are observed but not executed. This mode cannot
+    qualify conversation or delegation and never creates supervised targets.
+    """
+    import numpy as np
+    import soundfile as sf
+    import torch
+    from evals.audio_playout import render_packets
+    history=getattr(engine,'_dl_student_history',None)
+    if (args.source_split!='train' or loading['scenario_kind']!='simple'
+            or history is None or args.pending_status):
+        raise RuntimeError('Observe-only capture requires simple TRAIN input, recorder and no backend state')
+    tokens=[];rows=[];packets=[];epoch=time.monotonic()
+    with (args.out/'events.jsonl').open('w') as log:
+        for offset in range(0,len(user),engine.frame_size):
+            end=min(len(user),offset+engine.frame_size);due=end/24000
+            time.sleep(max(0,epoch+due-time.monotonic()));before=time.monotonic()-epoch
+            chunk=user[offset:end]
+            if len(chunk)<engine.frame_size:chunk=np.pad(chunk,(0,engine.frame_size-len(chunk)))
+            history_before=history.frames
+            result=engine.step(chunk);history.checkpoint();torch.cuda.synchronize()
+            available=time.monotonic()-epoch
+            tokens.append(result['text_token']);pcm=result['agent_pcm']
+            if pcm is not None:
+                pcm=np.asarray(pcm,dtype=np.float32)
+                if pcm.shape!=(1920,) or not np.isfinite(pcm).all():
+                    raise RuntimeError('Invalid observed native speech packet')
+                packets.append((available,pcm))
+            row={'input_start_s':offset/24000,'input_available_s':due,'started_s':before,
+                'available_s':available,'compute_s':available-before,'input_backlog_s':before-due,
+                'input_samples':end-offset,'output_samples':0 if pcm is None else len(pcm),
+                'text_token':result['text_token'],'native_retrieval_marker':result['is_ret'],
+                'history_virtual_frames_before_step':history_before,
+                'history_virtual_frames_after_step':history.frames}
+            rows.append(row);log.write(json.dumps(row)+'\n');log.flush()
+    if not packets or sum(r['input_samples'] for r in rows)!=len(user):
+        raise RuntimeError('Observation lost native audio/input samples')
+    output,playout=render_packets(packets,24000,.16)
+    sf.write(args.out/'model.wav',output,24000)
+    sf.write(args.out/'packet-stream.wav',np.concatenate([p for _,p in packets]),24000)
+    (args.out/'worker-events.json').write_text('[]\n')
+    receipt=history.finish()
+    report={'schema':'dl-context-simple-observation-v1','text':engine.decode_text(tokens),'loading':loading,
+        'scenario':args.scenario,'source_split':'train','fresh_holdout':False,'worker_events':[],
+        'student_history':receipt,'scheduled_dispatch':False,
+        'native_foreground_backend_request':False,'native_foreground_tool_choice':False,
+        'native_request_markers_observed_not_executed':sum(r['native_retrieval_marker'] for r in rows),
+        'backend_execution_disabled':True,'backend_context':'none; raw conditioning capture only',
+        'input_seconds':len(user)/24000,'wall_seconds':time.monotonic()-epoch,
+        'compute_p95_s':float(np.percentile([r['compute_s'] for r in rows],95)),
+        'maximum_input_backlog_s':max(r['input_backlog_s'] for r in rows),
+        'real_user_samples_processed':sum(r['input_samples'] for r in rows),
+        'real_user_samples_expected':len(user),'playout':playout,'audio_sha256':sha256(args.out/'model.wav'),
+        'word_or_acoustic_tokens_forced':False,'response_start_forced':False,
+        'actual_lm_and_pcm_executed_together':True,'playout_is_causal_simulation':True,
+        'conditioning_only':True,'past_labels_must_all_be_masked':True,'optimizer_steps':0,
+        'microphone_acceptance':False,'spoken_value_use_verified':False,
+        'quality_qualified':False,'training_approved':False}
+    (args.out/'report.json').write_text(json.dumps(report,indent=2)+'\n')
+    print(json.dumps({k:v for k,v in report.items() if k not in ('loading','playout')}),flush=True)
+
+
 def run(engine,user,world,args,loading):
     import numpy as np
     import soundfile as sf

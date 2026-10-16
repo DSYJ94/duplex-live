@@ -43,7 +43,7 @@ def main():
     ap.add_argument('--expected-kind',choices=('private','simple','clarify','cancel'))
     ap.add_argument('--voice-reference',type=Path)
     ap.add_argument('--voice-provenance',type=Path)
-    ap.add_argument('--backend-mode',choices=('scheduled','native-asr'),default='scheduled')
+    ap.add_argument('--backend-mode',choices=('scheduled','native-asr','observe-only'),default='scheduled')
     ap.add_argument('--asr-python',type=Path)
     ap.add_argument('--warm-audio',action='store_true')
     ap.add_argument('--adapter-proof',type=Path)
@@ -58,6 +58,9 @@ def main():
     ap.add_argument('--layout-audit',type=Path,
         help='Explicit native-layout candidate; require a successful actual input trace')
     args=ap.parse_args()
+    if args.backend_mode=='observe-only' and (
+            not args.train_history or args.expected_kind!='simple' or args.pending_status):
+        ap.error('Observe-only is an unapproved TRAIN simple-history capture, without supplied backend state')
     if args.backend_mode=='native-asr':
         devices=os.environ.get('CUDA_VISIBLE_DEVICES','').split(',')
         if len(devices)!=2 or len(set(devices))!=2 or not args.asr_python:
@@ -94,10 +97,10 @@ def main():
     expected_split='train' if args.train_history else 'validation'
     if row['split']!=expected_split or row['kind'] not in ('private','simple','clarify','cancel'):
         raise RuntimeError('Approved development behavior scene required')
-    if args.train_history and args.backend_mode!='native-asr':
+    if args.train_history and args.backend_mode not in ('native-asr','observe-only'):
         raise RuntimeError('Student histories require actual native requests and arrived-audio ASR')
     args.source_split=row['split']
-    if row['kind']!='private' and args.backend_mode!='native-asr':
+    if row['kind']!='private' and args.backend_mode not in ('native-asr','observe-only'):
         raise RuntimeError('Control scenes require native backend decisions and actual ASR')
     if len(args.private_value.split())!=2:raise RuntimeError('Expected declared two-word development value')
     side=json.loads(Path(row['path']).with_suffix('.json').read_text());meta=side['timeline']['meta']
@@ -200,6 +203,10 @@ def main():
     if history:
         history.source['declared_counterfactual_world']=world.records
         history.source['world_available_to_model_before_actual_receipt']=False
+    if args.backend_mode=='observe-only':
+        from evals.context_spanning_native import observe_only
+        observe_only(engine,user,args,loading)
+        return
     if args.backend_mode=='native-asr':
         from evals.context_spanning_native import run
         run(engine,user,world,args,loading)

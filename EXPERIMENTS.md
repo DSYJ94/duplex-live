@@ -18,6 +18,58 @@ passes on unseen lessons — that is generalization, not memorization.
 
 ## 16 October 2026 — actual-history corrections, still no qualified model
 
+Plain words: early17 October — targeted state/payload tests finished. Native
+pending-status runs7485621/22 produce the correct orange square/teal star;
+independent CPU speech audit7485697 confirms both complete values (word error
+against sampled text0.0606/0.0270). No spoken text/audio/start is forced. Without
+pending status7485619/20 still invent D138/six. Receipt-only changes do not
+establish safe waiting. This is improved private-result behavior, not complete
+conversation qualification: TRAIN000 still omits the intervening physics answer.
+
+Plain words: broader pending-state controls remain failures.7485698 gives correct
+pencil/graphite text;7485699 is incoherent about evaporation and7485700 ignores
+cancellation. Actual cancel-scene backend requests see only audio BEFORE the
+cancellation, so no cancellation tool is dispatched. Zero-adapter baselines
+7485702/7485755 also fail the private cases; ASR/backend timing differs, so this
+does not isolate the contribution of training.7485701 was rejected for missing
+TRAIN-scene authorization flag and is not a model result;7485755 is its retry.
+
+Plain words: do not expand the failed private-only recipe. Its13 new supervised
+continuations are private facts; other behavior kinds are base-distribution
+retention, not corrective supervision. Next training work must explicitly
+approve ordinary/clarification/cancellation request/timing targets from TRAIN
+sources and actual arrived user speech, with separate eligibility rules for
+non-factual actions. The fact-only receipt gate must not be weakened to smuggle
+in unsupported control labels. In parallel, measure request delay, pre-receipt
+speech and post-receipt value use separately. No qualified native model exists.
+
+
+Plain words: late16 October — owner explicitly prioritises Isambard model gains,
+not extra compute. Cloud validation is ON HOLD; $25 remains approved for later
+validation only, with zero cloud resources launched. Clifton was renewed and
+SSH works. Both136-update13-case continuations7480819/20 complete and reload
+exactly but do not pass native controls; do not expand on text loss alone.
+
+Plain words: a concrete backend interface bug hid actual successful receipts
+when worker prose answered only a later question (7480841: lookup=`teal star`,
+injected prose=physics only). Source3e42038 now injects verified actual record
+facts alongside prose; stale/fabricated/cancelled receipts cannot be promoted,
+and errors remain failure notices. All21 focused regression tests pass.
+The incorrect numeral in7480830 completes at9.957s before real receipt injection
+at10.869s: waiting and available-result use are distinct failure mechanisms.
+
+Plain words: four targeted native tests7485619–22 keep the136-update own-audio
+weights fixed. Receipt preservation alone still fails. Adding actual pending
+status (no forced speech) yields correct sampled orange square/teal star text
+in7485621/22 without the earlier fabricated values. This is preliminary text
+behavior, not full voice/task qualification. Independent CPU speech audit7485697,
+ordinary/clarify/cancel controls7485698/99/5700 and zero-adapter comparisons
+7485701/02 are running/queued. Exact payload events and phrase/receipt clocks
+are saved under `runs/recovery-continuation-20261016`.
+See `docs/research/2026-10-15-resource-decisions.md` for what was actually adopted
+from each supplied resource and what remains unimplemented.
+
+
 Plain words: latest checkpoint at19:45Berlin supersedes transfer/pending claims
 below. Both full public model weights are exported locally and read-back SHA
 verified (33.49GB total), with `runs/cloud-export-20261016/model-verification.json`.
