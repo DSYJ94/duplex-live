@@ -27,6 +27,23 @@ Raw-history integrity checks now pass both7457161/62: actual tensor file hashes,
 voice/source/model pins, source TRAIN approval and all frame/receipt accounting.
 They remain unapproved conditioning, with future target approval still absent.
 
+Plain words: EPAD-retaining preflight7463825 passes8 updates, integrated native
+history/parity and exact fresh reload. Its native7463977–84 all produce text.
+Independent audits7464215–22 confirm both changed values in Willow000 and
+ordinary answers, but Alder001, clarification006 and cancellation007 fail.
+This is partial behavior only. Bounded128 pilot7464214 completes/reloads;
+native7464223–30 has four empty sampled-text streams and remaining faulty
+private/control behavior. Reject for scale. Dense teacher-history training
+still drifts away from useful free-running behavior. Keep the accepted base.
+
+Plain words: new adapters7463825/7463729 and actual TRAIN v2 histories7463985/86
+are backed locally with hashes checked. Strict restarts7464207 and cold7464272
+fail assistant-acoustic code equality while clocks/provided flags/global RNG
+and delayed returned text match. No future gold targets are approved. New v3
+collectors7464403/04 save temporal hidden/text scores to locate divergence;
+dependent7464405 compares actual consumed inputs before any optimization.
+Do not weaken the gate or pretend this restores codec/PCM streams.
+
 ### Earlier recovery evidence — 15 October
 
 Plain words: no complete model qualifies. The owner says Context Spanning with

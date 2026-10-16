@@ -138,3 +138,42 @@ PCM continuation needs those states or separately checked codec replay, and
 forced gold audio is not evidence of sampled voice quality. Actual microphone,
 speaker echo cancellation, playback interruption and end-to-end latency remain
 separate unproven gates.
+
+## Restart gate result and falsifiable diagnosis
+
+Plain words: strict restart 7464207 fails. The reviewed experiment record says
+both histories retain exact provided flags, clocks, CPU/CUDA RNG and delayed
+returned text over two steps, but sampled assistant acoustic cache values
+diverge. Cold-graph control 7464272 also fails, rejecting graph warmup alone as
+the fix. Actual histories and future gold targets remain unapproved. These
+results do not identify a root cause.
+
+Official Torch 2.9
+[`CUDAGeneratorImpl`](https://github.com/pytorch/pytorch/blob/v2.9.0/aten/src/ATen/cuda/CUDAGeneratorImpl.cpp)
+serializes seed and Philox offset. `set_state` updates the existing generator
+state; graph replay fills its seed/offset device tensors from that state and
+advances the recorded graph increment.
+[`CUDAGraph::replay`](https://github.com/pytorch/pytorch/blob/v2.9.0/aten/src/ATen/cuda/CUDAGraph.cpp)
+calls this replay prologue before launching the graph. This argues against
+assuming an independent, omitted sampling RNG. The actual NGC Torch fork must
+still be distinguished from official release source. Matching global RNG
+establishes draw accounting, not identical distributions or category ordering.
+
+The next diagnostic saves each actual native temporal call's final hidden
+vector and text logits outside the graph, then compares replay before depth
+sampling. Clone captures immediately: `CUDAGraphed` reuses its output buffers,
+so keeping tensor references would corrupt earlier evidence. If the hidden
+vector already differs, investigate temporal KV values, execution settings and
+numerics before blaming depth RNG. Exact token inputs and positions alone do
+not establish exact floating-point KV contents.
+
+If hidden vectors match, force identical preceding depth codes and compare the
+first differing head's logits and top-k indices. Torch's
+[`topk` documentation](https://docs.pytorch.org/docs/2.9/generated/torch.topk.html)
+does not promise stable indices for ties. If those inputs also match, repeat
+fixed-probability sampling on the same captured graph with identical restored
+RNG. Different samples would support a sampler/graph-state issue; reproducible
+samples would direct attention back to the upstream inputs or depth graph.
+Native depth inference creates a separate streaming scope per frame; the
+review has not identified another persistent depth state that explains the
+observed mismatch. Keep that hypothesis open until these checks distinguish it.

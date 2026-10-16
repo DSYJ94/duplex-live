@@ -3661,3 +3661,20 @@ fix. Prepare v3 collectors saving each actual native call's final hidden vector
 and text logits outside the graph. Replay will compare these before sampling
 to separate temporal numerical differences from depth/sampler state. Raw
 conditioning and all future targets remain unapproved; thresholds are unchanged.
+
+
+Plain words: EPAD128 pilot7464214 passes fresh reload but native7464223–30
+again fails behavior: four empty sampled-text streams (both001, simple004,
+clarify006);000 answers are missing/wrong-field, cancel007 falsely claims room
+marker ready. Reject for scale. Eight-step7463977/78 spoken yellow circle and
+purple diamond are independently confirmed by audits7464215/16 (WER0/.026).
+Other speech audits confirm failed001/clarify/cancel behavior; cancellation
+transcription has invalid bounds and is not an approved artifact. No overall
+model qualification or PCM-silence conclusion is inferred from empty text.
+
+
+Plain words: v3 collectors7464403/04 finish with actual numerical evidence.
+Restart7464405 stops on the explicit next-input equality check after sampled
+acoustics diverge, before writing its numerical report. Keep the same strict
+requirement but record this failed check in the report so the first numerical
+difference survives. No optimizer or target approval is involved.

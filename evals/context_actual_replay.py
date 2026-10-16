@@ -117,11 +117,11 @@ def run(lm, voice, histories, data, assets, source_commit, warm_graphs=True):
                 original_main = state.graphed_main
                 next_calls = [i for i,c in enumerate(record['calls']) if c['start'] >= boundary]
                 next_index = iter(next_calls)
+                next_input_checks = []
                 def checked_main(value):
                     i = next(next_index)
                     original = saved['delayed_inputs'][:, :, record['calls'][i]['start']:record['calls'][i]['start']+1]
-                    if not torch.equal(value.cpu(), original):
-                        raise RuntimeError('Actual next temporal input differs before the sampled continuation')
+                    next_input_checks.append({'call': i, 'exact': torch.equal(value.cpu(), original)})
                     output = original_main(value)
                     compare(i, output)
                     return output
@@ -139,10 +139,10 @@ def run(lm, voice, histories, data, assets, source_commit, warm_graphs=True):
                         'returned_text_exact': output is not None and int(output[0, 0, 0]) == rows[following]['text_token']}
                     same['cache_mismatches_per_channel'] = (state.cache.cpu() != expected['cache']).sum((0, 2)).tolist()
                     steps.append(same)
-                passed = all(all(s[k] for k in ('cache_exact','provided_exact','offset_exact',
+                passed = all(c['exact'] for c in next_input_checks) and all(all(s[k] for k in ('cache_exact','provided_exact','offset_exact',
                     'cpu_rng_exact','cuda_rng_exact','returned_text_exact')) for s in steps)
         results.append({'history': str(path), 'source': check, 'real_frame_index': index,
-            'virtual_boundary': boundary, 'steps': steps, 'temporal_numerics': numerical, 'passed': passed})
+            'virtual_boundary': boundary, 'steps': steps, 'temporal_numerics': numerical, 'next_input_checks': next_input_checks, 'passed': passed})
     return {'schema': 'dl-context-actual-restart-gate-v1', 'results': results,
         'graph_warmup_before_replay': warm_graphs,
         'passed': all(r['passed'] for r in results), 'training_approved': False,
