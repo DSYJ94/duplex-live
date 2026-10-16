@@ -76,8 +76,13 @@ def run(lm, spm, voice, examples, components, audits, args):
             for audit,(inputs,mask,target) in zip(audits,batches):
                 z = forward(inputs)[1][0,0]; pos = int(torch.where(mask)[0][0])
                 y = target[mask]; z = z[mask].float()
-                results.append({'scenario':audit['scenario'],'nll':float(F.cross_entropy(z,y)),
+                weights = torch.where(y==3,.5,1.)
+                ce = F.cross_entropy(z,y,reduction='none')
+                results.append({'scenario':audit['scenario'],'nll':float((ce*weights).sum()/weights.sum()),
                     'top1':float((z.argmax(-1)==y).float().mean()),
+                    'non_pad_nll':float(ce[y!=3].mean()),
+                    'silence_targets':int((y==3).sum()),
+                    'silence_top1':float((z[y==3].argmax(-1)==3).float().mean()) if (y==3).any() else None,
                     'first_supervised_token_target':int(target[pos]),
                     'first_supervised_token_probability':float(z[0].softmax(-1)[target[pos]])})
         return results
@@ -89,6 +94,7 @@ def run(lm, spm, voice, examples, components, audits, args):
             'retention_examples':[r[2] for r in retention],
             'recipe':{'rank':8,'scaling':2.,'last_layers':4,'lr':1e-5,'weight_decay':0.,
                 'gradient_clip':1.,'retention_kl_weight':1.,'retention_hidden_mse_weight':10.,
+                'text_pad3_loss_weight':.5,
                 'data_order':'actual step modulo component count; retention step modulo four',
                 'actual_component_count':len(batches),'past_loss_targets':0,'audio_loss_targets':0,
                 'execution':'BF16 batch MATH, no compilation or CUDA graphs'}}
@@ -162,7 +168,9 @@ def run(lm, spm, voice, examples, components, audits, args):
             inputs,mask,target = batches[step%len(batches)]
             with checkpoint_language_layers(lm):
                 logits = forward(inputs)[1][0,0,mask].float()
-                ce = F.cross_entropy(logits,target[mask]); ce.backward()
+                y = target[mask]; weights = torch.where(y==3,.5,1.)
+                ce = (F.cross_entropy(logits,y,reduction='none')*weights).sum()/weights.sum()
+                ce.backward()
                 ri = step%len(retention); inputs,mask,_ = retention[ri]
                 h,z = forward(inputs); base_h,prob = references[ri]
                 kl = F.kl_div(z[0,0,mask].float().log_softmax(-1),prob,reduction='batchmean')

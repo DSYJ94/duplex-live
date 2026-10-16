@@ -129,16 +129,26 @@ def validate(folder, data, assets, examples, spm, voice):
             and begin <= source_frame < end):
         raise RuntimeError('Measured private fact outside approved future sentence')
     fact_frame = indices[source_frame-begin]
-    result = {'schema':'dl-context-early-future-audit-v1','component':str(folder),'passed':True,
+    # The capture's original sparse mask is checked above, not rewritten on disk.
+    # Full early continuations must also learn when to stay silent. Only real
+    # frames have nonnegative labels; virtual context spans retain -1/no loss.
+    full_mask = labels >= 0
+    if int(full_mask.sum()) != length or full_mask.sum() <= mask.sum():
+        raise RuntimeError('Incomplete real-frame silence supervision')
+    approved = {**saved, 'text_mask':full_mask}
+    result = {'schema':'dl-context-early-future-audit-v2','component':str(folder),'passed':True,
         'capture_manifest_sha256':sha256(folder/'early-future.json'),'tensor_sha256':m['sha256'],
         'restart_gate_sha256':m['actual_restart_gate_sha256'],'source_history_sha256':source['history_sha256'],
         'manifest_sha256':sha256(folder/'early-future.json'),'voice_codes_sha256':m['voice_codes_sha256'],
         'source_execution':m['source_execution'],'builder_commit':m['builder_commit'],
-        'scenario':source['scenario'],'world':m['world'],'frames':total,'text_targets':int(mask.sum()),
+        'scenario':source['scenario'],'world':m['world'],'frames':total,'text_targets':int(full_mask.sum()),
         'first_fact_frame':fact_frame,'first_fact_target':int(saved['text_targets'][fact_frame]),
         'teacher':m['teacher'],'actual_real_prefix_frames':begin,'real_future_frames':length,
-        'virtual_future_frames':total,'text_loss_targets':int(mask.sum()),'request_targets':int((gold[0]==4).sum()),
+        'virtual_future_frames':total,'text_loss_targets':int(full_mask.sum()),'request_targets':int((gold[0]==4).sum()),
+        'source_capture_sparse_mask_targets':int(mask.sum()),
+        'silence_pad3_targets':int((labels==3).sum()),'silence_pad3_loss_weight':.5,
+        'loss_policy':'all independently verified real future text; PAD3 half weight; spans and past excluded',
         'past_loss_targets':0,'span_loss_targets':0,'audio_loss_targets':0,
         'native_assistant_text_component_approved':True,'replayed_future_receipts_not_live_dispatch':True,
         'whole_model_quality_or_delegation_qualified':False}
-    return result,saved
+    return result,approved
