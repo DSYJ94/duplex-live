@@ -40,6 +40,7 @@ def main():
     ap.add_argument('--scenario',default='recovery-validation-000')
     ap.add_argument('--private-value',required=True)
     ap.add_argument('--voice',choices=('released','accepted-synthetic'),default='released')
+    ap.add_argument('--expected-kind',choices=('private','simple','clarify','cancel'))
     ap.add_argument('--voice-reference',type=Path)
     ap.add_argument('--voice-provenance',type=Path)
     ap.add_argument('--backend-mode',choices=('scheduled','native-asr'),default='scheduled')
@@ -88,6 +89,8 @@ def main():
         if sha256(args.base/name)!=digest:raise RuntimeError('PersonaPlex base asset changed')
     data=validate_conversion(args.data)
     row=next(r for r in data['accepted'] if r['scenario_id']==args.scenario)
+    if args.expected_kind and row['kind'] != args.expected_kind:
+        raise RuntimeError('Selected scene differs from the explicitly requested behavior kind')
     expected_split='train' if args.train_history else 'validation'
     if row['split']!=expected_split or row['kind'] not in ('private','simple','clarify','cancel'):
         raise RuntimeError('Approved development behavior scene required')
