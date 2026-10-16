@@ -2,6 +2,33 @@
 
 ## Current execution — 16 October, access restored and native-convention checks
 
+Plain words: owner confirms compute ends in5 days and requires readiness1–2
+days before. Delivery target is19 October,20 October recovery/export buffer;
+freeze recipe by17 October12:00Berlin and stop new training by18 October18:00.
+See [dated delivery plan](docs/DELIVERY_PLAN_2026-10-19.md). Time-box small
+experiments; this deadline does not waive causal-data, voice or task gates.
+
+Plain words: temporal7467496 PASSES exact fresh reload and is backed locally
+with adapter/data/voice/packaged-audit hashes checked. Native7467590 gets actual
+results (backend failures0, RET2) but omits orange square. Independent speech
+audit7467658 WER0.0222 confirms intelligible faulty speech. Reject a result-use
+success claim. Native7467526 failed the explicit TRAIN-history launch guard
+before inference; corrected7467590 captures TRAIN history explicitly. Pending
+head tests7467049/51/53/55/57/59/62/64 were cancelled because their scene settings
+had the same mismatch; validation replacements7467595–7467602 are in workq.
+
+Plain words: late corrections start at26.16/17.92/20.72s after actual receipts
+at10.55/10.87/11.03s. They do not teach the earlier choice to wait for a result.
+CPU early-window plans pass on all3 histories: original future dialogue clocks,
+incoming real user speech, no preceding student reply/request, actual future
+receipt boundaries, complete approved teacher text/request targets. Source review
+adds measured first-word onset and240ms private-speech-after-receipt margins,
+and checks pending assistant gold residuals across spans. New native Engine
+capture7467981 (immutable553794d) uses the explicit native-prelead-epad labels.
+It executes both codecs and native span-exit readout; future receipts are replayed,
+not freshly dispatched. Captures remain quarantined with training_approved=false
+and future_text_targets_approved=false until an independent artifact audit.
+
 Plain words: head-only proof7466440 PASSES8 updates and exact separate-process
 FP32/native-BF16 feature reload. SHA0c70dde5983d272a7c3772f23808a7c50fff6f2487642d0b573a807584ca6563.
 Learning is tiny (native NLL1.819252→1.819245); first fact-token top1 was already
@@ -28,7 +55,7 @@ approved TRAIN private/simple/clarify/cancel examples regularize the unchanged
 base text distribution (KL) and hidden states (10x MSE). Base speech parameters
 are frozen and hashed; require finite gradients and exact fresh-process reload.
 The matching zero-update temporal audit is mandatory and packaged with the
-proof. No128-step training is authorized by this engineering proof. Retrieve
+proof. This engineering proof alone does not justify128-step training. Retrieve
 FULL logs before deciding whether to run its unforced native comparisons.
 
 Plain words: corrective future components7466157/60/63 PASS strict native
