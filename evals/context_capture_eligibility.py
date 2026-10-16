@@ -45,11 +45,12 @@ def main():
         folder = root/('context-spanning-probe-'+case['job'])
         raw = json.loads((folder/'student-history.json').read_text())
         checked = validate_history(folder,args.data,args.assets,mapping['collector_commit'])
+        expected_world = {} if case['expected_kind']=='simple' else {
+            case['project']:{case['field']:case['private_value']}}
         if (checked['scenario'] != case['scenario'] or raw['source']['kind'] != case['expected_kind']
                 or raw['source']['wav_sha256'] != case['source_wav_sha256']
                 or raw['source']['sidecar_sha256'] != case['source_sidecar_sha256']
-                or raw['source']['declared_counterfactual_world'] != {
-                    case['project']:{case['field']:case['private_value']}}):
+                or raw['source']['declared_counterfactual_world'] != expected_world):
             raise RuntimeError('Captured source/kind/world differs from the hash-bound teacher plan')
         item = {'index':case['index'],'job':case['job'],'teacher':case['teacher'],
             'scenario':case['scenario'],'kind':case['expected_kind'],
