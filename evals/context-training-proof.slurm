@@ -46,6 +46,18 @@ if [ "${CONTEXT_CODEC_AUDIT:-0}" = 1 ]; then
   --cache "$DL/runs/recovery-mixed-codes-7411513" --out "$DL/runs/context-codec-audit-${SLURM_JOB_ID}"
  exit 0
 fi
+if [ -n "${CONTEXT_ACTUAL_REPLAY_JOBS:-}" ]; then
+ : "${CONTEXT_ACTUAL_SOURCE_COMMIT:?Actual collector commit required}"
+ ACTUAL=()
+ for J in $CONTEXT_ACTUAL_REPLAY_JOBS; do
+  [[ "$J" =~ ^[0-9]+$ ]]
+  ACTUAL+=(--actual-replay "$DL/runs/context-spanning-probe-$J")
+ done
+ run_container -m evals.context_training_proof "${ARGS[@]}" "${ACTUAL[@]}" \
+  --actual-source-data "$DL/runs/recovery-data-7407554" \
+  --actual-source-commit "$CONTEXT_ACTUAL_SOURCE_COMMIT"
+ exit 0
+fi
 run_container -m unittest evals.harness.test_context_training_loss
 if [ "${CONTEXT_TEACHER_AUDIT:-0}" = 1 ]; then
  AUDITS=()

@@ -3624,3 +3624,22 @@ cache/provided/offset and RNG snapshots after actual complete steps, retaining
 This will allow native forced-gold continuation assembly without fabricating
 pending assistant audio. No transformer KV or model weights are saved. The
 new snapshot path still needs an actual GPU collector check.
+
+
+## 2026-10-16 — EPAD preflight and actual-state restart gate
+
+Plain words: EPAD-retaining native-prelead preflight7463825 passes eight finite
+updates, native history/parity and exact fresh reload. Adapter SHA
+8424628a0adabcab6c5ed7147e478b0023f9c589455d348b04d77b9cce8cc279.
+Calibration7463976 gives baseline RET top1 36/40 and word NLL1.897, compared
+with 0/40 and11.339 on the earlier PAD3 convention; this is a different input
+convention, not an unchanged-input model improvement. Eight updates barely
+change these teacher-history measures. Free-running7463977–84 remain decisive.
+
+Plain words: v2 actual TRAIN collectors7463985/86 finish with small generator
+state and CPU/CUDA RNG snapshots, zero provided pending assistant acoustics,
+and seven provided pending user residuals. They are unapproved conditioning.
+The next diagnostic replays actual consumed direct/graph calls, restores cache
+ownership and RNG, and requires two unforced following steps to match the
+recorded snapshots. It creates no gold targets or optimizer updates and makes
+no PCM/microphone restart claim. See the dated actual-context source review.

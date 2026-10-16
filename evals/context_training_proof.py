@@ -32,6 +32,9 @@ def main():
     ap.add_argument('--pilot-preflight', type=Path)
     ap.add_argument('--layout-audit', type=Path)
     ap.add_argument('--teacher-audit', type=Path, action='append')
+    ap.add_argument('--actual-replay', type=Path, action='append')
+    ap.add_argument('--actual-source-data', type=Path)
+    ap.add_argument('--actual-source-commit')
     ap.add_argument('--reload', action='store_true')
     ap.add_argument('--history-audit-only', action='store_true')
     ap.add_argument('--history-audit', action='store_true')
@@ -40,6 +43,9 @@ def main():
     ap.add_argument('--text-padding', choices=('legacy-epad0','context-pad3'), default='legacy-epad0')
     ap.add_argument('--request-policy', choices=('source-dispatch','native-prelead','native-prelead-epad'), default='source-dispatch')
     args = ap.parse_args()
+    if args.actual_replay and (not args.actual_source_data or not args.actual_source_commit
+            or args.reload or args.pilot_preflight or args.teacher_audit):
+        ap.error('Actual restart needs explicit source data/commit and a separate diagnostic run')
     if args.history_logits and not (args.history_audit or args.history_audit_only):
         ap.error('Temporal history logits require a history audit')
     if args.steps == 128 and (not args.pilot_preflight or not args.layout_audit):
@@ -124,6 +130,14 @@ def main():
             voice = mimi.encode(torch.as_tensor(x, dtype=torch.float32, device='cuda').reshape(1, 1, -1))[0].long().cpu()
         torch.save({'codes': voice}, args.out / 'voice.pt')
     del mimi
+    if args.actual_replay:
+        from evals.context_actual_replay import run
+        result = run(lm, voice, args.actual_replay, args.actual_source_data,
+            args.assets, args.actual_source_commit)
+        (args.out / 'actual-replay.json').write_text(json.dumps(result, indent=2) + '\n')
+        print(json.dumps(result), flush=True)
+        if not result['passed']: raise RuntimeError('Actual unforced token restart failed')
+        return
     prefix = persona_prefix(BASE_INSTRUCTIONS, voice, spm)
     examples, records = load_training(args.cache, spm, prefix, text_padding=args.text_padding,
         request_policy=args.request_policy)
