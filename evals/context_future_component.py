@@ -170,6 +170,7 @@ def main():
     for key in ('history','data','assets','tokenizer','out'):
         ap.add_argument('--'+key,type=Path,required=True)
     ap.add_argument('--source-commit',required=True)
+    ap.add_argument('--early-window',action='store_true',help='Plan a complete future before any student reply; CPU only')
     ap.add_argument('--cache',type=Path,action='append',required=True)
     args=ap.parse_args()
     args.out.mkdir(exist_ok=False)
@@ -183,6 +184,9 @@ def main():
     examples,_=load_training(args.cache,spm,persona_prefix(BASE_INSTRUCTIONS,voice,spm))
     try:
         result,_=plan(args.history,args.data,examples,spm)
+        if args.early_window:
+            from evals.context_early_plan import plan as early_plan
+            result,_=early_plan(result,examples)
         result['eligible_for_strict_replay']=True
     except RuntimeError as error:
         result={'eligible_for_strict_replay':False,'reason':str(error),
