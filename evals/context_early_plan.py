@@ -18,13 +18,6 @@ def plan(late, examples):
     clean = example['clean_codes']
     actual_first = next(i for i,r in enumerate(rows) if r['text_token'] >= 4)
     teacher_first = int((clean[0]>=4).nonzero()[0])
-    begin = min(actual_first,teacher_first)-2
-    # Restart checks through cut+2; no old token is replaced by teacher gold.
-    cut = begin-3
-    if cut < 0 or any(r['text_token'] not in (0,3) for r in rows[:begin]):
-        raise RuntimeError('No early actual cut before every sampled reply/request token')
-    if (clean[0,:begin]>=4).any():
-        raise RuntimeError('Early window would omit an approved teacher reply/request token')
     if any(abs(row['input_start_s']-i*.08)>1e-7 for i,row in enumerate(rows)):
         raise RuntimeError('Early composition needs the unchanged absolute real-frame clock')
     teacher = late['teacher']; cache = Path(teacher['cache'])
@@ -33,6 +26,15 @@ def plan(late, examples):
         if r['scenario_id'] == teacher['id'])
     side = json.loads(Path(source['path']).with_suffix('.json').read_text())
     words = [a for a in side['alignments'] if a[2]=='SPEAKER_MAIN']
+    first_onset = min(w[1][0] for w in words)
+    if not math.isfinite(first_onset):raise RuntimeError('Invalid first measured assistant onset')
+    begin = min(actual_first-2,teacher_first-2,math.floor(first_onset*12.5)-2)
+    # Restart checks through cut+2; no old token is replaced by teacher gold.
+    cut = begin-3
+    if cut < 0 or any(r['text_token'] not in (0,3) for r in rows[:begin]):
+        raise RuntimeError('No early actual cut before every sampled reply/request token')
+    if (clean[0,:begin]>=4).any():
+        raise RuntimeError('Early window would omit an approved teacher reply/request token')
     last_word = int((clean[0]>=5).nonzero()[-1])
     end = max(last_word+1,math.ceil(max(w[1][1] for w in words)*12.5))+2
     if end > min(len(rows),clean.shape[1]):
@@ -70,6 +72,8 @@ def plan(late, examples):
         'replay_cut_index':cut,'future_first_real_frame':begin,'future_end_real_frame':end,
         'future_real_frames':end-begin,'source_start_frame':begin,'source_end_frame':end,
         'actual_prefix_has_no_reply_or_request_tokens':True,
+        'first_assistant_measured_onset_s':first_onset,
+        'window_begins_before_first_measured_speech':begin*.08 <= first_onset-.16,
         'all_teacher_reply_and_request_tokens_retained':True,
         'user_pcm_and_word_times_retimed':False,'teacher_word_times_retimed':False,
         'future_user_pcm_is_allowed_to_contain_real_speech':True,
