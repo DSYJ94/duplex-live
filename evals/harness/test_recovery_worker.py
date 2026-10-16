@@ -6,6 +6,50 @@ from evals.recovery_worker import RecordWorld,run_worker,WorkerSuperseded,Worker
 
 
 class RecordGuards(unittest.TestCase):
+    def test_concurrent_cancel_rejection_does_not_touch_unrelated_work(self):
+        world = RecordWorld({'Cedar':{'badge':'violet triangle'},'Birch':{'badge':'silver circle'}})
+        old = world.read('old','Cedar','badge')
+        other = world.read('other','Birch','badge')
+        revision = world.reserve('dispatch')
+        def post(*args,**kwargs):
+            world.cancel('old')  # Another dispatch wins after the task snapshot.
+            return types.SimpleNamespace(status_code=200,json=lambda:{
+                'id':'race','status':'completed','output':[{'type':'function_call',
+                    'name':'cancel_lookup','call_id':'cancel',
+                    'arguments':json.dumps({'task_ids':['old']})}]})
+        with patch.dict('sys.modules',{'requests':types.SimpleNamespace(post=post)}),patch.dict('os.environ',{'OPENAI_API_KEY':'test-placeholder'}):
+            with self.assertRaisesRegex(WorkerContractError,'no longer active') as caught:
+                run_worker([{'role':'user','text':'Cancel Cedar.'}],world,'dispatch',expected_revision=revision)
+        self.assertEqual(caught.exception.result['receipts'],[])
+        self.assertFalse(world.deliverable(old))
+        self.assertTrue(world.deliverable(other))
+        self.assertFalse(world.tasks['dispatch']['cancelled'])
+
+    def test_unavailable_record_becomes_failed_reply_without_execution(self):
+        from evals.context_backend_failure import notice
+        for project,field in [('Cedar','missing'),('Birch','badge')]:
+            with self.subTest(project=project,field=field):
+                world = RecordWorld({'Cedar':{'badge':'violet triangle'}})
+                revision = world.reserve('task')
+                call = {'type':'function_call','name':'lookup_record','call_id':'bad',
+                    'arguments':json.dumps({'project':project,'field':field})}
+                requests = []
+                def post(*args,**kwargs):
+                    requests.append(kwargs)
+                    return types.SimpleNamespace(status_code=200,json=lambda:{
+                        'id':'bad','status':'completed','output':[call]})
+                with patch.dict('sys.modules',{'requests':types.SimpleNamespace(post=post)}),patch.dict('os.environ',{'OPENAI_API_KEY':'test-placeholder'}):
+                    with self.assertRaises(WorkerContractError) as caught:
+                        run_worker([{'role':'user','text':'Check '+project+' '+field}],
+                            world,'task',expected_revision=revision)
+                result = notice(caught.exception,'task')
+                self.assertEqual(result['route'],'error')
+                self.assertEqual(result['receipts'],[])
+                self.assertNotIn('violet triangle',result['content'])
+                self.assertEqual(world.receipts,[])
+                self.assertEqual(world.tasks['task']['phase'],'pending')
+                self.assertEqual(len(requests),1)
+
     def test_cancel_selected_duplicates_preserves_unrelated_work(self):
         world = RecordWorld({"Cedar":{"badge":"violet triangle"},"Birch":{"badge":"silver circle"}})
         first = world.read("first","Cedar","badge")

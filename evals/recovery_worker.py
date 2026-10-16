@@ -161,7 +161,12 @@ def run_worker(context,world,task_id,model="gpt-6-luna",expected_revision=None):
         if call["name"] == "lookup_record":
             if not project_identified_by_user(context, arguments["project"]):
                 raise WorkerContractError("Private project was not identified by the user", {"events":events,"arguments":arguments})
-            receipt = world.read(task_id,**arguments,expected_revision=expected_revision)
+            try:
+                receipt = world.read(task_id,**arguments,expected_revision=expected_revision)
+            except ValueError as error:
+                raise WorkerContractError('Private record request was rejected',
+                    {'events':events,'arguments':arguments,'receipts':[],
+                     'tool_error':str(error)}) from error
             selected_route = "delegate"
         elif call["name"] == "cancel_lookup":
             # Legacy single-ID captured events remain readable for regression
@@ -169,7 +174,12 @@ def run_worker(context,world,task_id,model="gpt-6-luna",expected_revision=None):
             targets = [arguments["task_id"]] if set(arguments) == {"task_id"} else arguments.get("task_ids")
             if not isinstance(targets,list) or task_id in targets or any(t not in available["tasks"] for t in targets):
                 raise WorkerContractError("Cancellation must target existing work, not its own dispatch",{"events":events,"arguments":arguments})
-            receipt = world.cancel_many(targets)
+            try:
+                receipt = world.cancel_many(targets)
+            except ValueError as error:
+                raise WorkerContractError('Cancellation targets are no longer active',
+                    {'events':events,'arguments':arguments,'receipts':[],
+                     'tool_error':str(error)}) from error
             selected_route = "cancel"
         else:
             raise RuntimeError("Unknown backend tool")
