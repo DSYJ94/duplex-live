@@ -34,6 +34,7 @@ def main():
     ap.add_argument('--teacher-audit', type=Path, action='append')
     ap.add_argument('--actual-replay', type=Path, action='append')
     ap.add_argument('--actual-source-data', type=Path)
+    ap.add_argument('--actual-head-data', type=Path, action='append')
     ap.add_argument('--actual-source-commit')
     ap.add_argument('--actual-future-component', action='store_true')
     ap.add_argument('--actual-engine-replay', action='store_true')
@@ -48,6 +49,9 @@ def main():
     ap.add_argument('--text-padding', choices=('legacy-epad0','context-pad3'), default='legacy-epad0')
     ap.add_argument('--request-policy', choices=('source-dispatch','native-prelead','native-prelead-epad'), default='source-dispatch')
     args = ap.parse_args()
+    if args.actual_head_data and (not args.actual_source_data or args.actual_replay
+            or args.pilot_preflight or args.teacher_audit or args.history_audit or args.history_audit_only):
+        ap.error('Head-only proof requires independent future components and original source data')
     if args.actual_replay and (not args.actual_source_data or not args.actual_source_commit
             or args.reload or args.pilot_preflight or args.teacher_audit):
         ap.error('Actual restart needs explicit source data/commit and a separate diagnostic run')
@@ -134,6 +138,10 @@ def main():
             raise RuntimeError('Actual recorded voice provenance changed')
         voice = torch.load(voice_file, map_location='cpu', weights_only=True)['codes']
         torch.save({'codes': voice}, args.out / 'voice.pt')
+    elif args.actual_head_data:
+        voice_source = args.out if args.reload else args.actual_head_data[0]
+        voice = torch.load(voice_source/'voice.pt',map_location='cpu',weights_only=True)['codes']
+        if not args.reload: torch.save({'codes':voice},args.out/'voice.pt')
     elif args.reload or parent or args.teacher_audit:
         voice_source = args.out if args.reload else (args.pilot_preflight if parent else args.teacher_audit[0])
         if parent and not args.reload and sha256(voice_source / 'voice.pt') != parent['voice_sha256']:
@@ -180,6 +188,10 @@ def main():
     prefix = persona_prefix(BASE_INSTRUCTIONS, voice, spm)
     examples, records = load_training(args.cache, spm, prefix, text_padding=args.text_padding,
         request_policy=args.request_policy)
+    if args.actual_head_data:
+        from evals.context_head_proof import run
+        run(lm,spm,voice,examples,args)
+        return
     (args.out / 'data.json').write_text(json.dumps(records, indent=2) + '\n')
     if parent and (parent['data_sha256'] != sha256(args.out / 'data.json')
             or parent['voice_reference_sha256'] != sha256(args.voice_reference)):

@@ -63,6 +63,17 @@ if [ -n "${CONTEXT_ACTUAL_REPLAY_JOBS:-}" ]; then
   --actual-source-commit "$CONTEXT_ACTUAL_SOURCE_COMMIT"
  exit 0
 fi
+if [ -n "${CONTEXT_ACTUAL_HEAD_JOBS:-}" ]; then
+ HEAD=()
+ for J in $CONTEXT_ACTUAL_HEAD_JOBS; do
+  [[ "$J" =~ ^[0-9]+$ ]]
+  HEAD+=(--actual-head-data "$DL/runs/context-training-proof-$J")
+ done
+ HEAD+=(--actual-source-data "$DL/runs/recovery-data-7407554")
+ run_container -m evals.context_training_proof "${ARGS[@]}" "${HEAD[@]}"
+ run_container -m evals.context_training_proof "${ARGS[@]}" "${HEAD[@]}" --reload
+ exit 0
+fi
 run_container -m unittest evals.harness.test_context_training_loss
 if [ "${CONTEXT_TEACHER_AUDIT:-0}" = 1 ]; then
  AUDITS=()
