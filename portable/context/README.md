@@ -2,9 +2,13 @@
 
 This is a provider-neutral container recipe for the current Context Spanning
 trainer. It is intended for NVIDIA GPU instances on AWS, GCP, Modal, Nebius or
-Runpod. No provider resources are provisioned by this directory. The image build
-and an amd64 GPU resume are still pending verification; do not treat this recipe
-as a qualified deployment.
+Runpod. No provider resources are provisioned by this directory. The recipe
+passes an amd64 image build and native Engine/training imports under local CPU
+emulation. An amd64 GPU resume is still pending verification; do not treat this
+recipe as a qualified deployment. The NVIDIA base is pinned to the tested digest.
+The interrupted/uninterrupted optimizer/RNG tests also pass inside the amd64
+image on CPU (two tests). Neither import checks nor CPU tests establish GPU
+numerical equivalence or task quality.
 
 Build from the repository root on the destination architecture:
 
@@ -54,12 +58,12 @@ the required destination GPU audits pass:
 
 ```sh
 export DL_RESTORED_TREE=/mnt/duplex-live
-export DL_TASK_COMMIT=0e0e3634ea258761d2d9f16df6e3347ce9150834
+export DL_TASK_COMMIT=ad827455fc5052fd7963b5bed4c274b94068a37c
 export DL_RUN_ID=9990001  # choose a new unused numeric identifier
 export CONTEXT_ACTUAL_HEAD_JOBS='7467981 7468102 7468611'
 export CONTEXT_MODE=resume
-export CONTEXT_ACTUAL_TEMPORAL_PREFLIGHT_JOB=7469530
-export CONTEXT_RESUME_TRAINING_JOB=7474819
+export CONTEXT_ACTUAL_TEMPORAL_PREFLIGHT_JOB=7475863
+export CONTEXT_RESUME_TRAINING_JOB=7475934
 export CONTEXT_ACTUAL_FIT_UPDATES=32
 bash portable/context/train.sh
 ```

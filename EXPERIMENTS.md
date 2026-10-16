@@ -18,6 +18,18 @@ passes on unseen lessons — that is generalization, not memorization.
 
 ## 16 October 2026 — actual-history corrections, still no qualified model
 
+Plain words: a source comparison identifies an actual training mismatch:
+upstream includes PAD3 silence with0.5 weight, while our early continuation
+mask discarded it. New sourcead82745 retains capture verification unchanged,
+approves all real future text frames and weights silence as upstream does.
+Audit7475863 passes257/257/240 targets, including169/181/172 PAD3 targets; no
+past/span/user/audio loss. New base8-update7475934 passes exact separate model,
+optimizer and RNG reload. Word and silence metrics are reported separately.
+Do not compare its blended loss directly with the old sparse-word objective.
+Old40-update development private cases all fail complete changed-value use;
+old168-update7475556 improves teacher-conditioned prediction but proves no task
+success. No repeated silent/gold/forced-result behavior is accepted as native.
+
 Plain words: corrected early audits approve88/76/68 text targets. The complete
 continuation needs measured per-word positions to locate the first fact;
 whole-value tokenization can differ at punctuation. Corrected source0e0e363

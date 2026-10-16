@@ -1,5 +1,5 @@
 # Build from repository root. No model weights, datasets or credentials in image.
-FROM nvcr.io/nvidia/pytorch:25.10-py3
+FROM nvcr.io/nvidia/pytorch:25.10-py3@sha256:42263b2424fc237b34c4fc4a91c30d603c57eed36e37d31ff6d9a4f1f801edee
 RUN python -m venv --system-site-packages /opt/duplex-env
 ENV PATH="/opt/duplex-env/bin:${PATH}" \
     PYTHONDONTWRITEBYTECODE=1 \

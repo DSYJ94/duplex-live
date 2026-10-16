@@ -43,6 +43,8 @@ run() {
  docker run --rm --gpus '"device=0"' --ipc=host \
   --user "$(id -u):$(id -g)" \
   -v "$DL_RESTORED_TREE:$ROOT" -w "$SOURCE" -e PYTHONPATH="$SOURCE" \
+  -e HOME=/tmp -e TRITON_CACHE_DIR=/tmp/duplex-triton \
+  -e TORCHINDUCTOR_CACHE_DIR=/tmp/duplex-inductor -e HF_HOME="$ROOT/models/hf-cache" \
   "${DL_IMAGE:-duplex-context:25.10}" "$@"
 }
 run -m unittest evals.harness.test_context_training_state

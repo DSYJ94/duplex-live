@@ -8,6 +8,28 @@ freeze recipe by17 October12:00Berlin and stop new training by18 October18:00.
 See [dated delivery plan](docs/DELIVERY_PLAN_2026-10-19.md). Time-box small
 experiments; this deadline does not waive causal-data, voice or task gates.
 
+Plain words: the current stage corrects a confirmed loss mismatch. Upstream
+`contextspan/training/finetune.py` lines38–51 trains real PAD3 silence at half
+weight; our sparse early mask excluded it. Sourcead82745 independently verifies
+the original capture unchanged, then approves real text/PAD targets only;
+past/span/user/audio losses stay zero. Audit7475863 PASSES all3 with257/257/240
+targets, including169/181/172 silence targets, and causal prefix errors0.
+Fresh base8-update7475934 PASSES separate exact prediction/optimizer/RNG reload
+and is backed locally with state/adapter/data hashes checked. Do not resume old
+0e0e363 states into this changed loss/source stage. The old168-update7475556
+passes its engineering/reload checks but is not a behavioral success claim.
+
+Plain words: the amd64 portable image now BUILDS with pinned NVIDIA digest
+42263b2424fc237b34c4fc4a91c30d603c57eed36e37d31ff6d9a4f1f801edee.
+Native Engine/training imports and both CPU optimizer/RNG resume tests PASS
+inside that image. Actual amd64 GPU continuation is still unverified. All845
+observed files (1.24GB) passed size/SHA checks and are saved in
+`runs/cloud-export-20261016/tree`; observed-read manifest sits alongside it.
+This does not cover unobserved native/subprocess IO or establish a full restore.
+Exact Context/base model-weight transfers are still running into
+`/private/tmp/duplex-cloud-export-20261016`. Clean source and vendor bundle clone
+restore checks pass. Rebuild immutable checkouts with Git metadata before use.
+
 Plain words: the owner requires continued training and development after expiry,
 across AWS/GCP/Modal/Nebius/Runpod; destination undecided. No paid resources
 provisioned. `portable/context` contains the pinned amd64 CUDA recipe; local
