@@ -1,7 +1,7 @@
 """Causal/ownership guards, not model or training qualification."""
 import unittest
 import numpy as np
-from evals.context_actual_targets import matching_user_stimulus, actual_private_receipt, sentence_target
+from evals.context_actual_targets import matching_user_stimulus, actual_private_receipt, sentence_target, captured_packets
 
 
 class FutureTargetGuards(unittest.TestCase):
@@ -23,6 +23,16 @@ class FutureTargetGuards(unittest.TestCase):
             ([{**event,'result':{**event['result'],'route':'error'}}],'purple star',3.),
             ([event,{'event':'cancelled_backend_rejected','task_id':'ret-0'}],'purple star',3.)]:
             with self.assertRaises(RuntimeError):actual_private_receipt(events,'Birch North','badge',value,cut)
+
+    def test_quiet_audio_cannot_hide_unaccounted_speech(self):
+        rows=[{'output_samples':2,'available_s':.1}]
+        ledger=[{'packet':0,'samples':2,'available_s':.1,
+            'playback_start_sample':2,'inserted_gap_samples':2}]
+        audio=np.array([0.,0.,.2,.3],dtype=np.float32)
+        np.testing.assert_array_equal(captured_packets(audio,ledger,rows)[0],audio[2:])
+        audio[0]=.1
+        with self.assertRaises(RuntimeError):captured_packets(audio,ledger,rows)
+        with self.assertRaises(RuntimeError):captured_packets(np.zeros(5),ledger,rows)
 
     def test_sentence_keeps_native_word_spacing_and_requires_receipt(self):
         encode=lambda w:{'The':[5],'badge':[6],'is':[7],'purple':[8],'star.':[9]}[w]

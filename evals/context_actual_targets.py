@@ -93,3 +93,26 @@ def sentence_target(text_codes, alignments, value, encode, ready_s, frame_rate=1
         'text': ' '.join(w[0] for w in words[begin:end]),
         'source_receipt_s': ready_s, 'native_frame_rate': frame_rate,
         'measured_token_spacing_unchanged': True, 'training_approved': False}
+
+
+def captured_packets(audio, ledger, rows):
+    """Recover packets from hash-verified model.wav; require complete accounting."""
+    import numpy as np
+    if audio.ndim!=1 or not np.isfinite(audio).all():
+        raise RuntimeError('Invalid recorded model PCM')
+    packets=[];cursor=0;packet_index=0
+    for row in rows:
+        count=row['output_samples']
+        if not count:
+            packets.append(audio[:0]);continue
+        if packet_index>=len(ledger):raise RuntimeError('Recorded output packet is absent')
+        packet=ledger[packet_index];start=packet['playback_start_sample'];end=start+count
+        if (packet['packet']!=packet_index or packet['samples']!=count
+                or packet['available_s']!=row['available_s'] or start<cursor or end>len(audio)
+                or packet['inserted_gap_samples']!=start-cursor
+                or np.count_nonzero(audio[cursor:start])):
+            raise RuntimeError('Output ledger does not reproduce the verified recording')
+        packets.append(audio[start:end]);cursor=end;packet_index+=1
+    if packet_index!=len(ledger) or cursor!=len(audio):
+        raise RuntimeError('Unaccounted model output audio')
+    return packets

@@ -3,7 +3,7 @@ import json
 import math
 from pathlib import Path
 from evals.moshi_model_download import sha256
-from evals.context_actual_targets import matching_user_stimulus, actual_private_receipt, sentence_target
+from evals.context_actual_targets import matching_user_stimulus, actual_private_receipt, sentence_target, captured_packets
 
 
 def plan(history, data, examples, spm):
@@ -52,14 +52,14 @@ def plan(history, data, examples, spm):
     length=gold.shape[1]
     rows=[json.loads(l) for l in (history/'events.jsonl').read_text().splitlines()]
     events=json.loads((history/'worker-events.json').read_text())
-    packet,pr=sf.read(history/'packet-stream.wav',dtype='float32')
-    if pr!=rate or packet.ndim!=1:raise RuntimeError('Unexpected actual packet stream')
-    quiet=[];cursor=0
-    for row in rows:
-        count=row['output_samples'];part=packet[cursor:cursor+count];cursor+=count
-        quiet.append(count>0 and len(part)==count and float(np.sqrt(np.mean(part**2)))<.005
-            and row['text_token'] in (0,3))
-    if cursor!=len(packet):raise RuntimeError('Actual packet/frame accounting differs')
+    report=json.loads((history/'report.json').read_text())
+    if sha256(history/'model.wav')!=report['audio_sha256']:
+        raise RuntimeError('Actual generated recording changed')
+    audio,pr=sf.read(history/'model.wav',dtype='float32')
+    if pr!=rate:raise RuntimeError('Actual packet clock differs from source input')
+    packets=captured_packets(audio,report['playout']['packets'],rows)
+    quiet=[len(part)>0 and float(np.sqrt(np.mean(part**2)))<.005 and row['text_token'] in (0,3)
+        for row,part in zip(rows,packets)]
     last_user=max(w['end_s'] for w in side['user_words'])
     selected=None
     for i in range(len(rows)-length-3):
@@ -81,6 +81,8 @@ def plan(history, data, examples, spm):
     i,receipt=selected
     result={'schema':'dl-context-actual-future-plan-v1','actual_history':str(history),
         'actual_history_sha256':record['sha256'],'actual_report_sha256':sha256(history/'report.json'),
+        'actual_generated_audio_sha256':report['audio_sha256'],
+        'quiet_boundary_audio_source':'verified model.wav and completely checked packet ledger',
         'teacher':example['record'],'selection':selection,'matching_approved_teacher_count':len(candidates),
         'world':world,'actual_private_receipt':receipt,'replay_cut_index':i,
         'future_first_real_frame':i+3,'future_frames':length,'all_past_labels_masked':True,
