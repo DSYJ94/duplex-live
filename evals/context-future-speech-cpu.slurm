@@ -11,17 +11,29 @@ set -euo pipefail
 DL=/projects/u6si/duplex-live
 : "${DL_TASK_SOURCE:?Immutable source required}"
 : "${DL_TASK_COMMIT:?Immutable commit required}"
-: "${CONTEXT_FUTURE_JOBS:?Completed native-audio futures required}"
+if [ -n "${CONTEXT_NATIVE_SPEECH_JOBS:-}" ]; then
+ test -z "${CONTEXT_FUTURE_JOBS:-}"
+ JOBS="$CONTEXT_NATIVE_SPEECH_JOBS"
+ PREFIX=context-spanning-probe
+ KIND=--runs
+ OUTPUT=context-native-speech-audit
+else
+ : "${CONTEXT_FUTURE_JOBS:?Completed native-audio futures required}"
+ JOBS="$CONTEXT_FUTURE_JOBS"
+ PREFIX=context-training-proof
+ KIND=--future-runs
+ OUTPUT=context-future-speech-audit
+fi
 test "$(git -C "$DL_TASK_SOURCE" rev-parse HEAD)" = "$DL_TASK_COMMIT"
 test -z "$(git -C "$DL_TASK_SOURCE" status --porcelain)"
 FUTURES=()
-for J in $CONTEXT_FUTURE_JOBS; do
+for J in $JOBS; do
  [[ "$J" =~ ^[0-9]+$ ]]
- FUTURES+=("$DL/runs/context-training-proof-$J")
+ FUTURES+=("$DL/runs/$PREFIX-$J")
 done
 cd "$DL_TASK_SOURCE"
 apptainer exec --bind /projects,/lus,/home \
  --env PYTHONPATH="$DL_TASK_SOURCE" --env PYTHONDONTWRITEBYTECODE=1 --env OMP_NUM_THREADS=16 \
  "$DL/pytorch-new.sif" "$DL/envs/moshi-annotation-7379026/bin/python" -u -m evals.moshi_speech_audit \
- --future-runs "${FUTURES[@]}" --device cpu --trim-trailing-silence --keep-silent-failures \
- --out "$DL/runs/context-future-speech-audit-${SLURM_JOB_ID}"
+ "$KIND" "${FUTURES[@]}" --device cpu --trim-trailing-silence --keep-silent-failures \
+ --out "$DL/runs/$OUTPUT-${SLURM_JOB_ID}"
