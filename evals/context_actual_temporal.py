@@ -14,7 +14,8 @@ def audit(lm, folders, components, audits, out):
     lm.eval().requires_grad_(False)
     with torch.no_grad(), precise_native(lm):
         for folder, component, approval in zip(folders,components,audits):
-            manifest = json.loads((folder/'actual-future.json').read_text())
+            early = (folder/'early-future.json').exists()
+            manifest = json.loads((folder/('early-future.json' if early else 'actual-future.json')).read_text())
             history = Path(manifest['actual_history'])
             record = json.loads((history/'student-history.json').read_text())
             raw = torch.load(history/'student-history.pt',map_location='cpu',weights_only=True)['delayed_inputs']
@@ -30,8 +31,11 @@ def audit(lm, folders, components, audits, out):
             with lm.streaming(1):
                 for call in calls:
                     lm.forward_codes(sequence[:,:,call['start']:call['start']+call['frames']])
-                for n in range(component['hidden'].shape[1]):
-                    h,z = lm.forward_codes(sequence[:,:,stop+n:stop+n+1])
+                future_calls = manifest['calls'] if early else [
+                    {'start':n,'frames':1} for n in range(component['hidden'].shape[1])]
+                for call in future_calls:
+                    n,count = call['start'],call['frames']
+                    h,z = lm.forward_codes(sequence[:,:,stop+n:stop+n+count])
                     streamed.append((h.detach().clone(),z.detach().clone()))
             sh = torch.cat([v[0] for v in streamed],dim=1)
             sz = torch.cat([v[1] for v in streamed],dim=2)

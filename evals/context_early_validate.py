@@ -106,9 +106,19 @@ def validate(folder, data, assets, examples, spm, voice):
             if not torch.equal(inputs[0,:2,v],gold[:2,n-1]):raise RuntimeError('Future text/semantic input delay changed')
         if n>=2 and v-indices[n-2]==2:
             if not torch.equal(inputs[0,2:9,v],gold[2:9,n-2]):raise RuntimeError('Future residual input delay changed')
+    value = next(iter(next(iter(m['world'].values())).values()))
+    phrase = spm.encode(value); positions = (gold[0]>=5).nonzero().flatten().tolist()
+    ids = gold[0,positions].tolist()
+    matches = [i for i in range(len(ids)-len(phrase)+1) if ids[i:i+len(phrase)]==phrase]
+    if len(matches) != 1:raise RuntimeError('Ambiguous first private fact in complete teacher future')
+    fact_frame = indices[positions[matches[0]]]
     result = {'schema':'dl-context-early-future-audit-v1','component':str(folder),'passed':True,
         'capture_manifest_sha256':sha256(folder/'early-future.json'),'tensor_sha256':m['sha256'],
         'restart_gate_sha256':m['actual_restart_gate_sha256'],'source_history_sha256':source['history_sha256'],
+        'manifest_sha256':sha256(folder/'early-future.json'),'voice_codes_sha256':m['voice_codes_sha256'],
+        'source_execution':m['source_execution'],'builder_commit':m['builder_commit'],
+        'scenario':source['scenario'],'world':m['world'],'frames':total,'text_targets':int(mask.sum()),
+        'first_fact_frame':fact_frame,'first_fact_target':int(saved['text_targets'][fact_frame]),
         'teacher':m['teacher'],'actual_real_prefix_frames':begin,'real_future_frames':length,
         'virtual_future_frames':total,'text_loss_targets':int(mask.sum()),'request_targets':int((gold[0]==4).sum()),
         'past_loss_targets':0,'span_loss_targets':0,'audio_loss_targets':0,

@@ -34,7 +34,7 @@ def before_engine(engine_module, proof, disabled=False, zero=False):
         data = json.loads((proof/'data.json').read_text())
         preflight = proof/'approved-temporal-audit.json'
         gate = json.loads(preflight.read_text())
-        specific = (report['last_layers'] == 4 and report['optimizer_steps'] == 8
+        specific = (report['last_layers'] == 4 and report['optimizer_steps'] >= 8
             and report['zero_adapter_native_batch_logits_exact'] and report['all_actual_temporal_audits_passed']
             and report['all_component_audits_passed'] and report['past_loss_targets'] == report['audio_loss_targets'] == 0
             and report['base_audio_parameters_frozen'] and report['actual_temporal_audit_sha256'] == sha256(preflight)
@@ -45,6 +45,10 @@ def before_engine(engine_module, proof, disabled=False, zero=False):
             and reload['schema'] == 'dl-context-actual-adapter-reload-v1'
             and reload['all_valid_logits_exact'] and reload['actual'] == report['expected_logits']
             and reload['data_sha256'] == report['data_sha256'])
+        if report.get('training_state_sha256'):
+            specific = (specific and sha256(proof/'training-state.pt') == report['training_state_sha256']
+                and reload['training_state_sha256'] == report['training_state_sha256']
+                and reload['optimizer_rng_state_restored'] is True)
     elif report['schema'] == 'dl-context-adapter-proof-v1':
         specific = (report['zero_adapter_all_valid_logits_exact'] and report['native_depth_parity']['passed']
             and report['canonical_logits_dtype'] == 'float32' and reload['all_valid_logits_exact'])

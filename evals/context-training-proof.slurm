@@ -68,7 +68,11 @@ if [ -n "${CONTEXT_ACTUAL_HEAD_JOBS:-}" ]; then
  HEAD=()
  for J in $CONTEXT_ACTUAL_HEAD_JOBS; do
   [[ "$J" =~ ^[0-9]+$ ]]
-  HEAD+=(--actual-head-data "$DL/runs/context-training-proof-$J")
+  if [ "${CONTEXT_EARLY_TRAIN_DATA:-0}" = 1 ]; then
+   HEAD+=(--actual-early-data "$DL/runs/context-training-proof-$J")
+  else
+   HEAD+=(--actual-head-data "$DL/runs/context-training-proof-$J")
+  fi
  done
  HEAD+=(--actual-source-data "$DL/runs/recovery-data-7407554")
  if [ "${CONTEXT_ACTUAL_TEMPORAL_AUDIT:-0}" = 1 ]; then
@@ -79,6 +83,12 @@ if [ -n "${CONTEXT_ACTUAL_HEAD_JOBS:-}" ]; then
   : "${CONTEXT_ACTUAL_TEMPORAL_PREFLIGHT_JOB:?Passed matching temporal audit required}"
   [[ "$CONTEXT_ACTUAL_TEMPORAL_PREFLIGHT_JOB" =~ ^[0-9]+$ ]]
   HEAD+=(--actual-temporal-fit --actual-temporal-preflight "$DL/runs/context-training-proof-$CONTEXT_ACTUAL_TEMPORAL_PREFLIGHT_JOB")
+  run_container -m unittest evals.harness.test_context_training_state
+  if [ -n "${CONTEXT_RESUME_TRAINING_JOB:-}" ]; then
+   [[ "$CONTEXT_RESUME_TRAINING_JOB" =~ ^[0-9]+$ ]]
+   HEAD+=(--resume-training "$DL/runs/context-training-proof-$CONTEXT_RESUME_TRAINING_JOB/training-state.pt")
+  fi
+  HEAD+=(--actual-fit-updates "${CONTEXT_ACTUAL_FIT_UPDATES:-8}")
  fi
  run_container -m evals.context_training_proof "${ARGS[@]}" "${HEAD[@]}"
  run_container -m evals.context_training_proof "${ARGS[@]}" "${HEAD[@]}" --reload

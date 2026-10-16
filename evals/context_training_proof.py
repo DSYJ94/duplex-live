@@ -35,9 +35,12 @@ def main():
     ap.add_argument('--actual-replay', type=Path, action='append')
     ap.add_argument('--actual-source-data', type=Path)
     ap.add_argument('--actual-head-data', type=Path, action='append')
+    ap.add_argument('--actual-early-data', type=Path, action='append')
     ap.add_argument('--actual-temporal-audit', action='store_true')
     ap.add_argument('--actual-temporal-fit', action='store_true')
     ap.add_argument('--actual-temporal-preflight', type=Path)
+    ap.add_argument('--resume-training',type=Path,help='Exact adapter/optimizer/RNG state for the same approved recipe/data')
+    ap.add_argument('--actual-fit-updates',type=int,choices=(8,32,128,512),default=8)
     ap.add_argument('--actual-source-commit')
     ap.add_argument('--actual-future-component', action='store_true')
     ap.add_argument('--actual-early-window', action='store_true')
@@ -53,11 +56,19 @@ def main():
     ap.add_argument('--text-padding', choices=('legacy-epad0','context-pad3'), default='legacy-epad0')
     ap.add_argument('--request-policy', choices=('source-dispatch','native-prelead','native-prelead-epad'), default='source-dispatch')
     args = ap.parse_args()
+    if (args.resume_training or args.actual_fit_updates != 8) and not args.actual_temporal_fit:
+        ap.error('Resume/update budget is specific to the actual temporal trainer')
+    if args.actual_fit_updates != 8 and not args.resume_training:
+        ap.error('Longer adaptation requires a verified resumed eight-update proof')
+    if args.actual_early_data:
+        if args.actual_head_data or not (args.actual_temporal_audit or args.actual_temporal_fit):
+            ap.error('Early components require the separate temporal audit/fit path')
+        args.actual_head_data = args.actual_early_data
     if args.actual_early_window and not args.actual_future_component:
         ap.error('Early future requires the complete strict native engine component path')
     if args.actual_temporal_fit and (not args.actual_head_data or not args.actual_temporal_preflight
             or args.actual_temporal_audit or args.steps != 8):
-        ap.error('Actual temporal fit is an eight-update proof with a passed matching temporal audit')
+        ap.error('Actual temporal fit requires audited components and a passed matching temporal audit')
     if args.actual_temporal_audit and (not args.actual_head_data or args.reload):
         ap.error('Actual temporal audit needs separately validated components and no reload')
     if args.actual_head_data and (not args.actual_source_data or args.actual_replay

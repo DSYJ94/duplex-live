@@ -17,7 +17,11 @@ def run(lm, spm, voice, examples, args):
     from evals.context_spanning_download import SOURCE_COMMIT
     audits, components = [], []
     for folder in args.actual_head_data:
-        audit, component = validate(folder, args.actual_source_data, args.assets, examples, spm, voice)
+        if args.actual_early_data:
+            from evals.context_early_validate import validate as validate_early
+            audit, component = validate_early(folder,args.actual_source_data,args.assets,examples,spm,voice)
+        else:
+            audit, component = validate(folder, args.actual_source_data, args.assets, examples, spm, voice)
         audits.append(audit); components.append(component)
     if len({a['source_history_sha256'] for a in audits}) != len(audits):
         raise RuntimeError('Duplicate actual-history component')

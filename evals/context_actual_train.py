@@ -1,4 +1,4 @@
-"""Eight-update actual-history temporal proof with independent TRAIN retention."""
+"""Bounded resumable actual-history adaptation with independent TRAIN retention."""
 import hashlib
 import json
 import math
@@ -18,6 +18,7 @@ def run(lm, spm, voice, examples, components, audits, args):
     from evals.personaplex_adapters import install_adapters, adapter_parameters, checkpoint_language_layers
     from evals.moshi_training_smoke import tensor_hashes
     from evals.context_spanning_download import SOURCE_COMMIT
+    from evals.context_training_state import save as save_state, restore as restore_state
     pre = args.actual_temporal_preflight
     gate = json.loads((pre/'actual-temporal-audit.json').read_text())
     if (gate['schema'] != 'dl-context-actual-temporal-audit-v1' or gate['passed'] is not True
@@ -40,7 +41,8 @@ def run(lm, spm, voice, examples, components, audits, args):
         embedded.write_bytes((pre/'actual-temporal-audit.json').read_bytes())
     batches = []
     for folder, component in zip(args.actual_head_data,components):
-        m = json.loads((folder/'actual-future.json').read_text()); h = Path(m['actual_history'])
+        name = 'early-future.json' if args.actual_early_data else 'actual-future.json'
+        m = json.loads((folder/name).read_text()); h = Path(m['actual_history'])
         record = json.loads((h/'student-history.json').read_text())
         raw = torch.load(h/'student-history.pt',map_location='cpu',weights_only=True)['delayed_inputs']
         live = [c for c in record['calls'] if c['mode']=='live']
@@ -79,6 +81,17 @@ def run(lm, spm, voice, examples, components, audits, args):
                     'first_supervised_token_target':int(target[pos]),
                     'first_supervised_token_probability':float(z[0].softmax(-1)[target[pos]])})
         return results
+    def state_metadata(frozen):
+        return {'source_commit':SOURCE_COMMIT,
+            'repo_commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),
+            'assets_manifest_sha256':sha256(args.assets),'data_sha256':sha256(args.out/'data.json'),
+            'voice_sha256':sha256(args.out/'voice.pt'),'frozen_hashes':frozen,
+            'retention_examples':[r[2] for r in retention],
+            'recipe':{'rank':8,'scaling':2.,'last_layers':4,'lr':1e-5,'weight_decay':0.,
+                'gradient_clip':1.,'retention_kl_weight':1.,'retention_hidden_mse_weight':10.,
+                'data_order':'actual step modulo component count; retention step modulo four',
+                'actual_component_count':len(batches),'past_loss_targets':0,'audio_loss_targets':0,
+                'execution':'BF16 batch MATH, no compilation or CUDA graphs'}}
     with no_compile(), no_cuda_graph(), sdpa_kernel(SDPBackend.MATH):
         baseline = digests(); baseline_metrics = metrics()
         frozen = tensor_hashes(lm.named_parameters())
@@ -99,6 +112,7 @@ def run(lm, spm, voice, examples, components, audits, args):
         if args.reload:
             report = json.loads((args.out/'report.json').read_text())
             if (report['schema'] != 'dl-context-actual-adapter-proof-v1' or report['frozen_hashes'] != frozen
+                    or report['retention_examples'] != [r[2] for r in retention]
                     or report['data_sha256'] != sha256(args.out/'data.json')
                     or report['voice_sha256'] != sha256(args.out/'voice.pt')
                     or report['assets_manifest_sha256'] != sha256(args.assets)
@@ -109,18 +123,41 @@ def run(lm, spm, voice, examples, components, audits, args):
             if set(state) != set(learned): raise RuntimeError('Incomplete actual adapter keys')
             with torch.no_grad():
                 for n,p in learned.items():p.copy_(state[n])
+            resume_verified = None
+            if report.get('training_state_sha256'):
+                if report['training_state_sha256'] != sha256(args.out/'training-state.pt'):
+                    raise RuntimeError('Changed portable training state')
+                before = tensor_hashes(learned.items())
+                opt = torch.optim.AdamW(list(learned.values()),lr=1e-5,weight_decay=0.)
+                snapshot = restore_state(args.out/'training-state.pt',learned,opt,state_metadata(frozen))
+                resume_verified = (snapshot['completed_steps']==report['optimizer_steps']
+                    and before==tensor_hashes(learned.items()))
+                if not resume_verified:raise RuntimeError('Portable state differs from saved adapter')
             actual = digests(); passed = actual == report['expected_logits']
             result = {'schema':'dl-context-actual-adapter-reload-v1','fresh_process':True,
                 'all_valid_logits_exact':passed,'actual':actual,'checkpoint_sha256':report['checkpoint_sha256'],
-                'data_sha256':report['data_sha256'],'passed':passed}
+                'data_sha256':report['data_sha256'],'optimizer_rng_state_restored':resume_verified,
+                'training_state_sha256':report.get('training_state_sha256'),'passed':passed}
             (args.out/'reload-report.json').write_text(json.dumps(result,indent=2)+'\n')
             print(json.dumps(result),flush=True)
             if not passed: raise RuntimeError('Fresh actual adapter logits changed')
             return
         optimizer = torch.optim.AdamW(list(learned.values()),lr=1e-5,weight_decay=0.)
+        initial_step = 0
+        if args.resume_training:
+            if args.actual_fit_updates>8:
+                parent = json.loads((args.resume_training.parent/'report.json').read_text())
+                loaded = json.loads((args.resume_training.parent/'reload-report.json').read_text())
+                if (not parent['passed'] or not loaded['passed'] or not loaded['optimizer_rng_state_restored']
+                        or parent['training_state_sha256'] != sha256(args.resume_training)
+                        or loaded['training_state_sha256'] != parent['training_state_sha256']):
+                    raise RuntimeError('Longer resumed adaptation lacks a verified portable preflight')
+            snapshot = restore_state(args.resume_training,learned,optimizer,state_metadata(frozen))
+            initial_step = snapshot['completed_steps']
         steps = []; seen_a = seen_b = False; start = time.monotonic()
         torch.cuda.reset_peak_memory_stats()
-        for step in range(8):
+        for local_step in range(args.actual_fit_updates):
+            step = initial_step+local_step
             optimizer.zero_grad(set_to_none=True)
             inputs,mask,target = batches[step%len(batches)]
             with checkpoint_language_layers(lm):
@@ -141,6 +178,7 @@ def run(lm, spm, voice, examples, components, audits, args):
             norm = float(torch.nn.utils.clip_grad_norm_(list(learned.values()),1.))
             if not math.isfinite(norm): raise RuntimeError('Nonfinite actual gradient norm')
             optimizer.step()
+            save_state(args.out/'training-state.pt',learned,optimizer,step+1,state_metadata(frozen))
             row = {'step':step+1,'scenario':audits[step%len(batches)]['scenario'],
                 'future_text_ce':float(ce.detach()),'retention_kind':retention[ri][2]['kind'],
                 'retention_kl':float(kl.detach()),'retention_hidden_mse':float(hidden.detach()),
@@ -160,7 +198,10 @@ def run(lm, spm, voice, examples, components, audits, args):
             'actual_temporal_audit_sha256':sha256(pre/'actual-temporal-audit.json'),
             'actual_temporal_preflight':str(pre),'all_actual_temporal_audits_passed':True,
             'adapter_modules':modules,'last_layers':4,'rank':8,'scaling':2.,
-            'trainable_parameters':sum(p.numel() for p in learned.values()),'optimizer_steps':8,
+            'trainable_parameters':sum(p.numel() for p in learned.values()),'optimizer_steps':initial_step+len(steps),
+            'updates_this_run':len(steps),'initial_optimizer_steps':initial_step,
+            'resumed_from_training_state':str(args.resume_training) if args.resume_training else None,
+            'training_state_sha256':sha256(args.out/'training-state.pt'),
             'past_loss_targets':0,'audio_loss_targets':0,'all_component_audits_passed':True,
             'zero_adapter_native_batch_logits_exact':True,'adapter_construction_rng_preserved':True,
             'frozen_weights_unchanged':True,'frozen_hashes':frozen,'base_audio_parameters_frozen':True,
