@@ -56,6 +56,8 @@ def run(lm, voice, histories, data, assets, source_commit, warm_graphs=True):
             raise RuntimeError('No native temporal state was inspected')
         return positions, pointers
 
+    from evals.context_execution import snapshot as execution_snapshot
+    execution = execution_snapshot(lm)
     results = []
     for path, record, check in zip(histories, records, checks):
         saved = torch.load(path / 'student-history.pt', map_location='cpu', weights_only=True)
@@ -141,7 +143,7 @@ def run(lm, voice, histories, data, assets, source_commit, warm_graphs=True):
                     steps.append(same)
                 passed = all(c['exact'] for c in next_input_checks) and all(all(s[k] for k in ('cache_exact','provided_exact','offset_exact',
                     'cpu_rng_exact','cuda_rng_exact','returned_text_exact')) for s in steps)
-        results.append({'history': str(path), 'source': check, 'real_frame_index': index,
+        results.append({'execution': execution, 'source_execution': record.get('execution'), 'history': str(path), 'source': check, 'real_frame_index': index,
             'virtual_boundary': boundary, 'steps': steps, 'temporal_numerics': numerical, 'next_input_checks': next_input_checks, 'passed': passed})
     return {'schema': 'dl-context-actual-restart-gate-v1', 'results': results,
         'graph_warmup_before_replay': warm_graphs,

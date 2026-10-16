@@ -12,6 +12,8 @@ class Recorder:
         if source['split'] != 'train':
             raise RuntimeError('Student-history collection is TRAIN-only')
         self.engine, self.folder, self.source = engine, folder, source
+        from evals.context_execution import snapshot
+        self.execution = snapshot(engine.lm)
         self.chunks, self.calls, self.frames, self.states = [], [], 0, []
         self.temporal_outputs = []
         self.mode = 'prefix'
@@ -74,7 +76,7 @@ class Recorder:
             raise RuntimeError('Actual generator snapshots do not cover every real frame')
         torch.save({'delayed_inputs': inputs, 'states': self.states, 'temporal_outputs': self.temporal_outputs}, path)
         result = {'schema': 'dl-context-student-history-v3', 'source_split': 'train',
-            'source': self.source, 'file': path.name, 'sha256': sha256(path),
+            'source': self.source, 'execution': self.execution, 'file': path.name, 'sha256': sha256(path),
             'shape': list(inputs.shape), 'calls': self.calls,
             'conditioning_only': True, 'past_labels_must_all_be_masked': True,
             'generated_reply_tokens_forced': False, 'persona_prefix_forced': True,

@@ -3678,3 +3678,11 @@ Restart7464405 stops on the explicit next-input equality check after sampled
 acoustics diverge, before writing its numerical report. Keep the same strict
 requirement but record this failed check in the report so the first numerical
 difference survives. No optimizer or target approval is involved.
+
+
+Plain words: numerical restart7464529 locates differences before sampling:
+all381 compared calls differ across both histories, including the first persona
+prefix (hidden max0.25, text max0.1875). The first following input is exact;
+the second differs after sampled audio divergence. RNG is downstream of the
+first observed mismatch. Source/execution settings need explicit recording.
+Cold numerical replay is submitted separately; no approval threshold changes.
