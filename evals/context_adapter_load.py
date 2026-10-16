@@ -72,6 +72,11 @@ def before_engine(engine_module, proof, disabled=False, zero=False):
         if (protocol['name']!='bootstrap-preserve-provided-v1' or protocol['code_sha256']!=
                 hashlib.sha256(Path(__file__).with_name('context_native_layout.py').read_bytes()).hexdigest()):
             raise RuntimeError('Checkpoint native prefix/span protocol differs from this runtime')
+        if protocol.get('attention_backend','math')!='math':
+            raise RuntimeError('Unknown checkpoint attention protocol')
+        protocol={**protocol,'attention_backend':'math'}
+        from evals.context_execution import math_attention
+        math_attention()
     original = engine_module.load_model
     original_init=engine_module.Engine.__init__
     calls = []
