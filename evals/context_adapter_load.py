@@ -18,10 +18,25 @@ def before_engine(engine_module, proof, disabled=False, zero=False):
     report = json.loads((proof / 'report.json').read_text())
     reload = json.loads((proof / 'reload-report.json').read_text())
     digest = sha256(proof / 'adapters.safetensors')
-    if (report['schema'] != 'dl-context-adapter-proof-v1' or not report['passed']
-            or not report['frozen_weights_unchanged'] or not report['zero_adapter_all_valid_logits_exact']
-            or not report['native_depth_parity']['passed'] or report['canonical_logits_dtype'] != 'float32'
-            or not reload['passed'] or not reload['fresh_process'] or not reload['all_valid_logits_exact']
+    if report['schema'] == 'dl-context-result-head-proof-v1':
+        data = json.loads((proof/'data.json').read_text())
+        specific = (report['last_layers'] == 4 and report['only_text_head_trained'] and report['zero_adapter_feature_logits_exact']
+            and report['all_component_audits_passed'] and report['past_loss_targets'] == 0
+            and report['audio_loss_targets'] == 0 and report['base_audio_parameters_frozen']
+            and set(report['trainable_names']) == {'text_linear.lora_A.weight','text_linear.lora_B.weight'}
+            and reload['schema'] == 'dl-context-result-head-reload-v1'
+            and reload['all_feature_logits_exact'] and reload['actual'] == report['expected_logits']
+            and reload['data_sha256'] == report['data_sha256']
+            and data['schema'] == 'dl-context-result-head-data-v1' and data['all_component_audits_passed']
+            and data['past_loss_targets'] == data['audio_loss_targets'] == 0
+            and bool(data['components']) and all(c['passed'] for c in data['components']))
+    elif report['schema'] == 'dl-context-adapter-proof-v1':
+        specific = (report['zero_adapter_all_valid_logits_exact'] and report['native_depth_parity']['passed']
+            and report['canonical_logits_dtype'] == 'float32' and reload['all_valid_logits_exact'])
+    else:
+        specific = False
+    if (not specific or not report['passed'] or not report['frozen_weights_unchanged']
+            or not reload['passed'] or not reload['fresh_process']
             or report['source_commit'] != SOURCE_COMMIT or report['checkpoint_sha256'] != digest
             or reload['checkpoint_sha256'] != digest or report['rank'] != 8 or report['scaling'] != 2.
             or report['voice_sha256'] != sha256(proof / 'voice.pt')

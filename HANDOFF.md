@@ -2,6 +2,19 @@
 
 ## Current execution — 16 October, access restored and native-convention checks
 
+Plain words: corrective future components7466157/60/63 PASS strict native
+Engine replay through327/224/259 real frames of actual TRAIN histories7465804/06/07.
+They contain32/56/35 future frames,12/23/21 text targets, zero past or audio loss
+targets; each uses a complete independently approved same-user/same-world teacher
+sentence. Source001 already spoke its value and is excluded. These components
+and their passing restart reports are backed locally with hashes checked.
+Job7466440 (source07824cd) now independently revalidates each component, source
+approval, builder commit, voice and exact cut before an eight-update text-head
+proof plus fresh-process reload. All temporal, speech and other adapter weights
+stay frozen. Later features contain earlier teacher audio: fitting them is not
+proof of result integration. Require fresh unforced native tests; no new model
+qualifies yet. Eleven related local target/request-policy tests pass.
+
 Plain words: the owner renewed Clifton and authorised retry. Normal SSH works
 at07:46UTC/09:46Berlin on16 October; current certificate expires21:46:11Berlin.
 The previous pre-auth access block below is historical, not a current blocker.
