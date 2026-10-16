@@ -31,7 +31,7 @@ def actual_private_receipt(events, project, field, value, cut_s):
         result = e.get('result', {})
         if (e.get('event') != 'backend_result_ready' or applied is None
                 or not math.isfinite(applied) or applied > cut_s
-                or result.get('route') != 'answer'):
+                or result.get('route') not in ('answer', 'delegate')):
             continue
         words = spoken_words(result.get('content', ''))
         phrase = spoken_words(value)

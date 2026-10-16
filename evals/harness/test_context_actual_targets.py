@@ -14,12 +14,13 @@ class FutureTargetGuards(unittest.TestCase):
 
     def test_actual_failed_cancelled_and_wrong_world_are_not_facts(self):
         event={'event':'backend_result_ready','task_id':'ret-0','applied_at_s':2.,
-            'result':{'route':'answer','content':'The badge is purple star.',
+            'result':{'route':'delegate','content':'The badge is purple star.',
             'receipts':[{'tool':'lookup_record','executed':True,'read_only':True,
                 'project':'Birch North','field':'badge','value':'purple star'}]}}
         self.assertIs(actual_private_receipt([event],'Birch North','badge','purple star',3.),event)
         for events,value,cut in [([event],'orange square',3.),([event],'purple star',1.),
             ([{**event,'event':'backend_request_failed'}],'purple star',3.),
+            ([{**event,'result':{**event['result'],'route':'error'}}],'purple star',3.),
             ([event,{'event':'cancelled_backend_rejected','task_id':'ret-0'}],'purple star',3.)]:
             with self.assertRaises(RuntimeError):actual_private_receipt(events,'Birch North','badge',value,cut)
 
