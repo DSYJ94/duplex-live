@@ -32,6 +32,12 @@ def run(lm, spm, voice, examples, components, audits, args):
             raise RuntimeError('Actual temporal audit changed or failed')
     if not torch.equal(voice,torch.load(pre/'voice.pt',map_location='cpu',weights_only=True)['codes']):
         raise RuntimeError('Temporal preflight used different voice codes')
+    embedded = args.out/'approved-temporal-audit.json'
+    if args.reload:
+        if sha256(embedded) != sha256(pre/'actual-temporal-audit.json'):
+            raise RuntimeError('Changed packaged temporal audit')
+    else:
+        embedded.write_bytes((pre/'actual-temporal-audit.json').read_bytes())
     batches = []
     for folder, component in zip(args.actual_head_data,components):
         m = json.loads((folder/'actual-future.json').read_text()); h = Path(m['actual_history'])

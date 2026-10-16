@@ -32,8 +32,7 @@ def before_engine(engine_module, proof, disabled=False, zero=False):
             and bool(data['components']) and all(c['passed'] for c in data['components']))
     elif report['schema'] == 'dl-context-actual-adapter-proof-v1':
         data = json.loads((proof/'data.json').read_text())
-        from pathlib import Path
-        preflight = Path(report['actual_temporal_preflight'])/'actual-temporal-audit.json'
+        preflight = proof/'approved-temporal-audit.json'
         gate = json.loads(preflight.read_text())
         specific = (report['last_layers'] == 4 and report['optimizer_steps'] == 8
             and report['zero_adapter_native_batch_logits_exact'] and report['all_actual_temporal_audits_passed']
