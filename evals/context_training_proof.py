@@ -45,6 +45,7 @@ def main():
     ap.add_argument('--actual-teacher-id')
     ap.add_argument('--actual-future-component', action='store_true')
     ap.add_argument('--actual-early-window', action='store_true')
+    ap.add_argument('--actual-native-audio-future',action='store_true')
     ap.add_argument('--actual-engine-replay', action='store_true')
     ap.add_argument('--actual-recorded-voice', action='store_true')
     ap.add_argument('--actual-native-priming', action='store_true')
@@ -59,6 +60,8 @@ def main():
     args = ap.parse_args()
     if args.actual_teacher_id and not args.actual_early_window:
         ap.error('Explicit teacher selection is specific to early future capture')
+    if args.actual_native_audio_future and not args.actual_early_window:
+        ap.error('Native audio conditioning requires the independently gated early future path')
     if (args.resume_training or args.actual_fit_updates != 8) and not args.actual_temporal_fit:
         ap.error('Resume/update budget is specific to the actual temporal trainer')
     if args.actual_fit_updates != 8 and not args.resume_training:
@@ -200,7 +203,8 @@ def main():
                 (args.out/'engine-replay-before-future.json').write_text(json.dumps(gate,indent=2)+'\n')
                 if args.actual_early_window:
                     from evals.context_early_future import generate as early_generate
-                    return early_generate(engine,saved,index,rows,pcm,gold,manifest,args.out)
+                    return early_generate(engine,saved,index,rows,pcm,gold,manifest,args.out,
+                        native_audio=args.actual_native_audio_future)
                 return generate(engine,saved,index,rows,pcm,gold,manifest,args.out)
         result = run(lm, mimi, spm, voice, args.actual_replay, args.actual_source_data,
             args.assets, args.actual_source_commit, cut_index=cut_index, on_verified=callback,

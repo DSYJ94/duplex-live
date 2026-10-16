@@ -9,7 +9,7 @@ from pathlib import Path
 from evals.moshi_model_download import sha256
 
 
-def generate(engine, saved, index, rows, pcm, gold, manifest, out):
+def generate(engine, saved, index, rows, pcm, gold, manifest, out, native_audio=False):
     import numpy as np
     import torch
     gate_file = out/'engine-replay-before-future.json'
@@ -25,6 +25,7 @@ def generate(engine, saved, index, rows, pcm, gold, manifest, out):
     phase = 'span'; n = -1; cursor = 0
     inputs, hidden, calls, targets, masks = [], [], [], [], []
     current_targets, provided, real_to_virtual = [], [], []
+    generated_audio, audio_packets = [], []
     def capture(original, route):
         def wrapped(value):
             nonlocal cursor
@@ -45,8 +46,8 @@ def generate(engine, saved, index, rows, pcm, gold, manifest, out):
         if phase == 'live':
             if kw.get('moshi_tokens') is not None or kw.get('text_token') is not None:
                 raise RuntimeError('Native Engine acquired an unexpected forced input')
-            kw.update(moshi_tokens=gold[None,1:9,n:n+1].to(engine.device),
-                text_token=gold[0,n:n+1].to(engine.device))
+            kw.update(text_token=gold[0,n:n+1].to(engine.device))
+            if not native_audio:kw['moshi_tokens']=gold[None,1:9,n:n+1].to(engine.device)
         return original_step(*a,**kw)
     def prepare(*a,**kw):
         result = original_prepare(*a,**kw)
@@ -71,7 +72,14 @@ def generate(engine, saved, index, rows, pcm, gold, manifest, out):
                 phase = 'live'; row = rows[frame]; sample = round(row['input_start_s']*24000)
                 chunk = pcm[sample:sample+row['input_samples']]
                 if len(chunk)<1920:chunk=np.pad(chunk,(0,1920-len(chunk)))
-                engine.step(chunk)  # Both native codecs and the span-exit readout run normally.
+                output=engine.step(chunk)  # Both native codecs and the span-exit readout run normally.
+                if native_audio:
+                    position=(state.offset-1)%state.cache.shape[2]
+                    generated_audio.append(state.cache[:,1:9,position:position+1].detach().cpu().clone())
+                    packet=np.asarray(output['agent_pcm'],dtype=np.float32)
+                    if packet.shape!=(1920,) or not np.isfinite(packet).all():
+                        raise RuntimeError('Invalid own-sampled future speech packet')
+                    audio_packets.append(packet.copy())
                 original_state = saved['states'][frame]
                 if state.offset != original_state['offset']:
                     raise RuntimeError('Future native real/virtual clock changed')
@@ -87,16 +95,28 @@ def generate(engine, saved, index, rows, pcm, gold, manifest, out):
         state.graphed_main, lm.forward_codes = original_main, original_direct
         gen.step, gen.prepare_step_input = original_step, original_prepare
     current = torch.cat(current_targets,dim=2); flags = torch.cat(provided,dim=2)
-    if (not torch.equal(current[0,0],gold[0]) or not flags[:,0:2].all()
+    if (not torch.equal(current[0,0],gold[0]) or not flags[:,0].all()
             or not flags[:,9:17].all() or len(real_to_virtual) != gold.shape[1]
-            or len(applied) != len(spans) or not torch.equal(current[0,1],gold[1])
+            or len(applied) != len(spans)):
+        raise RuntimeError('Incomplete early-future target ownership or receipt coverage')
+    if native_audio:
+        if flags[:,1:9].any():raise RuntimeError('Own-sampled future acquired provided assistant audio')
+    elif (not flags[:,1].all() or not torch.equal(current[0,1],gold[1])
             or flags[:,2:9,0].any() or not flags[:,2:9,1:].all()
             or not torch.equal(current[0,2:9,1:],gold[2:9,:-1])):
-        raise RuntimeError('Incomplete early-future target ownership or receipt coverage')
+        raise RuntimeError('Teacher future acoustic ownership changed')
     file = out/'early-future.pt'
-    torch.save({'delayed_inputs':torch.cat(inputs,dim=2),'hidden':torch.cat(hidden,dim=1),
+    tensors={'delayed_inputs':torch.cat(inputs,dim=2),'hidden':torch.cat(hidden,dim=1),
         'text_targets':torch.cat(targets),'text_mask':torch.cat(masks),
-        'live_native_targets':current,'live_provided':flags,'approved_assistant_codes':gold[1:9]},file)
+        'live_native_targets':current,'live_provided':flags,'approved_assistant_codes':gold[1:9]}
+    audio_record={}
+    if native_audio:
+        import soundfile as sf
+        tensors['generated_delayed_audio']=torch.cat(generated_audio,dim=2)
+        wave=out/'early-native-audio.wav';sf.write(wave,np.concatenate(audio_packets),24000,subtype='FLOAT')
+        audio_record={'native_audio_file':wave.name,'native_audio_sha256':sha256(wave),
+            'native_audio_samples':len(audio_packets)*1920}
+    torch.save(tensors,file)
     history = Path(manifest['actual_history']); record = json.loads((history/'student-history.json').read_text())
     result = {**manifest,'schema':'dl-context-early-future-capture-v1','file':file.name,'sha256':sha256(file),
         'builder_commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),
@@ -107,6 +127,9 @@ def generate(engine, saved, index, rows, pcm, gold, manifest, out):
         'applied_recorded_receipts':applied,'virtual_future_frames':cursor,
         'all_future_user_codes_match_actual_capture':True,'gold_targets_created':True,
         'capture_complete':True,'future_text_targets_approved':False,'training_approved':False,
+        'future_audio_conditioning':'native_sampled' if native_audio else 'approved_teacher',
+        'future_assistant_audio_tokens_forced':not native_audio,'future_text_tokens_forced':True,
+        'teacher_audio_codes_are_reference_only':native_audio,**audio_record,
         'requires_independent_component_audit_before_any_optimizer':True}
     (out/'early-future.json').write_text(json.dumps(result,indent=2)+'\n')
     return result

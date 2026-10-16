@@ -63,9 +63,18 @@ def validate(folder, data, assets, examples, spm, voice):
     raw = torch.load(history/'student-history.pt',map_location='cpu',weights_only=True)['delayed_inputs']
     saved = torch.load(folder/'early-future.pt',map_location='cpu',weights_only=True)
     total = m['virtual_future_frames']
+    mode=m.get('future_audio_conditioning','approved_teacher')
+    if mode not in ('approved_teacher','native_sampled'):
+        raise RuntimeError('Unknown future audio-conditioning policy')
+    own_audio=mode=='native_sampled'
+    if (m.get('future_assistant_audio_tokens_forced',True) is not (not own_audio)
+            or m.get('teacher_audio_codes_are_reference_only',False) is not own_audio
+            or m.get('future_text_tokens_forced',True) is not True):
+        raise RuntimeError('Future acoustic ownership declaration changed')
     shapes = {'delayed_inputs':(1,17,total),'hidden':(1,total,4096),
         'text_targets':(total,),'text_mask':(total,),'live_native_targets':(1,17,length),
         'live_provided':(1,17,length),'approved_assistant_codes':(8,length)}
+    if own_audio:shapes['generated_delayed_audio']=(1,8,length)
     if set(saved) != set(shapes) or any(tuple(saved[k].shape) != shape for k,shape in shapes.items()):
         raise RuntimeError('Invalid early tensor coverage')
     for k,v in saved.items():
@@ -93,19 +102,36 @@ def validate(folder, data, assets, examples, spm, voice):
     current = saved['live_native_targets']; flags = saved['live_provided']; inputs = saved['delayed_inputs']
     if (not torch.equal(saved['text_targets'],labels) or not torch.equal(saved['text_mask'],mask)
             or not torch.equal(saved['approved_assistant_codes'],gold[1:9])
-            or not torch.equal(current[0,0],gold[0]) or not torch.equal(current[0,1],gold[1])
-            or not torch.equal(current[0,2:9,1:],gold[2:9,:-1])
-            or flags[:,2:9,0].any() or not flags[:,2:9,1:].all()
-            or not flags[:,0:2].all() or not flags[:,9:17].all()):
+            or not torch.equal(current[0,0],gold[0])
+            or not flags[:,0].all() or not flags[:,9:17].all()):
         raise RuntimeError('Early labels acquired a span, wrong delay or unprovided acoustic target')
+    if own_audio:
+        import soundfile as sf
+        generated=saved['generated_delayed_audio']
+        if flags[:,1:9].any() or (generated<0).any() or (generated>=2048).any():
+            raise RuntimeError('Native future acoustics were provided or out of range')
+        if m['native_audio_file']!='early-native-audio.wav' or sha256(folder/m['native_audio_file'])!=m['native_audio_sha256']:
+            raise RuntimeError('Changed native future audio artifact')
+        audio,rate=sf.read(folder/m['native_audio_file'],dtype='float32')
+        if (rate!=24000 or audio.ndim!=1 or len(audio)!=length*1920
+                or m['native_audio_samples']!=len(audio) or not torch.isfinite(torch.from_numpy(audio)).all()):
+            raise RuntimeError('Incomplete native future audio')
+    elif (not torch.equal(current[0,1],gold[1])
+            or not torch.equal(current[0,2:9,1:],gold[2:9,:-1])
+            or flags[:,2:9,0].any() or not flags[:,2:9,1:].all() or not flags[:,1].all()):
+        raise RuntimeError('Teacher future acoustic ownership changed')
     if not torch.equal(inputs[:,:,indices[0]],raw[:,:,stop]):
         raise RuntimeError('Early first input changed its actual past')
     for n,v in enumerate(indices):
         if not torch.equal(inputs[:,9:17,v],raw[:,9:17,live[begin+n]['start']]):
             raise RuntimeError('Early future omitted or changed observed user speech')
         if n>=1 and v-indices[n-1]==1:
-            if not torch.equal(inputs[0,:2,v],gold[:2,n-1]):raise RuntimeError('Future text/semantic input delay changed')
-        if n>=2 and v-indices[n-2]==2:
+            if int(inputs[0,0,v])!=int(gold[0,n-1]):raise RuntimeError('Future text input delay changed')
+            if own_audio:
+                if not torch.equal(inputs[0,1:9,v],generated[0,:,n-1]):
+                    raise RuntimeError('Future does not condition on its own generated delayed acoustics')
+            elif int(inputs[0,1,v])!=int(gold[1,n-1]):raise RuntimeError('Future semantic input delay changed')
+        if not own_audio and n>=2 and v-indices[n-2]==2:
             if not torch.equal(inputs[0,2:9,v],gold[2:9,n-2]):raise RuntimeError('Future residual input delay changed')
     # Cache construction encodes each measured word separately, including quotes.
     # Encoding the entire unquoted value can produce different SentencePiece IDs.
@@ -142,6 +168,7 @@ def validate(folder, data, assets, examples, spm, voice):
         'restart_gate_sha256':m['actual_restart_gate_sha256'],'source_history_sha256':source['history_sha256'],
         'manifest_sha256':sha256(folder/'early-future.json'),'voice_codes_sha256':m['voice_codes_sha256'],
         'source_execution':m['source_execution'],'builder_commit':m['builder_commit'],
+        'future_audio_conditioning':mode,'future_assistant_audio_tokens_forced':not own_audio,
         'scenario':source['scenario'],'world':m['world'],'frames':total,'text_targets':int(full_mask.sum()),
         'first_fact_frame':fact_frame,'first_fact_target':int(saved['text_targets'][fact_frame]),
         'teacher':m['teacher'],'actual_real_prefix_frames':begin,'real_future_frames':length,
