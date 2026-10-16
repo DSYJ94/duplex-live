@@ -70,6 +70,10 @@ if [ -n "${CONTEXT_ACTUAL_HEAD_JOBS:-}" ]; then
   HEAD+=(--actual-head-data "$DL/runs/context-training-proof-$J")
  done
  HEAD+=(--actual-source-data "$DL/runs/recovery-data-7407554")
+ if [ "${CONTEXT_ACTUAL_TEMPORAL_AUDIT:-0}" = 1 ]; then
+  run_container -m evals.context_training_proof "${ARGS[@]}" "${HEAD[@]}" --actual-temporal-audit
+  exit 0
+ fi
  run_container -m evals.context_training_proof "${ARGS[@]}" "${HEAD[@]}"
  run_container -m evals.context_training_proof "${ARGS[@]}" "${HEAD[@]}" --reload
  exit 0

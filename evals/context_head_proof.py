@@ -28,6 +28,9 @@ def run(lm, spm, voice, examples, args):
     if args.reload:
         if json.loads(data_path.read_text()) != data: raise RuntimeError('Changed head proof data')
     else: data_path.write_text(json.dumps(data,indent=2)+'\n')
+    if args.actual_temporal_audit:
+        from evals.context_actual_temporal import audit
+        return audit(lm,args.actual_head_data,components,audits,args.out)
     # Already normalized native features. No second delay, transformer, or out_norm.
     x = torch.cat([c['hidden'][0,c['text_mask']] for c in components]).cuda()
     y = torch.cat([c['text_targets'][c['text_mask']] for c in components]).cuda()

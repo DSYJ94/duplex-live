@@ -35,6 +35,7 @@ def main():
     ap.add_argument('--actual-replay', type=Path, action='append')
     ap.add_argument('--actual-source-data', type=Path)
     ap.add_argument('--actual-head-data', type=Path, action='append')
+    ap.add_argument('--actual-temporal-audit', action='store_true')
     ap.add_argument('--actual-source-commit')
     ap.add_argument('--actual-future-component', action='store_true')
     ap.add_argument('--actual-engine-replay', action='store_true')
@@ -49,6 +50,8 @@ def main():
     ap.add_argument('--text-padding', choices=('legacy-epad0','context-pad3'), default='legacy-epad0')
     ap.add_argument('--request-policy', choices=('source-dispatch','native-prelead','native-prelead-epad'), default='source-dispatch')
     args = ap.parse_args()
+    if args.actual_temporal_audit and (not args.actual_head_data or args.reload):
+        ap.error('Actual temporal audit needs separately validated components and no reload')
     if args.actual_head_data and (not args.actual_source_data or args.actual_replay
             or args.pilot_preflight or args.teacher_audit or args.history_audit or args.history_audit_only):
         ap.error('Head-only proof requires independent future components and original source data')
