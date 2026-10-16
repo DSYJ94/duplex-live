@@ -32,6 +32,12 @@ def main():
         for root in (logical_root, physical_root):
             try: relative = path.relative_to(root)
             except ValueError: continue
+            # Isambard's Python dependencies live under the project tree too.
+            # They are rebuilt from pinned requirements, never exported as data.
+            if relative.parts and relative.parts[0] in {'envs', 'tmp'}: return
+            if any(part in {'keys', '.ssh', '.aws', '.env'} or part.endswith('.env')
+                    for part in relative.parts):
+                raise RuntimeError('Refusing private path in artifact inventory')
             if not relative.parts or relative.parts[0] not in allowed:
                 raise RuntimeError('Refusing to inventory private/non-artifact root: '+str(relative))
             if path.is_file(): observed.add((str(relative), str(path)))
