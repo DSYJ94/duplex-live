@@ -8,6 +8,38 @@ freeze recipe by17 October12:00Berlin and stop new training by18 October18:00.
 See [dated delivery plan](docs/DELIVERY_PLAN_2026-10-19.md). Time-box small
 experiments; this deadline does not waive causal-data, voice or task gates.
 
+Plain words: IMPORTANT correction at18:15Berlin — recent native evaluations
+omitted the prefix/span layout used in actual-history training. Their wrong
+outputs are real, but they are NOT a matched checkpoint-quality comparison.
+Source8a14d91 now refuses actual-history adapter runs without a layout audit.
+Corrected native tests7479192–97 use adapter7475992, exact checkpoint voice,
+and layout audit7463825. Check these before any scaling/rejection verdict.
+
+Plain words: the first25-case array7477252 completed but used the released
+unwrapped/no-layout protocol and freshly cloned voice, unlike the replay
+contract. Preserve it as conditioning evidence; do not use it in the current
+future trainer. Corrected array7479198 uses zero proof7463825, its exact voice
+codes and layout audit7463825, sourcee591faa. A regression audit also exposed
+the different newly cloned voice; regression checks now use each artifact's
+own recorded voice. No optimizer approval was issued for the mismatched batch.
+
+Plain words: capture planning now matches all25 approved GPT-Live teachers to
+exact TRAIN user PCM/words and teacher worlds (19private,4simple,1clarify,1cancel).
+Plan SHAa79f4309e6e4f8dcc666b3c6f65231c5ed849252e5bed84794f5053b8ddb8b9b.
+Early fact selection no longer depends on a late quiet gap; its own silent
+prefix and actual receipt/240ms speech-margin checks remain mandatory.
+Grounded clarification can use the same checks. Explicit teacher IDs preserve
+which approved trajectory is selected when multiple teachers share a world.
+CPU eligibility source839bd23 predates protocol/voice-regression fixes; do not
+rerun it as the final broad-corpus audit. Use the current source and corrected map.
+
+Plain words: large direct model transfers BOTH lost their partial files on SSH
+timeout. Custom data/checkpoints/bundles remain safe. New stdlib
+`evals.artifact_shards` splits fixed-hash models into512MB pieces and atomically
+restores only after all piece/full hashes pass. Two corruption/missing-piece
+regression tests pass. Remote shard creation is running; small model assets
+transfer separately. No full model-weight export is verified yet.
+
 Plain words: corrected recipe7475992 (136 total updates) PASSES exact reload
 but FAILS native private-result use, including TRAIN000. Native7476104/05/06
 are wrong/missing complete values;7476107 gives the correct pencil/graphite
