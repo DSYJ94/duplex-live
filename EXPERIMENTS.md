@@ -3741,3 +3741,20 @@ FLOAT user PCM, both native codecs and recorded real-frame span boundaries,
 without new backend/ASR calls. The serialized user_in.wav is PCM16 and must not
 replace the original FLOAT input. No new target labels or optimizer updates
 are created, and replayed dispatch is not a live routing qualification.
+
+
+Plain words: full-engine7465002 fails first cache equality at real frame64;
+this first variant retained the trainer's disabled codec CuDNN flag, so it is
+not a matched native execution test. Corrected7465018 explicitly restores
+source codec enabled/deterministic/benchmark flags before Engine construction.
+Its result is pending retrieval. A single latest SSH read hit a banner timeout,
+not an authentication rejection; normal retry follows, without access changes.
+
+
+Plain words: normal SSH retry succeeds; the banner timeout was transient.
+Corrected full Engine7465018 still fails (first cache divergence frame64);
+first temporal difference is call6 while actual input IDs remain exact until
+call66. Captured/default attention numerical replay is not yet exact even
+with codecs restored. Next control uses existing math-attention source7464640
+with full Engine and recorded voice, combining the two separately identified
+requirements. It does not require new speech generation or backend calls.

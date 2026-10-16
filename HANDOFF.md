@@ -44,6 +44,22 @@ collectors7464403/04 save temporal hidden/text scores to locate divergence;
 dependent7464405 compares actual consumed inputs before any optimization.
 Do not weaken the gate or pretend this restores codec/PCM streams.
 
+Plain words: recorded-voice controls7464929/31 reproduce the saved prefix
+exactly; re-encoding voice in the replay loader had changed process-global
+compiled-kernel history. Later acoustic mismatch remains. Source review
+rejects an unproven extra-RNG/reset-offset explanation. Full Engine replay
+now executes both codecs from lossless approved FLOAT user PCM at the actual
+recorded span boundaries, without ASR/API/new dispatch. First7465002 used
+incorrect codec CuDNN flags and failed; corrected7465018 restores captured
+flags. Retrieve its full result before approving any future targets.
+
+Plain words: future-target helpers reject wrong worlds, missing/failed/cancelled
+actual results, changed user audio/words, premature teacher words and token
+collisions. Ten related local tests pass. Successful native tool results use
+route=delegate with executed receipts; plain reasoning uses route=answer.
+These selectors alone approve no dataset or optimization. New proof/history
+artifacts are backed locally; full source/evidence remains immutable by job ID.
+
 ### Earlier recovery evidence — 15 October
 
 Plain words: no complete model qualifies. The owner says Context Spanning with
