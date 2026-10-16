@@ -31,6 +31,9 @@ def run(lm, mimi, spm, voice, histories, data, assets, source_commit):
     if not record.get('execution'):
         raise RuntimeError('Engine replay requires recorded execution settings')
     restore_attention(record['execution'])
+    torch.backends.cudnn.enabled = record['execution']['cudnn']
+    torch.backends.cudnn.deterministic = record['execution']['cudnn_deterministic']
+    torch.backends.cudnn.benchmark = record['execution']['cudnn_benchmark']
     with torch.random.fork_rng(devices=[torch.cuda.current_device()]):
         install_adapters(lm,last_layers=4)
     lm.eval().requires_grad_(False)
