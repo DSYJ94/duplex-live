@@ -2,7 +2,7 @@
 
 ## Current execution — 16 October, access restored and native-convention checks
 
-Plain words: latest checkpoint at19:35Berlin supersedes transfer/pending claims
+Plain words: latest checkpoint at19:45Berlin supersedes transfer/pending claims
 below. Both full public model weights are exported locally and read-back SHA
 verified (33.49GB total), with `runs/cloud-export-20261016/model-verification.json`.
 All25 corrected synthetic histories are backed up in the workspace/export tree;
@@ -30,8 +30,9 @@ Plain words: corrected25-case collection7479198 completed. Eligibility report
 approves13 cases for gated fact-future capture, not for optimization. It rejects
 unsupported ordinary/cancellation targets and cases without a valid silent
 prefix/measured sentence/actual matching receipt. All13 teacher-audio future
-captures7479955 completed, restart gates pass; independent temporal audit7480420
-is running, followed only on success by eight-update/reload proof7480433.
+captures7479955 completed. Independent temporal audit7480420 PASSES all13;
+maximum streamed/batched error0.0008345 (limit0.001), causal prefix error0.
+Corrected eight-update/reload proof7480562 PASSES, frozen base/speech unchanged.
 Real job IDs:7480269,7480270,7480273,7480275,7480280,7480281,7480282,
 7480283,7480289,7480290,7480292,7480295,7479955. Do not use the old7477252 map.
 
@@ -41,14 +42,29 @@ TEXT is forced, and real source receipts are replayed. CPU speech audit7480258
 recovers the intended Purple Triangle/orange triangle values, with word errors.
 This is a rendering diagnostic, not native reasoning or live delegation success.
 All13 native-audio counterparts7480417 completed with restart gates passing,
-sourcee150524. Independent temporal audit7480482 and CPU speech check7480484 are
-queued; eight-update/reload proof7480483 depends on successful audit7480482.
+sourcee150524. Independent temporal audit7480482 PASSES all13, maximum error
+0.0002728 and causal prefix error0. Corrected eight-update/reload proof7480563
+PASSES exact predictions/optimizer/RNG reload, frozen base/speech unchanged.
+CPU speech check7480484 recovers11/13 complete private phrases; mean word error
+10.16%, median8.11%. Two Blue Circle renditions are incomplete/misrendered despite
+supplied text. This is not native policy success or a human voice-quality gate.
 Native real job IDs:7480443,7480444,7480445,7480446,7480447,7480449,7480454,
 7480455,7480463,7480464,7480465,7480466,7480417. Interactive first-source7479666
-remains pending and is not evidence of faster scheduling. Neither broader
-corpus has optimizer approval until its own independent audit passes.
-Next: inspect both audits and separate eight-update/reload proofs before any
-bounded continuation. New data/source is a new stage, never a silent exact resume.
+remains pending and is not evidence of faster scheduling. Both new checkpoint
+states/data/adapter hashes are verified in the local export. Proof launch7480433
+was rejected before optimization because CONTEXT_ACTUAL_TEMPORAL_FIT=1 was
+omitted;7480483 was cancelled pending to fix the same launch flag. Corrected
+jobs7480562/63 are the valid proofs. No training source/data rule was weakened.
+
+Plain words: paired128-update continuations7480819 (teacher acoustics) and
+7480820 (own acoustics) resume their exact new eight-update parents, sourcee150524.
+Native tests depend on successful completion/reload: teacher7480830/32/33/34/35/36;
+own7480837/39/41/42/43/44. Both test TRAIN000, changed private validation000/001
+(silver hexagon/teal star), pencil005, clarification006 and cancellation007.
+These are known audio scenarios with new private worlds, not unseen audio.
+There is still NO qualified native checkpoint. The paired baseline text losses
+are0.716 teacher-audio versus0.921 own-audio (FP32, same13cases); this is a
+conditioning diagnostic, not a proven explanation of native task failures. New data/source is a new stage, never a silent exact resume.
 
 ### Earlier 16 October notes — current statuses above supersede these
 
