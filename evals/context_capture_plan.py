@@ -22,6 +22,8 @@ def main():
     for row in validate_conversion(args.data)['accepted']:
         if row['split'] != 'train': continue
         side = json.loads(Path(row['path']).with_suffix('.json').read_text())
+        if side['timeline']['meta']['kind'] != row['kind']:
+            raise RuntimeError('Source behavior kind differs from its approval')
         pcm, rate = sf.read(row['path'],dtype='float32',always_2d=True)
         if rate != 24000 or pcm.shape[1] != 2: raise RuntimeError('Invalid approved source PCM')
         actual.append((row,side,pcm[:,1].copy()))
@@ -37,6 +39,8 @@ def main():
             seen.add(teacher['wav_sha256'])
             side = json.loads(Path(teacher['path']).with_suffix('.json').read_text())
             meta = side['timeline']['meta']
+            if cached['kind'] != teacher['kind'] or meta['kind'] != teacher['kind']:
+                raise RuntimeError('Teacher behavior kind differs from its cache/approval')
             pcm,rate = sf.read(teacher['path'],dtype='float32',always_2d=True)
             if rate != 24000 or pcm.shape[1] != 2: raise RuntimeError('Invalid approved teacher PCM')
             matches = [(row,source) for row,source,user in actual
