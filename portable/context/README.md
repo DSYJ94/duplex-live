@@ -41,6 +41,26 @@ data, recipe and source identity. Keep the parent `report.json`,
 Use one visible GPU, matching the current trainer. A changed recipe or dataset
 requires a distinct adaptation stage, not an exact-resume claim.
 
+`bash portable/context/train.sh` provides the same audit/fit/resume path without
+Slurm. It mounts the restored tree and runs as the host user. For example, after
+the required destination GPU audits pass:
+
+```sh
+export DL_RESTORED_TREE=/mnt/duplex-live
+export DL_TASK_COMMIT=0e0e3634ea258761d2d9f16df6e3347ce9150834
+export DL_RUN_ID=9990001  # choose a new unused numeric identifier
+export CONTEXT_ACTUAL_HEAD_JOBS='7467981 7468102 7468611'
+export CONTEXT_MODE=resume
+export CONTEXT_ACTUAL_TEMPORAL_PREFLIGHT_JOB=7469530
+export CONTEXT_RESUME_TRAINING_JOB=7474819
+export CONTEXT_ACTUAL_FIT_UPDATES=32
+bash portable/context/train.sh
+```
+
+These are the recorded engineering-proof inputs, not a recommended final model.
+Use `CONTEXT_MODE=audit` first for a new GPU and its new audit identifier in the
+resume command. Keep the source commit fixed while resuming a saved state.
+
 Destination acceptance requires strict base-weight coverage, independent data
 audits, native stream/delay checks, finite forward/backward, saved-state reload
 and free-running task/voice evaluation. CPU state tests have passed on Isambard;
