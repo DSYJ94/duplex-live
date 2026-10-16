@@ -171,6 +171,7 @@ def main():
         ap.add_argument('--'+key,type=Path,required=True)
     ap.add_argument('--source-commit',required=True)
     ap.add_argument('--early-window',action='store_true',help='Plan a complete future before any student reply; CPU only')
+    ap.add_argument('--request-policy',choices=('source-dispatch','native-prelead-epad'),default='source-dispatch')
     ap.add_argument('--cache',type=Path,action='append',required=True)
     args=ap.parse_args()
     args.out.mkdir(exist_ok=False)
@@ -181,7 +182,7 @@ def main():
     from contextspan.model.sequence_convention import persona_prefix
     spm=sentencepiece.SentencePieceProcessor(str(args.tokenizer))
     voice=torch.load(args.history/'student-voice.pt',weights_only=True)['codes']
-    examples,_=load_training(args.cache,spm,persona_prefix(BASE_INSTRUCTIONS,voice,spm))
+    examples,_=load_training(args.cache,spm,persona_prefix(BASE_INSTRUCTIONS,voice,spm),request_policy=args.request_policy)
     try:
         result,_=plan(args.history,args.data,examples,spm)
         if args.early_window:

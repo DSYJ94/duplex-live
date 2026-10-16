@@ -6,7 +6,8 @@ Unlike token-only replay, this executes both codecs in their original order.
 import json
 
 
-def run(lm, mimi, spm, voice, histories, data, assets, source_commit, cut_index=None, on_verified=None):
+def run(lm, mimi, spm, voice, histories, data, assets, source_commit, cut_index=None, on_verified=None,
+        before_reply=False):
     import numpy as np
     import soundfile as sf
     import torch
@@ -18,6 +19,8 @@ def run(lm, mimi, spm, voice, histories, data, assets, source_commit, cut_index=
     from evals.lychee_context import BASE_INSTRUCTIONS
     if len(histories) != 1:
         raise RuntimeError('Full engine restart requires one history per fresh process')
+    if before_reply and (cut_index is None or on_verified is None):
+        raise RuntimeError('Early restart requires an explicit independently planned future callback')
     path = histories[0]
     check = validate(path, data, assets, source_commit)
     record = json.loads((path/'student-history.json').read_text())
@@ -58,11 +61,15 @@ def run(lm, mimi, spm, voice, histories, data, assets, source_commit, cut_index=
     if cut_index is not None:
         index = cut_index
         if (not 0 <= index < len(rows)-2
-                or rows[index]['input_available_s'] < max(e['applied_at_s'] for e in spans)+.24
+                or (not before_reply and rows[index]['input_available_s'] < max(e['applied_at_s'] for e in spans)+.24)
                 or saved['states'][index]['pending_exit_cb0'] is not None
                 or any(rows[i+1]['history_virtual_frames_before_step'] != saved['states'][i]['virtual_frames']
                     for i in (index,index+1))):
             raise RuntimeError('Requested actual cut has an unaccounted receipt or pending state')
+        if before_reply and (any(r['text_token'] not in (0,3) for r in rows[:index+3])
+                or any(c['mode']=='span' and c['start'] < saved['states'][index+2]['virtual_frames']
+                    for c in record['calls'])):
+            raise RuntimeError('Early prefix contains a reply, request or delivered context')
     if index is None: raise RuntimeError('No actual bounded post-span restart boundary')
     # The probe consumes the approved FLOAT source directly, then pads20s.
     # Its user_in.wav is PCM16 serialization and is not the lossless input.
@@ -133,6 +140,7 @@ def run(lm, mimi, spm, voice, histories, data, assets, source_commit, cut_index=
     result = {'schema':'dl-context-engine-restart-gate-v1','history':str(path),'source':check,
         'source_execution':record['execution'],'execution':snapshot(lm),
         'real_frame_boundary':index,'checked_real_frames':len(steps),'steps':steps,
+        'cut_scope':'before every sampled reply/request and actual receipt' if before_reply else 'post-result',
         'inputs':inputs,'temporal_numerics':numerical,'passed':passed,
         'actual_user_encoder_and_agent_decoder_executed':True,
         'actual_receipt_boundaries_replayed':True,'new_backend_calls':False,

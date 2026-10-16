@@ -40,6 +40,7 @@ def main():
     ap.add_argument('--actual-temporal-preflight', type=Path)
     ap.add_argument('--actual-source-commit')
     ap.add_argument('--actual-future-component', action='store_true')
+    ap.add_argument('--actual-early-window', action='store_true')
     ap.add_argument('--actual-engine-replay', action='store_true')
     ap.add_argument('--actual-recorded-voice', action='store_true')
     ap.add_argument('--actual-native-priming', action='store_true')
@@ -52,6 +53,8 @@ def main():
     ap.add_argument('--text-padding', choices=('legacy-epad0','context-pad3'), default='legacy-epad0')
     ap.add_argument('--request-policy', choices=('source-dispatch','native-prelead','native-prelead-epad'), default='source-dispatch')
     args = ap.parse_args()
+    if args.actual_early_window and not args.actual_future_component:
+        ap.error('Early future requires the complete strict native engine component path')
     if args.actual_temporal_fit and (not args.actual_head_data or not args.actual_temporal_preflight
             or args.actual_temporal_audit or args.steps != 8):
         ap.error('Actual temporal fit is an eight-update proof with a passed matching temporal audit')
@@ -173,13 +176,20 @@ def main():
             examples, records = load_training(args.cache, spm, prefix, text_padding=args.text_padding,
                 request_policy=args.request_policy)
             manifest, gold = plan(args.actual_replay[0], args.actual_source_data, examples, spm)
+            if args.actual_early_window:
+                from evals.context_early_plan import plan as early_plan
+                manifest,gold = early_plan(manifest,examples)
             (args.out/'actual-future-plan.json').write_text(json.dumps(manifest,indent=2)+'\n')
             cut_index = manifest['replay_cut_index']
             def callback(engine, saved, index, rows, pcm, gate):
                 (args.out/'engine-replay-before-future.json').write_text(json.dumps(gate,indent=2)+'\n')
+                if args.actual_early_window:
+                    from evals.context_early_future import generate as early_generate
+                    return early_generate(engine,saved,index,rows,pcm,gold,manifest,args.out)
                 return generate(engine,saved,index,rows,pcm,gold,manifest,args.out)
         result = run(lm, mimi, spm, voice, args.actual_replay, args.actual_source_data,
-            args.assets, args.actual_source_commit, cut_index=cut_index, on_verified=callback)
+            args.assets, args.actual_source_commit, cut_index=cut_index, on_verified=callback,
+            before_reply=args.actual_early_window)
         (args.out / 'engine-replay.json').write_text(json.dumps(result, indent=2) + '\n')
         print(json.dumps(result), flush=True)
         if not result['passed']: raise RuntimeError('Full native engine restart failed')
