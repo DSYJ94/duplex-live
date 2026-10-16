@@ -58,10 +58,6 @@ def main():
     ap.add_argument('--layout-audit',type=Path,
         help='Explicit native-layout candidate; require a successful actual input trace')
     args=ap.parse_args()
-    if args.adapter_proof and not args.layout_audit:
-        protocol_report=json.loads((args.adapter_proof/'report.json').read_text())
-        if protocol_report.get('schema') in ('dl-context-actual-adapter-proof-v1','dl-context-result-head-proof-v1'):
-            ap.error('Actual-history adapters require their audited native prefix/span layout')
     if args.backend_mode=='native-asr':
         devices=os.environ.get('CUDA_VISIBLE_DEVICES','').split(',')
         if len(devices)!=2 or len(set(devices))!=2 or not args.asr_python:
@@ -140,9 +136,15 @@ def main():
                 or layout['layout_code_sha256']!=sha256(Path(__file__).with_name('context_native_layout.py'))):
             raise RuntimeError('Native-layout candidate lacks matching actual input parity')
         from evals.context_native_layout import install
-        install(engine)
+        if not getattr(engine,'_dl_checkpoint_native_protocol',None):install(engine)
         layout={'audit_sha256':sha256(args.layout_audit),'native_layout':'bootstrap prefix and preserve provided acoustics',
             'native_input_parity_passed':True,'quality_qualified':False}
+        from evals.context_span_trace import attach
+        layout['actual_free_running_span_checks']=attach(engine)
+    elif getattr(engine,'_dl_checkpoint_native_protocol',None):
+        layout={'native_layout':'bootstrap prefix and preserve provided acoustics',
+            'checkpoint_required':True,'native_protocol':engine._dl_checkpoint_native_protocol,
+            'quality_qualified':False}
         from evals.context_span_trace import attach
         layout['actual_free_running_span_checks']=attach(engine)
     if args.voice=='accepted-synthetic':
