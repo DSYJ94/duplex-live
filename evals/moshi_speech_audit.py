@@ -15,13 +15,15 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--runs", nargs="+", type=Path, default=[])
     ap.add_argument("--live-runs", nargs="+", type=Path, default=[])
+    ap.add_argument('--future-runs',nargs='+',type=Path,default=[],
+                    help='Native sampled audio under approved forced-text conditioning; never a native reasoning pass')
     ap.add_argument("--out", type=Path, required=True)
     ap.add_argument("--trim-trailing-silence", action="store_true")
     ap.add_argument("--keep-silent-failures", action="store_true",
                     help="Retain silent clips as explicit failed records and audit later clips")
     ap.add_argument("--device",choices=("cuda","cpu"),default="cuda")
     args = ap.parse_args()
-    if not args.runs and not args.live_runs:
+    if not args.runs and not args.live_runs and not args.future_runs:
         ap.error("At least one native or GPT-Live run is required")
     import numpy as np
     import soundfile as sf
@@ -31,8 +33,10 @@ def main():
     args.out.mkdir(parents=True, exist_ok=False)
     model = whisper.load_model("turbo", device=args.device)
     results = []
-    for run,kind in [(r,"native") for r in args.runs]+[(r,"GPT-Live") for r in args.live_runs]:
-        wav = run / ("model.wav" if kind == "native" else "model_out.wav")
+    for run,kind in ([(r,"native") for r in args.runs]+[(r,"GPT-Live") for r in args.live_runs]
+                     +[(r,'native_forced_text_future') for r in args.future_runs]):
+        wav = run / ('early-native-audio.wav' if kind=='native_forced_text_future'
+                     else "model.wav" if kind == "native" else "model_out.wav")
         pcm, sr = sf.read(wav, dtype="float32")
         if pcm.ndim != 1 or not np.isfinite(pcm).all():
             raise ValueError("Invalid generated mono speech")
@@ -55,7 +59,26 @@ def main():
                 audio = audio[:min(len(audio), active[-1] + frame + 4000)]
         result = {"text": "", "segments": []} if silent_failure else whisper.transcribe(
             model, audio, language="en", vad=False, beam_size=5, best_of=5, temperature=0., verbose=None)
-        if kind == "native":
+        if kind=='native_forced_text_future':
+            from evals.recovery_data import validate_conversion
+            manifest=json.loads((run/'early-future.json').read_text())
+            if (manifest['future_audio_conditioning']!='native_sampled'
+                    or manifest['future_assistant_audio_tokens_forced'] is not False
+                    or manifest['future_text_tokens_forced'] is not True
+                    or manifest['native_audio_sha256']!=hashlib.sha256(wav.read_bytes()).hexdigest()
+                    or manifest['all_teacher_reply_and_request_tokens_retained'] is not True):
+                raise RuntimeError('Future speech audit requires native audio with explicit forced-text provenance')
+            teacher=manifest['teacher'];cache=Path(teacher['cache'])
+            if hashlib.sha256((cache/'cache.json').read_bytes()).hexdigest()!=teacher['cache_sha256']:
+                raise RuntimeError('Changed teacher cache')
+            receipt=json.loads((cache/'cache.json').read_text())
+            origin=next(r for r in validate_conversion(Path(receipt['conversion']))['accepted']
+                if r['scenario_id']==teacher['id'])
+            side=Path(origin['path']).with_suffix('.json')
+            if hashlib.sha256(side.read_bytes()).hexdigest()!=teacher['sidecar_sha256']:
+                raise RuntimeError('Changed measured teacher words')
+            predicted=' '.join(w[0] for w in json.loads(side.read_text())['alignments'] if w[2]=='SPEAKER_MAIN')
+        elif kind == "native":
             predicted = json.loads((run / "report.json").read_text())["text"]
         else:
             predicted = "".join(p["text"] for p in json.loads((run / "transcripts.json").read_text()) if p["speaker"] == "assistant")
@@ -68,6 +91,9 @@ def main():
                   "wer_against_model_text": wer(norm_words(predicted), norm_words(result["text"])),
                   "semantic_review": "pending", "human_listening": "pending"}
         record["source_kind"] = kind
+        if kind=='native_forced_text_future':
+            record.update(text_was_forced=True,assistant_audio_tokens_forced=False,
+                native_reasoning_qualified=False,training_approved=False)
         if silent_failure:
             record["audit_failure"] = "Generated audio has no signal above the diagnostic silence floor"
         record["asr_time_bounds_valid"] = all(
