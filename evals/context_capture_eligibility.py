@@ -38,7 +38,10 @@ def main():
     regressions = []
     for folder in args.regression_capture:
         from evals.context_early_validate import validate
-        report,_ = validate(folder,args.data,args.assets,examples,spm,voice)
+        recorded_voice=torch.load(folder/'voice.pt',map_location='cpu',weights_only=True)['codes']
+        regression_examples,_=load_training(args.cache,spm,
+            persona_prefix(BASE_INSTRUCTIONS,recorded_voice,spm),request_policy='native-prelead-epad')
+        report,_ = validate(folder,args.data,args.assets,regression_examples,spm,recorded_voice)
         regressions.append(report)
     results = []
     for case in mapping['cases']:
