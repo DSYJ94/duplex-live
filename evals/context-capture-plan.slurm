@@ -24,6 +24,10 @@ test "${#SELECTED[@]}" = 3
 export CONTEXT_SCENARIO="${SELECTED[0]}" CONTEXT_EXPECTED_KIND="${SELECTED[1]}"
 export CONTEXT_PRIVATE_VALUE="${SELECTED[2]}" CONTEXT_ASSETS_JOB=7454205
 export CONTEXT_VOICE=accepted-synthetic CONTEXT_MATH_ATTENTION=1
-export CONTEXT_BACKEND_MODE=native-asr CONTEXT_TRAIN_HISTORY=1 CONTEXT_ADAPTER_JOB=
+export CONTEXT_BACKEND_MODE=native-asr CONTEXT_TRAIN_HISTORY=1
+# Match the native protocol, zero wrappers and exact voice codes used by replay
+# and the actual-history trainer. A released-protocol capture is not interchangeable.
+export CONTEXT_ADAPTER_JOB=7463825 CONTEXT_ADAPTER_ZERO=1 CONTEXT_ADAPTER_DISABLED=0
+export CONTEXT_LAYOUT_AUDIT_JOB=7463825
 echo "Capture task $SLURM_ARRAY_TASK_ID: $CONTEXT_SCENARIO / $CONTEXT_EXPECTED_KIND; plan $DL_CAPTURE_PLAN_SHA256"
 bash "$DL_TASK_SOURCE/evals/context-spanning-probe.slurm"

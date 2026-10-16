@@ -58,6 +58,10 @@ def main():
     ap.add_argument('--layout-audit',type=Path,
         help='Explicit native-layout candidate; require a successful actual input trace')
     args=ap.parse_args()
+    if args.adapter_proof and not args.layout_audit:
+        protocol_report=json.loads((args.adapter_proof/'report.json').read_text())
+        if protocol_report.get('schema') in ('dl-context-actual-adapter-proof-v1','dl-context-result-head-proof-v1'):
+            ap.error('Actual-history adapters require their audited native prefix/span layout')
     if args.backend_mode=='native-asr':
         devices=os.environ.get('CUDA_VISIBLE_DEVICES','').split(',')
         if len(devices)!=2 or len(set(devices))!=2 or not args.asr_python:

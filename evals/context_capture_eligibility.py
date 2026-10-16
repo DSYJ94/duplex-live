@@ -56,6 +56,11 @@ def main():
             'scenario':case['scenario'],'kind':case['expected_kind'],
             'raw_history_validated':True,'training_approved':False}
         try:
+            loading=json.loads((folder/'loading.json').read_text())
+            adapter=loading.get('adapter')
+            if (not adapter or not adapter['zero'] or adapter['disabled']
+                    or not loading.get('layout') or loading.get('input_warmup')):
+                raise RuntimeError('Capture protocol differs from the audited zero-wrapper/native-layout replay')
             if case['expected_kind'] not in ('private','clarify'):
                 raise RuntimeError('This fact-future builder does not approve ordinary/cancellation targets')
             if not torch.equal(voice,torch.load(folder/'student-voice.pt',map_location='cpu',weights_only=True)['codes']):
