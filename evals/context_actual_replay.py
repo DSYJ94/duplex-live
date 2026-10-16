@@ -97,6 +97,15 @@ def run(lm, voice, histories, data, assets, source_commit, warm_graphs=True):
                 if pointers != after_reset or any(positions.values()):
                     raise RuntimeError('In-place reset changed KV storage or retained temporal positions')
                 numerical = []
+                prefix_trace = None
+                if record.get('prefix_trace'):
+                    from evals.context_prefix_trace import PrefixTrace
+                    from evals.moshi_model_download import sha256
+                    trace_file = path / record['prefix_trace']['file']
+                    if sha256(trace_file) != record['prefix_trace']['sha256']:
+                        raise RuntimeError('Actual prefix evidence hash changed')
+                    expected_prefix = torch.load(trace_file, weights_only=True)
+                    prefix_trace = PrefixTrace(lm, lambda: call['mode'] == 'prefix')
                 def compare(call_index, output):
                     if 'temporal_outputs' not in saved: return
                     expected = saved['temporal_outputs'][call_index]
@@ -113,6 +122,14 @@ def run(lm, voice, histories, data, assets, source_commit, warm_graphs=True):
                     inputs = saved['delayed_inputs'][:, :, begin:end].to(lm.device)
                     output = (state.graphed_main if call['path'] == 'graph' else lm.forward_codes)(inputs)
                     compare(call_index, output)
+                prefix_numerics = None
+                if prefix_trace:
+                    prefix_trace.close()
+                    if set(prefix_trace.values) != set(expected_prefix):
+                        raise RuntimeError('Prefix layer evidence is incomplete')
+                    prefix_numerics = {k: {'exact': torch.equal(v, expected_prefix[k]),
+                        'max_abs': float((v.float()-expected_prefix[k].float()).abs().max())}
+                        for k,v in prefix_trace.values.items()}
                 positions, after_replay = temporal_state()
                 if pointers != after_replay or any(v != boundary for v in positions.values()):
                     raise RuntimeError('Actual temporal replay changed KV storage or frame positions')
@@ -151,7 +168,7 @@ def run(lm, voice, histories, data, assets, source_commit, warm_graphs=True):
                 passed = all(c['exact'] for c in next_input_checks) and all(all(s[k] for k in ('cache_exact','provided_exact','offset_exact',
                     'cpu_rng_exact','cuda_rng_exact','returned_text_exact')) for s in steps)
         results.append({'execution': execution, 'source_execution': record.get('execution'), 'history': str(path), 'source': check, 'real_frame_index': index,
-            'virtual_boundary': boundary, 'steps': steps, 'temporal_numerics': numerical, 'next_input_checks': next_input_checks, 'passed': passed})
+            'virtual_boundary': boundary, 'steps': steps, 'temporal_numerics': numerical, 'next_input_checks': next_input_checks, 'prefix_numerics': prefix_numerics, 'passed': passed})
     return {'schema': 'dl-context-actual-restart-gate-v1', 'results': results,
         'graph_warmup_before_replay': warm_graphs,
         'passed': all(r['passed'] for r in results), 'training_approved': False,

@@ -3704,3 +3704,12 @@ source sentence after its teacher receipt. Wrong worlds, failed notices,
 cancelled tasks, early targets and token collisions are rejected. Three local
 causality tests pass. These helpers do not approve labels, write a training
 dataset or bypass the still-failing strict restart gate.
+
+
+Plain words: execution-provenance7464633/34 records identical model dtypes,
+Torch/CUDA/GPU and attention/TF32 settings, yet prefix outputs differ. Matched
+math-attention control7464640/41 also fails (prefix hidden max0.5). Neither
+warmup nor attention selection alone explains it. Next capture records cloned
+per-embedding and per-layer prefix outputs to find the first numerical
+divergence. Hooks run only on the direct prefix; source/default model behavior
+and the strict restart requirement are preserved.

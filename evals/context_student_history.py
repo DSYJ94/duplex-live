@@ -18,6 +18,8 @@ class Recorder:
         self.temporal_outputs = []
         self.mode = 'prefix'
         self.active = False
+        from evals.context_prefix_trace import PrefixTrace
+        self.prefix_trace = PrefixTrace(engine.lm, lambda: self.mode == 'prefix')
         self.forward = engine.lm.forward_codes
         self.state = engine.lm_gen._streaming_state
         self.graph = self.state.graphed_main
@@ -68,6 +70,8 @@ class Recorder:
         self.state.graphed_main = self.graph
         if not self.chunks or not any(c['path'] == 'graph' for c in self.calls):
             raise RuntimeError('No actual native graph inputs were captured')
+        self.prefix_trace.close()
+        torch.save(self.prefix_trace.values, self.folder / 'student-prefix.pt')
         inputs = torch.cat(self.chunks, dim=2)
         if inputs.shape != (1, 17, self.frames):
             raise RuntimeError('Native student history lost frames')
@@ -76,7 +80,9 @@ class Recorder:
             raise RuntimeError('Actual generator snapshots do not cover every real frame')
         torch.save({'delayed_inputs': inputs, 'states': self.states, 'temporal_outputs': self.temporal_outputs}, path)
         result = {'schema': 'dl-context-student-history-v3', 'source_split': 'train',
-            'source': self.source, 'execution': self.execution, 'file': path.name, 'sha256': sha256(path),
+            'source': self.source, 'execution': self.execution,
+            'prefix_trace': {'file': 'student-prefix.pt', 'sha256': sha256(self.folder / 'student-prefix.pt')},
+            'file': path.name, 'sha256': sha256(path),
             'shape': list(inputs.shape), 'calls': self.calls,
             'conditioning_only': True, 'past_labels_must_all_be_masked': True,
             'generated_reply_tokens_forced': False, 'persona_prefix_forced': True,
