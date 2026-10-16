@@ -19,6 +19,7 @@ def run(engine,user,world,args,loading):
     import torch
     from evals.context_spanning_asr import context as recognized_context
     from evals.recovery_worker import run_worker,WorkerContractError
+    from evals.context_backend_reference import reference as backend_reference
     from evals.audio_playout import render_packets
     env=os.environ.copy();env['CUDA_VISIBLE_DEVICES']=args.asr_gpu
     env.pop('OPENAI_API_KEY',None)
@@ -72,17 +73,17 @@ def run(engine,user,world,args,loading):
                             if state['cancelled']:
                                 record.update(disposition='rejected; cancelled task',applied_at_s=None)
                             else:
-                                if any(not world.deliverable(r) for r in result['receipts'] if r['tool']=='lookup_record'):
-                                    raise RuntimeError('Stale actual record receipt')
+                                reference, receipt_count = backend_reference(result, world)
                                 history=getattr(engine,'_dl_student_history',None)
                                 if history:history.mode='span'
                                 try:
-                                    frames=engine.inject_context_span(result['content'])
+                                    frames=engine.inject_context_span(reference)
                                 finally:
                                     if history:history.mode='live'
                                 record.update(disposition='failure notice supplied; no verified result' if result['route']=='error'
                                     else 'actual backend text injected',applied_at_s=time.monotonic()-epoch,
-                                    prefill_ms=engine.last_prefill_ms,virtual_span_frames=frames)
+                                    prefill_ms=engine.last_prefill_ms,virtual_span_frames=frames,
+                                    injected_reference=reference,verified_lookup_receipts_in_span=receipt_count)
                                 if history:
                                     record['history_virtual_frames_after_span']=history.frames
                                 with world.lock:world.tasks[identity]['phase']='failed' if result['route']=='error' else 'delivered'
