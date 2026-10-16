@@ -91,7 +91,9 @@ def run(engine,user,world,args,loading):
                         if len(chunk)<engine.frame_size:chunk=np.pad(chunk,(0,engine.frame_size-len(chunk)))
                         history=getattr(engine,'_dl_student_history',None)
                         history_before=history.frames if history else None
-                        result=engine.step(chunk);torch.cuda.synchronize();available=time.monotonic()-epoch
+                        result=engine.step(chunk)
+                        if history:history.checkpoint()
+                        torch.cuda.synchronize();available=time.monotonic()-epoch
                         tokens.append(result['text_token']);pcm=result['agent_pcm']
                         if pcm is not None:
                             pcm=np.asarray(pcm,dtype=np.float32)

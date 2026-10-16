@@ -3605,3 +3605,22 @@ contain29/46 EPAD0 tokens, including0→4→first-word at both native RET events
 The next explicit variant retains those cues, repositions the lead cue one
 empty frame before derived RET and preserves other EPAD/word/audio targets.
 Seven pure causal/conversion regressions pass; full-corpus/GPU checks follow.
+
+
+Plain words: reject pilot7463729 for scale. Native7463731/33/34/35/36/37/38/39
+has seven empty sampled-text streams and zero RET in all eight cases; pencil005
+alone produces an unqualified answer. No new speech-audit pass is claimed.
+Raw-history validator3bf031c passes saved7457161/62 tensor SHA/load, immutable
+collector/voice/model/source pins and complete real/virtual frame accounting.
+Both remain conditioning only, not approved training targets. EPAD-retaining
+preflight7463825 is now submitted from immutable44b239e.
+
+
+Plain words: paired raw TRAIN collectors7463841–48 cover000–003 in two approved
+teacher worlds each (original plus one checked counterfactual). They remain
+unapproved conditioning. A v2 recorder is prepared to save small generator
+cache/provided/offset and RNG snapshots after actual complete steps, retaining
+0 provided pending assistant acoustics and7 actually observed user residuals.
+This will allow native forced-gold continuation assembly without fabricating
+pending assistant audio. No transformer KV or model weights are saved. The
+new snapshot path still needs an actual GPU collector check.

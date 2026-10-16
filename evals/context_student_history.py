@@ -12,7 +12,7 @@ class Recorder:
         if source['split'] != 'train':
             raise RuntimeError('Student-history collection is TRAIN-only')
         self.engine, self.folder, self.source = engine, folder, source
-        self.chunks, self.calls, self.frames = [], [], 0
+        self.chunks, self.calls, self.frames, self.states = [], [], 0, []
         self.mode = 'prefix'
         self.active = False
         self.forward = engine.lm.forward_codes
@@ -41,6 +41,21 @@ class Recorder:
                 self.active = False
         return recorded
 
+    def checkpoint(self):
+        """After an actual complete step, retain small generator state, not KV."""
+        import torch
+        state = self.state
+        position = state.offset % state.cache.shape[2]
+        if (state.offset != self.frames + 1 or state.provided[:, 1:9, position].any()
+                or int(state.provided[:, 9:17, position].sum()) != 7):
+            raise RuntimeError('Unexpected actual pending-token ownership or generator clock')
+        pending = self.engine._pending_exit_cb0
+        self.states.append({'virtual_frames': self.frames, 'offset': state.offset,
+            'cache': state.cache.detach().cpu().clone(),
+            'provided': state.provided.detach().cpu().clone(),
+            'cpu_rng': torch.get_rng_state().clone(), 'cuda_rng': torch.cuda.get_rng_state().clone(),
+            'pending_exit_cb0': None if pending is None else pending.detach().cpu().clone()})
+
     def finish(self):
         import torch
         self.engine.lm.forward_codes = self.forward
@@ -51,13 +66,16 @@ class Recorder:
         if inputs.shape != (1, 17, self.frames):
             raise RuntimeError('Native student history lost frames')
         path = self.folder / 'student-history.pt'
-        torch.save({'delayed_inputs': inputs}, path)
-        result = {'schema': 'dl-context-student-history-v1', 'source_split': 'train',
+        if len(self.states) != sum(c['mode'] == 'live' for c in self.calls):
+            raise RuntimeError('Actual generator snapshots do not cover every real frame')
+        torch.save({'delayed_inputs': inputs, 'states': self.states}, path)
+        result = {'schema': 'dl-context-student-history-v2', 'source_split': 'train',
             'source': self.source, 'file': path.name, 'sha256': sha256(path),
             'shape': list(inputs.shape), 'calls': self.calls,
             'conditioning_only': True, 'past_labels_must_all_be_masked': True,
             'generated_reply_tokens_forced': False, 'persona_prefix_forced': True,
             'training_approved': False,
+            'snapshot_after_every_real_frame': True, 'transformer_KV_saved': False,
             'graph_input_recorded_outside_graph': True}
         (self.folder / 'student-history.json').write_text(json.dumps(result, indent=2) + '\n')
         return {'file': 'student-history.json', 'sha256': sha256(self.folder / 'student-history.json'),

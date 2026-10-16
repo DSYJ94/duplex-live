@@ -8,7 +8,8 @@ The previous pre-auth access block below is historical, not a current blocker.
 Prepared batch ran successfully:128 pilot7463729, TRAIN calibration7463730 and
 native dependent tests7463731/33/34/35/36/37/38/39. Pilot passes exact fresh
 reload; checkpoint SHA7a6894b3604209188e0446b7df68686e2d0d99ed7d2f5a79d77b5a6cd9c1e51f.
-Behavior results are still being retrieved. Saved preflight7457079 is now fully
+Reject7463729 for scaling: native7463731/33/34/35/36/37/38/39 have seven empty
+text streams/zero RET, with only pencil005 sampling an unqualified answer. Saved preflight7457079 is now fully
 backed locally, with adapter/data/voice hashes checked.
 
 Calibration7463730 on the PAD3/pre-lead corpus has ordinary-word NLL11.339→11.206
@@ -21,6 +22,10 @@ lead's cue into an empty frame before its derived RET. Every source and derived
 cue frame is recorded; no words/audio/receipt clocks move. Require all48 causal
 checks and an integrated8-step proof before any larger run. Published convenience
 preparation's PAD3-only format is not proof the checkpoint prefers that format.
+
+Raw-history integrity checks now pass both7457161/62: actual tensor file hashes,
+voice/source/model pins, source TRAIN approval and all frame/receipt accounting.
+They remain unapproved conditioning, with future target approval still absent.
 
 ### Earlier recovery evidence — 15 October
 

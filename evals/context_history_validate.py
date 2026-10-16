@@ -14,7 +14,8 @@ def validate(folder, data, assets, source_commit):
     report = json.loads((folder / 'report.json').read_text())
     record = json.loads((folder / 'student-history.json').read_text())
     source = record['source']
-    if (record['schema'] != 'dl-context-student-history-v1' or record['source_split'] != 'train'
+    if (record['schema'] not in ('dl-context-student-history-v1','dl-context-student-history-v2')
+            or record['source_split'] != 'train'
             or source['split'] != 'train' or report['source_split'] != 'train'
             or record['training_approved'] is not False or report['training_approved'] is not False
             or record['conditioning_only'] is not True or record['past_labels_must_all_be_masked'] is not True
@@ -49,7 +50,8 @@ def validate(folder, data, assets, source_commit):
         raise RuntimeError('Actual history or recording hash changed')
     saved = torch.load(folder / record['file'], map_location='cpu', weights_only=True)
     inputs = saved['delayed_inputs']
-    if (set(saved) != {'delayed_inputs'} or list(inputs.shape) != record['shape']
+    keys = {'delayed_inputs', 'states'} if record['schema'].endswith('v2') else {'delayed_inputs'}
+    if (set(saved) != keys or list(inputs.shape) != record['shape']
             or inputs.shape[:2] != (1, 17) or inputs.dtype != torch.int64
             or (inputs < -1).any() or (inputs[:, 0] > 32000).any() or (inputs[:, 1:] > 2048).any()):
         raise RuntimeError('Invalid actual delayed conditioning tensor')
@@ -76,6 +78,19 @@ def validate(folder, data, assets, source_commit):
         if (call['start'] != row['history_virtual_frames_before_step']
                 or call['start'] + 1 != row['history_virtual_frames_after_step']):
             raise RuntimeError('Real input frame no longer maps to its actual native forward')
+    if record['schema'].endswith('v2'):
+        if len(saved['states']) != len(rows) or not record['snapshot_after_every_real_frame']:
+            raise RuntimeError('Incomplete actual generator snapshots')
+        for state, row in zip(saved['states'], rows):
+            if (state['virtual_frames'] != row['history_virtual_frames_after_step']
+                    or state['offset'] != state['virtual_frames'] + 1
+                    or state['cache'].shape != state['provided'].shape
+                    or state['cache'].shape[:2] != (1, 17) or state['cache'].dtype != torch.int64
+                    or state['provided'].dtype != torch.bool):
+                raise RuntimeError('Invalid native generator state or clock')
+            pos = state['offset'] % state['cache'].shape[2]
+            if state['provided'][:, 1:9, pos].any() or int(state['provided'][:, 9:17, pos].sum()) != 7:
+                raise RuntimeError('Unobserved assistant acoustics were marked provided')
     return {'scenario': source['scenario'], 'shape': record['shape'], 'live_forwards': len(live),
         'actual_spans': len(spans), 'history_sha256': record['sha256'],
         'report_sha256': sha256(folder / 'report.json'), 'raw_integrity_passed': True,
