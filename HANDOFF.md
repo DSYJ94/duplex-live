@@ -2,6 +2,35 @@
 
 ## Current execution — 16 October, access restored and native-convention checks
 
+Plain words: head-only proof7466440 PASSES8 updates and exact separate-process
+FP32/native-BF16 feature reload. SHA0c70dde5983d272a7c3772f23808a7c50fff6f2487642d0b573a807584ca6563.
+Learning is tiny (native NLL1.819252→1.819245); first fact-token top1 was already
+3/3 under previous teacher speech. Do not call this improved result use.
+Native development tests7467049/51/53/55/57/59/62/64 are queued on workq:
+two changed worlds each for000/001 plus ordinary004/005, clarify006/cancel007.
+Earlier submissions7466976/78/80/82/84/85/86/87 used an invalid voice CLI name;
+they were cancelled and replaced before model evaluation. No accepted evidence
+comes from those submissions.
+
+Plain words: temporal audit7467209 PASSES all3 components: streamed/batched
+FP32 text max errors0.00004745/0.00004911/0.00005651, causal prefix errors0.
+This checks actual already-delayed inputs without another shift. FP32 versus
+captured BF16 hidden differences0.346/0.284/0.238 remain a separate numerical
+diagnostic; exact native replay is still the original stricter gate. Interactive
+reservation started this short check; pending workq copy7467202 was cancelled
+only after acceptance. Audit/data/voice are backed locally.
+
+Plain words: interactive short backward proof7467496 (immutable0859f51) starts
+at10:35UTC, node nid010715. Eight updates train last4 temporal rank8 adapters
+and text head on the3 approved actual-history continuations, using native BF16
+batch/MATH computation. All actual past/audio targets are absent. Separate
+approved TRAIN private/simple/clarify/cancel examples regularize the unchanged
+base text distribution (KL) and hidden states (10x MSE). Base speech parameters
+are frozen and hashed; require finite gradients and exact fresh-process reload.
+The matching zero-update temporal audit is mandatory and packaged with the
+proof. No128-step training is authorized by this engineering proof. Retrieve
+FULL logs before deciding whether to run its unforced native comparisons.
+
 Plain words: corrective future components7466157/60/63 PASS strict native
 Engine replay through327/224/259 real frames of actual TRAIN histories7465804/06/07.
 They contain32/56/35 future frames,12/23/21 text targets, zero past or audio loss
