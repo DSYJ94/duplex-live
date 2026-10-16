@@ -3695,3 +3695,12 @@ the teacher/student-history mismatch diagnosis, not scaling dense training.
 Next single-variable numerical control selects Torch math attention for both
 actual capture and replay. The native default is preserved; weights, user audio
 and sampling settings are unchanged. Execution flags are now explicitly saved.
+
+
+Plain words: helpers for future-target selection now enforce identical TRAIN
+user PCM/word timing (only zero-tail padding may differ), an actually delivered
+successful matching private receipt, and a complete independently measured
+source sentence after its teacher receipt. Wrong worlds, failed notices,
+cancelled tasks, early targets and token collisions are rejected. Three local
+causality tests pass. These helpers do not approve labels, write a training
+dataset or bypass the still-failing strict restart gate.
