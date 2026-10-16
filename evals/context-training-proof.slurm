@@ -49,6 +49,7 @@ fi
 if [ -n "${CONTEXT_ACTUAL_REPLAY_JOBS:-}" ]; then
  : "${CONTEXT_ACTUAL_SOURCE_COMMIT:?Actual collector commit required}"
  ACTUAL=()
+ if [ "${CONTEXT_ACTUAL_FUTURE_COMPONENT:-0}" = 1 ]; then ACTUAL+=(--actual-future-component); fi
  if [ "${CONTEXT_ACTUAL_ENGINE_REPLAY:-0}" = 1 ]; then ACTUAL+=(--actual-engine-replay); fi
  if [ "${CONTEXT_ACTUAL_RECORDED_VOICE:-0}" = 1 ]; then ACTUAL+=(--actual-recorded-voice); fi
  if [ "${CONTEXT_ACTUAL_NATIVE_PRIMING:-0}" = 1 ]; then ACTUAL+=(--actual-native-priming); fi

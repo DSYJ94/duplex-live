@@ -6,7 +6,7 @@ Unlike token-only replay, this executes both codecs in their original order.
 import json
 
 
-def run(lm, mimi, spm, voice, histories, data, assets, source_commit):
+def run(lm, mimi, spm, voice, histories, data, assets, source_commit, cut_index=None, on_verified=None):
     import numpy as np
     import soundfile as sf
     import torch
@@ -55,6 +55,14 @@ def run(lm, mimi, spm, voice, histories, data, assets, source_commit):
         and rows[i+1]['history_virtual_frames_before_step'] == saved['states'][i]['virtual_frames']
         and rows[i+2]['history_virtual_frames_before_step'] == saved['states'][i+1]['virtual_frames']
         and saved['states'][i]['pending_exit_cb0'] is None),None) if spans else None
+    if cut_index is not None:
+        index = cut_index
+        if (not 0 <= index < len(rows)-2
+                or rows[index]['input_available_s'] < max(e['applied_at_s'] for e in spans)+.24
+                or saved['states'][index]['pending_exit_cb0'] is not None
+                or any(rows[i+1]['history_virtual_frames_before_step'] != saved['states'][i]['virtual_frames']
+                    for i in (index,index+1))):
+            raise RuntimeError('Requested actual cut has an unaccounted receipt or pending state')
     if index is None: raise RuntimeError('No actual bounded post-span restart boundary')
     # The probe consumes the approved FLOAT source directly, then pads20s.
     # Its user_in.wav is PCM16 serialization and is not the lossless input.
@@ -122,10 +130,12 @@ def run(lm, mimi, spm, voice, histories, data, assets, source_commit):
     passed=(all(c['exact'] for c in inputs)
         and all(all(s[k] for k in s if k!='real_frame') for s in steps)
         and all(all(n[k]['exact'] for k in ('hidden','text_logits')) for n in numerical))
+    future = on_verified(engine, saved, index+2, rows, pcm) if passed and on_verified else None
     return {'schema':'dl-context-engine-restart-gate-v1','history':str(path),'source':check,
         'source_execution':record['execution'],'execution':snapshot(lm),
         'real_frame_boundary':index,'checked_real_frames':len(steps),'steps':steps,
         'inputs':inputs,'temporal_numerics':numerical,'passed':passed,
         'actual_user_encoder_and_agent_decoder_executed':True,
         'actual_receipt_boundaries_replayed':True,'new_backend_calls':False,
-        'training_approved':False,'gold_targets_created':False,'microphone_tested':False}
+        'training_approved':False,'gold_targets_created':future is not None,
+        'future_component':future,'microphone_tested':False}

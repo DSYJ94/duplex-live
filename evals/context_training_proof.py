@@ -35,6 +35,7 @@ def main():
     ap.add_argument('--actual-replay', type=Path, action='append')
     ap.add_argument('--actual-source-data', type=Path)
     ap.add_argument('--actual-source-commit')
+    ap.add_argument('--actual-future-component', action='store_true')
     ap.add_argument('--actual-engine-replay', action='store_true')
     ap.add_argument('--actual-recorded-voice', action='store_true')
     ap.add_argument('--actual-native-priming', action='store_true')
@@ -50,6 +51,8 @@ def main():
     if args.actual_replay and (not args.actual_source_data or not args.actual_source_commit
             or args.reload or args.pilot_preflight or args.teacher_audit):
         ap.error('Actual restart needs explicit source data/commit and a separate diagnostic run')
+    if args.actual_future_component and not args.actual_engine_replay:
+        ap.error('Future component requires strict full engine replay')
     if args.actual_engine_replay and (not args.actual_replay or not args.actual_recorded_voice):
         ap.error('Full engine replay requires an actual history and its exact recorded voice')
     if args.actual_recorded_voice and not args.actual_replay:
@@ -147,8 +150,19 @@ def main():
         torch.save({'codes': voice}, args.out / 'voice.pt')
     if args.actual_engine_replay:
         from evals.context_engine_replay import run
+        cut_index = None; callback = None
+        if args.actual_future_component:
+            from evals.context_future_component import plan, generate
+            prefix = persona_prefix(BASE_INSTRUCTIONS, voice, spm)
+            examples, records = load_training(args.cache, spm, prefix, text_padding=args.text_padding,
+                request_policy=args.request_policy)
+            manifest, gold = plan(args.actual_replay[0], args.actual_source_data, examples, spm)
+            (args.out/'actual-future-plan.json').write_text(json.dumps(manifest,indent=2)+'\n')
+            cut_index = manifest['replay_cut_index']
+            def callback(engine, saved, index, rows, pcm):
+                return generate(engine,saved,index,rows,pcm,gold,manifest,args.out)
         result = run(lm, mimi, spm, voice, args.actual_replay, args.actual_source_data,
-            args.assets, args.actual_source_commit)
+            args.assets, args.actual_source_commit, cut_index=cut_index, on_verified=callback)
         (args.out / 'engine-replay.json').write_text(json.dumps(result, indent=2) + '\n')
         print(json.dumps(result), flush=True)
         if not result['passed']: raise RuntimeError('Full native engine restart failed')

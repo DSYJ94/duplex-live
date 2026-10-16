@@ -3758,3 +3758,19 @@ call66. Captured/default attention numerical replay is not yet exact even
 with codecs restored. Next control uses existing math-attention source7464640
 with full Engine and recorded voice, combining the two separately identified
 requirements. It does not require new speech generation or backend calls.
+
+
+Plain words: full Engine MATH replay7465797 PASSES all189 real frames, all
+captured input columns, temporal hidden/text outputs, cache/provided values,
+clocks and CPU/CUDA RNG. No thresholds relaxed. Required combination: recorded
+voice, actual codec operation order, matching math attention. This is a bounded
+actual-history component, not live backend/microphone/complete-model acceptance.
+
+Plain words: prepare approved same-user/same-world teacher sentences after a
+quiet actual failed-reply history. Replay must pass at that selected cut too.
+Only then force independently approved future text/assistant codes through
+native LMGen, verify every future user codec against the original stream, and
+record current hidden/text targets. Pending pre-cut residuals stay unprovided
+and sampled. All past labels remain absent. This initial component has no
+audio loss, no optimizer and no voice/task qualification. Four more math TRAIN
+collectors7465804–07 are submitted in approved worlds000–003.
