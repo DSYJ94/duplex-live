@@ -159,7 +159,8 @@ def main():
             manifest, gold = plan(args.actual_replay[0], args.actual_source_data, examples, spm)
             (args.out/'actual-future-plan.json').write_text(json.dumps(manifest,indent=2)+'\n')
             cut_index = manifest['replay_cut_index']
-            def callback(engine, saved, index, rows, pcm):
+            def callback(engine, saved, index, rows, pcm, gate):
+                (args.out/'engine-replay-before-future.json').write_text(json.dumps(gate,indent=2)+'\n')
                 return generate(engine,saved,index,rows,pcm,gold,manifest,args.out)
         result = run(lm, mimi, spm, voice, args.actual_replay, args.actual_source_data,
             args.assets, args.actual_source_commit, cut_index=cut_index, on_verified=callback)

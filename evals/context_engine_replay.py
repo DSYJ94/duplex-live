@@ -130,12 +130,15 @@ def run(lm, mimi, spm, voice, histories, data, assets, source_commit, cut_index=
     passed=(all(c['exact'] for c in inputs)
         and all(all(s[k] for k in s if k!='real_frame') for s in steps)
         and all(all(n[k]['exact'] for k in ('hidden','text_logits')) for n in numerical))
-    future = on_verified(engine, saved, index+2, rows, pcm) if passed and on_verified else None
-    return {'schema':'dl-context-engine-restart-gate-v1','history':str(path),'source':check,
+    result = {'schema':'dl-context-engine-restart-gate-v1','history':str(path),'source':check,
         'source_execution':record['execution'],'execution':snapshot(lm),
         'real_frame_boundary':index,'checked_real_frames':len(steps),'steps':steps,
         'inputs':inputs,'temporal_numerics':numerical,'passed':passed,
         'actual_user_encoder_and_agent_decoder_executed':True,
         'actual_receipt_boundaries_replayed':True,'new_backend_calls':False,
-        'training_approved':False,'gold_targets_created':future is not None,
-        'future_component':future,'microphone_tested':False}
+        'training_approved':False,'gold_targets_created':False,
+        'future_component':None,'microphone_tested':False}
+    if passed and on_verified:
+        result['future_component']=on_verified(engine,saved,index+2,rows,pcm,result)
+        result['gold_targets_created']=True
+    return result

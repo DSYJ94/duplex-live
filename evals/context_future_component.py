@@ -146,3 +146,41 @@ def generate(engine,saved,index,rows,pcm,gold,manifest,out):
         'voice_quality_or_free_running_success_qualified':False,'training_approved':False}
     (out/'actual-future.json').write_text(json.dumps(result,indent=2)+'\n')
     return result
+
+
+def main():
+    """CPU-only eligibility plan; no model forward, labels or optimizer."""
+    import argparse
+    import sys
+    import torch
+    import sentencepiece
+    from evals.context_history_validate import validate
+    from evals.context_training_data import load_training
+    from evals.personaplex_train import MODEL_HASHES
+    from evals.lychee_context import BASE_INSTRUCTIONS
+    ap=argparse.ArgumentParser(description=__doc__)
+    for key in ('history','data','assets','tokenizer','out'):
+        ap.add_argument('--'+key,type=Path,required=True)
+    ap.add_argument('--source-commit',required=True)
+    ap.add_argument('--cache',type=Path,action='append',required=True)
+    args=ap.parse_args()
+    args.out.mkdir(exist_ok=False)
+    validate(args.history,args.data,args.assets,args.source_commit)
+    if sha256(args.tokenizer)!=MODEL_HASHES['tokenizer_spm_32k_3.model']:
+        raise RuntimeError('Changed native tokenizer')
+    assets=json.loads(args.assets.read_text());sys.path.insert(0,assets['source'])
+    from contextspan.model.sequence_convention import persona_prefix
+    spm=sentencepiece.SentencePieceProcessor(str(args.tokenizer))
+    voice=torch.load(args.history/'student-voice.pt',weights_only=True)['codes']
+    examples,_=load_training(args.cache,spm,persona_prefix(BASE_INSTRUCTIONS,voice,spm))
+    try:
+        result,_=plan(args.history,args.data,examples,spm)
+        result['eligible_for_strict_replay']=True
+    except RuntimeError as error:
+        result={'eligible_for_strict_replay':False,'reason':str(error),
+            'training_approved':False,'gold_targets_created':False}
+    (args.out/'future-plan.json').write_text(json.dumps(result,indent=2)+'\n')
+    print(json.dumps(result),flush=True)
+
+
+if __name__=='__main__':main()
