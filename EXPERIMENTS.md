@@ -18,6 +18,48 @@ passes on unseen lessons — that is generalization, not memorization.
 
 ## 16 October 2026 — actual-history corrections, still no qualified model
 
+Plain words: latest checkpoint at19:35Berlin supersedes transfer/pending claims
+below. Both full public model weights are exported locally and read-back SHA
+verified (33.49GB total), with `runs/cloud-export-20261016/model-verification.json`.
+All25 corrected synthetic histories are backed up in the workspace/export tree;
+four critical file hashes per case pass. They remain conditioning-only, not
+optimizer-approved. Required zero/layout proof7463825 is included too.
+
+Plain words: the provider-neutral amd64 image builds and runs CPU state/data
+checks. Actual Isambard136-update checkpoint7475992 deserializes on amd64:
+26 finite adapter tensors, finite optimizer moments, CPU/Python/NumPy random
+states accepted. CUDA-state restore/forward/backward on a destination GPU is
+STILL UNTESTED. No cloud resources provisioned; provider/account and spending
+cap remain undecided. Use `portable/context/README.md` to restore and validate.
+
+Plain words: matched native tests7479192–97 all fail task qualification, including
+private TRAIN/validation, simple, clarification and cancellation. They use the
+correct fixed voice/layout, so this is a legitimate rejection for scaling the
+three-conversation136-update recipe. New loader789d3f3 restores the checkpoint's
+required native layout and MATH attention automatically, exactly once;7480107
+runs without explicit layout/math flags and still gives the wrong private value.
+Its prefix equivalence needs verification before claiming exact loader parity.
+
+Plain words: corrected25-case collection7479198 completed. Eligibility report
+`context-matched25-eligibility-9c5dc2047dc4019a6f39a5efc10894fdfe2586fa`
+approves13 cases for gated fact-future capture, not for optimization. It rejects
+unsupported ordinary/cancellation targets and cases without a valid silent
+prefix/measured sentence/actual matching receipt. All13 teacher-audio future
+captures7479955 completed, restart gates pass; independent temporal audit7480420
+is queued. Real job IDs:7480269,7480270,7480273,7480275,7480280,7480281,7480282,
+7480283,7480289,7480290,7480292,7480295,7479955. Do not use the old7477252 map.
+
+Plain words: native-audio futures7479546/47 pass independent ownership/delay
+and TRAIN-only audits. Assistant audio is naturally sampled; approved teacher
+TEXT is forced, and real source receipts are replayed. CPU speech audit7480258
+recovers the intended Purple Triangle/orange triangle values, with word errors.
+This is a rendering diagnostic, not native reasoning or live delegation success.
+The13-case native-audio counterpart7480417 is queued, sourcee150524; interactive
+first-source7479666 remains pending and is not evidence of faster scheduling.
+Next: audit both datasets, then separate eight-update/reload proofs before any
+bounded continuation. New data/source is a new stage, never a silent exact resume.
+
+
 Plain words: corrected loss run7475992 reaches136 updates and reloads exactly,
 but the native task failures remain. TRAIN000 and changed private validation
 000/001 do not give complete correct values; pencil005 text is correct;

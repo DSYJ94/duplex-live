@@ -25,8 +25,13 @@ Restore the artifact tree at `/projects/u6si/duplex-live` inside the container.
 Existing approvals bind absolute paths and source commits. Preserve the git
 history, pinned vendor source, model/tokenizer/codec files, voice provenance,
 approved raw data and caches, captured histories, audit reports and checkpoints.
-An adapter alone is insufficient. Data export and dependency-closure verification
-remain work in progress.
+An adapter alone is insufficient. The local export now contains both full model
+weights with read-back checksums, the original three independently revalidated
+future components, and 25 additional synthetic captured histories (not approved
+training labels). The isolated amd64 restore passes all three original data
+audits. The real ARM checkpoint deserializes with finite optimizer/adapter state
+and accepted CPU/Python/NumPy RNG on amd64; destination CUDA restore remains
+untested. These checks cover the recorded recipe, not every future workload.
 
 Recreate source checkouts from the saved Git bundle rather than copying linked
 worktree `.git` files: those can point back to the old host. For each checkpoint's
@@ -78,3 +83,10 @@ and free-running task/voice evaluation. CPU state tests have passed on Isambard;
 cross-hardware bitwise numerical identity is not guaranteed. Current measured
 training peak is about17.6GB for the tiny engineering proof, not a capacity
 promise for a larger run or concurrent evaluation services.
+
+For native evaluation, preserve the checkpoint's prefix/span convention and
+attention mode. Current adapter loading restores the actual-history checkpoint's
+native layout and MATH attention automatically. The historical `ad82745` source
+requires explicit layout audit `runs/context-training-proof-7463825/history-audit.json`
+and its recorded voice. Do not mix an unwrapped released-model trajectory into
+the current actual-history trainer.
