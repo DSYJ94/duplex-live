@@ -35,6 +35,7 @@ def main():
     ap.add_argument('--actual-replay', type=Path, action='append')
     ap.add_argument('--actual-source-data', type=Path)
     ap.add_argument('--actual-source-commit')
+    ap.add_argument('--actual-engine-replay', action='store_true')
     ap.add_argument('--actual-recorded-voice', action='store_true')
     ap.add_argument('--actual-native-priming', action='store_true')
     ap.add_argument('--actual-cold-graphs', action='store_true')
@@ -49,6 +50,8 @@ def main():
     if args.actual_replay and (not args.actual_source_data or not args.actual_source_commit
             or args.reload or args.pilot_preflight or args.teacher_audit):
         ap.error('Actual restart needs explicit source data/commit and a separate diagnostic run')
+    if args.actual_engine_replay and (not args.actual_replay or not args.actual_recorded_voice):
+        ap.error('Full engine replay requires an actual history and its exact recorded voice')
     if args.actual_recorded_voice and not args.actual_replay:
         ap.error('Recorded actual voice is a separate restart diagnostic only')
     if args.history_logits and not (args.history_audit or args.history_audit_only):
@@ -142,6 +145,14 @@ def main():
         with torch.no_grad():
             voice = mimi.encode(torch.as_tensor(x, dtype=torch.float32, device='cuda').reshape(1, 1, -1))[0].long().cpu()
         torch.save({'codes': voice}, args.out / 'voice.pt')
+    if args.actual_engine_replay:
+        from evals.context_engine_replay import run
+        result = run(lm, mimi, spm, voice, args.actual_replay, args.actual_source_data,
+            args.assets, args.actual_source_commit)
+        (args.out / 'engine-replay.json').write_text(json.dumps(result, indent=2) + '\n')
+        print(json.dumps(result), flush=True)
+        if not result['passed']: raise RuntimeError('Full native engine restart failed')
+        return
     del mimi
     if args.actual_replay:
         from evals.context_actual_replay import run

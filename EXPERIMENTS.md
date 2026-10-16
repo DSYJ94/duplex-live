@@ -3732,3 +3732,12 @@ IDs do not imply equal process compilation history. Add an explicit recorded-
 voice diagnostic that verifies its captured hash and reuses the exact codes;
 ordinary training defaults remain unchanged. Test it separately after the
 native-constructor priming control, with all source histories immutable.
+
+
+Plain words: recorded-voice controls7464929/31 now reproduce the entire saved
+last-column prefix trace exactly, with/without constructor priming. Subsequent
+acoustics still diverge. Full-engine diagnostic now replays the same approved
+FLOAT user PCM, both native codecs and recorded real-frame span boundaries,
+without new backend/ASR calls. The serialized user_in.wav is PCM16 and must not
+replace the original FLOAT input. No new target labels or optimizer updates
+are created, and replayed dispatch is not a live routing qualification.
