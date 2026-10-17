@@ -4,6 +4,14 @@ from pathlib import Path
 from evals.moshi_model_download import sha256
 
 
+def validate_base_retention(weight,native_teacher):
+    if isinstance(weight,bool) or weight not in (0.,1.):
+        raise ValueError('Base retention is an explicit zero-or-one controlled comparison')
+    if weight==0 and not native_teacher:
+        raise ValueError('Removing base retention requires independently approved native teacher supervision')
+    return float(weight)
+
+
 def teacher_index(kinds,step,reference_index,teacher_kinds):
     from evals.context_component_kind import retention_index
     names=('private','simple','clarify','cancel')
@@ -61,7 +69,9 @@ def prepare(examples,spm,voice,retention,args):
         native_input_approval_sha256=sha256(approval),teacher_scope_sha256=sha256(args.actual_native_teacher_scope),
         numerical_preflight_sha256=sha256(gate_file),native_teacher_data_sha256=sha256(native_data),
         code_sha256=sha256(Path(__file__)),sampling='same task-kind exposure as unchanged four-reference retention; rotate every teacher within that kind',
-        reference_kl_and_hidden_objective_unchanged=True,assistant_acoustics='approved teacher conditioning; no audio loss',
+        reference_kl_and_hidden_objective_unchanged=args.actual_base_retention_weight==1.,
+        **({'base_retention_weight':args.actual_base_retention_weight} if args.actual_base_retention_weight!=1. else {}),
+        assistant_acoustics='approved teacher conditioning; no audio loss',
         prefix_loss_targets=0,span_loss_targets=0,user_loss_targets=0,audio_loss_targets=0)
     batches=[(row['inputs'].cuda(),row['mask'].cuda(),row['targets'].cuda(),row['teacher']) for row in selected]
     return policy,batches

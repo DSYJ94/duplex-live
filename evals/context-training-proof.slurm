@@ -136,6 +136,7 @@ if [ -n "${CONTEXT_ACTUAL_HEAD_JOBS:-}" ]; then
   HEAD+=(--actual-fit-updates "${CONTEXT_ACTUAL_FIT_UPDATES:-8}")
   HEAD+=(--actual-sampling "${CONTEXT_ACTUAL_SAMPLING:-component-order}")
   HEAD+=(--actual-retention-sampling "${CONTEXT_ACTUAL_RETENTION_SAMPLING:-legacy-modulo}")
+  if [ -n "${CONTEXT_ACTUAL_BASE_RETENTION_WEIGHT:-}" ]; then HEAD+=(--actual-base-retention-weight "$CONTEXT_ACTUAL_BASE_RETENTION_WEIGHT"); fi
   if [ -n "${CONTEXT_ACTUAL_RETENTION_TEACHER_WEIGHT:-}" ]; then
    HEAD+=(--actual-retention-teacher-weight "$CONTEXT_ACTUAL_RETENTION_TEACHER_WEIGHT")
    if [ -n "${CONTEXT_ACTUAL_NATIVE_TEACHER_APPROVAL_JOB:-}" ]; then

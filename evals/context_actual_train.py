@@ -75,6 +75,8 @@ def run(lm, spm, voice, examples, components, audits, args):
     retention = [];retention_targets=[];retention_teacher_audits=[]
     teacher_weight=args.actual_retention_teacher_weight
     native_teacher_mode=bool(getattr(args,'actual_native_teacher_preflight',None));native_teacher_batches=[]
+    from evals.context_native_teacher_objective import validate_base_retention
+    base_retention_weight=validate_base_retention(args.actual_base_retention_weight,native_teacher_mode)
     for kind in ('private','simple','clarify','cancel'):
         e = max((e for e in examples if e['record']['kind']==kind),key=lambda e:e['codes'].shape[-1])
         codes = e['codes'][None].cuda(); initial = lm._get_initial_token()
@@ -139,7 +141,7 @@ def run(lm, spm, voice, examples, components, audits, args):
             'retention_examples':[r[2] for r in retention],
             **({'warm_start':warm_start,'warm_start_optimizer_reset':True} if warm_start else {}),
             'recipe':{'rank':8,'scaling':2.,'last_layers':4,'lr':1e-5,'weight_decay':0.,
-                'gradient_clip':1.,'retention_kl_weight':1.,'retention_hidden_mse_weight':10.,
+                'gradient_clip':1.,'retention_kl_weight':base_retention_weight,'retention_hidden_mse_weight':10.*base_retention_weight,
                 **({'retention_teacher_text':teacher} if teacher else {}),
                 'text_pad3_loss_weight':.5,
                 **({'response_first_word_loss':decision} if decision else {}),
@@ -246,6 +248,7 @@ def run(lm, spm, voice, examples, components, audits, args):
                 supervised=teacher_loss(z[0,0],retention_targets[ri],mask) if teacher and not native_teacher_mode else None
                 teacher_target_count=int(mask.sum())
                 regularizer=kl+10.*hidden
+                if base_retention_weight!=1.:regularizer=base_retention_weight*regularizer
                 if teacher and not native_teacher_mode:regularizer=regularizer+teacher_weight*supervised
                 regularizer.backward()
                 if native_teacher_mode:
@@ -302,8 +305,10 @@ def run(lm, spm, voice, examples, components, audits, args):
             'zero_adapter_native_batch_logits_exact':True,'adapter_construction_rng_preserved':True,
             'frozen_weights_unchanged':True,'frozen_hashes':frozen,'base_audio_parameters_frozen':True,
             'retention_examples':[r[2] for r in retention],
-            'retention_objective':('KL plus 10x hidden MSE and explicitly audited full TRAIN teacher text CE'
+            'retention_objective':('independently audited native TRAIN teacher text CE; base KL and hidden MSE weights zero'
+                if not base_retention_weight else 'KL plus 10x hidden MSE and explicitly audited full TRAIN teacher text CE'
                 if teacher else 'KL on unchanged base text distribution plus 10x hidden MSE, approved independent TRAIN histories'),
+            **({'base_retention_weight':base_retention_weight} if base_retention_weight!=1. else {}),
             **({'retention_teacher_text':teacher} if teacher else {}),
             **({'response_first_word_loss':decision} if decision else {}),
             'baseline_metrics':baseline_metrics,'initial_stage_metrics':initial_metrics,

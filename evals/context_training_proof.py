@@ -48,6 +48,7 @@ def main():
     ap.add_argument('--actual-sampling',choices=('component-order','balanced-kind'),default='component-order')
     ap.add_argument('--actual-retention-sampling',choices=('legacy-modulo','balanced-kind'),default='legacy-modulo')
     ap.add_argument('--actual-retention-teacher-weight',type=float,default=0.)
+    ap.add_argument('--actual-base-retention-weight',type=float,choices=(0.,1.),default=1.)
     ap.add_argument('--actual-retention-teacher-audit',type=Path)
     ap.add_argument('--actual-native-teacher-approval',type=Path)
     ap.add_argument('--actual-native-teacher-scope',type=Path)
@@ -104,6 +105,8 @@ def main():
     from evals.context_retention_teacher import validate_weight as validate_teacher_weight
     validate_teacher_weight(args.actual_retention_teacher_weight)
     native_teacher=any((args.actual_native_teacher_approval,args.actual_native_teacher_scope,args.actual_native_teacher_preflight))
+    from evals.context_native_teacher_objective import validate_base_retention
+    validate_base_retention(args.actual_base_retention_weight,native_teacher)
     if native_teacher and not (all((args.actual_native_teacher_approval,args.actual_native_teacher_scope,args.actual_native_teacher_preflight))
             and args.actual_retention_teacher_weight>0 and args.actual_temporal_fit and args.actual_mixed_data
             and args.actual_retention_sampling=='balanced-kind' and not args.actual_retention_teacher_audit):
