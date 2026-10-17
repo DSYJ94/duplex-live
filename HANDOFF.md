@@ -1,5 +1,38 @@
 # HANDOFF — where we are (updated 2026-10-17 for active recovery)
 
+Plain words:18 October00:52Berlin — no model qualifies. Matched four-teacher9079
+and all25-teacher9080 both PASS520 updates/exact fresh-process reload, but all32
+unforced native cases9110–9125/9127–9142 and independent ASR9126/9143 are now
+complete and REJECT full-system qualification. All32 receive complete user audio;
+all32 independent ASR segment/word bounds are valid. Actual audible failures in
+9080 include false lightning explanation9127, no cancel action9132, missing actual
+orange-circle value9135 and invented258-dollar cost after copper-diamond receipt9141.
+TRAIN9131 clarifies, actually retrieves brown triangle, says it and answers the
+later evaporation question (ASRworderror0.063); this component gain does not
+qualify validation. Both models/states/voices/data and32 WAV hashes pass locally;
+full32 native artifacts (~614MB), both ASR reports and launch receipts are backed.
+Review: runs/recovery-continuation-20261016/native-teacher-matched-native-review.json.
+Listening page http://localhost:8766/audio/voice-diagnostics/teacher-coverage.html
+serves all32 verified WAVs and independent transcripts.
+
+Plain words:next controlled ablation tests base-preservation conflict, not a
+proven diagnosis. Source60aa2c9 keeps native all25 teacher supervision, SAME28
+data de920990..., parent4806, teacherweight1, firstword16 and8+512 updates, but
+sets base KL and10x hidden-MSE multiplier to0. Default1 path retains its old
+calculation. NewCLI/portable/Slurm flag CONTEXT_ACTUAL_BASE_RETENTION_WEIGHT=0
+requires complete native teacher CPU/math gates.11 local guards pass. Short
+proof9708 PASSES8/exactreload/optimizer-RNG restore; four local hashes pass.
+Full520 continuation9710 RUNNING; normal workq. Pending16 native evaluations
+9762/9765–9779 (use receipt, not arithmetic) and ASR9780 depend on verified model.
+Time limits reduced while pending to8min proof/12min fit, based on matched4/6min
+observed runs; records context-base-retention-off-backfill-20261018.json.
+Interactive wrapper1b5c854 adds a guarded eight-update diagnostic case but was
+NOT used: original9708 started in workq before any replacement. Never duplicate.
+Native/speech receipts: context-base-retention-off-{trial,native,speech}-20261018.
+jsonl under cluster runs and local cloud-export tree. Do not extend unchanged
+recipe if this one-variable ablation also fails. Cloud validation remains paused.
+
+
 Plain words:18 October00:15Berlin — sourcef16d430, precise numerical reference
 9062 running. CPU8779 passes all25 observed-boundary scopes (11,425text targets,
 993spoken, one nonexistent pad excluded); independent CPU8795 passes exact

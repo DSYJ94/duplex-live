@@ -4174,3 +4174,26 @@ separate v2 reference verification retaining original failed FP32 results; no
 trainer/runtime precision change. Two real Torch isolation guards pass.
 Reference9062 running; dependent matched8-update proofs9077/78 and520-step
 models9079/80 queued. All25 native teachers remain TRAIN-only; no quality claim.
+
+
+## 2026-10-18 — Matched teacher coverage rejected; preservation-loss ablation
+
+Plain words:precise-reference9062 PASSES all25 at unchanged0.001 (max0.000883),
+retaining original FP32 failure8796. Proofs9077/78 and520-models9079/80 PASS exact
+reload. All32 unforced development cases and ASR9126/9143 complete; both remain
+UNQUALIFIED.9080's audible false lightning claim, no TRAINcancel action, omitted
+orange-circle receipt and invented258-dollar cost contradict complete task use.
+TRAIN9131 improves clarification+lookup+browntriangle+evaporation, but validation
+still fails.16/16 ASR timing bounds valid for each arm; causal playout underruns
+occur10/16 four-teacher and6/16 all25. No microphone/fresh-holdout acceptance.
+All model/state/voice/data and32 WAV hashes verified in local backup.
+
+Plain words:source60aa2c9 introduces an explicit0/1 base-preservation multiplier.
+Removing it requires independently approved native teacher supervision; default
+calculation unchanged. It tests whether preserving the unreliable base resists
+correction; exposure mismatch and narrow supervision remain alternate hypotheses.
+Same28 data/4806 parent/all25 teachers/weight1/budget; only base KL and hidden-MSE
+weights become0.11 local guards pass. Proof9708 PASSES8/exactreload and state
+restore, four local hashes pass.520-fit9710 running,16 native cases9762/9765–79
+and independent ASR9780 gated. All in workq; bounded interactive wrapper1b5c854
+was prepared/checksummed but unused because original proof started normally.
