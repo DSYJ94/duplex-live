@@ -4,6 +4,7 @@ No API/ASR calls, new dispatch decisions, gold targets or optimizer updates.
 Unlike token-only replay, this executes both codecs in their original order.
 """
 import json
+from pathlib import Path
 
 
 def collector_identity(loading,allow_trained=False):
@@ -41,6 +42,12 @@ def run(lm, mimi, spm, voice, histories, data, assets, source_commit, cut_index=
     collector=collector_identity(report['loading'],allow_trained)
     if collector and record['execution']['math_sdp'] is not True:
         raise RuntimeError('Trained replay requires the recorded verified MATH execution protocol')
+    if collector:
+        from evals.moshi_model_download import sha256
+        proof=Path(collector['proof']);parent=json.loads((proof/'report.json').read_text())
+        if (parent['assets_manifest_sha256']!=sha256(assets) or not torch.equal(voice,
+                torch.load(proof/'voice.pt',map_location='cpu',weights_only=True)['codes'])):
+            raise RuntimeError('Trained replay assets or actual voice differ from its verified collector')
     if not torch.equal(voice, torch.load(path/'student-voice.pt', weights_only=True)['codes']):
         raise RuntimeError('Engine replay voice differs from actual capture')
     if not record.get('execution'):
@@ -57,7 +64,6 @@ def run(lm, mimi, spm, voice, histories, data, assets, source_commit, cut_index=
     native.load_model = lambda *a, **kw: (lm, mimi, spm)
     try:
         if collector:
-            from pathlib import Path
             from evals.context_adapter_load import before_engine
             with before_engine(native,Path(collector['proof'])) as restored:
                 engine=native.Engine(device='cuda',temp=.8,temp_text=.7)
