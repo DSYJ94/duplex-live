@@ -18,8 +18,16 @@ from evals.kyutai_tts_assets import DSM_COMMIT
 def main():
     ap=argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--assets',type=Path,required=True)
+    ap.add_argument('--mimi-load-approval',type=Path,required=True)
     ap.add_argument('--out',type=Path,required=True)
     args=ap.parse_args();manifest=json.loads(args.assets.read_text())
+    mimi_gate=json.loads(args.mimi_load_approval.read_text())
+    if (mimi_gate['schema']!='dl-kyutai-tts-mimi-load-cpu-v1' or not mimi_gate['passed']
+            or not mimi_gate['original_default_loader_failed'] or mimi_gate['gpu_used'] is not False
+            or mimi_gate['assets_manifest_sha256']!=sha256(args.assets)
+            or mimi_gate['code_sha256']!=sha256(Path(__file__).with_name('kyutai_tts_mimi_load.py'))
+            or len(mimi_gate['negative_controls_rejected'])!=3):
+        raise RuntimeError('Missing matching independent strict Mimi load proof')
     if (not manifest['passed'] or manifest['schema']!='dl-kyutai-tts-assets-v1'
             or manifest['model_revision']!=MODEL_REVISION or manifest['voice_revision']!=VOICE_REVISION
             or manifest['wheel_sha256']!=WHEEL_SHA256
@@ -58,13 +66,14 @@ def main():
     from evals.context_execution import math_attention,snapshot
     from evals.recovery_worker import RecordWorld,run_worker
     from evals.audio_playout import render_packets
+    from evals.kyutai_tts_mimi_load import strict_mimi_loader
     spec=importlib.util.spec_from_file_location('pinned_kyutai_streaming_example',example)
     upstream=importlib.util.module_from_spec(spec);sys.modules[spec.name]=upstream;spec.loader.exec_module(upstream)
     args.out.mkdir(parents=True,exist_ok=False)
     math_attention();torch.manual_seed(42424242);torch.cuda.manual_seed_all(42424242)
-    loads=[];load_start=time.perf_counter()
+    loads=[];mimi_loads=[];load_start=time.perf_counter()
     with torch.inference_mode(),no_compile(),no_cuda_graph(),sdpa_kernel(SDPBackend.MATH):
-        with audited_loads(loads):
+        with audited_loads(loads),strict_mimi_loader(paths['mimi'],mimi_loads):
             info=CheckpointInfo.from_hf_repo('kyutai/tts-1.6b-en_fr',
                 moshi_weights=paths['model'],mimi_weights=paths['mimi'],
                 tokenizer=paths['tokenizer'],config_path=paths['config'])
@@ -118,6 +127,7 @@ def main():
         raw_peak=float(np.max(np.abs(raw))),raw_samples_above_one=int(np.count_nonzero(np.abs(raw)>1)),
         audio_sha256=sha256(args.out/'model.wav'),packet_stream_sha256=sha256(args.out/'packet-stream.wav'),
         assets_manifest_sha256=sha256(args.assets),loads=loads,execution=snapshot(tts.lm),
+        mimi_load_approval_sha256=sha256(args.mimi_load_approval),strict_mimi_loads=mimi_loads,
         native_duplex_qualified=False,hybrid_system_qualified=False,microphone_acceptance=False,
         speech_model_routing=False,text_chosen_by='external gpt-6-luna controller',
         input_is_typed=True,input_text_complete_before_render=True,concurrent_listening=False,

@@ -13,7 +13,9 @@ DL=/projects/u6si/duplex-live
 : "${DL_TASK_SOURCE:?Immutable source required}"
 : "${DL_TASK_COMMIT:?Immutable commit required}"
 : "${KYUTAI_TTS_ASSETS_JOB:?Complete verified pinned assets required}"
+: "${KYUTAI_TTS_MIMI_LOAD_JOB:?Independent strict CPU Mimi load proof required}"
 [[ "$KYUTAI_TTS_ASSETS_JOB" =~ ^[0-9]+$ ]]
+[[ "$KYUTAI_TTS_MIMI_LOAD_JOB" =~ ^[0-9]+$ ]]
 test "$(git -C "$DL_TASK_SOURCE" rev-parse HEAD)" = "$DL_TASK_COMMIT"
 test -z "$(git -C "$DL_TASK_SOURCE" status --porcelain)"
 cd "$DL_TASK_SOURCE"
@@ -26,4 +28,5 @@ apptainer exec --nv --bind /projects,/lus,/home \
  --env HF_HOME="$DL/models/hf-cache" --env HF_HUB_OFFLINE=1 \
  "$DL/pytorch-new.sif" python -u -m evals.kyutai_tts_probe \
  --assets "$DL/runs/kyutai-tts-assets-$KYUTAI_TTS_ASSETS_JOB/assets.json" \
+ --mimi-load-approval "$DL/runs/kyutai-tts-mimi-load-$KYUTAI_TTS_MIMI_LOAD_JOB/report.json" \
  --out "$DL/runs/kyutai-tts-probe-${SLURM_JOB_ID}"

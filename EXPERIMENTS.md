@@ -4300,3 +4300,19 @@ controller text before rendering are explicit; no concurrent listening, micropho
 native request decision, native intelligence or full-system acceptance is claimed.
 Independent recognition has a separate external-controller source kind. Syntax,
 CLI parsing and shell checks pass; actual GPU/speech checks remain to run.
+
+Plain words:first GPU TTS679 fails in21seconds before speech/backend execution;
+ASR680 cancels. Safetensors0.6.2 rejects32 legacy Mimi projection names before
+the registered official Moshi attention conversion hook runs. Existing required
+package bound is safetensors<0.6. Ranked predictions: raw-name prevalidation conflict
+implies ordinary strict PyTorch loading passes; wrong checkpoint architecture
+implies that also fails; further GPU/runtime incompatibility remains possible
+after loading. Do not downgrade the shared environment or skip weights.
+New CPU gate must reproduce the original failure, load through the official hook
+using load_file+load_state_dict(strict=True), and independently compare every
+parameter/buffer with the immutable source (all32 legacy projection mappings,
+no unused source tensors). Negative controls alter a value, remove a tensor and
+add an unused tensor; all must fail. A temporary Mimi-only loader restores on exit,
+changes no package/weight bytes, and requires that CPU gate before a new GPU probe.
+Native models remain rejected and unchanged.
+[Safetensors0.6 source](https://github.com/huggingface/safetensors/blob/v0.6.2/bindings/python/py_src/safetensors/torch.py).
