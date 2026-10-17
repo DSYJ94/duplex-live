@@ -38,6 +38,7 @@ def main():
     ap.add_argument('--actual-early-data', type=Path, action='append')
     ap.add_argument('--actual-mixed-data', type=Path, action='append')
     ap.add_argument('--actual-sampling',choices=('component-order','balanced-kind'),default='component-order')
+    ap.add_argument('--actual-response-first-word-weight',type=float,default=1.)
     ap.add_argument('--actual-temporal-audit', action='store_true')
     ap.add_argument('--actual-temporal-fit', action='store_true')
     ap.add_argument('--actual-temporal-preflight', type=Path)
@@ -63,6 +64,10 @@ def main():
     ap.add_argument('--text-padding', choices=('legacy-epad0','context-pad3'), default='legacy-epad0')
     ap.add_argument('--request-policy', choices=('source-dispatch','native-prelead','native-prelead-epad'), default='source-dispatch')
     args = ap.parse_args()
+    from evals.context_decision_loss import validate as validate_decision_weight
+    validate_decision_weight(args.actual_response_first_word_weight)
+    if args.actual_response_first_word_weight!=1. and not (args.actual_temporal_fit and args.actual_mixed_data):
+        ap.error('Decision weighting requires explicit audited mixed-component temporal training')
     if args.actual_teacher_id and not args.actual_future_component:
         ap.error('Explicit teacher selection requires an independently planned future component')
     if args.actual_native_audio_future and not args.actual_early_window:

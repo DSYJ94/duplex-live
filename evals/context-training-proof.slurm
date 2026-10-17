@@ -103,6 +103,7 @@ if [ -n "${CONTEXT_ACTUAL_HEAD_JOBS:-}" ]; then
   fi
   HEAD+=(--actual-fit-updates "${CONTEXT_ACTUAL_FIT_UPDATES:-8}")
   HEAD+=(--actual-sampling "${CONTEXT_ACTUAL_SAMPLING:-component-order}")
+  HEAD+=(--actual-response-first-word-weight "${CONTEXT_ACTUAL_RESPONSE_FIRST_WORD_WEIGHT:-1}")
  fi
  run_container -m evals.context_training_proof "${ARGS[@]}" "${HEAD[@]}"
  run_container -m evals.context_training_proof "${ARGS[@]}" "${HEAD[@]}" --reload

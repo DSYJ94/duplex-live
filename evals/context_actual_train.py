@@ -39,7 +39,8 @@ def run(lm, spm, voice, examples, components, audits, args):
             raise RuntimeError('Changed packaged temporal audit')
     else:
         embedded.write_bytes((pre/'actual-temporal-audit.json').read_bytes())
-    batches = [];component_kinds=[]
+    batches = [];component_kinds=[];response_boundaries=[]
+    from evals.context_decision_loss import weights as text_weights,policy as decision_policy
     warm_start=None
     if args.warm_start_proof:
         from evals.context_rollout_conditioning import verify_checkpoint
@@ -52,6 +53,8 @@ def run(lm, spm, voice, examples, components, audits, args):
         from evals.context_component_kind import manifest_name
         name=manifest_name(folder,early=bool(args.actual_early_data),mixed=bool(args.actual_mixed_data))
         m = json.loads((folder/name).read_text()); h = Path(m['actual_history'])
+        response_boundaries.append(m.get('native_response_boundary_version')==2
+            and m.get('target_kind')=='ordinary_answer' and m.get('actual_boundary_cache_verified') is True)
         component_kinds.append(m.get('target_kind','private_result'))
         record = json.loads((h/'student-history.json').read_text())
         raw = torch.load(h/'student-history.pt',map_location='cpu',weights_only=True)['delayed_inputs']
@@ -65,6 +68,7 @@ def run(lm, spm, voice, examples, components, audits, args):
         if mask[:stop].any() or int(mask.sum()) != int(component['text_mask'].sum()):
             raise RuntimeError('Actual past accidentally acquired labels')
         batches.append((inputs,mask,target))
+    decision=decision_policy(args.actual_response_first_word_weight,response_boundaries)
     retention = []
     for kind in ('private','simple','clarify','cancel'):
         e = max((e for e in examples if e['record']['kind']==kind),key=lambda e:e['codes'].shape[-1])
@@ -83,11 +87,12 @@ def run(lm, spm, voice, examples, components, audits, args):
     def metrics():
         results = []
         with torch.no_grad():
-            for audit,(inputs,mask,target) in zip(audits,batches):
+            for index,(audit,(inputs,mask,target)) in enumerate(zip(audits,batches)):
                 z = forward(inputs)[1][0,0]; pos = int(torch.where(mask)[0][0])
                 y = target[mask]; z = z[mask].float()
                 weights = torch.where(y==3,.5,1.)
                 ce = F.cross_entropy(z,y,reduction='none')
+                optimization_weights=text_weights(y,args.actual_response_first_word_weight,response_boundaries[index])
                 content=(y>=5).nonzero().flatten()
                 decision={}
                 if len(content):
@@ -97,6 +102,7 @@ def run(lm, spm, voice, examples, components, audits, args):
                         'first_content_probability':float(probs[y[c]]),
                         'first_content_request_probability':float(probs[4])}
                 results.append({'scenario':audit['scenario'],'nll':float((ce*weights).sum()/weights.sum()),
+                    **({'optimization_nll':float((ce*optimization_weights).sum()/optimization_weights.sum())} if decision else {}),
                     **decision,
                     'top1':float((z.argmax(-1)==y).float().mean()),
                     'non_pad_nll':float(ce[y!=3].mean()) if (y!=3).any() else None,
@@ -118,6 +124,7 @@ def run(lm, spm, voice, examples, components, audits, args):
             'recipe':{'rank':8,'scaling':2.,'last_layers':4,'lr':1e-5,'weight_decay':0.,
                 'gradient_clip':1.,'retention_kl_weight':1.,'retention_hidden_mse_weight':10.,
                 'text_pad3_loss_weight':.5,
+                **({'response_first_word_loss':decision} if decision else {}),
                 'data_order':('round-robin verified kinds, then examples per kind; retention step modulo four'
                     if args.actual_sampling=='balanced-kind' else 'actual step modulo component count; retention step modulo four'),
                 **({'component_kind_order':component_kinds} if args.actual_sampling=='balanced-kind' else {}),
@@ -206,7 +213,7 @@ def run(lm, spm, voice, examples, components, audits, args):
             inputs,mask,target = batches[index]
             with checkpoint_language_layers(lm):
                 logits = forward(inputs)[1][0,0,mask].float()
-                y = target[mask]; weights = torch.where(y==3,.5,1.)
+                y = target[mask]; weights = text_weights(y,args.actual_response_first_word_weight,response_boundaries[index])
                 ce = (F.cross_entropy(logits,y,reduction='none')*weights).sum()/weights.sum()
                 ce.backward()
                 ri = step%len(retention); inputs,mask,_ = retention[ri]
@@ -256,6 +263,7 @@ def run(lm, spm, voice, examples, components, audits, args):
             'frozen_weights_unchanged':True,'frozen_hashes':frozen,'base_audio_parameters_frozen':True,
             'retention_examples':[r[2] for r in retention],
             'retention_objective':'KL on unchanged base text distribution plus 10x hidden MSE, approved independent TRAIN histories',
+            **({'response_first_word_loss':decision} if decision else {}),
             'baseline_metrics':baseline_metrics,'initial_stage_metrics':initial_metrics,
             'final_metrics':metrics(),'expected_logits':expected,'steps':steps,
             'execution':'native BF16 batch MATH attention, no compilation/graphs; actual FP32 causal preflight required',
