@@ -36,6 +36,7 @@ def main():
     ap.add_argument('--teacher-engine-input-id')
     ap.add_argument('--teacher-engine-input-voice',type=Path)
     ap.add_argument('--teacher-native-math-audit',type=Path)
+    ap.add_argument('--teacher-native-math-diagnostic')
     ap.add_argument('--actual-replay', type=Path, action='append')
     ap.add_argument('--actual-source-data', type=Path)
     ap.add_argument('--actual-head-data', type=Path, action='append')
@@ -80,6 +81,8 @@ def main():
     ap.add_argument('--text-padding', choices=('legacy-epad0','context-pad3'), default='legacy-epad0')
     ap.add_argument('--request-policy', choices=('source-dispatch','native-prelead','native-prelead-epad'), default='source-dispatch')
     args = ap.parse_args()
+    if args.teacher_native_math_diagnostic and not args.teacher_native_math_audit:
+        ap.error('Numerical diagnostic requires the independently approved teacher corpus')
     if any((args.teacher_engine_input_audit,args.teacher_engine_input_id,args.teacher_engine_input_voice,args.teacher_native_math_audit)):
         if (not args.teacher_engine_input_audit or not args.teacher_engine_input_voice
                 or bool(args.teacher_engine_input_id)==bool(args.teacher_native_math_audit)):
@@ -276,6 +279,10 @@ def main():
         prefix=persona_prefix(BASE_INSTRUCTIONS,voice,spm)
         examples,_=load_training(args.cache,spm,prefix,text_padding=args.text_padding,request_policy=args.request_policy)
         if args.teacher_native_math_audit:
+            if args.teacher_native_math_diagnostic:
+                from evals.context_teacher_numeric_diagnostic import run as diagnose_teacher_math
+                diagnose_teacher_math(lm,spm,voice,examples,args)
+                return
             from evals.context_native_teacher_math import run as audit_teacher_math
             audit_teacher_math(lm,spm,voice,examples,args)
             return
