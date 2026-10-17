@@ -32,7 +32,7 @@ apptainer exec --bind /projects,/lus,/home \
  "$DL/pytorch-new.sif" python - <<'PY'
 import json,os
 from pathlib import Path
-import torch,transformers,tokenizers,diffusers,hyperpyyaml,tiktoken,conformer,soundfile,scipy
+import torch,torchaudio,transformers,tokenizers,diffusers,hyperpyyaml,tiktoken,conformer,soundfile,scipy
 from bayling_duplex import BayLingDuplex
 from evals.moshi_model_download import sha256
 assert torch.__version__.startswith('2.9.0') and transformers.__version__=='4.46.3'
@@ -40,7 +40,7 @@ record={'schema':'dl-bayling-runtime-v1','overlay':os.environ['DL_BAYLING_OVERLA
     'requirements_sha256':sha256(Path('evals/assets/bayling-runtime-requirements.txt')),
     'imports_passed':True,'torch':torch.__version__,'torch_path':torch.__file__,
     'transformers':transformers.__version__,'transformers_path':transformers.__file__,
-    'tokenizers':tokenizers.__version__,'diffusers':diffusers.__version__,
+    'tokenizers':tokenizers.__version__,'diffusers':diffusers.__version__,'torchaudio':torchaudio.__version__,
     'gpu_execution_tested':False,'quality_qualified':False}
 (Path(os.environ['DL_BAYLING_OUT'])/'runtime.json').write_text(json.dumps(record,indent=2)+'\n')
 print(json.dumps(record))
