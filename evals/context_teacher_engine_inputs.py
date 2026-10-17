@@ -17,9 +17,16 @@ def forcing(clean,frame,device,native_audio):
     return result
 
 
-def provided_ownership(flags,current,clean,native_audio):
+def provided_ownership(flags,current,clean,native_audio,prefix=None):
     import torch
-    owned=bool(flags[:,0].all() and flags[:,9:].all() and not flags[:,1:9].any()) if native_audio else bool(flags.all())
+    if native_audio:
+        if prefix is None:return False
+        expected=torch.ones_like(flags);expected[:,1:9]=False
+        # The seven delay-one rows start with the last provided persona frame.
+        # They are not teacher acoustic tokens or newly sampled predictions.
+        expected[:,2:9,0]=True
+        owned=torch.equal(flags,expected) and torch.equal(current[0,2:9,0],prefix[2:9,-1])
+    else:owned=bool(flags.all())
     return owned and torch.equal(current[0,0],clean[0])
 
 
@@ -144,13 +151,14 @@ def run(lm,mimi,spm,voice,examples,args):
     inputs=compare(actual,expected);encoded=torch.cat(user_codes,dim=2)
     codec=compare(encoded,clean[None,9:17])
     current=torch.cat(targets,dim=2);flags=torch.cat(provided,dim=2)
-    ownership=provided_ownership(flags,current,clean,native_audio)
+    from contextspan.model.sequence_convention import persona_prefix
+    native_prefix=persona_prefix(BASE_INSTRUCTIONS,voice,spm) if native_audio else None
+    ownership=provided_ownership(flags,current,clean,native_audio,native_prefix)
     native_comparison=None
     if native_audio:
         # Text and user inputs remain supplied; agent acoustic inputs must be sampled.
         from evals.context_teacher_native_approval import prepared
-        from contextspan.model.sequence_convention import persona_prefix
-        oracle=prepared(example,persona_prefix(BASE_INSTRUCTIONS,voice,spm),encoded,spm)
+        oracle=prepared(example,native_prefix,encoded,spm)
         non_agent=[0,*range(9,17)]
         native_comparison=compare(actual[:,non_agent],oracle[:,non_agent])
     mapping=live_indices==record['real_to_virtual']
@@ -176,12 +184,14 @@ def run(lm,mimi,spm,voice,examples,args):
         virtual_context_is_recorded_teacher_context_not_live_backend=True,execution=snapshot(lm),
         optimizer_steps=0,training_approved=False,quality_qualified=False)
     if native_audio:
-        result.update(schema='dl-context-teacher-text-native-audio-probe-v1',
+        result.update(schema='dl-context-teacher-text-native-audio-probe-v2',
             passed=ownership and native_comparison['exact'] and mapping,
             teacher_text_and_audio_forced=False,teacher_text_forced=True,agent_acoustic_tokens_forced=False,
             expected_text=spm.decode(clean[0,clean[0]>=5].tolist()),
             non_agent_native_input_comparison=native_comparison,
-            all_real_targets_provided=False,provided_text_and_user_only=ownership,
+            all_real_targets_provided=False,provided_text_user_and_initial_prefix_only=ownership,
+            initial_pending_agent_codes=native_prefix[2:9,-1].tolist(),
+            initial_pending_agent_codes_verified=ownership,
             generated_acoustic_frames=int(tensors['generated_codes'].shape[-1]),
             native_reasoning_qualified=False,independent_speech_review='pending')
     report_name='teacher-text-render-audit.json' if native_audio else 'teacher-engine-input-audit.json'

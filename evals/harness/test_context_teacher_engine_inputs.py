@@ -14,11 +14,19 @@ class TeacherEngineInputTest(unittest.TestCase):
         self.assertTrue(provided_ownership(flags,current,clean,False))
         self.assertFalse(provided_ownership(flags,current,clean,True))
         flags[:,1:9]=False
-        self.assertTrue(provided_ownership(flags,current,clean,True))
+        prefix=current[0,:,:1].clone()
+        self.assertFalse(provided_ownership(flags,current,clean,True,prefix))
+        flags[:,2:9,0]=True
+        self.assertTrue(provided_ownership(flags,current,clean,True,prefix))
+        wrong=prefix.clone();wrong[2,0]+=1
+        self.assertFalse(provided_ownership(flags,current,clean,True,wrong))
+        flags[:,2,2]=True
+        self.assertFalse(provided_ownership(flags,current,clean,True,prefix))
+        flags[:,2,2]=False
         flags[:,9,1]=False
-        self.assertFalse(provided_ownership(flags,current,clean,True))
+        self.assertFalse(provided_ownership(flags,current,clean,True,prefix))
         flags[:,9,1]=True;current[0,0,2]+=1
-        self.assertFalse(provided_ownership(flags,current,clean,True))
+        self.assertFalse(provided_ownership(flags,current,clean,True,prefix))
 
     def test_one_changed_speaker_token_or_missing_frame_fails_parity(self):
         import torch

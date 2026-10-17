@@ -85,14 +85,15 @@ def main():
             predicted=' '.join(words)
         elif kind=='forced_teacher_text_native_audio':
             rendered=json.loads((run/'teacher-text-render-audit.json').read_text())
-            if (rendered['schema']!='dl-context-teacher-text-native-audio-probe-v1'
+            if (rendered['schema']!='dl-context-teacher-text-native-audio-probe-v2'
                     or not rendered['passed'] or not rendered['teacher_text_forced']
                     or rendered['agent_acoustic_tokens_forced'] is not False
                     or rendered['audio_sha256']!=hashlib.sha256(wav.read_bytes()).hexdigest()
                     or rendered['teacher']['source_split']!='train'
                     or rendered['teacher']['source_model']!='gpt-live-1'
                     or rendered['generated_acoustic_frames']!=rendered['teacher']['real_frames']
-                    or not rendered['provided_text_and_user_only']
+                    or not rendered['provided_text_user_and_initial_prefix_only']
+                    or not rendered['initial_pending_agent_codes_verified']
                     or not rendered['non_agent_native_input_comparison']['exact']
                     or rendered['training_approved'] is not False):
                 raise RuntimeError('Teacher render lacks its diagnostic-only text/acoustic provenance')

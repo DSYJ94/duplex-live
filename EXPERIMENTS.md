@@ -4238,3 +4238,16 @@ input/ownership checks. No optimizer or data approval follows from rendering.
 Existing two integer-input Torch guards plus a new forcing/ownership guard run
 inside each cluster capture before loading the model. Local syntax passes;
 local Torch execution is unavailable and is not reported as passing.
+
+Plain words:render7510411 fails v1 ownership after all3 Torch guards pass; dependent
+413/414/415 and speech416 cancel without running. All9 non-agent input rows are
+exact, but seven delay-one agent rows have provided=True at real frame0 only.
+Independent CPU inspection reproduces their exact values from the pinned persona
+prefix:243/1178/546/1736/1030/1978/2008. Every other agent provided flag is false;
+text/user flags all true. This is pending persona-prefill state, not supplied
+teacher audio. V1 incorrectly required every agent flag false. Preserve its failed
+report and trace. V2 requires exactly those seven initial flags, exact prefix code
+values, all other agent flags false, and unchanged all9 non-agent input equality.
+Negative guards reject a changed prefix code, unexpected later provided flag,
+missing user ownership or changed teacher text. Runtime/training layout is unchanged.
+New captures require new immutable source; the old failed run is never relabelled.
