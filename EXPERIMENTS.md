@@ -16,6 +16,29 @@ gets a plain gloss the first time it appears.
 quizzed on 8 lessons it NEVER saw (held-out). A run only counts if it
 passes on unseen lessons — that is generalization, not memorization.
 
+## 17 October 2026 — matched controls and a new corrective stage
+
+Plain words: more updates alone did not solve conversation. Keep balanced136
+checkpoint7500125 as an unqualified reference; reject unchanged6487500366 for
+wrong explanations/repetition. Cancellation5207500371 learns a useful backend
+request on validation007 but falsely denies authority in speech. The new stage
+adds the first clarification question and cancellation controls on a newer actual
+TRAIN history, starting from136-update weights with an explicitly fresh optimizer.
+These are development checks, not the historical80-lesson Phase-1 exam.
+
+| Training run | Recipe and engineering result | Native verdict |
+| --- | --- | --- |
+|7500012/13,7500117/25| Matched14,8 then128 updates; component-order vs equal behavior-kind sampling; exact optimizer/random-state/prediction reload | Balanced private values spoken in three cases; full tasks fail. |
+|7500366|512 more updates from7500125,648 total; exact reload, lower text loss | Reject wrong facts, repetition and missing values7500380–91. |
+|7500364/7500371| New15 components including isolated cancellation controls;8 plus512 updates, exact reload | Validation7500397 requests after cancellation and backend executes it, but speech denies authority; TRAIN7500396 misses the request. Unqualified. |
+|7501360| New17-component warm8 from7500125 weights, optimizer reset; independent audit7501359 and exact state/prediction reload PASS | Native checks pending; pencil7501844 refuses. No continuation submitted yet. |
+
+Plain words: detail, diagnostic IDs, rejected rendering and corpus ownership live
+in [the current control-recovery record](docs/research/2026-10-17-control-recovery.md).
+The ordinary three TRAIN checks fail, the released persona does not repair the
+completed comparisons, and BayLing's bounded unchanged audition does not justify
+a backbone switch. No complete native model or cloud GPU resume is qualified.
+
 ## 16 October 2026 — actual-history corrections, still no qualified model
 
 

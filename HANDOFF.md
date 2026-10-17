@@ -2,6 +2,25 @@
 
 ## Current execution — 17 October, mixed ordinary/private correction
 
+Plain words: latest active record is [17 October control recovery](docs/research/2026-10-17-control-recovery.md).
+Retained reference7500125 is unqualified;648-update7500366 is rejected.520-update
+7500371 triggers a real backend cancellation in validation7500397 but speaks a
+false denial; this is a component gain, not task success. Corrective17 audit7501359
+and warm8 proof7501360 (source3223510, parent weights7500125, fresh optimizer)
+PASS independent mathematical checks and exact state/prediction reload. No
+longer continuation is submitted. Native7501763/65/66/67/68 remain on workq;
+pencil7501844 replaces held/cancelled7501764 and gives a refusal in sampled text. New current-rollout controls
+7501220 and teacher-acoustic question7501230 require independent mathematical
+approval. Exclude native-audio question7500610 because speech7501118 differs from
+its text. Repaired delayed-cancellation debug7501264 preserves the ASR timing
+guard and returns a no-execution failure notice instead of dropping live audio.
+Listening control7501751 passes CPU provenance/quiet-stem checks on repetitive
+TRAIN0087500380; independent18-component audit7501865 is the next gate. This
+component supervises50 measured control frames only. Source9c90970.
+Cloud remains paused, delivery19 October, training cutoff18 October18:00Berlin.
+
+### Earlier execution notes (the linked record above takes precedence)
+
 Plain words: current17 October13:28UTC continuation adds control diagnostics.
 Unchanged648-update7500366 reloads exactly but is REJECTED: native7500380–91
 produces wrong explanations, repetition, missing private values and failed controls.
