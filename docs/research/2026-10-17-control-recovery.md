@@ -667,3 +667,20 @@ checks every real target's ownership and real/virtual mapping. No optimization
 or new target generation. Native runtime CuDNN-on/MATH settings are explicit;
 eager execution audits integer inputs, not production latency. Initial cases
 cover all four task kinds plus the longest private reference, before the full25.
+
+Plain words:normal audit jobs7800–7804 are pending on Resources. Official
+interactive policy was rechecked17 October: one short debugging audit is allowed,
+production batch work stays on workq.7802 was held before a held replacement was
+submitted; the new job's effective partition/reservation were verified, then7802
+was cancelled and7852 released.7852 is confirmed RUNNING; remaining four stay in
+workq. No duplicate work ran. Source4650eea contains the audit; wrapper source
+deb2662 has byte-identical audit code. All changed source MD5s match.
+
+Plain words:codec7456232 had already established small offline/streaming user
+code differences. A separate CPU verifier is prepared to distinguish those from
+any further token-layout error. It reassembles the oracle with recorded actual
+streamed user codes only, requires identical teacher words/agent codes/masks/
+clocks, and checks all current forced targets and every prefix/span/live call.
+The original strict offline-cache failure remains a recorded result; the native
+conditioning variant is a separate data declaration. No optimizer approval or
+claim that small codec changes explain behavior is made.
