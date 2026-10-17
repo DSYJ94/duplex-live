@@ -19,6 +19,10 @@ def validate(folder, data, assets, examples, spm, voice):
     if m.get('native_response_boundary'):
         from evals.context_response_boundary import plan
     expected,gold = plan(late,examples)
+    if m.get('native_response_boundary_version')==2:
+        if (m.get('native_future_text_readout_delay_verified') is not True
+                or m.get('native_future_text_readout')!=[0]+gold[0,:-1].tolist()):
+            raise RuntimeError('Response future lost its actual one-frame text-readout evidence')
     expected['gold_targets_created'] = True
     if any(m.get(k) != v for k,v in expected.items() if k != 'schema'):
         raise RuntimeError('Early capture differs from independently revalidated TRAIN plan')

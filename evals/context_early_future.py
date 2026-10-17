@@ -26,6 +26,7 @@ def generate(engine, saved, index, rows, pcm, gold, manifest, out, native_audio=
     inputs, hidden, calls, targets, masks = [], [], [], [], []
     current_targets, provided, real_to_virtual = [], [], []
     generated_audio, audio_packets = [], []
+    readout=[];check_readout=manifest.get('native_response_boundary_version')==2
     def capture(original, route):
         def wrapped(value):
             nonlocal cursor
@@ -74,6 +75,11 @@ def generate(engine, saved, index, rows, pcm, gold, manifest, out, native_audio=
                 chunk = pcm[sample:sample+row['input_samples']]
                 if len(chunk)<1920:chunk=np.pad(chunk,(0,1920-len(chunk)))
                 output=engine.step(chunk)  # Both native codecs and the span-exit readout run normally.
+                if check_readout:
+                    expected=0 if n==0 else int(gold[0,n-1])
+                    if output['text_token']!=expected:
+                        raise RuntimeError('Future returned text does not match the verified one-frame prediction delay')
+                    readout.append(output['text_token'])
                 if native_audio:
                     position=(state.offset-1)%state.cache.shape[2]
                     generated_audio.append(state.cache[:,1:9,position:position+1].detach().cpu().clone())
@@ -135,5 +141,7 @@ def generate(engine, saved, index, rows, pcm, gold, manifest, out, native_audio=
         'future_assistant_audio_tokens_forced':not native_audio,'future_text_tokens_forced':True,
         'teacher_audio_codes_are_reference_only':native_audio,**audio_record,
         'requires_independent_component_audit_before_any_optimizer':True}
+    if check_readout:result.update(native_future_text_readout=readout,
+        native_future_text_readout_delay_verified=True)
     (out/'early-future.json').write_text(json.dumps(result,indent=2)+'\n')
     return result

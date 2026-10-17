@@ -18,15 +18,19 @@ def boundary(rows, text, source_start, source_end, last_user, first_onset):
             or any(abs(r['input_start_s']-i*.08)>1e-7 for i,r in enumerate(rows))):
         raise RuntimeError('No observed EPAD/RET response boundary before all sampled words')
     begin=first-1;end=begin+source_end-source_start;delta=begin-source_start
-    if (source_start<0 or source_end>len(text) or text[source_start]!=0
-            or text[source_start+1]<5 or any(t==4 for t in text)
-            or begin*.08<last_user or first_onset+delta*.08<last_user+.24
+    # Engine readout is one frame behind the newly predicted cache token.
+    # EPAD is already in the exact prefix cache. Replace RET with the first
+    # word at its prediction step; forcing another EPAD here repeats the cue.
+    if (source_start<1 or text[source_start-1]!=0 or text[source_start]<5
+            or any(t==4 for t in text)
+            or begin*.08<last_user or first_onset+(delta+1)*.08<last_user+.24
             or end>len(rows) or end<=begin):
         raise RuntimeError('Complete retimed answer would precede arrived speech or exceed recorded input')
     return begin,end,delta
 
 
 def plan(late,examples):
+    import torch
     from evals.recovery_data import validate_conversion
     if (late.get('target_kind')!='ordinary_answer' or late['world']!={}
             or late['actual_private_receipt'] is not None):
@@ -43,9 +47,15 @@ def plan(late,examples):
     side=json.loads(Path(source['path']).with_suffix('.json').read_text())
     words=[a for a in side['alignments'] if a[2]=='SPEAKER_MAIN']
     rows=[json.loads(l) for l in (history/'events.jsonl').read_text().splitlines()]
-    selection=late['selection'];left,right=selection['source_start_frame'],selection['source_end_frame']
+    selection=late['selection'];left,right=selection['source_start_frame']+1,selection['source_end_frame']
     onset=min(w[1][0] for w in words);last_user=max(w['end_s'] for w in side['user_words'])
     begin,end,delta=boundary(rows,clean[0].tolist(),left,right,last_user,onset)
+    saved=torch.load(history/'student-history.pt',map_location='cpu',weights_only=True)
+    for frame,token in ((begin-1,0),(begin,4)):
+        state=saved['states'][frame];position=(state['offset']-1)%state['cache'].shape[2]
+        if (int(state['cache'][0,0,position])!=token
+                or bool(state['provided'][0,0,position]) or state['pending_exit_cb0'] is not None):
+            raise RuntimeError('Observed boundary must be sampled EPAD then RET in the prediction cache')
     if (clean[:9,left:right]<0).any():raise RuntimeError('Retimed ordinary answer has invalid native targets')
     result={'schema':'dl-context-early-future-plan-v1','target_kind':'ordinary_answer',
         'actual_history':str(history),'actual_history_sha256':record['sha256'],
@@ -56,7 +66,12 @@ def plan(late,examples):
         'source_start_frame':left,'source_end_frame':right,
         'actual_prefix_has_no_reply_or_request_tokens':True,
         'source_first_assistant_measured_onset_s':onset,
-        'target_first_assistant_onset_s':onset+delta*.08,'retiming_offset_frames':delta,
+        'target_first_assistant_onset_s':onset+(delta+1)*.08,'retiming_offset_frames':delta,
+        'native_response_boundary_version':2,'returned_text_delay_frames':1,
+        'source_leading_epad_reused_from_actual_cache':True,
+        'actual_boundary_cache_verified':True,'actual_replaced_prediction_token':4,
+        'target_first_assistant_prediction_frame':begin,
+        'target_first_assistant_readout_frame':begin+1,
         'all_teacher_reply_and_request_tokens_retained':True,
         'user_pcm_and_word_times_retimed':False,'teacher_word_times_retimed':True,
         'measured_word_spacing_retained':True,'native_response_boundary':True,
@@ -66,5 +81,5 @@ def plan(late,examples):
         'future_recorded_receipts':[],'future_receipts_replayed_not_dispatched':False,
         'past_loss_targets':0,'audio_loss_targets':0,'gold_targets_created':False,
         'training_approved':False,'free_running_delegation_qualified':False,
-        'composition':'complete measured TRAIN ordinary reply retimed to observed EPAD/RET speaking boundary; no backend context or altered past'}
+        'composition':'complete measured TRAIN ordinary reply replaces RET at its actual prediction step; existing EPAD reused from exact prefix cache; no backend context or altered past'}
     return result,clean[:9,left:right].clone()

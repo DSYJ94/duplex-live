@@ -11,11 +11,16 @@ class ResponseBoundaryTest(unittest.TestCase):
         self.text=[3]*60+[0,12,3,13,3,3]+[3]*34
 
     def check(self,**kwargs):
-        return boundary(self.rows,self.text,60,66,kwargs.get('last_user',3.6),
+        return boundary(self.rows,self.text,61,66,kwargs.get('last_user',3.6),
                         kwargs.get('first_onset',4.88))
 
     def test_complete_reply_moves_to_observed_cue_with_spacing_retained(self):
-        self.assertEqual(self.check(),(49,55,-11))
+        self.assertEqual(self.check(),(49,54,-12))
+
+    def test_first_word_replaces_ret_prediction_without_repeating_cached_epad(self):
+        # Engine returns text one frame after predicting it. Returned RET50
+        # was predicted at49; EPAD was already predicted at48 and is in cache.
+        self.assertEqual(boundary(self.rows,self.text,61,66,3.6,4.88),(49,54,-12))
 
     def test_no_interruption_of_unfinished_user(self):
         with self.assertRaises(RuntimeError):self.check(last_user=3.9)
@@ -27,6 +32,9 @@ class ResponseBoundaryTest(unittest.TestCase):
     def test_missing_native_speaking_cue_is_rejected(self):
         self.rows[49]['text_token']=3
         with self.assertRaises(RuntimeError):self.check()
+
+    def test_repeating_teacher_epad_instead_of_first_word_is_rejected(self):
+        with self.assertRaises(RuntimeError):boundary(self.rows,self.text,60,66,3.6,4.88)
 
     def test_no_teacher_content_may_be_omitted(self):
         for frame in (30,80):
