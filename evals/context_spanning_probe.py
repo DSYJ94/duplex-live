@@ -5,6 +5,7 @@ The native model samples every output word and audio code; no response wakeup.
 """
 import argparse
 import concurrent.futures
+import hashlib
 from contextlib import contextmanager
 import json
 import os
@@ -53,11 +54,15 @@ def main():
         help='Supply actual request-started/delivery-pending state as a context span; diagnostic')
     ap.add_argument('--math-attention', action='store_true',
         help='Explicit numerical replay diagnostic; use Torch math attention only')
+    ap.add_argument('--persona-profile',choices=('recorded-records','released-default'),default='recorded-records',
+        help='Inference-only comparison with the exact pinned upstream default persona')
     ap.add_argument('--train-history',action='store_true',
         help='Capture actual native conditioning on approved TRAIN stimuli; never supervised past labels')
     ap.add_argument('--layout-audit',type=Path,
         help='Explicit native-layout candidate; require a successful actual input trace')
     args=ap.parse_args()
+    if args.persona_profile!='recorded-records' and args.train_history:
+        ap.error('Persona comparison is inference-only and cannot collect TRAIN histories')
     if args.backend_mode=='observe-only' and (
             not args.train_history or args.expected_kind not in ('simple','clarify') or args.pending_status):
         ap.error('Observe-only requires unapproved TRAIN simple/clarification conditioning without backend state')
@@ -187,7 +192,11 @@ def main():
             'probe_code_sha256':sha256(Path(__file__)),
             'native_run_code_sha256':sha256(Path(__file__).with_name('context_spanning_native.py')),
             'repo_commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()})
-    engine.set_persona(BASE_INSTRUCTIONS,voice)
+    persona=BASE_INSTRUCTIONS
+    if args.persona_profile=='released-default':
+        from contextspan.runtime.default_persona import DEFAULT_PERSONA
+        persona=DEFAULT_PERSONA
+    engine.set_persona(persona,voice)
     if history:
         history.mode='live'
         engine._dl_student_history=history
@@ -197,6 +206,8 @@ def main():
         'model_load_and_prefix_s':time.monotonic()-started,'pickle_globals':unsafe,
         'assets_manifest_sha256':sha256(args.assets),'base_hashes':MODEL_HASHES,
         'voice':args.voice,'voice_codes_shape':list(voice.shape),'input_warmup':warm,'adapter':adapter,'layout':layout,
+        'persona_profile':args.persona_profile,'persona_text':persona,
+        'persona_text_sha256':hashlib.sha256(persona.encode()).hexdigest(),
         'torch':torch.__version__,'torch_file':torch.__file__,'cuda':torch.version.cuda}
     (args.out/'loading.json').write_text(json.dumps(loading,indent=2)+'\n')
     world=RecordWorld({meta['project']:{meta['field']:args.private_value}} if row['kind']!='simple' else {})

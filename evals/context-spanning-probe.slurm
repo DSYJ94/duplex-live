@@ -22,6 +22,7 @@ set -a
 source "$DL/keys/openai.env"
 set +a
 EXTRA=()
+if [ -n "${CONTEXT_PERSONA_PROFILE:-}" ]; then EXTRA+=(--persona-profile "$CONTEXT_PERSONA_PROFILE"); fi
 if [ -n "${CONTEXT_EXPECTED_KIND:-}" ]; then EXTRA+=(--expected-kind "$CONTEXT_EXPECTED_KIND"); fi
 if [ "${CONTEXT_MATH_ATTENTION:-0}" = 1 ]; then EXTRA+=(--math-attention); fi
 if [ "${CONTEXT_BACKEND_MODE:-scheduled}" = native-asr ]; then
