@@ -3,6 +3,17 @@
 
 def approved_words(manifest, side, origin):
     words=[a[0] for a in side['alignments'] if a[2]=='SPEAKER_MAIN']
+    if manifest.get('native_late_private_version')==1:
+        from evals.recovery_prepare_data import spoken_words
+        s=manifest['selection'];left,right=s['source_first_word_index'],s['source_end_word_index']
+        phrase=spoken_words(next(iter(next(iter(manifest['world'].values())).values())))
+        selected=words[left:right]; normalized=spoken_words(' '.join(selected))
+        if (manifest.get('target_kind')!='private_result' or not manifest.get('actual_private_receipt')
+                or manifest.get('conditioning_policy')!='verified-trained-rollout'
+                or manifest['future_recorded_receipts'] or not 0<=left<right<=len(words)
+                or not phrase or sum(normalized[i:i+len(phrase)]==phrase for i in range(len(normalized)))!=1):
+            raise RuntimeError('Late private speech scope must retain its complete measured factual sentence')
+        return selected,'complete_measured_private_sentence_only'
     if manifest.get('target_kind')=='clarification_question':
         from evals.context_clarification_future import question_scope
         count,_=question_scope(origin,manifest['teacher'],side)

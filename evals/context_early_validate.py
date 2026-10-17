@@ -15,12 +15,19 @@ def validate(folder, data, assets, examples, spm, voice):
     m = json.loads((folder/'early-future.json').read_text()); history = Path(m['actual_history'])
     record = json.loads((history/'student-history.json').read_text())
     source = validate_history(history,data,assets,record['source']['repo_commit'])
-    late,_ = late_plan(history,data,examples,spm,early=True,teacher_id=m['teacher']['id'])
-    if m.get('native_response_boundary_version')==3:
+    late_private=m.get('native_late_private_version')==1
+    late,_ = late_plan(history,data,examples,spm,early=not late_private,teacher_id=m['teacher']['id'])
+    if late_private:
+        from evals.context_native_private import plan
+    elif m.get('native_response_boundary_version')==3:
         from evals.context_trained_boundary import plan
     elif m.get('native_response_boundary'):
         from evals.context_response_boundary import plan
     expected,gold = plan(late,examples)
+    if late_private and (m.get('future_audio_conditioning')!='native_sampled'
+            or m.get('native_future_text_readout_delay_verified') is not True
+            or m.get('native_future_text_readout')!=[expected['actual_prefix_last_predicted_text_token']]+gold[0,:-1].tolist()):
+        raise RuntimeError('Late private continuation lost own audio or actual delayed text readout')
     if m.get('native_response_boundary_version') in (2,3):
         if (m.get('native_future_text_readout_delay_verified') is not True
                 or m.get('native_future_text_readout')!=[0]+gold[0,:-1].tolist()):
@@ -40,6 +47,7 @@ def validate(folder, data, assets, examples, spm, voice):
     if not torch.equal(voice,torch.load(folder/'voice.pt',map_location='cpu',weights_only=True)['codes']):
         raise RuntimeError('Early capture voice differs from verified history voice')
     commit = m['builder_commit']; names = {'context_early_future.py','context_early_plan.py','context_engine_replay.py'}
+    if late_private:names.update(('context_native_private.py','context_future_component.py'))
     ordinary = m.get('target_kind') == 'ordinary_answer'
     question = m.get('target_kind') == 'clarification_question'
     if ordinary:names.add('context_ordinary_future.py')
@@ -52,7 +60,7 @@ def validate(folder, data, assets, examples, spm, voice):
         content = subprocess.check_output(['git','show',commit+':evals/'+name],cwd=Path(__file__).resolve().parents[1])
         if hashlib.sha256(content).hexdigest() != digest:raise RuntimeError('Changed early builder code')
     gate_file = folder/'engine-replay-before-future.json'; gate = json.loads(gate_file.read_text())
-    if m.get('native_response_boundary_version')==3 and (gate.get('conditioning_policy')!='verified-trained-rollout'
+    if (late_private or m.get('native_response_boundary_version')==3) and (gate.get('conditioning_policy')!='verified-trained-rollout'
             or gate.get('trained_collector')!=m['trained_collector']):
         raise RuntimeError('Trained first-response correction lost its verified collector identity')
     begin = m['future_first_real_frame']; end = m['future_end_real_frame']; length = end-begin
@@ -174,7 +182,7 @@ def validate(folder, data, assets, examples, spm, voice):
         ordinal = sum(len(spm.encode(w.strip())) for w in words[:left+starts[0]])
     example = next(e for e in examples if e['record'] == m['teacher'])
     source_frame = int((example['clean_codes'][0]>=5).nonzero().flatten()[ordinal])
-    target_frame=begin+source_frame-m['source_start_frame'] if m.get('native_response_boundary') else source_frame
+    target_frame=begin+source_frame-m['source_start_frame'] if m.get('native_response_boundary') or late_private else source_frame
     if not (selection['source_start_frame'] <= source_frame < selection['source_end_frame']
             and begin <= target_frame < end):
         raise RuntimeError('Measured diagnostic content outside approved future sentence')
@@ -187,8 +195,10 @@ def validate(folder, data, assets, examples, spm, voice):
     # The capture's original sparse mask is checked above, not rewritten on disk.
     # Full early continuations must also learn when to stay silent. Only real
     # frames have nonnegative labels; virtual context spans retain -1/no loss.
-    full_mask = labels >= 0
-    if int(full_mask.sum()) != length or full_mask.sum() <= mask.sum():
+    # Matched late-private comparison retains the old sparse text objective.
+    # Changing audio conditioning must not also introduce PAD3 supervision.
+    full_mask = mask if late_private else labels >= 0
+    if not late_private and (int(full_mask.sum()) != length or full_mask.sum() <= mask.sum()):
         raise RuntimeError('Incomplete real-frame silence supervision')
     approved = {**saved, 'text_mask':full_mask}
     result = {'schema':'dl-context-early-future-audit-v2','component':str(folder),'passed':True,
@@ -202,8 +212,9 @@ def validate(folder, data, assets, examples, spm, voice):
         'teacher':m['teacher'],'actual_real_prefix_frames':begin,'real_future_frames':length,
         'virtual_future_frames':total,'text_loss_targets':int(full_mask.sum()),'request_targets':int((gold[0]==4).sum()),
         'source_capture_sparse_mask_targets':int(mask.sum()),
-        'silence_pad3_targets':int((labels==3).sum()),'silence_pad3_loss_weight':.5,
-        'loss_policy':'all independently verified real future text; PAD3 half weight; spans and past excluded',
+        'silence_pad3_targets':int(((labels==3)&full_mask).sum()),'silence_pad3_loss_weight':.5,
+        'loss_policy':('same approved words/EPAD mask as matched late teacher-audio component; no added silence labels' if late_private else
+            'all independently verified real future text; PAD3 half weight; spans and past excluded'),
         'past_loss_targets':0,'span_loss_targets':0,'audio_loss_targets':0,
         'native_assistant_text_component_approved':True,'replayed_future_receipts_not_live_dispatch':not (ordinary or question),
         'whole_model_quality_or_delegation_qualified':False}

@@ -528,3 +528,22 @@ RNG/prediction reload. Actual logged teacher CEs are nonzero for all four kinds
 12/16 runs with some causal-playout underruns. This is not latency or microphone
 acceptance. Source5957 logs are preserved from its authoritative home stdout.
 Its checkpoint,16 native WAVs and two raw histories pass22 further local hashes.
+
+Plain words:teacher-text-retention6462 PASSES520 updates and exact fresh reload,
+but its16 completed native development conversations do not qualify. Ordinary
+lightning adds a false explanation after the correct speed comparison; triangle
+fails despite the correct supplied backend answer. TRAIN clarification retrieves
+brown triangle but then mixes it repeatedly with evaporation. Validation
+clarification6475 drops the required question/lookup. Private replies remain
+contradictory or absent; independent speech6479 is running. Reject this recipe.
+
+Plain words:the next bounded comparison changes future acoustic conditioning
+only for three already verified trained-history private corrections5219/20/21.
+It keeps4806's exact raw prefix4970/71/72, approved teacher sentence, measured
+word spacing, actual prior receipt, user codes, text labels and sparse loss mask.
+Engine.step samples its own future audio while text is forced for TRAIN capture;
+this is not native task success. New independent CPU validation compares labels,
+mask, first input and all user inputs against each original teacher-audio
+component. Past/span/user/audio loss remains zero. Any capture must pass exact
+restart, CPU validation, independent ASR including private words and mathematical
+stream/batch audit before optimization. No added teacher-retention objective.

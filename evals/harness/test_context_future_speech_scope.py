@@ -4,6 +4,16 @@ from evals.harness.test_context_clarification_future import QuestionScopeTests
 
 
 class FutureSpeechScopeTest(unittest.TestCase):
+    def test_late_private_scope_retains_fact_but_excludes_other_teacher_turns(self):
+        side={'alignments':[[w,[i,i+1],'SPEAKER_MAIN'] for i,w in enumerate(['Checking.','It','is','brown','triangle.','Next?'])]}
+        m={'native_late_private_version':1,'target_kind':'private_result',
+            'conditioning_policy':'verified-trained-rollout','actual_private_receipt':{'executed':True},
+            'world':{'Elm':{'label':'brown triangle'}},'future_recorded_receipts':[],
+            'selection':{'source_first_word_index':1,'source_end_word_index':5}}
+        self.assertEqual(approved_words(m,side,{})[0],['It','is','brown','triangle.'])
+        m['selection']['source_end_word_index']=4
+        with self.assertRaises(RuntimeError):approved_words(m,side,{})
+
     def test_partial_question_does_not_claim_the_later_fact(self):
         actual,teacher,side=QuestionScopeTests().scene()
         m={'target_kind':'clarification_question','teacher':teacher,

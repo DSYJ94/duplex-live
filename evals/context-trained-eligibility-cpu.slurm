@@ -22,7 +22,18 @@ run() {
  python -u "$@"
 }
 run -m unittest evals.harness.test_context_decision_loss evals.harness.test_context_training_state \
- evals.harness.test_context_trained_boundary
+ evals.harness.test_context_trained_boundary evals.harness.test_context_native_private
+OPTIONS=()
+if [ "${CONTEXT_NATIVE_PRIVATE_AUDIO:-0}" = 1 ]; then
+ OPTIONS+=(--native-private-audio)
+ for J in 7505219 7505220 7505221; do
+  OPTIONS+=(--regression-capture "$DL/runs/context-training-proof-$J")
+ done
+fi
+for J in ${CONTEXT_NATIVE_PRIVATE_CAPTURE_JOBS:-}; do
+ [[ "$J" =~ ^[0-9]+$ ]]
+ OPTIONS+=(--audit-native-private-capture "$DL/runs/context-training-proof-$J")
+done
 run -m evals.context_trained_eligibility --map "$DL_TRAINED_CAPTURE_MAP" \
  --data "$DL/runs/recovery-data-7407554" --assets "$DL/runs/context-spanning-assets-7454205/manifest.json" \
  --tokenizer "$DL/models/hf-cache/hub/models--nvidia--personaplex-7b-v1/snapshots/fdaf4090a61cb315c138a1faee287ffd6c716309/tokenizer_spm_32k_3.model" \
@@ -32,4 +43,4 @@ run -m evals.context_trained_eligibility --map "$DL_TRAINED_CAPTURE_MAP" \
  --regression-capture "$DL/runs/context-training-proof-7501230" \
  --regression-capture "$DL/runs/context-training-proof-7495655" \
  --regression-capture "$DL/runs/context-training-proof-7504669" \
- --out "$DL/runs/context-trained-eligibility-${SLURM_JOB_ID}"
+ "${OPTIONS[@]}" --out "$DL/runs/context-trained-eligibility-${SLURM_JOB_ID}"

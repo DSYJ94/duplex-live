@@ -96,7 +96,7 @@ def main():
             and not args.actual_cancel_ack):
         ap.error('Trained response correction needs explicit early TRAIN teacher selection and its exact trained collector')
     if args.actual_trained_private_future and not (args.actual_trained_collector and args.actual_future_component
-            and args.actual_teacher_id and not args.actual_early_window and not args.actual_native_audio_future):
+            and args.actual_teacher_id and not args.actual_early_window):
         ap.error('Trained private correction requires explicit late teacher selection and a verified trained collector')
     if args.actual_control_rollin and not (args.actual_trained_collector and args.actual_future_component
             and args.actual_teacher_id and not args.actual_early_window and args.actual_native_audio_future):
@@ -108,7 +108,7 @@ def main():
         ap.error('Decision weighting requires explicit audited mixed-component temporal training')
     if args.actual_teacher_id and not args.actual_future_component:
         ap.error('Explicit teacher selection requires an independently planned future component')
-    if args.actual_native_audio_future and not (args.actual_early_window or args.actual_control_rollin):
+    if args.actual_native_audio_future and not (args.actual_early_window or args.actual_control_rollin or args.actual_trained_private_future):
         ap.error('Native audio conditioning requires the independently gated early future path')
     if (args.resume_training or args.actual_fit_updates != 8) and not args.actual_temporal_fit:
         ap.error('Resume/update budget is specific to the actual temporal trainer')
@@ -261,6 +261,9 @@ def main():
                 if args.actual_trained_private_future and (manifest.get('target_kind')!='private_result'
                         or manifest.get('conditioning_policy')!='verified-trained-rollout'):
                     raise RuntimeError('Trained private correction did not select its independently verified receipt and collector')
+                if args.actual_trained_private_future and args.actual_native_audio_future:
+                    from evals.context_native_private import plan as native_private_plan
+                    manifest,gold=native_private_plan(manifest,examples)
             if args.actual_early_window:
                 if args.actual_trained_response_boundary:
                     from evals.context_trained_boundary import plan as early_plan
@@ -276,7 +279,7 @@ def main():
                 if args.actual_control_rollin:
                     from evals.context_control_rollin import generate as control_generate
                     return control_generate(engine,saved,index,rows,pcm,manifest,args.out)
-                if args.actual_early_window:
+                if args.actual_early_window or manifest.get('native_late_private_version')==1:
                     from evals.context_early_future import generate as early_generate
                     return early_generate(engine,saved,index,rows,pcm,gold,manifest,args.out,
                         native_audio=args.actual_native_audio_future)

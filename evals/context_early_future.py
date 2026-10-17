@@ -26,7 +26,9 @@ def generate(engine, saved, index, rows, pcm, gold, manifest, out, native_audio=
     inputs, hidden, calls, targets, masks = [], [], [], [], []
     current_targets, provided, real_to_virtual = [], [], []
     generated_audio, audio_packets = [], []
-    readout=[];check_readout=manifest.get('native_response_boundary_version') in (2,3)
+    late_private=manifest.get('native_late_private_version')==1
+    if late_private and not native_audio:raise RuntimeError('Late private path requires own sampled audio')
+    readout=[];check_readout=manifest.get('native_response_boundary_version') in (2,3) or late_private
     def capture(original, route):
         def wrapped(value):
             nonlocal cursor
@@ -76,7 +78,7 @@ def generate(engine, saved, index, rows, pcm, gold, manifest, out, native_audio=
                 if len(chunk)<1920:chunk=np.pad(chunk,(0,1920-len(chunk)))
                 output=engine.step(chunk)  # Both native codecs and the span-exit readout run normally.
                 if check_readout:
-                    expected=0 if n==0 else int(gold[0,n-1])
+                    expected=(manifest['actual_prefix_last_predicted_text_token'] if late_private else 0) if n==0 else int(gold[0,n-1])
                     if output['text_token']!=expected:
                         raise RuntimeError('Future returned text does not match the verified one-frame prediction delay')
                     readout.append(output['text_token'])
@@ -126,6 +128,7 @@ def generate(engine, saved, index, rows, pcm, gold, manifest, out, native_audio=
     torch.save(tensors,file)
     history = Path(manifest['actual_history']); record = json.loads((history/'student-history.json').read_text())
     builder_names = ['context_early_future.py','context_early_plan.py','context_engine_replay.py']
+    if late_private:builder_names.extend(['context_native_private.py','context_future_component.py'])
     if manifest.get('target_kind')=='ordinary_answer':builder_names.append('context_ordinary_future.py')
     if manifest.get('native_response_boundary_version')==3:builder_names.append('context_trained_boundary.py')
     elif manifest.get('native_response_boundary'):builder_names.append('context_response_boundary.py')
