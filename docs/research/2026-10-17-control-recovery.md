@@ -301,3 +301,35 @@ Earlier model denials stay conditioning without labels. This teaches a late
 correction; it does not qualify the first acknowledgment or cancellation timing.
 Other trained future generation remains blocked. Capture, an independent
 component audit and a mathematical audit must pass before optimization.
+
+
+Plain words:cancellation CPU7504574 passes. Capture7504669 restarts307 real
+frames exactly on actual TRAIN7503469 with verified collector7503303 and no new
+backend calls, then composes11 future frames of the approved terminal “It's
+cancelled” sentence. Independent CPU7504688 passes all scope, provenance, native
+input, target and collector checks. Six text targets include five word tokens;
+past, user, audio and private-fact labels stay zero. The selected boundary is
+24.56s, after the already observed denial: this teaches a late correction, not
+an earlier truthful first acknowledgment. Mathematical validation and native
+behavior tests are still required; neither replay nor teacher forcing qualifies
+a model.
+
+Plain words:actual7504434 optimizer steps reveal a retention pairing confound.
+With six supervision kinds and four retention references, step-modulo-four
+pairs each kind with only two references. Ordinary updates see only simple and
+cancel; lookup updates see only private and clarify. A regression reproduces
+this exact arithmetic (red), and the explicit per-kind rotation passes13 guard
+checks (green). Default legacy behavior is unchanged, including old checkpoint
+resume; the new schedule is separately selected and bound into recipe metadata.
+This is a falsifiable training hypothesis, not an established cause of the
+native regressions. Compare the same22 data/root/weight/update budget before
+claiming a gain. Separately evaluate late cancellation-acknowledgment supervision
+from the actual3303 collector.
+
+Plain words:runtime sourcef897a7f adds measured immediate log I/O and an explicit
+inference-only deferred mode. The original cold traces have11.05/11.17/11.31s
+between-step pauses despite sub0.05s typical model steps; the cause was not
+measured then. Warmed repeated diagnostics7504674/75/76/77/79/80/81/82 compare
+immediate/deferred writes on unchanged3303 weights and actual-ASR input. Await
+actual write timings before blaming shared storage. No quality qualification
+or runtime improvement is inferred from this instrumentation alone.

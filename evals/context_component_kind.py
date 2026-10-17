@@ -17,3 +17,12 @@ def balanced_index(kinds, step):
     groups={kind:[i for i,k in enumerate(kinds) if k==kind] for kind in sorted(set(kinds))}
     group=groups[sorted(groups)[step%len(groups)]]
     return group[(step//len(groups))%len(group)]
+
+
+def retention_index(kinds,step,count,balanced=False):
+    if not isinstance(count,int) or count<1:raise ValueError('Retention needs a positive reference count')
+    balanced_index(kinds,step)
+    if balanced:
+        cycle,kind_position=divmod(step,len(set(kinds)))
+        return (cycle+kind_position)%count
+    return step%count

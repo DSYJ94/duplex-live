@@ -69,6 +69,7 @@ def run(lm, spm, voice, examples, components, audits, args):
             raise RuntimeError('Actual past accidentally acquired labels')
         batches.append((inputs,mask,target))
     decision=decision_policy(args.actual_response_first_word_weight,response_boundaries)
+    balance_retention=args.actual_retention_sampling=='balanced-kind'
     retention = []
     for kind in ('private','simple','clarify','cancel'):
         e = max((e for e in examples if e['record']['kind']==kind),key=lambda e:e['codes'].shape[-1])
@@ -125,7 +126,10 @@ def run(lm, spm, voice, examples, components, audits, args):
                 'gradient_clip':1.,'retention_kl_weight':1.,'retention_hidden_mse_weight':10.,
                 'text_pad3_loss_weight':.5,
                 **({'response_first_word_loss':decision} if decision else {}),
-                'data_order':('round-robin verified kinds, then examples per kind; retention step modulo four'
+                **({'retention_sampling':{'policy':'rotate all retention examples within each verified kind',
+                    'code_sha256':sha256(Path(__file__).with_name('context_component_kind.py'))}} if balance_retention else {}),
+                'data_order':('round-robin verified kinds, then examples per kind; retention rotates within each kind'
+                    if balance_retention else 'round-robin verified kinds, then examples per kind; retention step modulo four'
                     if args.actual_sampling=='balanced-kind' else 'actual step modulo component count; retention step modulo four'),
                 **({'component_kind_order':component_kinds} if args.actual_sampling=='balanced-kind' else {}),
                 'actual_component_count':len(batches),'past_loss_targets':0,'audio_loss_targets':0,
@@ -216,7 +220,9 @@ def run(lm, spm, voice, examples, components, audits, args):
                 y = target[mask]; weights = text_weights(y,args.actual_response_first_word_weight,response_boundaries[index])
                 ce = (F.cross_entropy(logits,y,reduction='none')*weights).sum()/weights.sum()
                 ce.backward()
-                ri = step%len(retention); inputs,mask,_ = retention[ri]
+                from evals.context_component_kind import retention_index
+                ri=retention_index(component_kinds,step,len(retention),balance_retention)
+                inputs,mask,_ = retention[ri]
                 h,z = forward(inputs); base_h,prob = references[ri]
                 kl = F.kl_div(z[0,0,mask].float().log_softmax(-1),prob,reduction='batchmean')
                 hidden = (h[:,mask].float()-base_h.float()).square().mean()
@@ -235,6 +241,7 @@ def run(lm, spm, voice, examples, components, audits, args):
             row = {'step':step+1,'scenario':audits[index]['scenario'],'component_index':index,
                 'supervision_kind':component_kinds[index],
                 'future_text_ce':float(ce.detach()),'retention_kind':retention[ri][2]['kind'],
+                **({'retention_index':ri} if balance_retention else {}),
                 'retention_kl':float(kl.detach()),'retention_hidden_mse':float(hidden.detach()),
                 'nonzero_A_gradients':a,'nonzero_B_gradients':b,'gradient_norm_before_clip':norm}
             steps.append(row); print(json.dumps(row),flush=True)

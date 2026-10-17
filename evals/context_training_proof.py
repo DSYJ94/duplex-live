@@ -38,6 +38,7 @@ def main():
     ap.add_argument('--actual-early-data', type=Path, action='append')
     ap.add_argument('--actual-mixed-data', type=Path, action='append')
     ap.add_argument('--actual-sampling',choices=('component-order','balanced-kind'),default='component-order')
+    ap.add_argument('--actual-retention-sampling',choices=('legacy-modulo','balanced-kind'),default='legacy-modulo')
     ap.add_argument('--actual-response-first-word-weight',type=float,default=1.)
     ap.add_argument('--actual-temporal-audit', action='store_true')
     ap.add_argument('--actual-temporal-fit', action='store_true')
@@ -68,6 +69,8 @@ def main():
     args = ap.parse_args()
     from evals.context_decision_loss import validate as validate_decision_weight
     validate_decision_weight(args.actual_response_first_word_weight)
+    if args.actual_retention_sampling!='legacy-modulo' and not (args.actual_temporal_fit and args.actual_sampling=='balanced-kind'):
+        ap.error('Per-kind retention coverage requires explicit balanced-kind temporal adaptation')
     if args.actual_trained_collector and not (args.actual_engine_replay and args.actual_recorded_voice
             and args.actual_replay and len(args.actual_replay)==1 and args.actual_source_data and args.actual_source_commit):
         ap.error('Trained replay requires one explicit TRAIN history, source provenance and its exact recorded voice')
