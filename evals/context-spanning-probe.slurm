@@ -22,6 +22,7 @@ set -a
 source "$DL/keys/openai.env"
 set +a
 EXTRA=()
+if [ -n "${CONTEXT_EVENT_LOG_MODE:-}" ]; then EXTRA+=(--event-log-mode "$CONTEXT_EVENT_LOG_MODE"); fi
 if [ -n "${CONTEXT_BACKEND_REFERENCE_PROFILE:-}" ]; then EXTRA+=(--backend-reference-profile "$CONTEXT_BACKEND_REFERENCE_PROFILE"); fi
 if [ -n "${CONTEXT_RET_LOGIT_BIAS:-}" ]; then EXTRA+=(--ret-logit-bias "$CONTEXT_RET_LOGIT_BIAS"); fi
 if [ -n "${CONTEXT_PERSONA_PROFILE:-}" ]; then EXTRA+=(--persona-profile "$CONTEXT_PERSONA_PROFILE"); fi

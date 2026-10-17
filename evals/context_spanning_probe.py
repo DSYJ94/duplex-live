@@ -49,6 +49,7 @@ def main():
     ap.add_argument('--warm-audio',action='store_true')
     ap.add_argument('--ret-logit-bias',type=float,default=0.)
     ap.add_argument('--backend-reference-profile',choices=('answer-only','query-and-result'),default='answer-only')
+    ap.add_argument('--event-log-mode',choices=('immediate','deferred'),default='immediate')
     ap.add_argument('--adapter-proof',type=Path)
     ap.add_argument('--adapter-disabled',action='store_true')
     ap.add_argument('--adapter-zero',action='store_true')
@@ -67,6 +68,8 @@ def main():
     args=ap.parse_args()
     from evals.context_ret_bias import validate as validate_ret_bias
     validate_ret_bias(args.ret_logit_bias)
+    if args.event_log_mode!='immediate' and (args.train_history or args.backend_mode!='native-asr'):
+        ap.error('Deferred event logging is an explicit native-ASR inference diagnostic')
     if args.backend_reference_profile!='answer-only' and args.backend_mode!='native-asr':
         ap.error('Actual query grounding requires native requests and actual arrived-audio recognition')
     if args.ret_logit_bias and (args.train_history or args.backend_mode!='native-asr'):

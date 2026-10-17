@@ -86,6 +86,7 @@ def run(engine,user,world,args,loading):
     from evals.recovery_worker import run_worker,WorkerContractError
     from evals.context_backend_reference import reference as backend_reference
     from evals.audio_playout import render_packets
+    from evals.context_event_log import EventLog
     env=os.environ.copy();env['CUDA_VISIBLE_DEVICES']=args.asr_gpu
     env.pop('OPENAI_API_KEY',None)
     env['PYTHONPATH']=str(Path(__file__).resolve().parents[1])
@@ -121,7 +122,7 @@ def run(engine,user,world,args,loading):
         epoch=time.monotonic()
         with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
             try:
-                with (args.out/'events.jsonl').open('w') as log:
+                with EventLog(args.out/'events.jsonl',args.event_log_mode) as log:
                     for offset in range(0,len(user),engine.frame_size):
                         end=min(len(user),offset+engine.frame_size);due=end/24000
                         time.sleep(max(0,epoch+due-time.monotonic()));before=time.monotonic()-epoch
@@ -254,6 +255,7 @@ def run(engine,user,world,args,loading):
         'word_or_acoustic_tokens_forced':False,'response_start_forced':False,
         'actual_lm_and_pcm_executed_together':True,'playout_is_causal_simulation':True,
         'microphone_acceptance':False,'spoken_value_use_verified':False,'quality_qualified':False,'training_approved':False}
+    report['event_logging']=log.summary()
     if calibration:report['ret_logit_calibration_live_calls_verified']=engine._dl_ret_bias_calls
     if args.backend_reference_profile!='answer-only':
         report['backend_reference_profile']=args.backend_reference_profile
