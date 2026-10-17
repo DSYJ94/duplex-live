@@ -49,6 +49,7 @@ def main():
     ap.add_argument('--actual-teacher-id')
     ap.add_argument('--actual-future-component', action='store_true')
     ap.add_argument('--actual-early-window', action='store_true')
+    ap.add_argument('--actual-native-response-boundary',action='store_true')
     ap.add_argument('--actual-native-audio-future',action='store_true')
     ap.add_argument('--actual-engine-replay', action='store_true')
     ap.add_argument('--actual-recorded-voice', action='store_true')
@@ -82,6 +83,8 @@ def main():
         args.actual_head_data = args.actual_early_data or args.actual_mixed_data
     if args.actual_early_window and not args.actual_future_component:
         ap.error('Early future requires the complete strict native engine component path')
+    if args.actual_native_response_boundary and not (args.actual_early_window and args.actual_future_component and args.actual_teacher_id):
+        ap.error('Response-boundary composition requires explicit early-future teacher selection')
     if args.actual_temporal_fit and (not args.actual_head_data or not args.actual_temporal_preflight
             or args.actual_temporal_audit or args.steps != 8):
         ap.error('Actual temporal fit requires audited components and a passed matching temporal audit')
@@ -205,7 +208,10 @@ def main():
             manifest, gold = plan(args.actual_replay[0], args.actual_source_data, examples, spm,
                 early=args.actual_early_window,teacher_id=args.actual_teacher_id)
             if args.actual_early_window:
-                from evals.context_early_plan import plan as early_plan
+                if args.actual_native_response_boundary:
+                    from evals.context_response_boundary import plan as early_plan
+                else:
+                    from evals.context_early_plan import plan as early_plan
                 manifest,gold = early_plan(manifest,examples)
             (args.out/'actual-future-plan.json').write_text(json.dumps(manifest,indent=2)+'\n')
             cut_index = manifest['replay_cut_index']

@@ -52,6 +52,7 @@ if [ -n "${CONTEXT_ACTUAL_REPLAY_JOBS:-}" ]; then
  if [ "${CONTEXT_ACTUAL_NATIVE_AUDIO_FUTURE:-0}" = 1 ]; then ACTUAL+=(--actual-native-audio-future); fi
  if [ -n "${CONTEXT_ACTUAL_TEACHER_ID:-}" ]; then ACTUAL+=(--actual-teacher-id "$CONTEXT_ACTUAL_TEACHER_ID"); fi
  if [ "${CONTEXT_ACTUAL_EARLY_WINDOW:-0}" = 1 ]; then ACTUAL+=(--actual-early-window); fi
+ if [ "${CONTEXT_ACTUAL_NATIVE_RESPONSE_BOUNDARY:-0}" = 1 ]; then ACTUAL+=(--actual-native-response-boundary); fi
  if [ "${CONTEXT_ACTUAL_FUTURE_COMPONENT:-0}" = 1 ]; then ACTUAL+=(--actual-future-component); fi
  if [ "${CONTEXT_ACTUAL_ENGINE_REPLAY:-0}" = 1 ]; then ACTUAL+=(--actual-engine-replay); fi
  if [ "${CONTEXT_ACTUAL_RECORDED_VOICE:-0}" = 1 ]; then ACTUAL+=(--actual-recorded-voice); fi

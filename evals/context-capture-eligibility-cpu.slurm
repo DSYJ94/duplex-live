@@ -16,6 +16,7 @@ test "$(git -C "$DL_TASK_SOURCE" rev-parse HEAD)" = "$DL_TASK_COMMIT"
 test -z "$(git -C "$DL_TASK_SOURCE" status --porcelain)"
 REGRESSIONS=()
 OPTIONS=()
+if [ "${CONTEXT_ORDINARY_RESPONSE_BOUNDARY:-0}" = 1 ]; then OPTIONS+=(--ordinary-response-boundary); fi
 if [ "${CONTEXT_LATE_DIAGNOSTICS:-0}" = 1 ]; then OPTIONS+=(--late-diagnostics); fi
 for J in ${CONTEXT_REGRESSION_FUTURES:-7467981 7468102 7468611 7479546}; do
  [[ "$J" =~ ^[0-9]+$ ]]

@@ -16,6 +16,8 @@ def validate(folder, data, assets, examples, spm, voice):
     record = json.loads((history/'student-history.json').read_text())
     source = validate_history(history,data,assets,record['source']['repo_commit'])
     late,_ = late_plan(history,data,examples,spm,early=True,teacher_id=m['teacher']['id'])
+    if m.get('native_response_boundary'):
+        from evals.context_response_boundary import plan
     expected,gold = plan(late,examples)
     expected['gold_targets_created'] = True
     if any(m.get(k) != v for k,v in expected.items() if k != 'schema'):
@@ -35,6 +37,7 @@ def validate(folder, data, assets, examples, spm, voice):
     ordinary = m.get('target_kind') == 'ordinary_answer'
     question = m.get('target_kind') == 'clarification_question'
     if ordinary:names.add('context_ordinary_future.py')
+    if m.get('native_response_boundary'):names.add('context_response_boundary.py')
     if question:names.add('context_clarification_future.py')
     if not re.fullmatch('[a-f0-9]{40}',commit) or set(m['builder_code_sha256']) != names:
         raise RuntimeError('Incomplete early builder provenance')
@@ -161,10 +164,11 @@ def validate(folder, data, assets, examples, spm, voice):
         ordinal = sum(len(spm.encode(w.strip())) for w in words[:left+starts[0]])
     example = next(e for e in examples if e['record'] == m['teacher'])
     source_frame = int((example['clean_codes'][0]>=5).nonzero().flatten()[ordinal])
+    target_frame=begin+source_frame-m['source_start_frame'] if m.get('native_response_boundary') else source_frame
     if not (selection['source_start_frame'] <= source_frame < selection['source_end_frame']
-            and begin <= source_frame < end):
+            and begin <= target_frame < end):
         raise RuntimeError('Measured diagnostic content outside approved future sentence')
-    fact_frame = indices[source_frame-begin]
+    fact_frame = indices[target_frame-begin]
     diagnostic = ({'diagnostic_frame':fact_frame,'diagnostic_target':int(saved['text_targets'][fact_frame]),
         'diagnostic_kind':'first_assistant_content','target_kind':m['target_kind'],
         **({'ordinary_answer_without_backend_context':True} if ordinary else

@@ -22,7 +22,13 @@ def main():
     ap.add_argument('--regression-capture',type=Path,action='append',default=[])
     ap.add_argument('--late-diagnostics',action='store_true',
         help='Also plan private sentence corrections after actual delivered history; never approve labels')
+    ap.add_argument('--ordinary-response-boundary',action='store_true',
+        help='Explicitly compose complete ordinary TRAIN replies at observed native response boundaries')
     args = ap.parse_args()
+    if args.ordinary_response_boundary and args.late_diagnostics:
+        ap.error('Ordinary response composition and private late diagnostics are separate modes')
+    if args.ordinary_response_boundary:
+        from evals.context_response_boundary import plan as early_plan
     mapping = json.loads(args.map.read_text())
     if mapping['schema'] != 'dl-context-actual-capture-map-v1' or mapping['training_approved'] is not False:
         raise RuntimeError('Not an unapproved actual capture map')
@@ -68,6 +74,8 @@ def main():
                 raise RuntimeError('Capture protocol differs from the audited zero-wrapper/native-layout replay')
             if case['expected_kind'] not in ('private','clarify','simple'):
                 raise RuntimeError('Cancellation needs separate independently approved action targets')
+            if args.ordinary_response_boundary and case['expected_kind']!='simple':
+                raise RuntimeError('Response-boundary composition requires ordinary TRAIN input')
             if not torch.equal(voice,torch.load(folder/'student-voice.pt',map_location='cpu',weights_only=True)['codes']):
                 raise RuntimeError('Capture uses different accepted voice codes; group separately before fitting')
             selected,_ = fact_plan(folder,args.data,examples,spm,early=True,teacher_id=case['teacher'])
@@ -76,6 +84,7 @@ def main():
             (args.out/name).write_text(json.dumps(plan,indent=2)+'\n')
             item.update(eligible_for_strict_early_capture=True,plan_file=name,
                 plan_sha256=sha256(args.out/name),real_future_frames=plan['future_real_frames'])
+            if args.ordinary_response_boundary:item['ordinary_response_boundary']=True
         except RuntimeError as error:
             item.update(eligible_for_strict_early_capture=False,reason=str(error))
         if args.late_diagnostics and case['expected_kind']=='private':
@@ -92,6 +101,7 @@ def main():
     report = {'schema':'dl-context-capture-eligibility-v1','capture_map_sha256':sha256(args.map),
         'cases':results,'legacy_component_regressions':regressions,'heldout_used':False,
         'training_approved':False,'optimizer_steps':0,'labels_created':False}
+    if args.ordinary_response_boundary:report['ordinary_response_boundary']=True
     (args.out/'eligibility.json').write_text(json.dumps(report,indent=2)+'\n')
     print(json.dumps({'raw_histories':len(results),'eligible_early_futures':sum(
         r['eligible_for_strict_early_capture'] for r in results),'eligible_fact_futures':sum(

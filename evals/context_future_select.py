@@ -13,9 +13,14 @@ def main():
     ap.add_argument('--map',type=Path,required=True)
     ap.add_argument('--index',type=int,required=True)
     ap.add_argument('--late-diagnostic',action='store_true')
+    ap.add_argument('--ordinary-response-boundary',action='store_true')
     args=ap.parse_args()
+    if args.ordinary_response_boundary and args.late_diagnostic:
+        ap.error('Ordinary and private composition modes cannot be combined')
     if sha256(args.eligibility)!=args.sha256:raise RuntimeError('Changed eligibility report')
     report=json.loads(args.eligibility.read_text());mapping=json.loads(args.map.read_text())
+    if bool(report.get('ordinary_response_boundary'))!=args.ordinary_response_boundary:
+        raise RuntimeError('Response-boundary composition requires explicit matching eligibility mode')
     if (report['schema']!='dl-context-capture-eligibility-v1' or report['training_approved'] is not False
             or report['labels_created'] is not False or report['heldout_used'] is not False
             or report['optimizer_steps']!=0 or report['capture_map_sha256']!=sha256(args.map)
@@ -39,6 +44,10 @@ def main():
             or sha256(args.eligibility.parent/row[name])!=row[digest]):
         raise RuntimeError('Future request differs from its validated source/teacher plan')
     plan=json.loads((args.eligibility.parent/row[name]).read_text())
+    if (bool(plan.get('native_response_boundary'))!=args.ordinary_response_boundary
+            or (args.ordinary_response_boundary and
+                (row['kind']!='simple' or row.get('ordinary_response_boundary') is not True))):
+        raise RuntimeError('Future composition policy differs from the approved ordinary plan')
     if (plan['teacher']['id']!=row['teacher'] or plan['training_approved'] is not False
             or plan['actual_history'].split('/')[-1]!='context-spanning-probe-'+row['job']):
         raise RuntimeError('Future source or teacher differs from the reviewed plan')
