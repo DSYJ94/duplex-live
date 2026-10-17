@@ -37,6 +37,20 @@ storage as the cause of the earlier long cold-run pauses. Local backups cover
 all16 rejected22-model native recordings and six raw TRAIN histories. Cloud
 remains paused; the portable launcher integration check uses mocked Docker.
 
+Plain words:latest code81b9269 adds explicitly verified trained-state correction,
+keeping legacy data and replay rules. The520 checkpoint4806 answers evaporation
+and day/night directly in sampled native text but still fails lightning and
+private/control tasks. New TRAIN captures4965–4972 feed CPU5110: eight eligible
+plans, four legacy regressions and11 cluster tests pass. Corrective futures5207,
+5214,5216,5217,5218,5219,5220,5221 all restart exactly and complete; early futures
+verify text readout delay. Speech audit5283 passes all five at the unchanged0.15 bar, including24 hours.
+Audit5317 and dependent warm8 proof5318 are submitted from81b9269. No new optimization is
+approved until independent speech/component/mathematical gates pass. Proposed26
+components retain explicit lookup controls, replace old first-response targets
+with trained-state corrections, and add three trained private corrections plus
+the actual cancel acknowledgment.20-data4893/96's fitted acknowledgment does
+not qualify native behavior; their screen5114–5129 shows lookup regression.
+
 ### Earlier execution notes (latest paragraph and linked research record take precedence)
 
 Plain words:18-component continuation7502015 passes exact reload but FAILS the

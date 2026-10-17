@@ -4068,3 +4068,19 @@ Actual-ASR query anchoring2b8d6f5 in4409/13,4411/15,4412/16,4425/26 also fails;
 context labels become audible and results are contradicted. Independent speech
 7504102 confirms both ordinary component gains and audible factual failures of
 weighted19. No model qualified; cloud remains paused.
+
+
+## 17 October2026 — trained-state recovery and bounded learning curves
+
+Plain words:retention pairing is corrected in d989e20; actual136-stage4434 had
+each of six kinds paired with only two of four references. Matched136/520
+checkpoints4805/4806 restore exactly.520 learns three ordinary first-word
+choices and directly answers evaporation/day-night in sampled native text, but
+private, clarification and cancellation still fail.20-data acknowledgment
+variants4893/4896 also restore and fit their targets but regress native lookup.
+No unchanged extension. New81b9269 plans corrections on the actual520 model's
+TRAIN states: CPU5110 passes eight plans, four legacy regressions and eleven
+cluster tests; eight native replays/future captures5207/5214/5216/5217/5218/5219/
+5220/5221 all pass. Speech5283 passes the five own-speech early captures at the
+unchanged0.15 bar.26-data mathematical audit5317 and dependent eight-update5318
+are submitted; no new model qualification is claimed. Cloud stays paused.

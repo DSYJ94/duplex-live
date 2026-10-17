@@ -363,3 +363,67 @@ resume. A local integration check verifies exact Docker arguments and data-mode
 rejection using a mocked Docker executable; no instance or GPU was created.
 The local Docker daemon is currently stopped, so no new amd64 data-restore result
 is claimed. Isambard training remains the priority and cloud validation is held.
+
+
+Plain words:7504805/06 both restore exactly at136/520 updates. At520 the first
+ordinary target probabilities become0.239/0.893/0.379/0.020, while initial lookup
+probabilities stay0.999. Native4899–4917 confirms direct evaporation/day-night
+answers at520 but wrong lightning, missing or contradicted private results,
+clarification and cancellation. These ordinary successes are sampled-text
+observations pending independent speech checks, not a qualified full model.
+The retention change at136 does not resolve the failures. More fitting improves
+some decisions but does not make teacher-conditioned accuracy native success.
+
+Plain words:20-data136/520 checkpoints7504893/96 restore exactly. The final
+late-acknowledgment fit reaches top-one on all six supervised targets at520,
+but this is not evidence of actual cancellation or truthful free speech. Their
+native screen5114–5129 is running; available results already show private lookup
+collapse, incorrect physics and repetitive speech. Do not extend this recipe
+unchanged. The source-state correction must also preserve positive lookup
+supervision and independently check actual cancellation receipts.
+
+Plain words:source81b9269 adds explicitly scoped trained-state corrections,
+without weakening the original zero-collector/v2 paths. TRAIN-only captures
+4965–4969 observe the520 model on ordinary and clarification audio with backend
+execution disabled. Native-ASR TRAIN private captures4970–4972 use real declared
+orange-square/purple-triangle/orange-triangle worlds. No evaluation input becomes
+training. CPU5110 verifies all eight plans, exact trained checkpoints and user
+PCM, passes four legacy component regressions, and runs eleven real Torch/state
+and boundary tests. Thirty-eight local guard tests also pass. The new first
+response replaces a sampled word or RET at its prediction frame, reuses the
+already cached EPAD, retains measured word spacing and requires a complete
+arrived question. Clarification ends before the later project utterance. Private
+correction still requires a real delivered result, quiet post-result state and
+unchanged source/world. No generated model claim supplies a gold label.
+
+Plain words:trained future captures5207/5214/5216/5217/5218 (ordinary/question)
+and5219/5220/5221 (private) all complete successfully. Exact restart lengths are
+51/40/34/49/30/201/176/146 real frames. All five early captures verify actual
+one-frame text readout; own sampled speech remains forced-text training data.
+The three private captures force approved teacher acoustics for conditioning
+only. Speech auditing is submitted for the five own-speech captures, followed
+by independent component/mathematical approval before any new optimization.
+A potential26-data recipe replaces the old four ordinary/question captures,
+adds three trained private corrections and the cancel acknowledgment, and
+retains all eleven late-private lessons plus explicit positive lookup controls.
+It is not approved or submitted as training yet.
+
+
+Plain words:speech7505283 passes all five trained-prefix early captures at the
+unchanged0.15 word-error bar, with valid word and segment times. WERs are
+0.0357/0/0.0566/0/0.1111. Critical content is preserved: light faster than sound,
+liquid becomes gas, Earth rotation and24 hours, three sides, and a missing-project
+question for the locker label. The lightning rendering substitutes “survive”
+for “travel” once; the question adds a preposition. These remain forced-text
+captures, not native task passes. Proposed selection is saved with speech and
+plan hashes in `context-trained26-selection-20261017.json` on Isambard.
+
+Plain words:26-component audit7505317 and dependent eight-update proof7505318
+are submitted from immutable81b9269, whose fourteen changed file MD5s match local
+source. No optimizer starts unless the full matching mathematical audit passes.
+New-stage weights start from4806, optimizer restarts, first-response word weight16
+now explicitly covers the verified trained clarification boundary as well as
+ordinary boundaries, and retention rotates per kind. Three trained private
+corrections and acknowledgment4669 supplement the retained eleven private
+lessons, three positive lookup prefixes and original cancellation/listening
+controls. Qualification is pending. Cloud remains paused.
