@@ -51,19 +51,31 @@ def plan(late, examples):
             raise RuntimeError('Early prefix unexpectedly contains an already delivered backend span')
         if boundary >= end:continue
         spans.append({'real_frame':boundary,'event':event})
-    private = [s for s in spans if s['event'] == late['actual_private_receipt']]
-    if len(private) != 1 or late['selection']['source_start_frame'] <= private[0]['real_frame']:
-        raise RuntimeError('Approved private sentence would start before its actual delivered context')
-    selected = words[late['selection']['source_first_word_index']:late['selection']['source_end_word_index']]
-    onset = min(w[1][0] for w in selected)
-    delivered = max(private[0]['event']['applied_at_s'],rows[private[0]['real_frame']]['input_available_s'])
-    if not math.isfinite(onset) or onset < delivered+.24:
-        raise RuntimeError('Measured private speech lacks a 240ms margin after the actual receipt')
-    # No marker was consumed in the actual prefix. A target request must still
-    # precede the provided private receipt on this newly composed future clock.
-    requests = (clean[0,begin:private[0]['real_frame']] == 4).nonzero()
-    if not len(requests):
-        raise RuntimeError('No approved future request precedes the actual private receipt')
+    ordinary = late.get('target_kind') == 'ordinary_answer'
+    details = {}
+    if ordinary:
+        if (record['source']['kind'] != 'simple' or late['world'] != {}
+                or late['actual_private_receipt'] is not None or events or spans or (clean[0] == 4).any()):
+            raise RuntimeError('Ordinary future acquired backend context or a private target')
+        details = {'target_kind':'ordinary_answer',
+            'ordinary_plan_code_sha256':late['ordinary_plan_code_sha256'],
+            'ordinary_answer_without_backend_context':True}
+    else:
+        private = [s for s in spans if s['event'] == late['actual_private_receipt']]
+        if len(private) != 1 or late['selection']['source_start_frame'] <= private[0]['real_frame']:
+            raise RuntimeError('Approved private sentence would start before its actual delivered context')
+        selected = words[late['selection']['source_first_word_index']:late['selection']['source_end_word_index']]
+        onset = min(w[1][0] for w in selected)
+        delivered = max(private[0]['event']['applied_at_s'],rows[private[0]['real_frame']]['input_available_s'])
+        if not math.isfinite(onset) or onset < delivered+.24:
+            raise RuntimeError('Measured private speech lacks a 240ms margin after the actual receipt')
+        # A factual target request must precede its actual provided receipt.
+        requests = (clean[0,begin:private[0]['real_frame']] == 4).nonzero()
+        if not len(requests):
+            raise RuntimeError('No approved future request precedes the actual private receipt')
+        details = {'first_private_sentence_source_frame':late['selection']['source_start_frame'],
+            'private_sentence_measured_onset_s':onset,'actual_private_receipt_input_clock_s':delivered,
+            'minimum_private_speech_margin_after_receipt_s':.24}
     result = {'schema':'dl-context-early-future-plan-v1',
         'actual_history':str(history),'actual_history_sha256':record['sha256'],
         'actual_history_manifest_sha256':sha256(history/'student-history.json'),
@@ -77,11 +89,11 @@ def plan(late, examples):
         'all_teacher_reply_and_request_tokens_retained':True,
         'user_pcm_and_word_times_retimed':False,'teacher_word_times_retimed':False,
         'future_user_pcm_is_allowed_to_contain_real_speech':True,
-        'future_recorded_receipts':spans,'future_receipts_replayed_not_dispatched':True,
-        'first_private_sentence_source_frame':late['selection']['source_start_frame'],
-        'private_sentence_measured_onset_s':onset,'actual_private_receipt_input_clock_s':delivered,
-        'minimum_private_speech_margin_after_receipt_s':.24,
+        'future_recorded_receipts':spans,'future_receipts_replayed_not_dispatched':not ordinary,
+        **details,
         'past_loss_targets':0,'audio_loss_targets':0,'gold_targets_created':False,
         'training_approved':False,'free_running_delegation_qualified':False,
         'composition':'actual silent prefix, approved teacher future on original real clock, observed source user PCM and actual receipt boundaries'}
+    if ordinary:
+        result['composition']='actual silent prefix, complete approved ordinary teacher reply on original real clock, observed user PCM, no backend context'
     return result,clean[:9,begin:end].clone()

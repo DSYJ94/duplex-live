@@ -118,10 +118,11 @@ def generate(engine, saved, index, rows, pcm, gold, manifest, out, native_audio=
             'native_audio_samples':len(audio_packets)*1920}
     torch.save(tensors,file)
     history = Path(manifest['actual_history']); record = json.loads((history/'student-history.json').read_text())
+    builder_names = ['context_early_future.py','context_early_plan.py','context_engine_replay.py']
+    if manifest.get('target_kind')=='ordinary_answer':builder_names.append('context_ordinary_future.py')
     result = {**manifest,'schema':'dl-context-early-future-capture-v1','file':file.name,'sha256':sha256(file),
         'builder_commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),
-        'builder_code_sha256':{name:sha256(Path(__file__).with_name(name)) for name in (
-            'context_early_future.py','context_early_plan.py','context_engine_replay.py')},
+        'builder_code_sha256':{name:sha256(Path(__file__).with_name(name)) for name in builder_names},
         'actual_restart_gate_sha256':sha256(gate_file),'voice_codes_sha256':record['source']['voice_codes_sha256'],
         'source_execution':record['execution'],'calls':calls,'real_to_future_virtual':real_to_virtual,
         'applied_recorded_receipts':applied,'virtual_future_frames':cursor,

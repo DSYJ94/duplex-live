@@ -64,8 +64,8 @@ def main():
             if (not adapter or not adapter['zero'] or adapter['disabled']
                     or not loading.get('layout') or loading.get('input_warmup')):
                 raise RuntimeError('Capture protocol differs from the audited zero-wrapper/native-layout replay')
-            if case['expected_kind'] not in ('private','clarify'):
-                raise RuntimeError('This fact-future builder does not approve ordinary/cancellation targets')
+            if case['expected_kind'] not in ('private','clarify','simple'):
+                raise RuntimeError('Cancellation needs separate independently approved action targets')
             if not torch.equal(voice,torch.load(folder/'student-voice.pt',map_location='cpu',weights_only=True)['codes']):
                 raise RuntimeError('Capture uses different accepted voice codes; group separately before fitting')
             selected,_ = fact_plan(folder,args.data,examples,spm,early=True,teacher_id=case['teacher'])
@@ -82,8 +82,9 @@ def main():
         'cases':results,'legacy_component_regressions':regressions,'heldout_used':False,
         'training_approved':False,'optimizer_steps':0,'labels_created':False}
     (args.out/'eligibility.json').write_text(json.dumps(report,indent=2)+'\n')
-    print(json.dumps({'raw_histories':len(results),'eligible_fact_futures':sum(
-        r['eligible_for_strict_early_capture'] for r in results),
+    print(json.dumps({'raw_histories':len(results),'eligible_early_futures':sum(
+        r['eligible_for_strict_early_capture'] for r in results),'eligible_fact_futures':sum(
+        r['eligible_for_strict_early_capture'] and r['kind'] in ('private','clarify') for r in results),
         'legacy_regressions_passed':len(regressions),'training_approved':False}),flush=True)
 
 

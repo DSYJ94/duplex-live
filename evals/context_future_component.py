@@ -15,6 +15,9 @@ def plan(history, data, examples, spm, early=False, teacher_id=None):
     record=json.loads((history/'student-history.json').read_text())
     conversion=validate_conversion(data)
     actual=next(r for r in conversion['accepted'] if r['scenario_id']==record['source']['scenario'])
+    if early and actual['kind']=='simple':
+        from evals.context_ordinary_future import plan as ordinary_plan
+        return ordinary_plan(history,data,examples,spm,teacher_id)
     kinds = ('private','clarify') if early else ('private',)
     if actual['split']!='train' or actual['kind'] not in kinds:
         raise RuntimeError('Actual fact futures require eligible private/clarification TRAIN data')

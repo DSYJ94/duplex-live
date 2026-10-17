@@ -32,6 +32,8 @@ def validate(folder, data, assets, examples, spm, voice):
     if not torch.equal(voice,torch.load(folder/'voice.pt',map_location='cpu',weights_only=True)['codes']):
         raise RuntimeError('Early capture voice differs from verified history voice')
     commit = m['builder_commit']; names = {'context_early_future.py','context_early_plan.py','context_engine_replay.py'}
+    ordinary = m.get('target_kind') == 'ordinary_answer'
+    if ordinary:names.add('context_ordinary_future.py')
     if not re.fullmatch('[a-f0-9]{40}',commit) or set(m['builder_code_sha256']) != names:
         raise RuntimeError('Incomplete early builder provenance')
     for name,digest in m['builder_code_sha256'].items():
@@ -145,17 +147,26 @@ def validate(folder, data, assets, examples, spm, voice):
     words = [a[0] for a in side['alignments'] if a[2] == 'SPEAKER_MAIN']
     selection = late['selection']; left = selection['source_first_word_index']
     sentence = words[left:selection['source_end_word_index']]
-    value = next(iter(next(iter(m['world'].values())).values())); phrase = spoken_words(value)
-    starts = [i for i in range(len(sentence))
-        if spoken_words(' '.join(sentence[i:i+len(phrase)])) == phrase]
-    if not phrase or len(starts) != 1:raise RuntimeError('Ambiguous measured private fact')
-    ordinal = sum(len(spm.encode(w.strip())) for w in words[:left+starts[0]])
+    if ordinary:
+        if m['world'] != {} or m['future_recorded_receipts'] or m['actual_private_receipt'] is not None:
+            raise RuntimeError('Ordinary component acquired a private receipt or backend hint')
+        ordinal = 0
+    else:
+        value = next(iter(next(iter(m['world'].values())).values())); phrase = spoken_words(value)
+        starts = [i for i in range(len(sentence))
+            if spoken_words(' '.join(sentence[i:i+len(phrase)])) == phrase]
+        if not phrase or len(starts) != 1:raise RuntimeError('Ambiguous measured private fact')
+        ordinal = sum(len(spm.encode(w.strip())) for w in words[:left+starts[0]])
     example = next(e for e in examples if e['record'] == m['teacher'])
     source_frame = int((example['clean_codes'][0]>=5).nonzero().flatten()[ordinal])
     if not (selection['source_start_frame'] <= source_frame < selection['source_end_frame']
             and begin <= source_frame < end):
-        raise RuntimeError('Measured private fact outside approved future sentence')
+        raise RuntimeError('Measured diagnostic content outside approved future sentence')
     fact_frame = indices[source_frame-begin]
+    diagnostic = ({'diagnostic_frame':fact_frame,'diagnostic_target':int(saved['text_targets'][fact_frame]),
+        'diagnostic_kind':'first_assistant_content','target_kind':'ordinary_answer',
+        'ordinary_answer_without_backend_context':True} if ordinary else
+        {'first_fact_frame':fact_frame,'first_fact_target':int(saved['text_targets'][fact_frame])})
     # The capture's original sparse mask is checked above, not rewritten on disk.
     # Full early continuations must also learn when to stay silent. Only real
     # frames have nonnegative labels; virtual context spans retain -1/no loss.
@@ -170,13 +181,13 @@ def validate(folder, data, assets, examples, spm, voice):
         'source_execution':m['source_execution'],'builder_commit':m['builder_commit'],
         'future_audio_conditioning':mode,'future_assistant_audio_tokens_forced':not own_audio,
         'scenario':source['scenario'],'world':m['world'],'frames':total,'text_targets':int(full_mask.sum()),
-        'first_fact_frame':fact_frame,'first_fact_target':int(saved['text_targets'][fact_frame]),
+        **diagnostic,
         'teacher':m['teacher'],'actual_real_prefix_frames':begin,'real_future_frames':length,
         'virtual_future_frames':total,'text_loss_targets':int(full_mask.sum()),'request_targets':int((gold[0]==4).sum()),
         'source_capture_sparse_mask_targets':int(mask.sum()),
         'silence_pad3_targets':int((labels==3).sum()),'silence_pad3_loss_weight':.5,
         'loss_policy':'all independently verified real future text; PAD3 half weight; spans and past excluded',
         'past_loss_targets':0,'span_loss_targets':0,'audio_loss_targets':0,
-        'native_assistant_text_component_approved':True,'replayed_future_receipts_not_live_dispatch':True,
+        'native_assistant_text_component_approved':True,'replayed_future_receipts_not_live_dispatch':not ordinary,
         'whole_model_quality_or_delegation_qualified':False}
     return result,approved

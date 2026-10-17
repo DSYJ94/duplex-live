@@ -55,12 +55,17 @@ def audit(lm, folders, components, audits, out):
             logits = bz[0,0]
             nll = torch.nn.functional.cross_entropy(logits[mask],target[mask])
             numerical = max(c['maximum_absolute_error'] for c in comparisons.values()) <= .001
+            ordinary = approval.get('target_kind')=='ordinary_answer'
+            diagnostic_frame,diagnostic_target = ((approval['diagnostic_frame'],approval['diagnostic_target']) if ordinary
+                else (approval['first_fact_frame'],approval['first_fact_target']))
+            probability = float(logits[diagnostic_frame].softmax(-1)[diagnostic_target])
             item = {**approval, 'prefix_conditioning_frames':stop, 'past_loss_targets':0,
                 'already_delayed_inputs_used_without_reapplying_delay':True,
                 'comparisons':comparisons,'causal_prefix_maximum_error':causal_error,
                 'native_bf16_feature_difference_diagnostic_only':float((sh.cpu()-component['hidden'].float()).abs().max()),
                 'zero_adapter_future_text_nll_fp32':float(nll),
-                'first_fact_target_probability_fp32':float(logits[approval['first_fact_frame']].softmax(-1)[approval['first_fact_target']]),
+                **({'first_content_target_probability_fp32':probability} if ordinary
+                   else {'first_fact_target_probability_fp32':probability}),
                 'passed':numerical and causal_error == 0.}
             records.append(item)
             print(json.dumps(item),flush=True)
