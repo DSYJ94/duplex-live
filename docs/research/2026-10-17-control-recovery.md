@@ -699,3 +699,13 @@ ledgers and compares the batched forward in FP32 MATH (threshold0.001). Changing
 the final input must leave every earlier prediction unchanged. It binds actual
 native input tensors, original labels/masks and source hashes; it performs zero
 optimizer steps. No broader supervised optimizer is implemented or submitted yet.
+
+Plain words:the new optional supervised term consumes the independently approved
+native teacher inputs directly, with no second delay. Original four-reference
+KL/hidden retention is unchanged. Explicit four-longest versus all-approved
+coverage keeps the same teacher task kind at each update and cycles distinct
+teachers within that kind; all25 are visited, with130 updates per task kind over
+520 steps. The deterministic global-step schedule matches uninterrupted and
+resumed training in local guards. Positive weight requires complete CPU and
+numerical approvals. Default/legacy objectives remain separate. Both Slurm and
+portable launcher carry the explicit recipe; no cloud GPU test is claimed.

@@ -74,19 +74,24 @@ def run(lm, spm, voice, examples, components, audits, args):
     balance_retention=args.actual_retention_sampling=='balanced-kind'
     retention = [];retention_targets=[];retention_teacher_audits=[]
     teacher_weight=args.actual_retention_teacher_weight
+    native_teacher_mode=bool(getattr(args,'actual_native_teacher_preflight',None));native_teacher_batches=[]
     for kind in ('private','simple','clarify','cancel'):
         e = max((e for e in examples if e['record']['kind']==kind),key=lambda e:e['codes'].shape[-1])
         codes = e['codes'][None].cuda(); initial = lm._get_initial_token()
         inputs = torch.cat([initial,_delay_sequence(lm.delays,codes,initial)],dim=2)[:,:,:-1]
         retention.append((inputs,e['text_mask'].cuda(),e['record']))
-        if teacher_weight:
+        if teacher_weight and not native_teacher_mode:
             from evals.context_retention_teacher import scope as teacher_scope
             labels,mask,checked=teacher_scope(e)
             if not torch.equal(mask,e['text_mask']):raise RuntimeError('Teacher retention changed existing mask')
             retention_targets.append(labels.cuda());retention_teacher_audits.append(checked)
     from evals.context_retention_teacher import policy as teacher_policy,loss as teacher_loss
-    teacher=teacher_policy(teacher_weight,retention_teacher_audits,args.actual_retention_teacher_audit,
-        args.assets,args.out/'voice.pt')
+    if native_teacher_mode:
+        from evals.context_native_teacher_objective import prepare as prepare_native_teacher
+        teacher,native_teacher_batches=prepare_native_teacher(examples,spm,voice,retention,args)
+    else:
+        teacher=teacher_policy(teacher_weight,retention_teacher_audits,args.actual_retention_teacher_audit,
+            args.assets,args.out/'voice.pt')
     def forward(inputs): return lm.forward_codes(inputs)
     def digests():
         result = {}
@@ -238,10 +243,19 @@ def run(lm, spm, voice, examples, components, audits, args):
                 h,z = forward(inputs); base_h,prob = references[ri]
                 kl = F.kl_div(z[0,0,mask].float().log_softmax(-1),prob,reduction='batchmean')
                 hidden = (h[:,mask].float()-base_h.float()).square().mean()
-                supervised=teacher_loss(z[0,0],retention_targets[ri],mask) if teacher else None
+                supervised=teacher_loss(z[0,0],retention_targets[ri],mask) if teacher and not native_teacher_mode else None
+                teacher_target_count=int(mask.sum())
                 regularizer=kl+10.*hidden
-                if teacher:regularizer=regularizer+teacher_weight*supervised
+                if teacher and not native_teacher_mode:regularizer=regularizer+teacher_weight*supervised
                 regularizer.backward()
+                if native_teacher_mode:
+                    from evals.context_native_teacher_objective import teacher_index
+                    ti=teacher_index(component_kinds,step,ri,[b[3]['kind'] for b in native_teacher_batches])
+                    tinputs,tmask,ttarget,trecord=native_teacher_batches[ti]
+                    tz=forward(tinputs)[1][0,0]
+                    supervised=teacher_loss(tz,ttarget,tmask)
+                    teacher_target_count=int(tmask.sum())
+                    (teacher_weight*supervised).backward()
             if not all(torch.isfinite(v) for v in ((ce,kl,hidden,supervised) if teacher else (ce,kl,hidden))):
                 raise RuntimeError('Nonfinite actual or retention loss')
             if any(p.grad is None or not torch.isfinite(p.grad).all() for p in learned.values()):
@@ -259,7 +273,9 @@ def run(lm, spm, voice, examples, components, audits, args):
                 **({'retention_index':ri} if balance_retention else {}),
                 'retention_kl':float(kl.detach()),'retention_hidden_mse':float(hidden.detach()),
                 **({'retention_teacher_text_ce':float(supervised.detach()),
-                    'retention_teacher_text_targets':int(mask.sum())} if teacher else {}),
+                    'retention_teacher_text_targets':teacher_target_count} if teacher else {}),
+                **({'native_teacher_index':ti,'native_teacher_id':trecord['id'],
+                    'native_teacher_kind':trecord['kind']} if native_teacher_mode else {}),
                 'nonzero_A_gradients':a,'nonzero_B_gradients':b,'gradient_norm_before_clip':norm}
             steps.append(row); print(json.dumps(row),flush=True)
         if not seen_a or not seen_b: raise RuntimeError('Dead actual temporal adapter')

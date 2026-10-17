@@ -45,10 +45,19 @@ case "$MODE" in
   if [ -n "${CONTEXT_ACTUAL_SAMPLING:-}" ]; then ARGS+=(--actual-sampling "$CONTEXT_ACTUAL_SAMPLING"); fi
   if [ -n "${CONTEXT_ACTUAL_RETENTION_SAMPLING:-}" ]; then ARGS+=(--actual-retention-sampling "$CONTEXT_ACTUAL_RETENTION_SAMPLING"); fi
   if [ -n "${CONTEXT_ACTUAL_RETENTION_TEACHER_WEIGHT:-}" ]; then
-   : "${CONTEXT_ACTUAL_RETENTION_TEACHER_AUDIT_JOB:?Independent teacher scope audit required}"
-   [[ "$CONTEXT_ACTUAL_RETENTION_TEACHER_AUDIT_JOB" =~ ^[0-9]+$ ]]
-   ARGS+=(--actual-retention-teacher-weight "$CONTEXT_ACTUAL_RETENTION_TEACHER_WEIGHT"
-    --actual-retention-teacher-audit "$ROOT/runs/context-retention-teacher-audit-$CONTEXT_ACTUAL_RETENTION_TEACHER_AUDIT_JOB/report.json")
+   ARGS+=(--actual-retention-teacher-weight "$CONTEXT_ACTUAL_RETENTION_TEACHER_WEIGHT")
+   if [ -n "${CONTEXT_ACTUAL_NATIVE_TEACHER_APPROVAL_JOB:-}" ]; then
+    : "${CONTEXT_ACTUAL_NATIVE_TEACHER_PREFLIGHT_JOB:?Independent native teacher math preflight required}"
+    [[ "$CONTEXT_ACTUAL_NATIVE_TEACHER_APPROVAL_JOB" =~ ^[0-9]+$ && "$CONTEXT_ACTUAL_NATIVE_TEACHER_PREFLIGHT_JOB" =~ ^[0-9]+$ ]]
+    ARGS+=(--actual-native-teacher-approval "$ROOT/runs/context-teacher-native-approval-$CONTEXT_ACTUAL_NATIVE_TEACHER_APPROVAL_JOB/report.json"
+     --actual-native-teacher-scope "$ROOT/runs/context-retention-teacher-audit-7507449/report.json"
+     --actual-native-teacher-preflight "$ROOT/runs/context-training-proof-$CONTEXT_ACTUAL_NATIVE_TEACHER_PREFLIGHT_JOB"
+     --actual-native-teacher-coverage "${CONTEXT_ACTUAL_NATIVE_TEACHER_COVERAGE:-four-longest}")
+   else
+    : "${CONTEXT_ACTUAL_RETENTION_TEACHER_AUDIT_JOB:?Independent teacher scope audit required}"
+    [[ "$CONTEXT_ACTUAL_RETENTION_TEACHER_AUDIT_JOB" =~ ^[0-9]+$ ]]
+    ARGS+=(--actual-retention-teacher-audit "$ROOT/runs/context-retention-teacher-audit-$CONTEXT_ACTUAL_RETENTION_TEACHER_AUDIT_JOB/report.json")
+   fi
   fi
   if [ -n "${CONTEXT_ACTUAL_RESPONSE_FIRST_WORD_WEIGHT:-}" ]; then ARGS+=(--actual-response-first-word-weight "$CONTEXT_ACTUAL_RESPONSE_FIRST_WORD_WEIGHT"); fi
   if [ "$MODE" = resume ]; then

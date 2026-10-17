@@ -45,6 +45,10 @@ def main():
     ap.add_argument('--actual-retention-sampling',choices=('legacy-modulo','balanced-kind'),default='legacy-modulo')
     ap.add_argument('--actual-retention-teacher-weight',type=float,default=0.)
     ap.add_argument('--actual-retention-teacher-audit',type=Path)
+    ap.add_argument('--actual-native-teacher-approval',type=Path)
+    ap.add_argument('--actual-native-teacher-scope',type=Path)
+    ap.add_argument('--actual-native-teacher-preflight',type=Path)
+    ap.add_argument('--actual-native-teacher-coverage',choices=('four-longest','all-approved'),default='four-longest')
     ap.add_argument('--actual-response-first-word-weight',type=float,default=1.)
     ap.add_argument('--actual-temporal-audit', action='store_true')
     ap.add_argument('--actual-temporal-fit', action='store_true')
@@ -90,8 +94,15 @@ def main():
     validate_decision_weight(args.actual_response_first_word_weight)
     from evals.context_retention_teacher import validate_weight as validate_teacher_weight
     validate_teacher_weight(args.actual_retention_teacher_weight)
+    native_teacher=any((args.actual_native_teacher_approval,args.actual_native_teacher_scope,args.actual_native_teacher_preflight))
+    if native_teacher and not (all((args.actual_native_teacher_approval,args.actual_native_teacher_scope,args.actual_native_teacher_preflight))
+            and args.actual_retention_teacher_weight>0 and args.actual_temporal_fit and args.actual_mixed_data
+            and args.actual_retention_sampling=='balanced-kind' and not args.actual_retention_teacher_audit):
+        ap.error('Native teacher supervision requires complete CPU/math approvals, positive weight and balanced mixed training')
+    if args.actual_native_teacher_coverage!='four-longest' and not native_teacher:
+        ap.error('Expanded native teacher coverage requires its explicit approvals')
     if args.actual_retention_teacher_weight and not (args.actual_temporal_fit and args.actual_mixed_data
-            and args.actual_retention_teacher_audit):
+            and (args.actual_retention_teacher_audit or native_teacher)):
         ap.error('Teacher retention needs explicit mixed temporal adaptation and an independent scope audit')
     if args.actual_retention_teacher_audit and not args.actual_retention_teacher_weight:
         ap.error('Teacher retention scope audit requires an explicit positive teacher weight')
