@@ -1,5 +1,43 @@
 # HANDOFF — where we are (updated 2026-10-17 for active recovery)
 
+Plain words:18 October 01:06 Berlin — overnight work authorized without optional user questions.
+No model qualifies. Base-preservation-off9710 completes520/exact reload; all16
+native cases and independent ASR9780 complete.16/16 ASR bounds valid, but audible
+repetition/broken speech is severe (9769WER0.941,9773WER0.971,9778WER0.897).
+Lightning9762 is correct and ASRworderror0; this component gain does not outweigh
+failed ordinary answers, missing cancellations and speech collapse. Both TRAIN
+9769 and validation9777 execute original lookup only, no cancel. All16 WAV hashes
+match local backups; model/state/data/voice hashes pass. Review:
+runs/recovery-continuation-20261016/base-retention-off-native-review.json.
+New verified32-player page: http://localhost:8766/audio/voice-diagnostics/overnight-comparison.html
+compares9080 with9710, unforced native speech with external gpt-6-luna tool choice.
+
+Plain words:new controlled teacher-loss arm sourceca66cda: complete25 teachers,
+same28 data/4806 warm parent/teacherweight1/budget8+512, original base KL+10hidden
+preserved. Only teacher loss changes: half spoken tokens>=5, half clock/control<5,
+PAD3 weight0.5 within clock group, every original mask/target unchanged. Measured
+teacher corpus993/11,425 spoken targets8.69%; this is not proof of cause. New
+policy/source hash enters optimizer metadata; per-step counts/CE/masses recorded.
+Proof7510330 PASSES8/exact fresh reload/optimizer-RNG restoration; four backup
+hashes pass. All4 real Torch balance tests pass (including3 gradient/ownership),
+plus2 existing state guards. Full520 continuation7510331 RUNNING. Gated16 native
+7510338/7510340–7510354 (use receipt), independent ASR7510355. Receipts:
+context-balanced-spoken-{trial,native,speech}-20261018.jsonl. Default loss unchanged.
+
+Plain words:separate zero-update audio-history diagnostic source88ac590 supplies
+approved complete teacher WORDS but samples all agent acoustic tokens. No backend
+or optimizer; recorded teacher contexts/timing, no native reasoning qualification.
+First clarification capture7510411 RUNNING; gated private7510413/simple7510414/
+cancel7510415, independent ASR7510416. Actual text/user ownership and independently
+reconstructed all9 non-agent rows must match; all8 agent provided flags must be
+false. Distinct schema/filenames cannot enter old teacher-data approval. Do not
+train these captures without a separate independent CPU/numerical approval.
+Source MD5s match immutable cluster worktrees for both experiments. Monitor:
+/private/tmp/duplex-overnight-all-progress.py saves complete JSON before filtering.
+Keep cloud paused. Preserve unrelatedpyc/roadmap.html. Optional listening/auth
+questions wait until morning; continue independent work if access fails.
+
+
 Plain words:18 October00:52Berlin — no model qualifies. Matched four-teacher9079
 and all25-teacher9080 both PASS520 updates/exact fresh-process reload, but all32
 unforced native cases9110–9125/9127–9142 and independent ASR9126/9143 are now
