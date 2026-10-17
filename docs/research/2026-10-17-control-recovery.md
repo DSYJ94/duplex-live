@@ -547,3 +547,15 @@ mask, first input and all user inputs against each original teacher-audio
 component. Past/span/user/audio loss remains zero. Any capture must pass exact
 restart, CPU validation, independent ASR including private words and mathematical
 stream/batch audit before optimization. No added teacher-retention objective.
+
+Plain words:own-audio captures6926/6930/6932 PASS exact native replay, returned
+text's one-frame delay and native acoustic ownership. CPU6934 independently
+PASSES all three against original5219/20/21: identical labels/masks, first input,
+all user codes and actual receipt. Text target counts12/23/21 are unchanged.
+Seven legacy regressions pass. Independent speech6936 has word error0/0/0.1,
+valid segment/word bounds and all three private phrases correct: orange square,
+purple triangle, orange triangle. Nine local artifact hashes pass and all three
+WAVs return HTTP200 through viz.listen. These are forced-text TRAIN captures.
+Numerical audit6969 is running; gated proof6976,512-update continuation6978,
+16 unforced native runs6979–6994 and independent speech6995 are submitted. No
+native improvement is established yet. Keep teacher-retention weight0.

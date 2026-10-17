@@ -1,5 +1,24 @@
 # HANDOFF — where we are (updated 2026-10-17 for active recovery)
 
+Plain words:teacher-retention model7506462 PASSES520-update fit/exact reload but
+is REJECTED after16 native development runs and independent speech6479. It
+retains actual TRAIN cancellation but adds repetition; validation clarification
+6475 misses the required project question/lookup. Three speech rows6467/6475/
+6476 have invalid word bounds, and6470/6474/6478 yield no useful speech. Do not
+extend this objective unchanged. Model/state and all16 WAV hashes pass locally.
+
+Plain words:sourceb42a6e4 isolates future audio conditioning for the SAME three
+trained private-answer components5219/20/21, with exact old text targets/masks,
+actual prefix/receipt and all user codes. Nine source MD5s match. Independent CPU
+6900 PASSES three plans, seven legacy regressions and13 real Torch/local guards.
+Captures6926/6930/6932 PASS exact restart/delayed readout. CPU6934 independently
+PASSES same-label/mask/prefix/user comparisons to5219/20/21. Speech6936 PASSES
+word error0/0/0.1, valid timestamps and every private value. Nine local hashes
+and three gallery audio URLs pass. Math6969 is running; gated8-update proof6976,
+512-update continuation6978, native6979–6994 and speech6995 submitted. This is
+forced-text TRAIN preparation, not native success. Comparison retains28 data,
+4806 parent,8+512 budget and5957 objective; teacher-retention weight stays0.
+
 Plain words:latest28-data model7505957 PASSES520-update fit and exact fresh
 reload, but remains UNQUALIFIED after16 completed development runs. Do not
 infer0/16 component success: TRAIN cancellation
@@ -12,7 +31,7 @@ publisher5906 have invalid word timing, so no spoken acceptance from them. Chang
 private5977's ASR hears Copper Dive; correct sampled text is not verified speech.
 No native model is promoted; do not extend5957 unchanged.
 
-Plain words:new sourceb0f1beb tests weight1 supervised teacher text on the SAME
+Plain words:historical sourceb0f1beb tests weight1 supervised teacher text on the SAME
 four retention histories, alongside unchanged KL/hidden retention. Their prior
 loss only preserved base behavior, which is itself unreliable. Default weight0
 is unchanged; explicit positive mode requires independent teacher scope6263.

@@ -4123,3 +4123,14 @@ parent4806, schedule and8+512 budget:6461proof,6462fit,6463–6478native,6479spe
 It tests whether preserving a poor base distribution without teaching these
 approved complete teacher words contributes to failure. It does not establish
 that diagnosis or change the backbone. All data stays TRAIN-only.
+
+
+Plain words:17 October20:28UTC — teacher-retention6462 completes and exact reload
+passes. All16 native development runs6463–6478 plus independent speech6479
+complete. Reject: excessive repetition, wrong answers, missing validation
+clarification6475; actual TRAIN cancellation remains a partial control success.
+Speech6467/6475/6476 has invalid word bounds, so no spoken acceptance there.
+Checkpoint/state and16 native WAVs are locally hash-verified. Sourceb42a6e4's
+next comparison changes only future acoustic conditioning for three approved
+late TRAIN private targets. CPU6900 passes3plans,7legacy regressions and13Torch
+checks. Captures6926/6930/6932, CPUaudit6934 and speech6936 submitted; no optimizer.
