@@ -4332,3 +4332,15 @@ for replay arms. Report cold preparation/warmup separately, require both main/de
 graphs really captured, and retain per-frame/decoder timing plus independent ASR.
 Predictions: depth kernel-launch overhead should fall with graphs; a decoder
 bottleneck would remain visible; backend delay is isolated by the common replay.
+
+Plain words:warmed eager779 and CUDA-graph781 both PASS the same replayed actual
+controller sentence; independent780/782 worderror0 with valid timing. Both use
+the same pinned weights/voice/text/seed, Torch compilation off and MATH attention.
+Eager framep950.206s, decoderp950.0136, model+hostp950.193,44underruns.
+Graphs really capture main+depth: framep950.0300s, decoderp950.00359,
+model+hostp950.0264, zero underruns,3.68s audio in1.851s render wall.
+FirstPCM0.510s is from replayed text availability, not a fresh backend/user request.
+Warmup2.748s and service preparation6.697s remain separate. This supports moving
+to a continuous-listening component probe, not full duplex qualification.
+Streaming-ASR source/model metadata are pinned; all runtime assets already cached,
+but checksum/inference checks remain. No ASR reference words may enter inference.

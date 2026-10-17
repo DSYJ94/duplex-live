@@ -33,3 +33,22 @@ later model trial must pass explicit local weight/config/tokenizer paths to
 speaker embeddings must also use explicit pinned local paths. Keep model loading
 offline after asset retrieval. No runnable TTS system is claimed yet.
 [Pinned wheel release](https://pypi.org/project/moshi/0.2.11/).
+
+Plain words:the continuous-listening candidate is now pinned separately to
+`kyutai/stt-1b-en_fr-candle` revision
+`095e38f6242006a93c2541149b181988397f5c7c`. All four runtime files already exist
+in the Isambard cache: model1,978,522,200bytes, Mimi384,644,900bytes, config and
+8k tokenizer. Cache presence does not establish integrity or inference quality.
+The explicit asset check binds published hashes before loading. Configuration
+has32 input codebooks, no generated audio, zero token delays, four six-class
+extra heads,0.5-second audio delay and no silence prefix. This is a configuration
+delay, not a measured conversation latency.
+[Pinned config](https://huggingface.co/kyutai/stt-1b-en_fr-candle/blob/095e38f6242006a93c2541149b181988397f5c7c/config.json).
+
+Plain words:the pinned upstream STT example reads head2/class0 at threshold0.5
+as an end-of-turn signal. A component probe must retain the raw scores and
+actual input/token availability. Do not copy its timestamp clamping or infer
+exact spoken-word times from its offset formula. Replay only selected approved
+TRAIN user PCM; read measured reference words after recognition for evaluation,
+never as model input. No new ASR training or microphone claim follows.
+[Pinned STT example](https://github.com/kyutai-labs/delayed-streams-modeling/blob/4c4f65e147df056adf3346290d64c7b9649b18c9/scripts/stt_from_file_pytorch.py).
