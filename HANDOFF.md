@@ -1,6 +1,36 @@
 # HANDOFF — where we are (updated 2026-10-17 for active recovery)
 
-## Current execution — 16 October, access restored and native-convention checks
+## Current execution — 17 October, mixed ordinary/private correction
+
+Plain words: active goal is Isambard model improvement and an honest qualification
+result by19 October; recipe freeze17 October12:00Berlin, stop new training
+18 October18:00. Cloud GPU validation remains on hold. No qualified complete
+native model exists. The owner-approved Context Spanning synthetic voice remains
+the candidate; ordinary answering, clarification and cancellation are still gaps.
+
+Plain words: source2e1c352 adds separately gated ordinary-answer futures. Raw
+observations7486102/04/05/06 pass integrity7486128; eligibility7489479 approves
+four exact-user complete teacher replies without backend context. Future array
+7490241 yields7490242/43/44/41. Independent CPU speech7492289 recovers the first
+three explanations (WER0.0357/0/0.0377), but arithmetic7490241 is silent and is
+EXCLUDED. These are forced-text rendering diagnostics, not native task success.
+
+Plain words: mixed16 stage orders the three ordinary futures before the13
+existing own-acoustic private futures7480443/44/45/46/47/49/54/55/63/64/65/66,
+7480417. Zero-update temporal audit7493024 passes all16 (maximum error0.00027275,
+causal-prefix error0). Fresh8-update proof7494393 passes frozen-weight and exact
+prediction/optimizer/RNG reload checks. A bounded128-update continuation is
+submitted; retrieve its concrete ID and native evaluations before calling the
+model improved. Use legacy-epad0 plus native-prelead-epad for approved source
+conversion; future real-frame PAD3 half-weight supervision is independently
+audited.7492288 rejected an incompatible launch convention before updates.
+
+Plain words: previous136-update checkpoints7480819/20 are now backed up locally
+under runs/cloud-export-20261016/tree/runs with adapter and training-state SHA
+matches against report.json. They are preserved baselines, not qualified models.
+Full new logs and audit reports are in runs/recovery-continuation-20261016.
+
+### Earlier execution notes — current statuses above supersede these
 
 
 Plain words: corrective ordinary-answer preparation is now sourcec35f8fb.

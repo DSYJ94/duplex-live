@@ -247,3 +247,16 @@ pass without changed receipt requirements. Eligibility SHA256 is
 The future selector now accepts simple cases only with the distinct
 `ordinary_answer_without_backend_context` plan. This remains capture permission;
 independent future/restart/causality audits must pass before any optimisation.
+
+Plain words: future array7490241 completes all four exact actual-prefix restarts.
+Speech audit7492289 recovers the lightning, evaporation and day/night replies
+with WER0.0357/0/0.0377. Arithmetic7490241 has no signal and is excluded from
+training. This is forced-text acoustic evidence only. Mixed16 temporal audit
+7493024 passes the three ordinary plus13 private own-acoustic futures; maximum
+stream/batch error0.00027275 and causal-prefix error0. Fresh8-update proof7494393
+passes frozen-weight and exact prediction/optimizer/RNG reload checks. A bounded
+128-update continuation is submitted with the identical recipe.7492288 failed
+before updates because an incompatible source-padding flag was supplied; corrected
+conversion is legacy-epad0/native-prelead-epad, while future PAD3 loss stays half
+weight. Both older136-update paired checkpoints7480819/20 have verified local
+adapter/training-state backups. No new native behavior improvement is claimed yet.
