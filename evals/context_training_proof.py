@@ -32,6 +32,9 @@ def main():
     ap.add_argument('--pilot-preflight', type=Path)
     ap.add_argument('--layout-audit', type=Path)
     ap.add_argument('--teacher-audit', type=Path, action='append')
+    ap.add_argument('--teacher-engine-input-audit',type=Path)
+    ap.add_argument('--teacher-engine-input-id')
+    ap.add_argument('--teacher-engine-input-voice',type=Path)
     ap.add_argument('--actual-replay', type=Path, action='append')
     ap.add_argument('--actual-source-data', type=Path)
     ap.add_argument('--actual-head-data', type=Path, action='append')
@@ -72,6 +75,15 @@ def main():
     ap.add_argument('--text-padding', choices=('legacy-epad0','context-pad3'), default='legacy-epad0')
     ap.add_argument('--request-policy', choices=('source-dispatch','native-prelead','native-prelead-epad'), default='source-dispatch')
     args = ap.parse_args()
+    if any((args.teacher_engine_input_audit,args.teacher_engine_input_id,args.teacher_engine_input_voice)):
+        if not all((args.teacher_engine_input_audit,args.teacher_engine_input_id,args.teacher_engine_input_voice)):
+            ap.error('Teacher Engine input audit needs an independent scope, explicit TRAIN identity and exact voice')
+        if (args.reload or args.actual_replay or args.actual_head_data or args.actual_early_data
+                or args.actual_mixed_data or args.actual_temporal_fit or args.actual_temporal_audit
+                or args.teacher_audit or args.pilot_preflight or args.history_audit or args.history_audit_only
+                or args.resume_training or args.warm_start_proof or args.actual_retention_teacher_weight
+                or args.steps!=8 or args.request_policy!='native-prelead-epad'):
+            ap.error('Teacher Engine input audit is a separate zero-update TRAIN-only path')
     from evals.context_decision_loss import validate as validate_decision_weight
     validate_decision_weight(args.actual_response_first_word_weight)
     from evals.context_retention_teacher import validate_weight as validate_teacher_weight
@@ -214,7 +226,14 @@ def main():
     if (provenance['schema'] != 'dl-voice-codec-probe-v1' or provenance['source_model'] != 'gpt-live-1'
             or provenance['reference_sha256'] != sha256(args.voice_reference)):
         raise RuntimeError('Changed accepted synthetic voice provenance')
-    if args.actual_recorded_voice:
+    if args.teacher_engine_input_audit:
+        import shutil
+        scope_report=json.loads(args.teacher_engine_input_audit.read_text())
+        if sha256(args.teacher_engine_input_voice)!=scope_report['voice_sha256']:
+            raise RuntimeError('Teacher Engine audit voice differs from its independent scope')
+        voice=torch.load(args.teacher_engine_input_voice,map_location='cpu',weights_only=True)['codes']
+        shutil.copyfile(args.teacher_engine_input_voice,args.out/'voice.pt')
+    elif args.actual_recorded_voice:
         history = args.actual_replay[0]
         record = json.loads((history / 'student-history.json').read_text())
         voice_file = history / 'student-voice.pt'
@@ -240,6 +259,12 @@ def main():
         with torch.no_grad():
             voice = mimi.encode(torch.as_tensor(x, dtype=torch.float32, device='cuda').reshape(1, 1, -1))[0].long().cpu()
         torch.save({'codes': voice}, args.out / 'voice.pt')
+    if args.teacher_engine_input_audit:
+        prefix=persona_prefix(BASE_INSTRUCTIONS,voice,spm)
+        examples,_=load_training(args.cache,spm,prefix,text_padding=args.text_padding,request_policy=args.request_policy)
+        from evals.context_teacher_engine_inputs import run as audit_teacher_engine
+        audit_teacher_engine(lm,mimi,spm,voice,examples,args)
+        return
     if args.actual_engine_replay:
         from evals.context_engine_replay import run
         cut_index = None; callback = None

@@ -657,3 +657,13 @@ from a proposed25-teacher supervised term, record per-kind teacher exposure and
 exact resume identity, then require a new short proof/native comparison. Existing
 four-teacher optimizer rejects the all-teacher inventory schema;19 related local
 guards pass. No broader optimizer is launched and no compute-gain assumption.
+
+Plain words:the next audit executes complete approved teacher recordings through
+Engine.set_persona, Engine.inject_context_span and Engine.step, including both
+native codecs. Only independently approved teacher text/agent acoustics are
+forced. It compares all consumed17-row inputs against the current prepared
+teacher sequence, separately compares all eight streamed user codec rows, and
+checks every real target's ownership and real/virtual mapping. No optimization
+or new target generation. Native runtime CuDNN-on/MATH settings are explicit;
+eager execution audits integer inputs, not production latency. Initial cases
+cover all four task kinds plus the longest private reference, before the full25.

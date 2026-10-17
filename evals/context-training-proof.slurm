@@ -46,6 +46,17 @@ if [ "${CONTEXT_CODEC_AUDIT:-0}" = 1 ]; then
   --cache "$DL/runs/recovery-mixed-codes-7411513" --out "$DL/runs/context-codec-audit-${SLURM_JOB_ID}"
  exit 0
 fi
+if [ -n "${CONTEXT_TEACHER_ENGINE_INPUT_INDEX:-}" ]; then
+ : "${CONTEXT_TEACHER_SCOPE_JOB:?Independent all-teacher scope required}"
+ [[ "$CONTEXT_TEACHER_ENGINE_INPUT_INDEX" =~ ^[0-9]+$ && "$CONTEXT_TEACHER_SCOPE_JOB" =~ ^[0-9]+$ ]]
+ SCOPE="$DL/runs/context-retention-teacher-audit-$CONTEXT_TEACHER_SCOPE_JOB/report.json"
+ ID=$(python3 -c 'import json,sys; r=json.load(open(sys.argv[1])); assert r["passed"] and r["schema"]=="dl-context-all-teacher-scope-audit-v1"; print(r["teachers"][int(sys.argv[2])]["id"])' "$SCOPE" "$CONTEXT_TEACHER_ENGINE_INPUT_INDEX")
+ run_container -m unittest evals.harness.test_context_teacher_engine_inputs
+ run_container -m evals.context_training_proof "${ARGS[@]}" \
+  --teacher-engine-input-audit "$SCOPE" --teacher-engine-input-id "$ID" \
+  --teacher-engine-input-voice "$DL/runs/context-training-proof-7505957/voice.pt"
+ exit 0
+fi
 if [ -n "${CONTEXT_ACTUAL_REPLAY_JOBS:-}" ]; then
  : "${CONTEXT_ACTUAL_SOURCE_COMMIT:?Actual collector commit required}"
  ACTUAL=()
