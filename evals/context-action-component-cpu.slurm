@@ -18,6 +18,7 @@ test "$(git -C "$DL_TASK_SOURCE" rev-parse HEAD)" = "$DL_TASK_COMMIT"
 test -z "$(git -C "$DL_TASK_SOURCE" status --porcelain)"
 cd "$DL_TASK_SOURCE"
 EXTRA=()
+if [ -n "${CONTEXT_ACTION_KIND:-}" ]; then EXTRA+=(--action-kind "$CONTEXT_ACTION_KIND"); fi
 if [ "${CONTEXT_ACTION_TRAINED_ROLLOUT:-0}" = 1 ]; then EXTRA+=(--conditioning-policy verified-trained-rollout); fi
 apptainer exec --bind /projects,/lus,/home \
  --env PYTHONPATH="$DL/tmp/voice-quality-7415052:$DL/envs/moshi-rag-7379661/lib/python3.12/site-packages:$DL_TASK_SOURCE" \

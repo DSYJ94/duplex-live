@@ -90,7 +90,7 @@ def run(lm, spm, voice, examples, components, audits, args):
                 ce = F.cross_entropy(z,y,reduction='none')
                 results.append({'scenario':audit['scenario'],'nll':float((ce*weights).sum()/weights.sum()),
                     'top1':float((z.argmax(-1)==y).float().mean()),
-                    'non_pad_nll':float(ce[y!=3].mean()),
+                    'non_pad_nll':float(ce[y!=3].mean()) if (y!=3).any() else None,
                     'silence_targets':int((y==3).sum()),
                     'silence_top1':float((z[y==3].argmax(-1)==3).float().mean()) if (y==3).any() else None,
                     'first_supervised_token_target':int(target[pos]),

@@ -9,10 +9,20 @@ import sys
 from evals.moshi_model_download import sha256
 
 
+def planner(kind):
+    if kind=='cancel_request':
+        from evals.context_action_targets import plan
+        return plan,'context_action_targets.py'
+    if kind=='return_to_listening':
+        from evals.context_listen_targets import plan
+        return plan,'context_listen_targets.py'
+    raise RuntimeError('Unknown explicitly approved action kind')
+
+
 def validate(folder,data,assets,examples,spm,voice):
     import torch
-    from evals.context_action_targets import plan
     manifest=json.loads((folder/'action-future.json').read_text())
+    plan,policy_file=planner(manifest['target_kind'])
     policy=manifest.get('conditioning_policy','zero-wrapper')
     expected,component=plan(Path(manifest['actual_history']),data,assets,examples,spm,voice,manifest['teacher']['id'],policy)
     schema='dl-context-action-capture-v2' if policy=='verified-trained-rollout' else 'dl-context-action-capture-v1'
@@ -20,11 +30,11 @@ def validate(folder,data,assets,examples,spm,voice):
             or manifest['schema']!=schema or manifest['file']!='action-future.pt'
             or manifest['sha256']!=sha256(folder/'action-future.pt')):
         raise RuntimeError('Changed or unapproved action component')
-    names={'context_action_targets.py','context_action_component.py'}
+    names={policy_file,'context_action_component.py'}
     if policy=='verified-trained-rollout':names.add('context_rollout_conditioning.py')
     if (set(manifest['builder_code_sha256'])!=names
             or not re.fullmatch('[a-f0-9]{40}',manifest['builder_commit'])
-            or manifest['policy_code_sha256']!=manifest['builder_code_sha256']['context_action_targets.py']):
+            or manifest['policy_code_sha256']!=manifest['builder_code_sha256'][policy_file]):
         raise RuntimeError('Incomplete action builder provenance')
     for name,digest in manifest['builder_code_sha256'].items():
         code=subprocess.check_output(['git','show',manifest['builder_commit']+':evals/'+name],
@@ -35,13 +45,16 @@ def validate(folder,data,assets,examples,spm,voice):
         raise RuntimeError('Action conditioning or independently approved labels changed')
     if not torch.equal(voice,torch.load(folder/'voice.pt',map_location='cpu',weights_only=True)['codes']):
         raise RuntimeError('Action voice changed')
+    diagnostic=2 if manifest['target_kind']=='cancel_request' else 0
     audit={'schema':'dl-context-action-audit-v1','component':str(folder),'passed':True,
         'manifest_sha256':sha256(folder/'action-future.json'),'tensor_sha256':manifest['sha256'],
         'source_history_sha256':expected['source_history_sha256'],
         'voice_codes_sha256':expected['voice_codes_sha256'],'source_execution':expected['source_execution'],
         'builder_commit':manifest['builder_commit'],'scenario':expected['scenario'],
-        'target_kind':'cancel_request','diagnostic_kind':'backend_request',
-        'diagnostic_frame':2,'diagnostic_target':4,'frames':3,'text_targets':3,
+        'target_kind':manifest['target_kind'],
+        'diagnostic_kind':'backend_request' if manifest['target_kind']=='cancel_request' else 'listening_control',
+        'diagnostic_frame':diagnostic,'diagnostic_target':expected['targets'][diagnostic],
+        'frames':len(expected['targets']),'text_targets':int(saved['text_mask'].sum()),
         'past_loss_targets':0,'span_loss_targets':0,'audio_loss_targets':0,'user_loss_targets':0,
         'spoken_acknowledgement_targets':0,'private_fact_targets':0,
         'observed_conditioning_exact':True,'native_action_component_approved':True,
@@ -56,6 +69,7 @@ def main():
     for name in ('history','data','assets','tokenizer','out'):
         ap.add_argument('--'+name,type=Path,required=True)
     ap.add_argument('--teacher-id',required=True)
+    ap.add_argument('--action-kind',choices=('cancel_request','return_to_listening'),default='cancel_request')
     ap.add_argument('--conditioning-policy',choices=('zero-wrapper','verified-trained-rollout'),default='zero-wrapper')
     ap.add_argument('--cache',type=Path,action='append',required=True)
     args=ap.parse_args()
@@ -64,7 +78,7 @@ def main():
     from evals.personaplex_train import MODEL_HASHES
     from evals.lychee_context import BASE_INSTRUCTIONS
     from evals.context_training_data import load_training
-    from evals.context_action_targets import plan
+    plan,policy_file=planner(args.action_kind)
     if sha256(args.tokenizer)!=MODEL_HASHES['tokenizer_spm_32k_3.model']:
         raise RuntimeError('Changed native tokenizer')
     assets=json.loads(args.assets.read_text());sys.path.insert(0,assets['source'])
@@ -76,7 +90,7 @@ def main():
     args.out.mkdir(exist_ok=False)
     torch.save(tensors,args.out/'action-future.pt')
     (args.out/'voice.pt').write_bytes((args.history/'student-voice.pt').read_bytes())
-    names=['context_action_targets.py','context_action_component.py']
+    names=[policy_file,'context_action_component.py']
     trained=args.conditioning_policy=='verified-trained-rollout'
     if trained:names.append('context_rollout_conditioning.py')
     result={**manifest,'schema':'dl-context-action-capture-v2' if trained else 'dl-context-action-capture-v1','file':'action-future.pt',
