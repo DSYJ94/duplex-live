@@ -49,7 +49,7 @@ fi
 if [ -n "${CONTEXT_TEACHER_NATIVE_MATH_APPROVAL_JOB:-}" ]; then
  [[ "$CONTEXT_TEACHER_NATIVE_MATH_APPROVAL_JOB" =~ ^[0-9]+$ ]]
  DIAGNOSTIC=()
- if [ -n "${CONTEXT_TEACHER_NATIVE_MATH_DIAGNOSTIC:-}" ]; then DIAGNOSTIC+=(--teacher-native-math-diagnostic "$CONTEXT_TEACHER_NATIVE_MATH_DIAGNOSTIC"); fi
+ if [ -n "${CONTEXT_TEACHER_NATIVE_MATH_DIAGNOSTIC:-}" ]; then DIAGNOSTIC+=(--teacher-native-math-diagnostic "$CONTEXT_TEACHER_NATIVE_MATH_DIAGNOSTIC" --teacher-native-math-diagnostic-mode "${CONTEXT_TEACHER_NATIVE_MATH_DIAGNOSTIC_MODE:-attention}"); fi
  run_container -m evals.context_training_proof "${ARGS[@]}" \
   --teacher-engine-input-audit "$DL/runs/context-retention-teacher-audit-${CONTEXT_NATIVE_TEACHER_SCOPE_JOB:-7507449}/report.json" \
   --teacher-engine-input-voice "$DL/runs/context-training-proof-7505957/voice.pt" \

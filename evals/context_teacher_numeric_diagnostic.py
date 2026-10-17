@@ -19,13 +19,22 @@ def run(lm,spm,voice,examples,args):
     row=next(r for r in rows if r['teacher']['id']==args.teacher_native_math_diagnostic)
     with torch.random.fork_rng(devices=[torch.cuda.current_device()]):install_adapters(lm,last_layers=4)
     lm.eval().requires_grad_(False);inputs=row['inputs'].cuda();records=[]
-    original=F.scaled_dot_product_attention
+    original=F.scaled_dot_product_attention;linear=F.linear;wide={}
     def double_attention(q,k,v,*a,**kw):
         return original(q.double(),k.double(),v.double(),*a,**kw).to(q.dtype)
+    def double_linear(x,weight,bias=None):
+        key=id(weight)
+        if key not in wide:wide[key]=(weight,weight.double())
+        if wide[key][0] is not weight:raise RuntimeError('Diagnostic weight identity changed')
+        return linear(x.double(),wide[key][1],None if bias is None else bias.double()).to(x.dtype)
     with torch.no_grad(),precise_native(lm):
         execution=snapshot(lm)
-        for mode in ('original-fp32','original-fp32-repeat','fp64-attention-reductions-only'):
-            F.scaled_dot_product_attention=double_attention if mode.startswith('fp64') else original
+        modes=(('original-fp32','original-fp32-repeat','fp64-attention-reductions-only')
+            if args.teacher_native_math_diagnostic_mode=='attention' else
+            ('fp64-linear-reductions-only','fp64-linear-and-attention-reductions'))
+        for mode in modes:
+            F.scaled_dot_product_attention=double_attention if 'attention' in mode else original
+            F.linear=double_linear if 'linear' in mode else linear
             try:
                 pieces=[]
                 with lm.streaming(1):
@@ -47,9 +56,10 @@ def run(lm,spm,voice,examples,args):
                     eligible_targets=int(mask.sum()),streamed_ce=float(F.cross_entropy(s,y)),
                     batched_ce=float(F.cross_entropy(b,y)))
                 records.append(record);print(json.dumps(record),flush=True)
-            finally:F.scaled_dot_product_attention=original
+            finally:
+                F.scaled_dot_product_attention=original;F.linear=linear
     result=dict(schema='dl-context-teacher-numeric-diagnostic-v1',teacher=row['teacher'],
         native_data=manifest,execution=execution,comparisons=records,optimizer_steps=0,
         training_approved=False,quality_qualified=False,
-        scope='one teacher; FP64 attention is diagnostic only; original 0.001 preflight unchanged')
+        scope='one teacher; FP64 reductions are diagnostic only; original 0.001 preflight unchanged')
     (args.out/'teacher-numeric-diagnostic.json').write_text(json.dumps(result,indent=2)+'\n')

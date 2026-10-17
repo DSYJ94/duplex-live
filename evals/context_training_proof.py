@@ -37,6 +37,7 @@ def main():
     ap.add_argument('--teacher-engine-input-voice',type=Path)
     ap.add_argument('--teacher-native-math-audit',type=Path)
     ap.add_argument('--teacher-native-math-diagnostic')
+    ap.add_argument('--teacher-native-math-diagnostic-mode',choices=('attention','linear'),default='attention')
     ap.add_argument('--actual-replay', type=Path, action='append')
     ap.add_argument('--actual-source-data', type=Path)
     ap.add_argument('--actual-head-data', type=Path, action='append')
