@@ -6,8 +6,21 @@ Unlike token-only replay, this executes both codecs in their original order.
 import json
 
 
+def collector_identity(loading,allow_trained=False):
+    if loading.get('ret_logit_calibration'):
+        raise RuntimeError('Calibrated inference is not an approved replay collector')
+    if allow_trained:
+        from evals.context_rollout_conditioning import verify
+        return verify(loading)
+    adapter=loading.get('adapter')
+    if (not adapter or not adapter['zero'] or adapter['disabled']
+            or not loading.get('layout') or loading.get('input_warmup')):
+        raise RuntimeError('Engine replay needs the captured zero-wrapper baseline or explicit verified trained collector')
+    return None
+
+
 def run(lm, mimi, spm, voice, histories, data, assets, source_commit, cut_index=None, on_verified=None,
-        before_reply=False):
+        before_reply=False,allow_trained=False):
     import numpy as np
     import soundfile as sf
     import torch
@@ -25,10 +38,9 @@ def run(lm, mimi, spm, voice, histories, data, assets, source_commit, cut_index=
     check = validate(path, data, assets, source_commit)
     record = json.loads((path/'student-history.json').read_text())
     report = json.loads((path/'report.json').read_text())
-    adapter = report['loading']['adapter']
-    if (not adapter or not adapter['zero'] or adapter['disabled']
-            or not report['loading']['layout'] or report['loading']['input_warmup']):
-        raise RuntimeError('Engine replay needs the captured zero-wrapper native-layout/no-audio-warmup baseline')
+    collector=collector_identity(report['loading'],allow_trained)
+    if collector and record['execution']['math_sdp'] is not True:
+        raise RuntimeError('Trained replay requires the recorded verified MATH execution protocol')
     if not torch.equal(voice, torch.load(path/'student-voice.pt', weights_only=True)['codes']):
         raise RuntimeError('Engine replay voice differs from actual capture')
     if not record.get('execution'):
@@ -37,16 +49,25 @@ def run(lm, mimi, spm, voice, histories, data, assets, source_commit, cut_index=
     torch.backends.cudnn.enabled = record['execution']['cudnn']
     torch.backends.cudnn.deterministic = record['execution']['cudnn_deterministic']
     torch.backends.cudnn.benchmark = record['execution']['cudnn_benchmark']
-    with torch.random.fork_rng(devices=[torch.cuda.current_device()]):
-        install_adapters(lm,last_layers=4)
+    if collector is None:
+        with torch.random.fork_rng(devices=[torch.cuda.current_device()]):
+            install_adapters(lm,last_layers=4)
     lm.eval().requires_grad_(False)
     old_loader = native.load_model
     native.load_model = lambda *a, **kw: (lm, mimi, spm)
     try:
-        engine = native.Engine(device='cuda',temp=.8,temp_text=.7)
+        if collector:
+            from pathlib import Path
+            from evals.context_adapter_load import before_engine
+            with before_engine(native,Path(collector['proof'])) as restored:
+                engine=native.Engine(device='cuda',temp=.8,temp_text=.7)
+            if restored['checkpoint_sha256']!=collector['checkpoint_sha256']:
+                raise RuntimeError('Trained native replay loaded a different collector checkpoint')
+        else:
+            engine = native.Engine(device='cuda',temp=.8,temp_text=.7)
+            install(engine)
     finally:
         native.load_model = old_loader
-    install(engine)
     native.seed_all(42424242)
     engine.reset()
     saved = torch.load(path/'student-history.pt', map_location='cpu', weights_only=True)
@@ -138,6 +159,7 @@ def run(lm, mimi, spm, voice, histories, data, assets, source_commit, cut_index=
         and all(all(s[k] for k in s if k!='real_frame') for s in steps)
         and all(all(n[k]['exact'] for k in ('hidden','text_logits')) for n in numerical))
     result = {'schema':'dl-context-engine-restart-gate-v1','history':str(path),'source':check,
+        **({'conditioning_policy':'verified-trained-rollout','trained_collector':collector} if collector else {}),
         'source_execution':record['execution'],'execution':snapshot(lm),
         'real_frame_boundary':index,'checked_real_frames':len(steps),'steps':steps,
         'cut_scope':'before every sampled reply/request and actual receipt' if before_reply else 'post-result',

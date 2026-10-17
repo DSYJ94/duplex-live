@@ -53,6 +53,7 @@ def main():
     ap.add_argument('--actual-native-response-boundary',action='store_true')
     ap.add_argument('--actual-native-audio-future',action='store_true')
     ap.add_argument('--actual-engine-replay', action='store_true')
+    ap.add_argument('--actual-trained-collector',action='store_true')
     ap.add_argument('--actual-recorded-voice', action='store_true')
     ap.add_argument('--actual-native-priming', action='store_true')
     ap.add_argument('--actual-cold-graphs', action='store_true')
@@ -66,6 +67,11 @@ def main():
     args = ap.parse_args()
     from evals.context_decision_loss import validate as validate_decision_weight
     validate_decision_weight(args.actual_response_first_word_weight)
+    if args.actual_trained_collector and not (args.actual_engine_replay and args.actual_recorded_voice
+            and args.actual_replay and len(args.actual_replay)==1 and args.actual_source_data and args.actual_source_commit):
+        ap.error('Trained replay requires one explicit TRAIN history, source provenance and its exact recorded voice')
+    if args.actual_trained_collector and args.actual_future_component:
+        ap.error('Trained prefix replay is read-only until separately audited future supervision is implemented')
     if args.actual_response_first_word_weight!=1. and not (args.actual_temporal_fit and args.actual_mixed_data):
         ap.error('Decision weighting requires explicit audited mixed-component temporal training')
     if args.actual_teacher_id and not args.actual_future_component:
@@ -229,7 +235,7 @@ def main():
                 return generate(engine,saved,index,rows,pcm,gold,manifest,args.out)
         result = run(lm, mimi, spm, voice, args.actual_replay, args.actual_source_data,
             args.assets, args.actual_source_commit, cut_index=cut_index, on_verified=callback,
-            before_reply=args.actual_early_window)
+            before_reply=args.actual_early_window,allow_trained=args.actual_trained_collector)
         (args.out / 'engine-replay.json').write_text(json.dumps(result, indent=2) + '\n')
         print(json.dumps(result), flush=True)
         if not result['passed']: raise RuntimeError('Full native engine restart failed')
