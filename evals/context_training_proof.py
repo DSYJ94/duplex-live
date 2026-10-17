@@ -37,6 +37,7 @@ def main():
     ap.add_argument('--actual-head-data', type=Path, action='append')
     ap.add_argument('--actual-early-data', type=Path, action='append')
     ap.add_argument('--actual-mixed-data', type=Path, action='append')
+    ap.add_argument('--actual-sampling',choices=('component-order','balanced-kind'),default='component-order')
     ap.add_argument('--actual-temporal-audit', action='store_true')
     ap.add_argument('--actual-temporal-fit', action='store_true')
     ap.add_argument('--actual-temporal-preflight', type=Path)
@@ -67,6 +68,8 @@ def main():
         ap.error('Resume/update budget is specific to the actual temporal trainer')
     if args.actual_fit_updates != 8 and not args.resume_training:
         ap.error('Longer adaptation requires a verified resumed eight-update proof')
+    if args.actual_sampling!='component-order' and not args.actual_temporal_fit:
+        ap.error('Balanced sampling is specific to independently audited temporal adaptation')
     if args.actual_early_data or args.actual_mixed_data:
         if (args.actual_head_data or (args.actual_early_data and args.actual_mixed_data)
                 or not (args.actual_temporal_audit or args.actual_temporal_fit)):

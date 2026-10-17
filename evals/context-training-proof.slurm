@@ -97,6 +97,7 @@ if [ -n "${CONTEXT_ACTUAL_HEAD_JOBS:-}" ]; then
    HEAD+=(--resume-training "$DL/runs/context-training-proof-$CONTEXT_RESUME_TRAINING_JOB/training-state.pt")
   fi
   HEAD+=(--actual-fit-updates "${CONTEXT_ACTUAL_FIT_UPDATES:-8}")
+  HEAD+=(--actual-sampling "${CONTEXT_ACTUAL_SAMPLING:-component-order}")
  fi
  run_container -m evals.context_training_proof "${ARGS[@]}" "${HEAD[@]}"
  run_container -m evals.context_training_proof "${ARGS[@]}" "${HEAD[@]}" --reload

@@ -39,11 +39,12 @@ def run(lm, spm, voice, examples, components, audits, args):
             raise RuntimeError('Changed packaged temporal audit')
     else:
         embedded.write_bytes((pre/'actual-temporal-audit.json').read_bytes())
-    batches = []
+    batches = [];component_kinds=[]
     for folder, component in zip(args.actual_head_data,components):
         from evals.context_component_kind import manifest_name
         name=manifest_name(folder,early=bool(args.actual_early_data),mixed=bool(args.actual_mixed_data))
         m = json.loads((folder/name).read_text()); h = Path(m['actual_history'])
+        component_kinds.append(m.get('target_kind','private_result'))
         record = json.loads((h/'student-history.json').read_text())
         raw = torch.load(h/'student-history.pt',map_location='cpu',weights_only=True)['delayed_inputs']
         live = [c for c in record['calls'] if c['mode']=='live']
@@ -99,7 +100,9 @@ def run(lm, spm, voice, examples, components, audits, args):
             'recipe':{'rank':8,'scaling':2.,'last_layers':4,'lr':1e-5,'weight_decay':0.,
                 'gradient_clip':1.,'retention_kl_weight':1.,'retention_hidden_mse_weight':10.,
                 'text_pad3_loss_weight':.5,
-                'data_order':'actual step modulo component count; retention step modulo four',
+                'data_order':('round-robin verified kinds, then examples per kind; retention step modulo four'
+                    if args.actual_sampling=='balanced-kind' else 'actual step modulo component count; retention step modulo four'),
+                **({'component_kind_order':component_kinds} if args.actual_sampling=='balanced-kind' else {}),
                 'actual_component_count':len(batches),'past_loss_targets':0,'audio_loss_targets':0,
                 'execution':'BF16 batch MATH, no compilation or CUDA graphs'}}
     with no_compile(), no_cuda_graph(), sdpa_kernel(SDPBackend.MATH):
@@ -169,7 +172,9 @@ def run(lm, spm, voice, examples, components, audits, args):
         for local_step in range(args.actual_fit_updates):
             step = initial_step+local_step
             optimizer.zero_grad(set_to_none=True)
-            inputs,mask,target = batches[step%len(batches)]
+            from evals.context_component_kind import balanced_index
+            index=balanced_index(component_kinds,step) if args.actual_sampling=='balanced-kind' else step%len(batches)
+            inputs,mask,target = batches[index]
             with checkpoint_language_layers(lm):
                 logits = forward(inputs)[1][0,0,mask].float()
                 y = target[mask]; weights = torch.where(y==3,.5,1.)
@@ -191,7 +196,8 @@ def run(lm, spm, voice, examples, components, audits, args):
             if not math.isfinite(norm): raise RuntimeError('Nonfinite actual gradient norm')
             optimizer.step()
             save_state(args.out/'training-state.pt',learned,optimizer,step+1,state_metadata(frozen))
-            row = {'step':step+1,'scenario':audits[step%len(batches)]['scenario'],
+            row = {'step':step+1,'scenario':audits[index]['scenario'],'component_index':index,
+                'supervision_kind':component_kinds[index],
                 'future_text_ce':float(ce.detach()),'retention_kind':retention[ri][2]['kind'],
                 'retention_kl':float(kl.detach()),'retention_hidden_mse':float(hidden.detach()),
                 'nonzero_A_gradients':a,'nonzero_B_gradients':b,'gradient_norm_before_clip':norm}
