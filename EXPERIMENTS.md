@@ -4025,3 +4025,19 @@ Quiet selection now derives packets from hash-verified model.wav and requires
 complete ledger/gap/sample/clock accounting; it does not trust an unhashed
 packet-stream side file. Eleven related local guards pass. GPU cut/replay and
 forced-future ownership validation follow; no optimizer has used these plans.
+
+## 17 October 2026 — rejected duplicate-cue boundary experiment
+
+Plain words: new response-boundary source05d7b28 passed CPU plans7502645,
+native captures and speech for three replies7502654/55/56, mathematical
+checks7502672 and eight-update reload7502676. It is nevertheless REJECTED:
+the returned text lags prediction by one frame, so it repeats an EPAD control
+already present in the actual cache. No continuation is submitted. Saved
+native states prove this exact delay in three TRAIN traces. Corrected
+source787410a directly substitutes the first answer word for the RET prediction;
+selectorbd70fc8 rejects old versions and changed planner hashes. CPU7502998
+passes four corrected plans and four legacy regressions; all25 guard tests
+pass, including regressions that failed before these fixes. Native capture,
+speech and mathematical checks are still required. This fixes the new
+composition's clock; it does not establish a cause or cure for all earlier
+conversation failures.

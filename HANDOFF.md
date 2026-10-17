@@ -6,10 +6,13 @@ Plain words:18-component continuation7502015 passes exact reload but FAILS the
 completed native development checks7502018–29. Private values sometimes appear
 in sampled text; ordinary explanations, clarification and cancellation still
 fail. Do not extend this recipe unchanged. Speech audit7502649 independently
-checks four native recordings. Source05d7b28 explicitly tests complete approved
-ordinary answers at observed response cues, with unchanged user audio and actual
-past. CPU eligibility7502645 passes all four plans and four legacy regressions;
-native capture, speech approval and mathematical audit remain necessary. No
+checks four native recordings. The first response-boundary experiment is
+REJECTED:7502672/7502676 pass numerical/reload checks but repeat a cached EPAD
+because native returned text lags its prediction by one frame. No continuation.
+Corrected source787410a reuses the actual cached EPAD and directly replaces RET
+with the first answer word; CPU7502998 checks that cache and legacy regressions.
+Selectorbd70fc8 rejects stale policy versions/hashes. Native capture, independent
+speech approval and mathematical audit remain necessary. No
 qualified model exists. Cloud remains paused; delivery19 October and training
 cutoff18 October18:00Berlin remain unchanged.
 

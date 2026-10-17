@@ -167,3 +167,35 @@ pass. CPU7502645 approves all four plans and four legacy private regressions;
 eligibility SHA91775c9474ae01f9b3492371da8c54d1d6d8bafd4d63b7baa8d24188ff91ce58.
 Native own-audio capture, independent transcription and mathematical checks are
 still required before any optimizer sees these components.
+
+## Rejected first boundary plan; verified prediction/readout correction
+
+Plain words: the first response-boundary experiment is REJECTED despite passing
+its mathematical audit7502672 (18 components, maximum error0.0001139641) and
+exact eight-update reload7502676. The engine returns text one frame after
+predicting it. The plan used the returned EPAD/RET rows to select the prediction
+step, but then repeated EPAD even though it was already in the exact prefix
+cache. This is a bug in the new boundary composition, not proof of the cause of
+all earlier failures. No continuation of7502676 is submitted or permitted for
+adoption. Captures7502654/55/56 remain historical evidence only. Triangle7502653
+also rendered Ice instead of Three and was excluded before that proof.
+
+Plain words: saved native states establish the clock exactly in three original
+TRAIN traces7486102/04/05. Their RET readout frames50/40/35 were predicted at
+49/39/34, after EPAD was already sampled at48/38/33. At the RET prediction step,
+EPAD probability is3.70e-9/8.79e-10/4.51e-8; RET probability is
+0.99843/0.99987/0.99909. Exact cache identities, rather than sampler probabilities,
+prove the one-frame delay. This rules out sampling chance or batched numerical
+error as an explanation of that alignment discrepancy.
+
+Plain words: source787410a uses the teacher's first word at that actual RET
+prediction step, reuses the preceding EPAD from the verified actual cache, and
+records prediction and readout clocks separately. Every returned future text
+token must equal the previous forced prediction; capture and independent
+validation both enforce this identity. The full teacher reply remains retained,
+and user audio/past remain unchanged. The regression failed before the fix and
+passes afterwards. Selectorbd70fc8 also rejects old policy versions or changed
+planner hashes, preventing an old CPU approval from silently selecting a new
+composition. All25 timing, selector and ordinary/clarification guard tests pass.
+CPU7502998 independently replans the four corrected candidates and reruns the
+four existing private regressions. These checks do not establish native quality.
