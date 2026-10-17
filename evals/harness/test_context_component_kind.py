@@ -15,6 +15,10 @@ class MixedComponentScope(unittest.TestCase):
             with self.assertRaises(RuntimeError):manifest_name(root,mixed=True)
             (root/'early-future.json').unlink()
             self.assertEqual(manifest_name(root,mixed=True),'actual-future.json')
+            (root/'action-future.json').touch()
+            with self.assertRaises(RuntimeError):manifest_name(root,mixed=True)
+            (root/'actual-future.json').unlink()
+            self.assertEqual(manifest_name(root,mixed=True),'action-future.json')
 
     def test_existing_explicit_modes_do_not_change(self):
         self.assertEqual(manifest_name(Path('/not-read'),early=True),'early-future.json')

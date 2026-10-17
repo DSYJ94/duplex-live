@@ -15,7 +15,8 @@ def audit(lm, folders, components, audits, out):
     with torch.no_grad(), precise_native(lm):
         for folder, component, approval in zip(folders,components,audits):
             early = (folder/'early-future.json').exists()
-            manifest = json.loads((folder/('early-future.json' if early else 'actual-future.json')).read_text())
+            from evals.context_component_kind import manifest_name
+            manifest = json.loads((folder/manifest_name(folder,mixed=True)).read_text())
             history = Path(manifest['actual_history'])
             record = json.loads((history/'student-history.json').read_text())
             raw = torch.load(history/'student-history.pt',map_location='cpu',weights_only=True)['delayed_inputs']
@@ -55,17 +56,18 @@ def audit(lm, folders, components, audits, out):
             logits = bz[0,0]
             nll = torch.nn.functional.cross_entropy(logits[mask],target[mask])
             numerical = max(c['maximum_absolute_error'] for c in comparisons.values()) <= .001
-            ordinary = approval.get('target_kind')=='ordinary_answer'
-            diagnostic_frame,diagnostic_target = ((approval['diagnostic_frame'],approval['diagnostic_target']) if ordinary
+            nonfact = 'diagnostic_frame' in approval
+            diagnostic_frame,diagnostic_target = ((approval['diagnostic_frame'],approval['diagnostic_target']) if nonfact
                 else (approval['first_fact_frame'],approval['first_fact_target']))
+            probability_name=('request_target_probability_fp32' if approval.get('diagnostic_kind')=='backend_request'
+                else 'first_content_target_probability_fp32' if nonfact else 'first_fact_target_probability_fp32')
             probability = float(logits[diagnostic_frame].softmax(-1)[diagnostic_target])
             item = {**approval, 'prefix_conditioning_frames':stop, 'past_loss_targets':0,
                 'already_delayed_inputs_used_without_reapplying_delay':True,
                 'comparisons':comparisons,'causal_prefix_maximum_error':causal_error,
                 'native_bf16_feature_difference_diagnostic_only':float((sh.cpu()-component['hidden'].float()).abs().max()),
                 'zero_adapter_future_text_nll_fp32':float(nll),
-                **({'first_content_target_probability_fp32':probability} if ordinary
-                   else {'first_fact_target_probability_fp32':probability}),
+                probability_name:probability,
                 'passed':numerical and causal_error == 0.}
             records.append(item)
             print(json.dumps(item),flush=True)

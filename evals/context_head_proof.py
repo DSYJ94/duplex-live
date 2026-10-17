@@ -19,7 +19,10 @@ def run(lm, spm, voice, examples, args):
     for folder in args.actual_head_data:
         from evals.context_component_kind import manifest_name
         name=manifest_name(folder,early=bool(args.actual_early_data),mixed=bool(args.actual_mixed_data))
-        if name=='early-future.json':
+        if name=='action-future.json':
+            from evals.context_action_component import validate as validate_action
+            audit,component=validate_action(folder,args.actual_source_data,args.assets,examples,spm,voice)
+        elif name=='early-future.json':
             from evals.context_early_validate import validate as validate_early
             audit, component = validate_early(folder,args.actual_source_data,args.assets,examples,spm,voice)
         else:
