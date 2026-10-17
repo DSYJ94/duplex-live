@@ -256,7 +256,11 @@ def run(lm, spm, voice, examples, components, audits, args):
                     ti=teacher_index(component_kinds,step,ri,[b[3]['kind'] for b in native_teacher_batches])
                     tinputs,tmask,ttarget,trecord=native_teacher_batches[ti]
                     tz=forward(tinputs)[1][0,0]
-                    supervised=teacher_loss(tz,ttarget,tmask)
+                    teacher_breakdown=None
+                    if args.actual_native_teacher_loss=='balanced-spoken':
+                        from evals.context_teacher_text_balance import loss as balanced_teacher_loss
+                        supervised,teacher_breakdown=balanced_teacher_loss(tz,ttarget,tmask)
+                    else:supervised=teacher_loss(tz,ttarget,tmask)
                     teacher_target_count=int(tmask.sum())
                     (teacher_weight*supervised).backward()
             if not all(torch.isfinite(v) for v in ((ce,kl,hidden,supervised) if teacher else (ce,kl,hidden))):
@@ -279,6 +283,8 @@ def run(lm, spm, voice, examples, components, audits, args):
                     'retention_teacher_text_targets':teacher_target_count} if teacher else {}),
                 **({'native_teacher_index':ti,'native_teacher_id':trecord['id'],
                     'native_teacher_kind':trecord['kind']} if native_teacher_mode else {}),
+                **({'native_teacher_loss_breakdown':teacher_breakdown}
+                    if native_teacher_mode and teacher_breakdown is not None else {}),
                 'nonzero_A_gradients':a,'nonzero_B_gradients':b,'gradient_norm_before_clip':norm}
             steps.append(row); print(json.dumps(row),flush=True)
         if not seen_a or not seen_b: raise RuntimeError('Dead actual temporal adapter')

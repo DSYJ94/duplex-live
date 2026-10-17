@@ -73,5 +73,12 @@ def prepare(examples,spm,voice,retention,args):
         **({'base_retention_weight':args.actual_base_retention_weight} if args.actual_base_retention_weight!=1. else {}),
         assistant_acoustics='approved teacher conditioning; no audio loss',
         prefix_loss_targets=0,span_loss_targets=0,user_loss_targets=0,audio_loss_targets=0)
+    if args.actual_native_teacher_loss!='legacy':
+        from evals.context_teacher_text_balance import validate
+        validate(args.actual_native_teacher_loss,True,args.actual_native_teacher_coverage)
+        policy['text_loss']=dict(mode=args.actual_native_teacher_loss,spoken_weight_mass=.5,
+            clock_control_weight_mass=.5,pad3_within_clock_weight=.5,
+            code_sha256=sha256(Path(__file__).with_name('context_teacher_text_balance.py')),
+            target_ownership_and_native_inputs_unchanged=True)
     batches=[(row['inputs'].cuda(),row['mask'].cuda(),row['targets'].cuda(),row['teacher']) for row in selected]
     return policy,batches

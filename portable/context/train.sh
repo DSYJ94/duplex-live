@@ -45,6 +45,10 @@ case "$MODE" in
   if [ -n "${CONTEXT_ACTUAL_SAMPLING:-}" ]; then ARGS+=(--actual-sampling "$CONTEXT_ACTUAL_SAMPLING"); fi
   if [ -n "${CONTEXT_ACTUAL_RETENTION_SAMPLING:-}" ]; then ARGS+=(--actual-retention-sampling "$CONTEXT_ACTUAL_RETENTION_SAMPLING"); fi
   if [ -n "${CONTEXT_ACTUAL_BASE_RETENTION_WEIGHT:-}" ]; then ARGS+=(--actual-base-retention-weight "$CONTEXT_ACTUAL_BASE_RETENTION_WEIGHT"); fi
+  if [ -n "${CONTEXT_ACTUAL_NATIVE_TEACHER_LOSS:-}" ]; then
+   python -m unittest evals.harness.test_context_teacher_text_balance
+   ARGS+=(--actual-native-teacher-loss "$CONTEXT_ACTUAL_NATIVE_TEACHER_LOSS")
+  fi
   if [ -n "${CONTEXT_ACTUAL_RETENTION_TEACHER_WEIGHT:-}" ]; then
    ARGS+=(--actual-retention-teacher-weight "$CONTEXT_ACTUAL_RETENTION_TEACHER_WEIGHT")
    if [ -n "${CONTEXT_ACTUAL_NATIVE_TEACHER_APPROVAL_JOB:-}" ]; then

@@ -4197,3 +4197,30 @@ weights become0.11 local guards pass. Proof9708 PASSES8/exactreload and state
 restore, four local hashes pass.520-fit9710 running,16 native cases9762/9765–79
 and independent ASR9780 gated. All in workq; bounded interactive wrapper1b5c854
 was prepared/checksummed but unused because original proof started normally.
+
+
+## 2026-10-18 — Spoken teacher supervision comparison prepared
+
+Plain words:base-retention-off9710 completes520 updates and exact fresh-process
+reload/optimizer-RNG restoration; checkpoint/state/data/voice hashes match local
+backup. All16 unforced native cases9762/9765–9779 complete. Model text has a
+correct lightning explanation9762 and more retrieved values, but collapses into
+repeated "cancelled" on several cases and only "because" on both validation
+ordinary questions9774/9775. ASR9780 remains pending; these are generated-text
+observations until independent recognition. No qualification or unchanged extension.
+
+Plain words:the approved25 TRAIN teachers contain993 spoken text targets among
+11,425 eligible real-frame text targets (8.69%). This is measured coverage, not
+proof of the cause. New opt-in balanced-spoken native teacher loss assigns half
+the teacher objective to spoken tokens>=5, half to clock/control tokens<5, retaining
+PAD3 weight0.5 within its group. Every original label, mask and input is unchanged;
+no prefix/span/user/audio loss. Default legacy loss is unchanged. Policy/source
+hash enters portable optimizer metadata; each step records both group CEs/counts
+and legacy versus balanced spoken weight mass. Complete native CPU/math approval
+and all25 coverage are required. Proposed matched arm retains original base KL+
+10xhidden preservation, same28 data/4806 parent, teacherweight1 and8+512 updates,
+compared with9080. It tests signal dilution without adopting unstable9710.
+Seven local pure-policy guards and Python/shell syntax pass; three real Torch
+gradient/ownership guards must pass in the cluster proof before any model update.
+Teacher-forced versus own-speech history and narrow1clarify/1cancel supervision
+remain competing explanations. No claimed reasoning or microphone improvement.

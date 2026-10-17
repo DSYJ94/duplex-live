@@ -137,6 +137,10 @@ if [ -n "${CONTEXT_ACTUAL_HEAD_JOBS:-}" ]; then
   HEAD+=(--actual-sampling "${CONTEXT_ACTUAL_SAMPLING:-component-order}")
   HEAD+=(--actual-retention-sampling "${CONTEXT_ACTUAL_RETENTION_SAMPLING:-legacy-modulo}")
   if [ -n "${CONTEXT_ACTUAL_BASE_RETENTION_WEIGHT:-}" ]; then HEAD+=(--actual-base-retention-weight "$CONTEXT_ACTUAL_BASE_RETENTION_WEIGHT"); fi
+  if [ -n "${CONTEXT_ACTUAL_NATIVE_TEACHER_LOSS:-}" ]; then
+   run_container -m unittest evals.harness.test_context_teacher_text_balance
+   HEAD+=(--actual-native-teacher-loss "$CONTEXT_ACTUAL_NATIVE_TEACHER_LOSS")
+  fi
   if [ -n "${CONTEXT_ACTUAL_RETENTION_TEACHER_WEIGHT:-}" ]; then
    HEAD+=(--actual-retention-teacher-weight "$CONTEXT_ACTUAL_RETENTION_TEACHER_WEIGHT")
    if [ -n "${CONTEXT_ACTUAL_NATIVE_TEACHER_APPROVAL_JOB:-}" ]; then
