@@ -586,3 +586,33 @@ retrieves full reports with bounded Slurm calls. All three new capture tensors,
 restarts/audio, CPU audits and math6969 are exported locally;34 audit-referenced
 paths have no missing export paths. Sourceb42a6e4 restores as a clean independent
 clone from the Git bundle. This is source/data preservation, not cloud GPU resume.
+
+
+Plain words:proof6976 PASSES exact fresh-process reload and four local artifact
+hashes. Continuation6978's520-update fit report PASSES; separate reload is pending
+at the last snapshot. Voice ablation7115–7118 and speech7119 complete. Both voices
+produce a reasonable graphite explanation after actual backend text, while salt
+explanations are poorer. ASR WER is0.1176/0.0294/0.0588/0.0294, all segment/word
+bounds valid. Do not infer broad intelligence, voice neutrality or a preferred
+backbone from two reused questions. No voice switch is adopted; four WAV hashes
+pass locally. Original7079/80 guard failures remain excluded.
+
+Plain words:zero-adapter FP32 conditioning diagnostics on the three matched late
+components are mixed. First-fact probabilities change0.7189→0.9530,
+0.6377→0.5649 and0.8778→0.6627 under own audio. This does not support a universal
+teacher-acoustics shortcut explanation. Native behavior remains decisive.
+Read-only cache/conversion metadata inventory finds25 GPT-Live TRAIN teachers:
+19private,4simple,1clarify,1cancel (15.23minutes including silence). The rejected
+teacher-text trial used four longest histories, one per kind. Broader coverage is
+a distinct unresolved hypothesis, not evidence that larger compute would help.
+
+
+Plain words:6978 PASSES exact fresh-process reload and four local model/state/
+data/voice hashes. The first completed native runs reject full qualification:
+6981 says night comes from the Sun moving away,6983 misses lookup after its
+project question,6984 executes real cancellation but mixes answers and repeats,
+6985 gives yellow circle followed by false eclipse physics. No native gain is
+established by the acoustic-conditioning change; remaining cases and speech6995
+are still pending. All-teacher audit now has a distinct schema rejected by the
+unchanged four-reference optimizer policy. It audits all independent TRAIN
+labels/masks and code/source hashes without a model forward or optimizer.

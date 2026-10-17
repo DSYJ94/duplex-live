@@ -4134,3 +4134,14 @@ Checkpoint/state and16 native WAVs are locally hash-verified. Sourceb42a6e4's
 next comparison changes only future acoustic conditioning for three approved
 late TRAIN private targets. CPU6900 passes3plans,7legacy regressions and13Torch
 checks. Captures6926/6930/6932, CPUaudit6934 and speech6936 submitted; no optimizer.
+
+
+Plain words:17 October — matched own-audio private model6978 PASSES520 updates
+and exact fresh reload. Completed unforced development runs already contradict
+full qualification: wrong lightning/day explanations, missed lookup after project
+clarification6983, contradictory speech despite actual cancellation6984, false
+physics after yellow-circle lookup6985. Do not extend this unchanged. Remaining
+native runs/independent speech6995 remain pending. Metadata inventory establishes
+25 existing GPT-Live TRAIN teachers (19private/4simple/1clarify/1cancel); the
+failed teacher-text recipe supervised four longest only. New all-teacher CPU
+scope audit is distinct from optimizer approval and retains all fail-closed masks.

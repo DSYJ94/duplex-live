@@ -1,4 +1,4 @@
-"""Audit an explicit teacher-text term on the existing four retention histories.
+"""Audit teacher text; broader coverage stays separate from four-reference training.
 
 This is supervised assistant text, not new labels on student self-history.
 Prefix, supplied context, user and audio targets remain excluded.
@@ -8,6 +8,28 @@ import json
 import math
 from pathlib import Path
 from evals.moshi_model_download import sha256
+
+
+def select_teachers(examples, all_approved=False):
+    kinds=('private','simple','clarify','cancel')
+    if not all_approved:
+        return [max((e for e in examples if e['record']['kind']==kind),
+            key=lambda e:e['codes'].shape[-1]) for kind in kinds]
+    groups={kind:[] for kind in kinds};seen=set()
+    for e in examples:
+        r=e['record']
+        if r['source_model']!='gpt-live-1':continue
+        if r['source_split']!='train' or r['kind'] not in groups or r['id'] in seen:
+            raise RuntimeError('Broad teacher inventory has a duplicate, held-out or unsupported source')
+        seen.add(r['id']);groups[r['kind']].append(e)
+    if any(not group for group in groups.values()):
+        raise RuntimeError('Broad teacher inventory requires all four approved TRAIN task kinds')
+    for group in groups.values():group.sort(key=lambda e:e['record']['id'])
+    # An exhaustive deterministic order puts every kind in the first short proof.
+    result=[]
+    for i in range(max(map(len,groups.values()))):
+        result.extend(groups[k][i] for k in kinds if i<len(groups[k]))
+    return result
 
 
 def validate_weight(weight):
@@ -90,20 +112,27 @@ def main():
     from evals.lychee_context import BASE_INSTRUCTIONS
     ap=argparse.ArgumentParser(description=__doc__)
     for key in ('assets','tokenizer','voice','out'):ap.add_argument('--'+key,type=Path,required=True)
-    ap.add_argument('--cache',type=Path,action='append',required=True);args=ap.parse_args()
+    ap.add_argument('--cache',type=Path,action='append',required=True)
+    ap.add_argument('--all-approved-teachers',action='store_true',
+        help='Audit all independent TRAIN teachers; not accepted by the four-reference optimizer policy')
+    args=ap.parse_args()
     if sha256(args.tokenizer)!=MODEL_HASHES['tokenizer_spm_32k_3.model']:raise RuntimeError('Changed teacher tokenizer')
     assets=json.loads(args.assets.read_text());sys.path.insert(0,assets['source'])
     from contextspan.model.sequence_convention import persona_prefix
     spm=sentencepiece.SentencePieceProcessor(str(args.tokenizer));voice=torch.load(args.voice,map_location='cpu',weights_only=True)['codes']
     examples,_=load_training(args.cache,spm,persona_prefix(BASE_INSTRUCTIONS,voice,spm),request_policy='native-prelead-epad')
     teachers=[]
-    for kind in ('private','simple','clarify','cancel'):
-        e=max((e for e in examples if e['record']['kind']==kind),key=lambda e:e['codes'].shape[-1])
+    for e in select_teachers(examples,args.all_approved_teachers):
         _,_,audit=scope(e);teachers.append(audit)
     result=dict(schema='dl-context-retention-teacher-audit-v1',passed=True,optimizer_steps=0,
         assets_manifest_sha256=sha256(args.assets),voice_sha256=sha256(args.voice),
         code_sha256=sha256(Path(__file__)),teachers=teachers,prefix_loss_targets=0,span_loss_targets=0,
         user_loss_targets=0,audio_loss_targets=0,native_behavior_qualified=False)
+    if args.all_approved_teachers:
+        from collections import Counter
+        result.update(schema='dl-context-all-teacher-scope-audit-v1',coverage='all-approved-gpt-live-train',
+            task_kind_counts=dict(Counter(r['kind'] for r in teachers)),
+            training_approved=False,requires_separate_optimizer_policy=True)
     args.out.mkdir(exist_ok=False);(args.out/'report.json').write_text(json.dumps(result,indent=2)+'\n')
     print(json.dumps(result),flush=True)
 

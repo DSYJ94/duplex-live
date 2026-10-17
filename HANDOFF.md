@@ -1,5 +1,15 @@
 # HANDOFF — where we are (updated 2026-10-17 for active recovery)
 
+Plain words:own-audio private comparison6978 PASSES520-update fit and exact
+fresh reload; four checkpoint/state/data/voice hashes pass locally. It remains
+UNQUALIFIED from completed native development runs:6981 says the Sun moves away
+from Earth;6983 asks the project but never looks it up;6984 really cancels twice
+but mixes cancellation with wrong/contradictory speech. Private6985 says yellow
+circle then gives false eclipse physics. Remaining native runs and ASR6995 are
+pending; no aggregate score or spoken acceptance is claimed. Reject unchanged
+expansion. The next CPU-only audit covers all25 existing independent GPT-Live
+TRAIN teachers; it cannot authorize the existing four-reference optimizer policy.
+
 Plain words:teacher-retention model7506462 PASSES520-update fit/exact reload but
 is REJECTED after16 native development runs and independent speech6479. It
 retains actual TRAIN cancellation but adds repetition; validation clarification
@@ -15,7 +25,7 @@ Captures6926/6930/6932 PASS exact restart/delayed readout. CPU6934 independently
 PASSES same-label/mask/prefix/user comparisons to5219/20/21. Speech6936 PASSES
 word error0/0/0.1, valid timestamps and every private value. Nine local hashes
 and three gallery audio URLs pass. Math6969 PASSES all28 components (maxerror0.000151635, zero causal error).
-Eight-update6976 fit report PASSES; fresh-process reload is still running. Gated
+Eight-update6976 fit and exact fresh-process reload PASS; four local hashes pass. Gated
 512-update continuation6978, native6979–6994 and speech6995 submitted. This is
 forced-text TRAIN preparation, not native success. Comparison retains28 data,
 4806 parent,8+512 budget and5957 objective; teacher-retention weight stays0.
