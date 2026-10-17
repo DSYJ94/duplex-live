@@ -11,7 +11,13 @@ set -euo pipefail
 DL=/projects/u6si/duplex-live
 : "${DL_TASK_SOURCE:?Immutable source required}"
 : "${DL_TASK_COMMIT:?Immutable commit required}"
-if [ -n "${CONTEXT_TEACHER_RENDER_JOBS:-}" ]; then
+if [ -n "${KYUTAI_TTS_PROBE_JOBS:-}" ]; then
+ test -z "${CONTEXT_TEACHER_RENDER_JOBS:-}${CONTEXT_NATIVE_SPEECH_JOBS:-}${CONTEXT_FUTURE_JOBS:-}"
+ JOBS="$KYUTAI_TTS_PROBE_JOBS"
+ PREFIX=kyutai-tts-probe
+ KIND=--tts-runs
+ OUTPUT=kyutai-tts-speech-audit
+elif [ -n "${CONTEXT_TEACHER_RENDER_JOBS:-}" ]; then
  test -z "${CONTEXT_NATIVE_SPEECH_JOBS:-}${CONTEXT_FUTURE_JOBS:-}"
  JOBS="$CONTEXT_TEACHER_RENDER_JOBS"
  PREFIX=context-training-proof

@@ -4286,3 +4286,17 @@ single-GH200 compatibility/speech trial. Native voice identity does not transfer
 this is a separately disclosed stronger-controller/streaming-speech hybrid path.
 Cloud remains paused. A transient SSH relay banner timeout recovered on retry;
 current certificate expiry18Oct11:39Berlin, so no overnight user input was needed.
+
+Plain words:asset retrieval7510636 PASSES in35seconds: exact HF model/voice
+revisions, seven assets, published weight/voice SHA256s and sizes, and clean pinned
+upstream DSM Git source4c4f65e. TTS weight3,683,719,712bytes SHA726ddadd90a080c8...
+matches publisher; existing Mimi384,644,900bytes/09b782f... is byte-identical and
+reused. Every isolated package byte matches the reviewed wheel. Bounded GPU probe
+is prepared: strict complete model/Mimi loads, one actual gpt-6-luna lookup over
+RecordWorld, and exact returned text rendered through upstreamTTSGen with published
+speaker embedding. It records actual PCM availability, causal playout, raw packet
+stream, loading/runtime versions and backend receipts. Typed input and complete
+controller text before rendering are explicit; no concurrent listening, microphone,
+native request decision, native intelligence or full-system acceptance is claimed.
+Independent recognition has a separate external-controller source kind. Syntax,
+CLI parsing and shell checks pass; actual GPU/speech checks remain to run.

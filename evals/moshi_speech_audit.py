@@ -19,13 +19,15 @@ def main():
                     help='Native sampled audio under approved forced-text conditioning; never a native reasoning pass')
     ap.add_argument('--teacher-render-runs',nargs='+',type=Path,default=[],
                     help='Complete forced teacher words with native sampled acoustics; diagnostic only')
+    ap.add_argument('--tts-runs',nargs='+',type=Path,default=[],
+                    help='External-controller text rendered by streaming TTS; never native duplex qualification')
     ap.add_argument("--out", type=Path, required=True)
     ap.add_argument("--trim-trailing-silence", action="store_true")
     ap.add_argument("--keep-silent-failures", action="store_true",
                     help="Retain silent clips as explicit failed records and audit later clips")
     ap.add_argument("--device",choices=("cuda","cpu"),default="cuda")
     args = ap.parse_args()
-    if not args.runs and not args.live_runs and not args.future_runs and not args.teacher_render_runs:
+    if not any((args.runs,args.live_runs,args.future_runs,args.teacher_render_runs,args.tts_runs)):
         ap.error("At least one native or GPT-Live run is required")
     import numpy as np
     import soundfile as sf
@@ -37,10 +39,11 @@ def main():
     results = []
     for run,kind in ([(r,"native") for r in args.runs]+[(r,"GPT-Live") for r in args.live_runs]
                      +[(r,'native_forced_text_future') for r in args.future_runs]
-                     +[(r,'forced_teacher_text_native_audio') for r in args.teacher_render_runs]):
+                     +[(r,'forced_teacher_text_native_audio') for r in args.teacher_render_runs]
+                     +[(r,'external_controller_streaming_tts') for r in args.tts_runs]):
         wav = run / ('teacher-text-native-audio.wav' if kind=='forced_teacher_text_native_audio'
                      else 'early-native-audio.wav' if kind=='native_forced_text_future'
-                     else "model.wav" if kind == "native" else "model_out.wav")
+                     else "model.wav" if kind in ('native','external_controller_streaming_tts') else "model_out.wav")
         pcm, sr = sf.read(wav, dtype="float32")
         if pcm.ndim != 1 or not np.isfinite(pcm).all():
             raise ValueError("Invalid generated mono speech")
@@ -98,6 +101,15 @@ def main():
                     or rendered['training_approved'] is not False):
                 raise RuntimeError('Teacher render lacks its diagnostic-only text/acoustic provenance')
             predicted=rendered['expected_text']
+        elif kind=='external_controller_streaming_tts':
+            spoken=json.loads((run/'report.json').read_text())
+            if (spoken['schema']!='dl-external-controller-tts-probe-v1' or not spoken['passed']
+                    or spoken['audio_sha256']!=hashlib.sha256(wav.read_bytes()).hexdigest()
+                    or spoken['text_chosen_by']!='external gpt-6-luna controller'
+                    or spoken['native_duplex_qualified'] is not False
+                    or spoken['training_approved'] is not False):
+                raise RuntimeError('TTS speech audit requires explicit external-controller provenance')
+            predicted=spoken['text']
         elif kind == "native":
             predicted = json.loads((run / "report.json").read_text())["text"]
         else:
@@ -117,6 +129,9 @@ def main():
         if kind=='forced_teacher_text_native_audio':
             record.update(text_was_forced=True,assistant_audio_tokens_forced=False,
                 native_reasoning_qualified=False,training_approved=False)
+        if kind=='external_controller_streaming_tts':
+            record.update(text_chosen_by='external gpt-6-luna controller',native_reasoning_qualified=False,
+                hybrid_system_qualified=False,training_approved=False)
         if silent_failure:
             record["audit_failure"] = "Generated audio has no signal above the diagnostic silence floor"
         record["asr_time_bounds_valid"] = all(
