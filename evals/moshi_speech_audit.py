@@ -17,13 +17,15 @@ def main():
     ap.add_argument("--live-runs", nargs="+", type=Path, default=[])
     ap.add_argument('--future-runs',nargs='+',type=Path,default=[],
                     help='Native sampled audio under approved forced-text conditioning; never a native reasoning pass')
+    ap.add_argument('--teacher-render-runs',nargs='+',type=Path,default=[],
+                    help='Complete forced teacher words with native sampled acoustics; diagnostic only')
     ap.add_argument("--out", type=Path, required=True)
     ap.add_argument("--trim-trailing-silence", action="store_true")
     ap.add_argument("--keep-silent-failures", action="store_true",
                     help="Retain silent clips as explicit failed records and audit later clips")
     ap.add_argument("--device",choices=("cuda","cpu"),default="cuda")
     args = ap.parse_args()
-    if not args.runs and not args.live_runs and not args.future_runs:
+    if not args.runs and not args.live_runs and not args.future_runs and not args.teacher_render_runs:
         ap.error("At least one native or GPT-Live run is required")
     import numpy as np
     import soundfile as sf
@@ -34,8 +36,10 @@ def main():
     model = whisper.load_model("turbo", device=args.device)
     results = []
     for run,kind in ([(r,"native") for r in args.runs]+[(r,"GPT-Live") for r in args.live_runs]
-                     +[(r,'native_forced_text_future') for r in args.future_runs]):
-        wav = run / ('early-native-audio.wav' if kind=='native_forced_text_future'
+                     +[(r,'native_forced_text_future') for r in args.future_runs]
+                     +[(r,'forced_teacher_text_native_audio') for r in args.teacher_render_runs]):
+        wav = run / ('teacher-text-native-audio.wav' if kind=='forced_teacher_text_native_audio'
+                     else 'early-native-audio.wav' if kind=='native_forced_text_future'
                      else "model.wav" if kind == "native" else "model_out.wav")
         pcm, sr = sf.read(wav, dtype="float32")
         if pcm.ndim != 1 or not np.isfinite(pcm).all():
@@ -79,6 +83,20 @@ def main():
             from evals.context_future_speech_scope import approved_words
             words,text_scope=approved_words(manifest,json.loads(side.read_text()),origin)
             predicted=' '.join(words)
+        elif kind=='forced_teacher_text_native_audio':
+            rendered=json.loads((run/'teacher-text-render-audit.json').read_text())
+            if (rendered['schema']!='dl-context-teacher-text-native-audio-probe-v1'
+                    or not rendered['passed'] or not rendered['teacher_text_forced']
+                    or rendered['agent_acoustic_tokens_forced'] is not False
+                    or rendered['audio_sha256']!=hashlib.sha256(wav.read_bytes()).hexdigest()
+                    or rendered['teacher']['source_split']!='train'
+                    or rendered['teacher']['source_model']!='gpt-live-1'
+                    or rendered['generated_acoustic_frames']!=rendered['teacher']['real_frames']
+                    or not rendered['provided_text_and_user_only']
+                    or not rendered['non_agent_native_input_comparison']['exact']
+                    or rendered['training_approved'] is not False):
+                raise RuntimeError('Teacher render lacks its diagnostic-only text/acoustic provenance')
+            predicted=rendered['expected_text']
         elif kind == "native":
             predicted = json.loads((run / "report.json").read_text())["text"]
         else:
@@ -95,6 +113,9 @@ def main():
         if kind=='native_forced_text_future':
             record.update(text_was_forced=True,assistant_audio_tokens_forced=False,
                 native_reasoning_qualified=False,training_approved=False,text_scope=text_scope)
+        if kind=='forced_teacher_text_native_audio':
+            record.update(text_was_forced=True,assistant_audio_tokens_forced=False,
+                native_reasoning_qualified=False,training_approved=False)
         if silent_failure:
             record["audit_failure"] = "Generated audio has no signal above the diagnostic silence floor"
         record["asr_time_bounds_valid"] = all(

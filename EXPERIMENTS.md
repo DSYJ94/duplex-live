@@ -4224,3 +4224,17 @@ Seven local pure-policy guards and Python/shell syntax pass; three real Torch
 gradient/ownership guards must pass in the cluster proof before any model update.
 Teacher-forced versus own-speech history and narrow1clarify/1cancel supervision
 remain competing explanations. No claimed reasoning or microphone improvement.
+
+Plain words:next zero-update diagnostic compares complete teacher words with
+native sampled agent audio, on exactly four existing TRAIN histories (one per
+kind). New explicit teacher-engine-native-audio mode supplies only text/user
+tokens, verifies all agent provided flags false, independently reconstructs all
+non-agent native rows, and records actual generated codes/audio and full inputs.
+It retains the measured teacher word timing and recorded context arrivals, not
+live backend results. Its distinct schema/files cannot enter the existing
+teacher-input approval path. Independent speech audit labels forced words and
+requires TRAIN provenance, matching WAV hash, full generated frame coverage and
+input/ownership checks. No optimizer or data approval follows from rendering.
+Existing two integer-input Torch guards plus a new forcing/ownership guard run
+inside each cluster capture before loading the model. Local syntax passes;
+local Torch execution is unavailable and is not reported as passing.

@@ -2,11 +2,25 @@
 
 Teacher text and assistant acoustics are forced for this engineering audit.
 Both codecs execute; no backend, optimizer or native task claim is involved.
+The separate native-audio probe supplies only teacher words and records sampled
+agent audio under a different schema; it grants no training-data approval.
 """
 import hashlib
 import json
 from pathlib import Path
 from evals.moshi_model_download import sha256
+
+
+def forcing(clean,frame,device,native_audio):
+    result=dict(text_token=clean[0,frame:frame+1].to(device))
+    if not native_audio:result['moshi_tokens']=clean[None,1:9,frame:frame+1].to(device)
+    return result
+
+
+def provided_ownership(flags,current,clean,native_audio):
+    import torch
+    owned=bool(flags[:,0].all() and flags[:,9:].all() and not flags[:,1:9].any()) if native_audio else bool(flags.all())
+    return owned and torch.equal(current[0,0],clean[0])
 
 
 def compare(actual, expected):
@@ -36,6 +50,7 @@ def run(lm,mimi,spm,voice,examples,args):
     from evals.context_retention_teacher import scope
     from evals.recovery_data import validate_conversion
     from evals.lychee_context import BASE_INSTRUCTIONS
+    native_audio=bool(getattr(args,'teacher_engine_native_audio',False))
     audit=json.loads(args.teacher_engine_input_audit.read_text())
     if (audit['schema'] not in ('dl-context-all-teacher-scope-audit-v1','dl-context-all-teacher-scope-audit-v2') or not audit['passed']
             or audit['training_approved'] is not False or audit['optimizer_steps']!=0
@@ -76,7 +91,7 @@ def run(lm,mimi,spm,voice,examples,args):
     state=engine.lm_gen._streaming_state;gen=engine.lm_gen
     original_direct,original_graph=lm.forward_codes,state.graphed_main
     original_step,original_prepare=gen.step,gen.prepare_step_input
-    chunks,calls,provided,targets,user_codes,packets=[],[],[],[],[],[]
+    chunks,calls,provided,targets,user_codes,packets,generated=[],[],[],[],[],[],[]
     phase='prefix';frame=-1;cursor=0;live_indices=[];readout=[];applied=[]
     def capture(original,route):
         def wrapped(value):
@@ -94,9 +109,12 @@ def run(lm,mimi,spm,voice,examples,args):
             if a or kw.get('moshi_tokens') is not None or kw.get('text_token') is not None:
                 raise RuntimeError('Teacher Engine acquired unexpected forced inputs')
             user_codes.append(kw['input_tokens'].detach().cpu().clone())
-            kw.update(moshi_tokens=clean[None,1:9,frame:frame+1].to(engine.device),
-                text_token=clean[0,frame:frame+1].to(engine.device))
-        return original_step(*a,**kw)
+            kw.update(forcing(clean,frame,engine.device,native_audio))
+        result=original_step(*a,**kw)
+        if native_audio and phase=='live':
+            if result is None:raise RuntimeError('Native teacher rendering lost a generated frame')
+            generated.append(result.detach().cpu().clone())
+        return result
     def prepare(*a,**kw):
         result=original_prepare(*a,**kw)
         if phase=='live':
@@ -126,13 +144,24 @@ def run(lm,mimi,spm,voice,examples,args):
     inputs=compare(actual,expected);encoded=torch.cat(user_codes,dim=2)
     codec=compare(encoded,clean[None,9:17])
     current=torch.cat(targets,dim=2);flags=torch.cat(provided,dim=2)
-    ownership=bool(flags.all() and torch.equal(current[0,0],clean[0]))
+    ownership=provided_ownership(flags,current,clean,native_audio)
+    native_comparison=None
+    if native_audio:
+        # Text and user inputs remain supplied; agent acoustic inputs must be sampled.
+        from evals.context_teacher_native_approval import prepared
+        from contextspan.model.sequence_convention import persona_prefix
+        oracle=prepared(example,persona_prefix(BASE_INSTRUCTIONS,voice,spm),encoded,spm)
+        non_agent=[0,*range(9,17)]
+        native_comparison=compare(actual[:,non_agent],oracle[:,non_agent])
     mapping=live_indices==record['real_to_virtual']
     if not mapping:raise RuntimeError('Teacher Engine real/virtual mapping changed')
-    wave=args.out/'teacher-forced-native.wav';sf.write(wave,np.concatenate(packets),24000,subtype='FLOAT')
-    file=args.out/'teacher-engine-inputs.pt'
-    torch.save(dict(delayed_inputs=actual,expected_prepared_inputs=expected,text_targets=labels,text_mask=mask,
-        live_native_targets=current,live_provided=flags,encoded_user_codes=encoded),file)
+    wave=args.out/('teacher-text-native-audio.wav' if native_audio else 'teacher-forced-native.wav')
+    sf.write(wave,np.concatenate(packets),24000,subtype='FLOAT')
+    file=args.out/('teacher-text-native-audio.pt' if native_audio else 'teacher-engine-inputs.pt')
+    tensors=dict(delayed_inputs=actual,expected_prepared_inputs=expected,text_targets=labels,text_mask=mask,
+        live_native_targets=current,live_provided=flags,encoded_user_codes=encoded)
+    if native_audio:tensors['generated_codes']=torch.cat(generated,dim=2)
+    torch.save(tensors,file)
     result=dict(schema='dl-context-teacher-engine-input-audit-v1',passed=inputs['exact'] and codec['exact'] and ownership,
         teacher=checked,teacher_scope_sha256=sha256(args.teacher_engine_input_audit),
         assets_manifest_sha256=sha256(args.assets),voice_sha256=sha256(args.out/'voice.pt'),
@@ -146,7 +175,17 @@ def run(lm,mimi,spm,voice,examples,args):
         execution_scope='native BF16 model and streaming codecs; eager/no graphs for integer-input audit, not latency qualification',
         virtual_context_is_recorded_teacher_context_not_live_backend=True,execution=snapshot(lm),
         optimizer_steps=0,training_approved=False,quality_qualified=False)
-    (args.out/'teacher-engine-input-audit.json').write_text(json.dumps(result,indent=2)+'\n')
+    if native_audio:
+        result.update(schema='dl-context-teacher-text-native-audio-probe-v1',
+            passed=ownership and native_comparison['exact'] and mapping,
+            teacher_text_and_audio_forced=False,teacher_text_forced=True,agent_acoustic_tokens_forced=False,
+            expected_text=spm.decode(clean[0,clean[0]>=5].tolist()),
+            non_agent_native_input_comparison=native_comparison,
+            all_real_targets_provided=False,provided_text_and_user_only=ownership,
+            generated_acoustic_frames=int(tensors['generated_codes'].shape[-1]),
+            native_reasoning_qualified=False,independent_speech_review='pending')
+    report_name='teacher-text-render-audit.json' if native_audio else 'teacher-engine-input-audit.json'
+    (args.out/report_name).write_text(json.dumps(result,indent=2)+'\n')
     print(json.dumps(result),flush=True)
     if not result['passed']:raise RuntimeError('Prepared teacher differs from the actual native Engine input path')
     return result

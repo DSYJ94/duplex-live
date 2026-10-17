@@ -11,7 +11,13 @@ set -euo pipefail
 DL=/projects/u6si/duplex-live
 : "${DL_TASK_SOURCE:?Immutable source required}"
 : "${DL_TASK_COMMIT:?Immutable commit required}"
-if [ -n "${CONTEXT_NATIVE_SPEECH_JOBS:-}" ]; then
+if [ -n "${CONTEXT_TEACHER_RENDER_JOBS:-}" ]; then
+ test -z "${CONTEXT_NATIVE_SPEECH_JOBS:-}${CONTEXT_FUTURE_JOBS:-}"
+ JOBS="$CONTEXT_TEACHER_RENDER_JOBS"
+ PREFIX=context-training-proof
+ KIND=--teacher-render-runs
+ OUTPUT=context-teacher-render-speech-audit
+elif [ -n "${CONTEXT_NATIVE_SPEECH_JOBS:-}" ]; then
  test -z "${CONTEXT_FUTURE_JOBS:-}"
  JOBS="$CONTEXT_NATIVE_SPEECH_JOBS"
  PREFIX=context-spanning-probe

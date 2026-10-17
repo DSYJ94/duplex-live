@@ -35,6 +35,8 @@ def main():
     ap.add_argument('--teacher-engine-input-audit',type=Path)
     ap.add_argument('--teacher-engine-input-id')
     ap.add_argument('--teacher-engine-input-voice',type=Path)
+    ap.add_argument('--teacher-engine-native-audio',action='store_true',
+        help='Diagnostic forced teacher words with sampled agent audio; no training approval')
     ap.add_argument('--teacher-native-math-audit',type=Path)
     ap.add_argument('--teacher-native-math-diagnostic')
     ap.add_argument('--teacher-native-math-diagnostic-mode',choices=('attention','linear'),default='attention')
@@ -86,6 +88,9 @@ def main():
     ap.add_argument('--text-padding', choices=('legacy-epad0','context-pad3'), default='legacy-epad0')
     ap.add_argument('--request-policy', choices=('source-dispatch','native-prelead','native-prelead-epad'), default='source-dispatch')
     args = ap.parse_args()
+    if args.teacher_engine_native_audio and (not args.teacher_engine_input_audit
+            or not args.teacher_engine_input_id or args.teacher_native_math_audit):
+        ap.error('Native teacher audio rendering requires one independently scoped teacher and no math/optimizer path')
     if bool(args.teacher_native_fp32_preflight)!=bool(args.teacher_native_fp32_source_commit) or (
             args.teacher_native_fp32_preflight and (not args.teacher_native_math_audit or args.teacher_native_math_diagnostic)):
         ap.error('Higher precision reference requires the original FP32 audit and source in a separate zero-update run')

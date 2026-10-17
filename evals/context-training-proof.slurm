@@ -68,9 +68,11 @@ if [ -n "${CONTEXT_TEACHER_ENGINE_INPUT_INDEX:-}" ]; then
  SCOPE="$DL/runs/context-retention-teacher-audit-$CONTEXT_TEACHER_SCOPE_JOB/report.json"
  ID=$(python3 -c 'import json,sys; r=json.load(open(sys.argv[1])); assert r["passed"] and r["schema"] in ("dl-context-all-teacher-scope-audit-v1","dl-context-all-teacher-scope-audit-v2"); print(r["teachers"][int(sys.argv[2])]["id"])' "$SCOPE" "$CONTEXT_TEACHER_ENGINE_INPUT_INDEX")
  run_container -m unittest evals.harness.test_context_teacher_engine_inputs
+ NATIVE_AUDIO=()
+ if [ "${CONTEXT_TEACHER_ENGINE_NATIVE_AUDIO:-0}" = 1 ]; then NATIVE_AUDIO+=(--teacher-engine-native-audio); fi
  run_container -m evals.context_training_proof "${ARGS[@]}" \
   --teacher-engine-input-audit "$SCOPE" --teacher-engine-input-id "$ID" \
-  --teacher-engine-input-voice "$DL/runs/context-training-proof-7505957/voice.pt"
+  --teacher-engine-input-voice "$DL/runs/context-training-proof-7505957/voice.pt" "${NATIVE_AUDIO[@]}"
  exit 0
 fi
 if [ -n "${CONTEXT_ACTUAL_REPLAY_JOBS:-}" ]; then
