@@ -56,6 +56,8 @@ def main():
         help='Explicit numerical replay diagnostic; use Torch math attention only')
     ap.add_argument('--persona-profile',choices=('recorded-records','released-default'),default='recorded-records',
         help='Inference-only comparison with the exact pinned upstream default persona')
+    ap.add_argument('--lookup-delivery-delay-s',type=float,default=0.,
+        help='Inference-only minimum transport delay for real lookup results, between zero and 30 seconds')
     ap.add_argument('--train-history',action='store_true',
         help='Capture actual native conditioning on approved TRAIN stimuli; never supervised past labels')
     ap.add_argument('--layout-audit',type=Path,
@@ -63,6 +65,9 @@ def main():
     args=ap.parse_args()
     if args.persona_profile!='recorded-records' and args.train_history:
         ap.error('Persona comparison is inference-only and cannot collect TRAIN histories')
+    if not 0<=args.lookup_delivery_delay_s<=30 or (args.lookup_delivery_delay_s and
+            (args.train_history or args.backend_mode!='native-asr')):
+        ap.error('Lookup transport delay must be bounded and inference-only with actual native requests')
     if args.backend_mode=='observe-only' and (
             not args.train_history or args.expected_kind not in ('simple','clarify') or args.pending_status):
         ap.error('Observe-only requires unapproved TRAIN simple/clarification conditioning without backend state')
@@ -208,6 +213,7 @@ def main():
         'voice':args.voice,'voice_codes_shape':list(voice.shape),'input_warmup':warm,'adapter':adapter,'layout':layout,
         'persona_profile':args.persona_profile,'persona_text':persona,
         'persona_text_sha256':hashlib.sha256(persona.encode()).hexdigest(),
+        'lookup_delivery_minimum_delay_s':args.lookup_delivery_delay_s,
         'torch':torch.__version__,'torch_file':torch.__file__,'cuda':torch.version.cuda}
     (args.out/'loading.json').write_text(json.dumps(loading,indent=2)+'\n')
     world=RecordWorld({meta['project']:{meta['field']:args.private_value}} if row['kind']!='simple' else {})

@@ -93,6 +93,7 @@ def run(engine,user,world,args,loading):
     process=subprocess.Popen([str(args.asr_python),'-u','-m','evals.context_spanning_asr',
         '--root',str(args.out)],env=env,stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=asr_log,text=True,bufsize=1)
     lock=threading.Lock();events=[];pending={};tokens=[];rows=[];packets=[];epoch=None
+    dispatch_times={};held=set()
     def work(identity,path,due,assistant,available,revision):
         with lock:
             process.stdin.write(json.dumps({'id':identity,'path':str(path)})+'\n');process.stdin.flush()
@@ -130,7 +131,19 @@ def run(engine,user,world,args,loading):
                                 events.append({'event':'cancelled_backend_rejected','task_id':identity,
                                     'exception':str(future.exception()) if future.exception() else None})
                                 continue
-                            result,recognized,context,ready_at=future.result();del pending[identity]
+                            result,recognized,context,ready_at=future.result()
+                            from evals.context_delivery_hold import hold_until
+                            release=hold_until(result,dispatch_times[identity],args.lookup_delivery_delay_s,
+                                time.monotonic()-epoch)
+                            if release is not None:
+                                if identity not in held:
+                                    events.append({'event':'lookup_delivery_held','task_id':identity,
+                                        'actual_worker_ready_at_s':ready_at-epoch,'delivery_not_before_s':release,
+                                        'minimum_transport_delay_s':args.lookup_delivery_delay_s,
+                                        'diagnostic_only':True,'result_or_speech_forced':False})
+                                    held.add(identity)
+                                continue
+                            del pending[identity]
                             record={'event':'backend_request_failed' if result['route']=='error' else 'backend_result_ready',
                                 'task_id':identity,'result':result,
                                 'asr':recognized,'context':context,'ready_at_s':ready_at-epoch}
@@ -179,6 +192,7 @@ def run(engine,user,world,args,loading):
                             identity=f'ret-{count}';path=args.out/f'{identity}-arrived-user.wav'
                             sf.write(path,user[:end],24000,subtype='FLOAT')
                             revision=world.reserve(identity)
+                            dispatch_times[identity]=available
                             pending[identity]=pool.submit(work,identity,path,due,engine.decode_text(tokens),available,revision)
                             events.append({'event':'native_backend_requested','task_id':identity,'at_s':available,
                                 'input_available_s':due,'input_samples':end,'audio_sha256':sha256(path),
@@ -217,6 +231,8 @@ def run(engine,user,world,args,loading):
         'student_history':history_receipt,
         'scheduled_dispatch':False,'native_foreground_backend_request':True,'native_foreground_tool_choice':False,
         'explicit_pending_status':args.pending_status,
+        'lookup_delivery_minimum_delay_s':args.lookup_delivery_delay_s,
+        'controlled_lookup_transport_delay':bool(args.lookup_delivery_delay_s),
         'backend_contract_failures':sum(e['event']=='backend_request_failed' for e in events),
         'backend_context':'actual arrived user PCM recognized by Whisper turbo; no measured/reference transcript',
         'distinct_lm_asr_gpu_processes':True,'native_retrieval_markers':sum(r['native_retrieval_marker'] for r in rows),
