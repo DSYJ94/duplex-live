@@ -2,6 +2,42 @@
 
 ## Current execution — 17 October, mixed ordinary/private correction
 
+Plain words: current17 October13:28UTC continuation adds control diagnostics.
+Unchanged648-update7500366 reloads exactly but is REJECTED: native7500380–91
+produces wrong explanations, repetition, missing private values and failed controls.
+Lower training loss did not qualify it. Mixed cancellation520-update7500371
+reloads; TRAIN0207500396 still emits no native request after cancellation despite
+three-label TRAIN control NLL0.007/top1=1. Native7500392–400 must be reviewed as
+complete tasks. Never expand this recipe on teacher-conditioned action accuracy.
+
+Plain words: sourcead9102c separately scopes the first measured clarification
+question, with no request/result/private-value labels and no later project audio.
+Zero/layout raw7500433 passes eligibility7500443 (SHA22a36028d043823d15f25f4285f3711e98b8e27e3817f14dd407361be2938b49),
+51 real future frames27–77 inclusive. Native-audio future7500610 restarts its
+27-frame prefix exactly. It is forced text, not native clarification success.
+Speech job7500637 was accepted despite an sbatch socket timeout and failed the
+old full-reply-only scope guard; do not duplicate it or call that an acoustic
+failure. The speech audit now explicitly distinguishes first-question scope from
+complete replies; independent math and speech approval remain required.
+
+Plain words: the pinned upstream default_persona.py explicitly warns that a
+generic helpful-assistant prefix is outside its training persona distribution.
+This is a hypothesis for invented scenes, not a discovered quality fix. Source
+dd52eb8 adds an inference-only exact released-default persona comparison.
+Keep profiles separate: adapted136 pairs7500553–60; zero/layout matched pairs
+7500586/88/90/92/94/96/97/98. Initial zero jobs7500545–52 were cancelled because
+that old proof needs the explicit layout/math flags; they are not evidence.
+Source26ffd8b adds an explicit inference-only minimum lookup transport delay:
+only actual executed lookup receipts are held, cancellation/ordinary answers are
+never delayed, and the executor stays free. Delayed25-second cancellation/private
+checks compare136/520; their job IDs are in the delay submission log. No speech
+or native request is forced. Cloud remains paused.
+
+Plain words: approved15-component dependencies and five checkpoint/state pairs
+(7500012/13,7500117/25,7500366) are now local under the cloud-export tree; tensor
+and checkpoint hashes pass. The source-history dependency closure includes
+7495563. This is preservation, not a qualified delivery or destination-GPU test.
+
 Plain words: SSH was renewed at13:44Berlin and works; the current certificate
 expires18 October01:44Berlin. The planned17 October12:00Berlin recipe freeze
 was missed without a qualified recipe. Keep19 October delivery,20 October

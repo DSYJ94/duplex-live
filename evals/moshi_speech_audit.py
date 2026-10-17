@@ -65,8 +65,7 @@ def main():
             if (manifest['future_audio_conditioning']!='native_sampled'
                     or manifest['future_assistant_audio_tokens_forced'] is not False
                     or manifest['future_text_tokens_forced'] is not True
-                    or manifest['native_audio_sha256']!=hashlib.sha256(wav.read_bytes()).hexdigest()
-                    or manifest['all_teacher_reply_and_request_tokens_retained'] is not True):
+                    or manifest['native_audio_sha256']!=hashlib.sha256(wav.read_bytes()).hexdigest()):
                 raise RuntimeError('Future speech audit requires native audio with explicit forced-text provenance')
             teacher=manifest['teacher'];cache=Path(teacher['cache'])
             if hashlib.sha256((cache/'cache.json').read_bytes()).hexdigest()!=teacher['cache_sha256']:
@@ -77,7 +76,9 @@ def main():
             side=Path(origin['path']).with_suffix('.json')
             if hashlib.sha256(side.read_bytes()).hexdigest()!=teacher['sidecar_sha256']:
                 raise RuntimeError('Changed measured teacher words')
-            predicted=' '.join(w[0] for w in json.loads(side.read_text())['alignments'] if w[2]=='SPEAKER_MAIN')
+            from evals.context_future_speech_scope import approved_words
+            words,text_scope=approved_words(manifest,json.loads(side.read_text()),origin)
+            predicted=' '.join(words)
         elif kind == "native":
             predicted = json.loads((run / "report.json").read_text())["text"]
         else:
@@ -93,7 +94,7 @@ def main():
         record["source_kind"] = kind
         if kind=='native_forced_text_future':
             record.update(text_was_forced=True,assistant_audio_tokens_forced=False,
-                native_reasoning_qualified=False,training_approved=False)
+                native_reasoning_qualified=False,training_approved=False,text_scope=text_scope)
         if silent_failure:
             record["audit_failure"] = "Generated audio has no signal above the diagnostic silence floor"
         record["asr_time_bounds_valid"] = all(
