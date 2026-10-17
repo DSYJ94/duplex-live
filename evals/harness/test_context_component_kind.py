@@ -24,6 +24,13 @@ class MixedComponentScope(unittest.TestCase):
         self.assertEqual(manifest_name(Path('/not-read'),early=True),'early-future.json')
         self.assertEqual(manifest_name(Path('/not-read')),'actual-future.json')
 
+    def test_request_prefix_is_explicitly_mixed_and_cannot_hide_another_manifest(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp);(root/'request-prefix.json').touch()
+            self.assertEqual(manifest_name(root,mixed=True),'request-prefix.json')
+            (root/'action-future.json').touch()
+            with self.assertRaises(RuntimeError):manifest_name(root,mixed=True)
+
     def test_balancing_equalises_kinds_without_losing_examples_or_resume_position(self):
         from collections import Counter
         kinds=['ordinary_answer']*3+['private_result']*11

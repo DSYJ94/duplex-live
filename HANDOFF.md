@@ -2,6 +2,22 @@
 
 ## Current execution — 17 October, mixed ordinary/private correction
 
+Plain words: latest completed models remain UNQUALIFIED. Corrected19-component
+7503303 (8+128 updates, sourcebd70fc8) passes exact state reload but fails the
+native development checks. TRAIN cancellation7503469 really executes
+cancel_lookup; independent speech7503524 confirms it then falsely denies the
+ability to cancel. Its trained prefix replay7503670 (sourceda79343) reproduces
+the actual model/cache/random state exactly, creates no labels and makes no new
+backend calls. Decision-weight16 variant7503528 (sourceebf4d27) changes routing
+on three ordinary TRAIN questions, but private validation000 skips lookup and
+invents identical7.22 values in yellow-circle/copper-diamond worlds. Reject it;
+do not extend unchanged. Sampling biases-2/-4 also fail; stronger bias removes
+required private lookups. Next data work must add verified positive lookup
+decisions alongside ordinary answers and truthful cancellation acknowledgment.
+Cloud remains paused; delivery19 October, training cutoff18 October18:00Berlin.
+
+### Earlier execution notes (latest paragraph and linked research record take precedence)
+
 Plain words:18-component continuation7502015 passes exact reload but FAILS the
 completed native development checks7502018–29. Private values sometimes appear
 in sampled text; ordinary explanations, clarification and cancellation still

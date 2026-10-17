@@ -199,3 +199,62 @@ planner hashes, preventing an old CPU approval from silently selecting a new
 composition. All25 timing, selector and ordinary/clarification guard tests pass.
 CPU7502998 independently replans the four corrected candidates and reruns the
 four existing private regressions. These checks do not establish native quality.
+
+## Corrected nineteen-component result and decision-weight comparison
+
+Plain words: corrected CPU7502998, captures7503072/73/74/71 and per-frame
+readout checks pass. Speech7503079 hears Three correctly. Day/night own-audio
+7503074 is excluded because ASR reads240 rather than24 hours, even though its
+aggregate word error0.0755 is below0.15. Teacher-acoustic replacement7503101
+uses the verified original teacher. Lightning7503072 error0.1429, evaporation
+7503073 error0 and triangle7503071 error0 are retained as explicitly forced-text
+training conditioning. Nineteen-component mathematical audit7503111 passes;
+8-update7503114 and128-continuation7503303 restore exactly. Stage136 checkpoint
+SHA is d99f2fa33863f3ef7b9de3d1a198b8af78f9eb076de32b1eae239a490b095322;
+state SHA is a6735c9e9ae089f6e5c80f1cc1146dc0ee9dab9d168316339ec6c9b48a428fea.
+Both are exported locally. Native validation7503369–78 fails full tasks.
+Initial TRAIN invocations7503362/63/64/66/67/68 failed the required recorder
+startup guard before model execution; they are not model failures. Corrected
+TRAIN3464–69 also fail complete tasks. The original source world for
+clarification006 is brown square; these checks now use it explicitly.
+
+Plain words:7503469 has a real TRAIN cancellation receipt, delivered21.9038s.
+Speech7503524 confirms the later false denial, word error0.06 with valid bounds.
+The model really requested cancellation and the external backend executed it;
+tool choice is still external. Source323b086/da79343 adds explicit read-only
+trained-collector replay, verifying checkpoint/state/assets/voice/protocol before
+native graphs. Replay7503670 reproduces the actual TRAIN020 model/cache/random
+state exactly, with no new backend calls or supervision. This is a foundation
+for correctly scoped acknowledgment data, not a new quality-qualified model.
+
+Plain words:sourceebf4d27 gives only the independently verified first ordinary
+word16 times the token-loss weight; other kinds and target ownership remain
+unchanged. Eleven real Torch gradient/resume/calibration tests pass. Proof
+7503477 and136-stage7503528 restore exactly. The same nineteen components and
+parent7500125 weights are used, with a fresh optimizer for this new objective.
+Native7503551/52/53 answer three ordinary TRAIN questions without a backend;
+evaporation and day/night are plausible, lightning remains wrong. Triangle
+7503554 still requests a backend. Private validation0007503557 and its changed
+world7503565 both invent7.22 without a lookup. Other private/control checks also
+fail. REJECT the complete model despite the routing change. Checkpoint SHA is
+22851e6b40b2dc0a4bc36a914f8ce107f114e278dec45c68bca24bca41b28e8c.
+The outcome exposes missing positive first-lookup supervision: the eleven late
+private components supervise words after results, while retention alone does
+not preserve that decision under stronger ordinary-answer training.
+
+Plain words:constant live RET-logit biases0/-2/-4 were compared on unchanged
+7500125 weights in7503275–80. All four calibration-specific Torch tests pass;
+nonzero bias covers exactly all377/500 live predictions and changes no other
+logit or hidden state. Bias-2 still delegates the ordinary question. Bias-4
+removes its request but also removes the private lookup and hallucinates180.
+REJECT both calibrations; no wider sweep is justified.
+
+Plain words:the old complete private captures7467981/7468102/7468611/7479546
+share the accepted voice and contain a verified first lookup policy. They also
+contain a later backend answer span without a matching second teacher request.
+Do not treat those whole futures as native routing evidence or reintroduce the
+answer-bearing tail to solve this failure. A separately revalidated prefix,
+ending at the first approved lookup and before every future receipt or spoken
+word, can provide positive control supervision without that later dependency.
+The native-audio7479546 duplicates teacher-acoustic7468102; do not double-count
+the same question/world merely because the conditioning differs.

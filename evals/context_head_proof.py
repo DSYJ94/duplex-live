@@ -19,7 +19,10 @@ def run(lm, spm, voice, examples, args):
     for folder in args.actual_head_data:
         from evals.context_component_kind import manifest_name
         name=manifest_name(folder,early=bool(args.actual_early_data),mixed=bool(args.actual_mixed_data))
-        if name=='action-future.json':
+        if name=='request-prefix.json':
+            from evals.context_request_prefix import validate as validate_prefix
+            audit,component=validate_prefix(folder,args.actual_source_data,args.assets,examples,spm,voice)
+        elif name=='action-future.json':
             from evals.context_action_component import validate as validate_action
             audit,component=validate_action(folder,args.actual_source_data,args.assets,examples,spm,voice)
         elif name=='early-future.json':

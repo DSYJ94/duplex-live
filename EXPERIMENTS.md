@@ -4041,3 +4041,18 @@ pass, including regressions that failed before these fixes. Native capture,
 speech and mathematical checks are still required. This fixes the new
 composition's clock; it does not establish a cause or cure for all earlier
 conversation failures.
+
+## 17 October2026 — corrected decision timing, controls and routing tradeoff
+
+Plain words: corrected nineteen-component7503114/7503303 passes numerical and
+exact resume checks but remains unqualified on native3369–78 and corrected
+TRAIN3464–69. TRAIN3469 executes a real cancellation then speaks a false denial;
+speech3524 confirms it. Explicit read-only trained replay3670 reproduces the
+actual state without labels or new backend calls. First-word-weight16 proof3477
+and136-stage3528 change three ordinary TRAIN requests into direct answers, but
+private0003557/changed-world3565 both invent7.22 without lookup. Reject unchanged
+expansion. Constant RET-logit biases-2/-4 on reference7500125 also fail3275–80;
+stronger bias suppresses required private lookups. Next supervision must balance
+positive lookup decisions with ordinary answers. Existing complete private
+futures contain a later backend-answer dependency; extract only an independently
+verified pre-result lookup prefix, not the full answer-bearing tail.
