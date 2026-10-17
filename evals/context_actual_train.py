@@ -40,6 +40,14 @@ def run(lm, spm, voice, examples, components, audits, args):
     else:
         embedded.write_bytes((pre/'actual-temporal-audit.json').read_bytes())
     batches = [];component_kinds=[]
+    warm_start=None
+    if args.warm_start_proof:
+        from evals.context_rollout_conditioning import verify_checkpoint
+        warm_start,parent=verify_checkpoint(args.warm_start_proof)
+        if (parent['assets_manifest_sha256']!=sha256(args.assets)
+                or parent['voice_reference_sha256']!=sha256(args.voice_reference)
+                or not torch.equal(voice,torch.load(args.warm_start_proof/'voice.pt',map_location='cpu',weights_only=True)['codes'])):
+            raise RuntimeError('Warm-start source assets or voice differ from the new corrective stage')
     for folder, component in zip(args.actual_head_data,components):
         from evals.context_component_kind import manifest_name
         name=manifest_name(folder,early=bool(args.actual_early_data),mixed=bool(args.actual_mixed_data))
@@ -97,6 +105,7 @@ def run(lm, spm, voice, examples, components, audits, args):
                 'attention_backend':'math'},
             'voice_sha256':sha256(args.out/'voice.pt'),'frozen_hashes':frozen,
             'retention_examples':[r[2] for r in retention],
+            **({'warm_start':warm_start,'warm_start_optimizer_reset':True} if warm_start else {}),
             'recipe':{'rank':8,'scaling':2.,'last_layers':4,'lr':1e-5,'weight_decay':0.,
                 'gradient_clip':1.,'retention_kl_weight':1.,'retention_hidden_mse_weight':10.,
                 'text_pad3_loss_weight':.5,
@@ -157,6 +166,16 @@ def run(lm, spm, voice, examples, components, audits, args):
             return
         optimizer = torch.optim.AdamW(list(learned.values()),lr=1e-5,weight_decay=0.)
         initial_step = 0
+        if warm_start and not args.resume_training:
+            if parent['frozen_hashes']!=frozen:raise RuntimeError('Warm-start frozen base differs')
+            state=load_file(args.warm_start_proof/'adapters.safetensors',device='cuda')
+            if set(state)!=set(learned):raise RuntimeError('Warm-start adapter parameter coverage changed')
+            with torch.no_grad():
+                for n,p in learned.items():
+                    if state[n].shape!=p.shape or state[n].dtype!=p.dtype or not torch.isfinite(state[n]).all():
+                        raise RuntimeError('Invalid warm-start adapter tensor')
+                    p.copy_(state[n])
+            if optimizer.state:raise RuntimeError('New corrective stage unexpectedly retained optimizer moments')
         if args.resume_training:
             if args.actual_fit_updates>8:
                 parent = json.loads((args.resume_training.parent/'report.json').read_text())
@@ -167,6 +186,7 @@ def run(lm, spm, voice, examples, components, audits, args):
                     raise RuntimeError('Longer resumed adaptation lacks a verified portable preflight')
             snapshot = restore_state(args.resume_training,learned,optimizer,state_metadata(frozen))
             initial_step = snapshot['completed_steps']
+        initial_metrics=metrics()
         steps = []; seen_a = seen_b = False; start = time.monotonic()
         torch.cuda.reset_peak_memory_stats()
         for local_step in range(args.actual_fit_updates):
@@ -219,6 +239,7 @@ def run(lm, spm, voice, examples, components, audits, args):
             'trainable_parameters':sum(p.numel() for p in learned.values()),'optimizer_steps':initial_step+len(steps),
             'updates_this_run':len(steps),'initial_optimizer_steps':initial_step,
             'resumed_from_training_state':str(args.resume_training) if args.resume_training else None,
+            **({'warm_start':warm_start,'warm_start_optimizer_reset':True} if warm_start else {}),
             'training_state_sha256':sha256(args.out/'training-state.pt'),
             'past_loss_targets':0,'audio_loss_targets':0,'all_component_audits_passed':True,
             'native_protocol':state_metadata(frozen)['native_protocol'],
@@ -226,7 +247,8 @@ def run(lm, spm, voice, examples, components, audits, args):
             'frozen_weights_unchanged':True,'frozen_hashes':frozen,'base_audio_parameters_frozen':True,
             'retention_examples':[r[2] for r in retention],
             'retention_objective':'KL on unchanged base text distribution plus 10x hidden MSE, approved independent TRAIN histories',
-            'baseline_metrics':baseline_metrics,'final_metrics':metrics(),'expected_logits':expected,'steps':steps,
+            'baseline_metrics':baseline_metrics,'initial_stage_metrics':initial_metrics,
+            'final_metrics':metrics(),'expected_logits':expected,'steps':steps,
             'execution':'native BF16 batch MATH attention, no compilation/graphs; actual FP32 causal preflight required',
             'training_seconds':time.monotonic()-start,'peak_allocated_bytes':torch.cuda.max_memory_allocated(),
             'quality_qualified':False,'free_running_result_use_proven':False,

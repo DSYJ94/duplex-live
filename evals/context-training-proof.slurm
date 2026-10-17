@@ -96,6 +96,10 @@ if [ -n "${CONTEXT_ACTUAL_HEAD_JOBS:-}" ]; then
    [[ "$CONTEXT_RESUME_TRAINING_JOB" =~ ^[0-9]+$ ]]
    HEAD+=(--resume-training "$DL/runs/context-training-proof-$CONTEXT_RESUME_TRAINING_JOB/training-state.pt")
   fi
+  if [ -n "${CONTEXT_WARM_START_JOB:-}" ]; then
+   [[ "$CONTEXT_WARM_START_JOB" =~ ^[0-9]+$ ]]
+   HEAD+=(--warm-start-proof "$DL/runs/context-training-proof-$CONTEXT_WARM_START_JOB")
+  fi
   HEAD+=(--actual-fit-updates "${CONTEXT_ACTUAL_FIT_UPDATES:-8}")
   HEAD+=(--actual-sampling "${CONTEXT_ACTUAL_SAMPLING:-component-order}")
  fi

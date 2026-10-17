@@ -42,6 +42,8 @@ def main():
     ap.add_argument('--actual-temporal-fit', action='store_true')
     ap.add_argument('--actual-temporal-preflight', type=Path)
     ap.add_argument('--resume-training',type=Path,help='Exact adapter/optimizer/RNG state for the same approved recipe/data')
+    ap.add_argument('--warm-start-proof',type=Path,
+        help='Verified adapter weights for a new corrective stage; optimizer and step count restart explicitly')
     ap.add_argument('--actual-fit-updates',type=int,choices=(8,32,128,512),default=8)
     ap.add_argument('--actual-source-commit')
     ap.add_argument('--actual-teacher-id')
@@ -66,6 +68,9 @@ def main():
         ap.error('Native audio conditioning requires the independently gated early future path')
     if (args.resume_training or args.actual_fit_updates != 8) and not args.actual_temporal_fit:
         ap.error('Resume/update budget is specific to the actual temporal trainer')
+    if args.warm_start_proof and (not args.actual_temporal_fit or
+            (args.actual_fit_updates!=8 and not args.resume_training)):
+        ap.error('A new warm-start stage requires a separate eight-update temporal proof before continuation')
     if args.actual_fit_updates != 8 and not args.resume_training:
         ap.error('Longer adaptation requires a verified resumed eight-update proof')
     if args.actual_sampling!='component-order' and not args.actual_temporal_fit:
