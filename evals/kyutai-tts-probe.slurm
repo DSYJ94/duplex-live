@@ -22,6 +22,12 @@ cd "$DL_TASK_SOURCE"
 set -a
 source "$DL/keys/openai.env"
 set +a
+EXTRA=(--execution "${KYUTAI_TTS_EXECUTION:-eager}")
+if [ "${KYUTAI_TTS_WARMUP:-0}" = 1 ]; then EXTRA+=(--warmup); fi
+if [ -n "${KYUTAI_TTS_BACKEND_REFERENCE_JOB:-}" ]; then
+ [[ "$KYUTAI_TTS_BACKEND_REFERENCE_JOB" =~ ^[0-9]+$ ]]
+ EXTRA+=(--backend-reference "$DL/runs/kyutai-tts-probe-$KYUTAI_TTS_BACKEND_REFERENCE_JOB/backend.json")
+fi
 apptainer exec --nv --bind /projects,/lus,/home \
  --env PYTHONPATH="$DL/envs/moshi-rag-7379661/lib/python3.12/site-packages:$DL_TASK_SOURCE" \
  --env PYTHONDONTWRITEBYTECODE=1 --env OMP_NUM_THREADS=8 \
@@ -29,4 +35,4 @@ apptainer exec --nv --bind /projects,/lus,/home \
  "$DL/pytorch-new.sif" python -u -m evals.kyutai_tts_probe \
  --assets "$DL/runs/kyutai-tts-assets-$KYUTAI_TTS_ASSETS_JOB/assets.json" \
  --mimi-load-approval "$DL/runs/kyutai-tts-mimi-load-$KYUTAI_TTS_MIMI_LOAD_JOB/report.json" \
- --out "$DL/runs/kyutai-tts-probe-${SLURM_JOB_ID}"
+ --out "$DL/runs/kyutai-tts-probe-${SLURM_JOB_ID}" "${EXTRA[@]}"

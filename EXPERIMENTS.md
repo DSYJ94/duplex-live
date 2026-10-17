@@ -4316,3 +4316,19 @@ add an unused tensor; all must fail. A temporary Mimi-only loader restores on ex
 changes no package/weight bytes, and requires that CPU gate before a new GPU probe.
 Native models remain rejected and unchanged.
 [Safetensors0.6 source](https://github.com/huggingface/safetensors/blob/v0.6.2/bindings/python/py_src/safetensors/torch.py).
+
+Plain words:CPU722 PASSES actual original failure reproduction, strict official-hook
+loading, exact318 Mimi parameters/buffers and all3 integrity negatives. NewGPU723
+PASSES complete strict Mimi/TTS loading and actual backend lookup. Its sentence
+"The room marker for Project Willow North is a teal hexagon" is independently
+recognized by724 at worderror0 with valid timing. This is typed external-controller
+content, not native reasoning/duplex acceptance. Eager execution is NOT realtime:
+4.8s audio takes20.823s after request, backend3.021s, firstPCM7.977s,
+framep950.233s and58 causal underruns. Keep raw packet stream separate from causal
+playout. Next matched renderer benchmark holds the exact prior actual backend
+text/receipt fixed, discloses receipt replay, and compares warmed eager versus
+warmed CUDA graphs with Torch compilation off. No new backend execution is claimed
+for replay arms. Report cold preparation/warmup separately, require both main/depth
+graphs really captured, and retain per-frame/decoder timing plus independent ASR.
+Predictions: depth kernel-launch overhead should fall with graphs; a decoder
+bottleneck would remain visible; backend delay is isolated by the common replay.

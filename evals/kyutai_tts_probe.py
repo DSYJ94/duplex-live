@@ -4,6 +4,7 @@ Typed input, externally chosen tools/words, complete response text before speech
 This is a component compatibility proof, not native duplex or microphone acceptance.
 """
 import argparse
+from contextlib import nullcontext
 import importlib.util
 import json
 from pathlib import Path
@@ -19,6 +20,10 @@ def main():
     ap=argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--assets',type=Path,required=True)
     ap.add_argument('--mimi-load-approval',type=Path,required=True)
+    ap.add_argument('--execution',choices=('eager','cuda-graphs'),default='eager')
+    ap.add_argument('--warmup',action='store_true')
+    ap.add_argument('--backend-reference',type=Path,
+        help='Replay one previously verified actual controller result for a matched renderer benchmark')
     ap.add_argument('--out',type=Path,required=True)
     args=ap.parse_args();manifest=json.loads(args.assets.read_text())
     mimi_gate=json.loads(args.mimi_load_approval.read_text())
@@ -72,7 +77,8 @@ def main():
     args.out.mkdir(parents=True,exist_ok=False)
     math_attention();torch.manual_seed(42424242);torch.cuda.manual_seed_all(42424242)
     loads=[];mimi_loads=[];load_start=time.perf_counter()
-    with torch.inference_mode(),no_compile(),no_cuda_graph(),sdpa_kernel(SDPBackend.MATH):
+    graph_context=no_cuda_graph() if args.execution=='eager' else nullcontext()
+    with torch.inference_mode(),no_compile(),graph_context,sdpa_kernel(SDPBackend.MATH):
         with audited_loads(loads),strict_mimi_loader(paths['mimi'],mimi_loads):
             info=CheckpointInfo.from_hf_repo('kyutai/tts-1.6b-en_fr',
                 moshi_weights=paths['model'],mimi_weights=paths['mimi'],
@@ -85,32 +91,62 @@ def main():
             model.eval().requires_grad_(False)
         torch.cuda.synchronize();load_seconds=time.perf_counter()-load_start
         attributes=tts.make_condition_attributes([paths['voice']],cfg_coef=2.)
-        world=RecordWorld({'Willow North':{'room marker':'teal hexagon'}})
-        context=[dict(role='user',text='Please check the room marker for Project Willow North.')]
-        task='tts-component-lookup';revision=world.reserve(task,context)
-        start=time.perf_counter();backend=run_worker(context,world,task,expected_revision=revision)
-        backend_ready=time.perf_counter()-start
-        receipts=[r for r in backend['receipts'] if r['tool']=='lookup_record' and r.get('executed')]
-        if not receipts or any(not world.deliverable(r) for r in receipts):
-            raise RuntimeError('Speech trial has no actual deliverable backend lookup')
-        text=backend['content'];(args.out/'backend.json').write_text(json.dumps(dict(context=context,result=backend),indent=2)+'\n')
-        packets=[];frame_steps=[]
+        packets=[];frame_steps=[];decode_steps=[];model_steps=[];start=time.perf_counter()
         def on_frame(frame):
             if not bool((frame!=-1).all()):return
+            before=time.perf_counter()
             pcm=tts.mimi.decode(frame[:,1:,:]).detach().cpu().numpy()[0,0].copy()
+            decode_steps.append(time.perf_counter()-before)
             if pcm.shape!=(1920,) or not np.isfinite(pcm).all():
                 raise RuntimeError('Invalid actual streaming TTS PCM')
             packets.append((time.perf_counter()-start,pcm))
         gen=upstream.TTSGen(tts,[attributes],on_frame=on_frame)
         original=gen._step
         def measured_step():
-            t=time.perf_counter();original();torch.cuda.synchronize();frame_steps.append(time.perf_counter()-t)
+            n=len(decode_steps);t=time.perf_counter();original();torch.cuda.synchronize()
+            elapsed=time.perf_counter()-t;frame_steps.append(elapsed)
+            model_steps.append(elapsed-(decode_steps[-1] if len(decode_steps)>n else 0.))
         gen._step=measured_step
         with tts.mimi.streaming(1):
+            warmup_seconds=0.;warmup_packets=0
+            if args.warmup:
+                start=time.perf_counter()
+                for entry in upstream.prepare_script(tts,'Preparing the streaming speech system.',first_turn=True):
+                    gen.append_entry(entry);gen.process()
+                gen.process_last();warmup_seconds=time.perf_counter()-start;warmup_packets=len(packets)
+                gen.lm_gen.reset_streaming();tts.mimi.reset_streaming()
+                gen.offset=0;gen.state=tts.machine.new_state([])
+                packets.clear();frame_steps.clear();decode_steps.clear();model_steps.clear()
+            service_prepare_seconds=time.perf_counter()-load_start
+            start=time.perf_counter()
+            if args.backend_reference:
+                prior=json.loads(args.backend_reference.read_text())
+                parent=json.loads((args.backend_reference.parent/'report.json').read_text())
+                if (parent['schema']!='dl-external-controller-tts-probe-v1' or not parent['passed']
+                        or parent.get('backend_is_replay',False) or parent['backend']!=prior['result']
+                        or parent['text']!=prior['result']['content']
+                        or not any(r['tool']=='lookup_record' and r.get('executed') for r in prior['result']['receipts'])):
+                    raise RuntimeError('Renderer benchmark lacks a verified actual controller reference')
+                context=prior['context'];backend=prior['result']
+            else:
+                world=RecordWorld({'Willow North':{'room marker':'teal hexagon'}})
+                context=[dict(role='user',text='Please check the room marker for Project Willow North.')]
+                task='tts-component-lookup';revision=world.reserve(task,context)
+                backend=run_worker(context,world,task,expected_revision=revision)
+                receipts=[r for r in backend['receipts'] if r['tool']=='lookup_record' and r.get('executed')]
+                if not receipts or any(not world.deliverable(r) for r in receipts):
+                    raise RuntimeError('Speech trial has no actual deliverable backend lookup')
+            backend_ready=time.perf_counter()-start
+            text=backend['content'];(args.out/'backend.json').write_text(json.dumps(dict(context=context,result=backend),indent=2)+'\n')
             for entry in upstream.prepare_script(tts,text,first_turn=True):
                 gen.append_entry(entry);gen.process()
             gen.process_last()
         wall=time.perf_counter()-start
+        stream_state=gen.lm_gen._streaming_state
+        graphs=dict(main=stream_state.graphed_main._graph is not None,
+            depth=stream_state.graphed_depth._graph is not None)
+        if args.execution=='cuda-graphs' and not all(graphs.values()):
+            raise RuntimeError('Requested CUDA graphs were not captured for both language and depth generation')
     if not packets:raise RuntimeError('Streaming speech produced no decoded packets')
     raw=np.concatenate([p for _,p in packets]);rate=tts.mimi.sample_rate
     if float(np.max(np.abs(raw)))<.001:raise RuntimeError('Generated speech is below the diagnostic energy floor')
@@ -121,8 +157,14 @@ def main():
     (args.out/'packets.json').write_text(json.dumps(ledger,indent=2)+'\n')
     report=dict(schema='dl-external-controller-tts-probe-v1',passed=True,
         text=text,backend=backend,backend_ready_s=backend_ready,model_load_seconds=load_seconds,
+        backend_is_replay=bool(args.backend_reference),actual_backend_executed_this_run=not bool(args.backend_reference),
+        source_backend_file_sha256=sha256(args.backend_reference) if args.backend_reference else None,
+        execution_mode=args.execution,torch_compile_enabled=False,cuda_graphs=graphs,
+        warmup_seconds=warmup_seconds,warmup_packets=warmup_packets,service_prepare_seconds=service_prepare_seconds,
         wall_seconds=wall,audio_seconds=len(raw)/rate,sample_rate=rate,
         frame_compute_p95_s=float(np.percentile(frame_steps,95)),
+        decoder_p95_s=float(np.percentile(decode_steps,95)),
+        model_and_host_p95_s=float(np.percentile(model_steps,95)),
         first_pcm_packet_available_s=packets[0][0],playout=playout,
         raw_peak=float(np.max(np.abs(raw))),raw_samples_above_one=int(np.count_nonzero(np.abs(raw)>1)),
         audio_sha256=sha256(args.out/'model.wav'),packet_stream_sha256=sha256(args.out/'packet-stream.wav'),
