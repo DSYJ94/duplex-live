@@ -68,9 +68,15 @@ if [ -n "${CONTEXT_ACTUAL_REPLAY_JOBS:-}" ]; then
 fi
 if [ -n "${CONTEXT_ACTUAL_HEAD_JOBS:-}" ]; then
  HEAD=()
+ if [ "${CONTEXT_MIXED_TRAIN_DATA:-0}" = 1 ] && [ "${CONTEXT_EARLY_TRAIN_DATA:-0}" = 1 ]; then
+  echo 'Mixed and early-only component modes are mutually exclusive' >&2
+  exit 1
+ fi
  for J in $CONTEXT_ACTUAL_HEAD_JOBS; do
   [[ "$J" =~ ^[0-9]+$ ]]
-  if [ "${CONTEXT_EARLY_TRAIN_DATA:-0}" = 1 ]; then
+  if [ "${CONTEXT_MIXED_TRAIN_DATA:-0}" = 1 ]; then
+   HEAD+=(--actual-mixed-data "$DL/runs/context-training-proof-$J")
+  elif [ "${CONTEXT_EARLY_TRAIN_DATA:-0}" = 1 ]; then
    HEAD+=(--actual-early-data "$DL/runs/context-training-proof-$J")
   else
    HEAD+=(--actual-head-data "$DL/runs/context-training-proof-$J")

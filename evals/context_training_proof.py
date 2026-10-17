@@ -36,6 +36,7 @@ def main():
     ap.add_argument('--actual-source-data', type=Path)
     ap.add_argument('--actual-head-data', type=Path, action='append')
     ap.add_argument('--actual-early-data', type=Path, action='append')
+    ap.add_argument('--actual-mixed-data', type=Path, action='append')
     ap.add_argument('--actual-temporal-audit', action='store_true')
     ap.add_argument('--actual-temporal-fit', action='store_true')
     ap.add_argument('--actual-temporal-preflight', type=Path)
@@ -66,10 +67,11 @@ def main():
         ap.error('Resume/update budget is specific to the actual temporal trainer')
     if args.actual_fit_updates != 8 and not args.resume_training:
         ap.error('Longer adaptation requires a verified resumed eight-update proof')
-    if args.actual_early_data:
-        if args.actual_head_data or not (args.actual_temporal_audit or args.actual_temporal_fit):
-            ap.error('Early components require the separate temporal audit/fit path')
-        args.actual_head_data = args.actual_early_data
+    if args.actual_early_data or args.actual_mixed_data:
+        if (args.actual_head_data or (args.actual_early_data and args.actual_mixed_data)
+                or not (args.actual_temporal_audit or args.actual_temporal_fit)):
+            ap.error('Early/mixed components require a single separate temporal audit/fit path')
+        args.actual_head_data = args.actual_early_data or args.actual_mixed_data
     if args.actual_early_window and not args.actual_future_component:
         ap.error('Early future requires the complete strict native engine component path')
     if args.actual_temporal_fit and (not args.actual_head_data or not args.actual_temporal_preflight

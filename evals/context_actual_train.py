@@ -41,7 +41,8 @@ def run(lm, spm, voice, examples, components, audits, args):
         embedded.write_bytes((pre/'actual-temporal-audit.json').read_bytes())
     batches = []
     for folder, component in zip(args.actual_head_data,components):
-        name = 'early-future.json' if args.actual_early_data else 'actual-future.json'
+        from evals.context_component_kind import manifest_name
+        name=manifest_name(folder,early=bool(args.actual_early_data),mixed=bool(args.actual_mixed_data))
         m = json.loads((folder/name).read_text()); h = Path(m['actual_history'])
         record = json.loads((h/'student-history.json').read_text())
         raw = torch.load(h/'student-history.pt',map_location='cpu',weights_only=True)['delayed_inputs']

@@ -17,7 +17,9 @@ def run(lm, spm, voice, examples, args):
     from evals.context_spanning_download import SOURCE_COMMIT
     audits, components = [], []
     for folder in args.actual_head_data:
-        if args.actual_early_data:
+        from evals.context_component_kind import manifest_name
+        name=manifest_name(folder,early=bool(args.actual_early_data),mixed=bool(args.actual_mixed_data))
+        if name=='early-future.json':
             from evals.context_early_validate import validate as validate_early
             audit, component = validate_early(folder,args.actual_source_data,args.assets,examples,spm,voice)
         else:
