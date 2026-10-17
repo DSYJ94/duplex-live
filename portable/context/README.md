@@ -123,3 +123,13 @@ result covers the three original components only. New17 October checkpoint,
 raw-history and component files have separate read-back hash-verification
 records in `runs/recovery-continuation-20261016`; regenerate the export-wide
 checksum list after final artifact selection. Cloud validation remains paused.
+
+Plain words:the experimental supervised-retention comparison additionally uses
+`CONTEXT_ACTUAL_RETENTION_TEACHER_WEIGHT=1` and
+`CONTEXT_ACTUAL_RETENTION_TEACHER_AUDIT_JOB=7506263`, with sourceb0f1beb or its exact
+checkpoint source. Preserve the independent scope report and its four approved
+teacher caches. Their words are new supervised TRAIN targets alongside the
+existing KL/hidden retention; student-history past, prefix, spans, user and audio
+remain excluded. Unset both variables for historical weight0. A changed weight
+or audit changes the recipe and cannot claim exact resume. Native quality and
+cross-provider GPU resume remain unqualified.

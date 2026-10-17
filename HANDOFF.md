@@ -1,5 +1,39 @@
 # HANDOFF — where we are (updated 2026-10-17 for active recovery)
 
+Plain words:latest28-data model7505957 PASSES520-update fit and exact fresh
+reload, but remains UNQUALIFIED after16 completed development runs. Do not
+infer0/16 component success: TRAIN cancellation
+5968 now really cancels at19.12s input clock (complete cancel audio ends17.29s),
+receipt delivered23.117s; validation clarification5975 asks the project then
+really looks it up. Both still fail subsequent truthful result/acknowledgment.
+Ordinary evaporation works, while lightning/pencil explanations are wrong and
+private replies remain contradictory. ASR5984 covers19 recordings;5968/5976 and
+publisher5906 have invalid word timing, so no spoken acceptance from them. Changed
+private5977's ASR hears Copper Dive; correct sampled text is not verified speech.
+No native model is promoted; do not extend5957 unchanged.
+
+Plain words:new sourceb0f1beb tests weight1 supervised teacher text on the SAME
+four retention histories, alongside unchanged KL/hidden retention. Their prior
+loss only preserved base behavior, which is itself unreliable. Default weight0
+is unchanged; explicit positive mode requires independent teacher scope6263.
+That CPU audit and Torch gradient/masking/resume checks PASS: teachers007/011/
+019/020 have514/334/586/497 real text targets, no prefix/span/user/audio labels.
+All eight changed files match local/remote MD5s. Same28 data/audit5910,4806 parent,
+sampling and8+512 budget: proof6461, continuation6462, native6463–6478 and CPU
+speech6479 are submitted with afterok gates. No new-objective result is claimed.
+Proof6461 now PASSES eight updates and exact fresh reload; logged teacher CE is
+nonzero for all four kinds.6462 is confirmed running. This is numerical evidence,
+not native task improvement.
+
+Plain words:full28-data export now passes119 file readback hashes and a39-path
+scan with no missing paths. Source8a1c201 restores as an independent clone from
+the bundle; this is not a new CPU/GPU model restore test. Model5957 is backed up;
+all16 native WAVs and raw5967/68 now pass22 additional local hashes in
+context-trained28-final-local-verified.json. Stage5957/native5961–5978 were
+submitted from SSH home, so their stdout is /home/u6si/dsyj94.u6si/logs rather
+than repo/logs. Python still cd'd to the immutable source. New6461+ launches
+explicitly use repo cwd. Cloud remains paused, no user input needed.
+
 Plain words: owner reviewed progress and authorizes faster continuation. No
 complete native model qualifies. Latest26-component audit5317, eight-update
 proof5318 and136/520 checkpoints5421/5422 pass numerical/reload checks. Their32

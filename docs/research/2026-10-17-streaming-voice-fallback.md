@@ -129,3 +129,13 @@ these ownership ideas; do not label their simulation as heard-audio evidence or
 call externally controlled TTS native voice-model delegation.
 [Worker](../../evals/recovery_worker.py),
 [Concurrent vocoder](../../evals/lychee_concurrent_vocoder.py).
+
+## Read-only Isambard inventory
+
+Plain words:the17 October inventory identifies an existing
+`models--kyutai--stt-1b-en_fr-candle` cache in the checked HF directory, but no
+TTS/Unmute asset in the checked model/vendor names. The old Moshi environment
+has no matching distribution-metadata directory; that does not imply its
+PYTHONPATH-provided Moshi source is absent. No model was loaded, downloaded or
+installed. This narrows the next compatibility check; it is not a ready fallback.
+Evidence: `runs/recovery-continuation-20261016/duplex-streaming-assets-inventory-full.txt`.

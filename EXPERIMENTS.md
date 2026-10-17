@@ -4103,3 +4103,23 @@ parent and recipe as26-data. Qualification remains pending. Zero-adapter native
 ordinary5883–88 all delegate and several give poor answers; publisher-persona
 5899–5906 checks whether the records-focused persona contributes. Reused scenes
 are development diagnostics, not fresh general intelligence evidence.
+
+## 2026-10-17 — 28-data native verdict and teacher-retention comparison
+
+Plain words:28-data audit5910, eight-update5911 and520-update5957 pass exact
+reload. Native5961/5964–5978 (16 total; use receipt, not arithmetic) still fail
+full-system qualification. Two real component gains: TRAIN0205968 executes
+cancel_lookup after complete cancel audio; validation0065975 clarifies then
+executes its lookup. Neither uses the subsequent result/status correctly.
+Ordinary answers and private results remain unreliable. ASR5984 covers19 WAVs;
+invalid word timing on5968/5976/5906 blocks spoken acceptance, and5977's Copper
+Dive does not verify the expected copper diamond. Do not extend5957 unchanged.
+
+Plain words:sourceb0f1beb introduces explicitly audited teacher-text CE on the
+existing four retention examples, alongside unchanged base KL/hidden MSE.
+CPU6263 passes scope and real Torch gradient/mask/state tests. Default teacher
+weight0 remains unchanged. Weight1 comparison uses identical28 components,
+parent4806, schedule and8+512 budget:6461proof,6462fit,6463–6478native,6479speech.
+It tests whether preserving a poor base distribution without teaching these
+approved complete teacher words contributes to failure. It does not establish
+that diagnosis or change the backbone. All data stays TRAIN-only.

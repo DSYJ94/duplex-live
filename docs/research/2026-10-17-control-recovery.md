@@ -488,3 +488,43 @@ control tensors5893/95 and14 new native comparison WAVs have local readback
 verification in context-transition-local-closure-verified.json. New native
 question/answer/failure players are available through viz.listen at
 /audio/voice-diagnostics/response-boundary.html; four WAV URLs return HTTP200.
+
+Plain words:5957 passes520-update training and fresh-process exact reload.
+Full16-native matrix completes. The new control targets have an actual effect
+in some scenes:5968 requests cancellation at19.12s input clock after full17.29s
+cancel audio, and the successful cancel receipt is supplied23.117s.5975 performs
+a real lookup after a correct clarification question. TRAIN0195967 still makes
+no request. The complete model remains unqualified: private/status words
+are contradictory, ordinary lightning/pencil answers are wrong, cancellation
+acknowledgment fails. These development scenes are reused, not fresh holdouts.
+
+Plain words:speech5984 completes19 recordings.5968,5976 and publisher5906 have
+invalid word timing and substantial text/audio mismatch; do not pass them.
+The incorrect lightning and pencil explanations are audible at WER0. Correct
+sampled copper diamond5977 is rendered Copper Dive by ASR, so value-use speech
+is not verified. Model5957 and source histories have portable backups; all28
+component/source files (119 total) pass readback SHA256. Static scan finds no
+missing referenced path; no new destination-GPU restore is claimed.
+
+Plain words:next comparison changes the retention objective instead of simply
+extending5957. Existing four references only teach KL agreement with the poor
+base and hidden-state preservation. New explicit weight1 adds CE against their
+independently approved measured teacher assistant text. Prefix, supplied spans,
+user and audio get no new targets. CPU6263 passes all four source/mask/label
+checks and real Torch gradient, excluded-logit and resume tests. Same data,
+parent, sequence inputs, existing KL/MSE and update budget are retained; source
+b0f1beb binds the new weight/scope audit in exact-resume metadata. Mathematical
+5910 is reused because actual-component inputs and forward math are unchanged.
+Short6461 must pass finite gradients/frozen weights/fresh reload before512-more
+6462 and16 native6463–6478; speech6479 follows. Hypotheses remain retention
+conflict, insufficient actual result-state coverage, or a backbone limit. No
+new-objective gain is inferred from its implementation or CPU checks.
+
+Plain words:teacher-retention proof6461 PASSES eight updates and exact optimizer/
+RNG/prediction reload. Actual logged teacher CEs are nonzero for all four kinds
+(approximately0.60 private,0.13 simple,0.39 clarify,0.45 cancel initially).
+6462 is confirmed running. No native improvement is inferred. The previous
+5957 matrix has p95 compute0.0365–0.0448s/frame but cold backlog3.14–3.84s and
+12/16 runs with some causal-playout underruns. This is not latency or microphone
+acceptance. Source5957 logs are preserved from its authoritative home stdout.
+Its checkpoint,16 native WAVs and two raw histories pass22 further local hashes.
