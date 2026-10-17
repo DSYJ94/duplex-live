@@ -223,6 +223,9 @@ def run(engine,user,world,args,loading):
         (args.out/'worker-events.json').write_text(json.dumps(events,indent=2)+'\n')
     if not packets or epoch is None:raise RuntimeError('Native consultation produced no PCM')
     if sum(r['input_samples'] for r in rows)!=len(user):raise RuntimeError('Real user samples skipped')
+    calibration=loading.get('ret_logit_calibration')
+    if calibration and engine._dl_ret_bias_calls!=len(rows):
+        raise RuntimeError('RET calibration did not cover exactly the live native prediction calls')
     output,playout=render_packets(packets,24000,.16)
     sf.write(args.out/'model.wav',output,24000)
     sf.write(args.out/'packet-stream.wav',np.concatenate([p for _,p in packets]),24000)
@@ -247,5 +250,6 @@ def run(engine,user,world,args,loading):
         'word_or_acoustic_tokens_forced':False,'response_start_forced':False,
         'actual_lm_and_pcm_executed_together':True,'playout_is_causal_simulation':True,
         'microphone_acceptance':False,'spoken_value_use_verified':False,'quality_qualified':False,'training_approved':False}
+    if calibration:report['ret_logit_calibration_live_calls_verified']=engine._dl_ret_bias_calls
     (args.out/'report.json').write_text(json.dumps(report,indent=2)+'\n')
     print(json.dumps({k:v for k,v in report.items() if k not in ('loading','worker_events','playout')}),flush=True)

@@ -22,6 +22,7 @@ set -a
 source "$DL/keys/openai.env"
 set +a
 EXTRA=()
+if [ -n "${CONTEXT_RET_LOGIT_BIAS:-}" ]; then EXTRA+=(--ret-logit-bias "$CONTEXT_RET_LOGIT_BIAS"); fi
 if [ -n "${CONTEXT_PERSONA_PROFILE:-}" ]; then EXTRA+=(--persona-profile "$CONTEXT_PERSONA_PROFILE"); fi
 if [ -n "${CONTEXT_LOOKUP_DELIVERY_DELAY_S:-}" ]; then EXTRA+=(--lookup-delivery-delay-s "$CONTEXT_LOOKUP_DELIVERY_DELAY_S"); fi
 if [ -n "${CONTEXT_EXPECTED_KIND:-}" ]; then EXTRA+=(--expected-kind "$CONTEXT_EXPECTED_KIND"); fi

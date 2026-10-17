@@ -47,6 +47,7 @@ def main():
     ap.add_argument('--backend-mode',choices=('scheduled','native-asr','observe-only'),default='scheduled')
     ap.add_argument('--asr-python',type=Path)
     ap.add_argument('--warm-audio',action='store_true')
+    ap.add_argument('--ret-logit-bias',type=float,default=0.)
     ap.add_argument('--adapter-proof',type=Path)
     ap.add_argument('--adapter-disabled',action='store_true')
     ap.add_argument('--adapter-zero',action='store_true')
@@ -63,6 +64,10 @@ def main():
     ap.add_argument('--layout-audit',type=Path,
         help='Explicit native-layout candidate; require a successful actual input trace')
     args=ap.parse_args()
+    from evals.context_ret_bias import validate as validate_ret_bias
+    validate_ret_bias(args.ret_logit_bias)
+    if args.ret_logit_bias and (args.train_history or args.backend_mode!='native-asr'):
+        ap.error('RET calibration is inference-only with actual native-ASR consultation')
     if args.persona_profile!='recorded-records' and args.train_history:
         ap.error('Persona comparison is inference-only and cannot collect TRAIN histories')
     if not 0<=args.lookup_delivery_delay_s<=30 or (args.lookup_delivery_delay_s and
@@ -215,6 +220,9 @@ def main():
         'persona_text_sha256':hashlib.sha256(persona.encode()).hexdigest(),
         'lookup_delivery_minimum_delay_s':args.lookup_delivery_delay_s,
         'torch':torch.__version__,'torch_file':torch.__file__,'cuda':torch.version.cuda}
+    if args.ret_logit_bias:
+        from evals.context_ret_bias import install as install_ret_bias
+        loading['ret_logit_calibration']=install_ret_bias(engine,args.ret_logit_bias)
     (args.out/'loading.json').write_text(json.dumps(loading,indent=2)+'\n')
     world=RecordWorld({meta['project']:{meta['field']:args.private_value}} if row['kind']!='simple' else {})
     if history:
