@@ -37,13 +37,18 @@ def run(lm,mimi,spm,voice,examples,args):
     from evals.recovery_data import validate_conversion
     from evals.lychee_context import BASE_INSTRUCTIONS
     audit=json.loads(args.teacher_engine_input_audit.read_text())
-    if (audit['schema']!='dl-context-all-teacher-scope-audit-v1' or not audit['passed']
+    if (audit['schema'] not in ('dl-context-all-teacher-scope-audit-v1','dl-context-all-teacher-scope-audit-v2') or not audit['passed']
             or audit['training_approved'] is not False or audit['optimizer_steps']!=0
             or audit['code_sha256']!=sha256(Path(__file__).with_name('context_retention_teacher.py'))
             or audit['voice_sha256']!=sha256(args.out/'voice.pt')
             or audit['assets_manifest_sha256']!=sha256(args.assets)):
         raise RuntimeError('Teacher Engine audit requires its matching independent all-teacher scope')
     example=next(e for e in examples if e['record']['id']==args.teacher_engine_input_id)
+    if audit['schema'].endswith('-v2'):
+        from evals.context_teacher_native_approval import checked_scope
+        from evals.context_observed_teacher import canonical
+        checked_scope(args.teacher_engine_input_audit,args.assets,args.out/'voice.pt')
+        example=canonical(example,spm)
     labels,mask,checked=scope(example)
     if checked not in audit['teachers']:raise RuntimeError('Teacher is absent from the independent scope audit')
     record=example['record'];clean=example['clean_codes'];frames=clean.shape[1]

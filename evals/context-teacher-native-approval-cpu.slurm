@@ -26,11 +26,15 @@ for J in $CONTEXT_TEACHER_INPUT_CAPTURE_JOBS; do
  [[ "$J" =~ ^[0-9]+$ ]]
  CAPTURES+=(--capture "$DL/runs/context-training-proof-$J")
 done
+for J in ${CONTEXT_TEACHER_CAPTURE_SCOPE_JOBS:-}; do
+ [[ "$J" =~ ^[0-9]+$ ]]
+ CAPTURES+=(--capture-scope "$DL/runs/context-retention-teacher-audit-$J/report.json")
+done
 run -m evals.context_teacher_native_approval \
  --assets "$DL/runs/context-spanning-assets-7454205/manifest.json" \
  --tokenizer "$DL/models/hf-cache/hub/models--nvidia--personaplex-7b-v1/snapshots/fdaf4090a61cb315c138a1faee287ffd6c716309/tokenizer_spm_32k_3.model" \
  --voice "$DL/runs/context-training-proof-7505957/voice.pt" \
- --scope "$DL/runs/context-retention-teacher-audit-7507449/report.json" \
+ --scope "$DL/runs/context-retention-teacher-audit-${CONTEXT_NATIVE_TEACHER_SCOPE_JOB:-7507449}/report.json" \
  --cache "$DL/runs/recovery-mixed-codes-7411513" --cache "$DL/runs/recovery-codes-7434926" \
  --cache "$DL/runs/recovery-codes-7435538" "${CAPTURES[@]}" \
  --out "$DL/runs/context-teacher-native-approval-${SLURM_JOB_ID}"

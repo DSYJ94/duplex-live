@@ -12,6 +12,11 @@ def load(approval_file,scope_file,assets,voice_file,examples,prefix,spm):
             or outer['optimizer_steps']!=0 or outer['training_approved'] is not False
             or outer['code_sha256']!=sha256(Path(__file__).with_name('context_teacher_native_approval.py'))):
         raise RuntimeError('Native teacher corpus lacks matching independent CPU approval')
+    capture_scopes=[]
+    for item in outer.get('capture_scopes',[]):
+        path=Path(item['path'])
+        if sha256(path)!=item['sha256']:raise RuntimeError('Changed declared historical teacher scope')
+        capture_scopes.append(path)
     selected=select_teachers(examples,True);cases=outer['cases']
     if (len(cases)!=len(selected) or len({c['teacher']['id'] for c in cases})!=len(cases)
             or {c['teacher']['id'] for c in cases}!={e['record']['id'] for e in selected}):
@@ -19,7 +24,7 @@ def load(approval_file,scope_file,assets,voice_file,examples,prefix,spm):
     rows=[];records=[]
     for e in selected:
         case=next(c for c in cases if c['teacher']['id']==e['record']['id'])
-        folder=Path(case['capture']);checked,tensors=validate(folder,examples,prefix,spm,scope_file,assets,voice_file)
+        folder=Path(case['capture']);checked,tensors=validate(folder,examples,prefix,spm,scope_file,assets,voice_file,capture_scopes)
         if checked!=case or not checked['passed']:raise RuntimeError('Native teacher approval changed')
         trace=json.loads((folder/'teacher-engine-input-audit.json').read_text())
         rows.append(dict(inputs=tensors['delayed_inputs'],mask=tensors['text_mask'],targets=tensors['text_targets'],

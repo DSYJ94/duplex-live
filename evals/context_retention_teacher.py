@@ -68,6 +68,7 @@ def scope(example):
         targets_sha256=hashlib.sha256(selected.contiguous().numpy().tobytes()).hexdigest(),
         mask_sha256=hashlib.sha256(mask.contiguous().numpy().tobytes()).hexdigest(),
         prefix_loss_targets=0,span_loss_targets=0,user_loss_targets=0,audio_loss_targets=0)
+    if r.get('observed_boundary'):evidence['observed_boundary']=r['observed_boundary']
     return labels,mask,evidence
 
 
@@ -115,7 +116,10 @@ def main():
     ap.add_argument('--cache',type=Path,action='append',required=True)
     ap.add_argument('--all-approved-teachers',action='store_true',
         help='Audit all independent TRAIN teachers; not accepted by the four-reference optimizer policy')
+    ap.add_argument('--observed-native-boundary',action='store_true')
     args=ap.parse_args()
+    if args.observed_native_boundary and not args.all_approved_teachers:
+        ap.error('Observed teacher boundary is an explicit complete-corpus scope audit')
     if sha256(args.tokenizer)!=MODEL_HASHES['tokenizer_spm_32k_3.model']:raise RuntimeError('Changed teacher tokenizer')
     assets=json.loads(args.assets.read_text());sys.path.insert(0,assets['source'])
     from contextspan.model.sequence_convention import persona_prefix
@@ -123,6 +127,9 @@ def main():
     examples,_=load_training(args.cache,spm,persona_prefix(BASE_INSTRUCTIONS,voice,spm),request_policy='native-prelead-epad')
     teachers=[]
     for e in select_teachers(examples,args.all_approved_teachers):
+        if args.observed_native_boundary:
+            from evals.context_observed_teacher import canonical
+            e=canonical(e,spm)
         _,_,audit=scope(e);teachers.append(audit)
     result=dict(schema='dl-context-retention-teacher-audit-v1',passed=True,optimizer_steps=0,
         assets_manifest_sha256=sha256(args.assets),voice_sha256=sha256(args.voice),
@@ -133,6 +140,10 @@ def main():
         result.update(schema='dl-context-all-teacher-scope-audit-v1',coverage='all-approved-gpt-live-train',
             task_kind_counts=dict(Counter(r['kind'] for r in teachers)),
             training_approved=False,requires_separate_optimizer_policy=True)
+    if args.observed_native_boundary:
+        result.update(schema='dl-context-all-teacher-scope-audit-v2',observed_native_boundary=True,
+            observed_boundary_code_sha256=sha256(Path(__file__).with_name('context_observed_teacher.py')),
+            excluded_unobserved_padding_frames=sum(t.get('observed_boundary',{}).get('excluded_unobserved_padding_frames',0) for t in teachers))
     args.out.mkdir(exist_ok=False);(args.out/'report.json').write_text(json.dumps(result,indent=2)+'\n')
     print(json.dumps(result),flush=True)
 

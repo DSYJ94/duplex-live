@@ -21,8 +21,10 @@ run() {
 }
 run -m unittest evals.harness.test_context_retention_teacher evals.harness.test_context_training_state \
  evals.harness.test_context_teacher_inventory
+if [ "${CONTEXT_OBSERVED_NATIVE_BOUNDARY:-0}" = 1 ]; then run -m unittest evals.harness.test_context_observed_teacher; fi
 OPTIONS=()
 if [ "${CONTEXT_ALL_APPROVED_TEACHERS:-0}" = 1 ]; then OPTIONS+=(--all-approved-teachers); fi
+if [ "${CONTEXT_OBSERVED_NATIVE_BOUNDARY:-0}" = 1 ]; then OPTIONS+=(--observed-native-boundary); fi
 run -m evals.context_retention_teacher \
  --assets "$DL/runs/context-spanning-assets-7454205/manifest.json" \
  --tokenizer "$DL/models/hf-cache/hub/models--nvidia--personaplex-7b-v1/snapshots/fdaf4090a61cb315c138a1faee287ffd6c716309/tokenizer_spm_32k_3.model" \

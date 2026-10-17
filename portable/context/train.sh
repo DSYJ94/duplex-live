@@ -50,7 +50,7 @@ case "$MODE" in
     : "${CONTEXT_ACTUAL_NATIVE_TEACHER_PREFLIGHT_JOB:?Independent native teacher math preflight required}"
     [[ "$CONTEXT_ACTUAL_NATIVE_TEACHER_APPROVAL_JOB" =~ ^[0-9]+$ && "$CONTEXT_ACTUAL_NATIVE_TEACHER_PREFLIGHT_JOB" =~ ^[0-9]+$ ]]
     ARGS+=(--actual-native-teacher-approval "$ROOT/runs/context-teacher-native-approval-$CONTEXT_ACTUAL_NATIVE_TEACHER_APPROVAL_JOB/report.json"
-     --actual-native-teacher-scope "$ROOT/runs/context-retention-teacher-audit-7507449/report.json"
+     --actual-native-teacher-scope "$ROOT/runs/context-retention-teacher-audit-${CONTEXT_NATIVE_TEACHER_SCOPE_JOB:-7507449}/report.json"
      --actual-native-teacher-preflight "$ROOT/runs/context-training-proof-$CONTEXT_ACTUAL_NATIVE_TEACHER_PREFLIGHT_JOB"
      --actual-native-teacher-coverage "${CONTEXT_ACTUAL_NATIVE_TEACHER_COVERAGE:-four-longest}")
    else

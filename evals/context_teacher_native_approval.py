@@ -31,21 +31,35 @@ def prepared(example,prefix,user,spm):
     return torch.cat([initial,_delay_sequence(delays,assembled[None],initial)],dim=2)[:,:,:-1]
 
 
-def validate(folder,examples,prefix,spm,scope_file,assets,voice_file):
+def checked_scope(path,assets,voice_file):
+    value=json.loads(path.read_text())
+    if (value['schema'] not in ('dl-context-all-teacher-scope-audit-v1','dl-context-all-teacher-scope-audit-v2')
+            or not value['passed'] or value['optimizer_steps']!=0 or value['training_approved'] is not False
+            or value['voice_sha256']!=sha256(voice_file) or value['assets_manifest_sha256']!=sha256(assets)):
+        raise RuntimeError('Changed independent native teacher scope')
+    if value['schema'].endswith('-v2') and (not value['observed_native_boundary']
+            or value['observed_boundary_code_sha256']!=sha256(Path(__file__).with_name('context_observed_teacher.py'))):
+        raise RuntimeError('Changed observed native teacher boundary policy')
+    return value
+
+
+def validate(folder,examples,prefix,spm,scope_file,assets,voice_file,capture_scopes=()):
     import torch
     from evals.context_retention_teacher import scope
     from evals.context_teacher_engine_inputs import compare
     report_file=folder/'teacher-engine-input-audit.json';r=json.loads(report_file.read_text())
-    approved=json.loads(scope_file.read_text())
+    approved=checked_scope(scope_file,assets,voice_file)
+    if approved['code_sha256']!=sha256(Path(__file__).with_name('context_retention_teacher.py')):
+        raise RuntimeError('Changed overall teacher scope implementation')
+    source_scope=next((p for p in (scope_file,*capture_scopes) if sha256(p)==r['teacher_scope_sha256']),None)
+    if source_scope is None:raise RuntimeError('Undeclared historical capture scope')
+    captured=checked_scope(source_scope,assets,voice_file)
     if (r['schema']!='dl-context-teacher-engine-input-audit-v1' or r['optimizer_steps']!=0
             or r['training_approved'] is not False or not r['teacher_text_and_audio_forced']
             or not r['native_user_encoder_and_agent_decoder_executed']
             or not r['real_to_virtual_exact'] or not r['all_real_targets_provided']
-            or approved['schema']!='dl-context-all-teacher-scope-audit-v1' or not approved['passed']
-            or approved['code_sha256']!=sha256(Path(__file__).with_name('context_retention_teacher.py'))
             or approved['voice_sha256']!=sha256(voice_file)
             or approved['assets_manifest_sha256']!=sha256(assets)
-            or r['teacher_scope_sha256']!=sha256(scope_file)
             or r['assets_manifest_sha256']!=sha256(assets)
             or r['voice_sha256']!=sha256(voice_file) or sha256(folder/'voice.pt')!=sha256(voice_file)
             or r['file']!='teacher-engine-inputs.pt' or sha256(folder/r['file'])!=r['sha256']
@@ -57,9 +71,15 @@ def validate(folder,examples,prefix,spm,scope_file,assets,voice_file):
     for name,digest in r['code_sha256'].items():
         content=subprocess.check_output(['git','show',commit+':evals/'+name],cwd=Path(__file__).resolve().parents[1])
         if hashlib.sha256(content).hexdigest()!=digest:raise RuntimeError('Changed native teacher builder')
+    content=subprocess.check_output(['git','show',commit+':evals/context_retention_teacher.py'],cwd=Path(__file__).resolve().parents[1])
+    if hashlib.sha256(content).hexdigest()!=captured['code_sha256']:
+        raise RuntimeError('Capture scope does not match its immutable builder')
     example=next(e for e in examples if e['record']['id']==r['teacher']['id'])
+    if approved['schema'].endswith('-v2'):
+        from evals.context_observed_teacher import canonical
+        example=canonical(example,spm)
     labels,mask,checked=scope(example)
-    if checked!=r['teacher'] or checked not in approved['teachers']:
+    if checked!=r['teacher'] or checked not in approved['teachers'] or checked not in captured['teachers']:
         raise RuntimeError('Native teacher labels differ from independent approval')
     saved=torch.load(folder/r['file'],map_location='cpu',weights_only=True)
     count=example['clean_codes'].shape[1];total=example['codes'].shape[1]
@@ -126,6 +146,7 @@ def main():
     ap=argparse.ArgumentParser(description=__doc__)
     for key in ('assets','tokenizer','voice','scope','out'):ap.add_argument('--'+key,type=Path,required=True)
     ap.add_argument('--cache',type=Path,action='append',required=True)
+    ap.add_argument('--capture-scope',type=Path,action='append',default=[])
     ap.add_argument('--capture',type=Path,action='append',required=True);args=ap.parse_args()
     asset=json.loads(args.assets.read_text());source=Path(asset['source'])
     if (asset['source_commit']!=SOURCE_COMMIT or subprocess.check_output(['git','-C',str(source),'rev-parse','HEAD']).decode().strip()!=SOURCE_COMMIT
@@ -139,11 +160,12 @@ def main():
     examples,_=load_training(args.cache,spm,prefix,request_policy='native-prelead-epad')
     args.out.mkdir(exist_ok=False);results=[]
     for folder in args.capture:
-        audit,_=validate(folder,examples,prefix,spm,args.scope,args.assets,args.voice)
+        audit,_=validate(folder,examples,prefix,spm,args.scope,args.assets,args.voice,args.capture_scope)
         results.append(audit);print(json.dumps(audit),flush=True)
     if len({a['teacher']['id'] for a in results})!=len(results):raise RuntimeError('Duplicate approved teacher trace')
     result=dict(schema='dl-context-native-teacher-approval-set-v1',passed=all(a['passed'] for a in results),
-        cases=results,optimizer_steps=0,training_approved=False,code_sha256=sha256(Path(__file__)))
+        cases=results,optimizer_steps=0,training_approved=False,code_sha256=sha256(Path(__file__)),
+        capture_scopes=[dict(path=str(p),sha256=sha256(p)) for p in args.capture_scope])
     (args.out/'report.json').write_text(json.dumps(result,indent=2)+'\n')
     if not result['passed']:raise RuntimeError('Native teacher has differences beyond declared streaming user conditioning')
 
