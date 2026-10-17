@@ -12,6 +12,13 @@
 set -euo pipefail
 cd /projects/u6si/duplex-live/repo
 case "${1:?Choose rag, personaplex or qwen}" in
+  teacher-engine-input)
+    : "${DL_TASK_SOURCE:?Immutable source required}"
+    : "${DL_TASK_COMMIT:?Immutable commit required}"
+    : "${CONTEXT_TEACHER_SCOPE_JOB:?Independent teacher scope required}"
+    : "${CONTEXT_TEACHER_ENGINE_INPUT_INDEX:?Single teacher index required}"
+    [[ "$CONTEXT_TEACHER_ENGINE_INPUT_INDEX" =~ ^[0-9]+$ ]]
+    SCRIPT="$DL_TASK_SOURCE/evals/context-training-proof.slurm" ;;
   rag) SCRIPT=evals/moshi-rag-training-proof.slurm ;;
   rag-reload) SCRIPT=evals/moshi-rag-reload-only.slurm ;;
   recovery-data) SCRIPT=evals/recovery-prepare-data.slurm ;;
