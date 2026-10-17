@@ -2,6 +2,17 @@
 
 ## Current execution — 17 October, mixed ordinary/private correction
 
+Plain words: latest18-component proof7501930 PASSES eight new updates and exact
+prediction/optimizer/random-state reload, with the original136-update7500125
+weights and an explicitly fresh optimizer. Its bounded128-update continuation
+is7502015 (source9c90970, stage136 total). Dependent development/controlled TRAIN
+checks are7502018–27; changed private worlds7502028/29. Source metadata sets
+validation000=yellow circle and001=green oval, so earlier silver-hexagon/teal-star
+runs are different declared worlds, not matched retention checks. No qualified
+model exists. Audio1857 confirms real spoken cancellation denials despite the
+successful tool in7500397. The18-component audit7501865 passes all components
+(maximum error0.0001449585, causal0). Current research record below has details.
+
 Plain words: latest active record is [17 October control recovery](docs/research/2026-10-17-control-recovery.md).
 Retained reference7500125 is unqualified;648-update7500366 is rejected.520-update
 7500371 triggers a real backend cancellation in validation7500397 but speaks a

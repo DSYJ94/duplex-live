@@ -95,3 +95,35 @@ pairs and all15 earlier component tensor hashes match their reports. Newer
 checkpoint/data transfers and current source bundles must be verified before
 final packaging. The old16 October global SHA index is stale. CPU portability
 checks do not establish a destination-GPU resume.
+
+
+## Independent checks completed after the initial record
+
+Plain words: speech1857 confirms the cancellation mismatch from actual PCM,
+with word error0.0521 for7500397 and0.0638 for delayed7501264. Both have valid
+recognition time/word bounds. The backend cancellation in7500397 is real; the
+spoken denial is also real. These are separate requirements.
+
+Plain words: all18 components pass temporal audit7501865 (maximum error
+0.0001449585, causal-prefix error0). Workq proof7501930 uses the same verified
+136-update weights and a fresh optimizer, with a12-minute walltime. No128- or
+512-update continuation is submitted yet. Five17-component native checks are
+still pending in the normal queue at the last read; the isolated pencil check
+7501844 refuses despite a correct returned explanation.
+
+
+## Bounded18-component continuation
+
+Plain words: proof7501930 passes eight new updates, unchanged frozen weights,
+and exact prediction/optimizer/random-state reload. Continuation7502015 adds128
+updates with the same approved data, optimizer state and warm-source identity.
+Its stage counter will be136; the original warm weights also had136 updates.
+This is one new corrective comparison, not an unchanged-recipe scale-up.
+
+Dependent native cases7502018–27 cover all eight validation scenes and TRAIN019/020.
+Their declared worlds come from approved source metadata: validation000 is yellow
+circle and001 green oval. Earlier136 reference tests used declared counterfactual
+worlds silver hexagon/teal star; do not treat their value-dependent outcomes as
+matched comparisons. Extra changed-world7502028/29 use copper diamond/amber
+triangle. No value is supplied to the speech prompt before an actual lookup.
+All are development evidence; none is a fresh sealed qualification.

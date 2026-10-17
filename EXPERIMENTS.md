@@ -32,6 +32,7 @@ These are development checks, not the historical80-lesson Phase-1 exam.
 |7500366|512 more updates from7500125,648 total; exact reload, lower text loss | Reject wrong facts, repetition and missing values7500380–91. |
 |7500364/7500371| New15 components including isolated cancellation controls;8 plus512 updates, exact reload | Validation7500397 requests after cancellation and backend executes it, but speech denies authority; TRAIN7500396 misses the request. Unqualified. |
 |7501360| New17-component warm8 from7500125 weights, optimizer reset; independent audit7501359 and exact state/prediction reload PASS | Native checks pending; pencil7501844 refuses. No continuation submitted yet. |
+|7501930/7502015| New18-component recipe adds50 measured post-answer listening controls; warm8 passes exact reload, bounded128 continuation submitted | Native7502018–29 pending. No quality claim. |
 
 Plain words: detail, diagnostic IDs, rejected rendering and corpus ownership live
 in [the current control-recovery record](docs/research/2026-10-17-control-recovery.md).
