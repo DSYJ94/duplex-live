@@ -5,6 +5,10 @@ from pathlib import Path
 import sys
 
 
+class ASRContextError(RuntimeError):
+    """Recognized words cannot authorize a request on the arrived-audio clock."""
+
+
 def context(result, input_available_s, assistant_text, assistant_available_s):
     import math
     words=[word for segment in result['segments'] for word in segment.get('words',[])]
@@ -13,20 +17,31 @@ def context(result, input_available_s, assistant_text, assistant_available_s):
         start,end=word['start'],word['end'];text=word['text'].strip()
         if (not text or not all(math.isfinite(v) for v in (start,end))
                 or not 0<=start<end<=input_available_s+.04 or start<previous-.04):
-            raise RuntimeError('ASR returned invalid or future word bounds')
+            raise ASRContextError('ASR returned invalid or future word bounds')
         if not groups or start-groups[-1]['end_s']>.6:
             groups.append({'role':'user','text':text,'start_s':start,'end_s':end,
                 'source':'actual arrived user PCM; Whisper timed recognition, not reference words'})
         else:
             groups[-1]['text']+=' '+text;groups[-1]['end_s']=end
         previous=end
-    if not groups:raise RuntimeError('Native retrieval marker has no recognized user words')
+    if not groups:raise ASRContextError('Native retrieval marker has no recognized user words')
     if assistant_text.strip():
         groups.append({'role':'assistant','text':assistant_text,'packet_available_s':assistant_available_s,
             'source':'sampled native text through actual retrieval trigger; not verified tool receipt'})
     # Each user span keeps ASR bounds. The assistant entry is the cumulative
     # sampled snapshot available at the trigger; do not fabricate word times.
     return groups
+
+
+def request_context(result, input_available_s, assistant_text, assistant_available_s, task_id):
+    """Reject unusable recognition explicitly while allowing live audio to continue."""
+    try:
+        return context(result,input_available_s,assistant_text,assistant_available_s),None
+    except ASRContextError as error:
+        return [],{'route':'error','content':('The backend could not use this audio recognition reliably. '
+            'Ask the user to repeat their latest request. No tool was executed for this request.'),
+            'task_id':task_id,'asr_context_error':str(error),'receipts':[],
+            'speech_model_routing':False,'backend_api_called':False}
 
 
 def main():

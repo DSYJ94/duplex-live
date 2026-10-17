@@ -82,7 +82,7 @@ def run(engine,user,world,args,loading):
     import numpy as np
     import soundfile as sf
     import torch
-    from evals.context_spanning_asr import context as recognized_context
+    from evals.context_spanning_asr import request_context
     from evals.recovery_worker import run_worker,WorkerContractError
     from evals.context_backend_reference import reference as backend_reference
     from evals.audio_playout import render_packets
@@ -102,8 +102,10 @@ def run(engine,user,world,args,loading):
             recognized=json.loads(line)
             if recognized['id']!=identity or abs(recognized['input_seconds']-due)>.0001:
                 raise RuntimeError('ASR request/source clock mismatch')
-        context=recognized_context(recognized,due,assistant,available)
+        context,rejected=request_context(recognized,due,assistant,available,identity)
         with world.lock:world.tasks[identity]['context']=context
+        if rejected is not None:
+            return rejected,recognized,context,time.monotonic()
         try:
             result=run_worker(context,world,identity,expected_revision=revision)
         except WorkerContractError as error:
