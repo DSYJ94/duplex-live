@@ -88,7 +88,7 @@ def run(lm, mimi, spm, voice, histories, data, assets, source_commit, cut_index=
     if cut_index is not None:
         index = cut_index
         if (not 0 <= index < len(rows)-2
-                or (not before_reply and rows[index]['input_available_s'] < max(e['applied_at_s'] for e in spans)+.24)
+                or (not before_reply and rows[index]['input_available_s'] < max((e['applied_at_s'] for e in spans),default=0.)+.24)
                 or saved['states'][index]['pending_exit_cb0'] is not None
                 or any(rows[i+1]['history_virtual_frames_before_step'] != saved['states'][i]['virtual_frames']
                     for i in (index,index+1))):
@@ -168,7 +168,8 @@ def run(lm, mimi, spm, voice, histories, data, assets, source_commit, cut_index=
         **({'conditioning_policy':'verified-trained-rollout','trained_collector':collector} if collector else {}),
         'source_execution':record['execution'],'execution':snapshot(lm),
         'real_frame_boundary':index,'checked_real_frames':len(steps),'steps':steps,
-        'cut_scope':'before every sampled reply/request and actual receipt' if before_reply else 'post-result',
+        'cut_scope':'before every sampled reply/request and actual receipt' if before_reply else
+            'post-result' if spans else 'after actual dialogue without a supplied result',
         'inputs':inputs,'temporal_numerics':numerical,'passed':passed,
         'actual_user_encoder_and_agent_decoder_executed':True,
         'actual_receipt_boundaries_replayed':True,'new_backend_calls':False,

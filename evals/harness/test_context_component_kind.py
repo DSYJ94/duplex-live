@@ -42,5 +42,12 @@ class MixedComponentScope(unittest.TestCase):
         self.assertEqual(order[8:],[balanced_index(kinds,s) for s in range(8,264)])
         with self.assertRaises(ValueError):balanced_index([],0)
 
+    def test_control_rollin_requires_unambiguous_mixed_mode(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp);(root/'control-rollin.json').touch()
+            self.assertEqual(manifest_name(root,mixed=True),'control-rollin.json')
+            (root/'action-future.json').touch()
+            with self.assertRaises(RuntimeError):manifest_name(root,mixed=True)
+
 
 if __name__=='__main__':unittest.main()

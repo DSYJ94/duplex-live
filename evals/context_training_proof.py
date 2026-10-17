@@ -58,6 +58,7 @@ def main():
     ap.add_argument('--actual-cancel-ack',action='store_true')
     ap.add_argument('--actual-trained-response-boundary',action='store_true')
     ap.add_argument('--actual-trained-private-future',action='store_true')
+    ap.add_argument('--actual-control-rollin',choices=('cancel_request','clarification_lookup'))
     ap.add_argument('--actual-recorded-voice', action='store_true')
     ap.add_argument('--actual-native-priming', action='store_true')
     ap.add_argument('--actual-cold-graphs', action='store_true')
@@ -71,7 +72,7 @@ def main():
     args = ap.parse_args()
     from evals.context_decision_loss import validate as validate_decision_weight
     validate_decision_weight(args.actual_response_first_word_weight)
-    if sum((args.actual_cancel_ack,args.actual_trained_response_boundary,args.actual_trained_private_future))>1:
+    if sum((args.actual_cancel_ack,args.actual_trained_response_boundary,args.actual_trained_private_future,bool(args.actual_control_rollin)))>1:
         ap.error('Choose one independently scoped trained future kind')
     if args.actual_retention_sampling!='legacy-modulo' and not (args.actual_temporal_fit and args.actual_sampling=='balanced-kind'):
         ap.error('Per-kind retention coverage requires explicit balanced-kind temporal adaptation')
@@ -88,14 +89,17 @@ def main():
     if args.actual_trained_private_future and not (args.actual_trained_collector and args.actual_future_component
             and args.actual_teacher_id and not args.actual_early_window and not args.actual_native_audio_future):
         ap.error('Trained private correction requires explicit late teacher selection and a verified trained collector')
+    if args.actual_control_rollin and not (args.actual_trained_collector and args.actual_future_component
+            and args.actual_teacher_id and not args.actual_early_window and args.actual_native_audio_future):
+        ap.error('Control roll-in needs one explicit trained TRAIN history, teacher and own native audio')
     if args.actual_trained_collector and args.actual_future_component and not (args.actual_cancel_ack
-            or args.actual_trained_response_boundary or args.actual_trained_private_future):
+            or args.actual_trained_response_boundary or args.actual_trained_private_future or args.actual_control_rollin):
         ap.error('Trained prefix replay is read-only until separately audited future supervision is implemented')
     if args.actual_response_first_word_weight!=1. and not (args.actual_temporal_fit and args.actual_mixed_data):
         ap.error('Decision weighting requires explicit audited mixed-component temporal training')
     if args.actual_teacher_id and not args.actual_future_component:
         ap.error('Explicit teacher selection requires an independently planned future component')
-    if args.actual_native_audio_future and not args.actual_early_window:
+    if args.actual_native_audio_future and not (args.actual_early_window or args.actual_control_rollin):
         ap.error('Native audio conditioning requires the independently gated early future path')
     if (args.resume_training or args.actual_fit_updates != 8) and not args.actual_temporal_fit:
         ap.error('Resume/update budget is specific to the actual temporal trainer')
@@ -235,7 +239,11 @@ def main():
             prefix = persona_prefix(BASE_INSTRUCTIONS, voice, spm)
             examples, records = load_training(args.cache, spm, prefix, text_padding=args.text_padding,
                 request_policy=args.request_policy)
-            if args.actual_cancel_ack:
+            if args.actual_control_rollin:
+                from evals.context_control_rollin import plan as control_plan
+                manifest=control_plan(args.actual_replay[0],args.actual_source_data,args.assets,examples,spm,voice,
+                    args.actual_teacher_id,args.actual_control_rollin);gold=None
+            elif args.actual_cancel_ack:
                 from evals.context_cancel_ack import plan as cancel_plan
                 manifest,gold=cancel_plan(args.actual_replay[0],args.actual_source_data,examples,spm,args.actual_teacher_id)
             else:
@@ -256,6 +264,9 @@ def main():
             cut_index = manifest['replay_cut_index']
             def callback(engine, saved, index, rows, pcm, gate):
                 (args.out/'engine-replay-before-future.json').write_text(json.dumps(gate,indent=2)+'\n')
+                if args.actual_control_rollin:
+                    from evals.context_control_rollin import generate as control_generate
+                    return control_generate(engine,saved,index,rows,pcm,manifest,args.out)
                 if args.actual_early_window:
                     from evals.context_early_future import generate as early_generate
                     return early_generate(engine,saved,index,rows,pcm,gold,manifest,args.out,
