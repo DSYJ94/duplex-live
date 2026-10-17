@@ -4344,3 +4344,15 @@ Warmup2.748s and service preparation6.697s remain separate. This supports moving
 to a continuous-listening component probe, not full duplex qualification.
 Streaming-ASR source/model metadata are pinned; all runtime assets already cached,
 but checksum/inference checks remain. No ASR reference words may enter inference.
+
+Plain words:streaming listening probe is prepared separately. It loads the pinned
+1B ASR and identical32-codebook Mimi through complete strict audited loading, keeps
+weights frozen, and feeds each1920-sample user frame only after its80ms arrival
+boundary. No frame is discarded. After warmup/reset, three approved TRAIN inputs
+008/019/020 are replayed at real arrival pace; all raw token/head outputs, delays,
+backlog, samples and tensor hashes are retained. Measured reference user words
+are parsed only after recognition for grading. Endpoint baseline follows publisher
+head2/class0>0.5 plus two nonlexical frames; it is not qualified conversation policy.
+No assistant audio, reference transcript, controller/backend or microphone enters
+this component. A successful recognition run would still leave continuous
+listening/speaking integration, cancellation and task-completion evaluation open.
