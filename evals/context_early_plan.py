@@ -35,8 +35,10 @@ def plan(late, examples):
         raise RuntimeError('No early actual cut before every sampled reply/request token')
     if (clean[0,:begin]>=4).any():
         raise RuntimeError('Early window would omit an approved teacher reply/request token')
+    question = late.get('target_kind') == 'clarification_question'
     last_word = int((clean[0]>=5).nonzero()[-1])
-    end = max(last_word+1,math.ceil(max(w[1][1] for w in words)*12.5))+2
+    end = (late['selection']['source_end_frame'] if question else
+        max(last_word+1,math.ceil(max(w[1][1] for w in words)*12.5))+2)
     if end > min(len(rows),clean.shape[1]):
         raise RuntimeError('Complete approved teacher reply exceeds the recorded actual input; no silent crop')
     if (clean[:9,begin:end]<0).any():
@@ -53,7 +55,16 @@ def plan(late, examples):
         spans.append({'real_frame':boundary,'event':event})
     ordinary = late.get('target_kind') == 'ordinary_answer'
     details = {}
-    if ordinary:
+    if question:
+        if (record['source']['kind']!='clarify' or events or spans
+                or late['actual_private_receipt'] is not None or (clean[0,begin:end]==4).any()):
+            raise RuntimeError('Clarification question acquired a result, backend state or retrieval target')
+        details={'target_kind':'clarification_question',
+            'clarification_plan_code_sha256':late['clarification_plan_code_sha256'],
+            'clarification_question_without_backend_context':True,
+            'question_only_selection':late['selection'],
+            'later_teacher_reply_and_request_tokens_deliberately_excluded':True}
+    elif ordinary:
         if (record['source']['kind'] != 'simple' or late['world'] != {}
                 or late['actual_private_receipt'] is not None or events or spans or (clean[0] == 4).any()):
             raise RuntimeError('Ordinary future acquired backend context or a private target')
@@ -90,14 +101,16 @@ def plan(late, examples):
         'actual_prefix_has_no_reply_or_request_tokens':True,
         'first_assistant_measured_onset_s':first_onset,
         'window_begins_before_first_measured_speech':begin*.08 <= first_onset-.16,
-        'all_teacher_reply_and_request_tokens_retained':True,
+        'all_teacher_reply_and_request_tokens_retained':not question,
         'user_pcm_and_word_times_retimed':False,'teacher_word_times_retimed':False,
         'future_user_pcm_is_allowed_to_contain_real_speech':True,
-        'future_recorded_receipts':spans,'future_receipts_replayed_not_dispatched':not ordinary,
+        'future_recorded_receipts':spans,'future_receipts_replayed_not_dispatched':not (ordinary or question),
         **details,
         'past_loss_targets':0,'audio_loss_targets':0,'gold_targets_created':False,
         'training_approved':False,'free_running_delegation_qualified':False,
         'composition':'actual silent prefix, approved teacher future on original real clock, observed source user PCM and actual receipt boundaries'}
     if ordinary:
         result['composition']='actual silent prefix, complete approved ordinary teacher reply on original real clock, observed user PCM, no backend context'
+    if question:
+        result['composition']='actual silent prefix and complete first measured clarification question only; later project, requests and facts excluded'
     return result,clean[:9,begin:end].clone()

@@ -59,8 +59,8 @@ def main():
         help='Explicit native-layout candidate; require a successful actual input trace')
     args=ap.parse_args()
     if args.backend_mode=='observe-only' and (
-            not args.train_history or args.expected_kind!='simple' or args.pending_status):
-        ap.error('Observe-only is an unapproved TRAIN simple-history capture, without supplied backend state')
+            not args.train_history or args.expected_kind not in ('simple','clarify') or args.pending_status):
+        ap.error('Observe-only requires unapproved TRAIN simple/clarification conditioning without backend state')
     if args.backend_mode=='native-asr':
         devices=os.environ.get('CUDA_VISIBLE_DEVICES','').split(',')
         if len(devices)!=2 or len(set(devices))!=2 or not args.asr_python:

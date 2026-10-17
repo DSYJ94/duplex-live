@@ -14,7 +14,7 @@ from evals.moshi_model_download import sha256
 
 
 def observe_only(engine,user,args,loading):
-    """Record raw simple TRAIN conditioning without supplying answer-bearing spans.
+    """Record raw simple/clarification TRAIN conditioning without answer-bearing spans.
 
     Native request markers are observed but not executed. This mode cannot
     qualify conversation or delegation and never creates supervised targets.
@@ -24,9 +24,9 @@ def observe_only(engine,user,args,loading):
     import torch
     from evals.audio_playout import render_packets
     history=getattr(engine,'_dl_student_history',None)
-    if (args.source_split!='train' or loading['scenario_kind']!='simple'
+    if (args.source_split!='train' or loading['scenario_kind'] not in ('simple','clarify')
             or history is None or args.pending_status):
-        raise RuntimeError('Observe-only capture requires simple TRAIN input, recorder and no backend state')
+        raise RuntimeError('Observe-only requires simple/clarification TRAIN input, recorder and no backend state')
     tokens=[];rows=[];packets=[];epoch=time.monotonic()
     with (args.out/'events.jsonl').open('w') as log:
         for offset in range(0,len(user),engine.frame_size):
@@ -57,7 +57,8 @@ def observe_only(engine,user,args,loading):
     sf.write(args.out/'packet-stream.wav',np.concatenate([p for _,p in packets]),24000)
     (args.out/'worker-events.json').write_text('[]\n')
     receipt=history.finish()
-    report={'schema':'dl-context-simple-observation-v1','text':engine.decode_text(tokens),'loading':loading,
+    report={'schema':('dl-context-simple-observation-v1' if loading['scenario_kind']=='simple'
+        else 'dl-context-clarification-observation-v1'),'text':engine.decode_text(tokens),'loading':loading,
         'scenario':args.scenario,'source_split':'train','fresh_holdout':False,'worker_events':[],
         'student_history':receipt,'scheduled_dispatch':False,
         'native_foreground_backend_request':False,'native_foreground_tool_choice':False,

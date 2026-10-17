@@ -33,7 +33,9 @@ def validate(folder, data, assets, examples, spm, voice):
         raise RuntimeError('Early capture voice differs from verified history voice')
     commit = m['builder_commit']; names = {'context_early_future.py','context_early_plan.py','context_engine_replay.py'}
     ordinary = m.get('target_kind') == 'ordinary_answer'
+    question = m.get('target_kind') == 'clarification_question'
     if ordinary:names.add('context_ordinary_future.py')
+    if question:names.add('context_clarification_future.py')
     if not re.fullmatch('[a-f0-9]{40}',commit) or set(m['builder_code_sha256']) != names:
         raise RuntimeError('Incomplete early builder provenance')
     for name,digest in m['builder_code_sha256'].items():
@@ -147,9 +149,9 @@ def validate(folder, data, assets, examples, spm, voice):
     words = [a[0] for a in side['alignments'] if a[2] == 'SPEAKER_MAIN']
     selection = late['selection']; left = selection['source_first_word_index']
     sentence = words[left:selection['source_end_word_index']]
-    if ordinary:
-        if m['world'] != {} or m['future_recorded_receipts'] or m['actual_private_receipt'] is not None:
-            raise RuntimeError('Ordinary component acquired a private receipt or backend hint')
+    if ordinary or question:
+        if (ordinary and m['world'] != {}) or m['future_recorded_receipts'] or m['actual_private_receipt'] is not None:
+            raise RuntimeError('Nonfactual component acquired a private receipt or backend hint')
         ordinal = 0
     else:
         value = next(iter(next(iter(m['world'].values())).values())); phrase = spoken_words(value)
@@ -164,8 +166,9 @@ def validate(folder, data, assets, examples, spm, voice):
         raise RuntimeError('Measured diagnostic content outside approved future sentence')
     fact_frame = indices[source_frame-begin]
     diagnostic = ({'diagnostic_frame':fact_frame,'diagnostic_target':int(saved['text_targets'][fact_frame]),
-        'diagnostic_kind':'first_assistant_content','target_kind':'ordinary_answer',
-        'ordinary_answer_without_backend_context':True} if ordinary else
+        'diagnostic_kind':'first_assistant_content','target_kind':m['target_kind'],
+        **({'ordinary_answer_without_backend_context':True} if ordinary else
+            {'clarification_question_without_backend_context':True,'private_fact_targets':0})} if ordinary or question else
         {'first_fact_frame':fact_frame,'first_fact_target':int(saved['text_targets'][fact_frame])})
     # The capture's original sparse mask is checked above, not rewritten on disk.
     # Full early continuations must also learn when to stay silent. Only real
@@ -188,6 +191,6 @@ def validate(folder, data, assets, examples, spm, voice):
         'silence_pad3_targets':int((labels==3).sum()),'silence_pad3_loss_weight':.5,
         'loss_policy':'all independently verified real future text; PAD3 half weight; spans and past excluded',
         'past_loss_targets':0,'span_loss_targets':0,'audio_loss_targets':0,
-        'native_assistant_text_component_approved':True,'replayed_future_receipts_not_live_dispatch':not ordinary,
+        'native_assistant_text_component_approved':True,'replayed_future_receipts_not_live_dispatch':not (ordinary or question),
         'whole_model_quality_or_delegation_qualified':False}
     return result,approved

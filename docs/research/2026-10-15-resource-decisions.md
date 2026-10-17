@@ -307,3 +307,33 @@ external backends or forced speech. Its whole-input encoding and deferred wave
 decoding are explicitly offline; no live latency or delegation claim is allowed.
 The upstream GLM-4-Voice license/notice is retained; commercial registration
 must be reviewed before adopting or distributing a product based on it.
+
+
+## 17 October — matched histories, control supervision and unchanged BayLing checks
+
+Plain words: matching actual pending-state histories and balancing behavior kinds
+produces useful component progress. Fourteen-component audit7499556 passes,
+and balanced136-update7500125 says orange square, silver hexagon and teal star in
+native runs7500126–28. Independent speech audit7500290 confirms those spoken
+values. It still delegates ordinary questions, adds unrelated speech and fails
+clarification/cancellation. Even ordinary TRAIN008/009/010 runs7500312/13/14 delegate,
+so the failure is not solely held-out generalisation. Compare bounded unchanged
+648-update7500366 before assuming that more ordinary examples solve it.
+
+Plain words: DuplexCascade/survey-inspired separation of conversation acts now
+has a concrete cancellation target. Component7500187 separately approves only
+PAD3/EPAD0/RET4 after complete actual TRAIN cancellation audio; it teaches no
+spoken acknowledgement or private fact. Independent GPU temporal audit7500289
+passes. Fifteen-component audit7500363 and8-proof7500364 gate bounded520-update
+7500371. No executed native cancellation or full-task success follows from the
+label audit. A separately scoped first clarification question is being prepared;
+it ends before the user supplies the missing project and excludes all later
+teacher requests/results. Existing factual receipt guards remain unchanged.
+
+Plain words: the released BayLing checkpoint was also tested unchanged, with
+pinned source/asset hashes and exact loading. Offline7499454 gives an incorrect
+pencil explanation,7500004 gives a plausible salt explanation, and7500005 answers
+the missing-project question with an invented72-degree room temperature. These
+three bounded tests support keeping the current candidate; they neither reproduce
+BayLing training nor establish live-stream timing. Its block-fusion and assistant
+loss ideas remain architectural comparisons, not a transplanted fusion module.

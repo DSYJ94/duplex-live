@@ -18,6 +18,9 @@ def plan(history, data, examples, spm, early=False, teacher_id=None):
     if early and actual['kind']=='simple':
         from evals.context_ordinary_future import plan as ordinary_plan
         return ordinary_plan(history,data,examples,spm,teacher_id)
+    if early and actual['kind']=='clarify' and json.loads((history/'report.json').read_text()).get('backend_execution_disabled'):
+        from evals.context_clarification_future import plan as question_plan
+        return question_plan(history,data,examples,spm,teacher_id)
     kinds = ('private','clarify') if early else ('private',)
     if actual['split']!='train' or actual['kind'] not in kinds:
         raise RuntimeError('Actual fact futures require eligible private/clarification TRAIN data')

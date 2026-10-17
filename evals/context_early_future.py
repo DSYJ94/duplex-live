@@ -121,6 +121,7 @@ def generate(engine, saved, index, rows, pcm, gold, manifest, out, native_audio=
     history = Path(manifest['actual_history']); record = json.loads((history/'student-history.json').read_text())
     builder_names = ['context_early_future.py','context_early_plan.py','context_engine_replay.py']
     if manifest.get('target_kind')=='ordinary_answer':builder_names.append('context_ordinary_future.py')
+    if manifest.get('target_kind')=='clarification_question':builder_names.append('context_clarification_future.py')
     result = {**manifest,'schema':'dl-context-early-future-capture-v1','file':file.name,'sha256':sha256(file),
         'builder_commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),
         'builder_code_sha256':{name:sha256(Path(__file__).with_name(name)) for name in builder_names},

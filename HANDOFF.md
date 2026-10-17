@@ -2,16 +2,41 @@
 
 ## Current execution — 17 October, mixed ordinary/private correction
 
-Plain words: at11:43UTC/13:43Berlin, renewed SSH access is needed. The certificate
-expired11:47Berlin; SSH now rejects public-key authentication. `clifton auth`
-is running locally and a sign-in tab was opened; the owner has been asked to
-complete it. Do not duplicate any jobs on an observation failure. Retrieve
-7495630 (BayLing assets),7495650 (runtime retry),7495652 (independent late audit)
-and7495653 (dependent remaining late captures) after renewal. Their current
-terminal states are UNVERIFIED because access expired. Latest source is
-be534a3 before this documentation update. The planned12:00Berlin recipe freeze
-has passed without a qualified recipe; do not claim it was met. Keep19 October
-delivery/20 October recovery buffer and18 October18:00 training cutoff visible.
+Plain words: SSH was renewed at13:44Berlin and works; the current certificate
+expires18 October01:44Berlin. The planned17 October12:00Berlin recipe freeze
+was missed without a qualified recipe. Keep19 October delivery,20 October
+recovery buffer and18 October18:00Berlin training cutoff. Cloud validation is
+on hold. No complete native model is qualified.
+
+Plain words: the matched pending-state dataset now has three ordinary and11
+post-result private corrections. Independent temporal audit7499556 passes all14,
+maximum error0.0001449585 and causal error0. Source9282791 adds deterministic
+balanced-kind sampling; exact-state eight-update proofs7500012/13 and136-update
+continuations7500117/25 pass reload checks. Balanced7500125 speaks all three
+private values in native7500126/27/28; independent CPU speech7500290 confirms
+the values. Salt/pencil explanations improve, but irrelevant speech and failed
+clarification/cancellation remain. Native TRAIN008/009/010 runs7500312/13/14
+also delegate all three ordinary training questions. This is not just an unseen
+question problem. Do not call it qualified or expand on loss alone.
+
+Plain words: separately approved cancellation request component7500187 (source
+3797183, raw TRAIN0207500114, approved teacher-recovery-train-020) contains only
+PAD3/EPAD0/RET4 on three actual conditioning frames after the complete cancellation.
+No audio, user, private-value or spoken-acknowledgement labels are present.
+Independent GPU audit7500289 passes (maximum error0.000041008, causal0).
+This approves labels, not an actually executed cancellation. Mixed15 audit7500363
+and fresh8 proof7500364 gate bounded512-update continuation7500371 (520 total).
+7500365 was an unsupported384-budget launch, cancelled/replaced; not a model result.
+An unchanged-recipe512-update continuation7500366 (648 total, parent7500125)
+tests whether ordinary controls can fit before collecting more data. Native checks
+7500380/82/84/86/87/88/89/90/91 use648;7500392–400 use520. Submission maps and full
+logs live in runs/recovery-continuation-20261016.
+
+Plain words: BayLing asset7495630 and isolated runtime7495650 pass their hash and
+loading checks, but bounded OFFLINE auditions7499454/7500004/7500005 do not justify
+a switch. Pencil explanation is wrong, salt is plausible, and clarification
+hallucinates a72-degree room temperature. These are whole-input offline tests,
+not streaming/delegation qualification; there has been no BayLing training.
 
 Plain words: current07:48UTC status supersedes the mixed-stage submission note
 below. Mixed16 checkpoint7495189 reaches136 updates and exact reload, but native
