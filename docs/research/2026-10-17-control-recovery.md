@@ -684,3 +684,18 @@ clocks, and checks all current forced targets and every prefix/span/live call.
 The original strict offline-cache failure remains a recorded result; the native
 conditioning variant is a separate data declaration. No optimizer approval or
 claim that small codec changes explain behavior is made.
+
+Plain words:all five complete GPU traces finish. Legacy offline-cache comparison
+fails only in user rows; text/agent rows are exact. Independent CPU8370 PASSES
+all17 consumed rows after substituting the actual streamed user codes, with
+unchanged teacher targets/masks, current forced-target ownership and every span/
+frame checked. No further layout mismatch found in these five cases. Remaining
+20 teacher traces8408–8427 run on workq, at most8 GPUs; CPU8428 independently
+validates the complete25 afterward. This does not qualify native conversations.
+
+Plain words:the prepared numerical preflight requires ALL approved teachers,
+rejects a partial or duplicate inventory, streams their complete native call
+ledgers and compares the batched forward in FP32 MATH (threshold0.001). Changing
+the final input must leave every earlier prediction unchanged. It binds actual
+native input tensors, original labels/masks and source hashes; it performs zero
+optimizer steps. No broader supervised optimizer is implemented or submitted yet.

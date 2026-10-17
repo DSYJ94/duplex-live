@@ -46,6 +46,14 @@ if [ "${CONTEXT_CODEC_AUDIT:-0}" = 1 ]; then
   --cache "$DL/runs/recovery-mixed-codes-7411513" --out "$DL/runs/context-codec-audit-${SLURM_JOB_ID}"
  exit 0
 fi
+if [ -n "${CONTEXT_TEACHER_NATIVE_MATH_APPROVAL_JOB:-}" ]; then
+ [[ "$CONTEXT_TEACHER_NATIVE_MATH_APPROVAL_JOB" =~ ^[0-9]+$ ]]
+ run_container -m evals.context_training_proof "${ARGS[@]}" \
+  --teacher-engine-input-audit "$DL/runs/context-retention-teacher-audit-7507449/report.json" \
+  --teacher-engine-input-voice "$DL/runs/context-training-proof-7505957/voice.pt" \
+  --teacher-native-math-audit "$DL/runs/context-teacher-native-approval-$CONTEXT_TEACHER_NATIVE_MATH_APPROVAL_JOB/report.json"
+ exit 0
+fi
 if [ -n "${CONTEXT_TEACHER_ENGINE_INPUT_INDEX:-}" ]; then
  : "${CONTEXT_TEACHER_SCOPE_JOB:?Independent all-teacher scope required}"
  [[ "$CONTEXT_TEACHER_ENGINE_INPUT_INDEX" =~ ^[0-9]+$ && "$CONTEXT_TEACHER_SCOPE_JOB" =~ ^[0-9]+$ ]]

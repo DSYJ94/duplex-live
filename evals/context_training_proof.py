@@ -35,6 +35,7 @@ def main():
     ap.add_argument('--teacher-engine-input-audit',type=Path)
     ap.add_argument('--teacher-engine-input-id')
     ap.add_argument('--teacher-engine-input-voice',type=Path)
+    ap.add_argument('--teacher-native-math-audit',type=Path)
     ap.add_argument('--actual-replay', type=Path, action='append')
     ap.add_argument('--actual-source-data', type=Path)
     ap.add_argument('--actual-head-data', type=Path, action='append')
@@ -75,8 +76,9 @@ def main():
     ap.add_argument('--text-padding', choices=('legacy-epad0','context-pad3'), default='legacy-epad0')
     ap.add_argument('--request-policy', choices=('source-dispatch','native-prelead','native-prelead-epad'), default='source-dispatch')
     args = ap.parse_args()
-    if any((args.teacher_engine_input_audit,args.teacher_engine_input_id,args.teacher_engine_input_voice)):
-        if not all((args.teacher_engine_input_audit,args.teacher_engine_input_id,args.teacher_engine_input_voice)):
+    if any((args.teacher_engine_input_audit,args.teacher_engine_input_id,args.teacher_engine_input_voice,args.teacher_native_math_audit)):
+        if (not args.teacher_engine_input_audit or not args.teacher_engine_input_voice
+                or bool(args.teacher_engine_input_id)==bool(args.teacher_native_math_audit)):
             ap.error('Teacher Engine input audit needs an independent scope, explicit TRAIN identity and exact voice')
         if (args.reload or args.actual_replay or args.actual_head_data or args.actual_early_data
                 or args.actual_mixed_data or args.actual_temporal_fit or args.actual_temporal_audit
@@ -262,6 +264,10 @@ def main():
     if args.teacher_engine_input_audit:
         prefix=persona_prefix(BASE_INSTRUCTIONS,voice,spm)
         examples,_=load_training(args.cache,spm,prefix,text_padding=args.text_padding,request_policy=args.request_policy)
+        if args.teacher_native_math_audit:
+            from evals.context_native_teacher_math import run as audit_teacher_math
+            audit_teacher_math(lm,spm,voice,examples,args)
+            return
         from evals.context_teacher_engine_inputs import run as audit_teacher_engine
         audit_teacher_engine(lm,mimi,spm,voice,examples,args)
         return
