@@ -2,6 +2,39 @@
 
 ## Current execution — 17 October, mixed ordinary/private correction
 
+Plain words: current07:48UTC status supersedes the mixed-stage submission note
+below. Mixed16 checkpoint7495189 reaches136 updates and exact reload, but native
+7495483/84/85/88/89 plus retries7495506/07 and changed-value7495508/09 do NOT
+qualify it. Ordinary questions are refused, available values are omitted, and
+clarification/cancellation fail. CPU speech7495544 confirms the wording in eight
+recordings (mean WER0.04068). Cancellation7495489 has invalid ASR timestamps;
+do not interpret its repeated ASR words as verified repeated model speech.
+
+Plain words: source4242668 fixes exact recorded-payload replay and records
+pending-state virtual boundaries. Matching pending/canonical TRAIN array7495543
+has19 captures. CPU audit7495583 validates all19 raw histories and four old
+private components, but approves ZERO full early continuations: pending state
+would precede the teacher request, or no quiet early cut exists. Twelve separate
+post-result corrections are feasible. Never move request/receipt clocks to force
+an early pass. Eligibility SHA256 is
+`a20ee13355ab00d9e214caef149fd03aad32564de6efa30aeeb946c85a846ebc`.
+Map: runs/context-pending19-capture-map-20261017.json on Isambard (local copy in
+the continuation directory). Source2bd64cd enables explicit hash-bound late
+selection. Pilot7495632 restarts all206 prefix frames exactly and captures a
+32-frame orange-square teacher-text/acoustic component. It is not native success.
+Independent temporal/ownership audit7495652 gates remaining11 captures7495653.
+
+Plain words: bounded BayLing baseline audition is being prepared while these
+checks run. Public source is pinned41669ac04bbcbfaf5b1be3a2cc563e4b3752d041;
+asset pins are evals/assets/bayling-audition-pins.json. CPU download7495630 is
+pending retrieval. CPU runtime7495638 failed because TorchAudio was absent;
+7495650 retries with isolated TorchAudio2.9.0 and unchanged NGC Torch2.9.
+Current launcher source04dd62e has not yet produced a BayLing inference result.
+Its probe is explicitly OFFLINE (whole audio encoded first, wave decoded after
+generation), checks exact loading, and cannot qualify streaming or delegation.
+Do not change the backbone based on source availability. Preserve upstream
+GLM-4-Voice license/notice and review commercial registration before adoption.
+
 Plain words: active goal is Isambard model improvement and an honest qualification
 result by19 October; recipe freeze17 October12:00Berlin, stop new training
 18 October18:00. Cloud GPU validation remains on hold. No qualified complete
@@ -19,9 +52,9 @@ Plain words: mixed16 stage orders the three ordinary futures before the13
 existing own-acoustic private futures7480443/44/45/46/47/49/54/55/63/64/65/66,
 7480417. Zero-update temporal audit7493024 passes all16 (maximum error0.00027275,
 causal-prefix error0). Fresh8-update proof7494393 passes frozen-weight and exact
-prediction/optimizer/RNG reload checks. A bounded128-update continuation is
-submitted; retrieve its concrete ID and native evaluations before calling the
-model improved. Use legacy-epad0 plus native-prelead-epad for approved source
+prediction/optimizer/RNG reload checks. Bounded128-update continuation7495189
+also reloads exactly but fails the native checks above. Use legacy-epad0 plus
+native-prelead-epad for approved source
 conversion; future real-frame PAD3 half-weight supervision is independently
 audited.7492288 rejected an incompatible launch convention before updates.
 

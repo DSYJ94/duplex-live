@@ -279,3 +279,31 @@ that really entered the model. Empty explicit payloads cannot fall back to
 uninjected worker prose. Pending spans can never justify a fact and must follow
 an approved future request in an early composition. Eighteen focused guards pass.
 Collect matched TRAIN histories and independently audit before any new fit.
+
+Plain words: CPU speech7495544 confirms the mixed16 native wording in eight
+valid recordings (mean WER0.04068). Cancellation7495489 has invalid ASR time/word
+bounds, so its repeated transcription is excluded from speech conclusions. The
+model's sampled cancellation behavior already fails. Ordinary retries7495506/07
+refuse salt/pencil questions despite actual backend answers. Changed-value tests
+7495508/09 omit teal circle/bronze circle. Checkpoint7495189 remains unqualified.
+
+Plain words: matching pending-state array7495543 completes19 raw TRAIN histories.
+Eligibility7495583 validates all19 and four legacy private regressions, but
+rejects every full early composition. Most pending states would precede the
+teacher's derived request; other cases lack an early cut. No clocks or guards
+are relaxed. Twelve separately planned post-result corrections remain feasible.
+Pilot7495632 replays206 actual prefix frames exactly, then captures32 teacher
+conditioned frames. Independent audit7495652 gates the remaining11 captures
+7495653; this is component work, never native response/delegation qualification.
+
+Plain words: an unchanged BayLing audition is now concretely prepared, with
+public model/code/codec revisions and upstream LFS hashes pinned. Source is
+41669ac04bbcbfaf5b1be3a2cc563e4b3752d041; the official release remains at
+https://github.com/BayLing-Models/BayLing-Duplex . Assets7495630 and isolated
+runtime retry7495650 need retrieval. First runtime7495638 failed only on missing
+TorchAudio; the retry preserves NGC Torch and checks import compatibility. The
+probe audits ordinary/clarification validation inputs without optimisation,
+external backends or forced speech. Its whole-input encoding and deferred wave
+decoding are explicitly offline; no live latency or delegation claim is allowed.
+The upstream GLM-4-Voice license/notice is retained; commercial registration
+must be reviewed before adopting or distributing a product based on it.
