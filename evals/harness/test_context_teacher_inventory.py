@@ -1,4 +1,7 @@
 import unittest
+import tempfile
+import json
+from pathlib import Path
 from evals.context_retention_teacher import select_teachers
 
 
@@ -24,6 +27,13 @@ class TeacherInventoryTest(unittest.TestCase):
             if change=='missing':rows.pop()
             if change=='kind':rows[0]['record']['kind']='unknown'
             with self.assertRaises(RuntimeError):select_teachers(rows,True)
+
+    def test_inventory_cannot_authorize_the_existing_four_teacher_optimizer(self):
+        from evals.context_retention_teacher import policy
+        with tempfile.TemporaryDirectory() as name:
+            audit=Path(name)/'audit.json'
+            audit.write_text(json.dumps({'schema':'dl-context-all-teacher-scope-audit-v1'}))
+            with self.assertRaises(RuntimeError):policy(1.,[],audit,Path('unused-assets'),Path('unused-voice'))
 
 
 if __name__=='__main__':unittest.main()

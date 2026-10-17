@@ -616,3 +616,44 @@ established by the acoustic-conditioning change; remaining cases and speech6995
 are still pending. All-teacher audit now has a distinct schema rejected by the
 unchanged four-reference optimizer policy. It audits all independent TRAIN
 labels/masks and code/source hashes without a model forward or optimizer.
+
+
+Plain words:all16 native6979–6994 complete. Validation clarification6991 now
+asks the project, actually retrieves brown square and includes it in sampled
+text; it omits the subsequent requested evaporation answer. This is a component
+gain, not full-task qualification. Changed6993 includes copper diamond but wrong
+physics;6994 has no text/lookup. Cancellation6984 really cancels but repeats and
+mixes responses;6992 misses cancellation. Ordinary6981 says the Sun moves away
+from Earth. Sixteen WAV hashes pass locally, raw TRAIN6983/84 and full stdout
+are preserved. ASR6995 is still running at the last snapshot.
+
+Plain words:these16 runs have compute p95s0.0362–0.0436s per80ms frame, cold
+input backlog3.1256–3.3296s and11 recordings with causal-playout underrun samples.
+No microphone acceptance or broad low-latency qualification. Teacher CPU7449
+PASSES all25 histories:11,426 real text targets,993 spoken targets, zero prefix/
+span/user/audio targets, with19private/4simple/1clarify/1cancel. Corpus source
+and all17-row/native real-to-virtual maps are independently checked. The new
+schema cannot authorize the unchanged four-reference optimizer; an explicit
+local rejection guard passes. A broader objective needs its own recipe, sampler,
+short proof and native evaluation; no broader optimizer has been submitted.
+
+
+Plain words:ASR6995 completes all16 recordings in5minutes.6983 has invalid
+segment/word timing.6986/6994 give only You.6981's wrong Sun-moves-away speech
+has word error0.6985's ASR says yellow screen, so correct model text does not
+verify the private spoken value.6991's ASR contains brown square with valid
+timing, but full-clip word error0.278 and omitted follow-up prevent acceptance.
+Changed6993's copper diamond is heard (WER0.1014), followed by wrong/repetitive
+physics. Whole trial remains REJECTED; no model promotion, fresh holdout or
+microphone qualification. Full per-case review joins actual receipts, sampled
+text, independent ASR and runtime limits in
+runs/recovery-continuation-20261016/context-native-private-native-review.json.
+
+Plain words:before broader teacher optimization, verify its complete prepared
+teacher inputs against the native Engine at prefix/span boundaries. CPU7449
+proves target provenance and loss masks; it does not prove live/training input
+parity or broader gradients. Keep four-reference KL/hidden retention separate
+from a proposed25-teacher supervised term, record per-kind teacher exposure and
+exact resume identity, then require a new short proof/native comparison. Existing
+four-teacher optimizer rejects the all-teacher inventory schema;19 related local
+guards pass. No broader optimizer is launched and no compute-gain assumption.

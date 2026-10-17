@@ -1,14 +1,25 @@
 # HANDOFF — where we are (updated 2026-10-17 for active recovery)
 
+Plain words:final6978 review is REJECTED, not an adoption. ASR6995 confirms
+wrong ordinary speech (day/night6981 word error0), hears yellow screen instead
+of yellow circle in6985, and has invalid segment/word timing for6983.6991's
+actual clarification lookup audibly yields brown square, but omits the later
+question and has whole-clip word error0.278.6993 audibly uses changed copper
+diamond, then gives wrong repetitive physics. These are component results,
+not0/16 component success or a full-task pass. No fresh holdout/microphone gate.
+
 Plain words:own-audio private comparison6978 PASSES520-update fit and exact
 fresh reload; four checkpoint/state/data/voice hashes pass locally. It remains
 UNQUALIFIED from completed native development runs:6981 says the Sun moves away
 from Earth;6983 asks the project but never looks it up;6984 really cancels twice
 but mixes cancellation with wrong/contradictory speech. Private6985 says yellow
-circle then gives false eclipse physics. Remaining native runs and ASR6995 are
-pending; no aggregate score or spoken acceptance is claimed. Reject unchanged
-expansion. The next CPU-only audit covers all25 existing independent GPT-Live
-TRAIN teachers; it cannot authorize the existing four-reference optimizer policy.
+circle then gives false eclipse physics. All16 native runs and independent ASR6995 complete. Validation6991 now includes the retrieved brown square but misses the
+follow-up evaporation answer. No aggregate score or spoken acceptance is claimed. Reject unchanged
+expansion. CPU7449 PASSES all25 existing independent GPT-Live
+TRAIN teachers (11,426text/993spoken targets, zero prefix/span/user/audio targets).
+It cannot authorize the existing four-reference optimizer policy. No broader
+optimizer submitted. Source12b9708, three MD5s match; local optimizer-rejection
+guard passes.
 
 Plain words:teacher-retention model7506462 PASSES520-update fit/exact reload but
 is REJECTED after16 native development runs and independent speech6479. It
@@ -2680,3 +2691,14 @@ separately below; exact tests and results remain evidence, not model qualificati
 **Plain words — local verification:** 41 related tests pass, including the new
 control-teacher causality and counterfactual-world lineage guards. No local tests
 are claimed as native voice, intelligence or complete-task acceptance.
+
+
+Plain words:17 October continuation closure — model6978 and all16 native runs,
+speech6995 and CPU7449 are terminal/completed; no GPU job remains from this
+comparison. Do not resubmit it. Next work is a native Engine/prepared-teacher
+input parity check before implementing the separately scoped all25 teacher-text
+objective. Preserve original four-reference KL/hidden retention and immutable
+old recipes; audit new teacher scheduling/gradients/resume explicitly. Current
+25-teacher scope is source12b9708, module hash in CPU7449/report.json. No new
+optimizer or cloud validation is authorized by that audit. User authorization
+for goal work remains active; no user input is needed.
