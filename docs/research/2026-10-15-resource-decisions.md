@@ -237,3 +237,13 @@ future eligibility. Private receipt checks must remain unchanged. Metadata
 feasibility of the old four raw histories found answer-bearing spans during
 three teacher replies; report is `simple-control-feasibility.json` in the local
 continuation directory. New captures are raw conditioning only, not training.
+
+Plain words: CPU raw-integrity7486128 passes all four observations. Separate
+ordinary eligibility7489479 (sourceb5f62a7) approves all four complete measured
+TRAIN teacher replies with identical user PCM, no backend context, no private
+world and no retrieval labels. Four existing private-component regressions also
+pass without changed receipt requirements. Eligibility SHA256 is
+`fdc7585df36d5b6511817d0cc794a409221ff54213a706de22e7ee638d0cb5ab`.
+The future selector now accepts simple cases only with the distinct
+`ordinary_answer_without_backend_context` plan. This remains capture permission;
+independent future/restart/causality audits must pass before any optimisation.
