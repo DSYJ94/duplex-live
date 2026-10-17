@@ -127,3 +127,43 @@ worlds silver hexagon/teal star; do not treat their value-dependent outcomes as
 matched comparisons. Extra changed-world7502028/29 use copper diamond/amber
 triangle. No value is supplied to the speech prompt before an actual lookup.
 All are development evidence; none is a fresh sealed qualification.
+
+## Completed eighteen-component results and response-boundary experiment
+
+Plain words:7502015 completes128 additional updates, for136 updates in this
+fresh optimizer stage, and reloads predictions and optimizer/random state
+exactly. Its native development checks7502018–29 all fail complete tasks.
+Do not expand this recipe unchanged. Validation000/002/003 include the correct
+private value in sampled text but also refusals or wrong physics. Validation001
+omits part of green oval. Salt requests a backend and describes chloride atoms
+as positively charged; pencil requests a backend and initially refuses.
+Clarification asks no project question; cancellation produces no successful
+cancellation. Changed worlds copper diamond/amber triangle also fail. These
+are sampled-text observations; independent speech audit7502649 checks four
+recordings separately. Checkpoint SHA is
+b159ad9e18d20697a1304e44c6f047c117b55556fb178737435980091d654be3;
+optimizer state SHA is
+f116fb4159c6a16fe40013d402935d1d17b19e5cf7b4f261fe361fa811445676.
+Both are already exported and hash-verified locally.
+
+Plain words:7502129/30 isolate startup warm-up without changing weights or
+conversation. Sixteen silent frames run before resetting all streams and the
+conversation seed. Generated packet-stream audio, user audio, persona prefix,
+voice file and sampled text-token sequence match exactly. Packet audio SHA is
+70894d0fe591d4c4c62481b16d61e56d4e3994c1ab276d4932496061fa9d4c71.
+Maximum input backlog falls from3.1745792s to0.3938067s;95th-percentile compute
+is0.04279s versus0.04341s. This one paired result supports runtime warm-up, not
+better answers. Neither capture is approved for training.
+
+Plain words:source05d7b28 explicitly composes the complete approved ordinary
+TRAIN answer at the model's first observed EPAD/RET response boundary. The
+previous composition kept later teacher timing, after the native model usually
+requested a backend. This timing hypothesis is unproven. All preceding actual
+conditioning and user audio remain fixed; the complete teacher answer shifts
+with its word spacing retained, after the full user question. No backend result
+is hidden, no held-out example is used, and forced text is not native success.
+Six new pure timing guards and thirteen existing ordinary/clarification guards
+pass. CPU7502645 approves all four plans and four legacy private regressions;
+eligibility SHA91775c9474ae01f9b3492371da8c54d1d6d8bafd4d63b7baa8d24188ff91ce58.
+Native own-audio capture, independent transcription and mathematical checks are
+still required before any optimizer sees these components.

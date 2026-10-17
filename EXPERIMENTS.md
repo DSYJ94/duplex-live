@@ -31,8 +31,9 @@ These are development checks, not the historical80-lesson Phase-1 exam.
 |7500012/13,7500117/25| Matched14,8 then128 updates; component-order vs equal behavior-kind sampling; exact optimizer/random-state/prediction reload | Balanced private values spoken in three cases; full tasks fail. |
 |7500366|512 more updates from7500125,648 total; exact reload, lower text loss | Reject wrong facts, repetition and missing values7500380–91. |
 |7500364/7500371| New15 components including isolated cancellation controls;8 plus512 updates, exact reload | Validation7500397 requests after cancellation and backend executes it, but speech denies authority; TRAIN7500396 misses the request. Unqualified. |
-|7501360| New17-component warm8 from7500125 weights, optimizer reset; independent audit7501359 and exact state/prediction reload PASS | Native checks pending; pencil7501844 refuses. No continuation submitted yet. |
-|7501930/7502015| New18-component recipe adds50 measured post-answer listening controls; warm8 passes exact reload, bounded128 continuation submitted | Native7502018–29 pending. No quality claim. |
+|7501360| New17-component warm8 from7500125 weights, optimizer reset; independent audit7501359 and exact state/prediction reload PASS | Completed private/ordinary/clarification/cancellation checks fail full tasks. No unchanged continuation. |
+|7501930/7502015| New18-component recipe adds50 measured post-answer listening controls; warm8 plus128 updates pass exact reload | Completed native7502018–29 fail full tasks: wrong explanations, unnecessary ordinary requests, no clarification or cancellation; some private values in sampled text. Reject unchanged expansion. |
+|7502129/30 (inference only)|16 silent warm-up frames followed by full reset; identical generated packet audio and text | Maximum input backlog3.1746s cold versus0.3938s warm; one paired runtime gain, no answer-quality gain or training labels. |
 
 Plain words: detail, diagnostic IDs, rejected rendering and corpus ownership live
 in [the current control-recovery record](docs/research/2026-10-17-control-recovery.md).

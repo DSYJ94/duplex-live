@@ -2,16 +2,23 @@
 
 ## Current execution — 17 October, mixed ordinary/private correction
 
-Plain words: latest18-component proof7501930 PASSES eight new updates and exact
-prediction/optimizer/random-state reload, with the original136-update7500125
-weights and an explicitly fresh optimizer. Its bounded128-update continuation
-is7502015 (source9c90970, stage136 total). Dependent development/controlled TRAIN
-checks are7502018–27; changed private worlds7502028/29. Source metadata sets
-validation000=yellow circle and001=green oval, so earlier silver-hexagon/teal-star
-runs are different declared worlds, not matched retention checks. No qualified
-model exists. Audio1857 confirms real spoken cancellation denials despite the
-successful tool in7500397. The18-component audit7501865 passes all components
-(maximum error0.0001449585, causal0). Current research record below has details.
+Plain words:18-component continuation7502015 passes exact reload but FAILS the
+completed native development checks7502018–29. Private values sometimes appear
+in sampled text; ordinary explanations, clarification and cancellation still
+fail. Do not extend this recipe unchanged. Speech audit7502649 independently
+checks four native recordings. Source05d7b28 explicitly tests complete approved
+ordinary answers at observed response cues, with unchanged user audio and actual
+past. CPU eligibility7502645 passes all four plans and four legacy regressions;
+native capture, speech approval and mathematical audit remain necessary. No
+qualified model exists. Cloud remains paused; delivery19 October and training
+cutoff18 October18:00Berlin remain unchanged.
+
+Plain words: cold/warm comparison7502129/30 produces identical packet-stream
+audio (SHA70894d0fe591d4c4c62481b16d61e56d4e3994c1ab276d4932496061fa9d4c71)
+and text tokens. Warming16 silent frames before resetting all streams and the
+conversation seed reduces maximum input backlog from3.1746s to0.3938s. This is
+one paired runtime result, not a language or delegation improvement. Neither
+observation supplies training labels.
 
 Plain words: latest active record is [17 October control recovery](docs/research/2026-10-17-control-recovery.md).
 Retained reference7500125 is unqualified;648-update7500366 is rejected.520-update
