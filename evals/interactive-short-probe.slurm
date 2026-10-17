@@ -12,6 +12,16 @@
 set -euo pipefail
 cd /projects/u6si/duplex-live/repo
 case "${1:?Choose rag, personaplex or qwen}" in
+  native-teacher-smoke)
+    : "${DL_TASK_SOURCE:?Immutable source required}"
+    : "${DL_TASK_COMMIT:?Immutable commit required}"
+    : "${CONTEXT_ACTUAL_NATIVE_TEACHER_APPROVAL_JOB:?Independent native input approval required}"
+    : "${CONTEXT_ACTUAL_NATIVE_TEACHER_PREFLIGHT_JOB:?Independent numerical preflight required}"
+    test "${CONTEXT_ACTUAL_TEMPORAL_FIT:-0}" = 1
+    test "${CONTEXT_ACTUAL_FIT_UPDATES:-0}" = 8
+    test "${CONTEXT_ACTUAL_RETENTION_TEACHER_WEIGHT:-0}" = 1
+    test -z "${CONTEXT_RESUME_TRAINING_JOB:-}"
+    SCRIPT="$DL_TASK_SOURCE/evals/context-training-proof.slurm" ;;
   teacher-engine-input)
     : "${DL_TASK_SOURCE:?Immutable source required}"
     : "${DL_TASK_COMMIT:?Immutable commit required}"
