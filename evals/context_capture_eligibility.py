@@ -20,6 +20,8 @@ def main():
         ap.add_argument('--'+key,type=Path,required=True)
     ap.add_argument('--cache',type=Path,action='append',required=True)
     ap.add_argument('--regression-capture',type=Path,action='append',default=[])
+    ap.add_argument('--late-diagnostics',action='store_true',
+        help='Also plan private sentence corrections after actual delivered history; never approve labels')
     args = ap.parse_args()
     mapping = json.loads(args.map.read_text())
     if mapping['schema'] != 'dl-context-actual-capture-map-v1' or mapping['training_approved'] is not False:
@@ -76,6 +78,15 @@ def main():
                 plan_sha256=sha256(args.out/name),real_future_frames=plan['future_real_frames'])
         except RuntimeError as error:
             item.update(eligible_for_strict_early_capture=False,reason=str(error))
+        if args.late_diagnostics and case['expected_kind']=='private':
+            try:
+                late,_=fact_plan(folder,args.data,examples,spm,teacher_id=case['teacher'])
+                name='late-plan-'+str(case['index'])+'.json'
+                (args.out/name).write_text(json.dumps(late,indent=2)+'\n')
+                item.update(late_correction_diagnostic_eligible=True,late_plan_file=name,
+                    late_plan_sha256=sha256(args.out/name))
+            except RuntimeError as error:
+                item.update(late_correction_diagnostic_eligible=False,late_diagnostic_reason=str(error))
         results.append(item)
         print(json.dumps(item),flush=True)
     report = {'schema':'dl-context-capture-eligibility-v1','capture_map_sha256':sha256(args.map),
@@ -85,6 +96,7 @@ def main():
     print(json.dumps({'raw_histories':len(results),'eligible_early_futures':sum(
         r['eligible_for_strict_early_capture'] for r in results),'eligible_fact_futures':sum(
         r['eligible_for_strict_early_capture'] and r['kind'] in ('private','clarify') for r in results),
+        'late_correction_diagnostic_candidates':sum(r.get('late_correction_diagnostic_eligible',False) for r in results),
         'legacy_regressions_passed':len(regressions),'training_approved':False}),flush=True)
 
 
