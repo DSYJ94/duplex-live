@@ -88,7 +88,16 @@ def run(lm, spm, voice, examples, components, audits, args):
                 y = target[mask]; z = z[mask].float()
                 weights = torch.where(y==3,.5,1.)
                 ce = F.cross_entropy(z,y,reduction='none')
+                content=(y>=5).nonzero().flatten()
+                decision={}
+                if len(content):
+                    c=int(content[0]);probs=z[c].softmax(-1)
+                    decision={'first_content_target':int(y[c]),
+                        'first_content_top1':int(z[c].argmax()),
+                        'first_content_probability':float(probs[y[c]]),
+                        'first_content_request_probability':float(probs[4])}
                 results.append({'scenario':audit['scenario'],'nll':float((ce*weights).sum()/weights.sum()),
+                    **decision,
                     'top1':float((z.argmax(-1)==y).float().mean()),
                     'non_pad_nll':float(ce[y!=3].mean()) if (y!=3).any() else None,
                     'silence_targets':int((y==3).sum()),
