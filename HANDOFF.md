@@ -1,4 +1,38 @@
-# HANDOFF — where we are (updated 2026-10-17 for active recovery)
+# HANDOFF — active overnight recovery (updated 18 October)
+
+Plain words:latest overnight verdict — all native models remain UNQUALIFIED.
+Balanced-spoken7510331 finishes520/exactreload and all16 native cases+ASR7510355;
+15/16 ASR timing valid. Triangle7510342 says3,4,or5 and pencil7510350 claims lead
+is made of lead (both independent ASRworderror0); no executed cancellation in
+either control case. Do not expand unchanged. Four model/state/data/voice hashes
+and all16 native WAV hashes pass. Gallery now48 recordings:
+http://localhost:8766/audio/voice-diagnostics/overnight-comparison.html
+Review balanced-spoken-native-review.json under recovery-continuation-20261016.
+
+Plain words:whole-teacher native-audio diagnosticf306015 passes structural checks
+on7510498/503/505/506, ASR507 complete. Worderrors0.10/0.086/2.0/0.44; all bounds
+valid. Triangle teacher text3 recognizedThank you; cancellation includes extra
+badge-phrase words. Do not use these as approved training data or expand25
+captures. Teacher-word forcing at recorded timings does not ensure native speech
+correspondence. V1 failed7510411 stays failed/backed; its seven provided initial
+agent delay-one codes exactly match persona prefix, not teacher audio. V2 permits
+only those exact initial seven flags/codes and rejects every later supplied agent
+flag. Runtime/trainer layout unchanged. Native/ASR backups in progress; see full
+backup retry log. No user listening question overnight.
+
+Plain words:separate TTS fallback CPU7510584 PASSES actualARM64 imports of pinned
+Moshi0.2.11 TTSModel/CheckpointInfo. Torch2.9 and several other installed versions
+are outside upstream package bounds; this is only an import pass. No shared env
+change, weights or GPU. New asset-fetch code verifies each extracted package byte,
+uses exact HF revisions/public LFS hashes and published voice embedding, optionally
+reuses byte-identical existing Mimi, and obtains upstream streaming example via
+pinned Git commit. Next is one bounded GPU/speech compatibility trial after assets
+pass. It is a disclosed external-controller/TTS hybrid, not native voice-model
+reasoning, not accepted-reference voice identity, not a qualified duplex system.
+Source/research docs/research/2026-10-18-streaming-tts-pins.md. Cloud remains paused.
+SSH relay banner failure recovered with fresh retry; certificate valid until
+18October11:39Berlin. Continue autonomously overnight; defer optional input to morning.
+
 
 Plain words:18 October 01:06 Berlin — overnight work authorized without optional user questions.
 No model qualifies. Base-preservation-off9710 completes520/exact reload; all16

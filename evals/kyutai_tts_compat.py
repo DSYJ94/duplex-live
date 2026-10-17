@@ -24,6 +24,23 @@ def fetch(url):
         return response.read()
 
 
+def verified_overlay(folder):
+    """Check every extracted package byte against the immutable wheel."""
+    report=json.loads((folder/'report.json').read_text())
+    data=(folder/'moshi-0.2.11.whl').read_bytes()
+    if not report['passed'] or report['wheel_sha256']!=WHEEL_SHA256 or hashlib.sha256(data).hexdigest()!=WHEEL_SHA256:
+        raise RuntimeError('Isolated package lacks its successful matching CPU import check')
+    overlay=folder/'package'
+    with zipfile.ZipFile(io.BytesIO(data)) as archive:
+        names={n for n in archive.namelist() if not n.endswith('/')}
+        actual={str(p.relative_to(overlay)) for p in overlay.rglob('*') if p.is_file()}
+        if names!=actual:raise RuntimeError('Extracted package file inventory changed')
+        for name in names:
+            if (overlay/name).read_bytes()!=archive.read(name):
+                raise RuntimeError('Extracted package bytes changed: '+name)
+    return report,overlay
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--out', type=Path, required=True)

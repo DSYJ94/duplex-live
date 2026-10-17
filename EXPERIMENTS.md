@@ -4251,3 +4251,38 @@ values, all other agent flags false, and unchanged all9 non-agent input equality
 Negative guards reject a changed prefix code, unexpected later provided flag,
 missing user ownership or changed teacher text. Runtime/training layout is unchanged.
 New captures require new immutable source; the old failed run is never relabelled.
+
+
+## 2026-10-18 — Overnight matched loss and complete native speech-history verdicts
+
+Plain words:balanced-spoken sourceca66cda proof7510330 and520-continuation7510331
+PASS exact fresh-process reload/optimizer-RNG restoration; both model/state/data/
+voice hashes pass local backup. All16 unforced cases7510338/7510340–54 and ASR355
+complete. Reject full qualification: triangle342 audibly says3,4,or5 (ASRworderror0),
+pencil350 audibly claims lead is made of lead (worderror0), both cancellation
+scenes lack executed cancellation, clarification343 is repetitive with invalid
+ASR segment/word bounds.15/16 have valid bounds. Ordinary trained lightning338,
+evaporation340 and day/night341 improve, but private/control/factual reliability
+still fails. Do not extend unchanged or promote from teacher loss. All16 WAV
+hashes match local reports; the48-player overnight comparison now includes this arm.
+
+Plain words:sampled-acoustic teacher probes onf306015 all PASS structural v2
+ownership/non-agent input checks:498clarify/503private/505triangle/506cancel.
+Independent speech507 completes4; worderrors0.10/0.086/2.0/0.44, all timing bounds
+valid. Triangle teacher text3 is recognized asThank you; cancellation adds a
+badge-phrase fragment outside supplied words. ASR correspondence is diagnostic,
+not human listening. Do not expand these captures into training. Full teacher
+text forcing at recorded timing does not ensure speech correspondence. Original
+v1 failed411 is preserved, with exact prefix-state diagnosis; its dependents never ran.
+
+Plain words:isolated CPU TTS compatibility584 completes onARM64/Torch2.9/CUDA13.
+Actual Moshi0.2.11 TTSModel/CheckpointInfo imports pass from the SHA-pinned wheel;
+shared environment untouched, no model weights/GPU. Several installed versions
+are outside upstream bounds (Torch2.9, safetensors0.6.2, HFhub0.34.4,
+sentencepiece0.2.1,sphn0.2.1); imports are not supported-version or GPU proof.
+Next bounded step retrieves exact pinned public TTS assets and a published voice,
+checks published LFS hashes and every extracted wheel byte, then may run a
+single-GH200 compatibility/speech trial. Native voice identity does not transfer;
+this is a separately disclosed stronger-controller/streaming-speech hybrid path.
+Cloud remains paused. A transient SSH relay banner timeout recovered on retry;
+current certificate expiry18Oct11:39Berlin, so no overnight user input was needed.
