@@ -58,8 +58,8 @@ def main():
     ap.add_argument('--text-padding', choices=('legacy-epad0','context-pad3'), default='legacy-epad0')
     ap.add_argument('--request-policy', choices=('source-dispatch','native-prelead','native-prelead-epad'), default='source-dispatch')
     args = ap.parse_args()
-    if args.actual_teacher_id and not args.actual_early_window:
-        ap.error('Explicit teacher selection is specific to early future capture')
+    if args.actual_teacher_id and not args.actual_future_component:
+        ap.error('Explicit teacher selection requires an independently planned future component')
     if args.actual_native_audio_future and not args.actual_early_window:
         ap.error('Native audio conditioning requires the independently gated early future path')
     if (args.resume_training or args.actual_fit_updates != 8) and not args.actual_temporal_fit:
