@@ -49,9 +49,9 @@ def validate(folder, data, assets, examples, spm, voice):
         if hashlib.sha256(content).hexdigest() != digest:
             raise RuntimeError('Changed immutable component builder')
     gate = json.loads((folder/'engine-replay-before-future.json').read_text())
-    if cancel_ack and (gate.get('conditioning_policy')!='verified-trained-rollout'
+    if manifest.get('trained_collector') and (gate.get('conditioning_policy')!='verified-trained-rollout'
             or gate.get('trained_collector')!=manifest['trained_collector']):
-        raise RuntimeError('Cancellation correction lost its exact trained collector identity')
+        raise RuntimeError('Corrective future lost its exact trained collector identity')
     boundary = manifest['future_first_real_frame']
     live = [c for c in record['calls'] if c['mode'] == 'live']
     stop = live[boundary-1]['start'] + 1

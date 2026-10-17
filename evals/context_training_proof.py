@@ -56,6 +56,8 @@ def main():
     ap.add_argument('--actual-engine-replay', action='store_true')
     ap.add_argument('--actual-trained-collector',action='store_true')
     ap.add_argument('--actual-cancel-ack',action='store_true')
+    ap.add_argument('--actual-trained-response-boundary',action='store_true')
+    ap.add_argument('--actual-trained-private-future',action='store_true')
     ap.add_argument('--actual-recorded-voice', action='store_true')
     ap.add_argument('--actual-native-priming', action='store_true')
     ap.add_argument('--actual-cold-graphs', action='store_true')
@@ -69,6 +71,8 @@ def main():
     args = ap.parse_args()
     from evals.context_decision_loss import validate as validate_decision_weight
     validate_decision_weight(args.actual_response_first_word_weight)
+    if sum((args.actual_cancel_ack,args.actual_trained_response_boundary,args.actual_trained_private_future))>1:
+        ap.error('Choose one independently scoped trained future kind')
     if args.actual_retention_sampling!='legacy-modulo' and not (args.actual_temporal_fit and args.actual_sampling=='balanced-kind'):
         ap.error('Per-kind retention coverage requires explicit balanced-kind temporal adaptation')
     if args.actual_trained_collector and not (args.actual_engine_replay and args.actual_recorded_voice
@@ -77,7 +81,15 @@ def main():
     if args.actual_cancel_ack and not (args.actual_trained_collector and args.actual_future_component
             and args.actual_teacher_id and not args.actual_early_window and not args.actual_native_audio_future):
         ap.error('Cancellation acknowledgment needs an explicit verified trained collector and late teacher selection')
-    if args.actual_trained_collector and args.actual_future_component and not args.actual_cancel_ack:
+    if args.actual_trained_response_boundary and not (args.actual_trained_collector and args.actual_future_component
+            and args.actual_early_window and args.actual_teacher_id and not args.actual_native_response_boundary
+            and not args.actual_cancel_ack):
+        ap.error('Trained response correction needs explicit early TRAIN teacher selection and its exact trained collector')
+    if args.actual_trained_private_future and not (args.actual_trained_collector and args.actual_future_component
+            and args.actual_teacher_id and not args.actual_early_window and not args.actual_native_audio_future):
+        ap.error('Trained private correction requires explicit late teacher selection and a verified trained collector')
+    if args.actual_trained_collector and args.actual_future_component and not (args.actual_cancel_ack
+            or args.actual_trained_response_boundary or args.actual_trained_private_future):
         ap.error('Trained prefix replay is read-only until separately audited future supervision is implemented')
     if args.actual_response_first_word_weight!=1. and not (args.actual_temporal_fit and args.actual_mixed_data):
         ap.error('Decision weighting requires explicit audited mixed-component temporal training')
@@ -229,8 +241,13 @@ def main():
             else:
                 manifest, gold = plan(args.actual_replay[0], args.actual_source_data, examples, spm,
                     early=args.actual_early_window,teacher_id=args.actual_teacher_id)
+                if args.actual_trained_private_future and (manifest.get('target_kind')!='private_result'
+                        or manifest.get('conditioning_policy')!='verified-trained-rollout'):
+                    raise RuntimeError('Trained private correction did not select its independently verified receipt and collector')
             if args.actual_early_window:
-                if args.actual_native_response_boundary:
+                if args.actual_trained_response_boundary:
+                    from evals.context_trained_boundary import plan as early_plan
+                elif args.actual_native_response_boundary:
                     from evals.context_response_boundary import plan as early_plan
                 else:
                     from evals.context_early_plan import plan as early_plan

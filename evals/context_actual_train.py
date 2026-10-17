@@ -53,8 +53,10 @@ def run(lm, spm, voice, examples, components, audits, args):
         from evals.context_component_kind import manifest_name
         name=manifest_name(folder,early=bool(args.actual_early_data),mixed=bool(args.actual_mixed_data))
         m = json.loads((folder/name).read_text()); h = Path(m['actual_history'])
-        response_boundaries.append(m.get('native_response_boundary_version')==2
-            and m.get('target_kind')=='ordinary_answer' and m.get('actual_boundary_cache_verified') is True)
+        response_boundaries.append(m.get('native_response_boundary_version') in (2,3)
+            and (m.get('target_kind')=='ordinary_answer' or (m.get('native_response_boundary_version')==3
+                and m.get('target_kind')=='clarification_question' and m.get('question_retiming_before_project_verified') is True))
+            and m.get('actual_boundary_cache_verified') is True)
         component_kinds.append(m.get('target_kind','private_result'))
         record = json.loads((h/'student-history.json').read_text())
         raw = torch.load(h/'student-history.pt',map_location='cpu',weights_only=True)['delayed_inputs']

@@ -62,6 +62,10 @@ def plan(history, data, examples, spm, early=False, teacher_id=None):
     rows=[json.loads(l) for l in (history/'events.jsonl').read_text().splitlines()]
     events=json.loads((history/'worker-events.json').read_text())
     report=json.loads((history/'report.json').read_text())
+    collector=None
+    if report['loading'].get('adapter') and not report['loading']['adapter']['zero']:
+        from evals.context_rollout_conditioning import verify
+        collector=verify(report['loading'])
     if sha256(history/'model.wav')!=report['audio_sha256']:
         raise RuntimeError('Actual generated recording changed')
     audio,pr=sf.read(history/'model.wav',dtype='float32')
@@ -92,6 +96,8 @@ def plan(history, data, examples, spm, early=False, teacher_id=None):
     if selected is None:raise RuntimeError('No verified quiet corrective boundary without an already-spoken value')
     i,receipt=selected
     result={'schema':'dl-context-actual-future-plan-v1','actual_history':str(history),
+        **({'target_kind':'private_result','conditioning_policy':'verified-trained-rollout',
+            'trained_collector':collector} if collector else {}),
         'actual_history_sha256':record['sha256'],
         'actual_history_manifest_sha256':sha256(history/'student-history.json'),'actual_report_sha256':sha256(history/'report.json'),
         'actual_generated_audio_sha256':report['audio_sha256'],
@@ -185,12 +191,16 @@ def main():
     ap.add_argument('--source-commit',required=True)
     ap.add_argument('--early-window',action='store_true',help='Plan a complete future before any student reply; CPU only')
     ap.add_argument('--cancel-ack',action='store_true',help='Plan only a completed cancellation acknowledgment')
+    ap.add_argument('--trained-response-boundary',action='store_true')
     ap.add_argument('--teacher-id',help='Bind planning to one independently approved exact-user teacher')
     ap.add_argument('--request-policy',choices=('source-dispatch','native-prelead-epad'),default='source-dispatch')
     ap.add_argument('--audit-early-capture',type=Path)
     ap.add_argument('--audit-future-capture',type=Path)
     ap.add_argument('--cache',type=Path,action='append',required=True)
     args=ap.parse_args()
+    if args.trained_response_boundary and not (args.early_window and args.teacher_id and not args.cancel_ack
+            and not args.audit_early_capture and not args.audit_future_capture):
+        ap.error('Trained boundary planning needs explicit early teacher selection')
     if args.cancel_ack and (args.early_window or args.audit_early_capture or args.audit_future_capture or not args.teacher_id):
         ap.error('Cancellation plan needs explicit late teacher selection without another audit mode')
     if args.audit_future_capture and (args.early_window or args.audit_early_capture):
@@ -217,7 +227,10 @@ def main():
         else:
             result,_=plan(args.history,args.data,examples,spm,early=args.early_window,teacher_id=args.teacher_id)
             if args.early_window:
-                from evals.context_early_plan import plan as early_plan
+                if args.trained_response_boundary:
+                    from evals.context_trained_boundary import plan as early_plan
+                else:
+                    from evals.context_early_plan import plan as early_plan
                 result,_=early_plan(result,examples)
         result['eligible_for_strict_replay']=True
     except RuntimeError as error:

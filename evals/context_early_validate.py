@@ -16,10 +16,12 @@ def validate(folder, data, assets, examples, spm, voice):
     record = json.loads((history/'student-history.json').read_text())
     source = validate_history(history,data,assets,record['source']['repo_commit'])
     late,_ = late_plan(history,data,examples,spm,early=True,teacher_id=m['teacher']['id'])
-    if m.get('native_response_boundary'):
+    if m.get('native_response_boundary_version')==3:
+        from evals.context_trained_boundary import plan
+    elif m.get('native_response_boundary'):
         from evals.context_response_boundary import plan
     expected,gold = plan(late,examples)
-    if m.get('native_response_boundary_version')==2:
+    if m.get('native_response_boundary_version') in (2,3):
         if (m.get('native_future_text_readout_delay_verified') is not True
                 or m.get('native_future_text_readout')!=[0]+gold[0,:-1].tolist()):
             raise RuntimeError('Response future lost its actual one-frame text-readout evidence')
@@ -41,7 +43,8 @@ def validate(folder, data, assets, examples, spm, voice):
     ordinary = m.get('target_kind') == 'ordinary_answer'
     question = m.get('target_kind') == 'clarification_question'
     if ordinary:names.add('context_ordinary_future.py')
-    if m.get('native_response_boundary'):names.add('context_response_boundary.py')
+    if m.get('native_response_boundary_version')==3:names.add('context_trained_boundary.py')
+    elif m.get('native_response_boundary'):names.add('context_response_boundary.py')
     if question:names.add('context_clarification_future.py')
     if not re.fullmatch('[a-f0-9]{40}',commit) or set(m['builder_code_sha256']) != names:
         raise RuntimeError('Incomplete early builder provenance')
@@ -49,6 +52,9 @@ def validate(folder, data, assets, examples, spm, voice):
         content = subprocess.check_output(['git','show',commit+':evals/'+name],cwd=Path(__file__).resolve().parents[1])
         if hashlib.sha256(content).hexdigest() != digest:raise RuntimeError('Changed early builder code')
     gate_file = folder/'engine-replay-before-future.json'; gate = json.loads(gate_file.read_text())
+    if m.get('native_response_boundary_version')==3 and (gate.get('conditioning_policy')!='verified-trained-rollout'
+            or gate.get('trained_collector')!=m['trained_collector']):
+        raise RuntimeError('Trained first-response correction lost its verified collector identity')
     begin = m['future_first_real_frame']; end = m['future_end_real_frame']; length = end-begin
     live = [c for c in record['calls'] if c['mode']=='live']; stop = live[begin]['start']
     prefix_calls = [c for c in record['calls'] if c['start']<stop]

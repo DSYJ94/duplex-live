@@ -27,5 +27,5 @@ def policy(weight,boundaries):
     if weight==1.:return None
     if not any(boundaries):raise RuntimeError('Decision weighting has no verified response-boundary component')
     return {'first_word_weight':weight,'component_indices':[i for i,b in enumerate(boundaries) if b],
-        'scope':'first supervised word at independently verified native RET prediction step only',
+        'scope':'first supervised word at independently verified native response prediction step only',
         'code_sha256':sha256(Path(__file__)),'past_loss_targets':0,'audio_loss_targets':0,'user_loss_targets':0}
