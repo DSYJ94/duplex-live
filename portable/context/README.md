@@ -101,3 +101,25 @@ sha256sum --check ../SHA256SUMS
 
 This establishes file integrity against the saved export. It does not approve
 new captured trajectories for training or replace the destination GPU audits.
+
+
+Plain words:the launcher now supports the later mixed-component recipes. Set
+`CONTEXT_MIXED_TRAIN_DATA=1` for ordinary, private, control, lookup-prefix and
+cancellation-acknowledgment components together. The default remains historical
+early-only data. Mixed and explicit early-only modes are mutually exclusive.
+For recent checkpoints, preserve `CONTEXT_ACTUAL_SAMPLING`,
+`CONTEXT_ACTUAL_RETENTION_SAMPLING`, `CONTEXT_ACTUAL_RESPONSE_FIRST_WORD_WEIGHT`
+and `CONTEXT_WARM_START_JOB` from that run's recipe and submission record. A resumed
+stage still needs its original warm-start identity as well as
+`CONTEXT_RESUME_TRAINING_JOB`; it restores the saved optimizer rather than
+resetting it. Omitted or changed recipe settings must fail the checkpoint's
+metadata check. New CLI options require a source commit that implements them.
+
+Plain words:a local launcher integration check verifies mixed-data arguments,
+resume/warm-start identity, objective/sampling settings, reload and rejection of
+ambiguous data modes. Docker was mocked for that check: it does not establish a
+new image build, GPU resume or quality result. The older amd64 CPU restore
+result covers the three original components only. New17 October checkpoint,
+raw-history and component files have separate read-back hash-verification
+records in `runs/recovery-continuation-20261016`; regenerate the export-wide
+checksum list after final artifact selection. Cloud validation remains paused.

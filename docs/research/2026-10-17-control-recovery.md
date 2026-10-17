@@ -333,3 +333,33 @@ measured then. Warmed repeated diagnostics7504674/75/76/77/79/80/81/82 compare
 immediate/deferred writes on unchanged3303 weights and actual-ASR input. Await
 actual write timings before blaming shared storage. No quality qualification
 or runtime improvement is inferred from this instrumentation alone.
+
+
+Plain words:per-kind retention proof7504743 restores exactly. Learning-curve
+jobs7504805 and7504806 resume that same saved state for128/512 additional updates
+(136/520 total), with the same22 data, root7500125, weight16 and new schedule.
+The earlier128-update fit took36.24s and exposed each ordinary example only5–6
+times. This bounded comparison checks underfitting rather than assuming more
+compute cures bad supervision. Numerical fit and native task behavior remain
+separate gates. Do not promote either checkpoint from loss alone.
+
+Plain words:the20-component cancellation stage uses the19 corrected components
+plus4669, without the three new initial-lookup prefixes. Audit7504744 and
+warm-start proof7504816 are submitted, with collector3303 as the parent weights,
+a fresh optimizer, ordinary first-word weight1 and explicit per-kind retention.
+This tests receipt-conditioned late acknowledgment separately from the22-data
+routing experiment. Continue only after mathematical and exact reload gates.
+
+Plain words:warmed immediate/deferred diagnostics4674–82 all complete. Immediate
+writes peak0.0003–0.0005s, not the earlier11s. Input backlog is0.277–0.364s across
+all eight. Deferred mode has four zero-underrun runs except one76-sample gap;
+immediate has one zero-underrun run, others176/452/581 samples. The old stall did
+not reproduce, so do not claim storage caused it or that these few samples
+qualify a latency fix. No language/task improvement is established.
+
+Plain words:the portable launcher now carries mixed-component mode, warm-start
+identity, actual and retention sampling, first-word weight and saved-state
+resume. A local integration check verifies exact Docker arguments and data-mode
+rejection using a mocked Docker executable; no instance or GPU was created.
+The local Docker daemon is currently stopped, so no new amd64 data-restore result
+is claimed. Isambard training remains the priority and cloud validation is held.

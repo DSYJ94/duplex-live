@@ -25,6 +25,18 @@ explicitly scoped data path teaches the approved terminal cancellation
 acknowledgment only after a real completed cancellation, keeping preceding model
 errors as masked conditioning. See the current research record for evidence.
 
+Plain words:current source d989e20 adds explicit per-kind retention rotation.
+The six-kind/four-reference modulo confound is reproduced by a failing test and
+confirmed in7504434 steps;13 guard tests pass after correction. Proof7504743
+passes exact reload. Same-root22-data learning-curve checkpoints7504805 (136)
+and7504806 (520) are submitted; qualification is pending. Cancellation capture
+7504669 and independent CPU7504688 pass;20-component audit7504744 and dependent
+eight-update7504816 use3303 as the new-stage warm start. No native gain is claimed.
+Warmed runtime4674–82 shows under1ms immediate log writes, so it does not establish
+storage as the cause of the earlier long cold-run pauses. Local backups cover
+all16 rejected22-model native recordings and six raw TRAIN histories. Cloud
+remains paused; the portable launcher integration check uses mocked Docker.
+
 ### Earlier execution notes (latest paragraph and linked research record take precedence)
 
 Plain words:18-component continuation7502015 passes exact reload but FAILS the
