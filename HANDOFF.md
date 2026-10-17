@@ -1,5 +1,25 @@
 # HANDOFF — where we are (updated 2026-10-17 for active recovery)
 
+Plain words:18 October00:15Berlin — sourcef16d430, precise numerical reference
+9062 running. CPU8779 passes all25 observed-boundary scopes (11,425text targets,
+993spoken, one nonexistent pad excluded); independent CPU8795 passes exact
+all17 native rows for all25, with zero assistant-row cached-input changes.
+Original FP32 audit8796 completes REJECTED:23/25 pass0.001, clarification019
+max0.001466 and CF0041 max0.002780 fail; all25 causal-prefix errors0. Oldproofs
+8811/12 cancelled without running. Diagnostic9019 reproduces clarification
+exactly, zero586 eligible top1 changes, CE difference0.000000387; FP64 attention
+alone still fails0.001139. Diagnostic9034 changes only linear precision and
+passes0.000253 with equal CE. These are numerical diagnostics, not voice quality.
+Versioned v2 audit9062 retains complete original failed FP32 audit and separately
+uses FP64 linear arithmetic with FP32 weights/activations and same0.001 limit.
+Production/trainer execution stays unchanged. Two real Torch isolation guards
+pass. Newproofs9077four-longest/9078all25 require9062 pass; gated520-update
+continuations9079/9080 require their respective8-update fit and exact reload.
+No new model has trained yet. Do not claim an unchanged FP32 gate passed.
+Complete25 corpus backed locally; original failed8796 and diagnostic9034 backup
+in progress. Newnative/ASR comparisons remain to be launched after checks.
+
+
 Plain words: active next comparison uses native-streamed user conditioning for
 approved complete teacher histories. Five CPU-checked native traces8370 pass;
 remaining captures8408–8427 exposed one nonexistent end-padding frame in

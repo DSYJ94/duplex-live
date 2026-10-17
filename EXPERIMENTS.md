@@ -4159,3 +4159,18 @@ All16 acoustic rows of nonexistent frame469 are-1; no word/control/span is lost.
 Source4b0f9d5 adds strict opt-in observed-boundary scope, retains originals and
 binds historical captures by immutable source and explicit scope SHA. CPU8779
 submitted;12 real Torch guards pass so far. No optimizer/quality gain claimed.
+
+
+## 2026-10-18 — Full native teacher audit and numerical reference
+
+Plain words:CPU8779 passes observed physical boundaries/all25 scopes; CPU8795
+passes all25 actual Engine input reconstructions. Text/assistant rows/masks
+unchanged, user encoding explicitly streamed. FP32math8796 fails2/25 at fixed
+0.001:clarification0190.001466, CF00410.002780; all causal errors0. Cancelled
+blocked proofs8811/12. Zero-update9019 repeats the clarification failure exactly;
+FP64attention alone does not pass, but9034 FP64linear-only max0.000253 does,
+with identical supervised CE and no eligible top1 changes. Sourcef16d430 adds
+separate v2 reference verification retaining original failed FP32 results; no
+trainer/runtime precision change. Two real Torch isolation guards pass.
+Reference9062 running; dependent matched8-update proofs9077/78 and520-step
+models9079/80 queued. All25 native teachers remain TRAIN-only; no quality claim.
