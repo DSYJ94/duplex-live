@@ -1,0 +1,125 @@
+{
+  "schema": "dl-bayling-audition-pins-v1",
+  "source_repo": "https://github.com/BayLing-Models/BayLing-Duplex.git",
+  "source_commit": "41669ac04bbcbfaf5b1be3a2cc563e4b3752d041",
+  "models": [
+    {
+      "repo": "BayLing-Models/BayLing-Duplex",
+      "revision": "b314288d7fc545cdac3b2fe0c4caeb9084c5526b",
+      "files": {
+        "LICENSE": {
+          "bytes": 3528,
+          "sha256": null
+        },
+        "NOTICE.md": {
+          "bytes": 622,
+          "sha256": null
+        },
+        "README.md": {
+          "bytes": 5045,
+          "sha256": null
+        },
+        "added_tokens.json": {
+          "bytes": 497753,
+          "sha256": null
+        },
+        "config.json": {
+          "bytes": 1411,
+          "sha256": null
+        },
+        "configuration_chatglm.py": {
+          "bytes": 2267,
+          "sha256": null
+        },
+        "generation_config.json": {
+          "bytes": 240,
+          "sha256": null
+        },
+        "model-00001-of-00004.safetensors": {
+          "bytes": 4943226352,
+          "sha256": "ee73d2cb0e5fe5fca4c64db3cd2626832bb7d6beaf20a5890b02a854d7eede5c"
+        },
+        "model-00002-of-00004.safetensors": {
+          "bytes": 4895071352,
+          "sha256": "391be30fbed8d38faab4c2eee2410c9df980b092ec55df3ea400eee44bab1a6a"
+        },
+        "model-00003-of-00004.safetensors": {
+          "bytes": 4895071368,
+          "sha256": "b22c7587a6fef0e41ca6e18c203c46b28f80ec6f19b133d0469281c8ef053ed2"
+        },
+        "model-00004-of-00004.safetensors": {
+          "bytes": 4351784792,
+          "sha256": "4104039bc836dfbedd4ede7b2680c1bd19a03cd51307da2238911dc20bcbbe91"
+        },
+        "model.safetensors.index.json": {
+          "bytes": 29086,
+          "sha256": null
+        },
+        "modeling_chatglm.py": {
+          "bytes": 47282,
+          "sha256": null
+        },
+        "special_tokens_map.json": {
+          "bytes": 761,
+          "sha256": null
+        },
+        "tokenization_chatglm.py": {
+          "bytes": 8986,
+          "sha256": null
+        },
+        "tokenizer.model": {
+          "bytes": 2623634,
+          "sha256": "5a493598071550244b2ee7f26118f3edec2150b9dfa967929a99052ac83fe716"
+        },
+        "tokenizer_config.json": {
+          "bytes": 3178791,
+          "sha256": null
+        }
+      }
+    },
+    {
+      "repo": "zai-org/glm-4-voice-tokenizer",
+      "revision": "a5f2404e63c84e92f5238908e1706316324ebafa",
+      "files": {
+        "LICENSE": {
+          "bytes": 6490,
+          "sha256": null
+        },
+        "README.md": {
+          "bytes": 1296,
+          "sha256": null
+        },
+        "config.json": {
+          "bytes": 1746,
+          "sha256": null
+        },
+        "model.safetensors": {
+          "bytes": 1458374480,
+          "sha256": "2800bd503f52b51e45f0c53cfd5c31dcfe8ef7f13d22b396aa3d53e0280dd1e4"
+        },
+        "preprocessor_config.json": {
+          "bytes": 340,
+          "sha256": null
+        }
+      }
+    },
+    {
+      "repo": "zai-org/glm-4-voice-decoder",
+      "revision": "81ed541f0350d0b81728681afb628acee62772c2",
+      "files": {
+        "LICENSE": {
+          "bytes": 6490,
+          "sha256": null
+        },
+        "README.md": {
+          "bytes": 1415,
+          "sha256": null
+        },
+        "config.yaml": {
+          "bytes": 4447,
+          "sha256": null
+        }
+      }
+    }
+  ]
+}
