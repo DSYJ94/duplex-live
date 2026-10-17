@@ -39,6 +39,8 @@ def main():
     ap.add_argument('--actual-mixed-data', type=Path, action='append')
     ap.add_argument('--actual-sampling',choices=('component-order','balanced-kind'),default='component-order')
     ap.add_argument('--actual-retention-sampling',choices=('legacy-modulo','balanced-kind'),default='legacy-modulo')
+    ap.add_argument('--actual-retention-teacher-weight',type=float,default=0.)
+    ap.add_argument('--actual-retention-teacher-audit',type=Path)
     ap.add_argument('--actual-response-first-word-weight',type=float,default=1.)
     ap.add_argument('--actual-temporal-audit', action='store_true')
     ap.add_argument('--actual-temporal-fit', action='store_true')
@@ -72,6 +74,13 @@ def main():
     args = ap.parse_args()
     from evals.context_decision_loss import validate as validate_decision_weight
     validate_decision_weight(args.actual_response_first_word_weight)
+    from evals.context_retention_teacher import validate_weight as validate_teacher_weight
+    validate_teacher_weight(args.actual_retention_teacher_weight)
+    if args.actual_retention_teacher_weight and not (args.actual_temporal_fit and args.actual_mixed_data
+            and args.actual_retention_teacher_audit):
+        ap.error('Teacher retention needs explicit mixed temporal adaptation and an independent scope audit')
+    if args.actual_retention_teacher_audit and not args.actual_retention_teacher_weight:
+        ap.error('Teacher retention scope audit requires an explicit positive teacher weight')
     if sum((args.actual_cancel_ack,args.actual_trained_response_boundary,args.actual_trained_private_future,bool(args.actual_control_rollin)))>1:
         ap.error('Choose one independently scoped trained future kind')
     if args.actual_retention_sampling!='legacy-modulo' and not (args.actual_temporal_fit and args.actual_sampling=='balanced-kind'):

@@ -44,6 +44,12 @@ case "$MODE" in
   fi
   if [ -n "${CONTEXT_ACTUAL_SAMPLING:-}" ]; then ARGS+=(--actual-sampling "$CONTEXT_ACTUAL_SAMPLING"); fi
   if [ -n "${CONTEXT_ACTUAL_RETENTION_SAMPLING:-}" ]; then ARGS+=(--actual-retention-sampling "$CONTEXT_ACTUAL_RETENTION_SAMPLING"); fi
+  if [ -n "${CONTEXT_ACTUAL_RETENTION_TEACHER_WEIGHT:-}" ]; then
+   : "${CONTEXT_ACTUAL_RETENTION_TEACHER_AUDIT_JOB:?Independent teacher scope audit required}"
+   [[ "$CONTEXT_ACTUAL_RETENTION_TEACHER_AUDIT_JOB" =~ ^[0-9]+$ ]]
+   ARGS+=(--actual-retention-teacher-weight "$CONTEXT_ACTUAL_RETENTION_TEACHER_WEIGHT"
+    --actual-retention-teacher-audit "$ROOT/runs/context-retention-teacher-audit-$CONTEXT_ACTUAL_RETENTION_TEACHER_AUDIT_JOB/report.json")
+  fi
   if [ -n "${CONTEXT_ACTUAL_RESPONSE_FIRST_WORD_WEIGHT:-}" ]; then ARGS+=(--actual-response-first-word-weight "$CONTEXT_ACTUAL_RESPONSE_FIRST_WORD_WEIGHT"); fi
   if [ "$MODE" = resume ]; then
    : "${CONTEXT_RESUME_TRAINING_JOB:?Verified parent checkpoint identifier}"

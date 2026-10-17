@@ -109,6 +109,12 @@ if [ -n "${CONTEXT_ACTUAL_HEAD_JOBS:-}" ]; then
   HEAD+=(--actual-fit-updates "${CONTEXT_ACTUAL_FIT_UPDATES:-8}")
   HEAD+=(--actual-sampling "${CONTEXT_ACTUAL_SAMPLING:-component-order}")
   HEAD+=(--actual-retention-sampling "${CONTEXT_ACTUAL_RETENTION_SAMPLING:-legacy-modulo}")
+  if [ -n "${CONTEXT_ACTUAL_RETENTION_TEACHER_WEIGHT:-}" ]; then
+   : "${CONTEXT_ACTUAL_RETENTION_TEACHER_AUDIT_JOB:?Independent teacher scope audit required}"
+   [[ "$CONTEXT_ACTUAL_RETENTION_TEACHER_AUDIT_JOB" =~ ^[0-9]+$ ]]
+   HEAD+=(--actual-retention-teacher-weight "$CONTEXT_ACTUAL_RETENTION_TEACHER_WEIGHT"
+    --actual-retention-teacher-audit "$DL/runs/context-retention-teacher-audit-$CONTEXT_ACTUAL_RETENTION_TEACHER_AUDIT_JOB/report.json")
+  fi
   HEAD+=(--actual-response-first-word-weight "${CONTEXT_ACTUAL_RESPONSE_FIRST_WORD_WEIGHT:-1}")
  fi
  run_container -m evals.context_training_proof "${ARGS[@]}" "${HEAD[@]}"

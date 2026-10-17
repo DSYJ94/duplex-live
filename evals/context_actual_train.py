@@ -72,12 +72,21 @@ def run(lm, spm, voice, examples, components, audits, args):
         batches.append((inputs,mask,target))
     decision=decision_policy(args.actual_response_first_word_weight,response_boundaries)
     balance_retention=args.actual_retention_sampling=='balanced-kind'
-    retention = []
+    retention = [];retention_targets=[];retention_teacher_audits=[]
+    teacher_weight=args.actual_retention_teacher_weight
     for kind in ('private','simple','clarify','cancel'):
         e = max((e for e in examples if e['record']['kind']==kind),key=lambda e:e['codes'].shape[-1])
         codes = e['codes'][None].cuda(); initial = lm._get_initial_token()
         inputs = torch.cat([initial,_delay_sequence(lm.delays,codes,initial)],dim=2)[:,:,:-1]
         retention.append((inputs,e['text_mask'].cuda(),e['record']))
+        if teacher_weight:
+            from evals.context_retention_teacher import scope as teacher_scope
+            labels,mask,checked=teacher_scope(e)
+            if not torch.equal(mask,e['text_mask']):raise RuntimeError('Teacher retention changed existing mask')
+            retention_targets.append(labels.cuda());retention_teacher_audits.append(checked)
+    from evals.context_retention_teacher import policy as teacher_policy,loss as teacher_loss
+    teacher=teacher_policy(teacher_weight,retention_teacher_audits,args.actual_retention_teacher_audit,
+        args.assets,args.out/'voice.pt')
     def forward(inputs): return lm.forward_codes(inputs)
     def digests():
         result = {}
@@ -126,6 +135,7 @@ def run(lm, spm, voice, examples, components, audits, args):
             **({'warm_start':warm_start,'warm_start_optimizer_reset':True} if warm_start else {}),
             'recipe':{'rank':8,'scaling':2.,'last_layers':4,'lr':1e-5,'weight_decay':0.,
                 'gradient_clip':1.,'retention_kl_weight':1.,'retention_hidden_mse_weight':10.,
+                **({'retention_teacher_text':teacher} if teacher else {}),
                 'text_pad3_loss_weight':.5,
                 **({'response_first_word_loss':decision} if decision else {}),
                 **({'retention_sampling':{'policy':'rotate all retention examples within each verified kind',
@@ -228,8 +238,11 @@ def run(lm, spm, voice, examples, components, audits, args):
                 h,z = forward(inputs); base_h,prob = references[ri]
                 kl = F.kl_div(z[0,0,mask].float().log_softmax(-1),prob,reduction='batchmean')
                 hidden = (h[:,mask].float()-base_h.float()).square().mean()
-                regularizer = kl+10.*hidden; regularizer.backward()
-            if not all(torch.isfinite(v) for v in (ce,kl,hidden)):
+                supervised=teacher_loss(z[0,0],retention_targets[ri],mask) if teacher else None
+                regularizer=kl+10.*hidden
+                if teacher:regularizer=regularizer+teacher_weight*supervised
+                regularizer.backward()
+            if not all(torch.isfinite(v) for v in ((ce,kl,hidden,supervised) if teacher else (ce,kl,hidden))):
                 raise RuntimeError('Nonfinite actual or retention loss')
             if any(p.grad is None or not torch.isfinite(p.grad).all() for p in learned.values()):
                 raise RuntimeError('Missing/nonfinite actual temporal gradient')
@@ -245,6 +258,8 @@ def run(lm, spm, voice, examples, components, audits, args):
                 'future_text_ce':float(ce.detach()),'retention_kind':retention[ri][2]['kind'],
                 **({'retention_index':ri} if balance_retention else {}),
                 'retention_kl':float(kl.detach()),'retention_hidden_mse':float(hidden.detach()),
+                **({'retention_teacher_text_ce':float(supervised.detach()),
+                    'retention_teacher_text_targets':int(mask.sum())} if teacher else {}),
                 'nonzero_A_gradients':a,'nonzero_B_gradients':b,'gradient_norm_before_clip':norm}
             steps.append(row); print(json.dumps(row),flush=True)
         if not seen_a or not seen_b: raise RuntimeError('Dead actual temporal adapter')
@@ -271,7 +286,9 @@ def run(lm, spm, voice, examples, components, audits, args):
             'zero_adapter_native_batch_logits_exact':True,'adapter_construction_rng_preserved':True,
             'frozen_weights_unchanged':True,'frozen_hashes':frozen,'base_audio_parameters_frozen':True,
             'retention_examples':[r[2] for r in retention],
-            'retention_objective':'KL on unchanged base text distribution plus 10x hidden MSE, approved independent TRAIN histories',
+            'retention_objective':('KL plus 10x hidden MSE and explicitly audited full TRAIN teacher text CE'
+                if teacher else 'KL on unchanged base text distribution plus 10x hidden MSE, approved independent TRAIN histories'),
+            **({'retention_teacher_text':teacher} if teacher else {}),
             **({'response_first_word_loss':decision} if decision else {}),
             'baseline_metrics':baseline_metrics,'initial_stage_metrics':initial_metrics,
             'final_metrics':metrics(),'expected_logits':expected,'steps':steps,
