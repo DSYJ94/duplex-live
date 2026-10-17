@@ -13,14 +13,18 @@ def validate(folder,data,assets,examples,spm,voice):
     import torch
     from evals.context_action_targets import plan
     manifest=json.loads((folder/'action-future.json').read_text())
-    expected,component=plan(Path(manifest['actual_history']),data,assets,examples,spm,voice,manifest['teacher']['id'])
-    if (any(manifest.get(k)!=v for k,v in expected.items() if k!='schema')
-            or manifest['schema']!='dl-context-action-capture-v1' or manifest['file']!='action-future.pt'
+    policy=manifest.get('conditioning_policy','zero-wrapper')
+    expected,component=plan(Path(manifest['actual_history']),data,assets,examples,spm,voice,manifest['teacher']['id'],policy)
+    schema='dl-context-action-capture-v2' if policy=='verified-trained-rollout' else 'dl-context-action-capture-v1'
+    if (any(manifest.get(k)!=v for k,v in expected.items() if k not in ('schema','policy_code_sha256'))
+            or manifest['schema']!=schema or manifest['file']!='action-future.pt'
             or manifest['sha256']!=sha256(folder/'action-future.pt')):
         raise RuntimeError('Changed or unapproved action component')
     names={'context_action_targets.py','context_action_component.py'}
+    if policy=='verified-trained-rollout':names.add('context_rollout_conditioning.py')
     if (set(manifest['builder_code_sha256'])!=names
-            or not re.fullmatch('[a-f0-9]{40}',manifest['builder_commit'])):
+            or not re.fullmatch('[a-f0-9]{40}',manifest['builder_commit'])
+            or manifest['policy_code_sha256']!=manifest['builder_code_sha256']['context_action_targets.py']):
         raise RuntimeError('Incomplete action builder provenance')
     for name,digest in manifest['builder_code_sha256'].items():
         code=subprocess.check_output(['git','show',manifest['builder_commit']+':evals/'+name],
@@ -42,6 +46,8 @@ def validate(folder,data,assets,examples,spm,voice):
         'spoken_acknowledgement_targets':0,'private_fact_targets':0,
         'observed_conditioning_exact':True,'native_action_component_approved':True,
         'whole_model_quality_or_delegation_qualified':False}
+    if policy=='verified-trained-rollout':
+        audit.update(conditioning_policy=policy,trained_collector=expected['trained_collector'])
     return audit,saved
 
 
@@ -50,6 +56,7 @@ def main():
     for name in ('history','data','assets','tokenizer','out'):
         ap.add_argument('--'+name,type=Path,required=True)
     ap.add_argument('--teacher-id',required=True)
+    ap.add_argument('--conditioning-policy',choices=('zero-wrapper','verified-trained-rollout'),default='zero-wrapper')
     ap.add_argument('--cache',type=Path,action='append',required=True)
     args=ap.parse_args()
     import torch
@@ -65,15 +72,18 @@ def main():
     spm=sentencepiece.SentencePieceProcessor(str(args.tokenizer))
     voice=torch.load(args.history/'student-voice.pt',map_location='cpu',weights_only=True)['codes']
     examples,_=load_training(args.cache,spm,persona_prefix(BASE_INSTRUCTIONS,voice,spm),request_policy='native-prelead-epad')
-    manifest,tensors=plan(args.history,args.data,args.assets,examples,spm,voice,args.teacher_id)
+    manifest,tensors=plan(args.history,args.data,args.assets,examples,spm,voice,args.teacher_id,args.conditioning_policy)
     args.out.mkdir(exist_ok=False)
     torch.save(tensors,args.out/'action-future.pt')
     (args.out/'voice.pt').write_bytes((args.history/'student-voice.pt').read_bytes())
-    result={**manifest,'schema':'dl-context-action-capture-v1','file':'action-future.pt',
+    names=['context_action_targets.py','context_action_component.py']
+    trained=args.conditioning_policy=='verified-trained-rollout'
+    if trained:names.append('context_rollout_conditioning.py')
+    result={**manifest,'schema':'dl-context-action-capture-v2' if trained else 'dl-context-action-capture-v1','file':'action-future.pt',
         'sha256':sha256(args.out/'action-future.pt'),
         'builder_commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),
         'builder_code_sha256':{n:sha256(Path(__file__).with_name(n))
-            for n in ('context_action_targets.py','context_action_component.py')}}
+            for n in names}}
     (args.out/'action-future.json').write_text(json.dumps(result,indent=2)+'\n')
     audit,_=validate(args.out,args.data,args.assets,examples,spm,voice)
     (args.out/'cpu-audit.json').write_text(json.dumps(audit,indent=2)+'\n')

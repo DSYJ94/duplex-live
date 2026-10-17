@@ -26,7 +26,7 @@ def cancel_window(source, teacher, side, text):
     return frame-2,frame+1
 
 
-def plan(history,data,assets,examples,spm,voice,teacher_id):
+def plan(history,data,assets,examples,spm,voice,teacher_id,conditioning_policy='zero-wrapper'):
     import torch
     import soundfile as sf
     from evals.recovery_data import validate_conversion
@@ -35,7 +35,16 @@ def plan(history,data,assets,examples,spm,voice,teacher_id):
     record=json.loads((history/'student-history.json').read_text())
     checked=validate_history(history,data,assets,record['source']['repo_commit'])
     loading=json.loads((history/'report.json').read_text())['loading']
-    if (not loading['adapter'] or not loading['adapter']['zero'] or loading['adapter']['disabled']
+    collector={}
+    if conditioning_policy=='verified-trained-rollout':
+        from evals.context_rollout_conditioning import verify
+        collector={'conditioning_policy':conditioning_policy,
+            'trained_collector':verify(loading)}
+        if record['execution']['math_sdp'] is not True:
+            raise RuntimeError('Trained corrective conditioning needs the recorded math execution protocol')
+    elif conditioning_policy!='zero-wrapper':
+        raise RuntimeError('Unknown explicit action conditioning policy')
+    elif (not loading['adapter'] or not loading['adapter']['zero'] or loading['adapter']['disabled']
             or not loading['layout'] or loading['input_warmup']):
         raise RuntimeError('Action data requires the verified zero-wrapper/layout protocol')
     original=next(r for r in validate_conversion(data)['accepted'] if r['scenario_id']==checked['scenario'])
@@ -60,6 +69,9 @@ def plan(history,data,assets,examples,spm,voice,teacher_id):
     saved=torch.load(history/'student-history.pt',map_location='cpu',weights_only=True)
     actual_voice=torch.load(history/'student-voice.pt',map_location='cpu',weights_only=True)['codes']
     if not torch.equal(actual_voice,voice):raise RuntimeError('Action data uses a different voice')
+    if collector and not torch.equal(actual_voice,torch.load(
+            Path(collector['trained_collector']['proof'])/'voice.pt',map_location='cpu',weights_only=True)['codes']):
+        raise RuntimeError('Actual trained rollout voice differs from the collector proof')
     rows=[json.loads(l) for l in (history/'events.jsonl').read_text().splitlines()]
     if end>len(rows) or any(abs(r['input_start_s']-i*.08)>1e-7 for i,r in enumerate(rows)):
         raise RuntimeError('Action target exceeds the unchanged actual input clock')
@@ -73,7 +85,7 @@ def plan(history,data,assets,examples,spm,voice,teacher_id):
     component={'delayed_inputs':saved['delayed_inputs'][:,:,stop:stop+3].clone(),
         'hidden':torch.cat([saved['temporal_outputs'][i]['hidden'] for i,_ in chosen],dim=1),
         'text_targets':torch.tensor([3,0,4],dtype=torch.int64),'text_mask':torch.ones(3,dtype=torch.bool)}
-    result={'schema':'dl-context-action-plan-v1','target_kind':'cancel_request',
+    result={'schema':'dl-context-action-plan-v1','target_kind':'cancel_request',**collector,
         'scenario':checked['scenario'],
         'actual_history':str(history),'source_history_sha256':checked['history_sha256'],
         'source_manifest_sha256':sha256(history/'student-history.json'),
