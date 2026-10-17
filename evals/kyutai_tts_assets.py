@@ -36,11 +36,15 @@ def main():
             meta=next(s for s in info.siblings if s.rfilename==name)
             lfs=meta.lfs
             expected=(lfs.get('sha256') if isinstance(lfs,dict) else getattr(lfs,'sha256',None)) if lfs else None
+            if name.endswith('.safetensors') and (not expected or len(expected)!=64):
+                raise RuntimeError('Weight/voice asset lacks its published LFS SHA256: '+name)
             reused=False
             if role=='mimi' and expected and args.reuse_mimi.is_file() and sha256(args.reuse_mimi)==expected:
                 path=args.reuse_mimi;reused=True
             else:path=Path(hf_hub_download(repo,name,revision=revision,token=False))
             digest=sha256(path)
+            if meta.size is not None and path.stat().st_size!=meta.size:
+                raise RuntimeError('Published asset size mismatch: '+name)
             if expected and digest!=expected:raise RuntimeError('Published LFS content hash mismatch: '+name)
             if role=='config' and digest!=compat['config_sha256']:
                 raise RuntimeError('Model configuration differs from the CPU compatibility probe')
