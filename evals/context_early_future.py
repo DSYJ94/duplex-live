@@ -65,7 +65,8 @@ def generate(engine, saved, index, rows, pcm, gold, manifest, out, native_audio=
                 frame = begin+n
                 for span in (s for s in spans if s['real_frame']==frame):
                     phase = 'span'; event = span['event']; start = cursor
-                    count = engine.inject_context_span(event['result']['content'])
+                    from evals.context_engine_replay import recorded_span_text
+                    count = engine.inject_context_span(recorded_span_text(event))
                     if count != event['virtual_span_frames'] or cursor-start != count:
                         raise RuntimeError('Recorded future context length changed')
                     applied.append({'real_frame':frame,'virtual_start':start,'virtual_frames':count,'event':event})

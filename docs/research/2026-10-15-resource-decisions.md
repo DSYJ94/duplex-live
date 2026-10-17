@@ -260,3 +260,22 @@ before updates because an incompatible source-padding flag was supplied; correct
 conversion is legacy-epad0/native-prelead-epad, while future PAD3 loss stays half
 weight. Both older136-update paired checkpoints7480819/20 have verified local
 adapter/training-state backups. No new native behavior improvement is claimed yet.
+
+Plain words: mixed16 continuation7495189 reaches136 updates and exact reload,
+with frozen base/speech weights. Native7495483 gives orange square but also a
+false earlier no-record statement;7495484/85 miss available validation values.
+7495488 does not clarify and7495489 ignores cancellation. Do not adopt on its
+lower training loss.7495486/87 rejected a one-word dummy-value argument before
+inference; retries7495506/07 use the required two-word placeholder. Counterfactual
+7495508/09 change only declared record values. Independent speech audits follow.
+
+Plain words: a concrete conditioning mismatch remains: native pending-status
+tests include request-state spans absent from the13 private training histories.
+Replay also formerly used worker prose even when the collector injected a
+canonical receipt plus prose. New replay reads the actual recorded payload;
+pending history events now record their virtual-frame boundary. Fact eligibility
+still needs an actual executed matching receipt, now checked against the text
+that really entered the model. Empty explicit payloads cannot fall back to
+uninjected worker prose. Pending spans can never justify a fact and must follow
+an approved future request in an early composition. Eighteen focused guards pass.
+Collect matched TRAIN histories and independently audit before any new fit.

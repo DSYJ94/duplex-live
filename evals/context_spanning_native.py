@@ -193,7 +193,8 @@ def run(engine,user,world,args,loading):
                                 events.append({'event':'backend_pending_status_applied','task_id':identity,
                                     'applied_at_s':time.monotonic()-epoch,'virtual_span_frames':frames,
                                     'reference':reference,'source':'actual native request dispatch; no result supplied',
-                                    'word_or_acoustic_tokens_forced':False})
+                                    'word_or_acoustic_tokens_forced':False,
+                                    **({'history_virtual_frames_after_span':history.frames} if history else {})})
             finally:
                 for identity,future in pending.items():
                     events.append({'event':'input_exhausted_with_backend_pending','task_id':identity,'done_at_input_end':future.done()})

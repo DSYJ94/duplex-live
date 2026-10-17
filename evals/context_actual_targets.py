@@ -33,7 +33,8 @@ def actual_private_receipt(events, project, field, value, cut_s):
                 or not math.isfinite(applied) or applied > cut_s
                 or result.get('route') not in ('answer', 'delegate')):
             continue
-        words = spoken_words(result.get('content', ''))
+        from evals.context_engine_replay import recorded_span_text
+        words = spoken_words(recorded_span_text(e))
         phrase = spoken_words(value)
         contains = any(words[i:i+len(phrase)] == phrase for i in range(len(words)-len(phrase)+1))
         receipts = [r for r in result.get('receipts', []) if r.get('tool') == 'lookup_record'

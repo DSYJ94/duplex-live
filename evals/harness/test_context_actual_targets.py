@@ -34,6 +34,31 @@ class FutureTargetGuards(unittest.TestCase):
         with self.assertRaises(RuntimeError):captured_packets(audio,ledger,rows)
         with self.assertRaises(RuntimeError):captured_packets(np.zeros(5),ledger,rows)
 
+    def test_fact_gate_uses_delivered_payload_and_still_requires_receipt(self):
+        event={'event':'backend_result_ready','task_id':'ret-0','applied_at_s':2.,
+            'injected_reference':'Verified badge: purple star.',
+            'result':{'route':'delegate','content':'Physics explanation only.',
+                'receipts':[{'tool':'lookup_record','executed':True,'read_only':True,
+                    'project':'Birch North','field':'badge','value':'purple star'}]}}
+        self.assertIs(actual_private_receipt([event],'Birch North','badge','purple star',3.),event)
+        for bad in [{**event,'injected_reference':'No result supplied.'},
+                {**event,'result':{**event['result'],'receipts':[]}}]:
+            with self.assertRaises(RuntimeError):actual_private_receipt([bad],'Birch North','badge','purple star',3.)
+
+    def test_pending_payload_is_state_only_and_never_a_fact_receipt(self):
+        from evals.context_engine_replay import recorded_span_text
+        event={'event':'backend_pending_status_applied','reference':'Request pending.',
+            'word_or_acoustic_tokens_forced':False,'applied_at_s':1.}
+        self.assertEqual(recorded_span_text(event),'Request pending.')
+        with self.assertRaises(RuntimeError):
+            recorded_span_text({**event,'result':{'content':'purple star'}})
+        with self.assertRaises(RuntimeError):actual_private_receipt([event],'Birch North','badge','purple star',3.)
+
+    def test_explicit_empty_span_cannot_fall_back_to_uninjected_worker_prose(self):
+        from evals.context_engine_replay import recorded_span_text
+        with self.assertRaises(RuntimeError):
+            recorded_span_text({'injected_reference':'','result':{'content':'purple star'}})
+
     def test_sentence_keeps_native_word_spacing_and_requires_receipt(self):
         encode=lambda w:{'The':[5],'badge':[6],'is':[7],'purple':[8],'star.':[9]}[w]
         words=[['The',[1.,1.15],'SPEAKER_MAIN'],['badge',[1.2,1.35],'SPEAKER_MAIN'],

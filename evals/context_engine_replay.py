@@ -114,7 +114,7 @@ def run(lm, mimi, spm, voice, histories, data, assets, source_commit, cut_index=
                 # at which each already delivered receipt was inserted.
                 while record['calls'][call_index]['mode']=='span':
                     event = spans[span_index]; mode='span'
-                    frames = engine.inject_context_span(event['result']['content'])
+                    frames = engine.inject_context_span(recorded_span_text(event))
                     if frames != event['virtual_span_frames']:
                         raise RuntimeError('Actual replay span length changed')
                     span_index += 1
@@ -150,3 +150,16 @@ def run(lm, mimi, spm, voice, histories, data, assets, source_commit, cut_index=
         result['future_component']=on_verified(engine,saved,index+2,rows,pcm,result)
         result['gold_targets_created']=True
     return result
+
+
+def recorded_span_text(event):
+    """Replay precisely the recorded payload, including state-only spans."""
+    if event.get('event') == 'backend_pending_status_applied':
+        if event.get('result') is not None or event.get('word_or_acoustic_tokens_forced') is not False:
+            raise RuntimeError('Pending state cannot supply a result or forced speech')
+        value = event['reference']
+    else:
+        value = event['injected_reference'] if 'injected_reference' in event else event['result']['content']
+    if not isinstance(value,str) or not value.strip():
+        raise RuntimeError('Recorded context payload must be nonempty text')
+    return value

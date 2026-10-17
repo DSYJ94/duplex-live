@@ -73,6 +73,10 @@ def plan(late, examples):
         requests = (clean[0,begin:private[0]['real_frame']] == 4).nonzero()
         if not len(requests):
             raise RuntimeError('No approved future request precedes the actual private receipt')
+        for span in spans:
+            if (span['event'].get('event') == 'backend_pending_status_applied'
+                    and not (clean[0,begin:span['real_frame']] == 4).any()):
+                raise RuntimeError('Pending state would precede every approved future request')
         details = {'first_private_sentence_source_frame':late['selection']['source_start_frame'],
             'private_sentence_measured_onset_s':onset,'actual_private_receipt_input_clock_s':delivered,
             'minimum_private_speech_margin_after_receipt_s':.24}
