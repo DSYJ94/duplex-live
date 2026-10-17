@@ -28,6 +28,22 @@ Three latest model/state pairs and40 native recordings now have local readback
 hash verification in context-trained26-and-persona-local-verified.json. Cloud
 stays paused; no new user input needed.
 
+Plain words:28-component mathematical audit5910 PASSES all28, maximum streamed/
+batched error0.0001516342163, dataSHAde92099057ded15a1af0e387c96b457cdf4c1731c26594dcdca211d4c442fc1e.
+Proof5911 is running. Continuation5957 (512 further updates;520 total) and sixteen
+native jobs in context-trained28-native-full-20261017.jsonl are queued behind
+full successful reload gates. CPU speech5984 follows all sixteen plus baseline
+5883 and publisher-persona5900/5906. No new full-task result exists yet. The
+28-data mixture has eight verified supervision kinds versus seven in26-data;
+same balanced-kind algorithm/budget therefore changes per-kind exposure too.
+Do not claim this isolates only one label. Publisher persona5899–5906 does not
+repair whole tasks: latest5906 falsely claims cancellation with no cancel receipt,
+and ordinary5903/5904 give incorrect explanations. Zero5900 uses the supplied
+pencil answer, while zero5899 corrupts a correct salt answer. Capability and
+context-use limits remain unresolved; no pure intelligence score is claimed.
+New control tensors, both exact source histories and14 native comparison WAVs
+have local readback hashes in context-transition-local-closure-verified.json.
+
 ## Current execution — 17 October, mixed ordinary/private correction
 
 Plain words: latest completed models remain UNQUALIFIED. Corrected19-component

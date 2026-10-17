@@ -467,3 +467,24 @@ the original26, same4806 parent, balanced kinds, per-kind retention and weight16
 Only after the complete mathematical/reload gates may the bounded matched
 continuation run. The intended outcome is complete-task improvement without
 ordinary/private regression, not merely fitted control-token probability.
+
+Plain words:28-data mathematical audit5910 passes every component, maximum
+streamed/batched absolute error0.0001516342163, causal prefix error0. DataSHA is
+de92099057ded15a1af0e387c96b457cdf4c1731c26594dcdca211d4c442fc1e.
+Eight-update5911 is running; dependent5957 adds512 updates, same parent and loss
+settings. Sixteen native runs are in context-trained28-native-full-20261017.jsonl;
+independent speech5984 waits for them. All stages require predecessor success
+and revalidate artifacts on load. No new native behavior is qualified yet.
+Adding clarification_lookup makes eight supervision kinds versus seven for26;
+same balanced-kind policy changes exposure, so this is a bounded new-mixture
+comparison rather than a pure one-label causal estimate.
+
+Plain words:publisher-persona5899–5906 fails to restore reliable behavior. Base
+5899 corrupts a correct backend salt explanation;5900 gives a plausible supplied
+pencil explanation. Adapted5903/5904 answer directly but incorrectly;5906 claims
+cancellation despite only a lookup receipt. The issue is neither proved to be
+only control nor proved to be only base knowledge. Exact source histories5483/85,
+control tensors5893/95 and14 new native comparison WAVs have local readback
+verification in context-transition-local-closure-verified.json. New native
+question/answer/failure players are available through viz.listen at
+/audio/voice-diagnostics/response-boundary.html; four WAV URLs return HTTP200.
