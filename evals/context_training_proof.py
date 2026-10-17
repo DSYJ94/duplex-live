@@ -38,6 +38,8 @@ def main():
     ap.add_argument('--teacher-native-math-audit',type=Path)
     ap.add_argument('--teacher-native-math-diagnostic')
     ap.add_argument('--teacher-native-math-diagnostic-mode',choices=('attention','linear'),default='attention')
+    ap.add_argument('--teacher-native-fp32-preflight',type=Path)
+    ap.add_argument('--teacher-native-fp32-source-commit')
     ap.add_argument('--actual-replay', type=Path, action='append')
     ap.add_argument('--actual-source-data', type=Path)
     ap.add_argument('--actual-head-data', type=Path, action='append')
@@ -82,6 +84,9 @@ def main():
     ap.add_argument('--text-padding', choices=('legacy-epad0','context-pad3'), default='legacy-epad0')
     ap.add_argument('--request-policy', choices=('source-dispatch','native-prelead','native-prelead-epad'), default='source-dispatch')
     args = ap.parse_args()
+    if bool(args.teacher_native_fp32_preflight)!=bool(args.teacher_native_fp32_source_commit) or (
+            args.teacher_native_fp32_preflight and (not args.teacher_native_math_audit or args.teacher_native_math_diagnostic)):
+        ap.error('Higher precision reference requires the original FP32 audit and source in a separate zero-update run')
     if args.teacher_native_math_diagnostic and not args.teacher_native_math_audit:
         ap.error('Numerical diagnostic requires the independently approved teacher corpus')
     if any((args.teacher_engine_input_audit,args.teacher_engine_input_id,args.teacher_engine_input_voice,args.teacher_native_math_audit)):

@@ -26,7 +26,12 @@ def prepare(examples,spm,voice,retention,args):
     manifest,rows=load(approval,args.actual_native_teacher_scope,args.assets,args.out/'voice.pt',examples,
         persona_prefix(BASE_INSTRUCTIONS,voice,spm),spm)
     native_data=pre/'native-teacher-data.json'
-    if (gate['schema']!='dl-context-native-teacher-math-audit-v1' or not gate['passed']
+    if (gate['schema']!='dl-context-native-teacher-math-audit-v2' or not gate['passed']
+            or gate['reference_precision']!='fp32-weights-activations-fp64-linear-v1'
+            or gate['reference_code_sha256']!=sha256(Path(__file__).with_name('context_teacher_numeric_reference.py'))
+            or not gate['production_and_training_execution_unchanged']
+            or [c['teacher'] for c in gate['fp32_baseline']['cases']]!=[r['teacher'] for r in rows]
+            or any(c['causal_prefix_maximum_error']!=0. for c in gate['fp32_baseline']['cases'])
             or gate['optimizer_steps']!=0 or gate['training_approved'] is not False
             or gate['data_sha256']!=sha256(native_data) or json.loads(native_data.read_text())!=manifest
             or gate['data_loader_code_sha256']!=sha256(Path(__file__).with_name('context_native_teacher_data.py'))

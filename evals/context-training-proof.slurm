@@ -49,6 +49,12 @@ fi
 if [ -n "${CONTEXT_TEACHER_NATIVE_MATH_APPROVAL_JOB:-}" ]; then
  [[ "$CONTEXT_TEACHER_NATIVE_MATH_APPROVAL_JOB" =~ ^[0-9]+$ ]]
  DIAGNOSTIC=()
+ if [ -n "${CONTEXT_TEACHER_NATIVE_FP32_PREFLIGHT_JOB:-}" ]; then
+  : "${CONTEXT_TEACHER_NATIVE_FP32_SOURCE_COMMIT:?Original FP32 source required}"
+  [[ "$CONTEXT_TEACHER_NATIVE_FP32_PREFLIGHT_JOB" =~ ^[0-9]+$ ]]
+  DIAGNOSTIC+=(--teacher-native-fp32-preflight "$DL/runs/context-training-proof-$CONTEXT_TEACHER_NATIVE_FP32_PREFLIGHT_JOB" --teacher-native-fp32-source-commit "$CONTEXT_TEACHER_NATIVE_FP32_SOURCE_COMMIT")
+  run_container -m unittest evals.harness.test_context_teacher_numeric_reference
+ fi
  if [ -n "${CONTEXT_TEACHER_NATIVE_MATH_DIAGNOSTIC:-}" ]; then DIAGNOSTIC+=(--teacher-native-math-diagnostic "$CONTEXT_TEACHER_NATIVE_MATH_DIAGNOSTIC" --teacher-native-math-diagnostic-mode "${CONTEXT_TEACHER_NATIVE_MATH_DIAGNOSTIC_MODE:-attention}"); fi
  run_container -m evals.context_training_proof "${ARGS[@]}" \
   --teacher-engine-input-audit "$DL/runs/context-retention-teacher-audit-${CONTEXT_NATIVE_TEACHER_SCOPE_JOB:-7507449}/report.json" \
