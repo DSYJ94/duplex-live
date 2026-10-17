@@ -48,6 +48,11 @@ def main():
             or (args.ordinary_response_boundary and
                 (row['kind']!='simple' or row.get('ordinary_response_boundary') is not True))):
         raise RuntimeError('Future composition policy differs from the approved ordinary plan')
+    if args.ordinary_response_boundary and (
+            plan.get('native_response_boundary_version')!=2
+            or plan.get('response_boundary_plan_code_sha256')!=sha256(
+                Path(__file__).with_name('context_response_boundary.py'))):
+        raise RuntimeError('Rejected or changed response-boundary policy needs a new independent CPU plan')
     if (plan['teacher']['id']!=row['teacher'] or plan['training_approved'] is not False
             or plan['actual_history'].split('/')[-1]!='context-spanning-probe-'+row['job']):
         raise RuntimeError('Future source or teacher differs from the reviewed plan')
