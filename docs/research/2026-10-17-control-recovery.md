@@ -559,3 +559,30 @@ WAVs return HTTP200 through viz.listen. These are forced-text TRAIN captures.
 Numerical audit6969 is running; gated proof6976,512-update continuation6978,
 16 unforced native runs6979–6994 and independent speech6995 are submitted. No
 native improvement is established yet. Keep teacher-retention weight0.
+
+
+Plain words:math6969 PASSES28 components, maximum streamed/batched error
+0.00015163421630859375 and zero causal-prefix error. Eight-update proof6976 is
+confirmed running. Inference-only, zero-adapter publisher-persona comparison
+7079–7082 tests original versus accepted-synthetic voice on reused salt/pencil
+questions; speech7083 follows. This tests voice-reference confounding, not a new
+model, new holdout or voice-quality promotion. No result claimed yet.
+
+
+Plain words:voice-reference7079/7080 terminate at the exact-training-voice guard,
+before conversation; these are engineering failures, not native task failures.
+7081/82 with accepted reference complete, but do not form a matched voice pair.
+Dependent speech7083 is cancelled. Corrected7115–7118 use the existing adapter-
+free path for BOTH voices, validated layout7463825 and MATH attention, with the
+publisher persona; speech7119 follows. No source/guard changes. Own-audio6976's
+fit report now PASSES; its separate exact reload is pending. Main continuation
+6978, native6979–6994, speech6995 remain gated. Do not duplicate submissions.
+
+Plain words:continuation receipts are context-native-private-trial-20261017.jsonl,
+context-native-private-native-20261017.jsonl and
+context-native-voice-conditioning-bare-20261017.jsonl under cluster runs.
+Read-only local status script /private/tmp/duplex-native-private-model-progress-bounded.py
+retrieves full reports with bounded Slurm calls. All three new capture tensors,
+restarts/audio, CPU audits and math6969 are exported locally;34 audit-referenced
+paths have no missing export paths. Sourceb42a6e4 restores as a clean independent
+clone from the Git bundle. This is source/data preservation, not cloud GPU resume.

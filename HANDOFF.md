@@ -14,12 +14,13 @@ actual prefix/receipt and all user codes. Nine source MD5s match. Independent CP
 Captures6926/6930/6932 PASS exact restart/delayed readout. CPU6934 independently
 PASSES same-label/mask/prefix/user comparisons to5219/20/21. Speech6936 PASSES
 word error0/0/0.1, valid timestamps and every private value. Nine local hashes
-and three gallery audio URLs pass. Math6969 is running; gated8-update proof6976,
+and three gallery audio URLs pass. Math6969 PASSES all28 components (maxerror0.000151635, zero causal error).
+Eight-update6976 fit report PASSES; fresh-process reload is still running. Gated
 512-update continuation6978, native6979–6994 and speech6995 submitted. This is
 forced-text TRAIN preparation, not native success. Comparison retains28 data,
 4806 parent,8+512 budget and5957 objective; teacher-retention weight stays0.
 
-Plain words:latest28-data model7505957 PASSES520-update fit and exact fresh
+Plain words:comparison baseline28-data model7505957 PASSES520-update fit and exact fresh
 reload, but remains UNQUALIFIED after16 completed development runs. Do not
 infer0/16 component success: TRAIN cancellation
 5968 now really cancels at19.12s input clock (complete cancel audio ends17.29s),
@@ -31,18 +32,13 @@ publisher5906 have invalid word timing, so no spoken acceptance from them. Chang
 private5977's ASR hears Copper Dive; correct sampled text is not verified speech.
 No native model is promoted; do not extend5957 unchanged.
 
-Plain words:historical sourceb0f1beb tests weight1 supervised teacher text on the SAME
-four retention histories, alongside unchanged KL/hidden retention. Their prior
-loss only preserved base behavior, which is itself unreliable. Default weight0
-is unchanged; explicit positive mode requires independent teacher scope6263.
-That CPU audit and Torch gradient/masking/resume checks PASS: teachers007/011/
-019/020 have514/334/586/497 real text targets, no prefix/span/user/audio labels.
-All eight changed files match local/remote MD5s. Same28 data/audit5910,4806 parent,
-sampling and8+512 budget: proof6461, continuation6462, native6463–6478 and CPU
-speech6479 are submitted with afterok gates. No new-objective result is claimed.
-Proof6461 now PASSES eight updates and exact fresh reload; logged teacher CE is
-nonzero for all four kinds.6462 is confirmed running. This is numerical evidence,
-not native task improvement.
+Plain words:historical sourceb0f1beb added weight1 supervised text on the same
+four retention histories alongside unchanged KL/hidden retention. CPU6263 and
+Torch masking/gradient/resume checks pass; targets514/334/586/497 exclude all
+prefix/span/user/audio positions. Proof6461 and520-update6462 reload exactly.
+The completed native/speech failure above supersedes their former pending status.
+Default weight0 remains unchanged and is used in the current own-audio trial.
+
 
 Plain words:full28-data export now passes119 file readback hashes and a39-path
 scan with no missing paths. Source8a1c201 restores as an independent clone from
