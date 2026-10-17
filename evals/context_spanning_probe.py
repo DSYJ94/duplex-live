@@ -57,7 +57,7 @@ def main():
         help='Supply actual request-started/delivery-pending state as a context span; diagnostic')
     ap.add_argument('--math-attention', action='store_true',
         help='Explicit numerical replay diagnostic; use Torch math attention only')
-    ap.add_argument('--persona-profile',choices=('recorded-records','released-default'),default='recorded-records',
+    ap.add_argument('--persona-profile',choices=('recorded-records','released-default','lookup-and-cancel'),default='recorded-records',
         help='Inference-only comparison with the exact pinned upstream default persona')
     ap.add_argument('--lookup-delivery-delay-s',type=float,default=0.,
         help='Inference-only minimum transport delay for real lookup results, between zero and 30 seconds')
@@ -212,6 +212,10 @@ def main():
     if args.persona_profile=='released-default':
         from contextspan.runtime.default_persona import DEFAULT_PERSONA
         persona=DEFAULT_PERSONA
+    elif args.persona_profile=='lookup-and-cancel':
+        persona+=(' The client also supports cancelling lookup tasks. '
+            'If the user asks to cancel a lookup, consult the client. '
+            'Only a successful cancellation reply confirms that it is cancelled.')
     engine.set_persona(persona,voice)
     if history:
         history.mode='live'
