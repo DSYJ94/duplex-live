@@ -1,5 +1,33 @@
 # HANDOFF — where we are (updated 2026-10-17 for active recovery)
 
+Plain words: owner reviewed progress and authorizes faster continuation. No
+complete native model qualifies. Latest26-component audit5317, eight-update
+proof5318 and136/520 checkpoints5421/5422 pass numerical/reload checks. Their32
+unforced development runs5474–5505 show some ordinary answers and the520 model's
+correct first clarification question, but no lookup after the user's project
+reply, unreliable result use and missed cancellation. These are reused
+development scenes, not fresh qualification; independent speech checks remain.
+Eight capability-prompt comparisons5524–5538 are complete. Older4806 with an
+explicit cancellation capability executes cancel_lookup in5528, but later
+conversation remains wrong; latest5422 still misses cancellation. No prompt fix
+or model is promoted. Actual cluster queue was empty during the owner report.
+
+Plain words: source8a1c201 adds three approved PAD/EPAD/RET controls rolled
+forward from exact trained native history plus one unlabelled delayed-readout
+probe. CPU plans5869/5870 use TRAIN5483/5485 and independent approved019/020
+teachers. The new fit still requires its independent mathematical/reload gates.
+Thirty-seven local guards pass. CPU5869/5870, native captures5893/5895 and
+independent audits5894/5896 now pass, including exact prefix replay and actual
+readout[3,3,0,4]. Audit5910 and dependent eight-update proof5911 use the original26
+plus these two controls, same4806 parent, fresh optimizer and unchanged recipe.
+Matched zero-adapter ordinary runs5883–5888 all request help and several still
+give wrong replies; adaptation alone does not explain these failures. Publisher
+persona comparisons5899–5906 are inference-only and pending. Invalid-voice
+launches5873/75/76/77/78/79 failed argument parsing and are not model results.
+Three latest model/state pairs and40 native recordings now have local readback
+hash verification in context-trained26-and-persona-local-verified.json. Cloud
+stays paused; no new user input needed.
+
 ## Current execution — 17 October, mixed ordinary/private correction
 
 Plain words: latest completed models remain UNQUALIFIED. Corrected19-component

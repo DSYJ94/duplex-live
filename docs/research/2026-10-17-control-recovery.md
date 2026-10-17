@@ -427,3 +427,43 @@ ordinary boundaries, and retention rotates per kind. Three trained private
 corrections and acknowledgment4669 supplement the retained eleven private
 lessons, three positive lookup prefixes and original cancellation/listening
 controls. Qualification is pending. Cloud remains paused.
+
+Plain words:26-component audit5317 and proof5318 pass.136/520 checkpoints5421/22
+restore exactly and preserve frozen weights. Their32 free-running development
+runs5474–5505 remain unqualified: evaporation and some rotation answers work;
+5422 asks the right first question on TRAIN019 and validation006 but never
+requests the lookup after the project reply. Some changed private values are
+used then contradicted with stale pending claims. Cancellation is missed.
+No sealed test was read; independent speech5897 confirms correct question
+wording at WER0, and also confirms the incorrect lightning explanation at WER0.
+ASR checks support words spoken, not factual correctness.
+
+Plain words:eight capability comparisons5524–5538 complete. Explicit cancellation
+capability on4806 executes cancel_lookup in5528 and eventually says it cancelled,
+but the whole conversation still fails.5422 misses cancellation even with that
+instruction. This is a component clue, not an adopted prompt or qualified model.
+Three latest checkpoint/state pairs and40 native recordings are now exported
+and hash-verified locally in context-trained26-and-persona-local-verified.json.
+
+Plain words:owner reviews the report and authorizes faster continuation. The
+intelligence question remains unresolved: wrong everyday answers cannot be
+excused as only task control. Zero-adapter paired native runs5883–5888 retain
+the same voice/layout/attention but all six request help and several mishandle
+correct supplied answers. The latest adaptation is not the sole cause. Eight
+publisher-persona comparisons5899–5906 now test the documented upstream persona
+instead of inventing a generic instruction that upstream warns is unsupported.
+These are inference-only reused development scenes, never new training labels.
+Six earlier voice-argument startup failures are preserved, explicitly excluded
+from behavior evidence and corrected to accepted-synthetic before model runs.
+
+Plain words:source8a1c201 introduces explicitly typed trained-history control
+roll-in. Only three independent expert PAD/EPAD/RET controls receive loss; a
+fourth unforced frame proves the delayed RET readout and gets no loss. Existing
+past words/user/audio remain conditioning. CPU plans5869/5870, captures5893/5895
+and independent audits5894/5896 pass with four legacy regressions. Actual replay
+is133/228 frames respectively; readout[3,3,0,4] is verified. No tool is executed
+by a forced capture. Audit5910 and dependent eight-update5911 use these two plus
+the original26, same4806 parent, balanced kinds, per-kind retention and weight16.
+Only after the complete mathematical/reload gates may the bounded matched
+continuation run. The intended outcome is complete-task improvement without
+ordinary/private regression, not merely fitted control-token probability.

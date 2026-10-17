@@ -4084,3 +4084,22 @@ cluster tests; eight native replays/future captures5207/5214/5216/5217/5218/5219
 5220/5221 all pass. Speech5283 passes the five own-speech early captures at the
 unchanged0.15 bar.26-data mathematical audit5317 and dependent eight-update5318
 are submitted; no new model qualification is claimed. Cloud stays paused.
+
+## 2026-10-17 — Trained control transitions and reasoning separation
+
+Plain words:26-data136/520 models5421/22 pass reload but their32 native development
+runs5474–5505 fail full qualification. Correct first clarification is followed
+by no lookup; returned values are omitted/contradicted and cancellation fails.
+Independent ASR5897 confirms several observed words, including correct first
+questions and an incorrect lightning explanation. Capability-only cancellation
+5528 executes a real cancel on4806 but does not repair the full conversation.
+
+Plain words:source8a1c201 passes37 local guards. Exact-prefix native captures5893
+(clarification lookup) and5895(cancellation), CPU plans5869/70 and independent
+CPU audits5894/96 pass. Three expert controls are rolled forward; fourth frame
+is an unlabelled native readout, no tool dispatch or speech/fact supervision.
+28-data audit5910 and dependent warm eight-update5911 are submitted, same4806
+parent and recipe as26-data. Qualification remains pending. Zero-adapter native
+ordinary5883–88 all delegate and several give poor answers; publisher-persona
+5899–5906 checks whether the records-focused persona contributes. Reused scenes
+are development diagnostics, not fresh general intelligence evidence.
