@@ -1,5 +1,13 @@
 # duplex-live — final report (2026-10-12)
 
+Plain words: this is the historical12 October turn-taking report. It does not
+qualify the current full-duplex voice/delegation system. The17 October native
+candidates still fail ordinary-answer, result-use and conversation-control
+checks. Read [the current handoff](../HANDOFF.md) and
+[recovery decisions](research/2026-10-15-resource-decisions.md) for the active
+state, actual evidence and outstanding work. Earlier results below retain their
+original scope and date.
+
 **Plain words first.** The goal was a live duplex voice model: it hears
 you, it knows when to speak, it speaks. We got most of the way and
 proved exactly where the remaining wall is. The mic demo runs today.

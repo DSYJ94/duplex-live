@@ -2,6 +2,17 @@
 
 ## Current execution — 17 October, mixed ordinary/private correction
 
+Plain words: at11:43UTC/13:43Berlin, renewed SSH access is needed. The certificate
+expired11:47Berlin; SSH now rejects public-key authentication. `clifton auth`
+is running locally and a sign-in tab was opened; the owner has been asked to
+complete it. Do not duplicate any jobs on an observation failure. Retrieve
+7495630 (BayLing assets),7495650 (runtime retry),7495652 (independent late audit)
+and7495653 (dependent remaining late captures) after renewal. Their current
+terminal states are UNVERIFIED because access expired. Latest source is
+be534a3 before this documentation update. The planned12:00Berlin recipe freeze
+has passed without a qualified recipe; do not claim it was met. Keep19 October
+delivery/20 October recovery buffer and18 October18:00 training cutoff visible.
+
 Plain words: current07:48UTC status supersedes the mixed-stage submission note
 below. Mixed16 checkpoint7495189 reaches136 updates and exact reload, but native
 7495483/84/85/88/89 plus retries7495506/07 and changed-value7495508/09 do NOT
