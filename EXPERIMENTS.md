@@ -4145,3 +4145,17 @@ native runs/independent speech6995 remain pending. Metadata inventory establishe
 25 existing GPT-Live TRAIN teachers (19private/4simple/1clarify/1cancel); the
 failed teacher-text recipe supervised four longest only. New all-teacher CPU
 scope audit is distinct from optimizer approval and retains all fail-closed masks.
+
+
+## 2026-10-17 — Native teacher input audit and observed source boundary
+
+Plain words: actual Engine inputs7800/7801/7852/7803/7804 differ from the offline
+cache only on user acoustic rows. Independent CPU8370 passes exact all17-row
+reconstruction using actual streamed user codes; assistant targets/masks unchanged.
+Broader captures8408–8427 expose one phantom end frame in CF0062 (8420); CPU8428
+and dependent math8559 cannot pass. Source900480 samples/24000 is469 physical
+frames, but floating37.52*12.5 rounds above469 and pinned interleaver usesceil.
+All16 acoustic rows of nonexistent frame469 are-1; no word/control/span is lost.
+Source4b0f9d5 adds strict opt-in observed-boundary scope, retains originals and
+binds historical captures by immutable source and explicit scope SHA. CPU8779
+submitted;12 real Torch guards pass so far. No optimizer/quality gain claimed.

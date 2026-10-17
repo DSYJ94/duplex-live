@@ -1,5 +1,29 @@
 # HANDOFF — where we are (updated 2026-10-17 for active recovery)
 
+Plain words: active next comparison uses native-streamed user conditioning for
+approved complete teacher histories. Five CPU-checked native traces8370 pass;
+remaining captures8408–8427 exposed one nonexistent end-padding frame in
+teacher-cf-recovery-train-006-2. Its source has900480 samples/469 complete80ms
+frames; floating ceil produced470 cached frames, with all16 acoustic codes -1
+on only the final frame. No measured words or context/control events occur
+there. CPU observed-boundary audit8779 is running on4b0f9d5; three real Torch
+boundary guards pass, plus nine existing guards. Raw audio/cache stay unchanged.
+Old CPU8428 failed because8420 lacked a trace; dependent math8559 was cancelled,
+not passed. Do not retry unchanged or discard the lesson. A versioned scope
+removes only the proven nonexistent padding and binds all labels/masks/provenance.
+Re-capture only this teacher; independently revalidate all25 traces with explicit
+old/new scope receipts, then a new numerical audit before any optimizer.
+
+Plain words: native teacher objective is implemented but no new fit has run.
+Proposed controlled arms use four-longest versus all25 native histories at
+teacher weight1, with original28-data5957 components/parent4806/budget held fixed;
+base KL/hidden preservation stays unchanged. Both must pass8 updates and exact
+reload before512 continuation, then unforced native+independent ASR evaluation.
+6978 and6462 remain rejected; voice-reference ablation7115–7119 did not establish
+a cure for ordinary answer errors. Base intelligence remains unqualified as well
+as conversation completion. Cloud validation stays paused.
+
+
 Plain words:final6978 review is REJECTED, not an adoption. ASR6995 confirms
 wrong ordinary speech (day/night6981 word error0), hears yellow screen instead
 of yellow circle in6985, and has invalid segment/word timing for6983.6991's

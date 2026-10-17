@@ -58,7 +58,7 @@ if [ -n "${CONTEXT_TEACHER_ENGINE_INPUT_INDEX:-}" ]; then
  : "${CONTEXT_TEACHER_SCOPE_JOB:?Independent all-teacher scope required}"
  [[ "$CONTEXT_TEACHER_ENGINE_INPUT_INDEX" =~ ^[0-9]+$ && "$CONTEXT_TEACHER_SCOPE_JOB" =~ ^[0-9]+$ ]]
  SCOPE="$DL/runs/context-retention-teacher-audit-$CONTEXT_TEACHER_SCOPE_JOB/report.json"
- ID=$(python3 -c 'import json,sys; r=json.load(open(sys.argv[1])); assert r["passed"] and r["schema"]=="dl-context-all-teacher-scope-audit-v1"; print(r["teachers"][int(sys.argv[2])]["id"])' "$SCOPE" "$CONTEXT_TEACHER_ENGINE_INPUT_INDEX")
+ ID=$(python3 -c 'import json,sys; r=json.load(open(sys.argv[1])); assert r["passed"] and r["schema"] in ("dl-context-all-teacher-scope-audit-v1","dl-context-all-teacher-scope-audit-v2"); print(r["teachers"][int(sys.argv[2])]["id"])' "$SCOPE" "$CONTEXT_TEACHER_ENGINE_INPUT_INDEX")
  run_container -m unittest evals.harness.test_context_teacher_engine_inputs
  run_container -m evals.context_training_proof "${ARGS[@]}" \
   --teacher-engine-input-audit "$SCOPE" --teacher-engine-input-id "$ID" \
