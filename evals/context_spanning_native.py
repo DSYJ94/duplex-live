@@ -154,6 +154,10 @@ def run(engine,user,world,args,loading):
                                 record.update(disposition='rejected; cancelled task',applied_at_s=None)
                             else:
                                 reference, receipt_count = backend_reference(result, world)
+                                if args.backend_reference_profile=='query-and-result':
+                                    from evals.context_query_reference import compose
+                                    reference,query_evidence=compose(reference,context,recognized['input_seconds'],result['route'])
+                                    record['actual_asr_query_context']=query_evidence
                                 history=getattr(engine,'_dl_student_history',None)
                                 if history:history.mode='span'
                                 try:
@@ -251,5 +255,8 @@ def run(engine,user,world,args,loading):
         'actual_lm_and_pcm_executed_together':True,'playout_is_causal_simulation':True,
         'microphone_acceptance':False,'spoken_value_use_verified':False,'quality_qualified':False,'training_approved':False}
     if calibration:report['ret_logit_calibration_live_calls_verified']=engine._dl_ret_bias_calls
+    if args.backend_reference_profile!='answer-only':
+        report['backend_reference_profile']=args.backend_reference_profile
+        report['actual_asr_query_spans']=sum(e.get('actual_asr_query_context',{}).get('supplied',False) for e in events)
     (args.out/'report.json').write_text(json.dumps(report,indent=2)+'\n')
     print(json.dumps({k:v for k,v in report.items() if k not in ('loading','worker_events','playout')}),flush=True)

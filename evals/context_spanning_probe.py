@@ -48,6 +48,7 @@ def main():
     ap.add_argument('--asr-python',type=Path)
     ap.add_argument('--warm-audio',action='store_true')
     ap.add_argument('--ret-logit-bias',type=float,default=0.)
+    ap.add_argument('--backend-reference-profile',choices=('answer-only','query-and-result'),default='answer-only')
     ap.add_argument('--adapter-proof',type=Path)
     ap.add_argument('--adapter-disabled',action='store_true')
     ap.add_argument('--adapter-zero',action='store_true')
@@ -66,6 +67,8 @@ def main():
     args=ap.parse_args()
     from evals.context_ret_bias import validate as validate_ret_bias
     validate_ret_bias(args.ret_logit_bias)
+    if args.backend_reference_profile!='answer-only' and args.backend_mode!='native-asr':
+        ap.error('Actual query grounding requires native requests and actual arrived-audio recognition')
     if args.ret_logit_bias and (args.train_history or args.backend_mode!='native-asr'):
         ap.error('RET calibration is inference-only with actual native-ASR consultation')
     if args.persona_profile!='recorded-records' and args.train_history:
@@ -223,6 +226,9 @@ def main():
     if args.ret_logit_bias:
         from evals.context_ret_bias import install as install_ret_bias
         loading['ret_logit_calibration']=install_ret_bias(engine,args.ret_logit_bias)
+    if args.backend_reference_profile!='answer-only':
+        loading['backend_reference_profile']=args.backend_reference_profile
+        loading['backend_reference_code_sha256']=sha256(Path(__file__).with_name('context_query_reference.py'))
     (args.out/'loading.json').write_text(json.dumps(loading,indent=2)+'\n')
     world=RecordWorld({meta['project']:{meta['field']:args.private_value}} if row['kind']!='simple' else {})
     if history:
