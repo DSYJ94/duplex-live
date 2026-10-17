@@ -16,7 +16,12 @@ def validate(folder, data, assets, examples, spm, voice):
     history = Path(manifest['actual_history'])
     record = json.loads((history/'student-history.json').read_text())
     source = history_validate(history, data, assets, record['source']['repo_commit'])
-    expected, gold = plan(history, data, examples, spm)
+    cancel_ack=manifest.get('target_kind')=='cancellation_acknowledgment'
+    if cancel_ack:
+        from evals.context_cancel_ack import plan as plan_ack
+        expected,gold=plan_ack(history,data,examples,spm,manifest['teacher']['id'])
+    else:
+        expected, gold = plan(history, data, examples, spm)
     # Generation changes only this planner field; all provenance must recompute.
     expected['gold_targets_created'] = True
     if any(manifest.get(k) != v for k, v in expected.items() if k != 'schema'):
@@ -35,6 +40,7 @@ def validate(folder, data, assets, examples, spm, voice):
     if not re.fullmatch('[a-f0-9]{40}', commit):
         raise RuntimeError('Invalid component builder commit')
     names = {'context_future_component.py', 'context_actual_targets.py', 'context_engine_replay.py'}
+    if cancel_ack:names.add('context_cancel_ack.py')
     if set(manifest['builder_code_sha256']) != names:
         raise RuntimeError('Incomplete builder provenance')
     for name, digest in manifest['builder_code_sha256'].items():
@@ -43,6 +49,9 @@ def validate(folder, data, assets, examples, spm, voice):
         if hashlib.sha256(content).hexdigest() != digest:
             raise RuntimeError('Changed immutable component builder')
     gate = json.loads((folder/'engine-replay-before-future.json').read_text())
+    if cancel_ack and (gate.get('conditioning_policy')!='verified-trained-rollout'
+            or gate.get('trained_collector')!=manifest['trained_collector']):
+        raise RuntimeError('Cancellation correction lost its exact trained collector identity')
     boundary = manifest['future_first_real_frame']
     live = [c for c in record['calls'] if c['mode'] == 'live']
     stop = live[boundary-1]['start'] + 1
@@ -112,17 +121,23 @@ def validate(folder, data, assets, examples, spm, voice):
     side = json.loads(Path(teacher['path']).with_suffix('.json').read_text())
     words = [a[0] for a in side['alignments'] if a[2] == 'SPEAKER_MAIN']
     selection = manifest['selection']; words = words[selection['source_first_word_index']:selection['source_end_word_index']]
-    value = next(iter(next(iter(manifest['world'].values())).values()))
-    phrase = spoken_words(value)
-    starts = [i for i in range(len(words)) if spoken_words(' '.join(words[i:i+len(phrase)])) == phrase]
-    if len(starts) != 1: raise RuntimeError('Ambiguous first fact target')
-    ordinal = sum(len(spm.encode(w.strip())) for w in words[:starts[0]])
+    if cancel_ack:
+        ordinal=0
+    else:
+        value = next(iter(next(iter(manifest['world'].values())).values()))
+        phrase = spoken_words(value)
+        starts = [i for i in range(len(words)) if spoken_words(' '.join(words[i:i+len(phrase)])) == phrase]
+        if len(starts) != 1: raise RuntimeError('Ambiguous first fact target')
+        ordinal = sum(len(spm.encode(w.strip())) for w in words[:starts[0]])
     fact_frame = int(torch.where(gold[0]>=5)[0][ordinal])
     audit = {'component':str(folder), 'manifest_sha256':sha256(folder/'actual-future.json'),
         'tensor_sha256':manifest['sha256'], 'restart_gate_sha256':manifest['actual_restart_gate_sha256'],
         'source_history_sha256':source['history_sha256'], 'voice_codes_sha256':record['source']['voice_codes_sha256'],
         'source_execution':execution, 'builder_commit':commit, 'scenario':source['scenario'],
         'world':manifest['world'], 'frames':gold.shape[1], 'text_targets':int(mask.sum()),
-        'first_fact_frame':fact_frame, 'first_fact_target':int(gold[0,fact_frame]),
+        **({'target_kind':'cancellation_acknowledgment','diagnostic_kind':'first_assistant_content',
+            'diagnostic_frame':fact_frame,'diagnostic_target':int(gold[0,fact_frame]),
+            'private_fact_targets':0,'user_loss_targets':0,'actual_cancellation_completed':True} if cancel_ack else
+            {'first_fact_frame':fact_frame,'first_fact_target':int(gold[0,fact_frame])}),
         'past_loss_targets':0, 'audio_loss_targets':0, 'passed':True}
     return audit, saved

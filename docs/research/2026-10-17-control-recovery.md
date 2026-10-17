@@ -258,3 +258,46 @@ ending at the first approved lookup and before every future receipt or spoken
 word, can provide positive control supervision without that later dependency.
 The native-audio7479546 duplicates teacher-acoustic7468102; do not double-count
 the same question/world merely because the conditioning differs.
+
+
+Plain words:lookup-prefix CPU7504055/56/57 all pass:17/13/16 conditioning
+frames, exactly one RET label each, no answer words, future receipts, audio or
+user labels. They derive from7467981/7479546/7468611 respectively; do not
+include the duplicate7468102. Twenty-two-component mathematical audit7504247
+passes all components (maximum absolute streamed/batched difference0.000151635,
+causal error0). Data SHA15b81402c6a4fb4e9fab90c81a527a011be9ec8d02f9aad0c181f481f7b72446.
+Fresh-optimizer proof7504403 starts from7500125 weights;136-stage7504434 passes
+exact optimizer/random-state and prediction reload. Ordinary first-word weight16
+and balanced-kind sampling remain explicit. Checkpoint SHA
+16055329c24f19621f3cc958c753e981f8b0dc873b45c2c53fd4b60e4ec532ca.
+Native4494–4509 restore requests for help but regress ordinary direct answers;
+private-result use, clarification and cancellation still fail. Do not continue
+this recipe unchanged. These are development scenes, not sealed-test results.
+
+Plain words:source2b8d6f5 tests a bounded actual-ASR question plus validated
+backend result. It never supplies reference words or forces spoken tokens.
+Paired7504409/13 private,4411/15 clarification,4412/16 TRAIN cancellation and
+4425/26 ordinary salt remain unqualified. Startup4410/14 reject the unused
+one-word CLI value before model execution;4425/26 are the corrected replacements.
+Query anchoring sometimes supplies a value but the model reads context labels
+aloud, contradicts facts and misses cancellation. It is not adopted. Cold-run
+between-step pauses reach multiple seconds and confound latency comparisons;
+result-prefill timings themselves are about60–72ms. Do not attribute every pause
+to the speech network or call these cold samples a runtime qualification.
+
+Plain words:independent speech7504102 confirms weighted19 native evaporation3552
+and day/night3553 at word error0, and confirms lightning3551's wrong explanation
+at word error0. Private3557 audibly invents7.22; word error0.477 also exposes
+mismatch between text and spoken repetitions. Thirty-eight new native recordings
+are backed up locally and match their report audio SHA256s. The listening page
+has five native examples, each HTTP200 verified, with explicit failure labels.
+The Git bundle now includes complete history through2b8d6f5; cloud remains paused.
+
+Plain words:the next separately typed data path uses only the approved teacher's
+terminal “It's cancelled” sentence after an actual, successfully delivered cancel
+receipt. It requires the exact verified trained collector, matching TRAIN user
+PCM/world, a quiet boundary after all receipts, and unchanged word spacing.
+Earlier model denials stay conditioning without labels. This teaches a late
+correction; it does not qualify the first acknowledgment or cancellation timing.
+Other trained future generation remains blocked. Capture, an independent
+component audit and a mathematical audit must pass before optimization.

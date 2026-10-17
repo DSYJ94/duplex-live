@@ -152,10 +152,11 @@ def generate(engine,saved,index,rows,pcm,gold,manifest,out):
     torch.save({'delayed_inputs':torch.cat(inputs,dim=2),'hidden':torch.cat(features,dim=1),
         'text_targets':gold[0],'text_mask':text_mask,'provided':flags,
         'native_current_targets':target,'approved_assistant_codes':gold[1:9]},file)
+    builder_names=['context_future_component.py','context_actual_targets.py','context_engine_replay.py']
+    if manifest.get('target_kind')=='cancellation_acknowledgment':builder_names.append('context_cancel_ack.py')
     result={**manifest,'schema':'dl-context-actual-future-component-v1',
         'builder_commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),
-        'builder_code_sha256':{name:sha256(Path(__file__).with_name(name)) for name in (
-            'context_future_component.py','context_actual_targets.py','context_engine_replay.py')},
+        'builder_code_sha256':{name:sha256(Path(__file__).with_name(name)) for name in builder_names},
         'actual_restart_gate_sha256':sha256(out/'engine-replay-before-future.json'),'file':file.name,'sha256':sha256(file),
         'actual_engine_restart_passed':True,'all_future_user_codes_match_actual_capture':True,
         'native_pending_assistant_residuals_sampled_not_relabelled':True,
@@ -183,11 +184,17 @@ def main():
         ap.add_argument('--'+key,type=Path,required=True)
     ap.add_argument('--source-commit',required=True)
     ap.add_argument('--early-window',action='store_true',help='Plan a complete future before any student reply; CPU only')
+    ap.add_argument('--cancel-ack',action='store_true',help='Plan only a completed cancellation acknowledgment')
     ap.add_argument('--teacher-id',help='Bind planning to one independently approved exact-user teacher')
     ap.add_argument('--request-policy',choices=('source-dispatch','native-prelead-epad'),default='source-dispatch')
     ap.add_argument('--audit-early-capture',type=Path)
+    ap.add_argument('--audit-future-capture',type=Path)
     ap.add_argument('--cache',type=Path,action='append',required=True)
     args=ap.parse_args()
+    if args.cancel_ack and (args.early_window or args.audit_early_capture or args.audit_future_capture or not args.teacher_id):
+        ap.error('Cancellation plan needs explicit late teacher selection without another audit mode')
+    if args.audit_future_capture and (args.early_window or args.audit_early_capture):
+        ap.error('Choose one explicit future audit mode')
     args.out.mkdir(exist_ok=False)
     validate(args.history,args.data,args.assets,args.source_commit)
     if sha256(args.tokenizer)!=MODEL_HASHES['tokenizer_spm_32k_3.model']:
@@ -198,9 +205,15 @@ def main():
     voice=torch.load(args.history/'student-voice.pt',weights_only=True)['codes']
     examples,_=load_training(args.cache,spm,persona_prefix(BASE_INSTRUCTIONS,voice,spm),request_policy=args.request_policy)
     try:
-        if args.audit_early_capture:
+        if args.audit_future_capture:
+            from evals.context_future_validate import validate as validate_future
+            result,_=validate_future(args.audit_future_capture,args.data,args.assets,examples,spm,voice)
+        elif args.audit_early_capture:
             from evals.context_early_validate import validate as validate_early
             result,_=validate_early(args.audit_early_capture,args.data,args.assets,examples,spm,voice)
+        elif args.cancel_ack:
+            from evals.context_cancel_ack import plan as cancel_plan
+            result,_=cancel_plan(args.history,args.data,examples,spm,args.teacher_id)
         else:
             result,_=plan(args.history,args.data,examples,spm,early=args.early_window,teacher_id=args.teacher_id)
             if args.early_window:

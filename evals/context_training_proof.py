@@ -54,6 +54,7 @@ def main():
     ap.add_argument('--actual-native-audio-future',action='store_true')
     ap.add_argument('--actual-engine-replay', action='store_true')
     ap.add_argument('--actual-trained-collector',action='store_true')
+    ap.add_argument('--actual-cancel-ack',action='store_true')
     ap.add_argument('--actual-recorded-voice', action='store_true')
     ap.add_argument('--actual-native-priming', action='store_true')
     ap.add_argument('--actual-cold-graphs', action='store_true')
@@ -70,7 +71,10 @@ def main():
     if args.actual_trained_collector and not (args.actual_engine_replay and args.actual_recorded_voice
             and args.actual_replay and len(args.actual_replay)==1 and args.actual_source_data and args.actual_source_commit):
         ap.error('Trained replay requires one explicit TRAIN history, source provenance and its exact recorded voice')
-    if args.actual_trained_collector and args.actual_future_component:
+    if args.actual_cancel_ack and not (args.actual_trained_collector and args.actual_future_component
+            and args.actual_teacher_id and not args.actual_early_window and not args.actual_native_audio_future):
+        ap.error('Cancellation acknowledgment needs an explicit verified trained collector and late teacher selection')
+    if args.actual_trained_collector and args.actual_future_component and not args.actual_cancel_ack:
         ap.error('Trained prefix replay is read-only until separately audited future supervision is implemented')
     if args.actual_response_first_word_weight!=1. and not (args.actual_temporal_fit and args.actual_mixed_data):
         ap.error('Decision weighting requires explicit audited mixed-component temporal training')
@@ -216,8 +220,12 @@ def main():
             prefix = persona_prefix(BASE_INSTRUCTIONS, voice, spm)
             examples, records = load_training(args.cache, spm, prefix, text_padding=args.text_padding,
                 request_policy=args.request_policy)
-            manifest, gold = plan(args.actual_replay[0], args.actual_source_data, examples, spm,
-                early=args.actual_early_window,teacher_id=args.actual_teacher_id)
+            if args.actual_cancel_ack:
+                from evals.context_cancel_ack import plan as cancel_plan
+                manifest,gold=cancel_plan(args.actual_replay[0],args.actual_source_data,examples,spm,args.actual_teacher_id)
+            else:
+                manifest, gold = plan(args.actual_replay[0], args.actual_source_data, examples, spm,
+                    early=args.actual_early_window,teacher_id=args.actual_teacher_id)
             if args.actual_early_window:
                 if args.actual_native_response_boundary:
                     from evals.context_response_boundary import plan as early_plan

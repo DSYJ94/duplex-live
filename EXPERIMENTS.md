@@ -4056,3 +4056,15 @@ stronger bias suppresses required private lookups. Next supervision must balance
 positive lookup decisions with ordinary answers. Existing complete private
 futures contain a later backend-answer dependency; extract only an independently
 verified pre-result lookup prefix, not the full answer-bearing tail.
+
+
+## 17 October2026 — positive lookup prefixes and actual-query anchoring
+
+Plain words:CPU7504055–57 derives exactly one lookup label per verified prefix.
+Audit7504247, eight-update7504403 and136-stage7504434 pass mathematical and exact
+reload checks. Native4494–4509 restores lookup but regresses direct ordinary
+answers and still fails full conversation tasks. Reject unchanged expansion.
+Actual-ASR query anchoring2b8d6f5 in4409/13,4411/15,4412/16,4425/26 also fails;
+context labels become audible and results are contradicted. Independent speech
+7504102 confirms both ordinary component gains and audible factual failures of
+weighted19. No model qualified; cloud remains paused.

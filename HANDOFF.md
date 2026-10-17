@@ -16,6 +16,15 @@ required private lookups. Next data work must add verified positive lookup
 decisions alongside ordinary answers and truthful cancellation acknowledgment.
 Cloud remains paused; delivery19 October, training cutoff18 October18:00Berlin.
 
+Plain words:22-component7504434 (verified lookup prefixes added; eight-update
+proof7504403, audit7504247) also remains UNQUALIFIED. Native4494–4509 restore
+lookup requests but regress ordinary direct answers and still fail result use,
+clarification and cancellation. Do not extend unchanged. Query-and-result
+actual-ASR profile2b8d6f5 also fails paired checks and is not adopted. The next
+explicitly scoped data path teaches the approved terminal cancellation
+acknowledgment only after a real completed cancellation, keeping preceding model
+errors as masked conditioning. See the current research record for evidence.
+
 ### Earlier execution notes (latest paragraph and linked research record take precedence)
 
 Plain words:18-component continuation7502015 passes exact reload but FAILS the

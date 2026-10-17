@@ -50,6 +50,7 @@ if [ -n "${CONTEXT_ACTUAL_REPLAY_JOBS:-}" ]; then
  : "${CONTEXT_ACTUAL_SOURCE_COMMIT:?Actual collector commit required}"
  ACTUAL=()
  if [ "${CONTEXT_ACTUAL_TRAINED_COLLECTOR:-0}" = 1 ]; then ACTUAL+=(--actual-trained-collector); fi
+ if [ "${CONTEXT_ACTUAL_CANCEL_ACK:-0}" = 1 ]; then ACTUAL+=(--actual-cancel-ack); fi
  if [ "${CONTEXT_ACTUAL_NATIVE_AUDIO_FUTURE:-0}" = 1 ]; then ACTUAL+=(--actual-native-audio-future); fi
  if [ -n "${CONTEXT_ACTUAL_TEACHER_ID:-}" ]; then ACTUAL+=(--actual-teacher-id "$CONTEXT_ACTUAL_TEACHER_ID"); fi
  if [ "${CONTEXT_ACTUAL_EARLY_WINDOW:-0}" = 1 ]; then ACTUAL+=(--actual-early-window); fi
