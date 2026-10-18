@@ -93,6 +93,7 @@ def run_case(head,mimi,folder,case,out):
 def main():
     ap=argparse.ArgumentParser(description=__doc__)
     for name in ('inventory','head-approval','stt-assets','mimi-approval','out'):ap.add_argument('--'+name,type=Path,required=True)
+    ap.add_argument('--attention-proof',type=Path);ap.add_argument('--reference-shadow',type=Path)
     ap.add_argument('--source-run',type=Path,action='append',required=True);args=ap.parse_args()
     gate=json.loads(args.head_approval.read_text())
     if (gate['schema']!='dl-maai-bcdet-head-cpu-v1' or not gate['passed']
@@ -101,6 +102,18 @@ def main():
             or not gate['load']['all_tensors_exact']):raise RuntimeError('Missing exact strict/causal CPU head proof')
     import torch
     head,headload=load_head(args.inventory,device='cuda');mimi,codecload=load_mimi(args.stt_assets,args.mimi_approval)
+    attention=None
+    if (args.attention_proof is None)!=(args.reference_shadow is None):raise ValueError('Vectorized mask requires both equivalence proof and original shadow')
+    if args.attention_proof:
+        from evals.maai_backchannel_attention import install
+        attention=json.loads(args.attention_proof.read_text())
+        if (attention['schema']!='dl-maai-vectorized-mask-proof-v1' or not attention['passed']
+                or attention['code_sha256']!=sha256(Path(__file__).with_name('maai_backchannel_attention.py'))
+                or attention['head_code_sha256']!=sha256(Path(__file__).with_name('maai_backchannel_head.py'))
+                or attention['inventory_sha256']!=sha256(args.inventory)
+                or attention['cached_model_probability_max_error']>1e-6):raise RuntimeError('Missing exact attention equivalence proof')
+        installed=install(head)
+        if installed!=attention['changed_modules']:raise RuntimeError('Changed attention inventory')
     from moshi.utils.compile import no_compile
     from torch.nn.attention import sdpa_kernel,SDPBackend
     args.out.mkdir(parents=True,exist_ok=False);results=[]
@@ -111,7 +124,31 @@ def main():
                 raise RuntimeError('Shadow input requires a completed actual concurrent capture')
             for case in parent['results']:
                 results.append(run_case(head,mimi,source/case['scenario'],case,args.out/(source.name+'-'+case['scenario'])))
+    comparisons=[]
+    if args.reference_shadow:
+        reference=json.loads((args.reference_shadow/'report.json').read_text())
+        if reference['head_approval_sha256']!=sha256(args.head_approval) or reference['inventory_sha256']!=sha256(args.inventory):
+            raise RuntimeError('Original shadow uses different head provenance')
+        for row in results:
+            old=next(r for r in reference['results'] if r['scenario']==row['scenario'])
+            for key in ('source_user_pcm_sha256','source_agent_audio_sha256','source_events_sha256','frames'):
+                if row[key]!=old[key]:raise RuntimeError('Changed audio in optimization comparison')
+            folder=next(p for p in args.out.iterdir() if p.is_dir() and p.name.endswith('-'+row['scenario']))
+            before=args.reference_shadow/folder.name
+            if sha256(before/'scores.json')!=old['scores_sha256'] or sha256(before/'continuous-features.pt')!=old['features_sha256']:
+                raise RuntimeError('Changed original shadow artifacts')
+            a=torch.load(before/'continuous-features.pt',map_location='cpu',weights_only=True)
+            b=torch.load(folder/'continuous-features.pt',map_location='cpu',weights_only=True)
+            if not torch.equal(a,b):raise RuntimeError('Encoder features changed in attention-only comparison')
+            prior=json.loads((before/'scores.json').read_text());current=json.loads((folder/'scores.json').read_text())
+            if len(prior)!=len(current):raise RuntimeError('Changed frame inventory')
+            error=max(abs(a[k]-b[k]) for a,b in zip(prior,current) for k in ('p_user_backchannel','p_agent_backchannel'))
+            if error>1e-5:raise RuntimeError('Vectorized acoustic head probabilities changed')
+            comparisons.append(dict(scenario=row['scenario'],encoder_features_exact=True,max_probability_error=error,
+                original_compute_p95_s=old['compute_p95_s'],vectorized_compute_p95_s=row['compute_p95_s']))
     report=dict(schema='dl-maai-bcdet-moshi-shadow-v1',inference_executed=True,head_load=headload,codec_load=codecload,results=results,
+        attention_variant='vectorized-proved' if attention else 'publisher-original',attention_comparisons=comparisons,
+        attention_proof_sha256=sha256(args.attention_proof) if attention else None,
         code_sha256=sha256(Path(__file__)),head_approval_sha256=sha256(args.head_approval),
         inventory_sha256=sha256(args.inventory),encoder_assets_sha256=sha256(args.stt_assets),
         encoder_variant='official Moshi continuous Mimi, raw24kHz; publisher HF/resampling parity NOT established',
