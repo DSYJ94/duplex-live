@@ -5470,3 +5470,38 @@ and separate fixture hashes are pinned. Unchanged independent5% input WER and
 bounds; invalid inputs remain unscored, no reroll. If real timing removes a stop,
 resume or pending-result opportunity, mark uncovered rather than claim success.
 Text controls do not qualify these full spoken behaviors or native private reads.
+
+## 18 October — rehearsal improves but rejects; upstream reasoning error isolated
+
+Plain words:972-update7523832/sourcebb78f92 completes strict independent restoration.
+New paired contracts44/54→51/54; earlier controls60/72→63/72. Two previously
+passing cancel-preserve cases now emit empty content, so the worker rejects before
+cancelling. Preserve-family3 also speaks the old prepared reply immediately rather
+than the declared number-only response; original replacement remains1/8. REJECT
+promotion under the predeclared retention rule.252 worker rows/checkpoint/state
+backed up; context-rehearsal-full-integrity.json records every row hash and losses.
+
+Plain words: New22 controls7523906 pass22/22 mechanical state/action checks. Reused
+broader24 job7523907 completes24 but numerical score11/12: actual Astra returns133
+for hard-subsets where post-execution DP gives134. A separate exhaustive-combinations
+CPU oracle also gives134. The actual receipt question exactly matches the original;
+the local controller did not rewrite either the question or returned answer. This
+is an end-to-end upstream reasoning failure, not a local routing failure. Eight
+knowledge and four capability-boundary replies pass direct assistant saved-output
+review; awkward private-appointment wording retained. No promotion from narrow gains.
+
+Plain words: New spoken input7524196/source4691ca1 and independent quality7524197
+complete. Six eligible scenes058/059/060/061/064/065.062 is unscored for colours/colors
+(10% lexical error);063 is unscored for subset/sumset in the cancellation utterance
+(8.33%). No reroll or gate change; both waveforms/reports remain. This leaves fresh
+replacement and concurrent-cancellation coverage missing, not passed.
+
+Plain words: Add opt-in development context-adapter attachment to the private
+controller RPC and recorded-transport service only. Parent/child verify checkpoint,
+base assets, independent restore, training budget, settings and source hashes; child
+strict-loads all adapter tensors and freezes them for inference. No old head selector
+combination. This permits actual spoken diagnosis of an UNQUALIFIED candidate; the
+owner's accepted frozen service is unchanged. CPU metadata/budget rejection checks,
+three real-WebSocket regressions,13 other selected fixtures, seven Node tests and
+syntax/shell checks pass. Both teacher/compiler approvals remain exact. Actual GPU
+RPC handshake and PCM speech remain untested before the new diagnostic runs.

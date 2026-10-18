@@ -130,15 +130,17 @@ def main():
     ap.add_argument('--lexical-confirmed-pause',action='store_true')
     ap.add_argument('--compact-replies',action='store_true');ap.add_argument('--warm-long-prefill',action='store_true')
     ap.add_argument('--development-function-selector',type=Path);ap.add_argument('--pending-speech-only',action='store_true')
+    ap.add_argument('--development-context-candidate',type=Path);ap.add_argument('--context-candidate-updates',type=int,default=972)
     ap.add_argument('--include-speech-context',action='store_true')
     ap.add_argument('--client-pause-protocol',action='store_true');ap.add_argument('--semantic-pause',action='store_true');ap.add_argument('--bound-resume-target',action='store_true');ap.add_argument('--allow-cancel-resume',action='store_true')
     ap.add_argument('--host',default='127.0.0.1');ap.add_argument('--port',type=int,default=8788);ap.add_argument('--idle-seconds',type=int,default=300);ap.add_argument('--max-sessions',type=int,default=1)
     args=ap.parse_args()
     if args.development_function_selector is not None and not (args.include_speech_context and args.client_pause_protocol):raise ValueError('First selector speech experiment requires generated history and client-owned pause')
+    if args.development_context_candidate is not None and not (args.include_speech_context and args.client_pause_protocol and args.semantic_pause and args.compact_replies):raise ValueError('Context speech experiment requires its trained generated-history/resume protocol')
     if args.lexical_confirmed_pause and not args.semantic_pause:raise ValueError('Confirmed pause requires semantic pause')
     if args.allow_cancel_resume and not args.semantic_pause:raise ValueError('Cancel and resume requires semantic pause')
     if args.bound_resume_target and not args.semantic_pause:raise ValueError('Bound resume requires semantic pause')
-    if args.semantic_pause and (not args.client_pause_protocol or args.development_function_selector is not None):raise ValueError('Semantic resume first requires client pause and the frozen controller; the old adapter never trained this action')
+    if args.semantic_pause and (not args.client_pause_protocol or args.development_function_selector is not None):raise ValueError('Semantic resume requires client pause and excludes the old output-head selector')
     if args.client_pause_protocol and not args.include_speech_context:raise ValueError('Client pause experiment requires generated speech context')
     if not 1<=args.idle_seconds<=14400 or not 1<=args.max_sessions<=20:raise ValueError('Invalid bounded live service lifetime')
     args.out.mkdir(mode=0o700,parents=True,exist_ok=False);token=secrets.token_urlsafe(32)
@@ -150,7 +152,7 @@ def main():
     from evals.duplex_hybrid_probe import run_case
     from evals.moshi_model_download import sha256
     listener=StreamingListener(args.stt_assets,args.mimi_load_approval)
-    controller=ResidentQwen35(args.controller_assets,args.out,device='cuda:1',pending_speech_protocol='explicit-actions',kernel_assets=args.kernel_assets,compact_replies=args.compact_replies,development_function_selector=args.development_function_selector,pending_speech_only=args.pending_speech_only,warm_long_prefill=args.warm_long_prefill)
+    controller=ResidentQwen35(args.controller_assets,args.out,device='cuda:1',pending_speech_protocol='explicit-actions',kernel_assets=args.kernel_assets,compact_replies=args.compact_replies,development_function_selector=args.development_function_selector,pending_speech_only=args.pending_speech_only,warm_long_prefill=args.warm_long_prefill,development_context_candidate=args.development_context_candidate,context_candidate_updates=args.context_candidate_updates)
     requests=queue.Queue(maxsize=1);stop=threading.Event();network=Network(args.host,args.port,token,requests,stop,args.client_pause_protocol);thread=None;speaker=None
     try:
         with listener.session():

@@ -371,3 +371,21 @@ row, adds original TRAIN rehearsal and requires a new18-update actual proof befo
 fresh972 updates. The126 old cases are reused development retention;22 unseen
 controls are committed before optimizer execution. Actual speech, latency and
 native private-result/waiting qualification remain unresolved. Live demo unchanged.
+
+## Rehearsal result: improved aggregate, still unqualified
+
+Plain words:7523832 completes972 updates with exact fresh-process restoration.
+Paired score51/54 (frozen44); earlier controls63/72 (frozen60). Two prior
+cancel-preserve passes are lost because empty confirmation content is rejected
+before execution. The predeclared retention gate fails, so no deployment.
+New22 controls7523906 mechanically pass22/22. Broader24 job7523907 completes but
+has11/12 numerical answers: actual Astra returns133 against exact134 for the
+subset problem. Original-question binding is exact; two independent CPU algorithms
+agree on134. Stronger-model delegation is not a correctness oracle.
+
+Plain words: Eight new spoken inputs are generated independently. Six pass input
+screening; replacement062 fails colours/colors lexical normalization, cancellation
+063 fails subset/sumset transcription. Both remain unscored under unchanged gates,
+without rerolls. Optional recorded-service adapter attachment is for diagnosis of
+the unqualified candidate, not owner-demo promotion. Full spoken task performance
+and native qualification remain unresolved; the accepted frozen live service stays.

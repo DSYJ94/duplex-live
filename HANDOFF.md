@@ -1,5 +1,22 @@
 # HANDOFF — overnight recovery, 18 October
 
+Plain words: CURRENT 18 October — mixed972 candidate7523832/sourcebb78f92 COMPLETE
+and REJECTED for promotion. Paired51/54 vs44; earlier63/72 vs60, but TWO prior
+cancel-preserve passes lost (empty content→worker rejects, valid speech-retirement
+[]). Fresh22 job7523906 passes22/22; broader24 job7523907 has actual upstream
+Astra133 vs exactCPU134 on hard-subsets (DP+independent exhaustive enumeration).
+Original question/receipt match; do NOT blame local controller or call Astra oracle.
+All artifacts backed up; context-rehearsal-full-integrity/generalization-review.
+
+Plain words: Spoken input7524196/quality7524197 source4691ca1 COMPLETE. Eligible
+058/059/060/061/064/065 only.062 colours/colors lexical10%;063 subset/sumset8.33%
+invalid/unscored/no reroll. context-spoken-input-quality.json records the gate.
+Optional development context RPC/recorded transport flag implemented, not adopted;
+strict metadata/weights/source handshake, all parameters frozen for inference. New
+GPU handshake/speech smoke must run before further conversation tests. Keep owner
+service7522115/source8481bb1 frozen. Newly added adapter attachment does NOT qualify
+native private-result/waiting/delegation; native7510331 stillFAIL/cloudpaused.
+
 Plain words: CURRENT 18 October — rehearsal preflight7523629/sourcebb78f92
 COMPLETED,18 distinct TRAIN kind/corpus rows; gradients/source/zero/RNG/memory and
 fresh-process restore all pass,22.51GBpeak. Backed up; context-rehearsal-preflight-
