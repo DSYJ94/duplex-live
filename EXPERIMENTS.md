@@ -4553,3 +4553,9 @@ Local concise prompt had omitted the original worker's latest-user-only emphasis
 ## 2026-10-18 — additional untouched user-input scenes prepared
 
 Plain words:prepare new evaluation-only016–023: missing storage-label identity with two projects, brief Right acknowledgment, stop/shorten to first step, private lookup plus heat-conduction question, cancel one of two lookups, explicitly replace an ordinary explanation with arithmetic, conversational memory, and unavailable private project. New clips and independent input-quality receipts are mandatory. No assistant targets or training. Do not claim the acknowledgment/genuine-interruption scenes exercised overlap until actual playback timing confirms it. Original010 rejects color/colour rawWER.2;014 actually repeats Okay three times and rejectsWER2. Keep both failures; new scenes are distinct, not relabelled approvals.
+
+## 2026-10-18 — older4B control remains unqualified; isolated newer9B compatibility prepared
+
+Plain words:2314 math and2316 flash both pass8/10 strengthened worker cases. Missing identification regresses to attempted read; shortened explanation still leaves owed old ID unconsumed. Latest-user ordinary-while-pending now answers evaporation correctly. Flash reduces many stage times by~15–20% but is not a control improvement. No new local audio submitted from this candidate. Separate untouched user batch016–023 generated2342 /quality2343 pending.
+
+Prepare an isolated CPU compatibility screen for Qwen3.5-9B after checking its official card/config. Exact model and ARM64 wheel pins committed; no shared dependency changes. This directly tests a stronger pretrained controller foundation instead of assuming additional fine-tuning compute or more wording changes unlock reliability. It remains separate from the rejected native speech weights, requires actual strict-load/task/latency evidence and does not count as native speech intelligence.

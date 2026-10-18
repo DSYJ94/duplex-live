@@ -1,0 +1,37 @@
+{
+  "schema": "dl-isolated-runtime-wheel-pins-v1",
+  "files": [
+    {
+      "package": "transformers",
+      "version": "5.5.3",
+      "filename": "transformers-5.5.3-py3-none-any.whl",
+      "url": "https://files.pythonhosted.org/packages/a1/0b/f8524551ab2d896dfaca74ddb70a4453d515bbf4ab5451c100c7788ae155/transformers-5.5.3-py3-none-any.whl",
+      "sha256": "e48f3ec31dd96505e96e66b63a1e43e1ad7a65749e108d9227caaf51051cdb02",
+      "bytes": 10236257
+    },
+    {
+      "package": "huggingface-hub",
+      "version": "1.6.0",
+      "filename": "huggingface_hub-1.6.0-py3-none-any.whl",
+      "url": "https://files.pythonhosted.org/packages/92/e3/e3a44f54c8e2f28983fcf07f13d4260b37bd6a0d3a081041bc60b91d230e/huggingface_hub-1.6.0-py3-none-any.whl",
+      "sha256": "ef40e2d5cb85e48b2c067020fa5142168342d5108a1b267478ed384ecbf18961",
+      "bytes": 612874
+    },
+    {
+      "package": "tokenizers",
+      "version": "0.22.2",
+      "filename": "tokenizers-0.22.2-cp39-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+      "url": "https://files.pythonhosted.org/packages/d6/84/7990e799f1309a8b87af6b948f31edaa12a3ed22d11b352eaf4f4b2e5753/tokenizers-0.22.2-cp39-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+      "sha256": "2249487018adec45d6e3554c71d46eb39fa8ea67156c640f7513eb26f318cec7",
+      "bytes": 3290736
+    },
+    {
+      "package": "safetensors",
+      "version": "0.7.0",
+      "filename": "safetensors-0.7.0-cp38-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+      "url": "https://files.pythonhosted.org/packages/f1/06/578ffed52c2296f93d7fd2d844cabfa92be51a587c38c8afbb8ae449ca89/safetensors-0.7.0-cp38-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+      "sha256": "e07d91d0c92a31200f25351f4acb2bc6aff7f48094e13ebb1d0fb995b54b6542",
+      "bytes": 491748
+    }
+  ]
+}
