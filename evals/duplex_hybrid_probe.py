@@ -41,7 +41,7 @@ def counterfactual_records(scenario):
     raise ValueError('Unapproved bounded development case')
 
 
-def run_case(listener,speaker,row,out,delay_s):
+def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy"):
     import numpy as np
     import soundfile as sf
     from data.synthetic.filter import norm_words,wer
@@ -75,7 +75,7 @@ def run_case(listener,speaker,row,out,delay_s):
         nonlocal utterance_count
         utterance_count+=1;task='turn-'+str(utterance_count);context.append(dict(role='user',text=text))
         revision=world.reserve(task,[e.copy() for e in context]);submitted=now()
-        future=executor.submit(run_worker,[e.copy() for e in context],world,task,expected_revision=revision)
+        future=executor.submit(run_worker,[e.copy() for e in context],world,task,expected_revision=revision,dispatch_protocol=controller_protocol)
         futures[future]=dict(task_id=task,revision=revision,turn=utterance_count,submitted_s=submitted)
         log('controller_dispatched',task_id=task,text=text,reference_text_supplied=False)
     try:
@@ -171,7 +171,7 @@ def run_case(listener,speaker,row,out,delay_s):
         user_samples=len(user),real_user_samples_processed=min(frame*1920,len(user)),all_live_user_rows_exact_at_temporal_forward=True,
         frames=frame,synthetic_tail_frames=max(0,frame-real_frames),asr_compute_p95_s=float(np.percentile(steps,95)),
         maximum_input_backlog_s=max(backlogs),declared_counterfactual_world=world.records,
-        controlled_lookup_delivery_minimum_s=delay_s,world_tasks=world.tasks,actual_tool_receipts=world.receipts,
+        controlled_lookup_delivery_minimum_s=delay_s,controller_protocol=controller_protocol,world_tasks=world.tasks,actual_tool_receipts=world.receipts,
         fully_played_responses=spoken,playout=playout,audio_sha256=sha256(out/'model.wav'),wall_s=now(),
         unended_text=listener.spm.decode(policy.tokens),native_model_qualified=False,hybrid_system_qualified=False,
         microphone_acceptance=False,acoustic_echo_cancellation=False,read_only_tools=True)
@@ -182,6 +182,7 @@ def main():
     ap=argparse.ArgumentParser(description=__doc__)
     for n in ('stt-assets','tts-assets','mimi-load-approval','data','out'):ap.add_argument('--'+n,type=Path,required=True)
     ap.add_argument('--scenario',action='append',required=True);ap.add_argument('--lookup-delay-s',type=float,default=12.)
+    ap.add_argument('--controller-protocol',choices=('legacy','required-action'),default='legacy')
     args=ap.parse_args()
     if not 0<=args.lookup_delay_s<=30:raise ValueError('Invalid bounded controlled delivery delay')
     rows=selected_inputs(args.data,args.scenario);args.out.mkdir(parents=True,exist_ok=False)
@@ -196,7 +197,7 @@ def main():
         for _ in range(20):listener.step(np.zeros(1920,dtype=np.float32),verify_input=False)
         results=[]
         try:
-            for row in rows:results.append(run_case(listener,speaker,row,args.out/row['scenario_id'],args.lookup_delay_s))
+            for row in rows:results.append(run_case(listener,speaker,row,args.out/row['scenario_id'],args.lookup_delay_s,args.controller_protocol))
         finally:speaker.close()
     report=dict(schema='dl-concurrent-hybrid-development-v1',component_execution_completed=True,results=results,
         stt_assets_sha256=sha256(args.stt_assets),tts_assets_sha256=sha256(args.tts_assets),

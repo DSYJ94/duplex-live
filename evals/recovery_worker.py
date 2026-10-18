@@ -102,7 +102,8 @@ def tool(name,description,properties):
         "parameters":{"type":"object","properties":properties,"required":list(properties),"additionalProperties":False}}
 
 
-def run_worker(context,world,task_id,model="gpt-6-luna",expected_revision=None):
+def run_worker(context,world,task_id,model="gpt-6-luna",expected_revision=None,dispatch_protocol="legacy"):
+    if dispatch_protocol not in ("legacy","required-action"):raise ValueError("Unknown controller dispatch protocol")
     import requests
     key = os.environ.get("OPENAI_API_KEY")
     if not key:
@@ -129,6 +130,19 @@ def run_worker(context,world,task_id,model="gpt-6-luna",expected_revision=None):
     base = {"model":model,"instructions":instructions,"tools":tools,"parallel_tool_calls":False,
         "max_output_tokens":2048,"reasoning":{"effort":"low"},
         "text":{"format":{"type":"json_schema","name":"worker_result","strict":True,"schema":schema}}}
+    first = {**base,"input":json.dumps(context)}
+    if dispatch_protocol=="required-action":
+        # Model selects a single semantic action, including an ordinary reply.
+        # Required does not force a record read or cancellation: the reply action
+        # is a no-side-effect output channel and carries no execution receipt.
+        reply_tool=tool("respond_to_user","Answer general knowledge or ask for missing identification; no external side effects.",
+            {"route":{"type":"string","enum":["answer","clarify"]},"content":{"type":"string"}})
+        first.pop("text")
+        first.update(tools=tools+[reply_tool],tool_choice="required")
+        first['instructions']+=(" Select exactly one action now. Use respond_to_user for an ordinary answer or clarification. "
+            "Use lookup_record for an identified private field, or cancel_lookup for identified active tasks. "
+            "Never return a preliminary JSON delegation/cancellation plan instead of the action. "
+            "Calling respond_to_user does not execute a lookup or cancellation.")
     events = []
     def request(payload):
         start = time.monotonic()
@@ -142,8 +156,11 @@ def run_worker(context,world,task_id,model="gpt-6-luna",expected_revision=None):
             "seconds":time.monotonic()-start,"output":[{k:v for k,v in item.items() if k != "encrypted_content"}
                 for item in data.get("output",[])]})
         return data
-    response = request({**base,"input":json.dumps(context)})
+    response = request(first)
+    direct_reply = None
     calls = [item for item in response["output"] if item["type"] == "function_call"]
+    if dispatch_protocol=='required-action' and len(calls)!=1:
+        raise WorkerContractError('Required semantic action was not returned exactly once',{'events':events})
     selected_route = None
     if not calls:
         planning_text = " ".join(part["text"] for item in response["output"] if item["type"] == "message"
@@ -166,7 +183,13 @@ def run_worker(context,world,task_id,model="gpt-6-luna",expected_revision=None):
             raise RuntimeError("Worker exceeded the single-task tool contract")
         call = calls[0]
         arguments = json.loads(call["arguments"])
-        if call["name"] == "lookup_record":
+        if call["name"]=="respond_to_user":
+            if (dispatch_protocol!="required-action" or set(arguments)!={"route","content"}
+                    or arguments['route'] not in ('answer','clarify')
+                    or not isinstance(arguments['content'],str) or not arguments['content'].strip()):
+                raise WorkerContractError('Invalid no-side-effect reply action',{'events':events,'arguments':arguments})
+            direct_reply=arguments;selected_route=arguments['route']
+        elif call["name"] == "lookup_record":
             if not project_identified_by_user(context, arguments["project"]):
                 raise WorkerContractError("Private project was not identified by the user", {"events":events,"arguments":arguments})
             try:
@@ -191,18 +214,20 @@ def run_worker(context,world,task_id,model="gpt-6-luna",expected_revision=None):
             selected_route = "cancel"
         else:
             raise RuntimeError("Unknown backend tool")
-        receipts.append(receipt)
-        response = request({**base,"tool_choice":"none","previous_response_id":response["id"],"input":[
-            {"type":"function_call_output","call_id":call["call_id"],"output":json.dumps(receipt)}]})
+        if direct_reply is None:
+            receipts.append(receipt)
+            response = request({**base,"tool_choice":"none","previous_response_id":response["id"],"input":[
+                {"type":"function_call_output","call_id":call["call_id"],"output":json.dumps(receipt)}]})
     content = " ".join(part["text"] for item in response["output"] if item["type"] == "message"
         for part in item.get("content",[]) if part["type"] == "output_text")
-    parsed = json.loads(content)
+    parsed = direct_reply if direct_reply is not None else json.loads(content)
     final_response_route = parsed["route"]
     # A worker may correctly call its post-tool factual response an answer.
     # Preserve the original dispatch decision separately from that final phase.
     parsed["route"] = selected_route or final_response_route
     result = {**parsed,"receipts":receipts,"events":events,"task_id":task_id,"speech_model_routing":False}
     result["final_response_route"] = final_response_route
+    result["dispatch_protocol"] = dispatch_protocol
     if not isinstance(parsed.get("content"), str) or not parsed["content"].strip():
         raise WorkerContractError("Backend returned empty result text; do not inject an empty context span",result)
     if parsed["route"] == "delegate" and not any(r["tool"] == "lookup_record" for r in receipts):

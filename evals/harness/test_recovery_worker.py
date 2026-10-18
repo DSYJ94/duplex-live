@@ -6,6 +6,30 @@ from evals.recovery_worker import RecordWorld,run_worker,WorkerSuperseded,Worker
 
 
 class RecordGuards(unittest.TestCase):
+    def test_required_action_answers_in_one_call_without_fabricating_a_receipt(self):
+        world=RecordWorld({});payloads=[]
+        def post(*args,**kwargs):
+            payloads.append(kwargs['json'])
+            return types.SimpleNamespace(status_code=200,json=lambda:{'id':'reply','status':'completed','output':[
+                {'type':'function_call','name':'respond_to_user','call_id':'reply1',
+                 'arguments':json.dumps({'route':'answer','content':'Light travels faster than sound.'})}]})
+        with patch.dict('sys.modules',{'requests':types.SimpleNamespace(post=post)}),patch.dict('os.environ',{'OPENAI_API_KEY':'test-placeholder'}):
+            result=run_worker([{'role':'user','text':'Why lightning first?'}],world,'task',dispatch_protocol='required-action')
+        self.assertEqual(len(payloads),1);self.assertEqual(result['route'],'answer')
+        self.assertEqual(result['receipts'],[]);self.assertEqual(world.receipts,[])
+        self.assertEqual(payloads[0]['tool_choice'],'required');self.assertNotIn('text',payloads[0])
+        self.assertEqual({t['name'] for t in payloads[0]['tools']},{'respond_to_user','lookup_record','cancel_lookup'})
+
+    def test_required_action_cannot_return_plan_or_claim_a_private_read_in_reply_action(self):
+        for output in [[],[{'type':'function_call','name':'respond_to_user','call_id':'bad',
+                           'arguments':json.dumps({'route':'delegate','content':'Done.'})}]]:
+            world=RecordWorld({'Cedar':{'badge':'violet triangle'}})
+            def post(*args,**kwargs):return types.SimpleNamespace(status_code=200,json=lambda:{'id':'bad','status':'completed','output':output})
+            with patch.dict('sys.modules',{'requests':types.SimpleNamespace(post=post)}),patch.dict('os.environ',{'OPENAI_API_KEY':'test-placeholder'}):
+                with self.assertRaises(WorkerContractError):
+                    run_worker([{'role':'user','text':'Check Cedar.'}],world,'task',dispatch_protocol='required-action')
+            self.assertEqual(world.receipts,[])
+
     def test_completed_request_is_not_pending_or_cancellable_and_old_revision_cannot_close_new(self):
         world=RecordWorld({'Cedar':{'badge':'violet triangle'}})
         receipt=world.read('lookup','Cedar','badge');rev=receipt['revision']
