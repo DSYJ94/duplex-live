@@ -113,10 +113,11 @@ class Network:
 def main():
     ap=argparse.ArgumentParser(description=__doc__)
     for name in ('stt-assets','tts-assets','mimi-load-approval','controller-assets','kernel-assets','out'):ap.add_argument('--'+name,type=Path,required=True)
+    ap.add_argument('--compact-replies',action='store_true')
     ap.add_argument('--host',default='127.0.0.1');ap.add_argument('--port',type=int,default=8788);ap.add_argument('--idle-seconds',type=int,default=300);ap.add_argument('--max-sessions',type=int,default=1)
     args=ap.parse_args()
     if not 1<=args.idle_seconds<=14400 or not 1<=args.max_sessions<=20:raise ValueError('Invalid bounded live service lifetime')
-    args.out.mkdir(parents=True,exist_ok=False);token=secrets.token_urlsafe(32)
+    args.out.mkdir(mode=0o700,parents=True,exist_ok=False);token=secrets.token_urlsafe(32)
     token_path=args.out/'session-token'
     with os.fdopen(os.open(token_path,os.O_WRONLY|os.O_CREAT|os.O_EXCL,0o600),'w') as handle:handle.write(token+'\n')
     from evals.kyutai_stt_probe import StreamingListener
@@ -125,7 +126,7 @@ def main():
     from evals.duplex_hybrid_probe import run_case
     from evals.moshi_model_download import sha256
     listener=StreamingListener(args.stt_assets,args.mimi_load_approval)
-    controller=ResidentQwen35(args.controller_assets,args.out,device='cuda:1',pending_speech_protocol='explicit-actions',kernel_assets=args.kernel_assets)
+    controller=ResidentQwen35(args.controller_assets,args.out,device='cuda:1',pending_speech_protocol='explicit-actions',kernel_assets=args.kernel_assets,compact_replies=args.compact_replies)
     requests=queue.Queue(maxsize=1);stop=threading.Event();network=Network(args.host,args.port,token,requests,stop);thread=None;speaker=None
     try:
         with listener.session():

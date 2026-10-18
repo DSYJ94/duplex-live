@@ -4881,3 +4881,24 @@ prompt/schema/prefill views are byte-identical to source75e3883 when disabled.
 Native/canonical action provenance and the option are checked in the resident
 handshake. Test the same ten actual worker cases against a matched native-format
 baseline before any audio adoption; token reduction alone is not qualification.
+
+Plain words: matched resident native7516121 and compact7516122 BOTH pass10/10
+actual worker contracts. Median generation stage2.116s→1.648s; median generated
+tokens48→38. Sentence lengths vary, so this is practical stage latency rather
+than a controlled per-token speedup. Model weights/kernels unchanged; no training.
+Actual voice/transport checks remain necessary, and the published owner service
+7516113 stays frozen on verified source49e820b with the original reply protocol.
+
+Plain words: owner URL http://localhost:8767 is serving through authenticated
+SSH forward8768 to nid010225:8788. Five HTTP assets match49e820b byte-for-byte;
+private bootstrap matches the temporary token without printing it; private paths
+404 and WebSocket upgrade works. No microphone or model session started by this
+readiness check. SSH session26055 and local helper38521 are temporary. Owner
+server idle/max lifetime is bounded by its4.5hour Slurm allocation. Current run
+directory restricted to0700; future server roots also0700. Token600 remains
+outside exports; API keys never reach the browser. Browser/device QA remains open.
+
+Plain words: public19.33GB controller backup via SSH timed out after5.9GB; partial
+files retained, never declared complete. Direct public HTTPS revision-pinned
+resume runs locally with all14 expected sizes/SHA256 and no HF credentials. Do
+not include temporary session credentials in any backup or readiness artifact.

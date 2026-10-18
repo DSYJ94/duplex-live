@@ -19,10 +19,12 @@ set -a
 source "$DL/keys/openai.env"
 set +a
 export DL_LIVE_RUN="$DL/runs/duplex-live-owner-trial-$SLURM_JOB_ID"
+EXTRA=()
+if [ "${QWEN_COMPACT_REPLIES:-0}" = 1 ]; then EXTRA+=(--compact-replies); fi
 apptainer exec --nv --bind /projects,/lus,/home \
  --env PYTHONPATH="$DL/envs/moshi-rag-7379661/lib/python3.12/site-packages:$DL_TASK_SOURCE" \
  --env PYTHONDONTWRITEBYTECODE=1 --env OMP_NUM_THREADS=8 --env HF_HUB_OFFLINE=1 \
- "$DL/pytorch-new.sif" python -u -m serving.hybrid.server \
+ "$DL/pytorch-new.sif" python -u -m serving.hybrid.server "${EXTRA[@]}" \
  --stt-assets "$DL/runs/kyutai-stt-assets-7510852/assets.json" \
  --tts-assets "$DL/runs/kyutai-tts-assets-7510636/assets.json" \
  --mimi-load-approval "$DL/runs/kyutai-tts-mimi-load-7510722/report.json" \

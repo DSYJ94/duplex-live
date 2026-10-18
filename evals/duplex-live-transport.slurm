@@ -28,7 +28,9 @@ apptainer exec --nv --bind /projects,/lus,/home \
  --env PYTHONDONTWRITEBYTECODE=1 --env OMP_NUM_THREADS=8 --env HF_HUB_OFFLINE=1 \
  "$DL/pytorch-new.sif" bash -c '
  set -euo pipefail
- python -u -m serving.hybrid.server \
+ EXTRA=()
+ if [ "${QWEN_COMPACT_REPLIES:-0}" = 1 ]; then EXTRA+=(--compact-replies); fi
+ python -u -m serving.hybrid.server "${EXTRA[@]}" \
  --stt-assets "$DL/runs/kyutai-stt-assets-7510852/assets.json" \
  --tts-assets "$DL/runs/kyutai-tts-assets-7510636/assets.json" \
  --mimi-load-approval "$DL/runs/kyutai-tts-mimi-load-7510722/report.json" \
