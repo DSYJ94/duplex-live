@@ -21,6 +21,9 @@ set +a
 export DL_LIVE_RUN="$DL/runs/duplex-live-owner-trial-$SLURM_JOB_ID"
 EXTRA=()
 if [ "${QWEN_COMPACT_REPLIES:-0}" = 1 ]; then EXTRA+=(--compact-replies); fi
+if [ "${DUPLEX_CLIENT_PAUSE:-0}" = 1 ]; then EXTRA+=(--include-speech-context --client-pause-protocol); fi
+if [ "${DUPLEX_SEMANTIC_PAUSE:-0}" = 1 ]; then EXTRA+=(--semantic-pause); fi
+if [ "${DUPLEX_BOUND_RESUME:-0}" = 1 ]; then EXTRA+=(--bound-resume-target); fi
 apptainer exec --nv --bind /projects,/lus,/home \
  --env PYTHONPATH="$DL/envs/moshi-rag-7379661/lib/python3.12/site-packages:$DL_TASK_SOURCE" \
  --env PYTHONDONTWRITEBYTECODE=1 --env OMP_NUM_THREADS=8 --env HF_HUB_OFFLINE=1 \

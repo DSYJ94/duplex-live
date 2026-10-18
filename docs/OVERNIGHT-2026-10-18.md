@@ -1,5 +1,38 @@
 # Overnight recovery: 18 October
 
+Plain words: UPDATE10:00UTC /12:00Berlin. Current best tested speech-control
+variant is FROZEN local Qwen3.5-9B + streaming Kyutai speech + actual Astra reasoning,
+with retained semantic pause and application-bound resume. No trained controller
+adapter or native audio weights adopted. This is a modular hybrid, not GPT-Live
+parity. The native model function action here is not a native duplex audio model.
+
+Plain words: Bound resume c9d37b1/7518903–7518910 preserves all four matched control
+contracts, every complete audit clip WER0, no duplicated client source samples.
+Actual model resume generation43→14 tokens,1.866→0.644seconds; endpoint/dispatch-to-
+resume1.872→0.650seconds. These are server measurements, not browser roundtrip.
+Proof bound-resume-four-development-integrity.json + verifier; all artifacts local.
+
+Plain words: Fresh plan6451725 inputs7518886/quality7518887:042/043 pass all four
+input clips WER0;044/045 fail first-input quality (reported repeated speech), remain
+UNSCORED with no regeneration. Their dependent service attempts reject the inputs.
+Actual042/043 services7518888/7518890 BOTH choose resume_speech and retain the same
+generator. Primary full played-clip audit7518889 has WER1.537 and INVALID timestamp
+bounds;7518891 WER0.0213 with valid bounds. Do not equate the invalid river transcript
+with confirmed repeated audio. Exact wire replay and a LOCAL second recognizer are
+being used to diagnose this discrepancy; primary gates stay unchanged.
+
+Plain words: External eleven-clip OpenAI transcription diagnostic7dc4777 was NOT
+submitted: automatic approval review rejected audio export authorization. No clip
+was sent. Safer local-only Kyutai STT diagnostic4b4556c uses the same eleven clips,
+unsets API credentials and runs pinned offline weights on Isambard. It is a second
+recognizer relative to Whisper but also the prototype input listener; not independent
+end-to-end acceptance. Metadata helper /private/tmp/duplex-local-secondary-asr-submit.py,
+receipt runs/duplex-local-secondary-asr-launch-20261018.json. Inspect its actual job
+and outcomes before adopting the new demo. Old owner7516574 has expired; previous
+localhost8767 access is unavailable until refreshed. Gallery currently56 recordings.
+Goal ACTIVE; cloud paused. No user input requested while owner is away.
+
+
 Plain words: UPDATE09:47UTC: semantic pause development578132a/7518837–7518844
 is COMPLETE, four matched cases improve2/4→4/4 with FROZEN model weights. Same
 user PCM and first generated replies exactly match prior trials. The model chooses
