@@ -1,0 +1,21 @@
+{
+  "schema": "dl-native-joint-development-evaluation-v1",
+  "declared_before_new_model_results": true,
+  "purpose": "Reject speech collapse, ordinary-answer regression and continued native task failures before considering a longer run",
+  "scope": "Reused approved development inputs; not fresh qualification",
+  "do_not_train": true,
+  "word_or_audio_forcing": false,
+  "owner_demo_changed": false,
+  "cases": [
+    {"scenario": "recovery-train-012", "kind": "simple", "backend": "observe-only", "expected": "Ice floats because it is less dense than liquid water"},
+    {"scenario": "recovery-train-013", "kind": "simple", "backend": "observe-only", "expected": "Sound is produced by vibrations"},
+    {"scenario": "recovery-train-014", "kind": "simple", "backend": "observe-only", "expected": "Plants use light energy to make food through photosynthesis"},
+    {"scenario": "recovery-train-015", "kind": "simple", "backend": "observe-only", "expected": "Metal conducts heat away from skin"},
+    {"scenario": "recovery-validation-000", "kind": "private", "backend": "native-asr", "value": "yellow circle", "expected": "Actual read and correctly spoken private result, with independent question answered while waiting"},
+    {"scenario": "recovery-validation-000", "kind": "private", "backend": "native-asr", "value": "copper diamond", "expected": "Different actual private receipt changes the spoken value; no yellow-circle carryover"},
+    {"scenario": "recovery-validation-006", "kind": "clarify", "backend": "native-asr", "value": "brown square", "expected": "Clarify before lookup, then use actual named-project receipt without repeated questioning"},
+    {"scenario": "recovery-validation-007", "kind": "cancel", "backend": "native-asr", "value": "red star", "expected": "Actual cancellation before confirmation, no cancelled value delivery, latest ordinary question answered"}
+  ],
+  "required_review": ["actual native actions and worker receipts", "independent audio transcription with valid timestamps", "speech intelligibility", "ordinary retention", "no forced response or spoken tokens", "input samples processed and causal playout backlog"],
+  "longer_run_approval": "Not implied by an engineering pass; inspect the full native task and retention results"
+}

@@ -44,6 +44,11 @@ if [ -n "${CONTEXT_ADAPTER_JOB:-}" ]; then
  if [ "${CONTEXT_ADAPTER_DISABLED:-0}" = 1 ]; then EXTRA+=(--adapter-disabled); fi
  if [ "${CONTEXT_ADAPTER_ZERO:-0}" = 1 ]; then EXTRA+=(--adapter-zero); fi
 fi
+if [ -n "${CONTEXT_NATIVE_JOINT_JOB:-}" ]; then
+ [[ "$CONTEXT_NATIVE_JOINT_JOB" =~ ^[0-9]+$ ]]
+ test -z "${CONTEXT_ADAPTER_JOB:-}"
+ EXTRA+=(--adapter-proof "$DL/runs/native-assistant-joint-$CONTEXT_NATIVE_JOINT_JOB")
+fi
 if [ -n "${CONTEXT_LAYOUT_AUDIT_JOB:-}" ]; then
  [[ "$CONTEXT_LAYOUT_AUDIT_JOB" =~ ^[0-9]+$ ]]
  EXTRA+=(--layout-audit "$DL/runs/context-training-proof-$CONTEXT_LAYOUT_AUDIT_JOB/history-audit.json")
