@@ -33,11 +33,14 @@ def main():
     if a.inventory is None:clips=inventory(a.runs)
     else:
         source=json.loads(a.inventory.read_text())
-        if source['training_approved'] or not source['do_not_train']:raise ValueError('Secondary inventory is evaluation-only')
+        if (source['training_approved'] or not source['do_not_train'] or source.get('owner_audio_used') is not False
+                or not 1<=len(source['clips'])<=32 or len({r['id'] for r in source['clips']})!=len(source['clips'])):raise ValueError('Bounded synthetic evaluation-only inventory required')
         clips=[]
         for row in source['clips']:
             path=a.runs/row['path']
-            if not path.resolve().is_relative_to(a.runs.resolve()) or sha256(path)!=row['wav_sha256']:raise ValueError('Secondary audio source changed')
+            if (not path.resolve().is_relative_to(a.runs.resolve())
+                    or not path.resolve().relative_to(a.runs.resolve()).parts[0].startswith('duplex-live-transport-audit-')
+                    or sha256(path)!=row['wav_sha256']):raise ValueError('Secondary synthetic audio source changed')
             clips.append(dict(row,path=path))
     listener=StreamingListener(a.assets,a.mimi_load_approval);results=[]
     with listener.session():
