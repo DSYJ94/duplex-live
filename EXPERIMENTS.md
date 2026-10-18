@@ -4569,3 +4569,7 @@ Plain words:exact regex wheel resolved and added after the first filename-select
 ## 2026-10-18 — newer model class imports; initialization context moved upstream
 
 Plain words:CPU2554 gets past all package checks and successfully imports Qwen3_5ForConditionalGeneration. It then rejects the old4.x location of no_init_weights. Exact installed5.5.3 source places that context in transformers.initialization; update both isolated compatibility and asset stages to the real API. No loader checks disabled or shared dependencies changed. Dependent assets2555 never ran, so no GPU/model inference claim.
+
+## 2026-10-18 — newer controller strict-load and native-format worker proof prepared
+
+Plain words:prepare a typed10-case actual worker proof for the newer9B model, gated on the separate runtime and full asset receipts. Load every whole-model tensor strict=True, compare every source tensor onCPU before device copy, preserve source dtypes and freeze all weights. No vision inference or selective missing-module skip. Use the published tokenizer template with enable_thinking=False and its native XML-style function format. Parse exactly one named function and schema-validated parameters; reject prose, multiple calls, unknown/duplicate/missing arguments and malformed arrays. Record pre-generation prefix separately, raw continuation/timing, provider/model and actual receipts.33 targeted local contract/parser tests pass. This prepares a component test, not capability or speech qualification; no new audio integration yet.

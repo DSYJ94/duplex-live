@@ -49,6 +49,8 @@ class QwenResponseExecutor:
         with self.lock,torch.inference_mode(),torch.cuda.device(self.model.device),sdpa_kernel(SDPBackend.MATH if self.attention_backend=='math' else SDPBackend.FLASH_ATTENTION):
             return self._request(payload)
 
+    def parse_generated_action(self,text,definitions):return parse_action(text)
+
     def _request(self,payload):
         if payload['model']!=self.model_id:raise RuntimeError('Local controller cannot substitute a different model')
         state=payload['local_worker_state']
@@ -114,7 +116,7 @@ class QwenResponseExecutor:
         tools=[dict(type='function',function={k:v for k,v in f.items() if k not in ('type','strict')}) for f in definitions]
         generation=self.generator.request(messages,tools,assistant_prefill='<tool_call>\n')
         try:
-            action=parse_action(generation['cleaned_text'])
+            action=self.parse_generated_action(generation['cleaned_text'],definitions)
             definition=next((d for d in definitions if d['name']==action['name']),None)
             if definition is None:raise ValueError('Model selected an unavailable function')
             validate(action['arguments'],definition['parameters'])
@@ -150,8 +152,13 @@ def main():
     ap=argparse.ArgumentParser(description='Actual typed worker-contract proof using only the local Qwen model')
     ap.add_argument('--assets',type=Path,required=True);ap.add_argument('--out',type=Path,required=True)
     ap.add_argument('--attention-backend',choices=('math','flash'),default='math')
+    ap.add_argument('--provider',choices=('qwen4b','qwen35'),default='qwen4b')
     args=ap.parse_args();args.out.mkdir(parents=True,exist_ok=False)
-    executor=QwenResponseExecutor(args.assets,device='cuda:0',attention_backend=args.attention_backend);results=[]
+    executor_class=QwenResponseExecutor
+    if args.provider=='qwen35':
+        from evals.qwen35_controller import Qwen35ResponseExecutor
+        executor_class=Qwen35ResponseExecutor
+    executor=executor_class(args.assets,device='cuda:0',attention_backend=args.attention_backend);results=[]
     rows=fixtures()+[
         dict(id='ordinary-while-pending',records={'Oak Central':{'meeting room':'room seven'}},pending='Oak Central',kind='answer',
              history=[dict(role='user',text='Please check the meeting room for Project Oak Central.')],
@@ -184,7 +191,7 @@ def main():
                 message=str(error),failure=getattr(error,'result',None),world_tasks=world.tasks)
         (args.out/(row['id']+'.json')).write_text(json.dumps(record,indent=2)+'\n');results.append(record)
     report=dict(schema='dl-local-qwen-worker-contract-v1',results=results,load=executor.proof,warmup=executor.warmup,
-        attention_backend=args.attention_backend,remote_api_used=False,input_is_typed=True,optimizer_steps=0,development_cases_reused=True,
+        provider=executor.provider_name,attention_backend=args.attention_backend,remote_api_used=False,input_is_typed=True,optimizer_steps=0,development_cases_reused=True,
         speech_generation_executed=False,duplex_system_qualified=False,code_sha256=sha256(Path(__file__)))
     (args.out/'report.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report),flush=True)
 
