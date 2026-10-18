@@ -22,6 +22,6 @@ apptainer exec --nv --bind /projects,/lus,/home \
  --env PYTHONDONTWRITEBYTECODE=1 --env OMP_NUM_THREADS=8 --env HF_HUB_OFFLINE=1 \
  "$DL/pytorch-new.sif" python -u -m evals.qwen35_pending_ablation \
  --assets "$DL/runs/qwen35-controller-assets-$QWEN35_ASSETS_JOB/assets.json" \
- --kernel-assets "$DL/runs/qwen35-kernel-assets-7513645" \
+ --kernel-assets "$DL/runs/qwen35-kernel-assets-7513645" --kernel-mode "${QWEN_ABLATION_KERNEL_MODE:?Explicit kernel arm required}" \
  --capture "$DL/runs/duplex-hybrid-probe-7514745/hybrid-fresh-021" \
  --out "$DL/runs/qwen35-pending-ablation-${SLURM_JOB_ID}"

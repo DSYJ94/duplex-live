@@ -15,6 +15,7 @@ from evals.recovery_worker import RecordWorld,run_worker
 def main():
     ap=argparse.ArgumentParser(description=__doc__)
     for name in ('assets','kernel-assets','capture','out'):ap.add_argument('--'+name,type=Path,required=True)
+    ap.add_argument('--kernel-mode',choices=('torch','fused'),required=True)
     args=ap.parse_args();args.out.mkdir(parents=True,exist_ok=False)
     case=json.loads((args.capture/'report.json').read_text());source=json.loads((args.capture/'turn-2-backend.json').read_text())
     if case['recognition_wer']!=0 or source['task_id']!='turn-2' or not source['pending_speech']:raise RuntimeError('Actual exact-ASR pending-speech source missing')
@@ -23,7 +24,9 @@ def main():
     from evals.qwen35_controller import Qwen35ResponseExecutor
     import torch
     results=[];loads=[]
-    for fused in (False,True):
+    # Operator selection is cached when Transformers imports its model module.
+    # Each kernel arm therefore runs in a separate fresh process.
+    for fused in (args.kernel_mode=='fused',):
         executor=Qwen35ResponseExecutor(args.assets,kernel_assets=args.kernel_assets if fused else None,pending_speech_protocol='explicit-actions')
         loads.append(dict(fused=fused,proof=executor.proof))
         for spoken in (False,True):

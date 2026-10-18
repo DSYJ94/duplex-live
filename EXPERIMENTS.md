@@ -4705,3 +4705,15 @@ old speech ID but generates the old topic. This is a content-selection failure,
 not an audio error or a missing withdrawal ID. A four-arm typed diagnostic on
 that exact captured context independently varies kernels and spoken instruction;
 all prompts, pending speech and source weights are otherwise matched. No training.
+
+Plain words: typed reasoning7514992 passes7/7: three easy answers local; all four
+harder direct local counterfactuals wrong, all four model-selected actual GPT-6
+Astra answers exact. One foreground two-plus-three answer overlaps a real remote
+request; the other three do not (their queued calls start later), so only one
+proves that overlap. Routing policy is explicit; no general agent or duplex claim.
+
+Plain words: four-arm pending diagnostic7515044 correctly rejects requested FLA
+operators after loading torch-only in the same process: Transformers cached the
+first module's operator choices. This is a harness isolation failure, not a
+kernel quality verdict. Partial torch-arm outputs retained. Run each kernel arm
+in a fresh process rather than patching module globals or weakening the check.
