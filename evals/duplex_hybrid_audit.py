@@ -24,12 +24,18 @@ def main():
     from data.synthetic.filter import norm_words,wer
     report=json.loads((args.run/'report.json').read_text())
     topology_ok=report.get('same_process_same_gpu') is True
-    if report.get('controller_provider')=='local-transformers-qwen4b':
+    if report.get('controller_provider') in ('local-transformers-qwen4b','local-transformers-qwen35-9b'):
         topology_ok=(report.get('speech_services_same_process_same_gpu') is True
             and report.get('same_process_same_gpu') is False and report.get('remote_api_used') is False
             and report.get('external_controller') is None
             and report.get('local_controller_proof',{}).get('device')=='cuda:1'
             and report.get('local_controller_proof',{}).get('strict') is True)
+    if report.get('controller_provider')=='local-transformers-qwen35-9b':
+        transport=report.get('controller_transport',{})
+        topology_ok=topology_ok and (transport.get('kind')=='private-unix-socket'
+            and transport.get('controller_separate_process') is True
+            and transport.get('parent_transformers_version')=='4.55.3'
+            and transport.get('child_transformers_version')=='5.5.3')
     if (report['schema']!='dl-concurrent-hybrid-development-v1' or (not report['component_execution_completed'] and not args.include_completed_cases_from_failed_suite)
             or not topology_ok or report['hybrid_system_qualified'] is not False
             or any(c['reference_transcript_supplied'] for c in report['results'])):

@@ -219,8 +219,9 @@ def main():
     for n in ('stt-assets','tts-assets','mimi-load-approval','data','out'):ap.add_argument('--'+n,type=Path,required=True)
     ap.add_argument('--scenario',action='append',required=True);ap.add_argument('--lookup-delay-s',type=float,default=12.)
     ap.add_argument('--scope-read-tools',action='store_true')
-    ap.add_argument('--controller-provider',choices=('openai','local-qwen'),default='openai')
+    ap.add_argument('--controller-provider',choices=('openai','local-qwen','local-qwen35'),default='openai')
     ap.add_argument('--local-controller-assets',type=Path)
+    ap.add_argument('--local-controller-pending-speech-protocol',choices=('array','explicit-actions'),default='array')
     ap.add_argument('--local-controller-device',default='cuda:1')
     ap.add_argument('--local-controller-prompt-profile',choices=('base','contract-examples'),default='contract-examples')
     ap.add_argument('--interrupt-policy',choices=('acoustic','lexical'),default='acoustic')
@@ -240,31 +241,39 @@ def main():
     args.out.mkdir(parents=True,exist_ok=False)
     listener=StreamingListener(args.stt_assets,args.mimi_load_approval)
     torch=listener.torch;controller=None
-    if args.controller_provider=='local-qwen':
+    if args.controller_provider in ('local-qwen','local-qwen35'):
         if args.controller_protocol not in ('required-action','state-aware') or args.local_controller_assets is None:
             raise ValueError('Local controller requires exact assets and explicit action protocol')
         if torch.device(args.local_controller_device).index!=1 or torch.cuda.device_count()<2:
             raise RuntimeError('First local integration requires a distinct second allocated GPU; no resource fallback')
-        from evals.qwen_response_executor import QwenResponseExecutor
-        controller=QwenResponseExecutor(args.local_controller_assets,args.local_controller_device,args.local_controller_prompt_profile)
-    with listener.session():
-        torch.manual_seed(42424242);torch.cuda.manual_seed_all(42424242)
-        speaker=StreamingSpeaker(args.tts_assets,args.mimi_load_approval);speaker.open()
-        warmup=speaker.warmup()
-        listener.reset()
-        import numpy as np
-        for _ in range(20):listener.step(np.zeros(1920,dtype=np.float32),verify_input=False)
-        results=[];failures=[]
-        try:
-            for row in rows:
-                try:results.append(run_case(listener,speaker,row,args.out/row['scenario_id'],args.lookup_delay_s,args.controller_protocol,args.interrupt_policy,controller,args.scope_read_tools))
-                except Exception as error:
-                    if args.input_profile!='fresh-evaluation':raise
-                    failure=dict(scenario=row['scenario_id'],error_type=type(error).__name__,message=str(error),
-                        case_execution_completed=False,hybrid_system_qualified=False)
-                    failures.append(failure)
-                    (args.out/row['scenario_id']/'failure.json').write_text(json.dumps(failure,indent=2)+'\n')
-        finally:speaker.close()
+        if args.controller_provider=='local-qwen35':
+            if args.local_controller_prompt_profile!='contract-examples':raise ValueError('Resident newer controller currently proves only the contract-examples profile')
+            from evals.qwen35_rpc import ResidentQwen35
+            controller=ResidentQwen35(args.local_controller_assets,args.out,args.local_controller_device,args.local_controller_pending_speech_protocol)
+        else:
+            from evals.qwen_response_executor import QwenResponseExecutor
+            controller=QwenResponseExecutor(args.local_controller_assets,args.local_controller_device,args.local_controller_prompt_profile,pending_speech_protocol=args.local_controller_pending_speech_protocol)
+    try:
+        with listener.session():
+            torch.manual_seed(42424242);torch.cuda.manual_seed_all(42424242)
+            speaker=StreamingSpeaker(args.tts_assets,args.mimi_load_approval);speaker.open()
+            warmup=speaker.warmup()
+            listener.reset()
+            import numpy as np
+            for _ in range(20):listener.step(np.zeros(1920,dtype=np.float32),verify_input=False)
+            results=[];failures=[]
+            try:
+                for row in rows:
+                    try:results.append(run_case(listener,speaker,row,args.out/row['scenario_id'],args.lookup_delay_s,args.controller_protocol,args.interrupt_policy,controller,args.scope_read_tools))
+                    except Exception as error:
+                        if args.input_profile!='fresh-evaluation':raise
+                        failure=dict(scenario=row['scenario_id'],error_type=type(error).__name__,message=str(error),
+                            case_execution_completed=False,hybrid_system_qualified=False)
+                        failures.append(failure)
+                        (args.out/row['scenario_id']/'failure.json').write_text(json.dumps(failure,indent=2)+'\n')
+            finally:speaker.close()
+    finally:
+        if controller is not None and hasattr(controller,'close'):controller.close()
     report=dict(schema='dl-concurrent-hybrid-development-v1',component_execution_completed=not failures,results=results,failures=failures,
         read_tools_scoped_to_user_identified_available_projects=args.scope_read_tools,
         component_code_sha256={name:sha256(Path(__file__).with_name(name)) for name in
@@ -278,6 +287,8 @@ def main():
         controller_model=controller.model_id if controller else 'gpt-6-luna',
         local_controller_proof=controller.proof if controller else None,
         local_controller_warmup=controller.warmup if controller else None,
+        controller_transport=getattr(controller,'transport_info',dict(kind='in-process')) if controller else dict(kind='remote-api'),
+        local_controller_pending_speech_protocol=args.local_controller_pending_speech_protocol if controller else None,
         external_controller=None if controller else 'gpt-6-luna',remote_api_used=controller is None,native_model_reasoning=False,
         paced_recorded_train_user_pcm=args.input_profile=='approved-train',
         fresh_holdout=args.input_profile=='fresh-evaluation' and args.evaluation_use=='fresh',candidate_qualification_derived_from_execution=False,microphone_acceptance=False,
