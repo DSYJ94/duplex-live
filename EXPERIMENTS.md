@@ -5240,3 +5240,30 @@ either cancellation scene. Per-casep95compute36.6–44.5ms/80msframe; maxbacklog
 integrity.json/native-balanced-qualification-integrity.json and replayable verifiers
 remain in runs/recovery-continuation-20261016; full breakdown docs/QUALIFICATION-
 2026-10-18.md. Cloud paused; goal active.
+
+
+## 2026-10-18 — Matched function-name training rejected; owner session lifecycle repaired
+
+Plain words: Initial7520602 correctly fails before model loading/updates because
+newer prompt-compiler source hashes differ from approved teacher7517716. Guard
+unchanged. Isolatedbranch experiments/function-name-loss-20261018/source710b305
+restores exact original2compilerfiles;216teacher replays+72baseline rows pass.
+Matched7520623 finishes648updates; checkpoint/state hashes, optimizer/RNG restore,
+allsourceparameterhashes pass.64/72, retainingall60baselinepasses. All72canonical
+results/verdicts equal oldscope7517798, including wrong50 ratherthan49. No gain;
+reject/noadoption/no unchangedextension. Checkpoint/state/fullresults local.
+
+Plain words: Owner accepts recordedhybrid voice/slightfirst-response delay but
+cannotusetemporarydemo. First issueSSHFwd timeout fixed. Secondissue stale session:
+server rejectsnewStart whileoldsocketowns actor; disconnectedhandler alsoawaits
+idle sender beforeclearingbusy. Source76174d1 adds authenticatedexplicitStart
+replacement, abortablecapture/media actor, disconnected sendercancellation,
+startupEnd/late-mic cleanup/completionUI reset, microphone sound/quiet indicator.
+3actual localhostWS +4frame/core-abort +7Nodeclient/playout checks pass. NewGPUdemo
+7520776 ready; realGPUtwozeroaudio sessions prove replacement/.879s, no microphone
+orAPI. Publiclocalhost8767→newtunnel8780→nid010137:8788; exactstatic/privatebinding
+checks pass. Matchedspeech7520777/audit778 preservesinput/nativewords/actions/
+samegenerator, no duplicate/discardedproductionreplaysamples; completeWER.02128
+validbounds. Owneraskedtoprovide Listening/sounddetected versusquiet/startfailure.
+No physicaldevice/roomAEC/nativequalification. Currentvoiceweightsfrozen, nocandidate
+headadopted. Reports/proofs/backups current; goalACTIVE/cloudpaused.

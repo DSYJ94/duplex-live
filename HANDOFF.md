@@ -1,5 +1,38 @@
 # HANDOFF — overnight recovery, 18 October
 
+Plain words: CURRENT 11:48UTC /13:48Berlin18Oct — OWNER DEMO REPAIRED, job7520776/source76174d1,
+node nid010137:8788, public http://localhost:8767 viaNEW127.0.0.1:8780. Helper
+session41646; tunnel81914/PID2733; transportwatcher97988 /private/tmp/duplex-owner-
+recovered-forward-watch.py (watching existingPID, retries only afterexit,3hours).
+Private token /private/tmp/duplex-live-owner-7520776-token mode600; NEVER print/export.
+Oldhelper79318 terminated only after validating its exactcommand. Oldowner7519401/
+8986 and theirWS connections were not killed; new service is separate. Owner's
+recordedvoice accepted; slightresponse delay. Owner's second failure was stale
+session ownership (Startenabled/Enddisabled + serverbusy), distinctfromSSHFwdloss.
+New explicit Start sendsauthenticated replace_existing; closesoldWS, aborts old
+media actor without waiting for unneeded remote computation, thenclaimsnewowner.
+Server previously awaited an idle sender during disconnected cleanup; fixed.
+Endusable duringstartup, late microphone permission cannotleak capture, completion
+releasesUI, visiblemicrophone sound/quiet indicator. Credentials hiddeninConnection
+access details.3real localhostWS tests,4frame/core-abort tests,7Node playback/client
+lifecycle checks PASS. RealGPUzero-audio restart test: two session_readies, old
+close1000, takeover.879s; NOmicrophone/input/API. HTTPstatic exact+privateaccess
+bindingPASS. Twozero-audio synthetic administrative sessions consume2of10 demo
+slots, leaving8beforeowneruse. Noownerrecordings/transcripts exported. Newoptional
+ownerquestion asks Listening/sounddetected versusquiet versuscannotstart; pending.
+Matched synthetic regression7520777/audit778 preserves originaluserPCM/native
+words/actions +samegenerator; productionwire replay no duplicated/discardedsource.
+Independent completeWER.02128/validbounds, discrepancyretained. Reports/proofs local.
+
+Plain words: MATCHEDEDFUNCTIONTRAIN7520623 COMPLETE648updates/source710b305.
+Exact model/optimizer/RNG restore+allpublishedhashes pass; checkpoint/state backedup.
+All60baselinepasses retained,64/72 versusoldfunction-scope64/72; ALL72canonical
+results/verdicts IDENTICAL, including49→50 error. Hypothesistrain/inference scope
+alignment is NOT a remedy here. REJECT/noadoption/no unchangedextension. Proof
+function-name-training-integrity.json. Originalfailed7520602 remainszero-update.
+No learnedhead in repaired demo; Qwen/Kyutai frozen+actualAstrastillhybrid, native
+modelstillunqualified. GoalACTIVE; cloudpaused. User-ownedroadmap/pyc untouched.
+
 Plain words: OWNER FEEDBACK18Oct: recorded hybrid voice ACCEPTABLE; slight first-
 response delay remains. Owner never connected to demo; page said service not
 connected. Live job7519401 stillRUNNING; oldSSHforward17949 had exited255/server

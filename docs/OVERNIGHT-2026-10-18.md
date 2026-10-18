@@ -7,12 +7,14 @@ frozen local Qwen3.5-9B for words and actions, and actual GPT-6 Astra requests
 when the local model delegates difficult reasoning. It is a modular hybrid.
 No native speech weights or trained controller adapter were adopted overnight.
 
-Plain words: The current demo is [localhost:8767](http://localhost:8767).
-Refresh an already-open page before Start conversation. The newest two recordings
-are first on the [listening page](http://localhost:8766/audio/voice-diagnostics/overnight-results.html#latest).
-The temporary Isambard service is 7519401, source 7915b1c. It has a four-hour idle
-limit and a four-and-a-half-hour job limit. No agent-started microphone session or
-physical-device acceptance is claimed. Earlier connections retain their old service.
+Plain words: The current demo is [localhost:8767](http://localhost:8767), repaired
+service7520776/source76174d1 on18October. Refresh an already-open page before Start
+conversation. Start safely replaces an older connection; the page now shows
+microphone sound/quiet activity. The owner accepts the recorded voice, with a slight
+initial response delay. Live device input confirmation remains pending. See the
+[current qualification record](QUALIFICATION-2026-10-18.md) for the completed fresh
+checks, rejected training ablation and session-recovery evidence. The two listening
+examples remain first on the [listening page](http://localhost:8766/audio/voice-diagnostics/overnight-results.html#latest).
 
 ## How to understand the listening page
 

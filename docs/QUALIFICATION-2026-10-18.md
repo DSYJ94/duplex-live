@@ -145,3 +145,34 @@ printing its token. Demo remains http://localhost:8767; refresh before Start con
 A local watcher monitors the current transport and retries SSH after it exits; it
 starts no microphone/model sessions or new compute jobs. The cluster service remains
 temporary, subject to its original idle and Slurm wall limits.
+
+## Latest result: session recovery and matched training verdict
+
+Plain words: Repaired demo7520776/source76174d1 now serves the same public link.
+An explicit authenticated Start ends the old connection and waits for its media
+actor to stop before claiming ownership. A disconnect aborts the actor rather than
+waiting on synthetic tail frames or an idle sender. Invalid credentials cannot
+replace an active session. End works during startup; late microphone permission
+cannot leave an orphan capture. Completion releases the controls. The page shows
+whether microphone frames contain sound or quiet audio, and hides the automatic
+access code under Connection access.
+
+Plain words: Three actual localhost WebSocket tests, four frame/media-abort tests
+and seven Node playback/client-lifecycle checks pass. An actual GPU-service test
+opens two zero-audio synthetic connections: the second replaces the first and
+reaches session_ready in0.879seconds. No microphone, owner audio or reasoning API
+request is used. Exact served page/script hashes and private access binding pass.
+Synthetic speech regression7520777/audit778 retains the original user PCM, native
+words/actions and same-generator continuation. Production wire replay has no
+repeated/discarded source samples; complete independent WER0.02128 with valid
+bounds. This is not physical browser/device acceptance. The owner has been asked
+whether the refreshed page shows Listening and sound detected while speaking.
+
+Plain words: Matched function-name-only training7520623 completes648updates and
+strict adapter/optimizer/random-state restoration; published parameter hashes remain
+unchanged. All60 original baseline passes remain, with64/72 overall. All72 canonical
+results and verdicts equal the earlier function-scope inference variant7517798,
+including the wrong49→50 replacement answer. The checkpoint and full records are
+preserved, but this ablation shows no behavioral gain. Do not promote or extend it
+unchanged. Proof: `function-name-training-integrity.json` in the continuation folder.
+No learned adapter is loaded in the repaired demo.
