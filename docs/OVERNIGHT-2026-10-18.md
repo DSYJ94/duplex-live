@@ -1,5 +1,40 @@
 # Overnight recovery: 18 October
 
+Plain words: UPDATE10:14UTC /12:14Berlin. Experimental demo RESTORED at
+http://localhost:8767. Job7518986/source7cafa37, node nid010253:8788, frozen local
+Qwen3.5-9B, generated history, client-buffer pause, semantic model resume and bound
+resume target. It does NOT load the rejected trained adapter. Exact static bytes
+and private session-access endpoint pass localhost checks; no microphone session
+started by the agent. Temporary service idle timeout4hours. Local helper9706,
+SSH forward63327 (localhost8778), keepawake24939. Private credential remains only
+/private/tmp/duplex-live-owner-7518986-token (600); never print/export. Old6574 expired.
+
+Plain words: Local-only secondary ASR7518958/4b4556c COMPLETE11/11. Source WAV hashes,
+causal frame inventories and strict loads verified locally. Actual external
+transcription requests ZERO. River clip has no repeated passage in this recognizer,
+diagnostic WER3/54=0.0556; magnet1/47=0.0213. Both recognizers report repetitions in
+the invalid044/045 user clips. Original rejected input gates and invalid river
+Whisper timestamps remain unchanged. Proof local-secondary-asr-integrity.json +
+verifier; fresh integrity verifier updated with secondary diagnosis, not promotion.
+Gallery now62 recordings with newest first and earlier cases collapsed. HTTP bytes
+and WAV headers all verified; browser engine/physical device still untested.
+
+Plain words: New isolated combined cancellation experiment2e975b4: data7519122,
+quality7519123, baseline service/audit7519124/25, combined action7519126/27.
+Source and local/remote file hashes match before jobs. Native model action
+cancel_reasoning_and_resume_speech must execute actual selected reasoning delivery
+cancellation, verify real cancelled task state and retain the same ordinary TTS
+generator without new words or prefix replay. This stops delivery, never claims
+remote execution abort. Thirty-one local checks and two actual WebSocket tests pass.
+It is NOT enabled in the owner demo; inspect actual job results before adoption.
+Input046 reuses two exact approved coral clips with full original manifest/quality/
+validator lineage and generates ONLY the third utterance once. Explicitly development,
+never a fresh-question qualification or TRAIN. Fixed timing must produce a real
+ordinary prefix and undelivered reasoning result; otherwise no pass may be claimed.
+Helpers /private/tmp/duplex-cancel-resume-{submit,status}.py; durable receipts
+runs/duplex-cancel-resume-*-launch-20261018.json. Goal ACTIVE; cloud validation paused.
+
+
 Plain words: UPDATE10:00UTC /12:00Berlin. Current best tested speech-control
 variant is FROZEN local Qwen3.5-9B + streaming Kyutai speech + actual Astra reasoning,
 with retained semantic pause and application-bound resume. No trained controller
