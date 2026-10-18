@@ -72,4 +72,4 @@ apptainer exec --nv --bind /projects,/lus,/home \
  --local-controller-pending-speech-protocol "${QWEN_PENDING_SPEECH_PROTOCOL:-explicit-actions}" \
  --local-controller-prompt-profile "${QWEN_CONTROLLER_PROMPT_PROFILE:-contract-examples}" \
  --data "$INPUTS" --input-profile fresh-evaluation --input-quality "$QUALITY" "${SCENARIOS[@]}" \
- --controller-protocol "${DUPLEX_CONTROLLER_PROTOCOL:-state-aware}" --evaluation-use "${DUPLEX_EVALUATION_USE:-fresh}" "${EXTRA[@]}" --interrupt-policy "${DUPLEX_INTERRUPT_POLICY:-acoustic}" --lookup-delay-s 12 --out "$DL/runs/duplex-hybrid-probe-${SLURM_JOB_ID}"
+ --controller-protocol "${DUPLEX_CONTROLLER_PROTOCOL:-state-aware}" --evaluation-use "${DUPLEX_EVALUATION_USE:-fresh}" "${EXTRA[@]}" --interrupt-policy "${DUPLEX_INTERRUPT_POLICY:-acoustic}" --lookup-delay-s "${DUPLEX_LOOKUP_DELAY_S:-12}" --out "$DL/runs/duplex-hybrid-probe-${SLURM_JOB_ID}"

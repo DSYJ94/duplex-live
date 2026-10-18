@@ -4792,3 +4792,13 @@ ordinary speech remain separate. CPU synchronization/atomicity tests pass; actua
 ordinary-plus-reasoning and cancellation worker trials must pass before owner use.
 A new user-only026 cancellation scene is prepared and independently judged before
 any audio test. No API outputs become training data.
+
+Plain words: actual typed ordinary7515615 preserves the pending reasoning request
+and answers ice locally during its API interval. Actual typed cancellation7515616
+chooses cancel_reasoning for exactly background, executes the delivery guard, and
+answers the new shadow question from local parameters. The late real API receipt
+is retained but deliverable=False; unrelated work is untouched. Cancellation is
+explicitly delivery-only, not remote computation abortion. New026 generation
+7515617 and independent7515618 both user clips WER0/bounds valid. Next actual audio
+uses ZERO artificial delivery delay, so success cannot rely on holding a finished
+result for the old12-second test floor. Wrapper default remains12 for old probes.
