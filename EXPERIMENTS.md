@@ -5289,3 +5289,14 @@ candidate error, preserve it, no eager fallback. This tests whole-decoder Python
 launch overhead left untouched by normalization-only compilation. No live change,
 new training labels or native qualification. Native balanced520 remains rejected;
 its text-only temporal objectives and narrow25teacher coverage remain limitations.
+
+Plain words: wholedecode7521255/source19bdc70 diagnostic terminates as planned:
+10original exact same-process controls; first candidate fails FLA's explicit
+compiler-disabled layer_norm_gated_fwd. Zero compiled graphs, no eager fallback,
+sourcehashes/versions unchanged; no latency gain/adoption. ProcessCOMPLETED is
+not candidatePASS. Subsequent speech-accounting proposal uses existing
+resolve_pending_speech only: clarify that fulfilling a prepared unsaid answer
+retires its ID, distinguish replacement versus preserving a separate obligation.
+Two generic procedural examples do not contain captured user wording. Same5
+fixed development probes; all required before runtime implementation; no new
+function/keywordrouter/dispatch/API/optimizer, no native qualification.

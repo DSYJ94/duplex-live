@@ -234,3 +234,23 @@ first candidate execution error, retain it, and never fall back to eager executi
 At least1.2 median speed ratio and actual compiled graphs without graph breaks are
 required before any voice regression. This is neither training nor native-model
 qualification. Plan: evals/fixtures/whole-decode-dynamic-cache-plan-20261018.json.
+
+Plain words: Whole-decode job7521255/source19bdc70 terminates after the first
+candidate error as planned. All10 original controls pass exact within-process
+repeat checks. The candidate cannot create a graph: FLA layer_norm_gated_fwd is
+explicitly decorated torch.compiler.disable. There is no eager fallback, no speed
+claim and no adoption. All parameter hashes/versions remain unchanged. Slurm
+COMPLETED describes the diagnostic process, not a passing component; its report
+has component_execution_completed=false and promotion=false.
+
+Plain words: The next speech-control proposal uses only the existing
+resolve_pending_speech action. Current tool text says NEW answer and emphasizes
+revision; the diagnostic clarifies that fulfilling an already prepared unsaid
+answer must also retire its ID. General synthetic examples distinguish same
+request, superseded answer and separate question with old answer preserved.
+No new action, keyword routing, runtime dispatch or optimizer update is added.
+The same five development probes require correct native function, exact old ID,
+requested numbers, and the unchanged prepared answer for the two same-request
+cases. All five must pass before runtime work; any eventual change still needs
+actual voice and broader retention checks. This is an instruction probe, not
+proof of training, intelligence improvement or native duplex qualification.

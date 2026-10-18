@@ -1,0 +1,56 @@
+{
+  "schema": "dl-existing-queued-resolution-proposal-plan-v1",
+  "declared_before_execution": true,
+  "source_job": "7520301",
+  "source_task": "turn-2",
+  "cases": [
+    {
+      "id": "actual-additional-records-context",
+      "user": null,
+      "allowed": [
+        "resolve_pending_speech"
+      ]
+    },
+    {
+      "id": "explicit-prepared-reply",
+      "user": "Please go ahead with the answer you have already prepared.",
+      "allowed": [
+        "resolve_pending_speech"
+      ]
+    },
+    {
+      "id": "withdraw-prepared-reply",
+      "user": "Stop. I do not need any answer. Please say nothing more.",
+      "allowed": [
+        "withdraw_speech"
+      ]
+    },
+    {
+      "id": "replace-prepared-reply",
+      "user": "Set that aside. What is six plus seven? Give just the number.",
+      "allowed": [
+        "resolve_pending_speech"
+      ],
+      "number": "thirteen"
+    },
+    {
+      "id": "preserve-prepared-new-question",
+      "user": "I still want your previous reply, but first what is ten minus four? Give only the number.",
+      "allowed": [
+        "answer"
+      ],
+      "number": "six"
+    }
+  ],
+  "baseline_gate": "Actual answer with no pending consumption and original input length; reproduce duplicate-risk fault before adding a capability",
+  "new_action": null,
+  "all_five_contracts_required_before_runtime_implementation": true,
+  "no_new_user_keyword_router": true,
+  "actual_external_requests": 0,
+  "actions_dispatched": false,
+  "do_not_train": true,
+  "native_duplex_qualification": false,
+  "prior_new_action_proposal": "7521032 failed 2/5, no implementation",
+  "change": "Only add general speech-accounting examples and clarify existing resolve_pending_speech description; no new action or keyword router",
+  "require_same_prepared_reply_for_same_request": true
+}
