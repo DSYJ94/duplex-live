@@ -135,7 +135,7 @@ def tool(name,description,properties):
         "parameters":{"type":"object","properties":properties,"required":list(properties),"additionalProperties":False}}
 
 
-def run_worker(context,world,task_id,model="gpt-6-luna",expected_revision=None,dispatch_protocol="legacy",pending_speech=None,response_executor=None,scope_read_tools=False):
+def run_worker(context,world,task_id,model="gpt-6-luna",expected_revision=None,dispatch_protocol="legacy",pending_speech=None,response_executor=None,scope_read_tools=False,execution_observer=None):
     if dispatch_protocol not in ("legacy","required-action","state-aware"):raise ValueError("Unknown controller dispatch protocol")
     key=None
     if response_executor is None:
@@ -307,6 +307,7 @@ def run_worker(context,world,task_id,model="gpt-6-luna",expected_revision=None,d
             raise RuntimeError("Unknown backend tool")
         if direct_reply is None:
             receipts.append(receipt)
+            if execution_observer is not None:execution_observer(dict(task_id=task_id,call=call,receipt=receipt))
             response = request({**base,"tool_choice":"none","previous_response_id":response["id"],"input":[
                 {"type":"function_call_output","call_id":call["call_id"],"output":json.dumps(receipt)}]})
     content = " ".join(part["text"] for item in response["output"] if item["type"] == "message"

@@ -40,6 +40,7 @@ if [ -n "${DUPLEX_FRESH_SCENARIOS:-}" ]; then
  for ID in "${IDS[@]}"; do [[ "$ID" =~ ^hybrid-fresh-[0-9]{3}$ ]]; done
 fi
 EXTRA=()
+if [ "${DUPLEX_TOOL_CONTEXT:-0}" = 1 ]; then EXTRA+=(--include-tool-context); fi
 if [ "${DUPLEX_SCOPE_READ_TOOLS:-0}" = 1 ]; then EXTRA+=(--scope-read-tools); fi
 if [ -n "${DUPLEX_FRESH_VALIDATOR_SOURCE:-}" ]; then
  : "${DUPLEX_FRESH_VALIDATOR_COMMIT:?Historical validator commit required}"

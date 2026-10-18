@@ -6,6 +6,28 @@ from evals.recovery_worker import RecordWorld,run_worker,WorkerSuperseded,Worker
 
 
 class RecordGuards(unittest.TestCase):
+    def test_execution_observer_reports_real_read_before_model_formats_its_receipt(self):
+        world=RecordWorld({'Cedar':{'badge':'violet triangle'}});order=[];observed=[]
+        def execute(payload):
+            if 'previous_response_id' not in payload:
+                order.append('action')
+                return dict(id='read',status='completed',output=[dict(type='function_call',name='lookup_record',call_id='real-call',arguments=json.dumps(dict(project='Cedar',field='badge')))])
+            order.append('reply')
+            return dict(id='reply',status='completed',output=[dict(type='message',content=[dict(type='output_text',text=json.dumps(dict(route='answer',content='The badge is violet triangle.')))])])
+        def observe(event):order.append('executed');observed.append(event)
+        result=run_worker([dict(role='user',text='Read the badge for Project Cedar.')],world,'current',model='local',
+            dispatch_protocol='required-action',response_executor=execute,execution_observer=observe)
+        self.assertEqual(order,['action','executed','reply']);self.assertEqual(observed[0]['receipt'],result['receipts'][0])
+        self.assertEqual(observed[0]['call']['call_id'],'real-call');self.assertTrue(observed[0]['receipt']['executed'])
+
+    def test_rejected_project_never_creates_an_execution_notice(self):
+        world=RecordWorld({'Cedar':{'badge':'violet triangle'}});observed=[]
+        def execute(payload):return dict(id='bad',status='completed',output=[dict(type='function_call',name='lookup_record',call_id='bad-call',arguments=json.dumps(dict(project='Cedar',field='badge')))])
+        with self.assertRaises(WorkerContractError):
+            run_worker([dict(role='user',text='What is the badge?')],world,'current',model='local',dispatch_protocol='required-action',
+                response_executor=execute,execution_observer=observed.append)
+        self.assertEqual(observed,[]);self.assertEqual(world.receipts,[])
+
     def test_scoped_read_tools_cannot_offer_unavailable_or_unidentified_projects(self):
         for records,user,expected in [({},'Read the access code for Project Missing.',set()),
                 ({'Cedar':{'badge':'violet triangle'}},'What is the badge?',set()),

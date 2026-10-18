@@ -23,6 +23,9 @@ cd "$DL_TASK_SOURCE"
 [[ "$QWEN35_ASSETS_JOB" =~ ^[0-9]+$ ]]
 SCENARIOS=(--scenario recovery-train-020)
 if [ "${DUPLEX_HYBRID_THREE_CASES:-0}" = 1 ]; then SCENARIOS=(--scenario recovery-train-008 --scenario recovery-train-019 --scenario recovery-train-020); fi
+EXTRA=()
+if [ "${DUPLEX_TOOL_CONTEXT:-0}" = 1 ]; then EXTRA+=(--include-tool-context); fi
+if [ "${DUPLEX_SCOPE_READ_TOOLS:-0}" = 1 ]; then EXTRA+=(--scope-read-tools); fi
 apptainer exec --nv --bind /projects,/lus,/home \
  --env PYTHONPATH="$DL/envs/moshi-rag-7379661/lib/python3.12/site-packages:$DL_TASK_SOURCE" \
  --env PYTHONDONTWRITEBYTECODE=1 --env OMP_NUM_THREADS=8 \
@@ -32,7 +35,7 @@ apptainer exec --nv --bind /projects,/lus,/home \
  --tts-assets "$DL/runs/kyutai-tts-assets-$KYUTAI_TTS_ASSETS_JOB/assets.json" \
  --mimi-load-approval "$DL/runs/kyutai-tts-mimi-load-$KYUTAI_TTS_MIMI_LOAD_JOB/report.json" \
  --data "$DL/runs/recovery-data-7407554" "${SCENARIOS[@]}" \
- --controller-provider local-qwen35 --local-controller-device cuda:1 \
+ "${EXTRA[@]}" --controller-provider local-qwen35 --local-controller-device cuda:1 \
  --local-controller-assets "$DL/runs/qwen35-controller-assets-$QWEN35_ASSETS_JOB/assets.json" \
  --local-controller-pending-speech-protocol "${QWEN_PENDING_SPEECH_PROTOCOL:-explicit-actions}" \
  --local-controller-prompt-profile "${QWEN_CONTROLLER_PROMPT_PROFILE:-contract-examples}" \

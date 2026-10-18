@@ -41,7 +41,7 @@ def counterfactual_records(scenario):
     raise ValueError('Unapproved bounded development case')
 
 
-def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",interrupt_policy="acoustic",controller=None,scope_read_tools=False):
+def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",interrupt_policy="acoustic",controller=None,scope_read_tools=False,include_tool_context=False):
     import numpy as np
     import soundfile as sf
     from data.synthetic.filter import norm_words,wer
@@ -54,6 +54,8 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",inter
         if source.shape[1]!=2:raise RuntimeError('Approved TRAIN input expects stereo PCM')
         user=source[:,1].copy()
     out.mkdir();sf.write(out/'input-user.wav',user,rate,subtype='FLOAT')
+    from queue import SimpleQueue,Empty
+    control_queue=SimpleQueue();control_evidence=[]
     world=RecordWorld(row['world'] if row['split']=='fresh-evaluation' else counterfactual_records(row['scenario_id']));context=[];policy=TurnEndpoint(listener.spm.decode)
     listener.reset();speaker.stop();queue=[];futures={};held=[];packets=[];stops={};events=[];steps=[];backlogs=[]
     active=None;clock=None;spoken=[];asr_tokens=[];asr_events=[];utterance_count=0;generation_count=0;last_voice_s=-float('inf')
@@ -78,19 +80,31 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",inter
         if valid(active) and active['result']['route']!='clarify':
             queue.append({k:v for k,v in active.items() if k!='event_id'})
         active=None;clock=None
+    def drain_control():
+        if not include_tool_context:return
+        from evals.duplex_tool_context import project_execution
+        while True:
+            try:entry=control_queue.get_nowait()
+            except Empty:break
+            projection=project_execution(entry['call'],entry['receipt']);context.extend(projection)
+            control_evidence.append(dict(available_s=now(),**entry))
+            log('tool_execution_context_added',task_id=entry['task_id'],call_id=entry['call']['call_id'],
+                operation=entry['call']['name'],private_values_withheld=True)
     def dispatch(text):
         nonlocal utterance_count
         if controller_protocol=='state-aware' and active is not None:interrupt('completed_user_request')
+        drain_control()
         utterance_count+=1;task='turn-'+str(utterance_count);context.append(dict(role='user',text=text))
         revision=world.reserve(task,[e.copy() for e in context]);submitted=now()
         from evals.duplex_speech_obligations import snapshot
         pending=snapshot(queue,active) if controller_protocol=='state-aware' else []
         future=executor.submit(run_worker,[e.copy() for e in context],world,task,expected_revision=revision,dispatch_protocol=controller_protocol,pending_speech=pending,
-            model=controller.model_id if controller else 'gpt-6-luna',response_executor=controller,scope_read_tools=scope_read_tools)
+            model=controller.model_id if controller else 'gpt-6-luna',response_executor=controller,scope_read_tools=scope_read_tools,execution_observer=control_queue.put if include_tool_context else None)
         futures[future]=dict(task_id=task,revision=revision,turn=utterance_count,submitted_s=submitted,request_text=text,pending_speech=pending)
         log('controller_dispatched',task_id=task,text=text,reference_text_supplied=False)
     try:
         while frame<max_frames:
+            drain_control()
             t=now();next_frame=(frame+1)*.08
             if t>=next_frame:
                 pcm=padded[frame*1920:(frame+1)*1920];before=time.perf_counter()
@@ -182,6 +196,7 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",inter
     finally:
         executor.shutdown(wait=True,cancel_futures=True);speaker.stop()
         (out/'events.json').write_text(json.dumps(events,indent=2)+'\n')
+        if include_tool_context:(out/'control-executions.json').write_text(json.dumps(control_evidence,indent=2)+'\n')
         (out/'asr-events.json').write_text(json.dumps(asr_events,indent=2)+'\n')
         if packets:
             np.savez(out/'generated-packets.npz',**{str(i):p['pcm'] for i,p in enumerate(packets)})
@@ -205,6 +220,7 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",inter
         frames=frame,synthetic_tail_frames=max(0,frame-real_frames),asr_compute_p95_s=float(np.percentile(steps,95)),
         maximum_input_backlog_s=max(backlogs),declared_counterfactual_world=world.records,
         controlled_lookup_delivery_minimum_s=delay_s,controller_protocol=controller_protocol,interrupt_policy=interrupt_policy,
+        actual_tool_context_enabled=include_tool_context,control_executions_sha256=sha256(out/'control-executions.json') if include_tool_context else None,
         read_tools_scoped_to_user_identified_available_projects=scope_read_tools,
         controller_provider=controller.provider_name if controller else 'openai',controller_model=controller.model_id if controller else 'gpt-6-luna',
         lexical_interruption_is_not_a_backchannel_classifier=interrupt_policy=='lexical',world_tasks=world.tasks,actual_tool_receipts=world.receipts,
@@ -218,6 +234,7 @@ def main():
     ap=argparse.ArgumentParser(description=__doc__)
     for n in ('stt-assets','tts-assets','mimi-load-approval','data','out'):ap.add_argument('--'+n,type=Path,required=True)
     ap.add_argument('--scenario',action='append',required=True);ap.add_argument('--lookup-delay-s',type=float,default=12.)
+    ap.add_argument('--include-tool-context',action='store_true')
     ap.add_argument('--scope-read-tools',action='store_true')
     ap.add_argument('--controller-provider',choices=('openai','local-qwen','local-qwen35'),default='openai')
     ap.add_argument('--local-controller-assets',type=Path)
@@ -232,6 +249,7 @@ def main():
     ap.add_argument('--evaluation-use',choices=('development','fresh'),default='development')
     ap.add_argument('--controller-protocol',choices=('legacy','required-action','state-aware'),default='legacy')
     args=ap.parse_args()
+    if args.include_tool_context and args.controller_protocol!='state-aware':raise ValueError('First tool-context proof requires state-aware protocol')
     if not 0<=args.lookup_delay_s<=30:raise ValueError('Invalid bounded controlled delivery delay')
     if args.input_profile=='fresh-evaluation':
         from evals.duplex_input_validator import cases
@@ -264,7 +282,7 @@ def main():
             results=[];failures=[]
             try:
                 for row in rows:
-                    try:results.append(run_case(listener,speaker,row,args.out/row['scenario_id'],args.lookup_delay_s,args.controller_protocol,args.interrupt_policy,controller,args.scope_read_tools))
+                    try:results.append(run_case(listener,speaker,row,args.out/row['scenario_id'],args.lookup_delay_s,args.controller_protocol,args.interrupt_policy,controller,args.scope_read_tools,args.include_tool_context))
                     except Exception as error:
                         if args.input_profile!='fresh-evaluation':raise
                         failure=dict(scenario=row['scenario_id'],error_type=type(error).__name__,message=str(error),
@@ -275,9 +293,10 @@ def main():
     finally:
         if controller is not None and hasattr(controller,'close'):controller.close()
     report=dict(schema='dl-concurrent-hybrid-development-v1',component_execution_completed=not failures,results=results,failures=failures,
+        actual_tool_context_enabled=args.include_tool_context,
         read_tools_scoped_to_user_identified_available_projects=args.scope_read_tools,
         component_code_sha256={name:sha256(Path(__file__).with_name(name)) for name in
-            ('recovery_worker.py','duplex_endpoint.py','duplex_speaker.py','kyutai_stt_probe.py','duplex_speech_obligations.py')},
+            ('recovery_worker.py','duplex_endpoint.py','duplex_speaker.py','kyutai_stt_probe.py','duplex_speech_obligations.py','duplex_tool_context.py')},
         probe_code_sha256=sha256(Path(__file__)),
         input_profile=args.input_profile,input_validator=validator,evaluation_use=args.evaluation_use,input_quality_sha256=sha256(args.input_quality) if args.input_quality else None,
         stt_assets_sha256=sha256(args.stt_assets),tts_assets_sha256=sha256(args.tts_assets),
