@@ -5741,3 +5741,20 @@ longer available, and return only the requested actual receipt value. This polic
 is explicitly excluded from student messages and included in hashed teacher input.
 It is a training-label instruction, not a rewritten output or captured evaluation
 answer. New preview requires a new immutable source/job and full replay approval.
+
+## 18 October — distinguish unsupported capability from argument-gated execution
+
+Plain words: Revised preview7526900/source93f5696 again blocks the whole batch.
+Six kinds pass, including completed+same-generator resume and exact actual receipt
+value. Record clarification fails: all three teacher attempts wrongly deny a reader
+exists. The generic policy distinguishes reasoning/records profiles but did not
+explicitly identify the current one. In records, a real reader is supported while
+its current function is withheld until project identification; this differs from
+the reasoning profile's absent reader. The unchanged mechanical gate catches the
+wrong refusal before semantic approval. Preserve the failed batch; no TRAIN file.
+
+Plain words: Supply the source-authored current application profile explicitly in
+teacher-only input, bind it in teacher provenance/input hashes and replay checks.
+No student prompt, source scene, quality requirement or observed output is changed.
+Repeat all seven preview cases under a new immutable producer before full collection.
+This is a label-policy clarification, not retrospective approval of failed labels.

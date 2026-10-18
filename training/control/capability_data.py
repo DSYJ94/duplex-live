@@ -30,8 +30,10 @@ def api_history(messages):
     return result
 
 
-def teacher_input(messages,attempt):
+def teacher_input(messages,attempt,domain):
+    if domain not in ('reasoning','records'):raise ValueError('Unknown authored task profile')
     result=api_history(messages)
+    result[0]['content']+='\nTEACHER-ONLY CURRENT APPLICATION PROFILE: '+domain+'. In the records profile, a reader is supported but its execution is withheld until the user identifies a project from the actual records state. In the reasoning profile, no record reader exists at all.'
     result[0]['content']+='\nTEACHER-ONLY LABEL POLICY (not part of the student prompt): Ground capabilities in the actual profile and current tool set. In the reasoning profile there is no private reader, sender or email tool. Use answer to state an unavailable-capability limitation; do not use clarify merely to request access credentials, a directory path, or the private value requested for retrieval. You may offer to help interpret text the user provides, without implying a new connector exists. In the records profile an actual reader exists: ask for missing project identification before a lookup. A finished result cannot newly be cancelled. If that impossible cancellation is combined with a request to continue an existing paused explanation, carry out the feasible continuation with the available resume_speech action and no new words; do not restart, summarize or drop that explanation. For a post-tool reply, honor the original user request for only the value: return the actual receipt value without operation metadata, IDs or a report of the receipt itself.'
     if attempt:result[0]['content']+='\nTeacher-only quality repair: reconsider the actual tool capabilities, completed work, retained speech and actual receipts. Do not claim an unavailable operation ran or request private credentials to enable a missing tool. Preserve unrelated work and copy an actual requested value exactly.'
     return result
@@ -39,13 +41,13 @@ def teacher_input(messages,attempt):
 
 class Teacher:
     model_id=MODEL
-    def __init__(self,folder,attempt):self.folder=folder;self.attempt=attempt;self.calls=[]
+    def __init__(self,folder,attempt,domain):self.folder=folder;self.attempt=attempt;self.domain=domain;self.calls=[]
     def request(self,messages,tools,assistant_prefill=''):
         if assistant_prefill!='<tool_call>\n':raise ValueError('Changed native prefix')
         index=len(self.calls);path=self.folder/f'attempt-{self.attempt}-stage-{index}-teacher.json'
-        sent=teacher_input(messages,self.attempt);api_tools=[dict(type='function',**t['function'],strict=True) for t in tools]
+        sent=teacher_input(messages,self.attempt,self.domain);api_tools=[dict(type='function',**t['function'],strict=True) for t in tools]
         data,call,seconds=request(sent,api_tools,path);action=dict(name=call['name'],arguments=json.loads(call['arguments']));native=xml_action(action)
-        row=dict(stage=index,student_messages=copy.deepcopy(messages),student_tools=copy.deepcopy(tools),student_assistant_prefill=assistant_prefill,target_native_text=native,target_native_action=action,teacher_provenance=dict(actual_model=data['model'],source_model=MODEL,source_date_utc=datetime.now(timezone.utc).isoformat(),response_id=data['id'],response_file=path.name,response_sha256=sha(path),api_input_sha256=__import__('hashlib').sha256(json.dumps(sent,sort_keys=True).encode()).hexdigest(),usage=data.get('usage'),seconds=seconds,provenance_class='closed-content',teacher_repair_note_present=bool(self.attempt),teacher_only_label_policy=True))
+        row=dict(stage=index,student_messages=copy.deepcopy(messages),student_tools=copy.deepcopy(tools),student_assistant_prefill=assistant_prefill,target_native_text=native,target_native_action=action,teacher_provenance=dict(actual_model=data['model'],source_model=MODEL,source_date_utc=datetime.now(timezone.utc).isoformat(),response_id=data['id'],response_file=path.name,response_sha256=sha(path),api_input_sha256=__import__('hashlib').sha256(json.dumps(sent,sort_keys=True).encode()).hexdigest(),usage=data.get('usage'),seconds=seconds,provenance_class='closed-content',teacher_repair_note_present=bool(self.attempt),teacher_only_label_policy=True,actual_application_profile=self.domain))
         self.calls.append(row)
         return dict(raw_text=native,cleaned_text=native,assistant_prefill=assistant_prefill,input_tokens=0,generated_tokens=0,qwen_neural_inference_executed=False)
 
@@ -65,7 +67,7 @@ def review(scene,result,folder,attempt):
 def collect(scene,out):
     folder=out/'rows'/scene['id'];attempts=[];accepted=None
     for attempt in range(3):
-        teacher=Teacher(folder,attempt);entry=dict(attempt=attempt,passed=False)
+        teacher=Teacher(folder,attempt,scene['domain']);entry=dict(attempt=attempt,passed=False)
         try:
             result,world=run(scene,teacher,MODEL);quality=assess(scene,result,world)
             entry.update(mechanical=quality,result=result,teacher_calls=teacher.calls)
@@ -127,9 +129,9 @@ def verify(folder,*,audit_preview=False):
                 row=selected[self.index];self.index+=1;p=row['teacher_provenance'];attempt=row['quality_attempt']
                 if (row['student_messages']!=messages or row['student_tools']!=tools or row['student_assistant_prefill']!=assistant_prefill or row['source_scene_sha256']!=sha(src/'scene.json') or row['split']!='train' or row['kind']!=scene['kind'] or row['family']!=scene['family']):raise ValueError('Changed exact student prompt/scene')
                 path=src/p['response_file'];raw=json.loads(path.read_text());calls=[c for c in raw['output'] if c['type']=='function_call']
-                if (raw['status']!='completed' or raw['model']!=p['actual_model'] or raw['id']!=p['response_id'] or sha(path)!=p['response_sha256'] or not p['source_date_utc'] or len(calls)!=1 or p['provenance_class']!='closed-content'):raise ValueError('Missing actual teacher response lineage')
+                if (raw['status']!='completed' or raw['model']!=p['actual_model'] or raw['id']!=p['response_id'] or sha(path)!=p['response_sha256'] or not p['source_date_utc'] or len(calls)!=1 or p['provenance_class']!='closed-content' or p['actual_application_profile']!=scene['domain'] or not p['teacher_only_label_policy']):raise ValueError('Missing actual teacher response lineage')
                 action=dict(name=calls[0]['name'],arguments=json.loads(calls[0]['arguments']))
-                if action!=row['target_native_action'] or xml_action(action)!=row['target_native_text'] or __import__('hashlib').sha256(json.dumps(teacher_input(messages,attempt),sort_keys=True).encode()).hexdigest()!=p['api_input_sha256']:raise ValueError('Changed native target/API input')
+                if action!=row['target_native_action'] or xml_action(action)!=row['target_native_text'] or __import__('hashlib').sha256(json.dumps(teacher_input(messages,attempt,scene['domain']),sort_keys=True).encode()).hexdigest()!=p['api_input_sha256']:raise ValueError('Changed native target/API input')
                 return dict(raw_text=row['target_native_text'],cleaned_text=row['target_native_text'],assistant_prefill=assistant_prefill,input_tokens=0,generated_tokens=0)
         replay=Replay();result,world=run(scene,replay,MODEL)
         if not assess(scene,result,world)['passed'] or replay.index!=len(selected):raise ValueError('Actual worker replay failed')
