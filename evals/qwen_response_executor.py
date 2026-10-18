@@ -192,13 +192,20 @@ def main():
     ap.add_argument('--assets',type=Path,required=True);ap.add_argument('--out',type=Path,required=True)
     ap.add_argument('--attention-backend',choices=('math','flash'),default='math')
     ap.add_argument('--pending-speech-protocol',choices=('array','explicit-actions'),default='array')
+    ap.add_argument('--controller-transport',choices=('in-process','subprocess'),default='in-process')
     ap.add_argument('--provider',choices=('qwen4b','qwen35'),default='qwen4b')
     args=ap.parse_args();args.out.mkdir(parents=True,exist_ok=False)
-    executor_class=QwenResponseExecutor
-    if args.provider=='qwen35':
-        from evals.qwen35_controller import Qwen35ResponseExecutor
-        executor_class=Qwen35ResponseExecutor
-    executor=executor_class(args.assets,device='cuda:0',attention_backend=args.attention_backend,pending_speech_protocol=args.pending_speech_protocol);results=[]
+    if args.controller_transport=='subprocess':
+        if args.provider!='qwen35' or args.attention_backend!='math':raise ValueError('Resident proof supports the explicit newer model/math backend only')
+        from evals.qwen35_rpc import ResidentQwen35
+        executor=ResidentQwen35(args.assets,args.out,device='cuda:0',pending_speech_protocol=args.pending_speech_protocol)
+    else:
+        executor_class=QwenResponseExecutor
+        if args.provider=='qwen35':
+            from evals.qwen35_controller import Qwen35ResponseExecutor
+            executor_class=Qwen35ResponseExecutor
+        executor=executor_class(args.assets,device='cuda:0',attention_backend=args.attention_backend,pending_speech_protocol=args.pending_speech_protocol)
+    results=[]
     rows=fixtures()+[
         dict(id='ordinary-while-pending',records={'Oak Central':{'meeting room':'room seven'}},pending='Oak Central',kind='answer',
              history=[dict(role='user',text='Please check the meeting room for Project Oak Central.')],
@@ -209,28 +216,32 @@ def main():
              pending_speech=[dict(id='old-explanation',request_text='Explain in four sentences why seasons change.',
                 text="Seasons change because Earth is tilted. Sunlight strikes different latitudes at different angles. Daylight lengths change during the year. The hemispheres have opposite seasons.")]),
     ]
-    for row in rows:
-        world=RecordWorld(row['records'])
-        if row.get('pending'):world.read('pending-oak',row['pending'],'meeting room')
-        revision=world.reserve('current')
-        pending=row.get('pending_speech',[])
-        if row['id']=='cancel':
-            pending=[dict(id='ordinary',request_text='How many sides does a triangle have?',text='A triangle has three sides.')]
-        try:
-            result=run_worker(row.get('history',[])+[dict(role='user',text=row['user'])],world,'current',model=executor.model_id,
-                expected_revision=revision,dispatch_protocol='state-aware',pending_speech=pending,response_executor=executor)
-            passed=result['route']==row['kind']
-            if row['id'] in ('cancel','ordinary-while-pending'):passed=passed and result['consume_pending_speech_ids']==[]
-            if row['id']=='ordinary-while-pending':passed=passed and not result['receipts']
-            if row['id']=='superseded-ordinary-format':passed=passed and result['consume_pending_speech_ids']==['old-explanation']
-            if row.get('replacement'):
-                passed=passed and world.tasks['pending-oak']['cancelled'] and world.tasks['current'].get('project')=='Pine Central'
-            record=dict(id=row['id'],execution_completed=True,action_contract_passed=passed,result=result,world_tasks=world.tasks)
-        except Exception as error:
-            record=dict(id=row['id'],execution_completed=False,action_contract_passed=False,error_type=type(error).__name__,
-                message=str(error),failure=getattr(error,'result',None),world_tasks=world.tasks)
-        (args.out/(row['id']+'.json')).write_text(json.dumps(record,indent=2)+'\n');results.append(record)
+    try:
+        for row in rows:
+            world=RecordWorld(row['records'])
+            if row.get('pending'):world.read('pending-oak',row['pending'],'meeting room')
+            revision=world.reserve('current')
+            pending=row.get('pending_speech',[])
+            if row['id']=='cancel':
+                pending=[dict(id='ordinary',request_text='How many sides does a triangle have?',text='A triangle has three sides.')]
+            try:
+                result=run_worker(row.get('history',[])+[dict(role='user',text=row['user'])],world,'current',model=executor.model_id,
+                    expected_revision=revision,dispatch_protocol='state-aware',pending_speech=pending,response_executor=executor)
+                passed=result['route']==row['kind']
+                if row['id'] in ('cancel','ordinary-while-pending'):passed=passed and result['consume_pending_speech_ids']==[]
+                if row['id']=='ordinary-while-pending':passed=passed and not result['receipts']
+                if row['id']=='superseded-ordinary-format':passed=passed and result['consume_pending_speech_ids']==['old-explanation']
+                if row.get('replacement'):
+                    passed=passed and world.tasks['pending-oak']['cancelled'] and world.tasks['current'].get('project')=='Pine Central'
+                record=dict(id=row['id'],execution_completed=True,action_contract_passed=passed,result=result,world_tasks=world.tasks)
+            except Exception as error:
+                record=dict(id=row['id'],execution_completed=False,action_contract_passed=False,error_type=type(error).__name__,
+                    message=str(error),failure=getattr(error,'result',None),world_tasks=world.tasks)
+            (args.out/(row['id']+'.json')).write_text(json.dumps(record,indent=2)+'\n');results.append(record)
+    finally:
+        if hasattr(executor,'close'):executor.close()
     report=dict(schema='dl-local-qwen-worker-contract-v1',results=results,load=executor.proof,warmup=executor.warmup,
+        controller_transport=args.controller_transport,transport_info=getattr(executor,'transport_info',None),
         provider=executor.provider_name,pending_speech_protocol=args.pending_speech_protocol,attention_backend=args.attention_backend,remote_api_used=False,input_is_typed=True,optimizer_steps=0,development_cases_reused=True,
         speech_generation_executed=False,duplex_system_qualified=False,code_sha256=sha256(Path(__file__)))
     (args.out/'report.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report),flush=True)
