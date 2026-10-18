@@ -16,6 +16,28 @@ gets a plain gloss the first time it appears.
 quizzed on 8 lessons it NEVER saw (held-out). A run only counts if it
 passes on unseen lessons — that is generalization, not memorization.
 
+## 18 October 2026 — state-conditioned control training, results pending
+
+Plain words: Prior1356-update controller lost active cancellation/continuation
+behavior. New synthetic TRAIN pairs keep the latest words identical while actual
+task status changes, counterbalance task identity/order and include cancelling
+one task while answering a new question. Teacher and student receive the same
+truthful capabilities and receipt instructions. Whole533-label corpus7529991 is
+approved. Preflight7530020 completed35 updates and independent exact restore;
+full7530021 is running the predeclared1599 updates from fresh pretrained weights,
+not continuing an earlier failed candidate. All204 before/after holdouts and24
+new role reversals7530022 must be inspected before judging improvement. No result
+or deployment claim yet; this is text conversation/control training, not native
+duplex speech training. Source957af98bce13b34c5280ac6cc5727ab58f2c2213.
+
+Plain words: Preserve failed collection7529826:516/517 scenes passed, but one
+post-record answer violated its required format after three recorded attempts.
+Conflicting receipt instructions were corrected for BOTH teacher and student;
+all changed groups recollected,420 unchanged labels retained verbatim and all533
+labels reverified together. No accepted subset of the failed batch was trained.
+Earlier7529744 was cancelled after finding a positional shortcut; its pending
+preflight7529793 made zero updates. Preview7529672 was never TRAIN approved.
+
 ## 17 October 2026 — matched controls and a new corrective stage
 
 Plain words: more updates alone did not solve conversation. Keep balanced136

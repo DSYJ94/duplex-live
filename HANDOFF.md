@@ -1,5 +1,48 @@
 # HANDOFF — overnight recovery, 18 October
 
+Plain words: CURRENT 18 October, 19:30 UTC. Goal ACTIVE; cloud validation PAUSED.
+The new state-conditioned training is implemented, collected and running. Source
+957af98bce13b34c5280ac6cc5727ab58f2c2213 is immutable on the cluster. Teacher
+7529991 approves the WHOLE 517-scene/533-label corpus, including 81 new TRAIN
+state counterfactuals. No held-out outputs or owner recordings enter TRAIN.
+Preflight7530020 COMPLETED: all35 optimizer updates and a second-process exact
+adapter/optimizer/random-state/prediction restore passed. Full7530021 RUNNING:
+at19:29 it had saved102/204 frozen-baseline cases before its fixed1599 updates.
+Independent24-case role-reversal holdout7530022 is queued after the full job.
+Do not submit duplicates. Graph receipt: runs/recovery-continuation-20261016/
+state-training-graph-launch-output.txt. Neither a completed preflight nor a
+running training job establishes improved behavior. No candidate is promoted.
+
+Plain words: The previous whole-batch collection7529826 failed one post-record
+response-format check and was NEVER approved for training. Inspection found
+conflicting receipt instructions in both teacher/student prompts. The correction
+is shared by both; all changed groups were recollected (113 actual API labels),
+420 unchanged labels reused verbatim with reverified raw provenance, and all533
+labels reapproved together in7529991. Preserve the failed parent alongside the
+repair because portable verification checks the complete lineage. Superseded
+7529744 was cancelled after finding a task-position shortcut; its pending GPU
+preflight7529793 never optimized. Current opaque task identifiers, insertion and
+chronological order are counterbalanced. No action-weighted loss is implemented.
+
+Plain words: Focus now on the current run's measured results. The owner correctly
+flagged too much supporting work. Do not add more prompt experiments, diagnostics
+or harness features unless an actual failure blocks or invalidates training.
+This is Qwen conversation/control training, NOT new native duplex speech training.
+The accepted voice/demo stays frozen. Require full204 before/after cases,24 new
+role-reversal cases and semantic inspection; mechanics scores alone do not pass
+the original native/private-result/speech/latency goal.
+
+Plain words: Artifact retrieval is already live in a bounded authenticated SSH
+session (started19:25UTC, local53104 at19:29). It watches EXACT jobs7529991,
+7530020/21/22 then streams their artifacts, failed parent and Slurm logs into
+/private/tmp/duplex-state-final-957af98.tar.gz. Status is in
+/private/tmp/duplex-state-final-fetch.log; helper is
+/private/tmp/duplex-state-final-fetch.py. A zero-byte archive while jobs run is
+expected. Verify tar completion before extracting or claiming preservation.
+Session credentials are excluded. Re-poll this session/jobs; do not restart
+training because an observation times out. Last known SSH certificate expires
+19:34UTC. Existing owner demo/forwarding are unchanged.
+
 
 
 

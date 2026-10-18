@@ -1,5 +1,13 @@
 # Qualification record — 18 October 2026
 
+Plain words: Latest19:30UTC. Full state-conditioned Qwen control training7530021
+is RUNNING after completed35-update/independent-restore preflight7530020. The
+whole corrected533-label synthetic TRAIN corpus7529991 is approved;204 ordinary,
+capability and control holdouts plus24 independent role reversals remain to be
+assessed. There is NO new qualification result yet. This trains the conversation
+controller, not the native duplex speech model. No production/demo change.
+Keep the native and whole-system verdict FAIL until evidence covers that scope.
+
 
 
 
