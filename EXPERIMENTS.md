@@ -5526,3 +5526,22 @@ reply; original speech stays one ASR dispatch, so this does not cover old057's s
 and repeated-refusal failure. Candidate first-person phrasing is awkward. Complete
 paired conversation/cursor/WER/latency outcomes remain pending. Owner frozen demo
 unchanged/HTTP200. No new promotion or native qualification claim.
+
+## 18 October — nonempty speech schema alignment, inference-only probe
+
+Plain words: A CPU regression at the actual compiler/worker seam goes red: the
+native cancellation content schema has no nonempty constraint although the actual
+worker rejects empty speech before cancellation. The proposed opt-in generator
+wrapper adds only minLength1/pattern\\S to existing speech fields. It leaves silent
+withdrawal/resume zero-argument actions alone and returns raw generation unchanged.
+Three contract tests prove advertisement, silent resume preservation and continued
+rejection of empty output; all8 paired/contract fixtures pass after the schema fix.
+No teacher/compiler source file was changed and no data guard was relaxed.
+
+Plain words: Predeclared GPU probe compares original versus this schema on both
+frozen9B and saved972 candidate. Each stage generates all126 reused controls,
+22 fresh controls and24 local knowledge/capability/action choices. The last four
+hard questions test selection only; no Astra request or hidden numerical oracle is
+used. This does not resolve Astra's prior133/134 error. All weights remain frozen,
+all outputs/failures are retained; no output filling, optimizer, owner switch or
+checkpoint selection. Full before/after retention and semantic review required.

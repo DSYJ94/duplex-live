@@ -1,0 +1,24 @@
+{
+  "schema": "dl-nonempty-contract-probe-v1",
+  "declared_before_gpu_execution": true,
+  "hypothesis": "The native schema permits empty content while the unchanged worker rejects it before cancellation. Advertise that existing nonempty requirement and measure actual generation.",
+  "change": "Only minLength1 and pattern \\S on existing speech content fields; silent withdrawal/resume unchanged. No output repair or new action routing.",
+  "models": [
+    "strict frozen Qwen3.5-9B",
+    "fixed saved972 contextual candidate7523832"
+  ],
+  "per_model_stages": [
+    "original",
+    "nonempty schema"
+  ],
+  "per_stage_cases": {
+    "development_controls": 126,
+    "fresh_controls": 22,
+    "local_retention": 24
+  },
+  "hard_retention": "Selection only, no stronger-model API calls. Actual backend133/134 error stays unresolved.",
+  "gates": "Keep every before/after row. Require all original and historical frozen passes retained; review semantic outputs and raw empty generations. No checkpoint selection, optimizer or promotion from a narrow result.",
+  "owner_demo_changed": false,
+  "training_approved": false,
+  "do_not_train": true
+}
