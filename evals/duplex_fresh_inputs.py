@@ -32,6 +32,9 @@ def specifications():
         dict(id='hybrid-fresh-006',world={'Meadow East':{'meeting room':'room seven'},'Copper West':{'meeting room':'room twelve'}},turns=[
             (.8,'Please check the meeting room for Project Meadow East.'),
             (8.,'Actually I meant Project Copper West. Do not read out the Meadow result.')]),
+        dict(id='hybrid-fresh-007',world={'Oak Central':{'meeting room':'room seven'},'Pine Central':{'meeting room':'room twelve'}},turns=[
+            (.8,'Please check the meeting room for Project Oak Central.'),
+            (8.,'Actually use Project Pine Central instead. Do not read out the Oak result.')]),
     ]
 
 
