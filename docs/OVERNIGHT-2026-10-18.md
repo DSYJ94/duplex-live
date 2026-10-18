@@ -14,6 +14,43 @@ The temporary Isambard service is 7519401, source 7915b1c. It has a four-hour id
 limit and a four-and-a-half-hour job limit. No agent-started microphone session or
 physical-device acceptance is claimed. Earlier connections retain their old service.
 
+## How to understand the listening page
+
+Plain words: The listening page is a conversation-control test log. It is not a
+GPT-Live voice comparison or the live demo. It now opens with only two current
+examples; all 64 earlier recordings, including failures, are in a collapsed archive.
+The user voice is synthetic on the left; actual system speech is on the right.
+Pauses are retained. These server captures exclude final browser playback fades.
+
+1. Butterfly / “please go on”: listen for continuation of the same explanation,
+   without a new introduction or repeated beginning.
+2. Counting task + water explanation: listen for the counting result being cancelled
+   while the water explanation continues without restarting. The remote computation
+   itself is not aborted; its result delivery is cancelled.
+
+Plain words: These demonstrate targeted fixes with unchanged model weights. They
+cannot establish broad intelligence, general task completion or live device quality.
+The revised page and all 66 audio files pass HTTP byte/hash and WAV-header checks.
+
+## Immediate plan
+
+1. Freeze the current hybrid as a reference and run fresh whole conversations across
+   ordinary answers, difficult reasoning, clarification, interruption, cancellation
+   and task completion. Report incorrect answers, wrong actions, false completion,
+   lost work, speech defects and latency separately; retain invalid inputs unscored.
+2. Fix the largest demonstrated remaining problem, with matched before/after evidence
+   and checks that prior capabilities remain. First-speech delay is a known target:
+   ordinary speech currently waits for the complete text action. Any streaming change
+   must preserve action validation, cancellation and interrupted-speech ownership.
+3. Use that evidence to choose the next bounded training experiment. The rejected
+   text adapter stays out of the demo. Native voice training must demonstrate useful
+   result handling and preserve voice quality before promotion. The hybrid remains
+   a reference/fallback, not a substitute claim for the native duplex deliverable.
+
+Plain words: Use Isambard for these checks and justified training. Do not spend the
+remaining allocation on another broad run merely because compute is available.
+Keep exporting reproducible assets and results as work completes.
+
 ## What improved
 
 | Problem | Verified change | Practical limit |
