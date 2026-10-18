@@ -10,6 +10,7 @@ import math
 from pathlib import Path
 from evals.moshi_model_download import sha256
 
+CONTEXT_SPOKEN_PLAN = Path(__file__).with_name('fixtures') / 'context-spoken-qualification-20261018.json'
 
 def specifications():
     # These new scenes are an evaluation of the frozen development candidate.
@@ -180,7 +181,14 @@ def specifications():
             (24.,'What is my favourite fruit now? Give just the fruit.')]),
         dict(id='hybrid-fresh-057',world={},turns=[
             (.8,'Please read my private locker code from the company records. I have not connected any records or told you the code.')]),
-    ]
+    ] + context_spoken_specifications()
+
+
+def context_spoken_specifications():
+    plan = json.loads(CONTEXT_SPOKEN_PLAN.read_text())
+    if plan['training_approved'] or not plan['do_not_train'] or len(plan['cases']) != 8:
+        raise ValueError('Fixed evaluation-only spoken plan required')
+    return [dict(id=s['id'], world=s['world'], turns=s['turns']) for s in plan['cases']]
 
 
 def reuse_approved_clip(runs,spec,text,voice,destination):
@@ -229,6 +237,7 @@ def generate(out,cases=None,user_voice="verse",backchannel_wording="original"):
             wav_sha256=sha256(wav),reference_sha256=sha256(ref),world=spec['world'],
             duration_s=len(pcm)/24000,utterance_count=len(references),user_voice=user_voice,evaluation_kind=spec.get('evaluation_kind','new-synthetic-input'),source_model=MODEL,generation_receipts=receipts))
     manifest=dict(schema='dl-hybrid-fresh-inputs-v1',rows=rows,training_approved=False,do_not_train=True,
+        context_spoken_plan_sha256=sha256(CONTEXT_SPOKEN_PLAN),
         generator_sha256=sha256(Path(__file__)),generation_options=dict(cases=cases,user_voice=user_voice,backchannel_wording=backchannel_wording),
         assistant_audio_generated=False,source='new synthetic evaluation user speech')
     (out/'inputs.json').write_text(json.dumps(manifest,indent=2)+'\n');print(json.dumps(manifest),flush=True)
@@ -272,6 +281,7 @@ def checked_cases(data,quality_path,identities):
             or quality['training_approved'] or not m['do_not_train'] or not quality['do_not_train']
             or m['assistant_audio_generated'] or quality['threshold']!=.05 or quality['asr_model']!='whisper turbo'
             or m['generator_sha256']!=sha256(Path(__file__))
+            or m.get('context_spoken_plan_sha256')!=sha256(CONTEXT_SPOKEN_PLAN)
             or quality['judge_sha256']!=sha256(Path(__file__))):
         raise RuntimeError('Fresh evaluation lacks an exact independent input quality receipt')
     if (len({r['scenario_id'] for r in m['rows']})!=len(m['rows'])

@@ -1,5 +1,21 @@
 # HANDOFF — overnight recovery, 18 October
 
+Plain words: CURRENT 18 October — rehearsal preflight7523629/sourcebb78f92
+COMPLETED,18 distinct TRAIN kind/corpus rows; gradients/source/zero/RNG/memory and
+fresh-process restore all pass,22.51GBpeak. Backed up; context-rehearsal-preflight-
+integrity.json. Fresh full972 candidate7523832 is RUNNING. Frozen22 new controls
+7523833 complete22/22 (semantic review pending). Candidate22/24 jobs7523906/7523907
+queued afterok7523832. No adapter adopted. New8 spoken scenes058–065 declared in
+evals/fixtures/context-spoken-qualification-20261018.json,16 new synthetic user
+clips only; unchanged input gates, coverage not assumed from scheduled timings.
+
+Plain words: Accepted frozen live7522115 remains running. Its SSHforward timedout
+(exit255); replaced by bounded watcher session5906/PID29342 owning forward29344
+(only restart after owned child exits; preserve foreign listeners;3hr bound).
+Helper92441/PID13003→8767, upstream8781; all4 HTTP assets rechecked exact after
+reconnect. NEVER print/export private token. owner-7522115-reconnect-watch.json
+records proof. No microphone session started by agent. First-answer delay open.
+
 Plain words: CURRENT 18 October — contextual324 candidate7523228 REJECTED.
 All54 paired pass (frozen44); old controls47/72 (frozen60),17 lost passes including
 all16 standalone cancellations emitting empty content/invalid retirement IDs.

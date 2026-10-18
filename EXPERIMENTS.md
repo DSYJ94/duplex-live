@@ -5448,3 +5448,25 @@ controls are declared before optimization and structurally checked through the
 actual compiler/worker with authored actions; they have no model results yet.
 Broader actual reasoning and new complete spoken tests remain mandatory. Native
 7510331 remains unqualified; accepted frozen live demo stays unchanged/cloud paused.
+
+## 18 October — mixed preflight passes; complete spoken tests declared
+
+Plain words:18-update preflight7523629/sourcebb78f92 COMPLETED. All18 TRAIN
+kind/corpus pairs run, all gradients finite/nonzero, zero adapter logits/RNG and
+all original source hashes/versions exact; peak22.51GB. Independent process restores
+adapter, optimizer, RNG and actual probe logits exactly. All artifacts backed up;
+context-rehearsal-preflight-integrity.json. Full972 candidate7523832 starts fresh.
+Frozen22 new controls7523833 complete22/22 mechanical checks, semantic review still
+required. Candidate22 job7523906 and reused broader24 job7523907 depend on successful
+full7523832. No checkpoint/adapter adoption; old accepted live service stays frozen.
+
+Plain words: Declare eight new whole spoken conversations058–065 before reviewing
+this candidate's outputs: arithmetic, implicit unsupported-private elaboration,
+conversation-memory correction, preserving/replacing an owed explanation, actual
+reasoning-delivery cancellation during foreground speech, stop and same-generator
+continuation. Sixteen new synthetic user clips only; no owner input or assistant
+script. Requirement/oracle text stays outside generation and inference. Source
+and separate fixture hashes are pinned. Unchanged independent5% input WER and
+bounds; invalid inputs remain unscored, no reroll. If real timing removes a stop,
+resume or pending-result opportunity, mark uncovered rather than claim success.
+Text controls do not qualify these full spoken behaviors or native private reads.

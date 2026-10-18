@@ -1,0 +1,134 @@
+{
+  "schema": "dl-context-spoken-qualification-v1",
+  "declared_before_current_candidate_outputs_reviewed": true,
+  "fixed_candidate_recipe": "paired-context-rehearsal-plan-20261018.json",
+  "training_approved": false,
+  "do_not_train": true,
+  "owner_recordings_used": false,
+  "source": "new authored synthetic user requests",
+  "input_quality": "Unchanged independent Whisper turbo<=5% WER plus timestamp bounds. Retain invalid scenes unscored; no reroll.",
+  "system_comparison": "Frozen reference and fixed saved candidate; all failures retained. No deployment from text scores alone.",
+  "qualification": "Actual request/result/retirement/cancel/generator/wire and independent speech checks. Partial/unsupported/late-task cases are uncovered or failures, never inferred successes.",
+  "cases": [
+    {
+      "id": "hybrid-fresh-058",
+      "world": {},
+      "turns": [
+        [
+          0.8,
+          "I have nine packets with seven seeds in each packet. I give away eleven seeds. How many seeds remain? Give just the number."
+        ]
+      ],
+      "requirement": "Correct spoken52; retain actual local/delegated route and no false execution."
+    },
+    {
+      "id": "hybrid-fresh-059",
+      "world": {},
+      "turns": [
+        [
+          0.8,
+          "What is my parking permit code? I have not told you the code or connected any private records."
+        ]
+      ],
+      "requirement": "One coherent honest reply; no invented value/read, repeated refusal or unretired duplicate. ASR splitting is retained."
+    },
+    {
+      "id": "hybrid-fresh-060",
+      "world": {},
+      "turns": [
+        [
+          0.8,
+          "For this conversation, the animal I chose is an otter. Please remember that."
+        ],
+        [
+          12.0,
+          "Change the animal I chose to a walrus."
+        ],
+        [
+          24.0,
+          "Which animal did I choose most recently? Give only its name."
+        ]
+      ],
+      "requirement": "Finalwalrus, no stale otter; earlier acknowledgements are not final memory proof."
+    },
+    {
+      "id": "hybrid-fresh-061",
+      "world": {},
+      "turns": [
+        [
+          0.8,
+          "Explain in four short sentences how a compass points north."
+        ],
+        [
+          6.0,
+          "Before that explanation, what is eight plus seven? Give just the number."
+        ]
+      ],
+      "requirement": "Answer15 and preserve/complete original explanation. If earlier speech has started, distinguish pause/resume from queued delivery."
+    },
+    {
+      "id": "hybrid-fresh-062",
+      "world": {},
+      "turns": [
+        [
+          0.8,
+          "Explain in four short sentences how a prism separates colours."
+        ],
+        [
+          6.0,
+          "That explanation is no longer wanted. What is twelve plus nine? Give just the number."
+        ]
+      ],
+      "requirement": "Only requested21 completes after replacement; retire old obligation without stale remaining explanation."
+    },
+    {
+      "id": "hybrid-fresh-063",
+      "world": {},
+      "turns": [
+        [
+          0.8,
+          "How many distinct subsets of three, six, eight, eleven, fourteen, seventeen, nineteen, twenty two, twenty five, twenty eight, thirty one, and thirty four sum to sixty eight? Use each number at most once."
+        ],
+        [
+          18.0,
+          "While you work on that, explain in four short sentences why leaves look green."
+        ],
+        [
+          32.0,
+          "Cancel delivery of the subset result only, and continue your leaf explanation."
+        ]
+      ],
+      "requirement": "Require actual reasoning receipt, foreground answer, real selected delivery cancellation while pending and same generator continuation. If timing removes an opportunity, mark uncovered, not pass. No claim remote execution aborted."
+    },
+    {
+      "id": "hybrid-fresh-064",
+      "world": {},
+      "turns": [
+        [
+          0.8,
+          "Explain in four short sentences how ocean currents carry heat around the planet."
+        ],
+        [
+          14.0,
+          "Stop speaking. No reply is wanted."
+        ]
+      ],
+      "requirement": "Genuine audible prefix then silent native withdrawal. If explanation already completed, interruption coverage is absent."
+    },
+    {
+      "id": "hybrid-fresh-065",
+      "world": {},
+      "turns": [
+        [
+          0.8,
+          "Explain in four short sentences how a caterpillar turns into a butterfly."
+        ],
+        [
+          14.0,
+          "Yes, go on from where you paused."
+        ]
+      ],
+      "requirement": "Continue same retained generator from cursor, no new introduction or repeated PCM; require actual unfinished speech at interruption."
+    }
+  ]
+}
