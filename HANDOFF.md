@@ -1,5 +1,52 @@
 # HANDOFF — overnight recovery, 18 October
 
+Plain words: CURRENT18October20:00UTC. Goal ACTIVE; cloud PAUSED. Qwen1599 run
+7530021 remains REJECTED. Independent24 role-reversal7530022 COMPLETE:20/24 to
+20/24, identical pass/fail IDs, all4 cancel+new-answer cases fail in BOTH models.
+All48 role rowfiles verified locally (state-role-holdout-integrity.json); no new
+controller extension is justified. No model/voice/demo promotion.
+
+Plain words: NATIVE work resumed. Completed12 ordinary speech captures plus12
+independent ASRs. The FIRST frozen arm7530261–64 regenerated different voice
+codes, so its3-good/1-bad result must NOT be attributed to adapter effects.
+Retained all raw files. Corrected frozen7530331–34 uses SAME saved voice codes
+and bootstrap/math protocol as adapted7530265–68; ASRs7530335–38 and7530273–76
+all match words EXACTLY (WER0, valid timestamps). Actual input WAV/voice tensors,
+strict final model loading, protocol and all audio hashes verified locally.
+Both models give the central ordinary answer on ice/sound/plants/metal; frozen
+metal adds a misleading because-it-is-solid explanation. All4 frozen runs emit
+an unnecessary native retrieval marker; NONE of4 adapted runs does. Actual
+backend execution was DISABLED in both, so this proves selection behavior only.
+Reused approved TRAIN012–015, not fresh holdouts or broad intelligence. Native
+7510331 still fails earlier private-result/clarification/cancellation checks.
+Proof: native-matched-ordinary-integrity.json / verify-native-matched-ordinary.py.
+
+Plain words: Next native correction is now implemented as a LOSS MODULE ONLY:
+evals/context_native_joint_loss.py, source d62caef8668f20cddbdd2b523d091e98a0006670.
+It trains aligned assistant text AND8 assistant audio heads, supervises ZERO
+user audio heads, excludes supplied prefix/span columns through approved masks,
+rejects invalid active targets/nonfinite logits and permits pure silence targets.
+This is loss ownership, NOT waveform AEC. Prior16-head joint pilot also failed;
+do not claim joint training is untried or presume this variant fixes behavior.
+CPU7530346 COMPLETE:4 meaningful ownership/gradient/silence/fail-closed tests pass.
+The first CPU7530339 failed BEFORE tests because /projects was not mounted;
+corrected mount, same source. Launcher first also hit login Python3.6 shlex.join
+and was corrected before submission. Preserve those failed startup facts.
+
+Plain words: NEXT ACTION is an actual bounded NATIVE joint-loss/model preflight,
+not more Qwen training or prompt auditions. It has NOT been submitted yet.
+Use the25 independently approved native teacher histories with streamed user
+codes (native approval7508795, scope7508779, numerical preflight7509062) and exact
+saved voice7510331. Earlier whole-conversation trainer already has a16-head
+joint loss; it requires positive user-head targets and is NOT this new variant.
+Do not silently replace its objective or rebrand an old experiment. Native
+teacher approval validates text/conditioning; explicitly verify audio target
+ownership/delay/spans and numerical alignment before using those codes as loss.
+Require finite real gradients, unchanged source weights and an independent full
+adapter/optimizer/RNG/logit restore before extending beyond a short pilot.
+Then evaluate native private-result/control plus ordinary retention and speech.
+No larger new native run or new native checkpoint currently exists.
+
 Plain words: CURRENT18October19:45UTC. Full1599-update controller7530021 COMPLETE
 and REJECTED for adoption. Exact independent optimizer/random-state/prediction
 restore passed; all533 TRAIN labels used exactly three times; all408 held-out

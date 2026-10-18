@@ -18,6 +18,26 @@ passes on unseen lessons — that is generalization, not memorization.
 
 ## 18 October 2026 — state-conditioned control training, results pending
 
+Plain words: UPDATE20:00UTC — independent role-reversal7530022 confirms NO gain:
+20/24 to20/24, same four cancel-plus-new-answer failures, all48 rowfiles checked.
+Close this controller candidate as rejected; do not extend it unchanged.
+
+Plain words: Native capacity comparison, NO new optimizer: matched frozen
+7530331–34 versus7510331-adapted7530265–68 uses identical saved voice/input and
+bootstrap/math protocol. Both give the central answers to four ordinary reused
+TRAIN questions; frozen metal adds misleading solid-material causation. Native
+unnecessary retrieval markers4 to0; backend disabled, so selection-only proof.
+All8 independent ASRs haveWER0 with valid bounds. First unmatched frozen7530261–64
+used different voice codes and cannot establish adapter attribution. All raw
+captures retained. No native qualification or demo adoption.
+
+Plain words: New assistant-only native joint loss d62caef has4 CPU ownership,
+gradient, silence and invalid-target tests passing in7530346. It is not wired
+into a new native training run yet. Earlier16-head joint training failed too;
+the new proposed contrast is8 assistant heads/zero user heads on independently
+validated streamed native teacher conditioning, with native text retained.
+Audio target alignment/ownership and a real model pilot/restore remain required.
+
 Plain words: UPDATE19:45UTC — full7530021 COMPLETED1599/exact independent restore,
 all533 rows used three times,23.92GB peak. REJECT adoption: mechanics151/204 to
 176/204 loses three old passes, all4 cancel+new-answer cases still omit the new

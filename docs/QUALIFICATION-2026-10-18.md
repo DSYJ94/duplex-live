@@ -1,5 +1,14 @@
 # Qualification record — 18 October 2026
 
+Plain words: Latest20:00UTC. Native matched-voice comparison verifies ordinary
+answer retention on4 reused TRAIN questions and unnecessary retrieval markers4
+to0, all8 native speech transcriptions exact. No backend actually executed; no
+fresh qualification or resolution of existing private-result/control failures.
+The unmatched regenerated-voice baseline is excluded from adapter attribution.
+Controller role holdout20/24 to20/24 confirms no gain on the independent24 cases.
+New assistant-only joint loss passes4 CPU tests; no new native pilot submitted.
+Whole-system/native verdict remains FAIL, accepted owner demo unchanged.
+
 Plain words: Latest19:45UTC. REJECT controller7530021: full1599 updates and exact
 restore pass engineering checks, but mechanics151/204 to176/204 loses3 old passes
 and all4 cancel-plus-new-answer cases fail the new answer. One passing refusal
