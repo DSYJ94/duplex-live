@@ -6,6 +6,19 @@ from evals.recovery_worker import RecordWorld,run_worker,WorkerSuperseded,Worker
 
 
 class RecordGuards(unittest.TestCase):
+    def test_required_action_still_rejects_available_project_without_user_identification(self):
+        world=RecordWorld({'Elm North':{'locker label':'copper kite'}})
+        revision=world.reserve('task')
+        def post(*args,**kwargs):
+            return types.SimpleNamespace(status_code=200,json=lambda:{'id':'bad','status':'completed','output':[
+                {'type':'function_call','name':'lookup_record','call_id':'bad',
+                 'arguments':json.dumps({'project':'Elm North','field':'locker label'})}]})
+        with patch.dict('sys.modules',{'requests':types.SimpleNamespace(post=post)}),patch.dict('os.environ',{'OPENAI_API_KEY':'test-placeholder'}):
+            with self.assertRaisesRegex(WorkerContractError,'not identified') as caught:
+                run_worker([{'role':'user','text':"What's the locker label?"}],world,'task',expected_revision=revision,dispatch_protocol='required-action')
+        self.assertEqual(world.receipts,[])
+        self.assertEqual(caught.exception.result['arguments']['project'],'Elm North')
+
     def test_required_action_answers_in_one_call_without_fabricating_a_receipt(self):
         world=RecordWorld({});payloads=[]
         def post(*args,**kwargs):

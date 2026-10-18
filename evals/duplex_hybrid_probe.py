@@ -16,7 +16,7 @@ from evals.moshi_model_download import sha256
 from evals.kyutai_stt_probe import StreamingListener,selected_inputs
 from evals.duplex_endpoint import TurnEndpoint
 from evals.duplex_speaker import StreamingSpeaker
-from evals.recovery_worker import RecordWorld,run_worker
+from evals.recovery_worker import RecordWorld,run_worker,WorkerContractError
 from evals.utterance_playout import render_utterances
 
 
@@ -100,7 +100,17 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy"):
             for future,meta in list(futures.items()):
                 if not future.done():continue
                 del futures[future]
-                result=future.result();item=dict(meta,result=result)
+                try:result=future.result()
+                except Exception as error:
+                    failure=dict(schema='dl-hybrid-controller-failure-v1',task=meta,
+                        error_type=type(error).__name__,message=str(error),
+                        controller_evidence=error.result if isinstance(error,WorkerContractError) else None,
+                        actual_world_receipts=world.receipts,actual_world_tasks=world.tasks,
+                        controller_protocol=controller_protocol,hybrid_system_qualified=False)
+                    (out/(meta['task_id']+'-failure.json')).write_text(json.dumps(failure,indent=2)+'\n')
+                    log('controller_failed',task_id=meta['task_id'],error_type=type(error).__name__)
+                    raise
+                item=dict(meta,result=result)
                 item['ready_s']=now();item['release_s']=max(now(),meta['submitted_s']+delay_s) if result['route']=='delegate' else now()
                 (out/(meta['task_id']+'-backend.json')).write_text(json.dumps(item,indent=2)+'\n')
                 log('controller_completed',task_id=meta['task_id'],route=result['route'],release_s=item['release_s'])
