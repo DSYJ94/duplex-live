@@ -16,10 +16,12 @@ test "$(git -C "$DL_TASK_SOURCE" rev-parse HEAD)" = "$DL_TASK_COMMIT"
 test -z "$(git -C "$DL_TASK_SOURCE" status --porcelain)"
 cd "$DL_TASK_SOURCE"
 unset OPENAI_API_KEY
+EXTRA=()
+if [ "${DUPLEX_WARM_LONG_PREFILL:-0}" = 1 ]; then EXTRA+=(--warm-long-prefill); fi
 apptainer exec --nv --bind /projects,/lus,/home \
  --env PYTHONPATH="$DL/envs/moshi-rag-7379661/lib/python3.12/site-packages:$DL_TASK_SOURCE" \
  --env PYTHONDONTWRITEBYTECODE=1 --env HF_HUB_OFFLINE=1 --env OMP_NUM_THREADS=8 \
- "$DL/pytorch-new.sif" python -u -m evals.qwen35_prefill_profile \
+ "$DL/pytorch-new.sif" python -u -m evals.qwen35_prefill_profile "${EXTRA[@]}" \
  --assets "$DL/runs/qwen35-controller-assets-7512612/assets.json" \
  --kernel-assets "$DL/runs/qwen35-kernel-assets-7513645" \
  --runs "$DL/runs" --out "$DL/runs/qwen35-prefill-profile-$SLURM_JOB_ID"

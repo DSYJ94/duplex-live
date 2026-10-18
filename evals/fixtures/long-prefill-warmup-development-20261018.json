@@ -1,0 +1,13 @@
+{
+ "schema":"dl-long-prefill-warmup-development-plan-v1",
+ "before_candidate_execution":true,
+ "model_weights_changed":false,
+ "training_approved":false,
+ "mechanism":"Before readiness, generate one unused token after2048 and4096 ordinary synthetic tokens using the unchanged dynamic cache and math attention.",
+ "actual_user_requests_transformed":false,
+ "shared_library_or_cache_files_patched":false,
+ "actual_conversation_kv_cache_reused":false,
+ "qualification":["exact native action and input-token parity on both saved long prompts","cold and hot timings retained including startup cost","actual three-turn cancellation-and-resume regression","short continuation regression"],
+ "known_prior_unprofiled_first_token_seconds":[10.726974290002545,12.762866672004748],
+ "production_adoption_before_checks":false
+}

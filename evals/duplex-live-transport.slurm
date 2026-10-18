@@ -38,6 +38,7 @@ apptainer exec --nv --bind /projects,/lus,/home \
  set -euo pipefail
  EXTRA=()
  if [ "${QWEN_COMPACT_REPLIES:-0}" = 1 ]; then EXTRA+=(--compact-replies); fi
+ if [ "${DUPLEX_WARM_LONG_PREFILL:-0}" = 1 ]; then EXTRA+=(--warm-long-prefill); fi
  if [ "${DUPLEX_CLIENT_PAUSE:-0}" = 1 ]; then EXTRA+=(--include-speech-context --client-pause-protocol); fi
  if [ "${DUPLEX_SEMANTIC_PAUSE:-0}" = 1 ]; then EXTRA+=(--semantic-pause); fi
  if [ "${DUPLEX_BOUND_RESUME:-0}" = 1 ]; then EXTRA+=(--bound-resume-target); fi

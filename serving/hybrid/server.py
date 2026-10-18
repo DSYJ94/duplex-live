@@ -116,7 +116,7 @@ class Network:
 def main():
     ap=argparse.ArgumentParser(description=__doc__)
     for name in ('stt-assets','tts-assets','mimi-load-approval','controller-assets','kernel-assets','out'):ap.add_argument('--'+name,type=Path,required=True)
-    ap.add_argument('--compact-replies',action='store_true')
+    ap.add_argument('--compact-replies',action='store_true');ap.add_argument('--warm-long-prefill',action='store_true')
     ap.add_argument('--development-function-selector',type=Path);ap.add_argument('--pending-speech-only',action='store_true')
     ap.add_argument('--include-speech-context',action='store_true')
     ap.add_argument('--client-pause-protocol',action='store_true');ap.add_argument('--semantic-pause',action='store_true');ap.add_argument('--bound-resume-target',action='store_true');ap.add_argument('--allow-cancel-resume',action='store_true')
@@ -137,7 +137,7 @@ def main():
     from evals.duplex_hybrid_probe import run_case
     from evals.moshi_model_download import sha256
     listener=StreamingListener(args.stt_assets,args.mimi_load_approval)
-    controller=ResidentQwen35(args.controller_assets,args.out,device='cuda:1',pending_speech_protocol='explicit-actions',kernel_assets=args.kernel_assets,compact_replies=args.compact_replies,development_function_selector=args.development_function_selector,pending_speech_only=args.pending_speech_only)
+    controller=ResidentQwen35(args.controller_assets,args.out,device='cuda:1',pending_speech_protocol='explicit-actions',kernel_assets=args.kernel_assets,compact_replies=args.compact_replies,development_function_selector=args.development_function_selector,pending_speech_only=args.pending_speech_only,warm_long_prefill=args.warm_long_prefill)
     requests=queue.Queue(maxsize=1);stop=threading.Event();network=Network(args.host,args.port,token,requests,stop,args.client_pause_protocol);thread=None;speaker=None
     try:
         with listener.session():

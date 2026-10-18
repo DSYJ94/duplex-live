@@ -30,12 +30,15 @@ def capture_request(root,combined):
 def main():
     ap=argparse.ArgumentParser(description=__doc__)
     for n in ('runs','assets','kernel-assets','out'):ap.add_argument('--'+n,type=Path,required=True)
-    a=ap.parse_args();a.out.mkdir(parents=True,exist_ok=False)
+    ap.add_argument('--warm-long-prefill',action='store_true');a=ap.parse_args();a.out.mkdir(parents=True,exist_ok=False)
     for name,folder in [('TRITON_CACHE_DIR','private-triton-cache'),('CUDA_CACHE_PATH','private-cuda-cache')]:
         path=a.out/folder;path.mkdir();os.environ[name]=str(path)
     payloads=[(str(j),*capture_request(a.runs/('duplex-live-transport-'+str(j)),j==7519126)) for j in (7519124,7519126)]
     from evals.qwen35_controller import Qwen35ResponseExecutor
     executor=Qwen35ResponseExecutor(a.assets,device='cuda:0',kernel_assets=a.kernel_assets,pending_speech_protocol='explicit-actions',compact_replies=True)
+    if a.warm_long_prefill:
+        from evals.qwen35_prefill_warmup import warm_long_prefill
+        warm_long_prefill(executor)
     import torch
     rows=[]
     for job,payload,source in payloads:
@@ -51,7 +54,7 @@ def main():
             if inference['input_tokens']!=source['original_input_tokens'] or inference['native_model_action']!=source['original_native_action']:raise ValueError('Replay did not preserve actual prompt length and native action')
             row=dict(source_job=job,repeat=repeat,source=source,payload_sha256=hashlib.sha256(json.dumps(payload,sort_keys=True).encode()).hexdigest(),first_token_s=inference['first_token_s'],generation_wall_s=inference['wall_s'],generated_tokens=inference['generated_tokens'],profiled_end_to_end_s=seconds,actual_response=response,ops=tables)
             rows.append(row);(a.out/(name+'.json')).write_text(json.dumps(row,indent=2)+'\n');print(json.dumps({k:row[k] for k in ('source_job','repeat','first_token_s','generation_wall_s','generated_tokens')}),flush=True)
-    report=dict(schema='dl-qwen35-cold-hot-prefill-profile-v1',results=rows,component_execution_completed=True,actual_external_requests=0,native_actions_dispatched=False,weights_changed=False,private_compiler_caches=True,source_load=executor.proof,profiling_changes_measurement_overhead=True,production_adopted=False,code_sha256=sha256(Path(__file__)))
+    report=dict(schema='dl-qwen35-cold-hot-prefill-profile-v1',results=rows,warm_long_prefill=a.warm_long_prefill,warmup=executor.warmup,component_execution_completed=True,actual_external_requests=0,native_actions_dispatched=False,weights_changed=False,private_compiler_caches=True,source_load=executor.proof,profiling_changes_measurement_overhead=True,production_adopted=False,code_sha256=sha256(Path(__file__)))
     (a.out/'report.json').write_text(json.dumps(report,indent=2)+'\n')
 
 if __name__=='__main__':main()
