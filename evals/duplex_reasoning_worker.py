@@ -64,7 +64,7 @@ def reasoning_receipts(receipts):
 
 
 def run_reasoning_worker(context,world,task_id,model,expected_revision,dispatch_protocol,pending_speech,response_executor,
-                         scope_read_tools=False,execution_observer=None,resumable_speech=None):
+                         scope_read_tools=False,execution_observer=None,resumable_speech=None,bound_resume_target=False):
     if dispatch_protocol!='state-aware' or response_executor is None or scope_read_tools or execution_observer is not None:
         raise ValueError('Reasoning trial requires local state-aware control and no record-specific projection')
     latest=next((e['text'] for e in reversed(context) if e.get('role')=='user'),None)
@@ -82,8 +82,8 @@ def run_reasoning_worker(context,world,task_id,model,expected_revision,dispatch_
     if resumable_speech is not None:
         from evals.duplex_resume import validate_target
         resumable_speech=validate_target(resumable_speech,pending_speech)
-        tools.append(tool('resume_speech','Continue the identified PAUSED speech generator from its retained audio cursor, without any new words. Use when the user asks to carry on or acknowledges the explanation without requesting a change. Do not use for stop, a shorter version, a new answer or cancellation.',dict(
-            speech_id=dict(type='string',enum=[resumable_speech['speech_id']]),event_id=dict(type='string',enum=[resumable_speech['event_id']]))))
+        resume_parameters={} if bound_resume_target else dict(speech_id=dict(type='string',enum=[resumable_speech['speech_id']]),event_id=dict(type='string',enum=[resumable_speech['event_id']]))
+        tools.append(tool('resume_speech','Continue the identified PAUSED speech generator from its retained audio cursor, without any new words. Use when the user asks to carry on or acknowledges the explanation without requesting a change. Do not use for stop, a shorter version, a new answer or cancellation.',resume_parameters))
     active=[identity for identity,state in available['tasks'].items() if state.get('operation')=='delegate_reasoning']
     if active:
         consumption=dict(type='array',items=dict(type='string'))
@@ -93,7 +93,9 @@ def run_reasoning_worker(context,world,task_id,model,expected_revision,dispatch_
             task_ids=dict(type='array',minItems=1,items=dict(type='string',enum=active)),content=dict(type='string'),
             consume_pending_speech_ids=consumption)))
     state=dict(available=available,pending_speech=pending_speech,dispatch_protocol=dispatch_protocol,domain='reasoning-development')
-    if resumable_speech is not None:state['resumable_speech']=resumable_speech
+    if resumable_speech is not None:
+        state['resumable_speech']=resumable_speech
+        if bound_resume_target:state['resume_action_protocol']='application-bound-single-retained-generator'
     from evals.duplex_speech_context import delivery_states
     deliveries=delivery_states(context)
     if deliveries:state['generated_speech_delivery']=deliveries
@@ -122,7 +124,7 @@ def run_reasoning_worker(context,world,task_id,model,expected_revision,dispatch_
     elif call['name']=='cancel_reasoning':
         receipt=world.cancel_delivery(arguments['task_ids']);route='cancel';content=arguments['content'];receipts=[receipt];consumed=arguments['consume_pending_speech_ids']
     elif call['name']=='resume_speech':
-        if resumable_speech is None or arguments!=resumable_speech:raise WorkerContractError('Resume action does not identify the actual retained generator',dict(response=response))
+        if resumable_speech is None or arguments!=({} if bound_resume_target else resumable_speech):raise WorkerContractError('Resume action does not identify the actual retained generator',dict(response=response))
         route='resume';content='';consumed=[];receipts=[]
     elif call['name']=='withdraw_speech':
         consumed=arguments.get('speech_ids')

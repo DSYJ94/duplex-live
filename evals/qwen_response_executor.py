@@ -130,8 +130,9 @@ class QwenResponseExecutor:
                     'If the user also asks a new question or revised explanation, answer it through '
                     +('resolve_pending_speech' if self.pending_speech_protocol=='explicit-actions' else 'respond_to_user with consume_pending_speech_ids')+' instead. ')
         if state.get('resumable_speech') is not None:
+            resume_usage='choose resume_speech with no arguments; the application binds the sole retained generator shown in the actual state' if state.get('resume_action_protocol') else 'choose resume_speech with its exact speech_id and event_id'
             instructions+=('The actual state identifies a PAUSED speech generator retained by the client. '
-                'For a request to continue that explanation or a mere acknowledgment, choose resume_speech with its exact speech_id and event_id. '
+                f'For a request to continue that explanation or a mere acknowledgment, {resume_usage}. '
                 'This resumes the remaining audio without a new introduction, paraphrase or duplicate prefix. It is an output action, not completion of a task. '
                 'For stop, a requested revision, another question or a cancellation, use the corresponding provided action instead. ')
         if state['dispatch_protocol']=='state-aware' and self.pending_speech_protocol=='array':

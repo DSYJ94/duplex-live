@@ -34,6 +34,25 @@ class SemanticResume(unittest.TestCase):
   active=dict(task_id='old',event_id='speech-4',result=dict(route='answer'))
   with self.assertRaises(WorkerContractError):require_retained(target,active,dict(at_s=1))
 
+ def test_empty_resume_action_binds_only_the_application_retained_target(self):
+  pending=[dict(id='old',text='An actual generated answer',request_text='Explain')];target=dict(speech_id='old',event_id='speech-3')
+  class Action:
+   provider_name='fixture-only'
+   def __init__(self,arguments):self.arguments=arguments
+   def __call__(self,payload):
+    self.payload=payload
+    return dict(id='fixture',status='completed',model='fixture-only',output=[dict(type='function_call',name='resume_speech',arguments=json.dumps(self.arguments))])
+  for args in [{},dict(speech_id='another',event_id='speech-8')]:
+   world=ReasoningWorld({});revision=world.reserve('current');executor=Action(args)
+   def run():return run_reasoning_worker([dict(role='user',text='Carry on.')],world,'current','fixture-only',revision,'state-aware',pending,executor,resumable_speech=target,bound_resume_target=True)
+   if not args:
+    result=run();self.assertEqual(result['resume_target'],target);self.assertEqual(result['content'],'')
+    definition=next(t for t in executor.payload['tools'] if t['name']=='resume_speech')
+    self.assertEqual(definition['parameters']['properties'],{})
+   else:
+    with self.assertRaises(WorkerContractError):run()
+   self.assertEqual(world.receipts,[])
+
  def media(self,resume):
   with tempfile.TemporaryDirectory() as d:
    folder=Path(d);user=np.zeros(100*1920,dtype=np.float32);user[:3*1920]=.1;user[20*1920:23*1920]=.1

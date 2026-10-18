@@ -1,0 +1,13 @@
+{
+ "schema":"dl-bound-resume-development-plan-v1",
+ "before_model_execution":true,
+ "fresh_holdout":false,
+ "training_approved":false,
+ "baseline_job":"7518837",
+ "case":"034",
+ "change":"resume_speech takes an empty object; the application binds the sole retained generator from the exact model-visible state and validates it again at the media boundary",
+ "no_intent_keyword_router":true,
+ "no_new_weights":true,
+ "measure":["native action","full speech completion","source sample uniqueness","actual generated tokens","controller elapsed seconds","endpoint-to-resume seconds"],
+ "acceptance":"same generator and complete text retained without duplication; lower native token work; report measured timing without claiming browser roundtrip"
+}
