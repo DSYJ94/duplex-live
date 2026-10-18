@@ -135,12 +135,15 @@ def tool(name,description,properties):
         "parameters":{"type":"object","properties":properties,"required":list(properties),"additionalProperties":False}}
 
 
-def run_worker(context,world,task_id,model="gpt-6-luna",expected_revision=None,dispatch_protocol="legacy",pending_speech=None):
+def run_worker(context,world,task_id,model="gpt-6-luna",expected_revision=None,dispatch_protocol="legacy",pending_speech=None,response_executor=None):
     if dispatch_protocol not in ("legacy","required-action","state-aware"):raise ValueError("Unknown controller dispatch protocol")
-    import requests
-    key = os.environ.get("OPENAI_API_KEY")
-    if not key:
-        raise RuntimeError("Backend API credential unavailable")
+    key=None
+    if response_executor is None:
+        import requests
+        key=os.environ.get('OPENAI_API_KEY')
+        if not key:raise RuntimeError('Backend API credential unavailable')
+    provider=getattr(response_executor,'provider_name','custom-executor') if response_executor is not None else 'openai'
+
     tools = [tool("lookup_record","Read an identified private project field. Ask for missing identification before calling.",
         {"project":{"type":"string"},"field":{"type":"string"}}),
         tool("cancel_lookup","Cancel the identified existing lookups. Include all related duplicates, excluding unrelated work.",
@@ -206,14 +209,16 @@ def run_worker(context,world,task_id,model="gpt-6-luna",expected_revision=None,d
     events = []
     def request(payload):
         start = time.monotonic()
-        response = requests.post("https://api.openai.com/v1/responses",headers={"Authorization":"Bearer "+key},json=payload,timeout=90)
-        if response.status_code != 200:
-            raise RuntimeError(f"Backend HTTP {response.status_code}")
-        data = response.json()
+        if response_executor is None:
+            response=requests.post("https://api.openai.com/v1/responses",headers={"Authorization":"Bearer "+key},json=payload,timeout=90)
+            if response.status_code!=200:raise RuntimeError(f"Backend HTTP {response.status_code}")
+            data=response.json()
+        else:data=response_executor(payload)
+        if not isinstance(data,dict):raise RuntimeError('Controller transport returned no response object')
         if data.get("status") != "completed":
             raise RuntimeError("Backend did not complete within the token budget")
         events.append({"response_id":data["id"],"model":data.get("model"),"usage":data.get("usage"),
-            "seconds":time.monotonic()-start,"output":[{k:v for k,v in item.items() if k != "encrypted_content"}
+            "seconds":time.monotonic()-start,"provider":provider,"local_inference":data.get('local_inference'),"output":[{k:v for k,v in item.items() if k != "encrypted_content"}
                 for item in data.get("output",[])]})
         return data
     response = request(first)
@@ -308,6 +313,7 @@ def run_worker(context,world,task_id,model="gpt-6-luna",expected_revision=None,d
     result = {**parsed,"receipts":receipts,"events":events,"task_id":task_id,"speech_model_routing":False}
     result["final_response_route"] = final_response_route
     result["dispatch_protocol"] = dispatch_protocol
+    result['response_provider']=provider
     if not isinstance(parsed.get("content"), str) or not parsed["content"].strip():
         raise WorkerContractError("Backend returned empty result text; do not inject an empty context span",result)
     if parsed["route"] == "delegate" and not lookup_receipts(receipts):

@@ -13,7 +13,7 @@ from evals.moshi_model_download import sha256
 from evals.recovery_worker import RecordWorld,project_identified_by_user,tool
 
 
-def load_model(assets_path):
+def load_model(assets_path,device='cuda'):
     import torch
     from safetensors.torch import load_file
     from transformers import AutoConfig,AutoTokenizer,AutoModelForCausalLM
@@ -48,11 +48,11 @@ def load_model(assets_path):
         if value.shape!=weights[key].shape or value.dtype!=weights[key].dtype or not torch.equal(value,weights[key]):
             raise RuntimeError('Loaded text-model tensor differs from source: '+key)
     if any(p.device.type=='meta' for p in model.parameters()):raise RuntimeError('Unmaterialized model parameter')
-    model.eval().requires_grad_(False).to('cuda');model.tie_weights();torch.cuda.synchronize()
+    model.eval().requires_grad_(False).to(device);model.tie_weights();torch.cuda.synchronize(device)
     proof=dict(strict=True,all_source_tensors_exact_on_cpu_before_device_copy=True,source_tensor_count=len(index),
         model_state_tensor_count=len(state),explicit_true_tied_aliases=aliases,missing=[],unexpected=[],
         model_parameters=sum(p.numel() for p in model.parameters()),trainable_parameters=sum(p.numel() for p in model.parameters() if p.requires_grad),
-        load_seconds=time.perf_counter()-started,dtype=str(next(model.parameters()).dtype),
+        load_seconds=time.perf_counter()-started,device=str(next(model.parameters()).device),dtype=str(next(model.parameters()).dtype),
         assets_sha256=sha256(assets_path),repo=assets['repo'],revision=assets['revision'])
     return model,tokenizer,proof
 
@@ -78,11 +78,11 @@ class Generator:
                 clock.append(time.perf_counter()-start)
             def end(self):pass
         text=self.tokenizer.apply_chat_template(messages,tools=tools,tokenize=False,add_generation_prompt=True)
-        inputs=self.tokenizer(text,return_tensors='pt').to('cuda')
+        inputs=self.tokenizer(text,return_tensors='pt').to(self.model.device)
         if inputs['input_ids'].shape[1]>4096:raise RuntimeError('Bounded typed proof exceeded4096 input tokens')
         output=self.model.generate(**inputs,max_new_tokens=192,do_sample=False,streamer=Clock(),
             pad_token_id=self.tokenizer.pad_token_id,use_cache=True)
-        generated=output[0,inputs['input_ids'].shape[1]:];torch.cuda.synchronize();wall=time.perf_counter()-start
+        generated=output[0,inputs['input_ids'].shape[1]:];torch.cuda.synchronize(self.model.device);wall=time.perf_counter()-start
         cleaned=self.tokenizer.decode(generated,skip_special_tokens=True).strip()
         return dict(raw_text=self.tokenizer.decode(generated,skip_special_tokens=False),cleaned_text=cleaned,
             input_tokens=inputs['input_ids'].shape[1],generated_tokens=len(generated),wall_s=wall,

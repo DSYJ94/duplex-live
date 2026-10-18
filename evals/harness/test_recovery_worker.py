@@ -6,6 +6,19 @@ from evals.recovery_worker import RecordWorld,run_worker,WorkerSuperseded,Worker
 
 
 class RecordGuards(unittest.TestCase):
+    def test_explicit_local_executor_needs_no_remote_credential_or_http(self):
+        world=RecordWorld({});calls=[]
+        def execute(payload):
+            calls.append(payload)
+            return {'id':'local-proof','status':'completed','model':'local-test','output':[
+                {'type':'function_call','name':'respond_to_user','call_id':'reply',
+                 'arguments':json.dumps({'route':'answer','content':'Three sides.'})}]}
+        with patch.dict('os.environ',{'OPENAI_API_KEY':''}):
+            result=run_worker([{'role':'user','text':'Triangle sides?'}],world,'current',model='local-test',
+                dispatch_protocol='required-action',response_executor=execute)
+        self.assertEqual(result['response_provider'],'custom-executor');self.assertEqual(calls[0]['model'],'local-test')
+        self.assertEqual(result['events'][0]['model'],'local-test');self.assertEqual(result['receipts'],[])
+
     def test_state_aware_cancellation_can_fulfil_an_ordinary_reply_without_cancelling_it(self):
         world=RecordWorld({'Cedar':{'badge':'violet triangle'}})
         old=world.read('lookup','Cedar','badge');ordinary=world.reserve('ordinary');world.finish('ordinary',ordinary)

@@ -41,7 +41,7 @@ def counterfactual_records(scenario):
     raise ValueError('Unapproved bounded development case')
 
 
-def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",interrupt_policy="acoustic"):
+def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",interrupt_policy="acoustic",controller=None):
     import numpy as np
     import soundfile as sf
     from data.synthetic.filter import norm_words,wer
@@ -85,7 +85,8 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",inter
         revision=world.reserve(task,[e.copy() for e in context]);submitted=now()
         from evals.duplex_speech_obligations import snapshot
         pending=snapshot(queue,active) if controller_protocol=='state-aware' else []
-        future=executor.submit(run_worker,[e.copy() for e in context],world,task,expected_revision=revision,dispatch_protocol=controller_protocol,pending_speech=pending)
+        future=executor.submit(run_worker,[e.copy() for e in context],world,task,expected_revision=revision,dispatch_protocol=controller_protocol,pending_speech=pending,
+            model=controller.model_id if controller else 'gpt-6-luna',response_executor=controller)
         futures[future]=dict(task_id=task,revision=revision,turn=utterance_count,submitted_s=submitted,request_text=text,pending_speech=pending)
         log('controller_dispatched',task_id=task,text=text,reference_text_supplied=False)
     try:
@@ -204,6 +205,7 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",inter
         frames=frame,synthetic_tail_frames=max(0,frame-real_frames),asr_compute_p95_s=float(np.percentile(steps,95)),
         maximum_input_backlog_s=max(backlogs),declared_counterfactual_world=world.records,
         controlled_lookup_delivery_minimum_s=delay_s,controller_protocol=controller_protocol,interrupt_policy=interrupt_policy,
+        controller_provider=controller.provider_name if controller else 'openai',controller_model=controller.model_id if controller else 'gpt-6-luna',
         lexical_interruption_is_not_a_backchannel_classifier=interrupt_policy=='lexical',world_tasks=world.tasks,actual_tool_receipts=world.receipts,
         fully_played_responses=spoken,playout=playout,audio_sha256=sha256(out/'model.wav'),wall_s=now(),
         unended_text=listener.spm.decode(policy.tokens),native_model_qualified=False,hybrid_system_qualified=False,
@@ -215,6 +217,10 @@ def main():
     ap=argparse.ArgumentParser(description=__doc__)
     for n in ('stt-assets','tts-assets','mimi-load-approval','data','out'):ap.add_argument('--'+n,type=Path,required=True)
     ap.add_argument('--scenario',action='append',required=True);ap.add_argument('--lookup-delay-s',type=float,default=12.)
+    ap.add_argument('--controller-provider',choices=('openai','local-qwen'),default='openai')
+    ap.add_argument('--local-controller-assets',type=Path)
+    ap.add_argument('--local-controller-device',default='cuda:1')
+    ap.add_argument('--local-controller-prompt-profile',choices=('base','contract-examples'),default='contract-examples')
     ap.add_argument('--interrupt-policy',choices=('acoustic','lexical'),default='acoustic')
     ap.add_argument('--input-profile',choices=('approved-train','fresh-evaluation'),default='approved-train')
     ap.add_argument('--input-quality',type=Path)
@@ -231,7 +237,14 @@ def main():
     else:rows=selected_inputs(args.data,args.scenario);validator=None
     args.out.mkdir(parents=True,exist_ok=False)
     listener=StreamingListener(args.stt_assets,args.mimi_load_approval)
-    torch=listener.torch
+    torch=listener.torch;controller=None
+    if args.controller_provider=='local-qwen':
+        if args.controller_protocol not in ('required-action','state-aware') or args.local_controller_assets is None:
+            raise ValueError('Local controller requires exact assets and explicit action protocol')
+        if torch.device(args.local_controller_device).index!=1 or torch.cuda.device_count()<2:
+            raise RuntimeError('First local integration requires a distinct second allocated GPU; no resource fallback')
+        from evals.qwen_response_executor import QwenResponseExecutor
+        controller=QwenResponseExecutor(args.local_controller_assets,args.local_controller_device,args.local_controller_prompt_profile)
     with listener.session():
         torch.manual_seed(42424242);torch.cuda.manual_seed_all(42424242)
         speaker=StreamingSpeaker(args.tts_assets,args.mimi_load_approval);speaker.open()
@@ -242,7 +255,7 @@ def main():
         results=[];failures=[]
         try:
             for row in rows:
-                try:results.append(run_case(listener,speaker,row,args.out/row['scenario_id'],args.lookup_delay_s,args.controller_protocol,args.interrupt_policy))
+                try:results.append(run_case(listener,speaker,row,args.out/row['scenario_id'],args.lookup_delay_s,args.controller_protocol,args.interrupt_policy,controller))
                 except Exception as error:
                     if args.input_profile!='fresh-evaluation':raise
                     failure=dict(scenario=row['scenario_id'],error_type=type(error).__name__,message=str(error),
@@ -257,7 +270,12 @@ def main():
         input_profile=args.input_profile,input_validator=validator,evaluation_use=args.evaluation_use,input_quality_sha256=sha256(args.input_quality) if args.input_quality else None,
         stt_assets_sha256=sha256(args.stt_assets),tts_assets_sha256=sha256(args.tts_assets),
         listener_loads=listener.loads,speaker_evidence=speaker.evidence,tts_warmup=warmup,
-        same_process_same_gpu=True,external_controller='gpt-6-luna',native_model_reasoning=False,
+        speech_services_same_process_same_gpu=True,same_process_same_gpu=controller is None,
+        controller_provider=controller.provider_name if controller else 'openai',
+        controller_model=controller.model_id if controller else 'gpt-6-luna',
+        local_controller_proof=controller.proof if controller else None,
+        local_controller_warmup=controller.warmup if controller else None,
+        external_controller=None if controller else 'gpt-6-luna',remote_api_used=controller is None,native_model_reasoning=False,
         paced_recorded_train_user_pcm=args.input_profile=='approved-train',
         fresh_holdout=args.input_profile=='fresh-evaluation' and args.evaluation_use=='fresh',candidate_qualification_derived_from_execution=False,microphone_acceptance=False,
         native_model_qualified=False,hybrid_system_qualified=False,training_approved=False,optimizer_steps=0)

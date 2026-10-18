@@ -23,8 +23,15 @@ def main():
     from scipy.signal import resample_poly
     from data.synthetic.filter import norm_words,wer
     report=json.loads((args.run/'report.json').read_text())
+    topology_ok=report.get('same_process_same_gpu') is True
+    if report.get('controller_provider')=='local-transformers-qwen4b':
+        topology_ok=(report.get('speech_services_same_process_same_gpu') is True
+            and report.get('same_process_same_gpu') is False and report.get('remote_api_used') is False
+            and report.get('external_controller') is None
+            and report.get('local_controller_proof',{}).get('device')=='cuda:1'
+            and report.get('local_controller_proof',{}).get('strict') is True)
     if (report['schema']!='dl-concurrent-hybrid-development-v1' or (not report['component_execution_completed'] and not args.include_completed_cases_from_failed_suite)
-            or not report['same_process_same_gpu'] or report['hybrid_system_qualified'] is not False
+            or not topology_ok or report['hybrid_system_qualified'] is not False
             or any(c['reference_transcript_supplied'] for c in report['results'])):
         raise RuntimeError('Audit requires the explicit unqualified actual concurrent hybrid source')
     if not report['results']:raise RuntimeError('No completed case is available for actual-played speech audit')
