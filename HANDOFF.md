@@ -1,5 +1,91 @@
 # HANDOFF — overnight recovery, 18 October
 
+
+
+Plain words: CURRENT 18 October, 18:26 UTC. Owner-confirmed smooth playback remains
+on the unchanged frozen demo. Goal ACTIVE; cloud validation PAUSED. New capability
+profile experiment 7528694/source5bd58b6 is COMPLETE and locally verified: false
+send claims 5/6 to 0/6; three invented private answers disappear; all six supported
+reader clarifications remain correct. Two unsupported-private requests still
+receive circular follow-up questions. It loses one strict ordinary-answer format
+pass (correct 44, extra words) and two supplied-fact formats. Useful evidence,
+not promotion: old controls 44/54 to43/54 and60/72 unchanged; fresh mechanics8/15
+to12/15; six actual private reads remain correct but value-only formatting fails.
+All240 rowfiles and exact profile appends verified by application-capability-
+integrity.json / verify-application-capability.py. Source verification pins the
+old probe through git show5bd58b6, since its CLI now supports explicit candidates.
+
+Plain words: More substantial task-control gain: idempotent cancellation trial
+7529138/source212dddc COMPLETE, frozen model/no optimizer. Actual closed failure
+7525920 now returns an honest already_finished receipt and retains the same
+paused generator. Actual active cancellation7524610 still works. Focused strict
+3/11 to10/11; paired44/54 unchanged with ALL baseline passes retained. Ten actual
+idempotent receipts and all130 workerrow files independently verified; unrelated
+work preserved. One case still uses speaking cancellation, which cancels correctly
+but restarts the queued explanation rather than preserving its generator. This
+is a remaining interaction failure, not a collateral cancellation. No production
+media test or new owner listening acceptance yet. Proof: idempotent-resume-
+integrity.json / verify-idempotent-resume.py. No user-keyword router or output repair.
+
+Plain words: Two EXISTING-checkpoint profile comparisons are RUNNING from
+sourcea0a44fe: 7529214 = strict972 checkpoint7523832 plus previously tested
+cancel-only schema; 7529215 = strict1356 checkpoint7527432 without that schema.
+Both compare original/profile on42+15 fixtures and126 older after-controls.
+No new training. Retrieve and review complete utterances, not just mechanics.
+
+Plain words: Prepared next isolated source adds truthful speaking-cancellation
+side-effect descriptions, a media guard for real idempotent status receipts,
+and default-OFF server/Slurm wiring. Fifteen NEW do_not_train control fixtures
+are declared before model outputs: active/finished/already-cancelled/duplicate
+results, unrelated preservation, new-answer instead of continuation, speech-only
+stop and ambiguous cancellation. All15 valid native gold actions are reachable
+through the actual worker; this is fixture validation, not model competence.
+Eleven focused cancellation/media tests pass. Neither new source nor profile is
+on the owner demo. Next launch immutable source control/fresh and paced speech
+replays, inspect actual receipts/cursors/PCM and independent speech audits.
+
+Plain words: New unrelated untracked evals/capability_retention_probe.py appeared;
+it is NOT adopted, edited, staged or executed. Preserve it alongside roadmap.html
+and the unrelated tracked timeline pyc. Earlier CURRENT entries are historical.
+
+Plain words: CURRENT 18 October, 18:08 UTC. The owner confirmed smooth playback
+at `http://localhost:8767/?rev=confirmed-pause`. This confirms the accepted playback
+change; it does not qualify the native model or any new adapter. The renewed demo
+still uses the same frozen source 8481bb1. Goal ACTIVE; cloud validation PAUSED.
+
+Plain words: Instruction diagnostic 7528559, source 41bb0e6, COMPLETED in 3:25.
+Neither proposed correction is adopted. Original/resume/receipt strict focused
+scores were 6/20, 6/20 and 8/20. The conditional resume wording still failed the
+actual closed-task conversation. The receipt wording corrected only two of six
+value-only formats; all 27 executed fixture reads already returned correct facts.
+Both changes failed their focused gates, so broader evaluation was not run.
+All 60 row files, original historical inputs/raw outputs, unchanged request scopes,
+source tensor inventory and frozen parameter hashes verified locally. See
+`instruction-contract-integrity.json` and `verify-instruction-contract.py` under
+`runs/recovery-continuation-20261016`. The strict resume gate requires no new
+confirmation words; a valid cancel plus automatic continuation is a separate
+behavior from explicit same-generator resume. No claim of whole-system success.
+
+Plain words: Next diagnostic 7528694, source 5bd58b6, is RUNNING. It tests a trusted
+application capability description independently, distinguishing unsupported
+private reading/messaging from a supported reader awaiting project identification.
+The earlier literal function-inventory prompt confused that distinction. The
+profile comes from the actual worker domain and registry, never user keywords.
+Native schemas/actions/outputs remain unchanged; no routing or text repair.
+It compares 42 capability and 15 fresh fixtures before/after, plus all 126 older
+controls after the change. Semantic review and retention remain mandatory.
+
+Plain words: Full 1356-update model 7527432 remains REJECTED. Clarification to the
+record: false send claims were present in five of six frozen cases and remain in
+three of six trained cases; they were not newly introduced by this run. Three
+previously passing active cancellations were lost. The updated full integrity
+report verifies both sets of false claims. Do not launch unchanged extra epochs.
+Public forwarding has a bounded restart watcher: read its current child PID from
+`/private/tmp/duplex-owner-7527159-forward-status.json`, not old static PID 95796.
+Owner audio/words and session credentials remain excluded from exports.
+
+Plain words: Entries below are historical; the current status above takes precedence.
+
 Plain words: CURRENT18October17:35UTC. Full1356 job7527432/source517f159 COMPLETE
 in13:50 and REJECTED for promotion. All452TRAINrows seen exactly3times, finite
 16-factor gradients, frozen source hashes/versions and exact independent adapter/

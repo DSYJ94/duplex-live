@@ -103,14 +103,17 @@ def main():
     for name,worker in [('original',run_reasoning_worker),('idempotent',run_idempotent_reasoning_worker)]:
         rows=focused(executor,worker,a.runs,a.out/(name+'-focused'),name=='original')
         controls=paired(executor,worker,a.out/(name+'-paired'))
+        from evals.idempotent_fresh import evaluate as fresh
+        fresh_result=fresh(executor,worker,a.out/(name+'-fresh'))
         reports[name]=dict(focused_passed=sum(r['passed'] for r in rows),focused_cases=len(rows),paired_passed=sum(r['passed'] for r in controls),paired_cases=len(controls))
+        reports[name]['fresh']=fresh_result
         print(json.dumps(dict(mode=name,summary=reports[name])),flush=True)
     if before!=parameter_hashes(dict(executor.model.named_parameters())):
         raise ValueError('Frozen model parameters changed')
     report=dict(schema='dl-idempotent-resume-probe-v1',summaries=reports,source_model=executor.proof,
         all_parameters_unchanged=True,optimizer_steps=0,actual_external_requests=0,outputs_repaired=False,
         user_keyword_routing=False,function_forcing=False,do_not_train=True,overall_qualified=False,
-        production_media_receipt_guard_supported=False,production_adopted=False,owner_demo_changed=False,
+        production_media_tested=False,production_adopted=False,owner_demo_changed=False,
         code_sha256=sha256(Path(__file__)),worker_sha256=sha256(Path('evals/idempotent_reasoning_worker.py')))
     (a.out/'report.json').write_text(json.dumps(report,indent=2)+'\n')
 

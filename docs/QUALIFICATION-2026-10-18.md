@@ -1,5 +1,28 @@
 # Qualification record — 18 October 2026
 
+
+
+Plain words: Latest18:26UTC. Frozen idempotent tool experiment7529138 fixes the
+actual completed-task cancellation failure with an honest already-finished
+receipt and the same retained generator. Strict focused3/11 to10/11, paired44/54
+unchanged, all frozen passes retained. Unrelated work is preserved. One speaking
+cancellation still restarts owed speech; media validation remains outstanding.
+Capability profile7528694 removes5false sends and3invented private answers, but
+format retention and two circular private-access requests remain. It is not
+adopted. Existing-checkpoint profile trials7529214/15 are running. Neither these
+component gains nor the owner-accepted smooth demo qualify the native model or
+whole system. Native and overall qualification remain FAIL.
+
+Plain words: Latest 18:08 UTC: instruction probe 7528559 is complete and both
+changes are rejected. Conditional resume wording did not fix the actual finished-
+task failure; receipt wording fixed two of six value-only formats. All executed
+private fixture reads were already factually correct. The next independent
+capability-profile comparison is 7528694/source 5bd58b6, currently running.
+No new training or prompt change has been adopted. Public playback remains the
+owner-accepted frozen version. Full 1356 candidate remains rejected: false send
+claims reduce from five of six frozen cases to three of six, while three active
+cancellation passes are lost. Native and overall qualification remain FAIL.
+
 Plain words: No native duplex model is qualified. The improved hybrid is a separate
 experimental reference, with a completed first fresh conversation evaluation. Neither
 training mechanics nor clear speech establish reliable task completion. This record

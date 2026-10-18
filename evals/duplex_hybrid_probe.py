@@ -42,7 +42,7 @@ def counterfactual_records(scenario):
     raise ValueError('Unapproved bounded development case')
 
 
-def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",interrupt_policy="acoustic",controller=None,scope_read_tools=False,include_tool_context=False,worker_kind="records",live_input=None,output_observer=None,include_speech_context=False,semantic_pause=False,bound_resume_target=False,allow_cancel_resume=False,lexical_confirmed_pause=False,exact_reasoning_tools=False):
+def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",interrupt_policy="acoustic",controller=None,scope_read_tools=False,include_tool_context=False,worker_kind="records",live_input=None,output_observer=None,include_speech_context=False,semantic_pause=False,bound_resume_target=False,allow_cancel_resume=False,lexical_confirmed_pause=False,exact_reasoning_tools=False,idempotent_cancel_resume=False):
     import numpy as np
     import soundfile as sf
     from data.synthetic.filter import norm_words,wer
@@ -51,6 +51,8 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",inter
     from evals.duplex_pause_confirmation import PauseConfirmation
     pause_confirmation=PauseConfirmation()
     if allow_cancel_resume and not semantic_pause:raise ValueError('Cancel and resume requires semantic pause')
+    if idempotent_cancel_resume and not (allow_cancel_resume and semantic_pause and worker_kind=='reasoning-development'):
+        raise ValueError('Idempotent cancellation requires the explicit reasoning/resume protocol')
     if bound_resume_target and not semantic_pause:raise ValueError('Bound resume requires semantic pause')
     if semantic_pause and (worker_kind!='reasoning-development' or controller_protocol!='state-aware' or interrupt_policy!='acoustic-pause' or not include_speech_context):raise ValueError('Semantic pause requires generated history, retained audio and the explicit reasoning worker')
     if interrupt_policy not in ('acoustic','lexical','acoustic-pause'):raise ValueError('Unknown interruption policy')
@@ -76,6 +78,9 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",inter
     if worker_kind=='reasoning-development':
         from evals.duplex_reasoning_worker import ReasoningWorld,run_reasoning_worker,reasoning_receipts
         worker=run_reasoning_worker;world_type=ReasoningWorld;delivered_receipts=reasoning_receipts
+        if idempotent_cancel_resume:
+            from evals.idempotent_reasoning_worker import run_idempotent_reasoning_worker
+            worker=run_idempotent_reasoning_worker
         if exact_reasoning_tools:
             from functools import partial
             from evals.exact_reasoner import ask_exact_reasoner
@@ -217,14 +222,18 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",inter
                     require_retained(target,active,paused)
                     if result['route']=='resume':
                         if result.get('resume_target')!=target or result['content'] or result['consume_pending_speech_ids']:raise WorkerContractError('Resume cannot generate words or consume the retained speech obligation',dict(result=result))
-                        if result.get('resume_after_reasoning_cancellation'):
+                        if result.get('resume_after_idempotent_cancellation'):
+                            if not idempotent_cancel_resume:raise WorkerContractError('Idempotent cancellation unavailable',dict(result=result))
+                            from evals.idempotent_reasoning_worker import require_idempotent_delivery
+                            with world.lock:require_idempotent_delivery(result['receipts'],world.tasks)
+                        elif result.get('resume_after_reasoning_cancellation'):
                             if not allow_cancel_resume:raise WorkerContractError('Combined cancellation unavailable',dict(result=result))
                             from evals.duplex_resume import require_cancelled_delivery
                             with world.lock:require_cancelled_delivery(result['receipts'],world.tasks)
                         elif result['receipts']:raise WorkerContractError('Ordinary resume cannot claim execution',dict(result=result))
                         world.finish(meta['task_id'],meta['revision'])
                         (out/(meta['task_id']+'-backend.json')).write_text(json.dumps(dict(meta,result=result),indent=2)+'\n')
-                        log('semantic_resume_selected',task_id=meta['task_id'],resume_target=target,new_speech_generated=False,**({'actual_reasoning_cancellation_receipts':result['receipts']} if result.get('resume_after_reasoning_cancellation') else {}))
+                        log('semantic_resume_selected',task_id=meta['task_id'],resume_target=target,new_speech_generated=False,**({'actual_reasoning_cancellation_receipts':result['receipts']} if result.get('resume_after_reasoning_cancellation') or result.get('resume_after_idempotent_cancellation') else {}))
                         continue
                     interrupt('semantic_user_request')
                 if result['route']=='silence' and (result['content']!='' or not result['consume_pending_speech_ids']):
@@ -356,7 +365,7 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",inter
         foreground_barrier='actual-execution-aware',worker_kind=worker_kind,exact_reasoning_tools_enabled=exact_reasoning_tools,actual_tool_context_enabled=include_tool_context,actual_generated_speech_context_enabled=include_speech_context,generated_speech_context_sha256=sha256(out/'generated-speech-context.json') if include_speech_context else None,control_executions_sha256=sha256(out/'control-executions.json') if include_tool_context else None,
         read_tools_scoped_to_user_identified_available_projects=scope_read_tools,
         controller_provider=controller.provider_name if controller else 'openai',controller_model=controller.model_id if controller else 'gpt-6-luna',
-        lexical_interruption_is_not_a_backchannel_classifier=interrupt_policy=='lexical',semantic_pause_enabled=semantic_pause,lexical_confirmed_pause_enabled=lexical_confirmed_pause,bound_resume_target=bound_resume_target,cancel_and_resume_enabled=allow_cancel_resume,world_tasks=world.tasks,actual_tool_receipts=world.receipts,
+        lexical_interruption_is_not_a_backchannel_classifier=interrupt_policy=='lexical',semantic_pause_enabled=semantic_pause,lexical_confirmed_pause_enabled=lexical_confirmed_pause,bound_resume_target=bound_resume_target,cancel_and_resume_enabled=allow_cancel_resume,idempotent_cancel_resume_enabled=idempotent_cancel_resume,world_tasks=world.tasks,actual_tool_receipts=world.receipts,
         fully_played_responses=spoken,playout=playout,audio_sha256=sha256(out/'model.wav'),wall_s=now(),
         unended_text=listener.spm.decode(policy.tokens),native_model_qualified=False,hybrid_system_qualified=False,
         microphone_acceptance=False,acoustic_echo_cancellation=False,read_only_tools=True)

@@ -2,7 +2,7 @@
 
 The model selects actual task IDs. This never infers intent from user words,
 repairs generated output, or reports finished work as newly cancelled. The
-production media receipt guard does not yet support this protocol.
+    Production media must independently validate the returned receipt and cursor.
 """
 import copy
 import json
@@ -39,6 +39,41 @@ def cancel_or_report(world, task_ids, current_task, current_revision, target_rev
             remote_execution_aborted=False, new_speech_generated=False)
 
 
+def require_idempotent_delivery(receipts, tasks):
+    """Media boundary: reject a fabricated status, changed revision or abort claim."""
+    def reject():
+        raise WorkerContractError('Idempotent resume lacks actual result-status evidence', dict(receipts=receipts))
+    if not isinstance(receipts, list) or len(receipts) != 1:
+        reject()
+    receipt = receipts[0]; identities = receipt.get('task_ids'); changed = receipt.get('newly_cancelled_task_ids')
+    if (receipt.get('tool') != 'idempotent_cancel_reasoning_and_resume_speech'
+            or receipt.get('remote_execution_aborted') is not False or receipt.get('new_speech_generated') is not False
+            or not isinstance(identities, list) or not identities or any(not isinstance(t, str) for t in identities)
+            or len(set(identities)) != len(identities) or not isinstance(changed, list)
+            or any(not isinstance(t, str) for t in changed) or len(set(changed)) != len(changed)
+            or not set(changed) <= set(identities) or not isinstance(receipt.get('receipts'), list)
+            or len(receipt['receipts']) != len(identities)):
+        reject()
+    if changed:
+        from evals.duplex_resume import require_cancelled_delivery
+        actual = receipt.get('actual_cancellation_receipt')
+        if not isinstance(actual, dict) or actual.get('task_ids') != changed:
+            reject()
+        require_cancelled_delivery([actual], tasks)
+    elif receipt.get('actual_cancellation_receipt') is not None:
+        reject()
+    for identity, item in zip(identities, receipt['receipts']):
+        state = tasks.get(identity)
+        if (not state or state.get('operation') != 'delegate_reasoning' or not isinstance(item, dict)
+                or item.get('task_id') != identity or item.get('revision') != state['revision']
+                or item.get('closed') is not state['closed'] or item.get('delivery_cancelled') is not state['cancelled']
+                or item.get('remote_execution_aborted') is not False or item.get('state_changed') is not (identity in changed)):
+            reject()
+        expected = 'delivery_cancelled' if identity in changed else 'already_cancelled' if state['cancelled'] else 'already_finished' if state['closed'] else None
+        if expected is None or item.get('status') != expected or (identity in changed and not state['cancelled']):
+            reject()
+
+
 def run_idempotent_reasoning_worker(context, world, task_id, model, expected_revision, dispatch_protocol,
                                     pending_speech, response_executor, **options):
     if options.get('resumable_speech') is None or not options.get('allow_cancel_resume'):
@@ -69,6 +104,12 @@ def run_idempotent_reasoning_worker(context, world, task_id, model, expected_rev
         'Use the actual reasoning_result_history to identify the user-requested targets, never unrelated work. '
         'It never claims finished work was newly cancelled or remote computation was aborted. Retained audio resumes after the actual status/cancellation receipt.', parameters)
     payload['tools'] = [t for t in payload['tools'] if t['name'] != definition['name']] + [definition]
+    for definition_item in payload['tools']:
+        if definition_item['name'] == 'cancel_reasoning':
+            definition_item['description'] += (
+                ' This action speaks NEW content: in the paused-audio client it discards the retained generator and may restart the full owed explanation later. '
+                'For cancellation plus continuation of the UNCHANGED explanation, use cancel_reasoning_and_resume_speech to preserve the actual audio cursor. '
+                'Use this speaking cancellation action when the user instead wants a new spoken reply.')
     payload['local_worker_state']['reasoning_result_history'] = history
     before = time.monotonic(); response = response_executor(payload)
     calls = [c for c in response.get('output', []) if c.get('type') == 'function_call']
@@ -99,4 +140,4 @@ def run_idempotent_reasoning_worker(context, world, task_id, model, expected_rev
         speech_model_routing=False, final_response_route='resume', dispatch_protocol=dispatch_protocol,
         response_provider=response_executor.provider_name, actual_reasoning_backend=None,
         agent_actions_executed=False, cancellation_supported='idempotent-delivery-only',
-        remote_execution_abort_supported=False, production_media_receipt_guard_supported=False)
+        remote_execution_abort_supported=False, requires_idempotent_media_receipt_guard=True)

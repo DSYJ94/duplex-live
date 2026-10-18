@@ -1,7 +1,7 @@
 """Real state mutation/receipts; model competence requires the GPU comparison."""
 import copy
 import unittest
-from evals.idempotent_reasoning_worker import cancel_or_report, run_idempotent_reasoning_worker
+from evals.idempotent_reasoning_worker import cancel_or_report, run_idempotent_reasoning_worker, require_idempotent_delivery
 from evals.duplex_reasoning_worker import ReasoningWorld, run_reasoning_worker
 from evals.recovery_worker import WorkerContractError
 from evals.instruction_contract_probe import resume_fixture
@@ -28,6 +28,8 @@ class IdempotentCancellationTest(unittest.TestCase):
         self.assertEqual(again['newly_cancelled_task_ids'], [])
         self.assertFalse(any(r['state_changed'] for r in again['receipts']))
         self.assertEqual(world.tasks['unrelated'], untouched)
+        require_idempotent_delivery([receipt], world.tasks)
+        require_idempotent_delivery([again], world.tasks)
 
     def test_unknown_reused_duplicate_or_current_ids_never_partially_mutate(self):
         for identities, revisions in [(['active','unknown'], {'active':1}), (['active','active'], {'active':1}),
@@ -53,7 +55,21 @@ class IdempotentCancellationTest(unittest.TestCase):
         self.assertEqual(result['receipts'][0]['receipts'][0]['status'], 'already_finished')
         self.assertFalse(world.tasks['red-count']['cancelled'])
         self.assertFalse(world.tasks['blue-count']['cancelled'])
-        self.assertFalse(result['production_media_receipt_guard_supported'])
+        self.assertTrue(result['requires_idempotent_media_receipt_guard'])
+        require_idempotent_delivery(result['receipts'], world.tasks)
+
+    def test_media_rejects_fabricated_status_revision_and_remote_abort_claim(self):
+        world = self.world()
+        good = cancel_or_report(world, ['active','finished'], 'latest', 1, {t:1 for t in world.tasks})
+        for edit in ('status','revision','abort','changed','live-noop'):
+            bad = copy.deepcopy(good)
+            if edit=='status':bad['receipts'][1]['status']='delivery_cancelled'
+            if edit=='revision':bad['receipts'][0]['revision']=8
+            if edit=='abort':bad['remote_execution_aborted']=True
+            if edit=='changed':bad['receipts'][1]['state_changed']=True
+            if edit=='live-noop':
+                bad['task_ids'][1]='unrelated';bad['receipts'][1].update(task_id='unrelated',closed=False)
+            with self.assertRaises(WorkerContractError):require_idempotent_delivery([bad],world.tasks)
 
     def test_nonresume_native_request_has_exact_original_behavior(self):
         world = self.world(); capture = Capture([dict(name='answer', arguments=dict(content='Five.'))])

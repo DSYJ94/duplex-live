@@ -5843,3 +5843,56 @@ with the original user's requested answer form. Test conditional resume semantic
 with matching-active and unrelated-task contrasts, and receipt-format semantics
 independently. No keyword routing, forced function names, post-output rewriting,
 expert gating or new optimizer is implemented/adopted for these hypotheses.
+
+
+## 18 October: independent instruction contracts and capability profile
+
+Plain words: 7528559/source41bb0e6 COMPLETED in 3:25, frozen 9B only. Original,
+conditional-resume and receipt-format strict focused scores: 6/20, 6/20, 8/20.
+Neither arm passes its focused gate, so neither proceeds to broad qualification.
+Actual historical closed failure remains; receipt instruction fixes only two of
+six value-only forms. All 27 fixture reads return correct values. All 60 rowfiles,
+original actual request token lengths/raw outputs, unchanged generations outside
+each wrapper scope, exact instruction diffs and frozen parameters verified.
+No action forcing or generated-text repair; no owner-demo change.
+
+Plain words: The strict resume gate also requires no cancellation confirmation
+words. A real cancellation with pending speech preserved can permit automatic
+continuation and is not itself an unsafe action; do not conflate that strict
+optimization with the observed invalid functions or collateral cancellation.
+
+Plain words: 7528694/source5bd58b6 tests a trusted application capability profile,
+separately from current exposed functions. A supported record reader can be gated
+on identifying its project; the reasoning deployment has no reader or sender.
+Profile selection uses actual worker state/registry, never user wording. All
+current native actions and argument guards remain intact. Frozen before/after
+42+15 fixtures and 126 older after-controls; semantic review still required.
+Six actual worker/compiler guard tests passed locally before submission. RUNNING.
+
+
+## 18 October: capability profile result and idempotent delivery cancellation
+
+Plain words:7528694/source5bd58b6 COMPLETE. Independent240-row verification: false
+send claims5/6 to0/6; three invented private answers removed; six supported-reader
+clarifications correct. Two unsupported-private requests remain circular. Correct
+private values in all6reads, but only-value formatting fails. One prior ordinary
+format pass is lost (correct arithmetic with extra words); old72unchanged. HOLD
+promotion. Follow-up existing-checkpoint comparisons7529214/15/sourcea0a44fe are
+running; no optimizer or owner-demo change.
+
+Plain words:7529138/source212dddc COMPLETE. Actual failed closed-task request now
+selects a real idempotent cancellation/status operation and resumes the retained
+generator. Completed work is reported already_finished, not newly cancelled.
+Actual active cancellation is retained; unrelated active tasks are preserved.
+Strict focused3/11 to10/11 and paired44/54 unchanged, no lost baseline passes.
+One active case still speaks a confirmation and therefore restarts the queued
+explanation in the current media path. All130worker rows and10actual status
+receipts verified; source weights unchanged, zero optimizer/external requests.
+This is fixture/component evidence, not production or native qualification.
+
+Plain words: Next isolated source adds a media receipt guard and explicit opt-in
+server/Slurm path, plus truthful descriptions of the speaking cancellation's
+retained-generator side effect. Fifteen new control fixtures declared before
+outputs test duplicate/already-cancelled/closed states, new answers, stop-only
+and ambiguous targets. Their native gold actions pass actual-worker replay;
+eleven cancellation/media guard tests pass. No new model result claimed yet.
