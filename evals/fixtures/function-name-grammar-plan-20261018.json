@@ -1,0 +1,14 @@
+{
+  "schema": "dl-function-opener-grammar-plan-v1",
+  "declared_before_gpu_execution": true,
+  "do_not_train": true,
+  "training_approved": false,
+  "owner_demo_changed": false,
+  "models": [
+    "frozen9B",
+    "fixed972+cancel-only"
+  ],
+  "change": "Logits mask only until an advertised XML function opener completes. All advertised functions compete under the model logits. Arguments and text remain original, strictly validated; no output rewriting, user-keyword routing or fallback.",
+  "focused_gates": "For eight historically valid native calls per model, input length/raw output/native action/generated token count must remain EXACT. Rebuild the actual failed closed-task request and evaluate the model-selected feasible action. Review all15 declared new capability controls; no private-read or native qualification claim. All weights unchanged. If this focused gate passes, require broader172 retention before voice integration.",
+  "speech_repair": "First render7526478 failed before any speech because inference tensors lack version counters. Preserve failure and replace instrumentation with before/after full LM+Mimi tensor hashes, same eight declared inputs/RNG states. No model/input reroll."
+}

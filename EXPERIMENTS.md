@@ -5668,3 +5668,29 @@ fixed RNG states reset per pair, eight renders total. Same warmup and voice as t
 working service; no controller or revised model words. Local causal STT and separate
 Whisper audit read expected values only after transcription. No renderer adoption
 or native qualification from this component comparison. Owner reference unchanged.
+
+## 18 October — inventory hypothesis rejected; advertised-name decoder proof
+
+Plain words:82754bb focused7526476/77 COMPLETE,36 original/modified native calls
+retained. Every original actual input length reconstructs. Both models reproduce
+the closed-task unavailable-function failure, and the inventory prompt fails to
+repair it.972 also emits an empty answer in the private split case; another still
+asks which code to retrieve. REJECT inventory wrapper; no broader test or voice
+integration. Frozen replies also suggest connecting records that this profile does
+not implement. No capability/overall qualification from these outputs.
+
+Plain words: New predeclared diagnostic masks only the XML function-name opener
+against actual advertised tools at decoding time. Model logits choose among all
+feasible names; after the opener all arguments/words are unconstrained and existing
+worker guards stay strict. No user-keyword routing or post-generation repair. A
+sorted token-piece index preserves merged tokens crossing the opener/body boundary.
+All16 historically valid proposals must keep exact raw words/actions/token counts;
+actual closed failure is rebuilt, and15 new declared synthetic capability controls
+are checked. No private semantic repair is assumed from syntactic validity. Four
+pure grammar edge-case tests plus the fresh-state worker fixture check pass.
+
+Plain words: Short-number render7526478 failed before producing speech: frozen
+weights created under inference mode do not expose version counters. Audit7526479
+correctly never ran. Fix instrumentation with exact before/after fullLM+Mimi tensor
+hashes; keep all eight declared digit/word inputs and RNG settings unchanged. The
+failed folder remains saved; no owner session or approved input gate is changed.

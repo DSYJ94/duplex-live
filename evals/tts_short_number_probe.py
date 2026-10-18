@@ -18,7 +18,9 @@ def render_speech(a,listener):
     torch.manual_seed(42424242);torch.cuda.manual_seed_all(42424242)
     speaker=StreamingSpeaker(a.assets,a.mimi_load_approval);speaker.open();warmup=speaker.warmup()
     cpu=torch.get_rng_state().clone();cuda=torch.cuda.get_rng_state_all();rows=[]
-    versions={(role,n):p._version for role,model in [('lm',speaker.tts.lm),('mimi',speaker.tts.mimi)] for n,p in model.named_parameters()}
+    from evals.moshi_training_smoke import tensor_hashes
+    def parameter_hashes():return {role:tensor_hashes(model.named_parameters()) for role,model in [('lm',speaker.tts.lm),('mimi',speaker.tts.mimi)]}
+    before=parameter_hashes()
     try:
         for seed_offset in (0,1):
             for digit,word in TEXTS:
@@ -31,7 +33,7 @@ def render_speech(a,listener):
                     pcm=np.concatenate(packets);path=a.out/(identity+'.wav');sf.write(path,pcm,24000,subtype='FLOAT')
                     rows.append(dict(id=identity,input_text=text,expected_number=digit,mode=mode,seed_offset=seed_offset,wav=path.name,wav_sha256=sha256(path),pcm_sha256=hashlib.sha256(pcm.tobytes()).hexdigest(),samples=len(pcm),all_steps=steps,seconds=time.monotonic()-start,synthetic_model_speech=True))
     finally:speaker.close()
-    assert versions=={(role,n):p._version for role,model in [('lm',speaker.tts.lm),('mimi',speaker.tts.mimi)] for n,p in model.named_parameters()}
+    assert before==parameter_hashes()
     # Same pinned recognizer used as the live input listener; diagnostic only.
     from evals.duplex_local_secondary_asr import transcribe
     listener.reset()
@@ -41,7 +43,7 @@ def render_speech(a,listener):
         text,events=transcribe(listener,wave)
         (a.out/(row['id']+'-asr-events.json')).write_text(json.dumps(events,indent=2)+'\n')
         row['local_transcript']=text;row['reference_supplied_to_recognizer']=False
-    report=dict(schema='dl-short-number-speech-probe-v1',results=rows,rows=8,component_execution_completed=True,speaker_evidence=speaker.evidence,listener_loads=listener.loads,warmup=warmup,all_speaker_parameter_versions_unchanged=True,rng_reset_before_each_render=True,actual_external_requests=0,optimizer_steps=0,owner_audio_used=False,owner_demo_changed=False,training_approved=False,do_not_train=True,independent_whisper_required=True,code_sha256=sha256(Path(__file__)))
+    report=dict(schema='dl-short-number-speech-probe-v1',results=rows,rows=8,component_execution_completed=True,speaker_evidence=speaker.evidence,listener_loads=listener.loads,warmup=warmup,all_speaker_parameter_hashes_unchanged=True,rng_reset_before_each_render=True,actual_external_requests=0,optimizer_steps=0,owner_audio_used=False,owner_demo_changed=False,training_approved=False,do_not_train=True,independent_whisper_required=True,code_sha256=sha256(Path(__file__)))
     (a.out/'report.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(dict(rows=8,transcripts=[(r['id'],r['local_transcript']) for r in rows])))
 
 

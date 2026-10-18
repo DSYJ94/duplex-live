@@ -67,7 +67,7 @@ def parse_action(text):
 
 class Generator:
     def __init__(self,model,tokenizer):self.model=model;self.tokenizer=tokenizer
-    def request(self,messages,tools,assistant_prefill=""):
+    def request(self,messages,tools,assistant_prefill="",logits_processor=None):
         import torch
         from transformers.generation.streamers import BaseStreamer
         clock=[];start=time.perf_counter()
@@ -81,7 +81,8 @@ class Generator:
         text+=assistant_prefill
         inputs=self.tokenizer(text,return_tensors='pt').to(self.model.device)
         if inputs['input_ids'].shape[1]>4096:raise RuntimeError('Bounded typed proof exceeded4096 input tokens')
-        output=self.model.generate(**inputs,max_new_tokens=192,do_sample=False,streamer=Clock(),
+        optional=dict(logits_processor=logits_processor) if logits_processor is not None else {}
+        output=self.model.generate(**inputs,**optional,max_new_tokens=192,do_sample=False,streamer=Clock(),
             pad_token_id=self.tokenizer.pad_token_id,eos_token_id=self.tokenizer.eos_token_id,use_cache=True)
         generated=output[0,inputs['input_ids'].shape[1]:];torch.cuda.synchronize(self.model.device);wall=time.perf_counter()-start
         cleaned=self.tokenizer.decode(generated,skip_special_tokens=True).strip()
