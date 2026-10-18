@@ -5545,3 +5545,22 @@ hard questions test selection only; no Astra request or hidden numerical oracle 
 used. This does not resolve Astra's prior133/134 error. All weights remain frozen,
 all outputs/failures are retained; no output filling, optimizer, owner switch or
 checkpoint selection. Full before/after retention and semantic review required.
+
+## 18 October — bounded terminal counting tool, not deployed
+
+Plain words: Add an experimental Astra profile with a terminal answer_subset_count
+action. The model selects its inputs from the unchanged original question; a bounded
+CPU handler verifies literal numerical quotes and computes the actual receipt value.
+Application speech renders that receipt rather than repairing a guessed answer.
+One HTTP request/delegation and4096-token bound remain. Other answers are explicitly
+unverified model text; no native speech/private capability is claimed or enabled.
+
+Plain words: Seven local independent-enumeration/boundary/format checks pass. Tests
+first exposed that WER normalization erases signs/decimals and rejects spoken-list
+“and”; numeric quoting now rejects signs, ranges, fractions, partial digits and
+unsupported punctuation while handling conventional number words. Literal grounding
+does not prove semantic completeness; fixed evaluation checks actual selected inputs.
+A predeclared nine-case, one-pass synthetic API probe includes the134 counterexample,
+new values, changed target, empty/no-solution counts and unsupported/general questions.
+No evaluation oracle is transmitted and no owner data is used. Official API boundary
+and limitations are recorded in docs/EXACT-REASONING-EXPERIMENT-2026-10-18.md.

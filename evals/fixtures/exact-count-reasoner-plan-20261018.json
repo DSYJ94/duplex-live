@@ -1,0 +1,177 @@
+{
+  "schema": "dl-terminal-exact-count-plan-v1",
+  "declared_before_api_execution": true,
+  "model": "gpt-6-astra",
+  "owner_demo_changed": false,
+  "training_approved": false,
+  "do_not_train": true,
+  "actual_http_request_cap": 9,
+  "per_question_http_requests": 1,
+  "max_output_tokens_per_question": 4096,
+  "selection": "One fixed pass, no retries or rerolls; every error retained",
+  "mechanism": "Model selects terminal answer_subset_count action; quotes bind supplied positive integers to original question. Application computes and voices the actual receipt value. Plain answers remain unverified model text.",
+  "limits": "Only distinct positive-integer subset counting. Source quotes prove literal grounding, not universal semantic input completeness. No arbitrary code or private tools.",
+  "oracle": "Independent exhaustive combinations only after each actual result; expected answers never supplied to model",
+  "cases": [
+    {
+      "id": "reused-count-error",
+      "question": "For the eighteen distinct numbers [19, 24, 27, 32, 35, 40, 43, 48, 51, 56, 59, 64, 67, 72, 75, 80, 83, 88], how many subsets sum to 251? Each number is usable at most once. Give only the count.",
+      "numbers": [
+        19,
+        24,
+        27,
+        32,
+        35,
+        40,
+        43,
+        48,
+        51,
+        56,
+        59,
+        64,
+        67,
+        72,
+        75,
+        80,
+        83,
+        88
+      ],
+      "target": 251,
+      "tool_expected": true,
+      "development_reuse": true
+    },
+    {
+      "id": "reused-spoken-count",
+      "question": "How many distinct subsets of two, six, seven, nine, 14, 18, 22, and 27 sum to 31? Use each listed number at most once.",
+      "numbers": [
+        2,
+        6,
+        7,
+        9,
+        14,
+        18,
+        22,
+        27
+      ],
+      "target": 31,
+      "tool_expected": true,
+      "development_reuse": true
+    },
+    {
+      "id": "new-83",
+      "question": "For the distinct positive integers [3, 8, 12, 15, 19, 24, 27, 31, 36, 39, 44, 48, 52, 57], how many subsets sum to 83? Use each integer at most once, and include the empty subset if it meets the target. Give only the count.",
+      "numbers": [
+        3,
+        8,
+        12,
+        15,
+        19,
+        24,
+        27,
+        31,
+        36,
+        39,
+        44,
+        48,
+        52,
+        57
+      ],
+      "target": 83,
+      "tool_expected": true,
+      "development_reuse": false
+    },
+    {
+      "id": "changed-target-84",
+      "question": "For the distinct positive integers [3, 8, 12, 15, 19, 24, 27, 31, 36, 39, 44, 48, 52, 57], how many subsets sum to 84? Use each integer at most once, and include the empty subset if it meets the target. Give only the count.",
+      "numbers": [
+        3,
+        8,
+        12,
+        15,
+        19,
+        24,
+        27,
+        31,
+        36,
+        39,
+        44,
+        48,
+        52,
+        57
+      ],
+      "target": 84,
+      "tool_expected": true,
+      "development_reuse": false
+    },
+    {
+      "id": "new-eighteen",
+      "question": "For the distinct positive integers [5, 9, 14, 18, 23, 27, 32, 36, 41, 45, 50, 54, 59, 63, 68, 72, 77, 81], how many subsets sum to 191? Use each integer at most once, and include the empty subset if it meets the target. Give only the count.",
+      "numbers": [
+        5,
+        9,
+        14,
+        18,
+        23,
+        27,
+        32,
+        36,
+        41,
+        45,
+        50,
+        54,
+        59,
+        63,
+        68,
+        72,
+        77,
+        81
+      ],
+      "target": 191,
+      "tool_expected": true,
+      "development_reuse": false
+    },
+    {
+      "id": "empty-subset",
+      "question": "For the distinct positive integers [7, 12, 19], how many subsets sum to 0? Use each integer at most once, and include the empty subset if it meets the target. Give only the count.",
+      "numbers": [
+        7,
+        12,
+        19
+      ],
+      "target": 0,
+      "tool_expected": true,
+      "development_reuse": false
+    },
+    {
+      "id": "no-solutions",
+      "question": "For the distinct positive integers [6, 10, 14], how many subsets sum to 7? Use each integer at most once, and include the empty subset if it meets the target. Give only the count.",
+      "numbers": [
+        6,
+        10,
+        14
+      ],
+      "target": 7,
+      "tool_expected": true,
+      "development_reuse": false
+    },
+    {
+      "id": "negative-outside-tool-scope",
+      "question": "For the distinct integers [-3, 5, 8], how many subsets sum to 2? Use each integer at most once. Give only the count.",
+      "numbers": [
+        -3,
+        5,
+        8
+      ],
+      "target": 2,
+      "tool_expected": false,
+      "development_reuse": false
+    },
+    {
+      "id": "ordinary-no-count",
+      "question": "Why does ice float on liquid water? Explain briefly.",
+      "tool_expected": false,
+      "semantic_review_required": true,
+      "development_reuse": false
+    }
+  ]
+}
