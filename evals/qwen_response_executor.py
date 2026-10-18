@@ -142,7 +142,7 @@ class QwenResponseExecutor:
             schema=payload['text']['format']['schema']
             definitions=[dict(type='function',name='respond_to_user',
                 description='Return the final user-facing response to the actual tool receipt. This is output formatting only, without external side effects.',parameters=schema)]
-            messages.append(dict(role='user',content='Report the actual tool receipt using the respond_to_user function. Return exactly one function call, never plain prose. Include every required field and no fields outside the selected function schema. Do not execute another external operation.'))
+            messages.append(dict(role='user',content='Report the actual tool receipt using exactly one provided reply-format function. Return exactly one function call, never plain prose. Include every required field and no fields outside the selected function schema. Do not execute another external operation.'))
         else:
             if payload.get('tool_choice')!='required':raise RuntimeError('Local executor requires the explicit model-selected action protocol')
             definitions=sorted(payload['tools'],key=lambda f:f['name']!='respond_to_user')
