@@ -4662,3 +4662,24 @@ by Torch; no system driver or shared environment changed. Resident RPC now
 accepts opt-in verified kernel assets and the spoken-output instruction, checks
 both in its source/asset handshake, and leaves defaults unchanged. Full audio
 acceptance remains open; no new optimizer steps or adopted native weights.
+
+Plain words: resident7514733 passes10/10 typed actual worker contracts with
+spoken-output instruction and verified FLA kernels; startup33.1s, parent speech
+Transformers4.55.3 and child5.5.3 checked. Actual audio three-case7514741,
+second-batch7514743 and third-batch7514745 launched from immutablee768b01;
+independent audits7514742/44/46 depend on their actual completion. Capability
+scope is explicitly enabled and disclosed as an application constraint.
+
+Plain words: a separate typed general-reasoning boundary pilot is prepared.
+Frozen local9B chooses answer or actual stronger-model delegation. Four harder
+integer problems have exact enumerated CPU oracles withheld from all prompts;
+packing/counting oracles independently checked by dynamic programming. Direct
+local counterfactuals are recorded. Delegation executes at most four bounded
+GPT-6 Astra Responses calls, with no backend substitution or fabricated answer;
+another local question runs while each request is outstanding. Actual request
+intervals distinguish real overlap from executor queueing. No speech, cancellation,
+agent actions or training is claimed. This routing policy is explicit in the
+prompt, and the seven problems are development diagnostics, not qualification.
+Model and API checked in official documentation:
+https://developers.openai.com/api/docs/models/gpt-6-astra and
+https://developers.openai.com/api/docs/guides/reasoning .

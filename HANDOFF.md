@@ -1,5 +1,37 @@
 # HANDOFF — active overnight recovery (updated 18 October)
 
+Plain words: CURRENT18Oct03:44UTC — continue autonomously overnight, no optional
+questions before morning. All native models and the full hybrid remain
+UNQUALIFIED. New local9B explicit speech actions pass typed10/10 job7513071;
+separate resident process3324 also10/10. Initial actual audio3381 wrongly
+repeats a lookup because controller history omitted the real tool execution.
+Actual receipt projection fixes that causal defect (matched typed ablation3642,
+then actual TRAIN3703 and three-case3806). Broad reused development3808
+completes6/6;3810 completes6/7, unknown-record023guard rejection persists.
+Actual receipts verify cancellation/owed mirror completion, shorter-answer
+replacement and selective East-only cancellation. Backchannel017 still fails
+by interrupting/restarting. Written arithmetic and internal withheld metadata
+produce unsuitable spoken output. New sourcee768b01 opt-in spoken-output
+instruction and isolated resident FLA kernels are under component test7514733.
+No training/optimizer steps or native weight adoption occurred.
+
+Plain words: SPEED — standalone optional FLA7514182 matches10/10 typed behavior,
+median stage2.100s versus torch7513739 2.688s. Process-local CUDA discovery uses
+only the already-loaded hash-verified driver; no shared driver/env changes.
+This is not full conversation latency. Resident integration must pass before
+actual audio trials. Opt-in read capability scoping solves reused023 in external
+7513098/audit3099 (honest unavailable answer, WER0), an application constraint.
+
+Plain words: BACKUP/LISTEN —48 causal captures reconstruct exactly and81 played
+clips hash-check locally. All complete clips have valid ASR bounds; one old tiny
+interrupted fragment retains invalid bounds and is never interpreted. Public
+speech assets6.43GB are complete. New19-conversation listening page:
+http://localhost:8766/audio/voice-diagnostics/overnight-results.html includes
+local9B successes AND failures. Not a microphone trial. Kyutai published voice
+has not received owner approval. General hard-reasoning/agent delegation remains
+unintegrated; episode-local private reads are not that capability.
+
+
 Plain words:CURRENT 18Oct02:39UTC — continue autonomously overnight; owner away, no optional questions before morning. No full native/hybrid qualification. Frozen external source740c9ac now measured on13 newly approved conversations:2353 completes6/6 first batch (text/tool behavior correct);2569 completes6/7 second batch,023 unavailable-record call blocked,017 acknowledgment still interrupts/restarts. Actual cancellation/replacement/speech-ID receipts inspected:011 cancels lookup and fulfils owed mirror answer;012 atomically replaces East with West;015 retires old long answer;020 cancels ONLY East and preserves West;021 withdraws old explanation. Some private/quoted speech remains uncertain, not accepted. Research task review: runs/recovery-continuation-20261016/overnight-external-task-review.json. Private record lookups are NOT general hard-reasoning/agent delegation; that integration remains open.
 
 Plain words:LISTENING available for morning — http://localhost:8766/audio/voice-diagnostics/overnight-results.html .14 synchronized conversations (external new scenes plus failed local009/015 comparisons), source PCM unchanged, all14 GET/WAV/hash checked.31 actual causal captures reconstructed exactly and55 audit clips hash-verified; complete-clip timestamp bounds valid. One tiny interrupted011 fragment2354 has INVALID ASR timestamps and 'I do not know' hallucination-like transcript; do not treat it as spoken content or score it. Raw evidence retained. New013/019 speech still needs listening review. No voice approval, physical microphone, room AEC or browser round-trip acceptance.

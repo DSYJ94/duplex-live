@@ -1,3 +1,11 @@
+> **Current status (18 October):** No full native or hybrid model qualifies yet.
+> The active recovery work tests streaming Kyutai ASR/TTS with a separate frozen
+> Qwen3.5-9B controller. Tool and cancellation behavior have improved; backchannels,
+> latency, speech quality and general delegation still need work. This is a modular
+> hybrid, not a successfully trained Qwen-Omni duplex model. See [HANDOFF.md](HANDOFF.md)
+> and [EXPERIMENTS.md](EXPERIMENTS.md) for actual jobs and failures. The original
+> proposal below is historical, not a statement of delivered capability.
+
 # Duplex Live
 
 A **mini open-source program** to build a full-duplex, time-aware interaction model — the model class of OpenAI's GPT-Live and Thinking Machines Lab's interaction models — at research scale on **Isambard-AI** (GH200 Grace Hopper, aarch64), not commercial-lab scale.
