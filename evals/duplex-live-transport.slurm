@@ -41,6 +41,7 @@ apptainer exec --nv --bind /projects,/lus,/home \
  if [ "${DUPLEX_CLIENT_PAUSE:-0}" = 1 ]; then EXTRA+=(--include-speech-context --client-pause-protocol); fi
  if [ "${DUPLEX_SEMANTIC_PAUSE:-0}" = 1 ]; then EXTRA+=(--semantic-pause); fi
  if [ "${DUPLEX_BOUND_RESUME:-0}" = 1 ]; then EXTRA+=(--bound-resume-target); fi
+ if [ "${DUPLEX_CANCEL_RESUME:-0}" = 1 ]; then EXTRA+=(--allow-cancel-resume); fi
  if [ -n "${DUPLEX_FUNCTION_SELECTOR_JOB:-}" ]; then
   [[ "$DUPLEX_FUNCTION_SELECTOR_JOB" =~ ^[0-9]+$ ]]
   EXTRA+=(--development-function-selector "$DL/runs/controller-head-train-$DUPLEX_FUNCTION_SELECTOR_JOB")

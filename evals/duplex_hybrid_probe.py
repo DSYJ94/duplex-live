@@ -42,11 +42,12 @@ def counterfactual_records(scenario):
     raise ValueError('Unapproved bounded development case')
 
 
-def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",interrupt_policy="acoustic",controller=None,scope_read_tools=False,include_tool_context=False,worker_kind="records",live_input=None,output_observer=None,include_speech_context=False,semantic_pause=False,bound_resume_target=False):
+def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",interrupt_policy="acoustic",controller=None,scope_read_tools=False,include_tool_context=False,worker_kind="records",live_input=None,output_observer=None,include_speech_context=False,semantic_pause=False,bound_resume_target=False,allow_cancel_resume=False):
     import numpy as np
     import soundfile as sf
     from data.synthetic.filter import norm_words,wer
     live=live_input is not None
+    if allow_cancel_resume and not semantic_pause:raise ValueError('Cancel and resume requires semantic pause')
     if bound_resume_target and not semantic_pause:raise ValueError('Bound resume requires semantic pause')
     if semantic_pause and (worker_kind!='reasoning-development' or controller_protocol!='state-aware' or interrupt_policy!='acoustic-pause' or not include_speech_context):raise ValueError('Semantic pause requires generated history, retained audio and the explicit reasoning worker')
     if interrupt_policy not in ('acoustic','lexical','acoustic-pause'):raise ValueError('Unknown interruption policy')
@@ -136,7 +137,7 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",inter
         from evals.duplex_speech_obligations import snapshot
         pending=snapshot(queue,active) if controller_protocol=='state-aware' else []
         future=executor.submit(worker,[e.copy() for e in context],world,task,expected_revision=revision,dispatch_protocol=controller_protocol,pending_speech=pending,
-            model=controller.model_id if controller else 'gpt-6-luna',response_executor=controller,scope_read_tools=scope_read_tools,execution_observer=control_queue.put if include_tool_context else None,**({'resumable_speech':target,'bound_resume_target':True} if target is not None and bound_resume_target else {'resumable_speech':target} if target is not None else {}))
+            model=controller.model_id if controller else 'gpt-6-luna',response_executor=controller,scope_read_tools=scope_read_tools,execution_observer=control_queue.put if include_tool_context else None,**(dict(resumable_speech=target,bound_resume_target=bound_resume_target,allow_cancel_resume=allow_cancel_resume) if target is not None and (bound_resume_target or allow_cancel_resume) else {'resumable_speech':target} if target is not None else {}))
         futures[future]=dict(task_id=task,revision=revision,turn=utterance_count,submitted_s=submitted,request_text=text,pending_speech=pending,**({'resume_target':target} if target is not None else {}))
         log('controller_dispatched',task_id=task,text=text,reference_text_supplied=False)
     try:
@@ -201,10 +202,15 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",inter
                     if not semantic_pause or target is None or meta['turn']!=utterance_count:raise WorkerContractError('Stale or unavailable semantic pause decision',dict(result=result))
                     require_retained(target,active,paused)
                     if result['route']=='resume':
-                        if result.get('resume_target')!=target or result['content'] or result['consume_pending_speech_ids'] or result['receipts']:raise WorkerContractError('Resume cannot generate words, consume speech or claim execution',dict(result=result))
+                        if result.get('resume_target')!=target or result['content'] or result['consume_pending_speech_ids']:raise WorkerContractError('Resume cannot generate words or consume the retained speech obligation',dict(result=result))
+                        if result.get('resume_after_reasoning_cancellation'):
+                            if not allow_cancel_resume:raise WorkerContractError('Combined cancellation unavailable',dict(result=result))
+                            from evals.duplex_resume import require_cancelled_delivery
+                            with world.lock:require_cancelled_delivery(result['receipts'],world.tasks)
+                        elif result['receipts']:raise WorkerContractError('Ordinary resume cannot claim execution',dict(result=result))
                         world.finish(meta['task_id'],meta['revision'])
                         (out/(meta['task_id']+'-backend.json')).write_text(json.dumps(dict(meta,result=result),indent=2)+'\n')
-                        log('semantic_resume_selected',task_id=meta['task_id'],resume_target=target,new_speech_generated=False)
+                        log('semantic_resume_selected',task_id=meta['task_id'],resume_target=target,new_speech_generated=False,**({'actual_reasoning_cancellation_receipts':result['receipts']} if result.get('resume_after_reasoning_cancellation') else {}))
                         continue
                     interrupt('semantic_user_request')
                 if result['route']=='silence' and (result['content']!='' or not result['consume_pending_speech_ids']):
@@ -333,7 +339,7 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",inter
         foreground_barrier='actual-execution-aware',worker_kind=worker_kind,actual_tool_context_enabled=include_tool_context,actual_generated_speech_context_enabled=include_speech_context,generated_speech_context_sha256=sha256(out/'generated-speech-context.json') if include_speech_context else None,control_executions_sha256=sha256(out/'control-executions.json') if include_tool_context else None,
         read_tools_scoped_to_user_identified_available_projects=scope_read_tools,
         controller_provider=controller.provider_name if controller else 'openai',controller_model=controller.model_id if controller else 'gpt-6-luna',
-        lexical_interruption_is_not_a_backchannel_classifier=interrupt_policy=='lexical',semantic_pause_enabled=semantic_pause,bound_resume_target=bound_resume_target,world_tasks=world.tasks,actual_tool_receipts=world.receipts,
+        lexical_interruption_is_not_a_backchannel_classifier=interrupt_policy=='lexical',semantic_pause_enabled=semantic_pause,bound_resume_target=bound_resume_target,cancel_and_resume_enabled=allow_cancel_resume,world_tasks=world.tasks,actual_tool_receipts=world.receipts,
         fully_played_responses=spoken,playout=playout,audio_sha256=sha256(out/'model.wav'),wall_s=now(),
         unended_text=listener.spm.decode(policy.tokens),native_model_qualified=False,hybrid_system_qualified=False,
         microphone_acceptance=False,acoustic_echo_cancellation=False,read_only_tools=True)

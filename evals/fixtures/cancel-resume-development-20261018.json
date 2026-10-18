@@ -1,0 +1,14 @@
+{
+ "schema":"dl-cancel-and-resume-development-plan-v1",
+ "declared_before_generation":true,
+ "new_holdout":false,
+ "training_approved":false,
+ "case":"046",
+ "input_provenance":"Exact quality-approved counting clip from7515617/026 and water-cycle question from7517443/031; only the third cancellation utterance is newly synthesized, once.",
+ "mechanism":"Model chooses cancel_reasoning_and_resume_speech; actual background delivery cancellation receipt is verified before the retained ordinary generator resumes without new speech.",
+ "require":["real stronger-model request","ordinary audio started before cancellation utterance","reasoning result not already delivered","actual delivery cancellation receipt","no claim of aborting remote computation","same ordinary speech generator resumes","no new cancellation announcement","no duplicate source samples","independent played-audio audit"],
+ "ineligible_timing_not_a_pass":true,
+ "reject_bad_user_audio_without_reroll":true,
+ "speech_and_controller_weights_changed":false,
+ "compare_frozen_prior_protocol_on_same_input_if_quality_passes":true
+}

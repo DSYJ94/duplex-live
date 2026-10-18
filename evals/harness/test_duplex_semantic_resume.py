@@ -53,7 +53,31 @@ class SemanticResume(unittest.TestCase):
     with self.assertRaises(WorkerContractError):run()
    self.assertEqual(world.receipts,[])
 
- def media(self,resume):
+ def test_cancel_and_resume_executes_only_selected_delivery_after_target_validation(self):
+  from evals.duplex_resume import require_cancelled_delivery
+  pending=[dict(id='explanation',text='Actual generated explanation',request_text='Explain')];target=dict(speech_id='explanation',event_id='speech-1')
+  class Action:
+   provider_name='fixture-only'
+   def __init__(self,args):self.args=args
+   def __call__(self,payload):
+    return dict(id='fixture',status='completed',model='fixture-only',output=[dict(type='function_call',name='cancel_reasoning_and_resume_speech',arguments=json.dumps(self.args))])
+  for args,valid in [(dict(task_ids=['count']),True),(dict(task_ids=['count'],speech_id='invented'),False),(dict(task_ids=['count','missing']),False),(dict(task_ids=[]),False)]:
+   world=ReasoningWorld({})
+   for identity in ('count','unrelated'):
+    world.reserve(identity);world.tasks[identity].update(operation='delegate_reasoning',phase='running')
+   revision=world.reserve('current')
+   def run():return run_reasoning_worker([dict(role='user',text='Cancel the count and continue explaining.')],world,'current','fixture-only',revision,'state-aware',pending,Action(args),resumable_speech=target,bound_resume_target=True,allow_cancel_resume=True)
+   if valid:
+    result=run();self.assertEqual(result['route'],'resume');self.assertEqual(result['resume_target'],target);self.assertTrue(result['resume_after_reasoning_cancellation']);self.assertEqual(result['content'],'');self.assertEqual(result['consume_pending_speech_ids'],[])
+    require_cancelled_delivery(result['receipts'],world.tasks)
+    self.assertTrue(world.tasks['count']['cancelled']);self.assertFalse(world.tasks['unrelated']['cancelled'])
+    bad=[dict(result['receipts'][0],remote_execution_aborted=True)]
+    with self.assertRaises(WorkerContractError):require_cancelled_delivery(bad,world.tasks)
+   else:
+    with self.assertRaises((WorkerContractError,ValueError)):run()
+    self.assertFalse(world.tasks['count']['cancelled']);self.assertFalse(world.tasks['unrelated']['cancelled'])
+
+ def media(self,resume,cancel_resume=False):
   with tempfile.TemporaryDirectory() as d:
    folder=Path(d);user=np.zeros(100*1920,dtype=np.float32);user[:3*1920]=.1;user[20*1920:23*1920]=.1
    wav=folder/'input.wav';sf.write(wav,user,24000,subtype='FLOAT');ref=folder/'reference.json';ref.write_text(json.dumps(dict(user_words=[dict(text='Explain phases. Continue.')])) )
@@ -64,11 +88,16 @@ class SemanticResume(unittest.TestCase):
     spm=SPM()
    def execute(context,world,task,**kwargs):
     target=kwargs.get('resumable_speech');seen.append(target)
-    if target is not None and resume:return dict(route='resume',content='',consume_pending_speech_ids=[],receipts=[],resume_target=target)
+    if target is None and cancel_resume:
+     world.reserve('fixture-count');world.tasks['fixture-count'].update(operation='delegate_reasoning',phase='running')
+    if target is not None and resume:
+     result=dict(route='resume',content='',consume_pending_speech_ids=[],receipts=[],resume_target=target)
+     if cancel_resume:result.update(receipts=[world.cancel_delivery(['fixture-count'])],resume_after_reasoning_cancellation=True)
+     return result
     return dict(route='answer',content='A new short answer.' if target else 'The lit portion of the Moon changes as it orbits Earth.',consume_pending_speech_ids=[target['speech_id']] if target else [],receipts=[])
    row=dict(scenario_id='fixture',split='fresh-evaluation',path=str(wav),reference_path=str(ref),wav_sha256=probe.sha256(wav),world={})
    with patch.object(probe,'time',clock),patch('evals.duplex_reasoning_worker.run_reasoning_worker',execute):
-    result=probe.run_case(LexicalListener('stop-only'),speaker,row,folder/'case',0,'state-aware','acoustic-pause',Controller(),worker_kind='reasoning-development',include_speech_context=True,semantic_pause=True)
+    result=probe.run_case(LexicalListener('stop-only'),speaker,row,folder/'case',0,'state-aware','acoustic-pause',Controller(),worker_kind='reasoning-development',include_speech_context=True,semantic_pause=True,allow_cancel_resume=cancel_resume)
    events=json.loads((folder/'case/events.json').read_text());audio,_=sf.read(folder/'case/model.wav',dtype='float32');heard=[]
    for group in result['playout']['events'].values():
     for packet in group['packets']:
@@ -92,3 +121,9 @@ class SemanticResume(unittest.TestCase):
   self.assertFalse(any(e['kind']=='speech_resumed' for e in events))
   self.assertEqual(sum(e['kind']=='speech_pause_committed' for e in events),1)
   self.assertEqual([x['task_id'] for x in result['fully_played_responses']],['turn-2'])
+
+ def test_actual_fixture_cancellation_retains_generator_without_a_new_announcement(self):
+  speaker,result,events,heard,seen=self.media(True,cancel_resume=True)
+  self.assertEqual(speaker.starts,1);self.assertTrue(result['world_tasks']['fixture-count']['cancelled'])
+  event=next(e for e in events if e['kind']=='semantic_resume_selected');self.assertTrue(event['actual_reasoning_cancellation_receipts'][0]['delivery_cancelled'])
+  self.assertFalse(any(e['kind']=='speech_pause_committed' for e in events));self.assertTrue(np.array_equal(heard,np.concatenate(speaker.generated)))

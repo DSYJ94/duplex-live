@@ -141,7 +141,30 @@ def specifications():
         dict(id='hybrid-fresh-045',world={},turns=[
             (.8,'Explain in four short sentences how compost forms.'),
             (14.,'Forget that explanation. What is the capital of France? Give just the city.')]),
+        dict(id='hybrid-fresh-046',world={},evaluation_kind='reused-approved-clips-new-cancellation-control',turns=[
+            (.8,'How many distinct subsets of two, three, five, seven, eleven, thirteen, seventeen, nineteen, twenty three, twenty nine, thirty one, and thirty seven sum to fifty? Each number can be used at most once.'),
+            (17.4,'Explain in four short sentences how water moves through the water cycle.'),
+            (32.,'Cancel the number task and carry on with the water explanation.')],reuse_clips={
+                0:dict(inputs='7515617',quality='7515618',validator='42c704d7ef3472eb71a701a5db6a2dfee7c9ca69',scenario='hybrid-fresh-026',utterance=0),
+                1:dict(inputs='7517443',quality='7517444',validator='30510a79ec14ea10a3b76ec758a97aa0e5d33ea3',scenario='hybrid-fresh-031',utterance=0)}),
     ]
+
+
+def reuse_approved_clip(runs,spec,text,voice,destination):
+    # Explicit evaluation reuse, never unseen qualification or TRAIN. No fallback.
+    import shutil
+    from evals.duplex_input_validator import cases
+    data=runs/('duplex-fresh-inputs-'+spec['inputs']);quality=runs/('duplex-fresh-quality-'+spec['quality'])/'quality.json'
+    source=runs.parent/'worktrees'/('recovery-'+spec['validator'][:7])
+    rows,validator=cases(data,quality,[spec['scenario']],source,spec['validator']);row=rows[0]
+    reference=json.loads(Path(row['reference_path']).read_text());index=spec['utterance'];utterance=reference['utterances'][index]
+    original=Path(row['path']).parent/utterance['source_file'];receipt=row['generation_receipts'][index]
+    if utterance['text']!=text or receipt['voice']!=voice or receipt['sha256']!=sha256(original):raise RuntimeError('Approved reused clip changed text, voice or bytes')
+    shutil.copyfile(original,destination)
+    result=dict(receipt,reused_evaluation_clip=True,original_file=str(original),original_inputs_manifest_sha256=sha256(data/'inputs.json'),original_quality_sha256=sha256(quality),original_validator=validator)
+    result.pop('file',None)
+    destination.with_suffix('.receipt.json').write_text(json.dumps(dict(result,file=destination.name),indent=2)+'\n')
+    return result
 
 
 def generate(out,cases=None,user_voice="verse",backchannel_wording="original"):
@@ -154,7 +177,10 @@ def generate(out,cases=None,user_voice="verse",backchannel_wording="original"):
         if spec['id']=='hybrid-fresh-005' and backchannel_wording=='uh-huh':spec['turns'][-1]=(10.,'Uh-huh.')
         folder=out/spec['id'];folder.mkdir();clips=[];references=[];receipts=[];prior_end=0.
         for i,(nominal,text) in enumerate(spec['turns']):
-            path=folder/('user-'+str(i)+'.wav');receipt=synthesize(text,user_voice,path)
+            path=folder/('user-'+str(i)+'.wav')
+            reuse=spec.get('reuse_clips',{}).get(i)
+            receipt=reuse_approved_clip(out.parent,reuse,text,user_voice,path) if reuse else synthesize(text,user_voice,path)
+            if receipt['source_model']!=MODEL:raise RuntimeError('Reused clip belongs to a different speech producer')
             pcm,rate=sf.read(path,dtype='float32')
             if rate!=24000 or pcm.ndim!=1 or not np.isfinite(pcm).all():raise RuntimeError('Invalid fresh user clip')
             # Preserve every source sample; if TTS exceeds the nominal gap, move
@@ -168,7 +194,7 @@ def generate(out,cases=None,user_voice="verse",backchannel_wording="original"):
         ref=folder/'reference.json';ref.write_text(json.dumps(dict(user_words=[dict(text=r['text']) for r in references],utterances=references),indent=2)+'\n')
         rows.append(dict(scenario_id=spec['id'],split='fresh-evaluation',path=str(wav),reference_path=str(ref),
             wav_sha256=sha256(wav),reference_sha256=sha256(ref),world=spec['world'],
-            duration_s=len(pcm)/24000,utterance_count=len(references),user_voice=user_voice,source_model=MODEL,generation_receipts=receipts))
+            duration_s=len(pcm)/24000,utterance_count=len(references),user_voice=user_voice,evaluation_kind=spec.get('evaluation_kind','new-synthetic-input'),source_model=MODEL,generation_receipts=receipts))
     manifest=dict(schema='dl-hybrid-fresh-inputs-v1',rows=rows,training_approved=False,do_not_train=True,
         generator_sha256=sha256(Path(__file__)),generation_options=dict(cases=cases,user_voice=user_voice,backchannel_wording=backchannel_wording),
         assistant_audio_generated=False,source='new synthetic evaluation user speech')

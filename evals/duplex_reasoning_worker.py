@@ -64,7 +64,7 @@ def reasoning_receipts(receipts):
 
 
 def run_reasoning_worker(context,world,task_id,model,expected_revision,dispatch_protocol,pending_speech,response_executor,
-                         scope_read_tools=False,execution_observer=None,resumable_speech=None,bound_resume_target=False):
+                         scope_read_tools=False,execution_observer=None,resumable_speech=None,bound_resume_target=False,allow_cancel_resume=False):
     if dispatch_protocol!='state-aware' or response_executor is None or scope_read_tools or execution_observer is not None:
         raise ValueError('Reasoning trial requires local state-aware control and no record-specific projection')
     latest=next((e['text'] for e in reversed(context) if e.get('role')=='user'),None)
@@ -92,6 +92,8 @@ def run_reasoning_worker(context,world,task_id,model,expected_revision,dispatch_
         tools.append(tool('cancel_reasoning','Stop delivery of identified active reasoning results, preserving unrelated work. Late API returns cannot be spoken. This does not abort an already executing remote request. content is spoken only after actual cancellation succeeds; confirm delivery cancellation honestly and answer an ordinary question if requested.',dict(
             task_ids=dict(type='array',minItems=1,items=dict(type='string',enum=active)),content=dict(type='string'),
             consume_pending_speech_ids=consumption)))
+    if allow_cancel_resume and resumable_speech is not None and active:
+        tools.append(tool('cancel_reasoning_and_resume_speech','Cancel delivery of identified active reasoning results AND continue the sole retained ordinary speech generator without any new words. Use when the user cancels background reasoning but asks to carry on the current explanation. Never cancel unrelated work or claim remote computation was aborted.',dict(resume_parameters,task_ids=dict(type='array',minItems=1,items=dict(type='string',enum=active)))))
     state=dict(available=available,pending_speech=pending_speech,dispatch_protocol=dispatch_protocol,domain='reasoning-development')
     if resumable_speech is not None:
         state['resumable_speech']=resumable_speech
@@ -123,6 +125,10 @@ def run_reasoning_worker(context,world,task_id,model,expected_revision,dispatch_
         route='delegate';content=receipt['content'];receipts=[receipt];consumed=[]
     elif call['name']=='cancel_reasoning':
         receipt=world.cancel_delivery(arguments['task_ids']);route='cancel';content=arguments['content'];receipts=[receipt];consumed=arguments['consume_pending_speech_ids']
+    elif call['name']=='cancel_reasoning_and_resume_speech':
+        expected={} if bound_resume_target else resumable_speech
+        if not allow_cancel_resume or resumable_speech is None or set(arguments)!=set(expected)|{'task_ids'} or {k:v for k,v in arguments.items() if k!='task_ids'}!=expected:raise WorkerContractError('Cancel and resume lacks its actual retained generator',dict(response=response))
+        receipt=world.cancel_delivery(arguments['task_ids']);route='resume';content='';consumed=[];receipts=[receipt]
     elif call['name']=='resume_speech':
         if resumable_speech is None or arguments!=({} if bound_resume_target else resumable_speech):raise WorkerContractError('Resume action does not identify the actual retained generator',dict(response=response))
         route='resume';content='';consumed=[];receipts=[]
@@ -141,5 +147,7 @@ def run_reasoning_worker(context,world,task_id,model,expected_revision,dispatch_
     result=dict(route=route,content=content,consume_pending_speech_ids=consumed,receipts=receipts,events=[event],task_id=task_id,
         speech_model_routing=False,final_response_route=route,dispatch_protocol=dispatch_protocol,response_provider=response_executor.provider_name,
         actual_reasoning_backend=receipts[0].get('model') if receipts else None,agent_actions_executed=False,cancellation_supported='delivery-only',remote_execution_abort_supported=False)
-    if route=='resume':result['resume_target']=dict(resumable_speech)
+    if route=='resume':
+        result['resume_target']=dict(resumable_speech)
+        if call['name']=='cancel_reasoning_and_resume_speech':result['resume_after_reasoning_cancellation']=True
     return result

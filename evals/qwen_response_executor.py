@@ -135,6 +135,9 @@ class QwenResponseExecutor:
                 f'For a request to continue that explanation or a mere acknowledgment, {resume_usage}. '
                 'This resumes the remaining audio without a new introduction, paraphrase or duplicate prefix. It is an output action, not completion of a task. '
                 'For stop, a requested revision, another question or a cancellation, use the corresponding provided action instead. ')
+        if any(t['name']=='cancel_reasoning_and_resume_speech' for t in payload.get('tools',[])):
+            instructions+=('If the user cancels an active reasoning result AND wants the current explanation to continue, choose cancel_reasoning_and_resume_speech. '
+                'Plain resume_speech would not execute the requested cancellation. Do not generate a cancellation announcement or restart the explanation; the combined action resumes the retained audio after its actual cancellation receipt. ')
         if state['dispatch_protocol']=='state-aware' and self.pending_speech_protocol=='array':
             instructions+=(
                 'Pending speech lists ordinary answers owed but not fully played; an unknown prefix may have been heard. '
