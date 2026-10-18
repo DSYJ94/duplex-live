@@ -1,5 +1,41 @@
 # HANDOFF — active overnight recovery (updated 18 October)
 
+Plain words:latest — no native or hybrid full system qualifies. Native ablations
+9710/7510331 remain rejected, with all32 latest native recordings/ASR backed and
+48-player comparison verified. Whole-teacher sampled-audio probes498/503/505/506
+are not training approved. Do not run more unchanged native fits.
+
+Plain words:new speech component works on Isambard, with explicit limits. CPU
+strict Mimi proof7510722 reproduces the safetensors0.6 raw-key failure, then verifies
+all318 tensors exactly through the official PyTorch hook plus3 corruption negatives.
+Weight/package bytes unchanged. Actual backend+TTS723 and independent724 speak
+teal hexagon correctly (worderror0), but eager speed fails. Matched warm renderer
+779/781 replay the same actual prior backend text; both ASR780/782 worderror0.
+CUDA graphs capture main+depth, p950.030s/80ms, zero causal underruns, firstPCM
+0.510s FROM RECORDED TEXT availability (not a new backend call). Eagerp950.206s,
+44underruns. Warmup2.748s/serviceprepare6.697s reported separately. One sentence
+only, no mic/listening/task acceptance. Published Expresso voice differs from
+accepted reference. New9-player page verified:
+http://localhost:8766/audio/voice-diagnostics/streaming-speech.html
+All component WAV pairs hash-verified locally; source/model/voice pins retained.
+
+Plain words:pinned streaming ASR assets7510852 pass all published hashes from
+existing cache. GPU7510969 source82f26ba PASSES two real-Moshi initial-clock guards
+and complete strict model/Mimi loading. All3 TRAIN008/019/020 have worderror0,
+computep95~0.0122s, maxbacklog0.032s, no lost actual input rows. One virtual LM
+bootstrap consumes zero user PCM; all32 supplied user rows are checked exactly at
+every temporal forward. Reference words only parsed after recognition. Raw EOT
+head2/class0 plus2pad frames splits inputs into3/7/7 fragments — never dispatch
+work from that raw policy. Separate CPU endpoint policy664a121 uses terminal ASR
+punctuation+3quietframes+2nonlexicalframes, preserving text across head pulses.
+Three local state/sequence guards pass. Actual causal trace replay submitted;
+receipt duplex-endpoint-replay-launch-20261018.json; source/model not rerun.
+Next: retrieve replay, then integrate continuous listening, actual controller
+receipts, cancellable speech and delayed-result guards. Keep hybrid disclosures.
+Cloud paused; no user input needed overnight. Current SSH certificate until
+18Oct11:39Berlin; transient banner timeout recovered. Preserve pyc/roadmap.html.
+
+
 Plain words:latest overnight verdict — all native models remain UNQUALIFIED.
 Balanced-spoken7510331 finishes520/exactreload and all16 native cases+ASR7510355;
 15/16 ASR timing valid. Triangle7510342 says3,4,or5 and pencil7510350 claims lead
