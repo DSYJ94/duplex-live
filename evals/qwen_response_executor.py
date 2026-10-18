@@ -116,12 +116,6 @@ class QwenResponseExecutor:
                 'A user asking to stop and replace an explanation with a shorter version supersedes the older long answer: give the revised answer through resolve_pending_speech. '
                 'Cancelling a private lookup alone never resolves an unrelated ordinary answer; use respond_to_user after that receipt and leave the client to resume it. '
                 'These are output actions only, not execution receipts. Never both answer an owed request now and leave it queued. ')
-        if getattr(self,'spoken_output_contract',False):
-            instructions+=(
-                'The content argument is read aloud verbatim. Write concise natural spoken sentences. '
-                'Express arithmetic in words; do not include written equations, multiplication symbols, Markdown, or parenthetical calculations. '
-                'Do not narrate internal task flags, speech IDs, execution notices, scheduling state, or withheld-value markers. '
-                'Explain an unavailable requested fact honestly, without exposing internal metadata. Function names, IDs and other tool arguments retain their exact required values. ')
         if self.prompt_profile=='contract-examples' and domain=='records':instructions+=CONTRACT_EXAMPLES
         if state['dispatch_protocol']=='state-aware' and self.pending_speech_protocol=='array':
             instructions+=(
@@ -179,6 +173,14 @@ class QwenResponseExecutor:
             if payload.get('tool_choice')!='required':raise RuntimeError('Local executor requires the explicit model-selected action protocol')
             definitions=sorted(payload['tools'],key=lambda f:f['name']!='respond_to_user')
         model_definitions=self.model_functions(definitions,state)
+        if getattr(self,'spoken_output_contract',False):
+            import copy
+            model_definitions=copy.deepcopy(model_definitions)
+            for definition in model_definitions:
+                content=definition['parameters']['properties'].get('content')
+                if content is not None:
+                    content['description']='Spoken response in natural sentences. Express arithmetic in words, without written equations or Markdown.'
+                    if reply_only:definition['description']+=' Report only this actual receipt; do not narrate other tasks or internal withheld-value notices.'
         tools=[dict(type='function',function={k:v for k,v in f.items() if k not in ('type','strict')}) for f in model_definitions]
         generation=self.generator.request(messages,tools,assistant_prefill='<tool_call>\n')
         try:

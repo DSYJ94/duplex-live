@@ -4736,3 +4736,11 @@ CPU synchronization tests verify a pending request does not block reservation an
 that a cancelled task cannot publish its late receipt; these are fixtures, not
 live-model proof. Actual typed worker must pass before audio; new user-only024/025
 inputs get independent unchanged0.05WER/bounds quality checks and never training.
+
+Plain words: narrower spoken-output variant now places a short natural-speech
+format requirement on the function's content field only. It does not add the
+rejected broad system instruction. Actual tool-result reply formatting additionally
+requests only that receipt, excluding narration of other tasks/withheld notices.
+This is an opt-in prompt/schema change with unchanged generated text and tool
+arguments, not after-the-fact repair. Re-run the captured counterfactual first;
+previous arithmetic success does not qualify this new variant.
