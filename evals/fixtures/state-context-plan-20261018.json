@@ -2,7 +2,7 @@
   "schema": "dl-state-context-plan-v1",
   "date": "2026-10-18",
   "purpose": "Counterfactual task states and complete multi-intent responses with identical teacher/student capability profiles",
-  "scenes_sha256": "1c8da48df70975c31079cdc884022a73929edf7fdddb92b684b17a527ff1ef40",
+  "scenes_sha256": "3ad66d707952c727cc2141051713f1aef82e10bd1f51c0d2d33197d066db2c9f",
   "training_scenes": 517,
   "training_rows": 533,
   "heldout_scenes": 204,
@@ -25,5 +25,6 @@
   "checkpoint_selection": false,
   "owner_demo_changed": false,
   "cloud_gpu_validation": false,
-  "production_adopted": false
+  "production_adopted": false,
+  "counterbalanced_task_ids_and_orders": true
 }

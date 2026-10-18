@@ -25,6 +25,10 @@ def new_scenes():
             for variant in range(count):
                 target=NAMES[family]+' '+str(variant+7);other=NAMES[(family+1)%5]+' '+str(variant+21)
                 item=ITEMS[family];key=f'{split}-f{family}-v{variant}'
+                serial=family*3+variant
+                identities=['job-'+str(101+serial*5+i) for i in range(3)]
+                rotation=serial%3;identities=identities[rotation:]+identities[:rotation]
+                if (serial//3)%2:identities.reverse()
                 for kind in STATE_KINDS:
                     # Same latest request and opaque IDs across all four resume states.
                     user=CONTINUE[family].format(target=target,other=other,item=item)
@@ -35,7 +39,7 @@ def new_scenes():
                     elif kind=='finished-confirmation':user=f'Withdraw the {target} result delivery. Tell me honestly if that task is already finished; leave the {other} alone.'
                     scenes.append(dict(id='state-'+key+'-'+kind,split=split,family=f'state-family-{family}',kind=kind,
                         target=target,other=other,item=item,user=user,number=14+family+2*variant,
-                        task_ids=['job-'+str(101+family*17+variant*3),'job-'+str(102+family*17+variant*3),'job-'+str(103+family*17+variant*3)],
+                        task_ids=identities,task_insert_target_first=bool((serial//2)%2),history_target_first=bool(serial%2),
                         synthetic_fixture=True,real_playback=False,owner_data_used=False))
     return scenes
 
@@ -63,7 +67,9 @@ def state_world(scene):
     from evals.duplex_reasoning_worker import ReasoningWorld
     def forbidden(question):raise RuntimeError('TRAIN fixture cannot call an external reasoner')
     world=ReasoningWorld({},reasoner=forbidden);target,other,duplicate=scene['task_ids'];kind=scene['kind']
-    for identity,name in [(target,scene['target']),(other,scene['other'])]:
+    ordering=[(target,scene['target']),(other,scene['other'])]
+    if not scene['task_insert_target_first']:ordering.reverse()
+    for identity,name in ordering:
         world.reserve(identity);world.tasks[identity].update(operation='delegate_reasoning',phase='running',question=f'Count valid arrangements for the {name}.')
     if kind in ('resume-finished','finished-confirmation'):world.tasks[target].update(closed=True,phase='completed')
     elif kind=='resume-cancelled':world.tasks[target]['cancelled']=True
@@ -71,9 +77,10 @@ def state_world(scene):
         world.reserve(duplicate);world.tasks[duplicate].update(operation='delegate_reasoning',phase='running',question=world.tasks[target]['question'])
     question=f'Explain two steps for putting away a {scene["item"]}.'
     prepared=f'Place the {scene["item"]} in its storage space. Close the storage door.'
-    context=[dict(role='user',text=f'Count valid arrangements for the {scene["target"]}.'),
-        dict(role='user',text=f'Separately count valid arrangements for the {scene["other"]}.'),
-        dict(role='user',text=question),dict(role='assistant',text=prepared,control_source='actual-speech-generation',
+    questions=[dict(role='user',text=f'Count valid arrangements for the {scene["target"]}.'),
+        dict(role='user',text=f'Separately count valid arrangements for the {scene["other"]}.')]
+    if not scene['history_target_first']:questions.reverse()
+    context=questions+[dict(role='user',text=question),dict(role='assistant',text=prepared,control_source='actual-speech-generation',
             speech_task_id='retained-directions',first_speech_event_id='fixture-cursor',latest_speech_event_id='fixture-cursor',
             playback_segments=1,speech_delivery='generated-not-fully-played',physical_hearing_confirmed=False),dict(role='user',text=scene['user'])]
     revision=world.reserve('latest',context)
