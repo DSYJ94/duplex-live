@@ -5649,3 +5649,22 @@ actions/token counts exact and source parameter hashes/versions unchanged. Media
 steady speed ratio1.023345, reference drift within10%; fails predeclared1.2x gate.
 REJECT scheduling change. No optimizer, external requests or owner service change.
 All30 rows verified independently; thread-probe-integrity.json preserves decision.
+
+## 18 October — capability inventory and short speech diagnostics declared
+
+Plain words: The actual completed-count cancellation failure has authoritative
+closed state; the frozen controller selected an unavailable function. Test a
+truthful complete function inventory appended to existing system instructions,
+not a keyword router, output repair or new capability. Nine actual saved synthetic
+states (including the failed closed task) compare original/inventory on frozen9B
+and fixed972+cancel-only. No optimizer or external requests. Original transcript,
+state and input length must reconstruct; full failures and semantic review retained.
+A focused pass requires the broader172-case retention study before voice integration.
+The generic clarification instruction may confuse missing details with unavailable
+access; this experiment tests that hypothesis rather than training on heldout traces.
+
+Plain words: Separately compare15/fifteen and52/fifty two in strict pinned TTS, two
+fixed RNG states reset per pair, eight renders total. Same warmup and voice as the
+working service; no controller or revised model words. Local causal STT and separate
+Whisper audit read expected values only after transcription. No renderer adoption
+or native qualification from this component comparison. Owner reference unchanged.

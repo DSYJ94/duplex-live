@@ -1,0 +1,36 @@
+{
+  "schema": "dl-affordance-and-short-speech-diagnostics-v1",
+  "declared_before_gpu_execution": true,
+  "do_not_train": true,
+  "training_approved": false,
+  "owner_audio_used": false,
+  "capability_probe": {
+    "models": [
+      "frozen9B",
+      "fixed972+cancel-only"
+    ],
+    "saved_states": 8,
+    "failed_closed_task_state": 1,
+    "stages": [
+      "original",
+      "truthful complete inventory"
+    ],
+    "gates": "Original actual context/state and input length reconstructed. Never dispatch operations, rewrite outputs or use task-name routing. Review every response; require retention of ordinary, pending speech, real active cancel/resume and private honesty. If focused test passes, all172 control/knowledge/action rows per stage required before voice integration.",
+    "remaining_native_scope": "These are separate text-controller inference diagnostics. Native7510331 still fails; no native qualification substitution."
+  },
+  "speech_probe": {
+    "text_pairs": [
+      [
+        "15",
+        "fifteen"
+      ],
+      [
+        "52",
+        "fifty two"
+      ]
+    ],
+    "rng_states": 2,
+    "renders": 8,
+    "gates": "Strict same frozen TTS/voice/Mimi, reset same RNG per pair, full source/audio/events retained, local-only streaming ASR then independent local Whisper. No input-gate change, no renderer adoption without real conversation retention."
+  }
+}
