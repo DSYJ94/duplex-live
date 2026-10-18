@@ -35,6 +35,27 @@ def specifications():
         dict(id='hybrid-fresh-007',world={'Oak Central':{'meeting room':'room seven'},'Pine Central':{'meeting room':'room twelve'}},turns=[
             (.8,'Please check the meeting room for Project Oak Central.'),
             (8.,'Actually use Project Pine Central instead. Do not read out the Oak result.')]),
+        dict(id='hybrid-fresh-008',world={},turns=[
+            (.8,'I have three boxes with four pencils in each box. If I give away two pencils, how many do I have left?')]),
+        dict(id='hybrid-fresh-009',world={'River East':{'delivery day':'Friday morning'}},turns=[
+            (.8,'Check the delivery day for Project River East.'),
+            (8.,'While you check, explain why ice floats on water.')]),
+        dict(id='hybrid-fresh-010',world={'River East':{'storage colour':'orange'},'River West':{'storage colour':'purple'}},turns=[
+            (.8,'What is the storage colour?'),(8.,'Project River West.')]),
+        dict(id='hybrid-fresh-011',world={'Forest North':{'courier note':'use the side entrance'}},turns=[
+            (.8,'Check the courier note for Project Forest North.'),
+            (8.,'While you check, explain in two sentences why a mirror reverses an image.'),
+            (17.,'Cancel the courier lookup, but finish your explanation.')]),
+        dict(id='hybrid-fresh-012',world={'River East':{'delivery day':'Monday morning'},'River West':{'delivery day':'Thursday afternoon'}},turns=[
+            (.8,'Check the delivery day for Project River East.'),
+            (8.,'Actually use Project River West instead. Do not read out the River East result.')]),
+        dict(id='hybrid-fresh-013',world={'Forest North':{'courier note':'use the side entrance'}},turns=[
+            (.8,'Do not check Project Forest North. If all robins are birds, does that mean all birds are robins? Explain briefly.')]),
+        dict(id='hybrid-fresh-014',world={},turns=[
+            (.8,'Explain in three sentences how clouds produce rain.'),(10.,'Okay.')]),
+        dict(id='hybrid-fresh-015',world={},turns=[
+            (.8,'Explain in four sentences why seasons change during the year.'),
+            (11.,'Stop. Give me just the main reason in one short sentence.')]),
     ]
 
 
