@@ -4902,3 +4902,13 @@ Plain words: public19.33GB controller backup via SSH timed out after5.9GB; parti
 files retained, never declared complete. Direct public HTTPS revision-pinned
 resume runs locally with all14 expected sizes/SHA256 and no HF credentials. Do
 not include temporary session credentials in any backup or readiness artifact.
+
+Plain words: new paired typed generalization screen prepared for twelve questions:
+short arithmetic, multi-digit products, sequential percentages, square root, new
+subset count/assignment, quantified logic, unknown private fact, nonexistent task
+cancellation and an explicit no-tools request. CPU oracles are computed only after
+actual results; fraction/percentage/root checks independently verified. Every row
+and failure is retained. A user prohibition blocks an external attempt before the
+API call; six actual request attempts per arm bound cost. No teacher agreement,
+speech or overall qualification claim. Compare frozen native/compact formats
+without adapting between arms; review actual final words and receipts.
