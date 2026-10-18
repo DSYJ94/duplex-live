@@ -135,7 +135,7 @@ def tool(name,description,properties):
         "parameters":{"type":"object","properties":properties,"required":list(properties),"additionalProperties":False}}
 
 
-def run_worker(context,world,task_id,model="gpt-6-luna",expected_revision=None,dispatch_protocol="legacy",pending_speech=None,response_executor=None):
+def run_worker(context,world,task_id,model="gpt-6-luna",expected_revision=None,dispatch_protocol="legacy",pending_speech=None,response_executor=None,scope_read_tools=False):
     if dispatch_protocol not in ("legacy","required-action","state-aware"):raise ValueError("Unknown controller dispatch protocol")
     key=None
     if response_executor is None:
@@ -167,6 +167,16 @@ def run_worker(context,world,task_id,model="gpt-6-luna",expected_revision=None,d
     with world.lock:
         available = {"records":{p:list(fields) for p,fields in world.records.items()},
             "tasks":{name:state.copy() for name,state in world.tasks.items() if not state["cancelled"] and not state.get("closed",False) and name != task_id}}
+    readable=[]
+    if scope_read_tools:
+        readable=[p for p in available['records'] if project_identified_by_user(context,p)]
+        if readable:
+            fields=sorted({field for project in readable for field in available['records'][project]})
+            for definition in tools:
+                if definition['name'] in ('lookup_record','replace_lookup'):
+                    definition['parameters']['properties']['project']['enum']=readable
+                    definition['parameters']['properties']['field']['enum']=fields
+        else:tools=[definition for definition in tools if definition['name'] not in ('lookup_record','replace_lookup')]
     instructions = ("Help a live voice assistant with only the latest USER request in its chronological transcript. "
         "Do not repeat older pending or completed lookups merely because the voice assistant has not spoken their results. "
         "Answer simple general knowledge without tools. Private records require lookup_record; never invent their contents. "
@@ -177,6 +187,9 @@ def run_worker(context,world,task_id,model="gpt-6-luna",expected_revision=None,d
         "Use route delegate after a record tool, cancel after cancellation, otherwise answer or clarify. "
         "Do not say a lookup or cancellation completed until its tool receipt is present. Reply in at most 60 words. "
         "Available project/field names and active tasks: " + json.dumps(available))
+    if scope_read_tools:
+        instructions+=(' Read tools are exposed only for available projects actually identified in USER history. '
+            'If identification is missing, ask for it. If no matching record exists, explain it is unavailable; never invent a result. ')
     if dispatch_protocol=='state-aware':
         instructions+=(" If the user corrects an active lookup to a different identified project or field, use replace_lookup "
             "with only the superseded active IDs and the new project/field. This executes both retirement and the new read. "
@@ -314,6 +327,7 @@ def run_worker(context,world,task_id,model="gpt-6-luna",expected_revision=None,d
     result["final_response_route"] = final_response_route
     result["dispatch_protocol"] = dispatch_protocol
     result['response_provider']=provider
+    result['read_tools_scoped_to_user_identified_available_projects']=scope_read_tools
     if not isinstance(parsed.get("content"), str) or not parsed["content"].strip():
         raise WorkerContractError("Backend returned empty result text; do not inject an empty context span",result)
     if parsed["route"] == "delegate" and not lookup_receipts(receipts):

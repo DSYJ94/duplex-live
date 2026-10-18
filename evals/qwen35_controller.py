@@ -86,7 +86,7 @@ def load_model(assets_path,device='cuda:0'):
     proof=dict(strict=True,all_source_tensors_exact_on_cpu_before_device_copy=True,source_tensor_count=len(index),
         model_state_tensor_count=len(state),explicit_true_tied_aliases=aliases,missing=[],unexpected=[],
         declared_retained_unused_mtp_tensors=auxiliary,mtp_speculative_inference_executed=False,
-        core_model_tensor_count=len(state)-len(auxiliary),vision_weights_loaded_but_vision_inference_executed=False,
+        core_model_tensor_count=len(state)-len(auxiliary),vision_weights_loaded=True,vision_inference_executed=False,
         model_parameters=sum(p.numel() for p in model.parameters()),trainable_parameters=sum(p.numel() for p in model.parameters() if p.requires_grad),
         load_seconds=time.perf_counter()-started,device=str(next(model.parameters()).device),dtype=str(next(model.parameters()).dtype),
         assets_sha256=sha256(assets_path),repo=assets['repo'],revision=assets['revision'])

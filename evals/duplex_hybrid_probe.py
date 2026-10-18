@@ -41,7 +41,7 @@ def counterfactual_records(scenario):
     raise ValueError('Unapproved bounded development case')
 
 
-def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",interrupt_policy="acoustic",controller=None):
+def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",interrupt_policy="acoustic",controller=None,scope_read_tools=False):
     import numpy as np
     import soundfile as sf
     from data.synthetic.filter import norm_words,wer
@@ -86,7 +86,7 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",inter
         from evals.duplex_speech_obligations import snapshot
         pending=snapshot(queue,active) if controller_protocol=='state-aware' else []
         future=executor.submit(run_worker,[e.copy() for e in context],world,task,expected_revision=revision,dispatch_protocol=controller_protocol,pending_speech=pending,
-            model=controller.model_id if controller else 'gpt-6-luna',response_executor=controller)
+            model=controller.model_id if controller else 'gpt-6-luna',response_executor=controller,scope_read_tools=scope_read_tools)
         futures[future]=dict(task_id=task,revision=revision,turn=utterance_count,submitted_s=submitted,request_text=text,pending_speech=pending)
         log('controller_dispatched',task_id=task,text=text,reference_text_supplied=False)
     try:
@@ -205,6 +205,7 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",inter
         frames=frame,synthetic_tail_frames=max(0,frame-real_frames),asr_compute_p95_s=float(np.percentile(steps,95)),
         maximum_input_backlog_s=max(backlogs),declared_counterfactual_world=world.records,
         controlled_lookup_delivery_minimum_s=delay_s,controller_protocol=controller_protocol,interrupt_policy=interrupt_policy,
+        read_tools_scoped_to_user_identified_available_projects=scope_read_tools,
         controller_provider=controller.provider_name if controller else 'openai',controller_model=controller.model_id if controller else 'gpt-6-luna',
         lexical_interruption_is_not_a_backchannel_classifier=interrupt_policy=='lexical',world_tasks=world.tasks,actual_tool_receipts=world.receipts,
         fully_played_responses=spoken,playout=playout,audio_sha256=sha256(out/'model.wav'),wall_s=now(),
@@ -217,6 +218,7 @@ def main():
     ap=argparse.ArgumentParser(description=__doc__)
     for n in ('stt-assets','tts-assets','mimi-load-approval','data','out'):ap.add_argument('--'+n,type=Path,required=True)
     ap.add_argument('--scenario',action='append',required=True);ap.add_argument('--lookup-delay-s',type=float,default=12.)
+    ap.add_argument('--scope-read-tools',action='store_true')
     ap.add_argument('--controller-provider',choices=('openai','local-qwen'),default='openai')
     ap.add_argument('--local-controller-assets',type=Path)
     ap.add_argument('--local-controller-device',default='cuda:1')
@@ -255,7 +257,7 @@ def main():
         results=[];failures=[]
         try:
             for row in rows:
-                try:results.append(run_case(listener,speaker,row,args.out/row['scenario_id'],args.lookup_delay_s,args.controller_protocol,args.interrupt_policy,controller))
+                try:results.append(run_case(listener,speaker,row,args.out/row['scenario_id'],args.lookup_delay_s,args.controller_protocol,args.interrupt_policy,controller,args.scope_read_tools))
                 except Exception as error:
                     if args.input_profile!='fresh-evaluation':raise
                     failure=dict(scenario=row['scenario_id'],error_type=type(error).__name__,message=str(error),
@@ -264,6 +266,7 @@ def main():
                     (args.out/row['scenario_id']/'failure.json').write_text(json.dumps(failure,indent=2)+'\n')
         finally:speaker.close()
     report=dict(schema='dl-concurrent-hybrid-development-v1',component_execution_completed=not failures,results=results,failures=failures,
+        read_tools_scoped_to_user_identified_available_projects=args.scope_read_tools,
         component_code_sha256={name:sha256(Path(__file__).with_name(name)) for name in
             ('recovery_worker.py','duplex_endpoint.py','duplex_speaker.py','kyutai_stt_probe.py','duplex_speech_obligations.py')},
         probe_code_sha256=sha256(Path(__file__)),

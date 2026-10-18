@@ -6,6 +6,22 @@ from evals.recovery_worker import RecordWorld,run_worker,WorkerSuperseded,Worker
 
 
 class RecordGuards(unittest.TestCase):
+    def test_scoped_read_tools_cannot_offer_unavailable_or_unidentified_projects(self):
+        for records,user,expected in [({},'Read the access code for Project Missing.',set()),
+                ({'Cedar':{'badge':'violet triangle'}},'What is the badge?',set()),
+                ({'Cedar':{'badge':'violet triangle'},'Birch':{'badge':'silver circle'}},'Check the badge for Project Cedar.',{'Cedar'})]:
+            world=RecordWorld(records);captured=[]
+            def execute(payload):
+                captured.append(payload)
+                return dict(id='scoped',status='completed',model='local-test',output=[dict(type='function_call',
+                    name='respond_to_user',call_id='reply',arguments=json.dumps(dict(route='clarify',content='Please identify an available project.')))])
+            result=run_worker([dict(role='user',text=user)],world,'current',model='local-test',
+                dispatch_protocol='required-action',response_executor=execute,scope_read_tools=True)
+            definitions={d['name']:d for d in captured[0]['tools']}
+            if expected:self.assertEqual(set(definitions['lookup_record']['parameters']['properties']['project']['enum']),expected)
+            else:self.assertNotIn('lookup_record',definitions)
+            self.assertEqual(result['receipts'],[]);self.assertEqual(world.receipts,[])
+
     def test_explicit_local_executor_needs_no_remote_credential_or_http(self):
         world=RecordWorld({});calls=[]
         def execute(payload):
