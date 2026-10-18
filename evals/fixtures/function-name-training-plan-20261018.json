@@ -32,5 +32,17 @@
     "Existing corpus contains no positive hard-reasoning delegation examples; general routing remains a known risk",
     "The duplicate-refusal fresh conversation has become development evidence and is excluded from training",
     "New resume and combined cancellation actions are not trained in this old corpus; no semantic-pause deployment is authorized by this ablation alone"
-  ]
+  ],
+  "execution_source": {
+    "commit": "710b305fab7f77d7b614841af377d2700b59111f",
+    "branch": "experiments/function-name-loss-20261018",
+    "original_compiler_commit": "f2e22fbe49c8c501e58104f26781f5f99c9073af",
+    "original_compiler_files": [
+      "evals/qwen_response_executor.py",
+      "evals/duplex_reasoning_worker.py"
+    ],
+    "isolated": true,
+    "do_not_merge_historical_controller_files_into_main": true,
+    "all216_training_prompt_action_replays_and72_baseline_rows_verified": true
+  }
 }

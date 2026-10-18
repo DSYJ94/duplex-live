@@ -1,5 +1,19 @@
 # HANDOFF — overnight recovery, 18 October
 
+Plain words: TRAINING source correction18Oct: initial function-namejob7520602
+FAILED BEFORE model load/update, strict verified_data compiler-hash guard caught
+newer qwen_response_executor/duplex_reasoning_worker sources. Guard UNCHANGED.
+Isolated experiment710b305 (experiments/function-name-loss-20261018; localworktree
+/private/tmp/duplex-function-name-matched) restores ONLY those2compilerfiles from
+teacherproducerf2e22fb. Full216TRAIN prompt/action replays + original72baseline
+rows/sourcehashes pass locally. Model code viaGit only; main/live unchanged.
+Corrected metadata helper /private/tmp/controller-function-name-matched-submit.py,
+receipt controller-function-name-matched-train-launch-20261018.json oncluster,
+local stdout /private/tmp/controller-function-name-matched-submit.log. Observe its
+returned job, do NOT resubmit failed7520602. Source710b305 is for matched training;
+NEVER merge its historical controller files into main. Need broad current-runtime
+retention before adoption. New output remains controller-head-train-JOB.
+
 Plain words: NEXT training ablation: queued-history diagnostic7520544/e8215e3
 COMPLETE; exact original native action reproduced. Adding actual queued assistant
 history changes wording but consumesNO pendingID, so NOT a duplication fix and

@@ -121,3 +121,13 @@ Plain words: This corpus lacks positive hard-delegation and the newer resume act
 Even better72-case scores cannot authorize deployment. Broader reasoning/delegation
 and retained-generator checks must pass first. This is a text-controller experiment,
 not native voice-model training. Cloud validation remains paused.
+
+Plain words: Initial launch7520602 stops before model loading or updates because
+current controller files differ from the approved data compiler. The guard is
+unchanged. An isolated experiment checkout restores exactly the two original
+compiler files from producerf2e22fb. All216 teacher prompt/action replays and all72
+original frozen-baseline rows pass locally with exact source hashes. Experiment
+branch `experiments/function-name-loss-20261018`, commit710b305, retains the new
+loss-mask code while preserving the original compiler/baseline. Those historical
+controller files must not be merged into the current live implementation. This is
+a matched training ablation; integration with newer runtime actions remains separate.
