@@ -51,6 +51,9 @@ def before_engine(engine_module, proof, disabled=False, zero=False):
             specific = (specific and sha256(proof/'training-state.pt') == report['training_state_sha256']
                 and reload['training_state_sha256'] == report['training_state_sha256']
                 and reload['optimizer_rng_state_restored'] is True)
+    elif report['schema'] == 'dl-native-assistant-joint-proof-v1':
+        from evals.context_native_joint import verify_inference
+        specific = verify_inference(proof)
     elif report['schema'] == 'dl-context-adapter-proof-v1':
         specific = (report['zero_adapter_all_valid_logits_exact'] and report['native_depth_parity']['passed']
             and report['canonical_logits_dtype'] == 'float32' and reload['all_valid_logits_exact'])
@@ -64,7 +67,8 @@ def before_engine(engine_module, proof, disabled=False, zero=False):
             or report['data_sha256'] != sha256(proof / 'data.json')):
         raise RuntimeError('Unverified or changed Context adapter proof')
     protocol=None
-    if report['schema'] in ('dl-context-actual-adapter-proof-v1','dl-context-result-head-proof-v1'):
+    if report['schema'] in ('dl-context-actual-adapter-proof-v1','dl-context-result-head-proof-v1',
+            'dl-native-assistant-joint-proof-v1'):
         # These legacy schemas were produced only through the audited bootstrap/
         # provided-token-preserving replay. Keep their exact implementation pin.
         protocol=report.get('native_protocol',{'name':'bootstrap-preserve-provided-v1',
