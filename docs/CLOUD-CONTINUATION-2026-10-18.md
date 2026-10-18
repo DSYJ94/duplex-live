@@ -177,8 +177,9 @@ of the short Go clip and the precise clipped utterance before any new repair.
 
 Plain words: Focused copies of the failed TRAIN015/017 utterances and the source
 quality report were successfully fetched to the Mac's ignored local export.
-The broader four-directory artifact transfer was also started; verify its
-completion/file inventory before calling that new backup complete. These local
+The broader four-directory artifact transfer was explicitly stopped locally
+for takeover; its partial files are NOT a complete new backup. Verify the file
+inventory or fetch from the cluster before relying on that new source backup. These local
 files are not available through GitHub. Remote originals and failed audit
 reports remain the authoritative artifacts for the cloud agent.
 
