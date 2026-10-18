@@ -98,6 +98,10 @@ def load_model(assets_path,device='cuda:0',kernel_assets=None):
                     raise RuntimeError('Requested FLA operator not actually selected from verified package')
         selected.append(dict(module=name,**functions))
     if len(selected)!=24:raise RuntimeError('Unexpected Gated DeltaNet layer inventory')
+    driver_discovery=None
+    if kernel_package is not None:
+        from evals.qwen35_cuda_discovery import configure_loaded_driver
+        driver_discovery=configure_loaded_driver()
     proof=dict(strict=True,all_source_tensors_exact_on_cpu_before_device_copy=True,source_tensor_count=len(index),
         model_state_tensor_count=len(state),explicit_true_tied_aliases=aliases,missing=[],unexpected=[],
         declared_retained_unused_mtp_tensors=auxiliary,mtp_speculative_inference_executed=False,
@@ -105,7 +109,7 @@ def load_model(assets_path,device='cuda:0',kernel_assets=None):
         model_parameters=sum(p.numel() for p in model.parameters()),trainable_parameters=sum(p.numel() for p in model.parameters() if p.requires_grad),
         load_seconds=time.perf_counter()-started,device=str(next(model.parameters()).device),dtype=str(next(model.parameters()).dtype),
         assets_sha256=sha256(assets_path),repo=assets['repo'],revision=assets['revision'],
-        selected_inference_functions=selected,optional_kernel_assets_sha256=sha256(kernel_assets/'report.json') if kernel_assets else None,
+        triton_driver_discovery=driver_discovery,selected_inference_functions=selected,optional_kernel_assets_sha256=sha256(kernel_assets/'report.json') if kernel_assets else None,
         depthwise_convolution_functions=sorted({r['causal_conv1d_update'] for r in selected}),
         gpu_name=torch.cuda.get_device_name(device),gpu_total_memory=torch.cuda.get_device_properties(device).total_memory,
         compute_capability=list(torch.cuda.get_device_capability(device)))
