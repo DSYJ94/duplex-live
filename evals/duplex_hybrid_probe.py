@@ -18,6 +18,7 @@ from evals.duplex_endpoint import TurnEndpoint
 from evals.duplex_speaker import StreamingSpeaker
 from evals.recovery_worker import RecordWorld,run_worker,WorkerContractError,lookup_receipts
 from evals.utterance_playout import render_utterances
+from evals.duplex_dispatch import dispatch_status
 
 
 class PlaybackClock:
@@ -187,7 +188,8 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",inter
                 queue.append(item)
             # Acoustic quiet alone is insufficient: await delayed ASR words and
             # the newest semantic dispatch before releasing any queued result.
-            barrier=policy.speech_active or bool(policy.tokens) or bool(futures)
+            dispatch_state=dispatch_status(world,futures.values())
+            barrier=policy.speech_active or bool(policy.tokens) or bool(dispatch_state['unresolved_decisions'])
             if interrupt_policy=='lexical':barrier=barrier or now()-last_voice_s<.66
             if active and not speaker.active and now()>=clock.end/rate:
                 log('speech_fully_played',event_id=active['event_id'],task_id=active['task_id'])
@@ -203,7 +205,7 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",inter
                 active=queue.pop(0);generation_count+=1
                 active['event_id']='speech-'+str(generation_count);clock=PlaybackClock()
                 speaker.start(active['result']['content'])
-                log('speech_started',event_id=active['event_id'],task_id=active['task_id'],text=active['result']['content'])
+                log('speech_started',event_id=active['event_id'],task_id=active['task_id'],text=active['result']['content'],active_background_task_ids=dispatch_state['actual_background_tasks'])
             # Generate only bounded PCM lead. A step may overrun; never disguise
             # that as a fast clock: the next ASR backlog records the actual delay.
             if (active and speaker.active and clock.end/rate-now()<.24
@@ -252,7 +254,7 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",inter
         frames=frame,synthetic_tail_frames=max(0,frame-real_frames),asr_compute_p95_s=float(np.percentile(steps,95)),
         maximum_input_backlog_s=max(backlogs),declared_counterfactual_world=world.records,
         controlled_lookup_delivery_minimum_s=delay_s,controller_protocol=controller_protocol,interrupt_policy=interrupt_policy,
-        worker_kind=worker_kind,actual_tool_context_enabled=include_tool_context,control_executions_sha256=sha256(out/'control-executions.json') if include_tool_context else None,
+        foreground_barrier='actual-execution-aware',worker_kind=worker_kind,actual_tool_context_enabled=include_tool_context,control_executions_sha256=sha256(out/'control-executions.json') if include_tool_context else None,
         read_tools_scoped_to_user_identified_available_projects=scope_read_tools,
         controller_provider=controller.provider_name if controller else 'openai',controller_model=controller.model_id if controller else 'gpt-6-luna',
         lexical_interruption_is_not_a_backchannel_classifier=interrupt_policy=='lexical',world_tasks=world.tasks,actual_tool_receipts=world.receipts,
@@ -333,7 +335,7 @@ def main():
         worker_kind=args.worker_kind,actual_tool_context_enabled=args.include_tool_context,
         read_tools_scoped_to_user_identified_available_projects=args.scope_read_tools,
         component_code_sha256={name:sha256(Path(__file__).with_name(name)) for name in
-            ('recovery_worker.py','duplex_endpoint.py','duplex_speaker.py','kyutai_stt_probe.py','duplex_speech_obligations.py','duplex_tool_context.py','duplex_reasoning_worker.py')},
+            ('recovery_worker.py','duplex_endpoint.py','duplex_speaker.py','kyutai_stt_probe.py','duplex_speech_obligations.py','duplex_tool_context.py','duplex_reasoning_worker.py','duplex_dispatch.py')},
         probe_code_sha256=sha256(Path(__file__)),
         input_profile=args.input_profile,input_validator=validator,evaluation_use=args.evaluation_use,input_quality_sha256=sha256(args.input_quality) if args.input_quality else None,
         stt_assets_sha256=sha256(args.stt_assets),tts_assets_sha256=sha256(args.tts_assets),

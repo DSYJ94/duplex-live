@@ -4820,3 +4820,21 @@ browser QA could not run: iab/chrome providers unavailable, browser inventory
 empty, native computer-use pipe startup failed. Do not bypass that with another
 computer-control mechanism or claim browser/physical acceptance. Socket/auth/
 private-file tests and JavaScript syntax checks pass. Owner test remains pending.
+
+Plain words: timing audit of actual network7515423 finds an important software
+barrier. Real API interval15.988–28.974s; ordinary first scheduled server PCM29.736s,
+so this run did NOT speak while the API was still computing. The media loop's
+bool(futures) condition holds ready foreground speech behind every worker. This
+explains the delay despite verified nonblocking local inference; no model/GPU
+training change can remove that client barrier. Unused owner job7515697 is
+superseded before publishing access, after confirming no owner sessions exist.
+
+Plain words: correct the barrier using validated application execution state.
+Unknown semantic decisions still block queued speech. An actual lookup_record
+or delegate_reasoning dispatch can continue in the background; a model plan alone
+cannot clear the barrier. Retired work also cannot hold foreground speech. Read
+results keep their existing revision/delivery guards and declared timing floor.
+New synchronization tests exercise an actual pending reasoner fixture and a new
+unresolved foreground request separately. Re-run real network inference and the
+recorded regression before restarting the owner trial; require measured timing,
+not just final text or reordered playback, for any concurrency improvement claim.
