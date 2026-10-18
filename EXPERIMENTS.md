@@ -4473,3 +4473,9 @@ Prepare an isolated CPU head proof importing only exact Git-pinned neural module
 ## 2026-10-18 — separate self-hosted text intelligence component screen
 
 Plain words: external gpt-6-luna remains the current hybrid brain; native7B speech weights have not gained sufficient ordinary intelligence. A text-only4B Qwen instruct component may provide local knowledge/tool selection without old30B layer/tick changes. Exact public Apache2.0 assets are pinned. CPU imports on current SIF already succeed with existing Transformers4.55.3; prepare hash/index/template checks without changing packages. No model inference or training is established by the asset check. If pursued, typed controller tests must precede voice integration and cannot count as native speech-model intelligence or full-system acceptance.
+
+## 2026-10-18 — detector head CPU proof complete; exploratory shadow variant prepared
+
+Plain words:7511928 strict-loads all71 detector tensors exactly, without the desktop stack. Cached/full random-feature probability error1.19e-7; future-perturbation prefix error0; either-channel perturbation changes outputs. This establishes head loading/causality only.
+
+A separate unpaced shadow probe scores the completed actual lexical-policy recordings1790/1791. It uses the already independently verified official Moshi Mimi continuous encoder at raw24kHz, explicitly DIFFERENT from the publisher's HF/16kHz-resampling path; feature parity is not asserted. The frozen head receives only current/past acoustic features of user and actually played assistant PCM. Source annotations are read only after all scores. Preserve feature tensors, per-frame scores, source hashes and throughput; no threshold, speech control, deployment/model-license approval, training or full-system qualification follows from this diagnostic. Shared packages and the working speech runtime remain unchanged.
