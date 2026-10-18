@@ -113,7 +113,25 @@ def fixtures():
     ]
 
 
-def trial(generator,fixture,out):
+CONTRACT_EXAMPLES = """
+Illustrations of the action contract, NOT conversation history or execution receipts:
+Example A: available records contain only Sample East/storage code, but the user asks
+'What is the storage code?' without identifying a project. Choose respond_to_user
+with route clarify and content 'Which project do you mean?' A sole available name
+is still not user identification.
+Example B: active task old-demo is a Sample East/storage-code lookup. The user says
+'Use Project Sample West instead; do not read the Sample East result.' Choose
+replace_lookup with task_ids ['old-demo'], project 'Sample West', field 'storage code'.
+This retires the old work AND reads the corrected record; cancel_lookup alone would
+leave the user's replacement request unfulfilled.
+Example C: the same active task exists and the user says only 'Cancel that lookup.'
+Choose cancel_lookup with task_ids ['old-demo']; do not invent a replacement.
+Only the ACTUAL state and actual latest user below authorize this request, not these
+illustrative names. Do not output a preliminary plan; invoke the selected function.
+"""
+
+
+def trial(generator,fixture,out,prompt_profile='base'):
     world=RecordWorld(fixture['records']);receipts=[];stages=[]
     if fixture.get('pending'):world.read('pending-oak',fixture['pending'],'meeting room')
     revision=world.reserve('current');context=[dict(role='user',text=fixture['user'])]
@@ -124,6 +142,7 @@ def trial(generator,fixture,out):
         'Honor negation and corrections. Use replace_lookup when a pending lookup is corrected to a different identified project. '
         'Cancel only identified existing tasks, never current. Keep user-facing content within35 words. Available records contain field NAMES only; '
         'their values have not been provided. Actual client state: '+json.dumps(available))
+    if prompt_profile=='contract-examples':instructions+=CONTRACT_EXAMPLES+'\nACTUAL client state: '+json.dumps(available)
     messages=[dict(role='system',content=instructions),dict(role='user',content=fixture['user'])];tools=functions()
     first_prompt=generator.tokenizer.apply_chat_template(messages,tools=tools,tokenize=False,add_generation_prompt=True)
     if any(value in first_prompt for record in world.records.values() for value in record.values()):raise RuntimeError('Private value leaked into initial prompt')
@@ -153,24 +172,25 @@ def trial(generator,fixture,out):
             content=reply['arguments']['content']
         action_passed=route==fixture['kind']
         if fixture.get('replacement'):action_passed=action_passed and world.tasks['pending-oak']['cancelled'] and world.tasks['current'].get('project')=='Pine Central'
-        record=dict(id=fixture['id'],execution_completed=True,route=route,content=content,expected_action_kind=fixture['kind'],action_contract_passed=action_passed,
+        record=dict(id=fixture['id'],prompt_profile=prompt_profile,execution_completed=True,route=route,content=content,expected_action_kind=fixture['kind'],action_contract_passed=action_passed,
             actual_receipts=receipts,world_tasks=world.tasks,stages=stages,semantic_review='pending')
     except Exception as error:
-        record=dict(id=fixture['id'],execution_completed=False,error_type=type(error).__name__,message=str(error),actual_receipts=receipts,world_tasks=world.tasks,stages=stages,action_contract_passed=False)
+        record=dict(id=fixture['id'],prompt_profile=prompt_profile,execution_completed=False,error_type=type(error).__name__,message=str(error),actual_receipts=receipts,world_tasks=world.tasks,stages=stages,action_contract_passed=False)
     (out/(fixture['id']+'.json')).write_text(json.dumps(record,indent=2)+'\n');return record
 
 
 def main():
-    ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('--assets',type=Path,required=True);ap.add_argument('--out',type=Path,required=True);args=ap.parse_args()
+    ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('--assets',type=Path,required=True);ap.add_argument('--out',type=Path,required=True)
+    ap.add_argument('--prompt-profile',choices=('base','contract-examples'),default='base');args=ap.parse_args()
     args.out.mkdir(parents=True,exist_ok=False)
     import torch
     from torch.nn.attention import sdpa_kernel,SDPBackend
     model,tokenizer,proof=load_model(args.assets);generator=Generator(model,tokenizer)
     with torch.inference_mode(),sdpa_kernel(SDPBackend.MATH):
         warm=generator.request([dict(role='user',content='Say ready.')],[])
-        results=[trial(generator,row,args.out) for row in fixtures()]
+        results=[trial(generator,row,args.out,args.prompt_profile) for row in fixtures()]
     report=dict(schema='dl-local-qwen-typed-controller-v1',load=proof,results=results,warmup=warm,
-        local_text_model=True,remote_api_used=False,input_is_typed=True,reference_audio_supplied=False,
+        prompt_profile=args.prompt_profile,local_text_model=True,remote_api_used=False,input_is_typed=True,reference_audio_supplied=False,
         speech_generation_executed=False,training_approved=False,optimizer_steps=0,duplex_system_qualified=False,
         native_speech_model_qualified=False,actual_tool_scope='episode-local read-only records and task lifecycle only',
         code_sha256=sha256(Path(__file__)))
