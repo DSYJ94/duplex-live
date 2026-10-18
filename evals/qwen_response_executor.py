@@ -208,9 +208,12 @@ def main():
     ap.add_argument('--assets',type=Path,required=True);ap.add_argument('--out',type=Path,required=True)
     ap.add_argument('--attention-backend',choices=('math','flash'),default='math')
     ap.add_argument('--pending-speech-protocol',choices=('array','explicit-actions'),default='array')
+    ap.add_argument('--kernel-assets',type=Path)
     ap.add_argument('--controller-transport',choices=('in-process','subprocess'),default='in-process')
     ap.add_argument('--provider',choices=('qwen4b','qwen35'),default='qwen4b')
     args=ap.parse_args();args.out.mkdir(parents=True,exist_ok=False)
+    if args.kernel_assets is not None and (args.provider!='qwen35' or args.controller_transport!='in-process'):
+        raise ValueError('First optional-kernel proof supports newer9B in-process only')
     if args.controller_transport=='subprocess':
         if args.provider!='qwen35' or args.attention_backend!='math':raise ValueError('Resident proof supports the explicit newer model/math backend only')
         from evals.qwen35_rpc import ResidentQwen35
@@ -220,7 +223,8 @@ def main():
         if args.provider=='qwen35':
             from evals.qwen35_controller import Qwen35ResponseExecutor
             executor_class=Qwen35ResponseExecutor
-        executor=executor_class(args.assets,device='cuda:0',attention_backend=args.attention_backend,pending_speech_protocol=args.pending_speech_protocol)
+        extra=dict(kernel_assets=args.kernel_assets) if args.provider=='qwen35' else {}
+        executor=executor_class(args.assets,device='cuda:0',attention_backend=args.attention_backend,pending_speech_protocol=args.pending_speech_protocol,**extra)
     results=[]
     rows=fixtures()+[
         dict(id='ordinary-while-pending',records={'Oak Central':{'meeting room':'room seven'}},pending='Oak Central',kind='answer',
@@ -257,6 +261,7 @@ def main():
     finally:
         if hasattr(executor,'close'):executor.close()
     report=dict(schema='dl-local-qwen-worker-contract-v1',results=results,load=executor.proof,warmup=executor.warmup,
+        optional_kernel_assets_sha256=sha256(args.kernel_assets/'report.json') if args.kernel_assets else None,
         controller_transport=args.controller_transport,transport_info=getattr(executor,'transport_info',None),
         provider=executor.provider_name,pending_speech_protocol=args.pending_speech_protocol,attention_backend=args.attention_backend,remote_api_used=False,input_is_typed=True,optimizer_steps=0,development_cases_reused=True,
         speech_generation_executed=False,duplex_system_qualified=False,code_sha256=sha256(Path(__file__)))

@@ -40,13 +40,16 @@ def retain_published_auxiliary(model,weights):
     return sorted(extra)
 
 
-def load_model(assets_path,device='cuda:0'):
+def load_model(assets_path,device='cuda:0',kernel_assets=None):
     import sys
     assets=json.loads(assets_path.read_text())
     from evals.qwen35_runtime import verified_runtime
     runtime=Path(assets['runtime_folder'])
     if sha256(runtime/'report.json')!=assets['runtime_report_sha256']:raise RuntimeError('Changed runtime proof')
-    package,_=verified_runtime(runtime);sys.path.insert(0,str(package))
+    package,_=verified_runtime(runtime);sys.path.insert(0,str(package));kernel_package=None
+    if kernel_assets is not None:
+        from evals.qwen35_kernels import verified_kernels
+        kernel_package,_=verified_kernels(kernel_assets,runtime);sys.path.insert(0,str(kernel_package))
     import torch
     from safetensors.torch import load_file
     from transformers import AutoConfig,AutoTokenizer,AutoModelForImageTextToText
@@ -83,13 +86,29 @@ def load_model(assets_path,device='cuda:0'):
             raise RuntimeError('Loaded text-model tensor differs from source: '+key)
     if any(p.device.type=='meta' for p in model.parameters()):raise RuntimeError('Unmaterialized model parameter')
     model.eval().requires_grad_(False).to(device);model.tie_weights();torch.cuda.synchronize(device)
+    selected=[]
+    for name,module in model.named_modules():
+        if type(module).__name__!='Qwen3_5GatedDeltaNet':continue
+        functions={key:getattr(module,key).__module__ for key in ('causal_conv1d_update','chunk_gated_delta_rule','recurrent_gated_delta_rule')}
+        functions['gated_norm']=type(module.norm).__module__
+        if kernel_package is not None:
+            for key in ('chunk_gated_delta_rule','recurrent_gated_delta_rule','gated_norm'):
+                source=sys.modules[functions[key]].__file__
+                if not functions[key].startswith('fla.') or not Path(source).resolve().is_relative_to(kernel_package.resolve()):
+                    raise RuntimeError('Requested FLA operator not actually selected from verified package')
+        selected.append(dict(module=name,**functions))
+    if len(selected)!=24:raise RuntimeError('Unexpected Gated DeltaNet layer inventory')
     proof=dict(strict=True,all_source_tensors_exact_on_cpu_before_device_copy=True,source_tensor_count=len(index),
         model_state_tensor_count=len(state),explicit_true_tied_aliases=aliases,missing=[],unexpected=[],
         declared_retained_unused_mtp_tensors=auxiliary,mtp_speculative_inference_executed=False,
         core_model_tensor_count=len(state)-len(auxiliary),vision_weights_loaded=True,vision_inference_executed=False,
         model_parameters=sum(p.numel() for p in model.parameters()),trainable_parameters=sum(p.numel() for p in model.parameters() if p.requires_grad),
         load_seconds=time.perf_counter()-started,device=str(next(model.parameters()).device),dtype=str(next(model.parameters()).dtype),
-        assets_sha256=sha256(assets_path),repo=assets['repo'],revision=assets['revision'])
+        assets_sha256=sha256(assets_path),repo=assets['repo'],revision=assets['revision'],
+        selected_inference_functions=selected,optional_kernel_assets_sha256=sha256(kernel_assets/'report.json') if kernel_assets else None,
+        depthwise_convolution_functions=sorted({r['causal_conv1d_update'] for r in selected}),
+        gpu_name=torch.cuda.get_device_name(device),gpu_total_memory=torch.cuda.get_device_properties(device).total_memory,
+        compute_capability=list(torch.cuda.get_device_capability(device)))
     return model,tokenizer,proof
 
 
@@ -122,13 +141,13 @@ class NonThinkingTokenizer:
 
 class Qwen35ResponseExecutor(QwenResponseExecutor):
     provider_name='local-transformers-qwen35-9b'
-    def __init__(self,assets,device='cuda:0',prompt_profile='contract-examples',attention_backend='math',pending_speech_protocol='array'):
+    def __init__(self,assets,device='cuda:0',prompt_profile='contract-examples',attention_backend='math',pending_speech_protocol='array',kernel_assets=None):
         if attention_backend!='math':raise ValueError('First newer9B proof requires explicit math attention')
         if prompt_profile not in ('base','contract-examples'):raise ValueError('Unknown prompt profile')
         if pending_speech_protocol not in ('array','explicit-actions'):raise ValueError('Unknown speech action protocol')
         self.pending_speech_protocol=pending_speech_protocol
         self.attention_backend=attention_backend
-        self.model,self.tokenizer,self.proof=load_model(assets,device)
+        self.model,self.tokenizer,self.proof=load_model(assets,device,kernel_assets)
         self.generator=Generator(self.model,NonThinkingTokenizer(self.tokenizer));self.model_id=self.proof['repo']
         self.prompt_profile=prompt_profile;self.lock=threading.RLock();self.history={};self.counter=0
         import torch
