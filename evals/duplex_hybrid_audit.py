@@ -72,8 +72,8 @@ def main():
             work.append(dict(event_id=identity,task_id=starts[identity]['task_id'],first=min(p[0] for p in positions),
                 last=max(p[1] for p in positions),expected=starts[identity]['text'],fully=identity in complete))
         work.extend(aggregates)
-        for item in work:
-            identity=item['event_id'];first=item['first'];last=item['last'];clip=audio[first:last]
+        for entry in work:
+            identity=entry['event_id'];first=entry['first'];last=entry['last'];clip=audio[first:last]
             if len(clip)!=last-first:raise RuntimeError('Played clip exceeds actual capture')
             sf.write(caseout/(identity+'-played.wav'),clip,rate,subtype='FLOAT')
             g=math.gcd(rate,16000);resampled=resample_poly(clip,16000//g,rate//g).astype(np.float32)
@@ -82,14 +82,14 @@ def main():
             for segment in result['segments']:
                 for item in [segment]+segment.get('words',[]):
                     if not 0<=item['start']<=item['end']<=duration+.02:bounds=False
-            expected=item['expected'];fully=item['fully']
-            row=dict(scenario=case['scenario'],event_id=identity,task_id=item['task_id'],
+            expected=entry['expected'];fully=entry['fully']
+            row=dict(scenario=case['scenario'],event_id=identity,task_id=entry['task_id'],
                 played_start_s=first/rate,played_end_s=last/rate,fully_played=fully,planned_text=expected,
                 transcript=result['text'],word_error_rate=wer(norm_words(expected),norm_words(result['text'])) if fully else None,
                 valid_timestamp_bounds=bounds,played_audio_sha256=sha256(caseout/(identity+'-played.wav')),
                 cancelled_generated_material_excluded=True,task_qualified=False)
-            if item.get('pause_aggregate'):
-                row.update(playback_event_ids=item['playback_event_ids'],pause_aggregate=True,intentional_pause_included=True)
+            if entry.get('pause_aggregate'):
+                row.update(playback_event_ids=entry['playback_event_ids'],pause_aggregate=True,intentional_pause_included=True)
             (caseout/(identity+'-whisper.json')).write_text(json.dumps(result,indent=2)+'\n');results.append(row)
     audit=dict(schema='dl-concurrent-hybrid-speech-audit-v1',source_report_sha256=sha256(args.run/'report.json'),
         results=results,excluded_failed_cases=report.get('failures',[]),

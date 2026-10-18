@@ -3,7 +3,7 @@
 Plain words: CURRENT05:48UTC /07:48Berlin. Owner away; continue autonomously,
 no optional questions before return. Goal ACTIVE. No complete native or hybrid
 qualification. No optimizer steps or adopted native weights this continuation.
-Cloud validation remains paused. Current model source0d63370; preserve unrelated
+Cloud validation remains paused. Current experiment sourcecdf0ab9, owner source0d63370; preserve unrelated
 modified timeline.pyc and untracked roadmap.html.
 
 Plain words: LIVE OWNER DEMO http://localhost:8767 now serves experimental compact
@@ -16,9 +16,9 @@ Five served assets match tested source; private bootstrap and paths404 checked;
 WebSocket upgrade verified without authenticating/starting a model session.
 Do not interrupt it blindly: owner can use the link without sending chat.
 Old7516113 had ZERO owner sessions immediately before cancellation request;
-retirement receipt /private/tmp/duplex-retire-owner-v2-full.json. Confirm sacct
-before declaring final cancellation. Old HTTP helper31225 retired, separate old
-forward26055 still available until deliberately closed. Earlier7515697 confirmed
+retirement receipt /private/tmp/duplex-retire-owner-v2-full.json. Accounting confirms
+CANCELLED at05:47:14UTC; saved owner-rollover-accounting.txt. Old HTTP helper31225
+retired; old forward26055 ended255 with SSH timeout. Current forward49799 verified. Earlier7515697 confirmed
 CANCELLED at04:29:14UTC. New bounded job4h30m from about05:44UTC, helper4h from
 about05:46UTC. No browser/device voice approval or overall qualification.
 
@@ -77,6 +77,23 @@ training. Owner6574 explicitly enables compact, gated on these spoken tests plus
 sixteen typed6456/6457 and actual existing-task cancellation6503/6505. Failures and
 wording limits from other tests stay visible; two new voice clips are not overall
 qualification. Morning evidence report docs/OVERNIGHT-2026-10-18.md.
+
+Plain words: ACTIVE recorded-only exact-pause experiment cdf0ab9. Actual run_case
+fixture reproduces one controller dispatch but TWO generator starts across a
+nonlexical acknowledgment. New acoustic-pause retains TTS state/unheard PCM,
+stops playback promptly, resumes exact samples once after660ms quiet/no ASR words.
+Any arrived word commits existing interruption; stop/replace still resolves old
+obligation. NOT a learned acknowledgment classifier; recognized Right remains
+open. Explicit live rejection: browser resume protocol is NOT implemented.
+Owner6574 remains source0d63370/acoustic. Twenty-two pause/playout/worker/format
+checks and five live frame/socket/access tests pass; no native weights/training.
+Matched actual005 jobs7516704 acoustic /6706 pause; genuine015 pause6708. Independent
+speech audits6705/6707/6709. Full retained-generation audit includes the actual
+pause; individual fragments remain partial/unscored. All source local/remote MD5
+matches; original005 validatorce01b5b exact6be204 SHA, original015 validator22a5912.
+Submission receipt /private/tmp/duplex-exact-pause-submit-full.txt; progress helper
+/private/tmp/duplex-exact-pause-progress.py writes full JSON. Retrieve actual results
+before claiming voice continuity/intelligibility or adopting anything in owner UI.
 
 Plain words: KNOWN REMAINING FAILURES — natural backchannel017 still interrupts
 and restarts; record020 narrates withheld metadata; unavailable023 needs better

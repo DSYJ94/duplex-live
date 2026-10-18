@@ -5036,3 +5036,21 @@ unscored and score the full retained generation across its real pause, including
 silence. No clipped-fragment full-text WER or removed-pause latency claim. Thirteen
 pause/playout tests and fifteen worker/dispatch/format/pause checks pass locally.
 Next compare unchanged acoustic and new pause on approved005, then genuine015.
+
+
+Plain words: actual acknowledgment7516704 acoustic baseline restarts its answer;
+7516706 pause resumes SAME generation, restores5179 unheard samples, and produces
+one completed response across two playback segments. Both ASR streams omit Uh-huh.
+Pause at10.414s, resume scheduling11.622s; do not equate this pause with natural
+uninterrupted backchannel behavior. Actual genuine0157516708 commits its pause
+when new words arrive and produces only the requested short replacement. However
+its original TTS had no heard samples before user onset, so it DOES NOT establish
+audible interruption latency. Test approved018 with an actually audible prefix.
+
+Plain words: independent audits6705/6707/6709 failed in a NEW audit refactor:
+word-timestamp loop reused item and overwrote the work-item dict, causing KeyError
+expected. No model or speech-quality failure inferred. CPU test through actual
+audit main with timestamped recognizer fixture reproduces the exact KeyError;
+rename work entry separately, then all23 pause/playout/worker/format tests pass.
+Rescore preserved actual WAV/packet evidence with fixed audit; do not regenerate
+those conversations to hide the failed scorer. Failed audit artifacts stay retained.

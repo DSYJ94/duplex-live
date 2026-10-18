@@ -1,4 +1,6 @@
 import json,tempfile,time,unittest
+import sys
+from types import SimpleNamespace
 from pathlib import Path
 from unittest.mock import patch
 import numpy as np
@@ -33,15 +35,25 @@ class Controller:
 def worker(context,world,task,**kwargs):return dict(route='answer',content='The lit portion of the Moon changes as it orbits Earth.',consume_pending_speech_ids=[p['id'] for p in kwargs['pending_speech']] if len(context)>1 else [],receipts=[])
 
 class ExactSpeechPause(unittest.TestCase):
- def run_probe(self,policy,lexical=False,twice=False):
+ def run_probe(self,policy,lexical=False,twice=False,audit=False):
   with tempfile.TemporaryDirectory() as d:
    p=Path(d);user=np.zeros(100*1920,dtype=np.float32)
    user[:3*1920]=.1;user[20*1920:23*1920]=.1
    if twice:user[50*1920:53*1920]=.1
    wav=p/'input.wav';sf.write(wav,user,24000,subtype='FLOAT');ref=p/'reference.json';ref.write_text(json.dumps(dict(user_words=[dict(text='Explain phases. Uh huh.')])) )
-   speaker=Speaker();clock=Clock();row=dict(scenario_id='fixture-ack',split='fresh-evaluation',path=str(wav),reference_path=str(ref),wav_sha256=probe.sha256(wav),world={})
+   speaker=Speaker();clock=Clock();row=dict(scenario_id='case',split='fresh-evaluation',path=str(wav),reference_path=str(ref),wav_sha256=probe.sha256(wav),world={})
    with patch.object(probe,'time',clock),patch.object(probe,'run_worker',worker):
     result=probe.run_case(Listener(lexical),speaker,row,p/'case',0,'state-aware',policy,Controller())
+   if audit:
+    from evals import duplex_hybrid_audit
+    (p/'report.json').write_text(json.dumps(dict(schema='dl-concurrent-hybrid-development-v1',same_process_same_gpu=True,
+      component_execution_completed=True,hybrid_system_qualified=False,results=[result])))
+    # Exercise main's actual decode-result loop, including word timestamps, with
+    # a CPU-only recognizer fixture. This is parser coverage, not speech scoring.
+    recognizer=SimpleNamespace(load_model=lambda *a,**k:object(),transcribe=lambda *a,**k:dict(text='Fixture transcript',segments=[dict(start=0.,end=.001,words=[dict(start=0.,end=.001,word='Fixture')])]))
+    with patch.dict(sys.modules,{'whisper_timestamped':recognizer}),patch.object(sys,'argv',['audit','--run',str(p),'--out',str(p/'audit')]),patch('builtins.print'):
+     duplex_hybrid_audit.main()
+    self.last_audit=json.loads((p/'audit/report.json').read_text())
    events=json.loads((p/'case/events.json').read_text());audio,_=sf.read(p/'case/model.wav',dtype='float32');heard=[]
    for group in result['playout']['events'].values():
     for packet in group['packets']:
@@ -96,5 +108,10 @@ class ExactSpeechPause(unittest.TestCase):
   starts[second]['same_generator']=True
   case['playout']['events']['other']=dict(actual_stop_s=None,packets=[dict(playback_start_sample=int(2.*24000),samples=100)])
   with self.assertRaises(ValueError):grouped_completions(case,case['playout'],starts)
+ def test_actual_audit_parser_keeps_work_item_after_word_timestamp_loop(self):
+  self.run_probe('acoustic-pause',audit=True)
+  rows=self.last_audit['results'];full=[r for r in rows if r['fully_played']]
+  self.assertEqual(len(full),1);self.assertTrue(full[0]['pause_aggregate'])
+  self.assertTrue(all(r['word_error_rate'] is None for r in rows if not r['fully_played']))
 
 if __name__=='__main__':unittest.main()
