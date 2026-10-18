@@ -1,5 +1,20 @@
 # HANDOFF — overnight recovery, 18 October
 
+Plain words: OWNER FEEDBACK18Oct: recorded hybrid voice ACCEPTABLE; slight first-
+response delay remains. Owner never connected to demo; page said service not
+connected. Live job7519401 stillRUNNING; oldSSHforward17949 had exited255/server
+notresponding. Restored tunnel session42683/PID94445, same localhost8779→nid010147:
+8788; helper79318 unchanged onlocalhost8767. HTTP200 page/client/playout and private
+session-access binding verified without printing token or starting microphone.
+Owner told refresh http://localhost:8767 and Start conversation. Transport watcher
+session20977 /private/tmp/duplex-owner-forward-watch.py monitors existingPID (no
+interrupt) and retriesSSHonly after exit for3hours, statusfile /private/tmp/duplex-
+owner-forward-watch-status.json. No new compute/auth/model session. Proof owner-
+7519401-reconnect-integrity.json. Physical browser/microphone acceptance stillopen.
+Matched function-name training actuallyRUNNING7520623, source710b305; failed7520602
+had ZERO updates. Preserve/observe7520623; no duplicate launch. Current main training
+files require the isolated original compiler branch for this matched data/baseline.
+
 Plain words: TRAINING source correction18Oct: initial function-namejob7520602
 FAILED BEFORE model load/update, strict verified_data compiler-hash guard caught
 newer qwen_response_executor/duplex_reasoning_worker sources. Guard UNCHANGED.

@@ -113,8 +113,8 @@ Plain words: Automatic approval review rejected exporting those clips for extern
 transcription. That job was not submitted and no clip was sent. The safer local
 Kyutai recognizer completed instead, with zero external requests. It is also the
 prototype input listener, so it is a second recognizer relative to Whisper, not
-an independent end-to-end acceptance system. Owner voice-quality judgment remains
-pending; no approval is inferred from transcription scores.
+an independent end-to-end acceptance system. The owner subsequently accepts the current recorded hybrid voice, noting a slight
+initial-response delay. This approval comes from listening, not transcription scores.
 
 ## What the supplied research changed
 

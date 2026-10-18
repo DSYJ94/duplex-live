@@ -103,7 +103,8 @@ pending speech ID. Reject this as a duplicate-prevention fix; no runtime adoptio
 conversations remain frozen development evidence for any subsequent change.
 
 Plain words: Physical microphone, browser-engine playback, room echo/double-talk
-and human approval of the current hybrid voice remain unverified. Cloud validation
+remain unverified. The owner accepts the current recorded voice, noting a slight
+initial-response delay. Cloud validation
 remains paused. The overall goal remains active.
 
 ## Next bounded training ablation
@@ -131,3 +132,16 @@ branch `experiments/function-name-loss-20261018`, commit710b305, retains the new
 loss-mask code while preserving the original compiler/baseline. Those historical
 controller files must not be merged into the current live implementation. This is
 a matched training ablation; integration with newer runtime actions remains separate.
+
+## Owner feedback and live connection
+
+Plain words: The owner accepts the recorded hybrid voice, with a slight delay from
+initial prompt to response. That listening approval is distinct from a successful
+live microphone/browser trial. The owner had been unable to open the temporary demo:
+the voice job7519401 was still running, but its localhost8779 SSH forward had exited
+with a server-not-responding timeout. Reconnecting the forward restores HTTP200 for
+the page and playback scripts and verifies the private session-access binding without
+printing its token. Demo remains http://localhost:8767; refresh before Start conversation.
+A local watcher monitors the current transport and retries SSH after it exits; it
+starts no microphone/model sessions or new compute jobs. The cluster service remains
+temporary, subject to its original idle and Slurm wall limits.
