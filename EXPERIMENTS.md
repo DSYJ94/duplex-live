@@ -4938,3 +4938,28 @@ answer oracle or cancellation-by-speech is added. Recheck the original twelve
 questions as development plus four new task/constraint questions in BOTH formats.
 Budget raised to eight actual external requests per arm so the old six-call cap
 does not hide the logic result. No live service change or optimizer steps.
+
+
+Plain words: task-state16-question typed development7516456 native /6457 compact
+both complete. Ten numerical outputs per arm match independent CPU oracles;
+both quantified-logic answers are correct, unknown private facts are not invented,
+nonexistent cancellation is no longer claimed, and both no-tools requests stay
+local. Each arm chooses five real stronger-model requests. Native/compact both
+add All tasks are complete when no task exists; unknown-contact wording also
+makes broader unsupported privacy/storage claims. These remain wording limits;
+this small typed screen does not establish complete-task or duplex qualification.
+Actual existing-task cancellation still needs a regression after the prompt change.
+
+Plain words: dispatch guard fix validates nonempty speech and every owed speech
+ID BEFORE mutating a reasoning cancellation. Previously an unknown owed ID could
+cancel actual work then fail validation. A fixture regression checks both invalid
+ID and blank content leave the real background task uncancelled; nine targeted
+worker/dispatch/format tests pass. No model-generated content is repaired.
+
+Plain words: bounded static-cache decode experiment prepared in the component
+worker only, default eager unchanged. The pinned Transformers5.5.3 source has
+StaticCache layers for both linear and full attention and native generate-time
+compilation. Compare eager, static-eager and static-compiled with fullgraph=True
+and reduce-overhead. Record actual cache and compiled-call creation; inspect all
+actual outputs, errors and warmup cost. No silent fallback is authorized, no
+shared speech runtime is edited, and live/RPC integration remains unmodified.

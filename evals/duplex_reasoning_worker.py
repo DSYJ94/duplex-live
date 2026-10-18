@@ -89,6 +89,14 @@ def run_reasoning_worker(context,world,task_id,model,expected_revision,dispatch_
     call=calls[0];arguments=json.loads(call['arguments'])
     event=dict(response_id=response['id'],model=response['model'],provider=response_executor.provider_name,usage=response.get('usage'),
         seconds=time.monotonic()-before,local_inference=response.get('local_inference'),output=response['output'])
+    # Reject invalid speech obligations before any cancellation changes state.
+    # Model schema validation alone cannot verify these live speech identities.
+    if call['name'] in ('respond_to_user','cancel_reasoning'):
+        content=arguments.get('content');consumed=arguments.get('consume_pending_speech_ids')
+        if not isinstance(content,str) or not content.strip():raise WorkerContractError('Reasoning worker produced empty speech',dict(response=response))
+        if (not isinstance(consumed,list) or any(not isinstance(identity,str) for identity in consumed)
+                or len(set(consumed))!=len(consumed) or not set(consumed)<={p['id'] for p in pending_speech}):
+            raise WorkerContractError('Unknown owed speech identity',dict(response=response))
     if call['name']=='respond_to_user':
         route=arguments['route'];content=arguments['content'];consumed=arguments['consume_pending_speech_ids'];receipts=[]
     elif call['name']=='delegate_reasoning':

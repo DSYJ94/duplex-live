@@ -3,6 +3,7 @@ import threading
 import unittest
 from concurrent.futures import ThreadPoolExecutor
 from evals.duplex_reasoning_worker import ReasoningWorld,reasoning_receipts,run_reasoning_worker
+from evals.recovery_worker import WorkerContractError
 
 
 class ReasoningBoundary(unittest.TestCase):
@@ -42,6 +43,20 @@ class ReasoningBoundary(unittest.TestCase):
         with self.assertRaises(ValueError):ReasoningWorld({'Private':{'field':'value'}})
         for receipt in ({'tool':'lookup_record'},{'tool':'delegate_reasoning','executed':True,'content':'Claim'}):
             with self.assertRaises(ValueError):reasoning_receipts([receipt])
+
+    def test_invalid_speech_cannot_cancel_real_background_work(self):
+        class Controller:
+            provider_name='fixture-only'
+            def __init__(self,arguments):self.arguments=arguments
+            def __call__(self,payload):
+                return dict(id='fixture',status='completed',model='fixture-only',output=[dict(type='function_call',name='cancel_reasoning',arguments=json.dumps(self.arguments))])
+        for content,consumed in [('Cancelled.',['unknown']),('   ',[])]:
+            with self.subTest(content=content,consumed=consumed):
+                world=ReasoningWorld({});world.reserve('old');world.tasks['old'].update(operation='delegate_reasoning',phase='running')
+                revision=world.reserve('current');controller=Controller(dict(task_ids=['old'],content=content,consume_pending_speech_ids=consumed))
+                with self.assertRaises(WorkerContractError):
+                    run_reasoning_worker([dict(role='user',text='Cancel the old task')],world,'current','fixture-only',revision,'state-aware',[],controller)
+                self.assertFalse(world.tasks['old']['cancelled'])
 
 
 if __name__=='__main__':unittest.main()

@@ -252,9 +252,12 @@ def main():
     ap.add_argument('--kernel-assets',type=Path)
     ap.add_argument('--spoken-output-contract',action='store_true')
     ap.add_argument('--compact-replies',action='store_true')
+    ap.add_argument('--decode-backend',choices=('eager','static-eager','static-compiled'),default='eager')
     ap.add_argument('--controller-transport',choices=('in-process','subprocess'),default='in-process')
     ap.add_argument('--provider',choices=('qwen4b','qwen35'),default='qwen4b')
     args=ap.parse_args();args.out.mkdir(parents=True,exist_ok=False)
+    if args.decode_backend!='eager' and (args.provider!='qwen35' or args.controller_transport!='in-process'):
+        raise ValueError('Static decode experiment requires the isolated newer9B in-process component')
     if (args.kernel_assets is not None or args.spoken_output_contract or args.compact_replies) and args.provider!='qwen35':
         raise ValueError('Optional kernels and spoken contract require the newer9B controller')
     if args.controller_transport=='subprocess':
@@ -268,6 +271,12 @@ def main():
             executor_class=Qwen35ResponseExecutor
         extra=dict(kernel_assets=args.kernel_assets,spoken_output_contract=args.spoken_output_contract,compact_replies=args.compact_replies) if args.provider=='qwen35' else {}
         executor=executor_class(args.assets,device='cuda:0',attention_backend=args.attention_backend,pending_speech_protocol=args.pending_speech_protocol,**extra)
+    if args.decode_backend!='eager':
+        from transformers import CompileConfig
+        executor.model.generation_config.cache_implementation='static'
+        executor.model.generation_config.disable_compile=args.decode_backend=='static-eager'
+        if args.decode_backend=='static-compiled':
+            executor.model.generation_config.compile_config=CompileConfig(fullgraph=True,mode='reduce-overhead')
     results=[]
     rows=fixtures()+[
         dict(id='ordinary-while-pending',records={'Oak Central':{'meeting room':'room seven'}},pending='Oak Central',kind='answer',
@@ -303,9 +312,17 @@ def main():
             (args.out/(row['id']+'.json')).write_text(json.dumps(record,indent=2)+'\n');results.append(record)
     finally:
         if hasattr(executor,'close'):executor.close()
+    decode_proof=dict(requested=args.decode_backend,compiled_call_created=False,static_cache_created=False)
+    if args.decode_backend!='eager':
+        cache=getattr(executor.model,'_cache',None)
+        decode_proof.update(compiled_call_created=callable(getattr(executor.model,'_compiled_call',None)),
+            static_cache_created=type(cache).__name__=='StaticCache',cache_type=type(cache).__name__,
+            cache_compileable=bool(cache is not None and cache.is_compileable),
+            fullgraph_requested=args.decode_backend=='static-compiled',fallback_authorized=False)
     report=dict(schema='dl-local-qwen-worker-contract-v1',results=results,load=executor.proof,warmup=executor.warmup,
         optional_kernel_assets_sha256=sha256(args.kernel_assets/'report.json') if args.kernel_assets else None,
         controller_transport=args.controller_transport,transport_info=getattr(executor,'transport_info',None),
+        decode_backend=decode_proof,
         compact_replies=args.compact_replies,spoken_output_contract=args.spoken_output_contract,provider=executor.provider_name,pending_speech_protocol=args.pending_speech_protocol,attention_backend=args.attention_backend,remote_api_used=False,input_is_typed=True,optimizer_steps=0,development_cases_reused=True,
         speech_generation_executed=False,duplex_system_qualified=False,code_sha256=sha256(Path(__file__)))
     (args.out/'report.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report),flush=True)

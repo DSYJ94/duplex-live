@@ -20,6 +20,7 @@ cd "$DL_TASK_SOURCE"
 EXTRA=()
 if [ "${QWEN_COMPACT_REPLIES:-0}" = 1 ]; then EXTRA+=(--compact-replies); fi
 if [ "${QWEN_SPOKEN_OUTPUT_CONTRACT:-0}" = 1 ]; then EXTRA+=(--spoken-output-contract); fi
+if [ -n "${QWEN_DECODE_BACKEND:-}" ]; then EXTRA+=(--decode-backend "$QWEN_DECODE_BACKEND"); fi
 
 if [ -n "${QWEN35_KERNEL_ASSETS_JOB:-}" ]; then
  [[ "$QWEN35_KERNEL_ASSETS_JOB" =~ ^[0-9]+$ ]]
