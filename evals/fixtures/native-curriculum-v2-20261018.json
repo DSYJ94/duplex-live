@@ -1,0 +1,1765 @@
+[
+  {
+    "scenario_id": "native2-train-000",
+    "split": "train",
+    "kind": "private",
+    "script_family": "native2-train-cabinet code",
+    "project": "Laurel North",
+    "field": "cabinet code",
+    "phrase": "orange square",
+    "user_voice": "alloy",
+    "assistant_voice": "marin",
+    "nominal_worker_delay_s": 3.0,
+    "utterances": [
+      [
+        "user",
+        "Please check the cabinet code for Project Laurel North."
+      ],
+      [
+        "assistant",
+        "I will check."
+      ],
+      [
+        "user",
+        "While you check, all the towels are in the blue box. Where is my towel?"
+      ],
+      [
+        "assistant",
+        "Your towel is in the blue box."
+      ],
+      [
+        "assistant",
+        "The cabinet code is orange square."
+      ]
+    ],
+    "curriculum_version": 2,
+    "created_date": "2026-10-18",
+    "required_facts": [
+      [
+        "towel"
+      ],
+      [
+        "blue"
+      ],
+      [
+        "box"
+      ]
+    ]
+  },
+  {
+    "scenario_id": "native2-train-001",
+    "split": "train",
+    "kind": "private",
+    "script_family": "native2-train-parcel label",
+    "project": "Hazel North",
+    "field": "parcel label",
+    "phrase": "black square",
+    "user_voice": "echo",
+    "assistant_voice": "marin",
+    "nominal_worker_delay_s": 8.0,
+    "utterances": [
+      [
+        "user",
+        "Please check the parcel label for Project Hazel North."
+      ],
+      [
+        "assistant",
+        "I will check."
+      ],
+      [
+        "user",
+        "While you check, the train arrived after the bus. Which arrived first?"
+      ],
+      [
+        "assistant",
+        "The bus arrived first."
+      ],
+      [
+        "assistant",
+        "The parcel label is black square."
+      ]
+    ],
+    "curriculum_version": 2,
+    "created_date": "2026-10-18",
+    "required_facts": [
+      [
+        "bus"
+      ],
+      [
+        "first"
+      ]
+    ]
+  },
+  {
+    "scenario_id": "native2-train-002",
+    "split": "train",
+    "kind": "private",
+    "script_family": "native2-train-cabinet code",
+    "project": "Juniper North",
+    "field": "cabinet code",
+    "phrase": "orange diamond",
+    "user_voice": "alloy",
+    "assistant_voice": "marin",
+    "nominal_worker_delay_s": 12.0,
+    "utterances": [
+      [
+        "user",
+        "Please check the cabinet code for Project Juniper North."
+      ],
+      [
+        "assistant",
+        "I will check."
+      ],
+      [
+        "user",
+        "While you check, why does a ball roll down a slope?"
+      ],
+      [
+        "assistant",
+        "Gravity pulls the ball down the slope."
+      ],
+      [
+        "assistant",
+        "The cabinet code is orange diamond."
+      ]
+    ],
+    "curriculum_version": 2,
+    "created_date": "2026-10-18",
+    "required_facts": [
+      [
+        "gravity"
+      ],
+      [
+        "down"
+      ]
+    ]
+  },
+  {
+    "scenario_id": "native2-train-003",
+    "split": "train",
+    "kind": "private",
+    "script_family": "native2-train-parcel label",
+    "project": "Cypress North",
+    "field": "parcel label",
+    "phrase": "purple circle",
+    "user_voice": "echo",
+    "assistant_voice": "marin",
+    "nominal_worker_delay_s": 16.0,
+    "utterances": [
+      [
+        "user",
+        "Please check the parcel label for Project Cypress North."
+      ],
+      [
+        "assistant",
+        "I will check."
+      ],
+      [
+        "user",
+        "While you check, what does a thermometer measure?"
+      ],
+      [
+        "assistant",
+        "A thermometer measures temperature."
+      ],
+      [
+        "assistant",
+        "The parcel label is purple circle."
+      ]
+    ],
+    "curriculum_version": 2,
+    "created_date": "2026-10-18",
+    "required_facts": [
+      [
+        "temperature"
+      ]
+    ]
+  },
+  {
+    "scenario_id": "native2-train-004",
+    "split": "train",
+    "kind": "private",
+    "script_family": "native2-train-cabinet code",
+    "project": "Laurel South",
+    "field": "cabinet code",
+    "phrase": "purple oval",
+    "user_voice": "alloy",
+    "assistant_voice": "marin",
+    "nominal_worker_delay_s": 3.0,
+    "utterances": [
+      [
+        "user",
+        "Please check the cabinet code for Project Laurel South."
+      ],
+      [
+        "assistant",
+        "I will check."
+      ],
+      [
+        "user",
+        "While you check, what do roots take in from the soil?"
+      ],
+      [
+        "assistant",
+        "Roots take in water and dissolved minerals."
+      ],
+      [
+        "assistant",
+        "The cabinet code is purple oval."
+      ]
+    ],
+    "curriculum_version": 2,
+    "created_date": "2026-10-18",
+    "required_facts": [
+      [
+        "water"
+      ],
+      [
+        "minerals"
+      ]
+    ]
+  },
+  {
+    "scenario_id": "native2-train-005",
+    "split": "train",
+    "kind": "private",
+    "script_family": "native2-train-parcel label",
+    "project": "Hazel South",
+    "field": "parcel label",
+    "phrase": "gold star",
+    "user_voice": "echo",
+    "assistant_voice": "marin",
+    "nominal_worker_delay_s": 8.0,
+    "utterances": [
+      [
+        "user",
+        "Please check the parcel label for Project Hazel South."
+      ],
+      [
+        "assistant",
+        "I will check."
+      ],
+      [
+        "user",
+        "While you check, which tool measures length, a ruler or a mug?"
+      ],
+      [
+        "assistant",
+        "A ruler measures length."
+      ],
+      [
+        "assistant",
+        "The parcel label is gold star."
+      ]
+    ],
+    "curriculum_version": 2,
+    "created_date": "2026-10-18",
+    "required_facts": [
+      [
+        "ruler"
+      ],
+      [
+        "length"
+      ]
+    ]
+  },
+  {
+    "scenario_id": "native2-train-006",
+    "split": "train",
+    "kind": "private",
+    "script_family": "native2-train-cabinet code",
+    "project": "Juniper South",
+    "field": "cabinet code",
+    "phrase": "white circle",
+    "user_voice": "alloy",
+    "assistant_voice": "marin",
+    "nominal_worker_delay_s": 12.0,
+    "utterances": [
+      [
+        "user",
+        "Please check the cabinet code for Project Juniper South."
+      ],
+      [
+        "assistant",
+        "I will check."
+      ],
+      [
+        "user",
+        "While you check, all the towels are in the blue box. Where is my towel?"
+      ],
+      [
+        "assistant",
+        "Your towel is in the blue box."
+      ],
+      [
+        "assistant",
+        "The cabinet code is white circle."
+      ]
+    ],
+    "curriculum_version": 2,
+    "created_date": "2026-10-18",
+    "required_facts": [
+      [
+        "towel"
+      ],
+      [
+        "blue"
+      ],
+      [
+        "box"
+      ]
+    ]
+  },
+  {
+    "scenario_id": "native2-train-007",
+    "split": "train",
+    "kind": "private",
+    "script_family": "native2-train-parcel label",
+    "project": "Cypress South",
+    "field": "parcel label",
+    "phrase": "black heart",
+    "user_voice": "echo",
+    "assistant_voice": "marin",
+    "nominal_worker_delay_s": 16.0,
+    "utterances": [
+      [
+        "user",
+        "Please check the parcel label for Project Cypress South."
+      ],
+      [
+        "assistant",
+        "I will check."
+      ],
+      [
+        "user",
+        "While you check, the train arrived after the bus. Which arrived first?"
+      ],
+      [
+        "assistant",
+        "The bus arrived first."
+      ],
+      [
+        "assistant",
+        "The parcel label is black heart."
+      ]
+    ],
+    "curriculum_version": 2,
+    "created_date": "2026-10-18",
+    "required_facts": [
+      [
+        "bus"
+      ],
+      [
+        "first"
+      ]
+    ]
+  },
+  {
+    "scenario_id": "native2-train-008",
+    "split": "train",
+    "kind": "simple",
+    "script_family": "native2-train-general",
+    "project": "Laurel East",
+    "field": "cabinet code",
+    "phrase": null,
+    "user_voice": "alloy",
+    "assistant_voice": "marin",
+    "nominal_worker_delay_s": 3.0,
+    "utterances": [
+      [
+        "user",
+        "All the towels are in the blue box. Where is my towel?"
+      ],
+      [
+        "assistant",
+        "Your towel is in the blue box."
+      ]
+    ],
+    "curriculum_version": 2,
+    "created_date": "2026-10-18",
+    "required_facts": [
+      [
+        "towel"
+      ],
+      [
+        "blue"
+      ],
+      [
+        "box"
+      ]
+    ]
+  },
+  {
+    "scenario_id": "native2-train-009",
+    "split": "train",
+    "kind": "simple",
+    "script_family": "native2-train-general",
+    "project": "Hazel East",
+    "field": "parcel label",
+    "phrase": null,
+    "user_voice": "echo",
+    "assistant_voice": "marin",
+    "nominal_worker_delay_s": 8.0,
+    "utterances": [
+      [
+        "user",
+        "The train arrived after the bus. Which arrived first?"
+      ],
+      [
+        "assistant",
+        "The bus arrived first."
+      ]
+    ],
+    "curriculum_version": 2,
+    "created_date": "2026-10-18",
+    "required_facts": [
+      [
+        "bus"
+      ],
+      [
+        "first"
+      ]
+    ]
+  },
+  {
+    "scenario_id": "native2-train-010",
+    "split": "train",
+    "kind": "simple",
+    "script_family": "native2-train-general",
+    "project": "Juniper East",
+    "field": "cabinet code",
+    "phrase": null,
+    "user_voice": "alloy",
+    "assistant_voice": "marin",
+    "nominal_worker_delay_s": 12.0,
+    "utterances": [
+      [
+        "user",
+        "Why does a ball roll down a slope?"
+      ],
+      [
+        "assistant",
+        "Gravity pulls the ball down the slope."
+      ]
+    ],
+    "curriculum_version": 2,
+    "created_date": "2026-10-18",
+    "required_facts": [
+      [
+        "gravity"
+      ],
+      [
+        "down"
+      ]
+    ]
+  },
+  {
+    "scenario_id": "native2-train-011",
+    "split": "train",
+    "kind": "simple",
+    "script_family": "native2-train-general",
+    "project": "Cypress East",
+    "field": "parcel label",
+    "phrase": null,
+    "user_voice": "echo",
+    "assistant_voice": "marin",
+    "nominal_worker_delay_s": 16.0,
+    "utterances": [
+      [
+        "user",
+        "What does a thermometer measure?"
+      ],
+      [
+        "assistant",
+        "A thermometer measures temperature."
+      ]
+    ],
+    "curriculum_version": 2,
+    "created_date": "2026-10-18",
+    "required_facts": [
+      [
+        "temperature"
+      ]
+    ]
+  },
+  {
+    "scenario_id": "native2-train-012",
+    "split": "train",
+    "kind": "simple",
+    "script_family": "native2-train-general",
+    "project": "Laurel West",
+    "field": "cabinet code",
+    "phrase": null,
+    "user_voice": "alloy",
+    "assistant_voice": "marin",
+    "nominal_worker_delay_s": 3.0,
+    "utterances": [
+      [
+        "user",
+        "What do roots take in from the soil?"
+      ],
+      [
+        "assistant",
+        "Roots take in water and dissolved minerals."
+      ]
+    ],
+    "curriculum_version": 2,
+    "created_date": "2026-10-18",
+    "required_facts": [
+      [
+        "water"
+      ],
+      [
+        "minerals"
+      ]
+    ]
+  },
+  {
+    "scenario_id": "native2-train-013",
+    "split": "train",
+    "kind": "simple",
+    "script_family": "native2-train-general",
+    "project": "Hazel West",
+    "field": "parcel label",
+    "phrase": null,
+    "user_voice": "echo",
+    "assistant_voice": "marin",
+    "nominal_worker_delay_s": 8.0,
+    "utterances": [
+      [
+        "user",
+        "Which tool measures length, a ruler or a mug?"
+      ],
+      [
+        "assistant",
+        "A ruler measures length."
+      ]
+    ],
+    "curriculum_version": 2,
+    "created_date": "2026-10-18",
+    "required_facts": [
+      [
+        "ruler"
+      ],
+      [
+        "length"
+      ]
+    ]
+  },
+  {
+    "scenario_id": "native2-train-014",
+    "split": "train",
+    "kind": "simple",
+    "script_family": "native2-train-general",
+    "project": "Juniper West",
+    "field": "cabinet code",
+    "phrase": null,
+    "user_voice": "alloy",
+    "assistant_voice": "marin",
+    "nominal_worker_delay_s": 12.0,
+    "utterances": [
+      [
+        "user",
+        "Do not speak until I say ready. Listen quietly."
+      ],
+      [
+        "user",
+        "Ready. What does a timer measure?"
+      ],
+      [
+        "assistant",
+        "A timer measures elapsed time."
+      ]
+    ],
+    "curriculum_version": 2,
+    "created_date": "2026-10-18",
+    "required_facts": [
+      [
+        "elapsed"
+      ],
+      [
+        "time"
+      ]
+    ],
+    "gaps_before_s": {
+      "1": 4.0
+    },
+    "quiet_until_user_ordinal": 1,
+    "behavior": "listen-until-cue"
+  },
+  {
+    "scenario_id": "native2-train-015",
+    "split": "train",
+    "kind": "simple",
+    "script_family": "native2-train-general",
+    "project": "Cypress West",
+    "field": "parcel label",
+    "phrase": null,
+    "user_voice": "echo",
+    "assistant_voice": "marin",
+    "nominal_worker_delay_s": 16.0,
+    "utterances": [
+      [
+        "user",
+        "Say only the first step now: put the book on the shelf. After I say go, say close the cupboard."
+      ],
+      [
+        "assistant",
+        "Put the book on the shelf."
+      ],
+      [
+        "user",
+        "Pause. Stay quiet until I say go."
+      ],
+      [
+        "user",
+        "Go."
+      ],
+      [
+        "assistant",
+        "Close the cupboard."
+      ]
+    ],
+    "curriculum_version": 2,
+    "created_date": "2026-10-18",
+    "required_facts": [
+      [
+        "book"
+      ],
+      [
+        "shelf"
+      ],
+      [
+        "close"
+      ],
+      [
+        "cupboard"
+      ]
+    ],
+    "gaps_before_s": {
+      "3": 4.0
+    },
+    "quiet_between_user_ordinals": [
+      1,
+      2
+    ],
+    "no_restart_after_cue": [
+      "book",
+      "shelf"
+    ],
+    "behavior": "pause-and-continue"
+  },
+  {
+    "scenario_id": "native2-train-016",
+    "split": "train",
+    "kind": "clarify",
+    "script_family": "native2-train-cabinet code",
+    "project": "Laurel North",
+    "field": "cabinet code",
+    "phrase": "pink cross",
+    "user_voice": "alloy",
+    "assistant_voice": "marin",
+    "nominal_worker_delay_s": 3.0,
+    "utterances": [
+      [
+        "user",
+        "What is the cabinet code?"
+      ],
+      [
+        "assistant",
+        "Which project do you mean?"
+      ],
+      [
+        "user",
+        "Project Laurel North."
+      ],
+      [
+        "assistant",
+        "I will check."
+      ],
+      [
+        "user",
+        "While you check, what do roots take in from the soil?"
+      ],
+      [
+        "assistant",
+        "Roots take in water and dissolved minerals."
+      ],
+      [
+        "assistant",
+        "The cabinet code is pink cross."
+      ]
+    ],
+    "curriculum_version": 2,
+    "created_date": "2026-10-18",
+    "required_facts": [
+      [
+        "water"
+      ],
+      [
+        "minerals"
+      ]
+    ]
+  },
+  {
+    "scenario_id": "native2-train-017",
+    "split": "train",
+    "kind": "clarify",
+    "script_family": "native2-train-parcel label",
+    "project": "Hazel North",
+    "field": "parcel label",
+    "phrase": "blue heart",
+    "user_voice": "echo",
+    "assistant_voice": "marin",
+    "nominal_worker_delay_s": 8.0,
+    "utterances": [
+      [
+        "user",
+        "What is the parcel label?"
+      ],
+      [
+        "assistant",
+        "Which project do you mean?"
+      ],
+      [
+        "user",
+        "Project Hazel North."
+      ],
+      [
+        "assistant",
+        "I will check."
+      ],
+      [
+        "user",
+        "While you check, which tool measures length, a ruler or a mug?"
+      ],
+      [
+        "assistant",
+        "A ruler measures length."
+      ],
+      [
+        "assistant",
+        "The parcel label is blue heart."
+      ]
+    ],
+    "curriculum_version": 2,
+    "created_date": "2026-10-18",
+    "required_facts": [
+      [
+        "ruler"
+      ],
+      [
+        "length"
+      ]
+    ]
+  },
+  {
+    "scenario_id": "native2-train-018",
+    "split": "train",
+    "kind": "clarify",
+    "script_family": "native2-train-cabinet code",
+    "project": "Juniper North",
+    "field": "cabinet code",
+    "phrase": "red diamond",
+    "user_voice": "alloy",
+    "assistant_voice": "marin",
+    "nominal_worker_delay_s": 12.0,
+    "utterances": [
+      [
+        "user",
+        "What is the cabinet code?"
+      ],
+      [
+        "assistant",
+        "Which project do you mean?"
+      ],
+      [
+        "user",
+        "Project Juniper North."
+      ],
+      [
+        "assistant",
+        "I will check."
+      ],
+      [
+        "user",
+        "While you check, all the towels are in the blue box. Where is my towel?"
+      ],
+      [
+        "assistant",
+        "Your towel is in the blue box."
+      ],
+      [
+        "assistant",
+        "The cabinet code is red diamond."
+      ]
+    ],
+    "curriculum_version": 2,
+    "created_date": "2026-10-18",
+    "required_facts": [
+      [
+        "towel"
+      ],
+      [
+        "blue"
+      ],
+      [
+        "box"
+      ]
+    ]
+  },
+  {
+    "scenario_id": "native2-train-019",
+    "split": "train",
+    "kind": "clarify",
+    "script_family": "native2-train-parcel label",
+    "project": "Cypress North",
+    "field": "parcel label",
+    "phrase": "silver oval",
+    "user_voice": "echo",
+    "assistant_voice": "marin",
+    "nominal_worker_delay_s": 16.0,
+    "utterances": [
+      [
+        "user",
+        "What is the parcel label?"
+      ],
+      [
+        "assistant",
+        "Which project do you mean?"
+      ],
+      [
+        "user",
+        "Project Cypress North."
+      ],
+      [
+        "assistant",
+        "I will check."
+      ],
+      [
+        "user",
+        "While you check, the train arrived after the bus. Which arrived first?"
+      ],
+      [
+        "assistant",
+        "The bus arrived first."
+      ],
+      [
+        "assistant",
+        "The parcel label is silver oval."
+      ]
+    ],
+    "curriculum_version": 2,
+    "created_date": "2026-10-18",
+    "required_facts": [
+      [
+        "bus"
+      ],
+      [
+        "first"
+      ]
+    ]
+  },
+  {
+    "scenario_id": "native2-train-020",
+    "split": "train",
+    "kind": "cancel",
+    "script_family": "native2-train-cabinet code",
+    "project": "Laurel South",
+    "field": "cabinet code",
+    "phrase": "brown cross",
+    "user_voice": "alloy",
+    "assistant_voice": "marin",
+    "nominal_worker_delay_s": 3.0,
+    "utterances": [
+      [
+        "user",
+        "Please check the cabinet code for Project Laurel South."
+      ],
+      [
+        "assistant",
+        "I will check."
+      ],
+      [
+        "user",
+        "While you check, why does a ball roll down a slope?"
+      ],
+      [
+        "assistant",
+        "Gravity pulls the ball down the slope."
+      ],
+      [
+        "user",
+        "Cancel that lookup. Instead, what does a thermometer measure?"
+      ],
+      [
+        "assistant",
+        "The lookup is cancelled. A thermometer measures temperature."
+      ]
+    ],
+    "curriculum_version": 2,
+    "created_date": "2026-10-18",
+    "required_facts": [
+      [
+        "gravity"
+      ],
+      [
+        "down"
+      ],
+      [
+        "temperature"
+      ]
+    ]
+  },
+  {
+    "scenario_id": "native2-train-021",
+    "split": "train",
+    "kind": "cancel",
+    "script_family": "native2-train-parcel label",
+    "project": "Hazel South",
+    "field": "parcel label",
+    "phrase": "black star",
+    "user_voice": "echo",
+    "assistant_voice": "marin",
+    "nominal_worker_delay_s": 8.0,
+    "utterances": [
+      [
+        "user",
+        "Please check the parcel label for Project Hazel South."
+      ],
+      [
+        "assistant",
+        "I will check."
+      ],
+      [
+        "user",
+        "While you check, what does a thermometer measure?"
+      ],
+      [
+        "assistant",
+        "A thermometer measures temperature."
+      ],
+      [
+        "user",
+        "Cancel that lookup. Instead, what do roots take in from the soil?"
+      ],
+      [
+        "assistant",
+        "The lookup is cancelled. Roots take in water and dissolved minerals."
+      ]
+    ],
+    "curriculum_version": 2,
+    "created_date": "2026-10-18",
+    "required_facts": [
+      [
+        "temperature"
+      ],
+      [
+        "water"
+      ],
+      [
+        "minerals"
+      ]
+    ]
+  },
+  {
+    "scenario_id": "native2-train-022",
+    "split": "train",
+    "kind": "cancel",
+    "script_family": "native2-train-cabinet code",
+    "project": "Juniper South",
+    "field": "cabinet code",
+    "phrase": "orange oval",
+    "user_voice": "alloy",
+    "assistant_voice": "marin",
+    "nominal_worker_delay_s": 12.0,
+    "utterances": [
+      [
+        "user",
+        "Please check the cabinet code for Project Juniper South."
+      ],
+      [
+        "assistant",
+        "I will check."
+      ],
+      [
+        "user",
+        "While you check, what do roots take in from the soil?"
+      ],
+      [
+        "assistant",
+        "Roots take in water and dissolved minerals."
+      ],
+      [
+        "user",
+        "Cancel that lookup. Instead, which tool measures length, a ruler or a mug?"
+      ],
+      [
+        "assistant",
+        "The lookup is cancelled. A ruler measures length."
+      ]
+    ],
+    "curriculum_version": 2,
+    "created_date": "2026-10-18",
+    "required_facts": [
+      [
+        "water"
+      ],
+      [
+        "minerals"
+      ],
+      [
+        "ruler"
+      ],
+      [
+        "length"
+      ]
+    ]
+  },
+  {
+    "scenario_id": "native2-train-023",
+    "split": "train",
+    "kind": "cancel",
+    "script_family": "native2-train-parcel label",
+    "project": "Cypress South",
+    "field": "parcel label",
+    "phrase": "purple diamond",
+    "user_voice": "echo",
+    "assistant_voice": "marin",
+    "nominal_worker_delay_s": 16.0,
+    "utterances": [
+      [
+        "user",
+        "Please check the parcel label for Project Cypress South."
+      ],
+      [
+        "assistant",
+        "I will check."
+      ],
+      [
+        "user",
+        "While you check, which tool measures length, a ruler or a mug?"
+      ],
+      [
+        "assistant",
+        "A ruler measures length."
+      ],
+      [
+        "user",
+        "Cancel that lookup. Instead, all the towels are in the blue box. Where is my towel?"
+      ],
+      [
+        "assistant",
+        "The lookup is cancelled. Your towel is in the blue box."
+      ]
+    ],
+    "curriculum_version": 2,
+    "created_date": "2026-10-18",
+    "required_facts": [
+      [
+        "ruler"
+      ],
+      [
+        "length"
+      ],
+      [
+        "towel"
+      ],
+      [
+        "blue"
+      ],
+      [
+        "box"
+      ]
+    ]
+  },
+  {
+    "scenario_id": "native2-validation-000",
+    "split": "validation",
+    "kind": "private",
+    "script_family": "native2-validation-booking phrase",
+    "project": "Spruce North",
+    "field": "booking phrase",
+    "phrase": "brown oval",
+    "user_voice": "coral",
+    "assistant_voice": "marin",
+    "nominal_worker_delay_s": 3.0,
+    "utterances": [
+      [
+        "user",
+        "Please check the booking phrase for Project Spruce North."
+      ],
+      [
+        "assistant",
+        "I will check."
+      ],
+      [
+        "user",
+        "While you check, what does a map show?"
+      ],
+      [
+        "assistant",
+        "A map shows places and their positions."
+      ],
+      [
+        "assistant",
+        "The booking phrase is brown oval."
+      ]
+    ],
+    "curriculum_version": 2,
+    "created_date": "2026-10-18",
+    "required_facts": [
+      [
+        "places"
+      ],
+      [
+        "positions",
+        "locations"
+      ]
+    ]
+  },
+  {
+    "scenario_id": "native2-validation-001",
+    "split": "validation",
+    "kind": "private",
+    "script_family": "native2-validation-booking phrase",
+    "project": "Acacia North",
+    "field": "booking phrase",
+    "phrase": "red triangle",
+    "user_voice": "coral",
+    "assistant_voice": "marin",
+    "nominal_worker_delay_s": 8.0,
+    "utterances": [
+      [
+        "user",
+        "Please check the booking phrase for Project Acacia North."
+      ],
+      [
+        "assistant",
+        "I will check."
+      ],
+      [
+        "user",
+        "While you check, what does a calendar help track?"
+      ],
+      [
+        "assistant",
+        "A calendar helps track dates."
+      ],
+      [
+        "assistant",
+        "The booking phrase is red triangle."
+      ]
+    ],
+    "curriculum_version": 2,
+    "created_date": "2026-10-18",
+    "required_facts": [
+      [
+        "dates"
+      ]
+    ]
+  },
+  {
+    "scenario_id": "native2-validation-002",
+    "split": "validation",
+    "kind": "private",
+    "script_family": "native2-validation-booking phrase",
+    "project": "Spruce South",
+    "field": "booking phrase",
+    "phrase": "pink heart",
+    "user_voice": "coral",
+    "assistant_voice": "marin",
+    "nominal_worker_delay_s": 12.0,
+    "utterances": [
+      [
+        "user",
+        "Please check the booking phrase for Project Spruce South."
+      ],
+      [
+        "assistant",
+        "I will check."
+      ],
+      [
+        "user",
+        "While you check, what does a map show?"
+      ],
+      [
+        "assistant",
+        "A map shows places and their positions."
+      ],
+      [
+        "assistant",
+        "The booking phrase is pink heart."
+      ]
+    ],
+    "curriculum_version": 2,
+    "created_date": "2026-10-18",
+    "required_facts": [
+      [
+        "places"
+      ],
+      [
+        "positions",
+        "locations"
+      ]
+    ]
+  },
+  {
+    "scenario_id": "native2-validation-003",
+    "split": "validation",
+    "kind": "private",
+    "script_family": "native2-validation-booking phrase",
+    "project": "Acacia South",
+    "field": "booking phrase",
+    "phrase": "red cross",
+    "user_voice": "coral",
+    "assistant_voice": "marin",
+    "nominal_worker_delay_s": 16.0,
+    "utterances": [
+      [
+        "user",
+        "Please check the booking phrase for Project Acacia South."
+      ],
+      [
+        "assistant",
+        "I will check."
+      ],
+      [
+        "user",
+        "While you check, what does a calendar help track?"
+      ],
+      [
+        "assistant",
+        "A calendar helps track dates."
+      ],
+      [
+        "assistant",
+        "The booking phrase is red cross."
+      ]
+    ],
+    "curriculum_version": 2,
+    "created_date": "2026-10-18",
+    "required_facts": [
+      [
+        "dates"
+      ]
+    ]
+  },
+  {
+    "scenario_id": "native2-validation-004",
+    "split": "validation",
+    "kind": "simple",
+    "script_family": "native2-validation-general",
+    "project": "Spruce East",
+    "field": "booking phrase",
+    "phrase": null,
+    "user_voice": "coral",
+    "assistant_voice": "marin",
+    "nominal_worker_delay_s": 3.0,
+    "utterances": [
+      [
+        "user",
+        "What does a map show?"
+      ],
+      [
+        "assistant",
+        "A map shows places and their positions."
+      ]
+    ],
+    "curriculum_version": 2,
+    "created_date": "2026-10-18",
+    "required_facts": [
+      [
+        "places"
+      ],
+      [
+        "positions",
+        "locations"
+      ]
+    ]
+  },
+  {
+    "scenario_id": "native2-validation-005",
+    "split": "validation",
+    "kind": "simple",
+    "script_family": "native2-validation-general",
+    "project": "Acacia East",
+    "field": "booking phrase",
+    "phrase": null,
+    "user_voice": "coral",
+    "assistant_voice": "marin",
+    "nominal_worker_delay_s": 8.0,
+    "utterances": [
+      [
+        "user",
+        "Do not speak until I say start. Listen quietly."
+      ],
+      [
+        "user",
+        "Start. What does a map show?"
+      ],
+      [
+        "assistant",
+        "A map shows places and their positions."
+      ]
+    ],
+    "curriculum_version": 2,
+    "created_date": "2026-10-18",
+    "required_facts": [
+      [
+        "places"
+      ],
+      [
+        "positions",
+        "locations"
+      ]
+    ],
+    "gaps_before_s": {
+      "1": 4.0
+    },
+    "quiet_until_user_ordinal": 1,
+    "behavior": "listen-until-cue"
+  },
+  {
+    "scenario_id": "native2-validation-006",
+    "split": "validation",
+    "kind": "clarify",
+    "script_family": "native2-validation-booking phrase",
+    "project": "Spruce West",
+    "field": "booking phrase",
+    "phrase": "purple triangle",
+    "user_voice": "coral",
+    "assistant_voice": "marin",
+    "nominal_worker_delay_s": 12.0,
+    "utterances": [
+      [
+        "user",
+        "What is the booking phrase?"
+      ],
+      [
+        "assistant",
+        "Which project do you mean?"
+      ],
+      [
+        "user",
+        "Project Spruce West."
+      ],
+      [
+        "assistant",
+        "I will check."
+      ],
+      [
+        "user",
+        "While you check, what does a map show?"
+      ],
+      [
+        "assistant",
+        "A map shows places and their positions."
+      ],
+      [
+        "assistant",
+        "The booking phrase is purple triangle."
+      ]
+    ],
+    "curriculum_version": 2,
+    "created_date": "2026-10-18",
+    "required_facts": [
+      [
+        "places"
+      ],
+      [
+        "positions",
+        "locations"
+      ]
+    ]
+  },
+  {
+    "scenario_id": "native2-validation-007",
+    "split": "validation",
+    "kind": "cancel",
+    "script_family": "native2-validation-booking phrase",
+    "project": "Acacia West",
+    "field": "booking phrase",
+    "phrase": "purple square",
+    "user_voice": "coral",
+    "assistant_voice": "marin",
+    "nominal_worker_delay_s": 16.0,
+    "utterances": [
+      [
+        "user",
+        "Please check the booking phrase for Project Acacia West."
+      ],
+      [
+        "assistant",
+        "I will check."
+      ],
+      [
+        "user",
+        "While you check, what does a calendar help track?"
+      ],
+      [
+        "assistant",
+        "A calendar helps track dates."
+      ],
+      [
+        "user",
+        "Cancel that lookup. Instead, what does a map show?"
+      ],
+      [
+        "assistant",
+        "The lookup is cancelled. A map shows places and their positions."
+      ]
+    ],
+    "curriculum_version": 2,
+    "created_date": "2026-10-18",
+    "required_facts": [
+      [
+        "dates"
+      ],
+      [
+        "places"
+      ],
+      [
+        "positions",
+        "locations"
+      ]
+    ]
+  },
+  {
+    "scenario_id": "native2-test-000",
+    "split": "test",
+    "kind": "private",
+    "script_family": "native2-test-storage emblem",
+    "project": "Poplar North",
+    "field": "storage emblem",
+    "phrase": "blue star",
+    "user_voice": "verse",
+    "assistant_voice": "marin",
+    "nominal_worker_delay_s": 3.0,
+    "utterances": [
+      [
+        "user",
+        "Please check the storage emblem for Project Poplar North."
+      ],
+      [
+        "assistant",
+        "I will check."
+      ],
+      [
+        "user",
+        "While you check, what does a scale measure?"
+      ],
+      [
+        "assistant",
+        "A scale measures weight."
+      ],
+      [
+        "assistant",
+        "The storage emblem is blue star."
+      ]
+    ],
+    "curriculum_version": 2,
+    "created_date": "2026-10-18",
+    "required_facts": [
+      [
+        "weight"
+      ]
+    ]
+  },
+  {
+    "scenario_id": "native2-test-001",
+    "split": "test",
+    "kind": "private",
+    "script_family": "native2-test-storage emblem",
+    "project": "Rowan North",
+    "field": "storage emblem",
+    "phrase": "pink square",
+    "user_voice": "verse",
+    "assistant_voice": "marin",
+    "nominal_worker_delay_s": 8.0,
+    "utterances": [
+      [
+        "user",
+        "Please check the storage emblem for Project Rowan North."
+      ],
+      [
+        "assistant",
+        "I will check."
+      ],
+      [
+        "user",
+        "While you check, what does a stamp on a letter show?"
+      ],
+      [
+        "assistant",
+        "A stamp shows that postage has been paid."
+      ],
+      [
+        "assistant",
+        "The storage emblem is pink square."
+      ]
+    ],
+    "curriculum_version": 2,
+    "created_date": "2026-10-18",
+    "required_facts": [
+      [
+        "postage"
+      ],
+      [
+        "paid"
+      ]
+    ]
+  },
+  {
+    "scenario_id": "native2-test-002",
+    "split": "test",
+    "kind": "private",
+    "script_family": "native2-test-storage emblem",
+    "project": "Poplar South",
+    "field": "storage emblem",
+    "phrase": "yellow triangle",
+    "user_voice": "verse",
+    "assistant_voice": "marin",
+    "nominal_worker_delay_s": 12.0,
+    "utterances": [
+      [
+        "user",
+        "Please check the storage emblem for Project Poplar South."
+      ],
+      [
+        "assistant",
+        "I will check."
+      ],
+      [
+        "user",
+        "While you check, what does a scale measure?"
+      ],
+      [
+        "assistant",
+        "A scale measures weight."
+      ],
+      [
+        "assistant",
+        "The storage emblem is yellow triangle."
+      ]
+    ],
+    "curriculum_version": 2,
+    "created_date": "2026-10-18",
+    "required_facts": [
+      [
+        "weight"
+      ]
+    ]
+  },
+  {
+    "scenario_id": "native2-test-003",
+    "split": "test",
+    "kind": "private",
+    "script_family": "native2-test-storage emblem",
+    "project": "Rowan South",
+    "field": "storage emblem",
+    "phrase": "brown triangle",
+    "user_voice": "verse",
+    "assistant_voice": "marin",
+    "nominal_worker_delay_s": 16.0,
+    "utterances": [
+      [
+        "user",
+        "Please check the storage emblem for Project Rowan South."
+      ],
+      [
+        "assistant",
+        "I will check."
+      ],
+      [
+        "user",
+        "While you check, what does a stamp on a letter show?"
+      ],
+      [
+        "assistant",
+        "A stamp shows that postage has been paid."
+      ],
+      [
+        "assistant",
+        "The storage emblem is brown triangle."
+      ]
+    ],
+    "curriculum_version": 2,
+    "created_date": "2026-10-18",
+    "required_facts": [
+      [
+        "postage"
+      ],
+      [
+        "paid"
+      ]
+    ]
+  },
+  {
+    "scenario_id": "native2-test-004",
+    "split": "test",
+    "kind": "simple",
+    "script_family": "native2-test-general",
+    "project": "Poplar East",
+    "field": "storage emblem",
+    "phrase": null,
+    "user_voice": "verse",
+    "assistant_voice": "marin",
+    "nominal_worker_delay_s": 3.0,
+    "utterances": [
+      [
+        "user",
+        "What does a scale measure?"
+      ],
+      [
+        "assistant",
+        "A scale measures weight."
+      ]
+    ],
+    "curriculum_version": 2,
+    "created_date": "2026-10-18",
+    "required_facts": [
+      [
+        "weight"
+      ]
+    ]
+  },
+  {
+    "scenario_id": "native2-test-005",
+    "split": "test",
+    "kind": "simple",
+    "script_family": "native2-test-general",
+    "project": "Rowan East",
+    "field": "storage emblem",
+    "phrase": null,
+    "user_voice": "verse",
+    "assistant_voice": "marin",
+    "nominal_worker_delay_s": 8.0,
+    "utterances": [
+      [
+        "user",
+        "Do not speak until I say begin. Listen quietly."
+      ],
+      [
+        "user",
+        "Begin. What does a scale measure?"
+      ],
+      [
+        "assistant",
+        "A scale measures weight."
+      ]
+    ],
+    "curriculum_version": 2,
+    "created_date": "2026-10-18",
+    "required_facts": [
+      [
+        "weight"
+      ]
+    ],
+    "gaps_before_s": {
+      "1": 4.0
+    },
+    "quiet_until_user_ordinal": 1,
+    "behavior": "listen-until-cue"
+  },
+  {
+    "scenario_id": "native2-test-006",
+    "split": "test",
+    "kind": "clarify",
+    "script_family": "native2-test-storage emblem",
+    "project": "Poplar West",
+    "field": "storage emblem",
+    "phrase": "blue triangle",
+    "user_voice": "verse",
+    "assistant_voice": "marin",
+    "nominal_worker_delay_s": 12.0,
+    "utterances": [
+      [
+        "user",
+        "What is the storage emblem?"
+      ],
+      [
+        "assistant",
+        "Which project do you mean?"
+      ],
+      [
+        "user",
+        "Project Poplar West."
+      ],
+      [
+        "assistant",
+        "I will check."
+      ],
+      [
+        "user",
+        "While you check, what does a scale measure?"
+      ],
+      [
+        "assistant",
+        "A scale measures weight."
+      ],
+      [
+        "assistant",
+        "The storage emblem is blue triangle."
+      ]
+    ],
+    "curriculum_version": 2,
+    "created_date": "2026-10-18",
+    "required_facts": [
+      [
+        "weight"
+      ]
+    ]
+  },
+  {
+    "scenario_id": "native2-test-007",
+    "split": "test",
+    "kind": "cancel",
+    "script_family": "native2-test-storage emblem",
+    "project": "Rowan West",
+    "field": "storage emblem",
+    "phrase": "silver circle",
+    "user_voice": "verse",
+    "assistant_voice": "marin",
+    "nominal_worker_delay_s": 16.0,
+    "utterances": [
+      [
+        "user",
+        "Please check the storage emblem for Project Rowan West."
+      ],
+      [
+        "assistant",
+        "I will check."
+      ],
+      [
+        "user",
+        "While you check, what does a stamp on a letter show?"
+      ],
+      [
+        "assistant",
+        "A stamp shows that postage has been paid."
+      ],
+      [
+        "user",
+        "Cancel that lookup. Instead, what does a scale measure?"
+      ],
+      [
+        "assistant",
+        "The lookup is cancelled. A scale measures weight."
+      ]
+    ],
+    "curriculum_version": 2,
+    "created_date": "2026-10-18",
+    "required_facts": [
+      [
+        "postage"
+      ],
+      [
+        "paid"
+      ],
+      [
+        "weight"
+      ]
+    ]
+  }
+]

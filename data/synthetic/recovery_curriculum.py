@@ -10,6 +10,7 @@ import json
 import math
 import os
 import random
+import re
 import time
 from pathlib import Path
 
@@ -127,7 +128,10 @@ def assemble(scene, out, receipts):
         if rate != 24000:
             pcm = resample_poly(pcm, 24000//divisor, rate//divisor).astype(np.float32)
             sf.write(path, pcm, 24000)
-        start = .8 if index == 0 else end + .56
+        gap = float(scene.get('gaps_before_s', {}).get(str(index), .56))
+        if not math.isfinite(gap) or not 0 <= gap <= 10:
+            raise ValueError('Declared inter-utterance gap must be bounded')
+        start = .8 if index == 0 else end + gap
         if scene["kind"] not in ("simple", "cancel") and index == len(scene["utterances"])-1:
             start = max(start, ready + .4)
         start = math.ceil(start/.08)*.08
@@ -162,7 +166,7 @@ def assemble(scene, out, receipts):
     sf.write(folder / "mixed.wav", stems["assistant"]+stems["user"], 24000)
     meta = {k:v for k,v in scene.items() if k != "utterances"}
     meta.update(synthetic=True, provenance_class="closed-content", source_model=MODEL,
-        created_date="2026-10-14", verified=False, voices={"assistant":"marin","user":scene["user_voice"]},
+        created_date=scene.get('created_date', "2026-10-14"), verified=False, voices={"assistant":"marin","user":scene["user_voice"]},
         reference_arrivals=arrivals, lookup_trigger_s=trigger, planned_lookup_ready_s=ready,
         timing_scope="synthetic supervision; decoded clip lengths plus a 240ms input margin, not microphone measurements",
         clip_receipts=receipts)
@@ -177,8 +181,25 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--resume", action="store_true")
+    parser.add_argument('--specifications', type=Path,
+        help='Explicit sealed forty-scene curriculum; historical defaults stay unchanged')
     args = parser.parse_args()
-    scenes = specifications()
+    scenes = json.loads(args.specifications.read_text()) if args.specifications else specifications()
+    if args.specifications:
+        if len(scenes) != 40 or len({s['scenario_id'] for s in scenes}) != 40:
+            raise ValueError('Explicit curriculum requires exactly forty distinct scenes')
+        for scene in scenes:
+            if (not re.fullmatch(r'[A-Za-z0-9_-]{1,100}', scene['scenario_id'])
+                    or scene['split'] not in ('train', 'validation', 'test')
+                    or scene['kind'] not in ('private', 'simple', 'clarify', 'cancel')
+                    or not scene['utterances'] or scene['utterances'][0][0] != 'user'
+                    or scene['utterances'][-1][0] != 'assistant'
+                    or any(role not in ('user', 'assistant') or not text.strip() for role, text in scene['utterances'])):
+                raise ValueError('Invalid explicitly declared source scene')
+        for key in ('script_family', 'user_voice'):
+            groups = [{s[key] for s in scenes if s['split'] == split} for split in ('train', 'validation', 'test')]
+            if any(a & b for i, a in enumerate(groups) for b in groups[i + 1:]):
+                raise ValueError('Explicit source families/voices overlap sealed folds')
     if args.resume:
         if (args.out / "quality.jsonl").exists():
             raise RuntimeError("Do not mutate a corpus after quality stamping")
