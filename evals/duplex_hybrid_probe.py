@@ -41,7 +41,7 @@ def counterfactual_records(scenario):
     raise ValueError('Unapproved bounded development case')
 
 
-def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",interrupt_policy="acoustic",controller=None,scope_read_tools=False,include_tool_context=False):
+def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",interrupt_policy="acoustic",controller=None,scope_read_tools=False,include_tool_context=False,worker_kind="records"):
     import numpy as np
     import soundfile as sf
     from data.synthetic.filter import norm_words,wer
@@ -56,7 +56,11 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",inter
     out.mkdir();sf.write(out/'input-user.wav',user,rate,subtype='FLOAT')
     from queue import SimpleQueue,Empty
     control_queue=SimpleQueue();control_evidence=[]
-    world=RecordWorld(row['world'] if row['split']=='fresh-evaluation' else counterfactual_records(row['scenario_id']));context=[];policy=TurnEndpoint(listener.spm.decode)
+    worker=run_worker;world_type=RecordWorld;delivered_receipts=lookup_receipts
+    if worker_kind=='reasoning-development':
+        from evals.duplex_reasoning_worker import ReasoningWorld,run_reasoning_worker,reasoning_receipts
+        worker=run_reasoning_worker;world_type=ReasoningWorld;delivered_receipts=reasoning_receipts
+    world=world_type(row['world'] if row['split']=='fresh-evaluation' else counterfactual_records(row['scenario_id']));context=[];policy=TurnEndpoint(listener.spm.decode)
     listener.reset();speaker.stop();queue=[];futures={};held=[];packets=[];stops={};events=[];steps=[];backlogs=[]
     active=None;clock=None;spoken=[];asr_tokens=[];asr_events=[];utterance_count=0;generation_count=0;last_voice_s=-float('inf')
     # Tail allows an actual delayed result, a resumed answer and its PCM to finish.
@@ -67,7 +71,7 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",inter
     def log(kind,**kw):events.append(dict(kind=kind,at_s=now(),**kw))
     def valid(item):
         if item['result']['route']=='delegate':
-            reads=lookup_receipts(item['result']['receipts'])
+            reads=delivered_receipts(item['result']['receipts'])
             return bool(reads) and all(world.deliverable(r) for r in reads)
         return not (item['result']['route']=='clarify' and item['turn']<utterance_count)
     def interrupt(reason="acoustic_speech_start"):
@@ -98,7 +102,7 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",inter
         revision=world.reserve(task,[e.copy() for e in context]);submitted=now()
         from evals.duplex_speech_obligations import snapshot
         pending=snapshot(queue,active) if controller_protocol=='state-aware' else []
-        future=executor.submit(run_worker,[e.copy() for e in context],world,task,expected_revision=revision,dispatch_protocol=controller_protocol,pending_speech=pending,
+        future=executor.submit(worker,[e.copy() for e in context],world,task,expected_revision=revision,dispatch_protocol=controller_protocol,pending_speech=pending,
             model=controller.model_id if controller else 'gpt-6-luna',response_executor=controller,scope_read_tools=scope_read_tools,execution_observer=control_queue.put if include_tool_context else None)
         futures[future]=dict(task_id=task,revision=revision,turn=utterance_count,submitted_s=submitted,request_text=text,pending_speech=pending)
         log('controller_dispatched',task_id=task,text=text,reference_text_supplied=False)
@@ -158,7 +162,7 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",inter
                 held.remove(item)
                 if not valid(item):log('stale_result_discarded',task_id=item['task_id']);continue
                 if item['result']['route']=='delegate':
-                    for receipt in lookup_receipts(item['result']['receipts']):world.mark_ready(receipt)
+                    for receipt in delivered_receipts(item['result']['receipts']):world.mark_ready(receipt)
                 queue.append(item)
             # Acoustic quiet alone is insufficient: await delayed ASR words and
             # the newest semantic dispatch before releasing any queued result.
@@ -220,7 +224,7 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",inter
         frames=frame,synthetic_tail_frames=max(0,frame-real_frames),asr_compute_p95_s=float(np.percentile(steps,95)),
         maximum_input_backlog_s=max(backlogs),declared_counterfactual_world=world.records,
         controlled_lookup_delivery_minimum_s=delay_s,controller_protocol=controller_protocol,interrupt_policy=interrupt_policy,
-        actual_tool_context_enabled=include_tool_context,control_executions_sha256=sha256(out/'control-executions.json') if include_tool_context else None,
+        worker_kind=worker_kind,actual_tool_context_enabled=include_tool_context,control_executions_sha256=sha256(out/'control-executions.json') if include_tool_context else None,
         read_tools_scoped_to_user_identified_available_projects=scope_read_tools,
         controller_provider=controller.provider_name if controller else 'openai',controller_model=controller.model_id if controller else 'gpt-6-luna',
         lexical_interruption_is_not_a_backchannel_classifier=interrupt_policy=='lexical',world_tasks=world.tasks,actual_tool_receipts=world.receipts,
@@ -234,6 +238,7 @@ def main():
     ap=argparse.ArgumentParser(description=__doc__)
     for n in ('stt-assets','tts-assets','mimi-load-approval','data','out'):ap.add_argument('--'+n,type=Path,required=True)
     ap.add_argument('--scenario',action='append',required=True);ap.add_argument('--lookup-delay-s',type=float,default=12.)
+    ap.add_argument('--worker-kind',choices=('records','reasoning-development'),default='records')
     ap.add_argument('--include-tool-context',action='store_true')
     ap.add_argument('--scope-read-tools',action='store_true')
     ap.add_argument('--controller-provider',choices=('openai','local-qwen','local-qwen35'),default='openai')
@@ -251,6 +256,7 @@ def main():
     ap.add_argument('--evaluation-use',choices=('development','fresh'),default='development')
     ap.add_argument('--controller-protocol',choices=('legacy','required-action','state-aware'),default='legacy')
     args=ap.parse_args()
+    if args.worker_kind=='reasoning-development' and (args.controller_provider!='local-qwen35' or args.controller_protocol!='state-aware' or args.include_tool_context or args.scope_read_tools):raise ValueError('Reasoning trial requires isolated local state-aware control without record-specific options')
     if (args.local_controller_kernel_assets is not None or args.local_controller_spoken_output_contract) and args.controller_provider!='local-qwen35':raise ValueError('Optional newer-controller settings require local-qwen35')
     if args.include_tool_context and args.controller_protocol!='state-aware':raise ValueError('First tool-context proof requires state-aware protocol')
     if not 0<=args.lookup_delay_s<=30:raise ValueError('Invalid bounded controlled delivery delay')
@@ -285,7 +291,7 @@ def main():
             results=[];failures=[]
             try:
                 for row in rows:
-                    try:results.append(run_case(listener,speaker,row,args.out/row['scenario_id'],args.lookup_delay_s,args.controller_protocol,args.interrupt_policy,controller,args.scope_read_tools,args.include_tool_context))
+                    try:results.append(run_case(listener,speaker,row,args.out/row['scenario_id'],args.lookup_delay_s,args.controller_protocol,args.interrupt_policy,controller,args.scope_read_tools,args.include_tool_context,args.worker_kind))
                     except Exception as error:
                         if args.input_profile!='fresh-evaluation':raise
                         failure=dict(scenario=row['scenario_id'],error_type=type(error).__name__,message=str(error),
@@ -296,10 +302,10 @@ def main():
     finally:
         if controller is not None and hasattr(controller,'close'):controller.close()
     report=dict(schema='dl-concurrent-hybrid-development-v1',component_execution_completed=not failures,results=results,failures=failures,
-        actual_tool_context_enabled=args.include_tool_context,
+        worker_kind=args.worker_kind,actual_tool_context_enabled=args.include_tool_context,
         read_tools_scoped_to_user_identified_available_projects=args.scope_read_tools,
         component_code_sha256={name:sha256(Path(__file__).with_name(name)) for name in
-            ('recovery_worker.py','duplex_endpoint.py','duplex_speaker.py','kyutai_stt_probe.py','duplex_speech_obligations.py','duplex_tool_context.py')},
+            ('recovery_worker.py','duplex_endpoint.py','duplex_speaker.py','kyutai_stt_probe.py','duplex_speech_obligations.py','duplex_tool_context.py','duplex_reasoning_worker.py')},
         probe_code_sha256=sha256(Path(__file__)),
         input_profile=args.input_profile,input_validator=validator,evaluation_use=args.evaluation_use,input_quality_sha256=sha256(args.input_quality) if args.input_quality else None,
         stt_assets_sha256=sha256(args.stt_assets),tts_assets_sha256=sha256(args.tts_assets),
@@ -311,7 +317,9 @@ def main():
         local_controller_warmup=controller.warmup if controller else None,
         controller_transport=getattr(controller,'transport_info',dict(kind='in-process')) if controller else dict(kind='remote-api'),
         local_controller_pending_speech_protocol=args.local_controller_pending_speech_protocol if controller else None,
-        external_controller=None if controller else 'gpt-6-luna',remote_api_used=controller is None,native_model_reasoning=False,
+        external_controller=None if controller else 'gpt-6-luna',
+        external_reasoner='gpt-6-astra' if args.worker_kind=='reasoning-development' else None,
+        remote_api_used=controller is None or any(r.get('remote_api_used',False) for c in results for r in c['actual_tool_receipts']),native_model_reasoning=False,
         paced_recorded_train_user_pcm=args.input_profile=='approved-train',
         fresh_holdout=args.input_profile=='fresh-evaluation' and args.evaluation_use=='fresh',candidate_qualification_derived_from_execution=False,microphone_acceptance=False,
         native_model_qualified=False,hybrid_system_qualified=False,training_approved=False,optimizer_steps=0)

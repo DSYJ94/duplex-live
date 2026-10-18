@@ -78,6 +78,11 @@ def specifications():
             (9.,'What is my favourite animal?')]),
         dict(id='hybrid-fresh-023',world={},turns=[
             (.8,'What is the access code for Project Lake South?')]),
+        dict(id='hybrid-fresh-024',world={},turns=[
+            (.8,'How many distinct subsets of two, three, five, seven, eleven, thirteen, seventeen, nineteen, twenty three, twenty nine, thirty one, and thirty seven sum to fifty? Each number can be used at most once.'),
+            (14.,'While you work on that, why does ice float on water?')]),
+        dict(id='hybrid-fresh-025',world={},turns=[
+            (.8,'What is nine plus eight?')]),
     ]
 
 

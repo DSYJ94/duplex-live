@@ -90,6 +90,16 @@ class QwenResponseExecutor:
             'Cancel only identified existing lookup IDs, all related duplicates but never current or unrelated work. '
             'Report completed operations only from their actual execution receipts, never from assistant speech. Keep user-facing content within35 words. '
             'Available records contain field NAMES only; their values have not been provided. ')
+        domain=state.get('domain','records')
+        if domain not in ('records','reasoning-development'):raise ValueError('Unknown controller task domain')
+        if domain=='reasoning-development':
+            instructions=(
+                'You control a voice assistant. Address only the actual latest USER request. Earlier requests are context, never repeated commands. '
+                'Choose exactly one provided function; return only its call. Answer simple knowledge and short arithmetic directly. '
+                'Use delegate_reasoning for difficult multi-step calculation, combinatorial optimization or exhaustive counting. '
+                'It executes a real stronger-model request with the original latest user question unchanged. Never invent its answer. '
+                'Already running tasks are real background work; do not repeat them when the user asks an unrelated ordinary question. '
+                'Keep speech natural and concise, at most35 words. Never narrate internal IDs, task state or scheduling metadata. ')
         if state['dispatch_protocol']=='state-aware' and self.pending_speech_protocol=='array':
             instructions+=(
                 'Pending speech lists ordinary answers owed but not fully played; an unknown prefix may have been heard. '
@@ -112,7 +122,7 @@ class QwenResponseExecutor:
                 'Express arithmetic in words; do not include written equations, multiplication symbols, Markdown, or parenthetical calculations. '
                 'Do not narrate internal task flags, speech IDs, execution notices, scheduling state, or withheld-value markers. '
                 'Explain an unavailable requested fact honestly, without exposing internal metadata. Function names, IDs and other tool arguments retain their exact required values. ')
-        if self.prompt_profile=='contract-examples':instructions+=CONTRACT_EXAMPLES
+        if self.prompt_profile=='contract-examples' and domain=='records':instructions+=CONTRACT_EXAMPLES
         if state['dispatch_protocol']=='state-aware' and self.pending_speech_protocol=='array':
             instructions+=(
                 "\nSpeech-state examples, NOT actual tasks or receipts: "

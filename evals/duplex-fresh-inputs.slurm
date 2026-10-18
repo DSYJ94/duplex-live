@@ -32,6 +32,9 @@ if [ "${DUPLEX_FRESH_THIRD_BATCH:-0}" = 1 ]; then
  EXTRA=(--user-voice coral)
  for ID in 016 017 018 019 020 021 022 023; do EXTRA+=(--case "hybrid-fresh-$ID"); done
 fi
+if [ "${DUPLEX_FRESH_REASONING_BATCH:-0}" = 1 ]; then
+ EXTRA=(--case hybrid-fresh-024 --case hybrid-fresh-025 --user-voice coral)
+fi
 apptainer exec --bind /projects,/lus,/home \
  --env PYTHONPATH="$DL/envs/moshi-rag-7379661/lib/python3.12/site-packages:$DL_TASK_SOURCE" \
  --env PYTHONDONTWRITEBYTECODE=1 --env OMP_NUM_THREADS=4 \

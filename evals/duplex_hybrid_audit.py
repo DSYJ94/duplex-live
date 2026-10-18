@@ -26,10 +26,18 @@ def main():
     topology_ok=report.get('same_process_same_gpu') is True
     if report.get('controller_provider') in ('local-transformers-qwen4b','local-transformers-qwen35-9b'):
         topology_ok=(report.get('speech_services_same_process_same_gpu') is True
-            and report.get('same_process_same_gpu') is False and report.get('remote_api_used') is False
+            and report.get('same_process_same_gpu') is False
+            and report.get('remote_api_used') is (report.get('worker_kind')=='reasoning-development' and any(c.get('actual_tool_receipts') for c in report['results']))
             and report.get('external_controller') is None
             and report.get('local_controller_proof',{}).get('device')=='cuda:1'
             and report.get('local_controller_proof',{}).get('strict') is True)
+    if report.get('worker_kind')=='reasoning-development':
+        topology_ok=topology_ok and report.get('external_reasoner')=='gpt-6-astra'
+        for case in report['results']:
+            for receipt in case['actual_tool_receipts']:
+                if (receipt.get('tool')!='delegate_reasoning' or receipt.get('executed') is not True
+                        or receipt.get('remote_api_used') is not True or receipt.get('model')!='gpt-6-astra'
+                        or not receipt.get('response_id') or not receipt.get('content')):raise RuntimeError('Missing disclosed actual stronger reasoning receipt')
     if report.get('controller_provider')=='local-transformers-qwen35-9b':
         transport=report.get('controller_transport',{})
         topology_ok=topology_ok and (transport.get('kind')=='private-unix-socket'

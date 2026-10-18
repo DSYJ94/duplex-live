@@ -4717,3 +4717,22 @@ operators after loading torch-only in the same process: Transformers cached the
 first module's operator choices. This is a harness isolation failure, not a
 kernel quality verdict. Partial torch-arm outputs retained. Run each kernel arm
 in a fresh process rather than patching module globals or weakening the check.
+
+Plain words: isolated pending-context7515132(torch)/7515133(fused) establish
+causality: both kernels WITHOUT the broad spoken instruction answer '2 plus3
+is5'; both WITH it generate the old tides explanation. Same actual user context,
+old pending text, assets and parameters. Reject the broad spoken instruction;
+no evidence here of a kernel-caused content regression. Keep all four raw arms.
+
+Plain words: next opt-in reasoning worker connects the local structured action
+to a real bounded GPT-6 Astra request outside the media/world/local-model lock.
+A direct local ordinary answer can run while that request executes. Returned
+speech comes from the actual reasoner receipt, without a fabricated private read.
+Only this development worker enables the external reasoner; record-worker defaults
+are unchanged. Two-call per-conversation bound; no arbitrary agent actions,
+reasoning-task cancellation or replacement offered in this first trial. Root
+reports and independent audit distinguish local controller from external reasoner.
+CPU synchronization tests verify a pending request does not block reservation and
+that a cancelled task cannot publish its late receipt; these are fixtures, not
+live-model proof. Actual typed worker must pass before audio; new user-only024/025
+inputs get independent unchanged0.05WER/bounds quality checks and never training.

@@ -46,6 +46,12 @@ if [ -n "${QWEN35_KERNEL_ASSETS_JOB:-}" ]; then
 fi
 if [ "${DUPLEX_SCOPE_READ_TOOLS:-0}" = 1 ]; then EXTRA+=(--scope-read-tools); fi
 
+if [ "${DUPLEX_REASONING_WORKER:-0}" = 1 ]; then
+ set -a
+ source "$DL/keys/openai.env"
+ set +a
+ EXTRA+=(--worker-kind reasoning-development)
+fi
 if [ "${DUPLEX_TOOL_CONTEXT:-0}" = 1 ]; then EXTRA+=(--include-tool-context); fi
 if [ -n "${DUPLEX_FRESH_VALIDATOR_SOURCE:-}" ]; then
  : "${DUPLEX_FRESH_VALIDATOR_COMMIT:?Historical validator commit required}"
