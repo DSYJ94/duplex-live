@@ -1,0 +1,67 @@
+{
+  "schema": "dl-spoken-control-qualification-plan-v1",
+  "specified_before_generation": true,
+  "specified_before_function_scope_result": true,
+  "do_not_train": true,
+  "input_quality_threshold_unchanged": 0.05,
+  "rejected_inputs_not_regenerated": true,
+  "no_reference_text_supplied_to_model": true,
+  "physical_device_playback": false,
+  "cases": [
+    {
+      "id": "hybrid-fresh-035",
+      "required": "An audible initial prefix, correct quiet request recognition, retirement of the earlier explanation, no replacement reply/PCM after withdrawal."
+    },
+    {
+      "id": "hybrid-fresh-036",
+      "required": "Retire unfinished compass explanation and answer seven days; do not resume the withdrawn topic. Silence alone fails."
+    },
+    {
+      "id": "hybrid-fresh-037",
+      "required": "Retire the full pendulum explanation and give one factually correct sentence identifying energy dissipation through friction/air resistance. Compare against actual generated prior answer; no copying the full plan."
+    },
+    {
+      "id": "hybrid-fresh-038",
+      "required": "Retire the full airplane instructions; only one relevant first-step sentence completes. Check against actual generated initial plan and user request, without canned reference text in inference."
+    },
+    {
+      "id": "hybrid-fresh-039",
+      "required": "Continue the same generator without replaying its heard prefix. This is a declared negative control for the still-missing semantic continuation mechanism; retain the failure."
+    },
+    {
+      "id": "hybrid-fresh-040",
+      "required": "Actual stronger-model execution for the original counting request; overlapping ordinary spoon explanation; actual cancellation suppresses delivery only of the number result while the explanation finishes. Verify cancellation target was still pending delivery. No artificial delay. Record repeated prefixes and latency separately; do not hide the restart limitation."
+    },
+    {
+      "id": "hybrid-fresh-041",
+      "required": "Correct local product 391, no external request, speech intelligible. Do not count a correct label or attempted blocked delegation as task success."
+    }
+  ],
+  "additional_requirements": [
+    "All received PCM exact",
+    "Independent completed-speech transcription",
+    "Partial clips unscored for full-answer WER",
+    "Native model qualification remains separate",
+    "Owner voice approval and physical microphone/AEC remain open"
+  ],
+  "offline_scoring_only": {
+    "040_subset_count": 11,
+    "040_values": [
+      1,
+      4,
+      6,
+      9,
+      10,
+      15,
+      18,
+      21,
+      25,
+      30,
+      35,
+      40
+    ],
+    "040_target": 52,
+    "not_supplied_to_model_or_backend": true,
+    "041_product": 391
+  }
+}

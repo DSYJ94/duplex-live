@@ -51,6 +51,10 @@ if [ "${DUPLEX_FRESH_SPEECH_HOLDOUT:-0}" = 1 ]; then
  EXTRA=(--user-voice coral)
  for ID in 031 032 033 034; do EXTRA+=(--case "hybrid-fresh-$ID"); done
 fi
+if [ "${DUPLEX_FRESH_CONTROL_QUALIFICATION:-0}" = 1 ]; then
+ EXTRA=(--user-voice coral)
+ for ID in 035 036 037 038 039 040 041; do EXTRA+=(--case "hybrid-fresh-$ID"); done
+fi
 apptainer exec --bind /projects,/lus,/home \
  --env PYTHONPATH="$DL/envs/moshi-rag-7379661/lib/python3.12/site-packages:$DL_TASK_SOURCE" \
  --env PYTHONDONTWRITEBYTECODE=1 --env OMP_NUM_THREADS=4 \

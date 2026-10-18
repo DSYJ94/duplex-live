@@ -108,6 +108,27 @@ def specifications():
         dict(id='hybrid-fresh-034',world={},turns=[
             (.8,'Explain in four short sentences how a caterpillar becomes a butterfly.'),
             (14.,'Please go on.')]),
+        dict(id='hybrid-fresh-035',world={},turns=[
+            (.8,'Explain in four short sentences how a pulley helps lift a heavy object.'),
+            (14.,'End the explanation here, and do not reply.')]),
+        dict(id='hybrid-fresh-036',world={},turns=[
+            (.8,'Explain in four short sentences why a compass needle points north.'),
+            (14.,'You can leave that unfinished. How many days are in a week?')]),
+        dict(id='hybrid-fresh-037',world={},turns=[
+            (.8,'Explain in four short sentences why a swinging pendulum gradually slows down.'),
+            (14.,'Never mind the details. Give me the main cause in one sentence.')]),
+        dict(id='hybrid-fresh-038',world={},turns=[
+            (.8,'Explain in four short sentences how to make a simple paper airplane.'),
+            (14.,'I only need how it starts. Give just the first step in one brief sentence.')]),
+        dict(id='hybrid-fresh-039',world={},turns=[
+            (.8,'Explain in four short sentences why bread dough rises.'),
+            (14.,'Carry on, I am listening.')]),
+        dict(id='hybrid-fresh-040',world={},turns=[
+            (.8,'How many distinct subsets of one, four, six, nine, ten, fifteen, eighteen, twenty one, twenty five, thirty, thirty five, and forty sum to fifty two? Each number can be used at most once.'),
+            (14.,'While you work, explain in four short sentences why a metal spoon feels colder than wood in the same room.'),
+            (26.,'Cancel the number task only. Let the explanation finish.')]),
+        dict(id='hybrid-fresh-041',world={},turns=[
+            (.8,'Work this out yourself without any external tools or another model. What is seventeen multiplied by twenty three? Give just the product.')]),
     ]
 
 
