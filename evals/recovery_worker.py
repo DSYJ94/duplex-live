@@ -41,7 +41,7 @@ class RecordWorld:
     def reserve(self, task_id, context=None):
         with self.lock:
             revision = self.tasks.get(task_id, {}).get("revision", 0) + 1
-            self.tasks[task_id] = {"revision":revision,"cancelled":False,"phase":"pending","context":context}
+            self.tasks[task_id] = {"revision":revision,"cancelled":False,"closed":False,"phase":"pending","context":context}
             return revision
 
     def read(self, task_id, project, field, expected_revision=None):
@@ -52,7 +52,7 @@ class RecordWorld:
                 revision = self.reserve(task_id)
             else:
                 state = self.tasks.get(task_id)
-                if not state or state["cancelled"] or state["revision"] != expected_revision:
+                if not state or state["cancelled"] or state.get("closed",False) or state["revision"] != expected_revision:
                     raise WorkerSuperseded("Task was cancelled or replaced before record execution")
                 revision = expected_revision
             receipt = {"task_id":task_id,"revision":revision,"tool":"lookup_record", "project":project,"field":field,
@@ -63,7 +63,7 @@ class RecordWorld:
 
     def cancel(self, task_id):
         with self.lock:
-            if task_id not in self.tasks or self.tasks[task_id]["cancelled"]:
+            if task_id not in self.tasks or self.tasks[task_id]["cancelled"] or self.tasks[task_id].get("closed",False):
                 raise ValueError("No active task to cancel")
             self.tasks[task_id]["cancelled"] = True
             return {"task_id":task_id,"revision":self.tasks[task_id]["revision"],"tool":"cancel_lookup","cancelled":True}
@@ -71,16 +71,24 @@ class RecordWorld:
     def deliverable(self, receipt):
         with self.lock:
             state = self.tasks.get(receipt["task_id"])
-            return bool(state and not state["cancelled"] and state["revision"] == receipt["revision"])
+            return bool(state and not state["cancelled"] and not state.get("closed",False) and state["revision"] == receipt["revision"])
 
     def cancel_many(self,task_ids):
         with self.lock:
             if not isinstance(task_ids,list) or not task_ids or any(not isinstance(t,str) for t in task_ids) or len(set(task_ids)) != len(task_ids):
                 raise ValueError("Cancellation requires distinct existing task IDs")
-            if any(t not in self.tasks or self.tasks[t]["cancelled"] for t in task_ids):
+            if any(t not in self.tasks or self.tasks[t]["cancelled"] or self.tasks[t].get("closed",False) for t in task_ids):
                 raise ValueError("Every cancellation target must be active; nothing was changed")
             receipts = [self.cancel(t) for t in task_ids]
             return {"tool":"cancel_lookup","cancelled":True,"task_ids":task_ids,"receipts":receipts}
+
+    def finish(self,task_id,revision):
+        """Close a delivered or non-lookup request without claiming cancellation."""
+        with self.lock:
+            state=self.tasks.get(task_id)
+            if not state or state['revision']!=revision or state['cancelled'] or state.get('closed',False):
+                raise WorkerSuperseded('Cannot finish cancelled, replaced or already closed work')
+            state.update(closed=True,phase='completed')
 
     def mark_ready(self,receipt):
         with self.lock:
@@ -107,7 +115,7 @@ def run_worker(context,world,task_id,model="gpt-6-luna",expected_revision=None):
         "content":{"type":"string"}},"required":["route","content"],"additionalProperties":False}
     with world.lock:
         available = {"records":{p:list(fields) for p,fields in world.records.items()},
-            "tasks":{name:state.copy() for name,state in world.tasks.items() if not state["cancelled"] and name != task_id}}
+            "tasks":{name:state.copy() for name,state in world.tasks.items() if not state["cancelled"] and not state.get("closed",False) and name != task_id}}
     instructions = ("Help a live voice assistant with only the latest USER request in its chronological transcript. "
         "Do not repeat older pending or completed lookups merely because the voice assistant has not spoken their results. "
         "Answer simple general knowledge without tools. Private records require lookup_record; never invent their contents. "

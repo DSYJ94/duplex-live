@@ -4379,3 +4379,11 @@ pulses. It also reports acoustic speech starts separately from semantic task
 cancellation. Three local state/sequence regressions pass; replay on actual
 captured model tokens, raw heads and PCM remains to run. No model decoding or
 optimization is repeated; no reference words enter the policy.
+
+## 2026-10-18 — concurrent hybrid development probe prepared
+
+Plain words: endpoint replay 7511037 completed on the frozen actual streaming ASR traces. The conservative text-plus-quiet policy produced complete utterance counts 1/3/3 instead of raw head counts 3/7/7, with no leftover text and no reference words supplied. This is reused development policy replay, not fresh live acceptance.
+
+The next bounded probe feeds actual TRAIN user PCM to the verified streaming recognizer while an external gpt-6-luna controller executes read-only record/cancellation tools and a dedicated pinned Kyutai service renders its words in single GPU steps. Both frozen services share one process/GPU. Arrived input frames take priority; actual backlog, packet availability and causal interrupted playout are retained. A declared 12-second minimum lookup delivery delay exercises result/cancellation races; it is not network latency. No optimizer or native model update occurs.
+
+Local checks: 23 targeted lifecycle, endpoint, packet-clock and interruption tests pass. Completed controller dispatches can now close explicitly without pretending cancellation; closed or superseded requests cannot be delivered or cancelled. The renderer follows the pinned upstream drain-plus-flush completion rule. First run is the single reused TRAIN cancellation conversation, followed by broader development checks only after inspecting actual results. Native reasoning, microphone AEC, fresh holdouts and full-system qualification remain open. Interrupted ordinary answers currently resume from their beginning and may repeat a heard prefix.

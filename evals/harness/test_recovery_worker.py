@@ -6,6 +6,18 @@ from evals.recovery_worker import RecordWorld,run_worker,WorkerSuperseded,Worker
 
 
 class RecordGuards(unittest.TestCase):
+    def test_completed_request_is_not_pending_or_cancellable_and_old_revision_cannot_close_new(self):
+        world=RecordWorld({'Cedar':{'badge':'violet triangle'}})
+        receipt=world.read('lookup','Cedar','badge');rev=receipt['revision']
+        world.finish('lookup',rev)
+        self.assertFalse(world.deliverable(receipt))
+        with self.assertRaises(ValueError):world.cancel('lookup')
+        with self.assertRaises(WorkerSuperseded):world.read('lookup','Cedar','badge',expected_revision=rev)
+        next_rev=world.reserve('lookup')
+        with self.assertRaises(WorkerSuperseded):world.finish('lookup',rev)
+        self.assertFalse(world.tasks['lookup']['closed'])
+        self.assertGreater(next_rev,rev)
+
     def test_concurrent_cancel_rejection_does_not_touch_unrelated_work(self):
         world = RecordWorld({'Cedar':{'badge':'violet triangle'},'Birch':{'badge':'silver circle'}})
         old = world.read('old','Cedar','badge')
