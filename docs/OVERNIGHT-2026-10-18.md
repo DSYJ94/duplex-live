@@ -1,5 +1,33 @@
 # Overnight recovery: 18 October
 
+Plain words: UPDATE10:29UTC /12:29Berlin. Combined cancel-and-resume matched
+services7519124/26 and audits7519125/27 COMPLETE. Both actual Astra requests return
+nineteen; both delivery cancellations have real receipts and never speak that result.
+Same user PCM and initial two generated replies. Baseline announces cancellation
+then restarts the whole water-cycle answer after a real prefix. New native combined
+action returns no new text, cancels only turn-1 delivery, and resumes SAME turn-2
+TTS generator. All412800 source samples schedule once,5605 held samples resume,
+none discarded. Complete combined clip independent WER0, valid timestamps. Baseline
+announcement has a one-word cancellation-spelling mismatch WER1/6; its restarted
+explanation WER0. All artifacts local. Proof cancel-resume-matched-integrity.json
+and verifier; source2e975b4. No owner-demo promotion.
+
+Plain words: IMPORTANT LATENCY FAILURE: third-turn prompts2266/2462 tokens take
+10.727/12.763seconds to FIRST token. Baseline total13.434s, combined14.189s despite
+65→35 generated tokens. Earlier1021/1267-token turns start within~.08s. ASR p95
+.013–.017s and input backlog at most.086s; endpoint detects the final request at
+36.736s, so this delay is inside native model generation, not endpoint or API wait.
+Do not call combined cancellation low latency or qualified from its correct actions.
+New diagnostic179d25e, job7519297, profiles two exact reconstructed actual prompts
+cold/hot with private compiler caches, no library patches, no action dispatch and
+zero external requests. CPU capture verifies actual state exact before GPU; actual
+native token count/action parity must also pass. Hypotheses compilation/autotuning
+or compute path are not confirmed. Helper /private/tmp/duplex-prefill-profile-submit.py,
+status /private/tmp/duplex-prefill-profile-status.json; receipt
+runs/duplex-qwen35-prefill-profile-launch-20261018.json. Owner demo7518986 stays
+on verified bound-resume source7cafa37 without this compound option. Goal ACTIVE.
+
+
 Plain words: UPDATE10:14UTC /12:14Berlin. Experimental demo RESTORED at
 http://localhost:8767. Job7518986/source7cafa37, node nid010253:8788, frozen local
 Qwen3.5-9B, generated history, client-buffer pause, semantic model resume and bound
