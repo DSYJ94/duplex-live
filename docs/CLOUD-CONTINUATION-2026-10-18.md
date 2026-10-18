@@ -1,7 +1,9 @@
 # Cloud continuation — 18 October 2026
 
 Plain words: This is the entry point for continuing from a cloud chat after the
-owner shuts down the Mac. The goal is ACTIVE and NOT achieved. The native model
+owner shuts down the Mac. At 18 October 23:29 Berlin / 21:29 UTC, the owner
+explicitly stopped local work for cloud takeover. This local goal is PAUSED,
+not achieved; the cloud chat must establish its own working continuation. The native model
 and whole system remain unqualified. Start here, then read the newest entries in
 HANDOFF.md and docs/QUALIFICATION-2026-10-18.md. Older handoff paragraphs describe
 historical states, not current instructions to resubmit old jobs.
@@ -161,3 +163,27 @@ evals/capability_retention_probe.py and the pre-existing tracked pycache change.
 Transient SSH banner timeouts are observation failures, not permission expiry or
 job failure; re-read the SAME job before submitting anything. Read goal state in
 the new chat; do not claim the original goal migrated automatically.
+
+
+## Final local stop — 18 October 23:29 Berlin
+
+Plain words: The owner explicitly stopped this chat for cloud takeover. No new
+repair, teacher or training job was submitted after the failed 7531499 chain.
+Current committed implementation remains 1b3ae98; the later commits are handoff
+documentation. The last brief continuation only fetched source artifacts and
+started read-only waveform inspection. It did not establish a new diagnosis or
+fix. Do not interpret the hypothesis commentary as a result. Complete diagnosis
+of the short Go clip and the precise clipped utterance before any new repair.
+
+Plain words: Focused copies of the failed TRAIN015/017 utterances and the source
+quality report were successfully fetched to the Mac's ignored local export.
+The broader four-directory artifact transfer was also started; verify its
+completion/file inventory before calling that new backup complete. These local
+files are not available through GitHub. Remote originals and failed audit
+reports remain the authoritative artifacts for the cloud agent.
+
+Plain words: Preserve unrelated local-only roadmap.html,
+evals/capability-retention-probe.slurm, evals/capability_retention_probe.py and the
+tracked timeline pycache modification. They were not authored in this handoff
+and are intentionally not included in its GitHub commits. There are no
+uncommitted implementation edits from the stopped continuation.
