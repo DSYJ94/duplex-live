@@ -155,6 +155,11 @@ def label_scene(scene,generator):
     executor=object.__new__(CompileExecutor);executor.compact_replies=True;executor.spoken_output_contract=False
     executor.pending_speech_protocol='explicit-actions';executor.prompt_profile='contract-examples';executor.attention_backend='math'
     executor.model_id=getattr(generator,'model_id','procedural-authoring');executor.generator=generator;executor.history={};executor.counter=0
+    return evaluate_scene(scene,executor)
+
+
+def evaluate_scene(scene,executor):
+    from evals.duplex_reasoning_worker import ReasoningWorld,run_reasoning_worker
     def blocked(question):raise RuntimeError('Control labels cannot execute a remote reasoning request')
     world=ReasoningWorld({},blocked)
     for task in scene['active_calculations']:world.reserve(task);world.tasks[task].update(operation='delegate_reasoning',phase='running')

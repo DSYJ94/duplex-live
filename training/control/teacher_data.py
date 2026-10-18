@@ -117,7 +117,7 @@ def generate(out,preview):
     # Preserve rejected batches but never issue a TRAIN file/approval for them.
     if passed:(out/'train.jsonl').write_text(''.join(json.dumps(r)+'\n' for r in results))
     source_files=['training/control/curriculum.py','training/control/teacher_data.py','evals/qwen_response_executor.py','evals/qwen35_controller.py','evals/duplex_reasoning_worker.py','evals/duplex_speech_context.py']
-    manifest=dict(schema='dl-verified-controller-text-data-v1',training_approved=passed,preview=preview,synthetic_text_only=True,audio_generated=False,
+    manifest=dict(schema='dl-verified-controller-text-data-v1',training_approved=passed and not preview,all_label_quality_passed=passed,preview=preview,synthetic_text_only=True,audio_generated=False,
         provenance_class='closed-content',teacher_model=MODEL,created_utc=datetime.now(timezone.utc).isoformat(),
         authorization='ADR-0003 Amendment A: owner enterprise agreement generally permits closed-content with provenance',
         authorization_sha256=sha('decisions/0003-provenance-classes.md'),producer_commit=os.environ.get('DL_TASK_COMMIT'),
