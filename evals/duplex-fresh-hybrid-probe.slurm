@@ -55,4 +55,4 @@ apptainer exec --nv --bind /projects,/lus,/home \
  --tts-assets "$DL/runs/kyutai-tts-assets-$KYUTAI_TTS_ASSETS_JOB/assets.json" \
  --mimi-load-approval "$DL/runs/kyutai-tts-mimi-load-$KYUTAI_TTS_MIMI_LOAD_JOB/report.json" \
  --data "$INPUTS" --input-profile fresh-evaluation --input-quality "$QUALITY" "${SCENARIOS[@]}" \
- --controller-protocol "${DUPLEX_CONTROLLER_PROTOCOL:-required-action}" --evaluation-use "${DUPLEX_EVALUATION_USE:-fresh}" "${EXTRA[@]}" --lookup-delay-s 12 --out "$DL/runs/duplex-hybrid-probe-${SLURM_JOB_ID}"
+ --controller-protocol "${DUPLEX_CONTROLLER_PROTOCOL:-required-action}" --evaluation-use "${DUPLEX_EVALUATION_USE:-fresh}" "${EXTRA[@]}" --interrupt-policy "${DUPLEX_INTERRUPT_POLICY:-acoustic}" --lookup-delay-s 12 --out "$DL/runs/duplex-hybrid-probe-${SLURM_JOB_ID}"

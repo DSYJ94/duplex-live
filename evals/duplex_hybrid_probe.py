@@ -41,7 +41,7 @@ def counterfactual_records(scenario):
     raise ValueError('Unapproved bounded development case')
 
 
-def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy"):
+def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",interrupt_policy="acoustic"):
     import numpy as np
     import soundfile as sf
     from data.synthetic.filter import norm_words,wer
@@ -56,7 +56,7 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy"):
     out.mkdir();sf.write(out/'input-user.wav',user,rate,subtype='FLOAT')
     world=RecordWorld(row['world'] if row['split']=='fresh-evaluation' else counterfactual_records(row['scenario_id']));context=[];policy=TurnEndpoint(listener.spm.decode)
     listener.reset();speaker.stop();queue=[];futures={};held=[];packets=[];stops={};events=[];steps=[];backlogs=[]
-    active=None;clock=None;spoken=[];asr_tokens=[];asr_events=[];utterance_count=0;generation_count=0
+    active=None;clock=None;spoken=[];asr_tokens=[];asr_events=[];utterance_count=0;generation_count=0;last_voice_s=-float('inf')
     # Tail allows an actual delayed result, a resumed answer and its PCM to finish.
     real_frames=math.ceil(len(user)/1920);max_frames=real_frames+math.ceil(45/.08)
     padded=np.pad(user,(0,max_frames*1920-len(user)));frame=0;start=time.perf_counter()
@@ -68,11 +68,11 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy"):
             reads=lookup_receipts(item['result']['receipts'])
             return bool(reads) and all(world.deliverable(r) for r in reads)
         return not (item['result']['route']=='clarify' and item['turn']<utterance_count)
-    def interrupt():
+    def interrupt(reason="acoustic_speech_start"):
         nonlocal active,clock
         if active is None:return
         at=now();identity=active['event_id'];stops[identity]=at;clock.stop(at);speaker.stop()
-        log('speech_interrupted',event_id=identity,task_id=active['task_id'],actual_stop_s=at)
+        log('speech_interrupted',event_id=identity,task_id=active['task_id'],actual_stop_s=at,reason=reason)
         # Conservative baseline: retain ordinary answers in full. This can repeat
         # a heard prefix; no word-level heard-position inference is claimed.
         if valid(active) and active['result']['route']!='clarify':
@@ -80,7 +80,7 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy"):
         active=None;clock=None
     def dispatch(text):
         nonlocal utterance_count
-        if controller_protocol=='state-aware' and active is not None:interrupt()
+        if controller_protocol=='state-aware' and active is not None:interrupt('completed_user_request')
         utterance_count+=1;task='turn-'+str(utterance_count);context.append(dict(role='user',text=text))
         revision=world.reserve(task,[e.copy() for e in context]);submitted=now()
         from evals.duplex_speech_obligations import snapshot
@@ -97,12 +97,19 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy"):
                 steps.append(compute);token=result['token']
                 if token is not None and token>=4:asr_tokens.append(token)
                 score=result['heads'][2][0] if result['heads'] is not None else None
-                boundary=policy.update(token,score,float(np.sqrt(np.mean(pcm**2))),next_frame)
+                rms=float(np.sqrt(np.mean(pcm**2)))
+                if rms>policy.energy_floor:last_voice_s=next_frame
+                boundary=policy.update(token,score,rms,next_frame)
                 asr_events.append(dict(frame=frame,input_available_s=next_frame,available_wall_s=now(),
                     token=token,heads=result['heads'],compute_s=compute,arrival_backlog_s=backlogs[-1],
                     real_samples_seen=min((frame+1)*1920,len(user)),synthetic_tail=frame>=real_frames))
                 if boundary['speech_started']:
-                    log('user_speech_started',input_available_s=next_frame);interrupt()
+                    log('user_speech_started',input_available_s=next_frame)
+                    if interrupt_policy=='acoustic':interrupt()
+                if (interrupt_policy=='lexical' and active is not None and token is not None and token>=4
+                        and next_frame-last_voice_s<=1.
+                        and any(ch.isalnum() for ch in listener.spm.decode([token]))):
+                    interrupt('first_arrived_user_lexical_token')
                 if boundary['utterance']:
                     log('user_utterance_complete',**boundary['utterance']);dispatch(boundary['utterance']['text'])
                 frame+=1
@@ -141,6 +148,7 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy"):
             # Acoustic quiet alone is insufficient: await delayed ASR words and
             # the newest semantic dispatch before releasing any queued result.
             barrier=policy.speech_active or bool(policy.tokens) or bool(futures)
+            if interrupt_policy=='lexical':barrier=barrier or now()-last_voice_s<.66
             if active and not speaker.active and now()>=clock.end/rate:
                 log('speech_fully_played',event_id=active['event_id'],task_id=active['task_id'])
                 spoken.append(dict(event_id=active['event_id'],text=active['result']['content'],task_id=active['task_id']))
@@ -195,7 +203,8 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy"):
         user_samples=len(user),real_user_samples_processed=min(frame*1920,len(user)),all_live_user_rows_exact_at_temporal_forward=True,
         frames=frame,synthetic_tail_frames=max(0,frame-real_frames),asr_compute_p95_s=float(np.percentile(steps,95)),
         maximum_input_backlog_s=max(backlogs),declared_counterfactual_world=world.records,
-        controlled_lookup_delivery_minimum_s=delay_s,controller_protocol=controller_protocol,world_tasks=world.tasks,actual_tool_receipts=world.receipts,
+        controlled_lookup_delivery_minimum_s=delay_s,controller_protocol=controller_protocol,interrupt_policy=interrupt_policy,
+        lexical_interruption_is_not_a_backchannel_classifier=interrupt_policy=='lexical',world_tasks=world.tasks,actual_tool_receipts=world.receipts,
         fully_played_responses=spoken,playout=playout,audio_sha256=sha256(out/'model.wav'),wall_s=now(),
         unended_text=listener.spm.decode(policy.tokens),native_model_qualified=False,hybrid_system_qualified=False,
         microphone_acceptance=False,acoustic_echo_cancellation=False,read_only_tools=True)
@@ -206,6 +215,7 @@ def main():
     ap=argparse.ArgumentParser(description=__doc__)
     for n in ('stt-assets','tts-assets','mimi-load-approval','data','out'):ap.add_argument('--'+n,type=Path,required=True)
     ap.add_argument('--scenario',action='append',required=True);ap.add_argument('--lookup-delay-s',type=float,default=12.)
+    ap.add_argument('--interrupt-policy',choices=('acoustic','lexical'),default='acoustic')
     ap.add_argument('--input-profile',choices=('approved-train','fresh-evaluation'),default='approved-train')
     ap.add_argument('--input-quality',type=Path)
     ap.add_argument('--input-validator-source',type=Path)
@@ -232,7 +242,7 @@ def main():
         results=[];failures=[]
         try:
             for row in rows:
-                try:results.append(run_case(listener,speaker,row,args.out/row['scenario_id'],args.lookup_delay_s,args.controller_protocol))
+                try:results.append(run_case(listener,speaker,row,args.out/row['scenario_id'],args.lookup_delay_s,args.controller_protocol,args.interrupt_policy))
                 except Exception as error:
                     if args.input_profile!='fresh-evaluation':raise
                     failure=dict(scenario=row['scenario_id'],error_type=type(error).__name__,message=str(error),
