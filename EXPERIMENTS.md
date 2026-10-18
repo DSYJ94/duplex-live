@@ -5139,3 +5139,23 @@ and silence while number work continues. Ten cases total, all retained; no train
 or reference words hidden from model inputs.26 local regressions pass. Live owner
 source0d63370 unchanged. Proceed to voice only if all routes, IDs and requested
 answer content are actually correct; do not repeat the earlier route-only claim.
+
+
+Plain words: v3 actual7516958 fixes previous stop+first-step and calculation-cancel
+preservation failures, and passes three new contrasts including Moon one-sentence
+summary. Gate STILL FAILS: seed main-point request copies all four old sentences,
+now caught by content check. Nine of ten action/content contracts pass; no full
+qualification or voice adoption. Actual outputs retained. Initial submit SSH61271
+ended255 without launch receipt; verified no receipt/job before idempotent retry,
+which created6958. No duplicate model run was inferred from connection failure.
+
+Plain words: observed captured018 context has consecutive USER messages and no
+ongoing assistant turn; its real generated answer is only in pending-speech state.
+New DIAGNOSTIC history ablation optionally inserts that same already-available
+prior text as an assistant generation, while pending state still marks it not
+fully heard. No new answer information or reference transcript is added. Both
+arms use the same new source, weights/tools/instructions and eleven cases: ten
+fixtures plus actual6730 captured ASR/first-backend/pending-state replay. Verify
+actual first generated content matches pending text and saved audio hash. This
+is not heard-word alignment, native speech or permission to invent assistant
+history in production. Adopt a real event projection only if evidence supports it.

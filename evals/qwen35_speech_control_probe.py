@@ -31,17 +31,36 @@ def specifications():
 def main():
     ap=argparse.ArgumentParser(description=__doc__)
     for name in ('assets','kernel-assets','out'):ap.add_argument('--'+name,type=Path,required=True)
+    ap.add_argument('--prior-assistant-history',action='store_true')
+    ap.add_argument('--captured-run',type=Path)
     args=ap.parse_args();args.out.mkdir(parents=True,exist_ok=False)
     from evals.qwen35_controller import Qwen35ResponseExecutor
     executor=Qwen35ResponseExecutor(args.assets,kernel_assets=args.kernel_assets,pending_speech_protocol='explicit-actions',compact_replies=True)
     rows=[]
     def blocked_backend(question):raise RuntimeError('Typed speech-control fixture forbids any remote request')
-    for spec in specifications():
+    specs=specifications();captured=None
+    if args.captured_run is not None:
+        report_path=args.captured_run/'report.json';report=json.loads(report_path.read_text())
+        if not report['component_execution_completed'] or len(report['results'])!=1:raise ValueError('Replay requires one complete actual captured case')
+        case=report['results'][0];folder=args.captured_run/case['scenario'];backend=json.loads((folder/'turn-2-backend.json').read_text())
+        first=json.loads((folder/'turn-1-backend.json').read_text());pending=backend['pending_speech']
+        if (len(pending)!=1 or pending[0]['text']!=first['result']['content'] or pending[0]['id']!=first['task_id']
+                or sha256(folder/'model.wav')!=case['audio_sha256']):raise ValueError('Captured speech lacks actual generated-answer provenance')
+        original=case['world_tasks']['turn-2']['context']
+        if len(original)!=2 or any(e['role']!='user' for e in original):raise ValueError('Replay baseline is not the observed consecutive-user history')
+        specs.append(dict(id='captured-018-revision',user=backend['request_text'],request=original[0]['text'],prior_text=pending[0]['text'],
+            speech_id=pending[0]['id'],expected_route='answer',expected_consumed=[pending[0]['id']],max_sentences=1))
+        captured=dict(source_report_sha256=sha256(report_path),first_backend_sha256=sha256(folder/'turn-1-backend.json'),
+            second_backend_sha256=sha256(folder/'turn-2-backend.json'),reference_transcript_read=False)
+    for spec in specs:
         world=ReasoningWorld({},blocked_backend)
         if spec.get('background'):
             world.reserve('calculation');world.tasks['calculation'].update(operation='delegate_reasoning',phase='running')
         context=[dict(role='user',text=spec.get('request','Explain in four short sentences how a seed grows into a plant.')),dict(role='user',text=spec['user'])]
         pending=[dict(id='explanation',request_text=context[0]['text'],text=spec.get('prior_text','A seed needs water, warmth, and oxygen to begin germination. The root emerges first. A shoot then grows upward. Leaves begin making food using sunlight.'))]
+        pending[0]['id']=spec.get('speech_id','explanation')
+        if args.prior_assistant_history:
+            context.insert(1,dict(role='assistant',text=pending[0]['text'],speech_delivery='generated-not-fully-heard'))
         revision=world.reserve('current',context);row=dict(id=spec['id'],background_state_is_fixture=True)
         try:
             result=run_reasoning_worker(context,world,'current',executor.model_id,revision,'state-aware',pending,executor)
@@ -59,6 +78,7 @@ def main():
         row['world_tasks']=world.tasks;rows.append(row)
         (args.out/(spec['id']+'.json')).write_text(json.dumps(row,indent=2)+'\n')
     report=dict(schema='dl-typed-speech-control-v1',results=rows,load=executor.proof,all_action_contracts_passed=all(r['action_contract_passed'] for r in rows),
+        prior_assistant_history=args.prior_assistant_history,assistant_history_is_generated_not_fully_heard=args.prior_assistant_history,captured_replay=captured,
         remote_api_used=False,input_is_typed=True,background_state_is_fixture=True,speech_generation_executed=False,optimizer_steps=0,
         development_diagnostic=True,duplex_qualified=False,code_sha256=sha256(Path(__file__)))
     (args.out/'report.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report),flush=True)
