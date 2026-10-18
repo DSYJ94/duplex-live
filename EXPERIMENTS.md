@@ -5758,3 +5758,22 @@ teacher-only input, bind it in teacher provenance/input hashes and replay checks
 No student prompt, source scene, quality requirement or observed output is changed.
 Repeat all seven preview cases under a new immutable producer before full collection.
 This is a label-policy clarification, not retrospective approval of failed labels.
+
+## 18 October — capability preview passes; full collection and guarded trainer
+
+Plain words:7526963/source4dd733f COMPLETE, all7scenes/8native labels pass unchanged
+mechanics, semantic judgments and independent exact prompt/worker replay on cluster
+and locally. Manual review confirms honest unsupported-read/send, supplied value,
+no false completed-task cancellation, silent same-generator resume, missing-project
+clarification, actual fixture read and only its returned value. Preview remains
+training_approvedFALSE. Full112scene/128label collection uses the exact same source;
+42heldout scenes are not sent for teacher collection. Failed previews stay rejected.
+
+Plain words: Extend the trainer with an optional capability corpus only when its
+complete approved manifest matches a new fixed recipe. Keep original108paired and
+216rehearsal corpora and all guards. Preflight must cover every corpus/kind, plus
+both record-read stages; fixed fresh452-row three-epoch recipe would be1356updates
+after a new26-update/independent-restore proof. No optimizer has run for this stage.
+Add all42actual fixture-worker capability holdouts before/after strict restore;
+retain speech/semantic qualification as separate requirements. No decoder-grammar
+or inventory prompt is adopted. The accepted owner model remains unchanged.

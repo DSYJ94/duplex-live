@@ -1,4 +1,4 @@
-"""Fixed contextual pilot: nine TRAIN-only proof updates, then fresh324 candidate.
+"""Fixed contextual training from complete approved corpora, then fresh restore.
 
 The shell invokes restoration in a second process. No saved in-memory candidate
 is scored. Original pretrained parameters and all heldout fixtures stay frozen.
@@ -59,7 +59,7 @@ def encode(row, tokenizer):
     target = tokenizer.encode(suffix, add_special_tokens=False) + [tokenizer.eos_token_id]
     if not prefix or not target or len(prefix + target) > 4096:
         raise ValueError('Training token bounds exceeded')
-    return dict(id=row['id'], kind=row['kind'], corpus=row.get('train_corpus', 'paired'),
+    return dict(id=row['id'], kind=row['kind'], corpus=row.get('train_corpus', 'paired'), stage=row.get('stage'),
                 inputs=(prefix + target)[:-1], targets=target, prefix_tokens=len(prefix))
 
 
@@ -103,7 +103,7 @@ def validate_preflight(folder, assets_sha, implementation, recipe):
             or restored['adapter_weights_sha256'] != sha(folder / 'candidate-adapter/adapter.safetensors')
             or not trained['all_adapter_tensors_received_nonzero_gradients'] or not trained['all_source_hashes_and_versions_unchanged']
             or not trained['zero_adapter_logits_and_rng_exact'] or trained['peak_allocated_bytes'] >= 80_000_000_000):
-        raise ValueError('Actual nine-update and independent restore proofs required')
+        raise ValueError('Actual declared-update and independent restore proofs required')
     return dict(training_proof_sha256=sha(folder / 'training-proof.json'), restore_proof_sha256=sha(folder / 'restore-proof.json'))
 
 
@@ -115,6 +115,7 @@ def main():
     p.add_argument('--preflight', type=Path)
     p.add_argument('--recipe', type=Path, default=PLAN)
     p.add_argument('--rehearsal-data', type=Path)
+    p.add_argument('--capability-data', type=Path)
     p.add_argument('--restore-only', action='store_true')
     a = p.parse_args()
     from training.control.paired_data import verify
@@ -134,10 +135,20 @@ def main():
         rows = [dict(r, train_corpus='paired') for r in rows] + [dict(r, kind=scenes[r['id']]['kind'], train_corpus='rehearsal') for r in replay]
     elif plan.get('rehearsal_manifest_sha256'):
         raise ValueError('Declared rehearsal corpus is required')
+    capability_sha=None;capability_heldout=[]
+    if a.capability_data:
+        from training.control.capability_data import verify as verify_capability
+        calibration,capability_heldout,_=verify_capability(a.capability_data)
+        capability_sha=sha(a.capability_data/'manifest.json')
+        if capability_sha!=plan.get('capability_teacher_manifest_sha256') or len(calibration)!=128 or len(capability_heldout)!=42:
+            raise ValueError('Requires the exact complete approved128-label capability corpus')
+        rows += [dict(r,train_corpus='capability') for r in calibration]
+    elif plan.get('capability_teacher_manifest_sha256'):
+        raise ValueError('Declared capability corpus is required')
     if (plan['teacher_manifest_sha256'] != DATA_SHA or len(rows) != plan['training_rows'] or plan['epochs'] != 3
             or len(rows) * plan['epochs'] != plan['fixed_full_budget_updates'] or len({r['id'] for r in rows}) != len(rows)):
         raise ValueError('Changed predeclared recipe')
-    implementation = {f: sha(f) for f in ('training/control/context_adapter.py', 'training/control/train_context.py', 'training/control/context_evaluate.py')}
+    implementation = {f: sha(f) for f in ('training/control/context_adapter.py', 'training/control/train_context.py', 'training/control/context_evaluate.py','training/control/capability_evaluate.py')}
     assets_sha = sha(a.assets)
     preflight_proof = None
     if a.phase == 'full':
@@ -167,11 +178,14 @@ def main():
     probes = [next(e for e in examples if e['kind'] == kind and e['corpus'] == 'paired') for kind in KINDS]
     if a.rehearsal_data:
         probes += [next(e for e in examples if e['kind'] == kind and e['corpus'] == 'rehearsal') for kind in sorted({e['kind'] for e in examples if e['corpus'] == 'rehearsal'})]
+    if a.capability_data:
+        groups=sorted({(e['kind'],e['stage']) for e in examples if e['corpus']=='capability'})
+        probes += [next(e for e in examples if e['corpus']=='capability' and (e['kind'],e['stage'])==group) for group in groups]
     if len(probes) != plan.get('preflight_updates', 9):
         raise ValueError('Preflight must exercise one TRAIN row per kind and corpus')
     settings = dict(phase=a.phase, seed=42424242, learning_rate=2e-5, weight_decay=0., gradient_clip=1., batch_size=1,
                     epochs=3 if a.phase == 'full' else None, steps=plan['fixed_full_budget_updates'] if a.phase == 'full' else len(probes),
-                    data_manifest_sha256=DATA_SHA, rehearsal_manifest_sha256=rehearsal_sha,
+                    data_manifest_sha256=DATA_SHA, rehearsal_manifest_sha256=rehearsal_sha, capability_manifest_sha256=capability_sha,
                     base_assets_sha256=assets_sha, plan_sha256=sha(a.recipe), implementation_sha256=implementation,
                     source_commit=os.environ.get('DL_TASK_COMMIT'), preflight_proof=preflight_proof)
     with torch.cuda.device(model.device), sdpa_kernel(SDPBackend.MATH):
@@ -210,7 +224,11 @@ def main():
             if a.phase == 'full':
                 summary = evaluate(executor, heldout, a.out / 'restored-adapted')
                 retained = retention(a.out / 'baseline', a.out / 'restored-adapted')
-                write(a.out / 'report.json', dict(summary=summary, retention=retained, restore=proof,
+                capability_summary=None
+                if a.capability_data:
+                    from training.control.capability_evaluate import evaluate as evaluate_capabilities
+                    capability_summary=evaluate_capabilities(executor,capability_heldout,a.out/'restored-capabilities')
+                write(a.out / 'report.json', dict(summary=summary, retention=retained, restore=proof,capability_summary=capability_summary,
                       full_worker_generations_completed=True, heldout_optimizer_rows=0, heldout_checkpoint_selection=False,
                       production_adopted=False, native_duplex_qualified=False, speech_qualified=False))
             print(json.dumps(proof), flush=True)
@@ -218,9 +236,12 @@ def main():
         write(a.out / 'settings.json', settings)
         write(a.out / 'source-load.json', executor.proof)
         write(a.out / 'source-parameters-before.json', before)
-        write(a.out / 'feature-inventory.json', [dict(id=e['id'], kind=e['kind'], corpus=e['corpus'], prompt_tokens=e['prefix_tokens'], target_tokens=len(e['targets'])) for e in examples])
+        write(a.out / 'feature-inventory.json', [dict(id=e['id'], kind=e['kind'], corpus=e['corpus'], stage=e['stage'], prompt_tokens=e['prefix_tokens'], target_tokens=len(e['targets'])) for e in examples])
         if a.phase == 'full':
             evaluate(executor, heldout, a.out / 'baseline')
+            if a.capability_data:
+                from training.control.capability_evaluate import evaluate as evaluate_capabilities
+                evaluate_capabilities(executor,capability_heldout,a.out/'baseline-capabilities')
         zero_before = logit_hashes(model, probes)
         cpu_rng, cuda_rng = torch.get_rng_state(), torch.cuda.get_rng_state_all()
         adapters = install(model)
