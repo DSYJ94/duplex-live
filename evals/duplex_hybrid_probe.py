@@ -42,7 +42,7 @@ def counterfactual_records(scenario):
     raise ValueError('Unapproved bounded development case')
 
 
-def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",interrupt_policy="acoustic",controller=None,scope_read_tools=False,include_tool_context=False,worker_kind="records",live_input=None,output_observer=None):
+def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",interrupt_policy="acoustic",controller=None,scope_read_tools=False,include_tool_context=False,worker_kind="records",live_input=None,output_observer=None,include_speech_context=False):
     import numpy as np
     import soundfile as sf
     from data.synthetic.filter import norm_words,wer
@@ -196,6 +196,9 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",inter
                     from evals.duplex_speech_obligations import consume
                     consumed=result['consume_pending_speech_ids']
                     queue[:]=consume(queue,consumed,meta['pending_speech'])
+                    if include_speech_context:
+                        from evals.duplex_speech_context import retired
+                        retired(context,consumed)
                     for identity in consumed:log('speech_obligation_consumed',task_id=identity,fulfilled_by=meta['task_id'])
                 item=dict(meta,result=result)
                 item['ready_s']=now();item['release_s']=max(now(),meta['submitted_s']+delay_s) if result['route']=='delegate' else now()
@@ -226,6 +229,9 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",inter
                 active['event_id']=identity;clock=PlaybackClock();at=now()
                 log('speech_started',event_id=identity,task_id=active['task_id'],text=active['result']['content'],
                     active_background_task_ids=dispatch_state['actual_background_tasks'],resumes_event_id=prior,same_generator=True)
+                if include_speech_context:
+                    from evals.duplex_speech_context import started
+                    started(context,active,identity)
                 for pcm in paused['tail']:
                     packets.append(dict(event_id=identity,available_s=at,pcm=pcm));clock.append(at,len(pcm))
                 log('speech_resumed',event_id=identity,task_id=active['task_id'],resumes_event_id=prior,
@@ -236,7 +242,10 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",inter
                 completed=dict(event_id=active['event_id'],text=active['result']['content'],task_id=active['task_id'])
                 if 'playback_event_ids' in active:completed['playback_event_ids']=active['playback_event_ids']
                 spoken.append(completed)
-                context.append(dict(role='assistant',text=active['result']['content']))
+                if include_speech_context:
+                    from evals.duplex_speech_context import completed
+                    completed(context,active)
+                else:context.append(dict(role='assistant',text=active['result']['content']))
                 if active['result']['route']=='delegate' and valid(active):world.finish(active['task_id'],active['revision'])
                 active=None;clock=None
             queue[:]=[item for item in queue if valid(item)]
@@ -248,6 +257,10 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",inter
                 active['event_id']='speech-'+str(generation_count);clock=PlaybackClock()
                 speaker.start(active['result']['content'])
                 log('speech_started',event_id=active['event_id'],task_id=active['task_id'],text=active['result']['content'],active_background_task_ids=dispatch_state['actual_background_tasks'])
+                if include_speech_context:
+                    from evals.duplex_speech_context import started
+                    added=started(context,active,active['event_id'])
+                    log('generated_speech_context_recorded',task_id=active['task_id'],event_id=active['event_id'],new_assistant_turn=added,fully_played=False)
             # Generate only bounded PCM lead. A step may overrun; never disguise
             # that as a fast clock: the next ASR backlog records the actual delay.
             if (active and paused is None and speaker.active and clock.end/rate-now()<.24
@@ -272,6 +285,8 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",inter
         (out/'events.json').write_text(json.dumps(events,indent=2)+'\n')
         if include_tool_context:(out/'control-executions.json').write_text(json.dumps(control_evidence,indent=2)+'\n')
         (out/'asr-events.json').write_text(json.dumps(asr_events,indent=2)+'\n')
+        if include_speech_context:
+            (out/'generated-speech-context.json').write_text(json.dumps([e for e in context if e.get('control_source')=='actual-speech-generation'],indent=2)+'\n')
         if packets:
             np.savez(out/'generated-packets.npz',**{str(i):p['pcm'] for i,p in enumerate(packets)})
             (out/'packets.json').write_text(json.dumps([{k:v for k,v in p.items() if k!='pcm'}|dict(samples=len(p['pcm'])) for p in packets],indent=2)+'\n')
@@ -296,7 +311,7 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",inter
         frames=frame,synthetic_tail_frames=max(0,frame-real_frames),asr_compute_p95_s=float(np.percentile(steps,95)),
         maximum_input_backlog_s=max(backlogs),declared_counterfactual_world=world.records,
         controlled_lookup_delivery_minimum_s=delay_s,controller_protocol=controller_protocol,interrupt_policy=interrupt_policy,
-        foreground_barrier='actual-execution-aware',worker_kind=worker_kind,actual_tool_context_enabled=include_tool_context,control_executions_sha256=sha256(out/'control-executions.json') if include_tool_context else None,
+        foreground_barrier='actual-execution-aware',worker_kind=worker_kind,actual_tool_context_enabled=include_tool_context,actual_generated_speech_context_enabled=include_speech_context,generated_speech_context_sha256=sha256(out/'generated-speech-context.json') if include_speech_context else None,control_executions_sha256=sha256(out/'control-executions.json') if include_tool_context else None,
         read_tools_scoped_to_user_identified_available_projects=scope_read_tools,
         controller_provider=controller.provider_name if controller else 'openai',controller_model=controller.model_id if controller else 'gpt-6-luna',
         lexical_interruption_is_not_a_backchannel_classifier=interrupt_policy=='lexical',world_tasks=world.tasks,actual_tool_receipts=world.receipts,
@@ -312,6 +327,7 @@ def main():
     ap.add_argument('--scenario',action='append',required=True);ap.add_argument('--lookup-delay-s',type=float,default=12.)
     ap.add_argument('--worker-kind',choices=('records','reasoning-development'),default='records')
     ap.add_argument('--include-tool-context',action='store_true')
+    ap.add_argument('--include-speech-context',action='store_true')
     ap.add_argument('--scope-read-tools',action='store_true')
     ap.add_argument('--controller-provider',choices=('openai','local-qwen','local-qwen35'),default='openai')
     ap.add_argument('--local-controller-assets',type=Path)
@@ -332,6 +348,8 @@ def main():
     if args.worker_kind=='reasoning-development' and (args.controller_provider!='local-qwen35' or args.controller_protocol!='state-aware' or args.include_tool_context or args.scope_read_tools):raise ValueError('Reasoning trial requires isolated local state-aware control without record-specific options')
     if (args.local_controller_kernel_assets is not None or args.local_controller_spoken_output_contract or args.local_controller_compact_replies) and args.controller_provider!='local-qwen35':raise ValueError('Optional newer-controller settings require local-qwen35')
     if args.include_tool_context and args.controller_protocol!='state-aware':raise ValueError('First tool-context proof requires state-aware protocol')
+    if args.include_speech_context and (args.worker_kind!='reasoning-development' or args.controller_provider!='local-qwen35' or args.controller_protocol!='state-aware'):
+        raise ValueError('First generated-speech context proof requires the local state-aware reasoning controller')
     if not 0<=args.lookup_delay_s<=30:raise ValueError('Invalid bounded controlled delivery delay')
     if args.input_profile=='fresh-evaluation':
         from evals.duplex_input_validator import cases
@@ -364,7 +382,7 @@ def main():
             results=[];failures=[]
             try:
                 for row in rows:
-                    try:results.append(run_case(listener,speaker,row,args.out/row['scenario_id'],args.lookup_delay_s,args.controller_protocol,args.interrupt_policy,controller,args.scope_read_tools,args.include_tool_context,args.worker_kind))
+                    try:results.append(run_case(listener,speaker,row,args.out/row['scenario_id'],args.lookup_delay_s,args.controller_protocol,args.interrupt_policy,controller,args.scope_read_tools,args.include_tool_context,args.worker_kind,include_speech_context=args.include_speech_context))
                     except Exception as error:
                         if args.input_profile!='fresh-evaluation':raise
                         failure=dict(scenario=row['scenario_id'],error_type=type(error).__name__,message=str(error),
@@ -375,10 +393,10 @@ def main():
     finally:
         if controller is not None and hasattr(controller,'close'):controller.close()
     report=dict(schema='dl-concurrent-hybrid-development-v1',component_execution_completed=not failures,results=results,failures=failures,
-        worker_kind=args.worker_kind,actual_tool_context_enabled=args.include_tool_context,
+        worker_kind=args.worker_kind,actual_tool_context_enabled=args.include_tool_context,actual_generated_speech_context_enabled=args.include_speech_context,
         read_tools_scoped_to_user_identified_available_projects=args.scope_read_tools,
         component_code_sha256={name:sha256(Path(__file__).with_name(name)) for name in
-            ('recovery_worker.py','duplex_endpoint.py','duplex_speaker.py','kyutai_stt_probe.py','duplex_speech_obligations.py','duplex_tool_context.py','duplex_reasoning_worker.py','duplex_dispatch.py','duplex_pause.py')},
+            ('recovery_worker.py','duplex_endpoint.py','duplex_speaker.py','kyutai_stt_probe.py','duplex_speech_obligations.py','duplex_tool_context.py','duplex_reasoning_worker.py','duplex_dispatch.py','duplex_pause.py','duplex_speech_context.py')},
         probe_code_sha256=sha256(Path(__file__)),
         input_profile=args.input_profile,input_validator=validator,evaluation_use=args.evaluation_use,input_quality_sha256=sha256(args.input_quality) if args.input_quality else None,
         stt_assets_sha256=sha256(args.stt_assets),tts_assets_sha256=sha256(args.tts_assets),

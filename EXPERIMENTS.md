@@ -5159,3 +5159,28 @@ fixtures plus actual6730 captured ASR/first-backend/pending-state replay. Verify
 actual first generated content matches pending text and saved audio hash. This
 is not heard-word alignment, native speech or permission to invent assistant
 history in production. Adopt a real event projection only if evidence supports it.
+
+
+Plain words: matched history baseline7516980 fails seed summary as before; generated-
+assistant-history7516981 passes ALL11 action/content checks, including actual6730
+captured revision. Same weights/model code/tools/instructions/source for both;
+only prior assistant history differs. Actual summary now condenses to one sentence,
+not the four-sentence queued text. All actual answers inspected. This small typed
+result supports missing generation history as a cause; not full task qualification.
+
+Plain words: opt-in real media projection records generated text after actual TTS
+start, before the next user arrives. It does not invent user words or reference
+answers. Same plan resumed/restarted keeps one chronological assistant turn;
+server completion updates it instead of appending a duplicate. Consumption marks
+unfinished plans retired. Scalar metadata preserves already-submitted snapshots.
+Generated/retired/server-complete are distinct; physical hearing ALWAYS unconfirmed.
+The reasoning controller receives this delivery metadata too, even after withdrawal,
+so generated text cannot silently become a fully-heard transcript. Recheck the
+positive11-case model gate WITH this explicit metadata before real voice.
+
+Plain words: 28 local pause/control/playout/format tests pass, including actual
+run_case history timing, no duplicate assistant turn across repeated pauses,
+withdrawal/completion lifecycle and unmutated past controller snapshot. Four full
+old/new worker payloads are byte-identical when no generated-speech history exists.
+New helper code is in the root source inventory. Main CLI scopes this first proof
+to state-aware local9B reasoning; disabled by default and owner6574 unchanged.

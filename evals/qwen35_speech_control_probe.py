@@ -60,7 +60,8 @@ def main():
         pending=[dict(id='explanation',request_text=context[0]['text'],text=spec.get('prior_text','A seed needs water, warmth, and oxygen to begin germination. The root emerges first. A shoot then grows upward. Leaves begin making food using sunlight.'))]
         pending[0]['id']=spec.get('speech_id','explanation')
         if args.prior_assistant_history:
-            context.insert(1,dict(role='assistant',text=pending[0]['text'],speech_delivery='generated-not-fully-heard'))
+            from evals.duplex_speech_context import started
+            latest=context.pop();started(context,dict(task_id=pending[0]['id'],result=dict(content=pending[0]['text'])),'prior-generation');context.append(latest)
         revision=world.reserve('current',context);row=dict(id=spec['id'],background_state_is_fixture=True)
         try:
             result=run_reasoning_worker(context,world,'current',executor.model_id,revision,'state-aware',pending,executor)

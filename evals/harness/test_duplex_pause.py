@@ -36,19 +36,22 @@ class Controller:
 def worker(context,world,task,**kwargs):return dict(route='answer',content='The lit portion of the Moon changes as it orbits Earth.',consume_pending_speech_ids=[p['id'] for p in kwargs['pending_speech']] if len(context)>1 else [],receipts=[])
 
 class ExactSpeechPause(unittest.TestCase):
- def run_probe(self,policy,lexical=False,twice=False,audit=False,silent=False):
+ def run_probe(self,policy,lexical=False,twice=False,audit=False,silent=False,speech_context=False):
   with tempfile.TemporaryDirectory() as d:
    p=Path(d);user=np.zeros(100*1920,dtype=np.float32)
    user[:3*1920]=.1;user[20*1920:23*1920]=.1
    if twice:user[50*1920:53*1920]=.1
    wav=p/'input.wav';sf.write(wav,user,24000,subtype='FLOAT');ref=p/'reference.json';ref.write_text(json.dumps(dict(user_words=[dict(text='Explain phases. Uh huh.')])) )
    speaker=Speaker();clock=Clock();row=dict(scenario_id='case',split='fresh-evaluation',path=str(wav),reference_path=str(ref),wav_sha256=probe.sha256(wav),world={})
+   self.controller_contexts=[]
    def execute(*args,**kwargs):
+    self.controller_contexts.append([e.copy() for e in args[0]])
     result=worker(*args,**kwargs)
     if silent and len(args[0])>1:result.update(route='silence',content='')
     return result
    with patch.object(probe,'time',clock),patch.object(probe,'run_worker',execute):
-    result=probe.run_case(Listener(lexical),speaker,row,p/'case',0,'state-aware',policy,Controller())
+    result=probe.run_case(Listener(lexical),speaker,row,p/'case',0,'state-aware',policy,Controller(),include_speech_context=speech_context)
+   if speech_context:self.generated_context=json.loads((p/'case/generated-speech-context.json').read_text())
    if audit:
     from evals import duplex_hybrid_audit
     (p/'report.json').write_text(json.dumps(dict(schema='dl-concurrent-hybrid-development-v1',same_process_same_gpu=True,
@@ -123,5 +126,21 @@ class ExactSpeechPause(unittest.TestCase):
   self.assertEqual(speaker.starts,1)
   self.assertEqual(result['fully_played_responses'],[])
   self.assertTrue(any(e['kind']=='silent_control_completed' and e['speech_ids']==['turn-1'] for e in events))
+ def test_partial_reply_is_visible_before_next_user_without_claiming_full_playback(self):
+  self.run_probe('acoustic-pause',lexical=True,speech_context=True)
+  snapshot=self.controller_contexts[1]
+  self.assertEqual([e['role'] for e in snapshot],['user','assistant','user'])
+  self.assertEqual(snapshot[1]['speech_delivery'],'generated-not-fully-played')
+  self.assertFalse(snapshot[1]['physical_hearing_confirmed'])
+  self.assertEqual(len(self.generated_context),2)
+  self.assertEqual(self.generated_context[0]['speech_delivery'],'retired-before-full-playout')
+  self.assertEqual(self.generated_context[1]['speech_delivery'],'server-playout-complete')
+  self.assertEqual(snapshot[1]['speech_delivery'],'generated-not-fully-played')
+ def test_same_generation_pause_keeps_one_assistant_turn_and_default_remains_unchanged(self):
+  self.run_probe('acoustic-pause',twice=True,speech_context=True)
+  self.assertEqual(len(self.generated_context),1)
+  self.assertEqual(self.generated_context[0]['playback_segments'],3)
+  self.run_probe('acoustic-pause',lexical=True)
+  self.assertEqual([e['role'] for e in self.controller_contexts[1]],['user','user'])
 
 if __name__=='__main__':unittest.main()

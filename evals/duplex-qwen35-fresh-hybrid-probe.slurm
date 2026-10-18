@@ -54,6 +54,7 @@ if [ "${DUPLEX_REASONING_WORKER:-0}" = 1 ]; then
  EXTRA+=(--worker-kind reasoning-development)
 fi
 if [ "${DUPLEX_TOOL_CONTEXT:-0}" = 1 ]; then EXTRA+=(--include-tool-context); fi
+if [ "${DUPLEX_SPEECH_CONTEXT:-0}" = 1 ]; then EXTRA+=(--include-speech-context); fi
 if [ -n "${DUPLEX_FRESH_VALIDATOR_SOURCE:-}" ]; then
  : "${DUPLEX_FRESH_VALIDATOR_COMMIT:?Historical validator commit required}"
  EXTRA+=(--input-validator-source "$DUPLEX_FRESH_VALIDATOR_SOURCE" --input-validator-commit "$DUPLEX_FRESH_VALIDATOR_COMMIT")

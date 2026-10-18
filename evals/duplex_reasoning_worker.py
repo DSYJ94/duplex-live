@@ -87,8 +87,11 @@ def run_reasoning_worker(context,world,task_id,model,expected_revision,dispatch_
         tools.append(tool('cancel_reasoning','Stop delivery of identified active reasoning results, preserving unrelated work. Late API returns cannot be spoken. This does not abort an already executing remote request. content is spoken only after actual cancellation succeeds; confirm delivery cancellation honestly and answer an ordinary question if requested.',dict(
             task_ids=dict(type='array',minItems=1,items=dict(type='string',enum=active)),content=dict(type='string'),
             consume_pending_speech_ids=consumption)))
-    payload=dict(model=model,input=json.dumps(context),tools=tools,tool_choice='required',
-        local_worker_state=dict(available=available,pending_speech=pending_speech,dispatch_protocol=dispatch_protocol,domain='reasoning-development'))
+    state=dict(available=available,pending_speech=pending_speech,dispatch_protocol=dispatch_protocol,domain='reasoning-development')
+    from evals.duplex_speech_context import delivery_states
+    deliveries=delivery_states(context)
+    if deliveries:state['generated_speech_delivery']=deliveries
+    payload=dict(model=model,input=json.dumps(context),tools=tools,tool_choice='required',local_worker_state=state)
     before=time.monotonic();response=response_executor(payload)
     calls=[c for c in response.get('output',[]) if c.get('type')=='function_call']
     if response.get('status')!='completed' or len(calls)!=1:raise WorkerContractError('Reasoning controller did not choose exactly one action',dict(response=response))
