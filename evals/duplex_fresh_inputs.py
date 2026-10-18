@@ -56,6 +56,28 @@ def specifications():
         dict(id='hybrid-fresh-015',world={},turns=[
             (.8,'Explain in four sentences why seasons change during the year.'),
             (11.,'Stop. Give me just the main reason in one short sentence.')]),
+        dict(id='hybrid-fresh-016',world={'River East':{'storage label':'green circle'},'River West':{'storage label':'orange star'}},turns=[
+            (.8,'What is the storage label?'),(8.,'Project River West.')]),
+        dict(id='hybrid-fresh-017',world={},turns=[
+            (.8,'Explain in four short sentences how a seed grows into a plant.'),(10.,'Right.')]),
+        dict(id='hybrid-fresh-018',world={},turns=[
+            (.8,'Explain in four short sentences how a seed grows into a plant.'),
+            (12.,'Stop. I only want the first step, in one short sentence.')]),
+        dict(id='hybrid-fresh-019',world={'Lake North':{'map label':'silver square'}},turns=[
+            (.8,'Check the map label for Project Lake North.'),
+            (8.,'While you check, why does a metal spoon feel colder than a wooden spoon in the same room?')]),
+        dict(id='hybrid-fresh-020',world={'River East':{'delivery day':'Monday morning'},'River West':{'delivery day':'Thursday afternoon'}},turns=[
+            (.8,'Check the delivery day for Project River East.'),
+            (8.,'Also check the delivery day for Project River West.'),
+            (15.,'Cancel only the River East lookup. Keep checking River West.')]),
+        dict(id='hybrid-fresh-021',world={},turns=[
+            (.8,'Explain in four sentences why the ocean has tides.'),
+            (11.,'Forget the explanation. What is two plus three?')]),
+        dict(id='hybrid-fresh-022',world={},turns=[
+            (.8,'My favourite animal is a dolphin. Please remember that.'),
+            (9.,'What is my favourite animal?')]),
+        dict(id='hybrid-fresh-023',world={},turns=[
+            (.8,'What is the access code for Project Lake South?')]),
     ]
 
 
