@@ -4870,3 +4870,14 @@ socket test now opens an authenticated active session, rejects a wrong credentia
 then rejects a second authenticated connection with busy1013 while the first
 continues exact bidirectional PCM. No model/session was invoked by the rejected
 connections. This is a protocol test, not physical microphone acceptance.
+
+Plain words: optional compact speech actions are prepared as a latency experiment.
+The model chooses native answer(content) versus clarify(content), mapping its
+chosen function to the existing canonical route. Actual lookup/cancel/replace
+arguments and explicit speech-ID resolution stay unchanged. No content is repaired,
+no route is guessed from words, and full generated actions still validate before
+execution/playback. Default protocol remains unchanged; four record/reasoning
+prompt/schema/prefill views are byte-identical to source75e3883 when disabled.
+Native/canonical action provenance and the option are checked in the resident
+handshake. Test the same ten actual worker cases against a matched native-format
+baseline before any audio adoption; token reduction alone is not qualification.

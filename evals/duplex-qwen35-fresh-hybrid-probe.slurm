@@ -39,6 +39,7 @@ if [ -n "${DUPLEX_FRESH_SCENARIOS:-}" ]; then
  for ID in "${IDS[@]}"; do [[ "$ID" =~ ^hybrid-fresh-[0-9]{3}$ ]]; done
 fi
 EXTRA=()
+if [ "${QWEN_COMPACT_REPLIES:-0}" = 1 ]; then EXTRA+=(--local-controller-compact-replies); fi
 if [ "${QWEN_SPOKEN_OUTPUT_CONTRACT:-0}" = 1 ]; then EXTRA+=(--local-controller-spoken-output-contract); fi
 if [ -n "${QWEN35_KERNEL_ASSETS_JOB:-}" ]; then
  [[ "$QWEN35_KERNEL_ASSETS_JOB" =~ ^[0-9]+$ ]]

@@ -24,6 +24,7 @@ cd "$DL_TASK_SOURCE"
 SCENARIOS=(--scenario recovery-train-020)
 if [ "${DUPLEX_HYBRID_THREE_CASES:-0}" = 1 ]; then SCENARIOS=(--scenario recovery-train-008 --scenario recovery-train-019 --scenario recovery-train-020); fi
 EXTRA=()
+if [ "${QWEN_COMPACT_REPLIES:-0}" = 1 ]; then EXTRA+=(--local-controller-compact-replies); fi
 if [ "${QWEN_SPOKEN_OUTPUT_CONTRACT:-0}" = 1 ]; then EXTRA+=(--local-controller-spoken-output-contract); fi
 if [ -n "${QWEN35_KERNEL_ASSETS_JOB:-}" ]; then
  [[ "$QWEN35_KERNEL_ASSETS_JOB" =~ ^[0-9]+$ ]]

@@ -66,9 +66,19 @@ class QwenResponseExecutor:
             resolve['description']='Reply AND explicitly finish, withdraw or supersede identified owed ordinary answers. The reply must answer that request, or the latest user must withdraw/supersede it. Cancelling a private lookup alone NEVER resolves unrelated ordinary speech.'
             resolve['parameters']['properties']['speech_ids']=dict(type='array',minItems=1,items=dict(type='string',enum=[p['id'] for p in state['pending_speech']]))
             resolve['parameters']['required'].append('speech_ids');result.append(resolve)
+        if getattr(self,'compact_replies',False):
+            aliases=[]
+            for route in ('answer','clarify'):
+                alias=copy.deepcopy(reply);alias['name']=route
+                alias['parameters']['properties'].pop('route');alias['parameters']['required'].remove('route')
+                alias['description']=('Answer ordinary knowledge or confirm an actual operation.' if route=='answer' else 'Ask for information missing from the latest request.')+' Preserve all owed ordinary speech.'
+                aliases.append(alias)
+            position=result.index(reply);result[position:position+1]=aliases
         return result
 
     def canonical_action(self,action,state):
+        if getattr(self,'compact_replies',False) and action['name'] in ('answer','clarify'):
+            action=dict(name='respond_to_user',arguments=dict(action['arguments'],route=action['name']))
         if self.pending_speech_protocol!='explicit-actions' or state['dispatch_protocol']!='state-aware':return action
         if action['name']=='respond_to_user':return dict(name=action['name'],arguments=dict(action['arguments'],consume_pending_speech_ids=[]))
         if action['name']=='resolve_pending_speech':
@@ -80,10 +90,15 @@ class QwenResponseExecutor:
         if payload['model']!=self.model_id:raise RuntimeError('Local controller cannot substitute a different model')
         state=payload['local_worker_state']
         if state['dispatch_protocol'] not in ('required-action','state-aware'):raise RuntimeError('Unsupported local worker protocol')
+        compact=getattr(self,'compact_replies',False)
+        if compact and (self.pending_speech_protocol!='explicit-actions' or state['dispatch_protocol']!='state-aware'):raise ValueError('Compact replies require explicit state-aware speech actions')
+        speech_choices='answer for an ordinary answer or clarify for missing information' if compact else 'respond_to_user for an ordinary answer or clarification'
+        speech_answer='answer' if compact else 'respond_to_user'
+        speech_usage='Use answer for an ordinary reply or cancellation confirmation, and clarify for missing information; this preserves all owed speech. ' if compact else 'Use respond_to_user for an ordinary reply, clarification, or confirmation of private lookup cancellation; this preserves all owed speech. '
         instructions=(
             'You control a voice assistant. Address ONLY the latest USER request in its chronological transcript. '
             'Earlier user requests and active tasks are context, not repeated commands. Never repeat an older lookup just because its result has not been spoken. '
-            'Choose exactly one provided function, including respond_to_user for an ordinary answer or clarification. '
+            f'Choose exactly one provided function, including {speech_choices}. '
             'Return only the function call, never a preliminary plan or prose outside it. Answer simple general knowledge from your parameters. '
             'Private fields require an actual lookup; never infer a project from the available names. Ask for missing project or field identification. '
             'Honor negation and corrections. Use replace_lookup when an active lookup is corrected to a different user-identified project or field. '
@@ -112,12 +127,15 @@ class QwenResponseExecutor:
         if state['dispatch_protocol']=='state-aware' and self.pending_speech_protocol=='explicit-actions':
             instructions+=(
                 'Pending speech contains ordinary answers owed but not fully played; an unknown prefix may have been heard. '
-                'Use respond_to_user for an ordinary reply, clarification, or confirmation of private lookup cancellation; this preserves all owed speech. '
+                f'{speech_usage}'
                 'Use resolve_pending_speech with speech_ids ONLY if this reply itself answers an owed ordinary request, or the latest user explicitly withdraws or supersedes it. '
                 'A user asking to stop and replace an explanation with a shorter version supersedes the older long answer: give the revised answer through resolve_pending_speech. '
-                'Cancelling a private lookup alone never resolves an unrelated ordinary answer; use respond_to_user after that receipt and leave the client to resume it. '
+                f'Cancelling a private lookup alone never resolves an unrelated ordinary answer; use {speech_answer} after that receipt and leave the client to resume it. '
                 'These are output actions only, not execution receipts. Never both answer an owed request now and leave it queued. ')
-        if self.prompt_profile=='contract-examples' and domain=='records':instructions+=CONTRACT_EXAMPLES
+        if self.prompt_profile=='contract-examples' and domain=='records':
+            examples=CONTRACT_EXAMPLES
+            if compact:examples=examples.replace('Choose respond_to_user\nwith route clarify and content','Choose clarify\nwith content')
+            instructions+=examples
         if state['dispatch_protocol']=='state-aware' and self.pending_speech_protocol=='array':
             instructions+=(
                 "\nSpeech-state examples, NOT actual tasks or receipts: "
@@ -214,7 +232,7 @@ class QwenResponseExecutor:
                 total_tokens=generation['input_tokens']+generation['generated_tokens']),
             local_inference=dict(**generation,provider=self.provider_name,prompt_profile=self.prompt_profile,
                 response_is_internal_normalized_transport=True,reply_function_is_format_only=reply_only,attention_backend=self.attention_backend,
-                pending_speech_protocol=self.pending_speech_protocol,native_model_action=native_action,canonical_worker_action=action))
+                compact_reply_action_protocol=compact,pending_speech_protocol=self.pending_speech_protocol,native_model_action=native_action,canonical_worker_action=action))
 
 
 def main():
@@ -229,21 +247,22 @@ def main():
     ap.add_argument('--pending-speech-protocol',choices=('array','explicit-actions'),default='array')
     ap.add_argument('--kernel-assets',type=Path)
     ap.add_argument('--spoken-output-contract',action='store_true')
+    ap.add_argument('--compact-replies',action='store_true')
     ap.add_argument('--controller-transport',choices=('in-process','subprocess'),default='in-process')
     ap.add_argument('--provider',choices=('qwen4b','qwen35'),default='qwen4b')
     args=ap.parse_args();args.out.mkdir(parents=True,exist_ok=False)
-    if (args.kernel_assets is not None or args.spoken_output_contract) and args.provider!='qwen35':
+    if (args.kernel_assets is not None or args.spoken_output_contract or args.compact_replies) and args.provider!='qwen35':
         raise ValueError('Optional kernels and spoken contract require the newer9B controller')
     if args.controller_transport=='subprocess':
         if args.provider!='qwen35' or args.attention_backend!='math':raise ValueError('Resident proof supports the explicit newer model/math backend only')
         from evals.qwen35_rpc import ResidentQwen35
-        executor=ResidentQwen35(args.assets,args.out,device='cuda:0',pending_speech_protocol=args.pending_speech_protocol,kernel_assets=args.kernel_assets,spoken_output_contract=args.spoken_output_contract)
+        executor=ResidentQwen35(args.assets,args.out,device='cuda:0',pending_speech_protocol=args.pending_speech_protocol,kernel_assets=args.kernel_assets,spoken_output_contract=args.spoken_output_contract,compact_replies=args.compact_replies)
     else:
         executor_class=QwenResponseExecutor
         if args.provider=='qwen35':
             from evals.qwen35_controller import Qwen35ResponseExecutor
             executor_class=Qwen35ResponseExecutor
-        extra=dict(kernel_assets=args.kernel_assets,spoken_output_contract=args.spoken_output_contract) if args.provider=='qwen35' else {}
+        extra=dict(kernel_assets=args.kernel_assets,spoken_output_contract=args.spoken_output_contract,compact_replies=args.compact_replies) if args.provider=='qwen35' else {}
         executor=executor_class(args.assets,device='cuda:0',attention_backend=args.attention_backend,pending_speech_protocol=args.pending_speech_protocol,**extra)
     results=[]
     rows=fixtures()+[
@@ -283,7 +302,7 @@ def main():
     report=dict(schema='dl-local-qwen-worker-contract-v1',results=results,load=executor.proof,warmup=executor.warmup,
         optional_kernel_assets_sha256=sha256(args.kernel_assets/'report.json') if args.kernel_assets else None,
         controller_transport=args.controller_transport,transport_info=getattr(executor,'transport_info',None),
-        spoken_output_contract=args.spoken_output_contract,provider=executor.provider_name,pending_speech_protocol=args.pending_speech_protocol,attention_backend=args.attention_backend,remote_api_used=False,input_is_typed=True,optimizer_steps=0,development_cases_reused=True,
+        compact_replies=args.compact_replies,spoken_output_contract=args.spoken_output_contract,provider=executor.provider_name,pending_speech_protocol=args.pending_speech_protocol,attention_backend=args.attention_backend,remote_api_used=False,input_is_typed=True,optimizer_steps=0,development_cases_reused=True,
         speech_generation_executed=False,duplex_system_qualified=False,code_sha256=sha256(Path(__file__)))
     (args.out/'report.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report),flush=True)
 
