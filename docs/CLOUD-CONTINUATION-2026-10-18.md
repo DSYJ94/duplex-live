@@ -60,6 +60,10 @@ Dependent teacher 7531501, teacher ASR 7531502 and semantic/conversion 7531503
 were CANCELLED. No new teacher corpus, codec cache, optimizer updates or model
 qualification came from this pipeline. Inspect the remaining TRAIN failures
 before proposing another bounded repair; never silently take a passing subset.
+The re-audit admits 22/24 TRAIN scenes. Remaining failures: native2-train-015
+clip3 (Go. transcribed Go. Go.) and native2-train-017 (mixed waveform clipping;
+all its word checks now pass). Inspect the actual clipped source utterance before
+repairing it; do not merely lower the saved gain to conceal clipping.
 
 Plain words: Cluster root is /projects/u6si/duplex-live, repo under repo/, runs
 under runs/, immutable sources under worktrees/recovery-SHA7. Inspect:
