@@ -21,5 +21,6 @@ apptainer exec --nv --bind /projects,/lus,/home \
  --env PYTHONPATH="$DL/envs/moshi-rag-7379661/lib/python3.12/site-packages:$DL_TASK_SOURCE" \
  --env PYTHONDONTWRITEBYTECODE=1 --env OMP_NUM_THREADS=8 --env HF_HUB_OFFLINE=1 \
  "$DL/pytorch-new.sif" python -u -m evals.qwen_response_executor \
+ --attention-backend "${QWEN_CONTROLLER_ATTENTION_BACKEND:-math}" \
  --assets "$DL/runs/qwen-controller-assets-$QWEN_CONTROLLER_ASSETS_JOB/assets.json" \
  --out "$DL/runs/qwen-worker-contract-${SLURM_JOB_ID}"

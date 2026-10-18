@@ -31,20 +31,22 @@ def validate(value,schema):
 class QwenResponseExecutor:
     provider_name='local-transformers-qwen4b'
 
-    def __init__(self,assets,device='cuda:1',prompt_profile='contract-examples'):
+    def __init__(self,assets,device='cuda:1',prompt_profile='contract-examples',attention_backend='math'):
         if prompt_profile not in ('base','contract-examples'):raise ValueError('Unknown local controller prompt profile')
+        if attention_backend not in ('math','flash'):raise ValueError('Unknown explicit attention backend')
+        self.attention_backend=attention_backend
         self.model,self.tokenizer,self.proof=load_model(assets,device=device)
         self.generator=Generator(self.model,self.tokenizer);self.model_id=self.proof['repo']
         self.prompt_profile=prompt_profile;self.lock=threading.RLock();self.history={};self.counter=0
         import torch
         from torch.nn.attention import sdpa_kernel,SDPBackend
-        with torch.inference_mode(),torch.cuda.device(self.model.device),sdpa_kernel(SDPBackend.MATH):
+        with torch.inference_mode(),torch.cuda.device(self.model.device),sdpa_kernel(SDPBackend.MATH if self.attention_backend=='math' else SDPBackend.FLASH_ATTENTION):
             self.warmup=self.generator.request([dict(role='user',content='Say ready.')],[])
 
     def __call__(self,payload):
         import torch
         from torch.nn.attention import sdpa_kernel,SDPBackend
-        with self.lock,torch.inference_mode(),torch.cuda.device(self.model.device),sdpa_kernel(SDPBackend.MATH):
+        with self.lock,torch.inference_mode(),torch.cuda.device(self.model.device),sdpa_kernel(SDPBackend.MATH if self.attention_backend=='math' else SDPBackend.FLASH_ATTENTION):
             return self._request(payload)
 
     def _request(self,payload):
@@ -127,7 +129,7 @@ class QwenResponseExecutor:
             usage=dict(input_tokens=generation['input_tokens'],output_tokens=generation['generated_tokens'],
                 total_tokens=generation['input_tokens']+generation['generated_tokens']),
             local_inference=dict(**generation,provider=self.provider_name,prompt_profile=self.prompt_profile,
-                response_is_internal_normalized_transport=True,reply_function_is_format_only=reply_only))
+                response_is_internal_normalized_transport=True,reply_function_is_format_only=reply_only,attention_backend=self.attention_backend))
 
 
 def main():
@@ -138,8 +140,9 @@ def main():
     from evals.moshi_model_download import sha256
     ap=argparse.ArgumentParser(description='Actual typed worker-contract proof using only the local Qwen model')
     ap.add_argument('--assets',type=Path,required=True);ap.add_argument('--out',type=Path,required=True)
+    ap.add_argument('--attention-backend',choices=('math','flash'),default='math')
     args=ap.parse_args();args.out.mkdir(parents=True,exist_ok=False)
-    executor=QwenResponseExecutor(args.assets,device='cuda:0');results=[]
+    executor=QwenResponseExecutor(args.assets,device='cuda:0',attention_backend=args.attention_backend);results=[]
     for row in fixtures():
         world=RecordWorld(row['records'])
         if row.get('pending'):world.read('pending-oak',row['pending'],'meeting room')
@@ -160,7 +163,7 @@ def main():
                 message=str(error),failure=getattr(error,'result',None),world_tasks=world.tasks)
         (args.out/(row['id']+'.json')).write_text(json.dumps(record,indent=2)+'\n');results.append(record)
     report=dict(schema='dl-local-qwen-worker-contract-v1',results=results,load=executor.proof,warmup=executor.warmup,
-        remote_api_used=False,input_is_typed=True,optimizer_steps=0,development_cases_reused=True,
+        attention_backend=args.attention_backend,remote_api_used=False,input_is_typed=True,optimizer_steps=0,development_cases_reused=True,
         speech_generation_executed=False,duplex_system_qualified=False,code_sha256=sha256(Path(__file__)))
     (args.out/'report.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report),flush=True)
 
