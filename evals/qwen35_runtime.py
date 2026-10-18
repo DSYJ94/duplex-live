@@ -48,7 +48,7 @@ def main():
     sys.path.insert(0,str(package))
     import torch,transformers,huggingface_hub,tokenizers,safetensors
     from transformers import AutoConfig,AutoTokenizer,Qwen3_5ForConditionalGeneration
-    from transformers.modeling_utils import no_init_weights
+    from transformers.initialization import no_init_weights
     if transformers.__version__!='5.5.3':raise RuntimeError('Wrong isolated Transformers import')
     files={str(p.relative_to(package)):sha256(p) for name in PACKAGES for p in (package/name).rglob('*') if p.is_file() and '__pycache__' not in p.parts}
     report=dict(schema='dl-qwen35-isolated-runtime-v1',passed=True,package=str(package),package_files=files,

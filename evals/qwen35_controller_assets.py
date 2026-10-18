@@ -25,7 +25,7 @@ def main():
     from safetensors import safe_open
     import torch,transformers,tokenizers,huggingface_hub
     from transformers import AutoConfig,AutoTokenizer,Qwen3_5ForConditionalGeneration
-    from transformers.modeling_utils import no_init_weights
+    from transformers.initialization import no_init_weights
     assets=[];folder=None;inventory={}
     for row in pins['files']:
         file=Path(hf_hub_download(pins['repo'],row['file'],revision=pins['revision'],cache_dir=str(args.dl/'models/hf-cache/hub')))
