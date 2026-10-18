@@ -9,7 +9,7 @@ class LiveFrames:
     def __init__(self,max_seconds=300):
         if not 1<=max_seconds<=300:raise ValueError('Live session duration must be bounded')
         self.max_seconds=max_seconds;self.queue=queue.Queue(maxsize=16);self.closed=threading.Event();self.sequence=0
-        self.received=[];self.receipts=[];self.lock=threading.Lock();self.drain_frames=0
+        self.received=[];self.receipts=[];self.lock=threading.Lock();self.drain_frames=0;self.aborted=False
     def feed(self,packet):
         import numpy as np
         if self.closed.is_set():raise ValueError('Capture has already ended')
@@ -26,6 +26,7 @@ class LiveFrames:
         try:return self.queue.get_nowait()
         except queue.Empty:return None
     def finish(self):self.closed.set()
+    def abort(self):self.aborted=True;self.closed.set()
     @property
     def finished(self):return self.closed.is_set() and self.queue.empty()
     def pcm(self):

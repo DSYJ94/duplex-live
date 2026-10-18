@@ -143,6 +143,7 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",inter
     try:
         if live and output_observer is not None:output_observer.event(dict(kind='session_ready',at_s=now()))
         while frame<max_frames:
+            if live and live_input.aborted:raise ConnectionAbortedError('Browser disconnected; stop this media session')
             if live and now()>live_input.max_seconds+45:raise RuntimeError('Live session wall-clock limit reached')
             drain_control()
             t=now();next_frame=(frame+1)*.08 if not live else (drain_next_s if live_input.finished else t+.08)
@@ -302,7 +303,10 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",inter
             time.sleep(min(.002,max(0.,start+next_frame-time.perf_counter())))
         if frame>=max_frames:raise RuntimeError('Concurrent replay exceeded explicit 45s tail; unresolved work retained')
     finally:
-        executor.shutdown(wait=True,cancel_futures=True);speaker.stop()
+        # A departed browser must not hold the media actor while an unrelated
+        # remote reasoning request finishes. Its private result has no output
+        # path after abort; a later return belongs only to this abandoned world.
+        executor.shutdown(wait=not (live and live_input.aborted),cancel_futures=True);speaker.stop()
         if live:
             user=live_input.pcm();real_frames=math.ceil(len(user)/1920)
             sf.write(out/'input-user.wav',user,rate,subtype='FLOAT')

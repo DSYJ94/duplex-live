@@ -13,6 +13,39 @@ from serving.hybrid.server import Network
 
 @unittest.skipUnless(importlib.util.find_spec('websockets'),'Requires isolated existing websockets runtime')
 class LiveNetworkProtocol(unittest.IsolatedAsyncioTestCase):
+    async def test_authenticated_restart_aborts_old_capture_before_new_owner(self):
+        from websockets.asyncio.server import serve
+        from websockets.asyncio.client import connect
+        requests=queue.Queue(maxsize=1);network=Network('127.0.0.1',0,'fixture-secret',requests,threading.Event())
+        seen=[]
+        async def actor():
+            for index in range(2):
+                item=await asyncio.to_thread(requests.get,True,2);seen.append(item)
+                item['output'].event(dict(kind='session_ready'))
+                if index==0:
+                    while not item['incoming'].aborted:await asyncio.sleep(.005)
+                else:
+                    while not item['incoming'].finished:await asyncio.sleep(.005)
+                    item['output'].event(dict(kind='session_complete'));item['output'].put(None)
+                item['future'].set_result(dict(fixture_only=True))
+        hello=dict(token='fixture-secret',sample_rate=24000,frame_samples=1920)
+        async with serve(network.handler,'127.0.0.1',0,compression=None) as server:
+            url='ws://127.0.0.1:'+str(server.sockets[0].getsockname()[1])+'/ws';task=asyncio.create_task(actor())
+            async with connect(url,proxy=None) as old:
+                await old.send(json.dumps(hello));self.assertEqual(json.loads(await old.recv())['kind'],'session_ready')
+                async with connect(url,proxy=None) as unauthenticated:
+                    await unauthenticated.send(json.dumps(dict(hello,token='wrong',replace_existing=True)))
+                    await asyncio.wait_for(unauthenticated.wait_closed(),1);self.assertEqual(unauthenticated.close_code,1008)
+                self.assertFalse(seen[0]['incoming'].aborted)
+                async with connect(url,proxy=None) as new:
+                    await new.send(json.dumps(dict(hello,replace_existing=True)))
+                    self.assertEqual(json.loads(await asyncio.wait_for(new.recv(),2))['kind'],'session_ready')
+                    await asyncio.wait_for(old.wait_closed(),1);self.assertEqual(old.close_reason,'Replaced by a new conversation')
+                    self.assertTrue(seen[0]['incoming'].aborted);self.assertFalse(seen[1]['incoming'].aborted)
+                    await new.send(json.dumps(dict(kind='finish')))
+                    self.assertEqual(json.loads(await asyncio.wait_for(new.recv(),1))['kind'],'session_complete')
+                await task
+
     async def test_pause_protocol_rejects_clients_without_retained_buffer_support(self):
         from websockets.asyncio.server import serve
         from websockets.asyncio.client import connect

@@ -12,21 +12,28 @@ function stop() {
   stream?.getTracks().forEach((track) => track.stop()); stopPlayback();
   if (socket && socket.readyState < 2) socket.close(1000, 'Owner ended session');
   const closing = context; context = undefined; setTimeout(() => closing?.close(), 12); $('start').disabled = false; $('end').disabled = true; status('Session ended.');
+  $('input-level').textContent = 'Microphone off.';
 }
 function play(data) { playout.append(data); }
 $('end').onclick = stop;
 $('start').onclick = async () => {
-  const currentGeneration = ++generation; intentionalStop = false; $('start').disabled = true; sequence = 0;
+  const currentGeneration = ++generation; intentionalStop = false; ready = false; $('start').disabled = true; $('end').disabled = false; sequence = 0;
+  status('Connecting and requesting microphone access…'); $('input-level').textContent = 'Waiting for microphone…';
   try {
     let endpoint = `${location.protocol === 'https:' ? 'wss:' : 'ws:'}//${location.host}/ws`;
     const access = await fetch('/session-access', { cache: 'no-store' });
+    if (currentGeneration !== generation) return;
     if (access.ok) {
-      const config = await access.json(); $('token').value = config.token; endpoint = config.websocket_url;
+      const config = await access.json(); if (currentGeneration !== generation) return; $('token').value = config.token; endpoint = config.websocket_url;
     } else if (!$('token').value) throw new Error('Session access is unavailable.');
     context = new AudioContext({ sampleRate: 24000 }); await context.resume();
+    if (currentGeneration !== generation) return;
     if (context.sampleRate !== 24000) throw new Error('This browser did not provide 24 kHz audio. Please use Chrome.');
     await context.audioWorklet.addModule('/worklet.js');
-    stream = await navigator.mediaDevices.getUserMedia({ audio: { channelCount: 1, echoCancellation: true, noiseSuppression: true, autoGainControl: true } });
+    if (currentGeneration !== generation) return;
+    const acquired = await navigator.mediaDevices.getUserMedia({ audio: { channelCount: 1, echoCancellation: true, noiseSuppression: true, autoGainControl: true } });
+    if (currentGeneration !== generation) { acquired.getTracks().forEach((track) => track.stop()); return; }
+    stream = acquired;
     const { deviceId, groupId, ...appliedSettings } = stream.getAudioTracks()[0].getSettings();
     const settings = { ...appliedSettings, audio_context_sample_rate: context.sampleRate, aec_requested: true, physical_aec_tested: false };
     $('settings').textContent = JSON.stringify(settings, null, 2);
@@ -34,10 +41,14 @@ $('start').onclick = async () => {
     capture.connect(muted).connect(context.destination);
     playout = new AudioPlayout(context, (receipt) => { if (currentGeneration === generation && socket?.readyState === WebSocket.OPEN) socket.send(JSON.stringify(receipt)); });
     socket = new WebSocket(endpoint); socket.binaryType = 'arraybuffer';
-    socket.onopen = () => { if (currentGeneration !== generation) return; socket.send(JSON.stringify({ token: $('token').value, sample_rate: 24000, frame_samples: 1920, capture_settings: settings, client_kind: 'browser-microphone', playback_protocol: 'client-buffer-v1' })); };
+    socket.onopen = () => { if (currentGeneration !== generation) return; socket.send(JSON.stringify({ token: $('token').value, sample_rate: 24000, frame_samples: 1920, capture_settings: settings, client_kind: 'browser-microphone', playback_protocol: 'client-buffer-v1', replace_existing: true })); };
     capture.port.onmessage = ({ data }) => {
       if (currentGeneration !== generation || !ready || socket.readyState !== WebSocket.OPEN) return;
       if (socket.bufferedAmount > 16 * 7684) { status('The audio connection is falling behind.'); stop(); return; }
+      if (sequence % 5 === 0) {
+        const samples = new Float32Array(data); let energy = 0; for (const sample of samples) energy += sample * sample;
+        $('input-level').textContent = Math.sqrt(energy / samples.length) > .003 ? 'Microphone: sound detected.' : 'Microphone: receiving quiet audio.';
+      }
       const packet = new ArrayBuffer(4 + data.byteLength); new DataView(packet).setUint32(0, sequence++, true); new Uint8Array(packet, 4).set(new Uint8Array(data)); socket.send(packet);
     };
     socket.onmessage = ({ data }) => {
@@ -55,7 +66,7 @@ $('start').onclick = async () => {
         if (event.kind === 'speech_pause_committed') playout.interrupt(Number(event.event_id.replace('speech-', '')));
         if (event.kind === 'speech_resumed') playout.resume(Number(event.resumes_event_id.replace('speech-', '')), Number(event.event_id.replace('speech-', '')));
         if (event.kind === 'session_error') { const message = event.message; stop(); status(`Session error: ${message}`); }
-        if (event.kind === 'session_complete') status('Conversation complete.');
+        if (event.kind === 'session_complete') { stop(); status('Conversation complete. Choose Start to speak again.'); }
       } catch (error) { stop(); status(error.message); }
     };
     socket.onerror = () => { if (currentGeneration !== generation) return; stop(); status('The voice connection failed.'); };

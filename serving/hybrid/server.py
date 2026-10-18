@@ -39,7 +39,7 @@ class Output:
 class Network:
     def __init__(self,host,port,token,requests,stop,client_pause_protocol=False):
         self.client_pause_protocol=client_pause_protocol
-        self.host=host;self.port=port;self.token=token;self.requests=requests;self.stop=stop;self.ready=threading.Event();self.error=None;self.busy=False
+        self.host=host;self.port=port;self.token=token;self.requests=requests;self.stop=stop;self.ready=threading.Event();self.error=None;self.busy=False;self.active_ws=None
     async def http(self,connection,request):
         path=urlsplit(request.path).path
         if path=='/ws':return None
@@ -49,18 +49,24 @@ class Network:
         response=connection.respond(HTTPStatus.OK,body);del response.headers['Content-Type'];response.headers['Content-Type']='text/html; charset=utf-8' if path in ('/','/qa.html') else 'text/javascript; charset=utf-8'
         response.headers['Cache-Control']='no-store';response.headers['Referrer-Policy']='no-referrer';return response
     async def handler(self,ws):
-        incoming=None;output=None;sender=None;future=None;claimed=False
+        incoming=None;output=None;sender=None;future=None;claimed=False;graceful_finish=False
         try:
             hello=json.loads(await asyncio.wait_for(ws.recv(),timeout=5))
             if not isinstance(hello,dict) or not isinstance(hello.get('token'),str) or not secrets.compare_digest(hello['token'],self.token):
                 await ws.close(code=1008,reason='Unauthorized');return
-            if self.busy:await ws.close(code=1013,reason='A session is already running');return
             if hello.get('sample_rate')!=24000 or hello.get('frame_samples')!=1920:await ws.close(code=1008,reason='Unsupported PCM format');return
             if self.client_pause_protocol and hello.get('playback_protocol')!='client-buffer-v1':
                 await ws.close(code=1008,reason='Client-owned pause protocol required');return
             settings=hello.get('capture_settings',{})
             if not isinstance(settings,dict) or len(json.dumps(settings))>2048:raise ValueError('Invalid bounded capture settings')
-            self.busy=True;claimed=True;incoming=LiveFrames();output=Output(self.client_pause_protocol);future=Future()
+            if self.busy and hello.get('replace_existing') is True and self.active_ws is not None:
+                # Only an authenticated, valid explicit Start may replace the
+                # previous browser. Keep ownership until its media actor stops.
+                await self.active_ws.close(code=1000,reason='Replaced by a new conversation')
+                deadline=asyncio.get_running_loop().time()+10
+                while self.busy and asyncio.get_running_loop().time()<deadline:await asyncio.sleep(.02)
+            if self.busy:await ws.close(code=1013,reason='The previous conversation is ending. Please try again shortly.');return
+            self.busy=True;self.active_ws=ws;claimed=True;incoming=LiveFrames();output=Output(self.client_pause_protocol);future=Future()
             self.requests.put_nowait(dict(incoming=incoming,output=output,future=future,capture_settings=settings,client_kind=hello.get('client_kind','unspecified')))
             async def send():
                 try:
@@ -68,10 +74,11 @@ class Network:
                         if output.disconnected.is_set():return
                         try:packet=await asyncio.to_thread(output.queue.get,True,.2)
                         except queue.Empty:continue
-                        if packet is None:return
+                        if packet is None:
+                            await ws.close(code=1000,reason='Conversation complete');return
                         await ws.send(packet)
                 except Exception:
-                    output.disconnected.set();incoming.finish()
+                    output.disconnected.set();incoming.abort()
                     raise
             sender=asyncio.create_task(send())
             async for message in ws:
@@ -80,25 +87,29 @@ class Network:
                     incoming.feed(message)
                 else:
                     control=json.loads(message)
-                    if control.get('kind')=='finish':incoming.finish();break
+                    if control.get('kind')=='finish':graceful_finish=True;incoming.finish();break
                     if control.get('kind')=='playback_receipt':
                         if len(json.dumps(control))>2048:raise ValueError('Oversized playback receipt')
                         # Receipts never feed the model or become acceptance labels.
                         incoming.receipts.append(dict(client_playback_receipt=control,received_monotonic=time.monotonic()))
                     else:raise ValueError('Unknown live control message')
-            incoming.finish()
+            if graceful_finish:incoming.finish()
+            else:
+                incoming.abort();output.disconnected.set();sender.cancel()
             await asyncio.wrap_future(future)
-            await sender
+            if graceful_finish:await sender
         except Exception as error:
             if output is not None:output.event(dict(kind='session_error',message=type(error).__name__+': '+str(error)))
         finally:
-            if incoming is not None:incoming.finish()
+            if incoming is not None:
+                if graceful_finish:incoming.finish()
+                else:incoming.abort()
             if output is not None:output.disconnected.set()
             if sender is not None:sender.cancel()
             if future is not None:
                 try:await asyncio.wrap_future(future)
                 except Exception:pass
-            if claimed:self.busy=False
+            if claimed and self.active_ws is ws:self.busy=False;self.active_ws=None
     async def serve(self):
         import websockets
         if websockets.__version__!='15.0.1':raise RuntimeError('Live trial requires existing websockets15.0.1')

@@ -1,5 +1,8 @@
 import struct
 import unittest
+import tempfile
+from pathlib import Path
+from types import SimpleNamespace
 import numpy as np
 from serving.hybrid.frames import LiveFrames
 from serving.hybrid.server import Output
@@ -9,6 +12,18 @@ def packet(sequence,value=0.):return struct.pack('<I',sequence)+np.full(1920,val
 
 
 class LiveCaptureProtocol(unittest.TestCase):
+    def test_aborted_capture_exits_media_actor_without_draining_synthetic_tail(self):
+        from evals.duplex_hybrid_probe import run_case
+        source=LiveFrames();source.abort()
+        listener=SimpleNamespace(spm=SimpleNamespace(decode=lambda ids:''),reset=lambda:None)
+        speaker=SimpleNamespace(stop=lambda:None)
+        with tempfile.TemporaryDirectory() as folder:
+            out=Path(folder)/'capture'
+            with self.assertRaises(ConnectionAbortedError):
+                run_case(listener,speaker,dict(split='live-transport',scenario_id='fixture',world={}),out,0,worker_kind='reasoning-development',live_input=source)
+            self.assertTrue((out/'capture-arrivals.json').exists())
+            self.assertFalse((out/'model.wav').exists())
+
     def test_ordered_actual_pcm_is_preserved_and_ended_capture_drains(self):
         source=LiveFrames(2);source.feed(packet(0,.25));source.feed(packet(1,-.5));source.finish()
         self.assertFalse(source.finished);first,arrival=source.take();second,_=source.take();self.assertTrue(source.finished)
