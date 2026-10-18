@@ -50,6 +50,7 @@ class QwenResponseExecutor:
             return self._request(payload)
 
     def parse_generated_action(self,text,definitions):return parse_action(text)
+    def tool_history_arguments(self,arguments):return json.dumps(arguments)
 
     def _request(self,payload):
         if payload['model']!=self.model_id:raise RuntimeError('Local controller cannot substitute a different model')
@@ -134,7 +135,7 @@ class QwenResponseExecutor:
             arguments=json.dumps(action['arguments'])
             output=[dict(type='function_call',name=action['name'],arguments=arguments,call_id=call_id)]
             messages.append(dict(role='assistant',content=None,tool_calls=[dict(type='function',id=call_id,
-                function=dict(name=action['name'],arguments=arguments))]))
+                function=dict(name=action['name'],arguments=self.tool_history_arguments(action['arguments'])))]))
         self.history[identity]=messages
         return dict(id=identity,status='completed',model=self.model_id,output=output,
             usage=dict(input_tokens=generation['input_tokens'],output_tokens=generation['generated_tokens'],

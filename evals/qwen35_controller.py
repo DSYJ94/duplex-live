@@ -134,3 +134,4 @@ class Qwen35ResponseExecutor(QwenResponseExecutor):
         with torch.inference_mode(),torch.cuda.device(self.model.device),sdpa_kernel(SDPBackend.MATH):
             self.warmup=self.generator.request([dict(role='user',content='Say ready.')],[])
     def parse_generated_action(self,text,definitions):return parse_action(text,definitions)
+    def tool_history_arguments(self,arguments):return dict(arguments)
