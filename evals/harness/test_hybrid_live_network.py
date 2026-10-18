@@ -13,6 +13,18 @@ from serving.hybrid.server import Network
 
 @unittest.skipUnless(importlib.util.find_spec('websockets'),'Requires isolated existing websockets runtime')
 class LiveNetworkProtocol(unittest.IsolatedAsyncioTestCase):
+    async def test_pause_protocol_rejects_clients_without_retained_buffer_support(self):
+        from websockets.asyncio.server import serve
+        from websockets.asyncio.client import connect
+        requests=queue.Queue(maxsize=1)
+        network=Network('127.0.0.1',0,'fixture-secret',requests,threading.Event(),client_pause_protocol=True)
+        async with serve(network.handler,'127.0.0.1',0,compression=None) as server:
+            url='ws://127.0.0.1:'+str(server.sockets[0].getsockname()[1])+'/ws'
+            async with connect(url,proxy=None) as client:
+                await client.send(json.dumps(dict(token='fixture-secret',sample_rate=24000,frame_samples=1920)))
+                await asyncio.wait_for(client.wait_closed(),timeout=1)
+                self.assertEqual(client.close_code,1008);self.assertTrue(requests.empty());self.assertFalse(network.busy)
+
     async def test_authentication_static_content_and_actual_bidirectional_frame_identity(self):
         from websockets.asyncio.server import serve
         from websockets.asyncio.client import connect

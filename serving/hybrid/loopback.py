@@ -32,7 +32,7 @@ async def trial(args):
     args.out.mkdir(parents=True,exist_ok=False)
     from websockets.asyncio.client import connect
     async with connect('ws://127.0.0.1:'+str(ready['port'])+'/ws',max_size=16384,compression=None,proxy=None) as ws:
-        await ws.send(json.dumps(dict(token=token,sample_rate=24000,frame_samples=1920,client_kind='paced-recorded-pcm-network-test',
+        await ws.send(json.dumps(dict(token=token,sample_rate=24000,frame_samples=1920,client_kind='paced-recorded-pcm-network-test',playback_protocol=ready.get('playback_protocol'),
             capture_settings=dict(physical_microphone=False,physical_device_playback=False,echo_cancellation_applied=False))))
         async def transmit():
             await asyncio.wait_for(event.wait(),timeout=30);start=time.monotonic()
@@ -40,21 +40,22 @@ async def trial(args):
                 await asyncio.sleep(max(0.,start+(sequence+1)*.08-time.monotonic()))
                 await ws.send(struct.pack('<I',sequence)+padded[first:first+1920].tobytes());sends.append(dict(sequence=sequence,sent_s=time.monotonic()-start))
             await ws.send(json.dumps(dict(kind='finish')))
-        sending=asyncio.create_task(transmit())
+        sending=asyncio.create_task(transmit());arrival_index=0
         try:
             async for message in ws:
                 if isinstance(message,bytes):
                     if len(message)!=8+1920*4:raise RuntimeError('Changed network output frame size')
                     identity,sequence=struct.unpack_from('<II',message)
                     if sequence!=len(received):raise RuntimeError('Network output packet dropped or reordered')
-                    received.append(dict(event_id='speech-'+str(identity),pcm=np.frombuffer(message,dtype='<f4',offset=8).copy(),received_monotonic=time.monotonic()))
+                    received.append(dict(event_id='speech-'+str(identity),pcm=np.frombuffer(message,dtype='<f4',offset=8).copy(),received_monotonic=time.monotonic(),wire_arrival_index=arrival_index))
                     with (args.out/'received-wire-packets.bin').open('ab') as handle:handle.write(message)
                 else:
-                    item=json.loads(message);events.append(item)
+                    item=json.loads(message);item.update(received_monotonic=time.monotonic(),wire_arrival_index=arrival_index);events.append(item)
                     with (args.out/'network-events.jsonl').open('a') as handle:handle.write(json.dumps(item)+'\n')
                     if item['kind']=='session_ready':event.set()
                     if item['kind']=='session_error':raise RuntimeError('Live model session failed: '+item['message'])
                     if item['kind']=='session_complete':break
+                arrival_index+=1
         finally:
             if not sending.done():sending.cancel()
         await sending
@@ -62,8 +63,9 @@ async def trial(args):
     suite=json.loads((args.server/'report.json').read_text());case=suite['results'][0];folder=args.server/case['scenario']
     actual,rate=sf.read(folder/'input-user.wav',dtype='float32');np.testing.assert_array_equal(actual,padded)
     ledger=json.loads((folder/'packets.json').read_text());saved=np.load(folder/'generated-packets.npz')
-    if len(received)!=len(ledger) or set(saved.files)!={str(i) for i in range(len(ledger))}:raise RuntimeError('Network/server packet inventory differs')
-    for i,(packet,entry) in enumerate(zip(received,ledger)):
+    wire_ledger=[(i,entry) for i,entry in enumerate(ledger) if entry.get('wire_transmitted',True)]
+    if len(received)!=len(wire_ledger) or set(saved.files)!={str(i) for i in range(len(ledger))}:raise RuntimeError('Network/server packet inventory differs')
+    for packet,(i,entry) in zip(received,wire_ledger):
         if packet['event_id']!=entry['event_id']:raise RuntimeError('Network/server speech identity differs')
         np.testing.assert_array_equal(packet['pcm'],saved[str(i)])
     (args.out/'packet-arrivals.json').write_text(json.dumps([{k:v for k,v in row.items() if k!='pcm'} for row in received],indent=2)+'\n')
@@ -72,7 +74,7 @@ async def trial(args):
     from data.synthetic.filter import norm_words,wer
     reference=json.loads(Path(row['reference_path']).read_text());text=' '.join(w['text'] for w in reference['user_words'])
     report=dict(schema='dl-actual-live-transport-loopback-v1',component_execution_completed=True,input_validator=validator,source_scenario=args.scenario,
-        source_wav_sha256=row['wav_sha256'],actual_input_pcm_exact=True,all_received_model_packets_exact=True,received_packets=len(received),
+        source_wav_sha256=row['wav_sha256'],actual_input_pcm_exact=True,all_received_model_packets_exact=True,received_packets=len(received),server_diagnostic_only_packets=len(ledger)-len(wire_ledger),playback_protocol=ready.get('playback_protocol'),
         received_pcm_sha256=hashlib.sha256(b''.join(p['pcm'].tobytes() for p in received)).hexdigest(),
         recognized_text=case['recognized_text'],reference_read_after_generation=True,recognition_wer=wer(norm_words(text),norm_words(case['recognized_text'])),
         controller_provider=suite['controller_provider'],external_reasoner=suite['external_reasoner'],remote_api_used=suite['remote_api_used'],

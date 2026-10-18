@@ -34,7 +34,7 @@ $('start').onclick = async () => {
     capture.connect(muted).connect(context.destination);
     playout = new AudioPlayout(context, (receipt) => { if (currentGeneration === generation && socket?.readyState === WebSocket.OPEN) socket.send(JSON.stringify(receipt)); });
     socket = new WebSocket(endpoint); socket.binaryType = 'arraybuffer';
-    socket.onopen = () => { if (currentGeneration !== generation) return; socket.send(JSON.stringify({ token: $('token').value, sample_rate: 24000, frame_samples: 1920, capture_settings: settings, client_kind: 'browser-microphone' })); };
+    socket.onopen = () => { if (currentGeneration !== generation) return; socket.send(JSON.stringify({ token: $('token').value, sample_rate: 24000, frame_samples: 1920, capture_settings: settings, client_kind: 'browser-microphone', playback_protocol: 'client-buffer-v1' })); };
     capture.port.onmessage = ({ data }) => {
       if (currentGeneration !== generation || !ready || socket.readyState !== WebSocket.OPEN) return;
       if (socket.bufferedAmount > 16 * 7684) { status('The audio connection is falling behind.'); stop(); return; }
@@ -47,8 +47,13 @@ $('start').onclick = async () => {
         const event = JSON.parse(data);
         if (event.kind === 'session_ready') { ready = true; source.connect(capture); $('end').disabled = false; status('Listening — you can speak at any time.'); }
         if (event.kind === 'user_utterance_complete') append('You', event.text);
-        if (event.kind === 'speech_started') append('Assistant', event.text);
-        if (event.kind === 'speech_interrupted') playout.interrupt(Number(event.event_id.replace('speech-', '')));
+        if (event.kind === 'speech_started' && !event.same_generator) append('Assistant', event.text);
+        if (event.kind === 'speech_interrupted') {
+          const identity = Number(event.event_id.replace('speech-', ''));
+          if (event.reason === 'acoustic_pause') playout.pause(identity); else playout.interrupt(identity);
+        }
+        if (event.kind === 'speech_pause_committed') playout.interrupt(Number(event.event_id.replace('speech-', '')));
+        if (event.kind === 'speech_resumed') playout.resume(Number(event.resumes_event_id.replace('speech-', '')), Number(event.event_id.replace('speech-', '')));
         if (event.kind === 'session_error') { const message = event.message; stop(); status(`Session error: ${message}`); }
         if (event.kind === 'session_complete') status('Conversation complete.');
       } catch (error) { stop(); status(error.message); }

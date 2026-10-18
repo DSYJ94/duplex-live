@@ -22,7 +22,7 @@ from serving.hybrid.frames import LiveFrames
 
 
 class Output:
-    def __init__(self):self.queue=queue.Queue(maxsize=64);self.sequence=0;self.ready=threading.Event();self.disconnected=threading.Event()
+    def __init__(self,client_pause_protocol=False):self.client_pause_protocol=client_pause_protocol;self.queue=queue.Queue(maxsize=64);self.sequence=0;self.ready=threading.Event();self.disconnected=threading.Event()
     def put(self,value):
         if self.disconnected.is_set():return
         try:self.queue.put_nowait(value)
@@ -37,7 +37,8 @@ class Output:
 
 
 class Network:
-    def __init__(self,host,port,token,requests,stop):
+    def __init__(self,host,port,token,requests,stop,client_pause_protocol=False):
+        self.client_pause_protocol=client_pause_protocol
         self.host=host;self.port=port;self.token=token;self.requests=requests;self.stop=stop;self.ready=threading.Event();self.error=None;self.busy=False
     async def http(self,connection,request):
         path=urlsplit(request.path).path
@@ -55,9 +56,11 @@ class Network:
                 await ws.close(code=1008,reason='Unauthorized');return
             if self.busy:await ws.close(code=1013,reason='A session is already running');return
             if hello.get('sample_rate')!=24000 or hello.get('frame_samples')!=1920:await ws.close(code=1008,reason='Unsupported PCM format');return
+            if self.client_pause_protocol and hello.get('playback_protocol')!='client-buffer-v1':
+                await ws.close(code=1008,reason='Client-owned pause protocol required');return
             settings=hello.get('capture_settings',{})
             if not isinstance(settings,dict) or len(json.dumps(settings))>2048:raise ValueError('Invalid bounded capture settings')
-            self.busy=True;claimed=True;incoming=LiveFrames();output=Output();future=Future()
+            self.busy=True;claimed=True;incoming=LiveFrames();output=Output(self.client_pause_protocol);future=Future()
             self.requests.put_nowait(dict(incoming=incoming,output=output,future=future,capture_settings=settings,client_kind=hello.get('client_kind','unspecified')))
             async def send():
                 try:
@@ -114,8 +117,11 @@ def main():
     ap=argparse.ArgumentParser(description=__doc__)
     for name in ('stt-assets','tts-assets','mimi-load-approval','controller-assets','kernel-assets','out'):ap.add_argument('--'+name,type=Path,required=True)
     ap.add_argument('--compact-replies',action='store_true')
+    ap.add_argument('--include-speech-context',action='store_true')
+    ap.add_argument('--client-pause-protocol',action='store_true')
     ap.add_argument('--host',default='127.0.0.1');ap.add_argument('--port',type=int,default=8788);ap.add_argument('--idle-seconds',type=int,default=300);ap.add_argument('--max-sessions',type=int,default=1)
     args=ap.parse_args()
+    if args.client_pause_protocol and not args.include_speech_context:raise ValueError('Client pause experiment requires generated speech context')
     if not 1<=args.idle_seconds<=14400 or not 1<=args.max_sessions<=20:raise ValueError('Invalid bounded live service lifetime')
     args.out.mkdir(mode=0o700,parents=True,exist_ok=False);token=secrets.token_urlsafe(32)
     token_path=args.out/'session-token'
@@ -127,7 +133,7 @@ def main():
     from evals.moshi_model_download import sha256
     listener=StreamingListener(args.stt_assets,args.mimi_load_approval)
     controller=ResidentQwen35(args.controller_assets,args.out,device='cuda:1',pending_speech_protocol='explicit-actions',kernel_assets=args.kernel_assets,compact_replies=args.compact_replies)
-    requests=queue.Queue(maxsize=1);stop=threading.Event();network=Network(args.host,args.port,token,requests,stop);thread=None;speaker=None
+    requests=queue.Queue(maxsize=1);stop=threading.Event();network=Network(args.host,args.port,token,requests,stop,args.client_pause_protocol);thread=None;speaker=None
     try:
         with listener.session():
             listener.torch.manual_seed(42424242);listener.torch.cuda.manual_seed_all(42424242)
@@ -136,7 +142,7 @@ def main():
             for _ in range(20):listener.step(np.zeros(1920,dtype=np.float32),verify_input=False)
             thread=threading.Thread(target=network.run,name='live-pcm-network',daemon=True);thread.start()
             if not network.ready.wait(10) or network.error:raise RuntimeError('Live network did not start') from network.error
-            ready=dict(schema='dl-live-transport-ready-v1',host=args.host,port=network.port,controller_transport=controller.transport_info,controller_load=controller.proof,
+            ready=dict(schema='dl-live-transport-ready-v1',playback_protocol='client-buffer-v1' if args.client_pause_protocol else None,host=args.host,port=network.port,controller_transport=controller.transport_info,controller_load=controller.proof,
                 listener_loads=listener.loads,speaker_evidence=speaker.evidence,warmup=warmup,external_reasoner='gpt-6-astra',
                 microphone_tested=False,physical_aec_tested=False,duplex_qualified=False,token_file=str(token_path),code_sha256=sha256(Path(__file__)))
             (args.out/'ready.json').write_text(json.dumps(ready,indent=2)+'\n');print(json.dumps(dict(ready=True,port=network.port,token_file=str(token_path))),flush=True)
@@ -147,7 +153,8 @@ def main():
                 folder=args.out/('live-session-'+str(number));source=dict(split='live-transport',scenario_id='live-session-'+str(number),world={})
                 try:
                     report=run_case(listener,speaker,source,folder,0.,controller_protocol='state-aware',controller=controller,
-                        worker_kind='reasoning-development',live_input=request['incoming'],output_observer=request['output'])
+                        worker_kind='reasoning-development',live_input=request['incoming'],output_observer=request['output'],
+                        include_speech_context=args.include_speech_context,interrupt_policy='acoustic-pause' if args.client_pause_protocol else 'acoustic')
                     report.update(capture_settings=request['capture_settings'],client_kind=request['client_kind'],microphone_acceptance=False,physical_aec_tested=False,
                         browser_playout_acceptance=False,server_model_wav_is_not_a_device_recording=True)
                     (folder/'report.json').write_text(json.dumps(report,indent=2)+'\n')

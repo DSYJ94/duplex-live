@@ -115,3 +115,13 @@ on0d63370 and has not adopted the new pause/history path. Browser-owned pause an
 resume buffers still need implementation; server timing does not prove device
 playback. Natural recognized acknowledgments, general agent actions, native
 private-result qualification and physical microphone/AEC acceptance remain open.
+
+Plain words: Client pause experiment now retains the suffix at the client's own
+scheduled AudioContext sample position; the server does not resend its guessed
+tail over the wire. Hard cancellation discards retained audio, and old identities
+cannot resume it. Explicit protocol negotiation rejects clients without buffer
+retention support. The old owner service is unchanged. Five production-module
+scheduling tests, seventeen pause/playout/frame tests and two actual localhost
+WebSocket tests pass. Native browser/device testing is unavailable; the new Node
+wire-replay tool is explicitly a scheduling simulation, not audio acceptance.
+Real-model network jobs and independent saved-audio checks are next.

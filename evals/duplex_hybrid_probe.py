@@ -48,7 +48,8 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",inter
     from data.synthetic.filter import norm_words,wer
     live=live_input is not None
     if interrupt_policy not in ('acoustic','lexical','acoustic-pause'):raise ValueError('Unknown interruption policy')
-    if live and interrupt_policy=='acoustic-pause':raise ValueError('Exact pause experiment is recorded-only; browser resume protocol is not implemented')
+    if live and interrupt_policy=='acoustic-pause' and not getattr(output_observer,'client_pause_protocol',False):
+        raise ValueError('Live exact pause requires negotiated client-owned buffer retention')
     if live:
         if row['split']!='live-transport' or worker_kind!='reasoning-development':raise ValueError('Live prototype requires its explicit reasoning domain')
         rate=24000;user=np.zeros(0,dtype=np.float32)
@@ -233,9 +234,11 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",inter
                     from evals.duplex_speech_context import started
                     started(context,active,identity)
                 for pcm in paused['tail']:
-                    packets.append(dict(event_id=identity,available_s=at,pcm=pcm));clock.append(at,len(pcm))
+                    packets.append(dict(event_id=identity,available_s=at,pcm=pcm,**({'wire_transmitted':False} if live else {})));clock.append(at,len(pcm))
                 log('speech_resumed',event_id=identity,task_id=active['task_id'],resumes_event_id=prior,
-                    replayed_unheard_samples=sum(len(p) for p in paused['tail']),new_generation_started=False)
+                    replayed_unheard_samples=sum(len(p) for p in paused['tail']),new_generation_started=False,
+                    source_cursor_authority='client-audio-context' if live else 'recorded-server-clock',
+                    server_tail_is_diagnostic_only=live)
                 paused=None
             if active and paused is None and not speaker.active and now()>=clock.end/rate:
                 log('speech_fully_played',event_id=active['event_id'],task_id=active['task_id'])
