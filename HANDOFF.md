@@ -1,79 +1,93 @@
 # HANDOFF — overnight recovery, 18 October
 
-Plain words: CURRENT04:32UTC /06:32Berlin. Owner away; continue autonomously,
-no optional questions before morning. Goal ACTIVE. No full native or hybrid
-qualification; no optimizer steps or adopted native weights in this overnight
-continuation. Native model failures remain preserved. Cloud validation paused.
+Plain words: CURRENT05:33UTC /07:33Berlin. Owner away; continue autonomously,
+no optional questions before return. Goal ACTIVE. No complete native or hybrid
+qualification. No optimizer steps or adopted native weights this continuation.
+Cloud validation remains paused. Current source149e7b2; preserve unrelated
+modified timeline.pyc and untracked roadmap.html.
 
-Plain words: BEST NEW COMPONENT — exact frozen Qwen3.5-9B controls streaming
-Kyutai ASR/TTS with actual GPT-6 Astra reasoning for harder questions. This is a
-modular hybrid, NOT a trained native duplex model. Typed routing7514992:3 easy
-local answers correct,4 harder direct-local answers wrong,4 chosen real reasoning
-answers correct. Actual worker7515324 proves foreground local inference while
-API runs. Audio7515356/58 completes ice + actual count19; source ASR WER0.0227.
-Normalized WER0 hides an ambiguous fifty/two number boundary in one old count
-breakdown; do not equate it with perfect spoken meaning. New network7515423/24
-has249 exact client/server PCM packets and unambiguous count wording, both speech
-clips WER0. It is still recorded-PCM input, not physical mic/device acceptance.
+Plain words: LIVE OWNER DEMO http://localhost:8767 is ready on frozen source
+49e820be9a0c9d36c9e4603d36b52222541c7cce, original reply format, job7516113,
+node nid010225:8788. Strict models warmed; last metadata check had zero owner
+sessions. Do not interrupt it blindly: owner can use the published URL without
+sending chat. Allocation4h30m from about04:50UTC, idle14400s, maximum10sessions.
+SSH forward tool session26055 serves8768; local access helper38521 serves8767.
+Private token600 at /private/tmp/duplex-live-owner-7516113-token, never print or
+export; run root0700. Source/assets/bootstrap/private-path rejection/WS upgrade
+verified, no mic or model session started by readiness check. Superseded7515697
+confirmed CANCELLED at04:29:14UTC; do not retry from old stale notes below.
 
-Plain words: IMPORTANT CURRENT FIX — old bool(futures) media barrier held a ready
-ordinary answer behind real background work. In5423, foreground model finished
-23.446s but speech waited until after API end28.974s; first scheduled PCM29.736s.
-Source91ebf62793af0afe0bd61dadf4c6ab5e1bb9fecd separates actual dispatched
-background work from unresolved semantic decisions. Unit synchronization tests
-pass. Real network retest7515717/audit5718 and recorded3case5719/audit5720 are
-submitted; retrieve /private/tmp/duplex-live-barrier-v2-submit-full.txt and their
-actual results. Do not claim speech/API overlap until absolute clocks confirm.
-Unused owner service7515697 is superseded BEFORE any owner session/public link;
-SSH cancellation timed out, so inspect durable superseded receipt and job state
-before assuming it stopped or retrying. No access token has been published.
+Plain words: WHAT THIS IS — a disclosed modular hybrid: streaming Kyutai ASR/TTS,
+frozen local Qwen3.5-9B text controller on another GPU, explicit actual GPT-6 Astra
+reasoning for harder questions. NOT a trained native duplex model. No general
+agent actions or reasoning replacement. Cancellation suppresses delivery of an
+identified result, NOT already executing remote computation. Published Expresso
+happy voice is not yet owner-approved; do not conflate with earlier ContextSpan
+synthetic-reference voice approval. Browser engine, physical mic/playback/room
+AEC and owner voice acceptance remain untested. Cua has no browsers and its native
+pipe failed; do not bypass with another UI-control mechanism while owner is away.
 
-Plain words: CANCELLATION — actual typed5615 ordinary +5616 cancellation pass.
-Real no-delay audio5675 cancels exactly turn-1 and answers the new shadow question;
-late real API result retained but never spoken, independent5676 WER0. This cancels
-DELIVERY, not an already executing remote API request. Do not call it remote
-execution abortion. Input026 generation5617 /quality5618 both clips WER0. Source
-e448f0a exposes explicit delivery floor; old recorded defaults remain12seconds,
-live server0. General agent actions and reasoning replacement remain open.
+Plain words: REAL NETWORK SUCCESS — old bool(futures) gate wrongly held a ready
+ordinary answer behind background reasoning. Actual-execution-aware barrier91ebf62
+fixes this:7515717 ordinary PCM24.330s while real API16.020–30.120s. Concise reasoner
+75e3883 then network7515878/audit5879 produces ice + correct count19, BOTH WER0;
+7515880/81 cancels actual old counting result, only shadow reply plays, WER0.
+No artificial delivery delay. Owner6113 is gated on these two completed runs.
+Input and every returned packet exact; server model.wav is not device recording.
 
-Plain words: LOCAL RECORD BEHAVIOR — 6ea3d00 actual tool-history projection fixed
-duplicate reads. Large spoken-output system instruction CAUSED old-topic021
-regression under BOTH torch/fused kernels (isolated5132/5133); rejected. Narrow
-content-field instruction7455f1b fixes021 in5328/5331 and actual5363; arithmetic
-5361 now words, WER0. Broad reused5361/5363 completes13/13 structurally, but017
-acknowledgment STILL interrupts/restarts,020 narrates old unavailability,023 asks
-which project despite its unavailable named project. Logic013 small speech
-mismatch. No record or full-system qualification. Old4B rejected for now.
+Plain words: COMPACT FORMAT — opt-in native answer/clarify actions reduce ten-case
+resident median controller stage2.116→1.648s, both10/10 actual contracts, no new
+weights/kernels. Actual compact network7516339/40 correct ice/count19, but sum→
+summed transcription WER0.167;6341/42 cancels correctly, extra and/spelling WER0.059.
+Do not silently adopt on live owner demo. Default original schema remains frozen.
 
-Plain words: RUNTIME — all775 Qwen3.5 source tensors exact before device copy,
-760 architecture plus15 explicitly retained unused MTP tensors, frozen. Runtime
-2611 separate5.5.3 child; parent speech4.55.3 checked. Model assets2612 pinned
-19.33GB. Optional FLA3645 strict package proof;4182 ten-case typed pass, median
-stage2.10s vs torch3739 2.69s, not system latency. Resident4733 ten-case pass.
-CUDA discovery only process-local already-loaded driver; no system driver or
-shared speech dependency edits. Assets/helper code-SHA gates remain intact.
+Plain words: NEW GENERALIZATION — paired twelve-question7516385/6387 exposed BOTH
+formats falsely claiming cancellation with no task. Native attempts forbidden
+external delegation (guard blocked actual API), and six-request limit hides logic.
+Targeted state/prohibition instruction eec34c2: sixteen-question6456/6457 BOTH
+complete; ten numerical outputs match CPU oracles, two logic answers correct,
+unknown private facts not invented, nonexistent cancellation not claimed, both
+no-tools requests stay local. Five actual external requests each. Extra All tasks
+are complete wording and contact privacy/storage claims remain limits. Typed small
+diagnostic only, not broad intelligence/duplex qualification. Raw outputs retained.
 
-Plain words: LIVE PROTOTYPE — serving/hybrid server/frame queue/client uses real
-PCM, a private first-message socket credential, and an ephemeral local-access
-helper through SSH. Existing socket/auth/private-file tests pass. No unattended
-mic permission. Browser API list is empty and native computer-use pipe fails;
-actual browser-engine QA and mic/AEC/device playback are NOT done. Renderer5ms
-start/8ms stop fade has a supplied offline /qa.html check, still browser-unverified.
-Never export session-token or API keys. Owner service wrapper exists but restart
-only after current media barrier tests. Target local URL8767, tunnel8768; neither
-is started yet. Gallery8766 remains available with24 actual conversations.
+Plain words: CURRENT JOBS from immutable149e7b2, local/remote MD5 verified:
+7516498 eager /6499 static-eager /6500 static-compiled ten actual worker cases.
+Pinned runtime supports hybrid StaticCache and generate-time compilation; fullgraph
+reduce-overhead experiment only, no fallback/live/RPC adoption. Actual compile,
+cache, failures and cold cost must be checked. Network task-state regressions
+7516501/audit6502 native ordinary,6503/6504 native cancel,6505/6506 compact cancel.
+Launch receipts /private/tmp/duplex-static-and-state-v2-submit-full.txt.
+Also149e guard validates speech/owed IDs BEFORE cancellation mutation; fixture
+regression confirms invalid IDs/blank speech cannot cancel real background work.
+Nine targeted worker/dispatch/format tests pass.
 
-Plain words: BACKUP —79 causal captures /128 independent speech clips locally
-verified before latest network/record regression; all complete bounds valid,
-one old tiny interrupted invalid-ASR fragment retained/uninterpreted.12 public
-speech assets6.43GB complete. Qwen public14 assets19.33GB transfer ACTIVE exec
-session84190, /private/tmp/duplex-qwen35-public-weight-backup-full.txt; last size
-5.7GB, not yet hash-qualified. Source bundle stale6b0fa1c; refresh after final
-changes. Latest backups under runs/cloud-export-20261016/tree, proofs under
-runs/recovery-continuation-20261016. New network backups explicitly exclude token.
-Temporary caffeinate PID51748 ends07:33UTC/09:33Berlin; current cert expected
-09:39UTC/11:39Berlin. All source pushed through91ebf62; unrelated timeline.pyc
-and roadmap.html must stay untouched.
+Plain words: KNOWN REMAINING FAILURES — natural backchannel017 still interrupts
+and restarts; record020 narrates withheld metadata; unavailable023 needs better
+reply. Broad speech system instruction e768 caused old-topic021 failure under
+both torch/fused and was rejected. Narrow content description7455 fixes021 and
+spoken arithmetic in recorded5361/5363, still not full-system qualification.
+Native ContextSpan/Lychee pilots remain rejected, no unchanged reruns. MaAI
+vectorized mask exactly preserves outputs and speed improves, but publisher
+feature parity and model rights unresolved; shadow only, no live threshold/wiring.
+
+Plain words: REPRODUCIBILITY — Qwen strict775/775 source tensors exact before
+GPU,760 core plus15 explicitly retained unused MTP; zero skipped/missing/random
+weights. Speech parent4.55.3 /controller child5.5.3 isolated, optional FLA package
+verified. Model code Git commit/push/pull/clean immutable worktree and MD5 before
+compute, never scp/rsync code. Reused user inputs remain development; original
+quality validators source+commit pinned, reference text read only after generation.
+
+Plain words: BACKUPS/LISTEN —79 prior causal captures/128 audit clips verified;
+new four real-network captures and six clips separately packet/hash/bounds checked
+in network-backup-integrity.json. Gallery8766/audio/voice-diagnostics/overnight-results.html
+now28 actual synchronized conversations, all HTTP/WAV/SHA checked. No credentials
+or actual owner sessions exported.12 public speech assets6.43GB complete. Qwen
+14 public assets19.33GB HTTPS fallback ACTIVE tool session3142; three large shards
+verified, fourth partial, do not claim complete before final integrity JSON.
+Original SSH transfer84190 ended255, no longer active. Latest small-result backup
+37089 complete. Source bundle stale6b0fa1c; refresh after new commits. Temporary
+caffeinate PID51748 ends07:33UTC; current Clifton expiry expected09:39UTC.
 
 ## Earlier recovery notes — historical, superseded by the current state above
 
