@@ -1,0 +1,14 @@
+# Acoustic backchannel detector screen
+
+Plain words: actual fresh005 omits the user's verified “Uh-huh” from streaming ASR and restarts the Moon answer after acoustic interruption. Text-only routing cannot classify a missing acknowledgment. The five new task conversations and this backchannel are separate acceptance dimensions. The prior survey already recommended independent VAP-style conversational timing models; this screen targets the observed defect rather than restarting broad model auditions.
+
+MaAI documents a current backchannel DETECTION model (`bc_det`) distinct from predicting when the assistant should emit an acknowledgment (`bc`). It consumes both speakers, predicts a current backchannel probability per channel, and releases an English Mimi-based12.5Hz model. The publisher says the other speaker's audio matters and that a Japanese threshold is not a general English operating point. Those are publisher claims, not our validation.
+
+- [Publisher detector documentation](https://github.com/MaAI-Kyoto/MaAI/blob/ec88ff4c4d3a527397ea3a225279d7f8db0e52e2/readme/bc_det.md)
+- [Publisher source and license distinction](https://github.com/MaAI-Kyoto/MaAI/blob/ec88ff4c4d3a527397ea3a225279d7f8db0e52e2/README.md)
+- [Public weight repository](https://huggingface.co/maai-kyoto/bc_det_en/tree/982c561da312b26577593002fc1e32a046517535)
+- [Kyutai streaming STT model card](https://huggingface.co/kyutai/stt-1b-en_fr-candle) and [pinned streaming runtime](https://github.com/kyutai-labs/delayed-streams-modeling/blob/4c4f65e147df056adf3346290d64c7b9649b18c9/README.md)
+
+Source pinned ec88ff4c4d3a527397ea3a225279d7f8db0e52e2. HF revision982c561da312b26577593002fc1e32a046517535 exposes one17,352,706-byte checkpoint, SHA0059087953a90494f1791503b3a4643b3e91be77f468387831b4e9d93599c2e0. Its HF repository has no model card/license metadata. Source explicitly licenses code MIT and refers model rights to model documentation; do not infer weight rights from code MIT or approve deployment/training by inspecting assets.
+
+Compatibility concerns are concrete: MaAI requires transformers5.5.3 plus optional desktop/audio packages; do not alter the working Moshi environment. Upstream's top-level loader uses strict=False and then manually copies shared encoder/downsample weights, which is unsuitable as our completeness proof. Its causal16-to24kHz resampling and continuous-Mimi encoder have their own cache/init conventions; byte-identical codec weights alone do not prove feature parity with our existing runtime. First perform a CPU tensor-only inventory and retain every key/shape. No audio classification, training, threshold calibration or model adoption is authorized by that inventory result. If pursued, require strict complete head/encoder loading, publisher feature parity, current-arrived-audio-only causal checks, input-drop/latency checks, and fresh genuine interruption versus backchannel tests before wiring it into speech control.
