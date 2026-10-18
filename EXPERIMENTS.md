@@ -5211,3 +5211,32 @@ server-playout-complete; physical hearing stays unconfirmed. This supports a rea
 controller-context repair rather than another weight-training claim. Confirm exact
 causal audio/metadata hashes in local backup before gallery/promoting. Live owner
 6574 still0d63370: no pause protocol or speech-context flag has been enabled there.
+
+
+## 2026-10-18 — Fresh frozen-conversation evaluation and native evidence recheck
+
+Plain words: Sourcef09baf0 predeclares11 conversations before synthetic user
+input7520271/independent quality7520272. Inference sources match demo7915b1c.
+Ten eligible actual services7520283–7520301 (oddIDs) and dependent speech audits
+(evenIDs) COMPLETE; all input/WAV/wire hashes and ten production-JS scheduling
+replays pass locally. Memory056 fails the unchanged favourite/favorite lexical
+gate and stays unscored, not regenerated. Numerics456/23 and actual Astra subset
+count5 correct; ordinary foreground speech preserved. New soap-count4 cancellation
+has a real delivery-cancel receipt and same-generator continuation, no number
+spoken. Stop/shorten/tree-continue contracts hold. Eleven completed speech clips:
+nineWER0, appointment.0435, soap.1136; allboundsvalid; sixpartials have no fullWER.
+Private request057 invents no read/code but repeats the same refusal twice after
+endpointing one user clip into two clauses. No overall/native/microphone acceptance.
+Narrow queued-history probe reconstructs the actual second native state exactly,
+then adds only the actual earlier queued controller reply in chronological history;
+no model update/external request/action dispatch. Runtime remains unchanged.
+
+Plain words: Recheck of balanced native checkpoint7510331 verifies model/state/
+data/voice hashes, exact fresh reload and all16 native WAVs against independent
+ASR7510355. Mechanical training passes520updates; qualification fails triangle
+3,4,or5, pencil lead-is-lead, repeated clarification and no real cancellation in
+either cancellation scene. Per-casep95compute36.6–44.5ms/80msframe; maxbacklog
+2.83–12.12s, nine cases with causal underrun samples. Proofs frozen-conversation-
+integrity.json/native-balanced-qualification-integrity.json and replayable verifiers
+remain in runs/recovery-continuation-20261016; full breakdown docs/QUALIFICATION-
+2026-10-18.md. Cloud paused; goal active.

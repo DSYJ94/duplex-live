@@ -1,5 +1,22 @@
 # HANDOFF — overnight recovery, 18 October
 
+Plain words: UPDATE fresh evaluation18Oct: sourcef09baf0, synthetic inputs7520271,
+quality7520272, ten actual services7520283/85/87/89/91/93/95/97/99/301 and audits
+each+1 COMPLETE and locally backed up. Input056 fails favourite/favorite spelling
+quality comparison; unscored/no reroll. Local frozen-conversation-integrity.json
++ verifier pass exact user/server/wire PCM and ten production-JS wire replays.
+Eleven complete speech clips: nineWER0, appointment.0435, soap.1136; allboundsvalid.
+Genuine stop/shorten/same-generator continue and actual delegated count5/cancelled
+count4 succeed in their tested contracts. Private request057 stays honest but
+speaks the SAME refusal twice after one recorded request splits into two clauses.
+Do not call the whole system qualified. Narrow qwen35_ready_history_probe diagnostic
+reconstructs original actual model state and compares chronological queued-reply
+history; no runtime change/model update or API dispatch. Native balanced ledger
+native-balanced-qualification-integrity.json rechecks16 WAVs + checkpoint/state/
+data/voice/reload; factual, clarification, cancellation failures still disqualify.
+Details in docs/QUALIFICATION-2026-10-18.md. Earlier CURRENT status below remains
+service metadata; owner has now returned and was given the simplified listening page.
+
 Plain words: CURRENT10:54UTC /12:54Berlin18Oct. Goal ACTIVE; owner away; continue
 without optional approval waits. Clean morning report rewritten at docs/OVERNIGHT-
 2026-10-18.md. Best DEMO now7519401/source7915b1c, node nid010147:8788; public
