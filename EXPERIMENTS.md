@@ -4692,3 +4692,16 @@ Delegate action now has no question-rewrite argument: execution sends the actual
 original user problem unchanged, avoiding silent constraint changes and excessive
 copying overhead. Enforce at most four requests in code. This is a client-bound
 request, not a model-authored delegation brief; declare that limitation.
+
+Plain words: full spoken/fused/scoped candidate7514743 completes6/6 reused
+second-batch scenes. Arithmetic is now 'You have ten pencils left' and independent
+7514744 WER0, instead of the old spoken formula WER0.266667. Most other complete
+clips WER0; logic013 remains0.0909. Third-batch7514745 completes7/7 structurally,
+but017 still interrupts/restarts,020 narrates East's unavailability,021 wrongly
+answers the old tides request instead of two plus three, and023 asks which
+project despite the explicit unavailable project. Do NOT adopt this candidate.
+Actual021 ASR is exact; actual model resolve_pending_speech action consumes the
+old speech ID but generates the old topic. This is a content-selection failure,
+not an audio error or a missing withdrawal ID. A four-arm typed diagnostic on
+that exact captured context independently varies kernels and spoken instruction;
+all prompts, pending speech and source weights are otherwise matched. No training.
