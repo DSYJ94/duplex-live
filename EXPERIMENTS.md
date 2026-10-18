@@ -5267,3 +5267,25 @@ samegenerator, no duplicate/discardedproductionreplaysamples; completeWER.02128
 validbounds. Owneraskedtoprovide Listening/sounddetected versusquiet/startfailure.
 No physicaldevice/roomAEC/nativequalification. Currentvoiceweightsfrozen, nocandidate
 headadopted. Reports/proofs/backups current; goalACTIVE/cloudpaused.
+
+## 2026-10-18 — Reject normalization and queued-action proposals; bounded whole-decode diagnostic
+
+Plain words: 7521006/b4c4928 completes20 matched calls. All source hashes/versions
+unchanged, one normalization graph executed. Refrigerator word parity fails both
+candidate repeats; four eligible steady speed ratios median0.995558. GateFAIL,
+no gain/no adoption/no unchanged extension. Earlier historical-gate failures919/964
+retained. 7521032/b1d4b00 reproduces baseline duplicate-risk fault and passes3/5:
+explicit prepared reply, withdrawal, preserve-old-answer-plus-six. Original context
+still creates identical refusal; replacement thirteen leaves oldturn-1 unconsumed.
+All-five gateFAIL: proposed new action is not implemented. All captures synthetic,
+do_not_train, zeroAPI/dispatch/updates, strict775tensor source loading.
+
+Plain words: Next bounded diagnostic compiles the complete batch1/sequence1
+forward using fullgraph=True,dynamic=True without CUDA graphs; eager prefill and
+existing DynamicCache unchanged. Same-process exact raw actions/words/token counts
+on five actual saved payloads/two repeats; unchanged source hashes/versions, graph
+execution and zero graph breaks plus1.2 median speed ratio required. Stop at first
+candidate error, preserve it, no eager fallback. This tests whole-decoder Python
+launch overhead left untouched by normalization-only compilation. No live change,
+new training labels or native qualification. Native balanced520 remains rejected;
+its text-only temporal objectives and narrow25teacher coverage remain limitations.

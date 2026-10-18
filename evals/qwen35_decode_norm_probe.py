@@ -15,7 +15,10 @@ def main():
     ap=argparse.ArgumentParser(description=__doc__)
     for name in ('runs','assets','kernel-assets','out'):ap.add_argument('--'+name,type=Path,required=True)
     ap.add_argument('--same-process-control',action='store_true',help='Retain historical differences and require exact repeated original/candidate outputs within this model load')
-    a=ap.parse_args();a.out.mkdir(parents=True,exist_ok=False)
+    ap.add_argument('--whole-decode',action='store_true',help='Separate bounded fullgraph dynamic-cache decode experiment; stop at first candidate execution error')
+    a=ap.parse_args()
+    if a.whole_decode and not a.same_process_control:raise ValueError('Whole decode requires predeclared same-process controls')
+    a.out.mkdir(parents=True,exist_ok=False)
     for variable,folder in [('TORCHINDUCTOR_CACHE_DIR','private-inductor-cache'),('TRITON_CACHE_DIR','private-triton-cache'),('CUDA_CACHE_PATH','private-cuda-cache')]:
         p=a.out/folder;p.mkdir();os.environ[variable]=str(p)
     requests=[(job,task,*capture(a.runs/('duplex-live-transport-'+job),task)) for job,task in SOURCES]
@@ -26,9 +29,13 @@ def main():
     from training.control.head_adapter import parameter_hashes
     params=dict(executor.model.named_parameters());before=parameter_hashes(params);versions={n:p._version for n,p in params.items()}
     rows=[];compiled=None;controls={}
-    for mode in ('original','decode-norm-compiled'):
-        if mode=='decode-norm-compiled':
-            from evals.qwen35_decode_norm import install
+    candidate_mode='whole-decode-compiled' if a.whole_decode else 'decode-norm-compiled'
+    for mode in ('original',candidate_mode):
+        if mode==candidate_mode:
+            if a.whole_decode:
+                from evals.qwen35_whole_decode import install
+            else:
+                from evals.qwen35_decode_norm import install
             compiled=install(executor.model)
         for job,task,payload,source in requests:
             for repeat in range(2):
@@ -53,15 +60,23 @@ def main():
                         (a.out/(name+'.json')).write_text(json.dumps(row,indent=2)+'\n');raise
                 row['end_to_end_s']=time.monotonic()-start;rows.append(row);(a.out/(name+'.json')).write_text(json.dumps(row,indent=2)+'\n')
                 print(json.dumps({k:v for k,v in row.items() if k in ('mode','job','task','repeat','completed','actual_native_output_exact','first_token_s','controller_s','message')}),flush=True)
+                if a.whole_decode and mode!='original' and not row['completed']:break
+            if a.whole_decode and mode!='original' and not rows[-1]['completed']:break
     after=parameter_hashes(params)
     if before!=after or versions!={n:p._version for n,p in params.items()}:raise ValueError('A frozen published parameter changed')
-    if compiled['decode_calls']<1 or compiled['prefill_calls']<1:raise ValueError('Actual generation did not exercise both compiled decode and original prefill paths')
-    original=[r for r in rows if r['mode']=='original'];candidate=[r for r in rows if r['mode']=='decode-norm-compiled']
-    accepted=all(r.get('completed') and r.get('actual_native_output_exact') for r in candidate)
+    if not a.whole_decode and (compiled['decode_calls']<1 or compiled['prefill_calls']<1):raise ValueError('Actual generation did not exercise both compiled decode and original prefill paths')
+    original=[r for r in rows if r['mode']=='original'];candidate=[r for r in rows if r['mode']==candidate_mode]
+    if a.whole_decode:
+        from torch._dynamo.utils import counters
+        compiled['compiler_counters_after']={k:dict(v) for k,v in counters.items()}
+        compiled['compiled_graphs_created']=counters['stats']['unique_graphs']-compiled['unique_graphs_before']
+        compiled['graph_breaks']=sum(counters['graph_break'].values())-compiled['graph_breaks_before']
+    accepted=len(candidate)==10 and all(r.get('completed') and r.get('actual_native_output_exact') for r in candidate)
+    if a.whole_decode:accepted=accepted and compiled['compiled_graphs_created']>0 and compiled['graph_breaks']==0
     ratios=[b['controller_s']/c['controller_s'] for b,c in zip(original,candidate) if c.get('completed') and c.get('actual_native_output_exact')]
     steady=[b['controller_s']/c['controller_s'] for b,c in zip(original,candidate) if b['repeat']==1 and c.get('completed') and c.get('actual_native_output_exact')]
     median=statistics.median(steady) if steady else None
-    report=dict(schema='dl-decode-norm-matched-profile-v1',component_execution_completed=len(rows)==20,same_process_control=a.same_process_control,historical_original_outputs_exact=all(r['historical_native_output_exact'] for r in original),source_load=executor.proof,warmup=executor.warmup,results=rows,compiled_norm=compiled,parameter_hashes_before=before,parameter_hashes_after=after,all_source_parameter_hashes_unchanged=True,parameter_versions_unchanged=True,all_candidate_native_outputs_exact=accepted,paired_speed_ratios=ratios,steady_paired_speed_ratios=steady,steady_median_speed_ratio=median,component_promotion_gate_passed=accepted and len(steady)==5 and median>=1.2,actual_external_requests=0,actions_dispatched=False,weights_changed=False,cache_replaced=False,optimizer_steps=0,do_not_train=True,physical_device_test=False,production_adopted=False,prototype_qualified=False,code_sha256=sha256(Path(__file__)))
+    report=dict(schema=('dl-whole-decode-matched-profile-v1' if a.whole_decode else 'dl-decode-norm-matched-profile-v1'),whole_decode_experiment=a.whole_decode,component_execution_completed=len(rows)==20,same_process_control=a.same_process_control,historical_original_outputs_exact=all(r['historical_native_output_exact'] for r in original),source_load=executor.proof,warmup=executor.warmup,results=rows,**({'compiled_decode':compiled} if a.whole_decode else {'compiled_norm':compiled}),parameter_hashes_before=before,parameter_hashes_after=after,all_source_parameter_hashes_unchanged=True,parameter_versions_unchanged=True,all_candidate_native_outputs_exact=accepted,paired_speed_ratios=ratios,steady_paired_speed_ratios=steady,steady_median_speed_ratio=median,component_promotion_gate_passed=accepted and len(steady)==5 and median>=1.2,actual_external_requests=0,actions_dispatched=False,weights_changed=False,cache_replaced=False,optimizer_steps=0,do_not_train=True,physical_device_test=False,production_adopted=False,prototype_qualified=False,code_sha256=sha256(Path(__file__)))
     (a.out/'report.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(dict(completed=True,all_candidate_native_outputs_exact=accepted,paired_speed_ratios=ratios)),flush=True)
 
 if __name__=='__main__':main()

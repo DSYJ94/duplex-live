@@ -1,0 +1,66 @@
+{
+  "schema": "dl-whole-decode-dynamic-cache-plan-v1",
+  "declared_before_execution": true,
+  "problem": "Accepted recorded voice has delayed first response; actual decoder profiles show substantial host kernel-launch and pointwise overhead",
+  "change": "Compile the complete single-token decode forward, fullgraph=True dynamic=True CUDA graphs disabled; leave prefill eager and retain the exact existing DynamicCache; no static cache or package changes",
+  "cache_replacement": false,
+  "cuda_graphs": false,
+  "whole_model_compilation": true,
+  "shared_packages_modified": false,
+  "actual_request_sources": [
+    {
+      "job": "7520283",
+      "task": "turn-1",
+      "input_tokens": 951
+    },
+    {
+      "job": "7520293",
+      "task": "turn-1",
+      "input_tokens": 925
+    },
+    {
+      "job": "7520295",
+      "task": "turn-2",
+      "input_tokens": 1881
+    },
+    {
+      "job": "7520299",
+      "task": "turn-3",
+      "input_tokens": 2430
+    },
+    {
+      "job": "7520301",
+      "task": "turn-2",
+      "input_tokens": 1519
+    }
+  ],
+  "fixed_repeats_per_mode_per_source": 2,
+  "reference_text_supplied_to_model": false,
+  "require_original_native_output_input_length_and_token_count_exact": false,
+  "require_all_candidate_raw_native_outputs_exact": true,
+  "normalization_warmup": null,
+  "startup_compile_time_reported_separately": true,
+  "steady_speed_metric": "Median original/candidate controller wall-time ratio on repeat1 (the second run) of all5 sources; retain both repeats and all failures",
+  "minimum_component_speed_ratio": 1.2,
+  "require_all_published_parameter_hashes_and_versions_unchanged": true,
+  "actual_external_requests": 0,
+  "actions_dispatched": false,
+  "optimizer_steps": 0,
+  "do_not_train": true,
+  "development_replay_not_fresh_qualification": true,
+  "actual_voice_and_retention_required_before_deployment": true,
+  "previous_historical_gate_runs": [
+    "7520919",
+    "7520964"
+  ],
+  "previous_historical_gate_outcome": "Both stopped before normalization installation; refrigerator unchanged baseline differed in ordinary wording with identical input length and generated token count.",
+  "historical_output_variations_retained": true,
+  "require_original_input_length_and_non_content_action_identity_exact": true,
+  "require_original_repeats_raw_native_output_exact_to_each_other": true,
+  "candidate_comparator": "First original output for the same exact saved payload in this same model process; no forced output or label injection.",
+  "original_plan_not_relabelled": true,
+  "prior_norm_result": "7521006 rejected: median speed ratio .995558 and refrigerator word parity failure",
+  "compile_failure_policy": "Stop candidate execution at first thrown error, preserve original outputs and error; no eager fallback or unchanged rerun",
+  "require_actual_compiled_graph": true,
+  "require_zero_graph_breaks": true
+}

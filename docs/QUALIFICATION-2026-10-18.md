@@ -208,3 +208,29 @@ changes remain reported. At least1.2median speed ratio on the five second-repeat
 pairs, unchanged parameter hashes/versions and actual graph execution are required
 before even a voice regression. No deployment follows from a benchmark alone.
 Plan: `evals/fixtures/decode-normalization-control-plan-20261018.json`.
+
+Plain words: Same-process normalization run7521006 completes all20 proposals,
+with unchanged parameter hashes/versions and one actual compiled graph. The
+refrigerator candidate changes words on both repeats. Four eligible second-repeat
+speed ratios have median0.99556; the required fifth exact pair is absent. This is
+no speed improvement and fails the predeclared component gate. Reject; no runtime
+adoption or unchanged extension. Historical replay failures remain failures.
+
+Plain words: Queued-delivery proposal7521032 reproduces the original repeat-risk
+fault, then passes only3/5 predeclared action contracts. Explicit prepared-reply
+continuation and withdrawal work; preserving old speech while answering six also
+works. The original additional-context case still creates another identical
+refusal, and a replacement question gives thirteen without retiring turn-1.
+Correct arithmetic does not make that replacement action correct. The all-five
+implementation gate fails: do not implement or deploy continue_queued_speech from
+this result. There are no dispatched actions, API requests or optimizer steps.
+
+Plain words: A distinct bounded latency diagnostic now compiles complete
+single-token decode with fullgraph/dynamic shapes and CUDA graphs disabled.
+Prefill remains eager and the existing DynamicCache is retained. It avoids the
+previous static-cache path rather than repairing that historical failure in place.
+All five exact same-process controls and both repeats remain required; stop at the
+first candidate execution error, retain it, and never fall back to eager execution.
+At least1.2 median speed ratio and actual compiled graphs without graph breaks are
+required before any voice regression. This is neither training nor native-model
+qualification. Plan: evals/fixtures/whole-decode-dynamic-cache-plan-20261018.json.
