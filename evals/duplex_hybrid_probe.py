@@ -190,6 +190,8 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",inter
                     (out/(meta['task_id']+'-failure.json')).write_text(json.dumps(failure,indent=2)+'\n')
                     log('controller_failed',task_id=meta['task_id'],error_type=type(error).__name__)
                     raise
+                if result['route']=='silence' and (result['content']!='' or not result['consume_pending_speech_ids']):
+                    raise WorkerContractError('Silent media control requires empty content and actual speech identities',dict(result=result))
                 if controller_protocol=='state-aware':
                     from evals.duplex_speech_obligations import consume
                     consumed=result['consume_pending_speech_ids']
@@ -200,6 +202,10 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",inter
                 (out/(meta['task_id']+'-backend.json')).write_text(json.dumps(item,indent=2)+'\n')
                 log('controller_completed',task_id=meta['task_id'],route=result['route'],release_s=item['release_s'])
                 if result['route']!='delegate':world.finish(meta['task_id'],meta['revision'])
+                if result['route']=='silence':
+                    log('silent_control_completed',task_id=meta['task_id'],speech_ids=result['consume_pending_speech_ids'],
+                        background_work_cancelled=False,new_speech_generated=False)
+                    continue
                 held.append(item)
             for item in held[:]:
                 if now()<item['release_s']:continue

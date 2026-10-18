@@ -76,6 +76,9 @@ def run_reasoning_worker(context,world,task_id,model,expected_revision,dispatch_
         available=dict(records={},tasks={k:{name:value for name,value in v.items() if name!='context'} for k,v in world.tasks.items()
             if k!=task_id and not v['closed'] and not v['cancelled']})
     tools=[reply,delegate]
+    if pending_speech:
+        tools.append(tool('withdraw_speech','Silently withdraw identified ordinary speech when the user only asks you to stop talking. Produces no reply and does not cancel any background reasoning. If a new answer is requested, reply and resolve its owed speech identities instead.',dict(
+            speech_ids=dict(type='array',minItems=1,items=dict(type='string',enum=[p['id'] for p in pending_speech])))))
     active=[identity for identity,state in available['tasks'].items() if state.get('operation')=='delegate_reasoning']
     if active:
         tools.append(tool('cancel_reasoning','Stop delivery of identified active reasoning results, preserving unrelated work. Late API returns cannot be spoken. This does not abort an already executing remote request. content is spoken only after actual cancellation succeeds; confirm delivery cancellation honestly and answer an ordinary question if requested.',dict(
@@ -106,8 +109,17 @@ def run_reasoning_worker(context,world,task_id,model,expected_revision,dispatch_
         route='delegate';content=receipt['content'];receipts=[receipt];consumed=[]
     elif call['name']=='cancel_reasoning':
         receipt=world.cancel_delivery(arguments['task_ids']);route='cancel';content=arguments['content'];receipts=[receipt];consumed=arguments['consume_pending_speech_ids']
+    elif call['name']=='withdraw_speech':
+        consumed=arguments.get('speech_ids')
+        if (set(arguments)!={'speech_ids'} or not isinstance(consumed,list) or not consumed
+                or any(not isinstance(i,str) for i in consumed) or len(set(consumed))!=len(consumed)
+                or not set(consumed)<={p['id'] for p in pending_speech}):
+            raise WorkerContractError('Silent withdrawal requires identified actual speech obligations',dict(response=response))
+        # This is an output action. The media caller must apply consume before
+        # recording completion; no external operation/receipt is invented here.
+        route='silence';content='';receipts=[]
     else:raise WorkerContractError('Unavailable reasoning action',dict(response=response))
-    if not isinstance(content,str) or not content.strip():raise WorkerContractError('Reasoning worker produced empty speech',dict(response=response))
+    if route!='silence' and (not isinstance(content,str) or not content.strip()):raise WorkerContractError('Reasoning worker produced empty speech',dict(response=response))
     if not isinstance(consumed,list) or len(set(consumed))!=len(consumed) or not set(consumed)<={p['id'] for p in pending_speech}:raise WorkerContractError('Unknown owed speech identity',dict(response=response))
     return dict(route=route,content=content,consume_pending_speech_ids=consumed,receipts=receipts,events=[event],task_id=task_id,
         speech_model_routing=False,final_response_route=route,dispatch_protocol=dispatch_protocol,response_provider=response_executor.provider_name,

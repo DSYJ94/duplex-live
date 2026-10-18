@@ -20,7 +20,8 @@ class Listener:
  def __init__(self,lexical=False):self.lexical=lexical
  def reset(self):self.i=0
  def step(self,pcm):
-  token=({4:100,5:101,24:102,25:103} if self.lexical else {4:100,5:101}).get(self.i,3);self.i+=1
+  tokens={4:100,5:101,24:102} if self.lexical=='stop-only' else {4:100,5:101,24:102,25:103} if self.lexical else {4:100,5:101}
+  token=tokens.get(self.i,3);self.i+=1
   return dict(token=token,heads=[[0.9],[0.9],[0.9]])
 class Speaker:
  def __init__(self):self.active=False;self.starts=0;self.generated=[]
@@ -35,14 +36,18 @@ class Controller:
 def worker(context,world,task,**kwargs):return dict(route='answer',content='The lit portion of the Moon changes as it orbits Earth.',consume_pending_speech_ids=[p['id'] for p in kwargs['pending_speech']] if len(context)>1 else [],receipts=[])
 
 class ExactSpeechPause(unittest.TestCase):
- def run_probe(self,policy,lexical=False,twice=False,audit=False):
+ def run_probe(self,policy,lexical=False,twice=False,audit=False,silent=False):
   with tempfile.TemporaryDirectory() as d:
    p=Path(d);user=np.zeros(100*1920,dtype=np.float32)
    user[:3*1920]=.1;user[20*1920:23*1920]=.1
    if twice:user[50*1920:53*1920]=.1
    wav=p/'input.wav';sf.write(wav,user,24000,subtype='FLOAT');ref=p/'reference.json';ref.write_text(json.dumps(dict(user_words=[dict(text='Explain phases. Uh huh.')])) )
    speaker=Speaker();clock=Clock();row=dict(scenario_id='case',split='fresh-evaluation',path=str(wav),reference_path=str(ref),wav_sha256=probe.sha256(wav),world={})
-   with patch.object(probe,'time',clock),patch.object(probe,'run_worker',worker):
+   def execute(*args,**kwargs):
+    result=worker(*args,**kwargs)
+    if silent and len(args[0])>1:result.update(route='silence',content='')
+    return result
+   with patch.object(probe,'time',clock),patch.object(probe,'run_worker',execute):
     result=probe.run_case(Listener(lexical),speaker,row,p/'case',0,'state-aware',policy,Controller())
    if audit:
     from evals import duplex_hybrid_audit
@@ -113,5 +118,10 @@ class ExactSpeechPause(unittest.TestCase):
   rows=self.last_audit['results'];full=[r for r in rows if r['fully_played']]
   self.assertEqual(len(full),1);self.assertTrue(full[0]['pause_aggregate'])
   self.assertTrue(all(r['word_error_rate'] is None for r in rows if not r['fully_played']))
+ def test_silent_withdrawal_does_not_start_another_speech_generation(self):
+  speaker,result,events,heard=self.run_probe('acoustic-pause',lexical='stop-only',silent=True)
+  self.assertEqual(speaker.starts,1)
+  self.assertEqual(result['fully_played_responses'],[])
+  self.assertTrue(any(e['kind']=='silent_control_completed' and e['speech_ids']==['turn-1'] for e in events))
 
 if __name__=='__main__':unittest.main()

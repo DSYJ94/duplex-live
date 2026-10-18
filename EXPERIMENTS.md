@@ -5064,3 +5064,33 @@ before any adoption, never label it acknowledgment intelligence. Compare unchang
 acoustic with pause, retain every result, and require a genuinely heard prefix
 before treating either result as an audible interruption test. No new assistant
 teacher words, training labels or optimizer steps. Current owner remains unchanged.
+
+
+Plain words: fixed audits6725 baseline /6726 retained-generation005 BOTH full
+speech WER0.06818; paused aggregate includes the actual silence. Decimal29.5 versus
+recognized29andahalf contributes; scoring unchanged, no quality gain claimed.
+Tiny interrupted baseline clip is recognized Thank you and remains partial,
+unscored and not reliable evidence of its actual words.015 audit6727 finalWER0.
+Audible018 baseline6728 has31926 heard prefix samples and an unwanted old-answer
+restart12.821s before another acoustic stop13.374s. Pause6730 has43443 heard
+prefix samples, cuts12.173s, commits on actual new words12.972s, never restarts
+old generation; final first-step reply audit6731 WER0 (baseline6729 also0).
+
+Plain words: short Stop029 input6790 /quality6791 approves BOTH user clips WER0.
+Actual baseline6792 and pause6794 BOTH recognize Stop exactly, but then model
+speaks the full Moon explanation again as turn-2. Complete speech audits6793/95
+WER0 do NOT imply correct task behavior; this is a clear STOP failure. A supplied
+reply schema currently requires spoken content even when only silence is wanted.
+
+Plain words: explicit withdraw_speech(speech_ids) action now offered ONLY with
+actual owed ordinary speech. Model must select it; no keyword router or canned
+stop words. Worker validates exact known IDs and emits silence/empty content with
+no external receipt. Media caller consumes those IDs, records actual silent-control
+completion, and never sends empty content to TTS. Background reasoning is untouched.
+Ordinary replies/cancellation still require nonempty speech. Tests first reproduced
+unavailable-action rejection and actual media restart, then25 targeted tests pass.
+Four old message/schema/prefill views remain byte-identical if the action is not
+offered. New typed four-case actual-model probe must pass stop/withdraw, stop+new
+answer, and cancel-calculation-preserve-speech before new voice regressions.
+Background state in that typed probe is explicitly a fixture, never a live API.
+Owner6574/source0d63370 remains unchanged; no speech-control adoption or training.

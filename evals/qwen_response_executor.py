@@ -120,6 +120,11 @@ class QwenResponseExecutor:
                 'If there is no matching active task, explain that there is nothing to cancel or ask which task; never say cancellation happened. '
                 'An ordinary answer does not execute an operation. Confirm a cancellation only through the actual cancel_reasoning action or its execution receipt. '
                 'Keep speech natural and concise, at most35 words. Never narrate internal IDs, task state or scheduling metadata. ')
+            if any(t['name']=='withdraw_speech' for t in payload['tools']):
+                instructions+=('Use withdraw_speech for an explicit request only to stop talking: retire the identified pending speech without another spoken reply. '
+                    'Do not answer or repeat the withdrawn explanation. Stopping speech does not cancel unrelated background work. '
+                    'If the user also asks a new question or revised explanation, answer it through '
+                    +('resolve_pending_speech' if self.pending_speech_protocol=='explicit-actions' else 'respond_to_user with consume_pending_speech_ids')+' instead. ')
         if state['dispatch_protocol']=='state-aware' and self.pending_speech_protocol=='array':
             instructions+=(
                 'Pending speech lists ordinary answers owed but not fully played; an unknown prefix may have been heard. '

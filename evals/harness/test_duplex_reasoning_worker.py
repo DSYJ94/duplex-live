@@ -58,5 +58,20 @@ class ReasoningBoundary(unittest.TestCase):
                     run_reasoning_worker([dict(role='user',text='Cancel the old task')],world,'current','fixture-only',revision,'state-aware',[],controller)
                 self.assertFalse(world.tasks['old']['cancelled'])
 
+    def test_model_can_withdraw_known_speech_without_new_words_or_remote_operation(self):
+        class Controller:
+            provider_name='fixture-only'
+            def __call__(self,payload):
+                self.payload=payload
+                return dict(id='fixture',status='completed',model='fixture-only',output=[dict(type='function_call',name='withdraw_speech',arguments=json.dumps(dict(speech_ids=['old-answer'])))])
+        world=ReasoningWorld({});world.reserve('background');world.tasks['background'].update(operation='delegate_reasoning',phase='running')
+        revision=world.reserve('stop');controller=Controller()
+        result=run_reasoning_worker([dict(role='user',text='Stop.')],world,'stop','fixture-only',revision,'state-aware',
+            [dict(id='old-answer',request_text='Explain the Moon',text='Actual queued explanation')],controller)
+        self.assertEqual(result['route'],'silence');self.assertEqual(result['content'],'')
+        self.assertEqual(result['consume_pending_speech_ids'],['old-answer']);self.assertEqual(world.receipts,[])
+        self.assertIn('withdraw_speech',[t['name'] for t in controller.payload['tools']])
+        self.assertFalse(world.tasks['background']['cancelled'])
+
 
 if __name__=='__main__':unittest.main()
