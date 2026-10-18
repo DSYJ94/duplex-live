@@ -4963,3 +4963,25 @@ compilation. Compare eager, static-eager and static-compiled with fullgraph=True
 and reduce-overhead. Record actual cache and compiled-call creation; inspect all
 actual outputs, errors and warmup cost. No silent fallback is authorized, no
 shared speech runtime is edited, and live/RPC integration remains unmodified.
+
+
+Plain words: static eager7516499 and static compiled7516500 both FAIL0/10.
+Initial hybrid mask dispatch raises KeyError linear_attention; later cache reuse
+raises LinearAttentionLayer has no max_batch_size. Actual compiled wrapper/cache
+creation does NOT mean successful compiled inference. Reject this runtime path;
+no upstream monkeypatch, skip or fallback is adopted. Unchanged eager7516498
+passes10/10, median actual controller stage2.001s. Live service remains eager.
+
+Plain words: state-prompt/atomic guard network7516501/02 ordinary completes,
+ice and actual count19 both speech WER0. Native6503/04 and compact6505/06 preserve
+actual delivery cancellation and only the new shadow reply; independent ASR adds
+and and cancelled/canceled spelling (WER0.0714). Exact client/server PCM in all.
+Fourteen targeted frame/socket/auth/session/dispatch/reasoning/format tests pass.
+
+Plain words: two additional approved-user-speech candidates027 nonexistent earlier
+calculation cancellation and028 explicit no-external-tools multiplication24x36 are
+prepared. Independent input-quality guard is unchanged; generation and judging
+must use this exact source. Evaluate both formats without another prompt change,
+read references only after execution, keep all outcomes under runs, never train.
+These are development checks prompted by observed failure categories, not broad
+fresh-system qualification or physical microphone/AEC acceptance.

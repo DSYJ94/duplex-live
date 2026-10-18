@@ -38,6 +38,9 @@ fi
 if [ "${DUPLEX_FRESH_REASONING_CANCEL:-0}" = 1 ]; then
  EXTRA=(--case hybrid-fresh-026 --user-voice coral)
 fi
+if [ "${DUPLEX_FRESH_STATE_CONSTRAINTS:-0}" = 1 ]; then
+ EXTRA=(--case hybrid-fresh-027 --case hybrid-fresh-028 --user-voice coral)
+fi
 apptainer exec --bind /projects,/lus,/home \
  --env PYTHONPATH="$DL/envs/moshi-rag-7379661/lib/python3.12/site-packages:$DL_TASK_SOURCE" \
  --env PYTHONDONTWRITEBYTECODE=1 --env OMP_NUM_THREADS=4 \

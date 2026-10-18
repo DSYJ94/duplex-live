@@ -86,6 +86,10 @@ def specifications():
             (14.,'Cancel the counting task. Just tell me why a shadow moves during the day.')]),
         dict(id='hybrid-fresh-025',world={},turns=[
             (.8,'What is nine plus eight?')]),
+        dict(id='hybrid-fresh-027',world={},turns=[
+            (.8,'Please cancel the calculation from earlier.')]),
+        dict(id='hybrid-fresh-028',world={},turns=[
+            (.8,'Do not use another model or any external tools. What is twenty four multiplied by thirty six?')]),
     ]
 
 
