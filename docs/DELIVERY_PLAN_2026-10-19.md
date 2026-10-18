@@ -1,5 +1,33 @@
 # Delivery target: 19 October 2026
 
+## Scope clarification — 18 October, 19:34 UTC
+
+Plain words: The final target remains a native duplex voice assistant whose
+speech model listens while speaking, chooses whether to answer or delegate,
+uses actual asynchronous results, and handles waiting, clarification and
+cancellation without losing the conversation. The current implementation route
+has changed: a modular fallback has become the main active training track after
+the native candidates failed factual/result-use/control tests. This change of
+route must be explicit; it does not make the fallback the native final product.
+
+Plain words: Current7530021 fine-tunes786432 adapter parameters in pretrained
+Qwen3.5-9B's final four layers on533 synthetic text/action labels for1599 updates.
+It does not train acoustic tokens, the speech encoder/decoder, Moshi, Lychee,
+PersonaPlex or Qwen Omni, and it is not pretraining from scratch. Frozen speech
+recognition/synthesis and an actual external reasoning backend remain separate
+dependencies. Independent tests must establish whether this control candidate is
+worth retaining; it is not automatically promoted into the accepted demo.
+
+Plain words: Finish and judge this bounded run before additional supporting
+experiments. Preserve any demonstrated controller gain as a separately labelled
+fallback and possible source of verified TRAIN supervision. A native follow-up
+must explicitly train and evaluate the speech model itself with causally timed
+user/assistant audio, actual result arrivals and the same control obligations.
+Text-controller weights do not transfer directly into that model. Require new
+free-running native speech holdouts, retention and latency evidence; do not infer
+native success from teacher-forced loss, text-controller accuracy or smooth TTS.
+Existing native failures remain visible if no viable native checkpoint emerges.
+
 Plain words: the owner confirms on16 October that compute ends in5 days and
 requires readiness1–2 days earlier. Treat19 October as the delivery target;
 20 October is recovery/export buffer. Do not depend on21 October availability.
