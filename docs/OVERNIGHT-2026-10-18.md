@@ -143,3 +143,25 @@ quiet031 network7445/audit7446, shorten032 network7447/audit7448, replacement033
 network7449/audit7450, continuation034 network7451/audit7452. New audio/results
 remain evaluation-only. No regeneration of rejected clips or threshold changes.
 The continuation case deliberately tests a known lexical-policy limitation.
+
+Plain words: FRESH RESULT — inputs7443/quality7444: all eight user utterances WER0.
+Four frozen actual network conversations7445/7447/7449/7451 complete, all wire PCM
+exact; all four production scheduling replays have no repeated source samples.
+Independent audits7446/7448/7450/7452 and all audio hashes/bounds checked locally.
+Predeclared task behavior passes TWO OF FOUR: quiet031 and one-sentence volcano032.
+Replacement033 FAILS: exact ASR of Drop that explanation. What is seven minus two?
+but native withdraw_speech call gives silence, leaving arithmetic unanswered.
+Continuation034 FAILS: lexical interruption discards the old generator and a new
+butterfly explanation starts. Complete volcano/new butterfly clips both speech
+WER0; correct transcription does not rescue wrong task behavior. These cases now
+inform development and are not fresh evidence for later changes. No deployment.
+Proof: runs/recovery-continuation-20261016/spoken-control-holdout-integrity.json.
+
+Plain words: Next diagnostic compares the same saved speech-control requests with
+the current immediate tool-call decoder and bounded native Qwen deliberation.
+Production disables thinking and pre-fills a tool call. The published exact local
+chat template supports a thinking prefix; its own closing token must be generated
+before accepting a final action. New diagnostic never repairs missing closure,
+never calls an external backend, changes no weights and adopts no live changes.
+Measure actual answer content and latency, not just selected route. Two boundary
+tests pass. No claim that slower deliberation is suitable for live voice.

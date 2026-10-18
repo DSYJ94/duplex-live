@@ -1,21 +1,5 @@
 # HANDOFF — overnight recovery, 18 October
 
-Plain words: CLIENT PAUSE LIVE EXPERIMENT07:17UTC. Source78ecb1e committed/pushed,
-clean immutable recovery-78ecb1e with twelve local/remote MD5 matches before compute.
-Actual network005 job7517427/audit7428, bare Stop029 job7517429/audit7430,
-main-point030 job7517431/audit7432. Running, results NOT yet established. New
-client-buffer-v1 negotiation owns retained source samples at client AudioContext
-cursor; server guessed retained tail is diagnostic only and NOT retransmitted.
-Five production JS scheduling tests,17 Python pause/playout/frame tests and2 actual
-localhost socket tests PASS (existing /private/tmp/duplex-live-network dependency).
-New serving/hybrid/replay_playout.mjs must run on downloaded actual wire captures;
-its fake audio clock is NOT browser-engine/device acceptance. Native Cua is still
-unavailable. Owner6574/source0d63370 remains unchanged, no new owner sessions opened.
-Submission/status helpers /private/tmp/duplex-client-pause-{submit,status}.py,
-raw output files ...-submit-full.txt and ...-status-full.json. First SSH attempt
-banner timed out; receipts checked absent before retry. All six job receipts now
-exist durably under cluster runs/duplex-client-pause-*-launch-20261018.json.
-
 Plain words: CURRENT07:20UTC /09:20Berlin. Owner away; continue autonomously,
 no optional questions before return. Goal ACTIVE. No complete native or hybrid
 qualification. No optimizer steps or adopted native weights this continuation.
@@ -24,7 +8,8 @@ new evaluation-only source30510a7 byte-identical model/media. Owner6574/source0d
 is unchanged. Do not call the modular hybrid native duplex or a trained model.
 
 Plain words: CLIENT PAUSE RESULTS —7427/7429/7431 and audits7428/7430/7432 COMPLETE.
-Every transmitted PCM packet exact. Actual wire order replayed through production
+Twelve local/remote MD5 matches before compute; five JS scheduling, seventeen
+Python pause/playout/frame and two real localhost WebSocket tests pass. Every transmitted PCM packet exact. Actual wire order replayed through production
 AudioPlayout in Node: nonlexical pause resumes6425 retained source samples; all
 403200 source samples scheduled once with no discard. Stop has no replacement,
 summary shortened. Six server diagnostic audit clips hash/bounds verified; complete
