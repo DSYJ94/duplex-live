@@ -4763,3 +4763,22 @@ not requested unattended. First run an actual paced PCM network test and exact
 packet identity check, plus the existing independent speech audit. This remains
 a development prototype, not physical microphone/device acceptance or a trained
 native duplex model. Existing recorded path remains the default.
+
+Plain words: actual network job7515423 PASSES. Independently approved024 user
+PCM arrives unchanged across the socket; all249 received model PCM packets
+match the server's generated packets exactly, with ordered speech IDs. Both
+ordinary ice speech and actual stronger-reasoner count complete; independent
+7515424 WER0 for both, with straightforward count wording rather than the prior
+ambiguous number boundary. No controlled12-second delivery delay in this live
+transport path. This is a paced recorded-PCM network test, NOT a physical mic,
+room AEC or device-playback acceptance. Parent and child runtimes remain isolated.
+Recorded default regression7515425 completes all3 cases with exact user ASR;
+7515426 retains small added-word differences in008/019, and both cancellation
+and owed science in020 are WER0. No native weights or optimizer steps changed.
+
+Plain words: morning access helper is loopback-only and keeps the ephemeral
+socket credential out of URLs and logs. It reads only a private owned token
+file, never an API key, and denies cross-origin credential reads. Static voice
+UI is proxied through an authenticated SSH forward; the socket goes directly
+through that same local forward. No unattended microphone permission request.
+A bounded owner-trial service wrapper is prepared; not a qualification result.

@@ -66,6 +66,7 @@ async def trial(args):
     for i,(packet,entry) in enumerate(zip(received,ledger)):
         if packet['event_id']!=entry['event_id']:raise RuntimeError('Network/server speech identity differs')
         np.testing.assert_array_equal(packet['pcm'],saved[str(i)])
+    (args.out/'packet-arrivals.json').write_text(json.dumps([{k:v for k,v in row.items() if k!='pcm'} for row in received],indent=2)+'\n')
     np.savez(args.out/'received-packets.npz',**{str(i):p['pcm'] for i,p in enumerate(received)})
     (args.out/'network-events.json').write_text(json.dumps(events,indent=2)+'\n');(args.out/'input-arrivals.json').write_text(json.dumps(sends,indent=2)+'\n')
     from data.synthetic.filter import norm_words,wer
