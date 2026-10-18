@@ -18,6 +18,15 @@ passes on unseen lessons — that is generalization, not memorization.
 
 ## 18 October 2026 — state-conditioned control training, results pending
 
+Plain words: UPDATE19:45UTC — full7530021 COMPLETED1599/exact independent restore,
+all533 rows used three times,23.92GB peak. REJECT adoption: mechanics151/204 to
+176/204 loses three old passes, all4 cancel+new-answer cases still omit the new
+answer, and a mechanically passing send refusal repeats itself. All408 rowfiles,
+strict775 source tensors and finite16 adapter tensors independently verified in
+state-context-full-integrity.json. No further unchanged controller training.
+Independent24 role-reversal holdout7530022 still pending retrieval. These text
+controller results do not qualify the native voice model or change the demo.
+
 Plain words: Prior1356-update controller lost active cancellation/continuation
 behavior. New synthetic TRAIN pairs keep the latest words identical while actual
 task status changes, counterbalance task identity/order and include cancelling

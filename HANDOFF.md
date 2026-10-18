@@ -1,5 +1,41 @@
 # HANDOFF — overnight recovery, 18 October
 
+Plain words: CURRENT18October19:45UTC. Full1599-update controller7530021 COMPLETE
+and REJECTED for adoption. Exact independent optimizer/random-state/prediction
+restore passed; all533 TRAIN labels used exactly three times; all408 held-out
+rowfiles/strict775 source inventory/source hashes/finite16 adapter tensors and
+23.92GB peak allocation verified locally. Mechanics151/204 to176/204, BUT loses
+three old passes (one unavailable record-access limit and two active cancellations)
+and ALL FOUR cancel-plus-new-answer cases omit the new answer. A mechanically
+passing unavailable-send response repeats itself three times. Therefore the score
+is not semantic qualification. Proof: state-context-full-integrity.json and
+verify-state-context-full.py in runs/recovery-continuation-20261016. Do not run
+more unchanged controller epochs. Independent24-case role holdout7530022 was
+RUNNING19:43; retrieve its result rather than resubmit. Owner demo unchanged.
+
+Plain words: Return to NATIVE speech work as the owner explicitly clarified.
+The25 native teacher histories used in7510331 contain19 private,4 simple,1
+clarify and1 cancel conversation (other actual-history components also exist;
+this count is the native-teacher portion, not every label). Its objective has
+ZERO audio prediction targets. This exposes limited diversity; it does not by
+itself prove the cause of failure. A bounded frozen Context Spanning versus
+native7510331 comparison now runs on identical approved ordinary TRAIN inputs
+012–015 (ice, sound, plants, metal). Not fresh holdouts; never feed the captures
+back into TRAIN. No backend reasoner, forced speech words or new optimizer.
+Source31c09d1abaaa516198f88b218610035c2ed8b9d3; frozen7530261–64, adapted7530265–68,
+independent ASR7530269–76. At most4 native jobs concurrently. Use the results to
+distinguish base-model weakness from adaptation damage BEFORE choosing more
+native updates. Receipt: native-capacity-v2-launch-output.txt. Original7530240–47
+all rejected before loading: missing TRAIN-history flag and invalid one-word
+placeholder. Their blocked ASR7530248–55 cancelled; source/stimuli unchanged.
+
+Plain words: Clifton reauthenticated21:39Berlin, valid until19October09:39Berlin.
+Gateway timeouts still recur despite a valid certificate. The artifact watcher
+SSH session25146 terminated255; its tar file is ZERO bytes and is NOT a backup.
+The completed full7530021 and approved corpus/preflight are already backed up
+and verified through separate successful rsync. Retrieve role7530022 and native
+comparisons after terminal status; NEVER restart jobs from a polling timeout.
+
 Plain words: CURRENT 18 October, 19:30 UTC. Goal ACTIVE; cloud validation PAUSED.
 The new state-conditioned training is implemented, collected and running. Source
 957af98bce13b34c5280ac6cc5727ab58f2c2213 is immutable on the cluster. Teacher

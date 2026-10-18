@@ -1,5 +1,13 @@
 # Qualification record — 18 October 2026
 
+Plain words: Latest19:45UTC. REJECT controller7530021: full1599 updates and exact
+restore pass engineering checks, but mechanics151/204 to176/204 loses3 old passes
+and all4 cancel-plus-new-answer cases fail the new answer. One passing refusal
+repeats3 times. Local evidence covers all408 before/after files, not native speech.
+Native comparison7530261–68 plus independent ASR7530269–76 is running to separate
+frozen-backbone capacity from adapter damage on4 reused ordinary TRAIN questions.
+No new optimizer, no new native qualification, no owner demo change; cloud paused.
+
 Plain words: Latest19:30UTC. Full state-conditioned Qwen control training7530021
 is RUNNING after completed35-update/independent-restore preflight7530020. The
 whole corrected533-label synthetic TRAIN corpus7529991 is approved;204 ordinary,
