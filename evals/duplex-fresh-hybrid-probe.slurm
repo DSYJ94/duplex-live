@@ -35,6 +35,15 @@ for row in q['results']:
 PYMETA
 )
 if [ "${#IDS[@]}" -eq 0 ]; then echo 'No independently approved fresh input'; exit 1; fi
+if [ -n "${DUPLEX_FRESH_SCENARIOS:-}" ]; then
+ IFS=',' read -r -a IDS <<< "$DUPLEX_FRESH_SCENARIOS"
+ for ID in "${IDS[@]}"; do [[ "$ID" =~ ^hybrid-fresh-[0-9]{3}$ ]]; done
+fi
+EXTRA=()
+if [ -n "${DUPLEX_FRESH_VALIDATOR_SOURCE:-}" ]; then
+ : "${DUPLEX_FRESH_VALIDATOR_COMMIT:?Historical validator commit required}"
+ EXTRA+=(--input-validator-source "$DUPLEX_FRESH_VALIDATOR_SOURCE" --input-validator-commit "$DUPLEX_FRESH_VALIDATOR_COMMIT")
+fi
 SCENARIOS=()
 for ID in "${IDS[@]}"; do SCENARIOS+=(--scenario "$ID"); done
 apptainer exec --nv --bind /projects,/lus,/home \
@@ -46,4 +55,4 @@ apptainer exec --nv --bind /projects,/lus,/home \
  --tts-assets "$DL/runs/kyutai-tts-assets-$KYUTAI_TTS_ASSETS_JOB/assets.json" \
  --mimi-load-approval "$DL/runs/kyutai-tts-mimi-load-$KYUTAI_TTS_MIMI_LOAD_JOB/report.json" \
  --data "$INPUTS" --input-profile fresh-evaluation --input-quality "$QUALITY" "${SCENARIOS[@]}" \
- --controller-protocol required-action --lookup-delay-s 12 --out "$DL/runs/duplex-hybrid-probe-${SLURM_JOB_ID}"
+ --controller-protocol "${DUPLEX_CONTROLLER_PROTOCOL:-required-action}" --evaluation-use "${DUPLEX_EVALUATION_USE:-fresh}" "${EXTRA[@]}" --lookup-delay-s 12 --out "$DL/runs/duplex-hybrid-probe-${SLURM_JOB_ID}"

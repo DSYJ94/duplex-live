@@ -208,14 +208,17 @@ def main():
     ap.add_argument('--scenario',action='append',required=True);ap.add_argument('--lookup-delay-s',type=float,default=12.)
     ap.add_argument('--input-profile',choices=('approved-train','fresh-evaluation'),default='approved-train')
     ap.add_argument('--input-quality',type=Path)
+    ap.add_argument('--input-validator-source',type=Path)
+    ap.add_argument('--input-validator-commit')
+    ap.add_argument('--evaluation-use',choices=('development','fresh'),default='development')
     ap.add_argument('--controller-protocol',choices=('legacy','required-action','state-aware'),default='legacy')
     args=ap.parse_args()
     if not 0<=args.lookup_delay_s<=30:raise ValueError('Invalid bounded controlled delivery delay')
     if args.input_profile=='fresh-evaluation':
-        from evals.duplex_fresh_inputs import checked_cases
+        from evals.duplex_input_validator import cases
         if args.input_quality is None:raise ValueError('Fresh evaluation requires a separate exact quality receipt')
-        rows=checked_cases(args.data,args.input_quality,args.scenario)
-    else:rows=selected_inputs(args.data,args.scenario)
+        rows,validator=cases(args.data,args.input_quality,args.scenario,args.input_validator_source,args.input_validator_commit)
+    else:rows=selected_inputs(args.data,args.scenario);validator=None
     args.out.mkdir(parents=True,exist_ok=False)
     listener=StreamingListener(args.stt_assets,args.mimi_load_approval)
     torch=listener.torch
@@ -241,12 +244,12 @@ def main():
         component_code_sha256={name:sha256(Path(__file__).with_name(name)) for name in
             ('recovery_worker.py','duplex_endpoint.py','duplex_speaker.py','kyutai_stt_probe.py','duplex_speech_obligations.py')},
         probe_code_sha256=sha256(Path(__file__)),
-        input_profile=args.input_profile,input_quality_sha256=sha256(args.input_quality) if args.input_quality else None,
+        input_profile=args.input_profile,input_validator=validator,evaluation_use=args.evaluation_use,input_quality_sha256=sha256(args.input_quality) if args.input_quality else None,
         stt_assets_sha256=sha256(args.stt_assets),tts_assets_sha256=sha256(args.tts_assets),
         listener_loads=listener.loads,speaker_evidence=speaker.evidence,tts_warmup=warmup,
         same_process_same_gpu=True,external_controller='gpt-6-luna',native_model_reasoning=False,
         paced_recorded_train_user_pcm=args.input_profile=='approved-train',
-        fresh_holdout=args.input_profile=='fresh-evaluation',candidate_qualification_derived_from_execution=False,microphone_acceptance=False,
+        fresh_holdout=args.input_profile=='fresh-evaluation' and args.evaluation_use=='fresh',candidate_qualification_derived_from_execution=False,microphone_acceptance=False,
         native_model_qualified=False,hybrid_system_qualified=False,training_approved=False,optimizer_steps=0)
     (args.out/'report.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report),flush=True)
 
