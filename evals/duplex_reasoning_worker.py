@@ -2,8 +2,8 @@
 
 Local controller chooses a direct reply or a real external reasoning request.
 The original latest user request is bound by the application; there are no
-arbitrary actions, private-record reads or invented tool results. Cancellation
-and replacement are intentionally not offered by this first component trial.
+arbitrary actions, private-record reads or invented tool results. Cancellation stops delivery of selected reasoning results, including late API
+returns; it does not claim to abort an already executing remote request.
 """
 import json
 import os
@@ -44,6 +44,18 @@ class ReasoningWorld(RecordWorld):
         with self.lock:self.receipts.append(receipt)
         return receipt
 
+    def cancel_delivery(self,task_ids):
+        with self.lock:
+            if (not isinstance(task_ids,list) or not task_ids or any(not isinstance(t,str) for t in task_ids)
+                    or len(set(task_ids))!=len(task_ids) or any(t not in self.tasks or self.tasks[t]['cancelled'] or self.tasks[t]['closed']
+                        or self.tasks[t].get('operation')!='delegate_reasoning' for t in task_ids)):
+                raise ValueError('Every reasoning cancellation target must be active; nothing changed')
+            receipts=[]
+            for identity in task_ids:
+                self.tasks[identity]['cancelled']=True
+                receipts.append(dict(task_id=identity,revision=self.tasks[identity]['revision'],tool='cancel_reasoning',delivery_cancelled=True,remote_execution_aborted=False))
+            return dict(tool='cancel_reasoning',task_ids=task_ids,delivery_cancelled=True,remote_execution_aborted=False,receipts=receipts)
+
 
 def reasoning_receipts(receipts):
     if any(r.get('tool')!='delegate_reasoning' or not r.get('executed') or not r.get('remote_api_used') or not r.get('content') for r in receipts):
@@ -63,7 +75,13 @@ def run_reasoning_worker(context,world,task_id,model,expected_revision,dispatch_
     with world.lock:
         available=dict(records={},tasks={k:{name:value for name,value in v.items() if name!='context'} for k,v in world.tasks.items()
             if k!=task_id and not v['closed'] and not v['cancelled']})
-    payload=dict(model=model,input=json.dumps(context),tools=[reply,delegate],tool_choice='required',
+    tools=[reply,delegate]
+    active=[identity for identity,state in available['tasks'].items() if state.get('operation')=='delegate_reasoning']
+    if active:
+        tools.append(tool('cancel_reasoning','Stop delivery of identified active reasoning results, preserving unrelated work. Late API returns cannot be spoken. This does not abort an already executing remote request. content is spoken only after actual cancellation succeeds; confirm delivery cancellation honestly and answer an ordinary question if requested.',dict(
+            task_ids=dict(type='array',minItems=1,items=dict(type='string',enum=active)),content=dict(type='string'),
+            consume_pending_speech_ids=dict(type='array',items=dict(type='string')))))
+    payload=dict(model=model,input=json.dumps(context),tools=tools,tool_choice='required',
         local_worker_state=dict(available=available,pending_speech=pending_speech,dispatch_protocol=dispatch_protocol,domain='reasoning-development'))
     before=time.monotonic();response=response_executor(payload)
     calls=[c for c in response.get('output',[]) if c.get('type')=='function_call']
@@ -78,9 +96,11 @@ def run_reasoning_worker(context,world,task_id,model,expected_revision,dispatch_
         try:receipt=world.reason(task_id,expected_revision,latest)
         except Exception as error:raise WorkerContractError('Actual reasoning execution failed: '+str(error),dict(controller_event=event,error_type=type(error).__name__)) from error
         route='delegate';content=receipt['content'];receipts=[receipt];consumed=[]
+    elif call['name']=='cancel_reasoning':
+        receipt=world.cancel_delivery(arguments['task_ids']);route='cancel';content=arguments['content'];receipts=[receipt];consumed=arguments['consume_pending_speech_ids']
     else:raise WorkerContractError('Unavailable reasoning action',dict(response=response))
     if not isinstance(content,str) or not content.strip():raise WorkerContractError('Reasoning worker produced empty speech',dict(response=response))
     if not isinstance(consumed,list) or len(set(consumed))!=len(consumed) or not set(consumed)<={p['id'] for p in pending_speech}:raise WorkerContractError('Unknown owed speech identity',dict(response=response))
     return dict(route=route,content=content,consume_pending_speech_ids=consumed,receipts=receipts,events=[event],task_id=task_id,
         speech_model_routing=False,final_response_route=route,dispatch_protocol=dispatch_protocol,response_provider=response_executor.provider_name,
-        actual_reasoning_backend=receipts[0]['model'] if receipts else None,agent_actions_executed=False,cancellation_supported=False)
+        actual_reasoning_backend=receipts[0].get('model') if receipts else None,agent_actions_executed=False,cancellation_supported='delivery-only',remote_execution_abort_supported=False)

@@ -14,7 +14,7 @@ class ReasoningBoundary(unittest.TestCase):
         with ThreadPoolExecutor(max_workers=1) as pool:
             future=pool.submit(world.reason,'old',revision,'Exact user question')
             try:
-                self.assertTrue(started.wait(1));world.reserve('new');world.cancel('old')
+                self.assertTrue(started.wait(1));world.reserve('new');cancellation=world.cancel_delivery(['old']);self.assertTrue(cancellation['delivery_cancelled']);self.assertFalse(cancellation['remote_execution_aborted'])
             finally:release.set()
             receipt=future.result()
         self.assertEqual(received,['Exact user question']);self.assertFalse(world.deliverable(receipt));self.assertEqual(reasoning_receipts([receipt]),[receipt])
@@ -31,7 +31,13 @@ class ReasoningBoundary(unittest.TestCase):
         controller=Controller();result=run_reasoning_worker(context,world,'current','fixture-only',revision,'state-aware',[],controller)
         self.assertEqual(received,['Actual counting question']);self.assertEqual(result['content'],'Nineteen.');self.assertEqual(result['route'],'delegate')
         self.assertEqual(controller.payload['local_worker_state']['domain'],'reasoning-development');self.assertEqual(result['receipts'][0],world.receipts[0])
-        self.assertFalse(result['cancellation_supported'])
+        self.assertEqual(result['cancellation_supported'],'delivery-only');self.assertFalse(result['remote_execution_abort_supported'])
+    def test_cancellation_validates_all_targets_atomically_and_preserves_unrelated_work(self):
+        world=ReasoningWorld({});world.reserve('old');world.reserve('unrelated')
+        world.tasks['old'].update(operation='delegate_reasoning',phase='running')
+        with self.assertRaises(ValueError):world.cancel_delivery(['old','unrelated'])
+        self.assertFalse(world.tasks['old']['cancelled'])
+        world.cancel_delivery(['old']);self.assertTrue(world.tasks['old']['cancelled']);self.assertFalse(world.tasks['unrelated']['cancelled'])
     def test_private_records_and_fabricated_receipts_reject(self):
         with self.assertRaises(ValueError):ReasoningWorld({'Private':{'field':'value'}})
         for receipt in ({'tool':'lookup_record'},{'tool':'delegate_reasoning','executed':True,'content':'Claim'}):

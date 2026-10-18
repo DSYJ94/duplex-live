@@ -4782,3 +4782,13 @@ file, never an API key, and denies cross-origin credential reads. Static voice
 UI is proxied through an authenticated SSH forward; the socket goes directly
 through that same local forward. No unattended microphone permission request.
 A bounded owner-trial service wrapper is prepared; not a qualification result.
+
+Plain words: extend the opt-in reasoning worker with actual delivery cancellation.
+The model must choose identified active task IDs and its own user-facing words;
+all targets validate atomically before state changes. Late stronger-model returns
+remain in actual execution receipts but cannot publish. This explicitly does NOT
+claim to abort an already executing remote API request. Unrelated work and owed
+ordinary speech remain separate. CPU synchronization/atomicity tests pass; actual
+ordinary-plus-reasoning and cancellation worker trials must pass before owner use.
+A new user-only026 cancellation scene is prepared and independently judged before
+any audio test. No API outputs become training data.

@@ -25,5 +25,5 @@ class LocalSessionAccess(unittest.TestCase):
                         self.assertEqual(response.headers['Cache-Control'],'no-store')
                     request=urllib.request.Request(url,headers={'Origin':'https://foreign.invalid'})
                     with self.assertRaises(urllib.error.HTTPError) as error:urllib.request.urlopen(request)
-                    self.assertEqual(error.exception.code,403)
+                    self.assertEqual(error.exception.code,403);error.exception.close()
                 finally:server.shutdown();thread.join(timeout=2)
