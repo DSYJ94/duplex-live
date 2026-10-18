@@ -4862,3 +4862,11 @@ shared four-GPU node. Bind loopback probes to an OS-assigned port0 and report th
 actual bound port in ready.json, which the client already reads. This avoids
 cross-job socket collisions without changing model prompts, weights or PCM.
 Owner service can retain its separately forwarded configured port.
+
+Plain words: protect session-slot ownership in the live transport. Rejected or
+unauthenticated connections must never clear another connection's busy flag.
+Only the handler that actually claimed the slot releases it. The real local
+socket test now opens an authenticated active session, rejects a wrong credential,
+then rejects a second authenticated connection with busy1013 while the first
+continues exact bidirectional PCM. No model/session was invoked by the rejected
+connections. This is a protocol test, not physical microphone acceptance.

@@ -39,6 +39,15 @@ class LiveNetworkProtocol(unittest.IsolatedAsyncioTestCase):
             async with connect(url,proxy=None) as client:
                 await client.send(json.dumps(dict(token='fixture-secret',sample_rate=24000,frame_samples=1920,capture_settings={})))
                 self.assertEqual(json.loads(await client.recv())['kind'],'session_ready')
+                self.assertTrue(network.busy)
+                async with connect(url,proxy=None) as invalid:
+                    await invalid.send(json.dumps(dict(token='wrong',sample_rate=24000,frame_samples=1920)))
+                    await asyncio.wait_for(invalid.wait_closed(),timeout=1);self.assertEqual(invalid.close_code,1008)
+                self.assertTrue(network.busy)
+                async with connect(url,proxy=None) as concurrent:
+                    await concurrent.send(json.dumps(dict(token='fixture-secret',sample_rate=24000,frame_samples=1920)))
+                    await asyncio.wait_for(concurrent.wait_closed(),timeout=1);self.assertEqual(concurrent.close_code,1013)
+                self.assertTrue(network.busy);self.assertTrue(requests.empty())
                 payload=struct.pack('<I',0)+np.full(1920,.25,dtype='<f4').tobytes();await client.send(payload)
                 output=await client.recv();self.assertEqual(struct.unpack_from('<II',output),(3,0));self.assertEqual(output[8:],payload[4:])
                 await client.send(json.dumps(dict(kind='finish')));self.assertEqual(json.loads(await client.recv())['kind'],'session_complete')

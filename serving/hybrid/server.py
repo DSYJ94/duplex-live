@@ -48,7 +48,7 @@ class Network:
         response=connection.respond(HTTPStatus.OK,body);del response.headers['Content-Type'];response.headers['Content-Type']='text/html; charset=utf-8' if path in ('/','/qa.html') else 'text/javascript; charset=utf-8'
         response.headers['Cache-Control']='no-store';response.headers['Referrer-Policy']='no-referrer';return response
     async def handler(self,ws):
-        incoming=None;output=None;sender=None;future=None
+        incoming=None;output=None;sender=None;future=None;claimed=False
         try:
             hello=json.loads(await asyncio.wait_for(ws.recv(),timeout=5))
             if not isinstance(hello,dict) or not isinstance(hello.get('token'),str) or not secrets.compare_digest(hello['token'],self.token):
@@ -57,7 +57,7 @@ class Network:
             if hello.get('sample_rate')!=24000 or hello.get('frame_samples')!=1920:await ws.close(code=1008,reason='Unsupported PCM format');return
             settings=hello.get('capture_settings',{})
             if not isinstance(settings,dict) or len(json.dumps(settings))>2048:raise ValueError('Invalid bounded capture settings')
-            self.busy=True;incoming=LiveFrames();output=Output();future=Future()
+            self.busy=True;claimed=True;incoming=LiveFrames();output=Output();future=Future()
             self.requests.put_nowait(dict(incoming=incoming,output=output,future=future,capture_settings=settings,client_kind=hello.get('client_kind','unspecified')))
             async def send():
                 try:
@@ -95,7 +95,7 @@ class Network:
             if future is not None:
                 try:await asyncio.wrap_future(future)
                 except Exception:pass
-            self.busy=False
+            if claimed:self.busy=False
     async def serve(self):
         import websockets
         if websockets.__version__!='15.0.1':raise RuntimeError('Live trial requires existing websockets15.0.1')
