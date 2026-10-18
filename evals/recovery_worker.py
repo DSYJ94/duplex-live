@@ -82,6 +82,24 @@ class RecordWorld:
             receipts = [self.cancel(t) for t in task_ids]
             return {"tool":"cancel_lookup","cancelled":True,"task_ids":task_ids,"receipts":receipts}
 
+    def replace_lookup(self,task_id,task_ids,project,field,expected_revision):
+        """Validate both sides, then retire old work and read the replacement atomically."""
+        with self.lock:
+            if not isinstance(task_ids,list) or task_id in task_ids:
+                raise ValueError('Replacement cannot cancel its own dispatch')
+            if project not in self.records or field not in self.records[project]:
+                raise ValueError('Replacement requested an unknown project or field')
+            state=self.tasks.get(task_id)
+            if (not state or state['cancelled'] or state.get('closed',False)
+                    or state['revision']!=expected_revision):
+                raise WorkerSuperseded('Replacement dispatch was cancelled, closed or superseded')
+            # cancel_many validates every old target before changing any state.
+            # All new-read checks above run first, under this same reentrant lock.
+            cancellation=self.cancel_many(task_ids)
+            receipt=self.read(task_id,project,field,expected_revision)
+            return dict(task_id=task_id,revision=expected_revision,tool='replace_lookup',executed=True,
+                cancellation=cancellation,lookup=receipt)
+
     def finish(self,task_id,revision):
         """Close a delivered or non-lookup request without claiming cancellation."""
         with self.lock:
@@ -95,6 +113,21 @@ class RecordWorld:
             if not self.deliverable(receipt):
                 raise WorkerSuperseded("Cancelled or replaced lookup cannot become ready")
             self.tasks[receipt["task_id"]]["phase"] = "result_ready"
+
+
+def lookup_receipts(receipts):
+    """Actual reads inside direct and atomic replacement execution receipts."""
+    result=[]
+    for receipt in receipts:
+        if receipt['tool']=='lookup_record':result.append(receipt)
+        elif receipt['tool']=='replace_lookup':
+            nested=receipt.get('lookup')
+            if (not receipt.get('executed') or not isinstance(nested,dict) or nested.get('tool')!='lookup_record'
+                    or not nested.get('executed') or nested['task_id']!=receipt['task_id']
+                    or nested['revision']!=receipt['revision']):
+                raise ValueError('Replacement is missing its actual matching record receipt')
+            result.append(nested)
+    return result
 
 
 def tool(name,description,properties):
@@ -112,6 +145,10 @@ def run_worker(context,world,task_id,model="gpt-6-luna",expected_revision=None,d
         {"project":{"type":"string"},"field":{"type":"string"}}),
         tool("cancel_lookup","Cancel the identified existing lookups. Include all related duplicates, excluding unrelated work.",
             {"task_ids":{"type":"array","items":{"type":"string"},"minItems":1}})]
+    if dispatch_protocol=='state-aware':
+        tools.append(tool('replace_lookup','Correct an existing pending lookup: retire identified old task IDs and read the identified replacement project/field atomically.',
+            {'task_ids':{'type':'array','items':{'type':'string'},'minItems':1},
+             'project':{'type':'string'},'field':{'type':'string'}}))
     schema = {"type":"object","properties":{"route":{"type":"string","enum":["answer","clarify","delegate","cancel"]},
         "content":{"type":"string"}},"required":["route","content"],"additionalProperties":False}
     pending_speech=[] if pending_speech is None else pending_speech
@@ -138,7 +175,10 @@ def run_worker(context,world,task_id,model="gpt-6-luna",expected_revision=None,d
         "Do not say a lookup or cancellation completed until its tool receipt is present. Reply in at most 60 words. "
         "Available project/field names and active tasks: " + json.dumps(available))
     if dispatch_protocol=='state-aware':
-        instructions+=(" Actual client speech state, separate from active lookup tasks: "+json.dumps(pending_speech)+
+        instructions+=(" If the user corrects an active lookup to a different identified project or field, use replace_lookup "
+            "with only the superseded active IDs and the new project/field. This executes both retirement and the new read. "
+            "Do not merely cancel and claim the replacement is unavailable. If the old lookup is already complete, use lookup_record. "
+            "Actual client speech state, separate from active lookup tasks: "+json.dumps(pending_speech)+
             ". These ordinary answers are owed and have not been fully played; an unknown prefix may have been heard. "
             "The client will resume each unless you list its ID in consume_pending_speech_ids. "
             "List an ID only if your current reply answers that exact request, or the latest user explicitly withdraws it. "
@@ -210,6 +250,18 @@ def run_worker(context,world,task_id,model="gpt-6-luna",expected_revision=None,d
                     or not isinstance(arguments['content'],str) or not arguments['content'].strip()):
                 raise WorkerContractError('Invalid no-side-effect reply action',{'events':events,'arguments':arguments})
             direct_reply=arguments;selected_route=arguments['route']
+        elif call['name']=='replace_lookup':
+            targets=arguments.get('task_ids')
+            if (dispatch_protocol!='state-aware' or not isinstance(targets,list) or task_id in targets
+                    or any(t not in available['tasks'] for t in targets)
+                    or not project_identified_by_user(context,arguments.get('project',''))):
+                raise WorkerContractError('Replacement requires identified existing work and a user-identified project',
+                    {'events':events,'arguments':arguments,'receipts':[]})
+            try:receipt=world.replace_lookup(task_id,expected_revision=expected_revision,**arguments)
+            except ValueError as error:
+                raise WorkerContractError('Replacement validation rejected; no partial replacement executed',
+                    {'events':events,'arguments':arguments,'receipts':[],'tool_error':str(error)}) from error
+            selected_route='delegate'
         elif call["name"] == "lookup_record":
             if not project_identified_by_user(context, arguments["project"]):
                 raise WorkerContractError("Private project was not identified by the user", {"events":events,"arguments":arguments})
@@ -258,7 +310,7 @@ def run_worker(context,world,task_id,model="gpt-6-luna",expected_revision=None,d
     result["dispatch_protocol"] = dispatch_protocol
     if not isinstance(parsed.get("content"), str) or not parsed["content"].strip():
         raise WorkerContractError("Backend returned empty result text; do not inject an empty context span",result)
-    if parsed["route"] == "delegate" and not any(r["tool"] == "lookup_record" for r in receipts):
+    if parsed["route"] == "delegate" and not lookup_receipts(receipts):
         raise WorkerContractError("Delegation reported without actual record execution",result)
     if parsed["route"] == "cancel" and not any(r["tool"] == "cancel_lookup" for r in receipts):
         raise WorkerContractError("Cancellation reported without actual task cancellation",result)

@@ -16,7 +16,7 @@ from evals.moshi_model_download import sha256
 from evals.kyutai_stt_probe import StreamingListener,selected_inputs
 from evals.duplex_endpoint import TurnEndpoint
 from evals.duplex_speaker import StreamingSpeaker
-from evals.recovery_worker import RecordWorld,run_worker,WorkerContractError
+from evals.recovery_worker import RecordWorld,run_worker,WorkerContractError,lookup_receipts
 from evals.utterance_playout import render_utterances
 
 
@@ -65,7 +65,8 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy"):
     def log(kind,**kw):events.append(dict(kind=kind,at_s=now(),**kw))
     def valid(item):
         if item['result']['route']=='delegate':
-            return all(world.deliverable(r) for r in item['result']['receipts'] if r['tool']=='lookup_record')
+            reads=lookup_receipts(item['result']['receipts'])
+            return bool(reads) and all(world.deliverable(r) for r in reads)
         return not (item['result']['route']=='clarify' and item['turn']<utterance_count)
     def interrupt():
         nonlocal active,clock
@@ -135,8 +136,7 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy"):
                 held.remove(item)
                 if not valid(item):log('stale_result_discarded',task_id=item['task_id']);continue
                 if item['result']['route']=='delegate':
-                    for receipt in item['result']['receipts']:
-                        if receipt['tool']=='lookup_record':world.mark_ready(receipt)
+                    for receipt in lookup_receipts(item['result']['receipts']):world.mark_ready(receipt)
                 queue.append(item)
             # Acoustic quiet alone is insufficient: await delayed ASR words and
             # the newest semantic dispatch before releasing any queued result.
