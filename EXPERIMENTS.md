@@ -5722,3 +5722,22 @@ compiler/worker, exact state/value checks, separate semantic review, complete
 API/source/attempt lineage and independent prompt+worker replay are required.
 Private values enter student history only after an actual user-identified fixture
 read; two local boundary tests pass. No optimizer or native audio generation yet.
+
+## 18 October — first capability preview rejected before TRAIN approval
+
+Plain words:7526759/source7bb295c finishes all seven source scenes but FAILS full
+quality, manifest training_approvedFALSE and no TRAIN file. Both unsupported-read
+and completed+resume fail all three attempts. First record response narrates receipt
+metadata and fails exact-value scope; second attempt passes after a recorded repair.
+Do not train accepted subsets or override route/state checks. All responses/reviews
+and the failed manifest are backed up. Private actual fixture-read and stateless
+teacher tool-history conversion execute successfully, so transport is not the
+labeling blocker. Stronger-teacher agreement alone is insufficient.
+
+Plain words: Keep all seven preview inputs and quality gates unchanged. Revise
+teacher-only instructional policy to define answer versus clarification for absent
+capability, execute the remaining feasible continuation when cancellation is no
+longer available, and return only the requested actual receipt value. This policy
+is explicitly excluded from student messages and included in hashed teacher input.
+It is a training-label instruction, not a rewritten output or captured evaluation
+answer. New preview requires a new immutable source/job and full replay approval.
