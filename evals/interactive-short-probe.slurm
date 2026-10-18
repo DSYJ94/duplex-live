@@ -12,6 +12,12 @@
 set -euo pipefail
 cd /projects/u6si/duplex-live/repo
 case "${1:?Choose rag, personaplex or qwen}" in
+  confirmed-pause-network)
+    : "${DL_TASK_SOURCE:?Immutable source required}"
+    : "${DL_TASK_COMMIT:?Immutable commit required}"
+    test "${DUPLEX_CONFIRMED_PAUSE:-0}" = 1
+    test "${DUPLEX_LIVE_SCENARIO:-}" = hybrid-fresh-051
+    SCRIPT="$DL_TASK_SOURCE/evals/duplex-live-transport.slurm" ;;
   native-teacher-smoke)
     : "${DL_TASK_SOURCE:?Immutable source required}"
     : "${DL_TASK_COMMIT:?Immutable commit required}"
