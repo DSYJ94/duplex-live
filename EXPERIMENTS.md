@@ -5120,3 +5120,22 @@ results.json. No new voice test or owner adoption after failed gate. Next repair
 must distinguish replacing an answer from fulfilling an older obligation and
 background cancellation from media continuation, then inspect actual content.
 No training on any of these development inputs.
+
+
+Plain words: v3 repairs an overlapping model-facing contract: resolve_pending_speech
+still advertised finishing/withdrawing/superseding even after a separate silent
+withdrawal tool existed. Only when that new tool is offered, redefine resolve as
+REPLACING the old answer with a NEW answer to the full latest revision; narrow
+content-field description forbids copying the long queued explanation. Add two
+abstract contrast illustrations, not actual tasks/receipts, for revised-answer
+versus cancellation-with-continuation. Old views without the new tool still byte-
+identical. Do not infer success from this hypothesis before the actual model gate.
+
+Plain words: typed probe now rejects exact prior-text copies for requested new
+answers and checks one sentence when explicitly requested. These are content-
+contract checks, not full factual scoring; manually inspect actual answers. Three
+new contrasts include Moon-topic summary, cancellation with continuing explanation,
+and silence while number work continues. Ten cases total, all retained; no training
+or reference words hidden from model inputs.26 local regressions pass. Live owner
+source0d63370 unchanged. Proceed to voice only if all routes, IDs and requested
+answer content are actually correct; do not repeat the earlier route-only claim.

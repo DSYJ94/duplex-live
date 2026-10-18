@@ -5,6 +5,7 @@ No API calls, speech inference, training or whole-system qualification.
 """
 import argparse
 import json
+import re
 from pathlib import Path
 from evals.duplex_reasoning_worker import ReasoningWorld,run_reasoning_worker
 from evals.moshi_model_download import sha256
@@ -14,11 +15,16 @@ def specifications():
     return [
         dict(id='stop-only',user='Stop.',expected_route='silence',expected_consumed=['explanation']),
         dict(id='withdraw-explanation',user='Do not finish that explanation. Stop talking.',expected_route='silence',expected_consumed=['explanation']),
-        dict(id='stop-and-revise',user='Stop. I only want the first step in one short sentence.',expected_route='answer',expected_consumed=['explanation']),
+        dict(id='stop-and-revise',user='Stop. I only want the first step in one short sentence.',expected_route='answer',expected_consumed=['explanation'],max_sentences=1),
         dict(id='cancel-calculation-preserve-speech',user='Cancel the calculation, but finish your explanation.',background=True,expected_route='cancel',expected_consumed=[]),
         dict(id='new-summary-request',user='Do not continue the long version. Give me just its main point.',expected_route='answer',expected_consumed=['explanation']),
         dict(id='new-stop-speech-preserve-calculation',user='Stop the explanation. Keep the calculation running.',background=True,expected_route='silence',expected_consumed=['explanation']),
         dict(id='new-cancel-only-calculation',user='Leave the explanation queued. Cancel only the calculation.',background=True,expected_route='cancel',expected_consumed=[]),
+        dict(id='third-moon-summary',request='Explain in four sentences why the Moon has phases.',
+            prior_text='The Moon reflects sunlight. Half of it is lit by the Sun. From Earth we see different amounts of its sunlit half as it orbits us. These changing views are called phases.',
+            user='Forget the long version. Give me only the cause in a single sentence.',expected_route='answer',expected_consumed=['explanation'],max_sentences=1),
+        dict(id='third-cancel-and-continue',user='End that calculation. Carry on with the explanation.',background=True,expected_route='cancel',expected_consumed=[]),
+        dict(id='third-silence-only',user='Just be silent now. Do not stop the number work.',background=True,expected_route='silence',expected_consumed=['explanation']),
     ]
 
 
@@ -34,13 +40,18 @@ def main():
         world=ReasoningWorld({},blocked_backend)
         if spec.get('background'):
             world.reserve('calculation');world.tasks['calculation'].update(operation='delegate_reasoning',phase='running')
-        context=[dict(role='user',text='Explain in four short sentences how a seed grows into a plant.'),dict(role='user',text=spec['user'])]
-        pending=[dict(id='explanation',request_text=context[0]['text'],text='A seed needs water, warmth, and oxygen to begin germination. The root emerges first. A shoot then grows upward. Leaves begin making food using sunlight.')]
+        context=[dict(role='user',text=spec.get('request','Explain in four short sentences how a seed grows into a plant.')),dict(role='user',text=spec['user'])]
+        pending=[dict(id='explanation',request_text=context[0]['text'],text=spec.get('prior_text','A seed needs water, warmth, and oxygen to begin germination. The root emerges first. A shoot then grows upward. Leaves begin making food using sunlight.'))]
         revision=world.reserve('current',context);row=dict(id=spec['id'],background_state_is_fixture=True)
         try:
             result=run_reasoning_worker(context,world,'current',executor.model_id,revision,'state-aware',pending,executor)
             passed=result['route']==spec['expected_route'] and result['consume_pending_speech_ids']==spec['expected_consumed']
             if spec['expected_route']=='silence':passed=passed and result['content']=='' and result['receipts']==[]
+            if spec['expected_route']=='answer':
+                repeated=result['content'].strip()==pending[0]['text'].strip()
+                sentences=len(re.findall(r'[.!?](?:\s|$)',result['content'])) or bool(result['content'])
+                row.update(prior_text_copied_exactly=repeated,spoken_word_count=len(result['content'].split()),sentence_count=sentences)
+                passed=passed and not repeated and (not spec.get('max_sentences') or sentences<=spec['max_sentences'])
             if spec.get('background'):passed=passed and world.tasks['calculation']['cancelled']==(spec['expected_route']=='cancel')
             row.update(execution_completed=True,action_contract_passed=passed,result=result)
         except Exception as error:

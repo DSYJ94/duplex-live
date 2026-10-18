@@ -66,6 +66,9 @@ class QwenResponseExecutor:
             resolve['description']='Reply AND explicitly finish, withdraw or supersede identified owed ordinary answers. The reply must answer that request, or the latest user must withdraw/supersede it. Cancelling a private lookup alone NEVER resolves unrelated ordinary speech.'
             resolve['parameters']['properties']['speech_ids']=dict(type='array',minItems=1,items=dict(type='string',enum=[p['id'] for p in state['pending_speech']]))
             resolve['parameters']['required'].append('speech_ids');result.append(resolve)
+            if state.get('domain')=='reasoning-development' and any(d['name']=='withdraw_speech' for d in definitions):
+                resolve['description']='REPLACE the identified older answer with a NEW answer to the complete LATEST user request. Use for a shorter version, first step or summary. It retires the old version and speaks the revised answer. This is not silent withdrawal.'
+                resolve['parameters']['properties']['content']['description']='New spoken answer matching the latest requested revision. If a shorter answer is requested, write that shorter answer; do not copy the full queued explanation.'
         if getattr(self,'compact_replies',False):
             aliases=[]
             for route in ('answer','clarify'):
@@ -120,7 +123,7 @@ class QwenResponseExecutor:
                 'If there is no matching active task, explain that there is nothing to cancel or ask which task; never say cancellation happened. '
                 'An ordinary answer does not execute an operation. Confirm a cancellation only through the actual cancel_reasoning action or its execution receipt. '
                 'Keep speech natural and concise, at most35 words. Never narrate internal IDs, task state or scheduling metadata. ')
-            if any(t['name']=='withdraw_speech' for t in payload['tools']):
+            if any(t['name']=='withdraw_speech' for t in payload.get('tools',[])):
                 instructions+=('Use withdraw_speech for an explicit request only to stop talking: retire the identified pending speech without another spoken reply. '
                     'Do not answer or repeat the withdrawn explanation. Stopping speech does not cancel unrelated background work. '
                     'Read the WHOLE latest request: stop followed by a request for a first step, summary or new answer requires that answer, never silence. '
@@ -142,6 +145,11 @@ class QwenResponseExecutor:
                 'A user asking to stop and replace an explanation with a shorter version supersedes the older long answer: give the revised answer through resolve_pending_speech. '
                 f'Cancelling a private lookup alone never resolves an unrelated ordinary answer; use {speech_answer} after that receipt and leave the client to resume it. '
                 'These are output actions only, not execution receipts. Never both answer an owed request now and leave it queued. ')
+            if domain=='reasoning-development' and any(t['name']=='withdraw_speech' for t in payload.get('tools',[])):
+                instructions+=(
+                    'Speech-control illustrations, NOT actual tasks or receipts: '
+                    "If the user says 'Enough of the long version; give its main point instead', choose resolve_pending_speech with a NEW shorter answer and the old speech ID. Silent withdrawal would leave the new request unanswered. "
+                    "If the user says 'End the calculation and carry on explaining', choose cancel_reasoning on the calculation with consume_pending_speech_ids=[]. A cancellation confirmation or promise to continue is not the explanation, so it cannot consume that explanation's ID. ")
         if self.prompt_profile=='contract-examples' and domain=='records':
             examples=CONTRACT_EXAMPLES
             if compact:examples=examples.replace('Choose respond_to_user\nwith route clarify and content','Choose clarify\nwith content')
