@@ -1,0 +1,22 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><title>Offline voice playback check</title>
+<pre id="result">Checking offline audio; no microphone or hardware playback…</pre>
+<script type="module">
+import { AudioPlayout } from './playout.js';
+const pcm = new Float32Array(1920).fill(.5);
+function packet(sequence) { const data = new ArrayBuffer(7688); new DataView(data).setUint32(0, 1, true); new DataView(data).setUint32(4, sequence, true); new Float32Array(data, 8).set(pcm); return data; }
+function largestStep(wave) { let largest = 0; for (let i = 1; i < wave.length; i++) largest = Math.max(largest, Math.abs(wave[i] - wave[i - 1])); return largest; }
+try {
+  const context = new OfflineAudioContext(1, 12000, 24000), receipts = [], player = new AudioPlayout(context, (row) => receipts.push(row));
+  player.append(packet(0)); player.append(packet(1)); const suspended = context.suspend(.2); const rendering = context.startRendering();
+  await suspended; const interruptedAt = context.currentTime; player.interrupt(1); await context.resume();
+  const rendered = (await rendering).getChannelData(0); const smoothStep = largestStep(rendered);
+  const abrupt = new OfflineAudioContext(1, 12000, 24000), buffer = abrupt.createBuffer(1, 1920, 24000); buffer.copyToChannel(pcm, 0);
+  const node = abrupt.createBufferSource(); node.buffer = buffer; node.connect(abrupt.destination); node.start(.16); node.stop(.2);
+  const abruptStep = largestStep((await abrupt.startRendering()).getChannelData(0));
+  const positive = rendered.some((value) => value > .4); const ended = rendered.slice(Math.ceil((interruptedAt + .01) * 24000)).every((value) => value === 0);
+  const passed = positive && ended && smoothStep < .01 && abruptStep === .5 && receipts.some((r) => r.interruption_fade_ms === 8);
+  document.getElementById('result').textContent = JSON.stringify({ passed, smoothMaximumSampleStep: smoothStep, abruptMaximumSampleStep: abruptStep,
+    interruptedAt, interruptionFadeMs: 8, exactSilenceAfterFade: ended, hardwareOutputUsed: false, microphoneUsed: false }, null, 2);
+  if (!passed) throw new Error('Offline gain-envelope check failed');
+} catch (error) { document.getElementById('result').textContent += '\nFAILED: ' + error.message; }
+</script></html>

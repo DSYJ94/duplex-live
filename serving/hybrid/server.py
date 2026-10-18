@@ -42,10 +42,10 @@ class Network:
     async def http(self,connection,request):
         path=urlsplit(request.path).path
         if path=='/ws':return None
-        files={'/':'index.html','/client.js':'client.js','/worklet.js':'worklet.js'}
+        files={'/':'index.html','/client.js':'client.js','/worklet.js':'worklet.js','/playout.js':'playout.js','/qa.html':'qa.html'}
         if path not in files:return connection.respond(HTTPStatus.NOT_FOUND,'Not found\n')
         body=(Path(__file__).parent/files[path]).read_text()
-        response=connection.respond(HTTPStatus.OK,body);del response.headers['Content-Type'];response.headers['Content-Type']='text/html; charset=utf-8' if path=='/' else 'text/javascript; charset=utf-8'
+        response=connection.respond(HTTPStatus.OK,body);del response.headers['Content-Type'];response.headers['Content-Type']='text/html; charset=utf-8' if path in ('/','/qa.html') else 'text/javascript; charset=utf-8'
         response.headers['Cache-Control']='no-store';response.headers['Referrer-Policy']='no-referrer';return response
     async def handler(self,ws):
         incoming=None;output=None;sender=None;future=None

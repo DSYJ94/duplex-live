@@ -42,7 +42,7 @@ def handler(token_file,upstream,port):
                     self.reply(200,body,'application/json')
                 except Exception:self.reply(503,b'Session access is unavailable.','text/plain')
                 return
-            if path not in ('/','/client.js','/worklet.js'):self.reply(404,b'Not found','text/plain');return
+            if path not in ('/','/client.js','/worklet.js','/playout.js','/qa.html'):self.reply(404,b'Not found','text/plain');return
             try:
                 with urllib.request.urlopen(upstream+path,timeout=5) as response:self.reply(200,response.read(),response.headers['Content-Type'])
             except (OSError,urllib.error.URLError):self.reply(503,b'The voice service is not connected.','text/plain')

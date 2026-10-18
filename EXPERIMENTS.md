@@ -4802,3 +4802,21 @@ explicitly delivery-only, not remote computation abortion. New026 generation
 7515617 and independent7515618 both user clips WER0/bounds valid. Next actual audio
 uses ZERO artificial delivery delay, so success cannot rely on holding a finished
 result for the old12-second test floor. Wrapper default remains12 for old probes.
+
+Plain words: no-delay actual cancellation7515675 completes026, live user WER0.0213.
+Actual cancel_reasoning targets only turn-1; the stronger request's late receipt
+is retained and discarded before speech. Only the shadow reply completes;
+independent7515676 WER0. Delivery floor0, so this does not rely on an artificial
+hold. The phrase 'stopped the counting task' refers to delivery cancellation;
+no remote execution abortion occurred or is claimed by the actual receipt.
+
+Plain words: browser renderer now uses one gain envelope per utterance:5ms start,
+8ms interruption fade, no gain reset at native PCM packet boundaries. Received
+PCM remains unchanged; browser gain is explicitly separate from server audio
+artifacts. This prevents an intentional abrupt stop in the renderer's design,
+not proof that model-level clicks or physical playback are solved. An offline
+browser-engine check is supplied at /qa.html without mic/device output. Automated
+browser QA could not run: iab/chrome providers unavailable, browser inventory
+empty, native computer-use pipe startup failed. Do not bypass that with another
+computer-control mechanism or claim browser/physical acceptance. Socket/auth/
+private-file tests and JavaScript syntax checks pass. Owner test remains pending.
