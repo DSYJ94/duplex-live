@@ -54,7 +54,9 @@ class QwenResponseExecutor:
         state=payload['local_worker_state']
         if state['dispatch_protocol'] not in ('required-action','state-aware'):raise RuntimeError('Unsupported local worker protocol')
         instructions=(
-            'You control a voice assistant. Choose exactly one provided function, including respond_to_user for an ordinary answer or clarification. '
+            'You control a voice assistant. Address ONLY the latest USER request in its chronological transcript. '
+            'Earlier user requests and active tasks are context, not repeated commands. Never repeat an older lookup just because its result has not been spoken. '
+            'Choose exactly one provided function, including respond_to_user for an ordinary answer or clarification. '
             'Return only the function call, never a preliminary plan or prose outside it. Answer simple general knowledge from your parameters. '
             'Private fields require an actual lookup; never infer a project from the available names. Ask for missing project or field identification. '
             'Honor negation and corrections. Use replace_lookup when an active lookup is corrected to a different user-identified project or field. '
@@ -65,7 +67,9 @@ class QwenResponseExecutor:
             instructions+=(
                 'Pending speech lists ordinary answers owed but not fully played; an unknown prefix may have been heard. '
                 'The client resumes each unless its ID is listed in consume_pending_speech_ids. Include an ID only when this reply fulfills '
-                'that exact ordinary request or the latest user explicitly withdraws it. Never both answer it and leave it queued. '
+                'that exact ordinary request or the latest user explicitly withdraws or supersedes it. Never both answer it and leave it queued. '
+                'A latest user instruction to stop and replace an explanation with a shorter version supersedes the older longer answer; '
+                'answer the revised request and consume its old pending speech ID so the old version does not resume. '
                 'Cancellation of a lookup alone does not cancel an unrelated ordinary answer. Pending speech is not a private receipt or user project identification. ')
         if self.prompt_profile=='contract-examples':instructions+=CONTRACT_EXAMPLES
         if state['dispatch_protocol']=='state-aware':
@@ -78,7 +82,8 @@ class QwenResponseExecutor:
                 "If the user says 'Cancel the lookup but finish the explanation', either leave [] so the client resumes it, "
                 "or include the actual explanation in this reply AND consume ['speech-demo']; never consume it with only a cancellation confirmation. "
                 "If the user explicitly says 'Do not finish the explanation', consuming ['speech-demo'] withdraws it. ")
-        instructions+='\nACTUAL client state: '+json.dumps(state)
+        compact=dict(state,available=dict(state['available'],tasks={k:{name:value for name,value in task.items() if name!='context'} for k,task in state['available']['tasks'].items()}))
+        instructions+='\nACTUAL client state (chronological transcript supplied separately): '+json.dumps(compact)
         prior=payload.get('previous_response_id');reply_only=payload.get('tool_choice')=='none'
         if prior:
             if prior not in self.history:raise RuntimeError('Unknown local previous-response context')
@@ -94,6 +99,10 @@ class QwenResponseExecutor:
                 if event.get('role') not in ('user','assistant') or not isinstance(event.get('text'),str):
                     raise RuntimeError('Unsupported chronological event; no transcript fallback is allowed')
                 messages.append(dict(role=event['role'],content=event['text']))
+        if not prior:
+            latest=next((event['text'] for event in reversed(context) if event['role']=='user'),None)
+            if latest is None:raise RuntimeError('No actual latest user request')
+            messages[0]['content']+='\nACTUAL latest USER request to address now: '+json.dumps(latest)
         if reply_only:
             schema=payload['text']['format']['schema']
             definitions=[dict(type='function',name='respond_to_user',
@@ -143,18 +152,30 @@ def main():
     ap.add_argument('--attention-backend',choices=('math','flash'),default='math')
     args=ap.parse_args();args.out.mkdir(parents=True,exist_ok=False)
     executor=QwenResponseExecutor(args.assets,device='cuda:0',attention_backend=args.attention_backend);results=[]
-    for row in fixtures():
+    rows=fixtures()+[
+        dict(id='ordinary-while-pending',records={'Oak Central':{'meeting room':'room seven'}},pending='Oak Central',kind='answer',
+             history=[dict(role='user',text='Please check the meeting room for Project Oak Central.')],
+             user='While you check, what does evaporation mean?'),
+        dict(id='superseded-ordinary-format',records={},kind='answer',
+             history=[dict(role='user',text='Explain in four sentences why seasons change.')],
+             user='Stop. Give me just the main reason in one short sentence.',
+             pending_speech=[dict(id='old-explanation',request_text='Explain in four sentences why seasons change.',
+                text="Seasons change because Earth is tilted. Sunlight strikes different latitudes at different angles. Daylight lengths change during the year. The hemispheres have opposite seasons.")]),
+    ]
+    for row in rows:
         world=RecordWorld(row['records'])
         if row.get('pending'):world.read('pending-oak',row['pending'],'meeting room')
         revision=world.reserve('current')
-        pending=[]
+        pending=row.get('pending_speech',[])
         if row['id']=='cancel':
             pending=[dict(id='ordinary',request_text='How many sides does a triangle have?',text='A triangle has three sides.')]
         try:
-            result=run_worker([dict(role='user',text=row['user'])],world,'current',model=executor.model_id,
+            result=run_worker(row.get('history',[])+[dict(role='user',text=row['user'])],world,'current',model=executor.model_id,
                 expected_revision=revision,dispatch_protocol='state-aware',pending_speech=pending,response_executor=executor)
             passed=result['route']==row['kind']
-            if row['id']=='cancel':passed=passed and result['consume_pending_speech_ids']==[]
+            if row['id'] in ('cancel','ordinary-while-pending'):passed=passed and result['consume_pending_speech_ids']==[]
+            if row['id']=='ordinary-while-pending':passed=passed and not result['receipts']
+            if row['id']=='superseded-ordinary-format':passed=passed and result['consume_pending_speech_ids']==['old-explanation']
             if row.get('replacement'):
                 passed=passed and world.tasks['pending-oak']['cancelled'] and world.tasks['current'].get('project')=='Pine Central'
             record=dict(id=row['id'],execution_completed=True,action_contract_passed=passed,result=result,world_tasks=world.tasks)
