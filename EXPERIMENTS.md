@@ -4356,3 +4356,13 @@ head2/class0>0.5 plus two nonlexical frames; it is not qualified conversation po
 No assistant audio, reference transcript, controller/backend or microphone enters
 this component. A successful recognition run would still leave continuous
 listening/speaking integration, cancellation and task-completion evaluation open.
+
+Plain words:before submitting ASR, source inspection found that standard LMGen
+replaces its offset0 input with initial tokens. Feeding real audio there would
+omit the first80ms from the temporal model. The explicit ASR protocol advances
+that single initial-only LM slot using initial IDs and zero actual PCM, then
+checks all32 actual user rows exactly at every temporal forward. Mimi itself
+receives no artificial prefix. Metadata records the virtual bootstrap separately.
+Two real-Moshi CPU regressions must reject the unbootstrapped first frame and
+accept every real frame across reset/bootstrap. These guards run before loading
+the full ASR checkpoint. No parameter, audio sample or reference label changes.

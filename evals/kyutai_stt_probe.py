@@ -17,6 +17,30 @@ from evals.kyutai_tts_compat import verified_overlay
 from evals.kyutai_tts_mimi_load import MIMI_SHA256,strict_mimi_loader
 
 
+def bootstrap(gen):
+    """Advance the initial-only LM slot without consuming actual user audio."""
+    state=gen._streaming_state;lm=gen.lm_model
+    if state.offset_cpu!=0 or bool((state.offsets!=0).any()) or lm.dep_q!=0 or any(lm.delays):
+        raise RuntimeError('ASR bootstrap requires a reset zero-delay text-only generator')
+    gen.step(lm._get_initial_token()[:,1:])
+
+
+def checked_step(gen,codes):
+    """Require every supplied user code to reach the actual temporal forward."""
+    import torch
+    state=gen._streaming_state;original=state.graphed_main;calls=0
+    def forward(value,*args):
+        nonlocal calls
+        if not torch.equal(value[:,1:],codes):
+            raise RuntimeError('Actual user frame was replaced before the ASR temporal forward')
+        calls+=1;return original(value,*args)
+    state.graphed_main=forward
+    try:result=gen.step_with_extra_heads(codes)
+    finally:state.graphed_main=original
+    if calls!=1:raise RuntimeError('Actual ASR frame did not execute exactly one temporal forward')
+    return result
+
+
 class StreamingListener:
     """One reusable frozen ASR runtime; returns raw causal tokens and head scores."""
     def __init__(self,assets_path,mimi_approval):
@@ -73,15 +97,16 @@ class StreamingListener:
 
     def reset(self):
         self.mimi.reset_streaming();self.gen.reset_streaming()
+        bootstrap(self.gen)
 
-    def step(self,pcm):
+    def step(self,pcm,verify_input=True):
         import numpy as np
         t=self.torch
         if pcm.shape!=(1920,) or pcm.dtype!=np.float32 or not np.isfinite(pcm).all():
             raise RuntimeError('ASR accepts one finite arrived 24kHz mono 80ms frame')
         codes=self.mimi.encode(t.from_numpy(pcm.copy()).view(1,1,-1).to('cuda'))
         if codes.shape!=(1,32,1):raise RuntimeError('Streaming codec changed its one-frame input clock')
-        result=self.gen.step_with_extra_heads(codes)
+        result=checked_step(self.gen,codes) if verify_input else self.gen.step_with_extra_heads(codes)
         if result is None:return dict(token=None,heads=None,codes=codes.detach().cpu())
         tokens,heads=result
         if len(heads)!=4 or any(v.shape!=(1,1,6) for v in heads):raise RuntimeError('Unexpected ASR end-of-turn head layout')
@@ -117,8 +142,8 @@ def run_case(listener,row,out):
     if rate!=24000 or pcm.shape[1]!=2 or not np.isfinite(pcm).all():raise RuntimeError('Invalid approved stereo source')
     user=pcm[:,1].copy();out.mkdir();sf.write(out/'input-user.wav',user,rate,subtype='FLOAT')
     warm=time.perf_counter()
-    for _ in range(20):listener.step(np.zeros(1920,dtype=np.float32))
-    warm_seconds=time.perf_counter()-warm;listener.reset()
+    for _ in range(20):listener.step(np.zeros(1920,dtype=np.float32),verify_input=False)
+    listener.reset();warm_seconds=time.perf_counter()-warm
     if listener.gen._streaming_state.graphed_main._graph is None:raise RuntimeError('Streaming ASR CUDA graph was not captured')
     real_frames=math.ceil(len(user)/1920);flush_frames=math.ceil(.5*12.5)
     padded=np.pad(user,(0,(real_frames+flush_frames)*1920-len(user)))
@@ -159,6 +184,7 @@ def run_case(listener,row,out):
         end_of_turn_events=endpoints,unended_text=listener.spm.decode(current),reference_user_events=expected,
         stream_tensor_sha256=sha256(file),reference_transcript_supplied=False,reference_read_after_generation=True,
         assistant_audio_supplied=False,causal_input_frame_end_clock=True,timestamps_are_availability_not_inferred_word_times=True,
+        initial_lm_bootstrap_virtual_frames=1,bootstrap_actual_audio_samples=0,all_live_user_rows_exact_at_temporal_forward=True,
         microphone_acceptance=False,duplex_system_qualified=False,training_approved=False,optimizer_steps=0)
     (out/'report.json').write_text(json.dumps(record,indent=2)+'\n');return record
 
