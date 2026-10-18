@@ -14,6 +14,7 @@ SOURCES=[('7520283','turn-1'),('7520293','turn-1'),('7520295','turn-2'),('752029
 def main():
     ap=argparse.ArgumentParser(description=__doc__)
     for name in ('runs','assets','kernel-assets','out'):ap.add_argument('--'+name,type=Path,required=True)
+    ap.add_argument('--same-process-control',action='store_true',help='Retain historical differences and require exact repeated original/candidate outputs within this model load')
     a=ap.parse_args();a.out.mkdir(parents=True,exist_ok=False)
     for variable,folder in [('TORCHINDUCTOR_CACHE_DIR','private-inductor-cache'),('TRITON_CACHE_DIR','private-triton-cache'),('CUDA_CACHE_PATH','private-cuda-cache')]:
         p=a.out/folder;p.mkdir();os.environ[variable]=str(p)
@@ -24,7 +25,7 @@ def main():
     warm_long_prefill(executor)
     from training.control.head_adapter import parameter_hashes
     params=dict(executor.model.named_parameters());before=parameter_hashes(params);versions={n:p._version for n,p in params.items()}
-    rows=[];compiled=None
+    rows=[];compiled=None;controls={}
     for mode in ('original','decode-norm-compiled'):
         if mode=='decode-norm-compiled':
             from evals.qwen35_decode_norm import install
@@ -36,8 +37,15 @@ def main():
                 try:
                     response=executor(copy.deepcopy(payload));r=response['local_inference']
                     comparisons=dict(action=r['native_model_action']==source['original_native_action'],input_tokens=r['input_tokens']==source['original_input_tokens'],raw_text=r['raw_text']==source['original_raw_text'],generated_tokens=r['generated_tokens']==source['original_generated_tokens'])
-                    exact=all(comparisons.values())
-                    row=dict(mode=mode,job=job,task=task,repeat=repeat,completed=True,actual_native_output_exact=exact,first_token_s=r['first_token_s'],controller_s=r['wall_s'],generated_tokens=r['generated_tokens'],source=source,response=response)
+                    historical_exact=all(comparisons.values());key=(job,task)
+                    if a.same_process_control:
+                        def identity(action):return dict(name=action['name'],arguments={k:v for k,v in action['arguments'].items() if k!='content'})
+                        if not comparisons['input_tokens'] or identity(r['native_model_action'])!=identity(source['original_native_action']):raise ValueError('Historical request length or non-content action/identity differs')
+                        if mode=='original' and repeat==0:controls[key]=copy.deepcopy(r)
+                        expected=controls[key]
+                        exact=all(r[k]==expected[k] for k in ('native_model_action','input_tokens','raw_text','generated_tokens'))
+                    else:exact=historical_exact
+                    row=dict(mode=mode,job=job,task=task,repeat=repeat,completed=True,actual_native_output_exact=exact,historical_native_output_exact=historical_exact,first_token_s=r['first_token_s'],controller_s=r['wall_s'],generated_tokens=r['generated_tokens'],source=source,response=response)
                     if mode=='original' and not exact:raise ValueError('Original native proposal failed exact reconstruction; comparison invalid')
                 except Exception as error:
                     row=dict(mode=mode,job=job,task=task,repeat=repeat,completed=False,error_type=type(error).__name__,message=str(error),evidence=getattr(error,'result',None),source=source,observed_response=response,comparisons=comparisons)
@@ -53,7 +61,7 @@ def main():
     ratios=[b['controller_s']/c['controller_s'] for b,c in zip(original,candidate) if c.get('completed') and c.get('actual_native_output_exact')]
     steady=[b['controller_s']/c['controller_s'] for b,c in zip(original,candidate) if b['repeat']==1 and c.get('completed') and c.get('actual_native_output_exact')]
     median=statistics.median(steady) if steady else None
-    report=dict(schema='dl-decode-norm-matched-profile-v1',component_execution_completed=len(rows)==20,source_load=executor.proof,warmup=executor.warmup,results=rows,compiled_norm=compiled,parameter_hashes_before=before,parameter_hashes_after=after,all_source_parameter_hashes_unchanged=True,parameter_versions_unchanged=True,all_candidate_native_outputs_exact=accepted,paired_speed_ratios=ratios,steady_paired_speed_ratios=steady,steady_median_speed_ratio=median,component_promotion_gate_passed=accepted and len(steady)==5 and median>=1.2,actual_external_requests=0,actions_dispatched=False,weights_changed=False,cache_replaced=False,optimizer_steps=0,do_not_train=True,physical_device_test=False,production_adopted=False,prototype_qualified=False,code_sha256=sha256(Path(__file__)))
+    report=dict(schema='dl-decode-norm-matched-profile-v1',component_execution_completed=len(rows)==20,same_process_control=a.same_process_control,historical_original_outputs_exact=all(r['historical_native_output_exact'] for r in original),source_load=executor.proof,warmup=executor.warmup,results=rows,compiled_norm=compiled,parameter_hashes_before=before,parameter_hashes_after=after,all_source_parameter_hashes_unchanged=True,parameter_versions_unchanged=True,all_candidate_native_outputs_exact=accepted,paired_speed_ratios=ratios,steady_paired_speed_ratios=steady,steady_median_speed_ratio=median,component_promotion_gate_passed=accepted and len(steady)==5 and median>=1.2,actual_external_requests=0,actions_dispatched=False,weights_changed=False,cache_replaced=False,optimizer_steps=0,do_not_train=True,physical_device_test=False,production_adopted=False,prototype_qualified=False,code_sha256=sha256(Path(__file__)))
     (a.out/'report.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(dict(completed=True,all_candidate_native_outputs_exact=accepted,paired_speed_ratios=ratios)),flush=True)
 
 if __name__=='__main__':main()

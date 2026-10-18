@@ -176,3 +176,35 @@ including the wrong49→50 replacement answer. The checkpoint and full records a
 preserved, but this ablation shows no behavioral gain. Do not promote or extend it
 unchanged. Proof: `function-name-training-integrity.json` in the continuation folder.
 No learned adapter is loaded in the repaired demo.
+
+## Additional native latency evidence and controlled execution experiment
+
+Plain words: The post-run native timing inventory binds all16 model reports,
+user stems, event logs and generated WAV hashes to the original user data. The
+original diagnostic user WAVs are PCM16; the verifier preserves their measured
+quantization error rather than claiming bit-exact float32 capture. Only original
+user boundaries are read after inference. On the six single-question scenes,
+first sustained recorded acoustic activity is4.07–4.52seconds after the last
+aligned user word. This activity threshold is two adjacent10ms RMS windows above
+0.003; it is not proof of intelligible or correct answer onset, physical hearing
+or microphone-to-ear latency. Fast per-frame compute does not establish fast
+response. Artifact: `native-latency-inventory.json` and `verify-native-latency.py`.
+
+Plain words: A separate process-local controller latency experiment compiles only
+stateless decoder RMS normalization for sequence length1; prefill, attention,
+recurrent state/cache, weights and reply validation stay unchanged. Whole-model
+compilation and CUDA graphs are disabled. The live demo is unchanged. Strict
+historical replays7520919/7520964 stop before installing the candidate: the frozen
+refrigerator answer changes air/interior wording despite the same925 input and85
+output tokens. Historical failures are retained. The second run saves the observed
+output and individual comparison fields; no speed or quality gain is inferred.
+
+Plain words: The explicit follow-up plan compares exact same-process controls.
+All five fixed saved requests still run twice before any change. Their original
+repeats must match each other exactly; input length and every non-content action
+identity must match the historical capture. The compiled path must then match
+those actual same-process outputs exactly on both repeats. All historical wording
+changes remain reported. At least1.2median speed ratio on the five second-repeat
+pairs, unchanged parameter hashes/versions and actual graph execution are required
+before even a voice regression. No deployment follows from a benchmark alone.
+Plan: `evals/fixtures/decode-normalization-control-plan-20261018.json`.
