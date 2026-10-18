@@ -64,7 +64,7 @@ def reasoning_receipts(receipts):
 
 
 def run_reasoning_worker(context,world,task_id,model,expected_revision,dispatch_protocol,pending_speech,response_executor,
-                         scope_read_tools=False,execution_observer=None,resumable_speech=None,bound_resume_target=False,allow_cancel_resume=False):
+                         scope_read_tools=False,execution_observer=None):
     if dispatch_protocol!='state-aware' or response_executor is None or scope_read_tools or execution_observer is not None:
         raise ValueError('Reasoning trial requires local state-aware control and no record-specific projection')
     latest=next((e['text'] for e in reversed(context) if e.get('role')=='user'),None)
@@ -79,11 +79,6 @@ def run_reasoning_worker(context,world,task_id,model,expected_revision,dispatch_
     if pending_speech:
         tools.append(tool('withdraw_speech','Stop WITHOUT ANY REPLY. Only for a request to stop or withdraw speech with no replacement answer requested. Do not choose this if the latest request also asks a question, a first step, a summary or another revised answer. Does not cancel background reasoning.',dict(
             speech_ids=dict(type='array',minItems=1,items=dict(type='string',enum=[p['id'] for p in pending_speech])))))
-    if resumable_speech is not None:
-        from evals.duplex_resume import validate_target
-        resumable_speech=validate_target(resumable_speech,pending_speech)
-        resume_parameters={} if bound_resume_target else dict(speech_id=dict(type='string',enum=[resumable_speech['speech_id']]),event_id=dict(type='string',enum=[resumable_speech['event_id']]))
-        tools.append(tool('resume_speech','Continue the identified PAUSED speech generator from its retained audio cursor, without any new words. Use when the user asks to carry on or acknowledges the explanation without requesting a change. Do not use for stop, a shorter version, a new answer or cancellation.',resume_parameters))
     active=[identity for identity,state in available['tasks'].items() if state.get('operation')=='delegate_reasoning']
     if active:
         consumption=dict(type='array',items=dict(type='string'))
@@ -92,12 +87,7 @@ def run_reasoning_worker(context,world,task_id,model,expected_revision,dispatch_
         tools.append(tool('cancel_reasoning','Stop delivery of identified active reasoning results, preserving unrelated work. Late API returns cannot be spoken. This does not abort an already executing remote request. content is spoken only after actual cancellation succeeds; confirm delivery cancellation honestly and answer an ordinary question if requested.',dict(
             task_ids=dict(type='array',minItems=1,items=dict(type='string',enum=active)),content=dict(type='string'),
             consume_pending_speech_ids=consumption)))
-    if allow_cancel_resume and resumable_speech is not None and active:
-        tools.append(tool('cancel_reasoning_and_resume_speech','Cancel delivery of identified active reasoning results AND continue the sole retained ordinary speech generator without any new words. Use when the user cancels background reasoning but asks to carry on the current explanation. Never cancel unrelated work or claim remote computation was aborted.',dict(resume_parameters,task_ids=dict(type='array',minItems=1,items=dict(type='string',enum=active)))))
     state=dict(available=available,pending_speech=pending_speech,dispatch_protocol=dispatch_protocol,domain='reasoning-development')
-    if resumable_speech is not None:
-        state['resumable_speech']=resumable_speech
-        if bound_resume_target:state['resume_action_protocol']='application-bound-single-retained-generator'
     from evals.duplex_speech_context import delivery_states
     deliveries=delivery_states(context)
     if deliveries:state['generated_speech_delivery']=deliveries
@@ -125,13 +115,6 @@ def run_reasoning_worker(context,world,task_id,model,expected_revision,dispatch_
         route='delegate';content=receipt['content'];receipts=[receipt];consumed=[]
     elif call['name']=='cancel_reasoning':
         receipt=world.cancel_delivery(arguments['task_ids']);route='cancel';content=arguments['content'];receipts=[receipt];consumed=arguments['consume_pending_speech_ids']
-    elif call['name']=='cancel_reasoning_and_resume_speech':
-        expected={} if bound_resume_target else resumable_speech
-        if not allow_cancel_resume or resumable_speech is None or set(arguments)!=set(expected)|{'task_ids'} or {k:v for k,v in arguments.items() if k!='task_ids'}!=expected:raise WorkerContractError('Cancel and resume lacks its actual retained generator',dict(response=response))
-        receipt=world.cancel_delivery(arguments['task_ids']);route='resume';content='';consumed=[];receipts=[receipt]
-    elif call['name']=='resume_speech':
-        if resumable_speech is None or arguments!=({} if bound_resume_target else resumable_speech):raise WorkerContractError('Resume action does not identify the actual retained generator',dict(response=response))
-        route='resume';content='';consumed=[];receipts=[]
     elif call['name']=='withdraw_speech':
         consumed=arguments.get('speech_ids')
         if (set(arguments)!={'speech_ids'} or not isinstance(consumed,list) or not consumed
@@ -142,12 +125,8 @@ def run_reasoning_worker(context,world,task_id,model,expected_revision,dispatch_
         # recording completion; no external operation/receipt is invented here.
         route='silence';content='';receipts=[]
     else:raise WorkerContractError('Unavailable reasoning action',dict(response=response))
-    if route not in ('silence','resume') and (not isinstance(content,str) or not content.strip()):raise WorkerContractError('Reasoning worker produced empty speech',dict(response=response))
+    if route!='silence' and (not isinstance(content,str) or not content.strip()):raise WorkerContractError('Reasoning worker produced empty speech',dict(response=response))
     if not isinstance(consumed,list) or len(set(consumed))!=len(consumed) or not set(consumed)<={p['id'] for p in pending_speech}:raise WorkerContractError('Unknown owed speech identity',dict(response=response))
-    result=dict(route=route,content=content,consume_pending_speech_ids=consumed,receipts=receipts,events=[event],task_id=task_id,
+    return dict(route=route,content=content,consume_pending_speech_ids=consumed,receipts=receipts,events=[event],task_id=task_id,
         speech_model_routing=False,final_response_route=route,dispatch_protocol=dispatch_protocol,response_provider=response_executor.provider_name,
         actual_reasoning_backend=receipts[0].get('model') if receipts else None,agent_actions_executed=False,cancellation_supported='delivery-only',remote_execution_abort_supported=False)
-    if route=='resume':
-        result['resume_target']=dict(resumable_speech)
-        if call['name']=='cancel_reasoning_and_resume_speech':result['resume_after_reasoning_cancellation']=True
-    return result
