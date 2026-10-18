@@ -101,7 +101,7 @@ class QwenResponseExecutor:
             if payload.get('tool_choice')!='required':raise RuntimeError('Local executor requires the explicit model-selected action protocol')
             definitions=sorted(payload['tools'],key=lambda f:f['name']!='respond_to_user')
         tools=[dict(type='function',function={k:v for k,v in f.items() if k not in ('type','strict')}) for f in definitions]
-        generation=self.generator.request(messages,tools)
+        generation=self.generator.request(messages,tools,assistant_prefill='<tool_call>\n')
         try:
             action=parse_action(generation['cleaned_text'])
             definition=next((d for d in definitions if d['name']==action['name']),None)

@@ -67,7 +67,7 @@ def parse_action(text):
 
 class Generator:
     def __init__(self,model,tokenizer):self.model=model;self.tokenizer=tokenizer
-    def request(self,messages,tools):
+    def request(self,messages,tools,assistant_prefill=""):
         import torch
         from transformers.generation.streamers import BaseStreamer
         clock=[];start=time.perf_counter()
@@ -78,13 +78,14 @@ class Generator:
                 clock.append(time.perf_counter()-start)
             def end(self):pass
         text=self.tokenizer.apply_chat_template(messages,tools=tools,tokenize=False,add_generation_prompt=True)
+        text+=assistant_prefill
         inputs=self.tokenizer(text,return_tensors='pt').to(self.model.device)
         if inputs['input_ids'].shape[1]>4096:raise RuntimeError('Bounded typed proof exceeded4096 input tokens')
         output=self.model.generate(**inputs,max_new_tokens=192,do_sample=False,streamer=Clock(),
             pad_token_id=self.tokenizer.pad_token_id,use_cache=True)
         generated=output[0,inputs['input_ids'].shape[1]:];torch.cuda.synchronize(self.model.device);wall=time.perf_counter()-start
         cleaned=self.tokenizer.decode(generated,skip_special_tokens=True).strip()
-        return dict(raw_text=self.tokenizer.decode(generated,skip_special_tokens=False),cleaned_text=cleaned,
+        return dict(raw_text=self.tokenizer.decode(generated,skip_special_tokens=False),assistant_prefill=assistant_prefill,cleaned_text=assistant_prefill+cleaned,
             input_tokens=inputs['input_ids'].shape[1],generated_tokens=len(generated),wall_s=wall,
             first_token_s=clock[0] if clock else None,token_availability_s=clock)
 

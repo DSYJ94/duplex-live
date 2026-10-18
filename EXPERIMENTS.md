@@ -4531,3 +4531,9 @@ Add explicit dummy speech-state illustrations to the LOCAL prompt only: cancella
 Plain words:CPU7512215 source2d9feb6 passes10 exact attention-mask comparisons (contexts8/250, lengths1/17/261, single/multiple/full query rows). Full37-frame cached head probability difference0 with the vectorized mask. Strict head loading unchanged. This proves numerical equivalence on declared probes, not audio behavior.
 
 Optional shadow comparison requires that exact proof and original2028 artifacts. Re-encode same arrived user/actually played assistant audio; assert source hashes and every archived continuous feature exactly equal, and probability differences<=1e-5. Preserve original versus optimized p95. No threshold selection, speech-control integration, publisher feature-parity or deployment claim. Default shadow implementation remains original. The unresolved weight-rights boundary still applies.
+
+## 2026-10-18 — actual multi-turn local format failure; generation-prefix variant prepared
+
+Plain words:strengthened typed7512224 passes8 reused cases including cancellation leaving unrelated owed speech intact. Broader TRAIN audio7512232 nevertheless fails on a rejected local function serialization. Actual multi-turn behavior remains unqualified; dependent speech audit was cancelled. New6-case2234 is a separate measurement, not acceptance. Preserve full raw failure before interpretation.
+
+Prepare an explicit generation prefix '<tool_call>\\n' for LOCAL action requests. This is supplied to the model BEFORE sampling; it selects no function, arguments, factual answer or pending IDs. Raw generated continuation and supplied prefix are recorded separately; parsing validates their concatenation strictly. No post-generation rewriting or prose-to-action repair. Default standalone typed baseline has empty prefix. Repeat actual worker and multi-turn audio tests; any reused new scenes become development evidence for the changed candidate.
