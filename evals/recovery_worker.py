@@ -256,6 +256,13 @@ def run_worker(context,world,task_id,model="gpt-6-luna",expected_revision=None,d
             if not calls:
                 raise WorkerContractError("Required execution phase returned no tool call",{"events":events,"plan":plan})
     receipts = []
+    def execute_operation(operation):
+        # Pair the notice atomically with real world execution; never hold this
+        # lock across a model request. The media observer only enqueues metadata.
+        with world.lock:
+            receipt=operation()
+            if execution_observer is not None:execution_observer(dict(task_id=task_id,call=call,receipt=receipt))
+            return receipt
     if calls:
         if len(calls) != 1:
             raise RuntimeError("Worker exceeded the single-task tool contract")
@@ -275,7 +282,7 @@ def run_worker(context,world,task_id,model="gpt-6-luna",expected_revision=None,d
                     or not project_identified_by_user(context,arguments.get('project',''))):
                 raise WorkerContractError('Replacement requires identified existing work and a user-identified project',
                     {'events':events,'arguments':arguments,'receipts':[]})
-            try:receipt=world.replace_lookup(task_id,expected_revision=expected_revision,**arguments)
+            try:receipt=execute_operation(lambda:world.replace_lookup(task_id,expected_revision=expected_revision,**arguments))
             except ValueError as error:
                 raise WorkerContractError('Replacement validation rejected; no partial replacement executed',
                     {'events':events,'arguments':arguments,'receipts':[],'tool_error':str(error)}) from error
@@ -284,7 +291,7 @@ def run_worker(context,world,task_id,model="gpt-6-luna",expected_revision=None,d
             if not project_identified_by_user(context, arguments["project"]):
                 raise WorkerContractError("Private project was not identified by the user", {"events":events,"arguments":arguments})
             try:
-                receipt = world.read(task_id,**arguments,expected_revision=expected_revision)
+                receipt = execute_operation(lambda:world.read(task_id,**arguments,expected_revision=expected_revision))
             except ValueError as error:
                 raise WorkerContractError('Private record request was rejected',
                     {'events':events,'arguments':arguments,'receipts':[],
@@ -297,7 +304,7 @@ def run_worker(context,world,task_id,model="gpt-6-luna",expected_revision=None,d
             if not isinstance(targets,list) or task_id in targets or any(t not in available["tasks"] for t in targets):
                 raise WorkerContractError("Cancellation must target existing work, not its own dispatch",{"events":events,"arguments":arguments})
             try:
-                receipt = world.cancel_many(targets)
+                receipt = execute_operation(lambda:world.cancel_many(targets))
             except ValueError as error:
                 raise WorkerContractError('Cancellation targets are no longer active',
                     {'events':events,'arguments':arguments,'receipts':[],
@@ -307,7 +314,6 @@ def run_worker(context,world,task_id,model="gpt-6-luna",expected_revision=None,d
             raise RuntimeError("Unknown backend tool")
         if direct_reply is None:
             receipts.append(receipt)
-            if execution_observer is not None:execution_observer(dict(task_id=task_id,call=call,receipt=receipt))
             response = request({**base,"tool_choice":"none","previous_response_id":response["id"],"input":[
                 {"type":"function_call_output","call_id":call["call_id"],"output":json.dumps(receipt)}]})
     content = " ".join(part["text"] for item in response["output"] if item["type"] == "message"

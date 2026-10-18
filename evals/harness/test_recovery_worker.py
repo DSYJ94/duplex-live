@@ -13,6 +13,9 @@ class RecordGuards(unittest.TestCase):
                 order.append('action')
                 return dict(id='read',status='completed',output=[dict(type='function_call',name='lookup_record',call_id='real-call',arguments=json.dumps(dict(project='Cedar',field='badge')))])
             order.append('reply')
+            import threading
+            other=threading.Thread(target=world.reserve,args=('other',));other.start();other.join(.2)
+            self.assertFalse(other.is_alive(),'World lock must not be held while a model formats its reply')
             return dict(id='reply',status='completed',output=[dict(type='message',content=[dict(type='output_text',text=json.dumps(dict(route='answer',content='The badge is violet triangle.')))])])
         def observe(event):order.append('executed');observed.append(event)
         result=run_worker([dict(role='user',text='Read the badge for Project Cedar.')],world,'current',model='local',
