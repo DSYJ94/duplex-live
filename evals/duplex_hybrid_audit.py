@@ -15,6 +15,7 @@ from evals.utterance_playout import render_utterances
 def main():
     ap=argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--run',type=Path,required=True);ap.add_argument('--out',type=Path,required=True)
+    ap.add_argument('--include-completed-cases-from-failed-suite',action='store_true')
     args=ap.parse_args()
     import numpy as np
     import soundfile as sf
@@ -22,10 +23,11 @@ def main():
     from scipy.signal import resample_poly
     from data.synthetic.filter import norm_words,wer
     report=json.loads((args.run/'report.json').read_text())
-    if (report['schema']!='dl-concurrent-hybrid-development-v1' or not report['component_execution_completed']
+    if (report['schema']!='dl-concurrent-hybrid-development-v1' or (not report['component_execution_completed'] and not args.include_completed_cases_from_failed_suite)
             or not report['same_process_same_gpu'] or report['hybrid_system_qualified'] is not False
             or any(c['reference_transcript_supplied'] for c in report['results'])):
         raise RuntimeError('Audit requires the explicit unqualified actual concurrent hybrid source')
+    if not report['results']:raise RuntimeError('No completed case is available for actual-played speech audit')
     args.out.mkdir(parents=True,exist_ok=False);model=whisper.load_model('turbo',device='cuda');results=[]
     for case in report['results']:
         folder=args.run/case['scenario'];audio,rate=sf.read(folder/'model.wav',dtype='float32')
@@ -64,7 +66,10 @@ def main():
                 cancelled_generated_material_excluded=True,task_qualified=False)
             (caseout/(identity+'-whisper.json')).write_text(json.dumps(result,indent=2)+'\n');results.append(row)
     audit=dict(schema='dl-concurrent-hybrid-speech-audit-v1',source_report_sha256=sha256(args.run/'report.json'),
-        results=results,actual_causal_playout_reproduced_exactly=True,independent_model='whisper turbo',
+        results=results,excluded_failed_cases=report.get('failures',[]),
+        explicitly_partial_suite_diagnostic=args.include_completed_cases_from_failed_suite,
+        source_suite_execution_completed=report['component_execution_completed'],
+        actual_causal_playout_reproduced_exactly=True,independent_model='whisper turbo',
         partial_utterance_wer_computed=False,hybrid_system_qualified=False,microphone_acceptance=False)
     (args.out/'report.json').write_text(json.dumps(audit,indent=2)+'\n');print(json.dumps(audit),flush=True)
 

@@ -46,9 +46,15 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy"):
     import soundfile as sf
     from data.synthetic.filter import norm_words,wer
     source,rate=sf.read(row['path'],dtype='float32',always_2d=True)
-    if rate!=24000 or source.shape[1]!=2 or not np.isfinite(source).all():raise RuntimeError('Invalid TRAIN PCM')
-    user=source[:,1].copy();out.mkdir();sf.write(out/'input-user.wav',user,rate,subtype='FLOAT')
-    world=RecordWorld(counterfactual_records(row['scenario_id']));context=[];policy=TurnEndpoint(listener.spm.decode)
+    if rate!=24000 or not np.isfinite(source).all():raise RuntimeError('Invalid source PCM')
+    if row['split']=='fresh-evaluation':
+        if source.shape[1]!=1:raise RuntimeError('Fresh evaluation expects user-only mono PCM')
+        user=source[:,0].copy()
+    else:
+        if source.shape[1]!=2:raise RuntimeError('Approved TRAIN input expects stereo PCM')
+        user=source[:,1].copy()
+    out.mkdir();sf.write(out/'input-user.wav',user,rate,subtype='FLOAT')
+    world=RecordWorld(row['world'] if row['split']=='fresh-evaluation' else counterfactual_records(row['scenario_id']));context=[];policy=TurnEndpoint(listener.spm.decode)
     listener.reset();speaker.stop();queue=[];futures={};held=[];packets=[];stops={};events=[];steps=[];backlogs=[]
     active=None;clock=None;spoken=[];asr_tokens=[];asr_events=[];utterance_count=0;generation_count=0
     # Tail allows an actual delayed result, a resumed answer and its PCM to finish.
@@ -172,9 +178,9 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy"):
         sf.write(out/(identity+'-generated.wav'),np.concatenate([p['pcm'] for p in packets if p['event_id']==identity]),rate,subtype='FLOAT')
     ledger=[{k:v for k,v in p.items() if k!='pcm'}|dict(samples=len(p['pcm'])) for p in packets]
     (out/'packets.json').write_text(json.dumps(ledger,indent=2)+'\n')
-    side=json.loads(Path(row['path']).with_suffix('.json').read_text());reference=' '.join(w['text'] for w in side['user_words'])
+    side=json.loads((Path(row['reference_path']) if row['split']=='fresh-evaluation' else Path(row['path']).with_suffix('.json')).read_text());reference=' '.join(w['text'] for w in side['user_words'])
     recognized=listener.spm.decode(asr_tokens)
-    report=dict(scenario=row['scenario_id'],source_split='train',source_wav_sha256=row['wav_sha256'],
+    report=dict(scenario=row['scenario_id'],source_split=row['split'],source_wav_sha256=row['wav_sha256'],
         user_pcm_sha256=hashlib.sha256(user.tobytes()).hexdigest(),recognized_text=recognized,
         reference_user_text=reference,recognition_wer=wer(norm_words(reference),norm_words(recognized)),
         reference_read_after_generation=True,reference_transcript_supplied=False,assistant_audio_supplied=False,
@@ -192,10 +198,17 @@ def main():
     ap=argparse.ArgumentParser(description=__doc__)
     for n in ('stt-assets','tts-assets','mimi-load-approval','data','out'):ap.add_argument('--'+n,type=Path,required=True)
     ap.add_argument('--scenario',action='append',required=True);ap.add_argument('--lookup-delay-s',type=float,default=12.)
+    ap.add_argument('--input-profile',choices=('approved-train','fresh-evaluation'),default='approved-train')
+    ap.add_argument('--input-quality',type=Path)
     ap.add_argument('--controller-protocol',choices=('legacy','required-action'),default='legacy')
     args=ap.parse_args()
     if not 0<=args.lookup_delay_s<=30:raise ValueError('Invalid bounded controlled delivery delay')
-    rows=selected_inputs(args.data,args.scenario);args.out.mkdir(parents=True,exist_ok=False)
+    if args.input_profile=='fresh-evaluation':
+        from evals.duplex_fresh_inputs import checked_cases
+        if args.input_quality is None:raise ValueError('Fresh evaluation requires a separate exact quality receipt')
+        rows=checked_cases(args.data,args.input_quality,args.scenario)
+    else:rows=selected_inputs(args.data,args.scenario)
+    args.out.mkdir(parents=True,exist_ok=False)
     listener=StreamingListener(args.stt_assets,args.mimi_load_approval)
     torch=listener.torch
     with listener.session():
@@ -205,15 +218,27 @@ def main():
         listener.reset()
         import numpy as np
         for _ in range(20):listener.step(np.zeros(1920,dtype=np.float32),verify_input=False)
-        results=[]
+        results=[];failures=[]
         try:
-            for row in rows:results.append(run_case(listener,speaker,row,args.out/row['scenario_id'],args.lookup_delay_s,args.controller_protocol))
+            for row in rows:
+                try:results.append(run_case(listener,speaker,row,args.out/row['scenario_id'],args.lookup_delay_s,args.controller_protocol))
+                except Exception as error:
+                    if args.input_profile!='fresh-evaluation':raise
+                    failure=dict(scenario=row['scenario_id'],error_type=type(error).__name__,message=str(error),
+                        case_execution_completed=False,hybrid_system_qualified=False)
+                    failures.append(failure)
+                    (args.out/row['scenario_id']/'failure.json').write_text(json.dumps(failure,indent=2)+'\n')
         finally:speaker.close()
-    report=dict(schema='dl-concurrent-hybrid-development-v1',component_execution_completed=True,results=results,
+    report=dict(schema='dl-concurrent-hybrid-development-v1',component_execution_completed=not failures,results=results,failures=failures,
+        component_code_sha256={name:sha256(Path(__file__).with_name(name)) for name in
+            ('recovery_worker.py','duplex_endpoint.py','duplex_speaker.py','kyutai_stt_probe.py')},
+        probe_code_sha256=sha256(Path(__file__)),
+        input_profile=args.input_profile,input_quality_sha256=sha256(args.input_quality) if args.input_quality else None,
         stt_assets_sha256=sha256(args.stt_assets),tts_assets_sha256=sha256(args.tts_assets),
         listener_loads=listener.loads,speaker_evidence=speaker.evidence,tts_warmup=warmup,
         same_process_same_gpu=True,external_controller='gpt-6-luna',native_model_reasoning=False,
-        paced_recorded_train_user_pcm=True,fresh_holdout=False,microphone_acceptance=False,
+        paced_recorded_train_user_pcm=args.input_profile=='approved-train',
+        fresh_holdout=args.input_profile=='fresh-evaluation',candidate_qualification_derived_from_execution=False,microphone_acceptance=False,
         native_model_qualified=False,hybrid_system_qualified=False,training_approved=False,optimizer_steps=0)
     (args.out/'report.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report),flush=True)
 
