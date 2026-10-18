@@ -3,9 +3,41 @@ import json
 from pathlib import Path
 import re
 import threading
+import time
 from evals.moshi_model_download import sha256
 from evals.qwen_response_executor import QwenResponseExecutor,validate
 from evals.qwen_controller_probe import Generator
+
+
+MTP_KEYS={
+    'mtp.fc.weight','mtp.norm.weight','mtp.pre_fc_norm_embedding.weight','mtp.pre_fc_norm_hidden.weight',
+    *('mtp.layers.0.'+name+'.weight' for name in (
+        'mlp.down_proj','mlp.gate_proj','mlp.up_proj','input_layernorm','post_attention_layernorm',
+        'self_attn.q_proj','self_attn.k_proj','self_attn.v_proj','self_attn.o_proj','self_attn.q_norm','self_attn.k_norm')),
+}
+
+
+def retain_published_auxiliary(model,weights):
+    """Retain all15 publisher MTP tensors as frozen storage, without running MTP.
+
+    The official conditional-generation implementation explicitly ignores ^mtp.*
+    during its normal load. We instead account for and retain these exact extra
+    tensors, then strict-load and compare the entire source inventory. This adds
+    no random inference weights and does not claim speculative MTP execution.
+    """
+    import torch
+    extra=set(weights)-set(model.state_dict())
+    if not extra:return []
+    if (type(model).__name__!='Qwen3_5ForConditionalGeneration' or extra!=MTP_KEYS
+            or '^mtp.*' not in model._keys_to_ignore_on_load_unexpected):
+        raise RuntimeError('Unaccounted non-core source tensors: '+str(extra))
+    for key in sorted(extra):
+        parts=key.split('.');parent=model
+        for name in parts[:-1]:
+            if name not in parent._modules:parent.add_module(name,torch.nn.Module())
+            parent=parent._modules[name]
+        parent.register_parameter(parts[-1],torch.nn.Parameter(weights[key],requires_grad=False))
+    return sorted(extra)
 
 
 def load_model(assets_path,device='cuda:0'):
@@ -37,6 +69,7 @@ def load_model(assets_path,device='cuda:0'):
         if set(weights)&set(loaded):raise RuntimeError('Duplicated source tensor')
         weights.update(loaded)
     if set(weights)!=set(index):raise RuntimeError('Model tensor inventory changed')
+    auxiliary=retain_published_auxiliary(model,weights)
     aliases={};expected=set(model.state_dict());extra=expected-set(weights)
     if extra:
         if (extra!={'lm_head.weight'} or not config.tie_word_embeddings or 'model.embed_tokens.weight' not in weights
@@ -52,6 +85,8 @@ def load_model(assets_path,device='cuda:0'):
     model.eval().requires_grad_(False).to(device);model.tie_weights();torch.cuda.synchronize(device)
     proof=dict(strict=True,all_source_tensors_exact_on_cpu_before_device_copy=True,source_tensor_count=len(index),
         model_state_tensor_count=len(state),explicit_true_tied_aliases=aliases,missing=[],unexpected=[],
+        declared_retained_unused_mtp_tensors=auxiliary,mtp_speculative_inference_executed=False,
+        core_model_tensor_count=len(state)-len(auxiliary),vision_weights_loaded_but_vision_inference_executed=False,
         model_parameters=sum(p.numel() for p in model.parameters()),trainable_parameters=sum(p.numel() for p in model.parameters() if p.requires_grad),
         load_seconds=time.perf_counter()-started,device=str(next(model.parameters()).device),dtype=str(next(model.parameters()).dtype),
         assets_sha256=sha256(assets_path),repo=assets['repo'],revision=assets['revision'])
