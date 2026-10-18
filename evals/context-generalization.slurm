@@ -19,14 +19,24 @@ set -a
 source "$DL/keys/openai.env"
 set +a
 EXTRA=()
+if [ -n "${CONTEXT_EXPECTED_UPDATES:-}" ]; then
+ [[ "$CONTEXT_EXPECTED_UPDATES" =~ ^[0-9]+$ ]]
+ EXTRA+=(--expected-updates "$CONTEXT_EXPECTED_UPDATES")
+fi
 if [ -n "${CONTEXT_CANDIDATE_JOB:-}" ]; then
  [[ "$CONTEXT_CANDIDATE_JOB" =~ ^[0-9]+$ ]]
  EXTRA+=(--candidate "$DL/runs/controller-context-$CONTEXT_CANDIDATE_JOB")
 fi
+MODULE=evals.context_generalization
+OUT_PREFIX=context-generalization
+if [ "${CONTEXT_FRESH_CONTROL:-0}" = 1 ]; then
+ MODULE=evals.context_fresh_control
+ OUT_PREFIX=context-fresh-control
+fi
 apptainer exec --nv --bind /projects,/lus,/home \
  --env PYTHONPATH="$DL/envs/moshi-rag-7379661/lib/python3.12/site-packages:$DL_TASK_SOURCE" \
  --env PYTHONDONTWRITEBYTECODE=1 --env OMP_NUM_THREADS=8 --env HF_HUB_OFFLINE=1 \
- "$DL/pytorch-new.sif" python -u -m evals.context_generalization "${EXTRA[@]}" \
+ "$DL/pytorch-new.sif" python -u -m "$MODULE" "${EXTRA[@]}" \
  --assets "$DL/runs/qwen35-controller-assets-7512612/assets.json" \
  --kernel-assets "$DL/runs/qwen35-kernel-assets-7513645" \
- --out "$DL/runs/context-generalization-${SLURM_JOB_ID}"
+ --out "$DL/runs/${OUT_PREFIX}-${SLURM_JOB_ID}"

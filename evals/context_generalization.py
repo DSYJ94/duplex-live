@@ -31,6 +31,7 @@ def main():
     for key in ('assets', 'kernel-assets', 'out'):
         ap.add_argument('--' + key, type=Path, required=True)
     ap.add_argument('--candidate', type=Path)
+    ap.add_argument('--expected-updates', type=int, default=324)
     a = ap.parse_args()
     from evals.moshi_model_download import sha256
     fixture = Path('evals/fixtures/context-generalization-20261018.json')
@@ -47,16 +48,8 @@ def main():
     before = parameter_hashes(source)
     candidate_proof = None
     if a.candidate:
-        from training.control.context_adapter import install, restore
-        proof = json.loads((a.candidate / 'restore-proof.json').read_text())
-        trained = json.loads((a.candidate / 'training-proof.json').read_text())
-        if (not proof['fresh_process_restore_passed'] or trained['optimizer_steps'] != 324 or trained['phase'] != 'full'
-                or proof['training_proof_sha256'] != sha256(a.candidate / 'training-proof.json')
-                or proof['adapter_weights_sha256'] != sha256(a.candidate / 'candidate-adapter/adapter.safetensors')):
-            raise ValueError('Requires actual full candidate restore proof')
-        adapters = install(executor.model)
-        restore(a.candidate / 'candidate-adapter', adapters, sha256(a.assets))
-        candidate_proof = dict(restore_proof_sha256=sha256(a.candidate / 'restore-proof.json'), adapter_weights_sha256=proof['adapter_weights_sha256'])
+        from evals.context_candidate import attach
+        candidate_proof = attach(executor, a.candidate, a.assets, a.expected_updates)
     from evals.duplex_reasoning_worker import ReasoningWorld, run_reasoning_worker, ask_reasoner
     from data.synthetic.filter import norm_words, _num2words
     attempts = 0

@@ -1,0 +1,809 @@
+{
+  "schema": "dl-context-fresh-controls-v1",
+  "declared_before_rehearsal_optimizer": true,
+  "training_approved": false,
+  "do_not_train": true,
+  "selection": "Fixed final rehearsal candidate only; no checkpoint selection",
+  "cases": [
+    {
+      "id": "fresh-control-v0-replace",
+      "pair_id": "fresh-pair-0",
+      "kind": "replace",
+      "family": "fresh-family-0",
+      "split": "evaluation-only",
+      "context": [
+        {
+          "role": "user",
+          "text": "Tell me how to store the sextant."
+        },
+        {
+          "role": "user",
+          "text": "That previous answer is no longer needed. Instead, answer 101 plus 8 with the number alone."
+        }
+      ],
+      "pending_speech": [
+        {
+          "id": "new-owed-0",
+          "request_text": "Tell me how to store the sextant.",
+          "text": "Put the sextant beside the cabinet. Keep it away from the edge."
+        }
+      ],
+      "active_calculations": [],
+      "resume_target": null,
+      "expected": {
+        "route": "answer",
+        "consumed": [
+          "new-owed-0"
+        ],
+        "cancelled": [],
+        "number": "109"
+      },
+      "synthetic_fixture": true,
+      "simulated_delivery_fields_are_not_real_speech": true,
+      "audio_generated": false
+    },
+    {
+      "id": "fresh-control-v0-preserve",
+      "pair_id": "fresh-pair-0",
+      "kind": "preserve",
+      "family": "fresh-family-0",
+      "split": "evaluation-only",
+      "context": [
+        {
+          "role": "user",
+          "text": "Tell me how to store the sextant."
+        },
+        {
+          "role": "user",
+          "text": "That previous answer is still needed later. Before it, answer 101 plus 8 with the number alone."
+        }
+      ],
+      "pending_speech": [
+        {
+          "id": "new-owed-0",
+          "request_text": "Tell me how to store the sextant.",
+          "text": "Put the sextant beside the cabinet. Keep it away from the edge."
+        }
+      ],
+      "active_calculations": [],
+      "resume_target": null,
+      "expected": {
+        "route": "answer",
+        "consumed": [],
+        "cancelled": [],
+        "number": "109"
+      },
+      "synthetic_fixture": true,
+      "simulated_delivery_fields_are_not_real_speech": true,
+      "audio_generated": false
+    },
+    {
+      "id": "fresh-control-v0-fulfill",
+      "pair_id": "fresh-pair-0",
+      "kind": "fulfill",
+      "family": "fresh-family-0",
+      "split": "evaluation-only",
+      "context": [
+        {
+          "role": "user",
+          "text": "Tell me how to store the sextant."
+        },
+        {
+          "role": "user",
+          "text": "Deliver your entire ready reply exactly as prepared."
+        }
+      ],
+      "pending_speech": [
+        {
+          "id": "new-owed-0",
+          "request_text": "Tell me how to store the sextant.",
+          "text": "Put the sextant beside the cabinet. Keep it away from the edge."
+        }
+      ],
+      "active_calculations": [],
+      "resume_target": null,
+      "expected": {
+        "route": "answer",
+        "consumed": [
+          "new-owed-0"
+        ],
+        "cancelled": [],
+        "exact_content": "Put the sextant beside the cabinet. Keep it away from the edge."
+      },
+      "synthetic_fixture": true,
+      "simulated_delivery_fields_are_not_real_speech": true,
+      "audio_generated": false
+    },
+    {
+      "id": "fresh-control-v0-withdraw",
+      "pair_id": "fresh-pair-0",
+      "kind": "withdraw",
+      "family": "fresh-family-0",
+      "split": "evaluation-only",
+      "context": [
+        {
+          "role": "user",
+          "text": "Tell me how to store the sextant."
+        },
+        {
+          "role": "user",
+          "text": "I want complete silence now. Drop the waiting answer."
+        }
+      ],
+      "pending_speech": [
+        {
+          "id": "new-owed-0",
+          "request_text": "Tell me how to store the sextant.",
+          "text": "Put the sextant beside the cabinet. Keep it away from the edge."
+        }
+      ],
+      "active_calculations": [],
+      "resume_target": null,
+      "expected": {
+        "route": "silence",
+        "consumed": [
+          "new-owed-0"
+        ],
+        "cancelled": [],
+        "exact_content": ""
+      },
+      "synthetic_fixture": true,
+      "simulated_delivery_fields_are_not_real_speech": true,
+      "audio_generated": false
+    },
+    {
+      "id": "fresh-control-v0-ordinary",
+      "pair_id": "fresh-pair-0",
+      "kind": "ordinary",
+      "family": "fresh-family-0",
+      "split": "evaluation-only",
+      "context": [
+        {
+          "role": "user",
+          "text": "Answer 101 plus 8 with the number alone."
+        }
+      ],
+      "pending_speech": [],
+      "active_calculations": [],
+      "resume_target": null,
+      "expected": {
+        "route": "answer",
+        "consumed": [],
+        "cancelled": [],
+        "number": "109"
+      },
+      "synthetic_fixture": true,
+      "simulated_delivery_fields_are_not_real_speech": true,
+      "audio_generated": false
+    },
+    {
+      "id": "fresh-control-v0-resume",
+      "pair_id": "fresh-pair-0",
+      "kind": "resume",
+      "family": "fresh-family-0",
+      "split": "evaluation-only",
+      "context": [
+        {
+          "role": "user",
+          "text": "Tell me how to store the sextant."
+        },
+        {
+          "role": "assistant",
+          "text": "Put the sextant beside the cabinet. Keep it away from the edge.",
+          "control_source": "actual-speech-generation",
+          "speech_task_id": "new-owed-0",
+          "first_speech_event_id": "fixture-fresh-generator",
+          "latest_speech_event_id": "fixture-fresh-generator",
+          "playback_segments": 1,
+          "speech_delivery": "generated-not-fully-played",
+          "physical_hearing_confirmed": false
+        },
+        {
+          "role": "user",
+          "text": "Pick up the paused explanation at its current place without starting it again."
+        }
+      ],
+      "pending_speech": [
+        {
+          "id": "new-owed-0",
+          "request_text": "Tell me how to store the sextant.",
+          "text": "Put the sextant beside the cabinet. Keep it away from the edge."
+        }
+      ],
+      "active_calculations": [],
+      "resume_target": {
+        "speech_id": "new-owed-0",
+        "event_id": "fixture-fresh-generator"
+      },
+      "expected": {
+        "route": "resume",
+        "consumed": [],
+        "cancelled": [],
+        "exact_content": ""
+      },
+      "synthetic_fixture": true,
+      "simulated_delivery_fields_are_not_real_speech": true,
+      "audio_generated": false
+    },
+    {
+      "id": "fresh-control-v0-cancel-resume",
+      "pair_id": "fresh-pair-0",
+      "kind": "cancel-resume",
+      "family": "fresh-family-0",
+      "split": "evaluation-only",
+      "context": [
+        {
+          "role": "user",
+          "text": "Tell me how to store the sextant."
+        },
+        {
+          "role": "assistant",
+          "text": "Put the sextant beside the cabinet. Keep it away from the edge.",
+          "control_source": "actual-speech-generation",
+          "speech_task_id": "new-owed-0",
+          "first_speech_event_id": "fixture-fresh-generator",
+          "latest_speech_event_id": "fixture-fresh-generator",
+          "playback_segments": 1,
+          "speech_delivery": "generated-not-fully-played",
+          "physical_hearing_confirmed": false
+        },
+        {
+          "role": "user",
+          "text": "Withdraw delivery of the background result, and pick up your paused explanation at its current place."
+        }
+      ],
+      "pending_speech": [
+        {
+          "id": "new-owed-0",
+          "request_text": "Tell me how to store the sextant.",
+          "text": "Put the sextant beside the cabinet. Keep it away from the edge."
+        }
+      ],
+      "active_calculations": [
+        "new-job-amber-0"
+      ],
+      "resume_target": {
+        "speech_id": "new-owed-0",
+        "event_id": "fixture-fresh-generator"
+      },
+      "expected": {
+        "route": "resume",
+        "consumed": [],
+        "cancelled": [
+          "new-job-amber-0"
+        ],
+        "exact_content": ""
+      },
+      "synthetic_fixture": true,
+      "simulated_delivery_fields_are_not_real_speech": true,
+      "audio_generated": false
+    },
+    {
+      "id": "fresh-control-v0-delegate",
+      "pair_id": "fresh-pair-0",
+      "kind": "delegate",
+      "family": "fresh-family-0",
+      "split": "evaluation-only",
+      "context": [
+        {
+          "role": "user",
+          "text": "Count all subsets of the eighteen distinct numbers [23, 27, 31, 35, 39, 43, 47, 51, 55, 59, 63, 67, 71, 75, 79, 83, 87, 91] that sum to 197. Use each number at most once. Give only the count."
+        }
+      ],
+      "pending_speech": [],
+      "active_calculations": [],
+      "resume_target": null,
+      "expected": {
+        "native_function": "delegate_reasoning",
+        "zero_arguments": true
+      },
+      "synthetic_fixture": true,
+      "simulated_delivery_fields_are_not_real_speech": true,
+      "audio_generated": false
+    },
+    {
+      "id": "fresh-control-v0-clarify",
+      "pair_id": "fresh-pair-0",
+      "kind": "clarify",
+      "family": "fresh-family-0",
+      "split": "evaluation-only",
+      "context": [
+        {
+          "role": "user",
+          "text": "I want one of the two results withdrawn, but have not identified it. Ask me which before doing anything."
+        }
+      ],
+      "pending_speech": [],
+      "active_calculations": [
+        "new-job-amber-0",
+        "new-job-violet-0"
+      ],
+      "resume_target": null,
+      "expected": {
+        "route": "clarify",
+        "consumed": [],
+        "cancelled": [],
+        "question_required": true
+      },
+      "synthetic_fixture": true,
+      "simulated_delivery_fields_are_not_real_speech": true,
+      "audio_generated": false
+    },
+    {
+      "id": "fresh-control-v0-cancel-one",
+      "pair_id": "fresh-pair-0",
+      "kind": "cancel-one",
+      "family": "fresh-family-0",
+      "split": "evaluation-only",
+      "context": [
+        {
+          "role": "user",
+          "text": "Tell me how to store the sextant."
+        },
+        {
+          "role": "user",
+          "text": "Withdraw delivery of new-job-amber-0, keep new-job-violet-0 running, and tell me only that the selected delivery was cancelled."
+        }
+      ],
+      "pending_speech": [
+        {
+          "id": "new-owed-0",
+          "request_text": "Tell me how to store the sextant.",
+          "text": "Put the sextant beside the cabinet. Keep it away from the edge."
+        }
+      ],
+      "active_calculations": [
+        "new-job-amber-0",
+        "new-job-violet-0"
+      ],
+      "resume_target": null,
+      "expected": {
+        "route": "cancel",
+        "consumed": [],
+        "cancelled": [
+          "new-job-amber-0"
+        ]
+      },
+      "synthetic_fixture": true,
+      "simulated_delivery_fields_are_not_real_speech": true,
+      "audio_generated": false
+    },
+    {
+      "id": "fresh-control-v0-last",
+      "pair_id": "fresh-pair-0",
+      "kind": "last",
+      "family": "fresh-family-0",
+      "split": "evaluation-only",
+      "context": [
+        {
+          "role": "user",
+          "text": "Tell me how to store the sextant."
+        },
+        {
+          "role": "user",
+          "text": "Deliver only the final sentence of that ready reply, then discard the rest."
+        }
+      ],
+      "pending_speech": [
+        {
+          "id": "new-owed-0",
+          "request_text": "Tell me how to store the sextant.",
+          "text": "Put the sextant beside the cabinet. Keep it away from the edge."
+        }
+      ],
+      "active_calculations": [],
+      "resume_target": null,
+      "expected": {
+        "route": "answer",
+        "consumed": [
+          "new-owed-0"
+        ],
+        "cancelled": [],
+        "exact_content": "Keep it away from the edge."
+      },
+      "synthetic_fixture": true,
+      "simulated_delivery_fields_are_not_real_speech": true,
+      "audio_generated": false
+    },
+    {
+      "id": "fresh-control-v1-replace",
+      "pair_id": "fresh-pair-1",
+      "kind": "replace",
+      "family": "fresh-family-1",
+      "split": "evaluation-only",
+      "context": [
+        {
+          "role": "user",
+          "text": "Tell me how to store the tapestry."
+        },
+        {
+          "role": "user",
+          "text": "That previous answer is no longer needed. Instead, answer 96 plus 7 with the number alone."
+        }
+      ],
+      "pending_speech": [
+        {
+          "id": "new-owed-1",
+          "request_text": "Tell me how to store the tapestry.",
+          "text": "Put the tapestry beside the cabinet. Keep it away from the edge."
+        }
+      ],
+      "active_calculations": [],
+      "resume_target": null,
+      "expected": {
+        "route": "answer",
+        "consumed": [
+          "new-owed-1"
+        ],
+        "cancelled": [],
+        "number": "103"
+      },
+      "synthetic_fixture": true,
+      "simulated_delivery_fields_are_not_real_speech": true,
+      "audio_generated": false
+    },
+    {
+      "id": "fresh-control-v1-preserve",
+      "pair_id": "fresh-pair-1",
+      "kind": "preserve",
+      "family": "fresh-family-1",
+      "split": "evaluation-only",
+      "context": [
+        {
+          "role": "user",
+          "text": "Tell me how to store the tapestry."
+        },
+        {
+          "role": "user",
+          "text": "That previous answer is still needed later. Before it, answer 96 plus 7 with the number alone."
+        }
+      ],
+      "pending_speech": [
+        {
+          "id": "new-owed-1",
+          "request_text": "Tell me how to store the tapestry.",
+          "text": "Put the tapestry beside the cabinet. Keep it away from the edge."
+        }
+      ],
+      "active_calculations": [],
+      "resume_target": null,
+      "expected": {
+        "route": "answer",
+        "consumed": [],
+        "cancelled": [],
+        "number": "103"
+      },
+      "synthetic_fixture": true,
+      "simulated_delivery_fields_are_not_real_speech": true,
+      "audio_generated": false
+    },
+    {
+      "id": "fresh-control-v1-fulfill",
+      "pair_id": "fresh-pair-1",
+      "kind": "fulfill",
+      "family": "fresh-family-1",
+      "split": "evaluation-only",
+      "context": [
+        {
+          "role": "user",
+          "text": "Tell me how to store the tapestry."
+        },
+        {
+          "role": "user",
+          "text": "Deliver your entire ready reply exactly as prepared."
+        }
+      ],
+      "pending_speech": [
+        {
+          "id": "new-owed-1",
+          "request_text": "Tell me how to store the tapestry.",
+          "text": "Put the tapestry beside the cabinet. Keep it away from the edge."
+        }
+      ],
+      "active_calculations": [],
+      "resume_target": null,
+      "expected": {
+        "route": "answer",
+        "consumed": [
+          "new-owed-1"
+        ],
+        "cancelled": [],
+        "exact_content": "Put the tapestry beside the cabinet. Keep it away from the edge."
+      },
+      "synthetic_fixture": true,
+      "simulated_delivery_fields_are_not_real_speech": true,
+      "audio_generated": false
+    },
+    {
+      "id": "fresh-control-v1-withdraw",
+      "pair_id": "fresh-pair-1",
+      "kind": "withdraw",
+      "family": "fresh-family-1",
+      "split": "evaluation-only",
+      "context": [
+        {
+          "role": "user",
+          "text": "Tell me how to store the tapestry."
+        },
+        {
+          "role": "user",
+          "text": "I want complete silence now. Drop the waiting answer."
+        }
+      ],
+      "pending_speech": [
+        {
+          "id": "new-owed-1",
+          "request_text": "Tell me how to store the tapestry.",
+          "text": "Put the tapestry beside the cabinet. Keep it away from the edge."
+        }
+      ],
+      "active_calculations": [],
+      "resume_target": null,
+      "expected": {
+        "route": "silence",
+        "consumed": [
+          "new-owed-1"
+        ],
+        "cancelled": [],
+        "exact_content": ""
+      },
+      "synthetic_fixture": true,
+      "simulated_delivery_fields_are_not_real_speech": true,
+      "audio_generated": false
+    },
+    {
+      "id": "fresh-control-v1-ordinary",
+      "pair_id": "fresh-pair-1",
+      "kind": "ordinary",
+      "family": "fresh-family-1",
+      "split": "evaluation-only",
+      "context": [
+        {
+          "role": "user",
+          "text": "Answer 96 plus 7 with the number alone."
+        }
+      ],
+      "pending_speech": [],
+      "active_calculations": [],
+      "resume_target": null,
+      "expected": {
+        "route": "answer",
+        "consumed": [],
+        "cancelled": [],
+        "number": "103"
+      },
+      "synthetic_fixture": true,
+      "simulated_delivery_fields_are_not_real_speech": true,
+      "audio_generated": false
+    },
+    {
+      "id": "fresh-control-v1-resume",
+      "pair_id": "fresh-pair-1",
+      "kind": "resume",
+      "family": "fresh-family-1",
+      "split": "evaluation-only",
+      "context": [
+        {
+          "role": "user",
+          "text": "Tell me how to store the tapestry."
+        },
+        {
+          "role": "assistant",
+          "text": "Put the tapestry beside the cabinet. Keep it away from the edge.",
+          "control_source": "actual-speech-generation",
+          "speech_task_id": "new-owed-1",
+          "first_speech_event_id": "fixture-fresh-generator",
+          "latest_speech_event_id": "fixture-fresh-generator",
+          "playback_segments": 1,
+          "speech_delivery": "generated-not-fully-played",
+          "physical_hearing_confirmed": false
+        },
+        {
+          "role": "user",
+          "text": "Pick up the paused explanation at its current place without starting it again."
+        }
+      ],
+      "pending_speech": [
+        {
+          "id": "new-owed-1",
+          "request_text": "Tell me how to store the tapestry.",
+          "text": "Put the tapestry beside the cabinet. Keep it away from the edge."
+        }
+      ],
+      "active_calculations": [],
+      "resume_target": {
+        "speech_id": "new-owed-1",
+        "event_id": "fixture-fresh-generator"
+      },
+      "expected": {
+        "route": "resume",
+        "consumed": [],
+        "cancelled": [],
+        "exact_content": ""
+      },
+      "synthetic_fixture": true,
+      "simulated_delivery_fields_are_not_real_speech": true,
+      "audio_generated": false
+    },
+    {
+      "id": "fresh-control-v1-cancel-resume",
+      "pair_id": "fresh-pair-1",
+      "kind": "cancel-resume",
+      "family": "fresh-family-1",
+      "split": "evaluation-only",
+      "context": [
+        {
+          "role": "user",
+          "text": "Tell me how to store the tapestry."
+        },
+        {
+          "role": "assistant",
+          "text": "Put the tapestry beside the cabinet. Keep it away from the edge.",
+          "control_source": "actual-speech-generation",
+          "speech_task_id": "new-owed-1",
+          "first_speech_event_id": "fixture-fresh-generator",
+          "latest_speech_event_id": "fixture-fresh-generator",
+          "playback_segments": 1,
+          "speech_delivery": "generated-not-fully-played",
+          "physical_hearing_confirmed": false
+        },
+        {
+          "role": "user",
+          "text": "Withdraw delivery of the background result, and pick up your paused explanation at its current place."
+        }
+      ],
+      "pending_speech": [
+        {
+          "id": "new-owed-1",
+          "request_text": "Tell me how to store the tapestry.",
+          "text": "Put the tapestry beside the cabinet. Keep it away from the edge."
+        }
+      ],
+      "active_calculations": [
+        "new-job-amber-1"
+      ],
+      "resume_target": {
+        "speech_id": "new-owed-1",
+        "event_id": "fixture-fresh-generator"
+      },
+      "expected": {
+        "route": "resume",
+        "consumed": [],
+        "cancelled": [
+          "new-job-amber-1"
+        ],
+        "exact_content": ""
+      },
+      "synthetic_fixture": true,
+      "simulated_delivery_fields_are_not_real_speech": true,
+      "audio_generated": false
+    },
+    {
+      "id": "fresh-control-v1-delegate",
+      "pair_id": "fresh-pair-1",
+      "kind": "delegate",
+      "family": "fresh-family-1",
+      "split": "evaluation-only",
+      "context": [
+        {
+          "role": "user",
+          "text": "Count all subsets of the eighteen distinct numbers [24, 28, 32, 36, 40, 44, 48, 52, 56, 60, 64, 68, 72, 76, 80, 84, 88, 92] that sum to 204. Use each number at most once. Give only the count."
+        }
+      ],
+      "pending_speech": [],
+      "active_calculations": [],
+      "resume_target": null,
+      "expected": {
+        "native_function": "delegate_reasoning",
+        "zero_arguments": true
+      },
+      "synthetic_fixture": true,
+      "simulated_delivery_fields_are_not_real_speech": true,
+      "audio_generated": false
+    },
+    {
+      "id": "fresh-control-v1-clarify",
+      "pair_id": "fresh-pair-1",
+      "kind": "clarify",
+      "family": "fresh-family-1",
+      "split": "evaluation-only",
+      "context": [
+        {
+          "role": "user",
+          "text": "I want one of the two results withdrawn, but have not identified it. Ask me which before doing anything."
+        }
+      ],
+      "pending_speech": [],
+      "active_calculations": [
+        "new-job-amber-1",
+        "new-job-violet-1"
+      ],
+      "resume_target": null,
+      "expected": {
+        "route": "clarify",
+        "consumed": [],
+        "cancelled": [],
+        "question_required": true
+      },
+      "synthetic_fixture": true,
+      "simulated_delivery_fields_are_not_real_speech": true,
+      "audio_generated": false
+    },
+    {
+      "id": "fresh-control-v1-cancel-one",
+      "pair_id": "fresh-pair-1",
+      "kind": "cancel-one",
+      "family": "fresh-family-1",
+      "split": "evaluation-only",
+      "context": [
+        {
+          "role": "user",
+          "text": "Tell me how to store the tapestry."
+        },
+        {
+          "role": "user",
+          "text": "Withdraw delivery of new-job-amber-1, keep new-job-violet-1 running, and tell me only that the selected delivery was cancelled."
+        }
+      ],
+      "pending_speech": [
+        {
+          "id": "new-owed-1",
+          "request_text": "Tell me how to store the tapestry.",
+          "text": "Put the tapestry beside the cabinet. Keep it away from the edge."
+        }
+      ],
+      "active_calculations": [
+        "new-job-amber-1",
+        "new-job-violet-1"
+      ],
+      "resume_target": null,
+      "expected": {
+        "route": "cancel",
+        "consumed": [],
+        "cancelled": [
+          "new-job-amber-1"
+        ]
+      },
+      "synthetic_fixture": true,
+      "simulated_delivery_fields_are_not_real_speech": true,
+      "audio_generated": false
+    },
+    {
+      "id": "fresh-control-v1-last",
+      "pair_id": "fresh-pair-1",
+      "kind": "last",
+      "family": "fresh-family-1",
+      "split": "evaluation-only",
+      "context": [
+        {
+          "role": "user",
+          "text": "Tell me how to store the tapestry."
+        },
+        {
+          "role": "user",
+          "text": "Deliver only the final sentence of that ready reply, then discard the rest."
+        }
+      ],
+      "pending_speech": [
+        {
+          "id": "new-owed-1",
+          "request_text": "Tell me how to store the tapestry.",
+          "text": "Put the tapestry beside the cabinet. Keep it away from the edge."
+        }
+      ],
+      "active_calculations": [],
+      "resume_target": null,
+      "expected": {
+        "route": "answer",
+        "consumed": [
+          "new-owed-1"
+        ],
+        "cancelled": [],
+        "exact_content": "Keep it away from the edge."
+      },
+      "synthetic_fixture": true,
+      "simulated_delivery_fields_are_not_real_speech": true,
+      "audio_generated": false
+    }
+  ]
+}

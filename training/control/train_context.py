@@ -59,7 +59,8 @@ def encode(row, tokenizer):
     target = tokenizer.encode(suffix, add_special_tokens=False) + [tokenizer.eos_token_id]
     if not prefix or not target or len(prefix + target) > 4096:
         raise ValueError('Training token bounds exceeded')
-    return dict(id=row['id'], kind=row['kind'], inputs=(prefix + target)[:-1], targets=target, prefix_tokens=len(prefix))
+    return dict(id=row['id'], kind=row['kind'], corpus=row.get('train_corpus', 'paired'),
+                inputs=(prefix + target)[:-1], targets=target, prefix_tokens=len(prefix))
 
 
 def logits(model, example):
@@ -88,14 +89,15 @@ def optimizer_for(adapters):
     return torch.optim.AdamW(list(adapters.values()), lr=2e-5, weight_decay=0.)
 
 
-def validate_preflight(folder, assets_sha, implementation):
+def validate_preflight(folder, assets_sha, implementation, recipe):
     from training.control.context_adapter import sha
     folder = Path(folder)
     trained = json.loads((folder / 'training-proof.json').read_text())
     restored = json.loads((folder / 'restore-proof.json').read_text())
-    if (trained['phase'] != 'preflight' or trained['optimizer_steps'] != 9 or not restored['fresh_process_restore_passed']
+    updates = json.loads(Path(recipe).read_text()).get('preflight_updates', 9)
+    if (trained['phase'] != 'preflight' or trained['optimizer_steps'] != updates or not restored['fresh_process_restore_passed']
             or trained['pid'] == restored['pid'] or trained['base_assets_sha256'] != assets_sha
-            or trained['plan_sha256'] != sha(PLAN) or trained['implementation_sha256'] != implementation
+            or trained['plan_sha256'] != sha(recipe) or trained['implementation_sha256'] != implementation
             or restored['training_proof_sha256'] != sha(folder / 'training-proof.json')
             or restored['training_state_sha256'] != sha(folder / 'candidate-adapter/training-state.pt')
             or restored['adapter_weights_sha256'] != sha(folder / 'candidate-adapter/adapter.safetensors')
@@ -111,6 +113,8 @@ def main():
         p.add_argument('--' + key, type=Path, required=True)
     p.add_argument('--phase', choices=('preflight', 'full'), required=True)
     p.add_argument('--preflight', type=Path)
+    p.add_argument('--recipe', type=Path, default=PLAN)
+    p.add_argument('--rehearsal-data', type=Path)
     p.add_argument('--restore-only', action='store_true')
     a = p.parse_args()
     from training.control.paired_data import verify
@@ -118,8 +122,20 @@ def main():
     rows, heldout, manifest = verify(a.data)
     if sha(a.data / 'manifest.json') != DATA_SHA or len(rows) != 108 or len(heldout) != 54:
         raise ValueError('Requires the complete approved paired corpus')
-    plan = json.loads(PLAN.read_text())
-    if plan['teacher_manifest_sha256'] != DATA_SHA or plan['fixed_full_budget_updates'] != 324:
+    plan = json.loads(a.recipe.read_text())
+    rehearsal_sha = None
+    if a.rehearsal_data:
+        from training.control.verified_data import verified_data
+        replay, old_heldout, _ = verified_data(a.rehearsal_data)
+        rehearsal_sha = sha(a.rehearsal_data / 'manifest.json')
+        if rehearsal_sha != plan.get('rehearsal_manifest_sha256') or len(replay) != 216 or len(old_heldout) != 72:
+            raise ValueError('Missing exact approved current-compiler rehearsal corpus')
+        scenes = {s['id']: s for s in json.loads((a.rehearsal_data / 'scenes.json').read_text())}
+        rows = [dict(r, train_corpus='paired') for r in rows] + [dict(r, kind=scenes[r['id']]['kind'], train_corpus='rehearsal') for r in replay]
+    elif plan.get('rehearsal_manifest_sha256'):
+        raise ValueError('Declared rehearsal corpus is required')
+    if (plan['teacher_manifest_sha256'] != DATA_SHA or len(rows) != plan['training_rows'] or plan['epochs'] != 3
+            or len(rows) * plan['epochs'] != plan['fixed_full_budget_updates'] or len({r['id'] for r in rows}) != len(rows)):
         raise ValueError('Changed predeclared recipe')
     implementation = {f: sha(f) for f in ('training/control/context_adapter.py', 'training/control/train_context.py', 'training/control/context_evaluate.py')}
     assets_sha = sha(a.assets)
@@ -127,7 +143,7 @@ def main():
     if a.phase == 'full':
         if a.preflight is None:
             raise ValueError('Full run requires completed preflight')
-        preflight_proof = validate_preflight(a.preflight, assets_sha, implementation)
+        preflight_proof = validate_preflight(a.preflight, assets_sha, implementation, a.recipe)
     if not a.restore_only:
         a.out.mkdir(parents=True, exist_ok=False)
     from evals.qwen35_controller import Qwen35ResponseExecutor
@@ -148,10 +164,15 @@ def main():
     before = parameter_hashes(source)
     examples = [encode(r, executor.tokenizer) for r in rows]
     from training.control.paired_curriculum import KINDS
-    probes = [next(e for e in examples if e['kind'] == kind) for kind in KINDS]
+    probes = [next(e for e in examples if e['kind'] == kind and e['corpus'] == 'paired') for kind in KINDS]
+    if a.rehearsal_data:
+        probes += [next(e for e in examples if e['kind'] == kind and e['corpus'] == 'rehearsal') for kind in sorted({e['kind'] for e in examples if e['corpus'] == 'rehearsal'})]
+    if len(probes) != plan.get('preflight_updates', 9):
+        raise ValueError('Preflight must exercise one TRAIN row per kind and corpus')
     settings = dict(phase=a.phase, seed=42424242, learning_rate=2e-5, weight_decay=0., gradient_clip=1., batch_size=1,
-                    epochs=3 if a.phase == 'full' else None, steps=324 if a.phase == 'full' else 9,
-                    data_manifest_sha256=DATA_SHA, base_assets_sha256=assets_sha, plan_sha256=sha(PLAN), implementation_sha256=implementation,
+                    epochs=3 if a.phase == 'full' else None, steps=plan['fixed_full_budget_updates'] if a.phase == 'full' else len(probes),
+                    data_manifest_sha256=DATA_SHA, rehearsal_manifest_sha256=rehearsal_sha,
+                    base_assets_sha256=assets_sha, plan_sha256=sha(a.recipe), implementation_sha256=implementation,
                     source_commit=os.environ.get('DL_TASK_COMMIT'), preflight_proof=preflight_proof)
     with torch.cuda.device(model.device), sdpa_kernel(SDPBackend.MATH):
         if a.restore_only:
@@ -197,7 +218,7 @@ def main():
         write(a.out / 'settings.json', settings)
         write(a.out / 'source-load.json', executor.proof)
         write(a.out / 'source-parameters-before.json', before)
-        write(a.out / 'feature-inventory.json', [dict(id=e['id'], kind=e['kind'], prompt_tokens=e['prefix_tokens'], target_tokens=len(e['targets'])) for e in examples])
+        write(a.out / 'feature-inventory.json', [dict(id=e['id'], kind=e['kind'], corpus=e['corpus'], prompt_tokens=e['prefix_tokens'], target_tokens=len(e['targets'])) for e in examples])
         if a.phase == 'full':
             evaluate(executor, heldout, a.out / 'baseline')
         zero_before = logit_hashes(model, probes)
@@ -236,7 +257,7 @@ def main():
                     raise ValueError('A source parameter received gradients')
                 norm = torch.nn.utils.clip_grad_norm_(list(adapters.values()), 1., error_if_nonfinite=True)
                 optimizer.step()
-                entry = dict(step=step, id=example['id'], kind=example['kind'], loss=float(loss.detach()), gradient_norm=float(norm), seconds=time.monotonic()-started)
+                entry = dict(step=step, id=example['id'], kind=example['kind'], corpus=example['corpus'], loss=float(loss.detach()), gradient_norm=float(norm), seconds=time.monotonic()-started)
                 log.write(json.dumps(entry) + '\n')
                 log.flush()
                 print(json.dumps(entry), flush=True)
@@ -255,7 +276,7 @@ def main():
         torch.save(state, state_path)
         write(a.out / 'candidate-adapter/training-state.json', dict(state_sha256=sha(state_path), adapter_weights_sha256=meta['weights_sha256'], settings_sha256=sha(a.out / 'settings.json')))
         proof = dict(phase=a.phase, pid=os.getpid(), settings=settings, optimizer_steps=len(order),
-                     base_assets_sha256=assets_sha, implementation_sha256=implementation, plan_sha256=sha(PLAN),
+                     base_assets_sha256=assets_sha, implementation_sha256=implementation, plan_sha256=sha(a.recipe),
                      zero_adapter_logits_and_rng_exact=True, all_source_hashes_and_versions_unchanged=True,
                      all_adapter_tensors_received_nonzero_gradients=True, gradient_maxima=grad_seen,
                      peak_allocated_bytes=peak, restoration_logit_hashes=hashes, production_adopted=False)

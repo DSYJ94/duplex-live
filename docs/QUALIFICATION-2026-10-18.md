@@ -104,9 +104,10 @@ conversations remain frozen development evidence for any subsequent change.
 
 Plain words: The owner accepts the recorded voice and now confirms actual
 microphone conversation works in a fresh Chrome tab after browser permission.
-Live replies remain choppy and slow; room echo/double-talk and physical playback
-quality are not accepted. Cloud validation
-remains paused. The overall goal remains active.
+The earlier choppy playback is subsequently accepted as “Smooth now” on revised
+service7522115. Initial response delay and room echo/double-talk remain open.
+That one physical listening trial does not establish overall model quality.
+Cloud validation remains paused. The overall goal remains active.
 
 ## Next bounded training ablation
 
@@ -327,3 +328,46 @@ a fresh324-update candidate, full54 new and72 earlier control generations,
 broader reasoning and actual speech retention before adoption. This changes no
 native voice weights; the native failure verdict remains. Plan:
 `evals/fixtures/paired-context-adapter-plan-20261018.json`.
+
+## Contextual controller training: mechanics pass, behavior still under test
+
+Plain words: Nine-update preflight7523140/source6814474 completes with sixteen
+finite/nonzero adapter gradients, unchanged original hashes/versions, exact zero
+adapter logits/RNG and22,508,659,200-byte peak allocation. A fresh independent
+process restores saved adapter, optimizer, Python/Torch/CUDA random states and
+nine actual-model probe logits exactly. All artifacts are locally backed up;
+context-preflight-integrity.json verifies their hashes. No behavioral improvement
+follows from this mechanics result.
+
+Plain words: Full7523228 starts fresh with the fixed324-update recipe, after
+generating all54 paired and72 earlier control fixtures with the current compiler.
+It will score all126 again only after saved-candidate fresh-process restoration.
+No learned adapter is deployed. Separate evaluation-only24-case knowledge,
+arithmetic, hard reasoning and capability-boundary fixtures were committed before
+candidate output review. Frozen7523273 and candidate7523274 (afterok dependency
+on7523228) retain all rows, actual selected reasoning receipts and post-execution
+CPU oracles. Semantic claims require saved-output review. Native qualification
+remains failed; cloud validation stays paused.
+
+## Contextual candidate rejected; rehearsal coverage repair
+
+Plain words: Final saved/reloaded7523228 achieves54/54 paired contracts against
+44/54 frozen, but only47/72 original controls against60/72 frozen. Seventeen prior
+passes are lost: sixteen standalone cancellations and one last-sentence format.
+The cancellations select the correct function but supply empty speech and invalid
+retirement identities; the actual worker rejects before an execution receipt.
+No deployment follows. The24 wider text cases remain numerically correct, with
+direct assistant review of factual/honesty replies and4 actual Astra requests per
+arm. This limited retention cannot override cancellation failure. All artifacts,
+optimizer state,252 worker outputs and explicit failure proof are backed up.
+
+Plain words: The108-label curriculum lacks standalone cancel_reasoning examples.
+Fresh teacher7523329 approves the original216 TRAIN scenes under the current
+compiler, including48 standalone cancellation targets with semantic reviews. All
+216 first attempts pass; unchanged verified_data guard replays every exact teacher
+prompt/action/worker and source hash locally. No evaluation output becomes a label.
+New predeclared mixed recipe keeps adapter, learning rate, loss and3 exposures per
+row, adds original TRAIN rehearsal and requires a new18-update actual proof before
+fresh972 updates. The126 old cases are reused development retention;22 unseen
+controls are committed before optimizer execution. Actual speech, latency and
+native private-result/waiting qualification remain unresolved. Live demo unchanged.

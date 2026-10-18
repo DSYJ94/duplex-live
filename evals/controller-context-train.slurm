@@ -17,6 +17,11 @@ test -z "$(git -C "$DL_TASK_SOURCE" status --porcelain)"
 PHASE=${CONTROL_CONTEXT_PHASE:-preflight}
 [[ "$PHASE" = preflight || "$PHASE" = full ]]
 EXTRA=()
+if [ -n "${CONTROL_CONTEXT_REHEARSAL_DATA_JOB:-}" ]; then
+ [[ "$CONTROL_CONTEXT_REHEARSAL_DATA_JOB" =~ ^[0-9]+$ ]]
+ EXTRA+=(--rehearsal-data "$DL/runs/controller-text-teacher-$CONTROL_CONTEXT_REHEARSAL_DATA_JOB"
+ --recipe evals/fixtures/paired-context-rehearsal-plan-20261018.json)
+fi
 if [ "$PHASE" = full ]; then
  : "${CONTROL_CONTEXT_PREFLIGHT_JOB:?Actual nine-update proof required}"
  [[ "$CONTROL_CONTEXT_PREFLIGHT_JOB" =~ ^[0-9]+$ ]]

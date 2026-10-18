@@ -5413,3 +5413,38 @@ No question or captured response is approved for training. Compare frozen and sa
 candidate only; no checkpoint selection. Ordinary/reasoning retention and actual
 speech remain required even if the54+72 control results improve. Three oracle types
 pass independent small enumeration checks; GPU generations remain pending.
+
+## 18 October — contextual candidate rejects; missing rehearsal coverage identified
+
+Plain words:7523228/source6814474 completes324 updates and strict independent
+adapter/optimizer/RNG/logit restoration. New paired contracts improve44/54→54/54;
+original controls fall60/72→47/72, losing17 prior passes. All16 standalone
+cancellation cases select cancel_reasoning but emit empty content and invalid
+retirement IDs; the worker rejects before executing cancellation. One last-sentence
+case also loses exact-format compliance. Do NOT adopt. Full checkpoint, state,
+252 saved worker rows and local context-full-integrity.json preserve this verdict.
+The24 broader cases remain correct on numerical checks and direct assistant
+saved-output review; actual4 Astra requests are bound to original questions on
+both arms. These do not override lost cancellation. Spoon answer wording is awkward.
+
+Plain words: The108 paired TRAIN labels contain zero standalone cancel_reasoning
+targets. Hypothesis1 is missing rehearsal of a different action contract; adding
+original TRAIN coverage should preserve nonempty cancellation and valid retirement.
+A runtime/source mutation alternative is contradicted by matching frozen compiler,
+strict restored logits and unchanged source hashes. Global intelligence loss is
+not supported by the24 broader results, though their coverage is limited. No heldout
+or captured output will become a training label.
+
+Plain words: Fresh current-compiler teacher job7523329/source4defe50 approves all216
+original TRAIN scenes on first attempts;48 actual cancel_reasoning targets are now
+available with independent semantic reviews. Exact original verified_data guard,
+teacher/prompt/response/worker/source lineage passes locally; no guard was relaxed.
+Manifest3d76beb20187ac2d80596135b85ccb85ee25e84df44b251882938559d4ca9554.
+All artifacts backed up. Fixed next recipe combines216 rehearsal+108 paired rows,
+unchanged rank8/scaling2/LR2e-5/CE/frozen head and3 exposures per row (972 updates).
+Fresh18-update proof, one TRAIN row per kind per corpus, must pass again before
+fresh full initialization. All126 prior cases are development retention now.22 new
+controls are declared before optimization and structurally checked through the
+actual compiler/worker with authored actions; they have no model results yet.
+Broader actual reasoning and new complete spoken tests remain mandatory. Native
+7510331 remains unqualified; accepted frozen live demo stays unchanged/cloud paused.

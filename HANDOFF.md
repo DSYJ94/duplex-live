@@ -1,5 +1,26 @@
 # HANDOFF — overnight recovery, 18 October
 
+Plain words: CURRENT 18 October — contextual324 candidate7523228 REJECTED.
+All54 paired pass (frozen44); old controls47/72 (frozen60),17 lost passes including
+all16 standalone cancellations emitting empty content/invalid retirement IDs.
+Actual worker rejects before executing. Strict fresh-process restore/source hashes
+pass;252 worker rows+checkpoint/state backed up, context-full-integrity.json.
+Wider24-case frozen7523273/candidate7523274 numerical+assistant semantic review
+pass; actual4 Astra requests per arm. This does not override lost cancellation.
+No adapter deployed. Owner-approved smooth frozen service7522115 remains reference.
+
+Plain words: Missing coverage identified: paired108 has ZERO cancel_reasoning
+labels. Fresh current-compiler original216 TRAIN teacher7523329/source4defe50
+COMPLETED,216 first-attempt approvals,48 standalone cancellation targets. Original
+verified_data guard and full local provenance/prompt/worker replay pass unchanged.
+Manifest3d76beb20187ac2d80596135b85ccb85ee25e84df44b251882938559d4ca9554;
+full artifacts backed up. New fixed recipe paired-context-rehearsal-plan-20261018:
+216+108 TRAIN, unchanged adapter/LR/loss/3epochs,972 updates after NEW18-update
+proof+independent restore. New evals/context_fresh_control.py and22 unseen controls
+declared before optimizer. The126 old cases are now development retention;24
+broader cases reused. Actual new spoken tests still required. No rehearsal optimizer
+yet. Native qualification stillFAIL/cloudpaused/goalACTIVE.
+
 Plain words: CURRENT 18 October, 14:02 UTC. Owner accepts revised live playback:
 “Smooth now”. First-answer delay remains open. Same service7522115 is running;
 local helper had stopped between sessions and was reconnected without starting a
