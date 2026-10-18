@@ -5108,3 +5108,15 @@ request, stop speech while calculation continues, cancel only calculation while
 speech remains queued. All seven are typed fixture diagnostics, not live API work.
 Twenty-six pause/control/playout/format tests pass, including unknown/empty/duplicate
 withdrawal ID rejection. No weight update, no user-input shortcut or canned words.
+
+
+Plain words: v2 actual model7516870 still FAILS: stop+first-step chooses silence,
+and cancel-calculation-but-finish-explanation consumes its speech ID. New stop-
+speech/preserve-calculation and cancel-only-calculation cases choose correct
+boundaries. Summary case chooses the expected route/IDs but copies all FOUR old
+sentences; its route-only flag is NOT semantic task success. Do not report5/7
+as a general behavior score. Full outputs preserved in silent-control-v2-model-
+results.json. No new voice test or owner adoption after failed gate. Next repair
+must distinguish replacing an answer from fulfilling an older obligation and
+background cancellation from media continuation, then inspect actual content.
+No training on any of these development inputs.

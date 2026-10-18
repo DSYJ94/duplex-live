@@ -54,7 +54,7 @@ questions are development evidence, never approved training data.
 
 Plain words: Seven new real-network captures and ten independent played clips
 are locally packet/hash/bounds verified, alongside earlier capture backups. The
-listening page has 32 synchronized recordings with exact served HTTP/WAV hashes.
+listening page has 38 synchronized recordings with exact served HTTP/WAV hashes.
 Public speech assets and all fourteen Qwen controller files are complete; the
 19.33 GB controller export passed every expected size and SHA check. API keys, session credentials
 and actual owner conversations are excluded from these exports.
@@ -76,3 +76,20 @@ acknowledgments without
 sacrificing genuine interruption response. Do not expand training or declare a
 backbone accepted from these small controller tests. See [HANDOFF](../HANDOFF.md)
 and [EXPERIMENTS](../EXPERIMENTS.md) for exact sources, jobs and current activity.
+
+
+Plain words: Later acknowledgment work reproduced a software restart: one model
+answer caused two speech-generator starts after an ASR-omitted Uh-huh. A recorded-
+only pause experiment retained the generator and restored exactly5,179 unheard
+samples; all403,200 source samples were heard once. Its real pause is1.368seconds,
+so this is not natural uninterrupted backchannel behavior. Full speech WER remains
+0.06818 in both variants. Recognized acknowledgments and browser resume remain open.
+
+Plain words: The genuine one-word Stop check revealed a more serious control
+failure: both variants recognize Stop, then speak the full explanation again.
+Completed speech WER0 is not task success. A new model-selected silent-withdrawal
+action fixes stop-only typed cases, but its seven-case model gate still fails
+stop+new-answer and cancellation-with-unrelated-speech. A summary also copies the
+old full answer despite the right route. These changes have NOT entered the live
+demo. All failures, corrected audits and exact original recordings are preserved;
+no native weights were adopted, and no development inputs became training data.

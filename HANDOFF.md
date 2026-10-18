@@ -1,9 +1,9 @@
 # HANDOFF — overnight recovery, 18 October
 
-Plain words: CURRENT05:48UTC /07:48Berlin. Owner away; continue autonomously,
+Plain words: CURRENT06:24UTC /08:24Berlin. Owner away; continue autonomously,
 no optional questions before return. Goal ACTIVE. No complete native or hybrid
 qualification. No optimizer steps or adopted native weights this continuation.
-Cloud validation remains paused. Current experiment sourcecdf0ab9, owner source0d63370; preserve unrelated
+Cloud validation remains paused. Current experiment sourcea0ce541, owner source0d63370; preserve unrelated
 modified timeline.pyc and untracked roadmap.html.
 
 Plain words: LIVE OWNER DEMO http://localhost:8767 now serves experimental compact
@@ -96,11 +96,14 @@ success. Missing silent output action is now addressed experimentally with
 withdraw_speech(speech_ids), only exposed for actual pending ordinary speech;
 validated IDs, no words/remote receipt, caller consumes queue then records actual
 silent_control_completed. New action does not cancel background reasoning.
-First actual model probe7516827 FAILS2/4 (stop-only succeeds; stop+new-answer
-incorrectly silent; selective reasoning cancel consumes unrelated speech). No
-adoption. Targeted descriptions +three new contrast cases prepared for v2 seven-
-case probe; code source must be committed/pushed before submit. Current model
-experiment146b822 plus pending v2; owner6574 remains frozen0d63370/acoustic.
+First model probe7516827 FAILS2/4, v2 seven-case7516870 STILL FAILS same two
+original cases: stop+new-answer incorrectly silent; cancel+finish consumes speech.
+New speech-only/background-only contrasts pass routing, BUT summary case copies
+all four old sentences despite route-only pass. Read actual content; no5/7 semantic
+claim. NO new voice submissions/adoption after failed gate. Sourcea0ce541 committed,
+pushed, clean immutable worktree and local/remote MD5 checked; owner6574 remains
+frozen0d63370/acoustic. Next repair must separate replacing latest answer from
+fulfilling old owed text, and task cancellation from media preservation.
 Recorded acoustic-pause explicitly REJECTS live use: browser resume protocol and
 physical heard-prefix receipts are not implemented. Recognized Right not fixed.
 Twenty-six targeted tests pass; five live socket/frame/access tests passed before
@@ -131,13 +134,13 @@ Plain words: BACKUPS/LISTEN —87 recorded causal captures /139 audit clips loca
 verified (all complete bounds valid, one tiny old interrupted-ASR fragment invalid
 and uninterpreted). Seven new network captures /ten independent clips separately
 packet/hash/bounds verified in network-backup-integrity.json. Gallery8766/audio/
-voice-diagnostics/overnight-results.html now32 actual synchronized conversations,
+voice-diagnostics/overnight-results.html now38 actual synchronized conversations,
 all HTTP/WAV/SHA checked. No credentials or actual owner sessions exported.
 Twelve public speech assets6.43GB complete. ALL14 Qwen public files19,329,391,706
 bytes now verified; qwen35-public-assets-export-integrity.json has zero errors.
 Direct HTTPS backup3142 finished0 after prior SSH84190 failed255. Final spoken
 backup38516 complete; new/current source bundle must be refreshed after this
-handoff commit. Verify its saved SHA, do not preserve linked worktree git paths.
+handoff commit; current completed public-asset integrity proof stays valid. Verify its saved SHA, do not preserve linked worktree git paths.
 Current Clifton expiry expected09:39UTC. New temporary caffeinate tool45223 lasts four hours from about05:48UTC, matching
 the temporary owner access helper. Older51748 ends07:33UTC; no persistent settings.
 Cloud validation remains paused; the old portable/context CPU recipe is not a
