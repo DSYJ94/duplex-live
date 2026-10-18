@@ -4985,3 +4985,26 @@ must use this exact source. Evaluate both formats without another prompt change,
 read references only after execution, keep all outcomes under runs, never train.
 These are development checks prompted by observed failure categories, not broad
 fresh-system qualification or physical microphone/AEC acceptance.
+
+
+Plain words: new spoken input6564 /independent6565 approves027/028 with all user
+clips WER0. Native6566 and compact6568 both honestly decline nonexistent earlier
+cancellation and answer24x36=864 with NO external request. Compact played audit
+6569 both WER0; native6567 adds then and hears824 instead of24 as first factor,
+final864 correct. No further prompt adaptation between formats, no speech repair.
+
+Plain words: experimental owner7516574 now uses compact on tested immutable
+0d63370 at nid010159:8788. Same local URL8767, new separate SSH forward8778 tool
+49799, private local helper6434. Old owner6113 had zero sessions immediately
+before its cancellation request; old WebSockets were not touched during HTTP
+helper replacement. Five new served assets exact, bootstrap/private paths/WS
+upgrade checked without mic or model session activation. Not native qualification,
+physical device QA, AEC acceptance or owner voice approval. No new training.
+
+Plain words: public Qwen backup COMPLETE:14 exact files19,329,391,706bytes, zero
+errors; HTTPS fallback preserved original revision and every approved size/SHA.
+Twelve speech assets6.43GB complete. Recorded87 captures/139 played clips and new
+network7 captures/10 clips verified, all complete bounds valid. Gallery32 actual
+conversations GET/WAV/hash checked. Keys, session tokens and actual owner audio
+excluded. Runtime/source portability is still separate from destination GPU tests;
+cloud validation remains paused. Morning report docs/OVERNIGHT-2026-10-18.md.

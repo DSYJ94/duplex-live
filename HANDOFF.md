@@ -1,21 +1,26 @@
 # HANDOFF — overnight recovery, 18 October
 
-Plain words: CURRENT05:33UTC /07:33Berlin. Owner away; continue autonomously,
+Plain words: CURRENT05:48UTC /07:48Berlin. Owner away; continue autonomously,
 no optional questions before return. Goal ACTIVE. No complete native or hybrid
 qualification. No optimizer steps or adopted native weights this continuation.
-Cloud validation remains paused. Current source149e7b2; preserve unrelated
+Cloud validation remains paused. Current model source0d63370; preserve unrelated
 modified timeline.pyc and untracked roadmap.html.
 
-Plain words: LIVE OWNER DEMO http://localhost:8767 is ready on frozen source
-49e820be9a0c9d36c9e4603d36b52222541c7cce, original reply format, job7516113,
-node nid010225:8788. Strict models warmed; last metadata check had zero owner
-sessions. Do not interrupt it blindly: owner can use the published URL without
-sending chat. Allocation4h30m from about04:50UTC, idle14400s, maximum10sessions.
-SSH forward tool session26055 serves8768; local access helper38521 serves8767.
-Private token600 at /private/tmp/duplex-live-owner-7516113-token, never print or
-export; run root0700. Source/assets/bootstrap/private-path rejection/WS upgrade
-verified, no mic or model session started by readiness check. Superseded7515697
-confirmed CANCELLED at04:29:14UTC; do not retry from old stale notes below.
+Plain words: LIVE OWNER DEMO http://localhost:8767 now serves experimental compact
+source0d633701a1e029ec94b6c5cf539d0e164841a9a4, job7516574,
+node nid010159:8788. Strict models warmed; compact handshake true; no owner
+session started by readiness checks. Four-hour temporary local helper tool6434
+uses SSH forward49799 on8778. Private token600 at
+/private/tmp/duplex-live-owner-7516574-token, never print/export; run root0700.
+Five served assets match tested source; private bootstrap and paths404 checked;
+WebSocket upgrade verified without authenticating/starting a model session.
+Do not interrupt it blindly: owner can use the link without sending chat.
+Old7516113 had ZERO owner sessions immediately before cancellation request;
+retirement receipt /private/tmp/duplex-retire-owner-v2-full.json. Confirm sacct
+before declaring final cancellation. Old HTTP helper31225 retired, separate old
+forward26055 still available until deliberately closed. Earlier7515697 confirmed
+CANCELLED at04:29:14UTC. New bounded job4h30m from about05:44UTC, helper4h from
+about05:46UTC. No browser/device voice approval or overall qualification.
 
 Plain words: WHAT THIS IS — a disclosed modular hybrid: streaming Kyutai ASR/TTS,
 frozen local Qwen3.5-9B text controller on another GPU, explicit actual GPT-6 Astra
@@ -32,14 +37,16 @@ ordinary answer behind background reasoning. Actual-execution-aware barrier91ebf
 fixes this:7515717 ordinary PCM24.330s while real API16.020–30.120s. Concise reasoner
 75e3883 then network7515878/audit5879 produces ice + correct count19, BOTH WER0;
 7515880/81 cancels actual old counting result, only shadow reply plays, WER0.
-No artificial delivery delay. Owner6113 is gated on these two completed runs.
+No artificial delivery delay. Original owner6113 was gated on these two completed runs; newer6574 also uses
+the task-state, real cancellation and compact spoken checks below.
 Input and every returned packet exact; server model.wav is not device recording.
 
 Plain words: COMPACT FORMAT — opt-in native answer/clarify actions reduce ten-case
 resident median controller stage2.116→1.648s, both10/10 actual contracts, no new
 weights/kernels. Actual compact network7516339/40 correct ice/count19, but sum→
 summed transcription WER0.167;6341/42 cancels correctly, extra and/spelling WER0.059.
-Do not silently adopt on live owner demo. Default original schema remains frozen.
+Default original schema remains unchanged. Compact is now explicitly adopted
+ONLY in experimental owner6574 after newer typed/real cancellation/spoken checks.
 
 Plain words: NEW GENERALIZATION — paired twelve-question7516385/6387 exposed BOTH
 formats falsely claiming cancellation with no task. Native attempts forbidden
@@ -51,16 +58,25 @@ no-tools requests stay local. Five actual external requests each. Extra All task
 are complete wording and contact privacy/storage claims remain limits. Typed small
 diagnostic only, not broad intelligence/duplex qualification. Raw outputs retained.
 
-Plain words: CURRENT JOBS from immutable149e7b2, local/remote MD5 verified:
-7516498 eager /6499 static-eager /6500 static-compiled ten actual worker cases.
-Pinned runtime supports hybrid StaticCache and generate-time compilation; fullgraph
-reduce-overhead experiment only, no fallback/live/RPC adoption. Actual compile,
-cache, failures and cold cost must be checked. Network task-state regressions
-7516501/audit6502 native ordinary,6503/6504 native cancel,6505/6506 compact cancel.
-Launch receipts /private/tmp/duplex-static-and-state-v2-submit-full.txt.
-Also149e guard validates speech/owed IDs BEFORE cancellation mutation; fixture
-regression confirms invalid IDs/blank speech cannot cancel real background work.
-Nine targeted worker/dispatch/format tests pass.
+Plain words: COMPLETED bounded decode6498 eager10/10 median2.001s; static-eager
+6499 and static-compiled6500 BOTH FAIL0/10: missing linear_attention mask dispatch,
+then cache reuse missing LinearAttentionLayer.max_batch_size. Compiled-wrapper
+creation does not establish inference. REJECT static path; no runtime monkeypatch,
+fallback or live adoption. Task-state real-network6501/02 ordinary/count19 both
+speechWER0;6503/04 native and6505/06 compact actual cancellation preserves shadow
+reply, independent ASR adds and/cancelled spelling, WER0.0714. Exact PCM allthree.
+Guard149e validates speech and owed IDs BEFORE cancellation mutation. Fourteen
+frame/socket/auth/session/dispatch/worker/format tests pass.
+
+Plain words: NEW SPOKEN027/028 — input6564/quality6565 BOTH approved, all input
+clipsWER0. Frozen prompt, native6566 and compact6568 each correctly declines
+nonexistent earlier cancellation and answers24x36=864 with ZERO external receipts.
+Independent compact6569 BOTH played clipsWER0; original6567 adds then and hears
+824 rather than24 in the first factor (final864 correct). No content repair or
+training. Owner6574 explicitly enables compact, gated on these spoken tests plus
+sixteen typed6456/6457 and actual existing-task cancellation6503/6505. Failures and
+wording limits from other tests stay visible; two new voice clips are not overall
+qualification. Morning evidence report docs/OVERNIGHT-2026-10-18.md.
 
 Plain words: KNOWN REMAINING FAILURES — natural backchannel017 still interrupts
 and restarts; record020 narrates withheld metadata; unavailable023 needs better
@@ -78,16 +94,21 @@ verified. Model code Git commit/push/pull/clean immutable worktree and MD5 befor
 compute, never scp/rsync code. Reused user inputs remain development; original
 quality validators source+commit pinned, reference text read only after generation.
 
-Plain words: BACKUPS/LISTEN —79 prior causal captures/128 audit clips verified;
-new four real-network captures and six clips separately packet/hash/bounds checked
-in network-backup-integrity.json. Gallery8766/audio/voice-diagnostics/overnight-results.html
-now28 actual synchronized conversations, all HTTP/WAV/SHA checked. No credentials
-or actual owner sessions exported.12 public speech assets6.43GB complete. Qwen
-14 public assets19.33GB HTTPS fallback ACTIVE tool session3142; three large shards
-verified, fourth partial, do not claim complete before final integrity JSON.
-Original SSH transfer84190 ended255, no longer active. Latest small-result backup
-37089 complete. Source bundle stale6b0fa1c; refresh after new commits. Temporary
-caffeinate PID51748 ends07:33UTC; current Clifton expiry expected09:39UTC.
+Plain words: BACKUPS/LISTEN —87 recorded causal captures /139 audit clips locally
+verified (all complete bounds valid, one tiny old interrupted-ASR fragment invalid
+and uninterpreted). Seven new network captures /ten independent clips separately
+packet/hash/bounds verified in network-backup-integrity.json. Gallery8766/audio/
+voice-diagnostics/overnight-results.html now32 actual synchronized conversations,
+all HTTP/WAV/SHA checked. No credentials or actual owner sessions exported.
+Twelve public speech assets6.43GB complete. ALL14 Qwen public files19,329,391,706
+bytes now verified; qwen35-public-assets-export-integrity.json has zero errors.
+Direct HTTPS backup3142 finished0 after prior SSH84190 failed255. Final spoken
+backup38516 complete; new/current source bundle must be refreshed after this
+handoff commit. Verify its saved SHA, do not preserve linked worktree git paths.
+Current Clifton expiry expected09:39UTC. New temporary caffeinate tool45223 lasts four hours from about05:48UTC, matching
+the temporary owner access helper. Older51748 ends07:33UTC; no persistent settings.
+Cloud validation remains paused; the old portable/context CPU recipe is not a
+GPU portability claim for this new ARM64-wheel hybrid.
 
 ## Earlier recovery notes — historical, superseded by the current state above
 
