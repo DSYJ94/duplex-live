@@ -1,5 +1,50 @@
 # HANDOFF — active overnight recovery (updated 18 October)
 
+Plain words:LATEST — no complete native or hybrid system qualifies. Native
+weights remain rejected/unchanged. Frozen hybrid required-action candidate12e9a42
+now has real concurrent1GPU results, including new input tests; strong reasoning
+and routing are EXTERNAL gpt-6-luna, ASR+KyutaiTTS frozen.3 development scenes
+7511158 complete, independent ASR7511183: mostly matching words, minor resumed
+sentence mismatch and canceled/cancelled spelling retained. All3 actual causal
+WAVs, source packet reconstruction and independent clips hash-verified locally.
+Synchronized3-conversation page GET/WAV verified:
+http://localhost:8766/audio/voice-diagnostics/concurrent-development.html
+
+Plain words:NEW INPUTS7511189 /quality7511190 approve5/7 scenes000–004, WER0
+per user clip. Frozen concurrent7511217 completes these5 with recognitionWER0
+and zero underruns; independent played audit7511303 completes.000 condensation,
+001 rectangle+Tuesday afternoon and004 shadows/negation are intelligible;002
+access-code speech is uncertain (ASR “UMFALCON9”, rawWER.333).003 real cancel
+retains unrelated work but REPEATS ordinary answer in two completed responses.
+Do not call5/5 qualified. All5 causal captures and independent clips locally
+hash/reconstruction verified. Re-record1242 /quality1244 approves005 Uh-huh;
+frozen1288 omits the acknowledgment in ASR (WER.133) and interrupts/restarts the
+Moon explanation from its beginning: natural backchannel handling FAILS.
+Original006 correction audio remains unapproved after two versions; never use
+or relabel it. Distinct007 Oak/Pine Central source1304 /quality1305 has WER0;
+frozen-candidate correction1514 submitted — retrieve actual verdict.
+
+Plain words:SEPARATE state-aware candidatea4f4704, explicit owed ordinary speech
+IDs/content passed to controller; only model-declared validated fulfilled IDs
+removed. Private task cancellation still needs actual receipt.31 local guards
+pass; compatibility loader8116322 adds32nd guard and original immutable input
+validator provenance. TRAIN3case7511506 COMPLETE recognitionWER0/zero underruns.
+Reused003 DEVELOPMENT1512 COMPLETE: only one combined cancellation/ordinary
+answer fully played, no repeated saved answer. Need inspect consumption events,
+actual cancel receipt, independent speech audit before claiming fix. Latest
+source8116322. Existing fresh baseline remains immutable;003 is NOT fresh for
+this new candidate. Original8f82a30 validator executes unchanged from its clean
+Git worktree; no data re-recording/approval weakening for the comparison.
+
+Plain words:next — retrieve frozen1514; back up1506/1512 and independent speech
+audits; inspect real consumption/receipts. Then resolve correction and
+backchannel policy; fresh evaluation required after candidate changes. Do not
+claim speech text==heard words or mic/AEC acceptance. Current pipeline uses
+recorded mono user inputs, controlled12s lookup-delivery minimum and causal
+playout simulation, published voice with no owner approval. No training on new
+scenes. Native reasoning remains unresolved. Cloud paused. No optional owner
+questions overnight; current Clifton certificate until18Oct11:39Berlin.
+
 Plain words:CURRENT overnight stage — native training unchanged/rejected; new
 hybrid path now actually listens and speaks concurrently on one GH200.7511107
 (source9ebcb65) completes TRAIN020 with recognitionWER0, all actual input rows
