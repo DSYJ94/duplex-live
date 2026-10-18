@@ -1,9 +1,9 @@
 # HANDOFF — overnight recovery, 18 October
 
-Plain words: CURRENT06:24UTC /08:24Berlin. Owner away; continue autonomously,
+Plain words: CURRENT07:02UTC /09:02Berlin. Owner away; continue autonomously,
 no optional questions before return. Goal ACTIVE. No complete native or hybrid
 qualification. No optimizer steps or adopted native weights this continuation.
-Cloud validation remains paused. Current experiment sourcea0ce541, owner source0d63370; preserve unrelated
+Cloud validation remains paused. Current experiment sourcef271aba, owner source0d63370; preserve unrelated
 modified timeline.pyc and untracked roadmap.html.
 
 Plain words: LIVE OWNER DEMO http://localhost:8767 now serves experimental compact
@@ -78,41 +78,59 @@ sixteen typed6456/6457 and actual existing-task cancellation6503/6505. Failures 
 wording limits from other tests stay visible; two new voice clips are not overall
 qualification. Morning evidence report docs/OVERNIGHT-2026-10-18.md.
 
-Plain words: ACTIVE control experiment (owner unchanged). Recorded-only pause
-cdf0ab9 exact sample proof:5179 unheard samples restored,403200 unique generated
-samples heard once.005 baseline6704 restarts; pause6706 retains generation, actual
-pause1.368s, full independent corrected audits6725/6726 bothWER0.06818. Partial
-Thank-you-like ASR snippet is unscored/unreliable, do not infer spoken content.
-Audible018 baseline6728 restarts old answer during user pause;6730 acoustic-pause
-cuts12.173s with43443 heard prefix samples, no old restart; actual revised answer
-speech audits6729/6731 bothWER0.0156708 had NO heard prefix so not a latency proof.
-Initial audit6705/7/9 failed from loop-variable shadowing; fixed20c64dc rescores
-original recorded PCM, never regenerates it.23 tests before silent-control changes.
+Plain words: CURRENT CONTROL PROGRESS — frozen weights, no training. Overlapping
+resolve/withdraw descriptions fixed in7422b63; v3 actual6958 passes9/10, generic
+summary still copies full prior text. Matched history ablation8559f93:6980 no prior
+assistant fails;6981 actual generated assistant history passes ALL11 including
+captured6730 replay. Same tools/model code/weights; no reference transcripts.
+Ongoing assistant generation was missing from chronological context (two USER
+messages); full generated text existed only in pending-speech metadata.
 
-Plain words: IMPORTANT bare Stop029 fails in BOTH baseline6792 and pause6794:
-exact ASR Stop but model repeats the ENTIRE explanation as a new reply. Input
-6790/quality6791 both clipsWER0; completed speech audits6793/95 WER0 are NOT task
-success. Missing silent output action is now addressed experimentally with
-withdraw_speech(speech_ids), only exposed for actual pending ordinary speech;
-validated IDs, no words/remote receipt, caller consumes queue then records actual
-silent_control_completed. New action does not cancel background reasoning.
-First model probe7516827 FAILS2/4, v2 seven-case7516870 STILL FAILS same two
-original cases: stop+new-answer incorrectly silent; cancel+finish consumes speech.
-New speech-only/background-only contrasts pass routing, BUT summary case copies
-all four old sentences despite route-only pass. Read actual content; no5/7 semantic
-claim. NO new voice submissions/adoption after failed gate. Sourcea0ce541 committed,
-pushed, clean immutable worktree and local/remote MD5 checked; owner6574 remains
-frozen0d63370/acoustic. Next repair must separate replacing latest answer from
-fulfilling old owed text, and task cancellation from media preservation.
-Recorded acoustic-pause explicitly REJECTS live use: browser resume protocol and
-physical heard-prefix receipts are not implemented. Recognized Right not fixed.
-Twenty-six targeted tests pass; five live socket/frame/access tests passed before
-latest silent-action change. Exact-pause evidence backed up locally including
-failed scorer logs; first rsync23 was wrong logs/ path, successful retry uses
-repo/logs/. Integrity proof exact-pause-causal-integrity.json:7 captures/14 clips.
-New sources/probes: evals/qwen35_speech_control_probe.py and speech-control.slurm.
-Submissions/status under /private/tmp/duplex-speech-control-*. No native weights,
-optimizer steps, general-agent adoption or full model qualification.
+Plain words: REAL EVENT PROJECTION eab30a6/f271aba is opt-in. Actual validated reply
+enters history after TTS start, before next user, with generated-not-fully-played
+state. Repeated/resumed same plan stays one assistant turn; consumption retires it;
+completion marks SERVER playout only. Physical hearing always unconfirmed. Model
+receives these delivery states too, even for retired plans. Immutable snapshots
+stay unchanged. Four full payloads without generated history are byte-identical to
+previous worker.29 local control/pause/playout tests +5 socket/frame/access pass.
+Explicit-delivery neural gate7517160 passes ALL11; actual answers inspected, not
+just action labels. Main-point fixture is shorter but still3sentences; no universal
+brevity/intelligence score. Owner6574/source0d63370 has NOT adopted this feature.
+
+Plain words: ACTUAL AUDIO f271aba —030 input7206 /quality7207 BOTH clipsWER0.
+Matched7208 baseline vs7210 history has EXACT same user PCM, ASR and first generated
+answer. Baseline repeats48-word/four-sentence answer; enabled gives29-word/ONE-
+sentence summary. Complete independent audits7209/7211 bothWER0; baseline is still
+a task FAILURE. Stop029 history7212 retires turn-1, no subsequent reply/PCM after
+its real audible prefix; silent_control_completed confirmed.7213 old prefix stays
+partial/unscored. Revision018 history7214 retires old answer, only first step
+completes; independent7215 WER0. All four causal WAVs/metadata and seven clips
+locally hash/bounds/reconstruction verified. Proof generated-history-voice-integrity.json.
+
+Plain words: PAUSE LIMITS — recorded acoustic-pause cdf0ab9 preserves actual TTS
+state and restores5179 unheard samples exactly once (403200 unique source samples),
+actual pause1.368s; not natural uninterrupted backchannel behavior. Recognized
+Right remains unresolved. Fixed scorer20c64dc rescores original files after
+loop-variable KeyError; original failed audits6705/7/9/logs kept. Corrected6725/26
+full005 WER0.06818 in BOTH variants. Audible018 pause6730 cuts promptly, avoids
+baseline6728 old-answer restart between parts of user command; final speech both
+WER0. Bare Stop6792/6794 before silent action repeats full explanation: retained
+FAILURE despite completed speech WER0. All reused data is DEVELOPMENT, never train.
+
+Plain words: NEXT — integrate real generated history/silent control into a NEW
+versioned WebSocket experiment, not blindly into owner6574. Acoustic-pause is
+explicitly recorded-only: browser AudioPlayout currently destroys old buffers on
+interrupt, so no live resume protocol or actual client cursor exists. Do NOT merely
+remove the live guard or equate server WAV clock with device hearing. A viable next
+protocol is client-owned pause buffers: pause on acoustic_pause, permanently discard
+on speech_pause_committed, transfer retained client suffix on speech_resumed to new
+ID; server should not resend its guessed unheard suffix. Mark server diagnostic
+replay separately from wire packets, retain exact transmitted-source accounting,
+and verify race/late-packet/cancellation behavior before any adoption. Physical
+browser/mic/AEC/owner listening still required. Keep full native/delegation goal:
+this hybrid control fix is NOT native model qualification or general agent actions.
+Current submissions/status helpers /private/tmp/duplex-history-voice-* and
+/private/tmp/duplex-speech-history-*. Recorded job results terminal; owner live only.
 
 Plain words: KNOWN REMAINING FAILURES — natural backchannel017 still interrupts
 and restarts; record020 narrates withheld metadata; unavailable023 needs better
@@ -134,7 +152,7 @@ Plain words: BACKUPS/LISTEN —87 recorded causal captures /139 audit clips loca
 verified (all complete bounds valid, one tiny old interrupted-ASR fragment invalid
 and uninterpreted). Seven new network captures /ten independent clips separately
 packet/hash/bounds verified in network-backup-integrity.json. Gallery8766/audio/
-voice-diagnostics/overnight-results.html now38 actual synchronized conversations,
+voice-diagnostics/overnight-results.html now42 actual synchronized conversations,
 all HTTP/WAV/SHA checked. No credentials or actual owner sessions exported.
 Twelve public speech assets6.43GB complete. ALL14 Qwen public files19,329,391,706
 bytes now verified; qwen35-public-assets-export-integrity.json has zero errors.

@@ -54,7 +54,7 @@ questions are development evidence, never approved training data.
 
 Plain words: Seven new real-network captures and ten independent played clips
 are locally packet/hash/bounds verified, alongside earlier capture backups. The
-listening page has 38 synchronized recordings with exact served HTTP/WAV hashes.
+listening page has 42 synchronized recordings with exact served HTTP/WAV hashes.
 Public speech assets and all fourteen Qwen controller files are complete; the
 19.33 GB controller export passed every expected size and SHA check. API keys, session credentials
 and actual owner conversations are excluded from these exports.
@@ -88,8 +88,30 @@ so this is not natural uninterrupted backchannel behavior. Full speech WER remai
 Plain words: The genuine one-word Stop check revealed a more serious control
 failure: both variants recognize Stop, then speak the full explanation again.
 Completed speech WER0 is not task success. A new model-selected silent-withdrawal
-action fixes stop-only typed cases, but its seven-case model gate still fails
+action fixes stop-only typed cases, but its earlier seven-case model gate failed
 stop+new-answer and cancellation-with-unrelated-speech. A summary also copies the
 old full answer despite the right route. These changes have NOT entered the live
 demo. All failures, corrected audits and exact original recordings are preserved;
 no native weights were adopted, and no development inputs became training data.
+
+
+Plain words: The later controlled repair preserves the assistant's actual generated
+answer in chronological context before an interruption, with explicit delivery
+state. It never treats generated words as proof of full playback or physical
+hearing. With the same frozen model, eleven typed/captured control checks now pass;
+they remain a small development gate, not whole-system qualification.
+
+Plain words: Real audio comparison7517208/7517210 uses identical user PCM,
+recognition and first generated answer. Without generated history the controller
+repeats all48 words; with it, the requested main point becomes one29-word sentence.
+Both completed recordings have speech WER0, showing why speech transcription alone
+misses task failure. Bare Stop7212 now retires the actual speech and produces no
+new reply; its old prefix remains partial/unscored. First-step revision7214 gives
+only the first step, complete speech WER0. Four captures and seven audit clips are
+locally reconstructed/hash/bounds verified. The comparison page now has42 players.
+
+Plain words: These are recorded-audio results. The published owner demo remains
+on0d63370 and has not adopted the new pause/history path. Browser-owned pause and
+resume buffers still need implementation; server timing does not prove device
+playback. Natural recognized acknowledgments, general agent actions, native
+private-result qualification and physical microphone/AEC acceptance remain open.

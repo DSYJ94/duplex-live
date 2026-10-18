@@ -5193,3 +5193,21 @@ keep explicit generated-versus-heard delivery metadata in the enabled arm. This
 is development supervision/evaluation only, never training. Require eleven-case
 actual delivery-aware gate7160 before voice model runs. Existing Stop029 and
 revision018 use their original immutable validators. No owner service change.
+
+
+Plain words: explicit delivery-state model gate7517160 also passes ALL11, so
+actual voice tests proceed on unchanged model/control code. New030 user inputs
+7517206/independent7207 BOTH clipsWER0. Same sourcef271aba, same initial question,
+user PCM and models: baseline7208 copies four old sentences for main-point request;
+history7210 gives one condensed sentence instead. Independent7209/7211 complete
+speech BOTH WER0, which alone cannot distinguish the baseline task failure.
+
+Plain words: actual bare Stop029 history7212 has correct Stop recognition, retires
+turn-1 and emits silent_control_completed with NO subsequent reply or completed
+speech. Its old prefix audit7213 is partial/unscored. First-step revision018
+history7214 retires old turn-1 and gives only first step; independent7215 finalWER0.
+Actual generated context marks old plans retired-before-full-playout and new replies
+server-playout-complete; physical hearing stays unconfirmed. This supports a real
+controller-context repair rather than another weight-training claim. Confirm exact
+causal audio/metadata hashes in local backup before gallery/promoting. Live owner
+6574 still0d63370: no pause protocol or speech-context flag has been enabled there.
