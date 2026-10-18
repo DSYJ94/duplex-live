@@ -1,5 +1,24 @@
 # HANDOFF — overnight recovery, 18 October
 
+Plain words: CURRENT 18 October, 14:02 UTC. Owner accepts revised live playback:
+“Smooth now”. First-answer delay remains open. Same service7522115 is running;
+local helper had stopped between sessions and was reconnected without starting a
+microphone. New forward session24429 (localhost8781), helper92441/PID13003
+(localhost8767); same private token path, NEVER print/export. All4 HTTP assets and
+private binding exact; owner-7522115-helper-reconnected.json records checks.
+
+Plain words: Contextual preflight7523140/source6814474 COMPLETED. Nine updates,
+16 finite/nonzero adapter gradients, original hashes/versions unchanged, exact
+zero logits/RNG, peak22.51GB. Independent process restores adapter/optimizer/RNG
+and nine probe logits exactly. Backed up under export/tree/runs/controller-context-
+7523140; context-preflight-integrity.json. Full7523228 starts fresh, fixed324
+updates, all54 paired+72 earlier baseline generations before training, then strict
+fresh-process restore and all126 worker outputs. Not yet reviewed or adopted.
+New evaluation-only24-question wider retention plan/code declared before inspecting
+candidate outputs: evals/fixtures/context-generalization-20261018.json. Requires
+actual selected reasoning, arithmetic, knowledge and false-completion review.
+No optimizer reads these fixtures; native7510331 remains unqualified/cloud paused.
+
 Plain words: CURRENT13:42UTC/15:42Berlin18Oct — owner Chrome input WORKS.
 Owner now confirms revised live playback: “Smooth now”. Initial response delay
 remains open; this is one listening trial, not room AEC or native qualification.

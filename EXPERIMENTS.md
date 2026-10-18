@@ -5392,3 +5392,24 @@ current-compiler baseline generations before updates, then saved/reloaded worker
 generations. The 108-label manifest is pinned; no owner/evaluation targets enter
 training. Local syntax/shell checks and nine paired/pause fixtures pass. GPU math,
 restoration and behavioral improvement remain unproven before execution. Cloud paused.
+
+## 18 October — contextual preflight passes; fresh candidate and wider retention
+
+Plain words: Preflight7523140/source6814474 completes all nine updates, one TRAIN
+row per kind. All16 adapter tensors receive finite nonzero gradients; all original
+source hashes/versions are unchanged; zero-adapter logits and RNG are exact.
+Peak allocation22,508,659,200bytes. A separate process restores adapter, AdamW and
+Python/Torch/CUDA random states with exact nine probe logits. Entire adapter/state
+and proofs are locally backed up; context-preflight-integrity.json checks hashes.
+This proves training/restoration mechanics, not improved behavior. Full7523228
+starts fresh with the fixed324 budget and all126 baseline generations first.
+
+Plain words: Before reviewing candidate outputs, declare24 further evaluation-only
+questions:8 knowledge,8 arithmetic,4 capability boundaries and4 harder reasoning.
+Actual selected Astra requests capped at12 per arm, forbidden before API for explicit
+constraints. Post-execution numerical oracles are never supplied to either model;
+facts and false completion require saved-output review. All rows/failures retained.
+No question or captured response is approved for training. Compare frozen and saved
+candidate only; no checkpoint selection. Ordinary/reasoning retention and actual
+speech remain required even if the54+72 control results improve. Three oracle types
+pass independent small enumeration checks; GPU generations remain pending.
