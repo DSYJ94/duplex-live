@@ -66,6 +66,16 @@ class QwenResponseExecutor:
                 'that exact ordinary request or the latest user explicitly withdraws it. Never both answer it and leave it queued. '
                 'Cancellation of a lookup alone does not cancel an unrelated ordinary answer. Pending speech is not a private receipt or user project identification. ')
         if self.prompt_profile=='contract-examples':instructions+=CONTRACT_EXAMPLES
+        if state['dispatch_protocol']=='state-aware':
+            instructions+=(
+                "\nSpeech-state examples, NOT actual tasks or receipts: "
+                "An active lookup ID is lookup-demo and an owed ordinary explanation ID is speech-demo. "
+                "The user says only 'Cancel the lookup.' Call cancel_lookup on lookup-demo. After its receipt, "
+                "a reply that only says the lookup is cancelled MUST set consume_pending_speech_ids to []. "
+                "Cancelling lookup-demo does not fulfil speech-demo. Empty [] is the usual correct value. "
+                "If the user says 'Cancel the lookup but finish the explanation', either leave [] so the client resumes it, "
+                "or include the actual explanation in this reply AND consume ['speech-demo']; never consume it with only a cancellation confirmation. "
+                "If the user explicitly says 'Do not finish the explanation', consuming ['speech-demo'] withdraws it. ")
         instructions+='\nACTUAL client state: '+json.dumps(state)
         prior=payload.get('previous_response_id');reply_only=payload.get('tool_choice')=='none'
         if prior:
@@ -141,6 +151,7 @@ def main():
             result=run_worker([dict(role='user',text=row['user'])],world,'current',model=executor.model_id,
                 expected_revision=revision,dispatch_protocol='state-aware',pending_speech=pending,response_executor=executor)
             passed=result['route']==row['kind']
+            if row['id']=='cancel':passed=passed and result['consume_pending_speech_ids']==[]
             if row.get('replacement'):
                 passed=passed and world.tasks['pending-oak']['cancelled'] and world.tasks['current'].get('project')=='Pine Central'
             record=dict(id=row['id'],execution_completed=True,action_contract_passed=passed,result=result,world_tasks=world.tasks)
