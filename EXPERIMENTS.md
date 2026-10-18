@@ -4466,6 +4466,6 @@ The existing strict streaming renderer now optionally replays a fully played act
 
 ## 2026-10-18 — detector tensor inventory complete; strict head-only proof prepared
 
-Plain words: CPU7511739 completes a tensor-only inventory of the pinned17MB MaAI detector: all70 tensors finite, no unsafe pickle globals. Its checkpoint contains a shared512x512x3 rate-conversion layer,512→256 projection and the two-channel transformer/classifier; frozen Mimi encoder weights are separate. This proves asset contents only.
+Plain words: CPU7511739 completes a tensor-only inventory of the pinned17MB MaAI detector: all71 tensors finite, no unsafe pickle globals. Its checkpoint contains a shared512x512x3 rate-conversion layer,512→256 projection and the two-channel transformer/classifier; frozen Mimi encoder weights are separate. This proves asset contents only.
 
 Prepare an isolated CPU head proof importing only exact Git-pinned neural modules, excluding the desktop package entry point. Register every checkpoint tensor and load strict=True with tensor equality. Check cached versus full random-feature inference, future-perturbation prefix invariance and sensitivity to each current input channel. Synthetic features prove no audio behavior, encoder parity, English threshold or deployment rights. No shared package changes, threshold adoption or controller wiring. The head's registered conversion parameters are unused at native12.5Hz, matching the upstream encoder path; frozen Mimi still requires separate verification if pursued.
