@@ -50,7 +50,7 @@ class QwenResponseExecutor:
     def _request(self,payload):
         if payload['model']!=self.model_id:raise RuntimeError('Local controller cannot substitute a different model')
         instructions=payload['instructions']
-        if self.prompt_profile=='contract-examples':instructions+='\n'+CONTRACT_EXAMPLES
+        if self.prompt_profile=='contract-examples':instructions=CONTRACT_EXAMPLES+'\nACTUAL worker contract and state follow:\n'+instructions
         prior=payload.get('previous_response_id');reply_only=payload.get('tool_choice')=='none'
         if prior:
             if prior not in self.history:raise RuntimeError('Unknown local previous-response context')
@@ -70,10 +70,10 @@ class QwenResponseExecutor:
             schema=payload['text']['format']['schema']
             definitions=[dict(type='function',name='respond_to_user',
                 description='Return the final user-facing response to the actual tool receipt. This is output formatting only, without external side effects.',parameters=schema)]
-            messages[0]['content']+='\nThe external operation already executed. Use only respond_to_user to report its actual receipt; do not execute another external operation.'
+            messages.append(dict(role='user',content='Report the actual tool receipt using the respond_to_user function. Return exactly one function call, never plain prose. Include every required response field, including consume_pending_speech_ids when the schema requires it. Do not execute another external operation.'))
         else:
             if payload.get('tool_choice')!='required':raise RuntimeError('Local executor requires the explicit model-selected action protocol')
-            definitions=payload['tools']
+            definitions=sorted(payload['tools'],key=lambda f:f['name']!='respond_to_user')
         tools=[dict(type='function',function={k:v for k,v in f.items() if k not in ('type','strict')}) for f in definitions]
         generation=self.generator.request(messages,tools)
         try:
@@ -117,12 +117,13 @@ def main():
     for row in fixtures():
         world=RecordWorld(row['records'])
         if row.get('pending'):world.read('pending-oak',row['pending'],'meeting room')
+        revision=world.reserve('current')
         pending=[]
         if row['id']=='cancel':
             pending=[dict(id='ordinary',request_text='How many sides does a triangle have?',text='A triangle has three sides.')]
         try:
             result=run_worker([dict(role='user',text=row['user'])],world,'current',model=executor.model_id,
-                dispatch_protocol='state-aware',pending_speech=pending,response_executor=executor)
+                expected_revision=revision,dispatch_protocol='state-aware',pending_speech=pending,response_executor=executor)
             passed=result['route']==row['kind']
             if row.get('replacement'):
                 passed=passed and world.tasks['pending-oak']['cancelled'] and world.tasks['current'].get('project')=='Pine Central'
