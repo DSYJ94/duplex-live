@@ -9,7 +9,7 @@ import urllib.request
 import zipfile
 from evals.moshi_model_download import sha256
 
-PACKAGES=('transformers','huggingface_hub','tokenizers','safetensors')
+PACKAGES=('transformers','huggingface_hub','tokenizers','safetensors','regex')
 
 
 def verified_runtime(path):
