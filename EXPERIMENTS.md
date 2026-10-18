@@ -5694,3 +5694,31 @@ weights created under inference mode do not expose version counters. Audit752647
 correctly never ran. Fix instrumentation with exact before/after fullLM+Mimi tensor
 hashes; keep all eight declared digit/word inputs and RNG settings unchanged. The
 failed folder remains saved; no owner session or approved input gate is changed.
+
+## 18 October — grammar component insufficient; verified capability data preview
+
+Plain words: Function-name probes7526598/99 complete66 actual local generations
+(counting fresh controls). All16 historically valid original proposals retain exact
+raw words/actions/token counts. The closed failure now emits an advertised action,
+but frozen falsely claims cancellation and restarts the soap explanation;972 also
+restarts it. Fresh15 mechanics frozen9/15,9726/15; these are NOT semantic scores.
+972 falsely claims two messages were sent despite no messaging tool and produces
+one empty response. Frozen correctly refuses messaging. REJECT promotion and do
+not run broader grammar/voice integration. Valid syntax is not task success.
+
+Plain words: Repaired short-number7526600/audit7526601 complete all8 fixed renders.
+Original15 and52 PCM match earlier live clips EXACTLY, locating15's added “at” in
+TTS generation rather than transport. Whisper: digits3/4 exact, words4/4 exact;
+local Kyutai recognizer disagrees or emits no words on several clips. This tiny
+surface diagnostic does not qualify a general number renderer or change gates.
+
+Plain words: New independent TRAIN factory declares seven kinds before collection:
+unavailable read/send, supplied fact, completed cancellation, completed+resume,
+actual fixture record read+receipt-grounded reply, and missing project clarification.
+No evaluation capture is read. Full specification112TRAINscenes/128native labels
+(two real compiler stages for16record reads),42heldout scenes in disjoint template
+families. Preview7scenes/8labels is explicitly NOT TRAIN approved. Actual unchanged
+compiler/worker, exact state/value checks, separate semantic review, complete
+API/source/attempt lineage and independent prompt+worker replay are required.
+Private values enter student history only after an actual user-identified fixture
+read; two local boundary tests pass. No optimizer or native audio generation yet.

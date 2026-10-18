@@ -1,0 +1,42 @@
+{
+  "schema": "dl-capability-teacher-plan-v1",
+  "declared_before_teacher_execution": true,
+  "source": "Procedurally authored TRAIN/holdout families, no evaluation capture is read by the generator.",
+  "kinds": [
+    "unsupported-read",
+    "unsupported-send",
+    "given-fact",
+    "finished-cancel",
+    "finished-resume",
+    "record-read",
+    "record-clarify"
+  ],
+  "preview": {
+    "train_scenes": 7,
+    "labels": 8,
+    "training_approved": false
+  },
+  "full": {
+    "train_scenes": 112,
+    "labels": 128,
+    "heldout_scenes": 42,
+    "train_families": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "heldout_families": [
+      4,
+      5
+    ]
+  },
+  "quality": "Run actual unchanged native compiler and worker. Private record positives require an executed user-identified fixture read, then a second teacher call grounded only in its actual receipt. Other profiles expose no private/send capability. Exact state/value/same-generator checks plus separate semantic judgment for unsupported actions, completed cancellation and missing project identification. Preserve every attempt; any failed scene blocks whole batch. Recompile every accepted student prompt and replay every stage independently before TRAIN approval.",
+  "teacher_model": "gpt-6-astra",
+  "provenance_class": "closed-content, ADR0003 AmendmentA",
+  "owner_data_used": false,
+  "audio_generated": false,
+  "prior_evaluation_read": false,
+  "training_after_approval": "No optimizer in this collection stage. Requires new fixed mixed-rehearsal recipe, new numerical/gradient/zero-init proof and independent process restore before full training.",
+  "native_scope": "This calibrates the local text controller; no native speech-weight or full-duplex qualification claim."
+}
