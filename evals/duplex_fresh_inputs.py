@@ -35,15 +35,17 @@ def specifications():
     ]
 
 
-def generate(out):
+def generate(out,cases=None,user_voice="verse",backchannel_wording="original"):
     import numpy as np
     import soundfile as sf
     from data.synthetic.recovery_curriculum import synthesize,MODEL
     out.mkdir(parents=True,exist_ok=False);rows=[]
     for spec in specifications():
+        if cases and spec['id'] not in cases:continue
+        if spec['id']=='hybrid-fresh-005' and backchannel_wording=='uh-huh':spec['turns'][-1]=(10.,'Uh-huh.')
         folder=out/spec['id'];folder.mkdir();clips=[];references=[];receipts=[];prior_end=0.
         for i,(nominal,text) in enumerate(spec['turns']):
-            path=folder/('user-'+str(i)+'.wav');receipt=synthesize(text,'verse',path)
+            path=folder/('user-'+str(i)+'.wav');receipt=synthesize(text,user_voice,path)
             pcm,rate=sf.read(path,dtype='float32')
             if rate!=24000 or pcm.ndim!=1 or not np.isfinite(pcm).all():raise RuntimeError('Invalid fresh user clip')
             # Preserve every source sample; if TTS exceeds the nominal gap, move
@@ -57,9 +59,10 @@ def generate(out):
         ref=folder/'reference.json';ref.write_text(json.dumps(dict(user_words=[dict(text=r['text']) for r in references],utterances=references),indent=2)+'\n')
         rows.append(dict(scenario_id=spec['id'],split='fresh-evaluation',path=str(wav),reference_path=str(ref),
             wav_sha256=sha256(wav),reference_sha256=sha256(ref),world=spec['world'],
-            duration_s=len(pcm)/24000,utterance_count=len(references),user_voice='verse',source_model=MODEL,generation_receipts=receipts))
+            duration_s=len(pcm)/24000,utterance_count=len(references),user_voice=user_voice,source_model=MODEL,generation_receipts=receipts))
     manifest=dict(schema='dl-hybrid-fresh-inputs-v1',rows=rows,training_approved=False,do_not_train=True,
-        generator_sha256=sha256(Path(__file__)),assistant_audio_generated=False,source='new synthetic evaluation user speech')
+        generator_sha256=sha256(Path(__file__)),generation_options=dict(cases=cases,user_voice=user_voice,backchannel_wording=backchannel_wording),
+        assistant_audio_generated=False,source='new synthetic evaluation user speech')
     (out/'inputs.json').write_text(json.dumps(manifest,indent=2)+'\n');print(json.dumps(manifest),flush=True)
 
 
@@ -124,8 +127,11 @@ def checked_cases(data,quality_path,identities):
 
 def main():
     ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('mode',choices=('generate','judge'))
-    ap.add_argument('--data',type=Path);ap.add_argument('--out',type=Path,required=True);args=ap.parse_args()
-    if args.mode=='generate':generate(args.out)
+    ap.add_argument('--data',type=Path);ap.add_argument('--out',type=Path,required=True)
+    ap.add_argument('--case',action='append',choices=[s['id'] for s in specifications()])
+    ap.add_argument('--user-voice',choices=('verse','coral'),default='verse')
+    ap.add_argument('--backchannel-wording',choices=('original','uh-huh'),default='original');args=ap.parse_args()
+    if args.mode=='generate':generate(args.out,args.case,args.user_voice,args.backchannel_wording)
     else:judge(args.data,args.out)
 
 

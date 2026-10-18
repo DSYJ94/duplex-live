@@ -17,8 +17,12 @@ cd "$DL_TASK_SOURCE"
 set -a
 source "$DL/keys/openai.env"
 set +a
+EXTRA=()
+if [ "${DUPLEX_FRESH_REVOICE:-0}" = 1 ]; then
+ EXTRA=(--case hybrid-fresh-005 --case hybrid-fresh-006 --user-voice coral --backchannel-wording uh-huh)
+fi
 apptainer exec --bind /projects,/lus,/home \
  --env PYTHONPATH="$DL/envs/moshi-rag-7379661/lib/python3.12/site-packages:$DL_TASK_SOURCE" \
  --env PYTHONDONTWRITEBYTECODE=1 --env OMP_NUM_THREADS=4 \
- "$DL/pytorch-new.sif" python -u -m evals.duplex_fresh_inputs generate \
+ "$DL/pytorch-new.sif" python -u -m evals.duplex_fresh_inputs generate "${EXTRA[@]}" \
  --out "$DL/runs/duplex-fresh-inputs-${SLURM_JOB_ID}"
