@@ -1,5 +1,29 @@
 # HANDOFF — overnight recovery, 18 October
 
+Plain words: CURRENT 18Oct continuation — component experiments and preservation.
+Normalization7521006/b4c4928 REJECT: all20calls saved, sourcehashes/versions unchanged,
+1actualgraph; refrigerator words differ bothrepeats;4eligible steady pairs median
+.995558 (no gain). Queued-new-action7521032/b1d4b00 REJECT3/5; originaladditional-
+context refusal repeats and replacement13 leavesoldturn1. NO newactionimplemented.
+Localverifier verify-latest-rejected-proposals.py reproduces decisions from saved
+rows/report hashes. Native16case postrun latencyinventory/verifier rechecked:
+6ordinarycases firstrecordedacousticactivity4.07–4.52s afterlastaligneduserword;
+not correctanswer/onset orphysicalearlatency. Native7510331 stillunqualified.
+Wholedecode7521255/source19bdc70 TERMINAL diagnostic:10originalsameprocesscontrols
+exact, firstcandidate fails FLA layer_norm_gated_fwd explicitlycompilerdisabled.
+Zeroactualcompiledgraphs/noeagerfallback/noadoption. Parameters/versionsunchanged.
+Reports locallybacked, whole-decode-integrity.json bindsall11rowfiles/report.
+Existing-action queuedresolution7521271/source23ba558 TERMINAL54s,4/5FAIL;
+DO NOTresubmit oradopt. Same-request/replacement/stop work; separatequestion6
+wronglyretiresstillwantedturn1. Newaction3/5 and existingaction4/5 bothrejected. Usesgenericinstruction/tool-descriptionclarification only, no new
+action/runtime/keywordrouter/API/training. All5contracts requiredbeforeintegration.
+Metadatareceipt qwen35-queued-resolution-launch-20261018.json; localhelper
+/private/tmp/duplex-queued-resolution-submit.py and ...-submit.log. Capturebackedup.
+Ownerdemo7520776/source76174d1 unchanged/running, publiclocalhost8767 HTTP200 and
+all4servedstaticbytes exact/no-store at12:25UTC. Sessionrecovery tests3WS+7Node
+rechecked. Pendingownerphysicalmicquestion unchanged; noaudio/transcriptsretrieved.
+GoalACTIVE/cloudpaused; noheadadopted; userroadmap/pyc untouched.
+
 Plain words: CURRENT 11:48UTC /13:48Berlin18Oct — OWNER DEMO REPAIRED, job7520776/source76174d1,
 node nid010137:8788, public http://localhost:8767 viaNEW127.0.0.1:8780. Helper
 session41646; tunnel81914/PID2733; transportwatcher97988 /private/tmp/duplex-owner-

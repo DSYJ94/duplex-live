@@ -254,3 +254,14 @@ requested numbers, and the unchanged prepared answer for the two same-request
 cases. All five must pass before runtime work; any eventual change still needs
 actual voice and broader retention checks. This is an instruction probe, not
 proof of training, intelligence improvement or native duplex qualification.
+
+Plain words: Existing-action proposal7521271/source23ba558 completes54seconds and
+passes4/5. Original same-request context and explicit prepared delivery resolve
+turn-1 with exactly its prepared answer; stop withdraws turn-1; replacement speaks
+thirteen and retires turn-1. However, the separate question that explicitly keeps
+the old answer also resolves turn-1, losing still-owed speech. Reject the all-five
+implementation gate, no live adoption. This is evidence of over-consumption of
+speech obligations, not an arithmetic failure. Further prompt variants on these
+five reused cases would remain development tuning; fresh paired semantic-state
+supervision and separate untouched conversation checks are needed before any claim
+of general improvement. A new optimizer run needs an explicit data and retention hypothesis, rather than this score alone.

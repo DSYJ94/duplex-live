@@ -5300,3 +5300,11 @@ retires its ID, distinguish replacement versus preserving a separate obligation.
 Two generic procedural examples do not contain captured user wording. Same5
 fixed development probes; all required before runtime implementation; no new
 function/keywordrouter/dispatch/API/optimizer, no native qualification.
+
+Plain words: existing-resolution7521271/source23ba558 COMPLETE54s,4/5. Same-request
+actualcontext and explicitprepareddelivery useexactoldanswer+turn1; stopcorrect;
+replacement13 retiresoldID. Separatequestion6 explicitlypreservingoldanswer also
+retiresit: wrongaction/lostwork, NOT arithmeticerror. All-fivegateFAIL/noadoption.
+Newfunction7521032 remains3/5 failed, and7521006/1255 remainfailedlatencyhypotheses.
+All aredo_not_train; future supervisionmustbeindependentlyauthored ratherthan
+relabelledcaptures, andfreshconversationretentionisrequired afteranytraining.
