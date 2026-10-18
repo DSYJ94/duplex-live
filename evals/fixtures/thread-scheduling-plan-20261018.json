@@ -1,0 +1,16 @@
+{
+  "schema": "dl-thread-scheduling-plan-v1",
+  "declared_before_execution": true,
+  "hypothesis": "If per-token CPU dispatch overhead matters, one CPU thread will speed the same warmed model without changing any generated token. If GPU memory/kernel cost dominates, speed will not improve materially. End-of-turn/TTS delays are unaffected and must be reported separately.",
+  "schedule": [
+    2,
+    1,
+    2
+  ],
+  "requests": 5,
+  "repeats": 2,
+  "gates": "All30 raw outputs/actions/tokens exact to same-process controls, all source tensors/versions unchanged, reference return drift<=10%, median steady speed ratio>=1.2 before any real voice validation. No promotion from model-only timing.",
+  "do_not_train": true,
+  "training_approved": false,
+  "owner_demo_changed": false
+}

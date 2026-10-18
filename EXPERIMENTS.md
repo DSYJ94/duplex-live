@@ -5622,3 +5622,13 @@ pinned clips, no external requests. It also hears “at15”; keep the short-num
 speech failure. It disputes soap more strongly than Whisper and hears no extra
 private-refusal prefix. These are diagnostics, not owner listening or replacement
 qualification gates. Native model7510331 and overall system remain unqualified.
+
+## 18 October — declared CPU scheduling latency diagnostic
+
+Plain words: Compare two CPU threads, one thread, then two threads again in one
+strict frozen9B process. Five saved actual synthetic prompts, two repeats each;
+30 raw outputs/actions/input/output-token counts must match the first same-process
+reference. All model parameters/versions remain exact, no optimizer/API/dispatch.
+Require median steady speedup at least1.2 and return-reference drift within10%
+before considering a separate voice test. This diagnoses model generation only;
+full-text-before-speech, endpointing and speech startup remain separate delays.
