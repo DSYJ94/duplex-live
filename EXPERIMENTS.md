@@ -5799,3 +5799,22 @@ independent restore; later knowledge, real-reasoning, speech and latency gates
 still required. No decoder mask/inventory prompt or new native audio weights.
 The recorded-service launcher can now bind an explicit actual checkpoint budget
 (default972 unchanged) for later1356 diagnostics; no owner model switch.
+
+## 18 October — new26-update proof passes; full1356 run active
+
+Plain words:7527329/source517f159 COMPLETE26updates and fresh-process adapter,
+optimizer, Python/Torch/CUDA RNG and all26probe logits restore exactly. All16
+adapter factors have finite/nonzero gradients; zero initialization preserves logits
+and RNG; every original source tensor/hash/version is unchanged. Peak22.51GB.
+Both private-read stages included. Artifacts backed and independently hash-checked
+locally. Full7527432 starts fresh452×3=1356 updates,45minbound; currentlyRUNNING.
+All126old and42new worker cases before/after strict restore; semantics/speech/
+actualreasoning/latency still required. No new candidate deployed or qualified.
+
+Plain words: Renew the bounded temporarydemo with exact sameaccepted8481bb1
+source and frozen assets, newOWNER7527159 nid010336:8788, publiclocalhost8767 via
+8782. All4assetbytes, privatebinding,775strictcontroller tensors/zero trainables,
+childsource hashes and speechasset hashes verify. No microphone started. New
+helper/forward bounds4hr; private credentials never exported. Old7522115 absent
+fromqueue with allsessions terminal; oldforwardwatcher reacheditsbound. Transient
+SSH observationtimeouts did not trigger any training or service resubmission.

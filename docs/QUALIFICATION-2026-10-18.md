@@ -6,6 +6,30 @@ training mechanics nor clear speech establish reliable task completion. This rec
 keeps those claims separate and leaves missing evidence explicit.
 
 
+Plain words: Latest17:25UTC. No native model is qualified and the972 controller
+remains rejected. Fresh tests found two false message-sending claims without any
+messaging tool; frozen9B correctly refuses. A function-name decoder preserves valid
+outputs but fails closed-task meaning/continuation, so it is also not adopted.
+Actual source/tool/wire/audio evidence is retained rather than replaced by syntax
+scores. The accepted smooth demo is renewed on identical frozen source8481bb1,
+job7527159; no trained candidate or decoder change is deployed.
+
+Plain words: Corrective TRAIN corpus7527052 is fully approved:112scenes/128labels,
+42disjoint-family holdouts, actual fixture record reads and receipt-grounded replies,
+capability absence, missing identification, completed tasks and same-generator
+continuation. All source/API/prompt hashes and worker replays pass locally; no
+owner or captured evaluation data is included. Teacher-only source/profile policy
+is excluded from student features. Independent semantic approval and manual review
+were required; two failed preview batches remain unapproved.
+
+Plain words: New26update preflight7527329 passes finite/nonzero gradients, exact
+zero logits/RNG, frozen source hashes/versions and independent checkpoint/optimizer/
+random-state/logit restore. Full1356 job7527432 is running from fresh base with all
+324older+128new labels and unchanged rank8 adaptation. It evaluates126old+42new
+workers before training and after fresh restore; truthful content, actual speech
+and latency still need qualification. Data/proof quality is not a model result.
+The code, data,26step checkpoint and proofs are locally backed up.
+
 Plain words: Latest review, 18 October around16:08UTC: owner confirms the accepted
 live demo is smooth. Initial answer delay remains open. No new adapter, schema or
 exact backend has been promoted to that demo. The native model remains unqualified.

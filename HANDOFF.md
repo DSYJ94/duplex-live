@@ -1,5 +1,76 @@
 # HANDOFF — overnight recovery, 18 October
 
+Plain words: CURRENT18October17:25UTC. Goal ACTIVE/cloud validation PAUSED. Native
+7510331 stillFAIL; no whole duplex model qualified. Owner accepted smooth playback;
+public http://localhost:8767/?rev=confirmed-pause now points to renewed identical
+frozen OWNER7527159/source8481bb1,nid010336:8788. No new adapter/schema/decoder/voice
+weights adopted. All4servedstaticbytes exact+privatebinding+strictmodelsettings
+verified; no microphone started by agent. Owner old7522115 no longer in queue;
+all its session folders terminal, no words/audio retrieved. Oldwatcher29342 ended
+its bound and closed its own forward. Newhelper86182/PID98147→8767/upstream8782,
+newwatcher37705/PID95794 ownsSSH95796, both4hrbounds from~17:10UTC. Tokenprivate
+/private/tmp/duplex-live-owner-7527159-token NEVERprint/export. Stage8769 stopped.
+Proofs owner-7527159-{staging,public}-proof.json +owner-7522115-retirement.json.
+
+Plain words: New fixed contextual full1356 run7527432/source517f159 is RUNNING
+(last authoritative SSHpoll). Exact idempotent receipt capability-context-full-
+launch-output.txt. Freshbase452TRAINrows×3, never continue972 or26proof weights.
+108paired+216originalrehearsal+128newcapability labels; recipe capability-context-
+plan-20261018.json. Preflight7527329 COMPLETE26updates and independent fresh-process
+adapter/optimizer/Python+Torch+CUDA RNG/logit restorePASS; all16gradienttensors
+finite/nonzero, zeroadapterlogits/RNG exact, original775 source weights/versions
+unchanged,22.51GBpeak. Both record-read stages exercised. All artifacts locally
+backed; verify-capability-context-preflight.py/capability-context-preflight-integrity.
+Full job45minbounded. Poll SAME job, never resubmit from an observation timeout.
+Some SSH banner/read timeouts occur; certificate lastvalid until19:34UTC, do not
+assume auth expiry from a timeout. Latest acceptedvoice/frozenmodel stays separate.
+
+Plain words: Complete new capability corpus7527052/source4dd733f APPROVED and
+independently replayed locally.112TRAINscenes/128native labels,111first-attempt and
+one recordedrepair,42heldout scenes never sent for collection. Manifest
+7c128bbd290df85258674aa921b3b8fa46457f517f89f6d8ea904d48fb1fb849.
+Seven kinds: unsupportedread/send, suppliedfact, completedcancel, completed+resume,
+actual fixture recordread+receipt-grounded reply, missingprojectclarification.
+All64subjective utterances manually reviewed;16real fixture reads+16exact replies
+and16samegeneratorresumes independently replayed. Source/API/profile/prompt/worker
+hashes pass, all artifacts backed. Source factory reads NO evaluation captures or
+owner data. Teacher-only policy/profile is hashed and absent from student messages.
+Preview6963 7/7,8labels NOTTRAINapproved; failed6759/6900 have noTRAINfile/approval.
+Full API responseIDs are fresh, not copied from preview. Proof capability-teacher-
+integrity.json +verify-capability-teacher-data.py. Both older corpora guards unchanged.
+
+Plain words: Important newly measured regression: existing972 falsely claims two
+messages sent without any messaging tool (fresh15 grammarstudy7526599); frozen9B
+correctly refuses. Grammar preserves all16 historically valid proposals exactly,
+but closedtask chooses resolve/restarts speech; frozen even falselyclaims cancellation.
+Do NOTadopt grammar or inventory prompt. Inventory7526476/77 also failed. All72
+captured rows+30freshrows verified and backed, capability-diagnostics-integrity.
+Newdata directly addresses missing capability/state contrasts; no loss/aggregate
+score can qualify the next candidate. Full1356 must preserve frozen old126 passes,
+review all42newworker results for truthful content (mechanical reply route alone
+cannot detect a fake send), then freshcontrols22/broader24 with actualreasoning,
+15capabilitydiagnostics, complete spoken/wire/ASR/latency retention. No automatic
+promotion. Explicit newcheckpoint budget1356 is supported by transport env
+DUPLEX_CONTEXT_CANDIDATE_UPDATES; default972 unchanged. No nativevoiceweights changed.
+
+Plain words: Shortnumber7526600/audit7526601 COMPLETE8fixed renders. Digit15/52
+PCM EXACTLYreproduces oldliveclips, pinning addedat15 toTTS rather thantransport.
+Whisper digits3/4 vswords4/4 exact, allboundsvalid; KyutailocalSTT disagrees/empty
+on several. No generalrenderer adoption from this tiny study. Earlier7526478
+failed BEFOREaudio due inference tensor version counters; repaired instrumentation
+uses fullbefore/afterLM+Mimi hashes. Failedfolder preserved. Proofshort-number-
+integrity.json andverify-capability-diagnostics.py. Originalgates unchanged.
+
+Plain words: Latestcodebeforethishandoff517f159; fullrun immutable source remains
+517f159 even after docscommits. Preserve untrackedroadmap.html and unrelatedpyc.
+Gitbundle/evidence preservation-latest.json must be refreshed after docscommit.
+CloudGPUresume validation PAUSED; $25 allowance unused. Code viaGitonly; artifacts
+rsync-ar EXCLUDEsession-token; NEVERexport privatecore quarantine. Native model
+and earlier rejection details remain below and docs/QUALIFICATION-2026-10-18.md.
+
+## Earlier18October entries — historical, superseded above
+
+
 Plain words: CURRENT18October16:08UTC. Goal ACTIVE/cloud validation PAUSED; native
 7510331 and overall duplex system remain UNQUALIFIED. Owner says “Smooth now” for
 frozen demo7522115/source8481bb1. localhost8767/?rev=confirmed-pause HTTP200 checked;
