@@ -39,6 +39,13 @@ if [ -n "${DUPLEX_FRESH_SCENARIOS:-}" ]; then
  for ID in "${IDS[@]}"; do [[ "$ID" =~ ^hybrid-fresh-[0-9]{3}$ ]]; done
 fi
 EXTRA=()
+if [ "${QWEN_SPOKEN_OUTPUT_CONTRACT:-0}" = 1 ]; then EXTRA+=(--local-controller-spoken-output-contract); fi
+if [ -n "${QWEN35_KERNEL_ASSETS_JOB:-}" ]; then
+ [[ "$QWEN35_KERNEL_ASSETS_JOB" =~ ^[0-9]+$ ]]
+ EXTRA+=(--local-controller-kernel-assets "$DL/runs/qwen35-kernel-assets-$QWEN35_KERNEL_ASSETS_JOB")
+fi
+if [ "${DUPLEX_SCOPE_READ_TOOLS:-0}" = 1 ]; then EXTRA+=(--scope-read-tools); fi
+
 if [ "${DUPLEX_TOOL_CONTEXT:-0}" = 1 ]; then EXTRA+=(--include-tool-context); fi
 if [ -n "${DUPLEX_FRESH_VALIDATOR_SOURCE:-}" ]; then
  : "${DUPLEX_FRESH_VALIDATOR_COMMIT:?Historical validator commit required}"

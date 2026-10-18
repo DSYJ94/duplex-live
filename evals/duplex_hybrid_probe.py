@@ -238,6 +238,8 @@ def main():
     ap.add_argument('--scope-read-tools',action='store_true')
     ap.add_argument('--controller-provider',choices=('openai','local-qwen','local-qwen35'),default='openai')
     ap.add_argument('--local-controller-assets',type=Path)
+    ap.add_argument('--local-controller-kernel-assets',type=Path)
+    ap.add_argument('--local-controller-spoken-output-contract',action='store_true')
     ap.add_argument('--local-controller-pending-speech-protocol',choices=('array','explicit-actions'),default='array')
     ap.add_argument('--local-controller-device',default='cuda:1')
     ap.add_argument('--local-controller-prompt-profile',choices=('base','contract-examples'),default='contract-examples')
@@ -249,6 +251,7 @@ def main():
     ap.add_argument('--evaluation-use',choices=('development','fresh'),default='development')
     ap.add_argument('--controller-protocol',choices=('legacy','required-action','state-aware'),default='legacy')
     args=ap.parse_args()
+    if (args.local_controller_kernel_assets is not None or args.local_controller_spoken_output_contract) and args.controller_provider!='local-qwen35':raise ValueError('Optional newer-controller settings require local-qwen35')
     if args.include_tool_context and args.controller_protocol!='state-aware':raise ValueError('First tool-context proof requires state-aware protocol')
     if not 0<=args.lookup_delay_s<=30:raise ValueError('Invalid bounded controlled delivery delay')
     if args.input_profile=='fresh-evaluation':
@@ -267,7 +270,7 @@ def main():
         if args.controller_provider=='local-qwen35':
             if args.local_controller_prompt_profile!='contract-examples':raise ValueError('Resident newer controller currently proves only the contract-examples profile')
             from evals.qwen35_rpc import ResidentQwen35
-            controller=ResidentQwen35(args.local_controller_assets,args.out,args.local_controller_device,args.local_controller_pending_speech_protocol)
+            controller=ResidentQwen35(args.local_controller_assets,args.out,args.local_controller_device,args.local_controller_pending_speech_protocol,kernel_assets=args.local_controller_kernel_assets,spoken_output_contract=args.local_controller_spoken_output_contract)
         else:
             from evals.qwen_response_executor import QwenResponseExecutor
             controller=QwenResponseExecutor(args.local_controller_assets,args.local_controller_device,args.local_controller_prompt_profile,pending_speech_protocol=args.local_controller_pending_speech_protocol)

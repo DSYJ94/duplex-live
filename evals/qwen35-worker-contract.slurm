@@ -18,6 +18,8 @@ test "$(git -C "$DL_TASK_SOURCE" rev-parse HEAD)" = "$DL_TASK_COMMIT"
 test -z "$(git -C "$DL_TASK_SOURCE" status --porcelain)"
 cd "$DL_TASK_SOURCE"
 EXTRA=()
+if [ "${QWEN_SPOKEN_OUTPUT_CONTRACT:-0}" = 1 ]; then EXTRA+=(--spoken-output-contract); fi
+
 if [ -n "${QWEN35_KERNEL_ASSETS_JOB:-}" ]; then
  [[ "$QWEN35_KERNEL_ASSETS_JOB" =~ ^[0-9]+$ ]]
  EXTRA+=(--kernel-assets "$DL/runs/qwen35-kernel-assets-$QWEN35_KERNEL_ASSETS_JOB")

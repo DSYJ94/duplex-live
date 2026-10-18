@@ -4643,3 +4643,22 @@ Plain words:3740 reaches first FLA CUDA warmup, then Triton3.4 searches an inval
 Prepare an inference-process-only TRITON_LIBCUDA_PATH override to the ACTUAL mapped Torch driver directory. Require exactly one mapped library and matching hashes for its bare/versioned link names, then verify Triton's own search API selects that directory. No driver/library/cache/symlink edits, copied driver or shared environment change.44 targeted tests include mismatched/ambiguous driver rejection. Repeat only the failed optional-kernel variant; the existing matched Torch baseline remains valid because model/prompt/default execution are unchanged.
 
 Plain words:history-enabled resident audio3703 now performs only one private read, cancels it and completes the separate lightning explanation.3704 independent scienceWER0; cancellation rawWER.154 includes Birch/Burt pronunciation and canceled/cancelled spelling, so voice remains unapproved. This supports the actual-history fix on one reused audio scene. Broader same-frozen-source6ea3d00 TRAIN3 and reused6+7 development batches, with independent speech audits, are submitted; retrieve receipts /private/tmp/duplex-qwen35-history-broad-submit-full.txt. No full qualification or new training.
+
+Plain words: 18 October overnight — frozen history candidate 6ea3d00 completed
+three TRAIN regressions7513806 and six reused second-batch scenes7513808. All
+user ASR was exact. Third batch7513810 completed six of seven: unknown record
+023 still rejected by the unscoped execution guard. Backchannel017 still
+interrupts/restarts; this is a failure. Written arithmetic in008 became garbled
+spoken symbols (audit7513809 WER0.266667), and020 narrated withheld-value
+metadata. These motivate an opt-in spoken-output instruction, without changing
+actual function arguments or repairing generated text afterward.
+
+Plain words: optional frozen FLA kernels7514182 pass the same ten typed actual
+worker cases, with median model stage2.100s versus matched torch baseline
+7513739 2.688s (about22% lower). These are development typed cases, not full
+conversation latency. Both strictly load all775 source tensors. Triton's driver
+search is process-locally pointed at the hash-verified library already loaded
+by Torch; no system driver or shared environment changed. Resident RPC now
+accepts opt-in verified kernel assets and the spoken-output instruction, checks
+both in its source/asset handshake, and leaves defaults unchanged. Full audio
+acceptance remains open; no new optimizer steps or adopted native weights.

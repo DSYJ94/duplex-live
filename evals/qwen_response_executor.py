@@ -106,6 +106,12 @@ class QwenResponseExecutor:
                 'A user asking to stop and replace an explanation with a shorter version supersedes the older long answer: give the revised answer through resolve_pending_speech. '
                 'Cancelling a private lookup alone never resolves an unrelated ordinary answer; use respond_to_user after that receipt and leave the client to resume it. '
                 'These are output actions only, not execution receipts. Never both answer an owed request now and leave it queued. ')
+        if getattr(self,'spoken_output_contract',False):
+            instructions+=(
+                'The content argument is read aloud verbatim. Write concise natural spoken sentences. '
+                'Express arithmetic in words; do not include written equations, multiplication symbols, Markdown, or parenthetical calculations. '
+                'Do not narrate internal task flags, speech IDs, execution notices, scheduling state, or withheld-value markers. '
+                'Explain an unavailable requested fact honestly, without exposing internal metadata. Function names, IDs and other tool arguments retain their exact required values. ')
         if self.prompt_profile=='contract-examples':instructions+=CONTRACT_EXAMPLES
         if state['dispatch_protocol']=='state-aware' and self.pending_speech_protocol=='array':
             instructions+=(
@@ -209,21 +215,22 @@ def main():
     ap.add_argument('--attention-backend',choices=('math','flash'),default='math')
     ap.add_argument('--pending-speech-protocol',choices=('array','explicit-actions'),default='array')
     ap.add_argument('--kernel-assets',type=Path)
+    ap.add_argument('--spoken-output-contract',action='store_true')
     ap.add_argument('--controller-transport',choices=('in-process','subprocess'),default='in-process')
     ap.add_argument('--provider',choices=('qwen4b','qwen35'),default='qwen4b')
     args=ap.parse_args();args.out.mkdir(parents=True,exist_ok=False)
-    if args.kernel_assets is not None and (args.provider!='qwen35' or args.controller_transport!='in-process'):
-        raise ValueError('First optional-kernel proof supports newer9B in-process only')
+    if (args.kernel_assets is not None or args.spoken_output_contract) and args.provider!='qwen35':
+        raise ValueError('Optional kernels and spoken contract require the newer9B controller')
     if args.controller_transport=='subprocess':
         if args.provider!='qwen35' or args.attention_backend!='math':raise ValueError('Resident proof supports the explicit newer model/math backend only')
         from evals.qwen35_rpc import ResidentQwen35
-        executor=ResidentQwen35(args.assets,args.out,device='cuda:0',pending_speech_protocol=args.pending_speech_protocol)
+        executor=ResidentQwen35(args.assets,args.out,device='cuda:0',pending_speech_protocol=args.pending_speech_protocol,kernel_assets=args.kernel_assets,spoken_output_contract=args.spoken_output_contract)
     else:
         executor_class=QwenResponseExecutor
         if args.provider=='qwen35':
             from evals.qwen35_controller import Qwen35ResponseExecutor
             executor_class=Qwen35ResponseExecutor
-        extra=dict(kernel_assets=args.kernel_assets) if args.provider=='qwen35' else {}
+        extra=dict(kernel_assets=args.kernel_assets,spoken_output_contract=args.spoken_output_contract) if args.provider=='qwen35' else {}
         executor=executor_class(args.assets,device='cuda:0',attention_backend=args.attention_backend,pending_speech_protocol=args.pending_speech_protocol,**extra)
     results=[]
     rows=fixtures()+[
@@ -263,7 +270,7 @@ def main():
     report=dict(schema='dl-local-qwen-worker-contract-v1',results=results,load=executor.proof,warmup=executor.warmup,
         optional_kernel_assets_sha256=sha256(args.kernel_assets/'report.json') if args.kernel_assets else None,
         controller_transport=args.controller_transport,transport_info=getattr(executor,'transport_info',None),
-        provider=executor.provider_name,pending_speech_protocol=args.pending_speech_protocol,attention_backend=args.attention_backend,remote_api_used=False,input_is_typed=True,optimizer_steps=0,development_cases_reused=True,
+        spoken_output_contract=args.spoken_output_contract,provider=executor.provider_name,pending_speech_protocol=args.pending_speech_protocol,attention_backend=args.attention_backend,remote_api_used=False,input_is_typed=True,optimizer_steps=0,development_cases_reused=True,
         speech_generation_executed=False,duplex_system_qualified=False,code_sha256=sha256(Path(__file__)))
     (args.out/'report.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report),flush=True)
 

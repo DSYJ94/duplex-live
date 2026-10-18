@@ -35,7 +35,7 @@ def receive(stream):
 
 class ResidentQwen35:
     provider_name='local-transformers-qwen35-9b'
-    def __init__(self,assets,folder,device='cuda:1',pending_speech_protocol='explicit-actions'):
+    def __init__(self,assets,folder,device='cuda:1',pending_speech_protocol='explicit-actions',kernel_assets=None,spoken_output_contract=False):
         import transformers
         self.parent_version=transformers.__version__
         if self.parent_version!='4.55.3':raise RuntimeError('Resident integration requires the verified parent speech runtime4.55.3')
@@ -46,6 +46,8 @@ class ResidentQwen35:
         environment.update(PYTHONDONTWRITEBYTECODE='1',OMP_NUM_THREADS='2')
         command=[sys.executable,'-u','-m','evals.qwen35_rpc','--assets',str(assets),'--socket',str(self.socket_path),
             '--device',device,'--pending-speech-protocol',pending_speech_protocol]
+        if kernel_assets is not None:command+=['--kernel-assets',str(kernel_assets)]
+        if spoken_output_contract:command+=['--spoken-output-contract']
         started=time.monotonic()
         try:
             self.process=subprocess.Popen(command,stdout=self.log,stderr=subprocess.STDOUT,env=environment)
@@ -62,13 +64,17 @@ class ResidentQwen35:
             if (ready.get('kind')!='ready' or ready.get('provider')!=self.provider_name
                     or ready.get('model')!='Qwen/Qwen3.5-9B' or not ready.get('load',{}).get('strict')
                     or not ready['load'].get('all_source_tensors_exact_on_cpu_before_device_copy')
-                    or ready.get('pending_speech_protocol')!=pending_speech_protocol):raise RuntimeError('Unverified resident controller handshake')
-            expected={name:sha256(Path(__file__).with_name(name)) for name in ('qwen35_rpc.py','qwen35_controller.py','qwen_response_executor.py','qwen_controller_probe.py')}
+                    or ready.get('pending_speech_protocol')!=pending_speech_protocol
+                    or ready.get('spoken_output_contract')!=spoken_output_contract):raise RuntimeError('Unverified resident controller handshake')
+            expected={name:sha256(Path(__file__).with_name(name)) for name in ('qwen35_rpc.py','qwen35_controller.py','qwen_response_executor.py','qwen_controller_probe.py','qwen35_kernels.py','qwen35_cuda_discovery.py')}
             if (ready['source_sha256']!=expected or ready['load']['assets_sha256']!=sha256(assets)
                     or ready['load']['device']!=device or ready['load']['trainable_parameters']!=0):raise RuntimeError('Resident controller source, assets or device mismatch')
+            expected_kernels=sha256(Path(kernel_assets)/'report.json') if kernel_assets is not None else None
+            if ready['load'].get('optional_kernel_assets_sha256')!=expected_kernels:raise RuntimeError('Resident optional kernel assets mismatch')
             self.proof=ready['load'];self.warmup=ready['warmup'];self.model_id=ready['model']
             self.transport_info=dict(kind='private-unix-socket',controller_separate_process=True,pid=self.process.pid,
                 parent_transformers_version=self.parent_version,child_transformers_version=ready['transformers_version'],
+                spoken_output_contract=spoken_output_contract,optional_kernel_assets_sha256=expected_kernels,
                 startup_s=time.monotonic()-started,child_source_sha256=ready['source_sha256'],log=str(self.log_path),remote_api_used=False)
             self.connection.settimeout(90)
         except BaseException:
@@ -104,19 +110,19 @@ class ResidentQwen35:
 
 def main():
     ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('--assets',type=Path,required=True);ap.add_argument('--socket',type=Path,required=True)
-    ap.add_argument('--device',default='cuda:1');ap.add_argument('--pending-speech-protocol',choices=('array','explicit-actions'),default='explicit-actions');args=ap.parse_args()
+    ap.add_argument('--kernel-assets',type=Path);ap.add_argument('--spoken-output-contract',action='store_true');ap.add_argument('--device',default='cuda:1');ap.add_argument('--pending-speech-protocol',choices=('array','explicit-actions'),default='explicit-actions');args=ap.parse_args()
     listener=socket.socket(socket.AF_UNIX,socket.SOCK_STREAM)
     try:
         listener.bind(str(args.socket));os.chmod(args.socket,0o600);listener.listen(1)
         from evals.qwen35_controller import Qwen35ResponseExecutor
-        executor=Qwen35ResponseExecutor(args.assets,device=args.device,pending_speech_protocol=args.pending_speech_protocol)
+        executor=Qwen35ResponseExecutor(args.assets,device=args.device,pending_speech_protocol=args.pending_speech_protocol,kernel_assets=args.kernel_assets,spoken_output_contract=args.spoken_output_contract)
         import transformers
         connection,_=listener.accept()
         with connection,connection.makefile('rwb') as stream:
             send(stream,dict(kind='ready',provider=executor.provider_name,model=executor.model_id,load=executor.proof,warmup=executor.warmup,
-                pending_speech_protocol=args.pending_speech_protocol,transformers_version=transformers.__version__,
+                pending_speech_protocol=args.pending_speech_protocol,spoken_output_contract=args.spoken_output_contract,transformers_version=transformers.__version__,
                 source_sha256={name:sha256(Path(__file__).with_name(name)) for name in
-                    ('qwen35_rpc.py','qwen35_controller.py','qwen_response_executor.py','qwen_controller_probe.py')}))
+                    ('qwen35_rpc.py','qwen35_controller.py','qwen_response_executor.py','qwen_controller_probe.py','qwen35_kernels.py','qwen35_cuda_discovery.py')}))
             while True:
                 packet=receive(stream);identity=packet.get('id')
                 if packet.get('kind')=='shutdown':send(stream,dict(kind='shutdown',id=identity));break
