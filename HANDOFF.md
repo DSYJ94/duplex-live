@@ -1,6 +1,6 @@
 # HANDOFF — overnight recovery, 18 October
 
-Plain words: CURRENT07:20UTC /09:20Berlin. Owner away; continue autonomously,
+Plain words: CURRENT07:32UTC /09:32Berlin. Owner away; continue autonomously,
 no optional questions before return. Goal ACTIVE. No complete native or hybrid
 qualification. No optimizer steps or adopted native weights this continuation.
 Cloud validation remains paused. Frozen candidate model/media source78ecb1e;
@@ -17,14 +17,39 @@ moon WER0.06818, summary WER0, partials unscored. Client cursor is simulatedAudi
 NOT native browser/device. Proof runs/recovery-continuation-20261016/client-pause-live-integrity.json;
 verifier alongside it. Artifacts downloaded under runs/cloud-export-20261016/tree/runs.
 
-Plain words: FROZEN FRESH CONTROL CHECKS in progress. New user inputs7517443,
-independent quality7517444; quiet031 network7445/audit7446, shorten032 network7447/
-audit7448, replacement033 network7449/audit7450, continuation034 network7451/audit7452.
-Plan committed before generation; no controller changes, no TRAIN approval,
-no regeneration of rejected input. Continue case intentionally tests known lexical
-restart limitation. Helpers /private/tmp/duplex-control-holdout-{submit,status}.py;
-full outputs ...-submit-full.txt and ...-status-full.json. Do not rerun jobs blindly.
+Plain words: FROZEN FRESH CONTROL CHECKS COMPLETE. Inputs7517443/quality7517444:
+ALL eight user utterances independently WER0. Quiet031 network7445/audit7446 and
+shorten032 network7447/audit7448 PASS. Replacement033 network7449/audit7450 FAILS:
+exact recognized new arithmetic request, but native withdraw_speech leaves it
+unanswered. Continue034 network7451/audit7452 FAILS: old generator discarded and
+new explanation begins. TWO OF FOUR behavior passes. Complete volcano/butterfly
+speech WER0, partials unscored. All wire/source/audio hashes and timestamps exact;
+four actual-wire production scheduling replays have no repeated source samples.
+All downloaded. Proof spoken-control-holdout-integrity.json + verifier under
+runs/recovery-continuation-20261016. These cases now inform development, not fresh
+qualification for future changes. No live adoption. Plan/source30510a7 retained.
 
+Plain words: DELIBERATION7517489/source9550a72 COMPLETE, eight actual generations,
+all source hashes exact and all four immediate captured results reproduced.
+Both modes only3/4 COMPLETE control contracts. Native deliberation correctly says
+Seven minus two is five BUT consumes[]: old rainbow explanation still owed.
+FAILURE; reject as training target. Route-only score3/4→4/4 is misleading. Native
+replacement3.915s vs1.269s; stop5.903s vs1.292s; quiet5.260s vs1.291s;
+summary8.191s/35words vs3.651s/29words. No adoption, API requests, training, or media
+changes. Report/rows downloaded under runs/cloud-export-20261016/tree/runs/
+qwen35-deliberation-control-7517489. Proof bounded-deliberation-integrity.json and
+verifier under recovery-continuation-20261016. Native thoughts stay research
+artifacts; summarize actions/evidence/latency, not raw deliberation for the user.
+
+Plain words: NEXT — verified open-provenance TEXT controller training pilot with
+full answer+retirement targets; do not copy any actual voice evaluation or external
+API result into TRAIN. Reject incomplete teacher actions even if words are right.
+First verify adapter gradients, strict restore, frozen source preservation, data
+provenance, full-contract labels and separate held-out families. Keep this bounded;
+no full-model pretraining or untested live adoption. Separately, semantic continue
+needs model-selected retain/resume of the actual paused generator BEFORE lexical
+speech disposal. Current policy cannot be fixed by merely producing better text.
+Keep goal ACTIVE and continue without optional owner questions; cloud stays paused.
 Plain words: LIVE OWNER DEMO http://localhost:8767 now serves experimental compact
 source0d633701a1e029ec94b6c5cf539d0e164841a9a4, job7516574,
 node nid010159:8788. Strict models warmed; compact handshake true; no owner

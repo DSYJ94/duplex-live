@@ -165,3 +165,28 @@ before accepting a final action. New diagnostic never repairs missing closure,
 never calls an external backend, changes no weights and adopts no live changes.
 Measure actual answer content and latency, not just selected route. Two boundary
 tests pass. No claim that slower deliberation is suitable for live voice.
+
+Plain words: Deliberation diagnostic7517489 COMPLETE: eight real generations,
+strict frozen load, no external requests or training. All four immediate replays
+exactly reproduce their captured routes, words and speech IDs. Native deliberation
+answers the replacement arithmetic correctly in3.915s vs immediate1.269s, BUT
+leaves consume_pending_speech_ids=[]: the old rainbow explanation remains owed.
+That is still complete-task FAILURE and is rejected as a training target.
+Immediate and deliberate each pass only3/4 complete action contracts; route labels
+alone would misleadingly suggest3/4 vs4/4. Native stop takes5.903s vs1.292s; quiet
+5.260s vs1.291s; summary8.191s/35words vs3.651s/29words. No wholesale thinking
+adoption. Local source hashes and exact replay verified in bounded-deliberation-
+integrity.json under runs/recovery-continuation-20261016, with durable verifier.
+
+Plain words: Next independent work is a separately verified, open-provenance text
+control training pilot, with complete answer-plus-speech-retirement targets and
+fresh scenario families held apart before collection. Do not reuse these voice
+evaluations, GPT-Live audio, external reasoning outputs or rejected incomplete
+teacher actions as TRAIN. First prove a bounded adapter gradient/restore path and
+preservation of all frozen source weights; never expand compute from an intent
+label score alone. Keep silent withdrawal, stop-plus-new-question, summaries,
+continuation, background cancellation and no-active-task cases separate. The
+separate semantic-continuation fix must retain a paused generator until a model
+chooses continuation; current lexical disposal cannot be repaired by text labels.
+This is a plan for controller adaptation, not native duplex pretraining or proof
+that training will improve it. Owner demo remains unchanged.
