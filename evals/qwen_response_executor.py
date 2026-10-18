@@ -131,9 +131,25 @@ class QwenResponseExecutor:
             if not isinstance(context,list):raise RuntimeError('Local controller requires a chronological transcript')
             messages=[dict(role='system',content=instructions)]
             for event in context:
-                if event.get('role') not in ('user','assistant') or not isinstance(event.get('text'),str):
-                    raise RuntimeError('Unsupported chronological event; no transcript fallback is allowed')
-                messages.append(dict(role=event['role'],content=event['text']))
+                if event.get('control_source')=='actual-tool-execution':
+                    if event.get('role')=='assistant':
+                        calls=event.get('tool_calls')
+                        if not isinstance(calls,list) or len(calls)!=1:raise RuntimeError('Control history requires one actual call')
+                        call=calls[0];function=call['function']
+                        if call['type']!='function' or function['name'] not in ('lookup_record','cancel_lookup','replace_lookup') or not isinstance(function['arguments'],dict):
+                            raise RuntimeError('Invalid actual tool context')
+                        messages.append(dict(role='assistant',content=None,tool_calls=[dict(type='function',id=call['id'],
+                            function=dict(name=function['name'],arguments=self.tool_history_arguments(function['arguments'])))]))
+                    elif event.get('role')=='tool':
+                        if (not messages or messages[-1]['role']!='assistant' or len(messages[-1].get('tool_calls',[]))!=1
+                                or messages[-1]['tool_calls'][0]['id']!=event.get('tool_call_id') or not isinstance(event.get('text'),str)):
+                            raise RuntimeError('Actual tool notice lacks its matching chronological call')
+                        messages.append(dict(role='tool',tool_call_id=event['tool_call_id'],content=event['text']))
+                    else:raise RuntimeError('Invalid control event role')
+                else:
+                    if event.get('role') not in ('user','assistant') or not isinstance(event.get('text'),str):
+                        raise RuntimeError('Unsupported chronological event; no transcript fallback is allowed')
+                    messages.append(dict(role=event['role'],content=event['text']))
         if not prior:
             latest=next((event['text'] for event in reversed(context) if event['role']=='user'),None)
             if latest is None:raise RuntimeError('No actual latest user request')
