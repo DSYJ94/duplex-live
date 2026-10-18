@@ -1,5 +1,38 @@
 # HANDOFF — overnight recovery, 18 October
 
+Plain words: CURRENT 18 October, matched recorded-speech diagnostics are active.
+Smoke058 frozen7524521/candidate7524523 COMPLETE. Candidate strict GPU RPC handshake
+pins972 checkpoint200a1e67fe988a34157edc1ce10abf5d9bc83afa4f5b5989bb8b0e33e8d212f7;
+source85b24ed. Correct spoken52, exact samePCM both arms; input/wire/server-wave
+checks and two production Node wire replays pass, no duplication/discard. Corrected
+independent audits7524578/7524579 bothWER0/valid bounds. Original audits7524522/24
+FAILED BEFORE AUDIT: metadata used DUPLEX_LIVE_SERVICE_JOB; actual required variable
+is DUPLEX_LIVE_JOB. Only audits were resubmitted, NOT model services. Local reusable
+verify-context-speech-smoke.py and context-speech-smoke-integrity.json preserve this.
+
+Plain words: Remaining paired services source85b24ed,2 afterany chains (no owner
+change). Each entry service/audit frozen then candidate:
+059 7524590/91,7524592/93;060 7524594/95,7524596/97;
+061 7524598/99,7524600/01;064 7524602/03,7524604/05;
+065 7524606/07,7524608/09; reused055 7524610/11,7524612/13.
+Receipt context-speech-pairs-launch-output.txt; metadata idempotent remote receipt
+context-speech-pairs-85b24ed-launch.json. Poll these jobs, NEVER resubmit on SSH
+observation timeout. Fetch artifacts with rsync -ar EXCLUDING session-token.
+First059 both complete: each one coherent honest reply, no invented code/read.
+ASR keeps original two sentences in ONE dispatch; this does NOT establish fixing
+old057 two-dispatch duplicate failure. Candidate has awkward first-person wording.
+Next: finish paired full-conversation outcome/cursor/receipt/WER/latency review;
+explicitly reuse057 if needed to cover its known split. No more optimizer solely
+from aggregate scores. Both trained candidates remain REJECTED for promotion;
+actual Astra133/CPU134 upstream error needs a separate exact-tool investigation,
+not another local-routing label. No exact-reasoner tools implemented yet.
+
+Plain words: Accepted localhost8767 remains frozen OWNER7522115/source8481bb1,
+lastHTTP200. Forward watcher5906/PID29342 owns child29344; helper92441/PID13003;
+private token path unchanged, NEVER print/export. Owner input/smoothness accepted;
+new candidate has NO owner listening acceptance. Cloudpaused, native7510331 still
+unqualified; full goalACTIVE. All latest checkpoints/data/proofs locally backed up.
+
 Plain words: CURRENT 18 October — mixed972 candidate7523832/sourcebb78f92 COMPLETE
 and REJECTED for promotion. Paired51/54 vs44; earlier63/72 vs60, but TWO prior
 cancel-preserve passes lost (empty content→worker rejects, valid speech-retirement

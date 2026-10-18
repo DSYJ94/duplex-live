@@ -5505,3 +5505,24 @@ owner's accepted frozen service is unchanged. CPU metadata/budget rejection chec
 three real-WebSocket regressions,13 other selected fixtures, seven Node tests and
 syntax/shell checks pass. Both teacher/compiler approvals remain exact. Actual GPU
 RPC handshake and PCM speech remain untested before the new diagnostic runs.
+
+## 18 October — actual context-adapter speech smoke verified
+
+Plain words: Recorded058 service7524521 frozen and7524523 candidate COMPLETE.
+GPU parent/child strict checkpoint handshake pins the saved972 adapter. Both return
+correct52 with identical model PCM. Source user rows, transmitted packets and
+rebuilt server wave match exactly; production Node wire-order replay schedules
+every source sample once, with no discard. Independent corrected audits7524578/79
+bothWER0 and valid bounds. Initial audit submissions7524522/24 failed before
+running because the coordinator used the wrong environment variable; correct is
+DUPLEX_LIVE_JOB. Only audits were rerun. Reusable local verifier and integrity JSON
+check these artifacts. This is not physical listening or overall qualification.
+
+Plain words: Remaining five eligible fresh conversations and an explicitly reused
+055 cancellation regression run matched frozen/candidate services in two bounded
+afterany chains, with independent afterok audits. Source85b24ed; exact mapping in
+context-speech-pairs-launch-output.txt.059 both give one honest unsupported-code
+reply; original speech stays one ASR dispatch, so this does not cover old057's split
+and repeated-refusal failure. Candidate first-person phrasing is awkward. Complete
+paired conversation/cursor/WER/latency outcomes remain pending. Owner frozen demo
+unchanged/HTTP200. No new promotion or native qualification claim.

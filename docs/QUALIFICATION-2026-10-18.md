@@ -389,3 +389,18 @@ screening; replacement062 fails colours/colors lexical normalization, cancellati
 without rerolls. Optional recorded-service adapter attachment is for diagnosis of
 the unqualified candidate, not owner-demo promotion. Full spoken task performance
 and native qualification remain unresolved; the accepted frozen live service stays.
+
+## Recorded speech attachment verified; full conversations pending
+
+Plain words: Frozen7524521 and contextual7524523 both produce correct52 on the
+same newly approved input. The contextual GPU handshake verifies the actual saved
+972-update checkpoint. Input PCM, wire PCM and rebuilt server capture are exact;
+production playout replays have no duplicated or discarded samples. Independent
+audits7524578/79 giveWER0 and valid bounds; raw audio bytes match between arms.
+This is one recorded conversation, not owner listening or room AEC acceptance.
+
+Plain words: Five further eligible fresh conversations and one reused actual
+cancellation regression are running in matched bounded chains. Both059 arms return
+one honest reply, but ASR does not split that input: the earlier057 duplicate
+problem is uncovered by059. The two text cancellation regressions and actual upstream
+reasoning error still block promotion. No new owner-demo model or cloud validation.
