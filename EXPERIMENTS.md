@@ -4912,3 +4912,29 @@ and failure is retained. A user prohibition blocks an external attempt before th
 API call; six actual request attempts per arm bound cost. No teacher agreement,
 speech or overall qualification claim. Compare frozen native/compact formats
 without adapting between arms; review actual final words and receipts.
+
+
+Plain words: actual compact network7516339/audit6340 and cancellation6341/42
+complete with exact input and received PCM. Ordinary ice speech WER0; count19
+is correct, but independent ASR changes sum to summed (WER0.167). Cancellation
+preserves the new shadow answer and suppresses the late result; extra and plus
+cancelled/canceled differences remain (WER0.059). Compact is not adopted in the
+published owner demo7516113, which remains on49e820b.
+
+Plain words: new typed generalization7516385 native /6387 compact finds a real
+false-completion defect: BOTH claim cancellation despite no earlier task. Native
+also selects external delegation against explicit no-tools wording; the harness
+blocks the actual API request. Native logic is unscored because its six-request
+budget was already exhausted. Native correctly answers two local and six actual
+remote numerical cases; compact correctly answers four local numerical cases,
+four remote, logic and unknown private fact, and obeys the no-tools product.
+This is a small typed diagnostic, not a general intelligence score or speech gate.
+Full actual outputs/receipts retained in recovery continuation evidence.
+
+Plain words: targeted reasoning-domain instruction now makes actual empty task
+state authoritative, disallows claiming an operation through an ordinary reply,
+and explicitly honors external-tool prohibitions. No string repair, hidden
+answer oracle or cancellation-by-speech is added. Recheck the original twelve
+questions as development plus four new task/constraint questions in BOTH formats.
+Budget raised to eight actual external requests per arm so the old six-call cap
+does not hide the logic result. No live service change or optimizer steps.

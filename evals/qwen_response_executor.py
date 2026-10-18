@@ -113,8 +113,12 @@ class QwenResponseExecutor:
                 'Choose exactly one provided function; return only its call. Answer simple knowledge and short arithmetic directly. '
                 'Use delegate_reasoning for difficult multi-step calculation, combinatorial optimization or exhaustive counting. '
                 'It executes a real stronger-model request with the original latest user question unchanged. Never invent its answer. '
+                'If the user prohibits external tools or another model, do not delegate; answer locally or honestly state uncertainty. '
                 'Already running tasks are real background work; do not repeat them when the user asks an unrelated ordinary question. '
                 'Use cancel_reasoning when the user cancels an identified active reasoning result, preserving unrelated work. It stops result delivery, not already running remote computation; never claim that computation was aborted. '
+                'The ACTUAL client state is authoritative about existing tasks. An empty tasks object means no earlier task is active. '
+                'If there is no matching active task, explain that there is nothing to cancel or ask which task; never say cancellation happened. '
+                'An ordinary answer does not execute an operation. Confirm a cancellation only through the actual cancel_reasoning action or its execution receipt. '
                 'Keep speech natural and concise, at most35 words. Never narrate internal IDs, task state or scheduling metadata. ')
         if state['dispatch_protocol']=='state-aware' and self.pending_speech_protocol=='array':
             instructions+=(
