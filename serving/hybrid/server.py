@@ -119,10 +119,11 @@ def main():
     ap.add_argument('--compact-replies',action='store_true')
     ap.add_argument('--development-function-selector',type=Path);ap.add_argument('--pending-speech-only',action='store_true')
     ap.add_argument('--include-speech-context',action='store_true')
-    ap.add_argument('--client-pause-protocol',action='store_true')
+    ap.add_argument('--client-pause-protocol',action='store_true');ap.add_argument('--semantic-pause',action='store_true')
     ap.add_argument('--host',default='127.0.0.1');ap.add_argument('--port',type=int,default=8788);ap.add_argument('--idle-seconds',type=int,default=300);ap.add_argument('--max-sessions',type=int,default=1)
     args=ap.parse_args()
     if args.development_function_selector is not None and not (args.include_speech_context and args.client_pause_protocol):raise ValueError('First selector speech experiment requires generated history and client-owned pause')
+    if args.semantic_pause and (not args.client_pause_protocol or args.development_function_selector is not None):raise ValueError('Semantic resume first requires client pause and the frozen controller; the old adapter never trained this action')
     if args.client_pause_protocol and not args.include_speech_context:raise ValueError('Client pause experiment requires generated speech context')
     if not 1<=args.idle_seconds<=14400 or not 1<=args.max_sessions<=20:raise ValueError('Invalid bounded live service lifetime')
     args.out.mkdir(mode=0o700,parents=True,exist_ok=False);token=secrets.token_urlsafe(32)
@@ -156,7 +157,7 @@ def main():
                 try:
                     report=run_case(listener,speaker,source,folder,0.,controller_protocol='state-aware',controller=controller,
                         worker_kind='reasoning-development',live_input=request['incoming'],output_observer=request['output'],
-                        include_speech_context=args.include_speech_context,interrupt_policy='acoustic-pause' if args.client_pause_protocol else 'acoustic')
+                        include_speech_context=args.include_speech_context,semantic_pause=args.semantic_pause,interrupt_policy='acoustic-pause' if args.client_pause_protocol else 'acoustic')
                     report.update(capture_settings=request['capture_settings'],client_kind=request['client_kind'],microphone_acceptance=False,physical_aec_tested=False,
                         browser_playout_acceptance=False,server_model_wav_is_not_a_device_recording=True)
                     (folder/'report.json').write_text(json.dumps(report,indent=2)+'\n')

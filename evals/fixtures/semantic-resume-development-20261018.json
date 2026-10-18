@@ -1,0 +1,23 @@
+{
+  "schema": "dl-semantic-resume-development-plan-v1",
+  "declared_before_model_execution": true,
+  "new_holdout": false,
+  "training_approved": false,
+  "controller": "published-frozen-Qwen3.5-9B",
+  "speech_weights_changed": false,
+  "adapter_enabled": false,
+  "mechanism": "Retain paused generator through lexical ASR and native model action selection; resume_speech names the actual retained event and generates no new text.",
+  "inputs_job": "7517443",
+  "quality_job": "7517444",
+  "cases": [
+    {"scenario":"034","expected":"Native resume_speech action; same generator; one complete original explanation; no duplicate source samples."},
+    {"scenario":"031","expected":"Silent withdrawal retires old speech; no new response."},
+    {"scenario":"032","expected":"Requested one-sentence cause replaces old speech; no old restart."},
+    {"scenario":"033","expected":"Old rainbow answer retired; new seven-minus-two answer is five."}
+  ],
+  "scoring_not_supplied_to_models": true,
+  "independent_played_audio_asr_required": true,
+  "wire_order_production_playout_replay_required": true,
+  "physical_device_acceptance": false,
+  "do_not_regenerate_failed_inputs": true
+}

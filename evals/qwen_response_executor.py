@@ -129,6 +129,11 @@ class QwenResponseExecutor:
                     'Read the WHOLE latest request: stop followed by a request for a first step, summary or new answer requires that answer, never silence. '
                     'If the user also asks a new question or revised explanation, answer it through '
                     +('resolve_pending_speech' if self.pending_speech_protocol=='explicit-actions' else 'respond_to_user with consume_pending_speech_ids')+' instead. ')
+        if state.get('resumable_speech') is not None:
+            instructions+=('The actual state identifies a PAUSED speech generator retained by the client. '
+                'For a request to continue that explanation or a mere acknowledgment, choose resume_speech with its exact speech_id and event_id. '
+                'This resumes the remaining audio without a new introduction, paraphrase or duplicate prefix. It is an output action, not completion of a task. '
+                'For stop, a requested revision, another question or a cancellation, use the corresponding provided action instead. ')
         if state['dispatch_protocol']=='state-aware' and self.pending_speech_protocol=='array':
             instructions+=(
                 'Pending speech lists ordinary answers owed but not fully played; an unknown prefix may have been heard. '
