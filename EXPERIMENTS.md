@@ -5975,3 +5975,22 @@ change. Next training must contrast actual task states and complete multi-intent
 requests using NEW TRAIN data, not the evaluated counterexamples or more unchanged
 epochs. Student/teacher capability metadata must agree and source approval gates
 remain intact. Such new training is not implemented or claimed here.
+
+
+## 18 October, 21:25 UTC — native pilot rejected; complete new corpus gated
+
+Plain words: Native7530407 target/numerical audit and7530408 eight-update plus
+independent full-state restore COMPLETE. Assistant-only text/eight-audio loss has
+zero user prediction targets; not waveform AEC. Task review REJECTS the pilot:
+ordinary1/4 and private/control failures. Old actual-history/KL/hidden retention
+was omitted, so do not claim an isolated acoustic-loss comparison. Matched plain
+context and voice controls do not qualify the model; no more voice sweep.
+
+Plain words: New authored40-scene source7771e82 renders188 clips/6973 characters
+in7531436. Speech audit7531437 fails nine scenes, including five TRAIN. Exact-word
+TRAIN-only five-clip repair7531496/source1b3ae98 preserves held-out WAV hashes,
+but independent whole-TRAIN audit7531499 still FAILS. Teacher7531501, measured
+teacher audit7531502 and semantic/conversion7531503 CANCELLED. New complete24
+teacher pipeline includes quiet/new-answer checks and actual independent Astra
+semantic review; implemented, not approved/executed successfully. Twenty CPU
+regression/control tests pass. Successor entry: docs/CLOUD-CONTINUATION-2026-10-18.md.

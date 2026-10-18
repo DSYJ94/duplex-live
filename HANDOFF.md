@@ -1,5 +1,21 @@
 # HANDOFF — overnight recovery, 18 October
 
+
+Plain words: CLOUD SUCCESSOR START HERE: docs/CLOUD-CONTINUATION-2026-10-18.md,
+updated 18 October 21:25 UTC. Goal ACTIVE, native/whole-system FAIL. Source
+1b3ae98 is pushed. Actual native joint7530408 passed eight-update/independent
+restore engineering checks but is REJECTED for task regressions; it omitted old
+retention, so this is not an audio-loss-only ablation. Voice controls complete,
+no promotion. New40-scene source generated; exact-word five-clip TRAIN repair
+7531496 completed, but complete-TRAIN audio audit7531499 FAILED. Dependent
+teacher7531501/ASR7531502/semantic7531503 CANCELLED; NO new training running.
+Do not resubmit the whole chain without inspecting remaining source failures.
+All24 TRAIN scenes must pass; failed held-out audio stays unchanged/excluded.
+New cloud chat needs its OWN SSH/Clifton/network access; Mac shutdown stops local
+agent/demo services, not Slurm. Full artifacts are on cluster, not GitHub.
+The 20:00 entries immediately below are historical and superseded.
+
+
 Plain words: CURRENT18October20:00UTC. Goal ACTIVE; cloud PAUSED. Qwen1599 run
 7530021 remains REJECTED. Independent24 role-reversal7530022 COMPLETE:20/24 to
 20/24, identical pass/fail IDs, all4 cancel+new-answer cases fail in BOTH models.

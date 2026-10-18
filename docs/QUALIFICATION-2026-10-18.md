@@ -1,5 +1,16 @@
 # Qualification record — 18 October 2026
 
+
+Plain words: Latest21:25UTC. Native joint7530408 completed eight actual updates
+and exact independent training-state restore, but is REJECTED: ordinary answers
+1/4, private/control failures persist. Retention omission confounds audio-loss
+attribution. Context/voice controls remain partial; released7531044 has invalid
+ASR timestamps. New source40 scenes is NOT training-approved: repair7531496
+complete but whole-TRAIN audit7531499 FAILED; teacher7531501/02/03 cancelled.
+No new model training is running. Native and whole-system verdict remain FAIL.
+Cloud handoff: docs/CLOUD-CONTINUATION-2026-10-18.md. No checkpoint/demo promotion.
+
+
 Plain words: Latest20:00UTC. Native matched-voice comparison verifies ordinary
 answer retention on4 reused TRAIN questions and unnecessary retrieval markers4
 to0, all8 native speech transcriptions exact. No backend actually executed; no
