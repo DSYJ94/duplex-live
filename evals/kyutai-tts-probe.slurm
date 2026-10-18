@@ -28,6 +28,14 @@ if [ -n "${KYUTAI_TTS_BACKEND_REFERENCE_JOB:-}" ]; then
  [[ "$KYUTAI_TTS_BACKEND_REFERENCE_JOB" =~ ^[0-9]+$ ]]
  EXTRA+=(--backend-reference "$DL/runs/kyutai-tts-probe-$KYUTAI_TTS_BACKEND_REFERENCE_JOB/backend.json")
 fi
+if [ -n "${KYUTAI_TTS_HYBRID_REFERENCE_JOB:-}" ]; then
+ [[ "$KYUTAI_TTS_HYBRID_REFERENCE_JOB" =~ ^[0-9]+$ ]]
+ : "${KYUTAI_TTS_HYBRID_REFERENCE_CASE:?Actual hybrid case required}"
+ : "${KYUTAI_TTS_HYBRID_REFERENCE_TASK:?Actual hybrid response required}"
+ [[ "$KYUTAI_TTS_HYBRID_REFERENCE_CASE" =~ ^[a-z0-9-]+$ && "$KYUTAI_TTS_HYBRID_REFERENCE_TASK" =~ ^turn-[0-9]+$ ]]
+ EXTRA+=(--hybrid-backend-reference "$DL/runs/duplex-hybrid-probe-$KYUTAI_TTS_HYBRID_REFERENCE_JOB/$KYUTAI_TTS_HYBRID_REFERENCE_CASE/$KYUTAI_TTS_HYBRID_REFERENCE_TASK-backend.json")
+fi
+EXTRA+=(--text-policy "${KYUTAI_TTS_TEXT_POLICY:-verbatim}" --seed "${KYUTAI_TTS_SEED:-42424242}")
 apptainer exec --nv --bind /projects,/lus,/home \
  --env PYTHONPATH="$DL/envs/moshi-rag-7379661/lib/python3.12/site-packages:$DL_TASK_SOURCE" \
  --env PYTHONDONTWRITEBYTECODE=1 --env OMP_NUM_THREADS=8 \

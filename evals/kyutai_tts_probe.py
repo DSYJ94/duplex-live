@@ -24,8 +24,14 @@ def main():
     ap.add_argument('--warmup',action='store_true')
     ap.add_argument('--backend-reference',type=Path,
         help='Replay one previously verified actual controller result for a matched renderer benchmark')
+    ap.add_argument('--hybrid-backend-reference',type=Path,help='Replay an actual completed hybrid record response for an isolated renderer diagnostic')
+    ap.add_argument('--text-policy',choices=('verbatim','unquote-paired'),default='verbatim')
+    ap.add_argument('--seed',type=int,default=42424242)
     ap.add_argument('--out',type=Path,required=True)
-    args=ap.parse_args();manifest=json.loads(args.assets.read_text())
+    args=ap.parse_args()
+    if args.backend_reference and args.hybrid_backend_reference:ap.error('Choose exactly one recorded backend source')
+    reference_path=args.hybrid_backend_reference or args.backend_reference
+    manifest=json.loads(args.assets.read_text())
     mimi_gate=json.loads(args.mimi_load_approval.read_text())
     if (mimi_gate['schema']!='dl-kyutai-tts-mimi-load-cpu-v1' or not mimi_gate['passed']
             or not mimi_gate['original_default_loader_failed'] or mimi_gate['gpu_used'] is not False
@@ -75,7 +81,7 @@ def main():
     spec=importlib.util.spec_from_file_location('pinned_kyutai_streaming_example',example)
     upstream=importlib.util.module_from_spec(spec);sys.modules[spec.name]=upstream;spec.loader.exec_module(upstream)
     args.out.mkdir(parents=True,exist_ok=False)
-    math_attention();torch.manual_seed(42424242);torch.cuda.manual_seed_all(42424242)
+    math_attention();torch.manual_seed(args.seed);torch.cuda.manual_seed_all(args.seed)
     loads=[];mimi_loads=[];load_start=time.perf_counter()
     graph_context=no_cuda_graph() if args.execution=='eager' else nullcontext()
     with torch.inference_mode(),no_compile(),graph_context,sdpa_kernel(SDPBackend.MATH):
@@ -119,7 +125,20 @@ def main():
                 packets.clear();frame_steps.clear();decode_steps.clear();model_steps.clear()
             service_prepare_seconds=time.perf_counter()-load_start
             start=time.perf_counter()
-            if args.backend_reference:
+            if args.hybrid_backend_reference:
+                prior=json.loads(reference_path.read_text());folder=reference_path.parent
+                parent=json.loads((folder.parent/'report.json').read_text())
+                case=next(c for c in parent['results'] if c['scenario']==folder.name)
+                backend=prior['result']
+                if (parent['schema']!='dl-concurrent-hybrid-development-v1' or not parent['component_execution_completed']
+                        or parent['external_controller']!='gpt-6-luna' or backend['route']!='delegate'
+                        or case['audio_sha256']!=sha256(folder/'model.wav')
+                        or not any(r['task_id']==backend['task_id'] and r['text']==backend['content'] for r in case['fully_played_responses'])
+                        or not backend['receipts'] or any(r not in case['actual_tool_receipts'] for r in backend['receipts'])
+                        or not all(r['tool']=='lookup_record' and r.get('executed') and r.get('read_only') for r in backend['receipts'])):
+                    raise RuntimeError('Renderer diagnostic lacks an actual completed record response')
+                context=prior.get('context',case['world_tasks'][backend['task_id']]['context'])
+            elif args.backend_reference:
                 prior=json.loads(args.backend_reference.read_text())
                 parent=json.loads((args.backend_reference.parent/'report.json').read_text())
                 if (parent['schema']!='dl-external-controller-tts-probe-v1' or not parent['passed']
@@ -137,7 +156,11 @@ def main():
                 if not receipts or any(not world.deliverable(r) for r in receipts):
                     raise RuntimeError('Speech trial has no actual deliverable backend lookup')
             backend_ready=time.perf_counter()-start
-            text=backend['content'];(args.out/'backend.json').write_text(json.dumps(dict(context=context,result=backend),indent=2)+'\n')
+            from evals.tts_text_surface import for_speech
+            original_text=backend['content'];text=for_speech(original_text,args.text_policy)
+            tokenization={name:[dict(word=w,tokens=tts.tokenizer.encode(w)) for w in value.split()]
+                for name,value in [('original',original_text),('rendered',text)]}
+            (args.out/'backend.json').write_text(json.dumps(dict(context=context,result=backend),indent=2)+'\n')
             for entry in upstream.prepare_script(tts,text,first_turn=True):
                 gen.append_entry(entry);gen.process()
             gen.process_last()
@@ -157,8 +180,9 @@ def main():
     (args.out/'packets.json').write_text(json.dumps(ledger,indent=2)+'\n')
     report=dict(schema='dl-external-controller-tts-probe-v1',passed=True,
         text=text,backend=backend,backend_ready_s=backend_ready,model_load_seconds=load_seconds,
-        backend_is_replay=bool(args.backend_reference),actual_backend_executed_this_run=not bool(args.backend_reference),
-        source_backend_file_sha256=sha256(args.backend_reference) if args.backend_reference else None,
+        backend_is_replay=bool(reference_path),actual_backend_executed_this_run=not bool(reference_path),
+        source_backend_file_sha256=sha256(reference_path) if reference_path else None,
+        original_backend_text=original_text,text_policy=args.text_policy,seed=args.seed,tokenization=tokenization,
         execution_mode=args.execution,torch_compile_enabled=False,cuda_graphs=graphs,
         warmup_seconds=warmup_seconds,warmup_packets=warmup_packets,service_prepare_seconds=service_prepare_seconds,
         wall_seconds=wall,audio_seconds=len(raw)/rate,sample_rate=rate,
