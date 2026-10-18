@@ -20,6 +20,8 @@ def main():
     ap.add_argument("--model", type=Path, required=True)
     ap.add_argument("--source", type=Path, required=True)
     ap.add_argument("--out", type=Path, required=True)
+    ap.add_argument("--excerpt-start-s", type=float, default=3.2)
+    ap.add_argument("--excerpt-stop-s", type=float, default=13.2)
     args = ap.parse_args()
     import numpy as np
     import soundfile as sf
@@ -38,9 +40,14 @@ def main():
     audio, rate = sf.read(original, dtype="float32")
     if rate != 24000 or audio.ndim != 1 or not np.isfinite(audio).all():
         raise RuntimeError("Expected finite mono 24 kHz reference audio")
-    # A continuous excerpt of the first general-knowledge answer; no word
-    # rearrangement, resynthesis, normalization, or private-result conditioning.
-    start, stop = round(3.2 * rate), round(13.2 * rate)
+    # A continuous excerpt, never word rearrangement or resynthesis. Defaults
+    # preserve the original reference; explicit alternatives test content priming.
+    if (not np.isfinite(args.excerpt_start_s + args.excerpt_stop_s)
+            or not 0 <= args.excerpt_start_s < args.excerpt_stop_s <= len(audio) / rate):
+        raise ValueError("Reference excerpt exceeds its recorded synthetic source")
+    start, stop = round(args.excerpt_start_s * rate), round(args.excerpt_stop_s * rate)
+    if stop - start != 10 * rate:
+        raise ValueError("Matched voice-content controls retain exactly ten seconds")
     clip = audio[start:stop]
     if len(clip) != stop-start or float(np.sqrt(np.mean(clip**2))) < .001:
         raise RuntimeError("Missing or silent development reference excerpt")
