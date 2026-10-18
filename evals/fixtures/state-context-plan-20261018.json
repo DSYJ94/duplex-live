@@ -26,5 +26,7 @@
   "owner_demo_changed": false,
   "cloud_gpu_validation": false,
   "production_adopted": false,
-  "counterbalanced_task_ids_and_orders": true
+  "counterbalanced_task_ids_and_orders": true,
+  "receipt_instruction_corrected_in_teacher_and_student": true,
+  "neutral_chronological_task_question_stems": true
 }

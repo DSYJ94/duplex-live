@@ -78,7 +78,7 @@ def state_world(scene):
     question=f'Explain two steps for putting away a {scene["item"]}.'
     prepared=f'Place the {scene["item"]} in its storage space. Close the storage door.'
     questions=[dict(role='user',text=f'Count valid arrangements for the {scene["target"]}.'),
-        dict(role='user',text=f'Separately count valid arrangements for the {scene["other"]}.')]
+        dict(role='user',text=f'Count valid arrangements for the {scene["other"]}.')]
     if not scene['history_target_first']:questions.reverse()
     context=questions+[dict(role='user',text=question),dict(role='assistant',text=prepared,control_source='actual-speech-generation',
             speech_task_id='retained-directions',first_speech_event_id='fixture-cursor',latest_speech_event_id='fixture-cursor',
@@ -98,7 +98,7 @@ def compiler(generator,model):
     x=object.__new__(Compile);x.model_id=model;x.compact_replies=True;x.spoken_output_contract=False
     x.pending_speech_protocol='explicit-actions';x.prompt_profile='contract-examples';x.attention_backend='math'
     x.generator=generator;x.history={};x.counter=0;x.lock=threading.RLock()
-    return ApplicationCapabilityExecutor(x)
+    return ApplicationCapabilityExecutor(x,receipt_contract=True)
 
 
 def run(scene,generator,model,*,response_executor=None):
@@ -106,7 +106,7 @@ def run(scene,generator,model,*,response_executor=None):
     if response_executor is None:x=compiler(generator,model)
     else:
         from evals.application_capabilities import ApplicationCapabilityExecutor
-        x=ApplicationCapabilityExecutor(response_executor)
+        x=ApplicationCapabilityExecutor(response_executor,receipt_contract=True)
     base=scene['base'];corpus=scene['corpus']
     if corpus in ('paired','rehearsal'):
         from training.control.paired_curriculum import payload

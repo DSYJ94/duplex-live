@@ -58,8 +58,9 @@ class ApplicationCapabilityGenerator:
 
 
 class ApplicationCapabilityExecutor:
-    def __init__(self, base):
+    def __init__(self, base, *, receipt_contract=False):
         self.base, self.requests = base, []
+        self.receipt_contract = receipt_contract
 
     def __getattr__(self, name):
         return getattr(self.base, name)
@@ -73,7 +74,18 @@ class ApplicationCapabilityExecutor:
             raise ValueError('Actual operation registry differs from the declared profile')
         with self.base.lock:
             original = self.base.generator
-            proposal = ApplicationCapabilityGenerator(original, domain)
+            generation_base = original
+            if self.receipt_contract:
+                from evals.instruction_contract import InstructionContractGenerator
+                receipts = None
+                if payload.get('tool_choice') == 'none':
+                    if payload.get('previous_response_id') not in self.base.history:
+                        raise ValueError('Receipt correction requires the actual prior response')
+                    receipts = payload['input']
+                    if not receipts or any(r.get('type') != 'function_call_output' for r in receipts):
+                        raise ValueError('Receipt correction requires actual function outputs')
+                generation_base = InstructionContractGenerator(original, 'receipt', receipts)
+            proposal = ApplicationCapabilityGenerator(generation_base, domain)
             self.base.generator = proposal
             try:
                 return self.base(payload)

@@ -5,12 +5,14 @@ import copy
 from datetime import datetime,timezone
 import json
 import os
+import shutil
+import subprocess
 from pathlib import Path
 from training.control.state_curriculum import specifications,run,assess
 from training.control.curriculum import xml_action
 from training.control.teacher_data import request,sha,MODEL
 
-FILES=('training/control/state_curriculum.py', 'training/control/state_data.py', 'training/control/paired_curriculum.py', 'training/control/capability_curriculum.py', 'training/control/curriculum.py', 'training/control/teacher_data.py', 'evals/application_capabilities.py', 'evals/idempotent_reasoning_worker.py', 'evals/qwen_response_executor.py', 'evals/qwen35_controller.py', 'evals/qwen_controller_probe.py', 'evals/duplex_reasoning_worker.py', 'evals/recovery_worker.py', 'evals/duplex_speech_context.py', 'evals/duplex_resume.py')
+FILES=('training/control/state_curriculum.py', 'training/control/state_data.py', 'training/control/paired_curriculum.py', 'training/control/capability_curriculum.py', 'training/control/curriculum.py', 'training/control/teacher_data.py', 'evals/application_capabilities.py', 'evals/instruction_contract.py', 'evals/idempotent_reasoning_worker.py', 'evals/qwen_response_executor.py', 'evals/qwen35_controller.py', 'evals/qwen_controller_probe.py', 'evals/duplex_reasoning_worker.py', 'evals/recovery_worker.py', 'evals/duplex_speech_context.py', 'evals/duplex_resume.py')
 
 
 def api_history(messages):
@@ -86,14 +88,45 @@ def collect(scene,out):
     return accepted,dict(id=scene['id'],passed=bool(accepted),attempts=attempts)
 
 
-def generate(out,preview):
+def repair_parent_info(parent):
+    parent=Path(parent);m=json.loads((parent/'manifest.json').read_text())
+    if (m['schema']!='dl-state-teacher-data-v1' or m['preview'] or m['owner_data_used'] or m['prior_evaluation_read']
+            or m['teacher_model']!=MODEL or m['training_scenes']!=517 or m['expected_training_rows']!=533):
+        raise ValueError('Unexpected complete source collection for protocol repair')
+    if sha(parent/'scenes.json')!=m['scenes_sha256'] or sha(parent/'quality.json')!=m['quality_sha256']:
+        raise ValueError('Changed parent source collection')
+    for name,value in m['source_files'].items():
+        actual=subprocess.check_output(['git','show',m['producer_commit']+':'+name])
+        if __import__('hashlib').sha256(actual).hexdigest()!=value:raise ValueError('Parent compiler lineage differs from Git')
+    return dict(folder=parent.name,manifest_sha256=sha(parent/'manifest.json'),producer_commit=m['producer_commit'],
+                recollected_protocol_groups=['all state contrasts','all record-read scenes'],reused_rows=420)
+
+
+def generate(out,preview,repair_parent=None):
     out.mkdir(parents=True,exist_ok=False);scenes=specifications(preview);train=[s for s in scenes if s['split']=='train'];held=[s for s in scenes if s['split']=='heldout']
     (out/'scenes.json').write_text(json.dumps(scenes,indent=2)+'\n')
     for scene in train:
         p=out/'rows'/scene['id'];p.mkdir(parents=True);(p/'scene.json').write_text(json.dumps(scene,indent=2)+'\n')
-    rows=[];checks=[]
+    rows=[];checks=[];parent_info=repair_parent_info(repair_parent) if repair_parent else None
+    if preview and repair_parent:raise ValueError('Repair is a whole-batch operation, not a preview subset')
+    fresh=[]
+    for scene in train:
+        if repair_parent and scene['corpus']!='state' and scene['kind']!='record-read':
+            source=Path(repair_parent)/'rows'/scene['id'];dest=out/'rows'/scene['id']
+            if json.loads((source/'scene.json').read_text())!=scene:raise ValueError('A reused source scene changed')
+            q=json.loads((source/'quality.json').read_text())
+            if not q['passed']:raise ValueError('Unchanged protocol group contains an unrepaired row')
+            accepted=next(x for x in q['attempts'] if x['passed']);attempt=accepted['attempt']
+            if len(accepted['teacher_calls'])!=1:raise ValueError('Unexpected reused worker stages')
+            shutil.copytree(source,dest,dirs_exist_ok=True)
+            rows.extend(dict(row,id=scene['id']+'-stage-'+str(row['stage']),scene_id=scene['id'],split='train',kind=scene['kind'],
+                family=scene['family'],domain=scene['domain'],source_scene_sha256=sha(dest/'scene.json'),quality_attempt=attempt,
+                quality_passed=True,train_corpus=scene['corpus']) for row in accepted['teacher_calls'])
+            checks.append(q)
+        else:fresh.append(scene)
+    if repair_parent and len(rows)!=420:raise ValueError('Requires the entire unchanged420-label protocol groups')
     with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:
-        tasks=[pool.submit(collect,scene,out) for scene in train]
+        tasks=[pool.submit(collect,scene,out) for scene in fresh]
         for future in concurrent.futures.as_completed(tasks):
             accepted,quality=future.result();checks.append(quality)
             if accepted:rows.extend(accepted)
@@ -103,6 +136,7 @@ def generate(out,preview):
     (out/'quality.json').write_text(json.dumps(dict(all_passed=passed,requested=len(train),passed=sum(x['passed'] for x in checks),rows=checks,expected_label_stages=expected),indent=2)+'\n')
     if passed:(out/'train.jsonl').write_text(''.join(json.dumps(r)+'\n' for r in rows))
     manifest=dict(schema='dl-state-teacher-data-v1',preview=preview,training_approved=passed and not preview,all_quality_passed=passed,teacher_model=MODEL,provenance_class='closed-content',created_utc=datetime.now(timezone.utc).isoformat(),producer_commit=os.environ.get('DL_TASK_COMMIT'),authorization_sha256=sha('decisions/0003-provenance-classes.md'),synthetic_text_only=True,audio_generated=False,owner_data_used=False,prior_evaluation_read=False,training_scenes=len(train),heldout_scenes=len(held),training_rows=len(rows),expected_training_rows=expected,source_files={f:sha(f) for f in FILES},scenes_sha256=sha(out/'scenes.json'),quality_sha256=sha(out/'quality.json'),train_sha256=sha(out/'train.jsonl') if passed else None)
+    if parent_info:manifest['protocol_repair_parent']=parent_info
     (out/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
     if not passed:raise ValueError('Incomplete teacher quality; no TRAIN approval')
     verify(out,audit_preview=preview);print(json.dumps(dict(rows=len(rows),preview=preview,training_approved=not preview)))
@@ -115,6 +149,9 @@ def verify(folder,*,audit_preview=False):
         if not audit_preview or m['training_approved']:raise ValueError('Preview is not TRAIN approved')
     elif not m['training_approved']:raise ValueError('No TRAIN approval')
     if not m['producer_commit'] or len(m['producer_commit'])!=40 or m['source_files']!={f:sha(f) for f in FILES} or m['authorization_sha256']!=sha('decisions/0003-provenance-classes.md'):raise ValueError('Compiler/authorization lineage differs')
+    if m.get('protocol_repair_parent'):
+        parent=folder.parent/m['protocol_repair_parent']['folder']
+        if repair_parent_info(parent)!=m['protocol_repair_parent']:raise ValueError('Changed complete repair-parent collection')
     for name,key in [('scenes.json','scenes_sha256'),('quality.json','quality_sha256'),('train.jsonl','train_sha256')]:
         if sha(folder/name)!=m[key]:raise ValueError('Changed approved artifact')
     scenes=json.loads((folder/'scenes.json').read_text());quality=json.loads((folder/'quality.json').read_text());rows=[json.loads(x) for x in (folder/'train.jsonl').read_text().splitlines()]
@@ -125,6 +162,9 @@ def verify(folder,*,audit_preview=False):
         src=folder/'rows'/scene['id'];q=json.loads((src/'quality.json').read_text())
         if json.loads((src/'scene.json').read_text())!=scene or q!=next(x for x in quality['rows'] if x['id']==scene['id']) or not q['passed']:raise ValueError('Changed source quality')
         selected=sorted([r for r in rows if r['scene_id']==scene['id']],key=lambda r:r['stage'])
+        if m.get('protocol_repair_parent') and scene['corpus']!='state' and scene['kind']!='record-read':
+            old=folder.parent/m['protocol_repair_parent']['folder']/'rows'/scene['id']
+            if json.loads((old/'quality.json').read_text())!=q:raise ValueError('Reused approval record changed')
         if len(selected)!=(2 if scene['kind']=='record-read' else 1):raise ValueError('Missing worker stage')
         class Replay:
             def __init__(self):self.index=0
@@ -149,7 +189,7 @@ def verify(folder,*,audit_preview=False):
 
 
 def main():
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--out',type=Path,required=True);p.add_argument('--preview',action='store_true');a=p.parse_args();generate(a.out,a.preview)
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--out',type=Path,required=True);p.add_argument('--preview',action='store_true');p.add_argument('--repair-parent',type=Path);a=p.parse_args();generate(a.out,a.preview,a.repair_parent)
 
 
 if __name__=='__main__':main()

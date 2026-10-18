@@ -20,6 +20,10 @@ source "$DL/keys/openai.env"
 set +a
 EXTRA=()
 if [ "${STATE_TEACHER_PREVIEW:-0}" = 1 ]; then EXTRA+=(--preview); fi
+if [ -n "${STATE_REPAIR_PARENT_JOB:-}" ]; then
+ [[ "$STATE_REPAIR_PARENT_JOB" =~ ^[0-9]+$ ]]
+ EXTRA+=(--repair-parent "$DL/runs/controller-state-teacher-$STATE_REPAIR_PARENT_JOB")
+fi
 apptainer exec --bind /projects,/lus,/home \
  --env PYTHONPATH="$DL/envs/moshi-rag-7379661/lib/python3.12/site-packages:$DL_TASK_SOURCE" \
  --env PYTHONDONTWRITEBYTECODE=1 --env OMP_NUM_THREADS=4 \
