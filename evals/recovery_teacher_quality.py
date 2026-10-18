@@ -82,6 +82,15 @@ def validate_teacher(batch):
         expected_sources = {r["scenario_id"] for r in source["accepted"] if r["split"] == "train" and r["kind"] == "private"}
         if set(counts) != expected_sources or any(count != 4 for count in counts.values()):
             raise RuntimeError("Counterfactual source pairing changed")
+    elif manifest.get('collection_schema') == 'dl-native-dialogue-teacher-v2':
+        from data.synthetic.native_curriculum_v2 import specifications
+        expected_specs = json.loads(json.dumps(specifications()))
+        if json.loads((Path(source['source_batch']) / 'specifications.json').read_text()) != expected_specs:
+            raise RuntimeError('Native-v2 teacher source scripts changed')
+        expected = {r['scenario_id'] for r in expected_specs if r['split'] == 'train'}
+        if (len(expected) != 24 or ids != expected or set(manifest['selected_ids']) != expected
+                or manifest.get('scope') != 'native-v2' or manifest.get('teacher_protocol') != 'native-dialogue-v2'):
+            raise RuntimeError('Native-v2 teacher scope/protocol changed or incomplete')
     elif manifest.get("collection_schema") == "dl-control-teacher-v2":
         expected = {r["scenario_id"] for r in source["accepted"] if r["split"] == "train" and r["kind"] in ("clarify", "cancel")}
         if len(expected) != 7 or ids != expected or set(manifest["selected_ids"]) != expected or manifest.get("scope") != "control":
@@ -178,13 +187,40 @@ def assess(speech,events,metadata,kind,session):
         if starts or any(e["type"].startswith("local.worker.") for e in events):
             reasons.append("Simple task unnecessarily delegated")
         question = next(e["text"] for e in metadata["source_events"] if e["ch"] == "user")
-        if "lightning" in question: required = [{"light"},{"faster"},{"sound"}]
+        if metadata.get('curriculum_version') == 2: required = []
+        elif "lightning" in question: required = [{"light"},{"faster"},{"sound"}]
         elif "evaporation" in question: required = [{"liquid"},{"gas"}]
         elif "night" in question: required = [{"earth"},{"rotates","rotating","rotation"},{"sun"}]
         elif "triangle" in question: required = [{"three"}]
         else: raise RuntimeError("No independently specified fact check for this teacher question")
     else:
         raise RuntimeError("Unknown bounded teacher scene kind")
+    if metadata.get('curriculum_version') == 2:
+        required = metadata.get('required_facts')
+        if not required or any(not group or not all(isinstance(x, str) and x for x in group) for group in required):
+            raise RuntimeError('Native-v2 lacks declared independent answer facts')
+        users = [e for e in metadata['source_events'] if e['ch'] == 'user' and e.get('kind', 'utterance') == 'utterance']
+        intervals = []
+        if 'quiet_until_user_ordinal' in metadata:
+            cue = users[metadata['quiet_until_user_ordinal']]
+            intervals.append((0., cue['actual_end_ms'] / 1000))
+        if 'quiet_between_user_ordinals' in metadata:
+            pause, cue = [users[i] for i in metadata['quiet_between_user_ordinals']]
+            intervals.append((pause['actual_end_ms'] / 1000 + .4, cue['actual_end_ms'] / 1000))
+            later = {token for token, start in flat if start >= cue['actual_end_ms'] / 1000}
+            if later.intersection(metadata.get('no_restart_after_cue', [])):
+                reasons.append('Paused task restarts an already completed step after the cue')
+        if any(w['start'] < b and w['end'] > a for a, b in intervals for w in words):
+            reasons.append('Assistant speech intrudes into an explicitly requested quiet interval')
+        if kind == 'cancel':
+            from data.synthetic.native_curriculum_v2 import QA
+            question = users[-1]['text'].split('Instead, ', 1)[1].casefold()
+            matches = [facts for q, _, facts in QA['train'] if q.casefold() == question]
+            if len(matches) != 1:
+                raise RuntimeError('Cancellation follow-up differs from its independently authored question')
+            later = {token for token, start in flat if start >= users[-1]['actual_end_ms'] / 1000}
+            if any(not later.intersection(group) for group in matches[0]):
+                reasons.append('Cancellation omitted the new answer after the actual user request')
     if any(not set(tokens).intersection(group) for group in required):
         reasons.append("Required independently specified answer facts absent in measured speech")
     return {"speech_and_fact_checks_pass":not reasons,"reasons":reasons,"measured_words":words,

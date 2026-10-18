@@ -18,11 +18,11 @@ DL=/projects/u6si/duplex-live
 test "$(git -C "$DL_TASK_SOURCE" rev-parse HEAD)" = "$DL_TASK_COMMIT"
 test -z "$(git -C "$DL_TASK_SOURCE" status --porcelain)"
 cd "$DL_TASK_SOURCE"
-SOURCE="$DL/runs/native-curriculum-v2-$NATIVE_SOURCE_JOB"
+SOURCE="${NATIVE_SOURCE_DIR:-$DL/runs/native-curriculum-v2-$NATIVE_SOURCE_JOB}"
 cmp "$SOURCE/specifications.json" "$DL_TASK_SOURCE/evals/fixtures/native-curriculum-v2-20261018.json"
 apptainer exec --nv --bind /projects,/lus,/home \
  --env PYTHONPATH="$DL_TASK_SOURCE" --env PYTHONDONTWRITEBYTECODE=1 \
  --env HF_HOME="$DL/models/hf-cache" --env OMP_NUM_THREADS=8 --env OPENAI_API_KEY= \
  "$DL/pytorch-new.sif" "$DL/envs/moshi-annotation-7379026/bin/python" -u \
- -m evals.recovery_prepare_data --batch "$SOURCE" \
+ -m evals.recovery_prepare_data --native-v2-train-scope --batch "$SOURCE" \
  --out "$DL/runs/native-curriculum-v2-data-${SLURM_JOB_ID}"

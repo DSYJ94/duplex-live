@@ -23,6 +23,8 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--batch", type=Path, required=True)
     parser.add_argument("--out", type=Path, required=True)
+    parser.add_argument('--native-v2-train-scope', action='store_true',
+        help='Require the complete new native TRAIN fold; failed held-out clips remain excluded, never repaired')
     args = parser.parse_args()
     import numpy as np
     import soundfile as sf
@@ -35,6 +37,10 @@ def main():
 
     args.out.mkdir(parents=True, exist_ok=False)
     rows = [json.loads(line) for line in (args.batch / "manifest.jsonl").read_text().splitlines()]
+    if args.native_v2_train_scope:
+        from data.synthetic.native_curriculum_v2 import specifications
+        if json.loads((args.batch / 'specifications.json').read_text()) != json.loads(json.dumps(specifications())):
+            raise RuntimeError('Explicit native-v2 source differs from its authored sealed scripts')
     if len(rows) != 40 or len({r["scenario_id"] for r in rows}) != 40:
         raise RuntimeError("Fresh sealed curriculum must contain 40 unique scenes")
     for key in ("script_family",):
@@ -132,10 +138,18 @@ def main():
         "sealed_specs_sha256":sha256(args.batch / "specifications.json"),"asr_judge":judge,"quality":quality,
         "orthographic_normalization":{"canceled":"cancelled","traveling":"travelling"},
         "accepted":converted,"human_listening":"pending","independent_script_folds":True}
+    if args.native_v2_train_scope:
+        receipt.update(schema='dl-native-dialogue-source-v2', scope='complete-train-only',
+            full_heldout_qualification_ready=False, failed_heldout_clips_never_repaired=True)
     (args.out / "ingestion.json").write_text(json.dumps(receipt,indent=2)+"\n")
     for split, minimum in (("train",16),("validation",4),("test",4)):
         examples = [r for r in converted if r["split"] == split]
         (args.out / f"{split}.jsonl").write_text("".join(json.dumps(r)+"\n" for r in examples))
+        if args.native_v2_train_scope:
+            if split != 'train':
+                continue
+            if len(examples) != 24:
+                raise RuntimeError('Native-v2 requires all twenty-four verified TRAIN scenes, never a passing subset')
         if len(examples) < minimum:
             raise RuntimeError(f"Insufficient verified {split} examples: {len(examples)} < {minimum}")
         if {r["kind"] for r in examples} != {"private","simple","clarify","cancel"}:

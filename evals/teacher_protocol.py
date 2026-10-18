@@ -11,9 +11,18 @@ CONTROL_INSTRUCTIONS = (
     "Wait for the successful cancellation receipt before saying it is cancelled. "
     "Never speak a cancelled private result. Do not claim any delegated result before it returns."
 )
+NATIVE_PROTOCOL = 'native-dialogue-v2'
+NATIVE_INSTRUCTIONS = CONTROL_INSTRUCTIONS + (
+    ' Obey explicit requests to stay silent until a named cue: do not acknowledge the request aloud. '
+    'After a pause, resume only when the user gives the requested cue, continuing the unfinished task '
+    'without restarting completed steps. When cancellation includes a new ordinary question, cancel '
+    'the old lookup and answer the new question yourself. Keep answers brief and relevant.'
+)
 
 
 def validate_protocol(name, purpose, kind):
+    if name == NATIVE_PROTOCOL and purpose == 'teacher' and kind in ('private', 'simple', 'clarify', 'cancel'):
+        return NATIVE_INSTRUCTIONS
     if name != CONTROL_PROTOCOL or purpose != "teacher" or kind not in ("clarify", "cancel"):
         raise ValueError("Explicit client-control protocol requires approved control TRAIN teachers")
     return CONTROL_INSTRUCTIONS

@@ -52,7 +52,15 @@ def validate_teacher_conversion(data,receipt):
     from data.synthetic.quality import checked_rows
     raw = Path(receipt["raw_batch"])
     checks = Path(receipt["teacher_checks"])
-    validate_teacher(raw)
+    raw_manifest = validate_teacher(raw)
+    if raw_manifest.get('collection_schema') == 'dl-native-dialogue-teacher-v2':
+        from evals.native_v2_semantic_review import verify
+        if not receipt.get('semantic_approval') or len(receipt['accepted']) != 24:
+            raise RuntimeError('Native-v2 requires whole-corpus semantic approval and all twenty-four recordings')
+        semantic = Path(receipt['semantic_approval'])
+        if sha256(semantic) != receipt['semantic_approval_sha256']:
+            raise RuntimeError('Native-v2 semantic approval changed')
+        verify(raw, checks, semantic)
     if sha256(checks) != receipt["teacher_checks_sha256"] or sha256(raw / "teacher.json") != receipt["raw_manifest_sha256"]:
         raise RuntimeError("Teacher approval evidence changed")
     approval = json.loads(checks.read_text())
@@ -93,13 +101,20 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--checks",type=Path,required=True)
     parser.add_argument("--out",type=Path,required=True)
+    parser.add_argument('--semantic-approval', type=Path)
     args = parser.parse_args()
     import numpy as np
     import soundfile as sf
     from data.synthetic.quality import stamp_batch
     checks = json.loads(args.checks.read_text())
     raw = Path(checks["raw_batch"])
-    validate_teacher(raw)
+    validated_manifest = validate_teacher(raw)
+    native_v2 = validated_manifest.get('collection_schema') == 'dl-native-dialogue-teacher-v2'
+    if native_v2:
+        from evals.native_v2_semantic_review import verify
+        if not args.semantic_approval:
+            raise RuntimeError('Native-v2 conversion requires independent complete semantic approval')
+        verify(raw, args.checks, args.semantic_approval)
     if sha256(raw / "teacher.json") != checks["raw_manifest_sha256"] or sha256(args.checks.parent / "report.json") != checks["speech_report_sha256"]:
         raise RuntimeError("Teacher judge/source hashes changed")
     args.out.mkdir(parents=True,exist_ok=False)
@@ -150,6 +165,8 @@ def main():
                 "wer":speech[result["scenario_id"]]["wer_against_model_text"]}]},"verdict":"pass"})
         timings.append({"scenario_id":sid,"timing":"ok","max_offset_ms":offset,"offset_bar_ms":200,
             "method":"Exact transcript/independent measured words; actual grid including real worker marker"})
+    if native_v2 and (len(rows) != 24 or rejected):
+        raise RuntimeError('Native-v2 conversion cannot approve only a passing subset')
     for name,items in (("manifest.jsonl",rows),("train_manifest.jsonl",rows),("filter_report.jsonl",reports),("timing_report.jsonl",timings)):
         (args.out / name).write_text("".join(json.dumps(row)+"\n" for row in items))
     (args.out / "specifications.json").write_text(json.dumps({"raw_batch":str(raw),"checks_sha256":sha256(args.checks),
@@ -160,6 +177,8 @@ def main():
         "source_batch":str(args.out),"source_quality_sha256":sha256(args.out / "quality.jsonl"),
         "sealed_specs_sha256":sha256(args.out / "specifications.json"),"accepted":rows,"rejected":rejected,
         "native_token_grid_check":"Required additionally during codec encoding","human_listening":"pending"}
+    if native_v2:
+        receipt.update(semantic_approval=str(args.semantic_approval), semantic_approval_sha256=sha256(args.semantic_approval))
     (args.out / "ingestion.json").write_text(json.dumps(receipt,indent=2)+"\n")
     for fold in ("train","validation","test"):
         (args.out / f"{fold}.jsonl").write_text("".join(json.dumps(row)+"\n" for row in rows if row["split"] == fold))

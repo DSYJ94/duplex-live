@@ -32,7 +32,19 @@ def validate_conversion(data):
         actual = [json.loads(line) for line in (data / f"{split}.jsonl").read_text().splitlines()]
         if actual != [r for r in rows if r["split"] == split]:
             raise RuntimeError("Converted fold membership changed")
-        if {r.get("kind") for r in actual} != {"private","simple","clarify","cancel"}:
+        native_v2 = receipt.get('schema') == 'dl-native-dialogue-source-v2'
+        if native_v2:
+            from data.synthetic.native_curriculum_v2 import specifications
+            specs = json.loads(json.dumps(specifications()))
+            if (json.loads((batch / 'specifications.json').read_text()) != specs
+                    or receipt.get('scope') != 'complete-train-only'
+                    or receipt.get('full_heldout_qualification_ready') is not False
+                    or receipt.get('failed_heldout_clips_never_repaired') is not True):
+                raise RuntimeError('Native-v2 source approval does not retain its explicit TRAIN-only boundary')
+            if split == 'train' and (len(actual) != 24 or {r['scenario_id'] for r in actual} != {
+                    s['scenario_id'] for s in specs if s['split'] == 'train'}):
+                raise RuntimeError('Native-v2 lacks the complete approved TRAIN inventory')
+        if (not native_v2 or split == 'train') and {r.get("kind") for r in actual} != {"private","simple","clarify","cancel"}:
             raise RuntimeError("A verified fold lacks required behavior supervision")
     return receipt
 

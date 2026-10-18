@@ -25,6 +25,15 @@ async def generate(data,out,resume=False,scope="legacy",protocol=None):
         selected = [r for r in receipt["accepted"] if r["split"] == "train" and r["kind"] in ("clarify", "cancel")]
         if len(selected) != 7:
             raise RuntimeError("Control teacher pass requires the seven approved clarify/cancel TRAIN stimuli")
+    if scope == 'native-v2':
+        from data.synthetic.native_curriculum_v2 import specifications
+        expected = json.loads(json.dumps(specifications()))
+        if json.loads((Path(receipt['source_batch']) / 'specifications.json').read_text()) != expected:
+            raise RuntimeError('Native-v2 teacher source differs from the independently authored sealed scripts')
+        selected = [r for r in receipt['accepted'] if r['split'] == 'train']
+        wanted = {s['scenario_id'] for s in expected if s['split'] == 'train'}
+        if len(selected) != 24 or {r['scenario_id'] for r in selected} != wanted or protocol != 'native-dialogue-v2':
+            raise RuntimeError('Native-v2 requires the whole twenty-four-scene TRAIN source and explicit protocol')
     manifest = {"purpose":"raw training teacher recordings, not quality-approved", "source_conversion":str(data),
         "source_ingestion_sha256":sha256(data / "ingestion.json"), "source_model":"gpt-live-1",
         "created_date":datetime.now(timezone.utc).date().isoformat(),"provenance_class":"closed-content","fold":"train",
@@ -32,9 +41,12 @@ async def generate(data,out,resume=False,scope="legacy",protocol=None):
     if scope == "control":
         manifest.update(collection_schema="dl-control-teacher-v2", scope="control",
                         selected_ids=[r["scenario_id"] for r in selected])
+    if scope == 'native-v2':
+        manifest.update(collection_schema='dl-native-dialogue-teacher-v2', scope=scope,
+                        selected_ids=[r['scenario_id'] for r in selected])
     if protocol:
         from evals.teacher_protocol import validate_protocol
-        if scope != "control":
+        if scope not in ('control', 'native-v2'):
             raise ValueError("Client-control protocol is not a legacy teacher change")
         validate_protocol(protocol, "teacher", selected[0]["kind"])
         manifest["teacher_protocol"] = protocol
@@ -96,8 +108,8 @@ def main():
     parser.add_argument("--data",type=Path,required=True)
     parser.add_argument("--out",type=Path,required=True)
     parser.add_argument("--resume",action="store_true")
-    parser.add_argument("--scope",choices=("legacy", "control"),default="legacy")
-    parser.add_argument("--protocol", choices=("client-control-v1",))
+    parser.add_argument("--scope",choices=("legacy", "control", "native-v2"),default="legacy")
+    parser.add_argument("--protocol", choices=("client-control-v1", "native-dialogue-v2"))
     args = parser.parse_args()
     asyncio.run(generate(args.data,args.out,args.resume,args.scope,args.protocol))
 
