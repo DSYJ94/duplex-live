@@ -69,6 +69,7 @@ def main():
     for key in ('assets', 'kernel-assets', 'out'):
         p.add_argument('--' + key, type=Path, required=True)
     p.add_argument('--candidate', type=Path)
+    p.add_argument('--scope', choices=('all-speech', 'cancel-only'), default='all-speech')
     a = p.parse_args()
     a.out.mkdir(parents=True, exist_ok=False)
     from evals.qwen35_controller import Qwen35ResponseExecutor
@@ -89,7 +90,7 @@ def main():
     stages = {}
     for stage in ('original', 'nonempty'):
         if stage == 'nonempty':
-            executor.generator = NonemptySpeechGenerator(executor.generator)
+            executor.generator = NonemptySpeechGenerator(executor.generator, a.scope)
         folder = a.out / stage
         folder.mkdir()
         start = time.monotonic()
@@ -104,7 +105,7 @@ def main():
     kept = retention(a.out / 'original/controls', a.out / 'nonempty/controls')
     requests = executor.generator.requests
     write(a.out / 'constraint-requests.json', requests)
-    write(a.out / 'report.json', dict(stages=stages, control_retention=kept, candidate=candidate,
+    write(a.out / 'report.json', dict(stages=stages, control_retention=kept, candidate=candidate, scope=a.scope,
           all_parameters_unchanged=True, optimizer_steps=0, generated_outputs_repaired=False,
           actual_reasoning_requests=0, hard_questions_are_selection_only=True, all_failures_retained=True,
           semantic_review_pending=True, source_code_sha256=sha256(Path(__file__)),

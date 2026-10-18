@@ -5564,3 +5564,32 @@ A predeclared nine-case, one-pass synthetic API probe includes the134 counterexa
 new values, changed target, empty/no-solution counts and unsupported/general questions.
 No evaluation oracle is transmitted and no owner data is used. Official API boundary
 and limitations are recorded in docs/EXACT-REASONING-EXPERIMENT-2026-10-18.md.
+
+## 18 October — broad schema mixed result; cancel-only minimization
+
+Plain words: Original-versus-nonempty probes7525104/7525107 sourcec9f8f3d COMPLETE,
+all weights unchanged. Frozen44→45/54 and60→60/72, no original passes lost. Saved972
+candidate51→52/54 and63→64/72; both prior empty cancellations pass, but one previous
+replacement pass is lost. Both arms keep22/22 fresh controls,8/8 ordinary numbers
+and4/4 hard action selections. No actual reasoning requests in this probe. REJECT
+broad candidate change under its retention gate; keep full rows and source hashes.
+
+Plain words: Narrow next fixed schema experiment to cancel_reasoning.content only.
+Other tools are deep-copied byte-identically; test proves that boundary. Same full
+original/changed172-case local probe on both models, no optimizer/checkpoint choice.
+All old and historical frozen passes must remain; all outputs retained.
+
+Plain words: Exact-tool API probe7525614/sourcef101e97 completes9/9 first-pass checks
+with9 confirmed HTTP requests and7 actual terminal counting receipts. Complete
+selected lists/targets match authored questions; independent exhaustive counts match,
+including134, changed83→84 targets (18→11), empty subset and zero solutions. Negative
+inputs and ordinary explanation stay unverified model text; saved output review passes.
+No owner data or oracle transmitted; no live adoption. Seven local boundary tests pass.
+
+Plain words: Wire the exact backend as an explicit opt-in recorded-service mode;
+new metadata identifies it. Existing owner service remains unchanged. Validate actual
+spoken counting and cancellation timing with approved original054/055 inputs. A
+faster result may remove cancellation opportunity; report uncovered, never fake a
+receipt or delay a result to pass. Also declare six local-only secondary-ASR clips
+for short15/52, added prefix, soap and numbered butterfly output. Original Whisper
+gates remain unchanged; this is diagnostic, not replacement acceptance.

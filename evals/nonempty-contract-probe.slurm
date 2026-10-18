@@ -17,6 +17,7 @@ test -z "$(git -C "$DL_TASK_SOURCE" status --porcelain)"
 cd "$DL_TASK_SOURCE"
 unset OPENAI_API_KEY
 EXTRA=()
+if [ "${CONTEXT_SCHEMA_CANCEL_ONLY:-0}" = 1 ]; then EXTRA+=(--scope cancel-only); fi
 if [ -n "${CONTEXT_SCHEMA_CANDIDATE_JOB:-}" ]; then
  [[ "$CONTEXT_SCHEMA_CANDIDATE_JOB" =~ ^[0-9]+$ ]]
  EXTRA+=(--candidate "$DL/runs/controller-context-$CONTEXT_SCHEMA_CANDIDATE_JOB")

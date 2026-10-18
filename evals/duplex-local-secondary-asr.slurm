@@ -16,10 +16,14 @@ test "$(git -C "$DL_TASK_SOURCE" rev-parse HEAD)" = "$DL_TASK_COMMIT"
 test -z "$(git -C "$DL_TASK_SOURCE" status --porcelain)"
 cd "$DL_TASK_SOURCE"
 unset OPENAI_API_KEY
+EXTRA=()
+if [ "${DUPLEX_CONTEXT_SECONDARY_ASR:-0}" = 1 ]; then
+ EXTRA+=(--inventory "$DL_TASK_SOURCE/evals/fixtures/context-secondary-asr-20261018.json")
+fi
 apptainer exec --nv --bind /projects,/lus,/home \
  --env PYTHONPATH="$DL/envs/moshi-rag-7379661/lib/python3.12/site-packages:$DL_TASK_SOURCE" \
  --env PYTHONDONTWRITEBYTECODE=1 --env HF_HUB_OFFLINE=1 --env OMP_NUM_THREADS=8 \
- "$DL/pytorch-new.sif" python -u -m evals.duplex_local_secondary_asr \
+ "$DL/pytorch-new.sif" python -u -m evals.duplex_local_secondary_asr "${EXTRA[@]}" \
  --assets "$DL/runs/kyutai-stt-assets-7510852/assets.json" \
  --mimi-load-approval "$DL/runs/kyutai-tts-mimi-load-7510722/report.json" \
  --runs "$DL/runs" --out "$DL/runs/duplex-local-secondary-asr-$SLURM_JOB_ID"

@@ -42,7 +42,7 @@ def counterfactual_records(scenario):
     raise ValueError('Unapproved bounded development case')
 
 
-def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",interrupt_policy="acoustic",controller=None,scope_read_tools=False,include_tool_context=False,worker_kind="records",live_input=None,output_observer=None,include_speech_context=False,semantic_pause=False,bound_resume_target=False,allow_cancel_resume=False,lexical_confirmed_pause=False):
+def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",interrupt_policy="acoustic",controller=None,scope_read_tools=False,include_tool_context=False,worker_kind="records",live_input=None,output_observer=None,include_speech_context=False,semantic_pause=False,bound_resume_target=False,allow_cancel_resume=False,lexical_confirmed_pause=False,exact_reasoning_tools=False):
     import numpy as np
     import soundfile as sf
     from data.synthetic.filter import norm_words,wer
@@ -76,6 +76,11 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",inter
     if worker_kind=='reasoning-development':
         from evals.duplex_reasoning_worker import ReasoningWorld,run_reasoning_worker,reasoning_receipts
         worker=run_reasoning_worker;world_type=ReasoningWorld;delivered_receipts=reasoning_receipts
+        if exact_reasoning_tools:
+            from functools import partial
+            from evals.exact_reasoner import ask_exact_reasoner
+            world_type=partial(ReasoningWorld,reasoner=ask_exact_reasoner)
+    elif exact_reasoning_tools:raise ValueError('Exact reasoning profile requires the explicit reasoning domain')
     world=world_type(row['world'] if row['split'] in ('fresh-evaluation','live-transport') else counterfactual_records(row['scenario_id']));context=[];policy=TurnEndpoint(listener.spm.decode)
     listener.reset();speaker.stop();queue=[];futures={};held=[];packets=[];stops={};events=[];steps=[];backlogs=[]
     active=None;clock=None;paused=None;spoken=[];asr_tokens=[];asr_events=[];utterance_count=0;generation_count=0;last_voice_s=-float('inf')
@@ -348,7 +353,7 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",inter
         frames=frame,synthetic_tail_frames=max(0,frame-real_frames),asr_compute_p95_s=float(np.percentile(steps,95)),
         maximum_input_backlog_s=max(backlogs),declared_counterfactual_world=world.records,
         controlled_lookup_delivery_minimum_s=delay_s,controller_protocol=controller_protocol,interrupt_policy=interrupt_policy,
-        foreground_barrier='actual-execution-aware',worker_kind=worker_kind,actual_tool_context_enabled=include_tool_context,actual_generated_speech_context_enabled=include_speech_context,generated_speech_context_sha256=sha256(out/'generated-speech-context.json') if include_speech_context else None,control_executions_sha256=sha256(out/'control-executions.json') if include_tool_context else None,
+        foreground_barrier='actual-execution-aware',worker_kind=worker_kind,exact_reasoning_tools_enabled=exact_reasoning_tools,actual_tool_context_enabled=include_tool_context,actual_generated_speech_context_enabled=include_speech_context,generated_speech_context_sha256=sha256(out/'generated-speech-context.json') if include_speech_context else None,control_executions_sha256=sha256(out/'control-executions.json') if include_tool_context else None,
         read_tools_scoped_to_user_identified_available_projects=scope_read_tools,
         controller_provider=controller.provider_name if controller else 'openai',controller_model=controller.model_id if controller else 'gpt-6-luna',
         lexical_interruption_is_not_a_backchannel_classifier=interrupt_policy=='lexical',semantic_pause_enabled=semantic_pause,lexical_confirmed_pause_enabled=lexical_confirmed_pause,bound_resume_target=bound_resume_target,cancel_and_resume_enabled=allow_cancel_resume,world_tasks=world.tasks,actual_tool_receipts=world.receipts,

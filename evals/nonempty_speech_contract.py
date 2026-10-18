@@ -5,9 +5,11 @@ import json
 from pathlib import Path
 
 
-def constrain_tools(tools):
+def constrain_tools(tools, scope='all-speech'):
     proposal = copy.deepcopy(tools)
-    speech_actions = {'answer', 'clarify', 'respond_to_user', 'resolve_pending_speech', 'cancel_reasoning'}
+    if scope not in ('all-speech', 'cancel-only'):
+        raise ValueError('Unknown declared speech schema scope')
+    speech_actions = {'cancel_reasoning'} if scope == 'cancel-only' else {'answer', 'clarify', 'respond_to_user', 'resolve_pending_speech', 'cancel_reasoning'}
     for tool in proposal:
         function = tool['function']
         if function['name'] not in speech_actions:
@@ -22,16 +24,17 @@ def constrain_tools(tools):
 
 
 class NonemptySpeechGenerator:
-    def __init__(self, base):
+    def __init__(self, base, scope='all-speech'):
         self.base = base
+        self.scope = scope
         self.requests = []
 
     def __getattr__(self, name):
         return getattr(self.base, name)
 
     def request(self, messages, tools, assistant_prefill=''):
-        proposal = constrain_tools(tools)
+        proposal = constrain_tools(tools, self.scope)
         digest = lambda value: hashlib.sha256(json.dumps(value, sort_keys=True).encode()).hexdigest()
-        self.requests.append(dict(original_tools_sha256=digest(tools), proposed_tools_sha256=digest(proposal),
+        self.requests.append(dict(original_tools_sha256=digest(tools), proposed_tools_sha256=digest(proposal), scope=self.scope,
                                   code_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest()))
         return self.base.request(messages, proposal, assistant_prefill=assistant_prefill)

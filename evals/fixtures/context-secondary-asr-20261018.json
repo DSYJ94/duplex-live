@@ -1,0 +1,46 @@
+{
+  "schema": "dl-explicit-secondary-audio-v1",
+  "training_approved": false,
+  "do_not_train": true,
+  "owner_audio_used": false,
+  "primary_gates_changed": false,
+  "purpose": "Diagnostic recognizer comparison for short15, added prefix and micelles/numbering discrepancies; not a qualification replacement",
+  "clips": [
+    {
+      "id": "short-52",
+      "path": "duplex-live-transport-audit-7524579/live-session-0/speech-1-played.wav",
+      "wav_sha256": "362460d8b42aa0b0a942a67c4c5d3aa1ba4bf67fab62dbd03d7a7dfc264f7c78",
+      "expected": "52"
+    },
+    {
+      "id": "short-15",
+      "path": "duplex-live-transport-audit-7524601/live-session-0/speech-1-played.wav",
+      "wav_sha256": "130b3405a2f13f9d25deab6db114ab0bb71749839a56a8821b0ec2ce9e231f32",
+      "expected": "15"
+    },
+    {
+      "id": "private-prefix",
+      "path": "duplex-live-transport-audit-7524591/live-session-0/speech-1-played.wav",
+      "wav_sha256": "690d6d4aadadc8b082f8db6ecff6183795ed7d4dae294695b661637e6c697b03",
+      "expected": "I don't have access to your parking permit code since you haven't shared it or connected any private records. Please provide the code or connect your records for me to assist."
+    },
+    {
+      "id": "soap-frozen",
+      "path": "duplex-live-transport-audit-7524611/live-session-0/speech-2-complete-played.wav",
+      "wav_sha256": "7825fb87bff055cc2015ecb2d2756c851e575e403bf51c12f566c07d5a9c5b09",
+      "expected": "Soap molecules have a hydrophilic head and a hydrophobic tail. The hydrophobic tails attach to grease, while the hydrophilic heads face water. This forms micelles that trap grease inside, allowing it to be rinsed away. Soap thus emulsifies grease, making it soluble in water."
+    },
+    {
+      "id": "soap-candidate",
+      "path": "duplex-live-transport-audit-7524613/live-session-0/speech-2-complete-played.wav",
+      "wav_sha256": "8c826154ba327158a07395d71f0e6f18556248148d4790bf60a405ebb74979b4",
+      "expected": "Soap molecules have a hydrophilic head and a hydrophobic tail. The tail attaches to grease while the head stays in water. This forms micelles that trap grease inside. Rinsing washes away the micelles, removing the grease."
+    },
+    {
+      "id": "butterfly-candidate",
+      "path": "duplex-live-transport-audit-7524609/live-session-0/speech-2-complete-played.wav",
+      "wav_sha256": "3e62fc5b82adaeb437023eb806d01fce69be22c66584c2754723e2409ba0769b",
+      "expected": "1. A caterpillar forms a chrysalis around itself. 2. Inside, its body breaks down into liquid cells. 3. These cells reorganize into butterfly wings and organs. 4. The butterfly emerges, dries its wings, and flies away."
+    }
+  ]
+}

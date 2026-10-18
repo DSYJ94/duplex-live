@@ -1,0 +1,24 @@
+{
+  "schema": "dl-cancel-only-contract-probe-v1",
+  "declared_before_gpu_execution": true,
+  "hypothesis": "Broad nonempty schema repaired two cancellation failures but lost one replacement pass. Restrict the advertised constraint to cancel_reasoning; all other native tools must remain byte-identical.",
+  "change": "Only cancel_reasoning.content gets minLength1 and pattern \\S. Same saved model, unchanged output, no optimizer.",
+  "models": [
+    "strict frozen Qwen3.5-9B",
+    "fixed saved972 contextual candidate7523832"
+  ],
+  "per_model_stages": [
+    "original",
+    "nonempty schema"
+  ],
+  "per_stage_cases": {
+    "development_controls": 126,
+    "fresh_controls": 22,
+    "local_retention": 24
+  },
+  "hard_retention": "Selection only, no stronger-model API calls. Actual backend133/134 error stays unresolved.",
+  "gates": "Retain every original and historical frozen pass across126 controls and22 fresh controls; preserve24 local knowledge/action selections. Verify tool hashes are identical when cancellation is unavailable. Keep full failed broad experiment.",
+  "owner_demo_changed": false,
+  "training_approved": false,
+  "do_not_train": true
+}

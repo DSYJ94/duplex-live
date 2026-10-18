@@ -21,6 +21,15 @@ class NativeCapture:
 
 
 class NonemptySpeechContractTest(unittest.TestCase):
+    def test_cancel_only_scope_does_not_change_other_native_tools(self):
+        from evals.nonempty_speech_contract import constrain_tools
+        tools = [dict(type='function', function=dict(name=name, parameters=dict(properties=dict(content=dict(type='string'))))) for name in ('answer', 'clarify', 'resolve_pending_speech', 'cancel_reasoning')]
+        copied = json.loads(json.dumps(tools))
+        result = constrain_tools(tools, 'cancel-only')
+        self.assertEqual(tools, copied)
+        self.assertEqual(result[:3], tools[:3])
+        self.assertEqual(result[3]['function']['parameters']['properties']['content']['minLength'], 1)
+
     def test_actual_native_cancel_schema_excludes_worker_rejected_empty_speech(self):
         scene = next(s for s in specifications() if s['kind'] == 'cancel-preserve' and s['split'] == 'heldout')
         action = dict(name='cancel_reasoning', arguments=dict(task_ids=scene['expected']['cancelled'], content='Selected result delivery cancelled.', consume_pending_speech_ids=[]))
