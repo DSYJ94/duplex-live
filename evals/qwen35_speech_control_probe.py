@@ -16,6 +16,9 @@ def specifications():
         dict(id='withdraw-explanation',user='Do not finish that explanation. Stop talking.',expected_route='silence',expected_consumed=['explanation']),
         dict(id='stop-and-revise',user='Stop. I only want the first step in one short sentence.',expected_route='answer',expected_consumed=['explanation']),
         dict(id='cancel-calculation-preserve-speech',user='Cancel the calculation, but finish your explanation.',background=True,expected_route='cancel',expected_consumed=[]),
+        dict(id='new-summary-request',user='Do not continue the long version. Give me just its main point.',expected_route='answer',expected_consumed=['explanation']),
+        dict(id='new-stop-speech-preserve-calculation',user='Stop the explanation. Keep the calculation running.',background=True,expected_route='silence',expected_consumed=['explanation']),
+        dict(id='new-cancel-only-calculation',user='Leave the explanation queued. Cancel only the calculation.',background=True,expected_route='cancel',expected_consumed=[]),
     ]
 
 
@@ -38,7 +41,7 @@ def main():
             result=run_reasoning_worker(context,world,'current',executor.model_id,revision,'state-aware',pending,executor)
             passed=result['route']==spec['expected_route'] and result['consume_pending_speech_ids']==spec['expected_consumed']
             if spec['expected_route']=='silence':passed=passed and result['content']=='' and result['receipts']==[]
-            if spec.get('background'):passed=passed and world.tasks['calculation']['cancelled']
+            if spec.get('background'):passed=passed and world.tasks['calculation']['cancelled']==(spec['expected_route']=='cancel')
             row.update(execution_completed=True,action_contract_passed=passed,result=result)
         except Exception as error:
             row.update(execution_completed=False,action_contract_passed=False,error_type=type(error).__name__,message=str(error),evidence=getattr(error,'result',None))

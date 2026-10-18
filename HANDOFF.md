@@ -78,22 +78,38 @@ sixteen typed6456/6457 and actual existing-task cancellation6503/6505. Failures 
 wording limits from other tests stay visible; two new voice clips are not overall
 qualification. Morning evidence report docs/OVERNIGHT-2026-10-18.md.
 
-Plain words: ACTIVE recorded-only exact-pause experiment cdf0ab9. Actual run_case
-fixture reproduces one controller dispatch but TWO generator starts across a
-nonlexical acknowledgment. New acoustic-pause retains TTS state/unheard PCM,
-stops playback promptly, resumes exact samples once after660ms quiet/no ASR words.
-Any arrived word commits existing interruption; stop/replace still resolves old
-obligation. NOT a learned acknowledgment classifier; recognized Right remains
-open. Explicit live rejection: browser resume protocol is NOT implemented.
-Owner6574 remains source0d63370/acoustic. Twenty-two pause/playout/worker/format
-checks and five live frame/socket/access tests pass; no native weights/training.
-Matched actual005 jobs7516704 acoustic /6706 pause; genuine015 pause6708. Independent
-speech audits6705/6707/6709. Full retained-generation audit includes the actual
-pause; individual fragments remain partial/unscored. All source local/remote MD5
-matches; original005 validatorce01b5b exact6be204 SHA, original015 validator22a5912.
-Submission receipt /private/tmp/duplex-exact-pause-submit-full.txt; progress helper
-/private/tmp/duplex-exact-pause-progress.py writes full JSON. Retrieve actual results
-before claiming voice continuity/intelligibility or adopting anything in owner UI.
+Plain words: ACTIVE control experiment (owner unchanged). Recorded-only pause
+cdf0ab9 exact sample proof:5179 unheard samples restored,403200 unique generated
+samples heard once.005 baseline6704 restarts; pause6706 retains generation, actual
+pause1.368s, full independent corrected audits6725/6726 bothWER0.06818. Partial
+Thank-you-like ASR snippet is unscored/unreliable, do not infer spoken content.
+Audible018 baseline6728 restarts old answer during user pause;6730 acoustic-pause
+cuts12.173s with43443 heard prefix samples, no old restart; actual revised answer
+speech audits6729/6731 bothWER0.0156708 had NO heard prefix so not a latency proof.
+Initial audit6705/7/9 failed from loop-variable shadowing; fixed20c64dc rescores
+original recorded PCM, never regenerates it.23 tests before silent-control changes.
+
+Plain words: IMPORTANT bare Stop029 fails in BOTH baseline6792 and pause6794:
+exact ASR Stop but model repeats the ENTIRE explanation as a new reply. Input
+6790/quality6791 both clipsWER0; completed speech audits6793/95 WER0 are NOT task
+success. Missing silent output action is now addressed experimentally with
+withdraw_speech(speech_ids), only exposed for actual pending ordinary speech;
+validated IDs, no words/remote receipt, caller consumes queue then records actual
+silent_control_completed. New action does not cancel background reasoning.
+First actual model probe7516827 FAILS2/4 (stop-only succeeds; stop+new-answer
+incorrectly silent; selective reasoning cancel consumes unrelated speech). No
+adoption. Targeted descriptions +three new contrast cases prepared for v2 seven-
+case probe; code source must be committed/pushed before submit. Current model
+experiment146b822 plus pending v2; owner6574 remains frozen0d63370/acoustic.
+Recorded acoustic-pause explicitly REJECTS live use: browser resume protocol and
+physical heard-prefix receipts are not implemented. Recognized Right not fixed.
+Twenty-six targeted tests pass; five live socket/frame/access tests passed before
+latest silent-action change. Exact-pause evidence backed up locally including
+failed scorer logs; first rsync23 was wrong logs/ path, successful retry uses
+repo/logs/. Integrity proof exact-pause-causal-integrity.json:7 captures/14 clips.
+New sources/probes: evals/qwen35_speech_control_probe.py and speech-control.slurm.
+Submissions/status under /private/tmp/duplex-speech-control-*. No native weights,
+optimizer steps, general-agent adoption or full model qualification.
 
 Plain words: KNOWN REMAINING FAILURES — natural backchannel017 still interrupts
 and restarts; record020 narrates withheld metadata; unavailable023 needs better

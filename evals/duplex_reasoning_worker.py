@@ -77,13 +77,16 @@ def run_reasoning_worker(context,world,task_id,model,expected_revision,dispatch_
             if k!=task_id and not v['closed'] and not v['cancelled']})
     tools=[reply,delegate]
     if pending_speech:
-        tools.append(tool('withdraw_speech','Silently withdraw identified ordinary speech when the user only asks you to stop talking. Produces no reply and does not cancel any background reasoning. If a new answer is requested, reply and resolve its owed speech identities instead.',dict(
+        tools.append(tool('withdraw_speech','Stop WITHOUT ANY REPLY. Only for a request to stop or withdraw speech with no replacement answer requested. Do not choose this if the latest request also asks a question, a first step, a summary or another revised answer. Does not cancel background reasoning.',dict(
             speech_ids=dict(type='array',minItems=1,items=dict(type='string',enum=[p['id'] for p in pending_speech])))))
     active=[identity for identity,state in available['tasks'].items() if state.get('operation')=='delegate_reasoning']
     if active:
+        consumption=dict(type='array',items=dict(type='string'))
+        if pending_speech:
+            consumption['description']='Use [] when only cancelling reasoning, even if told to finish the explanation. The client resumes that ordinary speech. A cancellation confirmation or promise to finish does not fulfil it.'
         tools.append(tool('cancel_reasoning','Stop delivery of identified active reasoning results, preserving unrelated work. Late API returns cannot be spoken. This does not abort an already executing remote request. content is spoken only after actual cancellation succeeds; confirm delivery cancellation honestly and answer an ordinary question if requested.',dict(
             task_ids=dict(type='array',minItems=1,items=dict(type='string',enum=active)),content=dict(type='string'),
-            consume_pending_speech_ids=dict(type='array',items=dict(type='string')))))
+            consume_pending_speech_ids=consumption)))
     payload=dict(model=model,input=json.dumps(context),tools=tools,tool_choice='required',
         local_worker_state=dict(available=available,pending_speech=pending_speech,dispatch_protocol=dispatch_protocol,domain='reasoning-development'))
     before=time.monotonic();response=response_executor(payload)

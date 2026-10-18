@@ -73,5 +73,19 @@ class ReasoningBoundary(unittest.TestCase):
         self.assertIn('withdraw_speech',[t['name'] for t in controller.payload['tools']])
         self.assertFalse(world.tasks['background']['cancelled'])
 
+    def test_silent_withdrawal_rejects_unknown_duplicate_or_empty_targets(self):
+        class Controller:
+            provider_name='fixture-only'
+            def __init__(self,arguments):self.arguments=arguments
+            def __call__(self,payload):
+                return dict(id='fixture',status='completed',model='fixture-only',output=[dict(type='function_call',name='withdraw_speech',arguments=json.dumps(self.arguments))])
+        for arguments in [dict(speech_ids=[]),dict(speech_ids=['unknown']),dict(speech_ids=['known','known']),dict(speech_ids=['known'],content='Invented reply')]:
+            with self.subTest(arguments=arguments):
+                world=ReasoningWorld({});revision=world.reserve('current')
+                with self.assertRaises(WorkerContractError):
+                    run_reasoning_worker([dict(role='user',text='Stop.')],world,'current','fixture-only',revision,'state-aware',
+                        [dict(id='known',request_text='Explain',text='An actual owed response')],Controller(arguments))
+                self.assertEqual(world.receipts,[])
+
 
 if __name__=='__main__':unittest.main()

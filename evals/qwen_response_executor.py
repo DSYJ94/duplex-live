@@ -123,6 +123,7 @@ class QwenResponseExecutor:
             if any(t['name']=='withdraw_speech' for t in payload['tools']):
                 instructions+=('Use withdraw_speech for an explicit request only to stop talking: retire the identified pending speech without another spoken reply. '
                     'Do not answer or repeat the withdrawn explanation. Stopping speech does not cancel unrelated background work. '
+                    'Read the WHOLE latest request: stop followed by a request for a first step, summary or new answer requires that answer, never silence. '
                     'If the user also asks a new question or revised explanation, answer it through '
                     +('resolve_pending_speech' if self.pending_speech_protocol=='explicit-actions' else 'respond_to_user with consume_pending_speech_ids')+' instead. ')
         if state['dispatch_protocol']=='state-aware' and self.pending_speech_protocol=='array':

@@ -5094,3 +5094,17 @@ offered. New typed four-case actual-model probe must pass stop/withdraw, stop+ne
 answer, and cancel-calculation-preserve-speech before new voice regressions.
 Background state in that typed probe is explicitly a fixture, never a live API.
 Owner6574/source0d63370 remains unchanged; no speech-control adoption or training.
+
+
+Plain words: first actual silent-action probe7516827 passes ONLY2/4. Stop-only and
+explicit withdrawal correctly choose silence. Stop+first-step wrongly chooses
+silence; cancel-calculation-but-finish-explanation wrongly consumes its speech ID.
+Gate FAILS; no voice adoption. This exposes action-boundary regression, not a
+speech/ASR problem. Targeted v2 description makes WITHOUT ANY REPLY scope explicit,
+reads whole revised request, and explains that cancellation confirmation does not
+fulfil an explanation. Offered only with pending speech; old views without the
+new action remain byte-identical. Add three new contrast cases: shortened-answer
+request, stop speech while calculation continues, cancel only calculation while
+speech remains queued. All seven are typed fixture diagnostics, not live API work.
+Twenty-six pause/control/playout/format tests pass, including unknown/empty/duplicate
+withdrawal ID rejection. No weight update, no user-input shortcut or canned words.
