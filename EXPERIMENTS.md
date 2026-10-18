@@ -5373,3 +5373,22 @@ stoppedvalidatedargv. Newhelper44739/forward44343/watcher25817 remain.7518986 le
 unchanged: its sessionmetadatawasinsufficientforretirement. Ownerrecordingsremain
 oncluster, noexport. Newplaybackapprovalpending.54heldoutcontrolfixturesnotusedin
 teacheroptimization (nooptimizeratall); verifiedfullteacherbatchremainsready.
+
+## 18 October — live smoothness accepted; contextual adapter preflight
+
+Plain words: Owner reports “Smooth now” on the revised7522115 live demo after
+sound-only interruption filtering. This is direct listening evidence for that
+trial, separately recorded in owner-7522115-listening-feedback.json. First-answer
+delay, immediate interruption and room echo remain open; no model adoption follows.
+
+Plain words: Implement the previously fixed paired-context-adapter plan with
+rank8 FP32 adapters on eight projections in final four Qwen3.5 decoder layers.
+All original parameter objects/names, output projection, vision and unused MTP
+remain frozen. One approved TRAIN example per kind receives nine proof updates;
+zero-adapter logits/RNG, nonzero gradients, source hashes/versions,80GB peak bound
+and independent-process checkpoint/optimizer/RNG restoration must pass before a
+fresh324-update candidate. Full candidate requires all54 paired and72 earlier
+current-compiler baseline generations before updates, then saved/reloaded worker
+generations. The 108-label manifest is pinned; no owner/evaluation targets enter
+training. Local syntax/shell checks and nine paired/pause fixtures pass. GPU math,
+restoration and behavioral improvement remain unproven before execution. Cloud paused.

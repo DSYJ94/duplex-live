@@ -297,8 +297,11 @@ full controller text generation before first speech.
 
 Plain words: Revised owner service7522115/source8481bb1, node nid010056:8788, is
 served at localhost8767 through127.0.0.1:8781. All4 static assets and private
-session binding pass exact checks before switching helpers. Owner's new playback
-judgment remains pending. Superseded services7519401/7520776 were subsequently
+session binding pass exact checks before switching helpers. Owner subsequently
+confirms revised playback: “Smooth now”. This accepts smoothness for that live
+listening trial; it does not establish room AEC, immediate interruption or lower
+first-answer delay. Direct feedback is preserved separately from the earlier
+mechanical integrity proof in owner-7522115-listening-feedback.json. Superseded services7519401/7520776 were subsequently
 retired only after confirming no unfinished sessions and old session-write times. No learned head or
 new voice weights are loaded. Numeric proof owner-choppy-pause-numeric-audit.json,
 network proof confirmed-pause-network-integrity.json and explicit latency ledger

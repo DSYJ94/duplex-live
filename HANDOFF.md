@@ -1,7 +1,9 @@
 # HANDOFF — overnight recovery, 18 October
 
-Plain words: CURRENT13:12UTC/15:12Berlin18Oct — owner Chrome input WORKS, live
-speech choppy/slow. Actualowner7520776 sessions4/5 had6/8 sound-only pauses (all14
+Plain words: CURRENT13:42UTC/15:42Berlin18Oct — owner Chrome input WORKS.
+Owner now confirms revised live playback: “Smooth now”. Initial response delay
+remains open; this is one listening trial, not room AEC or native qualification.
+Earlier live speech was choppy/slow. Actualowner7520776 sessions4/5 had6/8 sound-only pauses (all14
 withnoASRtokenssincecompleteduserturn) and6browserunderrunseach; serverwithin-event
 packetgaps<120ms. Noowneraudio/words exported orTRAINed. CPU saved-inputreplay
 exact2endpointsequences, candidatepauses0. Opt-in lexical-confirmed pause8481bb1
@@ -15,7 +17,8 @@ Forward89590/PID44343; helper19914/PID44739; staging8769 helper29212/PID44433 no
 Token /private/tmp/duplex-live-owner-7522115-token mode600 NEVERprint/export.
 Watcher25817 /private/tmp/duplex-owner-confirmed-forward-watch.py watchesexisting
 PID/reconnectsonlyafterexit. All4static/privatebindingPASS; noagentmicstartafter
-switch. Ownerfreshplaybackquestionpending. Oldhelper3243 stoppedvalidatedcommand;
+switch. Ownerfreshplaybackaccepted: “Smooth now”; directfeedbackJSON
+owner-7522115-listening-feedback.json preserves its limited scope. Oldhelper3243 stoppedvalidatedcommand;
 Superseded7519401/7520776 verifiedidlethenretired; oldforwardwatchers/forwards
 3936/17598/18336/95128 stoppedbyexactcommandmatch.7518986 leftunchangedbecause
 its sessionmetadatawasnot sufficientforidle-retirement. Native7510331 stillunqualified/cloudpaused.
