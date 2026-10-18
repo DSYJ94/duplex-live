@@ -154,7 +154,8 @@ def run(engine,user,world,args,loading):
                             if state['cancelled']:
                                 record.update(disposition='rejected; cancelled task',applied_at_s=None)
                             else:
-                                reference, receipt_count = backend_reference(result, world)
+                                reference, receipt_count = backend_reference(result, world,
+                                    plain_text=args.backend_reference_profile=='plain-text')
                                 if args.backend_reference_profile=='query-and-result':
                                     from evals.context_query_reference import compose
                                     reference,query_evidence=compose(reference,context,recognized['input_seconds'],result['route'])

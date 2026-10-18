@@ -48,7 +48,7 @@ def main():
     ap.add_argument('--asr-python',type=Path)
     ap.add_argument('--warm-audio',action='store_true')
     ap.add_argument('--ret-logit-bias',type=float,default=0.)
-    ap.add_argument('--backend-reference-profile',choices=('answer-only','query-and-result'),default='answer-only')
+    ap.add_argument('--backend-reference-profile',choices=('answer-only','query-and-result','plain-text'),default='answer-only')
     ap.add_argument('--event-log-mode',choices=('immediate','deferred'),default='immediate')
     ap.add_argument('--adapter-proof',type=Path)
     ap.add_argument('--adapter-disabled',action='store_true')

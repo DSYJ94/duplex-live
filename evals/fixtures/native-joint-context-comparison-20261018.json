@@ -1,0 +1,22 @@
+{
+  "schema": "dl-native-joint-context-comparison-v1",
+  "declared_before_reviewing_new_native_task_outputs": true,
+  "reason": "Approved native teacher spans contain plain answer sentences. Runtime adds status/query/receipt labels. Test a shared plain-text reference interface while preserving actual verified facts AND independent backend answers.",
+  "parent": "7510331",
+  "candidate": "7530408",
+  "profile": "plain-text",
+  "pending_status_span": false,
+  "cases": [
+    {"scenario": "recovery-validation-000", "kind": "private", "value": "yellow circle"},
+    {"scenario": "recovery-validation-000", "kind": "private", "value": "copper diamond"},
+    {"scenario": "recovery-validation-006", "kind": "clarify", "value": "brown square"},
+    {"scenario": "recovery-validation-007", "kind": "cancel", "value": "red star"}
+  ],
+  "same_user_waveforms_voice_codes_and_native_protocol": true,
+  "actual_backend_receipts_required": true,
+  "word_or_audio_forcing": false,
+  "do_not_train": true,
+  "fresh_qualification": false,
+  "owner_demo_changed": false,
+  "attribution": "Compare parent and candidate under the same plain-text interface. Separately compare candidate plain-text with its already-declared query-and-result/no-pending-span arm. The older parent answer-only/with-pending-span arm is not a matched training comparison."
+}

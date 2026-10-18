@@ -1,7 +1,7 @@
 """Keep actual tool facts in a context span even if worker prose omits them."""
 
 
-def reference(result, world):
+def reference(result, world, *, plain_text=False):
     content = result['content']
     if not isinstance(content, str) or not content.strip():
         raise RuntimeError('Cannot inject empty backend text')
@@ -22,6 +22,13 @@ def reference(result, world):
             facts.append('The {field} for Project {project} is {value}.'.format(**receipt))
     if not facts:
         return content, 0
+    if plain_text:
+        # Match the training channel's plain sentences. Retain independent
+        # backend answers as well as verified facts; never replace one by the other.
+        lines = list(facts)
+        if content not in lines:
+            lines.append(content)
+        return '\n'.join(lines), len(facts)
     # The receipt and the worker's narrative are independent outputs. Retain
     # both; this supplies context, never forces a spoken token or response start.
     return 'Verified tool results:\n' + '\n'.join(facts) + '\nBackend response:\n' + content, len(facts)

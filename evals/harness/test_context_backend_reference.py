@@ -43,5 +43,21 @@ class BackendReferenceTest(unittest.TestCase):
         self.result.update(route='answer', receipts=[])
         self.assertEqual(reference(self.result, self.world), (self.result['content'], 0))
 
+    def test_plain_context_preserves_both_actual_fact_and_independent_answer(self):
+        text, count = reference(self.result, self.world, plain_text=True)
+        self.assertEqual(text, 'The room marker for Project Alder North is teal star.\n'
+            'Light travels much faster than sound.')
+        self.assertEqual(count, 1)
+
+    def test_plain_context_cannot_reintroduce_a_cancelled_value(self):
+        self.world.cancel('ret-0')
+        with self.assertRaisesRegex(RuntimeError, 'stale'):
+            reference(self.result, self.world, plain_text=True)
+
+    def test_plain_context_does_not_duplicate_identical_backend_sentence(self):
+        self.result['content'] = 'The room marker for Project Alder North is teal star.'
+        text, _ = reference(self.result, self.world, plain_text=True)
+        self.assertEqual(text, self.result['content'])
+
 
 if __name__ == '__main__': unittest.main()
