@@ -62,6 +62,10 @@ fi
 if [ "${DUPLEX_CANCEL_RESUME_INPUT:-0}" = 1 ]; then
  EXTRA=(--case hybrid-fresh-046 --user-voice coral)
 fi
+if [ "${DUPLEX_FROZEN_CONVERSATION_EVAL:-0}" = 1 ]; then
+ EXTRA=(--user-voice coral)
+ for ID in 047 048 049 050 051 052 053 054 055 056 057; do EXTRA+=(--case "hybrid-fresh-$ID"); done
+fi
 apptainer exec --bind /projects,/lus,/home \
  --env PYTHONPATH="$DL/envs/moshi-rag-7379661/lib/python3.12/site-packages:$DL_TASK_SOURCE" \
  --env PYTHONDONTWRITEBYTECODE=1 --env OMP_NUM_THREADS=4 \

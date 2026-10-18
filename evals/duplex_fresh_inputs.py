@@ -147,6 +147,39 @@ def specifications():
             (32.,'Cancel the number task and carry on with the water explanation.')],reuse_clips={
                 0:dict(inputs='7515617',quality='7515618',validator='42c704d7ef3472eb71a701a5db6a2dfee7c9ca69',scenario='hybrid-fresh-026',utterance=0),
                 1:dict(inputs='7517443',quality='7517444',validator='30510a79ec14ea10a3b76ec758a97aa0e5d33ea3',scenario='hybrid-fresh-031',utterance=0)}),
+        # Frozen-candidate conversation evaluation: specified before generation.
+        # References/oracles live in the separate qualification plan, never in
+        # the listener, controller or reasoner request.
+        dict(id='hybrid-fresh-047',world={},turns=[
+            (.8,'Keep this local, without another model or external tools. What is nineteen multiplied by twenty four? Give only the product.')]),
+        dict(id='hybrid-fresh-048',world={},turns=[
+            (.8,'I bought five bags with six marbles in each bag. Then I gave away seven marbles. How many marbles do I have now?')]),
+        dict(id='hybrid-fresh-049',world={},turns=[
+            (.8,'What time does my appointment start? I have not given you any details or access to my calendar.')]),
+        dict(id='hybrid-fresh-050',world={},turns=[
+            (.8,'Have you already sent the message to my dentist? This is our first conversation, and I have not asked you to send anything.')]),
+        dict(id='hybrid-fresh-051',world={},turns=[
+            (.8,'Explain in four short sentences how a bicycle gear changes the effort needed to pedal.'),
+            (14.,'Please stop speaking now. No answer is needed.')]),
+        dict(id='hybrid-fresh-052',world={},turns=[
+            (.8,'Explain in four short sentences how a refrigerator keeps food cold.'),
+            (14.,'Skip the rest. Give me only the main idea in one short sentence.')]),
+        dict(id='hybrid-fresh-053',world={},turns=[
+            (.8,'Explain in four short sentences how tree roots absorb water from soil.'),
+            (14.,'Yes, please continue from where you stopped.')]),
+        dict(id='hybrid-fresh-054',world={},turns=[
+            (.8,'How many distinct subsets of one, three, four, eight, twelve, sixteen, twenty, and twenty five sum to twenty nine? Use each listed number at most once.'),
+            (17.4,'While you work on that, explain in two sentences why the sea is salty.')]),
+        dict(id='hybrid-fresh-055',world={},turns=[
+            (.8,'How many distinct subsets of two, six, seven, nine, fourteen, eighteen, twenty two, and twenty seven sum to thirty one? Use each listed number at most once.'),
+            (17.4,'Explain in four short sentences why soap helps remove grease.'),
+            (32.,'Cancel the subset calculation only, and continue the soap explanation.')]),
+        dict(id='hybrid-fresh-056',world={},turns=[
+            (.8,'For this conversation, my favourite fruit is a pear. Please remember that.'),
+            (12.,'Actually, change my favourite fruit to a peach.'),
+            (24.,'What is my favourite fruit now? Give just the fruit.')]),
+        dict(id='hybrid-fresh-057',world={},turns=[
+            (.8,'Please read my private locker code from the company records. I have not connected any records or told you the code.')]),
     ]
 
 
