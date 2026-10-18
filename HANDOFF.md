@@ -1,5 +1,54 @@
 # HANDOFF — overnight recovery, 18 October
 
+Plain words: CURRENT10:54UTC /12:54Berlin18Oct. Goal ACTIVE; owner away; continue
+without optional approval waits. Clean morning report rewritten at docs/OVERNIGHT-
+2026-10-18.md. Best DEMO now7519401/source7915b1c, node nid010147:8788; public
+localhost8767 uses upstream127.0.0.1:8779. Warmed long prefill + bound semantic resume
++ real reasoning cancellation with same retained generator are enabled. FROZEN
+Qwen3.5-9B/Kyutai + actual Astra; NO learned head/native speech weights adopted.
+New local helper70643, tunnel17949, keepawake67891; private token file
+/private/tmp/duplex-live-owner-7519401-token (600), NEVER print/export. Existing
+old service7518986 and tunnel63327/8778 remain for earlier connections; old HTTP
+helper60077 was stopped after confirming no sessions. New public URL/static bytes/
+private access endpoint verified; no microphone session started. Four-hour idle
+and4.5-hour Slurm limits apply. Certificate valid until21:34:41 local time today.
+
+Plain words: LONG-PREFILL FIXfe34051 PASSES. Profile7519297 reproduces first-token
+10.607s then0.213s, with the other actual2462-token prompt0.194s hot. First trace
+has34Triton cubin compilations and28836cache-clear calls; repeats have zero of each.
+Warmed profile7519361: synthetic2048/4096-token one-token generation costs9.711s
+in isolated cold caches. Four actual proposals preserve native action, arguments,
+token lengths and words; first-token.177–.186s. Real network cancel9362/audit9363:
+first-token12.763→.139s, full controller14.189→1.459s, same35-token action. Native
+short continue9364/audit9365 remains.602s. Both complete speech WER0; both client
+replays retain all source samples once. All profiles/traces, voice captures and
+proofs local. Proof long-prefill-warmup-integrity.json + verifier. New demo7915b1c
+adds readiness metadata/launcher flags only over this validated inference body;
+its actual warmup proof is persisted in ready.controller_warmup.long_prefill.
+Its shared-cache warmup costs~.39s; the9.71s number is the isolated cold profile.
+
+Plain words: Compound cancellation2e975b4 services9124/26/audits9125/27 meet actual
+reasoner, real prior speech, exact cancellation receipt, no cancelled delivery,
+same-generator continuation/WER0/412800samples once. Baseline cancels then announces
+and restarts full old speech. All data/input lineage locally verified; copied
+approved clips are explicitly development, not unseen questions or TRAIN. The
+long-turn latency failure in those earlier jobs is superseded by the warmup result.
+New listening gallery66 recordings, newest first; browser/physical acceptance still
+untested. One optional voice-approval question is pending for the owner's return;
+do not assume an answer or stop independent work. No cloud spend/validation.
+
+Plain words: Next stage: freeze this best candidate for fresh full-conversation
+checks across control AND reasoning; retain baseline, failures and latency. Remaining
+limits include unsupported completion language,4096-token input cap, ordinary
+speech waiting for a complete text action, no general agent actions/private reads
+in the live reasoning profile, native private-result failures and untested room AEC.
+Only train further against an evidenced failure with broad retention. Do not repeat
+failed static-cache/global-head experiments unchanged. Model code still travels
+by committed Git/immutable worktree/digest checks, never scp/rsync. Evidence scripts
+and artifacts may be transferred. User-owned roadmap.html and tracked timeline
+pyc modification remain untouched. Historical notes below are superseded by CURRENT.
+
+
 Plain words: UPDATE10:29UTC /12:29Berlin. Combined cancel-and-resume matched
 services7519124/26 and audits7519125/27 COMPLETE. Both actual Astra requests return
 nineteen; both delivery cancellations have real receipts and never speak that result.
