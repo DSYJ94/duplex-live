@@ -5330,3 +5330,17 @@ cancel055 and speech/cursor checks before newownerdemo.11localendpoint/gate/abor
 checks pass; no currentlive promotion. Capture-settings metadata nowpersisted at
 sessionstart evenifbrowseraborts. Pairedsupervision authored108TRAIN/54heldout in
 untrackedtraining/control/paired_*; collection/training NOTstarted during ownerfix.
+
+Plain words: Paired-controller supervision now has108new authoredTRAIN/54heldout
+fixtures, wholepair/templatefamily splits, separateitemvocabulary/numberranges.
+Nine kinds include preserving/replacing/fulfilling owed speech, silentwithdrawal,
+ordinarynumbers, actual retainedgeneratoraction, cancellation+resume, positivehard
+delegationselection, missingcancellationidentity. No owner/capture/evaluation file
+isread.5localguards execute all162 through currentnativefunctioncompiler/worker;
+correctnumbers withlost/stalependinganswers explicitlyfail. Teachercollection is
+separate from nativevoice training, boundedpreview9TRAINlabels/9heldoutfixtures;
+preview NEVER receivesTRAINfile/approval. Allactual teacherattempts/provenance,
+completeworkerstate/answerchecks and clarificationsemanticreview are retained.
+Fullbatch requires every108label and exactprompt/source/response replay. No new
+optimizer/trainingstarted. AnycontextualdecoderLoRA followup requires separate
+recipe+realgradientpreflight+broaderretention; do not repeathead-onlypilotunchanged.

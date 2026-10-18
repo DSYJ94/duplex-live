@@ -1,0 +1,22 @@
+{
+  "schema": "dl-paired-controller-supervision-plan-v1",
+  "declared_before_teacher_collection": true,
+  "hypothesis": "The current model and rejected output-head corrections do not robustly represent whether a new reply fulfills, supersedes or preserves an owed answer. Matched pairs with identical earlier state and arithmetic separate action semantics from numerical correctness.",
+  "training_rows": 108,
+  "heldout_rows": 54,
+  "kinds": ["replace", "preserve", "fulfill", "withdraw", "ordinary", "resume", "cancel-resume", "delegate", "clarify"],
+  "split": "Entire authored template/pair families0/1 TRAIN and2/3 heldout; disjoint item vocabulary and arithmetic ranges",
+  "preview": "9 TRAIN proposals,9 heldout fixtures; no TRAIN file or training approval even if all labels pass",
+  "teacher": "gpt-6-astra, actual source/date/response/model/hash retained; at most3 quality attempts per row, all failures retained",
+  "quality": "Native function parsing plus complete production worker replay for nondelegation labels, exact number/content/retirement/cancellation/retained generator identity, independent semantic clarification review. Delegation labels check action selection only and never claim completed reasoning.",
+  "corpus_gate": "Every predeclared TRAIN row must pass; any failure blocks the whole batch; prompt/tools/source/teacher response hashes and replay must match on loading",
+  "optimizer_steps_in_collection": 0,
+  "prior_capture_or_evaluation_files_read": false,
+  "owner_audio_or_transcripts_used": false,
+  "native_voice_training": false,
+  "next_training_hypothesis": "If the full data gate passes, test contextual last-decoder-layer LoRA rather than repeating the rejected output-head-only correction; require a separate fixed recipe and real-gradient preflight before any long optimizer run",
+  "no_automatic_deployment": true,
+  "requires_broader_ordinary_reasoning_and_actual_speech_retention": true,
+  "native_model_status": "7510331 remains unqualified; controller-label quality cannot establish native private-result, waiting or cancellation competence",
+  "cloud_validation": "paused"
+}
