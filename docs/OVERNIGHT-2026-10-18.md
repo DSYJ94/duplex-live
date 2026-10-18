@@ -190,3 +190,34 @@ separate semantic-continuation fix must retain a paused generator until a model
 chooses continuation; current lexical disposal cannot be repaired by text labels.
 This is a plan for controller adaptation, not native duplex pretraining or proof
 that training will improve it. Owner demo remains unchanged.
+
+Plain words: Training-path mechanics7517528/sourceb9cf97e PASS on actual GH200.
+Rank8 output correction has2,019,328 trainable parameters; all775 published
+parameter tensors have identical before/after hashes. Zero correction produces
+exact original logits through the actual model forward. Two RANDOM NUMERICAL
+fixture optimizer steps produce finite gradients in both adapter tensors; strict
+save/reload reproduces logits exactly. The loader rejects the fixture checkpoint
+as a model candidate. Conversation training steps remain ZERO. Existing text,
+speech models and live service are unchanged. This proves mechanics, not gains.
+
+Plain words: Authoritative decisions/0003-provenance-classes.md Amendment A,
+30September, explicitly permits closed-content generally under the owner's
+enterprise agreement, with source/date provenance. Earlier open-only wording in
+the plan was unnecessarily restrictive. New strong-teacher text labels are
+allowed; current evaluation captures remain excluded from TRAIN regardless of
+rights. Fresh procedural scenes record GPT-6 Codex authoring provenance, and fresh
+GPT-6 Astra labels record actual response model/date/usage and raw response hashes.
+The teacher uses required, strict function calls with parallel calls disabled;
+implementation follows the [official function-calling documentation](https://developers.openai.com/api/docs/guides/function-calling).
+
+Plain words: New curriculum is DECLARED SYNTHETIC text state, with no audio or
+physical delivery evidence.216 full TRAIN scenes and72 held-out scenes use
+separate wording families and values. A preview is18 TRAIN proposals plus18 held
+scenes, never a training pilot. Every label passes the actual native-format parser
+and worker identity/preservation checks, plus independent CPU arithmetic or exact
+requested-instruction checks. Cancellation/clarification also receive a separate
+semantic review request; mechanical failure cannot be overruled by teacher
+agreement. Failed proposals are saved; up to3 explicit teacher attempts per fixed
+scene. Any unrepaired row blocks the entire TRAIN file and approval. Twelve local
+curriculum/worker/format tests pass, including correct-answer-but-old-speech-left-
+queued rejection. No corpus collection or training success claimed yet.
