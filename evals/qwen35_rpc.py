@@ -35,7 +35,7 @@ def receive(stream):
 
 class ResidentQwen35:
     provider_name='local-transformers-qwen35-9b'
-    def __init__(self,assets,folder,device='cuda:1',pending_speech_protocol='explicit-actions',kernel_assets=None,spoken_output_contract=False,compact_replies=False,development_function_selector=None,pending_speech_only=False,warm_long_prefill=False,development_context_candidate=None,context_candidate_updates=972):
+    def __init__(self,assets,folder,device='cuda:1',pending_speech_protocol='explicit-actions',kernel_assets=None,spoken_output_contract=False,compact_replies=False,development_function_selector=None,pending_speech_only=False,warm_long_prefill=False,development_context_candidate=None,context_candidate_updates=972,cancel_speech_contract=False):
         import transformers
         self.parent_version=transformers.__version__
         if self.parent_version!='4.55.3':raise RuntimeError('Resident integration requires the verified parent speech runtime4.55.3')
@@ -60,6 +60,7 @@ class ResidentQwen35:
         if kernel_assets is not None:command+=['--kernel-assets',str(kernel_assets)]
         if spoken_output_contract:command+=['--spoken-output-contract']
         if compact_replies:command+=['--compact-replies']
+        if cancel_speech_contract:command+=['--cancel-speech-contract']
         if development_function_selector is not None:command+=['--development-function-selector',str(development_function_selector)]
         if pending_speech_only:command+=['--pending-speech-only']
         if warm_long_prefill:command+=['--warm-long-prefill']
@@ -88,6 +89,8 @@ class ResidentQwen35:
             if warm is not None and (warm['lengths']!=[2048,4096] or warm['code_sha256']!=sha256(Path(__file__).with_name('qwen35_prefill_warmup.py')) or not warm['parameter_versions_unchanged'] or warm['user_requests_transformed'] or warm['persistent_conversation_cache']):raise RuntimeError('Resident long-prefill proof mismatch')
             if ready.get('function_selector')!=selector or ready['load'].get('function_selector')!=selector:raise RuntimeError('Resident selector hash/mode mismatch')
             if ready.get('context_candidate')!=context_candidate or ready['load'].get('context_candidate')!=context_candidate:raise RuntimeError('Resident context checkpoint/source mismatch')
+            expected_contract=dict(scope='cancel-only',code_sha256=sha256(Path(__file__).with_name('nonempty_speech_contract.py'))) if cancel_speech_contract else None
+            if ready.get('cancel_speech_contract')!=expected_contract or ready['load'].get('cancel_speech_contract')!=expected_contract:raise RuntimeError('Resident cancellation schema mismatch')
             expected={name:sha256(Path(__file__).with_name(name)) for name in ('qwen35_rpc.py','qwen35_controller.py','qwen_response_executor.py','qwen_controller_probe.py','qwen35_kernels.py','qwen35_cuda_discovery.py','qwen35_prefill_warmup.py')}
             if (ready['source_sha256']!=expected or ready['load']['assets_sha256']!=sha256(assets)
                     or ready['load']['device']!=device or ready['load']['trainable_parameters']!=0):raise RuntimeError('Resident controller source, assets or device mismatch')
@@ -100,6 +103,7 @@ class ResidentQwen35:
                 startup_s=time.monotonic()-started,child_source_sha256=ready['source_sha256'],log=str(self.log_path),remote_api_used=False)
             if selector is not None:self.transport_info['function_selector']=selector
             if context_candidate is not None:self.transport_info['context_candidate']=context_candidate
+            if expected_contract is not None:self.transport_info['cancel_speech_contract']=expected_contract
             self.connection.settimeout(90)
         except BaseException:
             self.close();raise
@@ -136,7 +140,7 @@ def main():
     ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('--assets',type=Path,required=True);ap.add_argument('--socket',type=Path,required=True)
     ap.add_argument('--development-function-selector',type=Path);ap.add_argument('--pending-speech-only',action='store_true');ap.add_argument('--warm-long-prefill',action='store_true')
     ap.add_argument('--development-context-candidate',type=Path);ap.add_argument('--context-candidate-updates',type=int,default=972)
-    ap.add_argument('--compact-replies',action='store_true');ap.add_argument('--kernel-assets',type=Path);ap.add_argument('--spoken-output-contract',action='store_true');ap.add_argument('--device',default='cuda:1');ap.add_argument('--pending-speech-protocol',choices=('array','explicit-actions'),default='explicit-actions');args=ap.parse_args()
+    ap.add_argument('--cancel-speech-contract',action='store_true');ap.add_argument('--compact-replies',action='store_true');ap.add_argument('--kernel-assets',type=Path);ap.add_argument('--spoken-output-contract',action='store_true');ap.add_argument('--device',default='cuda:1');ap.add_argument('--pending-speech-protocol',choices=('array','explicit-actions'),default='explicit-actions');args=ap.parse_args()
     if args.warm_long_prefill and args.development_function_selector is not None:raise ValueError('Long-prefill trial requires the frozen controller')
     if args.development_context_candidate is not None and (args.development_function_selector is not None or args.pending_speech_only or not args.compact_replies):raise ValueError('Context candidate requires sole compact action mode')
     listener=socket.socket(socket.AF_UNIX,socket.SOCK_STREAM)
@@ -155,10 +159,16 @@ def main():
             from evals.context_candidate import attach
             context_candidate=attach(executor,args.development_context_candidate,args.assets,args.context_candidate_updates)
             executor.proof=dict(executor.proof,context_candidate=context_candidate)
+        cancel_contract=None
+        if args.cancel_speech_contract:
+            from evals.nonempty_speech_contract import NonemptySpeechGenerator
+            executor.generator=NonemptySpeechGenerator(executor.generator,'cancel-only')
+            cancel_contract=dict(scope='cancel-only',code_sha256=sha256(Path(__file__).with_name('nonempty_speech_contract.py')))
+            executor.proof=dict(executor.proof,cancel_speech_contract=cancel_contract)
         import transformers
         connection,_=listener.accept()
         with connection,connection.makefile('rwb') as stream:
-            send(stream,dict(kind='ready',long_prefill_warmup=executor.warmup.get('long_prefill'),function_selector=executor.proof.get('function_selector'),context_candidate=context_candidate,provider=executor.provider_name,model=executor.model_id,load=executor.proof,warmup=executor.warmup,
+            send(stream,dict(kind='ready',cancel_speech_contract=cancel_contract,long_prefill_warmup=executor.warmup.get('long_prefill'),function_selector=executor.proof.get('function_selector'),context_candidate=context_candidate,provider=executor.provider_name,model=executor.model_id,load=executor.proof,warmup=executor.warmup,
                 pending_speech_protocol=args.pending_speech_protocol,compact_replies=args.compact_replies,spoken_output_contract=args.spoken_output_contract,transformers_version=transformers.__version__,
                 source_sha256={name:sha256(Path(__file__).with_name(name)) for name in
                     ('qwen35_rpc.py','qwen35_controller.py','qwen_response_executor.py','qwen_controller_probe.py','qwen35_kernels.py','qwen35_cuda_discovery.py','qwen35_prefill_warmup.py')}))

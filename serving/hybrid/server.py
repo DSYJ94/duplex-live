@@ -131,7 +131,7 @@ def main():
     ap.add_argument('--compact-replies',action='store_true');ap.add_argument('--warm-long-prefill',action='store_true')
     ap.add_argument('--development-function-selector',type=Path);ap.add_argument('--pending-speech-only',action='store_true')
     ap.add_argument('--development-context-candidate',type=Path);ap.add_argument('--context-candidate-updates',type=int,default=972)
-    ap.add_argument('--exact-reasoning-tools',action='store_true')
+    ap.add_argument('--exact-reasoning-tools',action='store_true');ap.add_argument('--cancel-speech-contract',action='store_true')
     ap.add_argument('--include-speech-context',action='store_true')
     ap.add_argument('--client-pause-protocol',action='store_true');ap.add_argument('--semantic-pause',action='store_true');ap.add_argument('--bound-resume-target',action='store_true');ap.add_argument('--allow-cancel-resume',action='store_true')
     ap.add_argument('--host',default='127.0.0.1');ap.add_argument('--port',type=int,default=8788);ap.add_argument('--idle-seconds',type=int,default=300);ap.add_argument('--max-sessions',type=int,default=1)
@@ -153,7 +153,7 @@ def main():
     from evals.duplex_hybrid_probe import run_case
     from evals.moshi_model_download import sha256
     listener=StreamingListener(args.stt_assets,args.mimi_load_approval)
-    controller=ResidentQwen35(args.controller_assets,args.out,device='cuda:1',pending_speech_protocol='explicit-actions',kernel_assets=args.kernel_assets,compact_replies=args.compact_replies,development_function_selector=args.development_function_selector,pending_speech_only=args.pending_speech_only,warm_long_prefill=args.warm_long_prefill,development_context_candidate=args.development_context_candidate,context_candidate_updates=args.context_candidate_updates)
+    controller=ResidentQwen35(args.controller_assets,args.out,device='cuda:1',pending_speech_protocol='explicit-actions',kernel_assets=args.kernel_assets,compact_replies=args.compact_replies,development_function_selector=args.development_function_selector,pending_speech_only=args.pending_speech_only,warm_long_prefill=args.warm_long_prefill,development_context_candidate=args.development_context_candidate,context_candidate_updates=args.context_candidate_updates,cancel_speech_contract=args.cancel_speech_contract)
     requests=queue.Queue(maxsize=1);stop=threading.Event();network=Network(args.host,args.port,token,requests,stop,args.client_pause_protocol);thread=None;speaker=None
     try:
         with listener.session():
@@ -163,7 +163,7 @@ def main():
             for _ in range(20):listener.step(np.zeros(1920,dtype=np.float32),verify_input=False)
             thread=threading.Thread(target=network.run,name='live-pcm-network',daemon=True);thread.start()
             if not network.ready.wait(10) or network.error:raise RuntimeError('Live network did not start') from network.error
-            ready=dict(schema='dl-live-transport-ready-v1',exact_reasoning_tools_enabled=args.exact_reasoning_tools,lexical_confirmed_pause_enabled=args.lexical_confirmed_pause,semantic_pause_enabled=args.semantic_pause,bound_resume_target=args.bound_resume_target,cancel_and_resume_enabled=args.allow_cancel_resume,playback_protocol='client-buffer-v1' if args.client_pause_protocol else None,host=args.host,port=network.port,controller_transport=controller.transport_info,controller_load=controller.proof,controller_warmup=controller.warmup,
+            ready=dict(schema='dl-live-transport-ready-v1',cancel_speech_contract_enabled=args.cancel_speech_contract,exact_reasoning_tools_enabled=args.exact_reasoning_tools,lexical_confirmed_pause_enabled=args.lexical_confirmed_pause,semantic_pause_enabled=args.semantic_pause,bound_resume_target=args.bound_resume_target,cancel_and_resume_enabled=args.allow_cancel_resume,playback_protocol='client-buffer-v1' if args.client_pause_protocol else None,host=args.host,port=network.port,controller_transport=controller.transport_info,controller_load=controller.proof,controller_warmup=controller.warmup,
                 listener_loads=listener.loads,speaker_evidence=speaker.evidence,warmup=warmup,external_reasoner='gpt-6-astra',
                 microphone_tested=False,physical_aec_tested=False,duplex_qualified=False,token_file=str(token_path),code_sha256=sha256(Path(__file__)))
             (args.out/'ready.json').write_text(json.dumps(ready,indent=2)+'\n');print(json.dumps(dict(ready=True,port=network.port,token_file=str(token_path))),flush=True)

@@ -1,0 +1,20 @@
+{
+  "schema": "dl-cancel-contract-speech-v1",
+  "do_not_train": true,
+  "training_approved": false,
+  "owner_audio_used": false,
+  "candidate": "fixed972 job7523832",
+  "change": "cancel_reasoning.content schema only; no new weights, output repair or exact reasoning profile",
+  "scenes": [
+    "058",
+    "059",
+    "060",
+    "061",
+    "064",
+    "065",
+    "055",
+    "057"
+  ],
+  "gates": "Reuse approved inputs without reroll. Strict parent/child schema+adapter handshake. Actual PCM/wire/cursor, complete-task outcomes, cancellation and independent speech audit. Preserve known short15 speech and private057 semantic failures; no promotion from control scores.",
+  "owner_service_changed": false
+}

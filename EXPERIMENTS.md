@@ -5593,3 +5593,32 @@ faster result may remove cancellation opportunity; report uncovered, never fake 
 receipt or delay a result to pass. Also declare six local-only secondary-ASR clips
 for short15/52, added prefix, soap and numbered butterfly output. Original Whisper
 gates remain unchanged; this is diagnostic, not replacement acceptance.
+
+## 18 October — narrowed cancellation contract enters speech validation
+
+Plain words: Candidate7525916 source344dded completes all344 generations: unchanged
+51/54 paired,63→65/72 prior controls,22/22 fresh and24/24 local completions. Both
+empty cancellation regressions fixed; all same-process original passes retained.
+This is inference-only schema alignment, not further training. Frozen7525915 still
+finishing at this entry. Historical-frozen retention and complete row hashes must
+be verified locally before making a qualification claim.
+
+Plain words: Expose cancel-only schema as an opt-in resident RPC/service mode. Both
+processes bind the wrapper code hash and scope in their strict handshake; default
+owner mode is unchanged. New declared recorded-speech comparison reuses all six
+eligible058–065 scenes,055 cancellation and057 split private-access regression.
+Known speech15 and private057 failures stay visible. No exact-backend change in
+this comparison. Disable future transport core dumps: a teardown dump accidentally
+dirtied source344dded and the independent audit correctly failed closed. The dump
+was moved to a private remote quarantine, never exported. Only the saved054 audit
+was resubmitted as7526306 and completed; failed055 service was not rerun.
+
+Plain words: Exact backend054/055 both executed real CPU count receipts (5/4) in
+one actual Astra request each.054 resumes the owed count after the sea explanation.
+055 completed its count before cancellation, then frozen controller selected an
+unavailable cancellation function and aborted the session. Cancellation opportunity
+is absent; full conversation FAIL. Local secondary ASR7525917 completes all six
+pinned clips, no external requests. It also hears “at15”; keep the short-number
+speech failure. It disputes soap more strongly than Whisper and hears no extra
+private-refusal prefix. These are diagnostics, not owner listening or replacement
+qualification gates. Native model7510331 and overall system remain unqualified.
