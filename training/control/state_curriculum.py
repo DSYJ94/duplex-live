@@ -7,7 +7,7 @@ import copy
 import threading
 from data.synthetic.filter import norm_words
 
-STATE_KINDS=('resume-active','resume-finished','resume-cancelled','resume-duplicates','cancel-new-answer','stop-only','clarify-target','finished-confirmation')
+STATE_KINDS=('resume-active','resume-finished','resume-cancelled','resume-duplicates','resume-keep-work','cancel-new-answer','stop-only','clarify-target','finished-confirmation')
 NAMES=('stencil batch','parcel plan','drum sequence','harp arrangement','fountain layout')
 ITEMS=('travel mug','wooden ladder','glass jar','wool blanket','metal tray')
 CONTINUE=(
@@ -28,7 +28,8 @@ def new_scenes():
                 for kind in STATE_KINDS:
                     # Same latest request and opaque IDs across all four resume states.
                     user=CONTINUE[family].format(target=target,other=other,item=item)
-                    if kind=='cancel-new-answer':user=f'Stop delivery of the {target} result. Replace the {item} explanation with the answer to {11+family+variant} plus {3+variant}; answer the new question too.'
+                    if kind=='resume-keep-work':user=f'Continue the same {item} directions from where you paused. Keep all calculation result deliveries active; do not cancel any of them.'
+                    elif kind=='cancel-new-answer':user=f'Stop delivery of the {target} result. Replace the {item} explanation with the answer to {11+family+variant} plus {3+variant}; answer the new question too.'
                     elif kind=='stop-only':user=f'End the spoken {item} directions without any further words. Keep the calculations running.'
                     elif kind=='clarify-target':user='One calculation result should be stopped, but I have not chosen which. Ask me to identify it before changing anything.'
                     elif kind=='finished-confirmation':user=f'Withdraw the {target} result delivery. Tell me honestly if that task is already finished; leave the {other} alone.'
@@ -54,7 +55,7 @@ def specifications(preview=False):
             if row['split']=='train':chosen.setdefault((row['corpus'],row['kind']),row)
         rows=list(chosen.values())+[r for r in rows if r['split']=='heldout']
     assert len({r['id'] for r in rows})==len(rows)
-    if not preview:assert sum(r['split']=='train' for r in rows)==508 and sum(r['split']=='heldout' for r in rows)==200
+    if not preview:assert sum(r['split']=='train' for r in rows)==517 and sum(r['split']=='heldout' for r in rows)==204
     return rows
 
 
@@ -93,9 +94,13 @@ def compiler(generator,model):
     return ApplicationCapabilityExecutor(x)
 
 
-def run(scene,generator,model):
+def run(scene,generator,model,*,response_executor=None):
     from evals.idempotent_reasoning_worker import run_idempotent_reasoning_worker
-    x=compiler(generator,model);base=scene['base'];corpus=scene['corpus']
+    if response_executor is None:x=compiler(generator,model)
+    else:
+        from evals.application_capabilities import ApplicationCapabilityExecutor
+        x=ApplicationCapabilityExecutor(response_executor)
+    base=scene['base'];corpus=scene['corpus']
     if corpus in ('paired','rehearsal'):
         from training.control.paired_curriculum import payload
         prepared=dict(base,resume_target=base.get('resume_target'))
@@ -144,7 +149,7 @@ def assess(scene,result,world):
         checks.update(route=result['route']=='resume',same_generator=result.get('resume_target')==dict(speech_id='retained-directions',event_id='fixture-cursor'),no_new_words=result['content']=='',preserved=result['consume_pending_speech_ids']==[])
         if result.get('resume_after_idempotent_cancellation'):require_idempotent_delivery(result['receipts'],world.tasks)
         # A cancellation request uses its truthful idempotent operation even when already finished.
-        checks['requested_operation']=bool(result.get('resume_after_idempotent_cancellation'))
+        checks['requested_operation']=not result['receipts'] if kind=='resume-keep-work' else bool(result.get('resume_after_idempotent_cancellation'))
     elif kind=='cancel-new-answer':
         checks.update(route=result['route']=='cancel',old_superseded=result['consume_pending_speech_ids']==['retained-directions'],new_answer=' '.join(norm_words(str(base['number']))) in ' '.join(norm_words(result['content'])))
     elif kind=='stop-only':checks.update(route=result['route']=='silence',silent=result['content']=='',retired=result['consume_pending_speech_ids']==['retained-directions'])
