@@ -4366,3 +4366,16 @@ receives no artificial prefix. Metadata records the virtual bootstrap separately
 Two real-Moshi CPU regressions must reject the unbootstrapped first frame and
 accept every real frame across reset/bootstrap. These guards run before loading
 the full ASR checkpoint. No parameter, audio sample or reference label changes.
+
+Plain words:ASR969 PASSES both real-Moshi clock guards and complete strict model
+loading, then all3 paced TRAIN inputs with worderror0. All32 provided user rows
+match actual temporal input on every real/flush frame. Computep95~0.0122s;
+maximum arrival backlog0.032s (other two<0.0001s). Raw head2/class0 plus two
+nonlexical frames is NOT an accepted turn-end policy: it splits lightning into
+3fragments and clarification/cancellation into7each. Do not dispatch tools from
+that readout. A separate causal CPU policy replay now requires terminal decoded
+punctuation and three quiet audio frames, retaining text across rejected interword
+pulses. It also reports acoustic speech starts separately from semantic task
+cancellation. Three local state/sequence regressions pass; replay on actual
+captured model tokens, raw heads and PCM remains to run. No model decoding or
+optimization is repeated; no reference words enter the policy.
