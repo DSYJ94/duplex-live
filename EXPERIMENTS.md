@@ -5054,3 +5054,13 @@ audit main with timestamped recognizer fixture reproduces the exact KeyError;
 rename work entry separately, then all23 pause/playout/worker/format tests pass.
 Rescore preserved actual WAV/packet evidence with fixed audit; do not regenerate
 those conversations to hide the failed scorer. Failed audit artifacts stay retained.
+
+
+Plain words: frozen-model pause ablation also needs a short-command safety check.
+New029 asks for a four-sentence Moon explanation, then only Stop at14seconds.
+Independent input judging remains unchanged. A no-decoded-words policy can mistake
+an ASR-omitted genuine command for a nonlexical sound; explicitly test this failure
+before any adoption, never label it acknowledgment intelligence. Compare unchanged
+acoustic with pause, retain every result, and require a genuinely heard prefix
+before treating either result as an audible interruption test. No new assistant
+teacher words, training labels or optimizer steps. Current owner remains unchanged.

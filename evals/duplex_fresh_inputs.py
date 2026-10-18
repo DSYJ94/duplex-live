@@ -90,6 +90,9 @@ def specifications():
             (.8,'Please cancel the calculation from earlier.')]),
         dict(id='hybrid-fresh-028',world={},turns=[
             (.8,'Do not use another model or any external tools. What is twenty four multiplied by thirty six?')]),
+        dict(id='hybrid-fresh-029',world={},turns=[
+            (.8,'Explain in four short sentences why the moon seems to change shape.'),
+            (14.,'Stop.')]),
     ]
 
 
