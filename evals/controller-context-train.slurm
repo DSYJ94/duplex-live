@@ -9,6 +9,7 @@
 #SBATCH --time=00:30:00
 #SBATCH --output=logs/dl-controller-context-%j.out
 set -euo pipefail
+ulimit -c 0
 DL=/projects/u6si/duplex-live
 : "${DL_TASK_SOURCE:?Immutable source required}"
 : "${DL_TASK_COMMIT:?Immutable commit required}"
@@ -17,13 +18,21 @@ test -z "$(git -C "$DL_TASK_SOURCE" status --porcelain)"
 PHASE=${CONTROL_CONTEXT_PHASE:-preflight}
 [[ "$PHASE" = preflight || "$PHASE" = full ]]
 EXTRA=()
+CONTEXT_RECIPE=evals/fixtures/paired-context-adapter-plan-20261018.json
 if [ -n "${CONTROL_CONTEXT_REHEARSAL_DATA_JOB:-}" ]; then
  [[ "$CONTROL_CONTEXT_REHEARSAL_DATA_JOB" =~ ^[0-9]+$ ]]
- EXTRA+=(--rehearsal-data "$DL/runs/controller-text-teacher-$CONTROL_CONTEXT_REHEARSAL_DATA_JOB"
- --recipe evals/fixtures/paired-context-rehearsal-plan-20261018.json)
+ EXTRA+=(--rehearsal-data "$DL/runs/controller-text-teacher-$CONTROL_CONTEXT_REHEARSAL_DATA_JOB")
+ CONTEXT_RECIPE=evals/fixtures/paired-context-rehearsal-plan-20261018.json
 fi
+if [ -n "${CONTROL_CONTEXT_CAPABILITY_DATA_JOB:-}" ]; then
+ [[ "$CONTROL_CONTEXT_CAPABILITY_DATA_JOB" =~ ^[0-9]+$ ]]
+ : "${CONTROL_CONTEXT_REHEARSAL_DATA_JOB:?Capability stage also requires the complete original rehearsal corpus}"
+ EXTRA+=(--capability-data "$DL/runs/controller-capability-teacher-$CONTROL_CONTEXT_CAPABILITY_DATA_JOB")
+ CONTEXT_RECIPE=evals/fixtures/capability-context-plan-20261018.json
+fi
+EXTRA+=(--recipe "$CONTEXT_RECIPE")
 if [ "$PHASE" = full ]; then
- : "${CONTROL_CONTEXT_PREFLIGHT_JOB:?Actual nine-update proof required}"
+ : "${CONTROL_CONTEXT_PREFLIGHT_JOB:?Actual declared-update proof required}"
  [[ "$CONTROL_CONTEXT_PREFLIGHT_JOB" =~ ^[0-9]+$ ]]
  EXTRA+=(--preflight "$DL/runs/controller-context-${CONTROL_CONTEXT_PREFLIGHT_JOB}")
 fi

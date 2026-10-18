@@ -49,7 +49,8 @@ if [ "${DUPLEX_CONFIRMED_PAUSE:-0}" = 1 ]; then EXTRA+=(--lexical-confirmed-paus
  if [ "${DUPLEX_CANCEL_RESUME:-0}" = 1 ]; then EXTRA+=(--allow-cancel-resume); fi
  if [ -n "${DUPLEX_CONTEXT_CANDIDATE_JOB:-}" ]; then
   [[ "$DUPLEX_CONTEXT_CANDIDATE_JOB" =~ ^[0-9]+$ ]]
-  EXTRA+=(--development-context-candidate "$DL/runs/controller-context-$DUPLEX_CONTEXT_CANDIDATE_JOB" --context-candidate-updates 972)
+  [[ "${DUPLEX_CONTEXT_CANDIDATE_UPDATES:-972}" =~ ^[0-9]+$ ]]
+  EXTRA+=(--development-context-candidate "$DL/runs/controller-context-$DUPLEX_CONTEXT_CANDIDATE_JOB" --context-candidate-updates "${DUPLEX_CONTEXT_CANDIDATE_UPDATES:-972}")
  fi
  if [ -n "${DUPLEX_FUNCTION_SELECTOR_JOB:-}" ]; then
   [[ "$DUPLEX_FUNCTION_SELECTOR_JOB" =~ ^[0-9]+$ ]]

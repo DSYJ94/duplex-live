@@ -5777,3 +5777,25 @@ after a new26-update/independent-restore proof. No optimizer has run for this st
 Add all42actual fixture-worker capability holdouts before/after strict restore;
 retain speech/semantic qualification as separate requirements. No decoder-grammar
 or inventory prompt is adopted. The accepted owner model remains unchanged.
+
+## 18 October — complete capability TRAIN corpus approved and new recipe fixed
+
+Plain words: Full7527052/source4dd733f COMPLETE112/112 TRAIN source scenes,128/128
+native labels,111 first-attempt scenes and one recorded repair. All actual teacher
+responses/reviews/source hashes and every exact student prompt and worker stage
+replay pass on cluster and independently locally. Manifest7c128bbd290df85258674aa9
+21b3b8fa46457f517f89f6d8ea904d48fb1fb849; all artifacts locally backed up. Manual
+review of all64 nontrivial unsupported/cancel/clarify utterances passes;16 record
+reads/16receipt replies and16same-generator resumes are exactly checked.42heldout
+scenes never entered teacher collection. No failed preview or evaluation capture
+is in TRAIN. This is data approval, not a model-quality claim.
+
+Plain words: Fix capability-context-plan:108paired+216rehearsal+128capability labels,
+fresh base initialization, same rank8 final4-layer adapter and3epochs,1356updates.
+A new26-update proof covers every corpus/kind and both record-read stages, then
+independent adapter/optimizer/RNG/logit restore before any full optimizer run.
+All126 old and42new capability workers run before full training and after strict
+independent restore; later knowledge, real-reasoning, speech and latency gates
+still required. No decoder mask/inventory prompt or new native audio weights.
+The recorded-service launcher can now bind an explicit actual checkpoint budget
+(default972 unchanged) for later1356 diagnostics; no owner model switch.
