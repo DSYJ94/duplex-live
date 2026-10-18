@@ -129,6 +129,18 @@ def specifications():
             (26.,'Cancel the number task only. Let the explanation finish.')]),
         dict(id='hybrid-fresh-041',world={},turns=[
             (.8,'Work this out yourself without any external tools or another model. What is seventeen multiplied by twenty three? Give just the product.')]),
+        dict(id='hybrid-fresh-042',world={},turns=[
+            (.8,'Explain in four short sentences how a river can carve a valley.'),
+            (14.,'Please carry on from where you paused.')]),
+        dict(id='hybrid-fresh-043',world={},turns=[
+            (.8,'Explain in four short sentences how magnets attract iron.'),
+            (14.,'I understand, carry on.')]),
+        dict(id='hybrid-fresh-044',world={},turns=[
+            (.8,'Explain in four short sentences why hot air balloons rise.'),
+            (14.,'That is enough. Do not add another word.')]),
+        dict(id='hybrid-fresh-045',world={},turns=[
+            (.8,'Explain in four short sentences how compost forms.'),
+            (14.,'Forget that explanation. What is the capital of France? Give just the city.')]),
     ]
 
 

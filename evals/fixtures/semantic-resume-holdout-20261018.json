@@ -1,0 +1,21 @@
+{
+  "schema":"dl-semantic-resume-fresh-plan-v1",
+  "frozen_controller_source":"578132ae8db2294b17c346ca6eb0c9aa669920a7",
+  "training_approved":false,
+  "plan_before_user_audio_generation":true,
+  "cases":[
+    {"id":"042","expected":"same retained river explanation generator, no new introduction or repeated prefix"},
+    {"id":"043","expected":"acknowledgment plus carry-on resumes same retained magnet explanation generator"},
+    {"id":"044","expected":"silent withdrawal, no replacement speech"},
+    {"id":"045","expected":"old compost explanation retired; only Paris completes"}
+  ],
+  "reject_bad_input_without_regeneration":true,
+  "user_audio_quality_wer_max":0.05,
+  "require_real_started_speech_before_control":true,
+  "require_independent_completed_speech_asr":true,
+  "require_exact_wire_packets_and_no_duplicate_client_samples":true,
+  "require_complete_same_generator_chain_for_resume":true,
+  "no_physical_browser_acceptance_claim":true,
+  "control_prompt_and_speech_weights_frozen_before_this_plan":true,
+  "new_source_changes_only_input_generation_and_ready_metadata":true
+}

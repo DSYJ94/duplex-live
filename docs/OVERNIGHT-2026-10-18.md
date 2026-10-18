@@ -1,5 +1,25 @@
 # Overnight recovery: 18 October
 
+Plain words: UPDATE09:47UTC: semantic pause development578132a/7518837–7518844
+is COMPLETE, four matched cases improve2/4→4/4 with FROZEN model weights. Same
+user PCM and first generated replies exactly match prior trials. The model chooses
+resume_speech on034; the SAME generator completes. Production client replay schedules
+all435840 source samples once, restores6402 client-held samples, discards none.
+Silent031, revised032 and replacement arithmetic033 all pass. All completed audit
+clips WER0;8 total audit clips include partial/unscored spans. Local artifact proof
+semantic-resume-four-development-integrity.json + verifier. Thirty local tests and
+two actual localhost WebSocket tests pass. No physical browser/device acceptance.
+The old trained adapter is prohibited in this new action experiment; it never
+trained resume_speech. Owner service remains unchanged; no broad qualification.
+
+Plain words: Next FRESH plan042–045 committed before user-audio generation, candidate
+speech/controller code frozen578132a. Two continue/acknowledgment cases, silent stop,
+and stop+capital question. Quality must pass original5percent input WER with no
+regeneration. New source changes only input generation/ready metadata/this plan.
+Clifton certificate was rechecked live: valid until21:34:41 local time18Oct; earlier
+09:39UTC expiry estimate is outdated. Do not request renewal based on that estimate.
+
+
 Plain words: LATEST09:37UTC: pending-only actual service7518789/91/93 and audits
 7518790/92/94 COMPLETE. Old compass speech retired and seven days spoken; local
 391 with no external request; actual count-result delivery cancelled while shadow

@@ -145,7 +145,7 @@ def main():
             for _ in range(20):listener.step(np.zeros(1920,dtype=np.float32),verify_input=False)
             thread=threading.Thread(target=network.run,name='live-pcm-network',daemon=True);thread.start()
             if not network.ready.wait(10) or network.error:raise RuntimeError('Live network did not start') from network.error
-            ready=dict(schema='dl-live-transport-ready-v1',playback_protocol='client-buffer-v1' if args.client_pause_protocol else None,host=args.host,port=network.port,controller_transport=controller.transport_info,controller_load=controller.proof,
+            ready=dict(schema='dl-live-transport-ready-v1',semantic_pause_enabled=args.semantic_pause,playback_protocol='client-buffer-v1' if args.client_pause_protocol else None,host=args.host,port=network.port,controller_transport=controller.transport_info,controller_load=controller.proof,
                 listener_loads=listener.loads,speaker_evidence=speaker.evidence,warmup=warmup,external_reasoner='gpt-6-astra',
                 microphone_tested=False,physical_aec_tested=False,duplex_qualified=False,token_file=str(token_path),code_sha256=sha256(Path(__file__)))
             (args.out/'ready.json').write_text(json.dumps(ready,indent=2)+'\n');print(json.dumps(dict(ready=True,port=network.port,token_file=str(token_path))),flush=True)
