@@ -57,7 +57,7 @@ def generate(out):
         ref=folder/'reference.json';ref.write_text(json.dumps(dict(user_words=[dict(text=r['text']) for r in references],utterances=references),indent=2)+'\n')
         rows.append(dict(scenario_id=spec['id'],split='fresh-evaluation',path=str(wav),reference_path=str(ref),
             wav_sha256=sha256(wav),reference_sha256=sha256(ref),world=spec['world'],
-            duration_s=len(pcm)/24000,user_voice='verse',source_model=MODEL,generation_receipts=receipts))
+            duration_s=len(pcm)/24000,utterance_count=len(references),user_voice='verse',source_model=MODEL,generation_receipts=receipts))
     manifest=dict(schema='dl-hybrid-fresh-inputs-v1',rows=rows,training_approved=False,do_not_train=True,
         generator_sha256=sha256(Path(__file__)),assistant_audio_generated=False,source='new synthetic evaluation user speech')
     (out/'inputs.json').write_text(json.dumps(manifest,indent=2)+'\n');print(json.dumps(manifest),flush=True)
@@ -67,10 +67,11 @@ def judge(data,out):
     import numpy as np
     import soundfile as sf
     import whisper_timestamped as whisper
+    import whisper as whisper_package
     from scipy.signal import resample_poly
     from data.synthetic.filter import norm_words,wer
     manifest=data/'inputs.json';m=json.loads(manifest.read_text());model=whisper.load_model('turbo',device='cuda');results=[]
-    if m['training_approved'] or not m['do_not_train'] or m['assistant_audio_generated']:raise RuntimeError('Invalid fresh input scope')
+    if m['training_approved'] or not m['do_not_train'] or m['assistant_audio_generated'] or m['generator_sha256']!=sha256(Path(__file__)):raise RuntimeError('Invalid fresh input scope')
     out.mkdir(parents=True,exist_ok=False)
     for row in m['rows']:
         wav=Path(row['path']);ref=Path(row['reference_path'])
@@ -88,7 +89,8 @@ def judge(data,out):
             wav_sha256=row['wav_sha256'],reference_sha256=row['reference_sha256']))
     report=dict(schema='dl-hybrid-fresh-quality-v1',passed=all(r['passed'] for r in results),results=results,
         inputs_manifest_sha256=sha256(manifest),training_approved=False,do_not_train=True,
-        judge_sha256=sha256(Path(__file__)),threshold=.05)
+        judge_sha256=sha256(Path(__file__)),threshold=.05,asr_model='whisper turbo',
+        asr_publisher_weight_sha256=whisper_package._MODELS['turbo'].split('/')[-2])
     (out/'quality.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report),flush=True)
 
 
@@ -97,16 +99,22 @@ def checked_cases(data,quality_path,identities):
     if (m['schema']!='dl-hybrid-fresh-inputs-v1' or quality['schema']!='dl-hybrid-fresh-quality-v1'
             or quality['inputs_manifest_sha256']!=sha256(manifest) or m['training_approved']
             or quality['training_approved'] or not m['do_not_train'] or not quality['do_not_train']
-            or m['assistant_audio_generated'] or quality['threshold']!=.05
+            or m['assistant_audio_generated'] or quality['threshold']!=.05 or quality['asr_model']!='whisper turbo'
+            or m['generator_sha256']!=sha256(Path(__file__))
             or quality['judge_sha256']!=sha256(Path(__file__))):
         raise RuntimeError('Fresh evaluation lacks an exact independent input quality receipt')
+    if (len({r['scenario_id'] for r in m['rows']})!=len(m['rows'])
+            or len({r['scenario_id'] for r in quality['results']})!=len(quality['results'])
+            or {r['scenario_id'] for r in m['rows']}!={r['scenario_id'] for r in quality['results']}):
+        raise RuntimeError('Incomplete or duplicated fresh input quality inventory')
     if len(set(identities))!=len(identities):raise ValueError('Duplicate fresh input selection')
     selected=[]
     for identity in identities:
         row=next(r for r in m['rows'] if r['scenario_id']==identity)
         approved=next(r for r in quality['results'] if r['scenario_id']==identity)
         if (not approved['passed'] or row['split']!='fresh-evaluation'
-                or any(not c['passed'] or c['wer']>.05 or not c['valid_bounds'] for c in approved['clips'])
+                or len(approved['clips'])!=row['utterance_count'] or row['utterance_count']<1
+                or any(not c['passed'] or not math.isfinite(c['wer']) or not 0<=c['wer']<=.05 or not c['valid_bounds'] for c in approved['clips'])
                 or approved['wav_sha256']!=row['wav_sha256'] or approved['reference_sha256']!=row['reference_sha256']
                 or sha256(Path(row['path']))!=row['wav_sha256'] or sha256(Path(row['reference_path']))!=row['reference_sha256']):
             raise RuntimeError('Unapproved or changed fresh evaluation input: '+identity)
