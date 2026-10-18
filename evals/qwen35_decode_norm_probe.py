@@ -32,13 +32,15 @@ def main():
         for job,task,payload,source in requests:
             for repeat in range(2):
                 name=mode+'-'+job+'-'+task+'-'+str(repeat);start=time.monotonic()
+                response=None;comparisons=None
                 try:
                     response=executor(copy.deepcopy(payload));r=response['local_inference']
-                    exact=(r['native_model_action']==source['original_native_action'] and r['input_tokens']==source['original_input_tokens'] and r['raw_text']==source['original_raw_text'] and r['generated_tokens']==source['original_generated_tokens'])
+                    comparisons=dict(action=r['native_model_action']==source['original_native_action'],input_tokens=r['input_tokens']==source['original_input_tokens'],raw_text=r['raw_text']==source['original_raw_text'],generated_tokens=r['generated_tokens']==source['original_generated_tokens'])
+                    exact=all(comparisons.values())
                     row=dict(mode=mode,job=job,task=task,repeat=repeat,completed=True,actual_native_output_exact=exact,first_token_s=r['first_token_s'],controller_s=r['wall_s'],generated_tokens=r['generated_tokens'],source=source,response=response)
                     if mode=='original' and not exact:raise ValueError('Original native proposal failed exact reconstruction; comparison invalid')
                 except Exception as error:
-                    row=dict(mode=mode,job=job,task=task,repeat=repeat,completed=False,error_type=type(error).__name__,message=str(error),evidence=getattr(error,'result',None),source=source)
+                    row=dict(mode=mode,job=job,task=task,repeat=repeat,completed=False,error_type=type(error).__name__,message=str(error),evidence=getattr(error,'result',None),source=source,observed_response=response,comparisons=comparisons)
                     if mode=='original':
                         (a.out/(name+'.json')).write_text(json.dumps(row,indent=2)+'\n');raise
                 row['end_to_end_s']=time.monotonic()-start;rows.append(row);(a.out/(name+'.json')).write_text(json.dumps(row,indent=2)+'\n')
