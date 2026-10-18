@@ -41,34 +41,43 @@ def counterfactual_records(scenario):
     raise ValueError('Unapproved bounded development case')
 
 
-def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",interrupt_policy="acoustic",controller=None,scope_read_tools=False,include_tool_context=False,worker_kind="records"):
+def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",interrupt_policy="acoustic",controller=None,scope_read_tools=False,include_tool_context=False,worker_kind="records",live_input=None,output_observer=None):
     import numpy as np
     import soundfile as sf
     from data.synthetic.filter import norm_words,wer
-    source,rate=sf.read(row['path'],dtype='float32',always_2d=True)
-    if rate!=24000 or not np.isfinite(source).all():raise RuntimeError('Invalid source PCM')
-    if row['split']=='fresh-evaluation':
-        if source.shape[1]!=1:raise RuntimeError('Fresh evaluation expects user-only mono PCM')
-        user=source[:,0].copy()
+    live=live_input is not None
+    if live:
+        if row['split']!='live-transport' or worker_kind!='reasoning-development':raise ValueError('Live prototype requires its explicit reasoning domain')
+        rate=24000;user=np.zeros(0,dtype=np.float32)
     else:
-        if source.shape[1]!=2:raise RuntimeError('Approved TRAIN input expects stereo PCM')
-        user=source[:,1].copy()
-    out.mkdir();sf.write(out/'input-user.wav',user,rate,subtype='FLOAT')
+        source,rate=sf.read(row['path'],dtype='float32',always_2d=True)
+        if rate!=24000 or not np.isfinite(source).all():raise RuntimeError('Invalid source PCM')
+        if row['split']=='fresh-evaluation':
+            if source.shape[1]!=1:raise RuntimeError('Fresh evaluation expects user-only mono PCM')
+            user=source[:,0].copy()
+        else:
+            if source.shape[1]!=2:raise RuntimeError('Approved TRAIN input expects stereo PCM')
+            user=source[:,1].copy()
+    out.mkdir()
+    if not live:sf.write(out/'input-user.wav',user,rate,subtype='FLOAT')
     from queue import SimpleQueue,Empty
     control_queue=SimpleQueue();control_evidence=[]
     worker=run_worker;world_type=RecordWorld;delivered_receipts=lookup_receipts
     if worker_kind=='reasoning-development':
         from evals.duplex_reasoning_worker import ReasoningWorld,run_reasoning_worker,reasoning_receipts
         worker=run_reasoning_worker;world_type=ReasoningWorld;delivered_receipts=reasoning_receipts
-    world=world_type(row['world'] if row['split']=='fresh-evaluation' else counterfactual_records(row['scenario_id']));context=[];policy=TurnEndpoint(listener.spm.decode)
+    world=world_type(row['world'] if row['split'] in ('fresh-evaluation','live-transport') else counterfactual_records(row['scenario_id']));context=[];policy=TurnEndpoint(listener.spm.decode)
     listener.reset();speaker.stop();queue=[];futures={};held=[];packets=[];stops={};events=[];steps=[];backlogs=[]
     active=None;clock=None;spoken=[];asr_tokens=[];asr_events=[];utterance_count=0;generation_count=0;last_voice_s=-float('inf')
     # Tail allows an actual delayed result, a resumed answer and its PCM to finish.
-    real_frames=math.ceil(len(user)/1920);max_frames=real_frames+math.ceil(45/.08)
-    padded=np.pad(user,(0,max_frames*1920-len(user)));frame=0;start=time.perf_counter()
+    real_frames=math.ceil(len(user)/1920);max_frames=(math.ceil(live_input.max_seconds/.08) if live else real_frames)+math.ceil(45/.08)
+    padded=None if live else np.pad(user,(0,max_frames*1920-len(user)));frame=0;start=time.perf_counter()
+    monotonic_origin=time.monotonic()-(time.perf_counter()-start);drain_next_s=0.
     executor=ThreadPoolExecutor(max_workers=4)
     def now():return time.perf_counter()-start
-    def log(kind,**kw):events.append(dict(kind=kind,at_s=now(),**kw))
+    def log(kind,**kw):
+        event=dict(kind=kind,at_s=now(),**kw);events.append(event)
+        if output_observer is not None and kind!='tts_step':output_observer.event(event)
     def valid(item):
         if item['result']['route']=='delegate':
             reads=delivered_receipts(item['result']['receipts'])
@@ -107,31 +116,43 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",inter
         futures[future]=dict(task_id=task,revision=revision,turn=utterance_count,submitted_s=submitted,request_text=text,pending_speech=pending)
         log('controller_dispatched',task_id=task,text=text,reference_text_supplied=False)
     try:
+        if live and output_observer is not None:output_observer.event(dict(kind='session_ready',at_s=now()))
         while frame<max_frames:
+            if live and now()>live_input.max_seconds+45:raise RuntimeError('Live session wall-clock limit reached')
             drain_control()
-            t=now();next_frame=(frame+1)*.08
-            if t>=next_frame:
-                pcm=padded[frame*1920:(frame+1)*1920];before=time.perf_counter()
-                backlogs.append(max(0.,before-start-next_frame));result=listener.step(pcm);compute=time.perf_counter()-before
+            t=now();next_frame=(frame+1)*.08 if not live else (drain_next_s if live_input.finished else t+.08)
+            incoming=live_input.take() if live else None
+            if live:
+                if incoming is not None:
+                    pcm,received=incoming;frame_available=received-monotonic_origin;synthetic_frame=False
+                elif live_input.finished and t>=next_frame:
+                    pcm=np.zeros(1920,dtype=np.float32);frame_available=t;synthetic_frame=True;live_input.drain_frames+=1
+                else:pcm=None
+            else:
+                pcm=padded[frame*1920:(frame+1)*1920];frame_available=next_frame;synthetic_frame=frame>=real_frames
+            if (live and pcm is not None) or (not live and t>=next_frame):
+                before=time.perf_counter()
+                backlogs.append(max(0.,before-start-frame_available));result=listener.step(pcm);compute=time.perf_counter()-before
                 steps.append(compute);token=result['token']
                 if token is not None and token>=4:asr_tokens.append(token)
                 score=result['heads'][2][0] if result['heads'] is not None else None
                 rms=float(np.sqrt(np.mean(pcm**2)))
-                if rms>policy.energy_floor:last_voice_s=next_frame
-                boundary=policy.update(token,score,rms,next_frame)
-                asr_events.append(dict(frame=frame,input_available_s=next_frame,available_wall_s=now(),
+                if rms>policy.energy_floor:last_voice_s=frame_available
+                boundary=policy.update(token,score,rms,frame_available)
+                asr_events.append(dict(frame=frame,input_available_s=frame_available,available_wall_s=now(),
                     token=token,heads=result['heads'],compute_s=compute,arrival_backlog_s=backlogs[-1],
-                    real_samples_seen=min((frame+1)*1920,len(user)),synthetic_tail=frame>=real_frames))
+                    real_samples_seen=live_input.sequence*1920 if live else min((frame+1)*1920,len(user)),synthetic_tail=synthetic_frame))
                 if boundary['speech_started']:
-                    log('user_speech_started',input_available_s=next_frame)
+                    log('user_speech_started',input_available_s=frame_available)
                     if interrupt_policy=='acoustic':interrupt()
                 if (interrupt_policy=='lexical' and active is not None and token is not None and token>=4
-                        and next_frame-last_voice_s<=1.
+                        and frame_available-last_voice_s<=1.
                         and any(ch.isalnum() for ch in listener.spm.decode([token]))):
                     interrupt('first_arrived_user_lexical_token')
                 if boundary['utterance']:
                     log('user_utterance_complete',**boundary['utterance']);dispatch(boundary['utterance']['text'])
                 frame+=1
+                if live:drain_next_s=now()+.08
                 continue  # Any arrived input always precedes further GPU speech work.
             for future,meta in list(futures.items()):
                 if not future.done():continue
@@ -186,19 +207,24 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",inter
             # Generate only bounded PCM lead. A step may overrun; never disguise
             # that as a fast clock: the next ASR backlog records the actual delay.
             if (active and speaker.active and clock.end/rate-now()<.24
-                    and next_frame-now()>.037):
+                    and (next_frame-now()>.037 or (live and incoming is None))):
                 rendered=speaker.step();at=now()
                 for pcm in rendered['pcm']:
                     packets.append(dict(event_id=active['event_id'],available_s=at,pcm=pcm))
                     clock.append(at,len(pcm))
+                    if output_observer is not None:output_observer.pcm(active['event_id'],pcm,at)
                 log('tts_step',event_id=active['event_id'],compute_s=rendered['compute_s'],packets=len(rendered['pcm']))
                 continue
-            if frame>=real_frames+7 and not futures and not held and not queue and active is None and not policy.tokens:
+            if ((live_input.finished and live_input.drain_frames>=7) if live else frame>=real_frames+7) and not futures and not held and not queue and active is None and not policy.tokens:
                 break
             time.sleep(min(.002,max(0.,start+next_frame-time.perf_counter())))
         if frame>=max_frames:raise RuntimeError('Concurrent replay exceeded explicit 45s tail; unresolved work retained')
     finally:
         executor.shutdown(wait=True,cancel_futures=True);speaker.stop()
+        if live:
+            user=live_input.pcm();real_frames=math.ceil(len(user)/1920)
+            sf.write(out/'input-user.wav',user,rate,subtype='FLOAT')
+            (out/'capture-arrivals.json').write_text(json.dumps(live_input.receipts,indent=2)+'\n')
         (out/'events.json').write_text(json.dumps(events,indent=2)+'\n')
         if include_tool_context:(out/'control-executions.json').write_text(json.dumps(control_evidence,indent=2)+'\n')
         (out/'asr-events.json').write_text(json.dumps(asr_events,indent=2)+'\n')
@@ -214,12 +240,14 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",inter
         sf.write(out/(identity+'-generated.wav'),np.concatenate([p['pcm'] for p in packets if p['event_id']==identity]),rate,subtype='FLOAT')
     ledger=[{k:v for k,v in p.items() if k!='pcm'}|dict(samples=len(p['pcm'])) for p in packets]
     (out/'packets.json').write_text(json.dumps(ledger,indent=2)+'\n')
-    side=json.loads((Path(row['reference_path']) if row['split']=='fresh-evaluation' else Path(row['path']).with_suffix('.json')).read_text());reference=' '.join(w['text'] for w in side['user_words'])
+    if live:reference=None
+    else:
+        side=json.loads((Path(row['reference_path']) if row['split']=='fresh-evaluation' else Path(row['path']).with_suffix('.json')).read_text());reference=' '.join(w['text'] for w in side['user_words'])
     recognized=listener.spm.decode(asr_tokens)
-    report=dict(scenario=row['scenario_id'],source_split=row['split'],source_wav_sha256=row['wav_sha256'],
+    report=dict(scenario=row['scenario_id'],source_split=row['split'],source_wav_sha256=sha256(out/'input-user.wav') if live else row['wav_sha256'],
         user_pcm_sha256=hashlib.sha256(user.tobytes()).hexdigest(),recognized_text=recognized,
-        reference_user_text=reference,recognition_wer=wer(norm_words(reference),norm_words(recognized)),
-        reference_read_after_generation=True,reference_transcript_supplied=False,assistant_audio_supplied=False,
+        reference_user_text=reference,recognition_wer=None if live else wer(norm_words(reference),norm_words(recognized)),
+        reference_read_after_generation=not live,reference_transcript_supplied=False,live_transport=live,case_monotonic_origin=monotonic_origin,assistant_audio_supplied=False,
         user_samples=len(user),real_user_samples_processed=min(frame*1920,len(user)),all_live_user_rows_exact_at_temporal_forward=True,
         frames=frame,synthetic_tail_frames=max(0,frame-real_frames),asr_compute_p95_s=float(np.percentile(steps,95)),
         maximum_input_backlog_s=max(backlogs),declared_counterfactual_world=world.records,

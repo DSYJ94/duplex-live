@@ -4744,3 +4744,22 @@ requests only that receipt, excluding narration of other tasks/withheld notices.
 This is an opt-in prompt/schema change with unchanged generated text and tool
 arguments, not after-the-fact repair. Re-run the captured counterfactual first;
 previous arithmetic success does not qualify this new variant.
+
+Plain words: first actual reasoning audio7515356 completes both development
+cases. User recognition024 has raw WER0.0227; ordinary ice answer then actual
+GPT-6 Astra subset result both complete and independent7515358 hears both with
+WER0. The subset count19 AND its size breakdown2/3/8/6 match independent CPU
+enumeration. Simple9+8 speech has WER0.2, so no blanket speech acceptance. Real
+request overlap already proved in typed worker7515324; do not infer actual API
+overlap merely from the replay's controlled12-second delivery minimum.
+
+Plain words: a live transport seam is prepared around the same bounded GPU
+services. Actual capture frames arrive through ordered, size-limited queues;
+client/server record PCM and receipt provenance. Browser worklet requests24k
+and rejects another context rate; AEC is requested and applied settings recorded,
+without claiming physical echo rejection. Authentication is an ephemeral first
+socket message; no API keys reach the browser. Owner microphone permission is
+not requested unattended. First run an actual paced PCM network test and exact
+packet identity check, plus the existing independent speech audit. This remains
+a development prototype, not physical microphone/device acceptance or a trained
+native duplex model. Existing recorded path remains the default.
