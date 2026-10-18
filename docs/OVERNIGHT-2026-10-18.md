@@ -1,5 +1,17 @@
 # Overnight recovery: 18 October
 
+Plain words: LATEST09:37UTC: pending-only actual service7518789/91/93 and audits
+7518790/92/94 COMPLETE. Old compass speech retired and seven days spoken; local
+391 with no external request; actual count-result delivery cancelled while shadow
+answer completes. The first two complete clips have independent WER0; cancellation
+clip WER0.0714, retained as a mismatch. All three captures/four audit clips have
+exact packet/hash/bounds checks, no duplicate scheduled samples, and local backups.
+Proofs pending-selector-three-voice-integrity.json and pending-selector-reasoning-
+integrity.json include durable verifiers. Original owner service remains unchanged.
+Listening gallery now52 synchronized conversations. Source9df62a0. Goal ACTIVE;
+next unresolved mechanism is semantic continue retaining the same paused generator.
+
+
 Plain words: UPDATE09:34UTC /11:34Berlin. Goal ACTIVE; owner away; no optional
 questions. No native voice weights or owner demo changed. Cloud validation paused.
 Function-name-only adapter7517798 COMPLETE64/72 development contracts, retaining
