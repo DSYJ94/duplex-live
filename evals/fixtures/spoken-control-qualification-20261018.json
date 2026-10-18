@@ -1,7 +1,7 @@
 {
   "schema": "dl-spoken-control-qualification-plan-v1",
   "specified_before_generation": true,
-  "specified_before_function_scope_result": true,
+  "specified_before_observing_function_scope_result": true,
   "do_not_train": true,
   "input_quality_threshold_unchanged": 0.05,
   "rejected_inputs_not_regenerated": true,

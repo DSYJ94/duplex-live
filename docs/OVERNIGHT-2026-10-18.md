@@ -4,8 +4,8 @@ Plain words: This is an interim evidence report. No complete native duplex model
 or modular hybrid is qualified. The current experimental voice demo uses streaming
 Kyutai speech recognition and synthesis, frozen local Qwen3.5-9B for words/actions,
 and explicit GPT-6 Astra requests for harder reasoning. It is not Qwen-Omni
-fine-tuning or pretraining. No optimizer steps or native weight adoption occurred
-in this overnight continuation.
+fine-tuning or pretraining. No native voice weights were adopted. A bounded text-controller adapter
+pilot is described below; it does not train a native duplex speech model.
 
 Plain words: For the live prototype, open http://localhost:8767 on this computer.
 The microphone starts only after Start conversation. The temporary service and
@@ -197,7 +197,7 @@ parameter tensors have identical before/after hashes. Zero correction produces
 exact original logits through the actual model forward. Two RANDOM NUMERICAL
 fixture optimizer steps produce finite gradients in both adapter tensors; strict
 save/reload reproduces logits exactly. The loader rejects the fixture checkpoint
-as a model candidate. Conversation training steps remain ZERO. Existing text,
+as a model candidate. That mechanism job uses zero conversation training steps. Existing text,
 speech models and live service are unchanged. This proves mechanics, not gains.
 
 Plain words: Authoritative decisions/0003-provenance-classes.md Amendment A,
@@ -243,3 +243,25 @@ run alongside corpus collection, with exact source/input/row hashes checked
 before reuse, so no duplicate GPU evaluation is needed. No training launched yet;
 full-data approval and baseline are prerequisites. Candidate remains unqualified
 until complete unseen behavior and actual speech/delegation checks pass.
+
+Plain words: First real text-controller adaptation7517718/sourcef2e22fb COMPLETE,
+648 updates,216 first-attempt verified teacher labels,72 held-out text scenarios.
+Frozen baseline60/72, full-vocabulary adapter62/72. Replacement0/8→5/8 and strict
+ordinary-output format4/8→6/8, but first-instruction8/8→5/8 and clarification8/8→6/8.
+REJECT global correction for adoption. Baseline arithmetic was numerically right;
+its ordinary failures were unwanted extra wording. Adapter creates four numerical
+errors and six malformed/repetitive calls. Fitting the teacher better (.973→.071
+mean loss over first/last24 updates) is insufficient. All775 original parameter
+hashes unchanged; strict weight/logit, optimizer and RNG restore pass. Every TRAIN
+row is used three times; no held-out optimizer row. All144 saved actual neural
+outputs independently replay through native parser/worker, with unchanged scores.
+Full corpus/checkpoint/optimizer/source artifacts are downloaded and verified.
+
+Plain words: Same learned tensors now tested only at native function-name
+selection, job7517798/source61cd20c. Original projection handles content/arguments;
+no new training, user-keyword router or output repair. Disabled wrapper reproduces
+four complete original worker results. Actual native decode boundary works, with
+38/72 scenarios done at08:17UTC. These are now development cases after the first
+results, not fresh qualification. Next fresh spoken035–041 plan committed before
+observing this result; includes actual delegation, cancellation, summary and the
+known semantic-continuation limitation. No live adoption or native qualification.

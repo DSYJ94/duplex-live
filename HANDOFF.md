@@ -1,11 +1,62 @@
 # HANDOFF — overnight recovery, 18 October
 
-Plain words: CURRENT07:32UTC /09:32Berlin. Owner away; continue autonomously,
-no optional questions before return. Goal ACTIVE. No complete native or hybrid
-qualification. No optimizer steps or adopted native weights this continuation.
-Cloud validation remains paused. Frozen candidate model/media source78ecb1e;
-new evaluation-only source30510a7 byte-identical model/media. Owner6574/source0d63370
-is unchanged. Do not call the modular hybrid native duplex or a trained model.
+Plain words: CURRENT08:22UTC /10:22Berlin. Owner away; continue independently,
+no optional questions. Goal ACTIVE; cloud paused. Owner6574/source0d63370 unchanged.
+Native voice weights unchanged. First TEXT controller adapter completes648 updates
+and full strict restore/evaluation; global output correction REJECTED for adoption.
+Do not call this native duplex training. Latest inference-ablation source61cd20c,
+new spoken-scenario source9fe46a2 (plan clarification in next commit).
+
+Plain words: TRAINING7517718/sourcef2e22fb COMPLETE.216 new closed-content teacher
+TRAIN labels all pass FIRST attempts,72 held-out text fixtures. Local verifier
+replays ALL144 actual baseline/adapted model outputs through parser and worker,
+checks648 updates/every TRAIN row3 times/no held-out optimizer IDs, source hash
+registry775, safetensors2-tensor inventory, optimizer/RNG artifact hashes and GPU
+strict restore proofs. Baseline60/72→global adapter62/72. Replacement0/8→5/8,
+ordinary4/8→6/8, BUT first8/8→5/8 and clarify8/8→6/8. Six malformed/repetitive
+calls and four numerically wrong replies appear; base arithmetic was correct,
+with four ordinary exact-format failures. Do not describe these as base arithmetic
+failures. Train loss falls~.973→.071 while full tasks regress in important kinds.
+All775 published parameter hashes unchanged. No live adoption. Artifacts locally
+complete under cloud-export-20261016/tree/runs/controller-{text-teacher-7517716,
+text-baseline-7517717,head-train-7517718}; checkpoint includes optimizer/RNG state.
+Proof controller-training-local-integrity.json + durable verifier under
+runs/recovery-continuation-20261016. Twelve data/worker/format tests pass.
+
+Plain words: CURRENT INFERENCE ABLATION7517798/source61cd20c RUNNING, oneGPU.
+SAME learned tensors; correction only while naming the native function. Frozen
+original projection generates all argument/content tokens. Public request-scoped
+PyTorch hook observes only generated control syntax, never user keywords or
+answer keys; no library patch, argument repair, fallback or extra optimization.
+Disabled wrapper exactly reproduces FOUR complete original worker outputs; actual
+native token boundary works. At08:17UTC38/72 full cases completed. These72 are
+NOW DEVELOPMENT cases; no fresh qualification claim. Sourceworktree recovery-
+61cd20c,12 local/remote MD5 matches. Receipt runs/duplex-control-function-scope-
+launch-20261018.json; helper /private/tmp/duplex-control-scope-submit.py; outputs
+...-submit-full.txt /...-status.json. Inspect actual complete results before reuse.
+
+Plain words: FRESH SPOKEN plan was committed before observing scoped results and
+before generation: evals/fixtures/spoken-control-qualification-20261018.json.
+Seven unseen cases035–041: silence, stop+knowledge question, one-sentence cause,
+first step, continue(known negative control), actual API count cancellation while
+ordinary explanation remains owed, no-tools local product. CPU scoring oracle
+separate, never model/backend input. Eval only; reject bad inputs without reroll.
+Generation not yet submitted. New flag DUPLEX_FRESH_CONTROL_QUALIFICATION=1.
+Plain words: NEW MECHANICS7517528/sourceb9cf97e PASS: rank8 output correction
+2,019,328 parameters, finite two-step NUMERICAL FIXTURE gradients, exact zero
+adapter actual model forward, strict checkpoint/logit restore, all775 published
+parameter hashes unchanged. Fixture is explicitly NOT a model candidate and loader
+rejects it by default. Artifacts downloaded. No conversation data in that job.
+
+Plain words: NEW TEACHER preview7517591/sourcef3b4248 ALL18 first-attempt labels pass,
+18 separate held-out fixtures. Local read-only exact prompt/parser/worker/source/
+raw-response lineage audit passes; default TRAIN loader correctly rejects preview.
+Full data uses separately predeclared families/values. Twelve curriculum/worker/
+format tests pass, including correct new answer without old-speech retirement FAIL.
+Authoritative ADR-0003 Amendment A permits new closed content generally under owner
+enterprise agreement; source/date/class recorded. Earlier open-only wording in
+this continuation was self-imposed and corrected. Reused evaluation and actual
+reasoner outputs still never copied into this new TRAIN corpus.
 
 Plain words: CLIENT PAUSE RESULTS —7427/7429/7431 and audits7428/7430/7432 COMPLETE.
 Twelve local/remote MD5 matches before compute; five JS scheduling, seventeen
@@ -41,15 +92,16 @@ qwen35-deliberation-control-7517489. Proof bounded-deliberation-integrity.json a
 verifier under recovery-continuation-20261016. Native thoughts stay research
 artifacts; summarize actions/evidence/latency, not raw deliberation for the user.
 
-Plain words: NEXT — verified open-provenance TEXT controller training pilot with
-full answer+retirement targets; do not copy any actual voice evaluation or external
-API result into TRAIN. Reject incomplete teacher actions even if words are right.
-First verify adapter gradients, strict restore, frozen source preservation, data
-provenance, full-contract labels and separate held-out families. Keep this bounded;
-no full-model pretraining or untested live adoption. Separately, semantic continue
-needs model-selected retain/resume of the actual paused generator BEFORE lexical
-speech disposal. Current policy cannot be fixed by merely producing better text.
-Keep goal ACTIVE and continue without optional owner questions; cloud stays paused.
+Plain words: NEXT after pilot — inspect complete action/content/retirement and
+latency results, verify checkpoint/optimizer/RNG/source hashes, back up all artifacts.
+Reject regressing or narrow-only gains. If credible, test actual resident-controller
+transport and spoken ordinary/replacement/silence/summary/cancellation/delegation
+regressions before any owner adoption. Existing nine-kind text corpus has no
+semantic-continue action and is NOT broad reasoning or native duplex proof.
+Separately, retaining a paused generator until model-selected continue is still
+needed; current lexical disposal cannot be repaired by labels alone. Do not rerun
+unchanged rejected native ContextSpan/Lychee pilots or substitute this modular
+hybrid for native qualification. Keep goal active; no cloud resources.
 Plain words: LIVE OWNER DEMO http://localhost:8767 now serves experimental compact
 source0d633701a1e029ec94b6c5cf539d0e164841a9a4, job7516574,
 node nid010159:8788. Strict models warmed; compact handshake true; no owner
