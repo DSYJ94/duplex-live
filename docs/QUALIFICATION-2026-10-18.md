@@ -6,6 +6,29 @@ training mechanics nor clear speech establish reliable task completion. This rec
 keeps those claims separate and leaves missing evidence explicit.
 
 
+Plain words: Latest17:35UTC: Full1356 candidate7527432 is COMPLETE and REJECTED.
+It improves aggregate controls to49/54 and64/72, but loses three previously passing
+active cancellations. The model resumes the explanation without cancelling the
+still-active result. All42 new mechanical checks pass, yet three unsupported
+messaging replies falsely say “sent” with no execution receipt; one refusal repeats
+three times. Valid function calls and aggregate scores cannot qualify this model.
+
+Plain words: Both frozen and trained models correctly execute all six private
+fixture reads and use the returned value. The gain here is obeying “value only”;
+the baseline adds extra field/project wording. Completed-task continuation improves
+0/6 to6/6 at fixture level. Neither gain overrides false completion or lost active
+cancellation. All1356updates,452×3 row exposures, strict weight/state/source hashes
+and fresh-process optimizer/RNG/logit restore pass; all336before/after rows and
+checkpoints are preserved locally. No new model is deployed.
+
+Plain words: The next diagnosis concerns contradictory application instructions:
+resume is forbidden for “cancellation” even when the referenced task has finished
+and no cancel action exists. Separately, the post-tool prompt asks to report the
+receipt rather than answer the original user in their requested form. Test each
+contract correction on frozen9B independently, then full task/speech retention.
+No new correction or narrower expert router has been adopted. Native model7510331
+still fails qualification; the owner’s smooth frozen reference remains unchanged.
+
 Plain words: Latest17:25UTC. No native model is qualified and the972 controller
 remains rejected. Fresh tests found two false message-sending claims without any
 messaging tool; frozen9B correctly refuses. A function-name decoder preserves valid

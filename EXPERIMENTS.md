@@ -5818,3 +5818,28 @@ childsource hashes and speechasset hashes verify. No microphone started. New
 helper/forward bounds4hr; private credentials never exported. Old7522115 absent
 fromqueue with allsessions terminal; oldforwardwatcher reacheditsbound. Transient
 SSH observationtimeouts did not trigger any training or service resubmission.
+
+## 18 October — full1356 candidate fails semantic and active-cancellation gates
+
+Plain words:7527432/source517f159 COMPLETE13:50, exact1356updates over452rows×3.
+Strict independent model/optimizer/RNG/logit restore, all frozen source hashes/
+versions and finite/nonzero adapter gradients pass;22.51GBpeak. All336before/after
+rowfiles and checkpoint/state hashes verified locally; all artifacts backed up.
+New mechanics42/42 is NOT qualification. Three false sent claims without receipts
+and one repeated refusal remain; three frozen activecancel+resume passes are lost
+(plainresume, no cancellation). REJECT promotion; no new speech expansion.
+
+Plain words: Originalcontrols44→49/54,60→64/72; newcapability mechanics26→42/42.
+Both models already execute sixcorrect private fixture reads and speak correct
+values; the exact-value-only FORMAT improves. Completed-task fixture continuation
+0→6/6 improves. These gains do not outweigh lost true cancellation and false
+completion. Semantic review is mandatory after route/state checks. Unchanged
+extra training is not justified by teacher approval or lower loss.
+
+Plain words: Source review identifies two contract hypotheses for bounded frozen
+model tests next: blanket resume prohibition on cancellation conflicts with the
+completed-task+continue case; post-tool “report actualreceipt” wording competes
+with the original user's requested answer form. Test conditional resume semantics
+with matching-active and unrelated-task contrasts, and receipt-format semantics
+independently. No keyword routing, forced function names, post-output rewriting,
+expert gating or new optimizer is implemented/adopted for these hypotheses.

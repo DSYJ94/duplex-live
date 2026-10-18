@@ -1,5 +1,57 @@
 # HANDOFF — overnight recovery, 18 October
 
+Plain words: CURRENT18October17:35UTC. Full1356 job7527432/source517f159 COMPLETE
+in13:50 and REJECTED for promotion. All452TRAINrows seen exactly3times, finite
+16-factor gradients, frozen source hashes/versions and exact independent adapter/
+optimizer/RNG/26logit restore PASS; all artifacts locally backed. Adapter SHA
+d714d58bc41e94e43ffd7c1fe981c1fdd28d7235c793a0fbff5612406b109861,
+statee818b5c44e15564dcde9d7b42063f5e4f26ffd6189447c40b303e7f10ed4ce25.
+All336before/after worker rowfiles verified by verify-capability-context-full.py;
+capability-context-full-integrity.json records exact failures.
+
+Plain words: Scores49/54paired vs44,64/72old vs60; losesTHREE frozen active
+cancel+resume passes (paired-heldout-f2-v0/1/2-cancel-resume): choosesplainresume,
+executesNOcancel. New42 mechanics26→42, BUT three false “sent” claims with ZERO
+receipts on unsupported messaging, plus one repeatedrefusal3times. Mechanical
+answerroute is not semantic truth. No deployment or spoken expansion of this
+failed candidate. Native7510331 and whole-system qualification remainFAIL.
+
+Plain words: Private-read gain is FORMAT, not newly discovered access/intelligence:
+both frozen andtrained execute all6correct fixture reads and return correct values.
+Baseadds unrequestedfield/project wording; trainedgives onlyvalue. Completed-task
+same-generator resume improves0/6→6/6 at fixture level. All data/proof gains remain
+separate from qualification. Do not launch more unchanged optimizer/epochs.
+
+Plain words: NEXT investigate actual instruction contradictions with frozen9B,
+not a per-state expert/fallback router. _request's resumable paragraph says
+“For stop, a requested revision, another question or a cancellation, use the
+corresponding provided action instead”; resume_speech description also forbids
+cancellation unconditionally. For a finished cancellation plus requestedcontinue,
+no cancel tool exists yet the correct resume is explicitly discouraged. Teacher-
+only labelpolicy overrode this;1356 then also ignored active cancellation. Test
+an inference-only CONDITIONAL resume-contract correction, raw outputs unchanged,
+no keywordrouting or function forcing. Keep matching-active cancellation mandatory
+and preserve unrelated work. Sourceguard/core compiler files should stay unchanged:
+use a declared wrapper, before/after actual closedfailure+activecancel+resumecases,
+new matched active/closed/unrelated-state fixtures, then all126old/42new controls
+if focused gate passes. No adapter/decoder mask should be adopted from prior tests.
+
+Plain words: Separately test receipt-format instruction correction: post-tool
+_request says “Report the actual tool receipt ...”, which can conflict with the
+original user asking onlyvalue. Use actual receipt facts to ANSWER ORIGINAL user
+in requestedform, not narrate receipt metadata. Independent one-variable test;
+leave ordinary/unsupported actions unchanged. Basealready has factualknowledge;
+retain its safe refusals. These are hypotheses, NO correction implemented yet.
+
+Plain words: Current smooth public demo remains identical frozen7527159/source
+8481bb1,localhost8767→8782,nid010336:8788. Helper86182/PID98147, watcher37705/
+PID95794 owns95796,4hrbounds~21:10UTC; tokenprivatepathNEVERexport. Original owner
+7522115 absentqueue, allsessions terminal; oldwatcher29342 finisheditsbound. Public
+assets/privatebinding and strict775-tensor frozenmodel sourceverified; noagentmic.
+Earlier CURRENTbelow is historical. Fullsource/data/proofs/checkpoints preserved;
+cloudvalidationPAUSED. GoalACTIVE, no userinput needed. Preserve roadmap.html/pyc.
+
+
 Plain words: CURRENT18October17:25UTC. Goal ACTIVE/cloud validation PAUSED. Native
 7510331 stillFAIL; no whole duplex model qualified. Owner accepted smooth playback;
 public http://localhost:8767/?rev=confirmed-pause now points to renewed identical
