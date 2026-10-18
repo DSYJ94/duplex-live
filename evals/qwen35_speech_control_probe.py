@@ -33,9 +33,12 @@ def main():
     for name in ('assets','kernel-assets','out'):ap.add_argument('--'+name,type=Path,required=True)
     ap.add_argument('--prior-assistant-history',action='store_true')
     ap.add_argument('--captured-run',type=Path)
-    args=ap.parse_args();args.out.mkdir(parents=True,exist_ok=False)
+    ap.add_argument('--development-function-selector',type=Path);args=ap.parse_args();args.out.mkdir(parents=True,exist_ok=False)
     from evals.qwen35_controller import Qwen35ResponseExecutor
     executor=Qwen35ResponseExecutor(args.assets,kernel_assets=args.kernel_assets,pending_speech_protocol='explicit-actions',compact_replies=True)
+    if args.development_function_selector is not None:
+        from training.control.inference import attach_development_selector
+        attach_development_selector(executor,args.development_function_selector,args.assets)
     rows=[]
     def blocked_backend(question):raise RuntimeError('Typed speech-control fixture forbids any remote request')
     specs=specifications();captured=None

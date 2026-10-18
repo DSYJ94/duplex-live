@@ -40,9 +40,12 @@ def specifications():
 def main():
     ap=argparse.ArgumentParser(description=__doc__)
     for n in ('assets','kernel-assets','out'):ap.add_argument('--'+n,type=Path,required=True)
-    ap.add_argument('--compact-replies',action='store_true');args=ap.parse_args();args.out.mkdir(parents=True,exist_ok=False)
+    ap.add_argument('--compact-replies',action='store_true');ap.add_argument('--development-function-selector',type=Path);args=ap.parse_args();args.out.mkdir(parents=True,exist_ok=False)
     from evals.qwen35_controller import Qwen35ResponseExecutor
     executor=Qwen35ResponseExecutor(args.assets,kernel_assets=args.kernel_assets,pending_speech_protocol='explicit-actions',compact_replies=args.compact_replies)
+    if args.development_function_selector is not None:
+        from training.control.inference import attach_development_selector
+        attach_development_selector(executor,args.development_function_selector,args.assets)
     rows=[];attempts=0
     for spec in specifications():
         row=dict(id=spec['id'],question=spec['question'],no_external=spec.get('no_external',False),oracle_supplied_to_models=False)
@@ -64,7 +67,7 @@ def main():
         rows.append(row);(args.out/(spec['id']+'.json')).write_text(json.dumps(row,indent=2)+'\n')
     report=dict(schema='dl-local-reasoning-generalization-typed-v1',results=rows,load=executor.proof,compact_replies=args.compact_replies,
         remote_request_attempts=attempts,all_rows_retained=True,component_execution_completed=all(r['execution_completed'] for r in rows),
-        new_typed_diagnostic_questions=True,development_only=True,oracle_computed_after_model_execution=True,training_approved=False,optimizer_steps=0,
+        new_typed_diagnostic_questions=args.development_function_selector is None,reused_questions_for_adapter_development=args.development_function_selector is not None,development_only=True,oracle_computed_after_model_execution=True,training_approved=False,optimizer_steps=0,
         speech_executed=False,agent_actions_executed=False,duplex_qualified=False,code_sha256=sha256(Path(__file__)))
     (args.out/'report.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report),flush=True)
 

@@ -39,6 +39,10 @@ apptainer exec --nv --bind /projects,/lus,/home \
  EXTRA=()
  if [ "${QWEN_COMPACT_REPLIES:-0}" = 1 ]; then EXTRA+=(--compact-replies); fi
  if [ "${DUPLEX_CLIENT_PAUSE:-0}" = 1 ]; then EXTRA+=(--include-speech-context --client-pause-protocol); fi
+ if [ -n "${DUPLEX_FUNCTION_SELECTOR_JOB:-}" ]; then
+  [[ "$DUPLEX_FUNCTION_SELECTOR_JOB" =~ ^[0-9]+$ ]]
+  EXTRA+=(--development-function-selector "$DL/runs/controller-head-train-$DUPLEX_FUNCTION_SELECTOR_JOB")
+ fi
  python -u -m serving.hybrid.server "${EXTRA[@]}" \
  --stt-assets "$DL/runs/kyutai-stt-assets-7510852/assets.json" \
  --tts-assets "$DL/runs/kyutai-tts-assets-7510636/assets.json" \

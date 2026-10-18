@@ -23,6 +23,10 @@ set +a
 : "${OPENAI_API_KEY:?Existing reasoning API credential required}"
 EXTRA=()
 if [ "${QWEN_COMPACT_REPLIES:-0}" = 1 ]; then EXTRA+=(--compact-replies); fi
+if [ -n "${DUPLEX_FUNCTION_SELECTOR_JOB:-}" ]; then
+ [[ "$DUPLEX_FUNCTION_SELECTOR_JOB" =~ ^[0-9]+$ ]]
+ EXTRA+=(--development-function-selector "$DL/runs/controller-head-train-$DUPLEX_FUNCTION_SELECTOR_JOB")
+fi
 apptainer exec --nv --bind /projects,/lus,/home \
  --env PYTHONPATH="$DL/envs/moshi-rag-7379661/lib/python3.12/site-packages:$DL_TASK_SOURCE" \
  --env PYTHONDONTWRITEBYTECODE=1 --env OMP_NUM_THREADS=8 --env HF_HUB_OFFLINE=1 \

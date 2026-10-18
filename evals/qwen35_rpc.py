@@ -35,13 +35,17 @@ def receive(stream):
 
 class ResidentQwen35:
     provider_name='local-transformers-qwen35-9b'
-    def __init__(self,assets,folder,device='cuda:1',pending_speech_protocol='explicit-actions',kernel_assets=None,spoken_output_contract=False,compact_replies=False):
+    def __init__(self,assets,folder,device='cuda:1',pending_speech_protocol='explicit-actions',kernel_assets=None,spoken_output_contract=False,compact_replies=False,development_function_selector=None):
         import transformers
         self.parent_version=transformers.__version__
         if self.parent_version!='4.55.3':raise RuntimeError('Resident integration requires the verified parent speech runtime4.55.3')
         self.folder=Path(folder);self.socket_path=self.folder/'controller.sock';self.log_path=self.folder/'controller-process.log'
         if self.socket_path.exists() or len(str(self.socket_path).encode())>100:raise RuntimeError('Controller socket path is occupied or too long')
         self.lock=threading.RLock();self.counter=0;self.connection=None;self.stream=None;self.process=None
+        selector=None
+        if development_function_selector is not None:
+            from training.control.inference import selector_metadata
+            selector=selector_metadata(development_function_selector,assets)
         self.log=self.log_path.open('wb');environment=os.environ.copy();environment.pop('OPENAI_API_KEY',None)
         environment.update(PYTHONDONTWRITEBYTECODE='1',OMP_NUM_THREADS='2')
         command=[sys.executable,'-u','-m','evals.qwen35_rpc','--assets',str(assets),'--socket',str(self.socket_path),
@@ -49,6 +53,7 @@ class ResidentQwen35:
         if kernel_assets is not None:command+=['--kernel-assets',str(kernel_assets)]
         if spoken_output_contract:command+=['--spoken-output-contract']
         if compact_replies:command+=['--compact-replies']
+        if development_function_selector is not None:command+=['--development-function-selector',str(development_function_selector)]
         started=time.monotonic()
         try:
             self.process=subprocess.Popen(command,stdout=self.log,stderr=subprocess.STDOUT,env=environment)
@@ -68,6 +73,7 @@ class ResidentQwen35:
                     or ready.get('pending_speech_protocol')!=pending_speech_protocol
                     or ready.get('spoken_output_contract')!=spoken_output_contract
                     or ready.get('compact_replies')!=compact_replies):raise RuntimeError('Unverified resident controller handshake')
+            if ready.get('function_selector')!=selector or ready['load'].get('function_selector')!=selector:raise RuntimeError('Resident selector hash/mode mismatch')
             expected={name:sha256(Path(__file__).with_name(name)) for name in ('qwen35_rpc.py','qwen35_controller.py','qwen_response_executor.py','qwen_controller_probe.py','qwen35_kernels.py','qwen35_cuda_discovery.py')}
             if (ready['source_sha256']!=expected or ready['load']['assets_sha256']!=sha256(assets)
                     or ready['load']['device']!=device or ready['load']['trainable_parameters']!=0):raise RuntimeError('Resident controller source, assets or device mismatch')
@@ -78,6 +84,7 @@ class ResidentQwen35:
                 parent_transformers_version=self.parent_version,child_transformers_version=ready['transformers_version'],
                 compact_replies=compact_replies,spoken_output_contract=spoken_output_contract,optional_kernel_assets_sha256=expected_kernels,
                 startup_s=time.monotonic()-started,child_source_sha256=ready['source_sha256'],log=str(self.log_path),remote_api_used=False)
+            if selector is not None:self.transport_info['function_selector']=selector
             self.connection.settimeout(90)
         except BaseException:
             self.close();raise
@@ -112,16 +119,20 @@ class ResidentQwen35:
 
 def main():
     ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('--assets',type=Path,required=True);ap.add_argument('--socket',type=Path,required=True)
+    ap.add_argument('--development-function-selector',type=Path)
     ap.add_argument('--compact-replies',action='store_true');ap.add_argument('--kernel-assets',type=Path);ap.add_argument('--spoken-output-contract',action='store_true');ap.add_argument('--device',default='cuda:1');ap.add_argument('--pending-speech-protocol',choices=('array','explicit-actions'),default='explicit-actions');args=ap.parse_args()
     listener=socket.socket(socket.AF_UNIX,socket.SOCK_STREAM)
     try:
         listener.bind(str(args.socket));os.chmod(args.socket,0o600);listener.listen(1)
         from evals.qwen35_controller import Qwen35ResponseExecutor
         executor=Qwen35ResponseExecutor(args.assets,device=args.device,pending_speech_protocol=args.pending_speech_protocol,kernel_assets=args.kernel_assets,spoken_output_contract=args.spoken_output_contract,compact_replies=args.compact_replies)
+        if args.development_function_selector is not None:
+            from training.control.inference import attach_development_selector
+            attach_development_selector(executor,args.development_function_selector,args.assets)
         import transformers
         connection,_=listener.accept()
         with connection,connection.makefile('rwb') as stream:
-            send(stream,dict(kind='ready',provider=executor.provider_name,model=executor.model_id,load=executor.proof,warmup=executor.warmup,
+            send(stream,dict(kind='ready',function_selector=executor.proof.get('function_selector'),provider=executor.provider_name,model=executor.model_id,load=executor.proof,warmup=executor.warmup,
                 pending_speech_protocol=args.pending_speech_protocol,compact_replies=args.compact_replies,spoken_output_contract=args.spoken_output_contract,transformers_version=transformers.__version__,
                 source_sha256={name:sha256(Path(__file__).with_name(name)) for name in
                     ('qwen35_rpc.py','qwen35_controller.py','qwen_response_executor.py','qwen_controller_probe.py','qwen35_kernels.py','qwen35_cuda_discovery.py')}))
