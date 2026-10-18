@@ -4838,3 +4838,21 @@ New synchronization tests exercise an actual pending reasoner fixture and a new
 unresolved foreground request separately. Re-run real network inference and the
 recorded regression before restarting the owner trial; require measured timing,
 not just final text or reordered playback, for any concurrency improvement claim.
+
+Plain words: corrected actual network7515717/18 verifies261 exact packets and
+foreground server speech24.330s during real API interval16.020–30.120s, ZERO
+artificial delivery floor. Prior run foreground first PCM29.736s after API done;
+new actual-operation-aware barrier removes that software serialization. These
+are server/network times, not physical device latency. Ice speech WER0. Count
+text19 and its include/exclude-two breakdown9/10 are independently correct, but
+ASR joins fifty/ten into5010 (raw WER0.1579): spoken-number boundary unresolved,
+not accepted. Recorded3case5719/5720 preserves actual tasks; small added-word and
+cancelled/canceled differences remain. No new training or native weights.
+
+Plain words: reasoner prompt now answers a single-number request in one short
+sentence without unrequested numeric breakdowns. This changes actual model output,
+not scoring or postprocessing. Re-run normal and cancelled reasoning via the
+actual network path; cancellation input has its own prior quality0WER gate.
+Browser offline engine check remains pending because computer-use backends are
+unavailable, not because microphone consent was requested. Owner service remains
+unpublished until current checks; superseded5697 has no owner session.

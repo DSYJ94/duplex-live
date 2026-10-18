@@ -1,4 +1,4 @@
-> **Current status (18 October):** No full native or hybrid model qualifies yet.
+> **Plain words: current status (18 October).** No full native or hybrid model qualifies yet.
 > The active recovery work tests streaming Kyutai ASR/TTS with a separate frozen
 > Qwen3.5-9B controller. Tool and cancellation behavior have improved; backchannels,
 > latency, speech quality and general delegation still need work. This is a modular

@@ -17,7 +17,7 @@ def ask_reasoner(question):
     before=time.monotonic()
     response=requests.post('https://api.openai.com/v1/responses',headers={'Authorization':'Bearer '+os.environ['OPENAI_API_KEY']},
         json=dict(model='gpt-6-astra',store=False,max_output_tokens=4096,
-            instructions='Solve the actual user problem carefully. Give a concise spoken answer, at most35 words. Use natural words for numbers and arithmetic. Do not include Markdown, written formulas, plans, or internal metadata.',
+            instructions='Solve the actual user problem carefully. Give a concise spoken answer, at most35 words. Use natural words for numbers and arithmetic. For a question asking for a single number, give only that result in one short sentence; do not add an unrequested numerical breakdown. Do not include Markdown, written formulas, plans, or internal metadata.',
             input=[dict(role='user',content=question)]),timeout=180)
     if response.status_code!=200:raise RuntimeError('Explicit stronger reasoning backend HTTP '+str(response.status_code))
     data=response.json()

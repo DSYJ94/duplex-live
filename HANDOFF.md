@@ -1,4 +1,81 @@
-# HANDOFF — active overnight recovery (updated 18 October)
+# HANDOFF — overnight recovery, 18 October
+
+Plain words: CURRENT04:32UTC /06:32Berlin. Owner away; continue autonomously,
+no optional questions before morning. Goal ACTIVE. No full native or hybrid
+qualification; no optimizer steps or adopted native weights in this overnight
+continuation. Native model failures remain preserved. Cloud validation paused.
+
+Plain words: BEST NEW COMPONENT — exact frozen Qwen3.5-9B controls streaming
+Kyutai ASR/TTS with actual GPT-6 Astra reasoning for harder questions. This is a
+modular hybrid, NOT a trained native duplex model. Typed routing7514992:3 easy
+local answers correct,4 harder direct-local answers wrong,4 chosen real reasoning
+answers correct. Actual worker7515324 proves foreground local inference while
+API runs. Audio7515356/58 completes ice + actual count19; source ASR WER0.0227.
+Normalized WER0 hides an ambiguous fifty/two number boundary in one old count
+breakdown; do not equate it with perfect spoken meaning. New network7515423/24
+has249 exact client/server PCM packets and unambiguous count wording, both speech
+clips WER0. It is still recorded-PCM input, not physical mic/device acceptance.
+
+Plain words: IMPORTANT CURRENT FIX — old bool(futures) media barrier held a ready
+ordinary answer behind real background work. In5423, foreground model finished
+23.446s but speech waited until after API end28.974s; first scheduled PCM29.736s.
+Source91ebf62793af0afe0bd61dadf4c6ab5e1bb9fecd separates actual dispatched
+background work from unresolved semantic decisions. Unit synchronization tests
+pass. Real network retest7515717/audit5718 and recorded3case5719/audit5720 are
+submitted; retrieve /private/tmp/duplex-live-barrier-v2-submit-full.txt and their
+actual results. Do not claim speech/API overlap until absolute clocks confirm.
+Unused owner service7515697 is superseded BEFORE any owner session/public link;
+SSH cancellation timed out, so inspect durable superseded receipt and job state
+before assuming it stopped or retrying. No access token has been published.
+
+Plain words: CANCELLATION — actual typed5615 ordinary +5616 cancellation pass.
+Real no-delay audio5675 cancels exactly turn-1 and answers the new shadow question;
+late real API result retained but never spoken, independent5676 WER0. This cancels
+DELIVERY, not an already executing remote API request. Do not call it remote
+execution abortion. Input026 generation5617 /quality5618 both clips WER0. Source
+e448f0a exposes explicit delivery floor; old recorded defaults remain12seconds,
+live server0. General agent actions and reasoning replacement remain open.
+
+Plain words: LOCAL RECORD BEHAVIOR — 6ea3d00 actual tool-history projection fixed
+duplicate reads. Large spoken-output system instruction CAUSED old-topic021
+regression under BOTH torch/fused kernels (isolated5132/5133); rejected. Narrow
+content-field instruction7455f1b fixes021 in5328/5331 and actual5363; arithmetic
+5361 now words, WER0. Broad reused5361/5363 completes13/13 structurally, but017
+acknowledgment STILL interrupts/restarts,020 narrates old unavailability,023 asks
+which project despite its unavailable named project. Logic013 small speech
+mismatch. No record or full-system qualification. Old4B rejected for now.
+
+Plain words: RUNTIME — all775 Qwen3.5 source tensors exact before device copy,
+760 architecture plus15 explicitly retained unused MTP tensors, frozen. Runtime
+2611 separate5.5.3 child; parent speech4.55.3 checked. Model assets2612 pinned
+19.33GB. Optional FLA3645 strict package proof;4182 ten-case typed pass, median
+stage2.10s vs torch3739 2.69s, not system latency. Resident4733 ten-case pass.
+CUDA discovery only process-local already-loaded driver; no system driver or
+shared speech dependency edits. Assets/helper code-SHA gates remain intact.
+
+Plain words: LIVE PROTOTYPE — serving/hybrid server/frame queue/client uses real
+PCM, a private first-message socket credential, and an ephemeral local-access
+helper through SSH. Existing socket/auth/private-file tests pass. No unattended
+mic permission. Browser API list is empty and native computer-use pipe fails;
+actual browser-engine QA and mic/AEC/device playback are NOT done. Renderer5ms
+start/8ms stop fade has a supplied offline /qa.html check, still browser-unverified.
+Never export session-token or API keys. Owner service wrapper exists but restart
+only after current media barrier tests. Target local URL8767, tunnel8768; neither
+is started yet. Gallery8766 remains available with24 actual conversations.
+
+Plain words: BACKUP —79 causal captures /128 independent speech clips locally
+verified before latest network/record regression; all complete bounds valid,
+one old tiny interrupted invalid-ASR fragment retained/uninterpreted.12 public
+speech assets6.43GB complete. Qwen public14 assets19.33GB transfer ACTIVE exec
+session84190, /private/tmp/duplex-qwen35-public-weight-backup-full.txt; last size
+5.7GB, not yet hash-qualified. Source bundle stale6b0fa1c; refresh after final
+changes. Latest backups under runs/cloud-export-20261016/tree, proofs under
+runs/recovery-continuation-20261016. New network backups explicitly exclude token.
+Temporary caffeinate PID51748 ends07:33UTC/09:33Berlin; current cert expected
+09:39UTC/11:39Berlin. All source pushed through91ebf62; unrelated timeline.pyc
+and roadmap.html must stay untouched.
+
+## Earlier recovery notes — historical, superseded by the current state above
 
 Plain words: CURRENT18Oct03:39UTC — continue autonomously overnight, no optional
 questions before morning. All native models and the full hybrid remain
