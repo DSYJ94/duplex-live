@@ -1,0 +1,36 @@
+{
+  "schema": "dl-function-name-training-plan-v1",
+  "declared_before_training": true,
+  "purpose": "Matched ablation of the previous train/inference output-correction scope mismatch",
+  "training_data_job": "7517716",
+  "frozen_baseline_job": "7517717",
+  "previous_all_token_training_job": "7517718",
+  "train_rows": 216,
+  "heldout_rows": 72,
+  "rank": 8,
+  "epochs": 3,
+  "optimizer_steps": 648,
+  "learning_rate": 0.0005,
+  "teacher_labels_and_student_prompts_unchanged": true,
+  "new_evaluation_captures_used_for_training": false,
+  "only_experimental_change": "Train only target positions at which the cached native function-name inference hook would apply the learned correction; evaluate with that same hook",
+  "target_boundary": "Position i predicts target[i] from decoded target[:i]; untouched first prefill prediction; argument, content and EOS positions excluded once the first function header closes",
+  "argument_content_projection": "Frozen published output projection",
+  "checkpoint_selection": "Fixed final step; no heldout checkpoint selection",
+  "required_checks": [
+    "Exact original TRAIN teacher/quality/prompt lineage",
+    "Function target positions match causal deployed hook boundary, including tokens spanning delimiters",
+    "Only the two rank8 tensors receive gradients; original parameter hashes unchanged",
+    "Finite gradients and full648 planned updates",
+    "Strict saved/reloaded adapter logits, optimizer and random-state restoration",
+    "Full72 heldout worker generations, compared by exact row with preserved baseline and prior function-scope variant",
+    "Before voice adoption, broader ordinary reasoning, positive delegation, no-tools and active-speech control retention checks",
+    "No promotion based on training loss or action-name accuracy alone"
+  ],
+  "limitations": [
+    "Text-controller experiment, not native speech training",
+    "Existing corpus contains no positive hard-reasoning delegation examples; general routing remains a known risk",
+    "The duplicate-refusal fresh conversation has become development evidence and is excluded from training",
+    "New resume and combined cancellation actions are not trained in this old corpus; no semantic-pause deployment is authorized by this ablation alone"
+  ]
+}

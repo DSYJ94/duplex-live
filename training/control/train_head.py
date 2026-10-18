@@ -15,6 +15,7 @@ import time
 def main():
     ap=argparse.ArgumentParser(description=__doc__)
     for name in ('data','assets','kernel-assets','out','baseline'):ap.add_argument('--'+name,type=Path,required=True)
+    ap.add_argument('--function-name-only',action='store_true',help='Match training targets and restored inference to the deployed function-name correction boundary')
     args=ap.parse_args()
     from training.control.verified_data import verified_data
     rows,heldout,data_manifest=verified_data(args.data)
@@ -25,6 +26,10 @@ def main():
         train_rows=len(rows),heldout_rows=len(heldout),full_worker_generation_required=True,loss='unweighted mean next-token loss on final native action and EOS only',
         data_manifest_sha256=sha256(args.data/'manifest.json'),data_quality_sha256=data_manifest['quality_sha256'],
         base_assets_sha256=sha256(args.assets),fixed_before_training=True,training_step_selection='fixed final step; no held-out checkpoint selection')
+    if args.function_name_only:
+        settings.update(loss='mean next-token loss only where the actual function-name inference hook applies correction',
+            inference_scope='function-name-only',argument_loss_targets=0,content_loss_targets=0,
+            boundary_code_sha256=sha256(Path(__file__).with_name('function_boundary.py')))
     (args.out/'settings.json').write_text(json.dumps(settings,indent=2)+'\n')
     from evals.qwen35_controller import Qwen35ResponseExecutor
     executor=Qwen35ResponseExecutor(args.assets,kernel_assets=args.kernel_assets,pending_speech_protocol='explicit-actions',compact_replies=True)
@@ -53,8 +58,12 @@ def main():
         with torch.no_grad():
             hidden=model.model(input_ids=ids,attention_mask=torch.ones_like(ids),use_cache=False)[0][0,len(prefix)-1:].detach().cpu().contiguous()
         if hidden.shape!=(len(target),base.in_features):raise ValueError('Teacher-forcing target alignment differs')
-        features.append(dict(id=row['id'],hidden=hidden,target=torch.tensor(target,dtype=torch.long),prompt_tokens=len(prefix)))
-    (args.out/'feature-inventory.json').write_text(json.dumps([dict(id=f['id'],prompt_tokens=f['prompt_tokens'],target_tokens=len(f['target'])) for f in features],indent=2)+'\n')
+        positions=list(range(len(target)))
+        if args.function_name_only:
+            from training.control.function_boundary import target_positions
+            positions=target_positions(target,lambda ids:tokenizer.decode(ids,skip_special_tokens=False))
+        features.append(dict(id=row['id'],hidden=hidden[positions].contiguous(),target=torch.tensor(target,dtype=torch.long)[positions],prompt_tokens=len(prefix),native_target_tokens=len(target),selected_positions=positions))
+    (args.out/'feature-inventory.json').write_text(json.dumps([dict(id=f['id'],prompt_tokens=f['prompt_tokens'],target_tokens=len(f['target']),native_target_tokens=f['native_target_tokens'],selected_positions=f['selected_positions']) for f in features],indent=2)+'\n')
     optimizer=torch.optim.AdamW(delta.parameters(),lr=settings['learning_rate'],weight_decay=settings['weight_decay']);steps=0
     with (args.out/'training.jsonl').open('w') as log:
         for epoch in range(settings['epochs']):
@@ -101,7 +110,12 @@ def main():
         fixture=features[0]['hidden'].to(base.weight.device)
         if not torch.equal(head(fixture),ResidualHead(base,restored)(fixture)):raise ValueError('Strict controller checkpoint restore differs')
     # Evaluate exactly what was saved/restored, never an unsaved in-memory arm.
-    model.lm_head=ResidualHead(base,restored);adapted=evaluate_suite(executor,heldout,args.out/'restored-adapted')
+    if args.function_name_only:
+        from training.control.scoped_head import FunctionNameHead,FunctionNameGenerator
+        model.lm_head=FunctionNameHead(base,restored)
+        executor.generator=FunctionNameGenerator(executor.generator,model.lm_head)
+    else:model.lm_head=ResidualHead(base,restored)
+    adapted=evaluate_suite(executor,heldout,args.out/'restored-adapted')
     after=parameter_hashes(source)
     if before!=after:raise ValueError('Published source weights changed')
     report=dict(schema='dl-controller-head-training-pilot-v1',component_execution_completed=True,settings=settings,load=executor.proof,

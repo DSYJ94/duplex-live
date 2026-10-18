@@ -1,5 +1,16 @@
 # HANDOFF — overnight recovery, 18 October
 
+Plain words: NEXT training ablation: queued-history diagnostic7520544/e8215e3
+COMPLETE; exact original native action reproduced. Adding actual queued assistant
+history changes wording but consumesNO pendingID, so NOT a duplication fix and
+NO runtime adoption. Captures backed up. Prepare opt-in --function-name-only in
+training/control/train_head.py, causal training/control/function_boundary.target_positions,
+CONTROL_FUNCTION_NAME_ONLY=1 in controller-head-train.slurm. Same approved teacher
+7517716/baseline7517717/rank8/648updates; only loss mask + matched scoped inference
+change. Plan evals/fixtures/function-name-training-plan-20261018.json,3localguards
+pass. Never train from fresh captures. Require full72 row comparison plus broader
+reasoning/delegation/new resume retention before any adoption. Currentdemounchanged.
+
 Plain words: UPDATE fresh evaluation18Oct: sourcef09baf0, synthetic inputs7520271,
 quality7520272, ten actual services7520283/85/87/89/91/93/95/97/99/301 and audits
 each+1 COMPLETE and locally backed up. Input056 fails favourite/favorite spelling

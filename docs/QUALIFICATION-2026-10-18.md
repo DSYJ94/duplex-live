@@ -96,10 +96,28 @@ user clause is dispatched, the first validated controller answer is already queu
 but has not started speech. The pending-speech state contains its text; chronological
 assistant history does not. Source-only probe `qwen35_ready_history_probe.py` compares
 the exact captured original native proposal with one additional actual queued reply
-in chronological history. It changes no weights, dispatches no actions, makes no
-external request and cannot by itself establish a runtime fix. The earlier ten
+in chronological history. It changes no weights, dispatches no actions and makes no
+external request. Actual diagnostic7520544 reproduces the baseline exactly; adding
+the actual queued answer changes the second reply wording but still consumes no
+pending speech ID. Reject this as a duplicate-prevention fix; no runtime adoption. The earlier ten
 conversations remain frozen development evidence for any subsequent change.
 
 Plain words: Physical microphone, browser-engine playback, room echo/double-talk
 and human approval of the current hybrid voice remain unverified. Cloud validation
 remains paused. The overall goal remains active.
+
+## Next bounded training ablation
+
+Plain words: The previous adapter was trained on every final-call token, but its
+less harmful inference variant corrected only function-name tokens. That is a
+measurable objective/deployment mismatch. New opt-in function-name-only training
+uses the same216 verified TRAIN rows,72 heldout families,rank8,learning rate and
+648 fixed updates. Only causal target positions where the deployed hook actually
+applies its correction receive loss; argument/content projection stays frozen.
+The explicit plan is `evals/fixtures/function-name-training-plan-20261018.json`.
+This tests that mismatch without adding any evaluation recording to TRAIN.
+
+Plain words: This corpus lacks positive hard-delegation and the newer resume actions.
+Even better72-case scores cannot authorize deployment. Broader reasoning/delegation
+and retained-generator checks must pass first. This is a text-controller experiment,
+not native voice-model training. Cloud validation remains paused.

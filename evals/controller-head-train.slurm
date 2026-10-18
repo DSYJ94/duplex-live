@@ -19,10 +19,15 @@ test -z "$(git -C "$DL_TASK_SOURCE" status --porcelain)"
 [[ "$CONTROL_TEACHER_DATA_JOB" =~ ^[0-9]+$ ]]
 [[ "$CONTROL_BASELINE_JOB" =~ ^[0-9]+$ ]]
 cd "$DL_TASK_SOURCE"
+EXTRA=()
+if [ "${CONTROL_FUNCTION_NAME_ONLY:-0}" = 1 ]; then
+ python3 -m unittest evals.harness.test_function_boundary
+ EXTRA+=(--function-name-only)
+fi
 apptainer exec --nv --bind /projects,/lus,/home \
  --env PYTHONPATH="$DL/envs/moshi-rag-7379661/lib/python3.12/site-packages:$DL_TASK_SOURCE" \
  --env PYTHONDONTWRITEBYTECODE=1 --env OMP_NUM_THREADS=8 --env HF_HUB_OFFLINE=1 \
- "$DL/pytorch-new.sif" python -u -m training.control.train_head \
+ "$DL/pytorch-new.sif" python -u -m training.control.train_head "${EXTRA[@]}" \
  --assets "$DL/runs/qwen35-controller-assets-7512612/assets.json" \
  --kernel-assets "$DL/runs/qwen35-kernel-assets-7513645" \
  --data "$DL/runs/controller-text-teacher-$CONTROL_TEACHER_DATA_JOB" \
