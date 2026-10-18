@@ -60,17 +60,20 @@ def main():
         stops={e['event_id']:e['actual_stop_s'] for e in events if e['kind']=='speech_interrupted'}
         reproduced,playout=render_utterances(packets,rate,.16,stops)
         if not np.array_equal(audio,reproduced) or playout!=case['playout']:raise RuntimeError('Captured interrupted playout cannot be reproduced exactly')
-        complete={r['event_id'] for r in case['fully_played_responses']}
+        complete={r['event_id'] for r in case['fully_played_responses'] if not r.get('playback_event_ids')}
         starts={e['event_id']:e for e in events if e['kind']=='speech_started'}
+        from evals.duplex_pause import played_positions,grouped_completions
+        aggregates=grouped_completions(case,playout,starts,rate)
         caseout=args.out/case['scenario'];caseout.mkdir()
+        work=[]
         for identity,group in playout['events'].items():
             if not group['played_samples']:continue
-            positions=[]
-            for p in group['packets']:
-                a=p['playback_start_sample'];b=a+p['samples']
-                if identity in stops:b=min(b,math.ceil(stops[identity]*rate))
-                if b>a:positions.append((a,b))
-            first=min(p[0] for p in positions);last=max(p[1] for p in positions);clip=audio[first:last]
+            positions=played_positions(group,rate)
+            work.append(dict(event_id=identity,task_id=starts[identity]['task_id'],first=min(p[0] for p in positions),
+                last=max(p[1] for p in positions),expected=starts[identity]['text'],fully=identity in complete))
+        work.extend(aggregates)
+        for item in work:
+            identity=item['event_id'];first=item['first'];last=item['last'];clip=audio[first:last]
             if len(clip)!=last-first:raise RuntimeError('Played clip exceeds actual capture')
             sf.write(caseout/(identity+'-played.wav'),clip,rate,subtype='FLOAT')
             g=math.gcd(rate,16000);resampled=resample_poly(clip,16000//g,rate//g).astype(np.float32)
@@ -79,12 +82,14 @@ def main():
             for segment in result['segments']:
                 for item in [segment]+segment.get('words',[]):
                     if not 0<=item['start']<=item['end']<=duration+.02:bounds=False
-            expected=starts[identity]['text'];fully=identity in complete
-            row=dict(scenario=case['scenario'],event_id=identity,task_id=starts[identity]['task_id'],
+            expected=item['expected'];fully=item['fully']
+            row=dict(scenario=case['scenario'],event_id=identity,task_id=item['task_id'],
                 played_start_s=first/rate,played_end_s=last/rate,fully_played=fully,planned_text=expected,
                 transcript=result['text'],word_error_rate=wer(norm_words(expected),norm_words(result['text'])) if fully else None,
                 valid_timestamp_bounds=bounds,played_audio_sha256=sha256(caseout/(identity+'-played.wav')),
                 cancelled_generated_material_excluded=True,task_qualified=False)
+            if item.get('pause_aggregate'):
+                row.update(playback_event_ids=item['playback_event_ids'],pause_aggregate=True,intentional_pause_included=True)
             (caseout/(identity+'-whisper.json')).write_text(json.dumps(result,indent=2)+'\n');results.append(row)
     audit=dict(schema='dl-concurrent-hybrid-speech-audit-v1',source_report_sha256=sha256(args.run/'report.json'),
         results=results,excluded_failed_cases=report.get('failures',[]),

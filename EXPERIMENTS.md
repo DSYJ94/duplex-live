@@ -5008,3 +5008,31 @@ network7 captures/10 clips verified, all complete bounds valid. Gallery32 actual
 conversations GET/WAV/hash checked. Keys, session tokens and actual owner audio
 excluded. Runtime/source portability is still separate from destination GPU tests;
 cloud validation remains paused. Morning report docs/OVERNIGHT-2026-10-18.md.
+
+
+Plain words: acoustic interruption replay at the actual run_case seam reproduces
+nonlexical acknowledgment restart deterministically: one controller dispatch,
+two speaker.start calls for the same answer. Captured7511288 shows the same
+one-question/two-generation pattern, despite Uh-huh omitted by streaming ASR.
+Ranked causes are generator reset, queue release after quiet, then repetition
+inside a single generation; the first two match both fixture and real event trace.
+No new GPU run is needed to reproduce the software defect.
+
+Plain words: new recorded-only acoustic-pause experiment stops causal playout at
+speech onset while retaining actual TTS generator state and the exact unheard
+PCM suffix. After660ms acoustic quiet with no decoded words/unresolved decision,
+it resumes those samples once and continues the SAME generator. Any arrived word
+commits the existing interruption path; genuine stop/replace still resolves the
+old speech obligation. This is NOT a learned acknowledgment classifier. Recognized
+Right may still need a semantic policy. Browser resume protocol is not implemented;
+explicitly reject live use and leave published owner6574/source0d63370 unchanged.
+
+Plain words: six exact-pause fixtures pass, including unchanged baseline restart,
+prompt pause, every generated sample heard once, repeated nonlexical sounds,
+actual new-word interruption and owed-ID retirement, renderer agreement through
+gaps/partial packets, and aggregate-audit rejection of other answers or changed
+generation provenance. Independent speech audit will keep partial fragments
+unscored and score the full retained generation across its real pause, including
+silence. No clipped-fragment full-text WER or removed-pause latency claim. Thirteen
+pause/playout tests and fifteen worker/dispatch/format/pause checks pass locally.
+Next compare unchanged acoustic and new pause on approved005, then genuine015.

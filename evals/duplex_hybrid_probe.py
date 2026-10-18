@@ -47,6 +47,8 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",inter
     import soundfile as sf
     from data.synthetic.filter import norm_words,wer
     live=live_input is not None
+    if interrupt_policy not in ('acoustic','lexical','acoustic-pause'):raise ValueError('Unknown interruption policy')
+    if live and interrupt_policy=='acoustic-pause':raise ValueError('Exact pause experiment is recorded-only; browser resume protocol is not implemented')
     if live:
         if row['split']!='live-transport' or worker_kind!='reasoning-development':raise ValueError('Live prototype requires its explicit reasoning domain')
         rate=24000;user=np.zeros(0,dtype=np.float32)
@@ -69,7 +71,7 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",inter
         worker=run_reasoning_worker;world_type=ReasoningWorld;delivered_receipts=reasoning_receipts
     world=world_type(row['world'] if row['split'] in ('fresh-evaluation','live-transport') else counterfactual_records(row['scenario_id']));context=[];policy=TurnEndpoint(listener.spm.decode)
     listener.reset();speaker.stop();queue=[];futures={};held=[];packets=[];stops={};events=[];steps=[];backlogs=[]
-    active=None;clock=None;spoken=[];asr_tokens=[];asr_events=[];utterance_count=0;generation_count=0;last_voice_s=-float('inf')
+    active=None;clock=None;paused=None;spoken=[];asr_tokens=[];asr_events=[];utterance_count=0;generation_count=0;last_voice_s=-float('inf')
     # Tail allows an actual delayed result, a resumed answer and its PCM to finish.
     real_frames=math.ceil(len(user)/1920);max_frames=(math.ceil(live_input.max_seconds/.08) if live else real_frames)+math.ceil(45/.08)
     padded=None if live else np.pad(user,(0,max_frames*1920-len(user)));frame=0;start=time.perf_counter()
@@ -85,15 +87,31 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",inter
             return bool(reads) and all(world.deliverable(r) for r in reads)
         return not (item['result']['route']=='clarify' and item['turn']<utterance_count)
     def interrupt(reason="acoustic_speech_start"):
-        nonlocal active,clock
+        nonlocal active,clock,paused
         if active is None:return
-        at=now();identity=active['event_id'];stops[identity]=at;clock.stop(at);speaker.stop()
-        log('speech_interrupted',event_id=identity,task_id=active['task_id'],actual_stop_s=at,reason=reason)
+        identity=active['event_id']
+        if paused is None:
+            at=now();stops[identity]=at;clock.stop(at)
+            log('speech_interrupted',event_id=identity,task_id=active['task_id'],actual_stop_s=at,reason=reason)
+        else:
+            log('speech_pause_committed',event_id=identity,task_id=active['task_id'],actual_stop_s=paused['at_s'],reason=reason)
+        speaker.stop();paused=None
         # Conservative baseline: retain ordinary answers in full. This can repeat
         # a heard prefix; no word-level heard-position inference is claimed.
         if valid(active) and active['result']['route']!='clarify':
-            queue.append({k:v for k,v in active.items() if k!='event_id'})
+            queue.append({k:v for k,v in active.items() if k not in ('event_id','playback_event_ids')})
         active=None;clock=None
+    def pause():
+        nonlocal paused
+        if active is None or paused is not None:return
+        identity=active['event_id'];at=now()
+        if not speaker.active and clock.end/rate<=at:return
+        stops[identity]=at;clock.stop(at)
+        log('speech_interrupted',event_id=identity,task_id=active['task_id'],actual_stop_s=at,reason='acoustic_pause')
+        from evals.duplex_pause import unheard_packets
+        tail=unheard_packets(packets,identity,at) if any(p['event_id']==identity for p in packets) else []
+        paused=dict(at_s=at,tail=tail)
+        log('speech_paused',event_id=identity,task_id=active['task_id'],unheard_samples=sum(len(p) for p in tail),generator_retained=True)
     def drain_control():
         if not include_tool_context:return
         from evals.duplex_tool_context import project_execution
@@ -146,8 +164,12 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",inter
                 if boundary['speech_started']:
                     log('user_speech_started',input_available_s=frame_available)
                     if interrupt_policy=='acoustic':interrupt()
+                    if interrupt_policy=='acoustic-pause':pause()
                 if (interrupt_policy=='lexical' and active is not None and token is not None and token>=4
                         and frame_available-last_voice_s<=1.
+                        and any(ch.isalnum() for ch in listener.spm.decode([token]))):
+                    interrupt('first_arrived_user_lexical_token')
+                if (interrupt_policy=='acoustic-pause' and paused is not None and token is not None and token>=4
                         and any(ch.isalnum() for ch in listener.spm.decode([token]))):
                     interrupt('first_arrived_user_lexical_token')
                 if boundary['utterance']:
@@ -191,9 +213,23 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",inter
             dispatch_state=dispatch_status(world,futures.values())
             barrier=policy.speech_active or bool(policy.tokens) or bool(dispatch_state['unresolved_decisions'])
             if interrupt_policy=='lexical':barrier=barrier or now()-last_voice_s<.66
-            if active and not speaker.active and now()>=clock.end/rate:
+            if paused is not None and not valid(active):interrupt('stale_result_during_pause')
+            if paused is not None and not barrier and now()-last_voice_s>=.66:
+                prior=active['event_id'];generation_count+=1;identity='speech-'+str(generation_count)
+                active['playback_event_ids']=active.get('playback_event_ids',[prior])+[identity]
+                active['event_id']=identity;clock=PlaybackClock();at=now()
+                log('speech_started',event_id=identity,task_id=active['task_id'],text=active['result']['content'],
+                    active_background_task_ids=dispatch_state['actual_background_tasks'],resumes_event_id=prior,same_generator=True)
+                for pcm in paused['tail']:
+                    packets.append(dict(event_id=identity,available_s=at,pcm=pcm));clock.append(at,len(pcm))
+                log('speech_resumed',event_id=identity,task_id=active['task_id'],resumes_event_id=prior,
+                    replayed_unheard_samples=sum(len(p) for p in paused['tail']),new_generation_started=False)
+                paused=None
+            if active and paused is None and not speaker.active and now()>=clock.end/rate:
                 log('speech_fully_played',event_id=active['event_id'],task_id=active['task_id'])
-                spoken.append(dict(event_id=active['event_id'],text=active['result']['content'],task_id=active['task_id']))
+                completed=dict(event_id=active['event_id'],text=active['result']['content'],task_id=active['task_id'])
+                if 'playback_event_ids' in active:completed['playback_event_ids']=active['playback_event_ids']
+                spoken.append(completed)
                 context.append(dict(role='assistant',text=active['result']['content']))
                 if active['result']['route']=='delegate' and valid(active):world.finish(active['task_id'],active['revision'])
                 active=None;clock=None
@@ -208,7 +244,7 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy",inter
                 log('speech_started',event_id=active['event_id'],task_id=active['task_id'],text=active['result']['content'],active_background_task_ids=dispatch_state['actual_background_tasks'])
             # Generate only bounded PCM lead. A step may overrun; never disguise
             # that as a fast clock: the next ASR backlog records the actual delay.
-            if (active and speaker.active and clock.end/rate-now()<.24
+            if (active and paused is None and speaker.active and clock.end/rate-now()<.24
                     and (next_frame-now()>.037 or (live and incoming is None))):
                 rendered=speaker.step();at=now()
                 for pcm in rendered['pcm']:
@@ -279,7 +315,7 @@ def main():
     ap.add_argument('--local-controller-pending-speech-protocol',choices=('array','explicit-actions'),default='array')
     ap.add_argument('--local-controller-device',default='cuda:1')
     ap.add_argument('--local-controller-prompt-profile',choices=('base','contract-examples'),default='contract-examples')
-    ap.add_argument('--interrupt-policy',choices=('acoustic','lexical'),default='acoustic')
+    ap.add_argument('--interrupt-policy',choices=('acoustic','lexical','acoustic-pause'),default='acoustic')
     ap.add_argument('--input-profile',choices=('approved-train','fresh-evaluation'),default='approved-train')
     ap.add_argument('--input-quality',type=Path)
     ap.add_argument('--input-validator-source',type=Path)
@@ -336,7 +372,7 @@ def main():
         worker_kind=args.worker_kind,actual_tool_context_enabled=args.include_tool_context,
         read_tools_scoped_to_user_identified_available_projects=args.scope_read_tools,
         component_code_sha256={name:sha256(Path(__file__).with_name(name)) for name in
-            ('recovery_worker.py','duplex_endpoint.py','duplex_speaker.py','kyutai_stt_probe.py','duplex_speech_obligations.py','duplex_tool_context.py','duplex_reasoning_worker.py','duplex_dispatch.py')},
+            ('recovery_worker.py','duplex_endpoint.py','duplex_speaker.py','kyutai_stt_probe.py','duplex_speech_obligations.py','duplex_tool_context.py','duplex_reasoning_worker.py','duplex_dispatch.py','duplex_pause.py')},
         probe_code_sha256=sha256(Path(__file__)),
         input_profile=args.input_profile,input_validator=validator,evaluation_use=args.evaluation_use,input_quality_sha256=sha256(args.input_quality) if args.input_quality else None,
         stt_assets_sha256=sha256(args.stt_assets),tts_assets_sha256=sha256(args.tts_assets),
