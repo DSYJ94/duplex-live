@@ -122,9 +122,11 @@ class NonThinkingTokenizer:
 
 class Qwen35ResponseExecutor(QwenResponseExecutor):
     provider_name='local-transformers-qwen35-9b'
-    def __init__(self,assets,device='cuda:0',prompt_profile='contract-examples',attention_backend='math'):
+    def __init__(self,assets,device='cuda:0',prompt_profile='contract-examples',attention_backend='math',pending_speech_protocol='array'):
         if attention_backend!='math':raise ValueError('First newer9B proof requires explicit math attention')
         if prompt_profile not in ('base','contract-examples'):raise ValueError('Unknown prompt profile')
+        if pending_speech_protocol not in ('array','explicit-actions'):raise ValueError('Unknown speech action protocol')
+        self.pending_speech_protocol=pending_speech_protocol
         self.attention_backend=attention_backend
         self.model,self.tokenizer,self.proof=load_model(assets,device)
         self.generator=Generator(self.model,NonThinkingTokenizer(self.tokenizer));self.model_id=self.proof['repo']

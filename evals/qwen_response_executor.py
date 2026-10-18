@@ -31,9 +31,11 @@ def validate(value,schema):
 class QwenResponseExecutor:
     provider_name='local-transformers-qwen4b'
 
-    def __init__(self,assets,device='cuda:1',prompt_profile='contract-examples',attention_backend='math'):
+    def __init__(self,assets,device='cuda:1',prompt_profile='contract-examples',attention_backend='math',pending_speech_protocol='array'):
         if prompt_profile not in ('base','contract-examples'):raise ValueError('Unknown local controller prompt profile')
         if attention_backend not in ('math','flash'):raise ValueError('Unknown explicit attention backend')
+        if pending_speech_protocol not in ('array','explicit-actions'):raise ValueError('Unknown pending speech protocol')
+        self.pending_speech_protocol=pending_speech_protocol
         self.attention_backend=attention_backend
         self.model,self.tokenizer,self.proof=load_model(assets,device=device)
         self.generator=Generator(self.model,self.tokenizer);self.model_id=self.proof['repo']
@@ -52,6 +54,28 @@ class QwenResponseExecutor:
     def parse_generated_action(self,text,definitions):return parse_action(text)
     def tool_history_arguments(self,arguments):return json.dumps(arguments)
 
+    def model_functions(self,definitions,state):
+        if self.pending_speech_protocol!='explicit-actions' or state['dispatch_protocol']!='state-aware':return definitions
+        import copy
+        result=copy.deepcopy(definitions)
+        reply=next(d for d in result if d['name']=='respond_to_user')
+        schema=reply['parameters'];schema['properties'].pop('consume_pending_speech_ids');schema['required'].remove('consume_pending_speech_ids')
+        reply['description']+=' This reply preserves owed ordinary speech. Use for a lookup-cancellation confirmation alone.'
+        if state['pending_speech']:
+            resolve=copy.deepcopy(reply);resolve['name']='resolve_pending_speech'
+            resolve['description']='Reply AND explicitly finish, withdraw or supersede identified owed ordinary answers. The reply must answer that request, or the latest user must withdraw/supersede it. Cancelling a private lookup alone NEVER resolves unrelated ordinary speech.'
+            resolve['parameters']['properties']['speech_ids']=dict(type='array',minItems=1,items=dict(type='string',enum=[p['id'] for p in state['pending_speech']]))
+            resolve['parameters']['required'].append('speech_ids');result.append(resolve)
+        return result
+
+    def canonical_action(self,action,state):
+        if self.pending_speech_protocol!='explicit-actions' or state['dispatch_protocol']!='state-aware':return action
+        if action['name']=='respond_to_user':return dict(name=action['name'],arguments=dict(action['arguments'],consume_pending_speech_ids=[]))
+        if action['name']=='resolve_pending_speech':
+            arguments=dict(action['arguments']);identities=arguments.pop('speech_ids')
+            return dict(name='respond_to_user',arguments=dict(arguments,consume_pending_speech_ids=identities))
+        return action
+
     def _request(self,payload):
         if payload['model']!=self.model_id:raise RuntimeError('Local controller cannot substitute a different model')
         state=payload['local_worker_state']
@@ -66,7 +90,7 @@ class QwenResponseExecutor:
             'Cancel only identified existing lookup IDs, all related duplicates but never current or unrelated work. '
             'Report completed operations only from their actual execution receipts, never from assistant speech. Keep user-facing content within35 words. '
             'Available records contain field NAMES only; their values have not been provided. ')
-        if state['dispatch_protocol']=='state-aware':
+        if state['dispatch_protocol']=='state-aware' and self.pending_speech_protocol=='array':
             instructions+=(
                 'Pending speech lists ordinary answers owed but not fully played; an unknown prefix may have been heard. '
                 'The client resumes each unless its ID is listed in consume_pending_speech_ids. Include an ID only when this reply fulfills '
@@ -74,8 +98,16 @@ class QwenResponseExecutor:
                 'A latest user instruction to stop and replace an explanation with a shorter version supersedes the older longer answer; '
                 'answer the revised request and consume its old pending speech ID so the old version does not resume. '
                 'Cancellation of a lookup alone does not cancel an unrelated ordinary answer. Pending speech is not a private receipt or user project identification. ')
+        if state['dispatch_protocol']=='state-aware' and self.pending_speech_protocol=='explicit-actions':
+            instructions+=(
+                'Pending speech contains ordinary answers owed but not fully played; an unknown prefix may have been heard. '
+                'Use respond_to_user for an ordinary reply, clarification, or confirmation of private lookup cancellation; this preserves all owed speech. '
+                'Use resolve_pending_speech with speech_ids ONLY if this reply itself answers an owed ordinary request, or the latest user explicitly withdraws or supersedes it. '
+                'A user asking to stop and replace an explanation with a shorter version supersedes the older long answer: give the revised answer through resolve_pending_speech. '
+                'Cancelling a private lookup alone never resolves an unrelated ordinary answer; use respond_to_user after that receipt and leave the client to resume it. '
+                'These are output actions only, not execution receipts. Never both answer an owed request now and leave it queued. ')
         if self.prompt_profile=='contract-examples':instructions+=CONTRACT_EXAMPLES
-        if state['dispatch_protocol']=='state-aware':
+        if state['dispatch_protocol']=='state-aware' and self.pending_speech_protocol=='array':
             instructions+=(
                 "\nSpeech-state examples, NOT actual tasks or receipts: "
                 "An active lookup ID is lookup-demo and an owed ordinary explanation ID is speech-demo. "
@@ -110,14 +142,19 @@ class QwenResponseExecutor:
             schema=payload['text']['format']['schema']
             definitions=[dict(type='function',name='respond_to_user',
                 description='Return the final user-facing response to the actual tool receipt. This is output formatting only, without external side effects.',parameters=schema)]
-            messages.append(dict(role='user',content='Report the actual tool receipt using the respond_to_user function. Return exactly one function call, never plain prose. Include every required response field, including consume_pending_speech_ids when the schema requires it. Do not execute another external operation.'))
+            messages.append(dict(role='user',content='Report the actual tool receipt using the respond_to_user function. Return exactly one function call, never plain prose. Include every required field and no fields outside the selected function schema. Do not execute another external operation.'))
         else:
             if payload.get('tool_choice')!='required':raise RuntimeError('Local executor requires the explicit model-selected action protocol')
             definitions=sorted(payload['tools'],key=lambda f:f['name']!='respond_to_user')
-        tools=[dict(type='function',function={k:v for k,v in f.items() if k not in ('type','strict')}) for f in definitions]
+        model_definitions=self.model_functions(definitions,state)
+        tools=[dict(type='function',function={k:v for k,v in f.items() if k not in ('type','strict')}) for f in model_definitions]
         generation=self.generator.request(messages,tools,assistant_prefill='<tool_call>\n')
         try:
-            action=self.parse_generated_action(generation['cleaned_text'],definitions)
+            native_action=self.parse_generated_action(generation['cleaned_text'],model_definitions)
+            native_definition=next((d for d in model_definitions if d['name']==native_action['name']),None)
+            if native_definition is None:raise ValueError('Model selected an unavailable function')
+            validate(native_action['arguments'],native_definition['parameters'])
+            action=self.canonical_action(native_action,state)
             definition=next((d for d in definitions if d['name']==action['name']),None)
             if definition is None:raise ValueError('Model selected an unavailable function')
             validate(action['arguments'],definition['parameters'])
@@ -141,7 +178,8 @@ class QwenResponseExecutor:
             usage=dict(input_tokens=generation['input_tokens'],output_tokens=generation['generated_tokens'],
                 total_tokens=generation['input_tokens']+generation['generated_tokens']),
             local_inference=dict(**generation,provider=self.provider_name,prompt_profile=self.prompt_profile,
-                response_is_internal_normalized_transport=True,reply_function_is_format_only=reply_only,attention_backend=self.attention_backend))
+                response_is_internal_normalized_transport=True,reply_function_is_format_only=reply_only,attention_backend=self.attention_backend,
+                pending_speech_protocol=self.pending_speech_protocol,native_model_action=native_action,canonical_worker_action=action))
 
 
 def main():
@@ -153,13 +191,14 @@ def main():
     ap=argparse.ArgumentParser(description='Actual typed worker-contract proof using only the local Qwen model')
     ap.add_argument('--assets',type=Path,required=True);ap.add_argument('--out',type=Path,required=True)
     ap.add_argument('--attention-backend',choices=('math','flash'),default='math')
+    ap.add_argument('--pending-speech-protocol',choices=('array','explicit-actions'),default='array')
     ap.add_argument('--provider',choices=('qwen4b','qwen35'),default='qwen4b')
     args=ap.parse_args();args.out.mkdir(parents=True,exist_ok=False)
     executor_class=QwenResponseExecutor
     if args.provider=='qwen35':
         from evals.qwen35_controller import Qwen35ResponseExecutor
         executor_class=Qwen35ResponseExecutor
-    executor=executor_class(args.assets,device='cuda:0',attention_backend=args.attention_backend);results=[]
+    executor=executor_class(args.assets,device='cuda:0',attention_backend=args.attention_backend,pending_speech_protocol=args.pending_speech_protocol);results=[]
     rows=fixtures()+[
         dict(id='ordinary-while-pending',records={'Oak Central':{'meeting room':'room seven'}},pending='Oak Central',kind='answer',
              history=[dict(role='user',text='Please check the meeting room for Project Oak Central.')],
@@ -192,7 +231,7 @@ def main():
                 message=str(error),failure=getattr(error,'result',None),world_tasks=world.tasks)
         (args.out/(row['id']+'.json')).write_text(json.dumps(record,indent=2)+'\n');results.append(record)
     report=dict(schema='dl-local-qwen-worker-contract-v1',results=results,load=executor.proof,warmup=executor.warmup,
-        provider=executor.provider_name,attention_backend=args.attention_backend,remote_api_used=False,input_is_typed=True,optimizer_steps=0,development_cases_reused=True,
+        provider=executor.provider_name,pending_speech_protocol=args.pending_speech_protocol,attention_backend=args.attention_backend,remote_api_used=False,input_is_typed=True,optimizer_steps=0,development_cases_reused=True,
         speech_generation_executed=False,duplex_system_qualified=False,code_sha256=sha256(Path(__file__)))
     (args.out/'report.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report),flush=True)
 
