@@ -5896,3 +5896,31 @@ retained-generator side effect. Fifteen new control fixtures declared before
 outputs test duplicate/already-cancelled/closed states, new answers, stop-only
 and ambiguous targets. Their native gold actions pass actual-worker replay;
 eleven cancellation/media guard tests pass. No new model result claimed yet.
+
+
+## 18 October, 18:39 UTC: actual idempotent media and fresh counterexamples
+
+Plain words: Source37b54693. Speech7529294/audit7529295 and7529296/audit7529297
+COMPLETE. The first returns truthful already_finished for a completed exact count;
+the second actually cancels active count delivery. Both preserve the soap audio
+generator. All input/wire/server PCM exact; real production Node playout replay
+finds zero duplicate or discarded samples. Stronger-model calls are real in both.
+Independent soap WER0.108108/0.045455 and valid timestamps; no physical-device or
+owner acceptance implied. Mechanism evidence is separate from qualification.
+
+Plain words: New controls7529293 COMPLETE. Focused3/11 to10/11, oldpaired44/54
+retained. Fresh10/15 to12/15, with TWO lost fresh passes: speaking cancellation
+instead of retained resume and malformed duplicate-action XML rejected before
+mutation. A third case cancels but omits a newly requested arithmetic answer.
+No unrelated task is newly cancelled. HOLD promotion. Independent160-row proof
+and source/receipt checks are preserved. No model optimizer steps.
+
+Plain words: Profile checkpoint trials7529214/15 COMPLETE and both REJECTED.972
+plus cancel-only schema/profile:35/42,10/15fresh,47/54paired,64/72old, losing five
+paired and one old pass vs its own checkpoint.1356/profile:42/42,15/15fresh,46/54,
+64/72, yet zero of six active cancel+resume actions execute cancellation. Exact
+adapter and independent restore hashes plus480 rowfiles verified. No owner-demo
+change. Next training must contrast actual task states and complete multi-intent
+requests using NEW TRAIN data, not the evaluated counterexamples or more unchanged
+epochs. Student/teacher capability metadata must agree and source approval gates
+remain intact. Such new training is not implemented or claimed here.

@@ -2,6 +2,19 @@
 
 
 
+
+Plain words: Latest18:39UTC. Two actual speech replays verify idempotent delivery
+cancellation/status plus the same retained generator: already-finished task in
+7529294 and actual active cancellation in7529296. Input, wire, server PCM and
+production Node replay agree, with no duplicate/discarded samples. Independent
+soap WER0.108108/0.045455 remains visible. New control7529293 scores12/15 vs10/15
+but loses two fresh passes and omits a requested new answer in a third case. HOLD
+promotion. Both trained-checkpoint profile comparisons7529214/15 are REJECTED;
+1356+profile gets42/42 mechanics and15/15fresh yet fails ALL6 active cancellations.
+The owner-accepted smooth demo stays unchanged. Native and whole-system FAIL.
+Next work should address state-conditioned and multi-intent TRAIN supervision,
+with new independent data and unchanged approval/restore gates.
+
 Plain words: Latest18:26UTC. Frozen idempotent tool experiment7529138 fixes the
 actual completed-task cancellation failure with an honest already-finished
 receipt and the same retained generator. Strict focused3/11 to10/11, paired44/54

@@ -2,6 +2,75 @@
 
 
 
+
+Plain words: CURRENT 18 October, 18:39 UTC. Goal ACTIVE, cloud validation PAUSED.
+The owner-confirmed smooth demo remains frozen7527159/source8481bb1 at
+http://localhost:8767/?rev=confirmed-pause (HTTP200 verified18:38UTC). No new model,
+prompt or cancellation protocol was promoted. Current forwarding child21706 is
+owned by watcher95794; always read the status file rather than trusting this PID.
+No agent microphone, owner conversation capture or exported session credential.
+
+Plain words: All new experiments below are complete and backed up. The useful
+idempotent cancellation mechanism passes TWO actual paced speech conversations:
+7529294/audit7529295 uses the exact-count reasoning profile and reports a truly
+already-finished count without pretending a new cancellation;7529296/audit7529297
+actually cancels delivery of an active count. Both resume the same soap generator,
+with identical source/input/wire/server PCM reconstruction and production Node
+playout replay: zero duplicate or discarded source samples. Actual stronger-model
+requests occurred in both; this remains a HYBRID. Independent soap WER is0.108108
+and0.045455, with valid timestamps; exact short count four hasWER0. No physical
+playback/AEC or new owner listening acceptance is claimed. See idempotent-media-
+integrity.json / verify-idempotent-media.py; source37b54693, raw six folders local.
+
+Plain words: Fresh control7529293/source37b54693 prevents promotion. Old54paired
+44/54 retained with no lost passes; focused3/11 to10/11. NEW15 controls10/15 to12/15,
+but two old fresh passes are lost: active-0 uses a new cancellation announcement
+rather than retained resume; duplicate-active-0 emits malformed XML rejected
+BEFORE any mutation. The third failure cancels and supersedes the old answer but
+OMITS the latest user's new arithmetic question. No new unrelated work is
+cancelled (the original worker did cancel unrelated work in four closed/cancelled
+fixtures). Do not call12/15 or two successful reused speech runs qualification.
+All160rowfiles, receipts, unchanged weights and failure states independently
+verified: idempotent-fresh-integrity.json / verify-idempotent-fresh.py.
+
+Plain words: Existing-checkpoint profile experiments also REJECTED.7529214 is972
+checkpoint7523832 with cancel-only schema: profile35/42 mechanics,10/15 fresh,
+47/54paired,64/72old. Relative to that checkpoint it loses five paired and one old
+pass; some unavailable-send replies merely echo the requested message without
+explaining the limitation.7529215 is1356 checkpoint7527432: profile42/42 mechanics
+and15/15fresh BUT46/54paired,64/72old and ZERO of6 active cancel+resume cases work.
+Three further cancellation passes and one preserve pass are lost vs that already
+rejected checkpoint. No further unchanged epochs are justified. All480rowfiles,
+exact adapter/restore hashes and source a0a44fe verified: profile-checkpoints-
+integrity.json / verify-profile-checkpoints.py. Older full1356 proof still records
+5-to3 false sends before adding profile, not newly introduced false claims.
+
+Plain words: NEXT useful training direction, not implemented yet: author NEW TRAIN
+counterfactual pairs/triples with IDENTICAL latest requests across active,
+finished, already-cancelled and duplicate-related task states, plus cancellation
+combined with a NEW answer, continuation, speech-only stop and clarification.
+Do not copy any of the evaluated15fresh cases, actual captured failures or heldout
+outputs into TRAIN. Keep existing TRAIN rehearsal. The current data lets language
+patterns predict resume without using actual task state; the profiles do not
+repair that learned shortcut. Align student and teacher with the SAME truthful
+capability profile and actual optional operation schemas. Preserve approved parent
+source guards; recollect/reapprove transformed labels rather than pretending
+old prompt hashes match. Whole-batch actual API lineage/replay/semantic approval,
+predeclared recipe and independent fresh-process preflight restore remain required.
+Action-token loss weighting is only a possible declared ablation, NOT implemented
+or tested. Extra compute by itself is not the proposed fix.
+
+Plain words: Native Context Spanning/Moshi7510331 remains FAIL, with earlier factual,
+private-result and cancellation failures. These text-controller and media results
+are not new native training or GPT-Live equivalence. No optimizer steps occurred
+in these diagnostics. Last-known certificate expiry19:34UTC; currentSSHworks. The
+new teacher/data/training stage will need remaining access or later renewal, but
+there is no current authentication blocker and no pending owner question.
+Preserve unrelated tracked timeline pyc, roadmap.html and the reappeared untracked
+evals/capability_retention_probe.py plus evals/capability-retention-probe.slurm;
+neither untracked diagnostic is adopted, edited, staged or executed. Earlier
+CURRENT entries are historical; current status above takes precedence.
+
 Plain words: CURRENT 18 October, 18:26 UTC. Owner-confirmed smooth playback remains
 on the unchanged frozen demo. Goal ACTIVE; cloud validation PAUSED. New capability
 profile experiment 7528694/source5bd58b6 is COMPLETE and locally verified: false
