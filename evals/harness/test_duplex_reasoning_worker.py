@@ -87,5 +87,20 @@ class ReasoningBoundary(unittest.TestCase):
                         [dict(id='known',request_text='Explain',text='An actual owed response')],Controller(arguments))
                 self.assertEqual(world.receipts,[])
 
+    def test_generated_history_forwards_delivery_uncertainty_to_the_model(self):
+        from evals.duplex_speech_context import started,retired
+        context=[dict(role='user',text='Explain a topic')]
+        started(context,dict(task_id='old',result=dict(content='An actual generated reply')),'speech-1')
+        retired(context,['old']);context.append(dict(role='user',text='Did that finish?'))
+        class Controller:
+            provider_name='fixture-only'
+            def __call__(self,payload):
+                self.payload=payload
+                return dict(id='fixture',status='completed',model='fixture-only',output=[dict(type='function_call',name='respond_to_user',arguments=json.dumps(dict(route='answer',content='Fixture reply.',consume_pending_speech_ids=[])))])
+        world=ReasoningWorld({});revision=world.reserve('current');controller=Controller()
+        run_reasoning_worker(context,world,'current','fixture-only',revision,'state-aware',[],controller)
+        self.assertEqual(controller.payload['local_worker_state']['generated_speech_delivery'],[
+            dict(task_id='old',delivery='retired-before-full-playout',physical_hearing_confirmed=False)])
+
 
 if __name__=='__main__':unittest.main()

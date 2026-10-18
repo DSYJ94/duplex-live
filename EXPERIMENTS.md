@@ -5184,3 +5184,12 @@ withdrawal/completion lifecycle and unmutated past controller snapshot. Four ful
 old/new worker payloads are byte-identical when no generated-speech history exists.
 New helper code is in the root source inventory. Main CLI scopes this first proof
 to state-aware local9B reasoning; disabled by default and owner6574 unchanged.
+
+
+Plain words: add user-only030 long seed explanation followed by the generic
+main-point revision that exposed the copying failure. Independent input judge is
+unchanged. Compare identical actual audio with history projection disabled/enabled;
+keep explicit generated-versus-heard delivery metadata in the enabled arm. This
+is development supervision/evaluation only, never training. Require eleven-case
+actual delivery-aware gate7160 before voice model runs. Existing Stop029 and
+revision018 use their original immutable validators. No owner service change.

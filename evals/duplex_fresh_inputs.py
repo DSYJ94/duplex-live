@@ -93,6 +93,9 @@ def specifications():
         dict(id='hybrid-fresh-029',world={},turns=[
             (.8,'Explain in four short sentences why the moon seems to change shape.'),
             (14.,'Stop.')]),
+        dict(id='hybrid-fresh-030',world={},turns=[
+            (.8,'Explain in four short sentences how a seed grows into a plant.'),
+            (14.,'Do not continue the long version. Give me just its main point.')]),
     ]
 
 
