@@ -1,6 +1,6 @@
 # HANDOFF — active overnight recovery (updated 18 October)
 
-Plain words: CURRENT18Oct03:44UTC — continue autonomously overnight, no optional
+Plain words: CURRENT18Oct03:39UTC — continue autonomously overnight, no optional
 questions before morning. All native models and the full hybrid remain
 UNQUALIFIED. New local9B explicit speech actions pass typed10/10 job7513071;
 separate resident process3324 also10/10. Initial actual audio3381 wrongly

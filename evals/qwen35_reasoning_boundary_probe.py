@@ -13,7 +13,7 @@ from pathlib import Path
 import re
 import time
 from evals.moshi_model_download import sha256
-from evals.recovery_worker import tool
+from evals.recovery_worker import tool,WorkerContractError
 
 
 def cases():
@@ -65,15 +65,16 @@ def main():
     from torch.nn.attention import sdpa_kernel,SDPBackend
     definitions=[dict(type='function',function={k:v for k,v in t.items() if k!='type'}) for t in (
         tool('respond_to_user','Answer from your own knowledge; content must be the final integer only.',{'content':dict(type='string')}),
-        tool('delegate_reasoning','Ask an available stronger reasoning model to solve a multi-step problem. It returns an actual answer asynchronously. Do not invent its result.',{'question':dict(type='string')}))]
+        tool('delegate_reasoning','Ask an available stronger reasoning model to solve a multi-step problem. It receives the complete original user question unchanged and returns an actual answer asynchronously. Do not invent its result.',{}))]
     def local(question,allow_delegate=True):
         instructions=('Choose exactly one function. Answer simple facts and short arithmetic yourself. Delegate combinatorial optimization and exhaustive counting when reliable calculation exceeds your immediate ability. '
-                      'Delegation is a real external model call, not a private-record lookup. If delegating, pass the complete original problem without adding an answer. '
+                      'Delegation is a real external model call, not a private-record lookup. If delegating, the client passes the complete original problem unchanged; do not supply a different question or an answer. '
                       'Return only the function call. An ordinary answer content is the final integer only.')
         tools=definitions if allow_delegate else definitions[:1]
         with torch.inference_mode(),torch.cuda.device(executor.model.device),sdpa_kernel(SDPBackend.MATH):
             stage=executor.generator.request([dict(role='system',content=instructions),dict(role='user',content=question)],tools,assistant_prefill='<tool_call>\n')
-        action=executor.parse_generated_action(stage['cleaned_text'],tools)
+        try:action=executor.parse_generated_action(stage['cleaned_text'],[d['function'] for d in tools])
+        except Exception as error:raise WorkerContractError(str(error),dict(local_inference=stage)) from error
         return dict(action=action,inference=stage)
     rows=[];pool=ThreadPoolExecutor(max_workers=1);origin=time.monotonic();pending=[]
     try:
@@ -84,19 +85,19 @@ def main():
                     try:
                         direct=local(case['question'],False);row['direct_local']=direct
                         row['direct_local_correct']=integer(direct['action']['arguments']['content'])==case['expected']
-                    except Exception as error:row.update(direct_local_correct=False,direct_local_error=dict(type=type(error).__name__,message=str(error)))
+                    except Exception as error:row.update(direct_local_correct=False,direct_local_error=dict(type=type(error).__name__,message=str(error),evidence=getattr(error,'result',None)))
                 selected=local(case['question']);row['selection']=selected;action=selected['action']
                 if action['name']=='respond_to_user':row.update(answer=integer(action['arguments']['content']),remote_api_used=False)
                 elif action['name']=='delegate_reasoning':
-                    # Exact question binding prevents omissions, hallucinated constraints,
-                    # answer contamination or a different request from reaching the backend.
-                    if action['arguments']['question']!=case['question']:raise ValueError('Delegated question differs from the original problem')
+                    if len(pending)>=4:raise RuntimeError('Four-request reasoning pilot limit reached; no extra API call')
+                    # Execution is bound to the actual user input, not a model-written rewrite.
+                    if action['arguments']:raise ValueError('Delegation action must not replace the original question')
                     row['submitted_s']=time.monotonic()-origin;future=pool.submit(remote,case['question'],args.reasoner,origin);pending.append((row,future))
                     before=time.monotonic();foreground=local('What is two plus three?',False)
                     row['concurrent_foreground']=dict(result=foreground,correct=integer(foreground['action']['arguments']['content'])==5,seconds=time.monotonic()-before,
                         background_finished_at_foreground_completion=future.done(),completed_s=time.monotonic()-origin)
                 else:raise ValueError('Unsupported action')
-            except Exception as error:row['error']=dict(type=type(error).__name__,message=str(error))
+            except Exception as error:row['error']=dict(type=type(error).__name__,message=str(error),evidence=getattr(error,'result',None))
             rows.append(row);(args.out/(case['id']+'.json')).write_text(json.dumps(row,indent=2)+'\n')
         for row,future in pending:
             try:
@@ -105,7 +106,7 @@ def main():
                     end=foreground['completed_s'];begin=end-foreground['seconds']
                     foreground['overlaps_actual_remote_request']=begin<receipt['request_completed_s'] and end>receipt['request_started_s']
                 row.update(reasoner_receipt=receipt,answer=receipt['answer'],remote_api_used=True,completed_s=time.monotonic()-origin)
-            except Exception as error:row['error']=dict(type=type(error).__name__,message=str(error))
+            except Exception as error:row['error']=dict(type=type(error).__name__,message=str(error),evidence=getattr(error,'result',None))
         for row in rows:
             row['correct']=not row.get('error') and row.get('answer')==row['expected_integer']
             (args.out/(row['id']+'.json')).write_text(json.dumps(row,indent=2)+'\n')

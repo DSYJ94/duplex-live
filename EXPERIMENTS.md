@@ -4683,3 +4683,12 @@ prompt, and the seven problems are development diagnostics, not qualification.
 Model and API checked in official documentation:
 https://developers.openai.com/api/docs/models/gpt-6-astra and
 https://developers.openai.com/api/docs/guides/reasoning .
+
+Plain words: reasoning pilot7514755 did NOT measure model quality: the new
+harness passed nested template definitions to a parser expecting flat schemas,
+causing KeyError before execution. No remote calls or successful routing counted.
+Correct the schema boundary and retain raw generation on format failures.
+Delegate action now has no question-rewrite argument: execution sends the actual
+original user problem unchanged, avoiding silent constraint changes and excessive
+copying overhead. Enforce at most four requests in code. This is a client-bound
+request, not a model-authored delegation brief; declare that limitation.
