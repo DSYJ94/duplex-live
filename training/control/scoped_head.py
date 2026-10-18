@@ -14,9 +14,11 @@ class FunctionNameHead(ResidualHead):
 
 
 class FunctionNameGenerator:
-    def __init__(self,original,head):self.original=original;self.head=head
+    def __init__(self,original,head,pending_speech_only=False):self.original=original;self.head=head;self.pending_speech_only=pending_speech_only
     def request(self,messages,tools,assistant_prefill=''):
         if assistant_prefill!='<tool_call>\n':raise ValueError('Scoped correction requires the known native function-call prefix')
+        supplied=any(t.get('function',{}).get('name') in ('withdraw_speech','resolve_pending_speech') for t in tools)
+        eligible=supplied or not self.pending_speech_only
         tokenizer=self.original.tokenizer
         prompt=tokenizer.apply_chat_template(messages,tools=tools,tokenize=False,add_generation_prompt=True)+assistant_prefill
         expected=tokenizer(prompt)['input_ids'];generated=[];first=True;positions=[]
@@ -31,14 +33,14 @@ class FunctionNameGenerator:
             else:
                 if len(values)!=1:raise ValueError('Scoped correction requires verified single-token cached decode')
                 generated.extend(values);text=tokenizer.decode(generated,skip_special_tokens=False)
-                self.head.active=name_phase(text)
-                if self.head.active:positions.append(dict(after_generated_tokens=len(generated),native_prefix=text))
+                phase=name_phase(text);self.head.active=phase and eligible
+                if phase:positions.append(dict(after_generated_tokens=len(generated),native_prefix=text))
         self.head.active=False;hook=self.original.model.register_forward_pre_hook(observe,with_kwargs=True)
         try:
             generation=self.original.request(messages,tools,assistant_prefill)
             if not positions:raise ValueError('No actual function-name token boundary was observed')
             generation.update(output_correction_scope='function-name-only',function_name_positions=positions,content_projection_is_original=True,
-                function_name_correction_enabled=self.head.enabled)
+                function_name_correction_enabled=self.head.enabled and eligible,pending_speech_only=self.pending_speech_only,supplied_pending_speech_actions=supplied)
             return generation
         finally:
             hook.remove();self.head.active=False

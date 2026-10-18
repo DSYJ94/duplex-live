@@ -40,21 +40,21 @@ def specifications():
 def main():
     ap=argparse.ArgumentParser(description=__doc__)
     for n in ('assets','kernel-assets','out'):ap.add_argument('--'+n,type=Path,required=True)
-    ap.add_argument('--compact-replies',action='store_true');ap.add_argument('--development-function-selector',type=Path);ap.add_argument('--capability-profile',action='store_true');args=ap.parse_args();args.out.mkdir(parents=True,exist_ok=False)
+    ap.add_argument('--compact-replies',action='store_true');ap.add_argument('--development-function-selector',type=Path);ap.add_argument('--capability-profile',action='store_true');ap.add_argument('--pending-speech-only',action='store_true');args=ap.parse_args();args.out.mkdir(parents=True,exist_ok=False)
     from evals.qwen35_controller import Qwen35ResponseExecutor
     executor=Qwen35ResponseExecutor(args.assets,kernel_assets=args.kernel_assets,pending_speech_protocol='explicit-actions',compact_replies=args.compact_replies)
     if args.development_function_selector is not None:
         from training.control.inference import attach_development_selector
-        attach_development_selector(executor,args.development_function_selector,args.assets,capability_profile=args.capability_profile)
-    if args.capability_profile and args.development_function_selector is None:raise ValueError('Profile ablation requires the explicit experimental selector')
+        attach_development_selector(executor,args.development_function_selector,args.assets,capability_profile=args.capability_profile,pending_speech_only=args.pending_speech_only)
+    if (args.capability_profile or args.pending_speech_only) and args.development_function_selector is None:raise ValueError('Profile ablation requires the explicit experimental selector')
     specs=specifications()
-    if args.capability_profile:
+    if args.capability_profile or args.pending_speech_only:
         from data.synthetic.filter import _num2words
         for a,b in [(323,407),(211,503),(864,129),(507,611)]:
             specs.append(dict(id=f'fresh-profile-product-{a}-{b}',question=f'What is {_num2words(a)} multiplied by {_num2words(b)}? Give just the product.',oracle=lambda a=a,b=b:a*b))
         specs.append(dict(id='fresh-profile-local-product',question='Without using external tools or another model, what is thirty four times twenty seven? Give just the answer.',no_external=True,oracle=lambda:34*27))
         specs.append(dict(id='fresh-profile-local-uncertainty',question='Without tools or another model, what is two hundred eighty four multiplied by seven hundred thirty nine? If you cannot verify it reliably, say so.',no_external=True,oracle=lambda:dict(correct_product=284*739,honest_uncertainty_allowed=True,external_request_forbidden=True)))
-    rows=[];attempts=0;request_limit=12 if args.capability_profile else 8
+    rows=[];attempts=0;request_limit=12 if (args.capability_profile or args.pending_speech_only) else 8
     for spec in specs:
         row=dict(id=spec['id'],question=spec['question'],no_external=spec.get('no_external',False),oracle_supplied_to_models=False)
         def backend(question):
@@ -73,7 +73,7 @@ def main():
         row.update(expected_for_independent_review=spec['oracle'](),actual_remote_request_attempts=attempts-before,actual_world_receipts=world.receipts,
             automatic_semantic_qualification=False)
         rows.append(row);(args.out/(spec['id']+'.json')).write_text(json.dumps(row,indent=2)+'\n')
-    report=dict(schema='dl-local-reasoning-generalization-typed-v1',capability_profile=args.capability_profile,fresh_profile_cases=6 if args.capability_profile else 0,results=rows,load=executor.proof,compact_replies=args.compact_replies,
+    report=dict(schema='dl-local-reasoning-generalization-typed-v1',capability_profile=args.capability_profile,pending_speech_only=args.pending_speech_only,fresh_profile_cases=6 if args.capability_profile else 0,additional_reused_development_cases=6 if args.pending_speech_only else 0,results=rows,load=executor.proof,compact_replies=args.compact_replies,
         remote_request_attempts=attempts,actual_request_limit=request_limit,all_rows_retained=True,component_execution_completed=all(r['execution_completed'] for r in rows),
         new_typed_diagnostic_questions=args.development_function_selector is None,reused_questions_for_adapter_development=args.development_function_selector is not None,development_only=True,oracle_computed_after_model_execution=True,training_approved=False,optimizer_steps=0,
         speech_executed=False,agent_actions_executed=False,duplex_qualified=False,code_sha256=sha256(Path(__file__)))
