@@ -102,9 +102,10 @@ the actual queued answer changes the second reply wording but still consumes no
 pending speech ID. Reject this as a duplicate-prevention fix; no runtime adoption. The earlier ten
 conversations remain frozen development evidence for any subsequent change.
 
-Plain words: Physical microphone, browser-engine playback, room echo/double-talk
-remain unverified. The owner accepts the current recorded voice, noting a slight
-initial-response delay. Cloud validation
+Plain words: The owner accepts the recorded voice and now confirms actual
+microphone conversation works in a fresh Chrome tab after browser permission.
+Live replies remain choppy and slow; room echo/double-talk and physical playback
+quality are not accepted. Cloud validation
 remains paused. The overall goal remains active.
 
 ## Next bounded training ablation
@@ -265,3 +266,61 @@ speech obligations, not an arithmetic failure. Further prompt variants on these
 five reused cases would remain development tuning; fresh paired semantic-state
 supervision and separate untouched conversation checks are needed before any claim
 of general improvement. A new optimizer run needs an explicit data and retention hypothesis, rather than this score alone.
+
+
+## Live playback diagnosis and word-confirmed interruption trial
+
+Plain words: Actual owner sessions4/5 on7520776 have6/8 pauses and6 reported
+browser underruns each. Every pause follows the completed question with no new
+ASR token. Server packet gaps within uninterrupted events stay below120ms.
+This supports acoustic-only noise triggering the repeated interruptions. A
+CPU-only saved-input replay reproduces both original endpoint sequences exactly;
+word-confirmed pause would produce zero pauses during those existing replies.
+Only numeric summaries/hashes leave Isambard; no owner audio or words enter TRAIN
+or export. This is a counterfactual input replay, not a new live acoustic test.
+
+Plain words: Source8481bb1 opt-in word-confirmed pause retains the same generator
+and application actions. Actual Stop7521962, continue7521964 and reasoning-cancel
+7521966 plus audits963/965/967 complete. Input PCM/wire packets/server WAV hashes
+match; production-JS wire replay has no repeated samples. Stop remains silent
+after its audible prefix. Continue completes the same tree generator with WER0.
+Cancel executes a real delivery-cancel receipt for turn-1, preserves the same soap
+generator and never speaks count4; completed soap WER0.04545, valid bounds.
+This discrepancy remains. These are reused development regressions.
+
+Plain words: Confirmation latency is a real tradeoff: interruption clips051/053/055
+reach first lexical confirmation at audio-clock offsets1.20/0.88/0.96seconds from
+the synthetic clip start. Publisher lookahead is0.5seconds; clip start is not an
+independently annotated physical word onset. Do not describe this as instant
+barge-in or measured microphone-to-ear latency. The policy does not accelerate
+full controller text generation before first speech.
+
+Plain words: Revised owner service7522115/source8481bb1, node nid010056:8788, is
+served at localhost8767 through127.0.0.1:8781. All4 static assets and private
+session binding pass exact checks before switching helpers. Owner's new playback
+judgment remains pending. Superseded services7519401/7520776 were subsequently
+retired only after confirming no unfinished sessions and old session-write times. No learned head or
+new voice weights are loaded. Numeric proof owner-choppy-pause-numeric-audit.json,
+network proof confirmed-pause-network-integrity.json and explicit latency ledger
+confirmed-pause-latency.json remain in the continuation folder.
+
+## Verified new paired supervision, no optimizer update yet
+
+Plain words: CPU preview7522060 passes all9 proposals on the first attempt; it
+has no TRAIN file or training approval. Full7522127 passes all108 authored TRAIN
+labels on first attempts:12 per kind across9 kinds,54 heldout fixtures untouched.
+Local replay verifies every actual teacher response/model/date/hash, exact
+student prompt/tool prefix, native function and complete fixture-worker state.
+Clarification labels also have actual independent semantic review. Delegation
+labels establish only a zero-argument selection, not executed reasoning.
+No owner/evaluation capture is read by collection; all source hashes match.
+Both batches and full provenance are backed up. Model quality does not follow
+from label quality. Proof: paired-teacher-integrity.json.
+
+Plain words: Next fixed candidate is contextual LoRA in the final4 text decoder
+layers with an unchanged output head, not another unchanged head-only pilot.
+The predeclared recipe requires a9-update actual-gradient/restore proof before
+a fresh324-update candidate, full54 new and72 earlier control generations,
+broader reasoning and actual speech retention before adoption. This changes no
+native voice weights; the native failure verdict remains. Plan:
+`evals/fixtures/paired-context-adapter-plan-20261018.json`.

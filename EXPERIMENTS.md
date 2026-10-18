@@ -5344,3 +5344,32 @@ completeworkerstate/answerchecks and clarificationsemanticreview are retained.
 Fullbatch requires every108label and exactprompt/source/response replay. No new
 optimizer/trainingstarted. AnycontextualdecoderLoRA followup requires separate
 recipe+realgradientpreflight+broaderretention; do not repeathead-onlypilotunchanged.
+
+Plain words: Saved-input numericalaudit preserves2/2 endpointsequences and gives
+0candidatepauses versus6/8 originals. Actualregressions7521962/64/66 andaudits963/
+965/967 COMPLETE. Alluser/server/wirePCM exact;3productionJSreplays nonduplicate.
+Stop silentafterheardprefix; tree samegeneratorcompletedWER0; actualcount4delivery
+cancelledrealreceiptturn1 while samesoapgeneratorcompletesWER.04545 validbounds.
+All threeconfirm modes actuallyenabled. Measuredinterruptionclip-start→confirmed
+frameends1.20/.88/.96s, NOT physicalwordonset orinstantbargein. Workqstarted051
+before interactivefallback checked; fallback correctlynotsubmitted/held/cancelled.
+
+Plain words: Newowner7522115/source8481bb1 ready nid010056:8788, newforward8781
+session89590/PID44343, helper19914/PID44739 public8767 (staging8769helper29212/PID44433).
+Privatebindingmode600 /private/tmp/duplex-live-owner-7522115-token NEVERexport/print.
+Transportwatcher25817 /private/tmp/duplex-owner-confirmed-forward-watch.py watches
+existingPID/reconnectsonlyafterexit. Oldhelper3243 terminatedonlyafterexactcommand
+and stagedstatic/privatebindingverification.4publicstaticassets+bindingPASS; no
+microphonesessionstartedbythesechecks. Newownerplaybackquestionpending; noqualified
+latency/AEC/nativeclaim. Currentmodelweightsfrozen. Teacherpreview7522060 9/9 and
+full7522127 108/108firstattempt qualityPASS, localexactprompt/source/API/worker
+replayPASS;54heldoutunused, allteacherprovenancebacked. Nooptimizerstarted. Fixed
+contextadapterplan requires9updategradientrestoregate beforefresh324updates.
+
+Plain words: PublicrevisedURLHTTP200 afterswitch. Superseded7519401/7520776 had
+no unfinishedsessions andlastwrites5893/1567secondsold, thenretired. Oldtransport
+watchers/forwards3936/17598/18336/95128 stoppedbyexactargv; staginghelper44433 also
+stoppedvalidatedargv. Newhelper44739/forward44343/watcher25817 remain.7518986 left
+unchanged: its sessionmetadatawasinsufficientforretirement. Ownerrecordingsremain
+oncluster, noexport. Newplaybackapprovalpending.54heldoutcontrolfixturesnotusedin
+teacheroptimization (nooptimizeratall); verifiedfullteacherbatchremainsready.

@@ -1,5 +1,34 @@
 # HANDOFF — overnight recovery, 18 October
 
+Plain words: CURRENT13:12UTC/15:12Berlin18Oct — owner Chrome input WORKS, live
+speech choppy/slow. Actualowner7520776 sessions4/5 had6/8 sound-only pauses (all14
+withnoASRtokenssincecompleteduserturn) and6browserunderrunseach; serverwithin-event
+packetgaps<120ms. Noowneraudio/words exported orTRAINed. CPU saved-inputreplay
+exact2endpointsequences, candidatepauses0. Opt-in lexical-confirmed pause8481bb1
+retainsgenerator, no keywordrouting. ActualStop7521962/audit963, continue1964/965,
+cancel1966/967 allCOMPLETE/localPCM+wireproofPASS. Stop silent, treesamegenerator
+WER0, count4actualdeliverycancelturn1+samesoapgen WER.04545/timingvalid.3Nodewire
+replaysnoduplicate; continue/cancelnodiscard. Confirmationclip-startdelay1.20/.88/
+.96s; .5spublisherlookahead isNOT measuredbargein. Full textdelayunchanged.
+NewOWNER7522115/source8481bb1 ready nid010056:8788; publiclocalhost8767→8781.
+Forward89590/PID44343; helper19914/PID44739; staging8769 helper29212/PID44433 nowterminatedafterpubliccheck.
+Token /private/tmp/duplex-live-owner-7522115-token mode600 NEVERprint/export.
+Watcher25817 /private/tmp/duplex-owner-confirmed-forward-watch.py watchesexisting
+PID/reconnectsonlyafterexit. All4static/privatebindingPASS; noagentmicstartafter
+switch. Ownerfreshplaybackquestionpending. Oldhelper3243 stoppedvalidatedcommand;
+Superseded7519401/7520776 verifiedidlethenretired; oldforwardwatchers/forwards
+3936/17598/18336/95128 stoppedbyexactcommandmatch.7518986 leftunchangedbecause
+its sessionmetadatawasnot sufficientforidle-retirement. Native7510331 stillunqualified/cloudpaused.
+Pairedsupervision sourcecdd9d4a: preview7522060 9/9firstattempt/noTRAINapproval;
+full7522127 108/108firstattemptqualityPASS/54heldoutunused. LocalactualAPIhash/
+prompt/source/nativefunction/fixtureworkerreplayPASS; ownerdataNOTused. Bothbatches
+backedunderexport/tree/runs/controller-paired-teacher-JOB, paired-teacher-integrity.
+json records hashes. NO OPTIMIZER YET. New fixed plan evals/fixtures/paired-context-
+adapter-plan-20261018.json: contextualLoRA final4textdecoderoutput+MLPdown/rank8,
+frozenhead,9updategrad/zero/RNG/hash/strictrestoreproof beforefresh324steps, all54
+new+72oldcurrentcompilerbaseline/retention plusbroaderreasoning/speechrequired.
+Do notcontinueoldheadunchanged orcallthisnativevoicefinetuning. GoalACTIVE.
+
 Plain words: CURRENT 18Oct continuation — component experiments and preservation.
 Normalization7521006/b4c4928 REJECT: all20calls saved, sourcehashes/versions unchanged,
 1actualgraph; refrigerator words differ bothrepeats;4eligible steady pairs median
