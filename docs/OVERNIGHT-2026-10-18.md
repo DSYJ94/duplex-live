@@ -221,3 +221,25 @@ agreement. Failed proposals are saved; up to3 explicit teacher attempts per fixe
 scene. Any unrepaired row blocks the entire TRAIN file and approval. Twelve local
 curriculum/worker/format tests pass, including correct-answer-but-old-speech-left-
 queued rejection. No corpus collection or training success claimed yet.
+
+Plain words: Teacher preview7517591/sourcef3b4248 completes ALL18 labels on first
+attempt, with18 separate held-out fixtures. Downloaded and independently replayed
+through exact native prompts/parser/worker. Every accepted target matches the raw
+teacher function call and response hash; arithmetic/requested instructions and
+speech-retirement IDs pass. Default loader correctly REFUSES preview for training;
+training_approved remains false. Cancellation preserves the owed explanation and
+unrelated computation; clarification asks which job. No old evaluation capture
+was read. This is text-fixture quality, not learned model performance.
+
+Plain words: Full pilot config fixed before baseline/adapter results:216 fresh
+teacher TRAIN scenes,72 held-out text scenes, rank8 output adapter, three epochs,
+648 updates, learning rate0.0005, unweighted final-action/EOS loss, no checkpoint
+selection using held-out results. All base weights frozen. Frozen target-position
+features may be cached because only the output projection correction trains;
+the teacher's answer is never supplied at free-running evaluation. Save optimizer,
+Python/Torch/CUDA RNG state, dataset/source hashes and strict adapter checkpoint;
+verify exact restored logits and optimizer state. Full baseline generation can
+run alongside corpus collection, with exact source/input/row hashes checked
+before reuse, so no duplicate GPU evaluation is needed. No training launched yet;
+full-data approval and baseline are prerequisites. Candidate remains unqualified
+until complete unseen behavior and actual speech/delegation checks pass.
