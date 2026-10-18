@@ -2,6 +2,34 @@
 
 ## Scope clarification — 18 October, 19:34 UTC
 
+Plain words: OWNER PRODUCT REQUIREMENTS clarified18October19:37UTC: chat with
+useful ordinary reasoning; smooth simultaneous listening/speaking; genuine
+silence instead of mandatory replies; context-appropriate stop/pause/continue
+commands; and competent delegation to a stronger background reasoner. The final
+foreground model must be tested for all of these together. A working text
+controller is neither a prerequisite for native training nor evidence that the
+native speech model can meet those requirements.
+
+Plain words: One named native starting point: the released Context Spanning7B
+checkpoint, which builds on PersonaPlex in the Moshi family and was accepted by
+the owner for voice quality. This is a starting point, NOT a qualified model.
+Do not restart from random weights or describe the current Qwen text run as
+training this speech model. After judging the already-running bounded Qwen run,
+do not launch another controller-training campaign as a substitute for native
+work. Return to the native model's demonstrated failures and choose a specific
+causal correction before further native updates; unchanged repeats are rejected.
+
+Plain words: End-to-end native process: preserve the accepted pretrained voice;
+build approved simultaneous-dialogue supervision for ordinary answers, silence,
+pause/resume and actual asynchronous tool receipts; adapt the native model's
+conversation/result-integration behavior while retaining its speech quality;
+test new free-running spoken conversations including private facts, ordinary
+reasoning and successful/failed/unnecessary delegation; then verify real live
+latency, interruption and reproducible model loading. Silence is an intended
+output, not a compulsory spoken acknowledgement. Hard reasoning stays with the
+background model. If ordinary reasoning still fails, report that the chosen
+base is inadequate rather than assuming more of the same updates will fix it.
+
 Plain words: The final target remains a native duplex voice assistant whose
 speech model listens while speaking, chooses whether to answer or delegate,
 uses actual asynchronous results, and handles waiting, clarification and
