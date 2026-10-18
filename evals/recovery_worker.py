@@ -102,8 +102,8 @@ def tool(name,description,properties):
         "parameters":{"type":"object","properties":properties,"required":list(properties),"additionalProperties":False}}
 
 
-def run_worker(context,world,task_id,model="gpt-6-luna",expected_revision=None,dispatch_protocol="legacy"):
-    if dispatch_protocol not in ("legacy","required-action"):raise ValueError("Unknown controller dispatch protocol")
+def run_worker(context,world,task_id,model="gpt-6-luna",expected_revision=None,dispatch_protocol="legacy",pending_speech=None):
+    if dispatch_protocol not in ("legacy","required-action","state-aware"):raise ValueError("Unknown controller dispatch protocol")
     import requests
     key = os.environ.get("OPENAI_API_KEY")
     if not key:
@@ -114,6 +114,16 @@ def run_worker(context,world,task_id,model="gpt-6-luna",expected_revision=None,d
             {"task_ids":{"type":"array","items":{"type":"string"},"minItems":1}})]
     schema = {"type":"object","properties":{"route":{"type":"string","enum":["answer","clarify","delegate","cancel"]},
         "content":{"type":"string"}},"required":["route","content"],"additionalProperties":False}
+    pending_speech=[] if pending_speech is None else pending_speech
+    if (not isinstance(pending_speech,list) or any(set(p)!={'id','request_text','text'} for p in pending_speech)
+            or any(not isinstance(p[k],str) or not p[k].strip() for p in pending_speech for k in p)
+            or len({p['id'] for p in pending_speech})!=len(pending_speech)):
+        raise ValueError('Invalid actual pending-speech snapshot')
+    if dispatch_protocol!='state-aware' and pending_speech:
+        raise ValueError('Pending-speech actions require explicit state-aware protocol')
+    if dispatch_protocol=='state-aware':
+        schema['properties']['consume_pending_speech_ids']={'type':'array','items':{'type':'string'}}
+        schema['required'].append('consume_pending_speech_ids')
     with world.lock:
         available = {"records":{p:list(fields) for p,fields in world.records.items()},
             "tasks":{name:state.copy() for name,state in world.tasks.items() if not state["cancelled"] and not state.get("closed",False) and name != task_id}}
@@ -127,16 +137,26 @@ def run_worker(context,world,task_id,model="gpt-6-luna",expected_revision=None,d
         "Use route delegate after a record tool, cancel after cancellation, otherwise answer or clarify. "
         "Do not say a lookup or cancellation completed until its tool receipt is present. Reply in at most 60 words. "
         "Available project/field names and active tasks: " + json.dumps(available))
+    if dispatch_protocol=='state-aware':
+        instructions+=(" Actual client speech state, separate from active lookup tasks: "+json.dumps(pending_speech)+
+            ". These ordinary answers are owed and have not been fully played; an unknown prefix may have been heard. "
+            "The client will resume each unless you list its ID in consume_pending_speech_ids. "
+            "List an ID only if your current reply answers that exact request, or the latest user explicitly withdraws it. "
+            "If you only confirm cancellation of a lookup, preserve unrelated ordinary answers by leaving their IDs out. "
+            "Never repeat an owed answer in this reply and also leave it queued. Do not consume an answer merely because "
+            "you cancelled an unrelated lookup. Pending speech is not a tool receipt or project identification.")
     base = {"model":model,"instructions":instructions,"tools":tools,"parallel_tool_calls":False,
         "max_output_tokens":2048,"reasoning":{"effort":"low"},
         "text":{"format":{"type":"json_schema","name":"worker_result","strict":True,"schema":schema}}}
     first = {**base,"input":json.dumps(context)}
-    if dispatch_protocol=="required-action":
+    if dispatch_protocol in ("required-action","state-aware"):
         # Model selects a single semantic action, including an ordinary reply.
         # Required does not force a record read or cancellation: the reply action
         # is a no-side-effect output channel and carries no execution receipt.
-        reply_tool=tool("respond_to_user","Answer general knowledge or ask for missing identification; no external side effects.",
-            {"route":{"type":"string","enum":["answer","clarify"]},"content":{"type":"string"}})
+        reply_properties={"route":{"type":"string","enum":["answer","clarify"]},"content":{"type":"string"}}
+        if dispatch_protocol=='state-aware':
+            reply_properties['consume_pending_speech_ids']=schema['properties']['consume_pending_speech_ids']
+        reply_tool=tool("respond_to_user","Answer general knowledge or ask for missing identification; no external side effects.",reply_properties)
         first.pop("text")
         first.update(tools=tools+[reply_tool],tool_choice="required")
         first['instructions']+=(" Select exactly one action now. Use respond_to_user for an ordinary answer or clarification. "
@@ -159,7 +179,7 @@ def run_worker(context,world,task_id,model="gpt-6-luna",expected_revision=None,d
     response = request(first)
     direct_reply = None
     calls = [item for item in response["output"] if item["type"] == "function_call"]
-    if dispatch_protocol=='required-action' and len(calls)!=1:
+    if dispatch_protocol in ('required-action','state-aware') and len(calls)!=1:
         raise WorkerContractError('Required semantic action was not returned exactly once',{'events':events})
     selected_route = None
     if not calls:
@@ -184,7 +204,8 @@ def run_worker(context,world,task_id,model="gpt-6-luna",expected_revision=None,d
         call = calls[0]
         arguments = json.loads(call["arguments"])
         if call["name"]=="respond_to_user":
-            if (dispatch_protocol!="required-action" or set(arguments)!={"route","content"}
+            reply_keys={'route','content'}|({'consume_pending_speech_ids'} if dispatch_protocol=='state-aware' else set())
+            if (dispatch_protocol not in ("required-action","state-aware") or set(arguments)!=reply_keys
                     or arguments['route'] not in ('answer','clarify')
                     or not isinstance(arguments['content'],str) or not arguments['content'].strip()):
                 raise WorkerContractError('Invalid no-side-effect reply action',{'events':events,'arguments':arguments})
@@ -221,6 +242,13 @@ def run_worker(context,world,task_id,model="gpt-6-luna",expected_revision=None,d
     content = " ".join(part["text"] for item in response["output"] if item["type"] == "message"
         for part in item.get("content",[]) if part["type"] == "output_text")
     parsed = direct_reply if direct_reply is not None else json.loads(content)
+    if dispatch_protocol=='state-aware':
+        consumed=parsed.get('consume_pending_speech_ids')
+        if (not isinstance(consumed,list) or any(not isinstance(identity,str) for identity in consumed)
+                or len(set(consumed))!=len(consumed) or not set(consumed)<={p['id'] for p in pending_speech}
+                or (parsed['route']=='clarify' and consumed)):
+            raise WorkerContractError('Response cannot consume unknown, duplicate or unfulfilled speech IDs',
+                {'events':events,'response':parsed,'pending_speech':pending_speech,'receipts':receipts})
     final_response_route = parsed["route"]
     # A worker may correctly call its post-tool factual response an answer.
     # Preserve the original dispatch decision separately from that final phase.

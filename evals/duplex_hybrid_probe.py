@@ -79,10 +79,13 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy"):
         active=None;clock=None
     def dispatch(text):
         nonlocal utterance_count
+        if controller_protocol=='state-aware' and active is not None:interrupt()
         utterance_count+=1;task='turn-'+str(utterance_count);context.append(dict(role='user',text=text))
         revision=world.reserve(task,[e.copy() for e in context]);submitted=now()
-        future=executor.submit(run_worker,[e.copy() for e in context],world,task,expected_revision=revision,dispatch_protocol=controller_protocol)
-        futures[future]=dict(task_id=task,revision=revision,turn=utterance_count,submitted_s=submitted)
+        from evals.duplex_speech_obligations import snapshot
+        pending=snapshot(queue,active) if controller_protocol=='state-aware' else []
+        future=executor.submit(run_worker,[e.copy() for e in context],world,task,expected_revision=revision,dispatch_protocol=controller_protocol,pending_speech=pending)
+        futures[future]=dict(task_id=task,revision=revision,turn=utterance_count,submitted_s=submitted,request_text=text,pending_speech=pending)
         log('controller_dispatched',task_id=task,text=text,reference_text_supplied=False)
     try:
         while frame<max_frames:
@@ -116,6 +119,11 @@ def run_case(listener,speaker,row,out,delay_s,controller_protocol="legacy"):
                     (out/(meta['task_id']+'-failure.json')).write_text(json.dumps(failure,indent=2)+'\n')
                     log('controller_failed',task_id=meta['task_id'],error_type=type(error).__name__)
                     raise
+                if controller_protocol=='state-aware':
+                    from evals.duplex_speech_obligations import consume
+                    consumed=result['consume_pending_speech_ids']
+                    queue[:]=consume(queue,consumed,meta['pending_speech'])
+                    for identity in consumed:log('speech_obligation_consumed',task_id=identity,fulfilled_by=meta['task_id'])
                 item=dict(meta,result=result)
                 item['ready_s']=now();item['release_s']=max(now(),meta['submitted_s']+delay_s) if result['route']=='delegate' else now()
                 (out/(meta['task_id']+'-backend.json')).write_text(json.dumps(item,indent=2)+'\n')
@@ -200,7 +208,7 @@ def main():
     ap.add_argument('--scenario',action='append',required=True);ap.add_argument('--lookup-delay-s',type=float,default=12.)
     ap.add_argument('--input-profile',choices=('approved-train','fresh-evaluation'),default='approved-train')
     ap.add_argument('--input-quality',type=Path)
-    ap.add_argument('--controller-protocol',choices=('legacy','required-action'),default='legacy')
+    ap.add_argument('--controller-protocol',choices=('legacy','required-action','state-aware'),default='legacy')
     args=ap.parse_args()
     if not 0<=args.lookup_delay_s<=30:raise ValueError('Invalid bounded controlled delivery delay')
     if args.input_profile=='fresh-evaluation':
@@ -231,7 +239,7 @@ def main():
         finally:speaker.close()
     report=dict(schema='dl-concurrent-hybrid-development-v1',component_execution_completed=not failures,results=results,failures=failures,
         component_code_sha256={name:sha256(Path(__file__).with_name(name)) for name in
-            ('recovery_worker.py','duplex_endpoint.py','duplex_speaker.py','kyutai_stt_probe.py')},
+            ('recovery_worker.py','duplex_endpoint.py','duplex_speaker.py','kyutai_stt_probe.py','duplex_speech_obligations.py')},
         probe_code_sha256=sha256(Path(__file__)),
         input_profile=args.input_profile,input_quality_sha256=sha256(args.input_quality) if args.input_quality else None,
         stt_assets_sha256=sha256(args.stt_assets),tts_assets_sha256=sha256(args.tts_assets),

@@ -6,6 +6,33 @@ from evals.recovery_worker import RecordWorld,run_worker,WorkerSuperseded,Worker
 
 
 class RecordGuards(unittest.TestCase):
+    def test_state_aware_cancellation_can_fulfil_an_ordinary_reply_without_cancelling_it(self):
+        world=RecordWorld({'Cedar':{'badge':'violet triangle'}})
+        old=world.read('lookup','Cedar','badge');ordinary=world.reserve('ordinary');world.finish('ordinary',ordinary)
+        revision=world.reserve('latest');pending=[{'id':'ordinary','request_text':'Opposite of clockwise?','text':'Counterclockwise.'}]
+        outputs=[{'id':'call','status':'completed','output':[{'type':'function_call','name':'cancel_lookup','call_id':'cancel',
+            'arguments':json.dumps({'task_ids':['lookup']})}]},
+            {'id':'reply','status':'completed','output':[{'type':'message','content':[{'type':'output_text',
+             'text':json.dumps({'route':'answer','content':'Cancelled. The opposite is counterclockwise.','consume_pending_speech_ids':['ordinary']})}]}]}]
+        def post(*args,**kwargs):return types.SimpleNamespace(status_code=200,json=lambda:outputs.pop(0))
+        with patch.dict('sys.modules',{'requests':types.SimpleNamespace(post=post)}),patch.dict('os.environ',{'OPENAI_API_KEY':'test-placeholder'}):
+            result=run_worker([{'role':'user','text':'Cancel the lookup but finish your answer.'}],world,'latest',
+                expected_revision=revision,dispatch_protocol='state-aware',pending_speech=pending)
+        self.assertEqual(result['route'],'cancel');self.assertEqual(result['consume_pending_speech_ids'],['ordinary'])
+        self.assertFalse(world.deliverable(old));self.assertFalse(world.tasks['ordinary']['cancelled'])
+        self.assertEqual(result['receipts'][0]['task_ids'],['lookup'])
+
+    def test_state_aware_reply_cannot_discard_an_unknown_ordinary_answer(self):
+        world=RecordWorld({})
+        def post(*args,**kwargs):
+            return types.SimpleNamespace(status_code=200,json=lambda:{'id':'bad','status':'completed','output':[
+                {'type':'function_call','name':'respond_to_user','call_id':'bad',
+                 'arguments':json.dumps({'route':'answer','content':'Done.','consume_pending_speech_ids':['unknown']})}]})
+        with patch.dict('sys.modules',{'requests':types.SimpleNamespace(post=post)}),patch.dict('os.environ',{'OPENAI_API_KEY':'test-placeholder'}):
+            with self.assertRaisesRegex(WorkerContractError,'unknown, duplicate'):
+                run_worker([{'role':'user','text':'Continue.'}],world,'latest',dispatch_protocol='state-aware')
+        self.assertEqual(world.receipts,[])
+
     def test_required_action_still_rejects_available_project_without_user_identification(self):
         world=RecordWorld({'Elm North':{'locker label':'copper kite'}})
         revision=world.reserve('task')
