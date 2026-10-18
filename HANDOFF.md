@@ -1,5 +1,74 @@
 # HANDOFF — overnight recovery, 18 October
 
+Plain words: CURRENT18October16:08UTC. Goal ACTIVE/cloud validation PAUSED; native
+7510331 and overall duplex system remain UNQUALIFIED. Owner says “Smooth now” for
+frozen demo7522115/source8481bb1. localhost8767/?rev=confirmed-pause HTTP200 checked;
+no microphone started by agent. Initial response delay open. No new candidate adopted.
+
+Plain words: Two real contextual adapters preserved:324job7523228 REJECTED (54/54
+new but47/72 previous,17 lost).972job7523832 originally REJECTED (51/54,63/72,
+two empty cancellation regressions). Exact independent fresh-process restore,
+optimizer/RNG/grad/source/checkpoint proofs pass; these do not imply task quality.
+No new native speech weights. Both verified teacher corpora/hash guards unchanged.
+
+Plain words: Narrow schema source344dded:7525915 frozen COMPLETE44/54,60/72 unchanged;
+7525916 candidate COMPLETE51/54,63→65/72. All22fresh/24local rows complete eachstage;
+all688 rows verified against stored files. Every original and historical frozen
+pass retained; hard4 selection-only, no Astra calls. Broadschema7525107 remains
+REJECTED because it lost a replacement pass. cancel-only-contract-integrity.json
+and verify-cancel-only-contract.py preserve exact before/after evidence.
+
+Plain words: Twelve paired voice captures7524590–7524613 all COMPLETE/verified.
+MemoryWalrus, math15+owedcompass, silentstop, samebutterflyresume and actual055
+deliverycancel/samesoapresume execute. All sourcePCM/wire/serveraudio exact;
+12productionNode replays no duplication. ASR15→“at15” and micelles discrepancies
+remain. Old057 explicit7525615/16 frozen duplicates refusal;7525617/18 candidate
+one circular clarification about unavailable code/records. NOT private success.
+Local secondaryASR7525917 all6 pinned clips COMPLETE/no external requests; agrees
+“at15”, disputes soap more thanWhisper. Keep originalgates and owner listening separate.
+Proofs context-speech-pairs-integrity.json/latest-speech-integrity.json +verifiers.
+
+Plain words: Exact counting tool sourcef101e97 API7525614 COMPLETE9/9,7actualterminal
+CPU receipts/9HTTPrequests, exact134counterexample andchangedtargets. Opt-in voice
+source344dded:0547525918 completes actual5+sea+resumedcount; independent audit
+7526306 COMPLETE. Originalaudit7525919 failed beforeexecution because an accidental
+core dirtied immutable source. Core moved privately remote (NEVERexport), no guard
+relaxed; only audit rerun.0557525920 FAILS:actual4 returned beforecancel; laterfrozen
+controller chooses unavailable cancel function. Opportunityabsent, conversationFAIL.
+No general reasoning oracle or private/agent capability claim. Proof latest-speech-integrity.
+
+Plain words: Recorded candidate+cancel-only integration source4fb2aa6 COMPLETE:
+0587526367/68,0597526369/70,0607526371/72,0617526373/74,
+0647526375/76,0657526377/78,0557526379/80,0577526381/82 (service/audit).
+All24artifactfolders backed up;8 actualPCM/wire/serverwave/productionNode replays
+PASS, strictscope/hash+972adapter GPU handshakePASS. Stop/correctedWalrus/52,
+math15+owedcompass, samebutterflyresume and actualdeliverycancel+samesoapresume
+preserved. Independent completed transcripts all exact except15→at15 andsoap
+micelles (WER.05556).057 still one circularclarification, semanticFAIL. Candidate
+has no owner acceptance; no promotion/overallqualification. Reusable verifier
+verify-cancel-contract-speech.py +cancel-contract-speech-integrity.json.
+
+Plain words: CPU2/1/2 latencyprobe7526408/sourcef4ae675 COMPLETE,30rawoutputs/actions/
+tokencounts exact, sourceweights/versions unchanged. Mediansteady1.023345x, below
+predeclared1.2x: REJECT, no servicechange. Allrows locallybacked+verified by
+verify-thread-probe.py/thread-probe-integrity.json. All current experiments terminal;
+only acceptedowner live service remains intentionally running. Next: isolate short
+integerTTS error and absent/finished-task cancellation without altering the smooth
+owner reference, then measure any actualendtoend latency improvement. Do not launch
+more unchanged training solely from availableGPUhours. Native stillFAIL/cloudpaused.
+
+Plain words: Owner7522115 nid010056:8788, wall4h30 (started13:07UTC,expires~17:37UTC).
+Helper92441/PID13003 port8767→8781 boundeduntil~16:48UTC; watcher5906/PID29342 owns
+SSH29344 boundeduntil~17:20UTC. Token/privatecore NEVERprint/export. HTTPonly verified.
+Maintain live access without starting mic or killing owner sessions. Clifton lastvalid
+until19:34UTC. Full artifacts through all4fb2aa6/f4ae675 results backed up and verified. Latest
+Gitbundle/evidence proof is preservation-latest.json; require matching source_commit.
+Keep user roadmap.html/unrelated pyc untouched. Code viaGitonly; artifacts rsync-ar
+exclude session-token; remote Python3.6 metadata uses universal_newlines=True.
+
+## Earlier18October entries — historical, superseded above
+
+
 Plain words: CURRENT 18 October, matched recorded-speech diagnostics are active.
 Smoke058 frozen7524521/candidate7524523 COMPLETE. Candidate strict GPU RPC handshake
 pins972 checkpoint200a1e67fe988a34157edc1ce10abf5d9bc83afa4f5b5989bb8b0e33e8d212f7;

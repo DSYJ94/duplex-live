@@ -5632,3 +5632,20 @@ reference. All model parameters/versions remain exact, no optimizer/API/dispatch
 Require median steady speedup at least1.2 and return-reference drift within10%
 before considering a separate voice test. This diagnoses model generation only;
 full-text-before-speech, endpointing and speech startup remain separate delays.
+
+## 18 October — narrowed schema voice checks and latency diagnostic complete
+
+Plain words: All eight source4fb2aa6 recorded services/audits complete. Strict GPU
+scope/hash+972adapter handshakes and originalPCM/wire/serverwave replay checks pass.
+Actual055 delivery cancellation retains and resumes the same soap generator; stop,
+correctedWalrus and owedcompass/butterfly behavior remain. Every source sample is
+scheduled once in production JavaScript replays.15→at15 and soap micelles (.05556
+WER) remain;057 still asks circularly for unavailable records/code. No owner listening
+acceptance or overall qualification follows. No promotion. All artifacts backed up;
+verify-cancel-contract-speech.py/cancel-contract-speech-integrity.json reproduce checks.
+
+Plain words:7526408 sourcef4ae675 completes CPU2/1/2 comparison. All30 raw outputs,
+actions/token counts exact and source parameter hashes/versions unchanged. Median
+steady speed ratio1.023345, reference drift within10%; fails predeclared1.2x gate.
+REJECT scheduling change. No optimizer, external requests or owner service change.
+All30 rows verified independently; thread-probe-integrity.json preserves decision.

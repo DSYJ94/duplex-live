@@ -5,6 +5,42 @@ experimental reference, with a completed first fresh conversation evaluation. Ne
 training mechanics nor clear speech establish reliable task completion. This record
 keeps those claims separate and leaves missing evidence explicit.
 
+
+Plain words: Latest review, 18 October around16:08UTC: owner confirms the accepted
+live demo is smooth. Initial answer delay remains open. No new adapter, schema or
+exact backend has been promoted to that demo. The native model remains unqualified.
+
+| Work completed | Current conclusion |
+|---|---|
+| Two actual contextual adapter runs |324 updates regress cancellation badly.972 updates improve control scores but originally lose two cancellation passes. Both original candidates rejected for promotion. These are text-controller adapters, not new native voice weights. |
+| Narrow cancellation schema | Same saved972 weights, no optimizer:51/54 paired,65/72 earlier controls,22/22 fresh; every historical frozen pass retained. Frozen remains44/54,60/72. All688 before/after rows verified, including24 local action/knowledge rows per stage. Hard questions here test delegation selection only. Actual voice integration preserves the tested control mechanics; private057 and short15 still fail. |
+| Matched actual voice conversations | Twelve paired captures have exact source input, transmitted packets and reconstructed server wave; production JavaScript replay has no duplicate samples. Memory correction, stop, resumed explanation and delivery cancellation execute. Short15 is heard as “at15” by both local recognizers. Soap terminology/wording discrepancies remain. |
+| Explicit old private-access regression | Frozen repeats the same refusal twice.972 candidate retires the old answer but asks which records and what code the user wants read. That is an unhelpful circular clarification; no private-read success. |
+| Stronger-model count error | Plain Astra previously returned133 instead of134. New opt-in bounded exact-count tool passes9/9 authored API checks; seven actual CPU computation receipts, no hidden oracle transmitted. Literal quotes do not prove universal semantic input selection. |
+| Actual exact-backend voice |054 computes5 from its actual selected inputs, completes the sea explanation and resumes its owed result; audit7526306 completes.055 computes4 and finishes before cancellation; the frozen controller later selects an unavailable cancel function and the session fails. Preserve this failure; cancellation was not exercised successfully. |
+| Live owner test | Owner says “Smooth now” for frozen7522115/source8481bb1. This confirms this playback trial, not physical AEC, every task or trained-candidate acceptance. |
+
+Plain words: Completed recorded-service validation source4fb2aa6 adds only the
+cancel_reasoning nonempty-content schema to the fixed972 candidate. Services/audits:
+0587526367/68,0597526369/70,0607526371/72,0617526373/74,
+0647526375/76,0657526377/78,0557526379/80,0577526381/82.
+All input gates remain unchanged;062 and063 remain unscored, not rerolled. Known
+private057 and short15 failures cannot be erased by better control aggregates.
+All eight services/audits complete. Exact PCM/wire/replay and scope/adapter handshakes
+pass; actual delivery cancellation and same-generator resumes are preserved. The
+private057 circular clarification and15→at15 speech failure remain. A separate
+fixed2/1/2 CPU-thread test7526408 preserves all30 outputs but yields only1.023345x
+median speed, below its declared1.2x gate: rejected. Neither change is deployed.
+
+Plain words: Reproducible local evidence is in
+runs/recovery-continuation-20261016/cancel-only-contract-integrity.json,
+context-speech-pairs-integrity.json and latest-speech-integrity.json, with matching
+verify-cancel-only-contract.py, verify-context-speech-pairs.py and
+verify-latest-speech-evidence.py. Full synthetic artifacts and both checkpoints are
+backed up under runs/cloud-export-20261016/tree/runs. An accidental remote core dump
+was quarantined privately and is excluded from exports; no owner audio, transcripts
+or session credential is included in TRAIN or these validation artifacts.
+
 ## Native model: measured improvements, failed qualification
 
 Plain words: The latest balanced-spoken Context Spanning experiment, checkpoint
