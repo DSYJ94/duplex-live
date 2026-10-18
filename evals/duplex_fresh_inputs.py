@@ -96,6 +96,18 @@ def specifications():
         dict(id='hybrid-fresh-030',world={},turns=[
             (.8,'Explain in four short sentences how a seed grows into a plant.'),
             (14.,'Do not continue the long version. Give me just its main point.')]),
+        dict(id='hybrid-fresh-031',world={},turns=[
+            (.8,'Explain in four short sentences how water moves through the water cycle.'),
+            (14.,'That is enough for now. Please be quiet.')]),
+        dict(id='hybrid-fresh-032',world={},turns=[
+            (.8,'Explain in four short sentences why a volcano erupts.'),
+            (14.,'Keep only the main cause in one sentence.')]),
+        dict(id='hybrid-fresh-033',world={},turns=[
+            (.8,'Explain in four short sentences how a rainbow forms.'),
+            (14.,'Drop that explanation. What is seven minus two?')]),
+        dict(id='hybrid-fresh-034',world={},turns=[
+            (.8,'Explain in four short sentences how a caterpillar becomes a butterfly.'),
+            (14.,'Please go on.')]),
     ]
 
 

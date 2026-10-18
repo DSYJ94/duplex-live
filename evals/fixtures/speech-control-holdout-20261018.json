@@ -1,0 +1,15 @@
+{
+  "schema": "dl-speech-control-holdout-plan-v1",
+  "frozen_controller_commit": "78ecb1efd7b17bd999a72c49438c66d4c4280a6e",
+  "specified_before_generation": true,
+  "do_not_train": true,
+  "input_quality_gate_unchanged": true,
+  "rejected_inputs_must_not_be_regenerated": true,
+  "physical_device_playback": false,
+  "cases": [
+    {"id":"hybrid-fresh-031","required":"After actual recognized quiet request, retire the prior explanation, produce no replacement speech; an audible initial prefix is required to establish interruption."},
+    {"id":"hybrid-fresh-032","required":"Replace unfinished volcano explanation with one sentence giving its main physical cause, without repeating the full original answer. Inspect actual output content and independent speech transcription."},
+    {"id":"hybrid-fresh-033","required":"Retire rainbow explanation and answer seven minus two as five. Silence alone is failure."},
+    {"id":"hybrid-fresh-034","required":"Continue the same generated butterfly explanation after the request, without replaying its heard prefix or starting another generation. Current lexical interruption policy is expected to remain a limitation; retain failure."}
+  ]
+}
