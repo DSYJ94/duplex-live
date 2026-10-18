@@ -16,11 +16,29 @@ raw output files ...-submit-full.txt and ...-status-full.json. First SSH attempt
 banner timed out; receipts checked absent before retry. All six job receipts now
 exist durably under cluster runs/duplex-client-pause-*-launch-20261018.json.
 
-Plain words: CURRENT07:02UTC /09:02Berlin. Owner away; continue autonomously,
+Plain words: CURRENT07:20UTC /09:20Berlin. Owner away; continue autonomously,
 no optional questions before return. Goal ACTIVE. No complete native or hybrid
 qualification. No optimizer steps or adopted native weights this continuation.
-Cloud validation remains paused. Current experiment sourcef271aba, owner source0d63370; preserve unrelated
-modified timeline.pyc and untracked roadmap.html.
+Cloud validation remains paused. Frozen candidate model/media source78ecb1e;
+new evaluation-only source30510a7 byte-identical model/media. Owner6574/source0d63370
+is unchanged. Do not call the modular hybrid native duplex or a trained model.
+
+Plain words: CLIENT PAUSE RESULTS —7427/7429/7431 and audits7428/7430/7432 COMPLETE.
+Every transmitted PCM packet exact. Actual wire order replayed through production
+AudioPlayout in Node: nonlexical pause resumes6425 retained source samples; all
+403200 source samples scheduled once with no discard. Stop has no replacement,
+summary shortened. Six server diagnostic audit clips hash/bounds verified; complete
+moon WER0.06818, summary WER0, partials unscored. Client cursor is simulatedAudioContext,
+NOT native browser/device. Proof runs/recovery-continuation-20261016/client-pause-live-integrity.json;
+verifier alongside it. Artifacts downloaded under runs/cloud-export-20261016/tree/runs.
+
+Plain words: FROZEN FRESH CONTROL CHECKS in progress. New user inputs7517443,
+independent quality7517444; quiet031 network7445/audit7446, shorten032 network7447/
+audit7448, replacement033 network7449/audit7450, continuation034 network7451/audit7452.
+Plan committed before generation; no controller changes, no TRAIN approval,
+no regeneration of rejected input. Continue case intentionally tests known lexical
+restart limitation. Helpers /private/tmp/duplex-control-holdout-{submit,status}.py;
+full outputs ...-submit-full.txt and ...-status-full.json. Do not rerun jobs blindly.
 
 Plain words: LIVE OWNER DEMO http://localhost:8767 now serves experimental compact
 source0d633701a1e029ec94b6c5cf539d0e164841a9a4, job7516574,

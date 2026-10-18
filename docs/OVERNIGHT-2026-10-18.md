@@ -125,3 +125,21 @@ scheduling tests, seventeen pause/playout/frame tests and two actual localhost
 WebSocket tests pass. Native browser/device testing is unavailable; the new Node
 wire-replay tool is explicitly a scheduling simulation, not audio acceptance.
 Real-model network jobs and independent saved-audio checks are next.
+
+Plain words: Actual client-pause network source78ecb1e: jobs7517427(nonlexical),
+7517429(Stop) and7517431(summary) complete with every transmitted packet exact.
+The captured wire order ran through production AudioPlayout in Node. Nonlexical
+resume schedules all403200 source samples exactly once, retaining6425 samples at
+its simulated client cursor. Stop has no new speech, summary is shorter. Six
+independently audited server diagnostic clips have exact hashes and valid bounds;
+complete moon explanation WER0.06818, summary WER0; partial fragments are unscored.
+The server guessed retained tail is explicitly diagnostic and is not retransmitted.
+These checks do not establish native browser gain behavior or device output.
+
+Plain words: New holdout plan evals/fixtures/speech-control-holdout-20261018.json
+was committed before generating audio, source30510a7. Controller and media code
+are byte-identical to78ecb1e. User inputs7517443, independent input quality7517444;
+quiet031 network7445/audit7446, shorten032 network7447/audit7448, replacement033
+network7449/audit7450, continuation034 network7451/audit7452. New audio/results
+remain evaluation-only. No regeneration of rejected clips or threshold changes.
+The continuation case deliberately tests a known lexical-policy limitation.
