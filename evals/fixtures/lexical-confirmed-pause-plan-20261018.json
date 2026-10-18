@@ -1,0 +1,17 @@
+{
+  "schema": "dl-lexical-confirmed-pause-plan-v1",
+  "declared_before_execution": true,
+  "owner_observation": "Chrome microphone and replies work, but output is choppy and slow",
+  "original_metadata": "Two actual sessions show 6/8 pauses, all14 with no new ASR token since preceding completed user utterance; within-event server packet gaps below120ms; client reports6 underruns each",
+  "change": "Opt-in pause only on first actual alphanumeric ASR fragment with microphone sound in preceding1s; reset at completed utterance. Keep generator/client cursor, semantic actions, endpoint policy, voice, words, buffer and weights unchanged",
+  "command_keyword_router": false,
+  "model_determines_resume_or_replacement": true,
+  "expected_tradeoff": "Genuine interruption waits for existing STT lexical lookahead (publisher config0.5s), rather than only160ms acoustic activity",
+  "first_gate": "Same original endpoints when replayed exactly; numeric private-input counterfactual pause counts only, no word/audio export or model rerun",
+  "required_actual_network_regressions": ["hybrid-fresh-051", "hybrid-fresh-053", "hybrid-fresh-055"],
+  "requirements": ["actual Stop remains silent after its prefix", "continue retains same generator and no duplicate source samples", "cancel reasoning delivery with real receipt and retain foreground generator", "all source model weights strict/frozen", "report first ASR confirmation and actual pause latency"],
+  "no_owner_audio_or_transcripts_in_training_or_export": true,
+  "requires_owner_live_playback_check_after_regressions": true,
+  "native_duplex_qualification": false,
+  "cloud_validation": "paused"
+}

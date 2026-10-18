@@ -20,6 +20,7 @@ source "$DL/keys/openai.env"
 set +a
 export DL_LIVE_RUN="$DL/runs/duplex-live-owner-trial-$SLURM_JOB_ID"
 EXTRA=()
+if [ "${DUPLEX_CONFIRMED_PAUSE:-0}" = 1 ]; then EXTRA+=(--lexical-confirmed-pause); fi
 if [ "${QWEN_COMPACT_REPLIES:-0}" = 1 ]; then EXTRA+=(--compact-replies); fi
 if [ "${DUPLEX_WARM_LONG_PREFILL:-0}" = 1 ]; then EXTRA+=(--warm-long-prefill); fi
 if [ "${DUPLEX_CLIENT_PAUSE:-0}" = 1 ]; then EXTRA+=(--include-speech-context --client-pause-protocol); fi

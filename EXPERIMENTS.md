@@ -5308,3 +5308,25 @@ retiresit: wrongaction/lostwork, NOT arithmeticerror. All-fivegateFAIL/noadoptio
 Newfunction7521032 remains3/5 failed, and7521006/1255 remainfailedlatencyhypotheses.
 All aredo_not_train; future supervisionmustbeindependentlyauthored ratherthan
 relabelledcaptures, andfreshconversationretentionisrequired afteranytraining.
+
+## 2026-10-18 — Real microphone works in Chrome; diagnose choppy playback
+
+Plain words: Owner still could not use earlier Listening page/no microphone line.
+Fresh Chrome tab shows current page and built-in microphone permission prompt.
+Owner grants browser access and confirms conversation works, but sounds choppy/slow.
+Actual session metadata7520776 sessions4/5:2recognized user utterances each;6/8
+retained-generator pauses/resumes and6browser underruns each. ALL14pauses have
+zero new ASR tokens since preceding complete utterance. Within-event generated
+packet gaps max.116/.120s. This implicates acoustic-only .003RMS pauses on noise;
+it does not prove room AEC or physical hearing. No owner voice/words exported.
+
+Plain words: New opt-in lexical-confirmed pause gates only the initial pause on
+an actual alphanumeric ASR fragment +sound inpreceding1s, once per unfinisheduser
+utterance. No command-keyword routing; model stillchooses resume/stop/replacement.
+Defaultunchanged, clientcursor/generator/voice/endpoint/buffer/weights unchanged.
+Tradeoff: genuine interruptionwaits existing.5s STTlookahead. Require exactoriginal
+endpoint replay +numericprivateinputaudit, then actualnetwork Stop051/continue053/
+cancel055 and speech/cursor checks before newownerdemo.11localendpoint/gate/abort
+checks pass; no currentlive promotion. Capture-settings metadata nowpersisted at
+sessionstart evenifbrowseraborts. Pairedsupervision authored108TRAIN/54heldout in
+untrackedtraining/control/paired_*; collection/training NOTstarted during ownerfix.

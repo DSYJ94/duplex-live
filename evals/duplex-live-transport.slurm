@@ -37,6 +37,7 @@ apptainer exec --nv --bind /projects,/lus,/home \
  "$DL/pytorch-new.sif" bash -c '
  set -euo pipefail
  EXTRA=()
+if [ "${DUPLEX_CONFIRMED_PAUSE:-0}" = 1 ]; then EXTRA+=(--lexical-confirmed-pause); fi
  if [ "${QWEN_COMPACT_REPLIES:-0}" = 1 ]; then EXTRA+=(--compact-replies); fi
  if [ "${DUPLEX_WARM_LONG_PREFILL:-0}" = 1 ]; then EXTRA+=(--warm-long-prefill); fi
  if [ "${DUPLEX_CLIENT_PAUSE:-0}" = 1 ]; then EXTRA+=(--include-speech-context --client-pause-protocol); fi
