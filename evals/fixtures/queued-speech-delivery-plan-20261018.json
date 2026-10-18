@@ -1,0 +1,54 @@
+{
+  "schema": "dl-queued-speech-delivery-proposal-plan-v1",
+  "declared_before_execution": true,
+  "source_job": "7520301",
+  "source_task": "turn-2",
+  "cases": [
+    {
+      "id": "actual-additional-records-context",
+      "user": null,
+      "allowed": [
+        "continue_queued_speech",
+        "resolve_pending_speech"
+      ]
+    },
+    {
+      "id": "explicit-prepared-reply",
+      "user": "Please go ahead with the answer you have already prepared.",
+      "allowed": [
+        "continue_queued_speech"
+      ]
+    },
+    {
+      "id": "withdraw-prepared-reply",
+      "user": "Stop. I do not need any answer. Please say nothing more.",
+      "allowed": [
+        "withdraw_speech"
+      ]
+    },
+    {
+      "id": "replace-prepared-reply",
+      "user": "Set that aside. What is six plus seven? Give just the number.",
+      "allowed": [
+        "resolve_pending_speech"
+      ],
+      "number": "thirteen"
+    },
+    {
+      "id": "preserve-prepared-new-question",
+      "user": "I still want your previous reply, but first what is ten minus four? Give only the number.",
+      "allowed": [
+        "answer"
+      ],
+      "number": "six"
+    }
+  ],
+  "baseline_gate": "Actual answer with no pending consumption and original input length; reproduce duplicate-risk fault before adding a capability",
+  "new_action": "continue_queued_speech: bound sole prepared unspoken ordinary reply; no new words, no side effects or consuming unrelated work",
+  "all_five_contracts_required_before_runtime_implementation": true,
+  "no_new_user_keyword_router": true,
+  "actual_external_requests": 0,
+  "actions_dispatched": false,
+  "do_not_train": true,
+  "native_duplex_qualification": false
+}
