@@ -1,0 +1,17 @@
+{
+ "schema":"dl-prefill-profile-development-plan-v1",
+ "before_profile_execution":true,
+ "sources":["7519124","7519126"],
+ "actual_unprofiled_first_token_seconds":[10.726974290002545,12.762866672004748],
+ "input_tokens":[2266,2462],
+ "replays_per_source":2,
+ "require_reconstructed_actual_state_exact":true,
+ "require_actual_input_token_count_and_native_action_parity":true,
+ "no_actions_dispatched":true,
+ "actual_external_requests":0,
+ "private_compiler_caches_only":true,
+ "no_shared_cache_deletion":true,
+ "hypotheses_unconfirmed":["cold kernel compilation or autotuning","prefill compute path"],
+ "production_model_or_runtime_change":false,
+ "profiling_overhead_not_deployment_latency":true
+}
