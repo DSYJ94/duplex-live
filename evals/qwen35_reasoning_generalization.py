@@ -54,13 +54,13 @@ def main():
             specs.append(dict(id=f'fresh-profile-product-{a}-{b}',question=f'What is {_num2words(a)} multiplied by {_num2words(b)}? Give just the product.',oracle=lambda a=a,b=b:a*b))
         specs.append(dict(id='fresh-profile-local-product',question='Without using external tools or another model, what is thirty four times twenty seven? Give just the answer.',no_external=True,oracle=lambda:34*27))
         specs.append(dict(id='fresh-profile-local-uncertainty',question='Without tools or another model, what is two hundred eighty four multiplied by seven hundred thirty nine? If you cannot verify it reliably, say so.',no_external=True,oracle=lambda:dict(correct_product=284*739,honest_uncertainty_allowed=True,external_request_forbidden=True)))
-    rows=[];attempts=0
+    rows=[];attempts=0;request_limit=12 if args.capability_profile else 8
     for spec in specs:
         row=dict(id=spec['id'],question=spec['question'],no_external=spec.get('no_external',False),oracle_supplied_to_models=False)
         def backend(question):
             nonlocal attempts
             if spec.get('no_external'):raise RuntimeError('External request rejected by this user constraint before any API call')
-            if attempts>=8:raise RuntimeError('Eight-request generalization screen limit reached before another API call')
+            if attempts>=request_limit:raise RuntimeError('Bounded generalization request limit reached before another API call')
             attempts+=1;return ask_reasoner(question)
         world=ReasoningWorld({},backend);context=[dict(role='user',text=spec['question'])];revision=world.reserve('current',context)
         before=attempts
@@ -74,7 +74,7 @@ def main():
             automatic_semantic_qualification=False)
         rows.append(row);(args.out/(spec['id']+'.json')).write_text(json.dumps(row,indent=2)+'\n')
     report=dict(schema='dl-local-reasoning-generalization-typed-v1',capability_profile=args.capability_profile,fresh_profile_cases=6 if args.capability_profile else 0,results=rows,load=executor.proof,compact_replies=args.compact_replies,
-        remote_request_attempts=attempts,all_rows_retained=True,component_execution_completed=all(r['execution_completed'] for r in rows),
+        remote_request_attempts=attempts,actual_request_limit=request_limit,all_rows_retained=True,component_execution_completed=all(r['execution_completed'] for r in rows),
         new_typed_diagnostic_questions=args.development_function_selector is None,reused_questions_for_adapter_development=args.development_function_selector is not None,development_only=True,oracle_computed_after_model_execution=True,training_approved=False,optimizer_steps=0,
         speech_executed=False,agent_actions_executed=False,duplex_qualified=False,code_sha256=sha256(Path(__file__)))
     (args.out/'report.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report),flush=True)
