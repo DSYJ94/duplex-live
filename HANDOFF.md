@@ -1,5 +1,47 @@
 # HANDOFF — overnight recovery, 18 October
 
+Plain words: UPDATE09:34UTC /11:34Berlin. Goal ACTIVE; owner away; no optional
+questions. No native voice weights or owner demo changed. Cloud validation paused.
+Function-name-only adapter7517798 COMPLETE64/72 development contracts, retaining
+all60 baseline passes. All8 replacement tasks retire old speech, but four still
+fail wording/arithmetic; one49→50 error remains. This is not general qualification.
+
+Plain words: Broader actual controller7518002 completed16 cases with2 actual
+reasoner requests, but answered149×267 incorrectly as40083 (39783 correct).
+The static declared-capability profile7518502 is REJECTED: among six additional
+cases it asks unnecessary permission for323×407 and answers211×503 as2183.
+Neither lower TRAIN loss nor function-only restriction establishes routing quality.
+
+Plain words: Pending-speech-only specialization7518727/source228955d COMPLETE22
+reused development cases,9 actual reasoner requests. All numerical answers correct,
+including four further three-digit products and prohibited-tool local209876;
+no forbidden external requests. The adapter correction is disabled for every token
+when the application supplies no pending-speech actions; original prompts/projection
+remain. Pending-speech warmup independently exercises the actual learned correction.
+Unsupported all-tasks-complete wording persists. New RPC/server option passes this
+explicit state condition through an exact parent/child metadata handshake. It is
+experimental; no owner-service adoption. Eight boundary/RPC/action tests pass.
+
+Plain words: Seven actual network captures7518144/46/48/50/52/54/56 and independent
+audits7518145/47/49/51/53/55/57 COMPLETE; artifacts locally backed. Five valid new
+spoken scenarios035/036/037/038/041 cover silence, stop+new question, one-sentence
+cause, first step, no-tools multiplication. Completed speech clips all WER0.
+Matched frozen036 also passes: do not attribute that voice success to training.
+Actual-reasoner cancellation026 also completes. Production playout JS replay finds
+no duplicate source samples in all seven wire captures. These remain simulated
+network/microphone inputs, not physical browser/device acceptance. Planned039/040
+failed predeclared user-audio quality thresholds and are UNSCORED, never regenerated.
+Semantic continue is still an unresolved known failure. Existing owner6574 is
+unchanged and may expire around10:13UTC. SSH certificate expected09:39UTC.
+
+Plain words: Full7518502/7518727 JSON artifacts are now local in
+runs/cloud-export-20261016/tree/runs/qwen35-reasoning-generalization-<job>.
+The prior08:22 notes below are retained historical observations; this update takes
+precedence. Next: validate pending-only mode through real network speech; retain
+frozen reasoning behavior; fix semantic continuation without discarding paused
+speech. Do not copy these development questions or API outputs into TRAIN.
+
+
 Plain words: CURRENT08:22UTC /10:22Berlin. Owner away; continue independently,
 no optional questions. Goal ACTIVE; cloud paused. Owner6574/source0d63370 unchanged.
 Native voice weights unchanged. First TEXT controller adapter completes648 updates

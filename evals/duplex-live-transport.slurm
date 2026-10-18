@@ -42,6 +42,7 @@ apptainer exec --nv --bind /projects,/lus,/home \
  if [ -n "${DUPLEX_FUNCTION_SELECTOR_JOB:-}" ]; then
   [[ "$DUPLEX_FUNCTION_SELECTOR_JOB" =~ ^[0-9]+$ ]]
   EXTRA+=(--development-function-selector "$DL/runs/controller-head-train-$DUPLEX_FUNCTION_SELECTOR_JOB")
+  if [ "${DUPLEX_PENDING_SPEECH_ONLY:-0}" = 1 ]; then EXTRA+=(--pending-speech-only); fi
  fi
  python -u -m serving.hybrid.server "${EXTRA[@]}" \
  --stt-assets "$DL/runs/kyutai-stt-assets-7510852/assets.json" \

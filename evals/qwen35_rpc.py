@@ -35,17 +35,18 @@ def receive(stream):
 
 class ResidentQwen35:
     provider_name='local-transformers-qwen35-9b'
-    def __init__(self,assets,folder,device='cuda:1',pending_speech_protocol='explicit-actions',kernel_assets=None,spoken_output_contract=False,compact_replies=False,development_function_selector=None):
+    def __init__(self,assets,folder,device='cuda:1',pending_speech_protocol='explicit-actions',kernel_assets=None,spoken_output_contract=False,compact_replies=False,development_function_selector=None,pending_speech_only=False):
         import transformers
         self.parent_version=transformers.__version__
         if self.parent_version!='4.55.3':raise RuntimeError('Resident integration requires the verified parent speech runtime4.55.3')
         self.folder=Path(folder);self.socket_path=self.folder/'controller.sock';self.log_path=self.folder/'controller-process.log'
         if self.socket_path.exists() or len(str(self.socket_path).encode())>100:raise RuntimeError('Controller socket path is occupied or too long')
         self.lock=threading.RLock();self.counter=0;self.connection=None;self.stream=None;self.process=None
+        if pending_speech_only and development_function_selector is None:raise ValueError('Pending-state selector requires an explicit adapter')
         selector=None
         if development_function_selector is not None:
             from training.control.inference import selector_metadata
-            selector=selector_metadata(development_function_selector,assets)
+            selector=selector_metadata(development_function_selector,assets,pending_speech_only=pending_speech_only)
         self.log=self.log_path.open('wb');environment=os.environ.copy();environment.pop('OPENAI_API_KEY',None)
         environment.update(PYTHONDONTWRITEBYTECODE='1',OMP_NUM_THREADS='2')
         command=[sys.executable,'-u','-m','evals.qwen35_rpc','--assets',str(assets),'--socket',str(self.socket_path),
@@ -54,6 +55,7 @@ class ResidentQwen35:
         if spoken_output_contract:command+=['--spoken-output-contract']
         if compact_replies:command+=['--compact-replies']
         if development_function_selector is not None:command+=['--development-function-selector',str(development_function_selector)]
+        if pending_speech_only:command+=['--pending-speech-only']
         started=time.monotonic()
         try:
             self.process=subprocess.Popen(command,stdout=self.log,stderr=subprocess.STDOUT,env=environment)
@@ -119,7 +121,7 @@ class ResidentQwen35:
 
 def main():
     ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('--assets',type=Path,required=True);ap.add_argument('--socket',type=Path,required=True)
-    ap.add_argument('--development-function-selector',type=Path)
+    ap.add_argument('--development-function-selector',type=Path);ap.add_argument('--pending-speech-only',action='store_true')
     ap.add_argument('--compact-replies',action='store_true');ap.add_argument('--kernel-assets',type=Path);ap.add_argument('--spoken-output-contract',action='store_true');ap.add_argument('--device',default='cuda:1');ap.add_argument('--pending-speech-protocol',choices=('array','explicit-actions'),default='explicit-actions');args=ap.parse_args()
     listener=socket.socket(socket.AF_UNIX,socket.SOCK_STREAM)
     try:
@@ -128,7 +130,7 @@ def main():
         executor=Qwen35ResponseExecutor(args.assets,device=args.device,pending_speech_protocol=args.pending_speech_protocol,kernel_assets=args.kernel_assets,spoken_output_contract=args.spoken_output_contract,compact_replies=args.compact_replies)
         if args.development_function_selector is not None:
             from training.control.inference import attach_development_selector
-            attach_development_selector(executor,args.development_function_selector,args.assets)
+            attach_development_selector(executor,args.development_function_selector,args.assets,pending_speech_only=args.pending_speech_only)
         import transformers
         connection,_=listener.accept()
         with connection,connection.makefile('rwb') as stream:
