@@ -1,5 +1,38 @@
 # HANDOFF — active overnight recovery (updated 18 October)
 
+Plain words:CURRENT overnight stage — native training unchanged/rejected; new
+hybrid path now actually listens and speaks concurrently on one GH200.7511107
+(source9ebcb65) completes TRAIN020 with recognitionWER0, all actual input rows
+verified, maxbacklog1.1ms, ASRp9518.35ms, TTSp9530.87ms, zero causal underruns.
+Real cancel receipt targets turn-1. Private result never starts speech. Science
+answer interrupted at15.613s and resumed from its beginning after cancellation;
+4569 queued samples actually excluded; PCM reconstruction exactly matches saved
+WAV. Independent audit7511132 completes: scienceWER0, cancellation only spelling
+canceled/cancelled rawWER.25, fragment no full-textWER; all bounds valid. Artifacts
+and independent played-clips backed/hash-verified.5-player GET/WAV verified page:
+http://localhost:8766/audio/voice-diagnostics/concurrent-hybrid.html
+
+Plain words:BROADER RUN7511133 FAILED — ordinary008 completes; initial019 request
+“What's the locker label?” incorrectly causes a private read without project
+identification. Guard rejects before record execution. Do not call hybrid
+qualified.26 local targeted guards pass. New opt-in required-action protocol
+lets model choose ordinary reply/clarify/read/cancel in one strict function call;
+ordinary reply has NO side effect or tool receipt. Existing protocol remains
+default. Real required-action3case run7511158 active, source12e9a42; receipt
+runs/duplex-hybrid-required-action-launch-20261018.json. Rejected arguments/API
+evidence now saved before failure; never relax identity/revision/cancel guards.
+Next retrieve1158 terminal report/failure, inspect all actual receipts/audio,
+then independent speech audit if it completed. No unchanged retries/scaling.
+
+Plain words:all3 actual streaming-ASR source recordings7510969 and endpointCPU
+replay7511037 now locally backed/PCM+tensor+event-hash verified. Conservative
+endpoint gives1/3/3 whole utterances (raw3/7/7), no leftover text. No GTwords
+supplied; reused TRAIN development only. Current hybrid is frozen ASR + external
+gpt-6-luna + dedicated published-voice KyutaiTTS; not native speech reasoning.
+No fresh holdout, physical mic/AEC or accepted-reference voice transfer/approval.
+12s controlled lookup delivery minimum is explicit test transport, not network
+latency. Keep cloud paused and optional owner questions until morning.
+
 Plain words:latest — no native or hybrid full system qualifies. Native ablations
 9710/7510331 remain rejected, with all32 latest native recordings/ASR backed and
 48-player comparison verified. Whole-teacher sampled-audio probes498/503/505/506
