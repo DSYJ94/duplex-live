@@ -101,7 +101,8 @@ class Network:
         if websockets.__version__!='15.0.1':raise RuntimeError('Live trial requires existing websockets15.0.1')
         from websockets.asyncio.server import serve
         origins=[None,re.compile(r'http://(?:localhost|127\.0\.0\.1)(?::[0-9]+)?')]
-        async with serve(self.handler,self.host,self.port,process_request=self.http,origins=origins,max_size=8192,max_queue=16,compression=None):
+        async with serve(self.handler,self.host,self.port,process_request=self.http,origins=origins,max_size=8192,max_queue=16,compression=None) as bound:
+            self.port=bound.sockets[0].getsockname()[1]
             self.ready.set()
             while not self.stop.is_set():await asyncio.sleep(.2)
     def run(self):
@@ -134,10 +135,10 @@ def main():
             for _ in range(20):listener.step(np.zeros(1920,dtype=np.float32),verify_input=False)
             thread=threading.Thread(target=network.run,name='live-pcm-network',daemon=True);thread.start()
             if not network.ready.wait(10) or network.error:raise RuntimeError('Live network did not start') from network.error
-            ready=dict(schema='dl-live-transport-ready-v1',host=args.host,port=args.port,controller_transport=controller.transport_info,controller_load=controller.proof,
+            ready=dict(schema='dl-live-transport-ready-v1',host=args.host,port=network.port,controller_transport=controller.transport_info,controller_load=controller.proof,
                 listener_loads=listener.loads,speaker_evidence=speaker.evidence,warmup=warmup,external_reasoner='gpt-6-astra',
                 microphone_tested=False,physical_aec_tested=False,duplex_qualified=False,token_file=str(token_path),code_sha256=sha256(Path(__file__)))
-            (args.out/'ready.json').write_text(json.dumps(ready,indent=2)+'\n');print(json.dumps(dict(ready=True,port=args.port,token_file=str(token_path))),flush=True)
+            (args.out/'ready.json').write_text(json.dumps(ready,indent=2)+'\n');print(json.dumps(dict(ready=True,port=network.port,token_file=str(token_path))),flush=True)
             completed=[];failures=[]
             for number in range(args.max_sessions):
                 try:request=requests.get(timeout=args.idle_seconds)

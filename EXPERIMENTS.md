@@ -4856,3 +4856,9 @@ actual network path; cancellation input has its own prior quality0WER gate.
 Browser offline engine check remains pending because computer-use backends are
 unavailable, not because microphone consent was requested. Owner service remains
 unpublished until current checks; superseded5697 has no owner session.
+
+Plain words: concurrent network probes must not assume port8788 is free on a
+shared four-GPU node. Bind loopback probes to an OS-assigned port0 and report the
+actual bound port in ready.json, which the client already reads. This avoids
+cross-job socket collisions without changing model prompts, weights or PCM.
+Owner service can retain its separately forwarded configured port.

@@ -34,7 +34,7 @@ apptainer exec --nv --bind /projects,/lus,/home \
  --mimi-load-approval "$DL/runs/kyutai-tts-mimi-load-7510722/report.json" \
  --controller-assets "$DL/runs/qwen35-controller-assets-7512612/assets.json" \
  --kernel-assets "$DL/runs/qwen35-kernel-assets-7513645" \
- --out "$DL_LIVE_RUN" --port 8788 --max-sessions 1 --idle-seconds 300 &
+ --out "$DL_LIVE_RUN" --port 0 --max-sessions 1 --idle-seconds 300 &
  service_pid=$!
  trap "kill $service_pid 2>/dev/null || true" EXIT
  python -u -m serving.hybrid.loopback --server "$DL_LIVE_RUN" \
