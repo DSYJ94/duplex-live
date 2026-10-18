@@ -49,8 +49,24 @@ class QwenResponseExecutor:
 
     def _request(self,payload):
         if payload['model']!=self.model_id:raise RuntimeError('Local controller cannot substitute a different model')
-        instructions=payload['instructions']
-        if self.prompt_profile=='contract-examples':instructions=CONTRACT_EXAMPLES+'\nACTUAL worker contract and state follow:\n'+instructions
+        state=payload['local_worker_state']
+        if state['dispatch_protocol'] not in ('required-action','state-aware'):raise RuntimeError('Unsupported local worker protocol')
+        instructions=(
+            'You control a voice assistant. Choose exactly one provided function, including respond_to_user for an ordinary answer or clarification. '
+            'Return only the function call, never a preliminary plan or prose outside it. Answer simple general knowledge from your parameters. '
+            'Private fields require an actual lookup; never infer a project from the available names. Ask for missing project or field identification. '
+            'Honor negation and corrections. Use replace_lookup when an active lookup is corrected to a different user-identified project or field. '
+            'Cancel only identified existing lookup IDs, all related duplicates but never current or unrelated work. '
+            'Report completed operations only from their actual execution receipts, never from assistant speech. Keep user-facing content within35 words. '
+            'Available records contain field NAMES only; their values have not been provided. ')
+        if state['dispatch_protocol']=='state-aware':
+            instructions+=(
+                'Pending speech lists ordinary answers owed but not fully played; an unknown prefix may have been heard. '
+                'The client resumes each unless its ID is listed in consume_pending_speech_ids. Include an ID only when this reply fulfills '
+                'that exact ordinary request or the latest user explicitly withdraws it. Never both answer it and leave it queued. '
+                'Cancellation of a lookup alone does not cancel an unrelated ordinary answer. Pending speech is not a private receipt or user project identification. ')
+        if self.prompt_profile=='contract-examples':instructions+=CONTRACT_EXAMPLES
+        instructions+='\nACTUAL client state: '+json.dumps(state)
         prior=payload.get('previous_response_id');reply_only=payload.get('tool_choice')=='none'
         if prior:
             if prior not in self.history:raise RuntimeError('Unknown local previous-response context')

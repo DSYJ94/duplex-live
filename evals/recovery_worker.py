@@ -213,7 +213,7 @@ def run_worker(context,world,task_id,model="gpt-6-luna",expected_revision=None,d
             response=requests.post("https://api.openai.com/v1/responses",headers={"Authorization":"Bearer "+key},json=payload,timeout=90)
             if response.status_code!=200:raise RuntimeError(f"Backend HTTP {response.status_code}")
             data=response.json()
-        else:data=response_executor(payload)
+        else:data=response_executor({**payload,'local_worker_state':dict(available=available,pending_speech=pending_speech,dispatch_protocol=dispatch_protocol)})
         if not isinstance(data,dict):raise RuntimeError('Controller transport returned no response object')
         if data.get("status") != "completed":
             raise RuntimeError("Backend did not complete within the token budget")
