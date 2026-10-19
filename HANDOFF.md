@@ -1,3 +1,35 @@
+# LOCAL active — old retention timing decision pending, 19 October 2026
+
+CRITICAL: read-only SHA-bound inspection finds impossible first-word onsets in
+FOUR of the old25 approved native teacher histories: cf-train001-0, cf-train002-0,
+cf-train007-0, teacher-recovery-train-004. Declared0.06–0.10s versus first nonzero
+PCM0.790–0.833s and voice6.16–6.74s. All25 original WAV hashes match receipts.
+Evidence: docs/NATIVE-OLD25-ONSET-AUDIT-2026-10-19.json. NO old word/audio/receipt/
+target/cache/history was changed. Native520 baseline remains preserved.
+
+New guard source0af7284 (pushed main) blocks a new native-v2 optimizer on these
+physically impossible old targets. The owner has been asked whether to authorize
+a NEW versioned derived-timing/cache/input repair retaining ALL25 histories,
+ALL28 actual-history components and unchanged KL/hidden retention, followed by
+full independent25-scope/native numerical approval. Decision is PENDING; do not
+silently relabel, drop a case or train around the guard. New-corpus qualification
+and preservation may continue independently. No optimizer has been submitted.
+
+CPU alignment7543295 COMPLETED35s: same two original WAV hashes, WER0, original
+clock remapping and valid physical/bounded onsets PASS. CPU7543296 is measuring
+all24 teacher-v3 records. Reference-conditioned teacher-v4 collection7543257 is
+running after CPU7543254 PASSED50tests. Its full CPU quality7543297 and actual
+semantic/conversion7543298 remain afterok-gated. Active receipt is
+runs/native-v2-cpu-measurement-local-20261019.json; measurement source1059d9f,
+teacher source798a687. CLOUD submits nothing until explicit owner handover.
+
+Runtime retry still transferring (partial SIF, no full hash approval yet). Local
+certificate ends22:51:23Berlin19October. Previously verified scoped checkpoints,
+optimizer/RNG/data/histories/source/cache/base artifacts remain intact. Goal
+ACTIVE, native/whole-system FAIL; cloud GPU validation PAUSED/no extra purchase.
+
+---
+
 # LOCAL active — explicit CPU measurement, 19 October 09:38 UTC / 11:38 Berlin
 
 No cloud submissions until explicit owner handover. Source
