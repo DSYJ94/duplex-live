@@ -1,7 +1,7 @@
 {
-  "at_utc": "2026-10-19T21:15:09.694606+00:00",
-  "unique_scoped_artifact_files": 23226,
-  "unique_scoped_artifact_bytes": 16926236148,
+  "at_utc": "2026-10-19T21:26:22.059158+00:00",
+  "unique_scoped_artifact_files": 23230,
+  "unique_scoped_artifact_bytes": 16926304034,
   "inventory_conflicts": [],
   "inventories": [
     {
@@ -514,6 +514,13 @@
       "files": 119,
       "bytes": 268260612,
       "missing_roots": []
+    },
+    {
+      "name": "remote-native-bounded32-preparation-inventory.json",
+      "sha256": "5d609f4c6202635d49796400fa866b0d593b732a7f1751d1263fd4243a246977",
+      "files": 4,
+      "bytes": 67886,
+      "missing_roots": []
     }
   ],
   "local_artifact_root": "runs/cloud-export-20261016/tree",
@@ -529,9 +536,9 @@
   "runtime_sif_sha256": "c00bc99693e4908ea75d17df9c379b93ae9a1678a65d875565ad5d52f76fa27b",
   "pinned_vendor_git_bundles_verified": 3,
   "source_git_bundle": {
-    "source_sha": "feca791",
-    "bundle": "runs/local-continuation-20261019/source-main-feca791.bundle",
-    "bundle_sha256": "101cb50512b76e5b8aec9ffbc291dcda7ed498c47321af32834d6c07cdff5173"
+    "source_sha": "99cc7394ebde78e2762d92813dddbc7a3feaaaed",
+    "bundle": "runs/local-continuation-20261019/source-main-99cc739.bundle",
+    "bundle_sha256": "371774860e61c96b7ea845e95e3945072d8470c981c50457206969b3157b5b07"
   },
   "native_candidate_job": "7549991",
   "native_candidate_training_state_sha256": "ff79b625c096d48e45b4f41c1107210b91fd1339e0b6bd4c1f988017ab0940e7",
@@ -557,13 +564,14 @@
     "first_timed_out_attempt_preserved": true
   },
   "local_access_reverified": {
-    "checked_utc": "2026-10-19T15:30:52Z",
+    "checked_utc": "2026-10-19T21:25:23Z",
     "actual_bounded_ssh_passed": true,
     "alias": "u6si.aip2.isambard",
     "certificate_valid_after_utc": "2026-10-19T14:05:02Z",
     "certificate_valid_before_utc": "2026-10-20T02:05:02Z",
     "certificate_valid_before_berlin": "2026-10-20T04:05:02+02:00",
-    "note": "Read from actual local certificate with TZ=UTC; supersedes previous expiry. No credentials exported."
+    "note": "Read from actual local certificate with TZ=UTC; supersedes previous expiry. No credentials exported.",
+    "certificate_rechecked_utc": "2026-10-19T21:26:22.059158+00:00"
   },
   "new_warm_ordinary_pilot": {
     "job": "7555898",
@@ -694,5 +702,86 @@
     "owner_approval_received": false,
     "optimizer_submission_authorized": false,
     "approval_fixture_not_created": true
+  },
+  "bounded32_exploration_preparation": {
+    "schema": "dl-native-bounded32-preparation-v1",
+    "at_utc": "2026-10-19T21:26:22.059158+00:00",
+    "executor": "LOCAL",
+    "implementation_source": "99cc7394ebde78e2762d92813dddbc7a3feaaaed",
+    "state_primitive_source": "7a8875986329bd0b866ed928b7957e63f28a3da5",
+    "source_primitive_cpu_job": "7558243",
+    "source_primitive_cpu_result": {
+      "status": "COMPLETED",
+      "tests_passed": 146,
+      "test_seconds": 3.85,
+      "allocation_elapsed": "00:00:21"
+    },
+    "implementation_cpu_job": "7558324",
+    "implementation_cpu_status": "COMPLETED",
+    "local_pure_authorization_and_default_review_tests_passed": 12,
+    "read_only_actual_evidence_revalidation": {
+      "complete_cases": 10,
+      "all_native_report_wav_asr_bindings_verified": true,
+      "independent_checkpoint_reload_and_state_identity_verified": true,
+      "review_sha256": "d293e7444e867c67763cbbc0113377a5ed85845b3dee1906b4f68f3c58146a9b",
+      "candidate": "7556562",
+      "candidate_remains_rejected": true
+    },
+    "owner_policy_decision": "PENDING",
+    "owner_authorization_fixture_created": false,
+    "training_submitted": false,
+    "new_optimizer_updates": 0,
+    "code_default_strict_ordinary_gate_unchanged": true,
+    "fresh20_and_adoption_gates_unchanged": true,
+    "source_transition": {
+      "from_source": "3061dcba1de571d2dad58d466f7c3f3ca43e41ec",
+      "only_allowed_metadata_changes": [
+        "repo_commit",
+        "append exact source_transition provenance"
+      ],
+      "all_other_metadata_must_match_exactly": true,
+      "original_state_never_edited": true,
+      "python_numpy_torch_rng_and_adam_equivalence_tested_with_synthetic_state": true,
+      "native_migration_not_executed": true
+    },
+    "future_run_if_owner_approves": {
+      "additional_updates": 32,
+      "total_updates": 40,
+      "optimizer_reset": false,
+      "learning_rate": 2e-06,
+      "all28_actual25_old24_new_histories_preserved": true,
+      "legacy_kl1_hidden10_word64_clock64_unchanged": true,
+      "all24_once_per8": true,
+      "original_text_sampling": 0.7,
+      "original_audio_sampling": 0.8,
+      "reservation": "interactive",
+      "maximum_gpus": 1,
+      "maximum_walltime_minutes": 30,
+      "no_further_training_or_adoption_authorized": true,
+      "independent_full_state_and_all28_logits_restore_required": true,
+      "both10_word14_clock_targets_reconstructed_required": true,
+      "complete_native10_review_then_all4_ordinary_and_fresh20_required": true
+    },
+    "next_action": "Resolve the existing owner policy choice. On explicit approval only, commit an exact authorization receipt in a clean separate review checkout pinned to implementation_source; launch once after CPU PASS and fresh queue check. Otherwise preserve the strict gate.",
+    "source_bundle": {
+      "path": "runs/local-continuation-20261019/source-main-99cc739.bundle",
+      "sha256": "371774860e61c96b7ea845e95e3945072d8470c981c50457206969b3157b5b07",
+      "full_history_verified": true
+    },
+    "implementation_cpu_result": {
+      "tests_passed": 151,
+      "test_seconds": 3.793,
+      "allocation_elapsed": "00:00:08",
+      "exit_code": "0:0"
+    },
+    "account_queue_empty_at_utc": "2026-10-19T21:25:23Z",
+    "cpu_receipts_and_logs_backup": {
+      "at_utc": "2026-10-19T21:25:37.142929+00:00",
+      "files": 4,
+      "bytes": 67886,
+      "all_size_and_sha256_match": true,
+      "failed": [],
+      "missing_roots": []
+    }
   }
 }

@@ -1,3 +1,72 @@
+# LOCAL active — bounded32 path prepared/tested; owner policy choice still pending (2026-10-19 21:26 UTC)
+
+LOCAL remains sole executor, CLOUD submits nothing until explicit handback.
+No running/submitted optimizer or GPU jobs. Actual account squeue EMPTY at
+21:25:23UTC. Two CPU-only preparations are terminal:
+- state primitive source7a8875986329bd0b866ed928b7957e63f28a3da5,
+  CPU7558243 COMPLETED0:0/21s,146tests PASS3.850s;
+- full disabled continuation implementation99cc7394ebde78e2762d92813dddbc7a3feaaaed,
+  CPU7558324 COMPLETED0:0/8s,151tests PASS3.793s.
+Both sources pushed/deployed in clean immutable worktrees; all4 CPU launch
+receipts/logs SHAbacked21:25:37. All10 original rejected-pilot raw WAV/report/
+independent-ASR/checkpoint/state/reload identities independently rebound with
+no training or relabeling. Full source99 Git bundle verified SHA
+371774860e61c96b7ea845e95e3945072d8470c981c50457206969b3157b5b07.
+
+NO OWNER ANSWER YET to the existing policy-choice question. No authorization
+fixture created. No32updates authorized/submitted. Proposal remains
+ docs/NATIVE-BOUNDED32-EXPLORATION-PROPOSAL-2026-10-19.json.
+Prepared result/evidence: docs/NATIVE-BOUNDED32-PREPARATION-2026-10-19.json.
+Do not infer approval from urgency, elapsed time, prior training permission,
+synthetic unit-test authorization dictionaries or tool accepted=true.
+
+Implementation now READY but OFF BY DEFAULT. Original continuation guard and
+fresh/adoption validators still require all4 ordinary correctness/speech.
+New --native-v2-exploration-authorization accepts ONLY an explicit Git-committed
+owner receipt bound to failed7556562/state3303/reload440b/reviewd293/proposal6cf7,
+execution_source99cc739, one32-update training-only run to40total, no reset,
+LR2e-6, all28actual/25old/24new/legacyKL1hidden10/word64/clock64 unchanged.
+All10 raw evidence still mandatory; the failed2/4 and6/10 remain failed. No
+adoption/further extension/fresh authorization comes from this owner exception.
+Portable restore pins old source3061 and exact original state3303; permits ONLY
+repo_commit transition plus exact approval provenance appended to metadata.
+Every other recipe/data/voice/frozen/target field must match EXACTLY. Tests
+verify unchanged Adam/RNG trajectory through synthetic migration/new strict
+reload and reject absent/wrong transition/changed data/expanded scope. Actual
+native migration NOT executed. Keep objective/reference modules unchanged.
+
+Next if owner explicitly chooses the bounded32 experiment: create exact owner
+receipt in a NEW clean review checkout D, execution_source99cc739; retain verbatim
+owner answer. Use --native-v2-extension-review D/docs/NATIVE-ORDINARY-CLOCK-
+COMPLETE10-REVIEW-2026-10-19.json and authorization path D, payload99. Verify
+queue EMPTY, use exclusive launch receipt, existing interactive-short-probe
+native-v2-warm-ordinary-extend branch with PHASEextend/RESUME7556562/full24/
+LR2e-6/word64/clock1 and NATIVE_V2_EXPLORATION_AUTHORIZATION. Maximum1GPU/30min,
+no partition/QoS override. Restore old moments/RNG, run globalsteps9..40; then
+fresh-process full state/10+14target/all28logit exact approval and complete10
+original text0.7/audio0.8 native evaluation + independent ASR/actual receipt/
+quiet/pause review. All4 ordinary/speech then pairedfresh20 before adoption.
+If owner keeps the gate, preserve strict4/4; do not fabricate a passing review.
+No later-than40 optimizer work authorized by this proposed scope.
+
+Latest ACTUALLY TRAINED candidate7556562 is still8updates, source3061dcba1de571d2dad58d466f7c3f3ca43e41ec,
+reported fit phase34.12175087298965s/allocation13m41. Complete independent
+optimizer/RNG/10+14references/all28logits EXACTPASS, but native7556809 and
+ASR7556810 full10REJECT ordinary2/4,speech6/10/private/control failures.
+Both sampler diagnostics remain rejected; no model/profile adoption. Fresh20
+source7550653 PASS, native fresh inference NONE. Native/whole-system UNQUALIFIED.
+
+Backups now23230unique scoped files16926304034bytes, zero inventory conflicts,
+plus separately pinned model/runtime/publicASR/vendor files. All critical original
+and rejected checkpoints/full optimizer-RNG/data/manifests/receipts preserved.
+Old stopped Mac source backup remains PARTIAL. No owner conversations,
+credentials/session-token or quarantined core exported. Local actual SSHPASS,
+certificate rechecked through20Oct02:05:02UTC/04:05:02Berlin. Unrelated pyc,
+capability probe scripts and roadmap edits preserved/excluded from commits.
+Active goal unachieved. No cloud handback or new compute purchase.
+
+---
+
 # LOCAL active — all jobs terminal; full backups verified;32-update policy choice pending (2026-10-19 21:16 UTC)
 
 NO active Slurm jobs in actual squeue21:11:19UTC. All watcher/submission processes
