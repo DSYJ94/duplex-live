@@ -1,7 +1,7 @@
 {
-  "at_utc": "2026-10-19T20:10:05.691799+00:00",
-  "unique_scoped_artifact_files": 22816,
-  "unique_scoped_artifact_bytes": 15516883782,
+  "at_utc": "2026-10-19T20:12:57.771833+00:00",
+  "unique_scoped_artifact_files": 22817,
+  "unique_scoped_artifact_bytes": 15516884938,
   "inventory_conflicts": [],
   "inventories": [
     {
@@ -430,6 +430,13 @@
       "files": 2,
       "bytes": 143670,
       "missing_roots": []
+    },
+    {
+      "name": "remote-native-ordinary-clock-pilot-launch-inventory.json",
+      "sha256": "3bce49ba51c0e56ba01689e2e04b078f7ccc84066d2a3bfad5a1e41a60ecc84f",
+      "files": 1,
+      "bytes": 1156,
+      "missing_roots": []
     }
   ],
   "local_artifact_root": "runs/cloud-export-20261016/tree",
@@ -445,9 +452,9 @@
   "runtime_sif_sha256": "c00bc99693e4908ea75d17df9c379b93ae9a1678a65d875565ad5d52f76fa27b",
   "pinned_vendor_git_bundles_verified": 3,
   "source_git_bundle": {
-    "source_sha": "3061dcba1de571d2dad58d466f7c3f3ca43e41ec",
-    "bundle": "runs/local-continuation-20261019/source-main-3061dcb.bundle",
-    "bundle_sha256": "36f304732dc997699c158cfdf0a0e47efe40ce58c6a5ca1689cada7a3d51b191"
+    "source_sha": "24de9f9bf1581b3f9443cc51c85e0e9786b89db6",
+    "bundle": "runs/local-continuation-20261019/source-main-24de9f9.bundle",
+    "bundle_sha256": "6f7157798b26c2bf5e778b87045ceb6adb2ddf97a50ff15ca1a2ef2d92e25628"
   },
   "native_candidate_job": "7549991",
   "native_candidate_training_state_sha256": "ff79b625c096d48e45b4f41c1107210b91fd1339e0b6bd4c1f988017ab0940e7",
@@ -528,7 +535,15 @@
     "independent_cpu_job": "7556372",
     "cpu_tests_passed": 139,
     "cpu_suite_seconds": 3.801,
-    "optimizer_jobs_submitted": 0,
-    "requires_complete_prior_native10_audio_review": true
+    "optimizer_jobs_submitted": 1,
+    "requires_complete_prior_native10_audio_review": true,
+    "job": "7556562",
+    "status": "RUNNING",
+    "checked_utc": "2026-10-19T20:11:21Z",
+    "elapsed": "00:00:49",
+    "maximum_updates": 8,
+    "prior_complete10_review_commit": "24de9f9bf1581b3f9443cc51c85e0e9786b89db6",
+    "watcher_local_exec": 77918,
+    "independent_restore_and_native_behavior_not_yet_verified": true
   }
 }

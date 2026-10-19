@@ -1,3 +1,52 @@
+# LOCAL active — ordinary-clock pilot7556562 RUNNING; sole watcher armed (2026-10-19 20:12 UTC)
+
+EXACT source3061dcba1de571d2dad58d466f7c3f3ca43e41ec, clean immutable Isambard
+recovery-3061dcb, CPU7556372 PASS139tests3.801s. Previous7555898 COMPLETE10 review
+committed/pushed24de9f9bf1581b3f9443cc51c85e0e9786b89db6; rejectedordinary1/4,
+speech8/10, full all10 raw audio/receipts+ASR backed. No extension/adoption.
+One NEW8-update pilot7556562 submitted20:10:30UTC, started20:10:32, verified
+RUNNING49s at20:11:21. Reservationinteractive/1GPU/110G/30min/no-requeue;
+no partition/QoS override. Queue EMPTY before submission; exclusive receipt
+runs/native-ordinary-clock-pilot-local-20261019.json. Do NOT resubmit or duplicate.
+
+New pilot from accepted native520/7510331, optimizerreset/LR2e-6/all24per8.
+All28actual/all25old/all24new histories, old KL1hidden10 and ten-word anchor64
+unchanged. Adds separate64x mean(KL+10hiddenMSE) on14 approved ordinary TRAIN
+clock/native-sampled-history inputs including original PAD3 masks. No source
+word/audio/target/mask/voice changes, teacher/speech API, evaluation-output training
+or user/past/audio output loss. Declarations/guards in
+ evals/fixtures/native-ordinary-clock-pilot-plan-20261019.json.
+Independent fresh-process reconstruction10word+14clock targets, full optimizer/
+Python/NumPy/Torch/CUDA state and all28valid logits EXACT before native evaluation.
+No new optimizer updates or restore results claimed at this entry.
+
+SOLE advance watcher /tmp/duplex-advance-clock-to-native10.py ACTIVE local exec
+77918. It polls SAME7556562 at60s intervals; only after COMPLETED0:0 invokes
+/tmp/duplex-launch-clock-native10.py ONCE, checks both reference caches/audits,
+then one2GPU finite full10 session+dependent full10 CPUASR. New evaluation receipt
+will be runs/native-ordinary-clock-development-local-20261019.json. Original
+cf28726b44ed0621dde6bfd27257709574f5e9ed native payload/new3061dcb session wrapper.
+Do not start a competing monitor/launcher. On observation timeout re-poll77918 /
+existing cluster jobs/receipt; never restart based on missing chat output. No
+new evaluation IDs yet. Allold7556210/7556211/7556372 areterminal; stop polling.
+After full10/audio review, require all4ordinary correctness+speech before separately
+committed32extension, complete paired fresh20 before adoption. Fresh source20/38
+7550653 PASS retained. Native/whole-systemFAIL, goalactive.
+
+New launch receipt1file1156bytes SHAverified20:11:24UTC. Union22817files
+15516884938bytes plus pinned models/runtime/vendor/publicASR. Full24de9f9 source
+bundle verified SHA6f7157798b26c2bf5e778b87045ceb6adb2ddf97a50ff15ca1a2ef2d92e25628.
+New clock cache/checkpoint/optimizer/RNG artifacts NOT yet backed: preserve once
+stable via scoped rsync-ar/exclude=session-token, verify all hashes, retain every
+failed version. Old stopped Mac source backup PARTIAL; owners/credentials/core
+excluded. Certificate20Oct02:05:02UTC/04:05:02Berlin; allocation deadline21Oct.
+LOCAL sole executor; CLOUD submits no jobs until explicit handback; no purchase.
+Unrelated pyc/probe/roadmap files preserved. This is continuation within LOCAL,
+not an execution handoff. Next: watcher training→restore→native10; backup and
+independent complete review immediately when outputs become stable.
+
+---
+
 # LOCAL active — full10 REJECTS7555898; CPU139 PASS for new clock/sampled-history pilot (2026-10-19 20:10 UTC)
 
 All10 native session7556210 COMPLETED11m09/exit0 each; independent full10 speech
