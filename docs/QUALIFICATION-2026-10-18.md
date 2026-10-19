@@ -1,3 +1,10 @@
+19 October12:03UTC — declared coverage limit, not a result: the bounded8-update
+pilot samples8/24 new teachers. Fixed quiet/pause exposure first occurs at27/31;
+all24 are sampled by31. This is a mechanics/regression pilot, never full-corpus
+behavior learning or qualification. Extension requires independent full-state
+restore and complete10-case native review first. Evidence: dated EXPOSURE JSON.
+No optimizer updates yet; native24 FP32/reference gates still precede7546645.
+
 19 October11:57UTC — native/whole-system FAIL; LOCAL active. Old25 complete
 numerical-v2 7545975 PASS25/25, max0.000882566 <=0.001, causal0.0; original failed
 FP32 result retained. New24 complete actual input7545909 PASS; FP32math7545910

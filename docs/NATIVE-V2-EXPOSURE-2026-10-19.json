@@ -1,0 +1,59 @@
+{
+  "schema": "dl-native-v2-declared-exposure-v1",
+  "execution_evidence": false,
+  "optimizer_updates_observed": 0,
+  "source": "c93ac931905d1c45c1e8c02924ebaaeb6fb34c8b",
+  "parent_report_sha256": "7f69a321b87613b44c7d5a19b783c3c6ddcbb479bb2fc7bb94e96fe210119778",
+  "scope_report_sha256": "0a5b7e4609cf2ffa4ebbd48df36f5e60d75a2030e42a1b12cd3f5ef292bbee30",
+  "teacher_sampler_code_sha256": "280f2f4b5326696629f8359853b4f9fc848fe54170ffb5fef9a05e3fc3f48df1",
+  "actual_components": 28,
+  "approved_new_teachers": 24,
+  "first8_unique_teacher_count": 8,
+  "first8": [
+    {
+      "step": 1,
+      "id": "teacher-native2-train-000",
+      "kind": "private"
+    },
+    {
+      "step": 2,
+      "id": "teacher-native2-train-008",
+      "kind": "simple"
+    },
+    {
+      "step": 3,
+      "id": "teacher-native2-train-016",
+      "kind": "clarify"
+    },
+    {
+      "step": 4,
+      "id": "teacher-native2-train-020",
+      "kind": "cancel"
+    },
+    {
+      "step": 5,
+      "id": "teacher-native2-train-001",
+      "kind": "private"
+    },
+    {
+      "step": 6,
+      "id": "teacher-native2-train-009",
+      "kind": "simple"
+    },
+    {
+      "step": 7,
+      "id": "teacher-native2-train-017",
+      "kind": "clarify"
+    },
+    {
+      "step": 8,
+      "id": "teacher-native2-train-021",
+      "kind": "cancel"
+    }
+  ],
+  "first_quiet_update": 27,
+  "first_pause_update": 31,
+  "updates_to_cover_all24": 31,
+  "no_extension_authorized_by_this_calculation": true,
+  "declared_at_utc": "2026-10-19T12:04:04.259123+00:00"
+}

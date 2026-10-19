@@ -529,3 +529,15 @@ restore is mandatory inside job. All10 unforced development cases must be review
 before extension/adoption. Full20 fresh qualification remains prepared/unexecuted;
 real speech generation paused awaiting explicit transfer approval after auto-review.
 Backups154files/290599979bytes independently size/SHA256 verified11:56:05UTC.
+
+
+## Declared first8 exposure, not full-corpus learning
+
+Deterministic sampling from the retained28-component order and approved24-teacher
+scope reaches000/008/016/020/001/009/017/021 during the first8 updates. Quiet014
+first appears at27 and pause015 at31; all24 new teachers are covered by31. Dated
+NATIVE-V2-EXPOSURE JSON binds the actual parent/scope/sampling hashes and marks
+this as nonexecution evidence. Eight updates therefore prove mechanics/regression
+only. Do not infer quiet/pause learning or full24 exposure from input approval or
+a falling loss. No longer training is authorized by this calculation: first require
+independent full optimizer/RNG restore and review every10 native development case.
