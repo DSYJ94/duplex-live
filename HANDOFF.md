@@ -1,3 +1,39 @@
+# LOCAL active — fresh20 collection running; complete comparison guards tested (2026-10-19 13:59UTC)
+
+Main before this entry75a94d1e86c24bdf849af6247619469bc0e08331, pushed/fetched
+immutable worktrees/recovery-75a94d1. IndependentCPU7549146 PASS117tests3.765s,
+13s job. Complete40 comparison wrapper native-fresh2-evaluate.slurm PREPARED ONLY;
+no fresh native inference submitted. V2 requires exact restored full24 candidate,
+committed all10 actual native/audio/receipt review with4ordinary cores retained,
+full source quality, same accepted7510331 baseline and exact declared20s tail.
+All10 raw report/WAV/full independentASR hashes bound; passing subset cannot approve.
+OriginalV1 collection/generator/clock unchanged. Extension uses originalCF trainer.
+
+Approved speech7549084 RUNNING since13:52:32UTC,17/38 retained clips as13:58:34;
+quality7549085 dependent, immutable source2a4e1364e7a8068e0dfba4a1f2089ca832cbfc9b,
+CPU7549071 PASS110tests. Routing/tail source4a3f56a CPU7549091 PASS112tests.
+Exclusive native-fresh2-collection-local-20261019 receipt records exact owner answer
+and sealed36-utterance SHA2566e44cac1d6bfa19c3453f813abaf4613651f8d051d2c2a0f3dd80c35c1121979.
+Originalfailed20 frozen unscored; any new input failure freezes whole new20 too.
+
+Native full24 pilot7548749 still PENDING Resources as13:58:34UTC; no update claimed.
+Trainercf28726b44ed0621dde6bfd27257709574f5e9ed,8updates LR2e-6 fromaccepted7510331,
+all24 exposed; preserve28actual/25old/KL1/hidden10. Complete10 native7548752 and CPU
+ASR7548762 remain dependent. No extension/adoption. Do not resubmit any job.
+
+Scoped verified backup22241 unique files14813601503bytes plus pinned models;
+new submission/test receipts7files77515bytes verified13:59:15UTC. Full75a94d1
+Git bundle complete history verified, SHA256513bc3ef14d8bda1e9aeef96cda8ef45d091bb5db1b233336859e5cb8f58a7e7.
+Additional two public Whisper weight binaries are TRANSFERRING, not yet verified;
+critical native checkpoints/full optimizer/RNG/data/teacher receipts already verified.
+Stopped old Mac source backup remains partial. Exclude owner/credentials/core.
+LOCAL active until explicit handback; CLOUD submits nothing, cloud GPU validation
+paused, no compute purchase. SSH certificate20:51:23UTC/22:51:23Berlin today.
+Native/whole-system FAIL. Next:complete newfull20 quality and nativefull10 review,
+preserve all new state; extend/adopt only through exact independent approval gates.
+
+---
+
 # LOCAL active — new full20 generation submitted (2026-10-19 13:52UTC)
 
 2026-10-19 13:52UTC — Approved new full20 collection submitted exactly once: speech7549084, dependent complete20/38 large-v3 CPU quality7549085, immutable source2a4e1364e7a8068e0dfba4a1f2089ca832cbfc9b. IndependentCPU7549071 PASS110tests. Exclusive receipt runs/native-fresh2-collection-local-20261019.json includes exact owner approval and plan SHA2566e44cac1d6bfa19c3453f813abaf4613651f8d051d2c2a0f3dd80c35c1121979. No native fresh inference. Originalfailed20 unchanged/unscored. Full24 native7548749 still Resources, evaluation7548752/ASR7548762 dependent. V2 inference preparation preserves exactly its declared20s tail; V1 clock retained. Next:fullinputquality, complete10 candidate, independent restore; no extension/adoption yet.
