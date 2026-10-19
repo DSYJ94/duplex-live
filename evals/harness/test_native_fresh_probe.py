@@ -4,7 +4,7 @@ import tempfile
 from types import SimpleNamespace
 import unittest
 from unittest.mock import patch
-from evals.native_fresh_probe import validate_options,load,finish,observe
+from evals.native_fresh_probe import validate_options,load,finish,observe,user_stream
 
 
 class FreshProbe(unittest.TestCase):
@@ -29,6 +29,21 @@ class FreshProbe(unittest.TestCase):
             source,row=load(self.options());self.assertEqual(row['split'],'fresh-evaluation');self.assertEqual(row['kind'],'simple')
             for d in (dict(expected_kind='private'),dict(lookup_delivery_delay_s=1.),dict(backend_mode='native-asr')):
                 with self.assertRaises(ValueError):load(self.options(**d))
+
+    def test_v2_routes_to_its_own_full20_guard(self):
+        safe=dict(kind='quiet',backend='observe-only',minimum_lookup_delay_s=0.,path='v2.wav',wav_sha256='abc')
+        with patch('evals.native_fresh_inputs_v2.inference_input',return_value=safe) as v2, \
+             patch('evals.native_fresh_inputs.inference_input') as old:
+            source,row=load(self.options(scenario='native-fresh2-016'))
+            v2.assert_called_once();old.assert_not_called();self.assertEqual(row['path'],'v2.wav')
+
+    def test_v2_does_not_append_a_second_undeclared_tail(self):
+        import numpy as np
+        from evals.native_fresh_inputs_v2 import PLAN_SHA256
+        audio=np.zeros(24000,dtype=np.float32)
+        self.assertIs(user_stream(audio,24000,dict(scenario='native-fresh2-000',plan_sha256=PLAN_SHA256)),audio)
+        with self.assertRaises(ValueError):user_stream(audio,24000,dict(scenario='native-fresh2-000',plan_sha256='changed'))
+        self.assertEqual(len(user_stream(audio,24000,dict(scenario='native-fresh-000'))),21*24000)
 
     def test_output_is_evaluation_only_and_forced_or_training_results_are_rejected(self):
         base=dict(scheduled_dispatch=False,word_or_acoustic_tokens_forced=False,response_start_forced=False,

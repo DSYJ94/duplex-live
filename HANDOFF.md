@@ -1,3 +1,9 @@
+# LOCAL active — new full20 generation submitted (2026-10-19 13:52UTC)
+
+2026-10-19 13:52UTC — Approved new full20 collection submitted exactly once: speech7549084, dependent complete20/38 large-v3 CPU quality7549085, immutable source2a4e1364e7a8068e0dfba4a1f2089ca832cbfc9b. IndependentCPU7549071 PASS110tests. Exclusive receipt runs/native-fresh2-collection-local-20261019.json includes exact owner approval and plan SHA2566e44cac1d6bfa19c3453f813abaf4613651f8d051d2c2a0f3dd80c35c1121979. No native fresh inference. Originalfailed20 unchanged/unscored. Full24 native7548749 still Resources, evaluation7548752/ASR7548762 dependent. V2 inference preparation preserves exactly its declared20s tail; V1 clock retained. Next:fullinputquality, complete10 candidate, independent restore; no extension/adoption yet.
+
+---
+
 # LOCAL active — full24 pilot queued; new full20 speech collection approved (2026-10-19 13:49 UTC)
 
 Main before this entry 6a4de70 (pushed). Actual bounded SSH verified13:48UTC;

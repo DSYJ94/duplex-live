@@ -62,7 +62,8 @@ def main():
     fresh,row=load_fresh(args)
     audio,rate=sf.read(row['path'],dtype='float32')
     if rate!=24000 or audio.ndim!=1 or not np.isfinite(audio).all():raise RuntimeError('Invalid fresh native mono source')
-    user=np.pad(audio,(0,20*rate));args.source_split='fresh-evaluation'
+    from evals.native_fresh_probe import user_stream
+    user=user_stream(audio,rate,fresh);args.source_split='fresh-evaluation'
     args.out.mkdir(exist_ok=False)
     sf.write(args.out/'user_in.wav',user,rate)
     os.environ.update(CS_BASE_DIR=str(args.base),CS_WEIGHTS_DIR=str(weights),CS_VOICES_DIR=str(weights/'voices'))

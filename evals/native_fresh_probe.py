@@ -16,7 +16,10 @@ def validate_options(args):
 
 
 def load(args):
-    from evals.native_fresh_inputs import inference_input
+    if args.scenario.startswith('native-fresh2-'):
+        from evals.native_fresh_inputs_v2 import inference_input
+    else:
+        from evals.native_fresh_inputs import inference_input
     validate_options(args)
     source=inference_input(args.data,args.native_fresh_quality,args.scenario)
     kind={'ordinary':'simple','quiet':'simple','pause':'simple'}.get(source['kind'],source['kind'])
@@ -25,6 +28,17 @@ def load(args):
         raise ValueError('Native fresh routing/kind/delay differs from the predeclared plan')
     return source,dict(scenario_id=args.scenario,kind=kind,split='fresh-evaluation',
                        path=source['path'],wav_sha256=source['wav_sha256'])
+
+
+def user_stream(audio, rate, source):
+    """V2 contains its declared twenty-second tail already; retain the v1 clock."""
+    import numpy as np
+    from evals.native_fresh_inputs_v2 import PLAN_SHA256
+    if source['scenario'].startswith('native-fresh2-'):
+        if source['plan_sha256'] != PLAN_SHA256:
+            raise ValueError('Second collection requires its exact sealed plan')
+        return audio
+    return np.pad(audio, (0, 20*rate))
 
 
 def finish(args,source):
