@@ -221,3 +221,31 @@ numerical preflight. Old baseline artifacts and rejected joint-pilot guards rema
 immutable. The cache job includes regression checks rejecting changed acoustic
 codes, references, tool clock, markers, shape or dtype. No optimizer submission
 is included in this approval chain. All source deployment uses pushed Git SHAs.
+
+
+## Repaired25 cache passes; native scope wrapper import defect
+
+7543730 passes all25 acoustic/reference/receipt/frame invariants; four text clocks
+changed, zero acoustic codes changed. Native scope7543731 fails at its initial
+cache validator import: pinned finetune Interleaver imports moshi.conditioners,
+but this wrapper exposed only Context Spanning/env dependencies. The cache job
+already had the correct pinned Moshi path. Add the same path to scope/input/math
+and future training wrappers; reuse the verified cache, cancel no running GPU
+work, and create a fresh exclusive approval receipt after terminal-state checks.
+No native optimizer ran. GPU dependency jobs3732/3733/3734 cannot pass the failed
+scope gate. This is execution plumbing, not a changed data or numerical threshold.
+
+The bounded native8-update preparation now accepts the repaired25 cache separately
+from the original three caches used for all28 actual histories and four KL/hidden
+references. Strict policy comparison allows only four diagnosed timing target
+hashes and new cache/approval identities: all25 words/audio/masks/frame counts,
+all21 undiagnosed target hashes, objective/weights/coverage remain identical.
+Missing repaired cache, dropped teacher, audio/frame/undignosed-target change,
+zeroed retention or extended updates fail before gradients. Eleven focused local
+tests pass. Actual native execution and independent restore/behavior remain required.
+
+Teacher repair7543779 rerenders only the11 failed v4 TRAIN recordings after CPU
+7543777 passes58tests; full24 quality7543781 and semantic7543783 remain afterok.
+Sourcebddd53b and receipt native-v2-teacher-v4-repair-local-20261019.json identify
+this exact attempt. Original13 passing recordings and all source/fold/heldout
+hashes are retained. No passing subset qualifies either corpus or native model.

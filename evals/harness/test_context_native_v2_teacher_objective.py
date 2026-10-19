@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 import tempfile
 
-from evals.context_native_v2_teacher_objective import validate_configuration, validate_teacher_onsets
+from evals.context_native_v2_teacher_objective import validate_configuration, validate_teacher_onsets, validate_old25_lineage
 from evals.moshi_model_download import sha256
 
 
@@ -18,7 +18,8 @@ class NativeV2ConfigurationTests(unittest.TestCase):
                       actual_base_retention_weight=1., actual_sampling='balanced-kind',
                       actual_retention_sampling='balanced-kind', actual_native_teacher_loss='balanced-spoken',
                       actual_response_first_word_weight=16., actual_native_teacher_approval='old25-input',
-                      actual_native_teacher_scope='old25-scope', actual_native_teacher_preflight='old25-math')
+                      actual_native_teacher_scope='old25-scope', actual_native_teacher_preflight='old25-math',
+                      actual_native_teacher_cache='repaired-old25')
         values.update(changes)
         return SimpleNamespace(**values)
 
@@ -38,9 +39,33 @@ class NativeV2ConfigurationTests(unittest.TestCase):
                            ('actual_native_teacher_coverage','four-longest'),('actual_fit_updates',128),
                            ('resume_training','old-state'),('actual_native_teacher_approval',None),
                            ('actual_native_teacher_scope',None),('actual_native_teacher_preflight',None),
+                           ('actual_native_teacher_cache',None),
                            ('actual_retention_sampling','legacy-modulo'),('actual_response_first_word_weight',1.)]:
             with self.subTest(name=name), self.assertRaises(ValueError):
                 validate_configuration(self.config(**{name:value}))
+
+    def test_old25_timing_lineage_retains_every_undiagnosed_target_and_retention_weight(self):
+        import copy
+        from evals.native_old25_timing_repair import REPAIRED
+        ids = sorted(REPAIRED) + ['other-'+str(i) for i in range(21)]
+        old = dict(weight=1., reference_kl_and_hidden_objective_unchanged=True,
+            teachers=[dict(id=i, cache='old', cache_sha256='old', ingestion_sha256='old',
+                           targets_sha256='same', wav_sha256='audio', frames=100) for i in ids])
+        new = copy.deepcopy(old)
+        for row in new['teachers']:
+            row.update(cache='new', cache_sha256='new', ingestion_sha256='new')
+            if row['id'] in REPAIRED:row['targets_sha256']='measured-new-clock'
+        validate_old25_lineage(old,new)
+        for change in ('audio','frames','undiagnosed','drop','weight','kl'):
+            bad=copy.deepcopy(new)
+            if change=='audio':bad['teachers'][0]['wav_sha256']='changed'
+            elif change=='frames':bad['teachers'][0]['frames']=99
+            elif change=='undiagnosed':bad['teachers'][-1]['targets_sha256']='changed'
+            elif change=='drop':bad['teachers'].pop()
+            elif change=='weight':bad['weight']=0.
+            else:bad['reference_kl_and_hidden_objective_unchanged']=False
+            with self.subTest(change=change), self.assertRaises(ValueError):
+                validate_old25_lineage(old,bad)
 
     def test_physical_onset_guard_rejects_original_fault_without_changing_audio(self):
         import numpy as np

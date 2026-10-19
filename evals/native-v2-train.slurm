@@ -13,12 +13,15 @@ ulimit -c 0
 DL=/projects/u6si/duplex-live
 : "${DL_TASK_SOURCE:?Immutable committed source required}"
 : "${DL_TASK_COMMIT:?Immutable identity required}"
-for NAME in NATIVE_V2_CODES_JOB NATIVE_V2_SCOPE_JOB NATIVE_V2_APPROVAL_JOB NATIVE_V2_MATH_JOB; do
+for NAME in NATIVE_V2_CODES_JOB NATIVE_V2_SCOPE_JOB NATIVE_V2_APPROVAL_JOB NATIVE_V2_MATH_JOB \
+ NATIVE_OLD25_CODES_JOB NATIVE_OLD25_SCOPE_JOB NATIVE_OLD25_APPROVAL_JOB NATIVE_OLD25_MATH_JOB; do
  [[ "${!NAME:?Complete independent native-v2 approvals required}" =~ ^[0-9]+$ ]]
 done
 test "$(git -C "$DL_TASK_SOURCE" rev-parse HEAD)" = "$DL_TASK_COMMIT"
 test -z "$(git -C "$DL_TASK_SOURCE" status --porcelain)"
 cd "$DL_TASK_SOURCE"
+MOSHI="$DL/vendor/moshi-rag-8c6dfc101b7871baa428424bcdc583b74fb561d9"
+test "$(git -C "$MOSHI" rev-parse HEAD)" = 8c6dfc101b7871baa428424bcdc583b74fb561d9
 PARENT="$DL/runs/context-training-proof-7510331"
 ARGS=(--assets "$DL/runs/context-spanning-assets-7454205/manifest.json"
  --base "$DL/models/hf-cache/hub/models--nvidia--personaplex-7b-v1/snapshots/fdaf4090a61cb315c138a1faee287ffd6c716309"
@@ -33,9 +36,10 @@ ARGS=(--assets "$DL/runs/context-spanning-assets-7454205/manifest.json"
  --actual-base-retention-weight 1 --actual-retention-teacher-weight 1
  --actual-native-teacher-loss balanced-spoken --actual-response-first-word-weight 16
  --actual-native-teacher-coverage all-approved
- --actual-native-teacher-approval "$DL/runs/context-teacher-native-approval-7508795/report.json"
- --actual-native-teacher-scope "$DL/runs/context-retention-teacher-audit-7508779/report.json"
- --actual-native-teacher-preflight "$DL/runs/context-training-proof-7509062"
+ --actual-native-teacher-cache "$DL/runs/native-old25-codes-$NATIVE_OLD25_CODES_JOB"
+ --actual-native-teacher-approval "$DL/runs/native-old25-native-approval-$NATIVE_OLD25_APPROVAL_JOB/report.json"
+ --actual-native-teacher-scope "$DL/runs/native-old25-native-scope-$NATIVE_OLD25_SCOPE_JOB/report.json"
+ --actual-native-teacher-preflight "$DL/runs/native-old25-native-math-$NATIVE_OLD25_MATH_JOB"
  --native-v2-cache "$DL/runs/native-v2-codes-$NATIVE_V2_CODES_JOB"
  --native-v2-scope "$DL/runs/native-v2-native-scope-$NATIVE_V2_SCOPE_JOB/report.json"
  --native-v2-approval "$DL/runs/native-v2-native-approval-$NATIVE_V2_APPROVAL_JOB/report.json"
@@ -47,7 +51,7 @@ PREFLIGHT=$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1]))["act
 ARGS+=(--actual-temporal-preflight "$PREFLIGHT")
 run() {
  apptainer exec --nv --bind /projects,/lus,/home \
-  --env PYTHONPATH="$DL/tmp/voice-quality-7415052:$DL/envs/moshi-rag-7379661/lib/python3.12/site-packages:$DL_TASK_SOURCE" \
+  --env PYTHONPATH="$MOSHI/moshi:$DL/tmp/voice-quality-7415052:$DL/envs/moshi-rag-7379661/lib/python3.12/site-packages:$DL_TASK_SOURCE" \
   --env HF_HOME="$DL/models/hf-cache" --env HF_HUB_OFFLINE=1 --env OPENAI_API_KEY= \
   --env PYTHONDONTWRITEBYTECODE=1 --env OMP_NUM_THREADS=8 \
   "$DL/pytorch-new.sif" python -u "$@"

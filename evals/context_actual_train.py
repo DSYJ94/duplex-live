@@ -90,7 +90,18 @@ def run(lm, spm, voice, examples, components, audits, args):
     from evals.context_retention_teacher import policy as teacher_policy,loss as teacher_loss
     if native_teacher_mode:
         from evals.context_native_teacher_objective import prepare as prepare_native_teacher
-        teacher,native_teacher_batches=prepare_native_teacher(examples,spm,voice,retention,args)
+        teacher_examples = examples
+        if getattr(args, 'actual_native_teacher_cache', None):
+            from evals.context_native_v2_teacher_objective import validate_configuration
+            if not validate_configuration(args):
+                raise ValueError('Repaired old25 teacher cache requires the bounded approved native-v2 recipe')
+            from contextspan.model.sequence_convention import persona_prefix
+            from evals.lychee_context import BASE_INSTRUCTIONS
+            from evals.context_training_data import load_training
+            teacher_examples, _ = load_training([args.actual_native_teacher_cache], spm,
+                persona_prefix(BASE_INSTRUCTIONS, voice, spm), text_padding='legacy-epad0',
+                request_policy='native-prelead-epad')
+        teacher,native_teacher_batches=prepare_native_teacher(teacher_examples,spm,voice,retention,args)
     else:
         teacher=teacher_policy(teacher_weight,retention_teacher_audits,args.actual_retention_teacher_audit,
             args.assets,args.out/'voice.pt')

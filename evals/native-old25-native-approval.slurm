@@ -23,6 +23,8 @@ CACHE="$DL/runs/native-old25-codes-$NATIVE_OLD25_CODES_JOB"
 ASSETS="$DL/runs/context-spanning-assets-7454205/manifest.json"
 BASE="$DL/models/hf-cache/hub/models--nvidia--personaplex-7b-v1/snapshots/fdaf4090a61cb315c138a1faee287ffd6c716309"
 VOICE="$DL/runs/context-training-proof-7510331/voice.pt"
+MOSHI="$DL/vendor/moshi-rag-8c6dfc101b7871baa428424bcdc583b74fb561d9"
+test "$(git -C "$MOSHI" rev-parse HEAD)" = 8c6dfc101b7871baa428424bcdc583b74fb561d9
 NV=(--nv)
 if [ "${NATIVE_OLD25_DEVICE:-cuda}" = cpu ]; then
  [[ "$NATIVE_OLD25_PHASE" = scope || "$NATIVE_OLD25_PHASE" = approve ]]
@@ -30,7 +32,7 @@ if [ "${NATIVE_OLD25_DEVICE:-cuda}" = cpu ]; then
 fi
 run() {
  apptainer exec "${NV[@]}" --bind /projects,/lus,/home \
-  --env PYTHONPATH="$DL/tmp/voice-quality-7415052:$DL/envs/moshi-rag-7379661/lib/python3.12/site-packages:$DL_TASK_SOURCE" \
+  --env PYTHONPATH="$MOSHI/moshi:$DL/tmp/voice-quality-7415052:$DL/envs/moshi-rag-7379661/lib/python3.12/site-packages:$DL_TASK_SOURCE" \
   --env HF_HOME="$DL/models/hf-cache" --env HF_HUB_OFFLINE=1 --env OPENAI_API_KEY= \
   --env PYTHONDONTWRITEBYTECODE=1 --env OMP_NUM_THREADS=8 \
   "$DL/pytorch-new.sif" python -u "$@"
@@ -41,6 +43,8 @@ if [ "$NATIVE_OLD25_PHASE" = scope ]; then
  run -m evals.context_retention_teacher --assets "$ASSETS" --tokenizer "$BASE/tokenizer_spm_32k_3.model" \
   --voice "$VOICE" --cache "$CACHE" --all-approved-teachers --observed-native-boundary \
   --out "$DL/runs/native-old25-native-scope-$SLURM_JOB_ID"
+ run -c 'import copy,json,sys; from evals.context_native_v2_teacher_objective import validate_old25_lineage; p=json.load(open("/projects/u6si/duplex-live/runs/context-training-proof-7510331/report.json"))["retention_teacher_text"]; r=copy.deepcopy(p); r["teachers"]=json.load(open(sys.argv[1]))["teachers"]; validate_old25_lineage(p,r); print("All25 scope preserves words/audio/frames/masks and all21 undiagnosed targets exactly")' \
+  "$DL/runs/native-old25-native-scope-$SLURM_JOB_ID/report.json"
  exit 0
 fi
 : "${NATIVE_OLD25_SCOPE_JOB:?Independent complete native-old25 scope required}"

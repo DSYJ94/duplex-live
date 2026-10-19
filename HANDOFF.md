@@ -1,3 +1,27 @@
+# LOCAL active — cache PASS; scope import-path repair, 19 October 10:12 UTC
+
+7543730 COMPLETED: all25 native cache cases, four text clocks repaired, ZERO
+acoustic/reference/receipt/frame changes. Two payload regression tests PASS.
+Scope7543731 FAILED before GPU execution: its validator now needs the pinned
+Moshi package path for the pinned native Interleaver; the wrapper omitted it.
+Dependent capture7543732, CPU7543733 and math7543734 must remain cancelled.
+Do not regenerate cache7543730. A source-only wrapper fix and fresh scope/input/
+numerical chain will reuse it after terminal-state verification.
+
+Separate teacher repair sourcebddd53bf39bc1e27eed3d16756bdfeac2f5845c4:
+CPU7543777 PASS58tests -> bounded11-scene rerecord7543779 RUNNING -> full24
+quality7543781 -> semantic/conversion7543783. Exclusive receipt
+runs/native-v2-teacher-v4-repair-local-20261019.json. Thirteen passing v4 raw
+recordings remain byte-identical. No source/heldout audio/folds changed.
+
+Timing/conversion backup verified10:10:51UTC:133files/351854807bytes SHA256 match.
+Runtime transfer interrupted again at7,011,336,192bytes; final-looking SIF is
+PARTIAL until full8,551,931,904bytes and pinned hash match. Resume ACTIVE with
+longer keepalive tolerance. No optimizer submitted. LOCAL retains execution;
+CLOUD submits NOTHING. Native/whole-system FAIL. More exact provenance below.
+
+---
+
 # LOCAL active — full25 timing approval passed, 19 October 10:06 UTC
 
 7543606 COMPLETED4m11: all25 current speech/fact/tool-clock/physical-onset checks

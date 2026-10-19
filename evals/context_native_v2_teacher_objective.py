@@ -50,9 +50,29 @@ def validate_configuration(args):
             or args.actual_native_teacher_loss != 'balanced-spoken'
             or args.actual_response_first_word_weight != 16.
             or not args.actual_native_teacher_approval or not args.actual_native_teacher_scope
-            or not args.actual_native_teacher_preflight):
+            or not args.actual_native_teacher_preflight
+            or not getattr(args, 'actual_native_teacher_cache', None)):
         raise ValueError('Native-v2 is a separate eight-update warm start with all old retention preserved')
     return True
+
+
+def validate_old25_lineage(original, repaired):
+    """Only diagnosed timing and hash-bound approval fields may differ."""
+    from evals.native_old25_timing_repair import REPAIRED
+    policy_fields = {'teachers', 'native_input_approval_sha256', 'teacher_scope_sha256',
+                     'numerical_preflight_sha256', 'native_teacher_data_sha256'}
+    if ({k: v for k, v in original.items() if k not in policy_fields}
+            != {k: v for k, v in repaired.items() if k not in policy_fields}
+            or len(original['teachers']) != 25 or len(repaired['teachers']) != 25
+            or [r['id'] for r in original['teachers']] != [r['id'] for r in repaired['teachers']]):
+        raise ValueError('Repaired old25 policy changed coverage, weights, retention or objective')
+    for before, after in zip(original['teachers'], repaired['teachers']):
+        allowed = {'cache', 'cache_sha256', 'ingestion_sha256'}
+        if before['id'] in REPAIRED:
+            allowed |= {'codes_sha256', 'sidecar_sha256', 'targets_sha256'}
+        if ({k: v for k, v in before.items() if k not in allowed}
+                != {k: v for k, v in after.items() if k not in allowed}):
+            raise ValueError('Old25 repair changed words/audio/masks/frames or undiagnosed targets: '+before['id'])
 
 
 def prepare(args, spm, voice, retention, old_teacher_policy):
@@ -66,11 +86,14 @@ def prepare(args, spm, voice, retention, old_teacher_policy):
     validate_configuration(args)
     parent = json.loads((args.warm_start_proof / 'report.json').read_text())
     parent_data = json.loads((args.warm_start_proof / 'data.json').read_text())
-    if (parent['optimizer_steps'] != 520 or parent['retention_teacher_text'] != old_teacher_policy
-            or len(old_teacher_policy['teachers']) != 25
+    if (parent['optimizer_steps'] != 520 or len(old_teacher_policy['teachers']) != 25
             or len(parent_data['components']) != 28
             or sha256(args.out / 'data.json') != parent['data_sha256']):
-        raise ValueError('Native-v2 must retain the exact native520 parent corpus and old 25-teacher policy')
+        raise ValueError('Native-v2 must retain the exact native520 parent corpus and all25 teachers')
+    validate_old25_lineage(parent['retention_teacher_text'], old_teacher_policy)
+    repaired_cache = validate_cache(args.actual_native_teacher_cache)
+    if repaired_cache.get('schema') != 'dl-native-old25-timing-cache-v1':
+        raise ValueError('Old25 timing repairs need their complete explicitly versioned native cache')
     validate_teacher_onsets(old_teacher_policy['teachers'])
     cache = validate_cache(args.native_v2_cache)
     conversion = validate_conversion(Path(cache['conversion']))
@@ -99,7 +122,9 @@ def prepare(args, spm, voice, retention, old_teacher_policy):
     policy = dict(schema='dl-additional-native-v2-text-objective-v1', teacher=policy,
                   cache=str(args.native_v2_cache), cache_sha256=sha256(args.native_v2_cache / 'cache.json'),
                   conversion_sha256=sha256(Path(cache['conversion']) / 'ingestion.json'),
-                  old_28_components_unchanged=True, old_25_teachers_unchanged=True,
+                  old_28_components_unchanged=True, old_25_words_audio_receipts_unchanged=True,
+                  old_25_timing_repair_cache=str(args.actual_native_teacher_cache),
+                  old_25_timing_repair_cache_sha256=sha256(args.actual_native_teacher_cache / 'cache.json'),
                   reference_kl_weight=1., reference_hidden_mse_weight=10., additional_teacher_weight=1.,
                   code_sha256=sha256(Path(__file__)),
                   objective='balanced assistant text, native request/control and genuine silence; no acoustic loss',

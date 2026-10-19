@@ -56,6 +56,8 @@ def main():
     ap.add_argument('--actual-native-teacher-approval',type=Path)
     ap.add_argument('--actual-native-teacher-scope',type=Path)
     ap.add_argument('--actual-native-teacher-preflight',type=Path)
+    ap.add_argument('--actual-native-teacher-cache',type=Path,
+                    help='Separate full25 versioned timing repair; original28 and KL/hidden caches stay unchanged')
     ap.add_argument('--actual-native-teacher-coverage',choices=('four-longest','all-approved'),default='four-longest')
     for name in ('cache', 'approval', 'scope', 'preflight'):
         ap.add_argument('--native-v2-' + name, type=Path)
