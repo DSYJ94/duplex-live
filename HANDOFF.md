@@ -1,3 +1,37 @@
+# Local ASR measurement re-audit — 19 October 2026, 09:27 UTC / 11:27 Berlin
+
+LOCAL remains active, CLOUD submits NOTHING. Teacher-v3 collection7542689 is
+complete; original audit7542690 is retained. Pending semantic7542691 was
+explicitly CANCELLED at09:26:46UTC because the earlier waveform inspection found
+physically impossible ASR onsets. No conversion/optimizer may use those onsets.
+
+New source d690e4f81c3a49c80d12a70b15b38158a20e288b is pushed and immutable at
+worktrees/recovery-d690e4f. Exclusive receipt:
+/projects/u6si/duplex-live/runs/native-v2-timing-reaudit-local-20261019.json.
+Submitted ONCE: CPU7542977 -> SAME-WAV alignment control7542978 -> FULL teacher-v3
+re-audit7542979 -> semantic/conversion7542980. Quality also depends on the
+existing completed teacher7542689. ZERO new teacher sessions; no source audio
+or transcripts modified. Inspect these exact jobs/receipt, never duplicate.
+
+Measurement repair is opt-in leading-quiet ASR window plus exact timestamp
+remapping to the ORIGINAL WAV/receipt clock. Existing20ms/0.001floor,250ms margin,
+all internal gaps, raw hashes, full24 scope, speech/fact/timing thresholds stay.
+A new check rejects onsets before any nonzero PCM beyond200ms. Six first-batch
+recordings fail that physical check; two were among the old5/24 diagnostic
+passes. No old25 native teacher target is relabelled or changed. New real-WAV
+control and full re-audit must pass before any downstream approval. See dated
+native continuation/failure ledgers for measured evidence and regression tests.
+
+Runtime preservation attempt1 hit its10minute orchestration timeout, leaving a
+partial2,198,372,352byte temp SIF (NOT a backup). Retry is running with partial
+retention and a4hour bound; local process25435 at09:28UTC. Eight runtime symbolic
+links were copied and verified separately. Container/env regular-file inventory
+17104files/9,072,299,252bytes awaits full transfer+hash verification. Critical
+native checkpoints/state/data/base assets and earlier scoped backups are already
+verified, including failed teacher220files/177,074,067bytes. No cloud compute.
+
+---
+
 # Local teacher-v3 chain — 19 October 2026, 09:17 UTC / 11:17 Berlin
 
 LOCAL is active; CLOUD must not submit. Committed source
