@@ -15,7 +15,7 @@ from evals.moshi_model_download import sha256
 from evals.gpt_live_replay import run
 
 
-async def generate(data,out,resume=False,scope="legacy",protocol=None):
+async def generate(data,out,resume=False,scope="legacy",protocol=None,record_protocols=None):
     receipt = validate_conversion(data)
     selected = [r for r in receipt["accepted"] if r["split"] == "train" and r["kind"] == "private"] + [
         r for r in receipt["accepted"] if r["split"] == "train" and r["kind"] == "simple"][:4]
@@ -52,6 +52,13 @@ async def generate(data,out,resume=False,scope="legacy",protocol=None):
         manifest["teacher_protocol"] = protocol
         if protocol == 'native-dialogue-v4':
             manifest['teacher_reference_conditioning'] = 'independently-authored-TRAIN-ordinary-answers-only-v1'
+    record_protocols = record_protocols or {}
+    if record_protocols:
+        if (scope != 'native-v2' or protocol != 'native-dialogue-v4'
+                or not set(record_protocols).issubset({r['scenario_id'] for r in selected})
+                or set(record_protocols.values()) != {'native-dialogue-v5'}):
+            raise RuntimeError('Per-record protocol is only the explicit diagnosed TRAIN clarity repair')
+        manifest['record_protocols'] = record_protocols
     if resume:
         if (out / "quality.jsonl").exists():
             raise RuntimeError("Cannot resume a stamped teacher corpus")
@@ -63,6 +70,8 @@ async def generate(data,out,resume=False,scope="legacy",protocol=None):
             raise RuntimeError("Teacher selection changed")
         if previous.get("teacher_protocol") != protocol:
             raise RuntimeError("Teacher client-control protocol changed")
+        if previous.get('record_protocols', {}) != record_protocols:
+            raise RuntimeError('Declared per-record teacher protocol repair changed')
         manifest = previous
         for record in manifest["recordings"]:
             folder = out / record["dir"]
@@ -88,11 +97,14 @@ async def generate(data,out,resume=False,scope="legacy",protocol=None):
                     destination = archive / f"{row['scenario_id']}-{index}"
                 shutil.move(str(out / row["scenario_id"]),destination)
             args = SimpleNamespace(batch=Path(receipt["source_batch"]),conversion=data,scenario=row["scenario_id"],
-                purpose="teacher",backend="gpt-6-luna",out=out / row["scenario_id"],teacher_protocol=protocol)
+                purpose="teacher",backend="gpt-6-luna",out=out / row["scenario_id"],
+                teacher_protocol=record_protocols.get(row['scenario_id'], protocol))
             await run(args)
             manifest["recordings"].append({"source_row":row,"dir":row["scenario_id"],
                 "environment_sha256":sha256(args.out / "environment.json"),"events_sha256":sha256(args.out / "events.jsonl"),
                 "audio_sha256":sha256(args.out / "model_out.wav"),"transcripts_sha256":sha256(args.out / "transcripts.json")})
+            if row['scenario_id'] in record_protocols:
+                manifest['recordings'][-1]['teacher_protocol'] = args.teacher_protocol
             (args.out / "model.wav").symlink_to("model_out.wav")
             (out / "manifest.jsonl").write_text("".join(json.dumps({"scenario_id":r["source_row"]["scenario_id"],
                 "dir":r["dir"],"scenario_class":"raw_gpt_live_teacher"})+"\n" for r in manifest["recordings"]))

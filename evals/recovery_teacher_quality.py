@@ -48,11 +48,15 @@ def validate_teacher(batch):
         environment = json.loads((folder / "environment.json").read_text())
         if manifest.get("teacher_protocol") or environment.get("teacher_protocol"):
             from evals.teacher_protocol import validate_protocol
-            expected_instructions = validate_protocol(manifest.get("teacher_protocol"), "teacher", row["kind"])
-            if (environment.get("teacher_protocol") != manifest["teacher_protocol"]
+            protocol = record.get('teacher_protocol', manifest.get('teacher_protocol'))
+            if ((sid in manifest.get('record_protocols', {})) != ('teacher_protocol' in record)
+                    or (sid in manifest.get('record_protocols', {}) and manifest['record_protocols'][sid] != protocol)):
+                raise RuntimeError('Undeclared per-record teacher instruction change')
+            expected_instructions = validate_protocol(protocol, "teacher", row["kind"])
+            if (environment.get("teacher_protocol") != protocol
                     or environment["session_config"]["instructions"] != expected_instructions):
                 raise RuntimeError("Teacher client-control protocol receipt changed")
-            if manifest['teacher_protocol'] == 'native-dialogue-v4' and (
+            if protocol in ('native-dialogue-v4', 'native-dialogue-v5') and (
                     manifest.get('teacher_reference_conditioning') != 'independently-authored-TRAIN-ordinary-answers-only-v1'
                     or environment.get('teacher_reference_conditioning') != manifest['teacher_reference_conditioning']):
                 raise RuntimeError('Reference-conditioned teacher lost its explicit TRAIN-only provenance')
@@ -106,6 +110,9 @@ def validate_teacher(batch):
     if 'diagnosed_repair' in manifest:
         from evals.native_v2_teacher_repair import validate_lineage
         validate_lineage(manifest)
+    if manifest.get('record_protocols') or 'diagnosed_repair_v2' in manifest:
+        from evals.native_v2_teacher_repair import validate_clarity_lineage
+        validate_clarity_lineage(manifest)
     return manifest
 
 

@@ -87,5 +87,20 @@ class NativeTeacherTests(unittest.TestCase):
         with self.assertRaises(ValueError):validate_protocol(NATIVE_REFERENCE_PROTOCOL,'comparison','simple')
 
 
+class ClarityReferenceTests(unittest.TestCase):
+    def test_clarity_has_no_private_values_or_heldout_answers_and_is_teacher_only(self):
+        from data.synthetic.native_curriculum_v2 import specifications, QA
+        instructions = validate_protocol('native-dialogue-v5', 'teacher', 'simple')
+        self.assertIn('hear the complete instruction', instructions)
+        for scene in specifications():
+            if scene['phrase']:
+                self.assertNotIn(scene['phrase'], instructions)
+        for split in ('validation', 'test'):
+            for _, answer, _ in QA[split]:
+                self.assertNotIn(answer, instructions)
+        with self.assertRaises(ValueError):
+            validate_protocol('native-dialogue-v5', 'comparison', 'simple')
+
+
 if __name__ == '__main__':
     unittest.main()

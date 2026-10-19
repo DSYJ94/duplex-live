@@ -33,6 +33,7 @@ NATIVE_COMPLETE_INSTRUCTIONS = NATIVE_INSTRUCTIONS + (
     'These rules do not permit speech during an explicitly requested quiet interval.'
 )
 NATIVE_REFERENCE_PROTOCOL = 'native-dialogue-v4'
+NATIVE_CLARITY_PROTOCOL = 'native-dialogue-v5'
 
 
 def native_reference_instructions():
@@ -55,6 +56,18 @@ def native_reference_instructions():
 
 
 def validate_protocol(name, purpose, kind):
+    if name == NATIVE_CLARITY_PROTOCOL and purpose == 'teacher' and kind in ('private', 'simple', 'clarify', 'cancel'):
+        return native_reference_instructions() + (
+            ' Speak clearly and unhurriedly. Enunciate the initial article and every separate word '
+            'in the authored ordinary answer; do not swallow short words or merge take in into taken. '
+            'Enunciate both words of an actual returned private value clearly, without changing it. '
+            'For a multi-clause user instruction, hear the complete instruction before starting its '
+            'commanded step. In the TRAIN first-step task, hear the entire After I say go clause, '
+            'then say Put the book on the shelf. completely before waiting. Do not replace any part '
+            'of the requested step with Noted or another acknowledgement. When the user then pauses, '
+            'stay silent until go and say only Close the cupboard. Never restart the completed step. '
+            'This explicit TRAIN reference supplies no private values or held-out answers.'
+        )
     if name == NATIVE_REFERENCE_PROTOCOL and purpose == 'teacher' and kind in ('private', 'simple', 'clarify', 'cancel'):
         return native_reference_instructions()
     if name == NATIVE_COMPLETE_PROTOCOL and purpose == 'teacher' and kind in ('private', 'simple', 'clarify', 'cancel'):

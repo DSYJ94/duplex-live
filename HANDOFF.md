@@ -1,3 +1,30 @@
+# LOCAL active — runtime backup VERIFIED; five teacher failures, 19 October10:26UTC
+
+Runtime preservation COMPLETE10:22:29UTC:17104regular files/9,072,299,252bytes,
+all sizes/SHA256 match;8symbolic links separately verified. SIF8,551,931,904bytes
+SHA256c00bc99693e4908ea75d17df9c379b93ae9a1678a65d875565ad5d52f76fa27b.
+Removed only this task's obsolete interrupted2,198,372,352byte SIF temp after
+full final hash verification. Base model weights and critical checkpoints/state/
+28actual histories/data/receipts remain verified. Precise deduplicated totals in
+docs/LOCAL-PRESERVATION-2026-10-19.json. No owner/credentials/core exported.
+
+Full25 native scope7543889 PASS5m15; CPU7543887 PASS59tests. Capture7543890 is
+RUNNING at max4GPUs; independent input7543891 and FP32 math7543892 remain gated.
+All21 undiagnosed targets and all25 original words/audio/masks/frames preserved.
+Do not duplicate this d4de305 source chain. No optimizer submitted.
+
+Teacher retry7543779 completed24 records (19new/old passes retained in next step);
+quality7543781 FAILED19/24 at6m50, semantic7543783 CANCELLED. Five remaining failures:
+001bus/boss;014missing measured A;015premature/abandoned first step;019oval/over;
+022take in/taken. Full reports hash-backed2files/233477bytes. Planned versioned
+five-record clarity retry preserves19 passing raw recordings byte-identically.
+Explicit per-record native-dialogue-v5 adds clear enunciation and complete-user-
+instruction handling using authored TRAIN references, no private values/heldouts.
+All24 quality/semantic/conversion/native gates remain mandatory; thresholds stay.
+LOCAL active; CLOUD submits NOTHING; goal ACTIVE, native/whole-system FAIL.
+
+---
+
 # LOCAL active — repaired25 native approval retry, 19 October 10:14 UTC
 
 Exclusive retry receipt:

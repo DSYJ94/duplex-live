@@ -1,7 +1,7 @@
 {
-  "at_utc": "2026-10-19T10:14:13.445087+00:00",
-  "unique_scoped_artifact_files": 3437,
-  "unique_scoped_artifact_bytes": 3445785484,
+  "at_utc": "2026-10-19T10:25:50.196171+00:00",
+  "unique_scoped_artifact_files": 20890,
+  "unique_scoped_artifact_bytes": 12972608175,
   "inventory_conflicts": [],
   "inventories": [
     {
@@ -66,15 +66,38 @@
       "files": 133,
       "bytes": 351854807,
       "missing_roots": []
+    },
+    {
+      "name": "remote-old25-cache-and-v4-repair-inventory.json",
+      "sha256": "3c6da18bb72c7fa6352fdbaf6a97f5658f2bb58fb356b0adad20916ed3394389",
+      "files": 347,
+      "bytes": 454289962,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-v4-repair-audit-inventory.json",
+      "sha256": "1e9cb14f9194037c48561fd52757e2602355ac2f8069ef40974efc4f4870ddb1",
+      "files": 2,
+      "bytes": 233477,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-runtime-inventory.json",
+      "sha256": "d7e3f34512bb1b658f01affc9b53b5f2f8167a591ca75615b13807ffccebc1b7",
+      "files": 17104,
+      "bytes": 9072299252,
+      "missing_roots": []
     }
   ],
   "local_artifact_root": "runs/cloud-export-20261016/tree",
-  "runtime_regular_file_transfer_complete": false,
+  "runtime_regular_file_transfer_complete": true,
   "native_base_checkpoint_pinned_sha256_verified": true,
   "personaplex_model_codec_tokenizer_pinned_sha256_verified": true,
   "owner_conversations_exported": false,
   "credentials_exported": false,
   "quarantined_core_exported": false,
   "cloud_gpu_validation": "paused",
-  "native_optimizer_updates": 0
+  "native_optimizer_updates": 0,
+  "runtime_symlinks_verified": 8,
+  "runtime_sif_sha256": "c00bc99693e4908ea75d17df9c379b93ae9a1678a65d875565ad5d52f76fa27b"
 }

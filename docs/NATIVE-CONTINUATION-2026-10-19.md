@@ -274,3 +274,25 @@ Native outputs are unforced; backend reads/cancellation execute from native RET
 and actual arrived-audio ASR. All ten plus independent audio/receipt/clock review
 are mandatory before any extension. Reused inputs are development evidence, not
 fresh full-task qualification. No behavior or optimizer jobs submitted yet.
+
+
+## Runtime preservation verified; remaining five TRAIN teacher defects
+
+Runtime retry completes10:22:29UTC:17104regular files/9,072,299,252bytes all match
+cluster sizes/SHA256;8symlink targets match separately. Final SIF8,551,931,904bytes
+SHA256c00bc99693e4908ea75d17df9c379b93ae9a1678a65d875565ad5d52f76fa27b.
+Only this task's obsolete interrupted2.2GB temp removed after final verification.
+Known critical/state/data/base/runtime preservation is verified; this does not
+claim that every unscoped cluster file or historical partial Mac export is complete.
+
+Teacher retry audit7543781 is19/24. Remaining failures001/014/015/019/022 are exact
+word disagreements except015's actual premature/abandoned first step. Versioned
+clarity retry binds the exact new parent/check SHA256s, rerenders ONLY these5,
+preserves19 passing raw records, all source words/audio/folds and earlier archives.
+Per-record native-dialogue-v5 is explicit in the actual environment, manifest and
+semantic provenance. It enunciates words/articles and waits for the complete
+multi-clause first-step instruction rather than emitting a fragment and Noted.
+It uses only already authored TRAIN ordinary/step references and actual private
+receipts; no private value or held-out answer is included. All24 strict gates are
+rerun.31 focused local tests pass, including changed-passing/undeclared-protocol/
+source-edit/subset rejection and heldout/private-reference exclusion.

@@ -84,7 +84,7 @@ async def run(args):
         "training_approved":False}
     if protocol:
         env["teacher_protocol"] = protocol
-        if protocol == 'native-dialogue-v4':
+        if protocol in ('native-dialogue-v4', 'native-dialogue-v5'):
             env['teacher_reference_conditioning'] = 'independently-authored-TRAIN-ordinary-answers-only-v1'
     (args.out / "environment.json").write_text(json.dumps(env, indent=2) + "\n")
     if args.conversion and world_override:
