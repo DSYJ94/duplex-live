@@ -277,10 +277,10 @@
   "runtime_sif_sha256": "c00bc99693e4908ea75d17df9c379b93ae9a1678a65d875565ad5d52f76fa27b",
   "pinned_vendor_git_bundles_verified": 3,
   "source_git_bundle": {
-    "at_utc": "2026-10-19T13:26:40.496550+00:00",
-    "source_sha": "cf28726b44ed0621dde6bfd27257709574f5e9ed",
-    "bundle": "runs/local-continuation-20261019/source-main-cf28726.bundle",
-    "bundle_sha256": "fc3d3c2c5dd368877c3838b8c232be271867c0f0b1e7d4b260988c3f72cefe08"
+    "at_utc": "2026-10-19T13:54:51.653593+00:00",
+    "source_sha": "4a3f56a2f13f53f65ed804e48d30107c60150619",
+    "bundle": "runs/local-continuation-20261019/source-main-4a3f56a.bundle",
+    "bundle_sha256": "562dcbd507038090827868e9a73deb8d68bbf4ce57e5af7483e4c2e73a696b24"
   },
   "native_candidate_job": "7546645",
   "native_candidate_training_state_sha256": "47b52ef890ecf64fa7c4cab9d5c1cf52bc74227d2bf676a13d9414ee2da95b4a",

@@ -38,6 +38,16 @@ def validate_review(review, proof, parent, identity):
             or not parent['additional_native_v2'].get('complete24_per8')
             or [c['index'] for c in review['cases']]!=list(range(10))):
         raise ValueError('Bounded continuation lacks a complete ordinary-retaining native review of this exact full24 pilot')
+    return validate_cases(review, proof, parent, identity)
+
+
+def validate_cases(review, proof, parent, identity):
+    """Bind every raw native task/audio/independent speech record to one checkpoint."""
+    proof=Path(proof);runs=proof.parent
+    plan=Path(__file__).with_name('fixtures')/'native-v2-development-20261019.json'
+    cases=json.loads(plan.read_text())['cases']
+    if [c['index'] for c in review['cases']]!=list(range(10)):
+        raise ValueError('All ten native development cases must be retained')
     array=str(review['native_evaluation_array_job']);speech_job=str(review['speech_audit_job'])
     if not array.isdigit() or not speech_job.isdigit():raise ValueError('Invalid native evidence job identity')
     speech=runs/('native-v2-development-asr-'+speech_job)/'report.json'

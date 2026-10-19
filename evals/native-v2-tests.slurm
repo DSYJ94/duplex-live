@@ -22,7 +22,7 @@ apptainer exec --bind /projects,/lus,/home \
 import json,sys,unittest
 sys.path.insert(0,json.load(open("/projects/u6si/duplex-live/runs/context-spanning-assets-7454205/manifest.json"))["source"])
 names = ["test_context_native_v2_teacher_objective", "test_context_native_gradient_audit", "test_context_native_teacher_coverage", "test_context_native_extension_review", "test_context_rollout_conditioning", "test_native_v2_source_repair_v2",
-         "test_native_v2_teacher", "test_native_fresh_inputs", "test_native_fresh_inputs_v2", "test_native_fresh_asr_control", "test_native_fresh_probe", "test_recovery_teacher_quality", "test_context_training_state",
+         "test_native_v2_teacher", "test_native_fresh_inputs", "test_native_fresh_inputs_v2", "test_native_fresh_asr_control", "test_native_fresh_probe", "test_native_fresh_review", "test_recovery_teacher_quality", "test_context_training_state",
          "test_context_native_teacher_data", "test_context_native_teacher_objective",
          "test_context_teacher_native_approval", "test_context_teacher_engine_inputs", "test_context_teacher_text_balance",
          "test_context_native_joint_loss", "test_measured_question_completion", "test_orthographic_agreement", "test_native_old25_timing_repair",

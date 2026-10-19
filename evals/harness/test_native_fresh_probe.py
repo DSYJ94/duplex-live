@@ -13,7 +13,7 @@ class FreshProbe(unittest.TestCase):
             warm_audio=False,pending_status=False,adapter_disabled=False,adapter_zero=False,layout_audit=None,
             event_log_mode='immediate',backend_reference_profile='answer-only',persona_profile='recorded-records',
             math_attention=False,data=Path('data'),native_fresh_quality=Path('quality'),scenario='native-fresh-000',
-            expected_kind='simple',lookup_delivery_delay_s=0.)
+            expected_kind='simple',lookup_delivery_delay_s=0.,native_fresh_behavior_review=Path('review'),native_fresh_candidate_proof=Path('candidate'),adapter_proof=Path('proof'))
         d.update(change);return SimpleNamespace(**d)
 
     def test_training_reference_or_diagnostic_options_fail_closed(self):
@@ -33,9 +33,10 @@ class FreshProbe(unittest.TestCase):
     def test_v2_routes_to_its_own_full20_guard(self):
         safe=dict(kind='quiet',backend='observe-only',minimum_lookup_delay_s=0.,path='v2.wav',wav_sha256='abc')
         with patch('evals.native_fresh_inputs_v2.inference_input',return_value=safe) as v2, \
-             patch('evals.native_fresh_inputs.inference_input') as old:
+             patch('evals.native_fresh_inputs.inference_input') as old, \
+             patch('evals.native_fresh_review.validate') as reviewed:
             source,row=load(self.options(scenario='native-fresh2-016'))
-            v2.assert_called_once();old.assert_not_called();self.assertEqual(row['path'],'v2.wav')
+            v2.assert_called_once();old.assert_not_called();reviewed.assert_called_once_with(Path('review'),Path('candidate'),Path('proof'));self.assertEqual(row['path'],'v2.wav')
 
     def test_v2_does_not_append_a_second_undeclared_tail(self):
         import numpy as np

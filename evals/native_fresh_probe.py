@@ -18,6 +18,8 @@ def validate_options(args):
 def load(args):
     if args.scenario.startswith('native-fresh2-'):
         from evals.native_fresh_inputs_v2 import inference_input
+        from evals.native_fresh_review import validate
+        validate(args.native_fresh_behavior_review,args.native_fresh_candidate_proof,args.adapter_proof)
     else:
         from evals.native_fresh_inputs import inference_input
     validate_options(args)

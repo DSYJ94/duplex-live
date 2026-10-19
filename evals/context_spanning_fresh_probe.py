@@ -23,6 +23,8 @@ def main():
     for name in ('assets','base','data','out','native-fresh-quality','adapter-proof','voice-reference','voice-provenance'):
         ap.add_argument('--'+name,type=Path,required=True)
     ap.add_argument('--scenario',required=True)
+    ap.add_argument('--native-fresh-behavior-review',type=Path)
+    ap.add_argument('--native-fresh-candidate-proof',type=Path)
     ap.add_argument('--expected-kind',choices=('private','simple','clarify','cancel'),required=True)
     ap.add_argument('--backend-mode',choices=('native-asr','observe-only'),required=True)
     ap.add_argument('--asr-python',type=Path)
