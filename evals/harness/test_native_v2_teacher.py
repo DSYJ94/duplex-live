@@ -2,7 +2,8 @@
 import copy
 import unittest
 from evals.recovery_teacher_quality import assess
-from evals.teacher_protocol import NATIVE_PROTOCOL, NATIVE_INSTRUCTIONS, validate_protocol
+from evals.teacher_protocol import (NATIVE_PROTOCOL, NATIVE_INSTRUCTIONS, NATIVE_COMPLETE_PROTOCOL,
+                                  NATIVE_COMPLETE_INSTRUCTIONS, validate_protocol)
 
 
 def speech(text, starts):
@@ -59,6 +60,13 @@ class NativeTeacherTests(unittest.TestCase):
             self.assertEqual(validate_protocol(NATIVE_PROTOCOL, 'teacher', kind), NATIVE_INSTRUCTIONS)
             with self.assertRaises(ValueError):
                 validate_protocol(NATIVE_PROTOCOL, 'comparison', kind)
+
+    def test_complete_sentence_protocol_is_separate_and_teacher_only(self):
+        for kind in ('simple', 'private', 'clarify', 'cancel'):
+            self.assertEqual(validate_protocol(NATIVE_COMPLETE_PROTOCOL, 'teacher', kind), NATIVE_COMPLETE_INSTRUCTIONS)
+            self.assertEqual(validate_protocol(NATIVE_PROTOCOL, 'teacher', kind), NATIVE_INSTRUCTIONS)
+            with self.assertRaises(ValueError):
+                validate_protocol(NATIVE_COMPLETE_PROTOCOL, 'comparison', kind)
 
 
 if __name__ == '__main__':

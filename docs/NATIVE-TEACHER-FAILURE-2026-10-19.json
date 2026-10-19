@@ -1,0 +1,191 @@
+{
+  "source_commit": "1519b71a5fc4f337735acca8529a860c7c00e310",
+  "teacher_job": "7541876",
+  "quality_job": "7541878",
+  "semantic_conversion_job": "7541879",
+  "approved": 5,
+  "required": 24,
+  "semantic_requests": 0,
+  "optimizer_steps": 0,
+  "decisions": [
+    {
+      "id": "native2-train-001",
+      "passed": true,
+      "reasons": []
+    },
+    {
+      "id": "native2-train-000",
+      "passed": false,
+      "reasons": [
+        "Required independently specified answer facts absent in measured speech"
+      ]
+    },
+    {
+      "id": "native2-train-002",
+      "passed": false,
+      "reasons": [
+        "Assistant transcript and measured spoken word positions do not match exactly",
+        "Required independently specified answer facts absent in measured speech"
+      ]
+    },
+    {
+      "id": "native2-train-003",
+      "passed": false,
+      "reasons": [
+        "Speech agreement exceeds the unchanged per-clip WER bar",
+        "Assistant transcript and measured spoken word positions do not match exactly",
+        "Actual record receipt does not match the sealed training world",
+        "Checked private phrase missing or spoken before the actual tool result"
+      ]
+    },
+    {
+      "id": "native2-train-004",
+      "passed": false,
+      "reasons": [
+        "Checked private phrase missing or spoken before the actual tool result"
+      ]
+    },
+    {
+      "id": "native2-train-005",
+      "passed": false,
+      "reasons": [
+        "Required independently specified answer facts absent in measured speech"
+      ]
+    },
+    {
+      "id": "native2-train-006",
+      "passed": false,
+      "reasons": [
+        "Required independently specified answer facts absent in measured speech"
+      ]
+    },
+    {
+      "id": "native2-train-007",
+      "passed": false,
+      "reasons": [
+        "Speech agreement exceeds the unchanged per-clip WER bar",
+        "Assistant transcript and measured spoken word positions do not match exactly",
+        "Checked private phrase missing or spoken before the actual tool result",
+        "Required independently specified answer facts absent in measured speech"
+      ]
+    },
+    {
+      "id": "native2-train-008",
+      "passed": true,
+      "reasons": []
+    },
+    {
+      "id": "native2-train-009",
+      "passed": false,
+      "reasons": [
+        "Required independently specified answer facts absent in measured speech"
+      ]
+    },
+    {
+      "id": "native2-train-010",
+      "passed": false,
+      "reasons": [
+        "Assistant transcript and measured spoken word positions do not match exactly",
+        "Required independently specified answer facts absent in measured speech"
+      ]
+    },
+    {
+      "id": "native2-train-011",
+      "passed": true,
+      "reasons": []
+    },
+    {
+      "id": "native2-train-012",
+      "passed": false,
+      "reasons": [
+        "Speech agreement exceeds the unchanged per-clip WER bar",
+        "Assistant transcript and measured spoken word positions do not match exactly",
+        "Required independently specified answer facts absent in measured speech"
+      ]
+    },
+    {
+      "id": "native2-train-013",
+      "passed": false,
+      "reasons": [
+        "Required independently specified answer facts absent in measured speech"
+      ]
+    },
+    {
+      "id": "native2-train-014",
+      "passed": true,
+      "reasons": []
+    },
+    {
+      "id": "native2-train-015",
+      "passed": true,
+      "reasons": []
+    },
+    {
+      "id": "native2-train-016",
+      "passed": false,
+      "reasons": [
+        "Required independently specified answer facts absent in measured speech"
+      ]
+    },
+    {
+      "id": "native2-train-017",
+      "passed": false,
+      "reasons": [
+        "Speech agreement exceeds the unchanged per-clip WER bar",
+        "Assistant transcript and measured spoken word positions do not match exactly",
+        "Required independently specified answer facts absent in measured speech"
+      ]
+    },
+    {
+      "id": "native2-train-018",
+      "passed": false,
+      "reasons": [
+        "Assistant transcript and measured spoken word positions do not match exactly",
+        "Required independently specified answer facts absent in measured speech"
+      ]
+    },
+    {
+      "id": "native2-train-019",
+      "passed": false,
+      "reasons": [
+        "Assistant transcript and measured spoken word positions do not match exactly"
+      ]
+    },
+    {
+      "id": "native2-train-020",
+      "passed": false,
+      "reasons": [
+        "Assistant transcript and measured spoken word positions do not match exactly",
+        "Required independently specified answer facts absent in measured speech"
+      ]
+    },
+    {
+      "id": "native2-train-021",
+      "passed": false,
+      "reasons": [
+        "Spoken cancellation acknowledgement missing or predates actual receipt",
+        "Cancellation omitted the new answer after the actual user request",
+        "Required independently specified answer facts absent in measured speech"
+      ]
+    },
+    {
+      "id": "native2-train-022",
+      "passed": false,
+      "reasons": [
+        "Speech agreement exceeds the unchanged per-clip WER bar",
+        "Assistant transcript and measured spoken word positions do not match exactly",
+        "Cancellation omitted the new answer after the actual user request",
+        "Required independently specified answer facts absent in measured speech"
+      ]
+    },
+    {
+      "id": "native2-train-023",
+      "passed": false,
+      "reasons": [
+        "Assistant transcript and measured spoken word positions do not match exactly",
+        "Spoken cancellation acknowledgement missing or predates actual receipt",
+        "Required independently specified answer facts absent in measured speech"
+      ]
+    }
+  ]
+}

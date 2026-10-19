@@ -18,9 +18,25 @@ NATIVE_INSTRUCTIONS = CONTROL_INSTRUCTIONS + (
     'without restarting completed steps. When cancellation includes a new ordinary question, cancel '
     'the old lookup and answer the new question yourself. Keep answers brief and relevant.'
 )
+NATIVE_COMPLETE_PROTOCOL = 'native-dialogue-v3'
+NATIVE_COMPLETE_INSTRUCTIONS = NATIVE_INSTRUCTIONS + (
+    ' Give each ordinary answer in one short complete sentence that names the subject and the '
+    'relation asked about, rather than an isolated noun, bare option, or pronoun-only answer. '
+    'Use premises explicitly supplied by the user when making simple deductions; do not add '
+    'unnecessary uncertainty about a conclusion entailed by those premises. Speak clearly, once. '
+    'Keep distinct answers distinct: an ordinary answer must never complete the spoken label of '
+    'an unrelated private field. If a new question interrupts an answer whose checked result '
+    'has already returned, keep that still-owed answer and complete it after answering the new '
+    'question. Do not restart a completed answer or repeat a delivered private value. '
+    'When cancelling, request actual cancellation first. Only after its successful client '
+    'receipt, say The lookup is cancelled. Then answer any new question in a complete sentence. '
+    'These rules do not permit speech during an explicitly requested quiet interval.'
+)
 
 
 def validate_protocol(name, purpose, kind):
+    if name == NATIVE_COMPLETE_PROTOCOL and purpose == 'teacher' and kind in ('private', 'simple', 'clarify', 'cancel'):
+        return NATIVE_COMPLETE_INSTRUCTIONS
     if name == NATIVE_PROTOCOL and purpose == 'teacher' and kind in ('private', 'simple', 'clarify', 'cancel'):
         return NATIVE_INSTRUCTIONS
     if name != CONTROL_PROTOCOL or purpose != "teacher" or kind not in ("clarify", "cancel"):

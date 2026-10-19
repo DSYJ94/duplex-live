@@ -1,3 +1,44 @@
+# Local teacher gate failed — 19 October 2026, 09:11 UTC / 11:11 Berlin
+
+LOCAL remains the ACTIVE executor. Source gate7541875 PASSED all24 TRAIN;
+source repair7541873 complete, immutable source1519b71. Teacher7541876 COMPLETED
+all24 recordings. Independent quality7541878 COMPLETED as a diagnostic process
+but admits ONLY5/24 (001/008/011/014/015). Semantic/conversion7541879 FAILED at
+its complete24 gate BEFORE any semantic requests. ZERO optimizer updates.
+Slurm account queue EMPTY at09:11:19UTC. Do not rerun this unchanged chain.
+
+Actual failed recordings/quality decisions retrieved under ignored
+runs/cloud-export-20261016/tree/runs/native-v2-teacher-{7541876,audit-7541878}.
+Tracked numeric/reason ledger: docs/NATIVE-TEACHER-FAILURE-2026-10-19.json.
+Some ordinary answers are elliptical (The bus / A ruler), some use words outside
+declared facts (downhill vs down; mineral nutrients vs minerals); other failures
+are real interrupted/lost private answers, Cyprus/Cypress live transcription,
+receipt/cancellation timing and measured speech mismatch. No thresholds changed,
+no passing subset accepted. All24 must pass unchanged independent gates.
+
+Next bounded repair is a NEW explicit native-dialogue-v3 teacher protocol on
+THE SAME24 approved source inputs, full sentences/relevant question relations,
+explicit user-premise deductions, retained owed replies and post-receipt cancel
+confirmation. No private values or scripted answer labels are supplied in its
+instructions. Preserve v2 recordings unchanged. New full24 quality must PASS
+before any semantic request/conversion/codec/native update. The quality Slurm
+wrapper now also fails on any rejected scene; older diagnostic completion did
+not mean approval. 27 focused local tests pass; new chain not yet submitted.
+
+Prepared native training path sourcee322af1 is pushed but NOT RUN. It preserves
+old28 histories/four-reference KL+hidden/all25 approved native teachers; adds a
+separate complete24 native text/control/silence objective, eight updates only,
+new optimizer, mandatory independent full-state restore. No unchanged joint7530408
+extension. Native/whole-system FAIL. Cloud validation PAUSED; no extra compute.
+
+Preservation: scoped1450files/661,640,011bytes, teacher/cache dependencies169files/
+280,281,639bytes and new source627files/306,461,197bytes hash-verified separately;
+16.74GB base checkpoint hash verified. Runtime8.55GB SIF plus~550MB environments
+is currently transferring and must NOT yet be called a complete backup. Local
+cert22:51:23Berlin19October. Preserve unrelated local work listed below.
+
+---
+
 # Local native chain — 19 October 2026
 
 Latest verified: repair7541873 COMPLETED(13s), source audit7541875 COMPLETED(88s).
