@@ -38,7 +38,9 @@ run() {
   "$DL/pytorch-new.sif" python -u "$@"
 }
 # All25 original histories; only the explicitly approved four derived timings change.
-run -c 'import sys; from pathlib import Path; from evals.recovery_data import validate_cache; from evals.native_old25_timing_repair import inventory; r=validate_cache(Path(sys.argv[1])); assert r["schema"]=="dl-native-old25-timing-cache-v1" and len(r["examples"])==25 and {e["scenario_id"] for e in r["examples"]}=={e["teacher"]["id"] for e in inventory()} and all(e["split"]=="train" for e in r["examples"])' "$CACHE"
+# Cheap scope routing only. Every phase below calls load_training, which performs
+# the complete cache/conversion/word/audio/receipt validation before using inputs.
+run -c 'import json,sys; from pathlib import Path; from evals.moshi_model_download import sha256; from evals.native_old25_timing_repair import PARENT,PARENT_SHA256; assert sha256(PARENT)==PARENT_SHA256; r=json.load(open(sys.argv[1]+"/cache.json")); expected={t["id"] for t in json.load(open(PARENT))["retention_teacher_text"]["teachers"]}; assert r["schema"]=="dl-native-old25-timing-cache-v1" and len(r["examples"])==25 and {e["scenario_id"] for e in r["examples"]}==expected and all(e["split"]=="train" for e in r["examples"])' "$CACHE"
 if [ "$NATIVE_OLD25_PHASE" = scope ]; then
  run -m evals.context_retention_teacher --assets "$ASSETS" --tokenizer "$BASE/tokenizer_spm_32k_3.model" \
   --voice "$VOICE" --cache "$CACHE" --all-approved-teachers --observed-native-boundary \
