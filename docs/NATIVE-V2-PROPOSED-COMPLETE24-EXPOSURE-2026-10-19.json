@@ -145,5 +145,7 @@
     "teacher-recovery-train-011"
   ],
   "ordinary_ice_sound_plants_metal_probe_teachers_in_old25": false,
-  "ordinary_probe_teacher_coverage_observation": "Approved old25 simple histories are008-011, not ordinary-probe012-015; preserve all25 unchanged. Correct baseline science is generalization, not explicit per-fact retention. This is a coverage observation, not proof of the regression cause or authorization to add teacher labels."
+  "ordinary_probe_teacher_coverage_observation": "Approved old25 simple histories are008-011, not ordinary-probe012-015; preserve all25 unchanged. Correct baseline science is generalization, not explicit per-fact retention. This is a coverage observation, not proof of the regression cause or authorization to add teacher labels.",
+  "implementation": "Opt-in source now wired; no optimizer submitted or recipe/rate selected pending complete81 gradient diagnosis",
+  "future_continuation": "Only32 additional updates after exact independent restore and committed complete10 review with all4 ordinary cores/strict speech retained; old rejected legacy candidate blocked"
 }

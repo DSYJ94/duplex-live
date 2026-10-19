@@ -36,12 +36,16 @@ def validate_teacher_onsets(teachers):
 def validate_configuration(args):
     names = ('native_v2_cache', 'native_v2_approval', 'native_v2_scope', 'native_v2_preflight')
     present = [bool(getattr(args, name, None)) for name in names]
+    full24 = bool(getattr(args, 'native_v2_full24_per8', False))
+    rate = getattr(args, 'native_v2_learning_rate', 1e-5)
+    review = getattr(args, 'native_v2_extension_review', None)
     if not any(present):
+        if full24 or rate != 1e-5 or review:
+            raise ValueError('Full24 recipe options require the complete native-v2 approval chain')
         return False
     if not all(present):
         raise ValueError('Additional native-v2 supervision needs its complete cache/input/scope/numerical chain')
     if (not args.actual_temporal_fit or not args.actual_mixed_data or not args.warm_start_proof
-            or args.resume_training or args.actual_fit_updates != 8
             or args.actual_native_teacher_coverage != 'all-approved'
             or args.actual_retention_teacher_weight != 1.
             or args.actual_base_retention_weight != 1.
@@ -53,7 +57,20 @@ def validate_configuration(args):
             or not args.actual_native_teacher_preflight
             or not getattr(args, 'actual_native_teacher_cache', None)):
         raise ValueError('Native-v2 is a separate eight-update warm start with all old retention preserved')
+    if rate not in (1e-5, 2e-6) or (not full24 and (rate != 1e-5 or review)):
+        raise ValueError('A changed native learning rate needs the explicit full24 bounded recipe')
+    if full24 and getattr(args, 'native_v2_gradient_audit', False):
+        raise ValueError('The separate frozen-parent gradient diagnostic retains its original schedule policy')
+    if args.resume_training or args.actual_fit_updates != 8 or review:
+        if not (full24 and args.resume_training and review and args.actual_fit_updates == 32):
+            raise ValueError('No native-v2 continuation without a complete committed native review')
+        from evals.context_native_extension_review import validate
+        validate(args)
     return True
+
+
+def learning_rate(args):
+    return getattr(args, 'native_v2_learning_rate', 1e-5) if getattr(args, 'native_v2_cache', None) else 1e-5
 
 
 def validate_old25_lineage(original, repaired):
@@ -130,6 +147,11 @@ def prepare(args, spm, voice, retention, old_teacher_policy):
                   objective='balanced assistant text, native request/control and genuine silence; no acoustic loss',
                   optimizer_reset=True, maximum_updates_before_behavioral_review=8,
                   prefix_loss_targets=0, span_loss_targets=0, user_loss_targets=0, audio_loss_targets=0)
+    if getattr(args, 'native_v2_full24_per8', False):
+        policy.update(complete24_per8=True, learning_rate=learning_rate(args),
+            coverage_code_sha256=sha256(Path(__file__).with_name('context_native_teacher_coverage.py')),
+            sampling='Average exact half of each new teacher kind per visit; all24 in every8 updates; unchanged old/reference sampling and total new kind weights',
+            continuation='Only32 additional updates after independent full-state restore and committed complete10 native review with ordinary core retained; never adoption')
     path = separate.out / 'policy.json'
     if args.reload:
         if json.loads(path.read_text()) != policy:

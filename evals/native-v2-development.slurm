@@ -26,7 +26,10 @@ from pathlib import Path
 root=Path('/projects/u6si/duplex-live')
 proof=root/'runs'/('context-training-proof-'+sys.argv[2])
 r=json.loads((proof/'report.json').read_text());reload=json.loads((proof/'reload-report.json').read_text())
-assert r['passed'] and r['optimizer_steps']==8 and r['additional_native_v2']
+assert r['passed'] and r['optimizer_steps'] in (8,40) and r['additional_native_v2']
+if r['optimizer_steps']==40:
+ assert r['additional_native_v2']['complete24_per8'] and r['initial_optimizer_steps']==8
+ assert r['updates_this_run']==32 and r['resumed_from_training_state']
 assert reload['passed'] and reload['fresh_process'] and reload['optimizer_rng_state_restored']
 spec=json.loads((Path(sys.argv[1])/'evals/fixtures/native-v2-development-20261019.json').read_text())
 assert len(spec['cases'])==10 and spec['word_or_audio_forcing'] is False

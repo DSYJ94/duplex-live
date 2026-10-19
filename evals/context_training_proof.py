@@ -63,6 +63,9 @@ def main():
     ap.add_argument('--actual-native-teacher-coverage',choices=('four-longest','all-approved'),default='four-longest')
     for name in ('cache', 'approval', 'scope', 'preflight'):
         ap.add_argument('--native-v2-' + name, type=Path)
+    ap.add_argument('--native-v2-full24-per8',action='store_true')
+    ap.add_argument('--native-v2-learning-rate',type=float,choices=(1e-5,2e-6),default=1e-5)
+    ap.add_argument('--native-v2-extension-review',type=Path)
     ap.add_argument('--native-v2-gradient-audit',action='store_true',
                     help='Zero-update complete TRAIN objective gradient diagnosis at native520; never a checkpoint')
     ap.add_argument('--actual-response-first-word-weight',type=float,default=1.)

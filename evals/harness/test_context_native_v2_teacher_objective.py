@@ -29,6 +29,17 @@ class NativeV2ConfigurationTests(unittest.TestCase):
     def test_complete_bounded_retention_recipe_is_explicit(self):
         self.assertTrue(validate_configuration(self.config()))
 
+    def test_explicit_full24_pilot_preserves_old_weights_and_requires_review_for_resume(self):
+        for rate in (1e-5,2e-6):
+            self.assertTrue(validate_configuration(self.config(native_v2_full24_per8=True,native_v2_learning_rate=rate)))
+        for changes in [dict(native_v2_learning_rate=2e-6),
+                        dict(native_v2_full24_per8=True,native_v2_learning_rate=1e-4),
+                        dict(native_v2_full24_per8=True,actual_fit_updates=32,resume_training='state'),
+                        dict(native_v2_full24_per8=True,native_v2_gradient_audit=True),
+                        dict(native_v2_full24_per8=True,actual_retention_teacher_weight=0.)]:
+            with self.subTest(changes=changes),self.assertRaises(ValueError):
+                validate_configuration(self.config(**changes))
+
     def test_missing_new_approval_fails(self):
         for name in ('native_v2_cache','native_v2_approval','native_v2_scope','native_v2_preflight'):
             with self.subTest(name=name), self.assertRaises(ValueError):

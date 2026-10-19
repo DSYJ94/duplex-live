@@ -19,6 +19,8 @@ def run(lm, spm, voice, examples, components, audits, args):
     from evals.moshi_training_smoke import tensor_hashes
     from evals.context_spanning_download import SOURCE_COMMIT
     from evals.context_training_state import save as save_state, restore as restore_state
+    from evals.context_native_v2_teacher_objective import learning_rate
+    rate = learning_rate(args)
     pre = args.actual_temporal_preflight
     gate = json.loads((pre/'actual-temporal-audit.json').read_text())
     if (gate['schema'] != 'dl-context-actual-temporal-audit-v1' or gate['passed'] is not True
@@ -155,7 +157,7 @@ def run(lm, spm, voice, examples, components, audits, args):
             'voice_sha256':sha256(args.out/'voice.pt'),'frozen_hashes':frozen,
             'retention_examples':[r[2] for r in retention],
             **({'warm_start':warm_start,'warm_start_optimizer_reset':True} if warm_start else {}),
-            'recipe':{'rank':8,'scaling':2.,'last_layers':4,'lr':1e-5,'weight_decay':0.,
+            'recipe':{'rank':8,'scaling':2.,'last_layers':4,'lr':rate,'weight_decay':0.,
                 'gradient_clip':1.,'retention_kl_weight':base_retention_weight,'retention_hidden_mse_weight':10.*base_retention_weight,
                 **({'retention_teacher_text':teacher} if teacher else {}),
                 **({'additional_native_v2':additional_policy} if additional_policy else {}),
@@ -205,7 +207,7 @@ def run(lm, spm, voice, examples, components, audits, args):
                 if report['training_state_sha256'] != sha256(args.out/'training-state.pt'):
                     raise RuntimeError('Changed portable training state')
                 before = tensor_hashes(learned.items())
-                opt = torch.optim.AdamW(list(learned.values()),lr=1e-5,weight_decay=0.)
+                opt = torch.optim.AdamW(list(learned.values()),lr=rate,weight_decay=0.)
                 snapshot = restore_state(args.out/'training-state.pt',learned,opt,state_metadata(frozen))
                 resume_verified = (snapshot['completed_steps']==report['optimizer_steps']
                     and before==tensor_hashes(learned.items()))
@@ -219,7 +221,7 @@ def run(lm, spm, voice, examples, components, audits, args):
             print(json.dumps(result),flush=True)
             if not passed: raise RuntimeError('Fresh actual adapter logits changed')
             return
-        optimizer = torch.optim.AdamW(list(learned.values()),lr=1e-5,weight_decay=0.)
+        optimizer = torch.optim.AdamW(list(learned.values()),lr=rate,weight_decay=0.)
         initial_step = 0
         if warm_start and not args.resume_training:
             if parent['frozen_hashes']!=frozen:raise RuntimeError('Warm-start frozen base differs')
@@ -251,7 +253,7 @@ def run(lm, spm, voice, examples, components, audits, args):
         steps = []; seen_a = seen_b = False; start = time.monotonic()
         torch.cuda.reset_peak_memory_stats()
         for local_step in range(args.actual_fit_updates):
-            additional_loss = None; additional_record = None
+            additional_loss = None; additional_record = None; additional_records = []
             step = initial_step+local_step
             optimizer.zero_grad(set_to_none=True)
             from evals.context_component_kind import balanced_index
@@ -289,13 +291,22 @@ def run(lm, spm, voice, examples, components, audits, args):
                 if additional_batches:
                     from evals.context_native_teacher_objective import teacher_index
                     from evals.context_teacher_text_balance import loss as balanced_teacher_loss
-                    ai=teacher_index(component_kinds,step,ri,[b[3]['kind'] for b in additional_batches])
-                    ainputs,amask,atarget,additional_record=additional_batches[ai]
-                    az=forward(ainputs)[1][0,0]
-                    additional_loss,_=balanced_teacher_loss(az,atarget,amask)
-                    if not torch.isfinite(additional_loss):
-                        raise RuntimeError('Nonfinite additional native-v2 supervision')
-                    additional_loss.backward()
+                    teacher_kinds=[b[3]['kind'] for b in additional_batches]
+                    if getattr(args, 'native_v2_full24_per8', False):
+                        from evals.context_native_teacher_coverage import complete_indices
+                        indices=complete_indices(component_kinds,step,ri,teacher_kinds)
+                    else:indices=[teacher_index(component_kinds,step,ri,teacher_kinds)]
+                    additional_losses=[]
+                    for ai in indices:
+                        ainputs,amask,atarget,additional_record=additional_batches[ai]
+                        az=forward(ainputs)[1][0,0]
+                        loss,_=balanced_teacher_loss(az,atarget,amask)
+                        if not torch.isfinite(loss):raise RuntimeError('Nonfinite additional native-v2 supervision')
+                        (loss/len(indices)).backward()
+                        additional_losses.append(loss.detach())
+                        additional_records.append(dict(id=additional_record['id'],kind=additional_record['kind'],
+                            text_ce=float(loss.detach()),weight=1/len(indices)))
+                    additional_loss=torch.stack(additional_losses).mean()
             if not all(torch.isfinite(v) for v in ((ce,kl,hidden,supervised) if teacher else (ce,kl,hidden))):
                 raise RuntimeError('Nonfinite actual or retention loss')
             if any(p.grad is None or not torch.isfinite(p.grad).all() for p in learned.values()):
@@ -321,9 +332,17 @@ def run(lm, spm, voice, examples, components, audits, args):
                 **({'additional_native_v2_id':additional_record['id'],
                     'additional_native_v2_kind':additional_record['kind'],
                     'additional_native_v2_text_ce':float(additional_loss.detach())}
-                    if additional_record else {}),
+                    if additional_record and not getattr(args, 'native_v2_full24_per8', False) else {}),
+                **({'additional_native_v2_microbatch':additional_records}
+                    if getattr(args, 'native_v2_full24_per8', False) else {}),
                 'nonzero_A_gradients':a,'nonzero_B_gradients':b,'gradient_norm_before_clip':norm}
             steps.append(row); print(json.dumps(row),flush=True)
+        if getattr(args, 'native_v2_full24_per8', False):
+            expected_ids={b[3]['id'] for b in additional_batches}
+            for offset in range(0,len(steps),8):
+                exposed=[view['id'] for row in steps[offset:offset+8] for view in row['additional_native_v2_microbatch']]
+                if len(exposed)!=24 or set(exposed)!=expected_ids:
+                    raise RuntimeError('Full24 native pilot omitted or duplicated a teacher in an eight-update block')
         if not seen_a or not seen_b: raise RuntimeError('Dead actual temporal adapter')
         if frozen != tensor_hashes((n,p) for n,p in lm.named_parameters() if not p.requires_grad):
             raise RuntimeError('Frozen speech/base weights changed')

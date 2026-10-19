@@ -719,3 +719,34 @@ recovery008–011; ordinary science probes012–015 are absent. Native520's corr
 science is thus retained generalization, not explicitly rehearsed in those25
 teacher targets. This observation does not establish a regression cause or justify
 new labels. Preserve all25/actual28/KL1/hidden10, keep all science checks unchanged.
+
+
+## Opt-in complete24 pilot and exact-state continuation guard prepared, not launched
+
+The declared coverage helper is now connected only behind --native-v2-full24-per8.
+It averages exact half-groups(4private/simple,2clarify/cancel) per existing kind
+visit, keeps new objective weight1 and old25/actual28/KL1/hidden10/old sampling
+unchanged, records every teacher view/weight and fails if any24 are missing or
+repeated in an8-update block. All old default paths remain opt-in separated.
+Explicit learning-rate choices1e-5/2e-6 are recorded in full24 policy and exact
+optimizer state metadata; rate NOT CHOSEN, no optimizer submitted. Full81 gradient
+7548377 and same-audio full20 ASR7548438 still queued at preparation snapshot.
+
+A future32-additional-update continuation is possible only for an independently
+restored8-update FULL24 pilot, same immutable Git source/recipe/rate, exact full
+optimizer/RNG state and a COMMITTED clean-checkout full10 native review binding
+candidate checkpoint/state/reload, every raw report/WAV and complete independent
+speech audit. All4 ordinary cores and their strict independent speech must pass;
+every other native task, failed quality and actual receipt requires explicit
+review/reason. This permits explicitly reviewed bounded research, never adoption
+or passing-subset qualification. Rejected legacy7546645 cannot pass full24 guard.
+No review exists authorizing such continuation. All25 approved histories/targets,
+reference KL1/hidden10 and all28 actual components are preserved. No new labels.
+Native development/fresh wrappers accept8 or properly resumed40 with complete
+restore, but retain all10/40 cases and all behavioral/quality review prerequisites.
+
+13 focused fixture tests pass locally: coverage, config/retention guards, complete
+review binding, altered/missing evidence, ordinary regressions, actual failed-task
+research review, committed Git document checks and existing trained-checkpoint
+verification. These are fixture/source checks, not native numerical or behavior
+acceptance. Full independent CPU suite must pass before a new optimizer.

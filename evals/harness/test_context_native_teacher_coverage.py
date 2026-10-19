@@ -7,7 +7,7 @@ class CompleteTeacherCoverageTests(unittest.TestCase):
     def test_every_teacher_and_quiet_pause_exposed_in_both_eight_update_blocks(self):
         kinds=['k'+str(i%8) for i in range(28)]
         teachers=['private']*8+['simple']*8+['clarify']*4+['cancel']*4
-        for block in (0,8,16,24):
+        for block in (0,8,16,24,32):
             seen=[];weights={k:0. for k in set(teachers)}
             for step in range(block,block+8):
                 ri=retention_index(kinds,step,4,True)
