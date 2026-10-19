@@ -45,12 +45,49 @@ def save(path, learned, optimizer, completed_steps, metadata, scheduler=None):
     return snapshot
 
 
-def restore(path, learned, optimizer, metadata, scheduler=None):
+def _source_metadata_matches(saved, current, transition):
+    """A bounded source-only migration may never change recipe or data identity.
+
+    The caller must independently validate the committed owner authorization.
+    This primitive additionally pins the original native pilot and state bytes;
+    no production caller enables it without that authorization.
+    """
+    if transition is None:
+        return saved == current
+    expected = {'schema', 'from_repo_commit', 'to_repo_commit',
+        'training_state_sha256', 'authorization_sha256', 'review_sha256',
+        'starting_optimizer_steps', 'additional_optimizer_updates', 'final_optimizer_steps'}
+    if (set(transition) != expected or transition['schema'] != 'dl-native-source-transition-v1'
+            or transition['from_repo_commit'] != '3061dcba1de571d2dad58d466f7c3f3ca43e41ec'
+            or transition['training_state_sha256'] != '3303bf1624cf3c36ff071e9fb69a239b3b93fda6a0d914db67848b7543cad675'
+            or transition['starting_optimizer_steps'] != 8
+            or transition['additional_optimizer_updates'] != 32
+            or transition['final_optimizer_steps'] != 40
+            or saved.get('repo_commit') != transition['from_repo_commit']
+            or current.get('repo_commit') != transition['to_repo_commit']
+            or transition['from_repo_commit'] == transition['to_repo_commit']
+            or 'source_transition' in saved):
+        return False
+    for key, size in [('to_repo_commit', 40), ('authorization_sha256', 64), ('review_sha256', 64)]:
+        value = transition[key]
+        if not isinstance(value, str) or len(value) != size or any(c not in '0123456789abcdef' for c in value):
+            return False
+    migrated = dict(saved, repo_commit=transition['to_repo_commit'], source_transition=transition)
+    return migrated == current
+
+
+def restore(path, learned, optimizer, metadata, scheduler=None, source_transition=None):
     import numpy as np
     import torch
+    if source_transition is not None:
+        from evals.moshi_model_download import sha256
+        if sha256(Path(path)) != source_transition.get('training_state_sha256'):
+            raise RuntimeError('Training state identity differs from authorized source transition')
     state = torch.load(path,map_location='cpu',weights_only=True)
     names = _optimizer_names(learned,optimizer)
-    if (state['schema'] != 'dl-context-training-state-v1' or state['metadata'] != _metadata(metadata)
+    if (state['schema'] != 'dl-context-training-state-v1'
+            or not _source_metadata_matches(state['metadata'], _metadata(metadata), source_transition)
+            or (source_transition is not None and state['completed_steps'] != 8)
             or state['parameter_names'] != names or set(state['adapters']) != set(learned)
             or state['optimizer_class'] != type(optimizer).__module__+'.'+type(optimizer).__qualname__
             or type(state['completed_steps']) is not int or state['completed_steps']<1
