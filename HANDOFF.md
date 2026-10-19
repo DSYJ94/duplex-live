@@ -1,3 +1,39 @@
+# LOCAL active — approved bounded32 job7558824 RUNNING (2026-10-19 21:47 UTC)
+
+Owner explicitly approved ONE32-update exploration and then "Proceed without
+prompting me, you have my approval". Live job7558824 RUNNING29s at latest sole
+watcher read; interactive reservation1GPU/110G/30min, no partition/QoS override.
+Payload99cc7394ebde78e2762d92813dddbc7a3feaaaed (CPU7558324 PASS151), authorization
+2837484b946adb01a2f01431083eeec4e90ed26e. AuthfixtureSHA
+c1a521aeb2e722978dc50158928f6d53ceb7015dcc086ade13a9bdac6b057316.
+Launch receipt runs/native-bounded32-exploration-local-20261019.json created
+exclusively after exact committed owner+all10 raw failed-review/state validation
+and EMPTY account queue. Resumes8/global9..40 from7556562; no optimizer/RNG reset,
+LR2e-6/all28actual/25old/24new/KL1hidden10/word64/clock64 unchanged. Exact
+source3061→99 transition and approval provenance appended; all other metadata
+must match. Originalstate3303 never edited. No new training results yet.
+
+Sole live local watcher exec34775 (/tmp/duplex-advance-bounded32-to-native10.py)
+polls7558824 >=60s. On terminal COMPLETE0:0 only, /tmp/duplex-launch-bounded32-
+native10.py independently verifies40total/32new, allolddata/loss/ref/policy hashes,
+new fullstate/reload/all28exact/10+14target caches, then exclusively submits ONE
+complete10 native development session plus full10 independent CPUASR. No native
+session/ASR IDs yet. If training fails, watcher stops without submission; inspect
+same job/state before any action. Never duplicate this launch. Inference remains
+original cf28726 payload/text0.7/audio0.8; session wrapper99 supports40.
+
+Full source authorization283 bundle verified SHA
+41fe618eb0080c9bb22a52ff870333dab6bce6d035e7b095c140ca262d323d57.
+Approved launch receipt scoped backup underway; all previous23230files/
+16926304034bytes plus model/runtime/ASR/vendor remain verified. Old stopped
+Mac source backup PARTIAL. No owner conversations/credentials/core exported.
+LOCAL owns execution; CLOUD no submissions, no handback/cloud purchases. Local
+cert through20Oct02:05:02UTC/04:05:02Berlin. Native/whole-system UNQUALIFIED.
+No further-than40 updates/adoption authorized. Full10/all4ordinary/fresh20
+strict gates remain after this training-only early-gate exception.
+
+---
+
 # LOCAL executor — owner APPROVES one bounded32 continuation (2026-10-19 21:44 UTC)
 
 Owner explicitly selected: "Run one bounded 32-update exploration (Recommended)".
