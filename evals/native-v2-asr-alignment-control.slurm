@@ -16,14 +16,18 @@ DL=/projects/u6si/duplex-live
 test "$(git -C "$DL_TASK_SOURCE" rev-parse HEAD)" = "$DL_TASK_COMMIT"
 test -z "$(git -C "$DL_TASK_SOURCE" status --porcelain)"
 cd "$DL_TASK_SOURCE"
+DEVICE="${NATIVE_ASR_DEVICE:-cuda}"
+[[ "$DEVICE" = cuda || "$DEVICE" = cpu ]]
+NV=()
+if [ "$DEVICE" = cuda ]; then NV+=(--nv); fi
 run() {
- apptainer exec --nv --bind /projects,/lus,/home \
+ apptainer exec "${NV[@]}" --bind /projects,/lus,/home \
   --env PYTHONPATH="$DL_TASK_SOURCE" --env PYTHONDONTWRITEBYTECODE=1 --env OMP_NUM_THREADS=8 \
   --env HF_HOME="$DL/models/hf-cache" --env OPENAI_API_KEY= \
   "$DL/pytorch-new.sif" "$DL/envs/moshi-annotation-7379026/bin/python" -u "$@"
 }
 OUT="$DL/runs/native-v2-asr-alignment-$SLURM_JOB_ID"
-run -m evals.moshi_speech_audit --out "$OUT" --trim-leading-silence --trim-trailing-silence \
+run -m evals.moshi_speech_audit --out "$OUT" --device "$DEVICE" --trim-leading-silence --trim-trailing-silence \
  --live-runs "$DL/runs/native-v2-teacher-7541876/native2-train-008" \
  "$DL/runs/native-v2-teacher-7541876/native2-train-015"
 run -c '
