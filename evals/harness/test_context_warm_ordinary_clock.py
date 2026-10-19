@@ -10,7 +10,8 @@ class OrdinaryClockTests(unittest.TestCase):
         old=[(object(),object(),object(),r) for _,_,_,r in old]
         new=[(object(),object(),object(),r) for _,_,_,r in new]
         batches=[(object(),object(),object()) for _ in range(28)]
-        audits=[dict(target_kind='private_result') for _ in range(28)]
+        # Approved nonordinary actual records may omit target_kind.
+        audits=[{} for _ in range(28)]
         for i,(job,scenario,manifest) in enumerate(ACTUAL):
             audits[i]=dict(target_kind='ordinary_answer',component='/projects/u6si/duplex-live/runs/context-training-proof-'+job,
                 scenario=scenario,manifest_sha256=manifest,passed=True,past_loss_targets=0,audio_loss_targets=0)

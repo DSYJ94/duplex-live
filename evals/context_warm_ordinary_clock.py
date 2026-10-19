@@ -16,7 +16,7 @@ DATA_SHA256='de92099057ded15a1af0e387c96b457cdf4c1731c26594dcdca211d4c442fc1e'
 def select(old,new,batches,audits):
     if len(batches)!=28 or len(audits)!=28:raise ValueError('Clock retention must preserve all28 actual components')
     rows=[(i,m,t,dict(r,id='clock-'+r['id'])) for i,m,t,r in teacher_select(old,new)]
-    ordinary=[(i,a) for i,a in enumerate(audits) if a['target_kind']=='ordinary_answer']
+    ordinary=[(i,a) for i,a in enumerate(audits) if a.get('target_kind')=='ordinary_answer']
     if len(ordinary)!=4:raise ValueError('All four predeclared approved actual ordinary histories required')
     for (index,a),(job,scenario,manifest) in zip(ordinary,ACTUAL):
         if (a['component']!='/projects/u6si/duplex-live/runs/context-training-proof-'+job
