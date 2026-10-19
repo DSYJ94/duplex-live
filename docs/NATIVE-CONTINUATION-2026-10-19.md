@@ -431,3 +431,22 @@ semantic7544795 already pass; conversion-only wrapper will reverify every stored
 input/response/hash and create a new version, without duplicate semantic requests,
 new teacher sessions, source/heldout audio edits or optimizer updates. Rejected
 partial22-case conversion is preserved. All native approval stages remain required.
+
+
+## All native25 captures complete; propagated quality stamp policy
+
+Remaining21 capture7544803 completes successfully; full25 CPU7544805 is running,
+FP32math7544806 remains afterok.73 CPU tests7545523 pass. Conversion7545524 creates
+all24 full measured-question timelines, then fail-closes at its final quality
+stamp for022: generator still passes raw spelling WER0.095238 to stamp_batch,
+instead of the explicit finite same-word canonical score0 already independently
+audited on unchanged words/times/audio. Failed output remains immutable/unapproved.
+
+New measured_speech_quality uses agreement_wer's verified declared policy, stores
+raw WER and the exact finite mapping beside canonical WER, and is recomputed by
+conversion validation. Legacy reports without the opt-in policy retain raw WER
+behavior. Repeats, missing words, synonyms, wrong values and early timing remain
+failures; the0.08 bar is unchanged.29 focused tests pass, including the actual
+quality-row field consumed by stamp_batch. New versioned full24 conversion must
+pass before encoding. Existing24 Astra responses are reused only through exact
+hash/input verification; no new API requests or source recordings are required.

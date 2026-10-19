@@ -37,5 +37,16 @@ class OrthographicAgreement(unittest.TestCase):
             else:bad['word_agreement']['variants']['boss']='bus'
             with self.subTest(field=field), self.assertRaises(RuntimeError):agreement_wer(bad)
 
+    def test_conversion_quality_stamp_uses_same_policy_and_preserves_raw_score(self):
+        from evals.recovery_teacher_convert import measured_speech_quality
+        r=self.record('Cancelling the lookup. The lookup is cancelled.',
+                      'Canceling the lookup. The lookup is canceled.')
+        row=measured_speech_quality(r)
+        self.assertEqual(row['wer'],0.)
+        self.assertGreater(row['raw_wer_against_model_text'],.08)
+        self.assertEqual(row['word_agreement'],r['word_agreement'])
+        del r['word_agreement']
+        self.assertGreater(measured_speech_quality(r)['wer'],.08)
+
 
 if __name__=='__main__':unittest.main()

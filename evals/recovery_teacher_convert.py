@@ -12,6 +12,15 @@ from evals.recovery_teacher_quality import validate_teacher,assess
 from evals.teacher_world import teacher_metadata
 
 
+def measured_speech_quality(speech):
+    """Use the declared same-word score consistently; never discard raw WER."""
+    from evals.recovery_prepare_data import agreement_wer
+    row=dict(ch='assistant',kind='utterance',gate='wer',gate_fail=None,wer=agreement_wer(speech))
+    if 'word_agreement' in speech:
+        row.update(raw_wer_against_model_text=speech['wer_against_model_text'],word_agreement=speech['word_agreement'])
+    return row
+
+
 def measured_question_completion(source_timeline, user_words):
     """Question content ends at its measured words, not the enclosing WAV tail.
 
@@ -98,6 +107,7 @@ def validate_teacher_conversion(data,receipt):
         raise RuntimeError("Independent teacher speech report changed")
     spoken = {Path(r["run"]).name:r for r in json.loads((checks.parent / "report.json").read_text())["results"]}
     decisions = {"teacher-"+r["scenario_id"]:r for r in approval["results"]}
+    quality_rows={r['scenario_id']:r for r in map(json.loads,(data/'filter_report.jsonl').read_text().splitlines())}
     passed = {"teacher-"+r["scenario_id"] for r in approval["results"] if r["speech_and_fact_checks_pass"]}
     if any(r["split"] != "train" or r["scenario_id"] not in passed for r in receipt["accepted"]):
         raise RuntimeError("Unapproved teacher or held-out audio entered conversion")
@@ -114,6 +124,8 @@ def validate_teacher_conversion(data,receipt):
         if not reviewed["speech_and_fact_checks_pass"] or reviewed["measured_words"] != decision["measured_words"]:
             raise RuntimeError("Teacher no longer passes current speech/fact/timing checks")
         if raw_manifest.get('collection_schema')=='dl-native-dialogue-teacher-v2':
+            if quality_rows[row['scenario_id']]['asr_detail']['per_utterance']!=[measured_speech_quality(spoken[decision['scenario_id']])]:
+                raise RuntimeError('Native-v2 quality stamp does not retain its exact raw/canonical speech evidence')
             expected,_=measured_timeline(row['scenario_id'],decision['measured_words'],source_timeline,
                 decision['delegation_events'],decision['reference_arrivals'],user_words=source_sidecar['user_words'])
             if (json.loads((data/row['dir']/'timeline.actual.json').read_text())!=expected.to_dict()
@@ -199,8 +211,7 @@ def main():
             ("stem_user.wav","source_user_sha256")): row[key] = sha256(folder / name)
         rows.append(row)
         reports.append({"scenario_id":sid,"scenario_class":"recovery_teacher","asr_model":"Whisper turbo independent words",
-            "asr_detail":{"per_utterance":[{"ch":"assistant","kind":"utterance","gate":"wer","gate_fail":None,
-                "wer":speech[result["scenario_id"]]["wer_against_model_text"]}]},"verdict":"pass"})
+            "asr_detail":{"per_utterance":[measured_speech_quality(speech[result['scenario_id']])]},"verdict":"pass"})
         timings.append({"scenario_id":sid,"timing":"ok","max_offset_ms":offset,"offset_bar_ms":200,
             "method":"Exact transcript/independent measured words; actual grid including real worker marker"})
     if native_v2 and (len(rows) != 24 or rejected):

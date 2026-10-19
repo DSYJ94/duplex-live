@@ -1,3 +1,26 @@
+# LOCAL active — all native captures complete; quality-stamp consistency fix,11:23UTC
+
+ALL21 remaining7544803 captures COMPLETED successfully; original0–3 preserved
+and independently proven exact. Full25 CPU7544805 RUNNING, FP32math7544806 afterok.
+No optimizer. Old28 histories and KL1/hiddenMSE10 unchanged.
+
+New sourcea94b677 CPU7545523 PASS73tests. Conversion7545524 creates all24 records
+with complete measured-question proof and <=50ms grid offsets, but FAILS final
+quality stamp on022 because converter still writes raw spelling WER0.095238 into
+that stamp. Raw speech audit already explicitly proves canonical same-word WER0,
+all measured words/times/WAVs/receipts identical and full24 semantic passes. Do not
+use or edit failed7545524. Fix generator/stamp consistency, retain raw score and
+finite spelling policy, verify quality-row evidence, then create a new version.
+No threshold decrease, rerendering, source/heldout change or passing subset.
+
+Independent full24 speech/control7544794 and actual semantic7544795 remain PASS;
+no repeated API calls needed. Read-only tail7545367 proves complete question
+through3.8s in full/prefix004, with all originals and late activity retained.
+All native25/new24 codec/input/numerical approvals remain required before training.
+LOCAL active; CLOUD submits nothing. Runtime/base/state/data/source backups verified.
+
+---
+
 # LOCAL active — complete measured-question clock prepared,19 October11:14UTC
 
 Read-only source control7545367 COMPLETED:004 full and prefix independently
