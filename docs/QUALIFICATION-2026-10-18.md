@@ -1,3 +1,11 @@
+19 October12:29UTC — native8-update process7546645 PASS, updates15.96seconds,
+frozen weights unchanged; exact adapter/full optimizer/RNG state and28-component
+data/25 old teachers/24 new teachers/KL1/hidden10 preserved and hash-backed.
+Independent fresh-process full state restore still RUNNING; development7547174/
+ASR7547175 remain dependent. No extension, adoption, fresh qualification or native
+behavior improvement claimed. Native/whole-system FAIL. Full dated eight-update
+JSON and newest HANDOFF contain exact identities, coverage limit and backup state.
+
 19 October12:21UTC — BOTH independent complete numerical approvals now PASS:
 old25 job7545975 max0.000882566, new24 job7546608 max0.000437021, unchanged0.001
 bar and causal0.0. Original failed FP32 baselines retained. Native8update pilot

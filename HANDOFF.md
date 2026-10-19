@@ -1,3 +1,42 @@
+# LOCAL active — eight native updates COMPLETE; independent restore pending,12:29UTC
+
+Native job7546645 source c93ac931905d1c45c1e8c02924ebaaeb6fb34c8b completed ALL8
+optimizer updates in15.961207563988864s, update process PASS, frozen speech/base
+weights unchanged, peak17747770880bytes. New optimizer from native520/7510331;
+no rejected7530408 reuse. Saved adapter SHA256
+ df113fc5bf67365062830737fb2b2ad5f6715afe555e10e185272e19987e9759;
+full optimizer/Python/NumPy/Torch/CUDA RNG state SHA256
+ 47b52ef890ecf64fa7c4cab9d5c1cf52bc74227d2bf676a13d9414ee2da95b4a.
+Independent fresh-process restore is RUNNING, not yet passed. No extension/adoption.
+
+Preserved report confirms exact original28-component data SHA256
+ de92099057ded15a1af0e387c96b457cdf4c1731c26594dcdca211d4c442fc1e,
+all25 old teacher histories, all24 new teachers available, KL1/hiddenMSE10, zero
+past/user/acoustic targets. Actual first8 sampling equals declared schedule8/24;
+quiet27/pause31 exposure not yet reached. Mechanics evidence
+ docs/NATIVE-V2-EIGHT-UPDATE-2026-10-19.json; no native quality improvement claimed.
+Critical11files/31207417bytes, including adapter/full state/data/voice/approval/
+policy/development receipt, all size/SHA256 verified12:24:35UTC on this Mac.
+
+Complete10 native evaluation7547174_0–9%2 remains PENDING AFTEROK7546645; independent
+CPU speech7547175 afterany7174. Both sourcec93ac93, max4GPUs. Old ordinary baseline
+7530265–68 already uses SAME7510331 weights/accepted voice, so do not resubmit.
+New matched quiet/pause7547007 FAIL2/2 fully measured and backed. Review every10
+candidate behavior, actual receipts/cancel clocks and speech before extension.
+Native/whole-system FAIL; reused development is not fresh qualification.
+
+Both complete numerical approvals PASS: old25/7545975 max0.000882566, new24/
+7546608 max0.000437021, unchanged0.001 and causal0.0; original failed FP32s retained.
+Fresh20 real36-utterance generation remains PAUSED after automatic-review transfer
+rejection, explicit owner approval question pending. No real generation/fresh
+inference submitted; no bypass/assumed consent. No owner conversations or secrets
+copied. Scoped backups21881files/14504241633bytes plus pinned model weights.
+LOCAL active until explicit handback; CLOUD submits nothing, GPU validation paused,
+no extra purchase. Cert expires20:51:23UTC/22:51:23Berlin today.
+Next:finish full independent restore ->all10 actual native evaluation ->review.
+
+---
+
 # LOCAL active — BOTH full numerical approvals PASS; native pilot running,12:21UTC
 
 ALL24 numerical-v2 reference7546608 COMPLETED10m07 and PASSES24/24 at unchanged

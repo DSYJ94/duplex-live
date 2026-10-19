@@ -593,3 +593,20 @@ queued using exclusive receipt. No completed updates, native behavioral improvem
 extension or adoption claimed at12:21UTC. New reference5files/178679bytes verified;
 source bundle756cdfb complete-history verified. Actual future results must update
 this ledger, not inherit a passing claim from source/input/math/mechanics approval.
+
+
+## Actual8 updates completed and portable full state preserved
+
+7546645 update process PASS8/8 in15.961207563988864seconds; frozen base/speech
+weights unchanged, peak17747770880bytes, zero past/audio loss targets. Adapter
+SHA256 df113fc5bf67365062830737fb2b2ad5f6715afe555e10e185272e19987e9759;
+full optimizer/Python/NumPy/Torch/CUDA state SHA256
+47b52ef890ecf64fa7c4cab9d5c1cf52bc74227d2bf676a13d9414ee2da95b4a. Parent's
+exact28-component data hash preserved, old25+new24 teacher policies and KL1/hidden10
+confirmed from stored report. Actual first8 sampling matches declaration exactly;
+quiet/pause teachers not exposed yet. Independent fresh-process restore still
+pending; complete10 native evaluation and actual speech review remain mandatory.
+Critical11files/31207417bytes hash-backed12:24:35UTC. No extension/adoption or
+behavior qualification inferred. Same7510331/accepted-voice ordinary baselines
+7530265–68 already exist and must not be duplicated. New baseline quiet/pause
+FAIL2/2 stands independently; conditional persona contribution remains unproven.

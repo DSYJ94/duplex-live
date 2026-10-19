@@ -1,7 +1,7 @@
 {
-  "at_utc": "2026-10-19T12:21:58.928177+00:00",
-  "unique_scoped_artifact_files": 21870,
-  "unique_scoped_artifact_bytes": 14473034216,
+  "at_utc": "2026-10-19T12:29:38.141175+00:00",
+  "unique_scoped_artifact_files": 21881,
+  "unique_scoped_artifact_bytes": 14504241633,
   "inventory_conflicts": [],
   "inventories": [
     {
@@ -178,6 +178,13 @@
       "files": 5,
       "bytes": 178679,
       "missing_roots": []
+    },
+    {
+      "name": "remote-native-v2-eight-update-critical-inventory.json",
+      "sha256": "5b8fcc98da1c2169d3598d8a12aca9c0ddbfff7a01b54b095d114aed89131159",
+      "files": 11,
+      "bytes": 31207417,
+      "missing_roots": []
     }
   ],
   "local_artifact_root": "runs/cloud-export-20261016/tree",
@@ -188,7 +195,7 @@
   "credentials_exported": false,
   "quarantined_core_exported": false,
   "cloud_gpu_validation": "paused",
-  "native_optimizer_updates": 0,
+  "native_optimizer_updates": 8,
   "runtime_symlinks_verified": 8,
   "runtime_sif_sha256": "c00bc99693e4908ea75d17df9c379b93ae9a1678a65d875565ad5d52f76fa27b",
   "pinned_vendor_git_bundles_verified": 3,
@@ -197,5 +204,7 @@
     "source_sha": "756cdfb6ca6fc24c8c87e6d47b18209ba54dbf88",
     "bundle": "runs/local-continuation-20261019/source-main-756cdfb.bundle",
     "bundle_sha256": "4950d428dc5639a1ebdbe87731b7d764c90fc98f706a2fa710880244f1398d66"
-  }
+  },
+  "native_candidate_job": "7546645",
+  "native_candidate_training_state_sha256": "47b52ef890ecf64fa7c4cab9d5c1cf52bc74227d2bf676a13d9414ee2da95b4a"
 }
