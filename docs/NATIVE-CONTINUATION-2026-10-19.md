@@ -388,3 +388,22 @@ or stale value, and measured latency/backlog/playout. Invalid new source audio i
 frozen and unscored, never rerolled or treated as a passing subset. A declaration
 is not execution or qualification evidence. This preserves the distinction between
 native engineering/data approval, reused development review and fresh acceptance.
+
+
+## Full24 speech/control AND semantic pass; actual conversion failure reproduced
+
+7544794 passes all24 and exact same-WAV/raw-ASR/words/times/receipts control,70 CPU
+tests pass.7544795 obtains24/24 actual gpt-6-astra semantic passes, then conversion
+rejects001 and004 because delegation precedes the complete WAV file end. It is
+not a200ms emission-grid failure. Keep the rejected partial output unapproved.
+
+001 actual delegation5.822835s, first clipend5.85s, last measured question word4.54s;
+late waveform tail is quiet.004 actual delegation5.538613s, fileend6.9s, last
+measured question word3.8s, but another acoustic burst occurs5.8–6.9s. Existing
+GPT-Live user transcript identifies Laurel South by4.6s and contains no later user
+word before10s. No assumption that the late burst is harmless is accepted without
+an independent isolated-tail control. Pinned raw SHA and windowed CPU ASR keep
+original audio, text, receipts and folds untouched. No expected words enter ASR.
+Only after this read-only diagnosis choose an explicit measured-question clock
+or repair a diagnosed raw TRAIN waveform in a new directory. No guard/threshold
+weakening, changed original, passing subset or native optimizer submission.

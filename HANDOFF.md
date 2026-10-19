@@ -1,3 +1,29 @@
+# LOCAL active — full24 speech AND semantic PASS; conversion guard diagnosis,11:05UTC
+
+CPU7544793 PASS70tests. Same-WAV quality/control7544794 COMPLETED6m27: all24
+speech/fact/tool/quiet/pause checks pass, every raw ASR word/time/WAV/model/receipt
+identical to7544226; only022 spelling verdict changes, raw WER0.095238 retained.
+Semantic7544795 independently PASSES ALL24 actual Astra reviews, then conversion
+FAILS on two first-question completion guards. No ingestion/optimizer approval.
+Partial data7544795 and all24 semantic responses preserved; never accept22/24.
+
+Local exact reproduction:004 delegate5.538613s vs clipend6.9s, measured word end3.8s;
+001 delegate5.822835s vs clipend5.85s, measured word end4.54s.001 tail is quiet;
+004 has late acoustic burst near5.8–6.9s, so do not assume clipend is just silence.
+Raw004 hash3e395657148a0f98571a02b3c5d5c679273e89da991c6b8ea70d86ec48a7ed05.
+A read-only CPU full/prefix/tail ASR control is prepared, with no source words or
+waveform changes, before choosing a measured-clock correction or raw TRAIN repair.
+The200ms native grid bar and every quality threshold remain unchanged.
+
+Native old25 remaining capture7544803 continues PASS so far (4–7 complete); full25
+CPU7544805 and FP32 numerical7544806 remain afterok. Four original controls0–3 are
+reused only after independent7544729 full-input exact pass. No optimizer. Native
+baseline520, all28 actual histories and KL1/hiddenMSE10 remain preserved.
+Fresh20 evaluation-only plan declared in0f7b6f6; no generation or evaluation jobs.
+LOCAL active, CLOUD submits nothing. Runtime/base/state/source backups VERIFIED.
+
+---
+
 # LOCAL active — native control PASS; remaining21 resumed,19 October10:50UTC
 
 Independent CPU control7544729 COMPLETED2m25: all four original native traces
