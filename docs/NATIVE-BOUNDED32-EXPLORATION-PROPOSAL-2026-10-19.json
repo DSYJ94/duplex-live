@@ -1,0 +1,69 @@
+{
+  "schema": "dl-native-bounded32-training-exploration-proposal-v1",
+  "status": "PROPOSAL_ONLY_OWNER_DECISION_REQUIRED",
+  "at_utc": "2026-10-19T21:05:16.343601+00:00",
+  "purpose": "Measure whether four more passes through the approved new teacher corpus learn silence/pause/delegation beyond the one-pass eight-update pilot, while preserving every old loss and data artifact. Improvement is uncertain; ordinary performance may worsen.",
+  "checkpoint_job": "7556562",
+  "checkpoint_sha256": "1ad464e2b5ca2258ef777f013ccdfe057721a65cd974e17a32a1070b1f05016b",
+  "training_state_sha256": "3303bf1624cf3c36ff071e9fb69a239b3b93fda6a0d914db67848b7543cad675",
+  "source_recipe": "3061dcba1de571d2dad58d466f7c3f3ca43e41ec",
+  "starting_optimizer_steps": 8,
+  "additional_optimizer_updates": 32,
+  "final_optimizer_steps": 40,
+  "optimizer_reset": false,
+  "learning_rate": 2e-06,
+  "evidence": {
+    "independent_restore_all28_logits_exact": true,
+    "word10_clock14_targets_independently_reconstructed": true,
+    "native10_session": "7556809",
+    "independent_speech_job": "7556810",
+    "all10_reviewed": true,
+    "ordinary_core_correct": "2/4",
+    "speech_quality": "6/10",
+    "native_review": "docs/NATIVE-ORDINARY-CLOCK-COMPLETE10-REVIEW-2026-10-19.json",
+    "greedy_diagnostic": "docs/NATIVE-TEXT-SAMPLING-DIAGNOSTIC-2026-10-19.json"
+  },
+  "existing_gate": {
+    "file": "evals/context_native_extension_review.py",
+    "condition": "all4_ordinary_core_correct and all4 ordinary speech gates",
+    "currently_satisfied": false
+  },
+  "proposed_owner_scoped_exception": "Permit exactly one training-only32-update exploration despite the failed early ordinary/speech continuation gate. Never relabel the failed pilot as passing. Default continuation/adoption gates remain for all other runs.",
+  "invariants": {
+    "actual_components": 28,
+    "old_native_teachers": 25,
+    "new_native_teachers": 24,
+    "new24_exposure_every8": true,
+    "legacy_kl_weight": 1.0,
+    "legacy_hidden_mse_weight": 10.0,
+    "word_anchor64_unchanged": true,
+    "clock_anchor64_unchanged": true,
+    "all_input_words_audio_targets_masks_receipts_folds_unchanged": true,
+    "user_past_audio_output_loss_targets": 0,
+    "no_new_speech_or_teacher_api_calls": true,
+    "default_text_temperature": 0.7,
+    "acoustic_temperature": 0.8
+  },
+  "required_before_launch": [
+    "Explicit owner selection authorizing this exact bounded exploration",
+    "Committed clean immutable implementation and authorization receipt",
+    "CPU tests of narrowly scoped gate exception and exact full-state source transition",
+    "All numerical/data/voice/recipe fields identical across restore; any source provenance transition explicitly recorded and independently tested",
+    "Verify Slurm state and use one exclusive launch receipt"
+  ],
+  "required_after_training": [
+    "Independent fresh-process optimizer/Python/NumPy/Torch/CUDA/full adapter restore and all28 exact valid logits",
+    "Independent reconstruction of both10word/14clock target caches",
+    "Complete10 original-profile native audio/independent speech/task/receipt/timing review",
+    "All4 ordinary correctness/speech required before fresh evaluation",
+    "Fresh full20 paired qualification at unchanged criteria before any adoption"
+  ],
+  "maximum_gpus": 1,
+  "maximum_gpu_walltime_minutes": 30,
+  "reservation": "interactive",
+  "partition_or_qos_override": false,
+  "new_cloud_compute_purchase": false,
+  "candidate_adoption_authorized": false,
+  "further_training_after40_authorized": false,
+  "training_submission_authorized": false
+}
