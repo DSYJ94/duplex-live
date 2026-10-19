@@ -697,11 +697,15 @@
     "profile_rejected": true
   },
   "bounded32_exploration_policy_decision": {
-    "status": "OWNER_DECISION_PENDING",
+    "status": "OWNER_APPROVED_ONE_BOUNDED32_TRAINING_ONLY",
     "proposal": "docs/NATIVE-BOUNDED32-EXPLORATION-PROPOSAL-2026-10-19.json",
-    "owner_approval_received": false,
-    "optimizer_submission_authorized": false,
-    "approval_fixture_not_created": true
+    "owner_approval_received": true,
+    "optimizer_submission_authorized": true,
+    "approval_fixture_not_created": false,
+    "authorization_fixture": "evals/fixtures/native-bounded32-owner-authorization-20261019.json",
+    "owner_reply": "Run one bounded 32-update exploration (Recommended)",
+    "execution_source": "99cc7394ebde78e2762d92813dddbc7a3feaaaed",
+    "approved_at_utc": "2026-10-19T21:44:05.996677+00:00"
   },
   "bounded32_exploration_preparation": {
     "schema": "dl-native-bounded32-preparation-v1",

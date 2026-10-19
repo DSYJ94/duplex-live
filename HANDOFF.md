@@ -1,3 +1,23 @@
+# LOCAL executor — owner APPROVES one bounded32 continuation (2026-10-19 21:44 UTC)
+
+Owner explicitly selected: "Run one bounded 32-update exploration (Recommended)".
+This resolves the previous policy blocker. Authorization fixture:
+ evals/fixtures/native-bounded32-owner-authorization-20261019.json
+binds exact tested execution source99cc7394ebde78e2762d92813dddbc7a3feaaaed,
+parent7556562/3061dcba1de571d2dad58d466f7c3f3ca43e41ec, state3303/reload440b/
+failedreviewd293/proposal6cf7. ONE32-update training-only run, global9..40,
+original optimizer/RNG, LR2e-6/all28/25/24/KL1hidden10/word64/clock64 unchanged,
+1GPU/30min interactive, no further extension or adoption. All independent
+restore/complete10/all4ordinary/fresh20/adoption gates remain unchanged.
+CPU7558324 PASS151 for execution99. ActualSSH PASS/queueEMPTY21:43:40UTC;
+local certificate through20Oct02:05:02UTC/04:05:02Berlin. Next: deploy clean
+new authorization review worktree, validate exact authorization+all10 evidence,
+check actual queue and submit once with exclusive launch receipt. No new job
+ID yet. LOCAL retains execution, CLOUD submits nothing. Old blocked notes below
+are superseded by this explicit owner choice. Native/whole-system unqualified.
+
+---
+
 # LOCAL sole executor — goal blocked pending bounded32 policy choice (2026-10-19 21:27 UTC)
 
 Same owner-choice blocker revalidated on third consecutive goal turn; no answer,
