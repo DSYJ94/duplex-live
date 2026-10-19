@@ -1,3 +1,43 @@
+# LOCAL active — full24 FP32 retained; native quiet/pause baseline added,12:10UTC
+
+New workflow source f47d27b4cc5a647998c78b141c0a7b591fbf9b8a pushed/immutable:
+native520 baseline array7547007_0–1%2 on repaired native2-train-014/015, one GPU
+per task with independent CPU speech audit inside each task. Reused TRAIN/development
+evidence ONLY, no external API, no new labels. Exclusive receipt
+runs/native-v2-quiet-baseline-local-20261019.json. At most3 GPUs concurrently with
+numerical reference/pilot; no extra compute purchase. Original collector/backend
+source files byte-identical. Check actual Slurm states before any submission.
+
+Native24 FP327545910 FAILED after10m35, ALL24 evaluated: failed017/006, max error
+0.0014115571975708008 > unchanged0.001; ALL causal-prefix errors0.0. Complete
+original report/data/log and pilot/CPU receipts backed10files/153814bytes, all
+sizes/SHA256 verified12:07:04UTC. Source a32b165ade593e62f92c675872ba4b0c789450ce.
+Required all24 numerical-v2 reference7546608 RUNNING, retaining original result.
+Old25 full numerical-v2 7545975 PASS25/25 max0.000882566, causal0.0, backed.
+
+Pilot7546645 remains PENDING AFTEROK7546608, immutable training source
+c93ac931905d1c45c1e8c02924ebaaeb6fb34c8b, CPU7546529 PASS85tests. ZERO new optimizer
+updates at12:10UTC. All25/24 complete approvals must pass at runtime. Native520
+warm start, new optimizer8updates, full28 histories/all25 old teachers/KL1/hidden10.
+Mandatory fresh-process full state restore then all10 native behavior review before
+extension/adoption. Exact declared sampling: first8 exposes8 new teachers; quiet
+at27, pause at31, all24 by31. Not execution evidence or extension authorization.
+
+Fresh20 external36 synthetic-utterance speech generation is still PAUSED after
+an automatic-review rejection; explicit owner transfer approval question remains
+pending. No real generation/API request or fresh inference was submitted. Prepared
+fresh observer/inference controls pass85 CPU tests. Do not bypass the rejection.
+
+Scoped backups21834files/14377906025bytes, every inventory size/SHA256 verified,
+plus standalone pinned native/PersonaPlex/codec weights and verified source/runtime.
+Older stopped Mac source backup remains partial. No owner conversations, credentials
+or quarantined core copied. Native/whole-system FAIL; no checkpoint adopted.
+LOCAL active until owner explicitly hands back. CLOUD submits nothing, GPU validation
+paused. Local certificate expires20:51:23UTC/22:51:23Berlin today.
+Next: complete24 numerical-v2 ->8update/restore ->all10 candidate/native baseline review.
+
+---
+
 # LOCAL active — all25 numerical PASS; full24 input PASS; gated pilot queued,11:57UTC
 
 Training/evaluation source c93ac931905d1c45c1e8c02924ebaaeb6fb34c8b is pushed,

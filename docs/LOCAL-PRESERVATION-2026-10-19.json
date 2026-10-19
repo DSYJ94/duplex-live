@@ -1,7 +1,7 @@
 {
-  "at_utc": "2026-10-19T11:57:32.667381+00:00",
-  "unique_scoped_artifact_files": 21824,
-  "unique_scoped_artifact_bytes": 14377752211,
+  "at_utc": "2026-10-19T12:10:03.964705+00:00",
+  "unique_scoped_artifact_files": 21834,
+  "unique_scoped_artifact_bytes": 14377906025,
   "inventory_conflicts": [],
   "inventories": [
     {
@@ -156,6 +156,13 @@
       "sha256": "c5c2d1156f768513dd08056c62eda1eb12687391b26870a63c894b11acd51d7b",
       "files": 154,
       "bytes": 290599979,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native24-fp32-and-pilot-receipts-inventory.json",
+      "sha256": "7ee4791b89320ca078415878e3b98ff3d751e33c313b46799ec7f9dd835ee873",
+      "files": 10,
+      "bytes": 153814,
       "missing_roots": []
     }
   ],
