@@ -1,3 +1,41 @@
+# LOCAL active — pilot7555898 eight updates COMPLETE; independent restore RUNNING (2026-10-19 19:45 UTC)
+
+Exact source b21ac8418be4e4c6597ab93a01c64c3f96addb12. CPU7555896 PASS135tests.
+Pilot7555898 remains sole live GPU job in interactive; watcher verified RUNNING
+7m40. report.json confirms8 updates/23.73239441498299s optimization, all24 new
+teachers exposed exactlyonce and all10 approved ordinary anchors on every update.
+Frozen base/audio unchanged; user/past/audio prediction loss0. First anchor KL/MSE
+0; last pre-update meanKL0.00015947280116961337/MSE0.00010425216969451867.
+These TRAIN diagnostics are not behavioral qualification. Independent fresh-process
+state/reference reconstruction still RUNNING; do NOT extend or evaluate prematurely.
+
+Adapter SHA36f1470c9ab5e9a7a2d0bc8e142e56978c50e4b36b9eb95c43e228ed5e558270;
+full optimizer/RNG state SHAbc92b6333a83fcd0577be59dafda61777c4794ed034d3c08cd62193d382a6888.
+All18 early immutable state/input/cache/receipt artifacts73099631bytes SHAbacked
+19:45:01UTC, omitting growingGPUlog. Backup union22662files15255103220bytes plus
+pinned models/runtime/ASR; previous full22647file union independently rehashed
+19:40:13UTC/no mismatch. Stopped old Mac source backup remains PARTIAL.
+
+LOCAL watcher /tmp/duplex-advance-warm-to-native10.py (exec29477) polls ONLY7555898
+at60s intervals and, after terminal0:0+full exact restore, invokes exclusive
+/tmp/duplex-launch-warm-native10.py ONCE. It creates cluster receipt
+runs/native-warm-ordinary-development-local-20261019.json with held/releasedIDs;
+original inference cf28726b44ed0621dde6bfd27257709574f5e9ed, new session b21ac84,
+2GPU finite10case session then independent CPUfull10speech. Do not start another
+monitor/launcher or duplicate jobs; inspect this watcher and cluster receipt first.
+No native evaluation IDs yet at this entry. Prepare bounded32 extension but do
+not submit before complete10 review/all4ordinary and independent restore pass.
+Fresh20/38 source approved7550653; model remains unqualified; no fresh inference.
+
+LOCAL sole executor, CLOUD submits nothing, no execution handback/cloud purchase.
+Certificate20Oct02:05:02UTC/04:05:02Berlin; allocation ends21Oct. Owner explicitly
+asks maximum pace: proceed immediately through mandatory gates without duplicate
+submissions or weakening any word/audio/numerical/behavioral threshold. Next:
+watcher completesrestore→native10, final state/log backup then independent review.
+Unrelated pyc/probe/roadmap edits preserved. Goalactive, native/whole-systemFAIL.
+
+---
+
 # LOCAL active — new warm-ordinary pilot7555898 RUNNING (2026-10-19 19:37 UTC)
 
 Exact training/session source b21ac8418be4e4c6597ab93a01c64c3f96addb12 committed,

@@ -1,7 +1,7 @@
 {
-  "at_utc": "2026-10-19T19:38:00.921120+00:00",
-  "unique_scoped_artifact_files": 22647,
-  "unique_scoped_artifact_bytes": 15182265500,
+  "at_utc": "2026-10-19T19:45:22.681075+00:00",
+  "unique_scoped_artifact_files": 22662,
+  "unique_scoped_artifact_bytes": 15255103220,
   "inventory_conflicts": [],
   "inventories": [
     {
@@ -381,6 +381,13 @@
       "files": 2,
       "bytes": 30456,
       "missing_roots": []
+    },
+    {
+      "name": "remote-native-warm-ordinary-pilot-state-early-inventory.json",
+      "sha256": "13bca61512caefb65d10a2ff3e092f84626f14eb87b0a46614b16ae6919bded8",
+      "files": 18,
+      "bytes": 73099631,
+      "missing_roots": []
     }
   ],
   "local_artifact_root": "runs/cloud-export-20261016/tree",
@@ -436,11 +443,26 @@
   "new_warm_ordinary_pilot": {
     "job": "7555898",
     "source": "b21ac8418be4e4c6597ab93a01c64c3f96addb12",
-    "status": "RUNNING",
+    "status": "EIGHT_UPDATES_COMPLETE_INDEPENDENT_RESTORE_PENDING",
     "checked_utc": "2026-10-19T19:37:24Z",
     "elapsed": "00:00:24",
     "independent_full_cpu_job": "7555896",
     "cpu_tests_passed": 135,
-    "checkpoint_or_restore_not_yet_verified": true
+    "optimizer_steps": 8,
+    "training_seconds": 23.73239441498299,
+    "checkpoint_sha256": "36f1470c9ab5e9a7a2d0bc8e142e56978c50e4b36b9eb95c43e228ed5e558270",
+    "training_state_sha256": "bc92b6333a83fcd0577be59dafda61777c4794ed034d3c08cd62193d382a6888",
+    "all24_teachers_exposed_once": true,
+    "all10_ordinary_anchors_each_update": true,
+    "full_checkpoint_and_reference_cache_sha256_backed": true
+  },
+  "complete_union_reverification": {
+    "at_utc": "2026-10-19T19:40:13.657549+00:00",
+    "files": 22647,
+    "bytes": 15182265500,
+    "all_artifact_sizes_and_sha256_match": true,
+    "report": "runs/local-continuation-20261019/complete-union-reverification-20261019.json",
+    "report_sha256": "0e1b1f526cb12003d7df33aa3936649f4be8550fcad5ca37040b6f4bc589460b",
+    "source_ledger_sha256": "495e2b324ba7c248cd0c395091f01b049dac6738a360d81fca2d50276205bede"
   }
 }
