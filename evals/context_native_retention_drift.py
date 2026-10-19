@@ -30,9 +30,12 @@ def differences(parent_h, parent_z, child_h, child_z, mask):
     import torch
     a=parent_z[0,0,mask].float().log_softmax(-1)
     b=child_z[0,0,mask].float().log_softmax(-1)
+    frames=int(mask.sum())
+    if not frames:raise ValueError('Empty comparison mask')
+    matches=int((a.argmax(-1)==b.argmax(-1)).sum())
     result=dict(warm_parent_kl=float((a.exp()*(a-b)).sum(-1).mean()),
         warm_parent_hidden_mse=float((parent_h[:,mask].float()-child_h[:,mask].float()).square().mean()),
-        text_top1_agreement=float((a.argmax(-1)==b.argmax(-1)).float().mean()),frames=int(mask.sum()))
+        text_top1_matches=matches,text_top1_agreement=matches/frames,frames=frames)
     if not all(__import__('math').isfinite(v) for v in result.values()):
         raise ValueError('Nonfinite drift diagnostic')
     return result
@@ -46,6 +49,9 @@ def run(lm, learned, old, new, retention, references, args, metadata, forward):
     from evals.context_teacher_text_balance import loss as teacher_loss
     from evals.moshi_training_smoke import tensor_hashes
     validate_inventory(old,new,retention)
+    frame_counts=sorted({int(b[1].sum()) for b in old+new+retention})
+    rounding=[dict(frames=n,legacy_float_mean=float(torch.ones(n,device='cuda',dtype=torch.float32).mean())) for n in frame_counts]
+    print(json.dumps(dict(identity_mean_reproduction=rounding)),flush=True)
     proof=Path(args.native_v2_retention_drift_proof)
     identity,child=verify_checkpoint(proof)
     parent=json.loads((args.warm_start_proof/'report.json').read_text())
@@ -66,8 +72,8 @@ def run(lm, learned, old, new, retention, references, args, metadata, forward):
             for group,index,inputs,mask,target,record in batches:
                 install(saved);ph,pz=forward(inputs)
                 check=differences(ph,pz,ph,pz,mask)
-                if check['warm_parent_kl']!=0 or check['warm_parent_hidden_mse']!=0 or check['text_top1_agreement']!=1:
-                    raise ValueError('Self-comparison is not exact')
+                if check['warm_parent_kl']!=0 or check['warm_parent_hidden_mse']!=0 or check['text_top1_matches']!=check['frames']:
+                    raise ValueError('Self-comparison is not exact: '+json.dumps(check))
                 parent_loss=float(teacher_loss(pz[0,0],target,mask)[0]) if target is not None else None
                 install(candidate);ch,cz=forward(inputs);metrics=differences(ph,pz,ch,cz,mask)
                 row=dict(group=group,index=index,teacher_id=record['id'],kind=record['kind'],
@@ -96,6 +102,7 @@ def run(lm, learned, old, new, retention, references, args, metadata, forward):
         parent=str(args.warm_start_proof),candidate=str(proof),candidate_identity=identity,
         parent_checkpoint_sha256=sha256(args.warm_start_proof/'adapters.safetensors'),
         source_code_sha256=sha256(Path(__file__)),complete_teacher_inputs=49,complete_legacy_references=4,
+        identity_mean_reproduction=rounding,
         cases=rows,optimizer_steps=0,new_checkpoint_written=False,parent_parameters_restored_exact=True,
         frozen_base_parameters_unchanged=True,legacy_reference_targets_and_weights_unchanged=True,
         evaluation_outputs_used_for_training=False,training_approved=False,candidate_adopted=False,

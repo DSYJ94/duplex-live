@@ -1,3 +1,31 @@
+# LOCAL — zero-update drift diagnostic failed identity guard; exact-count correction prepared (2026-10-19 18:51 UTC)
+
+Source0d352f6bc8305e2eb0331cd5c229dd88378b17bd deployed. CPU7554614 PASS130tests
+4.292s; zero-update GPU7554615 FAILED6m43 on Self-comparison is not exact before
+completing53streams. Original failed log/partial output/launch receipt retained;
+no aggregate result or passing subset accepted, no optimizer or model checkpoint.
+Actual native520 and rejected7549991 remain preserved. No source audio/teacher
+word/receipt/mask/legacy reference or native numerical threshold is changed.
+
+The guard used a float32 GPU mean of identical top-token booleans as an EXACT1.0
+test. Prepared correction uses integer matching-token count divided by integer
+valid-frame count, and compares integer matches==frames. Exact KL0/hiddenMSE0
+self checks remain. Adds nonpower-of-two count regression tests and logs GPU
+all-ones mean reproduction at all actual input frame counts to verify this rounding
+hypothesis directly, rather than silently loosening tolerances. New full53 rerun
+will still compare ALL25old/ALL24new/ALL4legacy references and restore exact parent.
+No new training recipe or extension is authorized.
+
+Last authoritative18:49:40UTC state: CPU7554614 COMPLETED8s, GPU7554615 FAILED,
+account squeue empty. New correction not yet deployed/rerun. Existing native
+session7551328/ASR7551361 already COMPLETE and reviewed: candidate7549991 rejected,
+ordinary3/4, speech7/10, source clipping absent. No32-update extension/adoption/
+fresh20 native inference. Source20/38 approval remainsPASS. LOCAL owns execution,
+CLOUD submits nothing. Next: back failed diagnostic, commit/push fix, independent
+full CPU suite then new exclusive whole53 zero-update diagnostic in interactive.
+
+---
+
 # LOCAL — complete10 review REJECTS pilot; zero-update retention diagnostic prepared (2026-10-19 18:05 UTC)
 
 Interactive allocation7551328 COMPLETED11m08; full10 independent CPUASR7551361

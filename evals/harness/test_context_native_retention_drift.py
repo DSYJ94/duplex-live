@@ -41,5 +41,12 @@ class RetentionDriftTests(unittest.TestCase):
         h=torch.zeros(1,1,2);z=torch.zeros(1,1,1,3);bad=z.clone();bad[0,0,0,0]=float('nan')
         with self.assertRaises(ValueError):differences(h,z,h,bad,torch.tensor([True]))
 
+    def test_nonpower_of_two_identity_uses_exact_integer_counts(self):
+        import torch
+        for frames in [325,471,761]:
+            h=torch.zeros(1,frames,2);z=torch.zeros(1,1,frames,3);mask=torch.ones(frames,dtype=torch.bool)
+            r=differences(h,z,h,z,mask)
+            self.assertEqual(r['text_top1_matches'],frames);self.assertEqual(r['text_top1_agreement'],1.)
+
 
 if __name__=='__main__':unittest.main()
