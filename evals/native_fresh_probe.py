@@ -16,11 +16,17 @@ def validate_options(args):
 
 
 def load(args):
+    profile=getattr(args,'native_fresh_source_profile','sealed-large-v3')
     if args.scenario.startswith('native-fresh2-'):
         from evals.native_fresh_inputs_v2 import inference_input
         from evals.native_fresh_review import validate
         validate(args.native_fresh_behavior_review,args.native_fresh_candidate_proof,args.adapter_proof)
+        if profile=='owner-approved-turbo-spelling-v1':
+            from evals.native_fresh_source_reapproval import inference_input
+        elif profile!='sealed-large-v3':
+            raise ValueError('Unknown fresh source quality profile')
     else:
+        if profile!='sealed-large-v3':raise ValueError('Derived quality profile applies only to the second collection')
         from evals.native_fresh_inputs import inference_input
     validate_options(args)
     source=inference_input(args.data,args.native_fresh_quality,args.scenario)

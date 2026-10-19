@@ -49,6 +49,14 @@ PY
 )
 test "${#FIELDS[@]}" = 5
 EXTRA=()
+QUALITY="$DL/runs/native-fresh2-judge-$NATIVE_FRESH_QUALITY_JOB/quality.json"
+case "${NATIVE_FRESH_SOURCE_PROFILE:-sealed-large-v3}" in
+ sealed-large-v3) ;;
+ owner-approved-turbo-spelling-v1)
+  QUALITY="$DL/runs/native-fresh2-source-reapproval-$NATIVE_FRESH_QUALITY_JOB/quality.json"
+  EXTRA+=(--native-fresh-source-profile owner-approved-turbo-spelling-v1) ;;
+ *) echo 'Unknown source-quality profile' >&2; exit 1 ;;
+esac
 if [ "${FIELDS[2]}" = native-asr ]; then
  EXTRA+=(--asr-python "$DL/envs/moshi-annotation-7379026/bin/python")
  set -a
@@ -66,7 +74,7 @@ apptainer exec --nv --bind /projects,/lus,/home \
  --data "$DL/runs/native-fresh2-inputs-$NATIVE_FRESH_INPUTS_JOB" \
  --native-fresh-candidate-proof "$DL/runs/context-training-proof-$NATIVE_FRESH_CANDIDATE_JOB" \
  --native-fresh-behavior-review "$NATIVE_FRESH_BEHAVIOR_REVIEW" \
- --native-fresh-quality "$DL/runs/native-fresh2-judge-$NATIVE_FRESH_QUALITY_JOB/quality.json" \
+ --native-fresh-quality "$QUALITY" \
  --scenario "${FIELDS[0]}" --expected-kind "${FIELDS[1]}" --backend-mode "${FIELDS[2]}" \
  --lookup-delivery-delay-s "${FIELDS[3]}" --adapter-proof "$DL/runs/context-training-proof-${FIELDS[4]}" \
  --voice-reference "$DL/runs/voice-quality-7414595/codec/reference.wav" \

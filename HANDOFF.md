@@ -1,3 +1,36 @@
+# LOCAL resumed — owner approves new whole20 source reapproval (2026-10-19 15:42 UTC)
+
+Owner independently heard "Room sign" and explicitly selected "Room sign; approve
+full20 derived reapproval". Committed authorization is the NEW fixture
+native-fresh2-source-reapproval-authorization-20261019.json, SHA
+d80d3334dd3b7913c1d0309ce6e423a35f3f7101551d7984dd15712c2eaae115.
+This supersedes only the prior owner-decision blocker. Original failed primary
+7549085 and complete turbo7549412 diagnostic remain unchanged/failed. No room/rune
+equivalence, no word/audio/gain/threshold change, no new API calls or rerolls.
+
+New derived whole20 quality writer and independently recomputing reader prepared:
+all20/38 required, fixed complete turbo transcripts, only lookup/look up and
+color/colour spelling normalization, same WER<=.05/peak<=.995/physical bounds.
+Input manifest/generator module/plan/original failed audits remain hash-pinned.
+New explicit inference profile owner-approved-turbo-spelling-v1 cannot bypass the
+committed all10 native candidate review. Legacy input reader stays unchanged.
+Local new gate tests4/4 PASS; full remote CPU suite and independent derived source
+approval job are not yet submitted at this entry. Existing local Python has no
+NumPy, so legacy spelling tests require the existing cluster CPU environment.
+
+At15:39:22 UTC existing native7549994 all10 PENDING(Resources), ASR7550001
+PENDING(Dependency), reports0/10. Pilot7549991 eightupdates/all24 exposure and
+independent full-state restore remain PASS. No new optimizer, extension, adoption
+or fresh inference. Same immutable trainercf28726/wrapper95a60b7 and full14file
+state backup. Native/whole-system FAIL. LOCAL retains execution ownership, CLOUD
+submits nothing. Backups remain22465 unique files14922150596bytes plus pinned
+runtime/models/ASRweights; stopped old Mac backup PARTIAL; unrelated edits retained.
+Next: commit/push/deploy source, run independent full CPU suite then whole20 derived
+source approval + fresh-process reader. Recheck existing native jobs, back/review
+ALL10 actual audio/ASR/receipts/clocks before any bounded research continuation.
+
+---
+
 # LOCAL executor retained — blocked awaiting GPUs and owner decision (2026-10-19 15:34 UTC)
 
 Source main before this checkpoint: 5b87f228561ca137bfab1c9108cbba0affe5753c,

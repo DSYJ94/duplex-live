@@ -1,0 +1,26 @@
+{
+  "schema": "dl-native-fresh2-source-reapproval-authorization-v1",
+  "status": "OWNER APPROVED",
+  "proposal_sha256": "1575e4108ed6280d88ebad85efc617242e239139f36e68cf1b065d7df7009712",
+  "owner_hearing": "room sign",
+  "owner_scope_approval": "Room sign; approve full20 derived reapproval",
+  "hearing_question_id": "call_e3ddc910dc384fc0b33b1fb1b323dac0",
+  "scope_question_id": "call_a9849a3050ff4e48aeecb835c08a62ff",
+  "all20_cases_and38_clips_required": true,
+  "complete_fixed_turbo_transcripts_only": true,
+  "finite_spelling_changes_only": {
+    "color": "colour",
+    "lookup": [
+      "look",
+      "up"
+    ]
+  },
+  "wer_threshold": 0.05,
+  "peak_threshold": 0.995,
+  "original_audio_words_receipts_and_failed_audits_unchanged": true,
+  "no_new_api_calls": true,
+  "no_rerolls_or_passing_subset": true,
+  "room_rune_equivalent": false,
+  "inference_requires_independent_full10_candidate_review": true,
+  "training_approved": false
+}

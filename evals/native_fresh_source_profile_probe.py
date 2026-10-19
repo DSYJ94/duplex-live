@@ -29,7 +29,7 @@ def require_same_cases(manifest, diagnostic):
         raise ValueError('Complete same20 source/ASR inventory required; no subset')
 
 
-def run(data,primary,diagnostic,out):
+def recompute(data,primary,diagnostic):
     import soundfile as sf
     from data.synthetic import filter as normalizer
     spec=json.loads(PROPOSAL.read_text())
@@ -83,6 +83,11 @@ def run(data,primary,diagnostic,out):
         original_failed_verdict_preserved=True,input_quality_approved=False,inference_approved=False,
         owner_hearing_received=False,owner_scope_approval_received=False,training_approved=False,
         generation_calls=0,rerolls=0,original_audio_changed=False,passing_subset_accepted=False)
+    return report
+
+
+def run(data,primary,diagnostic,out):
+    report=recompute(data,primary,diagnostic)
     out.mkdir(parents=True,exist_ok=False);(out/'diagnostic.json').write_text(json.dumps(report,indent=2)+'\n')
     print(json.dumps({k:v for k,v in report.items() if k!='results'}),flush=True)
 

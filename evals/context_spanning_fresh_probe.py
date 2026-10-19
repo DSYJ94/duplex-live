@@ -25,6 +25,7 @@ def main():
     ap.add_argument('--scenario',required=True)
     ap.add_argument('--native-fresh-behavior-review',type=Path)
     ap.add_argument('--native-fresh-candidate-proof',type=Path)
+    ap.add_argument('--native-fresh-source-profile',choices=('sealed-large-v3','owner-approved-turbo-spelling-v1'),default='sealed-large-v3')
     ap.add_argument('--expected-kind',choices=('private','simple','clarify','cancel'),required=True)
     ap.add_argument('--backend-mode',choices=('native-asr','observe-only'),required=True)
     ap.add_argument('--asr-python',type=Path)

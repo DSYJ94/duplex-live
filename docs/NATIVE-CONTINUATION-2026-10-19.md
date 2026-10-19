@@ -842,3 +842,6 @@ inference or generator execution. Candidate fixed before any new fresh outputs.
 
 
 2026-10-19 15:34 UTC — LOCAL goal blocked after three consecutive revalidations: native7549994 all10 pendingResources (no start estimate), ASR7550001 dependent, no behavior reports; owner hearing/new full20 procedure decision also pending. Existing jobs stay submitted, no duplicate or extension/adoption/fresh inference. Pilot7549991 independent full-state restorePASS, backups unchanged; local SSH works/certificate through20Oct02:05:02UTC. LOCAL retains ownership, no cloud handback; native/whole-systemFAIL.
+
+
+2026-10-19 15:42 UTC — owner hears room sign and explicitly approves NEW whole20 derived reapproval from complete turbo transcripts plus only lookup/look up/color/colour spelling. Both failed audits/audio/words/thresholds retained. Writer/reader and explicit inference opt-in prepared; no quality approval job yet, all10 native review still mandatory. Existing7549994 pendingResources/7550001 dependent at15:39:22; no extension/adoption/fresh inference. LOCAL resumed, native/whole-systemFAIL.

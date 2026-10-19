@@ -46,6 +46,19 @@ class FreshProbe(unittest.TestCase):
         with self.assertRaises(ValueError):user_stream(audio,24000,dict(scenario='native-fresh2-000',plan_sha256='changed'))
         self.assertEqual(len(user_stream(audio,24000,dict(scenario='native-fresh-000'))),21*24000)
 
+    def test_derived_profile_is_explicit_and_still_requires_candidate_review(self):
+        safe=dict(kind='quiet',backend='observe-only',minimum_lookup_delay_s=0.,path='v2.wav',wav_sha256='abc')
+        args=self.options(scenario='native-fresh2-016',native_fresh_source_profile='owner-approved-turbo-spelling-v1')
+        with patch('evals.native_fresh_source_reapproval.inference_input',return_value=safe) as derived, \
+             patch('evals.native_fresh_inputs_v2.inference_input') as original, \
+             patch('evals.native_fresh_review.validate') as reviewed:
+            load(args);derived.assert_called_once();original.assert_not_called();reviewed.assert_called_once()
+            reviewed.side_effect=ValueError('Native behavior not reviewed')
+            with self.assertRaises(ValueError):load(args)
+            self.assertEqual(derived.call_count,1)
+        with self.assertRaises(ValueError):
+            load(self.options(native_fresh_source_profile='owner-approved-turbo-spelling-v1'))
+
     def test_output_is_evaluation_only_and_forced_or_training_results_are_rejected(self):
         base=dict(scheduled_dispatch=False,word_or_acoustic_tokens_forced=False,response_start_forced=False,
                   student_history=None,training_approved=False,real_user_samples_processed=1920,real_user_samples_expected=1920)
