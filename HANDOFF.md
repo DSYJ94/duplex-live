@@ -1,3 +1,57 @@
+# LOCAL active —7555898 restored PASS; native10 RUNNING; clock-retention experiment prepared (2026-10-19 19:59 UTC)
+
+Exact current candidate source b21ac8418be4e4c6597ab93a01c64c3f96addb12.
+Pilot7555898 COMPLETED13m16,8 actual optimization updates23.73239441498299s,
+peak16.6317873GiB; all24 new teachers exactlyonce/all10 word anchors everyupdate.
+Independent fresh process reconstructs all10 refs; full optimizer/Python/NumPy/
+Torch/CUDA restore and all28 valid logits EXACT PASS. Reload report SHA
+669c72381e7c4eb67a019b74f495013dc27052e99e9d48e21966cd9db6147d35.
+Adapter36f1470c9ab5e9a7a2d0bc8e142e56978c50e4b36b9eb95c43e228ed5e558270;
+fullstatebc92b6333a83fcd0577be59dafda61777c4794ed034d3c08cd62193d382a6888.
+
+Watcher exec29477 TERMINATED successfully after submitting ONE complete10 native
+session7556210 and dependent full10 CPU speech7556211. Receipt
+runs/native-warm-ordinary-development-local-20261019.json. Session original
+cf28726b44ed0621dde6bfd27257709574f5e9ed inference/new b21ac84 session, reservation
+interactive2GPU160G75min, no partition/QoS override.19:58:18UTC RUNNING7m30,
+7/10 native reports complete; independent speech still dependent. Do not duplicate.
+Current sole monitor /tmp/duplex-monitor-warm-native10.py rate-limits to60s.
+Sampled ice answer correct; sampled sound/plant/metal answers factually wrong,
+quiet/pause/private still concerning. These are provisional model text findings;
+ALL10 actual WAV/independent audio/receipt/clock review still required. No extension
+or new candidate has been submitted, no fresh inference or adoption.
+
+During review, prepare one additive ordinary clock/sampled-history retention
+experiment from native520/7510331 (new optimizer,8updatesLR2e-6). Existing all28/
+25old/24new, legacyKL1/hidden10 and ten-word anchor64 remain unchanged. Adds
+separate64x mean(KL+10hiddenMSE) across14 approved ordinary inputs: original10
+teacher masks INCLUDING PAD3 plus4 existing sampled-native ordinary TRAIN histories
+7505207/7505214/7505216/7505217 (recovery-train008..011). No development012..015,
+evaluation output, new word/audio/teacher API, user/past/audio output loss. Source
+masks unchanged. Factual gap: word-only anchor omitted clock/native sampled past;
+causality/efficacy unproven. Predeclared plan
+ evals/fixtures/native-ordinary-clock-pilot-plan-20261019.json.
+Implementation/three pure selection tests/AST/shell checks prepared and PASS;
+full CPU139 suite pending deployment. ALL10 prior audio review before submission,
+then independent reconstruction10+14 refs/fullstate restore/native10/all4ordinary
+before any separate32 extension. This is preparation, not approval of a candidate.
+
+Final pilot backup19files73416889bytes SHAverified19:51:21UTC; new native launch
+receipt/allocation2files7468bytes SHAverified19:52:16UTC. Union22666files
+15255659401bytes plus pinned models/runtime/ASR. Full previous22647file union
+rehashed19:40:13/no mismatch. Full7b44ccf source bundle verified SHA
+589c576e645409f6dc150afe495a78bcb1bf4ccf898c660aef8efb9ca826cb5a.
+Stopped old Mac source backup remains PARTIAL; owners/credentials/core excluded.
+LOCAL sole executor, CLOUD submits nothing, no execution handback/cloud purchase.
+Certificate20Oct02:05:02UTC/04:05:02Berlin; deadline21Oct. Unrelated pyc/probe/
+roadmap edits preserved. Goalactive; native/whole-systemFAIL.
+Next: deploy/test prepared source while existing review runs; preserve all10 raw
+artifacts+fullASR; independently complete exact review; if rejected submit only
+one separately versioned clock-retention pilot after all gates, never extend
+rejected7555898/7549991/7546645/7530408 unchanged.
+
+---
+
 # LOCAL active — pilot7555898 eight updates COMPLETE; independent restore RUNNING (2026-10-19 19:45 UTC)
 
 Exact source b21ac8418be4e4c6597ab93a01c64c3f96addb12. CPU7555896 PASS135tests.

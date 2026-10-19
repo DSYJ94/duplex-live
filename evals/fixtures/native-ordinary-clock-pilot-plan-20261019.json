@@ -1,0 +1,92 @@
+{
+  "schema": "dl-native-ordinary-clock-eight-update-plan-v1",
+  "declared_before_new_candidate_outputs": true,
+  "at_utc": "2026-10-19T19:58:43.124314+00:00",
+  "parent_job": "7510331",
+  "optimizer_reset": true,
+  "not_a_resume_of": "7555898",
+  "optimizer_updates": 8,
+  "learning_rate": 2e-06,
+  "full24_per8": true,
+  "conditional_on_complete_native10_audio_review_of": "7555898",
+  "prior_native_session": "7556210",
+  "prior_independent_speech_job": "7556211",
+  "current_prior_evidence": "Seven native cases completed at19:58:18UTC; sampled ordinary sound/plants/metal answers have factual problems. All10 and independent audio still pending; no final review or new optimizer authorization implied.",
+  "factual_coverage_gap": "Existing additional native520 anchor uses only nonpad teacher positions. It omits ordinary PAD3 clock positions and approved sampled-native-audio actual history inputs. Whether this causes regression is unproven.",
+  "legacy_objectives_unchanged": {
+    "actual_components": 28,
+    "old_teacher_histories": 25,
+    "new_teacher_histories": 24,
+    "legacy_kl": 1.0,
+    "legacy_hidden_mse": 10.0,
+    "word_anchor_mean_kl_plus10hidden_weight": 64.0,
+    "word_anchor_histories": 10
+  },
+  "new_separate_term": {
+    "weight": 64.0,
+    "loss": "Mean14(KL(native520||candidate)+10hiddenMSE) at every original approved assistant/future mask position including PAD3, on every update",
+    "ids": [
+      "clock-teacher-recovery-train-008",
+      "clock-teacher-recovery-train-009",
+      "clock-teacher-recovery-train-010",
+      "clock-teacher-recovery-train-011",
+      "clock-teacher-native2-train-008",
+      "clock-teacher-native2-train-009",
+      "clock-teacher-native2-train-010",
+      "clock-teacher-native2-train-011",
+      "clock-teacher-native2-train-012",
+      "clock-teacher-native2-train-013",
+      "clock-actual-7505207",
+      "clock-actual-7505214",
+      "clock-actual-7505216",
+      "clock-actual-7505217"
+    ],
+    "actual_captures": [
+      {
+        "job": "7505207",
+        "scenario": "recovery-train-008",
+        "manifest_sha256": "5f1b5da415c2836d42115877dd133dd573e438aca5342c0bef0b56fb852e373f"
+      },
+      {
+        "job": "7505214",
+        "scenario": "recovery-train-009",
+        "manifest_sha256": "f14a42a75653487f5a493551711c3c4579c2661bc542b11083848dc730bbae6f"
+      },
+      {
+        "job": "7505216",
+        "scenario": "recovery-train-010",
+        "manifest_sha256": "6a4fa2721c32186c633a3594daa4472a7d9dd2e1fd8c0c1be8c6cd6d5842acb5"
+      },
+      {
+        "job": "7505217",
+        "scenario": "recovery-train-011",
+        "manifest_sha256": "056091bf2777498a4d576efb5027db38393cbd80b450e0fb74ab1a6ab3d61f9a"
+      }
+    ],
+    "quiet_pause_private_controls_excluded_from_frozen_parent_anchor": true,
+    "source_masks_words_audio_targets_unchanged": true,
+    "data_sha256": "de92099057ded15a1af0e387c96b457cdf4c1731c26594dcdca211d4c442fc1e"
+  },
+  "not_used_for_training": [
+    "native evaluation outputs",
+    "development questions recovery-train-012..015",
+    "held-out recordings",
+    "fresh20 inputs or answers",
+    "owner conversations"
+  ],
+  "new_speech_teacher_or_semantic_api_calls": 0,
+  "audio_user_past_output_loss_targets": 0,
+  "mandatory_checks": [
+    "Complete prior10 actual-waveform/speech/receipt/quiet-pause review before submission",
+    "Independent full CPU suite",
+    "Exact pre-optimizer self comparison and parameter/RNG restoration for all10 word and14 clock reference inputs",
+    "Independent fresh-process reconstruction of both caches plus full adapter/optimizer/Python/NumPy/Torch/CUDA restore/all28 valid logits exact",
+    "Complete unchanged native10 with independent speech/WAV/receipt/timing review",
+    "All4 ordinary core facts and speech quality required before separately committed32-update extension",
+    "Fresh full20 paired qualification before adoption"
+  ],
+  "new_candidate_submitted": false,
+  "training_extension_approved": false,
+  "candidate_adopted": false,
+  "interpretation": "One bounded coverage experiment; no causal or behavioral-success claim"
+}

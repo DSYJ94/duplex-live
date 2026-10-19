@@ -34,6 +34,14 @@ assert w['mode']=='native520-approved-ordinary-nonpad-v1' and w['weight']==64
 assert [x['id'] for x in w['examples']]==list(IDS) and w['complete53_diagnostic_sha256']==DRIFT_SHA256
 assert sha256(audit)==r['warm_ordinary_reference_audit_sha256'] and a['policy']==w
 assert sha256(p/'warm-ordinary-references.pt')==a['cache_sha256']
+os_clock=r.get('warm_ordinary_clock_retention')
+if os_clock:
+ from evals.context_warm_ordinary_clock import CLOCK_IDS
+ ca=p/'warm-ordinary-clock-reference-audit.json';cr=json.loads(ca.read_text())
+ assert os_clock['mode']=='native520-approved-ordinary-clock-and-actual-v1' and os_clock['weight']==64
+ assert os_clock['ids']==list(CLOCK_IDS) and cr['policy']==os_clock
+ assert sha256(ca)==r['warm_ordinary_clock_reference_audit_sha256'] and cr['exact_self_checks']==14
+ assert sha256(p/'warm-ordinary-clock-references.pt')==cr['cache_sha256']
 print(json.dumps(dict(verified_candidate=identity,ordinary_anchor_profile=w['mode'])),flush=True)
 PY
 OUT="$DL/runs/native-pilot-session-$SLURM_JOB_ID"

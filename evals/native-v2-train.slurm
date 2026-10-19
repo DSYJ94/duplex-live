@@ -74,6 +74,10 @@ if [[ "${NATIVE_V2_WARM_ORDINARY_WEIGHT:-0}" != 0 ]]; then
  ARGS+=(--native-v2-warm-ordinary-weight 64
   --native-v2-warm-ordinary-approval "$DL/runs/native-v2-retention-drift-audit-7554946/native-v2-retention-drift-audit.json")
 fi
+if [[ "${NATIVE_V2_WARM_ORDINARY_CLOCK:-0}" == 1 ]]; then
+ test "${NATIVE_V2_WARM_ORDINARY_WEIGHT:-0}" = 64
+ ARGS+=(--native-v2-warm-ordinary-clock)
+fi
 mapfile -t COMPONENTS < <(python3 -c 'import json,sys,hashlib; from pathlib import Path; p=Path(sys.argv[1]); r=json.loads((p/"report.json").read_text()); d=(p/"data.json").read_bytes(); assert hashlib.sha256(d).hexdigest()==r["data_sha256"]; rows=json.loads(d)["components"]; assert len(rows)==28; print("\n".join(x["component"] for x in rows))' "$PARENT")
 test "${#COMPONENTS[@]}" = 28
 for COMPONENT in "${COMPONENTS[@]}"; do ARGS+=(--actual-mixed-data "$COMPONENT"); done

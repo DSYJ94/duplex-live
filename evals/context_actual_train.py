@@ -147,7 +147,7 @@ def run(lm, spm, voice, examples, components, audits, args):
                     'first_supervised_token_target':int(target[pos]),
                     'first_supervised_token_probability':float(z[0].softmax(-1)[target[pos]])})
         return results
-    warm_policy=None;warm_references=[]
+    warm_policy=None;warm_references=[];clock_policy=None;clock_references=[]
     def state_metadata(frozen):
         return {'source_commit':SOURCE_COMMIT,
             'repo_commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),
@@ -163,6 +163,7 @@ def run(lm, spm, voice, examples, components, audits, args):
                 **({'retention_teacher_text':teacher} if teacher else {}),
                 **({'additional_native_v2':additional_policy} if additional_policy else {}),
                 **({'warm_ordinary_retention':warm_policy} if warm_policy else {}),
+                **({'warm_ordinary_clock_retention':clock_policy} if clock_policy else {}),
                 'text_pad3_loss_weight':.5,
                 **({'response_first_word_loss':decision} if decision else {}),
                 **({'retention_sampling':{'policy':'rotate all retention examples within each verified kind',
@@ -194,6 +195,10 @@ def run(lm, spm, voice, examples, components, audits, args):
             from evals.context_warm_ordinary_retention import prepare as warm_prepare
             warm_policy,warm_references=warm_prepare(lm,learned,native_teacher_batches,additional_batches,
                 args,forward,state_metadata(frozen))
+        if getattr(args,'native_v2_warm_ordinary_clock',False):
+            from evals.context_warm_ordinary_clock import prepare as clock_prepare
+            clock_policy,clock_references=clock_prepare(lm,learned,native_teacher_batches,additional_batches,
+                batches,audits,args,forward,warm_policy)
         if args.reload:
             report = json.loads((args.out/'report.json').read_text())
             if (report['schema'] != 'dl-context-actual-adapter-proof-v1' or report['frozen_hashes'] != frozen
@@ -208,6 +213,9 @@ def run(lm, spm, voice, examples, components, audits, args):
             if warm_policy and (report.get('warm_ordinary_retention')!=warm_policy
                     or report.get('warm_ordinary_reference_audit_sha256')!=sha256(args.out/'warm-ordinary-reference-audit.json')):
                 raise RuntimeError('Warm ordinary anchor changed before independent full-state restore')
+            if clock_policy and (report.get('warm_ordinary_clock_retention')!=clock_policy
+                    or report.get('warm_ordinary_clock_reference_audit_sha256')!=sha256(args.out/'warm-ordinary-clock-reference-audit.json')):
+                raise RuntimeError('Ordinary clock/native-audio anchor changed before full-state restore')
             if set(state) != set(learned): raise RuntimeError('Incomplete actual adapter keys')
             with torch.no_grad():
                 for n,p in learned.items():p.copy_(state[n])
@@ -269,7 +277,7 @@ def run(lm, spm, voice, examples, components, audits, args):
         steps = []; seen_a = seen_b = False; start = time.monotonic()
         torch.cuda.reset_peak_memory_stats()
         for local_step in range(args.actual_fit_updates):
-            warm_rows=[]
+            warm_rows=[];clock_rows=[]
             additional_loss = None; additional_record = None; additional_records = []
             step = initial_step+local_step
             optimizer.zero_grad(set_to_none=True)
@@ -332,6 +340,14 @@ def run(lm, spm, voice, examples, components, audits, args):
                         (warm_policy['weight']/len(warm_references)*value).backward()
                         warm_rows.append(dict(id=identity,kl=float(wkl.detach()),hidden_mse=float(wmse.detach()),
                             weight=warm_policy['weight']/len(warm_references)))
+                if clock_references:
+                    from evals.context_warm_ordinary_retention import loss as clock_loss
+                    for cinputs,cmask,reference,identity in clock_references:
+                        ch,cz=forward(cinputs);value,ckl,cmse=clock_loss(ch,cz,cmask,reference)
+                        if not torch.isfinite(value):raise RuntimeError('Nonfinite ordinary clock/native-audio retention')
+                        (clock_policy['weight']/len(clock_references)*value).backward()
+                        clock_rows.append(dict(id=identity,kl=float(ckl.detach()),hidden_mse=float(cmse.detach()),
+                            weight=clock_policy['weight']/len(clock_references)))
             if not all(torch.isfinite(v) for v in ((ce,kl,hidden,supervised) if teacher else (ce,kl,hidden))):
                 raise RuntimeError('Nonfinite actual or retention loss')
             if any(p.grad is None or not torch.isfinite(p.grad).all() for p in learned.values()):
@@ -361,6 +377,7 @@ def run(lm, spm, voice, examples, components, audits, args):
                 **({'additional_native_v2_microbatch':additional_records}
                     if getattr(args, 'native_v2_full24_per8', False) else {}),
                 **({'warm_ordinary_microbatch':warm_rows} if warm_rows else {}),
+                **({'warm_ordinary_clock_microbatch':clock_rows} if clock_rows else {}),
                 'nonzero_A_gradients':a,'nonzero_B_gradients':b,'gradient_norm_before_clip':norm}
             steps.append(row); print(json.dumps(row),flush=True)
         if getattr(args, 'native_v2_full24_per8', False):
@@ -401,6 +418,8 @@ def run(lm, spm, voice, examples, components, audits, args):
             **({'additional_native_v2':additional_policy} if additional_policy else {}),
             **({'warm_ordinary_retention':warm_policy,
                 'warm_ordinary_reference_audit_sha256':sha256(args.out/'warm-ordinary-reference-audit.json')} if warm_policy else {}),
+            **({'warm_ordinary_clock_retention':clock_policy,
+                'warm_ordinary_clock_reference_audit_sha256':sha256(args.out/'warm-ordinary-clock-reference-audit.json')} if clock_policy else {}),
             **({'response_first_word_loss':decision} if decision else {}),
             'baseline_metrics':baseline_metrics,'initial_stage_metrics':initial_metrics,
             'final_metrics':metrics(),'expected_logits':expected,'steps':steps,
@@ -412,5 +431,9 @@ def run(lm, spm, voice, examples, components, audits, args):
             if any([r['id'] for r in step.get('warm_ordinary_microbatch',[])]!=[r['id'] for r in warm_policy['examples']] for step in steps):
                 raise RuntimeError('Every update must retain all ten approved ordinary anchors')
             report['retention_objective']+='; additional64x mean native520 ordinary-word KL plus10hiddenMSE, legacy losses unchanged'
+        if clock_policy:
+            if any([r['id'] for r in step.get('warm_ordinary_clock_microbatch',[])]!=clock_policy['ids'] for step in steps):
+                raise RuntimeError('Every update must preserve all14 approved ordinary clock/native-audio anchors')
+            report['retention_objective']+='; separate64x mean ordinary clock/native-audio KL plus10hiddenMSE, word/legacy losses unchanged'
         (args.out/'report.json').write_text(json.dumps(report,indent=2)+'\n')
         print(json.dumps({k:report[k] for k in ('passed','checkpoint_sha256','final_metrics','peak_allocated_bytes')}),flush=True)

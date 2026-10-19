@@ -1,7 +1,7 @@
 {
-  "at_utc": "2026-10-19T19:45:22.681075+00:00",
-  "unique_scoped_artifact_files": 22662,
-  "unique_scoped_artifact_bytes": 15255103220,
+  "at_utc": "2026-10-19T19:52:34.209376+00:00",
+  "unique_scoped_artifact_files": 22666,
+  "unique_scoped_artifact_bytes": 15255659401,
   "inventory_conflicts": [],
   "inventories": [
     {
@@ -388,6 +388,20 @@
       "files": 18,
       "bytes": 73099631,
       "missing_roots": []
+    },
+    {
+      "name": "remote-native-warm-ordinary-pilot-complete-inventory.json",
+      "sha256": "57213a6b02c06f0dca6385a6079465dfa94cf7b8aadd288fc15d4a1c9aa39658",
+      "files": 19,
+      "bytes": 73416889,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native-warm-ordinary-native10-launch-inventory.json",
+      "sha256": "5aaac991c4dc7a7a2a59db1c0c3c206b0199fd11db4a46a93831b80a9a016c7b",
+      "files": 2,
+      "bytes": 7468,
+      "missing_roots": []
     }
   ],
   "local_artifact_root": "runs/cloud-export-20261016/tree",
@@ -403,10 +417,9 @@
   "runtime_sif_sha256": "c00bc99693e4908ea75d17df9c379b93ae9a1678a65d875565ad5d52f76fa27b",
   "pinned_vendor_git_bundles_verified": 3,
   "source_git_bundle": {
-    "at_utc": "2026-10-19T19:38:00.921120+00:00",
-    "source_sha": "b21ac8418be4e4c6597ab93a01c64c3f96addb12",
-    "bundle": "runs/local-continuation-20261019/source-main-b21ac84.bundle",
-    "bundle_sha256": "be137835bd0a5f65505efff586983d1a64d00c17d5fc44a4ce9104946c96c46f"
+    "source_sha": "7b44ccff223bfbbc8b8ef798d07e7b2d9d9b3b26",
+    "bundle": "runs/local-continuation-20261019/source-main-7b44ccf.bundle",
+    "bundle_sha256": "589c576e645409f6dc150afe495a78bcb1bf4ccf898c660aef8efb9ca826cb5a"
   },
   "native_candidate_job": "7549991",
   "native_candidate_training_state_sha256": "ff79b625c096d48e45b4f41c1107210b91fd1339e0b6bd4c1f988017ab0940e7",
@@ -443,7 +456,7 @@
   "new_warm_ordinary_pilot": {
     "job": "7555898",
     "source": "b21ac8418be4e4c6597ab93a01c64c3f96addb12",
-    "status": "EIGHT_UPDATES_COMPLETE_INDEPENDENT_RESTORE_PENDING",
+    "status": "COMPLETED",
     "checked_utc": "2026-10-19T19:37:24Z",
     "elapsed": "00:00:24",
     "independent_full_cpu_job": "7555896",
@@ -454,7 +467,15 @@
     "training_state_sha256": "bc92b6333a83fcd0577be59dafda61777c4794ed034d3c08cd62193d382a6888",
     "all24_teachers_exposed_once": true,
     "all10_ordinary_anchors_each_update": true,
-    "full_checkpoint_and_reference_cache_sha256_backed": true
+    "full_checkpoint_and_reference_cache_sha256_backed": true,
+    "allocation_elapsed": "00:13:16",
+    "independent_full_state_restore_passed": true,
+    "independent_reload_report_sha256": "669c72381e7c4eb67a019b74f495013dc27052e99e9d48e21966cd9db6147d35",
+    "all28_valid_logits_exact": true,
+    "all10_reference_targets_reconstructed_exact": true,
+    "native_evaluation_session": "7556210",
+    "native_full10_speech_job": "7556211",
+    "native_behavior_not_yet_approved": true
   },
   "complete_union_reverification": {
     "at_utc": "2026-10-19T19:40:13.657549+00:00",
