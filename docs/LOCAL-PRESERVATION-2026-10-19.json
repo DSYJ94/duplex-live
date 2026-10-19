@@ -1,7 +1,7 @@
 {
-  "at_utc": "2026-10-19T10:50:02.606483+00:00",
-  "unique_scoped_artifact_files": 21286,
-  "unique_scoped_artifact_bytes": 13323866464,
+  "at_utc": "2026-10-19T11:42:26.968627+00:00",
+  "unique_scoped_artifact_files": 21670,
+  "unique_scoped_artifact_bytes": 14087152232,
   "inventory_conflicts": [],
   "inventories": [
     {
@@ -121,6 +121,34 @@
       "sha256": "c08e8cd8de12a3c85cc40fd72b7b7ceea889652b051eb3d5d5952b3e5538a30d",
       "files": 2,
       "bytes": 48358,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-full24-semantic-and-partial-conversion-inventory.json",
+      "sha256": "5fb906c04a9745b1ce07270271efdca78e06f75584c468cce0981793d63d16f4",
+      "files": 140,
+      "bytes": 325941888,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-question-tail-control-inventory.json",
+      "sha256": "bfbe182dc85546a6a964cd4201dce2cb322ec784f182c9c0c01c7fcda7c85799",
+      "files": 2,
+      "bytes": 8772,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-approved25-input-and-new24-conversion-inventory.json",
+      "sha256": "aa655acdd44b090eceb323ad4bfa0d541beba9f79383005a99b9e9e702a82c4a",
+      "files": 238,
+      "bytes": 437236775,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-old25-fp32-numerical-control-inventory.json",
+      "sha256": "3faad35d589c49060a1e4afc1495a440e3ca71660d6b17d5ed44bf28fa8a8526",
+      "files": 4,
+      "bytes": 98333,
       "missing_roots": []
     }
   ],

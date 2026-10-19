@@ -1,3 +1,40 @@
+# LOCAL active — full25 input PASS; full24 conversion PASS; numerical audit,11:43UTC
+
+Source a32b165ade593e62f92c675872ba4b0c789450ce is pushed and immutable on
+Isambard. CPU7545751 PASS74tests; conversion7545753 COMPLETE24/24, no rejected
+records. All24 independently measured speech/control7544794 and actual Astra
+semantic7544795 passes are retained/reverified, without repeated API sessions.
+Data runs/native-v2-teacher-data-7545753 is approved for native codec/input/math
+checks, not optimizer/behavior/adoption. Original failed versions stay preserved.
+
+Old25 full native capture complete; independent full25 CPU7544805 PASS. FP32
+math7544806 FAILS: max0.002780318260192871 > unchanged0.001, causal prefix0.0
+on ALL25. Full failed baseline and data backed4files/98333bytes, SHA256 verified.
+Existing numerical-reference path7545975 RUNNING on all25: FP32 weights/activations
+with FP64 linear reference only, same0.001 and causal0 requirements; production
+and training execution unchanged. Exclusive receipt
+runs/native-old25-numerical-reference-local-20261019.json. Never overwrite failed
+FP32 audit or accept a subset. Old25 math v2 approval still pending.
+
+New24 codec7545905 and scope7545907 PASS. Capture7545908_0–8 COMPLETE,9–11 RUNNING,
+12–23 PENDING at11:41UTC, cap3 GPUs; full24 input7545909 then FP32math7545910 afterok.
+Receipt runs/native-v2-native-approval-local-20261019.json. No optimizer submitted.
+Before eight-update pilot: both complete25/24 native input and numerical-v2 approvals
+must pass. Keep ALL28 actual histories, ALL25 old teacher histories, KL1/hiddenMSE10,
+exact words/audio/receipts/folds, and held-out audio hashes. Require independent
+full state restore and all10 unforced native development cases before extension.
+Fresh20 plan declared before outputs; no fresh evaluation execution yet.
+
+Backup inventories now include full24 semantic/conversion, complete25 captures/input,
+source tail control and failed FP32 baseline; every scoped file size/SHA256 matches.
+Standalone Context/PersonaPlex/codec weights and runtime SIF also verified. Mac's
+older source backup remains partial, distinct from these verified scoped exports.
+LOCAL certificate valid until20:51:23UTC/22:51:23Berlin19October. LOCAL executor
+remains active; CLOUD submits nothing, GPU validation paused, no compute purchase.
+Native and whole-system remain FAIL. Next: finish all25/24 numerical gates.
+
+---
+
 # LOCAL active — all native captures complete; quality-stamp consistency fix,11:23UTC
 
 ALL21 remaining7544803 captures COMPLETED successfully; original0–3 preserved

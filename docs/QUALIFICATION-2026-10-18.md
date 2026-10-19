@@ -1,3 +1,16 @@
+19 October11:43UTC — LOCAL active; native/whole-system FAIL. All24 TRAIN source,
+all24 independent teacher speech/control and actual semantic review, and full24
+conversion7545753 PASS. CPU7545751 PASS74tests. Old25 complete input7544805 PASS;
+FP32math7544806 FAIL max0.002780318260192871 vs0.001, all causal prefixes0.0.
+Original failed report/data preserved, existing all25 higher-precision numerical
+reference7545975 RUNNING with same threshold and unchanged training execution.
+New24 codec5905/scope5907 PASS; full24 capture5908 running, input5909/math5910
+dependent. No optimizer, no checkpoint adoption, no fresh behavior qualification.
+Both full25/24 numerical-v2 gates remain mandatory. ALL28 actual histories and
+KL1/hiddenMSE10 retained. Precise source/jobs/backups: newest HANDOFF entry.
+
+---
+
 19 October10:35UTC — native/whole-system FAIL; LOCAL active. All24 source
 TRAIN clips pass; teacher retry quality7543781 passes19/24, remaining5 get a
 versioned clarity retry7544225 with19 passing recordings unchanged. Full24

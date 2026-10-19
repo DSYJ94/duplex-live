@@ -450,3 +450,23 @@ failures; the0.08 bar is unchanged.29 focused tests pass, including the actual
 quality-row field consumed by stamp_batch. New versioned full24 conversion must
 pass before encoding. Existing24 Astra responses are reused only through exact
 hash/input verification; no new API requests or source recordings are required.
+
+
+## Complete native input25 and conversion24; FP32 result retained
+
+7544805 independently approves all25 actual native teacher inputs. FP327544806
+executes every25 case and fails maximum0.002780318260192871 against unchanged
+0.001; causal prefix error0.0 throughout. Baseline report SHA256
+b890476073688ea418ec9fff834c2534a909fac647671444d6ca9282c6e373c6 retained and
+backed with data. Existing higher-precision reference7545975 uses FP32 weights/
+activations and FP64 linear arithmetic ONLY for numerical audit; same0.001 limit,
+all25 required, no production/training alteration and no optimizer.
+
+CPU7545751 passes74tests; full24 conversion7545753 now passes every quality stamp,
+complete measured-question timing, exact speech/semantic evidence and all24 records.
+Codec7545905 and scope7545907 pass. Complete24 capture7545908 (cap3), independent
+input7545909 and FP32math7545910 form the exclusive new native approval chain from
+source a32b165ade593e62f92c675872ba4b0c789450ce. Rejected partial/full conversions
+remain immutable. No repeated teacher/semantic requests, source/heldout mutations,
+optimizer submissions or behavioral/adoption claims. Both complete corpora need
+independent native numerical-v2 approval before prepared eight-update pilot.
