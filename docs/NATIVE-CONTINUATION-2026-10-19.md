@@ -489,3 +489,24 @@ is pending. ZERO real generation requests or generation jobs were submitted;
 CPU7546173 uses fake local audio only. Do not reroute around the rejection.
 Native running audits and backup work continue independently. No fresh20 model
 inference adapter/job or qualification result exists yet.
+
+
+## Isolated fresh native inference path prepared, not executed
+
+Full20 approval-reader CPU7546191 passes81tests. Separate
+context_spanning_fresh_probe.py keeps existing TRAIN/development probe and native
+backend files byte-identical. It reuses audited native Engine/model loading,
+accepted checkpoint voice, persona and seed; no controller, response forcing,
+wakeup, ret bias, timing/gain patch or TRAIN recorder. Fixed complete input
+approval supplies only actual user waveform and routing; private worlds remain
+worker-only and scoring references/scripts stay outside inference. Native RET
+and arrived-audio backend behavior is reused unchanged. Observe-only records
+unnecessary RET markers as evidence rather than executing unauthorized requests.
+
+Prepared complete40 baseline7510331/candidate comparisons (20 identical user
+stimuli each) require a committed all10-case native development review, fixed
+independently restored eight-update candidate, all20 source quality, and at most
+four total GPUs. No fresh inference or extra compute purchase submitted. Source
+quality is not task qualification; every report remains quality_qualified=false
+until full behavior/speech/causality assessment. External audio generation remains
+paused pending the owner's API-transfer approval after automatic-review rejection.
