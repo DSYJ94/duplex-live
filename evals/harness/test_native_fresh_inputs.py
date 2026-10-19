@@ -4,7 +4,7 @@ from pathlib import Path
 import tempfile
 import unittest
 from unittest.mock import patch
-from evals.native_fresh_inputs import specifications,generate,load_inputs,waveform
+from evals.native_fresh_inputs import specifications,generate,load_inputs,waveform,inference_input,PLAN_SHA256
 from evals.moshi_model_download import sha256
 
 
@@ -59,6 +59,43 @@ class NativeFreshInputs(unittest.TestCase):
             ref=Path(row['reference_path']);r=json.loads(ref.read_text());r['utterances'][0]['text']='A different question.'
             ref.write_text(json.dumps(r));row['reference_sha256']=sha256(ref);p.write_text(json.dumps(m))
             with self.assertRaisesRegex(RuntimeError,'exact words'):load_inputs(data)
+
+    def quality(self,data):
+        import soundfile as sf
+        m=load_inputs(data);folder=data.parent/'quality';folder.mkdir();results=[]
+        for row in m['rows']:
+            ref=json.loads(Path(row['reference_path']).read_text());clips=[]
+            for i,u in enumerate(ref['utterances']):
+                name=row['scenario_id']+'-%d-asr.json'%i;asr=folder/name
+                t=dict(text=u['text'],segments=[dict(start=0.,end=.1,words=[dict(text=u['text'],start=0.,end=.1)])])
+                asr.write_text(json.dumps(t));wav=Path(row['path']).with_name(u['source_file']);pcm,sr=sf.read(wav,dtype='float32')
+                clips.append(dict(ordinal=i,asr_file=name,asr_sha256=sha256(asr),raw_wav_sha256=sha256(wav),
+                                  passed=True,valid_bounds=True,waveform=waveform(pcm,sr),wer=0.,original_source_unchanged=True))
+            results.append(dict(scenario_id=row['scenario_id'],wav_sha256=row['wav_sha256'],passed=True,clips=clips))
+        q=dict(schema='dl-native-fresh-quality-v1',passed=True,inputs_manifest_sha256=sha256(data/'inputs.json'),
+               plan_sha256=PLAN_SHA256,threshold=.05,peak_bar=.995,results=results,
+               judge_sha256=sha256(Path(__file__).parents[1]/'native_fresh_inputs.py'),training_approved=False,
+               do_not_train=True,invalid_recordings_frozen_unscored=True,no_passing_subset=True)
+        path=folder/'quality.json';path.write_text(json.dumps(q));return path
+
+    def test_inference_receives_no_script_or_expected_answer_and_full20_is_required(self):
+        with tempfile.TemporaryDirectory() as root:
+            data=self.fixture(root);quality=self.quality(data)
+            safe=inference_input(data,quality,'native-fresh-008')
+            self.assertNotIn('required',safe)
+            self.assertNotIn('turns',safe)
+            self.assertNotIn('reference_path',safe)
+            self.assertEqual(safe['worker_only_world'],{'Seabrook East':{'entry phrase':'white heart'}})
+            q=json.loads(quality.read_text());q['results'][-1]['passed']=False;quality.write_text(json.dumps(q))
+            with self.assertRaises(RuntimeError):inference_input(data,quality,'native-fresh-008')
+
+    def test_forged_pass_or_refreshed_asr_hash_cannot_hide_wrong_words(self):
+        with tempfile.TemporaryDirectory() as root:
+            data=self.fixture(root);quality=self.quality(data);q=json.loads(quality.read_text())
+            clip=q['results'][0]['clips'][0];asr=quality.parent/clip['asr_file']
+            t=json.loads(asr.read_text());t['text']='Incorrect unrelated question.';asr.write_text(json.dumps(t))
+            clip['asr_sha256']=sha256(asr);quality.write_text(json.dumps(q))
+            with self.assertRaisesRegex(RuntimeError,'word/time/peak'):inference_input(data,quality,'native-fresh-008')
 
     def test_peak_finite_and_silence_fail_without_attenuation(self):
         import numpy as np

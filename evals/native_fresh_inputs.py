@@ -153,6 +153,50 @@ def judge(data,out):
     if not report['passed']:raise RuntimeError('Full20 source quality failed; freeze unscored, no reroll or subset')
 
 
+def approved_inputs(data,quality_path):
+    """Recompute all quality decisions from hash-bound raw ASR; never approve a subset."""
+    import soundfile as sf
+    from data.synthetic.filter import norm_words,wer
+    m=load_inputs(data);q=json.loads(quality_path.read_text())
+    if (q['schema']!='dl-native-fresh-quality-v1' or not q['passed']
+            or q['inputs_manifest_sha256']!=sha256(data/'inputs.json')
+            or q['plan_sha256']!=PLAN_SHA256 or q['threshold']!=.05 or q['peak_bar']!=.995
+            or q['judge_sha256']!=sha256(Path(__file__)) or q['training_approved']
+            or not q['do_not_train'] or not q['invalid_recordings_frozen_unscored']
+            or not q['no_passing_subset']
+            or [r['scenario_id'] for r in q['results']]!=[r['scenario_id'] for r in m['rows']]):
+        raise RuntimeError('Complete native full20 quality approval required')
+    for row,result in zip(m['rows'],q['results']):
+        folder=Path(row['path']).parent;ref=json.loads(Path(row['reference_path']).read_text())
+        if (not result['passed'] or result['wav_sha256']!=row['wav_sha256']
+                or len(result['clips'])!=len(ref['utterances'])):raise RuntimeError('Incomplete fresh clip approval')
+        for i,(clip,utterance) in enumerate(zip(result['clips'],ref['utterances'])):
+            path=folder/utterance['source_file'];pcm,rate=sf.read(path,dtype='float32')
+            name=row['scenario_id']+'-%d-asr.json'%i;asr=quality_path.parent/name
+            if clip['asr_file']!=name or clip['asr_sha256']!=sha256(asr):raise RuntimeError('Changed source ASR')
+            t=json.loads(asr.read_text());words=[w for s in t['segments'] for w in s.get('words',[])]
+            valid=bool(words) and all(math.isfinite(w['start']) and math.isfinite(w['end'])
+                and 0<=w['start']<=w['end']<=len(pcm)/rate+.02 for s in t['segments'] for w in [s]+s.get('words',[]))
+            error=wer(norm_words(utterance['text']),norm_words(t['text']));wave=waveform(pcm,rate)
+            if (clip['ordinal']!=i or clip['raw_wav_sha256']!=sha256(path) or not clip['passed']
+                    or clip['valid_bounds']!=valid or not valid or clip['waveform']!=wave or not wave['passed']
+                    or clip['wer']!=error or not math.isfinite(error) or not 0<=error<=.05
+                    or not clip['original_source_unchanged']):raise RuntimeError('Invalid source word/time/peak approval')
+    return m
+
+
+def inference_input(data,quality_path,identity):
+    """Only waveform/routing and worker-only world; no question script or scoring targets."""
+    m=approved_inputs(data,quality_path)
+    case=next(c for c in specifications() if c['id']==identity)
+    row=next(r for r in m['rows'] if r['scenario_id']==identity)
+    return dict(scenario=identity,path=row['path'],wav_sha256=row['wav_sha256'],kind=case['kind'],
+                backend=case['backend'],worker_only_world=case['world'],
+                minimum_lookup_delay_s=case.get('minimum_actual_lookup_delay_s',0.),
+                manifest_sha256=sha256(data/'inputs.json'),quality_sha256=sha256(quality_path),
+                plan_sha256=PLAN_SHA256,source_split='fresh-evaluation',training_approved=False)
+
+
 def main():
     ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('mode',choices=('generate','judge'))
     ap.add_argument('--data',type=Path);ap.add_argument('--out',type=Path,required=True);args=ap.parse_args()

@@ -470,3 +470,22 @@ source a32b165ade593e62f92c675872ba4b0c789450ce. Rejected partial/full conversio
 remain immutable. No repeated teacher/semantic requests, source/heldout mutations,
 optimizer submissions or behavioral/adoption claims. Both complete corpora need
 independent native numerical-v2 approval before prepared eight-update pilot.
+
+
+## Fresh20 input implementation; external generation approval pending
+
+05ae360113829366768b7022684133b0618beac6 adds isolated user-only generation,
+raw sample/receipt/schedule verification, same-audio counterfactual reuse, and
+independent full20 CPU speech/time/peak audit at unchanged WER0.05/peak0.995.
+CPU7546173 PASSES79tests including all five initial fresh-input mutation controls.
+Further approval-reader checks recompute WER from hash-bound actual ASR, require
+all20, and expose only waveform/routing plus worker-only world to inference;
+expected answers, scripts and scoring references never enter the model payload.
+
+Automatic approval review REJECTED the chained generation submission before any
+command ran: the36 authored synthetic questions would be sent to OpenAI speech
+API without explicit owner approval for that transfer. An asynchronous question
+is pending. ZERO real generation requests or generation jobs were submitted;
+CPU7546173 uses fake local audio only. Do not reroute around the rejection.
+Native running audits and backup work continue independently. No fresh20 model
+inference adapter/job or qualification result exists yet.
