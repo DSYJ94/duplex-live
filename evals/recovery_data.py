@@ -54,6 +54,9 @@ def validate_conversion(data):
 
 def validate_cache(cache):
     receipt = json.loads((cache / "cache.json").read_text())
+    if receipt.get('schema') == 'dl-native-old25-timing-cache-v1':
+        from evals.native_old25_timing_cache import validate as validate_repair
+        return validate_repair(cache, receipt)
     if receipt.get("schema") == "dl-composed-cache-v1":
         from evals.recovery_compose_cache import validate_cache_composition
         return validate_cache_composition(cache,receipt)

@@ -203,3 +203,21 @@ an actual private phrase omission, word disagreements, paused-step omission and
 one delivered cancelled result. This requires diagnosed label-collection repair,
 not threshold changes or a passing subset. Final report backup2files/233652bytes
 is fully SHA256 verified. V3 corrected audit7543296 admitted11/24 only.
+
+
+## CPU native-cache repair and full25 GPU approval prepared
+
+The pinned native text Interleaver can run independently of Mimi encoding. New
+native_old25_timing_cache.py first reproduces each faulty ORIGINAL text lane
+exactly with that pinned implementation, then reinterleaves its freshly measured
+clock. Every original 16 acoustic lanes, frozen reference tensor, actual arrival,
+marker and frame count must remain equal. The other21 PT files are copied byte
+for byte. No acoustic re-encoding or new ARC output is needed. Complete25 lineage
+is validated on every cache load; extra/omitted cases fail closed.
+
+Separate native-old25 wrappers require the full25 scope, a new0-24 streamed-user
+capture array (maximum4 GPU tasks), independent CPU input approval and native
+numerical preflight. Old baseline artifacts and rejected joint-pilot guards remain
+immutable. The cache job includes regression checks rejecting changed acoustic
+codes, references, tool clock, markers, shape or dtype. No optimizer submission
+is included in this approval chain. All source deployment uses pushed Git SHAs.
