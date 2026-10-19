@@ -77,5 +77,16 @@
     "all_size_and_sha256_match": true,
     "failed": [],
     "missing_roots": []
+  },
+  "blocked_audit": {
+    "at_utc": "2026-10-19T21:27:27.280014+00:00",
+    "same_pending_owner_policy_choice_observed_across_three_consecutive_goal_turns": true,
+    "previous_turn": "PROGRESS: exact source migration guard and complete continuation preparation;151CPUtests PASS; all artifacts backed",
+    "current_turn": "No new authorized optimizer action available; actual SSH and Slurm revalidated",
+    "live_jobs": [],
+    "actual_queue_checked_utc": "2026-10-19T21:27:01Z",
+    "authorization_fixture_present": false,
+    "goal_status_to_set": "blocked",
+    "local_execution_ownership_retained": true
   }
 }
