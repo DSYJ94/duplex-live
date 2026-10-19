@@ -541,3 +541,20 @@ this as nonexecution evidence. Eight updates therefore prove mechanics/regressio
 only. Do not infer quiet/pause learning or full24 exposure from input approval or
 a falling loss. No longer training is authorized by this calculation: first require
 independent full optimizer/RNG restore and review every10 native development case.
+
+
+## Native24 original FP32 result and matched quiet/pause baseline
+
+FP327545910 completes all24 then FAILS10m35: only017 and006 numerical comparisons
+exceed0.001, maximum0.0014115571975708008; ALL causal-prefix errors0.0. No source
+word/audio failure is implied by this numerical verdict. Original full24 report,
+data, log and pilot/test receipts backed10files/153814bytes, all size/SHA256 match.
+Numerical-v2 reference7546608 is running and8-update7546645 remains dependent.
+
+A two-case fixed baseline quiet014/pause015 replay is prepared using spare
+allocated GPUs, no API access. Native520 weights/voice/protocol/seed and identical
+repaired source PCM match planned candidate development cases. Complete raw
+recordings, unnecessary RET markers and independent CPU speech clocks are kept;
+quiet/pause behavior is still unqualified. Every output is evaluation-only and
+must never become TRAIN labels. No held-out mutation, gain change or extra compute
+purchase. Four old ordinary baseline results already exist; do not duplicate them.
