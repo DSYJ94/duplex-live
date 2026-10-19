@@ -1,3 +1,37 @@
+# LOCAL active — proposed whole20 profile diagnostic complete; approval pending (2026-10-19 15:00UTC)
+
+Main before this entryb57f8046f4a9ff53c832fd53807e0d94aff45175, pushed/fetched;
+CPU7550222 PASS121tests4.071s. Model-free full20 profile replay7550223 COMPLETE5s:
+all20/38 unchanged raw clips meet proposed finite lookup/look up +color/colour
+spelling profile at SAME .05WER/.995peak/physicalbounds. RawWER and BOTH failed
+full20 audits retained. Report explicitly diagnostic_only, input_quality_approved
+FALSE, inference_approved FALSE. No new ASR decoding, APIcalls, audio edits or
+per-clip recognizerselection. Originalsourceqa7549085 remainsFAILED19/20, other
+recognizer7549412 remainsdiagnostic19/20. Room/rune neverequivalent. Ownerlistening
+AND explicit newwhole20-profile approval pending; revised asyncquestion offers
+combinedhearing+approval. Macplayer http://127.0.0.1:57386/ serves exactoriginalWAV.
+ApprovedV2reader UNCHANGED; no derivedapproval implementation/bypass exists.
+
+Nativefull24 pilot7549991 COMPLETE12m56, all8updates17.44s/all24unique exposure,
+independent optimizer/Python/NumPy/Torch/CUDA restorePASS /all28 validlogits EXACT.
+Trainercf28726/wrapper95a60b7. All28data/25old/KL1/hidden10 retained. Full14file
+state/reload/log backupverified31.75MB; adapter/fullstate identities in FIRST8JSON.
+All10 native7549994_0-9%2 stillPENDING Resources as14:58:39UTC, CPUASR7550001
+Dependent; NO nativebehavior output yet. No extension/adoption/freshinference.
+Old7548749/7548752/7548762 CANCELLED0elapsed beforeheldreplacementrelease.
+
+Scoped artifactbackup22465 unique files14922150596bytes plus pinnedruntime/models/
+both publicASRweights. Newdiagnostic/submission/test4files56559bytes SHAverified
+14:58:46UTC. Sourceall committed/pushed; stoppedoldMacbackup remainspartial.
+Excludeowner/credentials/core; unrelatedlocaleditsuntouched. LOCALexecutoruntil
+explicit handback, CLOUDsubmitsnothing, cloudGPUvalidationpaused, no purchase.
+Certificate20:51:23UTC/22:51:23Berlin today. Native/whole-system FAIL.
+Next: awaitall10 actualnativeoutputs/independentASR, back/reviewALL10 before32
+additionalresearchupdates; obtainhearing andscopeapprovalbefore anyderivedsource
+reapproval. A diagnosticpassingflag cannot authorizeeithertraining or inference.
+
+---
+
 # LOCAL active — full24 pilot independent full-state restore PASS (2026-10-19 14:52UTC)
 
 Native pilot7549991 COMPLETE12m56. All8 updates17.44s/all24newteachers verified;

@@ -86,5 +86,22 @@
     "original_failed_large_v3_verdict_preserved": true,
     "owner_listening_check": "requested; playable loopback link supplied; no hearing answer yet",
     "no_generation_calls": true
+  },
+  "proposed_profile_diagnostic": {
+    "job": "7550223",
+    "cpu_tests_job": "7550222",
+    "cpu_test_count": 121,
+    "source": "b57f8046f4a9ff53c832fd53807e0d94aff45175",
+    "report_sha256": "82ad2b1104f192f26dc8f9b7f3108b586f82d69b87ecb555a8d9a6bddb016743",
+    "complete20": true,
+    "complete_clips": 38,
+    "all20_diagnostic_meets_proposed_bars": true,
+    "raw_wer_retained": true,
+    "lookup_look_up_normalization_only": true,
+    "room_rune_equivalent": false,
+    "input_quality_approved": false,
+    "inference_approved": false,
+    "owner_hearing_and_scope_approval_still_pending": true,
+    "no_new_generation_or_asr_decoding": true
   }
 }

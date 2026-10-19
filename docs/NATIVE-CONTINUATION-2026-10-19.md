@@ -833,3 +833,6 @@ inference or generator execution. Candidate fixed before any new fresh outputs.
 
 2026-10-19 14:52UTC — nativefull24 pilot7549991 COMPLETE12m56; full independent optimizer/RNG restorePASS and all28 validlogits EXACT. All8updates/all24exposure/28actual/25old/KL1/hidden10 unchanged. Fullstate/checkpoint/reload/logs14files31.75MB hash-backed. Complete10native7549994 eligibleResources, ASR7550001 dependent; no behaviorresult/extension/adoption/freshnativeinference. Full20sourcefailed/frozen, ownerhearing and anynewprofileapproval pending. LOCALactive; native/whole-system FAIL.
 
+
+2026-10-19 15:00UTC — diagnostic-only proposedprofile replay7550223 completeall20/38 underunchangedbars withfinite lookup/look up normalization; sourceb57f804/CPU7550222 PASS121tests. NOTsourceapproval; originalfailedverdictsretained, ownerhearing+explicitprofileapprovalpending, V2readerunchanged. Nativefull24 7549991 exactfullstaterestorePASS; all10native7549994 stillResources/ASR7550001 dependent, no behaviorresult/extension/adoption/freshinference. LOCALactive; native/whole-system FAIL.
+
