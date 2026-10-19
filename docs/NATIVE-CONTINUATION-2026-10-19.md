@@ -647,3 +647,17 @@ exclusive receipt native-fresh-inputs-local-20261019.json fixes36 synthetic user
 utterances,20caseplan and sourcec93ac93. No owner conversations/private world/scoring
 answers exported. No fresh inference; invalid input freezes whole qualification,
 no reroll or passing subset. LOCAL active, no cloud purchase/validation/submissions.
+
+
+## Zero-update complete objective gradient diagnostic planned
+
+Native8 candidate7546645 is rejected for extension/adoption on independently
+confirmed ice regression and task/audio failures. New explicit gradient-audit
+phase retains native520 parent, exact28 actual components,25 reapproved native
+histories,24 new approved teachers, KL1/hidden10 and every objective/weight. It
+computes separate gradients for ALL28+4reference+25old+24new=81 cases without an
+optimizer step or checkpoint. Aggregates are weighted by the exact declared8/32
+sampling schedule; negative cosine diagnoses first-order objective conflict at a
+fixed parent, not Adam attribution or native behavior. Existing training/reload
+path defaults unchanged. CPU arithmetic/schedule/guard tests required before the
+zero-update GPU diagnostic. No repair, learning-rate change or extension chosen.

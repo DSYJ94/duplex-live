@@ -23,13 +23,19 @@ cd "$DL_TASK_SOURCE"
 MOSHI="$DL/vendor/moshi-rag-8c6dfc101b7871baa428424bcdc583b74fb561d9"
 test "$(git -C "$MOSHI" rev-parse HEAD)" = 8c6dfc101b7871baa428424bcdc583b74fb561d9
 PARENT="$DL/runs/context-training-proof-7510331"
+PHASE="${NATIVE_V2_TRAIN_PHASE:-train}"
+case "$PHASE" in
+ train) RUN_OUT="$DL/runs/context-training-proof-$SLURM_JOB_ID" ;;
+ gradient-audit) RUN_OUT="$DL/runs/native-v2-gradient-audit-$SLURM_JOB_ID" ;;
+ *) echo "Unknown native phase" >&2; exit 2 ;;
+esac
 ARGS=(--assets "$DL/runs/context-spanning-assets-7454205/manifest.json"
  --base "$DL/models/hf-cache/hub/models--nvidia--personaplex-7b-v1/snapshots/fdaf4090a61cb315c138a1faee287ffd6c716309"
  --voice-reference "$DL/runs/voice-quality-7414595/codec/reference.wav"
  --voice-provenance "$DL/runs/voice-quality-7414595/codec/report.json"
  --cache "$DL/runs/recovery-mixed-codes-7411513"
  --cache "$DL/runs/recovery-codes-7434926" --cache "$DL/runs/recovery-codes-7435538"
- --out "$DL/runs/context-training-proof-$SLURM_JOB_ID"
+ --out "$RUN_OUT"
  --request-policy native-prelead-epad --actual-source-data "$DL/runs/recovery-data-7407554"
  --actual-temporal-fit --warm-start-proof "$PARENT" --actual-fit-updates 8
  --actual-sampling balanced-kind --actual-retention-sampling balanced-kind
@@ -57,6 +63,13 @@ run() {
   "$DL/pytorch-new.sif" python -u "$@"
 }
 run -m unittest evals.harness.test_context_training_state evals.harness.test_context_native_v2_teacher_objective
+if [[ "$PHASE" == gradient-audit ]]; then
+ run -m evals.context_training_proof "${ARGS[@]}" --native-v2-gradient-audit
+ test -f "$RUN_OUT/native-v2-gradient-audit.json"
+ test ! -e "$RUN_OUT/adapters.safetensors"
+ test ! -e "$RUN_OUT/training-state.pt"
+ exit 0
+fi
 run -m evals.context_training_proof "${ARGS[@]}"
 # This is a fresh process, with complete adapter/optimizer/Python/NumPy/Torch/CUDA restoration.
 run -m evals.context_training_proof "${ARGS[@]}" --reload

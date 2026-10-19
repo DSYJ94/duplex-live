@@ -63,6 +63,8 @@ def main():
     ap.add_argument('--actual-native-teacher-coverage',choices=('four-longest','all-approved'),default='four-longest')
     for name in ('cache', 'approval', 'scope', 'preflight'):
         ap.add_argument('--native-v2-' + name, type=Path)
+    ap.add_argument('--native-v2-gradient-audit',action='store_true',
+                    help='Zero-update complete TRAIN objective gradient diagnosis at native520; never a checkpoint')
     ap.add_argument('--actual-response-first-word-weight',type=float,default=1.)
     ap.add_argument('--actual-temporal-audit', action='store_true')
     ap.add_argument('--actual-temporal-fit', action='store_true')
@@ -99,6 +101,8 @@ def main():
         ap.error('Streamed-user capture is only an explicit forced-teacher input audit, before separate CPU approval')
     from evals.context_native_v2_teacher_objective import validate_configuration as validate_native_v2
     validate_native_v2(args)
+    if args.native_v2_gradient_audit and (not args.native_v2_cache or args.reload or args.resume_training):
+        ap.error('Native-v2 gradient diagnosis needs the complete warm-start corpus and zero optimizer/reload')
     if args.teacher_engine_native_audio and (not args.teacher_engine_input_audit
             or not args.teacher_engine_input_id or args.teacher_native_math_audit):
         ap.error('Native teacher audio rendering requires one independently scoped teacher and no math/optimizer path')

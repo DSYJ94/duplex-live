@@ -241,6 +241,12 @@ def run(lm, spm, voice, examples, components, audits, args):
                     raise RuntimeError('Longer resumed adaptation lacks a verified portable preflight')
             snapshot = restore_state(args.resume_training,learned,optimizer,state_metadata(frozen))
             initial_step = snapshot['completed_steps']
+        if getattr(args, 'native_v2_gradient_audit', False):
+            from evals.context_native_gradient_audit import run as gradient_audit
+            gradient_audit(lm, learned, batches, retention, references, native_teacher_batches,
+                additional_batches, component_kinds, response_boundaries, audits, args,
+                state_metadata(frozen))
+            return
         initial_metrics=metrics()
         steps = []; seen_a = seen_b = False; start = time.monotonic()
         torch.cuda.reset_peak_memory_stats()
