@@ -1,3 +1,5 @@
+2026-10-19 13:49UTC — gradient7548671 complete81 unchanged weights; stronger ASR7548672 full20 confirms warm/worn, original corpus frozen unscored. Full24 native8 LR2e-6 pilot7548749 queued Resources, sourcecf28726/101CPUtests, full10 native7548752 and independentASR7548762 dependent. Exact independent full-state restore required. Owner APPROVES separate new36/full20 speech collection, fixture SHA2566e44cac1d6bfa19c3453f813abaf4613651f8d051d2c2a0f3dd80c35c1121979; no new generation submitted yet. Preserve all28/25/KL1/hidden10. No extension/adoption. LOCAL executor; native/whole-system FAIL.
+
 2026-10-19 13:28:20 UTC — native candidate remains REJECTED, full state restore alone insufficient.
 Zero-update complete81 gradient7548671 RUNNING interactive(original7548377 held/
 cancelled0elapsed); fixed full20 stronger ASR7548672 RUNNING CPU/workq(original

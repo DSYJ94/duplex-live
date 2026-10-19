@@ -1,3 +1,50 @@
+# LOCAL active — full24 pilot queued; new full20 speech collection approved (2026-10-19 13:49 UTC)
+
+Main before this entry 6a4de70 (pushed). Actual bounded SSH verified13:48UTC;
+certificate expires20:51:23UTC/22:51:23Berlin. LOCAL executor; CLOUD submits nothing.
+Native/whole-system FAIL, cloud GPU validation paused, no compute purchase.
+
+Zero-update gradient7548671 COMPLETE: all81 cases, unchanged weights, no optimizer.
+First8 fixed-parent actual/reference gradient cosine -0.6278972175; actual/new24
+-0.2105048248. This is a local gradient observation, not sequential Adam attribution.
+Full report SHA25626ecfcfdbfbeabaada1cec6feee58bce4e50c853bc9b8efd2b420eda6c7b071e.
+Stronger full20 same-audio ASR7548672 COMPLETE20/38; warm/worn substitution persists.
+Original fresh20 remains frozen UNSCORED, no native inference/reroll/passing subset.
+Old diagnostic jobs7548377/7548438 cancelled0elapsed; do not resubmit.
+
+NEW full24 native8-update pilot7548749 PENDING Resources, immutable trainer
+cf28726b44ed0621dde6bfd27257709574f5e9ed; CPU7548658 PASS101tests. LR2e-6,
+all24 exposure in8, original28actual/25old teachers/KL1/hidden10 retained. Starts
+accepted7510331, not rejected7546645. Independent full optimizer/RNG/adapter/logit
+restore mandatory before complete10 native7548752_0-9 and full10 CPUASR7548762.
+Both evaluation jobs PENDING Dependency. Exclusive receipt native-full24-pilot-local-
+20261019.json; do not duplicate. No extension/adoption before complete10 review.
+Six observe-only evaluations1GPU, four actual private workflows retain2distinctGPUs.
+Plan fdf0fdd04e59290c0323bd02266c4d525e7ef7bd, plan SHA256
+bc9b85bd3ee455b4b7740111003bcec5d1cfea2e159e037af9c515b95d08b3d9.
+
+Owner now explicitly APPROVES new full20 collection: 36 new authored synthetic
+utterances in evals/fixtures/native-fulltask-qualification-v2-20261019.json,
+SHA2566e44cac1d6bfa19c3453f813abaf4613651f8d051d2c2a0f3dd80c35c1121979.
+No new generation submitted as of this entry. Preserve fixture bytes; implement
+separate version, raw samples/receipts,20s declared tail, full20/38 large-v3 CPU
+quality, WER<=.05, peak<=.995, finite physical word bounds, explicit color/colour
+spelling only. No answers/private worlds/owner data sent to speech API. Whole corpus
+freezes unscored on any failure. Candidate locked only after independent restore
+and complete10 development review; all20 baseline/candidate qualification required.
+
+Scoped backups now 22234 unique files 14813523988 bytes plus pinned models;
+new81gradient10files975985bytes verified13:36:55UTC, strongerASR/pilotreceipt41files
+271367bytes verified13:43:24UTC. Full sourcecf28726 bundle verified; later main
+commits need refreshed bundle. Stopped old Mac source backup remains PARTIAL.
+Owner conversations/credentials/quarantined core excluded. Unrelated pycache,
+capability-retention probes and roadmap edits preserved.
+
+Next: implement/test/deploy approved V2 collection; submit generation/quality once
+with exclusive receipts, monitor7548749 then full10 behavior, back all critical state.
+
+---
+
 # LOCAL active — diagnostics RUNNING; originals cancelled without execution (2026-10-19 13:28:20 UTC)
 
 Main source before this entrycf28726b44ed0621dde6bfd27257709574f5e9ed, pushed/fetched

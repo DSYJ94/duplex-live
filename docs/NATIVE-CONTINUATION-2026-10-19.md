@@ -812,3 +812,6 @@ speech API payload; only36 new synthetic user utterances would be sent. Earlier
 owner transfer approval covered original36; NEW owner approval is required for
 this separate data collection before any API call. Source-only proposal, no
 inference or generator execution. Candidate fixed before any new fresh outputs.
+
+2026-10-19 13:49UTC — gradient7548671 complete81 unchanged weights; stronger ASR7548672 full20 confirms warm/worn, original corpus frozen unscored. Full24 native8 LR2e-6 pilot7548749 queued Resources, sourcecf28726/101CPUtests, full10 native7548752 and independentASR7548762 dependent. Exact independent full-state restore required. Owner APPROVES separate new36/full20 speech collection, fixture SHA2566e44cac1d6bfa19c3453f813abaf4613651f8d051d2c2a0f3dd80c35c1121979; no new generation submitted yet. Preserve all28/25/KL1/hidden10. No extension/adoption. LOCAL executor; native/whole-system FAIL.
+
