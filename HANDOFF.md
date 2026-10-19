@@ -14,7 +14,9 @@ changed in place160G->110G(host)13:02:39UTC after prior training/audit measured
 MaxRSS below2GiB;1GPU unchanged. Same job/no resubmission/model/input change.
 Original and resource receipts native-v2-gradient-diagnostic-local-20261019.json,
 native-v2-gradient-gpu-submission-local-20261019.json,
-native-v2-gradient-resource-local-20261019.json. Next:inspect complete81 gradients.
+native-v2-gradient-resource-local-20261019.json. Time limits of both pending diagnostics shortened to30minutes in place13:08:13UTC
+for backfill; no new/replacement job. Receipt native-diagnostic-backfill-local-20261019.json.
+Next:inspect complete81 gradients.
 
 Fresh20 generation7548247 COMPLETE; full20 quality7548248 FAIL18/20pass/2fail.
 001colour/color WER0.05556 spelling only;002warm/worn WER0.08333 genuine word
@@ -27,13 +29,18 @@ prompt, no speech API calls/new audio, original verdict unchanged. Same0.05WER/
 schema cannot satisfy existing approved-input reader or authorize inference.
 Exclusive receipt native-fresh-asr-control-local-20261019.json. No duplicates.
 
-Scoped verified backup22172unique files14812186381bytes plus separately pinned
+Scoped verified backup22179unique files14812236842bytes plus separately pinned
 base/model weights; stopped old Mac source backup remains partial. Critical full
 optimizer/Python/NumPy/Torch/CUDA state7546645 preserved/verified. Keep credentials,
 owner conversations and quarantined core excluded. Unrelated local pycache/probe/
 roadmap edits untouched. LOCAL active until explicit handback; CLOUD submits nothing,
 cloud GPU validation paused, no extra compute purchase. SSH cert expiry20:51:23UTC
 /22:51:23Berlin today. Native/whole-system FAIL. No fresh40 inference submitted.
+Complete source bundle342fcfff3f28e4f230d442d47d81d244424385e7 SHA256
+c3b26505fcb504a3ec478a95676cf4bb03a98edfff7aade06bd17f726c3e828f verified,
+including unexecuted complete24-in8 proposal and two coverage tests. Proposed
+sampling preserves exact old actual/teacher/reference schedule, averages new
+teachers per kind and exposes quiet/pause byupdate6; no optimizer wired or run.
 
 ---
 
