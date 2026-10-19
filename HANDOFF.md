@@ -1,3 +1,39 @@
+# LOCAL active — listening link supplied; queue and local certificate reverified (2026-10-19 15:31 UTC)
+
+Main before this entry: f63f2be6ba941413da35a99cb008b83dd5073a59; origin/main
+matches after fetch. Trainer cf28726b44ed0621dde6bfd27257709574f5e9ed and pilot
+wrapper 95a60b79aa12ccc8c3ae04a6bd3e86ab6b60a663 remain unchanged. No submissions.
+Bounded actual SSH succeeded at 15:30:52 UTC: pilot 7549991 COMPLETED, independent
+full optimizer/RNG restore PASS, all28 valid logits exact. All10 evaluation tasks
+7549994_0-9 PENDING(Resources); ASR7550001 PENDING(Dependency). No native behavior
+reports exist yet. No extension, adoption or fresh inference is authorized.
+The previous read-only monitor timed out; the subsequent single bounded SSH check
+succeeded. Do not duplicate any queued job.
+
+The actual LOCAL certificate, re-read with TZ=UTC, is valid 19 October14:05:02 UTC
+through 20 October02:05:02 UTC /04:05:02 Berlin. This supersedes the earlier local
+20:51:23 UTC expiry recorded below; cloud credentials remain separate.
+
+Owner asked for the listening link, supplied as http://127.0.0.1:57386/ (HTTP200
+verified) and an absolute local WAV link. This is the unchanged 5.25s original015
+clip0, SHA17e0cb04a544f71b84b0caaf742cb328ee7f252a0860a8b390e03f117ba1cf33.
+No hearing answer or changed source-quality procedure approval has been received.
+Both failed full20 audits remain failed; proposed whole20 source profile remains
+UNAPPROVED, diagnostic7550223 cannot authorize inference. Await the owner's answer;
+retain originals, exact words, hashes, raw WER and complete20/38 scope.
+
+Scoped artifact inventory remains22465 unique files14922150596bytes, plus pinned
+runtime/models/public ASRweights. Full-history source bundle refreshed through
+f63f2be and verified; SHA recorded in LOCAL-PRESERVATION JSON. This entry's docs
+commit is newer than that bundle. Stopped old Mac source backup remains PARTIAL.
+Owner conversations, credentials and quarantined core excluded; unrelated local
+edits preserved. LOCAL remains executor; CLOUD submits nothing. No handback.
+Next: complete10 native outputs plus independent ASR, then back up and review all10
+actual audio/words/receipts/clocks before any bounded32-update research decision.
+Native and whole-system qualification remain FAIL.
+
+---
+
 # LOCAL active — proposed whole20 profile diagnostic complete; approval pending (2026-10-19 15:00UTC)
 
 Main before this entryb57f8046f4a9ff53c832fd53807e0d94aff45175, pushed/fetched;

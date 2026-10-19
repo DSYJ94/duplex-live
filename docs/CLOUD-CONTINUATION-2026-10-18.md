@@ -1,5 +1,9 @@
 # Cloud continuation — 18 October 2026
 
+CURRENT ACCESS UPDATE — 19 October15:31 UTC: LOCAL remains active; cloud submits
+no jobs. Actual local certificate reverified through20October02:05:02 UTC /
+04:05:02 Berlin, and bounded actual SSH PASS15:30:52 UTC. Read newest HANDOFF.
+
 CURRENT OVERRIDE — 19 October 08:52 UTC / 10:52 Berlin: the owner resumed the
 LOCAL chat as active executor. Cloud must remain read-only and submit no jobs
 until explicitly handed execution back. Read the newest HANDOFF.md entry. Local
