@@ -1,7 +1,7 @@
 {
-  "at_utc": "2026-10-19T10:25:50.196171+00:00",
-  "unique_scoped_artifact_files": 20890,
-  "unique_scoped_artifact_bytes": 12972608175,
+  "at_utc": "2026-10-19T10:50:02.606483+00:00",
+  "unique_scoped_artifact_files": 21286,
+  "unique_scoped_artifact_bytes": 13323866464,
   "inventory_conflicts": [],
   "inventories": [
     {
@@ -87,6 +87,41 @@
       "files": 17104,
       "bytes": 9072299252,
       "missing_roots": []
+    },
+    {
+      "name": "remote-native-offline-controls-inventory.json",
+      "sha256": "68f5e4b302f0598489cc01aa0b761cef19af1dd7dddb11b5dd8df2ee4c8552f6",
+      "files": 22,
+      "bytes": 15965368,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-vendor-sources-inventory.json",
+      "sha256": "8422539c97837db8e249c472b30e39345f7be53688abf33390ccd1caa2d2e5cc",
+      "files": 4,
+      "bytes": 30754880,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-clarity1-raw-inventory.json",
+      "sha256": "6a8c0abe464d0d9dd644df9958c52e5c0c2927f874a2f393b6e9c645209e335a",
+      "files": 366,
+      "bytes": 304256858,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-clarity1-quality-inventory.json",
+      "sha256": "a25baee8a0b7588c1fb6dce84d4e79a7fb28e7cc13028a212edd4ddff948c2fd",
+      "files": 2,
+      "bytes": 232825,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native-streamed-control-inventory.json",
+      "sha256": "c08e8cd8de12a3c85cc40fd72b7b7ceea889652b051eb3d5d5952b3e5538a30d",
+      "files": 2,
+      "bytes": 48358,
+      "missing_roots": []
     }
   ],
   "local_artifact_root": "runs/cloud-export-20261016/tree",
@@ -99,5 +134,6 @@
   "cloud_gpu_validation": "paused",
   "native_optimizer_updates": 0,
   "runtime_symlinks_verified": 8,
-  "runtime_sif_sha256": "c00bc99693e4908ea75d17df9c379b93ae9a1678a65d875565ad5d52f76fa27b"
+  "runtime_sif_sha256": "c00bc99693e4908ea75d17df9c379b93ae9a1678a65d875565ad5d52f76fa27b",
+  "pinned_vendor_git_bundles_verified": 3
 }

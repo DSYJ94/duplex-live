@@ -1,3 +1,31 @@
+# LOCAL active — native control PASS; remaining21 resumed,19 October10:50UTC
+
+Independent CPU control7544729 COMPLETED2m25: all four original native traces
+have EXACT full prepared/native streamed-user input parity; legacy offline
+mismatches only user streams9–16, unchanged assistant/prefix/word/mask ownership.
+Diagnostic schema remains nontraining, not full25 approval. Backed2files/48358bytes.
+
+Sourcecc169a2d5548debd9f2272a723a8dd85e5ea4f76 pushed/immutable. Exclusive resume
+receipt runs/native-old25-streamed-resume-local-20261019.json. Reuse original
+7543890_0–3 unchanged. Capture ONLY4–24%4 as7544803 -> FULL25 independent CPU
+approval7544805 -> FULL25 FP32 math7544806. All gated by CPU7544793. No optimizer.
+Every phase performs full cache/conversion validation before inputs; redundant
+wrapper validation removed. Never resubmit the full old capture array.
+
+Separate same-WAV full24 chain from SAME source: CPU7544793 -> quality/control
+7544794 -> semantic/conversion7544795. Receipt
+runs/native-v2-spelling-reaudit-local-20261019.json. ZERO new teacher sessions:
+original clarity teacher7544225 remains unchanged. Raw WER and failed7544226 kept;
+finite same-word spelling control must leave all raw words/times/receipts and
+all23 prior passes identical. No lower thresholds or subset acceptance.
+
+All critical runtime/base/state/data/vendor source backups VERIFIED; exact unique
+counts and inventory hashes in LOCAL-PRESERVATION dated JSON. Unrelated local edits
+preserved. LOCAL retains execution; CLOUD submits NOTHING. Goal ACTIVE; native/
+whole-system FAIL; cloud GPU validation PAUSED; cert expires22:51:23Berlin today.
+
+---
+
 # LOCAL active — same-WAV spelling control; native CPU control retry,10:46UTC
 
 Actual final teacher022 defect is orthographic, not a missing spoken word:
