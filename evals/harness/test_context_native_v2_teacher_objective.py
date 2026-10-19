@@ -1,8 +1,12 @@
 """New native supervision cannot disable old retention or extend before review."""
 from types import SimpleNamespace
 import unittest
+import json
+from pathlib import Path
+import tempfile
 
-from evals.context_native_v2_teacher_objective import validate_configuration
+from evals.context_native_v2_teacher_objective import validate_configuration, validate_teacher_onsets
+from evals.moshi_model_download import sha256
 
 
 class NativeV2ConfigurationTests(unittest.TestCase):
@@ -37,6 +41,28 @@ class NativeV2ConfigurationTests(unittest.TestCase):
                            ('actual_retention_sampling','legacy-modulo'),('actual_response_first_word_weight',1.)]:
             with self.subTest(name=name), self.assertRaises(ValueError):
                 validate_configuration(self.config(**{name:value}))
+
+    def test_physical_onset_guard_rejects_original_fault_without_changing_audio(self):
+        import numpy as np
+        import soundfile as sf
+        with tempfile.TemporaryDirectory() as name:
+            root=Path(name);wav=root/'conversation.wav';pcm=np.zeros((48000,2))
+            pcm[24000:,0]=.1
+            sf.write(wav,pcm,24000)
+            digest=sha256(wav)
+            (root/'cache.json').write_text(json.dumps(dict(conversion=str(root))))
+            (root/'ingestion.json').write_text(json.dumps(dict(accepted=[dict(
+                scenario_id='old-fault',path=str(wav),wav_sha256=digest)])))
+            side=wav.with_suffix('.json')
+            side.write_text(json.dumps(dict(alignments=[['Sure',[.1,1.2],'SPEAKER_MAIN']])))
+            teachers=[dict(id='old-fault',cache=str(root))]
+            with self.assertRaisesRegex(ValueError,'physically impossible onset'):
+                validate_teacher_onsets(teachers)
+            self.assertEqual(sha256(wav),digest)
+            # Synthetic control: only a physically valid annotation can pass.
+            side.write_text(json.dumps(dict(alignments=[['Sure',[1.,1.2],'SPEAKER_MAIN']])))
+            self.assertEqual(validate_teacher_onsets(teachers),['old-fault'])
+            self.assertEqual(sha256(wav),digest)
 
 
 if __name__ == '__main__':
