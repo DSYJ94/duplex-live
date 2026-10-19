@@ -1,7 +1,7 @@
 {
-  "at_utc": "2026-10-19T14:00:18.753632+00:00",
-  "unique_scoped_artifact_files": 22241,
-  "unique_scoped_artifact_bytes": 14813601503,
+  "at_utc": "2026-10-19T14:14:25.488619+00:00",
+  "unique_scoped_artifact_files": 22400,
+  "unique_scoped_artifact_bytes": 14890037517,
   "inventory_conflicts": [],
   "inventories": [
     {
@@ -268,6 +268,27 @@
       "sha256": "6f7d68cd52b9adbf5dd8768a555f18d65d7797e5b5f0b4b4bef9175f6d7e6c05",
       "files": 7,
       "bytes": 77515,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native-fresh2-inputs-inventory.json",
+      "sha256": "b39cd35142130532ed1c72c0c10acf11f372ebebac0834656b9ab58d7194f089",
+      "files": 118,
+      "bytes": 76276579,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native-full24-backfill-inventory.json",
+      "sha256": "6f809d58ab239b8a67e765a193e256ebfa502bf0cd1a0ae16b97a5f08d139309",
+      "files": 1,
+      "bytes": 39013,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native-fresh2-quality-inventory.json",
+      "sha256": "4a5b5c56e8dc8feee80de26ffa72b81d1960611178ce218f34d90c66d4f50c54",
+      "files": 40,
+      "bytes": 120422,
       "missing_roots": []
     }
   ],

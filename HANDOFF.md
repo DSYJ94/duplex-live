@@ -1,3 +1,37 @@
+# LOCAL active — new fresh20 FAILED19/20; native pilot still queued (2026-10-19 14:13UTC)
+
+Main before this entryd3929ef11ae1a0205a31388bf7a4c175c29ed766, pushed; tested inference guard source75a94d1
+PASS117CPUtests7549146. Approved36 new utterances generated once7549084 COMPLETE
+9m30,20scenes/38rawclips incl exact counterfactual copies,36 requests all attempt0.
+Full20 large-v3 CPU quality7549085 FAILED8m04:19/20scenes,37/38clips. Solefailure
+native-fresh2-015clip0 expected Check the room sign for Project Nine.; ASR Check the
+rune sign for Project9. WER1/7=.142857>.05; wavepeak.2536316 and bounds valid.
+Whole20 freezes UNSCORED, no native inference/reroll/subset/word-equivalence patch.
+Firstoriginalfresh20 also remains frozen failed. Plan SHA256 unchanged6e44cac1d6bfa19c3453f813abaf4613651f8d051d2c2a0f3dd80c35c1121979.
+Prepare full20 SAME-AUDIO other-recognizer turbo CPU diagnostic, no API calls/
+input approval; no diagnostic job submitted at this entry. Room/rune not equivalent.
+
+Native8 complete24 pilot7548749 still PENDING Resources as14:13:12UTC, source
+cf28726b44ed0621dde6bfd27257709574f5e9ed,LR2e-6 from7510331. Complete10 native7548752
+and CPUASR7548762 dependent. Measured oldpilot7546645=13m09 incl fresh restore;
+old10eval max1m38. Existing PENDING requests shortened in place14:07UTC to20min
+pilot/10min each evaluation; GPUcounts unchanged1 for0-5,2 for6-9, max4concurrent.
+Exclusive before/after receipt native-full24-backfill-local-20261019.json, no new
+jobs. All28 actual/25old teachers/KL1/hidden10 retained. No extension/adoption.
+
+Scoped verified backup22400 unique files14890037517bytes plus pinned models.
+Newinput118files76276579bytes verified14:04:30UTC; newQA40files120422bytes
+verified14:13:17UTC; backfillreceipt39013bytes verified14:07:56UTC. Full75a94d1
+Git bundle complete verified513bc3ef14d8bda1e9aeef96cda8ef45d091bb5db1b233336859e5cb8f58a7e7.
+Two public Whisper weight binaries still TRANSFERRING; native critical state already
+verified. Stopped old Mac source backup remains partial. Owner/credentials/core
+excluded; unrelated pycache/probe/roadmap files preserved. LOCAL executor, CLOUD
+submits nothing; cloud GPU validation paused, no purchase. Cert20:51:23UTC today.
+Native/whole-system FAIL. Next: same-audio full20 diagnosis, native full24 pilot /
+independent full restore / all10 behavioral review, preserve all artifacts.
+
+---
+
 # LOCAL active — fresh20 collection running; complete comparison guards tested (2026-10-19 13:59UTC)
 
 Main before this entry75a94d1e86c24bdf849af6247619469bc0e08331, pushed/fetched
