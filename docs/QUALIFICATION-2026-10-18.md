@@ -1,3 +1,14 @@
+2026-10-19 13:28:20 UTC — native candidate remains REJECTED, full state restore alone insufficient.
+Zero-update complete81 gradient7548671 RUNNING interactive(original7548377 held/
+cancelled0elapsed); fixed full20 stronger ASR7548672 RUNNING CPU/workq(original
+GPU7548438 held/cancelled0elapsed). Held replacements verified before release,
+no duplicate execution. Sourcecf28726 full CPU7548658 PASS101tests; native gradient
+payload remains60a7afe byte-identical. No new optimizer/rate selected. Prepared
+complete24-in8 opt-in and strict full10 native-review/state continuation guards,
+not behavior acceptance. Fresh20 original7548248 fails18/20; frozen unscored/no
+inference until any independently approved full20 version exists. Native/whole-
+system FAIL; LOCAL active, CLOUD submits nothing, no compute purchase.
+
 2026-10-19 13:05:01 UTC — native7546645 rejected after complete10 independent behavior review;
 no extension/adoption/new optimizer. Zero-update complete81 gradient7548377 queued
 source60a7afe(CPU87tests passed). Fresh20 source7548248 FAILED18/20, whole corpus

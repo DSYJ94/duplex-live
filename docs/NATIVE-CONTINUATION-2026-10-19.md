@@ -750,3 +750,27 @@ review binding, altered/missing evidence, ordinary regressions, actual failed-ta
 research review, committed Git document checks and existing trained-checkpoint
 verification. These are fixture/source checks, not native numerical or behavior
 acceptance. Full independent CPU suite must pass before a new optimizer.
+
+
+## Diagnostics now execute; held replacement handshake prevents duplicates (2026-10-19 13:28:20 UTC)
+
+Full sourcecf28726 independent CPU7548658 PASS101tests2.891s. Gradient diagnostic
+workq7548377 and same-audio ASR GPU7548438 remained pending with no start estimate.
+Official short-debug policy rechecked: one zero-update exploratory native gradient
+audit is eligible, normal training/corpus jobs remain workq. Old gradient held;
+held replacement7548671 verified effective interactive reservation/partition, old
+cancelled0elapsed before replacement released. Exact payload60a7afe unchanged,
+new wrappercf28726;1GPU/110G/30min, existing allocation1.5x credits, no purchase.
+7548671 starts13:25:31UTC. All81 required/no optimizer/no new checkpoint.
+
+ASR oldGPU7548438 held, CPU replacement7548672 held/verified hasNO GPU request,
+old cancelled0elapsed, replacement released after independent source101tests.
+Same large-v3 model/full20/all38 clips/no expected-text prompting; raw failed
+quality/frozen unscored set unchanged. CPU downloading pinned official weights.
+Always use squeue --all including hidden partition to audit all active jobs.
+Transitions have separate immutable receipts; original submission records retained.
+Both migration receipts + source/test evidence4files39794bytes independently
+size/SHA256 verified13:27:04UTC. Sourcecf28726 complete-history bundle verified
+SHA256fc3d3c2c5dd368877c3838b8c232be271867c0f0b1e7d4b260988c3f72cefe08.
+[Official short-debug guide](https://docs.isambard.ac.uk/user-documentation/guides/slurm-advanced/).
+No learning rate selected/new optimizer or extension submitted; native/whole-system FAIL.

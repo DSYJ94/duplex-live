@@ -1,3 +1,54 @@
+# LOCAL active — diagnostics RUNNING; originals cancelled without execution (2026-10-19 13:28:20 UTC)
+
+Main source before this entrycf28726b44ed0621dde6bfd27257709574f5e9ed, pushed/fetched
+in immutable worktrees/recovery-cf28726. Full independent CPU7548658 PASS101tests
+2.891s(10s job). Prepared opt-in complete24-in8 native pilot and strict same-source/
+state/complete10-review continuation gates; no learning rate selected, no new
+optimizer submitted. Rejected legacy candidate7546645 CANNOT pass full24 gate.
+
+ZERO-UPDATE complete81 gradient diagnostic NOW7548671 RUNNING since13:25:31UTC,
+interactive reservation,1GPU/110G/30min; exact immutable original diagnostic payload
+60a7afee27a468d56b1de9f17494783a0eb167a0(CPU87tests passed), wrappercf28726.
+Old7548377 was held, replacement submitted HELD, effective reservation/partition
+verified, original cancelled before replacement released. Old elapsed0; no duplicate
+execution. All81=28actual+4reference+25old+24new required, no optimizer/checkpoint.
+Exclusive transition receipt native-v2-gradient-interactive-local-20261019.json.
+Official short/debug policy rechecked19Oct; no explicit partition/QoS override,
+1.5x existing allocation credits. Training and bulk corpus work remain workq.
+
+Full20 SAME-AUDIO large-v3 ASR control NOW7548672 RUNNING on CPU/workq, source
+cf28726, afterCPU101tests. Old pending GPU7548438 held/cancelled0elapsed before
+held CPU replacement released. Receipt native-fresh-asr-cpu-migration-local-20261019.
+No new speech API calls, expected-text prompts, reroll or changed waveform/gain.
+Pinned large-v3 weights downloading through installed official Whisper package.
+Original fresh20 quality7548248 FAIL18/20(001colour/color;002warm/worn); whole20
+remains frozen UNSCORED with no native inference. Diagnostic cannot approve
+inputs/inference; same0.05/0.995 bars and original failed verdict retained.
+Use squeue --all -u dsyj94.u6si to include hidden interactive jobs. Do not resubmit
+old7548377/7548438 or current7548671/7548672. Native/whole-system FAIL.
+
+Native8 checkpoint7546645/full optimizer/Python/NumPy/Torch/CUDA state restore
+PASS but complete10 native7547174 + independent speech7547175 REJECT extension/
+adoption. Raw actual WAV/word/receipt/latency review committed; quiet/pause plots
+show actual speech inside unchanged mandatory intervals. All28 actual histories,
+all25 reapproved old teachers/KL1/hidden10 preserved; native numerical25/24 PASS.
+Full24 proposal now opt-in source only: average each kind's exact half-group per
+visit, old/reference sampling and total weights unchanged, every24 exposed by8,
+quiet/pause by6. Any future32additional updates needs independent exact restore +
+COMMITTED all10 review with4ordinary cores/strict speech retained; never adoption.
+
+Scoped backup22183unique files14812276636bytes plus pinned model weights;
+full sourcecf28726 Git bundle SHA256fc3d3c2c5dd368877c3838b8c232be271867c0f0b1e7d4b260988c3f72cefe08
+verified complete history. Migration/test receipts4files39794bytes verified
+13:27:04UTC. Original stopped Mac source backup remains partial separately.
+Owner conversations/credentials/quarantined core excluded; unrelated local edits
+untouched. LOCAL remains executor; CLOUD submits nothing, cloud GPU validation
+paused, no compute purchase. Cert expires20:51:23UTC/22:51:23Berlin today.
+Next:complete81 gradient diagnosis ->choose bounded native recipe; complete full20
+same-audio ASR diagnosis ->retain/independently reapprove only if full evidence permits.
+
+---
+
 # LOCAL active — two zero-update diagnostics queued; candidate rejected (2026-10-19 13:05:01 UTC)
 
 Current source main before this entry94119b9c4b8b02c9de249edd2f8e79de8b6edea6.

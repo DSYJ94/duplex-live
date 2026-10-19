@@ -1,7 +1,7 @@
 {
-  "at_utc": "2026-10-19T13:10:12.941704+00:00",
-  "unique_scoped_artifact_files": 22179,
-  "unique_scoped_artifact_bytes": 14812236842,
+  "at_utc": "2026-10-19T13:28:20.293780+00:00",
+  "unique_scoped_artifact_files": 22183,
+  "unique_scoped_artifact_bytes": 14812276636,
   "inventory_conflicts": [],
   "inventories": [
     {
@@ -241,6 +241,13 @@
       "files": 1,
       "bytes": 7021,
       "missing_roots": []
+    },
+    {
+      "name": "remote-native-diagnostic-migrations-inventory.json",
+      "sha256": "a2a422cbf268c8ba6ff547ac31de565c4169da8bade2cccabeafb0977ed23276",
+      "files": 4,
+      "bytes": 39794,
+      "missing_roots": []
     }
   ],
   "local_artifact_root": "runs/cloud-export-20261016/tree",
@@ -256,10 +263,10 @@
   "runtime_sif_sha256": "c00bc99693e4908ea75d17df9c379b93ae9a1678a65d875565ad5d52f76fa27b",
   "pinned_vendor_git_bundles_verified": 3,
   "source_git_bundle": {
-    "at_utc": "2026-10-19T13:07:50.677133+00:00",
-    "source_sha": "342fcfff3f28e4f230d442d47d81d244424385e7",
-    "bundle": "runs/local-continuation-20261019/source-main-342fcff.bundle",
-    "bundle_sha256": "c3b26505fcb504a3ec478a95676cf4bb03a98edfff7aade06bd17f726c3e828f"
+    "at_utc": "2026-10-19T13:26:40.496550+00:00",
+    "source_sha": "cf28726b44ed0621dde6bfd27257709574f5e9ed",
+    "bundle": "runs/local-continuation-20261019/source-main-cf28726.bundle",
+    "bundle_sha256": "fc3d3c2c5dd368877c3838b8c232be271867c0f0b1e7d4b260988c3f72cefe08"
   },
   "native_candidate_job": "7546645",
   "native_candidate_training_state_sha256": "47b52ef890ecf64fa7c4cab9d5c1cf52bc74227d2bf676a13d9414ee2da95b4a",
