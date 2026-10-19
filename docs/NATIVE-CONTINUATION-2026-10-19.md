@@ -795,3 +795,20 @@ chain/recipe. Require independent full-state fresh-process restoration then all1
 actual native behaviors+independent speech/receipts/latency, before any separately
 committed research-continuation decision. No adoption, no whole-model qualification.
 No optimizer job submitted yet at this plan declaration.
+
+
+## Separate fresh20 proposal prepared; no speech transfer authorized or submitted
+
+Both turbo and stronger large-v3 source audits fail002 raw word agreement above
+unchanged0.05; original full20 remains frozen/unscored. A fully separate proposed
+20-case fixture native-fulltask-qualification-v2-20261019.json contains38turns/
+36unique authored utterances, none repeated from original fresh20. It retains all
+8ordinary/4private(including exact-audio counterfactual)/2clarify/2cancel/2quiet/
+2pause gates. Original plan/audio/receipts/failures remain unchanged, no TRAIN use.
+Declares20second observation tail so actual worker/cancellation results and full
+ordinary answers have time to arrive; this changes ONLY proposed new input padding,
+not old source clocks or native behavior. Expected answers/worlds excluded from
+speech API payload; only36 new synthetic user utterances would be sent. Earlier
+owner transfer approval covered original36; NEW owner approval is required for
+this separate data collection before any API call. Source-only proposal, no
+inference or generator execution. Candidate fixed before any new fresh outputs.

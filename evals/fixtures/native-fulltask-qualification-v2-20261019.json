@@ -1,0 +1,482 @@
+{
+  "schema": "dl-native-fulltask-qualification-plan-v2",
+  "declared_before_new_candidate_outputs": false,
+  "source": "Entirely new authored synthetic user-only corpus; original failed fresh20 remains frozen/unscored and every original waveform/receipt is retained",
+  "do_not_train": true,
+  "training_approved": false,
+  "owner_conversations_used": false,
+  "qwen_or_external_foreground_controller_used": false,
+  "source_generation": "PROPOSED ONLY:36 unique new user utterances; owner API-transfer and separate-corpus approval pending; no generation submitted",
+  "input_quality": {
+    "per_clip_wer_bar": 0.05,
+    "actual_word_timestamp_bounds_required": true,
+    "peak_and_finite_audio_required": true,
+    "invalid_recordings_frozen_unscored": true,
+    "no_reroll_or_passing_subset": true,
+    "asr_model": "large-v3 pinned official weights; label-free, no reference-text prompts",
+    "peak_bar": 0.995,
+    "spelling_equivalents": {
+      "color": "colour"
+    },
+    "word_substitutions_not_equivalent": [
+      "warm/worn",
+      "missing/repeated words",
+      "synonyms"
+    ]
+  },
+  "model_inputs": "Only actual user waveform, usual native persona/voice and real arrived backend receipts. Expected answers and scoring references never enter native inference.",
+  "comparison": "Lock independently restored candidate after complete10 development review before ANY new native fresh output; same fresh20 user PCM/worlds for frozen native520 and candidate. Source quality is separate from behavioral qualification.",
+  "required_gates": {
+    "ordinary_correct": "8/8",
+    "private_actual_receipts_and_correct_results": "4/4",
+    "clarification_before_lookup": "2/2",
+    "actual_cancel_and_new_answer": "2/2",
+    "deliberate_quiet": "2/2",
+    "pause_resume_without_restart": "2/2",
+    "wrong_private_values": 0,
+    "false_completed_actions": 0,
+    "premature_completion": 0,
+    "unnecessary_external_requests_for_ordinary_quiet_pause": 0
+  },
+  "additional_metrics": [
+    "Independent generated-speech word agreement and physical onsets",
+    "Full20 task success/failure/uncovered inventory",
+    "Native RET requests and actual worker receipts",
+    "Causal input samples and packet availability",
+    "Compute median/p95, maximum backlog and audible playout gaps",
+    "No hidden fallback or synthetic fixture claimed as live evidence"
+  ],
+  "cases": [
+    {
+      "id": "native-fresh2-000",
+      "kind": "ordinary",
+      "turns": [
+        [
+          0.8,
+          "All the boxes with a red lid contain cards. This box has a red lid. What is in this box?"
+        ]
+      ],
+      "required": "Cards; apply the stated rule, no invented contents.",
+      "world": {},
+      "backend": "observe-only",
+      "external_requests_allowed": false
+    },
+    {
+      "id": "native-fresh2-001",
+      "kind": "ordinary",
+      "turns": [
+        [
+          0.8,
+          "The bus left before the boat. The boat left before the train. Which one left first?"
+        ]
+      ],
+      "required": "The bus; use the complete stated order.",
+      "world": {},
+      "backend": "observe-only",
+      "external_requests_allowed": false
+    },
+    {
+      "id": "native-fresh2-002",
+      "kind": "ordinary",
+      "turns": [
+        [
+          0.8,
+          "I have three pens. I get two more pens. I give one pen away. How many pens do I have?"
+        ]
+      ],
+      "required": "Four pens.",
+      "world": {},
+      "backend": "observe-only",
+      "external_requests_allowed": false
+    },
+    {
+      "id": "native-fresh2-003",
+      "kind": "ordinary",
+      "turns": [
+        [
+          0.8,
+          "The key is in one of two cups. The first cup is empty. Which cup holds the key?"
+        ]
+      ],
+      "required": "The second cup.",
+      "world": {},
+      "backend": "observe-only",
+      "external_requests_allowed": false
+    },
+    {
+      "id": "native-fresh2-004",
+      "kind": "ordinary",
+      "turns": [
+        [
+          0.8,
+          "Why can I see my face in a mirror?"
+        ]
+      ],
+      "required": "Light from the face is reflected by the mirror into the eyes.",
+      "world": {},
+      "backend": "observe-only",
+      "external_requests_allowed": false
+    },
+    {
+      "id": "native-fresh2-005",
+      "kind": "ordinary",
+      "turns": [
+        [
+          0.8,
+          "Why does a lid help a pot of water boil sooner?"
+        ]
+      ],
+      "required": "A lid reduces heat loss so the water heats faster.",
+      "world": {},
+      "backend": "observe-only",
+      "external_requests_allowed": false
+    },
+    {
+      "id": "native-fresh2-006",
+      "kind": "ordinary",
+      "turns": [
+        [
+          0.8,
+          "Why does a wet shirt dry faster when air moves across it?"
+        ]
+      ],
+      "required": "Moving air carries water vapour away and increases evaporation.",
+      "world": {},
+      "backend": "observe-only",
+      "external_requests_allowed": false
+    },
+    {
+      "id": "native-fresh2-007",
+      "kind": "ordinary",
+      "turns": [
+        [
+          0.8,
+          "To keep ice from melting on a short trip, would a thick box or a thin paper bag help more, and why?"
+        ]
+      ],
+      "required": "The thick box usually insulates better and slows heat entering; no claim that thickness creates cold.",
+      "world": {},
+      "backend": "observe-only",
+      "external_requests_allowed": false
+    },
+    {
+      "id": "native-fresh2-008",
+      "kind": "private",
+      "turns": [
+        [
+          0.8,
+          "Please check the room sign for Project One."
+        ],
+        [
+          9.0,
+          "While you check, what keeps the Moon in orbit around Earth?"
+        ]
+      ],
+      "required": "Actual blue-triangle receipt and correct gravity/orbital-motion explanation while waiting; no invented/stale facts.",
+      "world": {
+        "One": {
+          "room sign": "blue triangle"
+        }
+      },
+      "backend": "native-asr",
+      "minimum_actual_lookup_delay_s": 14.0,
+      "paired_stimulus_group": "project-one-room-sign",
+      "same_user_audio_as": null
+    },
+    {
+      "id": "native-fresh2-009",
+      "kind": "private",
+      "turns": [
+        [
+          0.8,
+          "Please check the room sign for Project One."
+        ],
+        [
+          9.0,
+          "While you check, what keeps the Moon in orbit around Earth?"
+        ]
+      ],
+      "required": "Changed actual receipt yields orange circle with identical user audio; correct orbital explanation and no blue-triangle carryover.",
+      "world": {
+        "One": {
+          "room sign": "orange circle"
+        }
+      },
+      "backend": "native-asr",
+      "minimum_actual_lookup_delay_s": 14.0,
+      "paired_stimulus_group": "project-one-room-sign",
+      "same_user_audio_as": "native-fresh2-008"
+    },
+    {
+      "id": "native-fresh2-010",
+      "kind": "private",
+      "turns": [
+        [
+          0.8,
+          "Please check the entry word for Project Two."
+        ],
+        [
+          9.0,
+          "While you check, why does a shadow appear when I stand in sunlight?"
+        ]
+      ],
+      "required": "Actual green-star receipt and light-blocking explanation while pending, without guessing.",
+      "world": {
+        "Two": {
+          "entry word": "green star"
+        }
+      },
+      "backend": "native-asr",
+      "minimum_actual_lookup_delay_s": 14.0
+    },
+    {
+      "id": "native-fresh2-011",
+      "kind": "private",
+      "turns": [
+        [
+          0.8,
+          "Please check the room sign for Project Three."
+        ],
+        [
+          9.0,
+          "While you check, I am wearing two shoes. I take one off. How many remain on my feet?"
+        ]
+      ],
+      "required": "Actual red-cross receipt and one-shoe answer while pending; no unnecessary second lookup.",
+      "world": {
+        "Three": {
+          "room sign": "red cross"
+        }
+      },
+      "backend": "native-asr",
+      "minimum_actual_lookup_delay_s": 18.0
+    },
+    {
+      "id": "native-fresh2-012",
+      "kind": "clarify",
+      "turns": [
+        [
+          0.8,
+          "What is the entry word?"
+        ],
+        [
+          8.0,
+          "Project Five."
+        ],
+        [
+          14.0,
+          "While you look, why does soap help remove grease from a plate?"
+        ]
+      ],
+      "required": "Ask which project before identification; actual named-project black-oval receipt and correct grease-removal explanation; no repeated questions.",
+      "world": {
+        "Four": {
+          "entry word": "white cross"
+        },
+        "Five": {
+          "entry word": "black oval"
+        }
+      },
+      "backend": "native-asr",
+      "minimum_actual_lookup_delay_s": 14.0
+    },
+    {
+      "id": "native-fresh2-013",
+      "kind": "clarify",
+      "turns": [
+        [
+          0.8,
+          "What is the room sign?"
+        ],
+        [
+          8.0,
+          "Project Six."
+        ],
+        [
+          14.0,
+          "While you look, I put two books in a bag and then add one more. How many are in the bag?"
+        ]
+      ],
+      "required": "Clarify before reading Project Six; actual gold-triangle receipt and three-books answer while pending.",
+      "world": {
+        "Six": {
+          "room sign": "gold triangle"
+        },
+        "Seven": {
+          "room sign": "silver square"
+        }
+      },
+      "backend": "native-asr",
+      "minimum_actual_lookup_delay_s": 18.0
+    },
+    {
+      "id": "native-fresh2-014",
+      "kind": "cancel",
+      "turns": [
+        [
+          0.8,
+          "Check the entry word for Project Eight."
+        ],
+        [
+          10.0,
+          "While you check, how many hands does one person usually have?"
+        ],
+        [
+          20.0,
+          "Cancel that lookup. Instead, why do I need a light to read in the dark?"
+        ]
+      ],
+      "required": "Two hands while waiting; actual cancel receipt before confirmation, no pink-heart delivery, answer that light is needed to see reflected light from the page.",
+      "world": {
+        "Eight": {
+          "entry word": "pink heart"
+        }
+      },
+      "backend": "native-asr",
+      "minimum_actual_lookup_delay_s": 30.0
+    },
+    {
+      "id": "native-fresh2-015",
+      "kind": "cancel",
+      "turns": [
+        [
+          0.8,
+          "Check the room sign for Project Nine."
+        ],
+        [
+          10.0,
+          "While you check, what do I use to tell if a line is straight?"
+        ],
+        [
+          20.0,
+          "Cancel that lookup. Instead, I have five cups and break one. How many cups are still whole?"
+        ]
+      ],
+      "required": "Straightedge/ruler answer while waiting; actual cancel before acknowledgement, no purple-circle delivery, four whole cups after new question.",
+      "world": {
+        "Nine": {
+          "room sign": "purple circle"
+        }
+      },
+      "backend": "native-asr",
+      "minimum_actual_lookup_delay_s": 30.0
+    },
+    {
+      "id": "native-fresh2-016",
+      "kind": "quiet",
+      "turns": [
+        [
+          0.8,
+          "Do not make a sound until I say begin now."
+        ],
+        [
+          13.0,
+          "Begin now. What does a compass help me find?"
+        ]
+      ],
+      "required": "No spoken acknowledgement before complete cue/question; then explain direction.",
+      "world": {},
+      "backend": "observe-only",
+      "quiet_until_user_ordinal": 1,
+      "external_requests_allowed": false
+    },
+    {
+      "id": "native-fresh2-017",
+      "kind": "quiet",
+      "turns": [
+        [
+          0.8,
+          "Stay silent until I say green light."
+        ],
+        [
+          13.0,
+          "Green light. What does a clock show?"
+        ]
+      ],
+      "required": "No speech before complete cue/question; then answer the time.",
+      "world": {},
+      "backend": "observe-only",
+      "quiet_until_user_ordinal": 1,
+      "external_requests_allowed": false
+    },
+    {
+      "id": "native-fresh2-018",
+      "kind": "pause",
+      "turns": [
+        [
+          0.8,
+          "Say put the spoon on the plate now. After I say carry on, say fold the paper."
+        ],
+        [
+          17.0,
+          "Pause. Stay silent until I say carry on."
+        ],
+        [
+          29.0,
+          "Carry on."
+        ]
+      ],
+      "required": "Finish Put the spoon on the plate before pause; no speech after complete pause request through complete cue; Fold the paper after cue without restarting.",
+      "world": {},
+      "backend": "observe-only",
+      "quiet_between_user_ordinals": [
+        1,
+        2
+      ],
+      "no_restart_after_cue": [
+        "spoon",
+        "plate"
+      ],
+      "external_requests_allowed": false
+    },
+    {
+      "id": "native-fresh2-019",
+      "kind": "pause",
+      "turns": [
+        [
+          0.8,
+          "Say lift the box now. After I say continue now, say place the bag on the chair."
+        ],
+        [
+          17.0,
+          "Wait. Stay quiet until I say continue now."
+        ],
+        [
+          29.0,
+          "Continue now."
+        ]
+      ],
+      "required": "Finish Lift the box before pause; stay silent through complete cue; Place the bag on the chair after cue without restarting.",
+      "world": {},
+      "backend": "observe-only",
+      "quiet_between_user_ordinals": [
+        1,
+        2
+      ],
+      "no_restart_after_cue": [
+        "lift",
+        "box"
+      ],
+      "external_requests_allowed": false
+    }
+  ],
+  "created_utc": "2026-10-19T13:41:14.410691+00:00",
+  "declared_before_full24_candidate_outputs": true,
+  "observation_tail_s": 20.0,
+  "development_information_known": {
+    "rejected_legacy_candidate": "7546645",
+    "full24_candidate_job": "7548749",
+    "full24_candidate_outputs_observed": false,
+    "original_fresh20_native_inference_executed": false
+  },
+  "original_plan_sha256": "162b0e64942dfe1917be9d8b24b579a947d1af54800bf246a1f2d47f3e7d1c21",
+  "original_input_quality": "7548248 failed; stronger same-audio large-v3 control7548672 also fails002 word agreement; whole old20 remains unscored, never repaired/rerolled/subset-selected",
+  "proposed_transfer_payload": {
+    "unique_user_utterances": 36,
+    "total_user_turns": 38,
+    "characters": 1912,
+    "no_original_user_utterances_reused": true,
+    "only_authored_user_text": true,
+    "owner_conversations_credentials_private_worlds_scoring_answers_in_payload": false
+  }
+}
