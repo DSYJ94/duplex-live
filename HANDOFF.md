@@ -1,3 +1,62 @@
+# LOCAL active — bounded full24 native pilot RUNNING; zero-duplicate migration (2026-10-19 14:36UTC)
+
+Main before this entry95a60b79aa12ccc8c3ae04a6bd3e86ab6b60a663, pushed/fetched,
+wrapper worktrees/recovery-95a60b7. CPU7549960 PASS118tests. Trainer payload remains
+cf28726b44ed0621dde6bfd27257709574f5e9ed, clean immutable original recipe, LR2e-6,
+8updates from accepted7510331, all24new teachers exposed, original28actual/
+25old teachers/KL1/hidden10 preserved. No old rejected7546645 resume.
+
+NEW pilot7549991 RUNNING interactive as14:35:11UTC (runtime1m07), preparing inputs;
+no completed update count/state restore claimed yet. New complete10 native array
+7549994_0-9%2 and independent full10 CPUASR7550001 PENDING Dependency. Six observe-
+only cases request1GPU, four actual worker cases2distinctGPUs, max4GPUs total.
+Exact oldpilot7548749, oldarray7548752_0-9 and ASR7548762 ALL CANCELLED0elapsed
+before replacement release. NEVER resubmit originals. A cancelled array placeholder
+vanished from scontrol; replacements stayed HELD while persistent sacct --array
+proved all12 CANCELLED0, then existing replacements released with no new submission.
+Original partial migration receipt + separate recovery receipt preserved:
+native-full24-short-migration-local-20261019.json and
+native-full24-short-migration-recovery-local-20261019.json.
+
+Official short-work policy rechecked: one bounded exploratory coverage/restore
+experiment uses interactive reservation, no partition/QoS override,1.5x existing
+credits. Wrapper rejects extension, resume and changed rate. Bulk all10 evaluation
+and any32-update continuation stay workq. Existing pending request limits20min pilot/
+10min eval; host requests64G pilot/observe,96G worker. Per-GPU115000M site default
+remains in MinMemoryTRES: smaller ReqTRES does NOT establish more usable GPU slots.
+Do not further override site memory/QoS or repeatedly poll; one monitor>=60sec.
+
+Approved new36 speech7549084 COMPLETE; full20 large-v3 sourcequality7549085 FAILED
+19/20scenes37/38clips:015clip0 room/rune WER1/7>.05. Entire new20 frozen UNSCORED,
+no native fresh inference/reroll/subset/alias patch. Complete same-audio turbo CPU
+7549412 COMPLETE6m06, source28e7078c4402a487bf28ccea412940428193b3c4 /CPU7549410
+PASS118tests. Turbo hears room correctly but fails014clip2 lookup vs look up
+orthographic tokenization, WER2/15=.133333. Full20 retained, no expected prompts/
+API/new audio/inference approval. Human listening clarification requested; only
+link requested so far, playable Mac loopback http://127.0.0.1:57386/ serves exact
+WAVSHA17e0cb04a544f71b84b0caaf742cb328ee7f252a0860a8b390e03f117ba1cf33.
+No actual hearing answer or approval to change fixed source gate yet. Room/rune
+not equivalent. Firstoriginalfresh20 also remains failed/unscored. Do not combine
+passing subsets from the two ASR audits. See NATIVE-FRESH2-INPUT-REVIEW JSON.
+
+Scoped backups 22447 unique files 14890343486bytes plus previously pinned models.
+Both public Whisper weight files now COMPLETE and locally hashverified14:32:45UTC:
+large-v3 3087371615bytes SHAe5b1a55b89c1367dacf97e3e19bfd829a01529dbfdeefa8caeb59b3f1b81dadb;
+turbo1617941637bytes SHAaff26ae408abcba5fbf8813c21e62b0941638c5f6eebfb145be0c9839262a19a.
+Firsttransfer timed out; partial bytes retained, resumed once, final both verified.
+New migration/test receipts4files100067bytes verified14:35:18UTC. Complete source
+bundle28e7078 verified SHA67e85cfeb1769c9b8fcde886f98f2de8931403ce7793ea27a50cd0c3eb98df6c;
+new95a60b7 wrapper requires refreshed bundle. Stopped old Mac source backup partial.
+Exclude owner conversations/credentials/quarantined core; unrelated edits untouched.
+
+LOCAL remains executor; CLOUD submits nothing, cloud GPU validation paused, no
+compute purchase. Cert20:51:23UTC/22:51:23Berlin today. Native/whole-system FAIL.
+Next: preserve7549991 checkpoint/optimizer/RNG/data as soon as firstpass stable,
+require independent exact restore then all10 actual native/audio/receipt review.
+No extension/adoption/fresh inference before their complete immutable approval gates.
+
+---
+
 # LOCAL active — new fresh20 FAILED19/20; native pilot still queued (2026-10-19 14:13UTC)
 
 Main before this entryd3929ef11ae1a0205a31388bf7a4c175c29ed766, pushed; tested inference guard source75a94d1

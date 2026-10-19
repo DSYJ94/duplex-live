@@ -1,0 +1,31 @@
+{
+  "at_utc": "2026-10-19T14:36:53.910554+00:00",
+  "official_sources": [
+    "https://docs.isambard.ac.uk/user-documentation/guides/slurm/",
+    "https://docs.isambard.ac.uk/user-documentation/guides/slurm-advanced/"
+  ],
+  "slurm_version": "26.05.4",
+  "observed_workq_job_defaults": {
+    "DefCpuPerGPU": 72,
+    "DefMemPerGPU_MB": 115000
+  },
+  "requested_host_memory_gib": {
+    "pilot": 64,
+    "observe_only": 64,
+    "delegation": 96
+  },
+  "effective_per_gpu_min_memory_tres": "115000M remains reported despite lower ReqTRES host memory",
+  "interpretation": "One requested GPU allocates a full GH200. Raw free-node estimates are not guaranteed schedulable slots; no further attempt to override per-GPU site defaults.",
+  "single_short_experiment": {
+    "pilot": "7549991",
+    "maximum_updates": 8,
+    "reservation": "interactive",
+    "reservation_only_submission": true,
+    "partition_or_qos_override": false,
+    "credit_multiplier": 1.5,
+    "trainer_source": "cf28726b44ed0621dde6bfd27257709574f5e9ed",
+    "wrapper_source": "95a60b79aa12ccc8c3ae04a6bd3e86ab6b60a663"
+  },
+  "bulk_native_evaluation_and_extension_partition": "workq",
+  "minimum_monitor_interval_seconds": 60
+}

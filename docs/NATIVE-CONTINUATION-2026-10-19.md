@@ -824,3 +824,6 @@ inference or generator execution. Candidate fixed before any new fresh outputs.
 
 2026-10-19 14:13UTC — newfull20 source7549085 FAILED19/20scenes,37/38clips: room/rune substitution in015clip0, WER.142857>.05. Entire new20 frozen unscored; no native inference/reroll/subset/word-equivalence change. Recordings118files and QA40files hash-backed. Full20 same-audio turbo diagnostic prepared only. Nativefull24 pilot7548749 still Resources, full10 native7548752/ASR7548762 dependent; existing wall-times shortened in place20min/10min, no resubmission/GPU change. LOCAL active, native/whole-system FAIL.
 
+
+2026-10-19 14:36UTC — native full24 eight-update development pilot7549991 RUNNING interactive, original trainercf28726 / wrapper95a60b7(CPU7549960 PASS118tests). Old7548749/7548752/7548762 all CANCELLED0elapsed before held replacements released; new all10 native7549994 and independentASR7550001 dependent. Same LR2e-6/all28/old25/KL1/hidden10. No completed update/restore yet. Fresh2 remains FAILED19/20 underlarge-v3; other full20 turbo7549412 also19/20, different failurelookup/look up. No combined subset or inferenceapproval; ownerhearing pending. Both public ASRweights finally SHAverified; no extra purchase. LOCAL active; native/whole-system FAIL.
+

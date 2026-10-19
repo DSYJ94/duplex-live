@@ -49,7 +49,7 @@
     "peak": 0.253631591796875,
     "room_rune_equivalent": false
   },
-  "next_action": "Full20 same-audio turbo CPU diagnostic only; no altered words, prompts, audio, thresholds, native inference, rerolls or passing subset",
+  "next_action": "Await owner diagnostic hearing for room/rune; no new source approval, alias, waveform or native inference; preserve both complete failed audits",
   "actual_failed_waveform_inspection": {
     "format": "mono signed16 PCM",
     "sample_rate": 24000,
@@ -63,5 +63,28 @@
     "visual_result": "No flat-topped/full-scale clipping visible; this does not resolve room versus rune pronunciation",
     "human_listening_performed": false,
     "original_waveform_changed": false
+  },
+  "same_audio_other_recognizer": {
+    "job": "7549412",
+    "source": "28e7078c4402a487bf28ccea412940428193b3c4",
+    "cpu_tests": "7549410",
+    "cpu_test_count": 118,
+    "complete20": true,
+    "complete_clips": 38,
+    "diagnostic_only": true,
+    "report_sha256": "9dac75b2dec8a4f5b3db4141a465e11a0d500d9b6bb4080b6cd56c1bf8dca00c",
+    "source_quality_approval": false,
+    "passed_scenes": 19,
+    "failed_scenes": [
+      "native-fresh2-014"
+    ],
+    "failed_clip_ordinal": 2,
+    "failure": "lookup versus look up tokenization",
+    "raw_wer": 0.13333333333333333,
+    "disputed015clip0_transcript": "Check the room sign for Project 9.",
+    "room_rune_equivalent": false,
+    "original_failed_large_v3_verdict_preserved": true,
+    "owner_listening_check": "requested; playable loopback link supplied; no hearing answer yet",
+    "no_generation_calls": true
   }
 }

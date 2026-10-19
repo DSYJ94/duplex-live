@@ -1,7 +1,7 @@
 {
-  "at_utc": "2026-10-19T14:14:25.488619+00:00",
-  "unique_scoped_artifact_files": 22400,
-  "unique_scoped_artifact_bytes": 14890037517,
+  "at_utc": "2026-10-19T14:36:53.910554+00:00",
+  "unique_scoped_artifact_files": 22447,
+  "unique_scoped_artifact_bytes": 14890343486,
   "inventory_conflicts": [],
   "inventories": [
     {
@@ -290,6 +290,27 @@
       "files": 40,
       "bytes": 120422,
       "missing_roots": []
+    },
+    {
+      "name": "remote-native-full24-host-and-fresh2-asr-submissions-inventory.json",
+      "sha256": "a508ede9399f97cd4238d9b31a33436759695bb7ead57b7cbbcb47476e676f01",
+      "files": 3,
+      "bytes": 66118,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native-fresh2-turbo-diagnostic-inventory.json",
+      "sha256": "ae4fcb6f2b5b277863818f177c4d386cf9dceffa98dcc71741ef92e23f6a6559",
+      "files": 40,
+      "bytes": 139784,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native-full24-short-migration-inventory.json",
+      "sha256": "2e3e9e0da26abc77cc307bd69b5565c830f5bc0e30735f2dd9e2fcb183a82dc6",
+      "files": 4,
+      "bytes": 100067,
+      "missing_roots": []
     }
   ],
   "local_artifact_root": "runs/cloud-export-20261016/tree",
@@ -305,12 +326,32 @@
   "runtime_sif_sha256": "c00bc99693e4908ea75d17df9c379b93ae9a1678a65d875565ad5d52f76fa27b",
   "pinned_vendor_git_bundles_verified": 3,
   "source_git_bundle": {
-    "at_utc": "2026-10-19T14:00:18.753632+00:00",
-    "source_sha": "75a94d1e86c24bdf849af6247619469bc0e08331",
-    "bundle": "runs/local-continuation-20261019/source-main-75a94d1.bundle",
-    "bundle_sha256": "513bc3ef14d8bda1e9aeef96cda8ef45d091bb5db1b233336859e5cb8f58a7e7"
+    "at_utc": "2026-10-19T14:34:18.898269+00:00",
+    "source_sha": "28e7078c4402a487bf28ccea412940428193b3c4",
+    "bundle": "runs/local-continuation-20261019/source-main-28e7078.bundle",
+    "bundle_sha256": "67e85cfeb1769c9b8fcde886f98f2de8931403ce7793ea27a50cd0c3eb98df6c"
   },
   "native_candidate_job": "7546645",
   "native_candidate_training_state_sha256": "47b52ef890ecf64fa7c4cab9d5c1cf52bc74227d2bf676a13d9414ee2da95b4a",
-  "native_candidate_independent_full_state_restore_passed": true
+  "native_candidate_independent_full_state_restore_passed": true,
+  "public_asr_weights": {
+    "local_root": "runs/local-continuation-20261019/asr-weights",
+    "verification_report": "public-asr-weights-verification-attempt2.json",
+    "verification_sha256": "555bfd72ab3a90aba5e2075cc1c0ab67bd55b64df1c52b7bec291f382ec33eda",
+    "files": [
+      {
+        "name": "large-v3.pt",
+        "bytes": 3087371615,
+        "sha256": "e5b1a55b89c1367dacf97e3e19bfd829a01529dbfdeefa8caeb59b3f1b81dadb"
+      },
+      {
+        "name": "large-v3-turbo.pt",
+        "bytes": 1617941637,
+        "sha256": "aff26ae408abcba5fbf8813c21e62b0941638c5f6eebfb145be0c9839262a19a"
+      }
+    ],
+    "all_size_and_sha256_match": true,
+    "verified_utc": "2026-10-19T14:32:45.867710+00:00",
+    "first_timed_out_attempt_preserved": true
+  }
 }
