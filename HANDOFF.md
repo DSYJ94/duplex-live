@@ -1,3 +1,22 @@
+# LOCAL active — five-record clarity repair submitted, 19 October10:27UTC
+
+Source20a98d43a609886a833b8fecd2ba7190b26ba7d7 pushed/immutable. Exclusive receipt
+runs/native-v2-teacher-clarity1-local-20261019.json. Submitted ONCE:
+CPU7544224 -> five-record clarity rerecord7544225 -> full24 quality7544226 ->
+actual semantic/conversion7544227. All afterok,19 passing recordings byte-identical;
+no source/heldout word/audio/fold changes. Parent7543779 and failed audit7543781
+SHA-bound; only001/014/015/019/022 get explicit per-record v5 instructions. No
+new optimizer or automatic extension. Inspect these jobs, never duplicate them.
+
+Native25 capture7543890 remains active from d4de305; full25 independent CPU7543891
+and FP32 numerical7543892 remain gated. Scope7543889 PASS, cache7543730 PASS,
+all28 actual-history inputs and KL1/hiddenMSE10 unchanged. All runtime/model/state
+preservation below is VERIFIED; source-main-20a98d4.bundle has complete Git history
+and passed git bundle verify. Local certificate ends22:51:23Berlin19October.
+LOCAL retains execution; CLOUD submits NOTHING. Goal ACTIVE, whole-system FAIL.
+
+---
+
 # LOCAL active — runtime backup VERIFIED; five teacher failures, 19 October10:26UTC
 
 Runtime preservation COMPLETE10:22:29UTC:17104regular files/9,072,299,252bytes,
