@@ -11,12 +11,30 @@ from pathlib import Path
 
 from evals.moshi_model_download import sha256
 
+WORD_SPELLINGS = {"canceled":"cancelled", "canceling":"cancelling", "traveling":"travelling"}
+
 
 def spoken_words(text):
     """Only orthographic variants with identical spoken words; no synonyms."""
     from data.synthetic.filter import norm_words
-    variants = {"canceled":"cancelled","traveling":"travelling"}
-    return [variants.get(word,word) for word in norm_words(text)]
+    return [WORD_SPELLINGS.get(word,word) for word in norm_words(text)]
+
+
+def orthographic_agreement(model_text, asr_text):
+    """Finite spelling equivalents only: retain raw WER beside canonical WER."""
+    from data.synthetic.filter import norm_words, wer
+    return dict(policy='finite-orthographic-variants-v1', variants=WORD_SPELLINGS.copy(),
+                raw_norm_wer=wer(norm_words(model_text), norm_words(asr_text)),
+                canonical_word_wer=wer(spoken_words(model_text), spoken_words(asr_text)))
+
+
+def agreement_wer(speech):
+    if 'word_agreement' not in speech:
+        return speech['wer_against_model_text']
+    expected = orthographic_agreement(speech['model_text'], speech['asr_text'])
+    if speech['word_agreement'] != expected or speech['wer_against_model_text'] != expected['raw_norm_wer']:
+        raise RuntimeError('Orthographic agreement lost the exact raw ASR/model words or finite spelling policy')
+    return expected['canonical_word_wer']
 
 
 def main():

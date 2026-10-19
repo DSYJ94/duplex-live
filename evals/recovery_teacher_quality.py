@@ -128,7 +128,8 @@ def assess(speech,events,metadata,kind,session):
         reasons.append("Session failed or did not finalize")
     if not any(e["type"] == "session.closed" for e in events) or any(e["type"] in ("error","worker_failure") for e in events):
         reasons.append("Actual event log lacks a clean finalized session")
-    if not words or speech["wer_against_model_text"] > .08:
+    from evals.recovery_prepare_data import agreement_wer
+    if not words or agreement_wer(speech) > .08:
         reasons.append("Speech agreement exceeds the unchanged per-clip WER bar")
     if spoken_words(speech["model_text"]) != [token for w in words for token in spoken_words(w["text"])]:
         reasons.append("Assistant transcript and measured spoken word positions do not match exactly")
@@ -250,6 +251,7 @@ def main():
     parser.add_argument("--out",type=Path,required=True)
     parser.add_argument("--device",choices=("cuda","cpu"),default="cuda")
     parser.add_argument('--trim-leading-silence', action='store_true')
+    parser.add_argument('--orthographic-word-agreement', action='store_true')
     args = parser.parse_args()
     manifest = validate_teacher(args.batch)
     # Existing independent audio auditor preserves the original WAV and only
@@ -259,6 +261,8 @@ def main():
         str(args.batch / record["dir"]) for record in manifest["recordings"]]]
     if args.trim_leading_silence:
         sys.argv.append('--trim-leading-silence')
+    if args.orthographic_word_agreement:
+        sys.argv.append('--orthographic-word-agreement')
     audit()
     speech = json.loads((args.out / "report.json").read_text())["results"]
     results = []

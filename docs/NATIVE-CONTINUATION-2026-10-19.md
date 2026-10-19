@@ -338,3 +338,34 @@ to [[ ... || ... ]], and executed the exact approve/control/math branch conditio
 successfully. Original four traces/failed controls stay immutable. Retry only the
 CPU control from a new pushed source/receipt, with no GPU or optimizer submission
 until all four actual streamed-input comparisons pass independently.
+
+
+## Same-word orthography caused the last23/24 rejection
+
+Actual022 model and independent audio word measurements differ only in US/UK
+Canceling/Cancelling and canceled/cancelled. Raw normalized-token WER is0.095238;
+existing spoken_words already equates canceled/cancelled, giving0.047619 but still
+rejecting the missing inflection spelling pair. With canceling/cancelling as the
+same spoken word, the finite canonical score is0.0. No missing/added word or
+semantic substitution is involved. Do not rerender or edit this clean recording.
+
+Explicit opt-in finite-orthographic policy records both raw and canonical scores,
+checks the exact declared mapping, and retains all raw model/ASR text and measured
+word timestamps. The0.08 bar and exact spoken-word, fact, receipt, physical-clock,
+quiet and cancellation gates stay unchanged. Legacy raw scores remain default.
+No synonym, dropped article, repeat or content substitution can be normalized.
+Regression examples Go→Go.Go, bus→boss, missing A, take in→absorb and cancelled→
+complete all still fail. Forged raw/canonical scores or a boss→bus map are rejected.
+
+On actual saved24 records, only022 changes verdict and every measured word/time,
+raw record, reference arrival and delegation is unchanged;34 focused tests pass.
+A new independent full24 same-WAV CPU re-audit must reproduce original raw WAV/
+ASR/model/word timing payloads exactly and retain all23 existing passes before
+semantic/conversion. Original failed audit7544226 remains immutable. New approvals
+still require all24 semantics/conversion/native numerical gates, never a subset.
+
+CPU input control retry7544729 uses pushed source1230c83. The prior afterok request
+was refused because completed test7544406 aged out of Slurm's live dependency
+controller; verified archived COMPLETED0:0 and identical tested Python bodies,
+then submitted once without a stale dependency under the same exclusive receipt.
+No duplicate job or new GPU submission. Four raw native controls remain preserved.

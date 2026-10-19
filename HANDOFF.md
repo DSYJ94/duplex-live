@@ -1,3 +1,33 @@
+# LOCAL active — same-WAV spelling control; native CPU control retry,10:46UTC
+
+Actual final teacher022 defect is orthographic, not a missing spoken word:
+model Cancelling/cancelled vs ASR Canceling/canceled. Raw WER0.095238; existing
+same-word normalization already covers canceled/cancelled but omits canceling/
+cancelling and raw WER ignores that same-word policy. No rerender needed. Retain
+original FAILED23/24 report7544226 and all raw words/times/audio/receipts.
+
+Prepared explicit finite-orthographic policy retains raw WER and adds a separately
+checked canonical score. Only same-word spelling pairs, no synonyms/omissions/
+repeats; unchanged0.08 bar, exact spoken words, timing/fact/quiet/cancel checks.
+Actual saved-WAV control gives24/24 with ONLY022 verdict changed, every original
+measured word/time/receipt identical; independent all24 ASR rerun still required.
+A new full24 same-WAV control wrapper also requires raw ASR/results identical and
+all23 prior passes unchanged.34 focused local tests pass. No conversion or optimizer
+submitted from this control. New source/receipt/jobs will be recorded after push.
+
+Independent old25 streamed-input CPU retry7544729 RUNNING from source1230c83.
+Exclusive receipt runs/native-old25-streamed-control-retry1-local-20261019.json.
+67-test gate7544406 verified COMPLETED0:0; tested Python bodies identical. An older
+afterok request was refused because the completed job aged out of Slurm controller;
+no job was created, then receipt-owned retry submitted only after archived pass
+verification. Correct actual shell branches tested. All native GPU work remains
+stopped until independent four-trace exact input control passes. No optimizer.
+
+All runtime/base/state/data and vendor bundles preserved; latest raw clarity batch
+verified366files/304256858bytes. LOCAL active; CLOUD submits NOTHING; goal ACTIVE.
+
+---
+
 # LOCAL active — 23/24 teacher pass; CPU control wrapper fixed,19 October10:37UTC
 
 Teacher clarity quality7544226 FAILED23/24; only native2-train-022 exact word

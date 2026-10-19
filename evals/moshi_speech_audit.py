@@ -56,6 +56,8 @@ def main():
     ap.add_argument("--keep-silent-failures", action="store_true",
                     help="Retain silent clips as explicit failed records and audit later clips")
     ap.add_argument("--device",choices=("cuda","cpu"),default="cuda")
+    ap.add_argument('--orthographic-word-agreement', action='store_true',
+                    help='Explicit finite same-word spelling policy; retain raw WER and every measured word/time')
     args = ap.parse_args()
     if not any((args.runs,args.live_runs,args.future_runs,args.teacher_render_runs,args.tts_runs)):
         ap.error("At least one native or GPT-Live run is required")
@@ -142,6 +144,9 @@ def main():
                   "asr_text": result["text"], "asr_segments": result["segments"],
                   "wer_against_model_text": wer(norm_words(predicted), norm_words(result["text"])),
                   "semantic_review": "pending", "human_listening": "pending"}
+        if args.orthographic_word_agreement:
+            from evals.recovery_prepare_data import orthographic_agreement
+            record['word_agreement'] = orthographic_agreement(predicted, result['text'])
         if args.trim_leading_silence:
             record.update(leading_silence_trimmed_s=head/16000,
                           asr_window_start_s=head/16000, asr_window_end_s=(original_samples-tail)/16000,
