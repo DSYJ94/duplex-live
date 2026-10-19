@@ -1,3 +1,64 @@
+# LOCAL — complete10 review REJECTS pilot; zero-update retention diagnostic prepared (2026-10-19 18:05 UTC)
+
+Interactive allocation7551328 COMPLETED11m08; full10 independent CPUASR7551361
+COMPLETED5m57. All10 steps exit0, all input samples processed, exact candidate
+7549991 adapter/voice loaded before native graphs; originalcf28726 payload,
+session64cb832, no forced words/audio/response boundaries or warm input. No jobs
+were running in authoritative17:44UTC squeue. Never resubmit these completed jobs.
+
+All10 actual PCM/ASR/source clocks/receipts reviewed and retained in NEW
+NATIVE-FULL24-COMPLETE10-REVIEW-2026-10-19.json. Ordinary core3/4: metal audio says
+LOW thermal conductivity, opposite of correct matched native520 baseline; WER0.0,
+valid bounds and no clipping make this a semantic regression. Ice starts correctly
+but irrelevant project/URL queries and unsupported tail remain. Sound/plants core
+correct. Overall native/whole-system FAIL; candidate7549991 REJECTED for extension/
+adoption. No32additional updates, fresh20 inference, threshold/gain/source repair.
+
+Speech quality7/10 at unchanged.08 and all original clock gates; pause first-onset
+fails, yellow-case WER.32653/invalid bounds, copper WER.23656. Quiet:7 words
+7.23-8.69 before Ready end12.41. Pause:3 diagnostic words19.27-20.17 inside
+17.54-22.10, wrong first instruction and continuation,2unexecuted native RETs;
+global onset failure retained, no passing transcript subset. Actual yellow-circle
+receipt injected then repetitive/malformed speech. Copper-diamond receipt changes
+spoken value but audio fails; its lightning answer comes from a second EXTERNAL
+worker, not native reasoning. Clarify issues0RET/0lookup/no brown-square result.
+Cancel has1initial read,0cancel receipt/ack: read result injected9.292763 before
+cancel cue18.24-20.89, so pending-lookup cancellation is NOT demonstrated; latest
+ordinary explanation also invents2seconds and says thunder first. No cancelled
+value leakage observed; don't confuse this timing limitation with a successful
+cancellation. Complete10 review records the distinction and all failures.
+
+Full completed artifacts148files258051282bytes SHAverified17:45:36 UTC, including
+raw WAV/step identities/exits/real worker receipts/full ASR. First4 earlier61file
+backup hash-identical. Scoped union22622 unique files15180355624bytes plus pinned
+runtime/models/ASRweights. fe84c27 full-history bundleverified, SHA
+dfa502507a1e3233b061138ec26d14490e6775228db19568d27ac3302e237a0e.
+Both native parent/candidate full optimizer/RNG states and all49 teacher approvals
+preserved. Old Mac source backupPARTIAL; owner/credentials/core excluded.
+
+Source diagnosis: unchanged four legacy KL/hidden targets are computed BEFORE
+installing adapters/loading accepted native520, so they preserve unadapted base,
+not native520 directly. Confirmed source ordering and nonzero initial KL/MSE in
+first8; NOT a bug/causal attribution and NOT permission to replace old retention.
+NATIVE-RETENTION-REFERENCE-AUDIT records this. Prepared read-only comparison of
+native520 vs rejected7549991 on ALL25old+ALL24new approved teacher inputs plus
+ALL4legacy refs (53streams), reporting pointwise KL/hidden drift, separate nonpad/
+PAD3 metrics and approved teacher CE. Uses NO evaluation outputs for training,
+no optimizer steps/checkpoint, restores exact parent parameters, checks frozen
+base unchanged, retains all old reference targets/weights and all28/25 histories.
+No new training recipe is authorized by this diagnostic alone.
+
+New diagnostic lineage/inventory guards PASS locally (including actual saved
+parent/child metadata); Python/shell syntax PASS. Full independent CPU suite and
+single1GPU20min interactive diagnostic are NOT yet submitted at this entry.
+Next: commit/push/deploy, independent full CPU then dependent zero-update53stream
+comparison; preserve reports before selecting any separately bounded new recipe.
+Full20 derived source7550653/reader PASS20/38 remains intact/unscored by a native
+candidate. LOCAL owns execution; CLOUD submits nothing, no purchase/handback.
+Certificate20Oct02:05:02UTC/04:05:02Berlin; all unrelated local edits preserved.
+
+---
+
 # LOCAL active — native pilot development RUNNING on interactive (2026-10-19 16:33 UTC)
 
 At16:32:03 UTC single allocation7551328 RUNNING interactive on nid010230,2GPUs,

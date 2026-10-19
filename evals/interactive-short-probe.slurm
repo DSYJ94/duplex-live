@@ -36,6 +36,15 @@ case "${1:?Choose rag, personaplex or qwen}" in
     test "${NATIVE_V2_FULL24_PER8:-0}" = 0
     test -z "${NATIVE_V2_RESUME_JOB:-}${NATIVE_V2_EXTENSION_REVIEW:-}${NATIVE_V2_LEARNING_RATE:-}"
     SCRIPT="$DL_TASK_SOURCE/evals/native-v2-train.slurm" ;;
+  native-v2-retention-drift-audit)
+    : "${DL_TASK_SOURCE:?Immutable diagnostic source required}"
+    : "${DL_TASK_COMMIT:?Immutable identity required}"
+    test "${NATIVE_V2_TRAIN_PHASE:-}" = retention-drift-audit
+    test "${NATIVE_V2_FULL24_PER8:-0}" = 1
+    test "${NATIVE_V2_LEARNING_RATE:-}" = 2e-6
+    test "${NATIVE_V2_DRIFT_CANDIDATE_JOB:-}" = 7549991
+    test -z "${NATIVE_V2_RESUME_JOB:-}${NATIVE_V2_EXTENSION_REVIEW:-}"
+    SCRIPT="$DL_TASK_SOURCE/evals/native-v2-train.slurm" ;;
   native-teacher-smoke)
     : "${DL_TASK_SOURCE:?Immutable source required}"
     : "${DL_TASK_COMMIT:?Immutable commit required}"

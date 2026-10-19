@@ -1,0 +1,82 @@
+{
+  "schema": "dl-native-retention-reference-lineage-audit-v1",
+  "recorded_at_utc": "2026-10-19T18:02:40.278540+00:00",
+  "source_evidence": "cf28726b44ed0621dde6bfd27257709574f5e9ed:evals/context_actual_train.py references before adapters install and warm-start load",
+  "legacy_reference_target": "Unadapted frozen base, computed before installing/initializing temporal adapters; accepted native520 loads later",
+  "legacy_reference_examples": [
+    {
+      "id": "teacher-recovery-train-007",
+      "kind": "private"
+    },
+    {
+      "id": "teacher-recovery-train-011",
+      "kind": "simple"
+    },
+    {
+      "id": "teacher-recovery-train-019",
+      "kind": "clarify"
+    },
+    {
+      "id": "teacher-recovery-train-020",
+      "kind": "cancel"
+    }
+  ],
+  "first8_legacy_reference_losses": [
+    {
+      "step": 1,
+      "retention_kind": "private",
+      "retention_kl": 0.05942261591553688,
+      "retention_hidden_mse": 0.013123803772032261
+    },
+    {
+      "step": 2,
+      "retention_kind": "simple",
+      "retention_kl": 0.038197897374629974,
+      "retention_hidden_mse": 0.004268121439963579
+    },
+    {
+      "step": 3,
+      "retention_kind": "clarify",
+      "retention_kl": 0.10531597584486008,
+      "retention_hidden_mse": 0.01638123020529747
+    },
+    {
+      "step": 4,
+      "retention_kind": "cancel",
+      "retention_kl": 0.070485919713974,
+      "retention_hidden_mse": 0.011397930793464184
+    },
+    {
+      "step": 5,
+      "retention_kind": "private",
+      "retention_kl": 0.059575702995061874,
+      "retention_hidden_mse": 0.013193514198064804
+    },
+    {
+      "step": 6,
+      "retention_kind": "simple",
+      "retention_kl": 0.03832210600376129,
+      "retention_hidden_mse": 0.004254690371453762
+    },
+    {
+      "step": 7,
+      "retention_kind": "clarify",
+      "retention_kl": 0.10599655658006668,
+      "retention_hidden_mse": 0.016444824635982513
+    },
+    {
+      "step": 8,
+      "retention_kind": "cancel",
+      "retention_kl": 0.07042793929576874,
+      "retention_hidden_mse": 0.011398865841329098
+    }
+  ],
+  "old_reference_kl_weight_must_remain": 1.0,
+  "old_reference_hidden_mse_weight_must_remain": 10.0,
+  "old28_components_and_old25_histories_must_remain": true,
+  "legacy_design_is_not_claimed_as_bug": true,
+  "causality_established": false,
+  "approved_input_pointwise_drift_audit_prepared": true,
+  "proposed_diagnostic_scope": "All25 old plus24 new already-approved teacher inputs and all4 legacy references; native520 vs rejected full24 child7549991; zero optimizer updates, no evaluation outputs used for training",
+  "new_training_recipe_authorized_by_this_audit": false
+}

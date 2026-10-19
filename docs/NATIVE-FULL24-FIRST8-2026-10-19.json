@@ -45,7 +45,7 @@
   "independent_full_state_restore_passed": true,
   "all10_evaluation_array_job": "7549994",
   "independent_all10_speech_job": "7550001",
-  "all10_behavior_review_complete": false,
+  "all10_behavior_review_complete": true,
   "extension_authorized": false,
   "checkpoint_adopted": false,
   "native_or_whole_system_qualified": false,
@@ -301,5 +301,10 @@
   "current_all10_evaluation_case_group_job": "7551328",
   "current_all10_evaluation_scheduler_array": false,
   "current_independent_all10_speech_job": "7551361",
-  "current_native_evaluation_session_source": "64cb832af019d1193dbdcea7b06844a533ab5565"
+  "current_native_evaluation_session_source": "64cb832af019d1193dbdcea7b06844a533ab5565",
+  "all4_ordinary_core_correct": false,
+  "ordinary_core_correct_count": 3,
+  "independent_speech_quality_passes": 7,
+  "native_candidate_rejected_for_extension": true,
+  "complete10_review": "docs/NATIVE-FULL24-COMPLETE10-REVIEW-2026-10-19.json"
 }

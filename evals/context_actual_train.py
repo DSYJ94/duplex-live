@@ -249,6 +249,13 @@ def run(lm, spm, voice, examples, components, audits, args):
                 additional_batches, component_kinds, response_boundaries, audits, args,
                 state_metadata(frozen))
             return
+        if getattr(args, 'native_v2_retention_drift_proof', None):
+            from evals.context_native_retention_drift import run as retention_drift
+            if optimizer.state or initial_step:
+                raise RuntimeError('Retention drift cannot resume or execute optimizer updates')
+            retention_drift(lm, learned, native_teacher_batches, additional_batches,
+                retention, references, args, state_metadata(frozen), forward)
+            return
         initial_metrics=metrics()
         steps = []; seen_a = seen_b = False; start = time.monotonic()
         torch.cuda.reset_peak_memory_stats()
