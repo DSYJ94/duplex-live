@@ -848,3 +848,6 @@ inference or generator execution. Candidate fixed before any new fresh outputs.
 
 
 2026-10-19 15:46 UTC — owner-approved derived full20 source7550653 PASS20/20scenes38/38clips, independent fresh-process readerPASS; unchanged .05WER/.995peak/physical bounds, canonicalWER0/rawWERretained. Source0552153/CPU7550652 PASS126tests. Original failed audits/audio/words/receipts retained. New5file backup verified; total22470/14922212118 plus pinned models. Native7549994 all10 stillResources/ASR7550001 dependent as15:44:28; no extension/adoption/fresh inference. Owner source decision resolved; remaining immediate blocker GPU availability. LOCALactive; native/whole-systemFAIL.
+
+
+2026-10-19 16:33 UTC — complete10 native pilot development nowRUNNING in single interactive allocation7551328, max2GPUs, originalcf28726payload/session64cb832. First2 rawreports complete, no independent behavior verdict; ASR7551361 full10dependent. All11 old7549994/7550001 CANCELLED0elapsed before release; initial array rejectedQoSlimit/nojob, held-session verification/accounting-lag recovered without resubmission. Source20/38PASS retained; no extension/adoption/fresh inference. Backup22474/14922304342 plus pinned models. LOCALactive; native/whole-systemFAIL.

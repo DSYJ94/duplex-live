@@ -296,5 +296,10 @@
     "backup_files": 5,
     "backup_bytes": 61522,
     "backup_verified_utc": "2026-10-19T15:44:45.478443+00:00"
-  }
+  },
+  "old_all10_evaluation_chain_state": "7549994_0-9 and7550001 all CANCELLED zero elapsed before interactive session release",
+  "current_all10_evaluation_case_group_job": "7551328",
+  "current_all10_evaluation_scheduler_array": false,
+  "current_independent_all10_speech_job": "7551361",
+  "current_native_evaluation_session_source": "64cb832af019d1193dbdcea7b06844a533ab5565"
 }

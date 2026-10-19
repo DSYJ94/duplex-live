@@ -1,3 +1,52 @@
+# LOCAL active — native pilot development RUNNING on interactive (2026-10-19 16:33 UTC)
+
+At16:32:03 UTC single allocation7551328 RUNNING interactive on nid010230,2GPUs,
+75min cap,160GiBhost RAM. First native cases0/1 have COMPLETE raw reports, cases2/3
+started. CPUASR7551361 PENDING(Dependency), afterany7551328, full10 required. Do not
+submit duplicates. Raw ice text opens with correct density then unwanted project
+questions/surface-tension tail; sound text says vibration. These are PROVISIONAL
+model text only, no actual-WAV/independent-ASR behavior pass or extension decision.
+All user samples processed in first2. No new optimizer or checkpoint adoption.
+
+Owner requested interactive if needed. One exploratory10-case development session
+uses official reservation-only submission, no partition/QoS override. Actual
+partition QoS=interactive_qos while job displays QOS=normal; the overstrict job-QoS
+check was corrected against scontrol -a show partition. Reservation array attempt
+was rejected by actual MaxSubmitPU1 before any replacement existed. One held
+session7551328 was then submitted ONCE and recovered/released without resubmission.
+Initial accounting lag still showed PENDING after cancellation, so replacements
+remained held; later persistent sacct --array proved ALL10 old7549994 tasks plus
+oldASR7550001 CANCELLED/zero elapsed BEFORE release. Four immutable failed/recovery/
+final receipts backed and hashed; no duplicate GPU execution or unrecorded repair.
+
+Current payload remainscf28726b44ed0621dde6bfd27257709574f5e9ed; session wrapper
+64cb832af019d1193dbdcea7b06844a533ab5565. Candidate7549991: same exact backed
+adapter/full optimizer/RNG state/independent restorePASS/all28valid logits exact,
+all28actual/25old/KL1/hidden10. Session has10 isolated native steps:0-5 three pairs
+of1GPU,6-9 sequential2GPU actual workers, each10min. Step receipts record real
+allocation/step IDs and GPU visibility. This is NOT a Slurm array: actual job ID
+7551328 is the legacy artifact case-group label only, preserving original output
+paths native-v2-development-7551328_<0-9>. Downstream legacy review field
+native_evaluation_array_job must be explicitly documented as this case group.
+
+Allocation host request was updated WHILE HELD from96 to160GiB so two64GiB steps
+fit concurrently; exact before/after recorded. Runtime script remains immutable
+64cb832; current main only aligns the future SBATCH default to160GiB, same body.
+Full20 source7550653+independent reader PASS20/38, CPU7550652PASS126tests. No fresh
+qualification inference, extension or adoption before all10 native review.
+
+New migration4files92224bytes SHAverified16:30:53 UTC. Scoped backups now22474
+unique files14922304342bytes plus pinned runtime/models/ASRweights; stopped old Mac
+source backupPARTIAL. Local certificate valid through20Oct02:05:02UTC/04:05:02Berlin.
+Unrelated local files untouched; owner/credentials/quarantinedcore excluded. LOCAL
+owns execution, no cloud handback/purchase. Native/whole-system FAIL.
+Next: preserve each completed native set and full independent ASR; inspect all10
+actual PCM/words/quiet-pause clocks/real worker receipts/latency. Only then decide
+whether strict4 ordinary preservation permits separately committed32-update research
+continuation from the exact7549991state. No passing subset or threshold changes.
+
+---
+
 # LOCAL — interactive array rejected; single-allocation recovery prepared (2026-10-19 16:24 UTC)
 
 Reservation-only array submission was rejected QOSMaxSubmitJobPerUserLimit. Live

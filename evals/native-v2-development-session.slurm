@@ -5,7 +5,7 @@
 #SBATCH --nodes=1
 #SBATCH --gres=gpu:2
 #SBATCH --cpus-per-task=16
-#SBATCH --mem=96G
+#SBATCH --mem=160G
 #SBATCH --time=01:15:00
 #SBATCH --output=logs/dl-native-pilot-session-%j.out
 # One finite exploratory pilot check; no partition/QoS override or actual array.

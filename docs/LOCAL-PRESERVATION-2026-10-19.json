@@ -1,7 +1,7 @@
 {
-  "at_utc": "2026-10-19T15:45:23.803404+00:00",
-  "unique_scoped_artifact_files": 22470,
-  "unique_scoped_artifact_bytes": 14922212118,
+  "at_utc": "2026-10-19T16:32:00.855910+00:00",
+  "unique_scoped_artifact_files": 22474,
+  "unique_scoped_artifact_bytes": 14922304342,
   "inventory_conflicts": [],
   "inventories": [
     {
@@ -338,6 +338,13 @@
       "sha256": "8225360044d651f440a3329b735a768316f8d59098e76e4d050bf4b6d22286cb",
       "files": 5,
       "bytes": 61522,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native-development-session-migration-inventory.json",
+      "sha256": "49152129b72c0744f80d52d76dafe3fcabf40fb47bdda285cd203b035413704e",
+      "files": 4,
+      "bytes": 92224,
       "missing_roots": []
     }
   ],

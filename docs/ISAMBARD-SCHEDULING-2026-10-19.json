@@ -1,5 +1,5 @@
 {
-  "at_utc": "2026-10-19T16:24:34.872320+00:00",
+  "at_utc": "2026-10-19T16:33:12.148907+00:00",
   "official_sources": [
     "https://docs.isambard.ac.uk/user-documentation/guides/slurm/",
     "https://docs.isambard.ac.uk/user-documentation/guides/slurm-advanced/"
@@ -46,7 +46,14 @@
     "maximum_allocations": 1,
     "isolated_srun_steps": true,
     "original_array_submission_rejected": "QOSMaxSubmitJobPerUserLimit; no replacement created",
-    "legacy_artifact_case_group": "Actual allocation job ID; per-case numeric suffix retained solely for original payload filenames; real step IDs/GPU assignments separately recorded"
+    "legacy_artifact_case_group": "Actual allocation job ID; per-case numeric suffix retained solely for original payload filenames; real step IDs/GPU assignments separately recorded",
+    "allocation_job": "7551328",
+    "independent_cpu_asr_job": "7551361",
+    "allocation_host_memory_gib": 160,
+    "session_source": "64cb832af019d1193dbdcea7b06844a533ab5565",
+    "old_array": "7549994",
+    "old_asr": "7550001",
+    "all11_originals_cancelled_zero_runtime_before_release": true
   },
   "future_short_development_work": "Use interactive reservation where site rules permit; all native approval and retention gates remain mandatory.",
   "observed_interactive_qos": {
@@ -54,5 +61,11 @@
     "maximum_running_jobs_per_user": 1,
     "maximum_submitted_jobs_per_user": 1,
     "maximum_nodes_per_job": 4
+  },
+  "observed_interactive_partition_qos": {
+    "partition": "interactive",
+    "partition_qos": "interactive_qos",
+    "job_qos_display": "normal",
+    "partition_or_job_qos_override_requested": false
   }
 }
