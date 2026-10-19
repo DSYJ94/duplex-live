@@ -717,5 +717,67 @@
       "still_pending_lookup_cancellation_demonstrated": false,
       "cancelled_value_leakage_observed": false
     }
+  ],
+  "matched_ordinary_baseline_bindings": [
+    {
+      "index": 0,
+      "baseline_job": "7530265",
+      "baseline_report_sha256": "c3b4d9b9a708cfb1965e9c93af81c58bc5520da1b460f5ddc0c89e6f2c5efa1a",
+      "baseline_audio_sha256": "d6688a83a8cf9faef9044f91913c5bf036a7eb1b63c7be9901e90b0a3b77c611",
+      "baseline_asr_job": "7530273",
+      "baseline_asr_report_sha256": "a1ddea0f7782cca4ebb57706b880706f9f426f7ade228839a7480d439e5504f4",
+      "baseline_asr_wer": 0.0,
+      "shared_user_input_sha256": "1bd5ef3c206f748b90259defdcabc74fa5c985d873654010f69054a06229564f",
+      "same_voice_persona_assets_torch_cuda_and_native_routing": true,
+      "baseline_first_nonzero_pcm_s": 0.46475,
+      "baseline_first_onset_check_independently_recomputed": true,
+      "baseline_all_word_starts_within_recorded_audio": true,
+      "baseline_spoken_text": " because ice is less dense than water would you like me to explain the physics behind that or are you curious about a real world example"
+    },
+    {
+      "index": 1,
+      "baseline_job": "7530266",
+      "baseline_report_sha256": "546b0e5f83fc83dc3e8430412a60a1bf13e3b72c459ba644e908d966c99236e2",
+      "baseline_audio_sha256": "5d4a6d4d840a386abe1ba8b6d466dea724180e07bcdd987f248c423e251dfbe5",
+      "baseline_asr_job": "7530274",
+      "baseline_asr_report_sha256": "61e9fdeb2341ce6378240db3c582f65675d28943ace38899c3a0dc121c8fe00c",
+      "baseline_asr_wer": 0.0,
+      "shared_user_input_sha256": "8f0c8caac122f314070c26078f3b584d18cc381cf574d460dd2679af020567b9",
+      "same_voice_persona_assets_torch_cuda_and_native_routing": true,
+      "baseline_first_nonzero_pcm_s": 0.45166666666666666,
+      "baseline_first_onset_check_independently_recomputed": true,
+      "baseline_all_word_starts_within_recorded_audio": true,
+      "baseline_spoken_text": " It is produced through the vibration of solid, liquid or gas, which then travels through the air."
+    },
+    {
+      "index": 2,
+      "baseline_job": "7530267",
+      "baseline_report_sha256": "d36b066e7727a186a7ed7bf2d9c8c96625988797fefb4594c41ac4c39b0d5e4a",
+      "baseline_audio_sha256": "8e20571d3082a22f26d96e619c71fa6faa34c99a9dca187035622d52fcd1f6e0",
+      "baseline_asr_job": "7530275",
+      "baseline_asr_report_sha256": "e7b792ebca0b09bb4b49bcb90670b215d3c0114f92a29f675a1c6e6599796f73",
+      "baseline_asr_wer": 0.0,
+      "shared_user_input_sha256": "2239caf13fecd09fe494bbd2920d10127b8ae06e37401d0c44bdd0421fd25187",
+      "same_voice_persona_assets_torch_cuda_and_native_routing": true,
+      "baseline_first_nonzero_pcm_s": 0.45516666666666666,
+      "baseline_first_onset_check_independently_recomputed": true,
+      "baseline_all_word_starts_within_recorded_audio": true,
+      "baseline_spoken_text": " because light is needed for photosynthesis the process that converts carbon dioxide into sugar it is used to make food light is also essential for the growth of plants"
+    },
+    {
+      "index": 3,
+      "baseline_job": "7530268",
+      "baseline_report_sha256": "b7421ff1387131f5515d24dbad25838dc30eb8cd3a9c6eb9446fe4d3e8287b87",
+      "baseline_audio_sha256": "665db817f010d9cc5e23f942cb2273817238d93b5bb5be6f27288e69a71873a6",
+      "baseline_asr_job": "7530276",
+      "baseline_asr_report_sha256": "24eae5860003b83017fa1e39cdb019dae5257a188b931b3145180cd9dfec7f5b",
+      "baseline_asr_wer": 0.0,
+      "shared_user_input_sha256": "eb744a904140fa81174c1976e1dbf8f3a5c4585970358bca992c053d5a703f12",
+      "same_voice_persona_assets_torch_cuda_and_native_routing": true,
+      "baseline_first_nonzero_pcm_s": 0.45375,
+      "baseline_first_onset_check_independently_recomputed": true,
+      "baseline_all_word_starts_within_recorded_audio": true,
+      "baseline_spoken_text": " Because when you touch metal, it conducts heat away from your skin, which makes your hand or arm feel cold. Is there a specific type of metal you're wondering about?"
+    }
   ]
 }

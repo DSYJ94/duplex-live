@@ -78,5 +78,27 @@
   "causality_established": false,
   "approved_input_pointwise_drift_audit_prepared": true,
   "proposed_diagnostic_scope": "All25 old plus24 new already-approved teacher inputs and all4 legacy references; native520 vs rejected full24 child7549991; zero optimizer updates, no evaluation outputs used for training",
-  "new_training_recipe_authorized_by_this_audit": false
+  "new_training_recipe_authorized_by_this_audit": false,
+  "first_zero_update_attempt": {
+    "source": "0d352f6bc8305e2eb0331cd5c229dd88378b17bd",
+    "cpu_job": "7554614",
+    "cpu_tests": 130,
+    "gpu_job": "7554615",
+    "state": "FAILED after6m43 on floating exact-identity guard; no aggregate accepted",
+    "backup_files": 11,
+    "backup_bytes": 801646,
+    "backup_verified_utc": "2026-10-19T18:51:22.275610+00:00"
+  },
+  "corrected_zero_update_attempt": {
+    "source": "b0fe82bc6b6e631c612bcda601d78883a2149581",
+    "cpu_job": "7554941",
+    "cpu_tests": 131,
+    "cpu_test_seconds": 3.977,
+    "gpu_job": "7554946",
+    "last_observed_utc": "2026-10-19T19:01:28.967612Z",
+    "state": "RUNNING interactive",
+    "identity_guard": "Integer top-token match counts, exact KL0 and hiddenMSE0; GPU legacy float-mean reproduction recorded",
+    "optimizer_steps": 0,
+    "new_model_checkpoint_authorized": false
+  }
 }

@@ -1,3 +1,40 @@
+# LOCAL active — CPU131 PASS; corrected all53 diagnostic RUNNING (2026-10-19 19:03 UTC)
+
+Sourceb0fe82bc6b6e631c612bcda601d78883a2149581 committed/pushed/deployed immutable.
+CPU7554941 COMPLETE14s, PASS131tests3.977s. Single1GPU interactive diagnostic7554946
+RUNNING as19:01:28UTC (4m49),20min cap, no partition/QoS override. Receipt
+runs/native-retention-drift-v2-local-20261019.json. Original7554615 FAILED6m43 on
+float32 mean==1 identity guard, preserved with partial outputs/CPU130 log and
+launch receipt11files801646bytes SHAverified18:51:22UTC. Do not resubmit either.
+
+Correction uses exact integer top-token matches/valid-frame counts, exact KL0/
+hiddenMSE0 self checks retained. New GPU run logs all-ones float32 means at every
+actual input frame count to directly test the rounding hypothesis, then compares
+ALL25old/ALL24new/ALL4legacy inputs. No original model/native numerical threshold,
+WAV, word, receipt, input mask, target history or legacy KL1/hidden10 changed.
+No optimizer updates, new model checkpoints, extension or adoption are authorized.
+Both parent7510331/rejectedchild7549991 states remain preserved. No aggregate
+pointwise result claimed until full53 and exact parent/frozen-base restoration.
+
+Native session7551328/ASR7551361 completed and ALL10 reviewed; candidate rejected
+for extension: ordinary3/4, speech7/10, quiet/pause/private/control failures. NEW
+baseline bindings verify all4 exact user-WAV hashes, same voice/persona/assets/
+Torch/CUDA/routing, original correct baseline ASR0 and physically recomputed first
+onset gates. Metal's LOW conductivity audio is a matched semantic regression.
+No32-step extension, fresh20 inference, source repairs or passing subset.
+
+Backup union22633files15181157270bytes plus pinned runtime/base/PersonaPlex/Mimi/
+tokenizer/vendor/publicASRweights. Fullb0fe82b source bundle complete/verified, SHA
+6273d400a579a7c3391a47293c79ecd0f84d9b488915b8e4bb32c9e2a53ba777.
+Old Mac source backupPARTIAL; owner/credentials/core excluded. Unrelated local
+edits preserved. LOCAL sole executor, CLOUD submits nothing, no purchase/handback.
+Certificate20Oct02:05:02UTC/04:05:02Berlin. Native/whole-systemFAIL.
+Next: complete and back7554946, inspect all53 pointwise results and GPU rounding
+reproduction before selecting any separately bounded revised TRAIN recipe. Keep
+all28actual/25old/new24 and both existing reference weights/history approvals.
+
+---
+
 # LOCAL — zero-update drift diagnostic failed identity guard; exact-count correction prepared (2026-10-19 18:51 UTC)
 
 Source0d352f6bc8305e2eb0331cd5c229dd88378b17bd deployed. CPU7554614 PASS130tests
