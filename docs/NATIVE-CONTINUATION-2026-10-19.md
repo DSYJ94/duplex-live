@@ -57,3 +57,27 @@ only after the complete source gate. Retain old histories, four-reference KL and
 hidden retention and25 approved native teacher histories. Do not extend rejected
 7530408 unchanged. Independent state restore and full native behavioral evaluation
 remain mandatory before extension or adoption.
+
+## Source gate passed; teacher collection active
+
+Repair7541873 COMPLETED(13s); full source audit7541875 COMPLETED(88s).
+All24 TRAIN scenes pass;36/40 total scenes pass. Four held-out failures remain
+unchanged/excluded and do not constitute a full qualification set. Teacher7541876
+is collecting all24; independent quality7541878 and semantic/conversion7541879
+remain afterok dependencies. No optimizer submitted. Source1519b71 remains the
+immutable chain implementation; HANDOFF ownership/job ledger486a203 is pushed.
+
+Dependency backup169files/280,281,639bytes also matches all remote/local hashes.
+The native base asset backup is rehashed: context_spanning_7b.pt16,743,028,866bytes
+SHA25632a4dec8ea8feb28d20ce485f0e49a09b118413aaaebdd182379db41cd441fcc;
+README and released voice hashes also match the pinned manifest.
+
+Prepared immutable wrappers native-v2-encode.slurm and
+native-v2-native-approval.slurm support a separate complete24-teacher codec,
+scope, streamed-input, independent CPU and numerical approval chain. These are
+not yet executed. They leave the old25-teacher loaders/guards untouched. Every
+future submission must use committed/pushed source and an exclusive receipt.
+Capture uses a complete0-23 array with maximum4concurrent GPU tasks; CPU approval
+must consume all24, never a subset. Original FP32 numerical failure must be kept
+before any separately requested higher precision reference audit. Encoding is
+for approved teacher audio only; it does not authorize an optimizer update.

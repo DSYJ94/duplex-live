@@ -1,4 +1,14 @@
-# Local native chain submitted — 19 October 2026, 08:58 UTC / 10:58 Berlin
+# Local native chain — 19 October 2026
+
+Latest verified: repair7541873 COMPLETED(13s), source audit7541875 COMPLETED(88s).
+ALL24 TRAIN scenes PASS,36/40 overall. Four held-out failures unchanged/excluded.
+Teacher7541876 RUNNING collecting24; quality7541878 and semantic7541879 pending
+afterok. No optimizer. Dependency backup169files/280,281,639bytes hash-verified;
+16.74GB native base rehashed against pinned manifest. Full evidence and prepared
+next-stage immutable wrappers: docs/NATIVE-CONTINUATION-2026-10-19.md.
+
+## Submitted at08:58UTC /10:58Berlin
+
 
 LOCAL remains the active executor; cloud submits NOTHING until explicit owner
 handover. Implementation1519b71a5fc4f337735acca8529a860c7c00e310 is pushed and
