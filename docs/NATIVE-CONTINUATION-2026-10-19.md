@@ -107,3 +107,23 @@ under additional-native-v2/ and enter exact optimizer/RNG state metadata, so a
 restore cannot silently change data/objective. Wrapper native-v2-train.slurm
 runs a separate full state/logit restore process after the eight updates.
 26 focused local tests pass; actual GPU execution and behavior are still pending.
+
+## Diagnosed independent ASR onset fault
+
+Read-only waveform comparison finds six first-batch word onsets before ANY
+nonzero recorded PCM by more than200ms (003/005/006/007/008/015). In008, If starts
+at0.08s while first nonzero PCM is0.748667s and detectable voice is5.76s. In015,
+Put starts0.06s while first nonzero PCM is0.768042s and detectable voice6.26s.
+Thus the original5/24 diagnostic admits two recordings with unusable onsets;
+that number never constituted conversion/native training approval.
+
+The separate opt-in ASR repair applies the EXISTING20ms/0.001activity floor and
+250ms margin to leading quiet, then adds the exact window offset back to every
+word/segment interval. No original WAV, internal gap, receipt clock, word,
+quality threshold or prior report is rewritten. Original audit stays failed.
+It also rejects word onsets preceding any recorded nonzero PCM beyond the200ms
+bar. Regression tests prove voiced samples/internal gaps are retained and a
+known2.0s onset maps back exactly. The original physical-onset check was run and
+failed on those six real recordings; corrected actual re-audit remains pending.
+Both original quality and semantic approvals must be repeated for any new labels.
+Old25 approved native histories/targets remain unchanged.

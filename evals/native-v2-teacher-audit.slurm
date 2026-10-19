@@ -23,7 +23,7 @@ apptainer exec --nv --bind /projects,/lus,/home \
  --env HF_HOME="$DL/models/hf-cache" --env OPENAI_API_KEY= \
  "$DL/pytorch-new.sif" "$DL/envs/moshi-annotation-7379026/bin/python" -u \
  -m evals.recovery_teacher_quality --batch "$DL/runs/native-v2-teacher-$NATIVE_TEACHER_JOB" \
- --out "$DL/runs/native-v2-teacher-audit-${SLURM_JOB_ID}"
+ --out "$DL/runs/native-v2-teacher-audit-${SLURM_JOB_ID}" --trim-leading-silence
 # A completed diagnostic report is not a passing full-corpus approval.
 python3 -c 'import json,sys; r=json.load(open(sys.argv[1]))["results"]; assert len(r)==24 and len({x["scenario_id"] for x in r})==24 and all(x["speech_and_fact_checks_pass"] for x in r), "All24 TRAIN teacher recordings must pass"' \
  "$DL/runs/native-v2-teacher-audit-${SLURM_JOB_ID}/teacher_checks.json"

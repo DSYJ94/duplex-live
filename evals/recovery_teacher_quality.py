@@ -107,6 +107,8 @@ def assess(speech,events,metadata,kind,session):
     reasons = []
     if speech.get("audit_failure"):
         reasons.append(speech["audit_failure"])
+    if speech.get('word_starts_within_recorded_audio') is False:
+        reasons.append('Measured word starts before recorded nonzero audio beyond the unchanged 200ms timing bar')
     words = [w for segment in speech["asr_segments"] for w in segment.get("words",[])]
     if not session["session_finalized"] or session["errors"]:
         reasons.append("Session failed or did not finalize")
@@ -233,6 +235,7 @@ def main():
     parser.add_argument("--batch",type=Path,required=True)
     parser.add_argument("--out",type=Path,required=True)
     parser.add_argument("--device",choices=("cuda","cpu"),default="cuda")
+    parser.add_argument('--trim-leading-silence', action='store_true')
     args = parser.parse_args()
     manifest = validate_teacher(args.batch)
     # Existing independent audio auditor preserves the original WAV and only
@@ -240,6 +243,8 @@ def main():
     from evals.moshi_speech_audit import main as audit
     sys.argv = [sys.argv[0],"--out",str(args.out),"--device",args.device,"--trim-trailing-silence","--keep-silent-failures","--live-runs",*[
         str(args.batch / record["dir"]) for record in manifest["recordings"]]]
+    if args.trim_leading_silence:
+        sys.argv.append('--trim-leading-silence')
     audit()
     speech = json.loads((args.out / "report.json").read_text())["results"]
     results = []

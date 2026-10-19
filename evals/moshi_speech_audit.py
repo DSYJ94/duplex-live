@@ -11,6 +11,34 @@ import math
 from pathlib import Path
 
 
+def asr_window(audio, trim_tail, trim_head, keep_silent):
+    """Use the existing 20ms/0.001 floor and 250ms margin; preserve internal gaps."""
+    import numpy as np
+    if not trim_tail and not trim_head:
+        return audio, 0, 0, False
+    frame = 320  # The ASR input is 16kHz.
+    active = [i for i in range(0, len(audio), frame)
+              if float(np.sqrt(np.mean(audio[i:i+frame] ** 2))) > .001]
+    if not active:
+        if not keep_silent:
+            raise RuntimeError('Generated audio has no signal above the diagnostic silence floor')
+        return audio, 0, 0, True
+    first = max(0, active[0]-4000) if trim_head else 0
+    end = min(len(audio), active[-1]+frame+4000) if trim_tail else len(audio)
+    return audio[first:end], first, len(audio)-end, False
+
+
+def restore_clock(result, offset):
+    """Map measured intervals back to the original WAV, not the recognition window."""
+    import copy
+    result = copy.deepcopy(result)
+    for segment in result['segments']:
+        for item in (segment, *segment.get('words', [])):
+            item['start'] += offset
+            item['end'] += offset
+    return result
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--runs", nargs="+", type=Path, default=[])
@@ -23,6 +51,8 @@ def main():
                     help='External-controller text rendered by streaming TTS; never native duplex qualification')
     ap.add_argument("--out", type=Path, required=True)
     ap.add_argument("--trim-trailing-silence", action="store_true")
+    ap.add_argument('--trim-leading-silence', action='store_true',
+                    help='Separate opt-in ASR window; remap all word times to the unchanged original WAV')
     ap.add_argument("--keep-silent-failures", action="store_true",
                     help="Retain silent clips as explicit failed records and audit later clips")
     ap.add_argument("--device",choices=("cuda","cpu"),default="cuda")
@@ -50,22 +80,12 @@ def main():
         g = math.gcd(sr, 16000)
         audio = resample_poly(pcm, 16000//g, sr//g).astype(np.float32)
         original_samples = len(audio)
-        silent_failure = False
-        if args.trim_trailing_silence:
-            # Keep the original WAV intact. Whisper can hallucinate repeated
-            # words over a long quiet tail; trim only that tail for this
-            # diagnostic, retaining 250 ms after the last active 20 ms window.
-            frame = 320
-            active = [i for i in range(0, len(audio), frame)
-                      if float(np.sqrt(np.mean(audio[i:i+frame] ** 2))) > 0.001]
-            if not active:
-                if not args.keep_silent_failures:
-                    raise RuntimeError("Generated audio has no signal above the diagnostic silence floor")
-                silent_failure = True
-            else:
-                audio = audio[:min(len(audio), active[-1] + frame + 4000)]
+        audio, head, tail, silent_failure = asr_window(audio, args.trim_trailing_silence,
+                                                     args.trim_leading_silence, args.keep_silent_failures)
         result = {"text": "", "segments": []} if silent_failure else whisper.transcribe(
             model, audio, language="en", vad=False, beam_size=5, best_of=5, temperature=0., verbose=None)
+        if head:
+            result = restore_clock(result, head/16000)
         if kind=='native_forced_text_future':
             from evals.recovery_data import validate_conversion
             manifest=json.loads((run/'early-future.json').read_text())
@@ -117,11 +137,22 @@ def main():
         record = {"run": str(run), "wav_sha256": hashlib.sha256(wav.read_bytes()).hexdigest(),
                   "audio_duration_s": len(pcm)/sr, "model_text": predicted,
                   "asr_input_duration_s": len(audio)/16000,
-                  "trailing_silence_trimmed_s": (original_samples-len(audio))/16000,
+                  "trailing_silence_trimmed_s": tail/16000,
                   "silence_trim_enabled": args.trim_trailing_silence,
                   "asr_text": result["text"], "asr_segments": result["segments"],
                   "wer_against_model_text": wer(norm_words(predicted), norm_words(result["text"])),
                   "semantic_review": "pending", "human_listening": "pending"}
+        if args.trim_leading_silence:
+            record.update(leading_silence_trimmed_s=head/16000,
+                          asr_window_start_s=head/16000, asr_window_end_s=(original_samples-tail)/16000,
+                          timestamps_restored_to_original_wav=True,
+                          internal_silence_removed=False, asr_activity_floor=.001, asr_margin_s=.25)
+        nonzero = np.flatnonzero(pcm)
+        first_nonzero = float(nonzero[0]/sr) if len(nonzero) else None
+        record['first_nonzero_wav_sample_s'] = first_nonzero
+        record['word_starts_within_recorded_audio'] = all(
+            first_nonzero is not None and word['start'] >= first_nonzero-.2
+            for segment in result['segments'] for word in segment.get('words', []))
         record["source_kind"] = kind
         if kind=='native_forced_text_future':
             record.update(text_was_forced=True,assistant_audio_tokens_forced=False,
@@ -135,9 +166,9 @@ def main():
         if silent_failure:
             record["audit_failure"] = "Generated audio has no signal above the diagnostic silence floor"
         record["asr_time_bounds_valid"] = all(
-            0 <= segment["start"] < segment["end"] <= len(audio)/16000 + 0.04
+            head/16000 <= segment["start"] < segment["end"] <= (head+len(audio))/16000 + 0.04
             for segment in result["segments"])
-        record["asr_word_bounds_valid"] = all(0 <= word["start"] < word["end"] <= len(audio)/16000+.04
+        record["asr_word_bounds_valid"] = all(head/16000 <= word["start"] < word["end"] <= (head+len(audio))/16000+.04
             for segment in result["segments"] for word in segment.get("words",[]))
         results.append(record)
         print(json.dumps({k: v for k, v in record.items() if k != "asr_segments"}), flush=True)

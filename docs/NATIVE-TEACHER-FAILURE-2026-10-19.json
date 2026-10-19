@@ -187,5 +187,38 @@
         "Required independently specified answer facts absent in measured speech"
       ]
     }
-  ]
+  ],
+  "additional_alignment_diagnosis": [
+    {
+      "id": "native2-train-003",
+      "word_start_s": 0.06,
+      "first_nonzero_s": 0.7284583333333333
+    },
+    {
+      "id": "native2-train-005",
+      "word_start_s": 0.06,
+      "first_nonzero_s": 0.7624583333333333
+    },
+    {
+      "id": "native2-train-006",
+      "word_start_s": 0.06,
+      "first_nonzero_s": 0.724125
+    },
+    {
+      "id": "native2-train-007",
+      "word_start_s": 0.06,
+      "first_nonzero_s": 0.7391666666666666
+    },
+    {
+      "id": "native2-train-008",
+      "word_start_s": 0.08,
+      "first_nonzero_s": 0.7486666666666667
+    },
+    {
+      "id": "native2-train-015",
+      "word_start_s": 0.06,
+      "first_nonzero_s": 0.7680416666666666
+    }
+  ],
+  "old_5_passes_not_finally_eligible": "TRAIN008 and015 also have physically impossible initial word timestamps; require separate unchanged-WAV re-audit"
 }
