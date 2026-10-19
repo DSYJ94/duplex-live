@@ -67,6 +67,11 @@ if [[ "$PHASE" == extend ]]; then
  ARGS+=(--resume-training "$DL/runs/context-training-proof-$NATIVE_V2_RESUME_JOB/training-state.pt"
         --native-v2-extension-review "$NATIVE_V2_EXTENSION_REVIEW")
 fi
+if [[ -n "${NATIVE_V2_EXPLORATION_AUTHORIZATION:-}" ]]; then
+ [[ "$PHASE" == extend && "${NATIVE_V2_RESUME_JOB:-}" == 7556562 ]]
+ [[ "${NATIVE_V2_WARM_ORDINARY_WEIGHT:-0}" == 64 && "${NATIVE_V2_WARM_ORDINARY_CLOCK:-0}" == 1 ]]
+ ARGS+=(--native-v2-exploration-authorization "$NATIVE_V2_EXPLORATION_AUTHORIZATION")
+fi
 if [[ "${NATIVE_V2_WARM_ORDINARY_WEIGHT:-0}" != 0 ]]; then
  [[ "$NATIVE_V2_WARM_ORDINARY_WEIGHT" == 64 && "${NATIVE_V2_FULL24_PER8:-0}" == 1 ]]
  [[ "$PHASE" == train || "$PHASE" == extend ]]

@@ -41,7 +41,7 @@ def validate_review(review, proof, parent, identity):
     return validate_cases(review, proof, parent, identity)
 
 
-def validate_cases(review, proof, parent, identity):
+def validate_cases(review, proof, parent, identity, *, require_ordinary=True):
     """Bind every raw native task/audio/independent speech record to one checkpoint."""
     proof=Path(proof);runs=proof.parent
     plan=Path(__file__).with_name('fixtures')/'native-v2-development-20261019.json'
@@ -68,7 +68,7 @@ def validate_cases(review, proof, parent, identity):
                 or r['scheduled_dispatch'] or r['word_or_acoustic_tokens_forced'] or r['response_start_forced']
                 or r['real_user_samples_processed']!=r['real_user_samples_expected']):
             raise ValueError('Native continuation evidence differs, is forced or omits a full task review')
-        if index<4 and (not case['ordinary_core_correct'] or not audio['asr_time_bounds_valid']
+        if require_ordinary and index<4 and (not case['ordinary_core_correct'] or not audio['asr_time_bounds_valid']
                 or not audio['asr_word_bounds_valid'] or not audio['word_starts_within_recorded_audio']
                 or not 0<=audio['wer_against_model_text']<=.08):
             raise ValueError('Do not extend a candidate with ordinary reasoning or speech regression')
@@ -76,6 +76,9 @@ def validate_cases(review, proof, parent, identity):
 
 
 def validate(args):
+    if getattr(args,'native_v2_exploration_authorization',None):
+        from evals.context_native_exploration import validate as validate_exploration
+        return validate_exploration(args)
     from evals.context_rollout_conditioning import verify_checkpoint
     proof=Path(args.resume_training).parent
     if Path(args.resume_training)!=proof/'training-state.pt':raise ValueError('Exact complete native training state required')

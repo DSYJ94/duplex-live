@@ -6,7 +6,7 @@ import subprocess
 import tempfile
 import unittest
 
-from evals.context_native_extension_review import committed_document, validate_review
+from evals.context_native_extension_review import committed_document, validate_review, validate_cases
 from evals.moshi_model_download import sha256
 
 
@@ -73,6 +73,17 @@ class NativeExtensionReviewTests(unittest.TestCase):
     def test_actual_receipt_task_failure_can_only_receive_explicit_research_review(self):
         review=copy.deepcopy(self.review);review['cases'][6].update(behavior_verdict='fail',reason='Actual receipt reviewed; native result use still fails')
         self.assertFalse(self.check(review)['candidate_adopted'])
+
+    def test_explicit_failed_pilot_evidence_binding_never_weakens_default_gate(self):
+        review=copy.deepcopy(self.review);review['all4_ordinary_core_correct']=False
+        review['cases'][0].update(ordinary_core_correct=False,behavior_verdict='fail')
+        with self.assertRaises(ValueError):self.check(review)
+        # Only the separate owner validator requests evidence-only binding.
+        self.assertFalse(validate_cases(review,self.proof,self.parent,self.identity,
+            require_ordinary=False)['cases'][0]['ordinary_core_correct'])
+        (self.runs/'native-v2-development-200_9/model.wav').write_bytes(b'changed')
+        with self.assertRaises(ValueError):
+            validate_cases(review,self.proof,self.parent,self.identity,require_ordinary=False)
 
 
 class CommittedReviewTests(unittest.TestCase):

@@ -21,6 +21,10 @@ def run(lm, spm, voice, examples, components, audits, args):
     from evals.context_training_state import save as save_state, restore as restore_state
     from evals.context_native_v2_teacher_objective import learning_rate
     rate = learning_rate(args)
+    source_transition=None
+    if getattr(args,'native_v2_exploration_authorization',None):
+        from evals.context_native_exploration import validate as validate_exploration
+        source_transition=validate_exploration(args)['source_transition']
     pre = args.actual_temporal_preflight
     gate = json.loads((pre/'actual-temporal-audit.json').read_text())
     if (gate['schema'] != 'dl-context-actual-temporal-audit-v1' or gate['passed'] is not True
@@ -151,6 +155,7 @@ def run(lm, spm, voice, examples, components, audits, args):
     def state_metadata(frozen):
         return {'source_commit':SOURCE_COMMIT,
             'repo_commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),
+            **({'source_transition':source_transition} if source_transition else {}),
             'assets_manifest_sha256':sha256(args.assets),'data_sha256':sha256(args.out/'data.json'),
             'native_protocol':{'name':'bootstrap-preserve-provided-v1',
                 'code_sha256':sha256(Path(__file__).with_name('context_native_layout.py')),
@@ -258,8 +263,11 @@ def run(lm, spm, voice, examples, components, audits, args):
                         or parent['training_state_sha256'] != sha256(args.resume_training)
                         or loaded['training_state_sha256'] != parent['training_state_sha256']):
                     raise RuntimeError('Longer resumed adaptation lacks a verified portable preflight')
-            snapshot = restore_state(args.resume_training,learned,optimizer,state_metadata(frozen))
+            snapshot = restore_state(args.resume_training,learned,optimizer,state_metadata(frozen),
+                source_transition=source_transition)
             initial_step = snapshot['completed_steps']
+            if source_transition and initial_step+args.actual_fit_updates!=40:
+                raise RuntimeError('Owner exploration must stop after forty total optimizer updates')
         if getattr(args, 'native_v2_gradient_audit', False):
             from evals.context_native_gradient_audit import run as gradient_audit
             gradient_audit(lm, learned, batches, retention, references, native_teacher_batches,
@@ -393,6 +401,7 @@ def run(lm, spm, voice, examples, components, audits, args):
         if expected == baseline: raise RuntimeError('Actual temporal updates changed no valid logits')
         save_file({n:p.detach().cpu().contiguous() for n,p in learned.items()},args.out/'adapters.safetensors')
         report = {'schema':'dl-context-actual-adapter-proof-v1','source_commit':SOURCE_COMMIT,
+            **({'source_transition':source_transition,'owner_exploration_training_only':True} if source_transition else {}),
             'repo_commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),
             'assets_manifest_sha256':sha256(args.assets),'data_sha256':sha256(args.out/'data.json'),
             'voice_sha256':sha256(args.out/'voice.pt'),'voice_reference_sha256':sha256(args.voice_reference),

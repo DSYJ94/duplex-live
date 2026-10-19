@@ -71,6 +71,8 @@ def main():
     ap.add_argument('--native-v2-warm-ordinary-clock',action='store_true')
     ap.add_argument('--native-v2-learning-rate',type=float,choices=(1e-5,2e-6),default=1e-5)
     ap.add_argument('--native-v2-extension-review',type=Path)
+    ap.add_argument('--native-v2-exploration-authorization',type=Path,
+        help='Exact committed owner exception for one training-only clock8+32 exploration; no adoption')
     ap.add_argument('--native-v2-gradient-audit',action='store_true',
                     help='Zero-update complete TRAIN objective gradient diagnosis at native520; never a checkpoint')
     ap.add_argument('--actual-response-first-word-weight',type=float,default=1.)
@@ -107,6 +109,9 @@ def main():
     if args.teacher_engine_input_streamed_user and (not args.teacher_engine_input_audit
             or args.teacher_native_math_audit or args.teacher_engine_native_audio):
         ap.error('Streamed-user capture is only an explicit forced-teacher input audit, before separate CPU approval')
+    if args.native_v2_exploration_authorization and not (args.native_v2_extension_review
+            and args.resume_training and args.actual_fit_updates==32 and args.native_v2_full24_per8):
+        ap.error('Owner exploration requires the exact bounded full24 continuation and complete rejected review')
     from evals.context_native_v2_teacher_objective import validate_configuration as validate_native_v2
     validate_native_v2(args)
     if args.native_v2_gradient_audit and (not args.native_v2_cache or args.reload or args.resume_training):
