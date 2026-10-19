@@ -1,3 +1,37 @@
+# LOCAL active — measured native520 quiet/pause FAIL2/2,12:15UTC
+
+Native520 baseline7547007_0/1 COMPLETE2m21/2m40 from immutable workflow source
+f47d27b4cc5a647998c78b141c0a7b591fbf9b8a. Independent CPU ASR confirms7 words
+inside quiet0–12.41s (Which project... starts8.77s, before cue9.76s);3 words inside
+pause17.54–22.10s (Sure I am quiet20.93–21.73s). Wrong door/light continuation
+after Go;2 unnecessary native RET markers observed, never executed. Raw speech
+agreement WER0.0212766/0.0, original-WAV word bounds/physical onsets valid; all input
+samples processed. Complete evidence docs/NATIVE520-QUIET-PAUSE-BASELINE-2026-10-19.json.
+Reused TRAIN/development baseline ONLY; no candidate or fresh qualification result.
+No teacher labels produced. No external API calls. Persona's unconditional project
+question is a confound hypothesis; no prefix/approved-history repair/adoption.
+
+31files/94949512bytes complete baseline audio/histories/speech/receipts/logs backed
+and size/SHA256 verified12:13:02UTC. Scoped total21865files/14472855537bytes plus
+separately pinned model weights. Runtime/source/state/data backups preserved.
+
+All25 numerical7545975 PASS, all24 input7545909 PASS. Native24 FP327545910 FAIL
+max0.001411557 (017/006), complete original retained. Full24 numerical-v2 reference
+7546608 RUNNING; pilot7546645 PENDING AFTEROK7546608, sourcec93ac93, CPU85testsPASS,
+ZERO new optimizer updates at12:15UTC. Both complete numerical gates required.
+Full28 actual histories/all25 teachers/KL1/hidden10 retained,8update warmstart7510331,
+then independent fresh-process full state restore and all10 native behavior review
+before extension/adoption. Exact sampler quiet/pause first27/31; full24 by31.
+
+Fresh20 real36-utterance speech generation remains paused after automatic review
+rejected external API payload transfer. Owner's explicit approval question pending;
+no generation/API request/fresh inference submitted. Do not assume consent/bypass.
+LOCAL executor remains active; CLOUD submits nothing, GPU validation paused,
+no extra purchase. Cert expires20:51:23UTC today. Native/whole-system FAIL.
+Next: finish7546608 ->pilot7546645/restore ->all10 native candidate review.
+
+---
+
 # LOCAL active — full24 FP32 retained; native quiet/pause baseline added,12:10UTC
 
 New workflow source f47d27b4cc5a647998c78b141c0a7b591fbf9b8a pushed/immutable:

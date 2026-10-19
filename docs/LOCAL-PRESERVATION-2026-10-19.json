@@ -1,7 +1,7 @@
 {
-  "at_utc": "2026-10-19T12:10:03.964705+00:00",
-  "unique_scoped_artifact_files": 21834,
-  "unique_scoped_artifact_bytes": 14377906025,
+  "at_utc": "2026-10-19T12:16:52.121804+00:00",
+  "unique_scoped_artifact_files": 21865,
+  "unique_scoped_artifact_bytes": 14472855537,
   "inventory_conflicts": [],
   "inventories": [
     {
@@ -163,6 +163,13 @@
       "sha256": "7ee4791b89320ca078415878e3b98ff3d751e33c313b46799ec7f9dd835ee873",
       "files": 10,
       "bytes": 153814,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native520-quiet-pause-baseline-inventory.json",
+      "sha256": "da1938c1b8bea82beba47461ab751cabeefb2358a3bc039e2f9a3f7f7b0b0171",
+      "files": 31,
+      "bytes": 94949512,
       "missing_roots": []
     }
   ],

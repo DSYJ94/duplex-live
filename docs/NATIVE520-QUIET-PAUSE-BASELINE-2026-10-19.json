@@ -1,0 +1,455 @@
+{
+  "schema": "dl-native520-quiet-pause-baseline-review-v1",
+  "at_utc": "2026-10-19T12:15:40.379767+00:00",
+  "source": "f47d27b4cc5a647998c78b141c0a7b591fbf9b8a",
+  "array": "7547007",
+  "cases": [
+    {
+      "index": 0,
+      "scenario": "native2-train-014",
+      "baseline_checkpoint": "7510331",
+      "run": "native-v2-quiet-baseline-7547007_0",
+      "run_report_sha256": "e8d437aa1cfc26632d64727ed84d48473a70c21d150ec5e381e4068f7227e535",
+      "speech_report_sha256": "387fc749144da23455bc3e6649a7827a32a95e0951f37074a62ac5eb185ca3aa",
+      "audio_sha256": "713f8e14da707171f2fd4eab9446bd1ada88b06c0de593b8df6351b425beb3f6",
+      "source_wav_sha256": "13d48e7bf811dd453a445de36b8f074a2dfd9d73ef9ba9d2ba3cc458529c8673",
+      "source_sidecar_sha256": "c0148171c1eab178cf55c0814cd52378d09e8853a3e03438c5ccd1e98f4c6dcc",
+      "quiet_interval_s": [
+        0.0,
+        12.41
+      ],
+      "measured_words_inside_quiet_interval": [
+        {
+          "text": "Which",
+          "start": 8.77,
+          "end": 8.95,
+          "confidence": 0.483
+        },
+        {
+          "text": "project",
+          "start": 8.95,
+          "end": 9.35,
+          "confidence": 0.974
+        },
+        {
+          "text": "should",
+          "start": 9.35,
+          "end": 9.61,
+          "confidence": 0.994
+        },
+        {
+          "text": "I",
+          "start": 9.61,
+          "end": 9.75,
+          "confidence": 0.935
+        },
+        {
+          "text": "check",
+          "start": 9.75,
+          "end": 9.97,
+          "confidence": 0.989
+        },
+        {
+          "text": "for",
+          "start": 9.97,
+          "end": 10.19,
+          "confidence": 0.991
+        },
+        {
+          "text": "now?",
+          "start": 10.19,
+          "end": 10.37,
+          "confidence": 0.944
+        }
+      ],
+      "quiet_passed": false,
+      "unnecessary_native_requests": 0,
+      "independent_asr_word_agreement_wer": 0.02127659574468085,
+      "word_onsets_and_bounds_valid": true,
+      "measured_spoken_text": " Which project should I check for now? It measures the amount of time that has passed. Are you checking for the total time since the start or a specific period? Does that help you with your project planning? Which project should I use the timer for?",
+      "compute_p95_s": 0.0371451201455784,
+      "maximum_input_backlog_s": 3.199507756993407,
+      "quality_qualified": false,
+      "do_not_train": true,
+      "full_task_passed": false
+    },
+    {
+      "index": 1,
+      "scenario": "native2-train-015",
+      "baseline_checkpoint": "7510331",
+      "run": "native-v2-quiet-baseline-7547007_1",
+      "run_report_sha256": "8d85e44d1fce6e5b8fc09f9de8695cad164c631df249b876e99c40541b5644e3",
+      "speech_report_sha256": "855a1c26a7479167f128cbc07d543102be389ee907b303781b7c5d4715ded3ab",
+      "audio_sha256": "351b298297fc326dd1a3c286be1c07063b136bab462b60aeeafff76aa5798ed5",
+      "source_wav_sha256": "f5fbe6856cd4d66314c8ddc8b421374abd133817cb277281599495f76e9159b8",
+      "source_sidecar_sha256": "f81d935cb50272609a3e8cc2f04aed056f57a7899a732e1924d1e4fde061731a",
+      "quiet_interval_s": [
+        17.54,
+        22.1
+      ],
+      "measured_words_inside_quiet_interval": [
+        {
+          "text": "Sure,",
+          "start": 20.93,
+          "end": 21.110000000000003,
+          "confidence": 0.668
+        },
+        {
+          "text": "I'm",
+          "start": 21.110000000000003,
+          "end": 21.43,
+          "confidence": 0.987
+        },
+        {
+          "text": "quiet",
+          "start": 21.43,
+          "end": 21.73,
+          "confidence": 0.986
+        }
+      ],
+      "quiet_passed": false,
+      "unnecessary_native_requests": 2,
+      "independent_asr_word_agreement_wer": 0.0,
+      "word_onsets_and_bounds_valid": true,
+      "measured_spoken_text": " Okay, I've Alright, I've closed the cupboard And I've also finished putting the book on the shelf Sure, I'm quiet Which project should we check? Okay, go And now please close the door And one more thing, turn off the light And that's it, the task is finished Did you check if the task was completed correctly? Do you want to check the check now? Should I check the check for you now?",
+      "compute_p95_s": 0.03716716639464721,
+      "maximum_input_backlog_s": 3.2820738509960936,
+      "quality_qualified": false,
+      "do_not_train": true,
+      "full_task_passed": false,
+      "post_cue_words": [
+        {
+          "text": "Which",
+          "start": 22.19,
+          "end": 22.310000000000002,
+          "confidence": 0.133
+        },
+        {
+          "text": "project",
+          "start": 22.310000000000002,
+          "end": 22.75,
+          "confidence": 0.885
+        },
+        {
+          "text": "should",
+          "start": 22.75,
+          "end": 23.05,
+          "confidence": 0.994
+        },
+        {
+          "text": "we",
+          "start": 23.05,
+          "end": 23.25,
+          "confidence": 0.996
+        },
+        {
+          "text": "check?",
+          "start": 23.25,
+          "end": 23.490000000000002,
+          "confidence": 0.978
+        },
+        {
+          "text": "Okay,",
+          "start": 25.85,
+          "end": 26.110000000000003,
+          "confidence": 0.455
+        },
+        {
+          "text": "go",
+          "start": 26.27,
+          "end": 26.43,
+          "confidence": 0.962
+        },
+        {
+          "text": "And",
+          "start": 26.830000000000002,
+          "end": 26.950000000000003,
+          "confidence": 0.283
+        },
+        {
+          "text": "now",
+          "start": 26.950000000000003,
+          "end": 27.110000000000003,
+          "confidence": 1.0
+        },
+        {
+          "text": "please",
+          "start": 27.110000000000003,
+          "end": 27.450000000000003,
+          "confidence": 0.975
+        },
+        {
+          "text": "close",
+          "start": 27.450000000000003,
+          "end": 27.71,
+          "confidence": 0.996
+        },
+        {
+          "text": "the",
+          "start": 27.71,
+          "end": 27.990000000000002,
+          "confidence": 1.0
+        },
+        {
+          "text": "door",
+          "start": 27.990000000000002,
+          "end": 28.19,
+          "confidence": 1.0
+        },
+        {
+          "text": "And",
+          "start": 28.610000000000003,
+          "end": 28.73,
+          "confidence": 0.129
+        },
+        {
+          "text": "one",
+          "start": 28.73,
+          "end": 28.950000000000003,
+          "confidence": 0.995
+        },
+        {
+          "text": "more",
+          "start": 28.950000000000003,
+          "end": 29.17,
+          "confidence": 1.0
+        },
+        {
+          "text": "thing,",
+          "start": 29.17,
+          "end": 29.39,
+          "confidence": 0.697
+        },
+        {
+          "text": "turn",
+          "start": 29.53,
+          "end": 29.69,
+          "confidence": 0.985
+        },
+        {
+          "text": "off",
+          "start": 29.69,
+          "end": 29.89,
+          "confidence": 0.999
+        },
+        {
+          "text": "the",
+          "start": 29.89,
+          "end": 30.05,
+          "confidence": 0.998
+        },
+        {
+          "text": "light",
+          "start": 30.05,
+          "end": 30.27,
+          "confidence": 0.999
+        },
+        {
+          "text": "And",
+          "start": 30.53,
+          "end": 30.650000000000002,
+          "confidence": 0.444
+        },
+        {
+          "text": "that's",
+          "start": 30.650000000000002,
+          "end": 30.91,
+          "confidence": 0.995
+        },
+        {
+          "text": "it,",
+          "start": 30.91,
+          "end": 31.05,
+          "confidence": 0.261
+        },
+        {
+          "text": "the",
+          "start": 31.39,
+          "end": 31.51,
+          "confidence": 0.991
+        },
+        {
+          "text": "task",
+          "start": 31.51,
+          "end": 31.77,
+          "confidence": 0.996
+        },
+        {
+          "text": "is",
+          "start": 31.77,
+          "end": 32.03,
+          "confidence": 0.999
+        },
+        {
+          "text": "finished",
+          "start": 32.03,
+          "end": 32.25,
+          "confidence": 0.997
+        },
+        {
+          "text": "Did",
+          "start": 35.79,
+          "end": 35.83,
+          "confidence": 0.343
+        },
+        {
+          "text": "you",
+          "start": 35.83,
+          "end": 36.05,
+          "confidence": 0.996
+        },
+        {
+          "text": "check",
+          "start": 36.05,
+          "end": 36.33,
+          "confidence": 0.989
+        },
+        {
+          "text": "if",
+          "start": 36.33,
+          "end": 36.489999999999995,
+          "confidence": 0.99
+        },
+        {
+          "text": "the",
+          "start": 36.489999999999995,
+          "end": 36.629999999999995,
+          "confidence": 0.994
+        },
+        {
+          "text": "task",
+          "start": 36.629999999999995,
+          "end": 36.849999999999994,
+          "confidence": 0.978
+        },
+        {
+          "text": "was",
+          "start": 36.849999999999994,
+          "end": 37.07,
+          "confidence": 0.987
+        },
+        {
+          "text": "completed",
+          "start": 37.07,
+          "end": 37.41,
+          "confidence": 0.993
+        },
+        {
+          "text": "correctly?",
+          "start": 37.41,
+          "end": 37.83,
+          "confidence": 0.991
+        },
+        {
+          "text": "Do",
+          "start": 41.69,
+          "end": 41.87,
+          "confidence": 0.848
+        },
+        {
+          "text": "you",
+          "start": 41.87,
+          "end": 41.989999999999995,
+          "confidence": 0.993
+        },
+        {
+          "text": "want",
+          "start": 41.989999999999995,
+          "end": 42.15,
+          "confidence": 0.998
+        },
+        {
+          "text": "to",
+          "start": 42.15,
+          "end": 42.29,
+          "confidence": 0.997
+        },
+        {
+          "text": "check",
+          "start": 42.29,
+          "end": 42.51,
+          "confidence": 0.994
+        },
+        {
+          "text": "the",
+          "start": 42.51,
+          "end": 42.669999999999995,
+          "confidence": 0.991
+        },
+        {
+          "text": "check",
+          "start": 42.669999999999995,
+          "end": 42.89,
+          "confidence": 0.983
+        },
+        {
+          "text": "now?",
+          "start": 42.89,
+          "end": 43.089999999999996,
+          "confidence": 0.99
+        },
+        {
+          "text": "Should",
+          "start": 46.93,
+          "end": 47.11,
+          "confidence": 0.77
+        },
+        {
+          "text": "I",
+          "start": 47.11,
+          "end": 47.23,
+          "confidence": 0.984
+        },
+        {
+          "text": "check",
+          "start": 47.23,
+          "end": 47.449999999999996,
+          "confidence": 0.996
+        },
+        {
+          "text": "the",
+          "start": 47.449999999999996,
+          "end": 47.61,
+          "confidence": 0.991
+        },
+        {
+          "text": "check",
+          "start": 47.61,
+          "end": 47.809999999999995,
+          "confidence": 0.971
+        },
+        {
+          "text": "for",
+          "start": 47.809999999999995,
+          "end": 48.03,
+          "confidence": 0.997
+        },
+        {
+          "text": "you",
+          "start": 48.03,
+          "end": 48.169999999999995,
+          "confidence": 0.998
+        },
+        {
+          "text": "now?",
+          "start": 48.169999999999995,
+          "end": 48.41,
+          "confidence": 0.976
+        }
+      ],
+      "pause_resume_first_step_or_second_step_exact": false,
+      "reason": "Speaks Sure I am quiet during mandatory pause, and substitutes unrelated door/light instructions after Go; does not provide the required close-the-cupboard continuation."
+    }
+  ],
+  "complete_cases": 2,
+  "passed": false,
+  "fresh_qualification": false,
+  "training_approved": false,
+  "do_not_train": true,
+  "owner_conversations_used": false,
+  "external_backend_requests_executed": 0,
+  "model_and_audio_actual_native": true,
+  "persona_text_sha256": "9e4cd74de1ecf8a445474d2a46d55410a5918f528f4b18a5d7cb4649aeb6e196",
+  "persona_wording_observation": "Ask which project if the user has not identified it is unconditional in the retained recorded-records persona; may contribute to irrelevant project questions. No controlled causal attribution or persona repair is claimed.",
+  "training_candidate_not_yet_evaluated": true
+}

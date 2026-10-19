@@ -558,3 +558,23 @@ recordings, unnecessary RET markers and independent CPU speech clocks are kept;
 quiet/pause behavior is still unqualified. Every output is evaluation-only and
 must never become TRAIN labels. No held-out mutation, gain change or extra compute
 purchase. Four old ordinary baseline results already exist; do not duplicate them.
+
+
+## Native520 actual quiet/pause baseline FAIL2/2, independent word clocks
+
+7547007_0/1 COMPLETED2m21/2m40. Quiet014: Which project should I check for now
+spoken8.77–10.37s, seven words inside unchanged0–12.41s quiet interval and before
+cue start9.76s. Pause015: Sure I am quiet spoken20.93–21.73s within unchanged
+17.54–22.10s mandatory pause; afterwards supplies unrelated close-door/turn-off-light
+instructions rather than required close-the-cupboard continuation. Two unnecessary
+native RET markers observed, none executed; external API calls0. Independent ASR
+matches actual native text WER0.0212766/0.0, valid restored word bounds/physical
+onsets. All real user samples processed. Full JSON binds report/audio/source/ASR
+hashes, exact word intervals and p95 compute/backlog; candidate not yet evaluated.
+
+Baseline persona's unconditional Ask which project if the user has not identified
+it may contribute to irrelevant questions. This is an observed wording confound,
+not controlled causal evidence or authorization to rewrite approved prefix/history.
+Keep original persona/approved teacher histories for candidate comparison. All
+baseline outputs are evaluation-only, never TRAIN labels.31files/94949512bytes,
+complete raw audio/history/ASR/receipts/logs, independently hash-verified12:13:02UTC.

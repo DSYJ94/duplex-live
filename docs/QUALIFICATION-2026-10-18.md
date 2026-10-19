@@ -1,3 +1,15 @@
+19 October12:15UTC — native520 matched quiet/pause baseline7547007 COMPLETE2/2
+and FAILS BOTH behaviors. Independent actual audio confirms7 words in quiet window
+0–12.41s, and3 words (Sure, I am quiet) in pause17.54–22.10s. Pause case substitutes
+door/light instructions after Go and emits2 unnecessary native RET markers (not
+executed in observe-only). ASR WER0.02128/0.0, valid physical/original word clocks;
+all source/voice/model hashes and input samples preserved. This is baseline reused
+TRAIN/development evidence, never new candidate results or fresh qualification.
+Dated NATIVE520-QUIET-PAUSE JSON contains complete measured evidence. No prompt
+repair/causal attribution: retained persona has unconditional project-question
+wording, recorded as a confound hypothesis. Native24 numerical-v2 and pilot remain
+separate pending gates; original28 histories, all25 teachers and retention unchanged.
+
 19 October12:03UTC — declared coverage limit, not a result: the bounded8-update
 pilot samples8/24 new teachers. Fixed quiet/pause exposure first occurs at27/31;
 all24 are sampled by31. This is a mechanics/regression pilot, never full-corpus
