@@ -1,3 +1,32 @@
+# LOCAL active — complete measured-question clock prepared,19 October11:14UTC
+
+Read-only source control7545367 COMPLETED:004 full and prefix independently
+contain the entire Laurel South question ending3.8s, agreeing with source ASR;
+GPT-Live identifies South by4.6s, before actual delegation5.538613s. Isolated tail
+ASR is unreliable (also invents Thank you on001 near-silent tail). All original
+waveforms, late acoustic burst, words, receipts, clip durations and folds remain.
+
+Conversion's old guard confuses file end with spoken-question completion. NEW
+native24 policy requires EXACT complete independently measured source question
+words and intervals (plus full project identification for clarify); rejects any
+early/missing/reordered word. Only that eligibility clock changes; original user
+clip end and actual delegation marker stay unchanged. Legacy old25 guard remains
+unchanged. Local actual24 replay now all pass, max emission-grid error50ms under
+unchanged200ms bar.28 focused local tests pass. Evidence dated question-clock JSON.
+
+Prepared CPU conversion-only wrapper re-verifies and REUSES all24 actual Astra
+passes7544795 plus unchanged speech/control7544794; makes no API/rerender request.
+New versioned data directory required; rejected22-case partial7544795 retained.
+Full new conversion and native codec/input/numerical gates still mandatory.
+No optimizer. New source/deployment/jobs will be recorded after push.
+
+Old25 capture7544803 continues; full25 CPU7544805 and FP32math7544806 afterok.
+Original4 controls reused after independent exact7544729 pass. Old28 histories,
+KL1/hiddenMSE10 and original native520 checkpoint remain preserved. LOCAL active;
+CLOUD submits nothing. All scoped runtime/base/state/data/vendor backups verified.
+
+---
+
 # LOCAL active — full24 speech AND semantic PASS; conversion guard diagnosis,11:05UTC
 
 CPU7544793 PASS70tests. Same-WAV quality/control7544794 COMPLETED6m27: all24

@@ -12,7 +12,32 @@ from evals.recovery_teacher_quality import validate_teacher,assess
 from evals.teacher_world import teacher_metadata
 
 
-def measured_timeline(sid,words,source_timeline,delegations,arrivals):
+def measured_question_completion(source_timeline, user_words):
+    """Question content ends at its measured words, not the enclosing WAV tail.
+
+    Require every declared question/identification word exactly once and valid
+    original-clock intervals. No partial project name or guessed endpoint passes.
+    """
+    from evals.recovery_prepare_data import spoken_words
+    users=[e for e in source_timeline['events'] if e['ch']=='user' and e.get('kind','utterance')=='utterance']
+    count=2 if source_timeline['meta']['kind']=='clarify' else 1
+    if len(users)<count:raise ValueError('Missing complete question/project identification')
+    evidence=[]
+    for index,event in enumerate(users[:count]):
+        start,end=event['actual_start_ms']/1000,event['actual_end_ms']/1000
+        words=[w for w in user_words if start-.001<=w['start_s'] and w['end_s']<=end+.001]
+        if (not words or spoken_words(event['text'])!=[t for w in words for t in spoken_words(w['text'])]
+                or any(not math.isfinite(w['start_s']+w['end_s']) or not start-.001<=w['start_s']<w['end_s']<=end+.001 for w in words)
+                or any(b['start_s']<a['end_s']-.02 for a,b in zip(words,words[1:]))):
+            raise ValueError('Question completion requires exact complete independently measured source words')
+        evidence.append(dict(user_ordinal=index,source_text=event['text'],measured_words=words,
+                             complete_at_s=words[-1]['end_s'],enclosing_clip_end_s=end))
+    return dict(policy='independently-measured-complete-user-words-v1',
+                complete_at_s=evidence[-1]['complete_at_s'],questions=evidence,
+                original_audio_words_receipts_unchanged=True)
+
+
+def measured_timeline(sid,words,source_timeline,delegations,arrivals,*,user_words=None):
     from data.synthetic.timeline import Timeline,Event
     from data.synthetic.timing_audit import grid_words_by_event
     if not words or any(len(w["text"].strip().split()) != 1 for w in words):
@@ -24,8 +49,10 @@ def measured_timeline(sid,words,source_timeline,delegations,arrivals):
         word_onsets_ms=[round(w["start"]*1000)-start for w in words])
     events = [Event(**event) for event in source_timeline["events"] if event["ch"] == "user"]
     events.append(asst)
+    completion=None
     if delegations:
-        first_end = events[0].actual_end_ms / 1000
+        completion=measured_question_completion(source_timeline,user_words) if user_words is not None else None
+        first_end = completion['complete_at_s'] if completion else events[0].actual_end_ms / 1000
         for delegation in delegations:
             received = delegation["received_at_s"]
             if received < first_end:
@@ -38,6 +65,7 @@ def measured_timeline(sid,words,source_timeline,delegations,arrivals):
     metadata = {**source_timeline["meta"],"scenario_id":sid,"split":"train","source_model":"gpt-live-1",
         "reference_arrivals":arrivals,"verified":False,"teacher_audio":True,
         "timing_scope":"measured output WAV words and actual client tool-result receipt times"}
+    if completion is not None:metadata['question_completion_clock']=completion
     timeline = Timeline(sid,"recovery_teacher",events,metadata)
     assistant,grid = grid_words_by_event(timeline)
     if len(assistant) != 1 or len(grid) != len(words):
@@ -61,6 +89,8 @@ def validate_teacher_conversion(data,receipt):
         if sha256(semantic) != receipt['semantic_approval_sha256']:
             raise RuntimeError('Native-v2 semantic approval changed')
         verify(raw, checks, semantic)
+        if receipt.get('question_clock_policy')!='independently-measured-complete-user-words-v1':
+            raise RuntimeError('Native-v2 conversion lacks its explicit complete measured-question clock')
     if sha256(checks) != receipt["teacher_checks_sha256"] or sha256(raw / "teacher.json") != receipt["raw_manifest_sha256"]:
         raise RuntimeError("Teacher approval evidence changed")
     approval = json.loads(checks.read_text())
@@ -75,13 +105,20 @@ def validate_teacher_conversion(data,receipt):
         decision = decisions[row["scenario_id"]]
         record = decision["raw_record"]
         folder = raw / record["dir"]
-        source_timeline = json.loads(Path(record["source_row"]["path"]).with_suffix(".json").read_text())["timeline"]
+        source_sidecar = json.loads(Path(record["source_row"]["path"]).with_suffix(".json").read_text())
+        source_timeline = source_sidecar['timeline']
         raw_manifest = json.loads((raw / "teacher.json").read_text())
         reviewed = assess(spoken[decision["scenario_id"]],[json.loads(line) for line in (folder / "events.jsonl").read_text().splitlines()],
             {**teacher_metadata(record, source_timeline["meta"], raw_manifest["source_ingestion_sha256"]),"source_events":source_timeline["events"]},row["kind"],
             json.loads((folder / "report.json").read_text()))
         if not reviewed["speech_and_fact_checks_pass"] or reviewed["measured_words"] != decision["measured_words"]:
             raise RuntimeError("Teacher no longer passes current speech/fact/timing checks")
+        if raw_manifest.get('collection_schema')=='dl-native-dialogue-teacher-v2':
+            expected,_=measured_timeline(row['scenario_id'],decision['measured_words'],source_timeline,
+                decision['delegation_events'],decision['reference_arrivals'],user_words=source_sidecar['user_words'])
+            if (json.loads((data/row['dir']/'timeline.actual.json').read_text())!=expected.to_dict()
+                    or json.loads((data/row['dir']/'conversation.json').read_text())['timeline']!=expected.to_dict()):
+                raise RuntimeError('Native-v2 measured question/delegation clock changed')
     checked_rows(data,receipt["accepted"],role="measured TRAIN-only teacher conversion")
     for name,key in (("quality.jsonl","source_quality_sha256"),("specifications.json","sealed_specs_sha256")):
         if sha256(data / name) != receipt[key]: raise RuntimeError("Teacher conversion approval changed")
@@ -132,7 +169,8 @@ def main():
         sid = "teacher-"+result["scenario_id"]
         try:
             timeline,offset = measured_timeline(sid,result["measured_words"],source_sidecar["timeline"],
-                result["delegation_events"],result["reference_arrivals"])
+                result["delegation_events"],result["reference_arrivals"],
+                user_words=source_sidecar['user_words'] if native_v2 else None)
         except ValueError as error:
             rejected.append({"scenario_id":result["scenario_id"],"reasons":[str(error)]})
             continue
@@ -179,6 +217,7 @@ def main():
         "native_token_grid_check":"Required additionally during codec encoding","human_listening":"pending"}
     if native_v2:
         receipt.update(semantic_approval=str(args.semantic_approval), semantic_approval_sha256=sha256(args.semantic_approval))
+        receipt['question_clock_policy']='independently-measured-complete-user-words-v1'
     (args.out / "ingestion.json").write_text(json.dumps(receipt,indent=2)+"\n")
     for fold in ("train","validation","test"):
         (args.out / f"{fold}.jsonl").write_text("".join(json.dumps(row)+"\n" for row in rows if row["split"] == fold))

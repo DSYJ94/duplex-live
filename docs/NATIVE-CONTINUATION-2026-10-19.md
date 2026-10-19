@@ -407,3 +407,27 @@ original audio, text, receipts and folds untouched. No expected words enter ASR.
 Only after this read-only diagnosis choose an explicit measured-question clock
 or repair a diagnosed raw TRAIN waveform in a new directory. No guard/threshold
 weakening, changed original, passing subset or native optimizer submission.
+
+
+## Complete-question word clock, retaining the entire original waveform
+
+7545367 independent CPU full/prefix source004 ASR both locate the COMPLETE
+Laurel South question through3.8s; actual GPT-Live user transcription identifies
+South by4.6s, before delegation5.538613s. Isolated-window ASR can hallucinate:001
+near-silent tail becomes Thank you. No isolated-tail output is promoted as a
+label, and the original late004 acoustic burst is kept, not trimmed or attenuated.
+
+The conversion checker used enclosing WAV clipend as question completion. New
+native24-only policy checks every source question word against the independently
+measured word sequence exactly, with valid intervals and complete project identity
+for clarification. It gates actual delegation against the last measured question
+word. Missing/reordered identity or an earlier delegation fails. Original file-end
+metadata and actual delegation times/markers are untouched. Legacy old25 behavior
+uses its original guard; no old baseline/corpus is rewritten.
+
+Real24 replay now passes with maximum50ms grid error, still below the unchanged
+200ms bar.28 focused tests pass. Full24 speech/control7544794 and actual Astra
+semantic7544795 already pass; conversion-only wrapper will reverify every stored
+input/response/hash and create a new version, without duplicate semantic requests,
+new teacher sessions, source/heldout audio edits or optimizer updates. Rejected
+partial22-case conversion is preserved. All native approval stages remain required.

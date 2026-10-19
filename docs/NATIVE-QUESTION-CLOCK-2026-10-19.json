@@ -1,0 +1,67 @@
+{
+  "scope": "New unapproved native24 conversion clock only; old25/28 unchanged",
+  "source_tail_control_job": "7545367",
+  "full_and_prefix_source004_question_end_s": 3.8,
+  "gpt_live_source004_project_identification_by_s": 4.6,
+  "isolated_tail_asr_not_used_as_labels": true,
+  "original_waveforms_words_receipts_folds_changed": 0,
+  "native_grid_limit_ms": 200,
+  "actual_full24_new_clock_max_grid_offset_ms": 50.0,
+  "question_completion_policy": "Every independently measured question/identification word must match the full declared source exactly; delegate cannot precede its last measured word; enclosing clip end remains unchanged",
+  "cases": [
+    {
+      "id": "native2-train-004",
+      "source_question": "Please check the cabinet code for Project Laurel South.",
+      "last_measured_words": [
+        {
+          "text": "Project",
+          "start_s": 2.54,
+          "end_s": 2.92
+        },
+        {
+          "text": "Laurel",
+          "start_s": 2.92,
+          "end_s": 3.5200000000000005
+        },
+        {
+          "text": "South.",
+          "start_s": 3.5200000000000005,
+          "end_s": 3.8
+        }
+      ],
+      "last_measured_word_end_s": 3.8,
+      "last_20ms_rms_above_001_end_s": 6.88,
+      "actual_delegation_s": 5.538613028998952,
+      "raw_clip_end_s": 6.9,
+      "delegate_after_measured_question_s": 1.7386130289989525,
+      "delegate_before_file_end_s": 1.361386971001048
+    },
+    {
+      "id": "native2-train-001",
+      "source_question": "Please check the parcel label for Project Hazel North.",
+      "last_measured_words": [
+        {
+          "text": "Project",
+          "start_s": 3.34,
+          "end_s": 3.7199999999999998
+        },
+        {
+          "text": "Hazel",
+          "start_s": 3.7199999999999998,
+          "end_s": 4.26
+        },
+        {
+          "text": "North.",
+          "start_s": 4.26,
+          "end_s": 4.54
+        }
+      ],
+      "last_measured_word_end_s": 4.54,
+      "last_20ms_rms_above_001_end_s": 4.72,
+      "actual_delegation_s": 5.822835118044168,
+      "raw_clip_end_s": 5.85,
+      "delegate_after_measured_question_s": 1.2828351180441677,
+      "delegate_before_file_end_s": 0.027164881955831888
+    }
+  ]
+}
