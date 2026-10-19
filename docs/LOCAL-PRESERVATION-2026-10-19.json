@@ -1,7 +1,7 @@
 {
-  "at_utc": "2026-10-19T19:52:34.209376+00:00",
-  "unique_scoped_artifact_files": 22666,
-  "unique_scoped_artifact_bytes": 15255659401,
+  "at_utc": "2026-10-19T20:10:05.691799+00:00",
+  "unique_scoped_artifact_files": 22816,
+  "unique_scoped_artifact_bytes": 15516883782,
   "inventory_conflicts": [],
   "inventories": [
     {
@@ -402,6 +402,34 @@
       "files": 2,
       "bytes": 7468,
       "missing_roots": []
+    },
+    {
+      "name": "remote-native-warm-ordinary-first4-inventory.json",
+      "sha256": "459490e1828b32298e842888437a78b785beef47a6a6c501f1a96a6058272070",
+      "files": 56,
+      "bytes": 134154708,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native-ordinary-clock-cpu-inventory.json",
+      "sha256": "9d7b012ad72cceefe62ef63a93481c835d567b41e5e07eb78cf044ffd7c3448e",
+      "files": 2,
+      "bytes": 30578,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native-warm-ordinary-complete10-native-inventory.json",
+      "sha256": "0ed2ad58868c12e9910692b4b5e9202ce0f0076d2cdf7d7ad35c172486556bbf",
+      "files": 148,
+      "bytes": 261057601,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native-warm-ordinary-complete10-speech-inventory.json",
+      "sha256": "a1cbad3a36af8468bda0c0514700609a508806d905e0b8f5278f59cde943261a",
+      "files": 2,
+      "bytes": 143670,
+      "missing_roots": []
     }
   ],
   "local_artifact_root": "runs/cloud-export-20261016/tree",
@@ -417,9 +445,9 @@
   "runtime_sif_sha256": "c00bc99693e4908ea75d17df9c379b93ae9a1678a65d875565ad5d52f76fa27b",
   "pinned_vendor_git_bundles_verified": 3,
   "source_git_bundle": {
-    "source_sha": "7b44ccff223bfbbc8b8ef798d07e7b2d9d9b3b26",
-    "bundle": "runs/local-continuation-20261019/source-main-7b44ccf.bundle",
-    "bundle_sha256": "589c576e645409f6dc150afe495a78bcb1bf4ccf898c660aef8efb9ca826cb5a"
+    "source_sha": "3061dcba1de571d2dad58d466f7c3f3ca43e41ec",
+    "bundle": "runs/local-continuation-20261019/source-main-3061dcb.bundle",
+    "bundle_sha256": "36f304732dc997699c158cfdf0a0e47efe40ce58c6a5ca1689cada7a3d51b191"
   },
   "native_candidate_job": "7549991",
   "native_candidate_training_state_sha256": "ff79b625c096d48e45b4f41c1107210b91fd1339e0b6bd4c1f988017ab0940e7",
@@ -475,7 +503,16 @@
     "all10_reference_targets_reconstructed_exact": true,
     "native_evaluation_session": "7556210",
     "native_full10_speech_job": "7556211",
-    "native_behavior_not_yet_approved": true
+    "native_behavior_not_yet_approved": true,
+    "native_session_status": "COMPLETED",
+    "native_session_elapsed": "00:11:09",
+    "native_all10_processes_exit0": true,
+    "native_full10_speech_status": "COMPLETED",
+    "no_behavior_or_extension_approval": true,
+    "speech_quality_passes": 8,
+    "ordinary_core_correct": 1,
+    "candidate_rejected_for_extension": true,
+    "complete_native10_review": "docs/NATIVE-WARM-ORDINARY-COMPLETE10-REVIEW-2026-10-19.json"
   },
   "complete_union_reverification": {
     "at_utc": "2026-10-19T19:40:13.657549+00:00",
@@ -485,5 +522,13 @@
     "report": "runs/local-continuation-20261019/complete-union-reverification-20261019.json",
     "report_sha256": "0e1b1f526cb12003d7df33aa3936649f4be8550fcad5ca37040b6f4bc589460b",
     "source_ledger_sha256": "495e2b324ba7c248cd0c395091f01b049dac6738a360d81fca2d50276205bede"
+  },
+  "prepared_ordinary_clock_pilot": {
+    "source": "3061dcba1de571d2dad58d466f7c3f3ca43e41ec",
+    "independent_cpu_job": "7556372",
+    "cpu_tests_passed": 139,
+    "cpu_suite_seconds": 3.801,
+    "optimizer_jobs_submitted": 0,
+    "requires_complete_prior_native10_audio_review": true
   }
 }

@@ -1,3 +1,59 @@
+# LOCAL active — full10 REJECTS7555898; CPU139 PASS for new clock/sampled-history pilot (2026-10-19 20:10 UTC)
+
+All10 native session7556210 COMPLETED11m09/exit0 each; independent full10 speech
+7556211 COMPLETED4m44. Exact candidate b21ac8418be4e4c6597ab93a01c64c3f96addb12 /
+7555898 had8updates23.7324s and exact independent fullstate/RNG/all28logits/10refs
+restorePASS, but complete actual-WAV/ASR/receipt/clock review REJECTS extension:
+ordinary1/4, speech8/10. Review
+ docs/NATIVE-WARM-ORDINARY-COMPLETE10-REVIEW-2026-10-19.json.
+Sound velum/eardrum hallucination(WER0), plants pores/nutrients instead offood,
+metal movingair instead ofconduction; all4 matched native520 input WAVs exact.
+Every actualPCM unclipped/no fullscale samples, max0.9185180664/gain unchanged.
+Quiet fails unchanged global first-onset check/diagnostic preReadyproject words;
+pause valid-WER0 I am staying still19.69-20.49 violates17.54-22.10. Yellow/copper
+actual reads/values spoken, but invented170/looping/ordinary question missed;
+copper speechWER0.117647 fails unchanged0.08. Clarification0RET/0read.
+Cancel improves: actual read injected17.991052 BEFOREcue18.24-20.89; actual first
+cancel receipt28.625755 BEFOREack30.77-32.11 (second39.034778). Redstar spoken
+23.45-23.97/26.37-26.97 AFTERcue, beforeack. Pending lookup cancellation NOT
+demonstrated; external cancel workers supply complete ordinary answer. Retain all
+partial successes/failures; no passing subset, speech/word/clock threshold change.
+
+New source3061dcba1de571d2dad58d466f7c3f3ca43e41ec committed/pushed/deployed in
+clean immutable recovery-3061dcb. CPU7556372 PASS139tests3.801s/30s allocation.
+Real all28 approved manifest selection of14 clock refs independently checked.
+A missing optional target_kind field was caught/fixed BEFORE optimizer; initial
+CPU-launch admin syntax error executed no statements/submitted no jobs. No prior
+optimizer state/data repaired. All original objectives and ten-word anchor64
+unchanged; adds separate64x mean(KL+10hiddenMSE) on10ordinary teacher masks withPAD3
+and4approved sampled-native ordinary TRAIN histories008..011 (neverdev012..015).
+Predeclared evals/fixtures/native-ordinary-clock-pilot-plan-20261019.json;
+coverage gap causal explanation/efficacy remain unproven. New8updatesLR2e-6 from
+native520/7510331 with optimizerreset, all28actual/25old/24new/legacyKL1hidden10,
+no new speech/teacher API, source words/audio/masks/targets unchanged; user/past/
+audio output loss0. Both caches10+14 must reconstruct independently, full state
+restore/all28logits exact +native10/all4ordinary before any32extension/adoption.
+
+No new optimizer submitted at this entry. /tmp/duplex-launch-clock-pilot.py is a
+conditional one-time launcher: checks COMMITTED full10 prior review, raw hashes,
+CPU139, queue empty, creates exclusive cluster receipt
+runs/native-ordinary-clock-pilot-local-20261019.json then ONE1GPU30min interactive
+pilot. Never rerun if receipt exists; inspect recorded job. Current root monitor
+/tmp/duplex-monitor-warm-native10.py all old jobs nowterminal; stop polling them.
+Next: commit/push this complete review, invoke conditional newpilot once; preserve
+new launch/state/cache/restoreproof; afterterminalPASS use originalcf28726 native
+payload/new3061session for another full10 review. Never extend rejected7555898.
+
+All current pilot+native10+fullASR backed: union22816files15516883782bytes plus
+pinned runtime/base/PersonaPlex/Mimi/tokenizer/vendor/ASR. Full3061dcb source bundle
+verified SHA36f304732dc997699c158cfdf0a0e47efe40ce58c6a5ca1689cada7a3d51b191.
+Old stopped Mac source backup PARTIAL; owner/credentials/core excluded. LOCALsole
+executor/CLOUD no jobs/no handback/no cloudpurchase. Certificate20Oct02:05:02UTC /
+04:05:02Berlin. Unrelated pyc/probe/roadmap edits preserved. Goalactive, native/
+whole-systemFAIL; fresh20 source7550653 stillPASS, no fresh native inference.
+
+---
+
 # LOCAL active —7555898 restored PASS; native10 RUNNING; clock-retention experiment prepared (2026-10-19 19:59 UTC)
 
 Exact current candidate source b21ac8418be4e4c6597ab93a01c64c3f96addb12.
