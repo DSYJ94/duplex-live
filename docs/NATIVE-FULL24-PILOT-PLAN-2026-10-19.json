@@ -1,0 +1,106 @@
+{
+  "schema": "dl-native-full24-bounded-pilot-plan-v1",
+  "at_utc": "2026-10-19T13:37:28.509169+00:00",
+  "source": "cf28726b44ed0621dde6bfd27257709574f5e9ed",
+  "independent_source_tests_job": "7548658",
+  "independent_source_tests": 101,
+  "gradient_diagnostic_job": "7548671",
+  "gradient_diagnostic_report_sha256": "26ecfcfdbfbeabaada1cec6feee58bce4e50c853bc9b8efd2b420eda6c7b071e",
+  "complete_gradient_cases": {
+    "actual": 28,
+    "reference": 4,
+    "old25": 25,
+    "new24": 24
+  },
+  "diagnostic_comparisons": {
+    "8": {
+      "objective_mean_norms": {
+        "actual": 6.13786068226004,
+        "reference": 1.3888988468389933,
+        "old25": 1.2367120656424493,
+        "new24": 3.0179559584634483
+      },
+      "pairwise_cosine": {
+        "actual__reference": -0.6278972175482778,
+        "actual__old25": -0.05229423510175858,
+        "actual__new24": -0.21050482477033883,
+        "old25__reference": -0.3808533626738295,
+        "new24__reference": 0.04175719824393323,
+        "new24__old25": 0.1067677708617372
+      },
+      "combined_gradient_norm": 5.548017249684744,
+      "combined_cosine": {
+        "actual": 0.8229620722058117,
+        "reference": -0.506492908714618,
+        "old25": 0.12779177054056304,
+        "new24": 0.3453385392201627
+      },
+      "interpretation": "Negative cosine means opposing first-order directions at the fixed parent; not free-running behavior or Adam-update attribution"
+    },
+    "32": {
+      "objective_mean_norms": {
+        "actual": 5.785732819466398,
+        "reference": 1.3888988468389933,
+        "old25": 1.205600632890336,
+        "new24": 2.920993658379993
+      },
+      "pairwise_cosine": {
+        "actual__reference": -0.6115304997973653,
+        "actual__old25": -0.09746498081701786,
+        "actual__new24": -0.15960463190037727,
+        "old25__reference": -0.43230449294835976,
+        "new24__reference": 0.0639591015995006,
+        "new24__old25": 0.19656917840579988
+      },
+      "combined_gradient_norm": 5.409478697439899,
+      "combined_cosine": {
+        "actual": 0.804637766524103,
+        "reference": -0.459122920785152,
+        "old25": 0.1137714806054963,
+        "new24": 0.4295017475362104
+      },
+      "interpretation": "Negative cosine means opposing first-order directions at the fixed parent; not free-running behavior or Adam-update attribution"
+    }
+  },
+  "diagnostic_limitation": "Fixed-parent first-order gradients, not sequential Adam attribution or proof of native behavior",
+  "decision": "New eight-update full24 pilot from accepted native520, all old components/retention unchanged, learning rate fivefold smaller. Never extend rejected7546645.",
+  "parent_job": "7510331",
+  "rejected_candidate_not_used": "7546645",
+  "optimizer_reset": true,
+  "optimizer_updates": 8,
+  "optimizer_updates_observed": 0,
+  "learning_rate": 2e-06,
+  "previous_learning_rate": 1e-05,
+  "all28_actual_components_preserved": true,
+  "actual_data_sha256": "de92099057ded15a1af0e387c96b457cdf4c1731c26594dcdca211d4c442fc1e",
+  "all25_reapproved_old_native_teachers_preserved": true,
+  "all24_approved_new_teachers_required": true,
+  "reference_kl_weight": 1.0,
+  "reference_hidden_mse_weight": 10.0,
+  "old_teacher_weight": 1.0,
+  "new_teacher_weight": 1.0,
+  "response_first_word_weight": 16.0,
+  "new_sampler": "Average half of each matching kind per visit:4private/4simple/2clarify/2cancel; all24 in8, total kind weights unchanged",
+  "old_actual_teacher_reference_sampling_unchanged": true,
+  "required_chain": {
+    "old25_codec": "7543730",
+    "old25_scope": "7543889",
+    "old25_native_input": "7544805",
+    "old25_numerical": "7545975",
+    "new24_codec": "7545905",
+    "new24_scope": "7545907",
+    "new24_native_input": "7545909",
+    "new24_numerical": "7546608"
+  },
+  "past_or_user_or_acoustic_labels_added": false,
+  "heldout_audio_or_evaluation_outputs_used_as_train": false,
+  "mandatory_after_optimizer": [
+    "Independent fresh-process full adapter/optimizer/Python/NumPy/Torch/CUDA restore, all28 valid logits exact",
+    "All10 actual native development cases and independent full10 speech, raw waveforms/word-clock/worker receipts/latency reviewed",
+    "Ordinary reasoning4/4 before any separately committed bounded continuation review; full-task/fresh qualification before adoption"
+  ],
+  "candidate_adopted": false,
+  "extension_authorized": false,
+  "cloud_gpu_validation": "paused",
+  "executor": "LOCAL"
+}

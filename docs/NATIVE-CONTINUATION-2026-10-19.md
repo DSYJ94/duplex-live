@@ -761,7 +761,7 @@ audit is eligible, normal training/corpus jobs remain workq. Old gradient held;
 held replacement7548671 verified effective interactive reservation/partition, old
 cancelled0elapsed before replacement released. Exact payload60a7afe unchanged,
 new wrappercf28726;1GPU/110G/30min, existing allocation1.5x credits, no purchase.
-7548671 starts13:25:31UTC. All81 required/no optimizer/no new checkpoint.
+7548671 starts13:25:42UTC. All81 required/no optimizer/no new checkpoint.
 
 ASR oldGPU7548438 held, CPU replacement7548672 held/verified hasNO GPU request,
 old cancelled0elapsed, replacement released after independent source101tests.
@@ -774,3 +774,24 @@ size/SHA256 verified13:27:04UTC. Sourcecf28726 complete-history bundle verified
 SHA256fc3d3c2c5dd368877c3838b8c232be271867c0f0b1e7d4b260988c3f72cefe08.
 [Official short-debug guide](https://docs.isambard.ac.uk/user-documentation/guides/slurm-advanced/).
 No learning rate selected/new optimizer or extension submitted; native/whole-system FAIL.
+
+
+## Complete81 diagnostic measured; new bounded full24 pilot selected
+
+7548671 completes6m50, all81 exact28actual+4reference+25old+24new gradients finite,
+all model weights unchanged, zero optimizer steps/new checkpoints. Full10files
+975985bytes independently hash-backed13:36:55UTC. Fixed-parent first8 mean gradient
+norm actual6.13786/reference1.38890/old251.23671/new243.01796. Actual/reference
+cosine-0.627897, combined/reference-0.506493; actual/new24-0.210505, new24/old25
++0.106768. This is an objective-conflict observation at native520, not causal Adam
+or native regression attribution. Do not delete actual28 or lower retention.
+
+Selected NEW8-update pilot from native520/7510331, sourcecf28726/CPU101tests:
+learning rate2e-6 instead1e-5, full24 average-half-group coverage with total new
+kind weight unchanged. Every old25/actual28/label/approved history/KL1/hidden10,
+old sampler and response-firstword16 preserved. Rejected7546645 not resumed.
+Plan NATIVE-FULL24-PILOT-PLAN-2026-10-19.json binds full gradient report and exact
+chain/recipe. Require independent full-state fresh-process restoration then all10
+actual native behaviors+independent speech/receipts/latency, before any separately
+committed research-continuation decision. No adoption, no whole-model qualification.
+No optimizer job submitted yet at this plan declaration.

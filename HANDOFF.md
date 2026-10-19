@@ -6,7 +6,7 @@ in immutable worktrees/recovery-cf28726. Full independent CPU7548658 PASS101test
 state/complete10-review continuation gates; no learning rate selected, no new
 optimizer submitted. Rejected legacy candidate7546645 CANNOT pass full24 gate.
 
-ZERO-UPDATE complete81 gradient diagnostic NOW7548671 RUNNING since13:25:31UTC,
+ZERO-UPDATE complete81 gradient diagnostic NOW7548671 RUNNING since13:25:42UTC,
 interactive reservation,1GPU/110G/30min; exact immutable original diagnostic payload
 60a7afee27a468d56b1de9f17494783a0eb167a0(CPU87tests passed), wrappercf28726.
 Old7548377 was held, replacement submitted HELD, effective reservation/partition
