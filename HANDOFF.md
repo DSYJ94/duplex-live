@@ -18,7 +18,10 @@ faults, retains every original word verbatim, and rechecks all25 original actual
 tool receipts/facts/physical clock. Conversion is a separate explicit full25
 schema; only4 sidecar/timeline intervals may change, every original audio byte
 and all21 other labels stay identical. Cache/input/numerical approval remains
-separate. Eight focused local tests pass. No repair job submitted at this entry.
+separate. Eight focused local tests pass. Repair CPU job7543606 submitted ONCE from pushed source
+46f1342876d593115d171abe18273cee722f359c at10:00:08UTC. Exclusive receipt:
+runs/native-old25-timing-repair-local-20261019.json. This job measures4, checks25
+and creates versioned conversion only after all25 pass. It submits no GPU job.
 
 Runtime/container preservation remains ACTIVE and PARTIAL pending full hashes;
 local SSH certificate ends22:51:23Berlin19October. Other critical scoped native
