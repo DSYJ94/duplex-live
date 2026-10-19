@@ -18,6 +18,13 @@ case "${1:?Choose rag, personaplex or qwen}" in
     test "${DUPLEX_CONFIRMED_PAUSE:-0}" = 1
     test "${DUPLEX_LIVE_SCENARIO:-}" = hybrid-fresh-051
     SCRIPT="$DL_TASK_SOURCE/evals/duplex-live-transport.slurm" ;;
+  native-v2-gradient-audit)
+    : "${DL_TASK_SOURCE:?Immutable diagnostic payload source required}"
+    : "${DL_TASK_COMMIT:?Immutable diagnostic payload commit required}"
+    test "${NATIVE_V2_TRAIN_PHASE:-}" = gradient-audit
+    test "${NATIVE_V2_FULL24_PER8:-0}" = 0
+    test -z "${NATIVE_V2_RESUME_JOB:-}${NATIVE_V2_EXTENSION_REVIEW:-}${NATIVE_V2_LEARNING_RATE:-}"
+    SCRIPT="$DL_TASK_SOURCE/evals/native-v2-train.slurm" ;;
   native-teacher-smoke)
     : "${DL_TASK_SOURCE:?Immutable source required}"
     : "${DL_TASK_COMMIT:?Immutable commit required}"
