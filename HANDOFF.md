@@ -1,3 +1,48 @@
+# LOCAL executor retained — blocked awaiting GPUs and owner decision (2026-10-19 15:34 UTC)
+
+Source main before this checkpoint: 5b87f228561ca137bfab1c9108cbba0affe5753c,
+pushed. Same genuine blockers revalidated across three consecutive goal turns:
+19Oct15:30:52 UTC, 15:32:22 UTC and 15:34:25 UTC bounded actual SSH checks.
+No new submissions or cancellations. Last authoritative squeue: all10 tasks
+7549994_0-9 PENDING(Resources); independent ASR7550001 PENDING(Dependency).
+Slurm15:33:46 start forecast N/A/Unknown; native reports0/10. The jobs remain
+submitted and may run independently of this chat. Do not restart them because a
+read-only observation timed out. No current GPU job was running at this checkpoint.
+
+Pilot7549991 remains COMPLETE: 8updates, all24new teachers exposed, independent
+full optimizer/Python/NumPy/Torch/CUDA RNG restore PASS, all28 valid logits exact.
+Immutable trainercf28726b44ed0621dde6bfd27257709574f5e9ed /wrapper95a60b79aa12ccc8c3ae04a6bd3e86ab6b60a663.
+All28actual histories/all25old teachers/KL1/hidden10 retained. Adapter/fullstate
+identities and hash-verified14file backup are in NATIVE-FULL24-FIRST8 JSON. No
+extension/adoption/fresh native inference. Full10 actual audio/ASR/word clocks/
+worker receipts/latency and all4 ordinary answers must be reviewed before any
+separately committed32-update research continuation from the exact training state.
+
+Owner has the working Mac-only player http://127.0.0.1:57386/ for original015clip0.
+No human hearing answer or explicit new whole20 quality-procedure approval has
+arrived. Both failed20-case source audits remain failed and frozen/unscored.
+The complete20/38 profile diagnostic7550223 is not source approval. Its proposal
+requires hearing 'room sign' AND explicit derived full20 approval; never equate
+room/rune, select passing subsets, change words/audio/gain or weaken thresholds.
+
+Scoped backups remain22465 unique files14922150596bytes plus pinned runtime/base/
+PersonaPlex/Mimi/tokenizer/vendor bundles and both verified ASR models. Latest
+complete source bundle throughf63f2be is hash-verified; this checkpoint is docs-only.
+Stopped old Mac source backup remains PARTIAL; owner conversations, credentials
+and quarantined core excluded. Local certificate actually verified through
+20Oct02:05:02UTC/04:05:02Berlin, bounded SSH works. Unrelated local edits preserved.
+Goal marked blocked only for external GPU availability/owner material decision;
+objective remains incomplete. LOCAL retains ownership, no cloud handback, no cloud
+submissions or compute purchase. No active read-only polling session remains;
+the local audio player is intentionally left available for the owner.
+
+Resume LOCAL: read this checkpoint, verify existing7549994/7550001 first, preserve
+any newly completed artifacts, and independently review ALL10. Apply any owner
+hearing/procedure reply only within its exact scope. Never resubmit existing jobs.
+Native and whole-system qualification remain FAIL.
+
+---
+
 # LOCAL active — listening link supplied; queue and local certificate reverified (2026-10-19 15:31 UTC)
 
 Main before this entry: f63f2be6ba941413da35a99cb008b83dd5073a59; origin/main
