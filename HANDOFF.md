@@ -1,3 +1,34 @@
+# Active local execution — 19 October 2026, 08:52 UTC / 10:52 Berlin
+
+Local chat is the ACTIVE executor until the owner explicitly hands execution to
+cloud. This entry supersedes the 18 October local-stop instructions below.
+Do not submit from cloud concurrently. Native Context Spanning/PersonaPlex/Moshi
+work only; cloud GPU validation remains paused, no additional cloud compute.
+
+Source baseline: main and fetched origin/main both
+4ad4367d16ee89b63b7d3746bf6eea784cf79004. Implementation baseline remains
+1b3ae989e95f70a053bee777509910d68aad483e. Preserved unrelated local files:
+roadmap.html, evals/capability-retention-probe.slurm,
+evals/capability_retention_probe.py and tracked timeline pycache modification.
+
+LOCAL certificate was expired; official Clifton institutional renewal completed
+19 October. Public certificate validity is 10:51:23–22:51:23 Berlin on 19 October.
+Bounded actual SSH via existing u6si.aip2.isambard succeeded at 08:51:48 UTC on
+login41. squeue for the account was EMPTY. sacct independently confirms repair
+7531496 COMPLETED, audit7531499 FAILED(1:0), teacher7531501/02/03 CANCELLED.
+No jobs submitted by this local continuation yet. Cloud reports no jobs/artifact
+retrieval/source repair; its separately renewed certificate is not the local one.
+
+TRAIN remains22/24, native and whole-system qualification FAIL. Next: complete
+partial four-directory source backup and compare remote/local inventories and
+SHA256; preserve/check native checkpoint, optimizer/RNG, approved histories and
+receipts. Inspect actual TRAIN015 clip3 and TRAIN017 clipped utterance before a
+versioned exact-word TRAIN-only repair. Keep all24 gate/held-out hashes/thresholds.
+Then existing independent teacher/quality/semantic/conversion/native numerical
+chain with old actual-history and KL/hidden retention; do not extend7530408 unchanged.
+
+---
+
 # HANDOFF — overnight recovery, 18 October
 
 

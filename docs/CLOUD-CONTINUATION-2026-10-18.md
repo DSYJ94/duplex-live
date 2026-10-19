@@ -1,5 +1,12 @@
 # Cloud continuation — 18 October 2026
 
+CURRENT OVERRIDE — 19 October 08:52 UTC / 10:52 Berlin: the owner resumed the
+LOCAL chat as active executor. Cloud must remain read-only and submit no jobs
+until explicitly handed execution back. Read the newest HANDOFF.md entry. Local
+Clifton renewed to22:51:23 Berlin today; actual SSH works and account squeue was
+empty at08:51:48UTC. Historical shutdown instructions below are superseded.
+
+
 Plain words: This is the entry point for continuing from a cloud chat after the
 owner shuts down the Mac. At 18 October 23:29 Berlin / 21:29 UTC, the owner
 explicitly stopped local work for cloud takeover. This local goal is PAUSED,
