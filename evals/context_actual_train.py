@@ -147,6 +147,7 @@ def run(lm, spm, voice, examples, components, audits, args):
                     'first_supervised_token_target':int(target[pos]),
                     'first_supervised_token_probability':float(z[0].softmax(-1)[target[pos]])})
         return results
+    warm_policy=None;warm_references=[]
     def state_metadata(frozen):
         return {'source_commit':SOURCE_COMMIT,
             'repo_commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),
@@ -161,6 +162,7 @@ def run(lm, spm, voice, examples, components, audits, args):
                 'gradient_clip':1.,'retention_kl_weight':base_retention_weight,'retention_hidden_mse_weight':10.*base_retention_weight,
                 **({'retention_teacher_text':teacher} if teacher else {}),
                 **({'additional_native_v2':additional_policy} if additional_policy else {}),
+                **({'warm_ordinary_retention':warm_policy} if warm_policy else {}),
                 'text_pad3_loss_weight':.5,
                 **({'response_first_word_loss':decision} if decision else {}),
                 **({'retention_sampling':{'policy':'rotate all retention examples within each verified kind',
@@ -188,6 +190,10 @@ def run(lm, spm, voice, examples, components, audits, args):
         learned = adapter_parameters(lm)
         if {n for n,p in lm.named_parameters() if p.requires_grad} != set(learned):
             raise RuntimeError('Unexpected temporal trainable parameters')
+        if getattr(args,'native_v2_warm_ordinary_weight',0.):
+            from evals.context_warm_ordinary_retention import prepare as warm_prepare
+            warm_policy,warm_references=warm_prepare(lm,learned,native_teacher_batches,additional_batches,
+                args,forward,state_metadata(frozen))
         if args.reload:
             report = json.loads((args.out/'report.json').read_text())
             if (report['schema'] != 'dl-context-actual-adapter-proof-v1' or report['frozen_hashes'] != frozen
@@ -199,6 +205,9 @@ def run(lm, spm, voice, examples, components, audits, args):
                     or report['checkpoint_sha256'] != sha256(args.out/'adapters.safetensors')):
                 raise RuntimeError('Changed actual adapter proof')
             state = load_file(args.out/'adapters.safetensors',device='cuda')
+            if warm_policy and (report.get('warm_ordinary_retention')!=warm_policy
+                    or report.get('warm_ordinary_reference_audit_sha256')!=sha256(args.out/'warm-ordinary-reference-audit.json')):
+                raise RuntimeError('Warm ordinary anchor changed before independent full-state restore')
             if set(state) != set(learned): raise RuntimeError('Incomplete actual adapter keys')
             with torch.no_grad():
                 for n,p in learned.items():p.copy_(state[n])
@@ -260,6 +269,7 @@ def run(lm, spm, voice, examples, components, audits, args):
         steps = []; seen_a = seen_b = False; start = time.monotonic()
         torch.cuda.reset_peak_memory_stats()
         for local_step in range(args.actual_fit_updates):
+            warm_rows=[]
             additional_loss = None; additional_record = None; additional_records = []
             step = initial_step+local_step
             optimizer.zero_grad(set_to_none=True)
@@ -314,6 +324,14 @@ def run(lm, spm, voice, examples, components, audits, args):
                         additional_records.append(dict(id=additional_record['id'],kind=additional_record['kind'],
                             text_ce=float(loss.detach()),weight=1/len(indices)))
                     additional_loss=torch.stack(additional_losses).mean()
+                if warm_references:
+                    from evals.context_warm_ordinary_retention import loss as warm_loss
+                    for winputs,wmask,reference,identity in warm_references:
+                        wh,wz=forward(winputs);value,wkl,wmse=warm_loss(wh,wz,wmask,reference)
+                        if not torch.isfinite(value):raise RuntimeError('Nonfinite additional ordinary retention')
+                        (warm_policy['weight']/len(warm_references)*value).backward()
+                        warm_rows.append(dict(id=identity,kl=float(wkl.detach()),hidden_mse=float(wmse.detach()),
+                            weight=warm_policy['weight']/len(warm_references)))
             if not all(torch.isfinite(v) for v in ((ce,kl,hidden,supervised) if teacher else (ce,kl,hidden))):
                 raise RuntimeError('Nonfinite actual or retention loss')
             if any(p.grad is None or not torch.isfinite(p.grad).all() for p in learned.values()):
@@ -342,6 +360,7 @@ def run(lm, spm, voice, examples, components, audits, args):
                     if additional_record and not getattr(args, 'native_v2_full24_per8', False) else {}),
                 **({'additional_native_v2_microbatch':additional_records}
                     if getattr(args, 'native_v2_full24_per8', False) else {}),
+                **({'warm_ordinary_microbatch':warm_rows} if warm_rows else {}),
                 'nonzero_A_gradients':a,'nonzero_B_gradients':b,'gradient_norm_before_clip':norm}
             steps.append(row); print(json.dumps(row),flush=True)
         if getattr(args, 'native_v2_full24_per8', False):
@@ -380,6 +399,8 @@ def run(lm, spm, voice, examples, components, audits, args):
             **({'base_retention_weight':base_retention_weight} if base_retention_weight!=1. else {}),
             **({'retention_teacher_text':teacher} if teacher else {}),
             **({'additional_native_v2':additional_policy} if additional_policy else {}),
+            **({'warm_ordinary_retention':warm_policy,
+                'warm_ordinary_reference_audit_sha256':sha256(args.out/'warm-ordinary-reference-audit.json')} if warm_policy else {}),
             **({'response_first_word_loss':decision} if decision else {}),
             'baseline_metrics':baseline_metrics,'initial_stage_metrics':initial_metrics,
             'final_metrics':metrics(),'expected_logits':expected,'steps':steps,
@@ -387,5 +408,9 @@ def run(lm, spm, voice, examples, components, audits, args):
             'training_seconds':time.monotonic()-start,'peak_allocated_bytes':torch.cuda.max_memory_allocated(),
             'quality_qualified':False,'free_running_result_use_proven':False,
             'audio_behavior_preservation_proven':False,'passed':True}
+        if warm_policy:
+            if any([r['id'] for r in step.get('warm_ordinary_microbatch',[])]!=[r['id'] for r in warm_policy['examples']] for step in steps):
+                raise RuntimeError('Every update must retain all ten approved ordinary anchors')
+            report['retention_objective']+='; additional64x mean native520 ordinary-word KL plus10hiddenMSE, legacy losses unchanged'
         (args.out/'report.json').write_text(json.dumps(report,indent=2)+'\n')
         print(json.dumps({k:report[k] for k in ('passed','checkpoint_sha256','final_metrics','peak_allocated_bytes')}),flush=True)

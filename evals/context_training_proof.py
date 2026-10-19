@@ -66,6 +66,8 @@ def main():
     ap.add_argument('--native-v2-full24-per8',action='store_true')
     ap.add_argument('--native-v2-retention-drift-proof',type=Path,
                     help='Read-only comparison of a restored full24 child against native520 on all approved inputs')
+    ap.add_argument('--native-v2-warm-ordinary-weight',type=float,choices=(0.,64.),default=0.)
+    ap.add_argument('--native-v2-warm-ordinary-approval',type=Path)
     ap.add_argument('--native-v2-learning-rate',type=float,choices=(1e-5,2e-6),default=1e-5)
     ap.add_argument('--native-v2-extension-review',type=Path)
     ap.add_argument('--native-v2-gradient-audit',action='store_true',
@@ -184,6 +186,12 @@ def main():
             or not args.native_v2_cache or not args.warm_start_proof or args.actual_fit_updates!=8
             or args.resume_training or args.reload or args.native_v2_gradient_audit):
         ap.error('Retention drift is a separate zero-update complete native-v2 diagnostic')
+    if bool(args.native_v2_warm_ordinary_weight)!=bool(args.native_v2_warm_ordinary_approval):
+        ap.error('Additional native520 ordinary anchoring requires its complete53 diagnostic approval')
+    if args.native_v2_warm_ordinary_weight and (not args.native_v2_full24_per8
+            or not args.native_v2_cache or args.native_v2_learning_rate!=2e-6 or not args.warm_start_proof
+            or args.native_v2_retention_drift_proof or args.native_v2_gradient_audit):
+        ap.error('Additional ordinary anchor is a separate bounded full24 native520 experiment')
     if args.actual_fit_updates != 8 and not args.resume_training:
         ap.error('Longer adaptation requires a verified resumed eight-update proof')
     if args.actual_sampling!='component-order' and not args.actual_temporal_fit:

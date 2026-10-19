@@ -1,3 +1,51 @@
+# LOCAL active — complete53 diagnostic PASS; new bounded warm-ordinary pilot prepared (2026-10-19 19:38 UTC)
+
+LOCAL is sole executor; CLOUD submits nothing. Owner explicitly authorized the
+interactive reservation for short development work. Actual bounded SSH PASS and
+account squeue EMPTY19:35:02UTC. Certificate valid through20Oct02:05:02UTC /
+04:05:02Berlin. No new optimizer job has been submitted at this entry.
+
+Corrected zero-update diagnostic7554946 COMPLETED6m45, all53 approved inputs
+(25old+24new+4legacy), exact parent restored/frozen base unchanged. CPU7554941
+PASS131tests3.977s. Report SHA6819554f26727800dc6f680b86ff60de8e6940a6f9a76efcbf0aeb0c2e50b50b.
+GPU reproduced float32 mean rounding; integer identity correction preserves exact
+checks. Failed7554615 preserved. Pointwise drift does not prove behavioral retention.
+
+Candidate7549991 remains REJECTED: complete native10 session7551328/ASR7551361,
+ordinary3/4, speech7/10, quiet/pause/private/control unqualified. No extension or
+fresh native inference. All4 matched native520 ordinary user WAV hashes exact.
+Approved fresh20 source7550653 remains20/20scenes38/38clips, separate from model
+qualification. All24 new TRAIN and25 old derived native approvals remain intact.
+
+NEW predeclared eight-update experiment from accepted native520/7510331 (optimizer
+reset, LR2e-6, all24 new teachers per8) adds64 times mean(KL+10hiddenMSE) on ten
+already approved ordinary TRAIN word histories, using frozen native520 targets.
+All28 actual components/all25 old/all24 new histories and legacy KL1/hidden10
+unchanged; no evaluation outputs, new labels, speech calls or audio repairs.
+Plan evals/fixtures/native-warm-ordinary-pilot-plan-20261019.json fixes exact IDs,
+weight/rationale and complete10/all4ordinary gates BEFORE candidate outputs.
+Independent reconstruction/hash of all10 reference targets plus full adapter/
+optimizer/Python/NumPy/Torch/CUDA restore/all28 exact valid logits mandatory.
+Local AST/shell/JSON checks and two non-Torch anchor-selection tests PASS; full
+CPU suite and GPU experiment NOT yet run. Never extend rejected7549991.
+
+Backup union22645files15182235044bytes plus separately pinned runtime/base/PersonaPlex/
+Mimi/tokenizer/vendor/publicASRweights. Complete53 backup12files1077774bytes SHA
+verified19:25:14UTC; all critical native optimizer/RNG/data/receipts retained.
+Old stopped Mac source backup remains PARTIAL; owner/credentials/core excluded.
+Last complete source bundle b0fe82b SHA6273d400a579a7c3391a47293c79ecd0f84d9b488915b8e4bb32c9e2a53ba777.
+Unrelated timeline pyc, capability-retention-probe files and roadmap.html preserved.
+
+Next: commit/push/deploy new immutable experiment; exclusive launch receipt
+runs/native-warm-ordinary-pilot-local-20261019.json; CPU135 tests then ONE bounded
+interactive1GPU8-update pilot+independent restore. After terminal PASS, one finite
+2GPU complete10 development session (original cf28726 inference payload, new session
+wrapper) plus independent full10 speech review. No duplicate submissions, no32-step
+extension until complete approved review/all4ordinary; fresh paired20 before adoption.
+Native/whole-system remains FAIL. No cloud compute purchase or execution handback.
+
+---
+
 # LOCAL active — CPU131 PASS; corrected all53 diagnostic RUNNING (2026-10-19 19:03 UTC)
 
 Sourceb0fe82bc6b6e631c612bcda601d78883a2149581 committed/pushed/deployed immutable.

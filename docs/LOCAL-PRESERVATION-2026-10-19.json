@@ -1,7 +1,7 @@
 {
-  "at_utc": "2026-10-19T18:53:41.041837+00:00",
-  "unique_scoped_artifact_files": 22633,
-  "unique_scoped_artifact_bytes": 15181157270,
+  "at_utc": "2026-10-19T19:32:09.329716+00:00",
+  "unique_scoped_artifact_files": 22645,
+  "unique_scoped_artifact_bytes": 15182235044,
   "inventory_conflicts": [],
   "inventories": [
     {
@@ -366,6 +366,13 @@
       "sha256": "dc127370e549563b9457f57790a26b8c50eacb1a8b16d2e6b1085c9fae36deb8",
       "files": 11,
       "bytes": 801646,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native-retention-drift-complete-inventory.json",
+      "sha256": "f93b2b5b50e1507d3a622b5b793817f9a34e7b97c04bb3973e2dc32775e8e520",
+      "files": 12,
+      "bytes": 1077774,
       "missing_roots": []
     }
   ],

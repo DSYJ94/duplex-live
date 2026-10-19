@@ -96,9 +96,22 @@
     "cpu_test_seconds": 3.977,
     "gpu_job": "7554946",
     "last_observed_utc": "2026-10-19T19:01:28.967612Z",
-    "state": "RUNNING interactive",
+    "state": "COMPLETED6m45",
     "identity_guard": "Integer top-token match counts, exact KL0 and hiddenMSE0; GPU legacy float-mean reproduction recorded",
     "optimizer_steps": 0,
-    "new_model_checkpoint_authorized": false
-  }
+    "new_model_checkpoint_authorized": false,
+    "complete_inputs": 53,
+    "parent_parameters_restored_exact": true,
+    "frozen_base_parameters_unchanged": true,
+    "report_sha256": "6819554f26727800dc6f680b86ff60de8e6940a6f9a76efcbf0aeb0c2e50b50b",
+    "floating_mean_rounding_reproduced": true,
+    "max_old25_kl": 0.00018699707288760692,
+    "max_new24_kl": 0.00013334510731510818,
+    "max_legacy4_kl": 0.0001550318847876042,
+    "causality_established": false,
+    "backup_files": 12,
+    "backup_bytes": 1077774,
+    "backup_verified_utc": "2026-10-19T19:25:14.648881+00:00"
+  },
+  "bounded_followup_plan": "evals/fixtures/native-warm-ordinary-pilot-plan-20261019.json"
 }

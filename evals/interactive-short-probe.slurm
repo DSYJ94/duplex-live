@@ -45,6 +45,22 @@ case "${1:?Choose rag, personaplex or qwen}" in
     test "${NATIVE_V2_DRIFT_CANDIDATE_JOB:-}" = 7549991
     test -z "${NATIVE_V2_RESUME_JOB:-}${NATIVE_V2_EXTENSION_REVIEW:-}"
     SCRIPT="$DL_TASK_SOURCE/evals/native-v2-train.slurm" ;;
+  native-v2-warm-ordinary-pilot|native-v2-warm-ordinary-extend)
+    : "${DL_TASK_SOURCE:?Immutable anchored recipe required}"
+    : "${DL_TASK_COMMIT:?Immutable identity required}"
+    test "${NATIVE_V2_FULL24_PER8:-0}" = 1
+    test "${NATIVE_V2_LEARNING_RATE:-}" = 2e-6
+    test "${NATIVE_V2_WARM_ORDINARY_WEIGHT:-}" = 64
+    test "${NATIVE_V2_WARM_ORDINARY_APPROVAL_JOB:-}" = 7554946
+    if [[ "$1" == native-v2-warm-ordinary-pilot ]]; then
+      test "${NATIVE_V2_TRAIN_PHASE:-}" = train
+      test -z "${NATIVE_V2_RESUME_JOB:-}${NATIVE_V2_EXTENSION_REVIEW:-}"
+    else
+      test "${NATIVE_V2_TRAIN_PHASE:-}" = extend
+      : "${NATIVE_V2_RESUME_JOB:?Exact independently restored anchored pilot required}"
+      : "${NATIVE_V2_EXTENSION_REVIEW:?Committed complete10 ordinary-preserving review required}"
+    fi
+    SCRIPT="$DL_TASK_SOURCE/evals/native-v2-train.slurm" ;;
   native-teacher-smoke)
     : "${DL_TASK_SOURCE:?Immutable source required}"
     : "${DL_TASK_COMMIT:?Immutable commit required}"

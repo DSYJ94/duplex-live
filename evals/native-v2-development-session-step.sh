@@ -4,7 +4,7 @@ ulimit -c 0
 INDEX="${1:?Development case index required}"
 [[ "$INDEX" =~ ^[0-9]+$ && "$INDEX" -lt 10 ]]
 test "${DL_TASK_COMMIT:-}" = cf28726b44ed0621dde6bfd27257709574f5e9ed
-test "${NATIVE_V2_CANDIDATE_JOB:-}" = 7549991
+[[ "${NATIVE_V2_CANDIDATE_JOB:-}" =~ ^[0-9]+$ ]]
 python3 - "$INDEX" <<'PY'
 import os,json,sys,datetime
 from pathlib import Path
@@ -15,7 +15,7 @@ r=dict(schema='dl-native-pilot-development-step-v1',started_utc=datetime.datetim
     actual_allocation_job=os.environ['SLURM_JOB_ID'],actual_step_id=os.environ['SLURM_STEP_ID'],
     scheduler_array=False,legacy_artifact_case_group=os.environ['SLURM_JOB_ID'],case_index=i,
     assigned_cuda_devices=devices,payload_source=os.environ['DL_TASK_COMMIT'],
-    session_source=os.environ['DL_SESSION_COMMIT'],candidate_job='7549991')
+    session_source=os.environ['DL_SESSION_COMMIT'],candidate_job=os.environ['NATIVE_V2_CANDIDATE_JOB'])
 p=Path('/projects/u6si/duplex-live/runs')/('native-pilot-session-'+os.environ['SLURM_JOB_ID'])
 with (p/('case-%d-launch.json'%i)).open('x') as f:json.dump(r,f,indent=2);f.write('\n')
 print(json.dumps(r),flush=True)

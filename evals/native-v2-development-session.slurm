@@ -18,8 +18,24 @@ DL=/projects/u6si/duplex-live
 test "$(git -C "$DL_SESSION_SOURCE" rev-parse HEAD)" = "$DL_SESSION_COMMIT"
 test -z "$(git -C "$DL_SESSION_SOURCE" status --porcelain)"
 test "${DL_TASK_COMMIT:-}" = cf28726b44ed0621dde6bfd27257709574f5e9ed
-test "${NATIVE_V2_CANDIDATE_JOB:-}" = 7549991
+[[ "${NATIVE_V2_CANDIDATE_JOB:-}" =~ ^[0-9]+$ ]]
 test -z "${SLURM_ARRAY_JOB_ID:-}"
+python3 - "$DL_SESSION_SOURCE" "$DL" "$NATIVE_V2_CANDIDATE_JOB" <<'PY'
+import sys,json
+from pathlib import Path
+sys.path.insert(0,sys.argv[1])
+from evals.context_rollout_conditioning import verify_checkpoint
+from evals.context_warm_ordinary_retention import IDS,DRIFT_SHA256
+from evals.moshi_model_download import sha256
+p=Path(sys.argv[2])/'runs'/('context-training-proof-'+sys.argv[3]);identity,r=verify_checkpoint(p)
+w=r['warm_ordinary_retention'];audit=p/'warm-ordinary-reference-audit.json';a=json.loads(audit.read_text())
+assert r['optimizer_steps'] in (8,40) and r['additional_native_v2']['complete24_per8']
+assert w['mode']=='native520-approved-ordinary-nonpad-v1' and w['weight']==64
+assert [x['id'] for x in w['examples']]==list(IDS) and w['complete53_diagnostic_sha256']==DRIFT_SHA256
+assert sha256(audit)==r['warm_ordinary_reference_audit_sha256'] and a['policy']==w
+assert sha256(p/'warm-ordinary-references.pt')==a['cache_sha256']
+print(json.dumps(dict(verified_candidate=identity,ordinary_anchor_profile=w['mode'])),flush=True)
+PY
 OUT="$DL/runs/native-pilot-session-$SLURM_JOB_ID"
 mkdir "$OUT"
 scontrol show job "$SLURM_JOB_ID" > "$OUT/allocation.txt"
@@ -53,7 +69,7 @@ r=dict(schema='dl-native-pilot-development-session-v1',actual_allocation_job=os.
     scheduler_array=False,legacy_artifact_case_group=os.environ['SLURM_JOB_ID'],cases=rows,
     complete10_attempted=True,all_processes_succeeded=all(x['exit_code']==0 for x in rows),
     payload_source=os.environ['DL_TASK_COMMIT'],session_source=os.environ['DL_SESSION_COMMIT'],
-    candidate_job='7549991',maximum_concurrent_gpus=2,training_approved=False,behavior_approved=False)
+    candidate_job=os.environ['NATIVE_V2_CANDIDATE_JOB'],maximum_concurrent_gpus=2,training_approved=False,behavior_approved=False)
 with (p/'execution.json').open('x') as f:json.dump(r,f,indent=2);f.write('\n')
 print(json.dumps(r),flush=True)
 PY
