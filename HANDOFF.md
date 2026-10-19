@@ -1,3 +1,43 @@
+# LOCAL active — explicit CPU measurement, 19 October 09:38 UTC / 11:38 Berlin
+
+No cloud submissions until explicit owner handover. Source
+1059d9f1835ba18cc110686bd0c72e1e23df57e4 is pushed and immutable in
+worktrees/recovery-1059d9f. Exclusive current measurement receipt:
+/projects/u6si/duplex-live/runs/native-v2-cpu-measurement-local-20261019.json.
+
+GPU alignment7542978 had Resources/no estimated start. AFTER confirming all were
+still pending, cancelled7542978/7542979/7542980/7543259/7543260 before replacements.
+No duplicate execution. New explicit CPU Whisper FP32 chain: alignment7543295 ->
+full teacher-v3 re-audit7543296 and full teacher-v4 audit7543297 -> v4 semantic/
+conversion7543298. V4 audit also depends on actual teacher7543257. No new teacher
+sessions in this replacement. Device/precision are explicit in receipts/reports;
+all speech/fact/receipt/clock/full24 thresholds remain unchanged. Native model
+numerical approval/training still requires GPUs; no cloud GPU purchase/validation.
+
+Teacher-v4 CPU gate7543254 and collection7543257 use source
+798a6872eb8aa56a93c6b05acca8a456becb5933. It is reference-conditioned TRAIN label
+collection: independently authored ordinary TRAIN answers plus naming vocabulary,
+NO private values and NO held-out answers. This is not unaided teacher reasoning
+or native qualification. Original source audio/folds stay identical24/24PASS.
+Every actual private read/cancel receipt and all24 strict independent approvals
+remain mandatory. Source record/marker and next native8-update recipe are in
+docs/NATIVE-CONTINUATION-2026-10-19.md. No optimizer submitted or model promoted.
+
+Original teacher-v3 audit7542690 admits9/24 and is FAILED;7542691 cancelled due
+onset fault. Original teacher-v2 audit7541878 admits5/24 as historical diagnostic,
+but two passes also have impossible onsets. All raw originals/reports preserved.
+Timing controls use the same WAV hashes, keep all internal gaps and remap only
+the ASR recognition window to the original receipt clock. CPU7542977 PASSED49
+regression tests. New reference-conditioned protocol has separate provenance.
+
+Runtime preservation retry active: source inventory17104 regular files /
+9,072,299,252bytes;8symbolic links verified. Latest temp SIF1.6GB at09:38UTC,
+still NOT complete. First interrupted temp2.2GB is also partial. Existing critical
+state/data/checkpoint/source/cache backups verified as below. Local cert expires
+22:51:23Berlin19October. Preserve unrelated local files. Goal ACTIVE, native FAIL.
+
+---
+
 # Local ASR measurement re-audit — 19 October 2026, 09:27 UTC / 11:27 Berlin
 
 LOCAL remains active, CLOUD submits NOTHING. Teacher-v3 collection7542689 is
