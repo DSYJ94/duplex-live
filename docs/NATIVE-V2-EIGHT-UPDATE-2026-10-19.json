@@ -1,6 +1,6 @@
 {
   "schema": "dl-native-v2-eight-update-mechanics-v1",
-  "at_utc": "2026-10-19T12:39:20.895610+00:00",
+  "at_utc": "2026-10-19T12:57:35.455809+00:00",
   "job": "7546645",
   "source": "c93ac931905d1c45c1e8c02924ebaaeb6fb34c8b",
   "update_process_passed": true,
@@ -39,8 +39,9 @@
     "all28_valid_logits_exact": true,
     "report_sha256": "869dd68ffcd5adf9e207709b9cf186f6b5a6c6accaaef3206950480b972b6fbb"
   },
-  "native_behavior": "Complete10-case native array7547174:0/1 running; 2-9 pending at12:37UTC; CPU speech7547175 after array",
-  "fresh_qualification": "not executed; external fresh speech generation approval pending",
+  "native_behavior": "All10 complete, independent full10 speech7547175 complete; complete review in NATIVE-V2-COMPLETE10-REVIEW-2026-10-19.json rejects extension/adoption",
+  "fresh_qualification": "Owner approved36 synthetic user utterances; generation7548247 complete; independent full20 input quality7548248 finishing; no fresh inference",
   "candidate_adopted": false,
-  "extension_authorized": false
+  "extension_authorized": false,
+  "native_candidate_rejected_for_extension": true
 }

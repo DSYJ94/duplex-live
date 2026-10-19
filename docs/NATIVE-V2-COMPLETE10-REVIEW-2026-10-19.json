@@ -1,0 +1,705 @@
+{
+  "schema": "dl-native-v2-complete10-native-review-v1",
+  "at_utc": "2026-10-19T12:56:54.539155+00:00",
+  "candidate_job": "7546645",
+  "evaluation_array": "7547174",
+  "independent_speech_job": "7547175",
+  "source": "c93ac931905d1c45c1e8c02924ebaaeb6fb34c8b",
+  "evaluation_plan_sha256": "eb9622a14bb3e444e3b8604a1e44a2f26b02fe01866a948483cad368628781f5",
+  "complete_cases": 10,
+  "all_cases_retained": true,
+  "no_passing_subset": true,
+  "independent_speech_quality_threshold": 0.08,
+  "independent_speech_quality_passes": 6,
+  "independent_restore_passed": true,
+  "native_behavior_passed": false,
+  "fresh_qualification": false,
+  "native_candidate_rejected_for_extension": true,
+  "candidate_adopted": false,
+  "training_approved": false,
+  "matched_ordinary_baselines": [
+    "7530265",
+    "7530266",
+    "7530267",
+    "7530268"
+  ],
+  "matched_quiet_pause_baseline": "7547007",
+  "actual_history_components_preserved": 28,
+  "old_native_teacher_histories_preserved": 25,
+  "reference_kl_weight": 1.0,
+  "reference_hidden_mse_weight": 10.0,
+  "first8_new_teacher_exposure": "8 of24; quiet first27 and pause31 not reached; no repair/causal attribution from absent exposure",
+  "next_action": "Zero-update full81 objective gradient diagnosis at accepted native520; no optimizer or extension before diagnosis/revised recipe",
+  "cases": [
+    {
+      "index": 0,
+      "scenario": "recovery-train-012",
+      "declared_expectation": "Ice floats because it is less dense than liquid water",
+      "behavior_review": "fail",
+      "reason": "Incorrect cause: surface tension vs air and melting; omits lower density than liquid water. Matched native520 baseline answers density correctly.",
+      "report_sha256": "a3f840f2834b2faccff35d30117573fef3dbd26c33860d18605b1026a13f1799",
+      "audio_sha256": "6ac082c5a6d7eb70a2bf8620ffb57167e50650b7ab63ce5686cadc34b549c81d",
+      "independent_asr_report_sha256": "5fb9a92fa9601377f651fd711067b92d54b209121d48f6f5202b706e199c2c8b",
+      "actual_pcm_inspected": {
+        "format": "mono signed16 PCM",
+        "rate": 24000,
+        "samples": 757316,
+        "duration_s": 31.554833333333335,
+        "peak": 0.527618408203125,
+        "full_scale_sample_count": 0,
+        "finite_integer_pcm": true,
+        "gain_changed": false
+      },
+      "independent_spoken_text": " Because the water's surface tension is much lower than air's. And when the temperature rises, the ice then melts.",
+      "sampled_model_text": "Because the water's surface tension is much lower than air's. And when the temperature rises, the ice then melts.",
+      "independent_word_agreement_wer": 0.0,
+      "independent_time_bounds_valid": true,
+      "independent_word_bounds_valid": true,
+      "independent_speech_quality_passed": true,
+      "native_request_count": 0,
+      "worker_events": [],
+      "all_user_samples_processed": true,
+      "compute_p95_s": 0.042213514851755465,
+      "maximum_input_backlog_s": 3.2235610990080747,
+      "playout": {
+        "sample_rate": 24000,
+        "startup_buffer_s": 0.16,
+        "packet_count": 352,
+        "source_samples": 675840,
+        "underrun_count": 0,
+        "underrun_samples": 0
+      },
+      "human_listening": "not performed; PCM samples, independent audio ASR and packet/worker evidence inspected",
+      "training_approved": false,
+      "candidate_adopted": false
+    },
+    {
+      "index": 1,
+      "scenario": "recovery-train-013",
+      "declared_expectation": "Sound is produced by vibrations",
+      "behavior_review": "partial",
+      "reason": "Pressure changes/sound waves are related physics, but does not explain the requested producing vibrations; follows with redundant questions. No useful-answer acceptance inferred.",
+      "report_sha256": "b1d50075a3a6391b2c6f085fb983a273a0980a53a4cb2a03b567dc546c7fd49e",
+      "audio_sha256": "c970a8192447f7fc72aceae587aedf4379e09d35dc7c96838185e04ecbb4fa80",
+      "independent_asr_report_sha256": "5fb9a92fa9601377f651fd711067b92d54b209121d48f6f5202b706e199c2c8b",
+      "actual_pcm_inspected": {
+        "format": "mono signed16 PCM",
+        "rate": 24000,
+        "samples": 776965,
+        "duration_s": 32.37354166666667,
+        "peak": 0.576751708984375,
+        "full_scale_sample_count": 0,
+        "finite_integer_pcm": true,
+        "gain_changed": false
+      },
+      "independent_spoken_text": " it is produced when pressure changes causing sound waves would you like to hear about how those waves travel to reach your ears is there a particular sound you're curious about like the sound of rain or ocean waves",
+      "sampled_model_text": "It is produced when pressure changes, causing sound waves. Would you like to hear about how those waves travel? to reach your ears. Is there a particular sound you are curious about, like the sound of rain or ocean waves?",
+      "independent_word_agreement_wer": 0.025,
+      "independent_time_bounds_valid": true,
+      "independent_word_bounds_valid": true,
+      "independent_speech_quality_passed": true,
+      "native_request_count": 0,
+      "worker_events": [],
+      "all_user_samples_processed": true,
+      "compute_p95_s": 0.0373097860137932,
+      "maximum_input_backlog_s": 3.3336803330073597,
+      "playout": {
+        "sample_rate": 24000,
+        "startup_buffer_s": 0.16,
+        "packet_count": 361,
+        "source_samples": 693120,
+        "underrun_count": 1,
+        "underrun_samples": 117
+      },
+      "human_listening": "not performed; PCM samples, independent audio ASR and packet/worker evidence inspected",
+      "training_approved": false,
+      "candidate_adopted": false
+    },
+    {
+      "index": 2,
+      "scenario": "recovery-train-014",
+      "declared_expectation": "Plants use light energy to make food through photosynthesis",
+      "behavior_review": "pass",
+      "reason": "Correctly explains photosynthesis as conversion of light to chemical energy; words clear and no unnecessary worker.",
+      "report_sha256": "c76f9c1c92fe0c1c4d0ed96e269750caf94992cbc6a531521ea998e5b2777484",
+      "audio_sha256": "0dbe9a379a4a5f3bb02dca83ae282b46a67c5a048582d402f62d0928e3818524",
+      "independent_asr_report_sha256": "5fb9a92fa9601377f651fd711067b92d54b209121d48f6f5202b706e199c2c8b",
+      "actual_pcm_inspected": {
+        "format": "mono signed16 PCM",
+        "rate": 24000,
+        "samples": 783310,
+        "duration_s": 32.63791666666667,
+        "peak": 0.348419189453125,
+        "full_scale_sample_count": 0,
+        "finite_integer_pcm": true,
+        "gain_changed": false
+      },
+      "independent_spoken_text": " Because light is needed for photosynthesis, which is the process of turning light into chemical energy.",
+      "sampled_model_text": "Because light is needed for photosynthesis, which is the process of turning light into chemical energy.",
+      "independent_word_agreement_wer": 0.0,
+      "independent_time_bounds_valid": true,
+      "independent_word_bounds_valid": true,
+      "independent_speech_quality_passed": true,
+      "native_request_count": 0,
+      "worker_events": [],
+      "all_user_samples_processed": true,
+      "compute_p95_s": 0.042754922399763015,
+      "maximum_input_backlog_s": 3.115914746003691,
+      "playout": {
+        "sample_rate": 24000,
+        "startup_buffer_s": 0.16,
+        "packet_count": 367,
+        "source_samples": 704640,
+        "underrun_count": 0,
+        "underrun_samples": 0
+      },
+      "human_listening": "not performed; PCM samples, independent audio ASR and packet/worker evidence inspected",
+      "training_approved": false,
+      "candidate_adopted": false
+    },
+    {
+      "index": 3,
+      "scenario": "recovery-train-015",
+      "declared_expectation": "Metal conducts heat away from skin",
+      "behavior_review": "partial",
+      "reason": "Correct initial conduction from skin explanation, then unrelated questions and incomplete ending really good heat. Correct core fact does not qualify full behavior.",
+      "report_sha256": "2de39311b2da69b256988cfbc608fa1eecf5f3e051e5b406e83232a31845ae01",
+      "audio_sha256": "bb63f736fd65559ff3f8efdfa50e054ed76bb4e4a97ed3369c9dbf4e13f40aae",
+      "independent_asr_report_sha256": "5fb9a92fa9601377f651fd711067b92d54b209121d48f6f5202b706e199c2c8b",
+      "actual_pcm_inspected": {
+        "format": "mono signed16 PCM",
+        "rate": 24000,
+        "samples": 750036,
+        "duration_s": 31.2515,
+        "peak": 0.649322509765625,
+        "full_scale_sample_count": 0,
+        "finite_integer_pcm": true,
+        "gain_changed": false
+      },
+      "independent_spoken_text": " because metal is a type of conductor which takes heat from your body and leaves you cold is there anything specific about the object you are asking about do you have a specific piece of metal in mind like a coat a care or a device because metal is a really good heat",
+      "sampled_model_text": "Because metal is a type of conductor, which takes heat from your body and leaves you cold. Is there anything specific about the object you are asking about? Do you have a specific piece of metal in mind, like a coat, a car, or a device? Because metal is a really good heat",
+      "independent_word_agreement_wer": 0.018867924528301886,
+      "independent_time_bounds_valid": true,
+      "independent_word_bounds_valid": true,
+      "independent_speech_quality_passed": true,
+      "native_request_count": 0,
+      "worker_events": [],
+      "all_user_samples_processed": true,
+      "compute_p95_s": 0.03687145924341166,
+      "maximum_input_backlog_s": 3.083957015003543,
+      "playout": {
+        "sample_rate": 24000,
+        "startup_buffer_s": 0.16,
+        "packet_count": 350,
+        "source_samples": 672000,
+        "underrun_count": 0,
+        "underrun_samples": 0
+      },
+      "human_listening": "not performed; PCM samples, independent audio ASR and packet/worker evidence inspected",
+      "training_approved": false,
+      "candidate_adopted": false
+    },
+    {
+      "index": 4,
+      "scenario": "native2-train-014",
+      "declared_expectation": "Stay silent until ready, then explain that a timer measures elapsed time",
+      "behavior_review": "fail",
+      "reason": "Speaks I am listening boss before ready cue; global independent ASR has hallucinated out-of-bounds tail and fails quality. No timing repair/subset acceptance.",
+      "report_sha256": "654b7c8540fd42b58f7bf7d82dc8b86bb253c18a873f8eff0f4b46627f5ff3b8",
+      "audio_sha256": "423468e41579b7c602fdfc49d3232625f20d7834d2f726470be038170f2a73b7",
+      "independent_asr_report_sha256": "5fb9a92fa9601377f651fd711067b92d54b209121d48f6f5202b706e199c2c8b",
+      "actual_pcm_inspected": {
+        "format": "mono signed16 PCM",
+        "rate": 24000,
+        "samples": 940791,
+        "duration_s": 39.199625,
+        "peak": 0.56793212890625,
+        "full_scale_sample_count": 0,
+        "finite_integer_pcm": true,
+        "gain_changed": false
+      },
+      "independent_spoken_text": " I'm listening boss. It's a simple device used to limit time. Is there a specific purpose you'd like to use it for? It's basically a tool that helps you stay within a fixed time frame. Would you like me to calculate how much time is left? And it's used to be a tool that helps you stay within a fixed time frame. Would you like me to calculate how much time is left?",
+      "sampled_model_text": "I'm listening, boss. It's a simple device used to limit time. Is there a specific purpose you'd like to use it for? It's basically a tool that helps you stay within a fixed time frame. Would you like me to calculate how much time is left? And it's used",
+      "independent_word_agreement_wer": 0.4444444444444444,
+      "independent_time_bounds_valid": false,
+      "independent_word_bounds_valid": false,
+      "independent_speech_quality_passed": false,
+      "native_request_count": 0,
+      "worker_events": [],
+      "all_user_samples_processed": true,
+      "compute_p95_s": 0.03745774496346712,
+      "maximum_input_backlog_s": 3.1997601759992538,
+      "playout": {
+        "sample_rate": 24000,
+        "startup_buffer_s": 0.16,
+        "packet_count": 448,
+        "source_samples": 860160,
+        "underrun_count": 1,
+        "underrun_samples": 280
+      },
+      "human_listening": "not performed; PCM samples, independent audio ASR and packet/worker evidence inspected",
+      "training_approved": false,
+      "candidate_adopted": false,
+      "quiet_interval_s": [
+        0.0,
+        12.41
+      ],
+      "diagnostic_words_in_quiet": [
+        {
+          "text": "I'm",
+          "start": 8.73,
+          "end": 8.969999999999999,
+          "confidence": 0.87
+        },
+        {
+          "text": "listening",
+          "start": 8.969999999999999,
+          "end": 9.27,
+          "confidence": 0.986
+        },
+        {
+          "text": "boss.",
+          "start": 9.27,
+          "end": 9.649999999999999,
+          "confidence": 0.396
+        }
+      ],
+      "quiet_requirement_passed": false,
+      "clock_warning": "Global ASR quality fails; intervals retained as diagnostic evidence, not an approved passing word-clock subset",
+      "actual_pcm_in_diagnostic_speech_intervals": [
+        {
+          "interval_s": [
+            8.73,
+            9.65
+          ],
+          "rms": 0.06083222505186828,
+          "peak": 0.255096435546875
+        }
+      ]
+    },
+    {
+      "index": 5,
+      "scenario": "native2-train-015",
+      "declared_expectation": "Finish put the book on the shelf, stay quiet during pause, and say close the cupboard after go without restarting",
+      "behavior_review": "fail",
+      "reason": "Does not give exact put-the-book-on-the-shelf first instruction, speaks Okay I will be quiet during mandatory pause and substitutes close-the-door after Go; two unnecessary RET markers. Independent WER exceeds unchanged0.08.",
+      "report_sha256": "2f99bb6e1be24d761b43fec450b1f077f2b1337136fa6087285165d1919d84b9",
+      "audio_sha256": "f7edf7d611b2ae3acc7a4f300aa4882a50b07e725aed1f2d0fd3aea44fdc43cb",
+      "independent_asr_report_sha256": "5fb9a92fa9601377f651fd711067b92d54b209121d48f6f5202b706e199c2c8b",
+      "actual_pcm_inspected": {
+        "format": "mono signed16 PCM",
+        "rate": 24000,
+        "samples": 1171470,
+        "duration_s": 48.81125,
+        "peak": 0.565093994140625,
+        "full_scale_sample_count": 0,
+        "finite_integer_pcm": true,
+        "gain_changed": false
+      },
+      "independent_spoken_text": " Sure, I'll say. All set. The closet is cleared. Okay, I'll be quiet. And now, please close the door. Is everything all right back there? Did you find what you needed? Is the door locked and secure from the inside? Should I check?",
+      "sampled_model_text": "Which project Sure, I'll say All set, the closet is cleared. Okay, I'll be quiet. And now, please close the door. Is everything alright back there? Did you find what you needed? Is the door locked and secure from the inside? Should I check",
+      "independent_word_agreement_wer": 0.08695652173913043,
+      "independent_time_bounds_valid": true,
+      "independent_word_bounds_valid": true,
+      "independent_speech_quality_passed": false,
+      "native_request_count": 2,
+      "worker_events": [],
+      "all_user_samples_processed": true,
+      "compute_p95_s": 0.037325636204332116,
+      "maximum_input_backlog_s": 3.1311528059793634,
+      "playout": {
+        "sample_rate": 24000,
+        "startup_buffer_s": 0.16,
+        "packet_count": 569,
+        "source_samples": 1092480,
+        "underrun_count": 0,
+        "underrun_samples": 0
+      },
+      "human_listening": "not performed; PCM samples, independent audio ASR and packet/worker evidence inspected",
+      "training_approved": false,
+      "candidate_adopted": false,
+      "quiet_interval_s": [
+        17.54,
+        22.1
+      ],
+      "diagnostic_words_in_quiet": [
+        {
+          "text": "Okay,",
+          "start": 20.75,
+          "end": 20.990000000000002,
+          "confidence": 0.724
+        },
+        {
+          "text": "I'll",
+          "start": 20.990000000000002,
+          "end": 21.39,
+          "confidence": 0.996
+        },
+        {
+          "text": "be",
+          "start": 21.39,
+          "end": 21.51,
+          "confidence": 0.998
+        },
+        {
+          "text": "quiet.",
+          "start": 21.51,
+          "end": 21.89,
+          "confidence": 0.966
+        }
+      ],
+      "quiet_requirement_passed": false,
+      "clock_warning": "Global ASR quality fails; intervals retained as diagnostic evidence, not an approved passing word-clock subset",
+      "actual_pcm_in_diagnostic_speech_intervals": [
+        {
+          "interval_s": [
+            20.75,
+            21.89
+          ],
+          "rms": 0.09383145892241859,
+          "peak": 0.505767822265625
+        }
+      ]
+    },
+    {
+      "index": 6,
+      "scenario": "recovery-validation-000",
+      "declared_expectation": "Actual read and correctly spoken value, independent ordinary answer while waiting",
+      "behavior_review": "fail",
+      "reason": "Actual yellow-circle receipt injected but native speech omits yellow circle and invents estimated cost; ordinary lightning explanation is incorrect flashbulb discussion.",
+      "report_sha256": "d6335e4d30c16b198597566a654eb85e40722d2f19a983707500c10f5e3c23b4",
+      "audio_sha256": "67c30045401dd33bf5aea7d70cfa1a86ee9a13a83099eed52c08bf94083db390",
+      "independent_asr_report_sha256": "5fb9a92fa9601377f651fd711067b92d54b209121d48f6f5202b706e199c2c8b",
+      "actual_pcm_inspected": {
+        "format": "mono signed16 PCM",
+        "rate": 24000,
+        "samples": 1041937,
+        "duration_s": 43.41404166666667,
+        "peak": 0.75970458984375,
+        "full_scale_sample_count": 0,
+        "finite_integer_pcm": true,
+        "gain_changed": false
+      },
+      "independent_spoken_text": " sure i'll get that for you the estimated cost for project willow north is 180 800 it's really just a splash from the flash bulbs they emit light usually from the outer layer and then the metal and gas within the electrical discharge creates light much like a way of the flash bulbs and the actual flash of light usually comes from the outer layer usually from the anode the flash of light is usually from the outer longer layer and the inner layer is the anode and the flash of light usually reaches the",
+      "sampled_model_text": "Sure, I'll get that for you. The estimated cost for Project Willow North is one hundred and eighty thousand eight hundred. It's really just a flash from the flash bulbs. They emit light, usually from the outer layer, and then the metal and gas within. The electrical discharge creates light, much like a way of the flash bulbs. And the actual flash of light usually comes from the outer layer, usually from the anode. The flash of light is usually from the outer, longer layer. And the inner layer is the anode. And the flash of light usually reaches the",
+      "independent_word_agreement_wer": 0.029411764705882353,
+      "independent_time_bounds_valid": true,
+      "independent_word_bounds_valid": true,
+      "independent_speech_quality_passed": true,
+      "native_request_count": 1,
+      "worker_events": [
+        {
+          "event": "native_backend_requested",
+          "task_id": "ret-0",
+          "at_s": 5.926101787015796,
+          "input_available_s": 5.44,
+          "input_samples": 130560,
+          "audio_sha256": "e7264804aef12db46c40d7f4d4fc7689c48ad74833d3eb68ec0159364be276c5"
+        },
+        {
+          "event": "backend_result_ready",
+          "task_id": "ret-0",
+          "ready_at_s": 12.46665521201794,
+          "applied_at_s": 12.552418491017306,
+          "prefill_ms": 65.39356501889415,
+          "disposition": "actual backend text injected",
+          "route": "delegate",
+          "receipts": [
+            {
+              "task_id": "ret-0",
+              "revision": 1,
+              "tool": "lookup_record",
+              "project": "Willow North",
+              "field": "room marker",
+              "value": "yellow circle",
+              "read_only": true,
+              "executed": true
+            }
+          ]
+        }
+      ],
+      "all_user_samples_processed": true,
+      "compute_p95_s": 0.036897075340675656,
+      "maximum_input_backlog_s": 3.254170300022233,
+      "playout": {
+        "sample_rate": 24000,
+        "startup_buffer_s": 0.16,
+        "packet_count": 500,
+        "source_samples": 960000,
+        "underrun_count": 1,
+        "underrun_samples": 42
+      },
+      "human_listening": "not performed; PCM samples, independent audio ASR and packet/worker evidence inspected",
+      "training_approved": false,
+      "candidate_adopted": false
+    },
+    {
+      "index": 7,
+      "scenario": "recovery-validation-000",
+      "declared_expectation": "Changed actual receipt changes spoken value without yellow-circle carryover",
+      "behavior_review": "fail",
+      "reason": "Actual copper-diamond counterfactual receipt changes eventual spoken phrase, but invented cost before/after, repeated lookup and incoherent ordinary explanation remain. Independent WER exceeds unchanged0.08.",
+      "report_sha256": "9ecc90801e2b94b8a435df6fd328d8a3c722b28880cb79386d05a045feccc32c",
+      "audio_sha256": "8f54560d23be83f885b664fca619a591490c1904da337d89caac45c462ea5356",
+      "independent_asr_report_sha256": "5fb9a92fa9601377f651fd711067b92d54b209121d48f6f5202b706e199c2c8b",
+      "actual_pcm_inspected": {
+        "format": "mono signed16 PCM",
+        "rate": 24000,
+        "samples": 1040959,
+        "duration_s": 43.37329166666667,
+        "peak": 0.76324462890625,
+        "full_scale_sample_count": 0,
+        "finite_integer_pcm": true,
+        "gain_changed": false
+      },
+      "independent_spoken_text": " Sure, I'll get that for you. The estimated cost for Project Willow North is $180,008. Because the flash travels much, much faster, it reaches the flash before the sound which takes longer to travel. The flash reaches the flashbulb, but the flash doesn't, it doesn't always do. It's just that the flash travels much, much faster. It's usually much shorter, and the back end response is copper diamond. Is there anything else I can find? Okay, $18,008. The flash travels, the flash-",
+      "sampled_model_text": "Sure, I'll get that for you. The estimated cost for Project Willow North is one hundred and eighty thousand dollars. Because the flash travels much, much faster. It reaches the flash before the sound, which takes longer to travel. The flash reaches the flash bulb, but the flash doesn't always do. It's just that the flash travels much, much faster. It's usually much shorter. And, the back end response is copper diamond. Is there anything else I can find? Mm, okay, one hundred and and eighty thousand eight dollars. The flash travels, the flash bulb",
+      "independent_word_agreement_wer": 0.1717171717171717,
+      "independent_time_bounds_valid": true,
+      "independent_word_bounds_valid": true,
+      "independent_speech_quality_passed": false,
+      "native_request_count": 2,
+      "worker_events": [
+        {
+          "event": "native_backend_requested",
+          "task_id": "ret-0",
+          "at_s": 5.863451707991771,
+          "input_available_s": 5.44,
+          "input_samples": 130560,
+          "audio_sha256": "6b4494b0126354fcfdb9653e37ff988a48c98007737faf21fa3344a03ffe0298"
+        },
+        {
+          "event": "backend_result_ready",
+          "task_id": "ret-0",
+          "ready_at_s": 10.387540549010737,
+          "applied_at_s": 10.468565880000824,
+          "prefill_ms": 61.823593016015366,
+          "disposition": "actual backend text injected",
+          "route": "delegate",
+          "receipts": [
+            {
+              "task_id": "ret-0",
+              "revision": 1,
+              "tool": "lookup_record",
+              "project": "Willow North",
+              "field": "room marker",
+              "value": "copper diamond",
+              "read_only": true,
+              "executed": true
+            }
+          ]
+        },
+        {
+          "event": "native_backend_requested",
+          "task_id": "ret-1",
+          "at_s": 32.436447093990864,
+          "input_available_s": 32.4,
+          "input_samples": 777600,
+          "audio_sha256": "3f93e3f798b087366d0f65fb09670debd3b292cb24d82ec1ca1c8b2009b5a740"
+        },
+        {
+          "event": "backend_result_ready",
+          "task_id": "ret-1",
+          "ready_at_s": 35.303770714992424,
+          "applied_at_s": 35.42386072000954,
+          "prefill_ms": 60.42366399196908,
+          "disposition": "actual backend text injected",
+          "route": "answer",
+          "receipts": []
+        }
+      ],
+      "all_user_samples_processed": true,
+      "compute_p95_s": 0.037053752814244945,
+      "maximum_input_backlog_s": 3.2064729920146053,
+      "playout": {
+        "sample_rate": 24000,
+        "startup_buffer_s": 0.16,
+        "packet_count": 500,
+        "source_samples": 960000,
+        "underrun_count": 0,
+        "underrun_samples": 0
+      },
+      "human_listening": "not performed; PCM samples, independent audio ASR and packet/worker evidence inspected",
+      "training_approved": false,
+      "candidate_adopted": false
+    },
+    {
+      "index": 8,
+      "scenario": "recovery-validation-006",
+      "declared_expectation": "Ask for project before lookup, then use actual named-project receipt without repeated questioning",
+      "behavior_review": "fail",
+      "reason": "Project clarification and brown-square result appear, but malformed estimate fragment and repeated questions; independent tail hallucination/invalid bounds prevents approval. No passing subset of transcript accepted.",
+      "report_sha256": "8a5c563415a892c5090f885934e6395f9ab8809375524eca3fa7d124ffe19714",
+      "audio_sha256": "c567f8abfc86e9b443df2e3c0b0f525e22c0a7f78337018800d8a7e1f1adabec",
+      "independent_asr_report_sha256": "5fb9a92fa9601377f651fd711067b92d54b209121d48f6f5202b706e199c2c8b",
+      "actual_pcm_inspected": {
+        "format": "mono signed16 PCM",
+        "rate": 24000,
+        "samples": 1133084,
+        "duration_s": 47.21183333333333,
+        "peak": 1.0,
+        "full_scale_sample_count": 6,
+        "finite_integer_pcm": true,
+        "gain_changed": false
+      },
+      "independent_spoken_text": " Which project should I check for you? It's estimated that the Willow West project The brown square room marker is located for Willow West Is there anything else you'd like to know about that project? Would you like me to include the location of that square marker in the records for you? Are you looking for the exact coordinates, or do you need more information on it? Thank you. Thank you. Thank you. Thank you.",
+      "sampled_model_text": "Which project should I check for you? It's estimated that the Willow West project The Brown square room marker is located for Willow West. Is there anything else you'd like to know about that project? Would you like me to include the location of that square marker in the records for you? Are you looking for the exact coordinates, or do you need more information on it?",
+      "independent_word_agreement_wer": 0.11594202898550725,
+      "independent_time_bounds_valid": false,
+      "independent_word_bounds_valid": false,
+      "independent_speech_quality_passed": false,
+      "native_request_count": 1,
+      "worker_events": [
+        {
+          "event": "native_backend_requested",
+          "task_id": "ret-0",
+          "at_s": 10.756235017004656,
+          "input_available_s": 10.72,
+          "input_samples": 257280,
+          "audio_sha256": "f6ce42f6b5f1da975e3c03799ff501a392aa03767e87dc744e8a3bb3693e7589"
+        },
+        {
+          "event": "backend_result_ready",
+          "task_id": "ret-0",
+          "ready_at_s": 15.610694007016718,
+          "applied_at_s": 15.751212310016854,
+          "prefill_ms": 64.8223809839692,
+          "disposition": "actual backend text injected",
+          "route": "delegate",
+          "receipts": [
+            {
+              "task_id": "ret-0",
+              "revision": 1,
+              "tool": "lookup_record",
+              "project": "Willow West",
+              "field": "room marker",
+              "value": "brown square",
+              "read_only": true,
+              "executed": true
+            }
+          ]
+        }
+      ],
+      "all_user_samples_processed": true,
+      "compute_p95_s": 0.03660743059735978,
+      "maximum_input_backlog_s": 3.2119855040125547,
+      "playout": {
+        "sample_rate": 24000,
+        "startup_buffer_s": 0.16,
+        "packet_count": 548,
+        "source_samples": 1052160,
+        "underrun_count": 1,
+        "underrun_samples": 36
+      },
+      "human_listening": "not performed; PCM samples, independent audio ASR and packet/worker evidence inspected",
+      "training_approved": false,
+      "candidate_adopted": false
+    },
+    {
+      "index": 9,
+      "scenario": "recovery-validation-007",
+      "declared_expectation": "Actual cancellation before confirmation, no cancelled result delivery, latest ordinary question answered",
+      "behavior_review": "fail",
+      "reason": "Actual cancellation receipt exists, but native voice does not acknowledge cancellation and gives incorrect brain-anticipation explanation of lightning/thunder, invented marker number and repetitions. No red-star leakage observed; cancellation-executed is distinguished from native success.",
+      "report_sha256": "b287e04ce818543e2e2359e57efe4d794f385fa3d468fddfbdcfae5acedf919b",
+      "audio_sha256": "4358b6a8a4770d0c2b6b82aab6e0e06bc6516c19fb5dbf1f50df383472d6f86c",
+      "independent_asr_report_sha256": "5fb9a92fa9601377f651fd711067b92d54b209121d48f6f5202b706e199c2c8b",
+      "actual_pcm_inspected": {
+        "format": "mono signed16 PCM",
+        "rate": 24000,
+        "samples": 1185360,
+        "duration_s": 49.39,
+        "peak": 0.7813720703125,
+        "full_scale_sample_count": 0,
+        "finite_integer_pcm": true,
+        "gain_changed": false
+      },
+      "independent_spoken_text": " Let me see what I can find. The room marker for Project Alder West is 25,500. It's likely your brain is anticipating the upcoming sound from the thunder. The auditory sit. I'm sorry that's not available. I'm not able to retrieve that detail. But, the light and the sound of thunder. The light and the sound of thunder. And the arrival of that sound. The light and the sound. And the arrival of thunder. The light, the sound, and the thunder. And the arrival of that sound. And the arrival of the sound. And the thunder.",
+      "sampled_model_text": "Let me see what I can find, the room marker for Project Alder West is twenty-five thousand, five hundred and sixty. It's likely your brain is anticipating the upcoming sound from the thunder. The auditory system I'm sorry, that's not available. I'm not able to retrieve that detail. But, the light and the sound of thunder. The light and the sound of thunder. And the arrival of that sound. The light and the sound. And the arrival of thunder. The light, the sound, and the thunder. And the arrival of that sound. And the arrival of the sound. and the thunder. The",
+      "independent_word_agreement_wer": 0.04672897196261682,
+      "independent_time_bounds_valid": true,
+      "independent_word_bounds_valid": true,
+      "independent_speech_quality_passed": true,
+      "native_request_count": 2,
+      "worker_events": [
+        {
+          "event": "native_backend_requested",
+          "task_id": "ret-0",
+          "at_s": 5.9188523160119075,
+          "input_available_s": 5.44,
+          "input_samples": 130560,
+          "audio_sha256": "fe6268ab4ec5df9621ab7f256dc4b4ef7c1d71b5c06b0c1650d64923b364a5f3"
+        },
+        {
+          "event": "backend_result_ready",
+          "task_id": "ret-0",
+          "ready_at_s": 9.998757511988515,
+          "applied_at_s": 10.07350911499816,
+          "prefill_ms": 66.94347597658634,
+          "disposition": "actual backend text injected",
+          "route": "delegate",
+          "receipts": [
+            {
+              "task_id": "ret-0",
+              "revision": 1,
+              "tool": "lookup_record",
+              "project": "Alder West",
+              "field": "room marker",
+              "value": "red star",
+              "read_only": true,
+              "executed": true
+            }
+          ]
+        },
+        {
+          "event": "native_backend_requested",
+          "task_id": "ret-1",
+          "at_s": 19.716960368998116,
+          "input_available_s": 19.68,
+          "input_samples": 472320,
+          "audio_sha256": "54d20a7146463f079c273a63d62a81e50cf46eabaaf5c0c8ad5e1edc60f5e406"
+        },
+        {
+          "event": "backend_result_ready",
+          "task_id": "ret-1",
+          "ready_at_s": 24.413809519988718,
+          "applied_at_s": 24.5409342990024,
+          "prefill_ms": 57.34701702021994,
+          "disposition": "actual backend text injected",
+          "route": "cancel",
+          "receipts": [
+            {
+              "tool": "cancel_lookup",
+              "cancelled": true,
+              "task_ids": [
+                "ret-0"
+              ],
+              "receipts": [
+                {
+                  "task_id": "ret-0",
+                  "revision": 1,
+                  "tool": "cancel_lookup",
+                  "cancelled": true
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "all_user_samples_processed": true,
+      "compute_p95_s": 0.0374248208157951,
+      "maximum_input_backlog_s": 3.2301452899898866,
+      "playout": {
+        "sample_rate": 24000,
+        "startup_buffer_s": 0.16,
+        "packet_count": 575,
+        "source_samples": 1104000,
+        "underrun_count": 1,
+        "underrun_samples": 214
+      },
+      "human_listening": "not performed; PCM samples, independent audio ASR and packet/worker evidence inspected",
+      "training_approved": false,
+      "candidate_adopted": false
+    }
+  ]
+}

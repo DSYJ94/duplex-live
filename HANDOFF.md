@@ -1,3 +1,40 @@
+# LOCAL active — native candidate REJECTED after full10 review; zero-update diagnosis next,13:00UTC
+
+All10 native runs7547174 and independent full10 CPU speech7547175 COMPLETE.
+Complete evidence docs/NATIVE-V2-COMPLETE10-REVIEW-2026-10-19.json retains every
+case, PCM statistics/hash, raw independent words, invalid bounds, native requests,
+actual read/cancel receipts, causal packet latency and unchanged user samples.
+6/10 independent speech-quality pass under unchanged0.08/valid bounds;4 failures
+retained. Ice wrongly attributes floating to surface tension; quiet speaks8.73–9.65s
+before ready, pause speaks20.75–21.89s inside17.54–22.10s then substitutes door for
+cupboard. Yellow-circle receipt unused; copper-diamond eventually spoken but invented
+cost/repeat lookup. Actual cancel receipt24.54s exists, but no native cancellation
+confirmation and wrong ordinary reasoning. Clarify includes brown square but ASR
+has invalid tail, malformed fragment/repeated questions. Candidate7546645 REJECTED
+for extension/adoption. No gain, prompt, threshold, original audio or labels changed.
+Full10 actual outputs124files263114323bytes verified12:50:52UTC; independent speech
+2files170049bytes verified12:54:46UTC. Full8 optimizer/RNG checkpoint already safe.
+
+Diagnostic source60a7afee27a468d56b1de9f17494783a0eb167a0 pushed/fetched, immutable
+worktrees/recovery-60a7afe. Independent CPU7548310 PASS87tests2.8s. New explicit
+zero-update gradient phase computes ALL81 cases(28actual+4KL/hiddenreference+
+25old+24new), native520parent7510331, unchanged old25/28/KL1/hidden10/objectives.
+Exact first8/32 schedule-weighted gradient cosine can diagnose opposing objectives,
+not Adam causality or native behavior. No GPU diagnostic submitted at this snapshot,
+no new optimizer planned until results. Exclusive runs/native-v2-gradient-diagnostic-
+local-20261019.json currently records CPUjob only; append GPU ID exactly once.
+
+Fresh owner-approved36 synthetic speech utterances/20cases generated7548247;
+independent full20 input quality7548248 finishing. Sourcec93ac93, fixedplan
+162b0e64942dfe1917be9d8b24b579a947d1af54800bf246a1f2d47f3e7d1c21. No owner
+conversations/private-world values/scoring answers exported. No fresh inference,
+reroll/subset or evaluation outputs used for TRAIN. Invalid source freezes whole
+fresh qualification unscored. LOCAL active, CLOUD submits nothing; cloud GPU paused,
+no extra compute purchase. Cert expires20:51:23UTC today. Native/whole-system FAIL.
+Next: zero-update full81 diagnosis; preserve entire fresh20/audio/receipts/verdict.
+
+---
+
 # LOCAL active — all10 native runs complete, independent speech running; fresh speech approved,12:51UTC
 
 Source main before this entry19bbeafcbc8295b31d0d1eae40f777889ed4ecd3; immutable

@@ -1,7 +1,7 @@
 {
-  "at_utc": "2026-10-19T12:50:28.906081+00:00",
-  "unique_scoped_artifact_files": 21965,
-  "unique_scoped_artifact_bytes": 14734032948,
+  "at_utc": "2026-10-19T12:57:35.433464+00:00",
+  "unique_scoped_artifact_files": 22013,
+  "unique_scoped_artifact_bytes": 14768121497,
   "inventory_conflicts": [],
   "inventories": [
     {
@@ -205,6 +205,20 @@
       "sha256": "5251cbfedca0efbfc0be15b2da4127e5ad749cea5583e7afd07f429c70db0f13",
       "files": 78,
       "bytes": 229195823,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native-v2-development-all10-inventory.json",
+      "sha256": "08246589e21a3cb79441faccf4706f9d2bd8f19f6f78c39ea3b855c8054df4e8",
+      "files": 124,
+      "bytes": 263114323,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native-v2-development-speech-inventory.json",
+      "sha256": "8bd468f0d8a0297964a280d8b742107245ec4794aa642844f8b3e857ffae320e",
+      "files": 2,
+      "bytes": 170049,
       "missing_roots": []
     }
   ],

@@ -1,3 +1,14 @@
+19 October13:00UTC — candidate7546645 REJECTED after complete10 actual native
+runs7547174 and independent full10 speech7547175. Six speech-quality pass/four
+failures retained; wrong ice reasoning, quiet/pause violations, invented private
+numbers, missed/corrupted results, no native cancellation confirmation despite
+actual cancellation receipt. Complete JSON NATIVE-V2-COMPLETE10-REVIEW-2026-10-19.
+Full optimizer/RNG restoration PASS does not override behavior failure. No extension
+or adoption. Zero-update full81 objective-gradient diagnostic source60a7afe,
+CPU7548310 PASS87tests; no GPU submitted yet. All28/25/KL1/hidden10 preserved.
+Fresh36 synthetic generation7548247 complete, full20 CPU input quality7548248
+finishing, no fresh inference. Native/whole-system FAIL; LOCAL active.
+
 19 October12:51UTC — all10 native candidate runs7547174 complete; independent
 CPU speech7547175 running. Raw model text provisionally regresses ordinary ice
 reasoning and fails quiet/pause/private/cancel; actual WAV/ASR/receipt-clock review
