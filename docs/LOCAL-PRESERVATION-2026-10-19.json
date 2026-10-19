@@ -1,0 +1,66 @@
+{
+  "at_utc": "2026-10-19T09:51:33.275617+00:00",
+  "unique_scoped_artifact_files": 3302,
+  "unique_scoped_artifact_bytes": 3093697025,
+  "inventory_conflicts": [],
+  "inventories": [
+    {
+      "name": "remote-critical-inventory.json",
+      "sha256": "be36edbf037abcd82edcfcfbdb6188b6c75e83a74a70874dbcd757dbf26595bd",
+      "files": 1450,
+      "bytes": 661640011,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native-dependency-inventory.json",
+      "sha256": "f12f648d63b602fd85fb6bcfffba861026ffb550ee85e2c23c302048416bb59a",
+      "files": 169,
+      "bytes": 280281639,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-repaired-source-inventory.json",
+      "sha256": "42676eb53de2dd3f177ae8c0945c2deb6b1e6fa6f28f80bb9570fa2c7c7cd793",
+      "files": 627,
+      "bytes": 306461197,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-failed-teacher-inventory.json",
+      "sha256": "546f19439815f55ba4c2f3905b6b94f492f9ff99ae89c1957038a639790a242a",
+      "files": 220,
+      "bytes": 177074067,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-v3-and-timing-inventory.json",
+      "sha256": "d831be9637af6d5973d26995e9f610c586de8c7287c1b58c62564201c3871258",
+      "files": 225,
+      "bytes": 176622456,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-v4-and-v3-reaudit-inventory.json",
+      "sha256": "6af4cf0f6ba4f8ea50cad63dcd393e4dbdc39712504d4d7cfa0f6534b9aa8524",
+      "files": 220,
+      "bytes": 177317297,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-actual-history-inventory.json",
+      "sha256": "b3dacd90573bf2a48422200ad01afe9bdd44ac753811bee521405cd9a2586710",
+      "files": 391,
+      "bytes": 1314300358,
+      "missing_roots": []
+    }
+  ],
+  "local_artifact_root": "runs/cloud-export-20261016/tree",
+  "runtime_regular_file_transfer_complete": false,
+  "native_base_checkpoint_pinned_sha256_verified": true,
+  "personaplex_model_codec_tokenizer_pinned_sha256_verified": true,
+  "owner_conversations_exported": false,
+  "credentials_exported": false,
+  "quarantined_core_exported": false,
+  "cloud_gpu_validation": "paused",
+  "native_optimizer_updates": 0
+}

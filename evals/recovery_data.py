@@ -7,6 +7,9 @@ from evals.moshi_model_download import sha256
 def validate_conversion(data):
     from data.synthetic.quality import checked_rows
     receipt = json.loads((data / "ingestion.json").read_text())
+    if receipt.get('schema') == 'dl-native-old25-timing-repair-v1':
+        from evals.native_old25_timing_repair import validate_conversion as validate_repair
+        return validate_repair(data, receipt)
     if receipt.get("schema") == "dl-composed-native-v1":
         from evals.recovery_compose_data import validate_composition
         return validate_composition(data,receipt)

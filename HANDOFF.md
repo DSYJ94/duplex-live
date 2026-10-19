@@ -1,3 +1,33 @@
+# LOCAL active — owner approved old25 timing repair, 19 October 10:00 UTC
+
+OWNER DECISION: "Repair and independently reapprove all 25 (recommended)."
+This supersedes the pending-decision entry below. Repair only the four diagnosed
+derived timing histories in a NEW version. Preserve all25 exact words, original
+WAVs and receipts, all28 actual-history components and KL1/hiddenMSE10 retention.
+Require complete25 independent speech/fact/clock, native input and numerical
+approval before any optimizer. Frozen native520 baseline remains unchanged.
+
+Actual account squeue EMPTY at09:56UTC. Teacher-v4 quality7543297 FAILED6m26:
+13/24 pass; semantic/conversion7543298 CANCELLED without execution. V3 corrected
+quality7543296 FAILED11/24. No optimizer is running or newly submitted. Do not
+accept a subset or weaken any gate. Raw v4 and both reports are backed up with
+SHA256 inventories; final v4 audit2files/233652bytes verified09:56:50UTC.
+
+Prepared native_old25_timing_repair.py performs fresh CPU ASR only on the four
+faults, retains every original word verbatim, and rechecks all25 original actual
+tool receipts/facts/physical clock. Conversion is a separate explicit full25
+schema; only4 sidecar/timeline intervals may change, every original audio byte
+and all21 other labels stay identical. Cache/input/numerical approval remains
+separate. Eight focused local tests pass. No repair job submitted at this entry.
+
+Runtime/container preservation remains ACTIVE and PARTIAL pending full hashes;
+local SSH certificate ends22:51:23Berlin19October. Other critical scoped native
+state/data/cache/base backups are verified in LOCAL-PRESERVATION dated JSON.
+LOCAL retains execution; CLOUD submits NOTHING until explicit owner handover.
+Native/whole-system FAIL; cloud GPU validation PAUSED; no additional purchase.
+
+---
+
 # LOCAL active — old retention timing decision pending, 19 October 2026
 
 CRITICAL: read-only SHA-bound inspection finds impossible first-word onsets in

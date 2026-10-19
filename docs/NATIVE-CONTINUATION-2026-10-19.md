@@ -178,3 +178,28 @@ native numerical preflight. Originals remain archived and hash-bound. Every new
 24-teacher scope/approval remains separate. No optimizer should consume the old
 invalid target timing while this decision is pending. Independent source/data
 qualification and preservation continue; no native checkpoint is adopted.
+
+
+## Owner authorized full25 timing repair — 19 October 2026 10:00 UTC
+
+The owner approved "Repair and independently reapprove all 25 (recommended)."
+The four diagnosed derived histories can receive new timing/cache/input versions;
+all25 exact original words/audio/receipts and all28 actual student histories remain
+mandatory, with unchanged KL1 and hiddenMSE10. No optimizer before full25 native
+reapproval. New schema dl-native-old25-timing-repair-v1 explicitly enforces this
+inventory; legacy loaders and rejected joint pilot remain unchanged.
+
+Fresh CPU ASR measures only the four diagnosed unchanged recordings with the
+already controlled leading-window/original-clock procedure. Existing21 measured
+intervals must remain identical. Full25 current speech/fact/tool/clock checks are
+rerun; conversion copies all25 originals and changes only four derived sidecar/
+timeline intervals. It cannot change a word, waveform, fold or worker receipt.
+Tests exercise exact label preservation and reject added/missing/reordered words.
+Eight focused local tests pass in .venv-api; system Python lacks NumPy.
+
+Final reference-conditioned teacher-v4 audit7543297 fails at13/24; semantic7543298
+was cancelled by its failed dependency. No optimizer. Remaining11 failures include
+an actual private phrase omission, word disagreements, paused-step omission and
+one delivered cancelled result. This requires diagnosed label-collection repair,
+not threshold changes or a passing subset. Final report backup2files/233652bytes
+is fully SHA256 verified. V3 corrected audit7543296 admitted11/24 only.
