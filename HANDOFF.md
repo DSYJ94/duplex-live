@@ -1,3 +1,42 @@
+# LOCAL active — two zero-update diagnostics queued; candidate rejected (2026-10-19 13:05:01 UTC)
+
+Current source main before this entry94119b9c4b8b02c9de249edd2f8e79de8b6edea6.
+Native training7546645 sourcec93ac931905d1c45c1e8c02924ebaaeb6fb34c8b remains
+REJECTED for extension/adoption after complete10 native7547174 + full10 speech
+7547175. All10 actual WAV/words/receipt/latency review committedc7e0e7e, JSON
+NATIVE-V2-COMPLETE10-REVIEW-2026-10-19. State restore PASS; behavior FAIL. All28
+actual histories/all25 old teachers/KL1/hidden10 retained. No new optimizer running.
+
+Existing zero-update gradient diagnostic7548377 PENDING(Resources), source
+60a7afee27a468d56b1de9f17494783a0eb167a0, CPU7548310 PASS87tests. ALL81 objective
+cases(28actual+4reference+25old+24new) required, no optimizer/checkpoint. Request
+changed in place160G->110G(host)13:02:39UTC after prior training/audit measured
+MaxRSS below2GiB;1GPU unchanged. Same job/no resubmission/model/input change.
+Original and resource receipts native-v2-gradient-diagnostic-local-20261019.json,
+native-v2-gradient-gpu-submission-local-20261019.json,
+native-v2-gradient-resource-local-20261019.json. Next:inspect complete81 gradients.
+
+Fresh20 generation7548247 COMPLETE; full20 quality7548248 FAIL18/20pass/2fail.
+001colour/color WER0.05556 spelling only;002warm/worn WER0.08333 genuine word
+substitution until independently diagnosed. Whole20 freezes UNSCORED, no inference,
+reroll/passing subset/TRAIN use. All159 artifacts44064884bytes SHA256 verified.
+Stronger SAME-AUDIO full20 large-v3 diagnostic7548438 PENDING(Resources), source
+94119b9; prerequisiteCPU7548437 PASS88tests2.731s. Local ASR, no reference-text
+prompt, no speech API calls/new audio, original verdict unchanged. Same0.05WER/
+0.995peak bars, explicit colour/color only; warm/worn never equivalent. Diagnostic
+schema cannot satisfy existing approved-input reader or authorize inference.
+Exclusive receipt native-fresh-asr-control-local-20261019.json. No duplicates.
+
+Scoped verified backup22172unique files14812186381bytes plus separately pinned
+base/model weights; stopped old Mac source backup remains partial. Critical full
+optimizer/Python/NumPy/Torch/CUDA state7546645 preserved/verified. Keep credentials,
+owner conversations and quarantined core excluded. Unrelated local pycache/probe/
+roadmap edits untouched. LOCAL active until explicit handback; CLOUD submits nothing,
+cloud GPU validation paused, no extra compute purchase. SSH cert expiry20:51:23UTC
+/22:51:23Berlin today. Native/whole-system FAIL. No fresh40 inference submitted.
+
+---
+
 # LOCAL active — native candidate REJECTED after full10 review; zero-update diagnosis next,13:00UTC
 
 All10 native runs7547174 and independent full10 CPU speech7547175 COMPLETE.

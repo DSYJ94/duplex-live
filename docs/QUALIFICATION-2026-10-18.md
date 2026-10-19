@@ -1,3 +1,10 @@
+2026-10-19 13:05:01 UTC — native7546645 rejected after complete10 independent behavior review;
+no extension/adoption/new optimizer. Zero-update complete81 gradient7548377 queued
+source60a7afe(CPU87tests passed). Fresh20 source7548248 FAILED18/20, whole corpus
+unscored and backed; same-audio full20 stronger ASR diagnostic7548438 queued source
+94119b9(CPU88tests passed), no reference prompt/new speech/approval. Native/whole-
+system FAIL. Exact job receipts prevent duplicates; LOCAL executor remains active.
+
 19 October13:00UTC — candidate7546645 REJECTED after complete10 actual native
 runs7547174 and independent full10 speech7547175. Six speech-quality pass/four
 failures retained; wrong ice reasoning, quiet/pause violations, invented private
