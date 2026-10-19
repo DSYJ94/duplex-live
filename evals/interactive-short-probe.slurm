@@ -18,6 +18,17 @@ case "${1:?Choose rag, personaplex or qwen}" in
     test "${DUPLEX_CONFIRMED_PAUSE:-0}" = 1
     test "${DUPLEX_LIVE_SCENARIO:-}" = hybrid-fresh-051
     SCRIPT="$DL_TASK_SOURCE/evals/duplex-live-transport.slurm" ;;
+  native-v2-full24-pilot)
+    : "${DL_TASK_SOURCE:?Immutable pilot payload source required}"
+    : "${DL_TASK_COMMIT:?Immutable pilot payload commit required}"
+    test "$DL_TASK_COMMIT" = cf28726b44ed0621dde6bfd27257709574f5e9ed
+    test "${NATIVE_V2_TRAIN_PHASE:-}" = train
+    test "${NATIVE_V2_FULL24_PER8:-0}" = 1
+    test "${NATIVE_V2_LEARNING_RATE:-}" = 2e-6
+    test -z "${NATIVE_V2_RESUME_JOB:-}${NATIVE_V2_EXTENSION_REVIEW:-}"
+    # One bounded development experiment: original payload fixes eight updates,
+    # then independent fresh-process restore. Bulk evaluation/extension uses workq.
+    SCRIPT="$DL_TASK_SOURCE/evals/native-v2-train.slurm" ;;
   native-v2-gradient-audit)
     : "${DL_TASK_SOURCE:?Immutable diagnostic payload source required}"
     : "${DL_TASK_COMMIT:?Immutable diagnostic payload commit required}"
