@@ -1,0 +1,32 @@
+#!/bin/bash
+#SBATCH --job-name=dl-native-v2-cpu-tests
+#SBATCH --partition=workq
+#SBATCH --account=brics.u6si
+#SBATCH --nodes=1
+#SBATCH --cpus-per-task=4
+#SBATCH --mem=16G
+#SBATCH --time=00:10:00
+#SBATCH --output=logs/dl-native-v2-cpu-tests-%j.out
+set -euo pipefail
+ulimit -c 0
+DL=/projects/u6si/duplex-live
+: "${DL_TASK_SOURCE:?Immutable source required}"
+: "${DL_TASK_COMMIT:?Immutable identity required}"
+test "$(git -C "$DL_TASK_SOURCE" rev-parse HEAD)" = "$DL_TASK_COMMIT"
+test -z "$(git -C "$DL_TASK_SOURCE" status --porcelain)"
+cd "$DL_TASK_SOURCE"
+apptainer exec --bind /projects,/lus,/home \
+ --env PYTHONPATH="$DL/tmp/voice-quality-7415052:$DL/envs/moshi-rag-7379661/lib/python3.12/site-packages:$DL_TASK_SOURCE" \
+ --env PYTHONDONTWRITEBYTECODE=1 --env OMP_NUM_THREADS=4 --env OPENAI_API_KEY= \
+ "$DL/pytorch-new.sif" python -u -c '
+import json,sys,unittest
+sys.path.insert(0,json.load(open("/projects/u6si/duplex-live/runs/context-spanning-assets-7454205/manifest.json"))["source"])
+names = ["test_context_native_v2_teacher_objective", "test_native_v2_source_repair_v2",
+         "test_native_v2_teacher", "test_recovery_teacher_quality", "test_context_training_state",
+         "test_context_native_teacher_data", "test_context_native_teacher_objective",
+         "test_context_teacher_native_approval", "test_context_teacher_text_balance",
+         "test_context_native_joint_loss"]
+suite=unittest.defaultTestLoader.loadTestsFromNames(["evals.harness."+n for n in names])
+result=unittest.TextTestRunner(verbosity=2).run(suite)
+raise SystemExit(not result.wasSuccessful())
+'
