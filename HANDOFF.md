@@ -1,3 +1,38 @@
+# LOCAL — interactive array rejected; single-allocation recovery prepared (2026-10-19 16:24 UTC)
+
+Reservation-only array submission was rejected QOSMaxSubmitJobPerUserLimit. Live
+interactive_qos reports MaxJobsPU1/MaxSubmitPU1/MaxWall8h/MaxTRESPJnode4. NO new job
+was created. Failed migration receipt remains runs/native-development-interactive-
+migration-local-20261019.json, phase all_originals_held_zero_runtime/jobs empty.
+Original7549994 ten tasks and7550001 remainHELD/PENDING with zero elapsed, not
+cancelled. Do not rerun the failed launcher or release originals during recovery.
+
+Prepared one bounded interactive allocation:2GPUs/75min maximum, ten development
+checks using isolated srun steps, each10min. First6observe cases in three1GPU pairs;
+four actual-worker cases sequentially2GPUs. Cap1allocation/2cases/2GPUs; no QoS or
+partition override. Uses unchanged originalcf28726 native payload and candidate
+7549991. No new optimizer, extension, fresh qualification or model/input mutation.
+Official guidance permits multiple short steps in one allocation; this obeys the
+actual one-job limit and keeps full10 scope. No large/high-throughput campaign.
+
+This is NOT a Slurm array. Actual allocation/step IDs and distinct assigned GPU
+lists will be recorded in native-pilot-session-<job>. For compatibility ONLY,
+original payload receives actual allocation ID as legacy SLURM_ARRAY_JOB_ID case-
+group label and explicit0-9 index, retaining native-v2-development-<group>_<index>
+artifact paths. All independent ASR/review hash checks remain unchanged; downstream
+legacy field native_evaluation_array_job denotes this documented allocation case
+group, not a scheduler-array claim. Shell syntax checked. The rejected array-only
+wrapper branch is removed; session uses its own reservation-only script.
+
+Next: commit/push/deploy session wrapper; open NEW exclusive recovery receipt
+referencing failed receipt hash. Verify originals stillHELD/zero and no replacement
+exists. Submit one HELD session and HELD full10 CPUASR, verify source/reservation/
+QoS/resources/dependency, cancel originals, prove ALL11 CANCELLED/zero in persistent
+sacct --array, then release the held pair. All old checkpoints/receipts retained.
+Native/whole-systemFAIL; full20 derived sourcePASS; LOCAL remains sole executor.
+
+---
+
 # LOCAL — owner requests interactive reservation; bounded migration prepared (2026-10-19 16:19 UTC)
 
 Owner: "use the interactive reservation on isambard to skip queuing if needed."

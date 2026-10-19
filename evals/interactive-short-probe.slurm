@@ -29,17 +29,6 @@ case "${1:?Choose rag, personaplex or qwen}" in
     # One bounded development experiment: original payload fixes eight updates,
     # then independent fresh-process restore. This branch cannot extend training.
     SCRIPT="$DL_TASK_SOURCE/evals/native-v2-train.slurm" ;;
-  native-v2-development-check)
-    : "${DL_TASK_SOURCE:?Immutable native development payload required}"
-    : "${DL_TASK_COMMIT:?Immutable payload identity required}"
-    : "${SLURM_ARRAY_JOB_ID:?Complete bounded ten-case development array required}"
-    test "$DL_TASK_COMMIT" = cf28726b44ed0621dde6bfd27257709574f5e9ed
-    test "${NATIVE_V2_CANDIDATE_JOB:-}" = 7549991
-    [[ "${SLURM_ARRAY_TASK_ID:-}" =~ ^[0-9]+$ && "$SLURM_ARRAY_TASK_ID" -lt 10 ]]
-    # One fixed pilot's exploratory development checks. The unchanged payload
-    # verifies independent full-state restore and preserves every native result.
-    # No fresh qualification, optimizer updates, training extension or adoption.
-    SCRIPT="$DL_TASK_SOURCE/evals/native-v2-development.slurm" ;;
   native-v2-gradient-audit)
     : "${DL_TASK_SOURCE:?Immutable diagnostic payload source required}"
     : "${DL_TASK_COMMIT:?Immutable diagnostic payload commit required}"

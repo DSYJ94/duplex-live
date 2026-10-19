@@ -1,5 +1,5 @@
 {
-  "at_utc": "2026-10-19T16:19:39.288280+00:00",
+  "at_utc": "2026-10-19T16:24:34.872320+00:00",
   "official_sources": [
     "https://docs.isambard.ac.uk/user-documentation/guides/slurm/",
     "https://docs.isambard.ac.uk/user-documentation/guides/slurm-advanced/"
@@ -34,13 +34,25 @@
     "cases": 10,
     "per_case_max_minutes": 10,
     "maximum_concurrent_cases": 2,
-    "maximum_concurrent_gpus": 4,
+    "maximum_concurrent_gpus": 2,
     "reservation_only_submission": true,
     "partition_or_qos_override": false,
     "credit_multiplier": 1.5,
     "payload_source": "cf28726b44ed0621dde6bfd27257709574f5e9ed",
     "no_optimizer_or_fresh_qualification": true,
-    "interpretation": "Finite exploratory development validation of one eight-update pilot; replaces earlier conservative workq-only placement for these ten development checks. Original jobs must be held, then cancelled with zero elapsed before held replacements release."
+    "interpretation": "Finite exploratory development validation of one eight-update pilot; replaces earlier conservative workq-only placement for these ten development checks. Original jobs must be held, then cancelled with zero elapsed before held replacements release.",
+    "scheduler_array": false,
+    "allocation_walltime_minutes": 75,
+    "maximum_allocations": 1,
+    "isolated_srun_steps": true,
+    "original_array_submission_rejected": "QOSMaxSubmitJobPerUserLimit; no replacement created",
+    "legacy_artifact_case_group": "Actual allocation job ID; per-case numeric suffix retained solely for original payload filenames; real step IDs/GPU assignments separately recorded"
   },
-  "future_short_development_work": "Use interactive reservation where site rules permit; all native approval and retention gates remain mandatory."
+  "future_short_development_work": "Use interactive reservation where site rules permit; all native approval and retention gates remain mandatory.",
+  "observed_interactive_qos": {
+    "maximum_walltime": "08:00:00",
+    "maximum_running_jobs_per_user": 1,
+    "maximum_submitted_jobs_per_user": 1,
+    "maximum_nodes_per_job": 4
+  }
 }
