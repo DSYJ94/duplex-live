@@ -1,7 +1,7 @@
 {
-  "at_utc": "2026-10-19T20:56:43.323407+00:00",
-  "unique_scoped_artifact_files": 22988,
-  "unique_scoped_artifact_bytes": 16389780356,
+  "at_utc": "2026-10-19T21:15:09.694606+00:00",
+  "unique_scoped_artifact_files": 23226,
+  "unique_scoped_artifact_bytes": 16926236148,
   "inventory_conflicts": [],
   "inventories": [
     {
@@ -486,6 +486,34 @@
       "files": 2,
       "bytes": 172834,
       "missing_roots": []
+    },
+    {
+      "name": "remote-native-text-sampling-complete-inventory.json",
+      "sha256": "ee87ecb653add76973054996de6a07444603145a5c4c292bfbc2e4d93faa7f9a",
+      "files": 119,
+      "bytes": 268171202,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native-text03-cpu-inventory.json",
+      "sha256": "3c689becb83ba1dff83b9b916eb7de0898deb217197e9f27c109798718a3747c",
+      "files": 2,
+      "bytes": 31656,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native-text03-launch-inventory.json",
+      "sha256": "d4d4d0363c8f792961284da0e8919770032655ca1a42fa65407841e619617aee",
+      "files": 2,
+      "bytes": 7610,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native-text03-complete-inventory.json",
+      "sha256": "f14762d46ad29318617f240a814a49cc9577f5c0218e353fa17bee3a66fa3010",
+      "files": 119,
+      "bytes": 268260612,
+      "missing_roots": []
     }
   ],
   "local_artifact_root": "runs/cloud-export-20261016/tree",
@@ -501,9 +529,9 @@
   "runtime_sif_sha256": "c00bc99693e4908ea75d17df9c379b93ae9a1678a65d875565ad5d52f76fa27b",
   "pinned_vendor_git_bundles_verified": 3,
   "source_git_bundle": {
-    "source_sha": "490047ef62e14f0164408ef911cfd1d91fc01e02",
-    "bundle": "runs/local-continuation-20261019/source-main-490047e.bundle",
-    "bundle_sha256": "7cfca6fd6d7a232eb1a10c49efce911c1c81a542e29518fcfbf4d4318502e3f0"
+    "source_sha": "feca791",
+    "bundle": "runs/local-continuation-20261019/source-main-feca791.bundle",
+    "bundle_sha256": "101cb50512b76e5b8aec9ffbc291dcda7ed498c47321af32834d6c07cdff5173"
   },
   "native_candidate_job": "7549991",
   "native_candidate_training_state_sha256": "ff79b625c096d48e45b4f41c1107210b91fd1339e0b6bd4c1f988017ab0940e7",
@@ -630,6 +658,41 @@
     "text_temperature": 0.0,
     "acoustic_temperature": 0.8,
     "six_empty_sampled_responses": true,
-    "adopted": false
+    "adopted": false,
+    "all8_artifacts_sha256_backed": true,
+    "baseline_ordinary_core_correct": 0,
+    "candidate_ordinary_core_correct": 1,
+    "speech_quality_passes": 2,
+    "total_stalls": 6,
+    "profile_rejected": true
+  },
+  "native_text03_diagnostic": {
+    "source": "d611891a015f280611e4e21f403324c1e36b95f3",
+    "cpu_job": "7557560",
+    "cpu_tests_passed": 144,
+    "session": "7557630",
+    "speech_job": "7557631",
+    "optimizer_steps": 0,
+    "diagnostic_only": true,
+    "text_temperature": 0.3,
+    "acoustic_temperature": 0.8,
+    "no_extension_or_adoption_approval": true,
+    "session_status": "COMPLETED",
+    "session_elapsed": "00:05:29",
+    "speech_status": "COMPLETED",
+    "speech_elapsed": "00:01:31",
+    "all8_artifacts_sha256_backed": true,
+    "baseline_ordinary_core_correct": 1,
+    "candidate_ordinary_core_correct": 1,
+    "total_stalls": 2,
+    "speech_quality_passes": 5,
+    "profile_rejected": true
+  },
+  "bounded32_exploration_policy_decision": {
+    "status": "OWNER_DECISION_PENDING",
+    "proposal": "docs/NATIVE-BOUNDED32-EXPLORATION-PROPOSAL-2026-10-19.json",
+    "owner_approval_received": false,
+    "optimizer_submission_authorized": false,
+    "approval_fixture_not_created": true
   }
 }

@@ -1,3 +1,81 @@
+# LOCAL active — all jobs terminal; full backups verified;32-update policy choice pending (2026-10-19 21:16 UTC)
+
+NO active Slurm jobs in actual squeue21:11:19UTC. All watcher/submission processes
+terminated; no background autosubmitter remains. LOCAL retains execution, CLOUD
+submits nothing until explicit handback. Check actual queue before any new job.
+Goalactive/unachieved; no native/whole-system qualification or adoption.
+
+Latest native-trained candidate7556562: source3061dcba1de571d2dad58d466f7c3f3ca43e41ec,
+8updates/34.12175087298965s reported fit phase (includes post-fit metrics), full
+GPU allocation13m41. Preserves28actual/25old/24new/legacyKL1hidden10/wordanchor64,
+adds14ordinary clock/native-history anchor64. Independent freshprocess full
+optimizer/Python/NumPy/Torch/CUDA restore+all28validlogits EXACT, word10+clock14
+refs reconstructed EXACT. Adapter1ad464e2b5ca2258ef777f013ccdfe057721a65cd974e17a32a1070b1f05016b;
+state3303bf1624cf3c36ff071e9fb69a239b3b93fda6a0d914db67848b7543cad675;
+reload440b665312b3125f57dd26531212db5f2c90e8b2d5a08dcf1d04b5e18b7c8b9a.
+Current-profile native107556809 COMPLETE12m22, independentASR7556810 COMPLETE4m36:
+ordinary2/4, speech6/10; full10 actual-WAV/receipt/quiet/pause review REJECTS
+extension/adoption. AllPCM unclipped max0.892242/gain unchanged. Full review
+ docs/NATIVE-ORDINARY-CLOCK-COMPLETE10-REVIEW-2026-10-19.json.
+
+Two paired read-only sampler diagnostics also FAIL; no optimizer, APIs, source
+repairs, gain change, Qwen/controller or training on their captures:
+- source490047ef62e14f0164408ef911cfd1d91fc01e02, CPU7556981 PASS143;
+  greedy TEXT0/acoustic0.8 native8session7557044 COMPLETE6m02, full8ASR7557045
+  COMPLETE1m35: baseline0/4,candidate1/4 ordinary, speech2/8, sixstalls(sound,
+  plants,metal for BOTHmodels; ASRYou/WER1). All8 reviewed/backed/rejected.
+  docs/NATIVE-TEXT-SAMPLING-DIAGNOSTIC-2026-10-19.json.
+- sourced611891a015f280611e4e21f403324c1e36b95f3, CPU7557560 PASS144;
+  text0.3/acoustic0.8 paired8session7557630 COMPLETE5m29, full8ASR7557631
+  COMPLETE1m31: baseline1/4,candidate1/4(plants), speech5/8, two metalstalls.
+  Ice/sound wrong or incomplete; all8 reviewed/backed/rejected. Defaultnative
+  text0.7 remains unchanged. docs/NATIVE-TEXT03-DIAGNOSTIC-2026-10-19.json.
+Do NOT adopt these profiles, reuse their histories for training, accept one
+passing case, or use them as a substitute for full native10/fresh20 gates.
+
+OWNER POLICY DECISION PENDING, asked via async UI with concrete proposal committed
+feca791: docs/NATIVE-BOUNDED32-EXPLORATION-PROPOSAL-2026-10-19.json.
+Current code evals/context_native_extension_review.py explicitly requires
+all4_ordinary_core_correct +ordinary speech gates before32 continuation. Owner
+is choosing ONE bounded32-update TRAINING-ONLY continuation from7556562 (40total,
+existing optimizer/RNG, LR2e-6, all losses/data/voice/sampling unchanged), despite
+failed early2/4 gate, versus keeping4/4 before extension. Proposed exception is
+only that early training gate; audio/numerical/full10/fresh20/adoption gates stay
+strict. No owner answer received, no approval fixture created, no32job authorized
+or submitted. Tool accepted=true means QUESTIONaccepted, NEVERapproval. Do not
+infer consent from time, urgency, proposed recommendation or earlier training
+permission. Keep independent source/testing/backup preparation moving while
+waiting; no dependent optimizer work without the actual decision.
+
+If owner explicitly approves, implement a NARROW owner-scoped profile under Git,
+with CPU tests and an exact authorization fixture bound to this state/32updates.
+Do not lie that2/4 passed or globally weaken ordinary/adoption validation. New
+code commit changes repo_commit: context_training_state.restore currently matches
+ALLmetadata exactly, so a source migration must be explicit and narrowly tested,
+allowing ONLY oldrepo3061→new tested source +approval provenance; every recipe/
+data/voice/frozen/target hash stays EXACT and old state3303 is never edited.
+Preserve default strict behavior. Keep context_native_v2_teacher_objective.py /
+word+clock reference modules unchanged where possible, since their SHA pins are
+embedded in the existing drift/policy approval. After32, independent reconstruction
+10+14/fullstate/all28exact restore and ALL10 native review mandatory. All4 ordinary
+and unchanged full20 paired qualification required before adoption. Proposal
+allows no further extension beyond40. If owner keeps4/4, retain that gate and
+continue diagnosed bounded repairs; do not bypass it with a relabelled review.
+
+All original/failed checkpoints/optimizer-RNG/data/manifests/receipts plus BOTH
+sampler comparisons now SHAbacked. Union 23226files
+16926236148bytes plus pinned runtime/base/PersonaPlex/Mimi/tokenizer/vendor/
+publicASR. Complete .3 backup119files268260612bytes verified21:11:56. Full prior
+native baseline/source inventories retained, no conflicts. Latest fullsource
+bundle feca791 SHA101cb50512b76e5b8aec9ffbc291dcda7ed498c47321af32834d6c07cdff5173.
+Old stopped Mac source backup PARTIAL; owners/credentials/core excluded. Actual
+local certificate through20Oct02:05:02UTC/04:05:02Berlin; actual SSHqueuecheckPASS
+21:11:19. Cloud TCP/credential state does not transfer. Allocation21Oct, no cloud
+purchase/handback. Unrelated pyc/probe/roadmap edits preserved. Fresh20/38 source
+7550653 PASS but native fresh inference STILLNONE/unscored. Native/whole-systemFAIL.
+
+---
+
 # LOCAL active — clock8 restored/all10 rejected; greedy8 stalls; text0.3 paired diagnostic prepared (2026-10-19 20:56 UTC)
 
 Native training source3061dcba1de571d2dad58d466f7c3f3ca43e41ec. Pilot7556562
@@ -53,7 +131,7 @@ one paired8 diagnostic and dependentASR through reservationinteractive. Source
 of truth is cluster exclusive receipt; inspect all existing IDs before submit.
 No old Slurm job remains running as20:51:15; no active watcher/newoptimizer.
 
-Backup union22988files16389787821bytes plus pinned runtime/base/PersonaPlex/Mimi/
+Backup union22988files16389780356bytes plus pinned runtime/base/PersonaPlex/Mimi/
 tokenizer/vendor/publicASR. Latestcomplete490047e sourcebundle SHA
 7cfca6fd6d7a232eb1a10c49efce911c1c81a542e29518fcfbf4d4318502e3f0.
 Greedy fullbackup pending above; old stopped Mac source backup PARTIAL. Owners/
