@@ -321,3 +321,20 @@ approval schema. Explicit controls use a different diagnostic schema rejected by
 the native training loader. This strengthens the all25/all24 gate, not a numerical
 or quality threshold change. Regression coverage includes assistant contamination,
 missing frames, wrong native user code, lost ownership and diagnostic training use.
+
+
+## Clarity23/24; independent control wrapper correction
+
+Full quality7544226 measures23/24 passes. The first-step/quiet/resume015 now passes
+without source edits, as do001/014/019. Only022 fails word agreement; semantic4227
+is cancelled. Keep all23 passing recordings, inspect022's exact raw/model/ASR
+words and rerender only that recording in a new version if diagnosed. No subset
+conversion or optimizer approval follows.
+
+CPU7544406 passes67tests. Independent control7544409 never reached validation:
+the new shell phase branch used [ ... || ... ], which bash -n cannot detect as a
+runtime test error. Reproduced the actual source condition failure, corrected it
+to [[ ... || ... ]], and executed the exact approve/control/math branch condition
+successfully. Original four traces/failed controls stay immutable. Retry only the
+CPU control from a new pushed source/receipt, with no GPU or optimizer submission
+until all four actual streamed-input comparisons pass independently.

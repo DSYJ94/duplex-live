@@ -61,7 +61,7 @@ if [ "$NATIVE_OLD25_PHASE" = capture ]; then
  ID=$(python3 -c 'import json,sys; r=json.load(open(sys.argv[1])); assert r["passed"] and len(r["teachers"])==25; print(r["teachers"][int(sys.argv[2])]["id"])' "$SCOPE" "$SLURM_ARRAY_TASK_ID")
  run -m evals.context_training_proof "${ARGS[@]}" --teacher-engine-input-id "$ID" --teacher-engine-input-streamed-user \
   --out "$DL/runs/native-old25-native-capture-${SLURM_ARRAY_JOB_ID}_$SLURM_ARRAY_TASK_ID"
-elif [ "$NATIVE_OLD25_PHASE" = approve || "$NATIVE_OLD25_PHASE" = control ]; then
+elif [[ "$NATIVE_OLD25_PHASE" = approve || "$NATIVE_OLD25_PHASE" = control ]]; then
  : "${NATIVE_OLD25_CAPTURE_ARRAY_JOB:?Complete native teacher trace array required}"
  [[ "$NATIVE_OLD25_CAPTURE_ARRAY_JOB" =~ ^[0-9]+$ ]]
  CAPTURES=()

@@ -1,3 +1,26 @@
+# LOCAL active — 23/24 teacher pass; CPU control wrapper fixed,19 October10:37UTC
+
+Teacher clarity quality7544226 FAILED23/24; only native2-train-022 exact word
+agreement remains failed. Pause/resume015 and four other repaired recordings now
+pass. Semantic7544227 CANCELLED; all24 remain mandatory, no conversion/optimizer.
+Preserve23 passes byte-identically and diagnose022's actual new words before any
+single-record retry. Source20a98d4 and raw/checks remain immutable.
+
+CPU7544406 PASS67tests. Control7544409 FAILED before independent tensor validation:
+a shell test used single brackets with ||. Reproduced the actual approve/control
+branch error, changed it to [[ ... || ... ]], and executed approve/control/math
+branches successfully. No data/gate/Engine change. The original four traces have
+only user-stream legacy differences, but full exact streamed-user independent
+control still MUST run; no native GPU resumption yet. Retry will use new source
+and new exclusive receipt, retaining old failure log/receipt. No optimizer.
+
+Other capture7543890_4–24 and dependent3891/3892 remain CANCELLED. Old28 histories,
+KL1/hiddenMSE10 and complete25 source/cache/scope approvals remain preserved.
+All known runtime/base/state backups verified; vendor source bundles transferred
+and SHA-verified4files/30754880bytes. LOCAL active, CLOUD submits nothing.
+
+---
+
 # LOCAL active — independent native input control queued,19 October10:35UTC
 
 Sourcefd1f852e9203eb0f0738313a568dcc5ccdd93dc2 pushed/immutable. Exclusive receipt
