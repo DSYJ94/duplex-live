@@ -83,10 +83,11 @@ def specifications():
     return scenes
 
 
-def synthesize(text, voice, path):
+def synthesize(text, voice, path, *, instructions=None):
     import requests
     import soundfile as sf
     key = os.environ["OPENAI_API_KEY"]
+    instructions = instructions or "Speak naturally in clear conversational English. Read exactly the supplied words, without additions."
     for attempt, backoff in enumerate((0, 1, 5)):
         if backoff:
             time.sleep(backoff)
@@ -94,7 +95,7 @@ def synthesize(text, voice, path):
             response = requests.post("https://api.openai.com/v1/audio/speech",
                 headers={"Authorization": "Bearer " + key}, timeout=90,
                 json={"model": MODEL, "input": text, "voice": voice, "response_format": "wav",
-                      "instructions": "Speak naturally in clear conversational English. Read exactly the supplied words, without additions."})
+                      "instructions": instructions})
         except (requests.exceptions.Timeout, requests.exceptions.ConnectionError):
             continue
         if response.status_code == 200:
@@ -104,7 +105,8 @@ def synthesize(text, voice, path):
                 raise RuntimeError("Invalid generated clip dimensions/duration")
             receipt = {"request_id": response.headers.get("x-request-id"), "source_model": MODEL,
                 "voice": voice, "sha256": hashlib.sha256(response.content).hexdigest(),
-                "attempt": attempt, "sample_rate": rate, "seconds": len(pcm)/rate}
+                "attempt": attempt, "sample_rate": rate, "seconds": len(pcm)/rate,
+                "input_text": text, "instructions": instructions}
             path.with_suffix(".receipt.json").write_text(json.dumps(receipt)+"\n")
             return receipt
         if response.status_code not in (429, 500, 502, 503):
