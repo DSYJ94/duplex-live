@@ -1,7 +1,7 @@
 {
-  "at_utc": "2026-10-19T09:51:33.275617+00:00",
-  "unique_scoped_artifact_files": 3302,
-  "unique_scoped_artifact_bytes": 3093697025,
+  "at_utc": "2026-10-19T10:14:13.445087+00:00",
+  "unique_scoped_artifact_files": 3437,
+  "unique_scoped_artifact_bytes": 3445785484,
   "inventory_conflicts": [],
   "inventories": [
     {
@@ -51,6 +51,20 @@
       "sha256": "b3dacd90573bf2a48422200ad01afe9bdd44ac753811bee521405cd9a2586710",
       "files": 391,
       "bytes": 1314300358,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-v4-final-audit-inventory.json",
+      "sha256": "d9404ef06e7f08de41c7be16c7710fb15dcae07657442ee76c559fdc750bab3b",
+      "files": 2,
+      "bytes": 233652,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-old25-timing-inventory.json",
+      "sha256": "e8d541e2ac7ab921b57ceb5387a32fdd781b98a28e9a68356e5ed2277ab53d46",
+      "files": 133,
+      "bytes": 351854807,
       "missing_roots": []
     }
   ],

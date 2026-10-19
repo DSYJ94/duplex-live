@@ -1,3 +1,27 @@
+# LOCAL active — repaired25 native approval retry, 19 October 10:14 UTC
+
+Exclusive retry receipt:
+runs/native-old25-native-approval-retry1-local-20261019.json.
+Source d4de305ae4ca1e01e380602426795f40795c3fc0 pushed/immutable. Reuses
+COMPLETE/PASS cache7543730; no regeneration. New CPU59-test gate7543887 ->
+scope7543889 -> full0-24%4 native GPU capture7543890 -> independent CPU input
+approval7543891 -> FP32 numerical7543892. Native scope also compares all25
+against native520: exact words/audio/masks/frame counts and all21 undiagnosed
+target hashes must remain unchanged. No optimizer submission in this chain.
+
+Previous scope7543731 FAILED only from missing pinned Moshi import path; verified
+7543732/7543733/7543734 CANCELLED before replacement. Do not resubmit them.
+Bounded11-scene teacher repair7543779 continues independently from bddd53b,
+then full24 quality7543781 and semantic7543783; CPU7543777 PASSED58tests.
+
+Scoped backups now verified3437files/3445785484bytes (deduplicated inventories,
+zero hash conflicts), including original state/data/28histories and new full25
+conversion/ASR. Runtime SIF/env transfer remains PARTIAL; never infer approval
+from a final-looking filename. LOCAL active, CLOUD submits NOTHING. Goal ACTIVE,
+native/whole-system FAIL, cloud GPU validation PAUSED, no additional purchase.
+
+---
+
 # LOCAL active — cache PASS; scope import-path repair, 19 October 10:12 UTC
 
 7543730 COMPLETED: all25 native cache cases, four text clocks repaired, ZERO
