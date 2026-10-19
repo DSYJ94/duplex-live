@@ -1,3 +1,29 @@
+# Local teacher-v3 chain — 19 October 2026, 09:17 UTC / 11:17 Berlin
+
+LOCAL is active; CLOUD must not submit. Committed source
+f0aed60c26ad9d8d35dcf6afbe57bac6bd7efa24 deployed through Git into clean immutable
+worktrees/recovery-f0aed60. Exclusive launch receipt:
+/projects/u6si/duplex-live/runs/native-v2-teacher-v3-local-20261019.json.
+Submitted ONCE: CPU tests7542688 -> teacher7542689 -> independent quality7542690
+-> semantic/conversion7542691, all afterok/kill-on-invalid-dependency. Same24
+approved source inputs7541875; explicit new teacher protocol native-dialogue-v3.
+Read the receipt/status of THESE jobs before doing anything; do not resubmit.
+
+Whole-TRAIN SOURCE is24/24 PASS. Previous raw TEACHER7541876 is5/24 and remains
+unapproved/preserved. New full24 teacher corpus must pass unchanged fact, speech,
+receipt, timing, quiet and cancellation gates. Quality wrapper now exits nonzero
+on any rejected teacher; semantic requests cannot run after that. No native codec,
+optimizer updates or checkpoint promotion yet. Native and whole-system FAIL.
+
+Latest tracked implementation and prepared bounded native recipe are documented
+in docs/NATIVE-CONTINUATION-2026-10-19.md; exact failed-teacher reason ledger is
+in docs/NATIVE-TEACHER-FAILURE-2026-10-19.json. Local runtime preservation remains
+IN PROGRESS (about2GB of8.55GB container transferred at09:17UTC); do not call it
+complete. Critical state/data/source/teacher-cache dependencies/base checkpoint
+already hash-verified as below. Local certificate ends22:51:23Berlin19October.
+
+---
+
 # Local teacher gate failed — 19 October 2026, 09:11 UTC / 11:11 Berlin
 
 LOCAL remains the ACTIVE executor. Source gate7541875 PASSED all24 TRAIN;
