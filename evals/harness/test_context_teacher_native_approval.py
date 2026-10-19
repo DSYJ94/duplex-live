@@ -1,8 +1,16 @@
 import unittest
-from evals.context_teacher_native_approval import prepared
+from evals.context_teacher_native_approval import prepared, complete_inventory
 
 
 class TeacherNativeApprovalTest(unittest.TestCase):
+    def test_full_approval_rejects_subsets_while_control_is_explicit(self):
+        teachers=[dict(id=str(i)) for i in range(25)]
+        cases=[dict(teacher=t) for t in teachers]
+        self.assertTrue(complete_inventory(cases,teachers))
+        with self.assertRaises(RuntimeError):complete_inventory(cases[:4],teachers)
+        self.assertFalse(complete_inventory(cases[:4],teachers,diagnostic=True))
+        with self.assertRaises(RuntimeError):complete_inventory(cases+[cases[0]],teachers,diagnostic=True)
+
     def scene(self):
         import torch
         from contextspan.model.sequence_convention import assemble_training_sequence

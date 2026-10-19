@@ -50,7 +50,7 @@ if [ "$NATIVE_V2_PHASE" = capture ]; then
  : "${SLURM_ARRAY_JOB_ID:?Submit the complete 0-23 array with at most four concurrent tasks}"
  [[ "$SLURM_ARRAY_TASK_ID" =~ ^[0-9]+$ && "$SLURM_ARRAY_TASK_ID" -lt 24 ]]
  ID=$(python3 -c 'import json,sys; r=json.load(open(sys.argv[1])); assert r["passed"] and len(r["teachers"])==24; print(r["teachers"][int(sys.argv[2])]["id"])' "$SCOPE" "$SLURM_ARRAY_TASK_ID")
- run -m evals.context_training_proof "${ARGS[@]}" --teacher-engine-input-id "$ID" \
+ run -m evals.context_training_proof "${ARGS[@]}" --teacher-engine-input-id "$ID" --teacher-engine-input-streamed-user \
   --out "$DL/runs/native-v2-native-capture-${SLURM_ARRAY_JOB_ID}_$SLURM_ARRAY_TASK_ID"
 elif [ "$NATIVE_V2_PHASE" = approve ]; then
  : "${NATIVE_V2_CAPTURE_ARRAY_JOB:?Complete native teacher trace array required}"

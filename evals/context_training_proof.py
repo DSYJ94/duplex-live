@@ -35,6 +35,8 @@ def main():
     ap.add_argument('--teacher-engine-input-audit',type=Path)
     ap.add_argument('--teacher-engine-input-id')
     ap.add_argument('--teacher-engine-input-voice',type=Path)
+    ap.add_argument('--teacher-engine-input-streamed-user',action='store_true',
+                    help='Retain offline mismatch control; require exact actual streamed-user inputs, then separate CPU corpus approval')
     ap.add_argument('--teacher-engine-native-audio',action='store_true',
         help='Diagnostic forced teacher words with sampled agent audio; no training approval')
     ap.add_argument('--teacher-native-math-audit',type=Path)
@@ -92,6 +94,9 @@ def main():
     ap.add_argument('--text-padding', choices=('legacy-epad0','context-pad3'), default='legacy-epad0')
     ap.add_argument('--request-policy', choices=('source-dispatch','native-prelead','native-prelead-epad'), default='source-dispatch')
     args = ap.parse_args()
+    if args.teacher_engine_input_streamed_user and (not args.teacher_engine_input_audit
+            or args.teacher_native_math_audit or args.teacher_engine_native_audio):
+        ap.error('Streamed-user capture is only an explicit forced-teacher input audit, before separate CPU approval')
     from evals.context_native_v2_teacher_objective import validate_configuration as validate_native_v2
     validate_native_v2(args)
     if args.teacher_engine_native_audio and (not args.teacher_engine_input_audit

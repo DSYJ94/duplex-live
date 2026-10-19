@@ -44,5 +44,24 @@ class TeacherEngineInputTest(unittest.TestCase):
         expected=torch.zeros(1,8,5,dtype=torch.int64);actual=expected.clone();actual[0,7,4]=12
         self.assertFalse(compare(actual,expected)['exact'])
 
+    def test_streamed_capture_retains_failed_offline_control_and_exact_native_bar(self):
+        import torch
+        from evals.context_teacher_engine_inputs import streamed_capture_control
+        legacy=torch.zeros(1,17,9,dtype=torch.int64)
+        actual=legacy.clone();actual[0,16,4]=7
+        result=streamed_capture_control(actual,legacy,actual.clone(),True)
+        self.assertTrue(result['passed'])
+        self.assertFalse(result['legacy_offline_comparison']['exact'])
+        self.assertTrue(result['streamed_user_input_comparison']['exact'])
+        self.assertFalse(result['training_approved'])
+        for change in ('assistant','native','ownership','frames'):
+            a=actual.clone();streamed=actual.clone();owned=True
+            if change=='assistant':a[0,8,3]=1;streamed=a.clone()
+            elif change=='native':streamed[0,15,2]=1
+            elif change=='ownership':owned=False
+            else:a=a[:,:,:-1]
+            with self.subTest(change=change):
+                self.assertFalse(streamed_capture_control(a,legacy,streamed,owned)['passed'])
+
 
 if __name__=='__main__':unittest.main()

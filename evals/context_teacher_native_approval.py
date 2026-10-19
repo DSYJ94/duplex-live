@@ -43,6 +43,17 @@ def checked_scope(path,assets,voice_file):
     return value
 
 
+def complete_inventory(cases, teachers, diagnostic=False):
+    actual=[c['teacher']['id'] for c in cases]
+    expected=[t['id'] for t in teachers]
+    if len(set(actual))!=len(actual) or not set(actual).issubset(expected):
+        raise RuntimeError('Duplicate or out-of-scope native teacher trace')
+    complete=len(actual)==len(expected) and set(actual)==set(expected)
+    if not complete and not diagnostic:
+        raise RuntimeError('Native input approval requires every teacher, never a passing subset')
+    return complete
+
+
 def validate(folder,examples,prefix,spm,scope_file,assets,voice_file,capture_scopes=()):
     import torch
     from evals.context_retention_teacher import scope
@@ -147,7 +158,10 @@ def main():
     for key in ('assets','tokenizer','voice','scope','out'):ap.add_argument('--'+key,type=Path,required=True)
     ap.add_argument('--cache',type=Path,action='append',required=True)
     ap.add_argument('--capture-scope',type=Path,action='append',default=[])
-    ap.add_argument('--capture',type=Path,action='append',required=True);args=ap.parse_args()
+    ap.add_argument('--capture',type=Path,action='append',required=True)
+    ap.add_argument('--diagnostic-only',action='store_true',
+                    help='Explicit subset control; emits a different schema that no training loader accepts')
+    args=ap.parse_args()
     asset=json.loads(args.assets.read_text());source=Path(asset['source'])
     if (asset['source_commit']!=SOURCE_COMMIT or subprocess.check_output(['git','-C',str(source),'rev-parse','HEAD']).decode().strip()!=SOURCE_COMMIT
             or subprocess.check_output(['git','-C',str(source),'status','--porcelain']).strip()
@@ -162,9 +176,11 @@ def main():
     for folder in args.capture:
         audit,_=validate(folder,examples,prefix,spm,args.scope,args.assets,args.voice,args.capture_scope)
         results.append(audit);print(json.dumps(audit),flush=True)
-    if len({a['teacher']['id'] for a in results})!=len(results):raise RuntimeError('Duplicate approved teacher trace')
-    result=dict(schema='dl-context-native-teacher-approval-set-v1',passed=all(a['passed'] for a in results),
+    complete=complete_inventory(results,checked_scope(args.scope,args.assets,args.voice)['teachers'],args.diagnostic_only)
+    result=dict(schema=('dl-context-native-teacher-subset-diagnostic-v1' if args.diagnostic_only
+                        else 'dl-context-native-teacher-approval-set-v1'),passed=all(a['passed'] for a in results),
         cases=results,optimizer_steps=0,training_approved=False,code_sha256=sha256(Path(__file__)),
+        complete_corpus=complete,diagnostic_only=args.diagnostic_only,
         capture_scopes=[dict(path=str(p),sha256=sha256(p)) for p in args.capture_scope])
     (args.out/'report.json').write_text(json.dumps(result,indent=2)+'\n')
     if not result['passed']:raise RuntimeError('Native teacher has differences beyond declared streaming user conditioning')

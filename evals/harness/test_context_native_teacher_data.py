@@ -14,7 +14,7 @@ class NativeTeacherDataTest(unittest.TestCase):
             with tempfile.TemporaryDirectory() as name:
                 p=Path(name)/'approval.json'
                 p.write_text(json.dumps(dict(schema='dl-context-native-teacher-approval-set-v1',
-                    passed=True,optimizer_steps=0,training_approved=False,
+                    passed=True,optimizer_steps=0,training_approved=False,diagnostic_only=False,complete_corpus=True,
                     code_sha256=sha256(Path(__file__).parents[1]/'context_teacher_native_approval.py'),
                     cases=[{'teacher':{'id':i}} for i in ids])))
                 with self.assertRaises(RuntimeError):load(p,Path('unused'),Path('unused'),Path('unused'),examples,None,None)
@@ -23,6 +23,13 @@ class NativeTeacherDataTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as name:
             p=Path(name)/'approval.json';p.write_text(json.dumps(dict(
                 schema='dl-context-native-teacher-approval-set-v1',passed=False)))
+            with self.assertRaises(RuntimeError):load(p,Path('unused'),Path('unused'),Path('unused'),[],None,None)
+
+    def test_diagnostic_control_cannot_enter_training_even_when_it_passes(self):
+        with tempfile.TemporaryDirectory() as name:
+            p=Path(name)/'approval.json'
+            p.write_text(json.dumps(dict(schema='dl-context-native-teacher-subset-diagnostic-v1',
+                passed=True,diagnostic_only=True,complete_corpus=False)))
             with self.assertRaises(RuntimeError):load(p,Path('unused'),Path('unused'),Path('unused'),[],None,None)
 
 

@@ -27,7 +27,7 @@ MOSHI="$DL/vendor/moshi-rag-8c6dfc101b7871baa428424bcdc583b74fb561d9"
 test "$(git -C "$MOSHI" rev-parse HEAD)" = 8c6dfc101b7871baa428424bcdc583b74fb561d9
 NV=(--nv)
 if [ "${NATIVE_OLD25_DEVICE:-cuda}" = cpu ]; then
- [[ "$NATIVE_OLD25_PHASE" = scope || "$NATIVE_OLD25_PHASE" = approve ]]
+ [[ "$NATIVE_OLD25_PHASE" = scope || "$NATIVE_OLD25_PHASE" = approve || "$NATIVE_OLD25_PHASE" = control ]]
  NV=()
 fi
 run() {
@@ -59,18 +59,31 @@ if [ "$NATIVE_OLD25_PHASE" = capture ]; then
  : "${SLURM_ARRAY_JOB_ID:?Submit the complete 0-24 array with at most four concurrent tasks}"
  [[ "$SLURM_ARRAY_TASK_ID" =~ ^[0-9]+$ && "$SLURM_ARRAY_TASK_ID" -lt 25 ]]
  ID=$(python3 -c 'import json,sys; r=json.load(open(sys.argv[1])); assert r["passed"] and len(r["teachers"])==25; print(r["teachers"][int(sys.argv[2])]["id"])' "$SCOPE" "$SLURM_ARRAY_TASK_ID")
- run -m evals.context_training_proof "${ARGS[@]}" --teacher-engine-input-id "$ID" \
+ run -m evals.context_training_proof "${ARGS[@]}" --teacher-engine-input-id "$ID" --teacher-engine-input-streamed-user \
   --out "$DL/runs/native-old25-native-capture-${SLURM_ARRAY_JOB_ID}_$SLURM_ARRAY_TASK_ID"
-elif [ "$NATIVE_OLD25_PHASE" = approve ]; then
+elif [ "$NATIVE_OLD25_PHASE" = approve || "$NATIVE_OLD25_PHASE" = control ]; then
  : "${NATIVE_OLD25_CAPTURE_ARRAY_JOB:?Complete native teacher trace array required}"
  [[ "$NATIVE_OLD25_CAPTURE_ARRAY_JOB" =~ ^[0-9]+$ ]]
  CAPTURES=()
- for I in $(seq 0 24); do
-  CAPTURES+=(--capture "$DL/runs/native-old25-native-capture-${NATIVE_OLD25_CAPTURE_ARRAY_JOB}_$I")
+ LAST=24
+ EXTRA=()
+ PREFIX=native-old25-native-approval
+ if [ "$NATIVE_OLD25_PHASE" = control ]; then
+  LAST=3
+  EXTRA+=(--diagnostic-only)
+  PREFIX=native-old25-native-control
+ fi
+ for I in $(seq 0 "$LAST"); do
+  ARRAY="$NATIVE_OLD25_CAPTURE_ARRAY_JOB"
+  if [ -n "${NATIVE_OLD25_PREVIOUS_CAPTURE_ARRAY_JOB:-}" ] && [ "$I" -lt 4 ]; then
+   [[ "$NATIVE_OLD25_PREVIOUS_CAPTURE_ARRAY_JOB" =~ ^[0-9]+$ ]]
+   ARRAY="$NATIVE_OLD25_PREVIOUS_CAPTURE_ARRAY_JOB"
+  fi
+  CAPTURES+=(--capture "$DL/runs/native-old25-native-capture-${ARRAY}_$I")
  done
  run -m evals.context_teacher_native_approval --assets "$ASSETS" \
   --tokenizer "$BASE/tokenizer_spm_32k_3.model" --voice "$VOICE" --cache "$CACHE" \
-  --scope "$SCOPE" "${CAPTURES[@]}" --out "$DL/runs/native-old25-native-approval-$SLURM_JOB_ID"
+  --scope "$SCOPE" "${CAPTURES[@]}" "${EXTRA[@]}" --out "$DL/runs/$PREFIX-$SLURM_JOB_ID"
 elif [ "$NATIVE_OLD25_PHASE" = math ]; then
  : "${NATIVE_OLD25_APPROVAL_JOB:?Independent complete input approval required}"
  [[ "$NATIVE_OLD25_APPROVAL_JOB" =~ ^[0-9]+$ ]]

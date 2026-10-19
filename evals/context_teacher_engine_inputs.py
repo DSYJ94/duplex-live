@@ -44,6 +44,18 @@ def compare(actual, expected):
         expected_sha256=hashlib.sha256(expected.contiguous().numpy().tobytes()).hexdigest())
 
 
+def streamed_capture_control(actual, legacy, streamed, ownership):
+    """Preserve the failed offline control; accept only exact streamed-user inputs."""
+    old = compare(actual, legacy)
+    new = compare(actual, streamed)
+    counts = old.get('mismatches_per_channel', [])
+    user_only = len(counts) == 17 and not any(counts[:9])
+    return dict(passed=bool(ownership and user_only and new['exact']),
+                legacy_offline_comparison=old, streamed_user_input_comparison=new,
+                legacy_diagnostic_retained=True, only_user_conditioning_may_differ=user_only,
+                independent_full_corpus_approval_required=True, training_approved=False)
+
+
 def run(lm,mimi,spm,voice,examples,args):
     import numpy as np
     import soundfile as sf
@@ -58,6 +70,9 @@ def run(lm,mimi,spm,voice,examples,args):
     from evals.recovery_data import validate_conversion
     from evals.lychee_context import BASE_INSTRUCTIONS
     native_audio=bool(getattr(args,'teacher_engine_native_audio',False))
+    streamed_capture=bool(getattr(args,'teacher_engine_input_streamed_user',False))
+    if streamed_capture and native_audio:
+        raise RuntimeError('Streamed-user input capture cannot change teacher acoustic ownership')
     audit=json.loads(args.teacher_engine_input_audit.read_text())
     if (audit['schema'] not in ('dl-context-all-teacher-scope-audit-v1','dl-context-all-teacher-scope-audit-v2') or not audit['passed']
             or audit['training_approved'] is not False or audit['optimizer_steps']!=0
@@ -194,8 +209,14 @@ def run(lm,mimi,spm,voice,examples,args):
             initial_pending_agent_codes_verified=ownership,
             generated_acoustic_frames=int(tensors['generated_codes'].shape[-1]),
             native_reasoning_qualified=False,independent_speech_review='pending')
+    if streamed_capture:
+        from evals.context_teacher_native_approval import prepared
+        prefix=persona_prefix(BASE_INSTRUCTIONS,voice,spm)
+        result['streamed_user_capture_control']=streamed_capture_control(
+            actual,expected,prepared(example,prefix,encoded,spm),ownership)
     report_name='teacher-text-render-audit.json' if native_audio else 'teacher-engine-input-audit.json'
     (args.out/report_name).write_text(json.dumps(result,indent=2)+'\n')
     print(json.dumps(result),flush=True)
-    if not result['passed']:raise RuntimeError('Prepared teacher differs from the actual native Engine input path')
+    accepted = result['streamed_user_capture_control']['passed'] if streamed_capture else result['passed']
+    if not accepted:raise RuntimeError('Prepared teacher differs from the actual native Engine input path')
     return result

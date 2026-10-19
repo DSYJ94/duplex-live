@@ -24,7 +24,7 @@ sys.path.insert(0,json.load(open("/projects/u6si/duplex-live/runs/context-spanni
 names = ["test_context_native_v2_teacher_objective", "test_native_v2_source_repair_v2",
          "test_native_v2_teacher", "test_recovery_teacher_quality", "test_context_training_state",
          "test_context_native_teacher_data", "test_context_native_teacher_objective",
-         "test_context_teacher_native_approval", "test_context_teacher_text_balance",
+         "test_context_teacher_native_approval", "test_context_teacher_engine_inputs", "test_context_teacher_text_balance",
          "test_context_native_joint_loss", "test_native_old25_timing_repair",
          "test_native_old25_timing_cache", "test_native_v2_teacher_repair", "test_speech_asr_window", "test_speech_silent_failure"]
 suite=unittest.defaultTestLoader.loadTestsFromNames(["evals.harness."+n for n in names])

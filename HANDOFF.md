@@ -1,3 +1,34 @@
+# LOCAL active — native capture controls preserved; remaining GPU tasks stopped,10:32UTC
+
+First four7543890 native traces exist, but original capture command fails its
+legacy offline-user-code parity check. This is a diagnostic, not proof of a
+new native target defect: independent native input approval explicitly replaces
+only offline user conditioning with the actual streamed encoder codes. Inspect
+all four complete traces through that independent CPU validator before resuming.
+
+To avoid burning repeated known-failure GPU controls, cancelled7543890_4 through
+_24 (pending/running metadata stage), plus dependent7543891/7543892. Tasks0–3
+finished and remain immutable. Exact interruption receipt:
+runs/native-old25-capture-interruption-local-20261019.json. No optimizer. Do not
+resubmit full25 or discard controls. Reuse0–3 ONLY after independent native-user
+input validation; then capture remaining4–24 with an explicit streamed-user control
+and require exact inputs on every channel plus unchanged assistant ownership.
+The old offline comparison remains FAILED in its original report, never relabelled.
+
+Prepared source adds an explicit capture-only flag; actual full streamed-user input
+must be exactly equal, and differences from the legacy input must be confined to
+user streams9–16. Independent full25 CPU and numerical approval still mandatory.
+Subset diagnostics emit a separate nontraining schema; full CPU approval now
+rejects any missing/duplicate teacher before writing approval. Training loader
+requires explicit full-corpus/nondiagnostic approval. Native/data thresholds stay.
+
+Separate five-record teacher clarity chain source20a98d4 remains active:
+CPU7544224 -> teacher7544225 -> full24 quality7544226 -> semantic7544227.
+Nineteen passing records preserved; all source/heldout audio/folds unchanged.
+Runtime/state/base backups VERIFIED as below. LOCAL active, CLOUD submits nothing.
+
+---
+
 # LOCAL active — five-record clarity repair submitted, 19 October10:27UTC
 
 Source20a98d43a609886a833b8fecd2ba7190b26ba7d7 pushed/immutable. Exclusive receipt

@@ -9,6 +9,7 @@ def load(approval_file,scope_file,assets,voice_file,examples,prefix,spm):
     from evals.context_teacher_native_approval import validate
     outer=json.loads(approval_file.read_text())
     if (outer['schema']!='dl-context-native-teacher-approval-set-v1' or not outer['passed']
+            or outer.get('diagnostic_only') is not False or outer.get('complete_corpus') is not True
             or outer['optimizer_steps']!=0 or outer['training_approved'] is not False
             or outer['code_sha256']!=sha256(Path(__file__).with_name('context_teacher_native_approval.py'))):
         raise RuntimeError('Native teacher corpus lacks matching independent CPU approval')

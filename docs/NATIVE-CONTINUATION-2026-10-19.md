@@ -296,3 +296,28 @@ It uses only already authored TRAIN ordinary/step references and actual private
 receipts; no private value or held-out answer is included. All24 strict gates are
 rerun.31 focused local tests pass, including changed-passing/undeclared-protocol/
 source-edit/subset rejection and heldout/private-reference exclusion.
+
+
+## Retained offline controls and explicit native streamed-user capture
+
+7543890_0 and_1 fail the historical offline-input equality check, writing complete
+raw native traces;_2/_3 also finish. The independent native approval already knows
+how to rebuild prepared inputs from actual streamed user codes, preserving every
+assistant word/acoustic input/prefix/mask and checking all17 actual input channels.
+Do not assume this accounts for the observed failures until that independent CPU
+check runs on the four traces. Other hypotheses are assistant delay/prefix changes
+or mismatched repaired-cache assembly; the same exact tensor comparison separates
+them. Cancelled4–24 and dependent3891/3892 before more GPU controls execute; receipt
+native-old25-capture-interruption-local-20261019.json records actual prior states.
+
+New explicit capture-only mode retains the original failed offline comparison and
+requires exact prepared-versus-actual equality using the real user encoder output.
+Legacy mismatches outside user streams9–16, any ownership or frame difference, or
+any streamed-input difference still fail. There is no Engine/decoder/target change.
+Four old traces remain immutable controls and can be reused only after independent
+validation; remaining21 are captured separately, then all25 reapproved together.
+Independent CPU full approval now fails closed on any subset before emitting its
+approval schema. Explicit controls use a different diagnostic schema rejected by
+the native training loader. This strengthens the all25/all24 gate, not a numerical
+or quality threshold change. Regression coverage includes assistant contamination,
+missing frames, wrong native user code, lost ownership and diagnostic training use.
