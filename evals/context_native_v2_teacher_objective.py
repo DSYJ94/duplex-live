@@ -11,6 +11,28 @@ import shutil
 from evals.moshi_model_download import sha256
 
 
+def validate_teacher_onsets(teachers):
+    """Fail before an optimizer if a claimed word predates any recorded PCM."""
+    import numpy as np
+    import soundfile as sf
+    checked = []
+    for teacher in teachers:
+        cache = json.loads((Path(teacher['cache']) / 'cache.json').read_text())
+        conversion = json.loads((Path(cache['conversion']) / 'ingestion.json').read_text())
+        row = next(r for r in conversion['accepted'] if r['scenario_id'] == teacher['id'])
+        wav = Path(row['path'])
+        if sha256(wav) != row['wav_sha256']:
+            raise ValueError('Native teacher waveform differs from its approved receipt')
+        side = json.loads(wav.with_suffix('.json').read_text())
+        pcm, rate = sf.read(wav, always_2d=True)
+        nonzero = np.flatnonzero(pcm[:, 0])
+        first = side['alignments'][0][1][0]
+        if not len(nonzero) or first < nonzero[0]/rate-.2:
+            raise ValueError('Native teacher has a physically impossible onset; retain original and reapprove a versioned timing repair: '+teacher['id'])
+        checked.append(teacher['id'])
+    return checked
+
+
 def validate_configuration(args):
     names = ('native_v2_cache', 'native_v2_approval', 'native_v2_scope', 'native_v2_preflight')
     present = [bool(getattr(args, name, None)) for name in names]
@@ -49,6 +71,7 @@ def prepare(args, spm, voice, retention, old_teacher_policy):
             or len(parent_data['components']) != 28
             or sha256(args.out / 'data.json') != parent['data_sha256']):
         raise ValueError('Native-v2 must retain the exact native520 parent corpus and old 25-teacher policy')
+    validate_teacher_onsets(old_teacher_policy['teachers'])
     cache = validate_cache(args.native_v2_cache)
     conversion = validate_conversion(Path(cache['conversion']))
     expected = {'teacher-' + s['scenario_id'] for s in specifications() if s['split'] == 'train'}

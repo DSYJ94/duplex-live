@@ -153,3 +153,28 @@ The native student sees its original native inputs and approved target histories
 not this teacher reference prompt. Free-running ordinary/private/clarification/
 cancellation/quiet/pause-resume tests remain mandatory before extension/adoption.
 New reference-conditioned collection has not yet been submitted at this entry.
+
+## Material decision: four old approved histories have impossible onsets
+
+Read-only SHA-bound comparison of all25 old approved native histories finds four
+with first words preceding ANY nonzero recorded PCM by>200ms, and preceding
+20ms RMS>0.003 activity by6.06–6.68seconds:
+
+- teacher-cf-recovery-train-001-0: Okay,0.10s, first PCM0.832708s, voice6.32s.
+- teacher-cf-recovery-train-002-0: Sure,0.06s, first PCM0.830125s, voice6.74s.
+- teacher-cf-recovery-train-007-0: Okay,0.10s, first PCM0.790333s, voice6.16s.
+- teacher-recovery-train-004: Sure0.10s, first PCM0.800667s, voice6.26s.
+
+All25 original WAV hashes match their approved conversion receipts. No original
+word, waveform, receipt, target/cache or scope was changed. The existing native
+520 baseline remains preserved for comparison; this finding is not proof that
+these four timing errors caused every prior behavioral failure.
+
+Evidence: docs/NATIVE-OLD25-ONSET-AUDIT-2026-10-19.json. Proposed repair retains
+ALL25 histories and ALL28 actual-history components plus unchanged KL/hidden
+retention. Only the four defective derived timing/cache/input histories receive
+new versioned measurements, followed by full independent25-teacher approval and
+native numerical preflight. Originals remain archived and hash-bound. Every new
+24-teacher scope/approval remains separate. No optimizer should consume the old
+invalid target timing while this decision is pending. Independent source/data
+qualification and preservation continue; no native checkpoint is adopted.
