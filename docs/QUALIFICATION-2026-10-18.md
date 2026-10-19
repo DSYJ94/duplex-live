@@ -1,3 +1,5 @@
+2026-10-19 21:57 UTC —7558824 reports32newupdates/global9..40,90.9203s fit phase/17.1571GiB; newcheckpoint b4361124/state9712d0d8 saved. Freshprocessrestore stillRUNNING/unproven; solewatcher34775 will gate native10/ASR. Critical backup79993 inprogress. No behavior/adoption/fresh inference/>40. LOCALactive/nativewhole-systemUNQUALIFIED.
+
 2026-10-19 21:47 UTC — Approved ONEbounded32 job7558824 RUNNING29s in interactive1GPU/30min, payload99cc739/auth2837484. Exact old state/owner/full10 evidence validated before exclusive launch; sole watcher34775 will submit complete10/ASR only after full40restorePASS. No new update/result/adoption yet; all28/25/24/KL1hidden10/word64clock64 unchanged. LOCALactive/nativewhole-systemUNQUALIFIED.
 
 2026-10-19 21:44 UTC — Owner explicitly approves ONE bounded32 training-only continuation from7556562 to40total, exact tested99cc739 payload. Authorization fixture committed next; old policy blocker resolved. No newjob yet. All data/losses/optimizerRNG/native10/fresh20/adoption gates unchanged; nativewhole-systemUNQUALIFIED; LOCALexecutor.

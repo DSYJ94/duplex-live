@@ -1,3 +1,29 @@
+# LOCAL active —7558824 completed32 new updates; independent restore RUNNING (2026-10-19 21:57 UTC)
+
+Actual job7558824 remains RUNNING in independent fresh-process restore phase.
+Training log/report at21:55:31UTC records ALL32 updates, globalsteps9..40,
+initial8/final40. Reported fit phase90.92028557200683s includes post-fit metrics
+and digests; not isolated optimizer benchmark. Peak17.15713119506836GiB.
+Checkpoint b4361124025b339c02e354b7729699a520da74400927eb1aaa9a5029136264b6;
+complete optimizer/RNG state9712d0d858d638630d02fbb2f2909da822c0c3f9d7b47202a1637a1785ee6c9d.
+All28actual/25old/24new/KL1hidden10/word64/clock64 retained, exact source
+3061→99 provenance, no new optimizer reset or input/target/audio/loss changes.
+Independent restore/all28exact/10+14refs NOT yet proven; no behavioral result,
+model adoption, fresh inference or >40updates. Native/whole-system UNQUALIFIED.
+
+Sole watcher exec34775 still observes SAME7558824 >=60s. It will exclusively
+launch ONE complete10 native session/full10 independentASR after terminal
+COMPLETE0:0 and all independent state/reference/oldrecipe checks. No evaluation
+job IDs yet. New state/reference backup in progress via exec79993,
+17files613812995bytes inventory; first16new transfer underway, no final hash
+verification yet. Prior23231files16926307647bytes+models/runtime/ASR/vendor
+already backed. Old Mac source backup PARTIAL. LOCAL retains execution, CLOUD
+submits nothing. Owner explicitly approved this scope and asked to continue
+without command-by-command prompts; use existing authorization. No handback,
+new compute purchase or further-than40 training/adoption authorized.
+
+---
+
 # LOCAL active — approved bounded32 job7558824 RUNNING (2026-10-19 21:47 UTC)
 
 Owner explicitly approved ONE32-update exploration and then "Proceed without
