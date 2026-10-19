@@ -1,0 +1,118 @@
+{
+  "schema": "dl-native-text03-paired-diagnostic-v1",
+  "at_utc": "2026-10-19T20:54:48.111308+00:00",
+  "declared_before_profile03_outputs": true,
+  "diagnostic_only": true,
+  "optimizer_steps": 0,
+  "baseline": "7510331",
+  "candidate": "7556562",
+  "cases": [
+    {
+      "index": 0,
+      "scenario": "recovery-train-012",
+      "role": "baseline",
+      "checkpoint_job": "7510331",
+      "text_temperature": 0.3,
+      "acoustic_temperature": 0.8,
+      "diagnostic_only": true,
+      "training_approved": false
+    },
+    {
+      "index": 1,
+      "scenario": "recovery-train-012",
+      "role": "candidate",
+      "checkpoint_job": "7556562",
+      "text_temperature": 0.3,
+      "acoustic_temperature": 0.8,
+      "diagnostic_only": true,
+      "training_approved": false
+    },
+    {
+      "index": 2,
+      "scenario": "recovery-train-013",
+      "role": "baseline",
+      "checkpoint_job": "7510331",
+      "text_temperature": 0.3,
+      "acoustic_temperature": 0.8,
+      "diagnostic_only": true,
+      "training_approved": false
+    },
+    {
+      "index": 3,
+      "scenario": "recovery-train-013",
+      "role": "candidate",
+      "checkpoint_job": "7556562",
+      "text_temperature": 0.3,
+      "acoustic_temperature": 0.8,
+      "diagnostic_only": true,
+      "training_approved": false
+    },
+    {
+      "index": 4,
+      "scenario": "recovery-train-014",
+      "role": "baseline",
+      "checkpoint_job": "7510331",
+      "text_temperature": 0.3,
+      "acoustic_temperature": 0.8,
+      "diagnostic_only": true,
+      "training_approved": false
+    },
+    {
+      "index": 5,
+      "scenario": "recovery-train-014",
+      "role": "candidate",
+      "checkpoint_job": "7556562",
+      "text_temperature": 0.3,
+      "acoustic_temperature": 0.8,
+      "diagnostic_only": true,
+      "training_approved": false
+    },
+    {
+      "index": 6,
+      "scenario": "recovery-train-015",
+      "role": "baseline",
+      "checkpoint_job": "7510331",
+      "text_temperature": 0.3,
+      "acoustic_temperature": 0.8,
+      "diagnostic_only": true,
+      "training_approved": false
+    },
+    {
+      "index": 7,
+      "scenario": "recovery-train-015",
+      "role": "candidate",
+      "checkpoint_job": "7556562",
+      "text_temperature": 0.3,
+      "acoustic_temperature": 0.8,
+      "diagnostic_only": true,
+      "training_approved": false
+    }
+  ],
+  "prior_evidence": {
+    "default_profile_native": "7556809",
+    "default_profile_audio": "7556810",
+    "ordinary_core_correct": 2,
+    "speech_quality_passes": 6,
+    "greedy_diagnostic": "7557044",
+    "greedy_speech": "7557045",
+    "six_empty_sampled_responses": true
+  },
+  "hypothesis": "Temperature0 stalls because its highest-probability text choice remains silence in6/8 ordinary episodes. Test one lower nonzero0.3 setting, retaining stochastic escape while reducing text entropy. No causal or quality claim before complete paired audio review.",
+  "text_temperature": 0.3,
+  "acoustic_temperature": 0.8,
+  "seed": 42424242,
+  "voice_persona_pcm_weights_gain_and_native_protocol_unchanged": true,
+  "source_words_audio_targets_receipts_folds_unchanged": true,
+  "all8_required": true,
+  "no_passing_subset": true,
+  "word_agreement_threshold": 0.08,
+  "original_wav_onset_and_bounds_required": true,
+  "additional_speech_teacher_or_semantic_api_calls": 0,
+  "diagnostic_outputs_must_not_be_trained_on": true,
+  "extension_or_adoption_approved": false,
+  "follow_up": "If viable, require separately declared complete native10 under the chosen profile and all4 ordinary correctness/speech before32extension; fresh paired20 before adoption. Existing failed runs remain intact.",
+  "maximum_gpus": 2,
+  "maximum_allocation_minutes": 30,
+  "reservation": "interactive",
+  "partition_or_qos_override": false
+}

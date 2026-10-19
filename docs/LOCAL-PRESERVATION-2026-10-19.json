@@ -1,7 +1,7 @@
 {
-  "at_utc": "2026-10-19T20:24:23.910779+00:00",
-  "unique_scoped_artifact_files": 22833,
-  "unique_scoped_artifact_bytes": 16130540740,
+  "at_utc": "2026-10-19T20:56:43.323407+00:00",
+  "unique_scoped_artifact_files": 22988,
+  "unique_scoped_artifact_bytes": 16389780356,
   "inventory_conflicts": [],
   "inventories": [
     {
@@ -444,6 +444,48 @@
       "files": 19,
       "bytes": 613918567,
       "missing_roots": []
+    },
+    {
+      "name": "remote-native-ordinary-clock-pilot-complete-inventory.json",
+      "sha256": "94f80d319965ecc5f61ec45d07bdc747421c55c9d74e2e94b4dc933328e52cac",
+      "files": 20,
+      "bytes": 614250794,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native-ordinary-clock-native10-launch-inventory.json",
+      "sha256": "00173dd7a6bbdc864998fffba5c9ab7406dc1c07a8e52df2d6064d1dd344faaf",
+      "files": 2,
+      "bytes": 7465,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native-text-sampling-cpu-inventory.json",
+      "sha256": "283be8c6250eeffd0c5b89dd9446d68b166bbe259256d55ac27f8c5b016a427d",
+      "files": 2,
+      "bytes": 31466,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native-text-sampling-launch-inventory.json",
+      "sha256": "a41d75fc3ebb9de7fd053272f66b36f968628fd6a16dbe98f69203032c8250aa",
+      "files": 2,
+      "bytes": 7678,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native-ordinary-clock-complete10-native-inventory.json",
+      "sha256": "75cf1add20e248fb85118ef17fbef6e421372e1fbe81464044b7b3d4788b707e",
+      "files": 147,
+      "bytes": 258463956,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native-ordinary-clock-complete10-speech-inventory.json",
+      "sha256": "02d53472520966de4446a2a00cdcfc7241f37f03bcf23a8d97fc6ebcac1bc526",
+      "files": 2,
+      "bytes": 172834,
+      "missing_roots": []
     }
   ],
   "local_artifact_root": "runs/cloud-export-20261016/tree",
@@ -459,9 +501,9 @@
   "runtime_sif_sha256": "c00bc99693e4908ea75d17df9c379b93ae9a1678a65d875565ad5d52f76fa27b",
   "pinned_vendor_git_bundles_verified": 3,
   "source_git_bundle": {
-    "source_sha": "24de9f9bf1581b3f9443cc51c85e0e9786b89db6",
-    "bundle": "runs/local-continuation-20261019/source-main-24de9f9.bundle",
-    "bundle_sha256": "6f7157798b26c2bf5e778b87045ceb6adb2ddf97a50ff15ca1a2ef2d92e25628"
+    "source_sha": "490047ef62e14f0164408ef911cfd1d91fc01e02",
+    "bundle": "runs/local-continuation-20261019/source-main-490047e.bundle",
+    "bundle_sha256": "7cfca6fd6d7a232eb1a10c49efce911c1c81a542e29518fcfbf4d4318502e3f0"
   },
   "native_candidate_job": "7549991",
   "native_candidate_training_state_sha256": "ff79b625c096d48e45b4f41c1107210b91fd1339e0b6bd4c1f988017ab0940e7",
@@ -545,13 +587,12 @@
     "optimizer_jobs_submitted": 1,
     "requires_complete_prior_native10_audio_review": true,
     "job": "7556562",
-    "status": "EIGHT_UPDATES_COMPLETE_RESTORE_PENDING",
+    "status": "COMPLETED",
     "checked_utc": "2026-10-19T20:11:21Z",
     "elapsed": "00:00:49",
     "maximum_updates": 8,
     "prior_complete10_review_commit": "24de9f9bf1581b3f9443cc51c85e0e9786b89db6",
     "watcher_local_exec": 77918,
-    "independent_restore_and_native_behavior_not_yet_verified": true,
     "optimizer_steps": 8,
     "reported_training_seconds": 34.12175087298965,
     "timing_scope": "Eight updates plus post-fit metrics/digests, excluding loader and independent restore",
@@ -559,6 +600,36 @@
     "training_state_sha256": "3303bf1624cf3c36ff071e9fb69a239b3b93fda6a0d914db67848b7543cad675",
     "all24_exposed_once": true,
     "all10_word_and14_clock_anchors_each_update": true,
-    "full_state_and_both_caches_sha256_backed": true
+    "full_state_and_both_caches_sha256_backed": true,
+    "allocation_elapsed": "00:13:41",
+    "independent_full_state_restore_passed": true,
+    "independent_reload_report_sha256": "440b665312b3125f57dd26531212db5f2c90e8b2d5a08dcf1d04b5e18b7c8b9a",
+    "all28_logits_exact": true,
+    "all10_word_and14_clock_references_reconstructed": true,
+    "native_session": "7556809",
+    "native_session_status": "COMPLETED",
+    "native_session_elapsed": "00:12:22",
+    "speech_job": "7556810",
+    "speech_status": "COMPLETED",
+    "speech_elapsed": "00:04:36",
+    "ordinary_core_correct": 2,
+    "speech_quality_passes": 6,
+    "candidate_rejected_for_extension": true
+  },
+  "native_text_sampling_diagnostic": {
+    "source": "490047ef62e14f0164408ef911cfd1d91fc01e02",
+    "cpu_job": "7556981",
+    "cpu_tests_passed": 143,
+    "session": "7557044",
+    "session_status": "COMPLETED",
+    "session_elapsed": "00:06:02",
+    "speech_job": "7557045",
+    "speech_status": "COMPLETED",
+    "speech_elapsed": "00:01:35",
+    "optimizer_steps": 0,
+    "text_temperature": 0.0,
+    "acoustic_temperature": 0.8,
+    "six_empty_sampled_responses": true,
+    "adopted": false
   }
 }

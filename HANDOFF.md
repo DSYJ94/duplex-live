@@ -1,3 +1,68 @@
+# LOCAL active — clock8 restored/all10 rejected; greedy8 stalls; text0.3 paired diagnostic prepared (2026-10-19 20:56 UTC)
+
+Native training source3061dcba1de571d2dad58d466f7c3f3ca43e41ec. Pilot7556562
+COMPLETED13m41,8updates/reported phase34.12175087298965s (includes post-fit
+metrics/digests, not isolated optimizer time). All24teachers once, all10word+
+14clock anchors eachupdate. Initialself10+14 exact, independent reconstruct10+14,
+full optimizer/Python/NumPy/Torch/CUDA restore/all28validlogits EXACTPASS. Adapter
+1ad464e2b5ca2258ef777f013ccdfe057721a65cd974e17a32a1070b1f05016b;
+state3303bf1624cf3c36ff071e9fb69a239b3b93fda6a0d914db67848b7543cad675;
+reload440b665312b3125f57dd26531212db5f2c90e8b2d5a08dcf1d04b5e18b7c8b9a.
+All20 finalstate/cache/log artifacts614250794bytes SHAbacked20:27:20UTC.
+
+Native10 session7556809 COMPLETED12m22/all10exit0; fullASR7556810 COMPLETE4m36.
+Complete actualPCM/ASR/receipt/clock review REJECTS profile: ordinary2/4(sound+
+plants correct; ice surface tension, metal kinetic-energy wrong), speech6/10.
+No fullscale samples/maxpeak0.892242/gain unchanged. Quiet Day loop/globalASR
+bounds invalid retained; valid pausewords I am quiet waiting19.23-20.59 violate
+17.54-22.10. Actual yellow/copper reads injected but native says BEE in both,
+no correct result use. Clarify0RET/read. Actual cancel inject25.612463, definitive
+cancelled25.77-26.15; originalread13.109927 beforecue18.24-20.89, so pendingcancel
+unproven. Native correctlightninganswer is NOT in the cancelworker text. Keep
+partialsuccesses/failedproofs; no native extension/adoption/fresh inference.
+Review docs/NATIVE-ORDINARY-CLOCK-COMPLETE10-REVIEW-2026-10-19.json.
+All147native artifacts258463956bytes SHAbacked20:46:51; fullASR2files172834bytes
+SHAbacked20:50:43. Watcher77918 terminatedsuccessfully after submitting6809/6810.
+
+Separate read-only greedy TEXT diagnostic source490047ef62e14f0164408ef911cfd1d91fc01e02,
+CPU7556981 PASS143; pair8session7557044 COMPLETE6m02, independentASR7557045
+COMPLETE1m35. Baseline7510331/candidate7556562 on eachsame4ordinary PCM. Actual
+native texttemp0/acoustictemp0.8/seed42424242/voice/persona unchanged, nooptimizer,
+backend or teacher/speech API. Greedy causes empty sampledtext on6/8: sound/plants/
+metal for BOTHmodels; independentASR hears only You/WER1.0 on allsix. Baselineice
+wrong(molecules smaller); candidateicecorrectdensity. Diagnostic fails; NEVER
+adopt or train on its captures, never accept its one passing candidate case as
+qualification. All8 complete; complete backup currently transferring via local
+exec67582 /tmp/duplex-backup-sampling-complete.py. Early launchreceipt/allocation
+2files7678bytes SHAbacked20:41:39, CPUreceipt/log2files31466bytes20:37:45.
+Pinned upstream sample_token uses argmax attemp0; LMGen runtimefields verified;
+textargmax consumes no textRNG draw, so acoustic randomstream can also differ.
+
+NEW separate paired8 texttemperature0.3 diagnostic PREPARED, not submitted or
+adopted. Defaults0.7 unchanged; acoustic0.8/voice/gain/persona/checkpoints/data/
+losses unchanged. Explicit ordinary-only diagnostic opt-in, actual samplerfields
+checked, no APIs/optimizer, no TRAINapproval, all8+same-threshold independent
+speech required. Predeclared evals/fixtures/native-text03-diagnostic-plan-20261019.json.
+Lower nonzero textsampling tests escape from PAD-dominant greedy stalls while
+reducing entropy. This is hypothesis, not causality/quality claim. Existing
+extension gate ALL4 ordinary+speech retained; any chosen profile needs full10
+native review before32 and fresh paired20 beforeadoption. Do not weaken gates.
+Localnew lowtemp/default-path tests PASS; complete144 CPU pending deployment.
+Next: commit/push prepared03 source+this review; deployimmutable, CPU144 then
+one paired8 diagnostic and dependentASR through reservationinteractive. Source
+of truth is cluster exclusive receipt; inspect all existing IDs before submit.
+No old Slurm job remains running as20:51:15; no active watcher/newoptimizer.
+
+Backup union22988files16389787821bytes plus pinned runtime/base/PersonaPlex/Mimi/
+tokenizer/vendor/publicASR. Latestcomplete490047e sourcebundle SHA
+7cfca6fd6d7a232eb1a10c49efce911c1c81a542e29518fcfbf4d4318502e3f0.
+Greedy fullbackup pending above; old stopped Mac source backup PARTIAL. Owners/
+credentials/core excluded. LOCALsoleexecutor/CLOUDsubmitsnothing/nohandback or
+cloudpurchase. Certificate20Oct02:05:02UTC/04:05:02Berlin; allocation21Oct.
+Unrelated pyc/probe/roadmap edits preserved. Native/whole-systemFAIL, goalactive.
+
+---
+
 # LOCAL active — ordinary-clock pilot7556562 RUNNING; sole watcher armed (2026-10-19 20:12 UTC)
 
 EXACT source3061dcba1de571d2dad58d466f7c3f3ca43e41ec, clean immutable Isambard

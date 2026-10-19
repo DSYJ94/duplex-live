@@ -65,7 +65,7 @@ def main():
         help='Capture actual native conditioning on approved TRAIN stimuli; never supervised past labels')
     ap.add_argument('--layout-audit',type=Path,
         help='Explicit native-layout candidate; require a successful actual input trace')
-    ap.add_argument('--native-text-temperature',type=float,choices=(0.,.7),default=.7)
+    ap.add_argument('--native-text-temperature',type=float,choices=(0.,.3,.7),default=.7)
     ap.add_argument('--native-sampling-diagnostic',action='store_true')
     args=ap.parse_args()
     from evals.native_text_sampling_diagnostic import policy as sampling_policy,verify_engine as verify_sampling

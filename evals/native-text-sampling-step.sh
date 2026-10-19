@@ -12,7 +12,7 @@ CASE="$DL/runs/native-text-sampling-case-${SLURM_JOB_ID}_$INDEX.json"
 python3 - "$INDEX" "$CASE" <<'PY'
 import os,json,sys
 from evals.native_text_sampling_diagnostic import case
-r=case(int(sys.argv[1]),os.environ['NATIVE_SAMPLING_CANDIDATE_JOB'])
+r=case(int(sys.argv[1]),os.environ['NATIVE_SAMPLING_CANDIDATE_JOB'],float(os.environ.get('NATIVE_SAMPLING_TEXT_TEMPERATURE','0')))
 r.update(allocation_job=os.environ['SLURM_JOB_ID'],step=os.environ['SLURM_STEP_ID'],
     assigned_cuda_devices=os.environ['CUDA_VISIBLE_DEVICES'],source=os.environ['DL_TASK_COMMIT'])
 assert len(r['assigned_cuda_devices'].split(','))==1 and r['step'].isdigit()
@@ -26,7 +26,7 @@ apptainer exec --nv --bind /projects,/lus,/home \
  --assets "$DL/runs/context-spanning-assets-7454205/manifest.json" \
  --base "$DL/models/hf-cache/hub/models--nvidia--personaplex-7b-v1/snapshots/fdaf4090a61cb315c138a1faee287ffd6c716309" \
  --data "$DL/runs/recovery-data-7407554" --scenario "${FIELDS[0]}" --expected-kind simple \
- --backend-mode observe-only --train-history --native-sampling-diagnostic --native-text-temperature 0 \
+ --backend-mode observe-only --train-history --native-sampling-diagnostic --native-text-temperature "${NATIVE_SAMPLING_TEXT_TEMPERATURE:-0}" \
  --private-value 'red circle' --adapter-proof "$DL/runs/context-training-proof-${FIELDS[1]}" \
  --voice accepted-synthetic --voice-reference "$DL/runs/voice-quality-7414595/codec/reference.wav" \
  --voice-provenance "$DL/runs/voice-quality-7414595/codec/report.json" \

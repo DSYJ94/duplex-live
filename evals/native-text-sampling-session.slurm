@@ -17,7 +17,7 @@ test -z "$(git -C "$DL_TASK_SOURCE" status --porcelain)"
 test -z "${SLURM_ARRAY_JOB_ID:-}"
 cd "$DL_TASK_SOURCE"
 python3 - "$DL" "$NATIVE_SAMPLING_CANDIDATE_JOB" <<'PY'
-import sys,json
+import sys,json,os
 from pathlib import Path
 from evals.context_rollout_conditioning import verify_checkpoint
 from evals.moshi_model_download import sha256
@@ -25,6 +25,9 @@ b=Path(sys.argv[1]);parent,pr=verify_checkpoint(b/'runs/context-training-proof-7
 child,cr=verify_checkpoint(b/'runs'/('context-training-proof-'+sys.argv[2]))
 assert pr['optimizer_steps']==520 and cr['optimizer_steps']==8 and cr['warm_ordinary_clock_retention']
 assert pr['voice_sha256']==cr['voice_sha256'] and pr['data_sha256']==cr['data_sha256']
+temperature=float(os.environ.get('NATIVE_SAMPLING_TEXT_TEMPERATURE','0'));assert temperature in (0.,.3)
+name='native-text03-diagnostic-plan-20261019.json' if temperature==.3 else 'native-text-sampling-diagnostic-plan-20261019.json'
+plan=json.load(open('evals/fixtures/'+name));assert len(plan['cases'])==8 and all(x['text_temperature']==temperature for x in plan['cases'])
 print(json.dumps(dict(parent=parent,child=child,optimizer_steps=0,diagnostic_only=True)),flush=True)
 PY
 OUT="$DL/runs/native-text-sampling-session-$SLURM_JOB_ID"
@@ -51,7 +54,7 @@ p=Path(sys.argv[1]);rows=[dict(index=int(i),exit_code=int(code)) for i,code in (
 assert [r['index'] for r in rows]==list(range(8))
 r=dict(cases=rows,all8_attempted=True,all_processes_succeeded=all(r['exit_code']==0 for r in rows),
  optimizer_steps=0,diagnostic_only=True,source=os.environ['DL_TASK_COMMIT'],candidate=os.environ['NATIVE_SAMPLING_CANDIDATE_JOB'],
- text_temperature=0.,acoustic_temperature=.8,training_extension_or_adoption_approved=False)
+ text_temperature=float(os.environ.get('NATIVE_SAMPLING_TEXT_TEMPERATURE','0')),acoustic_temperature=.8,training_extension_or_adoption_approved=False)
 with (p/'execution.json').open('x') as f:json.dump(r,f,indent=2)
 PY
 exit "$STATUS"

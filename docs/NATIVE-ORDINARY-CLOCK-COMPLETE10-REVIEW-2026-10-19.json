@@ -1,0 +1,4963 @@
+{
+  "schema": "dl-native-v2-complete10-native-review-v1",
+  "at_utc": "2026-10-19T20:52:48.907765+00:00",
+  "candidate_job": "7556562",
+  "evaluation_case_group": "7556809",
+  "scheduler_array": false,
+  "actual_single_allocation_job": "7556809",
+  "session_source": "3061dcba1de571d2dad58d466f7c3f3ca43e41ec",
+  "source": "cf28726b44ed0621dde6bfd27257709574f5e9ed",
+  "independent_speech_job": "7556810",
+  "independent_speech_report_sha256": "421cbc9a7b933bcc68799de6983f95ff495d1320bdae2f4fb7c4e36e2a696a47",
+  "evaluation_plan_sha256": "eb9622a14bb3e444e3b8604a1e44a2f26b02fe01866a948483cad368628781f5",
+  "complete_cases": 10,
+  "all_cases_retained": true,
+  "no_passing_subset": true,
+  "candidate_checkpoint_sha256": "1ad464e2b5ca2258ef777f013ccdfe057721a65cd974e17a32a1070b1f05016b",
+  "candidate_training_state_sha256": "3303bf1624cf3c36ff071e9fb69a239b3b93fda6a0d914db67848b7543cad675",
+  "independent_reload_report_sha256": "440b665312b3125f57dd26531212db5f2c90e8b2d5a08dcf1d04b5e18b7c8b9a",
+  "independent_restore_passed": true,
+  "all28_valid_logits_exact": true,
+  "all10_word_reference_targets_independently_reconstructed": true,
+  "ordinary_core_correct_count": 2,
+  "all4_ordinary_core_correct": false,
+  "independent_speech_quality_threshold": 0.08,
+  "independent_speech_quality_passes": 6,
+  "native_behavior_passed": false,
+  "fresh_qualification": false,
+  "native_candidate_rejected_for_extension": true,
+  "candidate_adopted": false,
+  "training_approved": false,
+  "fresh_native_inference_authorized": false,
+  "actual_history_components_preserved": 28,
+  "old_native_teacher_histories_preserved": 25,
+  "all24_new_teachers_exposed_once_in8": true,
+  "reference_kl_weight": 1.0,
+  "reference_hidden_mse_weight": 10.0,
+  "additional_ordinary_word_anchor_weight": 64.0,
+  "matched_ordinary_baseline_bindings": [
+    {
+      "index": 0,
+      "baseline_job": "7530265",
+      "baseline_report_sha256": "c3b4d9b9a708cfb1965e9c93af81c58bc5520da1b460f5ddc0c89e6f2c5efa1a",
+      "baseline_audio_sha256": "d6688a83a8cf9faef9044f91913c5bf036a7eb1b63c7be9901e90b0a3b77c611",
+      "baseline_asr_job": "7530273",
+      "baseline_asr_report_sha256": "a1ddea0f7782cca4ebb57706b880706f9f426f7ade228839a7480d439e5504f4",
+      "baseline_asr_wer": 0.0,
+      "shared_user_input_sha256": "1bd5ef3c206f748b90259defdcabc74fa5c985d873654010f69054a06229564f",
+      "same_voice_persona_assets_torch_cuda_and_native_routing": true,
+      "baseline_first_nonzero_pcm_s": 0.46475,
+      "baseline_first_onset_check_independently_recomputed": true,
+      "baseline_all_word_starts_within_recorded_audio": true,
+      "baseline_spoken_text": " because ice is less dense than water would you like me to explain the physics behind that or are you curious about a real world example"
+    },
+    {
+      "index": 1,
+      "baseline_job": "7530266",
+      "baseline_report_sha256": "546b0e5f83fc83dc3e8430412a60a1bf13e3b72c459ba644e908d966c99236e2",
+      "baseline_audio_sha256": "5d4a6d4d840a386abe1ba8b6d466dea724180e07bcdd987f248c423e251dfbe5",
+      "baseline_asr_job": "7530274",
+      "baseline_asr_report_sha256": "61e9fdeb2341ce6378240db3c582f65675d28943ace38899c3a0dc121c8fe00c",
+      "baseline_asr_wer": 0.0,
+      "shared_user_input_sha256": "8f0c8caac122f314070c26078f3b584d18cc381cf574d460dd2679af020567b9",
+      "same_voice_persona_assets_torch_cuda_and_native_routing": true,
+      "baseline_first_nonzero_pcm_s": 0.45166666666666666,
+      "baseline_first_onset_check_independently_recomputed": true,
+      "baseline_all_word_starts_within_recorded_audio": true,
+      "baseline_spoken_text": " It is produced through the vibration of solid, liquid or gas, which then travels through the air."
+    },
+    {
+      "index": 2,
+      "baseline_job": "7530267",
+      "baseline_report_sha256": "d36b066e7727a186a7ed7bf2d9c8c96625988797fefb4594c41ac4c39b0d5e4a",
+      "baseline_audio_sha256": "8e20571d3082a22f26d96e619c71fa6faa34c99a9dca187035622d52fcd1f6e0",
+      "baseline_asr_job": "7530275",
+      "baseline_asr_report_sha256": "e7b792ebca0b09bb4b49bcb90670b215d3c0114f92a29f675a1c6e6599796f73",
+      "baseline_asr_wer": 0.0,
+      "shared_user_input_sha256": "2239caf13fecd09fe494bbd2920d10127b8ae06e37401d0c44bdd0421fd25187",
+      "same_voice_persona_assets_torch_cuda_and_native_routing": true,
+      "baseline_first_nonzero_pcm_s": 0.45516666666666666,
+      "baseline_first_onset_check_independently_recomputed": true,
+      "baseline_all_word_starts_within_recorded_audio": true,
+      "baseline_spoken_text": " because light is needed for photosynthesis the process that converts carbon dioxide into sugar it is used to make food light is also essential for the growth of plants"
+    },
+    {
+      "index": 3,
+      "baseline_job": "7530268",
+      "baseline_report_sha256": "b7421ff1387131f5515d24dbad25838dc30eb8cd3a9c6eb9446fe4d3e8287b87",
+      "baseline_audio_sha256": "665db817f010d9cc5e23f942cb2273817238d93b5bb5be6f27288e69a71873a6",
+      "baseline_asr_job": "7530276",
+      "baseline_asr_report_sha256": "24eae5860003b83017fa1e39cdb019dae5257a188b931b3145180cd9dfec7f5b",
+      "baseline_asr_wer": 0.0,
+      "shared_user_input_sha256": "eb744a904140fa81174c1976e1dbf8f3a5c4585970358bca992c053d5a703f12",
+      "same_voice_persona_assets_torch_cuda_and_native_routing": true,
+      "baseline_first_nonzero_pcm_s": 0.45375,
+      "baseline_first_onset_check_independently_recomputed": true,
+      "baseline_all_word_starts_within_recorded_audio": true,
+      "baseline_spoken_text": " Because when you touch metal, it conducts heat away from your skin, which makes your hand or arm feel cold. Is there a specific type of metal you're wondering about?"
+    }
+  ],
+  "actual_waveforms_inspected": true,
+  "all_full_scale_sample_counts_zero": true,
+  "maximum_pcm_peak": 0.892242431640625,
+  "human_listening_performed": false,
+  "allocation_elapsed": "00:12:22",
+  "independent_speech_elapsed": "00:04:36",
+  "full20_source_quality_job": "7550653",
+  "full20_source_quality_passed": true,
+  "next_action": "Do not extend current profile7556562. Finish and retain paired sampler diagnostic7557044/ASR7557045; greedy text is not a remedy when ordinary responses stall. Any further decoding profile must be declared/evaluated fully; do not weaken ordinary4/4 or speech thresholds, and require fresh full20 before adoption.",
+  "cases": [
+    {
+      "index": 0,
+      "scenario": "recovery-train-012",
+      "expected": "Ice floats because it is less dense than liquid water",
+      "report_sha256": "d4a44cc24abafe4ed87e122323e1011c5b952c060685968405b31aaf899e6556",
+      "audio_sha256": "eebbc106e655cb97a731013e26244c7e135f588ed7c095317a305870074f786a",
+      "sampled_model_text": "Because the surface tension, the intermolecular forces, and the surface area of the ice create a surface tension. This surface tension creates an upward force, and the ice can't break.",
+      "independent_spoken_text": " Because the surface tection, the intermolecular forces, and surface area of the ice create a surface tection, this surface tection creates an upward force, and the ice can't break.",
+      "speech_wer": 0.12903225806451613,
+      "time_bounds_valid": true,
+      "word_bounds_valid": true,
+      "first_onset_valid": true,
+      "speech_quality_passed": false,
+      "first_nonzero_pcm_s": 3.3016666666666667,
+      "word_timestamps": [
+        {
+          "text": "Because",
+          "start": 6.6899999999999995,
+          "end": 6.75,
+          "confidence": 0.286
+        },
+        {
+          "text": "the",
+          "start": 6.75,
+          "end": 7.21,
+          "confidence": 0.963
+        },
+        {
+          "text": "surface",
+          "start": 7.21,
+          "end": 7.53,
+          "confidence": 0.994
+        },
+        {
+          "text": "tection,",
+          "start": 7.53,
+          "end": 8.29,
+          "confidence": 0.804
+        },
+        {
+          "text": "the",
+          "start": 8.43,
+          "end": 9.29,
+          "confidence": 0.808
+        },
+        {
+          "text": "intermolecular",
+          "start": 9.29,
+          "end": 10.17,
+          "confidence": 0.984
+        },
+        {
+          "text": "forces,",
+          "start": 10.17,
+          "end": 10.67,
+          "confidence": 0.86
+        },
+        {
+          "text": "and",
+          "start": 11.07,
+          "end": 11.57,
+          "confidence": 0.815
+        },
+        {
+          "text": "surface",
+          "start": 11.57,
+          "end": 11.850000000000001,
+          "confidence": 0.945
+        },
+        {
+          "text": "area",
+          "start": 11.850000000000001,
+          "end": 12.190000000000001,
+          "confidence": 0.984
+        },
+        {
+          "text": "of",
+          "start": 12.190000000000001,
+          "end": 12.370000000000001,
+          "confidence": 0.964
+        },
+        {
+          "text": "the",
+          "start": 12.370000000000001,
+          "end": 12.489999999999998,
+          "confidence": 0.971
+        },
+        {
+          "text": "ice",
+          "start": 12.489999999999998,
+          "end": 12.77,
+          "confidence": 0.992
+        },
+        {
+          "text": "create",
+          "start": 12.77,
+          "end": 13.149999999999999,
+          "confidence": 0.859
+        },
+        {
+          "text": "a",
+          "start": 13.21,
+          "end": 13.370000000000001,
+          "confidence": 0.984
+        },
+        {
+          "text": "surface",
+          "start": 13.370000000000001,
+          "end": 13.61,
+          "confidence": 0.991
+        },
+        {
+          "text": "tection,",
+          "start": 13.61,
+          "end": 14.25,
+          "confidence": 0.144
+        },
+        {
+          "text": "this",
+          "start": 14.43,
+          "end": 15.169999999999998,
+          "confidence": 0.9
+        },
+        {
+          "text": "surface",
+          "start": 15.169999999999998,
+          "end": 15.489999999999998,
+          "confidence": 0.997
+        },
+        {
+          "text": "tection",
+          "start": 15.489999999999998,
+          "end": 16.07,
+          "confidence": 0.866
+        },
+        {
+          "text": "creates",
+          "start": 16.07,
+          "end": 16.45,
+          "confidence": 0.98
+        },
+        {
+          "text": "an",
+          "start": 16.45,
+          "end": 16.63,
+          "confidence": 0.991
+        },
+        {
+          "text": "upward",
+          "start": 16.63,
+          "end": 16.93,
+          "confidence": 0.994
+        },
+        {
+          "text": "force,",
+          "start": 16.93,
+          "end": 17.43,
+          "confidence": 0.487
+        },
+        {
+          "text": "and",
+          "start": 17.59,
+          "end": 17.97,
+          "confidence": 0.986
+        },
+        {
+          "text": "the",
+          "start": 17.97,
+          "end": 18.13,
+          "confidence": 0.996
+        },
+        {
+          "text": "ice",
+          "start": 18.13,
+          "end": 18.43,
+          "confidence": 0.996
+        },
+        {
+          "text": "can't",
+          "start": 18.43,
+          "end": 18.89,
+          "confidence": 0.982
+        },
+        {
+          "text": "break.",
+          "start": 18.89,
+          "end": 19.17,
+          "confidence": 0.954
+        }
+      ],
+      "pcm": {
+        "rate": 24000,
+        "samples": 755080,
+        "peak": 0.6268310546875,
+        "full_scale_samples": 0,
+        "gain_changed": false
+      },
+      "all_user_samples_processed": true,
+      "worker_events": [],
+      "native_request_count": 0,
+      "compute_p95_s": 0.04264948059280869,
+      "maximum_input_backlog_s": 3.13345732099493,
+      "playout": {
+        "sample_rate": 24000,
+        "startup_buffer_s": 0.16,
+        "packet_count": 352,
+        "source_samples": 675840,
+        "underrun_count": 0,
+        "underrun_samples": 0
+      },
+      "human_listening_performed": false,
+      "candidate_adopted": false,
+      "behavior_review": "fail",
+      "reason": "Surface-tension/intermolecular-force explanation is wrong for ordinary ice floating; density explanation absent. Whole speechWER0.129032 also fails unchanged0.08. Actual PCM inspected/unclipped; no alias or passing word subset accepted.",
+      "ordinary_core_correct": false,
+      "behavior_and_receipts_reviewed": true,
+      "speech_quality_issue_reviewed": true,
+      "training_approved": false
+    },
+    {
+      "index": 1,
+      "scenario": "recovery-train-013",
+      "expected": "Sound is produced by vibrations",
+      "report_sha256": "bd797538048e5440a3c8170d87b9f321db790f919a2e25c0ef5567025cfe56c5",
+      "audio_sha256": "06deb0ec8f0f99ec0c8c272923518ff59a0bf5c01fa552a1d86ece9f0621a3af",
+      "sampled_model_text": "It is produced by the action of vibration. Would you like to know more about the different types of sound vibrations?",
+      "independent_spoken_text": " it is produced by the action of vibration would you like to know more about the different types of sound vibrations",
+      "speech_wer": 0.0,
+      "time_bounds_valid": true,
+      "word_bounds_valid": true,
+      "first_onset_valid": true,
+      "speech_quality_passed": true,
+      "first_nonzero_pcm_s": 3.3,
+      "word_timestamps": [
+        {
+          "text": "it",
+          "start": 7.35,
+          "end": 7.41,
+          "confidence": 0.332
+        },
+        {
+          "text": "is",
+          "start": 7.41,
+          "end": 7.609999999999999,
+          "confidence": 0.988
+        },
+        {
+          "text": "produced",
+          "start": 7.609999999999999,
+          "end": 7.97,
+          "confidence": 0.997
+        },
+        {
+          "text": "by",
+          "start": 7.97,
+          "end": 8.370000000000001,
+          "confidence": 0.993
+        },
+        {
+          "text": "the",
+          "start": 8.370000000000001,
+          "end": 8.55,
+          "confidence": 0.993
+        },
+        {
+          "text": "action",
+          "start": 8.55,
+          "end": 8.870000000000001,
+          "confidence": 0.98
+        },
+        {
+          "text": "of",
+          "start": 8.870000000000001,
+          "end": 9.149999999999999,
+          "confidence": 0.972
+        },
+        {
+          "text": "vibration",
+          "start": 9.149999999999999,
+          "end": 9.49,
+          "confidence": 0.956
+        },
+        {
+          "text": "would",
+          "start": 13.969999999999999,
+          "end": 13.989999999999998,
+          "confidence": 0.109
+        },
+        {
+          "text": "you",
+          "start": 13.989999999999998,
+          "end": 14.23,
+          "confidence": 0.98
+        },
+        {
+          "text": "like",
+          "start": 14.23,
+          "end": 14.41,
+          "confidence": 0.994
+        },
+        {
+          "text": "to",
+          "start": 14.41,
+          "end": 14.57,
+          "confidence": 0.993
+        },
+        {
+          "text": "know",
+          "start": 14.57,
+          "end": 14.690000000000001,
+          "confidence": 0.994
+        },
+        {
+          "text": "more",
+          "start": 14.690000000000001,
+          "end": 14.93,
+          "confidence": 0.982
+        },
+        {
+          "text": "about",
+          "start": 14.93,
+          "end": 15.129999999999999,
+          "confidence": 0.976
+        },
+        {
+          "text": "the",
+          "start": 15.129999999999999,
+          "end": 15.350000000000001,
+          "confidence": 0.977
+        },
+        {
+          "text": "different",
+          "start": 15.350000000000001,
+          "end": 15.55,
+          "confidence": 0.914
+        },
+        {
+          "text": "types",
+          "start": 15.55,
+          "end": 15.91,
+          "confidence": 0.987
+        },
+        {
+          "text": "of",
+          "start": 15.91,
+          "end": 16.19,
+          "confidence": 0.984
+        },
+        {
+          "text": "sound",
+          "start": 16.19,
+          "end": 16.43,
+          "confidence": 0.986
+        },
+        {
+          "text": "vibrations",
+          "start": 16.43,
+          "end": 16.91,
+          "confidence": 0.99
+        }
+      ],
+      "pcm": {
+        "rate": 24000,
+        "samples": 772320,
+        "peak": 0.56005859375,
+        "full_scale_samples": 0,
+        "gain_changed": false
+      },
+      "all_user_samples_processed": true,
+      "worker_events": [],
+      "native_request_count": 0,
+      "compute_p95_s": 0.04282911401242018,
+      "maximum_input_backlog_s": 3.1338721570116466,
+      "playout": {
+        "sample_rate": 24000,
+        "startup_buffer_s": 0.16,
+        "packet_count": 361,
+        "source_samples": 693120,
+        "underrun_count": 0,
+        "underrun_samples": 0
+      },
+      "human_listening_performed": false,
+      "candidate_adopted": false,
+      "behavior_review": "pass",
+      "reason": "Correct vibration explanation with optional follow-up. Independent actual speechWER0/all bounds valid.",
+      "ordinary_core_correct": true,
+      "behavior_and_receipts_reviewed": true,
+      "speech_quality_issue_reviewed": true,
+      "training_approved": false
+    },
+    {
+      "index": 2,
+      "scenario": "recovery-train-014",
+      "expected": "Plants use light energy to make food through photosynthesis",
+      "report_sha256": "1937ce57450cca885f9b51babc1a952550196e452ff9e8d98b0f8cb241001167",
+      "audio_sha256": "70c23d58e63546304c025382ee481379da70d65e0fdb202100eb00b80e5093fe",
+      "sampled_model_text": "Because light is what plants use to make their food, it's actually how they convert light energy into chemical energy.",
+      "independent_spoken_text": " because light is what plants use to make their food it's actually how they convert light energy into chemical energy",
+      "speech_wer": 0.0,
+      "time_bounds_valid": true,
+      "word_bounds_valid": true,
+      "first_onset_valid": true,
+      "speech_quality_passed": true,
+      "first_nonzero_pcm_s": 1.805375,
+      "word_timestamps": [
+        {
+          "text": "because",
+          "start": 5.19,
+          "end": 5.29,
+          "confidence": 0.234
+        },
+        {
+          "text": "light",
+          "start": 5.29,
+          "end": 5.79,
+          "confidence": 0.97
+        },
+        {
+          "text": "is",
+          "start": 5.79,
+          "end": 5.99,
+          "confidence": 0.993
+        },
+        {
+          "text": "what",
+          "start": 5.99,
+          "end": 6.1499999999999995,
+          "confidence": 0.994
+        },
+        {
+          "text": "plants",
+          "start": 6.1499999999999995,
+          "end": 6.45,
+          "confidence": 0.986
+        },
+        {
+          "text": "use",
+          "start": 6.45,
+          "end": 6.6899999999999995,
+          "confidence": 0.527
+        },
+        {
+          "text": "to",
+          "start": 6.6899999999999995,
+          "end": 6.81,
+          "confidence": 0.985
+        },
+        {
+          "text": "make",
+          "start": 6.81,
+          "end": 6.97,
+          "confidence": 0.934
+        },
+        {
+          "text": "their",
+          "start": 6.97,
+          "end": 7.17,
+          "confidence": 0.898
+        },
+        {
+          "text": "food",
+          "start": 7.17,
+          "end": 7.43,
+          "confidence": 0.986
+        },
+        {
+          "text": "it's",
+          "start": 7.43,
+          "end": 7.77,
+          "confidence": 0.681
+        },
+        {
+          "text": "actually",
+          "start": 7.77,
+          "end": 8.09,
+          "confidence": 0.966
+        },
+        {
+          "text": "how",
+          "start": 8.09,
+          "end": 8.370000000000001,
+          "confidence": 0.988
+        },
+        {
+          "text": "they",
+          "start": 8.370000000000001,
+          "end": 8.51,
+          "confidence": 0.975
+        },
+        {
+          "text": "convert",
+          "start": 8.51,
+          "end": 8.870000000000001,
+          "confidence": 0.917
+        },
+        {
+          "text": "light",
+          "start": 9.030000000000001,
+          "end": 9.17,
+          "confidence": 0.608
+        },
+        {
+          "text": "energy",
+          "start": 9.17,
+          "end": 9.55,
+          "confidence": 0.995
+        },
+        {
+          "text": "into",
+          "start": 9.55,
+          "end": 9.89,
+          "confidence": 0.996
+        },
+        {
+          "text": "chemical",
+          "start": 9.89,
+          "end": 10.15,
+          "confidence": 0.995
+        },
+        {
+          "text": "energy",
+          "start": 10.15,
+          "end": 10.59,
+          "confidence": 0.997
+        }
+      ],
+      "pcm": {
+        "rate": 24000,
+        "samples": 747969,
+        "peak": 0.47149658203125,
+        "full_scale_samples": 0,
+        "gain_changed": false
+      },
+      "all_user_samples_processed": true,
+      "worker_events": [],
+      "native_request_count": 0,
+      "compute_p95_s": 0.042952529396279714,
+      "maximum_input_backlog_s": 1.6329639440134633,
+      "playout": {
+        "sample_rate": 24000,
+        "startup_buffer_s": 0.16,
+        "packet_count": 367,
+        "source_samples": 704640,
+        "underrun_count": 0,
+        "underrun_samples": 0
+      },
+      "human_listening_performed": false,
+      "candidate_adopted": false,
+      "behavior_review": "pass",
+      "reason": "Correct light-energy to chemical-energy/food explanation. Independent actual speechWER0/all bounds valid.",
+      "ordinary_core_correct": true,
+      "behavior_and_receipts_reviewed": true,
+      "speech_quality_issue_reviewed": true,
+      "training_approved": false
+    },
+    {
+      "index": 3,
+      "scenario": "recovery-train-015",
+      "expected": "Metal conducts heat away from skin",
+      "report_sha256": "e61e336e40ae5d48fb6e81ba970812ffcdd4bfc11089c7930c1747dceb469448",
+      "audio_sha256": "cd64d594e16c3db273f96c122def5d27c43e87f6c12ad2ce1c01b2c1d3482682",
+      "sampled_model_text": "Because the metal's surface, the atoms, have much less energy, so the kinetic heat is much harder to lose.",
+      "independent_spoken_text": " Because the metals surface, the atoms have much less energy, so the kinetic heat is much harder to lose.",
+      "speech_wer": 0.1,
+      "time_bounds_valid": true,
+      "word_bounds_valid": true,
+      "first_onset_valid": true,
+      "speech_quality_passed": false,
+      "first_nonzero_pcm_s": 1.7894583333333334,
+      "word_timestamps": [
+        {
+          "text": "Because",
+          "start": 5.09,
+          "end": 5.25,
+          "confidence": 0.651
+        },
+        {
+          "text": "the",
+          "start": 5.25,
+          "end": 5.49,
+          "confidence": 0.994
+        },
+        {
+          "text": "metals",
+          "start": 5.49,
+          "end": 5.71,
+          "confidence": 0.975
+        },
+        {
+          "text": "surface,",
+          "start": 5.71,
+          "end": 6.15,
+          "confidence": 0.971
+        },
+        {
+          "text": "the",
+          "start": 6.61,
+          "end": 6.71,
+          "confidence": 0.95
+        },
+        {
+          "text": "atoms",
+          "start": 6.71,
+          "end": 7.05,
+          "confidence": 0.998
+        },
+        {
+          "text": "have",
+          "start": 7.05,
+          "end": 7.41,
+          "confidence": 0.986
+        },
+        {
+          "text": "much",
+          "start": 7.41,
+          "end": 7.67,
+          "confidence": 0.979
+        },
+        {
+          "text": "less",
+          "start": 7.67,
+          "end": 7.890000000000001,
+          "confidence": 0.987
+        },
+        {
+          "text": "energy,",
+          "start": 7.890000000000001,
+          "end": 8.29,
+          "confidence": 0.541
+        },
+        {
+          "text": "so",
+          "start": 8.57,
+          "end": 8.709999999999999,
+          "confidence": 0.828
+        },
+        {
+          "text": "the",
+          "start": 8.709999999999999,
+          "end": 8.83,
+          "confidence": 0.991
+        },
+        {
+          "text": "kinetic",
+          "start": 8.83,
+          "end": 9.11,
+          "confidence": 0.984
+        },
+        {
+          "text": "heat",
+          "start": 9.11,
+          "end": 9.45,
+          "confidence": 0.983
+        },
+        {
+          "text": "is",
+          "start": 9.45,
+          "end": 9.67,
+          "confidence": 0.991
+        },
+        {
+          "text": "much",
+          "start": 9.67,
+          "end": 9.91,
+          "confidence": 0.972
+        },
+        {
+          "text": "harder",
+          "start": 9.91,
+          "end": 10.229999999999999,
+          "confidence": 0.844
+        },
+        {
+          "text": "to",
+          "start": 10.229999999999999,
+          "end": 10.45,
+          "confidence": 0.966
+        },
+        {
+          "text": "lose.",
+          "start": 10.45,
+          "end": 10.67,
+          "confidence": 0.934
+        }
+      ],
+      "pcm": {
+        "rate": 24000,
+        "samples": 714947,
+        "peak": 0.707366943359375,
+        "full_scale_samples": 0,
+        "gain_changed": false
+      },
+      "all_user_samples_processed": true,
+      "worker_events": [],
+      "native_request_count": 0,
+      "compute_p95_s": 0.042791826749453324,
+      "maximum_input_backlog_s": 1.6247593469941057,
+      "playout": {
+        "sample_rate": 24000,
+        "startup_buffer_s": 0.16,
+        "packet_count": 350,
+        "source_samples": 672000,
+        "underrun_count": 0,
+        "underrun_samples": 0
+      },
+      "human_listening_performed": false,
+      "candidate_adopted": false,
+      "behavior_review": "fail",
+      "reason": "Metal answer says atoms have less energy and kinetic heat is harder to lose; required conduction away from skin is absent/inverted. SpeechWER0.1 fails unchanged0.08. Actual PCM unclipped/gain unchanged.",
+      "ordinary_core_correct": false,
+      "behavior_and_receipts_reviewed": true,
+      "speech_quality_issue_reviewed": true,
+      "training_approved": false
+    },
+    {
+      "index": 4,
+      "scenario": "native2-train-014",
+      "expected": "Stay silent until ready, then explain that a timer measures elapsed time",
+      "report_sha256": "494c7092a1d973f7023b65eae83a6e186f32ca63bc306440df5c8771f53c8e99",
+      "audio_sha256": "d1fb7b08a5db945c723584a8156f7dc86462e31700acf2959e309a6b89666d6e",
+      "sampled_model_text": "Which project should I check for that update? Ah, okay, a timer. It's a unit of measurement. The unit used for time is Day, Day and a half, Day, and a Day, and Day. Day, Day, Day, and Day. One, the day, Day, and Day, and Day. Day, the Day, the Day, Day. Day, Day, Day, Day, Day, Day, Day, Day, Day, Day, Day, Day. Day, Day, Day, Day, Day, Day, Day, Day Day Day Day, Day, Day, Day, Day, Day, Day, Day, Day, Day. Day, Day, Day, Day, Day, Day Day,",
+      "independent_spoken_text": " Which project should I check for that update? Okay, a timer. It's a unit of measurement. The unit used for time is day, day and a half, day and a day and day, day day day and day One, the day day and day and day, day the day the day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day day",
+      "speech_wer": 1.8172043010752688,
+      "time_bounds_valid": false,
+      "word_bounds_valid": false,
+      "first_onset_valid": false,
+      "speech_quality_passed": false,
+      "first_nonzero_pcm_s": 1.8344166666666666,
+      "word_timestamps": [
+        {
+          "text": "Which",
+          "start": 1.61,
+          "end": 7.37,
+          "confidence": 0.534
+        },
+        {
+          "text": "project",
+          "start": 7.37,
+          "end": 7.8100000000000005,
+          "confidence": 0.941
+        },
+        {
+          "text": "should",
+          "start": 7.8100000000000005,
+          "end": 8.09,
+          "confidence": 0.995
+        },
+        {
+          "text": "I",
+          "start": 8.09,
+          "end": 8.209999999999999,
+          "confidence": 0.973
+        },
+        {
+          "text": "check",
+          "start": 8.209999999999999,
+          "end": 8.39,
+          "confidence": 0.986
+        },
+        {
+          "text": "for",
+          "start": 8.39,
+          "end": 8.57,
+          "confidence": 0.979
+        },
+        {
+          "text": "that",
+          "start": 8.57,
+          "end": 8.77,
+          "confidence": 0.979
+        },
+        {
+          "text": "update?",
+          "start": 8.77,
+          "end": 9.07,
+          "confidence": 0.973
+        },
+        {
+          "text": "Okay,",
+          "start": 14.25,
+          "end": 14.55,
+          "confidence": 0.632
+        },
+        {
+          "text": "a",
+          "start": 14.81,
+          "end": 15.05,
+          "confidence": 0.981
+        },
+        {
+          "text": "timer.",
+          "start": 15.05,
+          "end": 15.35,
+          "confidence": 0.914
+        },
+        {
+          "text": "It's",
+          "start": 16.25,
+          "end": 16.47,
+          "confidence": 0.973
+        },
+        {
+          "text": "a",
+          "start": 16.47,
+          "end": 16.57,
+          "confidence": 0.999
+        },
+        {
+          "text": "unit",
+          "start": 16.57,
+          "end": 16.91,
+          "confidence": 0.986
+        },
+        {
+          "text": "of",
+          "start": 16.91,
+          "end": 17.09,
+          "confidence": 0.998
+        },
+        {
+          "text": "measurement.",
+          "start": 17.09,
+          "end": 17.43,
+          "confidence": 0.991
+        },
+        {
+          "text": "The",
+          "start": 18.19,
+          "end": 18.39,
+          "confidence": 0.92
+        },
+        {
+          "text": "unit",
+          "start": 18.39,
+          "end": 18.63,
+          "confidence": 0.993
+        },
+        {
+          "text": "used",
+          "start": 18.63,
+          "end": 18.91,
+          "confidence": 0.993
+        },
+        {
+          "text": "for",
+          "start": 18.91,
+          "end": 19.11,
+          "confidence": 1.0
+        },
+        {
+          "text": "time",
+          "start": 19.11,
+          "end": 19.35,
+          "confidence": 0.988
+        },
+        {
+          "text": "is",
+          "start": 19.35,
+          "end": 19.55,
+          "confidence": 0.996
+        },
+        {
+          "text": "day,",
+          "start": 19.55,
+          "end": 19.830000000000002,
+          "confidence": 0.94
+        },
+        {
+          "text": "day",
+          "start": 19.990000000000002,
+          "end": 20.35,
+          "confidence": 0.994
+        },
+        {
+          "text": "and",
+          "start": 20.35,
+          "end": 20.53,
+          "confidence": 0.971
+        },
+        {
+          "text": "a",
+          "start": 20.53,
+          "end": 20.61,
+          "confidence": 0.998
+        },
+        {
+          "text": "half,",
+          "start": 20.61,
+          "end": 20.85,
+          "confidence": 0.995
+        },
+        {
+          "text": "day",
+          "start": 21.13,
+          "end": 21.45,
+          "confidence": 0.984
+        },
+        {
+          "text": "and",
+          "start": 21.45,
+          "end": 21.65,
+          "confidence": 0.992
+        },
+        {
+          "text": "a",
+          "start": 21.65,
+          "end": 21.75,
+          "confidence": 0.999
+        },
+        {
+          "text": "day",
+          "start": 21.75,
+          "end": 21.95,
+          "confidence": 1.0
+        },
+        {
+          "text": "and",
+          "start": 21.95,
+          "end": 22.17,
+          "confidence": 0.985
+        },
+        {
+          "text": "day,",
+          "start": 22.17,
+          "end": 22.43,
+          "confidence": 0.865
+        },
+        {
+          "text": "day",
+          "start": 22.57,
+          "end": 23.13,
+          "confidence": 0.965
+        },
+        {
+          "text": "day",
+          "start": 23.13,
+          "end": 23.45,
+          "confidence": 0.696
+        },
+        {
+          "text": "day",
+          "start": 23.45,
+          "end": 23.71,
+          "confidence": 1.0
+        },
+        {
+          "text": "and",
+          "start": 23.71,
+          "end": 23.990000000000002,
+          "confidence": 0.994
+        },
+        {
+          "text": "day",
+          "start": 23.990000000000002,
+          "end": 24.27,
+          "confidence": 0.999
+        },
+        {
+          "text": "One,",
+          "start": 24.67,
+          "end": 24.95,
+          "confidence": 0.292
+        },
+        {
+          "text": "the",
+          "start": 25.05,
+          "end": 25.41,
+          "confidence": 0.887
+        },
+        {
+          "text": "day",
+          "start": 25.41,
+          "end": 25.61,
+          "confidence": 0.946
+        },
+        {
+          "text": "day",
+          "start": 25.61,
+          "end": 25.93,
+          "confidence": 0.394
+        },
+        {
+          "text": "and",
+          "start": 25.93,
+          "end": 26.19,
+          "confidence": 0.823
+        },
+        {
+          "text": "day",
+          "start": 26.19,
+          "end": 26.41,
+          "confidence": 0.994
+        },
+        {
+          "text": "and",
+          "start": 26.41,
+          "end": 26.65,
+          "confidence": 0.971
+        },
+        {
+          "text": "day,",
+          "start": 26.65,
+          "end": 26.93,
+          "confidence": 0.277
+        },
+        {
+          "text": "day",
+          "start": 27.15,
+          "end": 28.11,
+          "confidence": 0.788
+        },
+        {
+          "text": "the",
+          "start": 28.11,
+          "end": 28.29,
+          "confidence": 0.824
+        },
+        {
+          "text": "day",
+          "start": 28.29,
+          "end": 28.45,
+          "confidence": 0.995
+        },
+        {
+          "text": "the",
+          "start": 28.45,
+          "end": 28.61,
+          "confidence": 0.893
+        },
+        {
+          "text": "day",
+          "start": 28.61,
+          "end": 28.79,
+          "confidence": 0.988
+        },
+        {
+          "text": "day",
+          "start": 28.79,
+          "end": 29.07,
+          "confidence": 0.764
+        },
+        {
+          "text": "day",
+          "start": 29.07,
+          "end": 29.77,
+          "confidence": 0.432
+        },
+        {
+          "text": "day",
+          "start": 29.77,
+          "end": 29.990000000000002,
+          "confidence": 0.776
+        },
+        {
+          "text": "day",
+          "start": 29.990000000000002,
+          "end": 30.73,
+          "confidence": 0.884
+        },
+        {
+          "text": "day",
+          "start": 30.73,
+          "end": 31.05,
+          "confidence": 0.908
+        },
+        {
+          "text": "day",
+          "start": 31.05,
+          "end": 31.27,
+          "confidence": 0.902
+        },
+        {
+          "text": "day",
+          "start": 31.27,
+          "end": 31.61,
+          "confidence": 0.869
+        },
+        {
+          "text": "day",
+          "start": 31.61,
+          "end": 31.93,
+          "confidence": 0.833
+        },
+        {
+          "text": "day",
+          "start": 31.93,
+          "end": 31.95,
+          "confidence": 0.891
+        },
+        {
+          "text": "day",
+          "start": 31.95,
+          "end": 32.17,
+          "confidence": 0.841
+        },
+        {
+          "text": "day",
+          "start": 32.17,
+          "end": 32.309999999999995,
+          "confidence": 0.779
+        },
+        {
+          "text": "day",
+          "start": 32.309999999999995,
+          "end": 32.97,
+          "confidence": 0.796
+        },
+        {
+          "text": "day",
+          "start": 32.97,
+          "end": 33.21,
+          "confidence": 0.775
+        },
+        {
+          "text": "day",
+          "start": 33.21,
+          "end": 33.35,
+          "confidence": 0.801
+        },
+        {
+          "text": "day",
+          "start": 33.35,
+          "end": 33.41,
+          "confidence": 0.835
+        },
+        {
+          "text": "day",
+          "start": 33.41,
+          "end": 33.67,
+          "confidence": 0.865
+        },
+        {
+          "text": "day",
+          "start": 33.67,
+          "end": 33.81,
+          "confidence": 0.879
+        },
+        {
+          "text": "day",
+          "start": 33.81,
+          "end": 34.01,
+          "confidence": 0.892
+        },
+        {
+          "text": "day",
+          "start": 34.01,
+          "end": 34.29,
+          "confidence": 0.904
+        },
+        {
+          "text": "day",
+          "start": 34.29,
+          "end": 34.410000000000004,
+          "confidence": 0.912
+        },
+        {
+          "text": "day",
+          "start": 34.410000000000004,
+          "end": 34.95,
+          "confidence": 0.918
+        },
+        {
+          "text": "day",
+          "start": 34.95,
+          "end": 35.35,
+          "confidence": 0.921
+        },
+        {
+          "text": "day",
+          "start": 35.35,
+          "end": 35.37,
+          "confidence": 0.924
+        },
+        {
+          "text": "day",
+          "start": 35.37,
+          "end": 35.39,
+          "confidence": 0.925
+        },
+        {
+          "text": "day",
+          "start": 35.39,
+          "end": 35.57,
+          "confidence": 0.925
+        },
+        {
+          "text": "day",
+          "start": 35.57,
+          "end": 35.79,
+          "confidence": 0.923
+        },
+        {
+          "text": "day",
+          "start": 35.79,
+          "end": 35.81,
+          "confidence": 0.921
+        },
+        {
+          "text": "day",
+          "start": 35.81,
+          "end": 36.17,
+          "confidence": 0.918
+        },
+        {
+          "text": "day",
+          "start": 36.17,
+          "end": 36.19,
+          "confidence": 0.915
+        },
+        {
+          "text": "day",
+          "start": 36.19,
+          "end": 36.43,
+          "confidence": 0.911
+        },
+        {
+          "text": "day",
+          "start": 36.43,
+          "end": 36.45,
+          "confidence": 0.906
+        },
+        {
+          "text": "day",
+          "start": 36.45,
+          "end": 36.47,
+          "confidence": 0.906
+        },
+        {
+          "text": "day",
+          "start": 36.47,
+          "end": 36.49,
+          "confidence": 0.901
+        },
+        {
+          "text": "day",
+          "start": 36.49,
+          "end": 36.87,
+          "confidence": 0.895
+        },
+        {
+          "text": "day",
+          "start": 36.87,
+          "end": 36.93,
+          "confidence": 0.89
+        },
+        {
+          "text": "day",
+          "start": 36.93,
+          "end": 36.99,
+          "confidence": 0.884
+        },
+        {
+          "text": "day",
+          "start": 36.99,
+          "end": 37.05,
+          "confidence": 0.877
+        },
+        {
+          "text": "day",
+          "start": 37.05,
+          "end": 37.07,
+          "confidence": 0.878
+        },
+        {
+          "text": "day",
+          "start": 37.07,
+          "end": 37.09,
+          "confidence": 0.878
+        },
+        {
+          "text": "day",
+          "start": 37.09,
+          "end": 37.11,
+          "confidence": 0.868
+        },
+        {
+          "text": "day",
+          "start": 37.11,
+          "end": 37.13,
+          "confidence": 0.871
+        },
+        {
+          "text": "day",
+          "start": 37.13,
+          "end": 37.15,
+          "confidence": 0.867
+        },
+        {
+          "text": "day",
+          "start": 37.15,
+          "end": 37.23,
+          "confidence": 0.869
+        },
+        {
+          "text": "day",
+          "start": 37.23,
+          "end": 37.25,
+          "confidence": 0.861
+        },
+        {
+          "text": "day",
+          "start": 37.25,
+          "end": 37.27,
+          "confidence": 0.858
+        },
+        {
+          "text": "day",
+          "start": 37.27,
+          "end": 37.410000000000004,
+          "confidence": 0.858
+        },
+        {
+          "text": "day",
+          "start": 37.410000000000004,
+          "end": 37.43,
+          "confidence": 0.854
+        },
+        {
+          "text": "day",
+          "start": 37.43,
+          "end": 37.45,
+          "confidence": 0.85
+        },
+        {
+          "text": "day",
+          "start": 37.45,
+          "end": 37.49,
+          "confidence": 0.851
+        },
+        {
+          "text": "day",
+          "start": 37.49,
+          "end": 37.51,
+          "confidence": 0.85
+        },
+        {
+          "text": "day",
+          "start": 37.51,
+          "end": 37.53,
+          "confidence": 0.851
+        },
+        {
+          "text": "day",
+          "start": 37.53,
+          "end": 37.55,
+          "confidence": 0.85
+        },
+        {
+          "text": "day",
+          "start": 37.55,
+          "end": 37.57,
+          "confidence": 0.849
+        },
+        {
+          "text": "day",
+          "start": 37.57,
+          "end": 37.59,
+          "confidence": 0.852
+        },
+        {
+          "text": "day",
+          "start": 37.59,
+          "end": 37.61,
+          "confidence": 0.856
+        },
+        {
+          "text": "day",
+          "start": 37.61,
+          "end": 37.63,
+          "confidence": 0.853
+        },
+        {
+          "text": "day",
+          "start": 37.63,
+          "end": 37.65,
+          "confidence": 0.859
+        },
+        {
+          "text": "day",
+          "start": 37.65,
+          "end": 37.67,
+          "confidence": 0.859
+        },
+        {
+          "text": "day",
+          "start": 37.67,
+          "end": 37.69,
+          "confidence": 0.861
+        },
+        {
+          "text": "day",
+          "start": 37.69,
+          "end": 37.71,
+          "confidence": 0.865
+        },
+        {
+          "text": "day",
+          "start": 37.71,
+          "end": 37.73,
+          "confidence": 0.865
+        },
+        {
+          "text": "day",
+          "start": 37.73,
+          "end": 37.75,
+          "confidence": 0.869
+        },
+        {
+          "text": "day",
+          "start": 37.75,
+          "end": 37.77,
+          "confidence": 0.872
+        },
+        {
+          "text": "day",
+          "start": 37.77,
+          "end": 37.79,
+          "confidence": 0.873
+        },
+        {
+          "text": "day",
+          "start": 37.79,
+          "end": 37.81,
+          "confidence": 0.881
+        },
+        {
+          "text": "day",
+          "start": 37.81,
+          "end": 37.83,
+          "confidence": 0.884
+        },
+        {
+          "text": "day",
+          "start": 37.83,
+          "end": 37.85,
+          "confidence": 0.89
+        },
+        {
+          "text": "day",
+          "start": 37.85,
+          "end": 37.87,
+          "confidence": 0.89
+        },
+        {
+          "text": "day",
+          "start": 37.87,
+          "end": 37.89,
+          "confidence": 0.894
+        },
+        {
+          "text": "day",
+          "start": 37.89,
+          "end": 37.910000000000004,
+          "confidence": 0.898
+        },
+        {
+          "text": "day",
+          "start": 37.910000000000004,
+          "end": 37.93,
+          "confidence": 0.899
+        },
+        {
+          "text": "day",
+          "start": 37.93,
+          "end": 37.95,
+          "confidence": 0.906
+        },
+        {
+          "text": "day",
+          "start": 37.95,
+          "end": 37.97,
+          "confidence": 0.908
+        },
+        {
+          "text": "day",
+          "start": 37.97,
+          "end": 37.99,
+          "confidence": 0.913
+        },
+        {
+          "text": "day",
+          "start": 37.99,
+          "end": 38.01,
+          "confidence": 0.916
+        },
+        {
+          "text": "day",
+          "start": 38.01,
+          "end": 38.03,
+          "confidence": 0.919
+        },
+        {
+          "text": "day",
+          "start": 38.03,
+          "end": 38.05,
+          "confidence": 0.925
+        },
+        {
+          "text": "day",
+          "start": 38.05,
+          "end": 38.07,
+          "confidence": 0.925
+        },
+        {
+          "text": "day",
+          "start": 38.07,
+          "end": 38.09,
+          "confidence": 0.93
+        },
+        {
+          "text": "day",
+          "start": 38.09,
+          "end": 38.11,
+          "confidence": 0.932
+        },
+        {
+          "text": "day",
+          "start": 38.11,
+          "end": 38.13,
+          "confidence": 0.936
+        },
+        {
+          "text": "day",
+          "start": 38.13,
+          "end": 38.15,
+          "confidence": 0.938
+        },
+        {
+          "text": "day",
+          "start": 38.15,
+          "end": 38.17,
+          "confidence": 0.94
+        },
+        {
+          "text": "day",
+          "start": 38.17,
+          "end": 38.19,
+          "confidence": 0.944
+        },
+        {
+          "text": "day",
+          "start": 38.19,
+          "end": 38.21,
+          "confidence": 0.946
+        },
+        {
+          "text": "day",
+          "start": 38.21,
+          "end": 38.23,
+          "confidence": 0.949
+        },
+        {
+          "text": "day",
+          "start": 38.23,
+          "end": 38.25,
+          "confidence": 0.951
+        },
+        {
+          "text": "day",
+          "start": 38.25,
+          "end": 38.27,
+          "confidence": 0.953
+        },
+        {
+          "text": "day",
+          "start": 38.27,
+          "end": 38.29,
+          "confidence": 0.954
+        },
+        {
+          "text": "day",
+          "start": 38.29,
+          "end": 38.31,
+          "confidence": 0.957
+        },
+        {
+          "text": "day",
+          "start": 38.31,
+          "end": 38.33,
+          "confidence": 0.959
+        },
+        {
+          "text": "day",
+          "start": 38.33,
+          "end": 38.35,
+          "confidence": 0.961
+        },
+        {
+          "text": "day",
+          "start": 38.35,
+          "end": 38.37,
+          "confidence": 0.962
+        },
+        {
+          "text": "day",
+          "start": 38.37,
+          "end": 38.39,
+          "confidence": 0.964
+        },
+        {
+          "text": "day",
+          "start": 38.39,
+          "end": 38.410000000000004,
+          "confidence": 0.965
+        },
+        {
+          "text": "day",
+          "start": 38.410000000000004,
+          "end": 38.43,
+          "confidence": 0.967
+        },
+        {
+          "text": "day",
+          "start": 38.43,
+          "end": 38.45,
+          "confidence": 0.968
+        },
+        {
+          "text": "day",
+          "start": 38.45,
+          "end": 38.47,
+          "confidence": 0.97
+        },
+        {
+          "text": "day",
+          "start": 38.47,
+          "end": 38.49,
+          "confidence": 0.971
+        },
+        {
+          "text": "day",
+          "start": 38.49,
+          "end": 38.51,
+          "confidence": 0.972
+        },
+        {
+          "text": "day",
+          "start": 38.51,
+          "end": 38.53,
+          "confidence": 0.975
+        },
+        {
+          "text": "day",
+          "start": 38.53,
+          "end": 38.55,
+          "confidence": 0.975
+        },
+        {
+          "text": "day",
+          "start": 38.55,
+          "end": 38.57,
+          "confidence": 0.976
+        },
+        {
+          "text": "day",
+          "start": 38.57,
+          "end": 38.59,
+          "confidence": 0.977
+        },
+        {
+          "text": "day",
+          "start": 38.59,
+          "end": 38.61,
+          "confidence": 0.978
+        },
+        {
+          "text": "day",
+          "start": 38.61,
+          "end": 38.63,
+          "confidence": 0.979
+        },
+        {
+          "text": "day",
+          "start": 38.63,
+          "end": 38.65,
+          "confidence": 0.98
+        },
+        {
+          "text": "day",
+          "start": 38.65,
+          "end": 38.67,
+          "confidence": 0.981
+        },
+        {
+          "text": "day",
+          "start": 38.67,
+          "end": 38.69,
+          "confidence": 0.981
+        },
+        {
+          "text": "day",
+          "start": 38.69,
+          "end": 38.71,
+          "confidence": 0.982
+        },
+        {
+          "text": "day",
+          "start": 38.71,
+          "end": 38.73,
+          "confidence": 0.983
+        },
+        {
+          "text": "day",
+          "start": 38.73,
+          "end": 38.75,
+          "confidence": 0.984
+        },
+        {
+          "text": "day",
+          "start": 38.75,
+          "end": 38.77,
+          "confidence": 0.984
+        },
+        {
+          "text": "day",
+          "start": 38.77,
+          "end": 38.79,
+          "confidence": 0.985
+        },
+        {
+          "text": "day",
+          "start": 38.79,
+          "end": 38.81,
+          "confidence": 0.985
+        },
+        {
+          "text": "day",
+          "start": 38.81,
+          "end": 38.83,
+          "confidence": 0.986
+        },
+        {
+          "text": "day",
+          "start": 38.83,
+          "end": 38.85,
+          "confidence": 0.986
+        },
+        {
+          "text": "day",
+          "start": 38.85,
+          "end": 38.87,
+          "confidence": 0.987
+        },
+        {
+          "text": "day",
+          "start": 38.87,
+          "end": 38.89,
+          "confidence": 0.987
+        },
+        {
+          "text": "day",
+          "start": 38.89,
+          "end": 38.910000000000004,
+          "confidence": 0.988
+        },
+        {
+          "text": "day",
+          "start": 38.910000000000004,
+          "end": 38.93,
+          "confidence": 0.988
+        },
+        {
+          "text": "day",
+          "start": 38.93,
+          "end": 38.95,
+          "confidence": 0.989
+        },
+        {
+          "text": "day",
+          "start": 38.95,
+          "end": 38.97,
+          "confidence": 0.989
+        },
+        {
+          "text": "day",
+          "start": 38.97,
+          "end": 38.99,
+          "confidence": 0.989
+        },
+        {
+          "text": "day",
+          "start": 38.99,
+          "end": 39.01,
+          "confidence": 0.989
+        },
+        {
+          "text": "day",
+          "start": 39.01,
+          "end": 39.03,
+          "confidence": 0.99
+        },
+        {
+          "text": "day",
+          "start": 39.03,
+          "end": 39.05,
+          "confidence": 0.99
+        },
+        {
+          "text": "day",
+          "start": 39.05,
+          "end": 39.07,
+          "confidence": 0.99
+        },
+        {
+          "text": "day",
+          "start": 39.07,
+          "end": 39.09,
+          "confidence": 0.991
+        },
+        {
+          "text": "day",
+          "start": 39.09,
+          "end": 39.11,
+          "confidence": 0.991
+        },
+        {
+          "text": "day",
+          "start": 39.11,
+          "end": 39.13,
+          "confidence": 0.991
+        },
+        {
+          "text": "day",
+          "start": 39.13,
+          "end": 39.15,
+          "confidence": 0.992
+        },
+        {
+          "text": "day",
+          "start": 39.15,
+          "end": 39.17,
+          "confidence": 0.992
+        },
+        {
+          "text": "day",
+          "start": 39.17,
+          "end": 39.19,
+          "confidence": 0.992
+        },
+        {
+          "text": "day",
+          "start": 39.19,
+          "end": 39.21,
+          "confidence": 0.992
+        },
+        {
+          "text": "day",
+          "start": 39.21,
+          "end": 39.23,
+          "confidence": 0.993
+        },
+        {
+          "text": "day",
+          "start": 39.23,
+          "end": 39.25,
+          "confidence": 0.993
+        },
+        {
+          "text": "day",
+          "start": 39.25,
+          "end": 39.27,
+          "confidence": 0.993
+        },
+        {
+          "text": "day",
+          "start": 39.27,
+          "end": 39.29,
+          "confidence": 0.993
+        },
+        {
+          "text": "day",
+          "start": 39.29,
+          "end": 39.31,
+          "confidence": 0.993
+        },
+        {
+          "text": "day",
+          "start": 39.31,
+          "end": 39.33,
+          "confidence": 0.993
+        },
+        {
+          "text": "day",
+          "start": 39.33,
+          "end": 39.35,
+          "confidence": 0.994
+        },
+        {
+          "text": "day",
+          "start": 39.35,
+          "end": 39.37,
+          "confidence": 0.994
+        },
+        {
+          "text": "day",
+          "start": 39.37,
+          "end": 39.39,
+          "confidence": 0.994
+        },
+        {
+          "text": "day",
+          "start": 39.39,
+          "end": 39.410000000000004,
+          "confidence": 0.994
+        },
+        {
+          "text": "day",
+          "start": 39.410000000000004,
+          "end": 39.43,
+          "confidence": 0.994
+        },
+        {
+          "text": "day",
+          "start": 39.43,
+          "end": 39.45,
+          "confidence": 0.994
+        },
+        {
+          "text": "day",
+          "start": 39.45,
+          "end": 39.47,
+          "confidence": 0.994
+        },
+        {
+          "text": "day",
+          "start": 39.47,
+          "end": 39.49,
+          "confidence": 0.995
+        },
+        {
+          "text": "day",
+          "start": 39.49,
+          "end": 39.51,
+          "confidence": 0.994
+        },
+        {
+          "text": "day",
+          "start": 39.51,
+          "end": 39.53,
+          "confidence": 0.995
+        },
+        {
+          "text": "day",
+          "start": 39.53,
+          "end": 39.55,
+          "confidence": 0.995
+        },
+        {
+          "text": "day",
+          "start": 39.55,
+          "end": 39.57,
+          "confidence": 0.995
+        },
+        {
+          "text": "day",
+          "start": 39.57,
+          "end": 39.59,
+          "confidence": 0.995
+        },
+        {
+          "text": "day",
+          "start": 39.59,
+          "end": 39.61,
+          "confidence": 0.995
+        },
+        {
+          "text": "day",
+          "start": 39.61,
+          "end": 39.63,
+          "confidence": 0.995
+        },
+        {
+          "text": "day",
+          "start": 39.63,
+          "end": 39.65,
+          "confidence": 0.995
+        },
+        {
+          "text": "day",
+          "start": 39.65,
+          "end": 39.67,
+          "confidence": 0.995
+        },
+        {
+          "text": "day",
+          "start": 39.67,
+          "end": 39.69,
+          "confidence": 0.995
+        },
+        {
+          "text": "day",
+          "start": 39.69,
+          "end": 39.71,
+          "confidence": 0.995
+        },
+        {
+          "text": "day",
+          "start": 39.71,
+          "end": 39.73,
+          "confidence": 0.996
+        },
+        {
+          "text": "day",
+          "start": 39.73,
+          "end": 39.75,
+          "confidence": 0.996
+        },
+        {
+          "text": "day",
+          "start": 39.75,
+          "end": 39.77,
+          "confidence": 0.996
+        },
+        {
+          "text": "day",
+          "start": 39.77,
+          "end": 39.79,
+          "confidence": 0.996
+        },
+        {
+          "text": "day",
+          "start": 39.79,
+          "end": 39.81,
+          "confidence": 0.996
+        },
+        {
+          "text": "day",
+          "start": 39.81,
+          "end": 39.83,
+          "confidence": 0.996
+        },
+        {
+          "text": "day",
+          "start": 39.83,
+          "end": 39.85,
+          "confidence": 0.996
+        },
+        {
+          "text": "day",
+          "start": 39.85,
+          "end": 39.87,
+          "confidence": 0.996
+        },
+        {
+          "text": "day",
+          "start": 39.87,
+          "end": 39.89,
+          "confidence": 0.996
+        },
+        {
+          "text": "day",
+          "start": 39.89,
+          "end": 39.910000000000004,
+          "confidence": 0.996
+        },
+        {
+          "text": "day",
+          "start": 39.910000000000004,
+          "end": 39.93,
+          "confidence": 0.996
+        },
+        {
+          "text": "day",
+          "start": 39.93,
+          "end": 39.95,
+          "confidence": 0.996
+        },
+        {
+          "text": "day",
+          "start": 39.95,
+          "end": 39.97,
+          "confidence": 0.996
+        },
+        {
+          "text": "day",
+          "start": 39.97,
+          "end": 39.99,
+          "confidence": 0.996
+        },
+        {
+          "text": "day",
+          "start": 39.99,
+          "end": 40.01,
+          "confidence": 0.996
+        },
+        {
+          "text": "day",
+          "start": 40.01,
+          "end": 40.03,
+          "confidence": 0.996
+        },
+        {
+          "text": "day",
+          "start": 40.03,
+          "end": 40.05,
+          "confidence": 0.996
+        },
+        {
+          "text": "day",
+          "start": 40.05,
+          "end": 40.07,
+          "confidence": 0.996
+        },
+        {
+          "text": "day",
+          "start": 40.07,
+          "end": 40.09,
+          "confidence": 0.996
+        },
+        {
+          "text": "day",
+          "start": 40.09,
+          "end": 40.11,
+          "confidence": 0.996
+        },
+        {
+          "text": "day",
+          "start": 40.11,
+          "end": 40.13,
+          "confidence": 0.997
+        },
+        {
+          "text": "day",
+          "start": 40.13,
+          "end": 40.15,
+          "confidence": 0.997
+        },
+        {
+          "text": "day",
+          "start": 40.15,
+          "end": 40.17,
+          "confidence": 0.997
+        },
+        {
+          "text": "day",
+          "start": 40.17,
+          "end": 40.19,
+          "confidence": 0.997
+        },
+        {
+          "text": "day",
+          "start": 40.19,
+          "end": 40.21,
+          "confidence": 0.997
+        },
+        {
+          "text": "day",
+          "start": 40.21,
+          "end": 40.23,
+          "confidence": 0.997
+        },
+        {
+          "text": "day",
+          "start": 40.23,
+          "end": 40.25,
+          "confidence": 0.997
+        },
+        {
+          "text": "day",
+          "start": 40.25,
+          "end": 40.27,
+          "confidence": 0.997
+        },
+        {
+          "text": "day",
+          "start": 40.27,
+          "end": 40.29,
+          "confidence": 0.997
+        },
+        {
+          "text": "day",
+          "start": 40.29,
+          "end": 40.31,
+          "confidence": 0.997
+        },
+        {
+          "text": "day",
+          "start": 40.31,
+          "end": 40.33,
+          "confidence": 0.997
+        },
+        {
+          "text": "day",
+          "start": 40.33,
+          "end": 40.35,
+          "confidence": 0.997
+        },
+        {
+          "text": "day",
+          "start": 40.35,
+          "end": 40.37,
+          "confidence": 0.997
+        },
+        {
+          "text": "day",
+          "start": 40.37,
+          "end": 40.39,
+          "confidence": 0.997
+        },
+        {
+          "text": "day",
+          "start": 40.39,
+          "end": 40.410000000000004,
+          "confidence": 0.997
+        },
+        {
+          "text": "day",
+          "start": 40.410000000000004,
+          "end": 40.43,
+          "confidence": 0.997
+        },
+        {
+          "text": "day",
+          "start": 40.43,
+          "end": 40.45,
+          "confidence": 0.997
+        },
+        {
+          "text": "day",
+          "start": 40.45,
+          "end": 40.47,
+          "confidence": 0.997
+        },
+        {
+          "text": "day",
+          "start": 40.47,
+          "end": 40.49,
+          "confidence": 0.997
+        },
+        {
+          "text": "day",
+          "start": 40.49,
+          "end": 40.51,
+          "confidence": 0.997
+        },
+        {
+          "text": "day",
+          "start": 40.51,
+          "end": 40.53,
+          "confidence": 0.997
+        },
+        {
+          "text": "day",
+          "start": 40.53,
+          "end": 40.55,
+          "confidence": 0.997
+        },
+        {
+          "text": "day",
+          "start": 40.55,
+          "end": 40.57,
+          "confidence": 0.997
+        },
+        {
+          "text": "day",
+          "start": 40.57,
+          "end": 40.59,
+          "confidence": 0.997
+        },
+        {
+          "text": "day",
+          "start": 40.59,
+          "end": 40.61,
+          "confidence": 0.997
+        },
+        {
+          "text": "day",
+          "start": 40.61,
+          "end": 40.63,
+          "confidence": 0.997
+        },
+        {
+          "text": "day",
+          "start": 40.63,
+          "end": 40.65,
+          "confidence": 0.997
+        },
+        {
+          "text": "day",
+          "start": 40.65,
+          "end": 40.67,
+          "confidence": 0.997
+        }
+      ],
+      "pcm": {
+        "rate": 24000,
+        "samples": 904393,
+        "peak": 0.892242431640625,
+        "full_scale_samples": 0,
+        "gain_changed": false
+      },
+      "all_user_samples_processed": true,
+      "worker_events": [],
+      "native_request_count": 1,
+      "compute_p95_s": 0.04380466044094646,
+      "maximum_input_backlog_s": 1.6831934779963922,
+      "playout": {
+        "sample_rate": 24000,
+        "startup_buffer_s": 0.16,
+        "packet_count": 448,
+        "source_samples": 860160,
+        "underrun_count": 1,
+        "underrun_samples": 207
+      },
+      "human_listening_performed": false,
+      "candidate_adopted": false,
+      "quiet_interval_s": [
+        0.0,
+        12.41
+      ],
+      "source_wav_sha256": "13d48e7bf811dd453a445de36b8f074a2dfd9d73ef9ba9d2ba3cc458529c8673",
+      "source_sidecar_sha256": "c0148171c1eab178cf55c0814cd52378d09e8853a3e03438c5ccd1e98f4c6dcc",
+      "diagnostic_words_in_quiet": [
+        {
+          "text": "Which",
+          "start": 1.61,
+          "end": 7.37,
+          "confidence": 0.534
+        },
+        {
+          "text": "project",
+          "start": 7.37,
+          "end": 7.8100000000000005,
+          "confidence": 0.941
+        },
+        {
+          "text": "should",
+          "start": 7.8100000000000005,
+          "end": 8.09,
+          "confidence": 0.995
+        },
+        {
+          "text": "I",
+          "start": 8.09,
+          "end": 8.209999999999999,
+          "confidence": 0.973
+        },
+        {
+          "text": "check",
+          "start": 8.209999999999999,
+          "end": 8.39,
+          "confidence": 0.986
+        },
+        {
+          "text": "for",
+          "start": 8.39,
+          "end": 8.57,
+          "confidence": 0.979
+        },
+        {
+          "text": "that",
+          "start": 8.57,
+          "end": 8.77,
+          "confidence": 0.979
+        },
+        {
+          "text": "update?",
+          "start": 8.77,
+          "end": 9.07,
+          "confidence": 0.973
+        }
+      ],
+      "diagnostic_actual_pcm_at_words": [
+        {
+          "word": "Which",
+          "start": 1.61,
+          "end": 7.37,
+          "rms": 0.017373099018435086,
+          "peak": 0.36004638671875
+        },
+        {
+          "word": "project",
+          "start": 7.37,
+          "end": 7.8100000000000005,
+          "rms": 0.10311377935422099,
+          "peak": 0.51763916015625
+        },
+        {
+          "word": "should",
+          "start": 7.8100000000000005,
+          "end": 8.09,
+          "rms": 0.07055993301781675,
+          "peak": 0.380859375
+        },
+        {
+          "word": "I",
+          "start": 8.09,
+          "end": 8.209999999999999,
+          "rms": 0.0590679499686155,
+          "peak": 0.27142333984375
+        },
+        {
+          "word": "check",
+          "start": 8.209999999999999,
+          "end": 8.39,
+          "rms": 0.05098636678396916,
+          "peak": 0.35015869140625
+        },
+        {
+          "word": "for",
+          "start": 8.39,
+          "end": 8.57,
+          "rms": 0.03175504003911474,
+          "peak": 0.237640380859375
+        },
+        {
+          "word": "that",
+          "start": 8.57,
+          "end": 8.77,
+          "rms": 0.048879674502444646,
+          "peak": 0.195037841796875
+        },
+        {
+          "word": "update?",
+          "start": 8.77,
+          "end": 9.07,
+          "rms": 0.03777387482810917,
+          "peak": 0.295562744140625
+        }
+      ],
+      "quiet_interval_word_check_passed": false,
+      "clock_warning": "No global speech gate bypass; failed timestamps make overlaps diagnostic only",
+      "behavior_review": "fail",
+      "reason": "Unrequested project question before Ready12.41, then severe Day repetition. Full speechWER1.817204 and time/word/onset bounds fail. Diagnostic preReady words retained; no timestamp subset, gain reduction or clock repair accepted.",
+      "ordinary_core_correct": null,
+      "behavior_and_receipts_reviewed": true,
+      "speech_quality_issue_reviewed": true,
+      "training_approved": false
+    },
+    {
+      "index": 5,
+      "scenario": "native2-train-015",
+      "expected": "Finish put the book on the shelf, stay quiet during pause, and say close the cupboard after go without restarting",
+      "report_sha256": "ada47466f341c18554c2a355827735374206a05b0bd210c72377b39ca5d3abdd",
+      "audio_sha256": "8ef0fe47a214fc5da94b3ee3b5587955288df3adfb3afbe54140a161dac55f05",
+      "sampled_model_text": "Okay, I've That's what I've done. The cupboard's all closed. I'm quiet, waiting. And now, the room's quiet. Would you like to open the other rooms, or should I keep it that way? Would you like to try a different room, or should I stay in this one instead? Do you want to keep it quiet, or should I turn",
+      "independent_spoken_text": " Okay, I've That's what I've done. The cupboard's all closed. I'm quiet, waiting. And now, the room's quiet. Would you like to open the other rooms, or should I keep it that way? Would you like to try a different room, or should I stay in this one instead? Do you want to keep it quiet, or should I",
+      "speech_wer": 0.015151515151515152,
+      "time_bounds_valid": true,
+      "word_bounds_valid": true,
+      "first_onset_valid": true,
+      "speech_quality_passed": true,
+      "first_nonzero_pcm_s": 1.7991666666666666,
+      "word_timestamps": [
+        {
+          "text": "Okay,",
+          "start": 7.31,
+          "end": 7.45,
+          "confidence": 0.415
+        },
+        {
+          "text": "I've",
+          "start": 7.51,
+          "end": 7.87,
+          "confidence": 0.706
+        },
+        {
+          "text": "That's",
+          "start": 11.21,
+          "end": 11.49,
+          "confidence": 0.809
+        },
+        {
+          "text": "what",
+          "start": 11.49,
+          "end": 11.59,
+          "confidence": 0.996
+        },
+        {
+          "text": "I've",
+          "start": 11.59,
+          "end": 11.83,
+          "confidence": 0.99
+        },
+        {
+          "text": "done.",
+          "start": 11.83,
+          "end": 12.07,
+          "confidence": 0.771
+        },
+        {
+          "text": "The",
+          "start": 12.270000000000001,
+          "end": 12.63,
+          "confidence": 0.427
+        },
+        {
+          "text": "cupboard's",
+          "start": 12.63,
+          "end": 13.17,
+          "confidence": 0.585
+        },
+        {
+          "text": "all",
+          "start": 13.17,
+          "end": 13.370000000000001,
+          "confidence": 0.974
+        },
+        {
+          "text": "closed.",
+          "start": 13.370000000000001,
+          "end": 13.790000000000001,
+          "confidence": 0.888
+        },
+        {
+          "text": "I'm",
+          "start": 19.23,
+          "end": 19.53,
+          "confidence": 0.987
+        },
+        {
+          "text": "quiet,",
+          "start": 19.53,
+          "end": 19.95,
+          "confidence": 0.941
+        },
+        {
+          "text": "waiting.",
+          "start": 20.35,
+          "end": 20.59,
+          "confidence": 0.99
+        },
+        {
+          "text": "And",
+          "start": 24.53,
+          "end": 24.69,
+          "confidence": 0.602
+        },
+        {
+          "text": "now,",
+          "start": 24.69,
+          "end": 24.91,
+          "confidence": 0.65
+        },
+        {
+          "text": "the",
+          "start": 24.93,
+          "end": 25.27,
+          "confidence": 0.98
+        },
+        {
+          "text": "room's",
+          "start": 25.27,
+          "end": 25.59,
+          "confidence": 0.959
+        },
+        {
+          "text": "quiet.",
+          "start": 25.59,
+          "end": 25.89,
+          "confidence": 0.943
+        },
+        {
+          "text": "Would",
+          "start": 28.970000000000002,
+          "end": 29.05,
+          "confidence": 0.246
+        },
+        {
+          "text": "you",
+          "start": 29.05,
+          "end": 29.25,
+          "confidence": 0.996
+        },
+        {
+          "text": "like",
+          "start": 29.25,
+          "end": 29.45,
+          "confidence": 0.998
+        },
+        {
+          "text": "to",
+          "start": 29.45,
+          "end": 29.59,
+          "confidence": 0.996
+        },
+        {
+          "text": "open",
+          "start": 29.59,
+          "end": 29.89,
+          "confidence": 0.997
+        },
+        {
+          "text": "the",
+          "start": 29.89,
+          "end": 30.05,
+          "confidence": 0.988
+        },
+        {
+          "text": "other",
+          "start": 30.05,
+          "end": 30.21,
+          "confidence": 0.996
+        },
+        {
+          "text": "rooms,",
+          "start": 30.21,
+          "end": 30.59,
+          "confidence": 0.858
+        },
+        {
+          "text": "or",
+          "start": 30.91,
+          "end": 31.25,
+          "confidence": 0.906
+        },
+        {
+          "text": "should",
+          "start": 31.25,
+          "end": 31.39,
+          "confidence": 0.995
+        },
+        {
+          "text": "I",
+          "start": 31.39,
+          "end": 31.55,
+          "confidence": 0.979
+        },
+        {
+          "text": "keep",
+          "start": 31.55,
+          "end": 31.73,
+          "confidence": 0.995
+        },
+        {
+          "text": "it",
+          "start": 31.73,
+          "end": 31.93,
+          "confidence": 0.995
+        },
+        {
+          "text": "that",
+          "start": 31.93,
+          "end": 32.11,
+          "confidence": 0.994
+        },
+        {
+          "text": "way?",
+          "start": 32.11,
+          "end": 32.33,
+          "confidence": 0.981
+        },
+        {
+          "text": "Would",
+          "start": 36.87,
+          "end": 37.029999999999994,
+          "confidence": 0.738
+        },
+        {
+          "text": "you",
+          "start": 37.029999999999994,
+          "end": 37.19,
+          "confidence": 0.998
+        },
+        {
+          "text": "like",
+          "start": 37.19,
+          "end": 37.39,
+          "confidence": 0.999
+        },
+        {
+          "text": "to",
+          "start": 37.39,
+          "end": 37.57,
+          "confidence": 0.998
+        },
+        {
+          "text": "try",
+          "start": 37.57,
+          "end": 37.79,
+          "confidence": 0.998
+        },
+        {
+          "text": "a",
+          "start": 37.79,
+          "end": 37.989999999999995,
+          "confidence": 0.996
+        },
+        {
+          "text": "different",
+          "start": 37.989999999999995,
+          "end": 38.209999999999994,
+          "confidence": 0.996
+        },
+        {
+          "text": "room,",
+          "start": 38.209999999999994,
+          "end": 38.589999999999996,
+          "confidence": 0.873
+        },
+        {
+          "text": "or",
+          "start": 38.89,
+          "end": 39.25,
+          "confidence": 0.938
+        },
+        {
+          "text": "should",
+          "start": 39.25,
+          "end": 39.41,
+          "confidence": 0.998
+        },
+        {
+          "text": "I",
+          "start": 39.41,
+          "end": 39.55,
+          "confidence": 0.993
+        },
+        {
+          "text": "stay",
+          "start": 39.55,
+          "end": 39.87,
+          "confidence": 0.998
+        },
+        {
+          "text": "in",
+          "start": 39.87,
+          "end": 40.07,
+          "confidence": 0.998
+        },
+        {
+          "text": "this",
+          "start": 40.07,
+          "end": 40.23,
+          "confidence": 0.999
+        },
+        {
+          "text": "one",
+          "start": 40.23,
+          "end": 40.41,
+          "confidence": 0.998
+        },
+        {
+          "text": "instead?",
+          "start": 40.41,
+          "end": 40.79,
+          "confidence": 0.947
+        },
+        {
+          "text": "Do",
+          "start": 45.309999999999995,
+          "end": 45.449999999999996,
+          "confidence": 0.818
+        },
+        {
+          "text": "you",
+          "start": 45.449999999999996,
+          "end": 45.57,
+          "confidence": 0.995
+        },
+        {
+          "text": "want",
+          "start": 45.57,
+          "end": 45.73,
+          "confidence": 0.998
+        },
+        {
+          "text": "to",
+          "start": 45.73,
+          "end": 45.87,
+          "confidence": 0.998
+        },
+        {
+          "text": "keep",
+          "start": 45.87,
+          "end": 46.01,
+          "confidence": 0.998
+        },
+        {
+          "text": "it",
+          "start": 46.01,
+          "end": 46.169999999999995,
+          "confidence": 0.997
+        },
+        {
+          "text": "quiet,",
+          "start": 46.169999999999995,
+          "end": 46.51,
+          "confidence": 0.383
+        },
+        {
+          "text": "or",
+          "start": 46.61,
+          "end": 46.91,
+          "confidence": 0.927
+        },
+        {
+          "text": "should",
+          "start": 46.91,
+          "end": 47.089999999999996,
+          "confidence": 0.996
+        },
+        {
+          "text": "I",
+          "start": 47.089999999999996,
+          "end": 47.23,
+          "confidence": 0.983
+        }
+      ],
+      "pcm": {
+        "rate": 24000,
+        "samples": 1135660,
+        "peak": 0.738128662109375,
+        "full_scale_samples": 0,
+        "gain_changed": false
+      },
+      "all_user_samples_processed": true,
+      "worker_events": [],
+      "native_request_count": 2,
+      "compute_p95_s": 0.04253147918498144,
+      "maximum_input_backlog_s": 1.6302495780016761,
+      "playout": {
+        "sample_rate": 24000,
+        "startup_buffer_s": 0.16,
+        "packet_count": 569,
+        "source_samples": 1092480,
+        "underrun_count": 0,
+        "underrun_samples": 0
+      },
+      "human_listening_performed": false,
+      "candidate_adopted": false,
+      "quiet_interval_s": [
+        17.54,
+        22.1
+      ],
+      "source_wav_sha256": "f5fbe6856cd4d66314c8ddc8b421374abd133817cb277281599495f76e9159b8",
+      "source_sidecar_sha256": "f81d935cb50272609a3e8cc2f04aed056f57a7899a732e1924d1e4fde061731a",
+      "diagnostic_words_in_quiet": [
+        {
+          "text": "I'm",
+          "start": 19.23,
+          "end": 19.53,
+          "confidence": 0.987
+        },
+        {
+          "text": "quiet,",
+          "start": 19.53,
+          "end": 19.95,
+          "confidence": 0.941
+        },
+        {
+          "text": "waiting.",
+          "start": 20.35,
+          "end": 20.59,
+          "confidence": 0.99
+        }
+      ],
+      "diagnostic_actual_pcm_at_words": [
+        {
+          "word": "I'm",
+          "start": 19.23,
+          "end": 19.53,
+          "rms": 0.06009723339573272,
+          "peak": 0.2425537109375
+        },
+        {
+          "word": "quiet,",
+          "start": 19.53,
+          "end": 19.95,
+          "rms": 0.0634676233688187,
+          "peak": 0.300323486328125
+        },
+        {
+          "word": "waiting.",
+          "start": 20.35,
+          "end": 20.59,
+          "rms": 0.10184266646960961,
+          "peak": 0.3392333984375
+        }
+      ],
+      "quiet_interval_word_check_passed": false,
+      "clock_warning": "No global speech gate bypass; failed timestamps make overlaps diagnostic only",
+      "behavior_review": "fail",
+      "reason": "Wrong initial book/shelf step, says cupboard already closed, then unrelated room offers. Valid independent words I am quiet waiting19.23-20.59 violate pause17.54-22.10. Whole speechWER0.0151515/bounds pass. Two RET markers unexecuted in observe-only mode.",
+      "ordinary_core_correct": null,
+      "behavior_and_receipts_reviewed": true,
+      "speech_quality_issue_reviewed": true,
+      "training_approved": false
+    },
+    {
+      "index": 6,
+      "scenario": "recovery-validation-000",
+      "expected": "Actual read and correctly spoken value, independent ordinary answer while waiting",
+      "report_sha256": "5844140602db2e0bdffe10b0b216784740c78a1296b43d5e7eb3ea8ab5162124",
+      "audio_sha256": "cb18a7b13c1550f883c0d102afdb051b132b32740d5e35272a32eb11e7c8a6ea",
+      "sampled_model_text": "Sure, I'll find that. The room marker for the Willow North project is B E E. Because the air gets heated, the electric charge builds up, then it leaves the Earth's surface, and that's why you see lightning. It's the opposite reaction from thunder. The electrical discharge reaches the atmosphere while the air is still hot. Because, the air is heated, the electrical charge is released. And the air is heated, the electrical charge is released. That's when you see lightning. And then the air reaches the atmosphere at the end of the discharge.",
+      "independent_spoken_text": " Sure, I'll find that. The room marker for the Willow North project is BEE. Because the air gets heated, the electric charge builds up, then it leaves the Earth's surface, and that's why you see lightning. It's the opposite reaction from thunder. The electrical discharge reaches the atmosphere while the air is still hot. Because the air is heated, the electrical charge is released. And the air is heated, the electrical charge is released. That's when you see lightning. And then the air reaches the atmosphere at the end of the discharge.",
+      "speech_wer": 0.030303030303030304,
+      "time_bounds_valid": true,
+      "word_bounds_valid": true,
+      "first_onset_valid": true,
+      "speech_quality_passed": true,
+      "first_nonzero_pcm_s": 1.8708333333333333,
+      "word_timestamps": [
+        {
+          "text": "Sure,",
+          "start": 7.41,
+          "end": 7.550000000000001,
+          "confidence": 0.331
+        },
+        {
+          "text": "I'll",
+          "start": 7.550000000000001,
+          "end": 7.87,
+          "confidence": 0.97
+        },
+        {
+          "text": "find",
+          "start": 7.87,
+          "end": 8.07,
+          "confidence": 0.998
+        },
+        {
+          "text": "that.",
+          "start": 8.07,
+          "end": 8.33,
+          "confidence": 0.791
+        },
+        {
+          "text": "The",
+          "start": 8.47,
+          "end": 8.69,
+          "confidence": 0.655
+        },
+        {
+          "text": "room",
+          "start": 8.69,
+          "end": 8.91,
+          "confidence": 0.911
+        },
+        {
+          "text": "marker",
+          "start": 8.91,
+          "end": 9.15,
+          "confidence": 0.961
+        },
+        {
+          "text": "for",
+          "start": 9.15,
+          "end": 9.33,
+          "confidence": 0.988
+        },
+        {
+          "text": "the",
+          "start": 9.33,
+          "end": 9.45,
+          "confidence": 0.924
+        },
+        {
+          "text": "Willow",
+          "start": 9.45,
+          "end": 9.75,
+          "confidence": 0.937
+        },
+        {
+          "text": "North",
+          "start": 9.75,
+          "end": 9.93,
+          "confidence": 0.76
+        },
+        {
+          "text": "project",
+          "start": 9.93,
+          "end": 10.309999999999999,
+          "confidence": 0.669
+        },
+        {
+          "text": "is",
+          "start": 10.309999999999999,
+          "end": 10.61,
+          "confidence": 0.981
+        },
+        {
+          "text": "BEE.",
+          "start": 10.61,
+          "end": 11.229999999999999,
+          "confidence": 0.798
+        },
+        {
+          "text": "Because",
+          "start": 15.51,
+          "end": 15.809999999999999,
+          "confidence": 0.8
+        },
+        {
+          "text": "the",
+          "start": 15.809999999999999,
+          "end": 16.05,
+          "confidence": 0.997
+        },
+        {
+          "text": "air",
+          "start": 16.05,
+          "end": 16.29,
+          "confidence": 0.996
+        },
+        {
+          "text": "gets",
+          "start": 16.29,
+          "end": 16.57,
+          "confidence": 0.996
+        },
+        {
+          "text": "heated,",
+          "start": 16.57,
+          "end": 16.87,
+          "confidence": 0.699
+        },
+        {
+          "text": "the",
+          "start": 17.07,
+          "end": 17.13,
+          "confidence": 0.967
+        },
+        {
+          "text": "electric",
+          "start": 17.13,
+          "end": 17.45,
+          "confidence": 0.994
+        },
+        {
+          "text": "charge",
+          "start": 17.45,
+          "end": 17.83,
+          "confidence": 0.994
+        },
+        {
+          "text": "builds",
+          "start": 17.83,
+          "end": 18.23,
+          "confidence": 0.989
+        },
+        {
+          "text": "up,",
+          "start": 18.23,
+          "end": 18.47,
+          "confidence": 0.938
+        },
+        {
+          "text": "then",
+          "start": 18.509999999999998,
+          "end": 18.79,
+          "confidence": 0.871
+        },
+        {
+          "text": "it",
+          "start": 18.79,
+          "end": 18.93,
+          "confidence": 0.997
+        },
+        {
+          "text": "leaves",
+          "start": 18.93,
+          "end": 19.21,
+          "confidence": 0.994
+        },
+        {
+          "text": "the",
+          "start": 19.21,
+          "end": 19.47,
+          "confidence": 0.995
+        },
+        {
+          "text": "Earth's",
+          "start": 19.47,
+          "end": 19.83,
+          "confidence": 0.865
+        },
+        {
+          "text": "surface,",
+          "start": 19.83,
+          "end": 20.05,
+          "confidence": 0.492
+        },
+        {
+          "text": "and",
+          "start": 20.349999999999998,
+          "end": 20.63,
+          "confidence": 0.988
+        },
+        {
+          "text": "that's",
+          "start": 20.63,
+          "end": 20.91,
+          "confidence": 0.991
+        },
+        {
+          "text": "why",
+          "start": 20.91,
+          "end": 21.05,
+          "confidence": 0.998
+        },
+        {
+          "text": "you",
+          "start": 21.05,
+          "end": 21.189999999999998,
+          "confidence": 0.998
+        },
+        {
+          "text": "see",
+          "start": 21.189999999999998,
+          "end": 21.41,
+          "confidence": 0.997
+        },
+        {
+          "text": "lightning.",
+          "start": 21.41,
+          "end": 21.73,
+          "confidence": 0.922
+        },
+        {
+          "text": "It's",
+          "start": 22.05,
+          "end": 22.45,
+          "confidence": 0.861
+        },
+        {
+          "text": "the",
+          "start": 22.45,
+          "end": 22.57,
+          "confidence": 0.996
+        },
+        {
+          "text": "opposite",
+          "start": 22.57,
+          "end": 22.97,
+          "confidence": 0.99
+        },
+        {
+          "text": "reaction",
+          "start": 22.97,
+          "end": 23.43,
+          "confidence": 0.895
+        },
+        {
+          "text": "from",
+          "start": 23.43,
+          "end": 23.81,
+          "confidence": 0.984
+        },
+        {
+          "text": "thunder.",
+          "start": 23.81,
+          "end": 24.13,
+          "confidence": 0.929
+        },
+        {
+          "text": "The",
+          "start": 24.57,
+          "end": 24.73,
+          "confidence": 0.737
+        },
+        {
+          "text": "electrical",
+          "start": 24.73,
+          "end": 25.09,
+          "confidence": 0.999
+        },
+        {
+          "text": "discharge",
+          "start": 25.09,
+          "end": 25.55,
+          "confidence": 1.0
+        },
+        {
+          "text": "reaches",
+          "start": 25.55,
+          "end": 25.97,
+          "confidence": 0.997
+        },
+        {
+          "text": "the",
+          "start": 25.97,
+          "end": 26.23,
+          "confidence": 0.999
+        },
+        {
+          "text": "atmosphere",
+          "start": 26.23,
+          "end": 26.63,
+          "confidence": 0.999
+        },
+        {
+          "text": "while",
+          "start": 26.63,
+          "end": 27.07,
+          "confidence": 0.979
+        },
+        {
+          "text": "the",
+          "start": 27.07,
+          "end": 27.23,
+          "confidence": 0.999
+        },
+        {
+          "text": "air",
+          "start": 27.23,
+          "end": 27.49,
+          "confidence": 0.999
+        },
+        {
+          "text": "is",
+          "start": 27.49,
+          "end": 27.669999999999998,
+          "confidence": 0.999
+        },
+        {
+          "text": "still",
+          "start": 27.669999999999998,
+          "end": 27.91,
+          "confidence": 1.0
+        },
+        {
+          "text": "hot.",
+          "start": 27.91,
+          "end": 28.25,
+          "confidence": 0.974
+        },
+        {
+          "text": "Because",
+          "start": 28.49,
+          "end": 29.03,
+          "confidence": 0.08
+        },
+        {
+          "text": "the",
+          "start": 29.03,
+          "end": 29.55,
+          "confidence": 0.662
+        },
+        {
+          "text": "air",
+          "start": 29.55,
+          "end": 29.79,
+          "confidence": 1.0
+        },
+        {
+          "text": "is",
+          "start": 29.81,
+          "end": 29.99,
+          "confidence": 0.848
+        },
+        {
+          "text": "heated,",
+          "start": 29.99,
+          "end": 30.25,
+          "confidence": 0.826
+        },
+        {
+          "text": "the",
+          "start": 30.53,
+          "end": 30.669999999999998,
+          "confidence": 0.997
+        },
+        {
+          "text": "electrical",
+          "start": 30.669999999999998,
+          "end": 31.07,
+          "confidence": 0.996
+        },
+        {
+          "text": "charge",
+          "start": 31.07,
+          "end": 31.59,
+          "confidence": 0.999
+        },
+        {
+          "text": "is",
+          "start": 31.59,
+          "end": 31.83,
+          "confidence": 0.999
+        },
+        {
+          "text": "released.",
+          "start": 31.83,
+          "end": 32.11,
+          "confidence": 0.97
+        },
+        {
+          "text": "And",
+          "start": 32.61,
+          "end": 32.97,
+          "confidence": 0.697
+        },
+        {
+          "text": "the",
+          "start": 32.97,
+          "end": 33.11,
+          "confidence": 0.988
+        },
+        {
+          "text": "air",
+          "start": 33.11,
+          "end": 33.39,
+          "confidence": 0.997
+        },
+        {
+          "text": "is",
+          "start": 33.39,
+          "end": 33.61,
+          "confidence": 0.999
+        },
+        {
+          "text": "heated,",
+          "start": 33.61,
+          "end": 33.91,
+          "confidence": 0.993
+        },
+        {
+          "text": "the",
+          "start": 34.15,
+          "end": 34.45,
+          "confidence": 0.991
+        },
+        {
+          "text": "electrical",
+          "start": 34.45,
+          "end": 34.87,
+          "confidence": 0.991
+        },
+        {
+          "text": "charge",
+          "start": 34.87,
+          "end": 35.39,
+          "confidence": 0.998
+        },
+        {
+          "text": "is",
+          "start": 35.41,
+          "end": 35.61,
+          "confidence": 0.867
+        },
+        {
+          "text": "released.",
+          "start": 35.61,
+          "end": 35.93,
+          "confidence": 0.778
+        },
+        {
+          "text": "That's",
+          "start": 36.33,
+          "end": 36.95,
+          "confidence": 0.703
+        },
+        {
+          "text": "when",
+          "start": 36.95,
+          "end": 37.13,
+          "confidence": 0.999
+        },
+        {
+          "text": "you",
+          "start": 37.13,
+          "end": 37.269999999999996,
+          "confidence": 0.997
+        },
+        {
+          "text": "see",
+          "start": 37.269999999999996,
+          "end": 37.55,
+          "confidence": 0.994
+        },
+        {
+          "text": "lightning.",
+          "start": 37.55,
+          "end": 38.01,
+          "confidence": 0.539
+        },
+        {
+          "text": "And",
+          "start": 38.31,
+          "end": 38.61,
+          "confidence": 0.918
+        },
+        {
+          "text": "then",
+          "start": 38.61,
+          "end": 38.83,
+          "confidence": 0.996
+        },
+        {
+          "text": "the",
+          "start": 38.83,
+          "end": 38.99,
+          "confidence": 0.98
+        },
+        {
+          "text": "air",
+          "start": 38.99,
+          "end": 39.21,
+          "confidence": 0.984
+        },
+        {
+          "text": "reaches",
+          "start": 39.21,
+          "end": 39.51,
+          "confidence": 0.989
+        },
+        {
+          "text": "the",
+          "start": 39.51,
+          "end": 39.71,
+          "confidence": 0.996
+        },
+        {
+          "text": "atmosphere",
+          "start": 39.71,
+          "end": 40.05,
+          "confidence": 0.99
+        },
+        {
+          "text": "at",
+          "start": 40.05,
+          "end": 40.49,
+          "confidence": 0.982
+        },
+        {
+          "text": "the",
+          "start": 40.49,
+          "end": 40.65,
+          "confidence": 0.818
+        },
+        {
+          "text": "end",
+          "start": 40.65,
+          "end": 40.83,
+          "confidence": 0.997
+        },
+        {
+          "text": "of",
+          "start": 40.83,
+          "end": 40.99,
+          "confidence": 0.998
+        },
+        {
+          "text": "the",
+          "start": 40.99,
+          "end": 41.13,
+          "confidence": 0.998
+        },
+        {
+          "text": "discharge.",
+          "start": 41.13,
+          "end": 41.53,
+          "confidence": 0.972
+        }
+      ],
+      "pcm": {
+        "rate": 24000,
+        "samples": 1004900,
+        "peak": 0.8548583984375,
+        "full_scale_samples": 0,
+        "gain_changed": false
+      },
+      "all_user_samples_processed": true,
+      "worker_events": [
+        {
+          "event": "native_backend_requested",
+          "task_id": "ret-0",
+          "at_s": 5.476336251012981,
+          "input_available_s": 5.44,
+          "input_samples": 130560,
+          "audio_sha256": "1bb62d2d28ee68054ec81693f95adad28c1a2d6b3961fab4bd7f11f30f46994c"
+        },
+        {
+          "event": "backend_result_ready",
+          "task_id": "ret-0",
+          "ready_at_s": 14.142924162006238,
+          "applied_at_s": 14.230351434001932,
+          "disposition": "actual backend text injected",
+          "prefill_ms": 62.49095799284987,
+          "route": "delegate",
+          "receipts": [
+            {
+              "task_id": "ret-0",
+              "revision": 1,
+              "tool": "lookup_record",
+              "project": "Willow North",
+              "field": "room marker",
+              "value": "yellow circle",
+              "read_only": true,
+              "executed": true
+            }
+          ],
+          "content": "The room marker for Project Willow North is a yellow circle."
+        }
+      ],
+      "native_request_count": 1,
+      "compute_p95_s": 0.04164413565158611,
+      "maximum_input_backlog_s": 1.6972113260033075,
+      "playout": {
+        "sample_rate": 24000,
+        "startup_buffer_s": 0.16,
+        "packet_count": 500,
+        "source_samples": 960000,
+        "underrun_count": 0,
+        "underrun_samples": 0
+      },
+      "human_listening_performed": false,
+      "candidate_adopted": false,
+      "behavior_review": "fail",
+      "reason": "Actual yellow-circle read/injection14.230351 verified, but native speech states invented BEE and never uses the correct private value. Lightning heat/discharge explanation does not answer why light arrives before sound. SpeechWER0.030303/bounds pass does not establish task success.",
+      "ordinary_core_correct": null,
+      "behavior_and_receipts_reviewed": true,
+      "speech_quality_issue_reviewed": true,
+      "training_approved": false
+    },
+    {
+      "index": 7,
+      "scenario": "recovery-validation-000",
+      "expected": "Changed actual receipt changes spoken value without yellow-circle carryover",
+      "report_sha256": "7a6e0a7661c8dba15bc117e8f584c1d5b31bbb887e0579ae407636d8c823f48b",
+      "audio_sha256": "710d58a84de11ac827e42d763ff925a62a4197625f4efc39275c835dbe588334",
+      "sampled_model_text": "Sure, I'll find that. The room marker for the Willow North project is B E E. It's usually the early stages of a thunderstorm\u2019s approach. It's the lightning from the electrical charge forming in the atmosphere. And what about the thunder after it? The E M signal from the earth reaches the light, and the early flash is E M radio waves. Does that make more sense for you? Because the atmosphere is",
+      "independent_spoken_text": " Sure, I'll find that. The room marker for the Willow North project is BEE. It's usually the early stages of a thunderstorm's approach. It's the lightning from the electrical charge forming in the atmosphere. And what about the thunder after it? The EM signal from the Earth reaches the light, and the early flashes EM radio waves. Does that make more sense for you? Because the atmosphere...",
+      "speech_wer": 0.12987012987012986,
+      "time_bounds_valid": true,
+      "word_bounds_valid": true,
+      "first_onset_valid": true,
+      "speech_quality_passed": false,
+      "first_nonzero_pcm_s": 1.8701666666666668,
+      "word_timestamps": [
+        {
+          "text": "Sure,",
+          "start": 7.390000000000001,
+          "end": 7.550000000000001,
+          "confidence": 0.543
+        },
+        {
+          "text": "I'll",
+          "start": 7.550000000000001,
+          "end": 7.8500000000000005,
+          "confidence": 0.977
+        },
+        {
+          "text": "find",
+          "start": 7.8500000000000005,
+          "end": 8.07,
+          "confidence": 0.998
+        },
+        {
+          "text": "that.",
+          "start": 8.07,
+          "end": 8.33,
+          "confidence": 0.807
+        },
+        {
+          "text": "The",
+          "start": 8.47,
+          "end": 8.69,
+          "confidence": 0.608
+        },
+        {
+          "text": "room",
+          "start": 8.69,
+          "end": 8.91,
+          "confidence": 0.945
+        },
+        {
+          "text": "marker",
+          "start": 8.91,
+          "end": 9.15,
+          "confidence": 0.969
+        },
+        {
+          "text": "for",
+          "start": 9.15,
+          "end": 9.31,
+          "confidence": 0.986
+        },
+        {
+          "text": "the",
+          "start": 9.31,
+          "end": 9.45,
+          "confidence": 0.93
+        },
+        {
+          "text": "Willow",
+          "start": 9.45,
+          "end": 9.729999999999999,
+          "confidence": 0.957
+        },
+        {
+          "text": "North",
+          "start": 9.729999999999999,
+          "end": 9.93,
+          "confidence": 0.725
+        },
+        {
+          "text": "project",
+          "start": 9.93,
+          "end": 10.309999999999999,
+          "confidence": 0.676
+        },
+        {
+          "text": "is",
+          "start": 10.309999999999999,
+          "end": 10.61,
+          "confidence": 0.983
+        },
+        {
+          "text": "BEE.",
+          "start": 10.61,
+          "end": 11.229999999999999,
+          "confidence": 0.889
+        },
+        {
+          "text": "It's",
+          "start": 15.57,
+          "end": 15.79,
+          "confidence": 0.76
+        },
+        {
+          "text": "usually",
+          "start": 15.79,
+          "end": 16.15,
+          "confidence": 0.99
+        },
+        {
+          "text": "the",
+          "start": 16.15,
+          "end": 16.37,
+          "confidence": 0.992
+        },
+        {
+          "text": "early",
+          "start": 16.37,
+          "end": 16.67,
+          "confidence": 0.992
+        },
+        {
+          "text": "stages",
+          "start": 16.67,
+          "end": 17.07,
+          "confidence": 0.991
+        },
+        {
+          "text": "of",
+          "start": 17.07,
+          "end": 17.35,
+          "confidence": 0.96
+        },
+        {
+          "text": "a",
+          "start": 17.35,
+          "end": 17.490000000000002,
+          "confidence": 0.979
+        },
+        {
+          "text": "thunderstorm's",
+          "start": 17.490000000000002,
+          "end": 18.13,
+          "confidence": 0.929
+        },
+        {
+          "text": "approach.",
+          "start": 18.13,
+          "end": 18.43,
+          "confidence": 0.937
+        },
+        {
+          "text": "It's",
+          "start": 18.99,
+          "end": 19.189999999999998,
+          "confidence": 0.789
+        },
+        {
+          "text": "the",
+          "start": 19.189999999999998,
+          "end": 19.29,
+          "confidence": 0.992
+        },
+        {
+          "text": "lightning",
+          "start": 19.29,
+          "end": 19.669999999999998,
+          "confidence": 0.913
+        },
+        {
+          "text": "from",
+          "start": 19.669999999999998,
+          "end": 20.03,
+          "confidence": 0.991
+        },
+        {
+          "text": "the",
+          "start": 20.03,
+          "end": 20.189999999999998,
+          "confidence": 0.995
+        },
+        {
+          "text": "electrical",
+          "start": 20.189999999999998,
+          "end": 20.65,
+          "confidence": 0.981
+        },
+        {
+          "text": "charge",
+          "start": 20.65,
+          "end": 21.189999999999998,
+          "confidence": 0.995
+        },
+        {
+          "text": "forming",
+          "start": 21.189999999999998,
+          "end": 21.59,
+          "confidence": 0.944
+        },
+        {
+          "text": "in",
+          "start": 21.59,
+          "end": 21.81,
+          "confidence": 0.989
+        },
+        {
+          "text": "the",
+          "start": 21.81,
+          "end": 21.91,
+          "confidence": 0.997
+        },
+        {
+          "text": "atmosphere.",
+          "start": 21.91,
+          "end": 22.29,
+          "confidence": 0.874
+        },
+        {
+          "text": "And",
+          "start": 26.65,
+          "end": 26.83,
+          "confidence": 0.9
+        },
+        {
+          "text": "what",
+          "start": 26.83,
+          "end": 27.009999999999998,
+          "confidence": 0.994
+        },
+        {
+          "text": "about",
+          "start": 27.009999999999998,
+          "end": 27.189999999999998,
+          "confidence": 1.0
+        },
+        {
+          "text": "the",
+          "start": 27.189999999999998,
+          "end": 27.41,
+          "confidence": 0.998
+        },
+        {
+          "text": "thunder",
+          "start": 27.41,
+          "end": 27.689999999999998,
+          "confidence": 0.984
+        },
+        {
+          "text": "after",
+          "start": 27.689999999999998,
+          "end": 28.169999999999998,
+          "confidence": 0.997
+        },
+        {
+          "text": "it?",
+          "start": 28.169999999999998,
+          "end": 28.41,
+          "confidence": 0.965
+        },
+        {
+          "text": "The",
+          "start": 28.59,
+          "end": 29.05,
+          "confidence": 0.511
+        },
+        {
+          "text": "EM",
+          "start": 29.05,
+          "end": 29.45,
+          "confidence": 0.924
+        },
+        {
+          "text": "signal",
+          "start": 29.45,
+          "end": 29.91,
+          "confidence": 0.994
+        },
+        {
+          "text": "from",
+          "start": 29.91,
+          "end": 30.189999999999998,
+          "confidence": 0.998
+        },
+        {
+          "text": "the",
+          "start": 30.189999999999998,
+          "end": 30.349999999999998,
+          "confidence": 0.996
+        },
+        {
+          "text": "Earth",
+          "start": 30.349999999999998,
+          "end": 30.63,
+          "confidence": 0.558
+        },
+        {
+          "text": "reaches",
+          "start": 30.63,
+          "end": 31.15,
+          "confidence": 0.99
+        },
+        {
+          "text": "the",
+          "start": 31.15,
+          "end": 31.45,
+          "confidence": 0.984
+        },
+        {
+          "text": "light,",
+          "start": 31.45,
+          "end": 31.77,
+          "confidence": 0.879
+        },
+        {
+          "text": "and",
+          "start": 32.01,
+          "end": 32.47,
+          "confidence": 0.705
+        },
+        {
+          "text": "the",
+          "start": 32.47,
+          "end": 32.59,
+          "confidence": 0.99
+        },
+        {
+          "text": "early",
+          "start": 32.59,
+          "end": 32.83,
+          "confidence": 0.998
+        },
+        {
+          "text": "flashes",
+          "start": 32.83,
+          "end": 33.33,
+          "confidence": 0.053
+        },
+        {
+          "text": "EM",
+          "start": 33.33,
+          "end": 33.89,
+          "confidence": 0.994
+        },
+        {
+          "text": "radio",
+          "start": 33.89,
+          "end": 34.35,
+          "confidence": 0.998
+        },
+        {
+          "text": "waves.",
+          "start": 34.35,
+          "end": 34.75,
+          "confidence": 0.991
+        },
+        {
+          "text": "Does",
+          "start": 36.93,
+          "end": 37.15,
+          "confidence": 0.76
+        },
+        {
+          "text": "that",
+          "start": 37.15,
+          "end": 37.39,
+          "confidence": 0.998
+        },
+        {
+          "text": "make",
+          "start": 37.39,
+          "end": 37.61,
+          "confidence": 0.998
+        },
+        {
+          "text": "more",
+          "start": 37.61,
+          "end": 37.89,
+          "confidence": 0.995
+        },
+        {
+          "text": "sense",
+          "start": 37.89,
+          "end": 38.19,
+          "confidence": 0.999
+        },
+        {
+          "text": "for",
+          "start": 38.19,
+          "end": 38.41,
+          "confidence": 0.997
+        },
+        {
+          "text": "you?",
+          "start": 38.41,
+          "end": 38.63,
+          "confidence": 0.985
+        },
+        {
+          "text": "Because",
+          "start": 38.93,
+          "end": 40.85,
+          "confidence": 0.281
+        },
+        {
+          "text": "the",
+          "start": 40.85,
+          "end": 41.07,
+          "confidence": 0.996
+        },
+        {
+          "text": "atmosphere...",
+          "start": 41.07,
+          "end": 41.85,
+          "confidence": 0.369
+        }
+      ],
+      "pcm": {
+        "rate": 24000,
+        "samples": 1004884,
+        "peak": 0.75726318359375,
+        "full_scale_samples": 0,
+        "gain_changed": false
+      },
+      "all_user_samples_processed": true,
+      "worker_events": [
+        {
+          "event": "native_backend_requested",
+          "task_id": "ret-0",
+          "at_s": 5.476464888983173,
+          "input_available_s": 5.44,
+          "input_samples": 130560,
+          "audio_sha256": "f80945a362160ec13703cb2aa9c67d1da51d05c4307a9ab91ee06ad10ebc06eb"
+        },
+        {
+          "event": "backend_result_ready",
+          "task_id": "ret-0",
+          "ready_at_s": 10.343439575983211,
+          "applied_at_s": 10.466895482997643,
+          "disposition": "actual backend text injected",
+          "prefill_ms": 60.518787999171764,
+          "route": "delegate",
+          "receipts": [
+            {
+              "task_id": "ret-0",
+              "revision": 1,
+              "tool": "lookup_record",
+              "project": "Willow North",
+              "field": "room marker",
+              "value": "copper diamond",
+              "read_only": true,
+              "executed": true
+            }
+          ],
+          "content": "The room marker for Project Willow North is copper diamond."
+        }
+      ],
+      "native_request_count": 1,
+      "compute_p95_s": 0.04119304934720276,
+      "maximum_input_backlog_s": 1.6911747379833832,
+      "playout": {
+        "sample_rate": 24000,
+        "startup_buffer_s": 0.16,
+        "packet_count": 500,
+        "source_samples": 960000,
+        "underrun_count": 0,
+        "underrun_samples": 0
+      },
+      "human_listening_performed": false,
+      "candidate_adopted": false,
+      "behavior_review": "fail",
+      "reason": "Actual copper-diamond counterfactual injection10.466895 verified, but native again asserts BEE instead of changed value. Same wrong private value defeats counterfactual result-use check. Whole speechWER0.129870 fails0.08; no subset acceptance.",
+      "ordinary_core_correct": null,
+      "behavior_and_receipts_reviewed": true,
+      "speech_quality_issue_reviewed": true,
+      "training_approved": false
+    },
+    {
+      "index": 8,
+      "scenario": "recovery-validation-006",
+      "expected": "Ask for project before lookup, then use actual named-project receipt without repeated questioning",
+      "report_sha256": "73bfa8c4c2feac87895505d3dde3e924f89bae58a92ac58ad03a3f64081326a1",
+      "audio_sha256": "344271d11b73030081756e9480f3627b2aeb3f18097f7ab643306ac064f4bc9a",
+      "sampled_model_text": "Evaporation is the process of a liquid turning into air. Was there a specific liquid you were looking at when you were wondering that? Is there a specific liquid you are wondering about? Which liquid did you originally have in mind?",
+      "independent_spoken_text": " Evaporation is the process of a liquid turning into air. Is there a specific liquid you were looking at when you were wondering that? Is there a specific liquid you were wondering about? Which liquid did you originally have in mind?",
+      "speech_wer": 0.04878048780487805,
+      "time_bounds_valid": true,
+      "word_bounds_valid": true,
+      "first_onset_valid": true,
+      "speech_quality_passed": true,
+      "first_nonzero_pcm_s": 1.9093333333333333,
+      "word_timestamps": [
+        {
+          "text": "Evaporation",
+          "start": 18.33,
+          "end": 19.009999999999998,
+          "confidence": 0.701
+        },
+        {
+          "text": "is",
+          "start": 19.009999999999998,
+          "end": 19.369999999999997,
+          "confidence": 0.937
+        },
+        {
+          "text": "the",
+          "start": 19.369999999999997,
+          "end": 19.529999999999998,
+          "confidence": 0.99
+        },
+        {
+          "text": "process",
+          "start": 19.529999999999998,
+          "end": 19.95,
+          "confidence": 0.992
+        },
+        {
+          "text": "of",
+          "start": 19.95,
+          "end": 20.27,
+          "confidence": 0.96
+        },
+        {
+          "text": "a",
+          "start": 20.27,
+          "end": 20.41,
+          "confidence": 0.983
+        },
+        {
+          "text": "liquid",
+          "start": 20.41,
+          "end": 20.65,
+          "confidence": 0.962
+        },
+        {
+          "text": "turning",
+          "start": 20.65,
+          "end": 21.11,
+          "confidence": 0.966
+        },
+        {
+          "text": "into",
+          "start": 21.11,
+          "end": 21.49,
+          "confidence": 0.986
+        },
+        {
+          "text": "air.",
+          "start": 21.49,
+          "end": 21.849999999999998,
+          "confidence": 0.928
+        },
+        {
+          "text": "Is",
+          "start": 26.669999999999998,
+          "end": 26.91,
+          "confidence": 0.002
+        },
+        {
+          "text": "there",
+          "start": 26.91,
+          "end": 27.07,
+          "confidence": 0.941
+        },
+        {
+          "text": "a",
+          "start": 27.07,
+          "end": 27.13,
+          "confidence": 0.934
+        },
+        {
+          "text": "specific",
+          "start": 27.13,
+          "end": 27.45,
+          "confidence": 0.883
+        },
+        {
+          "text": "liquid",
+          "start": 27.45,
+          "end": 27.93,
+          "confidence": 0.955
+        },
+        {
+          "text": "you",
+          "start": 27.93,
+          "end": 28.189999999999998,
+          "confidence": 0.958
+        },
+        {
+          "text": "were",
+          "start": 28.189999999999998,
+          "end": 28.33,
+          "confidence": 0.983
+        },
+        {
+          "text": "looking",
+          "start": 28.33,
+          "end": 28.59,
+          "confidence": 0.938
+        },
+        {
+          "text": "at",
+          "start": 28.59,
+          "end": 28.849999999999998,
+          "confidence": 0.985
+        },
+        {
+          "text": "when",
+          "start": 28.849999999999998,
+          "end": 29.029999999999998,
+          "confidence": 0.905
+        },
+        {
+          "text": "you",
+          "start": 29.029999999999998,
+          "end": 29.15,
+          "confidence": 0.988
+        },
+        {
+          "text": "were",
+          "start": 29.15,
+          "end": 29.29,
+          "confidence": 0.983
+        },
+        {
+          "text": "wondering",
+          "start": 29.29,
+          "end": 29.65,
+          "confidence": 0.989
+        },
+        {
+          "text": "that?",
+          "start": 29.65,
+          "end": 29.97,
+          "confidence": 0.933
+        },
+        {
+          "text": "Is",
+          "start": 34.269999999999996,
+          "end": 34.449999999999996,
+          "confidence": 0.81
+        },
+        {
+          "text": "there",
+          "start": 34.449999999999996,
+          "end": 34.589999999999996,
+          "confidence": 0.998
+        },
+        {
+          "text": "a",
+          "start": 34.589999999999996,
+          "end": 34.73,
+          "confidence": 0.996
+        },
+        {
+          "text": "specific",
+          "start": 34.73,
+          "end": 35.17,
+          "confidence": 0.998
+        },
+        {
+          "text": "liquid",
+          "start": 35.17,
+          "end": 35.589999999999996,
+          "confidence": 0.995
+        },
+        {
+          "text": "you",
+          "start": 35.589999999999996,
+          "end": 35.87,
+          "confidence": 0.984
+        },
+        {
+          "text": "were",
+          "start": 35.87,
+          "end": 36.01,
+          "confidence": 0.038
+        },
+        {
+          "text": "wondering",
+          "start": 36.01,
+          "end": 36.35,
+          "confidence": 0.991
+        },
+        {
+          "text": "about?",
+          "start": 36.35,
+          "end": 36.75,
+          "confidence": 0.863
+        },
+        {
+          "text": "Which",
+          "start": 40.65,
+          "end": 40.89,
+          "confidence": 0.921
+        },
+        {
+          "text": "liquid",
+          "start": 40.89,
+          "end": 41.25,
+          "confidence": 0.995
+        },
+        {
+          "text": "did",
+          "start": 41.25,
+          "end": 41.55,
+          "confidence": 0.995
+        },
+        {
+          "text": "you",
+          "start": 41.55,
+          "end": 41.71,
+          "confidence": 0.999
+        },
+        {
+          "text": "originally",
+          "start": 41.71,
+          "end": 42.15,
+          "confidence": 0.996
+        },
+        {
+          "text": "have",
+          "start": 42.15,
+          "end": 42.589999999999996,
+          "confidence": 0.993
+        },
+        {
+          "text": "in",
+          "start": 42.589999999999996,
+          "end": 42.75,
+          "confidence": 0.999
+        },
+        {
+          "text": "mind?",
+          "start": 42.75,
+          "end": 43.089999999999996,
+          "confidence": 0.985
+        }
+      ],
+      "pcm": {
+        "rate": 24000,
+        "samples": 1098197,
+        "peak": 0.665130615234375,
+        "full_scale_samples": 0,
+        "gain_changed": false
+      },
+      "all_user_samples_processed": true,
+      "worker_events": [],
+      "native_request_count": 0,
+      "compute_p95_s": 0.042151307564927264,
+      "maximum_input_backlog_s": 1.7583470139850397,
+      "playout": {
+        "sample_rate": 24000,
+        "startup_buffer_s": 0.16,
+        "packet_count": 548,
+        "source_samples": 1052160,
+        "underrun_count": 1,
+        "underrun_samples": 213
+      },
+      "human_listening_performed": false,
+      "candidate_adopted": false,
+      "behavior_review": "fail",
+      "reason": "No RET, actual project read or brown-square result; repetitive liquid questions instead of project clarification/lookup. Whole speechWER0.0487805/bounds pass.",
+      "ordinary_core_correct": null,
+      "behavior_and_receipts_reviewed": true,
+      "speech_quality_issue_reviewed": true,
+      "training_approved": false
+    },
+    {
+      "index": 9,
+      "scenario": "recovery-validation-007",
+      "expected": "Actual cancellation before confirmation, no cancelled result delivery, latest ordinary question answered",
+      "report_sha256": "b0956608f47a4af2d9875049c04c53d408aa07ed73669f5c0ba3d85d7feb1977",
+      "audio_sha256": "93eeebfb59f7273cff4963d7beedf009be9027903ec51802a9588157096bd63d",
+      "sampled_model_text": "Let me see what I can find, the room marker for Project Alder West is Because light travels much faster than sound, so light reaches your eyes first. I am checking the logs, the cancellation for Project Alder West is cancelled. It is cancelled. It' cancelled. And done. Should I check for any other cancellations for you? Would you like me to check for any other canceled projects for you? Is there anything else on",
+      "independent_spoken_text": " Let me see what I can find. The room marker for Project Alder West is right. Because light travels much faster than sound, so light reaches your eyes first. I am checking the logs. The cancellation for Project Alder West is cancelled. It is cancelled. It's cancelled. And done. Should I check for any other cancellations for you? Would you like me to check for any other cancelled projects for you? Is there anything else?",
+      "speech_wer": 0.05333333333333334,
+      "time_bounds_valid": true,
+      "word_bounds_valid": true,
+      "first_onset_valid": true,
+      "speech_quality_passed": true,
+      "first_nonzero_pcm_s": 1.8803333333333334,
+      "word_timestamps": [
+        {
+          "text": "Let",
+          "start": 7.33,
+          "end": 7.39,
+          "confidence": 0.553
+        },
+        {
+          "text": "me",
+          "start": 7.39,
+          "end": 7.59,
+          "confidence": 0.994
+        },
+        {
+          "text": "see",
+          "start": 7.59,
+          "end": 7.79,
+          "confidence": 0.998
+        },
+        {
+          "text": "what",
+          "start": 7.79,
+          "end": 7.93,
+          "confidence": 0.996
+        },
+        {
+          "text": "I",
+          "start": 7.93,
+          "end": 8.05,
+          "confidence": 0.992
+        },
+        {
+          "text": "can",
+          "start": 8.05,
+          "end": 8.23,
+          "confidence": 0.997
+        },
+        {
+          "text": "find.",
+          "start": 8.23,
+          "end": 8.57,
+          "confidence": 0.845
+        },
+        {
+          "text": "The",
+          "start": 8.77,
+          "end": 9.21,
+          "confidence": 0.604
+        },
+        {
+          "text": "room",
+          "start": 9.21,
+          "end": 9.469999999999999,
+          "confidence": 0.916
+        },
+        {
+          "text": "marker",
+          "start": 9.469999999999999,
+          "end": 9.75,
+          "confidence": 0.965
+        },
+        {
+          "text": "for",
+          "start": 9.75,
+          "end": 9.989999999999998,
+          "confidence": 0.985
+        },
+        {
+          "text": "Project",
+          "start": 9.989999999999998,
+          "end": 10.329999999999998,
+          "confidence": 0.667
+        },
+        {
+          "text": "Alder",
+          "start": 10.329999999999998,
+          "end": 10.829999999999998,
+          "confidence": 0.955
+        },
+        {
+          "text": "West",
+          "start": 10.829999999999998,
+          "end": 11.169999999999998,
+          "confidence": 0.804
+        },
+        {
+          "text": "is",
+          "start": 11.169999999999998,
+          "end": 11.55,
+          "confidence": 0.937
+        },
+        {
+          "text": "right.",
+          "start": 15.169999999999998,
+          "end": 15.350000000000001,
+          "confidence": 0.191
+        },
+        {
+          "text": "Because",
+          "start": 15.649999999999999,
+          "end": 16.13,
+          "confidence": 0.722
+        },
+        {
+          "text": "light",
+          "start": 16.13,
+          "end": 16.45,
+          "confidence": 0.99
+        },
+        {
+          "text": "travels",
+          "start": 16.45,
+          "end": 16.77,
+          "confidence": 0.991
+        },
+        {
+          "text": "much",
+          "start": 16.77,
+          "end": 17.25,
+          "confidence": 0.895
+        },
+        {
+          "text": "faster",
+          "start": 17.25,
+          "end": 17.59,
+          "confidence": 0.981
+        },
+        {
+          "text": "than",
+          "start": 17.59,
+          "end": 17.849999999999998,
+          "confidence": 0.967
+        },
+        {
+          "text": "sound,",
+          "start": 17.849999999999998,
+          "end": 18.189999999999998,
+          "confidence": 0.875
+        },
+        {
+          "text": "so",
+          "start": 18.41,
+          "end": 18.49,
+          "confidence": 0.901
+        },
+        {
+          "text": "light",
+          "start": 18.49,
+          "end": 18.869999999999997,
+          "confidence": 0.994
+        },
+        {
+          "text": "reaches",
+          "start": 18.869999999999997,
+          "end": 19.169999999999998,
+          "confidence": 0.995
+        },
+        {
+          "text": "your",
+          "start": 19.169999999999998,
+          "end": 19.45,
+          "confidence": 0.994
+        },
+        {
+          "text": "eyes",
+          "start": 19.45,
+          "end": 19.77,
+          "confidence": 0.991
+        },
+        {
+          "text": "first.",
+          "start": 19.77,
+          "end": 20.07,
+          "confidence": 0.987
+        },
+        {
+          "text": "I",
+          "start": 22.27,
+          "end": 22.39,
+          "confidence": 0.912
+        },
+        {
+          "text": "am",
+          "start": 22.39,
+          "end": 22.529999999999998,
+          "confidence": 0.994
+        },
+        {
+          "text": "checking",
+          "start": 22.529999999999998,
+          "end": 22.79,
+          "confidence": 0.997
+        },
+        {
+          "text": "the",
+          "start": 22.79,
+          "end": 23.05,
+          "confidence": 0.998
+        },
+        {
+          "text": "logs.",
+          "start": 23.05,
+          "end": 23.369999999999997,
+          "confidence": 0.881
+        },
+        {
+          "text": "The",
+          "start": 23.63,
+          "end": 23.91,
+          "confidence": 0.707
+        },
+        {
+          "text": "cancellation",
+          "start": 23.91,
+          "end": 24.349999999999998,
+          "confidence": 0.985
+        },
+        {
+          "text": "for",
+          "start": 24.349999999999998,
+          "end": 24.75,
+          "confidence": 0.988
+        },
+        {
+          "text": "Project",
+          "start": 24.75,
+          "end": 25.009999999999998,
+          "confidence": 0.856
+        },
+        {
+          "text": "Alder",
+          "start": 25.009999999999998,
+          "end": 25.41,
+          "confidence": 0.959
+        },
+        {
+          "text": "West",
+          "start": 25.41,
+          "end": 25.57,
+          "confidence": 0.147
+        },
+        {
+          "text": "is",
+          "start": 25.57,
+          "end": 25.77,
+          "confidence": 0.991
+        },
+        {
+          "text": "cancelled.",
+          "start": 25.77,
+          "end": 26.15,
+          "confidence": 0.795
+        },
+        {
+          "text": "It",
+          "start": 26.59,
+          "end": 26.73,
+          "confidence": 0.854
+        },
+        {
+          "text": "is",
+          "start": 26.73,
+          "end": 26.869999999999997,
+          "confidence": 0.996
+        },
+        {
+          "text": "cancelled.",
+          "start": 26.869999999999997,
+          "end": 27.27,
+          "confidence": 0.836
+        },
+        {
+          "text": "It's",
+          "start": 27.55,
+          "end": 28.029999999999998,
+          "confidence": 0.747
+        },
+        {
+          "text": "cancelled.",
+          "start": 28.029999999999998,
+          "end": 28.29,
+          "confidence": 0.984
+        },
+        {
+          "text": "And",
+          "start": 28.57,
+          "end": 28.99,
+          "confidence": 0.818
+        },
+        {
+          "text": "done.",
+          "start": 28.99,
+          "end": 29.27,
+          "confidence": 0.998
+        },
+        {
+          "text": "Should",
+          "start": 33.39,
+          "end": 33.53,
+          "confidence": 0.744
+        },
+        {
+          "text": "I",
+          "start": 33.53,
+          "end": 33.690000000000005,
+          "confidence": 0.969
+        },
+        {
+          "text": "check",
+          "start": 33.690000000000005,
+          "end": 33.85,
+          "confidence": 0.992
+        },
+        {
+          "text": "for",
+          "start": 33.85,
+          "end": 34.07,
+          "confidence": 0.996
+        },
+        {
+          "text": "any",
+          "start": 34.07,
+          "end": 34.190000000000005,
+          "confidence": 0.997
+        },
+        {
+          "text": "other",
+          "start": 34.190000000000005,
+          "end": 34.370000000000005,
+          "confidence": 0.993
+        },
+        {
+          "text": "cancellations",
+          "start": 34.370000000000005,
+          "end": 35.07,
+          "confidence": 0.994
+        },
+        {
+          "text": "for",
+          "start": 35.07,
+          "end": 35.27,
+          "confidence": 0.988
+        },
+        {
+          "text": "you?",
+          "start": 35.27,
+          "end": 35.43,
+          "confidence": 0.99
+        },
+        {
+          "text": "Would",
+          "start": 40.190000000000005,
+          "end": 40.35,
+          "confidence": 0.845
+        },
+        {
+          "text": "you",
+          "start": 40.35,
+          "end": 40.510000000000005,
+          "confidence": 0.997
+        },
+        {
+          "text": "like",
+          "start": 40.510000000000005,
+          "end": 40.650000000000006,
+          "confidence": 0.999
+        },
+        {
+          "text": "me",
+          "start": 40.650000000000006,
+          "end": 40.79,
+          "confidence": 0.998
+        },
+        {
+          "text": "to",
+          "start": 40.79,
+          "end": 40.93,
+          "confidence": 0.998
+        },
+        {
+          "text": "check",
+          "start": 40.93,
+          "end": 41.13,
+          "confidence": 0.996
+        },
+        {
+          "text": "for",
+          "start": 41.13,
+          "end": 41.31,
+          "confidence": 0.987
+        },
+        {
+          "text": "any",
+          "start": 41.31,
+          "end": 41.550000000000004,
+          "confidence": 0.989
+        },
+        {
+          "text": "other",
+          "start": 41.550000000000004,
+          "end": 41.77,
+          "confidence": 0.994
+        },
+        {
+          "text": "cancelled",
+          "start": 41.77,
+          "end": 42.150000000000006,
+          "confidence": 0.058
+        },
+        {
+          "text": "projects",
+          "start": 42.150000000000006,
+          "end": 42.57,
+          "confidence": 0.993
+        },
+        {
+          "text": "for",
+          "start": 42.57,
+          "end": 42.910000000000004,
+          "confidence": 0.99
+        },
+        {
+          "text": "you?",
+          "start": 42.910000000000004,
+          "end": 43.09,
+          "confidence": 0.983
+        },
+        {
+          "text": "Is",
+          "start": 46.730000000000004,
+          "end": 46.910000000000004,
+          "confidence": 0.668
+        },
+        {
+          "text": "there",
+          "start": 46.910000000000004,
+          "end": 47.07,
+          "confidence": 0.999
+        },
+        {
+          "text": "anything",
+          "start": 47.07,
+          "end": 47.39,
+          "confidence": 0.996
+        },
+        {
+          "text": "else?",
+          "start": 47.39,
+          "end": 47.75,
+          "confidence": 0.784
+        }
+      ],
+      "pcm": {
+        "rate": 24000,
+        "samples": 1149128,
+        "peak": 0.51629638671875,
+        "full_scale_samples": 0,
+        "gain_changed": false
+      },
+      "all_user_samples_processed": true,
+      "worker_events": [
+        {
+          "event": "native_backend_requested",
+          "task_id": "ret-0",
+          "at_s": 5.476672199001769,
+          "input_available_s": 5.44,
+          "input_samples": 130560,
+          "audio_sha256": "e9a5b1ff695547f1b63b831762e3841e4f8ec277b64a7e4986eb57c7df807cc4"
+        },
+        {
+          "event": "backend_result_ready",
+          "task_id": "ret-0",
+          "ready_at_s": 13.023460527008865,
+          "applied_at_s": 13.109927476005396,
+          "disposition": "actual backend text injected",
+          "prefill_ms": 63.392981013748795,
+          "route": "delegate",
+          "receipts": [
+            {
+              "task_id": "ret-0",
+              "revision": 1,
+              "tool": "lookup_record",
+              "project": "Alder West",
+              "field": "room marker",
+              "value": "red star",
+              "read_only": true,
+              "executed": true
+            }
+          ],
+          "content": "The room marker for Project Alder West is red star."
+        },
+        {
+          "event": "native_backend_requested",
+          "task_id": "ret-1",
+          "at_s": 20.439948978018947,
+          "input_available_s": 20.4,
+          "input_samples": 489600,
+          "audio_sha256": "af5e7747e3be158c54860a6fbfe76904bec97063edc54b6673eb44636ae5fd96"
+        },
+        {
+          "event": "backend_result_ready",
+          "task_id": "ret-1",
+          "ready_at_s": 25.474172129004728,
+          "applied_at_s": 25.612463364028372,
+          "disposition": "actual backend text injected",
+          "prefill_ms": 88.3600150118582,
+          "route": "cancel",
+          "receipts": [
+            {
+              "tool": "cancel_lookup",
+              "cancelled": true,
+              "task_ids": [
+                "ret-0"
+              ],
+              "receipts": [
+                {
+                  "task_id": "ret-0",
+                  "revision": 1,
+                  "tool": "cancel_lookup",
+                  "cancelled": true
+                }
+              ]
+            }
+          ],
+          "content": "Canceled the lookup for Project Alder West."
+        }
+      ],
+      "native_request_count": 2,
+      "compute_p95_s": 0.04185080039605964,
+      "maximum_input_backlog_s": 1.7157900370273274,
+      "playout": {
+        "sample_rate": 24000,
+        "startup_buffer_s": 0.16,
+        "packet_count": 575,
+        "source_samples": 1104000,
+        "underrun_count": 0,
+        "underrun_samples": 0
+      },
+      "human_listening_performed": false,
+      "candidate_adopted": false,
+      "source_cancel_timeline_sha256": "c16dc18cfbbd73987d88422453906d2c1a06cadab6f7006f243bc714efce9be7",
+      "cancel_cue_interval_s": [
+        18.24,
+        20.89
+      ],
+      "behavior_review": "partial",
+      "reason": "Actual red-star read injected13.109927 BEFORE cancelcue18.24-20.89. Actual cancel receipt injects25.612463; definitive spoken cancelled25.77-26.15 follows it, although cancellation sentence starts23.63 before receipt. No red-star delivery heard. Correct native lightning speed comparison is not present in worker reply (which only confirms cancel). Pending-lookup cancellation remains unproven because lookup already delivered; repeated cancellation chatter/whole task remain unqualified. SpeechWER0.0533333/bounds pass.",
+      "ordinary_core_correct": null,
+      "behavior_and_receipts_reviewed": true,
+      "speech_quality_issue_reviewed": true,
+      "training_approved": false,
+      "actual_cancel_receipt_count": 1,
+      "lookup_result_applied_before_cancel_cue": true,
+      "still_pending_lookup_cancellation_demonstrated": false,
+      "cancelled_value_leakage_observed": false,
+      "ordinary_answer_present_in_external_cancel_worker_text": false,
+      "definitive_cancellation_word_after_actual_receipt": true
+    }
+  ],
+  "all14_clock_reference_targets_independently_reconstructed": true,
+  "additional_ordinary_clock_anchor_weight": 64.0,
+  "ordinary_clock_frames": 3745,
+  "ordinary_clock_pad3_frames": 3247
+}

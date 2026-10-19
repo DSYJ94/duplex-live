@@ -32,6 +32,14 @@ class NativeTextSamplingTests(unittest.TestCase):
         for i in [-1,8]:
             with self.assertRaises(ValueError):case(i,'7556562')
 
+    def test_low_nonzero_temperature_explicit_and_consistent(self):
+        a=self.args();a.native_text_temperature=.3;p=policy(a)
+        self.assertEqual(p['text_temperature'],.3);self.assertEqual(case(1,'7556562',.3)['text_temperature'],.3)
+        verify_engine(SimpleNamespace(lm_gen=SimpleNamespace(temp_text=.3,temp=.8,use_sampling=True)),p)
+        a.native_text_temperature=.5
+        with self.assertRaises(ValueError):policy(a)
+        with self.assertRaises(ValueError):case(1,'7556562',.5)
+
     def test_upstream_zero_temperature_uses_argmax_without_text_rng_draw(self):
         import torch
         from contextspan.moshi.utils.sampling import sample_token
