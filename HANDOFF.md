@@ -1,3 +1,27 @@
+# LOCAL active — full25 timing approval passed, 19 October 10:06 UTC
+
+7543606 COMPLETED4m11: all25 current speech/fact/tool-clock/physical-onset checks
+PASS. Four freshly measured unchanged WAVs have exact original words; all21
+other word intervals unchanged. New conversion runs/native-old25-timing-data-
+7543606 preserves every original audio/worker receipt. Not optimizer approval.
+
+Approval source342624b819573785585c657fe18b8b9049526af6 pushed/immutable.
+Exclusive receipt runs/native-old25-native-approval-local-20261019.json:
+cache7543730 -> scope7543731 -> complete0-24%4 GPU capture7543732 -> independent
+CPU input approval7543733 -> FP32 numerical7543734. All afterok, no optimizer.
+Cache starts with two acoustic/reference/receipt invariance regression tests.
+Do not duplicate these jobs. Inspect actual results before a higher precision
+numerical reference audit, training, extension or adoption. Old28 actual histories
+and KL1/hiddenMSE10 remain unchanged; native520 baseline remains frozen.
+
+Next new-corpus action: versioned retry of only the11 actually failed v4 TRAIN
+recordings, keeping13 passes byte-identical and same reference-conditioned v4
+protocol/source/folds. Full24 independent speech/fact/timing, semantic/conversion
+and native approvals still mandatory. No threshold change or passing subset.
+Runtime backup still PARTIAL. LOCAL active; CLOUD submits nothing. See below.
+
+---
+
 # LOCAL active — owner approved old25 timing repair, 19 October 10:00 UTC
 
 OWNER DECISION: "Repair and independently reapprove all 25 (recommended)."

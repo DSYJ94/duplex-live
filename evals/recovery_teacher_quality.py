@@ -103,6 +103,9 @@ def validate_teacher(batch):
         raise RuntimeError("Historical teacher scope changed")
     if len(ids) != manifest["maximum_sessions"]:
         raise RuntimeError("Incomplete bounded teacher collection")
+    if 'diagnosed_repair' in manifest:
+        from evals.native_v2_teacher_repair import validate_lineage
+        validate_lineage(manifest)
     return manifest
 
 
