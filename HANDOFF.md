@@ -1,3 +1,27 @@
+# LOCAL active — independent native input control queued,19 October10:35UTC
+
+Sourcefd1f852e9203eb0f0738313a568dcc5ccdd93dc2 pushed/immutable. Exclusive receipt
+runs/native-old25-streamed-control-local-20261019.json. CPU7544406 -> independent
+four-trace streamed-input control7544409. This is a diagnostic-only schema, never
+training approval. Original0–3 report ownership TRUE and legacy mismatches ONLY
+on user channels9–16; all first9 channels exactly match. Independent comparison
+must still prove exact prepared inputs using the actual streamed user codes.
+All4 traces and full25scope now locally SHA-verified22files/15965368bytes.
+
+No native GPU/optimizer submission until this independent control passes.
+Original capture7543890 tasks4–24 and dependent7543891/7543892 are CANCELLED;
+0–3 remain immutable FAILED offline controls. Future remaining21 captures must
+reuse0–3 only after control approval, and independently reapprove all25 together.
+No source/quality/numerical threshold changes. Old28 and KL/hidden preserved.
+
+Separate clarity teacher7544225 -> full24 quality7544226 -> semantic7544227 remain
+on source20a98d4, CPU7544224 gate. Runtime/base/state/source backups VERIFIED below.
+Pinned clean vendor Context Spanning/Moshi/finetune source Git bundles also built
+and verified on cluster, transfer/hash check pending. LOCAL active; CLOUD submits
+nothing. Goal ACTIVE, native/whole-system FAIL; cert ends22:51:23Berlin today.
+
+---
+
 # LOCAL active — native capture controls preserved; remaining GPU tasks stopped,10:32UTC
 
 First four7543890 native traces exist, but original capture command fails its

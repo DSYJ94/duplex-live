@@ -1,3 +1,20 @@
+19 October10:35UTC — native/whole-system FAIL; LOCAL active. All24 source
+TRAIN clips pass; teacher retry quality7543781 passes19/24, remaining5 get a
+versioned clarity retry7544225 with19 passing recordings unchanged. Full24
+quality7544226 and semantic7544227 remain mandatory. No optimizer submitted.
+
+Old25 timing7543606, cache7543730 and fullscope7543889 PASS; all original words,
+audio/masks/frames and all21 undiagnosed targets preserved. Four actual native
+traces fail the historical offline-user-code comparison with differences only in
+user streams9–16, so remaining captures and dependent audits were cancelled.
+Independent exact streamed-user CPU control7544409 is gated by CPU7544406 before
+any resumed capture. A diagnostic subset cannot approve training. All25 native
+input/numerical approvals, original28 histories and KL1/hiddenMSE10 remain required.
+Runtime17104files/9.07GB plus base weights/state/data backups are SHA256 verified.
+Source and exact live jobs: newest HANDOFF. Cloud submits nothing until handover.
+
+---
+
 19 October10:21UTC — LOCAL active. Native and whole-system remain FAIL.
 New source7541875 passes24/24 TRAIN unchanged gates; four failed held-out source
 clips remain unmodified and excluded. Reference-conditioned teacher-v4 audit
