@@ -81,3 +81,29 @@ Capture uses a complete0-23 array with maximum4concurrent GPU tasks; CPU approva
 must consume all24, never a subset. Original FP32 numerical failure must be kept
 before any separately requested higher precision reference audit. Encoding is
 for approved teacher audio only; it does not authorize an optimizer update.
+
+## Prepared native eight-update path (not executed)
+
+The next bounded native candidate preserves the7510331 recipe exactly: all28
+actual-history components, first-response-word weight16, four-reference KL1 and
+hidden MSE10, all25 independently approved native teachers with weight1 and
+balanced spoken/clock text loss, native520 warm-start weights and accepted voice.
+It starts a NEW optimizer, rather than claiming520+8 resumed updates.
+
+A separately approved COMPLETE24-teacher corpus adds one weight1 balanced native
+assistant-text/control/silence loss, on actual streamed-user conditioning. This
+is a controlled new-data text-supervision experiment in the native model, not a
+Qwen controller and not the rejected standalone joint audio pilot. There is no
+new acoustic prediction loss in this candidate. Source words/assistant acoustics
+remain independently approved conditioning; base acoustic parameters stay frozen.
+This choice retains the successful pretrained voice while isolating the new
+ordinary/quiet/pause/delegation supervision with every old retention term intact.
+
+New flags require the entire cache/input/scope/numerical chain, old retention,
+all25 teachers and an eight-update warm start. Longer updates or resume fail
+closed until a separately reviewed behavioral extension is implemented. Existing
+25-teacher guards remain unchanged. Additional policy and packaged approval live
+under additional-native-v2/ and enter exact optimizer/RNG state metadata, so a
+restore cannot silently change data/objective. Wrapper native-v2-train.slurm
+runs a separate full state/logit restore process after the eight updates.
+26 focused local tests pass; actual GPU execution and behavior are still pending.

@@ -57,6 +57,8 @@ def main():
     ap.add_argument('--actual-native-teacher-scope',type=Path)
     ap.add_argument('--actual-native-teacher-preflight',type=Path)
     ap.add_argument('--actual-native-teacher-coverage',choices=('four-longest','all-approved'),default='four-longest')
+    for name in ('cache', 'approval', 'scope', 'preflight'):
+        ap.add_argument('--native-v2-' + name, type=Path)
     ap.add_argument('--actual-response-first-word-weight',type=float,default=1.)
     ap.add_argument('--actual-temporal-audit', action='store_true')
     ap.add_argument('--actual-temporal-fit', action='store_true')
@@ -88,6 +90,8 @@ def main():
     ap.add_argument('--text-padding', choices=('legacy-epad0','context-pad3'), default='legacy-epad0')
     ap.add_argument('--request-policy', choices=('source-dispatch','native-prelead','native-prelead-epad'), default='source-dispatch')
     args = ap.parse_args()
+    from evals.context_native_v2_teacher_objective import validate_configuration as validate_native_v2
+    validate_native_v2(args)
     if args.teacher_engine_native_audio and (not args.teacher_engine_input_audit
             or not args.teacher_engine_input_id or args.teacher_native_math_audit):
         ap.error('Native teacher audio rendering requires one independently scoped teacher and no math/optimizer path')

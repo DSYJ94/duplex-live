@@ -94,6 +94,10 @@ def run(lm, spm, voice, examples, components, audits, args):
     else:
         teacher=teacher_policy(teacher_weight,retention_teacher_audits,args.actual_retention_teacher_audit,
             args.assets,args.out/'voice.pt')
+    additional_policy = None; additional_batches = []
+    if getattr(args, 'native_v2_cache', None):
+        from evals.context_native_v2_teacher_objective import prepare as prepare_native_v2
+        additional_policy, additional_batches = prepare_native_v2(args, spm, voice, retention, teacher)
     def forward(inputs): return lm.forward_codes(inputs)
     def digests():
         result = {}
@@ -143,6 +147,7 @@ def run(lm, spm, voice, examples, components, audits, args):
             'recipe':{'rank':8,'scaling':2.,'last_layers':4,'lr':1e-5,'weight_decay':0.,
                 'gradient_clip':1.,'retention_kl_weight':base_retention_weight,'retention_hidden_mse_weight':10.*base_retention_weight,
                 **({'retention_teacher_text':teacher} if teacher else {}),
+                **({'additional_native_v2':additional_policy} if additional_policy else {}),
                 'text_pad3_loss_weight':.5,
                 **({'response_first_word_loss':decision} if decision else {}),
                 **({'retention_sampling':{'policy':'rotate all retention examples within each verified kind',
@@ -229,6 +234,7 @@ def run(lm, spm, voice, examples, components, audits, args):
         steps = []; seen_a = seen_b = False; start = time.monotonic()
         torch.cuda.reset_peak_memory_stats()
         for local_step in range(args.actual_fit_updates):
+            additional_loss = None; additional_record = None
             step = initial_step+local_step
             optimizer.zero_grad(set_to_none=True)
             from evals.context_component_kind import balanced_index
@@ -263,6 +269,16 @@ def run(lm, spm, voice, examples, components, audits, args):
                     else:supervised=teacher_loss(tz,ttarget,tmask)
                     teacher_target_count=int(tmask.sum())
                     (teacher_weight*supervised).backward()
+                if additional_batches:
+                    from evals.context_native_teacher_objective import teacher_index
+                    from evals.context_teacher_text_balance import loss as balanced_teacher_loss
+                    ai=teacher_index(component_kinds,step,ri,[b[3]['kind'] for b in additional_batches])
+                    ainputs,amask,atarget,additional_record=additional_batches[ai]
+                    az=forward(ainputs)[1][0,0]
+                    additional_loss,_=balanced_teacher_loss(az,atarget,amask)
+                    if not torch.isfinite(additional_loss):
+                        raise RuntimeError('Nonfinite additional native-v2 supervision')
+                    additional_loss.backward()
             if not all(torch.isfinite(v) for v in ((ce,kl,hidden,supervised) if teacher else (ce,kl,hidden))):
                 raise RuntimeError('Nonfinite actual or retention loss')
             if any(p.grad is None or not torch.isfinite(p.grad).all() for p in learned.values()):
@@ -285,6 +301,10 @@ def run(lm, spm, voice, examples, components, audits, args):
                     'native_teacher_kind':trecord['kind']} if native_teacher_mode else {}),
                 **({'native_teacher_loss_breakdown':teacher_breakdown}
                     if native_teacher_mode and teacher_breakdown is not None else {}),
+                **({'additional_native_v2_id':additional_record['id'],
+                    'additional_native_v2_kind':additional_record['kind'],
+                    'additional_native_v2_text_ce':float(additional_loss.detach())}
+                    if additional_record else {}),
                 'nonzero_A_gradients':a,'nonzero_B_gradients':b,'gradient_norm_before_clip':norm}
             steps.append(row); print(json.dumps(row),flush=True)
         if not seen_a or not seen_b: raise RuntimeError('Dead actual temporal adapter')
@@ -316,6 +336,7 @@ def run(lm, spm, voice, examples, components, audits, args):
                 if teacher else 'KL on unchanged base text distribution plus 10x hidden MSE, approved independent TRAIN histories'),
             **({'base_retention_weight':base_retention_weight} if base_retention_weight!=1. else {}),
             **({'retention_teacher_text':teacher} if teacher else {}),
+            **({'additional_native_v2':additional_policy} if additional_policy else {}),
             **({'response_first_word_loss':decision} if decision else {}),
             'baseline_metrics':baseline_metrics,'initial_stage_metrics':initial_metrics,
             'final_metrics':metrics(),'expected_logits':expected,'steps':steps,

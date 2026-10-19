@@ -1,0 +1,15 @@
+{
+  "source_commit": "1519b71a5fc4f337735acca8529a860c7c00e310",
+  "source_repair_job": "7541873",
+  "source_audit_job": "7541875",
+  "train_scenes_passed": 24,
+  "train_scenes_required": 24,
+  "total_passed": 36,
+  "originals_and_repairs_sha256_verified": true,
+  "protected_audio_receipts_verified": 466,
+  "heldout_audio_receipts_unchanged": 200,
+  "generation_sha256": "6a6a232e31b95115148f275b66a9be18fdc6f09844afb3f319ed41c7b0bead03",
+  "ingestion_sha256": "8d42283d42b43308ce17a04611477c4c259a7e2de77ae6de1909714343a1a36e",
+  "optimizer_steps": 0,
+  "native_qualified": false
+}
