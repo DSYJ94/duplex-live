@@ -32,9 +32,31 @@ NATIVE_COMPLETE_INSTRUCTIONS = NATIVE_INSTRUCTIONS + (
     'receipt, say The lookup is cancelled. Then answer any new question in a complete sentence. '
     'These rules do not permit speech during an explicitly requested quiet interval.'
 )
+NATIVE_REFERENCE_PROTOCOL = 'native-dialogue-v4'
+
+
+def native_reference_instructions():
+    """TRAIN label construction references, never private values or held-out answers."""
+    import json
+    from data.synthetic.native_curriculum_v2 import QA
+    references = [dict(question=q, answer=a) for q, a, _ in QA['train']]
+    references.append(dict(question='What does a timer measure?', answer='A timer measures elapsed time.'))
+    return NATIVE_COMPLETE_INSTRUCTIONS + (
+        ' This is synthetic TRAIN label collection. The following independently authored TRAIN '
+        'reference answers specify complete ordinary-answer wording. When the user asks one of '
+        'these questions, give its complete reference answer once, after hearing the question, '
+        'while still obeying all quiet/pause/cancellation cues. These references supply no private '
+        'record values. Every private value must still come from its actual client receipt. '
+        'Project-name vocabulary for listening is Laurel, Hazel, Juniper, Cypress, and the '
+        'directions North, South, East, West. Vocabulary does not identify a missing project: '
+        'wait for the user to identify it, and never infer one from the vocabulary. '
+        'Reference-conditioned label generation does not establish unaided model reasoning. '
+    ) + json.dumps(references, sort_keys=True)
 
 
 def validate_protocol(name, purpose, kind):
+    if name == NATIVE_REFERENCE_PROTOCOL and purpose == 'teacher' and kind in ('private', 'simple', 'clarify', 'cancel'):
+        return native_reference_instructions()
     if name == NATIVE_COMPLETE_PROTOCOL and purpose == 'teacher' and kind in ('private', 'simple', 'clarify', 'cancel'):
         return NATIVE_COMPLETE_INSTRUCTIONS
     if name == NATIVE_PROTOCOL and purpose == 'teacher' and kind in ('private', 'simple', 'clarify', 'cancel'):

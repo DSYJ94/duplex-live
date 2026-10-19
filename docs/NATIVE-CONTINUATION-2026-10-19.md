@@ -127,3 +127,29 @@ known2.0s onset maps back exactly. The original physical-onset check was run and
 failed on those six real recordings; corrected actual re-audit remains pending.
 Both original quality and semantic approvals must be repeated for any new labels.
 Old25 approved native histories/targets remain unchanged.
+
+## Reference-conditioned TRAIN-label collection (prepared)
+
+Teacher-v3 original audit7542690 admits9/24, so general full-sentence wording
+alone does not make a complete corpus. Some raw model transcripts still omit
+required concepts (008 In the blue box.;010 downward instead of down). A timing
+repair cannot fix missing transcript words while exact speech agreement remains
+mandatory. No original result is silently accepted under a different gate.
+
+Explicit teacher protocol native-dialogue-v4 supplies the independently AUTHORED
+TRAIN ordinary QA references (the six source QA pairs plus the authored timer
+answer), never captured native/evaluation responses or held-out answers. It also
+supplies TRAIN project-name vocabulary for listening, with an explicit ban on
+inferring missing identity. NO private value is supplied. Actual private reads,
+cancellation receipts, waiting/quiet behavior, all24 audio/fact checks and actual
+Astra semantic review remain mandatory. Tests prove no held-out QA or synthetic
+private phrase occurs in the reference instructions. Teacher environment and
+manifest carry an explicit reference-conditioning marker; semantic review sees
+that provenance. Old protocols are preserved unchanged.
+
+This constructs supervised labels from independently authored source references;
+it does NOT establish unaided GPT-Live reasoning or native model intelligence.
+The native student sees its original native inputs and approved target histories,
+not this teacher reference prompt. Free-running ordinary/private/clarification/
+cancellation/quiet/pause-resume tests remain mandatory before extension/adoption.
+New reference-conditioned collection has not yet been submitted at this entry.

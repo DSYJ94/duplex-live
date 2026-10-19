@@ -52,6 +52,10 @@ def validate_teacher(batch):
             if (environment.get("teacher_protocol") != manifest["teacher_protocol"]
                     or environment["session_config"]["instructions"] != expected_instructions):
                 raise RuntimeError("Teacher client-control protocol receipt changed")
+            if manifest['teacher_protocol'] == 'native-dialogue-v4' and (
+                    manifest.get('teacher_reference_conditioning') != 'independently-authored-TRAIN-ordinary-answers-only-v1'
+                    or environment.get('teacher_reference_conditioning') != manifest['teacher_reference_conditioning']):
+                raise RuntimeError('Reference-conditioned teacher lost its explicit TRAIN-only provenance')
         if environment["purpose"] != "teacher" or environment["training_approved"] is not False or environment["input_sha256"] != row["source_user_sha256"]:
             raise RuntimeError("Teacher purpose/stimulus receipt changed")
         if "world_override" in record:
@@ -89,7 +93,7 @@ def validate_teacher(batch):
             raise RuntimeError('Native-v2 teacher source scripts changed')
         expected = {r['scenario_id'] for r in expected_specs if r['split'] == 'train'}
         if (len(expected) != 24 or ids != expected or set(manifest['selected_ids']) != expected
-                or manifest.get('scope') != 'native-v2' or manifest.get('teacher_protocol') not in ('native-dialogue-v2', 'native-dialogue-v3')):
+                or manifest.get('scope') != 'native-v2' or manifest.get('teacher_protocol') not in ('native-dialogue-v2', 'native-dialogue-v3', 'native-dialogue-v4')):
             raise RuntimeError('Native-v2 teacher scope/protocol changed or incomplete')
     elif manifest.get("collection_schema") == "dl-control-teacher-v2":
         expected = {r["scenario_id"] for r in source["accepted"] if r["split"] == "train" and r["kind"] in ("clarify", "cancel")}

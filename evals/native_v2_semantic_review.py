@@ -57,6 +57,7 @@ def inputs(batch, checks):
         result[sid] = [dict(role='system', content=SYSTEM), dict(role='user', content=json.dumps(dict(
             kind=record['source_row']['kind'], source_user_events=[e for e in timeline['events'] if e['ch'] == 'user'],
             independently_authored_world_and_control=timeline['meta'],
+            teacher_reference_conditioning=manifest.get('teacher_reference_conditioning'),
             actual_assistant_measured_words=decisions[sid]['measured_words'],
             actual_delegation_and_receipt_events=[e for e in events if e['type'] in (
                 'session.delegation.created', 'local.worker.tool_result', 'local.worker.cancelled', 'worker_failure')]

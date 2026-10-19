@@ -3,7 +3,8 @@ import copy
 import unittest
 from evals.recovery_teacher_quality import assess
 from evals.teacher_protocol import (NATIVE_PROTOCOL, NATIVE_INSTRUCTIONS, NATIVE_COMPLETE_PROTOCOL,
-                                  NATIVE_COMPLETE_INSTRUCTIONS, validate_protocol)
+                                  NATIVE_COMPLETE_INSTRUCTIONS, NATIVE_REFERENCE_PROTOCOL,
+                                  native_reference_instructions, validate_protocol)
 
 
 def speech(text, starts):
@@ -67,6 +68,23 @@ class NativeTeacherTests(unittest.TestCase):
             self.assertEqual(validate_protocol(NATIVE_PROTOCOL, 'teacher', kind), NATIVE_INSTRUCTIONS)
             with self.assertRaises(ValueError):
                 validate_protocol(NATIVE_COMPLETE_PROTOCOL, 'comparison', kind)
+
+    def test_reference_protocol_uses_authored_train_answers_not_heldout_or_private_values(self):
+        from data.synthetic.native_curriculum_v2 import QA, specifications
+        instructions = native_reference_instructions()
+        for q,a,_ in QA['train']:
+            self.assertIn(q,instructions)
+            self.assertIn(a,instructions)
+        for fold in ('validation','test'):
+            for q,a,_ in QA[fold]:
+                self.assertNotIn(q,instructions)
+                self.assertNotIn(a,instructions)
+        for scene in specifications():
+            if scene['phrase']:
+                self.assertNotIn(scene['phrase'],instructions)
+        self.assertIn('does not establish unaided model reasoning',instructions)
+        self.assertEqual(validate_protocol(NATIVE_REFERENCE_PROTOCOL,'teacher','simple'),instructions)
+        with self.assertRaises(ValueError):validate_protocol(NATIVE_REFERENCE_PROTOCOL,'comparison','simple')
 
 
 if __name__ == '__main__':

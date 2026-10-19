@@ -15,7 +15,7 @@ DL=/projects/u6si/duplex-live
 : "${NATIVE_SOURCE_AUDIT_JOB:?Measured source approval receipt required}"
 [[ "$NATIVE_SOURCE_AUDIT_JOB" =~ ^[0-9]+$ ]]
 PROTOCOL="${NATIVE_TEACHER_PROTOCOL:-native-dialogue-v2}"
-[[ "$PROTOCOL" = native-dialogue-v2 || "$PROTOCOL" = native-dialogue-v3 ]]
+[[ "$PROTOCOL" = native-dialogue-v2 || "$PROTOCOL" = native-dialogue-v3 || "$PROTOCOL" = native-dialogue-v4 ]]
 test "$(git -C "$DL_TASK_SOURCE" rev-parse HEAD)" = "$DL_TASK_COMMIT"
 test -z "$(git -C "$DL_TASK_SOURCE" status --porcelain)"
 cd "$DL_TASK_SOURCE"

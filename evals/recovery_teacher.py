@@ -32,7 +32,7 @@ async def generate(data,out,resume=False,scope="legacy",protocol=None):
             raise RuntimeError('Native-v2 teacher source differs from the independently authored sealed scripts')
         selected = [r for r in receipt['accepted'] if r['split'] == 'train']
         wanted = {s['scenario_id'] for s in expected if s['split'] == 'train'}
-        if len(selected) != 24 or {r['scenario_id'] for r in selected} != wanted or protocol not in ('native-dialogue-v2', 'native-dialogue-v3'):
+        if len(selected) != 24 or {r['scenario_id'] for r in selected} != wanted or protocol not in ('native-dialogue-v2', 'native-dialogue-v3', 'native-dialogue-v4'):
             raise RuntimeError('Native-v2 requires the whole twenty-four-scene TRAIN source and explicit protocol')
     manifest = {"purpose":"raw training teacher recordings, not quality-approved", "source_conversion":str(data),
         "source_ingestion_sha256":sha256(data / "ingestion.json"), "source_model":"gpt-live-1",
@@ -50,6 +50,8 @@ async def generate(data,out,resume=False,scope="legacy",protocol=None):
             raise ValueError("Client-control protocol is not a legacy teacher change")
         validate_protocol(protocol, "teacher", selected[0]["kind"])
         manifest["teacher_protocol"] = protocol
+        if protocol == 'native-dialogue-v4':
+            manifest['teacher_reference_conditioning'] = 'independently-authored-TRAIN-ordinary-answers-only-v1'
     if resume:
         if (out / "quality.jsonl").exists():
             raise RuntimeError("Cannot resume a stamped teacher corpus")
@@ -109,7 +111,7 @@ def main():
     parser.add_argument("--out",type=Path,required=True)
     parser.add_argument("--resume",action="store_true")
     parser.add_argument("--scope",choices=("legacy", "control", "native-v2"),default="legacy")
-    parser.add_argument("--protocol", choices=("client-control-v1", "native-dialogue-v2", "native-dialogue-v3"))
+    parser.add_argument("--protocol", choices=("client-control-v1", "native-dialogue-v2", "native-dialogue-v3", "native-dialogue-v4"))
     args = parser.parse_args()
     asyncio.run(generate(args.data,args.out,args.resume,args.scope,args.protocol))
 
