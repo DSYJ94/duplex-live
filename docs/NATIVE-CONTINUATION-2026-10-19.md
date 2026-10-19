@@ -690,3 +690,18 @@ pinned large-v3 weight would be downloaded by local cluster ASR, no speech API c
 Timing correction: prior status headings12:51/13:00 were rounded forward by a few
 minutes. Exact receipt times, Slurm clocks and backup-verification UTC timestamps
 are authoritative. This note and every new receipt use actual UTC clocks.
+
+
+## Proposed complete24 exposure in bounded8 updates, not executed
+
+Existing candidate's first8 updates sample only8of24 teachers; quiet014 and pause015
+first appear27/31 under the original schedule. Pure proposed coverage helper averages
+4private/4simple or2clarify/2cancel teachers on each respective existing kind visit.
+All24 are therefore covered exactly once in first8; old actual28/old25/reference
+sampling and total new-objective kind weights remain unchanged. Two CPU tests verify
+all24/quiet/pause across four8-update blocks and reject missing/misclassified teachers
+or wrong retention clock. Actual parent manifests generate explicit declaration
+NATIVE-V2-PROPOSED-COMPLETE24-EXPOSURE-2026-10-19.json; optimizer updates observed0,
+training is NOT wired to helper or approved by this declaration. No learning rate
+chosen while zero-update full81 diagnostic7548377 is pending. Distinguish coverage
+hypothesis from training execution and useful native behavior.

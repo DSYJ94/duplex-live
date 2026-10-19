@@ -1,0 +1,135 @@
+{
+  "schema": "dl-native-v2-proposed-complete24-eight-update-schedule-v1",
+  "at_utc": "2026-10-19T13:06:39.796906+00:00",
+  "declared_only": true,
+  "optimizer_updates_observed": 0,
+  "training_authorized_by_this_plan": false,
+  "parent": "7510331",
+  "rejected_candidate": "7546645",
+  "parent_data_sha256": "de92099057ded15a1af0e387c96b457cdf4c1731c26594dcdca211d4c442fc1e",
+  "all28_preserved": true,
+  "all25_preserved": true,
+  "reference_kl_weight": 1.0,
+  "reference_hidden_mse_weight": 10.0,
+  "old_teacher_weight": 1.0,
+  "new_teacher_kind_weight_unchanged": true,
+  "method": "Average four private/simple or two clarify/cancel teachers per native update, rotating exact half-groups; every24 in8updates",
+  "all24_exposed_in_declared_first8": true,
+  "source_code_sha256": "eddf71312116f6c1ed2d818d3625a48e9ea0c04245407e0d0708043d5973ecc8",
+  "learning_rate": "Not chosen; complete81 gradient diagnostic7548377 pending",
+  "requires_independent_restore_and_complete_native_review": true,
+  "steps": [
+    {
+      "step": 1,
+      "unchanged_actual_component_index": 15,
+      "unchanged_actual_component": "/projects/u6si/duplex-live/runs/context-training-proof-7500187",
+      "unchanged_old_teacher": "teacher-cf-recovery-train-000-1",
+      "unchanged_reference_index": 0,
+      "new_teacher_ids": [
+        "teacher-native2-train-000",
+        "teacher-native2-train-001",
+        "teacher-native2-train-002",
+        "teacher-native2-train-003"
+      ],
+      "each_new_teacher_weight": 0.25,
+      "combined_new_objective_weight": 1.0
+    },
+    {
+      "step": 2,
+      "unchanged_actual_component_index": 25,
+      "unchanged_actual_component": "/projects/u6si/duplex-live/runs/context-training-proof-7504669",
+      "unchanged_old_teacher": "teacher-recovery-train-008",
+      "unchanged_reference_index": 1,
+      "new_teacher_ids": [
+        "teacher-native2-train-008",
+        "teacher-native2-train-009",
+        "teacher-native2-train-010",
+        "teacher-native2-train-011"
+      ],
+      "each_new_teacher_weight": 0.25,
+      "combined_new_objective_weight": 1.0
+    },
+    {
+      "step": 3,
+      "unchanged_actual_component_index": 26,
+      "unchanged_actual_component": "/projects/u6si/duplex-live/runs/context-training-proof-7505893",
+      "unchanged_old_teacher": "teacher-recovery-train-019",
+      "unchanged_reference_index": 2,
+      "new_teacher_ids": [
+        "teacher-native2-train-016",
+        "teacher-native2-train-017"
+      ],
+      "each_new_teacher_weight": 0.5,
+      "combined_new_objective_weight": 1.0
+    },
+    {
+      "step": 4,
+      "unchanged_actual_component_index": 16,
+      "unchanged_actual_component": "/projects/u6si/duplex-live/runs/context-training-proof-7505218",
+      "unchanged_old_teacher": "teacher-recovery-train-020",
+      "unchanged_reference_index": 3,
+      "new_teacher_ids": [
+        "teacher-native2-train-020",
+        "teacher-native2-train-021"
+      ],
+      "each_new_teacher_weight": 0.5,
+      "combined_new_objective_weight": 1.0
+    },
+    {
+      "step": 5,
+      "unchanged_actual_component_index": 19,
+      "unchanged_actual_component": "/projects/u6si/duplex-live/runs/context-training-proof-7504055",
+      "unchanged_old_teacher": "teacher-cf-recovery-train-000-2",
+      "unchanged_reference_index": 0,
+      "new_teacher_ids": [
+        "teacher-native2-train-004",
+        "teacher-native2-train-005",
+        "teacher-native2-train-006",
+        "teacher-native2-train-007"
+      ],
+      "each_new_teacher_weight": 0.25,
+      "combined_new_objective_weight": 1.0
+    },
+    {
+      "step": 6,
+      "unchanged_actual_component_index": 0,
+      "unchanged_actual_component": "/projects/u6si/duplex-live/runs/context-training-proof-7505207",
+      "unchanged_old_teacher": "teacher-recovery-train-009",
+      "unchanged_reference_index": 1,
+      "new_teacher_ids": [
+        "teacher-native2-train-012",
+        "teacher-native2-train-013",
+        "teacher-native2-train-014",
+        "teacher-native2-train-015"
+      ],
+      "each_new_teacher_weight": 0.25,
+      "combined_new_objective_weight": 1.0
+    },
+    {
+      "step": 7,
+      "unchanged_actual_component_index": 4,
+      "unchanged_actual_component": "/projects/u6si/duplex-live/runs/context-training-proof-7495655",
+      "unchanged_old_teacher": "teacher-recovery-train-019",
+      "unchanged_reference_index": 2,
+      "new_teacher_ids": [
+        "teacher-native2-train-018",
+        "teacher-native2-train-019"
+      ],
+      "each_new_teacher_weight": 0.5,
+      "combined_new_objective_weight": 1.0
+    },
+    {
+      "step": 8,
+      "unchanged_actual_component_index": 18,
+      "unchanged_actual_component": "/projects/u6si/duplex-live/runs/context-training-proof-7501751",
+      "unchanged_old_teacher": "teacher-recovery-train-020",
+      "unchanged_reference_index": 3,
+      "new_teacher_ids": [
+        "teacher-native2-train-022",
+        "teacher-native2-train-023"
+      ],
+      "each_new_teacher_weight": 0.5,
+      "combined_new_objective_weight": 1.0
+    }
+  ]
+}
