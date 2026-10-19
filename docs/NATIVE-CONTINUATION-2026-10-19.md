@@ -249,3 +249,28 @@ Teacher repair7543779 rerenders only the11 failed v4 TRAIN recordings after CPU
 Sourcebddd53b and receipt native-v2-teacher-v4-repair-local-20261019.json identify
 this exact attempt. Original13 passing recordings and all source/fold/heldout
 hashes are retained. No passing subset qualifies either corpus or native model.
+
+
+## Corrected native25 scope PASS; capture array executing
+
+Source d4de305 CPU7543887 passes59tests. Scope7543889 independently verifies
+all25 original words/audio/masks/frame counts and all21 undiagnosed target hashes
+unchanged. Full0-24%4 capture7543890 is executing native user encoder/agent decoder
+on allocated Isambard GPUs. CPU input approval7543891 and FP32 math7543892 remain
+afterok. This is supervised-input approval, not free-running task qualification.
+
+Full24 teacher retry quality7543781 fails; dependent semantic7543783 cannot run.
+Do not accept a subset. Scene015 actually starts Put the during the ongoing
+9.35s user instruction, then aborts when After I say go arrives, acknowledges
+Noted and later says Close the cupboard. Source user ends10.15s, pause starts
+13.44s, so a3.29s response window exists. This is premature/abandoned first-step
+behavior, not proof that the source pause clock is impossible. Preserve original
+source timing and all raw recordings; diagnose remaining audit failures first.
+
+Prepared native-v2-development fixture/wrapper declares ten post-restore native
+cases before any new optimizer results: four old ordinary questions, two actual
+quiet/pause TRAIN scenes, paired private values, clarification and cancellation.
+Native outputs are unforced; backend reads/cancellation execute from native RET
+and actual arrived-audio ASR. All ten plus independent audio/receipt/clock review
+are mandatory before any extension. Reused inputs are development evidence, not
+fresh full-task qualification. No behavior or optimizer jobs submitted yet.

@@ -1,3 +1,23 @@
+19 October10:21UTC — LOCAL active. Native and whole-system remain FAIL.
+New source7541875 passes24/24 TRAIN unchanged gates; four failed held-out source
+clips remain unmodified and excluded. Reference-conditioned teacher-v4 audit
+7543297 passes13/24; a versioned11-scene retry7543779 preserves the13 passing
+raw recordings, but full24 audit7543781 also FAILS. No semantic conversion or
+new optimizer may proceed from a passing subset.
+
+Owner approved the separate timing repair of four old native teacher histories.
+7543606 passes all25 current word/fact/tool-clock/physical-onset checks;7543730
+native cache confirms zero changed acoustic/reference/receipt/frame payloads.
+Corrected native scope7543889 PASSES, with all21 undiagnosed targets and every
+original word/audio/mask/frame count identical. Full25 native streamed-input
+capture7543890 is RUNNING, capped at4 GPUs; independent CPU7543891 and FP32
+numerical7543892 are afterok dependencies. Original import-failed scope3731 and
+dependents remain terminal. No new native optimizer or checkpoint adoption.
+Original28 actual histories and KL1/hiddenMSE10 remain preserved. GPU validation
+in the cloud is paused; no extra compute purchase. HANDOFF is authoritative.
+
+---
+
 # Qualification record — 18 October 2026
 
 19 October09:11UTC: source7541875 remains24/24 TRAIN PASS. Teacher7541876

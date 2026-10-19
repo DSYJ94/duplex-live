@@ -1,0 +1,32 @@
+{
+  "schema": "dl-native-v2-development-evaluation-v1",
+  "declared_before_new_optimizer_results": true,
+  "scope": "Reused TRAIN and development audio; never fresh qualification",
+  "purpose": "Reject ordinary regression, quiet/pause failure and continued actual private/control failures before any extension",
+  "word_or_audio_forcing": false,
+  "do_not_train_on_evaluation_outputs": true,
+  "maximum_concurrent_jobs": 2,
+  "gpus_per_job": 2,
+  "cases": [
+    {"scenario": "recovery-train-012", "kind": "simple", "source": "old", "backend": "observe-only", "expected": "Ice floats because it is less dense than liquid water"},
+    {"scenario": "recovery-train-013", "kind": "simple", "source": "old", "backend": "observe-only", "expected": "Sound is produced by vibrations"},
+    {"scenario": "recovery-train-014", "kind": "simple", "source": "old", "backend": "observe-only", "expected": "Plants use light energy to make food through photosynthesis"},
+    {"scenario": "recovery-train-015", "kind": "simple", "source": "old", "backend": "observe-only", "expected": "Metal conducts heat away from skin"},
+    {"scenario": "native2-train-014", "kind": "simple", "source": "native-v2", "backend": "observe-only", "expected": "Stay silent until ready, then explain that a timer measures elapsed time"},
+    {"scenario": "native2-train-015", "kind": "simple", "source": "native-v2", "backend": "observe-only", "expected": "Finish put the book on the shelf, stay quiet during pause, and say close the cupboard after go without restarting"},
+    {"scenario": "recovery-validation-000", "kind": "private", "source": "old", "backend": "native-asr", "value": "yellow circle", "expected": "Actual read and correctly spoken value, independent ordinary answer while waiting"},
+    {"scenario": "recovery-validation-000", "kind": "private", "source": "old", "backend": "native-asr", "value": "copper diamond", "expected": "Changed actual receipt changes spoken value without yellow-circle carryover"},
+    {"scenario": "recovery-validation-006", "kind": "clarify", "source": "old", "backend": "native-asr", "value": "brown square", "expected": "Ask for project before lookup, then use actual named-project receipt without repeated questioning"},
+    {"scenario": "recovery-validation-007", "kind": "cancel", "source": "old", "backend": "native-asr", "value": "red star", "expected": "Actual cancellation before confirmation, no cancelled result delivery, latest ordinary question answered"}
+  ],
+  "required_review": [
+    "Fresh-process full adapter/optimizer/Python/NumPy/Torch/CUDA restore must already pass",
+    "Complete all ten cases without subset acceptance",
+    "Actual native RET actions, worker reads/cancellation and receipt clock",
+    "Independent audio words with valid original-WAV timestamps",
+    "Ordinary correctness and intelligibility",
+    "Measured quiet intervals and pause/resume without restart",
+    "Causal packet availability, backlog, input samples and audio continuity"
+  ],
+  "extension_or_adoption": "Never implied by lower loss or exact restore; independently review all native behaviors and obtain fresh full-task qualification"
+}
