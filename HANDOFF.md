@@ -1,3 +1,48 @@
+# LOCAL active — approved derived full20 input quality PASS (SOURCE ONLY) (2026-10-19 15:46 UTC)
+
+Source05521532eecdc264ac76f9b4f6a9e35f832e9312 is pushed/deployed immutable.
+Independent CPU7550652 PASS126tests3.994s. Owner-approved new derived full20 source
+quality7550653 COMPLETE19s: ALL20 scenes/ALL38 clips pass unchanged WER<=.05 and
+peak<=.995/physical clocks. Separate process independently reread/recomputed the
+complete source/ASR approval and PASS20/38. All canonical spelling WER0; raw max
+WER.1333333333 retained. Only lookup/look up and color/colour spelling normalize.
+No room/rune equivalence, ASR rerolls/API calls, source word/audio/receipt/world/
+clock/gain changes or passing subset. Original full20 primary7549085 and complete
+turbo7549412 failed audits remain byte-identical and retained. V1 failed fresh20
+also remains frozen/unscored. Owner heard room sign and explicitly approved this
+NEW derived whole20 procedure; authorizationSHAd80d3334dd3b7913c1d0309ce6e423a35f3f7101551d7984dd15712c2eaae115.
+
+Derived quality SHA6cf57f36bee612b3e4b3d4254b3686e85a13f8fdad7e5c7bb75bc1c7615887da;
+independent reader SHAcc53736c056e38203525eee682321da56ef5c2dcead9e0f27afd6b8d717805b1.
+Artifacts runs/native-fresh2-source-reapproval-7550653; exclusive submission receipt
+runs/native-fresh2-source-reapproval-local-20261019.json. Original V2 generator,
+plan and approved-input reader unchanged. Future inference must explicitly select
+NATIVE_FRESH_SOURCE_PROFILE=owner-approved-turbo-spelling-v1 and quality job7550653;
+source approval alone cannot authorize inference. Complete10 native candidate
+review and strict4 ordinary preservation gate remain mandatory. No fresh inference,
+optimizer, extension or adoption submitted. Native/whole-system qualification FAIL.
+
+At15:44:28 UTC all10 native7549994_0-9 still PENDING(Resources), independent ASR
+7550001 PENDING(Dependency), native reports0/10. Do not resubmit. Pilot7549991
+COMPLETE8updates/all24 exposure and independent full optimizer/RNG/logit restore
+PASS; same trainercf28726b44ed0621dde6bfd27257709574f5e9ed/wrapper95a60b79aa12ccc8c3ae04a6bd3e86ab6b60a663.
+All28actual/25old/KL1/hidden10 unchanged. The remaining immediate blocker is GPU
+availability; no owner source decision remains outstanding.
+
+New5files61522bytes size/SHAverified15:44:45UTC, scoped backup total22470 unique
+files14922212118bytes plus pinned runtime/base/PersonaPlex/codec/tokenizer/vendor
+bundles and both ASRweights. Full-history0552153 Git bundle verified,
+SHAd1cc628b3b4cb3d6901b7f3941a33867a31bb69cb85566ba6ccacdf92286f952.
+This docs checkpoint is newer than that bundle. Stopped old Mac source backup
+remains PARTIAL; owner conversations, credentials/core excluded; unrelated local
+edits preserved. Local certificate expires20Oct02:05:02UTC/04:05:02Berlin.
+LOCAL retains execution ownership; CLOUD submits nothing, no handback/purchase.
+Next: wait for EXISTING all10 native7549994 and ASR7550001; preserve all outputs,
+review all10 actual WAV/words/quiet-pause clocks/real worker receipts/latency, then
+make the separately committed bounded32-update research decision from exact state.
+
+---
+
 # LOCAL resumed — owner approves new whole20 source reapproval (2026-10-19 15:42 UTC)
 
 Owner independently heard "Room sign" and explicitly selected "Room sign; approve

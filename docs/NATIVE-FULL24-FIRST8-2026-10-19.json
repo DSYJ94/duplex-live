@@ -49,7 +49,7 @@
   "extension_authorized": false,
   "checkpoint_adopted": false,
   "native_or_whole_system_qualified": false,
-  "full20_source_quality_status": "FAILED frozen unscored; human room/rune hearing and any changed quality procedure approval still pending",
+  "full20_source_quality_status": "Original primary7549085 FAILED and preserved; NEW derived7550653 all20/38 PASS with separate fresh-process reader; fresh native inference still requires complete10 behavior review",
   "steps": [
     {
       "step": 1,
@@ -261,5 +261,40 @@
     }
   ],
   "reload_report_sha256": "4649e7238475a7e9e45a387de6d94830961531dd76b78d9f379a779e8b64ca02",
-  "total_job_elapsed": "00:12:56"
+  "total_job_elapsed": "00:12:56",
+  "derived_source_quality_approval": {
+    "recorded_at_utc": "2026-10-19T15:45:23.803404+00:00",
+    "source": "05521532eecdc264ac76f9b4f6a9e35f832e9312",
+    "quality_job": "7550653",
+    "independent_cpu_job": "7550652",
+    "independent_cpu_tests": 126,
+    "independent_cpu_test_seconds": 3.994,
+    "quality_elapsed": "00:00:19",
+    "quality_sha256": "6cf57f36bee612b3e4b3d4254b3686e85a13f8fdad7e5c7bb75bc1c7615887da",
+    "reader_sha256": "cc53736c056e38203525eee682321da56ef5c2dcead9e0f27afd6b8d717805b1",
+    "authorization_sha256": "d80d3334dd3b7913c1d0309ce6e423a35f3f7101551d7984dd15712c2eaae115",
+    "profile": "owner-approved-turbo-spelling-v1",
+    "complete_cases": 20,
+    "complete_clips": 38,
+    "input_quality_approved": true,
+    "independent_fresh_process_reader_passed": true,
+    "max_raw_wer": 0.13333333333333333,
+    "max_spelling_wer": 0.0,
+    "threshold": 0.05,
+    "peak_bar": 0.995,
+    "original_primary_and_other_recognizer_failed_reports_retained": true,
+    "original_audio_words_receipts_unchanged": true,
+    "new_api_calls": 0,
+    "rerolls": 0,
+    "passing_subset_accepted": false,
+    "room_rune_equivalent": false,
+    "native_inference_submitted": false,
+    "independent_full10_candidate_review_required": true,
+    "training_approved": false,
+    "native_or_whole_system_qualified": false,
+    "backup_inventory": "remote-native-fresh2-source-reapproval-inventory.json",
+    "backup_files": 5,
+    "backup_bytes": 61522,
+    "backup_verified_utc": "2026-10-19T15:44:45.478443+00:00"
+  }
 }

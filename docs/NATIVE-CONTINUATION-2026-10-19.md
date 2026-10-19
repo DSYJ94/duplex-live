@@ -845,3 +845,6 @@ inference or generator execution. Candidate fixed before any new fresh outputs.
 
 
 2026-10-19 15:42 UTC — owner hears room sign and explicitly approves NEW whole20 derived reapproval from complete turbo transcripts plus only lookup/look up/color/colour spelling. Both failed audits/audio/words/thresholds retained. Writer/reader and explicit inference opt-in prepared; no quality approval job yet, all10 native review still mandatory. Existing7549994 pendingResources/7550001 dependent at15:39:22; no extension/adoption/fresh inference. LOCAL resumed, native/whole-systemFAIL.
+
+
+2026-10-19 15:46 UTC — owner-approved derived full20 source7550653 PASS20/20scenes38/38clips, independent fresh-process readerPASS; unchanged .05WER/.995peak/physical bounds, canonicalWER0/rawWERretained. Source0552153/CPU7550652 PASS126tests. Original failed audits/audio/words/receipts retained. New5file backup verified; total22470/14922212118 plus pinned models. Native7549994 all10 stillResources/ASR7550001 dependent as15:44:28; no extension/adoption/fresh inference. Owner source decision resolved; remaining immediate blocker GPU availability. LOCALactive; native/whole-systemFAIL.
