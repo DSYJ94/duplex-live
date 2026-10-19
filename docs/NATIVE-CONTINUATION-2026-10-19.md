@@ -578,3 +578,18 @@ not controlled causal evidence or authorization to rewrite approved prefix/histo
 Keep original persona/approved teacher histories for candidate comparison. All
 baseline outputs are evaluation-only, never TRAIN labels.31files/94949512bytes,
 complete raw audio/history/ASR/receipts/logs, independently hash-verified12:13:02UTC.
+
+
+## Both numerical corpora pass; pilot and complete10 native review chain
+
+7546608 COMPLETES10m07, all24 pass max0.00043702125549316406 under unchanged
+0.001, causal0.0 throughout. Original failed full24 FP327545910 max0.001411557
+retained inside reference report and separate backup. All25 reference7545975 also
+passes max0.000882566. Production/training precision and threshold remain unchanged.
+Pilot7546645 is running sourcec93ac93 with all old28/25/KL1/hidden10 unchanged;
+independent fresh-process full optimizer/RNG restore is inside same job. Complete10
+native evaluation7547174 afterok6645 and independent CPU ASR7547175 afterany7174
+queued using exclusive receipt. No completed updates, native behavioral improvement,
+extension or adoption claimed at12:21UTC. New reference5files/178679bytes verified;
+source bundle756cdfb complete-history verified. Actual future results must update
+this ledger, not inherit a passing claim from source/input/math/mechanics approval.

@@ -1,7 +1,7 @@
 {
-  "at_utc": "2026-10-19T12:16:52.121804+00:00",
-  "unique_scoped_artifact_files": 21865,
-  "unique_scoped_artifact_bytes": 14472855537,
+  "at_utc": "2026-10-19T12:21:58.928177+00:00",
+  "unique_scoped_artifact_files": 21870,
+  "unique_scoped_artifact_bytes": 14473034216,
   "inventory_conflicts": [],
   "inventories": [
     {
@@ -171,6 +171,13 @@
       "files": 31,
       "bytes": 94949512,
       "missing_roots": []
+    },
+    {
+      "name": "remote-native24-numerical-reference-inventory.json",
+      "sha256": "8d2731b613d251af9f69eede040e660071d059841f23550c8223b10eecef37a4",
+      "files": 5,
+      "bytes": 178679,
+      "missing_roots": []
     }
   ],
   "local_artifact_root": "runs/cloud-export-20261016/tree",
@@ -186,9 +193,9 @@
   "runtime_sif_sha256": "c00bc99693e4908ea75d17df9c379b93ae9a1678a65d875565ad5d52f76fa27b",
   "pinned_vendor_git_bundles_verified": 3,
   "source_git_bundle": {
-    "at_utc": "2026-10-19T11:53:30.355819+00:00",
-    "source_sha": "c93ac931905d1c45c1e8c02924ebaaeb6fb34c8b",
-    "bundle": "runs/local-continuation-20261019/source-main-c93ac93.bundle",
-    "bundle_sha256": "24471179f3c7d05f3d653b8a65e6a83d1e383d0c20ce3ccb35df6e7a22f3af8c"
+    "at_utc": "2026-10-19T12:21:21.171446+00:00",
+    "source_sha": "756cdfb6ca6fc24c8c87e6d47b18209ba54dbf88",
+    "bundle": "runs/local-continuation-20261019/source-main-756cdfb.bundle",
+    "bundle_sha256": "4950d428dc5639a1ebdbe87731b7d764c90fc98f706a2fa710880244f1398d66"
   }
 }

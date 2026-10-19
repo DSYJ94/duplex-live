@@ -1,3 +1,43 @@
+# LOCAL active — BOTH full numerical approvals PASS; native pilot running,12:21UTC
+
+ALL24 numerical-v2 reference7546608 COMPLETED10m07 and PASSES24/24 at unchanged
+0.001: max0.00043702125549316406, causal-prefix0.0 throughout. Original full24
+FP32 job7545910 FAILED max0.001411557 (017/006), retained
+in reference report and separate backup. ALL25 numerical7545975 PASS25/25,
+max0.000882566/causal0.0. Audit-only higher-precision linear arithmetic; production/
+training unchanged. Five new reference files178679bytes size/SHA256 verified.
+Approval source a32b165ade593e62f92c675872ba4b0c789450ce remains immutable.
+
+Pilot7546645 RUNNING from c93ac931905d1c45c1e8c02924ebaaeb6fb34c8b, passed CPU85tests.
+Pre-optimizer source/data/policy checks underway; no completed update count claimed
+at this snapshot. Eight updates ONLY, warmstart native520/7510331, new optimizer,
+ALL28 actual-history components/ALL25 old teacher histories/KL1/hiddenMSE10 retained.
+Mandatory separate fresh-process full adapter/optimizer/Python/NumPy/Torch/CUDA
+restore follows in same job. Never extend/adopt from loss or reload alone.
+
+Complete10 native development array7547174_0–9%2 QUEUED AFTEROK7546645; max4GPUs.
+Independent full10 CPU speech7547175 QUEUED AFTERANY7547174 to retain failed/silent
+case evidence. Both use sourcec93ac93. Receipt
+runs/native-v2-development-local-20261019.json. Ordinary4, quiet/pause2, actual
+private/counterfactual2, clarify/cancel2. Actual native RET/arrived-audio Whisper/
+existing synthetic-record worker, no Qwen foreground, forced words, gain patches
+or adoption. Require complete all10 behavior review before extension. Reused TRAIN/
+development ONLY, not fresh qualification. Baseline7547007 FAIL2/2 quiet/pause,
+fully recorded below and never TRAIN labels. Exact first8 exposure8/24; quiet27,
+pause31, full24 by31 remains a declared sampler calculation, not execution.
+
+Backups21870scoped files14473034216bytes plus standalone pinned base weights;
+all inventories/SHA256 verified. Source Git bundle756cdfb complete-history verified,
+SHA2564950d428dc5639a1ebdbe87731b7d764c90fc98f706a2fa710880244f1398d66.
+Older Mac source backup partial, no owner conversations/credentials/core exported.
+Fresh20 external36 synthetic-utterance generation still paused by automatic-review
+rejection pending explicit owner transfer approval; no real generation/fresh
+inference submitted. LOCAL active, CLOUD submits nothing. Cert20:51:23UTC expiry,
+cloud GPU validation paused, no extra purchase. Native/whole-system FAIL.
+Next: finish8updates/fresh restore ->all10 native behavior/ASR ->review before extension.
+
+---
+
 # LOCAL active — measured native520 quiet/pause FAIL2/2,12:15UTC
 
 Native520 baseline7547007_0/1 COMPLETE2m21/2m40 from immutable workflow source

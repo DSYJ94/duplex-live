@@ -1,3 +1,13 @@
+19 October12:21UTC — BOTH independent complete numerical approvals now PASS:
+old25 job7545975 max0.000882566, new24 job7546608 max0.000437021, unchanged0.001
+bar and causal0.0. Original failed FP32 baselines retained. Native8update pilot
+7546645 RUNNING through pre-optimizer checks; no completed update count claimed.
+Separate full state restore required. Complete10 native evaluation7547174 and CPU
+speech7547175 are dependent; review all10 before extension/adoption. All28 histories,
+all25 old teacher histories and KL1/hiddenMSE10 unchanged. Baseline quiet/pause FAIL2/2;
+new candidate has no behavior result. Fresh20 external generation paused by automatic
+review pending explicit owner transfer approval. Native/whole-system remain FAIL.
+
 19 October12:15UTC — native520 matched quiet/pause baseline7547007 COMPLETE2/2
 and FAILS BOTH behaviors. Independent actual audio confirms7 words in quiet window
 0–12.41s, and3 words (Sure, I am quiet) in pause17.54–22.10s. Pause case substitutes
