@@ -1,3 +1,32 @@
+# LOCAL active — full24 pilot independent full-state restore PASS (2026-10-19 14:52UTC)
+
+Native pilot7549991 COMPLETE12m56. All8 updates17.44s/all24newteachers verified;
+independent fresh-process optimizer/Python/NumPy/Torch/CUDA restorePASS, all28 valid
+logit hashes EXACT. Trainercf28726 /wrapper95a60b7, same LR2e-6/28actual/25old/KL1/
+hidden10. Adapterb870e8faa07febdb1e62adf86172130ba95f8e1390056991b60e30f97d10fa56;
+fullstateff79b625c096d48e45b4f41c1107210b91fd1339e0b6bd4c1f988017ab0940e7.
+Reload report SHA4649e7238475a7e9e45a387de6d94830961531dd76b78d9f379a779e8b64ca02.
+Final14files31750551bytes locally size/SHAverified14:49:34UTC; first12 stable
+checkpointfiles unchanged. Scoped backup22461 unique files14922094037bytes plus pinned
+models/both publicASRweights. Old cancelled7548749/7548752/7548762 neverexecuted.
+
+All10 native7549994 eligiblePENDING Resources as14:47:48UTC, independent full10
+CPUASR7550001 dependent. No actualbehavior result yet; no extension/adoption/fresh
+native inference. Require ALL10 WAV/independentword/clocks/receipts/latency review,
+ordinary4/4retained beforecommitted32additional researchgate fromexactstate/sameCF.
+Full20source remains FAILED/frozenUNSCORED; human room/rune hearing pending on
+Macplayer http://127.0.0.1:57386/. Proposed derivedwhole20 qualityprofile SHA1575e4108ed6280d88ebad85efc617242e239139f36e68cf1b065d7df7009712
+UNAPPROVED; requires hearingroom AND separate explicitprofileapproval. No normalizer
+or sourceapproval reader changed. Originalaudio/words/receipts/worlds/failedaudits
+retained, no APIcalls/rerolls/passing subset, thresholdsunchanged.
+
+LOCALexecutor, CLOUDsubmitsnothing; no cloudGPUvalidation/purchase. Certificate
+20:51:23UTC/22:51:23Berlin today. Stopped oldMacsourcebackuppartial; excludeowner/
+credentials/core; unrelatedlocaledits untouched. Native/whole-system FAIL.
+Next: all10 actualbehavior, preserveeachcompletedrun/fullaudit, thenboundeddecision.
+
+---
+
 # LOCAL active — full24 native8 updates saved/backed; independent restore RUNNING (2026-10-19 14:44UTC)
 
 Main before this entry865f5f644f3372bc907de85ab89c02b267db8403, pushed. Nativepilot

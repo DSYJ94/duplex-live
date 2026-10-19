@@ -1,6 +1,6 @@
 {
   "schema": "dl-native-full24-eight-update-record-v1",
-  "at_utc": "2026-10-19T14:45:56.777955+00:00",
+  "at_utc": "2026-10-19T14:52:28.770609+00:00",
   "candidate_job": "7549991",
   "trainer_source": "cf28726b44ed0621dde6bfd27257709574f5e9ed",
   "wrapper_source": "95a60b79aa12ccc8c3ae04a6bd3e86ab6b60a663",
@@ -41,8 +41,8 @@
   "checkpoint_sha256": "b870e8faa07febdb1e62adf86172130ba95f8e1390056991b60e30f97d10fa56",
   "training_state_sha256": "ff79b625c096d48e45b4f41c1107210b91fd1339e0b6bd4c1f988017ab0940e7",
   "report_sha256": "9ca6ce61e27727e3a6683d892346613f286df32613c41dcc42b71b14a781a055",
-  "independent_full_state_restore_status": "RUNNING as14:43:55UTC",
-  "independent_full_state_restore_passed": null,
+  "independent_full_state_restore_status": "PASS fresh process; complete optimizer/RNG state restored; all28 valid logits exact",
+  "independent_full_state_restore_passed": true,
   "all10_evaluation_array_job": "7549994",
   "independent_all10_speech_job": "7550001",
   "all10_behavior_review_complete": false,
@@ -259,5 +259,7 @@
         }
       ]
     }
-  ]
+  ],
+  "reload_report_sha256": "4649e7238475a7e9e45a387de6d94830961531dd76b78d9f379a779e8b64ca02",
+  "total_job_elapsed": "00:12:56"
 }

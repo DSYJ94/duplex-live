@@ -1,7 +1,7 @@
 {
-  "at_utc": "2026-10-19T14:45:56.777955+00:00",
-  "unique_scoped_artifact_files": 22459,
-  "unique_scoped_artifact_bytes": 14921554684,
+  "at_utc": "2026-10-19T14:52:28.770609+00:00",
+  "unique_scoped_artifact_files": 22461,
+  "unique_scoped_artifact_bytes": 14922094037,
   "inventory_conflicts": [],
   "inventories": [
     {
@@ -318,6 +318,13 @@
       "files": 12,
       "bytes": 31211198,
       "missing_roots": []
+    },
+    {
+      "name": "remote-native-full24-restored-state-inventory.json",
+      "sha256": "b715db696f9221777b863524c3499cc135c2998b4dde5947e5184ddfe9fc6e6c",
+      "files": 14,
+      "bytes": 31750551,
+      "missing_roots": []
     }
   ],
   "local_artifact_root": "runs/cloud-export-20261016/tree",
@@ -340,7 +347,7 @@
   },
   "native_candidate_job": "7549991",
   "native_candidate_training_state_sha256": "ff79b625c096d48e45b4f41c1107210b91fd1339e0b6bd4c1f988017ab0940e7",
-  "native_candidate_independent_full_state_restore_passed": null,
+  "native_candidate_independent_full_state_restore_passed": true,
   "public_asr_weights": {
     "local_root": "runs/local-continuation-20261019/asr-weights",
     "verification_report": "public-asr-weights-verification-attempt2.json",
