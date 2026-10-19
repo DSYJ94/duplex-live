@@ -131,5 +131,19 @@
       "each_new_teacher_weight": 0.5,
       "combined_new_objective_weight": 1.0
     }
-  ]
+  ],
+  "retained_old25_teacher_kind_counts": {
+    "private": 19,
+    "simple": 4,
+    "clarify": 1,
+    "cancel": 1
+  },
+  "old25_simple_teacher_ids": [
+    "teacher-recovery-train-008",
+    "teacher-recovery-train-009",
+    "teacher-recovery-train-010",
+    "teacher-recovery-train-011"
+  ],
+  "ordinary_ice_sound_plants_metal_probe_teachers_in_old25": false,
+  "ordinary_probe_teacher_coverage_observation": "Approved old25 simple histories are008-011, not ordinary-probe012-015; preserve all25 unchanged. Correct baseline science is generalization, not explicit per-fact retention. This is a coverage observation, not proof of the regression cause or authorization to add teacher labels."
 }

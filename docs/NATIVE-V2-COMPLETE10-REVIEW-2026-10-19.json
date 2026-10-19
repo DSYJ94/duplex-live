@@ -275,7 +275,21 @@
           "rms": 0.06083222505186828,
           "peak": 0.255096435546875
         }
-      ]
+      ],
+      "visual_waveform_inspection": {
+        "at_utc": "2026-10-19T13:11:28.024575+00:00",
+        "plot": "runs/local-continuation-20261019/native10-waveforms/quiet.png",
+        "plot_sha256": "23cdc94d7f1638095aa0dc1cfa56fdd8a2d5f8dbc0395bf95fa1167368cd8dce",
+        "width_pixels": 1200,
+        "entire_source_duration_s": 39.199625,
+        "red_region_quiet_interval_s": [
+          0.0,
+          12.41
+        ],
+        "green_line": 12.41,
+        "observed": "Distinct native speech burst inside mandatory quiet region, corroborating independent words; no waveform/timing/gain edit",
+        "plotting": "ffmpeg showwavespic with interval shading; raw PCM waveform unmodified"
+      }
     },
     {
       "index": 5,
@@ -359,7 +373,21 @@
           "rms": 0.09383145892241859,
           "peak": 0.505767822265625
         }
-      ]
+      ],
+      "visual_waveform_inspection": {
+        "at_utc": "2026-10-19T13:11:28.024758+00:00",
+        "plot": "runs/local-continuation-20261019/native10-waveforms/pause.png",
+        "plot_sha256": "4b769617d561cf83dbe40afce48b3d76d61f39dbd207032d52ee71ceb58691a0",
+        "width_pixels": 1200,
+        "entire_source_duration_s": 48.81125,
+        "red_region_quiet_interval_s": [
+          17.54,
+          22.1
+        ],
+        "green_line": 22.1,
+        "observed": "Distinct native speech burst inside mandatory quiet region, corroborating independent words; no waveform/timing/gain edit",
+        "plotting": "ffmpeg showwavespic with interval shading; raw PCM waveform unmodified"
+      }
     },
     {
       "index": 6,

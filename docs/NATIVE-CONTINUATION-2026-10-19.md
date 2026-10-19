@@ -705,3 +705,17 @@ NATIVE-V2-PROPOSED-COMPLETE24-EXPOSURE-2026-10-19.json; optimizer updates observ
 training is NOT wired to helper or approved by this declaration. No learning rate
 chosen while zero-update full81 diagnostic7548377 is pending. Distinguish coverage
 hypothesis from training execution and useful native behavior.
+
+
+## Read-only waveform and teacher-coverage observations
+
+Raw native4/5 PCM rendered with ffmpeg showwavespic and original interval shading:
+quiet burst inside0–12.41s and pause burst inside17.54–22.10s are visually present.
+JSON review binds plot hashes, exact source duration, annotation intervals and raw
+WAV SHA256; no audio/gain/clock edit and no claim of human listening. Independent
+invalid ASR tails remain failed, not used as a passing subset.
+Approved old25 consists19private/4simple/1clarify/1cancel. The simple teachers are
+recovery008–011; ordinary science probes012–015 are absent. Native520's correct
+science is thus retained generalization, not explicitly rehearsed in those25
+teacher targets. This observation does not establish a regression cause or justify
+new labels. Preserve all25/actual28/KL1/hidden10, keep all science checks unchanged.
