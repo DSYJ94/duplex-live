@@ -1,5 +1,5 @@
 {
-  "at_utc": "2026-10-19T14:36:53.910554+00:00",
+  "at_utc": "2026-10-19T16:19:39.288280+00:00",
   "official_sources": [
     "https://docs.isambard.ac.uk/user-documentation/guides/slurm/",
     "https://docs.isambard.ac.uk/user-documentation/guides/slurm-advanced/"
@@ -26,6 +26,21 @@
     "trainer_source": "cf28726b44ed0621dde6bfd27257709574f5e9ed",
     "wrapper_source": "95a60b79aa12ccc8c3ae04a6bd3e86ab6b60a663"
   },
-  "bulk_native_evaluation_and_extension_partition": "workq",
-  "minimum_monitor_interval_seconds": 60
+  "minimum_monitor_interval_seconds": 60,
+  "high_throughput_or_long_running_partition": "workq",
+  "bounded_pilot_development_check": {
+    "owner_instruction": "use the interactive reservation on isambard to skip queuing if needed.",
+    "candidate": "7549991",
+    "cases": 10,
+    "per_case_max_minutes": 10,
+    "maximum_concurrent_cases": 2,
+    "maximum_concurrent_gpus": 4,
+    "reservation_only_submission": true,
+    "partition_or_qos_override": false,
+    "credit_multiplier": 1.5,
+    "payload_source": "cf28726b44ed0621dde6bfd27257709574f5e9ed",
+    "no_optimizer_or_fresh_qualification": true,
+    "interpretation": "Finite exploratory development validation of one eight-update pilot; replaces earlier conservative workq-only placement for these ten development checks. Original jobs must be held, then cancelled with zero elapsed before held replacements release."
+  },
+  "future_short_development_work": "Use interactive reservation where site rules permit; all native approval and retention gates remain mandatory."
 }

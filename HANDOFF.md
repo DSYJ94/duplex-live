@@ -1,3 +1,40 @@
+# LOCAL — owner requests interactive reservation; bounded migration prepared (2026-10-19 16:19 UTC)
+
+Owner: "use the interactive reservation on isambard to skip queuing if needed."
+Official slurm-advanced documentation rechecked: interactive permits short-lived
+interactive/development/exploratory work, no long-running/high-throughput jobs,
+reservation flag ONLY (no partition or QoS override), 1.5x existing credits. This
+finite ten-case development validation of one eight-update pilot is scoped as
+short exploratory development. Each task stays10minutes, cap2cases/4GPUs; no fresh
+qualification campaign, new optimizer, extension, source/gain/threshold changes.
+This supersedes our earlier conservative workq-only placement for these ten
+pilot-development checks. Future large/long campaigns still use workq.
+
+At16:18:22 UTC old7549994 all10 remainPENDING(Resources), CPUASR7550001 dependent;
+no native reports. Live interactive reservationACTIVE. Prepared guarded wrapper
+branch native-v2-development-check permits ONLY candidate7549991 and original
+payloadcf28726b44ed0621dde6bfd27257709574f5e9ed. Shell syntax PASS, unchanged native
+payload/teacher/data/retention already independently tested. No replacements have
+been submitted yet at this entry. Deployment uses Git only.
+
+Migration must inspect/hold ALL originals and verify zero runtime, create HELD
+replacement10array plus HELD independent full10 CPUASR, verify reservation-selected
+partition/QoS, exact source/candidate, cap2 and1GPU observe/2GPU worker resources,
+then cancel old7549994 and7550001 and prove ALL11CANCELLED/zero elapsed from
+persistent sacct --array before releasing replacements. If any original started,
+STOP migration without duplicating it. Exclusive receipt required. Never infer
+terminal state from a transient observation timeout or vanished scontrol entry.
+
+Full20 derived source7550653/independent reader PASS20/38, CPU7550652PASS126tests;
+both failed audits/source audio unchanged. Pilot7549991/full-state restorePASS;
+all28actual/25old/KL1/hidden10 retained. Backup22470files14922212118bytes plus
+pinned models/runtime/ASRweights; old Mac source backupPARTIAL. LOCAL owns execution,
+CLOUD submits nothing. Native/whole-systemFAIL; no extension/adoption/fresh inference.
+Next: commit/push wrapper, deploy immutable checkout, execute verified no-duplicate
+migration, record exact replacements and preserve all resulting native artifacts.
+
+---
+
 # LOCAL active — approved derived full20 input quality PASS (SOURCE ONLY) (2026-10-19 15:46 UTC)
 
 Source05521532eecdc264ac76f9b4f6a9e35f832e9312 is pushed/deployed immutable.
