@@ -1,3 +1,35 @@
+# LOCAL active — all10 native runs complete, independent speech running; fresh speech approved,12:51UTC
+
+Source main before this entry19bbeafcbc8295b31d0d1eae40f777889ed4ecd3; immutable
+training/evaluation sourcec93ac931905d1c45c1e8c02924ebaaeb6fb34c8b. Native8-update
+7546645 COMPLETE, independent full optimizer/RNG restore PASS(all28 valid logits
+exact). No extension/adoption. Development7547174_0–9 ALL complete; independent
+full10 CPU speech7547175 RUNNING. Raw text provisionally regresses ice reasoning
+vs matched native520 ordinary baseline, speaks during quiet/pause, invents private
+numbers and fails cancellation/ordinary interruption. Actual WAV/independent ASR/
+worker-clock review remains required; raw model text alone is not a final score.
+All real user samples processed in every10 run. First6 outputs78files229195823bytes
+independently size/SHA256 backed12:48:14UTC; remaining4/full10 backup underway.
+
+Owner explicitly answered APPROVE SYNTHETIC SPEECH GENERATION. Earlier automatic
+external-transfer rejection is resolved by this explicit approval; no pending
+permission question. Exclusive receipt runs/native-fresh-inputs-local-20261019.json
+records exact answer and fixed36 authored synthetic user utterances/20-case plan
+SHA256162b0e64942dfe1917be9d8b24b579a947d1af54800bf246a1f2d47f3e7d1c21.
+Only authored user text sent to OpenAI speech API, no owner conversations, credentials,
+private-world values or scoring answers. Generation7548247 RUNNING; full20 independent
+CPU input quality7548248 afterok. Sourcec93ac93, existing CPU85 tests7546529 passed.
+No fresh candidate inference submitted; no reroll/subset or training on evaluations.
+
+LOCAL executor remains active, CLOUD submits nothing, cloud GPU validation paused,
+no extra compute purchase. Certificate expires20:51:23UTC/22:51:23Berlin today.
+All25 old histories/all28 actual histories/KL1/hiddenMSE10 preserved; numerical25/24
+PASS unchanged0.001 and causal0. Native/whole-system FAIL. Next: full10 actual WAV,
+ASR/receipts/cancel/latency review before any revised training; finish fresh20 inputs
+and preserve raw inputs/verdicts regardless of pass. No duplicate submissions.
+
+---
+
 # LOCAL active — full independent restore PASS; native evaluation STARTED,12:38UTC
 
 Native8-update7546645 COMPLETED13m09 total; actual updates15.96s. Independent

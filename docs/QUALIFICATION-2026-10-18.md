@@ -1,3 +1,11 @@
+19 October12:51UTC — all10 native candidate runs7547174 complete; independent
+CPU speech7547175 running. Raw model text provisionally regresses ordinary ice
+reasoning and fails quiet/pause/private/cancel; actual WAV/ASR/receipt-clock review
+pending. Full restore PASS does not approve extension/adoption. Owner explicitly
+approved36 synthetic user utterances to OpenAI speech API: generation7548247 and
+independent full20 input quality7548248 submitted, no fresh inference/training.
+Native/whole-system FAIL; LOCAL active.
+
 19 October12:38UTC — native8-update7546645 COMPLETE and independent full-state
 restore PASS: all28 valid logits exact, optimizer/Python/NumPy/Torch/CUDA restored.
 Adapter/state/data hashes and all28 histories/25 old teachers/24 new teachers/

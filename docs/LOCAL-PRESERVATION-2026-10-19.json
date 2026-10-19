@@ -1,7 +1,7 @@
 {
-  "at_utc": "2026-10-19T12:39:20.894537+00:00",
-  "unique_scoped_artifact_files": 21887,
-  "unique_scoped_artifact_bytes": 14504837125,
+  "at_utc": "2026-10-19T12:50:28.906081+00:00",
+  "unique_scoped_artifact_files": 21965,
+  "unique_scoped_artifact_bytes": 14734032948,
   "inventory_conflicts": [],
   "inventories": [
     {
@@ -198,6 +198,13 @@
       "sha256": "bce94c6cf3e6cefff29ab4f78a48438b76f1e48307c2b3333d68540b5c51b114",
       "files": 2,
       "bytes": 59312,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native-v2-development-first6-inventory.json",
+      "sha256": "5251cbfedca0efbfc0be15b2da4127e5ad749cea5583e7afd07f429c70db0f13",
+      "files": 78,
+      "bytes": 229195823,
       "missing_roots": []
     }
   ],

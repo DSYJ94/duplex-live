@@ -632,3 +632,18 @@ numeric112640MiB request succeeded and jobs started. Both receipts versioned and
 backed. [Official scontrol reference](https://slurm.schedmd.com/scontrol.html)
 documents individual array-task updates and memory values in MiB. This administrative
 resource change is not a native behavior fix, threshold relaxation or qualification.
+
+
+## All10 native outputs complete; fresh speech explicitly approved
+
+12:51UTC:7547174_0–9 complete, independent full10 CPU speech7547175 running.
+Preliminary raw text: ice regresses vs baseline; quiet/pause speech, invented private
+numbers, cancellation failure. Final behavior review requires actual WAV, independent
+ASR and worker clocks, not raw text. No extension/adoption. First6 actual outputs
+78files229195823bytes verified12:48:14UTC; full10 backup in progress.
+Owner explicit answer Approve synthetic speech generation resolves prior automatic
+transfer rejection. Fresh generation7548247, independent all20 quality7548248;
+exclusive receipt native-fresh-inputs-local-20261019.json fixes36 synthetic user
+utterances,20caseplan and sourcec93ac93. No owner conversations/private world/scoring
+answers exported. No fresh inference; invalid input freezes whole qualification,
+no reroll or passing subset. LOCAL active, no cloud purchase/validation/submissions.
