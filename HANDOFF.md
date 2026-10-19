@@ -1,3 +1,42 @@
+# LOCAL active — full independent restore PASS; native evaluation STARTED,12:38UTC
+
+Native8-update7546645 COMPLETED13m09 total; actual updates15.96s. Independent
+fresh-process adapter/optimizer/Python/NumPy/Torch/CUDA restore PASSES, ALL28 valid
+logits EXACT. Restore report SHA256
+869dd68ffcd5adf9e207709b9cf186f6b5a6c6accaaef3206950480b972b6fbb.
+Adapter df113fc5bf67365062830737fb2b2ad5f6715afe555e10e185272e19987e9759;
+full state47b52ef890ecf64fa7c4cab9d5c1cf52bc74227d2bf676a13d9414ee2da95b4a.
+Immutable source c93ac931905d1c45c1e8c02924ebaaeb6fb34c8b, exact old28 data,
+all25 old teacher histories/all24 new teachers/KL1/hiddenMSE10 preserved. All8
+actual new-teacher exposures match declaration; quiet/pause not reached. No extension.
+Full completed run16files/31744462bytes independently SHA256 verified12:31:41UTC,
+including original critical state and fresh restore report. Mechanics not adoption.
+
+Complete10 native development array7547174 has0/1 RUNNING since12:36:18;2–9 PENDING
+at12:37UTC, throttle2. Independent full10 CPU speech7547175 afteranyarray. Source
+c93ac93 throughout. Six observe-only cases0–5 now request1GPU/110G host memory;
+private/counterfactual/clarify/cancel6–9 KEEP2 distinctGPUs. Max4GPUs total. This
+pending-request-only scheduling change submitted NO new/replacement jobs and
+changed NO model/source/input/check/threshold. Original submission receipt kept.
+New resource-v3 receipt records before/after for all tasks; resource-v2 preserves
+the rejected CLI memory-unit attempt that changed nothing. Slurm scontrol expects
+numeric MiB there (112640), unlike sbatch's110G spelling. Individual array IDs
+unchanged; new integer job IDs are Slurm's normal task instantiation, not duplicates.
+Receipts runs/native-v2-development-resource-v2-local-20261019.json and-v3-local.
+Original development receipt remains runs/native-v2-development-local-20261019.json.
+
+Both numerical corpora PASS full25/24 unchanged0.001/causal0; failed FP32 originals
+retained. Baseline ordinary7530265–68 already matched7510331/voice; quiet/pause
+baseline7547007 FAIL2/2 fully measured/backed. Review ALL10 candidate native tasks,
+speech, actual requests/receipts/cancel clocks and latency BEFORE extension/adoption.
+Fresh20 real36-utterance speech generation still PAUSED after automatic-review
+external-transfer rejection, explicit owner approval pending. No fresh inference,
+passing subset, hidden fallback, extra compute purchase or owner conversations.
+LOCAL active; CLOUD submits nothing; cloud GPU validation paused. Cert20:51:23UTC
+expiry today. Native/whole-system FAIL. Next:finish ALL10 native evaluation/ASR/review.
+
+---
+
 # LOCAL active — eight native updates COMPLETE; independent restore pending,12:29UTC
 
 Native job7546645 source c93ac931905d1c45c1e8c02924ebaaeb6fb34c8b completed ALL8

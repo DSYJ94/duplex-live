@@ -1,3 +1,12 @@
+19 October12:38UTC — native8-update7546645 COMPLETE and independent full-state
+restore PASS: all28 valid logits exact, optimizer/Python/NumPy/Torch/CUDA restored.
+Adapter/state/data hashes and all28 histories/25 old teachers/24 new teachers/
+KL1/hidden10 retained. Native evaluation7547174_0/1 now RUNNING; remaining8 queued,
+independent full10 CPU ASR7547175 dependent. Pending observe-only0–5 requests
+reduced to1GPU; four actual delegation cases retain2GPUs; no resubmission or model/
+check change. No extension/adoption before complete10 behavior review. Baseline
+quiet/pause FAIL2/2, no candidate behavior result yet. Native/whole-system FAIL.
+
 19 October12:29UTC — native8-update process7546645 PASS, updates15.96seconds,
 frozen weights unchanged; exact adapter/full optimizer/RNG state and28-component
 data/25 old teachers/24 new teachers/KL1/hidden10 preserved and hash-backed.

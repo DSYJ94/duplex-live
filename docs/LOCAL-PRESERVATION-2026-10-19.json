@@ -1,7 +1,7 @@
 {
-  "at_utc": "2026-10-19T12:29:38.141175+00:00",
-  "unique_scoped_artifact_files": 21881,
-  "unique_scoped_artifact_bytes": 14504241633,
+  "at_utc": "2026-10-19T12:39:20.894537+00:00",
+  "unique_scoped_artifact_files": 21887,
+  "unique_scoped_artifact_bytes": 14504837125,
   "inventory_conflicts": [],
   "inventories": [
     {
@@ -185,6 +185,20 @@
       "files": 11,
       "bytes": 31207417,
       "missing_roots": []
+    },
+    {
+      "name": "remote-native-v2-eight-update-restored-inventory.json",
+      "sha256": "d7378ba285f737b97703c7a96c714277cd0038641d4ad125310c5d6bd1c8ed50",
+      "files": 16,
+      "bytes": 31744462,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native-v2-resource-adjustment-inventory.json",
+      "sha256": "bce94c6cf3e6cefff29ab4f78a48438b76f1e48307c2b3333d68540b5c51b114",
+      "files": 2,
+      "bytes": 59312,
+      "missing_roots": []
     }
   ],
   "local_artifact_root": "runs/cloud-export-20261016/tree",
@@ -206,5 +220,6 @@
     "bundle_sha256": "4950d428dc5639a1ebdbe87731b7d764c90fc98f706a2fa710880244f1398d66"
   },
   "native_candidate_job": "7546645",
-  "native_candidate_training_state_sha256": "47b52ef890ecf64fa7c4cab9d5c1cf52bc74227d2bf676a13d9414ee2da95b4a"
+  "native_candidate_training_state_sha256": "47b52ef890ecf64fa7c4cab9d5c1cf52bc74227d2bf676a13d9414ee2da95b4a",
+  "native_candidate_independent_full_state_restore_passed": true
 }

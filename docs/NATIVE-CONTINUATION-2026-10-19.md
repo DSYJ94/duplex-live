@@ -610,3 +610,25 @@ Critical11files/31207417bytes hash-backed12:24:35UTC. No extension/adoption or
 behavior qualification inferred. Same7510331/accepted-voice ordinary baselines
 7530265–68 already exist and must not be duplicated. New baseline quiet/pause
 FAIL2/2 stands independently; conditional persona contribution remains unproven.
+
+
+## Full independent state restore passes; native review running
+
+7546645 COMPLETED13m09. Fresh-process full adapter/optimizer/Python/NumPy/Torch/
+CUDA restoration PASS with all28 valid logits exact, report SHA256
+869dd68ffcd5adf9e207709b9cf186f6b5a6c6accaaef3206950480b972b6fbb. Full completed
+16-file31744462-byte run independently backed, critical snapshot unchanged.
+Development7547174_0/1 starts12:36:18, remaining8 pending, full10 CPUASR7547175
+queued. No extension or adoption. Same-source, same-voice baseline4ordinary
+7530265–68 already available, valid independent speech WER0.0, so not resubmitted.
+
+Slurm initially could not place2GPU jobs and reported no start estimate. Six
+observe-only0–5 need no ASR GPU; pending requests changed in place to1GPU/110G,
+consistent with successful historical ordinary probes. Four real-delegation6–9
+remain2 distinctGPUs. Throttle2/max4GPUs unchanged, original receipt preserved,
+no new/cancelled/replacement job or model/input/check change. First CLI attempt
+used sbatch-style memory suffix; Slurm rejected it without changes. Corrected
+numeric112640MiB request succeeded and jobs started. Both receipts versioned and
+backed. [Official scontrol reference](https://slurm.schedmd.com/scontrol.html)
+documents individual array-task updates and memory values in MiB. This administrative
+resource change is not a native behavior fix, threshold relaxation or qualification.

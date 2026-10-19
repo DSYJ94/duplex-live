@@ -1,6 +1,6 @@
 {
   "schema": "dl-native-v2-eight-update-mechanics-v1",
-  "at_utc": "2026-10-19T12:27:49.325039+00:00",
+  "at_utc": "2026-10-19T12:39:20.895610+00:00",
   "job": "7546645",
   "source": "c93ac931905d1c45c1e8c02924ebaaeb6fb34c8b",
   "update_process_passed": true,
@@ -32,8 +32,14 @@
   "first8_exact_declared_sampling": true,
   "training_seconds": 15.961207563988864,
   "peak_allocated_bytes": 17747770880,
-  "independent_full_state_restore": "pending separate fresh process",
-  "native_behavior": "pending complete10-case independent review",
+  "independent_full_state_restore": {
+    "passed": true,
+    "fresh_process": true,
+    "optimizer_rng_state_restored": true,
+    "all28_valid_logits_exact": true,
+    "report_sha256": "869dd68ffcd5adf9e207709b9cf186f6b5a6c6accaaef3206950480b972b6fbb"
+  },
+  "native_behavior": "Complete10-case native array7547174:0/1 running; 2-9 pending at12:37UTC; CPU speech7547175 after array",
   "fresh_qualification": "not executed; external fresh speech generation approval pending",
   "candidate_adopted": false,
   "extension_authorized": false
