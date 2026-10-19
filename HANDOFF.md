@@ -1,3 +1,35 @@
+# Local native chain submitted — 19 October 2026, 08:58 UTC / 10:58 Berlin
+
+LOCAL remains the active executor; cloud submits NOTHING until explicit owner
+handover. Implementation1519b71a5fc4f337735acca8529a860c7c00e310 is pushed and
+runs from clean immutable worktrees/recovery-1519b71. Exact launch receipt:
+/projects/u6si/duplex-live/runs/native-v2-pipeline-local-20261019.json.
+The receipt is created exclusively before submission and saved after every job;
+if it exists, inspect its jobs instead of rerunning the launcher.
+
+Submitted once: repair7541873 -> full source audit7541875 -> teacher7541876 ->
+independent teacher audio audit7541878 -> semantic/conversion7541879. Every arrow
+is afterok with kill-on-invalid-dependency. These jobs are pending/running until
+verified; there is NO new optimizer job or model qualification. A first launcher
+syntax error occurred before any remote execution/submission and was corrected.
+Local receipt: runs/local-continuation-20261019/pipeline-launch.txt.
+
+Actual diagnosis is now established: TRAIN015/index3 contains two speech bursts
+matching Go. Go.; TRAIN017/index0 has50 clipped raw samples at3.541833–3.741125s,
+identical in source/stem/mix. Repair only these two exact-word utterances; originals
+and receipts are preserved under repair-originals/ and earlier version. No gain
+reduction or thresholds relaxed. All24 TRAIN scenes still require full audit.
+Read docs/NATIVE-CONTINUATION-2026-10-19.md for measured evidence and tested code.
+
+Completed prior partial source backup and native critical-state/history backup:
+1,450 files /661,640,011bytes, remote/local sizes and SHA256 all match. Independent
+25-teacher/cache/four-reference dependency inventory is refreshing. Evidence in
+ignored runs/local-continuation-20261019; artifacts in cloud-export-20261016/tree.
+Local cert expires22:51:23Berlin19October. Preserve unrelated local files as below.
+Native/whole-system FAIL, cloud GPU validation PAUSED, no checkpoint adoption.
+
+---
+
 # Active local execution — 19 October 2026, 08:52 UTC / 10:52 Berlin
 
 Local chat is the ACTIVE executor until the owner explicitly hands execution to
