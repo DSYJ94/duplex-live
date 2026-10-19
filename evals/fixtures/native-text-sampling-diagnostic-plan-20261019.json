@@ -1,0 +1,137 @@
+{
+  "schema": "dl-native-text-sampling-paired-diagnostic-v1",
+  "at_utc": "2026-10-19T20:33:36.234377+00:00",
+  "declared_before_diagnostic_outputs": true,
+  "prior_candidate_outputs_already_seen": true,
+  "hypothesis": "Small teacher-input KL and exact full-state restore coexist with ordinary free-running regressions. Test the distinct possibility of stochastic text sampling amplifying small updates. This does not establish a causal diagnosis in advance.",
+  "baseline": "7510331",
+  "candidate": "7556562",
+  "cases": [
+    {
+      "index": 0,
+      "scenario": "recovery-train-012",
+      "role": "baseline",
+      "checkpoint_job": "7510331",
+      "text_temperature": 0.0,
+      "acoustic_temperature": 0.8,
+      "diagnostic_only": true,
+      "training_approved": false
+    },
+    {
+      "index": 1,
+      "scenario": "recovery-train-012",
+      "role": "candidate",
+      "checkpoint_job": "7556562",
+      "text_temperature": 0.0,
+      "acoustic_temperature": 0.8,
+      "diagnostic_only": true,
+      "training_approved": false
+    },
+    {
+      "index": 2,
+      "scenario": "recovery-train-013",
+      "role": "baseline",
+      "checkpoint_job": "7510331",
+      "text_temperature": 0.0,
+      "acoustic_temperature": 0.8,
+      "diagnostic_only": true,
+      "training_approved": false
+    },
+    {
+      "index": 3,
+      "scenario": "recovery-train-013",
+      "role": "candidate",
+      "checkpoint_job": "7556562",
+      "text_temperature": 0.0,
+      "acoustic_temperature": 0.8,
+      "diagnostic_only": true,
+      "training_approved": false
+    },
+    {
+      "index": 4,
+      "scenario": "recovery-train-014",
+      "role": "baseline",
+      "checkpoint_job": "7510331",
+      "text_temperature": 0.0,
+      "acoustic_temperature": 0.8,
+      "diagnostic_only": true,
+      "training_approved": false
+    },
+    {
+      "index": 5,
+      "scenario": "recovery-train-014",
+      "role": "candidate",
+      "checkpoint_job": "7556562",
+      "text_temperature": 0.0,
+      "acoustic_temperature": 0.8,
+      "diagnostic_only": true,
+      "training_approved": false
+    },
+    {
+      "index": 6,
+      "scenario": "recovery-train-015",
+      "role": "baseline",
+      "checkpoint_job": "7510331",
+      "text_temperature": 0.0,
+      "acoustic_temperature": 0.8,
+      "diagnostic_only": true,
+      "training_approved": false
+    },
+    {
+      "index": 7,
+      "scenario": "recovery-train-015",
+      "role": "candidate",
+      "checkpoint_job": "7556562",
+      "text_temperature": 0.0,
+      "acoustic_temperature": 0.8,
+      "diagnostic_only": true,
+      "training_approved": false
+    }
+  ],
+  "historical_profile": {
+    "text_temperature": 0.7,
+    "acoustic_temperature": 0.8,
+    "seed": 42424242,
+    "full_native_candidate_session": "7556809",
+    "full_native_speech_job": "7556810",
+    "matched_baseline_jobs": [
+      "7530265",
+      "7530266",
+      "7530267",
+      "7530268"
+    ]
+  },
+  "diagnostic_profile": {
+    "text_temperature": 0.0,
+    "acoustic_temperature": 0.8,
+    "seed": 42424242,
+    "implementation": "Pinned upstream sample_token selects native argmax when temperature0; no supplied/forced reference words",
+    "acoustic_rng_note": "Text argmax consumes no text RNG draw; resulting sampled acoustic stream may differ, although acoustic temperature and speaker codes are unchanged"
+  },
+  "fixed": [
+    "User PCM for recovery-train012..015",
+    "Native checkpoint weights",
+    "Native persona and accepted synthetic voice codes",
+    "Bootstrap/provided-input protocol and math attention",
+    "Source folds/audio/words/receipts",
+    "All original native training losses/approvals"
+  ],
+  "optimizer_steps": 0,
+  "teacher_or_speech_api_calls": 0,
+  "external_foreground_controller": false,
+  "new_training_data": false,
+  "diagnostic_histories_must_not_be_trained_on": true,
+  "runtime_guards": [
+    "Explicit diagnostic opt-in; default0.7 path unchanged",
+    "Only the four declared ordinary scenes/observe-only; actual sampler fields checked",
+    "All8 retained; independent same-threshold speech and original-WAV clock audit",
+    "No subset acceptance or retuning on fresh20"
+  ],
+  "extension_or_adoption_approved": false,
+  "follow_up_required": "Any adopted decoding profile needs separate complete10 native review and all4 ordinary correctness/speech gates, then fresh paired20 qualification; diagnostic alone cannot authorize32extension",
+  "maximum_gpus": 2,
+  "maximum_concurrent_cases": 2,
+  "maximum_allocation_minutes": 30,
+  "reservation": "interactive",
+  "partition_or_qos_override": false
+}

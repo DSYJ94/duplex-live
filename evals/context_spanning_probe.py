@@ -65,7 +65,12 @@ def main():
         help='Capture actual native conditioning on approved TRAIN stimuli; never supervised past labels')
     ap.add_argument('--layout-audit',type=Path,
         help='Explicit native-layout candidate; require a successful actual input trace')
+    ap.add_argument('--native-text-temperature',type=float,choices=(0.,.7),default=.7)
+    ap.add_argument('--native-sampling-diagnostic',action='store_true')
     args=ap.parse_args()
+    from evals.native_text_sampling_diagnostic import policy as sampling_policy,verify_engine as verify_sampling
+    try: sampling=sampling_policy(args)
+    except ValueError as error:ap.error(str(error))
     from evals.context_ret_bias import validate as validate_ret_bias
     validate_ret_bias(args.ret_logit_bias)
     if args.event_log_mode!='immediate' and (args.train_history or args.backend_mode!='native-asr'):
@@ -146,7 +151,8 @@ def main():
     records=[];started=time.monotonic()
     with before_engine(engine_module,args.adapter_proof,args.adapter_disabled,args.adapter_zero) as adapter:
         with audited_loads(records):
-            engine=Engine(checkpoint=str(checkpoint),device='cuda',temp=.8,temp_text=.7)
+            engine=Engine(checkpoint=str(checkpoint),device='cuda',temp=.8,temp_text=args.native_text_temperature)
+            verify_sampling(engine,sampling)
             voice=load_voice('main')
     lm_loads=[r for r in records if r['module_identity']==id(engine.lm)]
     if (type(engine.lm).load_state_dict is not torch.nn.Module.load_state_dict
@@ -207,7 +213,8 @@ def main():
             'recorder_code_sha256':sha256(Path(__file__).with_name('context_student_history.py')),
             'probe_code_sha256':sha256(Path(__file__)),
             'native_run_code_sha256':sha256(Path(__file__).with_name('context_spanning_native.py')),
-            'repo_commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()})
+            'repo_commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),
+            **({'native_sampling_diagnostic':sampling} if sampling else {})})
     persona=BASE_INSTRUCTIONS
     if args.persona_profile=='released-default':
         from contextspan.runtime.default_persona import DEFAULT_PERSONA
@@ -229,7 +236,8 @@ def main():
         'persona_profile':args.persona_profile,'persona_text':persona,
         'persona_text_sha256':hashlib.sha256(persona.encode()).hexdigest(),
         'lookup_delivery_minimum_delay_s':args.lookup_delivery_delay_s,
-        'torch':torch.__version__,'torch_file':torch.__file__,'cuda':torch.version.cuda}
+        'torch':torch.__version__,'torch_file':torch.__file__,'cuda':torch.version.cuda,
+        **({'native_sampling_diagnostic':sampling} if sampling else {})}
     if args.ret_logit_bias:
         from evals.context_ret_bias import install as install_ret_bias
         loading['ret_logit_calibration']=install_ret_bias(engine,args.ret_logit_bias)

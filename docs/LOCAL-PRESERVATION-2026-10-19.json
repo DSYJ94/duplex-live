@@ -1,7 +1,7 @@
 {
-  "at_utc": "2026-10-19T20:12:57.771833+00:00",
-  "unique_scoped_artifact_files": 22817,
-  "unique_scoped_artifact_bytes": 15516884938,
+  "at_utc": "2026-10-19T20:24:23.910779+00:00",
+  "unique_scoped_artifact_files": 22833,
+  "unique_scoped_artifact_bytes": 16130540740,
   "inventory_conflicts": [],
   "inventories": [
     {
@@ -437,6 +437,13 @@
       "files": 1,
       "bytes": 1156,
       "missing_roots": []
+    },
+    {
+      "name": "remote-native-ordinary-clock-pilot-state-early-inventory.json",
+      "sha256": "56d297a83c7137bb1e984bdb138c2dfb9cc2aa7d3444e8b5c2878d2c21a01c00",
+      "files": 19,
+      "bytes": 613918567,
+      "missing_roots": []
     }
   ],
   "local_artifact_root": "runs/cloud-export-20261016/tree",
@@ -538,12 +545,20 @@
     "optimizer_jobs_submitted": 1,
     "requires_complete_prior_native10_audio_review": true,
     "job": "7556562",
-    "status": "RUNNING",
+    "status": "EIGHT_UPDATES_COMPLETE_RESTORE_PENDING",
     "checked_utc": "2026-10-19T20:11:21Z",
     "elapsed": "00:00:49",
     "maximum_updates": 8,
     "prior_complete10_review_commit": "24de9f9bf1581b3f9443cc51c85e0e9786b89db6",
     "watcher_local_exec": 77918,
-    "independent_restore_and_native_behavior_not_yet_verified": true
+    "independent_restore_and_native_behavior_not_yet_verified": true,
+    "optimizer_steps": 8,
+    "reported_training_seconds": 34.12175087298965,
+    "timing_scope": "Eight updates plus post-fit metrics/digests, excluding loader and independent restore",
+    "checkpoint_sha256": "1ad464e2b5ca2258ef777f013ccdfe057721a65cd974e17a32a1070b1f05016b",
+    "training_state_sha256": "3303bf1624cf3c36ff071e9fb69a239b3b93fda6a0d914db67848b7543cad675",
+    "all24_exposed_once": true,
+    "all10_word_and14_clock_anchors_each_update": true,
+    "full_state_and_both_caches_sha256_backed": true
   }
 }
