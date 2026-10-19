@@ -1,0 +1,263 @@
+{
+  "schema": "dl-native-full24-eight-update-record-v1",
+  "at_utc": "2026-10-19T14:45:56.777955+00:00",
+  "candidate_job": "7549991",
+  "trainer_source": "cf28726b44ed0621dde6bfd27257709574f5e9ed",
+  "wrapper_source": "95a60b79aa12ccc8c3ae04a6bd3e86ab6b60a663",
+  "independent_wrapper_cpu_job": "7549960",
+  "independent_cpu_tests": 118,
+  "source_payload_cpu_job": "7548658",
+  "pilot_plan_sha256": "bc9b85bd3ee455b4b7740111003bcec5d1cfea2e159e037af9c515b95d08b3d9",
+  "optimizer_updates": 8,
+  "updates_this_run": 8,
+  "learning_rate": 2e-06,
+  "complete24_per8": true,
+  "unique_new_teachers_exposed": 24,
+  "microbatch_weights_sum_one_per_update": true,
+  "actual_components_preserved": 28,
+  "data_sha256": "de92099057ded15a1af0e387c96b457cdf4c1731c26594dcdca211d4c442fc1e",
+  "old_teachers_preserved": 25,
+  "reference_kl_weight": 1.0,
+  "reference_hidden_mse_weight": 10.0,
+  "warm_start_optimizer_reset": true,
+  "warm_start": {
+    "proof": "/projects/u6si/duplex-live/runs/context-training-proof-7510331",
+    "report_sha256": "7f69a321b87613b44c7d5a19b783c3c6ddcbb479bb2fc7bb94e96fe210119778",
+    "reload_report_sha256": "42091ae5452b018cd51ac9c71bfb686cbd699b8b8e2ea07e0a313432b99fc6d1",
+    "checkpoint_sha256": "0310c2563988f8f59d942dce98119230016136f13fc9729ad1c2f398318e7cb5",
+    "training_state_sha256": "b5e4320fba68a0b624a7be61778def8e6238517272637324824126ccaa1c6785",
+    "native_protocol": {
+      "name": "bootstrap-preserve-provided-v1",
+      "code_sha256": "bbf0699025b40be9376491334f787b488fe04a9b6262c2509f44888121250320",
+      "attention_backend": "math"
+    },
+    "optimizer_steps": 520
+  },
+  "frozen_weights_unchanged": true,
+  "audio_loss_targets": 0,
+  "past_loss_targets": 0,
+  "training_seconds": 17.443123133998597,
+  "peak_allocated_bytes": 17770406400,
+  "checkpoint_sha256": "b870e8faa07febdb1e62adf86172130ba95f8e1390056991b60e30f97d10fa56",
+  "training_state_sha256": "ff79b625c096d48e45b4f41c1107210b91fd1339e0b6bd4c1f988017ab0940e7",
+  "report_sha256": "9ca6ce61e27727e3a6683d892346613f286df32613c41dcc42b71b14a781a055",
+  "independent_full_state_restore_status": "RUNNING as14:43:55UTC",
+  "independent_full_state_restore_passed": null,
+  "all10_evaluation_array_job": "7549994",
+  "independent_all10_speech_job": "7550001",
+  "all10_behavior_review_complete": false,
+  "extension_authorized": false,
+  "checkpoint_adopted": false,
+  "native_or_whole_system_qualified": false,
+  "full20_source_quality_status": "FAILED frozen unscored; human room/rune hearing and any changed quality procedure approval still pending",
+  "steps": [
+    {
+      "step": 1,
+      "actual_component_index": 15,
+      "actual_kind": "cancel_request",
+      "retention_kind": "private",
+      "new_teacher_microbatch": [
+        {
+          "id": "teacher-native2-train-000",
+          "kind": "private",
+          "text_ce": 0.44965827465057373,
+          "weight": 0.25
+        },
+        {
+          "id": "teacher-native2-train-001",
+          "kind": "private",
+          "text_ce": 0.6029765009880066,
+          "weight": 0.25
+        },
+        {
+          "id": "teacher-native2-train-002",
+          "kind": "private",
+          "text_ce": 0.866159200668335,
+          "weight": 0.25
+        },
+        {
+          "id": "teacher-native2-train-003",
+          "kind": "private",
+          "text_ce": 0.7185323238372803,
+          "weight": 0.25
+        }
+      ]
+    },
+    {
+      "step": 2,
+      "actual_component_index": 25,
+      "actual_kind": "cancellation_acknowledgment",
+      "retention_kind": "simple",
+      "new_teacher_microbatch": [
+        {
+          "id": "teacher-native2-train-008",
+          "kind": "simple",
+          "text_ce": 0.423443078994751,
+          "weight": 0.25
+        },
+        {
+          "id": "teacher-native2-train-009",
+          "kind": "simple",
+          "text_ce": 0.6471070051193237,
+          "weight": 0.25
+        },
+        {
+          "id": "teacher-native2-train-010",
+          "kind": "simple",
+          "text_ce": 1.2191295623779297,
+          "weight": 0.25
+        },
+        {
+          "id": "teacher-native2-train-011",
+          "kind": "simple",
+          "text_ce": 0.8870484828948975,
+          "weight": 0.25
+        }
+      ]
+    },
+    {
+      "step": 3,
+      "actual_component_index": 26,
+      "actual_kind": "clarification_lookup",
+      "retention_kind": "clarify",
+      "new_teacher_microbatch": [
+        {
+          "id": "teacher-native2-train-016",
+          "kind": "clarify",
+          "text_ce": 0.8044475317001343,
+          "weight": 0.5
+        },
+        {
+          "id": "teacher-native2-train-017",
+          "kind": "clarify",
+          "text_ce": 0.7491028308868408,
+          "weight": 0.5
+        }
+      ]
+    },
+    {
+      "step": 4,
+      "actual_component_index": 16,
+      "actual_kind": "clarification_question",
+      "retention_kind": "cancel",
+      "new_teacher_microbatch": [
+        {
+          "id": "teacher-native2-train-020",
+          "kind": "cancel",
+          "text_ce": 0.6839579343795776,
+          "weight": 0.5
+        },
+        {
+          "id": "teacher-native2-train-021",
+          "kind": "cancel",
+          "text_ce": 0.906013548374176,
+          "weight": 0.5
+        }
+      ]
+    },
+    {
+      "step": 5,
+      "actual_component_index": 19,
+      "actual_kind": "lookup_request",
+      "retention_kind": "private",
+      "new_teacher_microbatch": [
+        {
+          "id": "teacher-native2-train-004",
+          "kind": "private",
+          "text_ce": 0.8956695795059204,
+          "weight": 0.25
+        },
+        {
+          "id": "teacher-native2-train-005",
+          "kind": "private",
+          "text_ce": 0.5919443964958191,
+          "weight": 0.25
+        },
+        {
+          "id": "teacher-native2-train-006",
+          "kind": "private",
+          "text_ce": 0.3597703278064728,
+          "weight": 0.25
+        },
+        {
+          "id": "teacher-native2-train-007",
+          "kind": "private",
+          "text_ce": 0.5888047218322754,
+          "weight": 0.25
+        }
+      ]
+    },
+    {
+      "step": 6,
+      "actual_component_index": 0,
+      "actual_kind": "ordinary_answer",
+      "retention_kind": "simple",
+      "new_teacher_microbatch": [
+        {
+          "id": "teacher-native2-train-012",
+          "kind": "simple",
+          "text_ce": 0.9666433334350586,
+          "weight": 0.25
+        },
+        {
+          "id": "teacher-native2-train-013",
+          "kind": "simple",
+          "text_ce": 0.9949955940246582,
+          "weight": 0.25
+        },
+        {
+          "id": "teacher-native2-train-014",
+          "kind": "simple",
+          "text_ce": 1.0075007677078247,
+          "weight": 0.25
+        },
+        {
+          "id": "teacher-native2-train-015",
+          "kind": "simple",
+          "text_ce": 0.7177694439888,
+          "weight": 0.25
+        }
+      ]
+    },
+    {
+      "step": 7,
+      "actual_component_index": 4,
+      "actual_kind": "private_result",
+      "retention_kind": "clarify",
+      "new_teacher_microbatch": [
+        {
+          "id": "teacher-native2-train-018",
+          "kind": "clarify",
+          "text_ce": 0.461215615272522,
+          "weight": 0.5
+        },
+        {
+          "id": "teacher-native2-train-019",
+          "kind": "clarify",
+          "text_ce": 0.7189100980758667,
+          "weight": 0.5
+        }
+      ]
+    },
+    {
+      "step": 8,
+      "actual_component_index": 18,
+      "actual_kind": "return_to_listening",
+      "retention_kind": "cancel",
+      "new_teacher_microbatch": [
+        {
+          "id": "teacher-native2-train-022",
+          "kind": "cancel",
+          "text_ce": 1.061769962310791,
+          "weight": 0.5
+        },
+        {
+          "id": "teacher-native2-train-023",
+          "kind": "cancel",
+          "text_ce": 0.7881067395210266,
+          "weight": 0.5
+        }
+      ]
+    }
+  ]
+}

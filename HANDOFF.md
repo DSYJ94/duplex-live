@@ -1,3 +1,46 @@
+# LOCAL active — full24 native8 updates saved/backed; independent restore RUNNING (2026-10-19 14:44UTC)
+
+Main before this entry865f5f644f3372bc907de85ab89c02b267db8403, pushed. Nativepilot
+7549991 completed8updates17.443123s, LR2e-6, sourcecf28726b44ed0621dde6bfd27257709574f5e9ed,
+wrapper95a60b7 CPU7549960 PASS118. Independently checked all24 distinct new teachers
+exposed exactlyonce; everykind microbatchweights sum1, quiet/pause in update6.
+Exact28-component data SHAde92099057ded15a1af0e387c96b457cdf4c1731c26594dcdca211d4c442fc1e,
+all25old teachers/KL1/hidden10 preserved; frozenbase unchanged, zeroaudio/pastloss.
+Peakallocated16.549981GiB. Actual mechanics record NATIVE-FULL24-FIRST8 JSON.
+
+Adapter SHAb870e8faa07febdb1e62adf86172130ba95f8e1390056991b60e30f97d10fa56
+Full optimizer/Python/NumPy/Torch/CUDA RNG state SHAff79b625c096d48e45b4f41c1107210b91fd1339e0b6bd4c1f988017ab0940e7
+Stable firstpass12files31211198bytes SHAverified locally14:42:55UTC while fresh
+independent process restores. JobstillRUNNING as14:43:55UTC; no restorePASS yet.
+All10 native7549994_0-9%2 and CPUASR7550001 dependent. Review ALL10 actual WAV,
+independent words/quiet-pause clocks/realworker receipts/latency before any32update
+research extension, sameCFsource/exactstate/committedgate; no adoption untilfresh20.
+Old7548749/7548752/7548762 allcancelled0elapsed before replacement release; never
+resubmit. Single bounded8 exploratory development experiment eligibleinteractive;
+bulk evaluation/extension remainworkq. No source/threshold/gain/prompt changes.
+
+Fresh2 whole20 remains FAILED19/20 under fixedlarge-v3. Full20turbo diagnostic
+also19/20, fails lookup/look up spelling vslarge room/rune worddifference. Human
+listening answer still pending, loopbackplayer127.0.0.1:57386 serves originalclip.
+UNAPPROVED proposed derived whole20 profile sealed before any new native development
+outputs: evals/fixtures/native-fresh2-source-reapproval-proposal-20261019.json,
+SHA1575e4108ed6280d88ebad85efc617242e239139f36e68cf1b065d7df7009712.
+Proposes all20 same-WAV turbo source reapproval with finite lookup->look up spelling,
+rawWER/failedverdict retained; requires human room hearing AND explicit owner scope
+approval. No implementation, approval or inference bypass; existingV2reader unchanged.
+Room/rune remains a wordsubstitution, thresholds .05/.995 unchanged. No newAPIcalls.
+
+Scoped verified backup 22459 files 14921554684bytes plus pinned models and
+both verifiedpublicASRweights4705313252bytes. Full865f5f6 bundlecompleteverified
+SHA47a86b22f6a9f6cf9742f0a1c047bfa8232b4176feaff6e8180d5adba970866c.
+Stopped old Mac sourcebackup remainspartial. Credentials/ownerconversations/core
+excluded; unrelated localfiles untouched. LOCALexecutor; CLOUD submitsnothing,
+cloudGPUvalidationpaused, no purchase. Cert20:51:23UTC/22:51:23Berlin today.
+Native/whole-system FAIL. Next: independentrestore -> all10behavior -> decision;
+back finalrestore/logs and all actualoutputs. Maintain no duplicate submissions.
+
+---
+
 # LOCAL active — bounded full24 native pilot RUNNING; zero-duplicate migration (2026-10-19 14:36UTC)
 
 Main before this entry95a60b79aa12ccc8c3ae04a6bd3e86ab6b60a663, pushed/fetched,

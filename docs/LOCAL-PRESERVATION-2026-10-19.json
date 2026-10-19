@@ -1,7 +1,7 @@
 {
-  "at_utc": "2026-10-19T14:36:53.910554+00:00",
-  "unique_scoped_artifact_files": 22447,
-  "unique_scoped_artifact_bytes": 14890343486,
+  "at_utc": "2026-10-19T14:45:56.777955+00:00",
+  "unique_scoped_artifact_files": 22459,
+  "unique_scoped_artifact_bytes": 14921554684,
   "inventory_conflicts": [],
   "inventories": [
     {
@@ -311,6 +311,13 @@
       "files": 4,
       "bytes": 100067,
       "missing_roots": []
+    },
+    {
+      "name": "remote-native-full24-first8-state-inventory.json",
+      "sha256": "169a51a550f0bdd2e693bd7062ca6abe33ca1378fd56850d0ac94c5ad327cca0",
+      "files": 12,
+      "bytes": 31211198,
+      "missing_roots": []
     }
   ],
   "local_artifact_root": "runs/cloud-export-20261016/tree",
@@ -326,14 +333,14 @@
   "runtime_sif_sha256": "c00bc99693e4908ea75d17df9c379b93ae9a1678a65d875565ad5d52f76fa27b",
   "pinned_vendor_git_bundles_verified": 3,
   "source_git_bundle": {
-    "at_utc": "2026-10-19T14:34:18.898269+00:00",
-    "source_sha": "28e7078c4402a487bf28ccea412940428193b3c4",
-    "bundle": "runs/local-continuation-20261019/source-main-28e7078.bundle",
-    "bundle_sha256": "67e85cfeb1769c9b8fcde886f98f2de8931403ce7793ea27a50cd0c3eb98df6c"
+    "at_utc": "2026-10-19T14:45:56.777955+00:00",
+    "source_sha": "865f5f644f3372bc907de85ab89c02b267db8403",
+    "bundle": "runs/local-continuation-20261019/source-main-865f5f6.bundle",
+    "bundle_sha256": "47a86b22f6a9f6cf9742f0a1c047bfa8232b4176feaff6e8180d5adba970866c"
   },
-  "native_candidate_job": "7546645",
-  "native_candidate_training_state_sha256": "47b52ef890ecf64fa7c4cab9d5c1cf52bc74227d2bf676a13d9414ee2da95b4a",
-  "native_candidate_independent_full_state_restore_passed": true,
+  "native_candidate_job": "7549991",
+  "native_candidate_training_state_sha256": "ff79b625c096d48e45b4f41c1107210b91fd1339e0b6bd4c1f988017ab0940e7",
+  "native_candidate_independent_full_state_restore_passed": null,
   "public_asr_weights": {
     "local_root": "runs/local-continuation-20261019/asr-weights",
     "verification_report": "public-asr-weights-verification-attempt2.json",
