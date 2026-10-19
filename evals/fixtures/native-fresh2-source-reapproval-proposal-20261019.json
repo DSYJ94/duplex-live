@@ -1,0 +1,52 @@
+{
+  "schema": "dl-native-fresh2-derived-source-profile-proposal-v1",
+  "status": "PROPOSED ONLY; no source approval or inference authorization",
+  "declared_utc": "2026-10-19T14:39:52.125027+00:00",
+  "owner_approval_required": true,
+  "owner_hearing_required": "room sign",
+  "owner_hearing_received": false,
+  "owner_scope_approval_received": false,
+  "plan_sha256": "6e44cac1d6bfa19c3453f813abaf4613651f8d051d2c2a0f3dd80c35c1121979",
+  "inputs_manifest_sha256": "1500af0330ac85c9671dfe4932cab5d44ef19232e34a28a37ed5dc75190d2cce",
+  "original_failed_primary_quality_sha256": "a9579b5a6a8f951d2ca404331b56457193f24b050d2e97e458f932c08ab96d8c",
+  "all20_other_asr_diagnostic_sha256": "9dac75b2dec8a4f5b3db4141a465e11a0d500d9b6bb4080b6cd56c1bf8dca00c",
+  "proposed_change": "Create a NEW derived whole20 quality approval from the complete fixed turbo ASR, with explicit compound-spelling normalization only; retain both failed audits and every source byte",
+  "asr_model": "turbo CPU",
+  "asr_weight_sha256": "aff26ae408abcba5fbf8813c21e62b0941638c5f6eebfb145be0c9839262a19a",
+  "finite_canonicalization": {
+    "single_word_spellings": {
+      "color": "colour"
+    },
+    "compound_spelling_expansion": {
+      "lookup": [
+        "look",
+        "up"
+      ]
+    }
+  },
+  "word_equivalences_forbidden": [
+    "room/rune",
+    "warm/worn",
+    "synonyms",
+    "omitted/repeated words"
+  ],
+  "raw_wer_and_failed_primary_verdict_preserved": true,
+  "all20_cases_and38_clips_required": true,
+  "per_clip_wer_threshold": 0.05,
+  "peak_threshold": 0.995,
+  "physical_word_and_segment_bounds_required": true,
+  "no_reference_text_prompts": true,
+  "no_new_speech_api_calls": true,
+  "no_new_audio_or_rerolls": true,
+  "all_audio_words_receipts_schedule_worlds_and_scoring_targets_unchanged": true,
+  "no_passing_subset_or_per_clip_asr_selection": true,
+  "whole20_recomputed_again_from_hash_bound_raw_asr_before_any_native_inference": true,
+  "new_profile_requires_explicit_committed_approval": true,
+  "existing_v2_approval_reader_unchanged": true,
+  "no_source_reapproval_executed": true,
+  "no_new_full24_native_development_outputs_observed_at_declaration": true,
+  "no_fresh20_native_outputs_exist": true,
+  "independent_candidate_restore_and_full10_review_still_required": true,
+  "native_or_whole_system_qualified": false,
+  "training_approved": false
+}
