@@ -1,3 +1,54 @@
+# LOCAL active — all25 numerical PASS; full24 input PASS; gated pilot queued,11:57UTC
+
+Training/evaluation source c93ac931905d1c45c1e8c02924ebaaeb6fb34c8b is pushed,
+immutable Isambard worktree recovery-c93ac93; CPU7546529 PASS85tests. Approval
+source remains a32b165ade593e62f92c675872ba4b0c789450ce, exact training/approval
+code unchanged. Source Git bundle c93ac93 verified locally, complete history.
+
+ALL25 numerical-v2 reference7545975 COMPLETED14m09, PASSES25/25: max error
+0.000882565975189209 <= unchanged0.001; causal-prefix error0.0 throughout.
+Report SHA256 ef01b6d875c2346f71ac03b7e6b38f1bd7dbec4e333c55dbb94dac6ed6678fd6.
+Original failed FP327544806 max0.002780318260192871 retained in reference report
+and independent backup. Higher-precision LINEAR arithmetic is audit-only; production/
+training execution unchanged. All original25 words/audio/receipts/masks/frames,
+21 undiagnosed target hashes and28 actual histories preserved.
+
+ALL24 capture7545908 COMPLETED; complete independent input7545909 PASS13seconds,
+normal full-corpus schema, diagnostic_only=false. Codec5905/scope5907 PASS.
+Full24 FP32math7545910 RUNNING. Required numerical-v2 reference7546608 PENDING
+AFTERANY5910; wrapper requires the COMPLETE hash-verified original FP32 result,
+all causal-prefix errors0, unchanged24 cases and0.001 threshold. Original report
+must be kept whether pass or fail; an absent/incomplete baseline fail-closes.
+Exclusive receipt runs/native-v2-numerical-reference-local-20261019.json.
+
+Eight-update native pilot7546645 QUEUED AFTEROK7546608; not running, ZERO updates
+at11:57UTC. Receipt runs/native-v2-pilot-local-20261019.json. Runtime rechecks BOTH
+complete25/24 numerical-v2/input/scope approvals before optimizer. Warmstart ONLY
+native520 job7510331 accepted voice/weights, NEW optimizer8updates, all28 actual
+history components, all25 old teachers, KL1/hiddenMSE10. No rejected7530408 reuse.
+Separate fresh process adapter/optimizer/Python/NumPy/Torch/CUDA restore inside
+same job required. No extension/adoption before independent full10 native behavior
+review. Development evaluation is prepared, not yet submitted. Fresh20 comparison
+likewise prepared, no inference yet and never a training source.
+
+Fresh input/source/observer CPU tests pass85 total. Automatic approval review
+rejected real36 synthetic-user speech API generation before ANY command/job/API
+request. Owner question remains pending; do not bypass or assume approval. Only
+fake local clips/engine tests ran. Existing TRAIN collector/native backend source
+files remain byte-identical; isolated fresh entry point uses approved user-only
+PCM and worker-only private world, never scoring references in inference.
+
+Latest native approval backup154files/290599979bytes ALL size/SHA256 verified
+11:56:05UTC; includes old25 numerical-v2 and complete24 codec/capture/input.
+Scoped unique backup21824files/14377752211bytes, plus separately pinned native/
+PersonaPlex/codec weights. Runtime SIF complete/verified; older stopped Mac source
+backup partial, distinct. No owner conversations, credentials or core dump.
+LOCAL executor remains active; CLOUD submits nothing. Local certificate expires
+20:51:23UTC/22:51:23Berlin today. Cloud GPU validation paused, no new purchase.
+Native/whole-system FAIL. Next:24 numerical gates -> pilot/restore -> all10 behavior.
+
+---
+
 # LOCAL active — full25 input PASS; full24 conversion PASS; numerical audit,11:43UTC
 
 Source a32b165ade593e62f92c675872ba4b0c789450ce is pushed and immutable on

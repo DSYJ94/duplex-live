@@ -510,3 +510,22 @@ four total GPUs. No fresh inference or extra compute purchase submitted. Source
 quality is not task qualification; every report remains quality_qualified=false
 until full behavior/speech/causality assessment. External audio generation remains
 paused pending the owner's API-transfer approval after automatic-review rejection.
+
+
+## All25 numerical-v2 pass; complete24 input pass; gated eight-update pilot
+
+7545975 COMPLETES14m09 and passes all25 at max0.000882565975189209 under0.001,
+all causal-prefix errors0.0. Failed FP327544806 retained, no training precision
+or numerical threshold change. Report SHA256
+ ef01b6d875c2346f71ac03b7e6b38f1bd7dbec4e333c55dbb94dac6ed6678fd6.
+All24 captures7545908 complete and full CPUinput7545909 PASS13s; FP32math7545910
+running. Required full24 numerical-v2 reference7546608 queued afterany5910, runtime
+requires full original baseline regardless verdict; incomplete result fail-closes.
+Native pilot7546645 is queued afterok6608 from c93ac93, CPU7546529 PASS85tests.
+ZERO optimizer updates at submission. It rechecks both complete corpus chains,
+warms from native520 only, resets optimizer for8updates, retains all28 histories,
+all25 old teacher words/audio/receipts and KL1/hiddenMSE10. Separate full state
+restore is mandatory inside job. All10 unforced development cases must be reviewed
+before extension/adoption. Full20 fresh qualification remains prepared/unexecuted;
+real speech generation paused awaiting explicit transfer approval after auto-review.
+Backups154files/290599979bytes independently size/SHA256 verified11:56:05UTC.
