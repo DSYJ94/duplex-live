@@ -1,7 +1,7 @@
 {
-  "at_utc": "2026-10-19T12:57:35.433464+00:00",
-  "unique_scoped_artifact_files": 22013,
-  "unique_scoped_artifact_bytes": 14768121497,
+  "at_utc": "2026-10-19T13:01:51.645024+00:00",
+  "unique_scoped_artifact_files": 22172,
+  "unique_scoped_artifact_bytes": 14812186381,
   "inventory_conflicts": [],
   "inventories": [
     {
@@ -219,6 +219,13 @@
       "sha256": "8bd468f0d8a0297964a280d8b742107245ec4794aa642844f8b3e857ffae320e",
       "files": 2,
       "bytes": 170049,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native-fresh20-inputs-inventory.json",
+      "sha256": "d6bce6f4e08479d536be5ed84444cc7d3cf6250aa4bf0410e223ce917f9a4b24",
+      "files": 159,
+      "bytes": 44064884,
       "missing_roots": []
     }
   ],

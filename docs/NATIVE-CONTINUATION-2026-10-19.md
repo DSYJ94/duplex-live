@@ -661,3 +661,32 @@ sampling schedule; negative cosine diagnoses first-order objective conflict at a
 fixed parent, not Adam attribution or native behavior. Existing training/reload
 path defaults unchanged. CPU arithmetic/schedule/guard tests required before the
 zero-update GPU diagnostic. No repair, learning-rate change or extension chosen.
+
+
+## Full native review rejects candidate; full fresh20 source freezes unscored
+
+All10 actual native runs7547174 complete, full10 independent CPU ASR7547175
+complete6m14. Full review NATIVE-V2-COMPLETE10-REVIEW-2026-10-19.json rejects
+7546645 extension/adoption. Actual read/cancel receipts do execute; native voice
+still wrong/invented facts, quiet/pause failures, no cancellation confirmation.
+Six speech-quality passes under unchanged0.08/valid bounds; four failures retained.
+Full124 native files263114323bytes plus independent speech2files170049bytes backed.
+Zero-update complete81 gradient diagnostic7548377 source60a7afe queued afterCPU
+7548310 PASS87tests. No further optimizer submitted, all28/25/KL1/hidden10 preserved.
+
+Fresh generation7548247 COMPLETE2m14, full20 CPU quality7548248 FAILED5m58.
+18/20cases pass,2fail:001colour/color rawWER0.05555556;002warm/worn WER0.08333333,
+all physical waveform bars/bounds pass. Whole20 freezes UNSCORED; no inference,
+passing subset, repeated speech generation or TRAIN use. All159 source/audio/
+receipt/quality/log artifacts44064884bytes size/SHA256 verified12:58:45UTC.
+Plan/scoring targets/audio/receipts unchanged. A separately versioned full20 local
+large-v3 ASR control is prepared: no reference-text prompt, same0.05/0.995 bars,
+raw WER retained, explicit color/colour spelling only; warm/worn NEVER equivalent.
+This is DIAGNOSTIC ONLY, cannot satisfy existing input reader or authorize inference.
+It may distinguish a recognizer error from source mispronunciation, without rerolling
+or changing original failed verdict. Only turbo currently cached; official package's
+pinned large-v3 weight would be downloaded by local cluster ASR, no speech API calls.
+
+Timing correction: prior status headings12:51/13:00 were rounded forward by a few
+minutes. Exact receipt times, Slurm clocks and backup-verification UTC timestamps
+are authoritative. This note and every new receipt use actual UTC clocks.

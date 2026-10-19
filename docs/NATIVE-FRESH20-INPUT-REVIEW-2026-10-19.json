@@ -1,0 +1,55 @@
+{
+  "schema": "dl-fresh20-input-rejection-v1",
+  "at_utc": "2026-10-19T13:00:41.178122+00:00",
+  "generation_job": "7548247",
+  "quality_job": "7548248",
+  "complete_cases": 20,
+  "passed_cases": 18,
+  "failed_cases": 2,
+  "quality_report_sha256": "3f75d07f2ae48baf05f30e4c99c702cf009799e37b2e0ed5e53c4127d49c9b07",
+  "quality_threshold": 0.05,
+  "peak_bar": 0.995,
+  "failed": [
+    {
+      "scenario": "native-fresh-001",
+      "ordinal": 0,
+      "wer": 0.05555555555555555,
+      "valid_bounds": true,
+      "waveform": {
+        "sample_rate": 24000,
+        "samples": 168000,
+        "finite": true,
+        "peak": 0.330657958984375,
+        "passed": true
+      },
+      "asr_text": " Every kite in this bag is red. This kite came from that bag. What color is this kite?",
+      "asr_sha256": "beff92e7eaaf6b55ea29ceaba770a9f5bb8b96c01e6d787aba23e238f95f6fbe",
+      "raw_wav_sha256": "f07c18b4e404a1083f55db05d1b0cc26bfd7e49ef78b0a123bfe1376b51c305c"
+    },
+    {
+      "scenario": "native-fresh-002",
+      "ordinal": 0,
+      "wer": 0.08333333333333333,
+      "valid_bounds": true,
+      "waveform": {
+        "sample_rate": 24000,
+        "samples": 145200,
+        "finite": true,
+        "peak": 0.18524169921875,
+        "passed": true
+      },
+      "asr_text": " Why does a wet pavement usually dry faster on a worn day?",
+      "asr_sha256": "4fc419a9bf382799b532dde5ecbf8f7889a035f62eab83ac3549c67584c6e47a",
+      "raw_wav_sha256": "81b8cd61708900de3f6efbc2158c1f493df5ffbe1e9903c3498f5ce5d96a0a24"
+    }
+  ],
+  "decision": "Freeze complete20 unscored; no native inference, no rerecord or passing subset",
+  "analysis": [
+    "001 colour vs color is a spelling-only raw WER artifact; original failure retained",
+    "002 warm vs worn is a real word distinction; cannot canonicalize or approve from context. Stronger independent same-audio diagnosis would need full20, no expected-text prompting and unchanged bars"
+  ],
+  "all159_artifacts_bytes": 44064884,
+  "all159_artifacts_size_and_sha256_verified": true,
+  "training_approved": false,
+  "inference_approved": false
+}
