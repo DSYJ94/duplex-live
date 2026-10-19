@@ -1,7 +1,7 @@
 {
-  "at_utc": "2026-10-19T19:32:09.329716+00:00",
-  "unique_scoped_artifact_files": 22645,
-  "unique_scoped_artifact_bytes": 15182235044,
+  "at_utc": "2026-10-19T19:38:00.921120+00:00",
+  "unique_scoped_artifact_files": 22647,
+  "unique_scoped_artifact_bytes": 15182265500,
   "inventory_conflicts": [],
   "inventories": [
     {
@@ -374,6 +374,13 @@
       "files": 12,
       "bytes": 1077774,
       "missing_roots": []
+    },
+    {
+      "name": "remote-native-warm-ordinary-launch-inventory.json",
+      "sha256": "62c14fcd4e848a3f666715244fd979b4596a592805059a0184c93eeb4ea8b3fe",
+      "files": 2,
+      "bytes": 30456,
+      "missing_roots": []
     }
   ],
   "local_artifact_root": "runs/cloud-export-20261016/tree",
@@ -389,10 +396,10 @@
   "runtime_sif_sha256": "c00bc99693e4908ea75d17df9c379b93ae9a1678a65d875565ad5d52f76fa27b",
   "pinned_vendor_git_bundles_verified": 3,
   "source_git_bundle": {
-    "at_utc": "2026-10-19T19:03:29.550753+00:00",
-    "source_sha": "b0fe82bc6b6e631c612bcda601d78883a2149581",
-    "bundle": "runs/local-continuation-20261019/source-main-b0fe82b.bundle",
-    "bundle_sha256": "6273d400a579a7c3391a47293c79ecd0f84d9b488915b8e4bb32c9e2a53ba777"
+    "at_utc": "2026-10-19T19:38:00.921120+00:00",
+    "source_sha": "b21ac8418be4e4c6597ab93a01c64c3f96addb12",
+    "bundle": "runs/local-continuation-20261019/source-main-b21ac84.bundle",
+    "bundle_sha256": "be137835bd0a5f65505efff586983d1a64d00c17d5fc44a4ce9104946c96c46f"
   },
   "native_candidate_job": "7549991",
   "native_candidate_training_state_sha256": "ff79b625c096d48e45b4f41c1107210b91fd1339e0b6bd4c1f988017ab0940e7",
@@ -425,5 +432,15 @@
     "certificate_valid_before_utc": "2026-10-20T02:05:02Z",
     "certificate_valid_before_berlin": "2026-10-20T04:05:02+02:00",
     "note": "Read from actual local certificate with TZ=UTC; supersedes previous expiry. No credentials exported."
+  },
+  "new_warm_ordinary_pilot": {
+    "job": "7555898",
+    "source": "b21ac8418be4e4c6597ab93a01c64c3f96addb12",
+    "status": "RUNNING",
+    "checked_utc": "2026-10-19T19:37:24Z",
+    "elapsed": "00:00:24",
+    "independent_full_cpu_job": "7555896",
+    "cpu_tests_passed": 135,
+    "checkpoint_or_restore_not_yet_verified": true
   }
 }

@@ -1,4 +1,39 @@
-# LOCAL active — complete53 diagnostic PASS; new bounded warm-ordinary pilot prepared (2026-10-19 19:38 UTC)
+# LOCAL active — new warm-ordinary pilot7555898 RUNNING (2026-10-19 19:37 UTC)
+
+Exact training/session source b21ac8418be4e4c6597ab93a01c64c3f96addb12 committed,
+pushed and deployed in clean immutable worktree recovery-b21ac84. Independent CPU
+7555896 COMPLETED14s/PASS135tests. Exclusive launch receipt
+runs/native-warm-ordinary-pilot-local-20261019.json and separate submit-once sentinel
+record ONE1GPU reservation=interactive pilot7555898, no partition/QoS override,
+30min cap. Queue empty before submission. Actual19:37:24UTC: RUNNING24s, initial
+nine mechanics tests PASS. Full optimizer work/independent restore NOT yet verified.
+No native review jobs submitted yet: interactiveQoS permits one live allocation.
+Do NOT resubmit7555898 or reuse its launch scripts; inspect current state first.
+
+This is a new8-update native520/7510331 experiment, not a continuation of rejected
+7549991. All28actual/25old/24new histories and old KL1/hidden10 remain unchanged;
+additional64x mean frozen-parent ordinary-word KL+10hiddenMSE on10predeclared
+approved TRAIN histories. Plan and original target/audio/receipt hashes fixed
+before candidate output. Full53 diagnostic7554946 already PASS. Parent and every
+rejected checkpoint preserved. Independent reference reconstruction + full state
+restore/all28logits mandatory before originalcf28726 complete10 native review.
+All4ordinary core facts plus complete10 review before any separate32extension;
+paired fresh20 before adoption. Native/whole-system remains FAIL.
+
+Launch receipt/CPU log2files30456bytes SHAverified19:37:20UTC. Backup union22647
+files15182265500bytes plus pinned models/runtime/ASR. Fullb21ac84 source bundle
+verified, SHAbe137835bd0a5f65505efff586983d1a64d00c17d5fc44a4ce9104946c96c46f.
+New pilot artifacts not yet backed: copy full checkpoint/optimizer/RNG/anchor cache/
+audits/logs once stable, using scoped rsync-ar/exclude=session-token and hashes.
+Stopped Mac source backup remains PARTIAL. Unrelated local edits preserved.
+LOCAL sole executor, CLOUD submits nothing; no execution handback/cloud purchase.
+Certificate through20Oct02:05:02UTC/04:05:02Berlin. Goal remains active.
+Next: monitor7555898 at >=60s intervals, preserve artifacts, verify full restore,
+then one finite2GPU native10 development allocation plus independent full10 ASR.
+
+---
+
+# LOCAL active — complete53 diagnostic PASS; new bounded warm-ordinary pilot prepared (2026-10-19 19:35 UTC)
 
 LOCAL is sole executor; CLOUD submits nothing. Owner explicitly authorized the
 interactive reservation for short development work. Actual bounded SSH PASS and
