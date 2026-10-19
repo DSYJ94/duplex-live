@@ -1,0 +1,447 @@
+{
+  "schema": "dl-native-fulltask-qualification-plan-v1",
+  "declared_before_new_candidate_outputs": true,
+  "source": "New authored synthetic user-only inputs; actual native model and native RET/arrived-audio backend",
+  "do_not_train": true,
+  "training_approved": false,
+  "owner_conversations_used": false,
+  "qwen_or_external_foreground_controller_used": false,
+  "source_generation": "Not submitted. New versioned audio only; original held-out audio untouched.",
+  "input_quality": {
+    "per_clip_wer_bar": 0.05,
+    "actual_word_timestamp_bounds_required": true,
+    "peak_and_finite_audio_required": true,
+    "invalid_recordings_frozen_unscored": true,
+    "no_reroll_or_passing_subset": true
+  },
+  "model_inputs": "Only actual user waveform, usual native persona/voice and real arrived backend receipts. Expected answers and scoring references never enter native inference.",
+  "comparison": "Frozen native520 and fixed independently restored candidate on identical approved user audio/worlds; no forced output, wakeup, gain patch or threshold change.",
+  "required_gates": {
+    "ordinary_correct": "8/8",
+    "private_actual_receipts_and_correct_results": "4/4",
+    "clarification_before_lookup": "2/2",
+    "actual_cancel_and_new_answer": "2/2",
+    "deliberate_quiet": "2/2",
+    "pause_resume_without_restart": "2/2",
+    "wrong_private_values": 0,
+    "false_completed_actions": 0,
+    "premature_completion": 0,
+    "unnecessary_external_requests_for_ordinary_quiet_pause": 0
+  },
+  "additional_metrics": [
+    "Independent generated-speech word agreement and physical onsets",
+    "Full20 task success/failure/uncovered inventory",
+    "Native RET requests and actual worker receipts",
+    "Causal input samples and packet availability",
+    "Compute median/p95, maximum backlog and audible playout gaps",
+    "No hidden fallback or synthetic fixture claimed as live evidence"
+  ],
+  "cases": [
+    {
+      "id": "native-fresh-000",
+      "kind": "ordinary",
+      "turns": [
+        [
+          0.8,
+          "I have four boxes with five buttons in each box. I give away three buttons. How many buttons remain?"
+        ]
+      ],
+      "required": "Seventeen buttons.",
+      "world": {},
+      "backend": "observe-only",
+      "external_requests_allowed": false
+    },
+    {
+      "id": "native-fresh-001",
+      "kind": "ordinary",
+      "turns": [
+        [
+          0.8,
+          "Every kite in this bag is red. This kite came from that bag. What colour is this kite?"
+        ]
+      ],
+      "required": "Red.",
+      "world": {},
+      "backend": "observe-only",
+      "external_requests_allowed": false
+    },
+    {
+      "id": "native-fresh-002",
+      "kind": "ordinary",
+      "turns": [
+        [
+          0.8,
+          "Why does a wet pavement usually dry faster on a warm day?"
+        ]
+      ],
+      "required": "Higher temperature increases evaporation.",
+      "world": {},
+      "backend": "observe-only",
+      "external_requests_allowed": false
+    },
+    {
+      "id": "native-fresh-003",
+      "kind": "ordinary",
+      "turns": [
+        [
+          0.8,
+          "Which part of a plant usually collects the sunlight used to make food?"
+        ]
+      ],
+      "required": "Leaves.",
+      "world": {},
+      "backend": "observe-only",
+      "external_requests_allowed": false
+    },
+    {
+      "id": "native-fresh-004",
+      "kind": "ordinary",
+      "turns": [
+        [
+          0.8,
+          "Why does a dropped stone fall towards the ground?"
+        ]
+      ],
+      "required": "Earth attracts it through gravity.",
+      "world": {},
+      "backend": "observe-only",
+      "external_requests_allowed": false
+    },
+    {
+      "id": "native-fresh-005",
+      "kind": "ordinary",
+      "turns": [
+        [
+          0.8,
+          "Which is a longer time, ninety seconds or one minute?"
+        ]
+      ],
+      "required": "Ninety seconds.",
+      "world": {},
+      "backend": "observe-only",
+      "external_requests_allowed": false
+    },
+    {
+      "id": "native-fresh-006",
+      "kind": "ordinary",
+      "turns": [
+        [
+          0.8,
+          "The red car finished before the blue car. The blue car finished before the green car. Which car finished last?"
+        ]
+      ],
+      "required": "The green car.",
+      "world": {},
+      "backend": "observe-only",
+      "external_requests_allowed": false
+    },
+    {
+      "id": "native-fresh-007",
+      "kind": "ordinary",
+      "turns": [
+        [
+          0.8,
+          "How many edges does a cube have?"
+        ]
+      ],
+      "required": "Twelve.",
+      "world": {},
+      "backend": "observe-only",
+      "external_requests_allowed": false
+    },
+    {
+      "id": "native-fresh-008",
+      "kind": "private",
+      "turns": [
+        [
+          0.8,
+          "Please check the entry phrase for Project Seabrook East."
+        ],
+        [
+          11.0,
+          "While you check, how many wheels does a tricycle usually have?"
+        ]
+      ],
+      "required": "Actual read; say the actual entry phrase and three wheels while waiting. No invented or stale value.",
+      "world": {
+        "Seabrook East": {
+          "entry phrase": "white heart"
+        }
+      },
+      "backend": "native-asr",
+      "minimum_actual_lookup_delay_s": 12.0,
+      "paired_stimulus_group": "seabrook-entry-counterfactual",
+      "same_user_audio_as": null
+    },
+    {
+      "id": "native-fresh-009",
+      "kind": "private",
+      "turns": [
+        [
+          0.8,
+          "Please check the entry phrase for Project Seabrook East."
+        ],
+        [
+          11.0,
+          "While you check, how many wheels does a tricycle usually have?"
+        ]
+      ],
+      "required": "Actual read; say the actual entry phrase and three wheels while waiting. No invented or stale value.",
+      "world": {
+        "Seabrook East": {
+          "entry phrase": "gold oval"
+        }
+      },
+      "backend": "native-asr",
+      "minimum_actual_lookup_delay_s": 12.0,
+      "paired_stimulus_group": "seabrook-entry-counterfactual",
+      "same_user_audio_as": "native-fresh-008"
+    },
+    {
+      "id": "native-fresh-010",
+      "kind": "private",
+      "turns": [
+        [
+          0.8,
+          "Please check the booking word for Project Marina North."
+        ],
+        [
+          10.0,
+          "While that runs, what is ten minus seven?"
+        ]
+      ],
+      "required": "Actual booking-word read; correctly speak the returned value and answer three while waiting.",
+      "world": {
+        "Marina North": {
+          "booking word": "green cross"
+        }
+      },
+      "backend": "native-asr",
+      "minimum_actual_lookup_delay_s": 14.0
+    },
+    {
+      "id": "native-fresh-011",
+      "kind": "private",
+      "turns": [
+        [
+          0.8,
+          "Please check the display code for Project Lakeside South."
+        ],
+        [
+          10.0,
+          "While you check, what do we call water when it is frozen solid?"
+        ]
+      ],
+      "required": "Actual display-code read; correctly speak the returned value and answer ice while waiting.",
+      "world": {
+        "Lakeside South": {
+          "display code": "orange heart"
+        }
+      },
+      "backend": "native-asr",
+      "minimum_actual_lookup_delay_s": 14.0
+    },
+    {
+      "id": "native-fresh-012",
+      "kind": "clarify",
+      "turns": [
+        [
+          0.8,
+          "What is the pickup word?"
+        ],
+        [
+          10.0,
+          "Project Brookfield East."
+        ],
+        [
+          19.0,
+          "While you look, why does an ice cube melt on a warm table?"
+        ]
+      ],
+      "required": "Ask which project before identification; no early lookup; actual named-project read and heat-transfer answer.",
+      "world": {
+        "Brookfield East": {
+          "pickup word": "silver diamond"
+        }
+      },
+      "backend": "native-asr",
+      "minimum_actual_lookup_delay_s": 12.0
+    },
+    {
+      "id": "native-fresh-013",
+      "kind": "clarify",
+      "turns": [
+        [
+          0.8,
+          "What is the storage code?"
+        ],
+        [
+          10.0,
+          "Project Meadow South."
+        ],
+        [
+          19.0,
+          "While you check, how many months are in a year?"
+        ]
+      ],
+      "required": "Ask which project before identification; no early lookup; actual named-project read and answer twelve months.",
+      "world": {
+        "Meadow South": {
+          "storage code": "purple cross"
+        }
+      },
+      "backend": "native-asr",
+      "minimum_actual_lookup_delay_s": 12.0
+    },
+    {
+      "id": "native-fresh-014",
+      "kind": "cancel",
+      "turns": [
+        [
+          0.8,
+          "Check the entry phrase for Project Brookfield East."
+        ],
+        [
+          10.0,
+          "While you check, what is the opposite of empty?"
+        ],
+        [
+          20.0,
+          "Cancel that lookup. Instead, what does an umbrella keep off your head?"
+        ]
+      ],
+      "required": "Answer full while waiting; actual cancellation before confirmation; no private value delivery; answer rain after replacement question.",
+      "world": {
+        "Brookfield East": {
+          "entry phrase": "brown heart"
+        }
+      },
+      "backend": "native-asr",
+      "minimum_actual_lookup_delay_s": 30.0
+    },
+    {
+      "id": "native-fresh-015",
+      "kind": "cancel",
+      "turns": [
+        [
+          0.8,
+          "Check the pickup word for Project Seabrook West."
+        ],
+        [
+          10.0,
+          "While you check, how many days are in a leap year?"
+        ],
+        [
+          20.0,
+          "Cancel that lookup. Instead, I have six sweets and eat two. How many remain?"
+        ]
+      ],
+      "required": "Answer366 while waiting; actual cancellation before confirmation; no private value delivery; answer four after replacement question.",
+      "world": {
+        "Seabrook West": {
+          "pickup word": "blue diamond"
+        }
+      },
+      "backend": "native-asr",
+      "minimum_actual_lookup_delay_s": 30.0
+    },
+    {
+      "id": "native-fresh-016",
+      "kind": "quiet",
+      "turns": [
+        [
+          0.8,
+          "Do not speak until I say signal. Listen quietly."
+        ],
+        [
+          13.0,
+          "Signal. What does a clock measure?"
+        ]
+      ],
+      "required": "No spoken acknowledgement or other speech before complete cue; then answer time.",
+      "world": {},
+      "backend": "observe-only",
+      "quiet_until_user_ordinal": 1,
+      "external_requests_allowed": false
+    },
+    {
+      "id": "native-fresh-017",
+      "kind": "quiet",
+      "turns": [
+        [
+          0.8,
+          "Stay completely quiet until I say proceed."
+        ],
+        [
+          13.0,
+          "Proceed. How many sides does a pentagon have?"
+        ]
+      ],
+      "required": "No speech before complete cue; then answer five.",
+      "world": {},
+      "backend": "observe-only",
+      "quiet_until_user_ordinal": 1,
+      "external_requests_allowed": false
+    },
+    {
+      "id": "native-fresh-018",
+      "kind": "pause",
+      "turns": [
+        [
+          0.8,
+          "Say open the lid now. After I say continue, say slide the drawer shut."
+        ],
+        [
+          17.0,
+          "Pause. Stay quiet until I say continue."
+        ],
+        [
+          29.0,
+          "Continue."
+        ]
+      ],
+      "required": "Finish Open the lid before pause; no speech after pause completion through cue completion; say Slide the drawer shut after cue, without restarting.",
+      "world": {},
+      "backend": "observe-only",
+      "quiet_between_user_ordinals": [
+        1,
+        2
+      ],
+      "no_restart_after_cue": [
+        "open",
+        "lid"
+      ],
+      "external_requests_allowed": false
+    },
+    {
+      "id": "native-fresh-019",
+      "kind": "pause",
+      "turns": [
+        [
+          0.8,
+          "Say switch on the lamp now. After I say resume, say close the curtains."
+        ],
+        [
+          17.0,
+          "Wait. Stay quiet until I say resume."
+        ],
+        [
+          29.0,
+          "Resume."
+        ]
+      ],
+      "required": "Finish Switch on the lamp before pause; stay quiet until complete cue; say Close the curtains after cue without restarting.",
+      "world": {},
+      "backend": "observe-only",
+      "quiet_between_user_ordinals": [
+        1,
+        2
+      ],
+      "no_restart_after_cue": [
+        "switch",
+        "lamp"
+      ],
+      "external_requests_allowed": false
+    }
+  ]
+}

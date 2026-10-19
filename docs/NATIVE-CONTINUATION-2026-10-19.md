@@ -369,3 +369,22 @@ was refused because completed test7544406 aged out of Slurm's live dependency
 controller; verified archived COMPLETED0:0 and identical tested Python bodies,
 then submitted once without a stale dependency under the same exclusive receipt.
 No duplicate job or new GPU submission. Four raw native controls remain preserved.
+
+
+## Fresh full-task qualification plan declared before candidate outputs
+
+New native-fulltask-qualification-20261019.json declares20 authored user-only
+cases:8 ordinary reasoning/facts,4 actual private reads including identical-input
+counterfactual worlds,2 clarification,2 actual cancel-plus-new-answer,2 explicit
+quiet cues and2 paused/resumed steps.38 user clips/1951characters stay within the
+existing generation budget. No audio generation/evaluation job is submitted yet.
+Expected answers stay outside native inference. No Qwen/foreground controller,
+forced words/audio/wakeup, edited owner recording or original held-out hash change.
+
+After initial reused10-case behavior review, adoption still requires this full
+fresh20 inventory, valid independent input/speech clocks, all actual worker
+receipts, ordinary8/8, private4/4, clarify/cancel/quiet/pause2/2 each, no false action
+or stale value, and measured latency/backlog/playout. Invalid new source audio is
+frozen and unscored, never rerolled or treated as a passing subset. A declaration
+is not execution or qualification evidence. This preserves the distinction between
+native engineering/data approval, reused development review and fresh acceptance.
