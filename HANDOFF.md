@@ -24,8 +24,8 @@ original cf28726 payload/text0.7/audio0.8; session wrapper99 supports40.
 
 Full source authorization283 bundle verified SHA
 41fe618eb0080c9bb22a52ff870333dab6bce6d035e7b095c140ca262d323d57.
-Approved launch receipt scoped backup underway; all previous23230files/
-16926304034bytes plus model/runtime/ASR/vendor remain verified. Old stopped
+Approved launch receipt1file3613bytes SHAverified21:46:56UTC; union23231files/
+16926307647bytes plus model/runtime/ASR/vendor remain verified. Old stopped
 Mac source backup PARTIAL. No owner conversations/credentials/core exported.
 LOCAL owns execution; CLOUD no submissions, no handback/cloud purchases. Local
 cert through20Oct02:05:02UTC/04:05:02Berlin. Native/whole-system UNQUALIFIED.

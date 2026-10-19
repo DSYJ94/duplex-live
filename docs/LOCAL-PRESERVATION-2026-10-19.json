@@ -1,7 +1,7 @@
 {
-  "at_utc": "2026-10-19T21:26:22.059158+00:00",
-  "unique_scoped_artifact_files": 23230,
-  "unique_scoped_artifact_bytes": 16926304034,
+  "at_utc": "2026-10-19T21:49:08.131378+00:00",
+  "unique_scoped_artifact_files": 23231,
+  "unique_scoped_artifact_bytes": 16926307647,
   "inventory_conflicts": [],
   "inventories": [
     {
@@ -521,6 +521,13 @@
       "files": 4,
       "bytes": 67886,
       "missing_roots": []
+    },
+    {
+      "name": "remote-native-bounded32-launch-inventory.json",
+      "sha256": "a61882a72e3281481d8d78820eca44af5a8cba0d1962ece9e2fe197d6d6634f5",
+      "files": 1,
+      "bytes": 3613,
+      "missing_roots": []
     }
   ],
   "local_artifact_root": "runs/cloud-export-20261016/tree",
@@ -536,9 +543,9 @@
   "runtime_sif_sha256": "c00bc99693e4908ea75d17df9c379b93ae9a1678a65d875565ad5d52f76fa27b",
   "pinned_vendor_git_bundles_verified": 3,
   "source_git_bundle": {
-    "source_sha": "99cc7394ebde78e2762d92813dddbc7a3feaaaed",
-    "bundle": "runs/local-continuation-20261019/source-main-99cc739.bundle",
-    "bundle_sha256": "371774860e61c96b7ea845e95e3945072d8470c981c50457206969b3157b5b07"
+    "source_sha": "2837484b946adb01a2f01431083eeec4e90ed26e",
+    "bundle": "runs/local-continuation-20261019/source-main-2837484.bundle",
+    "bundle_sha256": "41fe618eb0080c9bb22a52ff870333dab6bce6d035e7b095c140ca262d323d57"
   },
   "native_candidate_job": "7549991",
   "native_candidate_training_state_sha256": "ff79b625c096d48e45b4f41c1107210b91fd1339e0b6bd4c1f988017ab0940e7",
@@ -787,5 +794,19 @@
       "failed": [],
       "missing_roots": []
     }
+  },
+  "bounded32_exploration_run": {
+    "job": "7558824",
+    "status": "RUNNING",
+    "execution_source": "99cc7394ebde78e2762d92813dddbc7a3feaaaed",
+    "authorization_commit": "2837484b946adb01a2f01431083eeec4e90ed26e",
+    "authorization_sha256": "c1a521aeb2e722978dc50158928f6d53ceb7015dcc086ade13a9bdac6b057316",
+    "starting_optimizer_steps": 8,
+    "maximum_additional_updates": 32,
+    "maximum_total_updates": 40,
+    "optimizer_reset": false,
+    "launch_receipt_sha256_backed": true,
+    "sole_local_watcher_session": 34775,
+    "complete_restore_native10_and_independent_speech_required": true
   }
 }
