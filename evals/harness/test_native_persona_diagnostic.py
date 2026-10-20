@@ -42,6 +42,15 @@ class PersonaDiagnostic(unittest.TestCase):
             a=self.args();setattr(a,field,value)
             with self.subTest(field=field),self.assertRaises(ValueError):policy(a)
 
+    def test_launch_receipt_preserves_native_v2_dataset_selector(self):
+        script=Path(__file__).parents[1]/'native-persona-diagnostic-step.sh'
+        text=script.read_text()
+        # The receipt previously overwrote case.source with a Git SHA, selecting
+        # the old dataset for both quiet/pause cases before any model ran.
+        self.assertIn("payload_source=os.environ['DL_TASK_COMMIT']",text)
+        self.assertNotIn(",source=os.environ['DL_TASK_COMMIT']",text)
+        for i in (4,5):self.assertEqual(case(i)['source'],'native-v2')
+
     def test_no_implicit_persona_index_or_invalid_case(self):
         a=self.args();a.native_persona_diagnostic=False
         with self.assertRaises(ValueError):policy(a)

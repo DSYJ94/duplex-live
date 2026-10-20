@@ -1,0 +1,22 @@
+{
+  "teacher": "teacher-recovery-train-010",
+  "optimizer_updates": 0,
+  "teacher_text_forced": true,
+  "agent_acoustics_forced": false,
+  "diagnostic_only": true,
+  "training_approved": false,
+  "native_behavior_qualified": false,
+  "outputs_must_not_be_trained_on": true,
+  "schema": "dl-native-conditioning-probe-plan-v1",
+  "capture_checkpoint": "7510331",
+  "score_checkpoints": [
+    "7510331",
+    "7558824"
+  ],
+  "complete_scope_teachers": 25,
+  "diagnostic_cases": 1,
+  "source_audio_words_receipts_and_masks_unchanged": true,
+  "scope_sha256": "a18de87de715b3909364693241df160f8169d21cdcae2666efb811cba9563ef7",
+  "cache_sha256": "7c73cb6c590fe7b7de0c3d6e13a3db1975be68ad1bb7979c3c13ce8ca242a257",
+  "reason": "Seen day/night changes from correct Earth rotation to axial tilt although fixed teacher-conditioned target fit remains good. Compare identical approved teacher targets with native520-sampled assistant conditioning. Prior unadapted forced-teacher render failures remain rejected; this probe uses the accepted native520 checkpoint and repaired complete25 approvals. Not a training subset or native behavior claim."
+}

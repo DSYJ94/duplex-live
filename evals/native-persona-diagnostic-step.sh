@@ -15,7 +15,7 @@ import os,json,sys
 from evals.native_persona_diagnostic import case
 r=case(int(sys.argv[1]))
 r.update(allocation_job=os.environ['SLURM_JOB_ID'],step=os.environ['SLURM_STEP_ID'],
-    assigned_cuda_devices=os.environ['CUDA_VISIBLE_DEVICES'],source=os.environ['DL_TASK_COMMIT'])
+    assigned_cuda_devices=os.environ['CUDA_VISIBLE_DEVICES'],payload_source=os.environ['DL_TASK_COMMIT'])
 assert len(r['assigned_cuda_devices'].split(','))==(1 if int(sys.argv[1])<6 else 2) and r['step'].isdigit()
 with open(sys.argv[2],'x') as f:json.dump(r,f,indent=2)
 PY
