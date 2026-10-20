@@ -1,7 +1,7 @@
 {
   "at_utc": "2026-10-20T19:49:27.607183+00:00",
-  "unique_scoped_artifact_files": 24543,
-  "unique_scoped_artifact_bytes": 24402705014,
+  "unique_scoped_artifact_files": 24544,
+  "unique_scoped_artifact_bytes": 24402706702,
   "inventory_conflicts": [],
   "inventories": [
     {
@@ -688,6 +688,13 @@
       "sha256": "a03d31a21e9e54f4933ceed7e0dffea2e68ad90cd4ea726e38954a3048c388d0",
       "files": 21,
       "bytes": 584098330,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native-complete-batch-failed-watcher-inventory.json",
+      "sha256": "0a1e86a257479f88605fea4425fea2dc44971cf31af8e67fcef438334e3414fe",
+      "files": 1,
+      "bytes": 1688,
       "missing_roots": []
     }
   ],
@@ -1541,7 +1548,7 @@
   "native_audio49_complete_batch_chain": {
     "source": "3b92d843e7724d66ecb6d148ab33b3705f089ec8",
     "readiness_job": "7582620",
-    "watcher_job": "7582621",
+    "watcher_job": "7585425",
     "canonical_receipt": "runs/native-audio49-complete-batch-local-20261020.json",
     "submitted_utc": "2026-10-20T17:10:00Z",
     "initial_observed_state": "PENDING",
@@ -1562,14 +1569,14 @@
       "verified_complete_history": true
     },
     "readiness_state": "COMPLETED",
-    "watcher_state": "FAILED",
-    "observed_utc": "2026-10-20T17:12:36Z",
+    "watcher_state": "RUNNING",
+    "observed_utc": "2026-10-20T19:52:29Z",
     "cluster_tests_passed": 252,
     "cluster_tests_seconds": 4.11,
     "additional_state_tests_passed": 11,
     "additional_state_tests_seconds": 1.564,
     "watcher_exit": "1:0",
-    "training_submitted": false,
+    "training_submitted": true,
     "readiness_all154_passed": true,
     "complete_gradient_norm": 5.444079505444755,
     "readiness_peak_allocated_bytes": 22002220544,
@@ -1577,6 +1584,19 @@
     "readiness_verified_files": 21,
     "readiness_verified_bytes": 584098330,
     "watcher_failure": "Active-slot guard raised before any submission attempt; no training accepted",
-    "local_certificate_valid_until_utc": "2026-10-21T03:50:25Z"
+    "local_certificate_valid_until_utc": "2026-10-21T03:50:25Z",
+    "training_job": "7585424",
+    "training_state": "RUNNING",
+    "watcher_source": "82789e3404c8f206ab5cd8411754018671b4832a",
+    "failed_watcher_job": "7582621",
+    "failed_watcher_exit": "1:0",
+    "recovery_submitted_utc": "2026-10-20T19:50:17Z",
+    "payload_unchanged": true,
+    "watcher_source_bundle": {
+      "path": "runs/local-continuation-20261019/source-main-82789e3.bundle",
+      "sha256": "3c9d39b52d59cf7c3ae74819ec1d7d79667dd998af7ca65326a43cf5c69ece4b",
+      "verified_complete_history": true
+    },
+    "failed_watcher_log_sha256_backed": true
   }
 }

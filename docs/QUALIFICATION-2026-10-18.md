@@ -1,3 +1,38 @@
+# LOCAL active — recovered TRAIN7585424 and fixed Slurm watcher7585425 (20Oct19:50UTC)
+
+Existing full154 readiness7582620 COMPLETE/PASS reused; it was NOT rerun. Original
+watcher7582621 FAILED before any training attempt due to active-slot guard. Fresh
+queue/account training-name history were empty and failed/completed states checked
+before exactly one recovery submission under canonical receipt lock. New train
+7585424 and replacement CPU watcher7585425 accepted/released19:50:17UTC; initial
+queuePENDING(None). Actual19:52:29UTC train7585424 RUNNING2m11 and fixed
+watcher7585425 RUNNING2m07; no other active jobs. Payload remains3b92d843e7724d66ecb6d148ab33b3705f089ec8;
+watcher ONLY source82789e3404c8f206ab5cd8411754018671b4832a, immutable worktrees.
+Canonical runs/native-audio49-complete-batch-local-20261020.json owns next IDs;
+failed watcher retained in scheduler_watcher_history. LOCAL soleexecutor/CLOUD
+read-only. No other manual submissions or old watcher restart.
+
+SlotBusy now logs actual active IDs and waits60s without recording a submission;
+uncertain/accepted sbatch attempts remain non-retriable.5local scheduler testsPASS.
+Training/data/math/losses/voice/masks/gates unchanged; source252tests+11state tests
+and full154 BF16 gradients alreadyPASS. Full norm5.444079505, peak22002220544B,
+allweightsunchanged/0updates. All21 readiness files584098330B SHA-backed. One new8
+fullbalanced stage must finish Adam528, then independently restore full state,
+all28+49 fingerprints, and undergo whole native10/speech via the fixed watcher.
+No extension/adoption/fresh20 inference follows automatically.
+
+Canonical scoped backup union24544files/24402706702B, including the failed
+watcher log1688B SHA-backed19:52:56UTC; old stopped Mac backupPARTIAL.
+Fixedwatcher fullsource bundle82789e3 verifiedcomplete SHA
+3c9d39b52d59cf7c3ae74819ec1d7d79667dd998af7ca65326a43cf5c69ece4b.
+Current certificate TZ=UTC and actual SSH reverified: expires21Oct03:50:25UTC /
+05:50:25Amsterdam, superseding old19:32UTC entry. Reservation ends21Oct08:56:32UTC.
+Unrelated local pycache/capability/roadmap preserved. Whole model unqualified.
+Next observe7585424/7585425, preserve final fit checkpoint early, require complete
+independent state restoration before reviewing every native case and speech audit.
+
+---
+
 # LOCAL active — full154 readiness PASS; watcher stopped before training; recovery prepared
 
 Actual19:47UTC queue EMPTY. Readiness7582620 COMPLETE0:0 (17:21:48UTC); full

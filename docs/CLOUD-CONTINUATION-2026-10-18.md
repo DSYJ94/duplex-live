@@ -1,5 +1,7 @@
 # Cloud continuation — 18 October 2026
 
+CURRENT OVERRIDE — 20October19:50UTC: LOCAL soleexecutor. Full154 readiness7582620 PASS; oldwatcher7582621 FAILED before ANY training submission. Exactly one recovery submitted TRAIN7585424 +fixed SlurmCPUwatcher7585425. Training payload3b92d84 unchanged, watcher source82789e3. Canonical runs/native-audio49-complete-batch-local-20261020.json owns next IDs. Current LOCAL cert independently reverified until21Oct03:50:25UTC; old expiry superseded. CLOUD READ-ONLY/no duplicates. No extension/adoption/fresh20 approval; read newest HANDOFF.
+
 CURRENT OVERRIDE — 20October17:10UTC: LOCAL soleexecutor. NEW complete-batch native8 chain readiness7582620/persistent SlurmCPUwatcher7582621 submitted; runtime3b92d84; canonical runs/native-audio49-complete-batch-local-20261020.json owns next IDs. Prior parentAdam7581869/native7582080/speech7582408/watcher7581640 allTERMINAL, full10 rejectedcore0/4,speech7/10, all artifacts SHA-backed. CLOUD READ-ONLY/no duplicates. No extension/adoption/fresh20 approval. Read newest HANDOFF.
 
 CURRENT OVERRIDE — 20October16:20UTC: LOCAL soleexecutor. Parent-Adam TRAIN7581869 RUNNING after readiness7581639 PASS; persistent SlurmCPUwatcher7581640 owns native10/speech next IDs. Runtime067cb5d, canonical runs/native-audio49-parent-adam-local-20261020.json. All20 readiness artifacts SHA-backed; prior failed candidates/gradient artifacts preserved. CLOUD READ-ONLY/no duplicates. No extension/adoption/fresh20 approval. Read newest HANDOFF.
