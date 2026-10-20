@@ -1,5 +1,5 @@
 {
-  "at_utc": "2026-10-20T10:34:09.221300+00:00",
+  "at_utc": "2026-10-20T11:49:18.488129+00:00",
   "unique_scoped_artifact_files": 23767,
   "unique_scoped_artifact_bytes": 18462797070,
   "inventory_conflicts": [],
@@ -1115,12 +1115,12 @@
   "native_audio49_pilot": {
     "source": "33cd0fe3de9871ad29281c7e0a2ee00d4f95fcc6",
     "readiness_job": "7574002",
-    "training_job_not_submitted_yet": true,
+    "training_job_not_submitted_yet": false,
     "server_watcher_pid": 135003,
     "server_watcher_log": "/projects/u6si/duplex-live/logs/native-audio49-server-chain-33cd0fe.out",
     "exclusive_receipt": "/projects/u6si/duplex-live/runs/native-audio49-pilot-v2-local-20261020.json",
     "connection_independent": true,
-    "maximum_submitted_active_jobs": 1,
+    "maximum_submitted_active_jobs": 2,
     "maximum_updates": 8,
     "parent_job": "7510331",
     "new_optimizer": true,
@@ -1131,6 +1131,26 @@
     "complete10_native_and_speech_required": true,
     "automatic_extension": false,
     "adoption": false,
-    "prior_held_job_cancelled_without_execution": "7573687"
+    "prior_held_job_cancelled_without_execution": "7573687",
+    "readiness_status": "COMPLETED",
+    "readiness_elapsed": "00:11:29",
+    "readiness_tests_passed": 233,
+    "readiness_bf16_passed": true,
+    "training_job": "7575817",
+    "training_status": "RUNNING",
+    "observed_at_utc": "2026-10-20T11:48:16Z",
+    "scheduler_watcher_job": "7575818",
+    "scheduler_watcher_status": "RUNNING",
+    "scheduler_watcher_source": "3d6de2c055d47e15b76ba3a9e48b7a43bbee3c2d",
+    "scheduler_watcher_log": "/projects/u6si/duplex-live/logs/dl-native-audio49-watch-7575818.out",
+    "server_watcher_pid_terminal": true,
+    "maximum_submitted_gpu_jobs": 1,
+    "readiness_off_cluster_backup_in_progress": true
+  },
+  "native_audio49_watcher_source_bundle": {
+    "source": "3d6de2c055d47e15b76ba3a9e48b7a43bbee3c2d",
+    "path": "runs/local-continuation-20261019/source-main-3d6de2c.bundle",
+    "sha256": "31e5542fefa87d10bcf922c5167e5f5db8186b44ef7c4795090d7f2cf37018f3",
+    "full_history_verified": true
   }
 }

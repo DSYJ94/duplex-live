@@ -1,3 +1,55 @@
+# LOCAL active — native8 TRAIN7575817 RUNNING; Slurm watcher7575818 (2026-10-20 11:48 UTC)
+
+Actual SSH/Slurm observation11:48:16UTC: native8 training7575817 RUNNING on
+nid010205 in interactive1GPU/30min; scheduler watcher7575818 RUNNING on
+nid010020/workq1CPU1G/20h. Training payload remains EXACT immutable
+33cd0fe3de9871ad29281c7e0a2ee00d4f95fcc6; watcher ONLY source
+3d6de2c055d47e15b76ba3a9e48b7a43bbee3c2d at worktrees/recovery-3d6de2c.
+No measured optimizer update/checkpoint/restore claimed yet. Goal ACTIVE;
+LOCAL retains execution/CLOUD read-only/no handback or duplicate jobs.
+
+Readiness7574002 COMPLETED11m29/exit0:0. All233 tests PASS plus separate11 state/
+objective tests, complete corpus approvals reconstructed and zero-update native520
+BF16 four-kind acoustic gradient smoke PASS. Same sources/words/audio/receipts/
+all28/25/24/KL1hidden10/word64clock64/firstword16 objectives retained. New8 audio49
+stage starts native520/new optimizer/LR2e-6; no unchanged rejected joint or40 extension.
+
+IMPORTANT correction to10:33 entry: detached login PID135003 DISAPPEARED after
+SSH ended; it logged only initial observation and submitted NO training. Readiness
+completed and its full on-cluster snapshot succeeded; training was delayed until
+this observation. Do NOT revive that login process. Explicit stale afterok dependency
+submission at11:46 was REJECTED with Job dependency problem, no job accepted.
+Confirmed queue/accounting empty, recorded rejection, independently revalidated
+COMPLETED0:0+BF16pass; then submitted7575817 without a stale scheduler dependency.
+New CPU watcher is an ACTUAL Slurm allocation, not a login background process.
+Only TWO submitted jobs total (watcher + one stage); only ONE GPU job submitted.
+
+Watcher7575818 survives Mac/SSH loss. It polls60s and requires terminal Slurm0:0
+plus full fresh-process original28 text/all49 audio and Adam/Python/NumPy/Torch/
+CUDA exact restore before native10. It then submits complete10 unforced native
+2GPU/30min; after all attempts, complete10 CPU speech even if nativecasefailure.
+Every next job ID is written/fsynced in canonical remote
+runs/native-audio49-pilot-v2-local-20261020.json before release. Read that receipt,
+squeue/sacct and logs/dl-native-audio49-watch-7575818.out FIRST. Ambiguous mutations
+stop, never auto duplicate; transient observation errors retry observation only.
+No automatic longer training/adoption/fresh20 inference. New snapshots remain
+same-project preservation until separately copied/hash-verified off cluster.
+
+Completed zero-update all49 audit7572397/7572398 PASS; all11 artifacts SHA-backed.
+Verified prior artifact union23767files18462797070B, models/runtime/ASR/vendor
+separate; new readiness19files583956756B transferring to Mac (not yet claimed
+verified). Full source bundle33cd0fe already verified; watcher3d6de2c bundle also
+verified SHA 31e5542fefa87d10bcf922c5167e5f5db8186b44ef7c4795090d7f2cf37018f3. Old stopped Mac source backup PARTIAL. All unrelated
+local edits preserved; no credentials/owner conversations/quarantined core copied.
+
+Local cert through20Oct19:32:16UTC/21:32:16Berlin. Interactive reservation ends
+21Oct08:56:32UTC/10:56:32Berlin; no extension assumed. Native whole system remains
+UNQUALIFIED. Rejected40/persona10 unchanged; fresh20 approved source7550653 but
+native still NONE. Next observe7575817/7575818, SHA-back full new state and all
+native10/speech artifacts, review complete10 before further training/fresh20.
+
+---
+
 # LOCAL active — durable native8 training chain RELEASED (2026-10-20 10:33 UTC)
 
 Runtime source33cd0fe3de9871ad29281c7e0a2ee00d4f95fcc6 pushed and immutable at
