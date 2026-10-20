@@ -1,3 +1,40 @@
+# LOCAL overnight — readiness live; independent Mac preservation observer active (20Oct22:52UTC)
+
+Payload/watcher remain741872fe2f9e49f35d4deba9aba96caff26c51d4, readiness7589157 and
+CPUwatcher7589159. Actual22:51:18UTC accounting: both RUNNING, readiness8m34.
+Original approved data validation is progressing; no training job submitted yet.
+Current LOCAL Clifton certificate independently inspected with TZ=UTC ssh-keygen:
+valid20Oct22:31:51UTC through21Oct10:31:51UTC. Bounded actual alias SSH works. This
+supersedes earlier03:50:25UTC expiry claims; allocation ends08:56:32UTC first. No
+certificate/key was transferred or credential requested.
+
+Existing watcher exclusively owns the eventual training/native10/speech IDs in
+runs/native-stream49-overnight-local-20261020.json. Do not duplicate submissions.
+
+Additional LOCAL backup observer is LIVE, exec session50287, protected by its own
+nonblocking lock; maximum7h, caffeinate prevents idle sleep while it runs. It has
+actually checked this canonical over SSH: training_not_submitted / chain_live.
+It cannot submit/cancel/train/adopt anything. It watches for the stable post-fit
+adapter checkpoint and final optimizer/RNG state, then copies fixed approved roots
+using rsync -ar --exclude=session-token, verifies every size/SHA and independently
+rechecks remote hashes. These early artifacts remain UNAPPROVED until full restore
+and behavior checks. After all scheduler jobs and the chain are terminal it also
+preserves every available stage artifact, including failed attempts, with a separate
+complete inventory. Owner conversations, credentials, session-token and core dumps
+are excluded. Full stopped Mac source backup is stillPARTIAL; this new observer is
+scoped new-artifact preservation only. No new checkpoint backup is claimed yet.
+
+Local ignored operators in runs/local-continuation-20261019:
+- watch-native-stream49-backups.py
+- backup-native-stream49-critical-early.py
+- backup-native-stream49-terminal.py
+Status file: native-stream49-local-backup-watch-status.json in that same directory.
+SHA identities recorded in docs/LOCAL-PRESERVATION-2026-10-19.json. Poll same session/job IDs; do not restart
+solely on observation timeout. The source deployment and finite overnight chain
+below remain unchanged. LOCAL remains sole executor while owner is away.
+
+---
+
 # LOCAL overnight — native stream readiness7589157 RUNNING; bounded training chain scheduled (20Oct22:44UTC)
 
 LOCAL is sole executor, CLOUD read-only. Owner is away7–8h and explicitly requests

@@ -2092,7 +2092,7 @@
     "canonical": "runs/native-stream49-overnight-local-20261020.json",
     "canonical_mutable_until_watcher_terminal": true,
     "readiness_state": "RUNNING",
-    "observed_utc": "2026-10-20T22:43:49Z",
+    "observed_utc": "2026-10-20T22:51:18Z",
     "readiness_started_utc": "2026-10-20T22:42:44Z",
     "readiness_maximum_minutes": 120,
     "training_maximum_minutes": 180,
@@ -2124,6 +2124,32 @@
       "sha256": "d7f19bd2248110301a65b66cfe5d0082de3f39be003d4edb28a91ef6547e9094",
       "verified_complete_history": true
     },
-    "document": "docs/NATIVE-STREAM49-GRADIENT-READINESS-2026-10-20.md"
+    "document": "docs/NATIVE-STREAM49-GRADIENT-READINESS-2026-10-20.md",
+    "readiness_elapsed": "00:08:34",
+    "local_bounded_backup_observer": {
+      "exec_session": 50287,
+      "status_path": "runs/local-continuation-20261019/native-stream49-local-backup-watch-status.json",
+      "observed_live_with_first_remote_checks_passed": true,
+      "first_status_utc": "2026-10-20T22:52:08.879265+00:00",
+      "maximum_hours": 7,
+      "prevents_idle_sleep_with_caffeinate": true,
+      "optimizer_checkpoint_backup_pending": true,
+      "terminal_backup_pending": true,
+      "can_submit_cancel_train_or_adopt": false,
+      "operator_sha256": {
+        "watch-native-stream49-backups.py": "1b6dc0f079a3c35b09fa380b2b9b43572257eb0549855b83a85b255c3afe8627",
+        "backup-native-stream49-critical-early.py": "6f3e90c269b54132ff4b105b2f093bd3380e8d49fd9d6b82690db23da93c9826",
+        "backup-native-stream49-terminal.py": "79f9ec6904ed40dc96928870730637707a4e01e725c4c0a5e2dda5ddf21bfe77"
+      }
+    }
+  },
+  "local_ssh_certificate_current": {
+    "observed_utc": "2026-10-20T22:53:04.104897+00:00",
+    "valid_from_utc": "2026-10-20T22:31:51Z",
+    "valid_until_utc": "2026-10-21T10:31:51Z",
+    "source": "TZ=UTC ssh-keygen -Lf existing local Clifton certificate; bounded actual alias SSH verified working",
+    "previous_0350_expiry_superseded": true,
+    "certificate_and_key_not_transferred": true,
+    "allocation_ends_before_current_certificate": true
   }
 }
