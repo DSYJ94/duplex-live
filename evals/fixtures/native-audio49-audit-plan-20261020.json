@@ -1,0 +1,66 @@
+{
+  "schema": "dl-native-all49-audio-audit-plan-v1",
+  "at_utc": "2026-10-20T09:43:48.313260+00:00",
+  "phase": "prepare-independent-ownership-numerical-gradient-audit",
+  "optimizer_updates": 0,
+  "training_approved": false,
+  "native_behavior_qualified": false,
+  "parent_checkpoint": "7510331",
+  "approval_lineage_reference_checkpoint": "7558824",
+  "reference_checkpoint_weights_used": false,
+  "original_actual_history_components_required": 28,
+  "old_native_teachers_required": 25,
+  "new_native_teachers_required": 24,
+  "all49_numerical_cases_required": true,
+  "assistant_audio_codebooks": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "user_audio_loss_targets": 0,
+  "prefix_loss_targets": 0,
+  "supplied_span_loss_targets": 0,
+  "source_words_audio_receipts_folds_and_approved_histories_unchanged": true,
+  "source_teacher_voice": "Existing approved gpt-live-1 synthetic teachers; accepted native voice prefix unchanged.",
+  "numerical_threshold": 0.001,
+  "causal_prefix_error_required": 0.0,
+  "depth_positions_per_case": [
+    "first all8-valid real audio target",
+    "first all8-valid spoken target",
+    "last all8-valid real audio target"
+  ],
+  "numerical_scope": "Every approved text target and the three predeclared unique depth positions in EACH of all49. Retain all original complete temporal numerical approvals. No exhaustive all-frame acoustic-depth claim.",
+  "gradient_smoke": [
+    "predeclared longest private",
+    "predeclared longest simple",
+    "predeclared longest clarify",
+    "predeclared longest cancel"
+  ],
+  "gradient_smoke_scope": "Four declared maximum-length/kind smoke tests, not full49 optimization or qualification.",
+  "new_auxiliary_loss": "Assistant acoustic cross entropy only: q0 plus 0.02 times each of q1..7, divided by1.14. Keep every original text/control/retention objective.",
+  "required_original_losses": {
+    "actual28": true,
+    "old25": true,
+    "new24": true,
+    "reference_kl_weight": 1.0,
+    "reference_hidden_mse_weight": 10.0,
+    "ordinary_word_and_clock_references": "Preserve existing approved references; no evaluation-output training."
+  },
+  "evidence_motivating_audit": [
+    "Complete10 quiet behavior fails despite text/control-only training.",
+    "Original40 records audio_loss_targets=0; approved source contains actual quiet/pause acoustic intervals.",
+    "Retain rejected standalone joint7530408; this new audit covers all49 and requires original28 plus KL/hidden retention before any optimizer."
+  ],
+  "next_optimizer_constraints": [
+    "No optimizer in this audit.",
+    "New explicit bounded pilot policy must preserve all original components/losses and complete49 audio coverage.",
+    "Use a new truthful assistant-audio-auxiliary training proof schema and independent full optimizer/RNG restore.",
+    "Review complete native10 and untouched fresh20 before any adoption; no passing subset.",
+    "No extension of rejected7530408 or40 unchanged."
+  ]
+}

@@ -1,0 +1,1230 @@
+{
+  "schema": "dl-approved-train-quiet-target-diagnostic-v1",
+  "at_utc": "2026-10-20T09:33:22.240568+00:00",
+  "original_complete24_ingestion_sha256": "d86d913d31c3a6b189a6c2fdd1d2a38da371dffd8f7ad341ae6c0927b6205078",
+  "all24_original_wavs_and_sidecars_hash_verified": [
+    {
+      "id": "teacher-native2-train-000",
+      "wav_sha256": "d02aa5f7b761bd0e2f85927d6218476e2b9a1ece979d8d96794ce12c0a955f6e",
+      "sidecar_sha256": "b9cf1ae99f7da0da3fcbec82c6ae958d69abcfe56f842072f580f820c53fd48f"
+    },
+    {
+      "id": "teacher-native2-train-004",
+      "wav_sha256": "fdf663f360f70f0de935142c0c620a7b6c726cf0dff516c6b2a523a9d565b905",
+      "sidecar_sha256": "878f7f654f8551e29d97f24b6916f423498b136a0e40c1d3634194a0aeb973f5"
+    },
+    {
+      "id": "teacher-native2-train-005",
+      "wav_sha256": "829dd2d5f01507432885bf3a63ac9ea8a7e774c5fa8e9b699eb2e0da58788f7b",
+      "sidecar_sha256": "591ffa08350369c2dd41c51df1e20799511e727cc967540da0fbee57365465d5"
+    },
+    {
+      "id": "teacher-native2-train-006",
+      "wav_sha256": "3d85c191d133133c8e57c3e59effd6d4fbb2f37504f26e2e29d6e0e7ebd48276",
+      "sidecar_sha256": "d9b62dd5b94ada001b9ce38eeb8c7e98a3998596e4c7b96594dc35a48a3d4ab8"
+    },
+    {
+      "id": "teacher-native2-train-007",
+      "wav_sha256": "18976aa319c7d9dc8ae9dfad7b64074c1175d22ee8a49a395daa835a2a2d5686",
+      "sidecar_sha256": "b6591b3d76513ee908944002e3f382502aa2d8030dbcdf3b967a8d2e7a773e6e"
+    },
+    {
+      "id": "teacher-native2-train-008",
+      "wav_sha256": "29457a34b3ae8d9f8aca526493b9179aac44e50c9f1bec4d5d1f8e61d41997e7",
+      "sidecar_sha256": "a6a082b4c40555e6703cf3b9265e3150bf36daca385f77a8cf7e5491c014c54f"
+    },
+    {
+      "id": "teacher-native2-train-009",
+      "wav_sha256": "ac98294b2e06069d75b0584baea81fbaeff2ab40768b158d8479f58f9720627b",
+      "sidecar_sha256": "028b5977ea27467c34f2b7c99d29ebceccc29fa51bed772bec853193ee650c6f"
+    },
+    {
+      "id": "teacher-native2-train-010",
+      "wav_sha256": "087da01a4ab4d916ca7ec306e3896ac1c27f48e7430b974cc1764e19cda21c2d",
+      "sidecar_sha256": "779a3e57dcec37107790ba93e817dcca4d416dbda9950cbd7446804ef8334d10"
+    },
+    {
+      "id": "teacher-native2-train-012",
+      "wav_sha256": "dd63bcec7efa3619d574cadd63450ca3c6024b9c1cb14f69875a7c262c6e1b9c",
+      "sidecar_sha256": "a43d9df83ee0d4ec1db2702c1d0493b1d99d5638a44717eac24ece50e4532bff"
+    },
+    {
+      "id": "teacher-native2-train-013",
+      "wav_sha256": "29ff67aff19acca87e341c0f6d716c974d8a90d770e47996e71fe01cd4ea1c45",
+      "sidecar_sha256": "b23702c0211024e4a91eabfa24af496065e61a1a6d7cd2e11ef0b37e9813d069"
+    },
+    {
+      "id": "teacher-native2-train-016",
+      "wav_sha256": "f4d7128563f678ccb1bf66fe05575fdc26ff2e863f613951780b16714edeb4ce",
+      "sidecar_sha256": "f58aa240d3ff9bcb5f8d535b9a4eb0accb3f0195b42d6d8fd32d973a515af12f"
+    },
+    {
+      "id": "teacher-native2-train-017",
+      "wav_sha256": "159975327555b6317d28f4759398ee65f80527ecd96c84dd2e7a6143a726d940",
+      "sidecar_sha256": "cb3cd52f2b40276985ba9c4a9b8664ed36c1b5f699056ca59af6ab20e67dde3f"
+    },
+    {
+      "id": "teacher-native2-train-018",
+      "wav_sha256": "a6ecf600c0a525fb074bf480f0a9cbe06831b1cd2d3e3182a63ac81cbdf17ccb",
+      "sidecar_sha256": "f05b9d2b70344700e2485b699139b51b5ae16d328d49b91b5b97cc2a746d9722"
+    },
+    {
+      "id": "teacher-native2-train-002",
+      "wav_sha256": "3a3701efdfa1b00e35f4bbcfcbaa48d1f87557d974b2a75b87d3e0a98b69abc7",
+      "sidecar_sha256": "ef7e2eaa28773f02cb821808492c3ea68cc33ba0497202d38c3e84754c479706"
+    },
+    {
+      "id": "teacher-native2-train-011",
+      "wav_sha256": "3a39185db160b1d812e37bdc3bf850c9e6e0382e9cfa1a26f41ed87c653af1bc",
+      "sidecar_sha256": "b0dbdc08d000b8d29bb977445e05de390a3b9a5308b07ad112bc4031ce53528b"
+    },
+    {
+      "id": "teacher-native2-train-003",
+      "wav_sha256": "6f629f815547880c3bbc98adc6473b1260953681bafba455b03d229e27227fb5",
+      "sidecar_sha256": "75e2cee2030180d63d9335d7e3a5752a0fefaac9327b735a7eac8e842c94153b"
+    },
+    {
+      "id": "teacher-native2-train-020",
+      "wav_sha256": "6297f46510a6416c0cb8376e963665add149df15d7b9745bd6f4f774fa456bd4",
+      "sidecar_sha256": "7c7eabe680cf9c709a418530907166bccb51e378c3c1efa52677bddc86b8da37"
+    },
+    {
+      "id": "teacher-native2-train-021",
+      "wav_sha256": "210c9d38a21099c41c0662a5160430fccf4c6a603d65c5b9cf87025b87b42d07",
+      "sidecar_sha256": "e55485d36a244955f98b719fd54131417f3aa310bfec598c964353f518052b82"
+    },
+    {
+      "id": "teacher-native2-train-023",
+      "wav_sha256": "af2882478b7d299068a6f811a0ccd8f69b053f3dad554c82b51950ec408344a3",
+      "sidecar_sha256": "b82682c0fe44dbcf51548115dd4c40a32b2e1d668e24f30bf8b760ad78bdd669"
+    },
+    {
+      "id": "teacher-native2-train-014",
+      "wav_sha256": "617bd7e2e3cc6b2f0879b6c87e620039e263716770d74925dbb6d41772cd2ed1",
+      "sidecar_sha256": "4a201683c82f48d4a7ee707d0a53823098aa8cbbdc0135d110d3018bce3ed641"
+    },
+    {
+      "id": "teacher-native2-train-001",
+      "wav_sha256": "f60196622bdee4464135e26daf828a26ca8daf8808a54e87e5c4c6e6f28af67f",
+      "sidecar_sha256": "3ebc6175d9c57e9e3dd0e91c1ef3431925a9aa261d2dc405c998f939b8c1c13d"
+    },
+    {
+      "id": "teacher-native2-train-015",
+      "wav_sha256": "c8beeef0cd2f1480d394d3c3809f18754c122207000f4d5f70a071b3b70602a1",
+      "sidecar_sha256": "62cdcd29bba2d20e434f6179f38e8e98e3c8c14f08837868557049f1e7cc0c1a"
+    },
+    {
+      "id": "teacher-native2-train-019",
+      "wav_sha256": "caf2fb5dfaf1c88bec3c5bb94388c4bc3e8d603ba5cae8d93ffa6b3a5a7c832e",
+      "sidecar_sha256": "bf6eea5c961b5450a221e4919a39f5056b12936a422acaa1d4571ccdca606113"
+    },
+    {
+      "id": "teacher-native2-train-022",
+      "wav_sha256": "dcae127b8732bde549bd87fb934dbc521f0362c48142b5ee072599be707780a8",
+      "sidecar_sha256": "564a4f680ddc521c0113f73a177ede1b22441cc8d6a366911cccc664ff4729b1"
+    }
+  ],
+  "declared_quiet_cases": [
+    {
+      "id": "teacher-native2-train-014",
+      "original_wav_sha256": "617bd7e2e3cc6b2f0879b6c87e620039e263716770d74925dbb6d41772cd2ed1",
+      "original_sidecar_sha256": "4a201683c82f48d4a7ee707d0a53823098aa8cbbdc0135d110d3018bce3ed641",
+      "declared_interval_s": [
+        0.0,
+        12.41
+      ],
+      "complete_native_frame_interval": [
+        0,
+        155
+      ],
+      "frames": 155,
+      "seconds": 12.4,
+      "peak": 0.001373291015625,
+      "maximum_frame_rms": 0.0004699618268516525,
+      "all_original_pcm_samples_exact_zero": false,
+      "measured_assistant_words_overlapping": [],
+      "all_frames": [
+        {
+          "real_frame": 0,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 1,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 2,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 3,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 4,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 5,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 6,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 7,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 8,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 9,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 10,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 11,
+          "peak": 0.001373291015625,
+          "rms": 0.00044237606322029014
+        },
+        {
+          "real_frame": 12,
+          "peak": 0.001129150390625,
+          "rms": 0.0004699618268516525
+        },
+        {
+          "real_frame": 13,
+          "peak": 0.000244140625,
+          "rms": 0.00010237802242254779
+        },
+        {
+          "real_frame": 14,
+          "peak": 9.1552734375e-05,
+          "rms": 3.42544804550779e-05
+        },
+        {
+          "real_frame": 15,
+          "peak": 6.103515625e-05,
+          "rms": 1.2123297563225329e-05
+        },
+        {
+          "real_frame": 16,
+          "peak": 6.103515625e-05,
+          "rms": 7.204292538561653e-06
+        },
+        {
+          "real_frame": 17,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 18,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 19,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 20,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 21,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 22,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 23,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 24,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 25,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 26,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 27,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 28,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 29,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 30,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 31,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 32,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 33,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 34,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 35,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 36,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 37,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 38,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 39,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 40,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 41,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 42,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 43,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 44,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 45,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 46,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 47,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 48,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 49,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 50,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 51,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 52,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 53,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 54,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 55,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 56,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 57,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 58,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 59,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 60,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 61,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 62,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 63,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 64,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 65,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 66,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 67,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 68,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 69,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 70,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 71,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 72,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 73,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 74,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 75,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 76,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 77,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 78,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 79,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 80,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 81,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 82,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 83,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 84,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 85,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 86,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 87,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 88,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 89,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 90,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 91,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 92,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 93,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 94,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 95,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 96,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 97,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 98,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 99,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 100,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 101,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 102,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 103,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 104,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 105,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 106,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 107,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 108,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 109,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 110,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 111,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 112,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 113,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 114,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 115,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 116,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 117,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 118,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 119,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 120,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 121,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 122,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 123,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 124,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 125,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 126,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 127,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 128,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 129,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 130,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 131,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 132,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 133,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 134,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 135,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 136,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 137,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 138,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 139,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 140,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 141,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 142,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 143,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 144,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 145,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 146,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 147,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 148,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 149,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 150,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 151,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 152,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 153,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 154,
+          "peak": 0.0,
+          "rms": 0.0
+        }
+      ]
+    },
+    {
+      "id": "teacher-native2-train-015",
+      "original_wav_sha256": "c8beeef0cd2f1480d394d3c3809f18754c122207000f4d5f70a071b3b70602a1",
+      "original_sidecar_sha256": "62cdcd29bba2d20e434f6179f38e8e98e3c8c14f08837868557049f1e7cc0c1a",
+      "declared_interval_s": [
+        17.54,
+        22.1
+      ],
+      "complete_native_frame_interval": [
+        220,
+        276
+      ],
+      "frames": 56,
+      "seconds": 4.48,
+      "peak": 0.0,
+      "maximum_frame_rms": 0.0,
+      "all_original_pcm_samples_exact_zero": true,
+      "measured_assistant_words_overlapping": [],
+      "all_frames": [
+        {
+          "real_frame": 220,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 221,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 222,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 223,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 224,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 225,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 226,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 227,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 228,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 229,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 230,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 231,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 232,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 233,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 234,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 235,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 236,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 237,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 238,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 239,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 240,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 241,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 242,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 243,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 244,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 245,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 246,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 247,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 248,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 249,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 250,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 251,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 252,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 253,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 254,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 255,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 256,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 257,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 258,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 259,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 260,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 261,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 262,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 263,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 264,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 265,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 266,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 267,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 268,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 269,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 270,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 271,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 272,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 273,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 274,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        {
+          "real_frame": 275,
+          "peak": 0.0,
+          "rms": 0.0
+        }
+      ]
+    }
+  ],
+  "source_audio_or_words_or_timing_or_folds_changed": false,
+  "optimizer_updates": 0,
+  "training_approved": false,
+  "interpretation": "Read-only diagnosis of available approved acoustic silence targets. Existing native training records audio_loss_targets=0. Any new assistant-only acoustic objective needs independent ownership/native depth numerical/gradient/state/native-behavior checks; this report grants no training approval. All original28/25/24 and KL/hidden retention must remain."
+}
