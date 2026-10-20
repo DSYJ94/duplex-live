@@ -67,6 +67,8 @@ def main():
         help='Explicit native-layout candidate; require a successful actual input trace')
     ap.add_argument('--native-text-temperature',type=float,choices=(0.,.3,.7),default=.7)
     ap.add_argument('--native-sampling-diagnostic',action='store_true')
+    ap.add_argument('--native-seen-retention-diagnostic',action='store_true',
+        help='Read-only default-sampler comparison on the four ordinary TRAIN anchor questions; never training data')
     args=ap.parse_args()
     from evals.native_text_sampling_diagnostic import policy as sampling_policy,verify_engine as verify_sampling
     try: sampling=sampling_policy(args)

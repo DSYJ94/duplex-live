@@ -3,6 +3,9 @@ ORDINARY=tuple('recovery-train-%03d'%i for i in range(12,16))
 
 
 def policy(args):
+    if getattr(args,'native_seen_retention_diagnostic',False):
+        from evals.native_seen_retention_diagnostic import policy as seen_policy
+        return seen_policy(args)
     enabled=args.native_sampling_diagnostic;temperature=args.native_text_temperature
     if not enabled:
         if temperature!=.7:raise ValueError('Nondefault decoding requires explicit diagnostic opt-in')

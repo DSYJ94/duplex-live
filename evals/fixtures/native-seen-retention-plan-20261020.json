@@ -1,0 +1,218 @@
+{
+  "schema": "dl-native-seen-train-retention-plan-v1",
+  "at_utc": "2026-10-20T08:18:18.720208+00:00",
+  "cases": [
+    {
+      "index": 0,
+      "scenario": "recovery-train-008",
+      "checkpoint_job": "7510331",
+      "role": "native520",
+      "text_temperature": 0.7,
+      "acoustic_temperature": 0.8,
+      "diagnostic_only": true,
+      "diagnostic_outputs_must_not_be_trained_on": true,
+      "qualification_approved": false
+    },
+    {
+      "index": 1,
+      "scenario": "recovery-train-008",
+      "checkpoint_job": "7556562",
+      "role": "clock8",
+      "text_temperature": 0.7,
+      "acoustic_temperature": 0.8,
+      "diagnostic_only": true,
+      "diagnostic_outputs_must_not_be_trained_on": true,
+      "qualification_approved": false
+    },
+    {
+      "index": 2,
+      "scenario": "recovery-train-008",
+      "checkpoint_job": "7558824",
+      "role": "clock40",
+      "text_temperature": 0.7,
+      "acoustic_temperature": 0.8,
+      "diagnostic_only": true,
+      "diagnostic_outputs_must_not_be_trained_on": true,
+      "qualification_approved": false
+    },
+    {
+      "index": 3,
+      "scenario": "recovery-train-009",
+      "checkpoint_job": "7510331",
+      "role": "native520",
+      "text_temperature": 0.7,
+      "acoustic_temperature": 0.8,
+      "diagnostic_only": true,
+      "diagnostic_outputs_must_not_be_trained_on": true,
+      "qualification_approved": false
+    },
+    {
+      "index": 4,
+      "scenario": "recovery-train-009",
+      "checkpoint_job": "7556562",
+      "role": "clock8",
+      "text_temperature": 0.7,
+      "acoustic_temperature": 0.8,
+      "diagnostic_only": true,
+      "diagnostic_outputs_must_not_be_trained_on": true,
+      "qualification_approved": false
+    },
+    {
+      "index": 5,
+      "scenario": "recovery-train-009",
+      "checkpoint_job": "7558824",
+      "role": "clock40",
+      "text_temperature": 0.7,
+      "acoustic_temperature": 0.8,
+      "diagnostic_only": true,
+      "diagnostic_outputs_must_not_be_trained_on": true,
+      "qualification_approved": false
+    },
+    {
+      "index": 6,
+      "scenario": "recovery-train-010",
+      "checkpoint_job": "7510331",
+      "role": "native520",
+      "text_temperature": 0.7,
+      "acoustic_temperature": 0.8,
+      "diagnostic_only": true,
+      "diagnostic_outputs_must_not_be_trained_on": true,
+      "qualification_approved": false
+    },
+    {
+      "index": 7,
+      "scenario": "recovery-train-010",
+      "checkpoint_job": "7556562",
+      "role": "clock8",
+      "text_temperature": 0.7,
+      "acoustic_temperature": 0.8,
+      "diagnostic_only": true,
+      "diagnostic_outputs_must_not_be_trained_on": true,
+      "qualification_approved": false
+    },
+    {
+      "index": 8,
+      "scenario": "recovery-train-010",
+      "checkpoint_job": "7558824",
+      "role": "clock40",
+      "text_temperature": 0.7,
+      "acoustic_temperature": 0.8,
+      "diagnostic_only": true,
+      "diagnostic_outputs_must_not_be_trained_on": true,
+      "qualification_approved": false
+    },
+    {
+      "index": 9,
+      "scenario": "recovery-train-011",
+      "checkpoint_job": "7510331",
+      "role": "native520",
+      "text_temperature": 0.7,
+      "acoustic_temperature": 0.8,
+      "diagnostic_only": true,
+      "diagnostic_outputs_must_not_be_trained_on": true,
+      "qualification_approved": false
+    },
+    {
+      "index": 10,
+      "scenario": "recovery-train-011",
+      "checkpoint_job": "7556562",
+      "role": "clock8",
+      "text_temperature": 0.7,
+      "acoustic_temperature": 0.8,
+      "diagnostic_only": true,
+      "diagnostic_outputs_must_not_be_trained_on": true,
+      "qualification_approved": false
+    },
+    {
+      "index": 11,
+      "scenario": "recovery-train-011",
+      "checkpoint_job": "7558824",
+      "role": "clock40",
+      "text_temperature": 0.7,
+      "acoustic_temperature": 0.8,
+      "diagnostic_only": true,
+      "diagnostic_outputs_must_not_be_trained_on": true,
+      "qualification_approved": false
+    }
+  ],
+  "source_bindings": [
+    {
+      "scenario": "recovery-train-008",
+      "source_split": "train",
+      "kind": "simple",
+      "wav_sha256": "bde366fa553c5b3870eec2a1dca04c118ac8b06feb9c5b1a4c6ad302a5efe950",
+      "sidecar_sha256": "a4f3378c3a7ecb1b65cdd4415f9f644a4d6193cd711d462dc2f86cf9dc27f086",
+      "source_utterances": [
+        {
+          "speaker": "user",
+          "text": "Why do I see lightning before hearing thunder?"
+        },
+        {
+          "speaker": "assistant",
+          "text": "Light travels much faster than sound."
+        }
+      ]
+    },
+    {
+      "scenario": "recovery-train-009",
+      "source_split": "train",
+      "kind": "simple",
+      "wav_sha256": "6ac717dc6e01c2569cefa0cb78cd1fab3b5e7db75c825af82930a227c45021e2",
+      "sidecar_sha256": "330debe3309247293f05a92d5bba40659c2d2b5f73caf2976c0b6f6c4942f50c",
+      "source_utterances": [
+        {
+          "speaker": "user",
+          "text": "What does evaporation mean?"
+        },
+        {
+          "speaker": "assistant",
+          "text": "Evaporation is liquid changing into gas."
+        }
+      ]
+    },
+    {
+      "scenario": "recovery-train-010",
+      "source_split": "train",
+      "kind": "simple",
+      "wav_sha256": "1b893945e508a1872125f815f4a2243d3e65ee45316c75c00390bd84efeb3991",
+      "sidecar_sha256": "daa09d7744cc601c38e9b20249a62ba49d05aff6b6fe9b44db2e326f6455c0b9",
+      "source_utterances": [
+        {
+          "speaker": "user",
+          "text": "Why does day turn into night?"
+        },
+        {
+          "speaker": "assistant",
+          "text": "Earth rotates, turning our part of the planet away from the sun."
+        }
+      ]
+    },
+    {
+      "scenario": "recovery-train-011",
+      "source_split": "train",
+      "kind": "simple",
+      "wav_sha256": "2830b276862c10a5d1788efc1a1f59890c86ccfca267f74925b493d50efec4b0",
+      "sidecar_sha256": "aa8ed0117c8ffba92cabafa08384035e858b81aaeb99b29c947633b6c3d795b9",
+      "source_utterances": [
+        {
+          "speaker": "user",
+          "text": "How many sides does a triangle have?"
+        },
+        {
+          "speaker": "assistant",
+          "text": "A triangle has three sides."
+        }
+      ]
+    }
+  ],
+  "source_ingestion_sha256": "91d72a704ed5435dd9b6f930017a5ac8c8e1bb9b27239a6753468eca1175f3e1",
+  "optimizer_updates": 0,
+  "diagnostic_outputs_must_not_be_trained_on": true,
+  "fresh_or_generalization_qualification": false,
+  "extension_or_adoption_authorized": false,
+  "maximum_gpus": 2,
+  "maximum_walltime_minutes": 30,
+  "reservation": "interactive",
+  "partition_or_qos_override": false,
+  "purpose": "Distinguish failure on the same four approved TRAIN anchors from poor generalization after the complete81 fixed-history retention comparison. Every model/case retained; unforced native words/acoustics at original0.7/0.8 and seed42424242; original inputs/voice/persona untouched."
+}
