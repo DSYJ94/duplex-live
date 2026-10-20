@@ -1,7 +1,7 @@
 {
-  "at_utc": "2026-10-20T11:53:03.011246+00:00",
-  "unique_scoped_artifact_files": 23786,
-  "unique_scoped_artifact_bytes": 19046753826,
+  "at_utc": "2026-10-20T12:03:22.236064+00:00",
+  "unique_scoped_artifact_files": 23798,
+  "unique_scoped_artifact_bytes": 19078729267,
   "inventory_conflicts": [],
   "inventories": [
     {
@@ -611,6 +611,13 @@
       "sha256": "1b353a2e196b7eff008060fc9869d83671178f1830cefa4e1be0f48e5e6e0b18",
       "files": 19,
       "bytes": 583956756,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native-audio49-state-early-inventory.json",
+      "sha256": "4452a60d6a8ba71983bcf8d2f542dda2092013c25da50bae292ae356ad04d6c4",
+      "files": 12,
+      "bytes": 31975441,
       "missing_roots": []
     }
   ],
@@ -1284,7 +1291,17 @@
           "original_text_and_kl_hidden_losses_must_be_preserved": true
         }
       }
-    ]
+    ],
+    "optimizer_updates": 8,
+    "reported_training_seconds": 44.65259971198975,
+    "training_timing_scope": "Fit plus post-fit metrics/digests before all49 acoustic fingerprint generation; excludes loading and independent restoration",
+    "peak_allocated_bytes": 22154085376,
+    "checkpoint_sha256": "2f00d6d1bf630059c5cdfd0ddd17ac6c6ebbcfbd441e7aa8e9c76bab6298278b",
+    "training_state_sha256": "859132bb7686e1d503ae3d687744302287e0d20e776418d55b2b43995f1ec059",
+    "all49_audio_teachers_exposed_once": true,
+    "assistant_audio_loss_targets": 183297,
+    "independent_restore_not_yet_verified": true,
+    "early12_checkpoint_state_artifacts_sha256_backed": true
   },
   "native_audio49_watcher_source_bundle": {
     "source": "3d6de2c055d47e15b76ba3a9e48b7a43bbee3c2d",

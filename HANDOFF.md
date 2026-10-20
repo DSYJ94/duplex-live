@@ -1,3 +1,35 @@
+# LOCAL active — native8 checkpoint saved and SHA-backed; independent restore running (2026-10-20 12:03 UTC)
+
+Existing job7575817 still RUNNING12:02:13UTC/14m26, includes separate restore;
+watcher7575818 RUNNING/heartbeat12:01:51. Payload33cd0fe, watcher3d6de2c unchanged.
+Training report independently checked:8new optimizer updates, all49 approved audio
+teachers exactly once/183297 assistant-only codebook targets; original28 data,
+old25/new24 policy, KL1hidden10/word64clock64 retained. Reported phase44.6525997s
+includes fit/post-fit metrics/digests, excludes loading and independent restore;
+peak22154085376B. Checkpoint SHA2f00d6d1bf630059c5cdfd0ddd17ac6c6ebbcfbd441e7aa8e9c76bab6298278b,
+full optimizer/Python/NumPy/Torch/CUDA state SHA859132bb7686e1d503ae3d687744302287e0d20e776418d55b2b43995f1ec059.
+All12 early critical checkpoint/state/data/report/approval files31975441B copied
+and size/SHA-verified12:02:07UTC. Formal state summary
+ docs/NATIVE-AUDIO49-PILOT-STATE-2026-10-20.json. No independent restore pass or
+native evaluation claimed yet. Cached references/full final outputs back next.
+
+Readiness7574002 PASS233tests+11state tests/BF16 four-kind smoke; all19files
+583956756B SHA-backed11:52:29UTC. Current verified union23798files/
+19078729267B/no conflicts, plus models/runtime/ASR/vendor/source bundles.
+Stopped older Mac source backup remains PARTIAL. No owner/credentials/core copied.
+
+Canonical remote runs/native-audio49-pilot-v2-local-20261020.json owns future
+native10/ASR IDs; sole live scheduler is SlurmCPU7575818 (NOT old dead PID135003).
+Max2submitted jobs including watcher, oneGPU stage. Native10 only after independent
+exact state/all28text+all49audio restore; complete10 speech follows even native
+case failures. No auto longertraining/adoption/fresh20. LOCAL remains soleexecutor,
+CLOUD read-only; no handback or duplicate jobs. Native whole system UNQUALIFIED.
+Transient SSH banner timeout only observation failure; same jobs re-polled live.
+Cert through20Oct19:32:16UTC/21:32:16Berlin, current reservation end21Oct08:56:32UTC/
+10:56:32Berlin. Next: verify full restore, back final state/references, complete10 review.
+
+---
+
 # LOCAL active — native8 TRAIN7575817 RUNNING; Slurm watcher7575818 (2026-10-20 11:48 UTC)
 
 Actual SSH/Slurm observation11:48:16UTC: native8 training7575817 RUNNING on
