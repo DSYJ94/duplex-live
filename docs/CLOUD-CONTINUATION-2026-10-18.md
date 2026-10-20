@@ -1,3 +1,38 @@
+# LOCAL active — full49 recovery33/49; future paired40 tooling prepared (20Oct21:56UTC)
+
+Actual21:56:48UTC queue ONLY GPU7587913 RUNNING24m56 and CPUwatcher7587915
+RUNNING24m52; heartbeat21:56:03UTC. Recovery33/49 cases/15287 real frames,
+full49 final report stillPENDING; no passing subset. Payload32eabbf7633bb607e6652442b7244272125e25a6,
+45min runtime bound; watcher sourcecf8d4d3bbcaa0db5592cf026b24e77378c57d07c.
+Canonical runs/native-precision16-no-tf32-recovery1-local-20261020.json owns all
+next IDs; currently jobs contains only predecessor7587913. NO manual submissions,
+no watcher restart, no fresh native inference. LOCAL soleexecutor/CLOUDread-only.
+
+While waiting, sourcefb2135c32296d6ffa1a23af57ef30d4d949c1dd9 prepares a complete40
+baseline/candidate fresh20 session in ONE2GPU interactive allocation. One-GPU
+observations pair; actual native-ASR cases retain2GPUs and run separately:28stages,
+all40 attempts/exit codes required. Full committed10/ordinary4/state restore and
+all20 approved source gates remain before any output. Diagnostic sampler/dtype
+records cannot silently qualify stock fresh runtime. A source-grounded bug fix
+accepts `/projects`/`/lus` aliases for the same physical artifact, but rejects a
+different directory even with identical WAV bytes. All original hashes/thresholds
+remain strict.20related local testsPASS; shell syntaxPASS. Bounded Isambard host
+Python3.6.15 planner ONLY verifies40/28/max2; no sourceWAV reads or model execution.
+Full source bundle preserved. Doc docs/NATIVE-FRESH40-SINGLE-ALLOCATION-2026-10-20.md.
+Fresh is PREPARED ONLY: current candidate still ordinary1/4, not eligible; no
+precision profile or fresh qualification/adoption is approved by this tooling.
+
+Current scoped artifacts24967files/26607951501B SHA-backed; old failed45/49
+run7586717 and failedwatcher7587733 preserved/unaccepted, old Mac source backup
+PARTIAL. All prior checkpoints/fulloptimizer+RNG/data/receipts preserved. Original
+complete16 speech16/16 but BF16 core parent4/4 versus child1/4, FP32 with original
+TF32=True both0/4. Next finish and preserve WHOLE49 recovery, let existing watcher
+run complete16 scoped-no-TF32 plus independent speech, then select a diagnosed
+training repair. Current jobs keep their immutable source; new feature source is
+not hot-deployed into them. Cert ends21Oct03:50:25UTC; reservation08:56:32UTC.
+
+---
+
 # LOCAL active — recovery7587913 and finite watcher7587915 RUNNING (20Oct21:33UTC)
 
 Actual21:33:15UTC queue contains ONLY GPU7587913 RUNNING1m22 and CPU7587915

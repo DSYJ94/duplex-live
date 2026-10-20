@@ -1,5 +1,5 @@
 {
-  "at_utc": "2026-10-20T21:33:12.588915+00:00",
+  "at_utc": "2026-10-20T21:57:35.352798+00:00",
   "unique_scoped_artifact_files": 24967,
   "unique_scoped_artifact_bytes": 26607951501,
   "inventory_conflicts": [],
@@ -1892,9 +1892,12 @@
     },
     "held_settings": "JobId=7587913 JobName=dl-native-bf16-stream49\n   UserId=dsyj94.u6si(1483807285) GroupId=dsyj94.u6si(1483807285) MCS_label=N/A\n   Priority=0 Nice=0 Account=brics.u6si QOS=normal\n   JobState=PENDING Reason=JobHeldUser Dependency=(null)\n   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0\n   RunTime=00:00:00 TimeLimit=00:45:00 TimeMin=N/A\n   SubmitTime=2026-10-20T21:31:51 EligibleTime=Unknown\n   AccrueTime=Unknown\n   StartTime=Unknown EndTime=Unknown Deadline=N/A\n   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-20T21:31:51 Scheduler=Main\n   Partition=interactive AllocNode:Sid=login41:23976\n   ReqNodeList=(null) ExcNodeList=(null)\n   NodeList=\n   NumNodes=1-1 NumCPUs=8 NumTasks=1 CPUs/Task=8 ReqB:S:C:T=0:0:*:*\n   ReqTRES=cpu=8,mem=160G,node=1,billing=324,gres/gpu=1\n   AllocTRES=(null)\n   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*\n   MinCPUsNode=8 MinMemoryNode=160G MinTmpDiskNode=0\n   Features=(null) DelayBoot=00:00:00\n   Reservation=interactive\n   OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null)\n   Command=/projects/u6si/duplex-live/worktrees/recovery-32eabbf/evals/native-bf16-stream49.slurm\n   SubmitLine=sbatch --hold --parsable --export=ALL --no-requeue --time=00:45:00 /projects/u6si/duplex-live/worktrees/recovery-32eabbf/evals/native-bf16-stream49.slurm\n   WorkDir=/lus/lfs1aip2/projects/u6si/duplex-live\n   StdErr=\n   StdIn=/dev/null\n   StdOut=/lus/lfs1aip2/projects/u6si/duplex-live/logs/dl-native-bf16-stream49-7587913.out\n   TresPerNode=gres/gpu:1\n   TresPerTask=cpu=8\n\n",
     "state": "RUNNING",
-    "observed_utc": "2026-10-20T21:33:15Z",
-    "observed_elapsed": "00:01:22",
-    "actual_gpu_walltime_limit_minutes": 45
+    "observed_utc": "2026-10-20T21:56:48Z",
+    "observed_elapsed": "00:24:56",
+    "actual_gpu_walltime_limit_minutes": 45,
+    "completed_cases_observed": 33,
+    "observed_real_frames": 15287,
+    "all49_complete": false
   },
   "native_precision16_no_tf32_recovery1_chain": {
     "source": "cf8d4d3bbcaa0db5592cf026b24e77378c57d07c",
@@ -1935,10 +1938,35 @@
       "verified_complete_history": true
     },
     "watcher_state": "RUNNING",
-    "observed_utc": "2026-10-20T21:33:15Z",
-    "observed_elapsed": "00:01:18",
+    "observed_utc": "2026-10-20T21:56:48Z",
+    "observed_elapsed": "00:24:52",
     "native16_submitted": false,
     "speech16_submitted": false,
-    "watcher_tests_locally_passed": 6
+    "watcher_tests_locally_passed": 6,
+    "watcher_heartbeat_utc": "2026-10-20T21:56:03.219522Z"
+  },
+  "fresh40_single_allocation_preparation": {
+    "source": "fb2135c32296d6ffa1a23af57ef30d4d949c1dd9",
+    "prepared_only": true,
+    "fresh_native_inference_submitted": false,
+    "candidate_eligible": false,
+    "complete_cases": 40,
+    "question_count": 20,
+    "stage_count": 28,
+    "maximum_gpus": 2,
+    "source_profile": "owner-approved-turbo-spelling-v1",
+    "local_related_tests_passed": 20,
+    "cluster_host_planner_verified": true,
+    "cluster_host_python": "3.6.15",
+    "host_planner_verified_utc": "2026-10-20T21:55:18.763795Z",
+    "host_planner_inference_or_source_wav_reads": false,
+    "diagnostic_profile_cannot_authorize_stock_fresh_runtime": true,
+    "equivalent_physical_alias_accepted_different_directory_rejected": true,
+    "document": "docs/NATIVE-FRESH40-SINGLE-ALLOCATION-2026-10-20.md",
+    "source_bundle": {
+      "path": "runs/local-continuation-20261019/source-main-fb2135c.bundle",
+      "sha256": "b1d5b6f3412889ca842f0de4b4f82e550c026d538e1d607d68eac6083e81de42",
+      "verified_complete_history": true
+    }
   }
 }
