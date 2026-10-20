@@ -106,6 +106,7 @@ def main():
     ap.add_argument('--native-audio49-preflight',type=Path)
     ap.add_argument('--native-audio49-step-scale',type=float,choices=(1.,.1),default=1.)
     ap.add_argument('--native-audio49-gradient-probe',action='store_true')
+    ap.add_argument('--native-audio49-parent-adam',action='store_true')
     ap.add_argument('--reload', action='store_true')
     ap.add_argument('--history-audit-only', action='store_true')
     ap.add_argument('--history-audit', action='store_true')

@@ -15,6 +15,12 @@ class Audio49PilotPolicy(unittest.TestCase):
             native_v2_warm_ordinary_weight=64.,native_v2_warm_ordinary_clock=True,actual_response_first_word_weight=16.,
             reload=False,native_v2_gradient_audit=False,native_v2_retention_drift_proof=None,native_v2_learning_curve_audit=False,
             native_v2_exploration_authorization=None)
+    def test_parent_adam_is_an_explicit_new_smallstep_mode_only(self):
+        a=self.args();a.native_audio49_parent_adam=True
+        with self.assertRaises(ValueError):validate_configuration(a)
+        a.native_audio49_step_scale=.1;self.assertTrue(validate_configuration(a))
+        a.native_audio49_gradient_probe=True
+        with self.assertRaises(ValueError):validate_configuration(a)
     def test_new_pilot_requires_independent_audit_and_preserves_original_objectives(self):
         self.assertTrue(validate_configuration(self.args()))
         for field,value in [('actual_base_retention_weight',0.),('actual_retention_teacher_weight',0.),

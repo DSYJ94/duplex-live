@@ -143,6 +143,11 @@ if [[ "$PHASE" == gradient-audit ]]; then
  test ! -e "$RUN_OUT/training-state.pt"
  exit 0
 fi
+if [[ "${NATIVE_AUDIO49_PARENT_ADAM:-0}" == 1 ]]; then
+ : "${NATIVE_AUDIO49_AUDIT_JOB:?}"
+ [[ "${NATIVE_AUDIO49_STEP_SCALE:-1}" == 0.1 ]]
+ ARGS+=(--native-audio49-parent-adam)
+fi
 if [[ "${NATIVE_AUDIO49_GRADIENT_PROBE:-0}" == 1 ]]; then
  [[ "${NATIVE_AUDIO49_PREFLIGHT_ONLY:-0}" == 1 ]]
  ARGS+=(--native-audio49-gradient-probe)

@@ -1,7 +1,7 @@
 {
-  "at_utc": "2026-10-20T13:17:29.262053+00:00",
-  "unique_scoped_artifact_files": 24137,
-  "unique_scoped_artifact_bytes": 20321304057,
+  "at_utc": "2026-10-20T15:36:58.948530+00:00",
+  "unique_scoped_artifact_files": 24330,
+  "unique_scoped_artifact_bytes": 22361505021,
   "inventory_conflicts": [],
   "inventories": [
     {
@@ -639,6 +639,20 @@
       "sha256": "d1adbceafb0bdc75d8d40499ddc4327dab3ad422793800495307835323b32ec1",
       "files": 175,
       "bytes": 402392189,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native-smallstep-complete-inventory.json",
+      "sha256": "3600536f0759bd364ed02c0118a62b68312f55be5d08c3c38ee65d79153619db",
+      "files": 176,
+      "bytes": 1455982473,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native-gradient154-complete-inventory.json",
+      "sha256": "5b9d957d562b77f4c556392a405dae8014244765eb8330cbac520fb4834d8187",
+      "files": 17,
+      "bytes": 584218491,
       "missing_roots": []
     }
   ],
@@ -1396,11 +1410,40 @@
       "sha256": "517a03f980c12f7b8f7d7971853580adc0b390fee3c709d0d4155351c8fb93a6",
       "verified_complete_history": true
     },
-    "new_stage_artifacts_backed": false,
+    "new_stage_artifacts_backed": true,
     "observed_utc": "2026-10-20T13:22:56Z",
-    "readiness_state": "RUNNING",
-    "watcher_state": "RUNNING",
+    "readiness_state": "COMPLETED",
+    "watcher_state": "COMPLETED",
     "cluster_tests_passed": 240,
-    "cluster_tests_elapsed_seconds": 3.9
+    "cluster_tests_elapsed_seconds": 3.9,
+    "training_job": "7578417",
+    "training_state": "COMPLETED",
+    "native10_job": "7578866",
+    "native10_state": "COMPLETED",
+    "speech10_job": "7579217",
+    "speech10_state": "COMPLETED",
+    "verified_files": 176,
+    "verified_bytes": 1455982473,
+    "ordinary_core_correct": 1,
+    "speech_quality_passes": 7,
+    "candidate_rejected": true,
+    "complete10_review": "docs/NATIVE-SMALLSTEP-COMPLETE10-REVIEW-2026-10-20.json",
+    "complete10_review_sha256": "b02951049d0e527630c5317536d647fecc9ea5a38387792041777924f66dddb2",
+    "checkpoint_sha256": "a031cf86aae3d91b4274f647cd421d2e8be45a51b1c6908d9cc24b3123bbd126",
+    "training_state_sha256": "75952c64e5acc9be9cc346a875afd7f9c54cd9d7e301b6880b3448f9d543cda3"
+  },
+  "native_audio49_gradient154_probe": {
+    "job": "7580878",
+    "source": "3d96fd0c7728e926672baf188d51505181386503",
+    "state": "COMPLETED",
+    "observed_utc": "2026-10-20T15:33:56Z",
+    "optimizer_updates": 0,
+    "submitted_utc": "2026-10-20T15:24:35Z",
+    "automatic_training": false,
+    "elapsed": "00:11:11",
+    "full242_tests_passed": true,
+    "all154_measured": true,
+    "all17_artifacts_sha256_backed": true,
+    "review": "docs/NATIVE-GRADIENT154-REVIEW-2026-10-20.json"
   }
 }

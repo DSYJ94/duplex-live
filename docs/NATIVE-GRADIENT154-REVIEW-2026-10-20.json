@@ -1,0 +1,147 @@
+{
+  "schema": "dl-native-audio49-gradient154-review-v1",
+  "at_utc": "2026-10-20T15:59:11.165700+00:00",
+  "source": "3d96fd0c7728e926672baf188d51505181386503",
+  "job": "7580878",
+  "slurm_state": "COMPLETED",
+  "slurm_exit_code": "0:0",
+  "elapsed": "00:11:11",
+  "cluster_tests": 242,
+  "all154_measured": true,
+  "all_parameters_unchanged": true,
+  "optimizer_updates": 0,
+  "source_report_sha256": "d8a379672e4ad19d59762fa138d4c7bd6caf937d5b4898e785068987ed8e5f83",
+  "cases_by_group": {
+    "actual": 28,
+    "reference": 4,
+    "old25": 25,
+    "new24": 24,
+    "audio49": 49,
+    "word": 10,
+    "clock": 14
+  },
+  "analyses": {
+    "first_update": {
+      "combined_gradient_norm": 27.840704224540573,
+      "group_gradient_norms": {
+        "actual": 28.32024508071616,
+        "reference": 1.6148844464151806,
+        "old25": 3.1528532830590312,
+        "new24": 3.1888266357200554,
+        "audio49": 0.641511336979503,
+        "word": 0.00029900196767062605,
+        "clock": 0.0006620884969608852
+      },
+      "group_cosine_with_fresh_adam_descent": {
+        "actual": 0.256173338759507,
+        "reference": -0.047090293572093635,
+        "old25": 0.05209153306603513,
+        "new24": 0.01977043237837892,
+        "audio49": -0.014823260554446698,
+        "word": -0.0002810553741652426,
+        "clock": 0.03257968694917682
+      },
+      "group_cosine_with_parent_adam_descent": {
+        "actual": 0.11277758249959914,
+        "reference": 0.021672320678357008,
+        "old25": 0.02489728381179155,
+        "new24": 0.01877556039477943,
+        "audio49": 0.006726771653088743,
+        "word": -0.009732833153206628,
+        "clock": 0.012406274458305742
+      },
+      "pairwise_gradient_cosine": {
+        "actual__reference": -0.13093826364390598,
+        "actual__old25": -0.026956565843205715,
+        "actual__new24": -0.18160032234129278,
+        "actual__audio49": -0.060119220421674814,
+        "actual__word": 0.05427192700694731,
+        "actual__clock": 0.11694796843709251,
+        "reference__word": -0.06423275280176141,
+        "old25__reference": 0.10320193301518638,
+        "old25__word": -0.10265383000536857,
+        "new24__reference": 0.057286791668993677,
+        "new24__old25": -0.017166651953313402,
+        "new24__word": 0.0702346671604652,
+        "audio49__reference": 0.09947623297728922,
+        "audio49__old25": -0.030216985582346853,
+        "audio49__new24": 0.08061460227134591,
+        "audio49__word": -0.022303364685013753,
+        "audio49__clock": -0.15417608185494355,
+        "clock__reference": 0.3919730505116951,
+        "clock__old25": 0.07319869079988288,
+        "clock__new24": -0.13482836179950713,
+        "clock__word": 0.08596061305077074
+      },
+      "fresh_vs_parent_adam_direction_cosine": 0.45282725217021746,
+      "parent_adam_next_step_numbers": [
+        521
+      ],
+      "interpretation": "Positive gradient/direction cosine predicts local loss decrease under subtraction; this is frozen-parent first-order arithmetic, not native behavioral qualification or sequential training"
+    },
+    "eight_update_parent_frozen_mean": {
+      "combined_gradient_norm": 5.455474067021983,
+      "group_gradient_norms": {
+        "actual": 6.13786068226004,
+        "reference": 1.3888988468389933,
+        "old25": 1.2367120656424493,
+        "new24": 2.920993658379993,
+        "audio49": 0.49307189012270886,
+        "word": 0.00029900196767062605,
+        "clock": 0.0006620884969608852
+      },
+      "group_cosine_with_fresh_adam_descent": {
+        "actual": 0.15430507548491149,
+        "reference": -0.08768662937529385,
+        "old25": 0.07930761681718934,
+        "new24": 0.15986116396366143,
+        "audio49": 0.035269130264918284,
+        "word": -0.009775506741413099,
+        "clock": -0.040807431708812215
+      },
+      "group_cosine_with_parent_adam_descent": {
+        "actual": 0.06028533032743894,
+        "reference": 0.01333620352146612,
+        "old25": 0.10104174620699481,
+        "new24": 0.06652762132518583,
+        "audio49": 0.018607208091483852,
+        "word": -0.014463878353491295,
+        "clock": -0.005259284278445018
+      },
+      "pairwise_gradient_cosine": {
+        "actual__reference": -0.6278972175482778,
+        "actual__old25": -0.05229423510175858,
+        "actual__new24": -0.23238495878649362,
+        "actual__audio49": -0.0909756893310277,
+        "actual__word": 0.07798464713241618,
+        "actual__clock": -0.25441729948725544,
+        "reference__word": -0.217217993969738,
+        "old25__reference": -0.3808533626738295,
+        "old25__word": 0.014223924057714306,
+        "new24__reference": 0.0639591015995006,
+        "new24__old25": 0.09527580625942292,
+        "new24__word": -0.006832866309844946,
+        "audio49__reference": 0.07561046730099882,
+        "audio49__old25": 0.052195457942715316,
+        "audio49__new24": 0.06035175156011079,
+        "audio49__word": -0.008035665577272729,
+        "audio49__clock": -0.16880703230532038,
+        "clock__reference": 0.417400776280153,
+        "clock__old25": -0.25225210956451855,
+        "clock__new24": -0.13100860266442285,
+        "clock__word": 0.08596061305077074
+      },
+      "fresh_vs_parent_adam_direction_cosine": 0.5483991568457426,
+      "parent_adam_next_step_numbers": [
+        521
+      ],
+      "interpretation": "Positive gradient/direction cosine predicts local loss decrease under subtraction; this is frozen-parent first-order arithmetic, not native behavioral qualification or sequential training"
+    }
+  },
+  "first_gradient_norm_matches_actual_training_within": 0.001,
+  "first_gradient_norm": 27.840704224540573,
+  "actual_training_first_gradient_norm": 27.840654373168945,
+  "next_action": "One new bounded8 stage retaining original520 Adam moments at same2e-7, all data/losses unchanged. Exact named source state transplant/clock audit, new matching BF16 readiness, independent complete state restoration and full10 required. No behavior/adoption claim from gradient arithmetic.",
+  "limitations": "Frozen-parent gradients and analytic Adam arithmetic do not reproduce sequential training or prove native retention. Tiny near-zero ordinary anchor gradients should not be overinterpreted.",
+  "training_approved_by_this_diagnostic": false
+}

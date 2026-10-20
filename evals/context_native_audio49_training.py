@@ -18,6 +18,7 @@ def validate_configuration(args):
     enabled=bool(getattr(args,'native_audio49_audit',None));weight=getattr(args,'native_audio49_weight',0.)
     smoke=bool(getattr(args,'native_audio49_preflight_only',False));pre=getattr(args,'native_audio49_preflight',None)
     scale=getattr(args,'native_audio49_step_scale',1.)
+    if getattr(args,'native_audio49_parent_adam',False) and (not enabled or scale!=.1 or getattr(args,'native_audio49_gradient_probe',False)):raise ValueError('Parent Adam is one distinct small-step stage, not a gradient probe')
     if getattr(args,'native_audio49_gradient_probe',False) and (not enabled or not smoke or pre or args.reload or args.resume_training):raise ValueError('Gradient probe is zero-update preflight only')
     if type(scale) not in (int,float) or isinstance(scale,bool) or scale not in (1.,.1):raise ValueError('Only the explicit original or tenfold-smaller initial stage is allowed')
     if not enabled:
@@ -95,6 +96,15 @@ def prepare(args,spm,voice):
         implementations=implementations(),new_optimizer=True,extends_rejected_joint_or40=False)
     if getattr(args,'native_audio49_step_scale',1.)!=1.:
         policy.update(step_scale=.1,nominal_legacy_recipe_learning_rate=2e-6,effective_optimizer_learning_rate=2e-7,legacy_objective_rate_field_scope='Original nominal text-recipe identity; combined_recipe.lr and this effective rate govern the optimizer')
+    if getattr(args,'native_audio49_parent_adam',False):
+        parent_report=json.loads((args.warm_start_proof/'report.json').read_text())
+        parent_state=args.warm_start_proof/'training-state.pt'
+        if sha256(parent_state)!=parent_report['training_state_sha256']:raise ValueError('Changed original520 optimizer state')
+        policy.update(mode='native520-all49-assistant-audio-parent-adam-v1',new_optimizer=False,
+            parent_adam_training_state_sha256=sha256(parent_state),parent_adam_parameter_steps=520,
+            parent_adam_implementation_sha256=sha256(Path(__file__).with_name('context_native_parent_adam.py')),
+            stage_optimizer_updates=8,final_adam_parameter_steps=528,
+            stage_update_scope='Eight calls in a new data/recipe stage; original Adam moments and clocks are carried explicitly, original RNG is not imported')
     for name,content in [('audio49-data.json',encoded),('approved-audio49-audit.json',gate_file.read_text())]:
         p=args.out/name
         if args.reload:
@@ -106,6 +116,8 @@ def prepare(args,spm,voice):
                 or pre['policy']!=policy or pre['source_commit']!=os.environ['DL_TASK_COMMIT']
                 or not pre['all_parameters_unchanged'] or len(pre['cases'])!=4):
             raise ValueError('Independent matching BF16 four-kind gradient preflight required')
+        if getattr(args,'native_audio49_parent_adam',False):
+            if pre.get('parent_adam_import_sha256')!=sha256(args.native_audio49_preflight/'parent-adam-import.json'):raise ValueError('Independent readiness omitted exact parent Adam import')
         policy['bf16_preflight_sha256']=sha256(path)
         target=args.out/'approved-audio49-bf16-preflight.json'
         if args.reload:
@@ -170,6 +182,7 @@ def bf16_preflight(lm,learned,batches,policy,args):
     result=dict(schema='dl-native-audio49-bf16-preflight-v1',passed=unchanged and peak<80_000_000_000,policy=policy,cases=rows,peak_allocated_bytes=peak,
         all_parameters_unchanged=unchanged,optimizer_updates=0,source_commit=os.environ['DL_TASK_COMMIT'],pid=os.getpid(),
         model_dtype='BF16 base plus FP32 temporal adapters, MATH attention',training_approved=False)
+    if getattr(args,'native_audio49_parent_adam',False):result['parent_adam_import_sha256']=sha256(args.out/'parent-adam-import.json')
     (args.out/'audio49-bf16-preflight.json').write_text(json.dumps(result,indent=2)+'\n')
     if not result['passed']:raise ValueError('BF16 preflight mutated weights or exceeded80GB')
     return result
@@ -187,14 +200,14 @@ def verify_checkpoint(proof):
     p=r.get('assistant_audio_auxiliary',{});data=json.loads((proof/'data.json').read_text())
     if (r['schema']!=SCHEMA or not r['passed'] or not r['frozen_weights_unchanged'] or not r['base_audio_parameters_frozen']
             or r['source_commit']!=SOURCE_COMMIT or r['optimizer_steps']!=8 or r['initial_optimizer_steps']!=0
-            or r['updates_this_run']!=8 or not r['warm_start_optimizer_reset'] or r['resumed_from_training_state']
+            or r['updates_this_run']!=8 or r['warm_start_optimizer_reset']!=(p.get('mode')!='native520-all49-assistant-audio-parent-adam-v1') or r['resumed_from_training_state']
             or r['last_layers']!=4 or r['rank']!=8 or r['scaling']!=2. or r['past_loss_targets']!=0
             or r['audio_loss_targets']<1 or r['original_actual_history_audio_loss_targets']!=0
             or r['user_audio_loss_targets']!=0 or r['prefix_audio_loss_targets']!=0 or r['supplied_span_audio_loss_targets']!=0
             or not r['all_actual_temporal_audits_passed'] or not r['all_component_audits_passed']
             or not r['zero_adapter_native_batch_logits_exact'] or len(data['components'])!=28
             or data['audio_loss_targets']!=0 or data['past_loss_targets']!=0 or not data['all_component_audits_passed']
-            or p.get('mode') not in ('native520-all49-assistant-audio-auxiliary-v1','native520-all49-assistant-audio-smallstep-v1') or p['weight']!=1. or p['updates']!=8
+            or p.get('mode') not in ('native520-all49-assistant-audio-auxiliary-v1','native520-all49-assistant-audio-smallstep-v1','native520-all49-assistant-audio-parent-adam-v1') or p['weight']!=1. or p['updates']!=8
             or len(p['teacher_ids'])!=49 or len(set(p['teacher_ids']))!=49
             or p['required_original_objectives']!=dict(actual_histories=28,old_native_teachers=25,new_native_teachers=24,kl_weight=1.,hidden_mse_weight=10.)
             or p['implementations']!=committed_implementations(r['repo_commit']) or not p['original_word64_clock64_and_all_text_losses_unchanged']
@@ -208,12 +221,18 @@ def verify_checkpoint(proof):
             or not v['optimizer_and_rng_independently_compared_exact'] or v['actual']!=r['expected_logits']
             or v['actual_audio49_logits']!=r['expected_audio49_logits']):
         raise ValueError('Unverified bounded audio49 combined-objective checkpoint')
-    expected_scale=.1 if p['mode']=='native520-all49-assistant-audio-smallstep-v1' else 1.
+    expected_scale=.1 if p['mode'] in ('native520-all49-assistant-audio-smallstep-v1','native520-all49-assistant-audio-parent-adam-v1') else 1.
     if (p.get('step_scale',1.)!=expected_scale or p['learning_rate']!=2e-6*expected_scale
             or r['combined_recipe']['lr']!=p['learning_rate']
             or r['additional_native_v2']['learning_rate']!=2e-6):raise ValueError('Changed declared effective optimizer rate or original text-recipe identity')
     if expected_scale==.1 and (p['nominal_legacy_recipe_learning_rate']!=2e-6 or p['effective_optimizer_learning_rate']!=2e-7):raise ValueError('Smallstep optimizer identity changed')
+    if p['mode']=='native520-all49-assistant-audio-parent-adam-v1':
+        expected=hashlib.sha256(subprocess.check_output(['git','show',r['repo_commit']+':evals/context_native_parent_adam.py'],cwd=str(Path(__file__).resolve().parent))).hexdigest()
+        if p['new_optimizer'] or p['parent_adam_implementation_sha256']!=expected or p['parent_adam_parameter_steps']!=520 or p['final_adam_parameter_steps']!=528:raise ValueError('Changed Adam transplant implementation or clocks')
+        from evals.context_native_parent_adam import validate_finished
+        validate_finished(proof,r)
     parent_identity,parent=old_verify(Path(p['parent']['proof']))
+    if p['mode']=='native520-all49-assistant-audio-parent-adam-v1' and p['parent_adam_training_state_sha256']!=parent['training_state_sha256']:raise ValueError('Adam source is not the approved native520 parent')
     if (parent_identity!=p['parent'] or r['warm_start']!=parent_identity or parent['optimizer_steps']!=520
             or r['data_sha256']!=parent['data_sha256'] or r['native_protocol']!=parent['native_protocol']
             or r['frozen_hashes']!=parent['frozen_hashes'] or r['voice_sha256']!=parent['voice_sha256']

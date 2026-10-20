@@ -1,3 +1,36 @@
+# LOCAL active — gradient154 complete; one parent-Adam native8 trial prepared (20October)
+
+Smallstep native8 train7578417/fullrestore COMPLETE; full10 7578866/independent
+speech7579217 rejected: core1/4 (sound correct but physical-onset fails), speech7/10,
+complete spoken ordinary0/4. Private/counterfactual correct values now spoken,
+but prior fabricated values and concurrent incorrect reasoning remain. Quiet,
+pause, clarify/cancel fail. All176 artifacts1455982473B size/SHA-backed15:35UTC.
+Formal docs/NATIVE-SMALLSTEP-COMPLETE10-REVIEW-2026-10-20.json; no extension/adoption.
+
+Zero-update154 GPU7580878 COMPLETE11m11/source3d96fd0c7728e926672baf188d51505181386503.
+Full242 cluster tests PASS4.091s plus11 state testsPASS1.611s. All154 original
+TRAIN objectives measured, all weights unchanged, no Adam import/update/checkpoint.
+First combined gradient norm27.840704 matches actual first27.840654 within.001.
+Fresh Adam/reference direction cosine-.04709 first/-.08769 mean8; original520
+Adam arithmetic+.02167/+.01334. This is first-order evidence, not native behavior.
+Formal docs/NATIVE-GRADIENT154-REVIEW-2026-10-20.json. All17 artifacts584218491B
+SHA-backed15:38UTC. Scoped union24330files/22361505021B; old Mac backup PARTIAL.
+
+Next one new8 stage from native520 carries original named Adam moments/clocks520,
+changes only LR to2e-7, keeps current RNG and all28/25/24/KL1hidden10/word64clock64
+and all49 assistant acoustic losses. Adam clocks must finish528; stage counter8
+is explicitly separate. Exact import audit must match independent matching BF16
+readiness; complete fresh restoration checks all Adam/RNG/fingerprints and clocks.
+New3 real tiny-Adam tests run in cluster before any GPU updates;17 local CPU policy/
+lineage tests PASS. Training/helper changes do not touch frozen legacy loss/data
+modules. No unchanged extension or adoption. Plan native-audio49-parent-adam-plan-
+20261020.json. Next commit/push/deploy and submit readiness+SlurmCPUwatcher after
+fresh queue check. New IDs pending. Prior watchers terminal. LOCAL soleexecutor,
+CLOUD read-only; unrelated pycache/capability/roadmap preserved. Cert ends19:32UTC,
+interactive ends21Oct08:56UTC. Whole native model still unqualified.
+
+---
+
 # LOCAL active — smaller-step8 complete; full10 fails; complete-gradient probe prepared
 
 20October: readiness7578127 COMPLETE11m32, training7578417 COMPLETE22m36,

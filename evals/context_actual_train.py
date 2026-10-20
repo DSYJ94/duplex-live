@@ -166,7 +166,7 @@ def run(lm, spm, voice, examples, components, audits, args):
                 'attention_backend':'math'},
             'voice_sha256':sha256(args.out/'voice.pt'),'frozen_hashes':frozen,
             'retention_examples':[r[2] for r in retention],
-            **({'warm_start':warm_start,'warm_start_optimizer_reset':True} if warm_start else {}),
+            **({'warm_start':warm_start,'warm_start_optimizer_reset':not getattr(args,'native_audio49_parent_adam',False)} if warm_start else {}),
             'recipe':{'rank':8,'scaling':2.,'last_layers':4,'lr':rate,'weight_decay':0.,
                 'gradient_clip':1.,'retention_kl_weight':base_retention_weight,'retention_hidden_mse_weight':10.*base_retention_weight,
                 **({'retention_teacher_text':teacher} if teacher else {}),
@@ -264,6 +264,10 @@ def run(lm, spm, voice, examples, components, audits, args):
                     all49_auxiliary_logits_exact=audio49_actual==report['expected_audio49_logits'],actual_audio49_logits=audio49_actual,
                     optimizer_and_rng_independently_compared_exact=True)
                 if result['pid']==result['training_pid']:raise RuntimeError('Audio49 restore must use a fresh process')
+            if getattr(args,'native_audio49_parent_adam',False):
+                clocks=sorted(set(int(x['step']) for x in opt.state.values()))
+                if clocks!=[528] or snapshot['completed_steps']!=8:raise RuntimeError('Independent restore lost stage8/Adam528 clocks')
+                result['parent_adam_parameter_steps_restored']=clocks
             (args.out/'reload-report.json').write_text(json.dumps(result,indent=2)+'\n')
             print(json.dumps(result),flush=True)
             if not passed: raise RuntimeError('Fresh actual adapter logits changed')
@@ -280,6 +284,11 @@ def run(lm, spm, voice, examples, components, audits, args):
                         raise RuntimeError('Invalid warm-start adapter tensor')
                     p.copy_(state[n])
             if optimizer.state:raise RuntimeError('New corrective stage unexpectedly retained optimizer moments')
+        parent_adam=None
+        if getattr(args,'native_audio49_parent_adam',False):
+            from evals.context_native_parent_adam import port
+            parent_adam=port(args.warm_start_proof,learned,optimizer,rate,args.out)
+            if not args.native_audio49_preflight_only and sha256(args.out/'parent-adam-import.json')!=sha256(args.native_audio49_preflight/'parent-adam-import.json'):raise RuntimeError('Independent training/import moments differ from readiness')
         if args.resume_training:
             if args.actual_fit_updates>8:
                 parent = json.loads((args.resume_training.parent/'report.json').read_text())
@@ -313,7 +322,7 @@ def run(lm, spm, voice, examples, components, audits, args):
                 audits,args,state_metadata(frozen),forward)
             return
         if audio49_policy and args.native_audio49_preflight_only:
-            if optimizer.state or initial_step:raise RuntimeError('BF16 readiness cannot optimize or resume')
+            if (optimizer.state and not parent_adam) or initial_step:raise RuntimeError('BF16 readiness cannot optimize or resume')
             if getattr(args,'native_audio49_gradient_probe',False):
                 from evals.context_native_audio49_gradient_probe import run as gradient_probe
                 gradient_probe(lm,learned,batches,retention,references,native_teacher_batches,additional_batches,component_kinds,response_boundaries,audits,
@@ -462,7 +471,7 @@ def run(lm, spm, voice, examples, components, audits, args):
             'trainable_parameters':sum(p.numel() for p in learned.values()),'optimizer_steps':initial_step+len(steps),
             'updates_this_run':len(steps),'initial_optimizer_steps':initial_step,
             'resumed_from_training_state':str(args.resume_training) if args.resume_training else None,
-            **({'warm_start':warm_start,'warm_start_optimizer_reset':True} if warm_start else {}),
+            **({'warm_start':warm_start,'warm_start_optimizer_reset':not getattr(args,'native_audio49_parent_adam',False)} if warm_start else {}),
             'training_state_sha256':sha256(args.out/'training-state.pt'),
             'past_loss_targets':0,'audio_loss_targets':0,'all_component_audits_passed':True,
             'native_protocol':state_metadata(frozen)['native_protocol'],
@@ -486,6 +495,11 @@ def run(lm, spm, voice, examples, components, audits, args):
             'training_seconds':time.monotonic()-start,'peak_allocated_bytes':torch.cuda.max_memory_allocated(),
             'quality_qualified':False,'free_running_result_use_proven':False,
             'audio_behavior_preservation_proven':False,'passed':True}
+        if parent_adam:
+            report.update(parent_adam_import_sha256=sha256(args.out/'parent-adam-import.json'),
+                adam_parameter_steps_after=sorted(set(int(x['step']) for x in optimizer.state.values())),
+                optimizer_steps_scope='Updates in this corrective stage; preserved Adam clocks are recorded separately')
+            if report['adam_parameter_steps_after']!=[528]:raise RuntimeError('Parent Adam clock did not advance exactly eight updates')
         if warm_policy:
             if any([r['id'] for r in step.get('warm_ordinary_microbatch',[])]!=[r['id'] for r in warm_policy['examples']] for step in steps):
                 raise RuntimeError('Every update must retain all ten approved ordinary anchors')
