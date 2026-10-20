@@ -1,0 +1,4144 @@
+{
+  "at_utc": "2026-10-20T09:25:36.800678+00:00",
+  "diagnostic_only": true,
+  "complete_cases": 10,
+  "candidate_job": "7558824",
+  "native_session": "7570828",
+  "invocation_repair_session": "7571367",
+  "speech_job": "7571368",
+  "original_case_indices_frozen": [
+    0,
+    1,
+    2,
+    3,
+    6,
+    7,
+    8,
+    9
+  ],
+  "only_persona_changed_against_original40": true,
+  "adoption": false,
+  "training_approved": false,
+  "independent_speech_sha256": "70b8c856a71182b6a7a1dd18b9135fc4b659d1063fd88ab9e7cf94ca83d49c4a",
+  "evaluation_plan_sha256": "ee6865c4d5ab89f9daaedc764e7e3d971a8f6395c103859253dfd09bc7bdaea8",
+  "speech_passes": 6,
+  "matched_ordinary_baseline_bindings": [
+    {
+      "index": 0,
+      "baseline_job": "7530265",
+      "baseline_report_sha256": "c3b4d9b9a708cfb1965e9c93af81c58bc5520da1b460f5ddc0c89e6f2c5efa1a",
+      "baseline_audio_sha256": "d6688a83a8cf9faef9044f91913c5bf036a7eb1b63c7be9901e90b0a3b77c611",
+      "baseline_asr_job": "7530273",
+      "baseline_asr_report_sha256": "a1ddea0f7782cca4ebb57706b880706f9f426f7ade228839a7480d439e5504f4",
+      "baseline_asr_wer": 0.0,
+      "shared_user_input_sha256": "1bd5ef3c206f748b90259defdcabc74fa5c985d873654010f69054a06229564f",
+      "baseline_first_nonzero_pcm_s": 0.46475,
+      "baseline_first_onset_check_independently_recomputed": true,
+      "baseline_all_word_starts_within_recorded_audio": true,
+      "baseline_spoken_text": " because ice is less dense than water would you like me to explain the physics behind that or are you curious about a real world example",
+      "same_user_voice_assets_torch_cuda": true,
+      "persona_matches_baseline": false,
+      "comparison_scope": "Different checkpoint and persona; original40 same-checkpoint/persona-only input and weight checks separately verified for all10."
+    },
+    {
+      "index": 1,
+      "baseline_job": "7530266",
+      "baseline_report_sha256": "546b0e5f83fc83dc3e8430412a60a1bf13e3b72c459ba644e908d966c99236e2",
+      "baseline_audio_sha256": "5d4a6d4d840a386abe1ba8b6d466dea724180e07bcdd987f248c423e251dfbe5",
+      "baseline_asr_job": "7530274",
+      "baseline_asr_report_sha256": "61e9fdeb2341ce6378240db3c582f65675d28943ace38899c3a0dc121c8fe00c",
+      "baseline_asr_wer": 0.0,
+      "shared_user_input_sha256": "8f0c8caac122f314070c26078f3b584d18cc381cf574d460dd2679af020567b9",
+      "baseline_first_nonzero_pcm_s": 0.45166666666666666,
+      "baseline_first_onset_check_independently_recomputed": true,
+      "baseline_all_word_starts_within_recorded_audio": true,
+      "baseline_spoken_text": " It is produced through the vibration of solid, liquid or gas, which then travels through the air.",
+      "same_user_voice_assets_torch_cuda": true,
+      "persona_matches_baseline": false,
+      "comparison_scope": "Different checkpoint and persona; original40 same-checkpoint/persona-only input and weight checks separately verified for all10."
+    },
+    {
+      "index": 2,
+      "baseline_job": "7530267",
+      "baseline_report_sha256": "d36b066e7727a186a7ed7bf2d9c8c96625988797fefb4594c41ac4c39b0d5e4a",
+      "baseline_audio_sha256": "8e20571d3082a22f26d96e619c71fa6faa34c99a9dca187035622d52fcd1f6e0",
+      "baseline_asr_job": "7530275",
+      "baseline_asr_report_sha256": "e7b792ebca0b09bb4b49bcb90670b215d3c0114f92a29f675a1c6e6599796f73",
+      "baseline_asr_wer": 0.0,
+      "shared_user_input_sha256": "2239caf13fecd09fe494bbd2920d10127b8ae06e37401d0c44bdd0421fd25187",
+      "baseline_first_nonzero_pcm_s": 0.45516666666666666,
+      "baseline_first_onset_check_independently_recomputed": true,
+      "baseline_all_word_starts_within_recorded_audio": true,
+      "baseline_spoken_text": " because light is needed for photosynthesis the process that converts carbon dioxide into sugar it is used to make food light is also essential for the growth of plants",
+      "same_user_voice_assets_torch_cuda": true,
+      "persona_matches_baseline": false,
+      "comparison_scope": "Different checkpoint and persona; original40 same-checkpoint/persona-only input and weight checks separately verified for all10."
+    },
+    {
+      "index": 3,
+      "baseline_job": "7530268",
+      "baseline_report_sha256": "b7421ff1387131f5515d24dbad25838dc30eb8cd3a9c6eb9446fe4d3e8287b87",
+      "baseline_audio_sha256": "665db817f010d9cc5e23f942cb2273817238d93b5bb5be6f27288e69a71873a6",
+      "baseline_asr_job": "7530276",
+      "baseline_asr_report_sha256": "24eae5860003b83017fa1e39cdb019dae5257a188b931b3145180cd9dfec7f5b",
+      "baseline_asr_wer": 0.0,
+      "shared_user_input_sha256": "eb744a904140fa81174c1976e1dbf8f3a5c4585970358bca992c053d5a703f12",
+      "baseline_first_nonzero_pcm_s": 0.45375,
+      "baseline_first_onset_check_independently_recomputed": true,
+      "baseline_all_word_starts_within_recorded_audio": true,
+      "baseline_spoken_text": " Because when you touch metal, it conducts heat away from your skin, which makes your hand or arm feel cold. Is there a specific type of metal you're wondering about?",
+      "same_user_voice_assets_torch_cuda": true,
+      "persona_matches_baseline": false,
+      "comparison_scope": "Different checkpoint and persona; original40 same-checkpoint/persona-only input and weight checks separately verified for all10."
+    }
+  ],
+  "cases": [
+    {
+      "index": 0,
+      "scenario": "recovery-train-012",
+      "expected": "Ice floats because it is less dense than liquid water",
+      "report_sha256": "639e306b2bd3979eb436945b4d86293c44b43be40a24e7ef759131872f50179a",
+      "audio_sha256": "8101cfd7f973e580a700fe4255bba53ef88f9a77cc88b0721fee7e5771e0a46f",
+      "sampled_model_text": "Because the way the molecules arrange themselves. Because, the liquid has an energy state that is stable. And, it reaches the equilibrium. Does that make sense for you? Does the idea of the energy state sound",
+      "independent_spoken_text": " because the way the molecules arrange themselves because the liquid has an energy state that is stable and it reaches the equilibrium state does that make sense for you does the idea of the energy states",
+      "speech_wer": 0.08333333333333333,
+      "time_bounds_valid": true,
+      "word_bounds_valid": true,
+      "first_onset_valid": true,
+      "speech_quality_passed": false,
+      "first_nonzero_pcm_s": 3.401125,
+      "word_timestamps": [
+        {
+          "text": "because",
+          "start": 6.99,
+          "end": 7.09,
+          "confidence": 0.356
+        },
+        {
+          "text": "the",
+          "start": 7.09,
+          "end": 7.390000000000001,
+          "confidence": 0.913
+        },
+        {
+          "text": "way",
+          "start": 7.390000000000001,
+          "end": 7.59,
+          "confidence": 0.982
+        },
+        {
+          "text": "the",
+          "start": 7.59,
+          "end": 7.789999999999999,
+          "confidence": 0.966
+        },
+        {
+          "text": "molecules",
+          "start": 7.789999999999999,
+          "end": 8.19,
+          "confidence": 0.984
+        },
+        {
+          "text": "arrange",
+          "start": 8.19,
+          "end": 8.69,
+          "confidence": 0.755
+        },
+        {
+          "text": "themselves",
+          "start": 8.69,
+          "end": 9.17,
+          "confidence": 0.923
+        },
+        {
+          "text": "because",
+          "start": 9.17,
+          "end": 11.07,
+          "confidence": 0.097
+        },
+        {
+          "text": "the",
+          "start": 11.07,
+          "end": 11.790000000000001,
+          "confidence": 0.956
+        },
+        {
+          "text": "liquid",
+          "start": 11.790000000000001,
+          "end": 12.05,
+          "confidence": 0.954
+        },
+        {
+          "text": "has",
+          "start": 12.05,
+          "end": 12.43,
+          "confidence": 0.983
+        },
+        {
+          "text": "an",
+          "start": 12.43,
+          "end": 12.59,
+          "confidence": 0.978
+        },
+        {
+          "text": "energy",
+          "start": 12.59,
+          "end": 12.950000000000001,
+          "confidence": 0.909
+        },
+        {
+          "text": "state",
+          "start": 12.950000000000001,
+          "end": 13.290000000000001,
+          "confidence": 0.992
+        },
+        {
+          "text": "that",
+          "start": 13.290000000000001,
+          "end": 13.51,
+          "confidence": 0.994
+        },
+        {
+          "text": "is",
+          "start": 13.51,
+          "end": 13.71,
+          "confidence": 0.998
+        },
+        {
+          "text": "stable",
+          "start": 13.71,
+          "end": 14.13,
+          "confidence": 0.992
+        },
+        {
+          "text": "and",
+          "start": 14.13,
+          "end": 15.290000000000001,
+          "confidence": 0.338
+        },
+        {
+          "text": "it",
+          "start": 15.290000000000001,
+          "end": 15.73,
+          "confidence": 0.981
+        },
+        {
+          "text": "reaches",
+          "start": 15.73,
+          "end": 16.07,
+          "confidence": 0.984
+        },
+        {
+          "text": "the",
+          "start": 16.07,
+          "end": 16.349999999999998,
+          "confidence": 0.991
+        },
+        {
+          "text": "equilibrium",
+          "start": 16.349999999999998,
+          "end": 16.75,
+          "confidence": 0.688
+        },
+        {
+          "text": "state",
+          "start": 16.75,
+          "end": 17.33,
+          "confidence": 0.979
+        },
+        {
+          "text": "does",
+          "start": 23.11,
+          "end": 23.33,
+          "confidence": 0.029
+        },
+        {
+          "text": "that",
+          "start": 23.33,
+          "end": 23.59,
+          "confidence": 0.997
+        },
+        {
+          "text": "make",
+          "start": 23.59,
+          "end": 23.81,
+          "confidence": 0.983
+        },
+        {
+          "text": "sense",
+          "start": 23.81,
+          "end": 24.09,
+          "confidence": 0.997
+        },
+        {
+          "text": "for",
+          "start": 24.09,
+          "end": 24.33,
+          "confidence": 0.995
+        },
+        {
+          "text": "you",
+          "start": 24.33,
+          "end": 24.57,
+          "confidence": 0.996
+        },
+        {
+          "text": "does",
+          "start": 29.729999999999997,
+          "end": 29.889999999999997,
+          "confidence": 0.191
+        },
+        {
+          "text": "the",
+          "start": 29.889999999999997,
+          "end": 30.09,
+          "confidence": 0.993
+        },
+        {
+          "text": "idea",
+          "start": 30.09,
+          "end": 30.41,
+          "confidence": 0.993
+        },
+        {
+          "text": "of",
+          "start": 30.41,
+          "end": 30.689999999999998,
+          "confidence": 0.976
+        },
+        {
+          "text": "the",
+          "start": 30.689999999999998,
+          "end": 30.81,
+          "confidence": 0.995
+        },
+        {
+          "text": "energy",
+          "start": 30.81,
+          "end": 31.13,
+          "confidence": 0.982
+        },
+        {
+          "text": "states",
+          "start": 31.13,
+          "end": 31.509999999999998,
+          "confidence": 0.143
+        }
+      ],
+      "pcm": {
+        "rate": 24000,
+        "samples": 762741,
+        "peak": 0.60540771484375,
+        "full_scale_samples": 0,
+        "gain_changed": false
+      },
+      "all_user_samples_processed": true,
+      "worker_events": [],
+      "native_request_count": 0,
+      "compute_p95_s": 0.04347437339893077,
+      "maximum_input_backlog_s": 3.4610050709941422,
+      "playout": {
+        "sample_rate": 24000,
+        "startup_buffer_s": 0.16,
+        "packet_count": 352,
+        "source_samples": 675840,
+        "underrun_count": 1,
+        "underrun_samples": 5274
+      },
+      "human_listening_performed": false,
+      "candidate_adopted": false,
+      "ordinary_core_correct": false,
+      "review": "Incorrect ice explanation: molecular arrangement/equilibrium, no lower density; whole speech WER1/12 exceeds unchanged0.08.",
+      "task_passed": false
+    },
+    {
+      "index": 1,
+      "scenario": "recovery-train-013",
+      "expected": "Sound is produced by vibrations",
+      "report_sha256": "1ffda99ff14726cd7b1fb17ff16488c6403c7a95c193d32039b8106c3598db2e",
+      "audio_sha256": "936827d02af590d62a83f68dc0e0b8a9bfeb2dafc101231ab4551f096a59480d",
+      "sampled_model_text": "It is produced by the vibration of the air molecules. Would you like to hear how that works, or are you curious about something else?",
+      "independent_spoken_text": " It is produced by the vibration of the air molecules. Would you like to hear how that works or are you curious about something else?",
+      "speech_wer": 0.0,
+      "time_bounds_valid": true,
+      "word_bounds_valid": true,
+      "first_onset_valid": true,
+      "speech_quality_passed": true,
+      "first_nonzero_pcm_s": 3.4245,
+      "word_timestamps": [
+        {
+          "text": "It",
+          "start": 7.47,
+          "end": 7.49,
+          "confidence": 0.571
+        },
+        {
+          "text": "is",
+          "start": 7.49,
+          "end": 7.71,
+          "confidence": 0.986
+        },
+        {
+          "text": "produced",
+          "start": 7.71,
+          "end": 7.99,
+          "confidence": 0.995
+        },
+        {
+          "text": "by",
+          "start": 7.99,
+          "end": 8.29,
+          "confidence": 0.991
+        },
+        {
+          "text": "the",
+          "start": 8.29,
+          "end": 8.43,
+          "confidence": 0.976
+        },
+        {
+          "text": "vibration",
+          "start": 8.43,
+          "end": 8.809999999999999,
+          "confidence": 0.965
+        },
+        {
+          "text": "of",
+          "start": 8.809999999999999,
+          "end": 9.27,
+          "confidence": 0.963
+        },
+        {
+          "text": "the",
+          "start": 9.27,
+          "end": 9.41,
+          "confidence": 0.989
+        },
+        {
+          "text": "air",
+          "start": 9.41,
+          "end": 9.65,
+          "confidence": 0.987
+        },
+        {
+          "text": "molecules.",
+          "start": 9.65,
+          "end": 10.05,
+          "confidence": 0.936
+        },
+        {
+          "text": "Would",
+          "start": 14.11,
+          "end": 14.17,
+          "confidence": 0.366
+        },
+        {
+          "text": "you",
+          "start": 14.17,
+          "end": 14.37,
+          "confidence": 0.995
+        },
+        {
+          "text": "like",
+          "start": 14.37,
+          "end": 14.53,
+          "confidence": 0.996
+        },
+        {
+          "text": "to",
+          "start": 14.53,
+          "end": 14.67,
+          "confidence": 0.994
+        },
+        {
+          "text": "hear",
+          "start": 14.67,
+          "end": 14.85,
+          "confidence": 0.994
+        },
+        {
+          "text": "how",
+          "start": 14.85,
+          "end": 15.03,
+          "confidence": 0.994
+        },
+        {
+          "text": "that",
+          "start": 15.03,
+          "end": 15.23,
+          "confidence": 0.993
+        },
+        {
+          "text": "works",
+          "start": 15.23,
+          "end": 15.57,
+          "confidence": 0.996
+        },
+        {
+          "text": "or",
+          "start": 15.57,
+          "end": 15.83,
+          "confidence": 0.396
+        },
+        {
+          "text": "are",
+          "start": 15.83,
+          "end": 15.97,
+          "confidence": 0.959
+        },
+        {
+          "text": "you",
+          "start": 15.97,
+          "end": 16.09,
+          "confidence": 0.982
+        },
+        {
+          "text": "curious",
+          "start": 16.09,
+          "end": 16.41,
+          "confidence": 0.969
+        },
+        {
+          "text": "about",
+          "start": 16.41,
+          "end": 16.77,
+          "confidence": 0.963
+        },
+        {
+          "text": "something",
+          "start": 16.77,
+          "end": 17.11,
+          "confidence": 0.979
+        },
+        {
+          "text": "else?",
+          "start": 17.11,
+          "end": 17.39,
+          "confidence": 0.981
+        }
+      ],
+      "pcm": {
+        "rate": 24000,
+        "samples": 775308,
+        "peak": 0.41668701171875,
+        "full_scale_samples": 0,
+        "gain_changed": false
+      },
+      "all_user_samples_processed": true,
+      "worker_events": [],
+      "native_request_count": 0,
+      "compute_p95_s": 0.042965534958057106,
+      "maximum_input_backlog_s": 3.2585954260337164,
+      "playout": {
+        "sample_rate": 24000,
+        "startup_buffer_s": 0.16,
+        "packet_count": 361,
+        "source_samples": 693120,
+        "underrun_count": 0,
+        "underrun_samples": 0
+      },
+      "human_listening_performed": false,
+      "candidate_adopted": false,
+      "ordinary_core_correct": true,
+      "review": "Correct vibration explanation; speech passes.",
+      "task_passed": true
+    },
+    {
+      "index": 2,
+      "scenario": "recovery-train-014",
+      "expected": "Plants use light energy to make food through photosynthesis",
+      "report_sha256": "f705f272930913d3190d2d40993018401f7e185cdf8c73ad060dc73799df39fb",
+      "audio_sha256": "3eadd05b327c7b0124a61b14e12159e365b025eff1a9b2e77fd7c26f460aab7e",
+      "sampled_model_text": "Because light is what helps them turn the energy from the sun into food. And light is also essential for their growth.",
+      "independent_spoken_text": " because light is what helps them turn the energy from the sun into food and light is also essential for their growth",
+      "speech_wer": 0.0,
+      "time_bounds_valid": true,
+      "word_bounds_valid": true,
+      "first_onset_valid": true,
+      "speech_quality_passed": true,
+      "first_nonzero_pcm_s": 1.8150416666666667,
+      "word_timestamps": [
+        {
+          "text": "because",
+          "start": 5.19,
+          "end": 5.2700000000000005,
+          "confidence": 0.211
+        },
+        {
+          "text": "light",
+          "start": 5.2700000000000005,
+          "end": 5.79,
+          "confidence": 0.962
+        },
+        {
+          "text": "is",
+          "start": 5.79,
+          "end": 5.99,
+          "confidence": 0.992
+        },
+        {
+          "text": "what",
+          "start": 5.99,
+          "end": 6.17,
+          "confidence": 0.99
+        },
+        {
+          "text": "helps",
+          "start": 6.17,
+          "end": 6.47,
+          "confidence": 0.981
+        },
+        {
+          "text": "them",
+          "start": 6.47,
+          "end": 6.6499999999999995,
+          "confidence": 0.992
+        },
+        {
+          "text": "turn",
+          "start": 6.6499999999999995,
+          "end": 6.87,
+          "confidence": 0.963
+        },
+        {
+          "text": "the",
+          "start": 6.87,
+          "end": 7.069999999999999,
+          "confidence": 0.963
+        },
+        {
+          "text": "energy",
+          "start": 7.069999999999999,
+          "end": 7.41,
+          "confidence": 0.966
+        },
+        {
+          "text": "from",
+          "start": 7.41,
+          "end": 7.67,
+          "confidence": 0.963
+        },
+        {
+          "text": "the",
+          "start": 7.67,
+          "end": 7.81,
+          "confidence": 0.985
+        },
+        {
+          "text": "sun",
+          "start": 7.81,
+          "end": 8.07,
+          "confidence": 0.673
+        },
+        {
+          "text": "into",
+          "start": 8.07,
+          "end": 8.33,
+          "confidence": 0.98
+        },
+        {
+          "text": "food",
+          "start": 8.33,
+          "end": 8.69,
+          "confidence": 0.982
+        },
+        {
+          "text": "and",
+          "start": 9.05,
+          "end": 9.19,
+          "confidence": 0.751
+        },
+        {
+          "text": "light",
+          "start": 9.19,
+          "end": 9.49,
+          "confidence": 0.993
+        },
+        {
+          "text": "is",
+          "start": 9.49,
+          "end": 9.67,
+          "confidence": 1.0
+        },
+        {
+          "text": "also",
+          "start": 9.67,
+          "end": 9.97,
+          "confidence": 1.0
+        },
+        {
+          "text": "essential",
+          "start": 9.97,
+          "end": 10.47,
+          "confidence": 1.0
+        },
+        {
+          "text": "for",
+          "start": 10.47,
+          "end": 10.71,
+          "confidence": 0.995
+        },
+        {
+          "text": "their",
+          "start": 10.71,
+          "end": 10.870000000000001,
+          "confidence": 1.0
+        },
+        {
+          "text": "growth",
+          "start": 10.870000000000001,
+          "end": 11.17,
+          "confidence": 0.999
+        }
+      ],
+      "pcm": {
+        "rate": 24000,
+        "samples": 748277,
+        "peak": 0.490142822265625,
+        "full_scale_samples": 0,
+        "gain_changed": false
+      },
+      "all_user_samples_processed": true,
+      "worker_events": [],
+      "native_request_count": 0,
+      "compute_p95_s": 0.043255669670179485,
+      "maximum_input_backlog_s": 1.6583837179839611,
+      "playout": {
+        "sample_rate": 24000,
+        "startup_buffer_s": 0.16,
+        "packet_count": 367,
+        "source_samples": 704640,
+        "underrun_count": 1,
+        "underrun_samples": 76
+      },
+      "human_listening_performed": false,
+      "candidate_adopted": false,
+      "ordinary_core_correct": true,
+      "review": "Correct light energy into food explanation; speech passes. Same core criterion as earlier reviews.",
+      "task_passed": true
+    },
+    {
+      "index": 3,
+      "scenario": "recovery-train-015",
+      "expected": "Metal conducts heat away from skin",
+      "report_sha256": "e8b81790db56199c537be661ed75ac862451ab79bac37bc158499d5e2fb2dacc",
+      "audio_sha256": "ab26500add67c97377ae5cc28834d37a187141175cb3ab201a65d0a355b3cfd0",
+      "sampled_model_text": "Because the surface area is much smaller, which makes the heat loss much higher. And what about the other thing, the one you mentioned? Is there anything else you'd like to know? What exactly is that second thing",
+      "independent_spoken_text": " because the surface area is much smaller which makes the heat loss much higher and what about the other thing the one you mentioned is there anything else you'd like to know what exactly is that second thing",
+      "speech_wer": 0.0,
+      "time_bounds_valid": true,
+      "word_bounds_valid": true,
+      "first_onset_valid": true,
+      "speech_quality_passed": true,
+      "first_nonzero_pcm_s": 1.7864166666666668,
+      "word_timestamps": [
+        {
+          "text": "because",
+          "start": 5.09,
+          "end": 5.21,
+          "confidence": 0.38
+        },
+        {
+          "text": "the",
+          "start": 5.21,
+          "end": 5.51,
+          "confidence": 0.995
+        },
+        {
+          "text": "surface",
+          "start": 5.51,
+          "end": 5.8100000000000005,
+          "confidence": 0.936
+        },
+        {
+          "text": "area",
+          "start": 5.8100000000000005,
+          "end": 6.23,
+          "confidence": 0.994
+        },
+        {
+          "text": "is",
+          "start": 6.23,
+          "end": 6.53,
+          "confidence": 0.993
+        },
+        {
+          "text": "much",
+          "start": 6.53,
+          "end": 6.8100000000000005,
+          "confidence": 0.99
+        },
+        {
+          "text": "smaller",
+          "start": 6.8100000000000005,
+          "end": 7.2700000000000005,
+          "confidence": 0.985
+        },
+        {
+          "text": "which",
+          "start": 7.2700000000000005,
+          "end": 7.69,
+          "confidence": 0.615
+        },
+        {
+          "text": "makes",
+          "start": 7.69,
+          "end": 7.930000000000001,
+          "confidence": 0.981
+        },
+        {
+          "text": "the",
+          "start": 7.930000000000001,
+          "end": 8.15,
+          "confidence": 0.981
+        },
+        {
+          "text": "heat",
+          "start": 8.15,
+          "end": 8.39,
+          "confidence": 0.983
+        },
+        {
+          "text": "loss",
+          "start": 8.39,
+          "end": 8.69,
+          "confidence": 0.988
+        },
+        {
+          "text": "much",
+          "start": 8.69,
+          "end": 9.01,
+          "confidence": 0.971
+        },
+        {
+          "text": "higher",
+          "start": 9.01,
+          "end": 9.35,
+          "confidence": 0.988
+        },
+        {
+          "text": "and",
+          "start": 12.469999999999999,
+          "end": 12.549999999999999,
+          "confidence": 0.047
+        },
+        {
+          "text": "what",
+          "start": 12.549999999999999,
+          "end": 12.75,
+          "confidence": 0.931
+        },
+        {
+          "text": "about",
+          "start": 12.75,
+          "end": 12.969999999999999,
+          "confidence": 0.995
+        },
+        {
+          "text": "the",
+          "start": 12.969999999999999,
+          "end": 13.17,
+          "confidence": 0.995
+        },
+        {
+          "text": "other",
+          "start": 13.17,
+          "end": 13.37,
+          "confidence": 0.996
+        },
+        {
+          "text": "thing",
+          "start": 13.37,
+          "end": 13.709999999999999,
+          "confidence": 0.996
+        },
+        {
+          "text": "the",
+          "start": 13.709999999999999,
+          "end": 14.03,
+          "confidence": 0.752
+        },
+        {
+          "text": "one",
+          "start": 14.03,
+          "end": 14.209999999999999,
+          "confidence": 0.997
+        },
+        {
+          "text": "you",
+          "start": 14.209999999999999,
+          "end": 14.37,
+          "confidence": 0.993
+        },
+        {
+          "text": "mentioned",
+          "start": 14.37,
+          "end": 14.69,
+          "confidence": 0.993
+        },
+        {
+          "text": "is",
+          "start": 21.37,
+          "end": 21.39,
+          "confidence": 0.131
+        },
+        {
+          "text": "there",
+          "start": 21.39,
+          "end": 21.71,
+          "confidence": 0.944
+        },
+        {
+          "text": "anything",
+          "start": 21.71,
+          "end": 22.05,
+          "confidence": 0.979
+        },
+        {
+          "text": "else",
+          "start": 22.05,
+          "end": 22.330000000000002,
+          "confidence": 0.991
+        },
+        {
+          "text": "you'd",
+          "start": 22.330000000000002,
+          "end": 22.650000000000002,
+          "confidence": 0.985
+        },
+        {
+          "text": "like",
+          "start": 22.650000000000002,
+          "end": 22.790000000000003,
+          "confidence": 0.993
+        },
+        {
+          "text": "to",
+          "start": 22.790000000000003,
+          "end": 22.950000000000003,
+          "confidence": 0.985
+        },
+        {
+          "text": "know",
+          "start": 22.950000000000003,
+          "end": 23.17,
+          "confidence": 0.985
+        },
+        {
+          "text": "what",
+          "start": 27.950000000000003,
+          "end": 28.01,
+          "confidence": 0.319
+        },
+        {
+          "text": "exactly",
+          "start": 28.01,
+          "end": 28.650000000000002,
+          "confidence": 0.986
+        },
+        {
+          "text": "is",
+          "start": 28.650000000000002,
+          "end": 29.01,
+          "confidence": 0.968
+        },
+        {
+          "text": "that",
+          "start": 29.01,
+          "end": 29.25,
+          "confidence": 0.984
+        },
+        {
+          "text": "second",
+          "start": 29.25,
+          "end": 29.55,
+          "confidence": 0.979
+        },
+        {
+          "text": "thing",
+          "start": 29.55,
+          "end": 29.75,
+          "confidence": 0.88
+        }
+      ],
+      "pcm": {
+        "rate": 24000,
+        "samples": 714874,
+        "peak": 0.608856201171875,
+        "full_scale_samples": 0,
+        "gain_changed": false
+      },
+      "all_user_samples_processed": true,
+      "worker_events": [],
+      "native_request_count": 0,
+      "compute_p95_s": 0.0431449866067851,
+      "maximum_input_backlog_s": 1.6234363450109959,
+      "playout": {
+        "sample_rate": 24000,
+        "startup_buffer_s": 0.16,
+        "packet_count": 350,
+        "source_samples": 672000,
+        "underrun_count": 0,
+        "underrun_samples": 0
+      },
+      "human_listening_performed": false,
+      "candidate_adopted": false,
+      "ordinary_core_correct": false,
+      "review": "Incorrect surface-area explanation, not conduction of heat away from skin; speech passes.",
+      "task_passed": false
+    },
+    {
+      "index": 4,
+      "scenario": "native2-train-014",
+      "expected": "Stay silent until ready, then explain that a timer measures elapsed time",
+      "report_sha256": "0f4d9607c3d73bff80b7dce923c78beddd10a44135527287188fce631f7f96ee",
+      "audio_sha256": "340e2fbcf50372883375e94d55277d998ad3a7e840807fa75123237fc211233e",
+      "sampled_model_text": "I'm listening. What's going on with the others? It's the time from when an event starts. Is there a particular timing system you're tracking, like hours, minutes, or seconds? It's used usually when timing an event. Do you want me to check the details for you? And",
+      "independent_spoken_text": " I'm listening. What's going on with the others? It's the time from when an event starts. Is there a particular timing system you're tracking, like hours, minutes, or seconds? It's used usually when timing an event. Do you want me to check the details for you?",
+      "speech_wer": 0.019230769230769232,
+      "time_bounds_valid": true,
+      "word_bounds_valid": true,
+      "first_onset_valid": true,
+      "speech_quality_passed": true,
+      "first_nonzero_pcm_s": 3.416916666666667,
+      "word_timestamps": [
+        {
+          "text": "I'm",
+          "start": 8.79,
+          "end": 9.03,
+          "confidence": 0.911
+        },
+        {
+          "text": "listening.",
+          "start": 9.03,
+          "end": 9.33,
+          "confidence": 0.829
+        },
+        {
+          "text": "What's",
+          "start": 10.67,
+          "end": 10.95,
+          "confidence": 0.721
+        },
+        {
+          "text": "going",
+          "start": 10.95,
+          "end": 11.11,
+          "confidence": 0.991
+        },
+        {
+          "text": "on",
+          "start": 11.11,
+          "end": 11.31,
+          "confidence": 0.991
+        },
+        {
+          "text": "with",
+          "start": 11.31,
+          "end": 11.450000000000001,
+          "confidence": 0.997
+        },
+        {
+          "text": "the",
+          "start": 11.450000000000001,
+          "end": 11.59,
+          "confidence": 0.995
+        },
+        {
+          "text": "others?",
+          "start": 11.59,
+          "end": 11.77,
+          "confidence": 0.948
+        },
+        {
+          "text": "It's",
+          "start": 16.27,
+          "end": 16.47,
+          "confidence": 0.891
+        },
+        {
+          "text": "the",
+          "start": 16.47,
+          "end": 16.61,
+          "confidence": 0.997
+        },
+        {
+          "text": "time",
+          "start": 16.61,
+          "end": 16.849999999999998,
+          "confidence": 0.999
+        },
+        {
+          "text": "from",
+          "start": 16.849999999999998,
+          "end": 17.05,
+          "confidence": 0.922
+        },
+        {
+          "text": "when",
+          "start": 17.05,
+          "end": 17.189999999999998,
+          "confidence": 0.995
+        },
+        {
+          "text": "an",
+          "start": 17.189999999999998,
+          "end": 17.31,
+          "confidence": 0.996
+        },
+        {
+          "text": "event",
+          "start": 17.31,
+          "end": 17.59,
+          "confidence": 0.99
+        },
+        {
+          "text": "starts.",
+          "start": 17.59,
+          "end": 17.97,
+          "confidence": 0.93
+        },
+        {
+          "text": "Is",
+          "start": 22.99,
+          "end": 23.049999999999997,
+          "confidence": 0.721
+        },
+        {
+          "text": "there",
+          "start": 23.049999999999997,
+          "end": 23.27,
+          "confidence": 0.996
+        },
+        {
+          "text": "a",
+          "start": 23.27,
+          "end": 23.389999999999997,
+          "confidence": 0.994
+        },
+        {
+          "text": "particular",
+          "start": 23.389999999999997,
+          "end": 23.63,
+          "confidence": 0.998
+        },
+        {
+          "text": "timing",
+          "start": 23.63,
+          "end": 24.15,
+          "confidence": 0.984
+        },
+        {
+          "text": "system",
+          "start": 24.15,
+          "end": 24.509999999999998,
+          "confidence": 0.992
+        },
+        {
+          "text": "you're",
+          "start": 24.509999999999998,
+          "end": 24.849999999999998,
+          "confidence": 0.958
+        },
+        {
+          "text": "tracking,",
+          "start": 24.849999999999998,
+          "end": 25.09,
+          "confidence": 0.666
+        },
+        {
+          "text": "like",
+          "start": 25.27,
+          "end": 25.61,
+          "confidence": 0.912
+        },
+        {
+          "text": "hours,",
+          "start": 25.61,
+          "end": 25.93,
+          "confidence": 0.971
+        },
+        {
+          "text": "minutes,",
+          "start": 26.25,
+          "end": 26.45,
+          "confidence": 0.841
+        },
+        {
+          "text": "or",
+          "start": 26.689999999999998,
+          "end": 26.79,
+          "confidence": 0.971
+        },
+        {
+          "text": "seconds?",
+          "start": 26.79,
+          "end": 27.11,
+          "confidence": 0.973
+        },
+        {
+          "text": "It's",
+          "start": 29.529999999999998,
+          "end": 29.79,
+          "confidence": 0.922
+        },
+        {
+          "text": "used",
+          "start": 29.79,
+          "end": 29.99,
+          "confidence": 0.992
+        },
+        {
+          "text": "usually",
+          "start": 29.99,
+          "end": 30.31,
+          "confidence": 0.989
+        },
+        {
+          "text": "when",
+          "start": 30.31,
+          "end": 30.709999999999997,
+          "confidence": 0.996
+        },
+        {
+          "text": "timing",
+          "start": 30.709999999999997,
+          "end": 31.09,
+          "confidence": 0.991
+        },
+        {
+          "text": "an",
+          "start": 31.09,
+          "end": 31.31,
+          "confidence": 0.99
+        },
+        {
+          "text": "event.",
+          "start": 31.31,
+          "end": 31.61,
+          "confidence": 0.977
+        },
+        {
+          "text": "Do",
+          "start": 35.67,
+          "end": 35.83,
+          "confidence": 0.848
+        },
+        {
+          "text": "you",
+          "start": 35.83,
+          "end": 35.97,
+          "confidence": 0.994
+        },
+        {
+          "text": "want",
+          "start": 35.97,
+          "end": 36.15,
+          "confidence": 0.998
+        },
+        {
+          "text": "me",
+          "start": 36.15,
+          "end": 36.29,
+          "confidence": 0.996
+        },
+        {
+          "text": "to",
+          "start": 36.29,
+          "end": 36.449999999999996,
+          "confidence": 0.998
+        },
+        {
+          "text": "check",
+          "start": 36.449999999999996,
+          "end": 36.589999999999996,
+          "confidence": 0.993
+        },
+        {
+          "text": "the",
+          "start": 36.589999999999996,
+          "end": 36.75,
+          "confidence": 0.993
+        },
+        {
+          "text": "details",
+          "start": 36.75,
+          "end": 37.089999999999996,
+          "confidence": 0.997
+        },
+        {
+          "text": "for",
+          "start": 37.089999999999996,
+          "end": 37.37,
+          "confidence": 0.99
+        },
+        {
+          "text": "you?",
+          "start": 37.37,
+          "end": 37.61,
+          "confidence": 0.953
+        }
+      ],
+      "pcm": {
+        "rate": 24000,
+        "samples": 942166,
+        "peak": 0.55859375,
+        "full_scale_samples": 0,
+        "gain_changed": false
+      },
+      "all_user_samples_processed": true,
+      "worker_events": [],
+      "native_request_count": 0,
+      "compute_p95_s": 0.04289031415246427,
+      "maximum_input_backlog_s": 3.253020311987493,
+      "playout": {
+        "sample_rate": 24000,
+        "startup_buffer_s": 0.16,
+        "packet_count": 448,
+        "source_samples": 860160,
+        "underrun_count": 0,
+        "underrun_samples": 0
+      },
+      "human_listening_performed": false,
+      "candidate_adopted": false,
+      "quiet_interval_s": [
+        0.0,
+        12.41
+      ],
+      "source_wav_sha256": "13d48e7bf811dd453a445de36b8f074a2dfd9d73ef9ba9d2ba3cc458529c8673",
+      "source_sidecar_sha256": "c0148171c1eab178cf55c0814cd52378d09e8853a3e03438c5ccd1e98f4c6dcc",
+      "diagnostic_words_in_quiet": [
+        {
+          "text": "I'm",
+          "start": 8.79,
+          "end": 9.03,
+          "confidence": 0.911
+        },
+        {
+          "text": "listening.",
+          "start": 9.03,
+          "end": 9.33,
+          "confidence": 0.829
+        },
+        {
+          "text": "What's",
+          "start": 10.67,
+          "end": 10.95,
+          "confidence": 0.721
+        },
+        {
+          "text": "going",
+          "start": 10.95,
+          "end": 11.11,
+          "confidence": 0.991
+        },
+        {
+          "text": "on",
+          "start": 11.11,
+          "end": 11.31,
+          "confidence": 0.991
+        },
+        {
+          "text": "with",
+          "start": 11.31,
+          "end": 11.450000000000001,
+          "confidence": 0.997
+        },
+        {
+          "text": "the",
+          "start": 11.450000000000001,
+          "end": 11.59,
+          "confidence": 0.995
+        },
+        {
+          "text": "others?",
+          "start": 11.59,
+          "end": 11.77,
+          "confidence": 0.948
+        }
+      ],
+      "diagnostic_actual_pcm_at_words": [
+        {
+          "word": "I'm",
+          "start": 8.79,
+          "end": 9.03,
+          "rms": 0.06578286999526471,
+          "peak": 0.210540771484375
+        },
+        {
+          "word": "listening.",
+          "start": 9.03,
+          "end": 9.33,
+          "rms": 0.07033779890838451,
+          "peak": 0.27508544921875
+        },
+        {
+          "word": "What's",
+          "start": 10.67,
+          "end": 10.95,
+          "rms": 0.07373256097680364,
+          "peak": 0.38372802734375
+        },
+        {
+          "word": "going",
+          "start": 10.95,
+          "end": 11.11,
+          "rms": 0.16036467919361236,
+          "peak": 0.518341064453125
+        },
+        {
+          "word": "on",
+          "start": 11.11,
+          "end": 11.31,
+          "rms": 0.12430649386381498,
+          "peak": 0.33648681640625
+        },
+        {
+          "word": "with",
+          "start": 11.31,
+          "end": 11.450000000000001,
+          "rms": 0.06475209399694869,
+          "peak": 0.19873046875
+        },
+        {
+          "word": "the",
+          "start": 11.450000000000001,
+          "end": 11.59,
+          "rms": 0.058224642063078286,
+          "peak": 0.235748291015625
+        },
+        {
+          "word": "others?",
+          "start": 11.59,
+          "end": 11.77,
+          "rms": 0.055385113919619554,
+          "peak": 0.228912353515625
+        }
+      ],
+      "quiet_interval_word_check_passed": false,
+      "clock_warning": "No global speech gate bypass; failed timestamps make overlaps diagnostic only",
+      "ordinary_core_correct": null,
+      "review": "Actual speech8.79\u201311.77 precedes Ready end12.41; whole speech gate passes and original PCM confirms nonzero words. Deliberate silence fails.",
+      "task_passed": false
+    },
+    {
+      "index": 5,
+      "scenario": "native2-train-015",
+      "expected": "Finish put the book on the shelf, stay quiet during pause, and say close the cupboard after go without restarting",
+      "report_sha256": "c8e80174ff8551898078465658c11424e399d437e9bb09435fb3562dd2908bd4",
+      "audio_sha256": "c51f33e7bc30c4473c36f98cb87c4108a81b8e8292ef68740e62dd874c4c44e3",
+      "sampled_model_text": "Okay, I've That's all done. The other command, Close the cupboard, is executed. I'm listening. Go. Is there anything specific you'd like to ask about your project, Sami? What's the issue you're facing right now? Are you dealing with a specific technical problem, or is it a project schedule issue? Should I see what's already logged, or is there something new? Which specific",
+      "independent_spoken_text": " Okay, I f- That's all done. The other command, close the cupboard, is executed. I'm listening. Go. Is there anything specific you'd like to ask about your project, Sammy? What's the issue you're facing right now? Are you dealing with a specific technical problem, or is it a project schedule issue? Should I see what's already logged, or is there something new? Which specific-",
+      "speech_wer": 0.02857142857142857,
+      "time_bounds_valid": true,
+      "word_bounds_valid": true,
+      "first_onset_valid": false,
+      "speech_quality_passed": false,
+      "first_nonzero_pcm_s": 3.4145833333333333,
+      "word_timestamps": [
+        {
+          "text": "Okay,",
+          "start": 3.19,
+          "end": 9.05,
+          "confidence": 0.303
+        },
+        {
+          "text": "I",
+          "start": 9.13,
+          "end": 9.37,
+          "confidence": 0.905
+        },
+        {
+          "text": "f-",
+          "start": 9.37,
+          "end": 9.67,
+          "confidence": 0.389
+        },
+        {
+          "text": "That's",
+          "start": 12.83,
+          "end": 13.110000000000001,
+          "confidence": 0.877
+        },
+        {
+          "text": "all",
+          "start": 13.110000000000001,
+          "end": 13.290000000000001,
+          "confidence": 0.996
+        },
+        {
+          "text": "done.",
+          "start": 13.290000000000001,
+          "end": 13.530000000000001,
+          "confidence": 0.889
+        },
+        {
+          "text": "The",
+          "start": 14.07,
+          "end": 14.21,
+          "confidence": 0.907
+        },
+        {
+          "text": "other",
+          "start": 14.21,
+          "end": 14.41,
+          "confidence": 0.996
+        },
+        {
+          "text": "command,",
+          "start": 14.41,
+          "end": 14.83,
+          "confidence": 0.278
+        },
+        {
+          "text": "close",
+          "start": 14.89,
+          "end": 15.25,
+          "confidence": 0.605
+        },
+        {
+          "text": "the",
+          "start": 15.25,
+          "end": 15.43,
+          "confidence": 0.998
+        },
+        {
+          "text": "cupboard,",
+          "start": 15.43,
+          "end": 15.71,
+          "confidence": 0.965
+        },
+        {
+          "text": "is",
+          "start": 15.91,
+          "end": 16.03,
+          "confidence": 0.999
+        },
+        {
+          "text": "executed.",
+          "start": 16.03,
+          "end": 16.57,
+          "confidence": 0.997
+        },
+        {
+          "text": "I'm",
+          "start": 20.849999999999998,
+          "end": 21.11,
+          "confidence": 0.99
+        },
+        {
+          "text": "listening.",
+          "start": 21.11,
+          "end": 21.41,
+          "confidence": 0.941
+        },
+        {
+          "text": "Go.",
+          "start": 21.93,
+          "end": 22.229999999999997,
+          "confidence": 0.365
+        },
+        {
+          "text": "Is",
+          "start": 25.91,
+          "end": 26.07,
+          "confidence": 0.695
+        },
+        {
+          "text": "there",
+          "start": 26.07,
+          "end": 26.25,
+          "confidence": 0.999
+        },
+        {
+          "text": "anything",
+          "start": 26.25,
+          "end": 26.59,
+          "confidence": 0.998
+        },
+        {
+          "text": "specific",
+          "start": 26.59,
+          "end": 27.07,
+          "confidence": 0.998
+        },
+        {
+          "text": "you'd",
+          "start": 27.07,
+          "end": 27.47,
+          "confidence": 0.993
+        },
+        {
+          "text": "like",
+          "start": 27.47,
+          "end": 27.61,
+          "confidence": 0.998
+        },
+        {
+          "text": "to",
+          "start": 27.61,
+          "end": 27.75,
+          "confidence": 0.994
+        },
+        {
+          "text": "ask",
+          "start": 27.75,
+          "end": 28.029999999999998,
+          "confidence": 0.998
+        },
+        {
+          "text": "about",
+          "start": 28.029999999999998,
+          "end": 28.229999999999997,
+          "confidence": 0.968
+        },
+        {
+          "text": "your",
+          "start": 28.229999999999997,
+          "end": 28.41,
+          "confidence": 0.996
+        },
+        {
+          "text": "project,",
+          "start": 28.41,
+          "end": 28.83,
+          "confidence": 0.957
+        },
+        {
+          "text": "Sammy?",
+          "start": 28.869999999999997,
+          "end": 29.229999999999997,
+          "confidence": 0.935
+        },
+        {
+          "text": "What's",
+          "start": 30.47,
+          "end": 30.81,
+          "confidence": 0.776
+        },
+        {
+          "text": "the",
+          "start": 30.81,
+          "end": 30.93,
+          "confidence": 0.998
+        },
+        {
+          "text": "issue",
+          "start": 30.93,
+          "end": 31.209999999999997,
+          "confidence": 0.997
+        },
+        {
+          "text": "you're",
+          "start": 31.209999999999997,
+          "end": 31.529999999999998,
+          "confidence": 0.991
+        },
+        {
+          "text": "facing",
+          "start": 31.529999999999998,
+          "end": 31.889999999999997,
+          "confidence": 0.999
+        },
+        {
+          "text": "right",
+          "start": 31.889999999999997,
+          "end": 32.15,
+          "confidence": 0.995
+        },
+        {
+          "text": "now?",
+          "start": 32.15,
+          "end": 32.43,
+          "confidence": 0.97
+        },
+        {
+          "text": "Are",
+          "start": 35.73,
+          "end": 35.83,
+          "confidence": 0.762
+        },
+        {
+          "text": "you",
+          "start": 35.83,
+          "end": 36.01,
+          "confidence": 0.997
+        },
+        {
+          "text": "dealing",
+          "start": 36.01,
+          "end": 36.269999999999996,
+          "confidence": 0.997
+        },
+        {
+          "text": "with",
+          "start": 36.269999999999996,
+          "end": 36.49,
+          "confidence": 0.99
+        },
+        {
+          "text": "a",
+          "start": 36.49,
+          "end": 36.629999999999995,
+          "confidence": 0.991
+        },
+        {
+          "text": "specific",
+          "start": 36.629999999999995,
+          "end": 36.97,
+          "confidence": 0.995
+        },
+        {
+          "text": "technical",
+          "start": 36.97,
+          "end": 37.37,
+          "confidence": 0.989
+        },
+        {
+          "text": "problem,",
+          "start": 37.37,
+          "end": 37.87,
+          "confidence": 0.567
+        },
+        {
+          "text": "or",
+          "start": 37.949999999999996,
+          "end": 38.19,
+          "confidence": 0.798
+        },
+        {
+          "text": "is",
+          "start": 38.19,
+          "end": 38.33,
+          "confidence": 0.984
+        },
+        {
+          "text": "it",
+          "start": 38.33,
+          "end": 38.449999999999996,
+          "confidence": 0.996
+        },
+        {
+          "text": "a",
+          "start": 38.449999999999996,
+          "end": 38.53,
+          "confidence": 0.993
+        },
+        {
+          "text": "project",
+          "start": 38.53,
+          "end": 38.85,
+          "confidence": 0.976
+        },
+        {
+          "text": "schedule",
+          "start": 38.85,
+          "end": 39.25,
+          "confidence": 0.986
+        },
+        {
+          "text": "issue?",
+          "start": 39.25,
+          "end": 39.67,
+          "confidence": 0.99
+        },
+        {
+          "text": "Should",
+          "start": 42.17,
+          "end": 42.41,
+          "confidence": 0.586
+        },
+        {
+          "text": "I",
+          "start": 42.41,
+          "end": 42.65,
+          "confidence": 0.989
+        },
+        {
+          "text": "see",
+          "start": 42.65,
+          "end": 42.87,
+          "confidence": 0.998
+        },
+        {
+          "text": "what's",
+          "start": 42.87,
+          "end": 43.15,
+          "confidence": 0.998
+        },
+        {
+          "text": "already",
+          "start": 43.15,
+          "end": 43.51,
+          "confidence": 0.999
+        },
+        {
+          "text": "logged,",
+          "start": 43.51,
+          "end": 43.93,
+          "confidence": 0.635
+        },
+        {
+          "text": "or",
+          "start": 44.269999999999996,
+          "end": 44.65,
+          "confidence": 0.973
+        },
+        {
+          "text": "is",
+          "start": 44.65,
+          "end": 44.809999999999995,
+          "confidence": 0.997
+        },
+        {
+          "text": "there",
+          "start": 44.809999999999995,
+          "end": 44.97,
+          "confidence": 0.998
+        },
+        {
+          "text": "something",
+          "start": 44.97,
+          "end": 45.309999999999995,
+          "confidence": 0.994
+        },
+        {
+          "text": "new?",
+          "start": 45.309999999999995,
+          "end": 45.65,
+          "confidence": 0.945
+        },
+        {
+          "text": "Which",
+          "start": 48.33,
+          "end": 48.57,
+          "confidence": 0.576
+        },
+        {
+          "text": "specific-",
+          "start": 48.57,
+          "end": 48.91,
+          "confidence": 0.123
+        }
+      ],
+      "pcm": {
+        "rate": 24000,
+        "samples": 1174430,
+        "peak": 0.91119384765625,
+        "full_scale_samples": 0,
+        "gain_changed": false
+      },
+      "all_user_samples_processed": true,
+      "worker_events": [],
+      "native_request_count": 2,
+      "compute_p95_s": 0.042719815793680026,
+      "maximum_input_backlog_s": 3.24947776100249,
+      "playout": {
+        "sample_rate": 24000,
+        "startup_buffer_s": 0.16,
+        "packet_count": 569,
+        "source_samples": 1092480,
+        "underrun_count": 0,
+        "underrun_samples": 0
+      },
+      "human_listening_performed": false,
+      "candidate_adopted": false,
+      "quiet_interval_s": [
+        17.54,
+        22.1
+      ],
+      "source_wav_sha256": "f5fbe6856cd4d66314c8ddc8b421374abd133817cb277281599495f76e9159b8",
+      "source_sidecar_sha256": "f81d935cb50272609a3e8cc2f04aed056f57a7899a732e1924d1e4fde061731a",
+      "diagnostic_words_in_quiet": [
+        {
+          "text": "I'm",
+          "start": 20.849999999999998,
+          "end": 21.11,
+          "confidence": 0.99
+        },
+        {
+          "text": "listening.",
+          "start": 21.11,
+          "end": 21.41,
+          "confidence": 0.941
+        },
+        {
+          "text": "Go.",
+          "start": 21.93,
+          "end": 22.229999999999997,
+          "confidence": 0.365
+        }
+      ],
+      "diagnostic_actual_pcm_at_words": [
+        {
+          "word": "I'm",
+          "start": 20.849999999999998,
+          "end": 21.11,
+          "rms": 0.13926446173840862,
+          "peak": 0.41143798828125
+        },
+        {
+          "word": "listening.",
+          "start": 21.11,
+          "end": 21.41,
+          "rms": 0.10277208857498055,
+          "peak": 0.349456787109375
+        },
+        {
+          "word": "Go.",
+          "start": 21.93,
+          "end": 22.229999999999997,
+          "rms": 0.09088028363481095,
+          "peak": 0.312744140625
+        }
+      ],
+      "quiet_interval_word_check_passed": false,
+      "clock_warning": "No global speech gate bypass; failed timestamps make overlaps diagnostic only",
+      "ordinary_core_correct": null,
+      "review": "Wrong steps/role and premature cupboard in sampled text; two unexecuted RET markers. Whole speech physical onset fails, so pause-overlap word times are diagnostic only; no passing timestamp subset.",
+      "task_passed": false
+    },
+    {
+      "index": 6,
+      "scenario": "recovery-validation-000",
+      "expected": "Actual read and correctly spoken value, independent ordinary answer while waiting",
+      "report_sha256": "da382213d6ebd89f21bb090342dea65f6697d51c0097ba249a42a331f864207a",
+      "audio_sha256": "690d098f8bba03b3144f402259e117f95076b0d591b6b1f2e86fd5e3a93cf5c5",
+      "sampled_model_text": "Sure, I'll find that. Which project should I check for? It's because light travels much, much faster than sound, that's why you see the light before the thunder reaches you. The room marker for Project Willow North is yellow. You're done checking, so now we've checked the room marker for Project Willow North. It's Yellow. And you're all set. Is there anything else I can check for you regarding the project? And the tool reports the room marker for Project Willow North is Yellow. You're welcome.",
+      "independent_spoken_text": " Sure, I'll find that. Which project should I check for? It's because light travels much, much faster than sound, that's why you see the light before the thunder reaches you. The room marker for Project Willow North is yellow. You're done checking, so now we've checked the room marker for Project Willow North. Video over yellow. Is there anything else I can check for you regarding the project? And the tool reports the room marker for Project Willow North is yellow. You're well-",
+      "speech_wer": 0.0851063829787234,
+      "time_bounds_valid": true,
+      "word_bounds_valid": true,
+      "first_onset_valid": true,
+      "speech_quality_passed": false,
+      "first_nonzero_pcm_s": 2.0335833333333335,
+      "word_timestamps": [
+        {
+          "text": "Sure,",
+          "start": 7.57,
+          "end": 7.73,
+          "confidence": 0.433
+        },
+        {
+          "text": "I'll",
+          "start": 7.73,
+          "end": 8.05,
+          "confidence": 0.97
+        },
+        {
+          "text": "find",
+          "start": 8.05,
+          "end": 8.25,
+          "confidence": 0.997
+        },
+        {
+          "text": "that.",
+          "start": 8.25,
+          "end": 8.47,
+          "confidence": 0.83
+        },
+        {
+          "text": "Which",
+          "start": 8.91,
+          "end": 9.09,
+          "confidence": 0.715
+        },
+        {
+          "text": "project",
+          "start": 9.09,
+          "end": 9.55,
+          "confidence": 0.983
+        },
+        {
+          "text": "should",
+          "start": 9.55,
+          "end": 9.75,
+          "confidence": 0.995
+        },
+        {
+          "text": "I",
+          "start": 9.75,
+          "end": 9.85,
+          "confidence": 0.969
+        },
+        {
+          "text": "check",
+          "start": 9.85,
+          "end": 10.01,
+          "confidence": 0.995
+        },
+        {
+          "text": "for?",
+          "start": 10.01,
+          "end": 10.309999999999999,
+          "confidence": 0.892
+        },
+        {
+          "text": "It's",
+          "start": 15.629999999999999,
+          "end": 15.87,
+          "confidence": 0.972
+        },
+        {
+          "text": "because",
+          "start": 15.87,
+          "end": 16.11,
+          "confidence": 1.0
+        },
+        {
+          "text": "light",
+          "start": 16.11,
+          "end": 16.45,
+          "confidence": 0.998
+        },
+        {
+          "text": "travels",
+          "start": 16.45,
+          "end": 16.79,
+          "confidence": 0.999
+        },
+        {
+          "text": "much,",
+          "start": 16.79,
+          "end": 17.29,
+          "confidence": 0.968
+        },
+        {
+          "text": "much",
+          "start": 17.31,
+          "end": 17.67,
+          "confidence": 0.992
+        },
+        {
+          "text": "faster",
+          "start": 17.67,
+          "end": 18.05,
+          "confidence": 0.999
+        },
+        {
+          "text": "than",
+          "start": 18.05,
+          "end": 18.31,
+          "confidence": 0.998
+        },
+        {
+          "text": "sound,",
+          "start": 18.31,
+          "end": 18.63,
+          "confidence": 0.293
+        },
+        {
+          "text": "that's",
+          "start": 18.83,
+          "end": 19.31,
+          "confidence": 0.928
+        },
+        {
+          "text": "why",
+          "start": 19.31,
+          "end": 19.45,
+          "confidence": 0.997
+        },
+        {
+          "text": "you",
+          "start": 19.45,
+          "end": 19.61,
+          "confidence": 0.997
+        },
+        {
+          "text": "see",
+          "start": 19.61,
+          "end": 19.81,
+          "confidence": 0.995
+        },
+        {
+          "text": "the",
+          "start": 19.81,
+          "end": 19.99,
+          "confidence": 0.991
+        },
+        {
+          "text": "light",
+          "start": 19.99,
+          "end": 20.19,
+          "confidence": 0.993
+        },
+        {
+          "text": "before",
+          "start": 20.19,
+          "end": 20.45,
+          "confidence": 0.844
+        },
+        {
+          "text": "the",
+          "start": 20.45,
+          "end": 20.669999999999998,
+          "confidence": 0.475
+        },
+        {
+          "text": "thunder",
+          "start": 20.669999999999998,
+          "end": 20.849999999999998,
+          "confidence": 0.726
+        },
+        {
+          "text": "reaches",
+          "start": 20.849999999999998,
+          "end": 21.21,
+          "confidence": 0.997
+        },
+        {
+          "text": "you.",
+          "start": 21.21,
+          "end": 21.49,
+          "confidence": 0.594
+        },
+        {
+          "text": "The",
+          "start": 21.69,
+          "end": 21.81,
+          "confidence": 0.847
+        },
+        {
+          "text": "room",
+          "start": 21.81,
+          "end": 22.03,
+          "confidence": 0.982
+        },
+        {
+          "text": "marker",
+          "start": 22.03,
+          "end": 22.33,
+          "confidence": 0.999
+        },
+        {
+          "text": "for",
+          "start": 22.33,
+          "end": 22.509999999999998,
+          "confidence": 0.999
+        },
+        {
+          "text": "Project",
+          "start": 22.509999999999998,
+          "end": 22.83,
+          "confidence": 0.872
+        },
+        {
+          "text": "Willow",
+          "start": 22.83,
+          "end": 23.23,
+          "confidence": 0.992
+        },
+        {
+          "text": "North",
+          "start": 23.23,
+          "end": 23.43,
+          "confidence": 0.973
+        },
+        {
+          "text": "is",
+          "start": 23.43,
+          "end": 23.63,
+          "confidence": 0.99
+        },
+        {
+          "text": "yellow.",
+          "start": 23.63,
+          "end": 23.849999999999998,
+          "confidence": 0.943
+        },
+        {
+          "text": "You're",
+          "start": 24.23,
+          "end": 24.43,
+          "confidence": 0.772
+        },
+        {
+          "text": "done",
+          "start": 24.43,
+          "end": 24.61,
+          "confidence": 0.992
+        },
+        {
+          "text": "checking,",
+          "start": 24.61,
+          "end": 24.93,
+          "confidence": 0.822
+        },
+        {
+          "text": "so",
+          "start": 25.11,
+          "end": 25.45,
+          "confidence": 0.97
+        },
+        {
+          "text": "now",
+          "start": 25.45,
+          "end": 25.59,
+          "confidence": 0.995
+        },
+        {
+          "text": "we've",
+          "start": 25.59,
+          "end": 25.87,
+          "confidence": 0.997
+        },
+        {
+          "text": "checked",
+          "start": 25.87,
+          "end": 26.03,
+          "confidence": 0.99
+        },
+        {
+          "text": "the",
+          "start": 26.03,
+          "end": 26.21,
+          "confidence": 0.991
+        },
+        {
+          "text": "room",
+          "start": 26.21,
+          "end": 26.43,
+          "confidence": 0.98
+        },
+        {
+          "text": "marker",
+          "start": 26.43,
+          "end": 26.69,
+          "confidence": 0.99
+        },
+        {
+          "text": "for",
+          "start": 26.69,
+          "end": 26.89,
+          "confidence": 0.99
+        },
+        {
+          "text": "Project",
+          "start": 26.89,
+          "end": 27.19,
+          "confidence": 0.836
+        },
+        {
+          "text": "Willow",
+          "start": 27.19,
+          "end": 27.669999999999998,
+          "confidence": 0.985
+        },
+        {
+          "text": "North.",
+          "start": 27.669999999999998,
+          "end": 27.849999999999998,
+          "confidence": 0.884
+        },
+        {
+          "text": "Video",
+          "start": 29.11,
+          "end": 29.29,
+          "confidence": 0.0
+        },
+        {
+          "text": "over",
+          "start": 29.29,
+          "end": 29.55,
+          "confidence": 0.74
+        },
+        {
+          "text": "yellow.",
+          "start": 29.55,
+          "end": 29.81,
+          "confidence": 0.461
+        },
+        {
+          "text": "Is",
+          "start": 34.39,
+          "end": 34.510000000000005,
+          "confidence": 0.855
+        },
+        {
+          "text": "there",
+          "start": 34.510000000000005,
+          "end": 34.650000000000006,
+          "confidence": 0.999
+        },
+        {
+          "text": "anything",
+          "start": 34.650000000000006,
+          "end": 34.95,
+          "confidence": 0.998
+        },
+        {
+          "text": "else",
+          "start": 34.95,
+          "end": 35.190000000000005,
+          "confidence": 0.998
+        },
+        {
+          "text": "I",
+          "start": 35.190000000000005,
+          "end": 35.370000000000005,
+          "confidence": 0.989
+        },
+        {
+          "text": "can",
+          "start": 35.370000000000005,
+          "end": 35.49,
+          "confidence": 0.999
+        },
+        {
+          "text": "check",
+          "start": 35.49,
+          "end": 35.690000000000005,
+          "confidence": 0.996
+        },
+        {
+          "text": "for",
+          "start": 35.690000000000005,
+          "end": 35.830000000000005,
+          "confidence": 0.993
+        },
+        {
+          "text": "you",
+          "start": 35.830000000000005,
+          "end": 35.95,
+          "confidence": 0.998
+        },
+        {
+          "text": "regarding",
+          "start": 35.95,
+          "end": 36.27,
+          "confidence": 0.984
+        },
+        {
+          "text": "the",
+          "start": 36.27,
+          "end": 36.470000000000006,
+          "confidence": 0.995
+        },
+        {
+          "text": "project?",
+          "start": 36.470000000000006,
+          "end": 36.81,
+          "confidence": 0.769
+        },
+        {
+          "text": "And",
+          "start": 37.75,
+          "end": 37.89,
+          "confidence": 0.644
+        },
+        {
+          "text": "the",
+          "start": 37.89,
+          "end": 38.010000000000005,
+          "confidence": 0.989
+        },
+        {
+          "text": "tool",
+          "start": 38.010000000000005,
+          "end": 38.17,
+          "confidence": 0.993
+        },
+        {
+          "text": "reports",
+          "start": 38.17,
+          "end": 38.650000000000006,
+          "confidence": 0.999
+        },
+        {
+          "text": "the",
+          "start": 38.650000000000006,
+          "end": 38.830000000000005,
+          "confidence": 0.987
+        },
+        {
+          "text": "room",
+          "start": 38.830000000000005,
+          "end": 39.03,
+          "confidence": 0.961
+        },
+        {
+          "text": "marker",
+          "start": 39.03,
+          "end": 39.290000000000006,
+          "confidence": 0.994
+        },
+        {
+          "text": "for",
+          "start": 39.290000000000006,
+          "end": 39.49,
+          "confidence": 0.984
+        },
+        {
+          "text": "Project",
+          "start": 39.49,
+          "end": 39.790000000000006,
+          "confidence": 0.813
+        },
+        {
+          "text": "Willow",
+          "start": 39.790000000000006,
+          "end": 40.31,
+          "confidence": 0.988
+        },
+        {
+          "text": "North",
+          "start": 40.31,
+          "end": 40.53,
+          "confidence": 0.951
+        },
+        {
+          "text": "is",
+          "start": 40.53,
+          "end": 40.790000000000006,
+          "confidence": 0.99
+        },
+        {
+          "text": "yellow.",
+          "start": 40.790000000000006,
+          "end": 41.010000000000005,
+          "confidence": 0.961
+        },
+        {
+          "text": "You're",
+          "start": 41.67,
+          "end": 41.910000000000004,
+          "confidence": 0.85
+        },
+        {
+          "text": "well-",
+          "start": 41.910000000000004,
+          "end": 42.010000000000005,
+          "confidence": 0.06
+        }
+      ],
+      "pcm": {
+        "rate": 24000,
+        "samples": 1008806,
+        "peak": 0.606353759765625,
+        "full_scale_samples": 0,
+        "gain_changed": false
+      },
+      "all_user_samples_processed": true,
+      "worker_events": [
+        {
+          "event": "native_backend_requested",
+          "task_id": "ret-0",
+          "at_s": 5.47620245302096,
+          "input_available_s": 5.44,
+          "input_samples": 130560,
+          "audio_sha256": "ca8749b31e893c4e0730e8c3dd637caadf4475a7f7bc2df8c3142a5c00ce62fb"
+        },
+        {
+          "event": "backend_result_ready",
+          "task_id": "ret-0",
+          "ready_at_s": 12.671239068033174,
+          "applied_at_s": 12.7893371770042,
+          "disposition": "actual backend text injected",
+          "prefill_ms": 62.357084010727704,
+          "route": "delegate",
+          "receipts": [
+            {
+              "task_id": "ret-0",
+              "revision": 1,
+              "tool": "lookup_record",
+              "project": "Willow North",
+              "field": "room marker",
+              "value": "yellow circle",
+              "read_only": true,
+              "executed": true
+            }
+          ],
+          "content": "The room marker for Project Willow North is a yellow circle."
+        }
+      ],
+      "native_request_count": 1,
+      "compute_p95_s": 0.03649747032322921,
+      "maximum_input_backlog_s": 1.8685313360090368,
+      "playout": {
+        "sample_rate": 24000,
+        "startup_buffer_s": 0.16,
+        "packet_count": 500,
+        "source_samples": 960000,
+        "underrun_count": 0,
+        "underrun_samples": 0
+      },
+      "human_listening_performed": false,
+      "candidate_adopted": false,
+      "ordinary_core_correct": null,
+      "review": "Actual yellow-circle read/injection but sampled text and ASR omit circle. Ordinary light/sound answer is correct. Whole speech WER0.085106 exceeds0.08; no qualified timed subset.",
+      "task_passed": false
+    },
+    {
+      "index": 7,
+      "scenario": "recovery-validation-000",
+      "expected": "Changed actual receipt changes spoken value without yellow-circle carryover",
+      "report_sha256": "04af0c9a13233e8587cff279462e6530ddfefbdd8d8e6cbb3bd65ce337850ee6",
+      "audio_sha256": "fd6d54244d8ea7da5f8ef6afcd394c875e1802a41f0e6de4ce93baf1b31d2bd4",
+      "sampled_model_text": "Sure, I'll find that. Which project should I check for? The It's a common feeling, almost like the sky's getting ready to open. Light happens when the electrons in the cloud get excited, releasing light energy. It's a beautiful mystery. And the thunder will arrive soon, don't worry. The room marker for Project Willow North is copper diamond.. It's the flash of light that reaches us, and the sound follows almost instantly, almost as fast. And the other one is the flash which reaches us almost instantly.. almost instantly. The flash reaches",
+      "independent_spoken_text": " Sure, I'll find that. Which project should I check for? It's a common feeling, almost like the sky's getting ready to open, light happens when the electrons in the cloud get excited releasing light energy, it's a beautiful mystery, and the thunder will arrive soon don't worry. The room marker for project willow north is copper diamond, it's the flash of light that reaches us, and the sound follows almost instantly, almost as fast, and the other one is the flash which reaches us almost instantly, the flash re-",
+      "speech_wer": 0.04081632653061224,
+      "time_bounds_valid": true,
+      "word_bounds_valid": true,
+      "first_onset_valid": true,
+      "speech_quality_passed": true,
+      "first_nonzero_pcm_s": 1.8807916666666666,
+      "word_timestamps": [
+        {
+          "text": "Sure,",
+          "start": 7.41,
+          "end": 7.57,
+          "confidence": 0.416
+        },
+        {
+          "text": "I'll",
+          "start": 7.59,
+          "end": 7.89,
+          "confidence": 0.968
+        },
+        {
+          "text": "find",
+          "start": 7.89,
+          "end": 8.09,
+          "confidence": 0.996
+        },
+        {
+          "text": "that.",
+          "start": 8.09,
+          "end": 8.309999999999999,
+          "confidence": 0.808
+        },
+        {
+          "text": "Which",
+          "start": 8.75,
+          "end": 8.93,
+          "confidence": 0.661
+        },
+        {
+          "text": "project",
+          "start": 8.93,
+          "end": 9.370000000000001,
+          "confidence": 0.983
+        },
+        {
+          "text": "should",
+          "start": 9.370000000000001,
+          "end": 9.57,
+          "confidence": 0.995
+        },
+        {
+          "text": "I",
+          "start": 9.57,
+          "end": 9.690000000000001,
+          "confidence": 0.975
+        },
+        {
+          "text": "check",
+          "start": 9.690000000000001,
+          "end": 9.89,
+          "confidence": 0.995
+        },
+        {
+          "text": "for?",
+          "start": 9.89,
+          "end": 10.169999999999998,
+          "confidence": 0.928
+        },
+        {
+          "text": "It's",
+          "start": 15.43,
+          "end": 15.649999999999999,
+          "confidence": 0.966
+        },
+        {
+          "text": "a",
+          "start": 15.649999999999999,
+          "end": 15.73,
+          "confidence": 1.0
+        },
+        {
+          "text": "common",
+          "start": 15.73,
+          "end": 15.969999999999999,
+          "confidence": 1.0
+        },
+        {
+          "text": "feeling,",
+          "start": 15.969999999999999,
+          "end": 16.33,
+          "confidence": 0.738
+        },
+        {
+          "text": "almost",
+          "start": 16.59,
+          "end": 16.71,
+          "confidence": 0.992
+        },
+        {
+          "text": "like",
+          "start": 16.71,
+          "end": 17.03,
+          "confidence": 1.0
+        },
+        {
+          "text": "the",
+          "start": 17.03,
+          "end": 17.19,
+          "confidence": 0.999
+        },
+        {
+          "text": "sky's",
+          "start": 17.19,
+          "end": 17.57,
+          "confidence": 0.777
+        },
+        {
+          "text": "getting",
+          "start": 17.57,
+          "end": 17.75,
+          "confidence": 0.997
+        },
+        {
+          "text": "ready",
+          "start": 17.75,
+          "end": 18.009999999999998,
+          "confidence": 1.0
+        },
+        {
+          "text": "to",
+          "start": 18.009999999999998,
+          "end": 18.209999999999997,
+          "confidence": 0.999
+        },
+        {
+          "text": "open,",
+          "start": 18.209999999999997,
+          "end": 18.55,
+          "confidence": 0.376
+        },
+        {
+          "text": "light",
+          "start": 18.73,
+          "end": 19.07,
+          "confidence": 0.818
+        },
+        {
+          "text": "happens",
+          "start": 19.07,
+          "end": 19.45,
+          "confidence": 0.998
+        },
+        {
+          "text": "when",
+          "start": 19.45,
+          "end": 19.65,
+          "confidence": 0.997
+        },
+        {
+          "text": "the",
+          "start": 19.65,
+          "end": 19.81,
+          "confidence": 0.48
+        },
+        {
+          "text": "electrons",
+          "start": 19.81,
+          "end": 20.13,
+          "confidence": 0.996
+        },
+        {
+          "text": "in",
+          "start": 20.13,
+          "end": 20.41,
+          "confidence": 0.964
+        },
+        {
+          "text": "the",
+          "start": 20.41,
+          "end": 20.509999999999998,
+          "confidence": 1.0
+        },
+        {
+          "text": "cloud",
+          "start": 20.509999999999998,
+          "end": 20.689999999999998,
+          "confidence": 0.991
+        },
+        {
+          "text": "get",
+          "start": 20.689999999999998,
+          "end": 20.89,
+          "confidence": 0.992
+        },
+        {
+          "text": "excited",
+          "start": 20.89,
+          "end": 21.27,
+          "confidence": 0.997
+        },
+        {
+          "text": "releasing",
+          "start": 21.27,
+          "end": 21.75,
+          "confidence": 0.93
+        },
+        {
+          "text": "light",
+          "start": 21.75,
+          "end": 22.11,
+          "confidence": 0.978
+        },
+        {
+          "text": "energy,",
+          "start": 22.11,
+          "end": 22.43,
+          "confidence": 0.556
+        },
+        {
+          "text": "it's",
+          "start": 22.65,
+          "end": 23.009999999999998,
+          "confidence": 0.983
+        },
+        {
+          "text": "a",
+          "start": 23.009999999999998,
+          "end": 23.09,
+          "confidence": 1.0
+        },
+        {
+          "text": "beautiful",
+          "start": 23.09,
+          "end": 23.33,
+          "confidence": 0.997
+        },
+        {
+          "text": "mystery,",
+          "start": 23.33,
+          "end": 23.75,
+          "confidence": 0.886
+        },
+        {
+          "text": "and",
+          "start": 23.99,
+          "end": 24.189999999999998,
+          "confidence": 0.952
+        },
+        {
+          "text": "the",
+          "start": 24.189999999999998,
+          "end": 24.31,
+          "confidence": 0.503
+        },
+        {
+          "text": "thunder",
+          "start": 24.31,
+          "end": 24.55,
+          "confidence": 0.055
+        },
+        {
+          "text": "will",
+          "start": 24.55,
+          "end": 24.77,
+          "confidence": 0.995
+        },
+        {
+          "text": "arrive",
+          "start": 24.77,
+          "end": 25.07,
+          "confidence": 0.994
+        },
+        {
+          "text": "soon",
+          "start": 25.07,
+          "end": 25.41,
+          "confidence": 0.995
+        },
+        {
+          "text": "don't",
+          "start": 25.41,
+          "end": 25.73,
+          "confidence": 0.769
+        },
+        {
+          "text": "worry.",
+          "start": 25.73,
+          "end": 25.93,
+          "confidence": 0.705
+        },
+        {
+          "text": "The",
+          "start": 26.47,
+          "end": 26.63,
+          "confidence": 0.849
+        },
+        {
+          "text": "room",
+          "start": 26.63,
+          "end": 26.849999999999998,
+          "confidence": 0.987
+        },
+        {
+          "text": "marker",
+          "start": 26.849999999999998,
+          "end": 27.09,
+          "confidence": 0.998
+        },
+        {
+          "text": "for",
+          "start": 27.09,
+          "end": 27.29,
+          "confidence": 0.999
+        },
+        {
+          "text": "project",
+          "start": 27.29,
+          "end": 27.59,
+          "confidence": 0.127
+        },
+        {
+          "text": "willow",
+          "start": 27.59,
+          "end": 27.99,
+          "confidence": 0.818
+        },
+        {
+          "text": "north",
+          "start": 27.99,
+          "end": 28.169999999999998,
+          "confidence": 0.764
+        },
+        {
+          "text": "is",
+          "start": 28.169999999999998,
+          "end": 28.41,
+          "confidence": 0.991
+        },
+        {
+          "text": "copper",
+          "start": 28.41,
+          "end": 28.73,
+          "confidence": 0.98
+        },
+        {
+          "text": "diamond,",
+          "start": 28.73,
+          "end": 29.009999999999998,
+          "confidence": 0.083
+        },
+        {
+          "text": "it's",
+          "start": 29.33,
+          "end": 31.89,
+          "confidence": 0.775
+        },
+        {
+          "text": "the",
+          "start": 31.89,
+          "end": 31.99,
+          "confidence": 0.98
+        },
+        {
+          "text": "flash",
+          "start": 31.99,
+          "end": 32.33,
+          "confidence": 0.97
+        },
+        {
+          "text": "of",
+          "start": 32.33,
+          "end": 32.53,
+          "confidence": 0.986
+        },
+        {
+          "text": "light",
+          "start": 32.53,
+          "end": 32.77,
+          "confidence": 0.847
+        },
+        {
+          "text": "that",
+          "start": 32.77,
+          "end": 32.97,
+          "confidence": 0.851
+        },
+        {
+          "text": "reaches",
+          "start": 32.97,
+          "end": 33.230000000000004,
+          "confidence": 0.928
+        },
+        {
+          "text": "us,",
+          "start": 33.230000000000004,
+          "end": 33.61,
+          "confidence": 0.482
+        },
+        {
+          "text": "and",
+          "start": 33.79,
+          "end": 34.190000000000005,
+          "confidence": 0.988
+        },
+        {
+          "text": "the",
+          "start": 34.190000000000005,
+          "end": 34.31,
+          "confidence": 0.998
+        },
+        {
+          "text": "sound",
+          "start": 34.31,
+          "end": 34.61,
+          "confidence": 0.998
+        },
+        {
+          "text": "follows",
+          "start": 34.61,
+          "end": 34.910000000000004,
+          "confidence": 0.998
+        },
+        {
+          "text": "almost",
+          "start": 34.910000000000004,
+          "end": 35.29,
+          "confidence": 0.992
+        },
+        {
+          "text": "instantly,",
+          "start": 35.29,
+          "end": 35.85,
+          "confidence": 0.989
+        },
+        {
+          "text": "almost",
+          "start": 36.25,
+          "end": 36.53,
+          "confidence": 0.99
+        },
+        {
+          "text": "as",
+          "start": 36.53,
+          "end": 36.77,
+          "confidence": 0.987
+        },
+        {
+          "text": "fast,",
+          "start": 36.77,
+          "end": 37.150000000000006,
+          "confidence": 0.873
+        },
+        {
+          "text": "and",
+          "start": 37.410000000000004,
+          "end": 37.71,
+          "confidence": 0.989
+        },
+        {
+          "text": "the",
+          "start": 37.71,
+          "end": 37.830000000000005,
+          "confidence": 0.998
+        },
+        {
+          "text": "other",
+          "start": 37.830000000000005,
+          "end": 38.03,
+          "confidence": 0.996
+        },
+        {
+          "text": "one",
+          "start": 38.03,
+          "end": 38.230000000000004,
+          "confidence": 0.953
+        },
+        {
+          "text": "is",
+          "start": 38.230000000000004,
+          "end": 38.39,
+          "confidence": 0.935
+        },
+        {
+          "text": "the",
+          "start": 38.39,
+          "end": 38.550000000000004,
+          "confidence": 0.978
+        },
+        {
+          "text": "flash",
+          "start": 38.550000000000004,
+          "end": 38.89,
+          "confidence": 0.966
+        },
+        {
+          "text": "which",
+          "start": 38.970000000000006,
+          "end": 39.190000000000005,
+          "confidence": 0.948
+        },
+        {
+          "text": "reaches",
+          "start": 39.190000000000005,
+          "end": 39.45,
+          "confidence": 0.997
+        },
+        {
+          "text": "us",
+          "start": 39.45,
+          "end": 39.71,
+          "confidence": 0.995
+        },
+        {
+          "text": "almost",
+          "start": 39.71,
+          "end": 40.010000000000005,
+          "confidence": 0.991
+        },
+        {
+          "text": "instantly,",
+          "start": 40.010000000000005,
+          "end": 40.61,
+          "confidence": 0.146
+        },
+        {
+          "text": "the",
+          "start": 41.27,
+          "end": 41.43,
+          "confidence": 0.833
+        },
+        {
+          "text": "flash",
+          "start": 41.43,
+          "end": 41.690000000000005,
+          "confidence": 0.891
+        },
+        {
+          "text": "re-",
+          "start": 41.690000000000005,
+          "end": 41.85,
+          "confidence": 0.355
+        }
+      ],
+      "pcm": {
+        "rate": 24000,
+        "samples": 1005139,
+        "peak": 0.678131103515625,
+        "full_scale_samples": 0,
+        "gain_changed": false
+      },
+      "all_user_samples_processed": true,
+      "worker_events": [
+        {
+          "event": "native_backend_requested",
+          "task_id": "ret-0",
+          "at_s": 5.476419272017665,
+          "input_available_s": 5.44,
+          "input_samples": 130560,
+          "audio_sha256": "5361cb532dc8f6e17c13992abf70face32e2dba00a77bec7def0c203d1e35636"
+        },
+        {
+          "event": "backend_result_ready",
+          "task_id": "ret-0",
+          "ready_at_s": 10.32297214801656,
+          "applied_at_s": 10.469991409976501,
+          "disposition": "actual backend text injected",
+          "prefill_ms": 63.475291011855006,
+          "route": "delegate",
+          "receipts": [
+            {
+              "task_id": "ret-0",
+              "revision": 1,
+              "tool": "lookup_record",
+              "project": "Willow North",
+              "field": "room marker",
+              "value": "copper diamond",
+              "read_only": true,
+              "executed": true
+            }
+          ],
+          "content": "The room marker for Project Willow North is copper diamond."
+        },
+        {
+          "event": "native_backend_requested",
+          "task_id": "ret-1",
+          "at_s": 24.676387062994763,
+          "input_available_s": 24.64,
+          "input_samples": 591360,
+          "audio_sha256": "9ca63d9e2b4fa6f58f3fc90b248c48cc3e1e1f81b2a9c0b4ae081c57d258157c"
+        },
+        {
+          "event": "backend_result_ready",
+          "task_id": "ret-1",
+          "ready_at_s": 27.527513471024577,
+          "applied_at_s": 27.659139528986998,
+          "disposition": "actual backend text injected",
+          "prefill_ms": 55.60518999118358,
+          "route": "answer",
+          "receipts": [],
+          "content": "Lightning reaches you before thunder because light travels much faster than sound. The flash is nearly instantaneous to us, while the sound takes longer to travel from the lightning strike."
+        }
+      ],
+      "native_request_count": 2,
+      "compute_p95_s": 0.03678327774687204,
+      "maximum_input_backlog_s": 1.7175591629836708,
+      "playout": {
+        "sample_rate": 24000,
+        "startup_buffer_s": 0.16,
+        "packet_count": 500,
+        "source_samples": 960000,
+        "underrun_count": 0,
+        "underrun_samples": 0
+      },
+      "human_listening_performed": false,
+      "candidate_adopted": false,
+      "ordinary_core_correct": null,
+      "review": "Independent valid whole ASR reports copper diamond28.41\u201329.01 after actual read injection10.469991. Partial result-use component; ordinary explanation wrong and second unnecessary request. Not a whole-task pass.",
+      "task_passed": false
+    },
+    {
+      "index": 8,
+      "scenario": "recovery-validation-006",
+      "expected": "Ask for project before lookup, then use actual named-project receipt without repeated questioning",
+      "report_sha256": "95e0338b28b167ffe826c62ba9f7a10cbf9c8df5de4b2c8ff4ef4774867f7e07",
+      "audio_sha256": "d0d51c9e914a404f2e667d8bd50a9f2f02ece05dc35c05b6909287e10dde3375",
+      "sampled_model_text": "Evaporation is the action of water turning into water vapor. Was there a specific term you were curious about, or is the definition itself what's unclear for you? Can I check for other terms like condensation or vaporization? The record for Willow West is now pending, and the evaporation value is",
+      "independent_spoken_text": " Evaporation is the action of water turning into water vapor. Was there a specific term you were curious about, or is the definition itself what's unclear for you? Can I check for other terms like condensation or vaporization? The record for Willow West is now pending, and the aberration value is",
+      "speech_wer": 0.019230769230769232,
+      "time_bounds_valid": true,
+      "word_bounds_valid": true,
+      "first_onset_valid": true,
+      "speech_quality_passed": true,
+      "first_nonzero_pcm_s": 1.8915416666666667,
+      "word_timestamps": [
+        {
+          "text": "Evaporation",
+          "start": 18.29,
+          "end": 18.869999999999997,
+          "confidence": 0.717
+        },
+        {
+          "text": "is",
+          "start": 18.869999999999997,
+          "end": 19.07,
+          "confidence": 0.944
+        },
+        {
+          "text": "the",
+          "start": 19.07,
+          "end": 19.23,
+          "confidence": 0.987
+        },
+        {
+          "text": "action",
+          "start": 19.23,
+          "end": 19.57,
+          "confidence": 0.985
+        },
+        {
+          "text": "of",
+          "start": 19.57,
+          "end": 19.869999999999997,
+          "confidence": 0.963
+        },
+        {
+          "text": "water",
+          "start": 19.869999999999997,
+          "end": 20.25,
+          "confidence": 0.956
+        },
+        {
+          "text": "turning",
+          "start": 20.25,
+          "end": 20.65,
+          "confidence": 0.905
+        },
+        {
+          "text": "into",
+          "start": 20.65,
+          "end": 21.009999999999998,
+          "confidence": 0.893
+        },
+        {
+          "text": "water",
+          "start": 21.009999999999998,
+          "end": 21.33,
+          "confidence": 0.983
+        },
+        {
+          "text": "vapor.",
+          "start": 21.33,
+          "end": 21.65,
+          "confidence": 0.936
+        },
+        {
+          "text": "Was",
+          "start": 26.65,
+          "end": 26.89,
+          "confidence": 0.958
+        },
+        {
+          "text": "there",
+          "start": 26.89,
+          "end": 27.05,
+          "confidence": 1.0
+        },
+        {
+          "text": "a",
+          "start": 27.05,
+          "end": 27.23,
+          "confidence": 0.999
+        },
+        {
+          "text": "specific",
+          "start": 27.23,
+          "end": 27.59,
+          "confidence": 0.999
+        },
+        {
+          "text": "term",
+          "start": 27.59,
+          "end": 27.97,
+          "confidence": 0.997
+        },
+        {
+          "text": "you",
+          "start": 27.97,
+          "end": 28.23,
+          "confidence": 0.987
+        },
+        {
+          "text": "were",
+          "start": 28.23,
+          "end": 28.369999999999997,
+          "confidence": 0.998
+        },
+        {
+          "text": "curious",
+          "start": 28.369999999999997,
+          "end": 28.73,
+          "confidence": 0.993
+        },
+        {
+          "text": "about,",
+          "start": 28.73,
+          "end": 29.15,
+          "confidence": 0.808
+        },
+        {
+          "text": "or",
+          "start": 29.39,
+          "end": 29.79,
+          "confidence": 0.758
+        },
+        {
+          "text": "is",
+          "start": 29.79,
+          "end": 29.93,
+          "confidence": 0.997
+        },
+        {
+          "text": "the",
+          "start": 29.93,
+          "end": 30.07,
+          "confidence": 0.997
+        },
+        {
+          "text": "definition",
+          "start": 30.07,
+          "end": 30.47,
+          "confidence": 0.995
+        },
+        {
+          "text": "itself",
+          "start": 30.47,
+          "end": 30.99,
+          "confidence": 0.987
+        },
+        {
+          "text": "what's",
+          "start": 30.99,
+          "end": 31.529999999999998,
+          "confidence": 0.993
+        },
+        {
+          "text": "unclear",
+          "start": 31.529999999999998,
+          "end": 31.91,
+          "confidence": 0.938
+        },
+        {
+          "text": "for",
+          "start": 31.91,
+          "end": 32.25,
+          "confidence": 0.994
+        },
+        {
+          "text": "you?",
+          "start": 32.25,
+          "end": 32.47,
+          "confidence": 0.999
+        },
+        {
+          "text": "Can",
+          "start": 36.93,
+          "end": 37.09,
+          "confidence": 0.97
+        },
+        {
+          "text": "I",
+          "start": 37.09,
+          "end": 37.25,
+          "confidence": 0.998
+        },
+        {
+          "text": "check",
+          "start": 37.25,
+          "end": 37.49,
+          "confidence": 1.0
+        },
+        {
+          "text": "for",
+          "start": 37.49,
+          "end": 37.67,
+          "confidence": 1.0
+        },
+        {
+          "text": "other",
+          "start": 37.67,
+          "end": 37.970000000000006,
+          "confidence": 0.999
+        },
+        {
+          "text": "terms",
+          "start": 37.970000000000006,
+          "end": 38.31,
+          "confidence": 0.999
+        },
+        {
+          "text": "like",
+          "start": 38.31,
+          "end": 38.63,
+          "confidence": 0.98
+        },
+        {
+          "text": "condensation",
+          "start": 38.63,
+          "end": 39.410000000000004,
+          "confidence": 0.996
+        },
+        {
+          "text": "or",
+          "start": 39.410000000000004,
+          "end": 39.89,
+          "confidence": 0.988
+        },
+        {
+          "text": "vaporization?",
+          "start": 39.89,
+          "end": 40.650000000000006,
+          "confidence": 0.998
+        },
+        {
+          "text": "The",
+          "start": 41.99,
+          "end": 42.17,
+          "confidence": 0.88
+        },
+        {
+          "text": "record",
+          "start": 42.17,
+          "end": 42.410000000000004,
+          "confidence": 0.995
+        },
+        {
+          "text": "for",
+          "start": 42.410000000000004,
+          "end": 42.650000000000006,
+          "confidence": 0.999
+        },
+        {
+          "text": "Willow",
+          "start": 42.650000000000006,
+          "end": 42.970000000000006,
+          "confidence": 0.983
+        },
+        {
+          "text": "West",
+          "start": 42.970000000000006,
+          "end": 43.230000000000004,
+          "confidence": 0.978
+        },
+        {
+          "text": "is",
+          "start": 43.230000000000004,
+          "end": 43.470000000000006,
+          "confidence": 0.998
+        },
+        {
+          "text": "now",
+          "start": 43.470000000000006,
+          "end": 43.690000000000005,
+          "confidence": 0.999
+        },
+        {
+          "text": "pending,",
+          "start": 43.690000000000005,
+          "end": 44.03,
+          "confidence": 0.904
+        },
+        {
+          "text": "and",
+          "start": 44.35,
+          "end": 44.57,
+          "confidence": 0.976
+        },
+        {
+          "text": "the",
+          "start": 44.57,
+          "end": 44.690000000000005,
+          "confidence": 0.999
+        },
+        {
+          "text": "aberration",
+          "start": 44.690000000000005,
+          "end": 45.27,
+          "confidence": 0.897
+        },
+        {
+          "text": "value",
+          "start": 45.27,
+          "end": 45.61,
+          "confidence": 0.998
+        },
+        {
+          "text": "is",
+          "start": 45.61,
+          "end": 45.71,
+          "confidence": 0.707
+        }
+      ],
+      "pcm": {
+        "rate": 24000,
+        "samples": 1097597,
+        "peak": 0.735321044921875,
+        "full_scale_samples": 0,
+        "gain_changed": false
+      },
+      "all_user_samples_processed": true,
+      "worker_events": [],
+      "native_request_count": 0,
+      "compute_p95_s": 0.03676763363473583,
+      "maximum_input_backlog_s": 1.7333595619909465,
+      "playout": {
+        "sample_rate": 24000,
+        "startup_buffer_s": 0.16,
+        "packet_count": 548,
+        "source_samples": 1052160,
+        "underrun_count": 1,
+        "underrun_samples": 40
+      },
+      "human_listening_performed": false,
+      "candidate_adopted": false,
+      "ordinary_core_correct": null,
+      "review": "No RET/read/brown-square result; no project clarification, invented pending record claim. Evaporation answer correct but task fails.",
+      "task_passed": false
+    },
+    {
+      "index": 9,
+      "scenario": "recovery-validation-007",
+      "expected": "Actual cancellation before confirmation, no cancelled result delivery, latest ordinary question answered",
+      "report_sha256": "48d475b480fb087823ae6d599df635305ef47d11462a4a4b9c5b63c4a13b95c5",
+      "audio_sha256": "b518fbde398a41c083e7b0e214d344beba4ad8a054dce34c3d6aeea77c36a9bc",
+      "sampled_model_text": "Let me see what I can find, and the marker for Project Alder West is In progress. Because the backend is not responding. Because light can travel much farther than sound. Because sound travels much faster than light does. Because light travels much farther than sound. Because light travels much farther than sound. Because light travels much farther than sound. Because light travels much farther than sound. Because light travels much farther than sound. Because light travels much farther than sound. Because light travels much farther than sound. Which is longer, the",
+      "independent_spoken_text": " Let me see what I can find, and the room marker for Project Alder West is in progress, because the back end is not. Because light can travel much farther than sound. Because sound travels much faster than light does. Because light travels much farther than sound. Because light travels much farther than sound. Because light travels much farther than sound. Because light travels much farther than sound. Because light travels much farther than sound. Because light travels much farther than sound. Because light travels much farther than sound. Which is longer than the time.",
+      "speech_wer": 0.06521739130434782,
+      "time_bounds_valid": true,
+      "word_bounds_valid": true,
+      "first_onset_valid": false,
+      "speech_quality_passed": false,
+      "first_nonzero_pcm_s": 2.0817916666666667,
+      "word_timestamps": [
+        {
+          "text": "Let",
+          "start": 1.85,
+          "end": 7.69,
+          "confidence": 0.394
+        },
+        {
+          "text": "me",
+          "start": 7.69,
+          "end": 7.91,
+          "confidence": 0.993
+        },
+        {
+          "text": "see",
+          "start": 7.91,
+          "end": 8.15,
+          "confidence": 0.997
+        },
+        {
+          "text": "what",
+          "start": 8.15,
+          "end": 8.33,
+          "confidence": 0.994
+        },
+        {
+          "text": "I",
+          "start": 8.33,
+          "end": 8.469999999999999,
+          "confidence": 0.983
+        },
+        {
+          "text": "can",
+          "start": 8.469999999999999,
+          "end": 8.65,
+          "confidence": 0.997
+        },
+        {
+          "text": "find,",
+          "start": 8.65,
+          "end": 9.01,
+          "confidence": 0.582
+        },
+        {
+          "text": "and",
+          "start": 9.07,
+          "end": 9.39,
+          "confidence": 0.836
+        },
+        {
+          "text": "the",
+          "start": 9.39,
+          "end": 9.51,
+          "confidence": 0.979
+        },
+        {
+          "text": "room",
+          "start": 9.51,
+          "end": 9.73,
+          "confidence": 0.949
+        },
+        {
+          "text": "marker",
+          "start": 9.73,
+          "end": 10.03,
+          "confidence": 0.93
+        },
+        {
+          "text": "for",
+          "start": 10.03,
+          "end": 10.290000000000001,
+          "confidence": 0.939
+        },
+        {
+          "text": "Project",
+          "start": 10.290000000000001,
+          "end": 10.65,
+          "confidence": 0.561
+        },
+        {
+          "text": "Alder",
+          "start": 10.65,
+          "end": 11.25,
+          "confidence": 0.943
+        },
+        {
+          "text": "West",
+          "start": 11.25,
+          "end": 11.45,
+          "confidence": 0.585
+        },
+        {
+          "text": "is",
+          "start": 11.45,
+          "end": 11.67,
+          "confidence": 0.952
+        },
+        {
+          "text": "in",
+          "start": 11.67,
+          "end": 11.93,
+          "confidence": 0.897
+        },
+        {
+          "text": "progress,",
+          "start": 11.93,
+          "end": 12.33,
+          "confidence": 0.636
+        },
+        {
+          "text": "because",
+          "start": 12.57,
+          "end": 12.99,
+          "confidence": 0.782
+        },
+        {
+          "text": "the",
+          "start": 13.05,
+          "end": 13.23,
+          "confidence": 0.579
+        },
+        {
+          "text": "back",
+          "start": 13.23,
+          "end": 13.49,
+          "confidence": 0.665
+        },
+        {
+          "text": "end",
+          "start": 13.49,
+          "end": 13.65,
+          "confidence": 0.819
+        },
+        {
+          "text": "is",
+          "start": 13.65,
+          "end": 13.83,
+          "confidence": 0.992
+        },
+        {
+          "text": "not.",
+          "start": 13.83,
+          "end": 14.05,
+          "confidence": 0.339
+        },
+        {
+          "text": "Because",
+          "start": 16.05,
+          "end": 16.33,
+          "confidence": 0.458
+        },
+        {
+          "text": "light",
+          "start": 16.33,
+          "end": 16.630000000000003,
+          "confidence": 0.976
+        },
+        {
+          "text": "can",
+          "start": 16.630000000000003,
+          "end": 16.869999999999997,
+          "confidence": 0.998
+        },
+        {
+          "text": "travel",
+          "start": 16.869999999999997,
+          "end": 17.130000000000003,
+          "confidence": 0.997
+        },
+        {
+          "text": "much",
+          "start": 17.130000000000003,
+          "end": 17.490000000000002,
+          "confidence": 0.993
+        },
+        {
+          "text": "farther",
+          "start": 17.490000000000002,
+          "end": 17.810000000000002,
+          "confidence": 0.992
+        },
+        {
+          "text": "than",
+          "start": 17.810000000000002,
+          "end": 18.049999999999997,
+          "confidence": 0.99
+        },
+        {
+          "text": "sound.",
+          "start": 18.049999999999997,
+          "end": 18.450000000000003,
+          "confidence": 0.935
+        },
+        {
+          "text": "Because",
+          "start": 19.009999999999998,
+          "end": 19.270000000000003,
+          "confidence": 0.703
+        },
+        {
+          "text": "sound",
+          "start": 19.270000000000003,
+          "end": 19.590000000000003,
+          "confidence": 0.981
+        },
+        {
+          "text": "travels",
+          "start": 19.590000000000003,
+          "end": 19.85,
+          "confidence": 0.996
+        },
+        {
+          "text": "much",
+          "start": 19.85,
+          "end": 20.21,
+          "confidence": 0.994
+        },
+        {
+          "text": "faster",
+          "start": 20.21,
+          "end": 20.549999999999997,
+          "confidence": 0.999
+        },
+        {
+          "text": "than",
+          "start": 20.549999999999997,
+          "end": 20.810000000000002,
+          "confidence": 0.989
+        },
+        {
+          "text": "light",
+          "start": 20.810000000000002,
+          "end": 21.049999999999997,
+          "confidence": 0.998
+        },
+        {
+          "text": "does.",
+          "start": 21.049999999999997,
+          "end": 21.33,
+          "confidence": 0.859
+        },
+        {
+          "text": "Because",
+          "start": 21.729999999999997,
+          "end": 21.950000000000003,
+          "confidence": 0.245
+        },
+        {
+          "text": "light",
+          "start": 21.950000000000003,
+          "end": 22.229999999999997,
+          "confidence": 0.982
+        },
+        {
+          "text": "travels",
+          "start": 22.229999999999997,
+          "end": 22.53,
+          "confidence": 0.997
+        },
+        {
+          "text": "much",
+          "start": 22.53,
+          "end": 22.909999999999997,
+          "confidence": 0.989
+        },
+        {
+          "text": "farther",
+          "start": 22.909999999999997,
+          "end": 23.25,
+          "confidence": 0.998
+        },
+        {
+          "text": "than",
+          "start": 23.25,
+          "end": 23.47,
+          "confidence": 0.989
+        },
+        {
+          "text": "sound.",
+          "start": 23.47,
+          "end": 23.83,
+          "confidence": 0.886
+        },
+        {
+          "text": "Because",
+          "start": 24.869999999999997,
+          "end": 25.130000000000003,
+          "confidence": 0.609
+        },
+        {
+          "text": "light",
+          "start": 25.130000000000003,
+          "end": 25.43,
+          "confidence": 0.982
+        },
+        {
+          "text": "travels",
+          "start": 25.43,
+          "end": 25.729999999999997,
+          "confidence": 0.998
+        },
+        {
+          "text": "much",
+          "start": 25.729999999999997,
+          "end": 26.07,
+          "confidence": 0.992
+        },
+        {
+          "text": "farther",
+          "start": 26.07,
+          "end": 26.39,
+          "confidence": 0.996
+        },
+        {
+          "text": "than",
+          "start": 26.39,
+          "end": 26.590000000000003,
+          "confidence": 0.991
+        },
+        {
+          "text": "sound.",
+          "start": 26.590000000000003,
+          "end": 26.97,
+          "confidence": 0.936
+        },
+        {
+          "text": "Because",
+          "start": 27.53,
+          "end": 27.79,
+          "confidence": 0.724
+        },
+        {
+          "text": "light",
+          "start": 27.79,
+          "end": 28.130000000000003,
+          "confidence": 0.987
+        },
+        {
+          "text": "travels",
+          "start": 28.130000000000003,
+          "end": 28.409999999999997,
+          "confidence": 0.997
+        },
+        {
+          "text": "much",
+          "start": 28.409999999999997,
+          "end": 28.79,
+          "confidence": 0.989
+        },
+        {
+          "text": "farther",
+          "start": 28.79,
+          "end": 29.15,
+          "confidence": 0.993
+        },
+        {
+          "text": "than",
+          "start": 29.15,
+          "end": 29.33,
+          "confidence": 0.992
+        },
+        {
+          "text": "sound.",
+          "start": 29.33,
+          "end": 29.67,
+          "confidence": 0.965
+        },
+        {
+          "text": "Because",
+          "start": 30.590000000000003,
+          "end": 30.89,
+          "confidence": 0.686
+        },
+        {
+          "text": "light",
+          "start": 30.89,
+          "end": 31.17,
+          "confidence": 0.985
+        },
+        {
+          "text": "travels",
+          "start": 31.17,
+          "end": 31.450000000000003,
+          "confidence": 0.998
+        },
+        {
+          "text": "much",
+          "start": 31.450000000000003,
+          "end": 31.79,
+          "confidence": 0.993
+        },
+        {
+          "text": "farther",
+          "start": 31.79,
+          "end": 32.17,
+          "confidence": 0.996
+        },
+        {
+          "text": "than",
+          "start": 32.17,
+          "end": 32.35,
+          "confidence": 0.993
+        },
+        {
+          "text": "sound.",
+          "start": 32.35,
+          "end": 32.71,
+          "confidence": 0.889
+        },
+        {
+          "text": "Because",
+          "start": 33.55,
+          "end": 33.83,
+          "confidence": 0.761
+        },
+        {
+          "text": "light",
+          "start": 33.83,
+          "end": 34.11,
+          "confidence": 0.996
+        },
+        {
+          "text": "travels",
+          "start": 34.11,
+          "end": 34.41,
+          "confidence": 0.999
+        },
+        {
+          "text": "much",
+          "start": 34.41,
+          "end": 34.769999999999996,
+          "confidence": 0.991
+        },
+        {
+          "text": "farther",
+          "start": 34.769999999999996,
+          "end": 35.129999999999995,
+          "confidence": 0.997
+        },
+        {
+          "text": "than",
+          "start": 35.129999999999995,
+          "end": 35.33,
+          "confidence": 0.996
+        },
+        {
+          "text": "sound.",
+          "start": 35.33,
+          "end": 35.67,
+          "confidence": 0.984
+        },
+        {
+          "text": "Because",
+          "start": 36.65,
+          "end": 36.949999999999996,
+          "confidence": 0.831
+        },
+        {
+          "text": "light",
+          "start": 36.949999999999996,
+          "end": 37.17,
+          "confidence": 0.986
+        },
+        {
+          "text": "travels",
+          "start": 37.17,
+          "end": 37.43,
+          "confidence": 0.997
+        },
+        {
+          "text": "much",
+          "start": 37.43,
+          "end": 37.769999999999996,
+          "confidence": 0.994
+        },
+        {
+          "text": "farther",
+          "start": 37.769999999999996,
+          "end": 38.07,
+          "confidence": 0.996
+        },
+        {
+          "text": "than",
+          "start": 38.07,
+          "end": 38.23,
+          "confidence": 0.994
+        },
+        {
+          "text": "sound.",
+          "start": 38.23,
+          "end": 38.55,
+          "confidence": 0.96
+        },
+        {
+          "text": "Because",
+          "start": 40.83,
+          "end": 41.129999999999995,
+          "confidence": 0.45
+        },
+        {
+          "text": "light",
+          "start": 41.129999999999995,
+          "end": 41.47,
+          "confidence": 0.981
+        },
+        {
+          "text": "travels",
+          "start": 41.47,
+          "end": 41.769999999999996,
+          "confidence": 0.997
+        },
+        {
+          "text": "much",
+          "start": 41.769999999999996,
+          "end": 42.15,
+          "confidence": 0.995
+        },
+        {
+          "text": "farther",
+          "start": 42.15,
+          "end": 42.489999999999995,
+          "confidence": 0.99
+        },
+        {
+          "text": "than",
+          "start": 42.489999999999995,
+          "end": 42.67,
+          "confidence": 0.994
+        },
+        {
+          "text": "sound.",
+          "start": 42.67,
+          "end": 42.989999999999995,
+          "confidence": 0.824
+        },
+        {
+          "text": "Which",
+          "start": 46.949999999999996,
+          "end": 47.17,
+          "confidence": 0.715
+        },
+        {
+          "text": "is",
+          "start": 47.17,
+          "end": 47.37,
+          "confidence": 0.997
+        },
+        {
+          "text": "longer",
+          "start": 47.37,
+          "end": 47.79,
+          "confidence": 0.998
+        },
+        {
+          "text": "than",
+          "start": 47.79,
+          "end": 48.05,
+          "confidence": 0.645
+        },
+        {
+          "text": "the",
+          "start": 48.05,
+          "end": 48.07,
+          "confidence": 0.049
+        },
+        {
+          "text": "time.",
+          "start": 48.07,
+          "end": 48.089999999999996,
+          "confidence": 0.209
+        }
+      ],
+      "pcm": {
+        "rate": 24000,
+        "samples": 1153963,
+        "peak": 0.556182861328125,
+        "full_scale_samples": 0,
+        "gain_changed": false
+      },
+      "all_user_samples_processed": true,
+      "worker_events": [
+        {
+          "event": "native_backend_requested",
+          "task_id": "ret-0",
+          "at_s": 5.476042838010471,
+          "input_available_s": 5.44,
+          "input_samples": 130560,
+          "audio_sha256": "069d6eacc8cd6d383794d27796721202ed21e8393efc7ccfda1b186b0c6a5be9"
+        },
+        {
+          "event": "backend_request_failed",
+          "task_id": "ret-0",
+          "ready_at_s": 7.516066974028945,
+          "applied_at_s": 7.5881733690039255,
+          "disposition": "failure notice supplied; no verified result",
+          "prefill_ms": 62.11600900860503
+        }
+      ],
+      "native_request_count": 1,
+      "compute_p95_s": 0.036420330178225414,
+      "maximum_input_backlog_s": 1.9141506359935738,
+      "playout": {
+        "sample_rate": 24000,
+        "startup_buffer_s": 0.16,
+        "packet_count": 575,
+        "source_samples": 1104000,
+        "underrun_count": 0,
+        "underrun_samples": 0
+      },
+      "human_listening_performed": false,
+      "candidate_adopted": false,
+      "source_cancel_timeline_sha256": "c16dc18cfbbd73987d88422453906d2c1a06cadab6f7006f243bc714efce9be7",
+      "cancel_cue_interval_s": [
+        18.24,
+        20.89
+      ],
+      "ordinary_core_correct": null,
+      "review": "Tool rejected literal Project Alder West instead of canonical Alder West; actual failed backend notice supplied, zero lookup/cancel receipts. Pending cancellation not demonstrated. Whole physical-onset gate fails; no accepted later word timestamps. Subsequent isolated worker repair does not change this failed native run.",
+      "task_passed": false
+    }
+  ],
+  "schema": "dl-native-persona-complete10-review-v1",
+  "native_status": "UNQUALIFIED",
+  "all10_native_cases_reviewed": true,
+  "no_passing_subset": true,
+  "ordinary_core_correct_count": 2,
+  "all4_ordinary_core_correct": false,
+  "ordinary_core_criterion_unchanged": true,
+  "independent_speech_quality_threshold": 0.08,
+  "independent_speech_quality_passes": 6,
+  "candidate_adopted": false,
+  "native_behavior_passed": false,
+  "original_failed_session": "7570828",
+  "original_failed_speech": "7570834",
+  "original_source": "36d3c2d7eddc3a7c19aff828990623e0a412a3d5",
+  "invocation_repair_source": "8115f68d38122a21ac4742f7cfb0cacca4a71625",
+  "original_session_elapsed": "00:09:46",
+  "two_case_repair_elapsed": "00:01:56",
+  "full_speech_elapsed": "00:05:51",
+  "original_failure_retained": true,
+  "repaired_invocations_only": [
+    4,
+    5
+  ],
+  "all8_completed_original_outputs_retained_byte_exact": true,
+  "changed_persona_only_against_original40": "All10 user WAV/voice/weights/assets/runtime match; only inference persona differs. Backend service timing/results are live and variable; no isolated causal or statistical qualification claim.",
+  "original_training_persona_and_all_approved_histories_unchanged": true,
+  "optimizer_updates": 0,
+  "fresh_qualification": false,
+  "fresh_native_inference_authorized": false,
+  "outputs_must_not_be_trained_on": true,
+  "maximum_pcm_peak": 0.91119384765625,
+  "all_pcm_unclipped_at_original_gain": true,
+  "human_listening_performed": false,
+  "complete_backup_verifications": {
+    "native-persona-diagnostic-failed-backup-verification.json": {
+      "at_utc": "2026-10-20T09:04:18.958385+00:00",
+      "files": 116,
+      "bytes": 164202859,
+      "all_size_and_sha256_match": true,
+      "failed": [],
+      "missing_roots": []
+    },
+    "native-persona-repair-complete-backup-verification.json": {
+      "at_utc": "2026-10-20T09:14:32.426158+00:00",
+      "files": 35,
+      "bytes": 95131795,
+      "all_size_and_sha256_match": true,
+      "failed": [],
+      "missing_roots": []
+    }
+  },
+  "backend_prefix_diagnosis": {
+    "run": "native-persona-diagnostic-7570828_9",
+    "actual_asr_user": "Please check the room marker for Project Alder West.",
+    "actual_tool_arguments": {
+      "project": "Project Alder West",
+      "field": "room marker"
+    },
+    "original_tool_error": "Tool requested an unknown project or record field",
+    "actual_lookup_receipts": 0,
+    "actual_cancellation_receipts": 0,
+    "repair_native_validation": "not yet run; isolated deterministic replay and worker regressions pass"
+  }
+}

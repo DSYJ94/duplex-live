@@ -1,7 +1,7 @@
 {
-  "at_utc": "2026-10-20T09:06:41.617063+00:00",
-  "unique_scoped_artifact_files": 23693,
-  "unique_scoped_artifact_bytes": 18362293002,
+  "at_utc": "2026-10-20T09:26:50.614465+00:00",
+  "unique_scoped_artifact_files": 23733,
+  "unique_scoped_artifact_bytes": 18457507998,
   "inventory_conflicts": [],
   "inventories": [
     {
@@ -563,6 +563,20 @@
       "files": 116,
       "bytes": 164202859,
       "missing_roots": []
+    },
+    {
+      "name": "remote-native-persona-repair-complete-inventory.json",
+      "sha256": "3aac86708309a11d0f8e19f79871d3229b6909d13eb0c422029d2518077ae01c",
+      "files": 35,
+      "bytes": 95131795,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native-conditioning-complete-inventory.json",
+      "sha256": "aa0770cb6266eefe2fbe93e2b5c6f57733494e9b3a37e8d31865ba67ccc71e76",
+      "files": 5,
+      "bytes": 83201,
+      "missing_roots": []
     }
   ],
   "local_artifact_root": "runs/cloud-export-20261016/tree",
@@ -578,14 +592,20 @@
   "runtime_sif_sha256": "c00bc99693e4908ea75d17df9c379b93ae9a1678a65d875565ad5d52f76fa27b",
   "pinned_vendor_git_bundles_verified": 3,
   "source_git_bundle": {
-    "path": "runs/local-continuation-20261019/source-main-8115f68.bundle",
-    "sha256": "955a06a35aea4c51bf14e3751c22dd2179da7bddc23e51d7a7ea09c8a7487ad9",
-    "source_commit": "8115f68d38122a21ac4742f7cfb0cacca4a71625",
+    "path": "runs/local-continuation-20261019/source-main-c722dd2.bundle",
+    "sha256": "e42d253075c30e975cd6d046ecb57f6dd5face85301add596c986e5eeed1e481",
+    "source_commit": "c722dd2c574d8173a2ac659eff8dfcffba44a539",
     "full_history_verified": true,
     "previous_verified_bundle": {
-      "source_sha": "a0c51a199b897733081d55524f0a89d4937287b9",
-      "bundle": "runs/local-continuation-20261019/source-main-a0c51a1.bundle",
-      "bundle_sha256": "50e21f77ecb8e63a10bdff7a56d65a7f72a1ffcaace53bafc911586b91fd71fb"
+      "path": "runs/local-continuation-20261019/source-main-8115f68.bundle",
+      "sha256": "955a06a35aea4c51bf14e3751c22dd2179da7bddc23e51d7a7ea09c8a7487ad9",
+      "source_commit": "8115f68d38122a21ac4742f7cfb0cacca4a71625",
+      "full_history_verified": true,
+      "previous_verified_bundle": {
+        "source_sha": "a0c51a199b897733081d55524f0a89d4937287b9",
+        "bundle": "runs/local-continuation-20261019/source-main-a0c51a1.bundle",
+        "bundle_sha256": "50e21f77ecb8e63a10bdff7a56d65a7f72a1ffcaace53bafc911586b91fd71fb"
+      }
     }
   },
   "native_candidate_job": "7558824",
@@ -964,6 +984,56 @@
     "conditioning_job_not_yet_submitted": false,
     "repair_status": "COMPLETED",
     "repair_elapsed": "00:01:56",
-    "conditioning_job": "7571406"
+    "conditioning_job": "7571406",
+    "complete10_speech_status": "COMPLETED",
+    "complete10_speech_elapsed": "00:05:51",
+    "complete10_review": "docs/NATIVE-PERSONA-COMPLETE10-REVIEW-2026-10-20.json",
+    "complete10_review_sha256": "c76ea8fa2ee9d3161a8b0fd478705920e8fba5af8a6f3523a62b964709c60229",
+    "ordinary_core_correct": 2,
+    "speech_passes": 6,
+    "all10_reviewed": true,
+    "profile_rejected": true,
+    "all_artifacts_sha256_backed": true,
+    "orchestrator_terminal": true
+  },
+  "interactive_reservation_verified": {
+    "observed_at_utc": "2026-10-20T09:07:58Z",
+    "reservation": "interactive",
+    "start_utc": "2026-10-19T08:56:32Z",
+    "end_utc": "2026-10-21T08:56:32Z",
+    "end_berlin": "2026-10-21T10:56:32+02:00",
+    "cluster_clock_timezone_verified": "UTC +0000",
+    "cluster_clock_observed": "2026-10-20T09:11:29Z",
+    "flags": [
+      "IGNORE_JOBS",
+      "DAILY",
+      "REPLACE_DOWN",
+      "NO_HOLD_JOBS_AFTER_END"
+    ],
+    "note": "Reported current reservation end; do not assume renewal or extension of the project allocation."
+  },
+  "native_conditioning_diagnostic": {
+    "source": "8115f68d38122a21ac4742f7cfb0cacca4a71625",
+    "job": "7571406",
+    "status": "FAILED",
+    "elapsed": "00:01:56",
+    "failure": "Missing pinned moshi vendor package on PYTHONPATH during cache validation, before capture",
+    "speech_job": "7571536",
+    "speech_status": "FAILED",
+    "speech_elapsed": "00:00:10",
+    "native_captures": 0,
+    "optimizer_updates": 0,
+    "all5_artifacts_sha256_backed": true
+  },
+  "native_conditioning_v2": {
+    "source": "c722dd2c574d8173a2ac659eff8dfcffba44a539",
+    "source_short": "c722dd2",
+    "cpu_job": "7571869",
+    "required_cpu_tests": 216,
+    "complete25_cpu_data_preflight_required": true,
+    "gpu_job_not_submitted_yet": true,
+    "local_orchestrator_session": 34863,
+    "optimizer_updates": 0,
+    "diagnostic_only": true
   }
 }

@@ -1,3 +1,52 @@
+# LOCAL active — persona complete10 REJECTED; conditioning CPU7571869 (2026-10-20 09:26 UTC)
+
+Native persona review COMPLETE: original8 captures7570828 frozen byte-exact +
+never-started quiet/pause repair7571367 COMPLETE1m56; full independent10 speech
+7571368 COMPLETE5m51. Runtime source36d3c2d + invocationfix8115f68/CPU171PASS.
+ALL10 reviewed, ordinary2/4(sound/plants), speech6/10. Ice equilibrium and metal
+surface-area explanations wrong. Quiet actual words8.79–11.77 beforeReady12.41
+violate silence with valid global speech clock/original PCM. Pause sampled text
+wrong/prematurecupboard; whole physical-onset fails, so quiet-overlap times only
+diagnostic, not accepted word subset. Yellow missingcircle/speechWER.085106>.08.
+Counterfactual full ASR sayscopperdiamond28.41–29.01 after realinject10.469991,
+but wrong ordinary reasoning/unnecessary secondrequest; PARTIAL component only.
+Clarify0RET/read/brownsquare. Cancel actualbackendrequestFAILED: worker returned
+Project Alder West where world key Alder West, no lookup/cancel receipts/pending
+cancel proof. Wholeonsetalsofails. AllPCM originalgain/unclippedmax0.91119385.
+Formal docs/NATIVE-PERSONA-COMPLETE10-REVIEW-2026-10-20.json,
+SHAc76ea8fa2ee9d3161a8b0fd478705920e8fba5af8a6f3523a62b964709c60229. No adoptedprofile/checkpoint/fresh infer or newtraining.
+
+Observed backendprefix bug repaired separately in RecordWorld: optional literal
+Project prefix resolves only to existing exact keys; exact original key wins,
+unknown/missinguseridentification stillfails, canonical receipt retains requested
+name. Isolated observed-call replay +45 related localworker tests PASS. No native
+cancellation qualification from that unit proof. Old histories/teacherdata untouched.
+
+Conditioning7571406 FAILED1m56 beforecapture: missing pinned moshi package import.
+Speech7571536 FAILED10s missingcapture; all5failedartifacts SHAbacked16:40UTC.
+No new conditioningscores/capture/data approval. Newsource
+c722dd2c574d8173a2ac659eff8dfcffba44a539 adds SAMEpinnedvendorPYTHONPATH as training and a
+separate complete25 CPU cache/input validation before GPU. CPU7571869 RELEASED,
+full216tests + actualall25data/importpreflight required. No newGPU ID yet.
+Sole liveorchestrator exec34863 (/tmp/duplex-run-native-conditioning-v2.py) gates
+GPU/ASR onthatpreflight, maxTWO submittedjobs, sameIDs/no observation-drivenrerun,
+then scopedrsync/SHAbacks results. Prior29728 TERMINALsuccess/allartifactsbacked.
+Exclusive CPUreceipt runs/native-conditioning-v2-cpu-local-20261020.json; GPUreceipt
+runs/native-conditioning-v2-local-20261020.json does not exist until launch.
+Probe fixedapprovedTRAINday/night, native520 ownassistantacoustics/forcedteacher
+words, freshprocess520/40scores, nooptimizer/nativeapproval/newtrainingdata.
+
+Backup union23733files18457507998bytes plus pinnedmodels/runtime/ASR/vendor;
+sourcec722 fullbundle SHAe42d253075c30e975cd6d046ecb57f6dd5face85301add596c986e5eeed1e481 verified.
+Old stopped Mac source backupPARTIAL. Localcert through20Oct19:32:16UTC/21:32:16Berlin.
+Actual clusterclockUTC verified; currentinteractive reservation ends
+21Oct08:56:32UTC/10:56:32Berlin. Do not assume reservation or allocation extension.
+Native40 remainsREJECTED; all28/25/24/KL1hidden10 retained; fresh20sourcePASS/nativeNONE.
+LOCAL soleexecutor/CLOUDnojobs/nohandback/nopurchase. Nativewhole-systemUNQUALIFIED.
+Next: CPU preflight→boundedconditioningcontrast/independentspeech→diagnosednewrecipe.
+
+---
+
 # LOCAL active — repaired2 complete; all10 speech running; conditioning7571406 released (2026-10-20 09:12 UTC)
 
 Runtime source8115f68d38122a21ac4742f7cfb0cacca4a71625/CPU7571184 PASS171.
