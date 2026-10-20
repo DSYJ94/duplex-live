@@ -1,3 +1,65 @@
+# LOCAL active — bounded40 fully restored/backed; complete10 REJECTED (2026-10-20 07:45 UTC)
+
+No running Slurm jobs: actual queueEMPTY07:32:40UTC. Train7558824 COMPLETED0:0
+14m40,32new/global9..40,total40, LR2e-6, original optimizer/RNG retained. Source
+99cc7394ebde78e2762d92813dddbc7a3feaaaed; owner authorization
+2837484b946adb01a2f01431083eeec4e90ed26e/SHA c1a521aeb2e722978dc50158928f6d53ceb7015dcc086ade13a9bdac6b057316.
+No further updates beyond40/adoption authorized by this specific experiment.
+All28actual/25old/24new/KL1hidden10/word64/clock64 unchanged. Independent local
+exposure audit verifies ALL24 exactlyonce in each block9..16,17..24,25..32,33..40,
+all10word+14clock anchors on EVERY update. Reported fit90.92028557200683s
+includes post-fit metrics/digests; full allocation14m40. Peak17.15713119506836GiB.
+
+Independent fresh-process full adapter/optimizer/Python/NumPy/Torch/CUDA restore,
+all28validlogits EXACT and both10word/14clock targets reconstruction PASS.
+Local checkpoint+cache hashes independently rechecked after transfer.
+Adapter b4361124025b339c02e354b7729699a520da74400927eb1aaa9a5029136264b6;
+state9712d0d858d638630d02fbb2f2909da822c0c3f9d7b47202a1637a1785ee6c9d;
+reload20c73529c9dacf72e62b3d8f2f3ee2ae0cf51310633d77aadba429d6bacb0492;
+report6fde1c6be34ede4c857efdd57361f7a9cf61cca47f613f26bb7b2d5909d3bea3.
+Original source3061/state3303 are preserved. Source transition only repo_commit
+and approval provenance; original warm_start_optimizer_reset field describes the
+old native520 stage, current continuation did NOT reset optimizer.
+
+Native10 session7559192 COMPLETE12m16/all10processes0; independentASR7559193
+COMPLETE6m35. Full raw WAV/report/receipt/timing review REJECTS40:
+ordinary1/4(sound); plants partial/light-energy vague but no food/photosynthesis,
+ice incomplete+project chatter, metal wronglyaircooling. Speech8/10 at unchanged
+WER<=.08/alltime/word/physicalonset gates. Original gain, all unclipped/max0.742645.
+Quiet violated by actual projectquestion7.25-8.83 beforeReady12.41; pause violated
+19.29-21.45 during17.54-22.10. Yellow-circle realread inject11.124006/fullvalue
+spoken26.11-26.79 is a PARTIAL improvement; ordinary lightning answer still wrong.
+Counterfactual realcopper-diamond inject10.071041 but only copper spoken, missing
+diamond; firstword1.67 beforefirstPCM1.895542 failswholeclockgate. Clarify0RET/
+read/brownsquare. Cancellation0actualcancelreceipts; redstarread11.133636 before
+cue18.24-20.89, no pending-cancel proof or newordinaryanswer; wholeWER0.918919/
+time+word bounds fail. No accepted timestamp/audio subset or outcome relabeling.
+Formal docs/NATIVE-BOUNDED32-COMPLETE10-REVIEW-2026-10-20.json
+SHA cb9b0f544669db658301c7158c1bf88ed46be94a5d62de48407e222e15c1bb1f.
+Training proof docs/NATIVE-BOUNDED32-TRAINING-RESULT-2026-10-20.json.
+Fresh20 source7550653 PASS but native fresh inference NONE/unscored; all4 gate
+still blocks it. Native/whole-system UNQUALIFIED. Do not extend/adopt40.
+
+All critical states/caches + complete10 native/audio/ASR/receipts/logs backed:
+latest157file inventory871240628bytes SHAverified20Oct07:40:31 after one dropped
+transfer resumed (no jobs rerun). Union23387files17797544662bytes plus separately
+pinned model/runtime/ASR/vendor/sourcebundles; no inventory conflicts. Old stopped
+Mac source backup remains PARTIAL. Excludes owners/credentials/session-token/core.
+Sole watcher34775 TERMINALsuccess after exclusive submission9192/9193; no live
+watcher/autosubmitter. LOCAL owns execution, CLOUD submits nothing/no handback.
+
+Certificate expired20Oct02:05UTC while owner away; official Clifton renewed by
+owner20Oct07:32. Actual boundedLOCALSSH PASS07:32:40, newcertificate through
+20Oct19:32:16UTC/21:32:16Berlin. Browser page permission was declined; no workaround,
+owner completed sign-in. No credentials exported. Owner asks no command-by-command
+prompts; continue existing authorized work. New source/data/model action must be
+based on diagnosed failure, not more unchanged40updates or a passing subset.
+Next: diagnose why low approved-history loss/drift does not retain native ordinary/
+quiet/pause behavior; preserve baseline/losses/approved data and the fresh holdout.
+No new teacher/speech API calls, Qwen fallback or cloud GPU purchase authorized.
+
+---
+
 # LOCAL active —7558824 completed32 new updates; independent restore RUNNING (2026-10-19 21:57 UTC)
 
 Actual job7558824 remains RUNNING in independent fresh-process restore phase.

@@ -1,0 +1,72 @@
+{
+  "at_utc": "2026-10-20T07:32:50.073150+00:00",
+  "candidate_job": "7558824",
+  "all32_steps_verified": true,
+  "new24_four_complete_passes": [
+    {
+      "first_step": 9,
+      "last_step": 16,
+      "unique_new_teachers": 24,
+      "each_exposed_once": true
+    },
+    {
+      "first_step": 17,
+      "last_step": 24,
+      "unique_new_teachers": 24,
+      "each_exposed_once": true
+    },
+    {
+      "first_step": 25,
+      "last_step": 32,
+      "unique_new_teachers": 24,
+      "each_exposed_once": true
+    },
+    {
+      "first_step": 33,
+      "last_step": 40,
+      "unique_new_teachers": 24,
+      "each_exposed_once": true
+    }
+  ],
+  "all28_actual_components_preserved": true,
+  "all25_old_teachers_preserved": true,
+  "all10_word14_clock_anchors_on_every_update": true,
+  "training_only_not_native_qualification": true,
+  "report_sha256": "6fde1c6be34ede4c857efdd57361f7a9cf61cca47f613f26bb7b2d5909d3bea3",
+  "checkpoint_sha256": "b4361124025b339c02e354b7729699a520da74400927eb1aaa9a5029136264b6",
+  "state_sha256": "9712d0d858d638630d02fbb2f2909da822c0c3f9d7b47202a1637a1785ee6c9d",
+  "legacy_kl_weight": 1.0,
+  "legacy_hidden_mse_weight": 10.0,
+  "word_anchor_weight": 64.0,
+  "clock_anchor_weight": 64.0,
+  "independent_local_checkpoint_verification": {
+    "identity": {
+      "proof": "runs/cloud-export-20261016/tree/runs/context-training-proof-7558824",
+      "report_sha256": "6fde1c6be34ede4c857efdd57361f7a9cf61cca47f613f26bb7b2d5909d3bea3",
+      "reload_report_sha256": "20c73529c9dacf72e62b3d8f2f3ee2ae0cf51310633d77aadba429d6bacb0492",
+      "checkpoint_sha256": "b4361124025b339c02e354b7729699a520da74400927eb1aaa9a5029136264b6",
+      "training_state_sha256": "9712d0d858d638630d02fbb2f2909da822c0c3f9d7b47202a1637a1785ee6c9d",
+      "native_protocol": {
+        "name": "bootstrap-preserve-provided-v1",
+        "code_sha256": "bbf0699025b40be9376491334f787b488fe04a9b6262c2509f44888121250320",
+        "attention_backend": "math"
+      },
+      "optimizer_steps": 40
+    },
+    "optimizer_steps": 40,
+    "saved_cache_hashes_verified": true,
+    "fresh_gpu_reconstruction_previously_passed": true,
+    "all28_valid_logits_exact": true
+  },
+  "schema": "dl-native-bounded32-training-result-v1",
+  "execution_source": "99cc7394ebde78e2762d92813dddbc7a3feaaaed",
+  "authorization_commit": "2837484b946adb01a2f01431083eeec4e90ed26e",
+  "native10_review": "docs/NATIVE-BOUNDED32-COMPLETE10-REVIEW-2026-10-20.json",
+  "native10_review_sha256": "cb9b0f544669db658301c7158c1bf88ed46be94a5d62de48407e222e15c1bb1f",
+  "native10_rejected": true,
+  "training_allocation_elapsed": "00:14:40",
+  "reported_training_seconds": 90.92028557200683,
+  "reported_timing_scope": "32 optimizer updates plus post-fit metrics/digests; excludes model loading and independent restore",
+  "peak_allocated_GiB": 17.15713119506836,
+  "all_new_state_and_native10_artifacts_sha256_backed": true
+}
