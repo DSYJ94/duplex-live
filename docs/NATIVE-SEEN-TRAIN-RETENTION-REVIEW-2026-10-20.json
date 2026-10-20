@@ -1,0 +1,3415 @@
+{
+  "at_utc": "2026-10-20T08:51:00.163798+00:00",
+  "complete_cases": 12,
+  "source": "2249c4dd1a221d6abb4ea525974540cbd3e08ee9",
+  "native_session": "7570564",
+  "speech_job": "7570565",
+  "independent_speech_sha256": "84bf8b1396543554e550d485a0f15deef7cd742ca7d1801e38de6b4c2b7190a9",
+  "all12_raw_records_verified": true,
+  "same_user_voice_persona_assets_runtime_per_question": {
+    "recovery-train-008": {
+      "user_input_sha256": "8b407a3dbfd5440ff63a171e4bf2136b909b1c35cb2d84140cbb5c990e710ed4",
+      "voice_codes_sha256": "2085b3d58d2f2b20042e2e57a60206dd43c3028173cd9140e83d6c7b5136404d",
+      "persona_sha256": "9e4cd74de1ecf8a445474d2a46d55410a5918f528f4b18a5d7cb4649aeb6e196",
+      "assets": "3ec0c3edfdefa33985beed5b0272a3ffbe190b6f7f53cf6509346173efa76e60",
+      "base": {
+        "model.safetensors": "db1290db583cdaa6cb4de444ed279e0b586ca2a372b41434b07a7461c8c0e2f4",
+        "tokenizer-e351c8d8-checkpoint125.safetensors": "09b782f0629851a271227fb9d36db65c041790365f11bbe5d3d59369cf863f50",
+        "tokenizer_spm_32k_3.model": "78d4336533ddc26f9acf7250d7fb83492152196c6ea4212c841df76933f18d2d"
+      },
+      "torch": "2.9.0a0+145a3a7bda.nv25.10",
+      "cuda": "13.0"
+    },
+    "recovery-train-009": {
+      "user_input_sha256": "107a14e64777277e1fa79503333ff5d1292db0de26c8d16155e5c8ff6eb9b7b1",
+      "voice_codes_sha256": "2085b3d58d2f2b20042e2e57a60206dd43c3028173cd9140e83d6c7b5136404d",
+      "persona_sha256": "9e4cd74de1ecf8a445474d2a46d55410a5918f528f4b18a5d7cb4649aeb6e196",
+      "assets": "3ec0c3edfdefa33985beed5b0272a3ffbe190b6f7f53cf6509346173efa76e60",
+      "base": {
+        "model.safetensors": "db1290db583cdaa6cb4de444ed279e0b586ca2a372b41434b07a7461c8c0e2f4",
+        "tokenizer-e351c8d8-checkpoint125.safetensors": "09b782f0629851a271227fb9d36db65c041790365f11bbe5d3d59369cf863f50",
+        "tokenizer_spm_32k_3.model": "78d4336533ddc26f9acf7250d7fb83492152196c6ea4212c841df76933f18d2d"
+      },
+      "torch": "2.9.0a0+145a3a7bda.nv25.10",
+      "cuda": "13.0"
+    },
+    "recovery-train-010": {
+      "user_input_sha256": "938995a3ba1411e82dd9e69d1c7a92041988995ced965dabf4766500ada355f2",
+      "voice_codes_sha256": "2085b3d58d2f2b20042e2e57a60206dd43c3028173cd9140e83d6c7b5136404d",
+      "persona_sha256": "9e4cd74de1ecf8a445474d2a46d55410a5918f528f4b18a5d7cb4649aeb6e196",
+      "assets": "3ec0c3edfdefa33985beed5b0272a3ffbe190b6f7f53cf6509346173efa76e60",
+      "base": {
+        "model.safetensors": "db1290db583cdaa6cb4de444ed279e0b586ca2a372b41434b07a7461c8c0e2f4",
+        "tokenizer-e351c8d8-checkpoint125.safetensors": "09b782f0629851a271227fb9d36db65c041790365f11bbe5d3d59369cf863f50",
+        "tokenizer_spm_32k_3.model": "78d4336533ddc26f9acf7250d7fb83492152196c6ea4212c841df76933f18d2d"
+      },
+      "torch": "2.9.0a0+145a3a7bda.nv25.10",
+      "cuda": "13.0"
+    },
+    "recovery-train-011": {
+      "user_input_sha256": "f03b368c62985f587343f2e1b120552d06f28ddaedeecad006fc77773592fc27",
+      "voice_codes_sha256": "2085b3d58d2f2b20042e2e57a60206dd43c3028173cd9140e83d6c7b5136404d",
+      "persona_sha256": "9e4cd74de1ecf8a445474d2a46d55410a5918f528f4b18a5d7cb4649aeb6e196",
+      "assets": "3ec0c3edfdefa33985beed5b0272a3ffbe190b6f7f53cf6509346173efa76e60",
+      "base": {
+        "model.safetensors": "db1290db583cdaa6cb4de444ed279e0b586ca2a372b41434b07a7461c8c0e2f4",
+        "tokenizer-e351c8d8-checkpoint125.safetensors": "09b782f0629851a271227fb9d36db65c041790365f11bbe5d3d59369cf863f50",
+        "tokenizer_spm_32k_3.model": "78d4336533ddc26f9acf7250d7fb83492152196c6ea4212c841df76933f18d2d"
+      },
+      "torch": "2.9.0a0+145a3a7bda.nv25.10",
+      "cuda": "13.0"
+    }
+  },
+  "cases": [
+    {
+      "index": 0,
+      "scenario": "recovery-train-008",
+      "checkpoint_job": "7510331",
+      "role": "native520",
+      "text_temperature": 0.7,
+      "acoustic_temperature": 0.8,
+      "diagnostic_only": true,
+      "diagnostic_outputs_must_not_be_trained_on": true,
+      "qualification_approved": false,
+      "run_report_sha256": "a3ea2898fe611e27833db14362776b5b68d78f62a7afea521a14c29691fd2374",
+      "audio_sha256": "8e643afa6acddfd0cfa1d951ffd6eda660529d3b362e98eb05d55d8c61c0c928",
+      "sampled_text": "Because light travels much faster than sound, so the eyes pick up the flash of light before the thunder even reaches your ears. It's just the way the atmosphere works. Do you want to hear a thunder sound effect? Is there anything specific about that that'",
+      "spoken_text": " Because light travels much faster than sound, so the eyes pick up the flash of light before the thunder even reaches your ears. It's just the way the atmosphere works. Do you want to hear a thunder sound effect? Is there anything specific about that that's",
+      "speech_wer": 0.02127659574468085,
+      "speech_quality_passed": true,
+      "time_bounds_valid": true,
+      "word_bounds_valid": true,
+      "first_onset_valid": true,
+      "first_nonzero_pcm_s": 3.423791666666667,
+      "word_timestamps": [
+        {
+          "text": "Because",
+          "start": 7.61,
+          "end": 7.6899999999999995,
+          "confidence": 0.338
+        },
+        {
+          "text": "light",
+          "start": 7.6899999999999995,
+          "end": 8.17,
+          "confidence": 0.983
+        },
+        {
+          "text": "travels",
+          "start": 8.17,
+          "end": 8.61,
+          "confidence": 0.994
+        },
+        {
+          "text": "much",
+          "start": 8.61,
+          "end": 9.25,
+          "confidence": 0.97
+        },
+        {
+          "text": "faster",
+          "start": 9.25,
+          "end": 9.67,
+          "confidence": 0.994
+        },
+        {
+          "text": "than",
+          "start": 9.67,
+          "end": 9.95,
+          "confidence": 0.976
+        },
+        {
+          "text": "sound,",
+          "start": 9.95,
+          "end": 10.33,
+          "confidence": 0.867
+        },
+        {
+          "text": "so",
+          "start": 10.57,
+          "end": 10.91,
+          "confidence": 0.711
+        },
+        {
+          "text": "the",
+          "start": 10.91,
+          "end": 11.07,
+          "confidence": 0.954
+        },
+        {
+          "text": "eyes",
+          "start": 11.07,
+          "end": 11.37,
+          "confidence": 0.983
+        },
+        {
+          "text": "pick",
+          "start": 11.37,
+          "end": 11.67,
+          "confidence": 0.952
+        },
+        {
+          "text": "up",
+          "start": 11.67,
+          "end": 11.81,
+          "confidence": 0.975
+        },
+        {
+          "text": "the",
+          "start": 11.81,
+          "end": 11.95,
+          "confidence": 0.962
+        },
+        {
+          "text": "flash",
+          "start": 11.95,
+          "end": 12.209999999999999,
+          "confidence": 0.964
+        },
+        {
+          "text": "of",
+          "start": 12.209999999999999,
+          "end": 12.49,
+          "confidence": 0.978
+        },
+        {
+          "text": "light",
+          "start": 12.49,
+          "end": 12.75,
+          "confidence": 0.955
+        },
+        {
+          "text": "before",
+          "start": 12.75,
+          "end": 13.09,
+          "confidence": 0.973
+        },
+        {
+          "text": "the",
+          "start": 13.09,
+          "end": 13.33,
+          "confidence": 0.717
+        },
+        {
+          "text": "thunder",
+          "start": 13.33,
+          "end": 13.59,
+          "confidence": 0.945
+        },
+        {
+          "text": "even",
+          "start": 13.59,
+          "end": 14.01,
+          "confidence": 0.997
+        },
+        {
+          "text": "reaches",
+          "start": 14.01,
+          "end": 14.37,
+          "confidence": 0.996
+        },
+        {
+          "text": "your",
+          "start": 14.37,
+          "end": 14.63,
+          "confidence": 0.996
+        },
+        {
+          "text": "ears.",
+          "start": 14.63,
+          "end": 14.95,
+          "confidence": 0.836
+        },
+        {
+          "text": "It's",
+          "start": 15.41,
+          "end": 15.69,
+          "confidence": 0.951
+        },
+        {
+          "text": "just",
+          "start": 15.69,
+          "end": 15.87,
+          "confidence": 1.0
+        },
+        {
+          "text": "the",
+          "start": 15.87,
+          "end": 16.07,
+          "confidence": 1.0
+        },
+        {
+          "text": "way",
+          "start": 16.07,
+          "end": 16.25,
+          "confidence": 1.0
+        },
+        {
+          "text": "the",
+          "start": 16.25,
+          "end": 16.490000000000002,
+          "confidence": 0.994
+        },
+        {
+          "text": "atmosphere",
+          "start": 16.490000000000002,
+          "end": 16.83,
+          "confidence": 0.998
+        },
+        {
+          "text": "works.",
+          "start": 16.83,
+          "end": 17.35,
+          "confidence": 0.977
+        },
+        {
+          "text": "Do",
+          "start": 22.990000000000002,
+          "end": 23.15,
+          "confidence": 0.936
+        },
+        {
+          "text": "you",
+          "start": 23.15,
+          "end": 23.270000000000003,
+          "confidence": 0.998
+        },
+        {
+          "text": "want",
+          "start": 23.270000000000003,
+          "end": 23.43,
+          "confidence": 0.999
+        },
+        {
+          "text": "to",
+          "start": 23.43,
+          "end": 23.57,
+          "confidence": 0.999
+        },
+        {
+          "text": "hear",
+          "start": 23.57,
+          "end": 23.810000000000002,
+          "confidence": 1.0
+        },
+        {
+          "text": "a",
+          "start": 23.810000000000002,
+          "end": 24.07,
+          "confidence": 0.995
+        },
+        {
+          "text": "thunder",
+          "start": 24.07,
+          "end": 24.369999999999997,
+          "confidence": 0.914
+        },
+        {
+          "text": "sound",
+          "start": 24.369999999999997,
+          "end": 24.79,
+          "confidence": 0.994
+        },
+        {
+          "text": "effect?",
+          "start": 24.79,
+          "end": 25.11,
+          "confidence": 0.977
+        },
+        {
+          "text": "Is",
+          "start": 29.509999999999998,
+          "end": 29.689999999999998,
+          "confidence": 0.905
+        },
+        {
+          "text": "there",
+          "start": 29.689999999999998,
+          "end": 29.85,
+          "confidence": 1.0
+        },
+        {
+          "text": "anything",
+          "start": 29.85,
+          "end": 30.270000000000003,
+          "confidence": 0.999
+        },
+        {
+          "text": "specific",
+          "start": 30.270000000000003,
+          "end": 30.869999999999997,
+          "confidence": 0.997
+        },
+        {
+          "text": "about",
+          "start": 30.869999999999997,
+          "end": 31.270000000000003,
+          "confidence": 0.992
+        },
+        {
+          "text": "that",
+          "start": 31.270000000000003,
+          "end": 31.57,
+          "confidence": 0.998
+        },
+        {
+          "text": "that's",
+          "start": 31.57,
+          "end": 31.79,
+          "confidence": 0.861
+        }
+      ],
+      "pcm": {
+        "rate": 24000,
+        "samples": 763800,
+        "peak": 0.5865478515625,
+        "full_scale_samples": 0,
+        "gain_changed": false
+      },
+      "all_user_samples_processed": true,
+      "native_ret_count": 0,
+      "human_listening_performed": false,
+      "ordinary_core_correct": true,
+      "review": "Correct light faster than sound; unrelated follow-up chatter."
+    },
+    {
+      "index": 1,
+      "scenario": "recovery-train-008",
+      "checkpoint_job": "7556562",
+      "role": "clock8",
+      "text_temperature": 0.7,
+      "acoustic_temperature": 0.8,
+      "diagnostic_only": true,
+      "diagnostic_outputs_must_not_be_trained_on": true,
+      "qualification_approved": false,
+      "run_report_sha256": "b73569e545220769695d2ba4d98c558d052191b9f8a4d0209ac8eeff8553a8d5",
+      "audio_sha256": "206a441bb432ecfd64044b8863083f178f28c0d383be7e4c2d1f634c81411fc6",
+      "sampled_text": "Because light travels almost instantly, while the sound wave takes much longer. It's because the light travels faster than the sound. Do you want to hear a bit more about the physics behind that sound? So, when the bolt of lightning reaches the Earth's atmosphere, the travel time is almost",
+      "spoken_text": " because light travels almost instantly while the sound wave takes much longer it's because the light travels faster than the sound do you want to hear a bit more about the physics behind that sound so when the bolt of lightning reaches the earth's atmosphere the travel time is",
+      "speech_wer": 0.019230769230769232,
+      "speech_quality_passed": true,
+      "time_bounds_valid": true,
+      "word_bounds_valid": true,
+      "first_onset_valid": true,
+      "first_nonzero_pcm_s": 3.459625,
+      "word_timestamps": [
+        {
+          "text": "because",
+          "start": 7.63,
+          "end": 7.89,
+          "confidence": 0.448
+        },
+        {
+          "text": "light",
+          "start": 7.89,
+          "end": 8.27,
+          "confidence": 0.98
+        },
+        {
+          "text": "travels",
+          "start": 8.27,
+          "end": 8.629999999999999,
+          "confidence": 0.996
+        },
+        {
+          "text": "almost",
+          "start": 8.629999999999999,
+          "end": 9.09,
+          "confidence": 0.983
+        },
+        {
+          "text": "instantly",
+          "start": 9.09,
+          "end": 9.75,
+          "confidence": 0.992
+        },
+        {
+          "text": "while",
+          "start": 9.75,
+          "end": 10.33,
+          "confidence": 0.612
+        },
+        {
+          "text": "the",
+          "start": 10.33,
+          "end": 10.530000000000001,
+          "confidence": 0.982
+        },
+        {
+          "text": "sound",
+          "start": 10.530000000000001,
+          "end": 10.870000000000001,
+          "confidence": 0.949
+        },
+        {
+          "text": "wave",
+          "start": 10.870000000000001,
+          "end": 11.129999999999999,
+          "confidence": 0.87
+        },
+        {
+          "text": "takes",
+          "start": 11.129999999999999,
+          "end": 11.39,
+          "confidence": 0.989
+        },
+        {
+          "text": "much",
+          "start": 11.39,
+          "end": 11.670000000000002,
+          "confidence": 0.978
+        },
+        {
+          "text": "longer",
+          "start": 11.670000000000002,
+          "end": 12.030000000000001,
+          "confidence": 0.994
+        },
+        {
+          "text": "it's",
+          "start": 14.809999999999999,
+          "end": 14.969999999999999,
+          "confidence": 0.18
+        },
+        {
+          "text": "because",
+          "start": 14.969999999999999,
+          "end": 15.27,
+          "confidence": 0.97
+        },
+        {
+          "text": "the",
+          "start": 15.27,
+          "end": 15.489999999999998,
+          "confidence": 0.993
+        },
+        {
+          "text": "light",
+          "start": 15.489999999999998,
+          "end": 15.79,
+          "confidence": 0.989
+        },
+        {
+          "text": "travels",
+          "start": 15.79,
+          "end": 16.13,
+          "confidence": 0.998
+        },
+        {
+          "text": "faster",
+          "start": 16.13,
+          "end": 16.71,
+          "confidence": 0.996
+        },
+        {
+          "text": "than",
+          "start": 16.71,
+          "end": 16.97,
+          "confidence": 0.991
+        },
+        {
+          "text": "the",
+          "start": 16.97,
+          "end": 17.11,
+          "confidence": 0.991
+        },
+        {
+          "text": "sound",
+          "start": 17.11,
+          "end": 17.47,
+          "confidence": 0.995
+        },
+        {
+          "text": "do",
+          "start": 23.09,
+          "end": 23.17,
+          "confidence": 0.092
+        },
+        {
+          "text": "you",
+          "start": 23.17,
+          "end": 23.37,
+          "confidence": 0.992
+        },
+        {
+          "text": "want",
+          "start": 23.37,
+          "end": 23.59,
+          "confidence": 0.996
+        },
+        {
+          "text": "to",
+          "start": 23.59,
+          "end": 23.73,
+          "confidence": 0.995
+        },
+        {
+          "text": "hear",
+          "start": 23.73,
+          "end": 23.93,
+          "confidence": 0.997
+        },
+        {
+          "text": "a",
+          "start": 23.93,
+          "end": 24.05,
+          "confidence": 0.994
+        },
+        {
+          "text": "bit",
+          "start": 24.05,
+          "end": 24.23,
+          "confidence": 0.996
+        },
+        {
+          "text": "more",
+          "start": 24.23,
+          "end": 24.490000000000002,
+          "confidence": 0.996
+        },
+        {
+          "text": "about",
+          "start": 24.490000000000002,
+          "end": 24.69,
+          "confidence": 0.991
+        },
+        {
+          "text": "the",
+          "start": 24.69,
+          "end": 24.85,
+          "confidence": 0.979
+        },
+        {
+          "text": "physics",
+          "start": 24.85,
+          "end": 25.150000000000002,
+          "confidence": 0.974
+        },
+        {
+          "text": "behind",
+          "start": 25.150000000000002,
+          "end": 25.630000000000003,
+          "confidence": 0.992
+        },
+        {
+          "text": "that",
+          "start": 25.630000000000003,
+          "end": 25.970000000000002,
+          "confidence": 0.996
+        },
+        {
+          "text": "sound",
+          "start": 25.970000000000002,
+          "end": 26.27,
+          "confidence": 0.996
+        },
+        {
+          "text": "so",
+          "start": 26.85,
+          "end": 27.07,
+          "confidence": 0.313
+        },
+        {
+          "text": "when",
+          "start": 27.07,
+          "end": 27.630000000000003,
+          "confidence": 0.95
+        },
+        {
+          "text": "the",
+          "start": 27.630000000000003,
+          "end": 27.77,
+          "confidence": 0.999
+        },
+        {
+          "text": "bolt",
+          "start": 27.77,
+          "end": 28.21,
+          "confidence": 0.984
+        },
+        {
+          "text": "of",
+          "start": 28.21,
+          "end": 28.330000000000002,
+          "confidence": 0.997
+        },
+        {
+          "text": "lightning",
+          "start": 28.330000000000002,
+          "end": 28.61,
+          "confidence": 0.989
+        },
+        {
+          "text": "reaches",
+          "start": 28.61,
+          "end": 29.05,
+          "confidence": 0.979
+        },
+        {
+          "text": "the",
+          "start": 29.05,
+          "end": 29.35,
+          "confidence": 0.995
+        },
+        {
+          "text": "earth's",
+          "start": 29.35,
+          "end": 29.85,
+          "confidence": 0.932
+        },
+        {
+          "text": "atmosphere",
+          "start": 29.85,
+          "end": 30.330000000000002,
+          "confidence": 0.993
+        },
+        {
+          "text": "the",
+          "start": 30.330000000000002,
+          "end": 30.73,
+          "confidence": 0.956
+        },
+        {
+          "text": "travel",
+          "start": 30.73,
+          "end": 31.03,
+          "confidence": 0.999
+        },
+        {
+          "text": "time",
+          "start": 31.03,
+          "end": 31.37,
+          "confidence": 0.999
+        },
+        {
+          "text": "is",
+          "start": 31.37,
+          "end": 31.61,
+          "confidence": 0.995
+        }
+      ],
+      "pcm": {
+        "rate": 24000,
+        "samples": 764631,
+        "peak": 0.5889892578125,
+        "full_scale_samples": 0,
+        "gain_changed": false
+      },
+      "all_user_samples_processed": true,
+      "native_ret_count": 0,
+      "human_listening_performed": false,
+      "ordinary_core_correct": true,
+      "review": "Correct light faster than sound; later fragmented explanation."
+    },
+    {
+      "index": 2,
+      "scenario": "recovery-train-008",
+      "checkpoint_job": "7558824",
+      "role": "clock40",
+      "text_temperature": 0.7,
+      "acoustic_temperature": 0.8,
+      "diagnostic_only": true,
+      "diagnostic_outputs_must_not_be_trained_on": true,
+      "qualification_approved": false,
+      "run_report_sha256": "326e78ce00180eb385321ceace24ec2fe1c868930023bdba728cb052a465cdd6",
+      "audio_sha256": "5999aaf597a2b46982ce178c491d77bb2aa22e90a2e4e395484dbec62df9348b",
+      "sampled_text": "Because light travels faster, so when light reaches your eyes, it's already there, while the sound from thunder takes longer. It's much, much faster. Do you prefer outdoor lightning over indoor thunderstorms? Does that make the lightning almost too",
+      "spoken_text": " Because light travels faster, so when light reaches your eyes, it's already there, while the sound from thunder takes longer. It's much, much faster. Do you prefer outdoor lightning over indoor thunderstorms? Does that make the lightning almost too...",
+      "speech_wer": 0.0,
+      "speech_quality_passed": true,
+      "time_bounds_valid": true,
+      "word_bounds_valid": true,
+      "first_onset_valid": true,
+      "first_nonzero_pcm_s": 2.088375,
+      "word_timestamps": [
+        {
+          "text": "Because",
+          "start": 6.2700000000000005,
+          "end": 6.37,
+          "confidence": 0.302
+        },
+        {
+          "text": "light",
+          "start": 6.37,
+          "end": 6.95,
+          "confidence": 0.929
+        },
+        {
+          "text": "travels",
+          "start": 6.95,
+          "end": 7.2700000000000005,
+          "confidence": 0.994
+        },
+        {
+          "text": "faster,",
+          "start": 7.2700000000000005,
+          "end": 7.93,
+          "confidence": 0.648
+        },
+        {
+          "text": "so",
+          "start": 8.27,
+          "end": 8.59,
+          "confidence": 0.727
+        },
+        {
+          "text": "when",
+          "start": 8.59,
+          "end": 8.81,
+          "confidence": 0.99
+        },
+        {
+          "text": "light",
+          "start": 8.81,
+          "end": 9.15,
+          "confidence": 0.983
+        },
+        {
+          "text": "reaches",
+          "start": 9.15,
+          "end": 9.469999999999999,
+          "confidence": 0.989
+        },
+        {
+          "text": "your",
+          "start": 9.469999999999999,
+          "end": 9.71,
+          "confidence": 0.989
+        },
+        {
+          "text": "eyes,",
+          "start": 9.71,
+          "end": 10.07,
+          "confidence": 0.972
+        },
+        {
+          "text": "it's",
+          "start": 10.31,
+          "end": 10.67,
+          "confidence": 0.894
+        },
+        {
+          "text": "already",
+          "start": 10.67,
+          "end": 10.99,
+          "confidence": 0.988
+        },
+        {
+          "text": "there,",
+          "start": 10.99,
+          "end": 11.33,
+          "confidence": 0.909
+        },
+        {
+          "text": "while",
+          "start": 11.63,
+          "end": 11.91,
+          "confidence": 0.789
+        },
+        {
+          "text": "the",
+          "start": 11.91,
+          "end": 12.07,
+          "confidence": 0.347
+        },
+        {
+          "text": "sound",
+          "start": 12.07,
+          "end": 12.35,
+          "confidence": 0.989
+        },
+        {
+          "text": "from",
+          "start": 12.35,
+          "end": 12.61,
+          "confidence": 0.988
+        },
+        {
+          "text": "thunder",
+          "start": 12.61,
+          "end": 12.91,
+          "confidence": 0.738
+        },
+        {
+          "text": "takes",
+          "start": 12.91,
+          "end": 13.21,
+          "confidence": 0.998
+        },
+        {
+          "text": "longer.",
+          "start": 13.21,
+          "end": 13.55,
+          "confidence": 0.923
+        },
+        {
+          "text": "It's",
+          "start": 13.95,
+          "end": 14.45,
+          "confidence": 0.919
+        },
+        {
+          "text": "much,",
+          "start": 14.45,
+          "end": 14.77,
+          "confidence": 0.834
+        },
+        {
+          "text": "much",
+          "start": 14.77,
+          "end": 15.09,
+          "confidence": 0.994
+        },
+        {
+          "text": "faster.",
+          "start": 15.09,
+          "end": 15.55,
+          "confidence": 0.969
+        },
+        {
+          "text": "Do",
+          "start": 19.590000000000003,
+          "end": 19.630000000000003,
+          "confidence": 0.331
+        },
+        {
+          "text": "you",
+          "start": 19.630000000000003,
+          "end": 19.85,
+          "confidence": 0.997
+        },
+        {
+          "text": "prefer",
+          "start": 19.85,
+          "end": 20.189999999999998,
+          "confidence": 0.995
+        },
+        {
+          "text": "outdoor",
+          "start": 20.189999999999998,
+          "end": 20.71,
+          "confidence": 0.987
+        },
+        {
+          "text": "lightning",
+          "start": 20.71,
+          "end": 21.369999999999997,
+          "confidence": 0.93
+        },
+        {
+          "text": "over",
+          "start": 21.369999999999997,
+          "end": 21.810000000000002,
+          "confidence": 0.979
+        },
+        {
+          "text": "indoor",
+          "start": 21.810000000000002,
+          "end": 22.229999999999997,
+          "confidence": 0.992
+        },
+        {
+          "text": "thunderstorms?",
+          "start": 22.229999999999997,
+          "end": 23.130000000000003,
+          "confidence": 0.988
+        },
+        {
+          "text": "Does",
+          "start": 28.21,
+          "end": 28.369999999999997,
+          "confidence": 0.683
+        },
+        {
+          "text": "that",
+          "start": 28.369999999999997,
+          "end": 28.689999999999998,
+          "confidence": 0.996
+        },
+        {
+          "text": "make",
+          "start": 28.689999999999998,
+          "end": 28.93,
+          "confidence": 0.991
+        },
+        {
+          "text": "the",
+          "start": 28.93,
+          "end": 29.130000000000003,
+          "confidence": 0.992
+        },
+        {
+          "text": "lightning",
+          "start": 29.130000000000003,
+          "end": 29.490000000000002,
+          "confidence": 0.864
+        },
+        {
+          "text": "almost",
+          "start": 29.490000000000002,
+          "end": 30.049999999999997,
+          "confidence": 0.938
+        },
+        {
+          "text": "too...",
+          "start": 30.049999999999997,
+          "end": 30.310000000000002,
+          "confidence": 0.024
+        }
+      ],
+      "pcm": {
+        "rate": 24000,
+        "samples": 732022,
+        "peak": 0.7242431640625,
+        "full_scale_samples": 0,
+        "gain_changed": false
+      },
+      "all_user_samples_processed": true,
+      "native_ret_count": 0,
+      "human_listening_performed": false,
+      "ordinary_core_correct": true,
+      "review": "Correct light faster than sound; unrelated outdoor/indoor follow-up."
+    },
+    {
+      "index": 3,
+      "scenario": "recovery-train-009",
+      "checkpoint_job": "7510331",
+      "role": "native520",
+      "text_temperature": 0.7,
+      "acoustic_temperature": 0.8,
+      "diagnostic_only": true,
+      "diagnostic_outputs_must_not_be_trained_on": true,
+      "qualification_approved": false,
+      "run_report_sha256": "16a5ed050048da49197c1328087d62dbab5154729586367ee16909d7602e03f4",
+      "audio_sha256": "e59843c6771d59b1b6ab8203c544b9aceb6887c046c0e157f972418982d36709",
+      "sampled_text": "Evaporation, then. Evaporation is the process of becoming a vapor, usually from a liquid.",
+      "spoken_text": " Evaporation then. Evaporation is the process of becoming a vapor, usually from a liquid.",
+      "speech_wer": 0.0,
+      "speech_quality_passed": true,
+      "time_bounds_valid": true,
+      "word_bounds_valid": true,
+      "first_onset_valid": true,
+      "first_nonzero_pcm_s": 2.018125,
+      "word_timestamps": [
+        {
+          "text": "Evaporation",
+          "start": 5.41,
+          "end": 6.09,
+          "confidence": 0.909
+        },
+        {
+          "text": "then.",
+          "start": 6.09,
+          "end": 6.37,
+          "confidence": 0.489
+        },
+        {
+          "text": "Evaporation",
+          "start": 6.69,
+          "end": 7.67,
+          "confidence": 0.856
+        },
+        {
+          "text": "is",
+          "start": 7.67,
+          "end": 7.87,
+          "confidence": 0.993
+        },
+        {
+          "text": "the",
+          "start": 7.87,
+          "end": 8.01,
+          "confidence": 0.994
+        },
+        {
+          "text": "process",
+          "start": 8.01,
+          "end": 8.35,
+          "confidence": 0.99
+        },
+        {
+          "text": "of",
+          "start": 8.35,
+          "end": 8.67,
+          "confidence": 0.976
+        },
+        {
+          "text": "becoming",
+          "start": 8.67,
+          "end": 8.969999999999999,
+          "confidence": 0.987
+        },
+        {
+          "text": "a",
+          "start": 8.969999999999999,
+          "end": 9.25,
+          "confidence": 0.972
+        },
+        {
+          "text": "vapor,",
+          "start": 9.25,
+          "end": 9.51,
+          "confidence": 0.962
+        },
+        {
+          "text": "usually",
+          "start": 9.87,
+          "end": 10.23,
+          "confidence": 0.978
+        },
+        {
+          "text": "from",
+          "start": 10.23,
+          "end": 10.55,
+          "confidence": 0.994
+        },
+        {
+          "text": "a",
+          "start": 10.55,
+          "end": 10.71,
+          "confidence": 0.989
+        },
+        {
+          "text": "liquid.",
+          "start": 10.71,
+          "end": 10.85,
+          "confidence": 0.984
+        }
+      ],
+      "pcm": {
+        "rate": 24000,
+        "samples": 722355,
+        "peak": 0.647003173828125,
+        "full_scale_samples": 0,
+        "gain_changed": false
+      },
+      "all_user_samples_processed": true,
+      "native_ret_count": 0,
+      "human_listening_performed": false,
+      "ordinary_core_correct": true,
+      "review": "Correct liquid to vapor definition."
+    },
+    {
+      "index": 4,
+      "scenario": "recovery-train-009",
+      "checkpoint_job": "7556562",
+      "role": "clock8",
+      "text_temperature": 0.7,
+      "acoustic_temperature": 0.8,
+      "diagnostic_only": true,
+      "diagnostic_outputs_must_not_be_trained_on": true,
+      "qualification_approved": false,
+      "run_report_sha256": "a74cc69842a05c8b1ad81f4e5a839839fc4bfbe4da4061fcc9c228f3b3c21d9f",
+      "audio_sha256": "24f4d486c3f98b814f34f0f212c5257613841c8ee56bf3bf33471a08f95d4c15",
+      "sampled_text": "Evaporation, the term means, is Evaporation. Evaporation is the process by Which the Vapor is the result. Evaporation involves the conversion of a liquid into a gas, usually through heat. Evaporation, the term, is Evaporation. Evaporation, the process, is Evaporation. The term, Evaporation. Would you like me to look up more about the science",
+      "spoken_text": " Evaporation, the term means, is evaporation. Evaporation is the process by which the release is the result. Evaporation involves the conversion of a liquid into a gas, usually through heat. Evaporation, the term is evaporation. Evaporation, the process is evaporation, the term evaporation. Would you like me to look up more about this?",
+      "speech_wer": 0.05555555555555555,
+      "speech_quality_passed": true,
+      "time_bounds_valid": true,
+      "word_bounds_valid": true,
+      "first_onset_valid": true,
+      "first_nonzero_pcm_s": 1.766625,
+      "word_timestamps": [
+        {
+          "text": "Evaporation,",
+          "start": 5.29,
+          "end": 5.91,
+          "confidence": 0.76
+        },
+        {
+          "text": "the",
+          "start": 6.09,
+          "end": 6.1499999999999995,
+          "confidence": 0.978
+        },
+        {
+          "text": "term",
+          "start": 6.1499999999999995,
+          "end": 6.35,
+          "confidence": 0.995
+        },
+        {
+          "text": "means,",
+          "start": 6.35,
+          "end": 6.71,
+          "confidence": 0.705
+        },
+        {
+          "text": "is",
+          "start": 6.7299999999999995,
+          "end": 7.01,
+          "confidence": 0.985
+        },
+        {
+          "text": "evaporation.",
+          "start": 7.01,
+          "end": 7.75,
+          "confidence": 0.968
+        },
+        {
+          "text": "Evaporation",
+          "start": 8.05,
+          "end": 8.870000000000001,
+          "confidence": 0.715
+        },
+        {
+          "text": "is",
+          "start": 8.870000000000001,
+          "end": 9.03,
+          "confidence": 0.987
+        },
+        {
+          "text": "the",
+          "start": 9.03,
+          "end": 9.15,
+          "confidence": 0.984
+        },
+        {
+          "text": "process",
+          "start": 9.15,
+          "end": 9.49,
+          "confidence": 0.964
+        },
+        {
+          "text": "by",
+          "start": 9.49,
+          "end": 9.77,
+          "confidence": 0.973
+        },
+        {
+          "text": "which",
+          "start": 9.77,
+          "end": 10.03,
+          "confidence": 0.985
+        },
+        {
+          "text": "the",
+          "start": 10.03,
+          "end": 10.209999999999999,
+          "confidence": 0.579
+        },
+        {
+          "text": "release",
+          "start": 10.209999999999999,
+          "end": 10.57,
+          "confidence": 0.471
+        },
+        {
+          "text": "is",
+          "start": 10.57,
+          "end": 10.65,
+          "confidence": 0.462
+        },
+        {
+          "text": "the",
+          "start": 10.65,
+          "end": 10.87,
+          "confidence": 0.998
+        },
+        {
+          "text": "result.",
+          "start": 10.87,
+          "end": 11.25,
+          "confidence": 0.973
+        },
+        {
+          "text": "Evaporation",
+          "start": 11.53,
+          "end": 12.37,
+          "confidence": 0.974
+        },
+        {
+          "text": "involves",
+          "start": 12.37,
+          "end": 12.65,
+          "confidence": 0.996
+        },
+        {
+          "text": "the",
+          "start": 12.65,
+          "end": 12.91,
+          "confidence": 0.991
+        },
+        {
+          "text": "conversion",
+          "start": 12.91,
+          "end": 13.31,
+          "confidence": 0.995
+        },
+        {
+          "text": "of",
+          "start": 13.31,
+          "end": 13.57,
+          "confidence": 0.995
+        },
+        {
+          "text": "a",
+          "start": 13.57,
+          "end": 13.709999999999999,
+          "confidence": 0.993
+        },
+        {
+          "text": "liquid",
+          "start": 13.709999999999999,
+          "end": 13.91,
+          "confidence": 0.995
+        },
+        {
+          "text": "into",
+          "start": 13.91,
+          "end": 14.27,
+          "confidence": 0.996
+        },
+        {
+          "text": "a",
+          "start": 14.27,
+          "end": 14.47,
+          "confidence": 0.999
+        },
+        {
+          "text": "gas,",
+          "start": 14.47,
+          "end": 14.77,
+          "confidence": 0.215
+        },
+        {
+          "text": "usually",
+          "start": 15.25,
+          "end": 15.49,
+          "confidence": 0.826
+        },
+        {
+          "text": "through",
+          "start": 15.49,
+          "end": 15.85,
+          "confidence": 0.992
+        },
+        {
+          "text": "heat.",
+          "start": 15.85,
+          "end": 16.19,
+          "confidence": 0.755
+        },
+        {
+          "text": "Evaporation,",
+          "start": 16.39,
+          "end": 17.29,
+          "confidence": 0.743
+        },
+        {
+          "text": "the",
+          "start": 17.45,
+          "end": 17.59,
+          "confidence": 0.971
+        },
+        {
+          "text": "term",
+          "start": 17.59,
+          "end": 17.810000000000002,
+          "confidence": 0.996
+        },
+        {
+          "text": "is",
+          "start": 17.810000000000002,
+          "end": 18.03,
+          "confidence": 0.992
+        },
+        {
+          "text": "evaporation.",
+          "start": 18.03,
+          "end": 18.810000000000002,
+          "confidence": 0.949
+        },
+        {
+          "text": "Evaporation,",
+          "start": 19.05,
+          "end": 19.810000000000002,
+          "confidence": 0.825
+        },
+        {
+          "text": "the",
+          "start": 19.810000000000002,
+          "end": 19.970000000000002,
+          "confidence": 0.65
+        },
+        {
+          "text": "process",
+          "start": 19.970000000000002,
+          "end": 20.25,
+          "confidence": 0.999
+        },
+        {
+          "text": "is",
+          "start": 20.25,
+          "end": 20.55,
+          "confidence": 0.996
+        },
+        {
+          "text": "evaporation,",
+          "start": 20.55,
+          "end": 21.21,
+          "confidence": 0.948
+        },
+        {
+          "text": "the",
+          "start": 21.39,
+          "end": 21.650000000000002,
+          "confidence": 0.976
+        },
+        {
+          "text": "term",
+          "start": 21.650000000000002,
+          "end": 21.89,
+          "confidence": 0.999
+        },
+        {
+          "text": "evaporation.",
+          "start": 21.89,
+          "end": 22.69,
+          "confidence": 0.987
+        },
+        {
+          "text": "Would",
+          "start": 28.05,
+          "end": 28.19,
+          "confidence": 0.815
+        },
+        {
+          "text": "you",
+          "start": 28.19,
+          "end": 28.37,
+          "confidence": 0.994
+        },
+        {
+          "text": "like",
+          "start": 28.37,
+          "end": 28.490000000000002,
+          "confidence": 0.999
+        },
+        {
+          "text": "me",
+          "start": 28.490000000000002,
+          "end": 28.69,
+          "confidence": 0.998
+        },
+        {
+          "text": "to",
+          "start": 28.69,
+          "end": 28.85,
+          "confidence": 0.997
+        },
+        {
+          "text": "look",
+          "start": 28.85,
+          "end": 29.05,
+          "confidence": 0.997
+        },
+        {
+          "text": "up",
+          "start": 29.05,
+          "end": 29.17,
+          "confidence": 0.993
+        },
+        {
+          "text": "more",
+          "start": 29.17,
+          "end": 29.450000000000003,
+          "confidence": 0.996
+        },
+        {
+          "text": "about",
+          "start": 29.450000000000003,
+          "end": 29.71,
+          "confidence": 0.986
+        },
+        {
+          "text": "this?",
+          "start": 29.71,
+          "end": 29.89,
+          "confidence": 0.573
+        }
+      ],
+      "pcm": {
+        "rate": 24000,
+        "samples": 719873,
+        "peak": 0.814605712890625,
+        "full_scale_samples": 0,
+        "gain_changed": false
+      },
+      "all_user_samples_processed": true,
+      "native_ret_count": 0,
+      "human_listening_performed": false,
+      "ordinary_core_correct": true,
+      "review": "Contains correct liquid-to-gas definition, with tautology and repetitions; whole answer partial."
+    },
+    {
+      "index": 5,
+      "scenario": "recovery-train-009",
+      "checkpoint_job": "7558824",
+      "role": "clock40",
+      "text_temperature": 0.7,
+      "acoustic_temperature": 0.8,
+      "diagnostic_only": true,
+      "diagnostic_outputs_must_not_be_trained_on": true,
+      "qualification_approved": false,
+      "run_report_sha256": "3ab0cd666345f820fe275d9d3e60efd0ac8a69fd84d7c2bb4efb1c54ed3682fc",
+      "audio_sha256": "811d8edbb71661e3176eac75677046bd8c2e720d6072fe7f1307d3621614d12e",
+      "sampled_text": "Evaporation, then. Evaporation is when a liquid turns into a gas, usually from a surface, like when water turns into water vapor. It's when a liquid's molecules get enough energy to leave. Are you looking for more details about the process, or should we move on to something else? Evaporation happens",
+      "spoken_text": " Evaporation then. Evaporation is when a liquid turns into a gas usually from a surface like when water turns into water vapor. It's when a liquid's molecules get enough energy to leave. Are you looking for more details about the process or should we move on to something else? Evaporation happens.",
+      "speech_wer": 0.0,
+      "speech_quality_passed": true,
+      "time_bounds_valid": true,
+      "word_bounds_valid": true,
+      "first_onset_valid": true,
+      "first_nonzero_pcm_s": 1.7979166666666666,
+      "word_timestamps": [
+        {
+          "text": "Evaporation",
+          "start": 5.21,
+          "end": 5.890000000000001,
+          "confidence": 0.839
+        },
+        {
+          "text": "then.",
+          "start": 5.890000000000001,
+          "end": 6.17,
+          "confidence": 0.5
+        },
+        {
+          "text": "Evaporation",
+          "start": 6.470000000000001,
+          "end": 7.49,
+          "confidence": 0.906
+        },
+        {
+          "text": "is",
+          "start": 7.49,
+          "end": 7.65,
+          "confidence": 0.992
+        },
+        {
+          "text": "when",
+          "start": 7.65,
+          "end": 7.7700000000000005,
+          "confidence": 0.986
+        },
+        {
+          "text": "a",
+          "start": 7.7700000000000005,
+          "end": 7.890000000000001,
+          "confidence": 0.987
+        },
+        {
+          "text": "liquid",
+          "start": 7.890000000000001,
+          "end": 8.07,
+          "confidence": 0.976
+        },
+        {
+          "text": "turns",
+          "start": 8.07,
+          "end": 8.39,
+          "confidence": 0.951
+        },
+        {
+          "text": "into",
+          "start": 8.39,
+          "end": 8.65,
+          "confidence": 0.94
+        },
+        {
+          "text": "a",
+          "start": 8.65,
+          "end": 8.81,
+          "confidence": 0.941
+        },
+        {
+          "text": "gas",
+          "start": 8.81,
+          "end": 9.03,
+          "confidence": 0.966
+        },
+        {
+          "text": "usually",
+          "start": 9.03,
+          "end": 9.43,
+          "confidence": 0.736
+        },
+        {
+          "text": "from",
+          "start": 9.43,
+          "end": 9.729999999999999,
+          "confidence": 0.947
+        },
+        {
+          "text": "a",
+          "start": 9.729999999999999,
+          "end": 9.91,
+          "confidence": 0.894
+        },
+        {
+          "text": "surface",
+          "start": 9.91,
+          "end": 10.129999999999999,
+          "confidence": 0.943
+        },
+        {
+          "text": "like",
+          "start": 10.129999999999999,
+          "end": 10.51,
+          "confidence": 0.816
+        },
+        {
+          "text": "when",
+          "start": 10.51,
+          "end": 10.69,
+          "confidence": 0.484
+        },
+        {
+          "text": "water",
+          "start": 10.69,
+          "end": 10.969999999999999,
+          "confidence": 0.762
+        },
+        {
+          "text": "turns",
+          "start": 10.969999999999999,
+          "end": 11.25,
+          "confidence": 0.981
+        },
+        {
+          "text": "into",
+          "start": 11.25,
+          "end": 11.51,
+          "confidence": 0.994
+        },
+        {
+          "text": "water",
+          "start": 11.51,
+          "end": 11.83,
+          "confidence": 0.984
+        },
+        {
+          "text": "vapor.",
+          "start": 11.83,
+          "end": 12.129999999999999,
+          "confidence": 0.979
+        },
+        {
+          "text": "It's",
+          "start": 12.629999999999999,
+          "end": 13.33,
+          "confidence": 0.889
+        },
+        {
+          "text": "when",
+          "start": 13.33,
+          "end": 13.469999999999999,
+          "confidence": 0.999
+        },
+        {
+          "text": "a",
+          "start": 13.469999999999999,
+          "end": 13.649999999999999,
+          "confidence": 0.996
+        },
+        {
+          "text": "liquid's",
+          "start": 13.649999999999999,
+          "end": 14.09,
+          "confidence": 0.919
+        },
+        {
+          "text": "molecules",
+          "start": 14.09,
+          "end": 14.45,
+          "confidence": 0.999
+        },
+        {
+          "text": "get",
+          "start": 14.45,
+          "end": 14.87,
+          "confidence": 0.999
+        },
+        {
+          "text": "enough",
+          "start": 14.87,
+          "end": 15.11,
+          "confidence": 0.998
+        },
+        {
+          "text": "energy",
+          "start": 15.11,
+          "end": 15.45,
+          "confidence": 0.999
+        },
+        {
+          "text": "to",
+          "start": 15.45,
+          "end": 15.75,
+          "confidence": 0.999
+        },
+        {
+          "text": "leave.",
+          "start": 15.75,
+          "end": 15.99,
+          "confidence": 0.988
+        },
+        {
+          "text": "Are",
+          "start": 21.37,
+          "end": 21.39,
+          "confidence": 0.632
+        },
+        {
+          "text": "you",
+          "start": 21.39,
+          "end": 21.630000000000003,
+          "confidence": 0.992
+        },
+        {
+          "text": "looking",
+          "start": 21.630000000000003,
+          "end": 21.87,
+          "confidence": 0.992
+        },
+        {
+          "text": "for",
+          "start": 21.87,
+          "end": 22.130000000000003,
+          "confidence": 0.986
+        },
+        {
+          "text": "more",
+          "start": 22.130000000000003,
+          "end": 22.310000000000002,
+          "confidence": 0.983
+        },
+        {
+          "text": "details",
+          "start": 22.310000000000002,
+          "end": 22.69,
+          "confidence": 0.99
+        },
+        {
+          "text": "about",
+          "start": 22.69,
+          "end": 23.07,
+          "confidence": 0.951
+        },
+        {
+          "text": "the",
+          "start": 23.07,
+          "end": 23.25,
+          "confidence": 0.965
+        },
+        {
+          "text": "process",
+          "start": 23.25,
+          "end": 23.61,
+          "confidence": 0.983
+        },
+        {
+          "text": "or",
+          "start": 23.61,
+          "end": 24.19,
+          "confidence": 0.355
+        },
+        {
+          "text": "should",
+          "start": 24.19,
+          "end": 24.470000000000002,
+          "confidence": 0.94
+        },
+        {
+          "text": "we",
+          "start": 24.470000000000002,
+          "end": 24.67,
+          "confidence": 0.957
+        },
+        {
+          "text": "move",
+          "start": 24.67,
+          "end": 24.93,
+          "confidence": 0.977
+        },
+        {
+          "text": "on",
+          "start": 24.93,
+          "end": 25.11,
+          "confidence": 0.97
+        },
+        {
+          "text": "to",
+          "start": 25.11,
+          "end": 25.25,
+          "confidence": 0.989
+        },
+        {
+          "text": "something",
+          "start": 25.25,
+          "end": 25.53,
+          "confidence": 0.967
+        },
+        {
+          "text": "else?",
+          "start": 25.53,
+          "end": 25.810000000000002,
+          "confidence": 0.849
+        },
+        {
+          "text": "Evaporation",
+          "start": 28.85,
+          "end": 29.53,
+          "confidence": 0.866
+        },
+        {
+          "text": "happens.",
+          "start": 29.53,
+          "end": 29.830000000000002,
+          "confidence": 0.512
+        }
+      ],
+      "pcm": {
+        "rate": 24000,
+        "samples": 717070,
+        "peak": 0.755279541015625,
+        "full_scale_samples": 0,
+        "gain_changed": false
+      },
+      "all_user_samples_processed": true,
+      "native_ret_count": 0,
+      "human_listening_performed": false,
+      "ordinary_core_correct": true,
+      "review": "Correct liquid-to-gas and molecular energy explanation."
+    },
+    {
+      "index": 6,
+      "scenario": "recovery-train-010",
+      "checkpoint_job": "7510331",
+      "role": "native520",
+      "text_temperature": 0.7,
+      "acoustic_temperature": 0.8,
+      "diagnostic_only": true,
+      "diagnostic_outputs_must_not_be_trained_on": true,
+      "qualification_approved": false,
+      "run_report_sha256": "d3afa86c6a310fbfd53e7fe1a15c52d03c573604ed2e33d3be667118e8c5d50a",
+      "audio_sha256": "dba256741d68ac3a6b6b45bbc03436740ba7e06eb04e281f91196c66808c9fc0",
+      "sampled_text": "Day turns into night because the Earth's rotation causes the Earth to rotate away from the sun.",
+      "spoken_text": " Day turns into night because the earth's rotation causes the earth to rotate away from the sun.",
+      "speech_wer": 0.0,
+      "speech_quality_passed": true,
+      "time_bounds_valid": true,
+      "word_bounds_valid": true,
+      "first_onset_valid": true,
+      "first_nonzero_pcm_s": 1.7923333333333333,
+      "word_timestamps": [
+        {
+          "text": "Day",
+          "start": 5.15,
+          "end": 5.37,
+          "confidence": 0.656
+        },
+        {
+          "text": "turns",
+          "start": 5.37,
+          "end": 5.7700000000000005,
+          "confidence": 0.978
+        },
+        {
+          "text": "into",
+          "start": 5.7700000000000005,
+          "end": 6.03,
+          "confidence": 0.98
+        },
+        {
+          "text": "night",
+          "start": 6.03,
+          "end": 6.33,
+          "confidence": 0.98
+        },
+        {
+          "text": "because",
+          "start": 6.33,
+          "end": 6.890000000000001,
+          "confidence": 0.516
+        },
+        {
+          "text": "the",
+          "start": 6.890000000000001,
+          "end": 7.17,
+          "confidence": 0.966
+        },
+        {
+          "text": "earth's",
+          "start": 7.17,
+          "end": 7.61,
+          "confidence": 0.667
+        },
+        {
+          "text": "rotation",
+          "start": 7.61,
+          "end": 7.930000000000001,
+          "confidence": 0.947
+        },
+        {
+          "text": "causes",
+          "start": 7.930000000000001,
+          "end": 8.49,
+          "confidence": 0.918
+        },
+        {
+          "text": "the",
+          "start": 8.49,
+          "end": 8.75,
+          "confidence": 0.945
+        },
+        {
+          "text": "earth",
+          "start": 8.75,
+          "end": 9.09,
+          "confidence": 0.901
+        },
+        {
+          "text": "to",
+          "start": 9.09,
+          "end": 9.37,
+          "confidence": 0.942
+        },
+        {
+          "text": "rotate",
+          "start": 9.37,
+          "end": 9.75,
+          "confidence": 0.975
+        },
+        {
+          "text": "away",
+          "start": 9.75,
+          "end": 10.17,
+          "confidence": 0.981
+        },
+        {
+          "text": "from",
+          "start": 10.17,
+          "end": 10.51,
+          "confidence": 0.768
+        },
+        {
+          "text": "the",
+          "start": 10.51,
+          "end": 10.67,
+          "confidence": 0.899
+        },
+        {
+          "text": "sun.",
+          "start": 10.67,
+          "end": 10.93,
+          "confidence": 0.825
+        }
+      ],
+      "pcm": {
+        "rate": 24000,
+        "samples": 711176,
+        "peak": 0.441802978515625,
+        "full_scale_samples": 0,
+        "gain_changed": false
+      },
+      "all_user_samples_processed": true,
+      "native_ret_count": 0,
+      "human_listening_performed": false,
+      "ordinary_core_correct": true,
+      "review": "Correct Earth rotation explanation."
+    },
+    {
+      "index": 7,
+      "scenario": "recovery-train-010",
+      "checkpoint_job": "7556562",
+      "role": "clock8",
+      "text_temperature": 0.7,
+      "acoustic_temperature": 0.8,
+      "diagnostic_only": true,
+      "diagnostic_outputs_must_not_be_trained_on": true,
+      "qualification_approved": false,
+      "run_report_sha256": "a314d8a779e4449fa76c5423f968b698753dd1c6d680779d56c550a42abc64f3",
+      "audio_sha256": "f105669ff996bce816a02734be8399d91bcdfc5ee78d68049840fa5c1880a51d",
+      "sampled_text": "Day turns into night because the Earth's axis is tilted, causing the Sun, Moon, and stars to move away.",
+      "spoken_text": " Day turns into night because the Earth's axis is tilted, causing the sun, moon, and stars to move away.",
+      "speech_wer": 0.0,
+      "speech_quality_passed": true,
+      "time_bounds_valid": true,
+      "word_bounds_valid": true,
+      "first_onset_valid": true,
+      "first_nonzero_pcm_s": 1.8070416666666667,
+      "word_timestamps": [
+        {
+          "text": "Day",
+          "start": 5.17,
+          "end": 5.35,
+          "confidence": 0.655
+        },
+        {
+          "text": "turns",
+          "start": 5.35,
+          "end": 5.6499999999999995,
+          "confidence": 0.989
+        },
+        {
+          "text": "into",
+          "start": 5.6499999999999995,
+          "end": 5.99,
+          "confidence": 0.997
+        },
+        {
+          "text": "night",
+          "start": 5.99,
+          "end": 6.31,
+          "confidence": 0.977
+        },
+        {
+          "text": "because",
+          "start": 6.31,
+          "end": 6.85,
+          "confidence": 0.791
+        },
+        {
+          "text": "the",
+          "start": 6.85,
+          "end": 7.05,
+          "confidence": 0.978
+        },
+        {
+          "text": "Earth's",
+          "start": 7.05,
+          "end": 7.43,
+          "confidence": 0.811
+        },
+        {
+          "text": "axis",
+          "start": 7.43,
+          "end": 7.77,
+          "confidence": 0.962
+        },
+        {
+          "text": "is",
+          "start": 7.77,
+          "end": 8.05,
+          "confidence": 0.969
+        },
+        {
+          "text": "tilted,",
+          "start": 8.05,
+          "end": 8.35,
+          "confidence": 0.879
+        },
+        {
+          "text": "causing",
+          "start": 8.530000000000001,
+          "end": 9.07,
+          "confidence": 0.887
+        },
+        {
+          "text": "the",
+          "start": 9.07,
+          "end": 9.27,
+          "confidence": 0.952
+        },
+        {
+          "text": "sun,",
+          "start": 9.27,
+          "end": 9.59,
+          "confidence": 0.771
+        },
+        {
+          "text": "moon,",
+          "start": 9.790000000000001,
+          "end": 9.950000000000001,
+          "confidence": 0.812
+        },
+        {
+          "text": "and",
+          "start": 10.010000000000002,
+          "end": 10.17,
+          "confidence": 0.93
+        },
+        {
+          "text": "stars",
+          "start": 10.17,
+          "end": 10.510000000000002,
+          "confidence": 0.519
+        },
+        {
+          "text": "to",
+          "start": 10.510000000000002,
+          "end": 10.770000000000001,
+          "confidence": 0.522
+        },
+        {
+          "text": "move",
+          "start": 10.770000000000001,
+          "end": 10.950000000000001,
+          "confidence": 0.929
+        },
+        {
+          "text": "away.",
+          "start": 10.950000000000001,
+          "end": 11.21,
+          "confidence": 0.95
+        }
+      ],
+      "pcm": {
+        "rate": 24000,
+        "samples": 711529,
+        "peak": 0.455413818359375,
+        "full_scale_samples": 0,
+        "gain_changed": false
+      },
+      "all_user_samples_processed": true,
+      "native_ret_count": 0,
+      "human_listening_performed": false,
+      "ordinary_core_correct": false,
+      "review": "Incorrect axial tilt explanation for day/night."
+    },
+    {
+      "index": 8,
+      "scenario": "recovery-train-010",
+      "checkpoint_job": "7558824",
+      "role": "clock40",
+      "text_temperature": 0.7,
+      "acoustic_temperature": 0.8,
+      "diagnostic_only": true,
+      "diagnostic_outputs_must_not_be_trained_on": true,
+      "qualification_approved": false,
+      "run_report_sha256": "62a35fd8b276528b073c000202502711ce1c909efc5ea4c5c8b7f826f1565039",
+      "audio_sha256": "f0c3d57cc54d1259934dc6ab01d66d052983766cae199e3b70116912f0b5bc0c",
+      "sampled_text": "Day turns into night, because the Earth's axis tilts, bringing the sun's light to one side, and the opposite side becomes dark. Day is the opposite of night, because the Earth's axis tilts. Are you a student of earth science, or just curious about how the day night cycle works? Day is the opposite",
+      "spoken_text": " Day turns into night because the earth's axis tilts, bringing the sun's light to one side, and the opposite side becomes dark. Day is the opposite of night because the earth's axis tilts. Are you a student of earth science, or just curious about how the day-night cycle works? Day is the Day is the Day is the Day is the Day is the Day is the Day is the Day is the Day is the Day is the Day is the Day is the Day is the Day is the Day is the Day is the Day is the Day is the Day is the Day is the Day is the Day is the Day is the Day is the Day is the Day is the Day is the Day is the Day is the",
+      "speech_wer": 1.4736842105263157,
+      "speech_quality_passed": false,
+      "time_bounds_valid": false,
+      "word_bounds_valid": false,
+      "first_onset_valid": true,
+      "first_nonzero_pcm_s": 1.798375,
+      "word_timestamps": [
+        {
+          "text": "Day",
+          "start": 5.17,
+          "end": 5.35,
+          "confidence": 0.473
+        },
+        {
+          "text": "turns",
+          "start": 5.35,
+          "end": 5.69,
+          "confidence": 0.928
+        },
+        {
+          "text": "into",
+          "start": 5.69,
+          "end": 6.03,
+          "confidence": 0.993
+        },
+        {
+          "text": "night",
+          "start": 6.03,
+          "end": 6.33,
+          "confidence": 0.981
+        },
+        {
+          "text": "because",
+          "start": 6.33,
+          "end": 6.930000000000001,
+          "confidence": 0.826
+        },
+        {
+          "text": "the",
+          "start": 6.930000000000001,
+          "end": 7.15,
+          "confidence": 0.988
+        },
+        {
+          "text": "earth's",
+          "start": 7.15,
+          "end": 7.65,
+          "confidence": 0.784
+        },
+        {
+          "text": "axis",
+          "start": 7.65,
+          "end": 7.99,
+          "confidence": 0.978
+        },
+        {
+          "text": "tilts,",
+          "start": 7.99,
+          "end": 8.59,
+          "confidence": 0.934
+        },
+        {
+          "text": "bringing",
+          "start": 8.81,
+          "end": 9.47,
+          "confidence": 0.825
+        },
+        {
+          "text": "the",
+          "start": 9.47,
+          "end": 9.709999999999999,
+          "confidence": 0.951
+        },
+        {
+          "text": "sun's",
+          "start": 9.709999999999999,
+          "end": 10.17,
+          "confidence": 0.943
+        },
+        {
+          "text": "light",
+          "start": 10.17,
+          "end": 10.35,
+          "confidence": 0.982
+        },
+        {
+          "text": "to",
+          "start": 10.35,
+          "end": 10.51,
+          "confidence": 0.962
+        },
+        {
+          "text": "one",
+          "start": 10.51,
+          "end": 10.77,
+          "confidence": 0.794
+        },
+        {
+          "text": "side,",
+          "start": 10.77,
+          "end": 11.17,
+          "confidence": 0.465
+        },
+        {
+          "text": "and",
+          "start": 11.43,
+          "end": 11.75,
+          "confidence": 0.634
+        },
+        {
+          "text": "the",
+          "start": 11.75,
+          "end": 11.87,
+          "confidence": 0.982
+        },
+        {
+          "text": "opposite",
+          "start": 11.87,
+          "end": 12.229999999999999,
+          "confidence": 0.992
+        },
+        {
+          "text": "side",
+          "start": 12.229999999999999,
+          "end": 12.629999999999999,
+          "confidence": 0.995
+        },
+        {
+          "text": "becomes",
+          "start": 12.629999999999999,
+          "end": 12.969999999999999,
+          "confidence": 0.997
+        },
+        {
+          "text": "dark.",
+          "start": 12.969999999999999,
+          "end": 13.35,
+          "confidence": 0.969
+        },
+        {
+          "text": "Day",
+          "start": 13.79,
+          "end": 13.99,
+          "confidence": 0.66
+        },
+        {
+          "text": "is",
+          "start": 13.99,
+          "end": 14.29,
+          "confidence": 0.997
+        },
+        {
+          "text": "the",
+          "start": 14.29,
+          "end": 14.41,
+          "confidence": 0.997
+        },
+        {
+          "text": "opposite",
+          "start": 14.41,
+          "end": 14.79,
+          "confidence": 0.998
+        },
+        {
+          "text": "of",
+          "start": 14.79,
+          "end": 15.03,
+          "confidence": 0.999
+        },
+        {
+          "text": "night",
+          "start": 15.03,
+          "end": 15.25,
+          "confidence": 0.97
+        },
+        {
+          "text": "because",
+          "start": 15.25,
+          "end": 15.629999999999999,
+          "confidence": 0.899
+        },
+        {
+          "text": "the",
+          "start": 15.629999999999999,
+          "end": 15.85,
+          "confidence": 0.993
+        },
+        {
+          "text": "earth's",
+          "start": 15.85,
+          "end": 16.23,
+          "confidence": 0.61
+        },
+        {
+          "text": "axis",
+          "start": 16.23,
+          "end": 16.51,
+          "confidence": 0.996
+        },
+        {
+          "text": "tilts.",
+          "start": 16.51,
+          "end": 17.07,
+          "confidence": 0.976
+        },
+        {
+          "text": "Are",
+          "start": 21.35,
+          "end": 21.450000000000003,
+          "confidence": 0.909
+        },
+        {
+          "text": "you",
+          "start": 21.450000000000003,
+          "end": 21.650000000000002,
+          "confidence": 0.999
+        },
+        {
+          "text": "a",
+          "start": 21.650000000000002,
+          "end": 21.75,
+          "confidence": 1.0
+        },
+        {
+          "text": "student",
+          "start": 21.75,
+          "end": 22.05,
+          "confidence": 0.999
+        },
+        {
+          "text": "of",
+          "start": 22.05,
+          "end": 22.290000000000003,
+          "confidence": 0.999
+        },
+        {
+          "text": "earth",
+          "start": 22.290000000000003,
+          "end": 22.51,
+          "confidence": 0.512
+        },
+        {
+          "text": "science,",
+          "start": 22.51,
+          "end": 22.93,
+          "confidence": 0.627
+        },
+        {
+          "text": "or",
+          "start": 23.25,
+          "end": 23.53,
+          "confidence": 0.874
+        },
+        {
+          "text": "just",
+          "start": 23.53,
+          "end": 23.77,
+          "confidence": 0.994
+        },
+        {
+          "text": "curious",
+          "start": 23.77,
+          "end": 24.19,
+          "confidence": 0.997
+        },
+        {
+          "text": "about",
+          "start": 24.19,
+          "end": 24.51,
+          "confidence": 0.991
+        },
+        {
+          "text": "how",
+          "start": 24.51,
+          "end": 24.75,
+          "confidence": 0.992
+        },
+        {
+          "text": "the",
+          "start": 24.75,
+          "end": 25.01,
+          "confidence": 0.996
+        },
+        {
+          "text": "day-night",
+          "start": 25.01,
+          "end": 25.37,
+          "confidence": 0.966
+        },
+        {
+          "text": "cycle",
+          "start": 25.37,
+          "end": 25.69,
+          "confidence": 0.982
+        },
+        {
+          "text": "works?",
+          "start": 25.69,
+          "end": 26.09,
+          "confidence": 0.993
+        },
+        {
+          "text": "Day",
+          "start": 28.87,
+          "end": 29.17,
+          "confidence": 0.498
+        },
+        {
+          "text": "is",
+          "start": 29.17,
+          "end": 29.41,
+          "confidence": 0.992
+        },
+        {
+          "text": "the",
+          "start": 29.41,
+          "end": 29.55,
+          "confidence": 0.994
+        },
+        {
+          "text": "Day",
+          "start": 29.61,
+          "end": 29.630000000000003,
+          "confidence": 0.001
+        },
+        {
+          "text": "is",
+          "start": 29.630000000000003,
+          "end": 29.650000000000002,
+          "confidence": 0.002
+        },
+        {
+          "text": "the",
+          "start": 29.650000000000002,
+          "end": 29.67,
+          "confidence": 0.146
+        },
+        {
+          "text": "Day",
+          "start": 29.67,
+          "end": 29.69,
+          "confidence": 0.0
+        },
+        {
+          "text": "is",
+          "start": 29.69,
+          "end": 29.71,
+          "confidence": 0.002
+        },
+        {
+          "text": "the",
+          "start": 29.71,
+          "end": 29.73,
+          "confidence": 0.226
+        },
+        {
+          "text": "Day",
+          "start": 29.73,
+          "end": 29.75,
+          "confidence": 0.0
+        },
+        {
+          "text": "is",
+          "start": 29.75,
+          "end": 29.77,
+          "confidence": 0.002
+        },
+        {
+          "text": "the",
+          "start": 29.77,
+          "end": 29.790000000000003,
+          "confidence": 0.226
+        },
+        {
+          "text": "Day",
+          "start": 29.790000000000003,
+          "end": 29.810000000000002,
+          "confidence": 0.0
+        },
+        {
+          "text": "is",
+          "start": 29.810000000000002,
+          "end": 29.830000000000002,
+          "confidence": 0.002
+        },
+        {
+          "text": "the",
+          "start": 29.830000000000002,
+          "end": 29.85,
+          "confidence": 0.226
+        },
+        {
+          "text": "Day",
+          "start": 29.85,
+          "end": 29.87,
+          "confidence": 0.0
+        },
+        {
+          "text": "is",
+          "start": 29.87,
+          "end": 29.89,
+          "confidence": 0.002
+        },
+        {
+          "text": "the",
+          "start": 29.89,
+          "end": 29.91,
+          "confidence": 0.226
+        },
+        {
+          "text": "Day",
+          "start": 29.91,
+          "end": 29.93,
+          "confidence": 0.0
+        },
+        {
+          "text": "is",
+          "start": 29.93,
+          "end": 29.950000000000003,
+          "confidence": 0.002
+        },
+        {
+          "text": "the",
+          "start": 29.950000000000003,
+          "end": 29.970000000000002,
+          "confidence": 0.226
+        },
+        {
+          "text": "Day",
+          "start": 29.970000000000002,
+          "end": 29.990000000000002,
+          "confidence": 0.0
+        },
+        {
+          "text": "is",
+          "start": 29.990000000000002,
+          "end": 30.01,
+          "confidence": 0.002
+        },
+        {
+          "text": "the",
+          "start": 30.01,
+          "end": 30.03,
+          "confidence": 0.226
+        },
+        {
+          "text": "Day",
+          "start": 30.03,
+          "end": 30.05,
+          "confidence": 0.0
+        },
+        {
+          "text": "is",
+          "start": 30.05,
+          "end": 30.07,
+          "confidence": 0.002
+        },
+        {
+          "text": "the",
+          "start": 30.07,
+          "end": 30.09,
+          "confidence": 0.226
+        },
+        {
+          "text": "Day",
+          "start": 30.09,
+          "end": 30.11,
+          "confidence": 0.0
+        },
+        {
+          "text": "is",
+          "start": 30.11,
+          "end": 30.130000000000003,
+          "confidence": 0.002
+        },
+        {
+          "text": "the",
+          "start": 30.130000000000003,
+          "end": 30.150000000000002,
+          "confidence": 0.226
+        },
+        {
+          "text": "Day",
+          "start": 30.150000000000002,
+          "end": 30.17,
+          "confidence": 0.0
+        },
+        {
+          "text": "is",
+          "start": 30.17,
+          "end": 30.19,
+          "confidence": 0.002
+        },
+        {
+          "text": "the",
+          "start": 30.19,
+          "end": 30.21,
+          "confidence": 0.226
+        },
+        {
+          "text": "Day",
+          "start": 30.21,
+          "end": 30.23,
+          "confidence": 0.0
+        },
+        {
+          "text": "is",
+          "start": 30.23,
+          "end": 30.25,
+          "confidence": 0.002
+        },
+        {
+          "text": "the",
+          "start": 30.25,
+          "end": 30.27,
+          "confidence": 0.226
+        },
+        {
+          "text": "Day",
+          "start": 30.27,
+          "end": 30.290000000000003,
+          "confidence": 0.0
+        },
+        {
+          "text": "is",
+          "start": 30.290000000000003,
+          "end": 30.310000000000002,
+          "confidence": 0.002
+        },
+        {
+          "text": "the",
+          "start": 30.310000000000002,
+          "end": 30.330000000000002,
+          "confidence": 0.226
+        },
+        {
+          "text": "Day",
+          "start": 30.330000000000002,
+          "end": 30.35,
+          "confidence": 0.0
+        },
+        {
+          "text": "is",
+          "start": 30.35,
+          "end": 30.37,
+          "confidence": 0.002
+        },
+        {
+          "text": "the",
+          "start": 30.37,
+          "end": 30.39,
+          "confidence": 0.226
+        },
+        {
+          "text": "Day",
+          "start": 30.39,
+          "end": 30.41,
+          "confidence": 0.0
+        },
+        {
+          "text": "is",
+          "start": 30.41,
+          "end": 30.43,
+          "confidence": 0.002
+        },
+        {
+          "text": "the",
+          "start": 30.43,
+          "end": 30.450000000000003,
+          "confidence": 0.226
+        },
+        {
+          "text": "Day",
+          "start": 30.450000000000003,
+          "end": 30.470000000000002,
+          "confidence": 0.0
+        },
+        {
+          "text": "is",
+          "start": 30.470000000000002,
+          "end": 30.490000000000002,
+          "confidence": 0.002
+        },
+        {
+          "text": "the",
+          "start": 30.490000000000002,
+          "end": 30.51,
+          "confidence": 0.226
+        },
+        {
+          "text": "Day",
+          "start": 30.51,
+          "end": 30.53,
+          "confidence": 0.0
+        },
+        {
+          "text": "is",
+          "start": 30.53,
+          "end": 30.55,
+          "confidence": 0.002
+        },
+        {
+          "text": "the",
+          "start": 30.55,
+          "end": 30.57,
+          "confidence": 0.226
+        },
+        {
+          "text": "Day",
+          "start": 30.57,
+          "end": 30.59,
+          "confidence": 0.0
+        },
+        {
+          "text": "is",
+          "start": 30.59,
+          "end": 30.61,
+          "confidence": 0.002
+        },
+        {
+          "text": "the",
+          "start": 30.61,
+          "end": 30.630000000000003,
+          "confidence": 0.226
+        },
+        {
+          "text": "Day",
+          "start": 30.630000000000003,
+          "end": 30.650000000000002,
+          "confidence": 0.0
+        },
+        {
+          "text": "is",
+          "start": 30.650000000000002,
+          "end": 30.67,
+          "confidence": 0.002
+        },
+        {
+          "text": "the",
+          "start": 30.67,
+          "end": 30.69,
+          "confidence": 0.226
+        },
+        {
+          "text": "Day",
+          "start": 30.69,
+          "end": 30.71,
+          "confidence": 0.0
+        },
+        {
+          "text": "is",
+          "start": 30.71,
+          "end": 30.73,
+          "confidence": 0.002
+        },
+        {
+          "text": "the",
+          "start": 30.73,
+          "end": 30.75,
+          "confidence": 0.226
+        },
+        {
+          "text": "Day",
+          "start": 30.75,
+          "end": 30.77,
+          "confidence": 0.0
+        },
+        {
+          "text": "is",
+          "start": 30.77,
+          "end": 30.790000000000003,
+          "confidence": 0.002
+        },
+        {
+          "text": "the",
+          "start": 30.790000000000003,
+          "end": 30.810000000000002,
+          "confidence": 0.226
+        },
+        {
+          "text": "Day",
+          "start": 30.810000000000002,
+          "end": 30.830000000000002,
+          "confidence": 0.0
+        },
+        {
+          "text": "is",
+          "start": 30.830000000000002,
+          "end": 30.85,
+          "confidence": 0.002
+        },
+        {
+          "text": "the",
+          "start": 30.85,
+          "end": 30.87,
+          "confidence": 0.226
+        },
+        {
+          "text": "Day",
+          "start": 30.87,
+          "end": 30.89,
+          "confidence": 0.0
+        },
+        {
+          "text": "is",
+          "start": 30.89,
+          "end": 30.91,
+          "confidence": 0.002
+        },
+        {
+          "text": "the",
+          "start": 30.91,
+          "end": 30.93,
+          "confidence": 0.226
+        },
+        {
+          "text": "Day",
+          "start": 30.93,
+          "end": 30.950000000000003,
+          "confidence": 0.0
+        },
+        {
+          "text": "is",
+          "start": 30.950000000000003,
+          "end": 30.970000000000002,
+          "confidence": 0.002
+        },
+        {
+          "text": "the",
+          "start": 30.970000000000002,
+          "end": 30.990000000000002,
+          "confidence": 0.226
+        },
+        {
+          "text": "Day",
+          "start": 30.990000000000002,
+          "end": 31.01,
+          "confidence": 0.0
+        },
+        {
+          "text": "is",
+          "start": 31.01,
+          "end": 31.03,
+          "confidence": 0.002
+        },
+        {
+          "text": "the",
+          "start": 31.03,
+          "end": 31.05,
+          "confidence": 0.226
+        },
+        {
+          "text": "Day",
+          "start": 31.05,
+          "end": 31.07,
+          "confidence": 0.0
+        },
+        {
+          "text": "is",
+          "start": 31.07,
+          "end": 31.09,
+          "confidence": 0.002
+        },
+        {
+          "text": "the",
+          "start": 31.09,
+          "end": 31.11,
+          "confidence": 0.226
+        },
+        {
+          "text": "Day",
+          "start": 31.11,
+          "end": 31.130000000000003,
+          "confidence": 0.0
+        },
+        {
+          "text": "is",
+          "start": 31.130000000000003,
+          "end": 31.150000000000002,
+          "confidence": 0.002
+        },
+        {
+          "text": "the",
+          "start": 31.150000000000002,
+          "end": 31.17,
+          "confidence": 0.226
+        },
+        {
+          "text": "Day",
+          "start": 31.17,
+          "end": 31.19,
+          "confidence": 0.0
+        },
+        {
+          "text": "is",
+          "start": 31.19,
+          "end": 31.21,
+          "confidence": 0.002
+        },
+        {
+          "text": "the",
+          "start": 31.21,
+          "end": 31.23,
+          "confidence": 0.226
+        },
+        {
+          "text": "Day",
+          "start": 31.23,
+          "end": 31.25,
+          "confidence": 0.0
+        },
+        {
+          "text": "is",
+          "start": 31.25,
+          "end": 31.27,
+          "confidence": 0.002
+        },
+        {
+          "text": "the",
+          "start": 31.27,
+          "end": 31.290000000000003,
+          "confidence": 0.226
+        }
+      ],
+      "pcm": {
+        "rate": 24000,
+        "samples": 711321,
+        "peak": 0.6827392578125,
+        "full_scale_samples": 0,
+        "gain_changed": false
+      },
+      "all_user_samples_processed": true,
+      "native_ret_count": 0,
+      "human_listening_performed": false,
+      "ordinary_core_correct": false,
+      "review": "Incorrect axial tilt explanation. Entire speech audit fails; ASR repetition is not accepted as proven timed speech."
+    },
+    {
+      "index": 9,
+      "scenario": "recovery-train-011",
+      "checkpoint_job": "7510331",
+      "role": "native520",
+      "text_temperature": 0.7,
+      "acoustic_temperature": 0.8,
+      "diagnostic_only": true,
+      "diagnostic_outputs_must_not_be_trained_on": true,
+      "qualification_approved": false,
+      "run_report_sha256": "8d5304e0c1a3f5c82a821a4843deb231eff5d9f80a7ac131a4307b7801f39d0d",
+      "audio_sha256": "ba1a46cfe9fd354630f879e7f0198177f168ba76eaa5017dc811cb71f97401ac",
+      "sampled_text": "3, 4, or 5, the answer. Which one of those numbers sounds more interesting to you?",
+      "spoken_text": " 3, 4, or 5, the answer. Which one of those numbers sounds more interesting to you?",
+      "speech_wer": 0.0,
+      "speech_quality_passed": true,
+      "time_bounds_valid": true,
+      "word_bounds_valid": true,
+      "first_onset_valid": true,
+      "first_nonzero_pcm_s": 1.7962916666666666,
+      "word_timestamps": [
+        {
+          "text": "3,",
+          "start": 5.890000000000001,
+          "end": 6.09,
+          "confidence": 0.573
+        },
+        {
+          "text": "4,",
+          "start": 6.11,
+          "end": 6.59,
+          "confidence": 0.818
+        },
+        {
+          "text": "or",
+          "start": 6.63,
+          "end": 6.8500000000000005,
+          "confidence": 0.989
+        },
+        {
+          "text": "5,",
+          "start": 6.8500000000000005,
+          "end": 7.11,
+          "confidence": 0.607
+        },
+        {
+          "text": "the",
+          "start": 7.15,
+          "end": 7.37,
+          "confidence": 0.967
+        },
+        {
+          "text": "answer.",
+          "start": 7.37,
+          "end": 7.67,
+          "confidence": 0.939
+        },
+        {
+          "text": "Which",
+          "start": 12.49,
+          "end": 12.709999999999999,
+          "confidence": 0.804
+        },
+        {
+          "text": "one",
+          "start": 12.709999999999999,
+          "end": 12.87,
+          "confidence": 0.994
+        },
+        {
+          "text": "of",
+          "start": 12.87,
+          "end": 13.01,
+          "confidence": 0.998
+        },
+        {
+          "text": "those",
+          "start": 13.01,
+          "end": 13.149999999999999,
+          "confidence": 0.994
+        },
+        {
+          "text": "numbers",
+          "start": 13.149999999999999,
+          "end": 13.41,
+          "confidence": 0.913
+        },
+        {
+          "text": "sounds",
+          "start": 13.41,
+          "end": 13.729999999999999,
+          "confidence": 0.974
+        },
+        {
+          "text": "more",
+          "start": 13.729999999999999,
+          "end": 13.99,
+          "confidence": 0.995
+        },
+        {
+          "text": "interesting",
+          "start": 13.99,
+          "end": 14.33,
+          "confidence": 0.993
+        },
+        {
+          "text": "to",
+          "start": 14.33,
+          "end": 14.61,
+          "confidence": 0.997
+        },
+        {
+          "text": "you?",
+          "start": 14.61,
+          "end": 14.79,
+          "confidence": 0.969
+        }
+      ],
+      "pcm": {
+        "rate": 24000,
+        "samples": 741991,
+        "peak": 0.59393310546875,
+        "full_scale_samples": 0,
+        "gain_changed": false
+      },
+      "all_user_samples_processed": true,
+      "native_ret_count": 0,
+      "human_listening_performed": false,
+      "ordinary_core_correct": false,
+      "review": "Contradictory guesses three, four or five; no single correct answer."
+    },
+    {
+      "index": 10,
+      "scenario": "recovery-train-011",
+      "checkpoint_job": "7556562",
+      "role": "clock8",
+      "text_temperature": 0.7,
+      "acoustic_temperature": 0.8,
+      "diagnostic_only": true,
+      "diagnostic_outputs_must_not_be_trained_on": true,
+      "qualification_approved": false,
+      "run_report_sha256": "fdb165e049dea16cd5d142cfd8e24e0a0b00d05e7105978f725e65ea36bfc4ac",
+      "audio_sha256": "3840b2a764e43d5c526bfddefb67613609c8201faff44dfc6f1ae7a053eab24b",
+      "sampled_text": "3, 4, or five. Which one should I use for your triangle? Which of those was the size you were asking about? Should I go with the three-sided shape then? Three.",
+      "spoken_text": " 3, 4, or 5. Which one should I use for your triangle? Which of those was the size you were asking about? Should I go with the three-sided shape then? 3.",
+      "speech_wer": 0.0,
+      "speech_quality_passed": true,
+      "time_bounds_valid": true,
+      "word_bounds_valid": true,
+      "first_onset_valid": true,
+      "first_nonzero_pcm_s": 1.8062083333333334,
+      "word_timestamps": [
+        {
+          "text": "3,",
+          "start": 5.91,
+          "end": 6.109999999999999,
+          "confidence": 0.61
+        },
+        {
+          "text": "4,",
+          "start": 6.13,
+          "end": 6.6899999999999995,
+          "confidence": 0.793
+        },
+        {
+          "text": "or",
+          "start": 6.71,
+          "end": 7.17,
+          "confidence": 0.979
+        },
+        {
+          "text": "5.",
+          "start": 7.17,
+          "end": 7.53,
+          "confidence": 0.873
+        },
+        {
+          "text": "Which",
+          "start": 12.290000000000001,
+          "end": 12.49,
+          "confidence": 0.624
+        },
+        {
+          "text": "one",
+          "start": 12.49,
+          "end": 12.690000000000001,
+          "confidence": 0.996
+        },
+        {
+          "text": "should",
+          "start": 12.690000000000001,
+          "end": 12.850000000000001,
+          "confidence": 0.999
+        },
+        {
+          "text": "I",
+          "start": 12.850000000000001,
+          "end": 13.030000000000001,
+          "confidence": 0.979
+        },
+        {
+          "text": "use",
+          "start": 13.030000000000001,
+          "end": 13.270000000000001,
+          "confidence": 0.999
+        },
+        {
+          "text": "for",
+          "start": 13.270000000000001,
+          "end": 13.430000000000001,
+          "confidence": 0.996
+        },
+        {
+          "text": "your",
+          "start": 13.430000000000001,
+          "end": 13.59,
+          "confidence": 0.996
+        },
+        {
+          "text": "triangle?",
+          "start": 13.59,
+          "end": 13.930000000000001,
+          "confidence": 0.958
+        },
+        {
+          "text": "Which",
+          "start": 18.89,
+          "end": 19.09,
+          "confidence": 0.371
+        },
+        {
+          "text": "of",
+          "start": 19.09,
+          "end": 19.25,
+          "confidence": 0.994
+        },
+        {
+          "text": "those",
+          "start": 19.25,
+          "end": 19.45,
+          "confidence": 0.999
+        },
+        {
+          "text": "was",
+          "start": 19.45,
+          "end": 19.67,
+          "confidence": 0.996
+        },
+        {
+          "text": "the",
+          "start": 19.67,
+          "end": 19.85,
+          "confidence": 0.998
+        },
+        {
+          "text": "size",
+          "start": 19.85,
+          "end": 20.150000000000002,
+          "confidence": 0.999
+        },
+        {
+          "text": "you",
+          "start": 20.150000000000002,
+          "end": 20.39,
+          "confidence": 0.991
+        },
+        {
+          "text": "were",
+          "start": 20.39,
+          "end": 20.53,
+          "confidence": 0.996
+        },
+        {
+          "text": "asking",
+          "start": 20.53,
+          "end": 20.91,
+          "confidence": 0.997
+        },
+        {
+          "text": "about?",
+          "start": 20.91,
+          "end": 21.25,
+          "confidence": 0.971
+        },
+        {
+          "text": "Should",
+          "start": 25.13,
+          "end": 25.330000000000002,
+          "confidence": 0.552
+        },
+        {
+          "text": "I",
+          "start": 25.330000000000002,
+          "end": 25.51,
+          "confidence": 0.982
+        },
+        {
+          "text": "go",
+          "start": 25.51,
+          "end": 25.71,
+          "confidence": 0.997
+        },
+        {
+          "text": "with",
+          "start": 25.71,
+          "end": 25.93,
+          "confidence": 0.998
+        },
+        {
+          "text": "the",
+          "start": 25.93,
+          "end": 26.11,
+          "confidence": 0.987
+        },
+        {
+          "text": "three-sided",
+          "start": 26.11,
+          "end": 26.79,
+          "confidence": 0.895
+        },
+        {
+          "text": "shape",
+          "start": 26.79,
+          "end": 27.25,
+          "confidence": 0.997
+        },
+        {
+          "text": "then?",
+          "start": 27.25,
+          "end": 27.51,
+          "confidence": 0.871
+        },
+        {
+          "text": "3.",
+          "start": 28.91,
+          "end": 29.23,
+          "confidence": 0.645
+        }
+      ],
+      "pcm": {
+        "rate": 24000,
+        "samples": 742229,
+        "peak": 0.888824462890625,
+        "full_scale_samples": 0,
+        "gain_changed": false
+      },
+      "all_user_samples_processed": true,
+      "native_ret_count": 0,
+      "human_listening_performed": false,
+      "ordinary_core_correct": false,
+      "review": "Contradictory three/four/five before final three; partial, not core-correct."
+    },
+    {
+      "index": 11,
+      "scenario": "recovery-train-011",
+      "checkpoint_job": "7558824",
+      "role": "clock40",
+      "text_temperature": 0.7,
+      "acoustic_temperature": 0.8,
+      "diagnostic_only": true,
+      "diagnostic_outputs_must_not_be_trained_on": true,
+      "qualification_approved": false,
+      "run_report_sha256": "c6c0aa2176ef9ee8ac7bfc1f78fb2f00d0237b5179f428435f1723ce07e710ca",
+      "audio_sha256": "a6714c5f8390f02eddb0d0a5efd380fcd0af14b6b78d2e8b2cf48de6ba9281b5",
+      "sampled_text": "3, 4, or 5, right? 3 is the most common, though.",
+      "spoken_text": " Three, four, or five, right? Three is the most common, though.",
+      "speech_wer": 0.0,
+      "speech_quality_passed": true,
+      "time_bounds_valid": true,
+      "word_bounds_valid": true,
+      "first_onset_valid": true,
+      "first_nonzero_pcm_s": 1.7851666666666666,
+      "word_timestamps": [
+        {
+          "text": "Three,",
+          "start": 5.87,
+          "end": 6.09,
+          "confidence": 0.436
+        },
+        {
+          "text": "four,",
+          "start": 6.11,
+          "end": 6.57,
+          "confidence": 0.84
+        },
+        {
+          "text": "or",
+          "start": 6.57,
+          "end": 6.8500000000000005,
+          "confidence": 0.991
+        },
+        {
+          "text": "five,",
+          "start": 6.8500000000000005,
+          "end": 7.07,
+          "confidence": 0.963
+        },
+        {
+          "text": "right?",
+          "start": 7.11,
+          "end": 7.390000000000001,
+          "confidence": 0.991
+        },
+        {
+          "text": "Three",
+          "start": 8.17,
+          "end": 8.37,
+          "confidence": 0.724
+        },
+        {
+          "text": "is",
+          "start": 8.37,
+          "end": 8.549999999999999,
+          "confidence": 0.997
+        },
+        {
+          "text": "the",
+          "start": 8.549999999999999,
+          "end": 8.67,
+          "confidence": 0.995
+        },
+        {
+          "text": "most",
+          "start": 8.67,
+          "end": 8.87,
+          "confidence": 0.999
+        },
+        {
+          "text": "common,",
+          "start": 8.87,
+          "end": 9.17,
+          "confidence": 0.792
+        },
+        {
+          "text": "though.",
+          "start": 9.37,
+          "end": 9.53,
+          "confidence": 0.978
+        }
+      ],
+      "pcm": {
+        "rate": 24000,
+        "samples": 741724,
+        "peak": 0.246551513671875,
+        "full_scale_samples": 0,
+        "gain_changed": false
+      },
+      "all_user_samples_processed": true,
+      "native_ret_count": 0,
+      "human_listening_performed": false,
+      "ordinary_core_correct": false,
+      "review": "Contradictory three/four/five and three most common; incorrect qualification."
+    }
+  ],
+  "diagnostic_only": true,
+  "outputs_must_not_be_trained_on": true,
+  "native_qualification": false,
+  "schema": "dl-native-seen-train-retention-complete12-review-v1",
+  "native_status": "UNQUALIFIED",
+  "all12_reviewed": true,
+  "checkpoint_scores": {
+    "native520": {
+      "core_correct": 3,
+      "speech_passes": 4,
+      "cases": 4
+    },
+    "clock8": {
+      "core_correct": 2,
+      "speech_passes": 4,
+      "cases": 4
+    },
+    "clock40": {
+      "core_correct": 2,
+      "speech_passes": 3,
+      "cases": 4
+    }
+  },
+  "findings": [
+    "Failures occur on seen TRAIN questions, including day/night regression after training.",
+    "The baseline itself fails the triangle question.",
+    "Fixed-history retention does not establish native autoregressive reasoning.",
+    "This comparison does not establish the cause of regression."
+  ],
+  "backup_verification": {
+    "at_utc": "2026-10-20T08:41:38.102244+00:00",
+    "files": 177,
+    "bytes": 399125783,
+    "all_size_and_sha256_match": true,
+    "failed": [],
+    "missing_roots": []
+  },
+  "adoption": false
+}

@@ -1,7 +1,7 @@
 {
-  "at_utc": "2026-10-20T08:29:05.427376+00:00",
-  "unique_scoped_artifact_files": 23400,
-  "unique_scoped_artifact_bytes": 17798964360,
+  "at_utc": "2026-10-20T08:51:00.163798+00:00",
+  "unique_scoped_artifact_files": 23577,
+  "unique_scoped_artifact_bytes": 18198090143,
   "inventory_conflicts": [],
   "inventories": [
     {
@@ -549,6 +549,13 @@
       "files": 13,
       "bytes": 1419698,
       "missing_roots": []
+    },
+    {
+      "name": "remote-native-seen-retention-complete-inventory.json",
+      "sha256": "4278b776a0e2bbafb38382d3c7f95fc198aa8573a5eed0c2d383c17bc9ac5276",
+      "files": 177,
+      "bytes": 399125783,
+      "missing_roots": []
     }
   ],
   "local_artifact_root": "runs/cloud-export-20261016/tree",
@@ -884,6 +891,33 @@
     "complete_cases_required": 12,
     "diagnostic_only": true,
     "outputs_must_not_be_trained_on": true,
-    "local_orchestrator_session": 10768
+    "local_orchestrator_session": 10768,
+    "status": "COMPLETED",
+    "native_elapsed": "00:06:56",
+    "speech_elapsed": "00:05:59",
+    "all12_reviewed": true,
+    "review": "docs/NATIVE-SEEN-TRAIN-RETENTION-REVIEW-2026-10-20.json",
+    "review_sha256": "d9c28c72b5db0cce86b9d3ea9bae90a9c84fc4e1bd2fc8d2e2ddf3887f45e596",
+    "core_correct_native520_clock8_clock40": [
+      3,
+      2,
+      2
+    ],
+    "speech_passes": 11,
+    "all_artifacts_sha256_backed": true,
+    "orchestrator_terminal": true
+  },
+  "native_persona_diagnostic": {
+    "source": "36d3c2d7eddc3a7c19aff828990623e0a412a3d5",
+    "cpu_job": "7570787",
+    "cpu_tests_passed": 165,
+    "native_session": "7570828",
+    "speech_job": "7570834",
+    "complete_cases_required": 10,
+    "optimizer_updates": 0,
+    "local_orchestrator_session": 99572,
+    "diagnostic_only": true,
+    "outputs_must_not_be_trained_on": true,
+    "adoption": false
   }
 }

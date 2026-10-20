@@ -1,3 +1,45 @@
+# LOCAL active — seen TRAIN12 reviewed; complete10 persona diagnostic running (2026-10-20 08:53 UTC)
+
+LOCAL remains sole executor; CLOUD submits nothing. No new optimizer job running.
+Owner-approved bounded32 finished7558824/global40; candidate remains REJECTED
+by complete10 ordinary1/4 plus plants partial, speech8/10 and control failures.
+No unchanged extension beyond40 or adoption. Full original state/checkpoints retained.
+
+Seen TRAIN12 native7570564 COMPLETED6m56; independent all12 speech7570565
+COMPLETED5m59. Source2249c4dd1a221d6abb4ea525974540cbd3e08ee9, CPU7570557 PASS160.
+All4 seen questions across native520/clock8/clock40 reviewed: core3/4,2/4,2/4;
+speech4/4,4/4,3/4. Baseline and children give contradictory triangle guesses;
+8/40 regress Earth rotation to axial tilt. Clock40 day/night whole speech audit
+fails WER1.473684/time bounds; no accepted ASR timestamp subset/repetition claim.
+All177files399125783bytes SHAverified08:41:38UTC. Review
+docs/NATIVE-SEEN-TRAIN-RETENTION-REVIEW-2026-10-20.json, SHAd9c28c72b5db0cce86b9d3ea9bae90a9c84fc4e1bd2fc8d2e2ddf3887f45e596.
+Old orchestrators10768 and48131 TERMINALsuccess. Diagnostic outputs do_not_train;
+these seen questions are not fresh qualification and do not prove a cause.
+
+Current inference-only persona diagnostic: source36d3c2d7eddc3a7c19aff828990623e0a412a3d5,
+CPU7570787 COMPLETED11s/PASS165. All10 native7570828 RUNNING at08:49:51UTC/6m39;
+dependent independent speech7570834. Exact frozen40 weights, user audio, voice,
+sampling .7/.8, all data/targets unchanged. Only inference prompt final sentence
+scopes project clarification to actual record requests. Original approved training
+persona/histories unchanged. No optimizer, source clip repair or fresh20 inference.
+Review ALL10 and original PCM/receipts before deciding next action. No subset/adoption.
+
+Exclusive remote receipt runs/native-persona-diagnostic-local-20261020.json;
+legacy key all12_native_persona_retention means the TEN-case session7570828.
+Sole live orchestrator exec99572 (/tmp/duplex-run-native-persona-diagnostic.py)
+polls same jobs >=60s then scoped rsync/hash backup. Do not launch another watcher,
+duplicate jobs, rerun on observation failure or use older terminal orchestrators.
+Interactive reservation, max2GPU/30min, no partition/QoS override.
+
+Backup union now23577files18198090143bytes plus separately pinned
+models/runtime/ASR/vendor/source bundles. Old stopped Mac source backup PARTIAL.
+No owners/credentials/session-token/quarantined core exported. Local certificate
+valid through20Oct19:32:16UTC/21:32:16Berlin. Fresh20 source approved, native outputs
+NONE/unscored. Whole-system/native UNQUALIFIED. Next: complete strict persona10
+review, then diagnose any remaining native conditioning failure before model repair.
+
+---
+
 # LOCAL active — full81 complete; unforced seen-TRAIN12 running7570564 (2026-10-20 08:28 UTC)
 
 Read-only81 diagnostic7570471 COMPLETED6m54/sourcea0c51a199b897733081d55524f0a89d4937287b9,
