@@ -21,6 +21,13 @@ class Audio49PilotPolicy(unittest.TestCase):
         a.native_audio49_step_scale=.1;self.assertTrue(validate_configuration(a))
         a.native_audio49_gradient_probe=True
         with self.assertRaises(ValueError):validate_configuration(a)
+    def test_complete_batch_keeps_explicit_parent_moments_and_cannot_extend(self):
+        a=self.args();a.native_audio49_complete_batch=True
+        with self.assertRaises(ValueError):validate_configuration(a)
+        a.native_audio49_parent_adam=True;a.native_audio49_step_scale=.1
+        self.assertTrue(validate_configuration(a))
+        a.actual_fit_updates=32
+        with self.assertRaises(ValueError):validate_configuration(a)
     def test_new_pilot_requires_independent_audit_and_preserves_original_objectives(self):
         self.assertTrue(validate_configuration(self.args()))
         for field,value in [('actual_base_retention_weight',0.),('actual_retention_teacher_weight',0.),

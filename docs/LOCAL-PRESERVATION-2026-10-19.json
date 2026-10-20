@@ -1,7 +1,7 @@
 {
-  "at_utc": "2026-10-20T16:21:05.460942+00:00",
-  "unique_scoped_artifact_files": 24350,
-  "unique_scoped_artifact_bytes": 22945467848,
+  "at_utc": "2026-10-20T17:06:01.760579+00:00",
+  "unique_scoped_artifact_files": 24522,
+  "unique_scoped_artifact_bytes": 23818606684,
   "inventory_conflicts": [],
   "inventories": [
     {
@@ -660,6 +660,27 @@
       "sha256": "0d486c3290a47194daa8aad0cb04b5d2aed26bd9f501b35753e9a430a72773f1",
       "files": 20,
       "bytes": 583962827,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native-parent-adam-critical-early-inventory.json",
+      "sha256": "66e41fd115dae40cc714057821f0b2586be19de054b613dd14bec3ccfc855d51",
+      "files": 12,
+      "bytes": 31885427,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native-parent-adam-train-native10-inventory.json",
+      "sha256": "8839fe51d32aefe076a3b0abf3c55b92e4c7849c5b6c8b55d16e4d79ee63585b",
+      "files": 168,
+      "bytes": 872959359,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native-parent-adam-terminal-speech-inventory.json",
+      "sha256": "16cfe439cb8bc1aae2966983e1c8f1f06dac21c9a58aa37f19a71b9e2849bf6c",
+      "files": 4,
+      "bytes": 179477,
       "missing_roots": []
     }
   ],
@@ -1465,14 +1486,14 @@
     "source_adam_clocks": 520,
     "required_final_adam_clocks": 528,
     "automatic_extension": false,
-    "stage_artifacts_backed": false,
+    "stage_artifacts_backed": true,
     "source_bundle": {
       "path": "runs/local-continuation-20261019/source-main-067cb5d.bundle",
       "sha256": "ddf4c4766d493ffd38f61e551fbe91c22941b06f6efe2ec247772db7c912d4e4",
       "verified_complete_history": true
     },
     "readiness_state": "COMPLETED",
-    "watcher_state": "RUNNING",
+    "watcher_state": "COMPLETED",
     "observed_utc": "2026-10-20T16:18:46Z",
     "cluster_tests_passed": 246,
     "cluster_tests_seconds": 4.023,
@@ -1480,7 +1501,7 @@
     "additional_state_tests_seconds": 1.332,
     "parent_adam_regression_tests_passed": true,
     "training_job": "7581869",
-    "training_state": "RUNNING",
+    "training_state": "COMPLETED",
     "readiness_snapshot_files": 17,
     "readiness_snapshot_missing_roots": [],
     "readiness_artifacts_sha256_backed": true,
@@ -1489,6 +1510,25 @@
     "independent_bf16_passed": true,
     "independent_parent_adam_import_passed": true,
     "parent_adam_import_sha256": "1b90a0fb68da86e077f5ffc497ad1fa57917ce9eebba838dd85d3aaa545923ed",
-    "readiness_peak_allocated_bytes": 21972096000
+    "readiness_peak_allocated_bytes": 21972096000,
+    "native10_job": "7582080",
+    "native10_state": "COMPLETED",
+    "speech10_job": "7582408",
+    "speech10_state": "COMPLETED",
+    "full_stage_artifacts_sha256_verified": true,
+    "independent_restore_passed": true,
+    "all28_text_and49_acoustic_fingerprints_exact": true,
+    "all_optimizer_rng_independently_compared_exact": true,
+    "all_adam_clocks_restored": [
+      528
+    ],
+    "ordinary_core_correct": 0,
+    "speech_quality_passes": 7,
+    "candidate_rejected": true,
+    "checkpoint_sha256": "0b856494590c95745f836bc69114c66bbcfd3ca3f987cb10cbf09b48f47cee49",
+    "training_state_sha256": "eaa471c5088a1f62d67daeeabe97f14ad618dff63581ba3304d341035cc9c4cd",
+    "complete10_review": "docs/NATIVE-PARENT-ADAM-COMPLETE10-REVIEW-2026-10-20.json",
+    "complete10_review_sha256": "539d9969b2eb79ec953814c47cfe9e286926fc42d314572e398561bab6942caf",
+    "counterfactual_value_injection_uncovered_due_to_empty_backend": true
   }
 }

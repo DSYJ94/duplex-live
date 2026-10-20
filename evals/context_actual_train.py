@@ -330,6 +330,10 @@ def run(lm, spm, voice, examples, components, audits, args):
                 return
             from evals.context_native_audio49_training import bf16_preflight
             bf16_preflight(lm,learned,audio49_batches,audio49_policy,args)
+            if getattr(args,'native_audio49_complete_batch',False):
+                from evals.context_native_complete_batch import preflight as complete_preflight
+                digest=complete_preflight(lm,learned,args,audio49_policy,batches,retention,references,native_teacher_batches,additional_batches,component_kinds,response_boundaries,audits,warm_references,clock_references,audio49_batches,forward,args.actual_response_first_word_weight)
+                path=args.out/'audio49-bf16-preflight.json';checked=json.loads(path.read_text());checked['complete_balanced_preflight_sha256']=digest;checked['peak_allocated_bytes']=json.loads((args.out/'complete-balanced-preflight.json').read_text())['peak_allocated_bytes'];path.write_text(json.dumps(checked,indent=2)+'\n')
             return
         initial_metrics=metrics()
         steps = []; seen_a = seen_b = False; start = time.monotonic()
@@ -342,73 +346,85 @@ def run(lm, spm, voice, examples, components, audits, args):
             from evals.context_component_kind import balanced_index
             index=balanced_index(component_kinds,step) if args.actual_sampling=='balanced-kind' else step%len(batches)
             inputs,mask,target = batches[index]
-            with checkpoint_language_layers(lm):
-                logits = forward(inputs)[1][0,0,mask].float()
-                y = target[mask]; weights = text_weights(y,args.actual_response_first_word_weight,response_boundaries[index])
-                ce = (F.cross_entropy(logits,y,reduction='none')*weights).sum()/weights.sum()
-                ce.backward()
+            if getattr(args,'native_audio49_complete_batch',False):
+                from evals.context_native_complete_batch import backward as complete_backward
                 from evals.context_component_kind import retention_index
+                complete_groups=complete_backward(lm,batches,retention,references,native_teacher_batches,additional_batches,component_kinds,response_boundaries,audits,warm_references,clock_references,audio49_batches,forward,args.actual_response_first_word_weight)
+                def mean(group,field='loss'):return torch.tensor(sum(x['weight']*x[field] for x in complete_groups[group]))
+                ce=mean('actual');kl=mean('reference','kl');hidden=mean('reference','hidden_mse');supervised=mean('old25')
                 ri=retention_index(component_kinds,step,len(retention),balance_retention)
-                inputs,mask,_ = retention[ri]
-                h,z = forward(inputs); base_h,prob = references[ri]
-                kl = F.kl_div(z[0,0,mask].float().log_softmax(-1),prob,reduction='batchmean')
-                hidden = (h[:,mask].float()-base_h.float()).square().mean()
-                supervised=teacher_loss(z[0,0],retention_targets[ri],mask) if teacher and not native_teacher_mode else None
-                teacher_target_count=int(mask.sum())
-                regularizer=kl+10.*hidden
-                if base_retention_weight!=1.:regularizer=base_retention_weight*regularizer
-                if teacher and not native_teacher_mode:regularizer=regularizer+teacher_weight*supervised
-                regularizer.backward()
-                if native_teacher_mode:
-                    from evals.context_native_teacher_objective import teacher_index
-                    ti=teacher_index(component_kinds,step,ri,[b[3]['kind'] for b in native_teacher_batches])
-                    tinputs,tmask,ttarget,trecord=native_teacher_batches[ti]
-                    tz=forward(tinputs)[1][0,0]
-                    teacher_breakdown=None
-                    if args.actual_native_teacher_loss=='balanced-spoken':
+                ti=-1;trecord=dict(id='all25-balanced-kind-mean',kind='all4');teacher_breakdown=None
+                teacher_target_count=sum(x['targets'] for x in complete_groups['old25'])
+                additional_records=complete_groups['new24'];audio49_rows=complete_groups['audio49']
+                warm_rows=complete_groups['word'];clock_rows=complete_groups['clock']
+            else:
+                with checkpoint_language_layers(lm):
+                    logits = forward(inputs)[1][0,0,mask].float()
+                    y = target[mask]; weights = text_weights(y,args.actual_response_first_word_weight,response_boundaries[index])
+                    ce = (F.cross_entropy(logits,y,reduction='none')*weights).sum()/weights.sum()
+                    ce.backward()
+                    from evals.context_component_kind import retention_index
+                    ri=retention_index(component_kinds,step,len(retention),balance_retention)
+                    inputs,mask,_ = retention[ri]
+                    h,z = forward(inputs); base_h,prob = references[ri]
+                    kl = F.kl_div(z[0,0,mask].float().log_softmax(-1),prob,reduction='batchmean')
+                    hidden = (h[:,mask].float()-base_h.float()).square().mean()
+                    supervised=teacher_loss(z[0,0],retention_targets[ri],mask) if teacher and not native_teacher_mode else None
+                    teacher_target_count=int(mask.sum())
+                    regularizer=kl+10.*hidden
+                    if base_retention_weight!=1.:regularizer=base_retention_weight*regularizer
+                    if teacher and not native_teacher_mode:regularizer=regularizer+teacher_weight*supervised
+                    regularizer.backward()
+                    if native_teacher_mode:
+                        from evals.context_native_teacher_objective import teacher_index
+                        ti=teacher_index(component_kinds,step,ri,[b[3]['kind'] for b in native_teacher_batches])
+                        tinputs,tmask,ttarget,trecord=native_teacher_batches[ti]
+                        tz=forward(tinputs)[1][0,0]
+                        teacher_breakdown=None
+                        if args.actual_native_teacher_loss=='balanced-spoken':
+                            from evals.context_teacher_text_balance import loss as balanced_teacher_loss
+                            supervised,teacher_breakdown=balanced_teacher_loss(tz,ttarget,tmask)
+                        else:supervised=teacher_loss(tz,ttarget,tmask)
+                        teacher_target_count=int(tmask.sum())
+                        (teacher_weight*supervised).backward()
+                    if additional_batches:
+                        from evals.context_native_teacher_objective import teacher_index
                         from evals.context_teacher_text_balance import loss as balanced_teacher_loss
-                        supervised,teacher_breakdown=balanced_teacher_loss(tz,ttarget,tmask)
-                    else:supervised=teacher_loss(tz,ttarget,tmask)
-                    teacher_target_count=int(tmask.sum())
-                    (teacher_weight*supervised).backward()
-                if additional_batches:
-                    from evals.context_native_teacher_objective import teacher_index
-                    from evals.context_teacher_text_balance import loss as balanced_teacher_loss
-                    teacher_kinds=[b[3]['kind'] for b in additional_batches]
-                    if getattr(args, 'native_v2_full24_per8', False):
-                        from evals.context_native_teacher_coverage import complete_indices
-                        indices=complete_indices(component_kinds,step,ri,teacher_kinds)
-                    else:indices=[teacher_index(component_kinds,step,ri,teacher_kinds)]
-                    additional_losses=[]
-                    for ai in indices:
-                        ainputs,amask,atarget,additional_record=additional_batches[ai]
-                        az=forward(ainputs)[1][0,0]
-                        loss,_=balanced_teacher_loss(az,atarget,amask)
-                        if not torch.isfinite(loss):raise RuntimeError('Nonfinite additional native-v2 supervision')
-                        (loss/len(indices)).backward()
-                        additional_losses.append(loss.detach())
-                        additional_records.append(dict(id=additional_record['id'],kind=additional_record['kind'],
-                            text_ce=float(loss.detach()),weight=1/len(indices)))
-                    additional_loss=torch.stack(additional_losses).mean()
-                if warm_references:
-                    from evals.context_warm_ordinary_retention import loss as warm_loss
-                    for winputs,wmask,reference,identity in warm_references:
-                        wh,wz=forward(winputs);value,wkl,wmse=warm_loss(wh,wz,wmask,reference)
-                        if not torch.isfinite(value):raise RuntimeError('Nonfinite additional ordinary retention')
-                        (warm_policy['weight']/len(warm_references)*value).backward()
-                        warm_rows.append(dict(id=identity,kl=float(wkl.detach()),hidden_mse=float(wmse.detach()),
-                            weight=warm_policy['weight']/len(warm_references)))
-                if clock_references:
-                    from evals.context_warm_ordinary_retention import loss as clock_loss
-                    for cinputs,cmask,reference,identity in clock_references:
-                        ch,cz=forward(cinputs);value,ckl,cmse=clock_loss(ch,cz,cmask,reference)
-                        if not torch.isfinite(value):raise RuntimeError('Nonfinite ordinary clock/native-audio retention')
-                        (clock_policy['weight']/len(clock_references)*value).backward()
-                        clock_rows.append(dict(id=identity,kl=float(ckl.detach()),hidden_mse=float(cmse.detach()),
-                            weight=clock_policy['weight']/len(clock_references)))
-                if audio49_policy:
-                    from evals.context_native_audio49_training import backward as audio49_backward
-                    audio49_rows=audio49_backward(lm,audio49_batches,local_step)
+                        teacher_kinds=[b[3]['kind'] for b in additional_batches]
+                        if getattr(args, 'native_v2_full24_per8', False):
+                            from evals.context_native_teacher_coverage import complete_indices
+                            indices=complete_indices(component_kinds,step,ri,teacher_kinds)
+                        else:indices=[teacher_index(component_kinds,step,ri,teacher_kinds)]
+                        additional_losses=[]
+                        for ai in indices:
+                            ainputs,amask,atarget,additional_record=additional_batches[ai]
+                            az=forward(ainputs)[1][0,0]
+                            loss,_=balanced_teacher_loss(az,atarget,amask)
+                            if not torch.isfinite(loss):raise RuntimeError('Nonfinite additional native-v2 supervision')
+                            (loss/len(indices)).backward()
+                            additional_losses.append(loss.detach())
+                            additional_records.append(dict(id=additional_record['id'],kind=additional_record['kind'],
+                                text_ce=float(loss.detach()),weight=1/len(indices)))
+                        additional_loss=torch.stack(additional_losses).mean()
+                    if warm_references:
+                        from evals.context_warm_ordinary_retention import loss as warm_loss
+                        for winputs,wmask,reference,identity in warm_references:
+                            wh,wz=forward(winputs);value,wkl,wmse=warm_loss(wh,wz,wmask,reference)
+                            if not torch.isfinite(value):raise RuntimeError('Nonfinite additional ordinary retention')
+                            (warm_policy['weight']/len(warm_references)*value).backward()
+                            warm_rows.append(dict(id=identity,kl=float(wkl.detach()),hidden_mse=float(wmse.detach()),
+                                weight=warm_policy['weight']/len(warm_references)))
+                    if clock_references:
+                        from evals.context_warm_ordinary_retention import loss as clock_loss
+                        for cinputs,cmask,reference,identity in clock_references:
+                            ch,cz=forward(cinputs);value,ckl,cmse=clock_loss(ch,cz,cmask,reference)
+                            if not torch.isfinite(value):raise RuntimeError('Nonfinite ordinary clock/native-audio retention')
+                            (clock_policy['weight']/len(clock_references)*value).backward()
+                            clock_rows.append(dict(id=identity,kl=float(ckl.detach()),hidden_mse=float(cmse.detach()),
+                                weight=clock_policy['weight']/len(clock_references)))
+                    if audio49_policy:
+                        from evals.context_native_audio49_training import backward as audio49_backward
+                        audio49_rows=audio49_backward(lm,audio49_batches,local_step)
             if not all(torch.isfinite(v) for v in ((ce,kl,hidden,supervised) if teacher else (ce,kl,hidden))):
                 raise RuntimeError('Nonfinite actual or retention loss')
             if any(p.grad is None or not torch.isfinite(p.grad).all() for p in learned.values()):
@@ -441,18 +457,24 @@ def run(lm, spm, voice, examples, components, audits, args):
                 **({'warm_ordinary_clock_microbatch':clock_rows} if clock_rows else {}),
                 **({'assistant_audio49_microbatch':audio49_rows} if audio49_policy else {}),
                 'nonzero_A_gradients':a,'nonzero_B_gradients':b,'gradient_norm_before_clip':norm}
+            if getattr(args,'native_audio49_complete_batch',False):
+                row.update(scenario='all28-balanced-kind-mean',component_index=None,supervision_kind='all8-balanced-kinds',retention_kind='all4-reference-mean',retention_index=None,native_teacher_index=None,complete_balanced_microbatches=complete_groups,legacy_nominal_schedule_anchor=dict(component_index=index,retention_index=ri))
             steps.append(row); print(json.dumps(row),flush=True)
-        if getattr(args, 'native_v2_full24_per8', False):
-            expected_ids={b[3]['id'] for b in additional_batches}
-            for offset in range(0,len(steps),8):
-                exposed=[view['id'] for row in steps[offset:offset+8] for view in row['additional_native_v2_microbatch']]
-                if len(exposed)!=24 or set(exposed)!=expected_ids:
-                    raise RuntimeError('Full24 native pilot omitted or duplicated a teacher in an eight-update block')
-        if audio49_policy:
-            exposed=[row['id'] for step in steps for row in step['assistant_audio49_microbatch']]
-            if len(exposed)!=49 or set(exposed)!=set(audio49_policy['teacher_ids']):raise RuntimeError('Incomplete49 assistant acoustic exposure')
-            count=sum(sum(row['objective']['assistant_audio_targets']) for step in steps for row in step['assistant_audio49_microbatch'])
-            if count!=audio49_policy['assistant_audio_loss_targets_per8']:raise RuntimeError('Audio49 target validity changed from independent numerical audit')
+        if getattr(args,'native_audio49_complete_batch',False):
+            from evals.context_native_complete_batch import validate_exposure as validate_complete
+            validate_complete(steps,audio49_policy['teacher_ids'],audio49_policy['source_unique49_acoustic_targets'],audio49_policy['complete_batch_membership'])
+        else:
+            if getattr(args, 'native_v2_full24_per8', False):
+                expected_ids={b[3]['id'] for b in additional_batches}
+                for offset in range(0,len(steps),8):
+                    exposed=[view['id'] for row in steps[offset:offset+8] for view in row['additional_native_v2_microbatch']]
+                    if len(exposed)!=24 or set(exposed)!=expected_ids:
+                        raise RuntimeError('Full24 native pilot omitted or duplicated a teacher in an eight-update block')
+            if audio49_policy:
+                exposed=[row['id'] for step in steps for row in step['assistant_audio49_microbatch']]
+                if len(exposed)!=49 or set(exposed)!=set(audio49_policy['teacher_ids']):raise RuntimeError('Incomplete49 assistant acoustic exposure')
+                count=sum(sum(row['objective']['assistant_audio_targets']) for step in steps for row in step['assistant_audio49_microbatch'])
+                if count!=audio49_policy['assistant_audio_loss_targets_per8']:raise RuntimeError('Audio49 target validity changed from independent numerical audit')
         if not seen_a or not seen_b: raise RuntimeError('Dead actual temporal adapter')
         if frozen != tensor_hashes((n,p) for n,p in lm.named_parameters() if not p.requires_grad):
             raise RuntimeError('Frozen speech/base weights changed')

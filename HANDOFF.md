@@ -1,3 +1,44 @@
+# LOCAL active — parent-Adam8 REJECTED, all artifacts backed; complete-batch8 prepared
+
+Parent-Adam chain allCOMPLETED0:0: readiness7581639 10m39, train7581869 22m02,
+native10 7582080 11m07, speech7582408 5m51, watcher7581640 52m23. Source067cb5d.
+Fit8calls44.760914s (excludes load/restore), peak22154085376B. Fresh restoration
+PASS: all28+49 fingerprints, full Adam/Python/NumPy/TorchCPU/CUDA RNG exact,
+Adam clocks528. Whole10 review rejectscore0/4,speech7/10. Quiet speech7.29-9.13s
+beforeReady12.41; pause speech19.17-21.05 insidequiet17.54-22.1. Counterfactual
+real tool READ copper diamond but provider emptytext→fail-closed notice; native
+value-use UNCOVERED, not silently blamed for missing a delivered value. Whole
+failed case retained. Formal NATIVE-PARENT-ADAM-COMPLETE10-REVIEW-2026-10-20.json.
+
+All168 training/native artifacts872959359B and4 terminal/speech179477B size/SHA-
+backed;20 readiness583962827B and12 earlycritical (subset of168) also verified.
+Canonical union24522files/23818606684B; old Mac source backup PARTIAL. Checkpoint
+0b856494590c95745f836bc69114c66bbcfd3ca3f987cb10cbf09b48f47cee49; state
+eaa471c5088a1f62d67daeeabe97f14ad618dff63581ba3304d341035cc9c4cd.
+No jobs were live after terminal chain; fresh queue must be checked at nextlaunch.
+
+Next isolated new8 from native520+its original Adam at SAME2e-7 averages all154
+approved components EVERY update. Actual28 balanced across8 kinds; old25/new24
+across4 kinds; reference4 mean; audio49 mean. All unit loss masses preserved,
+word64/clock64 unchanged; source words/masks/receipts/audio/folds identical. New24
+and audio49 total per-example weight over8 is EXACTLY the prior stride schedule;
+actual/old25 kind-average objectives stay intact with fuller within-kind coverage.
+Raw acoustic exposure8x is explicitly recorded, not disguised as49-once. Nominal
+old sampling/cache approval identity is explicitly separated from runtime weights.
+
+Motivation: combined first stochastic norm27.84 vs frozen eight-mean5.46; carrying
+Adam alone failed. Averaging tests variance, not a lowered acceptance gate. New
+matching readiness includes original four-kind acoustic BF16 smoke PLUS all154
+full-batch gradient coverage, finite gradients/allweightsunchanged/0updates/<80GB.
+No subset may submit training. Complete state restoration and full10+independent
+speech required. No unchanged extension/adoption/fresh20.23 local policy/lineage
+checks PASS; full cluster suite before updates. Plan native-audio49-complete-batch-
+plan-20261020.json. IDs pending commit/push/immutable deployment/fresh queue check.
+LOCAL soleexecutor/CLOUDread-only; unrelated pycache/capability/roadmap preserved.
+Cert valid through19:32UTC; interactive ends21Oct08:56UTC. Whole model unqualified.
+
+---
+
 # LOCAL active — TRAINING7581869 RUNNING after matching readiness PASS (20Oct16:18UTC)
 
 Readiness7581639 COMPLETED0:0; verified by persistent SlurmCPUwatcher7581640

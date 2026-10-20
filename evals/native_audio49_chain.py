@@ -61,6 +61,11 @@ def submit(path, receipt, action, job):
         pre = json.loads((BASE / 'runs' / ('native-audio49-training-preflight-' + job) / 'audio49-bf16-preflight.json').read_text())
         assert pre['passed'] and pre['optimizer_updates'] == 0 and pre['all_parameters_unchanged']
         assert pre['source_commit'] == receipt['source'] and len(pre['cases']) == 4
+        if pre['policy']['mode']=='native520-all49-assistant-audio-complete-batch-v1':
+            folder=BASE/'runs'/('native-audio49-training-preflight-'+job)
+            complete=json.loads((folder/'complete-balanced-preflight.json').read_text())
+            assert digest(folder/'complete-balanced-preflight.json')==pre['complete_balanced_preflight_sha256']
+            assert complete['passed'] and complete['optimizer_updates']==0 and complete['total_components']==154 and complete['all_parameters_unchanged'] and complete['source_commit']==receipt['source'] and complete['policy']==pre['policy']
     if action == 'submit-native':
         from evals.context_native_audio49_training import verify_checkpoint
         identity, report = verify_checkpoint(BASE / 'runs' / ('context-training-proof-' + job))

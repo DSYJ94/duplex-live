@@ -13,11 +13,23 @@ class DurableChain(unittest.TestCase):
     def test_existing_scheduler_job_blocks_next_gpu_submission(self):
         with tempfile.TemporaryDirectory() as name:
             root=Path(name);folder=root/'runs/native-audio49-training-preflight-1';folder.mkdir(parents=True)
-            (folder/'audio49-bf16-preflight.json').write_text('{"passed":true,"optimizer_updates":0,"all_parameters_unchanged":true,"source_commit":"source","cases":[1,2,3,4]}')
+            (folder/'audio49-bf16-preflight.json').write_text('{"passed":true,"optimizer_updates":0,"all_parameters_unchanged":true,"source_commit":"source","policy":{"mode":"native520-all49-assistant-audio-smallstep-v1"},"cases":[1,2,3,4]}')
             receipt=dict(jobs={'readiness':'1'},source='source')
             with patch.object(chain,'BASE',root),patch.object(chain,'validate'),patch.object(chain,'call',return_value='1\n') as call:
                 with self.assertRaises(ValueError):chain.submit(root/'receipt',receipt,'submit-training','1')
                 self.assertEqual(call.call_count,1)
+    def test_complete_batch_cannot_submit_after_a_subset_readiness(self):
+        import json
+        with tempfile.TemporaryDirectory() as name:
+            root=Path(name);folder=root/'runs/native-audio49-training-preflight-1';folder.mkdir(parents=True)
+            policy=dict(mode='native520-all49-assistant-audio-complete-batch-v1')
+            complete=dict(passed=True,optimizer_updates=0,total_components=153,all_parameters_unchanged=True,source_commit='source',policy=policy)
+            path=folder/'complete-balanced-preflight.json';path.write_text(json.dumps(complete))
+            pre=dict(passed=True,optimizer_updates=0,all_parameters_unchanged=True,source_commit='source',cases=[1,2,3,4],policy=policy,complete_balanced_preflight_sha256=chain.digest(path))
+            (folder/'audio49-bf16-preflight.json').write_text(json.dumps(pre))
+            with patch.object(chain,'BASE',root),patch.object(chain,'validate'),patch.object(chain,'call') as call:
+                with self.assertRaises(AssertionError):chain.submit(root/'receipt',dict(jobs={'readiness':'1'},source='source'),'submit-training','1')
+                call.assert_not_called()
     def test_preservation_excludes_credential_and_core_paths(self):
         for name in ['runs/a/session-token','keys/openai.env','runs/a/core-344dded','owner-conversations/a.json']:
             self.assertTrue(chain.excluded(Path(name)))
