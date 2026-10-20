@@ -1734,6 +1734,9 @@
       "path": "runs/local-continuation-20261019/source-main-9688453.bundle",
       "sha256": "0875c11242df26da5642f305056989be6a65709823b1a94bf7a6d4d75d41f54c",
       "verified_complete_history": true
-    }
+    },
+    "instrumentation_limitation": "Current immutable9688453 payload enforces initial post-Engine80GB allocated guard but final allocated peak was accidentally placed on scheduled route, not observe-only; do not claim final peak measured. Local correction moves the existing guard/measurement to observe_only for future captures; current originals remain unchanged.",
+    "early_sampled_text_review": "First original four ice arms captured: BF16 parent correct/child incorrect; FP32 both incorrect. Diagnostic only; all16 independent speech pending.",
+    "adapter_delta_diagnostic": "runs/local-continuation-20261019/complete8-parent-adapter-numeric-delta.json"
   }
 }

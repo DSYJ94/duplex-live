@@ -344,10 +344,6 @@ def main():
         'playout':playout,'audio_sha256':sha256(args.out/'model.wav'),
         'actual_lm_and_pcm_executed_together':True,'playout_is_causal_simulation':True,
         'microphone_acceptance':False,'spoken_value_use_verified':False,'quality_qualified':False,'training_approved':False}
-    if getattr(args,'native_precision_diagnostic',False):
-        import torch
-        peak=torch.cuda.max_memory_allocated();loading['adapter']['runtime_precision_diagnostic']['native_peak_allocated_bytes']=peak
-        if peak>=80_000_000_000:raise RuntimeError('Native precision replay exceeded80GB')
     (args.out/'report.json').write_text(json.dumps(report,indent=2)+'\n')
     print(json.dumps({k:v for k,v in report.items() if k not in ('loading','worker_events','playout')}),flush=True)
 

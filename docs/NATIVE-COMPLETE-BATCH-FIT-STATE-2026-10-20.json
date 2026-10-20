@@ -39,7 +39,7 @@
   "candidate_adopted": false,
   "extension_approved": false,
   "fresh20_native_runs": 0,
-  "next_action": "Require separate full-state/logit/RNG/Adam528 restoration and all10 native/speech review before another training decision",
+  "next_action": "Independent restoration and all10 review completed; candidate rejected. Read-only all16 checkpoint/LM precision diagnostic7586347 with dependent speech7586348 now owns the next decision.",
   "all28_text_fingerprints_exact": true,
   "all49_acoustic_fingerprints_exact": true,
   "all_optimizer_rng_independently_compared_exact": true,
