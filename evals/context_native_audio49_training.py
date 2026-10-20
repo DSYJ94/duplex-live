@@ -18,6 +18,7 @@ def validate_configuration(args):
     enabled=bool(getattr(args,'native_audio49_audit',None));weight=getattr(args,'native_audio49_weight',0.)
     smoke=bool(getattr(args,'native_audio49_preflight_only',False));pre=getattr(args,'native_audio49_preflight',None)
     scale=getattr(args,'native_audio49_step_scale',1.)
+    if getattr(args,'native_audio49_gradient_probe',False) and (not enabled or not smoke or pre or args.reload or args.resume_training):raise ValueError('Gradient probe is zero-update preflight only')
     if type(scale) not in (int,float) or isinstance(scale,bool) or scale not in (1.,.1):raise ValueError('Only the explicit original or tenfold-smaller initial stage is allowed')
     if not enabled:
         if weight or smoke or pre or scale!=1.:raise ValueError('Audio49 options require the complete independent audit')

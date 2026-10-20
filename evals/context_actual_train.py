@@ -314,6 +314,11 @@ def run(lm, spm, voice, examples, components, audits, args):
             return
         if audio49_policy and args.native_audio49_preflight_only:
             if optimizer.state or initial_step:raise RuntimeError('BF16 readiness cannot optimize or resume')
+            if getattr(args,'native_audio49_gradient_probe',False):
+                from evals.context_native_audio49_gradient_probe import run as gradient_probe
+                gradient_probe(lm,learned,batches,retention,references,native_teacher_batches,additional_batches,component_kinds,response_boundaries,audits,
+                    warm_references,clock_references,audio49_batches,audio49_policy,args,state_metadata(frozen),forward)
+                return
             from evals.context_native_audio49_training import bf16_preflight
             bf16_preflight(lm,learned,audio49_batches,audio49_policy,args)
             return

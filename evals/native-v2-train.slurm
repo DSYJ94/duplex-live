@@ -143,9 +143,17 @@ if [[ "$PHASE" == gradient-audit ]]; then
  test ! -e "$RUN_OUT/training-state.pt"
  exit 0
 fi
+if [[ "${NATIVE_AUDIO49_GRADIENT_PROBE:-0}" == 1 ]]; then
+ [[ "${NATIVE_AUDIO49_PREFLIGHT_ONLY:-0}" == 1 ]]
+ ARGS+=(--native-audio49-gradient-probe)
+fi
 run -m evals.context_training_proof "${ARGS[@]}"
 if [[ "${NATIVE_AUDIO49_PREFLIGHT_ONLY:-0}" == 1 ]]; then
- test -f "$RUN_OUT/audio49-bf16-preflight.json"
+ if [[ "${NATIVE_AUDIO49_GRADIENT_PROBE:-0}" == 1 ]]; then
+  test -f "$RUN_OUT/audio49-gradient-probe.json"
+ else
+  test -f "$RUN_OUT/audio49-bf16-preflight.json"
+ fi
  test ! -e "$RUN_OUT/adapters.safetensors"
  test ! -e "$RUN_OUT/training-state.pt"
  exit 0

@@ -1,0 +1,30 @@
+{
+  "schema": "dl-native-audio49-gradient-probe-plan-v1",
+  "at_utc": "2026-10-20T15:20:25.481465+00:00",
+  "parent": "7510331",
+  "all_actual_cases": 28,
+  "all_legacy_references": 4,
+  "all_old_teachers": 25,
+  "all_new_teachers": 24,
+  "all_word_anchors": 10,
+  "all_clock_anchors": 14,
+  "all_acoustic_cases": 49,
+  "total_cases": 154,
+  "optimizer_updates": 0,
+  "parent_optimizer_imported": false,
+  "outputs_for_training": false,
+  "mathematical_counterfactuals_only": [
+    "fresh Adam first step",
+    "original520 Adam next step"
+  ],
+  "learning_rates_not_tuned": true,
+  "all_current_objective_weights_preserved": true,
+  "first_and_epoch8_schedules_exact": true,
+  "hypotheses": [
+    "Competing objectives oppose ordinary retention: complete family gradient cosines quantify local conflict.",
+    "Resetting Adam removes useful preconditioning: original moment arithmetic predicts a different direction, without importing state.",
+    "BF16 effects dominate the smaller step: compare already measured fixed-history anchor drift between the two completed8 runs."
+  ],
+  "limits": "First-order fixed-parent arithmetic is not native behavior or a training/adoption authorization.",
+  "next_action": "Choose a single diagnosed repair only after the complete10 review and full154 report. No unchanged extension of either rejected8."
+}

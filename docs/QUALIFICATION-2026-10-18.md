@@ -1,3 +1,35 @@
+# LOCAL active — smaller-step8 complete; full10 fails; complete-gradient probe prepared
+
+20October: readiness7578127 COMPLETE11m32, training7578417 COMPLETE22m36,
+native10 7578866 COMPLETE11m04, speech7579217 COMPLETE5m21, sole SlurmCPU
+watcher7578128 COMPLETE53m39. Fresh14:56UTC queue empty. All240 tests passed;
+new8 actual LR2e-7; all28+49 fingerprints and full Adam/RNG restored exactly in
+fresh process. Runtime8858539d0f0b381f3d4aa1b8590e59978a6bac04. Canonical terminal
+runs/native-audio49-smallstep-local-20261020.json. No watcher remains active.
+
+Full ten transcripts show ordinary sound semantically correct, but its physical
+onset gate fails. Ice claims less volume means less dense; plants says light
+sets feeding time; metal loses its own heat. Ordinary core1/4, speech7/10;
+quiet/pause/clarification/cancellation fail. Private yellow-circle and copper-
+diamond values are spoken after actual tool reads, but invented prior value and
+incorrect concurrent reasoning remain. Candidate rejected; no extension/adoption/
+fresh20 inference. Raw report/WAV/clock/receipt full review and scoped176file/
+1455982473B backup in progress, not yet claimed complete. Transfer interrupted
+once; resuming only missing/hash-mismatched files. Critical checkpoint/state
+hashes are independently checked below in the preservation ledger when complete.
+
+Next zero-update complete154 gradient probe uses all28 actual+4legacy+25old+
+24new+10word+14clock+49audio histories. It measures exact first/eight-mean current
+schedules, family gradient conflicts and READ-ONLY original520 Adam arithmetic.
+No optimizer state imported, no parameter update/checkpoint. Frozen original
+legacy objectives untouched. New helper13 local tests PASS; cluster fullsuite
+required before probe. Plan native-audio49-gradient-probe-plan-20261020.json.
+LOCAL soleexecutor/CLOUDread-only. New job not yet submitted; inspect livequeue
+and exact receipt before any submission. Cert through19:32UTC; reservation ends
+21Oct08:56UTC. Whole native system unqualified; unrelated local work preserved.
+
+---
+
 # LOCAL active — smaller-step chain SUBMITTED 7578127 / 7578128 (20 October13:22UTC)
 
 Runtime exact source 8858539d0f0b381f3d4aa1b8590e59978a6bac04, committed/pushed, immutable
