@@ -1,3 +1,42 @@
+# LOCAL active — complete-batch native8 chain SUBMITTED7582620/7582621 (20Oct17:10UTC)
+
+Runtime exact3b92d843e7724d66ecb6d148ab33b3705f089ec8 committed/pushed, immutable
+worktrees/recovery-3b92d84. Fresh queue empty; prior7581639/7581640/7581869/
+7582080/7582408 independently allCOMPLETED0:0 before submission. ReadinessGPU
+7582620 and persistent SlurmCPUwatcher7582621 accepted and saved before release
+17:10UTC; initialPENDING(None). Actual17:12:36UTC both RUNNING; all252 cluster
+tests PASS4.110s plus11 state testsPASS1.564s before GPU preflight. Canonical remote
+runs/native-audio49-complete-batch-local-20261020.json owns all following IDs.
+LOCAL soleexecutor/CLOUDREAD-ONLY; no duplicates or old watcher restart.
+
+One NEW8 from native520+original Adam520, same actualLR2e-7. All154 approved
+components on EVERY update:28actual balanced8kinds/4reference/25old+24new balanced
+4kinds/49audio mean/10word+14clock anchors64 each. All scalar loss formulas,
+source words/audio/masks/receipts/folds unchanged. Raw acoustic exposures8x are
+explicit; per-example total acoustic/new24 weights across8 unchanged. Actual/
+old25 objectives keep their kind-average mass and cover all within-kind records.
+Matching BF16 readiness must pass original4 acoustic cases AND all154 complete-
+batch gradients, no subset, unchangedweights/0updates/<80GB. Then new8 must finish
+Adam528, fresh full optimizer/RNG+28/49 restoration before full native10/speech.
+23 local checksPASS; full cluster suite required first. No extension/adoption/
+fresh20 inference is automatic. PlanSHA
+9893566f7af9b1ea0936b2381a13279e30d0ba3a1f3cd4e536f6b86219489321.
+
+Prior parentAdam8 rejectedcore0/4,speech7/10; full rawWAVs/clocks/receipts reviewed.
+Counterfactual toolread occurred but provideremptytext caused failure notice:
+native verified-value use UNCOVERED; wholefailed case retained. All192 unique
+readiness/train/native/terminal artifacts1457101663B SHA-backed (early12subset),
+canonical union24522files/23818606684B. Old stopped Mac source backup PARTIAL.
+New fullsource3b92d84 bundle SHA91a124207bbafe2389ff63c87dadb2f4f31accae79114c6435cdd99615b290b8
+verifiedcomplete. No owner/credential/quarantinedcore transfers. Unrelated local
+pycache/capability probes/roadmap preserved. Whole model unqualified; fresh20nativeNONE.
+Local cert ends2026-10-20T19:32:16Z /21:32:16Amsterdam; interactive ends
+2026-10-21T08:56:32Z /10:56:32Amsterdam. Next observe7582620/7582621, preserve
+completed stage artifacts, verify complete154 readiness and exact restoration,
+then review the WHOLE10 before any further training decision.
+
+---
+
 # LOCAL active — parent-Adam8 REJECTED, all artifacts backed; complete-batch8 prepared
 
 Parent-Adam chain allCOMPLETED0:0: readiness7581639 10m39, train7581869 22m02,
