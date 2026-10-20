@@ -65,7 +65,8 @@ class NativeStreamGradient(unittest.TestCase):
     def test_readiness_is_not_training_or_another_diagnostic(self):
         from evals.harness.test_context_native_bf16_stream_diagnostic import BF16StreamDiagnostic
         args=BF16StreamDiagnostic().args();args.native_audio49_bf16_stream_diagnostic=False
+        args.native_audio49_stream_auxiliary=True;args.native_audio49_parent_adam=True;args.native_audio49_complete_batch=True
         validate(args)
-        for name,value in [('native_audio49_bf16_stream_diagnostic',True),('reload',True),('resume_training','state.pt'),('native_audio49_preflight_only',False),('native_audio49_complete_batch',True)]:
+        for name,value in [('native_audio49_bf16_stream_diagnostic',True),('reload',True),('resume_training','state.pt'),('native_audio49_preflight_only',False),('native_audio49_complete_batch',False)]:
             changed=types.SimpleNamespace(**vars(args));setattr(changed,name,value)
             with self.subTest(name=name),self.assertRaises(ValueError):validate(changed)

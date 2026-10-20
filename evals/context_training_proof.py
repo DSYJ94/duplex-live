@@ -108,6 +108,7 @@ def main():
     ap.add_argument('--native-audio49-gradient-probe',action='store_true')
     ap.add_argument('--native-audio49-bf16-stream-diagnostic',action='store_true')
     ap.add_argument('--native-audio49-stream-gradient-readiness',action='store_true')
+    ap.add_argument('--native-audio49-stream-auxiliary',action='store_true')
     ap.add_argument('--native-audio49-parent-adam',action='store_true')
     ap.add_argument('--native-audio49-complete-batch',action='store_true')
     ap.add_argument('--reload', action='store_true')

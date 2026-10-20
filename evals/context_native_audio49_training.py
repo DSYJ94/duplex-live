@@ -21,6 +21,7 @@ def validate_configuration(args):
     if getattr(args,'native_audio49_bf16_stream_diagnostic',False):
         from evals.context_native_bf16_stream_diagnostic import validate
         validate(args)
+    if getattr(args,'native_audio49_stream_auxiliary',False) and not getattr(args,'native_audio49_complete_batch',False):raise ValueError('Native stream auxiliary preserves the complete154 recipe')
     enabled=bool(getattr(args,'native_audio49_audit',None));weight=getattr(args,'native_audio49_weight',0.)
     smoke=bool(getattr(args,'native_audio49_preflight_only',False));pre=getattr(args,'native_audio49_preflight',None)
     scale=getattr(args,'native_audio49_step_scale',1.)
@@ -120,6 +121,9 @@ def prepare(args,spm,voice):
             assistant_audio_loss_targets_per8=8*policy['assistant_audio_loss_targets_per8'],per_example_weight_each_update=1/49,
             sampling='Every update includes all28 actual balanced across8 kinds, all4 references, all25 old/all24 new teachers balanced across4 kinds, all49 acoustic mean and all10word/14clock anchors',
             legacy_subpolicy_scope='Original nominal approval/cache/rotation identities; complete_batch_membership governs actual runtime exposure weights. All scalar loss formulas and kind-average masses retained.')
+    if getattr(args,'native_audio49_stream_auxiliary',False):
+        from evals.context_native_stream_training import policy as stream_policy
+        policy.update(mode='native520-complete154-native-stream49-auxiliary-v1',native_stream_auxiliary=stream_policy(data))
     for name,content in [('audio49-data.json',encoded),('approved-audio49-audit.json',gate_file.read_text())]:
         p=args.out/name
         if args.reload:
@@ -136,6 +140,14 @@ def prepare(args,spm,voice):
         if getattr(args,'native_audio49_complete_batch',False):
             complete=args.native_audio49_preflight/'complete-balanced-preflight.json';check=json.loads(complete.read_text())
             if pre.get('complete_balanced_preflight_sha256')!=sha256(complete) or not check['passed'] or check['policy']!=policy or check['optimizer_updates']!=0 or not check['all_parameters_unchanged'] or check['total_components']!=154:raise ValueError('Complete matching154 gradient readiness required')
+        if getattr(args,'native_audio49_stream_auxiliary',False):
+            from evals.context_native_stream_training import check_readiness
+            digest=check_readiness(args.native_audio49_preflight,policy['native_stream_auxiliary'],policy)
+            if pre.get('native_stream_readiness_sha256')!=digest:raise ValueError('BF16 readiness lacks exact native49 binding')
+            target=args.out/'approved-native-stream49-gradient-readiness.json'
+            if args.reload:
+                if sha256(target)!=digest:raise ValueError('Packaged native stream readiness changed')
+            else:target.write_bytes((args.native_audio49_preflight/'native-stream49-gradient-readiness.json').read_bytes())
         policy['bf16_preflight_sha256']=sha256(path)
         target=args.out/'approved-audio49-bf16-preflight.json'
         if args.reload:
@@ -218,14 +230,14 @@ def verify_checkpoint(proof):
     p=r.get('assistant_audio_auxiliary',{});data=json.loads((proof/'data.json').read_text())
     if (r['schema']!=SCHEMA or not r['passed'] or not r['frozen_weights_unchanged'] or not r['base_audio_parameters_frozen']
             or r['source_commit']!=SOURCE_COMMIT or r['optimizer_steps']!=8 or r['initial_optimizer_steps']!=0
-            or r['updates_this_run']!=8 or r['warm_start_optimizer_reset']!=(p.get('mode') not in ('native520-all49-assistant-audio-parent-adam-v1','native520-all49-assistant-audio-complete-batch-v1')) or r['resumed_from_training_state']
+            or r['updates_this_run']!=8 or r['warm_start_optimizer_reset']!=(p.get('mode') not in ('native520-all49-assistant-audio-parent-adam-v1','native520-all49-assistant-audio-complete-batch-v1','native520-complete154-native-stream49-auxiliary-v1')) or r['resumed_from_training_state']
             or r['last_layers']!=4 or r['rank']!=8 or r['scaling']!=2. or r['past_loss_targets']!=0
             or r['audio_loss_targets']<1 or r['original_actual_history_audio_loss_targets']!=0
             or r['user_audio_loss_targets']!=0 or r['prefix_audio_loss_targets']!=0 or r['supplied_span_audio_loss_targets']!=0
             or not r['all_actual_temporal_audits_passed'] or not r['all_component_audits_passed']
             or not r['zero_adapter_native_batch_logits_exact'] or len(data['components'])!=28
             or data['audio_loss_targets']!=0 or data['past_loss_targets']!=0 or not data['all_component_audits_passed']
-            or p.get('mode') not in ('native520-all49-assistant-audio-auxiliary-v1','native520-all49-assistant-audio-smallstep-v1','native520-all49-assistant-audio-parent-adam-v1','native520-all49-assistant-audio-complete-batch-v1') or p['weight']!=1. or p['updates']!=8
+            or p.get('mode') not in ('native520-all49-assistant-audio-auxiliary-v1','native520-all49-assistant-audio-smallstep-v1','native520-all49-assistant-audio-parent-adam-v1','native520-all49-assistant-audio-complete-batch-v1','native520-complete154-native-stream49-auxiliary-v1') or p['weight']!=1. or p['updates']!=8
             or len(p['teacher_ids'])!=49 or len(set(p['teacher_ids']))!=49
             or p['required_original_objectives']!=dict(actual_histories=28,old_native_teachers=25,new_native_teachers=24,kl_weight=1.,hidden_mse_weight=10.)
             or p['implementations']!=committed_implementations(r['repo_commit']) or not p['original_word64_clock64_and_all_text_losses_unchanged']
@@ -239,18 +251,18 @@ def verify_checkpoint(proof):
             or not v['optimizer_and_rng_independently_compared_exact'] or v['actual']!=r['expected_logits']
             or v['actual_audio49_logits']!=r['expected_audio49_logits']):
         raise ValueError('Unverified bounded audio49 combined-objective checkpoint')
-    expected_scale=.1 if p['mode'] in ('native520-all49-assistant-audio-smallstep-v1','native520-all49-assistant-audio-parent-adam-v1','native520-all49-assistant-audio-complete-batch-v1') else 1.
+    expected_scale=.1 if p['mode'] in ('native520-all49-assistant-audio-smallstep-v1','native520-all49-assistant-audio-parent-adam-v1','native520-all49-assistant-audio-complete-batch-v1','native520-complete154-native-stream49-auxiliary-v1') else 1.
     if (p.get('step_scale',1.)!=expected_scale or p['learning_rate']!=2e-6*expected_scale
             or r['combined_recipe']['lr']!=p['learning_rate']
             or r['additional_native_v2']['learning_rate']!=2e-6):raise ValueError('Changed declared effective optimizer rate or original text-recipe identity')
     if expected_scale==.1 and (p['nominal_legacy_recipe_learning_rate']!=2e-6 or p['effective_optimizer_learning_rate']!=2e-7):raise ValueError('Smallstep optimizer identity changed')
-    if p['mode'] in ('native520-all49-assistant-audio-parent-adam-v1','native520-all49-assistant-audio-complete-batch-v1'):
+    if p['mode'] in ('native520-all49-assistant-audio-parent-adam-v1','native520-all49-assistant-audio-complete-batch-v1','native520-complete154-native-stream49-auxiliary-v1'):
         expected=hashlib.sha256(subprocess.check_output(['git','show',r['repo_commit']+':evals/context_native_parent_adam.py'],cwd=str(Path(__file__).resolve().parent))).hexdigest()
         if p['new_optimizer'] or p['parent_adam_implementation_sha256']!=expected or p['parent_adam_parameter_steps']!=520 or p['final_adam_parameter_steps']!=528:raise ValueError('Changed Adam transplant implementation or clocks')
         from evals.context_native_parent_adam import validate_finished
         validate_finished(proof,r)
     parent_identity,parent=old_verify(Path(p['parent']['proof']))
-    if p['mode'] in ('native520-all49-assistant-audio-parent-adam-v1','native520-all49-assistant-audio-complete-batch-v1') and p['parent_adam_training_state_sha256']!=parent['training_state_sha256']:raise ValueError('Adam source is not the approved native520 parent')
+    if p['mode'] in ('native520-all49-assistant-audio-parent-adam-v1','native520-all49-assistant-audio-complete-batch-v1','native520-complete154-native-stream49-auxiliary-v1') and p['parent_adam_training_state_sha256']!=parent['training_state_sha256']:raise ValueError('Adam source is not the approved native520 parent')
     if (parent_identity!=p['parent'] or r['warm_start']!=parent_identity or parent['optimizer_steps']!=520
             or r['data_sha256']!=parent['data_sha256'] or r['native_protocol']!=parent['native_protocol']
             or r['frozen_hashes']!=parent['frozen_hashes'] or r['voice_sha256']!=parent['voice_sha256']
@@ -266,7 +278,7 @@ def verify_checkpoint(proof):
             or sha256(proof/'audio49-data.json')!=p['data_sha256'] or sha256(proof/'approved-audio49-audit.json')!=p['audit_sha256']
             or v['checkpoint_sha256']!=r['checkpoint_sha256'] or v['training_state_sha256']!=r['training_state_sha256']
             or v['data_sha256']!=r['data_sha256'] or len(r['expected_audio49_logits'])!=49):raise ValueError('Changed audio49 proof identities')
-    if p['mode']=='native520-all49-assistant-audio-complete-batch-v1':
+    if p['mode'] in ('native520-all49-assistant-audio-complete-batch-v1','native520-complete154-native-stream49-auxiliary-v1'):
         from evals.context_native_complete_batch import membership,validate_exposure as validate_complete
         expected=hashlib.sha256(subprocess.check_output(['git','show',r['repo_commit']+':evals/context_native_complete_batch.py'],cwd=str(Path(__file__).resolve().parent))).hexdigest()
         package=json.loads((proof/'audio49-data.json').read_text());members=membership(package,parent)
@@ -278,6 +290,18 @@ def verify_checkpoint(proof):
     else:validate_exposure(r['steps'],p['teacher_ids'],p['assistant_audio_loss_targets_per8'])
     if set(r['expected_audio49_logits'])!=set(p['teacher_ids']) or r['audio_loss_targets']!=p['assistant_audio_loss_targets_per8']:
         raise ValueError('Changed full49 restore or target identity')
+    if p['mode']=='native520-complete154-native-stream49-auxiliary-v1':
+        from evals.context_native_stream_training import exposure as stream_exposure
+        stream_exposure(r['steps'],p['native_stream_auxiliary'])
+        stream=p['native_stream_auxiliary']
+        from evals.context_native_stream_training import policy as stream_policy
+        if stream!=stream_policy(json.loads((proof/'audio49-data.json').read_text())):raise ValueError('Changed complete native stream teacher coverage or weights')
+        ready=json.loads((proof/'approved-audio49-bf16-preflight.json').read_text())
+        if sha256(proof/'approved-native-stream49-gradient-readiness.json')!=ready['native_stream_readiness_sha256']:raise ValueError('Changed packaged native stream readiness')
+        for key,name in [('implementation_sha256','context_native_stream_training.py'),('gradient_implementation_sha256','context_native_stream_gradient.py')]:
+            expected=hashlib.sha256(subprocess.check_output(['git','show',r['repo_commit']+':evals/'+name],cwd=str(Path(__file__).resolve().parent))).hexdigest()
+            if stream[key]!=expected:raise ValueError('Changed native stream implementation provenance')
+        if not v.get('all49_native_stream_logits_exact') or len(r.get('expected_native_stream49_logits',{}))!=49 or v.get('actual_native_stream49_logits')!=r['expected_native_stream49_logits'] or set(r['expected_native_stream49_logits'])!=set(p['teacher_ids']):raise ValueError('Independent complete49 native stream restore missing')
     identity=dict(proof=str(proof),report_sha256=sha256(proof/'report.json'),reload_report_sha256=sha256(proof/'reload-report.json'),
         checkpoint_sha256=r['checkpoint_sha256'],training_state_sha256=r['training_state_sha256'],native_protocol=r['native_protocol'],optimizer_steps=8)
     return identity,r

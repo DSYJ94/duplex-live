@@ -16,6 +16,7 @@ import time
 
 BASE = Path('/projects/u6si/duplex-live')
 STAGES = ('readiness', 'training', 'native10', 'speech10')
+TERMINAL=('COMPLETED','FAILED','CANCELLED','TIMEOUT','OUT_OF_MEMORY','NODE_FAIL','PREEMPTED','BOOT_FAIL','DEADLINE','REVOKED','SPECIAL_EXIT')
 
 
 class SlotBusy(ValueError):
@@ -66,11 +67,17 @@ def submit(path, receipt, action, job):
         pre = json.loads((BASE / 'runs' / ('native-audio49-training-preflight-' + job) / 'audio49-bf16-preflight.json').read_text())
         assert pre['passed'] and pre['optimizer_updates'] == 0 and pre['all_parameters_unchanged']
         assert pre['source_commit'] == receipt['source'] and len(pre['cases']) == 4
-        if pre['policy']['mode']=='native520-all49-assistant-audio-complete-batch-v1':
+        if pre['policy']['mode'] in ('native520-all49-assistant-audio-complete-batch-v1','native520-complete154-native-stream49-auxiliary-v1'):
             folder=BASE/'runs'/('native-audio49-training-preflight-'+job)
             complete=json.loads((folder/'complete-balanced-preflight.json').read_text())
             assert digest(folder/'complete-balanced-preflight.json')==pre['complete_balanced_preflight_sha256']
             assert complete['passed'] and complete['optimizer_updates']==0 and complete['total_components']==154 and complete['all_parameters_unchanged'] and complete['source_commit']==receipt['source'] and complete['policy']==pre['policy']
+        if receipt.get('native_stream_auxiliary'):
+            from evals.context_native_stream_training import check_readiness
+            assert pre['policy']['mode']=='native520-complete154-native-stream49-auxiliary-v1'
+            folder=BASE/'runs'/('native-audio49-training-preflight-'+job)
+            assert check_readiness(folder,pre['policy']['native_stream_auxiliary'],pre['policy'])==pre['native_stream_readiness_sha256']
+            script='native-stream49-pilot.slurm'
     if action == 'submit-native':
         from evals.context_native_audio49_training import verify_checkpoint
         identity, report = verify_checkpoint(BASE / 'runs' / ('context-training-proof-' + job))
@@ -82,10 +89,14 @@ def submit(path, receipt, action, job):
         raise SlotBusy('Active scheduler IDs '+repr(active)+'; watcher '+repr(watcher)+'; no submission attempted')
     terminal = call(['sacct', '-X', '-n', '-P', '-j', job, '--format=JobID,State,ExitCode'])
     rows = [x.split('|') for x in terminal.splitlines() if x.startswith(job + '|')]
-    if len(rows) != 1 or rows[0][1] in ('PENDING', 'RUNNING', 'COMPLETING', 'CONFIGURING', 'SUSPENDED', 'REQUEUED'):
+    if len(rows) != 1 or rows[0][1].split(' ',1)[0] not in TERMINAL:
         raise ValueError('Predecessor is not independently terminal')
     if following != 'speech10' and rows[0][1:3] != ['COMPLETED', '0:0']:
         raise ValueError('Predecessor did not pass')
+    if receipt.get('execution_deadline_utc'):
+        deadline=datetime.datetime.strptime(receipt['execution_deadline_utc'],'%Y-%m-%dT%H:%M:%SZ')
+        minutes=180 if following=='training' and receipt.get('native_stream_auxiliary') else 30
+        if datetime.datetime.utcnow()+datetime.timedelta(minutes=minutes+5)>deadline:raise ValueError('Remaining allocation cannot contain the bounded next stage')
     receipt.setdefault('verified_terminal_predecessors', {})[following] = dict(job=job, state=rows[0][1], exit_code=rows[0][2], at_utc=now())
     receipt.setdefault('submission_attempts', {})[following] = dict(at_utc=now(), status='submitting')
     save(path, receipt)
@@ -108,7 +119,8 @@ def submit(path, receipt, action, job):
     settings = call(['scontrol', 'show', 'job', new_job])
     receipt.setdefault('held_settings', {})[following] = settings
     save(path, receipt)
-    if 'TimeLimit=00:30:00' not in settings:
+    expected_time='03:00:00' if following=='training' and receipt.get('native_stream_auxiliary') else '00:30:00'
+    if ('TimeLimit='+expected_time) not in settings:
         raise ValueError('Unexpected held job allocation; not released')
     if following != 'speech10' and ('Reservation=interactive' not in settings or ('TresPerNode=gres/gpu:' + ('2' if following == 'native10' else '1')) not in settings):
         raise ValueError('Unexpected GPU reservation; not released')
@@ -122,9 +134,9 @@ def submit(path, receipt, action, job):
 def roots(receipt, stage):
     job = receipt['jobs'][stage]
     if stage == 'readiness':
-        return ['runs/native-audio49-training-preflight-' + job, 'logs/dl-native-audio49-ready-' + job + '.out']
+        return ['runs/native-audio49-training-preflight-' + job, ('logs/dl-native-stream49-gradient-' if receipt.get('native_stream_auxiliary') else 'logs/dl-native-audio49-ready-') + job + '.out']
     if stage == 'training':
-        return ['runs/context-training-proof-' + job, 'logs/dl-native-audio49-pilot-' + job + '.out']
+        return ['runs/context-training-proof-' + job, ('logs/dl-native-stream49-pilot-' if receipt.get('native_stream_auxiliary') else 'logs/dl-native-audio49-pilot-') + job + '.out']
     if stage == 'speech10':
         return ['runs/native-v2-development-asr-' + job, 'logs/dl-native-audio49-speech10-' + job + '.out']
     return (['runs/native-pilot-session-' + job, 'logs/dl-native-audio49-native10-' + job + '.out']
@@ -215,7 +227,7 @@ def watch(path):
                     receipt['watcher_heartbeat_utc'] = now()
                     save(path, receipt)
                     print(now(), stage, job, state, code, flush=True)
-                    if state not in ('PENDING', 'RUNNING', 'COMPLETING', 'CONFIGURING', 'SUSPENDED', 'REQUEUED'):
+                    if state.split(' ',1)[0] in TERMINAL:
                         if stage == 'speech10' or (stage != 'native10' and (state != 'COMPLETED' or code != '0:0')):
                             receipt['watcher_terminal'] = dict(at_utc=now(), stage=stage, state=state, no_extension_or_adoption=True)
                             save(path, receipt)

@@ -38,6 +38,13 @@ class DurableChain(unittest.TestCase):
                 with self.assertRaisesRegex(RuntimeError,'stop fixture'):chain.watch(path)
                 self.assertEqual(submit.call_count,2);sleep.assert_called_once_with(60)
             self.assertNotIn('submission_attempts',json.loads(path.read_text()))
+    def test_unknown_accounting_state_never_submits_a_next_stage(self):
+        import json
+        with tempfile.TemporaryDirectory() as name:
+            path=Path(name)/'receipt.json';path.write_text(json.dumps(dict(jobs={'readiness':'1'})))
+            with patch.object(chain,'validate'),patch.object(chain,'call',side_effect=['1|NEW_UNKNOWN_STATE|0:0',RuntimeError('stop fixture')]),patch.object(chain,'submit') as submit,patch.object(chain.time,'sleep') as sleep:
+                with self.assertRaisesRegex(RuntimeError,'stop fixture'):chain.watch(path)
+                submit.assert_not_called();sleep.assert_called_once_with(60)
     def test_preservation_excludes_credential_and_core_paths(self):
         for name in ['runs/a/session-token','keys/openai.env','runs/a/core-344dded','owner-conversations/a.json']:
             self.assertTrue(chain.excluded(Path(name)))

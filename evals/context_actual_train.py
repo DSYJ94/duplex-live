@@ -119,6 +119,10 @@ def run(lm, spm, voice, examples, components, audits, args):
     if getattr(args,'native_audio49_audit',None):
         from evals.context_native_audio49_training import prepare as prepare_audio49
         audio49_policy,audio49_batches=prepare_audio49(args,spm,voice)
+    stream_bound=None
+    if getattr(args,'native_audio49_stream_auxiliary',False):
+        from evals.context_native_stream_training import bindings as stream_bindings
+        stream_bound=stream_bindings(args,native_teacher_batches,additional_batches)
     def forward(inputs): return lm.forward_codes(inputs)
     def digests():
         result = {}
@@ -254,6 +258,11 @@ def run(lm, spm, voice, examples, components, audits, args):
                 from evals.context_native_audio49_training import fingerprints
                 audio49_actual=fingerprints(lm,audio49_batches)
                 if audio49_actual!=report['expected_audio49_logits']:raise RuntimeError('All49 acoustic restoration logits changed')
+            stream_actual=None
+            if stream_bound is not None:
+                from evals.context_native_stream_training import fingerprints as stream_fingerprints
+                stream_actual=stream_fingerprints(lm,stream_bound)
+                if stream_actual!=report['expected_native_stream49_logits']:raise RuntimeError('Independent all49 native stream restore changed')
             actual = digests(); passed = actual == report['expected_logits']
             result = {'schema':('dl-context-actual-audio49-adapter-reload-v1' if audio49_policy else 'dl-context-actual-adapter-reload-v1'),'fresh_process':True,
                 'all_valid_logits_exact':passed,'actual':actual,'checkpoint_sha256':report['checkpoint_sha256'],
@@ -264,6 +273,8 @@ def run(lm, spm, voice, examples, components, audits, args):
                     all49_auxiliary_logits_exact=audio49_actual==report['expected_audio49_logits'],actual_audio49_logits=audio49_actual,
                     optimizer_and_rng_independently_compared_exact=True)
                 if result['pid']==result['training_pid']:raise RuntimeError('Audio49 restore must use a fresh process')
+            if stream_actual is not None:
+                result.update(all49_native_stream_logits_exact=True,actual_native_stream49_logits=stream_actual)
             if getattr(args,'native_audio49_parent_adam',False):
                 clocks=sorted(set(int(x['step']) for x in opt.state.values()))
                 if clocks!=[528] or snapshot['completed_steps']!=8:raise RuntimeError('Independent restore lost stage8/Adam528 clocks')
@@ -324,8 +335,17 @@ def run(lm, spm, voice, examples, components, audits, args):
         if audio49_policy and args.native_audio49_preflight_only:
             if (optimizer.state and not parent_adam) or initial_step:raise RuntimeError('BF16 readiness cannot optimize or resume')
             if getattr(args,'native_audio49_stream_gradient_readiness',False):
+                from evals.context_native_audio49_training import bf16_preflight
+                from evals.context_native_complete_batch import preflight as complete_preflight
                 from evals.context_native_stream_gradient import run as stream_readiness
-                stream_readiness(lm,learned,native_teacher_batches,additional_batches,args)
+                bf16_preflight(lm,learned,audio49_batches,audio49_policy,args)
+                complete_digest=complete_preflight(lm,learned,args,audio49_policy,batches,retention,references,native_teacher_batches,additional_batches,component_kinds,response_boundaries,audits,warm_references,clock_references,audio49_batches,forward,args.actual_response_first_word_weight)
+                stream_readiness(lm,learned,native_teacher_batches,additional_batches,args,audio49_policy)
+                path=args.out/'audio49-bf16-preflight.json';checked=json.loads(path.read_text())
+                checked.update(complete_balanced_preflight_sha256=complete_digest,
+                    native_stream_readiness_sha256=sha256(args.out/'native-stream49-gradient-readiness.json'),
+                    peak_allocated_bytes=max(checked['peak_allocated_bytes'],json.loads((args.out/'complete-balanced-preflight.json').read_text())['peak_allocated_bytes'],json.loads((args.out/'native-stream49-gradient-readiness.json').read_text())['peak_allocated_bytes']))
+                path.write_text(json.dumps(checked,indent=2)+'\n')
                 return
             if getattr(args,'native_audio49_bf16_stream_diagnostic',False):
                 from evals.context_native_bf16_stream_diagnostic import run as stream_diagnostic
@@ -433,6 +453,10 @@ def run(lm, spm, voice, examples, components, audits, args):
                     if audio49_policy:
                         from evals.context_native_audio49_training import backward as audio49_backward
                         audio49_rows=audio49_backward(lm,audio49_batches,local_step)
+            native_stream_rows=[]
+            if stream_bound is not None:
+                from evals.context_native_stream_training import backward as stream_backward
+                native_stream_rows=stream_backward(lm,stream_bound,audio49_policy['native_stream_auxiliary'],local_step)
             if not all(torch.isfinite(v) for v in ((ce,kl,hidden,supervised) if teacher else (ce,kl,hidden))):
                 raise RuntimeError('Nonfinite actual or retention loss')
             if any(p.grad is None or not torch.isfinite(p.grad).all() for p in learned.values()):
@@ -467,6 +491,7 @@ def run(lm, spm, voice, examples, components, audits, args):
                 'nonzero_A_gradients':a,'nonzero_B_gradients':b,'gradient_norm_before_clip':norm}
             if getattr(args,'native_audio49_complete_batch',False):
                 row.update(scenario='all28-balanced-kind-mean',component_index=None,supervision_kind='all8-balanced-kinds',retention_kind='all4-reference-mean',retention_index=None,native_teacher_index=None,complete_balanced_microbatches=complete_groups,legacy_nominal_schedule_anchor=dict(component_index=index,retention_index=ri))
+            if stream_bound is not None:row['native_stream_teacher_microbatch']=native_stream_rows
             steps.append(row); print(json.dumps(row),flush=True)
         if getattr(args,'native_audio49_complete_batch',False):
             from evals.context_native_complete_batch import validate_exposure as validate_complete
@@ -483,6 +508,9 @@ def run(lm, spm, voice, examples, components, audits, args):
                 if len(exposed)!=49 or set(exposed)!=set(audio49_policy['teacher_ids']):raise RuntimeError('Incomplete49 assistant acoustic exposure')
                 count=sum(sum(row['objective']['assistant_audio_targets']) for step in steps for row in step['assistant_audio49_microbatch'])
                 if count!=audio49_policy['assistant_audio_loss_targets_per8']:raise RuntimeError('Audio49 target validity changed from independent numerical audit')
+        if stream_bound is not None:
+            from evals.context_native_stream_training import exposure as stream_exposure
+            stream_exposure(steps,audio49_policy['native_stream_auxiliary'])
         if not seen_a or not seen_b: raise RuntimeError('Dead actual temporal adapter')
         if frozen != tensor_hashes((n,p) for n,p in lm.named_parameters() if not p.requires_grad):
             raise RuntimeError('Frozen speech/base weights changed')
@@ -545,5 +573,11 @@ def run(lm, spm, voice, examples, components, audits, args):
                 audio_loss_targets=sum(sum(row['objective']['assistant_audio_targets']) for step in steps for row in step['assistant_audio49_microbatch']),
                 expected_audio49_logits=fingerprints(lm,audio49_batches),training_pid=__import__('os').getpid())
             report['retention_objective']+='; additional assistant-only acoustic CE on all49 approved teachers, every original objective retained'
+        if stream_bound is not None:
+            from evals.context_native_stream_training import fingerprints as stream_fingerprints
+            report['expected_native_stream49_logits']=stream_fingerprints(lm,stream_bound)
+            report['execution']='Native BF16 batch MATH original154 plus recorded-call streaming49 teacher CE; truncated call-boundary autograd; no compilation or CUDA graphs'
+            report['training_seconds_scope']='Eight optimizer calls; excludes final49 stream fingerprints and fresh-process independent restoration'
+            report['retention_objective']+='; supplemental balanced49 native-call teacher text CE with declared truncated autograd; original154 unchanged'
         (args.out/'report.json').write_text(json.dumps(report,indent=2)+'\n')
         print(json.dumps({k:report[k] for k in ('passed','checkpoint_sha256','final_metrics','peak_allocated_bytes')}),flush=True)
