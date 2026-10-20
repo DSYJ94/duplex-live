@@ -281,6 +281,12 @@ def run(lm, spm, voice, examples, components, audits, args):
             retention_drift(lm, learned, native_teacher_batches, additional_batches,
                 retention, references, args, state_metadata(frozen), forward)
             return
+        if getattr(args,'native_v2_learning_curve_audit',False):
+            from evals.context_native_learning_curve import run as learning_curve
+            if optimizer.state or initial_step:raise RuntimeError('Learning curve cannot execute optimizer updates')
+            learning_curve(lm,learned,batches,native_teacher_batches,additional_batches,retention,references,
+                audits,args,state_metadata(frozen),forward)
+            return
         initial_metrics=metrics()
         steps = []; seen_a = seen_b = False; start = time.monotonic()
         torch.cuda.reset_peak_memory_stats()

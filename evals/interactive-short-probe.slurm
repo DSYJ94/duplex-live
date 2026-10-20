@@ -45,6 +45,15 @@ case "${1:?Choose rag, personaplex or qwen}" in
     test "${NATIVE_V2_DRIFT_CANDIDATE_JOB:-}" = 7549991
     test -z "${NATIVE_V2_RESUME_JOB:-}${NATIVE_V2_EXTENSION_REVIEW:-}"
     SCRIPT="$DL_TASK_SOURCE/evals/native-v2-train.slurm" ;;
+  native-v2-learning-curve-audit)
+    : "${DL_TASK_SOURCE:?Immutable diagnostic source required}"
+    : "${DL_TASK_COMMIT:?Immutable identity required}"
+    test "${NATIVE_V2_TRAIN_PHASE:-}" = learning-curve-audit
+    test "${NATIVE_V2_FULL24_PER8:-0}" = 1
+    test "${NATIVE_V2_LEARNING_RATE:-}" = 2e-6
+    test -z "${NATIVE_V2_RESUME_JOB:-}${NATIVE_V2_EXTENSION_REVIEW:-}${NATIVE_V2_EXPLORATION_AUTHORIZATION:-}"
+    test "${NATIVE_V2_WARM_ORDINARY_WEIGHT:-0}" = 0
+    SCRIPT="$DL_TASK_SOURCE/evals/native-v2-train.slurm" ;;
   native-v2-warm-ordinary-pilot|native-v2-warm-ordinary-extend)
     : "${DL_TASK_SOURCE:?Immutable anchored recipe required}"
     : "${DL_TASK_COMMIT:?Immutable identity required}"

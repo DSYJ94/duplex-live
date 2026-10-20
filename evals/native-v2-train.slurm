@@ -29,6 +29,7 @@ case "$PHASE" in
  extend) RUN_OUT="$DL/runs/context-training-proof-$SLURM_JOB_ID"; UPDATES=32 ;;
  gradient-audit) RUN_OUT="$DL/runs/native-v2-gradient-audit-$SLURM_JOB_ID"; UPDATES=8 ;;
  retention-drift-audit) RUN_OUT="$DL/runs/native-v2-retention-drift-audit-$SLURM_JOB_ID"; UPDATES=8 ;;
+ learning-curve-audit) RUN_OUT="$DL/runs/native-learning-curve-audit-$SLURM_JOB_ID"; UPDATES=8 ;;
  *) echo "Unknown native phase" >&2; exit 2 ;;
 esac
 ARGS=(--assets "$DL/runs/context-spanning-assets-7454205/manifest.json"
@@ -96,6 +97,13 @@ run() {
   "$DL/pytorch-new.sif" python -u "$@"
 }
 run -m unittest evals.harness.test_context_training_state evals.harness.test_context_native_v2_teacher_objective
+if [[ "$PHASE" == learning-curve-audit ]]; then
+ run -m evals.context_training_proof "${ARGS[@]}" --native-v2-learning-curve-audit
+ test -f "$RUN_OUT/native-learning-curve-audit.json"
+ test ! -e "$RUN_OUT/adapters.safetensors"
+ test ! -e "$RUN_OUT/training-state.pt"
+ exit 0
+fi
 if [[ "$PHASE" == retention-drift-audit ]]; then
  : "${NATIVE_V2_DRIFT_CANDIDATE_JOB:?Exact independently restored full24 child required}"
  [[ "$NATIVE_V2_DRIFT_CANDIDATE_JOB" =~ ^[0-9]+$ && "${NATIVE_V2_FULL24_PER8:-0}" == 1 ]]

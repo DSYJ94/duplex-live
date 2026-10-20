@@ -1,0 +1,47 @@
+{
+  "schema": "dl-native-fixed-history-learning-curve-plan-v1",
+  "at_utc": "2026-10-20T07:51:59.299061+00:00",
+  "parent_job": "7510331",
+  "parent_optimizer_steps": 520,
+  "children": [
+    {
+      "job": "7556562",
+      "steps": 8,
+      "source": "3061dcba1de571d2dad58d466f7c3f3ca43e41ec",
+      "checkpoint": "1ad464e2b5ca2258ef777f013ccdfe057721a65cd974e17a32a1070b1f05016b",
+      "state": "3303bf1624cf3c36ff071e9fb69a239b3b93fda6a0d914db67848b7543cad675",
+      "reload": "440b665312b3125f57dd26531212db5f2c90e8b2d5a08dcf1d04b5e18b7c8b9a",
+      "report": "9785b624a31004638662efa80013704f8ad1ed65e7a102387aa7061e96acd3cf"
+    },
+    {
+      "job": "7558824",
+      "steps": 40,
+      "source": "99cc7394ebde78e2762d92813dddbc7a3feaaaed",
+      "checkpoint": "b4361124025b339c02e354b7729699a520da74400927eb1aaa9a5029136264b6",
+      "state": "9712d0d858d638630d02fbb2f2909da822c0c3f9d7b47202a1637a1785ee6c9d",
+      "reload": "20c73529c9dacf72e62b3d8f2f3ee2ae0cf51310633d77aadba429d6bacb0492",
+      "report": "6fde1c6be34ede4c857efdd57361f7a9cf61cca47f613f26bb7b2d5909d3bea3"
+    }
+  ],
+  "scope_counts": {
+    "actual": 28,
+    "old_native_teacher": 25,
+    "new_native_teacher": 24,
+    "legacy_reference": 4,
+    "total": 81
+  },
+  "data_sha256": "de92099057ded15a1af0e387c96b457cdf4c1731c26594dcdca211d4c442fc1e",
+  "source_code_sha256": "c49c50a3596324376571fbfa7ea8cfe6279bc4be8b0cd2ee0331da7bd697adfd",
+  "optimizer_updates": 0,
+  "new_checkpoint_written": false,
+  "source_audio_words_targets_masks_and_legacy_weights_unchanged": true,
+  "development_recordings_loaded": false,
+  "evaluation_outputs_used_for_training": false,
+  "native_behavior_qualification": false,
+  "extension_or_adoption_authorized": false,
+  "maximum_gpus": 1,
+  "maximum_walltime_minutes": 30,
+  "reservation": "interactive",
+  "partition_or_qos_override": false,
+  "purpose": "Measure native520 vs8 vs40 fixed-history likelihood and pointwise drift over every approved input; diagnose the training-fit/native-behavior discrepancy without attributing causality or extending training."
+}
