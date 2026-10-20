@@ -1,5 +1,5 @@
 {
-  "at_utc": "2026-10-20T12:03:22.236064+00:00",
+  "at_utc": "2026-10-20T12:14:27.471054+00:00",
   "unique_scoped_artifact_files": 23798,
   "unique_scoped_artifact_bytes": 19078729267,
   "inventory_conflicts": [],
@@ -1151,7 +1151,7 @@
     "readiness_tests_passed": 233,
     "readiness_bf16_passed": true,
     "training_job": "7575817",
-    "training_status": "RUNNING",
+    "training_status": "COMPLETED",
     "observed_at_utc": "2026-10-20T11:48:16Z",
     "scheduler_watcher_job": "7575818",
     "scheduler_watcher_status": "RUNNING",
@@ -1300,8 +1300,17 @@
     "training_state_sha256": "859132bb7686e1d503ae3d687744302287e0d20e776418d55b2b43995f1ec059",
     "all49_audio_teachers_exposed_once": true,
     "assistant_audio_loss_targets": 183297,
-    "independent_restore_not_yet_verified": true,
-    "early12_checkpoint_state_artifacts_sha256_backed": true
+    "independent_restore_not_yet_verified": false,
+    "early12_checkpoint_state_artifacts_sha256_backed": true,
+    "training_allocation_elapsed": "00:21:08",
+    "independent_full_state_restore_passed": true,
+    "all28_text_logits_exact": true,
+    "all49_audio_logits_exact": true,
+    "optimizer_rng_state_independently_compared_exact": true,
+    "reload_report_sha256": "929550fa773cd1e01e2bfc096b8e13b88469627636db93b75c4a8b896ac8d0f1",
+    "native10_job": "7576513",
+    "native10_status": "RUNNING",
+    "final23_artifacts_backup_in_progress": true
   },
   "native_audio49_watcher_source_bundle": {
     "source": "3d6de2c055d47e15b76ba3a9e48b7a43bbee3c2d",

@@ -1,3 +1,40 @@
+# LOCAL active — native8 FULL RESTORE PASS; complete native10 7576513 RUNNING (2026-10-20 12:12 UTC)
+
+Actual12:12:06UTC: training7575817 COMPLETED21m08/exit0:0. Independent fresh
+process PID38039 vs training36326, ALL28 text valid-logit fingerprints EXACT,
+ALL49 assistant-audio fingerprints EXACT; full Adam/Python/NumPy/TorchCPU/CUDA RNG
+independently compared EXACT after restoration. Reload report SHA
+929550fa773cd1e01e2bfc096b8e13b88469627636db93b75c4a8b896ac8d0f1.
+Original8-update/checkpoint2f00d6d1/fullstate859132bb identities unchanged;
+all49 once/183297 audio targets and all original28/25/24/KL1hidden10/word64clock64
+verified. Exact payload33cd0fe, watcher3d6de2c, source deployed through Git.
+
+Sole scheduler SlurmCPU7575818 remains RUNNING; it VERIFIED new proof and submitted
+complete10 native job7576513 at12:09:55, RUNNING1m23 at12:12:06 in interactive2GPU/
+30min. Canonical receipt runs/native-audio49-pilot-v2-local-20261020.json records
+ID before release. All10 cases required, unforced native text/acoustics and real
+private workers; no passing subset. Partial sampled text is DIAGNOSTIC ONLY;
+full independent speech, PCM/word clocks/receipts and all10 review still pending.
+Watcher automatically submits full10 speech AFTER nativejob ends, even native
+case failures. No longertraining/adoption/fresh20 or second scheduler authorized
+by this chain. LOCAL remains executor/CLOUD read-only/no duplicate jobs.
+
+Training snapshot21files on same project filesystem COMPLETE/missing[]; this is
+not an independent backup. Full final23 artifacts615398667B, including warm-word/
+clock reference caches and final reload/log/snapshot receipts, now being copied
+and SHA-verified to Mac. Existing early12 critical artifacts31975441B already
+verified; readiness19/583956756B verified; prior scoped union23798/19078729267,
+plus models/runtime/ASR/vendor/full source bundles. Old stopped Mac source backup
+PARTIAL. Credentials/owner conversations/quarantined core excluded; unrelated
+pycache/capability probes/roadmap untouched.
+
+Native whole system UNQUALIFIED. Next complete full23 artifact backup, all10
+native and independent speech review before choosing any further training or
+paired fresh20. Local cert through20Oct19:32:16UTC/21:32:16Berlin; reservation
+ends21Oct08:56:32UTC/10:56:32Berlin/Amsterdam; no extension assumed.
+
+---
+
 # LOCAL active — native8 checkpoint saved and SHA-backed; independent restore running (2026-10-20 12:03 UTC)
 
 Existing job7575817 still RUNNING12:02:13UTC/14m26, includes separate restore;

@@ -1,6 +1,6 @@
 {
   "schema": "dl-native-audio49-pilot-state-summary-v1",
-  "at_utc": "2026-10-20T12:03:22.236064+00:00",
+  "at_utc": "2026-10-20T12:14:27.471054+00:00",
   "candidate_job": "7575817",
   "source": "33cd0fe3de9871ad29281c7e0a2ee00d4f95fcc6",
   "parent_job": "7510331",
@@ -23,8 +23,18 @@
   "word_anchor_weight": 64.0,
   "clock_anchor_weight": 64.0,
   "early12_state_and_approval_artifacts_hash_backed": true,
-  "independent_full_state_restore_verified": false,
+  "independent_full_state_restore_verified": true,
   "native_behavior_evaluated": false,
   "candidate_adopted": false,
-  "next_action": "Existing Slurm watcher7575818 gates complete native10 and independent speech after exact fresh-process full state/all28 text/all49 acoustic restore."
+  "next_action": "Existing Slurm watcher7575818 owns complete10 speech submission; complete all10 raw/audio/receipt review before any extension/fresh20.",
+  "training_allocation_status": "COMPLETED",
+  "training_allocation_elapsed": "00:21:08",
+  "independent_reload_report_sha256": "929550fa773cd1e01e2bfc096b8e13b88469627636db93b75c4a8b896ac8d0f1",
+  "independent_original28_logits_exact": true,
+  "independent_all49_acoustic_logits_exact": true,
+  "independent_optimizer_rng_state_compared_exact": true,
+  "restore_pid": 38039,
+  "training_pid": 36326,
+  "native_evaluation_job": "7576513",
+  "native_evaluation_status": "RUNNING"
 }
