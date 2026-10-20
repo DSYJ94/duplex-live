@@ -18,6 +18,7 @@ TEACHER='teacher-recovery-train-010'
 PARENT='7510331'
 CHILD='7558824'
 ROOT=Path('/projects/u6si/duplex-live')
+OLD_APPROVAL='native-old25-native-approval-7544805'
 
 
 def policy(scope, parent, child):
@@ -63,6 +64,9 @@ def main():
     parent_identity,parent=verify_checkpoint(ROOT/('runs/context-training-proof-'+PARENT))
     child_identity,child=verify_checkpoint(ROOT/('runs/context-training-proof-'+CHILD))
     rules=policy(json.loads(scope.read_text()),parent,child)
+    approval=ROOT/'runs'/OLD_APPROVAL/'report.json'
+    if sha256(approval)!=child['retention_teacher_text']['native_input_approval_sha256']:
+        raise ValueError('Changed complete25 independent native input approval')
     manifest=json.loads(assets.read_text());source=Path(manifest['source']);weights=Path(manifest['path'])
     if (manifest['source_commit']!=SOURCE_COMMIT or manifest['revision']!=MODEL_REVISION
             or subprocess.check_output(['git','-C',str(source),'rev-parse','HEAD'],text=True).strip()!=SOURCE_COMMIT
@@ -124,7 +128,7 @@ def main():
                 or not capture['structural_capture_passed']):raise ValueError('Changed native diagnostic capture')
         tensors=torch.load(a.capture/'teacher-text-native-audio.pt',weights_only=True,map_location='cpu')
         from evals.context_native_teacher_data import load
-        _,rows=load(ROOT/'runs/context-teacher-native-approval-7544805/report.json',scope,assets,a.out/'voice.pt',examples,persona_prefix(BASE_INSTRUCTIONS,voice,spm),spm)
+        _,rows=load(ROOT/'runs'/OLD_APPROVAL/'report.json',scope,assets,a.out/'voice.pt',examples,persona_prefix(BASE_INSTRUCTIONS,voice,spm),spm)
         teacher=next(r for r in rows if r['teacher']['id']==TEACHER)
         if not torch.equal(tensors['text_targets'],teacher['targets']) or not torch.equal(tensors['text_mask'],teacher['mask']):raise ValueError('Source words or masks changed')
         from evals.context_training_parity import precise_native

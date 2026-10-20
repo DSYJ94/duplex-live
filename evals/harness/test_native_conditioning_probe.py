@@ -1,6 +1,6 @@
 import copy
 import unittest
-from evals.native_conditioning_probe import TEACHER,policy
+from evals.native_conditioning_probe import TEACHER,OLD_APPROVAL,policy
 from evals.context_native_learning_curve import PINS
 
 class ConditioningProbeTests(unittest.TestCase):
@@ -26,6 +26,9 @@ class ConditioningProbeTests(unittest.TestCase):
         for key,value in [('optimizer_steps',41),('checkpoint_sha256','other'),('training_state_sha256','other')]:
             c=copy.deepcopy(self.child);c[key]=value
             with self.assertRaises(ValueError):policy(self.scope,self.parent,c)
+    def test_approval_path_matches_the_completed_old25_chain(self):
+        self.assertEqual(OLD_APPROVAL,'native-old25-native-approval-7544805')
+
     def test_changed_voice_or_parent_fails(self):
         for key,value in [('voice_sha256','other'),('warm_start',dict(checkpoint_sha256='other'))]:
             c=copy.deepcopy(self.child);c[key]=value
