@@ -1,3 +1,73 @@
+# LOCAL active — durable native8 training chain RELEASED (2026-10-20 10:33 UTC)
+
+Runtime source33cd0fe3de9871ad29281c7e0a2ee00d4f95fcc6 pushed and immutable at
+/projects/u6si/duplex-live/worktrees/recovery-33cd0fe. LOCAL retains execution;
+CLOUD MUST NOT SUBMIT. Owner authorizes continuing without command prompts and
+requests jobs survive loss of connectivity. Goal ACTIVE, native whole system
+UNQUALIFIED. No cloud GPU purchases. This is an active status update, not handback.
+
+Readiness7574002 RELEASED in interactive1GPU/30min. It runs full233 tests then
+independent zero-update BF16 four-kind acoustic gradient smoke with all28 actual/
+old25/new24 original approvals. Training not yet submitted at this entry. Sole
+SERVER watcher PID135003, logs/native-audio49-server-chain-33cd0fe.out, polls60s
+and serially submits: readiness COMPLETE/pass -> bounded8 train -> independent
+fresh-process full optimizer/Python/NumPy/Torch/CUDA exact state + original28 text
+and all49 acoustic fingerprints -> complete10 unforced native -> independent
+complete10 speech. Each GPU allocation <=30min/interactive; native10 two GPUs.
+Only ONE submitted job at a time, including held jobs. No Mac process is required
+for scheduling. Receipt runs/native-audio49-pilot-v2-local-20261020.json is canonical
+and records all later IDs; READ IT AND squeue/sacct before taking any action.
+No retry on ambiguous submission; failed gate stops new training. Native10
+failures still receive complete10 speech collection, never a passing subset.
+
+Why serial: original readiness7573687 was accepted late after sbatch socket
+error (prevented duplicate by observing queue before retry), then held/NEVER RAN.
+Second GPU submission explicitly rejected QOSMaxSubmitJobPerUserLimit. The old
+held7573687 was cancelled before execution, ZERO updates, receipt
+runs/native-audio49-pilot-local-20261020.json preserved. New source replaces
+GPU-to-GPU in-job submissions with detached lightweight LOGIN scheduler watcher;
+no model computation on login node. Do not revive old receipt/job/watchers.
+Original local exec47061 audit watcher TERMINALsuccess; new local launch98087
+TERMINALsuccess. No local scheduler watcher competes with server PID135003.
+
+New bounded8 starts native5207510331 with new optimizer/LR2e-6; NEVER extends
+rejected joint7530408 or rejected40 unchanged. Retains exact28 actual,25 old,
+24 new, original text/KL1/hidden10/word64/clock64/firstword16 objectives. Adds
+assistant-only q1..8 audio CE: (q0+.02*sum(q1..7))/1.14, deterministic all49once
+in8 with perteacher coefficient8/49; no user/prefix/span labels. Truthful NEW
+proof schema, positive acoustic target counts, independent full49 restore.
+Only original approved teacher audio; failed native-conditioned recording is
+DO_NOT_TRAIN. Originals/words/receipts/folds/heldout hashes unchanged. Plan
+ evals/fixtures/native-audio49-pilot-plan-20261020.json. No automatic extension,
+adoption, fresh20 inference or unchanged joint pilot allowed by this chain.
+
+Prerequisite audit7572397 COMPLETE4m31/PASS224/all49 ownership;7572398 COMPLETE
+6m13/PASS49, all parameters unchanged/ZEROoptimizer. Text alignment/causal errors
+0.0; depth max.000019073486328125 against unchanged.001. Depth checks three
+predeclared unique positions each49, not exhaustive every-frame depth; original
+complete native temporal approvals retained. All4 declared longest-kind acoustic
+gradient probes pass, no frozen/texthead gradients; peak39492431360B. Formal
+ docs/NATIVE-AUDIO49-AUDIT-REVIEW-2026-10-20.json. All11 artifacts1753242B hashbacked.
+
+Scoped backup union23767files18462797070B/no inventory conflicts; critical old
+checkpoints/optimizerRNG/corpora/receipts remain SHA-backed plus pinned models,
+runtime/ASR/vendor. Full source33cd0fe Git bundle verified locally, SHA
+ a4cca093dff9174a23fd81da1a40e78634ce5b016ac7bddf4d60e6828c7674f4. New stages also snapshot scoped outputs/state/receipts on cluster
+using rsync -ar --exclude=session-token plus inventories/hashes; this is SAME
+project filesystem, not an independent off-cluster backup. Retrieve/hash new
+artifacts to Mac when connected. Older stopped Mac source backup remains PARTIAL.
+Credentials/owner conversations/quarantined core excluded; unrelated local
+pycache/capability probes/roadmap edits preserved.
+
+Local cert through20Oct19:32:16UTC/21:32:16Berlin; actual SSH works. Current
+interactive reservation verified ends21Oct08:56:32UTC/10:56:32Berlin; do not
+assume extension. Previous native40 full10 rejectedordinary1/4/speech8/10;
+persona10 rejectedordinary2/4/speech6/10. Fresh20 sourcePASS7550653, nativeNONE.
+Next: observe canonical server receipt/readiness; retrieve/hash each terminal
+stage, review complete10 before any extension or paired full20 qualification.
+
+---
+
 # LOCAL active — conditioning gap measured; complete49 audio audit7572397→7572398 (2026-10-20 09:52 UTC)
 
 Native conditioning7572011 COMPLETED11m34; independent forced-text speech7572013

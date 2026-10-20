@@ -1,7 +1,7 @@
 {
-  "at_utc": "2026-10-20T09:52:00.787213+00:00",
-  "unique_scoped_artifact_files": 23756,
-  "unique_scoped_artifact_bytes": 18461043828,
+  "at_utc": "2026-10-20T10:34:09.221300+00:00",
+  "unique_scoped_artifact_files": 23767,
+  "unique_scoped_artifact_bytes": 18462797070,
   "inventory_conflicts": [],
   "inventories": [
     {
@@ -598,6 +598,13 @@
       "files": 1,
       "bytes": 893,
       "missing_roots": []
+    },
+    {
+      "name": "remote-native-audio49-audit-complete-inventory.json",
+      "sha256": "c191ae1bef00e73e7974c61b40e218d220e11fcaed7bda6aebeff04bb5a07954",
+      "files": 11,
+      "bytes": 1753242,
+      "missing_roots": []
     }
   ],
   "local_artifact_root": "runs/cloud-export-20261016/tree",
@@ -1086,6 +1093,44 @@
     "gradient_smoke_cases": 4,
     "training_approved": false,
     "local_orchestrator_session": 47061,
-    "original28_old25_new24_kl_hidden_required": true
+    "original28_old25_new24_kl_hidden_required": true,
+    "cpu_status": "COMPLETED",
+    "cpu_tests_passed": 224,
+    "cpu_elapsed": "00:04:31",
+    "gpu_status": "COMPLETED",
+    "gpu_elapsed": "00:06:13",
+    "passed": true,
+    "all49_passed": true,
+    "gradient_smoke_passes": 4,
+    "peak_allocated_bytes": 39492431360,
+    "all_artifacts_sha256_backed": true,
+    "orchestrator_terminal": true
+  },
+  "native_audio49_pilot_source_bundle": {
+    "source": "33cd0fe3de9871ad29281c7e0a2ee00d4f95fcc6",
+    "path": "runs/local-continuation-20261019/source-main-33cd0fe.bundle",
+    "sha256": "a4cca093dff9174a23fd81da1a40e78634ce5b016ac7bddf4d60e6828c7674f4",
+    "full_history_verified": true
+  },
+  "native_audio49_pilot": {
+    "source": "33cd0fe3de9871ad29281c7e0a2ee00d4f95fcc6",
+    "readiness_job": "7574002",
+    "training_job_not_submitted_yet": true,
+    "server_watcher_pid": 135003,
+    "server_watcher_log": "/projects/u6si/duplex-live/logs/native-audio49-server-chain-33cd0fe.out",
+    "exclusive_receipt": "/projects/u6si/duplex-live/runs/native-audio49-pilot-v2-local-20261020.json",
+    "connection_independent": true,
+    "maximum_submitted_active_jobs": 1,
+    "maximum_updates": 8,
+    "parent_job": "7510331",
+    "new_optimizer": true,
+    "complete49_assistant_audio_auxiliary": true,
+    "original28_old25_new24_kl1_hidden10_word64_clock64_retained": true,
+    "independent_bf16_readiness_required": true,
+    "independent_full_state_restore_required": true,
+    "complete10_native_and_speech_required": true,
+    "automatic_extension": false,
+    "adoption": false,
+    "prior_held_job_cancelled_without_execution": "7573687"
   }
 }

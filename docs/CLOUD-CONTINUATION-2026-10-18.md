@@ -1,5 +1,7 @@
 # Cloud continuation — 18 October 2026
 
+CURRENT OVERRIDE — 20 October10:33UTC: LOCAL sole executor. Durable SERVER watcher PID135003/source33cd0fe/readiness7574002 owns sequential native8/restore/native10/speech submissions. CLOUD READ-ONLY, no duplicate jobs; first read newest HANDOFF and live runs/native-audio49-pilot-v2-local-20261020.json. Local cert through20Oct19:32:16UTC/21:32:16Berlin. Interactive reservation ends21Oct08:56:32UTC/10:56:32Berlin. No new execution handback.
+
 CURRENT ACCESS UPDATE — 19 October15:31 UTC: LOCAL remains active; cloud submits
 no jobs. Actual local certificate reverified through20October02:05:02 UTC /
 04:05:02 Berlin, and bounded actual SSH PASS15:30:52 UTC. Read newest HANDOFF.

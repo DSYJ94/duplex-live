@@ -1,0 +1,167 @@
+{
+  "schema": "dl-native-audio49-audit-review-v1",
+  "at_utc": "2026-10-20T10:32:59.660370+00:00",
+  "source": "1c79763b8478cf5a002a95d3e8ba63ae7b5d01e2",
+  "cpu_job": "7572397",
+  "cpu_tests": 224,
+  "cpu_status": "COMPLETED",
+  "gpu_job": "7572398",
+  "gpu_status": "COMPLETED",
+  "report_sha256": "6b03571ab251a7ba22d144ade4ab55b5c575273b5f588b9c61838ca77a0c00f2",
+  "all49_passed": true,
+  "complete49_cases": 49,
+  "maximum_text_alignment_error": 0.0,
+  "maximum_causal_prefix_error": 0.0,
+  "numerical_threshold": 0.001,
+  "depth_scope": "First, first spoken and last available all-eight-head target frame in EACH of all49; unique indices",
+  "temporal_scope": "Every approved text target in all49; original complete native temporal gates also retained",
+  "declared_gradient_smoke_cases": [
+    {
+      "id": "teacher-native2-train-007",
+      "kind": "private",
+      "acoustic_ce": 0.554547905921936,
+      "finite_temporal_gradients": true,
+      "nonzero_temporal_gradient_elements": 1605632,
+      "text_head_audio_gradient_elements": 0,
+      "frozen_parameter_gradients": 0,
+      "objective": {
+        "assistant_audio_targets": [
+          549,
+          548,
+          548,
+          548,
+          548,
+          548,
+          548,
+          548
+        ],
+        "per_head_ce": [
+          0.5185099840164185,
+          0.8207274079322815,
+          0.6268044114112854,
+          0.7691780924797058,
+          0.7468978762626648,
+          0.7861921787261963,
+          0.9547122716903687,
+          0.9792186617851257
+        ],
+        "user_audio_loss_targets": 0,
+        "output_already_aligned": true,
+        "prefix_and_span_exclusion_requires_approved_audio_mask": true,
+        "original_text_and_kl_hidden_losses_must_be_preserved": true
+      }
+    },
+    {
+      "id": "teacher-native2-train-015",
+      "kind": "simple",
+      "acoustic_ce": 0.22535072267055511,
+      "finite_temporal_gradients": true,
+      "nonzero_temporal_gradient_elements": 1605632,
+      "text_head_audio_gradient_elements": 0,
+      "frozen_parameter_gradients": 0,
+      "objective": {
+        "assistant_audio_targets": [
+          538,
+          537,
+          537,
+          537,
+          537,
+          537,
+          537,
+          537
+        ],
+        "per_head_ce": [
+          0.19112129509449005,
+          0.7887588143348694,
+          0.39398348331451416,
+          0.3984474837779999,
+          0.4561140835285187,
+          0.3816956877708435,
+          0.4605661630630493,
+          0.4093610942363739
+        ],
+        "user_audio_loss_targets": 0,
+        "output_already_aligned": true,
+        "prefix_and_span_exclusion_requires_approved_audio_mask": true,
+        "original_text_and_kl_hidden_losses_must_be_preserved": true
+      }
+    },
+    {
+      "id": "teacher-native2-train-019",
+      "kind": "clarify",
+      "acoustic_ce": 0.3350013792514801,
+      "finite_temporal_gradients": true,
+      "nonzero_temporal_gradient_elements": 1605632,
+      "text_head_audio_gradient_elements": 0,
+      "frozen_parameter_gradients": 0,
+      "objective": {
+        "assistant_audio_targets": [
+          606,
+          605,
+          605,
+          605,
+          605,
+          605,
+          605,
+          605
+        ],
+        "per_head_ce": [
+          0.28334417939186096,
+          1.082247257232666,
+          0.48607632517814636,
+          0.6380922794342041,
+          0.5863261818885803,
+          0.6254422068595886,
+          0.7484427094459534,
+          0.7612430453300476
+        ],
+        "user_audio_loss_targets": 0,
+        "output_already_aligned": true,
+        "prefix_and_span_exclusion_requires_approved_audio_mask": true,
+        "original_text_and_kl_hidden_losses_must_be_preserved": true
+      }
+    },
+    {
+      "id": "teacher-native2-train-023",
+      "kind": "cancel",
+      "acoustic_ce": 0.4984574317932129,
+      "finite_temporal_gradients": true,
+      "nonzero_temporal_gradient_elements": 1605632,
+      "text_head_audio_gradient_elements": 0,
+      "frozen_parameter_gradients": 0,
+      "objective": {
+        "assistant_audio_targets": [
+          595,
+          594,
+          594,
+          594,
+          594,
+          594,
+          594,
+          594
+        ],
+        "per_head_ce": [
+          0.4686756432056427,
+          1.0198355913162231,
+          0.60527503490448,
+          0.6286001801490784,
+          0.6210314035415649,
+          0.5915335416793823,
+          0.7624121308326721,
+          0.7496034502983093
+        ],
+        "user_audio_loss_targets": 0,
+        "output_already_aligned": true,
+        "prefix_and_span_exclusion_requires_approved_audio_mask": true,
+        "original_text_and_kl_hidden_losses_must_be_preserved": true
+      }
+    }
+  ],
+  "peak_allocated_bytes": 39492431360,
+  "optimizer_updates": 0,
+  "new_checkpoint_written": false,
+  "all_model_parameters_unchanged": true,
+  "all_critical_artifacts_sha256_backed": true,
+  "training_or_behavioral_approval": false,
+  "next_step": "Separate bounded8 combined-objective pilot from native520; matching independent BF16 gradient readiness, full state restore, complete10 native review required."
+}
