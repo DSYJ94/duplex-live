@@ -1,3 +1,25 @@
+# LOCAL active — precision16 RUNNING7586347; speech dependency7586348 (20Oct20:44UTC)
+
+Source9688453613293840308dc3a228d7d66def66df48 pushed/fetched; immutable worktree.
+GPU7586347 RUNNING in interactive reservation,2GPUs/30min; CPU7586348 accepted,
+PENDING afterany:7586347. Both submitted/released exactlyonce under exclusive
+canonical runs/native-precision16-local-20261020.json. No manual duplicate.
+257cluster tests PASS4.194s, including actual frozen FP32 numeric conversion.
+All16 native captures and independent speech remain PENDING. Zero optimizer work.
+LOCAL soleexecutor/CLOUDread-only; no handback. No candidate adoption/extension.
+
+Prior complete8 training7585424 restorePASS but fullnative10 7585692/speech7586152
+REJECTED ordinary1/4, speech7/10; all terminal0:0. Fullstate/checkpoint and terminal
+artifacts SHA-backed; scoped union24718files/25276924540B. Payload3b92d843e7724d66ecb6d148ab33b3705f089ec8,
+fixedwatcher82789e3404c8f206ab5cd8411754018671b4832a. Old Mac source backupPARTIAL.
+New9688453 complete-history source bundle preserved locally, digest in centralledger.
+Cert reverified expires21Oct03:50:25UTC, reservation ends08:56:32UTC.
+Next retrieve all16 original waveforms/clocks/receipts and independent speech,
+compare parent/child across precision without accepting a subset; preserve results,
+then choose a diagnosed repair. Do NOT extend the rejected fit unchanged.
+
+---
+
 # LOCAL active — complete-batch8 rejected; precision16 diagnostic prepared (20Oct20:43UTC)
 
 All existing jobs terminal COMPLETED0:0: train7585424, watcher7585425,

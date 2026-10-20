@@ -1,5 +1,5 @@
 {
-  "at_utc": "2026-10-20T20:40:25.584119+00:00",
+  "at_utc": "2026-10-20T20:44:20.829989+00:00",
   "unique_scoped_artifact_files": 24718,
   "unique_scoped_artifact_bytes": 25276924540,
   "inventory_conflicts": [],
@@ -1593,12 +1593,12 @@
     },
     "readiness_state": "COMPLETED",
     "watcher_state": "COMPLETED",
-    "observed_utc": "2026-10-20T20:16:11Z",
+    "observed_utc": "2026-10-20T20:42:51Z",
     "cluster_tests_passed": 252,
     "cluster_tests_seconds": 4.11,
     "additional_state_tests_passed": 11,
     "additional_state_tests_seconds": 1.564,
-    "watcher_exit": "1:0",
+    "watcher_exit": "0:0",
     "training_submitted": true,
     "readiness_all154_passed": true,
     "complete_gradient_norm": 5.444079505444755,
@@ -1659,7 +1659,7 @@
     "speech_quality_passes": 7,
     "candidate_rejected": true,
     "complete10_review": "docs/NATIVE-COMPLETE-BATCH-COMPLETE10-REVIEW-2026-10-20.json",
-    "complete10_review_sha256": "9691034cb661aa3709f1c21ac90850e266bcf792b92a6fccfcc39946dbd13c28",
+    "complete10_review_sha256": "c138695bbcf8a6f985dfa223e3a06f21783140e5b0ffdeca1394947605855d5e",
     "counterfactual_value_use_component_passed": true,
     "pending_cancellation_coverage_uncovered": true
   },
@@ -1675,7 +1675,7 @@
       "certificate_rechecked_utc": "2026-10-19T21:26:22.059158+00:00"
     }
   ],
-  "current_native_execution_chain": "native_audio49_complete_batch_chain",
+  "current_native_execution_chain": "native_precision16_chain",
   "legacy_top_level_candidate_summary_scope": "Earlier rejected40 job7558824 retained for preservation; not the active or adopted candidate. See current_native_execution_chain and newest HANDOFF.",
   "critical_preservation_coverage_review": {
     "path": "docs/NATIVE-PRESERVATION-COVERAGE-2026-10-20.json",
@@ -1685,5 +1685,55 @@
     "original_source_inventory_files": 545,
     "baseline_and_rejected_joint_state_inventory_coverage": true,
     "old_mac_source_backup_status": "PARTIAL"
+  },
+  "native_precision16_chain": {
+    "executor": "LOCAL",
+    "source": "9688453613293840308dc3a228d7d66def66df48",
+    "at_utc": "2026-10-20T20:43:52.369252Z",
+    "jobs": {
+      "all16_precision_native": "7586347",
+      "independent_all16_speech": "7586348"
+    },
+    "released": [
+      "7586348",
+      "7586347"
+    ],
+    "submission_attempts": {
+      "all16_precision_native": {
+        "at_utc": "2026-10-20T20:43:52.383188Z",
+        "status": "released",
+        "job": "7586347"
+      },
+      "independent_all16_speech": {
+        "at_utc": "2026-10-20T20:43:52.936045Z",
+        "status": "released",
+        "job": "7586348"
+      }
+    },
+    "plan_sha256": "a741c43ada2ee09d64101264e2a73d7f91cf06e2eacdb8b982691a993fac9fe7",
+    "rejected_complete_batch_review_sha256": "c138695bbcf8a6f985dfa223e3a06f21783140e5b0ffdeca1394947605855d5e",
+    "optimizer_updates": 0,
+    "all16_required": true,
+    "diagnostic_only": true,
+    "diagnostic_histories_do_not_train": true,
+    "training_extension_or_adoption_approved": false,
+    "maximum_submitted_active_jobs": 2,
+    "maximum_gpus": 2,
+    "reservation": "interactive",
+    "required_cpu_tests": 257,
+    "held_settings": {
+      "all16_precision_native": "JobId=7586347 JobName=dl-native-precision-diagnostic\n   UserId=dsyj94.u6si(1483807285) GroupId=dsyj94.u6si(1483807285) MCS_label=N/A\n   Priority=0 Nice=0 Account=brics.u6si QOS=normal\n   JobState=PENDING Reason=JobHeldUser Dependency=(null)\n   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0\n   RunTime=00:00:00 TimeLimit=00:30:00 TimeMin=N/A\n   SubmitTime=2026-10-20T20:43:52 EligibleTime=Unknown\n   AccrueTime=Unknown\n   StartTime=Unknown EndTime=Unknown Deadline=N/A\n   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-20T20:43:52 Scheduler=Main\n   Partition=interactive AllocNode:Sid=login41:74485\n   ReqNodeList=(null) ExcNodeList=(null)\n   NodeList=\n   NumNodes=1-1 NumCPUs=16 NumTasks=1 CPUs/Task=16 ReqB:S:C:T=0:0:*:*\n   ReqTRES=cpu=16,mem=160G,node=1,billing=648,gres/gpu=2\n   AllocTRES=(null)\n   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*\n   MinCPUsNode=16 MinMemoryNode=160G MinTmpDiskNode=0\n   Features=(null) DelayBoot=00:00:00\n   Reservation=interactive\n   OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null)\n   Command=/projects/u6si/duplex-live/worktrees/recovery-9688453/evals/native-precision-session.slurm\n   SubmitLine=sbatch --hold --parsable --export=ALL --no-requeue --kill-on-invalid-dep=yes /projects/u6si/duplex-live/worktrees/recovery-9688453/evals/native-precision-session.slurm\n   WorkDir=/lus/lfs1aip2/projects/u6si/duplex-live\n   StdErr=\n   StdIn=/dev/null\n   StdOut=/lus/lfs1aip2/projects/u6si/duplex-live/logs/dl-native-precision-7586347.out\n   KillOnInvalidDependent=Yes\n   TresPerNode=gres/gpu:2\n   TresPerTask=cpu=16\n\n",
+      "independent_all16_speech": "JobId=7586348 JobName=dl-native-precision-asr\n   UserId=dsyj94.u6si(1483807285) GroupId=dsyj94.u6si(1483807285) MCS_label=N/A\n   Priority=0 Nice=0 Account=brics.u6si QOS=normal\n   JobState=PENDING Reason=JobHeldUser Dependency=afterany:7586347(unfulfilled)\n   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0\n   RunTime=00:00:00 TimeLimit=00:30:00 TimeMin=N/A\n   SubmitTime=2026-10-20T20:43:52 EligibleTime=Unknown\n   AccrueTime=Unknown\n   StartTime=Unknown EndTime=Unknown Deadline=N/A\n   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-20T20:43:52 Scheduler=Main\n   Partition=workq AllocNode:Sid=login41:74485\n   ReqNodeList=(null) ExcNodeList=(null)\n   NodeList=\n   NumNodes=1-1 NumCPUs=8 NumTasks=1 CPUs/Task=8 ReqB:S:C:T=0:0:*:*\n   ReqTRES=cpu=8,mem=16G,node=1,billing=8\n   AllocTRES=(null)\n   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*\n   MinCPUsNode=8 MinMemoryNode=16G MinTmpDiskNode=0\n   Features=(null) DelayBoot=00:00:00\n   OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null)\n   Command=/projects/u6si/duplex-live/worktrees/recovery-9688453/evals/native-precision-asr.slurm\n   SubmitLine=sbatch --hold --parsable --export=ALL --no-requeue --kill-on-invalid-dep=yes --dependency=afterany:7586347 /projects/u6si/duplex-live/worktrees/recovery-9688453/evals/native-precision-asr.slurm\n   WorkDir=/lus/lfs1aip2/projects/u6si/duplex-live\n   StdErr=\n   StdIn=/dev/null\n   StdOut=/lus/lfs1aip2/projects/u6si/duplex-live/logs/dl-native-precision-asr-7586348.out\n   KillOnInvalidDependent=Yes\n   TresPerTask=cpu=8\n\n"
+    },
+    "cluster_tests_passed": 257,
+    "cluster_tests_seconds": 4.194,
+    "native_observed_state": "RUNNING",
+    "speech_observed_state": "PENDING_DEPENDENCY",
+    "observed_utc": "2026-10-20T20:44:13Z",
+    "source_bundle": {
+      "path": "runs/local-continuation-20261019/source-main-9688453.bundle",
+      "sha256": "0875c11242df26da5642f305056989be6a65709823b1a94bf7a6d4d75d41f54c",
+      "verified_complete_history": true
+    }
   }
 }
