@@ -1,3 +1,32 @@
+# LOCAL overnight — original154 readiness verified/backed; native49 check continues (20Oct23:02UTC)
+
+Payload741872fe2f9e49f35d4deba9aba96caff26c51d4 unchanged. Actual23:00:57UTC accounting:
+readiness7589157 RUNNING18m13, watcher7589159 RUNNING18m44. No training job submitted
+at this observation. Watcher exclusively owns all next IDs. Original154 gradient
+readiness PASSED: norm5.444079505444755, peak22002220544B, parameters unchanged,
+optimizer updates0. Immutable complete-balanced-preflight.json now copied to Mac;
+SHA55929b27b4a3bee70a50914414bae97dfb03a3d58d32b7c2f1994cbff403cb64 independently
+matched, all154 identities/weights reconstructed against original28/native520 and
+approved49 data. One isolated rsync SSH banner timeout resolved by read-only retry;
+actual jobs stayed RUNNING and were never restarted or duplicated.
+
+Streaming portion at22:57:22UTC had3/49 exact grad/no-grad forward cases,1382 valid
+gradient calls, finite trainable gradients and zero frozen gradients. WHOLE49 is
+stillPENDING; subset not accepted and no precision profile adopted. Existing chain
+submits bounded8 only after complete matching readiness0:0, then independent full
+state/RNG/original28/acoustic49/native-stream49 restore and complete native10/speech.
+
+LOCAL certificate is valid through21Oct10:31:51UTC; allocation ends08:56:32UTC.
+Local preservation observer exec50287 is active; actual pmset confirms caffeinate
+PID47878 prevents idle sleep for backupPythonPID47877. It repeatedly checks this
+canonical and will copy stable post-fit state plus all terminal artifacts. It cannot
+submit/cancel/train/adopt. Critical checkpoint/state backup remains PENDING because
+training has not started. Scoped backup union25222files/27939339863B, no conflicts;
+old Mac source backup PARTIAL. Source bundles and prior artifacts remain preserved.
+LOCAL is sole executor while owner is away; CLOUD read-only. Continue same jobs.
+
+---
+
 # LOCAL overnight — readiness live; independent Mac preservation observer active (20Oct22:52UTC)
 
 Payload/watcher remain741872fe2f9e49f35d4deba9aba96caff26c51d4, readiness7589157 and

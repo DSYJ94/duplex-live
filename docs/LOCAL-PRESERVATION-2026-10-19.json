@@ -1,7 +1,7 @@
 {
-  "at_utc": "2026-10-20T22:43:26.868584+00:00",
-  "unique_scoped_artifact_files": 25221,
-  "unique_scoped_artifact_bytes": 27939215792,
+  "at_utc": "2026-10-20T23:02:04.913134+00:00",
+  "unique_scoped_artifact_files": 25222,
+  "unique_scoped_artifact_bytes": 27939339863,
   "inventory_conflicts": [],
   "inventories": [
     {
@@ -758,6 +758,13 @@
       "sha256": "aaf5b326278b3866a59a5ead91b3d422b723ab52f1f883e2075db7d79d54327a",
       "files": 233,
       "bytes": 747060216,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native-stream49-original154-ready-inventory.json",
+      "sha256": "8b19edcc8eecabc3627c1115a352745b6da4a33040a17718322314b4975bdc2c",
+      "files": 1,
+      "bytes": 124071,
       "missing_roots": []
     }
   ],
@@ -2092,7 +2099,7 @@
     "canonical": "runs/native-stream49-overnight-local-20261020.json",
     "canonical_mutable_until_watcher_terminal": true,
     "readiness_state": "RUNNING",
-    "observed_utc": "2026-10-20T22:51:18Z",
+    "observed_utc": "2026-10-20T23:00:57Z",
     "readiness_started_utc": "2026-10-20T22:42:44Z",
     "readiness_maximum_minutes": 120,
     "training_maximum_minutes": 180,
@@ -2125,7 +2132,7 @@
       "verified_complete_history": true
     },
     "document": "docs/NATIVE-STREAM49-GRADIENT-READINESS-2026-10-20.md",
-    "readiness_elapsed": "00:08:34",
+    "readiness_elapsed": "00:18:13",
     "local_bounded_backup_observer": {
       "exec_session": 50287,
       "status_path": "runs/local-continuation-20261019/native-stream49-local-backup-watch-status.json",
@@ -2141,7 +2148,26 @@
         "backup-native-stream49-critical-early.py": "6f3e90c269b54132ff4b105b2f093bd3380e8d49fd9d6b82690db23da93c9826",
         "backup-native-stream49-terminal.py": "79f9ec6904ed40dc96928870730637707a4e01e725c4c0a5e2dda5ddf21bfe77"
       }
-    }
+    },
+    "original154_readiness_passed": true,
+    "original154_gradient_norm": 5.444079505444755,
+    "original154_peak_allocated_bytes": 22002220544,
+    "original154_report_sha256": "55929b27b4a3bee70a50914414bae97dfb03a3d58d32b7c2f1994cbff403cb64",
+    "original154_report_local_bytes_verified": true,
+    "original154_membership_independently_reconstructed": true,
+    "native_stream_progress_observed_utc": "2026-10-20T22:57:22.940508Z",
+    "native_stream_cases_completed": 3,
+    "native_stream_gradient_calls_observed": 1382,
+    "native_stream_exact_forward_cases_observed": 3,
+    "all49_readiness_complete": false,
+    "local_idle_sleep_assertion": {
+      "verified": true,
+      "caffeinate_pid": 47878,
+      "backup_python_pid": 47877,
+      "assertion": "PreventUserIdleSystemSleep",
+      "exec_session": 50287
+    },
+    "isolated_artifact_banner_timeout_resolved_by_read_only_retry": true
   },
   "local_ssh_certificate_current": {
     "observed_utc": "2026-10-20T22:53:04.104897+00:00",
