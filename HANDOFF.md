@@ -1,3 +1,51 @@
+# LOCAL active — two never-started cases repaired7571367; full10 ASR7571368 (2026-10-20 09:06 UTC)
+
+Original persona diagnostic7570828 FAILED9m46; ALL10 attempted, 8 model runs
+completed. Quiet4/pause5 exited argument validation before inference because
+launch receipt overwrote case.source with GitSHA, choosing old data instead of
+native-v2. This is a diagnosed invocation error. ASR7570834 FAILED1m22 on missing
+case4 WAV. Entire failed collection116files164202859bytes SHAbacked09:04:18UTC;
+all original outputs/logs/receipts preserved, no passing subset claimed.
+
+Fix8115f68d38122a21ac4742f7cfb0cacca4a71625 keeps case.source and adds payload_source.
+CPU7571184 PASS171tests/18s (earlierac6ab68 CPU7571084 PASS170/19s retained).
+Existing two held jobs7571367/7571368 were verified and released09:05:35UTC;
+repair7571367 RUNNING, max2GPU/10mininteractive. ONLY never-started4/5 execute in
+new version; original8 completed reports/WAV hashes pinned unchanged in exclusive
+receipt. Independent7571368 audits ALL10 jointly, using unchanged8 plus new2.
+Native40/source words/audio/voice/targets/sampling unchanged; inference persona
+still records-request-only, all outputs diagnostic/do_not_train. Candidate was
+already rejected, and all10 are mandatory for review; no fresh inference/adoption.
+
+Next separate zero-update diagnosis is prepared/tested on SAMEsource8115f68:
+fixed approved TRAIN day/night teacher, complete25 scope/repaired approval,
+native520 samples its own assistant acoustics under exact approved forced words.
+Then native520/clock40 fresh processes score identical target words/masks under
+old teacher vs new native conditioning. Independent speech audits actual generated
+WAV at unchanged gates. Previous unadapted native-audio failures stay rejected.
+This probe does NOT approve new training data, native reasoning or optimization.
+No conditioning job yet; submit it only when a job slot opens.
+
+Account limit TWO submitted jobs: third sbatch rejected QOSMaxSubmitJobPerUserLimit
+before allocating ID. First2 remained held and were recovered in place; no duplicate
+GPU submissions or cancelled/rerun captures. Sole live orchestrator exec29728
+(/tmp/duplex-resume-native-repair-conditioning.py) submits later phases as slots
+free, polls same IDs>=60s and hash-backs results. Prior99572/15461/21306 TERMINAL;
+15461 was paused/killed locally before GPU receipt existed to fix preflight path;
+21306 retained partial2-job receipt after rejectedthird submission. No otherwatcher.
+Receipt runs/native-repair-conditioning-local-20261020.json. CLOUD submits nothing.
+
+Training7558824 already completed32new/global40 and remains REJECTED; no unchanged
+extension or optimizer running. All28actual/25old/24new and KL1/hidden10 preserved.
+SeenTRAIN12 formal review retained3/4 baseline vs2/4 bothchildren/speech11/12.
+Fresh20 sourcePASS/nativeNONE. Native whole-system UNQUALIFIED. Backups union
+23693files18362293002bytes plus models/runtime/ASR/vendor; source8115 fullGit
+bundle SHA955a06a35aea4c51bf14e3751c22dd2179da7bddc23e51d7a7ea09c8a7487ad9 verified. Old Mac source backup PARTIAL.
+Local cert through20Oct19:32:16UTC/21:32:16Berlin. Next: full persona10 review and
+conditioning evidence, then choose a diagnosed new repair, preserving strict gates.
+
+---
+
 # LOCAL active — seen TRAIN12 reviewed; complete10 persona diagnostic running (2026-10-20 08:53 UTC)
 
 LOCAL remains sole executor; CLOUD submits nothing. No new optimizer job running.

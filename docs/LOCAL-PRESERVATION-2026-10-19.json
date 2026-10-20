@@ -1,7 +1,7 @@
 {
-  "at_utc": "2026-10-20T08:51:00.163798+00:00",
-  "unique_scoped_artifact_files": 23577,
-  "unique_scoped_artifact_bytes": 18198090143,
+  "at_utc": "2026-10-20T09:06:41.617063+00:00",
+  "unique_scoped_artifact_files": 23693,
+  "unique_scoped_artifact_bytes": 18362293002,
   "inventory_conflicts": [],
   "inventories": [
     {
@@ -556,6 +556,13 @@
       "files": 177,
       "bytes": 399125783,
       "missing_roots": []
+    },
+    {
+      "name": "remote-native-persona-diagnostic-failed-inventory.json",
+      "sha256": "e3bce0af2758fb3477b1a5015eff11d645f6c5418e1b80f11714c472a825e674",
+      "files": 116,
+      "bytes": 164202859,
+      "missing_roots": []
     }
   ],
   "local_artifact_root": "runs/cloud-export-20261016/tree",
@@ -571,9 +578,15 @@
   "runtime_sif_sha256": "c00bc99693e4908ea75d17df9c379b93ae9a1678a65d875565ad5d52f76fa27b",
   "pinned_vendor_git_bundles_verified": 3,
   "source_git_bundle": {
-    "source_sha": "a0c51a199b897733081d55524f0a89d4937287b9",
-    "bundle": "runs/local-continuation-20261019/source-main-a0c51a1.bundle",
-    "bundle_sha256": "50e21f77ecb8e63a10bdff7a56d65a7f72a1ffcaace53bafc911586b91fd71fb"
+    "path": "runs/local-continuation-20261019/source-main-8115f68.bundle",
+    "sha256": "955a06a35aea4c51bf14e3751c22dd2179da7bddc23e51d7a7ea09c8a7487ad9",
+    "source_commit": "8115f68d38122a21ac4742f7cfb0cacca4a71625",
+    "full_history_verified": true,
+    "previous_verified_bundle": {
+      "source_sha": "a0c51a199b897733081d55524f0a89d4937287b9",
+      "bundle": "runs/local-continuation-20261019/source-main-a0c51a1.bundle",
+      "bundle_sha256": "50e21f77ecb8e63a10bdff7a56d65a7f72a1ffcaace53bafc911586b91fd71fb"
+    }
   },
   "native_candidate_job": "7558824",
   "native_candidate_training_state_sha256": "9712d0d858d638630d02fbb2f2909da822c0c3f9d7b47202a1637a1785ee6c9d",
@@ -915,9 +928,39 @@
     "speech_job": "7570834",
     "complete_cases_required": 10,
     "optimizer_updates": 0,
-    "local_orchestrator_session": 99572,
+    "local_orchestrator_session": 29728,
     "diagnostic_only": true,
     "outputs_must_not_be_trained_on": true,
-    "adoption": false
+    "adoption": false,
+    "native_status": "FAILED",
+    "native_elapsed": "00:09:46",
+    "speech_status": "FAILED",
+    "speech_elapsed": "00:01:22",
+    "failure": "Invocation case.source overwritten with Git SHA; cases4/5 used wrong dataset and exited before inference.",
+    "complete10_attempted": true,
+    "completed_cases_retained": [
+      0,
+      1,
+      2,
+      3,
+      6,
+      7,
+      8,
+      9
+    ],
+    "failed_collection_all_artifacts_sha256_backed": true,
+    "original_orchestrator_terminal": true,
+    "repair_source": "8115f68d38122a21ac4742f7cfb0cacca4a71625",
+    "repair_cpu_job": "7571184",
+    "repair_cpu_tests_passed": 171,
+    "repair_job": "7571367",
+    "complete10_speech_job": "7571368",
+    "abandoned_local_orchestrators": [
+      99572,
+      15461,
+      21306
+    ],
+    "qos_max_active_submitted_jobs": 2,
+    "conditioning_job_not_yet_submitted": true
   }
 }
