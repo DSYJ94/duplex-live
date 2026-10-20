@@ -1,3 +1,35 @@
+# LOCAL active — complete-batch8 FIT COMPLETE; independent restore running (20Oct20:04UTC)
+
+Training7585424 final fit report PASS:8new update calls, Adam clocks528; optimizer
+history carried from520, no reset. Fit/metrics/digest phase179.712669872s (excludes
+loading, all49 acoustic fingerprints and independent reload). Payload remains
+3b92d843e7724d66ecb6d148ab33b3705f089ec8. Full154 components on every update.
+Checkpoint e6419a42d4c499a2a42778b315dc882dcb1d41100e13ef1c741dc9e278e224c2;
+fullstate af4691d67b2e9ab46e78c48029d6903c3495bc7a45076989c559ee992df87bf4.
+Actual20:04UTC reload-report not yet present; actual20:08:21UTC train7585424
+and watcher7585425 both RUNNING during separate restoration. Do NOT claim independent restoration
+or behavioral qualification yet. Early immutable12files33224787B size/SHA-backed
+20:05:14UTC. All8 complete154 exposure receipts independently checked; unique
+acoustic targets183297/raw8exposures1466376. First gradient norm differs from
+independent readiness by3.705e-7. Peak22005065728B. Formal fit state:
+docs/NATIVE-COMPLETE-BATCH-FIT-STATE-2026-10-20.json.
+
+Fixed SlurmCPUwatcher7585425/source82789e3404c8f206ab5cd8411754018671b4832a
+owns subsequent native10/speech after exact restoration and Slurm terminal success.
+Canonical runs/native-audio49-complete-batch-local-20261020.json; LOCAL soleexecutor,
+CLOUDread-only. No new manual submissions, no extension/adoption/fresh20 approval.
+Old watcher7582621 terminalfailed before any submission; recovered exactlyonce.
+Ready7582620 full154/PASS/0updates/allweightsunchanged, norm5.444079505 and peak
+22002220544B; all21files584098330B SHA-backed. Current scoped union24556files/
+24435931489B. Old stopped Mac source backup PARTIAL; unrelated edits preserved.
+
+Current central access record corrected/reverified: certificate expires21Oct
+03:50:25UTC/04:50:25London; reservation reverified19:56:24UTC ends21Oct08:56:32UTC/
+09:56:32London. Next finish early critical backup, verify separate reload all28+49
+fingerprints/Adam+all RNG+clocks528, preserve completed artifacts, review WHOLE10.
+
+---
+
 # LOCAL active — recovered TRAIN7585424 and fixed Slurm watcher7585425 (20Oct19:50UTC)
 
 Existing full154 readiness7582620 COMPLETE/PASS reused; it was NOT rerun. Original

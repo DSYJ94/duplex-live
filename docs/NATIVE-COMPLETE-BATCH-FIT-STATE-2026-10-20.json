@@ -1,0 +1,43 @@
+{
+  "schema": "dl-native-complete-batch-fit-state-v1",
+  "at_utc": "2026-10-20T20:08:18.157274+00:00",
+  "training_job": "7585424",
+  "payload_source": "3b92d843e7724d66ecb6d148ab33b3705f089ec8",
+  "watcher_job": "7585425",
+  "watcher_source": "82789e3404c8f206ab5cd8411754018671b4832a",
+  "readiness_job": "7582620",
+  "completed_update_calls": 8,
+  "source_adam_clocks": 520,
+  "final_adam_clocks": [
+    528
+  ],
+  "optimizer_reset": false,
+  "effective_learning_rate": 2e-07,
+  "fit_phase_seconds": 179.71266987198032,
+  "timing_scope": "Fit plus post-fit metrics/digests, excludes load/all49 fingerprints/independent restore",
+  "peak_allocated_bytes": 22005065728,
+  "all8_complete154_exposures_checked": true,
+  "components_per_update": {
+    "actual": 28,
+    "reference": 4,
+    "old25": 25,
+    "new24": 24,
+    "word": 10,
+    "clock": 14,
+    "audio49": 49
+  },
+  "source_unique49_acoustic_targets": 183297,
+  "raw_acoustic_targets_over8": 1466376,
+  "first_gradient_norm_difference_from_preflight": 3.705012900923066e-07,
+  "checkpoint_sha256": "e6419a42d4c499a2a42778b315dc882dcb1d41100e13ef1c741dc9e278e224c2",
+  "training_state_sha256": "af4691d67b2e9ab46e78c48029d6903c3495bc7a45076989c559ee992df87bf4",
+  "training_report_sha256": "c4af596e90e1a8cbee006c194ab825ae5b8f37e1f805e2f579e8c020fce2bd1c",
+  "data_sha256": "de92099057ded15a1af0e387c96b457cdf4c1731c26594dcdca211d4c442fc1e",
+  "early12_critical_artifacts_sha256_backed": true,
+  "independent_restore_status": "PENDING",
+  "native_behavior_evaluated": false,
+  "candidate_adopted": false,
+  "extension_approved": false,
+  "fresh20_native_runs": 0,
+  "next_action": "Require separate full-state/logit/RNG/Adam528 restoration and all10 native/speech review before another training decision"
+}

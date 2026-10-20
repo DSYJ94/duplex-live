@@ -1,7 +1,7 @@
 {
-  "at_utc": "2026-10-20T19:49:27.607183+00:00",
-  "unique_scoped_artifact_files": 24544,
-  "unique_scoped_artifact_bytes": 24402706702,
+  "at_utc": "2026-10-20T20:08:18.157274+00:00",
+  "unique_scoped_artifact_files": 24556,
+  "unique_scoped_artifact_bytes": 24435931489,
   "inventory_conflicts": [],
   "inventories": [
     {
@@ -695,6 +695,13 @@
       "sha256": "0a1e86a257479f88605fea4425fea2dc44971cf31af8e67fcef438334e3414fe",
       "files": 1,
       "bytes": 1688,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native-complete-batch-critical-early-inventory.json",
+      "sha256": "91542874d8f418326aa29fed7905ad7f3237428f11ecb3dec9f8d96fe58c9350",
+      "files": 12,
+      "bytes": 33224787,
       "missing_roots": []
     }
   ],
@@ -1572,7 +1579,7 @@
     },
     "readiness_state": "COMPLETED",
     "watcher_state": "RUNNING",
-    "observed_utc": "2026-10-20T19:52:29Z",
+    "observed_utc": "2026-10-20T20:08:21Z",
     "cluster_tests_passed": 252,
     "cluster_tests_seconds": 4.11,
     "additional_state_tests_passed": 11,
@@ -1599,7 +1606,27 @@
       "sha256": "3c9d39b52d59cf7c3ae74819ec1d7d79667dd998af7ca65326a43cf5c69ece4b",
       "verified_complete_history": true
     },
-    "failed_watcher_log_sha256_backed": true
+    "failed_watcher_log_sha256_backed": true,
+    "training_final_fit_passed": true,
+    "stage_update_calls_completed": 8,
+    "adam_clocks_after_fit": [
+      528
+    ],
+    "fit_phase_seconds": 179.71266987198032,
+    "fit_phase_timing_scope": "Fit plus post-fit metrics/digests, excludes loading/all49 acoustic fingerprints/independent restore",
+    "checkpoint_sha256": "e6419a42d4c499a2a42778b315dc882dcb1d41100e13ef1c741dc9e278e224c2",
+    "training_state_sha256": "af4691d67b2e9ab46e78c48029d6903c3495bc7a45076989c559ee992df87bf4",
+    "independent_restore_passed": false,
+    "independent_restore_status": "RUNNING",
+    "early_critical_backup_status": "COMPLETE_SHA256_VERIFIED",
+    "early_critical_verified_files": 12,
+    "early_critical_verified_bytes": 33224787,
+    "peak_allocated_bytes": 22005065728,
+    "all8_complete154_exposure_receipts_independently_checked": true,
+    "source_unique49_acoustic_targets": 183297,
+    "raw_acoustic_targets_over8": 1466376,
+    "first_training_gradient_norm": 5.444079875946045,
+    "first_gradient_norm_difference_from_preflight": 3.705012900923066e-07
   },
   "local_access_history": [
     {
@@ -1612,5 +1639,7 @@
       "note": "Official Clifton institutional renewal completed by owner20Oct; actual bounded localSSH PASS. No credentials exported.",
       "certificate_rechecked_utc": "2026-10-19T21:26:22.059158+00:00"
     }
-  ]
+  ],
+  "current_native_execution_chain": "native_audio49_complete_batch_chain",
+  "legacy_top_level_candidate_summary_scope": "Earlier rejected40 job7558824 retained for preservation; not the active or adopted candidate. See current_native_execution_chain and newest HANDOFF."
 }
