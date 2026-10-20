@@ -3,6 +3,10 @@ ORDINARY=tuple('recovery-train-%03d'%i for i in range(12,16))
 
 
 def policy(args):
+    if getattr(args,'native_precision_diagnostic',False):
+        from evals.native_precision_diagnostic import policy as precision_policy
+        return precision_policy(args)
+    if getattr(args,'native_precision_diagnostic_case',None) is not None:raise ValueError('Precision case index requires the explicit locked diagnostic')
     if getattr(args,'native_ancestor_diagnostic',False):
         from evals.native_ancestor_diagnostic import policy as ancestor_policy
         return ancestor_policy(args)

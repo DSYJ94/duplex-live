@@ -1,3 +1,60 @@
+# LOCAL active — complete-batch8 rejected; precision16 diagnostic prepared (20Oct20:43UTC)
+
+All existing jobs terminal COMPLETED0:0: train7585424, watcher7585425,
+native10 7585692 and independent speech7586152. Fresh queue20:42:51UTC EMPTY.
+Independent complete state restoration PASS, but ordinary core1/4 and speech7/10:
+no extension/adoption/fresh20. Full10 review preserves every failed/partial case;
+changed copper-diamond receipt/value use passes only its component. Pending actual
+cancellation remains uncovered because result precedes the cue.
+
+Verified scoped artifact union24718files/25276924540B; terminal training25files/
+617513005B and native10+speech149files/256704833B fully size/SHA backed. Old Mac
+source backup remainsPARTIAL. All original histories/losses/source words/audio,
+folds and held-out hashes preserved. Full review:
+docs/NATIVE-COMPLETE-BATCH-COMPLETE10-REVIEW-2026-10-20.json.
+
+Next immediate read-only precision16: native520 and complete8 checkpoints, original
+BF16 and FP32 LM tensors, all4 original ordinary questions. Same seed, sampler,
+voice/persona/user audio; TF32 flags and Mimi unchanged. Every converted tensor
+must cast back to identical original numeric hashes before native graphs. Zero
+optimizer updates, all16 independent speech audits, no diagnostic training data.
+One2GPU interactive allocation plus dependent CPU audit, maximum2active jobs.
+No submission yet at this entry; exclusive canonical receipt will own exact IDs:
+runs/native-precision16-local-20261020.json. LOCAL soleexecutor/CLOUDread-only.
+Certificate expires21Oct03:50:25UTC; reservation ends21Oct08:56:32UTC.
+
+---
+
+# LOCAL active — independent restore PASS; native10 7585692 RUNNING (20Oct20:16UTC)
+
+Train7585424 COMPLETED0:0, observed by fixed watcher7585425 at20:14:27UTC.
+Fresh-process restoration PASS: all28 valid text+all49 acoustic fingerprints exact;
+full Adam/Python/NumPy/TorchCPU/CUDA RNG independently compared exact; all Adam
+clocks528. TrainingPID5938/reloadPID42710 distinct. The existing watcher submitted
+native10 7585692 ONCE; actual20:16:11UTC RUNNING1m31. Watcher7585425 RUNNING.
+No other jobs or manual submissions. Payload3b92d843e7724d66ecb6d148ab33b3705f089ec8,
+watcher82789e3404c8f206ab5cd8411754018671b4832a. Canonical
+runs/native-audio49-complete-batch-local-20261020.json owns next speech jobID.
+
+Fit8/179.712669872s/peak22005065728B, all154 terms each update, all8 exposure
+receipts independently checked. Checkpoint e6419a42d4c499a2a42778b315dc882dcb1d41100e13ef1c741dc9e278e224c2;
+state af4691d67b2e9ab46e78c48029d6903c3495bc7a45076989c559ee992df87bf4.
+Early12files33224787B SHA-backed; full terminal training/reference/snapshot backup
+now in progress. Full10+independent speech still PENDING: no behavior/extension/
+adoption/fresh20 approval. All source histories/words/audio/folds/losses retained.
+
+Critical preservation audit independently found71 original failed7531499 audit
+files,545 original source7531496 files, baseline7510331 full state/checkpoint/data/
+reports and rejected7530408 full state.18 original failed TRAIN015/017 WAVs were
+freshly size/SHA checked. Formal docs/NATIVE-PRESERVATION-COVERAGE-2026-10-20.json;
+no cancelled7531501/02/03 artifacts invented. Old Mac source backup remainsPARTIAL.
+Prior scoped union24556files/24435931489B. LOCAL soleexecutor/CLOUDread-only.
+Current localcert ends21Oct03:50:25UTC/04:50:25London; reservation ends08:56:32UTC/
+09:56:32London. Next preserve fulltraining, review every original native10 waveform/
+word clock/receipt after independent speech, retain failures/uncovered cases.
+
+---
+
 # LOCAL active — complete-batch8 FIT COMPLETE; independent restore running (20Oct20:04UTC)
 
 Training7585424 final fit report PASS:8new update calls, Adam clocks528; optimizer

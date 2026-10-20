@@ -34,10 +34,27 @@
   "training_report_sha256": "c4af596e90e1a8cbee006c194ab825ae5b8f37e1f805e2f579e8c020fce2bd1c",
   "data_sha256": "de92099057ded15a1af0e387c96b457cdf4c1731c26594dcdca211d4c442fc1e",
   "early12_critical_artifacts_sha256_backed": true,
-  "independent_restore_status": "PENDING",
-  "native_behavior_evaluated": false,
+  "independent_restore_status": "PASS",
+  "native_behavior_evaluated": true,
   "candidate_adopted": false,
   "extension_approved": false,
   "fresh20_native_runs": 0,
-  "next_action": "Require separate full-state/logit/RNG/Adam528 restoration and all10 native/speech review before another training decision"
+  "next_action": "Require separate full-state/logit/RNG/Adam528 restoration and all10 native/speech review before another training decision",
+  "all28_text_fingerprints_exact": true,
+  "all49_acoustic_fingerprints_exact": true,
+  "all_optimizer_rng_independently_compared_exact": true,
+  "all_adam_clocks_restored": [
+    528
+  ],
+  "training_pid": 5938,
+  "reload_pid": 42710,
+  "native10_job": "7585692",
+  "native10_state": "COMPLETED",
+  "speech10_job": "7586152",
+  "speech10_state": "COMPLETED",
+  "native_behavior_passed": false,
+  "ordinary_core_correct": 1,
+  "speech_quality_passes": 7,
+  "candidate_rejected": true,
+  "complete10_review": "docs/NATIVE-COMPLETE-BATCH-COMPLETE10-REVIEW-2026-10-20.json"
 }

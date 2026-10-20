@@ -1,7 +1,7 @@
 {
-  "at_utc": "2026-10-20T20:08:18.157274+00:00",
-  "unique_scoped_artifact_files": 24556,
-  "unique_scoped_artifact_bytes": 24435931489,
+  "at_utc": "2026-10-20T20:40:25.584119+00:00",
+  "unique_scoped_artifact_files": 24718,
+  "unique_scoped_artifact_bytes": 25276924540,
   "inventory_conflicts": [],
   "inventories": [
     {
@@ -702,6 +702,20 @@
       "sha256": "91542874d8f418326aa29fed7905ad7f3237428f11ecb3dec9f8d96fe58c9350",
       "files": 12,
       "bytes": 33224787,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native-complete-batch-training-complete-inventory.json",
+      "sha256": "bc9c7017c776fde8c4fe6127e365ddbb3361fd0e1967b76ac763df3b6e4250a8",
+      "files": 25,
+      "bytes": 617513005,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native-complete-batch-native10-terminal-inventory.json",
+      "sha256": "f24bc6d2d2454abe21199765257a2e80afc37d250b98b9b6f49e02b6c9d9b8d7",
+      "files": 149,
+      "bytes": 256704833,
       "missing_roots": []
     }
   ],
@@ -1571,15 +1585,15 @@
     "complete_matching154_gradient_readiness_required": true,
     "automatic_extension": false,
     "adoption_approved": false,
-    "stage_artifacts_backed": false,
+    "stage_artifacts_backed": true,
     "source_bundle": {
       "path": "runs/local-continuation-20261019/source-main-3b92d84.bundle",
       "sha256": "91a124207bbafe2389ff63c87dadb2f4f31accae79114c6435cdd99615b290b8",
       "verified_complete_history": true
     },
     "readiness_state": "COMPLETED",
-    "watcher_state": "RUNNING",
-    "observed_utc": "2026-10-20T20:08:21Z",
+    "watcher_state": "COMPLETED",
+    "observed_utc": "2026-10-20T20:16:11Z",
     "cluster_tests_passed": 252,
     "cluster_tests_seconds": 4.11,
     "additional_state_tests_passed": 11,
@@ -1595,7 +1609,7 @@
     "watcher_failure": "Active-slot guard raised before any submission attempt; no training accepted",
     "local_certificate_valid_until_utc": "2026-10-21T03:50:25Z",
     "training_job": "7585424",
-    "training_state": "RUNNING",
+    "training_state": "COMPLETED",
     "watcher_source": "82789e3404c8f206ab5cd8411754018671b4832a",
     "failed_watcher_job": "7582621",
     "failed_watcher_exit": "1:0",
@@ -1616,8 +1630,8 @@
     "fit_phase_timing_scope": "Fit plus post-fit metrics/digests, excludes loading/all49 acoustic fingerprints/independent restore",
     "checkpoint_sha256": "e6419a42d4c499a2a42778b315dc882dcb1d41100e13ef1c741dc9e278e224c2",
     "training_state_sha256": "af4691d67b2e9ab46e78c48029d6903c3495bc7a45076989c559ee992df87bf4",
-    "independent_restore_passed": false,
-    "independent_restore_status": "RUNNING",
+    "independent_restore_passed": true,
+    "independent_restore_status": "PASS",
     "early_critical_backup_status": "COMPLETE_SHA256_VERIFIED",
     "early_critical_verified_files": 12,
     "early_critical_verified_bytes": 33224787,
@@ -1626,7 +1640,28 @@
     "source_unique49_acoustic_targets": 183297,
     "raw_acoustic_targets_over8": 1466376,
     "first_training_gradient_norm": 5.444079875946045,
-    "first_gradient_norm_difference_from_preflight": 3.705012900923066e-07
+    "first_gradient_norm_difference_from_preflight": 3.705012900923066e-07,
+    "all28_text_fingerprints_exact": true,
+    "all49_acoustic_fingerprints_exact": true,
+    "all_optimizer_rng_independently_compared_exact": true,
+    "all_adam_clocks_restored": [
+      528
+    ],
+    "training_pid": 5938,
+    "reload_pid": 42710,
+    "native10_job": "7585692",
+    "native10_state": "COMPLETED",
+    "speech10_job": "7586152",
+    "speech10_state": "COMPLETED",
+    "full_training25_sha256_backed": true,
+    "all149_native_terminal_sha256_backed": true,
+    "ordinary_core_correct": 1,
+    "speech_quality_passes": 7,
+    "candidate_rejected": true,
+    "complete10_review": "docs/NATIVE-COMPLETE-BATCH-COMPLETE10-REVIEW-2026-10-20.json",
+    "complete10_review_sha256": "9691034cb661aa3709f1c21ac90850e266bcf792b92a6fccfcc39946dbd13c28",
+    "counterfactual_value_use_component_passed": true,
+    "pending_cancellation_coverage_uncovered": true
   },
   "local_access_history": [
     {
@@ -1641,5 +1676,14 @@
     }
   ],
   "current_native_execution_chain": "native_audio49_complete_batch_chain",
-  "legacy_top_level_candidate_summary_scope": "Earlier rejected40 job7558824 retained for preservation; not the active or adopted candidate. See current_native_execution_chain and newest HANDOFF."
+  "legacy_top_level_candidate_summary_scope": "Earlier rejected40 job7558824 retained for preservation; not the active or adopted candidate. See current_native_execution_chain and newest HANDOFF.",
+  "critical_preservation_coverage_review": {
+    "path": "docs/NATIVE-PRESERVATION-COVERAGE-2026-10-20.json",
+    "sha256": "255b674e93132b585fcc5abe2968dbcb5784216aebfd597cd1796cc15d4bd1e6",
+    "original_failed_train_wavs_freshly_sha256_checked": 18,
+    "original_failed_audit_inventory_files": 71,
+    "original_source_inventory_files": 545,
+    "baseline_and_rejected_joint_state_inventory_coverage": true,
+    "old_mac_source_backup_status": "PARTIAL"
+  }
 }

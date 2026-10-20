@@ -73,6 +73,8 @@ def main():
     ap.add_argument('--native-persona-diagnostic-case',type=int,choices=range(10))
     ap.add_argument('--native-ancestor-diagnostic',action='store_true')
     ap.add_argument('--native-ancestor-diagnostic-case',type=int,choices=range(12))
+    ap.add_argument('--native-precision-diagnostic',action='store_true')
+    ap.add_argument('--native-precision-diagnostic-case',type=int,choices=range(16))
     args=ap.parse_args()
     if (args.persona_profile=='records-request-only')!=args.native_persona_diagnostic:
         ap.error('Scoped records persona requires the explicit locked complete10 inference diagnostic')
@@ -157,11 +159,19 @@ def main():
     if Path(inspect.getfile(Engine)).resolve()!=(source/'contextspan/model/engine.py').resolve():
         raise RuntimeError('Wrong Context Spanning engine module imported')
     records=[];started=time.monotonic()
-    with before_engine(engine_module,args.adapter_proof,args.adapter_disabled,args.adapter_zero) as adapter:
+    precision_transform=None
+    if args.native_precision_diagnostic:
+        from evals.native_precision_diagnostic import transform
+        precision_transform=transform(sampling)
+    with before_engine(engine_module,args.adapter_proof,args.adapter_disabled,args.adapter_zero,runtime_transform=precision_transform) as adapter:
         with audited_loads(records):
             engine=Engine(checkpoint=str(checkpoint),device='cuda',temp=.8,temp_text=args.native_text_temperature)
             verify_sampling(engine,sampling)
+            if args.native_precision_diagnostic:
+                from evals.native_precision_diagnostic import verify_engine as verify_precision
+                verify_precision(engine,sampling,adapter)
             voice=load_voice('main')
+    if args.native_precision_diagnostic and torch.cuda.max_memory_allocated()>=80_000_000_000:raise RuntimeError('Precision diagnostic exceeded80GB')
     lm_loads=[r for r in records if r['module_identity']==id(engine.lm)]
     if (type(engine.lm).load_state_dict is not torch.nn.Module.load_state_dict
             or not lm_loads or not lm_loads[-1]['strict'] or lm_loads[-1]['missing'] or lm_loads[-1]['unexpected']):
@@ -334,6 +344,10 @@ def main():
         'playout':playout,'audio_sha256':sha256(args.out/'model.wav'),
         'actual_lm_and_pcm_executed_together':True,'playout_is_causal_simulation':True,
         'microphone_acceptance':False,'spoken_value_use_verified':False,'quality_qualified':False,'training_approved':False}
+    if getattr(args,'native_precision_diagnostic',False):
+        import torch
+        peak=torch.cuda.max_memory_allocated();loading['adapter']['runtime_precision_diagnostic']['native_peak_allocated_bytes']=peak
+        if peak>=80_000_000_000:raise RuntimeError('Native precision replay exceeded80GB')
     (args.out/'report.json').write_text(json.dumps(report,indent=2)+'\n')
     print(json.dumps({k:v for k,v in report.items() if k not in ('loading','worker_events','playout')}),flush=True)
 

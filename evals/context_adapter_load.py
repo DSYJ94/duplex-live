@@ -7,8 +7,9 @@ from evals.moshi_model_download import sha256
 
 
 @contextmanager
-def before_engine(engine_module, proof, disabled=False, zero=False):
+def before_engine(engine_module, proof, disabled=False, zero=False, runtime_transform=None):
     import torch
+    if runtime_transform is not None and (proof is None or disabled or zero or not getattr(runtime_transform,'native_precision_diagnostic',False)):raise ValueError('Runtime precision transform requires an explicit frozen diagnostic and verified adapter')
     from safetensors.torch import load_file
     from evals.context_spanning_download import SOURCE_COMMIT
     from evals.personaplex_adapters import install_adapters, adapter_parameters
@@ -87,7 +88,7 @@ def before_engine(engine_module, proof, disabled=False, zero=False):
         math_attention()
     original = engine_module.load_model
     original_init=engine_module.Engine.__init__
-    calls = []
+    calls = [];runtime_precision={}
     def load(*args, **kwargs):
         lm, mimi, spm = original(*args, **kwargs)
         if calls: raise RuntimeError('Unexpected repeated model loading')
@@ -103,6 +104,7 @@ def before_engine(engine_module, proof, disabled=False, zero=False):
                 with torch.no_grad():
                     for n, p in learned.items(): p.copy_(state[n])
             lm.requires_grad_(False).eval()
+        if runtime_transform is not None:runtime_precision.update(runtime_transform(lm))
         calls.append(True)
         return lm, mimi, spm
     engine_module.load_model = load
@@ -117,6 +119,7 @@ def before_engine(engine_module, proof, disabled=False, zero=False):
         'installed_before_native_graphs': not disabled, 'voice_codes_sha256': report['voice_sha256'],
         'voice_reference_sha256': report['voice_reference_sha256'], 'quality_qualified': False,
         'native_protocol':protocol}
+    if runtime_transform is not None:evidence['runtime_precision_diagnostic']=runtime_precision
     try:
         yield evidence
         if not calls: raise RuntimeError('Native engine did not invoke verified model loader')

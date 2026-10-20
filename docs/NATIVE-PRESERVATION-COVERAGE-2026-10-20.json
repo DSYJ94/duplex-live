@@ -1,0 +1,126 @@
+{
+  "at_utc": "2026-10-20T20:12:50.798307+00:00",
+  "method": "Inventory coverage plus fresh original failed TRAIN015/017 WAV size/SHA checks; previous per-inventory verification receipts retain broader hash evidence",
+  "original_failed_audit_files": 71,
+  "original_failed_source_files": 545,
+  "original_failed_train_waveforms": [
+    {
+      "path": "runs/native-v2-source-repair-7531496/native2-train-015/mixed.wav",
+      "bytes": 1328684,
+      "sha256": "ecd35302c5763a5435512328a73c10507170bef778fcf52794956bd883aeedf3",
+      "verified_now": true
+    },
+    {
+      "path": "runs/native-v2-source-repair-7531496/native2-train-015/stem_assistant.wav",
+      "bytes": 1328684,
+      "sha256": "ac576df1101df7732baee03954871203cea3a2a70bdd88482ba58aa41ddad1a1",
+      "verified_now": true
+    },
+    {
+      "path": "runs/native-v2-source-repair-7531496/native2-train-015/stem_user.wav",
+      "bytes": 1328684,
+      "sha256": "a4d5d37eeb6c069c33410f663ba4047f0e5acdc2758b673fb250e18989da8409",
+      "verified_now": true
+    },
+    {
+      "path": "runs/native-v2-source-repair-7531496/native2-train-015/utterances/00_user.wav",
+      "bytes": 448844,
+      "sha256": "984011e760693019614a29c2da2a07f46d2277d9ca65bbf9f84c096d6496829d",
+      "verified_now": true
+    },
+    {
+      "path": "runs/native-v2-source-repair-7531496/native2-train-015/utterances/01_assistant.wav",
+      "bytes": 100844,
+      "sha256": "f31435b562afbc4618d88f3b764ed25ba2caad52e493a4531398119659bb73bb",
+      "verified_now": true
+    },
+    {
+      "path": "runs/native-v2-source-repair-7531496/native2-train-015/utterances/02_user.wav",
+      "bytes": 177644,
+      "sha256": "7077c064257c7d1ede792e24b2ede2703856789ef79ea11ef38ce6c67cbd0aea",
+      "verified_now": true
+    },
+    {
+      "path": "runs/native-v2-source-repair-7531496/native2-train-015/utterances/03_user.wav",
+      "bytes": 146444,
+      "sha256": "30eb80cdb035580fbcb5dc3026e0f16472cb09b66351b4e60bb4f63577a519f2",
+      "verified_now": true
+    },
+    {
+      "path": "runs/native-v2-source-repair-7531496/native2-train-015/utterances/04_assistant.wav",
+      "bytes": 96044,
+      "sha256": "65f6a06f61d2079f179f0937e03acc7979f6b9a8aeedcd8444634386eb55fcb2",
+      "verified_now": true
+    },
+    {
+      "path": "runs/native-v2-source-repair-7531496/native2-train-017/mixed.wav",
+      "bytes": 1628204,
+      "sha256": "49a073cc72df3104d45691087a28ab526d09359e648fae8d520215d26999e820",
+      "verified_now": true
+    },
+    {
+      "path": "runs/native-v2-source-repair-7531496/native2-train-017/stem_assistant.wav",
+      "bytes": 1628204,
+      "sha256": "33351d40170345b250ef201b5b5e18001753b6fdf996c0754a936d57e47728a4",
+      "verified_now": true
+    },
+    {
+      "path": "runs/native-v2-source-repair-7531496/native2-train-017/stem_user.wav",
+      "bytes": 1628204,
+      "sha256": "97cebe779f4e55d64b0dced660f72e2a7545b0259406b6694e164bfe7ea6dc2c",
+      "verified_now": true
+    },
+    {
+      "path": "runs/native-v2-source-repair-7531496/native2-train-017/utterances/00_user.wav",
+      "bytes": 355244,
+      "sha256": "edb3cc2467b79e5468276dd4760d36a85f562186d1d98f083a1574fc0469feff",
+      "verified_now": true
+    },
+    {
+      "path": "runs/native-v2-source-repair-7531496/native2-train-017/utterances/01_assistant.wav",
+      "bytes": 84044,
+      "sha256": "dace4c9ad4a3164b219c4b5e971b6f1f4681b30748e83a0d8b99ec88745e70e7",
+      "verified_now": true
+    },
+    {
+      "path": "runs/native-v2-source-repair-7531496/native2-train-017/utterances/02_user.wav",
+      "bytes": 86444,
+      "sha256": "7aa1169867b609f09e8825ec6bd2c5dc63251ca4d367da1623a9d29a6f068d07",
+      "verified_now": true
+    },
+    {
+      "path": "runs/native-v2-source-repair-7531496/native2-train-017/utterances/03_assistant.wav",
+      "bytes": 129644,
+      "sha256": "3357fe6c49bdbf0689da9384d8f0b70cd70a1e15af07a016229bec2a8423b88a",
+      "verified_now": true
+    },
+    {
+      "path": "runs/native-v2-source-repair-7531496/native2-train-017/utterances/04_user.wav",
+      "bytes": 242444,
+      "sha256": "351d6749430cd7f17ac86815c87ec80a92158be6e7ab399d0e1222b6feb9a96c",
+      "verified_now": true
+    },
+    {
+      "path": "runs/native-v2-source-repair-7531496/native2-train-017/utterances/05_assistant.wav",
+      "bytes": 100844,
+      "sha256": "834087b645f96519cbf445aa85456d23edeb30cac42031074b1c9103c9c31c46",
+      "verified_now": true
+    },
+    {
+      "path": "runs/native-v2-source-repair-7531496/native2-train-017/utterances/06_assistant.wav",
+      "bytes": 379244,
+      "sha256": "a65aad7ee80506f63db742212ce08693698620f94c329c138db30911fd2f8c63",
+      "verified_now": true
+    }
+  ],
+  "baseline_native520_required_files": {
+    "adapters.safetensors": true,
+    "training-state.pt": true,
+    "data.json": true,
+    "report.json": true,
+    "reload-report.json": true
+  },
+  "rejected_joint_checkpoint_and_state_preserved": true,
+  "cancelled_teacher_7531501_02_03_not_claimed_to_have_artifacts": true,
+  "old_mac_source_backup_status": "PARTIAL"
+}

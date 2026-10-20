@@ -1,4 +1,33 @@
+# LOCAL active — complete-batch8 rejected; precision16 diagnostic prepared (20Oct20:43UTC)
+
+All existing jobs terminal COMPLETED0:0: train7585424, watcher7585425,
+native10 7585692 and independent speech7586152. Fresh queue20:42:51UTC EMPTY.
+Independent complete state restoration PASS, but ordinary core1/4 and speech7/10:
+no extension/adoption/fresh20. Full10 review preserves every failed/partial case;
+changed copper-diamond receipt/value use passes only its component. Pending actual
+cancellation remains uncovered because result precedes the cue.
+
+Verified scoped artifact union24718files/25276924540B; terminal training25files/
+617513005B and native10+speech149files/256704833B fully size/SHA backed. Old Mac
+source backup remainsPARTIAL. All original histories/losses/source words/audio,
+folds and held-out hashes preserved. Full review:
+docs/NATIVE-COMPLETE-BATCH-COMPLETE10-REVIEW-2026-10-20.json.
+
+Next immediate read-only precision16: native520 and complete8 checkpoints, original
+BF16 and FP32 LM tensors, all4 original ordinary questions. Same seed, sampler,
+voice/persona/user audio; TF32 flags and Mimi unchanged. Every converted tensor
+must cast back to identical original numeric hashes before native graphs. Zero
+optimizer updates, all16 independent speech audits, no diagnostic training data.
+One2GPU interactive allocation plus dependent CPU audit, maximum2active jobs.
+No submission yet at this entry; exclusive canonical receipt will own exact IDs:
+runs/native-precision16-local-20261020.json. LOCAL soleexecutor/CLOUDread-only.
+Certificate expires21Oct03:50:25UTC; reservation ends21Oct08:56:32UTC.
+
+---
+
 # Cloud continuation — 18 October 2026
+
+CURRENT OVERRIDE — 20October20:16UTC: LOCAL soleexecutor. Train7585424 COMPLETE0:0; separate full optimizer/RNG/28text+49audio restoration PASS, Adam528. Native10 7585692 RUNNING, fixed SlurmCPUwatcher7585425 owns independent speech nextID. Payload3b92d84/watcher82789e3; canonical runs/native-audio49-complete-batch-local-20261020.json. No behavior/extension/adoption/fresh20 approval. CLOUD READ-ONLY/no duplicates; read newest HANDOFF.
 
 CURRENT OVERRIDE — 20October20:08UTC: LOCAL soleexecutor. Fullbalanced TRAIN7585424 completed8 update calls/Adam528; early12 critical files33224787B SHA-backed. Independent restore still running; no behavioral approval. Fixed SlurmCPUwatcher7585425/source82789e3 owns next native10/speech; payload3b92d84 unchanged. Canonical runs/native-audio49-complete-batch-local-20261020.json. CLOUD READ-ONLY/no duplicates; read newest HANDOFF.
 
