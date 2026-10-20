@@ -1,3 +1,32 @@
+# LOCAL active — smaller-step chain SUBMITTED 7578127 / 7578128 (20 October13:22UTC)
+
+Runtime exact source 8858539d0f0b381f3d4aa1b8590e59978a6bac04, committed/pushed, immutable
+worktrees/recovery-8858539. Fresh queue empty and ancestor7577202/7577203 both
+COMPLETED0:0 before submission. Readiness GPU7578127 and persistent SlurmCPU
+watcher7578128 accepted, recorded before release, both released13:22:21UTC;
+initial queue PENDING(None). Actual13:22:56UTC both RUNNING; full240 cluster
+tests PASS3.900s before matching BF16 GPU readiness. Reservation interactive1GPU/30min readiness;
+watcher workq1CPU/1G/20h. This is submitted readiness, not optimizer completion.
+Canonical remote runs/native-audio49-smallstep-local-20261020.json owns all next
+IDs; cloud MUST NOT duplicate or revive previous watcher. LOCAL remains soleexecutor.
+
+Watcher automatically advances only successful complete readiness→new8training
+plus independent exact full-state restore→full native10→independent speech10.
+Actual Adam LR2e-7, original nominal text-recipe2e-6 explicitly recorded. Max8
+updates, all28/25/24/KL1hidden10/word64clock64 retained, no automatic extension,
+adoption or fresh20 inference. At most2 active jobs and1GPU job. PlanSHA
+19c385d01f02c04f9717d45d795c4d269bf08152821275ccc8184083be693fdb.
+New submission survives Mac disconnection. Next inspect the canonical receipt,
+squeue/sacct and readiness7578127, preserve each terminal stage and review full10.
+
+Ancestor comparison native5204/4 vs rejected8 0/4; all12speechPASS; all175files
+SHA-backed. Scoped union24137files/20321304057B. New full source8858539 bundle
+verifiedSHA517a03f980c12f7b8f7d7971853580adc0b390fee3c709d0d4155351c8fb93a6.
+Prior partial Mac backup remains PARTIAL. Unrelated local work preserved.
+Cert through20Oct19:32:16UTC; reservation ends21Oct08:56:32UTC. Model unqualified.
+
+---
+
 # LOCAL active — ancestor12 complete; smaller-step native8 chain prepared (2026-10-20)
 
 GPU7577202 COMPLETE8m21, independent speech7577203 COMPLETE3m51; all238 cluster

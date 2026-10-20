@@ -1380,5 +1380,27 @@
     },
     "all12_speech_passed": true,
     "review": "docs/NATIVE-ANCESTOR12-COMPLETE-REVIEW-2026-10-20.json"
+  },
+  "native_audio49_smallstep_chain": {
+    "source": "8858539d0f0b381f3d4aa1b8590e59978a6bac04",
+    "readiness_job": "7578127",
+    "slurm_watcher_job": "7578128",
+    "canonical_receipt": "runs/native-audio49-smallstep-local-20261020.json",
+    "submitted_utc": "2026-10-20T13:22:21Z",
+    "initial_observed_state": "PENDING",
+    "effective_optimizer_learning_rate": 2e-07,
+    "maximum_updates": 8,
+    "all28_25_24_retained": true,
+    "source_bundle": {
+      "path": "runs/local-continuation-20261019/source-main-8858539.bundle",
+      "sha256": "517a03f980c12f7b8f7d7971853580adc0b390fee3c709d0d4155351c8fb93a6",
+      "verified_complete_history": true
+    },
+    "new_stage_artifacts_backed": false,
+    "observed_utc": "2026-10-20T13:22:56Z",
+    "readiness_state": "RUNNING",
+    "watcher_state": "RUNNING",
+    "cluster_tests_passed": 240,
+    "cluster_tests_elapsed_seconds": 3.9
   }
 }
