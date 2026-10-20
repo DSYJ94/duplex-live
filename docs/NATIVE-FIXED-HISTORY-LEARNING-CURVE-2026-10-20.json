@@ -140,5 +140,89 @@
     }
   ],
   "all_artifacts_sha256_backed": true,
-  "new_optimizer_work_authorized_by_this_report": false
+  "new_optimizer_work_authorized_by_this_report": false,
+  "target_accuracy_by_complete_group": [
+    {
+      "group": "actual28",
+      "complete_examples": 28,
+      "checkpoints": [
+        {
+          "checkpoint": "native520",
+          "spoken_targets": 281,
+          "spoken_top1_matches": 214,
+          "pad3_targets": 276,
+          "pad3_top1_matches": 222
+        },
+        {
+          "checkpoint": "7556562",
+          "spoken_targets": 281,
+          "spoken_top1_matches": 214,
+          "pad3_targets": 276,
+          "pad3_top1_matches": 222
+        },
+        {
+          "checkpoint": "7558824",
+          "spoken_targets": 281,
+          "spoken_top1_matches": 214,
+          "pad3_targets": 276,
+          "pad3_top1_matches": 222
+        }
+      ]
+    },
+    {
+      "group": "old25",
+      "complete_examples": 25,
+      "checkpoints": [
+        {
+          "checkpoint": "native520",
+          "spoken_targets": 993,
+          "spoken_top1_matches": 734,
+          "pad3_targets": 9663,
+          "pad3_top1_matches": 9360
+        },
+        {
+          "checkpoint": "7556562",
+          "spoken_targets": 993,
+          "spoken_top1_matches": 733,
+          "pad3_targets": 9663,
+          "pad3_top1_matches": 9357
+        },
+        {
+          "checkpoint": "7558824",
+          "spoken_targets": 993,
+          "spoken_top1_matches": 734,
+          "pad3_targets": 9663,
+          "pad3_top1_matches": 9360
+        }
+      ]
+    },
+    {
+      "group": "new24",
+      "complete_examples": 24,
+      "checkpoints": [
+        {
+          "checkpoint": "native520",
+          "spoken_targets": 498,
+          "spoken_top1_matches": 355,
+          "pad3_targets": 10708,
+          "pad3_top1_matches": 10563
+        },
+        {
+          "checkpoint": "7556562",
+          "spoken_targets": 498,
+          "spoken_top1_matches": 354,
+          "pad3_targets": 10708,
+          "pad3_top1_matches": 10562
+        },
+        {
+          "checkpoint": "7558824",
+          "spoken_targets": 498,
+          "spoken_top1_matches": 355,
+          "pad3_targets": 10708,
+          "pad3_top1_matches": 10562
+        }
+      ]
+    }
+  ],
+  "target_accuracy_interpretation": "Parent/child agreement measures preservation, not correctness. Forty updates leave spoken target top1 unchanged from native520: actual214/281, old734/993, new355/498. PAD3 accuracy is much higher; small half-PAD NLL does not mean spoken targets are mastered. This is fixed-history evidence only, not an inference result or diagnosed cause."
 }
