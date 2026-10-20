@@ -96,7 +96,8 @@ if [[ -n "${NATIVE_AUDIO49_AUDIT_JOB:-}" ]]; then
  test "${NATIVE_V2_LEARNING_RATE:-}" = 2e-6
  test "${NATIVE_V2_WARM_ORDINARY_WEIGHT:-0}" = 64
  test "${NATIVE_V2_WARM_ORDINARY_CLOCK:-0}" = 1
- ARGS+=(--native-audio49-audit "$DL/runs/native-audio49-audit-$NATIVE_AUDIO49_AUDIT_JOB" --native-audio49-weight 1)
+ [[ "${NATIVE_AUDIO49_STEP_SCALE:-1}" == 1 || "${NATIVE_AUDIO49_STEP_SCALE:-1}" == 0.1 ]]
+ ARGS+=(--native-audio49-audit "$DL/runs/native-audio49-audit-$NATIVE_AUDIO49_AUDIT_JOB" --native-audio49-weight 1 --native-audio49-step-scale "${NATIVE_AUDIO49_STEP_SCALE:-1}")
  if [[ "${NATIVE_AUDIO49_PREFLIGHT_ONLY:-0}" == 1 ]]; then
   ARGS+=(--native-audio49-preflight-only)
  else

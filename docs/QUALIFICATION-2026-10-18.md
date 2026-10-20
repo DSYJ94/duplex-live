@@ -1,3 +1,26 @@
+# LOCAL active — ancestor12 complete; smaller-step native8 chain prepared (2026-10-20)
+
+GPU7577202 COMPLETE8m21, independent speech7577203 COMPLETE3m51; all238 cluster
+tests passed, all12 speech passed. Fixed original4 questions × base/native520/
+rejected native8: core4/4,4/4,0/4. Formal complete review:
+docs/NATIVE-ANCESTOR12-COMPLETE-REVIEW-2026-10-20.json. Input/voice/assets/sampler
+matched; regenerated child PCM identity is measured per case, never assumed.
+This isolates ordinary regression to the new weights, without identifying one loss.
+All175 diagnostic files402392189B SHA-backed; scoped union24137files/20321304057B.
+Old stopped Mac source backup PARTIAL. No owner/credentials/core copied.
+
+Next authorized bounded8 from native520 uses actual Adam LR2e-7, tenfold smaller;
+legacy nominal text-recipe identity2e-6 explicitly distinct. All28/25/24, original
+WAVs/words/receipts/folds, KL1/hidden10/word64/clock64 unchanged. New matching BF16
+readiness and full tests precede updates; exact independent optimizer/RNG/logit
+restore precedes full native10 and independent speech. No automatic extension,
+adoption or fresh20 inference. Plan native-audio49-smallstep-plan-20261020.json.
+LOCAL sole executor; CLOUD read-only. Prior jobs all terminal; new IDs pending
+fresh Slurm check and exclusive submission. Reservation ends21Oct08:56:32UTC.
+Unrelated pycache, capability probes and roadmap preserved. Whole model unqualified.
+
+---
+
 2026-10-20 12:45UTC — Readonly ancestor12 GPU7577202 RUNNING/source dc4dd03 after full238cluster testsPASS, independent full12 CPU speech7577203 afterany. Same4 original ordinary inputs/profile/voice/native decoding, only base/adapters-disabled vs native520 vs rejected8 weights differ; zerooptimizer/no training/adoption/fresh approval. Exclusive receipt runs/native-ancestor12-local-20261020.json. Prior complete10 rejection/full backups retained, union23962/19918911868. LOCALactive/CLOUDread-only/nativewhole-systemUNQUALIFIED.
 
 2026-10-20 12:37UTC — Full audio49-native10 review REJECTS7575817: ordinary0/4 fullycorrect,speech7/10,quiet/pause/clarify/cancel/private delivery fail. Native7576513/ASR7576709/watcher7575818 allCOMPLETED; queueempty12:33. Complete153files256.76MB SHA-backed, union23962/19918911868. New readonly all4×3 ancestor comparison prepared (base/adapters-disabled vs native520 vs child), fixed original persona/input/voice/default sampling, full238cluster tests required. No new diagnostic IDs yet, optimizer/extension/adoption/fresh inference. LOCALactive/CLOUDread-only/nativewhole-systemUNQUALIFIED.

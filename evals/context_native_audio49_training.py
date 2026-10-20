@@ -6,6 +6,7 @@ rejected joint7530408 or rejected40. All original text/KL/hidden objectives stay
 import hashlib
 import json
 import os
+import subprocess
 from pathlib import Path
 from evals.moshi_model_download import sha256
 
@@ -16,8 +17,10 @@ RELOAD_SCHEMA='dl-context-actual-audio49-adapter-reload-v1'
 def validate_configuration(args):
     enabled=bool(getattr(args,'native_audio49_audit',None));weight=getattr(args,'native_audio49_weight',0.)
     smoke=bool(getattr(args,'native_audio49_preflight_only',False));pre=getattr(args,'native_audio49_preflight',None)
+    scale=getattr(args,'native_audio49_step_scale',1.)
+    if type(scale) not in (int,float) or isinstance(scale,bool) or scale not in (1.,.1):raise ValueError('Only the explicit original or tenfold-smaller initial stage is allowed')
     if not enabled:
-        if weight or smoke or pre:raise ValueError('Audio49 options require the complete independent audit')
+        if weight or smoke or pre or scale!=1.:raise ValueError('Audio49 options require the complete independent audit')
         return False
     if (weight!=1. or isinstance(weight,bool) or not args.actual_temporal_fit or not args.native_v2_full24_per8
             or args.actual_fit_updates!=8 or args.resume_training or len(args.actual_mixed_data)!=28 or args.native_v2_learning_rate!=2e-6
@@ -80,7 +83,7 @@ def prepare(args,spm,voice):
             or any(not g['finite_temporal_gradients'] or g['nonzero_temporal_gradient_elements']<1
                 or g['text_head_audio_gradient_elements']!=0 or g['frozen_parameter_gradients']!=0 for g in grad)):
         raise ValueError('New audio auxiliary lacks complete49 numerical ownership and declared gradient proof')
-    policy=dict(mode='native520-all49-assistant-audio-auxiliary-v1',weight=1.,updates=8,learning_rate=2e-6,
+    policy=dict(mode=('native520-all49-assistant-audio-smallstep-v1' if getattr(args,'native_audio49_step_scale',1.)==.1 else 'native520-all49-assistant-audio-auxiliary-v1'),weight=1.,updates=8,learning_rate=2e-6*getattr(args,'native_audio49_step_scale',1.),
         parent=data['parent'],audit_source=gate['settings']['source_commit'],audit_sha256=sha256(gate_file),
         data_sha256=digest,teacher_ids=[b['record']['teacher']['id'] for b in batches],
         assistant_audio_loss_targets_per8=sum(sum(c['objective']['assistant_audio_targets']) for c in checks),
@@ -89,6 +92,8 @@ def prepare(args,spm,voice):
         assistant_codebooks=list(range(1,9)),user_audio_loss_targets=0,prefix_loss_targets=0,supplied_span_loss_targets=0,
         per_example_weight_each_update=8/49,sampling='Deterministic stride8 partition; all49 exactly once in eight updates; epoch mean weight1',
         implementations=implementations(),new_optimizer=True,extends_rejected_joint_or40=False)
+    if getattr(args,'native_audio49_step_scale',1.)!=1.:
+        policy.update(step_scale=.1,nominal_legacy_recipe_learning_rate=2e-6,effective_optimizer_learning_rate=2e-7,legacy_objective_rate_field_scope='Original nominal text-recipe identity; combined_recipe.lr and this effective rate govern the optimizer')
     for name,content in [('audio49-data.json',encoded),('approved-audio49-audit.json',gate_file.read_text())]:
         p=args.out/name
         if args.reload:
@@ -169,6 +174,11 @@ def bf16_preflight(lm,learned,batches,policy,args):
     return result
 
 
+def committed_implementations(commit):
+    if not isinstance(commit,str) or len(commit)!=40 or any(c not in '0123456789abcdef' for c in commit):raise ValueError('Exact immutable builder commit required')
+    return {name:hashlib.sha256(subprocess.check_output(['git','show',commit+':evals/'+name],cwd=str(Path(__file__).resolve().parent))).hexdigest() for name in implementations()}
+
+
 def verify_checkpoint(proof):
     from evals.context_rollout_conditioning import verify_checkpoint as old_verify
     from evals.context_spanning_download import SOURCE_COMMIT
@@ -183,10 +193,10 @@ def verify_checkpoint(proof):
             or not r['all_actual_temporal_audits_passed'] or not r['all_component_audits_passed']
             or not r['zero_adapter_native_batch_logits_exact'] or len(data['components'])!=28
             or data['audio_loss_targets']!=0 or data['past_loss_targets']!=0 or not data['all_component_audits_passed']
-            or p.get('mode')!='native520-all49-assistant-audio-auxiliary-v1' or p['weight']!=1. or p['updates']!=8
+            or p.get('mode') not in ('native520-all49-assistant-audio-auxiliary-v1','native520-all49-assistant-audio-smallstep-v1') or p['weight']!=1. or p['updates']!=8
             or len(p['teacher_ids'])!=49 or len(set(p['teacher_ids']))!=49
             or p['required_original_objectives']!=dict(actual_histories=28,old_native_teachers=25,new_native_teachers=24,kl_weight=1.,hidden_mse_weight=10.)
-            or p['implementations']!=implementations() or not p['original_word64_clock64_and_all_text_losses_unchanged']
+            or p['implementations']!=committed_implementations(r['repo_commit']) or not p['original_word64_clock64_and_all_text_losses_unchanged']
             or len(r['retention_teacher_text']['teachers'])!=25 or len(r['additional_native_v2']['teacher']['teachers'])!=24
             or r['warm_ordinary_retention']['weight']!=64. or r['warm_ordinary_clock_retention']['weight']!=64.
             or v['schema']!=RELOAD_SCHEMA or not v['passed'] or not v['fresh_process'] or v['pid']==v['training_pid']
@@ -197,6 +207,11 @@ def verify_checkpoint(proof):
             or not v['optimizer_and_rng_independently_compared_exact'] or v['actual']!=r['expected_logits']
             or v['actual_audio49_logits']!=r['expected_audio49_logits']):
         raise ValueError('Unverified bounded audio49 combined-objective checkpoint')
+    expected_scale=.1 if p['mode']=='native520-all49-assistant-audio-smallstep-v1' else 1.
+    if (p.get('step_scale',1.)!=expected_scale or p['learning_rate']!=2e-6*expected_scale
+            or r['combined_recipe']['lr']!=p['learning_rate']
+            or r['additional_native_v2']['learning_rate']!=2e-6):raise ValueError('Changed declared effective optimizer rate or original text-recipe identity')
+    if expected_scale==.1 and (p['nominal_legacy_recipe_learning_rate']!=2e-6 or p['effective_optimizer_learning_rate']!=2e-7):raise ValueError('Smallstep optimizer identity changed')
     parent_identity,parent=old_verify(Path(p['parent']['proof']))
     if (parent_identity!=p['parent'] or r['warm_start']!=parent_identity or parent['optimizer_steps']!=520
             or r['data_sha256']!=parent['data_sha256'] or r['native_protocol']!=parent['native_protocol']

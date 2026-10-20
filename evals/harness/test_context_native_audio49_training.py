@@ -59,3 +59,12 @@ class Audio49PilotPolicy(unittest.TestCase):
             elif change=='codebook':bad[0]['assistant_audio49_microbatch'][0]['objective']['assistant_audio_targets'].pop()
             else:bad[0]['assistant_audio49_microbatch'][0]['objective']['assistant_audio_targets'][0]+=1
             with self.subTest(change=change),self.assertRaises(ValueError):validate_exposure(bad,ids,49*16)
+
+    def test_smallstep_is_explicit_and_cannot_change_objectives_or_extend(self):
+        a=self.args();a.native_audio49_step_scale=.1;self.assertTrue(validate_configuration(a))
+        for field,value in [('actual_fit_updates',32),('actual_base_retention_weight',0.),('native_v2_learning_rate',2e-7),('native_audio49_step_scale',.01)]:
+            b=self.args();b.native_audio49_step_scale=.1;setattr(b,field,value)
+            with self.subTest(field=field),self.assertRaises(ValueError):validate_configuration(b)
+    def test_smallstep_cannot_be_enabled_without_approved_audio49(self):
+        a=SimpleNamespace(native_audio49_step_scale=.1)
+        with self.assertRaises(ValueError):validate_configuration(a)

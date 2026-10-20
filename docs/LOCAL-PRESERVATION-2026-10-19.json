@@ -1,7 +1,7 @@
 {
-  "at_utc": "2026-10-20T12:49:25.256331+00:00",
-  "unique_scoped_artifact_files": 23962,
-  "unique_scoped_artifact_bytes": 19918911868,
+  "at_utc": "2026-10-20T13:17:29.262053+00:00",
+  "unique_scoped_artifact_files": 24137,
+  "unique_scoped_artifact_bytes": 20321304057,
   "inventory_conflicts": [],
   "inventories": [
     {
@@ -632,6 +632,13 @@
       "sha256": "013048a0eac9b1292353ebd5505d8b9d35a20df5e5cc56f9434c3a295fc7c586",
       "files": 153,
       "bytes": 256759375,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native-ancestor12-complete-inventory.json",
+      "sha256": "d1adbceafb0bdc75d8d40499ddc4327dab3ad422793800495307835323b32ec1",
+      "files": 175,
+      "bytes": 402392189,
       "missing_roots": []
     }
   ],
@@ -1348,9 +1355,9 @@
   "native_ancestor12_diagnostic": {
     "source": "dc4dd038f89aa8267aee76298557234f37113de3",
     "gpu_job": "7577202",
-    "gpu_status": "RUNNING",
+    "gpu_status": "COMPLETED",
     "independent_speech_job": "7577203",
-    "speech_status": "PENDING",
+    "speech_status": "COMPLETED",
     "dependency": "afterany:7577202",
     "observed_at_utc": "2026-10-20T12:44:59Z",
     "cpu_tests_passed": 238,
@@ -1364,6 +1371,14 @@
     "exclusive_remote_receipt": "/projects/u6si/duplex-live/runs/native-ancestor12-local-20261020.json",
     "maximum_submitted_active_jobs": 2,
     "maximum_gpus": 2,
-    "training_or_adoption_approved": false
+    "training_or_adoption_approved": false,
+    "all175_artifacts_sha256_backed": true,
+    "core_correct": {
+      "published-base": 4,
+      "native520": 4,
+      "audio49-eight": 0
+    },
+    "all12_speech_passed": true,
+    "review": "docs/NATIVE-ANCESTOR12-COMPLETE-REVIEW-2026-10-20.json"
   }
 }

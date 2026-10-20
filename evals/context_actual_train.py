@@ -20,7 +20,7 @@ def run(lm, spm, voice, examples, components, audits, args):
     from evals.context_spanning_download import SOURCE_COMMIT
     from evals.context_training_state import save as save_state, restore as restore_state
     from evals.context_native_v2_teacher_objective import learning_rate
-    rate = learning_rate(args)
+    rate = learning_rate(args)*getattr(args,'native_audio49_step_scale',1.)
     source_transition=None
     if getattr(args,'native_v2_exploration_authorization',None):
         from evals.context_native_exploration import validate as validate_exploration

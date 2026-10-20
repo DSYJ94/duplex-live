@@ -22,7 +22,9 @@ with Path(str(p)+'.lock').open('a') as lock:
  fcntl.flock(lock,fcntl.LOCK_EX);r=json.loads(p.read_text())
  assert r['source']==os.environ['DL_TASK_COMMIT']
  r['scheduler_watcher']=dict(job=os.environ['SLURM_JOB_ID'],source=os.environ['DL_WATCHER_COMMIT'],started_utc=datetime.datetime.utcnow().isoformat()+'Z',survives_ssh_disconnect=True)
- r['server_watcher']['terminal']=True;r['server_watcher']['failure']='Detached login process disappeared after initial SSH session; no training submitted by it'
+ if r.get('server_watcher',{}).get('pid'):
+  r['server_watcher']['terminal']=True;r['server_watcher']['failure']='Historical detached login process superseded by Slurm watcher'
+ else:r['server_watcher']=dict(used=False,terminal=True)
  r['maximum_submitted_active_jobs']=2;r['maximum_submitted_gpu_jobs']=1
  with tempfile.NamedTemporaryFile(mode='w',dir=str(p.parent),delete=False) as f:json.dump(r,f,indent=2);f.flush();os.fsync(f.fileno());name=f.name
  os.replace(name,str(p))
