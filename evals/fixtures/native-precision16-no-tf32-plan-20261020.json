@@ -299,5 +299,7 @@
     "7586347",
     "7586717"
   ],
-  "durable_chain": "CPU watcher waits for full49 terminal success, submits native16 once, then independent all16 speech once after native terminal (including failed captures). At most watcher+one active stage; never reattempt uncertain sbatch."
+  "durable_chain": "CPU watcher waits for full49 terminal success, submits native16 once, then independent all16 speech once after native terminal (including failed captures). At most watcher+one active stage; never reattempt uncertain sbatch.",
+  "bf16_recovery_plan": "docs/NATIVE-BF16-STREAM49-RECOVERY1-2026-10-20.json",
+  "failed_predecessor_subset_never_accepted": true
 }

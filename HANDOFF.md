@@ -1,3 +1,33 @@
+# LOCAL active — BF16scan TIMEOUT45/49; complete recovery45min prepared (20Oct21:28UTC)
+
+Actual21:27:25UTC: GPU7586717 TIMEOUT0:0 elapsed30m15; all49 report ABSENT,
+45/49 cases emitted20993/22992 real frames. This is FAILED/INCOMPLETE evidence,
+not an accepted subset. My original30min walltime estimate was too short.
+Running-walltime increase to45min was DENIED by Isambard job permissions21:23:56;
+original job/time limit remained unchanged. Finite watcher7587733/source0689a3d1e4d55ab583661559cb38337512cc9f8c
+correctly FAILED1:0/6m02 on predecessorTIMEOUT; submitted NO native16 or speech16.
+Do not restart that failed canonical chain or mark its45 cases as full49.
+
+Recovery plan docs/NATIVE-BF16-STREAM49-RECOVERY1-2026-10-20.json: ONE complete49
+rerun in new job/output directory, original pinned payload32eabbf7633bb607e6652442b7244272125e25a6
+and all math/data/weights/words/targets/thresholds unchanged, zero optimizer;
+new versioned runtime sbatch bound45min/oneGPU/interactive. A NEW finite CPU
+watcher will bind its exact immutable predecessor receipt and wait for all49
+COMPLETE0:0/unchanged parameters before scoped TF32 native16 and all16 speech.
+At most2 active jobs and1GPU job; accepted/uncertain sbatch never retried.
+No recovery IDs yet at this entry. Old45/49 outputs/failed receipts remain intact;
+scoped backup in progress. LOCAL soleexecutor/CLOUDread-only.
+
+Prior precision16 COMPLETE independent speech16/16, maxWER.0266667; ordinarycore
+BF16 parent4/4/child1/4, FP32 with originalTF32=True parent0/4/child0/4. Full16
+review and231 terminal files SHA-backed; union24949files/26023922251B. No candidate
+adoption/extension/fresh20. Source native520/complete8 fullstates and checkpoints
+all preserved; old Mac source backupPARTIAL. Cert ends21Oct03:50:25UTC; reservation
+ends08:56:32UTC. Next launch the complete45min recovery plus finite watcher,
+record exact IDs, finish failed-stage backup, then preserve/review all49 results.
+
+---
+
 # LOCAL active — precision16 independently reviewed; BF16audit7586717 running (20Oct21:08UTC)
 
 Precision GPU7586347 COMPLETED0:0/11m57; speech7586348 COMPLETED0:0/4m59.

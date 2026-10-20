@@ -20,6 +20,17 @@ class PrecisionChain(unittest.TestCase):
   for field,value in [('all_parameters_unchanged',False),('training_approved',True),('original_reference_threshold',.1),('optimizer_updates',1),('native520_checkpoint_sha256','bad'),('cases',r['cases'][:-1]),('cases',[r['cases'][0]]*49)]:
    bad=copy.deepcopy(r);bad[field]=value
    with self.subTest(field=field),self.assertRaises(ValueError):chain.validate_predecessor(bad)
+ def test_recovery_predecessor_binds_exact_immutable_receipt_and_job(self):
+  with tempfile.TemporaryDirectory() as folder:
+   base=Path(folder);tree=base/'tree';plan=tree/'evals/fixtures/native-precision16-no-tf32-plan-20261020.json';plan.parent.mkdir(parents=True);plan.write_text('{}')
+   predecessor=base/'runs/native-bf16-stream49-recovery1-local-20261020.json';predecessor.parent.mkdir();predecessor.write_text(json.dumps(dict(source='b'*40,optimizer_updates=0,jobs=dict(bf16_stream49='111'))))
+   r=self.receipt();r.update(plan_sha256=chain.digest(plan),predecessor_receipt_path=str(predecessor),predecessor_receipt_sha256=chain.digest(predecessor),predecessor_source='b'*40,lm_matmul_tf32=False,scheduler_watcher_job='20');r['jobs']['predecessor']='111'
+   def call(args,env=None):return 'a'*40+'\n' if 'rev-parse' in args else ''
+   with self.env(tree),patch.object(chain,'BASE',base),patch.object(chain,'call',side_effect=call):
+    chain.validate(r);r['jobs']['predecessor']='222'
+    with self.assertRaises(ValueError):chain.validate(r)
+    r['jobs']['predecessor']='111';predecessor.write_text(predecessor.read_text()+'\n')
+    with self.assertRaises(ValueError):chain.validate(r)
  def test_busy_slot_does_not_record_any_submission_attempt(self):
   with tempfile.TemporaryDirectory() as folder,self.env(folder),patch.object(chain,'validate'),patch.object(chain,'evidence') as evidence,patch.object(chain,'call',return_value='20\n7586717\n'):
    r=self.receipt();p=Path(folder)/'receipt.json'

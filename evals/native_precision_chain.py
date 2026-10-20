@@ -27,9 +27,16 @@ def validate_predecessor(report):
 def validate(receipt):
     tree=Path(os.environ['DL_TASK_SOURCE']);source=os.environ['DL_TASK_COMMIT']
     plan=tree/'evals/fixtures/native-precision16-no-tf32-plan-20261020.json'
+    predecessor=Path(receipt['predecessor_receipt_path'])
+    if predecessor.parent!=BASE/'runs' or not predecessor.name.startswith('native-bf16-stream49-'):
+        raise ValueError('Scoped BF16 predecessor receipt required')
+    prior=json.loads(predecessor.read_text())
     if (receipt['source']!=source or receipt['executor']!='LOCAL'
             or receipt['optimizer_updates']!=0 or receipt['training_extension_or_adoption_approved']
-            or receipt['jobs'].get('predecessor')!='7586717' or receipt['lm_matmul_tf32'] is not False
+            or digest(predecessor)!=receipt['predecessor_receipt_sha256']
+            or prior['source']!=receipt['predecessor_source'] or prior['optimizer_updates']!=0
+            or not receipt['jobs']['predecessor'].isdigit()
+            or prior['jobs']['bf16_stream49']!=receipt['jobs']['predecessor'] or receipt['lm_matmul_tf32'] is not False
             or receipt['scheduler_watcher_job']!=os.environ['DL_CHAIN_WATCHER_JOB']
             or call(['git','-C',str(tree),'rev-parse','HEAD']).strip()!=source
             or call(['git','-C',str(tree),'status','--porcelain']).strip()
@@ -39,7 +46,7 @@ def validate(receipt):
 
 def evidence(receipt,stage):
     if stage=='predecessor':
-        path=BASE/'runs/native-audio49-training-preflight-7586717/bf16-stream49-diagnostic.json'
+        path=BASE/'runs'/('native-audio49-training-preflight-'+receipt['jobs']['predecessor'])/'bf16-stream49-diagnostic.json'
         validate_predecessor(json.loads(path.read_text()))
         receipt['bf16_stream49_sha256']=digest(path)
     elif stage=='native16':
