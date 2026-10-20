@@ -22,5 +22,4 @@ export NATIVE_V2_FULL24_PER8=1 NATIVE_V2_LEARNING_RATE=2e-6 NATIVE_V2_WARM_ORDIN
 export NATIVE_AUDIO49_AUDIT_JOB=7572398 NATIVE_V2_TRAIN_PHASE=train
 unset NATIVE_AUDIO49_PREFLIGHT_ONLY
 bash evals/native-v2-train.slurm
-# Only an independently restored complete8 checkpoint can trigger native10.
-python3 -m evals.native_audio49_chain submit-native --receipt "$NATIVE_AUDIO49_CHAIN_RECEIPT" --job "$SLURM_JOB_ID"
+# The durable server watcher verifies completion and fresh restore before native10.

@@ -20,5 +20,5 @@ export DL_SESSION_SOURCE="$DL_TASK_SOURCE" DL_SESSION_COMMIT="$DL_TASK_COMMIT"
 RC=0
 bash evals/native-audio49-session.sh || RC=$?
 # Audit all original10 attempts even if a native case failed; never select a subset.
-python3 -m evals.native_audio49_chain submit-speech --receipt "$NATIVE_AUDIO49_CHAIN_RECEIPT" --job "$SLURM_JOB_ID"
+# The durable server watcher submits the complete speech audit after this job exits.
 exit "$RC"
