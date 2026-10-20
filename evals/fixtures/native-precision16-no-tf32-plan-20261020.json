@@ -1,6 +1,6 @@
 {
   "schema": "dl-native-checkpoint-precision16-no-tf32-plan-v1",
-  "at_utc": "2026-10-20T20:40:25.584119+00:00",
+  "at_utc": "2026-10-20T21:17:53.257612+00:00",
   "cases": [
     {
       "index": 0,
@@ -298,5 +298,6 @@
   "requires_prior_gpu_jobs_terminal": [
     "7586347",
     "7586717"
-  ]
+  ],
+  "durable_chain": "CPU watcher waits for full49 terminal success, submits native16 once, then independent all16 speech once after native terminal (including failed captures). At most watcher+one active stage; never reattempt uncertain sbatch."
 }
