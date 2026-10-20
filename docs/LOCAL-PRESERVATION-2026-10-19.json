@@ -1,7 +1,7 @@
 {
-  "at_utc": "2026-10-20T12:14:27.471054+00:00",
-  "unique_scoped_artifact_files": 23798,
-  "unique_scoped_artifact_bytes": 19078729267,
+  "at_utc": "2026-10-20T12:23:11.896049+00:00",
+  "unique_scoped_artifact_files": 23809,
+  "unique_scoped_artifact_bytes": 19662152493,
   "inventory_conflicts": [],
   "inventories": [
     {
@@ -618,6 +618,13 @@
       "sha256": "4452a60d6a8ba71983bcf8d2f542dda2092013c25da50bae292ae356ad04d6c4",
       "files": 12,
       "bytes": 31975441,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native-audio49-training-complete-inventory.json",
+      "sha256": "5c00543d45c4bf596b8009c0de59b4072a334a546050ef440a253084ac6f334e",
+      "files": 23,
+      "bytes": 615398667,
       "missing_roots": []
     }
   ],
@@ -1310,7 +1317,9 @@
     "reload_report_sha256": "929550fa773cd1e01e2bfc096b8e13b88469627636db93b75c4a8b896ac8d0f1",
     "native10_job": "7576513",
     "native10_status": "RUNNING",
-    "final23_artifacts_backup_in_progress": true
+    "final23_artifacts_backup_in_progress": false,
+    "all23_final_training_artifacts_sha256_backed": true,
+    "full_word_clock_reference_caches_sha256_backed": true
   },
   "native_audio49_watcher_source_bundle": {
     "source": "3d6de2c055d47e15b76ba3a9e48b7a43bbee3c2d",

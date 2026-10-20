@@ -21,9 +21,10 @@ by this chain. LOCAL remains executor/CLOUD read-only/no duplicate jobs.
 
 Training snapshot21files on same project filesystem COMPLETE/missing[]; this is
 not an independent backup. Full final23 artifacts615398667B, including warm-word/
-clock reference caches and final reload/log/snapshot receipts, now being copied
-and SHA-verified to Mac. Existing early12 critical artifacts31975441B already
-verified; readiness19/583956756B verified; prior scoped union23798/19078729267,
+clock reference caches and final reload/log/snapshot receipts, fully size/SHA-
+verified to Mac12:16:41UTC. Local exact28/49 fingerprints/PID/state restoration
+and both full word/clock reference-cache audit hashes independently checked.
+Early12 critical files31975441B and readiness19/583956756B verified; scoped union23809/19662152493,
 plus models/runtime/ASR/vendor/full source bundles. Old stopped Mac source backup
 PARTIAL. Credentials/owner conversations/quarantined core excluded; unrelated
 pycache/capability probes/roadmap untouched.
