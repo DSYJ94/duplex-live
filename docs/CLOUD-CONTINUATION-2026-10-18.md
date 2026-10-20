@@ -1,3 +1,41 @@
+# LOCAL active — full49 complete; scoped precision16 running (20Oct22:22UTC)
+
+LOCAL remains sole executor; CLOUD read-only. Source main/ad4edc2505ae81db5abf4b49c96bd1e173dce341.
+Full49 GPU7587913 COMPLETED0:0/32m00, payload32eabbf7633bb607e6652442b7244272125e25a6.
+All49 original capture/tensor hashes and final model parameter hashes checked.
+22992 valid/1491 spoken targets;36 valid argmax differences (9 spoken in8 cases),
+max logit error0.921875/hidden1.75; all49 exceed original0.001 reference tolerance.
+Completeness passes; actual BF16 stream/batch numerical equivalence DOES NOT.
+Review docs/NATIVE-BF16-STREAM49-RECOVERY1-COMPLETE-REVIEW-2026-10-20.json.
+
+Previous watcher7587915 and GPU7588416/speech7588427 FAILED: GPU aborted before
+any native capture on mixed PyTorch precision APIs, speech correctly failed missing
+inputs. All failed receipts/logs preserved. New immutable sourcead4edc2 consistently
+sets/restores the same backend API and first runs actual CPU compatibility tests.
+CPU watcher7588668 passed7 tests on NVIDIA Torch2.9, cuda_initialized=False; it alone
+owns canonical runs/native-precision16-no-tf32-api-recovery2-local-20261020.json.
+GPU7588671 RUNNING at22:21 accounting,276 testsPASS/4.045s, captures in progress.
+Next independent full16 speech audit is watcher-owned, not yet submitted at this
+observation. No manual submissions/restarts; max2 active jobs/oneGPUjob, interactive.
+Diagnostic zero optimizer updates; no adoption/extension/fresh qualification.
+
+Scoped preservation union24988files/27192155576B, no inventory conflicts. Newly
+backed complete49:17files584136155B; failed API chain:4files67920B, every size/SHA
+verified. Full sourcead4edc2 history bundle preserved. Old Mac source backup PARTIAL.
+Latest real training7585424 carried original Adam520→528 and independently restored,
+but full native10 ordinary1/4,speech7/10: REJECTED. Do not extend unchanged.
+Prepared paired fresh40 tooling is not yet eligible and has submitted no inference.
+
+Kyutai review complete: docs/KYUTAI-INTERACTIVITY-MOSHIRAG-REVIEW-2026-10-20.md.
+June supplies waveform rewards/evals and a noncommercial PersonaPlex-RL comparator;
+April releases a distinct ARC-conditioning async model/code/test set. Neither fixes
+matched-input BF16 numerics or establishes our complete delegation semantics.
+Code/model/data revisions pinned; no pipeline change or extra submission. Next: finish all16 and speech, preserve/hash/review all
+results, then select a diagnosed native repair. Cert21Oct03:50:25UTC; reservation
+21Oct08:56:32UTC. All previous data/retention/approval thresholds remain unchanged.
+
+---
+
 # LOCAL active — full49 recovery33/49; future paired40 tooling prepared (20Oct21:56UTC)
 
 Actual21:56:48UTC queue ONLY GPU7587913 RUNNING24m56 and CPUwatcher7587915

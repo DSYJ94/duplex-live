@@ -1,7 +1,7 @@
 {
-  "at_utc": "2026-10-20T21:57:35.352798+00:00",
-  "unique_scoped_artifact_files": 24967,
-  "unique_scoped_artifact_bytes": 26607951501,
+  "at_utc": "2026-10-20T22:21:57.326542+00:00",
+  "unique_scoped_artifact_files": 24988,
+  "unique_scoped_artifact_bytes": 27192155576,
   "inventory_conflicts": [],
   "inventories": [
     {
@@ -737,6 +737,20 @@
       "sha256": "79fba5995bfd59480dbd52f96133bfffbf6665f399fabee523e545f982106e5f",
       "files": 18,
       "bytes": 584029250,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native-bf16-stream49-recovery1-terminal-inventory.json",
+      "sha256": "ba2fa204dad562a99cf19f46aa801596511253d1d35a4aab431dcfaa87fccbec",
+      "files": 17,
+      "bytes": 584136155,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native-precision16-no-tf32-api-failed-inventory.json",
+      "sha256": "18273c02f095fb4dbc6dc5c44ea3c012d38164ea05ce1c8a641ff34b37712abe",
+      "files": 4,
+      "bytes": 67920,
       "missing_roots": []
     }
   ],
@@ -1891,23 +1905,45 @@
       "job": "7587913"
     },
     "held_settings": "JobId=7587913 JobName=dl-native-bf16-stream49\n   UserId=dsyj94.u6si(1483807285) GroupId=dsyj94.u6si(1483807285) MCS_label=N/A\n   Priority=0 Nice=0 Account=brics.u6si QOS=normal\n   JobState=PENDING Reason=JobHeldUser Dependency=(null)\n   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0\n   RunTime=00:00:00 TimeLimit=00:45:00 TimeMin=N/A\n   SubmitTime=2026-10-20T21:31:51 EligibleTime=Unknown\n   AccrueTime=Unknown\n   StartTime=Unknown EndTime=Unknown Deadline=N/A\n   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-20T21:31:51 Scheduler=Main\n   Partition=interactive AllocNode:Sid=login41:23976\n   ReqNodeList=(null) ExcNodeList=(null)\n   NodeList=\n   NumNodes=1-1 NumCPUs=8 NumTasks=1 CPUs/Task=8 ReqB:S:C:T=0:0:*:*\n   ReqTRES=cpu=8,mem=160G,node=1,billing=324,gres/gpu=1\n   AllocTRES=(null)\n   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*\n   MinCPUsNode=8 MinMemoryNode=160G MinTmpDiskNode=0\n   Features=(null) DelayBoot=00:00:00\n   Reservation=interactive\n   OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null)\n   Command=/projects/u6si/duplex-live/worktrees/recovery-32eabbf/evals/native-bf16-stream49.slurm\n   SubmitLine=sbatch --hold --parsable --export=ALL --no-requeue --time=00:45:00 /projects/u6si/duplex-live/worktrees/recovery-32eabbf/evals/native-bf16-stream49.slurm\n   WorkDir=/lus/lfs1aip2/projects/u6si/duplex-live\n   StdErr=\n   StdIn=/dev/null\n   StdOut=/lus/lfs1aip2/projects/u6si/duplex-live/logs/dl-native-bf16-stream49-7587913.out\n   TresPerNode=gres/gpu:1\n   TresPerTask=cpu=8\n\n",
-    "state": "RUNNING",
-    "observed_utc": "2026-10-20T21:56:48Z",
-    "observed_elapsed": "00:24:56",
+    "state": "COMPLETED",
+    "observed_utc": "2026-10-20T22:06:27.926278+00:00",
+    "observed_elapsed": "00:32:00",
     "actual_gpu_walltime_limit_minutes": 45,
-    "completed_cases_observed": 33,
-    "observed_real_frames": 15287,
-    "all49_complete": false
+    "completed_cases_observed": 49,
+    "observed_real_frames": 22992,
+    "all49_complete": true,
+    "parameter_hash_unchanged": true,
+    "numerical_equivalence_pass": false,
+    "valid_argmax_disagreements": 36,
+    "spoken_argmax_disagreements": 9,
+    "review": "docs/NATIVE-BF16-STREAM49-RECOVERY1-COMPLETE-REVIEW-2026-10-20.json",
+    "all17_terminal_artifacts_sha256_backed": true
   },
   "native_precision16_no_tf32_recovery1_chain": {
     "source": "cf8d4d3bbcaa0db5592cf026b24e77378c57d07c",
     "executor": "LOCAL",
     "at_utc": "2026-10-20T21:31:51.520285Z",
     "jobs": {
-      "predecessor": "7587913"
+      "predecessor": "7587913",
+      "native16": "7588416",
+      "speech16": "7588427"
     },
-    "released": [],
-    "submission_attempts": {},
+    "released": [
+      "7588416",
+      "7588427"
+    ],
+    "submission_attempts": {
+      "native16": {
+        "status": "released",
+        "at_utc": "2026-10-20T22:04:27.995395Z",
+        "job": "7588416"
+      },
+      "speech16": {
+        "status": "released",
+        "at_utc": "2026-10-20T22:05:28.154699Z",
+        "job": "7588427"
+      }
+    },
     "watcher_submission_attempt": {
       "status": "released",
       "job": "7587915"
@@ -1937,13 +1973,44 @@
       "sha256": "53f4f9e59531bf11a089adb489ae219c3646935d3e8d430de6df84b9c830583e",
       "verified_complete_history": true
     },
-    "watcher_state": "RUNNING",
-    "observed_utc": "2026-10-20T21:56:48Z",
-    "observed_elapsed": "00:24:52",
-    "native16_submitted": false,
-    "speech16_submitted": false,
+    "watcher_state": "FAILED",
+    "observed_utc": "2026-10-20T22:17:48.792569+00:00",
+    "observed_elapsed": "00:34:32",
+    "native16_submitted": true,
+    "speech16_submitted": true,
     "watcher_tests_locally_passed": 6,
-    "watcher_heartbeat_utc": "2026-10-20T21:56:03.219522Z"
+    "watcher_heartbeat_utc": "2026-10-20T22:06:28.284566Z",
+    "watcher_terminal": {
+      "stage": "speech16",
+      "job": "7588427",
+      "state": "FAILED",
+      "exit_code": "1:0",
+      "at_utc": "2026-10-20T22:06:28.293657Z"
+    },
+    "native16_state": "FAILED",
+    "speech16_state": "FAILED",
+    "native_captures": 0,
+    "all4_terminal_artifacts_sha256_backed": true,
+    "slurm_observed": {
+      "predecessor": {
+        "job": "7587913",
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "at_utc": "2026-10-20T22:04:27.272847Z"
+      },
+      "native16": {
+        "job": "7588416",
+        "state": "FAILED",
+        "exit_code": "1:0",
+        "at_utc": "2026-10-20T22:05:28.124239Z"
+      },
+      "speech16": {
+        "job": "7588427",
+        "state": "FAILED",
+        "exit_code": "1:0",
+        "at_utc": "2026-10-20T22:06:28.284573Z"
+      }
+    }
   },
   "fresh40_single_allocation_preparation": {
     "source": "fb2135c32296d6ffa1a23af57ef30d4d949c1dd9",
@@ -1968,5 +2035,29 @@
       "sha256": "b1d5b6f3412889ca842f0de4b4f82e550c026d538e1d607d68eac6083e81de42",
       "verified_complete_history": true
     }
+  },
+  "native_precision_tf32_api_recovery2": {
+    "source": "ad4edc2505ae81db5abf4b49c96bd1e173dce341",
+    "watcher": "7588668",
+    "native16": "7588671",
+    "cpu_backend_tests_passed": 7,
+    "cpu_preflight_cuda_initialized": false,
+    "cpu_preflight_sha256": "2f481bd97502f52189ec11aa15836c2be7c62e52ea67bd03a3ec7792e9753afc",
+    "canonical": "runs/native-precision16-no-tf32-api-recovery2-local-20261020.json",
+    "canonical_mutable_until_terminal": true,
+    "optimizer_updates": 0,
+    "adoption_approved": false,
+    "source_bundle": {
+      "path": "runs/local-continuation-20261019/source-main-ad4edc2.bundle",
+      "sha256": "5b50ac03b99bca4a78914a38b86e110f8f9935008accac3a9ea97dbce8b88f47",
+      "verified_complete_history": true
+    }
+  },
+  "kyutai_research": {
+    "note": "docs/KYUTAI-INTERACTIVITY-MOSHIRAG-REVIEW-2026-10-20.md",
+    "research_only": true,
+    "training_pipeline_changed": false,
+    "extra_jobs_submitted": false,
+    "existing_native_gate_unchanged": true
   }
 }
