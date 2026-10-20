@@ -84,7 +84,6 @@ def main():
     identity,report=(parent_identity,parent) if a.checkpoint==PARENT else (child_identity,child)
     if sha256(assets)!=report['assets_manifest_sha256']:raise ValueError('Different model manifest')
     os.environ.update(CS_BASE_DIR=str(base),CS_WEIGHTS_DIR=str(weights),CS_VOICES_DIR=str(weights/'voices'))
-    os.environ['TRITON_LIBCUDA_PATH']=subprocess.check_output([sys.executable,'-m','evals.cuda_linker_path','--out',str(a.out/'driver')],text=True).strip()
     sys.path.insert(0,str(source))
     if a.phase=='preflight':
         import sentencepiece
@@ -117,6 +116,7 @@ def main():
             or pre['implementation_sha256']!=sha256(Path(__file__))
             or pre['source_commit']!=os.environ['DL_TASK_COMMIT']):
         raise ValueError('Changed independent complete25 CPU preflight')
+    os.environ['TRITON_LIBCUDA_PATH']=subprocess.check_output([sys.executable,'-m','evals.cuda_linker_path','--out',str(a.out/'driver')],text=True).strip()
     from contextspan.model.weights import load_model
     from contextspan.model.sequence_convention import persona_prefix
     from evals.lychee_context import BASE_INSTRUCTIONS
