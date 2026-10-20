@@ -1,0 +1,144 @@
+{
+  "schema": "dl-native-fixed-history-learning-curve-review-v1",
+  "at_utc": "2026-10-20T08:29:05.427376+00:00",
+  "job": "7570471",
+  "source": "a0c51a199b897733081d55524f0a89d4937287b9",
+  "cpu_job": "7570433",
+  "cpu_tests_passed": 156,
+  "status": "COMPLETED",
+  "allocation_elapsed": "00:06:54",
+  "report_sha256": "5e8712aa8fe776753d51ae1ebffdd45a17c9fab8e1490b9576ab031d7e29b509",
+  "complete_inputs": 81,
+  "optimizer_updates": 0,
+  "parent_parameters_restored_exact": true,
+  "frozen_base_parameters_unchanged": true,
+  "groups": [
+    {
+      "group": "actual28",
+      "examples": 28,
+      "children": [
+        {
+          "job": "7556562",
+          "mean_example_parent_kl": 0.0002028732338729609,
+          "maximum_example_parent_kl": 0.0009391072671860456,
+          "mean_example_hidden_mse": 0.00010562370516709052,
+          "parent_top1_matches": 776,
+          "frames": 782,
+          "mean_example_half_pad_nll": 0.6334077249339316
+        },
+        {
+          "job": "7558824",
+          "mean_example_parent_kl": 0.00028734645016775015,
+          "maximum_example_parent_kl": 0.0016794074326753616,
+          "mean_example_hidden_mse": 0.00012689657056138718,
+          "parent_top1_matches": 778,
+          "frames": 782,
+          "mean_example_half_pad_nll": 0.6288677422557417
+        }
+      ],
+      "native520_mean_example_half_pad_nll": 0.6367367186290461
+    },
+    {
+      "group": "old25",
+      "examples": 25,
+      "children": [
+        {
+          "job": "7556562",
+          "mean_example_parent_kl": 0.0001025096807279624,
+          "maximum_example_parent_kl": 0.00015211530262604356,
+          "mean_example_hidden_mse": 6.502391624962911e-05,
+          "parent_top1_matches": 11407,
+          "frames": 11425,
+          "mean_example_half_pad_nll": 0.33017060309648516
+        },
+        {
+          "job": "7558824",
+          "mean_example_parent_kl": 0.00011524601577548311,
+          "maximum_example_parent_kl": 0.00018433306831866503,
+          "mean_example_hidden_mse": 7.002796803135425e-05,
+          "parent_top1_matches": 11409,
+          "frames": 11425,
+          "mean_example_half_pad_nll": 0.32971679866313935
+        }
+      ],
+      "native520_mean_example_half_pad_nll": 0.33017656952142715
+    },
+    {
+      "group": "new24",
+      "examples": 24,
+      "children": [
+        {
+          "job": "7556562",
+          "mean_example_parent_kl": 7.564596868784672e-05,
+          "maximum_example_parent_kl": 0.00010641311382642016,
+          "mean_example_hidden_mse": 6.126602844839606e-05,
+          "parent_top1_matches": 11554,
+          "frames": 11567,
+          "mean_example_half_pad_nll": 0.22351148910820484
+        },
+        {
+          "job": "7558824",
+          "mean_example_parent_kl": 8.812568451806631e-05,
+          "maximum_example_parent_kl": 0.00013984704855829477,
+          "mean_example_hidden_mse": 6.536665053621012e-05,
+          "parent_top1_matches": 11553,
+          "frames": 11567,
+          "mean_example_half_pad_nll": 0.22254920409371456
+        }
+      ],
+      "native520_mean_example_half_pad_nll": 0.2236677734181285
+    },
+    {
+      "group": "legacy4",
+      "examples": 4,
+      "children": [
+        {
+          "job": "7556562",
+          "mean_example_parent_kl": 0.00010014284816861618,
+          "maximum_example_parent_kl": 0.00013175061030779034,
+          "mean_example_hidden_mse": 6.289313660090556e-05,
+          "parent_top1_matches": 1928,
+          "frames": 1931
+        },
+        {
+          "job": "7558824",
+          "mean_example_parent_kl": 0.00011000431732099969,
+          "maximum_example_parent_kl": 0.00014538897085003555,
+          "mean_example_hidden_mse": 6.707593092869502e-05,
+          "parent_top1_matches": 1929,
+          "frames": 1931
+        }
+      ]
+    }
+  ],
+  "diagnostic_only": true,
+  "native_behavior_qualified": false,
+  "causal_attribution_established": false,
+  "inference": "The approved fixed histories retain almost all parent top choices and slightly lower mean target loss, despite failed native free-running behavior. This distinguishes small pointwise drift from the behavioral outcome; it does not establish the cause.",
+  "next_test": {
+    "plan": "evals/fixtures/native-seen-retention-plan-20261020.json",
+    "purpose": "Compare allthree checkpoints free-running on the same four approved ordinary TRAIN questions to test failure on seen stimuli versus failure to generalize.",
+    "all12_required": true,
+    "default_sampler_unchanged": true,
+    "outputs_must_not_be_trained_on": true
+  },
+  "hypotheses": [
+    {
+      "id": "fixed_history_forgetting",
+      "prediction": "Substantial degradation on approved masks/targets would support direct fixed-history forgetting",
+      "observed": "Broadly high parent top1 agreement and slightly improved example-mean losses; large broad pointwise forgetting is not demonstrated."
+    },
+    {
+      "id": "native_trajectory_shift",
+      "prediction": "Seen TRAIN free-running failures despite retained fixed-history predictions support a trajectory/conditioning gap",
+      "observed": "Pending full12 native/independent speech review"
+    },
+    {
+      "id": "generalization_loss",
+      "prediction": "Seen TRAIN answers retained but development answers fail supports inadequate generalization of retention",
+      "observed": "Pending full12 native/independent speech review"
+    }
+  ],
+  "all_artifacts_sha256_backed": true,
+  "new_optimizer_work_authorized_by_this_report": false
+}

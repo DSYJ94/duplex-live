@@ -1,3 +1,43 @@
+# LOCAL active — full81 complete; unforced seen-TRAIN12 running7570564 (2026-10-20 08:28 UTC)
+
+Read-only81 diagnostic7570471 COMPLETED6m54/sourcea0c51a199b897733081d55524f0a89d4937287b9,
+CPU7570433 PASS156. ALL28actual/25old/24new/4legacy measured for parent7510331,
+8child7556562 and40child7558824. ZERO optimizer updates/newcheckpoint; exactparent
+and frozenbase restored. All13 artifacts1419698bytes SHAbacked08:16:59UTC.
+ReportSHA5e8712aa8fe776753d51ae1ebffdd45a17c9fab8e1490b9576ab031d7e29b509.
+Committed summary docs/NATIVE-FIXED-HISTORY-LEARNING-CURVE-2026-10-20.json.
+40retains778/782actual parenttop1,11409/11425old,11553/11567new,1929/1931legacy.
+Mean example NLL actual0.636737→0.628868,old0.330177→0.329717,new0.223668→0.222549.
+Fixed-history retention/trainingfit does NOT establish native behavior/cause.
+Native40 remains fullyREJECTED ordinary1/4+plants partial,speech8/10/controlfail.
+
+Next diagnostic nowRUNNING7570564 (lastactualread08:27:11UTC,1m34); independent
+all12 CPUASR7570565 dependent. Source2249c4dd1a221d6abb4ea525974540cbd3e08ee9,
+CPU7570557 COMPLETED20s/PASS160. Exactly4SEENordinaryTRAINquestions008..011 ×
+three checkpoints7510331/7556562/7558824. Original text0.7/audio0.8/seed42424242,
+userWAV/persona/voice unchanged, no forcedwords/controller/backendactions.
+Plan evals/fixtures/native-seen-retention-plan-20261020.json binds originalTRAIN
+source WAV/sidecar/ingestion hashes and exactthree checkpoint lineages. All12
+must be reviewed; no passing subset. ALLoutputs are diagnostic/do_not_train,
+explicitly embedded in Recorder+loading metadata; no qualification/generalization
+or fresh20 use. Default source/sampling guards unchanged outside explicit opt-in.
+Purpose: distinguish failure even on trained questions from failure to generalize
+from trained anchors. No extra optimizer, data edits or API calls.
+
+Exclusive receipt runs/native-seen-retention-local-20261020.json. Solelive local
+orchestrator exec10768 (/tmp/duplex-run-native-seen-retention.py) polls eachcurrent
+job>=60s with UTCstamps, then scopedrsync/hashbackupsall12/ASR/receipts/logs.
+Prior48131 isTERMINALsuccess; nootherwatcher/submissionprocess. Native12 max2GPU/
+30mininteractive, no partition/QoSoverride. Do notduplicate or infercompletion
+from walltime; useactualsacct. LOCALowns,CLOUDnojobs/nohandback/nocloudpurchase.
+
+Verifiedbackupunion23400files17798964360bytes+model/runtime/ASR/vendor/source.
+OldstoppedMacsourcebackupPARTIAL. Excludesowners/credentials/core. Localcert
+through20Oct19:32:16UTC/21:32:16Berlin. No further-than40 training/adoption from
+bounded32scope. Native/whole-systemUNQUALIFIED; fresh20sourcePASS butnativeNONE.
+
+---
+
 # LOCAL active — complete81 ZERO-UPDATE diagnostic7570471 released (2026-10-20 08:11 UTC)
 
 Current task after rejecting fully restored40: quantify fixed-history fit versus

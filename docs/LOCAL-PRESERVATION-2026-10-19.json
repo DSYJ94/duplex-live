@@ -1,7 +1,7 @@
 {
-  "at_utc": "2026-10-20T07:47:51.116016+00:00",
-  "unique_scoped_artifact_files": 23387,
-  "unique_scoped_artifact_bytes": 17797544662,
+  "at_utc": "2026-10-20T08:29:05.427376+00:00",
+  "unique_scoped_artifact_files": 23400,
+  "unique_scoped_artifact_bytes": 17798964360,
   "inventory_conflicts": [],
   "inventories": [
     {
@@ -542,6 +542,13 @@
       "files": 157,
       "bytes": 871240628,
       "missing_roots": []
+    },
+    {
+      "name": "remote-native-learning-curve-complete-inventory.json",
+      "sha256": "7d57ca6e4dd5ac0c4ef2e432577108ce92694750037b85571f2cf1b7a9f37003",
+      "files": 13,
+      "bytes": 1419698,
+      "missing_roots": []
     }
   ],
   "local_artifact_root": "runs/cloud-export-20261016/tree",
@@ -851,11 +858,32 @@
     "cpu_job": "7570433",
     "cpu_tests_passed": 156,
     "job": "7570471",
-    "status": "RELEASED",
+    "status": "COMPLETED",
     "optimizer_updates": 0,
     "complete_inputs": 81,
     "local_orchestrator_session": 48131,
     "no_development_recordings_used": true,
-    "no_training_or_adoption_authorized": true
+    "no_training_or_adoption_authorized": true,
+    "allocation_elapsed": "00:06:54",
+    "parent_restored_exact": true,
+    "frozen_base_unchanged": true,
+    "all81_reviewed": true,
+    "report_sha256": "5e8712aa8fe776753d51ae1ebffdd45a17c9fab8e1490b9576ab031d7e29b509",
+    "all_artifacts_sha256_backed": true,
+    "orchestrator_terminal": true
+  },
+  "native_seen_retention_diagnostic": {
+    "source": "2249c4dd1a221d6abb4ea525974540cbd3e08ee9",
+    "cpu_job": "7570557",
+    "cpu_tests_passed": 160,
+    "jobs": {
+      "all12_native_seen_retention": "7570564",
+      "independent_all12_cpu_speech": "7570565"
+    },
+    "optimizer_updates": 0,
+    "complete_cases_required": 12,
+    "diagnostic_only": true,
+    "outputs_must_not_be_trained_on": true,
+    "local_orchestrator_session": 10768
   }
 }
