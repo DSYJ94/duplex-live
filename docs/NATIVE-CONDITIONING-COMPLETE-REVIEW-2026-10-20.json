@@ -1,0 +1,607 @@
+{
+  "schema": "dl-native-conditioning-diagnostic-complete-review-v1",
+  "at_utc": "2026-10-20T09:52:00.731901+00:00",
+  "source": "c722dd2c574d8173a2ac659eff8dfcffba44a539",
+  "cpu_preflight_job": "7571869",
+  "cpu_tests_passed": 216,
+  "complete25_independently_validated_before_gpu": true,
+  "native_job": "7572011",
+  "speech_job": "7572013",
+  "capture_provenance_sha256": "e184588f529e6f4a8a866dbd6873d4d3201da3086fc01f5144d6ba6ae4d2c473",
+  "render_report_sha256": "9306bee4895d7b9b9d556a3330f6537ed3c23b343a5268a61f07029c811bb964",
+  "capture_tensor_sha256": "8c10cfc04631ea13c14bfd31e8121fdb7e61864e90e163461cddccc814fc9bc5",
+  "audio_sha256": "31b5db649f06a2fdffbc87431cc8e274c5398815b9fecfb1e707d2561a2422f9",
+  "teacher": {
+    "id": "teacher-recovery-train-010",
+    "kind": "simple",
+    "source_model": "gpt-live-1",
+    "source_split": "train",
+    "cache": "/projects/u6si/duplex-live/runs/native-old25-codes-7543730",
+    "cache_sha256": "7c73cb6c590fe7b7de0c3d6e13a3db1975be68ad1bb7979c3c13ce8ca242a257",
+    "codes_sha256": "c8f87cad1a548aaa3d5e8cd5fc8bba74e741af0e5ded8cc9073de38802903382",
+    "wav_sha256": "06b8588ef1f64c1acc7bf251e5f97dff60169a7d26126bbf369a9f653e46ef55",
+    "sidecar_sha256": "efea4a9e632da5dd63e3f05232332be35729fab426ff2ce104251ffdbfd5240f",
+    "ingestion_sha256": "86c7d3da719d1a5265dd2ed80ee46fdad8aae0001a90716a6ebe2d6302fc4b67",
+    "request_policy": "native-prelead-epad",
+    "frames": 550,
+    "real_frames": 318,
+    "prefix_frames": 232,
+    "text_targets": 318,
+    "spoken_targets": 63,
+    "request_targets": 0,
+    "targets_sha256": "26da125a6f73e3c8b0f236a6057a7a271b38d01a7ead5ea5832a1e791a85dede",
+    "mask_sha256": "89a409d31ae7545f47d416072a5297a6bf597ee988eceb9fc12bd54e7ef9824f",
+    "prefix_loss_targets": 0,
+    "span_loss_targets": 0,
+    "user_loss_targets": 0,
+    "audio_loss_targets": 0
+  },
+  "expected_forced_text": "Day turns into night because Earth is constantly rotating. As it spins, different parts face the sun and get daylight, while the parts turned away are in shadow and experience night. That rotation takes about 24 hours, which is why we get a regular cycle of day, then night, then day again.",
+  "native_text_forced": true,
+  "native_audio_sampled": true,
+  "producer_structural_checks_passed": true,
+  "independent_new_training_input_approval": false,
+  "independent_speech_sha256": "29f2506bec4d82fa487e6370bf08530474915778c86eb3f2fcc1e84e4072c865",
+  "independent_speech": {
+    "run": "/projects/u6si/duplex-live/runs/native-conditioning-7572011/capture",
+    "wav_sha256": "31b5db649f06a2fdffbc87431cc8e274c5398815b9fecfb1e707d2561a2422f9",
+    "audio_duration_s": 25.44,
+    "model_text": "Day turns into night because Earth is constantly rotating. As it spins, different parts face the sun and get daylight, while the parts turned away are in shadow and experience night. That rotation takes about 24 hours, which is why we get a regular cycle of day, then night, then day again.",
+    "asr_input_duration_s": 21.61,
+    "trailing_silence_trimmed_s": 3.83,
+    "silence_trim_enabled": true,
+    "asr_text": " day turns into night because earth is constantly rotating as it spins different parts face the sun and get daylight while other parts turned away are in shadow and experience night that rotation takes about 24 hours which the mayan we get a 12 year base day then night then day again",
+    "asr_segments": [
+      {
+        "id": 0,
+        "seek": 0,
+        "start": 4.06,
+        "end": 9.86,
+        "text": " day turns into night because earth is constantly rotating as it spins different parts face the sun",
+        "tokens": [
+          50365,
+          786,
+          4523,
+          666,
+          1818,
+          570,
+          4120,
+          307,
+          6460,
+          19627,
+          382,
+          309,
+          31587,
+          819,
+          3166,
+          1851,
+          264,
+          3295,
+          50860
+        ],
+        "temperature": 0.0,
+        "avg_logprob": -0.14734975496927896,
+        "compression_ratio": 1.5810055865921788,
+        "no_speech_prob": 1.6707079513247902e-12,
+        "confidence": 0.859,
+        "words": [
+          {
+            "text": "day",
+            "start": 4.06,
+            "end": 4.22,
+            "confidence": 0.16
+          },
+          {
+            "text": "turns",
+            "start": 4.22,
+            "end": 4.56,
+            "confidence": 0.982
+          },
+          {
+            "text": "into",
+            "start": 4.56,
+            "end": 4.8,
+            "confidence": 0.997
+          },
+          {
+            "text": "night",
+            "start": 4.8,
+            "end": 5.02,
+            "confidence": 0.985
+          },
+          {
+            "text": "because",
+            "start": 5.02,
+            "end": 5.32,
+            "confidence": 0.967
+          },
+          {
+            "text": "earth",
+            "start": 5.32,
+            "end": 5.68,
+            "confidence": 0.953
+          },
+          {
+            "text": "is",
+            "start": 5.68,
+            "end": 5.92,
+            "confidence": 0.988
+          },
+          {
+            "text": "constantly",
+            "start": 5.92,
+            "end": 6.5,
+            "confidence": 0.976
+          },
+          {
+            "text": "rotating",
+            "start": 6.5,
+            "end": 7.18,
+            "confidence": 0.99
+          },
+          {
+            "text": "as",
+            "start": 7.18,
+            "end": 7.82,
+            "confidence": 0.803
+          },
+          {
+            "text": "it",
+            "start": 7.82,
+            "end": 7.98,
+            "confidence": 0.99
+          },
+          {
+            "text": "spins",
+            "start": 7.98,
+            "end": 8.34,
+            "confidence": 0.994
+          },
+          {
+            "text": "different",
+            "start": 8.34,
+            "end": 8.76,
+            "confidence": 0.897
+          },
+          {
+            "text": "parts",
+            "start": 8.76,
+            "end": 9.12,
+            "confidence": 0.952
+          },
+          {
+            "text": "face",
+            "start": 9.12,
+            "end": 9.4,
+            "confidence": 0.992
+          },
+          {
+            "text": "the",
+            "start": 9.4,
+            "end": 9.62,
+            "confidence": 0.908
+          },
+          {
+            "text": "sun",
+            "start": 9.62,
+            "end": 9.86,
+            "confidence": 0.908
+          }
+        ]
+      },
+      {
+        "id": 1,
+        "seek": 0,
+        "start": 9.88,
+        "end": 15.06,
+        "text": " and get daylight while other parts turned away are in shadow and experience night that rotation",
+        "tokens": [
+          50860,
+          293,
+          483,
+          29964,
+          1339,
+          661,
+          3166,
+          3574,
+          1314,
+          366,
+          294,
+          8576,
+          293,
+          1752,
+          1818,
+          300,
+          12447,
+          51121
+        ],
+        "temperature": 0.0,
+        "avg_logprob": -0.14734975496927896,
+        "compression_ratio": 1.5810055865921788,
+        "no_speech_prob": 1.6707079513247902e-12,
+        "confidence": 0.863,
+        "words": [
+          {
+            "text": "and",
+            "start": 9.88,
+            "end": 10.0,
+            "confidence": 0.907
+          },
+          {
+            "text": "get",
+            "start": 10.0,
+            "end": 10.16,
+            "confidence": 0.997
+          },
+          {
+            "text": "daylight",
+            "start": 10.16,
+            "end": 10.46,
+            "confidence": 0.977
+          },
+          {
+            "text": "while",
+            "start": 10.46,
+            "end": 11.0,
+            "confidence": 0.802
+          },
+          {
+            "text": "other",
+            "start": 11.0,
+            "end": 11.36,
+            "confidence": 0.982
+          },
+          {
+            "text": "parts",
+            "start": 11.36,
+            "end": 11.6,
+            "confidence": 0.998
+          },
+          {
+            "text": "turned",
+            "start": 11.6,
+            "end": 11.84,
+            "confidence": 0.99
+          },
+          {
+            "text": "away",
+            "start": 11.84,
+            "end": 12.18,
+            "confidence": 0.989
+          },
+          {
+            "text": "are",
+            "start": 12.18,
+            "end": 12.38,
+            "confidence": 0.976
+          },
+          {
+            "text": "in",
+            "start": 12.38,
+            "end": 12.52,
+            "confidence": 0.997
+          },
+          {
+            "text": "shadow",
+            "start": 12.52,
+            "end": 12.82,
+            "confidence": 0.962
+          },
+          {
+            "text": "and",
+            "start": 12.82,
+            "end": 13.14,
+            "confidence": 0.99
+          },
+          {
+            "text": "experience",
+            "start": 13.14,
+            "end": 13.56,
+            "confidence": 0.992
+          },
+          {
+            "text": "night",
+            "start": 13.56,
+            "end": 14.1,
+            "confidence": 0.972
+          },
+          {
+            "text": "that",
+            "start": 14.1,
+            "end": 14.68,
+            "confidence": 0.157
+          },
+          {
+            "text": "rotation",
+            "start": 14.68,
+            "end": 15.06,
+            "confidence": 0.983
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "seek": 0,
+        "start": 15.14,
+        "end": 20.94,
+        "text": " takes about 24 hours which the mayan we get a 12 year base day then night then day again",
+        "tokens": [
+          51121,
+          2516,
+          466,
+          4022,
+          2496,
+          597,
+          264,
+          815,
+          282,
+          321,
+          483,
+          257,
+          2272,
+          1064,
+          3096,
+          786,
+          550,
+          1818,
+          550,
+          786,
+          797,
+          51421
+        ],
+        "temperature": 0.0,
+        "avg_logprob": -0.14734975496927896,
+        "compression_ratio": 1.5810055865921788,
+        "no_speech_prob": 1.6707079513247902e-12,
+        "confidence": 0.774,
+        "words": [
+          {
+            "text": "takes",
+            "start": 15.14,
+            "end": 15.36,
+            "confidence": 0.832
+          },
+          {
+            "text": "about",
+            "start": 15.36,
+            "end": 15.66,
+            "confidence": 0.997
+          },
+          {
+            "text": "24",
+            "start": 15.66,
+            "end": 16.06,
+            "confidence": 0.957
+          },
+          {
+            "text": "hours",
+            "start": 16.06,
+            "end": 16.62,
+            "confidence": 0.997
+          },
+          {
+            "text": "which",
+            "start": 16.62,
+            "end": 17.08,
+            "confidence": 0.255
+          },
+          {
+            "text": "the",
+            "start": 17.08,
+            "end": 17.28,
+            "confidence": 0.967
+          },
+          {
+            "text": "mayan",
+            "start": 17.28,
+            "end": 17.64,
+            "confidence": 0.409
+          },
+          {
+            "text": "we",
+            "start": 17.64,
+            "end": 17.76,
+            "confidence": 0.957
+          },
+          {
+            "text": "get",
+            "start": 17.76,
+            "end": 17.88,
+            "confidence": 0.997
+          },
+          {
+            "text": "a",
+            "start": 17.88,
+            "end": 18.02,
+            "confidence": 0.997
+          },
+          {
+            "text": "12",
+            "start": 18.02,
+            "end": 18.34,
+            "confidence": 0.99
+          },
+          {
+            "text": "year",
+            "start": 18.34,
+            "end": 18.72,
+            "confidence": 0.377
+          },
+          {
+            "text": "base",
+            "start": 18.72,
+            "end": 18.98,
+            "confidence": 0.57
+          },
+          {
+            "text": "day",
+            "start": 18.98,
+            "end": 19.3,
+            "confidence": 0.996
+          },
+          {
+            "text": "then",
+            "start": 19.3,
+            "end": 19.58,
+            "confidence": 0.957
+          },
+          {
+            "text": "night",
+            "start": 19.58,
+            "end": 20.0,
+            "confidence": 0.998
+          },
+          {
+            "text": "then",
+            "start": 20.0,
+            "end": 20.32,
+            "confidence": 0.972
+          },
+          {
+            "text": "day",
+            "start": 20.32,
+            "end": 20.6,
+            "confidence": 0.985
+          },
+          {
+            "text": "again",
+            "start": 20.6,
+            "end": 20.94,
+            "confidence": 0.995
+          }
+        ]
+      }
+    ],
+    "wer_against_model_text": 0.11320754716981132,
+    "semantic_review": "pending",
+    "human_listening": "pending",
+    "leading_silence_trimmed_s": 0.0,
+    "asr_window_start_s": 0.0,
+    "asr_window_end_s": 21.61,
+    "timestamps_restored_to_original_wav": true,
+    "internal_silence_removed": false,
+    "asr_activity_floor": 0.001,
+    "asr_margin_s": 0.25,
+    "first_nonzero_wav_sample_s": 0.0,
+    "word_starts_within_recorded_audio": true,
+    "source_kind": "forced_teacher_text_native_audio",
+    "text_was_forced": true,
+    "assistant_audio_tokens_forced": false,
+    "native_reasoning_qualified": false,
+    "training_approved": false,
+    "asr_time_bounds_valid": true,
+    "asr_word_bounds_valid": true
+  },
+  "independent_speech_quality_passed": false,
+  "pcm": {
+    "rate": 24000,
+    "samples": 610560,
+    "format": "IEEE_FLOAT32",
+    "peak": 0.8608776330947876,
+    "samples_at_or_above_1": 0,
+    "gain_changed": false
+  },
+  "scores": [
+    {
+      "checkpoint": "7510331",
+      "report_sha256": "a8c5266a58a8ce410d012a6b8a2206885d75e1aae70ce9180cd452ae31293e95",
+      "metrics": {
+        "approved_teacher_acoustics": {
+          "frames": 318,
+          "half_pad_nll": 0.5895127654075623,
+          "top1_matches": 266,
+          "nonpad_frames": 111,
+          "spoken_frames": 63,
+          "pad3_frames": 207,
+          "spoken_top1_matches": 43,
+          "pad3_top1_matches": 196,
+          "first_spoken_target_probability": 0.9468609690666199
+        },
+        "sampled_native520_acoustics": {
+          "frames": 318,
+          "half_pad_nll": 0.8405861854553223,
+          "top1_matches": 236,
+          "nonpad_frames": 111,
+          "spoken_frames": 63,
+          "pad3_frames": 207,
+          "spoken_top1_matches": 34,
+          "pad3_top1_matches": 185,
+          "first_spoken_target_probability": 0.9569723606109619
+        }
+      }
+    },
+    {
+      "checkpoint": "7558824",
+      "report_sha256": "8a4c9023504a0b1c5b0ba0974e49b8099f20de4271bb69044f808564c72be22c",
+      "metrics": {
+        "approved_teacher_acoustics": {
+          "frames": 318,
+          "half_pad_nll": 0.5892846584320068,
+          "top1_matches": 266,
+          "nonpad_frames": 111,
+          "spoken_frames": 63,
+          "pad3_frames": 207,
+          "spoken_top1_matches": 43,
+          "pad3_top1_matches": 196,
+          "first_spoken_target_probability": 0.9485628604888916
+        },
+        "sampled_native520_acoustics": {
+          "frames": 318,
+          "half_pad_nll": 0.8404005169868469,
+          "top1_matches": 237,
+          "nonpad_frames": 111,
+          "spoken_frames": 63,
+          "pad3_frames": 207,
+          "spoken_top1_matches": 34,
+          "pad3_top1_matches": 185,
+          "first_spoken_target_probability": 0.9584131836891174
+        }
+      }
+    }
+  ],
+  "score_precision": "FP32 batched MATH; compares conditioning at the same diagnostic precision. Existing actual training executes BF16 MATH; these are not training or production numerical approvals.",
+  "optimizer_updates": 0,
+  "new_checkpoint_written": false,
+  "training_approved": false,
+  "native_behavior_qualified": false,
+  "outputs_must_not_be_trained_on": true,
+  "all49_quality_and_input_and_numerical_approval_required_before_any_new_augmentation_training": true,
+  "human_listening_performed": false,
+  "independent_input_isolation": {
+    "schema": "dl-native-conditioning-independent-input-isolation-v1",
+    "old_capture": "/projects/u6si/duplex-live/runs/native-old25-native-capture-7544803_7/teacher-engine-inputs.pt",
+    "new_capture": "/projects/u6si/duplex-live/runs/native-conditioning-7572011/capture/teacher-text-native-audio.pt",
+    "old_tensor_sha256": "717259778eb43f1756cb36553bcc5216e0d5b550e7b6a20088f1120090b8204a",
+    "new_tensor_sha256": "8c10cfc04631ea13c14bfd31e8121fdb7e61864e90e163461cddccc814fc9bc5",
+    "shapes": [
+      1,
+      17,
+      550
+    ],
+    "non_agent_text_and_streamed_user_exact": true,
+    "target_words_exact": true,
+    "target_masks_exact": true,
+    "prefix_all17_channels_exact": true,
+    "assistant_audio_mismatches_per_channel": [
+      235,
+      241,
+      244,
+      283,
+      302,
+      242,
+      295,
+      280
+    ],
+    "optimizer_updates": 0,
+    "training_approved": false,
+    "native_behavior_qualified": false
+  },
+  "independent_input_isolation_sha256": "db31c38123b29b24bccacfc3b257713005ef85f452093a88a68e89f457a0f6b3",
+  "gpu_status": "COMPLETED",
+  "gpu_elapsed": "00:11:34",
+  "speech_status": "COMPLETED",
+  "speech_elapsed": "00:00:30",
+  "source_training_data_approved": false,
+  "new_native_generated_training_corpus_authorized": false,
+  "conclusion": "Only assistant acoustic history differs in this fixed approved TRAIN comparison. Both checkpoints predict fewer correct spoken targets with native conditioning (34/63 versus43/63), at the same FP32 diagnostic precision. Forced gold text still gives WER0.1132075>0.08; original native-sampled recording is failed/do_not_train and must not enter training. This does not establish the cause of all free-running regressions. Next independent all49 assistant-audio audit uses ONLY original approved teacher recordings and retains all old objectives."
+}

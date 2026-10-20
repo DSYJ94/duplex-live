@@ -1,3 +1,52 @@
+# LOCAL active — conditioning gap measured; complete49 audio audit7572397→7572398 (2026-10-20 09:52 UTC)
+
+Native conditioning7572011 COMPLETED11m34; independent forced-text speech7572013
+COMPLETED30s. Sourcec722dd2c574d8173a2ac659eff8dfcffba44a539, priorCPU7571869
+PASS216/all25actualinputs/noCUDA3m33. Native520 renders SAME approved day/night
+teacher words using sampled assistant acoustics. Independent small CPU comparison
+proves original text/user codes/masks/all17prefix channels EXACT; only agent audio
+changes (full1×17×550 trace). Receipt SHAdb31c38123b29b24bccacfc3b257713005ef85f452093a88a68e89f457a0f6b3.
+At SAME FP32 diagnostic precision, native520/40 spoken targettop1 both43/63 with
+approved teacher acoustics but34/63 withnative acoustics. NLL520 .589513→.840586;
+40 .589285→.840401. Actual original FLOAT32PCM peak.8608776/no clipping/gainchange;
+forcedcorrectwords still WER.113207547>.08/allboundsPASS. Recording FAILED and
+DO_NOT_TRAIN; no native-generated corpus expansion. No causal claim for all native
+failures. Formal docs/NATIVE-CONDITIONING-COMPLETE-REVIEW-2026-10-20.json,
+SHAeac0f040ab7a41f8ff3e4cd4d8f63c3e45521c39ff8726ffd6c62a1ed34e5eaf. All newartifact inventories/hashes backed;34863 TERMINALsuccess.
+
+Next readonlyaudit source1c79763b8478cf5a002a95d3e8ba63ae7b5d01e2 pushed:
+CPU7572397 RUNNING4m06 at09:50:18UTC, full224tests+COMPLETE49 ownership/nativeinput
+validation. GPU7572398 afterokCPU, interactive1GPU/30min, ZEROoptimizer. ALL25old+
+24new original approved teacher audio targets, first8assistant codebooks only;
+no user/prefix/span targets, words/audio/receipts/folds unchanged. Numerictext
+alignment/causalchecks all49 at .001/zero; depth numerics three predeclared unique
+positions EACH49 (not exhaustiveallframe depth). Four declared longest-kind
+acoustic gradient/memory smoke probes. Retain all original temporal approvals;
+all49mustpass. This is not optimizer approval or extension of rejected7530408.
+Plan evals/fixtures/native-audio49-audit-plan-20261020.json. Added4CPU ownership
+unit testsPASS locally;4Torch loss tests included in cluster224suite, pending.
+
+Original approved24rawWAV/sidecars rehashed; quiet014/015 have211wholeframes /
+16.88s, no measured assistantwords. Pause56frames exactzero; quiet155frames max
+peak.00137329/frameRMS.000469962 (unchanged original low-level noise). Sourceproof
+ docs/NATIVE-APPROVED-QUIET-TARGET-AUDIT-2026-10-20.json grants no newtrainingapproval.
+Currentrecipe has ZEROaudio loss. Prepare a NEW8-update audio-auxiliary pilot only
+behind independent all49audit; preserveALL28/25/24/KL1hidden10/word64clock64 and
+native520 parent, add truthful newproofschema/fullstate+audio reconstruction,
+thencomplete10review. No optimizer/newcheckpoint/extension/adoption submitted.
+
+Exclusive receipt runs/native-audio49-audit-local-20261020.json; solelive
+orchestrator exec47061 (/tmp/duplex-run-native-audio49-audit.py), atmostTWOjobs,
+no rerun on observationfailure, scopedrsync/SHAbackup evenfailed outputs.
+Previous34863/29728/21306/15461/99572 TERMINAL; nootherwatcher. LOCALexec/CLOUDnojobs.
+Verifiedunion23756files18461043828bytes plus models/runtime/ASR/vendor/source.
+Old stoppedMacsourcebackupPARTIAL. Certthrough20Oct19:32:16UTC/21:32:16Berlin.
+Reservation ends21Oct08:56:32UTC/10:56:32Berlin; no extensionassumption.
+Nativewhole-systemUNQUALIFIED; native40/persona10REJECTED/fresh20sourcePASS/nativeNONE.
+Next: finishall49audit and prepare/independentlyrestoreboundednew8 before native10.
+
+---
+
 # LOCAL active — persona complete10 REJECTED; conditioning CPU7571869 (2026-10-20 09:26 UTC)
 
 Native persona review COMPLETE: original8 captures7570828 frozen byte-exact +

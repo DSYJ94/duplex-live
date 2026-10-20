@@ -1,7 +1,7 @@
 {
-  "at_utc": "2026-10-20T09:26:50.614465+00:00",
-  "unique_scoped_artifact_files": 23733,
-  "unique_scoped_artifact_bytes": 18457507998,
+  "at_utc": "2026-10-20T09:52:00.787213+00:00",
+  "unique_scoped_artifact_files": 23756,
+  "unique_scoped_artifact_bytes": 18461043828,
   "inventory_conflicts": [],
   "inventories": [
     {
@@ -577,6 +577,27 @@
       "files": 5,
       "bytes": 83201,
       "missing_roots": []
+    },
+    {
+      "name": "remote-native-conditioning-v2-preflight-inventory.json",
+      "sha256": "e03fc909922da19a557b0d7037edb59e80c95553b54f713557d23747ea85db55",
+      "files": 4,
+      "bytes": 243102,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native-conditioning-v2-complete-inventory.json",
+      "sha256": "2e730154d07ac9b727ba3c51d070e23a6ed1fd0b3ec9f9638b4ef4d501346c9f",
+      "files": 18,
+      "bytes": 3291835,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native-conditioning-isolation-inventory.json",
+      "sha256": "ddfa5fbe942e5e0e8249868d6bfc2d72cc647db24e8451443521de352420c2d6",
+      "files": 1,
+      "bytes": 893,
+      "missing_roots": []
     }
   ],
   "local_artifact_root": "runs/cloud-export-20261016/tree",
@@ -1031,9 +1052,40 @@
     "cpu_job": "7571869",
     "required_cpu_tests": 216,
     "complete25_cpu_data_preflight_required": true,
-    "gpu_job_not_submitted_yet": true,
+    "gpu_job_not_submitted_yet": false,
     "local_orchestrator_session": 34863,
     "optimizer_updates": 0,
-    "diagnostic_only": true
+    "diagnostic_only": true,
+    "cpu_status": "COMPLETED",
+    "cpu_elapsed": "00:03:33",
+    "cpu_tests_passed": 216,
+    "all25_actual_inputs_passed": true,
+    "gpu_job": "7572011",
+    "gpu_status": "COMPLETED",
+    "gpu_elapsed": "00:11:34",
+    "speech_job": "7572013",
+    "speech_status": "COMPLETED",
+    "speech_elapsed": "00:00:30",
+    "orchestrator_terminal": true,
+    "all_artifacts_sha256_backed": true,
+    "independent_input_isolation_sha256": "db31c38123b29b24bccacfc3b257713005ef85f452093a88a68e89f457a0f6b3",
+    "independent_speech_wer": 0.11320754716981132,
+    "speech_quality_passed": false,
+    "review": "docs/NATIVE-CONDITIONING-COMPLETE-REVIEW-2026-10-20.json",
+    "review_sha256": "eac0f040ab7a41f8ff3e4cd4d8f63c3e45521c39ff8726ffd6c62a1ed34e5eaf",
+    "training_approved": false
+  },
+  "native_audio49_audit": {
+    "source": "1c79763b8478cf5a002a95d3e8ba63ae7b5d01e2",
+    "cpu_job": "7572397",
+    "required_cpu_tests": 224,
+    "gpu_job": "7572398",
+    "gpu_dependency": "afterok:7572397",
+    "optimizer_updates": 0,
+    "all49_required": true,
+    "gradient_smoke_cases": 4,
+    "training_approved": false,
+    "local_orchestrator_session": 47061,
+    "original28_old25_new24_kl_hidden_required": true
   }
 }
