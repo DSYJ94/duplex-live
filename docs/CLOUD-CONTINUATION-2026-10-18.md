@@ -1,5 +1,7 @@
 # Cloud continuation — 18 October 2026
 
+CURRENT OVERRIDE — 20October16:20UTC: LOCAL soleexecutor. Parent-Adam TRAIN7581869 RUNNING after readiness7581639 PASS; persistent SlurmCPUwatcher7581640 owns native10/speech next IDs. Runtime067cb5d, canonical runs/native-audio49-parent-adam-local-20261020.json. All20 readiness artifacts SHA-backed; prior failed candidates/gradient artifacts preserved. CLOUD READ-ONLY/no duplicates. No extension/adoption/fresh20 approval. Read newest HANDOFF.
+
 CURRENT OVERRIDE — 20October16:06UTC: LOCAL soleexecutor. Parent-Adam new8 chain submitted readiness7581639 and persistent SlurmCPUwatcher7581640, runtime067cb5d. Canonical runs/native-audio49-parent-adam-local-20261020.json owns next IDs. Prior smaller-step8 completed and rejectedcore1/4,speech7/10; gradient1547580878 COMPLETE. All prior artifacts SHA-backed. CLOUD READ-ONLY/no duplicate jobs. No extension/adoption/fresh20 approval. Read newest HANDOFF.
 
 CURRENT OVERRIDE — 20October13:22UTC: LOCAL soleexecutor. Smaller-step chain submitted readiness7578127 and persistent SlurmCPUwatcher7578128, runtime8858539. Canonical runs/native-audio49-smallstep-local-20261020.json owns sequential new8/independent restore/native10/speech10 IDs. CLOUD READ-ONLY; no duplicates. Ancestor7577202/7577203 COMPLETE, native5204/4 vs rejected8 0/4. Read newest HANDOFF. No extension/adoption/fresh20 approval.

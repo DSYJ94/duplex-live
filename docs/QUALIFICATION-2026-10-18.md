@@ -1,3 +1,29 @@
+# LOCAL active — TRAINING7581869 RUNNING after matching readiness PASS (20Oct16:18UTC)
+
+Readiness7581639 COMPLETED0:0; verified by persistent SlurmCPUwatcher7581640
+16:17:32UTC, which submitted/released training7581869 once. Actual16:18:46UTC
+GPU7581869 RUNNING1m12 on nid010158 and sole watcher7581640 RUNNING. No other
+active jobs. Runtime067cb5d73e18b665a7f72025c7604ba1a46d225b immutable, main
+handoff previously2fe4dad. Canonical runs/native-audio49-parent-adam-local-
+20261020.json owns next IDs; LOCAL soleexecutor/CLOUDread-only. No new submissions
+outside this recorded chain. All246 tests+11state tests passed before readiness.
+
+New8 keeps verified native520 Adam moments/clocks520 at effectiveLR2e-7;
+stage8/Adam528 required. All data/losses/28/25/24/KL1hidden10/word64clock64/audio49
+unchanged. Fresh restore must compare full Adam/Python/NumPy/TorchCPU/CUDA RNG,
+all28 text and49 acoustic fingerprints, and every restored Adam clock528.
+Watcher then submits full10/native speech. No extension/adoption/fresh20 inferred.
+Readiness all20files583962827B size/SHA-backed16:20:19UTC. Independent BF16 and
+exact original Adam import audits PASS, all parameters/current RNG unchanged,0
+updates during import, all named clocks520 verified. Canonical union24350files/
+22945467848B SHA-backed, including
+all176 smaller-step artifacts and17 gradient154 artifacts. Old Mac source backup
+PARTIAL. Unrelated local edits preserved. Cert valid through19:32UTC and interactive
+ends21Oct08:56UTC. Next preserve completed readiness, observe7581869, copy critical
+state once final fit report exists, then verify independent restoration/native10.
+
+---
+
 # LOCAL active — parent-Adam chain SUBMITTED 7581639 / 7581640 (20October16:06UTC)
 
 Runtime067cb5d73e18b665a7f72025c7604ba1a46d225b committed/pushed, immutable
