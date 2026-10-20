@@ -1,3 +1,48 @@
+# LOCAL active — ancestor12 7577202 RUNNING / independent speech7577203 (2026-10-20 12:45 UTC)
+
+New exact runtime sourcedc4dd038f89aa8267aee76298557234f37113de3, immutable
+worktrees/recovery-dc4dd03, committed/pushed. Actual12:44:59UTC: GPU7577202 RUNNING
+54s (interactive2GPU/30min), independent all12 CPU speech7577203 PENDING afterany
+GPU. Both IDs recorded before release in exclusive remote
+runs/native-ancestor12-local-20261020.json. Full238 tests PASS3.970s in cluster
+runtime, parent/native8 full verified checkpoint identities rechecked before any
+inference. Local5new policy+10related tests PASS; local Torch-only test unavailable
+(no local Torch), covered by successful full238cluster suite.
+
+Read-only fixed all4 ordinary questions × published base with adapter disabled,
+native5207510331, rejected native8 7575817. ONLY adapter presence/weights changes;
+original recorded persona/accepted voice/native provided-token protocol/user WAVs/
+seed42424242/text.7/audio.8 fixed, actual LMGen sampler values measured. Base
+condition is this same audited wrapper/prompt, not a universal base-capability
+claim. No worker/API calls/optimizer/new data/profile or sampler search. All12
+and full independent speech required, every output DO_NOT_TRAIN. Plan sealed at
+ evals/fixtures/native-ancestor12-diagnostic-plan-20261020.json. Hypotheses distinguish
+inherited adapter bias, base behavior under original prompt, and new training
+regression. No native/fresh/extension/adoption approval from this diagnostic.
+
+Prior pilot whole10 REJECTEDordinary0/4/speech7/10 and all control/private task
+failures, formalreview08b71d3d unchanged. Prior jobs7574002/7575817/7576513/7576709
+and scheduler7575818 allCOMPLETED; old detachedPID135003 dead. No priorwatcher
+remains live, no local scheduler watcher; new GPU+CPU dependency already submitted
+and survives Mac disconnection. LOCAL soleexecutor/CLOUDread-only/no handback.
+No further submissions until this pair finishes and full results reviewed.
+
+All153 prior full10 artifacts256759375B, finaltraining23/615398667B and
+readiness19/583956756B size/SHA-backed. Verified scoped union23962files/
+19918911868B plus models/runtime/ASR/vendor/full source bundles. Newdc4dd03 full
+Git bundle verified SHAf36535241638cb3ceff573d51f42753b10746c457e323ad67c90eb3147c7dc56. Old stopped Mac source
+backup PARTIAL; unrelated pycache/capability probes/roadmap preserved. No owner
+conversations/credentials/quarantined core copied. New diagnostic artifacts not
+yet retrieved; next scoped rsync/SHA all12 outputs, speech, cases, logs andreceipt.
+
+Native whole-systemUNQUALIFIED; all28/25/24/KL1hidden10 and approved histories
+preserved. No extension of rejected native8/40/joint. Fresh20 sourcePASS7550653,
+nativeNONE. Local cert through20Oct19:32:16UTC/21:32:16Berlin/Amsterdam; current
+interactive end21Oct08:56:32UTC/10:56:32local, no extensionassumed. Next observe
+7577202/7577203, preserve/review complete12 then choose a diagnosed native repair.
+
+---
+
 # LOCAL active — audio49 pilot REJECTED; complete10 backed; ancestor12 diagnostic prepared (2026-10-20 12:37 UTC)
 
 All stages terminal: readiness7574002 COMPLETE11m29, train+independent restore

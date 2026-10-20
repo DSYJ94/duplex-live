@@ -1,5 +1,5 @@
 {
-  "at_utc": "2026-10-20T12:38:05.240990+00:00",
+  "at_utc": "2026-10-20T12:49:25.256331+00:00",
   "unique_scoped_artifact_files": 23962,
   "unique_scoped_artifact_bytes": 19918911868,
   "inventory_conflicts": [],
@@ -1344,5 +1344,26 @@
     "path": "runs/local-continuation-20261019/source-main-3d6de2c.bundle",
     "sha256": "31e5542fefa87d10bcf922c5167e5f5db8186b44ef7c4795090d7f2cf37018f3",
     "full_history_verified": true
+  },
+  "native_ancestor12_diagnostic": {
+    "source": "dc4dd038f89aa8267aee76298557234f37113de3",
+    "gpu_job": "7577202",
+    "gpu_status": "RUNNING",
+    "independent_speech_job": "7577203",
+    "speech_status": "PENDING",
+    "dependency": "afterany:7577202",
+    "observed_at_utc": "2026-10-20T12:44:59Z",
+    "cpu_tests_passed": 238,
+    "optimizer_updates": 0,
+    "all12_required": true,
+    "source_bundle": {
+      "path": "runs/local-continuation-20261019/source-main-dc4dd03.bundle",
+      "sha256": "f36535241638cb3ceff573d51f42753b10746c457e323ad67c90eb3147c7dc56",
+      "full_history_verified": true
+    },
+    "exclusive_remote_receipt": "/projects/u6si/duplex-live/runs/native-ancestor12-local-20261020.json",
+    "maximum_submitted_active_jobs": 2,
+    "maximum_gpus": 2,
+    "training_or_adoption_approved": false
   }
 }

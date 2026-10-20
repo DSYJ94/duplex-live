@@ -1,5 +1,7 @@
 # Cloud continuation — 18 October 2026
 
+CURRENT OVERRIDE — 20October12:45UTC: LOCAL remains soleexecutor. Prior native8 train7575817/restore and native10 7576513/speech7576709 completed; full10 REJECTEDordinary0/4,speech7/10, all artifacts SHA-backed. Prior watcher7575818 TERMINAL. New readonly ancestor12 GPU7577202 RUNNING/source dc4dd03/full238testsPASS, full12 speech7577203 dependent; canonical runs/native-ancestor12-local-20261020.json. CLOUD READ-ONLY/no duplicate jobs; read newest HANDOFF. No longertraining/adoption/fresh native inference.
+
 CURRENT OVERRIDE — 20October11:48UTC: LOCAL remains soleexecutor. TRAIN7575817 RUNNING source33cd0fe; actual SlurmCPU watcher7575818 RUNNING source3d6de2c owns next native10/speech submissions and survives disconnection. Prior detached PID135003 died/superseded; do not revive. CLOUD READ-ONLY; inspect canonical runs/native-audio49-pilot-v2-local-20261020.json plus live squeue/sacct before any action. Read newest HANDOFF.
 
 CURRENT OVERRIDE — 20 October10:33UTC: LOCAL sole executor. Durable SERVER watcher PID135003/source33cd0fe/readiness7574002 owns sequential native8/restore/native10/speech submissions. CLOUD READ-ONLY, no duplicate jobs; first read newest HANDOFF and live runs/native-audio49-pilot-v2-local-20261020.json. Local cert through20Oct19:32:16UTC/21:32:16Berlin. Interactive reservation ends21Oct08:56:32UTC/10:56:32Berlin. No new execution handback.
