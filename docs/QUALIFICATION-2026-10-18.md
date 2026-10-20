@@ -1,3 +1,32 @@
+# LOCAL active — precision16 complete; ASR7586348 and BF16audit7586717 active (20Oct20:57UTC)
+
+Native precision16 GPU7586347 COMPLETED0:0 elapsed11m57; all16 original captures
+process-successful. Payload9688453613293840308dc3a228d7d66def66df48. CPU speech7586348
+RUNNING20:56:35UTC. Whole16 independent speech/behavior review stillPENDING.
+Sampled text confirms BF16 parent4/4 versus child1/4; FP32 is not a simple cure:
+ice/sound/metal wrong for both, plants vague-energy under unchanged criterion.
+These are preliminary sampled-text observations, not independently qualified speech.
+Do NOT adopt precision changes or extend the rejected complete8 unchanged.
+
+New independent zero-update BF16 stream/batch49 job7586717 accepted/releasedONCE
+under runs/native-bf16-stream49-local-20261020.json; source32eabbf7633bb607e6652442b7244272125e25a6.
+It reuses all approved old25/new24 inputs/words/targets/native call partitions,
+measures actual BF16/FP32-adapter temporal differences, and leaves reference
+FP32/FP64 approvals/thresholds intact. OneGPU/30min/interactive, maximum2active
+jobs with existing CPU audit. No optimizer update or training/adoption approval.
+LOCAL soleexecutor/CLOUDread-only. Full source history bundles preserved locally.
+
+All16 native backup229files/746836325B size/SHA VERIFIED20:57:21UTC;
+current scoped union24947files/26023760865B. BF16audit260testsPASS4.092s. Prior complete8 checkpoint/fullstate,
+terminal10 and speech all SHA-backed. Old Mac source backupPARTIAL. Current9688453
+payload lacks final GPU-peak recording on observe-only path; initial post-Engine
+80GB guard executed, final peak UNMEASURED. Future-only route fix committed05c0319;
+no current raw report modified or rerun. Cert ends21Oct03:50:25UTC; reservation
+ends08:56:32UTC. Next finish all16 backup, complete independent speech review,
+retrieve whole49 BF16 diagnostic before choosing a diagnosed training repair.
+
+---
+
 # LOCAL active — precision16 RUNNING7586347; speech dependency7586348 (20Oct20:44UTC)
 
 Source9688453613293840308dc3a228d7d66def66df48 pushed/fetched; immutable worktree.

@@ -1,7 +1,7 @@
 {
-  "at_utc": "2026-10-20T20:44:20.829989+00:00",
-  "unique_scoped_artifact_files": 24718,
-  "unique_scoped_artifact_bytes": 25276924540,
+  "at_utc": "2026-10-20T20:58:19.194363+00:00",
+  "unique_scoped_artifact_files": 24947,
+  "unique_scoped_artifact_bytes": 26023760865,
   "inventory_conflicts": [],
   "inventories": [
     {
@@ -716,6 +716,13 @@
       "sha256": "f24bc6d2d2454abe21199765257a2e80afc37d250b98b9b6f49e02b6c9d9b8d7",
       "files": 149,
       "bytes": 256704833,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native-precision16-native-complete-inventory.json",
+      "sha256": "5d44fffe5ab04bacaa5a61b4d84550fe5f06df162b39bc8ce21b87966f295911",
+      "files": 229,
+      "bytes": 746836325,
       "missing_roots": []
     }
   ],
@@ -1727,9 +1734,9 @@
     },
     "cluster_tests_passed": 257,
     "cluster_tests_seconds": 4.194,
-    "native_observed_state": "RUNNING",
-    "speech_observed_state": "PENDING_DEPENDENCY",
-    "observed_utc": "2026-10-20T20:44:13Z",
+    "native_observed_state": "COMPLETED",
+    "speech_observed_state": "RUNNING",
+    "observed_utc": "2026-10-20T20:56:35Z",
     "source_bundle": {
       "path": "runs/local-continuation-20261019/source-main-9688453.bundle",
       "sha256": "0875c11242df26da5642f305056989be6a65709823b1a94bf7a6d4d75d41f54c",
@@ -1737,6 +1744,47 @@
     },
     "instrumentation_limitation": "Current immutable9688453 payload enforces initial post-Engine80GB allocated guard but final allocated peak was accidentally placed on scheduled route, not observe-only; do not claim final peak measured. Local correction moves the existing guard/measurement to observe_only for future captures; current originals remain unchanged.",
     "early_sampled_text_review": "First original four ice arms captured: BF16 parent correct/child incorrect; FP32 both incorrect. Diagnostic only; all16 independent speech pending.",
-    "adapter_delta_diagnostic": "runs/local-continuation-20261019/complete8-parent-adapter-numeric-delta.json"
-  }
+    "adapter_delta_diagnostic": "runs/local-continuation-20261019/complete8-parent-adapter-numeric-delta.json",
+    "gpu_exit": "0:0",
+    "gpu_elapsed": "00:11:57",
+    "all16_processes_succeeded": true,
+    "independent_speech_or_behavior_approval_pending": true,
+    "all16_native_artifacts_sha256_backed": true,
+    "verified_native_files": 229,
+    "verified_native_bytes": 746836325
+  },
+  "native_bf16_stream49_chain": {
+    "source": "32eabbf7633bb607e6652442b7244272125e25a6",
+    "executor": "LOCAL",
+    "at_utc": "2026-10-20T20:56:54.366842Z",
+    "active_jobs_before": [
+      "7586348"
+    ],
+    "optimizer_updates": 0,
+    "all49_required": true,
+    "training_extension_or_adoption_approved": false,
+    "plan_sha256": "4ff94f7de30fe43eca201e93202018424e2b76e5cda383e1eea32f284b91f8dd",
+    "maximum_active_jobs": 2,
+    "jobs": {
+      "bf16_stream49": "7586717"
+    },
+    "submission_attempt": {
+      "status": "released",
+      "job": "7586717"
+    },
+    "held_settings": "JobId=7586717 JobName=dl-native-bf16-stream49\n   UserId=dsyj94.u6si(1483807285) GroupId=dsyj94.u6si(1483807285) MCS_label=N/A\n   Priority=0 Nice=0 Account=brics.u6si QOS=normal\n   JobState=PENDING Reason=JobHeldUser Dependency=(null)\n   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0\n   RunTime=00:00:00 TimeLimit=00:30:00 TimeMin=N/A\n   SubmitTime=2026-10-20T20:57:02 EligibleTime=Unknown\n   AccrueTime=Unknown\n   StartTime=Unknown EndTime=Unknown Deadline=N/A\n   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-20T20:57:02 Scheduler=Main\n   Partition=interactive AllocNode:Sid=login42:68026\n   ReqNodeList=(null) ExcNodeList=(null)\n   NodeList=\n   NumNodes=1-1 NumCPUs=8 NumTasks=1 CPUs/Task=8 ReqB:S:C:T=0:0:*:*\n   ReqTRES=cpu=8,mem=160G,node=1,billing=324,gres/gpu=1\n   AllocTRES=(null)\n   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*\n   MinCPUsNode=8 MinMemoryNode=160G MinTmpDiskNode=0\n   Features=(null) DelayBoot=00:00:00\n   Reservation=interactive\n   OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null)\n   Command=/projects/u6si/duplex-live/worktrees/recovery-32eabbf/evals/native-bf16-stream49.slurm\n   SubmitLine=sbatch --hold --parsable --export=ALL --no-requeue /projects/u6si/duplex-live/worktrees/recovery-32eabbf/evals/native-bf16-stream49.slurm\n   WorkDir=/lus/lfs1aip2/projects/u6si/duplex-live\n   StdErr=\n   StdIn=/dev/null\n   StdOut=/lus/lfs1aip2/projects/u6si/duplex-live/logs/dl-native-bf16-stream49-7586717.out\n   TresPerNode=gres/gpu:1\n   TresPerTask=cpu=8\n\n",
+    "source_bundle": {
+      "path": "runs/local-continuation-20261019/source-main-32eabbf.bundle",
+      "sha256": "54644041597dd8a2777dd9d8c279f61510efbc334cdc57a4bd5ac2383c91034c",
+      "verified_complete_history": true
+    },
+    "observed_utc": "2026-10-20T20:57:14Z",
+    "state": "RUNNING",
+    "cluster_tests_passed": 260,
+    "cluster_tests_seconds": 4.092
+  },
+  "current_native_execution_chains": [
+    "native_precision16_chain",
+    "native_bf16_stream49_chain"
+  ]
 }
