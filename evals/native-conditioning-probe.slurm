@@ -15,15 +15,20 @@ DL=/projects/u6si/duplex-live
 test "$(git -C "$DL_TASK_SOURCE" rev-parse HEAD)" = "$DL_TASK_COMMIT"
 test -z "$(git -C "$DL_TASK_SOURCE" status --porcelain)"
 cd "$DL_TASK_SOURCE"
+MOSHI="$DL/vendor/moshi-rag-8c6dfc101b7871baa428424bcdc583b74fb561d9"
+test "$(git -C "$MOSHI" rev-parse HEAD)" = 8c6dfc101b7871baa428424bcdc583b74fb561d9
+: "${NATIVE_CONDITIONING_PREFLIGHT_JOB:?Independent CPU complete25 preflight required}"
+[[ "$NATIVE_CONDITIONING_PREFLIGHT_JOB" =~ ^[0-9]+$ ]]
+PREFLIGHT="$DL/runs/native-conditioning-preflight-$NATIVE_CONDITIONING_PREFLIGHT_JOB/conditioning-preflight.json"
 OUT="$DL/runs/native-conditioning-$SLURM_JOB_ID"
 mkdir "$OUT"
 scontrol show job "$SLURM_JOB_ID" > "$OUT/allocation.txt"
 run_probe() {
  apptainer exec --nv --bind /projects,/lus,/home \
- --env PYTHONPATH="$DL/tmp/voice-quality-7415052:$DL/envs/moshi-rag-7379661/lib/python3.12/site-packages:$DL_TASK_SOURCE" \
+ --env PYTHONPATH="$MOSHI/moshi:$DL/tmp/voice-quality-7415052:$DL/envs/moshi-rag-7379661/lib/python3.12/site-packages:$DL_TASK_SOURCE" \
  --env DL_TASK_COMMIT="$DL_TASK_COMMIT" --env HF_HOME="$DL/models/hf-cache" \
  --env HF_HUB_OFFLINE=1 --env PYTHONDONTWRITEBYTECODE=1 --env OMP_NUM_THREADS=8 --env OPENAI_API_KEY= \
- "$DL/pytorch-new.sif" python -u -m evals.native_conditioning_probe "$@"
+ "$DL/pytorch-new.sif" python -u -m evals.native_conditioning_probe --preflight "$PREFLIGHT" "$@"
 }
 run_probe --phase capture --capture "$OUT/capture" --out "$OUT/capture"
 for CHECKPOINT in 7510331 7558824; do

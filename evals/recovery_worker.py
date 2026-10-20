@@ -38,6 +38,13 @@ class RecordWorld:
         self.receipts = []
         self.lock = threading.RLock()
 
+    def project_name(self, project):
+        """Resolve only an optional literal Project prefix to an existing key."""
+        if isinstance(project,str) and project not in self.records and project.startswith('Project '):
+            bare=project[len('Project '):]
+            if bare in self.records:return bare
+        return project
+
     def reserve(self, task_id, context=None):
         with self.lock:
             revision = self.tasks.get(task_id, {}).get("revision", 0) + 1
@@ -46,6 +53,7 @@ class RecordWorld:
 
     def read(self, task_id, project, field, expected_revision=None):
         with self.lock:
+            requested_project=project;project=self.project_name(project)
             if project not in self.records or field not in self.records[project]:
                 raise ValueError("Tool requested an unknown project or record field")
             if expected_revision is None:
@@ -57,6 +65,7 @@ class RecordWorld:
                 revision = expected_revision
             receipt = {"task_id":task_id,"revision":revision,"tool":"lookup_record", "project":project,"field":field,
                 "value":self.records[project][field],"read_only":True,"executed":True}
+            if requested_project!=project:receipt['requested_project']=requested_project
             self.tasks[task_id].update(operation="lookup_record",phase="running",project=project,field=field)
             self.receipts.append(receipt)
             return receipt
@@ -87,7 +96,8 @@ class RecordWorld:
         with self.lock:
             if not isinstance(task_ids,list) or task_id in task_ids:
                 raise ValueError('Replacement cannot cancel its own dispatch')
-            if project not in self.records or field not in self.records[project]:
+            canonical=self.project_name(project)
+            if canonical not in self.records or field not in self.records[canonical]:
                 raise ValueError('Replacement requested an unknown project or field')
             state=self.tasks.get(task_id)
             if (not state or state['cancelled'] or state.get('closed',False)
@@ -279,7 +289,7 @@ def run_worker(context,world,task_id,model="gpt-6-luna",expected_revision=None,d
             targets=arguments.get('task_ids')
             if (dispatch_protocol!='state-aware' or not isinstance(targets,list) or task_id in targets
                     or any(t not in available['tasks'] for t in targets)
-                    or not project_identified_by_user(context,arguments.get('project',''))):
+                    or not project_identified_by_user(context,world.project_name(arguments.get('project','')))):
                 raise WorkerContractError('Replacement requires identified existing work and a user-identified project',
                     {'events':events,'arguments':arguments,'receipts':[]})
             try:receipt=execute_operation(lambda:world.replace_lookup(task_id,expected_revision=expected_revision,**arguments))
@@ -288,7 +298,7 @@ def run_worker(context,world,task_id,model="gpt-6-luna",expected_revision=None,d
                     {'events':events,'arguments':arguments,'receipts':[],'tool_error':str(error)}) from error
             selected_route='delegate'
         elif call["name"] == "lookup_record":
-            if not project_identified_by_user(context, arguments["project"]):
+            if not project_identified_by_user(context, world.project_name(arguments["project"])):
                 raise WorkerContractError("Private project was not identified by the user", {"events":events,"arguments":arguments})
             try:
                 receipt = execute_operation(lambda:world.read(task_id,**arguments,expected_revision=expected_revision))

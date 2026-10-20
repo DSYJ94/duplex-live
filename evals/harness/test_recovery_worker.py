@@ -6,6 +6,34 @@ from evals.recovery_worker import RecordWorld,run_worker,WorkerSuperseded,Worker
 
 
 class RecordGuards(unittest.TestCase):
+    def test_observed_project_prefix_failure_executes_only_the_identified_real_record(self):
+        world=RecordWorld({'Alder West':{'room marker':'red star'}})
+        def execute(payload):
+            if 'previous_response_id' not in payload:
+                return dict(id='read',status='completed',output=[dict(type='function_call',name='lookup_record',call_id='actual-prefix-case',
+                    arguments=json.dumps(dict(project='Project Alder West',field='room marker')))])
+            actual=json.loads(payload['input'][0]['output'])
+            self.assertEqual(actual['project'],'Alder West');self.assertEqual(actual['requested_project'],'Project Alder West')
+            return dict(id='reply',status='completed',output=[dict(type='message',content=[dict(type='output_text',
+                text=json.dumps(dict(route='answer',content='The marker is red star.')))])])
+        result=run_worker([dict(role='user',text='Please check the room marker for Project Alder West.')],world,'current',
+            response_executor=execute)
+        self.assertEqual(result['route'],'delegate');self.assertEqual(result['receipts'],world.receipts)
+        self.assertEqual(world.receipts[0]['value'],'red star')
+
+    def test_optional_project_prefix_does_not_infer_missing_user_identification(self):
+        world=RecordWorld({'Alder West':{'room marker':'red star'}})
+        def execute(payload):return dict(id='bad',status='completed',output=[dict(type='function_call',name='lookup_record',call_id='guess',
+            arguments=json.dumps(dict(project='Project Alder West',field='room marker')))])
+        with self.assertRaises(WorkerContractError):run_worker([dict(role='user',text='Check the room marker.')],world,'current',response_executor=execute)
+        self.assertEqual(world.receipts,[])
+
+    def test_unknown_prefixed_projects_still_fail_and_exact_record_name_takes_precedence(self):
+        world=RecordWorld({'Cedar':{'badge':'blue circle'},'Project Cedar':{'badge':'orange square'}})
+        self.assertEqual(world.read('exact','Project Cedar','badge')['value'],'orange square')
+        with self.assertRaises(ValueError):world.read('unknown','Project Missing','badge')
+        self.assertNotIn('unknown',world.tasks)
+
     def test_execution_observer_reports_real_read_before_model_formats_its_receipt(self):
         world=RecordWorld({'Cedar':{'badge':'violet triangle'}});order=[];observed=[]
         def execute(payload):

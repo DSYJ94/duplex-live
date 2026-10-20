@@ -42,11 +42,13 @@ def policy(scope, parent, child):
 
 def main():
     p=argparse.ArgumentParser(description=__doc__)
-    p.add_argument('--phase',choices=('capture','score'),required=True)
+    p.add_argument('--phase',choices=('preflight','capture','score'),required=True)
     p.add_argument('--checkpoint',choices=(PARENT,CHILD),default=PARENT)
     p.add_argument('--capture',type=Path,required=True)
+    p.add_argument('--preflight',type=Path)
     p.add_argument('--out',type=Path,required=True)
     a=p.parse_args()
+    if a.phase!='preflight' and not a.preflight:p.error('Independent complete25 CPU preflight is required')
     if a.phase=='capture' and (a.checkpoint!=PARENT or a.capture!=a.out):
         p.error('Only native520 may generate the one fixed diagnostic history')
     a.out.mkdir(parents=True,exist_ok=False)
@@ -84,6 +86,37 @@ def main():
     os.environ.update(CS_BASE_DIR=str(base),CS_WEIGHTS_DIR=str(weights),CS_VOICES_DIR=str(weights/'voices'))
     os.environ['TRITON_LIBCUDA_PATH']=subprocess.check_output([sys.executable,'-m','evals.cuda_linker_path','--out',str(a.out/'driver')],text=True).strip()
     sys.path.insert(0,str(source))
+    if a.phase=='preflight':
+        import sentencepiece
+        from contextspan.model.sequence_convention import persona_prefix
+        from evals.lychee_context import BASE_INSTRUCTIONS
+        from evals.context_training_data import load_training
+        from evals.context_native_teacher_data import load
+        shutil.copyfile(proof/'voice.pt',a.out/'voice.pt')
+        voice=torch.load(a.out/'voice.pt',weights_only=True,map_location='cpu')['codes']
+        spm=sentencepiece.SentencePieceProcessor(str(base/'tokenizer_spm_32k_3.model'))
+        prefix=persona_prefix(BASE_INSTRUCTIONS,voice,spm)
+        examples,_=load_training([cache],spm,prefix,text_padding='legacy-epad0',request_policy='native-prelead-epad')
+        manifest,rows=load(approval,scope,assets,a.out/'voice.pt',examples,prefix,spm)
+        if len(rows)!=25 or sum(r['teacher']['id']==TEACHER for r in rows)!=1:raise ValueError('Incomplete CPU preflight')
+        r=dict(schema='dl-native-conditioning-preflight-v1',passed=True,complete25_verified=True,
+            policy=rules,parent=parent_identity,child=child_identity,scope_sha256=sha256(scope),
+            approval_sha256=sha256(approval),cache_sha256=sha256(cache/'cache.json'),
+            voice_sha256=sha256(a.out/'voice.pt'),implementation_sha256=sha256(Path(__file__)),
+            source_commit=os.environ['DL_TASK_COMMIT'],optimizer_updates=0,training_approved=False,
+            cuda_used=False,native_data_manifest=manifest)
+        (a.out/'conditioning-preflight.json').write_text(json.dumps(r,indent=2)+'\n')
+        print(json.dumps(dict(passed=True,complete25_verified=True,cuda_used=False)),flush=True)
+        return
+    pre=json.loads(a.preflight.read_text())
+    if (pre['schema']!='dl-native-conditioning-preflight-v1' or not pre['passed']
+            or not pre['complete25_verified'] or pre['cuda_used'] or pre['policy']!=rules
+            or pre['parent']!=parent_identity or pre['child']!=child_identity
+            or pre['scope_sha256']!=sha256(scope) or pre['approval_sha256']!=sha256(approval)
+            or pre['cache_sha256']!=sha256(cache/'cache.json')
+            or pre['implementation_sha256']!=sha256(Path(__file__))
+            or pre['source_commit']!=os.environ['DL_TASK_COMMIT']):
+        raise ValueError('Changed independent complete25 CPU preflight')
     from contextspan.model.weights import load_model
     from contextspan.model.sequence_convention import persona_prefix
     from evals.lychee_context import BASE_INSTRUCTIONS
@@ -109,6 +142,7 @@ def main():
     provenance=dict(schema='dl-native-conditioning-probe-v1',policy=rules,phase=a.phase,checkpoint=identity,
         parent=parent_identity,child=child_identity,scope_sha256=sha256(scope),cache_sha256=sha256(cache/'cache.json'),
         source_commit=os.environ['DL_TASK_COMMIT'],implementation_sha256=sha256(Path(__file__)),source_loads=loads,
+        complete25_cpu_preflight_sha256=sha256(a.preflight),
         native_capture_helper_sha256=sha256(Path(__file__).with_name('context_teacher_engine_inputs.py')))
     if a.phase=='capture':
         from types import SimpleNamespace
