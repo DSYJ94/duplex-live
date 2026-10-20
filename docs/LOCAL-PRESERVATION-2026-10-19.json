@@ -961,6 +961,9 @@
       21306
     ],
     "qos_max_active_submitted_jobs": 2,
-    "conditioning_job_not_yet_submitted": true
+    "conditioning_job_not_yet_submitted": false,
+    "repair_status": "COMPLETED",
+    "repair_elapsed": "00:01:56",
+    "conditioning_job": "7571406"
   }
 }

@@ -1,3 +1,30 @@
+# LOCAL active — repaired2 complete; all10 speech running; conditioning7571406 released (2026-10-20 09:12 UTC)
+
+Runtime source8115f68d38122a21ac4742f7cfb0cacca4a71625/CPU7571184 PASS171.
+Repair7571367 COMPLETED1m56, exact never-started indices4/5 only; original8
+reports/audio retained byte-exact. Independent ALL10 speech7571368 RUNNING3m04
+at09:10:38UTC. New zero-update conditioning7571406 RELEASED after repair terminal
+and a slot freed; do not resubmit it. Fixed approved day/night teacher, native520
+sampled assistant acoustics under forced original teacher text; independent
+fresh-process native520/40 scoring of teacher vs native conditioning. Not new
+training data or native reasoning approval. No optimizer/newcheckpoint/adoption.
+
+Sole live orchestrator exec29728 (/tmp/duplex-resume-native-repair-conditioning.py)
+owns exact four-phase receipt runs/native-repair-conditioning-local-20261020.json.
+Only TWO submitted active jobs permitted: it submits forced-text CPUASR only after
+persona ASR frees a slot, then hash-backs all results. No forced-text speech ID yet.
+Prior99572/15461/21306 terminal. LOCAL executor/CLOUD nojobs/nohandback.
+Native40 remains REJECTED; no unchanged extension or fresh20 inference. Complete
+81 target audit also shows spoken accuracy unchanged from parent after40:
+actual214/281,old734/993,new355/498. Parent agreement is not target correctness.
+Full original failed persona collection116files164202859bytes SHAbacked;
+union23693files18362293002bytes plus separate models/runtime/source/ASR.
+Old stopped Mac source backup PARTIAL; local cert through19:32:16UTC/21:32:16Berlin.
+Native whole-system UNQUALIFIED. Next: complete all10/audio/receipt/quiet review,
+conditioning contrast and independent forced-text speech; diagnose a new repair.
+
+---
+
 # LOCAL active — two never-started cases repaired7571367; full10 ASR7571368 (2026-10-20 09:06 UTC)
 
 Original persona diagnostic7570828 FAILED9m46; ALL10 attempted, 8 model runs
