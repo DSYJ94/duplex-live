@@ -67,8 +67,16 @@ def submit(path, receipt, action, job):
         receipt['verified_training'] = identity
         assert report['optimizer_steps'] == 8
     active = call(['squeue', '--all', '-u', os.environ['USER'], '-h', '-o', '%i']).split()
-    if active:
+    watcher = os.environ.get('DL_CHAIN_WATCHER_JOB')
+    if any(x != watcher for x in active) or len(active) > (1 if watcher else 0):
         raise ValueError('Another active job owns a slot; no submission')
+    terminal = call(['sacct', '-X', '-n', '-P', '-j', job, '--format=JobID,State,ExitCode'])
+    rows = [x.split('|') for x in terminal.splitlines() if x.startswith(job + '|')]
+    if len(rows) != 1 or rows[0][1] in ('PENDING', 'RUNNING', 'COMPLETING', 'CONFIGURING', 'SUSPENDED', 'REQUEUED'):
+        raise ValueError('Predecessor is not independently terminal')
+    if following != 'speech10' and rows[0][1:3] != ['COMPLETED', '0:0']:
+        raise ValueError('Predecessor did not pass')
+    receipt.setdefault('verified_terminal_predecessors', {})[following] = dict(job=job, state=rows[0][1], exit_code=rows[0][2], at_utc=now())
     receipt.setdefault('submission_attempts', {})[following] = dict(at_utc=now(), status='submitting')
     save(path, receipt)
     env = {k: v for k, v in os.environ.items() if not k.startswith(('SBATCH_', 'SLURM_'))}
@@ -79,7 +87,7 @@ def submit(path, receipt, action, job):
         env['NATIVE_V2_DEVELOPMENT_ARRAY_JOB'] = job
     tree = Path(env['DL_TASK_SOURCE'])
     answer = call(['sbatch', '--hold', '--parsable', '--export=ALL', '--no-requeue',
-                   '--kill-on-invalid-dep=yes', '--dependency=' + dependency + ':' + job,
+                   '--kill-on-invalid-dep=yes',
                    str(tree / 'evals' / script)], env).strip()
     new_job = answer.split(';')[0]
     if not new_job.isdigit():
@@ -90,7 +98,7 @@ def submit(path, receipt, action, job):
     settings = call(['scontrol', 'show', 'job', new_job])
     receipt.setdefault('held_settings', {})[following] = settings
     save(path, receipt)
-    if 'TimeLimit=00:30:00' not in settings or dependency + ':' + job not in settings:
+    if 'TimeLimit=00:30:00' not in settings:
         raise ValueError('Unexpected held job allocation; not released')
     if following != 'speech10' and ('Reservation=interactive' not in settings or ('TresPerNode=gres/gpu:' + ('2' if following == 'native10' else '1')) not in settings):
         raise ValueError('Unexpected GPU reservation; not released')
@@ -183,7 +191,11 @@ def watch(path):
                 stage = next(x for x in reversed(STAGES) if x in receipt['jobs'])
                 job = receipt['jobs'][stage]
                 validate(receipt, stage, job)
-                answer = call(['sacct', '-X', '-n', '-P', '-j', job, '--format=JobID,State,ExitCode'])
+                try:
+                    answer = call(['sacct', '-X', '-n', '-P', '-j', job, '--format=JobID,State,ExitCode'])
+                except (subprocess.CalledProcessError, subprocess.TimeoutExpired) as error:
+                    print('OBSERVATION_FAILED_NO_SUBMISSION', job, str(error), flush=True)
+                    answer = ''
                 rows = [x.split('|') for x in answer.splitlines() if x.startswith(job + '|')]
                 if len(rows) != 1:
                     print('WAIT_ACCOUNTING', job, flush=True)
