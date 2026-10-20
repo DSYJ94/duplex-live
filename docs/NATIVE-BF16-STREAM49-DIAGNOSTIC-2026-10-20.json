@@ -1,0 +1,15 @@
+{
+  "schema": "dl-native-bf16-stream49-diagnostic-plan-v1",
+  "optimizer_updates": 0,
+  "checkpoint_job": "7510331",
+  "all25_old_and24_new_approved_histories": true,
+  "source_words_audio_targets_folds_heldouts_unchanged": true,
+  "reference_approvals_and_thresholds_unchanged": true,
+  "scope": "Compare exact approved native delayed inputs using the recorded native call partitions against one batched forward, on actual BF16 base and FP32 temporal adapters with MATH attention. Record raw hidden/logit differences, valid/spoken argmax disagreements, target CE and KL for every teacher. No passing stamp, loss change, new teachers, depth parity or behavior qualification.",
+  "rationale": "Prior numerical approvals explicitly used FP32 weights/activations and FP64 linear arithmetic. Those remain valid reference evidence but do not establish actual BF16 streaming/batched equivalence. Current precision16 must complete, including all independent speech; this orthogonal zero-update diagnostic may run alongside that CPU audit once the current GPU job is terminal.",
+  "maximum_gpus": 1,
+  "maximum_minutes": 30,
+  "maximum_total_active_jobs": 2,
+  "original_28_actual_kl_hidden_old25_new24_preserved": true,
+  "training_extension_or_adoption_approved": false
+}

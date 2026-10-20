@@ -152,13 +152,19 @@ if [[ "${NATIVE_AUDIO49_PARENT_ADAM:-0}" == 1 ]]; then
  [[ "${NATIVE_AUDIO49_STEP_SCALE:-1}" == 0.1 ]]
  ARGS+=(--native-audio49-parent-adam)
 fi
+if [[ "${NATIVE_AUDIO49_BF16_STREAM_DIAGNOSTIC:-0}" == 1 ]]; then
+ [[ "${NATIVE_AUDIO49_PREFLIGHT_ONLY:-0}" == 1 ]]
+ ARGS+=(--native-audio49-bf16-stream-diagnostic)
+fi
 if [[ "${NATIVE_AUDIO49_GRADIENT_PROBE:-0}" == 1 ]]; then
  [[ "${NATIVE_AUDIO49_PREFLIGHT_ONLY:-0}" == 1 ]]
  ARGS+=(--native-audio49-gradient-probe)
 fi
 run -m evals.context_training_proof "${ARGS[@]}"
 if [[ "${NATIVE_AUDIO49_PREFLIGHT_ONLY:-0}" == 1 ]]; then
- if [[ "${NATIVE_AUDIO49_GRADIENT_PROBE:-0}" == 1 ]]; then
+ if [[ "${NATIVE_AUDIO49_BF16_STREAM_DIAGNOSTIC:-0}" == 1 ]]; then
+  test -f "$RUN_OUT/bf16-stream49-diagnostic.json"
+ elif [[ "${NATIVE_AUDIO49_GRADIENT_PROBE:-0}" == 1 ]]; then
   test -f "$RUN_OUT/audio49-gradient-probe.json"
  else
   test -f "$RUN_OUT/audio49-bf16-preflight.json"
