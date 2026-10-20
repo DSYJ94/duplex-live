@@ -1,7 +1,7 @@
 {
-  "at_utc": "2026-10-20T11:49:18.488129+00:00",
-  "unique_scoped_artifact_files": 23767,
-  "unique_scoped_artifact_bytes": 18462797070,
+  "at_utc": "2026-10-20T11:53:03.011246+00:00",
+  "unique_scoped_artifact_files": 23786,
+  "unique_scoped_artifact_bytes": 19046753826,
   "inventory_conflicts": [],
   "inventories": [
     {
@@ -605,6 +605,13 @@
       "files": 11,
       "bytes": 1753242,
       "missing_roots": []
+    },
+    {
+      "name": "remote-native-audio49-readiness-complete-inventory.json",
+      "sha256": "1b353a2e196b7eff008060fc9869d83671178f1830cefa4e1be0f48e5e6e0b18",
+      "files": 19,
+      "bytes": 583956756,
+      "missing_roots": []
     }
   ],
   "local_artifact_root": "runs/cloud-export-20261016/tree",
@@ -1145,7 +1152,139 @@
     "scheduler_watcher_log": "/projects/u6si/duplex-live/logs/dl-native-audio49-watch-7575818.out",
     "server_watcher_pid_terminal": true,
     "maximum_submitted_gpu_jobs": 1,
-    "readiness_off_cluster_backup_in_progress": true
+    "readiness_off_cluster_backup_in_progress": false,
+    "readiness_all19_artifacts_sha256_backed": true,
+    "readiness_bf16_peak_allocated_bytes": 21956940800,
+    "readiness_gradient_smoke_cases": [
+      {
+        "id": "teacher-native2-train-007",
+        "kind": "private",
+        "acoustic_ce": 0.5545805096626282,
+        "nonzero_temporal_gradient_elements": 1605632,
+        "objective": {
+          "assistant_audio_targets": [
+            549,
+            548,
+            548,
+            548,
+            548,
+            548,
+            548,
+            548
+          ],
+          "per_head_ce": [
+            0.5185476541519165,
+            0.8224177956581116,
+            0.6275103688240051,
+            0.7691770792007446,
+            0.7465476393699646,
+            0.7857862710952759,
+            0.9544751048088074,
+            0.9777925610542297
+          ],
+          "user_audio_loss_targets": 0,
+          "output_already_aligned": true,
+          "prefix_and_span_exclusion_requires_approved_audio_mask": true,
+          "original_text_and_kl_hidden_losses_must_be_preserved": true
+        }
+      },
+      {
+        "id": "teacher-native2-train-015",
+        "kind": "simple",
+        "acoustic_ce": 0.22521618008613586,
+        "nonzero_temporal_gradient_elements": 1605632,
+        "objective": {
+          "assistant_audio_targets": [
+            538,
+            537,
+            537,
+            537,
+            537,
+            537,
+            537,
+            537
+          ],
+          "per_head_ce": [
+            0.19095905125141144,
+            0.7897614240646362,
+            0.39436376094818115,
+            0.39802223443984985,
+            0.4547669589519501,
+            0.3821951150894165,
+            0.4596864879131317,
+            0.41057315468788147
+          ],
+          "user_audio_loss_targets": 0,
+          "output_already_aligned": true,
+          "prefix_and_span_exclusion_requires_approved_audio_mask": true,
+          "original_text_and_kl_hidden_losses_must_be_preserved": true
+        }
+      },
+      {
+        "id": "teacher-native2-train-019",
+        "kind": "clarify",
+        "acoustic_ce": 0.33539924025535583,
+        "nonzero_temporal_gradient_elements": 1605632,
+        "objective": {
+          "assistant_audio_targets": [
+            606,
+            605,
+            605,
+            605,
+            605,
+            605,
+            605,
+            605
+          ],
+          "per_head_ce": [
+            0.28377997875213623,
+            1.0842028856277466,
+            0.486614853143692,
+            0.6375251412391663,
+            0.5864475965499878,
+            0.6245057582855225,
+            0.7486147284507751,
+            0.7608481645584106
+          ],
+          "user_audio_loss_targets": 0,
+          "output_already_aligned": true,
+          "prefix_and_span_exclusion_requires_approved_audio_mask": true,
+          "original_text_and_kl_hidden_losses_must_be_preserved": true
+        }
+      },
+      {
+        "id": "teacher-native2-train-023",
+        "kind": "cancel",
+        "acoustic_ce": 0.496690034866333,
+        "nonzero_temporal_gradient_elements": 1605632,
+        "objective": {
+          "assistant_audio_targets": [
+            595,
+            594,
+            594,
+            594,
+            594,
+            594,
+            594,
+            594
+          ],
+          "per_head_ce": [
+            0.4667342007160187,
+            1.0185374021530151,
+            0.6053590178489685,
+            0.6272357106208801,
+            0.6217538714408875,
+            0.5902348160743713,
+            0.7622803449630737,
+            0.7492216229438782
+          ],
+          "user_audio_loss_targets": 0,
+          "output_already_aligned": true,
+          "prefix_and_span_exclusion_requires_approved_audio_mask": true,
+          "original_text_and_kl_hidden_losses_must_be_preserved": true
+        }
+      }
+    ]
   },
   "native_audio49_watcher_source_bundle": {
     "source": "3d6de2c055d47e15b76ba3a9e48b7a43bbee3c2d",

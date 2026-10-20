@@ -36,9 +36,9 @@ No automatic longer training/adoption/fresh20 inference. New snapshots remain
 same-project preservation until separately copied/hash-verified off cluster.
 
 Completed zero-update all49 audit7572397/7572398 PASS; all11 artifacts SHA-backed.
-Verified prior artifact union23767files18462797070B, models/runtime/ASR/vendor
-separate; new readiness19files583956756B transferring to Mac (not yet claimed
-verified). Full source bundle33cd0fe already verified; watcher3d6de2c bundle also
+Verified artifact union23786 files/19046753826B, models/runtime/ASR/vendor
+separate; readiness19files583956756B fully size/SHA-verified on Mac at11:52:29UTC.
+Independent BF16 gradient readiness peak21956940800B; all4cases finite/nonzero, weights unchanged. Full source bundle33cd0fe already verified; watcher3d6de2c bundle also
 verified SHA 31e5542fefa87d10bcf922c5167e5f5db8186b44ef7c4795090d7f2cf37018f3. Old stopped Mac source backup PARTIAL. All unrelated
 local edits preserved; no credentials/owner conversations/quarantined core copied.
 
