@@ -1,3 +1,36 @@
+# LOCAL active — parent-Adam chain SUBMITTED 7581639 / 7581640 (20October16:06UTC)
+
+Runtime067cb5d73e18b665a7f72025c7604ba1a46d225b committed/pushed, immutable
+worktrees/recovery-067cb5d. Fresh queue empty and prior7578128/7578417/7578866/
+7579217/7580878 allCOMPLETED0:0 before submission. GPU readiness7581639 and
+SlurmCPU watcher7581640 accepted, exact IDs saved before release16:06:24UTC;
+initial queue PENDING(None); actual16:09:58UTC both RUNNING. Full246 tests
+PASS4.023s, including all3 real moment/clock negative-state tests;11 state tests
+PASS1.332s before matching BF16 GPU readiness. Canonical remote
+runs/native-audio49-parent-adam-local-20261020.json owns all following IDs.
+LOCAL soleexecutor; CLOUD READ-ONLY, no old watcher restart or duplicate jobs.
+
+One new8 from native520 preserves named original Adam moments and parameter
+clocks520; only group LR changes1e-5→2e-7. Stage calls8/Adam clocks528 must be
+independently verified. Current RNG is not replaced. All28/25/24/KL1hidden10/
+word64clock64/all49 acoustic objectives unchanged. New matching BF16 readiness
+includes exact import audit; that audit must equal training import. Three real
+small-Adam clock/negative-state tests run within fullsuite before optimizer work.
+Watcher advances successful readiness→new8+complete independent restoration→
+full native10→independent speech10; never extends/adopts. Max2active/1GPU job.
+PlanSHA56678d0fb776d87be2cdb4e48eabd2de2215057003c97b0c91f6a749756b0fd0.
+
+Prior smallstep full10 rejectedcore1/4,speech7/10; all176/1455982473B SHA-backed.
+Gradient154 allweightsunchanged/0updates; all17/584218491B SHA-backed. Scoped
+union24330files/22361505021B. Fullsource067cb5d bundle SHA
+ddf4c4766d493ffd38f61e551fbe91c22941b06f6efe2ec247772db7c912d4e4 verifiedcomplete.
+Old stopped Mac backup PARTIAL; unrelated local files preserved. No owner/
+credentials/core copied. Whole model unqualified; fresh20 native inferenceNONE.
+Cert through19:32UTC, interactive ends21Oct08:56UTC. Next observe7581639/7581640,
+retrieve each terminal stage via scoped rsync and independently review whole10.
+
+---
+
 # LOCAL active — gradient154 complete; one parent-Adam native8 trial prepared (20October)
 
 Smallstep native8 train7578417/fullrestore COMPLETE; full10 7578866/independent

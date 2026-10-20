@@ -1445,5 +1445,32 @@
     "all154_measured": true,
     "all17_artifacts_sha256_backed": true,
     "review": "docs/NATIVE-GRADIENT154-REVIEW-2026-10-20.json"
+  },
+  "native_audio49_parent_adam_chain": {
+    "source": "067cb5d73e18b665a7f72025c7604ba1a46d225b",
+    "readiness_job": "7581639",
+    "watcher_job": "7581640",
+    "canonical_receipt": "runs/native-audio49-parent-adam-local-20261020.json",
+    "submitted_utc": "2026-10-20T16:06:24Z",
+    "initial_observed_state": "PENDING",
+    "maximum_updates": 8,
+    "effective_optimizer_learning_rate": 2e-07,
+    "source_adam_clocks": 520,
+    "required_final_adam_clocks": 528,
+    "automatic_extension": false,
+    "stage_artifacts_backed": false,
+    "source_bundle": {
+      "path": "runs/local-continuation-20261019/source-main-067cb5d.bundle",
+      "sha256": "ddf4c4766d493ffd38f61e551fbe91c22941b06f6efe2ec247772db7c912d4e4",
+      "verified_complete_history": true
+    },
+    "readiness_state": "RUNNING",
+    "watcher_state": "RUNNING",
+    "observed_utc": "2026-10-20T16:09:58Z",
+    "cluster_tests_passed": 246,
+    "cluster_tests_seconds": 4.023,
+    "additional_state_tests_passed": 11,
+    "additional_state_tests_seconds": 1.332,
+    "parent_adam_regression_tests_passed": true
   }
 }
