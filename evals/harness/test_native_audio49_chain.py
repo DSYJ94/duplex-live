@@ -30,6 +30,14 @@ class DurableChain(unittest.TestCase):
             with patch.object(chain,'BASE',root),patch.object(chain,'validate'),patch.object(chain,'call') as call:
                 with self.assertRaises(AssertionError):chain.submit(root/'receipt',dict(jobs={'readiness':'1'},source='source'),'submit-training','1')
                 call.assert_not_called()
+    def test_busy_slot_keeps_watcher_alive_without_recording_a_submission(self):
+        import json
+        with tempfile.TemporaryDirectory() as name:
+            path=Path(name)/'receipt.json';path.write_text(json.dumps(dict(jobs={'readiness':'1'})))
+            with patch.object(chain,'validate'),patch.object(chain,'call',return_value='1|COMPLETED|0:0'),patch.object(chain,'submit',side_effect=[chain.SlotBusy('predecessor still visible'),RuntimeError('stop fixture')]) as submit,patch.object(chain.time,'sleep') as sleep:
+                with self.assertRaisesRegex(RuntimeError,'stop fixture'):chain.watch(path)
+                self.assertEqual(submit.call_count,2);sleep.assert_called_once_with(60)
+            self.assertNotIn('submission_attempts',json.loads(path.read_text()))
     def test_preservation_excludes_credential_and_core_paths(self):
         for name in ['runs/a/session-token','keys/openai.env','runs/a/core-344dded','owner-conversations/a.json']:
             self.assertTrue(chain.excluded(Path(name)))

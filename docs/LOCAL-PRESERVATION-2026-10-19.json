@@ -1,7 +1,7 @@
 {
-  "at_utc": "2026-10-20T17:06:01.760579+00:00",
-  "unique_scoped_artifact_files": 24522,
-  "unique_scoped_artifact_bytes": 23818606684,
+  "at_utc": "2026-10-20T19:49:27.607183+00:00",
+  "unique_scoped_artifact_files": 24543,
+  "unique_scoped_artifact_bytes": 24402705014,
   "inventory_conflicts": [],
   "inventories": [
     {
@@ -681,6 +681,13 @@
       "sha256": "16cfe439cb8bc1aae2966983e1c8f1f06dac21c9a58aa37f19a71b9e2849bf6c",
       "files": 4,
       "bytes": 179477,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native-complete-batch-readiness-inventory.json",
+      "sha256": "a03d31a21e9e54f4933ceed7e0dffea2e68ad90cd4ea726e38954a3048c388d0",
+      "files": 21,
+      "bytes": 584098330,
       "missing_roots": []
     }
   ],
@@ -1554,12 +1561,22 @@
       "sha256": "91a124207bbafe2389ff63c87dadb2f4f31accae79114c6435cdd99615b290b8",
       "verified_complete_history": true
     },
-    "readiness_state": "RUNNING",
-    "watcher_state": "RUNNING",
+    "readiness_state": "COMPLETED",
+    "watcher_state": "FAILED",
     "observed_utc": "2026-10-20T17:12:36Z",
     "cluster_tests_passed": 252,
     "cluster_tests_seconds": 4.11,
     "additional_state_tests_passed": 11,
-    "additional_state_tests_seconds": 1.564
+    "additional_state_tests_seconds": 1.564,
+    "watcher_exit": "1:0",
+    "training_submitted": false,
+    "readiness_all154_passed": true,
+    "complete_gradient_norm": 5.444079505444755,
+    "readiness_peak_allocated_bytes": 22002220544,
+    "readiness_artifacts_sha256_backed": true,
+    "readiness_verified_files": 21,
+    "readiness_verified_bytes": 584098330,
+    "watcher_failure": "Active-slot guard raised before any submission attempt; no training accepted",
+    "local_certificate_valid_until_utc": "2026-10-21T03:50:25Z"
   }
 }

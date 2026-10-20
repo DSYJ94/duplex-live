@@ -18,6 +18,11 @@ BASE = Path('/projects/u6si/duplex-live')
 STAGES = ('readiness', 'training', 'native10', 'speech10')
 
 
+class SlotBusy(ValueError):
+    """No submission was attempted; wait for the authoritative queue to clear."""
+    pass
+
+
 def now():
     return datetime.datetime.utcnow().isoformat() + 'Z'
 
@@ -74,7 +79,7 @@ def submit(path, receipt, action, job):
     active = call(['squeue', '--all', '-u', os.environ['USER'], '-h', '-o', '%i']).split()
     watcher = os.environ.get('DL_CHAIN_WATCHER_JOB')
     if any(x != watcher for x in active) or len(active) > (1 if watcher else 0):
-        raise ValueError('Another active job owns a slot; no submission')
+        raise SlotBusy('Active scheduler IDs '+repr(active)+'; watcher '+repr(watcher)+'; no submission attempted')
     terminal = call(['sacct', '-X', '-n', '-P', '-j', job, '--format=JobID,State,ExitCode'])
     rows = [x.split('|') for x in terminal.splitlines() if x.startswith(job + '|')]
     if len(rows) != 1 or rows[0][1] in ('PENDING', 'RUNNING', 'COMPLETING', 'CONFIGURING', 'SUSPENDED', 'REQUEUED'):
@@ -216,7 +221,10 @@ def watch(path):
                             save(path, receipt)
                             return
                         action = {'readiness': 'submit-training', 'training': 'submit-native', 'native10': 'submit-speech'}[stage]
-                        submit(path, receipt, action, job)
+                        try:
+                            submit(path, receipt, action, job)
+                        except SlotBusy as error:
+                            print('WAIT_ACTIVE_SCHEDULER_SLOT',str(error),flush=True)
             time.sleep(60)
     raise RuntimeError('Watcher time bound reached; no duplicate or extension')
 

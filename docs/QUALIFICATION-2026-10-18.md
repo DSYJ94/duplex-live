@@ -1,3 +1,31 @@
+# LOCAL active — full154 readiness PASS; watcher stopped before training; recovery prepared
+
+Actual19:47UTC queue EMPTY. Readiness7582620 COMPLETE0:0 (17:21:48UTC); full
+154-gradient readiness PASS/0updates/allweights unchanged, norm5.444079505, peak
+22002220544B. All21 readiness artifacts584098330B SHA-backed19:47:55UTC.
+Scoped union24543files/24402705014B; old Mac backup PARTIAL.
+Watcher7582621 FAILED1:0 at17:22:14UTC: active-slot guard raised before recording
+ANY training attempt. Receipt jobs ONLYreadiness7582620; no training was submitted.
+No evidence of another job in account history during transition. A lingering
+scheduler slot is consistent with this, but exact active IDs were not logged.
+
+Fix uses dedicated SlotBusy: log active IDs and wait/recheck without recording
+or retrying uncertain sbatch.5local scheduler tests PASS, including busy→retry
+and existing uncertain-attempt guard. No training/math/data source change: payload
+remains3b92d843e7724d66ecb6d148ab33b3705f089ec8. Recovery will use a separate fixed
+SlurmCPUwatcher source and submit the original ready-approved bounded8 once under
+receipt lock, after independent failed-watcher/emptyqueue checks. Next watcher
+and training IDs pending commit/push/deployment. LOCAL soleexecutor; CLOUDread-only.
+
+Certificate REVERIFIED with TZ=UTC ssh-keygen and bounded actual SSH: valid from
+2026-10-20T15:50:25Z until2026-10-21T03:50:25Z (05:50:25Amsterdam). This supersedes
+the previous expiry recorded in older entries. Machine display timezone is BST;
+use UTC explicitly. Reservation ends21Oct08:56:32UTC/10:56:32Amsterdam. No new
+sign-in requested. Whole model remains unqualified; original failed candidates,
+all28/25/24/KL1hidden10/word64clock64, all words/audio/receipts/folds unchanged.
+
+---
+
 # LOCAL active — complete-batch native8 chain SUBMITTED7582620/7582621 (20Oct17:10UTC)
 
 Runtime exact3b92d843e7724d66ecb6d148ab33b3705f089ec8 committed/pushed, immutable
