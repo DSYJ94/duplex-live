@@ -100,6 +100,10 @@ def main():
     ap.add_argument('--actual-recorded-voice', action='store_true')
     ap.add_argument('--actual-native-priming', action='store_true')
     ap.add_argument('--actual-cold-graphs', action='store_true')
+    ap.add_argument('--native-audio49-audit',type=Path)
+    ap.add_argument('--native-audio49-weight',type=float,choices=(0.,1.),default=0.)
+    ap.add_argument('--native-audio49-preflight-only',action='store_true')
+    ap.add_argument('--native-audio49-preflight',type=Path)
     ap.add_argument('--reload', action='store_true')
     ap.add_argument('--history-audit-only', action='store_true')
     ap.add_argument('--history-audit', action='store_true')
@@ -116,6 +120,8 @@ def main():
         ap.error('Owner exploration requires the exact bounded full24 continuation and complete rejected review')
     from evals.context_native_v2_teacher_objective import validate_configuration as validate_native_v2
     validate_native_v2(args)
+    from evals.context_native_audio49_training import validate_configuration as validate_audio49
+    validate_audio49(args)
     if args.native_v2_gradient_audit and (not args.native_v2_cache or args.reload or args.resume_training):
         ap.error('Native-v2 gradient diagnosis needs the complete warm-start corpus and zero optimizer/reload')
     if args.teacher_engine_native_audio and (not args.teacher_engine_input_audit

@@ -51,6 +51,10 @@ def before_engine(engine_module, proof, disabled=False, zero=False):
             specific = (specific and sha256(proof/'training-state.pt') == report['training_state_sha256']
                 and reload['training_state_sha256'] == report['training_state_sha256']
                 and reload['optimizer_rng_state_restored'] is True)
+    elif report['schema'] == 'dl-context-actual-audio49-adapter-proof-v1':
+        from evals.context_native_audio49_training import verify_checkpoint as verify_audio49
+        verify_audio49(proof)
+        specific=True
     elif report['schema'] == 'dl-native-assistant-joint-proof-v1':
         from evals.context_native_joint import verify_inference
         specific = verify_inference(proof)
@@ -68,7 +72,7 @@ def before_engine(engine_module, proof, disabled=False, zero=False):
         raise RuntimeError('Unverified or changed Context adapter proof')
     protocol=None
     if report['schema'] in ('dl-context-actual-adapter-proof-v1','dl-context-result-head-proof-v1',
-            'dl-native-assistant-joint-proof-v1'):
+            'dl-native-assistant-joint-proof-v1','dl-context-actual-audio49-adapter-proof-v1'):
         # These legacy schemas were produced only through the audited bootstrap/
         # provided-token-preserving replay. Keep their exact implementation pin.
         protocol=report.get('native_protocol',{'name':'bootstrap-preserve-provided-v1',

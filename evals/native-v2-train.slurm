@@ -32,6 +32,11 @@ case "$PHASE" in
  learning-curve-audit) RUN_OUT="$DL/runs/native-learning-curve-audit-$SLURM_JOB_ID"; UPDATES=8 ;;
  *) echo "Unknown native phase" >&2; exit 2 ;;
 esac
+if [[ "${NATIVE_AUDIO49_PREFLIGHT_ONLY:-0}" == 1 ]]; then
+ test "$PHASE" = train
+ : "${NATIVE_AUDIO49_AUDIT_JOB:?New complete49 audit required}"
+ RUN_OUT="$DL/runs/native-audio49-training-preflight-$SLURM_JOB_ID"
+fi
 ARGS=(--assets "$DL/runs/context-spanning-assets-7454205/manifest.json"
  --base "$DL/models/hf-cache/hub/models--nvidia--personaplex-7b-v1/snapshots/fdaf4090a61cb315c138a1faee287ffd6c716309"
  --voice-reference "$DL/runs/voice-quality-7414595/codec/reference.wav"
@@ -84,6 +89,22 @@ if [[ "${NATIVE_V2_WARM_ORDINARY_CLOCK:-0}" == 1 ]]; then
  test "${NATIVE_V2_WARM_ORDINARY_WEIGHT:-0}" = 64
  ARGS+=(--native-v2-warm-ordinary-clock)
 fi
+if [[ -n "${NATIVE_AUDIO49_AUDIT_JOB:-}" ]]; then
+ [[ "$NATIVE_AUDIO49_AUDIT_JOB" =~ ^[0-9]+$ ]]
+ test "$PHASE" = train
+ test "${NATIVE_V2_FULL24_PER8:-0}" = 1
+ test "${NATIVE_V2_LEARNING_RATE:-}" = 2e-6
+ test "${NATIVE_V2_WARM_ORDINARY_WEIGHT:-0}" = 64
+ test "${NATIVE_V2_WARM_ORDINARY_CLOCK:-0}" = 1
+ ARGS+=(--native-audio49-audit "$DL/runs/native-audio49-audit-$NATIVE_AUDIO49_AUDIT_JOB" --native-audio49-weight 1)
+ if [[ "${NATIVE_AUDIO49_PREFLIGHT_ONLY:-0}" == 1 ]]; then
+  ARGS+=(--native-audio49-preflight-only)
+ else
+  : "${NATIVE_AUDIO49_PREFLIGHT_JOB:?Independent BF16 readiness required}"
+  [[ "$NATIVE_AUDIO49_PREFLIGHT_JOB" =~ ^[0-9]+$ ]]
+  ARGS+=(--native-audio49-preflight "$DL/runs/native-audio49-training-preflight-$NATIVE_AUDIO49_PREFLIGHT_JOB")
+ fi
+fi
 mapfile -t COMPONENTS < <(python3 -c 'import json,sys,hashlib; from pathlib import Path; p=Path(sys.argv[1]); r=json.loads((p/"report.json").read_text()); d=(p/"data.json").read_bytes(); assert hashlib.sha256(d).hexdigest()==r["data_sha256"]; rows=json.loads(d)["components"]; assert len(rows)==28; print("\n".join(x["component"] for x in rows))' "$PARENT")
 test "${#COMPONENTS[@]}" = 28
 for COMPONENT in "${COMPONENTS[@]}"; do ARGS+=(--actual-mixed-data "$COMPONENT"); done
@@ -122,6 +143,12 @@ if [[ "$PHASE" == gradient-audit ]]; then
  exit 0
 fi
 run -m evals.context_training_proof "${ARGS[@]}"
+if [[ "${NATIVE_AUDIO49_PREFLIGHT_ONLY:-0}" == 1 ]]; then
+ test -f "$RUN_OUT/audio49-bf16-preflight.json"
+ test ! -e "$RUN_OUT/adapters.safetensors"
+ test ! -e "$RUN_OUT/training-state.pt"
+ exit 0
+fi
 # This is a fresh process, with complete adapter/optimizer/Python/NumPy/Torch/CUDA restoration.
 run -m evals.context_training_proof "${ARGS[@]}" --reload
 # No extension or adoption is authorized by this mechanics result alone.

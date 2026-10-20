@@ -115,6 +115,10 @@ def run(lm, spm, voice, examples, components, audits, args):
     if getattr(args, 'native_v2_cache', None):
         from evals.context_native_v2_teacher_objective import prepare as prepare_native_v2
         additional_policy, additional_batches = prepare_native_v2(args, spm, voice, retention, teacher)
+    audio49_policy=None;audio49_batches=[]
+    if getattr(args,'native_audio49_audit',None):
+        from evals.context_native_audio49_training import prepare as prepare_audio49
+        audio49_policy,audio49_batches=prepare_audio49(args,spm,voice)
     def forward(inputs): return lm.forward_codes(inputs)
     def digests():
         result = {}
@@ -177,7 +181,10 @@ def run(lm, spm, voice, examples, components, audits, args):
                     if balance_retention else 'round-robin verified kinds, then examples per kind; retention step modulo four'
                     if args.actual_sampling=='balanced-kind' else 'actual step modulo component count; retention step modulo four'),
                 **({'component_kind_order':component_kinds} if args.actual_sampling=='balanced-kind' else {}),
-                'actual_component_count':len(batches),'past_loss_targets':0,'audio_loss_targets':0,
+                **({'assistant_audio_auxiliary':audio49_policy,'original_actual_history_audio_loss_targets':0}
+                    if audio49_policy else {}),
+                'actual_component_count':len(batches),'past_loss_targets':0,
+                'audio_loss_targets':audio49_policy['assistant_audio_loss_targets_per8'] if audio49_policy else 0,
                 'execution':'BF16 batch MATH, no compilation or CUDA graphs'}}
     with no_compile(), no_cuda_graph(), sdpa_kernel(SDPBackend.MATH):
         baseline = digests(); baseline_metrics = metrics()
@@ -206,7 +213,7 @@ def run(lm, spm, voice, examples, components, audits, args):
                 batches,audits,args,forward,warm_policy)
         if args.reload:
             report = json.loads((args.out/'report.json').read_text())
-            if (report['schema'] != 'dl-context-actual-adapter-proof-v1' or report['frozen_hashes'] != frozen
+            if (report['schema'] != ('dl-context-actual-audio49-adapter-proof-v1' if audio49_policy else 'dl-context-actual-adapter-proof-v1') or report['frozen_hashes'] != frozen
                     or report['retention_examples'] != [r[2] for r in retention]
                     or report['data_sha256'] != sha256(args.out/'data.json')
                     or report['voice_sha256'] != sha256(args.out/'voice.pt')
@@ -234,11 +241,29 @@ def run(lm, spm, voice, examples, components, audits, args):
                 resume_verified = (snapshot['completed_steps']==report['optimizer_steps']
                     and before==tensor_hashes(learned.items()))
                 if not resume_verified:raise RuntimeError('Portable state differs from saved adapter')
+            if audio49_policy:
+                if report.get('assistant_audio_auxiliary')!=audio49_policy:raise RuntimeError('Audio49 policy reconstruction changed')
+                from training.control.train_context import assert_equal,cpu_tree
+                import random,numpy as np
+                assert_equal(snapshot['adapters'],load_file(args.out/'adapters.safetensors',device='cpu'))
+                assert_equal(snapshot['optimizer'],cpu_tree(opt.state_dict()))
+                assert_equal(snapshot['torch_cpu_rng'],torch.get_rng_state())
+                assert_equal(snapshot['torch_cuda_rng'],torch.cuda.get_rng_state_all())
+                assert_equal(snapshot['python_rng'],random.getstate())
+                n=np.random.get_state();assert_equal(snapshot['numpy_rng'],dict(name=n[0],keys=n[1].tolist(),position=int(n[2]),has_gauss=int(n[3]),cached_gauss=float(n[4])))
+                from evals.context_native_audio49_training import fingerprints
+                audio49_actual=fingerprints(lm,audio49_batches)
+                if audio49_actual!=report['expected_audio49_logits']:raise RuntimeError('All49 acoustic restoration logits changed')
             actual = digests(); passed = actual == report['expected_logits']
-            result = {'schema':'dl-context-actual-adapter-reload-v1','fresh_process':True,
+            result = {'schema':('dl-context-actual-audio49-adapter-reload-v1' if audio49_policy else 'dl-context-actual-adapter-reload-v1'),'fresh_process':True,
                 'all_valid_logits_exact':passed,'actual':actual,'checkpoint_sha256':report['checkpoint_sha256'],
                 'data_sha256':report['data_sha256'],'optimizer_rng_state_restored':resume_verified,
                 'training_state_sha256':report.get('training_state_sha256'),'passed':passed}
+            if audio49_policy:
+                result.update(pid=__import__('os').getpid(),training_pid=report['training_pid'],
+                    all49_auxiliary_logits_exact=audio49_actual==report['expected_audio49_logits'],actual_audio49_logits=audio49_actual,
+                    optimizer_and_rng_independently_compared_exact=True)
+                if result['pid']==result['training_pid']:raise RuntimeError('Audio49 restore must use a fresh process')
             (args.out/'reload-report.json').write_text(json.dumps(result,indent=2)+'\n')
             print(json.dumps(result),flush=True)
             if not passed: raise RuntimeError('Fresh actual adapter logits changed')
@@ -287,11 +312,16 @@ def run(lm, spm, voice, examples, components, audits, args):
             learning_curve(lm,learned,batches,native_teacher_batches,additional_batches,retention,references,
                 audits,args,state_metadata(frozen),forward)
             return
+        if audio49_policy and args.native_audio49_preflight_only:
+            if optimizer.state or initial_step:raise RuntimeError('BF16 readiness cannot optimize or resume')
+            from evals.context_native_audio49_training import bf16_preflight
+            bf16_preflight(lm,learned,audio49_batches,audio49_policy,args)
+            return
         initial_metrics=metrics()
         steps = []; seen_a = seen_b = False; start = time.monotonic()
         torch.cuda.reset_peak_memory_stats()
         for local_step in range(args.actual_fit_updates):
-            warm_rows=[];clock_rows=[]
+            warm_rows=[];clock_rows=[];audio49_rows=[]
             additional_loss = None; additional_record = None; additional_records = []
             step = initial_step+local_step
             optimizer.zero_grad(set_to_none=True)
@@ -362,6 +392,9 @@ def run(lm, spm, voice, examples, components, audits, args):
                         (clock_policy['weight']/len(clock_references)*value).backward()
                         clock_rows.append(dict(id=identity,kl=float(ckl.detach()),hidden_mse=float(cmse.detach()),
                             weight=clock_policy['weight']/len(clock_references)))
+                if audio49_policy:
+                    from evals.context_native_audio49_training import backward as audio49_backward
+                    audio49_rows=audio49_backward(lm,audio49_batches,local_step)
             if not all(torch.isfinite(v) for v in ((ce,kl,hidden,supervised) if teacher else (ce,kl,hidden))):
                 raise RuntimeError('Nonfinite actual or retention loss')
             if any(p.grad is None or not torch.isfinite(p.grad).all() for p in learned.values()):
@@ -392,6 +425,7 @@ def run(lm, spm, voice, examples, components, audits, args):
                     if getattr(args, 'native_v2_full24_per8', False) else {}),
                 **({'warm_ordinary_microbatch':warm_rows} if warm_rows else {}),
                 **({'warm_ordinary_clock_microbatch':clock_rows} if clock_rows else {}),
+                **({'assistant_audio49_microbatch':audio49_rows} if audio49_policy else {}),
                 'nonzero_A_gradients':a,'nonzero_B_gradients':b,'gradient_norm_before_clip':norm}
             steps.append(row); print(json.dumps(row),flush=True)
         if getattr(args, 'native_v2_full24_per8', False):
@@ -400,6 +434,11 @@ def run(lm, spm, voice, examples, components, audits, args):
                 exposed=[view['id'] for row in steps[offset:offset+8] for view in row['additional_native_v2_microbatch']]
                 if len(exposed)!=24 or set(exposed)!=expected_ids:
                     raise RuntimeError('Full24 native pilot omitted or duplicated a teacher in an eight-update block')
+        if audio49_policy:
+            exposed=[row['id'] for step in steps for row in step['assistant_audio49_microbatch']]
+            if len(exposed)!=49 or set(exposed)!=set(audio49_policy['teacher_ids']):raise RuntimeError('Incomplete49 assistant acoustic exposure')
+            count=sum(sum(row['objective']['assistant_audio_targets']) for step in steps for row in step['assistant_audio49_microbatch'])
+            if count!=audio49_policy['assistant_audio_loss_targets_per8']:raise RuntimeError('Audio49 target validity changed from independent numerical audit')
         if not seen_a or not seen_b: raise RuntimeError('Dead actual temporal adapter')
         if frozen != tensor_hashes((n,p) for n,p in lm.named_parameters() if not p.requires_grad):
             raise RuntimeError('Frozen speech/base weights changed')
@@ -450,5 +489,12 @@ def run(lm, spm, voice, examples, components, audits, args):
             if any([r['id'] for r in step.get('warm_ordinary_clock_microbatch',[])]!=clock_policy['ids'] for step in steps):
                 raise RuntimeError('Every update must preserve all14 approved ordinary clock/native-audio anchors')
             report['retention_objective']+='; separate64x mean ordinary clock/native-audio KL plus10hiddenMSE, word/legacy losses unchanged'
+        if audio49_policy:
+            from evals.context_native_audio49_training import fingerprints,SCHEMA
+            report.update(schema=SCHEMA,assistant_audio_auxiliary=audio49_policy,combined_recipe=state_metadata(frozen)['recipe'],
+                original_actual_history_audio_loss_targets=0,user_audio_loss_targets=0,prefix_audio_loss_targets=0,supplied_span_audio_loss_targets=0,
+                audio_loss_targets=sum(sum(row['objective']['assistant_audio_targets']) for step in steps for row in step['assistant_audio49_microbatch']),
+                expected_audio49_logits=fingerprints(lm,audio49_batches),training_pid=__import__('os').getpid())
+            report['retention_objective']+='; additional assistant-only acoustic CE on all49 approved teachers, every original objective retained'
         (args.out/'report.json').write_text(json.dumps(report,indent=2)+'\n')
         print(json.dumps({k:report[k] for k in ('passed','checkpoint_sha256','final_metrics','peak_allocated_bytes')}),flush=True)

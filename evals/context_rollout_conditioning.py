@@ -8,6 +8,9 @@ def verify_checkpoint(proof):
     from evals.context_spanning_download import SOURCE_COMMIT
     proof=Path(proof)
     report=json.loads((proof/'report.json').read_text());reload=json.loads((proof/'reload-report.json').read_text())
+    if report['schema']=='dl-context-actual-audio49-adapter-proof-v1':
+        from evals.context_native_audio49_training import verify_checkpoint as verify_audio49
+        return verify_audio49(proof)
     protocol=report.get('native_protocol')
     if (report['schema']!='dl-context-actual-adapter-proof-v1' or report['passed'] is not True
             or report['frozen_weights_unchanged'] is not True or report['base_audio_parameters_frozen'] is not True
