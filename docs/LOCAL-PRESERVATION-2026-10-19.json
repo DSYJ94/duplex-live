@@ -1,7 +1,7 @@
 {
-  "at_utc": "2026-10-20T21:04:58.938610+00:00",
-  "unique_scoped_artifact_files": 24949,
-  "unique_scoped_artifact_bytes": 26023922251,
+  "at_utc": "2026-10-20T21:33:12.588915+00:00",
+  "unique_scoped_artifact_files": 24967,
+  "unique_scoped_artifact_bytes": 26607951501,
   "inventory_conflicts": [],
   "inventories": [
     {
@@ -730,6 +730,13 @@
       "sha256": "2b4eecd59317a6e86fa59917c642238967322008cc1c2bab2ecf4705db5ef1b4",
       "files": 231,
       "bytes": 746997711,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native-bf16-stream49-timeout-inventory.json",
+      "sha256": "79fba5995bfd59480dbd52f96133bfffbf6665f399fabee523e545f982106e5f",
+      "files": 18,
+      "bytes": 584029250,
       "missing_roots": []
     }
   ],
@@ -1689,7 +1696,7 @@
       "certificate_rechecked_utc": "2026-10-19T21:26:22.059158+00:00"
     }
   ],
-  "current_native_execution_chain": "native_precision16_chain",
+  "current_native_execution_chain": "native_precision16_no_tf32_recovery1_chain",
   "legacy_top_level_candidate_summary_scope": "Earlier rejected40 job7558824 retained for preservation; not the active or adopted candidate. See current_native_execution_chain and newest HANDOFF.",
   "critical_preservation_coverage_review": {
     "path": "docs/NATIVE-PRESERVATION-COVERAGE-2026-10-20.json",
@@ -1800,12 +1807,138 @@
       "verified_complete_history": true
     },
     "observed_utc": "2026-10-20T20:57:14Z",
-    "state": "RUNNING",
+    "state": "TIMEOUT",
     "cluster_tests_passed": 260,
-    "cluster_tests_seconds": 4.092
+    "cluster_tests_seconds": 4.092,
+    "slurm_exit_code": "0:0",
+    "slurm_elapsed": "00:30:15",
+    "all49_complete": false,
+    "completed_partial_cases": 45,
+    "full49_report_missing": true,
+    "partial_subset_accepted": false,
+    "final_parameter_hash_check_completed": false,
+    "all18_failed_stage_artifacts_sha256_backed": true,
+    "failed_stage_verified_bytes": 584029250,
+    "running_walltime_increase_denied_by_slurm": true,
+    "derived_partial45": "runs/local-continuation-20261019/bf16-stream49-timeout-partial45-diagnostic.json"
   },
   "current_native_execution_chains": [
-    "native_precision16_chain",
-    "native_bf16_stream49_chain"
-  ]
+    "native_bf16_stream49_recovery1_chain",
+    "native_precision16_no_tf32_recovery1_chain"
+  ],
+  "native_precision_no_tf32_initial_failed_chain": {
+    "source": "0689a3d1e4d55ab583661559cb38337512cc9f8c",
+    "executor": "LOCAL",
+    "at_utc": "2026-10-20T21:21:21.282130Z",
+    "jobs": {
+      "predecessor": "7586717"
+    },
+    "released": [],
+    "submission_attempts": {},
+    "watcher_submission_attempt": {
+      "status": "released",
+      "at_utc": "2026-10-20T21:21:21.282145Z",
+      "job": "7587733"
+    },
+    "plan_sha256": "5154c21b6d36f86886e175bef7825d435ab5be4ce419cf4d87953b39955544e3",
+    "prior_precision16_review_sha256": "799bc6ccec86bcc5a149a8858195803b22287b860fa48ecfad78272e70c33f81",
+    "predecessor_receipt_sha256": "41a787c58f20e5ca69c7aaefe60e9615953c44057fc00704d4bb00568608b197",
+    "predecessor_source": "32eabbf7633bb607e6652442b7244272125e25a6",
+    "optimizer_updates": 0,
+    "all16_required": true,
+    "lm_matmul_tf32": false,
+    "maximum_submitted_active_jobs": 2,
+    "maximum_gpus": 2,
+    "only_one_gpu_job_at_once": true,
+    "reservation": "interactive",
+    "training_extension_or_adoption_approved": false,
+    "diagnostic_histories_do_not_train": true,
+    "required_cpu_tests": 267,
+    "canonical_receipt_mutable_until_watcher_terminal": true,
+    "scheduler_watcher_job": "7587733",
+    "watcher_held_settings": "JobId=7587733 JobName=dl-native-precision-no-tf32-watch\n   UserId=dsyj94.u6si(1483807285) GroupId=dsyj94.u6si(1483807285) MCS_label=N/A\n   Priority=0 Nice=0 Account=brics.u6si QOS=normal\n   JobState=PENDING Reason=JobHeldUser Dependency=(null)\n   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0\n   RunTime=00:00:00 TimeLimit=02:00:00 TimeMin=N/A\n   SubmitTime=2026-10-20T21:21:22 EligibleTime=Unknown\n   AccrueTime=Unknown\n   StartTime=Unknown EndTime=Unknown Deadline=N/A\n   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-20T21:21:22 Scheduler=Main\n   Partition=workq AllocNode:Sid=login42:42843\n   ReqNodeList=(null) ExcNodeList=(null)\n   NodeList=\n   NumNodes=1-1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:*\n   ReqTRES=cpu=1,mem=256M,node=1,billing=1\n   AllocTRES=(null)\n   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*\n   MinCPUsNode=1 MinMemoryNode=256M MinTmpDiskNode=0\n   Features=(null) DelayBoot=00:00:00\n   OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null)\n   Command=/projects/u6si/duplex-live/worktrees/recovery-0689a3d/evals/native-precision-no-tf32-watch.slurm\n   SubmitLine=sbatch --hold --parsable --export=ALL --no-requeue /projects/u6si/duplex-live/worktrees/recovery-0689a3d/evals/native-precision-no-tf32-watch.slurm\n   WorkDir=/lus/lfs1aip2/projects/u6si/duplex-live\n   StdErr=\n   StdIn=/dev/null\n   StdOut=/lus/lfs1aip2/projects/u6si/duplex-live/logs/dl-native-precision-no-tf32-watch-7587733.out\n   TresPerTask=cpu=1\n\n",
+    "watcher_state": "FAILED",
+    "watcher_exit": "1:0",
+    "watcher_elapsed": "00:06:02",
+    "native16_submitted": false,
+    "speech16_submitted": false,
+    "failed_predecessor_not_accepted": true,
+    "source_bundle": {
+      "path": "runs/local-continuation-20261019/source-main-0689a3d.bundle",
+      "sha256": "2ea6e94f7fc9a41d43bd40b01e3656c6074f8d22051a34a6188f6c137f3b6f9b",
+      "verified_complete_history": true
+    }
+  },
+  "native_bf16_stream49_recovery1_chain": {
+    "source": "32eabbf7633bb607e6652442b7244272125e25a6",
+    "executor": "LOCAL",
+    "at_utc": "2026-10-20T21:31:37.654364Z",
+    "jobs": {
+      "bf16_stream49": "7587913"
+    },
+    "optimizer_updates": 0,
+    "all49_required": true,
+    "maximum_gpus": 1,
+    "maximum_minutes": 45,
+    "source_and_all_math_data_unchanged": true,
+    "plan_source": "cf8d4d3bbcaa0db5592cf026b24e77378c57d07c",
+    "plan_sha256": "c94174eb670361d6f9f78a821ad1515aff228d0a4cb8080e72f73b4ee20e7a10",
+    "failed_original_job": "7586717",
+    "failed_original_partial_cases": 45,
+    "failed_original_partial_subset_accepted": false,
+    "submission_attempt": {
+      "status": "released",
+      "job": "7587913"
+    },
+    "held_settings": "JobId=7587913 JobName=dl-native-bf16-stream49\n   UserId=dsyj94.u6si(1483807285) GroupId=dsyj94.u6si(1483807285) MCS_label=N/A\n   Priority=0 Nice=0 Account=brics.u6si QOS=normal\n   JobState=PENDING Reason=JobHeldUser Dependency=(null)\n   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0\n   RunTime=00:00:00 TimeLimit=00:45:00 TimeMin=N/A\n   SubmitTime=2026-10-20T21:31:51 EligibleTime=Unknown\n   AccrueTime=Unknown\n   StartTime=Unknown EndTime=Unknown Deadline=N/A\n   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-20T21:31:51 Scheduler=Main\n   Partition=interactive AllocNode:Sid=login41:23976\n   ReqNodeList=(null) ExcNodeList=(null)\n   NodeList=\n   NumNodes=1-1 NumCPUs=8 NumTasks=1 CPUs/Task=8 ReqB:S:C:T=0:0:*:*\n   ReqTRES=cpu=8,mem=160G,node=1,billing=324,gres/gpu=1\n   AllocTRES=(null)\n   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*\n   MinCPUsNode=8 MinMemoryNode=160G MinTmpDiskNode=0\n   Features=(null) DelayBoot=00:00:00\n   Reservation=interactive\n   OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null)\n   Command=/projects/u6si/duplex-live/worktrees/recovery-32eabbf/evals/native-bf16-stream49.slurm\n   SubmitLine=sbatch --hold --parsable --export=ALL --no-requeue --time=00:45:00 /projects/u6si/duplex-live/worktrees/recovery-32eabbf/evals/native-bf16-stream49.slurm\n   WorkDir=/lus/lfs1aip2/projects/u6si/duplex-live\n   StdErr=\n   StdIn=/dev/null\n   StdOut=/lus/lfs1aip2/projects/u6si/duplex-live/logs/dl-native-bf16-stream49-7587913.out\n   TresPerNode=gres/gpu:1\n   TresPerTask=cpu=8\n\n",
+    "state": "RUNNING",
+    "observed_utc": "2026-10-20T21:33:15Z",
+    "observed_elapsed": "00:01:22",
+    "actual_gpu_walltime_limit_minutes": 45
+  },
+  "native_precision16_no_tf32_recovery1_chain": {
+    "source": "cf8d4d3bbcaa0db5592cf026b24e77378c57d07c",
+    "executor": "LOCAL",
+    "at_utc": "2026-10-20T21:31:51.520285Z",
+    "jobs": {
+      "predecessor": "7587913"
+    },
+    "released": [],
+    "submission_attempts": {},
+    "watcher_submission_attempt": {
+      "status": "released",
+      "job": "7587915"
+    },
+    "predecessor_receipt_path": "/projects/u6si/duplex-live/runs/native-bf16-stream49-recovery1-local-20261020.json",
+    "predecessor_receipt_sha256": "1ffb36330f980a604ddb7a0543267019377087658a0bae215a52c86f289267e5",
+    "predecessor_source": "32eabbf7633bb607e6652442b7244272125e25a6",
+    "failed_initial_canonical": "/projects/u6si/duplex-live/runs/native-precision16-no-tf32-local-20261020.json",
+    "failed_initial_canonical_sha256": "db0fed4c5201cbc981faa9913ca3bf916f3993df30360eaf4c1fd32d2eacc8e8",
+    "failed_initial_watcher": "7587733",
+    "plan_sha256": "96c68fb5c1b5b7424b54ea3f04652e74b5f3bf17f3aae0606df7dcb03d3e2024",
+    "optimizer_updates": 0,
+    "all16_required": true,
+    "lm_matmul_tf32": false,
+    "maximum_submitted_active_jobs": 2,
+    "maximum_gpus": 2,
+    "only_one_gpu_job_at_once": true,
+    "reservation": "interactive",
+    "training_extension_or_adoption_approved": false,
+    "diagnostic_histories_do_not_train": true,
+    "required_cpu_tests": 268,
+    "canonical_receipt_mutable_until_watcher_terminal": true,
+    "scheduler_watcher_job": "7587915",
+    "watcher_held_settings": "JobId=7587915 JobName=dl-native-precision-no-tf32-watch\n   UserId=dsyj94.u6si(1483807285) GroupId=dsyj94.u6si(1483807285) MCS_label=N/A\n   Priority=0 Nice=0 Account=brics.u6si QOS=normal\n   JobState=PENDING Reason=JobHeldUser Dependency=(null)\n   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0\n   RunTime=00:00:00 TimeLimit=02:00:00 TimeMin=N/A\n   SubmitTime=2026-10-20T21:31:51 EligibleTime=Unknown\n   AccrueTime=Unknown\n   StartTime=Unknown EndTime=Unknown Deadline=N/A\n   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-20T21:31:51 Scheduler=Main\n   Partition=workq AllocNode:Sid=login41:23976\n   ReqNodeList=(null) ExcNodeList=(null)\n   NodeList=\n   NumNodes=1-1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:*\n   ReqTRES=cpu=1,mem=256M,node=1,billing=1\n   AllocTRES=(null)\n   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*\n   MinCPUsNode=1 MinMemoryNode=256M MinTmpDiskNode=0\n   Features=(null) DelayBoot=00:00:00\n   OverSubscribe=NO Exclusive=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null)\n   Command=/projects/u6si/duplex-live/worktrees/recovery-cf8d4d3/evals/native-precision-no-tf32-watch.slurm\n   SubmitLine=sbatch --hold --parsable --export=ALL --no-requeue /projects/u6si/duplex-live/worktrees/recovery-cf8d4d3/evals/native-precision-no-tf32-watch.slurm\n   WorkDir=/lus/lfs1aip2/projects/u6si/duplex-live\n   StdErr=\n   StdIn=/dev/null\n   StdOut=/lus/lfs1aip2/projects/u6si/duplex-live/logs/dl-native-precision-no-tf32-watch-7587915.out\n   TresPerTask=cpu=1\n\n",
+    "source_bundle": {
+      "path": "runs/local-continuation-20261019/source-main-cf8d4d3.bundle",
+      "sha256": "53f4f9e59531bf11a089adb489ae219c3646935d3e8d430de6df84b9c830583e",
+      "verified_complete_history": true
+    },
+    "watcher_state": "RUNNING",
+    "observed_utc": "2026-10-20T21:33:15Z",
+    "observed_elapsed": "00:01:18",
+    "native16_submitted": false,
+    "speech16_submitted": false,
+    "watcher_tests_locally_passed": 6
+  }
 }

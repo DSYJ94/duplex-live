@@ -1,3 +1,44 @@
+# LOCAL active — recovery7587913 and finite watcher7587915 RUNNING (20Oct21:33UTC)
+
+Actual21:33:15UTC queue contains ONLY GPU7587913 RUNNING1m22 and CPU7587915
+RUNNING1m18. Complete49 recovery source32eabbf7633bb607e6652442b7244272125e25a6 unchanged;
+new runtime bound45min/oneGPU/interactive overrides the original script30.
+New finite watcher sourcecf8d4d3bbcaa0db5592cf026b24e77378c57d07c, workq1CPU/256M/
+2h. Both accepted/releasedONCE, after original GPU7586717 TIMEOUT and watcher
+7587733 FAILED were independently terminal and the actual queue EMPTY.
+
+Recovery canonical runs/native-bf16-stream49-recovery1-local-20261020.json is an
+immutable released-submission receipt. Following chain canonical
+runs/native-precision16-no-tf32-recovery1-local-20261020.json is MUTABLE until
+watcher_terminal. It binds exact predecessor receipt bytes/source/job7587913.
+Watcher alone owns next native16 and speech16 IDs, currently NOT SUBMITTED.
+Do NOT run any prepared manual precision launcher or restart original failed
+canonical runs/native-precision16-no-tf32-local-20261020.json. At most watcher+
+one active stage,2jobs total/1GPU job. Accepted/uncertain sbatch never retried.
+6local watcher tests PASS, including unknown accounting states, lingering slots,
+uncertain sbatch and immutable recovery binding. Future GPU preflight expects268tests.
+
+Original7586717 TIMEOUT0:0/30m15 emitted45/49 (20993/22992 real frames), no full
+report or final parameter-hash check; partial is NOT accepted. Originalwatcher
+7587733 FAILED1:0/6m02 and submitted no next job. Running-time increase denied by
+Slurm; no old source, outputs or job settings changed. All18 failed-stage files/
+584029250B size/SHA-backed21:29:59UTC; derived45-case diagnostic preserves every
+record and explicitly remains incomplete. Scoped union24967files/26607951501B.
+Sourcecf8d4d3 complete-history bundle SHA recorded in ledger. Old Mac source
+backupPARTIAL. All prior critical native checkpoints/fullstates/data/receipts,
+original7531499 audit and failed TRAIN015/017 WAVs remain preserved.
+
+Prior COMPLETE16 independent speechPASS16/16, maxWER.0266667; BF16 ordinary
+native5204/4 versus complete8 candidate1/4; FP32 tensors with originalTF32=True
+both0/4. New scoped-no-TF32 profile is a separate complete16 test after full49
+recovery; no optimizer, data/loss/voice/fold/heldout or threshold changes, no
+adoption/extension/fresh20. LOCAL soleexecutor/CLOUDread-only. Cert ends21Oct
+03:50:25UTC; reservation ends08:56:32UTC. Next preserve/review complete49 only
+after full parameter hashes and actual COMPLETE0:0, let finite watcher execute
+scoped TF32 native16+all16 speech, then select a diagnosed training repair.
+
+---
+
 # LOCAL active — BF16scan TIMEOUT45/49; complete recovery45min prepared (20Oct21:28UTC)
 
 Actual21:27:25UTC: GPU7586717 TIMEOUT0:0 elapsed30m15; all49 report ABSENT,
