@@ -1,3 +1,60 @@
+# LOCAL overnight — native stream readiness7589157 RUNNING; bounded training chain scheduled (20Oct22:44UTC)
+
+LOCAL is sole executor, CLOUD read-only. Owner is away7–8h and explicitly requests
+self-managed overnight execution and training ASAP. Immutable payload/watcher:
+741872fe2f9e49f35d4deba9aba96caff26c51d4. CPUwatcher7589159 passed the actual286-test
+suite in4.355s, errors0/failures0/CUDAuninitialized, then released its HELD readiness
+job7589157. Actualscontrol22:43:49UTC: readiness RUNNING since22:42:44, oneGPU /
+interactive /2h bound. CPUwatcher workq4CPU8G/8h; only these2 submitted-active jobs.
+Canonical runs/native-stream49-overnight-local-20261020.json owns ALL next IDs;
+MUTABLE until watcher_terminal. Never rerun launcher or manually submit duplicates.
+
+Finite chain: full original154 BF16 gradient preflight PLUS all49 native-call exact
+grad/no-grad output/gradient readiness → ONE bounded8 native520 training stage →
+fresh-process optimizer/RNG/original28/acoustic49 AND native-stream49 restoration
+→ complete native10 → independent speech10. Training is not submitted yet; watcher
+alone submits after complete readiness. Original154 terms remain at every update;
+new supplemental49 teacher CE uses exact recorded calls and declared truncated
+KV autograd at call boundaries, balanced4-kind epoch mass1 across8 updates.
+All original words/audio/receipts/folds/masks retained. Parent Adam520→528, LR2e-7;
+no extension of rejected child, no dtype/sampler/TF32 change. Readiness1GPU≤2h;
+training1GPU≤3h (includes complete49 stream fingerprints and independent restore);
+native10 uses2GPUs≤30m; speech CPU≤30m. At most2 active jobs/oneGPUjob. Unknown
+accounting states wait; uncertain accepted submissions never repeat. Full next
+stage walltime+5m must fit before reservation21Oct08:56:32UTC. Already scheduled
+watcher survives SSH disconnect/cert expiry21Oct03:50:25UTC. No automatic
+extension, adoption or fresh20. Full proposal/docs/NATIVE-STREAM49-GRADIENT-READINESS-2026-10-20.md.
+
+Completed scoped-no-TF32 comparison7588671 COMPLETED0:0/12m35; speech7588922
+COMPLETED0:0/4m59; watcher7588668 COMPLETED. All16 native captures and all16 speech
+PASS at unchanged thresholds; maxWER0.044444/maxPCM0.827911/no full-scale samples.
+Core: native520 BF16=1/4, child BF16=3/4, both FP32=1/4. Original TF32-enabled
+comparison was4/4 versus1/4 BF16, bothFP32=0/4. No precision arm qualifies or is
+adopted. All16 original input hashes/source/voice/sampler/LM+codec policy checked;
+all final GPU peaks measured below80GB. Full review:
+docs/NATIVE-PRECISION16-NO-TF32-COMPLETE-REVIEW-2026-10-20.json.
+Full49 earlier7587913 is complete with unchanged parameters; all49 exceed .001
+batch/stream tolerance, but simple12 have ZERO spoken argmax differences, so no
+causal claim that this alone explains child regression. Original thresholds stay.
+
+Scoped backup union25221files/27939215792B, no inventory conflicts. New233 terminal
+precision artifacts/747060216B all size/SHA256 verified on Mac22:38:34UTC; all prior
+critical checkpoints/full optimizer/RNG/data/manifests/receipts retained. Full741872f
+source history bundle verified. CPU286 proof copied locally and hash recorded.
+Old stopped Mac source backup remains PARTIAL. Remote EXIT snapshots are additional
+cluster copies, explicitly not off-cluster backups. Preserve/hash new checkpoint
+and fullstate as soon as stable, then all terminal outputs; never include credentials,
+owner conversations, session-token or quarantined core.
+
+Next: observe SAME readiness7589157 and canonical; if it fails inspect exact failure
+and retain all outputs. If it passes, let watcher submit training once; monitor fit
+and independently restored native10, preserve critical stable artifacts before cert
+expiry. Full paired fresh40 tooling is prepared but requires committed native10/
+ordinary4/restore review; no fresh inference has been run. Source deployments only
+Git commit/push/fetch/immutable worktrees. All unrelated local edits preserved.
+
+---
+
 # LOCAL active — full49 complete; scoped precision16 running (20Oct22:22UTC)
 
 LOCAL remains sole executor; CLOUD read-only. Source main/ad4edc2505ae81db5abf4b49c96bd1e173dce341.

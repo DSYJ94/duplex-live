@@ -1,0 +1,2935 @@
+{
+  "schema": "dl-native-precision16-no-tf32-complete-review-v1",
+  "at_utc": "2026-10-20T22:43:26.868584+00:00",
+  "source": "ad4edc2505ae81db5abf4b49c96bd1e173dce341",
+  "gpu_job": "7588671",
+  "speech_job": "7588922",
+  "all16_complete": true,
+  "all16_verified": true,
+  "final_gpu_peak_missing_in_payload": false,
+  "initial_post_engine_gpu_guard_executed": true,
+  "optimizer_updates": 0,
+  "independent_speech_report_sha256": "935ba9dc5aa938d7df3300f1f4039c2c9446d29c684710c0f14da388b001ca31",
+  "speech_passes": 16,
+  "cases": [
+    {
+      "index": 0,
+      "scenario": "recovery-train-012",
+      "role": "native520",
+      "precision": "original-bf16",
+      "sampled_model_text": "Because the air is much lighter than the water, which makes the surface feel much lighter, and ice floats.",
+      "independent_spoken_text": " Because the air is much lighter than the water which makes the surface feel much lighter, and ice floats.",
+      "speech_quality_passed": true,
+      "speech_wer": 0.0,
+      "raw_report_sha256": "f4251faf7251f5e8745bbd95918f24ff1a7bda65a8e1c15a7da86ccd20765f5a",
+      "audio_sha256": "7a1525b0f6ba5e5549923d232e75501adbc2d54e3aac67465bece7bf83ef40c6",
+      "user_audio_sha256": "1bd5ef3c206f748b90259defdcabc74fa5c985d873654010f69054a06229564f",
+      "peak": 0.45953369140625,
+      "full_scale_samples": 0,
+      "gain_changed": false,
+      "actual_sampler": {
+        "index": 0,
+        "scenario": "recovery-train-012",
+        "role": "native520",
+        "checkpoint_job": "7510331",
+        "precision": "original-bf16",
+        "text_temperature": 0.7,
+        "acoustic_temperature": 0.8,
+        "seed": 42424242,
+        "optimizer_steps": 0,
+        "diagnostic_only": true,
+        "training_approved": false,
+        "native_quality_or_extension_approved": false,
+        "diagnostic_outputs_must_not_be_trained_on": true,
+        "lm_matmul_tf32": false,
+        "tf32_scope": "LM forward_codes and forward_depformer only; restore global policy before Mimi",
+        "mode": "native-checkpoint-precision16-no-tf32-diagnostic-v1",
+        "forced_reference_words": false,
+        "source_words_audio_persona_voice_and_checkpoint_bytes_unchanged": true,
+        "precision_scope": "LM tensor dtype comparison; TF32 disabled inside native LM methods only, original global policy restored before codec; no optimizer",
+        "actual_lmgen_text_temperature": 0.7,
+        "actual_lmgen_acoustic_temperature": 0.8,
+        "native_acoustic_sampling_enabled": true
+      },
+      "runtime_precision": {
+        "precision": "original-bf16",
+        "applied_before_native_graphs": true,
+        "conversion_applied": false,
+        "all_weights_frozen": true,
+        "numeric_values_roundtrip_exact": true,
+        "checkpoint_bytes_modified": false,
+        "optimizer_steps": 0,
+        "original_execution": {
+          "torch": "2.9.0a0+145a3a7bda.nv25.10",
+          "cuda": "13.0",
+          "device": "NVIDIA GH200 120GB",
+          "capability": [
+            9,
+            0
+          ],
+          "cudnn": true,
+          "cudnn_sdp": false,
+          "flash_sdp": false,
+          "mem_efficient_sdp": false,
+          "math_sdp": true,
+          "matmul_tf32": true,
+          "cudnn_tf32": true,
+          "bf16_reduction": true,
+          "float32_precision": "high",
+          "deterministic_algorithms": false,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": false,
+          "threads": 8,
+          "parameter_dtypes": {
+            "torch.bfloat16": 475,
+            "torch.float32": 26
+          },
+          "environment": {
+            "NO_CUDA_GRAPH": null,
+            "NO_TORCH_COMPILE": null,
+            "TORCH_CUDNN_SDPA_ENABLED": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "actual_execution": {
+          "torch": "2.9.0a0+145a3a7bda.nv25.10",
+          "cuda": "13.0",
+          "device": "NVIDIA GH200 120GB",
+          "capability": [
+            9,
+            0
+          ],
+          "cudnn": true,
+          "cudnn_sdp": false,
+          "flash_sdp": false,
+          "mem_efficient_sdp": false,
+          "math_sdp": true,
+          "matmul_tf32": true,
+          "cudnn_tf32": true,
+          "bf16_reduction": true,
+          "float32_precision": "high",
+          "deterministic_algorithms": false,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": false,
+          "threads": 8,
+          "parameter_dtypes": {
+            "torch.bfloat16": 475,
+            "torch.float32": 26
+          },
+          "environment": {
+            "NO_CUDA_GRAPH": null,
+            "NO_TORCH_COMPILE": null,
+            "TORCH_CUDNN_SDPA_ENABLED": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "mimi_codec_unchanged": true,
+        "tf32_flags_left_unchanged": false,
+        "fp32_roundtrip_checks_performed": false,
+        "scoped_lm_no_tf32": {
+          "scope": [
+            "forward_codes",
+            "forward_depformer"
+          ],
+          "wrapper_calls": {
+            "forward_codes": 6,
+            "forward_depformer": 64
+          },
+          "first_call_execution": {
+            "forward_codes": {
+              "matmul_tf32": false,
+              "float32_precision": "highest"
+            },
+            "forward_depformer": {
+              "matmul_tf32": false,
+              "float32_precision": "highest"
+            }
+          },
+          "call_count_scope": "Python eager/warmup/graph capture calls, not CUDA graph replay frame counts",
+          "restored_before_return": true,
+          "mimi_global_policy_unchanged": true
+        },
+        "global_tf32_policy_restored_between_lm_calls": true,
+        "execution_after_engine_construction": {
+          "torch": "2.9.0a0+145a3a7bda.nv25.10",
+          "cuda": "13.0",
+          "device": "NVIDIA GH200 120GB",
+          "capability": [
+            9,
+            0
+          ],
+          "cudnn": true,
+          "cudnn_sdp": false,
+          "flash_sdp": false,
+          "mem_efficient_sdp": false,
+          "math_sdp": true,
+          "matmul_tf32": true,
+          "cudnn_tf32": true,
+          "bf16_reduction": true,
+          "float32_precision": "high",
+          "deterministic_algorithms": false,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": false,
+          "threads": 8,
+          "parameter_dtypes": {
+            "torch.bfloat16": 475,
+            "torch.float32": 26
+          },
+          "environment": {
+            "NO_CUDA_GRAPH": null,
+            "NO_TORCH_COMPILE": null,
+            "TORCH_CUDNN_SDPA_ENABLED": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "native_peak_allocated_bytes": 19540646400
+      },
+      "final_gpu_peak_measurement": 19540646400,
+      "final_gpu_peak_measurement_missing": false,
+      "ordinary_core_correct": false,
+      "behavior_review_pending": false,
+      "reason": "Air being lighter than water does not explain ice buoyancy; no lower ice density account.",
+      "additional_semantic_concerns": false,
+      "compute_p95_s": 0.04258384736313019,
+      "maximum_input_backlog_s": 3.6951165529806165
+    },
+    {
+      "index": 1,
+      "scenario": "recovery-train-012",
+      "role": "complete-batch8",
+      "precision": "original-bf16",
+      "sampled_model_text": "Because the surface tension of the water is higher than the air. And when the air pressure drops, the surface tension gets broken, and the ice starts to float. Does that answer your question? Would you like to know how surface tension works in other liquids? And because the surface tension",
+      "independent_spoken_text": " Because the surface tension of the water is higher than the air. And when the air pressure drops, the surface tension gets broken and the ice starts to float. Does that answer your question? Would you like to know how surface tension works in other liquids? And because the surface...",
+      "speech_quality_passed": true,
+      "speech_wer": 0.0196078431372549,
+      "raw_report_sha256": "d397ebcb820b343d1597648dda60fd59d935d0c07f7f8def1bf0a2e842d067f6",
+      "audio_sha256": "e006512deb4fbf21997a2d215c50f8067dd1843957db34cd7dc2d3f66ed35a1b",
+      "user_audio_sha256": "1bd5ef3c206f748b90259defdcabc74fa5c985d873654010f69054a06229564f",
+      "peak": 0.631805419921875,
+      "full_scale_samples": 0,
+      "gain_changed": false,
+      "actual_sampler": {
+        "index": 1,
+        "scenario": "recovery-train-012",
+        "role": "complete-batch8",
+        "checkpoint_job": "7585424",
+        "precision": "original-bf16",
+        "text_temperature": 0.7,
+        "acoustic_temperature": 0.8,
+        "seed": 42424242,
+        "optimizer_steps": 0,
+        "diagnostic_only": true,
+        "training_approved": false,
+        "native_quality_or_extension_approved": false,
+        "diagnostic_outputs_must_not_be_trained_on": true,
+        "lm_matmul_tf32": false,
+        "tf32_scope": "LM forward_codes and forward_depformer only; restore global policy before Mimi",
+        "mode": "native-checkpoint-precision16-no-tf32-diagnostic-v1",
+        "forced_reference_words": false,
+        "source_words_audio_persona_voice_and_checkpoint_bytes_unchanged": true,
+        "precision_scope": "LM tensor dtype comparison; TF32 disabled inside native LM methods only, original global policy restored before codec; no optimizer",
+        "actual_lmgen_text_temperature": 0.7,
+        "actual_lmgen_acoustic_temperature": 0.8,
+        "native_acoustic_sampling_enabled": true
+      },
+      "runtime_precision": {
+        "precision": "original-bf16",
+        "applied_before_native_graphs": true,
+        "conversion_applied": false,
+        "all_weights_frozen": true,
+        "numeric_values_roundtrip_exact": true,
+        "checkpoint_bytes_modified": false,
+        "optimizer_steps": 0,
+        "original_execution": {
+          "torch": "2.9.0a0+145a3a7bda.nv25.10",
+          "cuda": "13.0",
+          "device": "NVIDIA GH200 120GB",
+          "capability": [
+            9,
+            0
+          ],
+          "cudnn": true,
+          "cudnn_sdp": false,
+          "flash_sdp": false,
+          "mem_efficient_sdp": false,
+          "math_sdp": true,
+          "matmul_tf32": true,
+          "cudnn_tf32": true,
+          "bf16_reduction": true,
+          "float32_precision": "high",
+          "deterministic_algorithms": false,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": false,
+          "threads": 8,
+          "parameter_dtypes": {
+            "torch.bfloat16": 475,
+            "torch.float32": 26
+          },
+          "environment": {
+            "NO_CUDA_GRAPH": null,
+            "NO_TORCH_COMPILE": null,
+            "TORCH_CUDNN_SDPA_ENABLED": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "actual_execution": {
+          "torch": "2.9.0a0+145a3a7bda.nv25.10",
+          "cuda": "13.0",
+          "device": "NVIDIA GH200 120GB",
+          "capability": [
+            9,
+            0
+          ],
+          "cudnn": true,
+          "cudnn_sdp": false,
+          "flash_sdp": false,
+          "mem_efficient_sdp": false,
+          "math_sdp": true,
+          "matmul_tf32": true,
+          "cudnn_tf32": true,
+          "bf16_reduction": true,
+          "float32_precision": "high",
+          "deterministic_algorithms": false,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": false,
+          "threads": 8,
+          "parameter_dtypes": {
+            "torch.bfloat16": 475,
+            "torch.float32": 26
+          },
+          "environment": {
+            "NO_CUDA_GRAPH": null,
+            "NO_TORCH_COMPILE": null,
+            "TORCH_CUDNN_SDPA_ENABLED": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "mimi_codec_unchanged": true,
+        "tf32_flags_left_unchanged": false,
+        "fp32_roundtrip_checks_performed": false,
+        "scoped_lm_no_tf32": {
+          "scope": [
+            "forward_codes",
+            "forward_depformer"
+          ],
+          "wrapper_calls": {
+            "forward_codes": 6,
+            "forward_depformer": 64
+          },
+          "first_call_execution": {
+            "forward_codes": {
+              "matmul_tf32": false,
+              "float32_precision": "highest"
+            },
+            "forward_depformer": {
+              "matmul_tf32": false,
+              "float32_precision": "highest"
+            }
+          },
+          "call_count_scope": "Python eager/warmup/graph capture calls, not CUDA graph replay frame counts",
+          "restored_before_return": true,
+          "mimi_global_policy_unchanged": true
+        },
+        "global_tf32_policy_restored_between_lm_calls": true,
+        "execution_after_engine_construction": {
+          "torch": "2.9.0a0+145a3a7bda.nv25.10",
+          "cuda": "13.0",
+          "device": "NVIDIA GH200 120GB",
+          "capability": [
+            9,
+            0
+          ],
+          "cudnn": true,
+          "cudnn_sdp": false,
+          "flash_sdp": false,
+          "mem_efficient_sdp": false,
+          "math_sdp": true,
+          "matmul_tf32": true,
+          "cudnn_tf32": true,
+          "bf16_reduction": true,
+          "float32_precision": "high",
+          "deterministic_algorithms": false,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": false,
+          "threads": 8,
+          "parameter_dtypes": {
+            "torch.bfloat16": 475,
+            "torch.float32": 26
+          },
+          "environment": {
+            "NO_CUDA_GRAPH": null,
+            "NO_TORCH_COMPILE": null,
+            "TORCH_CUDNN_SDPA_ENABLED": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "native_peak_allocated_bytes": 19540646400
+      },
+      "final_gpu_peak_measurement": 19540646400,
+      "final_gpu_peak_measurement_missing": false,
+      "ordinary_core_correct": false,
+      "behavior_review_pending": false,
+      "waveform_identical_to_prior_complete10": false,
+      "reason": "Surface tension and falling air pressure are false causes of ice floating.",
+      "additional_semantic_concerns": false,
+      "compute_p95_s": 0.043847661995096134,
+      "maximum_input_backlog_s": 3.6965345849981532
+    },
+    {
+      "index": 2,
+      "scenario": "recovery-train-012",
+      "role": "native520",
+      "precision": "fp32-lm",
+      "sampled_model_text": "Because the heat from the Earth makes the surface water turn to ice. Would you like me to explain how that happens in more detail? Does that help, or is there something more specific you're curious about? And the water's surface heat turns",
+      "independent_spoken_text": " Because the heat from the earth makes the surface water turn to ice. Would you like me to explain how that happens in more detail? Does that help, or is there something more specific you're curious about? And the water's surface heat turns to ice.",
+      "speech_quality_passed": true,
+      "speech_wer": 0.044444444444444446,
+      "raw_report_sha256": "b2803ff3d155a72a8dc527322184dc1d7891dc8b9d34fcd94b94cb77e0c00dc5",
+      "audio_sha256": "dc897a2a7351ea0484e43f5c456d740e53785a3dfdc8ced2d5ce8e2a1eeb71ce",
+      "user_audio_sha256": "1bd5ef3c206f748b90259defdcabc74fa5c985d873654010f69054a06229564f",
+      "peak": 0.6121826171875,
+      "full_scale_samples": 0,
+      "gain_changed": false,
+      "actual_sampler": {
+        "index": 2,
+        "scenario": "recovery-train-012",
+        "role": "native520",
+        "checkpoint_job": "7510331",
+        "precision": "fp32-lm",
+        "text_temperature": 0.7,
+        "acoustic_temperature": 0.8,
+        "seed": 42424242,
+        "optimizer_steps": 0,
+        "diagnostic_only": true,
+        "training_approved": false,
+        "native_quality_or_extension_approved": false,
+        "diagnostic_outputs_must_not_be_trained_on": true,
+        "lm_matmul_tf32": false,
+        "tf32_scope": "LM forward_codes and forward_depformer only; restore global policy before Mimi",
+        "mode": "native-checkpoint-precision16-no-tf32-diagnostic-v1",
+        "forced_reference_words": false,
+        "source_words_audio_persona_voice_and_checkpoint_bytes_unchanged": true,
+        "precision_scope": "LM tensor dtype comparison; TF32 disabled inside native LM methods only, original global policy restored before codec; no optimizer",
+        "actual_lmgen_text_temperature": 0.7,
+        "actual_lmgen_acoustic_temperature": 0.8,
+        "native_acoustic_sampling_enabled": true
+      },
+      "runtime_precision": {
+        "precision": "fp32-lm",
+        "applied_before_native_graphs": true,
+        "conversion_applied": true,
+        "all_weights_frozen": true,
+        "numeric_values_roundtrip_exact": true,
+        "checkpoint_bytes_modified": false,
+        "optimizer_steps": 0,
+        "original_execution": {
+          "torch": "2.9.0a0+145a3a7bda.nv25.10",
+          "cuda": "13.0",
+          "device": "NVIDIA GH200 120GB",
+          "capability": [
+            9,
+            0
+          ],
+          "cudnn": true,
+          "cudnn_sdp": false,
+          "flash_sdp": false,
+          "mem_efficient_sdp": false,
+          "math_sdp": true,
+          "matmul_tf32": true,
+          "cudnn_tf32": true,
+          "bf16_reduction": true,
+          "float32_precision": "high",
+          "deterministic_algorithms": false,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": false,
+          "threads": 8,
+          "parameter_dtypes": {
+            "torch.bfloat16": 475,
+            "torch.float32": 26
+          },
+          "environment": {
+            "NO_CUDA_GRAPH": null,
+            "NO_TORCH_COMPILE": null,
+            "TORCH_CUDNN_SDPA_ENABLED": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "actual_execution": {
+          "torch": "2.9.0a0+145a3a7bda.nv25.10",
+          "cuda": "13.0",
+          "device": "NVIDIA GH200 120GB",
+          "capability": [
+            9,
+            0
+          ],
+          "cudnn": true,
+          "cudnn_sdp": false,
+          "flash_sdp": false,
+          "mem_efficient_sdp": false,
+          "math_sdp": true,
+          "matmul_tf32": true,
+          "cudnn_tf32": true,
+          "bf16_reduction": true,
+          "float32_precision": "high",
+          "deterministic_algorithms": false,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": false,
+          "threads": 8,
+          "parameter_dtypes": {
+            "torch.float32": 501
+          },
+          "environment": {
+            "NO_CUDA_GRAPH": null,
+            "NO_TORCH_COMPILE": null,
+            "TORCH_CUDNN_SDPA_ENABLED": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "mimi_codec_unchanged": true,
+        "tf32_flags_left_unchanged": false,
+        "fp32_roundtrip_checks_performed": true,
+        "scoped_lm_no_tf32": {
+          "scope": [
+            "forward_codes",
+            "forward_depformer"
+          ],
+          "wrapper_calls": {
+            "forward_codes": 6,
+            "forward_depformer": 64
+          },
+          "first_call_execution": {
+            "forward_codes": {
+              "matmul_tf32": false,
+              "float32_precision": "highest"
+            },
+            "forward_depformer": {
+              "matmul_tf32": false,
+              "float32_precision": "highest"
+            }
+          },
+          "call_count_scope": "Python eager/warmup/graph capture calls, not CUDA graph replay frame counts",
+          "restored_before_return": true,
+          "mimi_global_policy_unchanged": true
+        },
+        "global_tf32_policy_restored_between_lm_calls": true,
+        "execution_after_engine_construction": {
+          "torch": "2.9.0a0+145a3a7bda.nv25.10",
+          "cuda": "13.0",
+          "device": "NVIDIA GH200 120GB",
+          "capability": [
+            9,
+            0
+          ],
+          "cudnn": true,
+          "cudnn_sdp": false,
+          "flash_sdp": false,
+          "mem_efficient_sdp": false,
+          "math_sdp": true,
+          "matmul_tf32": true,
+          "cudnn_tf32": true,
+          "bf16_reduction": true,
+          "float32_precision": "high",
+          "deterministic_algorithms": false,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": false,
+          "threads": 8,
+          "parameter_dtypes": {
+            "torch.float32": 501
+          },
+          "environment": {
+            "NO_CUDA_GRAPH": null,
+            "NO_TORCH_COMPILE": null,
+            "TORCH_CUDNN_SDPA_ENABLED": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "native_peak_allocated_bytes": 37777093632
+      },
+      "final_gpu_peak_measurement": 37777093632,
+      "final_gpu_peak_measurement_missing": false,
+      "ordinary_core_correct": false,
+      "behavior_review_pending": false,
+      "reason": "Earth heat freezing surface water does not explain ice buoyancy.",
+      "additional_semantic_concerns": false,
+      "compute_p95_s": 0.041248452788568105,
+      "maximum_input_backlog_s": 1.5560874830023386
+    },
+    {
+      "index": 3,
+      "scenario": "recovery-train-012",
+      "role": "complete-batch8",
+      "precision": "fp32-lm",
+      "sampled_model_text": "Because the heat from the Earth makes the surface less dense. Would you like me to explain how that works?",
+      "independent_spoken_text": " Because the heat from the earth makes the surface less dense. Would you like me to explain how that works?",
+      "speech_quality_passed": true,
+      "speech_wer": 0.0,
+      "raw_report_sha256": "fcbb08c0d3bb1578ce7efb4c2e1cbdce2ade356ce4d9ab7a932f80079e238a56",
+      "audio_sha256": "1ae6b4c627d15bc93b275e3a28212297df920f1fa233ffc60eacd0aa54928b6b",
+      "user_audio_sha256": "1bd5ef3c206f748b90259defdcabc74fa5c985d873654010f69054a06229564f",
+      "peak": 0.4034423828125,
+      "full_scale_samples": 0,
+      "gain_changed": false,
+      "actual_sampler": {
+        "index": 3,
+        "scenario": "recovery-train-012",
+        "role": "complete-batch8",
+        "checkpoint_job": "7585424",
+        "precision": "fp32-lm",
+        "text_temperature": 0.7,
+        "acoustic_temperature": 0.8,
+        "seed": 42424242,
+        "optimizer_steps": 0,
+        "diagnostic_only": true,
+        "training_approved": false,
+        "native_quality_or_extension_approved": false,
+        "diagnostic_outputs_must_not_be_trained_on": true,
+        "lm_matmul_tf32": false,
+        "tf32_scope": "LM forward_codes and forward_depformer only; restore global policy before Mimi",
+        "mode": "native-checkpoint-precision16-no-tf32-diagnostic-v1",
+        "forced_reference_words": false,
+        "source_words_audio_persona_voice_and_checkpoint_bytes_unchanged": true,
+        "precision_scope": "LM tensor dtype comparison; TF32 disabled inside native LM methods only, original global policy restored before codec; no optimizer",
+        "actual_lmgen_text_temperature": 0.7,
+        "actual_lmgen_acoustic_temperature": 0.8,
+        "native_acoustic_sampling_enabled": true
+      },
+      "runtime_precision": {
+        "precision": "fp32-lm",
+        "applied_before_native_graphs": true,
+        "conversion_applied": true,
+        "all_weights_frozen": true,
+        "numeric_values_roundtrip_exact": true,
+        "checkpoint_bytes_modified": false,
+        "optimizer_steps": 0,
+        "original_execution": {
+          "torch": "2.9.0a0+145a3a7bda.nv25.10",
+          "cuda": "13.0",
+          "device": "NVIDIA GH200 120GB",
+          "capability": [
+            9,
+            0
+          ],
+          "cudnn": true,
+          "cudnn_sdp": false,
+          "flash_sdp": false,
+          "mem_efficient_sdp": false,
+          "math_sdp": true,
+          "matmul_tf32": true,
+          "cudnn_tf32": true,
+          "bf16_reduction": true,
+          "float32_precision": "high",
+          "deterministic_algorithms": false,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": false,
+          "threads": 8,
+          "parameter_dtypes": {
+            "torch.bfloat16": 475,
+            "torch.float32": 26
+          },
+          "environment": {
+            "NO_CUDA_GRAPH": null,
+            "NO_TORCH_COMPILE": null,
+            "TORCH_CUDNN_SDPA_ENABLED": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "actual_execution": {
+          "torch": "2.9.0a0+145a3a7bda.nv25.10",
+          "cuda": "13.0",
+          "device": "NVIDIA GH200 120GB",
+          "capability": [
+            9,
+            0
+          ],
+          "cudnn": true,
+          "cudnn_sdp": false,
+          "flash_sdp": false,
+          "mem_efficient_sdp": false,
+          "math_sdp": true,
+          "matmul_tf32": true,
+          "cudnn_tf32": true,
+          "bf16_reduction": true,
+          "float32_precision": "high",
+          "deterministic_algorithms": false,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": false,
+          "threads": 8,
+          "parameter_dtypes": {
+            "torch.float32": 501
+          },
+          "environment": {
+            "NO_CUDA_GRAPH": null,
+            "NO_TORCH_COMPILE": null,
+            "TORCH_CUDNN_SDPA_ENABLED": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "mimi_codec_unchanged": true,
+        "tf32_flags_left_unchanged": false,
+        "fp32_roundtrip_checks_performed": true,
+        "scoped_lm_no_tf32": {
+          "scope": [
+            "forward_codes",
+            "forward_depformer"
+          ],
+          "wrapper_calls": {
+            "forward_codes": 6,
+            "forward_depformer": 64
+          },
+          "first_call_execution": {
+            "forward_codes": {
+              "matmul_tf32": false,
+              "float32_precision": "highest"
+            },
+            "forward_depformer": {
+              "matmul_tf32": false,
+              "float32_precision": "highest"
+            }
+          },
+          "call_count_scope": "Python eager/warmup/graph capture calls, not CUDA graph replay frame counts",
+          "restored_before_return": true,
+          "mimi_global_policy_unchanged": true
+        },
+        "global_tf32_policy_restored_between_lm_calls": true,
+        "execution_after_engine_construction": {
+          "torch": "2.9.0a0+145a3a7bda.nv25.10",
+          "cuda": "13.0",
+          "device": "NVIDIA GH200 120GB",
+          "capability": [
+            9,
+            0
+          ],
+          "cudnn": true,
+          "cudnn_sdp": false,
+          "flash_sdp": false,
+          "mem_efficient_sdp": false,
+          "math_sdp": true,
+          "matmul_tf32": true,
+          "cudnn_tf32": true,
+          "bf16_reduction": true,
+          "float32_precision": "high",
+          "deterministic_algorithms": false,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": false,
+          "threads": 8,
+          "parameter_dtypes": {
+            "torch.float32": 501
+          },
+          "environment": {
+            "NO_CUDA_GRAPH": null,
+            "NO_TORCH_COMPILE": null,
+            "TORCH_CUDNN_SDPA_ENABLED": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "native_peak_allocated_bytes": 37777093632
+      },
+      "final_gpu_peak_measurement": 37777093632,
+      "final_gpu_peak_measurement_missing": false,
+      "ordinary_core_correct": false,
+      "behavior_review_pending": false,
+      "reason": "Earth heat reducing surface density is a false mechanism.",
+      "additional_semantic_concerns": false,
+      "compute_p95_s": 0.04131091081362683,
+      "maximum_input_backlog_s": 1.5761184179480188
+    },
+    {
+      "index": 4,
+      "scenario": "recovery-train-013",
+      "role": "native520",
+      "precision": "original-bf16",
+      "sampled_model_text": "It is produced through the interaction of sound waves. And light waves, which can also travel through a vacuum, are a pretty interesting example. Would you like to know more about light waves?",
+      "independent_spoken_text": " It is produced through the interaction of sound waves, and light waves which can also travel through a vacuum are a pretty interesting example. Would you like to know more about light waves?",
+      "speech_quality_passed": true,
+      "speech_wer": 0.0,
+      "raw_report_sha256": "de2a2c7c4fae634ca779f1232c57e469d6ec46d5d6d4a9c528b3af61be9c1079",
+      "audio_sha256": "5d05930f6b3533e6531f72dd102a10c31d697f25b87051e5f3fe24cc3648061c",
+      "user_audio_sha256": "8f0c8caac122f314070c26078f3b584d18cc381cf574d460dd2679af020567b9",
+      "peak": 0.466064453125,
+      "full_scale_samples": 0,
+      "gain_changed": false,
+      "actual_sampler": {
+        "index": 4,
+        "scenario": "recovery-train-013",
+        "role": "native520",
+        "checkpoint_job": "7510331",
+        "precision": "original-bf16",
+        "text_temperature": 0.7,
+        "acoustic_temperature": 0.8,
+        "seed": 42424242,
+        "optimizer_steps": 0,
+        "diagnostic_only": true,
+        "training_approved": false,
+        "native_quality_or_extension_approved": false,
+        "diagnostic_outputs_must_not_be_trained_on": true,
+        "lm_matmul_tf32": false,
+        "tf32_scope": "LM forward_codes and forward_depformer only; restore global policy before Mimi",
+        "mode": "native-checkpoint-precision16-no-tf32-diagnostic-v1",
+        "forced_reference_words": false,
+        "source_words_audio_persona_voice_and_checkpoint_bytes_unchanged": true,
+        "precision_scope": "LM tensor dtype comparison; TF32 disabled inside native LM methods only, original global policy restored before codec; no optimizer",
+        "actual_lmgen_text_temperature": 0.7,
+        "actual_lmgen_acoustic_temperature": 0.8,
+        "native_acoustic_sampling_enabled": true
+      },
+      "runtime_precision": {
+        "precision": "original-bf16",
+        "applied_before_native_graphs": true,
+        "conversion_applied": false,
+        "all_weights_frozen": true,
+        "numeric_values_roundtrip_exact": true,
+        "checkpoint_bytes_modified": false,
+        "optimizer_steps": 0,
+        "original_execution": {
+          "torch": "2.9.0a0+145a3a7bda.nv25.10",
+          "cuda": "13.0",
+          "device": "NVIDIA GH200 120GB",
+          "capability": [
+            9,
+            0
+          ],
+          "cudnn": true,
+          "cudnn_sdp": false,
+          "flash_sdp": false,
+          "mem_efficient_sdp": false,
+          "math_sdp": true,
+          "matmul_tf32": true,
+          "cudnn_tf32": true,
+          "bf16_reduction": true,
+          "float32_precision": "high",
+          "deterministic_algorithms": false,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": false,
+          "threads": 8,
+          "parameter_dtypes": {
+            "torch.bfloat16": 475,
+            "torch.float32": 26
+          },
+          "environment": {
+            "NO_CUDA_GRAPH": null,
+            "NO_TORCH_COMPILE": null,
+            "TORCH_CUDNN_SDPA_ENABLED": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "actual_execution": {
+          "torch": "2.9.0a0+145a3a7bda.nv25.10",
+          "cuda": "13.0",
+          "device": "NVIDIA GH200 120GB",
+          "capability": [
+            9,
+            0
+          ],
+          "cudnn": true,
+          "cudnn_sdp": false,
+          "flash_sdp": false,
+          "mem_efficient_sdp": false,
+          "math_sdp": true,
+          "matmul_tf32": true,
+          "cudnn_tf32": true,
+          "bf16_reduction": true,
+          "float32_precision": "high",
+          "deterministic_algorithms": false,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": false,
+          "threads": 8,
+          "parameter_dtypes": {
+            "torch.bfloat16": 475,
+            "torch.float32": 26
+          },
+          "environment": {
+            "NO_CUDA_GRAPH": null,
+            "NO_TORCH_COMPILE": null,
+            "TORCH_CUDNN_SDPA_ENABLED": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "mimi_codec_unchanged": true,
+        "tf32_flags_left_unchanged": false,
+        "fp32_roundtrip_checks_performed": false,
+        "scoped_lm_no_tf32": {
+          "scope": [
+            "forward_codes",
+            "forward_depformer"
+          ],
+          "wrapper_calls": {
+            "forward_codes": 6,
+            "forward_depformer": 64
+          },
+          "first_call_execution": {
+            "forward_codes": {
+              "matmul_tf32": false,
+              "float32_precision": "highest"
+            },
+            "forward_depformer": {
+              "matmul_tf32": false,
+              "float32_precision": "highest"
+            }
+          },
+          "call_count_scope": "Python eager/warmup/graph capture calls, not CUDA graph replay frame counts",
+          "restored_before_return": true,
+          "mimi_global_policy_unchanged": true
+        },
+        "global_tf32_policy_restored_between_lm_calls": true,
+        "execution_after_engine_construction": {
+          "torch": "2.9.0a0+145a3a7bda.nv25.10",
+          "cuda": "13.0",
+          "device": "NVIDIA GH200 120GB",
+          "capability": [
+            9,
+            0
+          ],
+          "cudnn": true,
+          "cudnn_sdp": false,
+          "flash_sdp": false,
+          "mem_efficient_sdp": false,
+          "math_sdp": true,
+          "matmul_tf32": true,
+          "cudnn_tf32": true,
+          "bf16_reduction": true,
+          "float32_precision": "high",
+          "deterministic_algorithms": false,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": false,
+          "threads": 8,
+          "parameter_dtypes": {
+            "torch.bfloat16": 475,
+            "torch.float32": 26
+          },
+          "environment": {
+            "NO_CUDA_GRAPH": null,
+            "NO_TORCH_COMPILE": null,
+            "TORCH_CUDNN_SDPA_ENABLED": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "native_peak_allocated_bytes": 19540646400
+      },
+      "final_gpu_peak_measurement": 19540646400,
+      "final_gpu_peak_measurement_missing": false,
+      "ordinary_core_correct": false,
+      "behavior_review_pending": false,
+      "reason": "Invokes sound/light-wave interaction rather than a vibrating source.",
+      "additional_semantic_concerns": false,
+      "compute_p95_s": 0.03938931098673493,
+      "maximum_input_backlog_s": 1.6983891829638742
+    },
+    {
+      "index": 5,
+      "scenario": "recovery-train-013",
+      "role": "complete-batch8",
+      "precision": "original-bf16",
+      "sampled_model_text": "It is produced through the vibration of air molecules. Would you like to know more about the actual physics behind that process? Is there anything specific about sound production that caught your eye? The answer is S O N, which is",
+      "independent_spoken_text": " It is produced through the vibration of air molecules. Would you like to know more about the actual physics behind that process? Is there anything specific about sound production that caught your eye? The answer is S-O-N, which is...",
+      "speech_quality_passed": true,
+      "speech_wer": 0.0,
+      "raw_report_sha256": "cb2fec86b75045b0be307bb2f6631a86cad73a83e1b806a5848fd974d3709ceb",
+      "audio_sha256": "8997d36c3ff9aa8b94b38b7bec9fc8b4ecea2452155c0ac723b934cd9f1e0681",
+      "user_audio_sha256": "8f0c8caac122f314070c26078f3b584d18cc381cf574d460dd2679af020567b9",
+      "peak": 0.6995849609375,
+      "full_scale_samples": 0,
+      "gain_changed": false,
+      "actual_sampler": {
+        "index": 5,
+        "scenario": "recovery-train-013",
+        "role": "complete-batch8",
+        "checkpoint_job": "7585424",
+        "precision": "original-bf16",
+        "text_temperature": 0.7,
+        "acoustic_temperature": 0.8,
+        "seed": 42424242,
+        "optimizer_steps": 0,
+        "diagnostic_only": true,
+        "training_approved": false,
+        "native_quality_or_extension_approved": false,
+        "diagnostic_outputs_must_not_be_trained_on": true,
+        "lm_matmul_tf32": false,
+        "tf32_scope": "LM forward_codes and forward_depformer only; restore global policy before Mimi",
+        "mode": "native-checkpoint-precision16-no-tf32-diagnostic-v1",
+        "forced_reference_words": false,
+        "source_words_audio_persona_voice_and_checkpoint_bytes_unchanged": true,
+        "precision_scope": "LM tensor dtype comparison; TF32 disabled inside native LM methods only, original global policy restored before codec; no optimizer",
+        "actual_lmgen_text_temperature": 0.7,
+        "actual_lmgen_acoustic_temperature": 0.8,
+        "native_acoustic_sampling_enabled": true
+      },
+      "runtime_precision": {
+        "precision": "original-bf16",
+        "applied_before_native_graphs": true,
+        "conversion_applied": false,
+        "all_weights_frozen": true,
+        "numeric_values_roundtrip_exact": true,
+        "checkpoint_bytes_modified": false,
+        "optimizer_steps": 0,
+        "original_execution": {
+          "torch": "2.9.0a0+145a3a7bda.nv25.10",
+          "cuda": "13.0",
+          "device": "NVIDIA GH200 120GB",
+          "capability": [
+            9,
+            0
+          ],
+          "cudnn": true,
+          "cudnn_sdp": false,
+          "flash_sdp": false,
+          "mem_efficient_sdp": false,
+          "math_sdp": true,
+          "matmul_tf32": true,
+          "cudnn_tf32": true,
+          "bf16_reduction": true,
+          "float32_precision": "high",
+          "deterministic_algorithms": false,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": false,
+          "threads": 8,
+          "parameter_dtypes": {
+            "torch.bfloat16": 475,
+            "torch.float32": 26
+          },
+          "environment": {
+            "NO_CUDA_GRAPH": null,
+            "NO_TORCH_COMPILE": null,
+            "TORCH_CUDNN_SDPA_ENABLED": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "actual_execution": {
+          "torch": "2.9.0a0+145a3a7bda.nv25.10",
+          "cuda": "13.0",
+          "device": "NVIDIA GH200 120GB",
+          "capability": [
+            9,
+            0
+          ],
+          "cudnn": true,
+          "cudnn_sdp": false,
+          "flash_sdp": false,
+          "mem_efficient_sdp": false,
+          "math_sdp": true,
+          "matmul_tf32": true,
+          "cudnn_tf32": true,
+          "bf16_reduction": true,
+          "float32_precision": "high",
+          "deterministic_algorithms": false,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": false,
+          "threads": 8,
+          "parameter_dtypes": {
+            "torch.bfloat16": 475,
+            "torch.float32": 26
+          },
+          "environment": {
+            "NO_CUDA_GRAPH": null,
+            "NO_TORCH_COMPILE": null,
+            "TORCH_CUDNN_SDPA_ENABLED": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "mimi_codec_unchanged": true,
+        "tf32_flags_left_unchanged": false,
+        "fp32_roundtrip_checks_performed": false,
+        "scoped_lm_no_tf32": {
+          "scope": [
+            "forward_codes",
+            "forward_depformer"
+          ],
+          "wrapper_calls": {
+            "forward_codes": 6,
+            "forward_depformer": 64
+          },
+          "first_call_execution": {
+            "forward_codes": {
+              "matmul_tf32": false,
+              "float32_precision": "highest"
+            },
+            "forward_depformer": {
+              "matmul_tf32": false,
+              "float32_precision": "highest"
+            }
+          },
+          "call_count_scope": "Python eager/warmup/graph capture calls, not CUDA graph replay frame counts",
+          "restored_before_return": true,
+          "mimi_global_policy_unchanged": true
+        },
+        "global_tf32_policy_restored_between_lm_calls": true,
+        "execution_after_engine_construction": {
+          "torch": "2.9.0a0+145a3a7bda.nv25.10",
+          "cuda": "13.0",
+          "device": "NVIDIA GH200 120GB",
+          "capability": [
+            9,
+            0
+          ],
+          "cudnn": true,
+          "cudnn_sdp": false,
+          "flash_sdp": false,
+          "mem_efficient_sdp": false,
+          "math_sdp": true,
+          "matmul_tf32": true,
+          "cudnn_tf32": true,
+          "bf16_reduction": true,
+          "float32_precision": "high",
+          "deterministic_algorithms": false,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": false,
+          "threads": 8,
+          "parameter_dtypes": {
+            "torch.bfloat16": 475,
+            "torch.float32": 26
+          },
+          "environment": {
+            "NO_CUDA_GRAPH": null,
+            "NO_TORCH_COMPILE": null,
+            "TORCH_CUDNN_SDPA_ENABLED": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "native_peak_allocated_bytes": 19540646400
+      },
+      "final_gpu_peak_measurement": 19540646400,
+      "final_gpu_peak_measurement_missing": false,
+      "ordinary_core_correct": true,
+      "behavior_review_pending": false,
+      "waveform_identical_to_prior_complete10": false,
+      "reason": "Correct core vibration of air explanation; subsequent invented SON fragment remains a semantic concern.",
+      "additional_semantic_concerns": true,
+      "compute_p95_s": 0.043020565004553646,
+      "maximum_input_backlog_s": 1.775409372979775
+    },
+    {
+      "index": 6,
+      "scenario": "recovery-train-013",
+      "role": "native520",
+      "precision": "fp32-lm",
+      "sampled_model_text": "Because light is energy, light waves hit the dendrites in the ear, and that energy becomes sound.",
+      "independent_spoken_text": " Because light is energy, light waves hit the dendrites in the ear, and that energy becomes sound.",
+      "speech_quality_passed": true,
+      "speech_wer": 0.0,
+      "raw_report_sha256": "bb7bfd3dd51cefb72c9648b31e87b0e6f651ec5f36d4c611040a4d564eab967d",
+      "audio_sha256": "d8712719f6a61e3a1d1451a98dd86955276c33af74d868cbbcaf8cf8e08e37ef",
+      "user_audio_sha256": "8f0c8caac122f314070c26078f3b584d18cc381cf574d460dd2679af020567b9",
+      "peak": 0.54571533203125,
+      "full_scale_samples": 0,
+      "gain_changed": false,
+      "actual_sampler": {
+        "index": 6,
+        "scenario": "recovery-train-013",
+        "role": "native520",
+        "checkpoint_job": "7510331",
+        "precision": "fp32-lm",
+        "text_temperature": 0.7,
+        "acoustic_temperature": 0.8,
+        "seed": 42424242,
+        "optimizer_steps": 0,
+        "diagnostic_only": true,
+        "training_approved": false,
+        "native_quality_or_extension_approved": false,
+        "diagnostic_outputs_must_not_be_trained_on": true,
+        "lm_matmul_tf32": false,
+        "tf32_scope": "LM forward_codes and forward_depformer only; restore global policy before Mimi",
+        "mode": "native-checkpoint-precision16-no-tf32-diagnostic-v1",
+        "forced_reference_words": false,
+        "source_words_audio_persona_voice_and_checkpoint_bytes_unchanged": true,
+        "precision_scope": "LM tensor dtype comparison; TF32 disabled inside native LM methods only, original global policy restored before codec; no optimizer",
+        "actual_lmgen_text_temperature": 0.7,
+        "actual_lmgen_acoustic_temperature": 0.8,
+        "native_acoustic_sampling_enabled": true
+      },
+      "runtime_precision": {
+        "precision": "fp32-lm",
+        "applied_before_native_graphs": true,
+        "conversion_applied": true,
+        "all_weights_frozen": true,
+        "numeric_values_roundtrip_exact": true,
+        "checkpoint_bytes_modified": false,
+        "optimizer_steps": 0,
+        "original_execution": {
+          "torch": "2.9.0a0+145a3a7bda.nv25.10",
+          "cuda": "13.0",
+          "device": "NVIDIA GH200 120GB",
+          "capability": [
+            9,
+            0
+          ],
+          "cudnn": true,
+          "cudnn_sdp": false,
+          "flash_sdp": false,
+          "mem_efficient_sdp": false,
+          "math_sdp": true,
+          "matmul_tf32": true,
+          "cudnn_tf32": true,
+          "bf16_reduction": true,
+          "float32_precision": "high",
+          "deterministic_algorithms": false,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": false,
+          "threads": 8,
+          "parameter_dtypes": {
+            "torch.bfloat16": 475,
+            "torch.float32": 26
+          },
+          "environment": {
+            "NO_CUDA_GRAPH": null,
+            "NO_TORCH_COMPILE": null,
+            "TORCH_CUDNN_SDPA_ENABLED": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "actual_execution": {
+          "torch": "2.9.0a0+145a3a7bda.nv25.10",
+          "cuda": "13.0",
+          "device": "NVIDIA GH200 120GB",
+          "capability": [
+            9,
+            0
+          ],
+          "cudnn": true,
+          "cudnn_sdp": false,
+          "flash_sdp": false,
+          "mem_efficient_sdp": false,
+          "math_sdp": true,
+          "matmul_tf32": true,
+          "cudnn_tf32": true,
+          "bf16_reduction": true,
+          "float32_precision": "high",
+          "deterministic_algorithms": false,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": false,
+          "threads": 8,
+          "parameter_dtypes": {
+            "torch.float32": 501
+          },
+          "environment": {
+            "NO_CUDA_GRAPH": null,
+            "NO_TORCH_COMPILE": null,
+            "TORCH_CUDNN_SDPA_ENABLED": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "mimi_codec_unchanged": true,
+        "tf32_flags_left_unchanged": false,
+        "fp32_roundtrip_checks_performed": true,
+        "scoped_lm_no_tf32": {
+          "scope": [
+            "forward_codes",
+            "forward_depformer"
+          ],
+          "wrapper_calls": {
+            "forward_codes": 6,
+            "forward_depformer": 64
+          },
+          "first_call_execution": {
+            "forward_codes": {
+              "matmul_tf32": false,
+              "float32_precision": "highest"
+            },
+            "forward_depformer": {
+              "matmul_tf32": false,
+              "float32_precision": "highest"
+            }
+          },
+          "call_count_scope": "Python eager/warmup/graph capture calls, not CUDA graph replay frame counts",
+          "restored_before_return": true,
+          "mimi_global_policy_unchanged": true
+        },
+        "global_tf32_policy_restored_between_lm_calls": true,
+        "execution_after_engine_construction": {
+          "torch": "2.9.0a0+145a3a7bda.nv25.10",
+          "cuda": "13.0",
+          "device": "NVIDIA GH200 120GB",
+          "capability": [
+            9,
+            0
+          ],
+          "cudnn": true,
+          "cudnn_sdp": false,
+          "flash_sdp": false,
+          "mem_efficient_sdp": false,
+          "math_sdp": true,
+          "matmul_tf32": true,
+          "cudnn_tf32": true,
+          "bf16_reduction": true,
+          "float32_precision": "high",
+          "deterministic_algorithms": false,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": false,
+          "threads": 8,
+          "parameter_dtypes": {
+            "torch.float32": 501
+          },
+          "environment": {
+            "NO_CUDA_GRAPH": null,
+            "NO_TORCH_COMPILE": null,
+            "TORCH_CUDNN_SDPA_ENABLED": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "native_peak_allocated_bytes": 37777093632
+      },
+      "final_gpu_peak_measurement": 37777093632,
+      "final_gpu_peak_measurement_missing": false,
+      "ordinary_core_correct": false,
+      "behavior_review_pending": false,
+      "reason": "Light striking ear dendrites is a false sound-production explanation.",
+      "additional_semantic_concerns": false,
+      "compute_p95_s": 0.0417433200054802,
+      "maximum_input_backlog_s": 1.6513151660235599
+    },
+    {
+      "index": 7,
+      "scenario": "recovery-train-013",
+      "role": "complete-batch8",
+      "precision": "fp32-lm",
+      "sampled_model_text": "Because light travels in a bundle, light and sound waves, and the vibrations from the vibrations of a tree. And the tree is the thing that produces sound. Are you looking for a specific sound like music, or is it more of a steady noise? The way sound is produced, the tree makes the waves.",
+      "independent_spoken_text": " Because light travels in a bundle, light and sound waves, and vibrations from the vibrations of a tree, and the tree is the thing that produces sound. Are you looking for a specific sound like music, or is it more of a steady noise? The way sound is produced, the tree makes the wave.",
+      "speech_quality_passed": true,
+      "speech_wer": 0.03636363636363636,
+      "raw_report_sha256": "26572fbba3d713cc1794c51b04ab8324a97a5b1b7f71cb0b1206921699bae015",
+      "audio_sha256": "9d20f79ec5c74f75e665b4f13d896b04f796446990a4faf0b674308501e29b9b",
+      "user_audio_sha256": "8f0c8caac122f314070c26078f3b584d18cc381cf574d460dd2679af020567b9",
+      "peak": 0.827911376953125,
+      "full_scale_samples": 0,
+      "gain_changed": false,
+      "actual_sampler": {
+        "index": 7,
+        "scenario": "recovery-train-013",
+        "role": "complete-batch8",
+        "checkpoint_job": "7585424",
+        "precision": "fp32-lm",
+        "text_temperature": 0.7,
+        "acoustic_temperature": 0.8,
+        "seed": 42424242,
+        "optimizer_steps": 0,
+        "diagnostic_only": true,
+        "training_approved": false,
+        "native_quality_or_extension_approved": false,
+        "diagnostic_outputs_must_not_be_trained_on": true,
+        "lm_matmul_tf32": false,
+        "tf32_scope": "LM forward_codes and forward_depformer only; restore global policy before Mimi",
+        "mode": "native-checkpoint-precision16-no-tf32-diagnostic-v1",
+        "forced_reference_words": false,
+        "source_words_audio_persona_voice_and_checkpoint_bytes_unchanged": true,
+        "precision_scope": "LM tensor dtype comparison; TF32 disabled inside native LM methods only, original global policy restored before codec; no optimizer",
+        "actual_lmgen_text_temperature": 0.7,
+        "actual_lmgen_acoustic_temperature": 0.8,
+        "native_acoustic_sampling_enabled": true
+      },
+      "runtime_precision": {
+        "precision": "fp32-lm",
+        "applied_before_native_graphs": true,
+        "conversion_applied": true,
+        "all_weights_frozen": true,
+        "numeric_values_roundtrip_exact": true,
+        "checkpoint_bytes_modified": false,
+        "optimizer_steps": 0,
+        "original_execution": {
+          "torch": "2.9.0a0+145a3a7bda.nv25.10",
+          "cuda": "13.0",
+          "device": "NVIDIA GH200 120GB",
+          "capability": [
+            9,
+            0
+          ],
+          "cudnn": true,
+          "cudnn_sdp": false,
+          "flash_sdp": false,
+          "mem_efficient_sdp": false,
+          "math_sdp": true,
+          "matmul_tf32": true,
+          "cudnn_tf32": true,
+          "bf16_reduction": true,
+          "float32_precision": "high",
+          "deterministic_algorithms": false,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": false,
+          "threads": 8,
+          "parameter_dtypes": {
+            "torch.bfloat16": 475,
+            "torch.float32": 26
+          },
+          "environment": {
+            "NO_CUDA_GRAPH": null,
+            "NO_TORCH_COMPILE": null,
+            "TORCH_CUDNN_SDPA_ENABLED": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "actual_execution": {
+          "torch": "2.9.0a0+145a3a7bda.nv25.10",
+          "cuda": "13.0",
+          "device": "NVIDIA GH200 120GB",
+          "capability": [
+            9,
+            0
+          ],
+          "cudnn": true,
+          "cudnn_sdp": false,
+          "flash_sdp": false,
+          "mem_efficient_sdp": false,
+          "math_sdp": true,
+          "matmul_tf32": true,
+          "cudnn_tf32": true,
+          "bf16_reduction": true,
+          "float32_precision": "high",
+          "deterministic_algorithms": false,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": false,
+          "threads": 8,
+          "parameter_dtypes": {
+            "torch.float32": 501
+          },
+          "environment": {
+            "NO_CUDA_GRAPH": null,
+            "NO_TORCH_COMPILE": null,
+            "TORCH_CUDNN_SDPA_ENABLED": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "mimi_codec_unchanged": true,
+        "tf32_flags_left_unchanged": false,
+        "fp32_roundtrip_checks_performed": true,
+        "scoped_lm_no_tf32": {
+          "scope": [
+            "forward_codes",
+            "forward_depformer"
+          ],
+          "wrapper_calls": {
+            "forward_codes": 6,
+            "forward_depformer": 64
+          },
+          "first_call_execution": {
+            "forward_codes": {
+              "matmul_tf32": false,
+              "float32_precision": "highest"
+            },
+            "forward_depformer": {
+              "matmul_tf32": false,
+              "float32_precision": "highest"
+            }
+          },
+          "call_count_scope": "Python eager/warmup/graph capture calls, not CUDA graph replay frame counts",
+          "restored_before_return": true,
+          "mimi_global_policy_unchanged": true
+        },
+        "global_tf32_policy_restored_between_lm_calls": true,
+        "execution_after_engine_construction": {
+          "torch": "2.9.0a0+145a3a7bda.nv25.10",
+          "cuda": "13.0",
+          "device": "NVIDIA GH200 120GB",
+          "capability": [
+            9,
+            0
+          ],
+          "cudnn": true,
+          "cudnn_sdp": false,
+          "flash_sdp": false,
+          "mem_efficient_sdp": false,
+          "math_sdp": true,
+          "matmul_tf32": true,
+          "cudnn_tf32": true,
+          "bf16_reduction": true,
+          "float32_precision": "high",
+          "deterministic_algorithms": false,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": false,
+          "threads": 8,
+          "parameter_dtypes": {
+            "torch.float32": 501
+          },
+          "environment": {
+            "NO_CUDA_GRAPH": null,
+            "NO_TORCH_COMPILE": null,
+            "TORCH_CUDNN_SDPA_ENABLED": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "native_peak_allocated_bytes": 37777093632
+      },
+      "final_gpu_peak_measurement": 37777093632,
+      "final_gpu_peak_measurement_missing": false,
+      "ordinary_core_correct": false,
+      "behavior_review_pending": false,
+      "reason": "Bundles light, sound and tree vibrations without a correct sound mechanism.",
+      "additional_semantic_concerns": false,
+      "compute_p95_s": 0.04203537595458329,
+      "maximum_input_backlog_s": 1.6654709119955078
+    },
+    {
+      "index": 8,
+      "scenario": "recovery-train-014",
+      "role": "native520",
+      "precision": "original-bf16",
+      "sampled_model_text": "Because light is needed for photosynthesis, the process by which they make their own food.",
+      "independent_spoken_text": " because light is needed for photosynthesis, the process by which they make their own food.",
+      "speech_quality_passed": true,
+      "speech_wer": 0.0,
+      "raw_report_sha256": "5aa7d9d4bad0a9bb11b228eec31e8e2a2915063acf665a3a5222da8f6d6291fd",
+      "audio_sha256": "a90d1b18792529bb588a42d7bd1c1743151bf36d4b356ed4757753cff8d93f1d",
+      "user_audio_sha256": "2239caf13fecd09fe494bbd2920d10127b8ae06e37401d0c44bdd0421fd25187",
+      "peak": 0.493255615234375,
+      "full_scale_samples": 0,
+      "gain_changed": false,
+      "actual_sampler": {
+        "index": 8,
+        "scenario": "recovery-train-014",
+        "role": "native520",
+        "checkpoint_job": "7510331",
+        "precision": "original-bf16",
+        "text_temperature": 0.7,
+        "acoustic_temperature": 0.8,
+        "seed": 42424242,
+        "optimizer_steps": 0,
+        "diagnostic_only": true,
+        "training_approved": false,
+        "native_quality_or_extension_approved": false,
+        "diagnostic_outputs_must_not_be_trained_on": true,
+        "lm_matmul_tf32": false,
+        "tf32_scope": "LM forward_codes and forward_depformer only; restore global policy before Mimi",
+        "mode": "native-checkpoint-precision16-no-tf32-diagnostic-v1",
+        "forced_reference_words": false,
+        "source_words_audio_persona_voice_and_checkpoint_bytes_unchanged": true,
+        "precision_scope": "LM tensor dtype comparison; TF32 disabled inside native LM methods only, original global policy restored before codec; no optimizer",
+        "actual_lmgen_text_temperature": 0.7,
+        "actual_lmgen_acoustic_temperature": 0.8,
+        "native_acoustic_sampling_enabled": true
+      },
+      "runtime_precision": {
+        "precision": "original-bf16",
+        "applied_before_native_graphs": true,
+        "conversion_applied": false,
+        "all_weights_frozen": true,
+        "numeric_values_roundtrip_exact": true,
+        "checkpoint_bytes_modified": false,
+        "optimizer_steps": 0,
+        "original_execution": {
+          "torch": "2.9.0a0+145a3a7bda.nv25.10",
+          "cuda": "13.0",
+          "device": "NVIDIA GH200 120GB",
+          "capability": [
+            9,
+            0
+          ],
+          "cudnn": true,
+          "cudnn_sdp": false,
+          "flash_sdp": false,
+          "mem_efficient_sdp": false,
+          "math_sdp": true,
+          "matmul_tf32": true,
+          "cudnn_tf32": true,
+          "bf16_reduction": true,
+          "float32_precision": "high",
+          "deterministic_algorithms": false,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": false,
+          "threads": 8,
+          "parameter_dtypes": {
+            "torch.bfloat16": 475,
+            "torch.float32": 26
+          },
+          "environment": {
+            "NO_CUDA_GRAPH": null,
+            "NO_TORCH_COMPILE": null,
+            "TORCH_CUDNN_SDPA_ENABLED": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "actual_execution": {
+          "torch": "2.9.0a0+145a3a7bda.nv25.10",
+          "cuda": "13.0",
+          "device": "NVIDIA GH200 120GB",
+          "capability": [
+            9,
+            0
+          ],
+          "cudnn": true,
+          "cudnn_sdp": false,
+          "flash_sdp": false,
+          "mem_efficient_sdp": false,
+          "math_sdp": true,
+          "matmul_tf32": true,
+          "cudnn_tf32": true,
+          "bf16_reduction": true,
+          "float32_precision": "high",
+          "deterministic_algorithms": false,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": false,
+          "threads": 8,
+          "parameter_dtypes": {
+            "torch.bfloat16": 475,
+            "torch.float32": 26
+          },
+          "environment": {
+            "NO_CUDA_GRAPH": null,
+            "NO_TORCH_COMPILE": null,
+            "TORCH_CUDNN_SDPA_ENABLED": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "mimi_codec_unchanged": true,
+        "tf32_flags_left_unchanged": false,
+        "fp32_roundtrip_checks_performed": false,
+        "scoped_lm_no_tf32": {
+          "scope": [
+            "forward_codes",
+            "forward_depformer"
+          ],
+          "wrapper_calls": {
+            "forward_codes": 6,
+            "forward_depformer": 64
+          },
+          "first_call_execution": {
+            "forward_codes": {
+              "matmul_tf32": false,
+              "float32_precision": "highest"
+            },
+            "forward_depformer": {
+              "matmul_tf32": false,
+              "float32_precision": "highest"
+            }
+          },
+          "call_count_scope": "Python eager/warmup/graph capture calls, not CUDA graph replay frame counts",
+          "restored_before_return": true,
+          "mimi_global_policy_unchanged": true
+        },
+        "global_tf32_policy_restored_between_lm_calls": true,
+        "execution_after_engine_construction": {
+          "torch": "2.9.0a0+145a3a7bda.nv25.10",
+          "cuda": "13.0",
+          "device": "NVIDIA GH200 120GB",
+          "capability": [
+            9,
+            0
+          ],
+          "cudnn": true,
+          "cudnn_sdp": false,
+          "flash_sdp": false,
+          "mem_efficient_sdp": false,
+          "math_sdp": true,
+          "matmul_tf32": true,
+          "cudnn_tf32": true,
+          "bf16_reduction": true,
+          "float32_precision": "high",
+          "deterministic_algorithms": false,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": false,
+          "threads": 8,
+          "parameter_dtypes": {
+            "torch.bfloat16": 475,
+            "torch.float32": 26
+          },
+          "environment": {
+            "NO_CUDA_GRAPH": null,
+            "NO_TORCH_COMPILE": null,
+            "TORCH_CUDNN_SDPA_ENABLED": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "native_peak_allocated_bytes": 19540646400
+      },
+      "final_gpu_peak_measurement": 19540646400,
+      "final_gpu_peak_measurement_missing": false,
+      "ordinary_core_correct": true,
+      "behavior_review_pending": false,
+      "reason": "Correct photosynthesis and food-production explanation.",
+      "additional_semantic_concerns": false,
+      "compute_p95_s": 0.043052188790170476,
+      "maximum_input_backlog_s": 1.6694883240177296
+    },
+    {
+      "index": 9,
+      "scenario": "recovery-train-014",
+      "role": "complete-batch8",
+      "precision": "original-bf16",
+      "sampled_model_text": "Because light is essential for photosynthesis, the process that converts carbon dioxide into sugar, and also for the eyes of the organism. It's vital for their growth. Which specific plants can you think of that use light for this? Which specific plants use light for that?",
+      "independent_spoken_text": " Because light is essential for photosynthesis, the process that converts carbon dioxide into sugar and also for the eyes of the organism, it's vital for their growth. Which specific plants can you think of that use light for this? Which specific plants use light for that?",
+      "speech_quality_passed": true,
+      "speech_wer": 0.0,
+      "raw_report_sha256": "26a104ce09e86aab0bb76ca83d4953cc1d0e95c663cd73a6e9cacea867bd80c1",
+      "audio_sha256": "4f2131af65b17fbf5763f51275023bd43bdb537de747cf08ed87568a1aa1b581",
+      "user_audio_sha256": "2239caf13fecd09fe494bbd2920d10127b8ae06e37401d0c44bdd0421fd25187",
+      "peak": 0.762542724609375,
+      "full_scale_samples": 0,
+      "gain_changed": false,
+      "actual_sampler": {
+        "index": 9,
+        "scenario": "recovery-train-014",
+        "role": "complete-batch8",
+        "checkpoint_job": "7585424",
+        "precision": "original-bf16",
+        "text_temperature": 0.7,
+        "acoustic_temperature": 0.8,
+        "seed": 42424242,
+        "optimizer_steps": 0,
+        "diagnostic_only": true,
+        "training_approved": false,
+        "native_quality_or_extension_approved": false,
+        "diagnostic_outputs_must_not_be_trained_on": true,
+        "lm_matmul_tf32": false,
+        "tf32_scope": "LM forward_codes and forward_depformer only; restore global policy before Mimi",
+        "mode": "native-checkpoint-precision16-no-tf32-diagnostic-v1",
+        "forced_reference_words": false,
+        "source_words_audio_persona_voice_and_checkpoint_bytes_unchanged": true,
+        "precision_scope": "LM tensor dtype comparison; TF32 disabled inside native LM methods only, original global policy restored before codec; no optimizer",
+        "actual_lmgen_text_temperature": 0.7,
+        "actual_lmgen_acoustic_temperature": 0.8,
+        "native_acoustic_sampling_enabled": true
+      },
+      "runtime_precision": {
+        "precision": "original-bf16",
+        "applied_before_native_graphs": true,
+        "conversion_applied": false,
+        "all_weights_frozen": true,
+        "numeric_values_roundtrip_exact": true,
+        "checkpoint_bytes_modified": false,
+        "optimizer_steps": 0,
+        "original_execution": {
+          "torch": "2.9.0a0+145a3a7bda.nv25.10",
+          "cuda": "13.0",
+          "device": "NVIDIA GH200 120GB",
+          "capability": [
+            9,
+            0
+          ],
+          "cudnn": true,
+          "cudnn_sdp": false,
+          "flash_sdp": false,
+          "mem_efficient_sdp": false,
+          "math_sdp": true,
+          "matmul_tf32": true,
+          "cudnn_tf32": true,
+          "bf16_reduction": true,
+          "float32_precision": "high",
+          "deterministic_algorithms": false,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": false,
+          "threads": 8,
+          "parameter_dtypes": {
+            "torch.bfloat16": 475,
+            "torch.float32": 26
+          },
+          "environment": {
+            "NO_CUDA_GRAPH": null,
+            "NO_TORCH_COMPILE": null,
+            "TORCH_CUDNN_SDPA_ENABLED": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "actual_execution": {
+          "torch": "2.9.0a0+145a3a7bda.nv25.10",
+          "cuda": "13.0",
+          "device": "NVIDIA GH200 120GB",
+          "capability": [
+            9,
+            0
+          ],
+          "cudnn": true,
+          "cudnn_sdp": false,
+          "flash_sdp": false,
+          "mem_efficient_sdp": false,
+          "math_sdp": true,
+          "matmul_tf32": true,
+          "cudnn_tf32": true,
+          "bf16_reduction": true,
+          "float32_precision": "high",
+          "deterministic_algorithms": false,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": false,
+          "threads": 8,
+          "parameter_dtypes": {
+            "torch.bfloat16": 475,
+            "torch.float32": 26
+          },
+          "environment": {
+            "NO_CUDA_GRAPH": null,
+            "NO_TORCH_COMPILE": null,
+            "TORCH_CUDNN_SDPA_ENABLED": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "mimi_codec_unchanged": true,
+        "tf32_flags_left_unchanged": false,
+        "fp32_roundtrip_checks_performed": false,
+        "scoped_lm_no_tf32": {
+          "scope": [
+            "forward_codes",
+            "forward_depformer"
+          ],
+          "wrapper_calls": {
+            "forward_codes": 6,
+            "forward_depformer": 64
+          },
+          "first_call_execution": {
+            "forward_codes": {
+              "matmul_tf32": false,
+              "float32_precision": "highest"
+            },
+            "forward_depformer": {
+              "matmul_tf32": false,
+              "float32_precision": "highest"
+            }
+          },
+          "call_count_scope": "Python eager/warmup/graph capture calls, not CUDA graph replay frame counts",
+          "restored_before_return": true,
+          "mimi_global_policy_unchanged": true
+        },
+        "global_tf32_policy_restored_between_lm_calls": true,
+        "execution_after_engine_construction": {
+          "torch": "2.9.0a0+145a3a7bda.nv25.10",
+          "cuda": "13.0",
+          "device": "NVIDIA GH200 120GB",
+          "capability": [
+            9,
+            0
+          ],
+          "cudnn": true,
+          "cudnn_sdp": false,
+          "flash_sdp": false,
+          "mem_efficient_sdp": false,
+          "math_sdp": true,
+          "matmul_tf32": true,
+          "cudnn_tf32": true,
+          "bf16_reduction": true,
+          "float32_precision": "high",
+          "deterministic_algorithms": false,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": false,
+          "threads": 8,
+          "parameter_dtypes": {
+            "torch.bfloat16": 475,
+            "torch.float32": 26
+          },
+          "environment": {
+            "NO_CUDA_GRAPH": null,
+            "NO_TORCH_COMPILE": null,
+            "TORCH_CUDNN_SDPA_ENABLED": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "native_peak_allocated_bytes": 19540646400
+      },
+      "final_gpu_peak_measurement": 19540646400,
+      "final_gpu_peak_measurement_missing": false,
+      "ordinary_core_correct": true,
+      "behavior_review_pending": false,
+      "waveform_identical_to_prior_complete10": false,
+      "reason": "Correct photosynthesis/carbon-to-sugar core; unrelated organism-eyes claim remains a semantic concern.",
+      "additional_semantic_concerns": true,
+      "compute_p95_s": 0.04282731802086346,
+      "maximum_input_backlog_s": 1.6789146719872952
+    },
+    {
+      "index": 10,
+      "scenario": "recovery-train-014",
+      "role": "native520",
+      "precision": "fp32-lm",
+      "sampled_model_text": "Because light helps them turn sunlight into food, which is called photosynthesis. Would you like to know how that process actually works in more detail? Does that answer your question, or is there something else on your mind? And, okay, then.",
+      "independent_spoken_text": " Because light helps them turn sunlight into food, which is called photosynthesis. Would you like to know how that process actually works in more detail? Does that answer your question, or is there something else on your mind? And, okay then.",
+      "speech_quality_passed": true,
+      "speech_wer": 0.0,
+      "raw_report_sha256": "3450f796be54cdcf80354c2fc072bda1ceffb3798557eacc0a1d90f5a2d1bc7c",
+      "audio_sha256": "8a962533250cdd62cf9f0e9d0eec385af7ed563401de2944020da590b0f044c0",
+      "user_audio_sha256": "2239caf13fecd09fe494bbd2920d10127b8ae06e37401d0c44bdd0421fd25187",
+      "peak": 0.58172607421875,
+      "full_scale_samples": 0,
+      "gain_changed": false,
+      "actual_sampler": {
+        "index": 10,
+        "scenario": "recovery-train-014",
+        "role": "native520",
+        "checkpoint_job": "7510331",
+        "precision": "fp32-lm",
+        "text_temperature": 0.7,
+        "acoustic_temperature": 0.8,
+        "seed": 42424242,
+        "optimizer_steps": 0,
+        "diagnostic_only": true,
+        "training_approved": false,
+        "native_quality_or_extension_approved": false,
+        "diagnostic_outputs_must_not_be_trained_on": true,
+        "lm_matmul_tf32": false,
+        "tf32_scope": "LM forward_codes and forward_depformer only; restore global policy before Mimi",
+        "mode": "native-checkpoint-precision16-no-tf32-diagnostic-v1",
+        "forced_reference_words": false,
+        "source_words_audio_persona_voice_and_checkpoint_bytes_unchanged": true,
+        "precision_scope": "LM tensor dtype comparison; TF32 disabled inside native LM methods only, original global policy restored before codec; no optimizer",
+        "actual_lmgen_text_temperature": 0.7,
+        "actual_lmgen_acoustic_temperature": 0.8,
+        "native_acoustic_sampling_enabled": true
+      },
+      "runtime_precision": {
+        "precision": "fp32-lm",
+        "applied_before_native_graphs": true,
+        "conversion_applied": true,
+        "all_weights_frozen": true,
+        "numeric_values_roundtrip_exact": true,
+        "checkpoint_bytes_modified": false,
+        "optimizer_steps": 0,
+        "original_execution": {
+          "torch": "2.9.0a0+145a3a7bda.nv25.10",
+          "cuda": "13.0",
+          "device": "NVIDIA GH200 120GB",
+          "capability": [
+            9,
+            0
+          ],
+          "cudnn": true,
+          "cudnn_sdp": false,
+          "flash_sdp": false,
+          "mem_efficient_sdp": false,
+          "math_sdp": true,
+          "matmul_tf32": true,
+          "cudnn_tf32": true,
+          "bf16_reduction": true,
+          "float32_precision": "high",
+          "deterministic_algorithms": false,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": false,
+          "threads": 8,
+          "parameter_dtypes": {
+            "torch.bfloat16": 475,
+            "torch.float32": 26
+          },
+          "environment": {
+            "NO_CUDA_GRAPH": null,
+            "NO_TORCH_COMPILE": null,
+            "TORCH_CUDNN_SDPA_ENABLED": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "actual_execution": {
+          "torch": "2.9.0a0+145a3a7bda.nv25.10",
+          "cuda": "13.0",
+          "device": "NVIDIA GH200 120GB",
+          "capability": [
+            9,
+            0
+          ],
+          "cudnn": true,
+          "cudnn_sdp": false,
+          "flash_sdp": false,
+          "mem_efficient_sdp": false,
+          "math_sdp": true,
+          "matmul_tf32": true,
+          "cudnn_tf32": true,
+          "bf16_reduction": true,
+          "float32_precision": "high",
+          "deterministic_algorithms": false,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": false,
+          "threads": 8,
+          "parameter_dtypes": {
+            "torch.float32": 501
+          },
+          "environment": {
+            "NO_CUDA_GRAPH": null,
+            "NO_TORCH_COMPILE": null,
+            "TORCH_CUDNN_SDPA_ENABLED": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "mimi_codec_unchanged": true,
+        "tf32_flags_left_unchanged": false,
+        "fp32_roundtrip_checks_performed": true,
+        "scoped_lm_no_tf32": {
+          "scope": [
+            "forward_codes",
+            "forward_depformer"
+          ],
+          "wrapper_calls": {
+            "forward_codes": 6,
+            "forward_depformer": 64
+          },
+          "first_call_execution": {
+            "forward_codes": {
+              "matmul_tf32": false,
+              "float32_precision": "highest"
+            },
+            "forward_depformer": {
+              "matmul_tf32": false,
+              "float32_precision": "highest"
+            }
+          },
+          "call_count_scope": "Python eager/warmup/graph capture calls, not CUDA graph replay frame counts",
+          "restored_before_return": true,
+          "mimi_global_policy_unchanged": true
+        },
+        "global_tf32_policy_restored_between_lm_calls": true,
+        "execution_after_engine_construction": {
+          "torch": "2.9.0a0+145a3a7bda.nv25.10",
+          "cuda": "13.0",
+          "device": "NVIDIA GH200 120GB",
+          "capability": [
+            9,
+            0
+          ],
+          "cudnn": true,
+          "cudnn_sdp": false,
+          "flash_sdp": false,
+          "mem_efficient_sdp": false,
+          "math_sdp": true,
+          "matmul_tf32": true,
+          "cudnn_tf32": true,
+          "bf16_reduction": true,
+          "float32_precision": "high",
+          "deterministic_algorithms": false,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": false,
+          "threads": 8,
+          "parameter_dtypes": {
+            "torch.float32": 501
+          },
+          "environment": {
+            "NO_CUDA_GRAPH": null,
+            "NO_TORCH_COMPILE": null,
+            "TORCH_CUDNN_SDPA_ENABLED": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "native_peak_allocated_bytes": 37777093632
+      },
+      "final_gpu_peak_measurement": 37777093632,
+      "final_gpu_peak_measurement_missing": false,
+      "ordinary_core_correct": true,
+      "behavior_review_pending": false,
+      "reason": "Correct sunlight-to-food/photosynthesis core.",
+      "additional_semantic_concerns": false,
+      "compute_p95_s": 0.041981334681622684,
+      "maximum_input_backlog_s": 1.6941610220144503
+    },
+    {
+      "index": 11,
+      "scenario": "recovery-train-014",
+      "role": "complete-batch8",
+      "precision": "fp32-lm",
+      "sampled_model_text": "Because light helps them turn sunlight into food, which is essential for their growth. Would you like to hear about the different types of light that plants use?",
+      "independent_spoken_text": " because light helps them turn sunlight into food, which is essential for their growth. Would you like to hear about the different types of light that plants use?",
+      "speech_quality_passed": true,
+      "speech_wer": 0.0,
+      "raw_report_sha256": "159a2788e78eb65a1a586a106864baf27e5072d4c5fff22a1402cb9eca3f9dca",
+      "audio_sha256": "1e8a248b022ce61f8f127221b86ba939bbfdb1cdf100f971cb211dc80749b800",
+      "user_audio_sha256": "2239caf13fecd09fe494bbd2920d10127b8ae06e37401d0c44bdd0421fd25187",
+      "peak": 0.470916748046875,
+      "full_scale_samples": 0,
+      "gain_changed": false,
+      "actual_sampler": {
+        "index": 11,
+        "scenario": "recovery-train-014",
+        "role": "complete-batch8",
+        "checkpoint_job": "7585424",
+        "precision": "fp32-lm",
+        "text_temperature": 0.7,
+        "acoustic_temperature": 0.8,
+        "seed": 42424242,
+        "optimizer_steps": 0,
+        "diagnostic_only": true,
+        "training_approved": false,
+        "native_quality_or_extension_approved": false,
+        "diagnostic_outputs_must_not_be_trained_on": true,
+        "lm_matmul_tf32": false,
+        "tf32_scope": "LM forward_codes and forward_depformer only; restore global policy before Mimi",
+        "mode": "native-checkpoint-precision16-no-tf32-diagnostic-v1",
+        "forced_reference_words": false,
+        "source_words_audio_persona_voice_and_checkpoint_bytes_unchanged": true,
+        "precision_scope": "LM tensor dtype comparison; TF32 disabled inside native LM methods only, original global policy restored before codec; no optimizer",
+        "actual_lmgen_text_temperature": 0.7,
+        "actual_lmgen_acoustic_temperature": 0.8,
+        "native_acoustic_sampling_enabled": true
+      },
+      "runtime_precision": {
+        "precision": "fp32-lm",
+        "applied_before_native_graphs": true,
+        "conversion_applied": true,
+        "all_weights_frozen": true,
+        "numeric_values_roundtrip_exact": true,
+        "checkpoint_bytes_modified": false,
+        "optimizer_steps": 0,
+        "original_execution": {
+          "torch": "2.9.0a0+145a3a7bda.nv25.10",
+          "cuda": "13.0",
+          "device": "NVIDIA GH200 120GB",
+          "capability": [
+            9,
+            0
+          ],
+          "cudnn": true,
+          "cudnn_sdp": false,
+          "flash_sdp": false,
+          "mem_efficient_sdp": false,
+          "math_sdp": true,
+          "matmul_tf32": true,
+          "cudnn_tf32": true,
+          "bf16_reduction": true,
+          "float32_precision": "high",
+          "deterministic_algorithms": false,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": false,
+          "threads": 8,
+          "parameter_dtypes": {
+            "torch.bfloat16": 475,
+            "torch.float32": 26
+          },
+          "environment": {
+            "NO_CUDA_GRAPH": null,
+            "NO_TORCH_COMPILE": null,
+            "TORCH_CUDNN_SDPA_ENABLED": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "actual_execution": {
+          "torch": "2.9.0a0+145a3a7bda.nv25.10",
+          "cuda": "13.0",
+          "device": "NVIDIA GH200 120GB",
+          "capability": [
+            9,
+            0
+          ],
+          "cudnn": true,
+          "cudnn_sdp": false,
+          "flash_sdp": false,
+          "mem_efficient_sdp": false,
+          "math_sdp": true,
+          "matmul_tf32": true,
+          "cudnn_tf32": true,
+          "bf16_reduction": true,
+          "float32_precision": "high",
+          "deterministic_algorithms": false,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": false,
+          "threads": 8,
+          "parameter_dtypes": {
+            "torch.float32": 501
+          },
+          "environment": {
+            "NO_CUDA_GRAPH": null,
+            "NO_TORCH_COMPILE": null,
+            "TORCH_CUDNN_SDPA_ENABLED": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "mimi_codec_unchanged": true,
+        "tf32_flags_left_unchanged": false,
+        "fp32_roundtrip_checks_performed": true,
+        "scoped_lm_no_tf32": {
+          "scope": [
+            "forward_codes",
+            "forward_depformer"
+          ],
+          "wrapper_calls": {
+            "forward_codes": 6,
+            "forward_depformer": 64
+          },
+          "first_call_execution": {
+            "forward_codes": {
+              "matmul_tf32": false,
+              "float32_precision": "highest"
+            },
+            "forward_depformer": {
+              "matmul_tf32": false,
+              "float32_precision": "highest"
+            }
+          },
+          "call_count_scope": "Python eager/warmup/graph capture calls, not CUDA graph replay frame counts",
+          "restored_before_return": true,
+          "mimi_global_policy_unchanged": true
+        },
+        "global_tf32_policy_restored_between_lm_calls": true,
+        "execution_after_engine_construction": {
+          "torch": "2.9.0a0+145a3a7bda.nv25.10",
+          "cuda": "13.0",
+          "device": "NVIDIA GH200 120GB",
+          "capability": [
+            9,
+            0
+          ],
+          "cudnn": true,
+          "cudnn_sdp": false,
+          "flash_sdp": false,
+          "mem_efficient_sdp": false,
+          "math_sdp": true,
+          "matmul_tf32": true,
+          "cudnn_tf32": true,
+          "bf16_reduction": true,
+          "float32_precision": "high",
+          "deterministic_algorithms": false,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": false,
+          "threads": 8,
+          "parameter_dtypes": {
+            "torch.float32": 501
+          },
+          "environment": {
+            "NO_CUDA_GRAPH": null,
+            "NO_TORCH_COMPILE": null,
+            "TORCH_CUDNN_SDPA_ENABLED": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "native_peak_allocated_bytes": 37777093632
+      },
+      "final_gpu_peak_measurement": 37777093632,
+      "final_gpu_peak_measurement_missing": false,
+      "ordinary_core_correct": true,
+      "behavior_review_pending": false,
+      "reason": "Correct sunlight-to-food core.",
+      "additional_semantic_concerns": false,
+      "compute_p95_s": 0.04122444152017124,
+      "maximum_input_backlog_s": 1.6669334759842604
+    },
+    {
+      "index": 12,
+      "scenario": "recovery-train-015",
+      "role": "native520",
+      "precision": "original-bf16",
+      "sampled_model_text": "Because when metal gets cold, the molecules start moving slower, so heat escapes from the surface, making the object feel cold.",
+      "independent_spoken_text": " Because when metal gets cold, the molecules start moving slower so heat escapes from the surface, making the object feel cold.",
+      "speech_quality_passed": true,
+      "speech_wer": 0.0,
+      "raw_report_sha256": "6a57534c763f1c00f8fcbae9eb8ed1ce1490319132c38049a5aaf07f1707e8c6",
+      "audio_sha256": "3230a54e9ec3368048d383ed914e713bd5a549132d3e5329a4e96b64263da95e",
+      "user_audio_sha256": "eb744a904140fa81174c1976e1dbf8f3a5c4585970358bca992c053d5a703f12",
+      "peak": 0.49224853515625,
+      "full_scale_samples": 0,
+      "gain_changed": false,
+      "actual_sampler": {
+        "index": 12,
+        "scenario": "recovery-train-015",
+        "role": "native520",
+        "checkpoint_job": "7510331",
+        "precision": "original-bf16",
+        "text_temperature": 0.7,
+        "acoustic_temperature": 0.8,
+        "seed": 42424242,
+        "optimizer_steps": 0,
+        "diagnostic_only": true,
+        "training_approved": false,
+        "native_quality_or_extension_approved": false,
+        "diagnostic_outputs_must_not_be_trained_on": true,
+        "lm_matmul_tf32": false,
+        "tf32_scope": "LM forward_codes and forward_depformer only; restore global policy before Mimi",
+        "mode": "native-checkpoint-precision16-no-tf32-diagnostic-v1",
+        "forced_reference_words": false,
+        "source_words_audio_persona_voice_and_checkpoint_bytes_unchanged": true,
+        "precision_scope": "LM tensor dtype comparison; TF32 disabled inside native LM methods only, original global policy restored before codec; no optimizer",
+        "actual_lmgen_text_temperature": 0.7,
+        "actual_lmgen_acoustic_temperature": 0.8,
+        "native_acoustic_sampling_enabled": true
+      },
+      "runtime_precision": {
+        "precision": "original-bf16",
+        "applied_before_native_graphs": true,
+        "conversion_applied": false,
+        "all_weights_frozen": true,
+        "numeric_values_roundtrip_exact": true,
+        "checkpoint_bytes_modified": false,
+        "optimizer_steps": 0,
+        "original_execution": {
+          "torch": "2.9.0a0+145a3a7bda.nv25.10",
+          "cuda": "13.0",
+          "device": "NVIDIA GH200 120GB",
+          "capability": [
+            9,
+            0
+          ],
+          "cudnn": true,
+          "cudnn_sdp": false,
+          "flash_sdp": false,
+          "mem_efficient_sdp": false,
+          "math_sdp": true,
+          "matmul_tf32": true,
+          "cudnn_tf32": true,
+          "bf16_reduction": true,
+          "float32_precision": "high",
+          "deterministic_algorithms": false,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": false,
+          "threads": 8,
+          "parameter_dtypes": {
+            "torch.bfloat16": 475,
+            "torch.float32": 26
+          },
+          "environment": {
+            "NO_CUDA_GRAPH": null,
+            "NO_TORCH_COMPILE": null,
+            "TORCH_CUDNN_SDPA_ENABLED": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "actual_execution": {
+          "torch": "2.9.0a0+145a3a7bda.nv25.10",
+          "cuda": "13.0",
+          "device": "NVIDIA GH200 120GB",
+          "capability": [
+            9,
+            0
+          ],
+          "cudnn": true,
+          "cudnn_sdp": false,
+          "flash_sdp": false,
+          "mem_efficient_sdp": false,
+          "math_sdp": true,
+          "matmul_tf32": true,
+          "cudnn_tf32": true,
+          "bf16_reduction": true,
+          "float32_precision": "high",
+          "deterministic_algorithms": false,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": false,
+          "threads": 8,
+          "parameter_dtypes": {
+            "torch.bfloat16": 475,
+            "torch.float32": 26
+          },
+          "environment": {
+            "NO_CUDA_GRAPH": null,
+            "NO_TORCH_COMPILE": null,
+            "TORCH_CUDNN_SDPA_ENABLED": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "mimi_codec_unchanged": true,
+        "tf32_flags_left_unchanged": false,
+        "fp32_roundtrip_checks_performed": false,
+        "scoped_lm_no_tf32": {
+          "scope": [
+            "forward_codes",
+            "forward_depformer"
+          ],
+          "wrapper_calls": {
+            "forward_codes": 6,
+            "forward_depformer": 64
+          },
+          "first_call_execution": {
+            "forward_codes": {
+              "matmul_tf32": false,
+              "float32_precision": "highest"
+            },
+            "forward_depformer": {
+              "matmul_tf32": false,
+              "float32_precision": "highest"
+            }
+          },
+          "call_count_scope": "Python eager/warmup/graph capture calls, not CUDA graph replay frame counts",
+          "restored_before_return": true,
+          "mimi_global_policy_unchanged": true
+        },
+        "global_tf32_policy_restored_between_lm_calls": true,
+        "execution_after_engine_construction": {
+          "torch": "2.9.0a0+145a3a7bda.nv25.10",
+          "cuda": "13.0",
+          "device": "NVIDIA GH200 120GB",
+          "capability": [
+            9,
+            0
+          ],
+          "cudnn": true,
+          "cudnn_sdp": false,
+          "flash_sdp": false,
+          "mem_efficient_sdp": false,
+          "math_sdp": true,
+          "matmul_tf32": true,
+          "cudnn_tf32": true,
+          "bf16_reduction": true,
+          "float32_precision": "high",
+          "deterministic_algorithms": false,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": false,
+          "threads": 8,
+          "parameter_dtypes": {
+            "torch.bfloat16": 475,
+            "torch.float32": 26
+          },
+          "environment": {
+            "NO_CUDA_GRAPH": null,
+            "NO_TORCH_COMPILE": null,
+            "TORCH_CUDNN_SDPA_ENABLED": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "native_peak_allocated_bytes": 19540646400
+      },
+      "final_gpu_peak_measurement": 19540646400,
+      "final_gpu_peak_measurement_missing": false,
+      "ordinary_core_correct": false,
+      "behavior_review_pending": false,
+      "reason": "Explains colder metal rather than greater conduction from skin at comparable ambient temperature.",
+      "additional_semantic_concerns": false,
+      "compute_p95_s": 0.043020537463598886,
+      "maximum_input_backlog_s": 1.6790512060304172
+    },
+    {
+      "index": 13,
+      "scenario": "recovery-train-015",
+      "role": "complete-batch8",
+      "precision": "original-bf16",
+      "sampled_model_text": "Because metal conducts heat away from your body. I am wondering, is the coldness from the air around it, or is it actually from the object's surface? And the object's surface is usually much colder. What kind of metal were you touching when you felt the cold?",
+      "independent_spoken_text": " Because metal conducts heat away from your body. I am wondering, is the coldness from the air around it, or is it actually from the object's surface? And the object's surface is usually much colder. What kind of metal were you touching when you felt the cold?",
+      "speech_quality_passed": true,
+      "speech_wer": 0.0,
+      "raw_report_sha256": "3f09868a871075943f786b7271477e537717be53c4f391a2c76fe20df8cbdcc3",
+      "audio_sha256": "40cab0bb64af45696f5680c780aca27a92c080cd3e88c82dec7fc466fecb549b",
+      "user_audio_sha256": "eb744a904140fa81174c1976e1dbf8f3a5c4585970358bca992c053d5a703f12",
+      "peak": 0.661529541015625,
+      "full_scale_samples": 0,
+      "gain_changed": false,
+      "actual_sampler": {
+        "index": 13,
+        "scenario": "recovery-train-015",
+        "role": "complete-batch8",
+        "checkpoint_job": "7585424",
+        "precision": "original-bf16",
+        "text_temperature": 0.7,
+        "acoustic_temperature": 0.8,
+        "seed": 42424242,
+        "optimizer_steps": 0,
+        "diagnostic_only": true,
+        "training_approved": false,
+        "native_quality_or_extension_approved": false,
+        "diagnostic_outputs_must_not_be_trained_on": true,
+        "lm_matmul_tf32": false,
+        "tf32_scope": "LM forward_codes and forward_depformer only; restore global policy before Mimi",
+        "mode": "native-checkpoint-precision16-no-tf32-diagnostic-v1",
+        "forced_reference_words": false,
+        "source_words_audio_persona_voice_and_checkpoint_bytes_unchanged": true,
+        "precision_scope": "LM tensor dtype comparison; TF32 disabled inside native LM methods only, original global policy restored before codec; no optimizer",
+        "actual_lmgen_text_temperature": 0.7,
+        "actual_lmgen_acoustic_temperature": 0.8,
+        "native_acoustic_sampling_enabled": true
+      },
+      "runtime_precision": {
+        "precision": "original-bf16",
+        "applied_before_native_graphs": true,
+        "conversion_applied": false,
+        "all_weights_frozen": true,
+        "numeric_values_roundtrip_exact": true,
+        "checkpoint_bytes_modified": false,
+        "optimizer_steps": 0,
+        "original_execution": {
+          "torch": "2.9.0a0+145a3a7bda.nv25.10",
+          "cuda": "13.0",
+          "device": "NVIDIA GH200 120GB",
+          "capability": [
+            9,
+            0
+          ],
+          "cudnn": true,
+          "cudnn_sdp": false,
+          "flash_sdp": false,
+          "mem_efficient_sdp": false,
+          "math_sdp": true,
+          "matmul_tf32": true,
+          "cudnn_tf32": true,
+          "bf16_reduction": true,
+          "float32_precision": "high",
+          "deterministic_algorithms": false,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": false,
+          "threads": 8,
+          "parameter_dtypes": {
+            "torch.bfloat16": 475,
+            "torch.float32": 26
+          },
+          "environment": {
+            "NO_CUDA_GRAPH": null,
+            "NO_TORCH_COMPILE": null,
+            "TORCH_CUDNN_SDPA_ENABLED": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "actual_execution": {
+          "torch": "2.9.0a0+145a3a7bda.nv25.10",
+          "cuda": "13.0",
+          "device": "NVIDIA GH200 120GB",
+          "capability": [
+            9,
+            0
+          ],
+          "cudnn": true,
+          "cudnn_sdp": false,
+          "flash_sdp": false,
+          "mem_efficient_sdp": false,
+          "math_sdp": true,
+          "matmul_tf32": true,
+          "cudnn_tf32": true,
+          "bf16_reduction": true,
+          "float32_precision": "high",
+          "deterministic_algorithms": false,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": false,
+          "threads": 8,
+          "parameter_dtypes": {
+            "torch.bfloat16": 475,
+            "torch.float32": 26
+          },
+          "environment": {
+            "NO_CUDA_GRAPH": null,
+            "NO_TORCH_COMPILE": null,
+            "TORCH_CUDNN_SDPA_ENABLED": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "mimi_codec_unchanged": true,
+        "tf32_flags_left_unchanged": false,
+        "fp32_roundtrip_checks_performed": false,
+        "scoped_lm_no_tf32": {
+          "scope": [
+            "forward_codes",
+            "forward_depformer"
+          ],
+          "wrapper_calls": {
+            "forward_codes": 6,
+            "forward_depformer": 64
+          },
+          "first_call_execution": {
+            "forward_codes": {
+              "matmul_tf32": false,
+              "float32_precision": "highest"
+            },
+            "forward_depformer": {
+              "matmul_tf32": false,
+              "float32_precision": "highest"
+            }
+          },
+          "call_count_scope": "Python eager/warmup/graph capture calls, not CUDA graph replay frame counts",
+          "restored_before_return": true,
+          "mimi_global_policy_unchanged": true
+        },
+        "global_tf32_policy_restored_between_lm_calls": true,
+        "execution_after_engine_construction": {
+          "torch": "2.9.0a0+145a3a7bda.nv25.10",
+          "cuda": "13.0",
+          "device": "NVIDIA GH200 120GB",
+          "capability": [
+            9,
+            0
+          ],
+          "cudnn": true,
+          "cudnn_sdp": false,
+          "flash_sdp": false,
+          "mem_efficient_sdp": false,
+          "math_sdp": true,
+          "matmul_tf32": true,
+          "cudnn_tf32": true,
+          "bf16_reduction": true,
+          "float32_precision": "high",
+          "deterministic_algorithms": false,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": false,
+          "threads": 8,
+          "parameter_dtypes": {
+            "torch.bfloat16": 475,
+            "torch.float32": 26
+          },
+          "environment": {
+            "NO_CUDA_GRAPH": null,
+            "NO_TORCH_COMPILE": null,
+            "TORCH_CUDNN_SDPA_ENABLED": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "native_peak_allocated_bytes": 19540646400
+      },
+      "final_gpu_peak_measurement": 19540646400,
+      "final_gpu_peak_measurement_missing": false,
+      "ordinary_core_correct": true,
+      "behavior_review_pending": false,
+      "waveform_identical_to_prior_complete10": false,
+      "reason": "Correct conduction away from body core; subsequent colder-surface claim remains a semantic concern.",
+      "additional_semantic_concerns": true,
+      "compute_p95_s": 0.04231282681867014,
+      "maximum_input_backlog_s": 1.6977037459635176
+    },
+    {
+      "index": 14,
+      "scenario": "recovery-train-015",
+      "role": "native520",
+      "precision": "fp32-lm",
+      "sampled_model_text": "Because when metal gets cold, the heat transfer process slows, the atoms lose their kinetic energy, and the object feels colder. And the answer is the heat transfer.",
+      "independent_spoken_text": " because when metal gets cold the heat transfer process the atoms lose their kinetic energy and the object feels colder and the answer is the heat transfer",
+      "speech_quality_passed": true,
+      "speech_wer": 0.03571428571428571,
+      "raw_report_sha256": "e85ff4e64b166be1a6157cfbff0703e1c70bb455e34c2548a266d23dd8a22dc9",
+      "audio_sha256": "c7085c5db4cc7312dda016d0c173ab5e8af597a5621020cc43721eb59c63d075",
+      "user_audio_sha256": "eb744a904140fa81174c1976e1dbf8f3a5c4585970358bca992c053d5a703f12",
+      "peak": 0.56695556640625,
+      "full_scale_samples": 0,
+      "gain_changed": false,
+      "actual_sampler": {
+        "index": 14,
+        "scenario": "recovery-train-015",
+        "role": "native520",
+        "checkpoint_job": "7510331",
+        "precision": "fp32-lm",
+        "text_temperature": 0.7,
+        "acoustic_temperature": 0.8,
+        "seed": 42424242,
+        "optimizer_steps": 0,
+        "diagnostic_only": true,
+        "training_approved": false,
+        "native_quality_or_extension_approved": false,
+        "diagnostic_outputs_must_not_be_trained_on": true,
+        "lm_matmul_tf32": false,
+        "tf32_scope": "LM forward_codes and forward_depformer only; restore global policy before Mimi",
+        "mode": "native-checkpoint-precision16-no-tf32-diagnostic-v1",
+        "forced_reference_words": false,
+        "source_words_audio_persona_voice_and_checkpoint_bytes_unchanged": true,
+        "precision_scope": "LM tensor dtype comparison; TF32 disabled inside native LM methods only, original global policy restored before codec; no optimizer",
+        "actual_lmgen_text_temperature": 0.7,
+        "actual_lmgen_acoustic_temperature": 0.8,
+        "native_acoustic_sampling_enabled": true
+      },
+      "runtime_precision": {
+        "precision": "fp32-lm",
+        "applied_before_native_graphs": true,
+        "conversion_applied": true,
+        "all_weights_frozen": true,
+        "numeric_values_roundtrip_exact": true,
+        "checkpoint_bytes_modified": false,
+        "optimizer_steps": 0,
+        "original_execution": {
+          "torch": "2.9.0a0+145a3a7bda.nv25.10",
+          "cuda": "13.0",
+          "device": "NVIDIA GH200 120GB",
+          "capability": [
+            9,
+            0
+          ],
+          "cudnn": true,
+          "cudnn_sdp": false,
+          "flash_sdp": false,
+          "mem_efficient_sdp": false,
+          "math_sdp": true,
+          "matmul_tf32": true,
+          "cudnn_tf32": true,
+          "bf16_reduction": true,
+          "float32_precision": "high",
+          "deterministic_algorithms": false,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": false,
+          "threads": 8,
+          "parameter_dtypes": {
+            "torch.bfloat16": 475,
+            "torch.float32": 26
+          },
+          "environment": {
+            "NO_CUDA_GRAPH": null,
+            "NO_TORCH_COMPILE": null,
+            "TORCH_CUDNN_SDPA_ENABLED": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "actual_execution": {
+          "torch": "2.9.0a0+145a3a7bda.nv25.10",
+          "cuda": "13.0",
+          "device": "NVIDIA GH200 120GB",
+          "capability": [
+            9,
+            0
+          ],
+          "cudnn": true,
+          "cudnn_sdp": false,
+          "flash_sdp": false,
+          "mem_efficient_sdp": false,
+          "math_sdp": true,
+          "matmul_tf32": true,
+          "cudnn_tf32": true,
+          "bf16_reduction": true,
+          "float32_precision": "high",
+          "deterministic_algorithms": false,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": false,
+          "threads": 8,
+          "parameter_dtypes": {
+            "torch.float32": 501
+          },
+          "environment": {
+            "NO_CUDA_GRAPH": null,
+            "NO_TORCH_COMPILE": null,
+            "TORCH_CUDNN_SDPA_ENABLED": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "mimi_codec_unchanged": true,
+        "tf32_flags_left_unchanged": false,
+        "fp32_roundtrip_checks_performed": true,
+        "scoped_lm_no_tf32": {
+          "scope": [
+            "forward_codes",
+            "forward_depformer"
+          ],
+          "wrapper_calls": {
+            "forward_codes": 6,
+            "forward_depformer": 64
+          },
+          "first_call_execution": {
+            "forward_codes": {
+              "matmul_tf32": false,
+              "float32_precision": "highest"
+            },
+            "forward_depformer": {
+              "matmul_tf32": false,
+              "float32_precision": "highest"
+            }
+          },
+          "call_count_scope": "Python eager/warmup/graph capture calls, not CUDA graph replay frame counts",
+          "restored_before_return": true,
+          "mimi_global_policy_unchanged": true
+        },
+        "global_tf32_policy_restored_between_lm_calls": true,
+        "execution_after_engine_construction": {
+          "torch": "2.9.0a0+145a3a7bda.nv25.10",
+          "cuda": "13.0",
+          "device": "NVIDIA GH200 120GB",
+          "capability": [
+            9,
+            0
+          ],
+          "cudnn": true,
+          "cudnn_sdp": false,
+          "flash_sdp": false,
+          "mem_efficient_sdp": false,
+          "math_sdp": true,
+          "matmul_tf32": true,
+          "cudnn_tf32": true,
+          "bf16_reduction": true,
+          "float32_precision": "high",
+          "deterministic_algorithms": false,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": false,
+          "threads": 8,
+          "parameter_dtypes": {
+            "torch.float32": 501
+          },
+          "environment": {
+            "NO_CUDA_GRAPH": null,
+            "NO_TORCH_COMPILE": null,
+            "TORCH_CUDNN_SDPA_ENABLED": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "native_peak_allocated_bytes": 37777093632
+      },
+      "final_gpu_peak_measurement": 37777093632,
+      "final_gpu_peak_measurement_missing": false,
+      "ordinary_core_correct": false,
+      "behavior_review_pending": false,
+      "reason": "Reduced atomic motion/slow heat transfer does not explain metal feeling colder than wood.",
+      "additional_semantic_concerns": false,
+      "compute_p95_s": 0.041113946159020996,
+      "maximum_input_backlog_s": 1.6278887920104899
+    },
+    {
+      "index": 15,
+      "scenario": "recovery-train-015",
+      "role": "complete-batch8",
+      "precision": "fp32-lm",
+      "sampled_model_text": "Because metal is much less dense than water, so less heat is transferred from the air.",
+      "independent_spoken_text": " Because metal is much less dense than water, so less heat is transferred from the air.",
+      "speech_quality_passed": true,
+      "speech_wer": 0.0,
+      "raw_report_sha256": "b85bb3fbe3c5035b3f49fb95917dabf6c459b7d6614c0d10a6f7cb1907d01e71",
+      "audio_sha256": "b3dab4c5c0bddad3fe51c1a646057f08fa8299d4e98218bcf9777412f342d915",
+      "user_audio_sha256": "eb744a904140fa81174c1976e1dbf8f3a5c4585970358bca992c053d5a703f12",
+      "peak": 0.597259521484375,
+      "full_scale_samples": 0,
+      "gain_changed": false,
+      "actual_sampler": {
+        "index": 15,
+        "scenario": "recovery-train-015",
+        "role": "complete-batch8",
+        "checkpoint_job": "7585424",
+        "precision": "fp32-lm",
+        "text_temperature": 0.7,
+        "acoustic_temperature": 0.8,
+        "seed": 42424242,
+        "optimizer_steps": 0,
+        "diagnostic_only": true,
+        "training_approved": false,
+        "native_quality_or_extension_approved": false,
+        "diagnostic_outputs_must_not_be_trained_on": true,
+        "lm_matmul_tf32": false,
+        "tf32_scope": "LM forward_codes and forward_depformer only; restore global policy before Mimi",
+        "mode": "native-checkpoint-precision16-no-tf32-diagnostic-v1",
+        "forced_reference_words": false,
+        "source_words_audio_persona_voice_and_checkpoint_bytes_unchanged": true,
+        "precision_scope": "LM tensor dtype comparison; TF32 disabled inside native LM methods only, original global policy restored before codec; no optimizer",
+        "actual_lmgen_text_temperature": 0.7,
+        "actual_lmgen_acoustic_temperature": 0.8,
+        "native_acoustic_sampling_enabled": true
+      },
+      "runtime_precision": {
+        "precision": "fp32-lm",
+        "applied_before_native_graphs": true,
+        "conversion_applied": true,
+        "all_weights_frozen": true,
+        "numeric_values_roundtrip_exact": true,
+        "checkpoint_bytes_modified": false,
+        "optimizer_steps": 0,
+        "original_execution": {
+          "torch": "2.9.0a0+145a3a7bda.nv25.10",
+          "cuda": "13.0",
+          "device": "NVIDIA GH200 120GB",
+          "capability": [
+            9,
+            0
+          ],
+          "cudnn": true,
+          "cudnn_sdp": false,
+          "flash_sdp": false,
+          "mem_efficient_sdp": false,
+          "math_sdp": true,
+          "matmul_tf32": true,
+          "cudnn_tf32": true,
+          "bf16_reduction": true,
+          "float32_precision": "high",
+          "deterministic_algorithms": false,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": false,
+          "threads": 8,
+          "parameter_dtypes": {
+            "torch.bfloat16": 475,
+            "torch.float32": 26
+          },
+          "environment": {
+            "NO_CUDA_GRAPH": null,
+            "NO_TORCH_COMPILE": null,
+            "TORCH_CUDNN_SDPA_ENABLED": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "actual_execution": {
+          "torch": "2.9.0a0+145a3a7bda.nv25.10",
+          "cuda": "13.0",
+          "device": "NVIDIA GH200 120GB",
+          "capability": [
+            9,
+            0
+          ],
+          "cudnn": true,
+          "cudnn_sdp": false,
+          "flash_sdp": false,
+          "mem_efficient_sdp": false,
+          "math_sdp": true,
+          "matmul_tf32": true,
+          "cudnn_tf32": true,
+          "bf16_reduction": true,
+          "float32_precision": "high",
+          "deterministic_algorithms": false,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": false,
+          "threads": 8,
+          "parameter_dtypes": {
+            "torch.float32": 501
+          },
+          "environment": {
+            "NO_CUDA_GRAPH": null,
+            "NO_TORCH_COMPILE": null,
+            "TORCH_CUDNN_SDPA_ENABLED": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "mimi_codec_unchanged": true,
+        "tf32_flags_left_unchanged": false,
+        "fp32_roundtrip_checks_performed": true,
+        "scoped_lm_no_tf32": {
+          "scope": [
+            "forward_codes",
+            "forward_depformer"
+          ],
+          "wrapper_calls": {
+            "forward_codes": 6,
+            "forward_depformer": 64
+          },
+          "first_call_execution": {
+            "forward_codes": {
+              "matmul_tf32": false,
+              "float32_precision": "highest"
+            },
+            "forward_depformer": {
+              "matmul_tf32": false,
+              "float32_precision": "highest"
+            }
+          },
+          "call_count_scope": "Python eager/warmup/graph capture calls, not CUDA graph replay frame counts",
+          "restored_before_return": true,
+          "mimi_global_policy_unchanged": true
+        },
+        "global_tf32_policy_restored_between_lm_calls": true,
+        "execution_after_engine_construction": {
+          "torch": "2.9.0a0+145a3a7bda.nv25.10",
+          "cuda": "13.0",
+          "device": "NVIDIA GH200 120GB",
+          "capability": [
+            9,
+            0
+          ],
+          "cudnn": true,
+          "cudnn_sdp": false,
+          "flash_sdp": false,
+          "mem_efficient_sdp": false,
+          "math_sdp": true,
+          "matmul_tf32": true,
+          "cudnn_tf32": true,
+          "bf16_reduction": true,
+          "float32_precision": "high",
+          "deterministic_algorithms": false,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": false,
+          "threads": 8,
+          "parameter_dtypes": {
+            "torch.float32": 501
+          },
+          "environment": {
+            "NO_CUDA_GRAPH": null,
+            "NO_TORCH_COMPILE": null,
+            "TORCH_CUDNN_SDPA_ENABLED": null,
+            "CUBLAS_WORKSPACE_CONFIG": null
+          }
+        },
+        "native_peak_allocated_bytes": 37777093632
+      },
+      "final_gpu_peak_measurement": 37777093632,
+      "final_gpu_peak_measurement_missing": false,
+      "ordinary_core_correct": false,
+      "behavior_review_pending": false,
+      "reason": "Density relative to water and heat from air do not explain metal versus wood against skin.",
+      "additional_semantic_concerns": false,
+      "compute_p95_s": 0.04238452025456354,
+      "maximum_input_backlog_s": 1.638546302963514
+    }
+  ],
+  "candidate_adopted": false,
+  "training_extension_authorized": false,
+  "gpu_elapsed": "00:12:35",
+  "speech_elapsed": "00:04:59",
+  "cpu_tests_passed": 276,
+  "cpu_tests_seconds": 4.045,
+  "all16_behavior_reviewed": true,
+  "ordinary_core_correct": {
+    "native520/original-bf16": 1,
+    "complete-batch8/original-bf16": 3,
+    "native520/fp32-lm": 1,
+    "complete-batch8/fp32-lm": 1
+  },
+  "all16_speech_passed": true,
+  "speech_maximum_wer": 0.044444444444444446,
+  "maximum_pcm_peak": 0.827911376953125,
+  "no_full_scale_samples": true,
+  "all233_terminal_artifacts_sha256_backed": true,
+  "source_words_audio_voice_persona_seed_temperatures_and_checkpoint_values_unchanged": true,
+  "only_declared_lm_arithmetic_varied": true,
+  "mimi_global_policy_restored": true,
+  "scoped_lm_tf32_disabled": true,
+  "final_gpu_peaks_present": true,
+  "maximum_native_peak_allocated_bytes": 37777093632,
+  "original_tf32_enabled_core": {
+    "native520_bf16": 4,
+    "child_bf16": 1,
+    "native520_fp32": 0,
+    "child_fp32": 0
+  },
+  "native_execution_profile_adopted": false,
+  "new_training_or_extension_approved": false,
+  "diagnostic_outputs_do_not_train": true,
+  "conclusion": "LM arithmetic changes materially change sampled behavior even at fixed checkpoint and seed; no arm reaches ordinary4/4. Scoped no-TF32 BF16 yields parent1/4 and child3/4, FP32 both1/4. This is not a qualified repair or a license to extend the child. Original baseline and all criteria remain unchanged.",
+  "next_action": "New native520 complete154 plus supplemental recorded-call49 recipe is independently gated by exact all49 gradient readiness, full optimizer/RNG/native-stream restore and complete native10; no adoption from precision diagnostics."
+}
