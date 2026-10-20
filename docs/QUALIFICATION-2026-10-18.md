@@ -1,3 +1,52 @@
+# LOCAL overnight — complete49 readinessPASS; TRAIN7590052 RUNNING (20Oct23:45UTC)
+
+Immutable payload/watcher741872fe2f9e49f35d4deba9aba96caff26c51d4. Complete readiness
+7589157 COMPLETED0:0; CPUwatcher7589159 automatically accepted/released training
+7590052 ONCE. Actualscontrol23:44:59UTC: TRAIN RUNNING since23:43:36, oneGPU,
+interactive reservation,3h bound/maxend21Oct02:43:36UTC. No optimizer-step completion
+is claimed yet; cold validation/loading precedes fitting. Canonical
+runs/native-stream49-overnight-local-20261020.json remains MUTABLE; watcher alone
+owns eventual native10 and speech IDs. No manual submissions or launcher restart.
+
+WHOLE49 readinessPASSED:22992 gradient-bearing calls/1491 spoken targets; all49
+exact grad/no-grad native forward hashes, all adapter gradients present/finite,
+frozen gradients0, model parameters/execution unchanged, peak22063578112B. All49
+teacher records, source capture reports and PT bytes independently reverified on
+Mac, complete original154 membership/weights also reconstructed. Original.001
+reference threshold remains unchanged; no BF16 batch equivalence claim. Review:
+docs/NATIVE-STREAM49-READINESS-COMPLETE-REVIEW-2026-10-20.json.
+
+New bounded8 is from native520 with original Adam moments/clocks520→528, LR2e-7;
+all original154 terms every update, plus all49 recorded-call teacher auxiliary
+across8 updates at balanced4-kind epoch mass1. Explicitly truncated call-boundary
+KV autograd, cache forward values unchanged. No waveform, word, fold, receipt,
+mask, sampler, dtype, TF32 or old loss change. Before native10 the SAME chain
+requires independent complete optimizer/RNG/original28/acoustic49 AND native49
+stream-fingerprint restoration in a fresh process. No extension/adoption or
+fresh20 inference is authorized from numerical success alone.
+
+All21 terminal readiness artifacts/588409271B size/SHA-backed23:47:24UTC. Scoped
+union25242files/28527625063B, no conflicts. Existing Mac preservation observer
+exec50287 watches stable post-fit checkpoint/fullstate and all terminal outputs;
+new trained-state backup is PENDING. Old stopped Mac source backup stillPARTIAL.
+An isolated observer exit-handler notice affected only the now-terminated read-only
+progress observer, never Slurm jobs or receipts. Its tool cell1829 is CLOSED.
+
+Actual local certificate valid through21Oct10:31:51UTC; reservation08:56:32UTC.
+Local supervision now has an additional allocation-bounded sleep assertion through
+08:56:32UTC, exec76078/Python70660/caffeinate70661, independently verified by pmset.
+This keeps later qualification supervised even after the initial chain's backup
+observer exits. Source/operator locks prevent duplicate observers. Mac has380GiB
+available. LOCAL remains sole executor while owner is away; CLOUD read-only.
+
+Next: monitor TRAIN7590052 and existing watcher; preserve stable adapter/fullstate
+as soon as written, then verify all8 exposures and independent state restoration.
+Review full native10 and speech; only a committed ordinary4/4, full10 review can
+release the prepared complete40 paired fresh qualification. All original gates and
+failed/rejected artifacts remain intact; no Qwen fallback or cloud GPU purchase.
+
+---
+
 # LOCAL overnight — original154 readiness verified/backed; native49 check continues (20Oct23:02UTC)
 
 Payload741872fe2f9e49f35d4deba9aba96caff26c51d4 unchanged. Actual23:00:57UTC accounting:
