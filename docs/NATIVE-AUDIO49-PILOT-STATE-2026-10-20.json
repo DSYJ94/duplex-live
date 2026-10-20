@@ -1,6 +1,6 @@
 {
   "schema": "dl-native-audio49-pilot-state-summary-v1",
-  "at_utc": "2026-10-20T12:23:11.896049+00:00",
+  "at_utc": "2026-10-20T12:38:05.240990+00:00",
   "candidate_job": "7575817",
   "source": "33cd0fe3de9871ad29281c7e0a2ee00d4f95fcc6",
   "parent_job": "7510331",
@@ -24,9 +24,9 @@
   "clock_anchor_weight": 64.0,
   "early12_state_and_approval_artifacts_hash_backed": true,
   "independent_full_state_restore_verified": true,
-  "native_behavior_evaluated": false,
+  "native_behavior_evaluated": true,
   "candidate_adopted": false,
-  "next_action": "Existing Slurm watcher7575818 owns complete10 speech submission; complete all10 raw/audio/receipt review before any extension/fresh20.",
+  "next_action": "Read-only original-profile all4 comparison: published base with adapters disabled vs native520 vs this8, one adapter-presence/weight factor; independent speech audit of all12. No optimizer/new corpus/sampler/profile changes.",
   "training_allocation_status": "COMPLETED",
   "training_allocation_elapsed": "00:21:08",
   "independent_reload_report_sha256": "929550fa773cd1e01e2bfc096b8e13b88469627636db93b75c4a8b896ac8d0f1",
@@ -36,7 +36,12 @@
   "restore_pid": 38039,
   "training_pid": 36326,
   "native_evaluation_job": "7576513",
-  "native_evaluation_status": "RUNNING",
+  "native_evaluation_status": "COMPLETED",
   "all23_final_training_artifacts_hash_backed": true,
-  "full_word_clock_reference_cache_hashes_independently_checked": true
+  "full_word_clock_reference_cache_hashes_independently_checked": true,
+  "native_behavior_passed": false,
+  "candidate_rejected": true,
+  "ordinary_core_correct": 0,
+  "speech_quality_passes": 7,
+  "complete10_review": "docs/NATIVE-AUDIO49-COMPLETE10-REVIEW-2026-10-20.json"
 }

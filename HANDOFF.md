@@ -1,3 +1,54 @@
+# LOCAL active — audio49 pilot REJECTED; complete10 backed; ancestor12 diagnostic prepared (2026-10-20 12:37 UTC)
+
+All stages terminal: readiness7574002 COMPLETE11m29, train+independent restore
+7575817 COMPLETE21m08, native10 7576513 COMPLETE11m22, independent speech7576709
+COMPLETE5m39, sole SlurmCPU watcher7575818 COMPLETE41m21. No jobs at actual12:33
+queue check; no watcher remains live. LOCAL retains execution, CLOUD read-only.
+
+Full10 original WAVs, all word clocks, real receipts and independent speech
+review REJECTS audio49 native8: ordinary0/4 fully correct, speech7/10. Ice falsely
+explains attraction; sound mentions vibrations but fabricates cilia/pharynx/larynx
+as generic source; plants omits food/photosynthesis/chemical-energy conversion
+(same criterion as old40 partial), metal omits conduction from skin. All4 ordinary
+speech clocks pass/lowWER, so failures are semantic, not recognition artifacts.
+Quiet fails whole physical-onset gate; no accepted timestamp subset. Pause valid
+speech says I am listening19.29-19.85 in required quiet17.54-22.10, misses exact
+book/shelf/cupboard sequence. Actual yellow/copper receipts execute and inject,
+but correct full values not spoken; copper WER.13924>.08. Clarify has no project
+question/read. Cancel actual red-star lookup arrives9.110s beforecue18.24; no
+cancel receipt/pending cancellation. Cancel WER.69737/all global clocks fail.
+All original PCM gains unchanged/fullscale0/maxpeak.8465576172; no clipping fix
+or threshold relaxation. Formal docs/NATIVE-AUDIO49-COMPLETE10-REVIEW-2026-10-20.json
+SHA08b71d3df28d7a6cb668218c5185e9f65decd967df9bcd46c347f5e3986ed4c2.
+No extension/adoption/fresh20 native inference. Exact state restore PASS retained.
+
+Complete153 evaluation/artifact/terminal receipt files256759375B size/SHA-verified
+12:34:55UTC; train23/615398667B and readiness19/583956756B verified. Current scoped
+union23962files/19918911868B/no conflicts, plus models/runtime/ASR/vendor/full
+source bundles. Stopped Mac source backup PARTIAL. No owner/keys/core copied;
+unrelated pycache/capability probes/roadmap preserved. SSH intermittent banner
+timeouts were observation failures only; actual connection succeeded12:29:53.
+Local public cert rechecked valid09:32:16-21:32:16Berlin/Amsterdam20Oct.
+
+Next controlled READ-ONLY diagnostic prepared: all4 original ordinary questions ×
+(published base with adapters disabled, native5207510331, audio49-eight7575817).
+Only adapter presence/weights change; original recorded persona, accepted voice,
+user WAVs, seed42424242/text.7/audio.8 and native audited wrapper fixed. Published
+base condition is not a claim about other personas/wrappers. Hypotheses/predictions
+in sealed evals/fixtures/native-ancestor12-diagnostic-plan-20261020.json. All12
+and separate independent speech required. No optimizer/new teacher/audio corpus/
+API requests; diagnostic outputs DO_NOT_TRAIN. New5 policy tests+10related PASS
+locally; full238 suite required on cluster before GPU inference. Diagnostic jobs
+not yet submitted at this entry; record exact IDs after exclusive launch.
+
+Goal ACTIVE/native whole system UNQUALIFIED. Preserve all28/25/24/KL1hidden10 and
+approved native histories. Current interactive reservation end21Oct08:56:32UTC /
+10:56:32Berlin/Amsterdam, no extension assumed. Next: immutable Git deploy and
+single ancestor12 diagnostic+full speech, SHA-back all outputs, diagnose before
+any new training recipe. No restart of rejected pilots or old scheduler.
+
+---
+
 # LOCAL active — native8 FULL RESTORE PASS; complete native10 7576513 RUNNING (2026-10-20 12:12 UTC)
 
 Actual12:12:06UTC: training7575817 COMPLETED21m08/exit0:0. Independent fresh

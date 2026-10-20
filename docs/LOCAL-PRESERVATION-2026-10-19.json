@@ -1,7 +1,7 @@
 {
-  "at_utc": "2026-10-20T12:23:11.896049+00:00",
-  "unique_scoped_artifact_files": 23809,
-  "unique_scoped_artifact_bytes": 19662152493,
+  "at_utc": "2026-10-20T12:38:05.240990+00:00",
+  "unique_scoped_artifact_files": 23962,
+  "unique_scoped_artifact_bytes": 19918911868,
   "inventory_conflicts": [],
   "inventories": [
     {
@@ -626,6 +626,13 @@
       "files": 23,
       "bytes": 615398667,
       "missing_roots": []
+    },
+    {
+      "name": "remote-native-audio49-complete10-inventory.json",
+      "sha256": "013048a0eac9b1292353ebd5505d8b9d35a20df5e5cc56f9434c3a295fc7c586",
+      "files": 153,
+      "bytes": 256759375,
+      "missing_roots": []
     }
   ],
   "local_artifact_root": "runs/cloud-export-20261016/tree",
@@ -1161,7 +1168,7 @@
     "training_status": "COMPLETED",
     "observed_at_utc": "2026-10-20T11:48:16Z",
     "scheduler_watcher_job": "7575818",
-    "scheduler_watcher_status": "RUNNING",
+    "scheduler_watcher_status": "COMPLETED",
     "scheduler_watcher_source": "3d6de2c055d47e15b76ba3a9e48b7a43bbee3c2d",
     "scheduler_watcher_log": "/projects/u6si/duplex-live/logs/dl-native-audio49-watch-7575818.out",
     "server_watcher_pid_terminal": true,
@@ -1316,10 +1323,21 @@
     "optimizer_rng_state_independently_compared_exact": true,
     "reload_report_sha256": "929550fa773cd1e01e2bfc096b8e13b88469627636db93b75c4a8b896ac8d0f1",
     "native10_job": "7576513",
-    "native10_status": "RUNNING",
+    "native10_status": "COMPLETED",
     "final23_artifacts_backup_in_progress": false,
     "all23_final_training_artifacts_sha256_backed": true,
-    "full_word_clock_reference_caches_sha256_backed": true
+    "full_word_clock_reference_caches_sha256_backed": true,
+    "native10_elapsed": "00:11:22",
+    "speech10_job": "7576709",
+    "speech10_status": "COMPLETED",
+    "speech10_elapsed": "00:05:39",
+    "scheduler_watcher_terminal": true,
+    "all153_complete10_artifacts_sha256_backed": true,
+    "ordinary_core_correct": 0,
+    "speech_passes": 7,
+    "candidate_rejected": true,
+    "complete10_review": "docs/NATIVE-AUDIO49-COMPLETE10-REVIEW-2026-10-20.json",
+    "complete10_review_sha256": "08b71d3df28d7a6cb668218c5185e9f65decd967df9bcd46c347f5e3986ed4c2"
   },
   "native_audio49_watcher_source_bundle": {
     "source": "3d6de2c055d47e15b76ba3a9e48b7a43bbee3c2d",

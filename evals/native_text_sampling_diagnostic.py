@@ -3,6 +3,11 @@ ORDINARY=tuple('recovery-train-%03d'%i for i in range(12,16))
 
 
 def policy(args):
+    if getattr(args,'native_ancestor_diagnostic',False):
+        from evals.native_ancestor_diagnostic import policy as ancestor_policy
+        return ancestor_policy(args)
+    if getattr(args,'native_ancestor_diagnostic_case',None) is not None:
+        raise ValueError('Ancestor case index requires its explicit locked diagnostic')
     if getattr(args,'native_persona_diagnostic',False):
         from evals.native_persona_diagnostic import policy as persona_policy
         return persona_policy(args)

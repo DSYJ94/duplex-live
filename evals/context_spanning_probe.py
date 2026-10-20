@@ -71,6 +71,8 @@ def main():
         help='Read-only default-sampler comparison on the four ordinary TRAIN anchor questions; never training data')
     ap.add_argument('--native-persona-diagnostic',action='store_true')
     ap.add_argument('--native-persona-diagnostic-case',type=int,choices=range(10))
+    ap.add_argument('--native-ancestor-diagnostic',action='store_true')
+    ap.add_argument('--native-ancestor-diagnostic-case',type=int,choices=range(12))
     args=ap.parse_args()
     if (args.persona_profile=='records-request-only')!=args.native_persona_diagnostic:
         ap.error('Scoped records persona requires the explicit locked complete10 inference diagnostic')
