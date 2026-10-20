@@ -751,14 +751,15 @@
     "first_timed_out_attempt_preserved": true
   },
   "local_access_reverified": {
-    "checked_utc": "2026-10-20T07:32:40Z",
+    "checked_utc": "2026-10-20T19:55:08Z",
     "actual_bounded_ssh_passed": true,
     "alias": "u6si.aip2.isambard",
-    "certificate_valid_after_utc": "2026-10-20T07:32:16Z",
-    "certificate_valid_before_utc": "2026-10-20T19:32:16Z",
-    "certificate_valid_before_berlin": "2026-10-20T21:32:16+02:00",
-    "note": "Official Clifton institutional renewal completed by owner20Oct; actual bounded localSSH PASS. No credentials exported.",
-    "certificate_rechecked_utc": "2026-10-19T21:26:22.059158+00:00"
+    "certificate_valid_after_utc": "2026-10-20T15:50:25Z",
+    "certificate_valid_before_utc": "2026-10-21T03:50:25Z",
+    "certificate_valid_before_london": "2026-10-21T04:50:25+01:00",
+    "certificate_rechecked_utc": "2026-10-20T19:48:58Z",
+    "clock_reference": "Explicit TZ=UTC ssh-keygen; machine display London/BST",
+    "note": "Current public certificate cache and bounded actual SSH independently reverified; supersedes previous expiry. Existing alias/configuration used, no credentials exported or sign-in requested."
   },
   "new_warm_ordinary_pilot": {
     "job": "7555898",
@@ -1116,20 +1117,21 @@
     "orchestrator_terminal": true
   },
   "interactive_reservation_verified": {
-    "observed_at_utc": "2026-10-20T09:07:58Z",
+    "observed_at_utc": "2026-10-20T19:56:24Z",
     "reservation": "interactive",
     "start_utc": "2026-10-19T08:56:32Z",
     "end_utc": "2026-10-21T08:56:32Z",
     "end_berlin": "2026-10-21T10:56:32+02:00",
     "cluster_clock_timezone_verified": "UTC +0000",
-    "cluster_clock_observed": "2026-10-20T09:11:29Z",
+    "cluster_clock_observed": "2026-10-20T19:56:24Z",
     "flags": [
       "IGNORE_JOBS",
       "DAILY",
       "REPLACE_DOWN",
       "NO_HOLD_JOBS_AFTER_END"
     ],
-    "note": "Reported current reservation end; do not assume renewal or extension of the project allocation."
+    "note": "Reported current reservation end; do not assume renewal or extension of the project allocation.",
+    "end_london": "2026-10-21T09:56:32+01:00"
   },
   "native_conditioning_diagnostic": {
     "source": "8115f68d38122a21ac4742f7cfb0cacca4a71625",
@@ -1598,5 +1600,17 @@
       "verified_complete_history": true
     },
     "failed_watcher_log_sha256_backed": true
-  }
+  },
+  "local_access_history": [
+    {
+      "checked_utc": "2026-10-20T07:32:40Z",
+      "actual_bounded_ssh_passed": true,
+      "alias": "u6si.aip2.isambard",
+      "certificate_valid_after_utc": "2026-10-20T07:32:16Z",
+      "certificate_valid_before_utc": "2026-10-20T19:32:16Z",
+      "certificate_valid_before_berlin": "2026-10-20T21:32:16+02:00",
+      "note": "Official Clifton institutional renewal completed by owner20Oct; actual bounded localSSH PASS. No credentials exported.",
+      "certificate_rechecked_utc": "2026-10-19T21:26:22.059158+00:00"
+    }
+  ]
 }

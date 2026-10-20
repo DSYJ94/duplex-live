@@ -26,7 +26,8 @@ watcher log1688B SHA-backed19:52:56UTC; old stopped Mac backupPARTIAL.
 Fixedwatcher fullsource bundle82789e3 verifiedcomplete SHA
 3c9d39b52d59cf7c3ae74819ec1d7d79667dd998af7ca65326a43cf5c69ece4b.
 Current certificate TZ=UTC and actual SSH reverified: expires21Oct03:50:25UTC /
-05:50:25Amsterdam, superseding old19:32UTC entry. Reservation ends21Oct08:56:32UTC.
+04:50:25London, superseding old19:32UTC entry. Central access ledger corrected;
+Slurm reservation reverified19:56:24UTC: ends21Oct08:56:32UTC/09:56:32London.
 Unrelated local pycache/capability/roadmap preserved. Whole model unqualified.
 Next observe7585424/7585425, preserve final fit checkpoint early, require complete
 independent state restoration before reviewing every native case and speech audit.
