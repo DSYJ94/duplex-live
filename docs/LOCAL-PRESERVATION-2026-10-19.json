@@ -557,9 +557,9 @@
   "runtime_sif_sha256": "c00bc99693e4908ea75d17df9c379b93ae9a1678a65d875565ad5d52f76fa27b",
   "pinned_vendor_git_bundles_verified": 3,
   "source_git_bundle": {
-    "source_sha": "2837484b946adb01a2f01431083eeec4e90ed26e",
-    "bundle": "runs/local-continuation-20261019/source-main-2837484.bundle",
-    "bundle_sha256": "41fe618eb0080c9bb22a52ff870333dab6bce6d035e7b095c140ca262d323d57"
+    "source_sha": "a0c51a199b897733081d55524f0a89d4937287b9",
+    "bundle": "runs/local-continuation-20261019/source-main-a0c51a1.bundle",
+    "bundle_sha256": "50e21f77ecb8e63a10bdff7a56d65a7f72a1ffcaace53bafc911586b91fd71fb"
   },
   "native_candidate_job": "7558824",
   "native_candidate_training_state_sha256": "9712d0d858d638630d02fbb2f2909da822c0c3f9d7b47202a1637a1785ee6c9d",
@@ -845,5 +845,17 @@
     "review_sha256": "cb9b0f544669db658301c7158c1bf88ed46be94a5d62de48407e222e15c1bb1f",
     "all_state_and_full10_artifacts_sha256_backed": true,
     "watcher_session_terminal": true
+  },
+  "native_learning_curve_diagnostic": {
+    "source": "a0c51a199b897733081d55524f0a89d4937287b9",
+    "cpu_job": "7570433",
+    "cpu_tests_passed": 156,
+    "job": "7570471",
+    "status": "RELEASED",
+    "optimizer_updates": 0,
+    "complete_inputs": 81,
+    "local_orchestrator_session": 48131,
+    "no_development_recordings_used": true,
+    "no_training_or_adoption_authorized": true
   }
 }

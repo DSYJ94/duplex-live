@@ -1,3 +1,38 @@
+# LOCAL active — complete81 ZERO-UPDATE diagnostic7570471 released (2026-10-20 08:11 UTC)
+
+Current task after rejecting fully restored40: quantify fixed-history fit versus
+native failure on ALL81 approved TRAIN/reference inputs, without optimizer work.
+Immutable sourcea0c51a199b897733081d55524f0a89d4937287b9; CPU7570433 COMPLETED12s,
+156tests PASS. Exactlynative5207510331 vsclock87556562 andclock407558824;
+all28actual+25old+24new+4legacy. Plan evals/fixtures/native-learning-curve-plan-
+20261020.json pins original reports/states/reloads/data/code. New diagnostic uses
+unchanged targets/masks/useraudio/teacher histories and existing KL1/hidden10
+references, no dev recordings, no APIs, no new checkpoint, no adoption or training.
+Existing strict native/fresh/adoption gates unchanged. Source actual_train only
+adds an opt-in branch that returns before any optimizer loop. Both source
+objective/reference modules remain unchanged. Frozen weights/parent restoredexact
+required at end; metrics alone cannot establish native capability or causality.
+
+GPU7570471 released after actualEMPTYqueue and CPU156PASS, interactive1GPU/110G/
+30min, no partition/QoS override. Exclusive receipt
+runs/native-learning-curve-local-20261020.json. Sole local orchestrator exec48131
+(/tmp/duplex-run-native-learning-curve.py) polls SAMEjob>=60s, no resubmission on
+observation failure, then backs report/logs/receipts with approved rsync exclusions
+and SHAchecks. No other watcher/autosubmitter. No extra optimizer run submitted.
+Sourcea0c51a1 fullGitbundle verified SHA
+50e21f77ecb8e63a10bdff7a56d65a7f72a1ffcaace53bafc911586b91fd71fb.
+
+Previous40 remains REJECTED: native7559192/ASR7559193 complete10 ordinary1/4+
+plants partial,speech8/10,quiet/pause/clarify/cancelfail,partialyellowcircleafter
+realread butcoppermissingdiamond/clockfail. Fullcriticalstate+native157files
+SHAbacked; union23387files17797544662bytes+models/runtime/ASR/vendor/source.
+Localcertthrough20Oct19:32:16UTC/21:32:16Berlin. LOCAL owns execution; CLOUD
+submits nothing, no handback/cloud purchase. No >40training/adoption authorized
+by bounded32scope; next model/source/data repair must follow diagnosis and full
+approval chain. Fresh20 sourceapproved but nativeoutputsNONE/unscored.
+
+---
+
 # LOCAL active — bounded40 fully restored/backed; complete10 REJECTED (2026-10-20 07:45 UTC)
 
 No running Slurm jobs: actual queueEMPTY07:32:40UTC. Train7558824 COMPLETED0:0
