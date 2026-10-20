@@ -27,7 +27,13 @@ class PrecisionChain(unittest.TestCase):
    r=self.receipt();r.update(plan_sha256=chain.digest(plan),predecessor_receipt_path=str(predecessor),predecessor_receipt_sha256=chain.digest(predecessor),predecessor_source='b'*40,lm_matmul_tf32=False,scheduler_watcher_job='20');r['jobs']['predecessor']='111'
    def call(args,env=None):return 'a'*40+'\n' if 'rev-parse' in args else ''
    with self.env(tree),patch.object(chain,'BASE',base),patch.object(chain,'call',side_effect=call):
-    chain.validate(r);r['jobs']['predecessor']='222'
+    chain.validate(r)
+    cpu=base/'cpu.json';pre=dict(passed=True,source='a'*40,allocation_job='20',tests_run=7,cuda_initialized=False,cpu_backend_contract_only=True)
+    cpu.write_text(json.dumps(pre));r.update(cpu_api_preflight_required=True,cpu_api_preflight=dict(path=str(cpu),sha256=chain.digest(cpu)));chain.validate(r)
+    pre['cuda_initialized']=True;cpu.write_text(json.dumps(pre));r['cpu_api_preflight']['sha256']=chain.digest(cpu)
+    with self.assertRaises(ValueError):chain.validate(r)
+    pre['cuda_initialized']=False;cpu.write_text(json.dumps(pre));r['cpu_api_preflight']['sha256']=chain.digest(cpu)
+    r['jobs']['predecessor']='222'
     with self.assertRaises(ValueError):chain.validate(r)
     r['jobs']['predecessor']='111';predecessor.write_text(predecessor.read_text()+'\n')
     with self.assertRaises(ValueError):chain.validate(r)

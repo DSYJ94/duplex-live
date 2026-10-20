@@ -42,6 +42,8 @@ def scoped_lm_no_tf32(lm):
     from functools import wraps
     names=('forward_codes','forward_depformer')
     if not all(callable(getattr(lm,n,None)) for n in names):raise ValueError('Verified native LM methods required')
+    if torch.get_float32_matmul_precision() not in ('high','highest'):
+        raise ValueError('Scoped legacy TF32 control requires the original unambiguous high/highest policy')
     evidence=dict(scope=list(names),wrapper_calls={},first_call_execution={},
         call_count_scope='Python eager/warmup/graph capture calls, not CUDA graph replay frame counts',
         restored_before_return=True,mimi_global_policy_unchanged=True)
@@ -52,6 +54,7 @@ def scoped_lm_no_tf32(lm):
             def call(*args,**kwargs):
                 previous=torch.backends.cuda.matmul.allow_tf32
                 previous_precision=torch.get_float32_matmul_precision()
+                if previous_precision not in ('high','highest'):raise RuntimeError('Original TF32 policy changed outside the sealed diagnostic')
                 torch.backends.cuda.matmul.allow_tf32=False
                 try:
                     if torch.backends.cuda.matmul.allow_tf32:raise RuntimeError('LM TF32 disable failed')
@@ -60,8 +63,13 @@ def scoped_lm_no_tf32(lm):
                         evidence['first_call_execution'][name]=dict(matmul_tf32=torch.backends.cuda.matmul.allow_tf32,float32_precision=torch.get_float32_matmul_precision())
                     return original(*args,**kwargs)
                 finally:
-                    torch.set_float32_matmul_precision(previous_precision)
-                    if torch.backends.cuda.matmul.allow_tf32!=previous:raise RuntimeError('LM TF32 wrapper did not restore original global precision')
+                    # Keep the existing pipeline's legacy backend control API.
+                    # Mixing its setter with the global precision setter breaks
+                    # NVIDIA PyTorch2.9's subsequent precision introspection.
+                    torch.backends.cuda.matmul.allow_tf32=previous
+                    if (torch.backends.cuda.matmul.allow_tf32!=previous
+                            or torch.get_float32_matmul_precision()!=previous_precision):
+                        raise RuntimeError('LM TF32 wrapper did not restore original global precision')
             return call
         setattr(lm,name,bind(original,name))
     return evidence

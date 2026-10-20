@@ -31,6 +31,12 @@ def validate(receipt):
     if predecessor.parent!=BASE/'runs' or not predecessor.name.startswith('native-bf16-stream49-'):
         raise ValueError('Scoped BF16 predecessor receipt required')
     prior=json.loads(predecessor.read_text())
+    if receipt.get('cpu_api_preflight_required'):
+        item=receipt['cpu_api_preflight'];p=Path(item['path']);pre=json.loads(p.read_text())
+        if (digest(p)!=item['sha256'] or not pre['passed'] or pre['source']!=receipt['source']
+                or pre['allocation_job']!=receipt['scheduler_watcher_job']
+                or pre['tests_run']!=7 or pre['cuda_initialized'] or not pre['cpu_backend_contract_only']):
+            raise ValueError('Exact successful CPU backend compatibility preflight required')
     if (receipt['source']!=source or receipt['executor']!='LOCAL'
             or receipt['optimizer_updates']!=0 or receipt['training_extension_or_adoption_approved']
             or digest(predecessor)!=receipt['predecessor_receipt_sha256']

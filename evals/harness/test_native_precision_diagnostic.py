@@ -50,7 +50,15 @@ class PrecisionPolicy(unittest.TestCase):
     raise ValueError('test-error')
   try:
    torch.backends.cuda.matmul.allow_tf32=True;lm=LM();e=scoped_lm_no_tf32(lm)
-   self.assertEqual(lm.forward_codes(3),4);self.assertTrue(torch.backends.cuda.matmul.allow_tf32)
+   self.assertEqual(lm.forward_codes(3),4);self.assertTrue(torch.backends.cuda.matmul.allow_tf32);self.assertEqual(torch.get_float32_matmul_precision(),'high')
    with self.assertRaises(ValueError):lm.forward_depformer()
-   self.assertTrue(torch.backends.cuda.matmul.allow_tf32);self.assertEqual(torch.backends.cudnn.allow_tf32,flags[1]);self.assertEqual(e['wrapper_calls'],dict(forward_codes=1,forward_depformer=1));self.assertTrue(all(not x['matmul_tf32'] and x['float32_precision']=='highest' for x in e['first_call_execution'].values()))
+   self.assertTrue(torch.backends.cuda.matmul.allow_tf32);self.assertEqual(torch.get_float32_matmul_precision(),'high');self.assertEqual(torch.backends.cudnn.allow_tf32,flags[1]);self.assertEqual(e['wrapper_calls'],dict(forward_codes=1,forward_depformer=1));self.assertTrue(all(not x['matmul_tf32'] and x['float32_precision']=='highest' for x in e['first_call_execution'].values()))
   finally:torch.backends.cuda.matmul.allow_tf32,torch.backends.cudnn.allow_tf32=flags
+ def test_tf32_scope_rejects_ambiguous_medium_without_changing_backend(self):
+  import torch
+  from evals.native_precision_diagnostic import scoped_lm_no_tf32
+  flags=torch.backends.cuda.matmul.allow_tf32,torch.backends.cudnn.allow_tf32
+  lm=SimpleNamespace(forward_codes=lambda x:x,forward_depformer=lambda x:x)
+  with patch('torch.get_float32_matmul_precision',return_value='medium'):
+   with self.assertRaises(ValueError):scoped_lm_no_tf32(lm)
+  self.assertEqual((torch.backends.cuda.matmul.allow_tf32,torch.backends.cudnn.allow_tf32),flags)
