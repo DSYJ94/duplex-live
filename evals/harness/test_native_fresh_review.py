@@ -1,5 +1,6 @@
 """Fixture mutation checks for full native review before any second-corpus output."""
 import copy
+import json
 import unittest
 from unittest.mock import patch
 from evals.harness import test_context_native_extension_review as fixtures
@@ -46,6 +47,27 @@ class NativeFreshReviewTests(unittest.TestCase):
     def test_rejected_legacy_pilot_cannot_reach_fresh_outputs(self):
         self.parent['additional_native_v2']['complete24_per8']=False
         with self.assertRaises(ValueError):self.check(self.fresh())
+
+    def test_rehashed_diagnostic_runtime_cannot_silently_become_stock_fresh_runtime(self):
+        from evals.moshi_model_download import sha256
+        for diagnostic in ('native_sampling_diagnostic','runtime_precision_diagnostic'):
+            review=self.fresh();p=self.runs/'native-v2-development-200_0/report.json';r=json.loads(p.read_text())
+            r['loading'].pop('native_sampling_diagnostic',None);r['loading']['adapter'].pop('runtime_precision_diagnostic',None)
+            target=r['loading'] if diagnostic=='native_sampling_diagnostic' else r['loading']['adapter']
+            target[diagnostic]=dict(diagnostic_only=True)
+            p.write_text(json.dumps(r));review['cases'][0]['run_report_sha256']=sha256(p)
+            with self.subTest(diagnostic=diagnostic),self.assertRaises(ValueError):self.check(review)
+
+    def test_same_physical_run_alias_is_valid_but_another_directory_is_not(self):
+        from evals.moshi_model_download import sha256
+        alias=self.runs/'runs-alias';alias.symlink_to(self.runs,target_is_directory=True)
+        audit=json.loads(self.speech.read_text())
+        for index,row in enumerate(audit['results']):row['run']=str(alias/('native-v2-development-200_'+str(index)))
+        self.speech.write_text(json.dumps(audit));review=self.fresh();review['independent_speech_report_sha256']=sha256(self.speech)
+        self.assertTrue(self.check(review)['fresh_evaluation_authorized'])
+        other=self.runs/'other-run';other.mkdir();(other/'model.wav').write_bytes((self.runs/'native-v2-development-200_0/model.wav').read_bytes())
+        audit['results'][0]['run']=str(other);self.speech.write_text(json.dumps(audit));review['independent_speech_report_sha256']=sha256(self.speech)
+        with self.assertRaises(ValueError):self.check(review)
 
 
 if __name__=='__main__':unittest.main()

@@ -1,4 +1,5 @@
 """Require a committed complete native development review before fresh V2 outputs."""
+import json
 from pathlib import Path
 from evals.context_native_extension_review import committed_document, validate_cases
 from evals.moshi_model_download import sha256
@@ -22,7 +23,15 @@ def validate_review(review, proof, parent, identity):
     if parent['optimizer_steps']==40 and (parent['initial_optimizer_steps']!=8
             or parent['updates_this_run']!=32 or not parent['resumed_from_training_state']):
         raise ValueError('Fresh extended candidate lacks its exact independently restored continuation')
-    return validate_cases(review,proof,parent,identity)
+    validated=validate_cases(review,proof,parent,identity)
+    # Fresh inference currently executes the fixed original runtime. A diagnostic
+    # dtype/sampler profile must never silently become an approved runtime here.
+    for index in range(10):
+        report=Path(proof).parent/('native-v2-development-'+str(review['native_evaluation_array_job'])+'_'+str(index))/'report.json'
+        loading=json.loads(report.read_text())['loading']
+        if loading.get('native_sampling_diagnostic') or loading['adapter'].get('runtime_precision_diagnostic'):
+            raise ValueError('Fresh runtime does not implement diagnostic sampler/precision profiles; independently reapprove an explicit runtime version first')
+    return validated
 
 
 def validate(path, proof, actual_proof):

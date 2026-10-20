@@ -59,7 +59,7 @@ def validate_cases(review, proof, parent, identity, *, require_ordinary=True):
         r=json.loads(report.read_text());adapter=r['loading']['adapter']
         if (sha256(report)!=case['run_report_sha256'] or sha256(run/'model.wav')!=case['audio_sha256']
                 or r['audio_sha256']!=case['audio_sha256'] or audio['wav_sha256']!=case['audio_sha256']
-                or Path(audio['run'])!=run or adapter['checkpoint_sha256']!=identity['checkpoint_sha256']
+                or Path(audio['run']).resolve()!=run.resolve() or adapter['checkpoint_sha256']!=identity['checkpoint_sha256']
                 or adapter['voice_codes_sha256']!=parent['voice_sha256']
                 or adapter['zero'] or adapter['disabled'] or not adapter['installed_before_native_graphs']
                 or r['loading'].get('input_warmup') or r['scenario']!=cases[index]['scenario']
