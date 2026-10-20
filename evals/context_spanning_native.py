@@ -78,6 +78,14 @@ def observe_only(engine,user,args,loading):
         import torch
         peak=torch.cuda.max_memory_allocated();loading['adapter']['runtime_precision_diagnostic']['native_peak_allocated_bytes']=peak
         if peak>=80_000_000_000:raise RuntimeError('Native precision replay exceeded80GB')
+        precision=loading['adapter']['runtime_precision_diagnostic']
+        if getattr(args,'native_precision_no_tf32',False):
+            scoped=precision['scoped_lm_no_tf32']
+            if (set(scoped['first_call_execution'])!={'forward_codes','forward_depformer'}
+                    or any(x['matmul_tf32'] or x['float32_precision']!='highest' for x in scoped['first_call_execution'].values())
+                    or torch.backends.cuda.matmul.allow_tf32!=precision['original_execution']['matmul_tf32']
+                    or torch.get_float32_matmul_precision()!=precision['original_execution']['float32_precision']):
+                raise RuntimeError('Scoped LM TF32 diagnostic failed to execute or restore codec policy')
     (args.out/'report.json').write_text(json.dumps(report,indent=2)+'\n')
     print(json.dumps({k:v for k,v in report.items() if k not in ('loading','playout')}),flush=True)
 

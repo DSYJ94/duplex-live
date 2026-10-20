@@ -74,6 +74,7 @@ def main():
     ap.add_argument('--native-ancestor-diagnostic',action='store_true')
     ap.add_argument('--native-ancestor-diagnostic-case',type=int,choices=range(12))
     ap.add_argument('--native-precision-diagnostic',action='store_true')
+    ap.add_argument('--native-precision-no-tf32',action='store_true')
     ap.add_argument('--native-precision-diagnostic-case',type=int,choices=range(16))
     args=ap.parse_args()
     if (args.persona_profile=='records-request-only')!=args.native_persona_diagnostic:

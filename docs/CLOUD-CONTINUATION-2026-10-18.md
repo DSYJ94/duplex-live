@@ -1,3 +1,35 @@
+# LOCAL active — precision16 independently reviewed; BF16audit7586717 running (20Oct21:08UTC)
+
+Precision GPU7586347 COMPLETED0:0/11m57; speech7586348 COMPLETED0:0/4m59.
+All16 original WAVs/clocks/provenance independently checked and speech gatesPASS16/16,
+maxWER.0266667, maxPCMpeak.9045715/no fullscale samples. Actual ordinary core:
+BF16 native5204/4 versus complete8 candidate1/4; FP32 LM tensors with ORIGINAL
+TF32=True/high native5200/4 and candidate0/4. It is NOT a TF32-disabled/IEEE FP32
+test. Full doc docs/NATIVE-PRECISION16-COMPLETE-REVIEW-2026-10-20.json. Every case
+retained; candidate/precision adoption and training extension remain unapproved.
+Prior sampled answers reproduced; raw PCM byte hashes differ due runtime capture,
+so no byte-determinism claim. All231 terminal files/746997711B SHA-backed21:03UTC.
+Current scoped artifact union24949files/26023922251B. Old Mac source backupPARTIAL.
+
+Actual BF16 stream/batch49 job7586717 source32eabbf7633bb607e6652442b7244272125e25a6
+remainsRUNNING (21:07:45UTC elapsed10m41), still approved-data preparation at that
+observation. No native49 result yet. Canonical runs/native-bf16-stream49-local-20261020.json;
+260cluster testsPASS4.092s. No duplicate/restart. LOCAL soleexecutor/CLOUDread-only.
+
+A separate COMPLETE16 scoped-no-TF32 profile is prepared, NOT submitted here:
+all4 questions x parent/child x BF16/FP32; original native sampler/userWAV/voice/
+persona/weights retained. Only LM forward_codes/forward_depformer matmul TF32 is
+disabled, with full original global precision restored on return/exception before
+Mimi. Native graphs capture the selected LM kernels. Plan evals/fixtures/native-precision16-no-tf32-plan-20261020.json;
+zero optimizer, all16 independent speech, no subset/adoption/extension. Prior
+16 plan/reports untouched. Require current GPU7586717 terminal before another
+GPU submission; then at most one2GPU job plus its dependent CPU audit,2jobs total.
+Cert expires21Oct03:50:25UTC; reservation ends08:56:32UTC. Next preserve/review
+whole49 actual BF16 diagnostic; execute scoped TF32 comparison only after terminal
+queue verification, then choose a diagnosed native training repair.
+
+---
+
 # LOCAL active — precision16 complete; ASR7586348 and BF16audit7586717 active (20Oct20:57UTC)
 
 Native precision16 GPU7586347 COMPLETED0:0 elapsed11m57; all16 original captures

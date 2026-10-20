@@ -6,17 +6,20 @@ ORDINARY=tuple('recovery-train-%03d'%i for i in range(12,16))
 CANDIDATE='7585424'
 
 
-def case(index):
+def case(index,no_tf32=False):
     if type(index) is not int or not 0<=index<16:raise ValueError('Complete sixteen-case precision comparison required')
+    if type(no_tf32) is not bool:raise ValueError('TF32 diagnostic requires an exact boolean')
     arm=index%4;child=bool(arm%2)
-    return dict(index=index,scenario=ORDINARY[index//4],role='complete-batch8' if child else 'native520',
+    row=dict(index=index,scenario=ORDINARY[index//4],role='complete-batch8' if child else 'native520',
         checkpoint_job=CANDIDATE if child else '7510331',precision='fp32-lm' if arm>=2 else 'original-bf16',
         text_temperature=.7,acoustic_temperature=.8,seed=42424242,optimizer_steps=0,diagnostic_only=True,
         training_approved=False,native_quality_or_extension_approved=False,diagnostic_outputs_must_not_be_trained_on=True)
+    if no_tf32:row.update(lm_matmul_tf32=False,tf32_scope='LM forward_codes and forward_depformer only; restore global policy before Mimi')
+    return row
 
 
 def policy(args):
-    row=case(args.native_precision_diagnostic_case)
+    row=case(args.native_precision_diagnostic_case,getattr(args,'native_precision_no_tf32',False))
     if (not args.native_precision_diagnostic or args.scenario!=row['scenario'] or args.expected_kind!='simple'
             or args.backend_mode!='observe-only' or not args.train_history or not args.adapter_proof
             or Path(args.adapter_proof).name!='context-training-proof-'+row['checkpoint_job']
@@ -28,9 +31,40 @@ def policy(args):
             or getattr(args,'math_attention',False) or getattr(args,'backend_reference_profile','answer-only')!='answer-only'
             or getattr(args,'event_log_mode','immediate')!='immediate'):
         raise ValueError('Only the declared checkpoint and compute precision may vary in this locked16 diagnostic')
-    return dict(row,mode='native-checkpoint-precision16-diagnostic-v1',forced_reference_words=False,
+    return dict(row,mode='native-checkpoint-precision16-no-tf32-diagnostic-v1' if getattr(args,'native_precision_no_tf32',False) else 'native-checkpoint-precision16-diagnostic-v1',forced_reference_words=False,
         source_words_audio_persona_voice_and_checkpoint_bytes_unchanged=True,
-        precision_scope='FP32 LM tensors versus unchanged original BF16, original TF32 flags retained so Mimi codec arithmetic stays unchanged; no optimizer')
+        precision_scope='LM tensor dtype comparison; TF32 disabled inside native LM methods only, original global policy restored before codec; no optimizer' if getattr(args,'native_precision_no_tf32',False) else 'FP32 LM tensors versus unchanged original BF16, original TF32 flags retained so Mimi codec arithmetic stays unchanged; no optimizer')
+
+
+def scoped_lm_no_tf32(lm):
+    """Choose LM matmul kernels before native graphs, leaving Mimi's policy intact."""
+    import torch
+    from functools import wraps
+    names=('forward_codes','forward_depformer')
+    if not all(callable(getattr(lm,n,None)) for n in names):raise ValueError('Verified native LM methods required')
+    evidence=dict(scope=list(names),wrapper_calls={},first_call_execution={},
+        call_count_scope='Python eager/warmup/graph capture calls, not CUDA graph replay frame counts',
+        restored_before_return=True,mimi_global_policy_unchanged=True)
+    for name in names:
+        original=getattr(lm,name)
+        def bind(original,name):
+            @wraps(original)
+            def call(*args,**kwargs):
+                previous=torch.backends.cuda.matmul.allow_tf32
+                previous_precision=torch.get_float32_matmul_precision()
+                torch.backends.cuda.matmul.allow_tf32=False
+                try:
+                    if torch.backends.cuda.matmul.allow_tf32:raise RuntimeError('LM TF32 disable failed')
+                    evidence['wrapper_calls'][name]=evidence['wrapper_calls'].get(name,0)+1
+                    if name not in evidence['first_call_execution']:
+                        evidence['first_call_execution'][name]=dict(matmul_tf32=torch.backends.cuda.matmul.allow_tf32,float32_precision=torch.get_float32_matmul_precision())
+                    return original(*args,**kwargs)
+                finally:
+                    torch.set_float32_matmul_precision(previous_precision)
+                    if torch.backends.cuda.matmul.allow_tf32!=previous:raise RuntimeError('LM TF32 wrapper did not restore original global precision')
+            return call
+        setattr(lm,name,bind(original,name))
+    return evidence
 
 
 def convert(lm,precision):
@@ -58,7 +92,12 @@ def convert(lm,precision):
 
 
 def transform(declared):
-    def apply(lm):return convert(lm,declared['precision'])
+    def apply(lm):
+        result=convert(lm,declared['precision'])
+        if declared.get('lm_matmul_tf32') is False:
+            result['scoped_lm_no_tf32']=scoped_lm_no_tf32(lm)
+            result.update(tf32_flags_left_unchanged=False,global_tf32_policy_restored_between_lm_calls=True)
+        return result
     apply.native_precision_diagnostic=True
     return apply
 

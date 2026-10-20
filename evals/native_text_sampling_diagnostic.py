@@ -3,6 +3,7 @@ ORDINARY=tuple('recovery-train-%03d'%i for i in range(12,16))
 
 
 def policy(args):
+    if getattr(args,'native_precision_no_tf32',False) and not getattr(args,'native_precision_diagnostic',False):raise ValueError('Scoped LM TF32 setting requires the locked precision diagnostic')
     if getattr(args,'native_precision_diagnostic',False):
         from evals.native_precision_diagnostic import policy as precision_policy
         return precision_policy(args)

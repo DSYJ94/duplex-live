@@ -1,7 +1,7 @@
 {
-  "at_utc": "2026-10-20T20:58:19.194363+00:00",
-  "unique_scoped_artifact_files": 24947,
-  "unique_scoped_artifact_bytes": 26023760865,
+  "at_utc": "2026-10-20T21:04:58.938610+00:00",
+  "unique_scoped_artifact_files": 24949,
+  "unique_scoped_artifact_bytes": 26023922251,
   "inventory_conflicts": [],
   "inventories": [
     {
@@ -723,6 +723,13 @@
       "sha256": "5d44fffe5ab04bacaa5a61b4d84550fe5f06df162b39bc8ce21b87966f295911",
       "files": 229,
       "bytes": 746836325,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native-precision16-terminal-inventory.json",
+      "sha256": "2b4eecd59317a6e86fa59917c642238967322008cc1c2bab2ecf4705db5ef1b4",
+      "files": 231,
+      "bytes": 746997711,
       "missing_roots": []
     }
   ],
@@ -1735,7 +1742,7 @@
     "cluster_tests_passed": 257,
     "cluster_tests_seconds": 4.194,
     "native_observed_state": "COMPLETED",
-    "speech_observed_state": "RUNNING",
+    "speech_observed_state": "COMPLETED",
     "observed_utc": "2026-10-20T20:56:35Z",
     "source_bundle": {
       "path": "runs/local-continuation-20261019/source-main-9688453.bundle",
@@ -1748,10 +1755,24 @@
     "gpu_exit": "0:0",
     "gpu_elapsed": "00:11:57",
     "all16_processes_succeeded": true,
-    "independent_speech_or_behavior_approval_pending": true,
+    "independent_speech_or_behavior_approval_pending": false,
     "all16_native_artifacts_sha256_backed": true,
     "verified_native_files": 229,
-    "verified_native_bytes": 746836325
+    "verified_native_bytes": 746836325,
+    "speech_exit": "0:0",
+    "speech_elapsed": "00:04:59",
+    "all231_terminal_artifacts_sha256_backed": true,
+    "ordinary_core_correct": {
+      "native520/original-bf16": 4,
+      "complete-batch8/original-bf16": 1,
+      "native520/fp32-lm": 0,
+      "complete-batch8/fp32-lm": 0
+    },
+    "all16_speech_passed": true,
+    "review": "docs/NATIVE-PRECISION16-COMPLETE-REVIEW-2026-10-20.json",
+    "review_sha256": "799bc6ccec86bcc5a149a8858195803b22287b860fa48ecfad78272e70c33f81",
+    "candidate_adopted": false,
+    "training_extension_approved": false
   },
   "native_bf16_stream49_chain": {
     "source": "32eabbf7633bb607e6652442b7244272125e25a6",
