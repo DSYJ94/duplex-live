@@ -2449,5 +2449,44 @@
   "native_quality_or_adoption_approved": false,
   "training_extension_approved": false,
   "interpretation": "Actual frozen native520 BF16 plus FP32-adapter MATH streamed/batched calculations differ on approved native histories. The FP32/FP64 mathematical reference approval remains intact but is not actual BF16 equivalence. This does not alone establish the cause of behavioral regression or approve a repair.",
-  "next_action": "Reuse this successfully completed and backed full49 result. Native16 7588416 failed its CPU unit preflight before any captures due to mixed precision APIs; speech7588427/watcher7587915 also terminal failed. New API-recovery2 finite CPU watcher must pass seven real Torch backend checks before submitting the same complete16 comparison and independent speech."
+  "next_action": "Reuse this successfully completed and backed full49 result. Native16 7588416 failed its CPU unit preflight before any captures due to mixed precision APIs; speech7588427/watcher7587915 also terminal failed. New API-recovery2 finite CPU watcher must pass seven real Torch backend checks before submitting the same complete16 comparison and independent speech.",
+  "per_kind_derived_summary": [
+    {
+      "kind": "private",
+      "cases": 27,
+      "spoken_targets": 977,
+      "spoken_argmax_disagreements": 6,
+      "mean_batch_to_stream_kl": 0.0001597793385304545,
+      "mean_spoken_ce_batch": 1.090863541320518,
+      "mean_spoken_ce_stream": 1.0920319413697277
+    },
+    {
+      "kind": "simple",
+      "cases": 12,
+      "spoken_targets": 183,
+      "spoken_argmax_disagreements": 0,
+      "mean_batch_to_stream_kl": 0.00010616738048459713,
+      "mean_spoken_ce_batch": 1.2414050366108615,
+      "mean_spoken_ce_stream": 1.2458708379417658
+    },
+    {
+      "kind": "clarify",
+      "cases": 5,
+      "spoken_targets": 163,
+      "spoken_argmax_disagreements": 1,
+      "mean_batch_to_stream_kl": 0.00013255128433229402,
+      "mean_spoken_ce_batch": 1.0860440015792847,
+      "mean_spoken_ce_stream": 1.0865077257156373
+    },
+    {
+      "kind": "cancel",
+      "cases": 5,
+      "spoken_targets": 168,
+      "spoken_argmax_disagreements": 2,
+      "mean_batch_to_stream_kl": 0.00015470384096261114,
+      "mean_spoken_ce_batch": 1.3739399194717408,
+      "mean_spoken_ce_stream": 1.3712050199508667
+    }
+  ],
+  "causal_scope_note": "All12 simple teacher cases have zero spoken argmax disagreements at native520, with mean batch/stream spoken CE1.241405/1.245871. The nonzero BF16 arithmetic discrepancy remains an unmet exact reference tolerance, but does not establish it caused the child ordinary1/4 regression. Causal repair selection also needs complete same-checkpoint native16 and independent speech."
 }

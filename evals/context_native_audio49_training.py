@@ -15,6 +15,9 @@ RELOAD_SCHEMA='dl-context-actual-audio49-adapter-reload-v1'
 
 
 def validate_configuration(args):
+    if getattr(args,'native_audio49_stream_gradient_readiness',False):
+        from evals.context_native_stream_gradient import validate
+        validate(args)
     if getattr(args,'native_audio49_bf16_stream_diagnostic',False):
         from evals.context_native_bf16_stream_diagnostic import validate
         validate(args)

@@ -323,6 +323,10 @@ def run(lm, spm, voice, examples, components, audits, args):
             return
         if audio49_policy and args.native_audio49_preflight_only:
             if (optimizer.state and not parent_adam) or initial_step:raise RuntimeError('BF16 readiness cannot optimize or resume')
+            if getattr(args,'native_audio49_stream_gradient_readiness',False):
+                from evals.context_native_stream_gradient import run as stream_readiness
+                stream_readiness(lm,learned,native_teacher_batches,additional_batches,args)
+                return
             if getattr(args,'native_audio49_bf16_stream_diagnostic',False):
                 from evals.context_native_bf16_stream_diagnostic import run as stream_diagnostic
                 stream_diagnostic(lm,native_teacher_batches,additional_batches,args)
