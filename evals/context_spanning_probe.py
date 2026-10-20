@@ -57,7 +57,7 @@ def main():
         help='Supply actual request-started/delivery-pending state as a context span; diagnostic')
     ap.add_argument('--math-attention', action='store_true',
         help='Explicit numerical replay diagnostic; use Torch math attention only')
-    ap.add_argument('--persona-profile',choices=('recorded-records','released-default','lookup-and-cancel'),default='recorded-records',
+    ap.add_argument('--persona-profile',choices=('recorded-records','released-default','lookup-and-cancel','records-request-only'),default='recorded-records',
         help='Inference-only comparison with the exact pinned upstream default persona')
     ap.add_argument('--lookup-delivery-delay-s',type=float,default=0.,
         help='Inference-only minimum transport delay for real lookup results, between zero and 30 seconds')
@@ -69,7 +69,11 @@ def main():
     ap.add_argument('--native-sampling-diagnostic',action='store_true')
     ap.add_argument('--native-seen-retention-diagnostic',action='store_true',
         help='Read-only default-sampler comparison on the four ordinary TRAIN anchor questions; never training data')
+    ap.add_argument('--native-persona-diagnostic',action='store_true')
+    ap.add_argument('--native-persona-diagnostic-case',type=int,choices=range(10))
     args=ap.parse_args()
+    if (args.persona_profile=='records-request-only')!=args.native_persona_diagnostic:
+        ap.error('Scoped records persona requires the explicit locked complete10 inference diagnostic')
     from evals.native_text_sampling_diagnostic import policy as sampling_policy,verify_engine as verify_sampling
     try: sampling=sampling_policy(args)
     except ValueError as error:ap.error(str(error))
@@ -81,7 +85,7 @@ def main():
         ap.error('Actual query grounding requires native requests and actual arrived-audio recognition')
     if args.ret_logit_bias and (args.train_history or args.backend_mode!='native-asr'):
         ap.error('RET calibration is inference-only with actual native-ASR consultation')
-    if args.persona_profile!='recorded-records' and args.train_history:
+    if args.persona_profile!='recorded-records' and args.train_history and not args.native_persona_diagnostic:
         ap.error('Persona comparison is inference-only and cannot collect TRAIN histories')
     if not 0<=args.lookup_delivery_delay_s<=30 or (args.lookup_delivery_delay_s and
             (args.train_history or args.backend_mode!='native-asr')):
@@ -225,6 +229,9 @@ def main():
         persona+=(' The client also supports cancelling lookup tasks. '
             'If the user asks to cancel a lookup, consult the client. '
             'Only a successful cancellation reply confirms that it is cancelled.')
+    elif args.persona_profile=='records-request-only':
+        from evals.native_persona_diagnostic import scoped_persona
+        persona=scoped_persona()
     engine.set_persona(persona,voice)
     if history:
         history.mode='live'

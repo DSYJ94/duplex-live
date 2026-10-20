@@ -3,6 +3,11 @@ ORDINARY=tuple('recovery-train-%03d'%i for i in range(12,16))
 
 
 def policy(args):
+    if getattr(args,'native_persona_diagnostic',False):
+        from evals.native_persona_diagnostic import policy as persona_policy
+        return persona_policy(args)
+    if getattr(args,'native_persona_diagnostic_case',None) is not None:
+        raise ValueError('Persona diagnostic index requires its explicit locked profile')
     if getattr(args,'native_seen_retention_diagnostic',False):
         from evals.native_seen_retention_diagnostic import policy as seen_policy
         return seen_policy(args)
