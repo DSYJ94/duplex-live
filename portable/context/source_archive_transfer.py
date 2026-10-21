@@ -1,7 +1,7 @@
-"""Python3.6-compatible source-side packing and single-archive signed PUTs.
+"""Python3.6-compatible source-side packing and payload-bound signed PUTs.
 
-No account credential is accepted. Signed part URLs arrive through SSH stdin,
-remain in memory, are restricted to the declared Runpod bucket, and are not logged.
+No reusable account key is accepted. Request-specific authorization headers arrive
+through SSH stdin, remain in memory, and are never logged or saved.
 """
 import base64
 from concurrent.futures import ThreadPoolExecutor
@@ -76,14 +76,18 @@ def upload(plan):
         assert len(data) == part['bytes']
         for attempt in range(5):
             try:
-                request=urllib.request.Request(part['url'],data=data,method='PUT')
+                assert part['headers']['X-Amz-Content-SHA256'] == hashlib.sha256(data).hexdigest()
+                request=urllib.request.Request(part['url'],data=data,headers=part['headers'],method='PUT')
                 with urllib.request.urlopen(request,timeout=50) as response:
                     assert response.status == 200
                     etag=response.headers['ETag']
                 return {'PartNumber':part['number'],'ETag':etag}
             except Exception as e:
+                if getattr(e,'code',500) < 500:
+                    raise RuntimeError('Signed upload HTTP status '+str(e.code))
                 if attempt == 4:
-                    raise RuntimeError('Signed upload part failed: '+type(e).__name__)
+                    raise RuntimeError('Signed upload part failed: '+type(e).__name__+
+                                       ' status '+str(getattr(e,'code',None)))
                 time.sleep(2**attempt)
     with ThreadPoolExecutor(max_workers=4) as pool:
         parts=list(pool.map(one,plan['parts']))

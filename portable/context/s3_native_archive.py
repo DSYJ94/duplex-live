@@ -10,6 +10,8 @@ import fcntl
 import hashlib
 import json
 import os
+import re
+import shlex
 from pathlib import Path
 import sys
 import subprocess
@@ -133,6 +135,10 @@ def upload(args):
     import boto3
     from boto3.s3.transfer import TransferConfig
     from botocore.config import Config
+    shared_config = Config(connect_timeout=15, read_timeout=120,
+        retries={'mode': 'standard', 'max_attempts': 8},
+        s3={'payload_signing_enabled': True},
+        request_checksum_calculation='when_required', response_checksum_validation='when_required')
     data = inventory(args.manifest, args.manifest_sha256)
     index = json.loads((args.archive_dir/'index.json').read_text())
     assert index['manifest_sha256'] == args.manifest_sha256
@@ -148,16 +154,30 @@ def upload(args):
     client = boto3.client('s3', endpoint_url='https://s3api-'+args.region.lower()+'.runpod.io',
         region_name=args.region, aws_access_key_id=credentials['access_key'],
         aws_secret_access_key=credentials['secret_key'],
-        config=Config(connect_timeout=15, read_timeout=120,
-                      retries={'mode': 'standard', 'max_attempts': 8},
-                      request_checksum_calculation='when_required',
-                      response_checksum_validation='when_required'))
+        config=shared_config)
     client.head_bucket(Bucket=args.bucket)
     transfer = TransferConfig(multipart_threshold=64*1024*1024,
         multipart_chunksize=64*1024*1024, max_concurrency=2)
     lock = threading.Lock()
     complete = []
     source_ready = set()
+    if args.source_pack_receipt and not args.source_helper:
+        raise ValueError('A Git-deployed source helper path is required')
+    if args.source_helper and (not str(args.source_helper).startswith(
+            '/projects/u6si/duplex-live/worktrees/migration-') or '..' in args.source_helper.parts):
+        raise ValueError('Unexpected source helper path')
+    signing_client = boto3.client('s3', endpoint_url='https://s3api-'+args.region.lower()+'.runpod.io',
+        region_name=args.region, aws_access_key_id=credentials['access_key'],
+        aws_secret_access_key=credentials['secret_key'], config=shared_config)
+    prepared = threading.local()
+    class CapturedRequest(Exception):
+        pass
+    def capture_request(request, **kwargs):
+        prepared.value = {'url': request.url, 'headers': {
+            k: v.decode() if isinstance(v, bytes) else str(v)
+            for k, v in request.headers.items()}}
+        raise CapturedRequest()
+    signing_client.meta.events.register('before-send.s3.UploadPart', capture_request)
     if args.source_pack_receipt:
         expected = {r['name']: r for r in index['archives']}
         for line in args.source_pack_receipt.read_text().splitlines():
@@ -172,26 +192,33 @@ def upload(args):
         upload_id = created['UploadId']
         chunk = 64*1024*1024
         parts = []
-        for offset in range(0, spec['bytes'], chunk):
-            number = len(parts)+1
-            url = client.generate_presigned_url('upload_part', Params={
-                'Bucket': args.bucket, 'Key': key, 'UploadId': upload_id,
-                'PartNumber': number}, ExpiresIn=3600, HttpMethod='PUT')
-            parts.append({'number': number, 'offset': offset,
-                          'bytes': min(chunk, spec['bytes']-offset), 'url': url})
-        # Capability URLs are scoped to one approved object part for one hour;
-        # no account key, signed URL or request payload is logged or saved.
+        with (args.archive_dir/spec['name']).open('rb') as reader:
+            for offset in range(0, spec['bytes'], chunk):
+                number = len(parts)+1
+                block = reader.read(min(chunk, spec['bytes']-offset))
+                try:
+                    signing_client.upload_part(Bucket=args.bucket, Key=key,
+                        UploadId=upload_id, PartNumber=number, Body=block)
+                except CapturedRequest:
+                    pass
+                request = prepared.value
+                assert request['headers']['X-Amz-Content-SHA256'] == hashlib.sha256(block).hexdigest()
+                parts.append({'number': number, 'offset': offset,
+                              'bytes': len(block), **request})
+        # The supported API uses SDK-prepared authorization headers bound to
+        # one exact payload/object part. No reusable account key is exported.
         payload = {'name': spec['name'], 'bytes': spec['bytes'],
                    'bucket': args.bucket, 'parts': parts}
         try:
             proc = subprocess.run(['ssh', '-o', 'BatchMode=yes', '-o', 'ConnectTimeout=15',
                 '-o', 'ServerAliveInterval=15', '-o', 'ServerAliveCountMax=2',
-                'u6si.aip2.isambard', 'python3 '
-                '/projects/u6si/duplex-live/worktrees/migration-3044df2/'
-                'portable/context/source_archive_transfer.py upload'],
+                'u6si.aip2.isambard', 'python3 '+shlex.quote(str(args.source_helper))+' upload'],
                 input=json.dumps(payload), capture_output=True, text=True, timeout=1800)
             if proc.returncode:
-                raise RuntimeError('Source signed upload failed; exit '+str(proc.returncode))
+                detail = proc.stderr.splitlines()[-1] if proc.stderr.splitlines() else 'no stderr'
+                detail = re.sub(r'https?://\S+', '<redacted-url>', detail)
+                detail = re.sub(r'(rps_|user_)[A-Za-z0-9_-]+', '<redacted>', detail)
+                raise RuntimeError('Source signed upload failed; exit '+str(proc.returncode)+': '+detail)
             result = json.loads(proc.stdout)
             assert result['name'] == spec['name'] and result['all_signed_parts_uploaded']
             assert [p['PartNumber'] for p in result['parts']] == list(range(1,len(parts)+1))
@@ -206,23 +233,28 @@ def upload(args):
         assert path.is_file() and path.stat().st_size == spec['bytes']
         assert digest(path) == spec['sha256']
         key = 'native-archive-v3/' + spec['name']
+        print(json.dumps({'starting_archive': spec['name']}), flush=True)
         if spec['name'] in source_ready:
             signed_source_upload(spec, key)
         else:
             client.upload_file(str(path), args.bucket, key, Config=transfer)
         head = client.head_object(Bucket=args.bucket, Key=key)
         assert head['ContentLength'] == spec['bytes']
-        response = client.get_object(Bucket=args.bucket, Key=key)
-        try:
-            verify_members(response['Body'], spec, files, links)
-        finally:
-            response['Body'].close()
+        if not args.defer_to_independent_filesystem_verifier:
+            response = client.get_object(Bucket=args.bucket, Key=key)
+            try:
+                verify_members(response['Body'], spec, files, links)
+            finally:
+                response['Body'].close()
         result = {'archive': spec['name'], 'object_key': key,
                   'archive_bytes': spec['bytes'], 'source_archive_sha256': spec['sha256'],
                   'files': len(spec['files']), 'symlinks': len(spec['symlinks']),
                   'upload_source': 'isambard-single-object-signed-parts'
                                    if spec['name'] in source_ready else 'local-mac',
-                  'independent_s3_readback_all_member_hashes_passed': True,
+                  'independent_s3_readback_all_member_hashes_passed':
+                       not args.defer_to_independent_filesystem_verifier,
+                  'independent_destination_verification_pending':
+                       args.defer_to_independent_filesystem_verifier,
                   'at_utc': datetime.datetime.now(datetime.timezone.utc).isoformat()}
         with lock:
             with args.journal.open('a') as journal:
@@ -233,10 +265,20 @@ def upload(args):
             print(json.dumps(result), flush=True)
         return result
 
+    # Prove the supported signed-header source route on one tiny archive before
+    # starting concurrent large copies. Failures cancel remaining queued work.
+    one(index['archives'][0])
     with ThreadPoolExecutor(max_workers=args.workers) as pool:
-        futures = [pool.submit(one, spec) for spec in index['archives']]
-        for future in as_completed(futures):
-            future.result()
+        futures = [pool.submit(one, spec) for spec in index['archives'][1:]]
+        try:
+            for future in as_completed(futures):
+                future.result()
+        except BaseException as error:
+            for future in futures:
+                future.cancel()
+            print(json.dumps({'transfer_failed': type(error).__name__,
+                              'message': str(error)[:500]}), flush=True)
+            raise
     assert sum(r['files'] for r in complete) == len(files)
     assert sum(r['symlinks'] for r in complete) == len(links)
     for path, key in [(args.manifest, 'native-archive-v3/manifest.json'),
@@ -247,18 +289,25 @@ def upload(args):
             assert hashlib.sha256(body.read()).hexdigest() == digest(path)
         finally:
             body.close()
-    report = {'schema': 'dl-native-s3-complete-verification-v1',
+    report = {'schema': ('dl-native-s3-upload-awaiting-full-verification-v1'
+                        if args.defer_to_independent_filesystem_verifier
+                        else 'dl-native-s3-complete-verification-v1'),
               'at_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
               'bucket': args.bucket, 'region': args.region,
               'manifest_sha256': args.manifest_sha256, 'files': len(files),
               'bytes': sum(r['bytes'] for r in files.values()), 'symlinks': len(links),
-              'all_members_independently_read_back_and_verified': True,
+              'all_members_independently_read_back_and_verified':
+                   not args.defer_to_independent_filesystem_verifier,
+              'independent_destination_verification_pending':
+                   args.defer_to_independent_filesystem_verifier,
               'archives': complete, 'whole_remote_project_backup': False,
               'model_quality_or_native_numerical_approved': False}
     with args.report.open('x') as stream:
         json.dump(report, stream, indent=2)
         stream.write('\n')
-    client.upload_file(str(args.report), args.bucket, 'native-archive-v3/verification.json')
+    client.upload_file(str(args.report), args.bucket, 'native-archive-v3/'+
+        ('upload-pending-verification.json' if args.defer_to_independent_filesystem_verifier
+         else 'verification.json'))
     print(json.dumps({k: v for k, v in report.items() if k != 'archives'}), flush=True)
 
 
@@ -282,6 +331,8 @@ def main():
             q.add_argument('--report', type=Path, required=True)
             q.add_argument('--workers', type=int, default=3)
             q.add_argument('--source-pack-receipt', type=Path)
+            q.add_argument('--source-helper', type=Path)
+            q.add_argument('--defer-to-independent-filesystem-verifier', action='store_true')
     args = p.parse_args()
     if args.command == 'pack':
         pack(args)
