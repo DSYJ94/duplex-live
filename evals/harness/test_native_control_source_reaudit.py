@@ -4,12 +4,13 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+import shutil
 from unittest.mock import patch
 
 from data.synthetic.native_control_repair import build
 from data.synthetic.native_control_render import render, sha256
 from evals.harness import test_native_control_repair as source_fixtures
-from evals.native_control_source_quality import ASR_WEIGHT, assess_clip
+from evals.native_control_source_quality import ASR_WEIGHT, assess_clip, verify
 from evals.native_control_source_reaudit import reassess
 from data.synthetic.filter import norm_words
 
@@ -66,6 +67,22 @@ class DurableSourceReaudit(unittest.TestCase):
                 self.assertFalse(reviewed['training_approved'])
                 self.assertEqual(sha256(parent_root / results[0]['clips'][0]['asr_file']),
                                  sha256(root / 'derived-good' / results[0]['clips'][0]['asr_file']))
+                cached_dir = root / 'cached-good'
+                shutil.copytree(root / 'derived-good', cached_dir)
+                cached = dict(reviewed, reused_clips=168, recognition_calls=0,
+                              cache_provenance=dict(raw=str(raw), audit=str(root / 'derived-good/source-word-audit.json'),
+                                  audit_sha256=sha256(root / 'derived-good/source-word-audit.json'),
+                                  raw_manifest_sha256=sha256(raw / 'raw-source.json'),
+                                  reused=[dict(id=s['id'], turn_index=c['turn_index'], wav_sha256=c['wav_sha256'],
+                                               receipt_sha256=c['receipt_sha256'], asr_sha256=c['asr_sha256'])
+                                          for s in reviewed['results'] for c in s['clips']]))
+                cached_path = cached_dir / 'source-word-audit.json'
+                cached_path.write_text(json.dumps(cached))
+                verify(raw, cached_path)
+                cached['cache_provenance']['reused'][0]['wav_sha256'] = 'wrong-waveform'
+                cached_path.write_text(json.dumps(cached))
+                with self.assertRaisesRegex(ValueError, 'identical original waveform'):
+                    verify(raw, cached_path)
                 # A genuine changed word must still fail after the same numerical
                 # representation repair. This is a new artificial fixture version.
                 clip = report['results'][0]['clips'][0]
@@ -79,6 +96,8 @@ class DurableSourceReaudit(unittest.TestCase):
                 self.assertFalse(failed['passed'])
                 self.assertEqual(len(failed['results']), 40)
                 self.assertFalse(failed['results'][0]['passed'])
+                with self.assertRaises(ValueError):
+                    verify(raw, root / 'derived-failed/source-word-audit.json')
 
 
 if __name__ == '__main__':

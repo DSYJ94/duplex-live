@@ -25,8 +25,13 @@ def source_tasks(plan):
             for scene in plan['cases'] for i, turn in enumerate(scene['turns'])]
 
 
-def retained_source(parent, plan_path, tasks):
+def retained_source(parent, plan_path, tasks, *, word_audit=None, raw=None, diagnostic=None):
     """Revalidate original bytes before retaining any raw clip in a repair."""
+    if any(value is not None for value in (word_audit, raw, diagnostic)):
+        if not all(value is not None for value in (word_audit, raw, diagnostic)):
+            raise ValueError('Word repair requires complete source, failed audit and independent diagnosis')
+        from evals.native_control_word_source_repair import retained
+        return retained(parent, plan_path, tasks, raw, word_audit, diagnostic)
     ledger = json.loads((parent / 'generation.json').read_text())
     if (ledger['status'] != 'failed_preserved_unapproved' or ledger['training_approved'] is not False
             or ledger['plan_sha256'] != sha256(plan_path)
@@ -67,7 +72,8 @@ def retained_source(parent, plan_path, tasks):
                           retained_clips=len(retained), retained_audio_and_receipts_unchanged=True)
 
 
-def collect(plan_path, out, key, lock, *, generate=synthesize, repair_source=None):
+def collect(plan_path, out, key, lock, *, generate=synthesize, repair_source=None,
+            word_audit=None, raw=None, diagnostic=None):
     plan = json.loads(plan_path.read_text())
     coverage = validate(plan)
     if plan != build():
@@ -75,6 +81,8 @@ def collect(plan_path, out, key, lock, *, generate=synthesize, repair_source=Non
     tasks = source_tasks(plan)
     if len(tasks) != 168 or sum(len(t['text']) for t in tasks) != 7953:
         raise ValueError('Unexpected authorized request bound')
+    if any(value is not None for value in (word_audit, raw, diagnostic)) and repair_source is None:
+        raise ValueError('Word diagnosis cannot be used without the preserved parent source')
     with collection_lock(lock):
         if out.exists():
             raise ValueError('Use a NEW version, preserving every failed/partial collection')
@@ -94,7 +102,8 @@ def collect(plan_path, out, key, lock, *, generate=synthesize, repair_source=Non
         instructions = {}
         pending = tasks
         if repair_source is not None:
-            retained, provenance = retained_source(repair_source, plan_path, tasks)
+            retained, provenance = retained_source(repair_source, plan_path, tasks,
+                                                   word_audit=word_audit, raw=raw, diagnostic=diagnostic)
             for row in retained:
                 original = repair_source / row['path']
                 for source in (original, original.with_suffix('.receipt.json')):
@@ -106,9 +115,13 @@ def collect(plan_path, out, key, lock, *, generate=synthesize, repair_source=Non
             copied = {r['path'] for r in retained}
             pending = [t for t in tasks if f'clips/{t["case"]}/{t["index"]:02d}_{t["role"]}.wav' not in copied]
             pending.sort(key=lambda t: (t['case'], t['index']) != ('native-control3-train-034', 2))
-            instructions[('native-control3-train-034', 2)] = (
-                'Read exactly the supplied single word once, with no repetition or continuation. '
-                'End the utterance immediately after that word. Use natural conversational delivery.')
+            if provenance.get('repair_kind') == 'complete-word-audit-v1':
+                from evals.native_control_word_source_repair import instructions as word_instructions
+                instructions.update({(t['case'], t['index']): word_instructions(t) for t in pending})
+            else:
+                instructions[('native-control3-train-034', 2)] = (
+                    'Read exactly the supplied single word once, with no repetition or continuation. '
+                    'End the utterance immediately after that word. Use natural conversational delivery.')
         state['maximum_new_clips'] = len(pending)
         state['maximum_new_characters'] = sum(len(t['text']) for t in pending)
 
@@ -185,10 +198,14 @@ def main():
     parser.add_argument('--env-file', type=Path, required=True)
     parser.add_argument('--repair-source', type=Path,
                         help='Retain verified originals and repair only the diagnosed TRAIN peak failure/missing clips')
+    parser.add_argument('--word-audit', type=Path)
+    parser.add_argument('--raw', type=Path)
+    parser.add_argument('--diagnostic', type=Path)
     parser.add_argument('--lock', type=Path,
                         default=Path('runs/local-migration-20261021/.private/control3-capture.lock'))
     args = parser.parse_args()
-    result = collect(args.plan, args.out, local_key(args.env_file), args.lock, repair_source=args.repair_source)
+    result = collect(args.plan, args.out, local_key(args.env_file), args.lock, repair_source=args.repair_source,
+                     word_audit=args.word_audit, raw=args.raw, diagnostic=args.diagnostic)
     print(json.dumps(dict(status=result['status'], clips=len(result['clips']), training_approved=False)))
 
 

@@ -33,7 +33,12 @@ def generation_complete(generation, plan):
     if 'repair_provenance' in ledger:
         from data.synthetic.native_control_generate import retained_source, source_tasks
         parent = Path(ledger['repair_provenance']['parent'])
-        retained, provenance = retained_source(parent, plan, source_tasks(json.loads(plan.read_text())))
+        extra = {}
+        if ledger['repair_provenance'].get('repair_kind') == 'complete-word-audit-v1':
+            value = ledger['repair_provenance']
+            extra = dict(raw=Path(value['parent_raw']), word_audit=Path(value['word_audit']),
+                         diagnostic=Path(value['independent_diagnostic']))
+        retained, provenance = retained_source(parent, plan, source_tasks(json.loads(plan.read_text())), **extra)
         if provenance != ledger['repair_provenance']:
             raise ValueError('Changed failed-source repair provenance')
         for row in retained:
@@ -44,16 +49,17 @@ def generation_complete(generation, plan):
     return True
 
 
-def stages(plan, generation, out, weights, env_file):
+def stages(plan, generation, out, weights, env_file, reuse_raw=None, reuse_audit=None):
     raw, source, teachers = out / 'raw-source', out / 'source-audit/source-word-audit.json', out / 'teachers'
     quality, semantic = out / 'teacher-audit/teacher-quality.json', out / 'semantic/semantic.json'
     source_args = ['--raw', str(raw), '--source-audit', str(source)]
     teacher_args = source_args + ['--batch', str(teachers)]
+    cached = ['--reuse-raw', str(reuse_raw), '--reuse-audit', str(reuse_audit)] if reuse_raw and reuse_audit else []
     return [
         ('assemble40', 'data.synthetic.native_control_render',
          ['--plan', str(plan), '--clips', str(generation / 'clips'), '--out', str(raw)], 300),
         ('source_asr168', 'evals.native_control_source_quality',
-         ['--raw', str(raw), '--weights', str(weights), '--out', str(source.parent), '--threads', '4'], 7200),
+         ['--raw', str(raw), '--weights', str(weights), '--out', str(source.parent), '--threads', '4'] + cached, 7200),
         ('verify_source168', 'evals.native_control_source_quality', ['--raw', str(raw), '--verify', str(source)], 300),
         ('capture_teachers40', 'evals.native_control_teacher',
          source_args + ['--out', str(teachers), '--env-file', str(env_file)], 4800),
@@ -67,7 +73,7 @@ def stages(plan, generation, out, weights, env_file):
     ]
 
 
-def run(plan, generation, out, weights, env_file, lock):
+def run(plan, generation, out, weights, env_file, lock, reuse_raw=None, reuse_audit=None):
     # Preflight all dependencies and key presence without network or key output.
     import requests
     import soundfile
@@ -75,6 +81,8 @@ def run(plan, generation, out, weights, env_file, lock):
     import whisper_timestamped
     from websockets.asyncio.client import connect
     local_key(env_file)
+    if bool(reuse_raw) != bool(reuse_audit):
+        raise ValueError('Cached ASR needs both complete original source and audit')
     with collection_lock(lock):
         out.mkdir(parents=True, exist_ok=False)
         state = dict(schema='dl-native-control3-pipeline-v1',
@@ -92,7 +100,7 @@ def run(plan, generation, out, weights, env_file, lock):
                 if time.monotonic() - started >= state['source_wait_bound_s']:
                     raise TimeoutError('Existing generation still incomplete at bounded wait deadline')
                 time.sleep(5)
-            for name, module, arguments, limit in stages(plan, generation, out, weights, env_file):
+            for name, module, arguments, limit in stages(plan, generation, out, weights, env_file, reuse_raw, reuse_audit):
                 remaining = state['maximum_wallclock_s'] - (time.monotonic() - started)
                 if remaining <= 0:
                     raise TimeoutError('Pipeline deadline reached before another stage could start')
@@ -130,8 +138,11 @@ def main():
         parser.add_argument('--' + name, type=Path, required=True)
     parser.add_argument('--lock', type=Path,
                         default=Path('runs/local-migration-20261021/.private/control3-pipeline.lock'))
+    parser.add_argument('--reuse-raw', type=Path)
+    parser.add_argument('--reuse-audit', type=Path)
     args = parser.parse_args()
-    result = run(args.plan, args.generation, args.out, args.weights, args.env_file, args.lock)
+    result = run(args.plan, args.generation, args.out, args.weights, args.env_file, args.lock,
+                 args.reuse_raw, args.reuse_audit)
     print(json.dumps(dict(phase=result['phase'], training_approved=False)))
 
 

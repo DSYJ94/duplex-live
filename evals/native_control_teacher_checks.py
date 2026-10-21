@@ -6,11 +6,11 @@ separate. Historical teacher approvals are untouched.
 """
 import math
 from data.synthetic.native_control_repair import build
+from evals.native_control_words import agreement, spoken_words as norm_words
 
 
 def assess(scene, timeline, speech, pcm, rate, events, session, source_checks):
     import numpy as np
-    from data.synthetic.filter import norm_words, wer
     from evals.native_control_teacher_artifacts import input_availability, available_at
     canonical = next(s for s in build()['cases'] if s['id'] == scene['id'])
     if scene != canonical or timeline['scenario_id'] != scene['id']:
@@ -70,7 +70,8 @@ def assess(scene, timeline, speech, pcm, rate, events, session, source_checks):
     words = [w for segment in speech.get('asr_segments', []) for w in segment.get('words', [])]
     text = speech.get('model_text', '')
     tokens = [t for w in words for t in norm_words(w['text'])]
-    error = wer(norm_words(text), norm_words(speech.get('asr_text', '')))
+    comparison = agreement(text, speech.get('asr_text', ''))
+    error = comparison['canonical_word_wer']
     if (not words or speech.get('audit_failure') or speech.get('word_starts_within_recorded_audio') is False
             or error > .08 or tokens != norm_words(text)
             or tokens != norm_words(speech.get('asr_text', ''))):
@@ -122,7 +123,8 @@ def assess(scene, timeline, speech, pcm, rate, events, session, source_checks):
                                expected_words=expected, measured_words=actual, passed=passed))
         if assigned != set(range(len(words))):
             reasons.append('Teacher contains speech outside its commanded answer phases')
-    return dict(passed=not reasons, reasons=reasons, raw_speech_wer=error,
+    return dict(passed=not reasons, reasons=reasons, raw_speech_wer=comparison['raw_wer'],
+                canonical_speech_wer=error, word_agreement=comparison,
                 quiet_start_s=begin, quiet_end_s=end, quiet_active_20ms_frames=active,
                 terminal_observation_included=release is None, answer_phases=phases,
                 semantic_review_required=True, native_numerical_review_required=True,

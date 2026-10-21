@@ -19,7 +19,7 @@ def pins():
     return {name: sha256(Path(__file__).with_name(name)) for name in (
         'native_control_teacher_quality.py', 'native_control_teacher_checks.py',
         'native_control_teacher_artifacts.py', 'native_control_teacher.py',
-        'native_control_source_quality.py', 'moshi_speech_audit.py', 'audio_playout.py')}
+        'native_control_source_quality.py', 'native_control_words.py', 'moshi_speech_audit.py', 'audio_playout.py')}
 
 
 def speech_record(folder, response):
@@ -83,6 +83,7 @@ def audit(raw, source_audit, batch, weights, out, device, threads):
         response = restore_clock(response, head / 16000)
         name = scene['id'] + '.asr.json'
         (out / name).write_text(json.dumps(response, indent=2) + '\n')
+        response = json.loads((out / name).read_text())
         row = decision(raw, source_row, scene, folder, source_checks['clips'], response)
         row.update(asr_file=name, asr_sha256=sha256(out / name),
                    leading_window_s=head / 16000, trailing_window_s=tail / 16000,

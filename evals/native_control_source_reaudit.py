@@ -2,7 +2,8 @@
 
 An observed NumPy-scalar check bug in the first actual audit disagreed with its
 own JSON verifier. Preserve that full failed audit; judge every saved response
-again in a new version. No new recognition, normalization or relaxed threshold.
+again in a new version. Raw WER remains recorded; the declared finite TRAIN
+vapor/vapour spelling comparison changes no spoken word or numerical threshold.
 """
 import argparse
 from datetime import datetime, timezone
@@ -12,7 +13,8 @@ from pathlib import Path
 import subprocess
 
 from data.synthetic.native_control_render import sha256, validate_raw
-from evals.native_control_source_quality import ASR_WEIGHT, PEAK_BAR, WER_BAR, assess_clip, verify
+from evals.native_control_source_quality import ASR_WEIGHT, PEAK_BAR, WER_BAR, SCHEMA, assess_clip, verify
+from evals.native_control_words import POLICY, VARIANTS
 
 
 def reassess(raw, parent, out):
@@ -64,9 +66,11 @@ def reassess(raw, parent, out):
                               receipt_sha256=old['receipt_sha256'], asr_file=name,
                               asr_sha256=old['asr_sha256'], **verdict))
         results.append(dict(id=scene['id'], split='train', passed=all(c['passed'] for c in clips), clips=clips))
-    result = dict(report, at_utc=datetime.now(timezone.utc).isoformat(), results=results,
+    result = dict(report, schema=SCHEMA, at_utc=datetime.now(timezone.utc).isoformat(), results=results,
                   passed=all(r['passed'] for r in results),
                   code_sha256=sha256(Path('evals/native_control_source_quality.py')),
+                  word_comparison_policy=POLICY, orthographic_variants=VARIANTS.copy(),
+                  word_logic_sha256=sha256(Path('evals/native_control_words.py')),
                   derivation=dict(schema='dl-full-durable-json-reassessment-v1',
                                   code_sha256=sha256(Path(__file__)),
                                   parent_audit_sha256=sha256(parent),
@@ -76,11 +80,11 @@ def reassess(raw, parent, out):
                                   raw_responses_copied_byte_for_byte=True,
                                   numeric_timestamp_values_changed=False,
                                   source_words_or_audio_changed=False,
-                                  spelling_normalization_added=False, thresholds_changed=False))
+                                  spelling_variants=VARIANTS.copy(), raw_wer_retained=True,
+                                  spoken_words_changed=False, thresholds_changed=False))
     target = out / 'source-word-audit.json'
     target.write_text(json.dumps(result, indent=2) + '\n')
-    if result['passed']:
-        verify(raw, target)
+    verify(raw, target, require_pass=False)
     return result
 
 
