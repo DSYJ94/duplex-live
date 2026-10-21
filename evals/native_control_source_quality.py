@@ -56,16 +56,22 @@ def assess_clip(reference, result, pcm, rate):
                 expected_text_prompt_used=False, waveform_changed=False)
 
 
-def audit(raw, weights, out, device):
+def audit(raw, weights, out, device, threads=4):
     import numpy as np
     import soundfile as sf
     from scipy.signal import resample_poly
     import whisper_timestamped as whisper
+    import torch
     raw_manifest, plan = validate_raw(raw)
     if sha256(weights) != ASR_WEIGHT:
         raise ValueError('Exact pinned independent Whisper turbo weights required')
     if out.exists():
         raise ValueError('Use a new immutable source-audit directory')
+    if not 1 <= threads <= 8:
+        raise ValueError('Use bounded independent ASR threads')
+    torch.set_num_threads(threads)
+    torch.set_num_interop_threads(1)
+    implementation = sha256(Path(__file__))
     model = whisper.load_model(str(weights), device=device)
     out.mkdir(parents=True)
     rows = []
@@ -76,22 +82,28 @@ def audit(raw, weights, out, device):
             pcm, rate = sf.read(path, dtype='float32')
             asr_pcm = resample_poly(pcm, 2, 3).astype(np.float32)
             result = whisper.transcribe(model, asr_pcm, language='en', vad=False,
-                                        best_of=5, beam_size=5, temperature=0., verbose=None)
+                                        best_of=5, beam_size=5, temperature=0., fp16=device != 'cpu', verbose=None)
             name = f'{scene["id"]}-{i:02d}-asr.json'
             (out / name).write_text(json.dumps(result, indent=2) + '\n')
             verdict = assess_clip(turn['text'], result, pcm, rate)
             clips.append(dict(turn_index=i, role=turn['role'], wav_sha256=sha256(path),
                               receipt_sha256=sha256(path.with_suffix('.receipt.json')),
                               asr_file=name, asr_sha256=sha256(out / name), **verdict))
+            (out / 'progress.json').write_text(json.dumps(dict(
+                scene=scene['id'], turn=i, completed=sum(len(r['clips']) for r in rows) + len(clips),
+                expected=168, current_passed=verdict['passed'], training_approved=False)) + '\n')
         row = dict(id=scene['id'], split='train', passed=all(c['passed'] for c in clips), clips=clips)
         rows.append(row)
         print(json.dumps(dict(id=row['id'], passed=row['passed'], clips=len(clips))), flush=True)
+    if implementation != sha256(Path(__file__)):
+        raise ValueError('Source audit implementation changed during actual transcription')
     result = dict(schema='dl-native-control3-source-word-audit-v1', at_utc=datetime.now(timezone.utc).isoformat(),
                   raw_manifest_sha256=sha256(raw / 'raw-source.json'), plan_sha256=raw_manifest['plan_sha256'],
                   code_sha256=sha256(Path(__file__)), renderer_sha256=sha256(Path(__file__).parents[1] / 'data/synthetic/native_control_render.py'),
                   asr_model='whisper-turbo', asr_weight_sha256=ASR_WEIGHT,
                   asr_packages={p: importlib.metadata.version(p) for p in ('openai-whisper', 'whisper-timestamped')},
-                  device=device, expected_text_prompt_used=False, wer_bar=WER_BAR, peak_bar=PEAK_BAR,
+                  device=device, threads=threads, precision='float32' if device == 'cpu' else 'float16',
+                  expected_text_prompt_used=False, wer_bar=WER_BAR, peak_bar=PEAK_BAR,
                   all40_complete=True, complete_clips=sum(len(r['clips']) for r in rows),
                   passed=all(r['passed'] for r in rows), results=rows,
                   original_waveforms_changed=False, passing_subset_accepted=False,
@@ -147,11 +159,12 @@ def main():
     parser.add_argument('--out', type=Path)
     parser.add_argument('--verify', type=Path)
     parser.add_argument('--device', choices=('cpu', 'cuda'), default='cpu')
+    parser.add_argument('--threads', type=int, default=4)
     args = parser.parse_args()
     if args.verify:
         result = verify(args.raw, args.verify)
     elif args.weights and args.out:
-        result = audit(args.raw, args.weights, args.out, args.device)
+        result = audit(args.raw, args.weights, args.out, args.device, args.threads)
     else:
         parser.error('Use --verify, or --weights with --out')
     print(json.dumps(dict(passed=result['passed'], complete_clips=result['complete_clips'], training_approved=False)))
