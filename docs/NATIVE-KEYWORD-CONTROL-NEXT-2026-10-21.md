@@ -44,7 +44,8 @@ no model/precision/clock, and left the live audition default unchanged.
 
 No new training, data approval, output muting, model adoption, package change,
 owner recording, or additional purchase has been performed by this proposal.
-The live trial remains budget-guarded through21Oct17:28:42UTC. A complete external
+The live trial terminated at21Oct17:28:46UTC (18:28London); an independent
+get-pod returns404. The100GB persistent volume remains. A complete external
 worker evaluation needs local authorization in the ignored0600keyfile and two
 actual distinct GPUs under a concrete budget. Neither is simulated by these probes.
 

@@ -1,6 +1,6 @@
 {
   "schema": "dl-runpod-native-trial-status-v2",
-  "at_utc": "2026-10-21T17:18:52.060066+00:00",
+  "at_utc": "2026-10-21T17:57:54.789655+00:00",
   "executor": "LOCAL",
   "source_commit": "c8759473ca70d775c8b993795be5c2b6eee7cccd",
   "trial": {
@@ -237,18 +237,18 @@
     "venv": "/workspace/runtime-x86-ngc2510",
     "image": "nvcr.io/nvidia/pytorch:25.10-py3@sha256:42263b2424fc237b34c4fc4a91c30d603c57eed36e37d31ff6d9a4f1f801edee",
     "cpu_imports_passed": true,
-    "gpu_runtime_not_yet_proven": true
+    "gpu_runtime_not_yet_proven": false
   },
   "active_task_resources": {
-    "gpu_pods": [
-      "i20euy4x58fo1m"
-    ],
+    "gpu_pods": [],
     "cpu_pods": [],
     "slurm_jobs": [],
     "archive_writers": [],
     "retained_volumes": [
       "49yytzyoge"
-    ]
+    ],
+    "final_trial_independent_get": 404,
+    "verified_at_utc": "2026-10-21T17:57:54.789655+00:00"
   },
   "receipt_rescue": {
     "pod_id": "vgp8bfskvrcotf",
@@ -298,12 +298,10 @@
     "image": "nvcr.io/nvidia/pytorch:25.10-py3@sha256:42263b2424fc237b34c4fc4a91c30d603c57eed36e37d31ff6d9a4f1f801edee",
     "source_commit": "5ea1547ada2bdca35bf4390cb2f4ee413c3115a2",
     "deadline_guard_status": {
-      "phase": "armed",
+      "phase": "pod_terminated",
       "pod_id": "i20euy4x58fo1m",
-      "state": "RUNNING",
-      "deadline_utc": "2026-10-21T17:28:42.087000+00:00",
       "network_volume_retained": "49yytzyoge",
-      "at_utc": "2026-10-21T17:18:33.905903+00:00",
+      "at_utc": "2026-10-21T17:28:46.290436+00:00",
       "pid": 9262
     },
     "direct_ssh": {
@@ -312,7 +310,10 @@
       "username": "root"
     },
     "ssh_tunnel_session": 82490,
-    "private_local_url": "http://127.0.0.1:8765"
+    "private_local_url": "http://127.0.0.1:8765",
+    "independent_pod_get_now": 404,
+    "private_local_url_available": false,
+    "direct_ssh_available": false
   },
   "a100_independent_restore": {
     "schema": "dl-runpod-independent-adapter-state-restore-v1",

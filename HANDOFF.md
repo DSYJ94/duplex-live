@@ -1,3 +1,30 @@
+# LOCAL — trial terminated; native capability repair next (21 October 2026)
+
+LOCAL remains sole executor; CLOUD read-only. Budget watchdog terminated final
+A100 trial i20euy4x58fo1m at 17:28:46 UTC / 18:28 London on 21 October.
+Independent Runpod get-pod now returns404. No task compute or training is running;
+old localhost audition and SSH endpoint are unavailable. Retained100GB volume
+49yytzyoge independently exists; storage remains $7/month. All archive and
+51-file diagnostic hash-verification results remain preserved. Whole-project
+Isambard/Mac source backup remains partial; native archive preservation passed.
+
+Source before this status update: 0f0a7c7972d21ae6f059e1e72ced2b9e76a62be3;
+actual final voice launcher909c547e7c65269a1bcc07d9daecb52c0a5a9501 and frozen
+native payload741872fe2f9e49f35d4deba9aba96caff26c51d4. Latest experimental
+candidate7590052 is not adopted. No additional training occurred on Runpod.
+Native runtime/restore worked; ordinary and silence behavioral diagnostics failed.
+All9 synthetic quiet probes failed, independent fullnative10/fresh40 remain unrun.
+
+Next: complete baseline/candidate comparison and quiet-target/coverage audit,
+prepare a NEW approved control-teacher collection, then one bounded repair pilot
+with original retention and strict complete behavioral gates before scaling.
+See docs/NATIVE-KEYWORD-CONTROL-NEXT-2026-10-21.md. Full evaluation needs two
+actual GPUs and a locally configured worker credential; last key check was empty.
+No new submissions, purchases or data changes made in this status update.
+Inspect live resources and remaining budget before any new job.
+
+---
+
 # LOCAL — keyword silence failure9/9; source audit complete (21Oct17:25UTC)
 
 LOCAL sole executor; CLOUD read-only. Migration/setup goal COMPLETE; native-control
