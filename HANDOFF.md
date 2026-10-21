@@ -1,3 +1,36 @@
+# LOCAL — approved Runpod trial created; transfer/validation in progress (21Oct09:20UTC)
+
+Owner approved initial$25validation +$7/month100GBstorage and requested weights,
+configs, exact cookbook/model identity and a way to test it. Approval supersedes the
+prior paid-cloud prohibition ONLY for this bounded trial. No new training approved
+by numerical success alone; complete native review/ordinary4/4 gates remain intact.
+
+Created volume cyjzip53ap,100GBSTANDARD EUR-IS-3, read back verified. Created Pod
+q3wqjwols44aos at09:15:37.923UTC,2H100SXM80GB,$7.98/hour,377GBhostRAM40vCPU,
+pinned NGC25.10 digest42263b2424fc237b34c4fc4a91c30d603c57eed36e37d31ff6d9a4f1f801edee.
+Actual SSH PASS, x86_64 Torch2.9.0a0+145a3a7bda.nv25.10 CUDA13.0 twoGPUs confirmed.
+DirectSSH root@213.181.105.227 port11047 using existing local Runpod identity.
+The network volume is /workspace, provenance paths symlink there.
+
+Independent LOCAL cost watchdog Python82566/session55483 is ARMED and keeps the Mac
+awake. Hard trial deadline11:15:37.923UTC/12:15London: it terminates ONLY this Pod,
+retaining volume. Credential is temporary, ignored mode0600, remains on Mac only;
+revoke its own named console key after trial. No other account Pod/key modified.
+Private SSH known-host and agent metadata remain ignored locally; no private key
+is copied to Isambard or Runpod. Transfer and destination hash verification pending.
+
+Candidate7590052 is already trained8updates/full154+native49, exactIsambardrestore;
+behavior UNTESTED/notadopted. Baseline7510331 retained. New cookbook at
+docs/NATIVE-TRAINING-COOKBOOK-2026-10-21.md and full machine-readable recipe export
+NATIVE-7590052-RECIPE-2026-10-21.json.1,894,400trainableadapter parameters,rank8/
+scaling2,last4temporallayers+texthead,AdamW2e-7,weightdecay0,clip1,Adam520→528.
+Published speech model is nominal7B; PersonaPlex file stores8,371,408,896BF16tensor
+elements including audio/depth machinery (storage count, not unique-runtime claim).
+No merged/quantized/adopted final model. Source parent24557a8. LOCAL sole executor;
+CLOUD must not duplicate transfers/jobs/provisioning. Read live watchdog/receipt first.
+
+---
+
 # LOCAL — AIRR grace period; expanded native archive verified; Runpod assessed (21Oct06:43UTC)
 
 Owner screenshot confirms allocation ended21Oct2026; data access through19Nov,
