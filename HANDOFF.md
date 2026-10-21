@@ -1,3 +1,28 @@
+# LOCAL overnight — TRAIN7590052 first update observed; backend constraint repair isolated (21Oct00:05UTC)
+
+LOCAL remains sole executor. Existing payload/watcher741872f unchanged, TRAIN7590052
+and CPUwatcher7589159 remain the only active jobs. Actual23:59:40UTC stdout now
+contains optimizer step1: finite gradient norm, complete original154 rows and new
+native-stream teacher microbatch. This is one update, not completed8 or qualified
+behavior. Watcher alone owns next native10/speech IDs; no manual stage submission.
+Critical post-fit checkpoint/fullstate backup still pending; local preservation
+observer is active and checks every60s. Existing complete49 readiness is verified
+and backed as recorded below. Allocation deadline21Oct08:56:32UTC; certificate
+valid through10:31:51UTC. Keep-awake assertions remain active.
+
+Separate provider repair: original7582080_7 trace confirms completed gpt-6-luna
+reply content:"" after actual receipt, only16 output tokens. Actual outbound
+schemas allowed it. New source adds nonwhitespace pattern to both structured final
+reply and respond_to_user; existing fail-closed guard remains. Three protocol
+regressions first failed, then all46 worker/reference/dispatch/failure tests passed.
+No tools repeated or receipt-only fallback introduced. Live provider acceptance
+and native behavior remain UNVERIFIED. Details/docs/BACKEND-NONEMPTY-REPLY-REPAIR-2026-10-21.md.
+This source repair is NOT deployed into running741 jobs. Original failed evidence
+stays failed. Next: monitor same TRAIN, preserve its stable fullstate, require fresh
+restore and complete native10/speech review before any further decision.
+
+---
+
 # LOCAL overnight — complete49 readinessPASS; TRAIN7590052 RUNNING (20Oct23:45UTC)
 
 Immutable payload/watcher741872fe2f9e49f35d4deba9aba96caff26c51d4. Complete readiness

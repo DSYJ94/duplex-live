@@ -162,8 +162,11 @@ def run_worker(context,world,task_id,model="gpt-6-luna",expected_revision=None,d
         tools.append(tool('replace_lookup','Correct an existing pending lookup: retire identified old task IDs and read the identified replacement project/field atomically.',
             {'task_ids':{'type':'array','items':{'type':'string'},'minItems':1},
              'project':{'type':'string'},'field':{'type':'string'}}))
+    # Completed provider replies have returned content:"" after real execution.
+    # Constrain generation as well as retaining the fail-closed delivery guard.
+    reply_content={"type":"string","pattern":r"\S"}
     schema = {"type":"object","properties":{"route":{"type":"string","enum":["answer","clarify","delegate","cancel"]},
-        "content":{"type":"string"}},"required":["route","content"],"additionalProperties":False}
+        "content":reply_content},"required":["route","content"],"additionalProperties":False}
     pending_speech=[] if pending_speech is None else pending_speech
     if (not isinstance(pending_speech,list) or any(set(p)!={'id','request_text','text'} for p in pending_speech)
             or any(not isinstance(p[k],str) or not p[k].strip() for p in pending_speech for k in p)
@@ -219,7 +222,7 @@ def run_worker(context,world,task_id,model="gpt-6-luna",expected_revision=None,d
         # Model selects a single semantic action, including an ordinary reply.
         # Required does not force a record read or cancellation: the reply action
         # is a no-side-effect output channel and carries no execution receipt.
-        reply_properties={"route":{"type":"string","enum":["answer","clarify"]},"content":{"type":"string"}}
+        reply_properties={"route":{"type":"string","enum":["answer","clarify"]},"content":reply_content}
         if dispatch_protocol=='state-aware':
             reply_properties['consume_pending_speech_ids']=schema['properties']['consume_pending_speech_ids']
         reply_tool=tool("respond_to_user","Answer general knowledge or ask for missing identification; no external side effects.",reply_properties)

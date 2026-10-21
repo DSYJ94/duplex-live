@@ -1,11 +1,45 @@
 import unittest
 import json
 import types
+import re
 from unittest.mock import patch
 from evals.recovery_worker import RecordWorld,run_worker,WorkerSuperseded,WorkerContractError,project_identified_by_user
 
 
 class RecordGuards(unittest.TestCase):
+    def test_actual_outgoing_reply_schemas_forbid_observed_empty_provider_result(self):
+        # A real completed provider response returned {route:delegate,content:""}
+        # after an executed read. Test the schemas sent through both output
+        # channels, and retain the one-read receipt and normal reply behavior.
+        for protocol in ('legacy','required-action','state-aware'):
+            with self.subTest(protocol=protocol):
+                payloads=[]
+                world=RecordWorld({'Cedar':{'badge':'violet triangle'}})
+                def execute(payload):
+                    payloads.append(payload)
+                    if 'previous_response_id' not in payload:
+                        return dict(id='read',status='completed',output=[dict(type='function_call',name='lookup_record',
+                            call_id='one-read',arguments=json.dumps(dict(project='Cedar',field='badge')))])
+                    result=dict(route='delegate',content='The badge is violet triangle.')
+                    if protocol=='state-aware':result['consume_pending_speech_ids']=[]
+                    return dict(id='reply',status='completed',output=[dict(type='message',content=[
+                        dict(type='output_text',text=json.dumps(result))])])
+                result=run_worker([dict(role='user',text='Check the badge for Cedar.')],world,'current',
+                    dispatch_protocol=protocol,response_executor=execute)
+                self.assertEqual(len(world.receipts),1)
+                self.assertEqual(result['receipts'],world.receipts)
+                self.assertEqual(len(payloads),2)
+                schemas=[payloads[-1]['text']['format']['schema']['properties']['content']]
+                if protocol!='legacy':
+                    reply=next(t for t in payloads[0]['tools'] if t['name']=='respond_to_user')
+                    schemas.append(reply['parameters']['properties']['content'])
+                for schema in schemas:
+                    pattern=schema.get('pattern','')
+                    for blank in ('',' ','\t\n'):
+                        self.assertIsNone(re.search(pattern,blank),'Outgoing schema permits blank speech')
+                    for text in ('The badge is violet triangle.','Please identify the project.','Écoutez.'):
+                        self.assertIsNotNone(re.search(pattern,text))
+
     def test_observed_project_prefix_failure_executes_only_the_identified_real_record(self):
         world=RecordWorld({'Alder West':{'room marker':'red star'}})
         def execute(payload):
