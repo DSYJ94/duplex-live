@@ -38,7 +38,7 @@ def run(out, env_file, lock):
             context = [dict(role='user', text='Look up the access code for project Falcon.')]
             revision = world.reserve('synthetic-lookup', context)
             lookup = run_worker(context, world, 'synthetic-lookup', expected_revision=revision,
-                                dispatch_protocol='state-aware', scope_read_tools=True)
+                                model=report['model'], dispatch_protocol='state-aware', scope_read_tools=True)
             atomic_json(out / 'lookup.json', lookup)
             if (lookup['route'] != 'delegate' or len(lookup['receipts']) != 1
                     or lookup['receipts'][0]['tool'] != 'lookup_record'
@@ -48,10 +48,10 @@ def run(out, env_file, lock):
             receipt = lookup['receipts'][0]
             world.mark_ready(receipt)
             report['lookup_before_cancellation_deliverable'] = world.deliverable(receipt)
-            context += [dict(role='user', text='Cancel the project Falcon lookup before you speak its result.')]
+            context = context + [dict(role='user', text='Cancel the project Falcon lookup before you speak its result.')]
             revision = world.reserve('synthetic-cancel', context)
             cancelled = run_worker(context, world, 'synthetic-cancel', expected_revision=revision,
-                                   dispatch_protocol='state-aware', scope_read_tools=True)
+                                   model=report['model'], dispatch_protocol='state-aware', scope_read_tools=True)
             atomic_json(out / 'cancellation.json', cancelled)
             if (cancelled['route'] != 'cancel' or not cancelled['receipts']
                     or world.deliverable(receipt)):
