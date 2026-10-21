@@ -1,3 +1,48 @@
+# LOCAL overnight — all8 trained/all49 exposed; fullstate backed; restore pending (21Oct00:29:59UTC)
+
+TRAIN7590052 remains RUNNING on interactive1GPU, immutable741872fe2f9e49f35d4deba9aba96caff26c51d4.
+All8 optimizer calls are recorded. Independent receipt audit confirms all154 original
+components at EVERY update (1232 total), exact identities/kinds/weights, acoustic
+ownership and all49 native teacher partitions:22992 valid gradient calls/1491 spoken
+targets. Native-text auxiliary prefix/span/user/audio targets are0; original
+assistant-acoustic loss stays intact. Complete review:
+docs/NATIVE-STREAM49-TRAINING-EXPOSURE-REVIEW-2026-10-21.json.
+
+Stable adapter/fullstate/data/voice/approval/parentAdam/reference-cache backup is
+VERIFIED:14files617998753B, all local size/SHA match and remote inventory repeated
+unchanged after transfer21Oct00:26:04UTC. CheckpointSHA
+7bbb2e9f1822cb43db50f6ead7c14d510e7c280d520cc7e1436dced6edbcfeb5;
+fullstateSHA6a9fc6cb0949d1562f654af74cb6e86a827a0214a486f869e7bd92b1ae0b63b4.
+Separate CPU steps7589159.2/.3 independently matches all26 state adapter tensors to
+checkpoint, finite complete optimizer moments, Adam520→528, effectiveLR2e-7,
+Python/NumPy/TorchCPU/CUDA RNG present. Both CPU reports are size/SHA-backed; v2 explicitly checks all26 Adam state
+keysets, parameter mapping, moment shapes/dtypes and nonnegative second moments.
+This CPU inspection is NOT the required full fresh-process GPU restore approval.
+
+Training is capturing all49 expected native stream fingerprints; actual00:31:11UTC
+captured13/49. Original28/acoustic49/native49 and full optimizer/RNG independent
+restoration remain PENDING. Existing CPUwatcher7589159 alone owns eventual native10
+and speech IDs in MUTABLE runs/native-stream49-overnight-local-20261020.json.
+No manual submissions, launcher restart, extension/adoption or fresh20 release.
+Only these2 scheduler jobs active at last actual queue read. LOCAL sole executor,
+CLOUD read-only while owner is away. Current shared source before this docs commit:
+1b195c904685cd5c25c1bc9d0ee9584f9f3fe255; running payload unchanged741872f.
+
+Scoped backup union25261files29145703565B, zero conflicts. Earlier full preserved
+union25245files28527702727B freshly rehashed with zero failures00:06:48UTC; new16
+files independently verified at transfer. Old stopped Mac source backup PARTIAL.
+Backup and allocation-bounded keep-awake Python/caffeinate processes independently
+verified LIVE00:26:58UTC. LOCAL certificate valid to21Oct10:31:51UTC; allocation
+ends21Oct08:56:32UTC. No cloud GPU purchase or Qwen fallback.
+
+Next: monitor SAME training/watcher IDs, require terminal training0:0 AND full fresh
+restore before existing native10/speech, preserve all terminal artifacts, then
+review all10 cases. Ordinary4/4 remains mandatory before extension/fresh qualification.
+Native/whole-system remain UNQUALIFIED; training/exposure and backup success do not
+prove behavior. Preserve old failed/rejected versions and all original data/losses.
+
+---
+
 # LOCAL overnight — TRAIN3/8; whole preserved union freshly verified (21Oct00:06:48UTC)
 
 TRAIN7590052 and CPUwatcher7589159 remain sole active jobs, immutable741872f.

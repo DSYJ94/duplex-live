@@ -1,0 +1,122 @@
+{
+  "step_receipt_sha256": {
+    "1": "88949efb227799fab800720aa65abb1cbc38e03f56353284fd8543a070c5ac3b",
+    "2": "2cf674b56cfc55df83db8fbb58266c3c39c5b976772fc6d134e564d46c9a992f",
+    "3": "c979d77729b6ae3a9f5c1bf896ce70e0c557ea1ca52f6f277e2e2309895005ce",
+    "4": "4412fdf149462f8245a496e98f1b8f4bb9410364a41981e809a2b809dcd16fd2",
+    "5": "770e5728475e94f7025c6aa54f297423997c0cf0d704ffec43bf30a0441e8e1d",
+    "6": "a11e96f71cfb54830bd3a26fc5f569a59330b66460e7cb9cb7e361894e99ed15",
+    "7": "1a695fedee761f5f66c4ca2eff8910a770a4c39785e3b8d65b1e20d867200157",
+    "8": "adad6b738201e2043dae5d14507fb54fe94292bd39561917021a96bba022a0da"
+  },
+  "readiness_report_sha256": "1fa1049c620014eb00a6ac099dce600b9f114a5a2d130c8a038087a00767968a",
+  "at_utc": "2026-10-21T00:26:09.016031Z",
+  "training_job": "7590052",
+  "source": "741872fe2f9e49f35d4deba9aba96caff26c51d4",
+  "recorded_updates": 8,
+  "complete154_original_components_at_every_observed_update": true,
+  "original_membership_kinds_and_weights_exact": true,
+  "assistant_audio_ownership_unchanged": true,
+  "native_teacher_partitions_exact": true,
+  "observed_unique_native_teachers": 49,
+  "native_valid_targets": 22992,
+  "native_spoken_targets": 1491,
+  "all8_and49_complete": true,
+  "restore_approved": false,
+  "behavior_approved": false,
+  "subset_accepted": false,
+  "schema": "dl-native-stream49-complete-eight-update-exposure-review-v1",
+  "audit_scope": "Actual recorded optimizer-step receipts compared against complete independently approved readiness inventory",
+  "complete_original_microbatches": 1232,
+  "checkpoint_and_full_state_preserved": true,
+  "critical_backup_verification": {
+    "at_utc": "2026-10-21T00:26:04.720070+00:00",
+    "training_job": "7590052",
+    "files": 14,
+    "bytes": 617998753,
+    "all_size_and_sha256_match": true,
+    "failed": [],
+    "remote_inventory_unchanged_after_transfer": true,
+    "full_restore_or_native_quality_approval": false
+  },
+  "checkpoint_sha256": "7bbb2e9f1822cb43db50f6ead7c14d510e7c280d520cc7e1436dced6edbcfeb5",
+  "training_state_sha256": "6a9fc6cb0949d1562f654af74cb6e86a827a0214a486f869e7bd92b1ae0b63b4",
+  "fresh_state_restoration_passed": false,
+  "native_behavior_qualified": false,
+  "candidate_adopted": false,
+  "extension_authorized": false,
+  "fresh20_authorized": false,
+  "independent_audit_operator_sha256": "a06f2e561b9af4f278fc44a3d520ec9a02b7b38e110401f28fd1567caaf36a47",
+  "independent_cpu_state_inspection": {
+    "schema": "dl-native-stream49-postfit-cpu-state-audit-v2",
+    "passed": true,
+    "at_utc": "2026-10-21T00:31:13.260630+00:00",
+    "training_job": "7590052",
+    "training_source": "741872fe2f9e49f35d4deba9aba96caff26c51d4",
+    "allocation_job": "7589159",
+    "step": "3",
+    "gpu_used": false,
+    "cuda_initialized": false,
+    "checkpoint_sha256": "7bbb2e9f1822cb43db50f6ead7c14d510e7c280d520cc7e1436dced6edbcfeb5",
+    "training_state_sha256": "6a9fc6cb0949d1562f654af74cb6e86a827a0214a486f869e7bd92b1ae0b63b4",
+    "parent_state_sha256": "b5e4320fba68a0b624a7be61778def8e6238517272637324824126ccaa1c6785",
+    "completed_stage_updates": 8,
+    "parent_adam_clocks": [
+      520
+    ],
+    "saved_adam_clocks": [
+      528
+    ],
+    "learning_rate": 2e-07,
+    "parameter_tensors": 26,
+    "checkpoint_matches_all_saved_adapter_tensors": true,
+    "all_optimizer_moments_present_and_finite": true,
+    "all26_optimizer_state_keysets_and_moment_shapes_and_dtypes_verified": true,
+    "nonnegative_second_moments": true,
+    "python_numpy_torch_cpu_cuda_rng_present": true,
+    "fresh_state_restoration_or_native_behavior_approved": false,
+    "report_sha256": "f85886b2605d56e333feb30ceeabd7ef528037c1c7d19419e53497ab011fef25",
+    "local_backup_verification": {
+      "at_utc": "2026-10-21T00:32:02.016532+00:00",
+      "files": 1,
+      "bytes": 1101,
+      "all_size_and_sha256_match": true,
+      "failed": []
+    }
+  },
+  "prior_cpu_state_inspection": {
+    "schema": "dl-native-stream49-postfit-cpu-state-audit-v1",
+    "passed": true,
+    "at_utc": "2026-10-21T00:28:00.277409+00:00",
+    "training_job": "7590052",
+    "training_source": "741872fe2f9e49f35d4deba9aba96caff26c51d4",
+    "allocation_job": "7589159",
+    "step": "2",
+    "gpu_used": false,
+    "cuda_initialized": false,
+    "checkpoint_sha256": "7bbb2e9f1822cb43db50f6ead7c14d510e7c280d520cc7e1436dced6edbcfeb5",
+    "training_state_sha256": "6a9fc6cb0949d1562f654af74cb6e86a827a0214a486f869e7bd92b1ae0b63b4",
+    "parent_state_sha256": "b5e4320fba68a0b624a7be61778def8e6238517272637324824126ccaa1c6785",
+    "completed_stage_updates": 8,
+    "parent_adam_clocks": [
+      520
+    ],
+    "saved_adam_clocks": [
+      528
+    ],
+    "learning_rate": 2e-07,
+    "parameter_tensors": 26,
+    "checkpoint_matches_all_saved_adapter_tensors": true,
+    "all_optimizer_moments_present_and_finite": true,
+    "python_numpy_torch_cpu_cuda_rng_present": true,
+    "fresh_state_restoration_or_native_behavior_approved": false,
+    "report_sha256": "7577f3f9614676b5ec4d04b37e291532927d5c2043abe4d12964e85676c3b676",
+    "local_backup_verification": {
+      "at_utc": "2026-10-21T00:28:37.569964+00:00",
+      "files": 1,
+      "bytes": 984,
+      "all_size_and_sha256_match": true,
+      "failed": []
+    }
+  }
+}

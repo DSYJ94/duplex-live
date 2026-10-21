@@ -1,3 +1,24 @@
+# LOCAL status — all8 trained/all49 exposed; full restore and behavior pending (21Oct00:29:59UTC)
+
+LOCAL remains sole executor while owner is away; CLOUD read-only. Running payload
+741872fe2f9e49f35d4deba9aba96caff26c51d4: TRAIN7590052 has completed all8 optimizer
+updates, all154 original components per update plus complete49 native auxiliary.
+Independent exposure audit confirms22992 native target calls/1491 spoken targets.
+Stable checkpoint/fullstate/data/reference/approval backup VERIFIED14files617998753B.
+Independent CPU state inspection verifies all26 adapters, complete finite Adam
+moments/clocks520→528 at2e-7 and complete RNG presence. These are saved-artifact
+checks: full fresh-process GPU restore of original28/acoustic49/native49 plus
+optimizer/RNG remains pending. TRAIN and CPUwatcher7589159 remain active; existing
+watcher alone submits native10/speech after complete gates. Do not restart/duplicate.
+Native and whole-system remain UNQUALIFIED. No extension/adoption/fresh20 from losses
+or subsets. Exact hashes/jobs/backups and next action: newest HANDOFF.md entry and
+docs/NATIVE-STREAM49-TRAINING-EXPOSURE-REVIEW-2026-10-21.json. Certificate21Oct10:31:51UTC;
+allocation21Oct08:56:32UTC. Old Mac source backup PARTIAL; scoped union25261 verified
+files. No cloud GPU purchase/Qwen fallback. Existing runtime/sampler/thresholds and
+all old data/receipts/retention losses preserved.
+
+---
+
 # LOCAL overnight — complete49 readinessPASS; TRAIN7590052 RUNNING (20Oct23:45UTC)
 
 Immutable payload/watcher741872fe2f9e49f35d4deba9aba96caff26c51d4. Complete readiness

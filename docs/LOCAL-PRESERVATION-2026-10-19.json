@@ -1,7 +1,7 @@
 {
-  "at_utc": "2026-10-21T00:06:48.074421+00:00",
-  "unique_scoped_artifact_files": 25245,
-  "unique_scoped_artifact_bytes": 28527702727,
+  "at_utc": "2026-10-21T00:32:34.156223+00:00",
+  "unique_scoped_artifact_files": 25261,
+  "unique_scoped_artifact_bytes": 29145703565,
   "inventory_conflicts": [],
   "inventories": [
     {
@@ -779,6 +779,27 @@
       "sha256": "1c8cbbf4a9f54e44fec74fb998f5687706969b072f14c5f71c775dc022770324",
       "files": 3,
       "bytes": 77664,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native-stream49-7590052-critical-early-inventory.json",
+      "sha256": "48b2304c0aa0ed07ed200e4338725cfc45acb723ea9b5c34ad5d30f422427106",
+      "files": 14,
+      "bytes": 617998753,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native-stream49-state-cpu-audit-7590052-inventory.json",
+      "sha256": "f0ce11af4c0e457dadf96e2510e55b40c77340c746dab7121a183e1e6d55f6d3",
+      "files": 1,
+      "bytes": 984,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native-stream49-state-cpu-audit-7590052-v2-inventory.json",
+      "sha256": "c57f0fc179f9e2b6aa0e66e1fcd32c44a03778a8aba8dfc181a39174021e4bd0",
+      "files": 1,
+      "bytes": 1101,
       "missing_roots": []
     }
   ],
@@ -2222,6 +2243,59 @@
       "first_stream_teacher_count": 7,
       "checkpoint_or_restore_complete": false,
       "original_training_source_unchanged": true
+    },
+    "complete_eight_update_exposure_review": {
+      "path": "docs/NATIVE-STREAM49-TRAINING-EXPOSURE-REVIEW-2026-10-21.json",
+      "sha256": "a9cabc98d9d8d2cd7084aead2a6d2152bfda73cfeb21c177d83e92103b0db0de",
+      "all8_and49_complete": true,
+      "restore_or_behavior_approval": false
+    },
+    "stable_early_critical_backup": {
+      "at_utc": "2026-10-21T00:26:04.720070+00:00",
+      "training_job": "7590052",
+      "files": 14,
+      "bytes": 617998753,
+      "all_size_and_sha256_match": true,
+      "failed": [],
+      "remote_inventory_unchanged_after_transfer": true,
+      "full_restore_or_native_quality_approval": false
+    },
+    "independent_cpu_state_inspection": {
+      "schema": "dl-native-stream49-postfit-cpu-state-audit-v2",
+      "passed": true,
+      "at_utc": "2026-10-21T00:31:13.260630+00:00",
+      "training_job": "7590052",
+      "training_source": "741872fe2f9e49f35d4deba9aba96caff26c51d4",
+      "allocation_job": "7589159",
+      "step": "3",
+      "gpu_used": false,
+      "cuda_initialized": false,
+      "checkpoint_sha256": "7bbb2e9f1822cb43db50f6ead7c14d510e7c280d520cc7e1436dced6edbcfeb5",
+      "training_state_sha256": "6a9fc6cb0949d1562f654af74cb6e86a827a0214a486f869e7bd92b1ae0b63b4",
+      "parent_state_sha256": "b5e4320fba68a0b624a7be61778def8e6238517272637324824126ccaa1c6785",
+      "completed_stage_updates": 8,
+      "parent_adam_clocks": [
+        520
+      ],
+      "saved_adam_clocks": [
+        528
+      ],
+      "learning_rate": 2e-07,
+      "parameter_tensors": 26,
+      "checkpoint_matches_all_saved_adapter_tensors": true,
+      "all_optimizer_moments_present_and_finite": true,
+      "all26_optimizer_state_keysets_and_moment_shapes_and_dtypes_verified": true,
+      "nonnegative_second_moments": true,
+      "python_numpy_torch_cpu_cuda_rng_present": true,
+      "fresh_state_restoration_or_native_behavior_approved": false,
+      "report_sha256": "f85886b2605d56e333feb30ceeabd7ef528037c1c7d19419e53497ab011fef25",
+      "local_backup_verification": {
+        "at_utc": "2026-10-21T00:32:02.016532+00:00",
+        "files": 1,
+        "bytes": 1101,
+        "all_size_and_sha256_match": true,
+        "failed": []
+      }
     }
   },
   "local_ssh_certificate_current": {
