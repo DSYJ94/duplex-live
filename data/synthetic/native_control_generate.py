@@ -10,6 +10,7 @@ import json
 import os
 from pathlib import Path
 import re
+import shutil
 import subprocess
 
 from data.synthetic.native_control_repair import build, validate
@@ -18,14 +19,60 @@ from data.synthetic.recovery_curriculum import MODEL, synthesize
 from evals.native_control_teacher import collection_lock, local_key
 
 
-def collect(plan_path, out, key, lock, *, generate=synthesize):
+def source_tasks(plan):
+    return [dict(case=scene['id'], index=i, role=turn['role'], text=turn['text'],
+                 voice=scene['user_voice'] if turn['role'] == 'user' else scene['assistant_voice'])
+            for scene in plan['cases'] for i, turn in enumerate(scene['turns'])]
+
+
+def retained_source(parent, plan_path, tasks):
+    """Revalidate original bytes before retaining any raw clip in a repair."""
+    ledger = json.loads((parent / 'generation.json').read_text())
+    if (ledger['status'] != 'failed_preserved_unapproved' or ledger['training_approved'] is not False
+            or ledger['plan_sha256'] != sha256(plan_path)
+            or ledger['speech_helper_sha256'] != sha256(Path('data/synthetic/recovery_curriculum.py'))):
+        raise ValueError('Require the exact preserved failed source version')
+    content = subprocess.check_output(['git', 'show', ledger['source_commit'] + ':data/synthetic/native_control_generate.py'])
+    if __import__('hashlib').sha256(content).hexdigest() != ledger['implementation_sha256']:
+        raise ValueError('Parent collection lacks immutable source provenance')
+    expected = {f'clips/{t["case"]}/{t["index"]:02d}_{t["role"]}.wav': t for t in tasks}
+    retained, seen = [], set()
+    for row in ledger['clips']:
+        name = row['path']
+        if name not in expected or name in seen:
+            raise ValueError('Duplicate or out-of-plan retained source')
+        _, measured = load_clip(parent / name, expected[name])
+        if (any(row[k] != v for k, v in expected[name].items())
+                or any(row[k] != v for k, v in measured.items())):
+            raise ValueError('Retained raw source words, voice, receipt or audio changed')
+        retained.append(row)
+        seen.add(name)
+    # This repair is deliberately narrow: one measured saturated waveform and
+    # missing outputs. Never reroll an undiagnosed generated recording.
+    failed = 'clips/native-control3-train-034/02_user.wav'
+    extra = {str(p.relative_to(parent)) for p in (parent / 'clips').rglob('*.wav')} - seen
+    diagnosis = parent / 'failed-waveform-diagnostic.json'
+    evidence = json.loads(diagnosis.read_text())
+    import numpy as np
+    import soundfile as sf
+    pcm, _ = sf.read(parent / failed)
+    if (extra != {failed} or evidence['wav_sha256'] != sha256(parent / failed)
+            or evidence['peak'] != float(np.abs(pcm).max())
+            or evidence['samples_above_limit'] != int(np.sum(np.abs(pcm) > .995))
+            or evidence['peak'] <= .995 or evidence['samples_above_limit'] <= 0):
+        raise ValueError('Only the diagnosed peak failure may replace an existing waveform')
+    return retained, dict(parent=str(parent), parent_generation_sha256=sha256(parent / 'generation.json'),
+                          diagnosis_sha256=sha256(diagnosis), diagnosed_replacement=failed,
+                          original_failed_wav_sha256=evidence['wav_sha256'],
+                          retained_clips=len(retained), retained_audio_and_receipts_unchanged=True)
+
+
+def collect(plan_path, out, key, lock, *, generate=synthesize, repair_source=None):
     plan = json.loads(plan_path.read_text())
     coverage = validate(plan)
     if plan != build():
         raise ValueError('Require the exact committed complete40 source plan')
-    tasks = [dict(case=scene['id'], index=i, role=turn['role'], text=turn['text'],
-                  voice=scene['user_voice'] if turn['role'] == 'user' else scene['assistant_voice'])
-             for scene in plan['cases'] for i, turn in enumerate(scene['turns'])]
+    tasks = source_tasks(plan)
     if len(tasks) != 168 or sum(len(t['text']) for t in tasks) != 7953:
         raise ValueError('Unexpected authorized request bound')
     with collection_lock(lock):
@@ -44,6 +91,26 @@ def collect(plan_path, out, key, lock, *, generate=synthesize):
                      owner_conversations_used=False, credentials_exported=False,
                      gain_changed=False, training_approved=False,
                      status='collecting_unapproved', clips=[], artifacts={})
+        instructions = {}
+        pending = tasks
+        if repair_source is not None:
+            retained, provenance = retained_source(repair_source, plan_path, tasks)
+            for row in retained:
+                original = repair_source / row['path']
+                for source in (original, original.with_suffix('.receipt.json')):
+                    target = out / source.relative_to(repair_source)
+                    target.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copyfile(source, target)
+            state['clips'] = list(retained)
+            state['repair_provenance'] = provenance
+            copied = {r['path'] for r in retained}
+            pending = [t for t in tasks if f'clips/{t["case"]}/{t["index"]:02d}_{t["role"]}.wav' not in copied]
+            pending.sort(key=lambda t: (t['case'], t['index']) != ('native-control3-train-034', 2))
+            instructions[('native-control3-train-034', 2)] = (
+                'Read exactly the supplied single word once, with no repetition or continuation. '
+                'End the utterance immediately after that word. Use natural conversational delivery.')
+        state['maximum_new_clips'] = len(pending)
+        state['maximum_new_characters'] = sum(len(t['text']) for t in pending)
 
         def persist():
             state['artifacts'] = {str(p.relative_to(out)): sha256(p)
@@ -53,7 +120,11 @@ def collect(plan_path, out, key, lock, *, generate=synthesize):
         def one(task):
             path = out / 'clips' / task['case'] / f'{task["index"]:02d}_{task["role"]}.wav'
             path.parent.mkdir(parents=True, exist_ok=True)
-            generate(task['text'], task['voice'], path)
+            instruction = instructions.get((task['case'], task['index']))
+            if instruction:
+                generate(task['text'], task['voice'], path, instructions=instruction)
+            else:
+                generate(task['text'], task['voice'], path)
             _, receipt = load_clip(path, task)
             return dict(task, path=str(path.relative_to(out)), **receipt)
 
@@ -65,8 +136,9 @@ def collect(plan_path, out, key, lock, *, generate=synthesize):
             # Probe one actual request before scheduling two concurrently. The
             # helper retries only bounded transient transport failures, never words.
             with ThreadPoolExecutor(max_workers=2) as pool:
-                iterator = iter(tasks)
-                active = {pool.submit(one, next(iterator)): tasks[0]}
+                iterator = iter(pending)
+                first = next(iterator, None)
+                active = {pool.submit(one, first): first} if first else {}
                 while active:
                     done, _ = wait(active, return_when=FIRST_COMPLETED)
                     for future in done:
@@ -111,10 +183,12 @@ def main():
     parser.add_argument('--plan', type=Path, required=True)
     parser.add_argument('--out', type=Path, required=True)
     parser.add_argument('--env-file', type=Path, required=True)
+    parser.add_argument('--repair-source', type=Path,
+                        help='Retain verified originals and repair only the diagnosed TRAIN peak failure/missing clips')
     parser.add_argument('--lock', type=Path,
                         default=Path('runs/local-migration-20261021/.private/control3-capture.lock'))
     args = parser.parse_args()
-    result = collect(args.plan, args.out, local_key(args.env_file), args.lock)
+    result = collect(args.plan, args.out, local_key(args.env_file), args.lock, repair_source=args.repair_source)
     print(json.dumps(dict(status=result['status'], clips=len(result['clips']), training_approved=False)))
 
 

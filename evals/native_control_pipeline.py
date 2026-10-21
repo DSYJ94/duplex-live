@@ -30,6 +30,17 @@ def generation_complete(generation, plan):
             or ledger['implementation_sha256'] != sha256(Path('data/synthetic/native_control_generate.py'))
             or ledger['speech_helper_sha256'] != sha256(Path('data/synthetic/recovery_curriculum.py'))):
         raise ValueError('Existing source generation is failed, incomplete or changed; no downstream submissions')
+    if 'repair_provenance' in ledger:
+        from data.synthetic.native_control_generate import retained_source, source_tasks
+        parent = Path(ledger['repair_provenance']['parent'])
+        retained, provenance = retained_source(parent, plan, source_tasks(json.loads(plan.read_text())))
+        if provenance != ledger['repair_provenance']:
+            raise ValueError('Changed failed-source repair provenance')
+        for row in retained:
+            wav = Path(row['path'])
+            if (sha256(generation / wav) != row['waveform_sha256']
+                    or sha256(generation / wav.with_suffix('.receipt.json')) != row['receipt_sha256']):
+                raise ValueError('A retained original source clip or receipt changed in the repair')
     return True
 
 
