@@ -1,3 +1,23 @@
+# LOCAL — old-volume receipt recovery ACTIVE (21Oct15:23UTC)
+
+LOCAL sole executor; CLOUD read-only. Only active task Podvgp8bfskvrcotf is a
+singleH10080GB SecureEUR-IS-3 with oldvolume cyjzip53ap at/workspace, created
+15:19:04.173UTC,$3.99/h. Read-only receipt recovery; no training or model work.
+Image still pulling/extracting, SSH not yet available; do not create a duplicate.
+Independent Mac budget guardPID5453/session48266 is ARMED, hard deadline17:19:04UTC,
+retains volume. Terminate promptly once receipts retrieved and hash-checked.
+Exact receipt/status paths in execution JSON. Previous Pods/writers are terminal.
+
+Complete native archive remains verified on49yytzyoge EUR-IS-1 and Mac. Next:
+recover old migration receipts/logs, verify onMac+newvolume, stoprescuePod, retire
+oldvolume only after unique receipts safe. Then read fresh32GBGPU stock inEUR-IS-1
+and perform bounded native restore/voice proof with existing persistent runtime.
+No native10/full40 or quality adoption claimed; strict gates and original data
+unchanged. Preserve unrelated local edits. Remaining original$25 compute budget
+must cover every further rental; no concurrent newGPU before recovery cost known.
+
+---
+
 # LOCAL — verified backup complete; all task compute stopped (21Oct14:24UTC)
 
 LOCAL sole executor; CLOUD read-only. Main backup commitdf072a5 pushed; launcher/
