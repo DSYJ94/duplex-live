@@ -28,8 +28,8 @@ class ObserveOnlyBackend:
         return None
 
 
-def configure_cuda_headers():
-    """Expose installed toolkit headers to GCC without modifying any packages."""
+def configure_cuda_toolkit():
+    """Expose installed toolkit headers/assembler without changing packages."""
     include_dirs = [Path(p) for p in os.environ.get('CPATH', '').split(os.pathsep) if p]
     include_dirs += [Path(os.environ[p])/'include' for p in ('CUDA_HOME', 'CUDA_PATH')
                      if os.environ.get(p)]
@@ -40,7 +40,14 @@ def configure_cuda_headers():
     prior = os.environ.get('CPATH', '')
     if str(header.parent) not in prior.split(os.pathsep):
         os.environ['CPATH'] = str(header.parent)+(os.pathsep+prior if prior else '')
+    assembler = Path(os.environ.get('TRITON_PTXAS_PATH',
+                                   str(header.parent.parent/'bin/ptxas')))
+    if not assembler.is_file() or not os.access(assembler, os.X_OK):
+        raise RuntimeError('Installed CUDA assembler ptxas was not found')
+    os.environ['TRITON_PTXAS_PATH'] = str(assembler)
     return {'header': str(header), 'header_sha256': hashlib.sha256(header.read_bytes()).hexdigest(),
+            'assembler': str(assembler),
+            'assembler_sha256': hashlib.sha256(assembler.read_bytes()).hexdigest(),
             'packages_changed': False}
 
 
@@ -60,12 +67,20 @@ def main():
     os.environ['TRITON_LIBCUDA_PATH'] = subprocess.check_output(
         [sys.executable, '-m', 'evals.cuda_linker_path', '--out',
          str(args.receipt.parent/'audition-driver')], text=True).strip()
-    compiler = configure_cuda_headers()
+    compiler = configure_cuda_toolkit()
     # Exercise the exact driver compiler before loading 16GB of model weights.
     from triton.backends.nvidia.driver import CudaUtils
     CudaUtils()
     compiler['actual_triton_driver_compile_passed'] = True
+    import triton
+    compiler['assembler_cuda_version'] = triton.knobs.nvidia.ptxas.version
     if args.compiler_check_only:
+        import torch
+        value = torch.ones(8, device='cuda', dtype=torch.bfloat16)
+        result = torch.compile(lambda x: x + 1, fullgraph=True)(value)
+        torch.cuda.synchronize()
+        assert torch.equal(result, torch.full_like(value, 2))
+        compiler['actual_compiled_bf16_gpu_kernel_passed'] = True
         with args.receipt.open('x') as stream:
             json.dump({'schema': 'dl-native-cuda-compiler-check-v1', **compiler}, stream, indent=2)
         print(json.dumps(compiler))
