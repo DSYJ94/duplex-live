@@ -1,3 +1,37 @@
+# LOCAL — execution BLOCKED after third unchanged quota audit (21Oct01:54:58UTC)
+
+Third consecutive goal-turn audit rejects even1CPU/1minute test-only allocation with
+AssocGrpCPUMinutesLimit. Actual queue empty; readiness7589157 COMPLETED0:0,
+TRAIN7590052 COMPLETED0:0, watcher7589159 FAILED1:0 at rejected native submission.
+No accepted native10/speech job exists. No active process can progress model work;
+remaining native10/full speech and fresh40 qualification require external project
+CPU-minute allowance restoration. All terminal preservation and necessary source
+failure-handling fixes are complete. Goal will be marked BLOCKED after this handoff
+is pushed; it is not complete. A later user resume starts a fresh blocked audit.
+
+Numerical training/restoration PASS and every verified backup remain unchanged:
+checkpoint7bbb2e9..., fullstate6a9fc6c..., restore88056cfa...; full exact original28/
+acoustic49/native49 plus optimizer/all RNG, freshPID123537 vs116298. Whole scoped
+25275files29157222593B freshly hash-verified, all45 terminal files backed, original
+submission receipt retained. Full Mac source backup PARTIAL. Native behavior and
+adoption remain UNQUALIFIED/UNTESTED; all ordinary4/4/full10/fresh gates stay intact.
+
+LOCAL ownership persists until explicit handback; CLOUD read-only. Stop submissions,
+never restart the old frozen canonical or repeat training. After allowance is restored,
+inspect live Slurm and create a NEW versioned execution receipt for complete10/speech
+from locked candidate7590052. No account/QOS bypass, cloud purchase or Qwen fallback.
+Payload741872f, controller repair d08ef7a (7 local/actualPython3.6 tests PASS), shared
+state before this docs commit e9b005afae1b40dc47d84e3a6477ea70746e7f1e.
+
+Only the previously authorized local keep-awake Python70660/caffeinate70661 remain
+live; they cannot submit or modify cluster jobs and expire at08:56:32UTC. Backup
+observer50287 exited successfully. The private SSH master idles out after600s.
+Certificate remains valid to10:31:51UTC; GPU reservation ends08:56:32UTC. The blocker
+is CPU-minute allowance, so certificate renewal does not resolve it. Exact evidence:
+docs/NATIVE-STREAM49-QUOTA-BLOCK-2026-10-21.json and continuation prompt below.
+
+---
+
 # LOCAL quota recheck — unchanged; no jobs (21Oct01:52:31UTC)
 
 Second consecutive goal-turn audit: current1CPU/1minute sbatch --test-only still

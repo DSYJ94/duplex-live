@@ -1,3 +1,7 @@
+The goal is blocked after three consecutive confirmed CPU-minute quota denials.
+A later user resume starts a fresh blocked audit; do not immediately reuse the old
+counter. Local keep-awake is allocation-bounded and cannot submit jobs.
+
 Read newest HANDOFF.md, docs/NATIVE-STREAM49-QUOTA-BLOCK-2026-10-21.json and the
 complete training/exposure review. LOCAL remains sole executor until the owner
 explicitly hands back; CLOUD must stay read-only meanwhile. Candidate7590052 has

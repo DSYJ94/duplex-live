@@ -1,3 +1,13 @@
+21Oct01:54:58UTC — Third unchanged quota audit: oneCPU/oneMinute test-only still
+rejects AssocGrpCPUMinutesLimit; actual queue empty, all original jobs terminal.
+Goal is being marked BLOCKED after handoff push. Training/full independent restore
+and backups PASS; native10/speech/fresh qualification UNTESTED, no adoption.
+External CPU-minute allowance restoration is required. No retries, new submissions,
+cloud purchase or relaxed gate. LOCAL ownership persists until explicit handback;
+CLOUD read-only. Newest HANDOFF.md and quota JSON contain exact proof and resume steps.
+
+---
+
 21Oct01:52:31UTC — LOCAL second quota audit unchanged: even1CPU/1minute test-only
 rejects AssocGrpCPUMinutesLimit, actual queue empty. Training/restoration and verified
 backups PASS; native evaluation/fresh qualification remain unrun. No job submitted,

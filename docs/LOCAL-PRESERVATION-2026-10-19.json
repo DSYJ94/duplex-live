@@ -2280,7 +2280,9 @@
       "active": true,
       "can_submit_or_modify_cluster_jobs": false,
       "exec_session": 76078,
-      "assertion_independently_verified": true
+      "assertion_independently_verified": true,
+      "still_live_at_final_block_audit": true,
+      "can_submit_jobs": false
     },
     "latest_progress_observation": {
       "at_utc": "2026-10-21T01:08:53.971533Z",
@@ -2457,7 +2459,7 @@
     "execution_blocker": "AssocGrpCPUMinutesLimit",
     "quota_block_review": {
       "path": "docs/NATIVE-STREAM49-QUOTA-BLOCK-2026-10-21.json",
-      "sha256": "18cf49603996b037a0960fee340a056227a058139351bdbbd90f702a407d5574"
+      "sha256": "69377eb726ef8da18b08a4f2897b08d313889d0a0bf123fc74aeae18beed8b4d"
     },
     "all_terminal_artifacts_backup_verified": {
       "at_utc": "2026-10-21T01:30:19.089637+00:00",
@@ -2468,7 +2470,7 @@
       "missing_roots": []
     },
     "latest_quota_recheck": {
-      "at_utc": "2026-10-21T01:52:31.881616Z",
+      "at_utc": "2026-10-21T01:54:58.377249Z",
       "command": [
         "sbatch",
         "--test-only",
@@ -2485,8 +2487,10 @@
       "stdout": "",
       "stderr": "sbatch: error: AssocGrpCPUMinutesLimit\nallocation failure: Job violates accounting/QOS policy (job submit limit, user's size and/or time limits)\n",
       "no_job_submitted": true,
-      "current_queue": ""
-    }
+      "current_queue": "",
+      "original_job_states": "7589157|COMPLETED|0:0\n7589159|FAILED|1:0\n7590052|COMPLETED|0:0\n"
+    },
+    "execution_status": "Blocked by externally enforced CPU-minute allowance; all Slurm jobs terminal"
   },
   "local_ssh_certificate_current": {
     "observed_utc": "2026-10-20T22:53:04.104897+00:00",
