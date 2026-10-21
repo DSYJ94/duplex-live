@@ -12,6 +12,7 @@ import json
 import os
 from pathlib import Path
 import sys
+import subprocess
 import tarfile
 import threading
 
@@ -156,13 +157,59 @@ def upload(args):
         multipart_chunksize=64*1024*1024, max_concurrency=2)
     lock = threading.Lock()
     complete = []
+    source_ready = set()
+    if args.source_pack_receipt:
+        expected = {r['name']: r for r in index['archives']}
+        for line in args.source_pack_receipt.read_text().splitlines():
+            row = json.loads(line)
+            if row['passed']:
+                assert row['sha256'] == expected[row['name']]['sha256']
+                assert row['bytes'] == expected[row['name']]['bytes']
+                source_ready.add(row['name'])
+
+    def signed_source_upload(spec, key):
+        created = client.create_multipart_upload(Bucket=args.bucket, Key=key)
+        upload_id = created['UploadId']
+        chunk = 64*1024*1024
+        parts = []
+        for offset in range(0, spec['bytes'], chunk):
+            number = len(parts)+1
+            url = client.generate_presigned_url('upload_part', Params={
+                'Bucket': args.bucket, 'Key': key, 'UploadId': upload_id,
+                'PartNumber': number}, ExpiresIn=3600, HttpMethod='PUT')
+            parts.append({'number': number, 'offset': offset,
+                          'bytes': min(chunk, spec['bytes']-offset), 'url': url})
+        # Capability URLs are scoped to one approved object part for one hour;
+        # no account key, signed URL or request payload is logged or saved.
+        payload = {'name': spec['name'], 'bytes': spec['bytes'],
+                   'bucket': args.bucket, 'parts': parts}
+        try:
+            proc = subprocess.run(['ssh', '-o', 'BatchMode=yes', '-o', 'ConnectTimeout=15',
+                '-o', 'ServerAliveInterval=15', '-o', 'ServerAliveCountMax=2',
+                'u6si.aip2.isambard', 'python3 '
+                '/projects/u6si/duplex-live/worktrees/migration-3044df2/'
+                'portable/context/source_archive_transfer.py upload'],
+                input=json.dumps(payload), capture_output=True, text=True, timeout=1800)
+            if proc.returncode:
+                raise RuntimeError('Source signed upload failed; exit '+str(proc.returncode))
+            result = json.loads(proc.stdout)
+            assert result['name'] == spec['name'] and result['all_signed_parts_uploaded']
+            assert [p['PartNumber'] for p in result['parts']] == list(range(1,len(parts)+1))
+            client.complete_multipart_upload(Bucket=args.bucket, Key=key,
+                UploadId=upload_id, MultipartUpload={'Parts': result['parts']})
+        except BaseException:
+            client.abort_multipart_upload(Bucket=args.bucket, Key=key, UploadId=upload_id)
+            raise
 
     def one(spec):
         path = args.archive_dir / spec['name']
         assert path.is_file() and path.stat().st_size == spec['bytes']
         assert digest(path) == spec['sha256']
         key = 'native-archive-v3/' + spec['name']
-        client.upload_file(str(path), args.bucket, key, Config=transfer)
+        if spec['name'] in source_ready:
+            signed_source_upload(spec, key)
+        else:
+            client.upload_file(str(path), args.bucket, key, Config=transfer)
         head = client.head_object(Bucket=args.bucket, Key=key)
         assert head['ContentLength'] == spec['bytes']
         response = client.get_object(Bucket=args.bucket, Key=key)
@@ -173,6 +220,8 @@ def upload(args):
         result = {'archive': spec['name'], 'object_key': key,
                   'archive_bytes': spec['bytes'], 'source_archive_sha256': spec['sha256'],
                   'files': len(spec['files']), 'symlinks': len(spec['symlinks']),
+                  'upload_source': 'isambard-single-object-signed-parts'
+                                   if spec['name'] in source_ready else 'local-mac',
                   'independent_s3_readback_all_member_hashes_passed': True,
                   'at_utc': datetime.datetime.now(datetime.timezone.utc).isoformat()}
         with lock:
@@ -232,6 +281,7 @@ def main():
             q.add_argument('--journal', type=Path, required=True)
             q.add_argument('--report', type=Path, required=True)
             q.add_argument('--workers', type=int, default=3)
+            q.add_argument('--source-pack-receipt', type=Path)
     args = p.parse_args()
     if args.command == 'pack':
         pack(args)
