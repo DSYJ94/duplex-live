@@ -13,7 +13,7 @@ from pathlib import Path
 
 from data.synthetic.native_control_render import sha256, validate_raw
 from evals.native_control_teacher import atomic_json, collection_lock, local_key
-from evals.native_control_teacher_quality import verify as verify_quality
+from evals.native_control_teacher_reaudit import verify as verify_quality
 from training.control.teacher_data import MODEL, request
 
 SYSTEM = (
