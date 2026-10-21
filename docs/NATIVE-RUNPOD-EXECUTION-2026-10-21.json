@@ -1,6 +1,6 @@
 {
   "schema": "dl-runpod-native-trial-status-v2",
-  "at_utc": "2026-10-21T12:01:39.543136+00:00",
+  "at_utc": "2026-10-21T17:18:52.060066+00:00",
   "executor": "LOCAL",
   "source_commit": "c8759473ca70d775c8b993795be5c2b6eee7cccd",
   "trial": {
@@ -49,10 +49,7 @@
     "tracked_original_receipt": "docs/NATIVE-RUNPOD-INDEPENDENT-STATE-RESTORE-2026-10-21.json"
   },
   "voice_audition": {
-    "usable_or_ready": false,
-    "last_run_pid": 4017,
-    "last_run_failed": "Triton linker missing libcuda.so linker-name",
-    "launcher_fix_committed": "c8759473ca70d775c8b993795be5c2b6eee7cccd",
+    "usable_or_ready": true,
     "fix_gpu_executed": true,
     "native_full_numerical_or_behavior_approved": false,
     "first_a100_attempt": {
@@ -82,7 +79,31 @@
       "actual_triton_driver_compile_passed": true,
       "assembler_cuda_version": "13.0",
       "actual_compiled_bf16_gpu_kernel_passed": true
-    }
+    },
+    "ready_log_observed": true,
+    "strict_published_lm_load": true,
+    "actual_external_synthetic_websocket_request_passed": true,
+    "browser_page_visually_verified": true,
+    "microphone_agent_accessed": false,
+    "external_backend_connected": false,
+    "voice_or_task_qualified": false,
+    "original_launch_receipt": "docs/NATIVE-RUNPOD-VOICE-LAUNCH-2026-10-21.json",
+    "original_synthetic_smoke_receipt": "docs/NATIVE-RUNPOD-VOICE-SMOKE-2026-10-21.json",
+    "sampled_audio_sha256": "808280c9eac76ea9b6d8054b51bea60f074bb760f33c56f2f21dbd9ed825937a",
+    "synthetic_audio_and_receipt_preserved_on_mac_and_volume": true,
+    "behavioral_diagnostic": {
+      "input_scene": "native2-train-008",
+      "split": "TRAIN seen sample, not heldout qualification",
+      "question": "All the towels are in the blue box. Where is my towel?",
+      "sampled_text": "Which project are you checking, the blue box is for? The blue box, I'm afraid, is empty. Should I check the red box instead? Which other project should we check next?",
+      "correct": false,
+      "reason": "Unnecessary project clarification and invented empty blue box contradict supplied ordinary fact",
+      "input_approved_training_data_unchanged": true,
+      "independent_asr_or_full_native_review_run": false
+    },
+    "historical_first_trial_pid": 4017,
+    "historical_first_trial_failure": "Triton linker missing libcuda.so linker-name",
+    "historical_first_driver_fix_commit": "c8759473ca70d775c8b993795be5c2b6eee7cccd"
   },
   "replacement_storage": {
     "owner_explicitly_approved_replacement_and_overlap": true,
@@ -138,8 +159,8 @@
     "fresh40_run": false,
     "adopted": false
   },
-  "progress_utc": "2026-10-21T16:53:43.629220+00:00",
-  "current_source": "5ea1547ada2bdca35bf4390cb2f4ee413c3115a2",
+  "progress_utc": "2026-10-21T17:18:52.060066+00:00",
+  "current_source": "86e9977375c67aad1fe0af6666bfda5a6e8717c1",
   "cpu_staging": {
     "schema": "dl-runpod-cpu-staging-execution-v1",
     "pod_id": "kgy1ygl8i5p1u5",
@@ -250,7 +271,8 @@
     },
     "status": "TERMINATED",
     "independent_get_after_delete": 404,
-    "original_receipt_retrieved": true
+    "original_receipt_retrieved": true,
+    "reported_gpu_disk_usd": 0.41080548241734505
   },
   "third_gpu_attempt": {
     "class": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
@@ -281,7 +303,7 @@
       "state": "RUNNING",
       "deadline_utc": "2026-10-21T17:28:42.087000+00:00",
       "network_volume_retained": "49yytzyoge",
-      "at_utc": "2026-10-21T16:53:30.291297+00:00",
+      "at_utc": "2026-10-21T17:18:33.905903+00:00",
       "pid": 9262
     },
     "direct_ssh": {
@@ -311,5 +333,44 @@
     "cuda": "13.0",
     "native_full_numerical_or_behavior_approved": false,
     "tracked_original_receipt": "docs/NATIVE-RUNPOD-A100-STATE-RESTORE-2026-10-21.json"
+  },
+  "owner_feedback": {
+    "at_utc": "2026-10-21T16:59:00Z",
+    "reported_issue": "Does not stay quiet until the requested keyword",
+    "owner_microphone_or_transcripts_recorded": false,
+    "server_log_exceptions_after_owner_trial": false,
+    "reconstruction_limit": "Exact owner exchange unavailable because audition intentionally does not persist conversations",
+    "diagnostic": "Approved native2-train-014 user stem; exact hash pinned, native unforced output frame events recorded"
+  },
+  "keyword_control_diagnostic": {
+    "owner_report": "Continued speech and keyword clarification during a requested quiet-until-cue interval",
+    "owner_audio_recorded": false,
+    "server_exceptions_observed": false,
+    "cases_completed": 9,
+    "transport_passed": 9,
+    "quiet_text_constraints_passed": 0,
+    "variants": [
+      "original",
+      "project-clarification clause scoped only",
+      "generic silence rule appended only"
+    ],
+    "independent_asr_run": false,
+    "full_native_qualification": false,
+    "diagnostic_source_commit": "86e9977375c67aad1fe0af6666bfda5a6e8717c1",
+    "review": "docs/NATIVE-KEYWORD-CONTROL-DIAGNOSTIC-2026-10-21.json",
+    "next_proposal": "docs/NATIVE-KEYWORD-CONTROL-NEXT-2026-10-21.md",
+    "all51_artifacts_verified_on_mac_and_volume": {
+      "schema": "dl-native-keyword-artifact-verification-v1",
+      "at_utc": "2026-10-21T17:17:40.950094+00:00",
+      "files": 51,
+      "bytes": 24427906,
+      "manifest_sha256": "416b119d2439e5bce369d285ec52d5333219f010785ed3a6e796273825feada3",
+      "failed": [],
+      "all_destination_hashes_passed": true,
+      "owner_audio_or_credentials_included": false
+    },
+    "default_live_prompt_changed": false,
+    "no_keyword_output_gate_added": true,
+    "reported_cue": "Geronimo"
   }
 }

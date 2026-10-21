@@ -1,0 +1,67 @@
+{
+  "schema": "dl-native-voice-audition-v1",
+  "model_job": "context-training-proof-7590052",
+  "launcher_commit": "909c547e7c65269a1bcc07d9daecb52c0a5a9501",
+  "adapter": {
+    "proof": "/projects/u6si/duplex-live/runs/context-training-proof-7590052",
+    "checkpoint_sha256": "7bbb2e9f1822cb43db50f6ead7c14d510e7c280d520cc7e1436dced6edbcfeb5",
+    "disabled": false,
+    "zero": false,
+    "installed_before_native_graphs": true,
+    "voice_codes_sha256": "2085b3d58d2f2b20042e2e57a60206dd43c3028173cd9140e83d6c7b5136404d",
+    "voice_reference_sha256": "6d5c88747333eddf3efd65d1a33973b48b0185bd119bcee16ebaae441c6e28e1",
+    "quality_qualified": false,
+    "native_protocol": {
+      "name": "bootstrap-preserve-provided-v1",
+      "code_sha256": "bbf0699025b40be9376491334f787b488fe04a9b6262c2509f44888121250320",
+      "attention_backend": "math"
+    }
+  },
+  "runtime": {
+    "torch": "2.9.0a0+145a3a7bda.nv25.10",
+    "cuda": "13.0",
+    "device": "NVIDIA A100-SXM4-80GB",
+    "capability": [
+      8,
+      0
+    ],
+    "cudnn": true,
+    "cudnn_sdp": false,
+    "flash_sdp": false,
+    "mem_efficient_sdp": false,
+    "math_sdp": true,
+    "matmul_tf32": false,
+    "cudnn_tf32": true,
+    "bf16_reduction": true,
+    "float32_precision": "highest",
+    "deterministic_algorithms": false,
+    "cudnn_deterministic": false,
+    "cudnn_benchmark": false,
+    "threads": 8,
+    "parameter_dtypes": {
+      "torch.bfloat16": 475,
+      "torch.float32": 26
+    },
+    "environment": {
+      "NO_CUDA_GRAPH": null,
+      "NO_TORCH_COMPILE": null,
+      "TORCH_CUDNN_SDPA_ENABLED": null,
+      "CUBLAS_WORKSPACE_CONFIG": null
+    }
+  },
+  "cuda_compiler": {
+    "header": "/usr/local/cuda/include/cuda.h",
+    "header_sha256": "64025f81a9d6d2b10e9e11654f3523e5b046d01b883f0b9ca474e463274b80d4",
+    "assembler": "/usr/local/cuda/bin/ptxas",
+    "assembler_sha256": "daba837a68265cae38c832d13399b61dab811891de9b8914defddef143b849f2",
+    "packages_changed": false,
+    "actual_triton_driver_compile_passed": true,
+    "assembler_cuda_version": "13.0"
+  },
+  "strict_published_lm_load": true,
+  "word_or_audio_forcing": false,
+  "voice_codes_from_verified_proof": true,
+  "external_backend_connected": false,
+  "conversation_audio_or_transcripts_saved": false,
+  "native_full_numerical_or_behavior_approved": false
+}

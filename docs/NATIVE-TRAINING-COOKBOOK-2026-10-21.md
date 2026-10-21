@@ -162,3 +162,23 @@ verified onMac and newvolume; oldvolume retired. Ongoing storage is single100GB
 49yytzyoge/$7month. Original H100 restore receipt now committed in
 [NATIVE-RUNPOD-INDEPENDENT-STATE-RESTORE-2026-10-21.json](NATIVE-RUNPOD-INDEPENDENT-STATE-RESTORE-2026-10-21.json).
 A bounded1A100 voice trial is booting; see newest handoff for actual readiness.
+
+
+21Oct16:57UTC: actual native audition is live onMac via http://127.0.0.1:8765,
+automatic stop17:28UTC/18:28London. Full strict model/adapter/voice load and302frame
+synthetic streaming PASS after installed CUDA header/assembler path repairs,
+with original BF16/native clock/sampling preserved. Source909c547; no newupdates.
+The seenTRAIN008 response is WRONG (invented emptybox), so this is experimental,
+not qualification/adoption. External tools disconnected, no owner recordings saved.
+Exact original launch and sample result:
+[NATIVE-RUNPOD-VOICE-LAUNCH-2026-10-21.json](NATIVE-RUNPOD-VOICE-LAUNCH-2026-10-21.json),
+[NATIVE-RUNPOD-VOICE-SMOKE-2026-10-21.json](NATIVE-RUNPOD-VOICE-SMOKE-2026-10-21.json).
+
+
+21Oct17:20UTC: the owner reported broken silence-until-keyword control. Complete
+synthetic diagnostics reproduce0/9 quiet-text passes, despite9/9 working streams;
+two controlled prompt changes did not solve it. This is instruction-following/
+state-tracking failure and blocks adoption/unchanged extension. See the exact
+[diagnostic review](NATIVE-KEYWORD-CONTROL-DIAGNOSTIC-2026-10-21.json) and
+[new-stage proposal](NATIVE-KEYWORD-CONTROL-NEXT-2026-10-21.md). No new training or
+masking workaround has been performed. All failures and51artifact hashes preserved.

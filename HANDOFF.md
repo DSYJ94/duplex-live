@@ -1,3 +1,90 @@
+# LOCAL — keyword silence failure reproduced9/9; repair proposal ready (21Oct17:20UTC)
+
+LOCAL sole executor; CLOUD read-only. No new training, teacher collection, acceptance,
+loss/data repair or adoption. Sole Podi20euy4x58fo1m/A10080GB remains on$1.79/h with
+voicePID18959; hardstop17:28:42UTC/18:28London TODAY. Guard9262/session22701 ARMED;
+never extend it blindly. Tunnel82490 serves http://127.0.0.1:8765. Original live
+prompt remains unchanged. Source launcher909c547; frozen payload741872f unchanged.
+
+Owner reported speech/keyword questions after a silence-until-Geronimo request. No server exception observed. Owner audio/transcripts
+were NOT recorded. New author-created LOCALmacOSspeech probes used no speech API
+or owner recordings. Entire empty/sandboxedv1 input collection rejected BEFORE
+any model request; complete nonemptyv2 (all3stems peak<.995) preserved unchanged.
+
+All9 diagnostic requests returned sampled audio successfully, but0/9 native text
+quiet constraints passed: originalprompt, scoped project-clarification sentence,
+and appended generic silence rule, each acrossReady-no-cue/Geronimo-no-cue/later
+Geronimo+question. Acknowledgment/clarification duringquiet is FAIL. No output mute,
+keyword gate, forced words/audio, package/model/precision/clock changes. Prompt
+variants were per-session only, using documented context protocol (no explicitack).
+Live-sessionRNG was NOT reseeded; no canonical statistical/full speech qualification
+claimed. The original seenTRAIN014Ready sample separately stayed near-silent in its
+interior quiet interval; generalization across wording/voice is brittle, not solely
+a novel-keyword issue. No prompt variant is adopted.
+
+Evidence: docs/NATIVE-KEYWORD-CONTROL-DIAGNOSTIC-2026-10-21.json.
+Concrete next work: docs/NATIVE-KEYWORD-CONTROL-NEXT-2026-10-21.md.
+All51 synthetic diagnostic files24,427,906B verified sourceMac→persistentvolume,
+manifest416b119d2439e5bce369d285ec52d5333219f010785ed3a6e796273825feada3;
+original destination receipt committed. Includes all failed variants and valid/
+rejected input collections. No passing subset selected; no owner data copied.
+Original failed warmupv4/v5logs remain onvolume. Core archive67.764GB and all25old
+unique receipts verified Mac+Runpod; oldvolume retired; sole100GB49yytzyoge$7/month.
+
+Next: full retained baseline/candidate native10+independent speech (ordinary4/4
+required), audit TRAIN quiet targets/masks/exposure, then NEWversioned broader
+control-teacher collection through ENTIRE teacher/quality/semantic/conversion/
+numerical approvals before any bounded repair pilot. Preserve28 actual histories,
+KLhidden/all49approvedhistories/heldout hashes and all154objectives. No unchanged
+extension of failed candidate or weaker guards. Geronimo probes are DEVELOPMENT,
+never freshheldout. Fullnative10/fresh40 unrun; local worker keyfile was empty at
+last check and2actualGPUs are required. Before newjobs inspect live resources.
+
+---
+
+# LOCAL — native voice LIVE, ordinary diagnostic FAIL (21Oct16:57UTC)
+
+LOCAL sole executor; CLOUD read-only. Sole task Podi20euy4x58fo1m,1A10080GB,
+$1.79/h, volume49yytzyoge. Hard stop17:28:42UTC/18:28London TODAY; guard9262/
+session22701 ARMED, never extend without budget review. Voiceprocess18959, attempt
+/workspace/migration/native-audition-v6, Gitlauncher909c547e7c65269a1bcc07d9daecb52c0a5a9501,
+frozen model/source741872f unchanged. SSHroot@157.157.221.29 port11974, existing
+Mac identity/ignored knownhostfile. Tunnel session82490, localhost8765→8081.
+Owner can try http://127.0.0.1:8765 using headphones/Startmicrophone. Agent did NOT
+capture microphone. No publicHTTP port; backend/ASR disconnected in this audition.
+No owner audio/transcripts persisted. Do not copy owner conversations or credentials.
+
+Actual runtime PASS: strict released LM load,26actual adapters, savedvoice/native
+BF16/80ms/MATH layout, unforced words/audio. A100 independent Adam528/allRNG restore
+PASS, zero optimizer updates. Installed CUDA header/ptxas paths fixed via Git;
+empty-cache compiledBF16GPUkernel PASS, no package/model settings changed.
+Real Mac→SSH→nativeWS synthetic request PASS:302/302frames,24.16s finite sampled
+speech,peak.58915, total24.592s, firstaudio4.804s (transport timing, not tasklatency).
+Original launch/smoke receipts committed in docs; floatWAV SHA in execution JSON,
+actual audio+receipt preserved onMac AND persistentvolume.
+
+CRITICAL: native sampled TEXT for seen TRAIN008 is WRONG: asks whichproject,
+invents the bluebox is empty and suggests redbox. Expected towel inbluebox from
+user fact. This is a student behavioral diagnostic FAIL; input audio remains
+approved/unchanged. No independent ASR/fullnative10/pairedfresh40 qualification;
+no adoption or training extension, no passing-subset acceptance. All old28actual
+histories/KLhidden/49approvedteachers/heldout hashes/data/losses remain preserved.
+
+Full native67.764GB archive verified onMac+Runpod. All25old unique receipts85.6MB
+verified onMac+S3; cyjzip53ap DELETED/fresh404. Sole100GB volume49yytzyoge persists,
+$7/month. RecoveryH100 and all prior Pods/writers terminal; failed warmupv4/v5logs
+preserved. External evaluation worker needs local OpenAI key in ignored0600file
+runs/local-migration-20261021/.private/openai-backend.env, currently empty; key never
+inchat or onRunpod. Full native10 also needs2distinctGPUs and unchanged gates.
+
+Next: owner may audition before hardstop. Preserve actual failures; prepare complete
+native baseline/candidate behavioral review once worker/auth/2GPU budget allow.
+Do NOT infer production readiness from working transport or continue training from
+this single diagnostic. Before any new job inspect current Pod/Slurm/guard state.
+Unrelated local files remain untouched. Source/results handoff committed/pushed.
+
+---
+
 # LOCAL — A100 state restore PASS; native voice warming (21Oct16:53UTC)
 
 LOCAL sole executor; CLOUD read-only. Sole task Podi20euy4x58fo1m,1A10080GB,

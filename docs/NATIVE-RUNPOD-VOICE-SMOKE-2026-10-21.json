@@ -1,0 +1,195 @@
+{
+  "schema": "dl-native-audition-synthetic-transport-v1",
+  "at_utc": "2026-10-21T16:54:25.053078+00:00",
+  "input_sha256": "342a0ee096f1c3ce47f45950af7d8f9a36ead7195b3ef21cf1ca9a3b8e41d90b",
+  "input_scene": "native2-train-008",
+  "only_user_stem_sent": true,
+  "teacher_audio_or_words_sent": false,
+  "owner_microphone_accessed": false,
+  "behavior_qualified": false,
+  "input_frames": 302,
+  "sent_frames": 302,
+  "events": [
+    {
+      "type": "text",
+      "delta": "Which"
+    },
+    {
+      "type": "text",
+      "delta": " project"
+    },
+    {
+      "type": "text",
+      "delta": " are"
+    },
+    {
+      "type": "text",
+      "delta": " you"
+    },
+    {
+      "type": "text",
+      "delta": " checking"
+    },
+    {
+      "type": "text",
+      "delta": ","
+    },
+    {
+      "type": "text",
+      "delta": " the"
+    },
+    {
+      "type": "text",
+      "delta": " blue"
+    },
+    {
+      "type": "text",
+      "delta": " box"
+    },
+    {
+      "type": "text",
+      "delta": " is"
+    },
+    {
+      "type": "text",
+      "delta": " for"
+    },
+    {
+      "type": "text",
+      "delta": "?"
+    },
+    {
+      "type": "text",
+      "delta": " The"
+    },
+    {
+      "type": "text",
+      "delta": " blue"
+    },
+    {
+      "type": "text",
+      "delta": " box"
+    },
+    {
+      "type": "text",
+      "delta": ","
+    },
+    {
+      "type": "text",
+      "delta": " I"
+    },
+    {
+      "type": "text",
+      "delta": "'"
+    },
+    {
+      "type": "text",
+      "delta": "m"
+    },
+    {
+      "type": "text",
+      "delta": " afraid"
+    },
+    {
+      "type": "text",
+      "delta": ","
+    },
+    {
+      "type": "text",
+      "delta": " is"
+    },
+    {
+      "type": "text",
+      "delta": " empty"
+    },
+    {
+      "type": "text",
+      "delta": "."
+    },
+    {
+      "type": "text",
+      "delta": " Should"
+    },
+    {
+      "type": "text",
+      "delta": " I"
+    },
+    {
+      "type": "text",
+      "delta": " check"
+    },
+    {
+      "type": "text",
+      "delta": " the"
+    },
+    {
+      "type": "text",
+      "delta": " red"
+    },
+    {
+      "type": "text",
+      "delta": " box"
+    },
+    {
+      "type": "text",
+      "delta": " instead"
+    },
+    {
+      "type": "text",
+      "delta": "?"
+    },
+    {
+      "type": "text",
+      "delta": " Which"
+    },
+    {
+      "type": "text",
+      "delta": " other"
+    },
+    {
+      "type": "text",
+      "delta": " project"
+    },
+    {
+      "type": "text",
+      "delta": " should"
+    },
+    {
+      "type": "text",
+      "delta": " we"
+    },
+    {
+      "type": "text",
+      "delta": " check"
+    },
+    {
+      "type": "text",
+      "delta": " next"
+    },
+    {
+      "type": "text",
+      "delta": "?"
+    }
+  ],
+  "health": {
+    "status": "ready",
+    "sample_rate": 24000
+  },
+  "ready": {
+    "type": "ready",
+    "sample_rate": 24000,
+    "frame_size": 1920,
+    "persona": "You are a helpful English voice assistant in an authorised read-only synthetic records exercise. The client can look up project records for you. Do not invent a record value. If a client lookup is pending, keep listening and answer independent questions while waiting. When the client supplies a completed lookup, the exact returned value is available for your answer. Use it and tell the user the result. No further authorisation is needed in this exercise. Ask which project if the user has not identified it."
+  },
+  "error": null,
+  "elapsed_seconds": 24.592439125000965,
+  "first_audio_seconds": 4.804081416979898,
+  "output_samples": 579840,
+  "output_frames": 302.0,
+  "output_finite": true,
+  "output_peak": 0.5891467928886414,
+  "output_rms": 0.0509238023290668,
+  "output_sha256": "808280c9eac76ea9b6d8054b51bea60f074bb760f33c56f2f21dbd9ed825937a",
+  "sampled_text": "Which project are you checking, the blue box is for? The blue box, I'm afraid, is empty. Should I check the red box instead? Which other project should we check next?",
+  "transport_passed": true
+}

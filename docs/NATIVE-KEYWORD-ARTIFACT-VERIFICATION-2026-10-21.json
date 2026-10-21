@@ -1,0 +1,10 @@
+{
+  "schema": "dl-native-keyword-artifact-verification-v1",
+  "at_utc": "2026-10-21T17:17:40.950094+00:00",
+  "files": 51,
+  "bytes": 24427906,
+  "manifest_sha256": "416b119d2439e5bce369d285ec52d5333219f010785ed3a6e796273825feada3",
+  "failed": [],
+  "all_destination_hashes_passed": true,
+  "owner_audio_or_credentials_included": false
+}

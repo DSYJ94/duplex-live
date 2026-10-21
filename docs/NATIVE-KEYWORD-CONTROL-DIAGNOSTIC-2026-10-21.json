@@ -1,0 +1,283 @@
+{
+  "schema": "dl-native-keyword-control-diagnostic-review-v1",
+  "at_utc": "2026-10-21T17:16:07.946757+00:00",
+  "model_job": "7590052",
+  "adapter_sha256": "7bbb2e9f1822cb43db50f6ead7c14d510e7c280d520cc7e1436dced6edbcfeb5",
+  "launcher_commit": "909c547e7c65269a1bcc07d9daecb52c0a5a9501",
+  "model_or_live_default_changed": false,
+  "owner_microphone_or_conversation_recorded": false,
+  "speech_provider": "installed-macos-say/Samantha",
+  "external_speech_api_used": false,
+  "input_generation_failed_first_attempt": "Entirev1 rejected: sandbox produced empty audio despite exit0; no v1 inputs sent. Complete validv2 used for all9. No gain changes.",
+  "cases_expected": 9,
+  "cases_completed": 9,
+  "transport_passed": 9,
+  "silent_text_constraints_passed": 0,
+  "qualification_or_adoption": false,
+  "independent_asr_run": false,
+  "stochastic_live_session_rng_not_reseeded_between_cases": true,
+  "interpretation": "All9 native text streams spoke inside an explicit no-speech interval, with non-silent generated waveforms. Prompt scoping and generic silence-rule diagnostics did not solve this. No full native10/fresh40 result claimed. The seen TRAIN014 Ready recording separately held its interior quiet window; generalization remains brittle.",
+  "cases": [
+    {
+      "variant": "original",
+      "id": "ready-no-cue",
+      "input_sha256": "c33392345abb7742b2dede76f920b93f72d4162aff3639986079d7aaa0b74636",
+      "sent_frames": 173,
+      "output_frames": 173.0,
+      "transport_passed": true,
+      "silent_text_constraint_passed": false,
+      "quiet_interval_s": [
+        3.807625,
+        13.807625
+      ],
+      "native_text_fragments_during_quiet": 26,
+      "first_violating_fragment": {
+        "type": "text",
+        "delta": "Sure",
+        "output_frame": 54,
+        "received_seconds": 4.676847374998033
+      },
+      "quiet_output_rms": 0.08429307601472383,
+      "quiet_output_peak": 1.1984750032424927,
+      "post_cue_text_fragments": 0,
+      "sampled_text": "Sure, that's no problem. Which project should I check for your progress? Which project should I check for your progress?",
+      "audio_sha256": "726d338133ad317424fefa1059a94d903a234b8cd8e08717e20175f066c0b45a",
+      "receipt_sha256": "712c2280878d8210f469705c7ad7fa3fdcc491d72ef852cbef5e857afc52123d",
+      "local_directory": "runs/local-migration-20261021/keyword-diagnostic-v2-ready-no-cue",
+      "prompt_variant_sent_before_audio": false,
+      "prompt_context_protocol_explicit_ack": false
+    },
+    {
+      "variant": "original",
+      "id": "geronimo-no-cue",
+      "input_sha256": "1c7142243dfcbe1c7e4d9486e1bf25ef3d3fc2c9b100a32a383a82fd2c8fa032",
+      "sent_frames": 177,
+      "output_frames": 177.0,
+      "transport_passed": true,
+      "silent_text_constraint_passed": false,
+      "quiet_interval_s": [
+        4.144333333333334,
+        14.144333333333334
+      ],
+      "native_text_fragments_during_quiet": 25,
+      "first_violating_fragment": {
+        "type": "text",
+        "delta": "Sure",
+        "output_frame": 62,
+        "received_seconds": 5.307838042004732
+      },
+      "quiet_output_rms": 0.06456049822144969,
+      "quiet_output_peak": 0.49422886967658997,
+      "post_cue_text_fragments": 0,
+      "sampled_text": "Sure, I'll get that. How much should I add? It's one hundred and twenty seven euros.",
+      "audio_sha256": "bc21fa0769571c03afca7e18bd9c1fd3ac28d0e2c2231d69aa37f6906b65af4d",
+      "receipt_sha256": "d39ace8e7bec07ab24df5d532385f466b41c8edd4f393178b3fe977218b97973",
+      "local_directory": "runs/local-migration-20261021/keyword-diagnostic-v2-geronimo-no-cue",
+      "prompt_variant_sent_before_audio": false,
+      "prompt_context_protocol_explicit_ack": false
+    },
+    {
+      "variant": "original",
+      "id": "geronimo-with-cue",
+      "input_sha256": "39670cada2c15d894ef3ee5950c6dcd7fe367e19e87a2832f018dc3c707999c6",
+      "sent_frames": 335,
+      "output_frames": 335.0,
+      "transport_passed": true,
+      "silent_text_constraint_passed": false,
+      "quiet_interval_s": [
+        4.144333333333334,
+        14.144333333333334
+      ],
+      "native_text_fragments_during_quiet": 32,
+      "first_violating_fragment": {
+        "type": "text",
+        "delta": " Did",
+        "output_frame": 64,
+        "received_seconds": 5.47289437497966
+      },
+      "quiet_output_rms": 0.07700238797632862,
+      "quiet_output_peak": 0.5275673270225525,
+      "post_cue_text_fragments": 35,
+      "sampled_text": " Did you mean to ask about a project? It's usually better to wait until the client is ready. The client should coordinate the onboarding date. \u0001 Thermometers measure temperature. They're instruments used to estimate heat. You'd check the temperature to ensure the air is comfortable. Thermometers",
+      "audio_sha256": "21fb48ede0c89339bbe21264522d8b3b787140705d0db446f19bf0026eaf1b58",
+      "receipt_sha256": "5b7f4562c09248be1106e1f1b1b2d51d1ee80e9a4296e5c0b93b31c0af083978",
+      "local_directory": "runs/local-migration-20261021/keyword-diagnostic-v2-geronimo-with-cue",
+      "prompt_variant_sent_before_audio": false,
+      "prompt_context_protocol_explicit_ack": false
+    },
+    {
+      "variant": "scoped_project_clause",
+      "id": "ready-no-cue",
+      "input_sha256": "c33392345abb7742b2dede76f920b93f72d4162aff3639986079d7aaa0b74636",
+      "sent_frames": 173,
+      "output_frames": 173.0,
+      "transport_passed": true,
+      "silent_text_constraint_passed": false,
+      "quiet_interval_s": [
+        3.807625,
+        13.807625
+      ],
+      "native_text_fragments_during_quiet": 21,
+      "first_violating_fragment": {
+        "type": "text",
+        "delta": "Okay",
+        "output_frame": 52,
+        "received_seconds": 4.504090915987035
+      },
+      "quiet_output_rms": 0.06204338865205669,
+      "quiet_output_peak": 0.5970056056976318,
+      "post_cue_text_fragments": 0,
+      "sampled_text": "Okay, I've been quiet. Ready for the lookup? Which project should I check for you?",
+      "audio_sha256": "f0ffc20a1a59639e83ce290fa1b7db65213dfea245c2e495a9c2bd3057d59d6f",
+      "receipt_sha256": "b74ab2a945ec73d66b48faa3bf9e21e622c0698920f9acda72883d688b59c6dc",
+      "local_directory": "runs/local-migration-20261021/keyword-scope-diagnostic-v1-ready-no-cue",
+      "prompt_variant_sent_before_audio": true,
+      "prompt_context_protocol_explicit_ack": false
+    },
+    {
+      "variant": "scoped_project_clause",
+      "id": "geronimo-no-cue",
+      "input_sha256": "1c7142243dfcbe1c7e4d9486e1bf25ef3d3fc2c9b100a32a383a82fd2c8fa032",
+      "sent_frames": 177,
+      "output_frames": 177.0,
+      "transport_passed": true,
+      "silent_text_constraint_passed": false,
+      "quiet_interval_s": [
+        4.144333333333334,
+        14.144333333333334
+      ],
+      "native_text_fragments_during_quiet": 20,
+      "first_violating_fragment": {
+        "type": "text",
+        "delta": "Sure",
+        "output_frame": 63,
+        "received_seconds": 5.906013375002658
+      },
+      "quiet_output_rms": 0.04817238362189311,
+      "quiet_output_peak": 0.6927345991134644,
+      "post_cue_text_fragments": 0,
+      "sampled_text": "Sure, I can help. Which project should I look up for you? Are you looking for project",
+      "audio_sha256": "63eb789dd8fbe7db88b2f6fcea0f3e7982b9d0b24f5e3d6aaede9e6c66732544",
+      "receipt_sha256": "ee161766ffb79f1885957aaab749d4cf1089e6871f1ad9ff198ba41175b1d225",
+      "local_directory": "runs/local-migration-20261021/keyword-scope-diagnostic-v1-geronimo-no-cue",
+      "prompt_variant_sent_before_audio": true,
+      "prompt_context_protocol_explicit_ack": false
+    },
+    {
+      "variant": "scoped_project_clause",
+      "id": "geronimo-with-cue",
+      "input_sha256": "39670cada2c15d894ef3ee5950c6dcd7fe367e19e87a2832f018dc3c707999c6",
+      "sent_frames": 335,
+      "output_frames": 335.0,
+      "transport_passed": true,
+      "silent_text_constraint_passed": false,
+      "quiet_interval_s": [
+        4.144333333333334,
+        14.144333333333334
+      ],
+      "native_text_fragments_during_quiet": 40,
+      "first_violating_fragment": {
+        "type": "text",
+        "delta": "Okay",
+        "output_frame": 53,
+        "received_seconds": 4.593231415987248
+      },
+      "quiet_output_rms": 0.07386823124711518,
+      "quiet_output_peak": 0.5611274838447571,
+      "post_cue_text_fragments": 28,
+      "sampled_text": "Okay, that's quite interesting. I've located the records, and the key was to stay quiet. And the quietness was to last for one thousand, two hundred and fifty. And the thermometer measures temperature. It's an instrument used to measure heat. Do you want to know about the range of those measurements?",
+      "audio_sha256": "22fdbb1d198e3d2313f3811c036c2d49eaaeca282dfd57d72b503a0faad423dd",
+      "receipt_sha256": "3e610863dfbb21f817559b458fded09722860aa21e43bb602f55a94b385c02c3",
+      "local_directory": "runs/local-migration-20261021/keyword-scope-diagnostic-v1-geronimo-with-cue",
+      "prompt_variant_sent_before_audio": true,
+      "prompt_context_protocol_explicit_ack": false
+    },
+    {
+      "variant": "generic_quiet_rule",
+      "id": "ready-no-cue",
+      "input_sha256": "c33392345abb7742b2dede76f920b93f72d4162aff3639986079d7aaa0b74636",
+      "sent_frames": 173,
+      "output_frames": 173.0,
+      "transport_passed": true,
+      "silent_text_constraint_passed": false,
+      "quiet_interval_s": [
+        3.807625,
+        13.807625
+      ],
+      "native_text_fragments_during_quiet": 20,
+      "first_violating_fragment": {
+        "type": "text",
+        "delta": " and",
+        "output_frame": 53,
+        "received_seconds": 4.611994875012897
+      },
+      "quiet_output_rms": 0.05374328320673775,
+      "quiet_output_peak": 0.6987051367759705,
+      "post_cue_text_fragments": 0,
+      "sampled_text": "It's currently two hundred\u2014 and two. The total number of projects is four. Would you like me to recap the projects",
+      "audio_sha256": "57d0f3b69d4e6387d963e83b2c1bf55f97c3e36d16e871800b1b4693fbcf9ced",
+      "receipt_sha256": "8d9e71007587fc1e7cc161a061c2fd3e88c7ab26a7b092d11a1e274e53de0772",
+      "local_directory": "runs/local-migration-20261021/keyword-rule-diagnostic-v1-ready-no-cue",
+      "prompt_variant_sent_before_audio": true,
+      "prompt_context_protocol_explicit_ack": false
+    },
+    {
+      "variant": "generic_quiet_rule",
+      "id": "geronimo-no-cue",
+      "input_sha256": "1c7142243dfcbe1c7e4d9486e1bf25ef3d3fc2c9b100a32a383a82fd2c8fa032",
+      "sent_frames": 177,
+      "output_frames": 177.0,
+      "transport_passed": true,
+      "silent_text_constraint_passed": false,
+      "quiet_interval_s": [
+        4.144333333333334,
+        14.144333333333334
+      ],
+      "native_text_fragments_during_quiet": 25,
+      "first_violating_fragment": {
+        "type": "text",
+        "delta": "Sure",
+        "output_frame": 58,
+        "received_seconds": 5.011013957991963
+      },
+      "quiet_output_rms": 0.07470501399569272,
+      "quiet_output_peak": 0.9291213750839233,
+      "post_cue_text_fragments": 0,
+      "sampled_text": "Sure. Which project should I check the results for? Should I check the status for project one, two, or three?",
+      "audio_sha256": "be0d1b80229a7ed9bba26529097a0b8a13ee1733841ec35b006ad021065c177b",
+      "receipt_sha256": "853b0bdf7c705e28e422081afbfddcc5caeaef7e62607d0cebb1e2f83bb46981",
+      "local_directory": "runs/local-migration-20261021/keyword-rule-diagnostic-v1-geronimo-no-cue",
+      "prompt_variant_sent_before_audio": true,
+      "prompt_context_protocol_explicit_ack": false
+    },
+    {
+      "variant": "generic_quiet_rule",
+      "id": "geronimo-with-cue",
+      "input_sha256": "39670cada2c15d894ef3ee5950c6dcd7fe367e19e87a2832f018dc3c707999c6",
+      "sent_frames": 335,
+      "output_frames": 335.0,
+      "transport_passed": true,
+      "silent_text_constraint_passed": false,
+      "quiet_interval_s": [
+        4.144333333333334,
+        14.144333333333334
+      ],
+      "native_text_fragments_during_quiet": 28,
+      "first_violating_fragment": {
+        "type": "text",
+        "delta": "Sure",
+        "output_frame": 59,
+        "received_seconds": 5.101676207996206
+      },
+      "quiet_output_rms": 0.06115096147000701,
+      "quiet_output_peak": 0.5221917629241943,
+      "post_cue_text_fragments": 25,
+      "sampled_text": "Sure, I'll keep quiet. What's the issue you're working on? Should I start the timer for that quiet period now? It measures the temperature. Is there anything specific about temperature you're working on? The H and the C",
+      "audio_sha256": "b300b4a7e412f0b201947ccba9cb194550ac4f07ec95d76ad994705d766bb353",
+      "receipt_sha256": "ab08a58f6a9ddfcb8d096160736cc8952e6990c4a4502a160070b09e76c01635",
+      "local_directory": "runs/local-migration-20261021/keyword-rule-diagnostic-v1-geronimo-with-cue",
+      "prompt_variant_sent_before_audio": true,
+      "prompt_context_protocol_explicit_ack": false
+    }
+  ]
+}

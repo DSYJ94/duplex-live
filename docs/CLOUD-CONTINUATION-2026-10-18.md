@@ -1,3 +1,27 @@
+21Oct17:20UTC — LOCAL sole executor; CLOUD read-only. Owner keyword-silence
+failure reproduced:9/9 complete synthetic transport requests worked,0/9 native
+quiet-text constraints passed across original/scoped-project/generic-quiet prompts.
+Live default unchanged, no mute/forced outputs/training/adoption. Review and concrete
+repair proposal: docs/NATIVE-KEYWORD-CONTROL-DIAGNOSTIC-2026-10-21.json and
+NATIVE-KEYWORD-CONTROL-NEXT-2026-10-21.md. All51files24.4MB Mac→volume hashesPASS.
+Only activeA100 Podi20euy4x58fo1m/voice18959/tunnel82490, hardstop17:28:42UTC,
+guard9262 ARMED. Single100GB49yytzyoge$7/month, fullnative+oldreceipts verified,
+oldvolume retired. No duplicate jobs; fullnative10/fresh40 remain unrun/unqualified.
+
+---
+
+21Oct16:57UTC — LOCAL sole executor, CLOUD read-only. LIVE experimental native
+voice http://127.0.0.1:8765; Podi20euy4x58fo1m,1A100,$1.79/h, guard9262 hardstop
+17:28:42UTC/18:28London; modelPID18959, tunnel82490. Launcher909c547, payload741872f.
+Strict model load, independent adapter/Adam528/allRNG restore, real compiledGPU
+preflight and302-frame syntheticWS transport PASS. SeenTRAIN008 generated WRONG
+text (invented emptybluebox); behavioral diagnostic FAIL. No model adoption/new
+training/full10/fresh40. External tools disconnected; local worker keyfile empty.
+Oldvolume retired after25receipts source→Mac→S3 verified; single100GB$7month.
+Read newest HANDOFF.md and execution JSON; do not duplicate/restart active trial.
+
+---
+
 21Oct15:29UTC — LOCAL sole executor, CLOUD read-only. Sole active task Pod
 i20euy4x58fo1m:1A10080GB,$1.79/h, created15:28:42UTC; max2h/$3.58, guard9262/
 session22701 ARMED, termination17:28:42UTC. Volume49yytzyoge at/workspace. Image
