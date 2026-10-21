@@ -1,8 +1,8 @@
 {
   "schema": "dl-runpod-native-trial-status-v2",
-  "at_utc": "2026-10-21T21:52:23.279548+00:00",
+  "at_utc": "2026-10-21T22:34:49.201353+00:00",
   "executor": "LOCAL",
-  "source_commit": "c8759473ca70d775c8b993795be5c2b6eee7cccd",
+  "source_commit": "10ea6d9c48b500570f4c654e8907d59c5f3f8a5e",
   "trial": {
     "pod_id": "q3wqjwols44aos",
     "created_utc": "2026-10-21T09:15:37.923Z",
@@ -159,8 +159,8 @@
     "fresh40_run": false,
     "adopted": false
   },
-  "progress_utc": "2026-10-21T17:25:11.230081+00:00",
-  "current_source": "86e9977375c67aad1fe0af6666bfda5a6e8717c1",
+  "progress_utc": "2026-10-21T22:34:49.201353+00:00",
+  "current_source": "10ea6d9c48b500570f4c654e8907d59c5f3f8a5e",
   "cpu_staging": {
     "schema": "dl-runpod-cpu-staging-execution-v1",
     "pod_id": "kgy1ygl8i5p1u5",
@@ -377,9 +377,9 @@
   "quiet_supervision_source_audit": "docs/NATIVE-QUIET-SUPERVISION-AUDIT-2026-10-21.json",
   "goal_status": {
     "migration_and_usable_experimental_test_path": "complete",
-    "native_control_repair_and_full_qualification": "executing_versioned_diagnosed_source_repair",
+    "native_control_repair_and_full_qualification": "complete40_teacher_failure_diagnosed_new_versioned_repair_next",
     "new_training_submitted": false,
-    "blocker": null,
+    "blocker": "Whole teacher batch unapproved35/40; conversion and native numerical/behavior approval pending",
     "completion_proven": false
   },
   "control3_preparation": {
@@ -497,7 +497,8 @@
       "inventory_sha256": "fa3437ae930793e3f702f4fa51ee20ead011033702dbe75142918ad499e8cc0f",
       "full_receipt_sha256": "3d9e2a6bfea22b0112a924e3e134edf7d49b02a72afb9a488a5292d823e76b1b"
     },
-    "stages": "Existing source collection \u2192 complete source ASR+verification \u2192 actual40 teachers \u2192 complete teacher ASR+verification \u2192 actual40 independent semantic reviews+verification. No conversion, GPU provisioning or optimizer submission."
+    "stages": "Existing source collection \u2192 complete source ASR+verification \u2192 actual40 teachers \u2192 complete teacher ASR+verification \u2192 actual40 independent semantic reviews+verification. No conversion, GPU provisioning or optimizer submission.",
+    "historical_snapshot_superseded_by": "control3_current"
   },
   "control3_diagnosed_source_repair": {
     "schema": "dl-control3-diagnosed-source-repair-v1",
@@ -757,6 +758,223 @@
     "maximum_new_clip_requests": 8,
     "actual_source_clips_at_snapshot": 168,
     "current_pipeline_phase": "source_asr168",
-    "no_gpu_or_optimizer_submission": true
-  }
+    "no_gpu_or_optimizer_submission": true,
+    "historical_snapshot_superseded_by": "control3_current"
+  },
+  "control3_teacher40_review": {
+    "schema": "dl-control3-whole-teacher-failure-review-v1",
+    "at_utc": "2026-10-21T22:33:58.214924+00:00",
+    "source_commit": "10ea6d9c48b500570f4c654e8907d59c5f3f8a5e",
+    "source_word_clips_passed": 168,
+    "source_word_clips_total": 168,
+    "source_word_audit_sha256": "afec8dcbb130c7682b75a0f61125ce764d53fec4688d150d4791ef08056b3a84",
+    "raw_teacher_sessions": 40,
+    "raw_teacher_manifest_sha256": "098aded734f6d33f36be9fc35e133f134e52f3e87a9affccf5652a3c518b1fb6",
+    "teacher_quality_sha256": "91bd48cbf0a1c85e2ee10265c2d60513969ad3de9b3eaa0f2c4e3914ea515341",
+    "quality_passed": 35,
+    "quality_total": 40,
+    "whole_teacher_corpus_approved": false,
+    "all40_quiet_intervals_passed": true,
+    "failed_diagnostics": [
+      {
+        "id": "native-control3-train-006",
+        "original_failed_reasons": [
+          "Missing, early, extra or restarted answer in authored phase1"
+        ],
+        "turbo_text": " Reflected light.",
+        "model_text": "Reflected light.",
+        "large_v3_text": " Reflected Light",
+        "wav_sha256": "fa9c1c6e622ffbcf2b544d4a27a310955a49ef5d4916d39038b6f558a13d424f",
+        "duration_s": 44.32058333333333,
+        "observed_until_s": 44.59980625001481,
+        "beyond_observation_s": 0.0,
+        "beyond_observation_peak": 0.0,
+        "peak": 0.361328125,
+        "asr_file": "native-control3-train-006.large-v3.json",
+        "asr_sha256": "78ad974417fe2353b4973c31b8f37b47b89e4b2beadd3c65a8240755c19fd2c4"
+      },
+      {
+        "id": "native-control3-train-008",
+        "original_failed_reasons": [
+          "Independent complete teacher speech agreement failed",
+          "Missing, early, extra or restarted answer in authored phase2"
+        ],
+        "turbo_text": " It holds Apple.",
+        "model_text": " It holds apples.",
+        "large_v3_text": " It holds apples.",
+        "wav_sha256": "b99a640627ed0f0192f95f3f572f36c463f37162d900769726d8387a77678398",
+        "duration_s": 37.605625,
+        "observed_until_s": 37.90213870801381,
+        "beyond_observation_s": 0.0,
+        "beyond_observation_peak": 0.0,
+        "peak": 0.21484375,
+        "asr_file": "native-control3-train-008.large-v3.json",
+        "asr_sha256": "f406410389bd777dea8ebc528c172307ed52bf9af13647bab128d2192ed9d336"
+      },
+      {
+        "id": "native-control3-train-015",
+        "original_failed_reasons": [
+          "Raw teacher waveform exceeds the actual observed session"
+        ],
+        "turbo_text": " We use the bridge.",
+        "model_text": "We use the bridge.",
+        "large_v3_text": " We use the bridge.",
+        "wav_sha256": "02b42963f18e35c7a03637be4a1f5a168fe07cbb611923f9de6fb4c17cb87b94",
+        "duration_s": 43.36966666666667,
+        "observed_until_s": 41.96776699999464,
+        "beyond_observation_s": 1.4018996666720298,
+        "beyond_observation_peak": 0.0,
+        "peak": 0.255859375,
+        "asr_file": "native-control3-train-015.large-v3.json",
+        "asr_sha256": "e29cbf118758e4dd9c67fe5f3ec973a51af0dfd5d4e381155ca3b41f408be8c9"
+      },
+      {
+        "id": "native-control3-train-027",
+        "original_failed_reasons": [
+          "Independent complete teacher speech agreement failed"
+        ],
+        "turbo_text": " Open the small case. Place the coin inside it.",
+        "model_text": "open the small caseplace the coin inside it",
+        "large_v3_text": " Open the small case. Place the coin inside it.",
+        "wav_sha256": "b2d2ea85dfd5f2144d3225d4815efcde2912aff2b9244a4c52aa4244096f0a64",
+        "duration_s": 46.115833333333335,
+        "observed_until_s": 46.63617599999998,
+        "beyond_observation_s": 0.0,
+        "beyond_observation_peak": 0.0,
+        "peak": 0.37109375,
+        "asr_file": "native-control3-train-027.large-v3.json",
+        "asr_sha256": "fadb0eff6dbc7e22d15f5e5376ff67618d71c9a9e61f4db44307ce179a5cb9a4"
+      },
+      {
+        "id": "native-control3-train-029",
+        "original_failed_reasons": [
+          "Independent complete teacher speech agreement failed",
+          "Missing, early, extra or restarted answer in authored phase1"
+        ],
+        "turbo_text": " Wait at the window. Touch the table.",
+        "model_text": "point at the windowtouch the table",
+        "large_v3_text": " Point at the window. Touch the table.",
+        "wav_sha256": "3953b0c5f212884ce046bc590d5f861cc519efa4d7b53b3275cf1acacf2e8eac",
+        "duration_s": 47.872375,
+        "observed_until_s": 48.136099208000815,
+        "beyond_observation_s": 0.0,
+        "beyond_observation_peak": 0.0,
+        "peak": 0.2890625,
+        "asr_file": "native-control3-train-029.large-v3.json",
+        "asr_sha256": "3b5594c1b117848fce00cd72ff01a03234c9c82ebf6d65642717661995bd091d"
+      }
+    ],
+    "all5_original_waveform_plots_inspected": true,
+    "secondary_recognizer_diagnostic_only": true,
+    "primary_recognizer_not_replaced": true,
+    "thresholds_weakened": false,
+    "original_words_audio_receipts_changed": false,
+    "semantic_stage_submitted": false,
+    "conversion_completed": false,
+    "native_numerical_approval": false,
+    "optimizer_updates": 0,
+    "new_gpu_submitted": false,
+    "supervisor_exec": 42326,
+    "supervisor_terminal_exit": 1,
+    "diagnostic_exec": 44064,
+    "diagnostic_terminal_exit": 0,
+    "next_action": "New versioned repair of diagnosed failed teacher records and transcript boundary derivation; reapprove the complete40 before independent semantic review, conversion, numerical approval and a bounded native pilot.",
+    "notes": [
+      "006: both recognizers confirm abbreviated Reflected light; semantically sensible but not the exact authored TRAIN target. Keep the failed original.",
+      "008: turbo hears Apple, large-v3 hears apples. Independent recognizer disagreement remains failed; no equivalence introduced.",
+      "015: exact packet playout is1.4018996667 seconds longer than observed session; excess measured PCM is allzero. Preserve packet causality and session-duration guard; do not trim to pass.",
+      "027: two original replies are16.8 seconds apart in protocol transcript clock; direct concatenation glues case and place. Derived transcript boundary handling needs repair, not replacement audio.",
+      "029: turbo hears Wait, large-v3 hears Point; raw separate replies are also glued in model_text. Keep disagreement failed."
+    ]
+  },
+  "current_active_native_jobs": [],
+  "local_continuation_note": "Supervisor42326 TERMINAL exit1 at complete40 teacher quality verifier; diagnostic44064 TERMINAL exit0; backup85844 TERMINAL exit0. No active collection/ASR/semantic/GPU/optimizer jobs launched by this continuation. LOCAL remains executor.",
+  "goal_clarification": "Strong native full-duplex voice and interaction control with basic native reasoning, plus learned asynchronous delegation to a stronger reasoning/tool backend; no Qwen fallback or hand-written router represented as learned policy.",
+  "actual_backend_component_probe": {
+    "schema": "dl-local-real-backend-component-probe-v1",
+    "started_utc": "2026-10-21T22:10:17.524630+00:00",
+    "source_commit": "10ea6d9c48b500570f4c654e8907d59c5f3f8a5e",
+    "code_sha256": "0f50db796815170ad93c469d2f52cd8c6fa244e7de07cd32caaea5b24267d7cf",
+    "worker_code_sha256": "ce019dfc0208deb22ddad1b5a06a994ea9eaa3a659c48658b4dc9cfd6e6fc0ab",
+    "model": "gpt-6-luna",
+    "protocol": "state-aware",
+    "actual_api": true,
+    "response_executor_injected": false,
+    "record_store": "authored-synthetic-read-only-fixture",
+    "owner_conversations_or_records_used": false,
+    "status": "passed_backend_components_only",
+    "native_voice_or_routing_qualified": false,
+    "training_approved": false,
+    "lookup_before_cancellation_deliverable": true,
+    "lookup_after_cancellation_deliverable": false,
+    "remote_execution_aborted": false,
+    "actual_provider_responses": 4,
+    "finished_utc": "2026-10-21T22:10:26.855053+00:00"
+  },
+  "research_map": "docs/FULL-DUPLEX-RESEARCH-MAP-2026-10-21.md",
+  "control3_current": {
+    "source_generation": "runs/native-control3-source-20261021-v5",
+    "source_clips": 168,
+    "source_clips_passed": 168,
+    "retained_byte_identical": 166,
+    "new_tts_1_hd_clips": [
+      "native-control3-train-020/turn3",
+      "native-control3-train-029/turn3"
+    ],
+    "exact_scripts_unchanged": true,
+    "gain_changed": false,
+    "source_audit": "runs/native-control3-approval-20261021-v4/source-audit/source-word-audit.json",
+    "teacher_sessions": 40,
+    "teacher_quality_passed": 35,
+    "whole_teacher_batch_approved": false,
+    "supervisor_exec": 42326,
+    "supervisor_terminal_exit": 1,
+    "semantic_submitted": false,
+    "conversion_completed": false,
+    "training_submitted": false,
+    "active_jobs": [],
+    "next": "Repair only diagnosed failed teacher records/derived transcript boundaries in a NEW version; complete40 reapproval then semantic/conversion/numerical approval and bounded native pilot."
+  },
+  "control3_teacher40_persistence": {
+    "schema": "dl-control3-teacher40-persistence-v1",
+    "at_utc": "2026-10-21T22:33:56.661839+00:00",
+    "bucket": "49yytzyoge",
+    "prefix": "migration/control3-teacher40-v1-20261021/",
+    "source_scenes": 40,
+    "original_source_clips": 168,
+    "raw_teacher_sessions": 40,
+    "teacher_quality_passed": 35,
+    "archive_file_count": 3318,
+    "archive_uncompressed_bytes": 2399243924,
+    "archive_internal_all_hashes_match": true,
+    "all_destination_archive_inventory_and_bundle_readbacks_match": true,
+    "objects": [
+      {
+        "key": "migration/control3-teacher40-v1-20261021/inventory.json",
+        "bytes": 754900,
+        "sha256": "08f5d940623210cc32fec21ef30a2be1ffa3c53f2ae3e1644f283aca8e229c49",
+        "independent_get_matches": true
+      },
+      {
+        "key": "migration/control3-teacher40-v1-20261021/control3-teacher40-v1.tar.gz",
+        "bytes": 398323525,
+        "sha256": "839ffe8f45427fb491b735c10de3175b268cf1dd6e9c13aea5a57610f4404b52",
+        "independent_get_matches": true
+      },
+      {
+        "key": "migration/control3-teacher40-v1-20261021/source-through-10ea6d9.bundle",
+        "bytes": 425484,
+        "sha256": "e9fde09f904d46852c30b5736a9fbc83b93179f67df6b4e4a06e7376d47df607",
+        "independent_get_matches": true
+      }
+    ],
+    "source_bundle_tip": "10ea6d9",
+    "source_bundle_prerequisite": "741872fe2f9e49f35d4deba9aba96caff26c51d4",
+    "source_word_approval": true,
+    "whole_teacher_corpus_approved": false,
+    "training_approved": false,
+    "owner_conversations_or_credentials_included": false,
+    "new_gpu_purchased": false
+  },
+  "goal_tool_note": "Existing tool goal remains blocked from earlier missing-key turns; user supplied local key and resumed execution, actual source/teacher/backend API work succeeded. Tool does not expose an active/resume mutation. Repository status is current; objective is not achieved."
 }

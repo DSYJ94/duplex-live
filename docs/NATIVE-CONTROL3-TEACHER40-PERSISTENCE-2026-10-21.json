@@ -1,0 +1,41 @@
+{
+  "schema": "dl-control3-teacher40-persistence-v1",
+  "at_utc": "2026-10-21T22:33:56.661839+00:00",
+  "bucket": "49yytzyoge",
+  "prefix": "migration/control3-teacher40-v1-20261021/",
+  "source_scenes": 40,
+  "original_source_clips": 168,
+  "raw_teacher_sessions": 40,
+  "teacher_quality_passed": 35,
+  "archive_file_count": 3318,
+  "archive_uncompressed_bytes": 2399243924,
+  "archive_internal_all_hashes_match": true,
+  "all_destination_archive_inventory_and_bundle_readbacks_match": true,
+  "objects": [
+    {
+      "key": "migration/control3-teacher40-v1-20261021/inventory.json",
+      "bytes": 754900,
+      "sha256": "08f5d940623210cc32fec21ef30a2be1ffa3c53f2ae3e1644f283aca8e229c49",
+      "independent_get_matches": true
+    },
+    {
+      "key": "migration/control3-teacher40-v1-20261021/control3-teacher40-v1.tar.gz",
+      "bytes": 398323525,
+      "sha256": "839ffe8f45427fb491b735c10de3175b268cf1dd6e9c13aea5a57610f4404b52",
+      "independent_get_matches": true
+    },
+    {
+      "key": "migration/control3-teacher40-v1-20261021/source-through-10ea6d9.bundle",
+      "bytes": 425484,
+      "sha256": "e9fde09f904d46852c30b5736a9fbc83b93179f67df6b4e4a06e7376d47df607",
+      "independent_get_matches": true
+    }
+  ],
+  "source_bundle_tip": "10ea6d9",
+  "source_bundle_prerequisite": "741872fe2f9e49f35d4deba9aba96caff26c51d4",
+  "source_word_approval": true,
+  "whole_teacher_corpus_approved": false,
+  "training_approved": false,
+  "owner_conversations_or_credentials_included": false,
+  "new_gpu_purchased": false
+}

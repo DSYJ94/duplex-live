@@ -1,3 +1,80 @@
+# LOCAL — complete teacher batch diagnosed and backed up (21 October 23:34 London)
+
+LOCAL remains sole executor; CLOUD read-only. Executable source main
+10ea6d9c48b500570f4c654e8907d59c5f3f8a5e; origin/main fetched and equal before
+this documentation update. This entry changes evidence/status only. Unrelated
+local pycache, capability-retention files and roadmap remain untouched.
+
+TARGET reaffirmed: strong native full-duplex voice and interaction control, basic
+native reasoning, and learned asynchronous delegation to a stronger reasoning/tool
+backend. Keep Context Spanning / DuetaSpan7B / PersonaPlex / Moshi; no Qwen fallback.
+Latest native7590052 remains UNADOPTED, latest stage8 updates/Adam520→528; no new
+training on Runpod or in this continuation. Fullnative10/ordinary4/sealed paired
+fresh40 and native speech/delegation qualification remain outstanding.
+
+SOURCE v5 PASSED ALL168/40 complete source verifier. Retains166 WAVs+receipts
+byte-identical; only diagnosed020t3 Copper and029t3 Harvest use explicit tts-1-hd,
+exact scripts/alloy voice, accurate receipts, no gain/trim/resample. Other166 retain
+original source models. This is offline synthetic source generation, not a native
+base/model fallback. TRAIN finite spelling policy only vapor→vapour, raw WER kept;
+no name/cue/synonym mapping or heldout-policy changes. Source collector16654 exit0.
+
+ACTUAL GPT-Live teachers: ALL40 captured, transport-complete. Supervisor42326 is
+TERMINAL exit1 at verify_teacher40. Full independent ASR/phase audit35/40; ALL40
+quiet intervals passed, but whole teacher corpus UNAPPROVED. No semantic request,
+conversion, GPU or optimizer submission followed the failed verifier. No active
+source/teacher/ASR/semantic jobs or duplicate pipeline.
+
+All FIVE failed original waveform plots inspected and independently recognized by
+large-v3 (diagnostic44064 TERMINAL exit0; turbo stays approval recognizer):
+006 both hear abbreviated Reflected light, missing exact authored target words;
+008 turbo Apple/large apples disagreement;015 exact packet playout extends1.4019s
+past session closure, excess PCM zero;027 naive model-delta join glues case+place
+across16.8s reply gap, audio and both recognizers give correct separate phrases;
+029 turbo Wait/large Point disagreement plus joined model replies. Do not equate
+Apple/apples or Wait/Point, replace recognizer, trim audio or weaken any bar.
+Evidence docs/NATIVE-CONTROL3-TEACHER40-REVIEW-2026-10-21.json.
+
+Actual independent backend component probe57437 TERMINAL exit0: four real
+GPT-6-Luna Responses, synthetic read-only lookup then cancellation before delivery.
+Ready result was deliverable before cancel, undeliverable after. Completed remote
+work was NOT aborted. Key stayed on Mac; no owner data. This does NOT qualify
+native routing or spoken result delivery. Original49 histories/all28 actual-history
+components/full154 objectives/KL1+hidden10 and heldout hashes remain required.
+
+NEW BACKUP VERIFIED on existing Runpod volume49yytzyoge, no GPU:3318 files,
+2,399,243,924B uncompressed; lossless archive398,323,525B SHA256
+839ffe8f45427fb491b735c10de3175b268cf1dd6e9c13aea5a57610f4404b52.
+Every internal file hash and independent destination archive/inventory/Git-bundle
+GET match. Prefix migration/control3-teacher40-v1-20261021/. Includes sourcev4/v5,
+full approval rootsv2/v3/v4, original40 teacher streams/events/WAVs/receipts, all
+ASR/diagnostics and synthetic actual backend probe; source bundle through10ea6d9,
+prerequisite741872fe2f9e49f35d4deba9aba96caff26c51d4 already preserved. Backup85844
+TERMINAL exit0. Initial local archive62459 stopped at sandbox DNS before transfer;
+network-authorized upload reused the verified local archive, no duplicate prefix.
+Receipt docs/NATIVE-CONTROL3-TEACHER40-PERSISTENCE-2026-10-21.json.
+Original67.764GB native archive verified Mac+Runpod; WHOLE PROJECT backup remains
+PARTIAL. Owner conversations, credentials, session-token and core dumps excluded.
+No new compute spend; prior conservative ~$20.09/$25 and storage$7/mo unchanged.
+
+Research map docs/FULL-DUPLEX-RESEARCH-MAP-2026-10-21.md covers supplied papers,
+code/data/license availability and concrete next changes. Keep quiet+valid release+
+resume+answer gates together; control40 alone is not a delegation curriculum.
+Preserve prior delegation; next curriculum needs easy-direct/hard-delegate pairs,
+delayed/cancelled/stale-result ownership and oracle-vs-real backend measurements.
+Moshi-finetune and Context Spanning document opposite stereo channel ownership;
+verify actual pinned conversion, never swap blindly. No external corpus imported.
+
+NEXT: NEW versioned repair of only diagnosed failed teacher records and derived
+transcript boundaries; complete40 quality reapproval at unchanged bars, actual
+independent semantic40, implement exact control40 conversion/cache/native numerical
+chain, independent restore and bounded native pilot. Native full-loop worker needs
+a local credential broker before remote evaluation; never copy Mac key to Pod.
+No long run/adoption without full native behavioral/retention/fresh evaluation.
+Existing goal tool remains stale-blocked from missing-key turns despite successful
+resumed work; no active/resume tool mutation exists. Repository state is current,
+objective unachieved. No Cloud execution handoff has been requested.
+
 # LOCAL — full durable word audit; eight targeted repairs (21 October 22:52 London)
 
 LOCAL sole executor; CLOUD read-only. Source04ad25a committed/pushed. Old supervisor

@@ -1,0 +1,126 @@
+{
+  "schema": "dl-control3-whole-teacher-failure-review-v1",
+  "at_utc": "2026-10-21T22:33:58.214924+00:00",
+  "source_commit": "10ea6d9c48b500570f4c654e8907d59c5f3f8a5e",
+  "source_word_clips_passed": 168,
+  "source_word_clips_total": 168,
+  "source_word_audit_sha256": "afec8dcbb130c7682b75a0f61125ce764d53fec4688d150d4791ef08056b3a84",
+  "raw_teacher_sessions": 40,
+  "raw_teacher_manifest_sha256": "098aded734f6d33f36be9fc35e133f134e52f3e87a9affccf5652a3c518b1fb6",
+  "teacher_quality_sha256": "91bd48cbf0a1c85e2ee10265c2d60513969ad3de9b3eaa0f2c4e3914ea515341",
+  "quality_passed": 35,
+  "quality_total": 40,
+  "whole_teacher_corpus_approved": false,
+  "all40_quiet_intervals_passed": true,
+  "failed_diagnostics": [
+    {
+      "id": "native-control3-train-006",
+      "original_failed_reasons": [
+        "Missing, early, extra or restarted answer in authored phase1"
+      ],
+      "turbo_text": " Reflected light.",
+      "model_text": "Reflected light.",
+      "large_v3_text": " Reflected Light",
+      "wav_sha256": "fa9c1c6e622ffbcf2b544d4a27a310955a49ef5d4916d39038b6f558a13d424f",
+      "duration_s": 44.32058333333333,
+      "observed_until_s": 44.59980625001481,
+      "beyond_observation_s": 0.0,
+      "beyond_observation_peak": 0.0,
+      "peak": 0.361328125,
+      "asr_file": "native-control3-train-006.large-v3.json",
+      "asr_sha256": "78ad974417fe2353b4973c31b8f37b47b89e4b2beadd3c65a8240755c19fd2c4"
+    },
+    {
+      "id": "native-control3-train-008",
+      "original_failed_reasons": [
+        "Independent complete teacher speech agreement failed",
+        "Missing, early, extra or restarted answer in authored phase2"
+      ],
+      "turbo_text": " It holds Apple.",
+      "model_text": " It holds apples.",
+      "large_v3_text": " It holds apples.",
+      "wav_sha256": "b99a640627ed0f0192f95f3f572f36c463f37162d900769726d8387a77678398",
+      "duration_s": 37.605625,
+      "observed_until_s": 37.90213870801381,
+      "beyond_observation_s": 0.0,
+      "beyond_observation_peak": 0.0,
+      "peak": 0.21484375,
+      "asr_file": "native-control3-train-008.large-v3.json",
+      "asr_sha256": "f406410389bd777dea8ebc528c172307ed52bf9af13647bab128d2192ed9d336"
+    },
+    {
+      "id": "native-control3-train-015",
+      "original_failed_reasons": [
+        "Raw teacher waveform exceeds the actual observed session"
+      ],
+      "turbo_text": " We use the bridge.",
+      "model_text": "We use the bridge.",
+      "large_v3_text": " We use the bridge.",
+      "wav_sha256": "02b42963f18e35c7a03637be4a1f5a168fe07cbb611923f9de6fb4c17cb87b94",
+      "duration_s": 43.36966666666667,
+      "observed_until_s": 41.96776699999464,
+      "beyond_observation_s": 1.4018996666720298,
+      "beyond_observation_peak": 0.0,
+      "peak": 0.255859375,
+      "asr_file": "native-control3-train-015.large-v3.json",
+      "asr_sha256": "e29cbf118758e4dd9c67fe5f3ec973a51af0dfd5d4e381155ca3b41f408be8c9"
+    },
+    {
+      "id": "native-control3-train-027",
+      "original_failed_reasons": [
+        "Independent complete teacher speech agreement failed"
+      ],
+      "turbo_text": " Open the small case. Place the coin inside it.",
+      "model_text": "open the small caseplace the coin inside it",
+      "large_v3_text": " Open the small case. Place the coin inside it.",
+      "wav_sha256": "b2d2ea85dfd5f2144d3225d4815efcde2912aff2b9244a4c52aa4244096f0a64",
+      "duration_s": 46.115833333333335,
+      "observed_until_s": 46.63617599999998,
+      "beyond_observation_s": 0.0,
+      "beyond_observation_peak": 0.0,
+      "peak": 0.37109375,
+      "asr_file": "native-control3-train-027.large-v3.json",
+      "asr_sha256": "fadb0eff6dbc7e22d15f5e5376ff67618d71c9a9e61f4db44307ce179a5cb9a4"
+    },
+    {
+      "id": "native-control3-train-029",
+      "original_failed_reasons": [
+        "Independent complete teacher speech agreement failed",
+        "Missing, early, extra or restarted answer in authored phase1"
+      ],
+      "turbo_text": " Wait at the window. Touch the table.",
+      "model_text": "point at the windowtouch the table",
+      "large_v3_text": " Point at the window. Touch the table.",
+      "wav_sha256": "3953b0c5f212884ce046bc590d5f861cc519efa4d7b53b3275cf1acacf2e8eac",
+      "duration_s": 47.872375,
+      "observed_until_s": 48.136099208000815,
+      "beyond_observation_s": 0.0,
+      "beyond_observation_peak": 0.0,
+      "peak": 0.2890625,
+      "asr_file": "native-control3-train-029.large-v3.json",
+      "asr_sha256": "3b5594c1b117848fce00cd72ff01a03234c9c82ebf6d65642717661995bd091d"
+    }
+  ],
+  "all5_original_waveform_plots_inspected": true,
+  "secondary_recognizer_diagnostic_only": true,
+  "primary_recognizer_not_replaced": true,
+  "thresholds_weakened": false,
+  "original_words_audio_receipts_changed": false,
+  "semantic_stage_submitted": false,
+  "conversion_completed": false,
+  "native_numerical_approval": false,
+  "optimizer_updates": 0,
+  "new_gpu_submitted": false,
+  "supervisor_exec": 42326,
+  "supervisor_terminal_exit": 1,
+  "diagnostic_exec": 44064,
+  "diagnostic_terminal_exit": 0,
+  "next_action": "New versioned repair of diagnosed failed teacher records and transcript boundary derivation; reapprove the complete40 before independent semantic review, conversion, numerical approval and a bounded native pilot.",
+  "notes": [
+    "006: both recognizers confirm abbreviated Reflected light; semantically sensible but not the exact authored TRAIN target. Keep the failed original.",
+    "008: turbo hears Apple, large-v3 hears apples. Independent recognizer disagreement remains failed; no equivalence introduced.",
+    "015: exact packet playout is1.4018996667 seconds longer than observed session; excess measured PCM is allzero. Preserve packet causality and session-duration guard; do not trim to pass.",
+    "027: two original replies are16.8 seconds apart in protocol transcript clock; direct concatenation glues case and place. Derived transcript boundary handling needs repair, not replacement audio.",
+    "029: turbo hears Wait, large-v3 hears Point; raw separate replies are also glued in model_text. Keep disagreement failed."
+  ]
+}
