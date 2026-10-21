@@ -1,3 +1,34 @@
+# LOCAL — raw teacher recorder ready; local ASR next (21 October 19:57 London)
+
+LOCAL remains sole executor; CLOUD read-only. Recorder source commit 48b1c0d234c79d5158fc68492eb24d2111c109a4.
+New40-teacher collector, raw input/output packet evidence and complete40 artifact
+bindings implemented;21 artificial-fixture tests PASS. Exact model/session/PCM,
+causal input packet availability and unbuffered WAV reconstruction are checked.
+OS file lease prevents duplicate collections; no retries or output filtering.
+This is preparation, NOT an actual teacher collection or model qualification.
+Frozen native payload741872f/launcher909c547 unchanged; candidate7590052 unadopted.
+
+Local API credential remains blank after3 checks; actual CLI stopped before any
+connection/source/output creation. The original credential setup question remains
+pending. No API, GPU, Slurm or training submitted. Fresh Runpod task inventory empty;
+unrelated4 Pods untouched. Native archive saved; whole-project backup stillpartial.
+
+Next independent action while that credential is unavailable: prepare an isolated
+Mac CPU ASR runtime and audit the EXISTING synthetic cue recordings/outputs.
+Existing Python3.12.13 is available through uv; no cloud GPU is needed. No ASR
+process has started at this handoff entry. Do not infer a live job from this plan.
+All9 previous diagnostics remain failed; any new ASR is development evidence only.
+Use the complete input/output inventory, never owner microphone/conversations.
+
+Actual new source generation, real teacher ASR/semantic/native conversion and all
+numerical/fullnative10/fresh40 gates remain pending. Keep28 histories,49 approved
+teachers, KL1/hidden10,154 objectives and held-out hashes. Original$25 cloud-compute
+cap and retained100GB/$7month volume49yytzyoge remain. See
+ docs/NATIVE-CONTROL3-TEACHER-PREPARATION-2026-10-21.json and
+ docs/NATIVE-CONTROL3-REPAIR-2026-10-21.md for code/status/commands.
+
+---
+
 # LOCAL — portable source and measured quality checks (21 October 2026 19:34 London)
 
 LOCAL sole executor; CLOUD read-only. Quality implementation source commit:

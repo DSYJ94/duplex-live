@@ -1,6 +1,6 @@
 {
   "schema": "dl-runpod-native-trial-status-v2",
-  "at_utc": "2026-10-21T18:34:09.330998+00:00",
+  "at_utc": "2026-10-21T18:57:56.375091+00:00",
   "executor": "LOCAL",
   "source_commit": "c8759473ca70d775c8b993795be5c2b6eee7cccd",
   "trial": {
@@ -410,5 +410,16 @@
     "local_api_credential_configured": false,
     "task_pods_from_fresh_inventory": [],
     "retained_volume": "49yytzyoge"
+  },
+  "control3_teacher_preparation": {
+    "source_commit": "48b1c0d234c79d5158fc68492eb24d2111c109a4",
+    "record": "docs/NATIVE-CONTROL3-TEACHER-PREPARATION-2026-10-21.json",
+    "tests_passed": 21,
+    "fixtures_only": true,
+    "actual_capture_calls": 0,
+    "local_api_credential_configured": false,
+    "next_independent_work": "Isolated Mac CPU independent ASR of preserved synthetic diagnostics; no cloud resources required",
+    "asr_process_started": false,
+    "native_training_submitted": false
   }
 }
