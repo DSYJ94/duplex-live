@@ -1,3 +1,15 @@
+21Oct06:43UTC — AIRR has ended per owner screenshot; data grace period through
+19Nov, access lost20Nov with deletion. LOCAL SSH/data access PASS, queue empty,
+cert18:27UTC. Expanded native archive28470files67.764GB+8links freshly hash-verified,
+including latest7590052 checkpoint/fullstate and earlier proof roots. Whole-project/
+old Mac backup still partial; no verified offsite/Runpod copy. Training8updates and
+independent Isambard full numerical restore PASS; native10/speech/fresh40 UNTESTED.
+No new jobs/purchases. Runpod assessed, proposed bounded paid validation only;
+see newest HANDOFF.md and docs/NATIVE-RUNPOD-MIGRATION-2026-10-21.md. LOCAL remains
+sole executor, CLOUD read-only; frozen old receipt must never restart.
+
+---
+
 21Oct01:54:58UTC — Third unchanged quota audit: oneCPU/oneMinute test-only still
 rejects AssocGrpCPUMinutesLimit; actual queue empty, all original jobs terminal.
 Goal is being marked BLOCKED after handoff push. Training/full independent restore

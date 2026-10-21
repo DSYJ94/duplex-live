@@ -1,0 +1,110 @@
+{
+  "schema": "dl-native-provider-migration-review-v1",
+  "at_utc": "2026-10-21T06:45:48.249105+00:00",
+  "executor": "LOCAL",
+  "cloud_executor_read_only": true,
+  "source_parent": "aaeebca2a9db770727634244b2aa618f2ce0ffa9",
+  "training_payload_source": "741872fe2f9e49f35d4deba9aba96caff26c51d4",
+  "controller_backend_repair_source": "d08ef7a09f17dbb3600827aa989bfe23e77f4bc7",
+  "award_dates_from_owner_screenshot": {
+    "allocation_end": "2026-10-21",
+    "last_data_access": "2026-11-19",
+    "access_lost_and_deletion_from": "2026-11-20",
+    "contact_allocator_before_if_more_time_needed": "2026-11-10",
+    "late_extension_requests_rejected_after": "2026-11-15"
+  },
+  "local_certificate": {
+    "valid_from_utc": "2026-10-21T06:27:59Z",
+    "valid_until_utc": "2026-10-21T18:27:59Z",
+    "bounded_actual_ssh_passed": true
+  },
+  "slurm_queue_empty_at_utc": "2026-10-21T06:34:26Z",
+  "candidate": {
+    "job": "7590052",
+    "optimizer_updates": 8,
+    "adam_clocks": [
+      520,
+      528
+    ],
+    "native49_exposures": 49,
+    "original154_each_update": true,
+    "independent_isambard_optimizer_rng_native_restore_passed": true,
+    "native_behavior_evaluated": false,
+    "adopted": false,
+    "checkpoint_sha256": "7bbb2e9f1822cb43db50f6ead7c14d510e7c280d520cc7e1436dced6edbcfeb5",
+    "training_state_sha256": "6a9fc6cb0949d1562f654af74cb6e86a827a0214a486f869e7bd92b1ae0b63b4",
+    "reload_report_sha256": "88056cfa1129a795f52d974d1bbb25fa4984d670829c44b30dcb0a9fe84e9f0b"
+  },
+  "native_migration_archive": {
+    "manifest": "runs/local-migration-20261021/native-migration-v3.json",
+    "sha256": "4eac15590dc9def6dfb5e34b2cea92f30d9a067fabe0940e2876b6acdcbe6dce",
+    "files": 28470,
+    "bytes": 67764285650,
+    "symlinks": 8,
+    "verification": {
+      "at_utc": "2026-10-21T06:43:48.652897+00:00",
+      "files": 28470,
+      "bytes": 67764285650,
+      "symlinks": 8,
+      "failed": [],
+      "all_size_sha256_and_symlinks_match": true,
+      "whole_remote_project_backup": false,
+      "destination_gpu_restore_or_behavior_qualified": false,
+      "manifest_sha256": "4eac15590dc9def6dfb5e34b2cea92f30d9a067fabe0940e2876b6acdcbe6dce"
+    },
+    "additional_training_proof_backup": {
+      "at_utc": "2026-10-21T06:40:32.808991+00:00",
+      "files": 839,
+      "bytes": 1494007624,
+      "all_size_and_sha256_match": true,
+      "failed": [],
+      "whole_remote_project_backup": false
+    },
+    "source_bundle": {
+      "path": "runs/local-migration-20261021/source-main-aaeebca.bundle",
+      "bytes": 3257740,
+      "sha256": "3a93e131cf42ea6d7fdc1f4c2a6628daca688d1fb647560b937aa2c5e6ee347d",
+      "complete_history_verified": true
+    },
+    "whole_remote_project_backup": false,
+    "old_whole_mac_source_backup_status": "PARTIAL",
+    "independent_offsite_copy_verified": false
+  },
+  "runpod_catalog": {
+    "path": "runs/local-migration-20261021/runpod-live-catalog.json",
+    "sha256": "09fe9854b4a3e073dc119f35a0528c8fd208ae71330960e10c7b5e7acb13390d",
+    "selection": {
+      "gpu_id": "NVIDIA H100 80GB HBM3",
+      "count": 2,
+      "cloud": "SECURE",
+      "candidate_data_center": "EUR-IS-3",
+      "price_per_gpu_hour_usd": 3.99,
+      "proposed_maximum_gpu_hours_wallclock": 2,
+      "maximum_gpu_compute_usd": 15.96,
+      "standard_network_volume_gb": 100,
+      "storage_per_month_usd": 7,
+      "proposed_initial_budget_usd": 25,
+      "budget_is_not_authorization_or_platform_enforced_cap": true
+    }
+  },
+  "no_new_slurm_jobs": true,
+  "no_runpod_resources_created": true,
+  "no_paid_compute_authorized_or_purchased": true,
+  "destination_transfer_complete": false,
+  "destination_gpu_restore_or_behavior_qualified": false,
+  "next_action": "Approve a bounded paid destination if desired; recreate pinned x86 runtime, transfer exact artifacts, verify both ends, independently restore and execute complete native10/speech with a NEW provider receipt. No extension before complete ordinary4/4 review.",
+  "independent_asr_weights": {
+    "verification": "runs/local-migration-20261021/local-asr-weights-fresh-verification.json",
+    "sha256": "a123394c45ee88b88605b0e39eec6b38c55dbb4b97f4f757e3531aef2b175e87",
+    "bytes": 4705313252,
+    "passed": true,
+    "outside_migration_tree_manifest": true
+  },
+  "verifier_checks": {
+    "full_archive_size_sha256_links_pass": true,
+    "excluded_paths_fail_closed": true,
+    "corrupted_bytes_rejected": true,
+    "parent_symlink_escape_rejected": true,
+    "legal_numpy_core_package_paths_allowed": true
+  }
+}

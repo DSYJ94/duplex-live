@@ -1,3 +1,57 @@
+# LOCAL — AIRR grace period; expanded native archive verified; Runpod assessed (21Oct06:43UTC)
+
+Owner screenshot confirms allocation ended21Oct2026; data access through19Nov,
+access lost20Nov followed by deletion. If more copying time needed, contact award
+allocator before10Nov with copying evidence; requests after15Nov rejected.
+Actual alias SSH21Oct06:34:26UTC PASS, squeue --all empty. LOCAL certificate freshly
+observed valid06:27:59–18:27:59UTC today. No sign-in needed now, no credentials copied.
+
+Expanded native archive28470regularfiles67764285650B plus8runtime symlinks, all sizes/
+SHA256/link targets independently reverified21Oct06:43:48UTC. Includes original
+synthetic histories/vendor sources and published native base/PersonaPlex/codec/
+tokenizer beyond the old25275-file scoped union. Additionally archived126 earlier
+native training-proof roots:839files1494007624B,242needed transfer; all remote
+context-training-proof-* roots from current census represented. This remains a
+SCOPED native archive; old whole-Mac source backup PARTIAL, whole remote project
+NOT copied, independent offsite/Runpod copy NOT yet verified. Owner conversations,
+credentials/session-token and quarantinedcore remain excluded.
+
+Manifest runs/local-migration-20261021/native-migration-v3.json SHA
+4eac15590dc9def6dfb5e34b2cea92f30d9a067fabe0940e2876b6acdcbe6dce.
+Verifier final report SHA5630728b2d60ac5246890782246fff9187a01e741cf2f7c70c82f004bdbf9f57.
+Fresh complete-history source bundle main-aaeebca SHA
+3a93e131cf42ea6d7fdc1f4c2a6628daca688d1fb647560b937aa2c5e6ee347d;
+GitHub main supplies this later migration-source/docs commit. Source parent at start
+is aaeebca2a9db770727634244b2aa618f2ce0ffa9 (fetch shows main/origin identical).
+
+TRAIN7590052 already COMPLETED8updates/all49native exposure/original154eachupdate,
+Adam520→528 at2e-7. Independent Isambard original28/acoustic49/native49 plus optimizer/
+RNG restore exact PASS. Candidate checkpoint7bbb2e9...,state6a9fc6c...,reload88056cfa...
+remain preserved. Readiness7589157completed; watcher7589159failed at quota-rejected
+native10 sbatch (NO accepted job). Native behavior/full10/speech/fresh40 UNTESTED,
+candidate NOT adopted. Old overnight canonical TERMINAL/FROZEN; never restart or
+repeat completed training. Training payload741872f, controller/backend repairsd08ef7a.
+
+Runpod viability: live SECURE POD catalog H100SXM80GB$3.99/GPUh HIGH overall,
+2GPUqueryHIGH/individualEUR-IS-3LOW; center offers STANDARD network storage.
+A100SXM80GB$1.79/h MEDIUM; L40S48GB$1.09/h MEDIUM. Recommended FIRST paid scope,
+not authorized/purchased:2H100max2h=$15.96compute +100GBnetwork=$7/month, proposed
+initial$25validationbudget plus enforced shutdown monitoring. No Runpod resource,
+paid transfer destination or new Slurm job created. Existing paid-cloud restriction
+persists pending explicit concrete budget approval. Recheck stock/price beforecreate.
+
+Next: destination pinned x86 runtime/independent full-state and native restore,
+complete native10 plus independent speech in NEW provider receipt; only complete
+ordinary4/4 review unlocks extension/fresh40. Preserve exact source/losses/dtype/TF32/
+MATH/native histories and all approved data. No ARM SIF/venv execution on x86, no
+fake SlurmIDs, no historical portable/train.sh reuse for stream49/full154 unchanged.
+No Qwen fallback. Details:docs/NATIVE-RUNPOD-MIGRATION-2026-10-21.md and reviewJSON.
+LOCAL sole executor until explicit handback; CLOUD read-only. Source verifier path/
+corruption/symlink checks PASS; full28470files rehash PASS. Unrelated bytecode, two
+capability-probe files and roadmap.html remain untouched and uncommitted.
+
+---
+
 # LOCAL — execution BLOCKED after third unchanged quota audit (21Oct01:54:58UTC)
 
 Third consecutive goal-turn audit rejects even1CPU/1minute test-only allocation with

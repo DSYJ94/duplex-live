@@ -1,5 +1,13 @@
 # Continue training after Isambard
 
+**21 October current migration:** start with
+[the native Runpod migration record](../../docs/NATIVE-RUNPOD-MIGRATION-2026-10-21.md).
+Candidate7590052 has completed eight updates and independent Isambard restore,
+but has no native behavioral evaluation. This directory's older `train.sh` does
+not implement the current stream49/full154 orchestration; do not run its historical
+examples unchanged as that candidate's continuation. Destination GPU validation,
+new provider execution receipts and full native10 review come before extension.
+
 This is a provider-neutral container recipe for the current Context Spanning
 trainer. It is intended for NVIDIA GPU instances on AWS, GCP, Modal, Nebius or
 Runpod. No provider resources are provisioned by this directory. The recipe
