@@ -1,3 +1,14 @@
+21Oct14:21UTC — LOCAL sole executor, CLOUD read-only. Complete native Runpod
+backup PASS:28,470files/67,764,285,650B+8links on49yytzyoge, whole original
+manifest verified14:05:57UTC. All35containers uploaded; v4 terminal exit0; no
+active archive writers. Runtime Git layout/CPU imports PASS. No GPU/Slurm/new
+training; A100 create refused400 after stock disappeared, no Pod/billing created.
+CPU kgy1ygl8i5p1u5 guard deadline14:52:51UTC. Oldvolume cyjzip53ap retained for
+unique receipts. Native7590052 still unqualified, voice/full10/fresh40 unrun.
+Read newest HANDOFF.md and execution JSON; no duplicate submissions/transfers.
+
+---
+
 21Oct13:27UTC — LOCAL sole executor, CLOUD read-only. v3 is TERMINAL after a
 provider post-completion NoSuchUpload error; independent CPU SHA checks passed
 all6 completed containers, including both16.74GB weights. Sole resumed writer is

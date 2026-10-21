@@ -140,3 +140,9 @@ microphone audition remain incomplete. An approved S3-supported replacement volu
 and bounded CPU staging now prepare the full backup/runtime before any GPU rental.
 See the latest HANDOFF.md and NATIVE-RUNPOD-EXECUTION-2026-10-21.json for current
 resource IDs, transfer ownership, spending guards and the precise next test.
+
+
+21Oct14:21UTC preservation update: complete native archive independently verified
+on Mac and Runpod volume49yytzyoge, all28,470files+8links. Runtime reconstructed
+with Git, full pinned native source unchanged. No production model adopted and
+no usable live audition yet; numerical/behavior gates remain as documented above.

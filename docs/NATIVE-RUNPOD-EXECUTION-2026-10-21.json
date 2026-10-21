@@ -27,7 +27,7 @@
     "priority_proof_files": 36,
     "priority_proof_bytes": 658039680,
     "complete_archive_on_mac": true,
-    "complete_archive_on_runpod": false
+    "complete_archive_on_runpod": true
   },
   "independent_restore_observed_stdout": {
     "at_utc": "2026-10-21T10:32:21.119758+00:00",
@@ -66,28 +66,31 @@
     "actual_authenticated_s3_list_passed": true,
     "ongoing_usd_month_after_old_retired": 7,
     "temporary_both_usd_month_prorated": 14,
-    "transfer_complete": false,
+    "transfer_complete": true,
     "source_tar_containers": 35,
     "all_source_tar_sha256_match": true,
     "tar_bytes": 67815854080,
     "upload_source": "Isambard; exact SDK-prepared payload-bound request headers, no reusable account key exported",
     "upload_journal": "runs/local-migration-20261021/s3-native-upload-v4.jsonl",
-    "upload_completion_report": "runs/local-migration-20261021/s3-native-upload-v3-upload-completion.json",
-    "current_local_transfer_processes": [
-      {
-        "pid": 62127,
-        "elapsed": "06:07"
-      }
-    ],
-    "verification": "Full independent destination filesystem hash verification REQUIRED; uploaded size alone does not approve backup",
+    "upload_completion_report": "runs/local-migration-20261021/s3-native-upload-v4-upload-completion.json",
+    "current_local_transfer_processes": [],
+    "verification": "PASS: all original 28,470 regular files and 8 symlinks independently checked after extraction",
     "superseded_mac_uploader": "PID36218 stopped12:37:43UTC, session36656 exit143",
     "unsupported_presigned_url_attempt": "PID43533 and its exact SSH children stopped12:44:44UTC; no successful result claimed; Runpod documentation forbids presigned URLs",
-    "transferred_container_count": 10,
-    "transferred_container_bytes": 39342551040,
+    "transferred_container_count": 35,
+    "transferred_container_bytes": 67815854080,
     "completed_first6_container_shas_independently_verified": true,
     "present_tar_verification_receipt": "runs/local-migration-20261021/present-archive-sha-verification-v1.json",
     "stopped_v3": "Session82279 exit1 at provider CompleteMultipartUpload NoSuchUpload after finalized tar003; both16.74GB files then independently SHA-verified, no size-only acceptance",
-    "stopped_upload_cleanup": "Five positively identified v1/v2 attempts created before12:50 aborted via S3; actual CPU directory read confirmed all5 absent. v3 failed before cleanup."
+    "stopped_upload_cleanup": "Five positively identified v1/v2 attempts created before12:50 aborted via S3; actual CPU directory read confirmed all5 absent. v3 failed before cleanup.",
+    "verification_receipt": "runs/local-migration-20261021/native-full-extracted-verification-v1.json",
+    "verification_receipt_sha256": "2c65f93b75156e945b13a45fcdd1ac98cc80c6b81940d7f7096d59aa189c43bd",
+    "verified_files": 28470,
+    "verified_bytes": 67764285650,
+    "verified_symlinks": 8,
+    "manifest_sha256": "4eac15590dc9def6dfb5e34b2cea92f30d9a067fabe0940e2876b6acdcbe6dce",
+    "verified_at_utc": "2026-10-21T14:05:57.563301+00:00",
+    "upload_terminal": "v4/session81451 exit0, no active archive writers"
   },
   "qualification": {
     "latest_candidate_job": "7590052",
@@ -97,8 +100,8 @@
     "fresh40_run": false,
     "adopted": false
   },
-  "progress_utc": "2026-10-21T13:28:34.020371+00:00",
-  "current_source": "c962afed57f8f9a2a46d39d984162ef8e533a4fb",
+  "progress_utc": "2026-10-21T14:20:46.507963+00:00",
+  "current_source": "5ea1547ada2bdca35bf4390cb2f4ee413c3115a2",
   "cpu_staging": {
     "schema": "dl-runpod-cpu-staging-execution-v1",
     "pod_id": "kgy1ygl8i5p1u5",
@@ -135,5 +138,31 @@
       "aiohttp": "3.14.5",
       "imports_passed": true
     }
+  },
+  "runtime_layout": {
+    "schema": "dl-native-runtime-layout-v1",
+    "at_utc": "2026-10-21T14:13:54.480747+00:00",
+    "full_native_artifact_verification_required_and_passed": true,
+    "runtime_root": "/workspace/duplex-live",
+    "payload_commit": "741872fe2f9e49f35d4deba9aba96caff26c51d4",
+    "controller_commit": "d08ef7a09f17dbb3600827aa989bfe23e77f4bc7",
+    "vendor_commit": "79df302fa2820cae10c61bb2b7f302c52edb6ed2",
+    "originals_unchanged": true,
+    "source_deployed_with_git": true,
+    "training_or_model_quality_approved": false
+  },
+  "second_gpu_attempt": {
+    "at_utc": "2026-10-21T14:20:46.507963+00:00",
+    "class": "NVIDIA A100-SXM4-80GB",
+    "count": 1,
+    "region": "EUR-IS-1",
+    "catalog_usd_per_hour": 1.79,
+    "creation_result": 400,
+    "reason": "No instances available with requested specifications; stock disappeared after positive read",
+    "pod_created": false,
+    "training_submitted": false,
+    "budget_guard_pid": 83644,
+    "budget_guard_phase": "waiting_for_owned_pod_receipt",
+    "budget_guard_session": 20642
   }
 }

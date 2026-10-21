@@ -1,3 +1,48 @@
+# LOCAL — complete native Runpod backup VERIFIED (21Oct14:21UTC)
+
+LOCAL remains sole executor; CLOUD read-only. No active GPU/Slurm jobs or new
+training. Source main5ea1547ada2bdca35bf4390cb2f4ee413c3115a2. Latest trained
+candidate7590052 remains experimental and unqualified; full native10/speech and
+paired fresh40 are unrun. Do not repeat its completed8updates or extend/adopt it.
+
+Replacement100GB volume49yytzyoge EUR-IS-1 contains the complete verified native
+archive:28,470 regular files /67,764,285,650B +8 symlinks. All35 uploaded source
+containers SHA-match; independent destination extraction and WHOLE manifest
+verification PASS at14:05:57UTC. ManifestSHA
+4eac15590dc9def6dfb5e34b2cea92f30d9a067fabe0940e2876b6acdcbe6dce.
+Actual retrieved receipt runs/local-migration-20261021/native-full-extracted-verification-v1.json;
+receipt SHA is in execution JSON. v4/session81451 TERMINAL exit0. No active copy
+writer; never restart v1/v2/v3/v4. Original checkpoints, Adam/RNG, data, receipts,
+folds and audio hashes preserved. Mac native archive verified too; WHOLE PROJECT
+and old whole-Mac source backup remain PARTIAL.
+
+Runtime layout PASS14:13:54UTC, /workspace/duplex-live. Git payload741872f,
+controllerd08ef7a, vendor79df302; full SHAs in runtime receipt/execution JSON.
+Persistent x86 venv /workspace/runtime-x86-ngc2510 imports PASS on exact pinned
+NGC25.10 image. Rerun prepare_native_layout.py on any new container for external
+/projects and /lus aliases. No original files overwritten.
+
+CPU Podkgy1ygl8i5p1u5 remains RUNNING $0.06/h; guard50305/session8087 terminates
+14:52:51.864UTC, retaining volume. New single A10080GB attempt ($1.79/h,2h max)
+was refused400 after positive stock read: capacity disappeared. NO GPU created
+or charged. Prearmed guard83644/session20642 waits for a receipt, cannot create
+resources. No duplicate GPU, archive or Slurm job exists.
+
+Oldvolume cyjzip53ap EUR-IS-3 retained for unique original validation receipts;
+region has no S3 endpoint, cross-region CopyObject failed. Owner approved temporary
+$14/month prorated overlap; $7/month after oldvolume retired. Do NOT delete old
+until receipts recovered. Original first H100 trial terminated; independent
+adapter/Adam528/allRNG restore passed but original receipt remains on oldvolume.
+
+Next: recover old receipts through official supported access; read fresh available
+GPU capacity before any bounded trial within original$25 compute budget. Run
+independent state restore then actual native audition, unchanged BF16/frameclock,
+with committed driver discovery fix. No usable voice path claimed yet. Complete
+native10 requires2 distinct GPUs and actual worker authorization; local API key
+not configured. No passing-subset qualification, fallback, or threshold changes.
+
+---
+
 # LOCAL — first6 container hashes PASS; supported transfer v4 active; CPU runtime ready (21Oct13:27UTC)
 
 LOCAL sole executor; CLOUD read-only. No GPU or Slurm jobs, no new training.
