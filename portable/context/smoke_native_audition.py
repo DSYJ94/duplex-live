@@ -24,7 +24,17 @@ INPUTS = {
 
 async def run(args):
     import aiohttp
-    input_sha = INPUTS[args.case]
+    diagnostic = None
+    if args.diagnostic_manifest:
+        manifest = json.loads(args.diagnostic_manifest.read_text())
+        assert manifest['schema'] == 'dl-native-local-synthetic-cue-diagnostic-v1'
+        assert manifest['owner_microphone_used'] is False
+        assert manifest['speech_provider'] == 'installed-macos-say'
+        diagnostic = next(c for c in manifest['cases'] if c['id'] == args.case)
+        assert args.wav.resolve() == (args.diagnostic_manifest.parent/diagnostic['wav']).resolve()
+        input_sha = diagnostic['sha256']
+    else:
+        input_sha = INPUTS[args.case]
     assert hashlib.sha256(args.wav.read_bytes()).hexdigest() == input_sha
     assert not args.out.exists(), 'Use a new receipt directory'
     with wave.open(str(args.wav)) as source:
@@ -44,6 +54,9 @@ async def run(args):
                'only_user_stem_sent': True, 'teacher_audio_or_words_sent': False,
                'owner_microphone_accessed': False, 'behavior_qualified': False,
                'input_frames': len(frames), 'sent_frames': 0, 'events': []}
+    if diagnostic:
+        receipt['synthetic_diagnostic_plan'] = diagnostic
+        receipt['training_data_or_heldout_approval_claimed'] = False
     audio = bytearray()
     started = time.monotonic()
     first_audio = None
@@ -125,6 +138,7 @@ async def run(args):
 if __name__ == '__main__':
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--wav', type=Path, required=True)
-    p.add_argument('--case', choices=sorted(INPUTS), default='native2-train-008')
+    p.add_argument('--case', default='native2-train-008')
+    p.add_argument('--diagnostic-manifest', type=Path)
     p.add_argument('--out', type=Path, required=True)
     raise SystemExit(0 if asyncio.run(run(p.parse_args())) else 1)
