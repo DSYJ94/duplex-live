@@ -117,3 +117,54 @@ bounded repair stage be defined and run. Keep all28 actual histories,49 approved
 teachers, KL1/hidden10, original154 objectives and held-out hashes. Full40 sealed
 paired outputs remain required before adoption. No unchanged extension of the
 failed candidate and no frontend keyword mute is authorized as a substitute.
+
+## Follow-on quality implementation
+
+The raw-source format is now `dl-native-control3-raw-source-v2`. It retains all
+original utterance WAVs and provider receipts byte for byte inside the new source
+directory. No external Mac clip path is needed to revalidate it. The read-only
+validator reconstructs every source stem and quiet window from those clips; even
+a rewritten manifest hash cannot authorize PCM absent from the original clips.
+Unexpected receipt fields are rejected before copying, so headers/credentials
+cannot be silently included in this format. No real raw source existed when this
+new format was implemented; original generated/model audio remains untouched.
+
+`evals/native_control_source_quality.py` implements a label-free independent
+Whisper-turbo word audit and verifier for ALL40 scenes and168 clips. The fixed
+weight hash is aff26ae408abcba5fbf8813c21e62b0941638c5f6eebfb145be0c9839262a19a.
+WER remains at most0.05 and peak at most0.995. Exact authored source word positions
+must also match, so a changed cue/premise cannot pass merely because a long clip
+has low aggregate WER. Raw recognizer outputs and waveform/receipt hashes are bound
+to the audit. No reference text is prompted into ASR, audio is not edited, and the
+report grants no student training approval. This CLI has not run on real new audio.
+
+After real clips have been generated and assembled, use a new audit directory:
+
+```sh
+python -m evals.native_control_source_quality --raw NEW_RAW_SOURCE \
+  --weights PINNED_LOCAL_TURBO_PT --out NEW_SOURCE_AUDIT --device cpu
+python -m evals.native_control_source_quality --raw NEW_RAW_SOURCE \
+  --verify NEW_SOURCE_AUDIT/source-word-audit.json
+```
+
+`evals/native_control_teacher_checks.py` implements the next teacher phase-check
+component. It requires measured source-word completion, complete actual playback
+and observation evidence, raw teacher PCM, independent teacher ASR and a clean
+session close. A short output WAV alone cannot prove an unreleased quiet period.
+It rejects acknowledgments and non-silent PCM during quiet (including sound missed
+by ASR), near-miss/old-cue releases, early answers, repeated completed steps, absent
+resume, unnecessary delegation and invalid word times. It is a component, not a
+whole-collection teacher approval or a recording client. Full artifact/ASR bindings,
+actual capture, independent semantic review and native conversion remain unfinished.
+
+Fourteen fixture tests now pass, including complete40 assembly/reconstruction and
+complete40 artificial teacher phase checks. These use artificial signals and word
+records, never actual model outputs or approved labels. The actual source-word ASR
+and teacher capture remain UNRUN. No new API/GPU/training work was submitted.
+
+The existing GPT-Live model and WebSocket start/audio/close protocol were checked
+against the official [model page](https://developers.openai.com/api/docs/models/gpt-live-1)
+and [WebSocket guide](https://developers.openai.com/api/docs/guides/voice-websockets).
+This verifies documentation compatibility, not account access or a successful call.
+The local API credential remains blank at the last check. See the machine-readable
+[quality preparation record](NATIVE-CONTROL3-QUALITY-PREPARATION-2026-10-21.json).

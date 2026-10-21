@@ -7,7 +7,7 @@ import tempfile
 import unittest
 
 from data.synthetic.native_control_repair import build, validate
-from data.synthetic.native_control_render import load_clip, render
+from data.synthetic.native_control_render import load_clip, render, validate_raw
 from evals.native_control_coverage import quiet_windows
 
 
@@ -84,6 +84,21 @@ class ControlSourceRepair(unittest.TestCase):
                                             scene['trailing_observation_s'])
                 self.assertEqual(len(pcm) % 1920, 0)
             self.assertEqual(before, {p: hashlib.sha256(p.read_bytes()).hexdigest() for p in files})
+            import shutil
+            shutil.rmtree(root / 'clips')
+            manifest, _ = validate_raw(root / 'raw')
+            self.assertEqual(len(manifest['cases']), 40, 'Portable source cannot depend on original Mac clip paths')
+            # Even replacing a manifest hash cannot bless PCM absent from the
+            # original input clips. Reconstruct the stems independently.
+            row = manifest['cases'][0]
+            stem = root / 'raw' / row['id'] / 'stem_assistant.wav'
+            data, rate = sf.read(stem, dtype='float32')
+            data[row['quiet_contract']['start_sample'] + 100] = .05
+            sf.write(stem, data, rate, subtype='FLOAT')
+            row['artifacts']['stem_assistant.wav'] = hashlib.sha256(stem.read_bytes()).hexdigest()
+            (root / 'raw/raw-source.json').write_text(json.dumps(manifest))
+            with self.assertRaisesRegex(ValueError, 'differs from immutable original clips'):
+                validate_raw(root / 'raw')
             with self.assertRaises(ValueError):
                 render(path, root / 'clips', root / 'raw')
 
@@ -111,6 +126,11 @@ class ControlSourceRepair(unittest.TestCase):
             receipt['input_text'] = 'Wrong words.'
             receipt_path.write_text(json.dumps(receipt))
             with self.assertRaises(ValueError):
+                load_clip(path, expected)
+            receipt = json.loads(original_receipt)
+            receipt['Authorization'] = 'fixture-only-never-a-real-credential'
+            receipt_path.write_text(json.dumps(receipt))
+            with self.assertRaisesRegex(ValueError, 'Unexpected receipt fields'):
                 load_clip(path, expected)
 
     def test_missing_last_case_leaves_entire_source_batch_unapproved(self):

@@ -1,0 +1,49 @@
+{
+  "schema": "dl-native-control3-quality-preparation-v1",
+  "at_utc": "2026-10-21T18:32:27.474447+00:00",
+  "implementations": {
+    "data/synthetic/native_control_render.py": "439b662294db28183f169a29b5a63d01ca2523c6e701be4302cf76bebd7d0513",
+    "evals/native_control_source_quality.py": "13c717b41ebe93fe6ef26565bc5721878ec60d8e6351d78a8ffde53a35aa3b94",
+    "evals/native_control_teacher_checks.py": "500421da31aeccd215842f878ad198dcb592e7345e5219b45e684f67828bf411",
+    "evals/harness/test_native_control_repair.py": "9df33dcadd18d1a298aea65f9ecbe67989a29e39562bb5db637674b247931093",
+    "evals/harness/test_native_control_quality.py": "e0e29777fbeebc900afd8861da3cdeca2015205f1c24c8ce7de3492b8e925699"
+  },
+  "source_plan_sha256": "e1ac027c032913e9ef96dd4d92dcc5e31e1da733d237e52e1ba418813cfc706f",
+  "protected_file_hashes_unchanged": true,
+  "raw_source_schema": "dl-native-control3-raw-source-v2",
+  "self_contained_original_clips_and_receipts": true,
+  "actual_source_or_teacher_generated": false,
+  "actual_independent_asr_run": false,
+  "model_behavior_qualified": false,
+  "source_asr": {
+    "model": "Whisper turbo",
+    "weight_sha256": "aff26ae408abcba5fbf8813c21e62b0941638c5f6eebfb145be0c9839262a19a",
+    "wer_bar": 0.05,
+    "peak_bar": 0.995,
+    "reference_text_prompted": false,
+    "exact_source_word_positions_required": true
+  },
+  "checks": {
+    "tests_passed": 14,
+    "command": "/Users/daryl/.venvs/duplex-live/bin/python -m unittest evals.harness.test_native_control_repair evals.harness.test_native_control_quality -v",
+    "fixtures_only": true,
+    "source_quality_cli_help_passed": true,
+    "real_asr_cli_and_full_teacher_capture_not_run": true
+  },
+  "scope": [
+    "Portable complete40 source reconstruction from original receipted WAV bytes.",
+    "Read-only independent full40/168-clip source-word audit and revalidation implementation.",
+    "Teacher phase-check component uses independently measured source word completion, not WAV-tail estimates.",
+    "Reject acknowledgments, untranscribed non-silent PCM, wrong-cue answers, restart, absent resume, delegation, missing full observation and invalid timestamps."
+  ],
+  "credential_file_configured": false,
+  "gpu_or_training_submitted": false,
+  "training_approved": false,
+  "remaining": [
+    "Actual source generation requires local API credential.",
+    "Real source-word auditing requires pinned local Whisper turbo weights and compatible runtime.",
+    "Implement/audit actual complete40 teacher capture, whole-collection artifact/ASR bindings, independent semantic review and conversion.",
+    "Complete native numerical approvals, retained baseline/candidate fullnative10 and speech review before choosing a bounded pilot.",
+    "Preserve all28 actual histories,49 approved teachers, KL1/hidden10, original154 objectives and held-out hashes."
+  ]
+}
