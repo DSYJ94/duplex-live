@@ -1,3 +1,54 @@
+# LOCAL — full raw source backed up; source ASR active (21 October 22:27 London)
+
+LOCAL sole executor; CLOUD read-only. Main230b269ff94452d6b0c84dec56a88adea83c294d
+pushed. No duplicate source, ASR, teacher or GPU jobs.
+
+SOURCE V3 exec54639 TERMINAL exit0: all168 waveform/receipt checks passed, all40
+raw scenes assembled. All139 retained originals unchanged; one diagnosed clipped
+Lantern source replaced,28 missing clips generated. Failed v2 remains intact.
+
+ACTIVE supervisor exec5840, root runs/native-control3-approval-20261021-v2:
+phase source_asr168, 113/168 raw independent responses at this snapshot.
+CPU float32/4threads, pinned turbo. No teacher or semantic API stage started.
+The new auditor has a CONFIRMED NumPy-scalar timestamp-type bug: an actual
+recognizer result returns numpy.float64; it fails the in-memory type guard but
+identical persisted JSON values pass. Source waveform, numbers and words unchanged.
+Proof actual-numeric-type-diagnostic.json in pipeline root and tracked diagnostic.
+Do NOT edit its running source implementation: its final code-hash guard must pass.
+Original full failed audit and every raw response must remain preserved.
+
+NEXT after all168 and the original supervisor stops at verify_source168: fix only
+serialization consistency in source/teacher audit loops, test/commit/push, then
+run the NEW full-durable source reassessment module on ALL168. It verifies the
+parent code against Git, copies raw responses byte for byte and recomputes every
+clip at unchanged bars. Genuine word failures remain failures; no subset approval.
+Current durable-response diagnostics already show missing Beacon, Mia/Nia and
+extra words, plus vapour/vapor spelling differences. These need actual waveform /
+independent-recognizer diagnosis; do not silently equate different words or lower
+thresholds. No source quality approval or student fitting yet.
+
+ACTIVE secondary diagnostic exec26515: original failed source WAVs only, local
+Whisper large-v3 float32/2threads, results under pipeline/secondary-asr-diagnostic.
+This is diagnostic ONLY, cannot replace complete turbo approval. Public large-v3
+weights downloaded/official SHA verified (3,087,371,615B); not native weights and
+not uploaded to Runpod. No external audio/API request or GPU purchase for this.
+
+Complete v3 original+raw source BACKUP VERIFIED on existing volume49yytzyoge:
+836files641,322,800B, lossless archive122,177,869B, all internal hashes verified;
+independent destination GET hashes match archive, inventory and source bundle.
+S3 migration/control3-complete-source-v3-20261021/; archiveSHA
+cc4b41b849ecc9bb6247f77b27350c16bae0a4b052cbb9df8208166e2cb92c25.
+Bundle230b269 requires frozen native741872fe2f9e49f35d4deba9aba96caff26c51d4.
+Receipt docs/NATIVE-CONTROL3-COMPLETE-SOURCE-PERSISTENCE-2026-10-21.json.
+This is complete RAW SOURCE preservation, NOT word/teacher/training approval.
+Original failed140 backup289files and first80 snapshot also independently verified.
+
+Native7590052 still unadopted; no new optimizer/GPU work. Old28 histories/49 teachers,
+KL1/hidden10,154 objectives, exact originals/folds/heldouts retained. Full native
+67.764GB archive verified Mac+Runpod; whole-project backup PARTIAL. Original ~$20.09/
+$25 compute cap and$7/mo storage unchanged. Native conversion/numerics and fullnative10/
+ordinary4/fresh40/pilot still pending. Unrelated local edits remain untouched.
+
 # LOCAL — diagnosed versioned source repair live (21 October 22:08 London)
 
 LOCAL sole executor; CLOUD read-only. Source284913483addc839b1989734852a0d918f26d6a1

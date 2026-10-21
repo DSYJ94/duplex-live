@@ -1,0 +1,38 @@
+{
+  "schema": "dl-control3-complete-source-persistence-v1",
+  "at_utc": "2026-10-21T21:20:48.089809+00:00",
+  "bucket": "49yytzyoge",
+  "prefix": "migration/control3-complete-source-v3-20261021/",
+  "source_scenes": 40,
+  "original_source_clips": 168,
+  "archive_file_count": 836,
+  "archive_uncompressed_bytes": 641322800,
+  "archive_internal_all_hashes_match": true,
+  "all_destination_archive_inventory_and_bundle_readbacks_match": true,
+  "objects": [
+    {
+      "key": "migration/control3-complete-source-v3-20261021/inventory.json",
+      "bytes": 164447,
+      "sha256": "5b22c5c77b62519573857e902443042ad71f9ecfbd5d8c6daa339e9df4bf31dd",
+      "independent_get_matches": true
+    },
+    {
+      "key": "migration/control3-complete-source-v3-20261021/native-control3-complete-source-v3.tar.gz",
+      "bytes": 122177869,
+      "sha256": "cc4b41b849ecc9bb6247f77b27350c16bae0a4b052cbb9df8208166e2cb92c25",
+      "independent_get_matches": true
+    },
+    {
+      "key": "migration/control3-complete-source-v3-20261021/source-through-230b269.bundle",
+      "bytes": 398258,
+      "sha256": "08c37599c23dbb287c11f6cabcb2785f2a043f596454d1e78f03407beb797ce6",
+      "independent_get_matches": true
+    }
+  ],
+  "source_bundle_tip": "230b269",
+  "source_bundle_prerequisite": "741872fe2f9e49f35d4deba9aba96caff26c51d4",
+  "source_word_approval": false,
+  "training_approved": false,
+  "owner_conversations_or_credentials_included": false,
+  "new_gpu_purchased": false
+}
