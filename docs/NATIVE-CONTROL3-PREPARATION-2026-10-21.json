@@ -1,0 +1,51 @@
+{
+  "schema": "dl-native-control3-preparation-v1",
+  "at_utc": "2026-10-21T18:11:42.677498+00:00",
+  "source_plan": "evals/fixtures/native-control-repair-v3-source-20261021.json",
+  "source_plan_sha256": "e1ac027c032913e9ef96dd4d92dcc5e31e1da733d237e52e1ba418813cfc706f",
+  "source_coverage": {
+    "cases": 40,
+    "families": {
+      "no-release": 8,
+      "release-reason": 8,
+      "distractor-release": 8,
+      "pause-resume": 8,
+      "replace-cue": 8
+    },
+    "source_turns": 168,
+    "source_characters": 7953,
+    "training_approved": false,
+    "no_remote_requests": true
+  },
+  "audit": "docs/NATIVE-CONTROL-COVERAGE-2026-10-21.json",
+  "audit_sha256": "a564ae020a846933576eed3f5dea7cc62363bb190c58309e48c218c6a16bba56",
+  "protected_file_hashes": {
+    "evals/fixtures/native-curriculum-v2-20261018.json": "f86e64275f9e02b1218821c8782f374a94f37d4e4b7107573f9cc0dd6763b443",
+    "evals/fixtures/native-fulltask-qualification-20261019.json": "162b0e64942dfe1917be9d8b24b579a947d1af54800bf246a1f2d47f3e7d1c21",
+    "evals/fixtures/native-fulltask-qualification-v2-20261019.json": "6e44cac1d6bfa19c3453f813abaf4613651f8d051d2c2a0f3dd80c35c1121979",
+    "docs/NATIVE-7590052-RECIPE-2026-10-21.json": "5aefd583a30a009dd60d7f188eb53c5eef2b65a84659fb86f2ef9f04b8083026",
+    "docs/NATIVE-RUNPOD-ARCHIVE-VERIFICATION-2026-10-21.json": "2c65f93b75156e945b13a45fcdd1ac98cc80c6b81940d7f7096d59aa189c43bd"
+  },
+  "exact_new_user_turn_matches_in_old_source_and_fulltask_plans": [],
+  "overlap_limit": "Exact casefolded user-turn comparison only, not proof of semantic holdout independence.",
+  "assembler_tests": {
+    "command": "/Users/daryl/.venvs/duplex-live/bin/python -m unittest evals.harness.test_native_control_repair -v",
+    "tests": 6,
+    "passed": true,
+    "fixtures_only": true,
+    "model_quality_proven": false
+  },
+  "actual_speech_generation_submitted": false,
+  "actual_teacher_generation_submitted": false,
+  "gpu_created": false,
+  "optimizer_updates": 0,
+  "training_approved": false,
+  "required_next": [
+    "Configure local API credential without transferring it to Runpod or chat.",
+    "Implement and audit actual control3 teacher capture/quality/semantic/conversion bindings; historical native-v2 is not an implicit approval route.",
+    "Generate one new immutable complete40 source collection, independently qualify all clips and whole source timelines; preserve failures.",
+    "Obtain complete40 actual teacher, independent quality, semantic, conversion and numerical approvals.",
+    "Complete baseline/candidate native10 and independent speech/ordinary4 before selecting a repair parent; preserve full40 sealed evaluation for reviewed candidate."
+  ],
+  "architecture": "Native Context Spanning / PersonaPlex / Moshi; no fallback or frontend keyword gate"
+}

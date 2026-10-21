@@ -1,0 +1,1662 @@
+{
+  "schema": "dl-native-control3-source-plan-v1",
+  "status": "source-only; no audio generated; all approvals pending",
+  "owner_conversations_used": false,
+  "external_speech_api_used": false,
+  "model_or_training_recipe_changed": false,
+  "training_approved": false,
+  "collection_scope": "40 entirely authored TRAIN source scenes; preserve all existing folds and heldouts",
+  "model_inputs": "User PCM, ordinary native persona/voice and actual arrived worker receipts only; no cue fields, phase state, scoring references or answer text injected at inference.",
+  "required_chain": [
+    "source audio",
+    "actual native teacher histories",
+    "independent complete quality",
+    "independent semantic review",
+    "conversion",
+    "native numerical approval",
+    "bounded pilot",
+    "independent state restore",
+    "complete behavioral review"
+  ],
+  "prohibited_shortcuts": [
+    "No output keyword gate or forced silence",
+    "No passing subset",
+    "No gain lowering or threshold weakening",
+    "No heldout relabeling",
+    "No unchanged extension of a failed candidate"
+  ],
+  "generation_blockers": [
+    "Use the separately tested native_control_render adapter for raw source assembly. The historical renderer cannot represent terminal no-release silence.",
+    "Historical semantic/quiet checks need multiple non-release user turns and cue-replacement support; do not silently use weaker old semantics.",
+    "Real speech/teacher API requests require a locally configured credential; no remote request is made by this module."
+  ],
+  "existing_28_histories_and_49_teachers_retained": true,
+  "retention_kl_weight": 1.0,
+  "retention_hidden_mse_weight": 10.0,
+  "cases": [
+    {
+      "id": "native-control3-train-000",
+      "split": "train",
+      "family": "no-release",
+      "cue": "beacon",
+      "user_voice": "alloy",
+      "assistant_voice": "marin",
+      "turns": [
+        {
+          "role": "user",
+          "text": "Every small basket holds apples. This basket is small. What does it hold?",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "assistant",
+          "text": "It holds apples.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "user",
+          "text": "Stay completely silent until I say beacon in a later turn.",
+          "gap_before_s": 0.56
+        }
+      ],
+      "quiet_start_after_turn": 2,
+      "release_turn": null,
+      "trailing_observation_s": 10.0,
+      "external_requests_allowed": false,
+      "expected_assistant_turns": [
+        1
+      ],
+      "required": "No acknowledgment, clarification, words or audible speech while quiet; after a valid later cue complete the stated task without inventing facts.",
+      "training_approved": false
+    },
+    {
+      "id": "native-control3-train-001",
+      "split": "train",
+      "family": "no-release",
+      "cue": "orbit",
+      "user_voice": "echo",
+      "assistant_voice": "marin",
+      "turns": [
+        {
+          "role": "user",
+          "text": "Mia came before Leo. Leo came before Sam. Who came first?",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "assistant",
+          "text": "Mia came first.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "user",
+          "text": "Please listen without replying. Wait until I later say orbit.",
+          "gap_before_s": 0.56
+        }
+      ],
+      "quiet_start_after_turn": 2,
+      "release_turn": null,
+      "trailing_observation_s": 20.0,
+      "external_requests_allowed": false,
+      "expected_assistant_turns": [
+        1
+      ],
+      "required": "No acknowledgment, clarification, words or audible speech while quiet; after a valid later cue complete the stated task without inventing facts.",
+      "training_approved": false
+    },
+    {
+      "id": "native-control3-train-002",
+      "split": "train",
+      "family": "no-release",
+      "cue": "lantern",
+      "user_voice": "alloy",
+      "assistant_voice": "marin",
+      "turns": [
+        {
+          "role": "user",
+          "text": "There are five stones. I add three and remove two. How many remain?",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "assistant",
+          "text": "Six stones remain.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "user",
+          "text": "Do not answer or acknowledge this. Speak only after I say lantern again.",
+          "gap_before_s": 0.56
+        }
+      ],
+      "quiet_start_after_turn": 2,
+      "release_turn": null,
+      "trailing_observation_s": 30.0,
+      "external_requests_allowed": false,
+      "expected_assistant_turns": [
+        1
+      ],
+      "required": "No acknowledgment, clarification, words or audible speech while quiet; after a valid later cue complete the stated task without inventing facts.",
+      "training_approved": false
+    },
+    {
+      "id": "native-control3-train-003",
+      "split": "train",
+      "family": "no-release",
+      "cue": "walnut",
+      "user_voice": "echo",
+      "assistant_voice": "marin",
+      "turns": [
+        {
+          "role": "user",
+          "text": "The coin is in one of two jars. The round jar is empty. Where is the coin?",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "assistant",
+          "text": "The coin is in the other jar.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "user",
+          "text": "Keep listening quietly. I will release you by saying walnut later.",
+          "gap_before_s": 0.56
+        }
+      ],
+      "quiet_start_after_turn": 2,
+      "release_turn": null,
+      "trailing_observation_s": 10.0,
+      "external_requests_allowed": false,
+      "expected_assistant_turns": [
+        1
+      ],
+      "required": "No acknowledgment, clarification, words or audible speech while quiet; after a valid later cue complete the stated task without inventing facts.",
+      "training_approved": false
+    },
+    {
+      "id": "native-control3-train-004",
+      "split": "train",
+      "family": "no-release",
+      "cue": "copper",
+      "user_voice": "alloy",
+      "assistant_voice": "marin",
+      "turns": [
+        {
+          "role": "user",
+          "text": "Why does a shadow move when a lamp moves?",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "assistant",
+          "text": "The light reaches the object from a different direction.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "user",
+          "text": "Stay completely silent until I say copper in a later turn.",
+          "gap_before_s": 0.56
+        }
+      ],
+      "quiet_start_after_turn": 2,
+      "release_turn": null,
+      "trailing_observation_s": 20.0,
+      "external_requests_allowed": false,
+      "expected_assistant_turns": [
+        1
+      ],
+      "required": "No acknowledgment, clarification, words or audible speech while quiet; after a valid later cue complete the stated task without inventing facts.",
+      "training_approved": false
+    },
+    {
+      "id": "native-control3-train-005",
+      "split": "train",
+      "family": "no-release",
+      "cue": "harvest",
+      "user_voice": "echo",
+      "assistant_voice": "marin",
+      "turns": [
+        {
+          "role": "user",
+          "text": "Why does water form drops on a cold glass?",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "assistant",
+          "text": "Water vapour in the air cools and condenses on the glass.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "user",
+          "text": "Please listen without replying. Wait until I later say harvest.",
+          "gap_before_s": 0.56
+        }
+      ],
+      "quiet_start_after_turn": 2,
+      "release_turn": null,
+      "trailing_observation_s": 30.0,
+      "external_requests_allowed": false,
+      "expected_assistant_turns": [
+        1
+      ],
+      "required": "No acknowledgment, clarification, words or audible speech while quiet; after a valid later cue complete the stated task without inventing facts.",
+      "training_approved": false
+    },
+    {
+      "id": "native-control3-train-006",
+      "split": "train",
+      "family": "no-release",
+      "cue": "marble",
+      "user_voice": "alloy",
+      "assistant_voice": "marin",
+      "turns": [
+        {
+          "role": "user",
+          "text": "Which carries light to my eyes, a sound wave or reflected light?",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "assistant",
+          "text": "Reflected light carries light to your eyes.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "user",
+          "text": "Do not answer or acknowledge this. Speak only after I say marble again.",
+          "gap_before_s": 0.56
+        }
+      ],
+      "quiet_start_after_turn": 2,
+      "release_turn": null,
+      "trailing_observation_s": 10.0,
+      "external_requests_allowed": false,
+      "expected_assistant_turns": [
+        1
+      ],
+      "required": "No acknowledgment, clarification, words or audible speech while quiet; after a valid later cue complete the stated task without inventing facts.",
+      "training_approved": false
+    },
+    {
+      "id": "native-control3-train-007",
+      "split": "train",
+      "family": "no-release",
+      "cue": "velvet",
+      "user_voice": "echo",
+      "assistant_voice": "marin",
+      "turns": [
+        {
+          "role": "user",
+          "text": "If the path is blocked, we use the bridge. The path is blocked. Which way do we go?",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "assistant",
+          "text": "We use the bridge.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "user",
+          "text": "Keep listening quietly. I will release you by saying velvet later.",
+          "gap_before_s": 0.56
+        }
+      ],
+      "quiet_start_after_turn": 2,
+      "release_turn": null,
+      "trailing_observation_s": 20.0,
+      "external_requests_allowed": false,
+      "expected_assistant_turns": [
+        1
+      ],
+      "required": "No acknowledgment, clarification, words or audible speech while quiet; after a valid later cue complete the stated task without inventing facts.",
+      "training_approved": false
+    },
+    {
+      "id": "native-control3-train-008",
+      "split": "train",
+      "family": "release-reason",
+      "cue": "beacon",
+      "user_voice": "echo",
+      "assistant_voice": "marin",
+      "turns": [
+        {
+          "role": "user",
+          "text": "Please listen without replying. Wait until I later say beacon.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "user",
+          "text": "Beacon. Every small basket holds apples. This basket is small. What does it hold?",
+          "gap_before_s": 4.0
+        },
+        {
+          "role": "assistant",
+          "text": "It holds apples.",
+          "gap_before_s": 0.56
+        }
+      ],
+      "quiet_start_after_turn": 0,
+      "release_turn": 1,
+      "trailing_observation_s": 1.0,
+      "external_requests_allowed": false,
+      "expected_assistant_turns": [
+        2
+      ],
+      "required": "No acknowledgment, clarification, words or audible speech while quiet; after a valid later cue complete the stated task without inventing facts.",
+      "training_approved": false
+    },
+    {
+      "id": "native-control3-train-009",
+      "split": "train",
+      "family": "release-reason",
+      "cue": "orbit",
+      "user_voice": "alloy",
+      "assistant_voice": "marin",
+      "turns": [
+        {
+          "role": "user",
+          "text": "Do not answer or acknowledge this. Speak only after I say orbit again.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "user",
+          "text": "Orbit. Mia came before Leo. Leo came before Sam. Who came first?",
+          "gap_before_s": 8.0
+        },
+        {
+          "role": "assistant",
+          "text": "Mia came first.",
+          "gap_before_s": 0.56
+        }
+      ],
+      "quiet_start_after_turn": 0,
+      "release_turn": 1,
+      "trailing_observation_s": 1.0,
+      "external_requests_allowed": false,
+      "expected_assistant_turns": [
+        2
+      ],
+      "required": "No acknowledgment, clarification, words or audible speech while quiet; after a valid later cue complete the stated task without inventing facts.",
+      "training_approved": false
+    },
+    {
+      "id": "native-control3-train-010",
+      "split": "train",
+      "family": "release-reason",
+      "cue": "lantern",
+      "user_voice": "echo",
+      "assistant_voice": "marin",
+      "turns": [
+        {
+          "role": "user",
+          "text": "Keep listening quietly. I will release you by saying lantern later.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "user",
+          "text": "Lantern. There are five stones. I add three and remove two. How many remain?",
+          "gap_before_s": 10.0
+        },
+        {
+          "role": "assistant",
+          "text": "Six stones remain.",
+          "gap_before_s": 0.56
+        }
+      ],
+      "quiet_start_after_turn": 0,
+      "release_turn": 1,
+      "trailing_observation_s": 1.0,
+      "external_requests_allowed": false,
+      "expected_assistant_turns": [
+        2
+      ],
+      "required": "No acknowledgment, clarification, words or audible speech while quiet; after a valid later cue complete the stated task without inventing facts.",
+      "training_approved": false
+    },
+    {
+      "id": "native-control3-train-011",
+      "split": "train",
+      "family": "release-reason",
+      "cue": "walnut",
+      "user_voice": "alloy",
+      "assistant_voice": "marin",
+      "turns": [
+        {
+          "role": "user",
+          "text": "Stay completely silent until I say walnut in a later turn.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "user",
+          "text": "Walnut. The coin is in one of two jars. The round jar is empty. Where is the coin?",
+          "gap_before_s": 4.0
+        },
+        {
+          "role": "assistant",
+          "text": "The coin is in the other jar.",
+          "gap_before_s": 0.56
+        }
+      ],
+      "quiet_start_after_turn": 0,
+      "release_turn": 1,
+      "trailing_observation_s": 1.0,
+      "external_requests_allowed": false,
+      "expected_assistant_turns": [
+        2
+      ],
+      "required": "No acknowledgment, clarification, words or audible speech while quiet; after a valid later cue complete the stated task without inventing facts.",
+      "training_approved": false
+    },
+    {
+      "id": "native-control3-train-012",
+      "split": "train",
+      "family": "release-reason",
+      "cue": "copper",
+      "user_voice": "echo",
+      "assistant_voice": "marin",
+      "turns": [
+        {
+          "role": "user",
+          "text": "Please listen without replying. Wait until I later say copper.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "user",
+          "text": "Copper. Why does a shadow move when a lamp moves?",
+          "gap_before_s": 8.0
+        },
+        {
+          "role": "assistant",
+          "text": "The light reaches the object from a different direction.",
+          "gap_before_s": 0.56
+        }
+      ],
+      "quiet_start_after_turn": 0,
+      "release_turn": 1,
+      "trailing_observation_s": 1.0,
+      "external_requests_allowed": false,
+      "expected_assistant_turns": [
+        2
+      ],
+      "required": "No acknowledgment, clarification, words or audible speech while quiet; after a valid later cue complete the stated task without inventing facts.",
+      "training_approved": false
+    },
+    {
+      "id": "native-control3-train-013",
+      "split": "train",
+      "family": "release-reason",
+      "cue": "harvest",
+      "user_voice": "alloy",
+      "assistant_voice": "marin",
+      "turns": [
+        {
+          "role": "user",
+          "text": "Do not answer or acknowledge this. Speak only after I say harvest again.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "user",
+          "text": "Harvest. Why does water form drops on a cold glass?",
+          "gap_before_s": 10.0
+        },
+        {
+          "role": "assistant",
+          "text": "Water vapour in the air cools and condenses on the glass.",
+          "gap_before_s": 0.56
+        }
+      ],
+      "quiet_start_after_turn": 0,
+      "release_turn": 1,
+      "trailing_observation_s": 1.0,
+      "external_requests_allowed": false,
+      "expected_assistant_turns": [
+        2
+      ],
+      "required": "No acknowledgment, clarification, words or audible speech while quiet; after a valid later cue complete the stated task without inventing facts.",
+      "training_approved": false
+    },
+    {
+      "id": "native-control3-train-014",
+      "split": "train",
+      "family": "release-reason",
+      "cue": "marble",
+      "user_voice": "echo",
+      "assistant_voice": "marin",
+      "turns": [
+        {
+          "role": "user",
+          "text": "Keep listening quietly. I will release you by saying marble later.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "user",
+          "text": "Marble. Which carries light to my eyes, a sound wave or reflected light?",
+          "gap_before_s": 4.0
+        },
+        {
+          "role": "assistant",
+          "text": "Reflected light carries light to your eyes.",
+          "gap_before_s": 0.56
+        }
+      ],
+      "quiet_start_after_turn": 0,
+      "release_turn": 1,
+      "trailing_observation_s": 1.0,
+      "external_requests_allowed": false,
+      "expected_assistant_turns": [
+        2
+      ],
+      "required": "No acknowledgment, clarification, words or audible speech while quiet; after a valid later cue complete the stated task without inventing facts.",
+      "training_approved": false
+    },
+    {
+      "id": "native-control3-train-015",
+      "split": "train",
+      "family": "release-reason",
+      "cue": "velvet",
+      "user_voice": "alloy",
+      "assistant_voice": "marin",
+      "turns": [
+        {
+          "role": "user",
+          "text": "Stay completely silent until I say velvet in a later turn.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "user",
+          "text": "Velvet. If the path is blocked, we use the bridge. The path is blocked. Which way do we go?",
+          "gap_before_s": 8.0
+        },
+        {
+          "role": "assistant",
+          "text": "We use the bridge.",
+          "gap_before_s": 0.56
+        }
+      ],
+      "quiet_start_after_turn": 0,
+      "release_turn": 1,
+      "trailing_observation_s": 1.0,
+      "external_requests_allowed": false,
+      "expected_assistant_turns": [
+        2
+      ],
+      "required": "No acknowledgment, clarification, words or audible speech while quiet; after a valid later cue complete the stated task without inventing facts.",
+      "training_approved": false
+    },
+    {
+      "id": "native-control3-train-016",
+      "split": "train",
+      "family": "distractor-release",
+      "cue": "beacon",
+      "user_voice": "alloy",
+      "assistant_voice": "marin",
+      "turns": [
+        {
+          "role": "user",
+          "text": "Do not answer or acknowledge this. Speak only after I say beacon again.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "user",
+          "text": "I am still thinking. There is no need to reply.",
+          "gap_before_s": 8.0
+        },
+        {
+          "role": "user",
+          "text": "Bacon.",
+          "gap_before_s": 8.0
+        },
+        {
+          "role": "user",
+          "text": "Beacon. Every small basket holds apples. This basket is small. What does it hold?",
+          "gap_before_s": 8.0
+        },
+        {
+          "role": "assistant",
+          "text": "It holds apples.",
+          "gap_before_s": 0.56
+        }
+      ],
+      "quiet_start_after_turn": 0,
+      "release_turn": 3,
+      "trailing_observation_s": 1.0,
+      "external_requests_allowed": false,
+      "expected_assistant_turns": [
+        4
+      ],
+      "required": "No acknowledgment, clarification, words or audible speech while quiet; after a valid later cue complete the stated task without inventing facts.",
+      "training_approved": false
+    },
+    {
+      "id": "native-control3-train-017",
+      "split": "train",
+      "family": "distractor-release",
+      "cue": "orbit",
+      "user_voice": "echo",
+      "assistant_voice": "marin",
+      "turns": [
+        {
+          "role": "user",
+          "text": "Keep listening quietly. I will release you by saying orbit later.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "user",
+          "text": "I am still thinking. There is no need to reply.",
+          "gap_before_s": 8.0
+        },
+        {
+          "role": "user",
+          "text": "Order.",
+          "gap_before_s": 8.0
+        },
+        {
+          "role": "user",
+          "text": "Orbit. Mia came before Leo. Leo came before Sam. Who came first?",
+          "gap_before_s": 8.0
+        },
+        {
+          "role": "assistant",
+          "text": "Mia came first.",
+          "gap_before_s": 0.56
+        }
+      ],
+      "quiet_start_after_turn": 0,
+      "release_turn": 3,
+      "trailing_observation_s": 1.0,
+      "external_requests_allowed": false,
+      "expected_assistant_turns": [
+        4
+      ],
+      "required": "No acknowledgment, clarification, words or audible speech while quiet; after a valid later cue complete the stated task without inventing facts.",
+      "training_approved": false
+    },
+    {
+      "id": "native-control3-train-018",
+      "split": "train",
+      "family": "distractor-release",
+      "cue": "lantern",
+      "user_voice": "alloy",
+      "assistant_voice": "marin",
+      "turns": [
+        {
+          "role": "user",
+          "text": "Stay completely silent until I say lantern in a later turn.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "user",
+          "text": "I am still thinking. There is no need to reply.",
+          "gap_before_s": 8.0
+        },
+        {
+          "role": "user",
+          "text": "Laundry.",
+          "gap_before_s": 8.0
+        },
+        {
+          "role": "user",
+          "text": "Lantern. There are five stones. I add three and remove two. How many remain?",
+          "gap_before_s": 8.0
+        },
+        {
+          "role": "assistant",
+          "text": "Six stones remain.",
+          "gap_before_s": 0.56
+        }
+      ],
+      "quiet_start_after_turn": 0,
+      "release_turn": 3,
+      "trailing_observation_s": 1.0,
+      "external_requests_allowed": false,
+      "expected_assistant_turns": [
+        4
+      ],
+      "required": "No acknowledgment, clarification, words or audible speech while quiet; after a valid later cue complete the stated task without inventing facts.",
+      "training_approved": false
+    },
+    {
+      "id": "native-control3-train-019",
+      "split": "train",
+      "family": "distractor-release",
+      "cue": "walnut",
+      "user_voice": "echo",
+      "assistant_voice": "marin",
+      "turns": [
+        {
+          "role": "user",
+          "text": "Please listen without replying. Wait until I later say walnut.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "user",
+          "text": "I am still thinking. There is no need to reply.",
+          "gap_before_s": 8.0
+        },
+        {
+          "role": "user",
+          "text": "Wallet.",
+          "gap_before_s": 8.0
+        },
+        {
+          "role": "user",
+          "text": "Walnut. The coin is in one of two jars. The round jar is empty. Where is the coin?",
+          "gap_before_s": 8.0
+        },
+        {
+          "role": "assistant",
+          "text": "The coin is in the other jar.",
+          "gap_before_s": 0.56
+        }
+      ],
+      "quiet_start_after_turn": 0,
+      "release_turn": 3,
+      "trailing_observation_s": 1.0,
+      "external_requests_allowed": false,
+      "expected_assistant_turns": [
+        4
+      ],
+      "required": "No acknowledgment, clarification, words or audible speech while quiet; after a valid later cue complete the stated task without inventing facts.",
+      "training_approved": false
+    },
+    {
+      "id": "native-control3-train-020",
+      "split": "train",
+      "family": "distractor-release",
+      "cue": "copper",
+      "user_voice": "alloy",
+      "assistant_voice": "marin",
+      "turns": [
+        {
+          "role": "user",
+          "text": "Do not answer or acknowledge this. Speak only after I say copper again.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "user",
+          "text": "I am still thinking. There is no need to reply.",
+          "gap_before_s": 8.0
+        },
+        {
+          "role": "user",
+          "text": "Coffee.",
+          "gap_before_s": 8.0
+        },
+        {
+          "role": "user",
+          "text": "Copper. Why does a shadow move when a lamp moves?",
+          "gap_before_s": 8.0
+        },
+        {
+          "role": "assistant",
+          "text": "The light reaches the object from a different direction.",
+          "gap_before_s": 0.56
+        }
+      ],
+      "quiet_start_after_turn": 0,
+      "release_turn": 3,
+      "trailing_observation_s": 1.0,
+      "external_requests_allowed": false,
+      "expected_assistant_turns": [
+        4
+      ],
+      "required": "No acknowledgment, clarification, words or audible speech while quiet; after a valid later cue complete the stated task without inventing facts.",
+      "training_approved": false
+    },
+    {
+      "id": "native-control3-train-021",
+      "split": "train",
+      "family": "distractor-release",
+      "cue": "harvest",
+      "user_voice": "echo",
+      "assistant_voice": "marin",
+      "turns": [
+        {
+          "role": "user",
+          "text": "Keep listening quietly. I will release you by saying harvest later.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "user",
+          "text": "I am still thinking. There is no need to reply.",
+          "gap_before_s": 8.0
+        },
+        {
+          "role": "user",
+          "text": "Harness.",
+          "gap_before_s": 8.0
+        },
+        {
+          "role": "user",
+          "text": "Harvest. Why does water form drops on a cold glass?",
+          "gap_before_s": 8.0
+        },
+        {
+          "role": "assistant",
+          "text": "Water vapour in the air cools and condenses on the glass.",
+          "gap_before_s": 0.56
+        }
+      ],
+      "quiet_start_after_turn": 0,
+      "release_turn": 3,
+      "trailing_observation_s": 1.0,
+      "external_requests_allowed": false,
+      "expected_assistant_turns": [
+        4
+      ],
+      "required": "No acknowledgment, clarification, words or audible speech while quiet; after a valid later cue complete the stated task without inventing facts.",
+      "training_approved": false
+    },
+    {
+      "id": "native-control3-train-022",
+      "split": "train",
+      "family": "distractor-release",
+      "cue": "marble",
+      "user_voice": "alloy",
+      "assistant_voice": "marin",
+      "turns": [
+        {
+          "role": "user",
+          "text": "Stay completely silent until I say marble in a later turn.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "user",
+          "text": "I am still thinking. There is no need to reply.",
+          "gap_before_s": 8.0
+        },
+        {
+          "role": "user",
+          "text": "Maple.",
+          "gap_before_s": 8.0
+        },
+        {
+          "role": "user",
+          "text": "Marble. Which carries light to my eyes, a sound wave or reflected light?",
+          "gap_before_s": 8.0
+        },
+        {
+          "role": "assistant",
+          "text": "Reflected light carries light to your eyes.",
+          "gap_before_s": 0.56
+        }
+      ],
+      "quiet_start_after_turn": 0,
+      "release_turn": 3,
+      "trailing_observation_s": 1.0,
+      "external_requests_allowed": false,
+      "expected_assistant_turns": [
+        4
+      ],
+      "required": "No acknowledgment, clarification, words or audible speech while quiet; after a valid later cue complete the stated task without inventing facts.",
+      "training_approved": false
+    },
+    {
+      "id": "native-control3-train-023",
+      "split": "train",
+      "family": "distractor-release",
+      "cue": "velvet",
+      "user_voice": "echo",
+      "assistant_voice": "marin",
+      "turns": [
+        {
+          "role": "user",
+          "text": "Please listen without replying. Wait until I later say velvet.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "user",
+          "text": "I am still thinking. There is no need to reply.",
+          "gap_before_s": 8.0
+        },
+        {
+          "role": "user",
+          "text": "Helmet.",
+          "gap_before_s": 8.0
+        },
+        {
+          "role": "user",
+          "text": "Velvet. If the path is blocked, we use the bridge. The path is blocked. Which way do we go?",
+          "gap_before_s": 8.0
+        },
+        {
+          "role": "assistant",
+          "text": "We use the bridge.",
+          "gap_before_s": 0.56
+        }
+      ],
+      "quiet_start_after_turn": 0,
+      "release_turn": 3,
+      "trailing_observation_s": 1.0,
+      "external_requests_allowed": false,
+      "expected_assistant_turns": [
+        4
+      ],
+      "required": "No acknowledgment, clarification, words or audible speech while quiet; after a valid later cue complete the stated task without inventing facts.",
+      "training_approved": false
+    },
+    {
+      "id": "native-control3-train-024",
+      "split": "train",
+      "family": "pause-resume",
+      "cue": "beacon",
+      "user_voice": "echo",
+      "assistant_voice": "marin",
+      "turns": [
+        {
+          "role": "user",
+          "text": "Say only the first step now: Turn the card over. After I say beacon, say Move the pencil to the left.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "assistant",
+          "text": "Turn the card over.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "user",
+          "text": "Pause here. Stay silent until I say beacon in a later turn.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "user",
+          "text": "Beacon.",
+          "gap_before_s": 4.0
+        },
+        {
+          "role": "assistant",
+          "text": "Move the pencil to the left.",
+          "gap_before_s": 0.56
+        }
+      ],
+      "quiet_start_after_turn": 2,
+      "release_turn": 3,
+      "trailing_observation_s": 1.0,
+      "external_requests_allowed": false,
+      "expected_assistant_turns": [
+        1,
+        4
+      ],
+      "required": "No acknowledgment, clarification, words or audible speech while quiet; after a valid later cue complete the stated task without inventing facts.",
+      "training_approved": false,
+      "no_restart_text": "Turn the card over."
+    },
+    {
+      "id": "native-control3-train-025",
+      "split": "train",
+      "family": "pause-resume",
+      "cue": "orbit",
+      "user_voice": "alloy",
+      "assistant_voice": "marin",
+      "turns": [
+        {
+          "role": "user",
+          "text": "Say only the first step now: Set the cup on the mat. After I say orbit, say Fold the cloth in half.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "assistant",
+          "text": "Set the cup on the mat.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "user",
+          "text": "Pause here. Stay silent until I say orbit in a later turn.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "user",
+          "text": "Orbit.",
+          "gap_before_s": 8.0
+        },
+        {
+          "role": "assistant",
+          "text": "Fold the cloth in half.",
+          "gap_before_s": 0.56
+        }
+      ],
+      "quiet_start_after_turn": 2,
+      "release_turn": 3,
+      "trailing_observation_s": 1.0,
+      "external_requests_allowed": false,
+      "expected_assistant_turns": [
+        1,
+        4
+      ],
+      "required": "No acknowledgment, clarification, words or audible speech while quiet; after a valid later cue complete the stated task without inventing facts.",
+      "training_approved": false,
+      "no_restart_text": "Set the cup on the mat."
+    },
+    {
+      "id": "native-control3-train-026",
+      "split": "train",
+      "family": "pause-resume",
+      "cue": "lantern",
+      "user_voice": "echo",
+      "assistant_voice": "marin",
+      "turns": [
+        {
+          "role": "user",
+          "text": "Say only the first step now: Lift the red block. After I say lantern, say Put the green block beside it.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "assistant",
+          "text": "Lift the red block.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "user",
+          "text": "Pause here. Stay silent until I say lantern in a later turn.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "user",
+          "text": "Lantern.",
+          "gap_before_s": 10.0
+        },
+        {
+          "role": "assistant",
+          "text": "Put the green block beside it.",
+          "gap_before_s": 0.56
+        }
+      ],
+      "quiet_start_after_turn": 2,
+      "release_turn": 3,
+      "trailing_observation_s": 1.0,
+      "external_requests_allowed": false,
+      "expected_assistant_turns": [
+        1,
+        4
+      ],
+      "required": "No acknowledgment, clarification, words or audible speech while quiet; after a valid later cue complete the stated task without inventing facts.",
+      "training_approved": false,
+      "no_restart_text": "Lift the red block."
+    },
+    {
+      "id": "native-control3-train-027",
+      "split": "train",
+      "family": "pause-resume",
+      "cue": "walnut",
+      "user_voice": "alloy",
+      "assistant_voice": "marin",
+      "turns": [
+        {
+          "role": "user",
+          "text": "Say only the first step now: Open the small case. After I say walnut, say Place the coin inside it.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "assistant",
+          "text": "Open the small case.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "user",
+          "text": "Pause here. Stay silent until I say walnut in a later turn.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "user",
+          "text": "Walnut.",
+          "gap_before_s": 4.0
+        },
+        {
+          "role": "assistant",
+          "text": "Place the coin inside it.",
+          "gap_before_s": 0.56
+        }
+      ],
+      "quiet_start_after_turn": 2,
+      "release_turn": 3,
+      "trailing_observation_s": 1.0,
+      "external_requests_allowed": false,
+      "expected_assistant_turns": [
+        1,
+        4
+      ],
+      "required": "No acknowledgment, clarification, words or audible speech while quiet; after a valid later cue complete the stated task without inventing facts.",
+      "training_approved": false,
+      "no_restart_text": "Open the small case."
+    },
+    {
+      "id": "native-control3-train-028",
+      "split": "train",
+      "family": "pause-resume",
+      "cue": "copper",
+      "user_voice": "echo",
+      "assistant_voice": "marin",
+      "turns": [
+        {
+          "role": "user",
+          "text": "Say only the first step now: Draw a short line. After I say copper, say Add a circle below it.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "assistant",
+          "text": "Draw a short line.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "user",
+          "text": "Pause here. Stay silent until I say copper in a later turn.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "user",
+          "text": "Copper.",
+          "gap_before_s": 8.0
+        },
+        {
+          "role": "assistant",
+          "text": "Add a circle below it.",
+          "gap_before_s": 0.56
+        }
+      ],
+      "quiet_start_after_turn": 2,
+      "release_turn": 3,
+      "trailing_observation_s": 1.0,
+      "external_requests_allowed": false,
+      "expected_assistant_turns": [
+        1,
+        4
+      ],
+      "required": "No acknowledgment, clarification, words or audible speech while quiet; after a valid later cue complete the stated task without inventing facts.",
+      "training_approved": false,
+      "no_restart_text": "Draw a short line."
+    },
+    {
+      "id": "native-control3-train-029",
+      "split": "train",
+      "family": "pause-resume",
+      "cue": "harvest",
+      "user_voice": "alloy",
+      "assistant_voice": "marin",
+      "turns": [
+        {
+          "role": "user",
+          "text": "Say only the first step now: Point at the window. After I say harvest, say Touch the table.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "assistant",
+          "text": "Point at the window.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "user",
+          "text": "Pause here. Stay silent until I say harvest in a later turn.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "user",
+          "text": "Harvest.",
+          "gap_before_s": 10.0
+        },
+        {
+          "role": "assistant",
+          "text": "Touch the table.",
+          "gap_before_s": 0.56
+        }
+      ],
+      "quiet_start_after_turn": 2,
+      "release_turn": 3,
+      "trailing_observation_s": 1.0,
+      "external_requests_allowed": false,
+      "expected_assistant_turns": [
+        1,
+        4
+      ],
+      "required": "No acknowledgment, clarification, words or audible speech while quiet; after a valid later cue complete the stated task without inventing facts.",
+      "training_approved": false,
+      "no_restart_text": "Point at the window."
+    },
+    {
+      "id": "native-control3-train-030",
+      "split": "train",
+      "family": "pause-resume",
+      "cue": "marble",
+      "user_voice": "echo",
+      "assistant_voice": "marin",
+      "turns": [
+        {
+          "role": "user",
+          "text": "Say only the first step now: Put down the brush. After I say marble, say Pick up the sponge.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "assistant",
+          "text": "Put down the brush.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "user",
+          "text": "Pause here. Stay silent until I say marble in a later turn.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "user",
+          "text": "Marble.",
+          "gap_before_s": 4.0
+        },
+        {
+          "role": "assistant",
+          "text": "Pick up the sponge.",
+          "gap_before_s": 0.56
+        }
+      ],
+      "quiet_start_after_turn": 2,
+      "release_turn": 3,
+      "trailing_observation_s": 1.0,
+      "external_requests_allowed": false,
+      "expected_assistant_turns": [
+        1,
+        4
+      ],
+      "required": "No acknowledgment, clarification, words or audible speech while quiet; after a valid later cue complete the stated task without inventing facts.",
+      "training_approved": false,
+      "no_restart_text": "Put down the brush."
+    },
+    {
+      "id": "native-control3-train-031",
+      "split": "train",
+      "family": "pause-resume",
+      "cue": "velvet",
+      "user_voice": "alloy",
+      "assistant_voice": "marin",
+      "turns": [
+        {
+          "role": "user",
+          "text": "Say only the first step now: Move the chair back. After I say velvet, say Place the cushion on it.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "assistant",
+          "text": "Move the chair back.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "user",
+          "text": "Pause here. Stay silent until I say velvet in a later turn.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "user",
+          "text": "Velvet.",
+          "gap_before_s": 8.0
+        },
+        {
+          "role": "assistant",
+          "text": "Place the cushion on it.",
+          "gap_before_s": 0.56
+        }
+      ],
+      "quiet_start_after_turn": 2,
+      "release_turn": 3,
+      "trailing_observation_s": 1.0,
+      "external_requests_allowed": false,
+      "expected_assistant_turns": [
+        1,
+        4
+      ],
+      "required": "No acknowledgment, clarification, words or audible speech while quiet; after a valid later cue complete the stated task without inventing facts.",
+      "training_approved": false,
+      "no_restart_text": "Move the chair back."
+    },
+    {
+      "id": "native-control3-train-032",
+      "split": "train",
+      "family": "replace-cue",
+      "cue": "beacon",
+      "user_voice": "alloy",
+      "assistant_voice": "marin",
+      "turns": [
+        {
+          "role": "user",
+          "text": "Stay completely silent until I say beacon in a later turn.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "user",
+          "text": "Change the cue to orbit. Keep quiet until I say it in another turn.",
+          "gap_before_s": 8.0
+        },
+        {
+          "role": "user",
+          "text": "Beacon.",
+          "gap_before_s": 8.0
+        },
+        {
+          "role": "user",
+          "text": "Orbit. Every small basket holds apples. This basket is small. What does it hold?",
+          "gap_before_s": 8.0
+        },
+        {
+          "role": "assistant",
+          "text": "It holds apples.",
+          "gap_before_s": 0.56
+        }
+      ],
+      "quiet_start_after_turn": 0,
+      "release_turn": 3,
+      "trailing_observation_s": 1.0,
+      "external_requests_allowed": false,
+      "expected_assistant_turns": [
+        4
+      ],
+      "required": "No acknowledgment, clarification, words or audible speech while quiet; after a valid later cue complete the stated task without inventing facts.",
+      "training_approved": false,
+      "replacement_cue": "orbit"
+    },
+    {
+      "id": "native-control3-train-033",
+      "split": "train",
+      "family": "replace-cue",
+      "cue": "orbit",
+      "user_voice": "echo",
+      "assistant_voice": "marin",
+      "turns": [
+        {
+          "role": "user",
+          "text": "Please listen without replying. Wait until I later say orbit.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "user",
+          "text": "Change the cue to lantern. Keep quiet until I say it in another turn.",
+          "gap_before_s": 8.0
+        },
+        {
+          "role": "user",
+          "text": "Orbit.",
+          "gap_before_s": 8.0
+        },
+        {
+          "role": "user",
+          "text": "Lantern. Mia came before Leo. Leo came before Sam. Who came first?",
+          "gap_before_s": 8.0
+        },
+        {
+          "role": "assistant",
+          "text": "Mia came first.",
+          "gap_before_s": 0.56
+        }
+      ],
+      "quiet_start_after_turn": 0,
+      "release_turn": 3,
+      "trailing_observation_s": 1.0,
+      "external_requests_allowed": false,
+      "expected_assistant_turns": [
+        4
+      ],
+      "required": "No acknowledgment, clarification, words or audible speech while quiet; after a valid later cue complete the stated task without inventing facts.",
+      "training_approved": false,
+      "replacement_cue": "lantern"
+    },
+    {
+      "id": "native-control3-train-034",
+      "split": "train",
+      "family": "replace-cue",
+      "cue": "lantern",
+      "user_voice": "alloy",
+      "assistant_voice": "marin",
+      "turns": [
+        {
+          "role": "user",
+          "text": "Do not answer or acknowledge this. Speak only after I say lantern again.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "user",
+          "text": "Change the cue to walnut. Keep quiet until I say it in another turn.",
+          "gap_before_s": 8.0
+        },
+        {
+          "role": "user",
+          "text": "Lantern.",
+          "gap_before_s": 8.0
+        },
+        {
+          "role": "user",
+          "text": "Walnut. There are five stones. I add three and remove two. How many remain?",
+          "gap_before_s": 8.0
+        },
+        {
+          "role": "assistant",
+          "text": "Six stones remain.",
+          "gap_before_s": 0.56
+        }
+      ],
+      "quiet_start_after_turn": 0,
+      "release_turn": 3,
+      "trailing_observation_s": 1.0,
+      "external_requests_allowed": false,
+      "expected_assistant_turns": [
+        4
+      ],
+      "required": "No acknowledgment, clarification, words or audible speech while quiet; after a valid later cue complete the stated task without inventing facts.",
+      "training_approved": false,
+      "replacement_cue": "walnut"
+    },
+    {
+      "id": "native-control3-train-035",
+      "split": "train",
+      "family": "replace-cue",
+      "cue": "walnut",
+      "user_voice": "echo",
+      "assistant_voice": "marin",
+      "turns": [
+        {
+          "role": "user",
+          "text": "Keep listening quietly. I will release you by saying walnut later.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "user",
+          "text": "Change the cue to copper. Keep quiet until I say it in another turn.",
+          "gap_before_s": 8.0
+        },
+        {
+          "role": "user",
+          "text": "Walnut.",
+          "gap_before_s": 8.0
+        },
+        {
+          "role": "user",
+          "text": "Copper. The coin is in one of two jars. The round jar is empty. Where is the coin?",
+          "gap_before_s": 8.0
+        },
+        {
+          "role": "assistant",
+          "text": "The coin is in the other jar.",
+          "gap_before_s": 0.56
+        }
+      ],
+      "quiet_start_after_turn": 0,
+      "release_turn": 3,
+      "trailing_observation_s": 1.0,
+      "external_requests_allowed": false,
+      "expected_assistant_turns": [
+        4
+      ],
+      "required": "No acknowledgment, clarification, words or audible speech while quiet; after a valid later cue complete the stated task without inventing facts.",
+      "training_approved": false,
+      "replacement_cue": "copper"
+    },
+    {
+      "id": "native-control3-train-036",
+      "split": "train",
+      "family": "replace-cue",
+      "cue": "copper",
+      "user_voice": "alloy",
+      "assistant_voice": "marin",
+      "turns": [
+        {
+          "role": "user",
+          "text": "Stay completely silent until I say copper in a later turn.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "user",
+          "text": "Change the cue to harvest. Keep quiet until I say it in another turn.",
+          "gap_before_s": 8.0
+        },
+        {
+          "role": "user",
+          "text": "Copper.",
+          "gap_before_s": 8.0
+        },
+        {
+          "role": "user",
+          "text": "Harvest. Why does a shadow move when a lamp moves?",
+          "gap_before_s": 8.0
+        },
+        {
+          "role": "assistant",
+          "text": "The light reaches the object from a different direction.",
+          "gap_before_s": 0.56
+        }
+      ],
+      "quiet_start_after_turn": 0,
+      "release_turn": 3,
+      "trailing_observation_s": 1.0,
+      "external_requests_allowed": false,
+      "expected_assistant_turns": [
+        4
+      ],
+      "required": "No acknowledgment, clarification, words or audible speech while quiet; after a valid later cue complete the stated task without inventing facts.",
+      "training_approved": false,
+      "replacement_cue": "harvest"
+    },
+    {
+      "id": "native-control3-train-037",
+      "split": "train",
+      "family": "replace-cue",
+      "cue": "harvest",
+      "user_voice": "echo",
+      "assistant_voice": "marin",
+      "turns": [
+        {
+          "role": "user",
+          "text": "Please listen without replying. Wait until I later say harvest.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "user",
+          "text": "Change the cue to marble. Keep quiet until I say it in another turn.",
+          "gap_before_s": 8.0
+        },
+        {
+          "role": "user",
+          "text": "Harvest.",
+          "gap_before_s": 8.0
+        },
+        {
+          "role": "user",
+          "text": "Marble. Why does water form drops on a cold glass?",
+          "gap_before_s": 8.0
+        },
+        {
+          "role": "assistant",
+          "text": "Water vapour in the air cools and condenses on the glass.",
+          "gap_before_s": 0.56
+        }
+      ],
+      "quiet_start_after_turn": 0,
+      "release_turn": 3,
+      "trailing_observation_s": 1.0,
+      "external_requests_allowed": false,
+      "expected_assistant_turns": [
+        4
+      ],
+      "required": "No acknowledgment, clarification, words or audible speech while quiet; after a valid later cue complete the stated task without inventing facts.",
+      "training_approved": false,
+      "replacement_cue": "marble"
+    },
+    {
+      "id": "native-control3-train-038",
+      "split": "train",
+      "family": "replace-cue",
+      "cue": "marble",
+      "user_voice": "alloy",
+      "assistant_voice": "marin",
+      "turns": [
+        {
+          "role": "user",
+          "text": "Do not answer or acknowledge this. Speak only after I say marble again.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "user",
+          "text": "Change the cue to velvet. Keep quiet until I say it in another turn.",
+          "gap_before_s": 8.0
+        },
+        {
+          "role": "user",
+          "text": "Marble.",
+          "gap_before_s": 8.0
+        },
+        {
+          "role": "user",
+          "text": "Velvet. Which carries light to my eyes, a sound wave or reflected light?",
+          "gap_before_s": 8.0
+        },
+        {
+          "role": "assistant",
+          "text": "Reflected light carries light to your eyes.",
+          "gap_before_s": 0.56
+        }
+      ],
+      "quiet_start_after_turn": 0,
+      "release_turn": 3,
+      "trailing_observation_s": 1.0,
+      "external_requests_allowed": false,
+      "expected_assistant_turns": [
+        4
+      ],
+      "required": "No acknowledgment, clarification, words or audible speech while quiet; after a valid later cue complete the stated task without inventing facts.",
+      "training_approved": false,
+      "replacement_cue": "velvet"
+    },
+    {
+      "id": "native-control3-train-039",
+      "split": "train",
+      "family": "replace-cue",
+      "cue": "velvet",
+      "user_voice": "echo",
+      "assistant_voice": "marin",
+      "turns": [
+        {
+          "role": "user",
+          "text": "Keep listening quietly. I will release you by saying velvet later.",
+          "gap_before_s": 0.56
+        },
+        {
+          "role": "user",
+          "text": "Change the cue to beacon. Keep quiet until I say it in another turn.",
+          "gap_before_s": 8.0
+        },
+        {
+          "role": "user",
+          "text": "Velvet.",
+          "gap_before_s": 8.0
+        },
+        {
+          "role": "user",
+          "text": "Beacon. If the path is blocked, we use the bridge. The path is blocked. Which way do we go?",
+          "gap_before_s": 8.0
+        },
+        {
+          "role": "assistant",
+          "text": "We use the bridge.",
+          "gap_before_s": 0.56
+        }
+      ],
+      "quiet_start_after_turn": 0,
+      "release_turn": 3,
+      "trailing_observation_s": 1.0,
+      "external_requests_allowed": false,
+      "expected_assistant_turns": [
+        4
+      ],
+      "required": "No acknowledgment, clarification, words or audible speech while quiet; after a valid later cue complete the stated task without inventing facts.",
+      "training_approved": false,
+      "replacement_cue": "beacon"
+    }
+  ]
+}

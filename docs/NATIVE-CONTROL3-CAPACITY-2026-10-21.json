@@ -1,0 +1,242 @@
+{
+  "schema": "dl-native-control3-capacity-read-v1",
+  "at_utc": "2026-10-21 18:11:42 UTC",
+  "cloud": "SECURE",
+  "product": "POD",
+  "count": 1,
+  "min_cuda": "13.0",
+  "volume": "49yytzyoge",
+  "volume_data_center": "EUR-IS-1",
+  "stock_80gb_plus": [
+    {
+      "id": "AMD Instinct MI300X OAM",
+      "memory_gb": 192,
+      "secure_usd_per_hour": 2.39,
+      "data_centers": [],
+      "availability": "NONE"
+    },
+    {
+      "id": "AMD Instinct MI350 OAM",
+      "memory_gb": 294,
+      "secure_usd_per_hour": 5.49,
+      "data_centers": [],
+      "availability": "NONE"
+    },
+    {
+      "id": "NVIDIA A100 80GB PCIe",
+      "memory_gb": 80,
+      "secure_usd_per_hour": 1.79,
+      "data_centers": [
+        {
+          "id": "CA-MTL-3",
+          "availability": "LOW"
+        },
+        {
+          "id": "US-KS-2",
+          "availability": "LOW"
+        }
+      ],
+      "availability": "LOW"
+    },
+    {
+      "id": "NVIDIA A100-SXM4-80GB",
+      "memory_gb": 80,
+      "secure_usd_per_hour": 1.79,
+      "data_centers": [
+        {
+          "id": "EU-RO-1",
+          "availability": "LOW"
+        },
+        {
+          "id": "US-KS-2",
+          "availability": "LOW"
+        },
+        {
+          "id": "US-MD-1",
+          "availability": "LOW"
+        },
+        {
+          "id": "US-WA-1",
+          "availability": "LOW"
+        }
+      ],
+      "availability": "LOW"
+    },
+    {
+      "id": "NVIDIA B200",
+      "memory_gb": 180,
+      "secure_usd_per_hour": 7.99,
+      "data_centers": [
+        {
+          "id": "EU-RO-1",
+          "availability": "LOW"
+        },
+        {
+          "id": "US-NE-1",
+          "availability": "LOW"
+        }
+      ],
+      "availability": "LOW"
+    },
+    {
+      "id": "NVIDIA B300 SXM6 AC",
+      "memory_gb": 288,
+      "secure_usd_per_hour": 8.99,
+      "data_centers": [
+        {
+          "id": "EU-NL-1",
+          "availability": "LOW"
+        }
+      ],
+      "availability": "LOW"
+    },
+    {
+      "id": "NVIDIA H100 80GB HBM3",
+      "memory_gb": 80,
+      "secure_usd_per_hour": 3.99,
+      "data_centers": [
+        {
+          "id": "AP-IN-1",
+          "availability": "LOW"
+        },
+        {
+          "id": "AP-JP-1",
+          "availability": "LOW"
+        },
+        {
+          "id": "CA-MTL-1",
+          "availability": "LOW"
+        },
+        {
+          "id": "EU-FR-1",
+          "availability": "LOW"
+        },
+        {
+          "id": "EU-NL-1",
+          "availability": "LOW"
+        },
+        {
+          "id": "US-GA-2",
+          "availability": "LOW"
+        },
+        {
+          "id": "US-MO-1",
+          "availability": "LOW"
+        },
+        {
+          "id": "US-NE-1",
+          "availability": "LOW"
+        }
+      ],
+      "availability": "MEDIUM"
+    },
+    {
+      "id": "NVIDIA H100 NVL",
+      "memory_gb": 94,
+      "secure_usd_per_hour": 3.19,
+      "data_centers": [
+        {
+          "id": "US-KS-2",
+          "availability": "LOW"
+        }
+      ],
+      "availability": "LOW"
+    },
+    {
+      "id": "NVIDIA H100 PCIe",
+      "memory_gb": 80,
+      "secure_usd_per_hour": 2.89,
+      "data_centers": [],
+      "availability": "NONE"
+    },
+    {
+      "id": "NVIDIA H200",
+      "memory_gb": 141,
+      "secure_usd_per_hour": 5.29,
+      "data_centers": [
+        {
+          "id": "CA-MTL-3",
+          "availability": "LOW"
+        },
+        {
+          "id": "EUR-IS-4",
+          "availability": "LOW"
+        },
+        {
+          "id": "EUR-IS-5",
+          "availability": "LOW"
+        },
+        {
+          "id": "US-CO-1",
+          "availability": "LOW"
+        },
+        {
+          "id": "US-NC-1",
+          "availability": "LOW"
+        }
+      ],
+      "availability": "LOW"
+    },
+    {
+      "id": "NVIDIA H200 NVL",
+      "memory_gb": 143,
+      "secure_usd_per_hour": 3.79,
+      "data_centers": [],
+      "availability": "NONE"
+    },
+    {
+      "id": "NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition",
+      "memory_gb": 96,
+      "secure_usd_per_hour": 0.5,
+      "data_centers": [],
+      "availability": "NONE"
+    },
+    {
+      "id": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+      "memory_gb": 96,
+      "secure_usd_per_hour": 2.49,
+      "data_centers": [
+        {
+          "id": "EU-NL-1",
+          "availability": "LOW"
+        },
+        {
+          "id": "EUR-IS-1",
+          "availability": "LOW"
+        },
+        {
+          "id": "EUR-IS-2",
+          "availability": "LOW"
+        },
+        {
+          "id": "US-CO-1",
+          "availability": "LOW"
+        },
+        {
+          "id": "US-MD-1",
+          "availability": "LOW"
+        },
+        {
+          "id": "US-NE-1",
+          "availability": "LOW"
+        }
+      ],
+      "availability": "LOW"
+    },
+    {
+      "id": "NVIDIA RTX PRO 6000 Blackwell Workstation Edition",
+      "memory_gb": 96,
+      "secure_usd_per_hour": 2.59,
+      "data_centers": [
+        {
+          "id": "EU-RO-1",
+          "availability": "LOW"
+        }
+      ],
+      "availability": "LOW"
+    }
+  ],
+  "interpretation": "No A100/H100 capacity listed in EUR-IS-1. RTX PRO6000 Blackwell Server Edition96GB has LOW listed capacity at2.49USD/h there; this architecture has not been validated for this workload. No Pod created. Full native10 still requires two distinct actual GPUs; this count1 read is not proof of count2 availability.",
+  "reported_billing_total_usd": 19.521947230328806,
+  "billing_limit": "Reported day-bucket totals may settle; conservative previous full-wallclock envelope20.09USD. Original25USD compute cap remains; storage separate."
+}
