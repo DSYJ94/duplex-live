@@ -73,7 +73,7 @@ def retained_source(parent, plan_path, tasks, *, word_audit=None, raw=None, diag
 
 
 def collect(plan_path, out, key, lock, *, generate=synthesize, repair_source=None,
-            word_audit=None, raw=None, diagnostic=None):
+            word_audit=None, raw=None, diagnostic=None, speech_model=None):
     plan = json.loads(plan_path.read_text())
     coverage = validate(plan)
     if plan != build():
@@ -83,6 +83,11 @@ def collect(plan_path, out, key, lock, *, generate=synthesize, repair_source=Non
         raise ValueError('Unexpected authorized request bound')
     if any(value is not None for value in (word_audit, raw, diagnostic)) and repair_source is None:
         raise ValueError('Word diagnosis cannot be used without the preserved parent source')
+    if speech_model is not None:
+        if speech_model != 'tts-1-hd' or word_audit is None:
+            raise ValueError('Alternate synthesizer requires the complete diagnosed word-repair chain')
+        from evals.native_control_tts1hd import synthesize as explicit_synthesizer
+        generate = explicit_synthesizer
     with collection_lock(lock):
         if out.exists():
             raise ValueError('Use a NEW version, preserving every failed/partial collection')
@@ -93,7 +98,7 @@ def collect(plan_path, out, key, lock, *, generate=synthesize, repair_source=Non
                      source_commit=subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip(),
                      implementation_sha256=sha256(Path(__file__)),
                      speech_helper_sha256=sha256(Path('data/synthetic/recovery_curriculum.py')),
-                     plan_sha256=sha256(plan_path), coverage=coverage, model=MODEL,
+                     plan_sha256=sha256(plan_path), coverage=coverage, model=speech_model or MODEL,
                      maximum_clips=168, maximum_characters=7953, concurrency=2,
                      transport_retry_limit=3, content_rerolls=0,
                      owner_conversations_used=False, credentials_exported=False,
@@ -124,6 +129,13 @@ def collect(plan_path, out, key, lock, *, generate=synthesize, repair_source=Non
                     'End the utterance immediately after that word. Use natural conversational delivery.')
         state['maximum_new_clips'] = len(pending)
         state['maximum_new_characters'] = sum(len(t['text']) for t in pending)
+        if speech_model:
+            if {(t['case'], t['index']) for t in pending} != {
+                    ('native-control3-train-020', 3), ('native-control3-train-029', 3)}:
+                raise ValueError('Alternate synthesizer is scoped to the two persistently failed source clips')
+            state.update(new_speech_helper_sha256=sha256(Path('evals/native_control_tts1hd.py')),
+                         new_clip_model=speech_model, instructions_supported=False,
+                         retained_source_models=sorted({r['source_model'] for r in state['clips']}))
 
         def persist():
             state['artifacts'] = {str(p.relative_to(out)): sha256(p)
@@ -201,11 +213,13 @@ def main():
     parser.add_argument('--word-audit', type=Path)
     parser.add_argument('--raw', type=Path)
     parser.add_argument('--diagnostic', type=Path)
+    parser.add_argument('--speech-model', choices=('tts-1-hd',))
     parser.add_argument('--lock', type=Path,
                         default=Path('runs/local-migration-20261021/.private/control3-capture.lock'))
     args = parser.parse_args()
     result = collect(args.plan, args.out, local_key(args.env_file), args.lock, repair_source=args.repair_source,
-                     word_audit=args.word_audit, raw=args.raw, diagnostic=args.diagnostic)
+                     word_audit=args.word_audit, raw=args.raw, diagnostic=args.diagnostic,
+                     speech_model=args.speech_model)
     print(json.dumps(dict(status=result['status'], clips=len(result['clips']), training_approved=False)))
 
 

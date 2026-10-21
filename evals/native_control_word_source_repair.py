@@ -27,6 +27,17 @@ def retained(parent, plan_path, tasks, raw, word_audit, diagnostic):
             or ledger['implementation_sha256'] != hashlib.sha256(previous_code).hexdigest()
             or ledger['speech_helper_sha256'] != sha256(Path('data/synthetic/recovery_curriculum.py'))):
         raise ValueError('Require the complete immutable original generated source')
+    historical = ledger.get('repair_provenance', {}).get('validator_sha256')
+    if historical:
+        content = subprocess.check_output([
+            'git', 'show', ledger['source_commit'] + ':evals/native_control_word_source_repair.py'])
+        if hashlib.sha256(content).hexdigest() != historical:
+            raise ValueError('Historical source repair validator provenance changed')
+    if ledger.get('new_speech_helper_sha256'):
+        content = subprocess.check_output([
+            'git', 'show', ledger['source_commit'] + ':evals/native_control_tts1hd.py'])
+        if hashlib.sha256(content).hexdigest() != ledger['new_speech_helper_sha256']:
+            raise ValueError('Historical source synthesizer provenance changed')
     secondary = json.loads(diagnostic.read_text())
     if (secondary['status'] != 'complete_failed_source_diagnostic_only'
             or secondary['seen_original_responses'] != 168

@@ -30,6 +30,10 @@ def generation_complete(generation, plan):
             or ledger['implementation_sha256'] != sha256(Path('data/synthetic/native_control_generate.py'))
             or ledger['speech_helper_sha256'] != sha256(Path('data/synthetic/recovery_curriculum.py'))):
         raise ValueError('Existing source generation is failed, incomplete or changed; no downstream submissions')
+    if ledger.get('new_speech_helper_sha256'):
+        if (ledger.get('new_clip_model') != 'tts-1-hd'
+                or ledger['new_speech_helper_sha256'] != sha256(Path('evals/native_control_tts1hd.py'))):
+            raise ValueError('Explicit repair synthesizer provenance changed')
     if 'repair_provenance' in ledger:
         from data.synthetic.native_control_generate import retained_source, source_tasks
         parent = Path(ledger['repair_provenance']['parent'])
