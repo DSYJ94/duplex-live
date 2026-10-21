@@ -1,3 +1,19 @@
+# LOCAL — fresh comparison underway; no full restore approval yet (21Oct01:09:35UTC)
+
+TRAIN7590052/CPUwatcher7589159 remain active on immutable741872f. Fresh native
+fingerprints23/49 captured and all observed hashes match; full49/original28/final
+restore report still mandatory. Existing watcher alone owns native10/speech submissions.
+All8 updates/full49 exposure and critical state/final-report backups verified as below.
+Audited1871.6025s timing includes post-fit frozen/digest/checkpoint/original28 metrics;
+excludes final acoustic/native49 fingerprints and fresh restoration. Raw report retained.
+Separate source edit clarifies label only; running741 unchanged. Read-only SSH retries
+recover isolated banner timeouts; verified private600s connection reuse now serves
+monitor/backup, same alias/authentication. No jobs restarted or new submissions.
+Newest HANDOFF.md is authoritative. LOCAL sole executor, CLOUD read-only; allocation
+08:56:32UTC/cert10:31:51UTC. All4 ordinary and complete10 review gates unchanged.
+
+---
+
 # LOCAL — all8 fit/report complete; independent restore pending (21Oct00:53:03UTC)
 
 TRAIN7590052/CPUwatcher7589159 remain active on immutable741872f; watcher alone

@@ -145,6 +145,9 @@
     "mean_initial_stage_nll": 0.6367367186290461,
     "mean_final_nll": 0.6366545186054802,
     "nll_is_diagnostic_not_behavior_qualification": true,
-    "full_fresh_process_restore_approved": false
+    "full_fresh_process_restore_approved": false,
+    "audited_training_seconds_scope": "Eight updates plus post-fit frozen-weight/digest checks, checkpoint writing and original28 final metrics; excludes final acoustic49/native49 fingerprints and fresh-process restoration",
+    "raw_timing_label_preserved_unchanged": true,
+    "timing_scope_audit_source": "Immutable741872f evals/context_actual_train.py timer starts367, sample553, final fingerprints573/578"
   }
 }

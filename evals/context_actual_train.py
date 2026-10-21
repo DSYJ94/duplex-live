@@ -577,7 +577,7 @@ def run(lm, spm, voice, examples, components, audits, args):
             from evals.context_native_stream_training import fingerprints as stream_fingerprints
             report['expected_native_stream49_logits']=stream_fingerprints(lm,stream_bound)
             report['execution']='Native BF16 batch MATH original154 plus recorded-call streaming49 teacher CE; truncated call-boundary autograd; no compilation or CUDA graphs'
-            report['training_seconds_scope']='Eight optimizer calls; excludes final49 stream fingerprints and fresh-process independent restoration'
+            report['training_seconds_scope']='Eight updates plus post-fit frozen-weight/digest checks, checkpoint writing and original28 final metrics; excludes final acoustic49/native49 fingerprints and fresh-process restoration'
             report['retention_objective']+='; supplemental balanced49 native-call teacher text CE with declared truncated autograd; original154 unchanged'
         (args.out/'report.json').write_text(json.dumps(report,indent=2)+'\n')
         print(json.dumps({k:report[k] for k in ('passed','checkpoint_sha256','final_metrics','peak_allocated_bytes')}),flush=True)

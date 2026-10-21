@@ -1,3 +1,37 @@
+# LOCAL — fresh native comparison 23/49 matches; timing scope clarified (21Oct01:09:35UTC)
+
+Same TRAIN7590052/CPUwatcher7589159, immutable payload741872f; sole submitted-active
+jobs at actual2026-10-21T01:08:53.971533Z. All8 updates/all49 teacher exposure and critical
+state/report backups remain verified as below. Fresh-process native capture now
+23/49; all23 observed hashes match saved expected values. This is PARTIAL
+comparison evidence, not full restore approval. All49 and final original28 checks
+plus terminal training0:0 are still required before existing watcher submits native10.
+No extension, fresh qualification or adoption. CLOUD remains read-only; LOCAL executor.
+
+Timing scope audit:1871.6025426s covers eight updates PLUS post-fit frozen/digest
+checks, checkpoint writing and original28 final metrics. It excludes final acoustic49/
+native49 fingerprints and fresh restoration. Immutable raw report397a259... unchanged;
+review explicitly records the audited scope. A metadata-only source label correction
+is committed separately from running741. AST parse/diff check suffice; no new GPU
+or numerically changed code is deployed. Same sampler/loss/data/runtime thresholds.
+
+Two isolated SSH/banner observations and backup polls timed out; same-ID read-only
+retries recovered and jobs stayed RUNNING. Existing alias/cert/jump config retained.
+Private0700 local socket now reuses an authenticated connection for600s, independently
+verified, used only by monitor and terminal-backup helper. No key/token transfer,
+cluster-job change or global SSH config edit. Exact local control record is ignored
+runs/local-continuation-20261019/native-stream49-ssh-control.json. Existing backup
+observer is not restarted; it picks up updated helper on its next poll. Operator hash
+and previous hash recorded in preservation ledger; stable critical backup remains safe.
+
+Structured ledger stale flags corrected to8 observed updates and checkpoint-backup
+complete. Scoped union25262files29151948036B unchanged. Old Mac source backup PARTIAL.
+Allocation21Oct08:56:32UTC; certificate10:31:51UTC; keep-awake deadline and source locks
+remain. Next: complete same fresh restore, preserve reload report, let existing watcher
+run native10/speech, then review every case before choosing further training/fresh20.
+
+---
+
 # LOCAL overnight — complete training report backed; expected49 captured; fresh restore pending (21Oct00:53:03UTC)
 
 Immutable payload741872fe2f9e49f35d4deba9aba96caff26c51d4, TRAIN7590052 and CPUwatcher

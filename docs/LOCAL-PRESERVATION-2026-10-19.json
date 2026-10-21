@@ -1,5 +1,5 @@
 {
-  "at_utc": "2026-10-21T00:53:03.477324+00:00",
+  "at_utc": "2026-10-21T01:09:35.510858+00:00",
   "unique_scoped_artifact_files": 25262,
   "unique_scoped_artifact_bytes": 29151948036,
   "inventory_conflicts": [],
@@ -2189,14 +2189,17 @@
       "first_status_utc": "2026-10-20T22:52:08.879265+00:00",
       "maximum_hours": 7,
       "prevents_idle_sleep_with_caffeinate": true,
-      "optimizer_checkpoint_backup_pending": true,
+      "optimizer_checkpoint_backup_pending": false,
       "terminal_backup_pending": true,
       "can_submit_cancel_train_or_adopt": false,
       "operator_sha256": {
         "watch-native-stream49-backups.py": "1b6dc0f079a3c35b09fa380b2b9b43572257eb0549855b83a85b255c3afe8627",
         "backup-native-stream49-critical-early.py": "6f3e90c269b54132ff4b105b2f093bd3380e8d49fd9d6b82690db23da93c9826",
-        "backup-native-stream49-terminal.py": "79f9ec6904ed40dc96928870730637707a4e01e725c4c0a5e2dda5ddf21bfe77"
-      }
+        "backup-native-stream49-terminal.py": "8856debf67e5b6545fd1967c37c0ed129180f1c5d6db2ee7439043ba8ff0cda5"
+      },
+      "optimizer_checkpoint_backup_verified_utc": "2026-10-21T00:26:04.720070+00:00",
+      "critical_backup_receipt": "runs/local-continuation-20261019/native-stream49-7590052-critical-early-backup-verification.json",
+      "prior_terminal_operator_sha256": "79f9ec6904ed40dc96928870730637707a4e01e725c4c0a5e2dda5ddf21bfe77"
     },
     "original154_readiness_passed": true,
     "original154_gradient_norm": 5.444079505444755,
@@ -2226,7 +2229,7 @@
     "training_state": "RUNNING",
     "training_started_utc": "2026-10-20T23:43:36Z",
     "training_maximum_end_utc": "2026-10-21T02:43:36Z",
-    "training_updates_completed_not_yet_observed": true,
+    "training_updates_completed_not_yet_observed": false,
     "independent_restore_pending": true,
     "native10_pending": true,
     "readiness_progress_observer_terminated_after_success": true,
@@ -2243,17 +2246,31 @@
       "assertion_independently_verified": true
     },
     "latest_progress_observation": {
-      "at_utc": "2026-10-21T00:02:34.760642Z",
-      "training_job": "7590052",
-      "completed_updates": 1,
-      "first_gradient_norm": 6.862292289733887,
-      "first_stream_teacher_count": 7,
-      "checkpoint_or_restore_complete": false,
-      "original_training_source_unchanged": true
+      "at_utc": "2026-10-21T01:08:53.971533Z",
+      "source": "741872fe2f9e49f35d4deba9aba96caff26c51d4",
+      "jobs": {
+        "readiness": "7589157",
+        "training": "7590052"
+      },
+      "queue": "7590052|RUNNING|1:25:17\n7589159|RUNNING|2:26:40",
+      "stream_restore_fingerprints": 72,
+      "expected_native_fingerprints_captured": 49,
+      "fresh_process_native_fingerprints_captured": 23,
+      "fingerprint_count_is_not_restore_approval": true,
+      "fresh_native_hash_matches_observed": 23,
+      "fresh_native_hash_mismatch_ids": [],
+      "files": {
+        "adapters.safetensors": 7580728,
+        "training-state.pt": 22948619,
+        "report.json": 6244471
+      },
+      "watcher_terminal": null,
+      "watcher_heartbeat": "2026-10-21T01:08:48.022105Z",
+      "completed_updates": 8
     },
     "complete_eight_update_exposure_review": {
       "path": "docs/NATIVE-STREAM49-TRAINING-EXPOSURE-REVIEW-2026-10-21.json",
-      "sha256": "53df06b29fb88396dc1d38b85fd15669370dd64be98cc5a63dc0279d9cd3f774",
+      "sha256": "77e7339cd3717b77885b89698968f4fa7503932e2f11c49ae99b95feb34b0459",
       "all8_and49_complete": true,
       "restore_or_behavior_approval": false
     },
@@ -2330,7 +2347,32 @@
       "mean_initial_stage_nll": 0.6367367186290461,
       "mean_final_nll": 0.6366545186054802,
       "nll_is_diagnostic_not_behavior_qualification": true,
-      "full_fresh_process_restore_approved": false
+      "full_fresh_process_restore_approved": false,
+      "audited_training_seconds_scope": "Eight updates plus post-fit frozen-weight/digest checks, checkpoint writing and original28 final metrics; excludes final acoustic49/native49 fingerprints and fresh-process restoration",
+      "raw_timing_label_preserved_unchanged": true,
+      "timing_scope_audit_source": "Immutable741872f evals/context_actual_train.py timer starts367, sample553, final fingerprints573/578"
+    },
+    "prior_latest_progress_observation": {
+      "at_utc": "2026-10-21T00:02:34.760642Z",
+      "training_job": "7590052",
+      "completed_updates": 1,
+      "first_gradient_norm": 6.862292289733887,
+      "first_stream_teacher_count": 7,
+      "checkpoint_or_restore_complete": false,
+      "original_training_source_unchanged": true
+    },
+    "training_updates_completed": 8,
+    "local_readonly_ssh_transport": {
+      "established_utc": "2026-10-21T01:08:01Z",
+      "existing_alias": "u6si.aip2.isambard",
+      "private_socket_directory_mode": "0700",
+      "connection_reuse_seconds": 600,
+      "uses_existing_keys_certificate_and_jump_configuration": true,
+      "credentials_copied": false,
+      "monitor_and_terminal_backup_helper_only": true,
+      "server_jobs_or_payload_modified": false,
+      "control_record_ignored_repository_path": "runs/local-continuation-20261019/native-stream49-ssh-control.json",
+      "isolated_banner_timeouts_resolved_by_same_job_read_retries": true
     }
   },
   "local_ssh_certificate_current": {
