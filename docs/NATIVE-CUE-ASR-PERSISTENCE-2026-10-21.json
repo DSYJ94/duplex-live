@@ -1,0 +1,147 @@
+{
+  "schema": "dl-local-cue-asr-persistence-verification-v1",
+  "at_utc": "2026-10-21T19:12:00.039389+00:00",
+  "bucket": "49yytzyoge",
+  "endpoint": "https://s3api-eur-is-1.runpod.io",
+  "prefix": "migration/local-cue-asr-20261021-v1/",
+  "all19_independent_readback_hashes_match": true,
+  "metadata_bytes": 213099,
+  "files": [
+    {
+      "path": "cue-audit-v1/independent-asr.json",
+      "key": "migration/local-cue-asr-20261021-v1/cue-audit-v1/independent-asr.json",
+      "bytes": 85937,
+      "sha256": "6e9375ae97a2132464764979d745e720a11fd75f3eea12f00fad97339752e767",
+      "destination_readback_matches": true
+    },
+    {
+      "path": "cue-audit-v1/input-cue.asr.json",
+      "key": "migration/local-cue-asr-20261021-v1/cue-audit-v1/input-cue.asr.json",
+      "bytes": 1388,
+      "sha256": "a458121ea550e0853c5a819954a7469cd393fab2a9072231ab7796a8e3246f40",
+      "destination_readback_matches": true
+    },
+    {
+      "path": "cue-audit-v1/input-geronimo.asr.json",
+      "key": "migration/local-cue-asr-20261021-v1/cue-audit-v1/input-geronimo.asr.json",
+      "bytes": 1942,
+      "sha256": "74d4af720b81920affa3d7750cc14f2978dbbcf925256a9edd099af00cafeced",
+      "destination_readback_matches": true
+    },
+    {
+      "path": "cue-audit-v1/input-ready.asr.json",
+      "key": "migration/local-cue-asr-20261021-v1/cue-audit-v1/input-ready.asr.json",
+      "bytes": 1909,
+      "sha256": "3547b8f06be9e73283247c7131c6d58a1c081b57b5ff6febe240368ce00c8346",
+      "destination_readback_matches": true
+    },
+    {
+      "path": "cue-audit-v1/output-00-ready-no-cue.asr.json",
+      "key": "migration/local-cue-asr-20261021-v1/cue-audit-v1/output-00-ready-no-cue.asr.json",
+      "bytes": 3844,
+      "sha256": "3439f82aed729db0bcc2cb0bac6fe727f9953dd9aa957be579b83f05924d50c3",
+      "destination_readback_matches": true
+    },
+    {
+      "path": "cue-audit-v1/output-01-geronimo-no-cue.asr.json",
+      "key": "migration/local-cue-asr-20261021-v1/cue-audit-v1/output-01-geronimo-no-cue.asr.json",
+      "bytes": 2599,
+      "sha256": "3b9743659dc28c0e4427a943b8852fc88eb208e8da7fe8c2f4411503f348192f",
+      "destination_readback_matches": true
+    },
+    {
+      "path": "cue-audit-v1/output-02-geronimo-with-cue.asr.json",
+      "key": "migration/local-cue-asr-20261021-v1/cue-audit-v1/output-02-geronimo-with-cue.asr.json",
+      "bytes": 9070,
+      "sha256": "263a8be00e578b9cf4b0f5dbe85a730a88bbfa9dbfa3533512a24f3a41bca999",
+      "destination_readback_matches": true
+    },
+    {
+      "path": "cue-audit-v1/output-03-ready-no-cue.asr.json",
+      "key": "migration/local-cue-asr-20261021-v1/cue-audit-v1/output-03-ready-no-cue.asr.json",
+      "bytes": 3122,
+      "sha256": "8542ea7a80f4fc938b6f786abd7a6e8d526c9a0ec1f7fd593497bc7bb87a1f3c",
+      "destination_readback_matches": true
+    },
+    {
+      "path": "cue-audit-v1/output-04-geronimo-no-cue.asr.json",
+      "key": "migration/local-cue-asr-20261021-v1/cue-audit-v1/output-04-geronimo-no-cue.asr.json",
+      "bytes": 3153,
+      "sha256": "ebe5a7d2ef2013a3f2f344114e54d0aaa05abe4c14ca1de7eeac703affbbabd2",
+      "destination_readback_matches": true
+    },
+    {
+      "path": "cue-audit-v1/output-05-geronimo-with-cue.asr.json",
+      "key": "migration/local-cue-asr-20261021-v1/cue-audit-v1/output-05-geronimo-with-cue.asr.json",
+      "bytes": 28060,
+      "sha256": "e785e62c512afa176116a553ad17ad501d6a92582d372c0955527247aefafcce",
+      "destination_readback_matches": true
+    },
+    {
+      "path": "cue-audit-v1/output-06-ready-no-cue.asr.json",
+      "key": "migration/local-cue-asr-20261021-v1/cue-audit-v1/output-06-ready-no-cue.asr.json",
+      "bytes": 4227,
+      "sha256": "5bd4680699d5aa9763e53c33ecebde7f1ca42cc281c4e5a8048e50d9416c429f",
+      "destination_readback_matches": true
+    },
+    {
+      "path": "cue-audit-v1/output-07-geronimo-no-cue.asr.json",
+      "key": "migration/local-cue-asr-20261021-v1/cue-audit-v1/output-07-geronimo-no-cue.asr.json",
+      "bytes": 3853,
+      "sha256": "f6d94c0737493f7f276618eca23231041288f4614f20bf822d159235812c2899",
+      "destination_readback_matches": true
+    },
+    {
+      "path": "cue-audit-v1/output-08-geronimo-with-cue.asr.json",
+      "key": "migration/local-cue-asr-20261021-v1/cue-audit-v1/output-08-geronimo-with-cue.asr.json",
+      "bytes": 8195,
+      "sha256": "d1bf513bfddfd6e8acb690c8313f2dd08a14fbdee489999156334d4cc0c5be61",
+      "destination_readback_matches": true
+    },
+    {
+      "path": "cue-audit-v1/progress.json",
+      "key": "migration/local-cue-asr-20261021-v1/cue-audit-v1/progress.json",
+      "bytes": 213,
+      "sha256": "828910a28b18db2f89cdc1922232a75adff25a113c27286a09f5b1f73950bed9",
+      "destination_readback_matches": true
+    },
+    {
+      "path": "cue-audit-v1/results.jsonl",
+      "key": "migration/local-cue-asr-20261021-v1/cue-audit-v1/results.jsonl",
+      "bytes": 50590,
+      "sha256": "87f405a0dac765015dbed02adce62802055074a70d9bac77069c85a7afbee74e",
+      "destination_readback_matches": true
+    },
+    {
+      "path": "models/download-receipt.json",
+      "key": "migration/local-cue-asr-20261021-v1/models/download-receipt.json",
+      "bytes": 388,
+      "sha256": "96ea285c83a7bc7723c4e802cd897280435efae9fd5e9543b0cdb3b54b5eceb5",
+      "destination_readback_matches": true
+    },
+    {
+      "path": "resolved-requirements.txt",
+      "key": "migration/local-cue-asr-20261021-v1/resolved-requirements.txt",
+      "bytes": 525,
+      "sha256": "3deca56846c132ae8bad7572697b18e669225d1ce07e57debbc7235de1c36044",
+      "destination_readback_matches": true
+    },
+    {
+      "path": "runtime.json",
+      "key": "migration/local-cue-asr-20261021-v1/runtime.json",
+      "bytes": 2968,
+      "sha256": "f4c0e4834854471b1a685eab73b035105d44e2936ad0db9f5516bcd333254d99",
+      "destination_readback_matches": true
+    },
+    {
+      "path": "summary.json",
+      "key": "migration/local-cue-asr-20261021-v1/summary.json",
+      "bytes": 1116,
+      "sha256": "583ea434e64db54adbfd814b19f466d95499388ffdf9396de3e20114e4b0a8e1",
+      "destination_readback_matches": true
+    }
+  ],
+  "owner_recordings_or_credentials_included": false,
+  "new_gpu_created": false,
+  "public_asr_weight_binary_uploaded": false
+}

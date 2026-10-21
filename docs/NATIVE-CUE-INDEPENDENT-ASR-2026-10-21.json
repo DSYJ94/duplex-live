@@ -1,0 +1,3645 @@
+{
+  "schema": "dl-native-cue-independent-cpu-asr-v1",
+  "at_utc": "2026-10-21T19:06:59.495478+00:00",
+  "code_sha256": "1f9f22b28e50c08cf633c3e37a1478f611636aee1a2280f17ab654ec5c314581",
+  "source_commit": "1356b2c396569597b6716a230d849eaf7ea06768",
+  "asr": "Whisper turbo",
+  "weights_sha256": "aff26ae408abcba5fbf8813c21e62b0941638c5f6eebfb145be0c9839262a19a",
+  "device": "cpu",
+  "precision": "float32",
+  "threads": 4,
+  "python": "3.12.13",
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "packages": {
+    "torch": "2.9.0",
+    "numpy": "2.2.6",
+    "scipy": "1.18.0",
+    "openai-whisper": "20250625",
+    "whisper-timestamped": "1.15.9",
+    "soundfile": "0.13.1"
+  },
+  "input_manifest_sha256": "fce1acec7d28199cf49fa59a7b55d34a56997b065ba6a6886ce3fd8f243ba7d5",
+  "original_review_sha256": "2607e4c5c7c03e6240661ef87eecd9202d1093a7861a10b4cd9abe34f13feab1",
+  "complete12": true,
+  "inputs": 3,
+  "native_outputs": 9,
+  "results": [
+    {
+      "id": "input-ready",
+      "sha256": "f4f0b1db6460ec1e1ee8c108b4d92226aeaa55530d7ada69b039ca30edd4930a",
+      "kind": "authored-synthetic-input",
+      "reference": "Keep quiet and do not speak until I say Ready.",
+      "asr_file": "input-ready.asr.json",
+      "asr_sha256": "3547b8f06be9e73283247c7131c6d58a1c081b57b5ff6febe240368ce00c8346",
+      "asr_text": " Keep quiet and do not speak until I say ready.",
+      "measured_words": [
+        {
+          "text": "Keep",
+          "start": 0.0,
+          "end": 0.2,
+          "confidence": 0.795
+        },
+        {
+          "text": "quiet",
+          "start": 0.2,
+          "end": 0.54,
+          "confidence": 1.0
+        },
+        {
+          "text": "and",
+          "start": 0.54,
+          "end": 0.78,
+          "confidence": 0.996
+        },
+        {
+          "text": "do",
+          "start": 0.78,
+          "end": 0.94,
+          "confidence": 0.999
+        },
+        {
+          "text": "not",
+          "start": 0.94,
+          "end": 1.18,
+          "confidence": 1.0
+        },
+        {
+          "text": "speak",
+          "start": 1.18,
+          "end": 1.46,
+          "confidence": 0.999
+        },
+        {
+          "text": "until",
+          "start": 1.46,
+          "end": 1.74,
+          "confidence": 0.997
+        },
+        {
+          "text": "I",
+          "start": 1.74,
+          "end": 1.96,
+          "confidence": 0.99
+        },
+        {
+          "text": "say",
+          "start": 1.96,
+          "end": 2.18,
+          "confidence": 0.999
+        },
+        {
+          "text": "ready.",
+          "start": 2.18,
+          "end": 2.44,
+          "confidence": 0.984
+        }
+      ],
+      "raw_word_disagreement_diagnostic": 0.0,
+      "seconds": 4.9004299999796785,
+      "audio_seconds": 2.807625,
+      "peak": 0.740570068359375,
+      "peak_meets_unchanged_ceiling": true,
+      "leading_silence_window_s": 0.0,
+      "trailing_silence_window_s": 0.0,
+      "word_times_restored_to_original_wav": true,
+      "internal_silence_removed": false,
+      "expected_text_prompt_used": false,
+      "original_wav_unchanged": true,
+      "diagnostic_word_check_meets_005": true
+    },
+    {
+      "id": "input-geronimo",
+      "sha256": "55b6084d2b296f886f5959d260f2804408ee26107451cf95f97759da2015b716",
+      "kind": "authored-synthetic-input",
+      "reference": "Keep quiet and do not speak until I say Geronimo.",
+      "asr_file": "input-geronimo.asr.json",
+      "asr_sha256": "74d4af720b81920affa3d7750cc14f2978dbbcf925256a9edd099af00cafeced",
+      "asr_text": " Keep quiet and do not speak until I say Geronimo.",
+      "measured_words": [
+        {
+          "text": "Keep",
+          "start": 0.0,
+          "end": 0.2,
+          "confidence": 0.814
+        },
+        {
+          "text": "quiet",
+          "start": 0.2,
+          "end": 0.54,
+          "confidence": 1.0
+        },
+        {
+          "text": "and",
+          "start": 0.54,
+          "end": 0.78,
+          "confidence": 0.999
+        },
+        {
+          "text": "do",
+          "start": 0.78,
+          "end": 0.94,
+          "confidence": 1.0
+        },
+        {
+          "text": "not",
+          "start": 0.94,
+          "end": 1.18,
+          "confidence": 1.0
+        },
+        {
+          "text": "speak",
+          "start": 1.18,
+          "end": 1.46,
+          "confidence": 0.999
+        },
+        {
+          "text": "until",
+          "start": 1.46,
+          "end": 1.74,
+          "confidence": 0.995
+        },
+        {
+          "text": "I",
+          "start": 1.74,
+          "end": 1.96,
+          "confidence": 0.996
+        },
+        {
+          "text": "say",
+          "start": 1.96,
+          "end": 2.18,
+          "confidence": 0.999
+        },
+        {
+          "text": "Geronimo.",
+          "start": 2.18,
+          "end": 2.8,
+          "confidence": 0.974
+        }
+      ],
+      "raw_word_disagreement_diagnostic": 0.0,
+      "seconds": 4.838231875008205,
+      "audio_seconds": 3.1443333333333334,
+      "peak": 0.928863525390625,
+      "peak_meets_unchanged_ceiling": true,
+      "leading_silence_window_s": 0.0,
+      "trailing_silence_window_s": 0.0,
+      "word_times_restored_to_original_wav": true,
+      "internal_silence_removed": false,
+      "expected_text_prompt_used": false,
+      "original_wav_unchanged": true,
+      "diagnostic_word_check_meets_005": true
+    },
+    {
+      "id": "input-cue",
+      "sha256": "a94798b5ee51b8483d520ca5831f8913f924734be639a6bf99275b2b7ba2f6be",
+      "kind": "authored-synthetic-input",
+      "reference": "Geronimo. What does a thermometer measure?",
+      "asr_file": "input-cue.asr.json",
+      "asr_sha256": "a458121ea550e0853c5a819954a7469cd393fab2a9072231ab7796a8e3246f40",
+      "asr_text": " Geronimo, what does a thermometer measure?",
+      "measured_words": [
+        {
+          "text": "Geronimo,",
+          "start": 0.0,
+          "end": 0.58,
+          "confidence": 0.892
+        },
+        {
+          "text": "what",
+          "start": 0.82,
+          "end": 1.08,
+          "confidence": 0.972
+        },
+        {
+          "text": "does",
+          "start": 1.08,
+          "end": 1.3,
+          "confidence": 1.0
+        },
+        {
+          "text": "a",
+          "start": 1.3,
+          "end": 1.44,
+          "confidence": 0.999
+        },
+        {
+          "text": "thermometer",
+          "start": 1.44,
+          "end": 1.88,
+          "confidence": 1.0
+        },
+        {
+          "text": "measure?",
+          "start": 1.88,
+          "end": 2.3,
+          "confidence": 0.994
+        }
+      ],
+      "raw_word_disagreement_diagnostic": 0.0,
+      "seconds": 4.692525416001445,
+      "audio_seconds": 2.6433333333333335,
+      "peak": 0.910552978515625,
+      "peak_meets_unchanged_ceiling": true,
+      "leading_silence_window_s": 0.0,
+      "trailing_silence_window_s": 0.0,
+      "word_times_restored_to_original_wav": true,
+      "internal_silence_removed": false,
+      "expected_text_prompt_used": false,
+      "original_wav_unchanged": true,
+      "diagnostic_word_check_meets_005": true
+    },
+    {
+      "id": "output-00-ready-no-cue",
+      "sha256": "726d338133ad317424fefa1059a94d903a234b8cd8e08717e20175f066c0b45a",
+      "kind": "native-sampled-fixed-window-output",
+      "reference": "Sure, that's no problem. Which project should I check for your progress? Which project should I check for your progress?",
+      "variant": "original",
+      "nominal_quiet_s": [
+        3.807625,
+        13.807625
+      ],
+      "asr_file": "output-00-ready-no-cue.asr.json",
+      "asr_sha256": "3439f82aed729db0bcc2cb0bac6fe727f9953dd9aa957be579b83f05924d50c3",
+      "asr_text": " sure that's no problem which project should I check for your progress which project should I check for your progress",
+      "measured_words": [
+        {
+          "text": "sure",
+          "start": 4.3,
+          "end": 4.44,
+          "confidence": 0.149
+        },
+        {
+          "text": "that's",
+          "start": 4.44,
+          "end": 4.86,
+          "confidence": 0.924
+        },
+        {
+          "text": "no",
+          "start": 4.86,
+          "end": 4.98,
+          "confidence": 0.995
+        },
+        {
+          "text": "problem",
+          "start": 4.98,
+          "end": 5.32,
+          "confidence": 0.995
+        },
+        {
+          "text": "which",
+          "start": 5.32,
+          "end": 5.7,
+          "confidence": 0.885
+        },
+        {
+          "text": "project",
+          "start": 5.7,
+          "end": 6.08,
+          "confidence": 0.929
+        },
+        {
+          "text": "should",
+          "start": 6.08,
+          "end": 6.28,
+          "confidence": 0.924
+        },
+        {
+          "text": "I",
+          "start": 6.28,
+          "end": 6.38,
+          "confidence": 0.559
+        },
+        {
+          "text": "check",
+          "start": 6.38,
+          "end": 6.58,
+          "confidence": 0.967
+        },
+        {
+          "text": "for",
+          "start": 6.58,
+          "end": 6.78,
+          "confidence": 0.99
+        },
+        {
+          "text": "your",
+          "start": 6.78,
+          "end": 6.92,
+          "confidence": 0.992
+        },
+        {
+          "text": "progress",
+          "start": 6.92,
+          "end": 7.28,
+          "confidence": 0.992
+        },
+        {
+          "text": "which",
+          "start": 12.02,
+          "end": 12.14,
+          "confidence": 0.189
+        },
+        {
+          "text": "project",
+          "start": 12.14,
+          "end": 12.56,
+          "confidence": 0.94
+        },
+        {
+          "text": "should",
+          "start": 12.56,
+          "end": 12.78,
+          "confidence": 0.986
+        },
+        {
+          "text": "I",
+          "start": 12.78,
+          "end": 12.88,
+          "confidence": 0.814
+        },
+        {
+          "text": "check",
+          "start": 12.88,
+          "end": 13.1,
+          "confidence": 0.956
+        },
+        {
+          "text": "for",
+          "start": 13.1,
+          "end": 13.28,
+          "confidence": 0.985
+        },
+        {
+          "text": "your",
+          "start": 13.28,
+          "end": 13.42,
+          "confidence": 0.985
+        },
+        {
+          "text": "progress",
+          "start": 13.42,
+          "end": 13.78,
+          "confidence": 0.885
+        }
+      ],
+      "raw_word_disagreement_diagnostic": 0.0,
+      "seconds": 7.426903999992646,
+      "audio_seconds": 13.84,
+      "peak": 1.1984750032424927,
+      "peak_meets_unchanged_ceiling": false,
+      "leading_silence_window_s": 0.0,
+      "trailing_silence_window_s": 0.0,
+      "word_times_restored_to_original_wav": true,
+      "internal_silence_removed": false,
+      "expected_text_prompt_used": false,
+      "original_wav_unchanged": true,
+      "recognized_words_in_nominal_quiet": [
+        {
+          "text": "sure",
+          "start": 4.3,
+          "end": 4.44,
+          "confidence": 0.149
+        },
+        {
+          "text": "that's",
+          "start": 4.44,
+          "end": 4.86,
+          "confidence": 0.924
+        },
+        {
+          "text": "no",
+          "start": 4.86,
+          "end": 4.98,
+          "confidence": 0.995
+        },
+        {
+          "text": "problem",
+          "start": 4.98,
+          "end": 5.32,
+          "confidence": 0.995
+        },
+        {
+          "text": "which",
+          "start": 5.32,
+          "end": 5.7,
+          "confidence": 0.885
+        },
+        {
+          "text": "project",
+          "start": 5.7,
+          "end": 6.08,
+          "confidence": 0.929
+        },
+        {
+          "text": "should",
+          "start": 6.08,
+          "end": 6.28,
+          "confidence": 0.924
+        },
+        {
+          "text": "I",
+          "start": 6.28,
+          "end": 6.38,
+          "confidence": 0.559
+        },
+        {
+          "text": "check",
+          "start": 6.38,
+          "end": 6.58,
+          "confidence": 0.967
+        },
+        {
+          "text": "for",
+          "start": 6.58,
+          "end": 6.78,
+          "confidence": 0.99
+        },
+        {
+          "text": "your",
+          "start": 6.78,
+          "end": 6.92,
+          "confidence": 0.992
+        },
+        {
+          "text": "progress",
+          "start": 6.92,
+          "end": 7.28,
+          "confidence": 0.992
+        },
+        {
+          "text": "which",
+          "start": 12.02,
+          "end": 12.14,
+          "confidence": 0.189
+        },
+        {
+          "text": "project",
+          "start": 12.14,
+          "end": 12.56,
+          "confidence": 0.94
+        },
+        {
+          "text": "should",
+          "start": 12.56,
+          "end": 12.78,
+          "confidence": 0.986
+        },
+        {
+          "text": "I",
+          "start": 12.78,
+          "end": 12.88,
+          "confidence": 0.814
+        },
+        {
+          "text": "check",
+          "start": 12.88,
+          "end": 13.1,
+          "confidence": 0.956
+        },
+        {
+          "text": "for",
+          "start": 13.1,
+          "end": 13.28,
+          "confidence": 0.985
+        },
+        {
+          "text": "your",
+          "start": 13.28,
+          "end": 13.42,
+          "confidence": 0.985
+        },
+        {
+          "text": "progress",
+          "start": 13.42,
+          "end": 13.78,
+          "confidence": 0.885
+        }
+      ],
+      "full_answer_wer_scored": false
+    },
+    {
+      "id": "output-01-geronimo-no-cue",
+      "sha256": "bc21fa0769571c03afca7e18bd9c1fd3ac28d0e2c2231d69aa37f6906b65af4d",
+      "kind": "native-sampled-fixed-window-output",
+      "reference": "Sure, I'll get that. How much should I add? It's one hundred and twenty seven euros.",
+      "variant": "original",
+      "nominal_quiet_s": [
+        4.144333333333334,
+        14.144333333333334
+      ],
+      "asr_file": "output-01-geronimo-no-cue.asr.json",
+      "asr_sha256": "3b9743659dc28c0e4427a943b8852fc88eb208e8da7fe8c2f4411503f348192f",
+      "asr_text": " sure I'll get that how much should I add it's 127 euros",
+      "measured_words": [
+        {
+          "text": "sure",
+          "start": 4.96,
+          "end": 5.14,
+          "confidence": 0.367
+        },
+        {
+          "text": "I'll",
+          "start": 5.14,
+          "end": 5.54,
+          "confidence": 0.882
+        },
+        {
+          "text": "get",
+          "start": 5.54,
+          "end": 5.66,
+          "confidence": 0.996
+        },
+        {
+          "text": "that",
+          "start": 5.66,
+          "end": 5.98,
+          "confidence": 0.994
+        },
+        {
+          "text": "how",
+          "start": 5.98,
+          "end": 6.7,
+          "confidence": 0.821
+        },
+        {
+          "text": "much",
+          "start": 6.7,
+          "end": 6.88,
+          "confidence": 0.997
+        },
+        {
+          "text": "should",
+          "start": 6.88,
+          "end": 7.1,
+          "confidence": 0.995
+        },
+        {
+          "text": "I",
+          "start": 7.1,
+          "end": 7.24,
+          "confidence": 0.922
+        },
+        {
+          "text": "add",
+          "start": 7.24,
+          "end": 7.6,
+          "confidence": 0.941
+        },
+        {
+          "text": "it's",
+          "start": 10.08,
+          "end": 10.28,
+          "confidence": 0.512
+        },
+        {
+          "text": "127",
+          "start": 10.28,
+          "end": 10.98,
+          "confidence": 0.979
+        },
+        {
+          "text": "euros",
+          "start": 10.98,
+          "end": 11.64,
+          "confidence": 0.938
+        }
+      ],
+      "raw_word_disagreement_diagnostic": 0.05555555555555555,
+      "seconds": 7.299914417002583,
+      "audio_seconds": 14.16,
+      "peak": 0.49422886967658997,
+      "peak_meets_unchanged_ceiling": true,
+      "leading_silence_window_s": 0.0,
+      "trailing_silence_window_s": 1.91,
+      "word_times_restored_to_original_wav": true,
+      "internal_silence_removed": false,
+      "expected_text_prompt_used": false,
+      "original_wav_unchanged": true,
+      "recognized_words_in_nominal_quiet": [
+        {
+          "text": "sure",
+          "start": 4.96,
+          "end": 5.14,
+          "confidence": 0.367
+        },
+        {
+          "text": "I'll",
+          "start": 5.14,
+          "end": 5.54,
+          "confidence": 0.882
+        },
+        {
+          "text": "get",
+          "start": 5.54,
+          "end": 5.66,
+          "confidence": 0.996
+        },
+        {
+          "text": "that",
+          "start": 5.66,
+          "end": 5.98,
+          "confidence": 0.994
+        },
+        {
+          "text": "how",
+          "start": 5.98,
+          "end": 6.7,
+          "confidence": 0.821
+        },
+        {
+          "text": "much",
+          "start": 6.7,
+          "end": 6.88,
+          "confidence": 0.997
+        },
+        {
+          "text": "should",
+          "start": 6.88,
+          "end": 7.1,
+          "confidence": 0.995
+        },
+        {
+          "text": "I",
+          "start": 7.1,
+          "end": 7.24,
+          "confidence": 0.922
+        },
+        {
+          "text": "add",
+          "start": 7.24,
+          "end": 7.6,
+          "confidence": 0.941
+        },
+        {
+          "text": "it's",
+          "start": 10.08,
+          "end": 10.28,
+          "confidence": 0.512
+        },
+        {
+          "text": "127",
+          "start": 10.28,
+          "end": 10.98,
+          "confidence": 0.979
+        },
+        {
+          "text": "euros",
+          "start": 10.98,
+          "end": 11.64,
+          "confidence": 0.938
+        }
+      ],
+      "full_answer_wer_scored": false
+    },
+    {
+      "id": "output-02-geronimo-with-cue",
+      "sha256": "21fb48ede0c89339bbe21264522d8b3b787140705d0db446f19bf0026eaf1b58",
+      "kind": "native-sampled-fixed-window-output",
+      "reference": " Did you mean to ask about a project? It's usually better to wait until the client is ready. The client should coordinate the onboarding date. \u0001 Thermometers measure temperature. They're instruments used to estimate heat. You'd check the temperature to ensure the air is comfortable. Thermometers",
+      "variant": "original",
+      "nominal_quiet_s": [
+        4.144333333333334,
+        14.144333333333334
+      ],
+      "asr_file": "output-02-geronimo-with-cue.asr.json",
+      "asr_sha256": "263a8be00e578b9cf4b0f5dbe85a730a88bbfa9dbfa3533512a24f3a41bca999",
+      "asr_text": " do you mean to ask about a project it's usually better to wait until the client is ready the client should coordinate the onboarding date yeah thermometers measure temperature they're instruments used to estimate heat you'd check the temperature to ensure the air is comfortable thermometers",
+      "measured_words": [
+        {
+          "text": "do",
+          "start": 0.04,
+          "end": 5.04,
+          "confidence": 0.015
+        },
+        {
+          "text": "you",
+          "start": 5.04,
+          "end": 5.22,
+          "confidence": 0.978
+        },
+        {
+          "text": "mean",
+          "start": 5.22,
+          "end": 5.44,
+          "confidence": 0.971
+        },
+        {
+          "text": "to",
+          "start": 5.44,
+          "end": 5.62,
+          "confidence": 0.987
+        },
+        {
+          "text": "ask",
+          "start": 5.62,
+          "end": 5.88,
+          "confidence": 0.99
+        },
+        {
+          "text": "about",
+          "start": 5.88,
+          "end": 6.08,
+          "confidence": 0.977
+        },
+        {
+          "text": "a",
+          "start": 6.08,
+          "end": 6.18,
+          "confidence": 0.99
+        },
+        {
+          "text": "project",
+          "start": 6.18,
+          "end": 6.62,
+          "confidence": 0.986
+        },
+        {
+          "text": "it's",
+          "start": 6.62,
+          "end": 7.58,
+          "confidence": 0.702
+        },
+        {
+          "text": "usually",
+          "start": 7.58,
+          "end": 7.94,
+          "confidence": 0.929
+        },
+        {
+          "text": "better",
+          "start": 7.94,
+          "end": 8.3,
+          "confidence": 0.983
+        },
+        {
+          "text": "to",
+          "start": 8.3,
+          "end": 8.56,
+          "confidence": 0.982
+        },
+        {
+          "text": "wait",
+          "start": 8.56,
+          "end": 8.9,
+          "confidence": 0.975
+        },
+        {
+          "text": "until",
+          "start": 8.9,
+          "end": 9.2,
+          "confidence": 0.978
+        },
+        {
+          "text": "the",
+          "start": 9.2,
+          "end": 9.36,
+          "confidence": 0.983
+        },
+        {
+          "text": "client",
+          "start": 9.36,
+          "end": 9.68,
+          "confidence": 0.892
+        },
+        {
+          "text": "is",
+          "start": 9.68,
+          "end": 9.9,
+          "confidence": 0.806
+        },
+        {
+          "text": "ready",
+          "start": 9.9,
+          "end": 10.22,
+          "confidence": 0.97
+        },
+        {
+          "text": "the",
+          "start": 10.98,
+          "end": 11.1,
+          "confidence": 0.061
+        },
+        {
+          "text": "client",
+          "start": 11.1,
+          "end": 11.46,
+          "confidence": 0.995
+        },
+        {
+          "text": "should",
+          "start": 11.46,
+          "end": 11.72,
+          "confidence": 0.999
+        },
+        {
+          "text": "coordinate",
+          "start": 11.72,
+          "end": 12.16,
+          "confidence": 0.996
+        },
+        {
+          "text": "the",
+          "start": 12.16,
+          "end": 12.42,
+          "confidence": 0.993
+        },
+        {
+          "text": "onboarding",
+          "start": 12.42,
+          "end": 12.98,
+          "confidence": 0.981
+        },
+        {
+          "text": "date",
+          "start": 12.98,
+          "end": 13.28,
+          "confidence": 0.993
+        },
+        {
+          "text": "yeah",
+          "start": 16.32,
+          "end": 16.48,
+          "confidence": 0.133
+        },
+        {
+          "text": "thermometers",
+          "start": 16.48,
+          "end": 17.98,
+          "confidence": 0.881
+        },
+        {
+          "text": "measure",
+          "start": 17.98,
+          "end": 18.3,
+          "confidence": 0.982
+        },
+        {
+          "text": "temperature",
+          "start": 18.3,
+          "end": 18.84,
+          "confidence": 0.983
+        },
+        {
+          "text": "they're",
+          "start": 18.84,
+          "end": 19.64,
+          "confidence": 0.565
+        },
+        {
+          "text": "instruments",
+          "start": 19.64,
+          "end": 20.06,
+          "confidence": 0.993
+        },
+        {
+          "text": "used",
+          "start": 20.06,
+          "end": 20.4,
+          "confidence": 0.983
+        },
+        {
+          "text": "to",
+          "start": 20.4,
+          "end": 20.56,
+          "confidence": 0.999
+        },
+        {
+          "text": "estimate",
+          "start": 20.56,
+          "end": 21.0,
+          "confidence": 0.997
+        },
+        {
+          "text": "heat",
+          "start": 21.0,
+          "end": 21.38,
+          "confidence": 0.928
+        },
+        {
+          "text": "you'd",
+          "start": 22.42,
+          "end": 22.7,
+          "confidence": 0.106
+        },
+        {
+          "text": "check",
+          "start": 22.7,
+          "end": 22.84,
+          "confidence": 0.998
+        },
+        {
+          "text": "the",
+          "start": 22.84,
+          "end": 23.02,
+          "confidence": 0.999
+        },
+        {
+          "text": "temperature",
+          "start": 23.02,
+          "end": 23.42,
+          "confidence": 0.998
+        },
+        {
+          "text": "to",
+          "start": 23.42,
+          "end": 23.7,
+          "confidence": 0.997
+        },
+        {
+          "text": "ensure",
+          "start": 23.7,
+          "end": 23.98,
+          "confidence": 0.994
+        },
+        {
+          "text": "the",
+          "start": 23.98,
+          "end": 24.18,
+          "confidence": 0.997
+        },
+        {
+          "text": "air",
+          "start": 24.18,
+          "end": 24.42,
+          "confidence": 0.998
+        },
+        {
+          "text": "is",
+          "start": 24.42,
+          "end": 24.62,
+          "confidence": 0.999
+        },
+        {
+          "text": "comfortable",
+          "start": 24.62,
+          "end": 24.98,
+          "confidence": 0.998
+        },
+        {
+          "text": "thermometers",
+          "start": 26.26,
+          "end": 26.78,
+          "confidence": 0.128
+        }
+      ],
+      "raw_word_disagreement_diagnostic": 0.041666666666666664,
+      "seconds": 15.702199166989885,
+      "audio_seconds": 26.8,
+      "peak": 0.5606430768966675,
+      "peak_meets_unchanged_ceiling": true,
+      "leading_silence_window_s": 0.0,
+      "trailing_silence_window_s": 0.0,
+      "word_times_restored_to_original_wav": true,
+      "internal_silence_removed": false,
+      "expected_text_prompt_used": false,
+      "original_wav_unchanged": true,
+      "recognized_words_in_nominal_quiet": [
+        {
+          "text": "do",
+          "start": 0.04,
+          "end": 5.04,
+          "confidence": 0.015
+        },
+        {
+          "text": "you",
+          "start": 5.04,
+          "end": 5.22,
+          "confidence": 0.978
+        },
+        {
+          "text": "mean",
+          "start": 5.22,
+          "end": 5.44,
+          "confidence": 0.971
+        },
+        {
+          "text": "to",
+          "start": 5.44,
+          "end": 5.62,
+          "confidence": 0.987
+        },
+        {
+          "text": "ask",
+          "start": 5.62,
+          "end": 5.88,
+          "confidence": 0.99
+        },
+        {
+          "text": "about",
+          "start": 5.88,
+          "end": 6.08,
+          "confidence": 0.977
+        },
+        {
+          "text": "a",
+          "start": 6.08,
+          "end": 6.18,
+          "confidence": 0.99
+        },
+        {
+          "text": "project",
+          "start": 6.18,
+          "end": 6.62,
+          "confidence": 0.986
+        },
+        {
+          "text": "it's",
+          "start": 6.62,
+          "end": 7.58,
+          "confidence": 0.702
+        },
+        {
+          "text": "usually",
+          "start": 7.58,
+          "end": 7.94,
+          "confidence": 0.929
+        },
+        {
+          "text": "better",
+          "start": 7.94,
+          "end": 8.3,
+          "confidence": 0.983
+        },
+        {
+          "text": "to",
+          "start": 8.3,
+          "end": 8.56,
+          "confidence": 0.982
+        },
+        {
+          "text": "wait",
+          "start": 8.56,
+          "end": 8.9,
+          "confidence": 0.975
+        },
+        {
+          "text": "until",
+          "start": 8.9,
+          "end": 9.2,
+          "confidence": 0.978
+        },
+        {
+          "text": "the",
+          "start": 9.2,
+          "end": 9.36,
+          "confidence": 0.983
+        },
+        {
+          "text": "client",
+          "start": 9.36,
+          "end": 9.68,
+          "confidence": 0.892
+        },
+        {
+          "text": "is",
+          "start": 9.68,
+          "end": 9.9,
+          "confidence": 0.806
+        },
+        {
+          "text": "ready",
+          "start": 9.9,
+          "end": 10.22,
+          "confidence": 0.97
+        },
+        {
+          "text": "the",
+          "start": 10.98,
+          "end": 11.1,
+          "confidence": 0.061
+        },
+        {
+          "text": "client",
+          "start": 11.1,
+          "end": 11.46,
+          "confidence": 0.995
+        },
+        {
+          "text": "should",
+          "start": 11.46,
+          "end": 11.72,
+          "confidence": 0.999
+        },
+        {
+          "text": "coordinate",
+          "start": 11.72,
+          "end": 12.16,
+          "confidence": 0.996
+        },
+        {
+          "text": "the",
+          "start": 12.16,
+          "end": 12.42,
+          "confidence": 0.993
+        },
+        {
+          "text": "onboarding",
+          "start": 12.42,
+          "end": 12.98,
+          "confidence": 0.981
+        },
+        {
+          "text": "date",
+          "start": 12.98,
+          "end": 13.28,
+          "confidence": 0.993
+        }
+      ],
+      "full_answer_wer_scored": false
+    },
+    {
+      "id": "output-03-ready-no-cue",
+      "sha256": "f0ffc20a1a59639e83ce290fa1b7db65213dfea245c2e495a9c2bd3057d59d6f",
+      "kind": "native-sampled-fixed-window-output",
+      "reference": "Okay, I've been quiet. Ready for the lookup? Which project should I check for you?",
+      "variant": "scoped_project_clause",
+      "nominal_quiet_s": [
+        3.807625,
+        13.807625
+      ],
+      "asr_file": "output-03-ready-no-cue.asr.json",
+      "asr_sha256": "8542ea7a80f4fc938b6f786abd7a6e8d526c9a0ec1f7fd593497bc7bb87a1f3c",
+      "asr_text": " Okay, I've been quiet. Ready for the lookup? Which project should I check for you?",
+      "measured_words": [
+        {
+          "text": "Okay,",
+          "start": 4.16,
+          "end": 4.32,
+          "confidence": 0.435
+        },
+        {
+          "text": "I've",
+          "start": 4.56,
+          "end": 4.78,
+          "confidence": 0.972
+        },
+        {
+          "text": "been",
+          "start": 4.78,
+          "end": 4.9,
+          "confidence": 0.998
+        },
+        {
+          "text": "quiet.",
+          "start": 4.9,
+          "end": 5.28,
+          "confidence": 0.835
+        },
+        {
+          "text": "Ready",
+          "start": 5.58,
+          "end": 5.88,
+          "confidence": 0.616
+        },
+        {
+          "text": "for",
+          "start": 5.88,
+          "end": 6.06,
+          "confidence": 0.995
+        },
+        {
+          "text": "the",
+          "start": 6.06,
+          "end": 6.18,
+          "confidence": 0.995
+        },
+        {
+          "text": "lookup?",
+          "start": 6.18,
+          "end": 6.52,
+          "confidence": 0.471
+        },
+        {
+          "text": "Which",
+          "start": 9.0,
+          "end": 9.12,
+          "confidence": 0.497
+        },
+        {
+          "text": "project",
+          "start": 9.12,
+          "end": 9.48,
+          "confidence": 0.98
+        },
+        {
+          "text": "should",
+          "start": 9.48,
+          "end": 9.68,
+          "confidence": 0.99
+        },
+        {
+          "text": "I",
+          "start": 9.68,
+          "end": 9.8,
+          "confidence": 0.955
+        },
+        {
+          "text": "check",
+          "start": 9.8,
+          "end": 10.0,
+          "confidence": 0.987
+        },
+        {
+          "text": "for",
+          "start": 10.0,
+          "end": 10.2,
+          "confidence": 0.989
+        },
+        {
+          "text": "you?",
+          "start": 10.2,
+          "end": 10.38,
+          "confidence": 0.961
+        }
+      ],
+      "raw_word_disagreement_diagnostic": 0.0,
+      "seconds": 7.578600083012134,
+      "audio_seconds": 13.84,
+      "peak": 0.5970056056976318,
+      "peak_meets_unchanged_ceiling": true,
+      "leading_silence_window_s": 0.0,
+      "trailing_silence_window_s": 2.95,
+      "word_times_restored_to_original_wav": true,
+      "internal_silence_removed": false,
+      "expected_text_prompt_used": false,
+      "original_wav_unchanged": true,
+      "recognized_words_in_nominal_quiet": [
+        {
+          "text": "Okay,",
+          "start": 4.16,
+          "end": 4.32,
+          "confidence": 0.435
+        },
+        {
+          "text": "I've",
+          "start": 4.56,
+          "end": 4.78,
+          "confidence": 0.972
+        },
+        {
+          "text": "been",
+          "start": 4.78,
+          "end": 4.9,
+          "confidence": 0.998
+        },
+        {
+          "text": "quiet.",
+          "start": 4.9,
+          "end": 5.28,
+          "confidence": 0.835
+        },
+        {
+          "text": "Ready",
+          "start": 5.58,
+          "end": 5.88,
+          "confidence": 0.616
+        },
+        {
+          "text": "for",
+          "start": 5.88,
+          "end": 6.06,
+          "confidence": 0.995
+        },
+        {
+          "text": "the",
+          "start": 6.06,
+          "end": 6.18,
+          "confidence": 0.995
+        },
+        {
+          "text": "lookup?",
+          "start": 6.18,
+          "end": 6.52,
+          "confidence": 0.471
+        },
+        {
+          "text": "Which",
+          "start": 9.0,
+          "end": 9.12,
+          "confidence": 0.497
+        },
+        {
+          "text": "project",
+          "start": 9.12,
+          "end": 9.48,
+          "confidence": 0.98
+        },
+        {
+          "text": "should",
+          "start": 9.48,
+          "end": 9.68,
+          "confidence": 0.99
+        },
+        {
+          "text": "I",
+          "start": 9.68,
+          "end": 9.8,
+          "confidence": 0.955
+        },
+        {
+          "text": "check",
+          "start": 9.8,
+          "end": 10.0,
+          "confidence": 0.987
+        },
+        {
+          "text": "for",
+          "start": 10.0,
+          "end": 10.2,
+          "confidence": 0.989
+        },
+        {
+          "text": "you?",
+          "start": 10.2,
+          "end": 10.38,
+          "confidence": 0.961
+        }
+      ],
+      "full_answer_wer_scored": false
+    },
+    {
+      "id": "output-04-geronimo-no-cue",
+      "sha256": "63eb789dd8fbe7db88b2f6fcea0f3e7982b9d0b24f5e3d6aaede9e6c66732544",
+      "kind": "native-sampled-fixed-window-output",
+      "reference": "Sure, I can help. Which project should I look up for you? Are you looking for project",
+      "variant": "scoped_project_clause",
+      "nominal_quiet_s": [
+        4.144333333333334,
+        14.144333333333334
+      ],
+      "asr_file": "output-04-geronimo-no-cue.asr.json",
+      "asr_sha256": "ebe5a7d2ef2013a3f2f344114e54d0aaa05abe4c14ca1de7eeac703affbbabd2",
+      "asr_text": " sure i can help which project should i look up for you are you looking for",
+      "measured_words": [
+        {
+          "text": "sure",
+          "start": 5.04,
+          "end": 5.22,
+          "confidence": 0.172
+        },
+        {
+          "text": "i",
+          "start": 5.22,
+          "end": 5.72,
+          "confidence": 0.421
+        },
+        {
+          "text": "can",
+          "start": 5.72,
+          "end": 5.86,
+          "confidence": 0.996
+        },
+        {
+          "text": "help",
+          "start": 5.86,
+          "end": 6.14,
+          "confidence": 0.995
+        },
+        {
+          "text": "which",
+          "start": 6.14,
+          "end": 6.98,
+          "confidence": 0.836
+        },
+        {
+          "text": "project",
+          "start": 6.98,
+          "end": 7.36,
+          "confidence": 0.948
+        },
+        {
+          "text": "should",
+          "start": 7.36,
+          "end": 7.58,
+          "confidence": 0.993
+        },
+        {
+          "text": "i",
+          "start": 7.58,
+          "end": 7.7,
+          "confidence": 0.943
+        },
+        {
+          "text": "look",
+          "start": 7.7,
+          "end": 7.88,
+          "confidence": 0.95
+        },
+        {
+          "text": "up",
+          "start": 7.88,
+          "end": 8.06,
+          "confidence": 0.978
+        },
+        {
+          "text": "for",
+          "start": 8.06,
+          "end": 8.2,
+          "confidence": 0.977
+        },
+        {
+          "text": "you",
+          "start": 8.2,
+          "end": 8.4,
+          "confidence": 0.982
+        },
+        {
+          "text": "are",
+          "start": 13.3,
+          "end": 13.4,
+          "confidence": 0.204
+        },
+        {
+          "text": "you",
+          "start": 13.4,
+          "end": 13.56,
+          "confidence": 0.978
+        },
+        {
+          "text": "looking",
+          "start": 13.56,
+          "end": 13.78,
+          "confidence": 0.965
+        },
+        {
+          "text": "for",
+          "start": 13.78,
+          "end": 14.0,
+          "confidence": 0.962
+        }
+      ],
+      "raw_word_disagreement_diagnostic": 0.058823529411764705,
+      "seconds": 7.5353678750107065,
+      "audio_seconds": 14.16,
+      "peak": 0.6927345991134644,
+      "peak_meets_unchanged_ceiling": true,
+      "leading_silence_window_s": 0.0,
+      "trailing_silence_window_s": 0.0,
+      "word_times_restored_to_original_wav": true,
+      "internal_silence_removed": false,
+      "expected_text_prompt_used": false,
+      "original_wav_unchanged": true,
+      "recognized_words_in_nominal_quiet": [
+        {
+          "text": "sure",
+          "start": 5.04,
+          "end": 5.22,
+          "confidence": 0.172
+        },
+        {
+          "text": "i",
+          "start": 5.22,
+          "end": 5.72,
+          "confidence": 0.421
+        },
+        {
+          "text": "can",
+          "start": 5.72,
+          "end": 5.86,
+          "confidence": 0.996
+        },
+        {
+          "text": "help",
+          "start": 5.86,
+          "end": 6.14,
+          "confidence": 0.995
+        },
+        {
+          "text": "which",
+          "start": 6.14,
+          "end": 6.98,
+          "confidence": 0.836
+        },
+        {
+          "text": "project",
+          "start": 6.98,
+          "end": 7.36,
+          "confidence": 0.948
+        },
+        {
+          "text": "should",
+          "start": 7.36,
+          "end": 7.58,
+          "confidence": 0.993
+        },
+        {
+          "text": "i",
+          "start": 7.58,
+          "end": 7.7,
+          "confidence": 0.943
+        },
+        {
+          "text": "look",
+          "start": 7.7,
+          "end": 7.88,
+          "confidence": 0.95
+        },
+        {
+          "text": "up",
+          "start": 7.88,
+          "end": 8.06,
+          "confidence": 0.978
+        },
+        {
+          "text": "for",
+          "start": 8.06,
+          "end": 8.2,
+          "confidence": 0.977
+        },
+        {
+          "text": "you",
+          "start": 8.2,
+          "end": 8.4,
+          "confidence": 0.982
+        },
+        {
+          "text": "are",
+          "start": 13.3,
+          "end": 13.4,
+          "confidence": 0.204
+        },
+        {
+          "text": "you",
+          "start": 13.4,
+          "end": 13.56,
+          "confidence": 0.978
+        },
+        {
+          "text": "looking",
+          "start": 13.56,
+          "end": 13.78,
+          "confidence": 0.965
+        },
+        {
+          "text": "for",
+          "start": 13.78,
+          "end": 14.0,
+          "confidence": 0.962
+        }
+      ],
+      "full_answer_wer_scored": false
+    },
+    {
+      "id": "output-05-geronimo-with-cue",
+      "sha256": "22fdbb1d198e3d2313f3811c036c2d49eaaeca282dfd57d72b503a0faad423dd",
+      "kind": "native-sampled-fixed-window-output",
+      "reference": "Okay, that's quite interesting. I've located the records, and the key was to stay quiet. And the quietness was to last for one thousand, two hundred and fifty. And the thermometer measures temperature. It's an instrument used to measure heat. Do you want to know about the range of those measurements?",
+      "variant": "scoped_project_clause",
+      "nominal_quiet_s": [
+        4.144333333333334,
+        14.144333333333334
+      ],
+      "asr_file": "output-05-geronimo-with-cue.asr.json",
+      "asr_sha256": "e785e62c512afa176116a553ad17ad501d6a92582d372c0955527247aefafcce",
+      "asr_text": " okay that's quite interesting i've located the records and the key was to stay quiet and the quietness was the last for 1250 and the thermometer measures temperature it's an instrument used to measure heat do you want to know about the range of those measurements do you want to know about the range of the range of the range of the range of the range of the range of the range of the range of the range of the range of the range of the range of the range of the range of the range of the range of the range of the range of the range of the range of the range of the range of the range of the range of the range of the range of the range of the range of the range of the range of the range of the range of the range of the range of the range of the range of the range of the range",
+      "measured_words": [
+        {
+          "text": "okay",
+          "start": 4.24,
+          "end": 4.4,
+          "confidence": 0.106
+        },
+        {
+          "text": "that's",
+          "start": 4.4,
+          "end": 5.04,
+          "confidence": 0.818
+        },
+        {
+          "text": "quite",
+          "start": 5.04,
+          "end": 5.24,
+          "confidence": 0.995
+        },
+        {
+          "text": "interesting",
+          "start": 5.24,
+          "end": 5.7,
+          "confidence": 0.994
+        },
+        {
+          "text": "i've",
+          "start": 5.7,
+          "end": 6.48,
+          "confidence": 0.734
+        },
+        {
+          "text": "located",
+          "start": 6.48,
+          "end": 6.8,
+          "confidence": 0.966
+        },
+        {
+          "text": "the",
+          "start": 6.8,
+          "end": 7.02,
+          "confidence": 0.986
+        },
+        {
+          "text": "records",
+          "start": 7.02,
+          "end": 7.38,
+          "confidence": 0.991
+        },
+        {
+          "text": "and",
+          "start": 7.38,
+          "end": 7.8,
+          "confidence": 0.95
+        },
+        {
+          "text": "the",
+          "start": 7.8,
+          "end": 7.92,
+          "confidence": 0.994
+        },
+        {
+          "text": "key",
+          "start": 7.92,
+          "end": 8.1,
+          "confidence": 0.987
+        },
+        {
+          "text": "was",
+          "start": 8.1,
+          "end": 8.32,
+          "confidence": 0.982
+        },
+        {
+          "text": "to",
+          "start": 8.32,
+          "end": 8.46,
+          "confidence": 0.966
+        },
+        {
+          "text": "stay",
+          "start": 8.46,
+          "end": 8.64,
+          "confidence": 0.977
+        },
+        {
+          "text": "quiet",
+          "start": 8.64,
+          "end": 9.04,
+          "confidence": 0.99
+        },
+        {
+          "text": "and",
+          "start": 10.36,
+          "end": 10.44,
+          "confidence": 0.026
+        },
+        {
+          "text": "the",
+          "start": 10.44,
+          "end": 10.56,
+          "confidence": 0.978
+        },
+        {
+          "text": "quietness",
+          "start": 10.56,
+          "end": 11.14,
+          "confidence": 0.997
+        },
+        {
+          "text": "was",
+          "start": 11.14,
+          "end": 11.34,
+          "confidence": 0.991
+        },
+        {
+          "text": "the",
+          "start": 11.34,
+          "end": 11.5,
+          "confidence": 0.977
+        },
+        {
+          "text": "last",
+          "start": 11.5,
+          "end": 11.74,
+          "confidence": 0.999
+        },
+        {
+          "text": "for",
+          "start": 11.74,
+          "end": 11.94,
+          "confidence": 0.99
+        },
+        {
+          "text": "1250",
+          "start": 11.94,
+          "end": 13.56,
+          "confidence": 0.765
+        },
+        {
+          "text": "and",
+          "start": 16.82,
+          "end": 16.92,
+          "confidence": 0.278
+        },
+        {
+          "text": "the",
+          "start": 16.92,
+          "end": 17.06,
+          "confidence": 0.936
+        },
+        {
+          "text": "thermometer",
+          "start": 17.06,
+          "end": 17.46,
+          "confidence": 0.962
+        },
+        {
+          "text": "measures",
+          "start": 17.46,
+          "end": 17.84,
+          "confidence": 0.97
+        },
+        {
+          "text": "temperature",
+          "start": 17.84,
+          "end": 18.28,
+          "confidence": 0.962
+        },
+        {
+          "text": "it's",
+          "start": 18.28,
+          "end": 19.38,
+          "confidence": 0.375
+        },
+        {
+          "text": "an",
+          "start": 19.38,
+          "end": 19.44,
+          "confidence": 0.993
+        },
+        {
+          "text": "instrument",
+          "start": 19.44,
+          "end": 19.8,
+          "confidence": 0.991
+        },
+        {
+          "text": "used",
+          "start": 19.8,
+          "end": 20.1,
+          "confidence": 0.974
+        },
+        {
+          "text": "to",
+          "start": 20.1,
+          "end": 20.24,
+          "confidence": 0.99
+        },
+        {
+          "text": "measure",
+          "start": 20.24,
+          "end": 20.42,
+          "confidence": 0.964
+        },
+        {
+          "text": "heat",
+          "start": 20.42,
+          "end": 20.76,
+          "confidence": 0.936
+        },
+        {
+          "text": "do",
+          "start": 23.4,
+          "end": 23.48,
+          "confidence": 0.078
+        },
+        {
+          "text": "you",
+          "start": 23.48,
+          "end": 23.58,
+          "confidence": 0.986
+        },
+        {
+          "text": "want",
+          "start": 23.58,
+          "end": 23.74,
+          "confidence": 0.997
+        },
+        {
+          "text": "to",
+          "start": 23.74,
+          "end": 23.86,
+          "confidence": 0.998
+        },
+        {
+          "text": "know",
+          "start": 23.86,
+          "end": 24.0,
+          "confidence": 0.999
+        },
+        {
+          "text": "about",
+          "start": 24.0,
+          "end": 24.22,
+          "confidence": 0.997
+        },
+        {
+          "text": "the",
+          "start": 24.22,
+          "end": 24.4,
+          "confidence": 0.998
+        },
+        {
+          "text": "range",
+          "start": 24.4,
+          "end": 24.64,
+          "confidence": 0.997
+        },
+        {
+          "text": "of",
+          "start": 24.64,
+          "end": 24.82,
+          "confidence": 0.996
+        },
+        {
+          "text": "those",
+          "start": 24.82,
+          "end": 25.04,
+          "confidence": 0.984
+        },
+        {
+          "text": "measurements",
+          "start": 25.04,
+          "end": 25.42,
+          "confidence": 0.996
+        },
+        {
+          "text": "do",
+          "start": 26.06,
+          "end": 26.08,
+          "confidence": 0.0
+        },
+        {
+          "text": "you",
+          "start": 26.08,
+          "end": 26.1,
+          "confidence": 0.012
+        },
+        {
+          "text": "want",
+          "start": 26.1,
+          "end": 26.12,
+          "confidence": 0.253
+        },
+        {
+          "text": "to",
+          "start": 26.12,
+          "end": 26.14,
+          "confidence": 0.636
+        },
+        {
+          "text": "know",
+          "start": 26.14,
+          "end": 26.16,
+          "confidence": 0.025
+        },
+        {
+          "text": "about",
+          "start": 26.16,
+          "end": 26.18,
+          "confidence": 0.09
+        },
+        {
+          "text": "the",
+          "start": 26.18,
+          "end": 26.2,
+          "confidence": 0.295
+        },
+        {
+          "text": "range",
+          "start": 26.2,
+          "end": 26.22,
+          "confidence": 0.0
+        },
+        {
+          "text": "of",
+          "start": 26.22,
+          "end": 26.24,
+          "confidence": 0.656
+        },
+        {
+          "text": "the",
+          "start": 26.24,
+          "end": 26.26,
+          "confidence": 0.032
+        },
+        {
+          "text": "range",
+          "start": 26.26,
+          "end": 26.28,
+          "confidence": 0.011
+        },
+        {
+          "text": "of",
+          "start": 26.28,
+          "end": 26.3,
+          "confidence": 0.442
+        },
+        {
+          "text": "the",
+          "start": 26.3,
+          "end": 26.32,
+          "confidence": 0.193
+        },
+        {
+          "text": "range",
+          "start": 26.32,
+          "end": 26.34,
+          "confidence": 0.547
+        },
+        {
+          "text": "of",
+          "start": 26.34,
+          "end": 26.36,
+          "confidence": 0.459
+        },
+        {
+          "text": "the",
+          "start": 26.36,
+          "end": 26.38,
+          "confidence": 0.409
+        },
+        {
+          "text": "range",
+          "start": 26.38,
+          "end": 26.4,
+          "confidence": 0.875
+        },
+        {
+          "text": "of",
+          "start": 26.4,
+          "end": 26.42,
+          "confidence": 0.526
+        },
+        {
+          "text": "the",
+          "start": 26.42,
+          "end": 26.44,
+          "confidence": 0.624
+        },
+        {
+          "text": "range",
+          "start": 26.44,
+          "end": 26.46,
+          "confidence": 0.945
+        },
+        {
+          "text": "of",
+          "start": 26.46,
+          "end": 26.48,
+          "confidence": 0.136
+        },
+        {
+          "text": "the",
+          "start": 26.48,
+          "end": 26.5,
+          "confidence": 0.475
+        },
+        {
+          "text": "range",
+          "start": 26.5,
+          "end": 26.52,
+          "confidence": 0.758
+        },
+        {
+          "text": "of",
+          "start": 26.52,
+          "end": 26.54,
+          "confidence": 0.001
+        },
+        {
+          "text": "the",
+          "start": 26.54,
+          "end": 26.56,
+          "confidence": 0.174
+        },
+        {
+          "text": "range",
+          "start": 26.56,
+          "end": 26.58,
+          "confidence": 0.0
+        },
+        {
+          "text": "of",
+          "start": 26.58,
+          "end": 26.6,
+          "confidence": 0.448
+        },
+        {
+          "text": "the",
+          "start": 26.6,
+          "end": 26.62,
+          "confidence": 0.054
+        },
+        {
+          "text": "range",
+          "start": 26.62,
+          "end": 26.64,
+          "confidence": 0.26
+        },
+        {
+          "text": "of",
+          "start": 26.64,
+          "end": 26.66,
+          "confidence": 0.439
+        },
+        {
+          "text": "the",
+          "start": 26.66,
+          "end": 26.68,
+          "confidence": 0.263
+        },
+        {
+          "text": "range",
+          "start": 26.68,
+          "end": 26.7,
+          "confidence": 0.893
+        },
+        {
+          "text": "of",
+          "start": 26.7,
+          "end": 26.72,
+          "confidence": 0.455
+        },
+        {
+          "text": "the",
+          "start": 26.72,
+          "end": 26.74,
+          "confidence": 0.428
+        },
+        {
+          "text": "range",
+          "start": 26.74,
+          "end": 26.76,
+          "confidence": 0.965
+        },
+        {
+          "text": "of",
+          "start": 26.76,
+          "end": 26.78,
+          "confidence": 0.453
+        },
+        {
+          "text": "the",
+          "start": 26.78,
+          "end": 26.8,
+          "confidence": 0.446
+        },
+        {
+          "text": "range",
+          "start": 26.8,
+          "end": 26.82,
+          "confidence": 0.973
+        },
+        {
+          "text": "of",
+          "start": 26.82,
+          "end": 26.84,
+          "confidence": 0.468
+        },
+        {
+          "text": "the",
+          "start": 26.84,
+          "end": 26.86,
+          "confidence": 0.443
+        },
+        {
+          "text": "range",
+          "start": 26.86,
+          "end": 26.88,
+          "confidence": 0.977
+        },
+        {
+          "text": "of",
+          "start": 26.88,
+          "end": 26.9,
+          "confidence": 0.508
+        },
+        {
+          "text": "the",
+          "start": 26.9,
+          "end": 26.92,
+          "confidence": 0.467
+        },
+        {
+          "text": "range",
+          "start": 26.92,
+          "end": 26.94,
+          "confidence": 0.928
+        },
+        {
+          "text": "of",
+          "start": 26.94,
+          "end": 26.96,
+          "confidence": 0.388
+        },
+        {
+          "text": "the",
+          "start": 26.96,
+          "end": 26.98,
+          "confidence": 0.404
+        },
+        {
+          "text": "range",
+          "start": 26.98,
+          "end": 27.0,
+          "confidence": 0.974
+        },
+        {
+          "text": "of",
+          "start": 27.0,
+          "end": 27.02,
+          "confidence": 0.001
+        },
+        {
+          "text": "the",
+          "start": 27.02,
+          "end": 27.04,
+          "confidence": 0.174
+        },
+        {
+          "text": "range",
+          "start": 27.04,
+          "end": 27.06,
+          "confidence": 0.0
+        },
+        {
+          "text": "of",
+          "start": 27.06,
+          "end": 27.08,
+          "confidence": 0.448
+        },
+        {
+          "text": "the",
+          "start": 27.08,
+          "end": 27.1,
+          "confidence": 0.054
+        },
+        {
+          "text": "range",
+          "start": 27.1,
+          "end": 27.12,
+          "confidence": 0.26
+        },
+        {
+          "text": "of",
+          "start": 27.12,
+          "end": 27.14,
+          "confidence": 0.439
+        },
+        {
+          "text": "the",
+          "start": 27.14,
+          "end": 27.16,
+          "confidence": 0.263
+        },
+        {
+          "text": "range",
+          "start": 27.16,
+          "end": 27.18,
+          "confidence": 0.893
+        },
+        {
+          "text": "of",
+          "start": 27.18,
+          "end": 27.2,
+          "confidence": 0.455
+        },
+        {
+          "text": "the",
+          "start": 27.2,
+          "end": 27.22,
+          "confidence": 0.428
+        },
+        {
+          "text": "range",
+          "start": 27.22,
+          "end": 27.24,
+          "confidence": 0.965
+        },
+        {
+          "text": "of",
+          "start": 27.24,
+          "end": 27.26,
+          "confidence": 0.453
+        },
+        {
+          "text": "the",
+          "start": 27.26,
+          "end": 27.28,
+          "confidence": 0.446
+        },
+        {
+          "text": "range",
+          "start": 27.28,
+          "end": 27.3,
+          "confidence": 0.973
+        },
+        {
+          "text": "of",
+          "start": 27.3,
+          "end": 27.32,
+          "confidence": 0.468
+        },
+        {
+          "text": "the",
+          "start": 27.32,
+          "end": 27.34,
+          "confidence": 0.443
+        },
+        {
+          "text": "range",
+          "start": 27.34,
+          "end": 27.36,
+          "confidence": 0.977
+        },
+        {
+          "text": "of",
+          "start": 27.36,
+          "end": 27.38,
+          "confidence": 0.508
+        },
+        {
+          "text": "the",
+          "start": 27.38,
+          "end": 27.4,
+          "confidence": 0.467
+        },
+        {
+          "text": "range",
+          "start": 27.4,
+          "end": 27.42,
+          "confidence": 0.928
+        },
+        {
+          "text": "of",
+          "start": 27.42,
+          "end": 27.44,
+          "confidence": 0.388
+        },
+        {
+          "text": "the",
+          "start": 27.44,
+          "end": 27.46,
+          "confidence": 0.404
+        },
+        {
+          "text": "range",
+          "start": 27.46,
+          "end": 27.48,
+          "confidence": 0.974
+        },
+        {
+          "text": "of",
+          "start": 27.48,
+          "end": 27.5,
+          "confidence": 0.001
+        },
+        {
+          "text": "the",
+          "start": 27.5,
+          "end": 27.52,
+          "confidence": 0.174
+        },
+        {
+          "text": "range",
+          "start": 27.52,
+          "end": 27.54,
+          "confidence": 0.0
+        },
+        {
+          "text": "of",
+          "start": 27.54,
+          "end": 27.56,
+          "confidence": 0.448
+        },
+        {
+          "text": "the",
+          "start": 27.56,
+          "end": 27.58,
+          "confidence": 0.054
+        },
+        {
+          "text": "range",
+          "start": 27.58,
+          "end": 27.6,
+          "confidence": 0.26
+        },
+        {
+          "text": "of",
+          "start": 27.6,
+          "end": 27.62,
+          "confidence": 0.439
+        },
+        {
+          "text": "the",
+          "start": 27.62,
+          "end": 27.64,
+          "confidence": 0.263
+        },
+        {
+          "text": "range",
+          "start": 27.64,
+          "end": 27.66,
+          "confidence": 0.893
+        },
+        {
+          "text": "of",
+          "start": 27.66,
+          "end": 27.68,
+          "confidence": 0.455
+        },
+        {
+          "text": "the",
+          "start": 27.68,
+          "end": 27.7,
+          "confidence": 0.428
+        },
+        {
+          "text": "range",
+          "start": 27.7,
+          "end": 27.72,
+          "confidence": 0.965
+        },
+        {
+          "text": "of",
+          "start": 27.72,
+          "end": 27.74,
+          "confidence": 0.453
+        },
+        {
+          "text": "the",
+          "start": 27.74,
+          "end": 27.76,
+          "confidence": 0.446
+        },
+        {
+          "text": "range",
+          "start": 27.76,
+          "end": 27.78,
+          "confidence": 0.973
+        },
+        {
+          "text": "of",
+          "start": 27.78,
+          "end": 27.8,
+          "confidence": 0.468
+        },
+        {
+          "text": "the",
+          "start": 27.8,
+          "end": 27.82,
+          "confidence": 0.443
+        },
+        {
+          "text": "range",
+          "start": 27.82,
+          "end": 27.84,
+          "confidence": 0.977
+        },
+        {
+          "text": "of",
+          "start": 27.84,
+          "end": 27.86,
+          "confidence": 0.508
+        },
+        {
+          "text": "the",
+          "start": 27.86,
+          "end": 27.88,
+          "confidence": 0.467
+        },
+        {
+          "text": "range",
+          "start": 27.88,
+          "end": 27.9,
+          "confidence": 0.928
+        },
+        {
+          "text": "of",
+          "start": 27.9,
+          "end": 27.92,
+          "confidence": 0.388
+        },
+        {
+          "text": "the",
+          "start": 27.92,
+          "end": 27.94,
+          "confidence": 0.404
+        },
+        {
+          "text": "range",
+          "start": 27.94,
+          "end": 27.96,
+          "confidence": 0.974
+        },
+        {
+          "text": "of",
+          "start": 27.96,
+          "end": 27.98,
+          "confidence": 0.001
+        },
+        {
+          "text": "the",
+          "start": 27.98,
+          "end": 28.0,
+          "confidence": 0.174
+        },
+        {
+          "text": "range",
+          "start": 28.0,
+          "end": 28.02,
+          "confidence": 0.0
+        },
+        {
+          "text": "of",
+          "start": 28.02,
+          "end": 28.04,
+          "confidence": 0.448
+        },
+        {
+          "text": "the",
+          "start": 28.04,
+          "end": 28.06,
+          "confidence": 0.054
+        },
+        {
+          "text": "range",
+          "start": 28.06,
+          "end": 28.08,
+          "confidence": 0.26
+        },
+        {
+          "text": "of",
+          "start": 28.08,
+          "end": 28.1,
+          "confidence": 0.439
+        },
+        {
+          "text": "the",
+          "start": 28.1,
+          "end": 28.12,
+          "confidence": 0.263
+        },
+        {
+          "text": "range",
+          "start": 28.12,
+          "end": 28.14,
+          "confidence": 0.893
+        },
+        {
+          "text": "of",
+          "start": 28.14,
+          "end": 28.16,
+          "confidence": 0.455
+        },
+        {
+          "text": "the",
+          "start": 28.16,
+          "end": 28.18,
+          "confidence": 0.428
+        },
+        {
+          "text": "range",
+          "start": 28.18,
+          "end": 28.2,
+          "confidence": 0.965
+        },
+        {
+          "text": "of",
+          "start": 28.2,
+          "end": 28.22,
+          "confidence": 0.453
+        },
+        {
+          "text": "the",
+          "start": 28.22,
+          "end": 28.24,
+          "confidence": 0.446
+        },
+        {
+          "text": "range",
+          "start": 28.24,
+          "end": 28.26,
+          "confidence": 0.973
+        },
+        {
+          "text": "of",
+          "start": 28.26,
+          "end": 28.28,
+          "confidence": 0.468
+        },
+        {
+          "text": "the",
+          "start": 28.28,
+          "end": 28.3,
+          "confidence": 0.443
+        },
+        {
+          "text": "range",
+          "start": 28.3,
+          "end": 28.32,
+          "confidence": 0.977
+        },
+        {
+          "text": "of",
+          "start": 28.32,
+          "end": 28.34,
+          "confidence": 0.508
+        },
+        {
+          "text": "the",
+          "start": 28.34,
+          "end": 28.36,
+          "confidence": 0.467
+        },
+        {
+          "text": "range",
+          "start": 28.36,
+          "end": 28.38,
+          "confidence": 0.928
+        },
+        {
+          "text": "of",
+          "start": 28.38,
+          "end": 28.4,
+          "confidence": 0.388
+        },
+        {
+          "text": "the",
+          "start": 28.4,
+          "end": 28.42,
+          "confidence": 0.404
+        },
+        {
+          "text": "range",
+          "start": 28.42,
+          "end": 28.44,
+          "confidence": 0.974
+        }
+      ],
+      "raw_word_disagreement_diagnostic": 2.240740740740741,
+      "seconds": 31.812515291996533,
+      "audio_seconds": 26.8,
+      "peak": 0.6452474594116211,
+      "peak_meets_unchanged_ceiling": true,
+      "leading_silence_window_s": 0.0,
+      "trailing_silence_window_s": 0.71,
+      "word_times_restored_to_original_wav": true,
+      "internal_silence_removed": false,
+      "expected_text_prompt_used": false,
+      "original_wav_unchanged": true,
+      "recognized_words_in_nominal_quiet": [
+        {
+          "text": "okay",
+          "start": 4.24,
+          "end": 4.4,
+          "confidence": 0.106
+        },
+        {
+          "text": "that's",
+          "start": 4.4,
+          "end": 5.04,
+          "confidence": 0.818
+        },
+        {
+          "text": "quite",
+          "start": 5.04,
+          "end": 5.24,
+          "confidence": 0.995
+        },
+        {
+          "text": "interesting",
+          "start": 5.24,
+          "end": 5.7,
+          "confidence": 0.994
+        },
+        {
+          "text": "i've",
+          "start": 5.7,
+          "end": 6.48,
+          "confidence": 0.734
+        },
+        {
+          "text": "located",
+          "start": 6.48,
+          "end": 6.8,
+          "confidence": 0.966
+        },
+        {
+          "text": "the",
+          "start": 6.8,
+          "end": 7.02,
+          "confidence": 0.986
+        },
+        {
+          "text": "records",
+          "start": 7.02,
+          "end": 7.38,
+          "confidence": 0.991
+        },
+        {
+          "text": "and",
+          "start": 7.38,
+          "end": 7.8,
+          "confidence": 0.95
+        },
+        {
+          "text": "the",
+          "start": 7.8,
+          "end": 7.92,
+          "confidence": 0.994
+        },
+        {
+          "text": "key",
+          "start": 7.92,
+          "end": 8.1,
+          "confidence": 0.987
+        },
+        {
+          "text": "was",
+          "start": 8.1,
+          "end": 8.32,
+          "confidence": 0.982
+        },
+        {
+          "text": "to",
+          "start": 8.32,
+          "end": 8.46,
+          "confidence": 0.966
+        },
+        {
+          "text": "stay",
+          "start": 8.46,
+          "end": 8.64,
+          "confidence": 0.977
+        },
+        {
+          "text": "quiet",
+          "start": 8.64,
+          "end": 9.04,
+          "confidence": 0.99
+        },
+        {
+          "text": "and",
+          "start": 10.36,
+          "end": 10.44,
+          "confidence": 0.026
+        },
+        {
+          "text": "the",
+          "start": 10.44,
+          "end": 10.56,
+          "confidence": 0.978
+        },
+        {
+          "text": "quietness",
+          "start": 10.56,
+          "end": 11.14,
+          "confidence": 0.997
+        },
+        {
+          "text": "was",
+          "start": 11.14,
+          "end": 11.34,
+          "confidence": 0.991
+        },
+        {
+          "text": "the",
+          "start": 11.34,
+          "end": 11.5,
+          "confidence": 0.977
+        },
+        {
+          "text": "last",
+          "start": 11.5,
+          "end": 11.74,
+          "confidence": 0.999
+        },
+        {
+          "text": "for",
+          "start": 11.74,
+          "end": 11.94,
+          "confidence": 0.99
+        },
+        {
+          "text": "1250",
+          "start": 11.94,
+          "end": 13.56,
+          "confidence": 0.765
+        }
+      ],
+      "full_answer_wer_scored": false
+    },
+    {
+      "id": "output-06-ready-no-cue",
+      "sha256": "57d0f3b69d4e6387d963e83b2c1bf55f97c3e36d16e871800b1b4693fbcf9ced",
+      "kind": "native-sampled-fixed-window-output",
+      "reference": "It's currently two hundred\u2014 and two. The total number of projects is four. Would you like me to recap the projects",
+      "variant": "generic_quiet_rule",
+      "nominal_quiet_s": [
+        3.807625,
+        13.807625
+      ],
+      "asr_file": "output-06-ready-no-cue.asr.json",
+      "asr_sha256": "5bd4680699d5aa9763e53c33ecebde7f1ca42cc281c4e5a8048e50d9416c429f",
+      "asr_text": " It's currently two, and two. The total number of projects is four. Would you like me to recap the project?",
+      "measured_words": [
+        {
+          "text": "It's",
+          "start": 0.74,
+          "end": 0.92,
+          "confidence": 0.859
+        },
+        {
+          "text": "currently",
+          "start": 0.92,
+          "end": 1.26,
+          "confidence": 0.998
+        },
+        {
+          "text": "two,",
+          "start": 1.26,
+          "end": 1.66,
+          "confidence": 0.224
+        },
+        {
+          "text": "and",
+          "start": 1.86,
+          "end": 4.4,
+          "confidence": 0.69
+        },
+        {
+          "text": "two.",
+          "start": 4.4,
+          "end": 4.7,
+          "confidence": 0.96
+        },
+        {
+          "text": "The",
+          "start": 5.44,
+          "end": 5.56,
+          "confidence": 0.926
+        },
+        {
+          "text": "total",
+          "start": 5.56,
+          "end": 5.82,
+          "confidence": 0.992
+        },
+        {
+          "text": "number",
+          "start": 5.82,
+          "end": 6.04,
+          "confidence": 0.998
+        },
+        {
+          "text": "of",
+          "start": 6.04,
+          "end": 6.2,
+          "confidence": 0.999
+        },
+        {
+          "text": "projects",
+          "start": 6.2,
+          "end": 6.6,
+          "confidence": 0.985
+        },
+        {
+          "text": "is",
+          "start": 6.6,
+          "end": 6.9,
+          "confidence": 0.997
+        },
+        {
+          "text": "four.",
+          "start": 6.9,
+          "end": 7.32,
+          "confidence": 0.783
+        },
+        {
+          "text": "Would",
+          "start": 12.1,
+          "end": 12.24,
+          "confidence": 0.878
+        },
+        {
+          "text": "you",
+          "start": 12.24,
+          "end": 12.38,
+          "confidence": 0.996
+        },
+        {
+          "text": "like",
+          "start": 12.38,
+          "end": 12.56,
+          "confidence": 0.999
+        },
+        {
+          "text": "me",
+          "start": 12.56,
+          "end": 12.74,
+          "confidence": 0.997
+        },
+        {
+          "text": "to",
+          "start": 12.74,
+          "end": 12.9,
+          "confidence": 0.997
+        },
+        {
+          "text": "recap",
+          "start": 12.9,
+          "end": 13.26,
+          "confidence": 0.993
+        },
+        {
+          "text": "the",
+          "start": 13.26,
+          "end": 13.5,
+          "confidence": 0.992
+        },
+        {
+          "text": "project?",
+          "start": 13.5,
+          "end": 13.78,
+          "confidence": 0.793
+        }
+      ],
+      "raw_word_disagreement_diagnostic": 0.09090909090909091,
+      "seconds": 9.948444624984404,
+      "audio_seconds": 13.84,
+      "peak": 0.6987051367759705,
+      "peak_meets_unchanged_ceiling": true,
+      "leading_silence_window_s": 0.0,
+      "trailing_silence_window_s": 0.0,
+      "word_times_restored_to_original_wav": true,
+      "internal_silence_removed": false,
+      "expected_text_prompt_used": false,
+      "original_wav_unchanged": true,
+      "recognized_words_in_nominal_quiet": [
+        {
+          "text": "and",
+          "start": 1.86,
+          "end": 4.4,
+          "confidence": 0.69
+        },
+        {
+          "text": "two.",
+          "start": 4.4,
+          "end": 4.7,
+          "confidence": 0.96
+        },
+        {
+          "text": "The",
+          "start": 5.44,
+          "end": 5.56,
+          "confidence": 0.926
+        },
+        {
+          "text": "total",
+          "start": 5.56,
+          "end": 5.82,
+          "confidence": 0.992
+        },
+        {
+          "text": "number",
+          "start": 5.82,
+          "end": 6.04,
+          "confidence": 0.998
+        },
+        {
+          "text": "of",
+          "start": 6.04,
+          "end": 6.2,
+          "confidence": 0.999
+        },
+        {
+          "text": "projects",
+          "start": 6.2,
+          "end": 6.6,
+          "confidence": 0.985
+        },
+        {
+          "text": "is",
+          "start": 6.6,
+          "end": 6.9,
+          "confidence": 0.997
+        },
+        {
+          "text": "four.",
+          "start": 6.9,
+          "end": 7.32,
+          "confidence": 0.783
+        },
+        {
+          "text": "Would",
+          "start": 12.1,
+          "end": 12.24,
+          "confidence": 0.878
+        },
+        {
+          "text": "you",
+          "start": 12.24,
+          "end": 12.38,
+          "confidence": 0.996
+        },
+        {
+          "text": "like",
+          "start": 12.38,
+          "end": 12.56,
+          "confidence": 0.999
+        },
+        {
+          "text": "me",
+          "start": 12.56,
+          "end": 12.74,
+          "confidence": 0.997
+        },
+        {
+          "text": "to",
+          "start": 12.74,
+          "end": 12.9,
+          "confidence": 0.997
+        },
+        {
+          "text": "recap",
+          "start": 12.9,
+          "end": 13.26,
+          "confidence": 0.993
+        },
+        {
+          "text": "the",
+          "start": 13.26,
+          "end": 13.5,
+          "confidence": 0.992
+        },
+        {
+          "text": "project?",
+          "start": 13.5,
+          "end": 13.78,
+          "confidence": 0.793
+        }
+      ],
+      "full_answer_wer_scored": false
+    },
+    {
+      "id": "output-07-geronimo-no-cue",
+      "sha256": "be0d1b80229a7ed9bba26529097a0b8a13ee1733841ec35b006ad021065c177b",
+      "kind": "native-sampled-fixed-window-output",
+      "reference": "Sure. Which project should I check the results for? Should I check the status for project one, two, or three?",
+      "variant": "generic_quiet_rule",
+      "nominal_quiet_s": [
+        4.144333333333334,
+        14.144333333333334
+      ],
+      "asr_file": "output-07-geronimo-no-cue.asr.json",
+      "asr_sha256": "f6d94c0737493f7f276618eca23231041288f4614f20bf822d159235812c2899",
+      "asr_text": " Sure. Which project should I check the results for? Should I check the status for project 1, 2, or 3?",
+      "measured_words": [
+        {
+          "text": "Sure.",
+          "start": 4.66,
+          "end": 4.84,
+          "confidence": 0.606
+        },
+        {
+          "text": "Which",
+          "start": 5.2,
+          "end": 5.72,
+          "confidence": 0.577
+        },
+        {
+          "text": "project",
+          "start": 5.72,
+          "end": 6.08,
+          "confidence": 0.983
+        },
+        {
+          "text": "should",
+          "start": 6.08,
+          "end": 6.28,
+          "confidence": 0.986
+        },
+        {
+          "text": "I",
+          "start": 6.28,
+          "end": 6.38,
+          "confidence": 0.953
+        },
+        {
+          "text": "check",
+          "start": 6.38,
+          "end": 6.54,
+          "confidence": 0.981
+        },
+        {
+          "text": "the",
+          "start": 6.54,
+          "end": 6.68,
+          "confidence": 0.982
+        },
+        {
+          "text": "results",
+          "start": 6.68,
+          "end": 6.94,
+          "confidence": 0.991
+        },
+        {
+          "text": "for?",
+          "start": 6.94,
+          "end": 7.18,
+          "confidence": 0.968
+        },
+        {
+          "text": "Should",
+          "start": 11.26,
+          "end": 11.4,
+          "confidence": 0.728
+        },
+        {
+          "text": "I",
+          "start": 11.4,
+          "end": 11.54,
+          "confidence": 0.984
+        },
+        {
+          "text": "check",
+          "start": 11.54,
+          "end": 11.76,
+          "confidence": 0.995
+        },
+        {
+          "text": "the",
+          "start": 11.76,
+          "end": 11.94,
+          "confidence": 0.996
+        },
+        {
+          "text": "status",
+          "start": 11.94,
+          "end": 12.3,
+          "confidence": 0.975
+        },
+        {
+          "text": "for",
+          "start": 12.3,
+          "end": 12.52,
+          "confidence": 0.995
+        },
+        {
+          "text": "project",
+          "start": 12.52,
+          "end": 12.84,
+          "confidence": 0.775
+        },
+        {
+          "text": "1,",
+          "start": 12.84,
+          "end": 13.1,
+          "confidence": 0.76
+        },
+        {
+          "text": "2,",
+          "start": 13.4,
+          "end": 13.48,
+          "confidence": 0.801
+        },
+        {
+          "text": "or",
+          "start": 13.5,
+          "end": 13.72,
+          "confidence": 0.988
+        },
+        {
+          "text": "3?",
+          "start": 13.72,
+          "end": 13.96,
+          "confidence": 0.984
+        }
+      ],
+      "raw_word_disagreement_diagnostic": 0.0,
+      "seconds": 7.601407875015866,
+      "audio_seconds": 14.16,
+      "peak": 0.9291213750839233,
+      "peak_meets_unchanged_ceiling": true,
+      "leading_silence_window_s": 0.0,
+      "trailing_silence_window_s": 0.0,
+      "word_times_restored_to_original_wav": true,
+      "internal_silence_removed": false,
+      "expected_text_prompt_used": false,
+      "original_wav_unchanged": true,
+      "recognized_words_in_nominal_quiet": [
+        {
+          "text": "Sure.",
+          "start": 4.66,
+          "end": 4.84,
+          "confidence": 0.606
+        },
+        {
+          "text": "Which",
+          "start": 5.2,
+          "end": 5.72,
+          "confidence": 0.577
+        },
+        {
+          "text": "project",
+          "start": 5.72,
+          "end": 6.08,
+          "confidence": 0.983
+        },
+        {
+          "text": "should",
+          "start": 6.08,
+          "end": 6.28,
+          "confidence": 0.986
+        },
+        {
+          "text": "I",
+          "start": 6.28,
+          "end": 6.38,
+          "confidence": 0.953
+        },
+        {
+          "text": "check",
+          "start": 6.38,
+          "end": 6.54,
+          "confidence": 0.981
+        },
+        {
+          "text": "the",
+          "start": 6.54,
+          "end": 6.68,
+          "confidence": 0.982
+        },
+        {
+          "text": "results",
+          "start": 6.68,
+          "end": 6.94,
+          "confidence": 0.991
+        },
+        {
+          "text": "for?",
+          "start": 6.94,
+          "end": 7.18,
+          "confidence": 0.968
+        },
+        {
+          "text": "Should",
+          "start": 11.26,
+          "end": 11.4,
+          "confidence": 0.728
+        },
+        {
+          "text": "I",
+          "start": 11.4,
+          "end": 11.54,
+          "confidence": 0.984
+        },
+        {
+          "text": "check",
+          "start": 11.54,
+          "end": 11.76,
+          "confidence": 0.995
+        },
+        {
+          "text": "the",
+          "start": 11.76,
+          "end": 11.94,
+          "confidence": 0.996
+        },
+        {
+          "text": "status",
+          "start": 11.94,
+          "end": 12.3,
+          "confidence": 0.975
+        },
+        {
+          "text": "for",
+          "start": 12.3,
+          "end": 12.52,
+          "confidence": 0.995
+        },
+        {
+          "text": "project",
+          "start": 12.52,
+          "end": 12.84,
+          "confidence": 0.775
+        },
+        {
+          "text": "1,",
+          "start": 12.84,
+          "end": 13.1,
+          "confidence": 0.76
+        },
+        {
+          "text": "2,",
+          "start": 13.4,
+          "end": 13.48,
+          "confidence": 0.801
+        },
+        {
+          "text": "or",
+          "start": 13.5,
+          "end": 13.72,
+          "confidence": 0.988
+        },
+        {
+          "text": "3?",
+          "start": 13.72,
+          "end": 13.96,
+          "confidence": 0.984
+        }
+      ],
+      "full_answer_wer_scored": false
+    },
+    {
+      "id": "output-08-geronimo-with-cue",
+      "sha256": "b300b4a7e412f0b201947ccba9cb194550ac4f07ec95d76ad994705d766bb353",
+      "kind": "native-sampled-fixed-window-output",
+      "reference": "Sure, I'll keep quiet. What's the issue you're working on? Should I start the timer for that quiet period now? It measures the temperature. Is there anything specific about temperature you're working on? The H and the C",
+      "variant": "generic_quiet_rule",
+      "nominal_quiet_s": [
+        4.144333333333334,
+        14.144333333333334
+      ],
+      "asr_file": "output-08-geronimo-with-cue.asr.json",
+      "asr_sha256": "d1bf513bfddfd6e8acb690c8313f2dd08a14fbdee489999156334d4cc0c5be61",
+      "asr_text": " Sure, I'll keep quiet. What's the issue you're working on? Should I start the timer for that quiet period now? It measures the temperature. Is there anything specific about temperature you're working on? The H and the C.",
+      "measured_words": [
+        {
+          "text": "Sure,",
+          "start": 4.72,
+          "end": 4.9,
+          "confidence": 0.577
+        },
+        {
+          "text": "I'll",
+          "start": 5.08,
+          "end": 5.2,
+          "confidence": 0.984
+        },
+        {
+          "text": "keep",
+          "start": 5.2,
+          "end": 5.32,
+          "confidence": 0.997
+        },
+        {
+          "text": "quiet.",
+          "start": 5.32,
+          "end": 5.74,
+          "confidence": 0.839
+        },
+        {
+          "text": "What's",
+          "start": 6.42,
+          "end": 6.66,
+          "confidence": 0.909
+        },
+        {
+          "text": "the",
+          "start": 6.66,
+          "end": 6.78,
+          "confidence": 0.999
+        },
+        {
+          "text": "issue",
+          "start": 6.78,
+          "end": 7.06,
+          "confidence": 0.998
+        },
+        {
+          "text": "you're",
+          "start": 7.06,
+          "end": 7.32,
+          "confidence": 0.989
+        },
+        {
+          "text": "working",
+          "start": 7.32,
+          "end": 7.6,
+          "confidence": 0.999
+        },
+        {
+          "text": "on?",
+          "start": 7.6,
+          "end": 7.9,
+          "confidence": 0.925
+        },
+        {
+          "text": "Should",
+          "start": 12.4,
+          "end": 12.54,
+          "confidence": 0.815
+        },
+        {
+          "text": "I",
+          "start": 12.54,
+          "end": 12.7,
+          "confidence": 0.992
+        },
+        {
+          "text": "start",
+          "start": 12.7,
+          "end": 13.02,
+          "confidence": 0.998
+        },
+        {
+          "text": "the",
+          "start": 13.02,
+          "end": 13.22,
+          "confidence": 0.998
+        },
+        {
+          "text": "timer",
+          "start": 13.22,
+          "end": 13.56,
+          "confidence": 0.999
+        },
+        {
+          "text": "for",
+          "start": 13.56,
+          "end": 13.84,
+          "confidence": 0.998
+        },
+        {
+          "text": "that",
+          "start": 13.84,
+          "end": 14.06,
+          "confidence": 0.998
+        },
+        {
+          "text": "quiet",
+          "start": 14.06,
+          "end": 14.52,
+          "confidence": 0.98
+        },
+        {
+          "text": "period",
+          "start": 14.52,
+          "end": 14.92,
+          "confidence": 0.998
+        },
+        {
+          "text": "now?",
+          "start": 14.92,
+          "end": 15.42,
+          "confidence": 0.978
+        },
+        {
+          "text": "It",
+          "start": 16.9,
+          "end": 17.04,
+          "confidence": 0.882
+        },
+        {
+          "text": "measures",
+          "start": 17.04,
+          "end": 17.42,
+          "confidence": 0.993
+        },
+        {
+          "text": "the",
+          "start": 17.42,
+          "end": 17.68,
+          "confidence": 0.998
+        },
+        {
+          "text": "temperature.",
+          "start": 17.68,
+          "end": 18.14,
+          "confidence": 0.944
+        },
+        {
+          "text": "Is",
+          "start": 21.88,
+          "end": 22.02,
+          "confidence": 0.884
+        },
+        {
+          "text": "there",
+          "start": 22.02,
+          "end": 22.16,
+          "confidence": 0.999
+        },
+        {
+          "text": "anything",
+          "start": 22.16,
+          "end": 22.52,
+          "confidence": 0.999
+        },
+        {
+          "text": "specific",
+          "start": 22.52,
+          "end": 23.04,
+          "confidence": 0.998
+        },
+        {
+          "text": "about",
+          "start": 23.04,
+          "end": 23.38,
+          "confidence": 0.978
+        },
+        {
+          "text": "temperature",
+          "start": 23.38,
+          "end": 23.84,
+          "confidence": 0.975
+        },
+        {
+          "text": "you're",
+          "start": 23.84,
+          "end": 24.14,
+          "confidence": 0.984
+        },
+        {
+          "text": "working",
+          "start": 24.14,
+          "end": 24.4,
+          "confidence": 0.997
+        },
+        {
+          "text": "on?",
+          "start": 24.4,
+          "end": 24.7,
+          "confidence": 0.992
+        },
+        {
+          "text": "The",
+          "start": 25.7,
+          "end": 25.84,
+          "confidence": 0.56
+        },
+        {
+          "text": "H",
+          "start": 25.84,
+          "end": 26.16,
+          "confidence": 0.828
+        },
+        {
+          "text": "and",
+          "start": 26.16,
+          "end": 26.38,
+          "confidence": 0.939
+        },
+        {
+          "text": "the",
+          "start": 26.38,
+          "end": 26.56,
+          "confidence": 0.968
+        },
+        {
+          "text": "C.",
+          "start": 26.56,
+          "end": 26.74,
+          "confidence": 0.638
+        }
+      ],
+      "raw_word_disagreement_diagnostic": 0.0,
+      "seconds": 19.83384695800487,
+      "audio_seconds": 26.8,
+      "peak": 0.6358566284179688,
+      "peak_meets_unchanged_ceiling": true,
+      "leading_silence_window_s": 0.0,
+      "trailing_silence_window_s": 0.0,
+      "word_times_restored_to_original_wav": true,
+      "internal_silence_removed": false,
+      "expected_text_prompt_used": false,
+      "original_wav_unchanged": true,
+      "recognized_words_in_nominal_quiet": [
+        {
+          "text": "Sure,",
+          "start": 4.72,
+          "end": 4.9,
+          "confidence": 0.577
+        },
+        {
+          "text": "I'll",
+          "start": 5.08,
+          "end": 5.2,
+          "confidence": 0.984
+        },
+        {
+          "text": "keep",
+          "start": 5.2,
+          "end": 5.32,
+          "confidence": 0.997
+        },
+        {
+          "text": "quiet.",
+          "start": 5.32,
+          "end": 5.74,
+          "confidence": 0.839
+        },
+        {
+          "text": "What's",
+          "start": 6.42,
+          "end": 6.66,
+          "confidence": 0.909
+        },
+        {
+          "text": "the",
+          "start": 6.66,
+          "end": 6.78,
+          "confidence": 0.999
+        },
+        {
+          "text": "issue",
+          "start": 6.78,
+          "end": 7.06,
+          "confidence": 0.998
+        },
+        {
+          "text": "you're",
+          "start": 7.06,
+          "end": 7.32,
+          "confidence": 0.989
+        },
+        {
+          "text": "working",
+          "start": 7.32,
+          "end": 7.6,
+          "confidence": 0.999
+        },
+        {
+          "text": "on?",
+          "start": 7.6,
+          "end": 7.9,
+          "confidence": 0.925
+        },
+        {
+          "text": "Should",
+          "start": 12.4,
+          "end": 12.54,
+          "confidence": 0.815
+        },
+        {
+          "text": "I",
+          "start": 12.54,
+          "end": 12.7,
+          "confidence": 0.992
+        },
+        {
+          "text": "start",
+          "start": 12.7,
+          "end": 13.02,
+          "confidence": 0.998
+        },
+        {
+          "text": "the",
+          "start": 13.02,
+          "end": 13.22,
+          "confidence": 0.998
+        },
+        {
+          "text": "timer",
+          "start": 13.22,
+          "end": 13.56,
+          "confidence": 0.999
+        },
+        {
+          "text": "for",
+          "start": 13.56,
+          "end": 13.84,
+          "confidence": 0.998
+        },
+        {
+          "text": "that",
+          "start": 13.84,
+          "end": 14.06,
+          "confidence": 0.998
+        },
+        {
+          "text": "quiet",
+          "start": 14.06,
+          "end": 14.52,
+          "confidence": 0.98
+        }
+      ],
+      "full_answer_wer_scored": false
+    }
+  ],
+  "all_input_word_checks_meet005": true,
+  "owner_recordings_used": false,
+  "api_calls": 0,
+  "cloud_compute_purchased": false,
+  "waveform_gain_or_bytes_changed": false,
+  "training_approved": false,
+  "native_behavior_qualified": false,
+  "limits": [
+    "Development diagnostics only; original nine failures remain preserved.",
+    "Native WAV times are concatenated output-frame time, not network/playout latency.",
+    "Fixed windows may truncate answers; output disagreement is not full-answer WER qualification.",
+    "Independent ASR hearing the words does not prove the native model understood them.",
+    "No fullnative10, paired fresh40, actual teacher collection, numerical approval or new training claimed."
+  ]
+}

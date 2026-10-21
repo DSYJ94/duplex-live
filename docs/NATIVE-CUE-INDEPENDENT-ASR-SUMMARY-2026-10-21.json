@@ -1,0 +1,38 @@
+{
+  "at_utc": "2026-10-21T19:11:01.236540+00:00",
+  "source_commit": "1356b2c396569597b6716a230d849eaf7ea06768",
+  "complete12": true,
+  "input_word_errors": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "quiet_words_per_native_output": [
+    20,
+    12,
+    25,
+    15,
+    16,
+    23,
+    17,
+    20,
+    18
+  ],
+  "native_output_peak_violations": 1,
+  "independent_asr_report_sha256": "6e9375ae97a2132464764979d745e720a11fd75f3eea12f00fad97339752e767",
+  "owner_recordings_used": false,
+  "api_calls": 0,
+  "gpu_compute_purchased": false,
+  "native_behavior_qualified": false,
+  "new_training_run": false,
+  "training_approved": false,
+  "limits": [
+    "Development diagnostics only; original nine failures remain preserved.",
+    "Native WAV times are concatenated output-frame time, not network/playout latency.",
+    "Fixed windows may truncate answers; output disagreement is not full-answer WER qualification.",
+    "Independent ASR hearing the words does not prove the native model understood them.",
+    "No fullnative10, paired fresh40, actual teacher collection, numerical approval or new training claimed."
+  ],
+  "credential_file_configured_at_latest_check": false,
+  "all_five_protected_records_unchanged": true
+}
