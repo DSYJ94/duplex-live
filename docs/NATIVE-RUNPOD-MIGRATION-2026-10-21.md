@@ -1,3 +1,22 @@
+# Current execution — 21 October12:00UTC
+
+The initial approved trial has ended; no trial GPU remains. Read
+[NATIVE-RUNPOD-EXECUTION-2026-10-21.json](NATIVE-RUNPOD-EXECUTION-2026-10-21.json)
+and the newest HANDOFF.md for exact current resources, restoration and backup status.
+The full archive is verified on Mac but not yet complete on Runpod. The initial
+36-file model/state export and priority proof were verified on Runpod. Independent
+adapter/Adam/allRNG restoration passed; full native numerical/behavioral approval
+and a usable voice audition remain incomplete. No new training occurred.
+
+Replacement100GB volume49yytzyoge in S3-supported EUR-IS-1 has actual authenticated
+storage access. The owner approved temporary overlap with oldvolume cyjzip53ap,
+which must retain its unique receipts until recovered. $7/month each while both
+exist, $7/month ongoing after retirement. Paid compute remains within the original
+$25 budget; no replacement GPU has been started. The following earlier assessment
+is historical; its no-resource/no-approval/pending-copy statements describe06:43UTC.
+
+---
+
 # AIRR grace-period backup and Runpod migration
 
 LOCAL remains the sole executor. CLOUD is read-only until the owner explicitly

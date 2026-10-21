@@ -1,0 +1,76 @@
+{
+  "schema": "dl-runpod-native-trial-status-v2",
+  "at_utc": "2026-10-21T12:01:39.543136+00:00",
+  "executor": "LOCAL",
+  "source_commit": "c8759473ca70d775c8b993795be5c2b6eee7cccd",
+  "trial": {
+    "pod_id": "q3wqjwols44aos",
+    "created_utc": "2026-10-21T09:15:37.923Z",
+    "deadline_utc": "2026-10-21T11:15:37.923Z",
+    "watchdog_terminal": {
+      "phase": "pod_terminated",
+      "pod_id": "q3wqjwols44aos",
+      "network_volume_retained": "cyjzip53ap",
+      "at_utc": "2026-10-21T11:15:59.341790+00:00",
+      "pid": 82566
+    },
+    "independent_pod_get_now": 404,
+    "new_training_updates": 0
+  },
+  "native_assets": {
+    "model_config_adapter_state_files": 36,
+    "bytes": 33941618091,
+    "hashes_passed_utc": "2026-10-21T09:58:13Z",
+    "priority_proof_files": 36,
+    "priority_proof_bytes": 658039680,
+    "complete_archive_on_mac": true,
+    "complete_archive_on_runpod": false
+  },
+  "independent_restore_observed_stdout": {
+    "at_utc": "2026-10-21T10:32:21.119758+00:00",
+    "passed": true,
+    "optimizer_updates": 0,
+    "adapter_tensors": 26,
+    "trainable_parameters": 1894400,
+    "phase_updates_restored": 8,
+    "adam_clocks": [
+      528
+    ],
+    "optimizer_and_python_numpy_torch_cpu_cuda_rng_exact": true,
+    "parameter_order_from_published_model_state_dict": true,
+    "device": "NVIDIA H100 80GB HBM3",
+    "torch": "2.9.0a0+145a3a7bda.nv25.10",
+    "cuda": "13.0",
+    "original_receipt_on_old_volume": "/workspace/migration/independent-gpu-adapter-state-restore-v1.json",
+    "original_receipt_retrieved": false
+  },
+  "voice_audition": {
+    "usable_or_ready": false,
+    "last_run_pid": 4017,
+    "last_run_failed": "Triton linker missing libcuda.so linker-name",
+    "launcher_fix_committed": "c8759473ca70d775c8b993795be5c2b6eee7cccd",
+    "fix_gpu_executed": false,
+    "native_full_numerical_or_behavior_approved": false
+  },
+  "replacement_storage": {
+    "owner_explicitly_approved_replacement_and_overlap": true,
+    "old_id": "cyjzip53ap",
+    "old_data_center": "EUR-IS-3",
+    "old_retained_for_unique_receipt_recovery": true,
+    "new_id": "49yytzyoge",
+    "new_data_center": "EUR-IS-1",
+    "new_size_gb": 100,
+    "actual_authenticated_s3_list_passed": true,
+    "ongoing_usd_month_after_old_retired": 7,
+    "temporary_both_usd_month_prorated": 14,
+    "transfer_complete": false
+  },
+  "qualification": {
+    "latest_candidate_job": "7590052",
+    "isambard_full_numerical_passed": true,
+    "destination_full_native_numerical_passed": false,
+    "native10_run": false,
+    "fresh40_run": false,
+    "adopted": false
+  }
+}

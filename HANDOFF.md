@@ -1,3 +1,56 @@
+# LOCAL — bounded trial terminated; exact state restore PASS; replacement backup active (21Oct12:00UTC)
+
+LOCAL remains the sole executor; CLOUD is read-only. No new training or Slurm job
+was submitted. Do not restart the frozen Isambard watcher or repeat completed8updates.
+Candidate7590052 remains UNQUALIFIED: full native10/speech and paired fresh40 unrun.
+
+Trial q3wqjwols44aos (2H100,09:15:37.923UTC) was terminated by the independent Mac
+watchdog at11:15:59UTC; fresh get-pod returned404 at11:52UTC. Original100GBvolume
+cyjzip53ap remains. All36 weights/config/adapter/state files33,941,618,091B passed
+independent Runpod SHA checks09:58UTC; priorityproof36files658,039,680B also passed.
+Independent one-H100 restore10:32:21UTC EXACT:26adapters/1,894,400params,Adam528,
+phase8,Python/NumPy/TorchCPU/CUDA RNG. Zero optimizer updates. This does NOT prove
+full native28/acoustic49/native49 numerical equivalence or behavioral quality.
+Original restore report is on oldvolume /workspace/migration/independent-gpu-adapter-state-restore-v1.json;
+observed stdout is transcribed with explicit provenance in NATIVE-RUNPOD-EXECUTION-2026-10-21.json.
+
+Voice audition did NOT become usable. Last process4017 failed at Triton libcuda
+linker-name discovery; fix uses the SAME pinned native probe's cuda_linker_path
+and is committed/pushed as c8759473ca70d775c8b993795be5c2b6eee7cccd, NOT GPU-tested.
+Last executed launcher/source-main was3a3e0608 (full SHA via Git); trained payload
+741872fe2f9e49f35d4deba9aba96caff26c51d4 and controller repair d08ef7a unchanged.
+Pinned runtime Torch2.9.0a0+145a3a7bda.nv25.10/CUDA13.0. New audition dependencies
+are separately pinned; do not silently change Torch, precision, sampler or layout.
+
+All28,470files67,764,285,650B+8links remain fully hash-verified on Mac. Runpod FULL
+archive is INCOMPLETE. Earlier source rsync transport ended255; some receiver-side
+bytes continued arriving in ephemeral /tmp but are not accepted backup evidence.
+The incremental persistence journal on oldvolume, not staging sizes, determines
+which additional files survived. Do not infer completion from a disappeared handle.
+
+EUR-IS-3 lacks S3/DNS endpoint and has no attachable CPU/GPU stock in current reads.
+Owner explicitly approved a replacement100GBSTANDARD volume in EUR-IS-1, ID
+49yytzyoge. Fresh get-volume and authenticated S3 list PASS; it is empty before
+copy. Pack/upload only the pinned native-v3 manifest, independently GET and SHA
+verify EVERY regular tar member and all8link targets. No subset acceptance.
+Local packing process/session75870 is active; destination archive prefix native-archive-v3/.
+Read actual processes, local index/journal and S3 before any retry. Keep oldvolume
+until unique migration/restore receipts are recovered. Temporary two volumes cost
+$14/month prorated; after oldretirement ongoing100GB is$7/month. Owner approved overlap.
+No second GPU started. All further compute must remain within original$25 total.
+Credentials are mode0600 ignored locally; never copy or commit them. S3 credentials
+were downloaded by owner; do not output Downloads/credentials.txt or private files.
+Temporary budget API key remains for cost control; revoke only after paid validation.
+
+Next: finish complete S3 read-back backup; preserve original migration receipts;
+Git-deploy fixed launcher to a NEW bounded provider receipt, independently restore,
+then prove a real native request and microphone session. Complete10/speech review
+and ordinary4/4 remain required before training extension/fresh/adoption. Cookbook
+and exact hyperparameters: docs/NATIVE-TRAINING-COOKBOOK-2026-10-21.md and recipe JSON.
+Preserve unrelated local pyc, capability probe files and roadmap.html.
+
+---
+
 # LOCAL — approved Runpod trial created; transfer/validation in progress (21Oct09:20UTC)
 
 Owner approved initial$25validation +$7/month100GBstorage and requested weights,

@@ -1,3 +1,17 @@
+21Oct12:00UTC — LOCAL sole executor; CLOUD read-only. Approved Runpod trial
+q3wqjwols44aos is TERMINATED (watchdog11:15:59UTC, actualget404). Weights36files/
+33.942GB verified; independent one-H100 adapter/Adam528/allRNG restore EXACT,
+zero newupdates. Native full numerical/behavior10/speech/fresh40 still unrun.
+Voice audition failed at driver linker discovery; c875947 fixes it but is untested.
+Complete native67.764GB archive verified on Mac, Runpod copy INCOMPLETE. Owner
+approved replacement S3-supported EUR-IS-1 volume49yytzyoge plus temporary overlap;
+actual S3 accessPASS. Pack/upload/read-back full pinned v3 inventory, no subset.
+Oldvolume cyjzip53ap retained for unique receipts, noS3/compute stock currently.
+See newest HANDOFF.md and docs/NATIVE-RUNPOD-EXECUTION-2026-10-21.json. No duplicate
+jobs/transfers, no restart frozen native receipt, no training before complete gates.
+
+---
+
 21Oct06:43UTC — AIRR has ended per owner screenshot; data grace period through
 19Nov, access lost20Nov with deletion. LOCAL SSH/data access PASS, queue empty,
 cert18:27UTC. Expanded native archive28470files67.764GB+8links freshly hash-verified,
