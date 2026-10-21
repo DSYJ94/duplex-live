@@ -1,3 +1,18 @@
+# Execution update: local credential supplied
+
+The owner configured the ignored0600 credential on21October. Exact speech model
+access returned HTTP200. Source collector de11d6a is running the complete168-clip
+plan in `runs/native-control3-source-20261021-v2`, using the isolated local ASR
+Python environment. V1 stopped before any API call because its environment lacked
+requests; it remains preserved. All earlier blank-credential statements below are
+historical. Source/teacher/semantic/numerical approvals remain pending.
+
+The added `evals/native_control_teacher_quality.py` binds ALL40 original teacher
+streams, the complete source word audit, label-free pinned Whisper responses and
+measured phase/quiet checks. It cannot grant semantic, conversion, numerical or
+training approval. It remains untested on actual new teacher artifacts until those
+exist. No recipe, model, original data or heldout changes are made by preparation.
+
 # Native control repair preparation
 
 The latest candidate7590052 remains rejected for adoption. No optimizer update,

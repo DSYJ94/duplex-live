@@ -1,6 +1,6 @@
 {
   "schema": "dl-runpod-native-trial-status-v2",
-  "at_utc": "2026-10-21T19:18:34.654733+00:00",
+  "at_utc": "2026-10-21T20:39:21.498882+00:00",
   "executor": "LOCAL",
   "source_commit": "c8759473ca70d775c8b993795be5c2b6eee7cccd",
   "trial": {
@@ -377,9 +377,9 @@
   "quiet_supervision_source_audit": "docs/NATIVE-QUIET-SUPERVISION-AUDIT-2026-10-21.json",
   "goal_status": {
     "migration_and_usable_experimental_test_path": "complete",
-    "native_control_repair_and_full_qualification": "blocked",
+    "native_control_repair_and_full_qualification": "executing_local_source_collection",
     "new_training_submitted": false,
-    "blocker": "Local OpenAI API credential remains unconfigured across three consecutive preparation turns; empirical source/teacher/worker experiments need it.",
+    "blocker": null,
     "completion_proven": false
   },
   "control3_preparation": {
@@ -390,13 +390,13 @@
     "all49_source_hashes_match": true,
     "bound_files": 151,
     "source_scenes": 40,
-    "actual_source_generation_submitted": false,
+    "actual_source_generation_submitted": true,
     "teacher_generation_submitted": false,
     "training_submitted": false,
     "tests_passed": 6,
     "training_approved": false,
     "next_work": "docs/NATIVE-CONTROL3-REPAIR-2026-10-21.md",
-    "credential_configured_at_last_check": false
+    "credential_configured_at_last_check": true
   },
   "control3_quality_preparation": {
     "source_commit": "d7d59579d9f7ec85d6f818b3c1b2389fe81047d1",
@@ -447,5 +447,30 @@
     "all_destination_readback_hashes_passed": true,
     "api_calls": 0,
     "gpu_purchased": false
+  },
+  "control3_local_resume": {
+    "at_utc": "2026-10-21T20:39:21.498882+00:00",
+    "credential_configured": true,
+    "credential_value_recorded": false,
+    "exact_speech_model_access_http_status": 200,
+    "source_collector_commit": "de11d6a",
+    "source_collection": "runs/native-control3-source-20261021-v2",
+    "exec_session": 12640,
+    "maximum_source_clips": 168,
+    "concurrency": 2,
+    "source_status": "collecting_unapproved",
+    "clips_at_snapshot": 12,
+    "failures_at_snapshot": [],
+    "prior_attempt": "runs/native-control3-source-20261021-v1",
+    "prior_attempt_failure": "Missing requests in first Python environment; zero API requests, no audio. Preserved unchanged.",
+    "local_runtime": "runs/local-asr-20261021/env/bin/python",
+    "websocket_client": "websockets==15.0.1 installed in isolated local environment",
+    "tests_passed": 23,
+    "fixture_tests_are_model_or_label_approval": false,
+    "actual_teacher_capture_started": false,
+    "source_asr_started": false,
+    "new_training_updates": 0,
+    "new_gpu_purchased": false,
+    "next": "Finish full source generation, assemble exact40, independently audit all168, then actual40 teachers and full independent approvals."
   }
 }

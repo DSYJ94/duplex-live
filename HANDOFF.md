@@ -1,3 +1,34 @@
+# LOCAL — credential verified; source collection executing (21 October 21:39 London)
+
+LOCAL remains sole executor; CLOUD read-only. Source collector de11d6a is committed
+and pushed. Local credential is configured, never printed or transferred. Exact
+speech model read-only access returned HTTP200. No new GPU or optimizer work.
+
+ACTIVE: exec session12640, `caffeinate` running isolated Python3.12 source collector:
+`runs/native-control3-source-20261021-v2`. At this snapshot 12/168 authored clips
+have waveform/receipt checks, 0 failures. Maximum two requests; one probe before
+fanout, bounded transport retries only, no content rerolls. Do not start another
+collector: live OS lease `runs/local-migration-20261021/.private/control3-capture.lock`.
+Every waveform and receipt is retained. These are NOT word or teacher approvals.
+Provider latency includes transient request retries; never infer a stall from a
+stale progress count without checking the running session and lease.
+
+Preserved v1 stopped BEFORE network because first Python environment lacked
+requests. It contains no generated audio or API calls. V2 uses existing isolated
+ASR environment, now additionally websockets15.0.1. Native runtime unchanged.
+23 fixture tests pass; no fixture result is a real label or native capability pass.
+New teacher-quality integration has not run on actual teacher recordings yet.
+
+NEXT: finish168 clips, assemble ALL40 raw-source, independent pinned Whisper audit
+of all168 at unchanged word/peak/timing rules; only a complete pass permits actual
+ALL40 teacher collection. Then independent teacher ASR/phase checks, semantic
+review, conversion and native numerical approval. Retained native10/ordinary4 and
+full paired fresh40 still pending. Keep all28 histories/49 teachers/KL1/hidden10/
+154 objectives and heldout hashes. No extension or adoption of failed candidate.
+No new Runpod compute purchased; prior conservative usage ~$20.09/$25, storage$7/mo.
+Full67.764GB native archive remains verified Mac+volume; whole-project backup PARTIAL.
+Unrelated local files remain untouched. Older entries below are historical.
+
 # LOCAL — independent ASR complete; credential blocker (21 October 20:18 London)
 
 LOCAL sole executor; CLOUD read-only until owner explicitly transfers execution.
