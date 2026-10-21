@@ -1,3 +1,47 @@
+# LOCAL — native49 audited; control3 source prepared (21 October 2026)
+
+LOCAL sole executor; CLOUD read-only. Prepared source commit: 488a716600ac89683662d474428ae70432828929.
+Frozen native payload741872f and voice launcher909c547 remain unchanged. No GPU,
+Slurm, teacher or training submission was made in this preparation. All four task
+Pods are terminal;100GB volume49yytzyoge is retained at$7/month. Latest model7590052
+remains experimental/unadopted; fullnative10 and sealed40 outputs remain unrun.
+
+New read-only audit passed all49 teacher bindings across151 distinct files.
+The two explicit quiet teachers014/alloy and015/echo have exactly zero assistant
+PCM/aligned words in measured windows5.70–12.41s and17.14–22.10s. There are no
+additional explicit quiet-control metadata rows among the other47. This does not
+prove causality or decode/reapprove tensor masks. All originals/receipts remain.
+Evidence: docs/NATIVE-CONTROL-COVERAGE-2026-10-21.json.
+
+New authored TRAIN-only control3 proposal:40 scenes,168 utterances,7953 characters;
+8 each no-release/later-cue reasoning/distractor/pause-resume/cue-replacement.
+No source speech or actual teacher generated yet; NOT approved for training.
+Terminal no-release scenes retain prior spoken targets so the existing spoken+
+clock objective guard stays intact. New raw-source assembler rejects empty,
+nonfinite, clipped or receipt-mismatched clips; no gain/resampling. All6 tests
+passed, including complete40 artificial fixture assembly and no subset approval.
+No fixture signal is speech, a training teacher or a behavioral pass.
+
+Detailed next work and reproducible commands:
+docs/NATIVE-CONTROL3-REPAIR-2026-10-21.md. Local API credential remains blank at last
+check; ignored0600file exists and a setup question is pending. Actual generation/
+worker use needs that local credential, never in chat or on Runpod. New control3
+teacher/quality/semantic/conversion bindings remain to be implemented/audited;
+historical24-scene native-v2 approvals cannot approve40 new scenes. Preserve all28
+actual histories,49 approved teachers, KL1/hidden10 and154 original objectives.
+No unchanged failed-candidate extension or output mute; all40 new scenes must pass.
+
+Fresh count1/CUDA13 capacity reads list no A100/H100 in EUR-IS-1. RTX PRO6000
+Blackwell96GB has LOW listed capacity there at$2.49/h; workload not validated on
+that architecture. No resource created. Count2 stock not inferred. Reported four
+Pod billing total$19.52 may settle; conservative full-wallclock envelope$20.09 of
+original$25 cap. Whole Isambard/Mac project backup remains partial; native archive
+and diagnostic hash verification remain passed. Inspect live resources/budget
+before any future submission. Baseline/candidate complete10 + independent speech/
+ordinary4 are still required before choosing a bounded repair parent.
+
+---
+
 # LOCAL — trial terminated; native capability repair next (21 October 2026)
 
 LOCAL remains sole executor; CLOUD read-only. Budget watchdog terminated final

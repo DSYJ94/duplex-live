@@ -61,3 +61,12 @@ credit assignment are hypotheses, not established causes. Diagnose these before
 assuming more unchanged updates or adding a duplicate silence loss will fix it.
 Exact source/report fingerprints and actual TRAIN014 row:
 [NATIVE-QUIET-SUPERVISION-AUDIT-2026-10-21.json](NATIVE-QUIET-SUPERVISION-AUDIT-2026-10-21.json).
+
+## Control3 preparation completed
+
+The complete49-source coverage/hash audit and separate40-scene TRAIN proposal
+are now saved. A new raw-source assembler supports terminal silence and passed
+six fixture tests. No speech, teacher or training generation has run, and the new
+source is not approved. See [the current preparation and next steps](NATIVE-CONTROL3-REPAIR-2026-10-21.md).
+Historical native-v2 approval machinery remains scoped to24 and must not approve
+the new collection implicitly. Existing data, masks, losses and gates are unchanged.

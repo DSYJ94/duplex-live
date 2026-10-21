@@ -1,6 +1,6 @@
 {
   "schema": "dl-runpod-native-trial-status-v2",
-  "at_utc": "2026-10-21T17:57:54.789655+00:00",
+  "at_utc": "2026-10-21T18:14:15.542529+00:00",
   "executor": "LOCAL",
   "source_commit": "c8759473ca70d775c8b993795be5c2b6eee7cccd",
   "trial": {
@@ -379,5 +379,21 @@
     "migration_and_usable_experimental_test_path": "complete",
     "native_control_repair_and_full_qualification": "active",
     "new_training_submitted": false
+  },
+  "control3_preparation": {
+    "source_commit": "488a716600ac89683662d474428ae70432828929",
+    "plan": "evals/fixtures/native-control-repair-v3-source-20261021.json",
+    "plan_sha256": "e1ac027c032913e9ef96dd4d92dcc5e31e1da733d237e52e1ba418813cfc706f",
+    "coverage_audit": "docs/NATIVE-CONTROL-COVERAGE-2026-10-21.json",
+    "all49_source_hashes_match": true,
+    "bound_files": 151,
+    "source_scenes": 40,
+    "actual_source_generation_submitted": false,
+    "teacher_generation_submitted": false,
+    "training_submitted": false,
+    "tests_passed": 6,
+    "training_approved": false,
+    "next_work": "docs/NATIVE-CONTROL3-REPAIR-2026-10-21.md",
+    "credential_configured_at_last_check": false
   }
 }
