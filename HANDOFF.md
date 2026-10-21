@@ -1,9 +1,22 @@
+# LOCAL quota recheck — unchanged; no jobs (21Oct01:52:31UTC)
+
+Second consecutive goal-turn audit: current1CPU/1minute sbatch --test-only still
+returns AssocGrpCPUMinutesLimit; no job submitted, actual squeue --all empty.
+No model/validation work progressed this turn. All trained/restored artifacts,
+verified backups and source repair remain as recorded below. All necessary terminal
+preservation/source fixes are complete; remaining native10/speech/fresh qualification
+requires external project CPU-minute allowance restoration. Goal remains active
+until the required blocker audit threshold; no retries, quota bypass or cloud purchase.
+LOCAL remains sole executor; CLOUD read-only. No new numerical/behavior claims.
+
+---
+
 # LOCAL — TRAIN/RESTORE PASS; all artifacts safe; evaluation blocked by CPU quota (21Oct01:49:03UTC)
 
 LOCAL remains sole executor until explicit handback; CLOUD read-only. No Slurm job
 is running or pending after independently checked scheduler/accounting. No new
 submissions while current quota restriction persists. Goal remains active for
-bounded revalidation; this is the FIRST goal turn with this genuine quota blocker.
+bounded revalidation; quota rejection has now persisted across TWO consecutive goal turns.
 
 TRAIN7590052 COMPLETED0:0 in01:36:25, immutable payload
 741872fe2f9e49f35d4deba9aba96caff26c51d4. All8 optimizer updates, every original154

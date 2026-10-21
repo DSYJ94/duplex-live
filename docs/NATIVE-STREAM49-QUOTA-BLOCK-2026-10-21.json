@@ -2,7 +2,7 @@
   "schema": "dl-native-stream49-restored-quota-block-v1",
   "at_utc": "2026-10-21T01:43:15.504119+00:00",
   "first_rejection_utc": "2026-10-21T01:20:51.484298Z",
-  "consecutive_goal_turns_with_this_blocker": 1,
+  "consecutive_goal_turns_with_this_blocker": 2,
   "training_job": "7590052",
   "training_state": "COMPLETED",
   "training_exit_code": "0:0",
@@ -139,7 +139,7 @@
   "full288_cpu_suite_not_run_due_to_quota": true,
   "next_action": "After project CPU-minute allowance is restored, verify current Slurm state and use a NEW versioned receipt to evaluate all10 cases and independent speech from locked candidate7590052. Never resubmit training, reuse the frozen failed receipt, lower gates or adopt from numerical success.",
   "latest_minimum_quota_recheck": {
-    "at_utc": "2026-10-21T01:47:16.340767Z",
+    "at_utc": "2026-10-21T01:52:31.881616Z",
     "command": [
       "sbatch",
       "--test-only",
@@ -155,7 +155,8 @@
     "exit_code": 1,
     "stdout": "",
     "stderr": "sbatch: error: AssocGrpCPUMinutesLimit\nallocation failure: Job violates accounting/QOS policy (job submit limit, user's size and/or time limits)\n",
-    "no_job_submitted": true
+    "no_job_submitted": true,
+    "current_queue": ""
   },
   "complete_scoped_union_reverification": {
     "at_utc": "2026-10-21T01:44:19.150725+00:00",
@@ -170,5 +171,27 @@
     "report": "runs/local-continuation-20261019/complete-union-reverification-20261021-terminal.json",
     "report_sha256": "cd824c4cd3d36f16f2445b8c8a08f867a5dc38793f2b238e7ad874cc9e568d89",
     "source_ledger_snapshot": "runs/local-continuation-20261019/native-stream49-terminal-source-ledger-snapshot.json"
-  }
+  },
+  "minimum_quota_recheck_history": [
+    {
+      "at_utc": "2026-10-21T01:47:16.340767Z",
+      "command": [
+        "sbatch",
+        "--test-only",
+        "--account=brics.u6si",
+        "--partition=workq",
+        "--nodes=1",
+        "--ntasks=1",
+        "--cpus-per-task=1",
+        "--mem=1G",
+        "--time=00:01:00",
+        "--wrap=true"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "sbatch: error: AssocGrpCPUMinutesLimit\nallocation failure: Job violates accounting/QOS policy (job submit limit, user's size and/or time limits)\n",
+      "no_job_submitted": true
+    }
+  ],
+  "remaining_native_work_requires_external_quota_change": true
 }

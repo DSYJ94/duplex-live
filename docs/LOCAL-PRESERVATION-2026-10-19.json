@@ -2457,7 +2457,7 @@
     "execution_blocker": "AssocGrpCPUMinutesLimit",
     "quota_block_review": {
       "path": "docs/NATIVE-STREAM49-QUOTA-BLOCK-2026-10-21.json",
-      "sha256": "298c4bd2afb6d50864f28ab94a4984b06a901d22e70fe5324684bea57a4f604f"
+      "sha256": "18cf49603996b037a0960fee340a056227a058139351bdbbd90f702a407d5574"
     },
     "all_terminal_artifacts_backup_verified": {
       "at_utc": "2026-10-21T01:30:19.089637+00:00",
@@ -2466,6 +2466,26 @@
       "all_size_and_sha256_match": true,
       "failed": [],
       "missing_roots": []
+    },
+    "latest_quota_recheck": {
+      "at_utc": "2026-10-21T01:52:31.881616Z",
+      "command": [
+        "sbatch",
+        "--test-only",
+        "--account=brics.u6si",
+        "--partition=workq",
+        "--nodes=1",
+        "--ntasks=1",
+        "--cpus-per-task=1",
+        "--mem=1G",
+        "--time=00:01:00",
+        "--wrap=true"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "sbatch: error: AssocGrpCPUMinutesLimit\nallocation failure: Job violates accounting/QOS policy (job submit limit, user's size and/or time limits)\n",
+      "no_job_submitted": true,
+      "current_queue": ""
     }
   },
   "local_ssh_certificate_current": {
