@@ -6,6 +6,7 @@ No microphone audio or conversation transcripts are persisted by this launcher.
 """
 import argparse
 import asyncio
+import hashlib
 import json
 import logging
 import os
@@ -27,6 +28,22 @@ class ObserveOnlyBackend:
         return None
 
 
+def configure_cuda_headers():
+    """Expose installed toolkit headers to GCC without modifying any packages."""
+    include_dirs = [Path(p) for p in os.environ.get('CPATH', '').split(os.pathsep) if p]
+    include_dirs += [Path(os.environ[p])/'include' for p in ('CUDA_HOME', 'CUDA_PATH')
+                     if os.environ.get(p)]
+    include_dirs.append(Path('/usr/local/cuda/include'))
+    header = next((p/'cuda.h' for p in include_dirs if (p/'cuda.h').is_file()), None)
+    if header is None:
+        raise RuntimeError('Installed CUDA toolkit header cuda.h was not found')
+    prior = os.environ.get('CPATH', '')
+    if str(header.parent) not in prior.split(os.pathsep):
+        os.environ['CPATH'] = str(header.parent)+(os.pathsep+prior if prior else '')
+    return {'header': str(header), 'header_sha256': hashlib.sha256(header.read_bytes()).hexdigest(),
+            'packages_changed': False}
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--source', type=Path, required=True)
@@ -35,6 +52,7 @@ def main():
     ap.add_argument('--port', type=int, default=8081)
     ap.add_argument('--ui-origin', default='http://127.0.0.1:8765')
     ap.add_argument('--receipt', type=Path, required=True)
+    ap.add_argument('--compiler-check-only', action='store_true')
     args = ap.parse_args()
     sys.path.insert(0, str(args.source))
     # Use the same driver-library discovery as the pinned native probe. Some
@@ -42,6 +60,16 @@ def main():
     os.environ['TRITON_LIBCUDA_PATH'] = subprocess.check_output(
         [sys.executable, '-m', 'evals.cuda_linker_path', '--out',
          str(args.receipt.parent/'audition-driver')], text=True).strip()
+    compiler = configure_cuda_headers()
+    # Exercise the exact driver compiler before loading 16GB of model weights.
+    from triton.backends.nvidia.driver import CudaUtils
+    CudaUtils()
+    compiler['actual_triton_driver_compile_passed'] = True
+    if args.compiler_check_only:
+        with args.receipt.open('x') as stream:
+            json.dump({'schema': 'dl-native-cuda-compiler-check-v1', **compiler}, stream, indent=2)
+        print(json.dumps(compiler))
+        return
     assets = json.loads((args.root/'runs/context-spanning-assets-7454205/manifest.json').read_text())
     vendor = Path(assets['source'])
     sys.path.insert(0, str(vendor))
@@ -70,6 +98,7 @@ def main():
     receipt = {'schema': 'dl-native-voice-audition-v1', 'model_job': args.proof.name,
                'launcher_commit': subprocess.check_output(['git','rev-parse','HEAD'], text=True).strip(),
                'adapter': adapter, 'runtime': snapshot(engine.lm),
+               'cuda_compiler': compiler,
                'strict_published_lm_load': True, 'word_or_audio_forcing': False,
                'voice_codes_from_verified_proof': True, 'external_backend_connected': False,
                'conversation_audio_or_transcripts_saved': False,
