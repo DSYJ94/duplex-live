@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Native voice audition · 7590052</title>
+<style>
+body{font:17px/1.6 system-ui;background:#111820;color:#e6edf3;max-width:760px;margin:7vh auto;padding:24px}
+h1{font-size:30px;line-height:1.2}p{color:#aebdca}button{font:inherit;padding:10px 22px;border:0;border-radius:8px;margin-right:12px;background:#a9e6cf;color:#10291e;cursor:pointer}button:disabled{opacity:.4;cursor:default}
+#status{display:block;margin:24px 0;color:#a9e6cf}#text{white-space:pre-wrap;min-height:100px;border:1px solid #334656;padding:18px;border-radius:10px}small{color:#aebdca}
+</style>
+<h1>Native voice audition</h1>
+<p>Candidate 7590052 · Context Spanning / PersonaPlex 7B</p>
+<p>Use headphones. Speak naturally, pause, or interrupt. The model generates its own words and speech.</p>
+<button id="start">Start microphone</button><button id="stop" disabled>Stop</button>
+<span id="status">Ready to connect</span><div id="text" aria-live="polite"></div>
+<p><small>Experimental voice test. External tools are not connected in this session. Microphone audio and transcripts are not saved. This candidate has not passed the complete behavioral qualification.</small></p>
+<script>
+let ws,ctx,stream,mic,player;const $=id=>document.getElementById(id);
+async function stop(){if(stream)stream.getTracks().forEach(t=>t.stop());if(ws)ws.close();if(ctx)await ctx.close();ws=ctx=stream=mic=player=null;$('start').disabled=false;$('stop').disabled=true;}
+async function audio(format){ctx=new AudioContext({sampleRate:format.sample_rate});await ctx.resume();if(ctx.sampleRate!==format.sample_rate)throw Error('Unsupported audio sample rate');
+ await ctx.audioWorklet.addModule('/static/mic.js');await ctx.audioWorklet.addModule('/static/player.js');
+ player=new AudioWorkletNode(ctx,'agent-player',{processorOptions:{frameSize:format.frame_size},outputChannelCount:[1]});player.connect(ctx.destination);
+ stream=await navigator.mediaDevices.getUserMedia({audio:{channelCount:1,echoCancellation:true,noiseSuppression:true,autoGainControl:false}});
+ mic=new AudioWorkletNode(ctx,'mic-frames',{processorOptions:{frameSize:format.frame_size}});const mute=ctx.createGain();mute.gain.value=0;mic.connect(mute).connect(ctx.destination);ctx.createMediaStreamSource(stream).connect(mic);
+ mic.port.onmessage=e=>{if(ws&&ws.readyState===WebSocket.OPEN)ws.send(e.data.buffer)};$('status').textContent='Listening · speak naturally';}
+$('start').onclick=async()=>{try{$('start').disabled=true;$('stop').disabled=false;$('text').textContent='';$('status').textContent='Connecting to native model…';
+ ws=new WebSocket((location.protocol==='https:'?'wss://':'ws://')+location.host+'/ws');ws.binaryType='arraybuffer';
+ ws.onmessage=async e=>{try{if(typeof e.data!=='string'){if(player)player.port.postMessage(e.data,[e.data]);return}const m=JSON.parse(e.data);
+  if(m.type==='ready')await audio(m);if(m.type==='text')$('text').textContent+=m.delta;if(m.type==='ret')$('status').textContent='The model requested an external backend · unavailable in this voice audition';if(m.type==='busy')throw Error('The previous session is ending. Try again shortly.');if(m.type==='error')throw Error(m.message);
+ }catch(err){$('status').textContent=err.message;await stop();}};
+ ws.onerror=()=>{$('status').textContent='Connection failed'};ws.onclose=()=>{if(stream)stream.getTracks().forEach(t=>t.stop());$('start').disabled=false;$('stop').disabled=true;};
+ }catch(err){$('status').textContent=err.message;await stop();}};
+$('stop').onclick=async()=>{await stop();$('status').textContent='Stopped';};window.addEventListener('beforeunload',()=>{if(stream)stream.getTracks().forEach(t=>t.stop());if(ws)ws.close()});
+</script></html>
