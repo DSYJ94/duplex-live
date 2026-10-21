@@ -31,7 +31,7 @@ with Path(str(p)+'.lock').open('a') as lock:
 PY
 # The first readiness allocation remains HELD until this actual CPU suite passes.
 export DL_CPU_TEST_REPORT="/projects/u6si/duplex-live/runs/native-stream49-cpu-preflight-$SLURM_JOB_ID.json"
-export DL_CPU_EXPECTED_TESTS=286
+export DL_CPU_EXPECTED_TESTS=288
 if ! bash "$DL_TASK_SOURCE/evals/native-v2-tests.slurm"; then
  python3 - "$NATIVE_AUDIO49_CHAIN_RECEIPT" <<'FAIL'
 import json,sys,subprocess,os
@@ -52,7 +52,7 @@ p=Path(sys.argv[1])
 with Path(str(p)+'.lock').open('a') as lock:
  fcntl.flock(lock,fcntl.LOCK_EX);r=json.loads(p.read_text());j=r['jobs']['readiness']
  report=Path(os.environ['DL_CPU_TEST_REPORT']);v=json.loads(report.read_text())
- assert v['passed'] and v['tests_run']==286 and v['source']==r['source']==os.environ['DL_TASK_COMMIT'] and v['allocation_job']==os.environ['SLURM_JOB_ID'] and not v['cuda_initialized']
+ assert v['passed'] and v['tests_run']==288 and v['source']==r['source']==os.environ['DL_TASK_COMMIT'] and v['allocation_job']==os.environ['SLURM_JOB_ID'] and not v['cuda_initialized']
  assert r['native_stream_auxiliary'] and r['submission_attempts']['readiness']['status']=='held'
  settings=subprocess.check_output(['scontrol','show','job',j],universal_newlines=True)
  assert 'JobState=PENDING' in settings and 'Reason=JobHeldUser' in settings and 'TimeLimit=02:00:00' in settings and 'Reservation=interactive' in settings and 'TresPerNode=gres/gpu:1' in settings

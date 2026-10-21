@@ -237,6 +237,17 @@ def watch(path):
                             submit(path, receipt, action, job)
                         except SlotBusy as error:
                             print('WAIT_ACTIVE_SCHEDULER_SLOT',str(error),flush=True)
+                        except Exception as error:
+                            # Keep the attempt and any accepted/held ID intact.
+                            # A scheduler error can be ambiguous: never retry it.
+                            receipt['watcher_terminal'] = dict(at_utc=now(), stage=stage,
+                                state='FAILED', action=action, exception_type=type(error).__name__,
+                                submission_may_be_uncertain=True, no_automatic_retry=True,
+                                no_extension_or_adoption=True)
+                            save(path, receipt)
+                            print('SUBMISSION_FAILED_OR_UNCERTAIN_NO_RETRY', action, job,
+                                  type(error).__name__, flush=True)
+                            raise
             time.sleep(60)
     raise RuntimeError('Watcher time bound reached; no duplicate or extension')
 

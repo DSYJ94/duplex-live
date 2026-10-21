@@ -1,10 +1,38 @@
 import tempfile
 import unittest
+import json
+import subprocess
 from pathlib import Path
 from unittest.mock import patch
 from evals import native_audio49_chain as chain
 
 class DurableChain(unittest.TestCase):
+    def test_submission_failure_records_terminal_watcher_without_losing_attempt_or_held_job(self):
+        for accepted_job in (False, True):
+            with self.subTest(accepted_job=accepted_job), tempfile.TemporaryDirectory() as name:
+                path=Path(name)/'receipt.json'
+                path.write_text(json.dumps(dict(jobs={'training':'1'},submission_attempts={})))
+                def fail_submission(path,receipt,action,job):
+                    receipt['submission_attempts']['native10']={'status':'submitting'}
+                    if accepted_job:
+                        receipt['jobs']['native10']='2'
+                        receipt['submission_attempts']['native10']={'status':'held','job':'2'}
+                    chain.save(path,receipt)
+                    if accepted_job:raise subprocess.TimeoutExpired(['scontrol','show','job','2'],90)
+                    raise subprocess.CalledProcessError(1,['sbatch'])
+                error=subprocess.TimeoutExpired if accepted_job else subprocess.CalledProcessError
+                with patch.object(chain,'validate'),patch.object(chain,'call',return_value='1|COMPLETED|0:0'),patch.object(chain,'submit',side_effect=fail_submission) as submit,patch.object(chain.time,'sleep') as sleep:
+                    with self.assertRaises(error):chain.watch(path)
+                    self.assertEqual(submit.call_count,1)
+                    sleep.assert_not_called()
+                receipt=json.loads(path.read_text())
+                self.assertEqual(receipt['watcher_terminal']['state'],'FAILED')
+                self.assertEqual(receipt['watcher_terminal']['action'],'submit-native')
+                self.assertTrue(receipt['watcher_terminal']['no_automatic_retry'])
+                self.assertTrue(receipt['watcher_terminal']['submission_may_be_uncertain'])
+                self.assertEqual(receipt['submission_attempts']['native10'],{'status':'held','job':'2'} if accepted_job else {'status':'submitting'})
+                self.assertEqual(receipt['jobs'],{'training':'1','native10':'2'} if accepted_job else {'training':'1'})
+
     def test_uncertain_attempt_is_never_resubmitted(self):
         receipt=dict(jobs={'training':'1'},submission_attempts={'native10':{'status':'submitting'}})
         with patch.object(chain,'validate'),patch.object(chain,'call') as call:
