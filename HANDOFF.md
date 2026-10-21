@@ -21,7 +21,8 @@ Evidence: docs/NATIVE-CUE-INDEPENDENT-ASR-2026-10-21.json and adjacent MD/summar
 Local isolated ASR: Python3.12.13, Torch2.9.0, Whisper20250625/timestamped1.15.9,
 NumPy2.2.6/SciPy1.18.0, CPU float32/4threads. Initial SciPy1.15.3 import failure
 fixed only in this separate environment; no native runtime changed. Public turbo
-weights1,617,941,637B locally cached with official aff26ae4...26e2a19a SHA verified.
+weights1,617,941,637B locally cached with official SHA verified:
+aff26ae408abcba5fbf8813c21e62b0941638c5f6eebfb145be0c9839262a19a.
 Runtime: docs/NATIVE-LOCAL-ASR-RUNTIME-2026-10-21.json. No API key/owner audio used.
 
 All19 ASR JSON/text metadata files213,099B preserved Mac→Runpod volume49yytzyoge,
