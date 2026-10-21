@@ -72,6 +72,16 @@ async def run(args):
                 assert ready['type'] == 'ready', ready
                 assert (ready['sample_rate'], ready['frame_size']) == (24000, 1920)
                 receipt['ready'] = ready
+                if args.persona_diagnostic:
+                    plan = json.loads(args.persona_diagnostic.read_text())
+                    assert plan['schema'] == 'dl-native-persona-diagnostic-v1'
+                    assert hashlib.sha256(ready['persona'].encode()).hexdigest() == plan['original_prompt_sha256']
+                    assert plan['keyword_supplied_in_prompt'] is False
+                    await ws.send_json({'type':'context', 'persona':plan['persona']})
+                    receipt['persona_diagnostic'] = {**plan,
+                        'request_sent_before_audio':True,
+                        'server_protocol_has_explicit_persona_ack':False,
+                        'live_app_default_changed':False}
 
                 async def send():
                     origin = time.monotonic()
@@ -140,5 +150,6 @@ if __name__ == '__main__':
     p.add_argument('--wav', type=Path, required=True)
     p.add_argument('--case', default='native2-train-008')
     p.add_argument('--diagnostic-manifest', type=Path)
+    p.add_argument('--persona-diagnostic', type=Path)
     p.add_argument('--out', type=Path, required=True)
     raise SystemExit(0 if asyncio.run(run(p.parse_args())) else 1)
