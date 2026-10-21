@@ -159,7 +159,7 @@
     "fresh40_run": false,
     "adopted": false
   },
-  "progress_utc": "2026-10-21T17:18:52.060066+00:00",
+  "progress_utc": "2026-10-21T17:25:11.230081+00:00",
   "current_source": "86e9977375c67aad1fe0af6666bfda5a6e8717c1",
   "cpu_staging": {
     "schema": "dl-runpod-cpu-staging-execution-v1",
@@ -372,5 +372,11 @@
     "default_live_prompt_changed": false,
     "no_keyword_output_gate_added": true,
     "reported_cue": "Geronimo"
+  },
+  "quiet_supervision_source_audit": "docs/NATIVE-QUIET-SUPERVISION-AUDIT-2026-10-21.json",
+  "goal_status": {
+    "migration_and_usable_experimental_test_path": "complete",
+    "native_control_repair_and_full_qualification": "active",
+    "new_training_submitted": false
   }
 }

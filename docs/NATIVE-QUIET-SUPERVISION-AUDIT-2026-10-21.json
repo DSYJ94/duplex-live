@@ -1,0 +1,32 @@
+{
+  "schema": "dl-native-quiet-supervision-source-audit-v1",
+  "at_utc": "2026-10-21T17:24:19.919979+00:00",
+  "source_commit": "741872fe2f9e49f35d4deba9aba96caff26c51d4",
+  "report_sha256": "397a259d124948dec3aeed63564ad24dbf2f13bb2b3699565f9f1974e60fa3eb",
+  "stream_gradient_source_sha256": "9bbfde02a98d18d379f90002e116db788c7489a6a36216a7fd0b35814ac3a015",
+  "clock_silence_targets_omitted": false,
+  "coefficient_policy": {
+    "spoken_group_mass": 0.5,
+    "clock_control_group_mass": 0.5,
+    "pad3_within_clock_weight": 0.5
+  },
+  "observed_train014_native_auxiliary_rows": [
+    {
+      "step": 7,
+      "id": "teacher-native2-train-014",
+      "kind": "simple",
+      "weight": 0.16666666666666666,
+      "balanced_spoken_clock_ce": 1.0118983320249555,
+      "gradient_calls": 417,
+      "native_call_count": 418,
+      "temporal_cache_count": 32,
+      "valid_targets": 417,
+      "spoken_targets": 7,
+      "prefix_span_user_audio_loss_targets": 0,
+      "autograd_truncation": "recorded native call boundaries only"
+    }
+  ],
+  "all49_native_teachers_once_across8_updates": true,
+  "temporal_autograd": "Detach at every recorded native call; values retained, not full temporal BPTT",
+  "interpretation": "The original objective already includes genuine silence/control supervision. Do not claim a missing silence loss. Coverage/generalization, exposure, and long-range credit assignment need controlled diagnosis; no causal explanation proven by this source audit."
+}

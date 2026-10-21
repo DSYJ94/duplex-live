@@ -1,6 +1,7 @@
-# LOCAL — keyword silence failure reproduced9/9; repair proposal ready (21Oct17:20UTC)
+# LOCAL — keyword silence failure9/9; source audit complete (21Oct17:25UTC)
 
-LOCAL sole executor; CLOUD read-only. No new training, teacher collection, acceptance,
+LOCAL sole executor; CLOUD read-only. Migration/setup goal COMPLETE; native-control
+repair/qualification is now the ACTIVE goal. No new training, teacher collection, acceptance,
 loss/data repair or adoption. Sole Podi20euy4x58fo1m/A10080GB remains on$1.79/h with
 voicePID18959; hardstop17:28:42UTC/18:28London TODAY. Guard9262/session22701 ARMED;
 never extend it blindly. Tunnel82490 serves http://127.0.0.1:8765. Original live
@@ -24,6 +25,11 @@ a novel-keyword issue. No prompt variant is adopted.
 
 Evidence: docs/NATIVE-KEYWORD-CONTROL-DIAGNOSTIC-2026-10-21.json.
 Concrete next work: docs/NATIVE-KEYWORD-CONTROL-NEXT-2026-10-21.md.
+Initial source audit: silence/control loss IS present (.5normalized mass),
+TRAIN014417targets/7spoken, nativeaux seen once atstep7,417gradientcalls. Autograd
+detaches each nativecall. See docs/NATIVE-QUIET-SUPERVISION-AUDIT-2026-10-21.json.
+Coverage/exposure/temporalcredit are hypotheses, not proven causes; do not add a
+duplicate loss or assume more unchanged updates solve it.
 All51 synthetic diagnostic files24,427,906B verified sourceMac→persistentvolume,
 manifest416b119d2439e5bce369d285ec52d5333219f010785ed3a6e796273825feada3;
 original destination receipt committed. Includes all failed variants and valid/

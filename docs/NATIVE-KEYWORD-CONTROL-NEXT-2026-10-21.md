@@ -47,3 +47,16 @@ owner recording, or additional purchase has been performed by this proposal.
 The live trial remains budget-guarded through21Oct17:28:42UTC. A complete external
 worker evaluation needs local authorization in the ignored0600keyfile and two
 actual distinct GPUs under a concrete budget. Neither is simulated by these probes.
+
+## Initial source audit completed
+
+The actual741872f native-stream loss already assigns half its normalized mass to
+spoken targets and half to clock/control targets, with PAD3 weighted.5 inside the
+clock group. TRAIN014 has417 active targets and7 spoken targets, and its native
+auxiliary was exposed once in the eight-update stage. Silence was not omitted.
+The run deliberately detaches autograd at each recorded native call while keeping
+forward cache values. Generalization/coverage, limited exposure and long-range
+credit assignment are hypotheses, not established causes. Diagnose these before
+assuming more unchanged updates or adding a duplicate silence loss will fix it.
+Exact source/report fingerprints and actual TRAIN014 row:
+[NATIVE-QUIET-SUPERVISION-AUDIT-2026-10-21.json](NATIVE-QUIET-SUPERVISION-AUDIT-2026-10-21.json).
