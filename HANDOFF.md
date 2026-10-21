@@ -1,4 +1,33 @@
-# LOCAL overnight — TRAIN7590052 first update observed; backend constraint repair isolated (21Oct00:05UTC)
+# LOCAL overnight — training progresses; live backend repair verified (21Oct00:05:35UTC)
+
+Source49b9d013e6532cf62238aeab2aaa503d64b964cd is pushed/deployed separately.
+TRAIN7590052 and CPUwatcher7589159 remain fixed741872f. Actual00:03:49UTC stdout
+records2/8 completed optimizer updates, gradient norms6.8622923/5.9284997, native
+teacher microbatch counts7/6. Entire run, final exposure checks and independent
+complete state restore are pending. Only existing watcher owns native10/speech;
+no additional Slurm/GPU job was submitted. Local backup observer remains live;
+stable adapter/fullstate backup awaits completion, old Mac source backup PARTIAL.
+
+Actual backend API accepts the new nonempty schema. Six synthetic cases (ordinary
+and private in legacy/required-action/state-aware) all pass,10 provider requests,
+3 actual lookup receipts/no tool retries. CPU step7589159.0, source49b9d01; separate
+CPU step full287-test suite PASS/CUDAuninitialized. No new scheduler allocation.
+Reports and full CPU log independently size/SHA preserved3files77664B. This is
+software/provider evidence only; native10 still executes unchanged741 source.
+Original failed blank-reply evidence stays failed. Details are in
+BACKEND-NONEMPTY-REPLY-REPAIR-2026-10-21.md.
+
+New complete-history Git bundle source-main-49b9d01.bundle verified. Scoped union
+25245files28527702727B, zero conflicts. Allocation21Oct08:56:32UTC; current LOCAL
+certificate21Oct10:31:51UTC, allocation-bounded keep-awake and backup locks active.
+LOCAL is sole executor while owner is away; CLOUD remains read-only. Next action:
+continue same train/watcher IDs, preserve final checkpoint/fullstate, require all8
+and independent optimizer/RNG/original28/acoustic49/native49 restore, then complete
+native10/speech review. No extension/adoption or fresh20 release from losses alone.
+
+---
+
+# LOCAL overnight — TRAIN7590052 first update observed; backend constraint repair isolated (20Oct23:59UTC)
 
 LOCAL remains sole executor. Existing payload/watcher741872f unchanged, TRAIN7590052
 and CPUwatcher7589159 remain the only active jobs. Actual23:59:40UTC stdout now

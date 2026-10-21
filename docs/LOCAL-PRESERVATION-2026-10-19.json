@@ -1,7 +1,7 @@
 {
-  "at_utc": "2026-10-20T23:49:27.591898+00:00",
-  "unique_scoped_artifact_files": 25242,
-  "unique_scoped_artifact_bytes": 28527625063,
+  "at_utc": "2026-10-21T00:05:03.730647+00:00",
+  "unique_scoped_artifact_files": 25245,
+  "unique_scoped_artifact_bytes": 28527702727,
   "inventory_conflicts": [],
   "inventories": [
     {
@@ -773,6 +773,13 @@
       "files": 21,
       "bytes": 588409271,
       "missing_roots": []
+    },
+    {
+      "name": "remote-worker-nonempty-49b9d01-validation-inventory.json",
+      "sha256": "1c8cbbf4a9f54e44fec74fb998f5687706969b072f14c5f71c775dc022770324",
+      "files": 3,
+      "bytes": 77664,
+      "missing_roots": []
     }
   ],
   "local_artifact_root": "runs/cloud-export-20261016/tree",
@@ -788,19 +795,25 @@
   "runtime_sif_sha256": "c00bc99693e4908ea75d17df9c379b93ae9a1678a65d875565ad5d52f76fa27b",
   "pinned_vendor_git_bundles_verified": 3,
   "source_git_bundle": {
-    "path": "runs/local-continuation-20261019/source-main-c722dd2.bundle",
-    "sha256": "e42d253075c30e975cd6d046ecb57f6dd5face85301add596c986e5eeed1e481",
-    "source_commit": "c722dd2c574d8173a2ac659eff8dfcffba44a539",
+    "path": "runs/local-continuation-20261019/source-main-49b9d01.bundle",
+    "sha256": "2c25a766fee3bcd894bdbb63d84da19ac7e2326dea244b9c347570995e1e9eb5",
+    "source_commit": "49b9d013e6532cf62238aeab2aaa503d64b964cd",
     "full_history_verified": true,
     "previous_verified_bundle": {
-      "path": "runs/local-continuation-20261019/source-main-8115f68.bundle",
-      "sha256": "955a06a35aea4c51bf14e3751c22dd2179da7bddc23e51d7a7ea09c8a7487ad9",
-      "source_commit": "8115f68d38122a21ac4742f7cfb0cacca4a71625",
+      "path": "runs/local-continuation-20261019/source-main-c722dd2.bundle",
+      "sha256": "e42d253075c30e975cd6d046ecb57f6dd5face85301add596c986e5eeed1e481",
+      "source_commit": "c722dd2c574d8173a2ac659eff8dfcffba44a539",
       "full_history_verified": true,
       "previous_verified_bundle": {
-        "source_sha": "a0c51a199b897733081d55524f0a89d4937287b9",
-        "bundle": "runs/local-continuation-20261019/source-main-a0c51a1.bundle",
-        "bundle_sha256": "50e21f77ecb8e63a10bdff7a56d65a7f72a1ffcaace53bafc911586b91fd71fb"
+        "path": "runs/local-continuation-20261019/source-main-8115f68.bundle",
+        "sha256": "955a06a35aea4c51bf14e3751c22dd2179da7bddc23e51d7a7ea09c8a7487ad9",
+        "source_commit": "8115f68d38122a21ac4742f7cfb0cacca4a71625",
+        "full_history_verified": true,
+        "previous_verified_bundle": {
+          "source_sha": "a0c51a199b897733081d55524f0a89d4937287b9",
+          "bundle": "runs/local-continuation-20261019/source-main-a0c51a1.bundle",
+          "bundle_sha256": "50e21f77ecb8e63a10bdff7a56d65a7f72a1ffcaace53bafc911586b91fd71fb"
+        }
       }
     }
   },
@@ -2200,6 +2213,15 @@
       "can_submit_or_modify_cluster_jobs": false,
       "exec_session": 76078,
       "assertion_independently_verified": true
+    },
+    "latest_progress_observation": {
+      "at_utc": "2026-10-21T00:02:34.760642Z",
+      "training_job": "7590052",
+      "completed_updates": 1,
+      "first_gradient_norm": 6.862292289733887,
+      "first_stream_teacher_count": 7,
+      "checkpoint_or_restore_complete": false,
+      "original_training_source_unchanged": true
     }
   },
   "local_ssh_certificate_current": {
@@ -2210,5 +2232,25 @@
     "previous_0350_expiry_superseded": true,
     "certificate_and_key_not_transferred": true,
     "allocation_ends_before_current_certificate": true
+  },
+  "backend_nonempty_repair": {
+    "source": "49b9d013e6532cf62238aeab2aaa503d64b964cd",
+    "live_provider_report_sha256": "46be1057dfc96b9f24e2c4ec0ab6b179449c6a412aec1ca5415a335b4c068ce8",
+    "all6_synthetic_cases_passed": true,
+    "provider_model": "gpt-6-luna",
+    "provider_requests": 10,
+    "tools_retried": false,
+    "cpu_tests": 287,
+    "cpu_allocation": "7589159",
+    "gpu_used": false,
+    "validation_backup": {
+      "at_utc": "2026-10-21T00:04:29.949276+00:00",
+      "files": 3,
+      "bytes": 77664,
+      "all_size_and_sha256_match": true,
+      "failed": []
+    },
+    "running_train_source_unchanged": "741872fe2f9e49f35d4deba9aba96caff26c51d4",
+    "native_behavior_verified": false
   }
 }

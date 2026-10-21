@@ -30,3 +30,12 @@ are still required before using the revised backend in qualification.
 
 The in-flight training7590052 and watcher7589159 stay pinned to741872f. This fix
 is not hot-patched into either process or its eventual native10 evaluation.
+
+Actual live validation completed21Oct00:02:43UTC in CPU step7589159.0, immutable
+source49b9d013e6532cf62238aeab2aaa503d64b964cd: six synthetic cases (ordinary and
+private under each protocol) all pass, ten provider requests, three actual
+synthetic read receipts, no retries. The API accepts the constraint. Complete
+287-test CPU suite independently passes with CUDA uninitialized in a separate
+step of the same existing CPU allocation. No new Slurm or GPU job was submitted.
+Both reports and complete CPU log are independently size/SHA verified on the Mac:
+3files77664bytes. This is provider and software evidence, not native qualification.
