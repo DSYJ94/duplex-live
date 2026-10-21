@@ -7,7 +7,9 @@ ENV PATH="/opt/duplex-env/bin:${PATH}" \
     CUDA_VISIBLE_DEVICES=0 \
     OMP_NUM_THREADS=8
 COPY requirements.txt /opt/duplex-requirements.txt
+COPY audition-requirements.txt /opt/duplex-audition-requirements.txt
 RUN pip install --no-cache-dir -r /opt/duplex-requirements.txt \
+    -r /opt/duplex-audition-requirements.txt \
  && python -c 'import torch; assert str(torch.__version__) == "2.9.0a0+145a3a7bda.nv25.10", torch.__version__'
 # Source and artifact trees are mounted at their original provenance paths.
 WORKDIR /projects/u6si/duplex-live
