@@ -1,3 +1,46 @@
+# LOCAL — one supervised control3 chain live (21 October 21:51 London)
+
+LOCAL sole executor; CLOUD read-only. Main/pipeline source9f8d722c070cda16e401bde19bbedf40d67ccfb9
+pushed; source factory de11d6a unchanged. Do not submit duplicate jobs.
+
+ACTIVE SOURCE: process14117 / exec12640 / caffeinate, root
+`runs/native-control3-source-20261021-v2`: 89/168 waveform+receipt checks at snapshot,
+no failures. Independent word approval still pending. Two requests maximum, bounded
+transport retries only. Provider requests sometimes wait90s then retry.
+
+ACTIVE SUPERVISOR: process19270 / exec8812 / caffeinate, root
+`runs/native-control3-approval-20261021-v1`, currently `waiting_existing_source`.
+The supervisor DOES NOT restart generation. After complete168 it assembles ALL40,
+runs independent CPU ASR168 and full verifier; only then actual40 raw teachers,
+CPU teacher ASR40+full verifier, independent semantic40+full verifier. Any failed
+upstream stage stops further submissions and preserves every artifact. No passing
+subset, no content rerolls, no gain/threshold changes. Bounds: source wait2h,
+supervisor6h; stage commands/logs/return codes in its pipeline.json. No GPU,
+conversion or optimizer stage exists in this chain. No production/adoption claim.
+
+Separate live OS leases prevent duplicate source/teacher collectors and duplicate
+supervisors. Paths below ignored private directory are lock files, not credentials
+to copy: `control3-capture.lock`, `control3-pipeline.lock`. A stale file alone does
+not mean a live process. Verify process/session and current JSON before any work.
+
+First80 immutable source clips+receipts, plan, generation snapshot and Git bundle
+preserved on volume49yytzyoge under migration/control3-source-snapshot-20261021-v1/.
+164files17,882,740B, ALL independent GET/hash checks match. ManifestSHA
+fa3437ae930793e3f702f4fa51ee20ead011033702dbe75142918ad499e8cc0f.
+Bundle9f8d722 requires archived frozen native payload741872fe2f9e49f35d4deba9aba96caff26c51d4.
+This is a PARTIAL80/168 snapshot, not complete new source backup or approval.
+Receipt docs/NATIVE-CONTROL3-SNAPSHOT-PERSISTENCE-2026-10-21.json. No secrets/owner audio.
+
+25 fixture tests passed. New semantic reviewer uses the existing independent
+request helper/model, never a student fallback. All actual new source/teacher
+word/semantic/conversion/numerical approvals remain pending. After the supervised
+chain, finish real conversion and native approvals, retained baseline/candidate
+native10+ordinary4 and bounded pilot planning within remaining authorized budget.
+Keep original28 histories/49 teachers, KL1/hidden10,154 objectives, all heldout hashes.
+Latest7590052 remains unadopted. No new GPU/training; prior ~$20.09/$25 compute
+allowance and$7/month storage unchanged. Full67.764GB native archive verified;
+whole-project backup PARTIAL. Unrelated local files remain untouched.
+
 # LOCAL — credential verified; source collection executing (21 October 21:39 London)
 
 LOCAL remains sole executor; CLOUD read-only. Source collector de11d6a is committed

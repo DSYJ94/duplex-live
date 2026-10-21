@@ -1,0 +1,17 @@
+{
+  "schema": "dl-control3-source-snapshot-persistence-v1",
+  "at_utc": "2026-10-21T20:50:40.616126+00:00",
+  "bucket": "49yytzyoge",
+  "prefix": "migration/control3-source-snapshot-20261021-v1/",
+  "clips": 80,
+  "complete168": false,
+  "bytes": 17882740,
+  "all_independent_readbacks_match": true,
+  "source_bundle_tip": "9f8d722c070cda16e401bde19bbedf40d67ccfb9",
+  "source_bundle_prerequisite": "741872fe2f9e49f35d4deba9aba96caff26c51d4",
+  "owner_conversations_or_credentials_included": false,
+  "training_approved": false,
+  "file_count": 164,
+  "inventory_sha256": "fa3437ae930793e3f702f4fa51ee20ead011033702dbe75142918ad499e8cc0f",
+  "full_receipt_sha256": "3d9e2a6bfea22b0112a924e3e134edf7d49b02a72afb9a488a5292d823e76b1b"
+}

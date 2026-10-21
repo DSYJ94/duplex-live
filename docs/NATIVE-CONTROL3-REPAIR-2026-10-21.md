@@ -1,3 +1,24 @@
+# Supervised execution update
+
+Source/pipeline main9f8d722 is committed and pushed. The sole supervisor is running
+in `runs/native-control3-approval-20261021-v1`, following existing generation v2;
+it cannot launch a duplicate generation job or any GPU/optimizer work. It requires
+ALL168 source clips and full independent verification before actual40 teachers,
+complete teacher quality checks and independent semantic review. A zero audit CLI
+exit alone cannot allow progress: full verifier stages are mandatory. Every failed
+corpus remains preserved, with no partial approval. Local credentials stay on Mac.
+
+The independent semantic module `evals/native_control_semantic.py` revalidates the
+whole measured teacher corpus before sending only authored synthetic TRAIN content
+to the existing semantic-review model. Full raw responses and exact input digests
+are bound to all40 decisions. It cannot grant conversion/numerical or training
+approval. Actual semantic requests remain pending; 25 local fixture tests passed.
+
+First80 source clips have a separate fully read-back-hashed S3 backup; that snapshot
+is partial, never a word approval. The native archive remains independently verified.
+Source CPU ASR records four threads/float32 and per-clip progress. See HANDOFF.md and
+machine execution record for exact live processes, paths, snapshots and next work.
+
 # Execution update: local credential supplied
 
 The owner configured the ignored0600 credential on21October. Exact speech model
