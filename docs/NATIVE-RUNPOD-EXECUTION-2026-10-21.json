@@ -1,6 +1,6 @@
 {
   "schema": "dl-runpod-native-trial-status-v2",
-  "at_utc": "2026-10-21T18:57:56.375091+00:00",
+  "at_utc": "2026-10-21T19:18:34.654733+00:00",
   "executor": "LOCAL",
   "source_commit": "c8759473ca70d775c8b993795be5c2b6eee7cccd",
   "trial": {
@@ -377,8 +377,10 @@
   "quiet_supervision_source_audit": "docs/NATIVE-QUIET-SUPERVISION-AUDIT-2026-10-21.json",
   "goal_status": {
     "migration_and_usable_experimental_test_path": "complete",
-    "native_control_repair_and_full_qualification": "active",
-    "new_training_submitted": false
+    "native_control_repair_and_full_qualification": "blocked",
+    "new_training_submitted": false,
+    "blocker": "Local OpenAI API credential remains unconfigured across three consecutive preparation turns; empirical source/teacher/worker experiments need it.",
+    "completion_proven": false
   },
   "control3_preparation": {
     "source_commit": "488a716600ac89683662d474428ae70432828929",
@@ -421,5 +423,29 @@
     "next_independent_work": "Isolated Mac CPU independent ASR of preserved synthetic diagnostics; no cloud resources required",
     "asr_process_started": false,
     "native_training_submitted": false
+  },
+  "independent_local_cue_asr": {
+    "source_commit": "1356b2c396569597b6716a230d849eaf7ea06768",
+    "evidence_commit": "952d24fc996d0ddd9c9a437ec0d82b16d520961e",
+    "process": 78533,
+    "exec_session": 96569,
+    "status": "complete_exit0",
+    "inputs": 3,
+    "outputs": 9,
+    "input_wers": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "all9_quiet_speech_corroborated": true,
+    "native_peak_violations": 1,
+    "full_answer_wer_qualification": false,
+    "report": "docs/NATIVE-CUE-INDEPENDENT-ASR-2026-10-21.json",
+    "backup_receipt": "docs/NATIVE-CUE-ASR-PERSISTENCE-2026-10-21.json",
+    "backup_files": 19,
+    "backup_bytes": 213099,
+    "all_destination_readback_hashes_passed": true,
+    "api_calls": 0,
+    "gpu_purchased": false
   }
 }

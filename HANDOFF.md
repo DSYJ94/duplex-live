@@ -1,3 +1,58 @@
+# LOCAL — independent ASR complete; credential blocker (21 October 20:18 London)
+
+LOCAL sole executor; CLOUD read-only until owner explicitly transfers execution.
+Latest evidence commit 952d24fc996d0ddd9c9a437ec0d82b16d520961e. Actual ASR source:
+1356b2c396569597b6716a230d849eaf7ea06768. Raw teacher recorder source:
+48b1c0d234c79d5158fc68492eb24d2111c109a4. Frozen native payload741872f and voice launcher909c547
+unchanged. Candidate7590052 remains UNADOPTED. No new model training or GPU/API
+submission. All task Pods absent at latest inventory; unrelated4 left untouched.
+
+Actual Mac CPU Whisper-turbo audit COMPLETE12/12, process78533/session96569 exit0.
+All3 synthetic input fragments, including Geronimo, independently match authored
+words at WER0.0. Original full input assemblies and all9 output hashes match.
+ASR detects20/12/25/15/16/23/17/20/18 words in the respective nominal quiet windows.
+This corroborates all9 existing failed control diagnostics; it does not prove the
+native model understood input or qualify behavior. One original native output has
+peak1.198475 above unchanged.995; gain/audio bytes were NOT changed. Fixed output
+windows can truncate speech; ASR repetition/errors are possible, full-answer WER
+remains unscored. No new native inference or selective passing subset.
+Evidence: docs/NATIVE-CUE-INDEPENDENT-ASR-2026-10-21.json and adjacent MD/summary.
+
+Local isolated ASR: Python3.12.13, Torch2.9.0, Whisper20250625/timestamped1.15.9,
+NumPy2.2.6/SciPy1.18.0, CPU float32/4threads. Initial SciPy1.15.3 import failure
+fixed only in this separate environment; no native runtime changed. Public turbo
+weights1,617,941,637B locally cached with official aff26ae4...26e2a19a SHA verified.
+Runtime: docs/NATIVE-LOCAL-ASR-RUNTIME-2026-10-21.json. No API key/owner audio used.
+
+All19 ASR JSON/text metadata files213,099B preserved Mac→Runpod volume49yytzyoge,
+prefix migration/local-cue-asr-20261021-v1/. Every independent GET hash matched.
+Receipt: docs/NATIVE-CUE-ASR-PERSISTENCE-2026-10-21.json. No GPU needed. Original
+synthetic WAV backup and full native67.764GB archive remain verified; whole-project
+Isambard/Mac source backup remains PARTIAL. Sole100GB volume$7/month retained.
+
+EXECUTION BLOCKER: ignored0600file
+runs/local-migration-20261021/.private/openai-backend.env still has no local API key,
+confirmed across3 consecutive preparation turns and again now. The actual new
+collector CLI stops before connecting or creating output. Credential setup question
+is already pending. Never request key values in chat or transfer them to Runpod.
+The next necessary empirical source/teacher/worker experiments cannot run without
+that local credential. Goal is BLOCKED on this input, not complete. Source/check/
+recorder preparation and21 fixture tests are not labels, numerical or product passes.
+
+AFTER CREDENTIAL: generate all168 authored clips for new40 TRAIN source, audit
+ALL40/168 with the now-ready local recognizer, then record ALL40 actual teachers.
+Complete real teacher ASR/semantic/conversion and native numerical approvals; those
+integrations remain unfinished and require actual artifacts. Complete retained
+baseline/candidate fullnative10+speech/ordinary4 before choosing a bounded repair
+parent. Preserve28 actual histories,49 approved teachers, KL1/hidden10,154 original
+objectives and heldout hashes. Full40 paired fresh outputs still required before
+adoption. No unchanged failed-candidate extension or frontend keyword mute.
+Original$25 cloud-compute cap still applies (last conservative envelope$20.09);
+no extra cloud compute was purchased here. Inspect live jobs/resources/budget before
+any future submission. No API/source generation or training job is currently live.
+
+---
+
 # LOCAL — raw teacher recorder ready; local ASR next (21 October 19:57 London)
 
 LOCAL remains sole executor; CLOUD read-only. Recorder source commit 48b1c0d234c79d5158fc68492eb24d2111c109a4.
