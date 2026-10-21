@@ -33,8 +33,18 @@ def main():
         assert hashlib.sha256((args.proof/name).read_bytes()).hexdigest() == wanted
     report = json.loads((args.proof/'report.json').read_text())
     checkpoint = load_file(args.proof/'adapters.safetensors')
+    # Installation order and nn.Module traversal order differ: text_linear is
+    # registered before the temporal stack. Reconstruct traversal from the pinned
+    # published state_dict, independently of the saved optimizer name list.
+    published = args.proof.parents[1] / ('models/hf-cache/hub/'
+        'models--mindlogicinc--context-spanning-7b/snapshots/'
+        'e62a4494a295ff8cee345451cf40aae85719a9f5/context_spanning_7b.pt')
+    model = torch.load(published, map_location='meta', weights_only=True, mmap=True)['model']
+    modules = [n[:-7] for n in model if n.endswith('.weight') and
+               n[:-7] in report['adapter_modules']]
+    assert set(modules) == set(report['adapter_modules'])
     names = [module + '.lora_' + suffix + '.weight'
-             for module in report['adapter_modules'] for suffix in ('A', 'B')]
+             for module in modules for suffix in ('A', 'B')]
     assert set(names) == set(checkpoint) and len(names) == 26
     learned = OrderedDict((n, torch.nn.Parameter(torch.zeros_like(checkpoint[n], device='cuda')))
                           for n in names)
@@ -67,6 +77,7 @@ def main():
               'phase_updates_restored': 8, 'adam_clocks': clocks,
               'optimizer_and_python_numpy_torch_cpu_cuda_rng_exact': True,
               'metadata_reconstructed_from_pinned_report': True,
+              'parameter_order_from_published_model_state_dict': True,
               'device': torch.cuda.get_device_name(), 'torch': str(torch.__version__),
               'cuda': torch.version.cuda, 'native_full_numerical_or_behavior_approved': False}
     with args.out.open('x') as stream:
