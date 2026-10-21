@@ -1,3 +1,29 @@
+# LOCAL — bounded A100 native voice trial ACTIVE; oldvolume retired (21Oct15:29UTC)
+
+LOCAL sole executor; CLOUD read-only. Sole active task Podi20euy4x58fo1m is1A100
+80GB SecureEUR-IS-1,125GB hostRAM32vCPU,$1.79/h. Created15:28:42.087UTC; max2h
+compute$3.58 within original$25. Independent Mac guard session22701 is ARMED;
+read exact PID/status in execution JSON and ignored runpod-validation-watchdog-status-v4.json.
+Hard termination17:28:42.087UTC, retains sole100GBvolume49yytzyoge at/workspace.
+Image booting; do not duplicate it. No training or Slurm jobs. Run native state
+restore then actual Engine audition; full numerical/behavior native10/fresh40
+still unqualified. Current launcher/layout5ea1547; smoke client7f3a885.
+
+Oldvolume cyjzip53ap is DELETED (fresh404) AFTER all25unique migration files/
+85,615,129B passed source→Mac and independentS3 readback hashes on49yytzyoge.
+Original H100 adapter/Adam528/allRNG restore receipt recovered and committed in
+docs/NATIVE-RUNPOD-INDEPENDENT-STATE-RESTORE-2026-10-21.json. All source bundles,
+logs, staging manifests and receipts preserved. RecoveryH100vgp8bfskvrcotf was
+terminated early (fresh404); guard5453 terminal. Temporary overlap ended; ongoing
+single100GB storage$7/month. Original complete native67.764GB archive verified.
+
+Failed96GBGPU create made no resource; guard8229 stopped. Prior trialfirstH100
+settled current read16.001852USD total includingdisk, not earlier partial14.49.
+Recovery cost small and newA100max3.58 still within25. Preserve receipts/failures,
+original154components/49teachers/KLhidden/allheldouts. No adoption/extension.
+
+---
+
 # LOCAL — old-volume receipt recovery ACTIVE (21Oct15:23UTC)
 
 LOCAL sole executor; CLOUD read-only. Only active task Podvgp8bfskvrcotf is a

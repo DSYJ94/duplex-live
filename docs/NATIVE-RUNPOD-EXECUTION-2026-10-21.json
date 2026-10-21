@@ -16,9 +16,9 @@
     },
     "independent_pod_get_now": 404,
     "new_training_updates": 0,
-    "reported_pod_billing_gpu_usd": 14.481822490692139,
-    "reported_pod_billing_disk_usd": 0.01273148157633841,
-    "billing_scope": "list-pod-billing through12:10UTC, buckets rounded13:00UTC; actual read, may settle later"
+    "reported_pod_billing_gpu_usd": 15.987963229417801,
+    "reported_pod_billing_disk_usd": 0.013888888992369175,
+    "billing_scope": "Fresh list-pod-billing day bucket at21Oct15:23UTC; total16.00185211841017USD, may settle"
   },
   "native_assets": {
     "model_config_adapter_state_files": 36,
@@ -45,7 +45,8 @@
     "torch": "2.9.0a0+145a3a7bda.nv25.10",
     "cuda": "13.0",
     "original_receipt_on_old_volume": "/workspace/migration/independent-gpu-adapter-state-restore-v1.json",
-    "original_receipt_retrieved": false
+    "original_receipt_retrieved": true,
+    "tracked_original_receipt": "docs/NATIVE-RUNPOD-INDEPENDENT-STATE-RESTORE-2026-10-21.json"
   },
   "voice_audition": {
     "usable_or_ready": false,
@@ -59,7 +60,7 @@
     "owner_explicitly_approved_replacement_and_overlap": true,
     "old_id": "cyjzip53ap",
     "old_data_center": "EUR-IS-3",
-    "old_retained_for_unique_receipt_recovery": true,
+    "old_retained_for_unique_receipt_recovery": false,
     "new_id": "49yytzyoge",
     "new_data_center": "EUR-IS-1",
     "new_size_gb": 100,
@@ -91,7 +92,14 @@
     "manifest_sha256": "4eac15590dc9def6dfb5e34b2cea92f30d9a067fabe0940e2876b6acdcbe6dce",
     "verified_at_utc": "2026-10-21T14:05:57.563301+00:00",
     "upload_terminal": "v4/session81451 exit0, no active archive writers",
-    "tracked_verification_receipt": "docs/NATIVE-RUNPOD-ARCHIVE-VERIFICATION-2026-10-21.json"
+    "tracked_verification_receipt": "docs/NATIVE-RUNPOD-ARCHIVE-VERIFICATION-2026-10-21.json",
+    "old_retired": true,
+    "old_independent_get_after_delete": 404,
+    "old_receipts_recovered_files": 25,
+    "old_receipts_recovered_bytes": 85615129,
+    "old_receipts_verified_on_mac_and_new_volume": true,
+    "old_receipts_verification": "docs/NATIVE-RUNPOD-OLD-RECEIPTS-VERIFICATION-2026-10-21.json",
+    "temporary_overlap_ended": true
   },
   "qualification": {
     "latest_candidate_job": "7590052",
@@ -101,7 +109,7 @@
     "fresh40_run": false,
     "adopted": false
   },
-  "progress_utc": "2026-10-21T15:23:23.486501+00:00",
+  "progress_utc": "2026-10-21T15:29:25.062923+00:00",
   "current_source": "5ea1547ada2bdca35bf4390cb2f4ee413c3115a2",
   "cpu_staging": {
     "schema": "dl-runpod-cpu-staging-execution-v1",
@@ -182,16 +190,14 @@
   },
   "active_task_resources": {
     "gpu_pods": [
-      "vgp8bfskvrcotf"
+      "i20euy4x58fo1m"
     ],
     "cpu_pods": [],
     "slurm_jobs": [],
     "archive_writers": [],
     "retained_volumes": [
-      "49yytzyoge",
-      "cyjzip53ap"
-    ],
-    "old_volume_retirement_blocker": "Unique original receipts remain on EUR-IS-3; no S3 endpoint and no available Pod capacity. Official UI file browser requires a Pod."
+      "49yytzyoge"
+    ]
   },
   "receipt_rescue": {
     "pod_id": "vgp8bfskvrcotf",
@@ -206,13 +212,47 @@
     "purpose": "Read and preserve unique original trial receipts; terminate promptly after retrieval",
     "image": "nvcr.io/nvidia/pytorch:25.10-py3@sha256:42263b2424fc237b34c4fc4a91c30d603c57eed36e37d31ff6d9a4f1f801edee",
     "deadline_guard_status": {
-      "phase": "armed",
+      "phase": "pod_terminated",
       "pod_id": "vgp8bfskvrcotf",
-      "state": "RUNNING",
-      "deadline_utc": "2026-10-21T17:19:04.173000+00:00",
       "network_volume_retained": "cyjzip53ap",
-      "at_utc": "2026-10-21T15:23:15.867880+00:00",
+      "at_utc": "2026-10-21T15:25:19.292351+00:00",
       "pid": 5453
+    },
+    "status": "TERMINATED",
+    "independent_get_after_delete": 404,
+    "original_receipt_retrieved": true
+  },
+  "third_gpu_attempt": {
+    "class": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+    "count": 1,
+    "region": "EUR-IS-1",
+    "catalog_usd_per_hour": 2.49,
+    "creation_result": 400,
+    "reason": "Capacity unavailable after positive catalog read",
+    "pod_created": false,
+    "guard_pid": 8229,
+    "guard_stopped": true
+  },
+  "current_voice_trial": {
+    "pod_id": "i20euy4x58fo1m",
+    "pod_name": "duplex-native-validation-gpu-20261021-v4",
+    "created_at_utc": "2026-10-21T15:28:42.087Z",
+    "network_volume_id": "49yytzyoge",
+    "approved_gpu_wallclock_seconds": 7200,
+    "gpu_hourly_usd": 1.79,
+    "maximum_compute_usd": 3.58,
+    "total_validation_budget_usd": 25,
+    "training_submitted": false,
+    "image": "nvcr.io/nvidia/pytorch:25.10-py3@sha256:42263b2424fc237b34c4fc4a91c30d603c57eed36e37d31ff6d9a4f1f801edee",
+    "source_commit": "5ea1547ada2bdca35bf4390cb2f4ee413c3115a2",
+    "deadline_guard_status": {
+      "phase": "armed",
+      "pod_id": "i20euy4x58fo1m",
+      "state": "RUNNING",
+      "deadline_utc": "2026-10-21T17:28:42.087000+00:00",
+      "network_volume_retained": "49yytzyoge",
+      "at_utc": "2026-10-21T15:29:05.613590+00:00",
+      "pid": 9262
     }
   }
 }

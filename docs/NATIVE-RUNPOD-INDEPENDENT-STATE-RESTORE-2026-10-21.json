@@ -1,0 +1,19 @@
+{
+  "schema": "dl-runpod-independent-adapter-state-restore-v1",
+  "at_utc": "2026-10-21T10:32:21.119758+00:00",
+  "passed": true,
+  "optimizer_updates": 0,
+  "adapter_tensors": 26,
+  "trainable_parameters": 1894400,
+  "phase_updates_restored": 8,
+  "adam_clocks": [
+    528
+  ],
+  "optimizer_and_python_numpy_torch_cpu_cuda_rng_exact": true,
+  "metadata_reconstructed_from_pinned_report": true,
+  "parameter_order_from_published_model_state_dict": true,
+  "device": "NVIDIA H100 80GB HBM3",
+  "torch": "2.9.0a0+145a3a7bda.nv25.10",
+  "cuda": "13.0",
+  "native_full_numerical_or_behavior_approved": false
+}
