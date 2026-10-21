@@ -1,3 +1,23 @@
+# LOCAL overnight — TRAIN3/8; whole preserved union freshly verified (21Oct00:06:48UTC)
+
+TRAIN7590052 and CPUwatcher7589159 remain sole active jobs, immutable741872f.
+Actual00:06:38UTC records3/8 updates, finite gradient norms6.8622923/5.9284997/
+7.5672026, native teacher microbatch counts7/6/6. No final adapter or restore yet;
+watcher alone owns next submissions. Stable new fullstate backup remains pending.
+Mac freshly rehashed ALL25245 preserved scoped files/28527702727B: zero size/hash
+failures,14.88s, report complete-union-reverification-20261021-preterminal.json.
+This is the already-preserved union; new training state is not included yet.
+Old Mac source backup PARTIAL. Existing keep-awake and local backup observers live.
+
+Source54cb690 shared main includes the independently live-tested backend constraint
+repair; running741 jobs stay unchanged. No new GPU or Slurm job was submitted for
+its6-case/10-request provider test and full287-test CPU suite, both preserved.
+LOCAL sole executor; CLOUD read-only. Continue existing8-update/independent full
+restore/native10/speech chain; no extension/adoption/fresh20 from partial success.
+Allocation21Oct08:56:32UTC, certificate10:31:51UTC. Exact preceding evidence below.
+
+---
+
 # LOCAL overnight — training progresses; live backend repair verified (21Oct00:05:35UTC)
 
 Source49b9d013e6532cf62238aeab2aaa503d64b964cd is pushed/deployed separately.

@@ -1,5 +1,5 @@
 {
-  "at_utc": "2026-10-21T00:05:03.730647+00:00",
+  "at_utc": "2026-10-21T00:06:48.074421+00:00",
   "unique_scoped_artifact_files": 25245,
   "unique_scoped_artifact_bytes": 28527702727,
   "inventory_conflicts": [],
@@ -2252,5 +2252,18 @@
     },
     "running_train_source_unchanged": "741872fe2f9e49f35d4deba9aba96caff26c51d4",
     "native_behavior_verified": false
+  },
+  "complete_union_reverification_20261021_preterminal": {
+    "at_utc": "2026-10-21T00:06:48.074421+00:00",
+    "source_ledger_sha256": "97445d80f684ed4409795508c318fcf3366896dced84dd24181d7305a509d286",
+    "files": 25245,
+    "bytes": 28527702727,
+    "all_artifact_sizes_and_sha256_match": true,
+    "failed": [],
+    "seconds": 14.880715665989555,
+    "old_mac_source_backup_status": "PARTIAL",
+    "new_training_postfit_state_not_yet_in_this_union": true,
+    "report": "runs/local-continuation-20261019/complete-union-reverification-20261021-preterminal.json",
+    "report_sha256": "e48516ada69b1f008986988db39e5fcf525b57af15dcd1c58fac13bda6244c96"
   }
 }
