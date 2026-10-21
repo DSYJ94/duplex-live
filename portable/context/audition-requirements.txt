@@ -1,0 +1,4 @@
+# Additional websocket transport and upstream optional microphone imports.
+# Numerical model dependencies remain pinned in requirements.txt.
+aiohttp==3.14.5
+noisereduce==3.0.3

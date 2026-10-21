@@ -40,6 +40,8 @@ def main():
         'models--mindlogicinc--context-spanning-7b/snapshots/'
         'e62a4494a295ff8cee345451cf40aae85719a9f5/context_spanning_7b.pt')
     model = torch.load(published, map_location='meta', weights_only=True, mmap=True)['model']
+    # Match the published loader's explicit torch.compile wrapper removal.
+    model = {n.replace('._orig_mod.', '.'): v for n, v in model.items()}
     modules = [n[:-7] for n in model if n.endswith('.weight') and
                n[:-7] in report['adapter_modules']]
     assert set(modules) == set(report['adapter_modules'])
