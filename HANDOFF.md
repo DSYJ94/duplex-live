@@ -1,3 +1,50 @@
+# LOCAL — portable source and measured quality checks (21 October 2026 19:34 London)
+
+LOCAL sole executor; CLOUD read-only. Quality implementation source commit:
+d7d59579d9f7ec85d6f818b3c1b2389fe81047d1. Frozen native payload741872f/launcher909c547 unchanged.
+Fresh Runpod inventory shows NO duplex task Pods; unrelated4 Pods untouched.
+Retained100GB volume49yytzyoge independently exists. No new GPU, API, teacher,
+Slurm or training submission. No optimizer updates or behavioral/adoption approval.
+
+Raw control3 source formatv2 now archives every original utterance WAV and receipt
+inside its source directory. Validator reconstructs all40 scenes/quiet intervals
+from original clips; rewritten manifest hashes cannot bless added/changed PCM.
+It does not need original Mac clip paths. No real new source existed during this
+format change; all actual original data/receipts/audio remain unchanged.
+
+New evals/native_control_source_quality.py implements full40/168-clip independent
+source ASR auditing and verification using pinned local Whisper turbo weights,
+WER<=.05/peak<=.995, exact source word positions, no ASR text prompting, no gain
+change and no passing subset. Real ASR remains UNRUN. New teacher phase-check
+component requires independent measured source-word completion, complete actual
+input/observation/close evidence and raw independent teacher speech. It rejects
+acknowledgment, untranscribed non-silent PCM, old/near-miss release, early answers,
+restart, missing resume, delegation and malformed times. This is NOT a collection
+recorder or whole-collection teacher/semantic/conversion approval.
+
+All14 artificial-fixture tests PASS, including all40 source reconstructions and
+all40 artificial teacher phases. No fixture is approved speech or model evidence.
+All5 protected recipe/source/fulltask/archive records remain hash-identical.
+Evidence: docs/NATIVE-CONTROL3-QUALITY-PREPARATION-2026-10-21.json.
+The existing GPT-Live model/WebSocket handshake was verified against official
+documentation; no authenticated call or account-access claim is made.
+
+NEXT: complete the actual40-teacher recorder and full artifact/ASR/semantic/
+conversion bindings, then generate and independently qualify the entire new
+source/teacher collection. Local API credential file remains blank at latest check;
+ignored0600file exists and the setup question is already pending, do not ask for
+key values in chat or copy them to Runpod. Source ASR also needs the pinned local
+weights/runtime. Detailed commands/status: docs/NATIVE-CONTROL3-REPAIR-2026-10-21.md.
+
+No baseline/candidate fullnative10 or sealed40 result yet. Preserve28 actual
+histories,49 approved teachers, KL1/hidden10, all154 original objectives and heldout
+hashes. Finish complete10+independent speech/ordinary4 before choosing a repair
+parent, then all new approvals before a bounded pilot. Original$25 compute cap
+still applies; last conservative envelope$20.09, retained storage$7/month. Whole
+Isambard/Mac project backup remains partial; verified native archive remains saved.
+
+---
+
 # LOCAL — native49 audited; control3 source prepared (21 October 2026)
 
 LOCAL sole executor; CLOUD read-only. Prepared source commit: 488a716600ac89683662d474428ae70432828929.

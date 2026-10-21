@@ -1,6 +1,6 @@
 {
   "schema": "dl-runpod-native-trial-status-v2",
-  "at_utc": "2026-10-21T18:14:15.542529+00:00",
+  "at_utc": "2026-10-21T18:34:09.330998+00:00",
   "executor": "LOCAL",
   "source_commit": "c8759473ca70d775c8b993795be5c2b6eee7cccd",
   "trial": {
@@ -395,5 +395,20 @@
     "training_approved": false,
     "next_work": "docs/NATIVE-CONTROL3-REPAIR-2026-10-21.md",
     "credential_configured_at_last_check": false
+  },
+  "control3_quality_preparation": {
+    "source_commit": "d7d59579d9f7ec85d6f818b3c1b2389fe81047d1",
+    "record": "docs/NATIVE-CONTROL3-QUALITY-PREPARATION-2026-10-21.json",
+    "raw_source_schema": "dl-native-control3-raw-source-v2",
+    "tests_passed": 14,
+    "fixture_evidence_only": true,
+    "actual_source_asr_run": false,
+    "actual_teacher_capture_run": false,
+    "whole_teacher_semantic_conversion_bindings_complete": false,
+    "training_submitted": false,
+    "native_behavior_qualified": false,
+    "local_api_credential_configured": false,
+    "task_pods_from_fresh_inventory": [],
+    "retained_volume": "49yytzyoge"
   }
 }
