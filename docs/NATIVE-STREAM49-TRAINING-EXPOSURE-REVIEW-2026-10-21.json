@@ -118,5 +118,33 @@
       "all_size_and_sha256_match": true,
       "failed": []
     }
+  },
+  "complete_training_report": {
+    "report_sha256": "397a259d124948dec3aeed63564ad24dbf2f13bb2b3699565f9f1974e60fa3eb",
+    "backup_verification": {
+      "at_utc": "2026-10-21T00:49:29.853144+00:00",
+      "files": 1,
+      "bytes": 6244471,
+      "all_size_and_sha256_match": true,
+      "failed": [],
+      "all8_step_receipt_hashes_match_independent_exposure_audit": true,
+      "native520_parent_data_voice_assets_frozen_weights_and_retention_bindings_exact": true,
+      "all49_expected_native_fingerprints_captured": true,
+      "full_fresh_restore_or_behavior_approved": false
+    },
+    "training_report_passed": true,
+    "all49_expected_native_fingerprints_captured": true,
+    "all49_expected_acoustic_fingerprints_captured": true,
+    "training_seconds": 1871.6025426369742,
+    "training_seconds_scope": "Eight optimizer calls; excludes final49 stream fingerprints and fresh-process independent restoration",
+    "peak_allocated_bytes": 22071380480,
+    "training_pid": 116298,
+    "native520_parent_bindings_exact": true,
+    "all8_step_receipt_hashes_match_independent_exposure_audit": true,
+    "original28_metric_count": 28,
+    "mean_initial_stage_nll": 0.6367367186290461,
+    "mean_final_nll": 0.6366545186054802,
+    "nll_is_diagnostic_not_behavior_qualification": true,
+    "full_fresh_process_restore_approved": false
   }
 }

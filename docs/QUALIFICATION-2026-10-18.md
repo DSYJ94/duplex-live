@@ -1,3 +1,23 @@
+# LOCAL — all8 fit/report complete; independent restore pending (21Oct00:53:03UTC)
+
+TRAIN7590052/CPUwatcher7589159 remain active on immutable741872f; watcher alone
+owns native10/speech submissions. All8 original154-per-update plus all49 native
+teacher exposure independently verified. Critical checkpoint/fullstate/data backed;
+all49 expected native fingerprints now captured and final training report6244471B
+also size/SHA backed. Report SHA397a259d124948dec3aeed63564ad24dbf2f13bb2b3699565f9f1974e60fa3eb.
+Native520 original data/voice/assets/frozen weights/retention bindings and all8
+step receipt hashes independently matched. Fit1871.6025426s, peak22071380480B.
+Full fresh-process optimizer/RNG/original28/acoustic49/native49 restoration remains
+PENDING; expected fingerprints and CPU inspections are not restore/behavior passes.
+No native10/speech ID yet at00:50UTC. Do not duplicate/restart existing chain.
+Native/whole-system UNQUALIFIED; ordinary4/4 and full10 review before any extension/
+fresh output, no adoption. LOCAL sole executor while owner away; CLOUD read-only.
+Precise latest state: newest HANDOFF.md and NATIVE-STREAM49-TRAINING-EXPOSURE-REVIEW-2026-10-21.json.
+Scoped25262files29151948036B verified, old Mac source backup PARTIAL. Certificate
+21Oct10:31:51UTC, allocation21Oct08:56:32UTC. All existing gates/data/losses retained.
+
+---
+
 # LOCAL status — all8 trained/all49 exposed; full restore and behavior pending (21Oct00:29:59UTC)
 
 LOCAL remains sole executor while owner is away; CLOUD read-only. Running payload

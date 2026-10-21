@@ -1,3 +1,44 @@
+# LOCAL overnight — complete training report backed; expected49 captured; fresh restore pending (21Oct00:53:03UTC)
+
+Immutable payload741872fe2f9e49f35d4deba9aba96caff26c51d4, TRAIN7590052 and CPUwatcher
+7589159 remain active; same canonical runs/native-stream49-overnight-local-20261020.json.
+All8 optimizer updates and original154 components per update/all49 native auxiliary
+were independently audited and critical14files backed as below. All49 expected
+native stream fingerprints are now captured and final report.json is written.
+Report SHA397a259d124948dec3aeed63564ad24dbf2f13bb2b3699565f9f1974e60fa3eb,
+6244471B independently size/SHA backed00:49:29UTC. All8 canonical step-receipt hashes
+match the separate exposure audit. Parent native520 original28 data, voice, assets,
+frozen base/speech weights, retention examples and temporal audit bindings match
+exactly. Word64/clock64/actual28/old25/new24/KL1/hidden10 remain intact.
+
+Report records1871.6025426s for eight-update fit (excludes final49 stream fingerprints
+and independent restoration), peak22071380480B, trainingPID116298. These are numeric
+fit/report checks only. REQUIRED full fresh-process optimizer/RNG/original28/
+acoustic49/native49 restoration is still PENDING; expected hashes alone are not
+an independent restore pass. Actual00:50:10UTC queue: TRAIN RUNNING1:06:35,
+CPUwatcher RUNNING2:07:58, only these2 jobs. No native10/speech ID yet; watcher alone
+owns submissions after complete restore and terminal training0:0. Never restart.
+
+New raw evidence extractor (read-only local preparation) is in ignored
+runs/local-continuation-20261019/review-native-stream49-complete10-evidence.py.
+It waits for all10 native/speech artifacts and checks exact candidate/state/voice,
+step hashes, raw audio hashes, unforced runtime and baseline input bindings;
+it writes diagnostic evidence, never a behavioral approval. No outputs reviewed yet.
+
+Scoped union25262files29151948036B, zero conflicts; latest report plus earlier critical
+state and CPU audit versions independently size/SHA checked. Mac source backup
+PARTIAL. Shared main before this docs commit4ae1a744d6c42dd8bc9c6ce8bfcc0a45abd2dfff;
+running payload unchanged741. LOCAL sole executor, CLOUD read-only, no new compute
+purchase/Qwen fallback. Certificate rechecked00:33UTC valid through21Oct10:31:51UTC;
+allocation ends08:56:32UTC; existing preservation/keep-awake processes continue.
+
+Next: monitor same TRAIN/watch IDs through independent full restore, preserve
+reload report, allow existing complete native10/speech chain, then review every
+case. Ordinary4/4 and complete committed review remain mandatory for extension/
+fresh qualification. Candidate and whole system remain UNQUALIFIED, no adoption.
+
+---
+
 # LOCAL overnight — all8 trained/all49 exposed; fullstate backed; restore pending (21Oct00:29:59UTC)
 
 TRAIN7590052 remains RUNNING on interactive1GPU, immutable741872fe2f9e49f35d4deba9aba96caff26c51d4.
