@@ -1,0 +1,136 @@
+{
+  "schema": "dl-control3-complete-durable-word-review-v2",
+  "at_utc": "2026-10-21T21:52:23.279548+00:00",
+  "source_commit": "04ad25a",
+  "source_word_audit_sha256": "6abbe1ccaf354a202750ad19c71ff3278e740cce00e0022e259c782b5ffad9c2",
+  "complete_clips": 168,
+  "passed_clips": 160,
+  "failed_clips": [
+    {
+      "id": "native-control3-train-008",
+      "turn": 1,
+      "reference": "Beacon. Every small basket holds apples. This basket is small. What does it hold?",
+      "asr": " every small basket holds apples, this basket is small, what does it hold?",
+      "raw_wer": 0.07142857142857142,
+      "canonical_word_wer": 0.07142857142857142,
+      "reasons": [
+        "Independent source word agreement failed",
+        "Exact authored source word positions do not match measured speech"
+      ],
+      "wav_sha256": "e5a246be3ad415a282f238ef65ec608a6f60fb594eac2d1d2462565de6760971"
+    },
+    {
+      "id": "native-control3-train-009",
+      "turn": 2,
+      "reference": "Mia came first.",
+      "asr": " Nia came first.",
+      "raw_wer": 0.3333333333333333,
+      "canonical_word_wer": 0.3333333333333333,
+      "reasons": [
+        "Independent source word agreement failed",
+        "Exact authored source word positions do not match measured speech"
+      ],
+      "wav_sha256": "518da355fd48044d9a68cdd04d3b5805c3f98b7bd3c11f8b50ea5a2701875f29"
+    },
+    {
+      "id": "native-control3-train-017",
+      "turn": 4,
+      "reference": "Mia came first.",
+      "asr": " Mia came first, CA came first.",
+      "raw_wer": 1.0,
+      "canonical_word_wer": 1.0,
+      "reasons": [
+        "Independent source word agreement failed",
+        "Exact authored source word positions do not match measured speech"
+      ],
+      "wav_sha256": "6dc64bbda60166656471939a658052d4c912c39b7c677bcbf8ce93f8af59b21c"
+    },
+    {
+      "id": "native-control3-train-020",
+      "turn": 3,
+      "reference": "Copper. Why does a shadow move when a lamp moves?",
+      "asr": " Why does a shadow move when a lamp moves?",
+      "raw_wer": 0.1,
+      "canonical_word_wer": 0.1,
+      "reasons": [
+        "Independent source word agreement failed",
+        "Exact authored source word positions do not match measured speech"
+      ],
+      "wav_sha256": "a005cec9ce05c1f245e3a2c6e5ac2ca878d683f5a943a64f6f722414c8832e16"
+    },
+    {
+      "id": "native-control3-train-021",
+      "turn": 3,
+      "reference": "Harvest. Why does water form drops on a cold glass?",
+      "asr": " Why does water form drops on a cold glass?",
+      "raw_wer": 0.1,
+      "canonical_word_wer": 0.1,
+      "reasons": [
+        "Independent source word agreement failed",
+        "Exact authored source word positions do not match measured speech"
+      ],
+      "wav_sha256": "22b6116e48a288e567201bc6296f9a75f2fa034dc3ecc40c847545a901c46b8d"
+    },
+    {
+      "id": "native-control3-train-024",
+      "turn": 3,
+      "reference": "Beacon.",
+      "asr": " Thank you.",
+      "raw_wer": 2.0,
+      "canonical_word_wer": 2.0,
+      "reasons": [
+        "Independent source word agreement failed",
+        "Exact authored source word positions do not match measured speech"
+      ],
+      "wav_sha256": "188d8a7c4e72c90f1c7bc4ccf2e0c33a4996e17d1a6467220fa9b39fc72d58e8"
+    },
+    {
+      "id": "native-control3-train-029",
+      "turn": 3,
+      "reference": "Harvest.",
+      "asr": " Harvest. D. Harvest.",
+      "raw_wer": 2.0,
+      "canonical_word_wer": 2.0,
+      "reasons": [
+        "Independent source word agreement failed",
+        "Exact authored source word positions do not match measured speech"
+      ],
+      "wav_sha256": "6ce2b2713b7088bef4ff88f6d65bab7ed3c6f3236eab127392f18189d868a25c"
+    },
+    {
+      "id": "native-control3-train-039",
+      "turn": 3,
+      "reference": "Beacon. If the path is blocked, we use the bridge. The path is blocked. Which way do we go?",
+      "asr": " Beacon. If the path is blocked, we use the bridge. The path is blocked. Which color do we go?",
+      "raw_wer": 0.05263157894736842,
+      "canonical_word_wer": 0.05263157894736842,
+      "reasons": [
+        "Independent source word agreement failed",
+        "Exact authored source word positions do not match measured speech"
+      ],
+      "wav_sha256": "8b342c6e2bf1c7a3ba13422317e3a2fea3823213c6ace5507adcd51668d8bb10"
+    }
+  ],
+  "whole_corpus_passed": false,
+  "training_approved": false,
+  "original_full_audit_and_raw_responses_preserved": true,
+  "timestamp_serialization_fixed": true,
+  "word_comparison_policy": "control3-finite-spoken-orthography-v1",
+  "finite_spelling_variants": {
+    "vapor": "vapour"
+  },
+  "raw_wer_retained": true,
+  "word_or_audio_or_threshold_values_changed": false,
+  "all8_failed_waveforms_plotted_and_inspected": true,
+  "secondary_recognizer_cases": 12,
+  "secondary_is_diagnostic_only": true,
+  "new_source": "runs/native-control3-source-20261021-v4",
+  "source_exec_session": 13435,
+  "new_supervisor": "runs/native-control3-approval-20261021-v3",
+  "pipeline_exec_session": 64127,
+  "retained_unchanged": 160,
+  "maximum_new_clip_requests": 8,
+  "actual_source_clips_at_snapshot": 168,
+  "current_pipeline_phase": "source_asr168",
+  "no_gpu_or_optimizer_submission": true
+}

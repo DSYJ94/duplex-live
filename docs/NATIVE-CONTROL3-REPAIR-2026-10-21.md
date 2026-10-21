@@ -1,3 +1,26 @@
+# Durable audit v2 and diagnosed word repairs
+
+The first full168 audit completed and its supervisor stopped before teacher calls.
+The timestamp fix now checks the exact durable JSON bytes, keeping numbers and
+waveforms unchanged. A NEW control3 TRAIN-only finite spelling policy compares
+vapor/vapour as the same spoken word; raw WER remains recorded. All other names,
+cues, missing/extra words, word intervals and numeric thresholds stay strict.
+This policy is versioned and does not change old49 or sealed evaluation scoring.
+
+The complete derived audit has160 passing clips and EIGHT failures, so the full
+corpus remains unapproved. Both recognizers and all eight actual waveforms were
+inspected. A new v4 retains160 original recordings/receipts unchanged and permits
+only eight diagnosed repairs with the same words and voices, no gain alteration.
+The complete audit is repeated over all168. Only byte-identical waveform/receipt
+recognition evidence can be reused; each changed clip gets new independent ASR.
+
+A full failed report may be revalidated for repair diagnosis only. Collection-facing
+callers and the CLI retain require_pass=True, so no failed corpus can advance to
+teacher capture. The supervisor still has no GPU/conversion/optimizer stage.
+29 fixture tests pass; actual source-word qualification, teacher quality/semantics,
+conversion, numerical approval and native behavior remain separate mandatory steps.
+See HANDOFF.md for current job handles and the new measured word-review record.
+
 # Actual full source and auditor diagnostic
 
 All168 source clips are now complete in generation v3, and all40 raw scenes are

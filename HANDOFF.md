@@ -1,3 +1,59 @@
+# LOCAL — full durable word audit; eight targeted repairs (21 October 22:52 London)
+
+LOCAL sole executor; CLOUD read-only. Source04ad25a committed/pushed. Old supervisor
+exec5840 TERMINAL exit1 at verify_source168, after the full168 source ASR. Old
+secondary diagnostic exec72218 TERMINAL exit0:12 actual failed-source diagnostics.
+Earlier secondary exec26515 failed before inference because module path was absent;
+corrected launch used PYTHONPATH=$PWD. No old audit/teacher jobs still active.
+
+Complete source audit v1 remains preserved. Confirmed numpy.float64 guard bug fixed
+by judging the exact persisted JSON numbers, matching independent verification.
+New v2 TRAIN-only comparison declares ONLY vapor→vapour as an identical spoken-word
+spelling; raw WER and original transcript/words/PCM remain recorded. Numeric bars
+remain WER.05/peak.995. No other word/name/cue equivalence, no sealed eval changes.
+Original49 retention approvals/policies and all heldout hashes remain untouched.
+
+NEW full durable reassessment: ALL168 recomputed,160 pass/eight fail. Whole corpus
+UNAPPROVED. Parent code bound to Git2849134; original raw ASR copied byte for byte.
+Failures:008t1 Beacon omitted/misheard,009t2 Mia/Nia,017t4 extra phrase,020t3 Copper
+omitted by turbo (large-v3 hears it),021t3 Harvest omitted by turbo (large hears it),
+024t3 Beacon almost silent (.3s,peak.001587),029t3 Harvest repeated,039t3 way→color.
+Both recognizers and full waveform plots inspected before any new repair. Four
+vapour/vapor cases are the same spoken word, with raw WER.090909 retained and
+canonical word WER0 under the explicit new TRAIN policy. No audio repair for those.
+Evidence docs/NATIVE-CONTROL3-DURABLE-WORD-REVIEW-2026-10-21.json.
+
+ACTIVE SOURCE V4 exec13435/caffeinate: runs/native-control3-source-20261021-v4.
+Retains160 original WAVs/receipts byte for byte; maximum eight new TTS requests,
+only the diagnosed failed TRAIN clips. Same exact scripts/voices; clarity and
+stop/once instructions only. NO gain adjustment. At snapshot 168/168 waveform
+checks, 0 failures. This is not source-word approval.
+
+ACTIVE supervisor exec64127/caffeinate: runs/native-control3-approval-20261021-v3,
+phase source_asr168. One collector/supervisor only; same process leases.
+After complete v4: assemble ALL40 → full168 word audit, recognizing changed clips
+and rechecking byte-bound cached raw ASR only for identical WAV+receipt → full
+verifier → actual40 teachers → complete teacher ASR/phase+verifier → semantic40+
+verifier. Any failure stops further submissions. Teacher collector still requires
+passed=True; explicit failed-report validation exists only for diagnosed repairs.
+ASR reuse cannot pass a subset; all168 decisions and parent hashes are recomputed.
+No conversion, GPU or optimizer stage in the supervisor. No actual teacher yet.
+
+Source code29 fixture tests pass; cached-response tamper, genuine word failure,
+name/cue confusion and failed-corpus default-verifier rejection are tested. Actual
+failed-corpus repair retention was read-only validated against all real168 source
+clips/receipts and both recognizers before eight new requests. Source/teacher
+approval and model capability remain separate.
+
+Complete v3 raw source BACKUP already VERIFIED:836files641,322,800B, lossless
+archive122,177,869B with all internal and independent destination hashes matching,
+S3 migration/control3-complete-source-v3-20261021/ on volume49yytzyoge. Failed v2
+and first80 snapshots also verified. New v4/audit metadata backup still pending.
+Native67.764GB archive verified Mac+Runpod; whole-project backup PARTIAL. Native
+7590052 unadopted; no new GPU/optimizer work. Prior ~$20.09/$25 cap and$7/mo storage
+unchanged. Native conversion/numerics/fullnative10/ordinary4/fresh40/new pilot pending.
+Unrelated local files/edits remain untouched.
+
 # LOCAL — full raw source backed up; source ASR active (21 October 22:27 London)
 
 LOCAL sole executor; CLOUD read-only. Main230b269ff94452d6b0c84dec56a88adea83c294d
