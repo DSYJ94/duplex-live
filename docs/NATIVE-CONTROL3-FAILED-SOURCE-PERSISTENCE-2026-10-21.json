@@ -1,0 +1,18 @@
+{
+  "schema": "dl-control3-source-snapshot-persistence-v1",
+  "at_utc": "2026-10-21T21:07:53.169705+00:00",
+  "bucket": "49yytzyoge",
+  "prefix": "migration/control3-source-failed-v2-20261021/",
+  "waveform_validated_clips": 139,
+  "total_original_wavs": 140,
+  "complete168": false,
+  "bytes": 30176989,
+  "all_independent_readbacks_match": true,
+  "source_bundle_tip": "284913483addc839b1989734852a0d918f26d6a1",
+  "source_bundle_prerequisite": "741872fe2f9e49f35d4deba9aba96caff26c51d4",
+  "owner_conversations_or_credentials_included": false,
+  "training_approved": false,
+  "file_count": 289,
+  "inventory_sha256": "b4506a06dcd6a0d75b50a15a5895e80879eb2e6fe728297e8ceb31d3f0270077",
+  "full_receipt_sha256": "4d27660324b1f2704fab39a58731e68130a7ece343dcfd82acf1cafbbaf4202e"
+}

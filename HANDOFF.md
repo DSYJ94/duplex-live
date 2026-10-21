@@ -1,3 +1,48 @@
+# LOCAL — diagnosed versioned source repair live (21 October 22:08 London)
+
+LOCAL sole executor; CLOUD read-only. Source284913483addc839b1989734852a0d918f26d6a1
+committed/pushed. Original source-plan SHAe1ac027c032913e9ef96dd4d92dcc5e31e1da733d237e52e1ba418813cfc706f unchanged.
+
+OLD SOURCE v2 exec12640 and OLD supervisor v1 exec8812 both TERMINAL exit1.
+No downstream source ASR/teacher/semantic API stage started. V2 preserved139
+waveform-valid originals plus one actual rejected waveform; one request exhausted
+bounded API/transport retries without audio and27 clips were not yet submitted.
+No passing subset admitted, no new GPU, no model training or adoption.
+
+ACTUAL DIAGNOSIS: TRAIN034 clip2, exact word Lantern./voice alloy, original SHA
+6775a33bca5f7beec75f53ace49124f72815b5a4b7bcfd06aa535e54bf0250fa,
+4.0s waveform peak0.9999694824;262 samples above.995,229 at digital peak, longest
+clipped run7samples. Full waveform and20ms zoom inspected; separate late burst
+visible. Independent pinned CPU Whisper hears only Lantern; this cannot excuse
+physical clipping. Original WAV/receipt/plot/raw ASR remain intact. Never lower gain.
+
+NEW ACTIVE SOURCE: exec54639/caffeinate, `runs/native-control3-source-20261021-v3`.
+Copies all139 original WAVs/receipts byte for byte after independent hash checks.
+Makes maximum29 new clip requests: the ONE diagnosed failed clip plus28 missing.
+Same words/voices; only failed single-word TTS gets an explicit say-once/end-now
+instruction, with no gain/volume alteration. At snapshot 153/168 waveform checks,
+0 failures. All168 independent source word checks remain required.
+
+NEW ACTIVE SUPERVISOR: exec5840/caffeinate, root
+`runs/native-control3-approval-20261021-v2`, phase `waiting_existing_source`.
+One existing-source follower only. Verifies retained parent SHA/receipts again,
+then complete source ASR168+verifier → actual teacher40 → teacher ASR40+verifier
+→ semantic40+verifier. Stop on any failure. No conversion/GPU/optimizer stage.
+Same capture and pipeline OS locks prevent duplicates; old lock-file existence
+alone is not a live job. Do not start another source factory or supervisor.
+
+26 fixture tests pass, including139 retained originals plus29 exact-scope new
+clips and rejection of a changed retained copy. Fixtures are NOT actual labels.
+Evidence docs/NATIVE-CONTROL3-DIAGNOSED-REPAIR-2026-10-21.json. Existing full native
+archive67.764GB remains verified on Mac+Runpod; original first80 new-source snapshot
+also verified on S3. Full failed140 source+diagnostics backup VERIFIED:289files30,176,989B; every
+independent GET hash matches, S3 migration/control3-source-failed-v2-20261021/.
+Receipt docs/NATIVE-CONTROL3-FAILED-SOURCE-PERSISTENCE-2026-10-21.json.
+All28 old histories/49 teachers/KL1/hidden10/154 objectives/heldout hashes retained.
+Latest7590052 remains unadopted. No new GPU spend; previous ~$20.09/$25 and$7/month
+storage unchanged. Native conversion/numerics, fullnative10/ordinary4, new pilot and
+fresh40 qualification still pending. Unrelated local edits remain untouched.
+
 # LOCAL — one supervised control3 chain live (21 October 21:51 London)
 
 LOCAL sole executor; CLOUD read-only. Main/pipeline source9f8d722c070cda16e401bde19bbedf40d67ccfb9
