@@ -37,6 +37,11 @@ def main():
     ap.add_argument('--receipt', type=Path, required=True)
     args = ap.parse_args()
     sys.path.insert(0, str(args.source))
+    # Use the same driver-library discovery as the pinned native probe. Some
+    # provider images expose libcuda.so.1 without the linker-name symlink.
+    os.environ['TRITON_LIBCUDA_PATH'] = subprocess.check_output(
+        [sys.executable, '-m', 'evals.cuda_linker_path', '--out',
+         str(args.receipt.parent/'audition-driver')], text=True).strip()
     assets = json.loads((args.root/'runs/context-spanning-assets-7454205/manifest.json').read_text())
     vendor = Path(assets['source'])
     sys.path.insert(0, str(vendor))
