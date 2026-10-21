@@ -1,3 +1,34 @@
+# LOCAL — A100 state restore PASS; native voice warming (21Oct16:53UTC)
+
+LOCAL sole executor; CLOUD read-only. Sole task Podi20euy4x58fo1m,1A10080GB,
+$1.79/h, volume49yytzyoge. Guard9262/session22701 ARMED, hardstop17:28:42UTC.
+No training/Slurm/other rentals. SSHroot@157.157.221.29 port11974 using existingMac
+identity and ignored v4 knownhostfile. Localhost tunnel session82490 maps8765→8081.
+
+Actual A100 independent26adapter/Adam528/allPythonNumPyTorchCPUCUDA restore PASS,
+zero optimizer updates; original receipt committed. Current nativeEnginePID18959
+uses Git launcher909c547 (fullSHA in execution JSON), payload741872f unchanged,
+/workspace/source-audition-909c547, attempt /workspace/migration/native-audition-v6.
+It is loading/warming, NOT ready yet. Do NOT duplicate/restart it blindly.
+Prior attemptv4/PID7796 failed missing CUDAheader include path; v5/PID13996 failed
+missing assembler lookup, both terminal. The installed CUDA13 headers andptxas
+are now explicitly located. Actual EMPTY-CACHE compiledBF16GPUkernel PASS, no
+packages/model/data/losses/precision/frameclock changes. Original failed logs
+stay intact. Full native numerical/behavior10/fresh40 unrun/unqualified.
+
+Next: inspectv6log/process/health through localhost tunnel, then run hash-pinned
+synthetic TRAIN user-stem WebSocket smoke, preserve sampled output and exact results,
+visually verify localhost page, allow owner experimental audition. No ownerMic
+capture by agent. External backend disconnected; missing local OpenAIworker key
+requested via ignored0600file, never key in chat. This does not gate voice test.
+
+Backup complete: native28,470files67.764GB+8links verified Mac+Runpod. All25oldvolume
+unique receipts85.6MB also source-hash verified onMac+S3. Oldvolume cyjzip53ap
+retired/fresh404; sole100GB storage now$7/month. RecoveryH100 terminal. All original
+checkpoints/AdamRNG/data/folds/receipts retained; unrelated local edits preserved.
+
+---
+
 # LOCAL — bounded A100 native voice trial ACTIVE; oldvolume retired (21Oct15:29UTC)
 
 LOCAL sole executor; CLOUD read-only. Sole active task Podi20euy4x58fo1m is1A100

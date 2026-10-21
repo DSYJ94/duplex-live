@@ -1,3 +1,15 @@
+21Oct15:29UTC — LOCAL sole executor, CLOUD read-only. Sole active task Pod
+i20euy4x58fo1m:1A10080GB,$1.79/h, created15:28:42UTC; max2h/$3.58, guard9262/
+session22701 ARMED, termination17:28:42UTC. Volume49yytzyoge at/workspace. Image
+initializing; do not duplicate. Next independent state restore/native audition,
+source5ea1547, exact runtime already staged. No new training, native10/fresh40 unrun.
+Oldvolume cyjzip53ap DELETED/fresh404 after all25unique receipts85.6MB verified
+source→Mac and independentS3 readback. RecoveryH100 terminated/fresh404. Original
+restore receipt now committed. Ongoing single100GB$7/month; temporary overlap ended.
+Read newest HANDOFF.md and execution JSON for current process state and budget.
+
+---
+
 21Oct14:24UTC — LOCAL sole executor; CLOUD read-only. Complete native archive
 verified on49yytzyoge, original verification receipt committed. CPU staging finished
 and Podkgy1ygl8i5p1u5 terminated (freshget404). No task GPU/CPU/Slurm or transfers

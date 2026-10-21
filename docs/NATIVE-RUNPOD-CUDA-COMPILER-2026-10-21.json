@@ -1,0 +1,11 @@
+{
+  "schema": "dl-native-cuda-compiler-check-v1",
+  "header": "/usr/local/cuda/include/cuda.h",
+  "header_sha256": "64025f81a9d6d2b10e9e11654f3523e5b046d01b883f0b9ca474e463274b80d4",
+  "assembler": "/usr/local/cuda/bin/ptxas",
+  "assembler_sha256": "daba837a68265cae38c832d13399b61dab811891de9b8914defddef143b849f2",
+  "packages_changed": false,
+  "actual_triton_driver_compile_passed": true,
+  "assembler_cuda_version": "13.0",
+  "actual_compiled_bf16_gpu_kernel_passed": true
+}

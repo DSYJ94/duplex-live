@@ -43,6 +43,17 @@ Verify /health plus a real synthetic WebSocket audio request from outside the Po
 before claiming a usable path. Only then open http://127.0.0.1:8765 for the owner to
 start their microphone. Do not capture the microphone automatically.
 
+The prepared Mac client sends only a hash-pinned synthetic TRAIN user stem and
+preserves actual sampled float audio/text, without microphone access:
+
+```sh
+runs/local-migration-20261021/s3-env/bin/python portable/context/smoke_native_audition.py --wav runs/cloud-export-20261016/tree/runs/native-v2-teacher-7543779/native2-train-008/user_in.wav --out runs/local-migration-20261021/native-audition-smoke-next
+```
+
+Use a new output directory. This proves transport only; inspect actual output and
+report exact frame counts/latency/errors. No behavioral acceptance comes from this
+seen TRAIN sample. It does not replace native10, ordinary4/4 or paired fresh40.
+
 The launcher preserves original BF16/native80ms layout, actual7590052 adapter,
 saved voice and sampler, and does not force words/audio. Its external tool backend
 is disconnected; it is an experimental speech audition, not full native10/fresh40

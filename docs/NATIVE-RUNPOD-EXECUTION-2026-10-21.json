@@ -53,8 +53,36 @@
     "last_run_pid": 4017,
     "last_run_failed": "Triton linker missing libcuda.so linker-name",
     "launcher_fix_committed": "c8759473ca70d775c8b993795be5c2b6eee7cccd",
-    "fix_gpu_executed": false,
-    "native_full_numerical_or_behavior_approved": false
+    "fix_gpu_executed": true,
+    "native_full_numerical_or_behavior_approved": false,
+    "first_a100_attempt": {
+      "directory": "/workspace/migration/native-audition-v4",
+      "pid": 7796,
+      "terminal": true,
+      "error": "Installed cuda.h not on GCC include path"
+    },
+    "second_a100_attempt": {
+      "directory": "/workspace/migration/native-audition-v5",
+      "pid": 13996,
+      "terminal": true,
+      "error": "Triton did not find installed ptxas"
+    },
+    "latest_launcher_commit": "909c547e7c65269a1bcc07d9daecb52c0a5a9501",
+    "latest_directory": "/workspace/migration/native-audition-v6",
+    "cuda_paths_only_fixed": true,
+    "packages_or_model_settings_changed": false,
+    "latest_pid": 18959,
+    "fresh_cache_compiler_preflight": {
+      "schema": "dl-native-cuda-compiler-check-v1",
+      "header": "/usr/local/cuda/include/cuda.h",
+      "header_sha256": "64025f81a9d6d2b10e9e11654f3523e5b046d01b883f0b9ca474e463274b80d4",
+      "assembler": "/usr/local/cuda/bin/ptxas",
+      "assembler_sha256": "daba837a68265cae38c832d13399b61dab811891de9b8914defddef143b849f2",
+      "packages_changed": false,
+      "actual_triton_driver_compile_passed": true,
+      "assembler_cuda_version": "13.0",
+      "actual_compiled_bf16_gpu_kernel_passed": true
+    }
   },
   "replacement_storage": {
     "owner_explicitly_approved_replacement_and_overlap": true,
@@ -99,7 +127,8 @@
     "old_receipts_recovered_bytes": 85615129,
     "old_receipts_verified_on_mac_and_new_volume": true,
     "old_receipts_verification": "docs/NATIVE-RUNPOD-OLD-RECEIPTS-VERIFICATION-2026-10-21.json",
-    "temporary_overlap_ended": true
+    "temporary_overlap_ended": true,
+    "recovered_original_manifest_byte_identical_to_verified_archive_manifest": true
   },
   "qualification": {
     "latest_candidate_job": "7590052",
@@ -109,7 +138,7 @@
     "fresh40_run": false,
     "adopted": false
   },
-  "progress_utc": "2026-10-21T15:29:25.062923+00:00",
+  "progress_utc": "2026-10-21T16:53:43.629220+00:00",
   "current_source": "5ea1547ada2bdca35bf4390cb2f4ee413c3115a2",
   "cpu_staging": {
     "schema": "dl-runpod-cpu-staging-execution-v1",
@@ -150,7 +179,8 @@
     "terminated_by_local_executor_utc": "2026-10-21T14:24:13.252611+00:00",
     "reason": "Full archive verification and reproducible runtime staging finished; stopped early to end idle compute billing",
     "network_volume_retained": "49yytzyoge",
-    "deadline_guard_session_exit_code": 0
+    "deadline_guard_session_exit_code": 0,
+    "reported_cpu_and_disk_usd": 0.09414811909664422
   },
   "runtime_layout": {
     "schema": "dl-native-runtime-layout-v1",
@@ -251,8 +281,35 @@
       "state": "RUNNING",
       "deadline_utc": "2026-10-21T17:28:42.087000+00:00",
       "network_volume_retained": "49yytzyoge",
-      "at_utc": "2026-10-21T15:29:05.613590+00:00",
+      "at_utc": "2026-10-21T16:53:30.291297+00:00",
       "pid": 9262
-    }
+    },
+    "direct_ssh": {
+      "host": "157.157.221.29",
+      "port": 11974,
+      "username": "root"
+    },
+    "ssh_tunnel_session": 82490,
+    "private_local_url": "http://127.0.0.1:8765"
+  },
+  "a100_independent_restore": {
+    "schema": "dl-runpod-independent-adapter-state-restore-v1",
+    "at_utc": "2026-10-21T16:42:46.145974+00:00",
+    "passed": true,
+    "optimizer_updates": 0,
+    "adapter_tensors": 26,
+    "trainable_parameters": 1894400,
+    "phase_updates_restored": 8,
+    "adam_clocks": [
+      528
+    ],
+    "optimizer_and_python_numpy_torch_cpu_cuda_rng_exact": true,
+    "metadata_reconstructed_from_pinned_report": true,
+    "parameter_order_from_published_model_state_dict": true,
+    "device": "NVIDIA A100-SXM4-80GB",
+    "torch": "2.9.0a0+145a3a7bda.nv25.10",
+    "cuda": "13.0",
+    "native_full_numerical_or_behavior_approved": false,
+    "tracked_original_receipt": "docs/NATIVE-RUNPOD-A100-STATE-RESTORE-2026-10-21.json"
   }
 }

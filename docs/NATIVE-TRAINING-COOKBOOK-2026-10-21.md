@@ -155,3 +155,10 @@ Original full destination verification:
 Both100GB volumes remain; the old one awaits unique-receipt recovery. No GPU/live
 microphone path currently runs. A single A100 attempt failed at provider capacity;
 no model settings or acceptance gates were changed to obtain a result.
+
+
+21Oct15:29UTC: oldvolume unique receipts recovered, all25 files85.6MB independently
+verified onMac and newvolume; oldvolume retired. Ongoing storage is single100GB
+49yytzyoge/$7month. Original H100 restore receipt now committed in
+[NATIVE-RUNPOD-INDEPENDENT-STATE-RESTORE-2026-10-21.json](NATIVE-RUNPOD-INDEPENDENT-STATE-RESTORE-2026-10-21.json).
+A bounded1A100 voice trial is booting; see newest handoff for actual readiness.
