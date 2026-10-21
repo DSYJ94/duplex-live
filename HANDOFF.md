@@ -1,3 +1,39 @@
+# LOCAL — first6 container hashes PASS; supported transfer v4 active; CPU runtime ready (21Oct13:27UTC)
+
+LOCAL sole executor; CLOUD read-only. No GPU or Slurm jobs, no new training.
+Mainc962afe (full SHA in execution JSON), source uploader recovery; immutable
+Isambard transfer helper2ce3ed8 and CPU watcher/sourcea5605c1 remain fixed.
+
+v3 transfer TERMINAL/session82279 exit1: provider CompleteMultipartUpload returned
+NoSuchUpload AFTER storing tar003. Independent CPU fresh reads verified exact SHA
+of BOTH16.74GB weight containers and all other first6 containers. Do not recopy
+those32GB, do not call their existence/size alone a pass. Actual retrieved receipt
+runs/local-migration-20261021/present-archive-sha-verification-v1.json.
+New v4/session81451 is sole active writer; PID and progress are in execution JSON.
+Journal runs/local-migration-20261021/s3-native-upload-v4.jsonl. It verifies reused
+destination tar hashes and recovers any new provider NoSuchUpload only after a
+fresh CPU tar SHA equals the sealed original. Remaining archives transfer from
+all35 exact Isambard source tars. All per-file/link verification remains REQUIRED,
+not yet run; no complete destination backup or model-quality approval claimed.
+
+CPU Podkgy1ygl8i5p1u5 is reachable root@157.157.221.29 port38506. Actual runtime
+imports PASS at /workspace/runtime-x86-ngc2510, Torch2.9.0a0+145a3a7bda.nv25.10 /
+CUDA13.0 unchanged, aiohttp3.14.5/noisereduce3.0.3 installed. CPU stage watcher2609
+waits for full35 upload marker, then unpacks/hash-verifies all28,470files+8links.
+Do NOT restart its existing receipt. CPU cost guard50305/session8087 remains ARMED
+through14:52:51.864UTC, retains replacementvolume49yytzyoge. No second GPU rental.
+Five stopped v1/v2 multipart attempts created before12:50 were positively identified,
+API-aborted and confirmed absent on the mounted filesystem; active v4 untouched.
+
+Next: finish v4, verify full CPU extraction report, preserve oldvolume unique
+receipts before approved retirement, then new bounded GPU state restore/native
+voice proof within original$25 budget. No extension/adoption before complete
+native10/speech ordinary4/4 and fresh40 gates. Mac full native archive remains
+verified; whole-project/old whole-Mac backup PARTIAL. Original candidate7590052,
+baseline7510331 and all frozen data/retention components remain unchanged.
+
+---
+
 # LOCAL — exact source archives ready; supported transfer active; bounded CPU staging (21Oct12:57UTC)
 
 LOCAL sole executor; CLOUD read-only. No active GPU or Slurm jobs. Latest completed

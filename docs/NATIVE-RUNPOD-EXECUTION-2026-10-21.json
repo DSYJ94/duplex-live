@@ -71,17 +71,23 @@
     "all_source_tar_sha256_match": true,
     "tar_bytes": 67815854080,
     "upload_source": "Isambard; exact SDK-prepared payload-bound request headers, no reusable account key exported",
-    "upload_journal": "runs/local-migration-20261021/s3-native-upload-v3.jsonl",
+    "upload_journal": "runs/local-migration-20261021/s3-native-upload-v4.jsonl",
     "upload_completion_report": "runs/local-migration-20261021/s3-native-upload-v3-upload-completion.json",
     "current_local_transfer_processes": [
       {
-        "pid": 49523,
-        "elapsed": "07:30"
+        "pid": 62127,
+        "elapsed": "06:07"
       }
     ],
     "verification": "Full independent destination filesystem hash verification REQUIRED; uploaded size alone does not approve backup",
     "superseded_mac_uploader": "PID36218 stopped12:37:43UTC, session36656 exit143",
-    "unsupported_presigned_url_attempt": "PID43533 and its exact SSH children stopped12:44:44UTC; no successful result claimed; Runpod documentation forbids presigned URLs"
+    "unsupported_presigned_url_attempt": "PID43533 and its exact SSH children stopped12:44:44UTC; no successful result claimed; Runpod documentation forbids presigned URLs",
+    "transferred_container_count": 10,
+    "transferred_container_bytes": 39342551040,
+    "completed_first6_container_shas_independently_verified": true,
+    "present_tar_verification_receipt": "runs/local-migration-20261021/present-archive-sha-verification-v1.json",
+    "stopped_v3": "Session82279 exit1 at provider CompleteMultipartUpload NoSuchUpload after finalized tar003; both16.74GB files then independently SHA-verified, no size-only acceptance",
+    "stopped_upload_cleanup": "Five positively identified v1/v2 attempts created before12:50 aborted via S3; actual CPU directory read confirmed all5 absent. v3 failed before cleanup."
   },
   "qualification": {
     "latest_candidate_job": "7590052",
@@ -91,8 +97,8 @@
     "fresh40_run": false,
     "adopted": false
   },
-  "progress_utc": "2026-10-21T12:58:55.499188+00:00",
-  "current_source": "2ce3ed887334270a700ed0b8b48c2f44ef8c617a",
+  "progress_utc": "2026-10-21T13:28:34.020371+00:00",
+  "current_source": "c962afed57f8f9a2a46d39d984162ef8e533a4fb",
   "cpu_staging": {
     "schema": "dl-runpod-cpu-staging-execution-v1",
     "pod_id": "kgy1ygl8i5p1u5",
@@ -116,6 +122,18 @@
       "at_utc": "2026-10-21T12:58:52.770658+00:00",
       "pid": 50305
     },
-    "source_or_verifier_executed": false
+    "source_or_verifier_executed": "Git deployed a5605c1; one-shot watcherPID2609 waiting for all35, complete verification not begun",
+    "direct_ssh": {
+      "host": "157.157.221.29",
+      "port": 38506,
+      "username": "root"
+    },
+    "runtime_x86_prepared": {
+      "persistent_venv": "/workspace/runtime-x86-ngc2510",
+      "torch": "2.9.0a0+145a3a7bda.nv25.10",
+      "cuda": "13.0",
+      "aiohttp": "3.14.5",
+      "imports_passed": true
+    }
   }
 }

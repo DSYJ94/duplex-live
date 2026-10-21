@@ -1,3 +1,14 @@
+21Oct13:27UTC — LOCAL sole executor, CLOUD read-only. v3 is TERMINAL after a
+provider post-completion NoSuchUpload error; independent CPU SHA checks passed
+all6 completed containers, including both16.74GB weights. Sole resumed writer is
+v4/session81451; exact PID/journal in execution JSON. Do not restart v1/v2/v3.
+CPU Podkgy1ygl8i5p1u5 runtime imports PASS; watcher2609 waits for all35, then must
+verify every original file/hash/link. Full destination backup/behavior still pending.
+Guard50305/session8087 terminates CPU14:52:51UTC, retains volume49yytzyoge. No GPU/
+Slurm jobs or new training. Newest HANDOFF.md and execution JSON are authoritative.
+
+---
+
 21Oct12:57UTC — LOCAL sole executor; CLOUD read-only. Original H100 trial is
 terminated. Active CPU stagingPodkgy1ygl8i5p1u5 ($0.06/h,max2h,deadline14:52:51UTC)
 mounts replacementvolume49yytzyoge. WatchdogPID50305 ARMED. Single source-side
