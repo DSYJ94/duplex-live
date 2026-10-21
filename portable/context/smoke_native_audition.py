@@ -16,12 +16,16 @@ import sys
 import time
 import wave
 
-INPUT_SHA = '342a0ee096f1c3ce47f45950af7d8f9a36ead7195b3ef21cf1ca9a3b8e41d90b'
+INPUTS = {
+    'native2-train-008': '342a0ee096f1c3ce47f45950af7d8f9a36ead7195b3ef21cf1ca9a3b8e41d90b',
+    'native2-train-014': '570b6c0710f17e2a9ad49f516fd9d2807046a3de7789f1709ae908f2dec37891',
+}
 
 
 async def run(args):
     import aiohttp
-    assert hashlib.sha256(args.wav.read_bytes()).hexdigest() == INPUT_SHA
+    input_sha = INPUTS[args.case]
+    assert hashlib.sha256(args.wav.read_bytes()).hexdigest() == input_sha
     assert not args.out.exists(), 'Use a new receipt directory'
     with wave.open(str(args.wav)) as source:
         assert (source.getnchannels(), source.getsampwidth(), source.getframerate()) == (1, 2, 24000)
@@ -36,7 +40,7 @@ async def run(args):
     args.out.mkdir(parents=True)
     receipt = {'schema': 'dl-native-audition-synthetic-transport-v1',
                'at_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
-               'input_sha256': INPUT_SHA, 'input_scene': 'native2-train-008',
+               'input_sha256': input_sha, 'input_scene': args.case,
                'only_user_stem_sent': True, 'teacher_audio_or_words_sent': False,
                'owner_microphone_accessed': False, 'behavior_qualified': False,
                'input_frames': len(frames), 'sent_frames': 0, 'events': []}
@@ -83,7 +87,9 @@ async def run(args):
                                 audio.extend(message.data)
                             elif message.type == aiohttp.WSMsgType.TEXT:
                                 event = json.loads(message.data)
-                                receipt['events'].append(event)
+                                receipt['events'].append({**event,
+                                    'output_frame': len(audio)//(1920*4),
+                                    'received_seconds': time.monotonic()-started})
                                 if event.get('type') in ('error', 'busy'):
                                     raise RuntimeError(str(event))
                             else:
@@ -119,5 +125,6 @@ async def run(args):
 if __name__ == '__main__':
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--wav', type=Path, required=True)
+    p.add_argument('--case', choices=sorted(INPUTS), default='native2-train-008')
     p.add_argument('--out', type=Path, required=True)
     raise SystemExit(0 if asyncio.run(run(p.parse_args())) else 1)
