@@ -36,9 +36,14 @@ class ControlQuality(unittest.TestCase):
         session = dict(session_finalized=True, errors=[], source_samples=frames,
                        added_silence_samples=15 * 24000, sent_input_samples=frames + 15 * 24000,
                        observed_until_s=observation)
-        log = [dict(type='local.input.completed', source_samples=frames,
-                    sent_input_samples=session['sent_input_samples'],
-                    received_at_s=session['sent_input_samples'] / 24000), dict(type='session.closed')]
+        log = [dict(type='local.input.append', first_sample=i,
+                    sample_count=min(1920, session['sent_input_samples'] - i),
+                    received_at_s=min(i + 1920, session['sent_input_samples']) / 24000)
+               for i in range(0, session['sent_input_samples'], 1920)]
+        log += [dict(type='local.input.completed', source_samples=frames,
+                     sent_input_samples=session['sent_input_samples'],
+                     received_at_s=session['sent_input_samples'] / 24000),
+                dict(type='session.closed', received_at_s=observation)]
         checks = []
         for i, turn in enumerate(scene['turns']):
             text = turn['text'].split()
@@ -104,7 +109,7 @@ class ControlQuality(unittest.TestCase):
         scene = build()['cases'][0]
         timeline, speech, pcm, rate, log, session, checks = self.fixture(scene)
         session['sent_input_samples'] -= rate
-        log[0]['sent_input_samples'] = session['sent_input_samples']
+        next(e for e in log if e['type'] == 'local.input.completed')['sent_input_samples'] = session['sent_input_samples']
         result = assess(scene, timeline, speech, pcm, rate, log, session, checks)
         self.assertFalse(result['passed'])
         self.assertTrue(any('Incomplete actual source playback' in r for r in result['reasons']))
@@ -138,6 +143,30 @@ class ControlQuality(unittest.TestCase):
         checks[release]['measured_words'].pop()
         with self.assertRaisesRegex(ValueError, 'exact independently measured words'):
             assess(scene, timeline, speech, pcm, rate, log, session, checks)
+
+    def test_late_or_missing_input_packets_cannot_use_the_planned_question_clock(self):
+        scene = build()['cases'][8]
+        for missing in (False, True):
+            timeline, speech, pcm, rate, log, session, checks = self.fixture(scene)
+            if missing:
+                log.pop(1)
+            else:
+                release = scene['release_turn']
+                sample = math.ceil(timeline['events'][release]['actual_start_sample']
+                                   + checks[release]['measured_words'][-1]['end'] * rate)
+                delayed = False
+                for event in log:
+                    if event['type'] == 'local.input.append' and event['first_sample'] + event['sample_count'] >= sample:
+                        delayed = True
+                    if delayed:
+                        event['received_at_s'] += 2
+                session['observed_until_s'] += 2
+            result = assess(scene, timeline, speech, pcm, rate, log, session, checks)
+            self.assertFalse(result['passed'])
+            if missing:
+                self.assertIn('Actual packet availability does not cover measured source words', result['reasons'])
+            else:
+                self.assertIn('Teacher speaks during the requested quiet interval', result['reasons'])
 
     def test_source_low_wer_does_not_bless_a_changed_cue_or_guessed_onset(self):
         import numpy as np

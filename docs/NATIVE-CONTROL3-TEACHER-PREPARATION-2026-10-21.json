@@ -1,0 +1,56 @@
+{
+  "schema": "dl-native-control3-teacher-preparation-v1",
+  "at_utc": "2026-10-21T18:52:07.044648+00:00",
+  "implementations": {
+    "evals/native_control_teacher.py": "4a41a9890dd24b7a68d37bcc41140016a0ace4797ebe185ee7563208bee9a0f0",
+    "evals/native_control_teacher_artifacts.py": "9afb854a26d72c70a423865063af34ce93af8805203c72e0e0a70c17cbc375f8",
+    "evals/native_control_teacher_checks.py": "73426d68007a1cc47b6d31d2585deea285b00f490451e69664db0eda3d66464c",
+    "evals/harness/test_native_control_teacher.py": "85a8dc4add7a6697c8b454cf24b59fe6c4fe0e1d0351b8f2d628474d794cf65e",
+    "evals/harness/test_native_control_quality.py": "8f6567e78cb2e1d36cb8844d30d41a7beb7ce1ea37eb4697cd6b0d68fb405086"
+  },
+  "model": "gpt-live-1",
+  "protocol": "native-control3-teacher-v1",
+  "source_cases_required": 40,
+  "concurrent_sessions": 2,
+  "actual_api_calls": 0,
+  "actual_source_or_teacher_generated": false,
+  "gpu_or_training_submitted": false,
+  "tests": {
+    "passed": 21,
+    "fixtures_only": true,
+    "live_model_or_label_quality_proven": false,
+    "command": "/Users/daryl/.venvs/duplex-live/bin/python -m unittest evals.harness.test_native_control_repair evals.harness.test_native_control_quality evals.harness.test_native_control_teacher -v",
+    "unconfigured_actual_cli": "PASS: actual CLI stops before source/network/output creation when local credential is blank"
+  },
+  "integrity": [
+    "Original output PCM spooled and flushed per packet, including incomplete connections.",
+    "No output suppression, keyword gate, worker fallback or retry.",
+    "Whole40 source-word approval required before any connection; raw40 remain unapproved.",
+    "OS process lease prevents duplicate collectors; stale file alone does not imply active work.",
+    "Input/output packet hashes, actual availability and waveform reconstruction bind the artifacts.",
+    "Measured user completion uses actual packet availability, not a planned timestamp or silent clip tail."
+  ],
+  "credential_configured": false,
+  "credential_file_mode": "0o600",
+  "prior_same_credential_condition": [
+    {
+      "record": "git:2da632b:docs/NATIVE-RUNPOD-EXECUTION-2026-10-21.json",
+      "configured": false
+    },
+    {
+      "record": "docs/NATIVE-CONTROL3-QUALITY-PREPARATION-2026-10-21.json",
+      "configured": false
+    }
+  ],
+  "protected_recipe_source_fulltask_archive_records_unchanged": true,
+  "whole_teacher_semantic_conversion_and_numerical_approvals_complete": false,
+  "training_approved": false,
+  "completion_audit": {
+    "model_repaired": false,
+    "new_source_actual_quality_approved": false,
+    "new_teacher_quality_semantic_conversion_numerical_approved": false,
+    "bounded_repair_pilot_run": false,
+    "full_native10_and_fresh40_qualified": false
+  },
+  "next_required": "Configure the local API key; generate and independently audit ALL168 authored source clips, then collect ALL40 actual raw teachers. Real independent teacher ASR/semantic/conversion/numerical approvals remain required before any bounded pilot."
+}

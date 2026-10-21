@@ -11,6 +11,7 @@ from data.synthetic.native_control_repair import build
 def assess(scene, timeline, speech, pcm, rate, events, session, source_checks):
     import numpy as np
     from data.synthetic.filter import norm_words, wer
+    from evals.native_control_teacher_artifacts import input_availability, available_at
     canonical = next(s for s in build()['cases'] if s['id'] == scene['id'])
     if scene != canonical or timeline['scenario_id'] != scene['id']:
         raise ValueError('Exact authored control3 TRAIN case required')
@@ -21,7 +22,7 @@ def assess(scene, timeline, speech, pcm, rate, events, session, source_checks):
         raise ValueError('Complete source speaker/word inventory required')
     if len(source_checks) != len(source):
         raise ValueError('Complete independent source word checks required')
-    completion = {}
+    completion, onset = {}, {}
     for i, (event, turn, check) in enumerate(zip(source, scene['turns'], source_checks)):
         measured = check['measured_words']
         duration = (event['actual_end_sample'] - event['actual_start_sample']) / rate
@@ -32,6 +33,7 @@ def assess(scene, timeline, speech, pcm, rate, events, session, source_checks):
                 or any(b['start'] < a['end'] - .02 for a, b in zip(measured, measured[1:]))):
             raise ValueError('Source completion needs exact independently measured words')
         completion[i] = event['actual_start_sample'] / rate + min(duration, measured[-1]['end'])
+        onset[i] = event['actual_start_sample'] / rate + measured[0]['start']
     reasons = []
     closed = [e for e in events if e['type'] == 'session.closed']
     completed = [e for e in events if e['type'] == 'local.input.completed']
@@ -49,6 +51,13 @@ def assess(scene, timeline, speech, pcm, rate, events, session, source_checks):
           or completed[0]['sent_input_samples'] != session['sent_input_samples']
           or completed[0]['received_at_s'] < session['sent_input_samples'] / 24000):
         reasons.append('Actual input completion event does not cover the whole source')
+    try:
+        packets = input_availability(events, session['sent_input_samples'])
+        for i in completion:
+            completion[i] = max(completion[i], available_at(packets, math.ceil(completion[i] * rate)))
+            onset[i] = max(onset[i], available_at(packets, math.ceil(onset[i] * rate)))
+    except ValueError:
+        reasons.append('Actual packet availability does not cover measured source words')
     if any(e['type'] in ('error', 'worker_failure', 'session.delegation.created')
            or e['type'].startswith('local.worker.') for e in events):
         reasons.append('Control-only teacher failed or unnecessarily delegated')
@@ -101,7 +110,7 @@ def assess(scene, timeline, speech, pcm, rate, events, session, source_checks):
             preceding = max(j for j in range(i) if scene['turns'][j]['role'] == 'user')
             following = next((j for j in range(i + 1, len(source)) if source[j]['ch'] == 'user'), None)
             start = completion[preceding]
-            stop = observed if following is None else source[following]['actual_start_sample'] / rate
+            stop = observed if following is None else onset[following]
             selected = [j for j, w in enumerate(words) if start <= w['start'] and w['end'] <= stop]
             actual = [t for j in selected for t in norm_words(words[j]['text'])]
             expected = norm_words(scene['turns'][i]['text'])

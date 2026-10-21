@@ -168,3 +168,58 @@ and [WebSocket guide](https://developers.openai.com/api/docs/guides/voice-websoc
 This verifies documentation compatibility, not account access or a successful call.
 The local API credential remains blank at the last check. See the machine-readable
 [quality preparation record](NATIVE-CONTROL3-QUALITY-PREPARATION-2026-10-21.json).
+
+## Actual recorder and raw transport bindings implemented
+
+`evals/native_control_teacher.py` now provides the new40-scene raw teacher recorder.
+It verifies the complete source-word audit before opening a connection and permits
+two concurrent GPT-Live sessions. A local OS file lease rejects overlapping
+collectors; an old lock filename alone does not prevent a new process. Output
+directories are immutable, no failed recording is retried, and an incomplete
+transport leaves the whole collection unapproved. Source generations and source
+ASR must finish first; the recorder has not made a real API call.
+
+The teacher protocol is `native-control3-teacher-v1`, with the authored TRAIN-only
+ordinary references and generic quiet/pause/cue-change rules. Cue values and
+conversation state arrive through user audio. These instructions construct labels;
+they do not change the native foreground runtime or establish unaided reasoning.
+The collector runs no worker for these control-only cases. Unexpected delegations
+remain in the evidence and must fail teacher quality.
+
+Every input packet retains its sample interval, hash and actual send time. Every
+returned PCM byte is flushed to a raw spool before its event is logged. Transcripts,
+closed-session usage and incomplete transport evidence are retained. The derived
+WAV preserves unbuffered packet availability; it is reconstructed from raw packets
+by `evals/native_control_teacher_artifacts.py`. Editing a WAV and its manifest hash
+cannot conceal a changed/dropped packet. The validator covers ALL40 records, their
+source/model/instruction bindings, original user PCM plus15 silent seconds, complete
+actual input/close evidence, transcripts and exact output playout. Passing this
+validator is transport integrity only, never a teacher-label or model approval.
+
+Teacher phase checks now use the later of independently measured user-word
+completion and actual availability of the packet covering those words. Late or
+missing input packets cannot borrow the planned question clock. These checks
+retain strict quiet and complete-answer requirements; there is no response grace,
+output mute or wording substitution.
+
+Once the local credential, complete source generation and source-word audit exist:
+
+```sh
+python -m evals.native_control_teacher --raw NEW_RAW_SOURCE \
+  --source-audit NEW_SOURCE_AUDIT/source-word-audit.json --out NEW_RAW_TEACHERS \
+  --env-file runs/local-migration-20261021/.private/openai-backend.env
+```
+
+The credential is read locally from the ignored0600file; it is never copied into
+artifacts or to Runpod. The actual CLI was checked with the blank local file and
+stopped before source processing, output-directory creation or any connection.
+Twenty-one artificial-fixture tests pass. Their simulated sockets/PCM are not
+API access, authentic speech, labels or native qualification. See the
+[teacher preparation record](NATIVE-CONTROL3-TEACHER-PREPARATION-2026-10-21.json).
+
+Current empirical blocker: the local credential remains blank after three
+consecutive preparation stages. Further source/teacher experiments need it.
+Independent real teacher ASR, whole-collection semantic review and native conversion
+still need completion and testing on actual artifacts. All numerical, retained
+baseline/candidate complete10 and sealed40 gates remain required. No training,
+source/data repair, adoption, new GPU or additional spending was performed here.
