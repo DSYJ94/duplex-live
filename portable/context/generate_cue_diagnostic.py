@@ -3,6 +3,7 @@
 These diagnostic inputs are not new TRAIN/heldout approvals. No microphone is used.
 """
 import argparse
+import array
 import hashlib
 import json
 from pathlib import Path
@@ -27,6 +28,9 @@ def main():
         with wave.open(str(dest)) as w:
             assert (w.getnchannels(), w.getsampwidth(), w.getframerate()) == (1,2,24000)
             clips[name] = w.readframes(w.getnframes())
+        # macOS speech may exit zero yet emit only a header when sandboxed.
+        if len(clips[name]) < 48000 or not any(array.array('h', clips[name])):
+            raise RuntimeError('Local speech produced empty/silent audio; no valid diagnostic input')
         fragments.append({'id':name,'text':text,'sha256':hashlib.sha256(dest.read_bytes()).hexdigest()})
     silence = bytes(24000*2)
     cases = []
