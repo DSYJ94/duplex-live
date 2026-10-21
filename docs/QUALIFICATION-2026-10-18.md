@@ -1,3 +1,27 @@
+# LOCAL — training/full restore PASS; no native eval; CPU-minute quota blocks jobs (21Oct01:49:03UTC)
+
+TRAIN7590052 COMPLETED0:0,8 updates/full49 native teacher exposure with original154
+at every update. Independent fresh-process original28/acoustic49/native49 fingerprints
+and full optimizer/RNG EXACT, Adam520→528 at2e-7. Checkpoint/state/reports preserved.
+Numerical restore is approved; native behavior, full10/speech and fresh40 are UNTESTED.
+CPUwatcher7589159 FAILED1:0: sbatch rejected native10 with AssocGrpCPUMinutesLimit.
+No native job accepted, no Slurm job running/pending. Even1CPU/1minute test-only check
+still rejects01:47UTC; reservation is open to08:56UTC but association quota blocks
+new jobs. No compute purchase/Qwen fallback or weakened gate. Original candidate is
+not numerically rejected. All45 terminal files/1.218GB backed with no missing roots;
+whole scoped25275files29157222593B independently rehashed01:44UTC, zero failures.
+Mac source backup PARTIAL. Canonical native-stream49-overnight-local-20261020.json is
+now TERMINAL/FROZEN, original submitting receipt archived. Never clear/retry/restart
+it or repeat training. After external quota restoration, inspect Slurm and use a NEW
+versioned receipt for complete10 native evaluation/speech from candidate7590052.
+All4 ordinary plus complete review still required before extension/fresh/adoption.
+LOCAL sole executor until explicit user handback; CLOUD read-only. Immutable payload
+741872f; source controller repair d08ef7a passes7 local and actualPython3.6 host tests,
+full288 CPU suite not run under quota. Latest HANDOFF.md and
+NATIVE-STREAM49-QUOTA-BLOCK-2026-10-21.json contain exact hashes and receipts.
+
+---
+
 # LOCAL — fresh comparison underway; no full restore approval yet (21Oct01:09:35UTC)
 
 TRAIN7590052/CPUwatcher7589159 remain active on immutable741872f. Fresh native

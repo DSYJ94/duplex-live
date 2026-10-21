@@ -1,3 +1,71 @@
+# LOCAL — TRAIN/RESTORE PASS; all artifacts safe; evaluation blocked by CPU quota (21Oct01:49:03UTC)
+
+LOCAL remains sole executor until explicit handback; CLOUD read-only. No Slurm job
+is running or pending after independently checked scheduler/accounting. No new
+submissions while current quota restriction persists. Goal remains active for
+bounded revalidation; this is the FIRST goal turn with this genuine quota blocker.
+
+TRAIN7590052 COMPLETED0:0 in01:36:25, immutable payload
+741872fe2f9e49f35d4deba9aba96caff26c51d4. All8 optimizer updates, every original154
+component at every update, and full49 recorded-call teacher exposure pass independent
+receipt audit. Original28/old25/new24/KL1/hidden10/word64/clock64 and assistant-only
+acoustic loss preserved. Actual Adam520→528 at2e-7, all26 adapter tensors, both Adam moments per
+parameter and full Python/NumPy/TorchCPU/CUDA RNG states retained. CheckpointSHA
+7bbb2e9f1822cb43db50f6ead7c14d510e7c280d520cc7e1436dced6edbcfeb5;
+training-stateSHA6a9fc6cb0949d1562f654af74cb6e86a827a0214a486f869e7bd92b1ae0b63b4.
+
+FULL independent GPU restore PASSED: original28, acoustic49 AND native-stream49
+fingerprint dictionaries EXACT, complete optimizer/all RNG independently EXACT,
+restored Adam528. FreshPID123537 differs trainingPID116298. Reload reportSHA
+88056cfa1129a795f52d974d1bbb25fa4984d670829c44b30dcb0a9fe84e9f0b,13568B,
+independently size/SHA backed01:20:38UTC. This qualifies saved-state restoration,
+NOT model behavior/adoption. Formal review/docs/NATIVE-STREAM49-TRAINING-EXPOSURE-REVIEW-2026-10-21.json.
+
+CPUwatcher7589159 FAILED1:0 at native10 submission01:20:51UTC. Slurm explicitly
+rejected sbatch with AssocGrpCPUMinutesLimit; NO native10 job was accepted/executed.
+All10 native/speech development, ordinary4/4, paired fresh40 and adoption remain
+UNTESTED/UNQUALIFIED. The candidate is not numerically rejected. Read-only test-only
+checks for original30m evaluation, shorter20m and even1CPU/1minute all reject with
+same reason; last minimum recheck01:47:16UTC. Only visible permitted account/QOS
+brics.u6si/normal. Reservation still ends21Oct08:56:32UTC; certificate10:31:51UTC.
+Walltime availability does not resolve this separate aggregate CPU-minute restriction.
+No quota/account/QOS bypass, admin change, cloud compute purchase or Qwen fallback.
+Quota evidence/docs/NATIVE-STREAM49-QUOTA-BLOCK-2026-10-21.json.
+
+The old watcher left an ambiguous submitting marker. LOCAL independently verified
+empty queue/no accepted native job, archived original receiptSHA36616eb... and then
+reconciled the canonical under its lock. runs/native-stream49-overnight-local-20261020.json
+is now TERMINAL/FROZEN with explicit rejection. NEVER restart its launcher/watch,
+resubmit training, clear attempts or overwrite this receipt. After quota is restored,
+inspect current Slurm state and create a NEW versioned execution receipt for all10
+native cases and independent speech from locked candidate7590052. Retain every case,
+all original thresholds and ordinary4/4 before extension/fresh; no old32 exception reuse.
+
+Terminal preservation VERIFIED45files1217905504B, zero missing roots. Stable critical
+checkpoint/state/data/reference/approval files, final training/reload reports, failed
+watcher stdout/canonical and original pre-reconciliation receipt are on Mac. Full
+scoped union freshly rehashed01:44:19UTC:25275files29157222593B, zero size/SHA failures.
+Old stopped Mac source backup is still PARTIAL. Owner conversations, credentials,
+session-token and quarantined core excluded. Backup observer50287 ended successfully;
+allocation-bounded keep-awake and private600s SSH reuse remain as previously recorded.
+
+Source repair d08ef7a09f17dbb3600827aa989bfe23e77f4bc7 is pushed/deployed in clean
+worktree recovery-d08ef7a. Rejection/uncertain failures now persist FAILED watcher
+state before rethrow, preserve attempts/possible held IDs and NEVER retry. All7
+controller tests pass locally and on actual hostPython3.6.15 (0.081s), no model/GPU/
+Slurm submission. Full288-test model suite remains unrun under the quota. Current
+candidate/outputs remain immutable741; earlier worker nonempty-schema fix is separate.
+Complete-history source-main-d08ef7a.bundle verified SHA
+1dba29dae932d0d835a2862e1b788f9db4c761e8a003d22c9a0a8ca98583870c.
+
+Next: bounded non-submitting quota recheck; if still denied, native execution needs
+project CPU-minute allowance restored externally. Keep LOCAL ownership and do not
+buy cloud compute. Once allowance is restored, evaluate complete10/speech before
+any further optimizer work or fresh20 release. Exact source/jobs/hashes above;
+continuation prompt/docs/NATIVE-STREAM49-CONTINUATION-PROMPT-2026-10-21.md.
+
+---
+
 # LOCAL — fresh native comparison 23/49 matches; timing scope clarified (21Oct01:09:35UTC)
 
 Same TRAIN7590052/CPUwatcher7589159, immutable payload741872f; sole submitted-active

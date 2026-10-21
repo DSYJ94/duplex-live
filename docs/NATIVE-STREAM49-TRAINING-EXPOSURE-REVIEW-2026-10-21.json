@@ -22,7 +22,7 @@
   "native_valid_targets": 22992,
   "native_spoken_targets": 1491,
   "all8_and49_complete": true,
-  "restore_approved": false,
+  "restore_approved": true,
   "behavior_approved": false,
   "subset_accepted": false,
   "schema": "dl-native-stream49-complete-eight-update-exposure-review-v1",
@@ -41,7 +41,7 @@
   },
   "checkpoint_sha256": "7bbb2e9f1822cb43db50f6ead7c14d510e7c280d520cc7e1436dced6edbcfeb5",
   "training_state_sha256": "6a9fc6cb0949d1562f654af74cb6e86a827a0214a486f869e7bd92b1ae0b63b4",
-  "fresh_state_restoration_passed": false,
+  "fresh_state_restoration_passed": true,
   "native_behavior_qualified": false,
   "candidate_adopted": false,
   "extension_authorized": false,
@@ -145,9 +145,39 @@
     "mean_initial_stage_nll": 0.6367367186290461,
     "mean_final_nll": 0.6366545186054802,
     "nll_is_diagnostic_not_behavior_qualification": true,
-    "full_fresh_process_restore_approved": false,
+    "full_fresh_process_restore_approved": true,
     "audited_training_seconds_scope": "Eight updates plus post-fit frozen-weight/digest checks, checkpoint writing and original28 final metrics; excludes final acoustic49/native49 fingerprints and fresh-process restoration",
     "raw_timing_label_preserved_unchanged": true,
     "timing_scope_audit_source": "Immutable741872f evals/context_actual_train.py timer starts367, sample553, final fingerprints573/578"
-  }
+  },
+  "complete_independent_gpu_restore": {
+    "report_sha256": "88056cfa1129a795f52d974d1bbb25fa4984d670829c44b30dcb0a9fe84e9f0b",
+    "passed": true,
+    "training_pid": 116298,
+    "reload_pid": 123537,
+    "fresh_process": true,
+    "all28_original_fingerprints_exact": true,
+    "all49_acoustic_fingerprints_exact": true,
+    "all49_native_stream_fingerprints_exact": true,
+    "complete_optimizer_and_rng_independently_exact": true,
+    "adam_parameter_steps_restored": [
+      528
+    ],
+    "backup_verification": {
+      "at_utc": "2026-10-21T01:20:38.065010+00:00",
+      "files": 1,
+      "bytes": 13568,
+      "all_size_and_sha256_match": true,
+      "failed": [],
+      "complete_independent_gpu_restore_report_verified": true,
+      "all28_and49_and_native49_exact": true,
+      "complete_optimizer_and_python_numpy_torch_cpu_cuda_rng_independently_exact": true,
+      "training_pid": 116298,
+      "reload_pid": 123537,
+      "behavior_or_adoption_approved": false
+    },
+    "behavior_or_adoption_approved": false
+  },
+  "native_evaluation_executed": false,
+  "native_evaluation_blocker": "AssocGrpCPUMinutesLimit"
 }

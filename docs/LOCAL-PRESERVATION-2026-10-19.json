@@ -1,7 +1,7 @@
 {
-  "at_utc": "2026-10-21T01:09:35.510858+00:00",
-  "unique_scoped_artifact_files": 25262,
-  "unique_scoped_artifact_bytes": 29151948036,
+  "at_utc": "2026-10-21T01:49:03.689787+00:00",
+  "unique_scoped_artifact_files": 25275,
+  "unique_scoped_artifact_bytes": 29157222593,
   "inventory_conflicts": [],
   "inventories": [
     {
@@ -808,6 +808,34 @@
       "files": 1,
       "bytes": 6244471,
       "missing_roots": []
+    },
+    {
+      "name": "remote-native-stream49-reload-report-7590052-inventory.json",
+      "sha256": "7e61f6cfc40ca9a025db268e0f17504076712a1ef9102c5f9685ec51809311d5",
+      "files": 1,
+      "bytes": 13568,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native-stream49-overnight-terminal-inventory.json",
+      "sha256": "0592538c2fc624ce99a8d95042598503f22062cea3e69b804ec66be4375e2d67",
+      "files": 45,
+      "bytes": 1217905504,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native-stream49-prequota-receipt-inventory.json",
+      "sha256": "8d91bbd5392cd163eca7a07caa5a017f7d9ae63e8afd9d08c5bc0fb1e7b9fb4e",
+      "files": 1,
+      "bytes": 9675,
+      "missing_roots": []
+    },
+    {
+      "name": "remote-native-controller-stdlib-d08ef7a-inventory.json",
+      "sha256": "b96217649a4eac9555b789966401a0c7ef2467be53b593f577df9cf3abe5351d",
+      "files": 1,
+      "bytes": 1075,
+      "missing_roots": []
     }
   ],
   "local_artifact_root": "runs/cloud-export-20261016/tree",
@@ -823,24 +851,30 @@
   "runtime_sif_sha256": "c00bc99693e4908ea75d17df9c379b93ae9a1678a65d875565ad5d52f76fa27b",
   "pinned_vendor_git_bundles_verified": 3,
   "source_git_bundle": {
-    "path": "runs/local-continuation-20261019/source-main-49b9d01.bundle",
-    "sha256": "2c25a766fee3bcd894bdbb63d84da19ac7e2326dea244b9c347570995e1e9eb5",
-    "source_commit": "49b9d013e6532cf62238aeab2aaa503d64b964cd",
+    "path": "runs/local-continuation-20261019/source-main-d08ef7a.bundle",
+    "sha256": "1dba29dae932d0d835a2862e1b788f9db4c761e8a003d22c9a0a8ca98583870c",
+    "source_commit": "d08ef7a09f17dbb3600827aa989bfe23e77f4bc7",
     "full_history_verified": true,
     "previous_verified_bundle": {
-      "path": "runs/local-continuation-20261019/source-main-c722dd2.bundle",
-      "sha256": "e42d253075c30e975cd6d046ecb57f6dd5face85301add596c986e5eeed1e481",
-      "source_commit": "c722dd2c574d8173a2ac659eff8dfcffba44a539",
+      "path": "runs/local-continuation-20261019/source-main-49b9d01.bundle",
+      "sha256": "2c25a766fee3bcd894bdbb63d84da19ac7e2326dea244b9c347570995e1e9eb5",
+      "source_commit": "49b9d013e6532cf62238aeab2aaa503d64b964cd",
       "full_history_verified": true,
       "previous_verified_bundle": {
-        "path": "runs/local-continuation-20261019/source-main-8115f68.bundle",
-        "sha256": "955a06a35aea4c51bf14e3751c22dd2179da7bddc23e51d7a7ea09c8a7487ad9",
-        "source_commit": "8115f68d38122a21ac4742f7cfb0cacca4a71625",
+        "path": "runs/local-continuation-20261019/source-main-c722dd2.bundle",
+        "sha256": "e42d253075c30e975cd6d046ecb57f6dd5face85301add596c986e5eeed1e481",
+        "source_commit": "c722dd2c574d8173a2ac659eff8dfcffba44a539",
         "full_history_verified": true,
         "previous_verified_bundle": {
-          "source_sha": "a0c51a199b897733081d55524f0a89d4937287b9",
-          "bundle": "runs/local-continuation-20261019/source-main-a0c51a1.bundle",
-          "bundle_sha256": "50e21f77ecb8e63a10bdff7a56d65a7f72a1ffcaace53bafc911586b91fd71fb"
+          "path": "runs/local-continuation-20261019/source-main-8115f68.bundle",
+          "sha256": "955a06a35aea4c51bf14e3751c22dd2179da7bddc23e51d7a7ea09c8a7487ad9",
+          "source_commit": "8115f68d38122a21ac4742f7cfb0cacca4a71625",
+          "full_history_verified": true,
+          "previous_verified_bundle": {
+            "source_sha": "a0c51a199b897733081d55524f0a89d4937287b9",
+            "bundle": "runs/local-continuation-20261019/source-main-a0c51a1.bundle",
+            "bundle_sha256": "50e21f77ecb8e63a10bdff7a56d65a7f72a1ffcaace53bafc911586b91fd71fb"
+          }
         }
       }
     }
@@ -2190,7 +2224,7 @@
       "maximum_hours": 7,
       "prevents_idle_sleep_with_caffeinate": true,
       "optimizer_checkpoint_backup_pending": false,
-      "terminal_backup_pending": true,
+      "terminal_backup_pending": false,
       "can_submit_cancel_train_or_adopt": false,
       "operator_sha256": {
         "watch-native-stream49-backups.py": "1b6dc0f079a3c35b09fa380b2b9b43572257eb0549855b83a85b255c3afe8627",
@@ -2199,7 +2233,10 @@
       },
       "optimizer_checkpoint_backup_verified_utc": "2026-10-21T00:26:04.720070+00:00",
       "critical_backup_receipt": "runs/local-continuation-20261019/native-stream49-7590052-critical-early-backup-verification.json",
-      "prior_terminal_operator_sha256": "79f9ec6904ed40dc96928870730637707a4e01e725c4c0a5e2dda5ddf21bfe77"
+      "prior_terminal_operator_sha256": "79f9ec6904ed40dc96928870730637707a4e01e725c4c0a5e2dda5ddf21bfe77",
+      "terminal_backup_verified": true,
+      "observer_exited_successfully": true,
+      "observer_exec_session_closed": 50287
     },
     "original154_readiness_passed": true,
     "original154_gradient_norm": 5.444079505444755,
@@ -2226,11 +2263,11 @@
     "all21_readiness_artifacts_sha256_backed": true,
     "readiness_review": "docs/NATIVE-STREAM49-READINESS-COMPLETE-REVIEW-2026-10-20.json",
     "readiness_review_sha256": "5eaa1078ed6cabc95285c6d77ac73fd6e213d713bbaaeeaaf890a59df19f7233",
-    "training_state": "RUNNING",
+    "training_state": "COMPLETED",
     "training_started_utc": "2026-10-20T23:43:36Z",
     "training_maximum_end_utc": "2026-10-21T02:43:36Z",
     "training_updates_completed_not_yet_observed": false,
-    "independent_restore_pending": true,
+    "independent_restore_pending": false,
     "native10_pending": true,
     "readiness_progress_observer_terminated_after_success": true,
     "read_only_observer_exit_handler_notice_was_not_a_job_failure": true,
@@ -2270,9 +2307,9 @@
     },
     "complete_eight_update_exposure_review": {
       "path": "docs/NATIVE-STREAM49-TRAINING-EXPOSURE-REVIEW-2026-10-21.json",
-      "sha256": "77e7339cd3717b77885b89698968f4fa7503932e2f11c49ae99b95feb34b0459",
+      "sha256": "c6916d539ecb15800764dd756a61190bdca995692e1c8947f4927c703c35e08a",
       "all8_and49_complete": true,
-      "restore_or_behavior_approval": false
+      "restore_or_behavior_approval": "Independent numerical restore approved; native behavior remains untested"
     },
     "stable_early_critical_backup": {
       "at_utc": "2026-10-21T00:26:04.720070+00:00",
@@ -2347,7 +2384,7 @@
       "mean_initial_stage_nll": 0.6367367186290461,
       "mean_final_nll": 0.6366545186054802,
       "nll_is_diagnostic_not_behavior_qualification": true,
-      "full_fresh_process_restore_approved": false,
+      "full_fresh_process_restore_approved": true,
       "audited_training_seconds_scope": "Eight updates plus post-fit frozen-weight/digest checks, checkpoint writing and original28 final metrics; excludes final acoustic49/native49 fingerprints and fresh-process restoration",
       "raw_timing_label_preserved_unchanged": true,
       "timing_scope_audit_source": "Immutable741872f evals/context_actual_train.py timer starts367, sample553, final fingerprints573/578"
@@ -2373,6 +2410,62 @@
       "server_jobs_or_payload_modified": false,
       "control_record_ignored_repository_path": "runs/local-continuation-20261019/native-stream49-ssh-control.json",
       "isolated_banner_timeouts_resolved_by_same_job_read_retries": true
+    },
+    "training_exit_code": "0:0",
+    "training_elapsed": "01:36:25",
+    "independent_gpu_restore": {
+      "report_sha256": "88056cfa1129a795f52d974d1bbb25fa4984d670829c44b30dcb0a9fe84e9f0b",
+      "passed": true,
+      "training_pid": 116298,
+      "reload_pid": 123537,
+      "fresh_process": true,
+      "all28_original_fingerprints_exact": true,
+      "all49_acoustic_fingerprints_exact": true,
+      "all49_native_stream_fingerprints_exact": true,
+      "complete_optimizer_and_rng_independently_exact": true,
+      "adam_parameter_steps_restored": [
+        528
+      ],
+      "backup_verification": {
+        "at_utc": "2026-10-21T01:20:38.065010+00:00",
+        "files": 1,
+        "bytes": 13568,
+        "all_size_and_sha256_match": true,
+        "failed": [],
+        "complete_independent_gpu_restore_report_verified": true,
+        "all28_and49_and_native49_exact": true,
+        "complete_optimizer_and_python_numpy_torch_cpu_cuda_rng_independently_exact": true,
+        "training_pid": 116298,
+        "reload_pid": 123537,
+        "behavior_or_adoption_approved": false
+      },
+      "behavior_or_adoption_approved": false
+    },
+    "native10_submitted": false,
+    "native_behavior_qualified": false,
+    "watcher_state": "FAILED",
+    "watcher_terminal": {
+      "at_utc": "20261021T012947Z",
+      "state": "FAILED",
+      "stage": "native10_submission",
+      "scheduler_watcher_job": "7589159",
+      "reason": "Explicit scheduler CPU-minute quota rejection; no native10 job accepted",
+      "training_and_full_independent_restore_passed": true,
+      "no_extension_or_adoption": true,
+      "no_retry_submission": true
+    },
+    "execution_blocker": "AssocGrpCPUMinutesLimit",
+    "quota_block_review": {
+      "path": "docs/NATIVE-STREAM49-QUOTA-BLOCK-2026-10-21.json",
+      "sha256": "298c4bd2afb6d50864f28ab94a4984b06a901d22e70fe5324684bea57a4f604f"
+    },
+    "all_terminal_artifacts_backup_verified": {
+      "at_utc": "2026-10-21T01:30:19.089637+00:00",
+      "files": 45,
+      "bytes": 1217905504,
+      "all_size_and_sha256_match": true,
+      "failed": [],
+      "missing_roots": []
     }
   },
   "local_ssh_certificate_current": {
@@ -2416,5 +2509,19 @@
     "new_training_postfit_state_not_yet_in_this_union": true,
     "report": "runs/local-continuation-20261019/complete-union-reverification-20261021-preterminal.json",
     "report_sha256": "e48516ada69b1f008986988db39e5fcf525b57af15dcd1c58fac13bda6244c96"
+  },
+  "complete_union_reverification_20261021_terminal": {
+    "at_utc": "2026-10-21T01:44:19.150725+00:00",
+    "source_ledger_sha256": "da2ce0438ce91a54f52973c5e51041ac99ccb3c684de9e462e369ab923e78dd0",
+    "files": 25275,
+    "bytes": 29157222593,
+    "all_artifact_sizes_and_sha256_match": true,
+    "failed": [],
+    "seconds": 15.659808833996067,
+    "old_mac_source_backup_status": "PARTIAL",
+    "new_training_postfit_state_included": true,
+    "report": "runs/local-continuation-20261019/complete-union-reverification-20261021-terminal.json",
+    "report_sha256": "cd824c4cd3d36f16f2445b8c8a08f867a5dc38793f2b238e7ad874cc9e568d89",
+    "source_ledger_snapshot": "runs/local-continuation-20261019/native-stream49-terminal-source-ledger-snapshot.json"
   }
 }

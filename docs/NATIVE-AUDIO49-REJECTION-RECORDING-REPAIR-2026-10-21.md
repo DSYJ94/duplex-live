@@ -25,3 +25,10 @@ Slurm defines this reason as an aggregate association CPU-minute limit over past
 present and future jobs. See the [official reason-code reference](https://slurm.schedmd.com/job_reason_codes.html).
 Native model behavior is still untested for this checkpoint; full numerical restore
 and preserved artifacts do not qualify a model for adoption.
+
+The same7 model-free tests independently pass on Isambard host Python3.6.15 from
+immutable d08ef7a09f17dbb3600827aa989bfe23e77f4bc7 in0.081s. No model/GPU was
+loaded and no Slurm job was submitted. The exact host validation receipt is backed
+up with size/SHA checks. Complete Git history bundle source-main-d08ef7a.bundle is
+verified. This validates controller portability and failure handling, not native
+inference or the full288-test model/state suite, which remains unrun under the quota.
