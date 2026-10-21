@@ -11,18 +11,26 @@ import os
 from pathlib import Path
 import threading
 import time
+import sys
+import urllib.parse
 import urllib.request
 
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument('--url', required=True)
+    urls = p.add_mutually_exclusive_group(required=True)
+    urls.add_argument('--url')
+    urls.add_argument('--url-from-stdin', action='store_true',
+                      help='Use an expiring single-asset HF redirect; never print it')
     p.add_argument('--out', type=Path, required=True)
     p.add_argument('--bytes', type=int, required=True)
     p.add_argument('--sha256', required=True)
     p.add_argument('--workers', type=int, default=8)
     args = p.parse_args()
-    assert args.url.startswith('https://huggingface.co/')
+    url = sys.stdin.read().strip() if args.url_from_stdin else args.url
+    parsed = urllib.parse.urlparse(url)
+    assert parsed.scheme == 'https' and (parsed.hostname == 'huggingface.co' or
+                                         parsed.hostname.endswith('.hf.co'))
     assert args.bytes > 0 and 1 <= args.workers <= 16
     assert len(args.sha256) == 64
     args.out.parent.mkdir(parents=True, exist_ok=True)
@@ -39,7 +47,7 @@ def main():
             end = min(start + 32 * 1024 * 1024, args.bytes) - 1
             for attempt in range(3):
                 try:
-                    request = urllib.request.Request(args.url,
+                    request = urllib.request.Request(url,
                         headers={'Range': 'bytes=%d-%d' % (start, end)})
                     with urllib.request.urlopen(request, timeout=45) as response:
                         if (response.status != 206 or response.headers.get('Content-Range') !=
