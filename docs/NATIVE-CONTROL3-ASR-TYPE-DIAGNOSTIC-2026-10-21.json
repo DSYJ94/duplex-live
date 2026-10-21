@@ -1,0 +1,25 @@
+{
+  "schema": "dl-actual-source-asr-type-diagnostic-v1",
+  "in_memory_timestamp_types": [
+    "numpy.float64"
+  ],
+  "asr_text": " Every small basket holds apples. This basket is small. What does it hold?",
+  "in_memory_passed": false,
+  "in_memory_reasons": [
+    "Invalid independently measured word interval"
+  ],
+  "json_roundtrip_passed": true,
+  "json_roundtrip_reasons": [],
+  "audio_or_numeric_values_changed": false,
+  "threshold_changed": false,
+  "whole_corpus_approved": false,
+  "at_utc": "2026-10-21T21:19:56.409976+00:00",
+  "source_auditor_commit": "284913483addc839b1989734852a0d918f26d6a1",
+  "actual_source_clips_complete": 168,
+  "all40_raw_assembly_complete": true,
+  "actual_asr_still_running": true,
+  "original_audit_and_all_responses_preserved": true,
+  "proposed_reassessment": "ALL168 durable JSON responses, same words/audio/times/thresholds; genuine failures remain failed",
+  "model_or_training_recipe_changed": false,
+  "new_gpu_purchased": false
+}

@@ -1,3 +1,30 @@
+# Actual full source and auditor diagnostic
+
+All168 source clips are now complete in generation v3, and all40 raw scenes are
+assembled. V2 remains failed and preserved, with its full failed-corpus backup
+independently verified. Only the diagnosed clipped single-word clip was replaced;
+139 original recordings/receipts were copied unchanged, and28 missing clips were
+created. No gain, word, voice, fold or threshold changed. No teacher or GPU job yet.
+
+The first actual independent source audit is running through ALL168. A confirmed
+new-auditor bug rejects `numpy.float64` word times in memory, although identical
+persisted JSON numbers pass its own verifier. An actual repeat recognition proved
+the type discrepancy, with unchanged text/numeric values/audio. This is unrelated
+to the native BF16/model numerical discrepancy. See the adjacent ASR type record.
+
+`evals/native_control_source_reaudit.py` is a NEW derived audit, to run only after
+the complete original168 audit and stopped supervisor exist. It binds the old code
+to its Git commit, preserves the full failed report and all raw ASR bytes, rechecks
+all source/receipt hashes and ALL168 durable responses using the same bars and word
+checks. It makes no recognition/API requests, adds no spelling normalization and
+cannot turn a genuine word failure into a pass. It grants no training approval.
+An artificial full168 test checks both correct reassessment and retained genuine
+word failure; this is implementation evidence, not actual corpus qualification.
+
+A complete immutable raw-source backup is packed locally:836files641,322,800B,
+compressed122,177,869B. Every internal archive hash matches. Destination upload and
+readback are separate and must be recorded before calling this backup durable.
+
 # Supervised execution update
 
 Source/pipeline main9f8d722 is committed and pushed. The sole supervisor is running
