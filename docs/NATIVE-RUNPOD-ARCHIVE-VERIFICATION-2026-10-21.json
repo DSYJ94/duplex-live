@@ -1,0 +1,225 @@
+{
+  "at_utc": "2026-10-21T14:05:57.563301+00:00",
+  "files": 28470,
+  "bytes": 67764285650,
+  "symlinks": 8,
+  "failed": [],
+  "all_size_sha256_and_symlinks_match": true,
+  "whole_remote_project_backup": false,
+  "destination_gpu_restore_or_behavior_qualified": false,
+  "schema": "dl-native-extracted-archive-verification-v1",
+  "manifest_sha256": "4eac15590dc9def6dfb5e34b2cea92f30d9a067fabe0940e2876b6acdcbe6dce",
+  "archive_containers": [
+    {
+      "archive": "native-v3-000.tar",
+      "files": 1,
+      "links": 0,
+      "all_destination_hashes_passed": true
+    },
+    {
+      "archive": "native-v3-001.tar",
+      "files": 1,
+      "links": 0,
+      "all_destination_hashes_passed": true
+    },
+    {
+      "archive": "native-v3-002.tar",
+      "files": 22,
+      "links": 0,
+      "all_destination_hashes_passed": true
+    },
+    {
+      "archive": "native-v3-003.tar",
+      "files": 1,
+      "links": 0,
+      "all_destination_hashes_passed": true
+    },
+    {
+      "archive": "native-v3-004.tar",
+      "files": 1065,
+      "links": 0,
+      "all_destination_hashes_passed": true
+    },
+    {
+      "archive": "native-v3-005.tar",
+      "files": 15904,
+      "links": 0,
+      "all_destination_hashes_passed": true
+    },
+    {
+      "archive": "native-v3-006.tar",
+      "files": 1,
+      "links": 0,
+      "all_destination_hashes_passed": true
+    },
+    {
+      "archive": "native-v3-007.tar",
+      "files": 346,
+      "links": 0,
+      "all_destination_hashes_passed": true
+    },
+    {
+      "archive": "native-v3-008.tar",
+      "files": 319,
+      "links": 0,
+      "all_destination_hashes_passed": true
+    },
+    {
+      "archive": "native-v3-009.tar",
+      "files": 780,
+      "links": 0,
+      "all_destination_hashes_passed": true
+    },
+    {
+      "archive": "native-v3-010.tar",
+      "files": 678,
+      "links": 0,
+      "all_destination_hashes_passed": true
+    },
+    {
+      "archive": "native-v3-011.tar",
+      "files": 139,
+      "links": 0,
+      "all_destination_hashes_passed": true
+    },
+    {
+      "archive": "native-v3-012.tar",
+      "files": 20,
+      "links": 0,
+      "all_destination_hashes_passed": true
+    },
+    {
+      "archive": "native-v3-013.tar",
+      "files": 20,
+      "links": 0,
+      "all_destination_hashes_passed": true
+    },
+    {
+      "archive": "native-v3-014.tar",
+      "files": 21,
+      "links": 0,
+      "all_destination_hashes_passed": true
+    },
+    {
+      "archive": "native-v3-015.tar",
+      "files": 21,
+      "links": 0,
+      "all_destination_hashes_passed": true
+    },
+    {
+      "archive": "native-v3-016.tar",
+      "files": 376,
+      "links": 0,
+      "all_destination_hashes_passed": true
+    },
+    {
+      "archive": "native-v3-017.tar",
+      "files": 175,
+      "links": 0,
+      "all_destination_hashes_passed": true
+    },
+    {
+      "archive": "native-v3-018.tar",
+      "files": 15,
+      "links": 0,
+      "all_destination_hashes_passed": true
+    },
+    {
+      "archive": "native-v3-019.tar",
+      "files": 16,
+      "links": 0,
+      "all_destination_hashes_passed": true
+    },
+    {
+      "archive": "native-v3-020.tar",
+      "files": 17,
+      "links": 0,
+      "all_destination_hashes_passed": true
+    },
+    {
+      "archive": "native-v3-021.tar",
+      "files": 14,
+      "links": 0,
+      "all_destination_hashes_passed": true
+    },
+    {
+      "archive": "native-v3-022.tar",
+      "files": 15,
+      "links": 0,
+      "all_destination_hashes_passed": true
+    },
+    {
+      "archive": "native-v3-023.tar",
+      "files": 18,
+      "links": 0,
+      "all_destination_hashes_passed": true
+    },
+    {
+      "archive": "native-v3-024.tar",
+      "files": 744,
+      "links": 0,
+      "all_destination_hashes_passed": true
+    },
+    {
+      "archive": "native-v3-025.tar",
+      "files": 885,
+      "links": 0,
+      "all_destination_hashes_passed": true
+    },
+    {
+      "archive": "native-v3-026.tar",
+      "files": 416,
+      "links": 0,
+      "all_destination_hashes_passed": true
+    },
+    {
+      "archive": "native-v3-027.tar",
+      "files": 380,
+      "links": 0,
+      "all_destination_hashes_passed": true
+    },
+    {
+      "archive": "native-v3-028.tar",
+      "files": 401,
+      "links": 0,
+      "all_destination_hashes_passed": true
+    },
+    {
+      "archive": "native-v3-029.tar",
+      "files": 469,
+      "links": 0,
+      "all_destination_hashes_passed": true
+    },
+    {
+      "archive": "native-v3-030.tar",
+      "files": 1093,
+      "links": 0,
+      "all_destination_hashes_passed": true
+    },
+    {
+      "archive": "native-v3-031.tar",
+      "files": 1735,
+      "links": 0,
+      "all_destination_hashes_passed": true
+    },
+    {
+      "archive": "native-v3-032.tar",
+      "files": 534,
+      "links": 0,
+      "all_destination_hashes_passed": true
+    },
+    {
+      "archive": "native-v3-033.tar",
+      "files": 607,
+      "links": 0,
+      "all_destination_hashes_passed": true
+    },
+    {
+      "archive": "native-v3-034.tar",
+      "files": 1221,
+      "links": 8,
+      "all_destination_hashes_passed": true
+    }
+  ],
+  "historical_source_not_deployed": true
+}

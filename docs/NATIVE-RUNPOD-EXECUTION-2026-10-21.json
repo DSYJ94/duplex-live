@@ -90,7 +90,8 @@
     "verified_symlinks": 8,
     "manifest_sha256": "4eac15590dc9def6dfb5e34b2cea92f30d9a067fabe0940e2876b6acdcbe6dce",
     "verified_at_utc": "2026-10-21T14:05:57.563301+00:00",
-    "upload_terminal": "v4/session81451 exit0, no active archive writers"
+    "upload_terminal": "v4/session81451 exit0, no active archive writers",
+    "tracked_verification_receipt": "docs/NATIVE-RUNPOD-ARCHIVE-VERIFICATION-2026-10-21.json"
   },
   "qualification": {
     "latest_candidate_job": "7590052",
@@ -100,7 +101,7 @@
     "fresh40_run": false,
     "adopted": false
   },
-  "progress_utc": "2026-10-21T14:20:46.507963+00:00",
+  "progress_utc": "2026-10-21T14:24:13.252611+00:00",
   "current_source": "5ea1547ada2bdca35bf4390cb2f4ee413c3115a2",
   "cpu_staging": {
     "schema": "dl-runpod-cpu-staging-execution-v1",
@@ -117,15 +118,13 @@
     "image": "nvcr.io/nvidia/pytorch:25.10-py3@sha256:42263b2424fc237b34c4fc4a91c30d603c57eed36e37d31ff6d9a4f1f801edee",
     "source_commit": "2ce3ed8",
     "deadline_guard_status": {
-      "phase": "armed",
+      "phase": "pod_terminated",
       "pod_id": "kgy1ygl8i5p1u5",
-      "state": "RUNNING",
-      "deadline_utc": "2026-10-21T14:52:51.864000+00:00",
       "network_volume_retained": "49yytzyoge",
-      "at_utc": "2026-10-21T12:58:52.770658+00:00",
+      "at_utc": "2026-10-21T14:23:21.819265+00:00",
       "pid": 50305
     },
-    "source_or_verifier_executed": "Git deployed a5605c1; one-shot watcherPID2609 waiting for all35, complete verification not begun",
+    "source_or_verifier_executed": "Terminal PASS: Git a5605c1 watcher completed full original manifest verification14:05:57UTC; layout Git5ea1547 completed14:13:54UTC",
     "direct_ssh": {
       "host": "157.157.221.29",
       "port": 38506,
@@ -137,7 +136,13 @@
       "cuda": "13.0",
       "aiohttp": "3.14.5",
       "imports_passed": true
-    }
+    },
+    "status": "TERMINATED",
+    "independent_get_after_delete": 404,
+    "terminated_by_local_executor_utc": "2026-10-21T14:24:13.252611+00:00",
+    "reason": "Full archive verification and reproducible runtime staging finished; stopped early to end idle compute billing",
+    "network_volume_retained": "49yytzyoge",
+    "deadline_guard_session_exit_code": 0
   },
   "runtime_layout": {
     "schema": "dl-native-runtime-layout-v1",
@@ -162,7 +167,28 @@
     "pod_created": false,
     "training_submitted": false,
     "budget_guard_pid": 83644,
-    "budget_guard_phase": "waiting_for_owned_pod_receipt",
-    "budget_guard_session": 20642
+    "budget_guard_phase": "stopped_after_failed_create",
+    "budget_guard_session": 20642,
+    "budget_guard_exit_code": 143
+  },
+  "runtime_packages": {
+    "inventory": "docs/NATIVE-RUNPOD-RUNTIME-PACKAGES-2026-10-21.json",
+    "count": 247,
+    "sha256": "9173224df48ea079380d398191b82cd0fc3ece94acd5654de4914894904886a3",
+    "venv": "/workspace/runtime-x86-ngc2510",
+    "image": "nvcr.io/nvidia/pytorch:25.10-py3@sha256:42263b2424fc237b34c4fc4a91c30d603c57eed36e37d31ff6d9a4f1f801edee",
+    "cpu_imports_passed": true,
+    "gpu_runtime_not_yet_proven": true
+  },
+  "active_task_resources": {
+    "gpu_pods": [],
+    "cpu_pods": [],
+    "slurm_jobs": [],
+    "archive_writers": [],
+    "retained_volumes": [
+      "49yytzyoge",
+      "cyjzip53ap"
+    ],
+    "old_volume_retirement_blocker": "Unique original receipts remain on EUR-IS-3; no S3 endpoint and no available Pod capacity. Official UI file browser requires a Pod."
   }
 }

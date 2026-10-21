@@ -1,13 +1,55 @@
-# Current migration evidence (21 October)
+# Current migration evidence (21 October14:24UTC)
 
-The full native archive is verified on Mac. Replacement S3 volume49yytzyoge and a
-bounded CPU staging Pod prepare complete destination verification/runtime setup.
-The initial H100 trial passed exact adapter/Adam/allRNG restore; it did not complete
-full native numerical/behavioral evaluation or a usable voice audition. Follow the
-newest HANDOFF.md before renting compute or restarting a transfer. The Dockerfile
-now includes separately pinned audition dependencies; its updated image has not
-been rebuilt locally because the Docker daemon is stopped. The pinned base remains
-unchanged. Source must be Git-deployed separately from historical archived metadata.
+Complete native archive verification PASS on Mac and Runpod volume49yytzyoge:
+28,470files /67,764,285,650B +8links. The independently retrieved original receipt
+is [committed here](../../docs/NATIVE-RUNPOD-ARCHIVE-VERIFICATION-2026-10-21.json).
+All task GPU/CPU/Slurm/copy jobs are stopped. Both volumes remain; oldvolume
+cyjzip53ap awaits unique-receipt recovery. Read newest HANDOFF.md before any rental.
+The first H100 trial passed adapter/Adam/allRNG restore; full native numerical/
+behavioral qualification and usable voice audition remain incomplete. A second
+A100 create failed400 after stock disappeared; no new GPU was created.
+
+## Prepared experimental voice restart
+
+Read fresh GPU stock/price, stay within the original$25 compute budget, and arm a
+NEW local two-hour budget guard/execution receipt BEFORE creating a Pod. Mount
+volume49yytzyoge at /workspace in EUR-IS-1. Use the SAME exact image:
+
+`nvcr.io/nvidia/pytorch:25.10-py3@sha256:42263b2424fc237b34c4fc4a91c30d603c57eed36e37d31ff6d9a4f1f801edee`
+
+The247-package persistent x86 environment is already staged; its
+[exact package inventory](../../docs/NATIVE-RUNPOD-RUNTIME-PACKAGES-2026-10-21.json)
+is saved. These restart commands are prepared, not a successful GPU audition:
+
+```sh
+cd /workspace/source-layout-5ea1547
+export PYTHONDONTWRITEBYTECODE=1
+export CUDA_VISIBLE_DEVICES=0
+export OMP_NUM_THREADS=8
+export PYTHONPATH=/workspace/duplex-live/worktrees/recovery-741872f
+# Choose a NEW unused attempt directory; do not reuse or overwrite receipts.
+trial=/workspace/migration/native-audition-next
+mkdir "$trial"
+/workspace/runtime-x86-ngc2510/bin/python portable/context/prepare_native_layout.py   --volume /workspace --git-source /workspace/source-main   --report "$trial/runtime-layout.json"
+/workspace/runtime-x86-ngc2510/bin/python portable/context/restore_adapter_state.py   --source "$PYTHONPATH"   --proof /projects/u6si/duplex-live/runs/context-training-proof-7590052   --out "$trial/independent-state-restore.json"
+# Continue only after the independent state check passes.
+/workspace/runtime-x86-ngc2510/bin/python -u portable/context/native_audition.py   --source "$PYTHONPATH" --root /projects/u6si/duplex-live   --proof /projects/u6si/duplex-live/runs/context-training-proof-7590052   --port 8081 --ui-origin http://127.0.0.1:8765   --receipt "$trial/audition.json" > "$trial/audition.log" 2>&1
+```
+
+Keep that process supervised, inspect its log/device memory, and confirm readiness.
+Use the new Pod's actual direct SSH address (old addresses are obsolete) to forward
+Mac127.0.0.1:8765 to Pod127.0.0.1:8081. Do not publish an unauthenticated HTTPport.
+Verify /health plus a real synthetic WebSocket audio request from outside the Pod
+before claiming a usable path. Only then open http://127.0.0.1:8765 for the owner to
+start their microphone. Do not capture the microphone automatically.
+
+The launcher preserves original BF16/native80ms layout, actual7590052 adapter,
+saved voice and sampler, and does not force words/audio. Its external tool backend
+is disconnected; it is an experimental speech audition, not full native10/fresh40
+qualification. The full native10 pipeline still requires2 distinct GPUs and an
+actual authorized worker. Do not fake device IDs or accept a passing subset.
+The committed driver discovery fix has not yet been GPU-proven. Preserve failed
+logs/receipts, and do not change precision/frameclock/thresholds to make a test pass.
 
 ---
 

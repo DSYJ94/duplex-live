@@ -126,7 +126,7 @@ The old `demo/mic-demo.sh` uses scripted words from a different earlier model an
 does not test this candidate. The older portable `train.sh` likewise does not
 implement the current stream49/full154 stage unchanged.
 
-Current approved Runpod trial: Pod`q3wqjwols44aos`,2H100SXM,377GB host RAM,40vCPU,
+Historical first approved Runpod trial (now terminated): Pod`q3wqjwols44aos`,2H100SXM,377GB host RAM,40vCPU,
 volume`cyjzip53ap` at`/workspace`. Created21Oct09:15:37.923UTC; local deadline guard
 terminates this trial by11:15:37.923UTC, retaining the100GB network volume. It is
 $7.98/hour compute while running and$7/month storage while retained. Execution and
@@ -146,3 +146,12 @@ resource IDs, transfer ownership, spending guards and the precise next test.
 on Mac and Runpod volume49yytzyoge, all28,470files+8links. Runtime reconstructed
 with Git, full pinned native source unchanged. No production model adopted and
 no usable live audition yet; numerical/behavior gates remain as documented above.
+
+
+21Oct14:24UTC: all task compute is stopped. Reproducible x86 package inventory:
+[NATIVE-RUNPOD-RUNTIME-PACKAGES-2026-10-21.json](NATIVE-RUNPOD-RUNTIME-PACKAGES-2026-10-21.json).
+Original full destination verification:
+[NATIVE-RUNPOD-ARCHIVE-VERIFICATION-2026-10-21.json](NATIVE-RUNPOD-ARCHIVE-VERIFICATION-2026-10-21.json).
+Both100GB volumes remain; the old one awaits unique-receipt recovery. No GPU/live
+microphone path currently runs. A single A100 attempt failed at provider capacity;
+no model settings or acceptance gates were changed to obtain a result.

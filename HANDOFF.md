@@ -1,3 +1,37 @@
+# LOCAL — verified backup complete; all task compute stopped (21Oct14:24UTC)
+
+LOCAL sole executor; CLOUD read-only. Main backup commitdf072a5 pushed; launcher/
+layout source5ea1547ada2bdca35bf4390cb2f4ee413c3115a2. No active task GPU/CPU/Slurm
+jobs, archive writers or new training. CPUkgy1ygl8i5p1u5 terminated early after
+completion; fresh get-pod404. Volume49yytzyoge retained with complete verified
+native archive. Failed A100 creation made no resource; waiting guard83644 stopped,
+session20642 exit143. CPUguard50305 observed404 and exited0 (session8087); do not restart.
+
+Full preservation PASS14:05:57UTC:28,470files/67,764,285,650B +8links, every original
+size/SHA256/link independently verified. Original receipt now committed in
+[docs/NATIVE-RUNPOD-ARCHIVE-VERIFICATION-2026-10-21.json](docs/NATIVE-RUNPOD-ARCHIVE-VERIFICATION-2026-10-21.json).
+Exact247-package x86 runtime inventory committed too; runtime/layout remain on
+volume. Whole Isambard project and whole-Mac source backup remain PARTIAL.
+
+Oldvolume cyjzip53ap remains intact for unique original trial receipts. No eligible
+EUR-IS-3 Pod capacity found, even with lower12.8 driver floor for data-only access.
+Official Runpod UI confirms file browser also requires a Pod; no direct export.
+Temporary two-volume overlap was explicitly approved ($14/month prorated); final
+single100GB remains$7/month once old receipts can be recovered and oldvolume retired.
+
+GPU A10080GB single inEUR-IS-1 was positively available at$1.79/h, then create400
+reported stock gone. No blind retry or second rental. Next executor should read
+fresh stock before any new bounded trial, within original$25 compute budget.
+Independent original26adapter/Adam528/allRNG restore previously PASS on H100;
+full native numerical/behavioral approval and usable voice test remain INCOMPLETE.
+Native10 requires2 distinct GPUs and local worker authorization; no local API key
+is configured. Candidate7590052 experimental, not adopted; native10/speech/fresh40
+unrun. Preserve all original gates/data/losses. No new permission needed for already
+approved migration/test scope; only genuine missing credentials/material decisions
+require owner input. Do not transfer owner conversations/credentials/core dumps.
+
+---
+
 # LOCAL — complete native Runpod backup VERIFIED (21Oct14:21UTC)
 
 LOCAL remains sole executor; CLOUD read-only. No active GPU/Slurm jobs or new
