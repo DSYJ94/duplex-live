@@ -131,3 +131,12 @@ volume`cyjzip53ap` at`/workspace`. Created21Oct09:15:37.923UTC; local deadline g
 terminates this trial by11:15:37.923UTC, retaining the100GB network volume. It is
 $7.98/hour compute while running and$7/month storage while retained. Execution and
 validation outcomes are recorded separately in the newest HANDOFF.md.
+
+
+21Oct12:57UTC destination update: the initial H100 trial is terminated. Its fresh
+process restored all26 adapters, Adam528 and all saved RNG exactly, with zero new
+optimizer updates. Full native numerical/behavioral qualification and a usable
+microphone audition remain incomplete. An approved S3-supported replacement volume
+and bounded CPU staging now prepare the full backup/runtime before any GPU rental.
+See the latest HANDOFF.md and NATIVE-RUNPOD-EXECUTION-2026-10-21.json for current
+resource IDs, transfer ownership, spending guards and the precise next test.

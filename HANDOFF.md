@@ -1,3 +1,55 @@
+# LOCAL — exact source archives ready; supported transfer active; bounded CPU staging (21Oct12:57UTC)
+
+LOCAL sole executor; CLOUD read-only. No active GPU or Slurm jobs. Latest completed
+training remains7590052,8updates; no extension/adoption, full10/speech/fresh40 unrun.
+Main/source2ce3ed8 (full SHA in execution JSON), original payload741872f unchanged.
+All native28,470files67,764,285,650B+8links remain verified on Mac. All35 derived
+source tar containers67,815,854,080B independently match exact Mac tar SHA256;
+34reconstructed on Isambard, final034 rsynced and rehashed. Source files/originals
+remain intact. Source packing SSH ended255 but retrieved terminal receipt proved
+34successes; this was not treated as a stopped packing job or blindly restarted.
+
+Single active archive writer uses local script portable/context/s3_native_archive.py,
+Git-deployed source helper worktrees/migration-2ce3ed8/portable/context/source_archive_transfer.py,
+source archive root runs/runpod-migration-20261021/s3-archive-source-v1, destination
+volume49yytzyoge EUR-IS-1/native-archive-v3/. Local session82279; exact PID recorded
+in docs/NATIVE-RUNPOD-EXECUTION-2026-10-21.json. Actual journal
+runs/local-migration-20261021/s3-native-upload-v3.jsonl. All uploads remain PENDING
+full independent destination hashes; do not accept size-only receipts as backup.
+Account S3 key stays mode0600 on Mac. Only SDK-prepared headers authorizing exact
+object parts/payloads pass through SSH stdin, never logged/saved. Runpod's unsupported
+pre-signed-URL attempt is STOPPED; do not restart v1/v2 or overlap writers.
+
+CPU staging Podkgy1ygl8i5p1u5 created12:52:51.864UTC,2vCPU/4GBRAM,$0.06/hour,20GB
+containerdisk, same pinned NGC25.10 image, volume49yytzyoge mounted /workspace.
+Fresh get-pod confirms RUNNING and mount; image still extracting, no execution
+source/verifier run yet. No second GPU started. CPU budget max2h/$0.12; independent
+LOCAL watchdogPID50305/session8087 is ARMED, hard termination14:52:51.864UTC,
+retaining volume. Initial guard lacked sandbox network access and was STOPPED,
+then replaced with network-enabled guard; read actual status before touching it.
+CPU proxy SSH kgy1ygl8i5p1u5-64411478@ssh.runpod.io; direct address not yet provided.
+Known-host file and existing Runpod identity remain ignored locally. Initial proxy
+probe returned container not found while actual image-pull logs were live; do not
+recreate a second Pod because boot is incomplete.
+
+Next: finish source upload; use CPU to Git-clone staged migration bundle, unpack
+and independently verify EVERY original file/hash/link to a DISTINCT archival root,
+never overwrite live Git metadata. Delete derived tar containers only after their
+members pass destination hashes to keep100GB capacity. Preserve oldvolume
+cyjzip53ap and its unique trial receipts until recovered, then retire it as approved.
+Ongoing100GB$7/month; owner approved temporary overlap14/month prorated. Before any
+new GPU, prepare runtime/files fully, confirm remaining original$25 budget and stock,
+use NEW bounded receipt, independently restore and prove actual native voice request.
+Trial14.48182249GPU+$0.01273148disk reported by current pod-billing read (may settle).
+Old trialq3wqjwols44aos is404/terminated; independent adapter/Adam528/allRNG restore
+PASS, but audition never ready. Driver discovery fix remains GPU-untested.
+
+An inventory tool exposed unrelated existing notebook passwords in tool output;
+owner was told to rotate before notebook reuse. Never repeat values, never dump
+raw Pod/list responses, and do not modify unrelated Pods. Preserve unrelated local edits.
+
+---
+
 # LOCAL — bounded trial terminated; exact state restore PASS; replacement backup active (21Oct12:00UTC)
 
 LOCAL remains the sole executor; CLOUD is read-only. No new training or Slurm job

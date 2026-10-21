@@ -1,3 +1,16 @@
+# Current migration evidence (21 October)
+
+The full native archive is verified on Mac. Replacement S3 volume49yytzyoge and a
+bounded CPU staging Pod prepare complete destination verification/runtime setup.
+The initial H100 trial passed exact adapter/Adam/allRNG restore; it did not complete
+full native numerical/behavioral evaluation or a usable voice audition. Follow the
+newest HANDOFF.md before renting compute or restarting a transfer. The Dockerfile
+now includes separately pinned audition dependencies; its updated image has not
+been rebuilt locally because the Docker daemon is stopped. The pinned base remains
+unchanged. Source must be Git-deployed separately from historical archived metadata.
+
+---
+
 # Continue training after Isambard
 
 **21 October current migration:** start with

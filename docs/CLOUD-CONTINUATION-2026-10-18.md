@@ -1,3 +1,14 @@
+21Oct12:57UTC — LOCAL sole executor; CLOUD read-only. Original H100 trial is
+terminated. Active CPU stagingPodkgy1ygl8i5p1u5 ($0.06/h,max2h,deadline14:52:51UTC)
+mounts replacementvolume49yytzyoge. WatchdogPID50305 ARMED. Single source-side
+SDK-header archive uploadPID49523/session82279/v3 journal is ACTIVE; v1/v2 stopped.
+All35source tars SHA-match Mac, full destination hashes still REQUIRED/PENDING.
+No GPU/Slurm training/evaluation jobs, no qualification or usable audition yet.
+Read newest HANDOFF.md and NATIVE-RUNPOD-EXECUTION-2026-10-21.json before any
+submission/transfer/retry. Preserve oldvolume for unique receipts; approved overlap.
+
+---
+
 21Oct12:00UTC — LOCAL sole executor; CLOUD read-only. Approved Runpod trial
 q3wqjwols44aos is TERMINATED (watchdog11:15:59UTC, actualget404). Weights36files/
 33.942GB verified; independent one-H100 adapter/Adam528/allRNG restore EXACT,
