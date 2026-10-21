@@ -135,6 +135,7 @@ def upload(args):
     import boto3
     from boto3.s3.transfer import TransferConfig
     from botocore.config import Config
+    from botocore.exceptions import ClientError
     shared_config = Config(connect_timeout=15, read_timeout=120,
         retries={'mode': 'standard', 'max_attempts': 8},
         s3={'payload_signing_enabled': True},
@@ -161,6 +162,15 @@ def upload(args):
     lock = threading.Lock()
     complete = []
     source_ready = set()
+    existing_verified = set()
+    if args.verified_existing_report:
+        prior = json.loads(args.verified_existing_report.read_text())
+        assert prior['manifest_sha256'] == args.manifest_sha256
+        expected = {r['name']: r for r in index['archives']}
+        for row in prior['archives']:
+            assert row['passed'] and row['sha256'] == expected[row['name']]['sha256']
+            assert row['bytes'] == expected[row['name']]['bytes']
+            existing_verified.add(row['name'])
     if args.source_pack_receipt and not args.source_helper:
         raise ValueError('A Git-deployed source helper path is required')
     if args.source_helper and (not str(args.source_helper).startswith(
@@ -178,6 +188,27 @@ def upload(args):
             for k, v in request.headers.items()}}
         raise CapturedRequest()
     signing_client.meta.events.register('before-send.s3.UploadPart', capture_request)
+    destination = json.loads(args.destination_ssh.read_text()) if args.destination_ssh else None
+
+    def destination_tar_hash(spec):
+        if destination is None:
+            raise RuntimeError('Independent destination hash connection not configured')
+        name = safe_name(spec['name'])
+        assert '/' not in name and name.startswith('native-v3-') and name.endswith('.tar')
+        code = ('import hashlib;from pathlib import Path;'
+                'p=Path("/workspace/native-archive-v3")/' + repr(name) + ';'
+                'h=hashlib.sha256();f=p.open("rb");'
+                '[h.update(b) for b in iter(lambda:f.read(16*1024*1024),b"")];'
+                'print(h.hexdigest())')
+        print(json.dumps({'checking_destination_tar_sha256': name}), flush=True)
+        proc = subprocess.run(['ssh', '-i', destination['identity'], '-o', 'IdentitiesOnly=yes',
+            '-o', 'BatchMode=yes', '-o', 'ConnectTimeout=20', '-o', 'StrictHostKeyChecking=yes',
+            '-o', 'UserKnownHostsFile='+destination['known_hosts'], '-p', str(destination['port']),
+            destination['username']+'@'+destination['host'], 'python3 -c '+shlex.quote(code)],
+            capture_output=True, text=True, timeout=600)
+        if proc.returncode or proc.stdout.strip() != spec['sha256']:
+            raise RuntimeError('Independent destination tar SHA256 failed: '+name)
+        return True
     if args.source_pack_receipt:
         expected = {r['name']: r for r in index['archives']}
         for line in args.source_pack_receipt.read_text().splitlines():
@@ -222,10 +253,24 @@ def upload(args):
             result = json.loads(proc.stdout)
             assert result['name'] == spec['name'] and result['all_signed_parts_uploaded']
             assert [p['PartNumber'] for p in result['parts']] == list(range(1,len(parts)+1))
-            client.complete_multipart_upload(Bucket=args.bucket, Key=key,
-                UploadId=upload_id, MultipartUpload={'Parts': result['parts']})
+            try:
+                client.complete_multipart_upload(Bucket=args.bucket, Key=key,
+                    UploadId=upload_id, MultipartUpload={'Parts': result['parts']})
+            except ClientError as error:
+                if error.response['Error']['Code'] != 'NoSuchUpload':
+                    raise
+                # A retry after the provider finalized a large archive can return
+                # NoSuchUpload. Size alone is never accepted: independently hash
+                # the actual destination file before treating it as transferred.
+                destination_tar_hash(spec)
+                print(json.dumps({'provider_completion_recovered_by_destination_sha256':
+                                  spec['name']}), flush=True)
         except BaseException:
-            client.abort_multipart_upload(Bucket=args.bucket, Key=key, UploadId=upload_id)
+            try:
+                client.abort_multipart_upload(Bucket=args.bucket, Key=key, UploadId=upload_id)
+            except ClientError as cleanup_error:
+                if cleanup_error.response['Error']['Code'] != 'NoSuchUpload':
+                    raise
             raise
 
     def one(spec):
@@ -234,7 +279,9 @@ def upload(args):
         assert digest(path) == spec['sha256']
         key = 'native-archive-v3/' + spec['name']
         print(json.dumps({'starting_archive': spec['name']}), flush=True)
-        if spec['name'] in source_ready:
+        if spec['name'] in existing_verified:
+            destination_tar_hash(spec)
+        elif spec['name'] in source_ready:
             signed_source_upload(spec, key)
         else:
             client.upload_file(str(path), args.bucket, key, Config=transfer)
@@ -251,6 +298,7 @@ def upload(args):
                   'files': len(spec['files']), 'symlinks': len(spec['symlinks']),
                   'upload_source': 'isambard-single-object-signed-parts'
                                    if spec['name'] in source_ready else 'local-mac',
+                  'reused_independently_verified_container': spec['name'] in existing_verified,
                   'independent_s3_readback_all_member_hashes_passed':
                        not args.defer_to_independent_filesystem_verifier,
                   'independent_destination_verification_pending':
@@ -333,6 +381,8 @@ def main():
             q.add_argument('--source-pack-receipt', type=Path)
             q.add_argument('--source-helper', type=Path)
             q.add_argument('--defer-to-independent-filesystem-verifier', action='store_true')
+            q.add_argument('--verified-existing-report', type=Path)
+            q.add_argument('--destination-ssh', type=Path)
     args = p.parse_args()
     if args.command == 'pack':
         pack(args)
