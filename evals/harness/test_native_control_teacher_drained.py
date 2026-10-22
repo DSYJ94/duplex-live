@@ -41,13 +41,15 @@ class PlayoutDrain(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(sent,samples.tobytes())
         played,_=render_packets([(p['arrival_s'],np.frombuffer(audio[p['byte_offset']:p['byte_offset']+p['bytes']],dtype='<i2')) for p in packets],24000,0)
         self.assertLessEqual(len(played)/24000,report['observed_until_s']+.08)
+        self.assertLess(report['server_closed_at_s'],len(played)/24000)
+        self.assertEqual(report['server_closed_at_s'],next(e['received_at_s'] for e in events if e['type']=='session.closed'))
         self.assertFalse(report['training_approved'])
-        self.assertTrue(drained.verify_drain(events)['actual_preclose_drain_verified'])
+        self.assertTrue(drained.verify_drain(events,report)['actual_postclose_drain_verified'])
         broken=[dict(e) for e in events]
         end=next(e for e in broken if e['type']=='local.output.drain.completed')
         end['received_at_s']-=4
-        with self.assertRaisesRegex(ValueError,'closure preceded'):
-            drained.verify_drain(broken)
+        with self.assertRaisesRegex(ValueError,'observation ended'):
+            drained.verify_drain(broken,report)
 
     async def test_capture_one_and_verifier_preserve_full_raw_record_and_reject_drain_tampering(self):
         import soundfile as sf
@@ -70,7 +72,7 @@ class PlayoutDrain(unittest.IsolatedAsyncioTestCase):
             next(e for e in events if e['type']=='local.output.drain.completed')['playout_end_sample']-=1
             (folder/'events.jsonl').write_text(''.join(json.dumps(e)+'\n' for e in events))
             record['artifacts']['events.jsonl']=drained.sha256(folder/'events.jsonl')
-            with self.assertRaisesRegex(ValueError,'closure preceded'):
+            with self.assertRaisesRegex(ValueError,'observation ended'):
                 drained.verify_exact_record(root,dict(id=sid,frames=1920),folder,'fixture-audit',record)
 
     async def test_only_one_new_session_is_allowed_before_accessing_data(self):
@@ -78,17 +80,17 @@ class PlayoutDrain(unittest.IsolatedAsyncioTestCase):
             with self.assertRaisesRegex(ValueError,'Exactly one'):
                 await drained.collect(*(Path('absent') for _ in range(6)),'fixture-key',Path('lease'),concurrency=n)
 
-    async def test_excessive_backlog_times_out_before_requesting_close(self):
+    async def test_excessive_backlog_fails_closed_without_trimming(self):
         clock,socket=Clock(),BacklogSocket()
         async def trigger(ws,pcm,source_samples,emit,**kwargs):
             kwargs['now']()
             emit(dict(type='session.output_audio.delta',received_at_s=0.,audio_bytes=30*48000))
-            await ws.send(json.dumps(dict(type='session.close')))
+            return dict(session_finalized=True,errors=[],observed_until_s=0.),b'raw',[],[]
         with patch.object(drained.original,'capture_stream',side_effect=trigger):
-            with self.assertRaisesRegex(TimeoutError,'within20 seconds'):
-                await drained.capture_stream(socket,np.zeros(1920,dtype='int16'),1920,lambda e:None,
-                                             now=clock.now,sleep=clock.sleep)
-        self.assertFalse(any(e['type']=='session.close' for e in socket.sent))
+            report,audio,_,_=await drained.capture_stream(socket,np.zeros(1920,dtype='int16'),1920,lambda e:None,
+                                                       now=clock.now,sleep=clock.sleep)
+        self.assertEqual(report['errors'],[dict(error_type='TimeoutError',component='output_drain')])
+        self.assertEqual(audio,b'raw')
 
     def test_new_quality_schema_cannot_bypass_whole40_approval(self):
         from evals import native_control_teacher_drained_quality as quality

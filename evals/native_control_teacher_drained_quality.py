@@ -1,7 +1,7 @@
 """Complete40 teacher reapproval with explicit protocol transcript boundaries.
 
 The original v1 collector/evaluator and full v2 reapprovals remain immutable.
-This v4 evaluator validates mixed v1/exact-v2/drained-v3 provenance. No audio, ASR word,
+This v5 evaluator validates mixed v1/exact-v2/drained-v4 provenance. No audio, ASR word,
 timestamp, acceptance threshold or original approval is edited. A failed complete
 audit may supply byte-bound recognition evidence, never a passing subset.
 """
@@ -17,7 +17,7 @@ from evals import native_control_teacher_quality as original
 from evals import native_control_teacher_exact_quality as parent_quality
 from evals.native_control_teacher_drained import validate_collection
 
-SCHEMA = 'dl-native-control3-teacher-quality-v4'
+SCHEMA = 'dl-native-control3-teacher-quality-v5'
 JOIN_POLICY = 'protocol-delta-gap-word-boundary-v1'
 GAP_MS = 1000
 

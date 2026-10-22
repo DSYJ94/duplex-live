@@ -1,5 +1,5 @@
 {
-  "schema": "dl-control3-playout-drain-repair-v1",
+  "schema": "dl-control3-playout-drain-repair-v2",
   "failed_parent": "runs/native-control3-teachers-exact-20261022-v5",
   "failed_quality": "runs/native-control3-postteacher-20261022-v5/quality/teacher-quality.json",
   "diagnosis": "docs/NATIVE-CONTROL3-EXACT-V5-REVIEW-2026-10-22.json",
@@ -14,12 +14,31 @@
   "additional_input_samples": 0,
   "pcm_trimmed_or_suppressed": false,
   "thresholds_changed": false,
-  "preclose_playout_margin_s": 0.16,
-  "output_settle_s": 2.0,
   "maximum_additional_drain_s": 20.0,
   "fresh_capture_required": true,
   "original_failed_record_reapproved": false,
   "complete40_independent_approval_required": true,
   "native_student_inference_changed": false,
-  "training_approved": false
+  "training_approved": false,
+  "at_utc": "2026-10-22T14:29:48.744414+00:00",
+  "actual_server_close_preserved": true,
+  "actual_monotonic_client_observation_includes_postclose_playout": true,
+  "physical_speaker_audition_claimed": false,
+  "packet_playout_margin_s": 0.16,
+  "observed_clock_definition": "Real client observation through causal scheduled packet playout; separate original server_closed_at_s is mandatory",
+  "failed_preclose_attempt": {
+    "source_commit": "bd4362c323d3d9e590cbe43a812349412e9fc95b",
+    "directory": "runs/native-control3-teachers-drained-20261022-v6",
+    "exec": 24849,
+    "terminal_exit": 1,
+    "session_finalized": false,
+    "input_samples": 1005120,
+    "received_audio_packets": 926,
+    "observed_until_s": 95.47131,
+    "errors": [
+      "TimeoutError",
+      "input_sender TimeoutError"
+    ],
+    "finding": "Service emits continuous PCM after input finishes; waiting for output to settle before requesting close cannot complete. Preserve this failed attempt; do not reuse its output."
+  }
 }

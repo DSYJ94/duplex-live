@@ -1,7 +1,7 @@
 """Repair only the diagnosed capture backlog; preserve exact prompt and every PCM sample.
 
-The v1/v2 collectors remain immutable. This v3 collector waits for causal playout
-and a two-second output-settle interval BEFORE requesting actual session closure.
+The v1/v2 collectors remain immutable. This v3 collector preserves actual server closure
+then measures causal client playout completion on the original monotonic clock.
 It sends no extra input, never trims audio, and fails after20 drain seconds.
 """
 import argparse
@@ -22,19 +22,19 @@ from evals.native_control_teacher_artifacts import input_availability, verify_re
 from evals.native_control_teacher_exact_quality import verify as verify_parent_quality
 
 MODEL = original.MODEL
-PROTOCOL = 'native-control3-exact-reference-playout-drain-v3'
+PROTOCOL = 'native-control3-exact-reference-playout-drain-v4'
 ARTIFACTS = original.ARTIFACTS
 FAILED_IDS = ['native-control3-train-006']
 atomic_json, collection_lock, local_key = original.atomic_json, original.collection_lock, original.local_key
 configuration = exact.configuration
 DRAIN_MARGIN_S = .16
-OUTPUT_SETTLE_S = 2.
 MAXIMUM_DRAIN_S = 20.
 
 
 class ConfiguredSocket:
-    def __init__(self, socket, emit, close):
-        self.socket, self.emit, self.close = socket, emit, close
+    """Keep exact TRAIN instructions; preserve actual server close timestamps."""
+    def __init__(self, socket, emit):
+        self.socket, self.emit = socket, emit
 
     async def send(self, raw):
         message = json.loads(raw)
@@ -45,8 +45,6 @@ class ConfiguredSocket:
             self.emit(dict(type='local.teacher.configuration', protocol=PROTOCOL,
                            session_config_sha256=hashlib.sha256(json.dumps(configuration(), sort_keys=True).encode()).hexdigest(),
                            received_at_s=None))
-        if message['type'] == 'session.close':
-            await self.close()
         await self.socket.send(json.dumps(message))
 
     def __aiter__(self):
@@ -59,8 +57,7 @@ async def capture_stream(ws, pcm16, source_samples, emit, *, now=time.monotonic,
     def clock():
         nonlocal origin
         value = now()
-        # Original recorder's first clock read is session.started, before any
-        # sender or receive timestamp. Preserve that same monotonic origin.
+        # First read in the unchanged recorder is actual session.started.
         if origin is None:
             origin = value
         return value
@@ -73,51 +70,59 @@ async def capture_stream(ws, pcm16, source_samples, emit, *, now=time.monotonic,
             packet_count += 1
         emit(event)
 
-    async def close_after_drain():
-        if origin is None or not packet_count:
-            raise ValueError('Cannot drain an unobserved teacher output')
+    report, audio, packets, transcripts = await original.capture_stream(
+        ConfiguredSocket(ws, record), pcm16, source_samples, record,
+        now=clock, sleep=sleep, audio_sink=audio_sink)
+    if report['session_finalized'] and not report['errors']:
+        report['server_closed_at_s'] = report['observed_until_s']
         started = now() - origin
         record(dict(type='local.output.drain.started', received_at_s=started,
-                    maximum_drain_s=MAXIMUM_DRAIN_S, playout_margin_s=DRAIN_MARGIN_S,
-                    output_settle_s=OUTPUT_SETTLE_S))
-        while True:
-            elapsed = now() - origin
-            target = max(cursor / 24000 + DRAIN_MARGIN_S, last_arrival + OUTPUT_SETTLE_S)
-            if elapsed >= target:
-                break
-            if target - started > MAXIMUM_DRAIN_S or elapsed - started >= MAXIMUM_DRAIN_S:
+                    server_closed_at_s=report['server_closed_at_s'],
+                    maximum_drain_s=MAXIMUM_DRAIN_S, playout_margin_s=DRAIN_MARGIN_S))
+        try:
+            target = cursor / 24000 + DRAIN_MARGIN_S
+            if not packet_count or target - started > MAXIMUM_DRAIN_S:
                 raise TimeoutError('Actual output playout cannot drain within20 seconds')
-            await sleep(min(.25, max(.001, target - elapsed)))
-        record(dict(type='local.output.drain.completed', received_at_s=now() - origin,
-                    playout_end_sample=cursor, output_packets=packet_count,
-                    last_output_arrival_s=last_arrival))
+            async with asyncio.timeout(MAXIMUM_DRAIN_S + .5):
+                while now() - origin < target:
+                    await sleep(min(.25, max(.001, target - (now() - origin))))
+            ended = now() - origin
+            if ended - started > MAXIMUM_DRAIN_S + .08:
+                raise TimeoutError('Actual output drain exceeded20 seconds')
+            record(dict(type='local.output.drain.completed', received_at_s=ended,
+                        playout_end_sample=cursor, output_packets=packet_count,
+                        last_output_arrival_s=last_arrival))
+            report['observed_until_s'] = ended
+        except TimeoutError:
+            report['errors'].append(dict(error_type='TimeoutError', component='output_drain'))
+            report['observed_until_s'] = now() - origin
+    return report, audio, packets, transcripts
 
-    return await original.capture_stream(ConfiguredSocket(ws, record, close_after_drain), pcm16,
-                                         source_samples, record, now=clock, sleep=sleep, audio_sink=audio_sink)
 
-
-def verify_drain(events):
+def verify_drain(events, report):
     begin = [e for e in events if e['type'] == 'local.output.drain.started']
     end = [e for e in events if e['type'] == 'local.output.drain.completed']
     closed = [e for e in events if e['type'] == 'session.closed']
     completed = [e for e in events if e['type'] == 'local.input.completed']
     outputs = [e for e in events if e['type'] == 'session.output_audio.delta']
     if len(begin) != 1 or len(end) != 1 or len(closed) != 1 or len(completed) != 1 or not outputs:
-        raise ValueError('Complete actual pre-close output-drain trace required')
+        raise ValueError('Complete actual post-close output-drain trace required')
     a, b = begin[0], end[0]
     cursor = 0
     for event in outputs:
         cursor = max(cursor, math.ceil(event['received_at_s'] * 24000)) + event['audio_bytes'] // 2
     if (a['maximum_drain_s'] != MAXIMUM_DRAIN_S or a['playout_margin_s'] != DRAIN_MARGIN_S
-            or a['output_settle_s'] != OUTPUT_SETTLE_S
-            or not completed[0]['received_at_s'] <= a['received_at_s'] <= b['received_at_s'] <= closed[0]['received_at_s']
+            or a['server_closed_at_s'] != closed[0]['received_at_s']
+            or report['server_closed_at_s'] != closed[0]['received_at_s']
+            or report['observed_until_s'] != b['received_at_s']
+            or not completed[0]['received_at_s'] <= closed[0]['received_at_s'] <= a['received_at_s'] <= b['received_at_s']
+            or any(e['received_at_s'] > closed[0]['received_at_s'] for e in outputs)
             or b['received_at_s'] - a['received_at_s'] > MAXIMUM_DRAIN_S + .08
             or b['playout_end_sample'] != cursor or b['output_packets'] != len(outputs)
             or b['last_output_arrival_s'] != outputs[-1]['received_at_s']
-            or b['received_at_s'] < max(cursor / 24000 + DRAIN_MARGIN_S,
-                                         outputs[-1]['received_at_s'] + OUTPUT_SETTLE_S)):
-        raise ValueError('Actual teacher closure preceded complete unchanged packet playout')
-    return dict(actual_preclose_drain_verified=True, output_samples_preserved=True)
+            or b['received_at_s'] < cursor / 24000 + DRAIN_MARGIN_S):
+        raise ValueError('Actual client observation ended before complete unchanged packet playout')
+    return dict(actual_postclose_drain_verified=True, output_samples_preserved=True)
 
 
 async def capture_one(raw, row, folder, source_audit_sha, key, *, connector=None):
@@ -135,7 +140,7 @@ async def capture_one(raw, row, folder, source_audit_sha, key, *, connector=None
     sf.write(folder / 'user_in.wav', pcm, rate, subtype='FLOAT')
     pcm16 = (pcm * 32767).astype('<i2')
     (folder / 'input-stream.pcm').write_bytes(pcm16.tobytes())
-    environment = dict(schema='dl-native-control3-teacher-environment-v3', purpose='teacher',
+    environment = dict(schema='dl-native-control3-teacher-environment-v4', purpose='teacher',
                        model=MODEL, protocol=PROTOCOL, source_id=row['id'],
                        source_raw_manifest_sha256=sha256(raw / 'raw-source.json'),
                        source_word_audit_sha256=source_audit_sha, input_user_wav_sha256=sha256(source),
@@ -206,7 +211,7 @@ def verify_exact_record(raw, row, folder, source_audit_sha, record):
         if path.is_symlink() or sha256(path) != digest:
             raise ValueError('Raw teacher artifact changed or is not self-contained')
     environment = json.loads((folder / 'environment.json').read_text())
-    expected = dict(schema='dl-native-control3-teacher-environment-v3', purpose='teacher',
+    expected = dict(schema='dl-native-control3-teacher-environment-v4', purpose='teacher',
                     model=MODEL, protocol=PROTOCOL, source_id=row['id'],
                     source_raw_manifest_sha256=sha256(raw / 'raw-source.json'),
                     source_word_audit_sha256=source_audit_sha,
@@ -240,7 +245,7 @@ def verify_exact_record(raw, row, folder, source_audit_sha, record):
             or len(completed) != 1 or not report['session_finalized'] or report['errors']
             or report['source_samples'] != row['frames'] or report['added_silence_samples'] != 15 * 24000
             or report['sent_input_samples'] != len(wanted)
-            or report['observed_until_s'] != closed[0]['received_at_s']
+            or report['server_closed_at_s'] != closed[0]['received_at_s']
             or report['observed_until_s'] < completed[0]['received_at_s']
             or completed[0]['received_at_s'] < sent[-1]['received_at_s']
             or completed[0]['source_samples'] != row['frames']
@@ -278,7 +283,7 @@ def verify_exact_record(raw, row, folder, source_audit_sha, record):
                             for e in events if e['type'] in ('session.input_transcript.delta', 'session.output_transcript.delta')]
     if json.loads((folder / 'transcripts.json').read_text()) != expected_transcripts:
         raise ValueError('Teacher transcripts differ from the original received deltas')
-    verify_drain(events)
+    verify_drain(events, report)
     return dict(id=row['id'], transport_integrity_passed=True, training_approved=False,
                 behavior_or_label_quality_approved=False)
 
@@ -304,7 +309,7 @@ def validate_collection(raw, source_audit, batch):
     parent = parent_evidence(raw, source_audit, parent_batch, quality, diagnosis)
     source, plan = validate_raw(raw)
     ids = [s['id'] for s in plan['cases']]
-    if (manifest['schema'] != 'dl-native-control3-teacher-collection-v3'
+    if (manifest['schema'] != 'dl-native-control3-teacher-collection-v4'
             or manifest['model'] != MODEL or manifest['protocol'] != 'mixed-v1-v2-and-' + PROTOCOL
             or manifest['code_sha256'] != sha256(Path(__file__))
             or manifest['source_raw_manifest_sha256'] != sha256(raw / 'raw-source.json')
@@ -345,7 +350,7 @@ async def collect(raw, source_audit, parent_batch, quality, diagnosis, out, key,
             folder.mkdir()
             for name in ARTIFACTS:
                 shutil.copy2(parent_batch / record['id'] / name, folder / name)
-        receipt = dict(schema='dl-native-control3-teacher-collection-v3', model=MODEL,
+        receipt = dict(schema='dl-native-control3-teacher-collection-v4', model=MODEL,
                        protocol='mixed-v1-v2-and-' + PROTOCOL,
                        source_raw_manifest_sha256=sha256(raw / 'raw-source.json'),
                        source_word_audit_sha256=sha256(source_audit), source_plan_sha256=source['plan_sha256'],
