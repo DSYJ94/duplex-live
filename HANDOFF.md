@@ -1,3 +1,61 @@
+# LOCAL — budget50; exact teacher audit39/40 (22 October 15:02 London)
+
+LOCAL sole executor; CLOUD read-only. Executable source33adf815be6c6e023066051a7328adf9660e6910
+committed/pushed. Native7590052 remains unadopted; latest actual training stage8
+updates/Adam520→528. No new optimizer work or GPU submissions. Original49 approved
+teacher histories/all28 actual-history components/full154 objectives/KL1+hidden10
+and heldout hashes remain unchanged. Goal ACTIVE.
+
+User increased TOTAL Runpod compute cap to50USD (not50additional). Fresh attributed
+four-pod spend20.096006687846966USD; remaining29.903993312153034USD. Sole100GB
+volume49yytzyoge remains7USD/month separately approved. Unrelated Aurium resources
+excluded/untouched. No duplex Pod live at fresh read. Authorization and billing:
+docs/NATIVE-BUDGET-AUTHORIZATION-2026-10-22.json. Refresh stock/price before provision;
+prior EUR-IS-1 Blackwell96GB2.49/hr availability is historical, runtime unqualified.
+
+Original source ALL168/40 approved. Original teacher rounds35/40→derived36/40→
+four-record repair38/40→two-record followup38/40; every failed batch retained.
+Explicit exact-reference TRAIN protocol changes only teacher session instructions,
+not student inference/source PCM/thresholds. First exact concurrent attempt42878
+TERMINAL1: upload starvation/TimeoutError and cancellation; partials preserved.
+Stopped bulk S3; sequential exact collector90815 TERMINAL0, all40 transport complete
+in runs/native-control3-teachers-exact-20261022-v5. Retains38 byte-identical prior
+records, only006/029 newly captured. Server-echoed instructions checked.
+
+Postteacher supervisor26118 TERMINAL1 at verify_quality40; root
+runs/native-control3-postteacher-20261022-v5. Independent audit39/40 (38 cached
+byte-bound,2 new turbo recognitions). Both new006/029 now pass exact word/phase
+and quiet checks.006 ONLY fails recorded-waveform duration guard: actual observation
+44.661378584s, WAV50.538416667s, excess5.877038083s/141049samples allzero; last nonzero
+8.527458333s. Evidence docs/NATIVE-CONTROL3-EXACT-V5-REVIEW-2026-10-22.json.
+Do not trim zeros or weaken timing bar to pass. Diagnose packet/render/close clocks
+and repair capture mechanics in a new version before complete40 reapproval.
+No semantic, conversion, cache, numerical approval, GPU or training followed failure.
+No current teacher/quality/semantic/GPU/optimizer process; no duplicate pipeline.
+
+Original67.764GB native archive verified on Mac+Runpod. Original40teacher/source
+backup3318files also independently verified. NEW earlier-repair archive LOCAL verified:
+863files/1,026,645,355B; lossless114,791,298B SHA256
+b8ddc64b2f90206026b01ba3aab06cb9cbaf5a9daa50e38ff62a20246c237b15.
+Remote migration/control3-teacher-repairs-20261022/ on49yytzyoge remains PARTIAL:
+12/28 independently GET-verified chunks(0–10,13), no complete reconstruction proof.
+All upload processes terminal; preserve existing chunks and resume ignored script
+runs/local-asr-20261021/upload-control3-repair-chunks.py. Do not overlap bulk transfer
+with actual live voice capture. Latest exact-v4/v5 and postteacher-v5 are not yet
+in that archive. Whole Isambard/project backup still partial. Owner audio/credentials/
+session-token/quarantined cores excluded. API key stays on Mac only.
+
+NEXT: diagnose006 actual packet timing/rendering; versioned capture repair and
+whole40 quality+independent verifier, semantic40+verifier, conversion40+verifier.
+Then integrate distinct control40 native cache/Engine ownership and numerical gate
+without falsifying old24/25/49 schemas; prepare bounded repair pilot within50USD.
+Independent state restore plus native10/ordinary4/fresh paired40 and real asynchronous
+delegation remain required before extension/adoption. Silence Geronimo diagnostic
+still0/9; no native behavioral fix trained. Backend component-only probe4 calls passed;
+this does not qualify learned native routing. Remote evaluation still needs local
+credential broker. Research map/cookbook saved; no Qwen fallback or frontend mute.
+Unrelated pycache/capability-retention files/roadmap preserved. No Cloud handoff requested.
+
 # LOCAL — complete teacher batch diagnosed and backed up (21 October 23:34 London)
 
 LOCAL remains sole executor; CLOUD read-only. Executable source main

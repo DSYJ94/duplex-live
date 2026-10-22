@@ -1,0 +1,56 @@
+{
+  "schema": "dl-native-compute-budget-authorization-v1",
+  "at_utc": "2026-10-22 13:51:28 UTC",
+  "authorization": "User increased total Runpod compute cap from25USD to50USD in this LOCAL chat on22October2026.",
+  "previous_total_cap_usd": 25,
+  "total_cap_usd": 50,
+  "additional_cap_usd": 25,
+  "attributed_spend_usd": 20.096006687846966,
+  "remaining_compute_budget_usd": 29.903993312153034,
+  "billing_window": {
+    "bucketSize": "day",
+    "endTime": "2026-10-23T00:00:00Z",
+    "startTime": "2026-10-21T00:00:00Z"
+  },
+  "billing_rows": [
+    {
+      "cpuAmount": 0,
+      "diskAmount": 0.00833333283662796,
+      "endTime": "2026-10-22T00:00:00Z",
+      "gpuAmount": 3.580867635086179,
+      "podId": "i20euy4x58fo1m",
+      "startTime": "2026-10-21T00:00:00Z",
+      "totalAmount": 3.5892009679228067
+    },
+    {
+      "cpuAmount": 0.09021293348632753,
+      "diskAmount": 0.003935185610316694,
+      "endTime": "2026-10-22T00:00:00Z",
+      "gpuAmount": 0,
+      "podId": "kgy1ygl8i5p1u5",
+      "startTime": "2026-10-21T00:00:00Z",
+      "totalAmount": 0.09414811909664422
+    },
+    {
+      "cpuAmount": 0,
+      "diskAmount": 0.013888888992369175,
+      "endTime": "2026-10-22T00:00:00Z",
+      "gpuAmount": 15.987963229417801,
+      "podId": "q3wqjwols44aos",
+      "startTime": "2026-10-21T00:00:00Z",
+      "totalAmount": 16.00185211841017
+    },
+    {
+      "cpuAmount": 0,
+      "diskAmount": 0.00069444440305233,
+      "endTime": "2026-10-22T00:00:00Z",
+      "gpuAmount": 0.4101110380142927,
+      "podId": "vgp8bfskvrcotf",
+      "startTime": "2026-10-21T00:00:00Z",
+      "totalAmount": 0.41080548241734505
+    }
+  ],
+  "unrelated_resources_excluded": true,
+  "storage_approval_unchanged": true,
+  "new_gpu_created_for_this_update": false
+}

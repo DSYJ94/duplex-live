@@ -1,0 +1,19 @@
+{
+  "schema": "dl-control3-exact-v5-failure-diagnostic-v1",
+  "at_utc": "2026-10-22T14:01:07.484688+00:00",
+  "id": "native-control3-train-006",
+  "wav_sha256": "13915e7b9ae7d580933a736157bc12885fb301c93d56a717d3007a36d71c4b48",
+  "samples": 1212922,
+  "sample_rate": 24000,
+  "duration_s": 50.53841666666667,
+  "observed_until_s": 44.661378583999976,
+  "beyond_observation_s": 5.877038082666694,
+  "beyond_observation_samples": 141049,
+  "beyond_observation_nonzero": 0,
+  "beyond_observation_peak": 0.0,
+  "last_nonzero_s": 8.527458333333334,
+  "word_agreement_passed": true,
+  "quiet_interval_passed": true,
+  "training_approved": false,
+  "original_audio_changed": false
+}

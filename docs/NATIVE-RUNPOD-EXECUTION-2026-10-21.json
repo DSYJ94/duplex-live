@@ -1,8 +1,8 @@
 {
   "schema": "dl-runpod-native-trial-status-v2",
-  "at_utc": "2026-10-21T22:34:49.201353+00:00",
+  "at_utc": "2026-10-22T14:02:50.161590+00:00",
   "executor": "LOCAL",
-  "source_commit": "10ea6d9c48b500570f4c654e8907d59c5f3f8a5e",
+  "source_commit": "33adf815be6c6e023066051a7328adf9660e6910",
   "trial": {
     "pod_id": "q3wqjwols44aos",
     "created_utc": "2026-10-21T09:15:37.923Z",
@@ -159,8 +159,8 @@
     "fresh40_run": false,
     "adopted": false
   },
-  "progress_utc": "2026-10-21T22:34:49.201353+00:00",
-  "current_source": "10ea6d9c48b500570f4c654e8907d59c5f3f8a5e",
+  "progress_utc": "2026-10-22T11:22:18.274855+00:00",
+  "current_source": "33adf815be6c6e023066051a7328adf9660e6910",
   "cpu_staging": {
     "schema": "dl-runpod-cpu-staging-execution-v1",
     "pod_id": "kgy1ygl8i5p1u5",
@@ -377,9 +377,9 @@
   "quiet_supervision_source_audit": "docs/NATIVE-QUIET-SUPERVISION-AUDIT-2026-10-21.json",
   "goal_status": {
     "migration_and_usable_experimental_test_path": "complete",
-    "native_control_repair_and_full_qualification": "complete40_teacher_failure_diagnosed_new_versioned_repair_next",
+    "native_control_repair_and_full_qualification": "executing_versioned_exact_teacher_transport_recovery",
     "new_training_submitted": false,
-    "blocker": "Whole teacher batch unapproved35/40; conversion and native numerical/behavior approval pending",
+    "blocker": null,
     "completion_proven": false
   },
   "control3_preparation": {
@@ -888,7 +888,7 @@
     ]
   },
   "current_active_native_jobs": [],
-  "local_continuation_note": "Supervisor42326 TERMINAL exit1 at complete40 teacher quality verifier; diagnostic44064 TERMINAL exit0; backup85844 TERMINAL exit0. No active collection/ASR/semantic/GPU/optimizer jobs launched by this continuation. LOCAL remains executor.",
+  "local_continuation_note": "LOCAL sole executor; exact collector90815 terminal0; postteacher26118 terminal1 at verify_quality40,39/40. No semantic/conversion/GPU/optimizer submission after failure.",
   "goal_clarification": "Strong native full-duplex voice and interaction control with basic native reasoning, plus learned asynchronous delegation to a stronger reasoning/tool backend; no Qwen fallback or hand-written router represented as learned policy.",
   "actual_backend_component_probe": {
     "schema": "dl-local-real-backend-component-probe-v1",
@@ -913,27 +913,49 @@
   },
   "research_map": "docs/FULL-DUPLEX-RESEARCH-MAP-2026-10-21.md",
   "control3_current": {
-    "source_generation": "runs/native-control3-source-20261021-v5",
-    "source_clips": 168,
     "source_clips_passed": 168,
-    "retained_byte_identical": 166,
-    "new_tts_1_hd_clips": [
-      "native-control3-train-020/turn3",
-      "native-control3-train-029/turn3"
-    ],
-    "exact_scripts_unchanged": true,
-    "gain_changed": false,
-    "source_audit": "runs/native-control3-approval-20261021-v4/source-audit/source-word-audit.json",
-    "teacher_sessions": 40,
-    "teacher_quality_passed": 35,
+    "source_clips_total": 168,
+    "teacher_quality_passed": 39,
+    "teacher_quality_total": 40,
+    "teacher_quality": "runs/native-control3-postteacher-20261022-v5/quality/teacher-quality.json",
     "whole_teacher_batch_approved": false,
-    "supervisor_exec": 42326,
-    "supervisor_terminal_exit": 1,
+    "old_repair_collectors_terminal": true,
+    "postteacher_exec": 26118,
+    "postteacher_terminal_exit": 1,
+    "postteacher_failed_stage": "verify_quality40",
     "semantic_submitted": false,
-    "conversion_completed": false,
-    "training_submitted": false,
-    "active_jobs": [],
-    "next": "Repair only diagnosed failed teacher records/derived transcript boundaries in a NEW version; complete40 reapproval then semantic/conversion/numerical approval and bounded native pilot."
+    "conversion_executed": false,
+    "exact_teacher_protocol": "native-control3-exact-reference-teacher-v2",
+    "exact_teacher_source": "33adf815be6c6e023066051a7328adf9660e6910",
+    "exact_teacher_directory": "runs/native-control3-teachers-exact-20261022-v5",
+    "exact_teacher_exec": 90815,
+    "exact_teacher_concurrency": 1,
+    "exact_teacher_status": "raw_complete_unapproved",
+    "maximum_new_sessions": 2,
+    "retained_byte_identical": 38,
+    "bulk_transfer_stopped_during_live_voice": true,
+    "prior_exact_failed_directory": "runs/native-control3-teachers-exact-20261022-v4",
+    "prior_exact_exec": 42878,
+    "prior_exact_terminal_exit": 1,
+    "prior_exact_transport_errors": [
+      "TimeoutError",
+      "CancelledError"
+    ],
+    "prior_exact_sent_input_seconds": [
+      17.52,
+      23.36
+    ],
+    "prior_exact_observation_seconds": [
+      95.419471375,
+      96.080683875
+    ],
+    "teacher_prompt_change_train_only": true,
+    "thresholds_or_source_words_or_input_audio_changed": false,
+    "native_optimizer_updates": 0,
+    "new_gpu_submitted": false,
+    "next": "Diagnose006 waveform/session-clock mismatch (allzero excess5.877038083s); versioned capture repair then complete40 quality, semantic, conversion and native numerical gates before bounded pilot.",
+    "exact_teacher_terminal_exit": 0,
+    "failure_review": "docs/NATIVE-CONTROL3-EXACT-V5-REVIEW-2026-10-22.json"
   },
   "control3_teacher40_persistence": {
     "schema": "dl-control3-teacher40-persistence-v1",
@@ -976,5 +998,95 @@
     "owner_conversations_or_credentials_included": false,
     "new_gpu_purchased": false
   },
-  "goal_tool_note": "Existing tool goal remains blocked from earlier missing-key turns; user supplied local key and resumed execution, actual source/teacher/backend API work succeeded. Tool does not expose an active/resume mutation. Repository status is current; objective is not achieved."
+  "goal_tool_note": "Goal tool is active again as confirmed22October. Full repair/qualification objective remains unachieved.",
+  "control3_repair_backup_current": {
+    "local_archive_verified": true,
+    "file_count": 863,
+    "uncompressed_bytes": 1026645355,
+    "archive_bytes": 114791298,
+    "archive_sha256": "b8ddc64b2f90206026b01ba3aab06cb9cbaf5a9daa50e38ff62a20246c237b15",
+    "destination_prefix": "migration/control3-teacher-repairs-20261022/",
+    "destination_volume": "49yytzyoge",
+    "destination_status": "partial_not_complete",
+    "verified_chunk_indices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      13
+    ],
+    "total_chunks": 28,
+    "archive_reconstruction_verified": false,
+    "source_bundle_tip": "6163c1a",
+    "multipart_exec89685_exit": 1,
+    "single_stream_multipart_exec93718_exit": 1,
+    "single_put_chunks_exec37181_exit": 1,
+    "all_transfers_now_stopped": true,
+    "resume_script": "runs/local-asr-20261021/upload-control3-repair-chunks.py",
+    "resume_after": "Both live voice sessions close; script resumes identical verified chunks without replacing them",
+    "prior_native_archive_and_original40_backups_still_verified": true
+  },
+  "budget_current": {
+    "schema": "dl-native-compute-budget-authorization-v1",
+    "at_utc": "2026-10-22 13:51:28 UTC",
+    "authorization": "User increased total Runpod compute cap from25USD to50USD in this LOCAL chat on22October2026.",
+    "previous_total_cap_usd": 25,
+    "total_cap_usd": 50,
+    "additional_cap_usd": 25,
+    "attributed_spend_usd": 20.096006687846966,
+    "remaining_compute_budget_usd": 29.903993312153034,
+    "billing_window": {
+      "bucketSize": "day",
+      "endTime": "2026-10-23T00:00:00Z",
+      "startTime": "2026-10-21T00:00:00Z"
+    },
+    "billing_rows": [
+      {
+        "cpuAmount": 0,
+        "diskAmount": 0.00833333283662796,
+        "endTime": "2026-10-22T00:00:00Z",
+        "gpuAmount": 3.580867635086179,
+        "podId": "i20euy4x58fo1m",
+        "startTime": "2026-10-21T00:00:00Z",
+        "totalAmount": 3.5892009679228067
+      },
+      {
+        "cpuAmount": 0.09021293348632753,
+        "diskAmount": 0.003935185610316694,
+        "endTime": "2026-10-22T00:00:00Z",
+        "gpuAmount": 0,
+        "podId": "kgy1ygl8i5p1u5",
+        "startTime": "2026-10-21T00:00:00Z",
+        "totalAmount": 0.09414811909664422
+      },
+      {
+        "cpuAmount": 0,
+        "diskAmount": 0.013888888992369175,
+        "endTime": "2026-10-22T00:00:00Z",
+        "gpuAmount": 15.987963229417801,
+        "podId": "q3wqjwols44aos",
+        "startTime": "2026-10-21T00:00:00Z",
+        "totalAmount": 16.00185211841017
+      },
+      {
+        "cpuAmount": 0,
+        "diskAmount": 0.00069444440305233,
+        "endTime": "2026-10-22T00:00:00Z",
+        "gpuAmount": 0.4101110380142927,
+        "podId": "vgp8bfskvrcotf",
+        "startTime": "2026-10-21T00:00:00Z",
+        "totalAmount": 0.41080548241734505
+      }
+    ],
+    "unrelated_resources_excluded": true,
+    "storage_approval_unchanged": true,
+    "new_gpu_created_for_this_update": false
+  }
 }
