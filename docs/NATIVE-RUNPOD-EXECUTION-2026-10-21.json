@@ -1,8 +1,8 @@
 {
   "schema": "dl-runpod-native-trial-status-v2",
-  "at_utc": "2026-10-22T16:58:14.451928+00:00",
+  "at_utc": "2026-10-22T22:55:37.803492+00:00",
   "executor": "LOCAL",
-  "source_commit": "4583aa631a1543ccd397156019dca7fa1f4eff6e",
+  "source_commit": "51ea2f71c970afd6472022eb9ea9d042227decd7",
   "trial": {
     "pod_id": "q3wqjwols44aos",
     "created_utc": "2026-10-21T09:15:37.923Z",
@@ -1103,41 +1103,43 @@
   "adapter_capacity_audit": "docs/NATIVE-ADAPTER-CAPACITY-2026-10-22.json",
   "interaction_delegation_curriculum": "docs/NATIVE-INTERACTION-DELEGATION-CURRICULUM-2026-10-22.md",
   "latest_control40_state": {
-    "schema": "dl-control3-scoped-v9-failure-review-v1",
-    "at_utc": "2026-10-22T16:58:14.451928+00:00",
-    "source_commit": "4583aa631a1543ccd397156019dca7fa1f4eff6e",
-    "teacher_root": "runs/native-control3-teachers-scoped-20261022-v9",
-    "complete_quality_root": "runs/native-control3-postteacher-20261022-v7/quality",
-    "quality_sha256": "c2593308b0d4bcfb7c29689b2133b9a62c0344699e0cbb43903b0c0bb821e614",
-    "passed": false,
-    "all40_complete": true,
-    "diagnostic_file": "runs/native-control3-teacher-diagnostic-20261022-v7/diagnostic.json",
-    "diagnostic_sha256": "f13703808661f68efaca1eb223cb80e691b2951dab2cbbc12c2c48f31502084b",
-    "failed_record": {
-      "id": "native-control3-train-006",
-      "original_failed_reasons": [
-        "Missing, early, extra or restarted answer in authored phase1",
-        "Teacher contains speech outside its commanded answer phases"
-      ],
-      "turbo_text": " Reflected light carries light to your eyes.",
-      "model_text": "Reflected light carries light to your eyes.",
-      "large_v3_text": " Reflected light carries light to your eyes.",
-      "wav_sha256": "68f5929aab525d91745e8a9a8ba81db8dc21b11ff39d761366680c891bbf105d",
-      "duration_s": 50.46075,
-      "observed_until_s": 50.62194633400213,
-      "beyond_observation_s": 0.0,
-      "beyond_observation_peak": 0.0,
-      "peak": 0.37109375,
-      "asr_file": "native-control3-train-006.large-v3.json",
-      "asr_sha256": "2202415e903d081329ef86534b8bd5ac0de0dc997a70dfb6de01c6a0bd261dcb"
+    "schema": "dl-control3-webrtc-active-execution-v1",
+    "at_utc": "2026-10-22T22:55:37.803492+00:00",
+    "executor": "LOCAL",
+    "cloud_read_only": true,
+    "source_commit": "51ea2f71c970afd6472022eb9ea9d042227decd7",
+    "quality": {
+      "exec_session": 11327,
+      "pid": 60757,
+      "birth": "Thu Oct 22 23:47:11 2026",
+      "root": "/private/tmp/duplex-control3-review-4583aa6/runs/native-control3-webrtc-reapproval-20261022-v1",
+      "all40_initial_scene_checks_passed": true,
+      "server_reflected_input_words_passed": true,
+      "independent_final_verifier": "running_at_last_handle_poll"
     },
-    "next_action": "One declared WebRTC transport diagnostic with unchanged source and scoped reference; no data approval or threshold change",
-    "native_control_codec_cache_source": "evals/native_control_cache.py",
-    "actual_codec_execution": false,
-    "native_training_integration_complete": false,
-    "training_approved": false,
+    "followon": {
+      "exec_session": 13707,
+      "script": "runs/local-asr-20261021/follow-control3-webrtc-v1.py",
+      "script_sha256": "6c8ad8dbe9dbb40a7938bbc3ac8c74aace4b5cd1933920a299fee1502baff0b6",
+      "log": "/private/tmp/control3-webrtc-followon-v1.log",
+      "output": "runs/native-control3-webrtc-postteacher-20261022-v1",
+      "phase": "waiting_for_actual_review_process",
+      "no_duplicate_quality_or_capture_submission": true,
+      "next_stages": [
+        "independent whole40 verification",
+        "independent semantic40 review and verifier",
+        "complete40 conversion and verifier",
+        "canonical rsync copyback with all hashes"
+      ]
+    },
+    "new_backup_receipt": "docs/NATIVE-CONTROL3-TRANSPORT-PERSISTENCE-2026-10-22.json",
+    "new_backup_verified_files": 2343,
+    "new_backup_archive_sha256": "619019218fac1f948aa6124aaf89d7b54def65643a89fb7e12cca9c96903ad20",
+    "new_backup_includes_reapproval": false,
     "new_optimizer_updates": 0,
-    "new_gpu_purchased": false
+    "new_gpu_purchased": false,
+    "goal_status": "active",
+    "unrelated_local_work_preserved": true
   },
-  "latest_repair_backup_receipt": "docs/NATIVE-CONTROL3-REPAIRS-PERSISTENCE-2026-10-22.json"
+  "latest_repair_backup_receipt": "docs/NATIVE-CONTROL3-TRANSPORT-PERSISTENCE-2026-10-22.json"
 }

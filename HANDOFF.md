@@ -1,3 +1,45 @@
+# LOCAL — initial40/40, independent verifier/controller live; latest backup verified (22 October 23:55 London)
+
+LOCAL sole executor; CLOUD read-only. Executable source51ea2f71c970afd6472022eb9ea9d042227decd7.
+Full40 initial audit now reports ALL40 scene checks pass and independent received-input
+words pass, using39 retained recordings and new WebRTC006. This remains provisional
+until independent final verifier finishes. ACTUAL LIVE review exec11327, PID60757,
+birth Thu Oct22 23:47:11 2026, cwd /private/tmp/duplex-control3-review-4583aa6.
+Root runs/native-control3-webrtc-reapproval-20261022-v1; log
+/private/tmp/control3-webrtc-reapproval-v1.log. Do not rerun based on quiet log/state.
+Poll actual handle/process. Previous failed39/40 artifacts remain immutable.
+
+ONE follow-on controller exec13707 is LIVE, waiting for exact process60757/birth
+before independently verifying full40, then running semantic40+verifier, conversion40
++verifier and copying both result roots to canonical repo with rsync and all hashes.
+No GPU/training in this controller. Script runs/local-asr-20261021/follow-control3-webrtc-v1.py,
+SHA recorded in NATIVE-CONTROL3-WEBRTC-ACTIVE-2026-10-22.json; log
+/private/tmp/control3-webrtc-followon-v1.log. Output
+runs/native-control3-webrtc-postteacher-20261022-v1. An initial launch failed before
+starting any Python/API because script was written relative to the temporary cwd;
+corrected saved canonical script is the ONE live controller. It holds a local lock,
+waits actual process birth, creates fresh output only, and never restarts captures.
+If it fails, preserve state/artifacts and diagnose; never start duplicates by files alone.
+
+New transport delta is NOW verified remotely:2343files/3,133,963,317B uncompressed;
+archive345,846,177B SHA619019218fac1f948aa6124aaf89d7b54def65643a89fb7e12cca9c96903ad20.
+All83 ordered single-PUT chunks independently downloaded and reconstructed on Mac.
+Volume49yytzyoge prefix migration/control3-transport-repairs-20261022-v1/.
+Uploader93347 TERMINAL0. Source bundle51ea2f7, prerequisite6163c1a. Includes failed
+exact/drained/scoped captures, both WebRTC captures and diagnostics. Receipt
+NATIVE-CONTROL3-TRANSPORT-PERSISTENCE-2026-10-22.json. Current full40 reapproval and
+future semantic/conversion are NOT included; preserve and back up subsequent delta.
+Earlier863-file delta, original3318-file source/teacher backup and67.764GB native
+archive all independently verified. Whole Isambard project remains partial.
+
+No new optimizer updates or paid GPU. Budget TOTAL50USD, last fresh13:51UTC compute
+20.096006687846966USD; no compute purchases since. Native7590052 remains unadopted,
+latest actual8 updates/Adam520→528. After complete40 data chain passes: finish actual
+native codec/Engine-input/numerical/gradient/trainer integration, then bounded pilot,
+independent full restore and native behavioral evaluation before extension/adoption.
+Retain old49/28/154/KL1/hidden10 and heldout hashes. Broader microturn/backchannel/
+delegation curriculum still required. Goal ACTIVE, no Cloud handoff or user blocker.
+
 # LOCAL — server input witness exact; independent full40 reapproval ready (22 October23:46 London)
 
 LOCAL sole executor, CLOUD read-only. Source before this commit a058588d473bd55bae97707a4995ecdf3ce29886.

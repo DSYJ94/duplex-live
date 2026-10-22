@@ -1,0 +1,39 @@
+{
+  "schema": "dl-control3-webrtc-active-execution-v1",
+  "at_utc": "2026-10-22T22:55:37.803492+00:00",
+  "executor": "LOCAL",
+  "cloud_read_only": true,
+  "source_commit": "51ea2f71c970afd6472022eb9ea9d042227decd7",
+  "quality": {
+    "exec_session": 11327,
+    "pid": 60757,
+    "birth": "Thu Oct 22 23:47:11 2026",
+    "root": "/private/tmp/duplex-control3-review-4583aa6/runs/native-control3-webrtc-reapproval-20261022-v1",
+    "all40_initial_scene_checks_passed": true,
+    "server_reflected_input_words_passed": true,
+    "independent_final_verifier": "running_at_last_handle_poll"
+  },
+  "followon": {
+    "exec_session": 13707,
+    "script": "runs/local-asr-20261021/follow-control3-webrtc-v1.py",
+    "script_sha256": "6c8ad8dbe9dbb40a7938bbc3ac8c74aace4b5cd1933920a299fee1502baff0b6",
+    "log": "/private/tmp/control3-webrtc-followon-v1.log",
+    "output": "runs/native-control3-webrtc-postteacher-20261022-v1",
+    "phase": "waiting_for_actual_review_process",
+    "no_duplicate_quality_or_capture_submission": true,
+    "next_stages": [
+      "independent whole40 verification",
+      "independent semantic40 review and verifier",
+      "complete40 conversion and verifier",
+      "canonical rsync copyback with all hashes"
+    ]
+  },
+  "new_backup_receipt": "docs/NATIVE-CONTROL3-TRANSPORT-PERSISTENCE-2026-10-22.json",
+  "new_backup_verified_files": 2343,
+  "new_backup_archive_sha256": "619019218fac1f948aa6124aaf89d7b54def65643a89fb7e12cca9c96903ad20",
+  "new_backup_includes_reapproval": false,
+  "new_optimizer_updates": 0,
+  "new_gpu_purchased": false,
+  "goal_status": "active",
+  "unrelated_local_work_preserved": true
+}

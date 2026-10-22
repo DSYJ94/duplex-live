@@ -1,0 +1,628 @@
+{
+  "schema": "dl-control3-transport-repair-chunk-persistence-v1",
+  "at_utc": "2026-10-22T22:52:43.642186+00:00",
+  "bucket": "49yytzyoge",
+  "prefix": "migration/control3-transport-repairs-20261022-v1/",
+  "archive_file_count": 2343,
+  "archive_uncompressed_bytes": 3133963317,
+  "archive_bytes": 345846177,
+  "archive_sha256": "619019218fac1f948aa6124aaf89d7b54def65643a89fb7e12cca9c96903ad20",
+  "all_internal_archive_hashes_match": true,
+  "every_destination_chunk_hash_matches": true,
+  "complete_destination_archive_reconstruction_hash_matches": true,
+  "archive_object_uploaded": false,
+  "storage_format": "lossless ordered single-PUT chunks plus index",
+  "chunks": [
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0000.bin",
+      "sha256": "e65ba65ab790275fa2c2587391efa4dd8d5c6669e3ab00a8da6a80894faa3891",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:51:02.045497+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0001.bin",
+      "sha256": "ca28495603ddf89408850b5ce72fb78986d78ad1e2ed4d536d84626639d98a90",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:51:04.382156+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0002.bin",
+      "sha256": "75f462b05bf83529b8e330210a02058935065dab7eb13787588f3c400a502ed2",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:51:05.697136+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0003.bin",
+      "sha256": "be163c079f1cd3c652da6348e0ad60044247c0f35d956d6fc81a9e9bd246c9c5",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:51:06.612749+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0004.bin",
+      "sha256": "9297c2acab5f96c9dbd261462abea9500b45816714cfacc912ff0d7b812700f3",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:51:07.539991+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0005.bin",
+      "sha256": "c2095caa7d300cafca754e4c1f06f66173a056a64d3490334a2b56a7a69fbffb",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:51:08.609331+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0006.bin",
+      "sha256": "4577ddfb167eb0aa6ab0f0c30bbdd6efca9be4253cce836ef65ed204e7efbd25",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:51:09.548025+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0007.bin",
+      "sha256": "ca745792c6a22e6765b8ee1c894d8e55a6c714d2fee9280ccc63518f360daa1f",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:51:10.879525+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0008.bin",
+      "sha256": "4286d31e4d63191bc357f8697033498178c34b867b5cce1ddffc45a2803ebebb",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:51:11.814302+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0009.bin",
+      "sha256": "ccfd5cd849b42efb95ab4c8afdc83d2a361f0cc1097d52703f88f3eba04fc5dc",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:51:13.209408+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0010.bin",
+      "sha256": "b24511dc08d435364e4526b6739ca31c27b19d9f8046f46a22ac4acf0a8b5856",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:51:14.388693+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0011.bin",
+      "sha256": "9e918b3b00625dc06de52baba8d612b1c2a36bdf2882fdc1849a7e68c6b880fb",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:51:15.766578+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0012.bin",
+      "sha256": "ff6add9bca74155dcea32566ecd65ca3f69089b0ba472e1e70154c5de82f8296",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:51:17.045460+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0013.bin",
+      "sha256": "63012bf85d105b8a0cce1b327d31c5c52c68ed9db573f3f9ca835680f35142ef",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:51:18.316890+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0014.bin",
+      "sha256": "d74b851fa0dda6786cb5cd4c630b74aa6c8268818644a6e3d650e543e46e9653",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:51:19.273144+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0015.bin",
+      "sha256": "46ad61970aca0d367befe1940acfb93a9fe32ada92372788be97af99cf7dc0ef",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:51:21.506834+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0016.bin",
+      "sha256": "cf4aa355fc3a6e92bbe4911fc4722e4eca36836ecc4db2f37517638070b89e34",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:51:23.488584+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0017.bin",
+      "sha256": "11a9e708cb3716814637cd5595f8cb3c2c5963b0a8c7c2e7052d2c233d28a7bc",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:51:24.619850+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0018.bin",
+      "sha256": "f36943a72fc2ed8aef9ac98c55155a9d643288286baf5da9bbe15c4f9b3db420",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:51:25.752310+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0019.bin",
+      "sha256": "93312b3dccf9741b8794b034470ead9f5a2e0cedc8efcd5242ac87d10f96241b",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:51:26.686642+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0020.bin",
+      "sha256": "4e7e979270616b079cc8b228bc9dd592f3d83b6d2fb546ba860316cc87311d38",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:51:27.880752+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0021.bin",
+      "sha256": "0f5c7bee250111cc68619beb07ec0bd3aaf4e4a3349d1443d37fe25b4c779bde",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:51:29.032912+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0022.bin",
+      "sha256": "4b0d60ad02675c2bdc895251053a244c81b3dc652c06f4027a5c5ecbb4d4c206",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:51:30.233031+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0023.bin",
+      "sha256": "fb2c2272f2f2d7471d844608cb5b7c1abf642e0e15caa763f59c6c3a1ca211de",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:51:31.749067+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0024.bin",
+      "sha256": "6a2560d5d705dba280a1d957cd53af9fc07bfc8e1e7f19bba0b39bf456ac276a",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:51:32.994535+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0025.bin",
+      "sha256": "d55760eae4310c6c2d2e1db33283577a9f2cfd89bb359f0aba77520382479363",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:51:34.643537+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0026.bin",
+      "sha256": "5a84d552c8544f6d8a8ac922999b514b2bfe12efa43e5d9940a68dc3322db9a8",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:51:36.290173+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0027.bin",
+      "sha256": "c06b61274fa1012d8549f8fafe06e049030ad2b38217f693b29bf7ed6374924a",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:51:37.452954+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0028.bin",
+      "sha256": "12df74edc0527357afc97fd090d65f930df6b6243206f92ea035778dbf85e72f",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:51:38.602477+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0029.bin",
+      "sha256": "e29196b5e2050a9941be050620e0a4de4050dbc11492954110d005847222a9e6",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:51:39.687231+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0030.bin",
+      "sha256": "cbec2ed4d9b9095cc8d34a971b8e261ba1fe29d7c0bd8e81089305b5a82e9544",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:51:40.678338+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0031.bin",
+      "sha256": "a81e56df646788baa256f3089445903b90abe64d92ee75db97d2c0dadb5cb2a6",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:51:42.200651+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0032.bin",
+      "sha256": "df82a3506e4440abc8a501951463217446551fa36bb8eb773ff2d3f5fdc8e0d2",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:51:43.569279+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0033.bin",
+      "sha256": "39ed9e558033c1676e55dc58a03eef78eecad49d57230e2fa0c40d5cf315483f",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:51:45.072931+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0034.bin",
+      "sha256": "22f787747aa7995881dc5ea1e0035ed99bf786045d0ca89846fddb112378bba0",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:51:47.440909+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0035.bin",
+      "sha256": "707c51a7a697b8e46ea7628a6655afa735145cdd06bdd3ea2aabad6fde223ca3",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:51:48.878663+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0036.bin",
+      "sha256": "8b95de67fc2f7155b178d6bd89f59965eaf9b8e1379150ce6887c415bdd57e59",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:51:50.124994+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0037.bin",
+      "sha256": "a9e2bcba4d6a877f6eb894f185765e5ce30e60e702c50dee3d22384be322d91e",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:51:51.227406+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0038.bin",
+      "sha256": "8899ee529051f7fdd0d32c9ce31cb1fae197f4ef0a30edd60f94de1fbaf214ca",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:51:52.486325+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0039.bin",
+      "sha256": "c7801fa989b15c38ea68ee923caaf627a070eeca85117f6f5d1f68de7c003d8e",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:51:54.276988+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0040.bin",
+      "sha256": "d51664b70477a4cd2d52937cb1f715a7453dbc2ef5968c8c45600839017ae4d9",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:51:55.553854+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0041.bin",
+      "sha256": "40c612083d7fe732988b60d25eec0eab3a121d4139da18bc34f24353628d372b",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:51:57.493413+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0042.bin",
+      "sha256": "74ea9a59eff0323fef753093373002dfbf55cb70677e51a8e32e602c8b193e3c",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:51:59.203398+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0043.bin",
+      "sha256": "0898c82b17389cec79bfe6b63a68403ac9a1edb9f6b955fbaba58e8d6771ae26",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:52:00.663590+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0044.bin",
+      "sha256": "7ba0534c08370cb5062586168d8f422851e84fa124684e93a2add4a6e7bb5594",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:52:01.815466+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0045.bin",
+      "sha256": "9b799a9bccf96e94a85b5a937423f93b5c083949d75be0cb6a85a0e43a277c53",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:52:03.347190+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0046.bin",
+      "sha256": "faf0481dcbe78d1856eae0d81fd5953f63a16b5bc9484f56daeb46ebd4510ddc",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:52:04.487077+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0047.bin",
+      "sha256": "578b088fe86b9409611c67dcf1e72d935b26cedcb563876743addbf13223514b",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:52:05.768105+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0048.bin",
+      "sha256": "978c3c314665fa0a32a66c763ad540cc3871d4a4df2cb7c38c2277019fdfab7e",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:52:06.709483+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0049.bin",
+      "sha256": "232602d7e527df2dd8546ef8c9d251406e83dcdee58c736a620796f72f04594d",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:52:09.247821+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0050.bin",
+      "sha256": "382454b79d66a6f8980fc8b55e7f0ef26455c27a1c68bf6c1c2b3d55f6d85725",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:52:10.726221+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0051.bin",
+      "sha256": "f1ab9c461378720f2d9683957c5ae986ee1f0c5f8f22ade00ecde2c8a756f9ff",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:52:11.961075+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0052.bin",
+      "sha256": "313958a96c07913ddd32474addad8864bda86e04605a3817dd162240aa218b30",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:52:13.718901+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0053.bin",
+      "sha256": "ebe47ea986cd50d6e7af2b3f7b899edc4073605cb8c586da18bd382d243efe15",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:52:14.829868+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0054.bin",
+      "sha256": "11931a44c0d921ce5586f622fc4df0c054a5a69e2f1fde0dc706ad4f34890c1a",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:52:15.821541+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0055.bin",
+      "sha256": "f5762b4585775dd0cf2dc5154e51a7f0cf7b4644a88f5390f6cbf2c1bf40896f",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:52:17.053722+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0056.bin",
+      "sha256": "9e7991ef5089efa28b99469d736bd6b1cf1be57b56a1ec83c1b0ad6be0192438",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:52:18.081384+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0057.bin",
+      "sha256": "1cfff953f2274fc8c141abe819599937dd6691306e69679be0a0a24b02d59766",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:52:18.996961+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0058.bin",
+      "sha256": "593fa02e20ed7a766ef215374415f681ca1a577af25a1e3760dc5369e7341559",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:52:19.928850+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0059.bin",
+      "sha256": "78b3befbedc9dcd96e1b273370b9f036990a22ede876b18e79b7c7fefc933e0a",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:52:20.857162+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0060.bin",
+      "sha256": "7757826b9c4466ba41ad9261785406eeef9e354bf9efc41625d40fc968110f6b",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:52:21.789178+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0061.bin",
+      "sha256": "a463bd633fb57d767f83673493c60eec3cd2103fa67a174bd24b8394273ec5c1",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:52:22.752958+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0062.bin",
+      "sha256": "9d2b41060446112abd92f22116bbaa8af8b14ed2ba9f9760b5981c2561716458",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:52:24.109498+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0063.bin",
+      "sha256": "df3834ecf0f64ff6255a9775fbea102a43b374fc338b60e81bcbe9e37435f623",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:52:25.031547+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0064.bin",
+      "sha256": "c7dc9d5bffe7ffe05373b50a35ac53c9147ad1990413e91972d5dda520bab0d3",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:52:25.986924+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0065.bin",
+      "sha256": "ab2d1d3e61609f487f0154f157fe623d4b6f3291f902d723ffa75ac637e4cee5",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:52:26.907836+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0066.bin",
+      "sha256": "978101e445393fb8285480290a4e5cbb031fb8a1997fb688f3d5700d8983b04c",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:52:27.972949+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0067.bin",
+      "sha256": "21c15f2272c70bfb9438cf38e06b01e210291d5eb29b78cf77a942ff3d8f20c6",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:52:29.143700+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0068.bin",
+      "sha256": "1e7ec0d40429ba69635bd5eac72dc48600ae21eea406dd0b163d35ebdfa199c4",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:52:30.081929+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0069.bin",
+      "sha256": "ca4cfa7623d33efde6be19ffe625c06c4f37f20bc5155d64fbb60fde6151260f",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:52:31.015783+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0070.bin",
+      "sha256": "39cf06f668938985fb6967d9d6877a861d20dcb8b1280d187cbafc65258ac2f9",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:52:31.958177+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0071.bin",
+      "sha256": "5e3929adc1eb63e8e4ab02441e81b67ac8a64d6a0cac5376cd9842ce7825d650",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:52:32.909804+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0072.bin",
+      "sha256": "c90e1e46248c7d8f5bbbc14c0b22a08717ebfaeae3149a7d41fa075611542e07",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:52:34.134684+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0073.bin",
+      "sha256": "1e4abaa84b3945ec66c23d6747027d6a94d9bf554fe611b50662701e8c89a2b9",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:52:35.075896+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0074.bin",
+      "sha256": "501cead89a759695319ece9a2f803e5d06dfc5efec26f9ad694e363dc44c7f0e",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:52:36.016213+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0075.bin",
+      "sha256": "538aab8ce36c6788bd5a0640ccfaf86a85e8fd8a8037e8ddfb299ee1ecf883fc",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:52:36.951521+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0076.bin",
+      "sha256": "379dc30c4eac18c3ad6acc50d580f1584b164a6a5a06be295cd9d40e21c9fe0e",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:52:38.249597+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0077.bin",
+      "sha256": "2da476d2d52660fee702867f691ffab50fb0992164f2d66fbe871923160ce3bb",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:52:39.165443+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0078.bin",
+      "sha256": "7b0558e42d6d1afb06bc43311b895d13bcb580b909d0047721fa170b9e697ce3",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:52:40.201180+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0079.bin",
+      "sha256": "c1e07725547b862718a90ccc12f7c56926ae0a66dcdbd549f4a66fafee01ff6c",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:52:41.113026+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0080.bin",
+      "sha256": "3b7c1524d6be81577c2cd289407c1ef915346682a07f6fc2e27d92654ce57168",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:52:42.050625+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0081.bin",
+      "sha256": "54fa6e2d3e7ccc9a65684d33b1670858bdb7fe2456c253046798ba4f65810c03",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:52:43.050803+00:00"
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunks/0082.bin",
+      "sha256": "f25fd01f840928a80688a7c66ee606c34969872d9c67e166727be398f8ab004c",
+      "bytes": 1913249,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T22:52:43.640645+00:00"
+    }
+  ],
+  "metadata": [
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/inventory.json",
+      "bytes": 528385,
+      "sha256": "83363799abe2e1866116658e97b327d21ea8a50459705e79679c452fcac75221",
+      "independent_get_matches": true
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/source-through-51ea2f7.bundle",
+      "bytes": 94124,
+      "sha256": "625819de8a7dcd32f594aaf4f93dc8e049c93e367765373804f68f56af687a2b",
+      "independent_get_matches": true
+    },
+    {
+      "key": "migration/control3-transport-repairs-20261022-v1/chunk-index.json",
+      "bytes": 20819,
+      "sha256": "7f19576d579ba2cf7a7a905319b45cbdd61fa1be52b9ea9e5daf36abbee1e0a1",
+      "independent_get_matches": true
+    }
+  ],
+  "destination_reconstruction": "Concatenation of all independently downloaded destination chunk files, retaining per-chunk readback receipts across transient failures",
+  "source_bundle_tip": "51ea2f71c970afd6472022eb9ea9d042227decd7",
+  "source_bundle_prerequisite": "6163c1a6082056b4843278bf362cf0edaf0a9172",
+  "historical_teacher_quality_passed": 39,
+  "whole40_reapproval_included": false,
+  "whole_teacher_batch_approved": false,
+  "training_approved": false,
+  "owner_conversations_or_credentials_included": false,
+  "new_gpu_purchased": false,
+  "uploader_sha256": "bcaa606926737301db5e3cc1b512e5b103958c587b960b21ac6e57d956ab9f42"
+}
