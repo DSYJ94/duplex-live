@@ -11,6 +11,12 @@ from evals.harness.test_native_control_teacher import Clock, Socket
 
 
 class ExactPromptTransport(unittest.IsolatedAsyncioTestCase):
+    async def test_invalid_concurrency_fails_before_reading_data_or_opening_network(self):
+        for concurrency in (0, 3, True):
+            with self.assertRaisesRegex(ValueError, 'bounded sessions'):
+                await exact.collect(*(Path('absent-fixture') for _ in range(6)), 'fixture-key', Path('lease'),
+                                    concurrency=concurrency)
+
     async def test_actual_start_uses_declared_prompt_and_original_recorder_preserves_pcm(self):
         import numpy as np
         import soundfile as sf

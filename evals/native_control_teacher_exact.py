@@ -270,7 +270,8 @@ def validate_collection(raw, source_audit, batch):
             or manifest['selected_ids'] != ids or len(ids) != 40
             or [r['id'] for r in manifest['recordings']] != ids
             or manifest['maximum_sessions'] != 40 or manifest['maximum_new_sessions'] != 2
-            or manifest['concurrent_sessions'] != 2 or manifest['training_approved'] is not False
+            or type(manifest['concurrent_sessions']) is not int
+            or manifest['concurrent_sessions'] not in (1, 2) or manifest['training_approved'] is not False
             or manifest['status'] != 'raw_complete_unapproved'
             or manifest['new_protocol_ids'] != FAILED_IDS or manifest['retained_records'] != 38
             or lineage['batch_sha256'] != sha256(parent_batch / 'teacher.json')
@@ -286,7 +287,9 @@ def validate_collection(raw, source_audit, batch):
     return manifest
 
 
-async def collect(raw, source_audit, parent_batch, quality, diagnosis, out, key, lock):
+async def collect(raw, source_audit, parent_batch, quality, diagnosis, out, key, lock, concurrency=1):
+    if type(concurrency) is not int or concurrency not in (1, 2):
+        raise ValueError('One or two bounded sessions only')
     parent = parent_evidence(raw, source_audit, parent_batch, quality, diagnosis)
     source, plan = validate_raw(raw)
     with collection_lock(lock):
@@ -304,22 +307,24 @@ async def collect(raw, source_audit, parent_batch, quality, diagnosis, out, key,
                        source_commit=subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip(),
                        code_sha256=sha256(Path(__file__)), created_utc=datetime.now(timezone.utc).isoformat(),
                        selected_ids=[s['id'] for s in plan['cases']], maximum_sessions=40, maximum_new_sessions=2,
-                       concurrent_sessions=2, new_protocol_ids=FAILED_IDS, retained_records=38,
+                       concurrent_sessions=concurrency, new_protocol_ids=FAILED_IDS, retained_records=38,
                        status='recording', recordings=retained, training_approved=False,
                        parent_evidence=dict(batch=str(parent_batch), quality=str(quality), diagnosis=str(diagnosis),
                            batch_sha256=sha256(parent_batch / 'teacher.json'), quality_sha256=sha256(quality),
                            diagnosis_sha256=sha256(diagnosis)))
         target = out / 'teacher.json'
         atomic_json(target, receipt)
+        semaphore = asyncio.Semaphore(concurrency)
         async def one(row):
-            record = await capture_one(raw, row, out / row['id'], receipt['source_word_audit_sha256'], key)
-            receipt['recordings'].append(record)
-            receipt['recordings'].sort(key=lambda r: r['id'])
-            atomic_json(target, receipt)
-            print(json.dumps(dict(id=row['id'], transport_complete=record['transport_complete'],
-                                  complete=len(receipt['recordings']), maximum_new_sessions=2)), flush=True)
-            if not record['transport_complete']:
-                raise RuntimeError('Exact-prompt teacher transport failed; preserve all attempts')
+            async with semaphore:
+                record = await capture_one(raw, row, out / row['id'], receipt['source_word_audit_sha256'], key)
+                receipt['recordings'].append(record)
+                receipt['recordings'].sort(key=lambda r: r['id'])
+                atomic_json(target, receipt)
+                print(json.dumps(dict(id=row['id'], transport_complete=record['transport_complete'],
+                                      complete=len(receipt['recordings']), maximum_new_sessions=2)), flush=True)
+                if not record['transport_complete']:
+                    raise RuntimeError('Exact-prompt teacher transport failed; preserve all attempts')
         try:
             async with asyncio.TaskGroup() as group:
                 for row in source['cases']:
@@ -338,9 +343,10 @@ def main():
     for name in ('raw', 'source-audit', 'parent-batch', 'quality', 'diagnosis', 'out', 'env-file'):
         ap.add_argument('--' + name, type=Path, required=True)
     ap.add_argument('--lock', type=Path, default=Path('runs/local-migration-20261021/.private/control3-capture.lock'))
+    ap.add_argument('--concurrency', type=int, choices=(1, 2), default=1)
     args = ap.parse_args()
     result = asyncio.run(collect(args.raw, args.source_audit, args.parent_batch, args.quality,
-                                args.diagnosis, args.out, local_key(args.env_file), args.lock))
+                                args.diagnosis, args.out, local_key(args.env_file), args.lock, args.concurrency))
     print(json.dumps(dict(status=result['status'], complete=len(result['recordings']), training_approved=False)))
 
 
