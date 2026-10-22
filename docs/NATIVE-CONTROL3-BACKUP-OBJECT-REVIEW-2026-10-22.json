@@ -1,0 +1,15 @@
+{
+  "schema": "dl-control3-backup-object-conflict-diagnostic-v1",
+  "at_utc": "2026-10-22T15:09:48.366050+00:00",
+  "key": "migration/control3-teacher-repairs-20261022/chunks/0000.bin",
+  "head_content_length": 4194304,
+  "head_sha256_metadata": null,
+  "get_content_length": 4194304,
+  "get_sha256_metadata": null,
+  "downloaded_bytes": 4194304,
+  "destination_sha256": "8ec03277c20c546693cd6d692ce86df39721af42c196a03832ccca7bbc1efb40",
+  "expected_bytes": 4194304,
+  "expected_sha256": "8ec03277c20c546693cd6d692ce86df39721af42c196a03832ccca7bbc1efb40",
+  "actual_bytes_identical": true,
+  "mutated": false
+}
