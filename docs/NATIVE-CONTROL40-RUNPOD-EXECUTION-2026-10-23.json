@@ -1,0 +1,32 @@
+{
+  "pod_id": "sjf72o8v64mjvb",
+  "pod_name": "duplex-native-validation-control40-20261023-v1",
+  "created_at_utc": "2026-10-22T23:14:52.804Z",
+  "network_volume_id": "49yytzyoge",
+  "approved_gpu_wallclock_seconds": 7200,
+  "gpu_hourly_usd": 1.79,
+  "maximum_gpu_usd": 3.58,
+  "ephemeral_disk_gb": 100,
+  "total_compute_budget_usd": 50,
+  "prior_attributed_spend_usd": 20.096006687846966,
+  "training_submitted": false,
+  "image": "nvcr.io/nvidia/pytorch:25.10-py3@sha256:42263b2424fc237b34c4fc4a91c30d603c57eed36e37d31ff6d9a4f1f801edee",
+  "source_commit": "7a69158e5fbc9c725031b5c1b598fffc52fdfbd8",
+  "purpose": "Approved-data native cache and Engine/numerical preflight; no optimizer before independent gates",
+  "watchdog": {
+    "phase": "armed",
+    "pod_id": "sjf72o8v64mjvb",
+    "state": "RUNNING",
+    "deadline_utc": "2026-10-23T01:14:52.804000+00:00",
+    "network_volume_retained": "49yytzyoge",
+    "at_utc": "2026-10-22T23:26:37.867708+00:00",
+    "pid": 72825
+  },
+  "watchdog_exec_session": 67422,
+  "pod_image_initializing": true,
+  "readback_status": "RUNNING; runtime and direct SSH pending, actual logs show image layers extracting",
+  "at_utc": "2026-10-22T23:26:39.685656+00:00",
+  "data_pipeline_exec_session": 13707,
+  "native_engine_preflight_implemented": true,
+  "native_engine_actual_cuda_execution": false
+}

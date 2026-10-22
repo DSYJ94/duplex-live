@@ -1,3 +1,63 @@
+# LOCAL — full40 quality and semantic pass; one bounded A100 Pod initializing (23 October 00:26 London)
+
+LOCAL sole executor; CLOUD read-only. Executable source7a69158e5fbc9c725031b5c1b598fffc52fdfbd8.
+Quality11327 TERMINAL0, complete40 PASSED independent verifier. Follow-on13707 LIVE:
+all40 actual independent semantic responses passed; semantic verifier finished and
+phase complete40_conversion_and_verification since23:11:03UTC. Cwd remains
+/private/tmp/duplex-control3-review-4583aa6 at immutable51ea2f7. No duplicate review.
+Log /private/tmp/control3-webrtc-followon-v1.log. Await actual handle, then inspect
+pipeline and canonical copyback. No native optimizer update submitted.
+
+ONE new owned Pod sjf72o8v64mjvb, duplex-native-validation-control40-20261023-v1,
+created2026-10-22T23:14:52.804Z. Fresh reads: RUNNING, A100-SXM4-80GB, EUR-IS-1,
+CUDA13.2 host; runtime/directSSH not yet available because exact NGC image layers
+are still extracting. Keep same Pod; do not replace a pulling image. Image
+nvcr.io/nvidia/pytorch:25.10-py3@sha256:42263b2424fc237b34c4fc4a91c30d603c57eed36e37d31ff6d9a4f1f801edee.
+GPU1.79USD/hour; initial7200seconds maximum GPU3.58USD plus ephemeral disk100GB.
+Volume49yytzyoge100GB mounted /workspace; no new volume. Only22/tcp exposed,
+registered local id_ed25519_runpod public key matches account. Proxy SSH command
+ssh sjf72o8v64mjvb-64410abc@ssh.runpod.io; direct SSH must come from fresh get-pod.
+
+ACTUAL deadline guard67422 LIVE, PID72825, armed; local raw Runpod control key stays
+Mac0600. Receipt runs/local-migration-20261023/runpod-control40-execution-v1.json;
+status runpod-control40-watchdog-v1.json in same dir. Automatic DELETE deadline
+2026-10-23T01:14:52.804Z =02:14London/03:14Berlin. It targets ONLY this owned Pod
+and retains volume. Initial use is archive/runtime verification, codec40 and Engine
+inputs; no optimizer before complete numerical/gradient gates. Prior attributed
+four-Pod spend freshly read20.096006687846966USD, TOTAL budget50USD, previous
+headroom29.903993312153034USD before this Pod. Unrelated four Aurium Pods EXITED,
+untouched. New execution receipt NATIVE-CONTROL40-RUNPOD-EXECUTION-2026-10-23.json.
+
+S3 root inventory confirms existing native-preservation-v3/, runtime-x86-ngc2510/,
+duplex-live/, source-main/ and old source checkouts already persist on this volume.
+Do NOT unnecessarily restore67GB again or duplicate original weights. Existing
+prepare_native_layout.py can re-create original external aliases after inspecting
+runtime paths; original filesystem verification receipt is under
+/workspace/migration/native-full-extracted-verification-v1.json. Original aliases
+/projects/u6si/duplex-live and /lus/lfs1aip2/projects/u6si/duplex-live are container-local
+and must be re-created safely. Never overwrite existing/dirty checkout or artifact.
+Git full-history bundle ready on Mac:
+runs/local-migration-20261023/control40-source-7a69158.bundle, verified complete main
+history at7a69158. Transfer source with approved rsync flags and Git fetch/checkout
+into fresh source checkout; do not deploy uncommitted local files or credentials.
+
+New native_control_engine.py: actual Engine hooks, complete40 code/user ownership,
+all-frame text/acoustic source masks, baseline520 only, independent tensor/voice/cache
+reconstruction. Eight focused Engine/cache tests pass; full68 control tests passed
+before acoustic-source field clarification. Actual pinned Interleaver/tokenizer CPU
+sample executed125frames/vocab32000. No actual CUDA codec/Engine/math/grad executed.
+Mac native helper packages added --no-deps; old ASR Torch/NumPy/Whisper versions
+unchanged. Also audited all40 on nominal PCM clock that Engine actually consumes:
+40/40 pass unchanged word/phase/quiet/peak checks. Largest input submission lag3.67s
+was mostly outside user utterances;016 user-utterance max1.023s. Do not claim exact
+unrecorded server receipt history. Extra check only establishes coherent PCM replay,
+never student behavior or training approval. Original audio/events unchanged.
+
+All earlier backup layers remain independently verified, latest2343-file delta with
+83 readback chunks/source51ea2f7. New reapproval/semantic/conversion and later code
+still need next backup delta. Goal ACTIVE; native7590052 unadopted, latest actual
+training8 updates/Adam520→528. Preserve original49/28/154/KL1/hidden10/heldout hashes.
+
 # LOCAL — initial40/40, independent verifier/controller live; latest backup verified (22 October 23:55 London)
 
 LOCAL sole executor; CLOUD read-only. Executable source51ea2f71c970afd6472022eb9ea9d042227decd7.

@@ -1,0 +1,12 @@
+{
+  "schema": "dl-control40-pcm-clock-diagnostic-v1",
+  "at_utc": "2026-10-22T23:26:39.685656+00:00",
+  "complete": 40,
+  "passed": 40,
+  "all40_nominal_pcm_scene_checks_passed": true,
+  "original_artifacts_changed": false,
+  "training_approved": false,
+  "source_file": "runs/local-asr-20261021/control40-pcm-clock-diagnostic-v1.json",
+  "source_sha256": "c00fee44a297c28eb3f260f6174930a03baeec32f92c578699b0958b80642904",
+  "interpretation": "Independent check of the exact replayed PCM clock, not proof of unrecorded server receipt times or behavior of the native student."
+}
