@@ -1,0 +1,49 @@
+# Native interaction and delegation training coverage
+
+The native Moshi/PersonaPlex duplex streams and Context Spanning result interface
+already exist. Additional training targets when to listen, acknowledge, take or
+yield the floor, answer directly, or request external reasoning. It must retain
+the complete old49 teachers/all28 actual histories/full154 objectives/KL1+hidden10.
+The current control40 repair remains a required whole-corpus gate; this plan does
+not approve its failed batch or create a passing subset.
+
+| Behavior | Positive supervision | Matched negative/control |
+| --- | --- | --- |
+| Listen through an unfinished turn | Preserve the user's unfinished thought across short/long internal pauses | Do not infer turn completion merely from a gap |
+| Take the floor | Answer once when the user has yielded; correct content and measured onset | Avoid permanent silence or premature completion |
+| Listener backchannel | Brief contextual acknowledgment during user speech without taking over | Remain completely silent under explicit quiet, sensitive timing or interruption |
+| Hold own floor | Occasional natural hesitation if useful; continue the same answer | Avoid repetitive filler, fabricated work claims or filling every backend wait |
+| Interruption and resume | Stop, retain unfinished task, resume only when permitted | Do not restart completed steps or mistake the user's backchannel for cancellation |
+| Direct versus delegate | Matched easy/hard tasks; native direct answer for basic cases, complete scoped request for hard/tool cases | Penalize unnecessary requests and unsupported direct answers separately |
+| Delayed result integration | Keep listening, preserve request context, use the actual returned result | No answer before needed evidence; no fabricated completion |
+| Cancellation and changed intent | Respect cancellation/replacement and respond to the current intent | Reject stale results, unrelated results, duplicate deliveries and error-as-success |
+
+These are proposed additional families, not generated/approved examples. Source
+scripts/audio, native teacher histories, receipts, independent recognition/quality,
+semantic review, measured conversion and native numerical/gradient scope need the
+same explicit provenance as current data. Keep held-out audio, voices and folds
+separate. No external dataset/checkpoint import, new base, new optimizer or new
+API/GPU job is performed by this document.
+
+Backchannels such as “uh-huh” are listener behavior; “umm” can be speaker hesitation.
+Do not insert either periodically or optimize their count alone. New nonlexical
+vocalization data needs an explicit audio/annotation protocol; it cannot silently
+be accepted by spelling substitutions or a weakened lexical ASR rule. Word-based
+acknowledgments still need exact independent word/timing checks. No existing
+control40 threshold or quiet interval changes.
+
+Evaluate each axis separately on fresh complete conversations: false takeovers,
+missed valid replies, backchannel precision/timing, explicit-quiet violations,
+interruption latency and semantic continuation, direct-answer accuracy, delegation
+need/argument correctness, result fidelity, cancelled/stale delivery, failure
+handling and end-to-end latency. Good backend text alone is insufficient. Include
+oracle-result and real-backend runs to distinguish routing/integration from worker
+failure. The runtime must also enforce request identity, cancellation and result
+ownership; model training alone does not supply those guarantees.
+
+Kyutai's primary study separately trains pause handling, turn-taking, backchanneling
+and interruption, retaining a response-quality objective. It supports these
+categories, not a claim our small LoRA already achieves them. Its broad RL recipe
+is a separate larger workflow; do not replace the present supervised repair with
+an unbudgeted reproduction.
+[Paper](https://arxiv.org/html/2606.11167v1).

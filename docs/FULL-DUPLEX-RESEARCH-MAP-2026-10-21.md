@@ -222,3 +222,36 @@ review. Public evaluation samples remain evaluation material. The supplied
 YouTube link was not treated as primary technical evidence; this map follows the
 authors' paper/code releases instead. No new training, GPU submission or spending
 was performed for this research task.
+
+
+## 22 October clarification: native duplex foundation versus our adaptation
+
+Rechecked the official PersonaPlex architecture page, Context Spanning repository
+and released DuetaSpan card on22October2026. PersonaPlex already runs concurrent
+user/assistant audio streams. DuetaSpan adds a trained retrieval trigger and
+Context Span result interface; its card states the PersonaPlex base was fine-tuned
+across trainable parameters. Our small LoRA is additional adaptation on this native
+foundation, not the mechanism that creates simultaneous listening and speaking.
+[PersonaPlex architecture](https://research.nvidia.com/labs/adlr/personaplex/),
+[DuetaSpan model card](https://huggingface.co/mindlogicinc/context-spanning-7b),
+[official implementation](https://github.com/mindlogic-ai/Context-Spanning).
+
+7B is a plausible conversational frontend capacity when difficult reasoning goes
+to an external backend; that is an architectural judgment, not a measured capacity
+finding. The frontend still needs spoken understanding, instruction retention,
+request scoping, calibrated trigger timing and correct delayed-result delivery.
+A backend tool router supplied by the released system does not prove these are
+all learned in our native frontend. Published results are evidence of feasibility,
+not production readiness: the card reports47% full tool-use pass on100 scenarios
+with its external router/ASR, and separates backend reference from spoken-answer
+accuracy. Those are author-reported measurements, not results for native7590052.
+Our own quiet failure and missing complete behavioral qualification remain decisive.
+
+The current control40 repair targets explicit quiet, cue release, pause/resume,
+cue changes and basic answers; it is not a complete easy-direct/hard-delegate,
+delayed/cancelled/stale-result curriculum. Preserve current model/checkpoint pins.
+Use matched approved native behavior tests on the released base, native520 and
+native7590052 to attribute weaknesses before selecting wider adaptation or a
+separate base comparison. No automatic full-weight stage, base substitution or
+new GPU purchase is authorized by this research note alone; existing user budget
+and execution authorization govern any actual run.

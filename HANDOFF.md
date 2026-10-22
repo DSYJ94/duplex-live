@@ -1,3 +1,35 @@
+# LOCAL — complete40 teacher audit still fails; wider curriculum specified (22 October16:01 London)
+
+LOCAL sole executor. Executable source61c0b3ab80dc0bef495f33c2bb20ae544e7e2441;
+latest docs source7296f31. Supervisor68915 TERMINAL exit1 at verify_quality40,
+full batch39/40. No semantic, conversion, GPU or optimizer stage submitted.
+Root runs/native-control3-postteacher-20261022-v6, batch drained-v8. Capture timing
+now passes; current006 fails model/ASR agreement and answer-phase membership.
+Model text contains duplicate Reflected light prefix; BOTH turbo and independent
+large-v3 hear the single exact seven-word sentence. Waveform has two speech islands
+with a long gap and words extending beyond the allowed first answer phase. Do not
+claim the two recognizers confirmed a duplicated spoken prefix. Original waveform
+plot inspected; diagnostic9088 TERMINAL0, folder
+runs/native-control3-teacher-diagnostic-20261022-v6. All original raw PCM/receipts
+preserved. Do not normalize away the duplicate or move word timestamps to pass.
+
+No current collection/quality/semantic/GPU/optimizer job after observed termination.
+Next repair must address premature partial text/restart and delayed answer delivery;
+use diagnosis to specify a new scoped teacher protocol, not an unchanged content
+reroll. Preserve39 passing records byte-identically and require whole40 approval.
+Native cache/Engine/numerical/actual training integration still pending. Budgets and
+backups unchanged from entry below; latest repairs/diagnostics not yet remotely
+backed up. Resume stopped verified chunk transfer when no live voice capture/API
+critical path is active. Goal remains ACTIVE; no external blocker or Cloud handoff.
+
+User clarified the target includes microturn control, learned delegation and natural
+backchannels. Saved concrete training/evaluation coverage in
+NATIVE-INTERACTION-DELEGATION-CURRICULUM-2026-10-22.md; no new generated data/job.
+Base already duplex; current control40 is a focused repair, not the complete
+interaction/delegation curriculum. Explicit quiet must suppress even uh-huh.
+Native model learns when to request work; runtime separately guarantees request
+identity/cancellation/stale-result handling. Current candidate remains unqualified.
+
 # LOCAL — actual client drain captured; complete40 review running (22 October15:49 London)
 
 LOCAL sole executor; CLOUD read-only. Executable source61c0b3ab80dc0bef495f33c2bb20ae544e7e2441
