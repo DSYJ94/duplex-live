@@ -1,0 +1,21 @@
+{
+  "schema": "dl-control40-engine-preparation-v1",
+  "at_utc": "2026-10-22T23:13:47.888514+00:00",
+  "code_sha256": {
+    "evals/native_control_engine.py": "ade1fff00a81c53f589f62217fbca3a8c71f0c01c592aef3af0098857cb1d4a8",
+    "evals/harness/test_native_control_engine.py": "3106c0ad4c37e8ac9e8937f779813d07b108bdd8d9decf22c38e69155b6da9e0"
+  },
+  "actual_native_delay_cpu_tests_passed": 4,
+  "actual_pinned_interleaver_cpu_sample_executed": true,
+  "interleaver_sample_frames": 125,
+  "tokenizer_vocabulary": 32000,
+  "control_suite_tests_passed_before_acoustic_field_clarification": 68,
+  "focused_engine_cache_tests_after_clarification": 8,
+  "actual_cuda_codec_execution": false,
+  "actual_cuda_engine_execution": false,
+  "native_numerical_gradient_approved": false,
+  "new_optimizer_updates": 0,
+  "old49_teachers_original28_components_original154_objectives_kl1_hidden10_preserved": true,
+  "training_approved": false,
+  "next_action": "One bounded A100 stage for archive/runtimes, approved whole40 codec cache and native Engine inputs; no optimizer until independent numerical and gradient gates pass."
+}
