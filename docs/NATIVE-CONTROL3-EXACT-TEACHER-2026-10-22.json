@@ -1,0 +1,163 @@
+{
+  "schema": "dl-control3-exact-teacher-prompt-version-v1",
+  "at_utc": "2026-10-22T11:07:53.367900+00:00",
+  "protocol": "native-control3-exact-reference-teacher-v2",
+  "implementation": "evals/native_control_teacher_exact.py",
+  "implementation_sha256": "c1ee6ddaf1991573d5a35e1e442bdccec39849e7c427ec0d250d568fac359cfd",
+  "parent_quality": "runs/native-control3-postteacher-20261022-v4/quality/teacher-quality.json",
+  "parent_quality_sha256": "85b5a5b353a3d3e9437b863df793a41bd2881725968c7a9b7adddedb0e84fb09",
+  "complete_parent": 40,
+  "passed_parent": 38,
+  "new_session_ids": [
+    "native-control3-train-006",
+    "native-control3-train-029"
+  ],
+  "maximum_new_sessions": 2,
+  "retained_byte_identical": 38,
+  "model_voice_and_source_input_pcm_unchanged": true,
+  "teacher_prompt_changed": true,
+  "prompt_change_is_train_reference_conditioning": true,
+  "unaided_reasoning_claim": false,
+  "source_scripts_heldout_old49_actual28_losses_and_thresholds_changed": false,
+  "session_configuration": {
+    "model": "gpt-live-1",
+    "delegation": {
+      "type": "client"
+    },
+    "instructions": "You are a concise English voice assistant collecting synthetic TRAIN labels. Answer ordinary questions using the stated premises. Follow the entire spoken instruction. When asked to stay quiet, produce no acknowledgment, clarification, backchannel or speech. A cue mentioned inside its defining instruction is not a release. Wait for a later user turn. Unrelated speech or a similar-sounding word does not release you. When the user changes the cue, the old cue no longer releases you; naming the new cue inside that change is not a release. If no later valid cue arrives, keep listening silently until the session ends. For two-step instructions, say the first commanded step exactly once after hearing the complete instruction. After the later pause, wait silently for the valid cue and say only the remaining step, without restarting. After a valid cue with a question, answer that question once. These simple tasks require no delegation. Speak the complete commanded or reference words clearly. The following authored TRAIN-only ordinary-answer references guide label wording; they supply no private values and do not establish unaided reasoning. They are never student inference inputs. [{\"answer\": \"It holds apples.\", \"question\": \"Every small basket holds apples. This basket is small. What does it hold?\"}, {\"answer\": \"Mia came first.\", \"question\": \"Mia came before Leo. Leo came before Sam. Who came first?\"}, {\"answer\": \"Six stones remain.\", \"question\": \"There are five stones. I add three and remove two. How many remain?\"}, {\"answer\": \"The coin is in the other jar.\", \"question\": \"The coin is in one of two jars. The round jar is empty. Where is the coin?\"}, {\"answer\": \"The light reaches the object from a different direction.\", \"question\": \"Why does a shadow move when a lamp moves?\"}, {\"answer\": \"Water vapour in the air cools and condenses on the glass.\", \"question\": \"Why does water form drops on a cold glass?\"}, {\"answer\": \"Reflected light carries light to your eyes.\", \"question\": \"Which carries light to my eyes, a sound wave or reflected light?\"}, {\"answer\": \"We use the bridge.\", \"question\": \"If the path is blocked, we use the bridge. The path is blocked. Which way do we go?\"}]\nVerbatim synthetic TRAIN-label policy: the reference sentences are exact target words, not examples to paraphrase or shorten. When asked which carries light to the eyes, say exactly: Reflected light carries light to your eyes. Speak all seven words; pronounce plural eyes with its final voiced z sound, /a\u026az/. Do not answer only Reflected light, and do not change eyes to eye. For the window/table two-step instruction, the first response is exactly: Point at the window. Pronounce at as /\u00e6t/, not out. Begin promptly after the whole user instruction finishes, without a prefatory word. After the later pause, keep silent until the later valid cue, then say exactly: Touch the table. Pronounce Touch clearly, not Catch. Never restart the first step. Backchannel policy: no acknowledgment, filler or listening sounds in requested quiet. Interruption policy: stop your speech when the user starts the next turn. Delegation policy: these authored control labels require no external reasoning; never generate <|SpawnThinking|>. Reference conditioning is TRAIN-only; these answers do not establish unaided reasoning.",
+    "audio": {
+      "format": {
+        "type": "audio/pcm",
+        "rate": 24000
+      },
+      "output": {
+        "voice": "marin"
+      }
+    }
+  },
+  "session_configuration_sha256": "de034f2d4460cec56af88d73c59e71f33c391474540514ca3233ff834f547da3",
+  "server_echo_of_actual_instructions_required": true,
+  "output_pcm_rewriting_or_suppression": false,
+  "whole40_quality_semantic_conversion_native_numerical_required": true,
+  "optimizer_updates": 0,
+  "new_gpu_purchased": false,
+  "official_prompting_reference": "https://developers.openai.com/api/docs/guides/live-prompting",
+  "failed_parent_records": [
+    {
+      "id": "native-control3-train-006",
+      "checks": {
+        "passed": false,
+        "reasons": [
+          "Independent complete teacher speech agreement failed",
+          "Missing, early, extra or restarted answer in authored phase1"
+        ],
+        "raw_speech_wer": 0.5,
+        "canonical_speech_wer": 0.5,
+        "word_agreement": {
+          "policy": "control3-finite-spoken-orthography-v1",
+          "variants": {
+            "vapor": "vapour"
+          },
+          "raw_wer": 0.5,
+          "canonical_word_wer": 0.5
+        },
+        "quiet_start_s": 15.920530542000051,
+        "quiet_end_s": 44.60291733300005,
+        "quiet_active_20ms_frames": 0,
+        "terminal_observation_included": true,
+        "answer_phases": [
+          {
+            "assistant_turn": 1,
+            "start_s": 4.80205141700003,
+            "end_s": 10.162176000000045,
+            "expected_words": [
+              "reflected",
+              "light",
+              "carries",
+              "light",
+              "to",
+              "your",
+              "eyes"
+            ],
+            "measured_words": [
+              "reflected"
+            ],
+            "passed": false
+          }
+        ],
+        "semantic_review_required": true,
+        "native_numerical_review_required": true,
+        "training_approved": false,
+        "model_behavior_qualified": false
+      },
+      "actual_model_text": "Reflected light.",
+      "independent_asr": " Reflected."
+    },
+    {
+      "id": "native-control3-train-029",
+      "checks": {
+        "passed": false,
+        "reasons": [
+          "Independent complete teacher speech agreement failed",
+          "Missing, early, extra or restarted answer in authored phase1"
+        ],
+        "raw_speech_wer": 0.14285714285714285,
+        "canonical_speech_wer": 0.14285714285714285,
+        "word_agreement": {
+          "policy": "control3-finite-spoken-orthography-v1",
+          "variants": {
+            "vapor": "vapour"
+          },
+          "raw_wer": 0.14285714285714285,
+          "canonical_word_wer": 0.14285714285714285
+        },
+        "quiet_start_s": 15.360922291999941,
+        "quiet_end_s": 26.162038708999944,
+        "quiet_active_20ms_frames": 0,
+        "terminal_observation_included": false,
+        "answer_phases": [
+          {
+            "assistant_turn": 1,
+            "start_s": 7.282338958999958,
+            "end_s": 11.360524166999994,
+            "expected_words": [
+              "point",
+              "at",
+              "the",
+              "window"
+            ],
+            "measured_words": [
+              "point",
+              "out",
+              "the",
+              "window"
+            ],
+            "passed": false
+          },
+          {
+            "assistant_turn": 4,
+            "start_s": 26.162038708999944,
+            "end_s": 48.1181059999999,
+            "expected_words": [
+              "touch",
+              "the",
+              "table"
+            ],
+            "measured_words": [
+              "touch",
+              "the",
+              "table"
+            ],
+            "passed": true
+          }
+        ],
+        "semantic_review_required": true,
+        "native_numerical_review_required": true,
+        "training_approved": false,
+        "model_behavior_qualified": false
+      },
+      "actual_model_text": "Point at the window.Touch the table.",
+      "independent_asr": " Point out the window Touch the table"
+    }
+  ]
+}

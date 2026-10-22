@@ -11,8 +11,7 @@ import math
 from pathlib import Path
 
 from data.synthetic.native_control_render import sha256, validate_raw
-from evals.native_control_semantic import verify as verify_semantic
-from evals.native_control_teacher_reaudit import verify as verify_quality
+from evals.native_control_semantic import verify as verify_semantic, verify_quality
 
 SCHEMA = 'dl-native-control3-measured-conversion-v1'
 FILES = ('stem_user.wav', 'stem_assistant.wav', 'conversation.wav', 'conversation.json', 'timeline.actual.json')

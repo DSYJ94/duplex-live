@@ -13,7 +13,7 @@ from pathlib import Path
 
 from data.synthetic.native_control_render import sha256, validate_raw
 from evals.native_control_teacher import atomic_json, collection_lock, local_key
-from evals.native_control_teacher_reaudit import verify as verify_quality
+from evals.native_control_teacher_reaudit import verify as verify_quality_v2
 from training.control.teacher_data import MODEL, request
 
 SYSTEM = (
@@ -35,6 +35,16 @@ TOOL = dict(type='function', name='judge_native_control', strict=True,
             parameters=dict(type='object', properties=dict(
                 verdict=dict(type='string', enum=['pass', 'fail']), reason=dict(type='string')),
                 required=['verdict', 'reason'], additionalProperties=False))
+
+
+def verify_quality(raw, source_audit, batch, quality):
+    schema = json.loads(quality.read_text())['schema']
+    if schema == 'dl-native-control3-teacher-quality-v2':
+        return verify_quality_v2(raw, source_audit, batch, quality)
+    if schema == 'dl-native-control3-teacher-quality-v3':
+        from evals.native_control_teacher_exact_quality import verify
+        return verify(raw, source_audit, batch, quality)
+    raise ValueError('Complete independent approved control40 quality schema required')
 
 
 def messages(raw, source_audit, batch, quality):

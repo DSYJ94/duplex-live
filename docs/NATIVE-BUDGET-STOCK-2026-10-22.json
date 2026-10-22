@@ -1,0 +1,63 @@
+{
+  "schema": "dl-native-budget-stock-check-v1",
+  "at_utc": "2026-10-22 07:45:12 UTC",
+  "source": "Runpod MCP list-pod-billing/list-pods/get-data-center/get-gpu-type",
+  "attributed_pods": [
+    {
+      "cpuAmount": 0,
+      "diskAmount": 0.00833333283662796,
+      "endTime": "2026-10-22T00:00:00Z",
+      "gpuAmount": 3.580867635086179,
+      "podId": "i20euy4x58fo1m",
+      "startTime": "2026-10-21T00:00:00Z",
+      "totalAmount": 3.5892009679228067
+    },
+    {
+      "cpuAmount": 0.09021293348632753,
+      "diskAmount": 0.003935185610316694,
+      "endTime": "2026-10-22T00:00:00Z",
+      "gpuAmount": 0,
+      "podId": "kgy1ygl8i5p1u5",
+      "startTime": "2026-10-21T00:00:00Z",
+      "totalAmount": 0.09414811909664422
+    },
+    {
+      "cpuAmount": 0,
+      "diskAmount": 0.013888888992369175,
+      "endTime": "2026-10-22T00:00:00Z",
+      "gpuAmount": 15.987963229417801,
+      "podId": "q3wqjwols44aos",
+      "startTime": "2026-10-21T00:00:00Z",
+      "totalAmount": 16.00185211841017
+    },
+    {
+      "cpuAmount": 0,
+      "diskAmount": 0.00069444440305233,
+      "endTime": "2026-10-22T00:00:00Z",
+      "gpuAmount": 0.4101110380142927,
+      "podId": "vgp8bfskvrcotf",
+      "startTime": "2026-10-21T00:00:00Z",
+      "totalAmount": 0.41080548241734505
+    }
+  ],
+  "attributed_total_usd": 20.096006687846966,
+  "compute_cap_usd": 25,
+  "remaining_usd": 4.903993312153034,
+  "unrelated_aurium_pod_billing_excluded": true,
+  "live_duplex_pods": [],
+  "new_gpu_created": false,
+  "volume": "49yytzyoge",
+  "data_center": "EUR-IS-1",
+  "stock": "LOW",
+  "candidate_gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+  "vram_gib": 96,
+  "secure_price_per_hour_usd": 2.49,
+  "cuda_versions": [
+    {
+      "available": true,
+      "version": "13.2"
+    }
+  ],
+  "planning_only": true,
+  "blackwell_native_runtime_workload_qualified": false
+}
