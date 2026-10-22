@@ -47,6 +47,9 @@ def verify_quality(raw, source_audit, batch, quality):
     if schema == 'dl-native-control3-teacher-quality-v5':
         from evals.native_control_teacher_drained_quality import verify
         return verify(raw, source_audit, batch, quality)
+    if schema == 'dl-native-control3-teacher-quality-v6':
+        from evals.native_control_teacher_scoped_quality import verify
+        return verify(raw, source_audit, batch, quality)
     raise ValueError('Complete independent approved control40 quality schema required')
 
 

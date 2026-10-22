@@ -11,13 +11,14 @@ from data.synthetic.native_control_render import sha256
 from evals.native_control_teacher import atomic_json, collection_lock
 
 
-def stages(raw, source_audit, batch, reuse_batch, reuse_quality, out, weights, env_file, exact_teacher=False, drained_teacher=False):
+def stages(raw, source_audit, batch, reuse_batch, reuse_quality, out, weights, env_file, exact_teacher=False, drained_teacher=False, scoped_teacher=False):
     quality = out / 'quality/teacher-quality.json'
     semantic = out / 'semantic/semantic.json'
     common = ['--raw', str(raw), '--source-audit', str(source_audit), '--batch', str(batch)]
-    if exact_teacher and drained_teacher:
+    if sum(map(bool, (exact_teacher, drained_teacher, scoped_teacher))) > 1:
         raise ValueError('Select exactly one declared teacher approval protocol')
-    quality_module = ('evals.native_control_teacher_drained_quality' if drained_teacher else
+    quality_module = ('evals.native_control_teacher_scoped_quality' if scoped_teacher else
+                      'evals.native_control_teacher_drained_quality' if drained_teacher else
                       'evals.native_control_teacher_exact_quality' if exact_teacher else
                       'evals.native_control_teacher_reaudit')
     yield ('quality40', quality_module, common + [
@@ -33,7 +34,7 @@ def stages(raw, source_audit, batch, reuse_batch, reuse_quality, out, weights, e
     yield ('verify_conversion40', 'evals.native_control_convert', ['--verify', str(out / 'converted')], 1800)
 
 
-def run(raw, source_audit, batch, reuse_batch, reuse_quality, out, weights, env_file, lock, exact_teacher=False, drained_teacher=False):
+def run(raw, source_audit, batch, reuse_batch, reuse_quality, out, weights, env_file, lock, exact_teacher=False, drained_teacher=False, scoped_teacher=False):
     # The caller must first observe its collection handle finish. The controller
     # independently validates the sealed40 on stage1; no generation or retry lives here.
     manifest = json.loads((batch / 'teacher.json').read_text())
@@ -50,11 +51,12 @@ def run(raw, source_audit, batch, reuse_batch, reuse_quality, out, weights, env_
                      optimizer_updates=0, new_gpu_submitted=False, credentials_exported=False)
         state['exact_teacher_protocol'] = exact_teacher
         state['drained_teacher_protocol'] = drained_teacher
+        state['scoped_teacher_protocol'] = scoped_teacher
         target = out / 'pipeline.json'
         atomic_json(target, state)
         start = time.monotonic()
         try:
-            for name, module, args, bound in stages(raw, source_audit, batch, reuse_batch, reuse_quality, out, weights, env_file, exact_teacher, drained_teacher):
+            for name, module, args, bound in stages(raw, source_audit, batch, reuse_batch, reuse_quality, out, weights, env_file, exact_teacher, drained_teacher, scoped_teacher):
                 if sha256(batch / 'teacher.json') != state['teacher_manifest_sha256']:
                     raise ValueError('Sealed collection changed between independent stages')
                 remaining = state['maximum_wallclock_s'] - (time.monotonic() - start)
@@ -94,9 +96,10 @@ def main():
     protocol = ap.add_mutually_exclusive_group()
     protocol.add_argument('--exact-teacher', action='store_true')
     protocol.add_argument('--drained-teacher', action='store_true')
+    protocol.add_argument('--scoped-teacher', action='store_true')
     args = ap.parse_args()
     result = run(args.raw, args.source_audit, args.batch, args.reuse_batch, args.reuse_quality,
-                 args.out, args.weights, args.env_file, args.lock, args.exact_teacher, args.drained_teacher)
+                 args.out, args.weights, args.env_file, args.lock, args.exact_teacher, args.drained_teacher, args.scoped_teacher)
     print(json.dumps(dict(phase=result['phase'], training_approved=False, optimizer_updates=0)))
 
 

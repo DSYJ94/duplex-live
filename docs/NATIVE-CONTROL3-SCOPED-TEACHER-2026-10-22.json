@@ -1,0 +1,25 @@
+{
+  "schema": "dl-control3-scoped-teacher-repair-plan-v1",
+  "protocol": "native-control3-scoped-no-release-teacher-v5",
+  "model": "gpt-live-1",
+  "voice": "marin",
+  "parent_batch": "runs/native-control3-teachers-drained-20261022-v8",
+  "parent_quality": "runs/native-control3-postteacher-20261022-v6/quality/teacher-quality.json",
+  "actual_failed_diagnosis": "runs/native-control3-teacher-diagnostic-20261022-v6/diagnostic.json",
+  "failed_ids": [
+    "native-control3-train-006"
+  ],
+  "maximum_new_sessions": 1,
+  "retained_records_byte_identical": 39,
+  "scope": "One TRAIN scene only; listen to full final option, then one complete seven-word answer, then terminal silence. Remove unrelated references and negatively quoted incomplete answers.",
+  "configuration_sha256": "232602ef1ad7c7b1aa547deda9f0a5a3ab4f0a2db67f2579fb839be812a7f5c9",
+  "source_words_audio_receipts_folds_unchanged": true,
+  "thresholds_changed": false,
+  "capture_mechanics": "Unchanged real server-close plus actual bounded client drain; no output trim/gain/suppression",
+  "temporary_capture_location": "/private/tmp/duplex-control3-scoped-20261022-v9",
+  "local_io_hypothesis": "Write critical packet spools outside OneDrive to avoid potential file-provider contention; cause is not proven. Copy back with exact hashes before quality review.",
+  "complete40_reapproval_required": true,
+  "semantic_conversion_native_numerical_required": true,
+  "native_student_inference_changed": false,
+  "training_approved": false
+}
