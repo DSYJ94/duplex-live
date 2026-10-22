@@ -121,8 +121,20 @@ def check_codes(codes, frames, side, tokenizer):
     return native_word_timing(codes[0, 0].tolist(), side['alignments'], tokenizer.encode, 12.5)
 
 
-def build(data, model, codec_source, interleaver_source, out):
-    conversion = verify_conversion(data)  # Full quality+semantic chain before CUDA/import/output.
+def checked_conversion(data,frozen_workset=None):
+    if frozen_workset is None:
+        return verify_conversion(data)
+    from evals.native_control_snapshot import verify
+    return verify(data,frozen_workset)
+
+
+def snapshot_identity(path):
+    if path is None:return None
+    return dict(path=str(path),sha256=sha256(path),verifier_sha256=sha256(Path('evals/native_control_snapshot.py')))
+
+
+def build(data, model, codec_source, interleaver_source, out, frozen_workset=None):
+    conversion = checked_conversion(data,frozen_workset)  # Full chain or its source-pinned unchanged complete snapshot.
     rows = inventory(conversion)
     pins = source_pins(codec_source, interleaver_source, model)
     import soundfile as sf
@@ -130,6 +142,7 @@ def build(data, model, codec_source, interleaver_source, out):
     mimi, tokenizer, builder = runtime(codec_source, interleaver_source, model)
     out.mkdir(parents=True, exist_ok=False)
     report = dict(schema=SCHEMA, conversion=str(data), ingestion_sha256=sha256(data / 'ingestion.json'),
+                  frozen_workset=snapshot_identity(frozen_workset),
                   created_utc=datetime.now(timezone.utc).isoformat(), code_sha256=sha256(Path(__file__)),
                   source_pins=pins, model=str(model), codec_source=str(codec_source), interleaver_source=str(interleaver_source),
                   channel_order=['assistant', 'user'], frame_rate=12.5, sample_rate=24000, examples=[],
@@ -163,7 +176,10 @@ def verify(cache):
     import torch
     report = json.loads((cache / 'cache.json').read_text())
     data = Path(report['conversion'])
-    conversion = verify_conversion(data)
+    frozen=report.get('frozen_workset')
+    if frozen is not None and frozen!=snapshot_identity(Path(frozen['path'])):
+        raise ValueError('Frozen whole40 gate closure or its verifier changed')
+    conversion = checked_conversion(data,Path(frozen['path']) if frozen else None)
     rows = inventory(conversion)
     pins = source_pins(Path(report['codec_source']), Path(report['interleaver_source']), Path(report['model']))
     if (report['schema'] != SCHEMA or report['code_sha256'] != sha256(Path(__file__))
@@ -201,13 +217,14 @@ def verify(cache):
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--verify', type=Path)
+    ap.add_argument('--frozen-workset',type=Path)
     for name in ('data', 'model', 'codec-source', 'interleaver-source', 'out'):
         ap.add_argument('--' + name, type=Path)
     args = ap.parse_args()
     if args.verify:
         report = verify(args.verify)
     elif all((args.data, args.model, args.codec_source, args.interleaver_source, args.out)):
-        report = build(args.data, args.model, args.codec_source, args.interleaver_source, args.out)
+        report = build(args.data, args.model, args.codec_source, args.interleaver_source, args.out,args.frozen_workset)
     else:
         ap.error('Use --verify or all data/model/source/out paths')
     print(json.dumps(dict(complete=len(report['examples']), training_approved=False, optimizer_updates=0)))

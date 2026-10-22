@@ -1,0 +1,39 @@
+{
+  "schema": "dl-control40-complete-data-chain-v1",
+  "at_utc": "2026-10-22T23:31:50.613093+00:00",
+  "code_source": "51ea2f71c970afd6472022eb9ea9d042227decd7",
+  "controller_exec_session": 13707,
+  "controller_exit_code": 0,
+  "source_utterances": 168,
+  "teacher_quality_passed": 40,
+  "independent_semantic_passed": 40,
+  "complete_converted_train_cases": 40,
+  "server_reflected_input_word_wer": 0.0,
+  "folds_changed": false,
+  "heldout_audio_changed": false,
+  "original_failed_attempts_preserved": true,
+  "canonical_copyback": [
+    {
+      "source": "runs/native-control3-webrtc-reapproval-20261022-v1",
+      "destination": "/Users/daryl/Library/CloudStorage/OneDrive-Personal/Shared GitHub Repos/duplex-live/runs/native-control3-webrtc-reapproval-20261022-v1",
+      "files": 408,
+      "all_hashes_match": true
+    },
+    {
+      "source": "runs/native-control3-webrtc-postteacher-20261022-v1",
+      "destination": "/Users/daryl/Library/CloudStorage/OneDrive-Personal/Shared GitHub Repos/duplex-live/runs/native-control3-webrtc-postteacher-20261022-v1",
+      "files": 246,
+      "all_hashes_match": true
+    }
+  ],
+  "receipts": {
+    "runs/native-control3-webrtc-reapproval-20261022-v1/quality/teacher-quality.json": "1f3f4b45e847e7a02b4e781fa88f4802029cd1c9982148560e1b91c40ba76858",
+    "runs/native-control3-webrtc-postteacher-20261022-v1/semantic/semantic.json": "f03bebe4dda16d4a159bdc0e8cf1127f772fb01e543a8af90c392dd0671aca36",
+    "runs/native-control3-webrtc-postteacher-20261022-v1/converted/ingestion.json": "93e2eb6e90c00d3414797bc977fb01b5c26f2f5892f30656e1c3c6a538e1295e",
+    "runs/native-control3-webrtc-postteacher-20261022-v1/pipeline.json": "dec982754fb4d18e621d601dd8d5775dbc298549c926187e89e779a33abdceea"
+  },
+  "actual_cuda_codec_or_engine_executed": false,
+  "native_numerical_or_gradient_approved": false,
+  "new_optimizer_updates": 0,
+  "training_approved": false
+}

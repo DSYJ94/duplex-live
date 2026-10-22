@@ -1,0 +1,18 @@
+{
+  "schema": "dl-control40-frozen-snapshot-verification-v1",
+  "at_utc": "2026-10-22T23:42:48.228396+00:00",
+  "inventory_sha256": "79401e2c1051361d150da644250e8acf87814bda1c48b167af8a34345214fa8f",
+  "archive_bytes": 1023720756,
+  "archive_sha256": "87717cdf3e80977dbe78b18b0f1e75367411eab535d327dbee4679dcd9483616",
+  "files": 7797,
+  "uncompressed_bytes": 8000842614,
+  "all_internal_archive_hashes_match": true,
+  "all_snapshot_files_independently_rehashed": true,
+  "all40_current_quality_semantic_conversion_recomputed": true,
+  "original_chain_completed_before_freezing": true,
+  "original_failed_ancestors_preserved_byte_exact": true,
+  "thresholds_audio_receipts_or_folds_changed": false,
+  "numerical_gradient_or_training_approval": false,
+  "reason": "Pin exact original completed gate roots and every7797 file in source; avoid recursively revalidating immutable historical ancestors at every codec and Engine call. Original slow verifier remains available.",
+  "snapshot_code_sha256": "7c7d6d42f005783220a1ba23d2081b7df9cb8f6dfff9daf442dcbf1842898035"
+}
