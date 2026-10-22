@@ -1,3 +1,35 @@
+# LOCAL — server input witness exact; independent full40 reapproval ready (22 October23:46 London)
+
+LOCAL sole executor, CLOUD read-only. Source before this commit a058588d473bd55bae97707a4995ecdf3ce29886.
+Actual WebRTC capture24896 TERMINAL0; ASR10075 TERMINAL0. Capture-v2 original
+encoder source1,005,120 samples; server-reflected input1,065,600 samples. Independent
+turbo recovers EVERY authored user word, WER0, finite peak.520385742. Both turbo and
+large-v3 recover exact seven-word answer; unchanged answer phase/quiet checks pass.
+Actual server close44.628228209s, client observed47.084875250s. Original output and
+all server input PCM retained. Independent validator rebuilt every decoded frame,
+explicit resampling and causal client WAV byte-exactly. No caller-heard latency or
+native model qualification claimed. Old failed39/40 stays immutable. Receipt
+NATIVE-CONTROL3-WEBRTC-INPUT-WITNESS-2026-10-22.json records hashes and bothrecognizers.
+
+New evals/native_control_webrtc_quality.py assembles ALL40 with39 original byte-identical
+records and this one new capture, rechecks complete historical source/quality chain,
+reruns independent turbo on new assistant AND server input, then independently
+recomputes all40 decisions. Source code native_control_webrtc_artifacts.py verifies
+every raw frame/sample/packet, sideband-before-media and original source. Same
+word/phase/quiet/peak bars, no normalization beyond existing policy. New qualityv7
+explicitly dispatched by semantic reviewer/converter. Twelve focused tests pass;
+full control suite previously60, plus4 new input/quality tests. No new API session
+created by reapproval. Next run complete reapproval then semantic+conversion only
+if whole40 passes. Runtime handle will be recorded after dispatch; no duplicate.
+
+Core67.764GB archive, original40 backup and earlier863-file repair delta verified
+on Runpod. Latest exact/drained/scoped/WebRTC captures and diagnostics still need
+new remote backup delta. No duplex GPU or optimizer running; TOTAL50USD budget,
+last fresh compute20.096006687846966USD, no compute since13:51UTC. Candidate7590052
+remains unadopted, actual latest stage8 updates/Adam520→528. Native control cache
+code exists; actual encode/Engine/numerical/trainer integration still pending.
+Goal ACTIVE; broader interaction/delegation/backchannel curriculum remains required.
+
 # LOCAL — actual WebRTC response meets unchanged scene checks; input witness prepared (22 October18:08 London)
 
 Source e4cc385 committed/pushed. One bounded WebRTC probe92819 TERMINAL0, no errors,

@@ -1,0 +1,173 @@
+{
+  "schema": "dl-control3-webrtc-waveform-diagnostic-v1",
+  "at_utc": "2026-10-22T22:41:47.643521+00:00",
+  "wav_sha256": "ef4228ec3f77c5b4b96ed18f62868a5f7266e761777a77dea0a9af6e4f4dfd15",
+  "source": "/private/tmp/duplex-control3-webrtc-20261022-v2",
+  "actual_original_input_trace_complete": true,
+  "wire_codec_lossy": true,
+  "server_received_input_not_verified": false,
+  "whole40_approved": false,
+  "training_approved": false,
+  "original_audio_changed": false,
+  "recognizers": [
+    {
+      "recognizer": "large-v3-turbo",
+      "weights_sha256": "aff26ae408abcba5fbf8813c21e62b0941638c5f6eebfb145be0c9839262a19a",
+      "asr_sha256": "63d4af5029cfdc559b70a567f9c1f4e4e84efb6a4a39ed852aaca5839cb7e48d",
+      "text": " Reflected light carries light to your eyes.",
+      "checks": {
+        "passed": true,
+        "reasons": [],
+        "raw_speech_wer": 0.0,
+        "canonical_speech_wer": 0.0,
+        "word_agreement": {
+          "policy": "control3-finite-spoken-orthography-v1",
+          "variants": {
+            "vapor": "vapour"
+          },
+          "raw_wer": 0.0,
+          "canonical_word_wer": 0.0
+        },
+        "quiet_start_s": 15.922083459001442,
+        "quiet_end_s": 47.08487525000237,
+        "quiet_active_20ms_frames": 0,
+        "terminal_observation_included": true,
+        "answer_phases": [
+          {
+            "assistant_turn": 1,
+            "start_s": 4.800461541999539,
+            "end_s": 10.16084200000114,
+            "expected_words": [
+              "reflected",
+              "light",
+              "carries",
+              "light",
+              "to",
+              "your",
+              "eyes"
+            ],
+            "measured_words": [
+              "reflected",
+              "light",
+              "carries",
+              "light",
+              "to",
+              "your",
+              "eyes"
+            ],
+            "passed": true
+          }
+        ],
+        "semantic_review_required": true,
+        "native_numerical_review_required": true,
+        "training_approved": false,
+        "model_behavior_qualified": false
+      }
+    },
+    {
+      "recognizer": "large-v3",
+      "weights_sha256": "e5b1a55b89c1367dacf97e3e19bfd829a01529dbfdeefa8caeb59b3f1b81dadb",
+      "asr_sha256": "4dd3a8fe365db90a0fac5e878118607013eff19f3244f63b3d494026c0317662",
+      "text": " Reflected light carries light to your eyes.",
+      "checks": {
+        "passed": true,
+        "reasons": [],
+        "raw_speech_wer": 0.0,
+        "canonical_speech_wer": 0.0,
+        "word_agreement": {
+          "policy": "control3-finite-spoken-orthography-v1",
+          "variants": {
+            "vapor": "vapour"
+          },
+          "raw_wer": 0.0,
+          "canonical_word_wer": 0.0
+        },
+        "quiet_start_s": 15.922083459001442,
+        "quiet_end_s": 47.08487525000237,
+        "quiet_active_20ms_frames": 0,
+        "terminal_observation_included": true,
+        "answer_phases": [
+          {
+            "assistant_turn": 1,
+            "start_s": 4.800461541999539,
+            "end_s": 10.16084200000114,
+            "expected_words": [
+              "reflected",
+              "light",
+              "carries",
+              "light",
+              "to",
+              "your",
+              "eyes"
+            ],
+            "measured_words": [
+              "reflected",
+              "light",
+              "carries",
+              "light",
+              "to",
+              "your",
+              "eyes"
+            ],
+            "passed": true
+          }
+        ],
+        "semantic_review_required": true,
+        "native_numerical_review_required": true,
+        "training_approved": false,
+        "model_behavior_qualified": false
+      }
+    }
+  ],
+  "server_input_diagnostic": {
+    "expected_text": "Which carries light to my eyes, a sound wave or reflected light? Do not answer or acknowledge this. Speak only after I say marble again.",
+    "asr_text": " Which carries light to my eyes, a sound wave or reflected light? Do not answer or acknowledge this. Speak only after I say marble again.",
+    "word_agreement": {
+      "policy": "control3-finite-spoken-orthography-v1",
+      "variants": {
+        "vapor": "vapour"
+      },
+      "raw_wer": 0.0,
+      "canonical_word_wer": 0.0
+    },
+    "exact_spoken_words": true,
+    "peak": 0.5203857421875,
+    "finite": true,
+    "samples": 1065600,
+    "asr_sha256": "09458429882526699b035d7152548c743f2f99076e79e2e0f750728bec29340a",
+    "wav_sha256": "654bb1b4df9da7d2f612b2bc3fddb28f68451dbc968d7126d527182984a90226"
+  },
+  "completed_utc": "2026-10-22T22:42:26.539740+00:00",
+  "capture_report": {
+    "schema": "dl-native-control3-webrtc-capture-v2",
+    "status": "complete_diagnostic_unapproved",
+    "protocol": "native-control3-webrtc-reflected-input-v2",
+    "started_utc": "2026-10-22T22:40:17.532678+00:00",
+    "source_samples": 645120,
+    "added_silence_samples": 360000,
+    "sent_input_samples": 1005120,
+    "expected_input_samples": 1005120,
+    "session_finalized": true,
+    "diagnostic_only": true,
+    "training_approved": false,
+    "original_audio_changed": false,
+    "create_http_status": 201,
+    "created_session_id": "live_u2_EbvkIp3oNN1cZL4WPiyrBAdXvOXjTLXV",
+    "offer_sha256": "cba795fbef522f888807167c92599b20fd46f59685cf4cb85d6c2c09aab1fc7a",
+    "answer_sha256": "bdf608d4b81ce14c52a9489ce026751864a3e00c17f5844ea5af4f02af7051d1",
+    "session_config_echo_matches": true,
+    "sideband_session_finalized": true,
+    "server_closed_at_s": 44.628228208999644,
+    "observed_until_s": 47.08487525000237,
+    "server_reflected_input_samples": 1065600,
+    "output_samples": 1126165,
+    "output_packets": 2150,
+    "preready_samples": 0,
+    "preready_nonzero_samples": 0,
+    "errors": [],
+    "ended_utc": "2026-10-22T22:41:07.186623+00:00"
+  },
+  "independent_decoded_media_reconstruction_passed": true,
+  "complete40_review_required": true,
+  "new_optimizer_updates": 0
+}
