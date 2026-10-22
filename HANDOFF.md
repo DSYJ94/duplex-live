@@ -1,3 +1,28 @@
+# LOCAL — actual WebRTC response meets unchanged scene checks; input witness prepared (22 October18:08 London)
+
+Source e4cc385 committed/pushed. One bounded WebRTC probe92819 TERMINAL0, no errors,
+all1,005,120 source samples submitted to negotiated Opus encoder. Actual session.closed
+44.785675417s, client observation45.249435709s. Causal media waveform45.088333333s,
+peak.319000244, audible island~7.632–9.360s. Model/turbo/large-v3 agree on exact seven
+words. Both independent recognizers pass unchanged scene word/phase/quiet bars:
+allowed4.800146375–10.161255125s, all words inside, quiet active frames0. This is a
+DIAGNOSTIC, not full40 approval, server-input verification, semantic or native pass.
+Raw /private/tmp/duplex-control3-webrtc-20261022-v1; ASR diagnostic-v1 and corrected-v2
+both retained in runs. Initial scratch assessment falsely rejected NumPy numeric
+scalar types; v2 reads identical persisted JSON like production quality, changing no
+numeric values, ASR/audio/threshold. Waveform viewed. Receipt
+NATIVE-CONTROL3-WEBRTC-DIAGNOSTIC-2026-10-22.json preserves both recognizer hashes.
+
+New capture evals/native_control_webrtc_capture.py requires same-session sideband
+subscription BEFORE primary media, then retains all server-reflected PCM16 input,
+original encoder input, every decoded output frame and actual causal playout clocks.
+Same source/scoped reference/model/voice. Independent reflected-input word checks
+must establish source word integrity after lossy Opus before considering teacher
+use. No old capture retroactively approved. Six focused codec/lifecycle/reflection/
+configuration tests pass. Next ONE bounded capture, then all40 quality/semantic/
+conversion and native numerical chain; no new optimizer/GPU submitted. Last actual
+whole batch39/40 remains authoritative. New data still requires separate backup delta.
+
 # LOCAL — repair backup verified; scoped teacher39/40, transport diagnostic prepared (22 October17:58 London)
 
 LOCAL sole executor; CLOUD read-only. Source before this commit4583aa631a1543ccd397156019dca7fa1f4eff6e.

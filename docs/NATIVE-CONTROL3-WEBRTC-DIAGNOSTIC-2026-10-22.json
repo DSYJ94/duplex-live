@@ -1,0 +1,149 @@
+{
+  "schema": "dl-control3-webrtc-persisted-asr-diagnostic-v2",
+  "at_utc": "2026-10-22T22:20:00.347362+00:00",
+  "wav_sha256": "ae63c3a910d13a5ae6d3535c40159a8e88403db7cb0b7f3ba85af2fc22ecaa08",
+  "source": "/private/tmp/duplex-control3-webrtc-20261022-v1",
+  "actual_original_input_trace_complete": true,
+  "wire_codec_lossy": true,
+  "server_received_input_not_verified": true,
+  "whole40_approved": false,
+  "training_approved": false,
+  "original_audio_changed": false,
+  "recognizers": [
+    {
+      "recognizer": "large-v3-turbo",
+      "asr_sha256": "e21117f915ce412a6ed962b5173f19251db6642f6c5d56a14b04999b87288c84",
+      "text": " Reflected light carries light to your eyes.",
+      "checks": {
+        "passed": true,
+        "reasons": [],
+        "raw_speech_wer": 0.0,
+        "canonical_speech_wer": 0.0,
+        "word_agreement": {
+          "policy": "control3-finite-spoken-orthography-v1",
+          "variants": {
+            "vapor": "vapour"
+          },
+          "raw_wer": 0.0,
+          "canonical_word_wer": 0.0
+        },
+        "quiet_start_s": 15.920857334000175,
+        "quiet_end_s": 45.249435708999954,
+        "quiet_active_20ms_frames": 0,
+        "terminal_observation_included": true,
+        "answer_phases": [
+          {
+            "assistant_turn": 1,
+            "start_s": 4.800146375000622,
+            "end_s": 10.161255125000025,
+            "expected_words": [
+              "reflected",
+              "light",
+              "carries",
+              "light",
+              "to",
+              "your",
+              "eyes"
+            ],
+            "measured_words": [
+              "reflected",
+              "light",
+              "carries",
+              "light",
+              "to",
+              "your",
+              "eyes"
+            ],
+            "passed": true
+          }
+        ],
+        "semantic_review_required": true,
+        "native_numerical_review_required": true,
+        "training_approved": false,
+        "model_behavior_qualified": false
+      }
+    },
+    {
+      "recognizer": "large-v3",
+      "asr_sha256": "676b13e254cbd93dd147cf984b150e3165862376e050553fbde2782cdeeddbef",
+      "text": " Reflected light carries light to your eyes.",
+      "checks": {
+        "passed": true,
+        "reasons": [],
+        "raw_speech_wer": 0.0,
+        "canonical_speech_wer": 0.0,
+        "word_agreement": {
+          "policy": "control3-finite-spoken-orthography-v1",
+          "variants": {
+            "vapor": "vapour"
+          },
+          "raw_wer": 0.0,
+          "canonical_word_wer": 0.0
+        },
+        "quiet_start_s": 15.920857334000175,
+        "quiet_end_s": 45.249435708999954,
+        "quiet_active_20ms_frames": 0,
+        "terminal_observation_included": true,
+        "answer_phases": [
+          {
+            "assistant_turn": 1,
+            "start_s": 4.800146375000622,
+            "end_s": 10.161255125000025,
+            "expected_words": [
+              "reflected",
+              "light",
+              "carries",
+              "light",
+              "to",
+              "your",
+              "eyes"
+            ],
+            "measured_words": [
+              "reflected",
+              "light",
+              "carries",
+              "light",
+              "to",
+              "your",
+              "eyes"
+            ],
+            "passed": true
+          }
+        ],
+        "semantic_review_required": true,
+        "native_numerical_review_required": true,
+        "training_approved": false,
+        "model_behavior_qualified": false
+      }
+    }
+  ],
+  "completed_utc": "2026-10-22T22:20:30.574330+00:00",
+  "parent_sha256": "7b31cb4e827af4a99dab5f59610e587612c6798d3339c77b27cc4198da24c98a",
+  "reason": "Original scratch diagnostic passed NumPy scalar word times directly to strict built-in numeric validator; production quality reads persisted JSON. Reassess identical numeric values from untouched persisted evidence.",
+  "capture_report": {
+    "schema": "dl-native-control3-webrtc-probe-v1",
+    "status": "complete_diagnostic_unapproved",
+    "protocol": "native-control3-webrtc-transport-probe-v1",
+    "started_utc": "2026-10-22T16:59:22.985100+00:00",
+    "sent_input_samples": 1005120,
+    "expected_input_samples": 1005120,
+    "session_finalized": true,
+    "diagnostic_only": true,
+    "training_approved": false,
+    "original_audio_changed": false,
+    "create_http_status": 201,
+    "created_session_id": "live_u1_EbqQNp3oNRwj49bqpuEBvJunQywL1hPr",
+    "offer_sha256": "64fa382c8b7c91a35637b4e9c51b138a808cfdef98e37d16d12a707041759f20",
+    "answer_sha256": "1f54872daa6df054ee4f02acc97ec9be48d73132e74a80fee969b36e2e25476f",
+    "server_closed_at_s": 44.785675417002494,
+    "observed_until_s": 45.249435708999954,
+    "output_samples": 1082120,
+    "output_packets": 2097,
+    "preready_samples": 0,
+    "preready_nonzero_samples": 0,
+    "errors": [],
+    "ended_utc": "2026-10-22T17:00:10.825180+00:00"
+  },
+  "waveform_inspected": true,
+  "next_action": "New versioned capture additionally requires sideband subscription before primary media and preserves every reflected server input sample for independent word checks. Keep original39/40 failed audit intact."
+}
