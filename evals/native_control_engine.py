@@ -54,7 +54,10 @@ def validate_trace(clean,prefix,saved,calls,delay_sequence,initial):
     frames=clean.shape[1];p=prefix.shape[1]
     call_partition(calls,codes.shape[1])
     live=[c for c in calls if c['phase']=='live']
+    dtypes={k:torch.int64 for k in ('inputs','offline_inputs','codes','targets','streamed_user_codes','current_targets')}
+    dtypes.update(mask=torch.bool,provided=torch.bool)
     if (set(saved)!={'inputs','offline_inputs','codes','mask','targets','streamed_user_codes','provided','current_targets'}
+            or any(not isinstance(saved[k],torch.Tensor) or saved[k].dtype!=dtype for k,dtype in dtypes.items())
             or not torch.equal(saved['inputs'],expected) or not torch.equal(saved['offline_inputs'],offline)
             or not torch.equal(saved['codes'],codes) or not torch.equal(saved['mask'],mask)
             or not torch.equal(saved['targets'],codes[0])
