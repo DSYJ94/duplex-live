@@ -1,0 +1,242 @@
+{
+  "schema": "dl-control3-repair-chunk-persistence-v1",
+  "at_utc": "2026-10-22T16:53:02.875959+00:00",
+  "bucket": "49yytzyoge",
+  "prefix": "migration/control3-teacher-repairs-20261022/",
+  "archive_file_count": 863,
+  "archive_uncompressed_bytes": 1026645355,
+  "archive_bytes": 114791298,
+  "archive_sha256": "b8ddc64b2f90206026b01ba3aab06cb9cbaf5a9daa50e38ff62a20246c237b15",
+  "all_internal_archive_hashes_match": true,
+  "every_destination_chunk_hash_matches": true,
+  "complete_destination_archive_reconstruction_hash_matches": true,
+  "archive_object_uploaded": false,
+  "storage_format": "lossless ordered single-PUT chunks plus index",
+  "chunks": [
+    {
+      "key": "migration/control3-teacher-repairs-20261022/chunks/0000.bin",
+      "sha256": "8ec03277c20c546693cd6d692ce86df39721af42c196a03832ccca7bbc1efb40",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T16:49:01.588706+00:00"
+    },
+    {
+      "key": "migration/control3-teacher-repairs-20261022/chunks/0001.bin",
+      "sha256": "c013d0f0dc87575208f4392fa849b850781e3245a032bd2ddd158b1df0aa6865",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T16:49:09.884107+00:00"
+    },
+    {
+      "key": "migration/control3-teacher-repairs-20261022/chunks/0002.bin",
+      "sha256": "58452f3e48794df08fd6c23c31dbfbea9027501b21f49688fed4b935ab621d3c",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T16:49:19.293766+00:00"
+    },
+    {
+      "key": "migration/control3-teacher-repairs-20261022/chunks/0003.bin",
+      "sha256": "b4fa3975cd156483ea6ab757253309c76a76735a35cc565ea5a1ec9c95bdb43b",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T16:49:25.929927+00:00"
+    },
+    {
+      "key": "migration/control3-teacher-repairs-20261022/chunks/0004.bin",
+      "sha256": "fb85c28ac1fb8d91f81d1de79747162c0d5ca73b2b8e131dbdcc179f0d313c8f",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T16:49:31.135978+00:00"
+    },
+    {
+      "key": "migration/control3-teacher-repairs-20261022/chunks/0005.bin",
+      "sha256": "94bdca00131619d5c66e20cb64687a6798aeae5478ed467ce8e3c822c5c9b38a",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T16:49:36.992932+00:00"
+    },
+    {
+      "key": "migration/control3-teacher-repairs-20261022/chunks/0006.bin",
+      "sha256": "ca19351b08db647d4c1d41c0ed147a2bdbde4deeb196d7593904e09caff5fd6d",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T16:49:41.061871+00:00"
+    },
+    {
+      "key": "migration/control3-teacher-repairs-20261022/chunks/0007.bin",
+      "sha256": "7cd04c8ae8b8536ebc86abbf964c1f27bd1ffae1816117fea8367c9c9b53941b",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T16:49:48.369912+00:00"
+    },
+    {
+      "key": "migration/control3-teacher-repairs-20261022/chunks/0008.bin",
+      "sha256": "1093db5a7a25ce8859f586377a923bd0211b8623c5374d110179d3510146339d",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T16:49:53.226359+00:00"
+    },
+    {
+      "key": "migration/control3-teacher-repairs-20261022/chunks/0009.bin",
+      "sha256": "f2bd1e16891853eb94706f58794175d06dea6ff0661a97d081e5b84dc2771905",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T16:50:00.929578+00:00"
+    },
+    {
+      "key": "migration/control3-teacher-repairs-20261022/chunks/0010.bin",
+      "sha256": "a75a343bc518c3e3161cd58f7721b3bb6cf180220c08e7e4f0127e90aba4b3e2",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T16:50:07.847697+00:00"
+    },
+    {
+      "key": "migration/control3-teacher-repairs-20261022/chunks/0011.bin",
+      "sha256": "300d25572b0170559a1487c6c9570a2c0e33f44c9908079ec22bf510839b2205",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T16:50:16.738654+00:00"
+    },
+    {
+      "key": "migration/control3-teacher-repairs-20261022/chunks/0012.bin",
+      "sha256": "ccf97fb606a1bd6d5a6b490df51b4fffd50a14c9d9ef35693d865ac9dc8bb0be",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T16:50:25.038480+00:00"
+    },
+    {
+      "key": "migration/control3-teacher-repairs-20261022/chunks/0013.bin",
+      "sha256": "b05a985606e67ea234d024a674954d8eddedaa600b02a1e17b25d820c65e4131",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T16:50:35.067612+00:00"
+    },
+    {
+      "key": "migration/control3-teacher-repairs-20261022/chunks/0014.bin",
+      "sha256": "1a9ae3726387fff902b34a2602b14679d0ca7d9f9b55281d910163b6db57a7e7",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T16:50:58.708346+00:00"
+    },
+    {
+      "key": "migration/control3-teacher-repairs-20261022/chunks/0015.bin",
+      "sha256": "28f8dadcf079e0f9abc8f13199ed0badc71cc54162cf5ba6561095a6c6a95cef",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T16:51:56.776389+00:00"
+    },
+    {
+      "key": "migration/control3-teacher-repairs-20261022/chunks/0016.bin",
+      "sha256": "d37042c5c5a92baa90b4031355942ce50cc025fe64adbc6adebf896addef9004",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T16:52:07.119283+00:00"
+    },
+    {
+      "key": "migration/control3-teacher-repairs-20261022/chunks/0017.bin",
+      "sha256": "44d8e4902861694efe10ed22f11f43973c5c0354f7a4625562e60ce889c3c455",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T16:52:12.176050+00:00"
+    },
+    {
+      "key": "migration/control3-teacher-repairs-20261022/chunks/0018.bin",
+      "sha256": "e9d5b7b84ca04c3238290beea7ba8b9a6b2d491638f6c249b3bb1ab26eb466b8",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T16:52:41.744747+00:00"
+    },
+    {
+      "key": "migration/control3-teacher-repairs-20261022/chunks/0019.bin",
+      "sha256": "5008aa916b58172e279d83c531b8b729a8581fd001c724d459017d5e92c33d69",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T16:52:47.470694+00:00"
+    },
+    {
+      "key": "migration/control3-teacher-repairs-20261022/chunks/0020.bin",
+      "sha256": "f917de7f29f897baa5fc080e5d36d69edab81a21c9dde55570f9d38b81a9512d",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T16:52:49.293605+00:00"
+    },
+    {
+      "key": "migration/control3-teacher-repairs-20261022/chunks/0021.bin",
+      "sha256": "322900f1cb9fcd24368310d117098dd07f83f84e86abdeddd86043a0b7b30f31",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T16:52:51.272040+00:00"
+    },
+    {
+      "key": "migration/control3-teacher-repairs-20261022/chunks/0022.bin",
+      "sha256": "170ecebc85ff416476dee14ed5b653172a3e0f617a5b7f888ed330adec87b0c1",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T16:52:53.503412+00:00"
+    },
+    {
+      "key": "migration/control3-teacher-repairs-20261022/chunks/0023.bin",
+      "sha256": "467f55150e0fe6b47ff4041408d20dc15c84644996ca85069d54e402981f137d",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T16:52:56.078980+00:00"
+    },
+    {
+      "key": "migration/control3-teacher-repairs-20261022/chunks/0024.bin",
+      "sha256": "b1e1a58bc65a7a49aa0400fe3bd7ecc22901642cc8ef02966e841ed4acc0b8f0",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T16:52:58.438529+00:00"
+    },
+    {
+      "key": "migration/control3-teacher-repairs-20261022/chunks/0025.bin",
+      "sha256": "37fe80de21f9229f4d8af17a85f6bc9acd14226b67b00ece5982ea981a5b3ed9",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T16:53:00.405095+00:00"
+    },
+    {
+      "key": "migration/control3-teacher-repairs-20261022/chunks/0026.bin",
+      "sha256": "3b06265bafb9d68523010aba519ab89239404c48ee7afa0961c70facc18e8159",
+      "bytes": 4194304,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T16:53:02.227757+00:00"
+    },
+    {
+      "key": "migration/control3-teacher-repairs-20261022/chunks/0027.bin",
+      "sha256": "f62a4378c8e7fce5e2fe1f12f92d52bdd7a7a8143facfa24985a773760d35f0c",
+      "bytes": 1545090,
+      "independent_get_matches": true,
+      "downloaded_utc": "2026-10-22T16:53:02.873402+00:00"
+    }
+  ],
+  "metadata": [
+    {
+      "key": "migration/control3-teacher-repairs-20261022/inventory.json",
+      "bytes": 184986,
+      "sha256": "861c451a0db248ac8b033f6ee270d6fc81abf3a27c620b7684f17f0e822d9152",
+      "independent_get_matches": true
+    },
+    {
+      "key": "migration/control3-teacher-repairs-20261022/source-through-6163c1a.bundle",
+      "bytes": 452668,
+      "sha256": "a1d772a4358f145c6e01b63eedd944f98b9bf836c5131346785a65bf962f5610",
+      "independent_get_matches": true
+    },
+    {
+      "key": "migration/control3-teacher-repairs-20261022/chunk-index.json",
+      "bytes": 7089,
+      "sha256": "8a04723c53d6bdce08ca060390661f4b899a9cee49bdfb8d17861d315574d630",
+      "independent_get_matches": true
+    }
+  ],
+  "destination_reconstruction": "Concatenation of all independently downloaded destination chunk files, retaining per-chunk readback receipts across transient failures",
+  "source_bundle_tip": "6163c1a",
+  "source_bundle_prerequisite": "741872fe2f9e49f35d4deba9aba96caff26c51d4",
+  "teacher_quality_passed": 38,
+  "whole_teacher_batch_approved": false,
+  "training_approved": false,
+  "owner_conversations_or_credentials_included": false,
+  "new_gpu_purchased": false,
+  "uploader_sha256": "6afae89deabd3c04b75819f64c5616a7c0a8cd92a732f17f853ca109b9c82b87"
+}

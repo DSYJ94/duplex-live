@@ -1,3 +1,48 @@
+# LOCAL — repair backup verified; scoped teacher39/40, transport diagnostic prepared (22 October17:58 London)
+
+LOCAL sole executor; CLOUD read-only. Source before this commit4583aa631a1543ccd397156019dca7fa1f4eff6e.
+Latest collector46957 TERMINAL0; complete40 supervisor77608 TERMINAL1 at quality verifier.
+Root runs/native-control3-postteacher-20261022-v7; raw scoped-v9. Both recognizers and
+model text agree on exact seven-word006 answer, WER0. It finishes outside unchanged
+answer window4.801440875–10.161457125s; turbo ends10.77s. Quiet/duration pass.
+Independent diagnostic6763 TERMINAL0; WAV/ASR hashes recorded in
+NATIVE-CONTROL3-SCOPED-V9-REVIEW-2026-10-22.json. Raw capture and failed full40 audit
+copied back from temporary review mirror with every file hash checked. No semantic,
+conversion, GPU or optimizer stage submitted. Keep all failed attempts unchanged.
+
+Native control40 codec cache now implemented in evals/native_control_cache.py,
+4 contract tests pass. Separate strict40 schema, pinned Mimi/Interleaver, full PCM,
+17-channel ownership, no acoustic crop/pad. Actual CUDA encoding and native Engine/
+numerical/gradient/training integration remain unrun or unfinished. This is not
+approval to extend unqualified native7590052. Original49/28/154/KL1/hidden10 retained.
+
+Earlier repair archive863files/1,026,645,355B is now independently verified on Runpod
+volume49yytzyoge under migration/control3-teacher-repairs-20261022/. All28 ordered
+single-PUT chunks were independently downloaded and reconstructed:114,791,298B,
+SHA b8ddc64b2f90206026b01ba3aab06cb9cbaf5a9daa50e38ff62a20246c237b15.
+Receipt NATIVE-CONTROL3-REPAIRS-PERSISTENCE-2026-10-22.json, source bundle6163c1a
+with prerequisite741872fe2f9e49f35d4deba9aba96caff26c51d4. Process no longer present;
+complete receipt and actual readback bytes rehashed locally. Latest exact/drained/
+scoped captures and diagnostics are NOT in that earlier archive; new backup delta
+still required. Original67.764GB archive and original40/source backup remain verified.
+Whole Isambard project remains partial. No owner conversations/credentials/cores.
+
+Next one bounded WebRTC transport probe of existing synthetic006, gpt-live-1/marin,
+same source/scoped instructions, Opus negotiated. New diagnostic protocol never
+approves TRAIN or replaces the failed recording. Preserve all decoded media, explicit
+resampling, actual packet arrival and bounded postclose observation; reject distinct
+stereo rather than downmix. API key stays Mac. Failure cleanup uses same-session
+sideband session.close; official hangup docs are SIP-specific, not used for WebRTC.
+60 control tests pass; 4 probe tests include real Opus encode/decode, duplicate-mono conversion, preservation of
+causal audio observation, redaction and same-session close. Do not duplicate the
+probe after an observation timeout; revalidate actual handle. No capture live yet.
+
+Budget TOTAL50USD, last fresh13:51UTC spend20.096006687846966USD; no GPU since.
+No duplex Pod live; volume49yytzyoge100GB EUR-IS-1 costs7USD/month separately.
+Candidate7590052 unadopted; latest actual training remains8 updates/Adam520→528.
+Goal ACTIVE. User wants full microturn/delegation/backchannel competence, not only
+control40; broader approved-data training curriculum remains to be built.
+
 # LOCAL — complete40 teacher audit still fails; wider curriculum specified (22 October16:01 London)
 
 LOCAL sole executor. Executable source61c0b3ab80dc0bef495f33c2bb20ae544e7e2441;

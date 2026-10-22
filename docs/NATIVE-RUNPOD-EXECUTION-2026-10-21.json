@@ -1,8 +1,8 @@
 {
   "schema": "dl-runpod-native-trial-status-v2",
-  "at_utc": "2026-10-22T15:01:57.867841+00:00",
+  "at_utc": "2026-10-22T16:58:14.451928+00:00",
   "executor": "LOCAL",
-  "source_commit": "61c0b3ab80dc0bef495f33c2bb20ae544e7e2441",
+  "source_commit": "4583aa631a1543ccd397156019dca7fa1f4eff6e",
   "trial": {
     "pod_id": "q3wqjwols44aos",
     "created_utc": "2026-10-21T09:15:37.923Z",
@@ -1101,5 +1101,43 @@
     "new_gpu_created_for_this_update": false
   },
   "adapter_capacity_audit": "docs/NATIVE-ADAPTER-CAPACITY-2026-10-22.json",
-  "interaction_delegation_curriculum": "docs/NATIVE-INTERACTION-DELEGATION-CURRICULUM-2026-10-22.md"
+  "interaction_delegation_curriculum": "docs/NATIVE-INTERACTION-DELEGATION-CURRICULUM-2026-10-22.md",
+  "latest_control40_state": {
+    "schema": "dl-control3-scoped-v9-failure-review-v1",
+    "at_utc": "2026-10-22T16:58:14.451928+00:00",
+    "source_commit": "4583aa631a1543ccd397156019dca7fa1f4eff6e",
+    "teacher_root": "runs/native-control3-teachers-scoped-20261022-v9",
+    "complete_quality_root": "runs/native-control3-postteacher-20261022-v7/quality",
+    "quality_sha256": "c2593308b0d4bcfb7c29689b2133b9a62c0344699e0cbb43903b0c0bb821e614",
+    "passed": false,
+    "all40_complete": true,
+    "diagnostic_file": "runs/native-control3-teacher-diagnostic-20261022-v7/diagnostic.json",
+    "diagnostic_sha256": "f13703808661f68efaca1eb223cb80e691b2951dab2cbbc12c2c48f31502084b",
+    "failed_record": {
+      "id": "native-control3-train-006",
+      "original_failed_reasons": [
+        "Missing, early, extra or restarted answer in authored phase1",
+        "Teacher contains speech outside its commanded answer phases"
+      ],
+      "turbo_text": " Reflected light carries light to your eyes.",
+      "model_text": "Reflected light carries light to your eyes.",
+      "large_v3_text": " Reflected light carries light to your eyes.",
+      "wav_sha256": "68f5929aab525d91745e8a9a8ba81db8dc21b11ff39d761366680c891bbf105d",
+      "duration_s": 50.46075,
+      "observed_until_s": 50.62194633400213,
+      "beyond_observation_s": 0.0,
+      "beyond_observation_peak": 0.0,
+      "peak": 0.37109375,
+      "asr_file": "native-control3-train-006.large-v3.json",
+      "asr_sha256": "2202415e903d081329ef86534b8bd5ac0de0dc997a70dfb6de01c6a0bd261dcb"
+    },
+    "next_action": "One declared WebRTC transport diagnostic with unchanged source and scoped reference; no data approval or threshold change",
+    "native_control_codec_cache_source": "evals/native_control_cache.py",
+    "actual_codec_execution": false,
+    "native_training_integration_complete": false,
+    "training_approved": false,
+    "new_optimizer_updates": 0,
+    "new_gpu_purchased": false
+  },
+  "latest_repair_backup_receipt": "docs/NATIVE-CONTROL3-REPAIRS-PERSISTENCE-2026-10-22.json"
 }
