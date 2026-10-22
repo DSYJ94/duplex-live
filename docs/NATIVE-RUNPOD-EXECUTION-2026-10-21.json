@@ -1,8 +1,8 @@
 {
   "schema": "dl-runpod-native-trial-status-v2",
-  "at_utc": "2026-10-22T14:02:50.161590+00:00",
+  "at_utc": "2026-10-22T14:48:36.145492+00:00",
   "executor": "LOCAL",
-  "source_commit": "33adf815be6c6e023066051a7328adf9660e6910",
+  "source_commit": "61c0b3ab80dc0bef495f33c2bb20ae544e7e2441",
   "trial": {
     "pod_id": "q3wqjwols44aos",
     "created_utc": "2026-10-21T09:15:37.923Z",
@@ -887,8 +887,15 @@
       "029: turbo hears Wait, large-v3 hears Point; raw separate replies are also glued in model_text. Keep disagreement failed."
     ]
   },
-  "current_active_native_jobs": [],
-  "local_continuation_note": "LOCAL sole executor; exact collector90815 terminal0; postteacher26118 terminal1 at verify_quality40,39/40. No semantic/conversion/GPU/optimizer submission after failure.",
+  "current_active_native_jobs": [
+    {
+      "exec": 68915,
+      "type": "complete40_quality_semantic_conversion",
+      "directory": "runs/native-control3-postteacher-20261022-v6",
+      "latest_observed_phase": "quality40"
+    }
+  ],
+  "local_continuation_note": "LOCAL sole executor. Drained v8 collector35976 terminal0/all40 transport. Postteacher68915 LIVE quality40; no GPU/optimizer submitted. Preserve failed v6/v7 attempts.",
   "goal_clarification": "Strong native full-duplex voice and interaction control with basic native reasoning, plus learned asynchronous delegation to a stronger reasoning/tool backend; no Qwen fallback or hand-written router represented as learned policy.",
   "actual_backend_component_probe": {
     "schema": "dl-local-real-backend-component-probe-v1",
@@ -920,9 +927,9 @@
     "teacher_quality": "runs/native-control3-postteacher-20261022-v5/quality/teacher-quality.json",
     "whole_teacher_batch_approved": false,
     "old_repair_collectors_terminal": true,
-    "postteacher_exec": 26118,
-    "postteacher_terminal_exit": 1,
-    "postteacher_failed_stage": "verify_quality40",
+    "postteacher_exec": 68915,
+    "postteacher_terminal_exit": null,
+    "postteacher_failed_stage": null,
     "semantic_submitted": false,
     "conversion_executed": false,
     "exact_teacher_protocol": "native-control3-exact-reference-teacher-v2",
@@ -932,7 +939,7 @@
     "exact_teacher_concurrency": 1,
     "exact_teacher_status": "raw_complete_unapproved",
     "maximum_new_sessions": 2,
-    "retained_byte_identical": 38,
+    "retained_byte_identical": 39,
     "bulk_transfer_stopped_during_live_voice": true,
     "prior_exact_failed_directory": "runs/native-control3-teachers-exact-20261022-v4",
     "prior_exact_exec": 42878,
@@ -953,9 +960,19 @@
     "thresholds_or_source_words_or_input_audio_changed": false,
     "native_optimizer_updates": 0,
     "new_gpu_submitted": false,
-    "next": "Diagnose006 waveform/session-clock mismatch (allzero excess5.877038083s); versioned capture repair then complete40 quality, semantic, conversion and native numerical gates before bounded pilot.",
+    "next": "Observe live68915 full40 quality; then semantic/conversion only on complete independent approval. Implement native cache/numerical and bounded training integration retaining original objectives.",
     "exact_teacher_terminal_exit": 0,
-    "failure_review": "docs/NATIVE-CONTROL3-EXACT-V5-REVIEW-2026-10-22.json"
+    "failure_review": "docs/NATIVE-CONTROL3-EXACT-V5-REVIEW-2026-10-22.json",
+    "postteacher_status": "running_quality40",
+    "current_postteacher_directory": "runs/native-control3-postteacher-20261022-v6",
+    "current_teacher_directory": "runs/native-control3-teachers-drained-20261022-v8",
+    "current_teacher_exec": 35976,
+    "current_teacher_terminal_exit": 0,
+    "current_teacher_status": "raw_complete_unapproved",
+    "current_teacher_protocol": "native-control3-exact-reference-playout-drain-v4",
+    "current_server_closed_at_s": 53.501299916999415,
+    "current_client_observed_until_s": 58.676521749999665,
+    "current_quality_result_pending": true
   },
   "control3_teacher40_persistence": {
     "schema": "dl-control3-teacher40-persistence-v1",
@@ -1088,5 +1105,6 @@
     "unrelated_resources_excluded": true,
     "storage_approval_unchanged": true,
     "new_gpu_created_for_this_update": false
-  }
+  },
+  "adapter_capacity_audit": "docs/NATIVE-ADAPTER-CAPACITY-2026-10-22.json"
 }

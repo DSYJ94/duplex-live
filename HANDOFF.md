@@ -1,3 +1,75 @@
+# LOCAL — actual client drain captured; complete40 review running (22 October15:49 London)
+
+LOCAL sole executor; CLOUD read-only. Executable source61c0b3ab80dc0bef495f33c2bb20ae544e7e2441
+committed/pushed. No GPU or optimizer submitted. Native7590052 remains unadopted,
+latest actual stage8 updates/Adam520→528. Original49 teacher histories/all28 actual
+components/full154 objectives/KL1+hidden10/heldout hashes unchanged. Goal ACTIVE.
+
+Capture backlog reproduced twice using actual006 packet ledger:50.538416667s
+causal playout vs44.661378584s service closure; excess5.877038083s allzero. New
+regression failed against original recorder (21.08s packet playout vs17.08s close).
+Pre-close settling hypothesis was FALSIFIED by actual exec24849, sourcebd4362c:
+input completed41.882s but service kept emitting PCM to95.47s; input_sender/outer
+TimeoutError, no session.closed. Folder native-control3-teachers-drained-20261022-v6
+preserved; never reuse as approved. Actual service emits continuous PCM without
+more input, so waiting for output to stop before close cannot complete.
+
+Corrected protocol native-control3-exact-reference-playout-drain-v4 preserves the
+actual server session.closed timestamp separately, then measures REAL client wall
+observation through full causal scheduled packet playout. No speaker audition or
+retrospective extension of old capture claimed. All PCM/arrival clocks preserved,
+no trim/gain/output suppression; original15s extra input silence, prompt and80ms
+waveform-duration bar unchanged. Max postclose drain20s, margin160ms, failed drain
+rejects whole batch. Five focused/48 total control tests pass, including real
+recorder-seam delayed-packet preservation, tamper rejection and timeout guard.
+
+First corrected capture28116 TERMINAL1: network send stalls up to13.66s, only
+739200/1005120 input samples, no close. Folder v7 preserved, not content approval.
+Bounded actual authenticated WebSocket ping47556 TERMINAL0: handshake.737s,
+RTT.167/.251/.682s, no audio/credentials logged. ONE bounded transport retry35976
+TERMINAL0: runs/native-control3-teachers-drained-20261022-v8 ALL40 transport-complete.
+Only006 newly recorded,39 retained byte-identical. Full input1005120, no errors,
+server closed53.501299917s; actual client observation ends58.676521750s.
+Original failed v5/v6/v7 remain unchanged; no old recording retroactively approved.
+
+CURRENT LIVE exec68915/caffeinate: evals.native_control_postteacher_pipeline,
+--drained-teacher; out runs/native-control3-postteacher-20261022-v6. Batch v8,
+reuse batch native-control3-teachers-exact-20261022-v5 and its complete39/40 quality.
+Latest phase quality40. Poll ACTUAL HANDLE; do not duplicate based on stale JSON.
+Requires complete40 quality/v5 + independent verifier, semantic40+verifier,
+conversion40+verifier. Any failure stops downstream. No GPU/cache/native numerical/
+optimizer stage in this controller. Latest actual quality count still39/40 until
+this new whole40 audit finishes; changed006 needs new independent turbo ASR.
+
+Budget TOTAL50USD, previous attributed spend20.096006687846966USD, remainder
+29.903993312153034USD at22Oct13:51UTC; no new compute since. No duplex Pod live.
+Volume49yytzyoge100GB EUR-IS-1,7USD/month. Refresh stock before paid provisioning.
+Original67.764GB native archive and original40/source backup3318files independently
+verified Mac+Runpod. New earlier-repair archive863files114791298B remains REMOTE
+PARTIAL12/28 chunks(0–10,13); no reconstruction proof. No upload running during
+voice capture. Latest exact/drained attempts and approvals are not yet in that
+archive; preserve/transfer them plus prior repair delta after critical API work.
+Whole Isambard/project backup remains partial. Exclude owner audio/credentials/
+session-token/cores. OpenAI key stays on Mac. Unrelated Aurium resources untouched.
+
+Adapter count independently recomputed from actual7590052 safetensors header:
+26 tensors/13 rank8 modules,1,894,400 parameters. Exact breakdown in new
+NATIVE-ADAPTER-CAPACITY-2026-10-22.json and cookbook clarification. Final4-layer/
+rank8 selection is an engineering hypothesis; no layer/rank comparison establishes
+optimality/sufficiency. Full-weight fine-tuning is NOT an automatic next stage.
+
+NEXT: observe68915; diagnose actual failures if any, otherwise complete semantic
+and conversion. Then implement distinct native control40 cache/Engine ownership,
+unchanged numerical gates and bounded pilot retaining all original154 objectives.
+Do not fake old24/25/49 schema membership or train from a passing subset. Native10/
+ordinary4/fresh paired40 and independent training-state restore still required
+before extension/adoption. Learned delegation remains unqualified; component-only
+4-call backend probe is not native routing. Remote actual-backend eval still needs
+Mac credential broker. User's Geronimo failure0/9 is unresolved in trained weights.
+No Cloud execution handoff requested. Unrelated pycache/capability files/roadmap
+preserved. Restored public finetune/moshi-rag sources from verified local bundles
+under ignored runs/local-asr-20261021/ for offline integration reads only.
+
 # LOCAL — budget50; exact teacher audit39/40 (22 October 15:02 London)
 
 LOCAL sole executor; CLOUD read-only. Executable source33adf815be6c6e023066051a7328adf9660e6910

@@ -1,0 +1,257 @@
+{
+  "schema": "dl-native-adapter-capacity-audit-v1",
+  "at_utc": "2026-10-22T14:40:15.096935+00:00",
+  "checkpoint": "runs/cloud-export-20261016/tree/runs/context-training-proof-7590052/adapters.safetensors",
+  "checkpoint_sha256": "7bbb2e9f1822cb43db50f6ead7c14d510e7c280d520cc7e1436dced6edbcfeb5",
+  "parameter_count_method": "Sum of products of dimensions from actual saved safetensors header; no model reconstruction or nominal estimate",
+  "adapter_modules": 13,
+  "trainable_tensors": 26,
+  "trainable_parameters": 1894400,
+  "rank": 8,
+  "last_layers": [
+    28,
+    29,
+    30,
+    31
+  ],
+  "selection_is_proven_optimal": false,
+  "layer_or_rank_comparison_performed": false,
+  "full_weight_training_is_automatic_next_stage": false,
+  "base_weights_frozen": true,
+  "tensors": [
+    {
+      "name": "text_linear.lora_A.weight",
+      "shape": [
+        8,
+        4096
+      ],
+      "dtype": "F32",
+      "parameters": 32768
+    },
+    {
+      "name": "text_linear.lora_B.weight",
+      "shape": [
+        32000,
+        8
+      ],
+      "dtype": "F32",
+      "parameters": 256000
+    },
+    {
+      "name": "transformer.layers.28.gating.linear_in.lora_A.weight",
+      "shape": [
+        8,
+        4096
+      ],
+      "dtype": "F32",
+      "parameters": 32768
+    },
+    {
+      "name": "transformer.layers.28.gating.linear_in.lora_B.weight",
+      "shape": [
+        22528,
+        8
+      ],
+      "dtype": "F32",
+      "parameters": 180224
+    },
+    {
+      "name": "transformer.layers.28.gating.linear_out.lora_A.weight",
+      "shape": [
+        8,
+        11264
+      ],
+      "dtype": "F32",
+      "parameters": 90112
+    },
+    {
+      "name": "transformer.layers.28.gating.linear_out.lora_B.weight",
+      "shape": [
+        4096,
+        8
+      ],
+      "dtype": "F32",
+      "parameters": 32768
+    },
+    {
+      "name": "transformer.layers.28.self_attn.out_proj.lora_A.weight",
+      "shape": [
+        8,
+        4096
+      ],
+      "dtype": "F32",
+      "parameters": 32768
+    },
+    {
+      "name": "transformer.layers.28.self_attn.out_proj.lora_B.weight",
+      "shape": [
+        4096,
+        8
+      ],
+      "dtype": "F32",
+      "parameters": 32768
+    },
+    {
+      "name": "transformer.layers.29.gating.linear_in.lora_A.weight",
+      "shape": [
+        8,
+        4096
+      ],
+      "dtype": "F32",
+      "parameters": 32768
+    },
+    {
+      "name": "transformer.layers.29.gating.linear_in.lora_B.weight",
+      "shape": [
+        22528,
+        8
+      ],
+      "dtype": "F32",
+      "parameters": 180224
+    },
+    {
+      "name": "transformer.layers.29.gating.linear_out.lora_A.weight",
+      "shape": [
+        8,
+        11264
+      ],
+      "dtype": "F32",
+      "parameters": 90112
+    },
+    {
+      "name": "transformer.layers.29.gating.linear_out.lora_B.weight",
+      "shape": [
+        4096,
+        8
+      ],
+      "dtype": "F32",
+      "parameters": 32768
+    },
+    {
+      "name": "transformer.layers.29.self_attn.out_proj.lora_A.weight",
+      "shape": [
+        8,
+        4096
+      ],
+      "dtype": "F32",
+      "parameters": 32768
+    },
+    {
+      "name": "transformer.layers.29.self_attn.out_proj.lora_B.weight",
+      "shape": [
+        4096,
+        8
+      ],
+      "dtype": "F32",
+      "parameters": 32768
+    },
+    {
+      "name": "transformer.layers.30.gating.linear_in.lora_A.weight",
+      "shape": [
+        8,
+        4096
+      ],
+      "dtype": "F32",
+      "parameters": 32768
+    },
+    {
+      "name": "transformer.layers.30.gating.linear_in.lora_B.weight",
+      "shape": [
+        22528,
+        8
+      ],
+      "dtype": "F32",
+      "parameters": 180224
+    },
+    {
+      "name": "transformer.layers.30.gating.linear_out.lora_A.weight",
+      "shape": [
+        8,
+        11264
+      ],
+      "dtype": "F32",
+      "parameters": 90112
+    },
+    {
+      "name": "transformer.layers.30.gating.linear_out.lora_B.weight",
+      "shape": [
+        4096,
+        8
+      ],
+      "dtype": "F32",
+      "parameters": 32768
+    },
+    {
+      "name": "transformer.layers.30.self_attn.out_proj.lora_A.weight",
+      "shape": [
+        8,
+        4096
+      ],
+      "dtype": "F32",
+      "parameters": 32768
+    },
+    {
+      "name": "transformer.layers.30.self_attn.out_proj.lora_B.weight",
+      "shape": [
+        4096,
+        8
+      ],
+      "dtype": "F32",
+      "parameters": 32768
+    },
+    {
+      "name": "transformer.layers.31.gating.linear_in.lora_A.weight",
+      "shape": [
+        8,
+        4096
+      ],
+      "dtype": "F32",
+      "parameters": 32768
+    },
+    {
+      "name": "transformer.layers.31.gating.linear_in.lora_B.weight",
+      "shape": [
+        22528,
+        8
+      ],
+      "dtype": "F32",
+      "parameters": 180224
+    },
+    {
+      "name": "transformer.layers.31.gating.linear_out.lora_A.weight",
+      "shape": [
+        8,
+        11264
+      ],
+      "dtype": "F32",
+      "parameters": 90112
+    },
+    {
+      "name": "transformer.layers.31.gating.linear_out.lora_B.weight",
+      "shape": [
+        4096,
+        8
+      ],
+      "dtype": "F32",
+      "parameters": 32768
+    },
+    {
+      "name": "transformer.layers.31.self_attn.out_proj.lora_A.weight",
+      "shape": [
+        8,
+        4096
+      ],
+      "dtype": "F32",
+      "parameters": 32768
+    },
+    {
+      "name": "transformer.layers.31.self_attn.out_proj.lora_B.weight",
+      "shape": [
+        4096,
+        8
+      ],
+      "dtype": "F32",
+      "parameters": 32768
+    }
+  ]
+}

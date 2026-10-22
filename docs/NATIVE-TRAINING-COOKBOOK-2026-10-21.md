@@ -182,3 +182,21 @@ state-tracking failure and blocks adoption/unchanged extension. See the exact
 [diagnostic review](NATIVE-KEYWORD-CONTROL-DIAGNOSTIC-2026-10-21.json) and
 [new-stage proposal](NATIVE-KEYWORD-CONTROL-NEXT-2026-10-21.md). No new training or
 masking workaround has been performed. All failures and51artifact hashes preserved.
+
+
+Adapter capacity clarification —22October2026: the1,894,400 count was independently
+recomputed from all26 tensor shapes in the actual native7590052 safetensors file;
+see `NATIVE-ADAPTER-CAPACITY-2026-10-22.json`. It is an exact inventory, not evidence
+that rank8 or final4-layer coverage is optimal. There are13 adapted matrices:
+attention output and gated feed-forward input/output in layers28–31, plus the text
+head. Each matrix adds rank×(input+output) trainable values; total is
+4×(65,536+212,992+122,880)+288,768=1,894,400. Base matrices, QKV parameters and
+acoustic depth/codec weights are frozen; temporal changes can still change the
+conditioning reaching speech generation. This selection is a constrained engineering
+hypothesis; no matched layer/rank capacity comparison has established sufficiency.
+The entire native model executes during training/inference. A successful adapter
+pilot does not schedule full-weight fine-tuning automatically: retain/extend this
+method if heldout losses and native behavior improve, or test broader adaptation
+if evidence indicates a capacity limit. Partial/full-weight training would require
+a separately specified data, memory, optimizer and compute plan. The intended
+product capabilities, not the adapter count, define completion.
