@@ -3,14 +3,14 @@
   "status": "PREPARED_AWAITING_SPECIFIC_EGRESS_APPROVAL",
   "collector_source_commit": "820711c",
   "collector_code_sha256": "0b1e7b0dfefe49c11991304d53eda398b241234c32fe60829a49ed18b625ec4c",
-  "independent_source_quality_code_sha256": "6e672a90efafc3ffba0670807ead9b69fa1e1f64d3a3658cd209e4ec1cf9b9a8",
+  "independent_source_quality_code_sha256": "6717d88ecee441cdfbc7771f0a35b5f33807a33167723e47df559a442595d57e",
   "complete_source_cases": 32,
   "scene_utterances": 56,
   "unique_speech_requests": 40,
   "authored_user_characters": 7349,
   "payload_review": "docs/NATIVE-REASONING32-SPEECH-PAYLOAD-2026-10-23.json",
   "source_plan": "evals/fixtures/native-reasoning-delegation-source-proposal-20261023.json",
-  "tests_passed": 11,
+  "tests_passed": 12,
   "actual_API_calls": 0,
   "source_audio_created": false,
   "independent_real_ASR_executed": false,
@@ -19,5 +19,6 @@
   "approval_request_pending": true,
   "automatic_review_rejection": "Specific egress for these40 new reasoning-curriculum synthetic utterances was not covered by approvals of different previous collections. No command was executed.",
   "secrets_owner_data_or_answer_annotations_in_payload": false,
-  "runpod_GPU_pipeline_changed": false
+  "runpod_GPU_pipeline_changed": false,
+  "normalization_policy": "Existing norm_words numeral expansion retained; wrong numeric values still fail. Normalization implementation hash now pinned."
 }

@@ -86,5 +86,16 @@ class NativeReasoningLifecycleTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(self.world.tasks['other']['phase'],'failed_preserved')
         self.assertFalse(self.world.tasks['original']['cancelled'])
 
+    async def test_first_slow_request_does_not_force_delay_onto_a_later_control_reply(self):
+        await self.reserve('original');self.at=2.
+        await self.world.reserve_native_request('cancel',self.context,minimum_delivery_delay_s=0.)
+        await self.world.start_backend('cancel','fixture-only');self.at=3.
+        r=await self.world.complete_backend('cancel',response('cancel_reasoning',task_ids=['original'],content='The requested basic answer.'),actual_transport=False)
+        self.assertEqual(r['minimum_delivery_delay_s'],0.)
+        self.assertEqual(r['delivery_eligible_at_s'],3.)
+        self.assertEqual(self.world.tasks['original']['minimum_delivery_delay_s'],16.)
+        self.assertEqual(self.world.events[2]['type'],'native_request_reserved')
+        self.assertEqual(self.world.events[2]['minimum_delivery_delay_s'],0.)
+
 
 if __name__=='__main__':unittest.main()

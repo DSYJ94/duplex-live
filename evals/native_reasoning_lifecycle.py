@@ -51,15 +51,18 @@ class NativeReasoningLifecycle:
     def event(self,kind,at,**fields):
         self.events.append(dict(type=kind,at_s=at,**copy.deepcopy(fields)))
 
-    async def reserve_native_request(self,identity,arrived_user_transcript):
+    async def reserve_native_request(self,identity,arrived_user_transcript,*,minimum_delivery_delay_s=None):
         async with self.lock:
             at=self.now()
             if (not isinstance(identity,str) or not identity or identity in self.tasks
                     or len(self.tasks)>=self.maximum):raise ValueError('Distinct bounded actual native delegation identity required')
             context=transcript_snapshot(arrived_user_transcript,at)
+            delay=self.delay if minimum_delivery_delay_s is None else minimum_delivery_delay_s
+            if type(delay) not in (int,float) or not math.isfinite(delay) or not 0<=delay<=30:
+                raise ValueError('Declare bounded transport delay before actual backend dispatch')
             self.tasks[identity]=dict(id=identity,revision=1,context=context,context_sha256=canonical_hash(context),
-                native_request_observed_at_s=at,phase='reserved',cancelled=False,response=None)
-            self.event('native_request_reserved',at,task_id=identity,context_sha256=canonical_hash(context))
+                native_request_observed_at_s=at,minimum_delivery_delay_s=delay,phase='reserved',cancelled=False,response=None)
+            self.event('native_request_reserved',at,task_id=identity,context_sha256=canonical_hash(context),minimum_delivery_delay_s=delay)
 
     async def start_backend(self,identity,model):
         """Call immediately before actual transport; never while holding a model call."""
@@ -138,7 +141,8 @@ class NativeReasoningLifecycle:
                 response_id=response['id'],model=response['model'],response_sha256=canonical_hash(response),
                 request_payload_sha256=task['payload_sha256'],arrived_user_context_sha256=task['context_sha256'],
                 backend_started_at_s=task['backend_started_at_s'],provider_finished_at_s=at,
-                delivery_eligible_at_s=max(at,task['backend_started_at_s']+self.delay),
+                minimum_delivery_delay_s=task['minimum_delivery_delay_s'],
+                delivery_eligible_at_s=max(at,task['backend_started_at_s']+task['minimum_delivery_delay_s']),
                 actual_transport=actual_transport,content=arguments['content'])
             task.update(phase='result_ready',receipt=receipt)
             self.event('semantic_action_committed',at,task_id=identity,operation=operation,retired_requests=retired)

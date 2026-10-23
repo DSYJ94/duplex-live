@@ -119,3 +119,12 @@ subsequent measured conversion. The historical control40/old49 clip limits are
 unchanged. Source-only success never approves a teacher or model training. Eleven
 local source/quality/independent-solver tests pass. No real collection had run at
 this source commit; actual receipts must supply its eventual status.
+
+
+The new source-word audit explicitly records the existing `norm_words` numeral
+expansion (for example2/two), pins that implementation's hash, and still rejects
+wrong numeric values. No comparator behavior or0.05/0.995 threshold changed.
+Twelve source/quality/solver tests now pass; collection still has zero API calls.
+The separate offline lifecycle component now has eight passing tests, including
+predeclaring a separate transport-delay floor for each request before dispatch.
+It is unconnected to actual source/teacher capture and cannot qualify a model.

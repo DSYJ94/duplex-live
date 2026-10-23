@@ -1,7 +1,7 @@
 # Native reasoning teacher lifecycle preparation — 23 October2026
 
 The opt-in `evals/native_reasoning_lifecycle.py` boundary is implemented and has
-seven passing offline tests. It is not connected to the current GPU pilot,
+eight passing offline tests. It is not connected to the current GPU pilot,
 production voice client, a live API, or a teacher collector. No teacher or model
 is approved by these tests. Both previously requested specific approvals remain
 pending: the new40 synthetic source utterances and the one-time20USD top-up.
@@ -25,7 +25,10 @@ it never claims an executing remote model was aborted. Replacement advances the
 logical revision and keeps unrelated work. An old result that finishes after
 retirement remains in raw evidence and cannot be delivered or mutate other tasks.
 
-A configured transport delay has its own eligibility clock. Provider completion
+A transport delay is declared and recorded per request BEFORE backend dispatch;
+a slow original must not silently impose that same artificial delay on a later
+control reply. It cannot be adjusted after seeing a result. Each declared delay
+has its own eligibility clock. Provider completion
 is never relabeled as a slower remote computation. A bounded asynchronous wire
 write serializes with cancellation commitment. Failed/uncertain writes never
 retry, avoiding duplicate commentary. Successful writes record local completion;

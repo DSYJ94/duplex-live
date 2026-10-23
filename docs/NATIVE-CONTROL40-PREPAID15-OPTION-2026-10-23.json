@@ -1,0 +1,26 @@
+{
+  "schema": "dl-native-control40-existing-prepaid-window-option-v1",
+  "status": "PROPOSED_NOT_ARMED",
+  "at_utc": "2026-10-23T14:59:39.620575+00:00",
+  "official_fresh_wallet_readback_USD": 18.06,
+  "official_account_rate_USD_per_hour": 1.814,
+  "billing_delay_reserve_hours": 1,
+  "shutdown_reserve_USD": 0.5,
+  "proposed_same_pod_lifetime_hours": 15,
+  "proposed_deadline_utc": "2026-10-23T23:22:37.900000+00:00",
+  "estimated_remaining_account_cost_USD": 15.206499688041667,
+  "required_wallet_with_reserves_USD": 17.520499688041667,
+  "proposed_project_maximum_compute_USD": 64.29071830424945,
+  "human_project_compute_cap_USD": 100,
+  "no_topup_or_payment_required": true,
+  "no_change_to_pending20USD_payment_approval": true,
+  "new_egress_authorized": false,
+  "all_training_data_losses_gates_and_eight_update_limit_unchanged": true,
+  "required_before_actual_change": [
+    "Fresh wallet/rate readback and conservative wallet arithmetic still passes",
+    "Exact original gradient completes and old4111 is actually retired before later-stage preservation",
+    "One exact later-child handoff with already-armed longer guard; rearm sole backup/backend/evaluator to its bounded funded deadlines"
+  ],
+  "active_guard_unchanged": "74352 through2026-10-23T22:22:37.9UTC",
+  "active_pilot_unchanged": "21063 through2026-10-23T21:30UTC"
+}

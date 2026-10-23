@@ -1,0 +1,43 @@
+{
+  "schema": "dl-native-control40-preserved-child-after-original-timeout-v1",
+  "observation": {
+    "at_utc": "2026-10-23T15:01:00.943138+00:00",
+    "processes": [
+      {
+        "pid": 21063,
+        "state": "S",
+        "birth": 20582160,
+        "exit_status": 0
+      },
+      {
+        "pid": 4111,
+        "state": "T",
+        "birth": 18985221,
+        "exit_status": 19
+      },
+      {
+        "pid": 14873,
+        "state": "R",
+        "birth": 20219598,
+        "exit_status": 0
+      }
+    ],
+    "phase": "complete40_independent_BF16_gradient",
+    "cases": 19,
+    "all_completed_passed": true,
+    "optimizer_updates": 0,
+    "backup_verified_files": 23,
+    "backup_inventory_sha256": "f64137c92cf4c2dcf37ccd28aa269ad26359fbba67fb0b9f9b67116df37bc1bd",
+    "superseded_original_deadline_passed": true
+  },
+  "active_GPU_execution_commit": "c9efaaac24d983342f7eded46617e6450bc102ce",
+  "active_supervisor_commit": "7769270c8b0ce2b915b28c664b867f2dd7232e17",
+  "original_deadline_utc": "2026-10-23T14:59:00+00:00",
+  "active_supervisor_deadline_utc": "2026-10-23T21:30:00+00:00",
+  "active_budget_guard_deadline_utc": "2026-10-23T22:22:37.9+00:00",
+  "child_restarted": false,
+  "new_optimizer_updates": 0,
+  "complete40_gradient_approved": false,
+  "goal_status": "ACTIVE",
+  "next": "Finish the same40-case child; original combined-readiness/one8/restore/proof chain remains unchanged."
+}

@@ -20,7 +20,8 @@ ASR_WEIGHT='aff26ae408abcba5fbf8813c21e62b0941638c5f6eebfb145be0c9839262a19a'
 SCHEMA='dl-native-reasoning32-independent-user-source-quality-v1'
 WER_BAR=.05
 PEAK_BAR=.995
-WORD_POLICY='raw lexical words; no synonyms, recognizer substitution or answer prompt'
+WORD_POLICY='Existing norm_words lexical comparison with numeral expansion; no synonyms, recognizer substitution or answer prompt'
+NORMALIZATION_CODE=Path(__file__).resolve().parents[1]/'data/synthetic/filter.py'
 
 
 def assess(text,result,pcm,rate):
@@ -84,7 +85,7 @@ def audit(source,weights,out,threads=4):
         plan_sha256=manifest['plan_sha256'],code_sha256=code,source_code_sha256=manifest['code_sha256'],
         asr_model='whisper-turbo',asr_weight_sha256=ASR_WEIGHT,asr_device='cpu',threads=threads,
         asr_packages={p:importlib.metadata.version(p) for p in ('openai-whisper','whisper-timestamped')},
-        word_policy=WORD_POLICY,
+        word_policy=WORD_POLICY,normalization_code_sha256=sha(NORMALIZATION_CODE),
         wer_bar=WER_BAR,peak_bar=PEAK_BAR,complete_objects=40,complete_scene_clips=56,complete_scenes=32,
         results=results,passed=all(x['passed'] for x in results),original_waveforms_changed=False,
         passing_subset_accepted=False,reference_text_prompt_used=False,training_approved=False,
@@ -103,6 +104,7 @@ def verify(source,approval,*,require_pass=True):
             or r['source_code_sha256']!=manifest['code_sha256'] or r['asr_weight_sha256']!=ASR_WEIGHT
             or r['asr_model']!='whisper-turbo' or r['asr_device']!='cpu'
             or type(r['threads']) is not int or not 1<=r['threads']<=8 or r['word_policy']!=WORD_POLICY
+            or r['normalization_code_sha256']!=sha(NORMALIZATION_CODE)
             or r['asr_packages']!={p:importlib.metadata.version(p) for p in ('openai-whisper','whisper-timestamped')}
             or r['wer_bar']!=.05 or r['peak_bar']!=.995
             or (r['complete_objects'],r['complete_scene_clips'],r['complete_scenes'])!=(40,56,32)

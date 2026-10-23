@@ -24,5 +24,11 @@ class ReasoningSourceQuality(unittest.TestCase):
         self.assertFalse(assess('Two badges.',self.result,np.full(89*24000,.1),24000)['passed'])
         self.assertFalse(assess('Two badges.',self.result,self.pcm,16000)['passed'])
 
+    def test_existing_numeral_expansion_is_preserved_and_wrong_values_still_fail(self):
+        r=copy.deepcopy(self.result);r['text']='2 badges.';r['segments'][0]['words'][0]['text']='2'
+        self.assertTrue(assess('Two badges.',r,self.pcm,24000)['passed'])
+        r['text']='3 badges.';r['segments'][0]['words'][0]['text']='3'
+        self.assertFalse(assess('Two badges.',r,self.pcm,24000)['passed'])
+
 
 if __name__=='__main__':unittest.main()

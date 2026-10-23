@@ -1,3 +1,50 @@
+# LOCAL —19/40 live AFTER superseded deadline; no child restart (23 October15:02UTC)
+
+LOCAL executor; goal ACTIVE. Main4a34abc before this supplemental commit. Actual
+GPUC9 c9efaaac24d983342f7eded46617e6450bc102ce and supervisor7769270 unchanged.
+At15:01:00.943UTC, active21063/birth20582160 S/live, original4111/birth18985221
+T/paused, originalCUDA14873/birth20219598 R/live,19/40 all passing,0optimizerupdates.
+Original14:59 timeout has actually passed without interrupting the same child.
+Observer session9001 ended normally after its finite read-only interval. Do not
+resume4111 or restart14873. Active pilotdeadline21:30 and guard74352/session71225
+22:22:37.9UTC remain unchanged; currentprojectmax62.50071830424946 <100USD cap.
+
+Backup85270/session28881 v7 to22:20; evaluator86013/session39293 v3 latest21:37/
+end22:17; proxy85512/session86213 v4 to22:19 and tunnel session3455 unchanged.
+Latest23files independently verifiedinventoryf64137c92cf4c2dcf37ccd28aa269ad26359fbba67fb0b9f9b67116df37bc1bd.
+Evidence docs/NATIVE-CONTROL40-DEADLINE-CROSSING-2026-10-23.json. Full40 numerical
+passed earlier; fullBF16 and all retained readiness/one8/freshrestore/behavior gates
+still incomplete. Training saves full adapter/Adam/RNG state after EVERY update;
+existing snapshotter includes that atomic file. No new candidate or adoption.
+
+Offline preparation only: lifecyclecomponent8tests pass, distinct per-request
+transportdelay declared before backend dispatch (avoids imposing an originalslow
+request's artificialdelay on latercontrolreplies). Source/quality/solver12tests
+pass; existing numeral expansion retained and normalization implementationhash
+pinned. No newAPI/sourceaudio/realASR/teacher run. Neither new component nor any
+source change was deployed into immutableC9 or active7769270.
+
+Specific20USDpayment and40newsynthetic-source-egress approvals STILL PENDING after
+automatic-review rejection; do not retry/bypass or infer approval. Officialbilling
+reloaded14:58UTC:18.06USD prepaid,1.814USD/h, billing1hbehind, auto-pay disabled,
+no new20transaction. Same24h/80.40 proposal remains UNARMED and needs verified
+funding. A narrower RUNTIME option (full goal/gates/one8 unchanged) can use EXISTING
+prepaid credit for15h Pod lifetime through23:22:37.9UTC, projectmax64.2907183USD:
+docs/NATIVE-CONTROL40-PREPAID15-OPTION-2026-10-23.json. It is PROPOSED/NOT ARMED;
+fresh balance/rate arithmetic plus1hbillingreserve+0.50shutdown must still fit
+before use. This requires no credit purchase; it does not authorize new egress.
+After gradient completes and old4111 ACTUALLY retires, prepared738bb25 (25Linux
+checks pass) can preserve exact laterreadiness/fit/restore child if needed, with
+longerguard already armed and sole services rearmed. Do NOT nest pausedgradient
+supervisors. No longer deadline/guard dispatched yet.
+
+Next sameBF1640 ->combined154/native49/control40 readiness ->ONE8 ->independent
+state/native restore+strictproof ->full native20/speech20/all4 ->eligiblefresh40.
+Source40 collection staysblockedpendingits exactapproval; current productiveGPU
+work keeps goal unblocked. Preserve all28/49 histories/losses/folds/heldouthashes;
+unrelatedlocal edits untouched. Criticalnativearchive historicallyverified;
+broader stoppedMacbackup PARTIAL. Execution remains LOCAL.
+
 # LOCAL —17/40 live; offline native reasoning lifecycle component tested (23 October14:49UTC)
 
 LOCAL executor, goal ACTIVE; mainca04124 before this component commit. Actual GPU
