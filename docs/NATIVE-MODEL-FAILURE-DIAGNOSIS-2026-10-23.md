@@ -333,3 +333,40 @@ threads and affinity0–254. This application setting is not proven optimal; do 
 claim every available CPU is used or that hardware never throttles. Background
 OneDrive/FileProvider/indexing is active. Do not restart immutable readiness to
 change threads; benchmark a matched workload before a future launch change.
+
+
+## Actual data repairs and remaining native-request failure —23 October20:22UTC
+
+The diagnosed source was rerecorded once with identical approved words/model/echo
+voice and an explicit new pacing instruction/hash. Duration45.75→39.85s,peak0.6713,
+independent WER0.0. Complete40 source objects reapproved in V4, preserving39
+unchanged WAV/ASR artifacts and reassessing every verdict. Source SHA
+3bccef7ba53835efc6c5be8b5d490551a2ad31bd5d3875d1cf0692e2d9f0254c;quality SHA
+e9f0296a5fcddd892556bfa409ef692b5f51956c76335f1d24e7b4691781ca0d. The actual
+timing teacher now fits1055/1100frames. No audio edits or threshold changes.
+
+V4 then exposed a different replacement failure: the backend computed the changed
+answer but chose an independent response, leaving the obsolete request deliverable.
+Actual output combined new item names with old16-token/32-point totals; independent
+ASR confirmed those totals in the unclipped original WAV. A clarified generic
+model-selected action contract passed one actual backend-only replay and independent
+exact state/receipt recomputation. Its original whole-voice checker remains failed
+because the component deliberately sent no voice commentary; no API retry occurred.
+V5 then passed an actual native teacher replacement in992frames, retiring the old
+request and delivering only the current receipt. This is component/teacher evidence,
+not a repair of the native7B pupil or qualification of all32 teachers.
+
+V5 stopped at28recordings:27 transport/lifecycle/frame-valid and one cancellation
+failure026. Its actual arrived transcript includes the cancellation and arithmetic.
+The voice answered ten tokens but created NO second delegation; therefore the backend
+never received cancellation and later supplied the old bundle. Source/teacher WAVs
+are not clipped. The backend contract cannot repair an absent native request.
+A new generic teacher-policy experiment should prioritize dispatching pending-task
+changes before answering accompanying basic arithmetic, preserving the27 valid
+records, all failed parents and unchanged actual-event/full32 approval requirements.
+No such new capture is yet launched. Full speech/semantic/native gates remain open.
+
+V5 all1084files/760,659,846bytes are independently hash-verified on the persistent
+volume. Current GPU readiness19/49 is confirmed live20:21UTC; numerical40 and
+gradient40 passed, but0new native optimizer updates. No current teacher/API collection
+remains running. See NATIVE-REASONING32-V5-TERMINAL-2026-10-23.json.

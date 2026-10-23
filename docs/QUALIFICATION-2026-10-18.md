@@ -1,3 +1,24 @@
+23Oct20:22UTC — LOCAL sole executor; goal ACTIVE; no adopted production model.
+Control40 numerical40 and independent BF16 gradient40 PASS,0new updates; actual
+retained-history readiness19/49 live41540/birth22014818 under42932. Old21063T;
+do not resume/restart or submit duplicate native work. C9 code/objectives frozen.
+New reasoning32 source V4 independently PASS all40 unique utterances/56clips;
+one same-words pacing repair fits an actual1055-frame teacher. Backend action
+contract repair passed actual replacement capture992frames. V5 collector STOPPED
+exit1 at28recordings:27 raw transport/lifecycle/frame-valid;026 failed to select
+a new cancellation delegation despite actual arrived cancel text. Entire32 stays
+unapproved; no whole32 speech/semantic/conversion/native approval. This concerns
+GPT-Live teacher data; it does not establish native7B improvement or explain the
+historical7590052 regression. Native pupil latest completed stage remains that
+unadopted eight-update run. Full retained154/native49/control40 readiness, ONE8
+from520, independent Adam/RNG/native restore and complete behavioral/speech/fresh
+gates remain required. V5 raw1084files760.66MB independently hash-backed. Source
+5766b240af489bfd28803f06ad4da2356a4eabe7; see newest HANDOFF.md and
+docs/NATIVE-REASONING32-V5-TERMINAL-2026-10-23.json. Budget100USD, existing
+prepaid only; specific20USDtopup pending, no payment made. GPU guard23:22:37.9UTC.
+
+---
+
 21Oct17:20UTC — LOCAL sole executor; CLOUD read-only. Owner keyword-silence
 failure reproduced:9/9 complete synthetic transport requests worked,0/9 native
 quiet-text constraints passed across original/scoped-project/generic-quiet prompts.

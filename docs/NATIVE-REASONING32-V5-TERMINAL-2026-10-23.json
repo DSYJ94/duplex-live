@@ -1,0 +1,62 @@
+{
+  "schema": "dl-native-reasoning32-v5-terminal-native-request-failure-v1",
+  "source_commit": "5766b240af489bfd28803f06ad4da2356a4eabe7",
+  "collection_sha256": "cfdff0924bbec7364fb084c37ce9ff0cb70994c7b98f9c442a44d63c7ccacc3d",
+  "status": "incomplete_failed_preserved_no_retry",
+  "recordings": 28,
+  "valid_transport_lifecycle_frame_records": 27,
+  "new_voice_attempts": 7,
+  "aggregate_voice_attempts": 33,
+  "new_backend_requests": 10,
+  "aggregate_backend_requests": 43,
+  "failed_id": "native-reasoning4-train-026",
+  "actual_arrived_user_tail": "ns fifteen points. The ribbon costs six tokens and earns thirteen points. Spend at most twenty-two tokens. Include the badge. Never choose both the candle and the poster. Maximize total points. Break ties by lower cost, then alphabetical order of the three names. Tell me the items, total cost, and total points Cancel the bundle search. Instead, one badge costs five tokens. How many tokens do two badges cost",
+  "actual_provider_spoken_text": " Okay, let me take a look. Two badges cost ten tokens. Badge, marker, and pouch; total cost eighteen tokens and total thirty-two points.",
+  "waveform": {
+    "sha256": "686ca015026e314fbadb963542fc2551cabd778ed204a94a1e723605fa68a5a4",
+    "sample_rate": 24000,
+    "duration_s": 66.58029166666667,
+    "peak": 0.345703125,
+    "above_0995_samples": 0,
+    "edited": false
+  },
+  "diagnosis": "Native voice selected only the original request. The cancellation and new basic question were present in its arrived transcript; it answered arithmetic but did not select the new delegation needed to mutate pending state. The backend never received that cancellation.",
+  "all32_required": true,
+  "passing_subset_accepted": false,
+  "whole32_audio_or_semantic_approval": false,
+  "training_approved": false,
+  "new_optimizer_updates": 0,
+  "at_utc": "2026-10-23T20:24:07.193168+00:00",
+  "actual_terminal_exit": 1,
+  "complete_preservation": {
+    "schema": "dl-native-reasoning32-teachers-failed-complete-remote-preservation-v1",
+    "at_utc": "2026-10-23T20:21:52.017153+00:00",
+    "destination": "/workspace/migration/native-reasoning32-teachers-v5-preserved-v1",
+    "volume_id": "49yytzyoge",
+    "inventory_sha256": "e4810b9974186214313065d908902d1d985e5d71851e8d581d6779a24f9d527b",
+    "files": 1084,
+    "bytes": 760659846,
+    "all_regular_size_sha256_match": true
+  },
+  "successful_actual_replacement_repair": {
+    "id": "native-reasoning4-train-019",
+    "full_native_frames": 992,
+    "original_result_retired": true,
+    "only_current_receipt_delivered": true,
+    "whole32_audio_and_semantic_approved": false
+  },
+  "backend_component_preservation": {
+    "schema": "dl-native-reasoning32-backend-component-and-diagnosis-preservation-v1",
+    "at_utc": "2026-10-23T20:14:36.362362+00:00",
+    "destination": "/workspace/migration/native-reasoning32-action-component-preserved-v1-preserved-v1",
+    "volume_id": "49yytzyoge",
+    "inventory_sha256": "4a0f576082c48ca44ec28a39002cbe75152876cabb9153ced72aa8382ce07428",
+    "files": 9,
+    "bytes": 89872,
+    "all_regular_size_sha256_match": true
+  },
+  "next_experiment": "NEW versioned teacher voice-policy experiment: prioritize issuing an actual new delegation for changes to pending work before answering accompanying basic arithmetic; preserve all27 valid records and all failed parents. Test026 alone, then four unattempted scenes. No forced RET, word/intent router, output suppression, retry loop or gate relaxation.",
+  "next_experiment_executed": false,
+  "historical_native7590052_regression_explained": false,
+  "distinction": "These are GPT-Live teacher-collection failures and repairs, not measured improvements to the still-unadopted native7B pupil."
+}

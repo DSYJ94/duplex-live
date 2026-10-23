@@ -1,3 +1,97 @@
+# LOCAL —source pacing repaired; replacement repaired; native cancel selection remains (23 October20:22UTC)
+
+Goal turn PROGRESS: one real diagnosed source take, complete40 independent source
+reapproval, actual V4/V5 teacher captures, causal replacement diagnosis/repair and
+full hash-backed preservation. LOCAL sole executor, goal ACTIVE. Main before this
+doc commit5766b240af489bfd28803f06ad4da2356a4eabe7. No new native optimizer
+updates/adoption/GPU submission/resource purchase/payment. Unrelated edits excluded.
+
+SOURCE V4: ONE same99 approved words/model/echo take, pacing instruction explicitly
+changed,45.75→39.85s/peak0.6713/independentWER0.0. No crop/gain/resampling. Original
+WAV/receipts/allparents kept. Canonical object8d5749...b77, actual payload
+088a08ce640a1df0027b7e0360ed48962c5140b373436e24bb0fb990a1932d48. Source SHA
+3bccef7ba53835efc6c5be8b5d490551a2ad31bd5d3875d1cf0692e2d9f0254c;quality SHA
+e9f0296a5fcddd892556bfa409ef692b5f51956c76335f1d24e7b4691781ca0d. All40
+objects/56clips/32TRAIN cases re-assessed,39 immutable ASRs reused/1 newly recognized
+with pinned turbo8 unchanged limits. Aggregate TTS attempts43. Source304files81,695,210B
+remote hash PASS inventory16f767f97d89ccc2466e5d290c0ba55f970dae0ecb2258bd9ceda29e317995f1;
+quality41files447035B inventoryeb55de84c1f6d5651afdd1fd634558ebaea95b814f100d979dfb5907303e855c.
+Both under /workspace/migration/native-reasoning32-user-{source,quality}-v4-preserved-v1.
+Docs NATIVE-REASONING32-PACING-REPAIR-2026-10-23.json. Collector source19ab9b08ba77258fd320941ba1037d0d6f0c2a26,
+qualityefe81a9ac4467c89d332c21ce38a18a404032866, actual V4 capturea73758d1696c806cd5bee5a61d11efd4daf2977d.
+
+V4 actual session15643 TERMINAL1: repaired013 timing PASS1055/1100frames. Stopped
+at22records on019: backend computed corrected12tokens22points but selected
+respond_to_user, leaving original alive; old16tokens32points later delivered.
+Independent actual WAV ASR confirms wrong totals,peak0.2773/no clipped samples.
+New16voices/20backend, aggregate26voices/32backend. V4manifest SHA
+96f9be42ddb39133c08cb4e7d21ea14fec909807def44ba68f07f12d5d9a3f6a, full635files
+439464423B remote PASS inventoryebc4d86793b2112151b2a0bd52691024160d6b0612ed9b2777fcbd3b425c4eb3.
+Destination /workspace/migration/native-reasoning32-teachers-v4-preserved-v1.
+
+Generic lifecycle_v3 clarifies model-selected independent vs corrected pending work;
+no intent/case router, no forced RET or output rewriting. Backend-only ONE actual
+replay source23fa436b068b104d921cbc30290321368d39b137 selected replace_reasoning/retired original/correct local
+oracle. Original session79337 EXIT1 because whole-voice checker was wrongly scoped
+to a no-wire component; preserve its failed voice diagnostic. NEW independent
+readback94839 EXIT0 recomputes exact payload/state/receipt at recorded clocks,
+asserts the ONLY missing criterion is actual voice delivery. No API retry. Component
+proofe76cc9daafd39a6d66d9ac18347ff138daec7d3681a1774c16a32aecd88ef09c; complete
+six-file inventory canonicalb8435243cf62e25a8c07dde00cf487ea2c5e5ffca91506e66732bd7a077411b8.
+Backend aggregate33 after replay.9files89872B component+failed-audio evidence remote
+hash PASS inventory4a0f576082c48ca44ec28a39002cbe75152876cabb9153ced72aa8382ce07428,
+/workspace/migration/native-reasoning32-action-component-preserved-v1-preserved-v1.
+
+V5 actual source5766b240af489bfd28803f06ad4da2356a4eabe7,session48650 TERMINAL1,
+PID42686 now terminal. Voice config/sourcePCM/delays unchanged; backend action
+contract only.019 actual REPLACEMENT PASS992frames,old retired/no old wire/current
+receipt delivered.21 original records reused with original recorder/source/quality
+lineage. V5 STOPPED28records:27 raw transport/lifecycle/frame-valid;026 CANCEL
+failed because voice selected only initial request. Actual arrived user text clearly
+includes cancellation+basic question; voice answered10tokens but no NEW delegation
+was created, so backend never received cancellation and old bundle was delivered.
+Wave66.580s,peak0.3457/no clipped samples; fullframes1090. This is a native teacher
+action-selection failure, distinct from repaired backend misclassification. New7
+voice attempts/10backend; aggregate33voice attempts/43backend. Latest33offline tests
+PASS; every new module remains versioned/frozen. Whole32 audio/semantics/conversion/
+native approval NOT DONE; no passing subset and no native7B improvement claimed.
+V5manifestcfdff0924bbec7364fb084c37ce9ff0cb70994c7b98f9c442a44d63c7ccacc3d.
+ALL1084files760659846B independently remotehash PASS20:21:52, inventory
+e4810b9974186214313065d908902d1d985e5d71851e8d581d6779a24f9d527b,
+/workspace/migration/native-reasoning32-teachers-v5-preserved-v1, volume49yytzyoge.
+See docs/NATIVE-REASONING32-V5-TERMINAL-2026-10-23.json. No teacher/API/ASR job live now.
+
+NEXT DATA ACTION: NEW V6 experiment with generic voice-policy priority: create an
+actual new delegation for changes to pending work before answering accompanying
+basic arithmetic; no forced token, keyword classifier, mute, oracle input or gate
+weakening. Preserve27 good records+all V5failed parent; test ONLY026 first, then
+four unattempted028..031 if it passes. Max5new/38aggregate voice attempts; prior
+backend43, max43+5*6=73<=192. Same fully qualified sourceV4/qualitye9. Reused raw
+records retain original V1/V2/V3/V4/V5 recorders/source metadata. ALL32 independent
+speech+semantic+conversion+native numerical/gradient/retention gates still required.
+No V6 code or capture exists yet. Freeze V1..V5 modules and source/quality hashes.
+
+Actual GPU20:21:37UTC Pod4yx8vahdmjsylx: supervisor42932/birth22207653S,old21063/
+birth20582160T,readiness41540/birth22014818R. Phase combined_readiness19/49 rows
+exact so far; final49/combined40 receipts absent. Numerical40+gradient40 PASSED,0
+updates. Immutable C9 c9efaaac24d983342f7eded46617e6450bc102ce; supervisor source
+738bb25e56b79aed13acf4c5b3577f926391f81a. DO NOT resume old21063/restart child or nest
+takeover until actual21063 missing/terminal; inherited retired flag unsafe. Correct
+observer /private/tmp/duplex-native-current-observer-v4.py; oldv2 observer reads old
+controller. Native path remains all154/native49/control40 readiness ->ONE8from520
+->independent Adam/RNG/native restore+strict proof ->paired20/speech20/all4 ->eligible
+sealedfresh40. Historical7590052 ordinary regression unresolved; latest trained
+candidate remains unadopted. Teacher failures do not explain that older pupil.
+
+Services unchanged: costguard16271/session82942 delete23:22:37.9UTC retainvolume;
+backup95445/session36808v8 to23:20; proxy95444/session28664v5Mac50258 to23:19;
+tunnel81044 remote18791; evaluator98191/session1702planv6 latest22:37/end23:17
+awaits actual42932/all7exit0. Supervisor deadline22:30. Proxy16/128aggregate,112
+remaining; teacher APIs separate. Existing prepaid only,100USD cap, specific20USD
+topup pending auto-review rejection/no payment made. Walletlast19:22UTC10.049084/
+1.814hour,no autopay; do not infer extension funding. Broader stopped Mac source
+backup PARTIAL; native archive previously verified, all critical parents retained.
+
 # LOCAL —actual cancellation repaired; timing source repair next (23 October19:38UTC)
 
 LOCAL remains sole executor; goal ACTIVE. Main before this documentation commit
