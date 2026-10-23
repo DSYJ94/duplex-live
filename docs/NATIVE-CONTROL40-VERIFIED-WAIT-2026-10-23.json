@@ -1,0 +1,39 @@
+{
+  "schema": "dl-native-control40-verified-wait-v1",
+  "recorded_utc": "2026-10-23T12:21:59.981220+00:00",
+  "previous_goal_turn": "progress",
+  "current_goal_turn": "verified_wait",
+  "pod_id": "4yx8vahdmjsylx",
+  "execution_source_commit": "c9efaaac24d983342f7eded46617e6450bc102ce",
+  "same_controller_pid": 4111,
+  "same_numerical_pid": 4216,
+  "actual_ps_live_confirmed_this_turn": true,
+  "remote_execution_phase": "complete40_precise_numerical",
+  "completed_numerical_cases": 34,
+  "all_completed_cases_pass": true,
+  "complete40_approved": false,
+  "new_optimizer_updates": 0,
+  "model_adopted": false,
+  "new_gpu_or_duplicate_job": false,
+  "backup": {
+    "path": "runs/local-migration-20261023/native-control40-continuous-copyback-v6/20261023T121936.221494Z",
+    "files": 18,
+    "inventory_sha256": "f81c63c8a43776713c48c6708cee5097c96dbc3dec0ffdf63dbf187fa2221906"
+  },
+  "backup_files_independently_verified": true,
+  "retained_volume_measured_bytes": 80150787037,
+  "remote_progress_snapshots_measured_bytes": 32565499,
+  "approved_volume_GB": 100,
+  "shared_filesystem_df_is_not_project_quota": true,
+  "next_action": "Wait on exact original controller4111 and numerical4216. Existing gated controller owns full40/BF16/readiness/new8/restore;40212 owns conditional full native20/speech20. Review all cases before fresh40.",
+  "review_gate": {
+    "implementation": "evals/native_control40_fresh_review.py",
+    "all10_candidate_semantic_receipt_audio_reviews_required": true,
+    "complete20_native_and20_independent_speech_required": true,
+    "all4_ordinary_core_correct_and_speech_pass_required": true,
+    "all_artifact_and_candidate_restore_hashes_bound": true,
+    "review_authorizes_fresh_measurement_only": true,
+    "actual_candidate_review_exists": false
+  },
+  "goal_complete": false
+}

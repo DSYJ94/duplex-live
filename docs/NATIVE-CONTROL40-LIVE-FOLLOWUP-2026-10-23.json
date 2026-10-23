@@ -1,6 +1,6 @@
 {
   "schema": "dl-native-control40-live-numerical-and-evaluation-followup-v1",
-  "observed_utc": "2026-10-23T12:15:29.279791+00:00",
+  "observed_utc": "2026-10-23T12:21:41.829570+00:00",
   "execution_source_commit": "c9efaaac24d983342f7eded46617e6450bc102ce",
   "pod_id": "4yx8vahdmjsylx",
   "controller_pid": 4111,
@@ -8,7 +8,7 @@
   "numerical_pid": 4216,
   "numerical_birth": 18993883,
   "numerical_created_utc": "2026-10-23T09:38:13.615016+00:00",
-  "completed_cases": 33,
+  "completed_cases": 34,
   "all_completed_cases_pass": true,
   "complete40": false,
   "whole40_approved": false,
@@ -211,6 +211,12 @@
       "passed": true,
       "hidden_max_error": 0.00011181831359863281,
       "logit_max_error": 6.29425048828125e-05
+    },
+    {
+      "id": "native-control3-train-033",
+      "passed": true,
+      "hidden_max_error": 2.1457672119140625e-05,
+      "logit_max_error": 1.138448715209961e-05
     }
   ],
   "final_parameter_hash_and_peak_checks_pending": true,
@@ -219,10 +225,10 @@
   "backup": {
     "watcher_pid": 42219,
     "current_successful": true,
-    "snapshots_verified": 3,
-    "latest_inventory_sha256": "54dc6dfd8dd883d52d6591dc379e5334c83b9a92ff406355d9a6ecc591c9b3f2",
+    "snapshots_verified": 4,
+    "latest_inventory_sha256": "f81c63c8a43776713c48c6708cee5097c96dbc3dec0ffdf63dbf187fa2221906",
     "latest_files": 18,
-    "numerical_progress_sha256": "90606c685f2f23a8c720dd40bcfd1059f3a85e5ef59b0842ce38a56e7173313a",
+    "numerical_progress_sha256": "4eaccf5c3915ff475e4577e6b73a1cf3d10eb5ebfdf370d85aba43406b7d83d4",
     "watcher_session": 46974,
     "path": "runs/local-migration-20261023/native-control40-continuous-copyback-v6",
     "deadline_utc": "2026-10-23T15:30:00Z"
@@ -262,17 +268,15 @@
     "guard_status": "runs/local-migration-20261023/runpod-control40-replacement-budget-v2.json"
   },
   "storage": {
-    "measured_retained_volume_bytes": 80131205660,
+    "measured_retained_volume_bytes": 80150787037,
     "approved_network_volume_GB": 100,
     "volume_resized": false,
     "broader_stopped_Mac_source_backup": "PARTIAL",
     "complete_original_archive_rehashed_this_turn": false
   },
   "last_goal_turn": {
-    "classification": "progress",
-    "actual_numerical_process_continued_without_restart": true,
-    "billing_reconciled_inside_existing50_cap": true,
-    "recovered_backend_and_rearmed_read_retrying_evaluation": true,
+    "classification": "verified_wait",
+    "exact_original_remote_processes_live_confirmed": true,
     "new_gpu_resources": 0,
     "new_optimizer_updates": 0
   },
