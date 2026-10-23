@@ -1,0 +1,2853 @@
+{
+  "schema": "dl-native-reasoning-delegation-source-proposal-v1",
+  "cases": [
+    {
+      "id": "native-reasoning4-train-000",
+      "split": "train",
+      "family": "direct-basic",
+      "matched_instance": 0,
+      "user_voice": "alloy",
+      "assistant_voice": "marin",
+      "inference_inputs": {
+        "authored_user_utterances": [
+          "One badge costs four tokens. How many tokens do two badges cost?"
+        ],
+        "scoring_answers_or_oracles_supplied": false
+      },
+      "annotations_not_model_inputs": {
+        "expected_foreground_action": "answer-directly",
+        "worker_route": "none",
+        "explanation": "A native external request and the reasoning backend answer route are different decisions",
+        "expected_final_spoken_words": "Two badges cost eight tokens.",
+        "expected_pending_basic_words": null,
+        "actual_worker_returns_required": [],
+        "required_predicates": [],
+        "native_request_forcing_allowed": false,
+        "source_oracle_is_not_a_worker_receipt": true,
+        "minimum_result_delivery_delay_s": 3.0,
+        "lifecycle_event_after_actual_dispatch": false
+      },
+      "training_approved": false
+    },
+    {
+      "id": "native-reasoning4-train-001",
+      "split": "train",
+      "family": "delegate-reasoning",
+      "matched_instance": 0,
+      "user_voice": "alloy",
+      "assistant_voice": "marin",
+      "inference_inputs": {
+        "authored_user_utterances": [
+          "Choose exactly three different items. The badge costs four tokens and earns seventeen points. The candle costs two tokens and earns sixteen points. The marker costs six tokens and earns eight points. The poster costs ten tokens and earns fifteen points. The pouch costs three tokens and earns fourteen points. The ribbon costs two tokens and earns five points. Spend at most seventeen tokens. Include the badge. Never choose both the pouch and the candle. Maximize total points. Break ties by lower cost, then alphabetical order of the three names. Tell me the items, total cost and total points.",
+          "While that is pending, one badge costs four tokens. How many tokens do two badges cost?"
+        ],
+        "scoring_answers_or_oracles_supplied": false
+      },
+      "annotations_not_model_inputs": {
+        "expected_foreground_action": "request-reasoning",
+        "worker_route": "answer",
+        "explanation": "A native external request and the reasoning backend answer route are different decisions",
+        "expected_final_spoken_words": "Choose the badge, candle and poster. That costs sixteen tokens and earns forty eight points.",
+        "expected_pending_basic_words": "Two badges cost eight tokens.",
+        "actual_worker_returns_required": [
+          {
+            "revision": 1,
+            "problem": {
+              "items": [
+                {
+                  "name": "badge",
+                  "cost": 4,
+                  "points": 17
+                },
+                {
+                  "name": "candle",
+                  "cost": 2,
+                  "points": 16
+                },
+                {
+                  "name": "marker",
+                  "cost": 6,
+                  "points": 8
+                },
+                {
+                  "name": "poster",
+                  "cost": 10,
+                  "points": 15
+                },
+                {
+                  "name": "pouch",
+                  "cost": 3,
+                  "points": 14
+                },
+                {
+                  "name": "ribbon",
+                  "cost": 2,
+                  "points": 5
+                }
+              ],
+              "budget": 17,
+              "required": "badge",
+              "incompatible": [
+                "pouch",
+                "candle"
+              ],
+              "choose_exactly": 3
+            },
+            "oracle": {
+              "names": [
+                "badge",
+                "candle",
+                "poster"
+              ],
+              "cost": 16,
+              "points": 48
+            },
+            "deliverable": true
+          }
+        ],
+        "required_predicates": [
+          "native request selected without a forced RET marker",
+          "request context contains only actual arrived user words",
+          "real reasoning API response ID, input hash, completion and arrival times retained",
+          "basic question answered directly while reasoning is pending",
+          "final bundle spoken only after matching actual reasoning result arrival"
+        ],
+        "native_request_forcing_allowed": false,
+        "source_oracle_is_not_a_worker_receipt": true,
+        "minimum_result_delivery_delay_s": 3.0,
+        "lifecycle_event_after_actual_dispatch": false
+      },
+      "training_approved": false
+    },
+    {
+      "id": "native-reasoning4-train-002",
+      "split": "train",
+      "family": "cancel-reasoning",
+      "matched_instance": 0,
+      "user_voice": "alloy",
+      "assistant_voice": "marin",
+      "inference_inputs": {
+        "authored_user_utterances": [
+          "Choose exactly three different items. The badge costs four tokens and earns seventeen points. The candle costs two tokens and earns sixteen points. The marker costs six tokens and earns eight points. The poster costs ten tokens and earns fifteen points. The pouch costs three tokens and earns fourteen points. The ribbon costs two tokens and earns five points. Spend at most seventeen tokens. Include the badge. Never choose both the pouch and the candle. Maximize total points. Break ties by lower cost, then alphabetical order of the three names. Tell me the items, total cost and total points.",
+          "Cancel the bundle search. Instead, one badge costs four tokens. How many tokens do two badges cost?"
+        ],
+        "scoring_answers_or_oracles_supplied": false
+      },
+      "annotations_not_model_inputs": {
+        "expected_foreground_action": "request-reasoning",
+        "worker_route": "answer",
+        "explanation": "A native external request and the reasoning backend answer route are different decisions",
+        "expected_final_spoken_words": "Two badges cost eight tokens.",
+        "expected_pending_basic_words": null,
+        "actual_worker_returns_required": [
+          {
+            "revision": 1,
+            "problem": {
+              "items": [
+                {
+                  "name": "badge",
+                  "cost": 4,
+                  "points": 17
+                },
+                {
+                  "name": "candle",
+                  "cost": 2,
+                  "points": 16
+                },
+                {
+                  "name": "marker",
+                  "cost": 6,
+                  "points": 8
+                },
+                {
+                  "name": "poster",
+                  "cost": 10,
+                  "points": 15
+                },
+                {
+                  "name": "pouch",
+                  "cost": 3,
+                  "points": 14
+                },
+                {
+                  "name": "ribbon",
+                  "cost": 2,
+                  "points": 5
+                }
+              ],
+              "budget": 17,
+              "required": "badge",
+              "incompatible": [
+                "pouch",
+                "candle"
+              ],
+              "choose_exactly": 3
+            },
+            "oracle": {
+              "names": [
+                "badge",
+                "candle",
+                "poster"
+              ],
+              "cost": 16,
+              "points": 48
+            },
+            "deliverable": false
+          }
+        ],
+        "required_predicates": [
+          "native request selected without a forced RET marker",
+          "request context contains only actual arrived user words",
+          "real reasoning API response ID, input hash, completion and arrival times retained",
+          "actual cancellation receipt precedes any cancellation confirmation",
+          "late original result rejected; latest basic question answered directly"
+        ],
+        "native_request_forcing_allowed": false,
+        "source_oracle_is_not_a_worker_receipt": true,
+        "minimum_result_delivery_delay_s": 16.0,
+        "lifecycle_event_after_actual_dispatch": true
+      },
+      "training_approved": false
+    },
+    {
+      "id": "native-reasoning4-train-003",
+      "split": "train",
+      "family": "replace-reasoning",
+      "matched_instance": 0,
+      "user_voice": "alloy",
+      "assistant_voice": "marin",
+      "inference_inputs": {
+        "authored_user_utterances": [
+          "Choose exactly three different items. The badge costs four tokens and earns seventeen points. The candle costs two tokens and earns sixteen points. The marker costs six tokens and earns eight points. The poster costs ten tokens and earns fifteen points. The pouch costs three tokens and earns fourteen points. The ribbon costs two tokens and earns five points. Spend at most seventeen tokens. Include the badge. Never choose both the pouch and the candle. Maximize total points. Break ties by lower cost, then alphabetical order of the three names. Tell me the items, total cost and total points.",
+          "Change the budget to twelve tokens. Keep all the other rules the same."
+        ],
+        "scoring_answers_or_oracles_supplied": false
+      },
+      "annotations_not_model_inputs": {
+        "expected_foreground_action": "request-reasoning",
+        "worker_route": "answer",
+        "explanation": "A native external request and the reasoning backend answer route are different decisions",
+        "expected_final_spoken_words": "Choose the badge, candle and marker. That costs twelve tokens and earns forty one points.",
+        "expected_pending_basic_words": null,
+        "actual_worker_returns_required": [
+          {
+            "revision": 1,
+            "problem": {
+              "items": [
+                {
+                  "name": "badge",
+                  "cost": 4,
+                  "points": 17
+                },
+                {
+                  "name": "candle",
+                  "cost": 2,
+                  "points": 16
+                },
+                {
+                  "name": "marker",
+                  "cost": 6,
+                  "points": 8
+                },
+                {
+                  "name": "poster",
+                  "cost": 10,
+                  "points": 15
+                },
+                {
+                  "name": "pouch",
+                  "cost": 3,
+                  "points": 14
+                },
+                {
+                  "name": "ribbon",
+                  "cost": 2,
+                  "points": 5
+                }
+              ],
+              "budget": 17,
+              "required": "badge",
+              "incompatible": [
+                "pouch",
+                "candle"
+              ],
+              "choose_exactly": 3
+            },
+            "oracle": {
+              "names": [
+                "badge",
+                "candle",
+                "poster"
+              ],
+              "cost": 16,
+              "points": 48
+            },
+            "deliverable": false
+          },
+          {
+            "revision": 2,
+            "problem": {
+              "items": [
+                {
+                  "name": "badge",
+                  "cost": 4,
+                  "points": 17
+                },
+                {
+                  "name": "candle",
+                  "cost": 2,
+                  "points": 16
+                },
+                {
+                  "name": "marker",
+                  "cost": 6,
+                  "points": 8
+                },
+                {
+                  "name": "poster",
+                  "cost": 10,
+                  "points": 15
+                },
+                {
+                  "name": "pouch",
+                  "cost": 3,
+                  "points": 14
+                },
+                {
+                  "name": "ribbon",
+                  "cost": 2,
+                  "points": 5
+                }
+              ],
+              "budget": 12,
+              "required": "badge",
+              "incompatible": [
+                "pouch",
+                "candle"
+              ],
+              "choose_exactly": 3
+            },
+            "oracle": {
+              "names": [
+                "badge",
+                "candle",
+                "marker"
+              ],
+              "cost": 12,
+              "points": 41
+            },
+            "deliverable": true
+          }
+        ],
+        "required_predicates": [
+          "native request selected without a forced RET marker",
+          "request context contains only actual arrived user words",
+          "real reasoning API response ID, input hash, completion and arrival times retained",
+          "original revision retired; one new reasoning request contains the correction",
+          "late original result rejected; only current revision result spoken"
+        ],
+        "native_request_forcing_allowed": false,
+        "source_oracle_is_not_a_worker_receipt": true,
+        "minimum_result_delivery_delay_s": 16.0,
+        "lifecycle_event_after_actual_dispatch": true
+      },
+      "training_approved": false
+    },
+    {
+      "id": "native-reasoning4-train-004",
+      "split": "train",
+      "family": "direct-basic",
+      "matched_instance": 1,
+      "user_voice": "echo",
+      "assistant_voice": "marin",
+      "inference_inputs": {
+        "authored_user_utterances": [
+          "One candle costs nine tokens. How many tokens do two candles cost?"
+        ],
+        "scoring_answers_or_oracles_supplied": false
+      },
+      "annotations_not_model_inputs": {
+        "expected_foreground_action": "answer-directly",
+        "worker_route": "none",
+        "explanation": "A native external request and the reasoning backend answer route are different decisions",
+        "expected_final_spoken_words": "Two candles cost eighteen tokens.",
+        "expected_pending_basic_words": null,
+        "actual_worker_returns_required": [],
+        "required_predicates": [],
+        "native_request_forcing_allowed": false,
+        "source_oracle_is_not_a_worker_receipt": true,
+        "minimum_result_delivery_delay_s": 8.0,
+        "lifecycle_event_after_actual_dispatch": false
+      },
+      "training_approved": false
+    },
+    {
+      "id": "native-reasoning4-train-005",
+      "split": "train",
+      "family": "delegate-reasoning",
+      "matched_instance": 1,
+      "user_voice": "echo",
+      "assistant_voice": "marin",
+      "inference_inputs": {
+        "authored_user_utterances": [
+          "Choose exactly three different items. The badge costs nine tokens and earns nineteen points. The candle costs nine tokens and earns four points. The marker costs four tokens and earns six points. The poster costs eleven tokens and earns three points. The pouch costs two tokens and earns eight points. The ribbon costs two tokens and earns seventeen points. Spend at most sixteen tokens. Include the candle. Never choose both the marker and the poster. Maximize total points. Break ties by lower cost, then alphabetical order of the three names. Tell me the items, total cost and total points.",
+          "While that is pending, one candle costs nine tokens. How many tokens do two candles cost?"
+        ],
+        "scoring_answers_or_oracles_supplied": false
+      },
+      "annotations_not_model_inputs": {
+        "expected_foreground_action": "request-reasoning",
+        "worker_route": "answer",
+        "explanation": "A native external request and the reasoning backend answer route are different decisions",
+        "expected_final_spoken_words": "Choose the candle, pouch and ribbon. That costs thirteen tokens and earns twenty nine points.",
+        "expected_pending_basic_words": "Two candles cost eighteen tokens.",
+        "actual_worker_returns_required": [
+          {
+            "revision": 1,
+            "problem": {
+              "items": [
+                {
+                  "name": "badge",
+                  "cost": 9,
+                  "points": 19
+                },
+                {
+                  "name": "candle",
+                  "cost": 9,
+                  "points": 4
+                },
+                {
+                  "name": "marker",
+                  "cost": 4,
+                  "points": 6
+                },
+                {
+                  "name": "poster",
+                  "cost": 11,
+                  "points": 3
+                },
+                {
+                  "name": "pouch",
+                  "cost": 2,
+                  "points": 8
+                },
+                {
+                  "name": "ribbon",
+                  "cost": 2,
+                  "points": 17
+                }
+              ],
+              "budget": 16,
+              "required": "candle",
+              "incompatible": [
+                "marker",
+                "poster"
+              ],
+              "choose_exactly": 3
+            },
+            "oracle": {
+              "names": [
+                "candle",
+                "pouch",
+                "ribbon"
+              ],
+              "cost": 13,
+              "points": 29
+            },
+            "deliverable": true
+          }
+        ],
+        "required_predicates": [
+          "native request selected without a forced RET marker",
+          "request context contains only actual arrived user words",
+          "real reasoning API response ID, input hash, completion and arrival times retained",
+          "basic question answered directly while reasoning is pending",
+          "final bundle spoken only after matching actual reasoning result arrival"
+        ],
+        "native_request_forcing_allowed": false,
+        "source_oracle_is_not_a_worker_receipt": true,
+        "minimum_result_delivery_delay_s": 8.0,
+        "lifecycle_event_after_actual_dispatch": false
+      },
+      "training_approved": false
+    },
+    {
+      "id": "native-reasoning4-train-006",
+      "split": "train",
+      "family": "cancel-reasoning",
+      "matched_instance": 1,
+      "user_voice": "echo",
+      "assistant_voice": "marin",
+      "inference_inputs": {
+        "authored_user_utterances": [
+          "Choose exactly three different items. The badge costs nine tokens and earns nineteen points. The candle costs nine tokens and earns four points. The marker costs four tokens and earns six points. The poster costs eleven tokens and earns three points. The pouch costs two tokens and earns eight points. The ribbon costs two tokens and earns seventeen points. Spend at most sixteen tokens. Include the candle. Never choose both the marker and the poster. Maximize total points. Break ties by lower cost, then alphabetical order of the three names. Tell me the items, total cost and total points.",
+          "Cancel the bundle search. Instead, one candle costs nine tokens. How many tokens do two candles cost?"
+        ],
+        "scoring_answers_or_oracles_supplied": false
+      },
+      "annotations_not_model_inputs": {
+        "expected_foreground_action": "request-reasoning",
+        "worker_route": "answer",
+        "explanation": "A native external request and the reasoning backend answer route are different decisions",
+        "expected_final_spoken_words": "Two candles cost eighteen tokens.",
+        "expected_pending_basic_words": null,
+        "actual_worker_returns_required": [
+          {
+            "revision": 1,
+            "problem": {
+              "items": [
+                {
+                  "name": "badge",
+                  "cost": 9,
+                  "points": 19
+                },
+                {
+                  "name": "candle",
+                  "cost": 9,
+                  "points": 4
+                },
+                {
+                  "name": "marker",
+                  "cost": 4,
+                  "points": 6
+                },
+                {
+                  "name": "poster",
+                  "cost": 11,
+                  "points": 3
+                },
+                {
+                  "name": "pouch",
+                  "cost": 2,
+                  "points": 8
+                },
+                {
+                  "name": "ribbon",
+                  "cost": 2,
+                  "points": 17
+                }
+              ],
+              "budget": 16,
+              "required": "candle",
+              "incompatible": [
+                "marker",
+                "poster"
+              ],
+              "choose_exactly": 3
+            },
+            "oracle": {
+              "names": [
+                "candle",
+                "pouch",
+                "ribbon"
+              ],
+              "cost": 13,
+              "points": 29
+            },
+            "deliverable": false
+          }
+        ],
+        "required_predicates": [
+          "native request selected without a forced RET marker",
+          "request context contains only actual arrived user words",
+          "real reasoning API response ID, input hash, completion and arrival times retained",
+          "actual cancellation receipt precedes any cancellation confirmation",
+          "late original result rejected; latest basic question answered directly"
+        ],
+        "native_request_forcing_allowed": false,
+        "source_oracle_is_not_a_worker_receipt": true,
+        "minimum_result_delivery_delay_s": 16.0,
+        "lifecycle_event_after_actual_dispatch": true
+      },
+      "training_approved": false
+    },
+    {
+      "id": "native-reasoning4-train-007",
+      "split": "train",
+      "family": "replace-reasoning",
+      "matched_instance": 1,
+      "user_voice": "echo",
+      "assistant_voice": "marin",
+      "inference_inputs": {
+        "authored_user_utterances": [
+          "Choose exactly three different items. The badge costs nine tokens and earns nineteen points. The candle costs nine tokens and earns four points. The marker costs four tokens and earns six points. The poster costs eleven tokens and earns three points. The pouch costs two tokens and earns eight points. The ribbon costs two tokens and earns seventeen points. Spend at most sixteen tokens. Include the candle. Never choose both the marker and the poster. Maximize total points. Break ties by lower cost, then alphabetical order of the three names. Tell me the items, total cost and total points.",
+          "Change the budget to twenty one tokens. Keep all the other rules the same."
+        ],
+        "scoring_answers_or_oracles_supplied": false
+      },
+      "annotations_not_model_inputs": {
+        "expected_foreground_action": "request-reasoning",
+        "worker_route": "answer",
+        "explanation": "A native external request and the reasoning backend answer route are different decisions",
+        "expected_final_spoken_words": "Choose the badge, candle and ribbon. That costs twenty tokens and earns forty points.",
+        "expected_pending_basic_words": null,
+        "actual_worker_returns_required": [
+          {
+            "revision": 1,
+            "problem": {
+              "items": [
+                {
+                  "name": "badge",
+                  "cost": 9,
+                  "points": 19
+                },
+                {
+                  "name": "candle",
+                  "cost": 9,
+                  "points": 4
+                },
+                {
+                  "name": "marker",
+                  "cost": 4,
+                  "points": 6
+                },
+                {
+                  "name": "poster",
+                  "cost": 11,
+                  "points": 3
+                },
+                {
+                  "name": "pouch",
+                  "cost": 2,
+                  "points": 8
+                },
+                {
+                  "name": "ribbon",
+                  "cost": 2,
+                  "points": 17
+                }
+              ],
+              "budget": 16,
+              "required": "candle",
+              "incompatible": [
+                "marker",
+                "poster"
+              ],
+              "choose_exactly": 3
+            },
+            "oracle": {
+              "names": [
+                "candle",
+                "pouch",
+                "ribbon"
+              ],
+              "cost": 13,
+              "points": 29
+            },
+            "deliverable": false
+          },
+          {
+            "revision": 2,
+            "problem": {
+              "items": [
+                {
+                  "name": "badge",
+                  "cost": 9,
+                  "points": 19
+                },
+                {
+                  "name": "candle",
+                  "cost": 9,
+                  "points": 4
+                },
+                {
+                  "name": "marker",
+                  "cost": 4,
+                  "points": 6
+                },
+                {
+                  "name": "poster",
+                  "cost": 11,
+                  "points": 3
+                },
+                {
+                  "name": "pouch",
+                  "cost": 2,
+                  "points": 8
+                },
+                {
+                  "name": "ribbon",
+                  "cost": 2,
+                  "points": 17
+                }
+              ],
+              "budget": 21,
+              "required": "candle",
+              "incompatible": [
+                "marker",
+                "poster"
+              ],
+              "choose_exactly": 3
+            },
+            "oracle": {
+              "names": [
+                "badge",
+                "candle",
+                "ribbon"
+              ],
+              "cost": 20,
+              "points": 40
+            },
+            "deliverable": true
+          }
+        ],
+        "required_predicates": [
+          "native request selected without a forced RET marker",
+          "request context contains only actual arrived user words",
+          "real reasoning API response ID, input hash, completion and arrival times retained",
+          "original revision retired; one new reasoning request contains the correction",
+          "late original result rejected; only current revision result spoken"
+        ],
+        "native_request_forcing_allowed": false,
+        "source_oracle_is_not_a_worker_receipt": true,
+        "minimum_result_delivery_delay_s": 16.0,
+        "lifecycle_event_after_actual_dispatch": true
+      },
+      "training_approved": false
+    },
+    {
+      "id": "native-reasoning4-train-008",
+      "split": "train",
+      "family": "direct-basic",
+      "matched_instance": 2,
+      "user_voice": "alloy",
+      "assistant_voice": "marin",
+      "inference_inputs": {
+        "authored_user_utterances": [
+          "One marker costs ten tokens. How many tokens do two markers cost?"
+        ],
+        "scoring_answers_or_oracles_supplied": false
+      },
+      "annotations_not_model_inputs": {
+        "expected_foreground_action": "answer-directly",
+        "worker_route": "none",
+        "explanation": "A native external request and the reasoning backend answer route are different decisions",
+        "expected_final_spoken_words": "Two markers cost twenty tokens.",
+        "expected_pending_basic_words": null,
+        "actual_worker_returns_required": [],
+        "required_predicates": [],
+        "native_request_forcing_allowed": false,
+        "source_oracle_is_not_a_worker_receipt": true,
+        "minimum_result_delivery_delay_s": 12.0,
+        "lifecycle_event_after_actual_dispatch": false
+      },
+      "training_approved": false
+    },
+    {
+      "id": "native-reasoning4-train-009",
+      "split": "train",
+      "family": "delegate-reasoning",
+      "matched_instance": 2,
+      "user_voice": "alloy",
+      "assistant_voice": "marin",
+      "inference_inputs": {
+        "authored_user_utterances": [
+          "Choose exactly three different items. The badge costs three tokens and earns eight points. The candle costs ten tokens and earns four points. The marker costs ten tokens and earns thirteen points. The poster costs ten tokens and earns nine points. The pouch costs eight tokens and earns six points. The ribbon costs two tokens and earns fifteen points. Spend at most nineteen tokens. Include the marker. Never choose both the badge and the poster. Maximize total points. Break ties by lower cost, then alphabetical order of the three names. Tell me the items, total cost and total points.",
+          "While that is pending, one marker costs ten tokens. How many tokens do two markers cost?"
+        ],
+        "scoring_answers_or_oracles_supplied": false
+      },
+      "annotations_not_model_inputs": {
+        "expected_foreground_action": "request-reasoning",
+        "worker_route": "answer",
+        "explanation": "A native external request and the reasoning backend answer route are different decisions",
+        "expected_final_spoken_words": "Choose the badge, marker and ribbon. That costs fifteen tokens and earns thirty six points.",
+        "expected_pending_basic_words": "Two markers cost twenty tokens.",
+        "actual_worker_returns_required": [
+          {
+            "revision": 1,
+            "problem": {
+              "items": [
+                {
+                  "name": "badge",
+                  "cost": 3,
+                  "points": 8
+                },
+                {
+                  "name": "candle",
+                  "cost": 10,
+                  "points": 4
+                },
+                {
+                  "name": "marker",
+                  "cost": 10,
+                  "points": 13
+                },
+                {
+                  "name": "poster",
+                  "cost": 10,
+                  "points": 9
+                },
+                {
+                  "name": "pouch",
+                  "cost": 8,
+                  "points": 6
+                },
+                {
+                  "name": "ribbon",
+                  "cost": 2,
+                  "points": 15
+                }
+              ],
+              "budget": 19,
+              "required": "marker",
+              "incompatible": [
+                "badge",
+                "poster"
+              ],
+              "choose_exactly": 3
+            },
+            "oracle": {
+              "names": [
+                "badge",
+                "marker",
+                "ribbon"
+              ],
+              "cost": 15,
+              "points": 36
+            },
+            "deliverable": true
+          }
+        ],
+        "required_predicates": [
+          "native request selected without a forced RET marker",
+          "request context contains only actual arrived user words",
+          "real reasoning API response ID, input hash, completion and arrival times retained",
+          "basic question answered directly while reasoning is pending",
+          "final bundle spoken only after matching actual reasoning result arrival"
+        ],
+        "native_request_forcing_allowed": false,
+        "source_oracle_is_not_a_worker_receipt": true,
+        "minimum_result_delivery_delay_s": 12.0,
+        "lifecycle_event_after_actual_dispatch": false
+      },
+      "training_approved": false
+    },
+    {
+      "id": "native-reasoning4-train-010",
+      "split": "train",
+      "family": "cancel-reasoning",
+      "matched_instance": 2,
+      "user_voice": "alloy",
+      "assistant_voice": "marin",
+      "inference_inputs": {
+        "authored_user_utterances": [
+          "Choose exactly three different items. The badge costs three tokens and earns eight points. The candle costs ten tokens and earns four points. The marker costs ten tokens and earns thirteen points. The poster costs ten tokens and earns nine points. The pouch costs eight tokens and earns six points. The ribbon costs two tokens and earns fifteen points. Spend at most nineteen tokens. Include the marker. Never choose both the badge and the poster. Maximize total points. Break ties by lower cost, then alphabetical order of the three names. Tell me the items, total cost and total points.",
+          "Cancel the bundle search. Instead, one marker costs ten tokens. How many tokens do two markers cost?"
+        ],
+        "scoring_answers_or_oracles_supplied": false
+      },
+      "annotations_not_model_inputs": {
+        "expected_foreground_action": "request-reasoning",
+        "worker_route": "answer",
+        "explanation": "A native external request and the reasoning backend answer route are different decisions",
+        "expected_final_spoken_words": "Two markers cost twenty tokens.",
+        "expected_pending_basic_words": null,
+        "actual_worker_returns_required": [
+          {
+            "revision": 1,
+            "problem": {
+              "items": [
+                {
+                  "name": "badge",
+                  "cost": 3,
+                  "points": 8
+                },
+                {
+                  "name": "candle",
+                  "cost": 10,
+                  "points": 4
+                },
+                {
+                  "name": "marker",
+                  "cost": 10,
+                  "points": 13
+                },
+                {
+                  "name": "poster",
+                  "cost": 10,
+                  "points": 9
+                },
+                {
+                  "name": "pouch",
+                  "cost": 8,
+                  "points": 6
+                },
+                {
+                  "name": "ribbon",
+                  "cost": 2,
+                  "points": 15
+                }
+              ],
+              "budget": 19,
+              "required": "marker",
+              "incompatible": [
+                "badge",
+                "poster"
+              ],
+              "choose_exactly": 3
+            },
+            "oracle": {
+              "names": [
+                "badge",
+                "marker",
+                "ribbon"
+              ],
+              "cost": 15,
+              "points": 36
+            },
+            "deliverable": false
+          }
+        ],
+        "required_predicates": [
+          "native request selected without a forced RET marker",
+          "request context contains only actual arrived user words",
+          "real reasoning API response ID, input hash, completion and arrival times retained",
+          "actual cancellation receipt precedes any cancellation confirmation",
+          "late original result rejected; latest basic question answered directly"
+        ],
+        "native_request_forcing_allowed": false,
+        "source_oracle_is_not_a_worker_receipt": true,
+        "minimum_result_delivery_delay_s": 16.0,
+        "lifecycle_event_after_actual_dispatch": true
+      },
+      "training_approved": false
+    },
+    {
+      "id": "native-reasoning4-train-011",
+      "split": "train",
+      "family": "replace-reasoning",
+      "matched_instance": 2,
+      "user_voice": "alloy",
+      "assistant_voice": "marin",
+      "inference_inputs": {
+        "authored_user_utterances": [
+          "Choose exactly three different items. The badge costs three tokens and earns eight points. The candle costs ten tokens and earns four points. The marker costs ten tokens and earns thirteen points. The poster costs ten tokens and earns nine points. The pouch costs eight tokens and earns six points. The ribbon costs two tokens and earns fifteen points. Spend at most nineteen tokens. Include the marker. Never choose both the badge and the poster. Maximize total points. Break ties by lower cost, then alphabetical order of the three names. Tell me the items, total cost and total points.",
+          "Change the budget to twenty two tokens. Keep all the other rules the same."
+        ],
+        "scoring_answers_or_oracles_supplied": false
+      },
+      "annotations_not_model_inputs": {
+        "expected_foreground_action": "request-reasoning",
+        "worker_route": "answer",
+        "explanation": "A native external request and the reasoning backend answer route are different decisions",
+        "expected_final_spoken_words": "Choose the marker, poster and ribbon. That costs twenty two tokens and earns thirty seven points.",
+        "expected_pending_basic_words": null,
+        "actual_worker_returns_required": [
+          {
+            "revision": 1,
+            "problem": {
+              "items": [
+                {
+                  "name": "badge",
+                  "cost": 3,
+                  "points": 8
+                },
+                {
+                  "name": "candle",
+                  "cost": 10,
+                  "points": 4
+                },
+                {
+                  "name": "marker",
+                  "cost": 10,
+                  "points": 13
+                },
+                {
+                  "name": "poster",
+                  "cost": 10,
+                  "points": 9
+                },
+                {
+                  "name": "pouch",
+                  "cost": 8,
+                  "points": 6
+                },
+                {
+                  "name": "ribbon",
+                  "cost": 2,
+                  "points": 15
+                }
+              ],
+              "budget": 19,
+              "required": "marker",
+              "incompatible": [
+                "badge",
+                "poster"
+              ],
+              "choose_exactly": 3
+            },
+            "oracle": {
+              "names": [
+                "badge",
+                "marker",
+                "ribbon"
+              ],
+              "cost": 15,
+              "points": 36
+            },
+            "deliverable": false
+          },
+          {
+            "revision": 2,
+            "problem": {
+              "items": [
+                {
+                  "name": "badge",
+                  "cost": 3,
+                  "points": 8
+                },
+                {
+                  "name": "candle",
+                  "cost": 10,
+                  "points": 4
+                },
+                {
+                  "name": "marker",
+                  "cost": 10,
+                  "points": 13
+                },
+                {
+                  "name": "poster",
+                  "cost": 10,
+                  "points": 9
+                },
+                {
+                  "name": "pouch",
+                  "cost": 8,
+                  "points": 6
+                },
+                {
+                  "name": "ribbon",
+                  "cost": 2,
+                  "points": 15
+                }
+              ],
+              "budget": 22,
+              "required": "marker",
+              "incompatible": [
+                "badge",
+                "poster"
+              ],
+              "choose_exactly": 3
+            },
+            "oracle": {
+              "names": [
+                "marker",
+                "poster",
+                "ribbon"
+              ],
+              "cost": 22,
+              "points": 37
+            },
+            "deliverable": true
+          }
+        ],
+        "required_predicates": [
+          "native request selected without a forced RET marker",
+          "request context contains only actual arrived user words",
+          "real reasoning API response ID, input hash, completion and arrival times retained",
+          "original revision retired; one new reasoning request contains the correction",
+          "late original result rejected; only current revision result spoken"
+        ],
+        "native_request_forcing_allowed": false,
+        "source_oracle_is_not_a_worker_receipt": true,
+        "minimum_result_delivery_delay_s": 16.0,
+        "lifecycle_event_after_actual_dispatch": true
+      },
+      "training_approved": false
+    },
+    {
+      "id": "native-reasoning4-train-012",
+      "split": "train",
+      "family": "direct-basic",
+      "matched_instance": 3,
+      "user_voice": "echo",
+      "assistant_voice": "marin",
+      "inference_inputs": {
+        "authored_user_utterances": [
+          "One poster costs three tokens. How many tokens do two posters cost?"
+        ],
+        "scoring_answers_or_oracles_supplied": false
+      },
+      "annotations_not_model_inputs": {
+        "expected_foreground_action": "answer-directly",
+        "worker_route": "none",
+        "explanation": "A native external request and the reasoning backend answer route are different decisions",
+        "expected_final_spoken_words": "Two posters cost six tokens.",
+        "expected_pending_basic_words": null,
+        "actual_worker_returns_required": [],
+        "required_predicates": [],
+        "native_request_forcing_allowed": false,
+        "source_oracle_is_not_a_worker_receipt": true,
+        "minimum_result_delivery_delay_s": 16.0,
+        "lifecycle_event_after_actual_dispatch": false
+      },
+      "training_approved": false
+    },
+    {
+      "id": "native-reasoning4-train-013",
+      "split": "train",
+      "family": "delegate-reasoning",
+      "matched_instance": 3,
+      "user_voice": "echo",
+      "assistant_voice": "marin",
+      "inference_inputs": {
+        "authored_user_utterances": [
+          "Choose exactly three different items. The badge costs six tokens and earns thirteen points. The candle costs nine tokens and earns thirteen points. The marker costs two tokens and earns seven points. The poster costs three tokens and earns eight points. The pouch costs two tokens and earns ten points. The ribbon costs seven tokens and earns eight points. Spend at most eighteen tokens. Include the poster. Never choose both the pouch and the badge. Maximize total points. Break ties by lower cost, then alphabetical order of the three names. Tell me the items, total cost and total points.",
+          "While that is pending, one poster costs three tokens. How many tokens do two posters cost?"
+        ],
+        "scoring_answers_or_oracles_supplied": false
+      },
+      "annotations_not_model_inputs": {
+        "expected_foreground_action": "request-reasoning",
+        "worker_route": "answer",
+        "explanation": "A native external request and the reasoning backend answer route are different decisions",
+        "expected_final_spoken_words": "Choose the badge, candle and poster. That costs eighteen tokens and earns thirty four points.",
+        "expected_pending_basic_words": "Two posters cost six tokens.",
+        "actual_worker_returns_required": [
+          {
+            "revision": 1,
+            "problem": {
+              "items": [
+                {
+                  "name": "badge",
+                  "cost": 6,
+                  "points": 13
+                },
+                {
+                  "name": "candle",
+                  "cost": 9,
+                  "points": 13
+                },
+                {
+                  "name": "marker",
+                  "cost": 2,
+                  "points": 7
+                },
+                {
+                  "name": "poster",
+                  "cost": 3,
+                  "points": 8
+                },
+                {
+                  "name": "pouch",
+                  "cost": 2,
+                  "points": 10
+                },
+                {
+                  "name": "ribbon",
+                  "cost": 7,
+                  "points": 8
+                }
+              ],
+              "budget": 18,
+              "required": "poster",
+              "incompatible": [
+                "pouch",
+                "badge"
+              ],
+              "choose_exactly": 3
+            },
+            "oracle": {
+              "names": [
+                "badge",
+                "candle",
+                "poster"
+              ],
+              "cost": 18,
+              "points": 34
+            },
+            "deliverable": true
+          }
+        ],
+        "required_predicates": [
+          "native request selected without a forced RET marker",
+          "request context contains only actual arrived user words",
+          "real reasoning API response ID, input hash, completion and arrival times retained",
+          "basic question answered directly while reasoning is pending",
+          "final bundle spoken only after matching actual reasoning result arrival"
+        ],
+        "native_request_forcing_allowed": false,
+        "source_oracle_is_not_a_worker_receipt": true,
+        "minimum_result_delivery_delay_s": 16.0,
+        "lifecycle_event_after_actual_dispatch": false
+      },
+      "training_approved": false
+    },
+    {
+      "id": "native-reasoning4-train-014",
+      "split": "train",
+      "family": "cancel-reasoning",
+      "matched_instance": 3,
+      "user_voice": "echo",
+      "assistant_voice": "marin",
+      "inference_inputs": {
+        "authored_user_utterances": [
+          "Choose exactly three different items. The badge costs six tokens and earns thirteen points. The candle costs nine tokens and earns thirteen points. The marker costs two tokens and earns seven points. The poster costs three tokens and earns eight points. The pouch costs two tokens and earns ten points. The ribbon costs seven tokens and earns eight points. Spend at most eighteen tokens. Include the poster. Never choose both the pouch and the badge. Maximize total points. Break ties by lower cost, then alphabetical order of the three names. Tell me the items, total cost and total points.",
+          "Cancel the bundle search. Instead, one poster costs three tokens. How many tokens do two posters cost?"
+        ],
+        "scoring_answers_or_oracles_supplied": false
+      },
+      "annotations_not_model_inputs": {
+        "expected_foreground_action": "request-reasoning",
+        "worker_route": "answer",
+        "explanation": "A native external request and the reasoning backend answer route are different decisions",
+        "expected_final_spoken_words": "Two posters cost six tokens.",
+        "expected_pending_basic_words": null,
+        "actual_worker_returns_required": [
+          {
+            "revision": 1,
+            "problem": {
+              "items": [
+                {
+                  "name": "badge",
+                  "cost": 6,
+                  "points": 13
+                },
+                {
+                  "name": "candle",
+                  "cost": 9,
+                  "points": 13
+                },
+                {
+                  "name": "marker",
+                  "cost": 2,
+                  "points": 7
+                },
+                {
+                  "name": "poster",
+                  "cost": 3,
+                  "points": 8
+                },
+                {
+                  "name": "pouch",
+                  "cost": 2,
+                  "points": 10
+                },
+                {
+                  "name": "ribbon",
+                  "cost": 7,
+                  "points": 8
+                }
+              ],
+              "budget": 18,
+              "required": "poster",
+              "incompatible": [
+                "pouch",
+                "badge"
+              ],
+              "choose_exactly": 3
+            },
+            "oracle": {
+              "names": [
+                "badge",
+                "candle",
+                "poster"
+              ],
+              "cost": 18,
+              "points": 34
+            },
+            "deliverable": false
+          }
+        ],
+        "required_predicates": [
+          "native request selected without a forced RET marker",
+          "request context contains only actual arrived user words",
+          "real reasoning API response ID, input hash, completion and arrival times retained",
+          "actual cancellation receipt precedes any cancellation confirmation",
+          "late original result rejected; latest basic question answered directly"
+        ],
+        "native_request_forcing_allowed": false,
+        "source_oracle_is_not_a_worker_receipt": true,
+        "minimum_result_delivery_delay_s": 16.0,
+        "lifecycle_event_after_actual_dispatch": true
+      },
+      "training_approved": false
+    },
+    {
+      "id": "native-reasoning4-train-015",
+      "split": "train",
+      "family": "replace-reasoning",
+      "matched_instance": 3,
+      "user_voice": "echo",
+      "assistant_voice": "marin",
+      "inference_inputs": {
+        "authored_user_utterances": [
+          "Choose exactly three different items. The badge costs six tokens and earns thirteen points. The candle costs nine tokens and earns thirteen points. The marker costs two tokens and earns seven points. The poster costs three tokens and earns eight points. The pouch costs two tokens and earns ten points. The ribbon costs seven tokens and earns eight points. Spend at most eighteen tokens. Include the poster. Never choose both the pouch and the badge. Maximize total points. Break ties by lower cost, then alphabetical order of the three names. Tell me the items, total cost and total points.",
+          "Change the budget to thirteen tokens. Keep all the other rules the same."
+        ],
+        "scoring_answers_or_oracles_supplied": false
+      },
+      "annotations_not_model_inputs": {
+        "expected_foreground_action": "request-reasoning",
+        "worker_route": "answer",
+        "explanation": "A native external request and the reasoning backend answer route are different decisions",
+        "expected_final_spoken_words": "Choose the badge, marker and poster. That costs eleven tokens and earns twenty eight points.",
+        "expected_pending_basic_words": null,
+        "actual_worker_returns_required": [
+          {
+            "revision": 1,
+            "problem": {
+              "items": [
+                {
+                  "name": "badge",
+                  "cost": 6,
+                  "points": 13
+                },
+                {
+                  "name": "candle",
+                  "cost": 9,
+                  "points": 13
+                },
+                {
+                  "name": "marker",
+                  "cost": 2,
+                  "points": 7
+                },
+                {
+                  "name": "poster",
+                  "cost": 3,
+                  "points": 8
+                },
+                {
+                  "name": "pouch",
+                  "cost": 2,
+                  "points": 10
+                },
+                {
+                  "name": "ribbon",
+                  "cost": 7,
+                  "points": 8
+                }
+              ],
+              "budget": 18,
+              "required": "poster",
+              "incompatible": [
+                "pouch",
+                "badge"
+              ],
+              "choose_exactly": 3
+            },
+            "oracle": {
+              "names": [
+                "badge",
+                "candle",
+                "poster"
+              ],
+              "cost": 18,
+              "points": 34
+            },
+            "deliverable": false
+          },
+          {
+            "revision": 2,
+            "problem": {
+              "items": [
+                {
+                  "name": "badge",
+                  "cost": 6,
+                  "points": 13
+                },
+                {
+                  "name": "candle",
+                  "cost": 9,
+                  "points": 13
+                },
+                {
+                  "name": "marker",
+                  "cost": 2,
+                  "points": 7
+                },
+                {
+                  "name": "poster",
+                  "cost": 3,
+                  "points": 8
+                },
+                {
+                  "name": "pouch",
+                  "cost": 2,
+                  "points": 10
+                },
+                {
+                  "name": "ribbon",
+                  "cost": 7,
+                  "points": 8
+                }
+              ],
+              "budget": 13,
+              "required": "poster",
+              "incompatible": [
+                "pouch",
+                "badge"
+              ],
+              "choose_exactly": 3
+            },
+            "oracle": {
+              "names": [
+                "badge",
+                "marker",
+                "poster"
+              ],
+              "cost": 11,
+              "points": 28
+            },
+            "deliverable": true
+          }
+        ],
+        "required_predicates": [
+          "native request selected without a forced RET marker",
+          "request context contains only actual arrived user words",
+          "real reasoning API response ID, input hash, completion and arrival times retained",
+          "original revision retired; one new reasoning request contains the correction",
+          "late original result rejected; only current revision result spoken"
+        ],
+        "native_request_forcing_allowed": false,
+        "source_oracle_is_not_a_worker_receipt": true,
+        "minimum_result_delivery_delay_s": 16.0,
+        "lifecycle_event_after_actual_dispatch": true
+      },
+      "training_approved": false
+    },
+    {
+      "id": "native-reasoning4-train-016",
+      "split": "train",
+      "family": "direct-basic",
+      "matched_instance": 4,
+      "user_voice": "alloy",
+      "assistant_voice": "marin",
+      "inference_inputs": {
+        "authored_user_utterances": [
+          "One pouch costs three tokens. How many tokens do two pouches cost?"
+        ],
+        "scoring_answers_or_oracles_supplied": false
+      },
+      "annotations_not_model_inputs": {
+        "expected_foreground_action": "answer-directly",
+        "worker_route": "none",
+        "explanation": "A native external request and the reasoning backend answer route are different decisions",
+        "expected_final_spoken_words": "Two pouches cost six tokens.",
+        "expected_pending_basic_words": null,
+        "actual_worker_returns_required": [],
+        "required_predicates": [],
+        "native_request_forcing_allowed": false,
+        "source_oracle_is_not_a_worker_receipt": true,
+        "minimum_result_delivery_delay_s": 3.0,
+        "lifecycle_event_after_actual_dispatch": false
+      },
+      "training_approved": false
+    },
+    {
+      "id": "native-reasoning4-train-017",
+      "split": "train",
+      "family": "delegate-reasoning",
+      "matched_instance": 4,
+      "user_voice": "alloy",
+      "assistant_voice": "marin",
+      "inference_inputs": {
+        "authored_user_utterances": [
+          "Choose exactly three different items. The badge costs two tokens and earns four points. The candle costs seven tokens and earns thirteen points. The marker costs eleven tokens and earns thirteen points. The poster costs nine tokens and earns three points. The pouch costs three tokens and earns fifteen points. The ribbon costs seven tokens and earns three points. Spend at most nineteen tokens. Include the pouch. Never choose both the badge and the candle. Maximize total points. Break ties by lower cost, then alphabetical order of the three names. Tell me the items, total cost and total points.",
+          "While that is pending, one pouch costs three tokens. How many tokens do two pouches cost?"
+        ],
+        "scoring_answers_or_oracles_supplied": false
+      },
+      "annotations_not_model_inputs": {
+        "expected_foreground_action": "request-reasoning",
+        "worker_route": "answer",
+        "explanation": "A native external request and the reasoning backend answer route are different decisions",
+        "expected_final_spoken_words": "Choose the badge, marker and pouch. That costs sixteen tokens and earns thirty two points.",
+        "expected_pending_basic_words": "Two pouches cost six tokens.",
+        "actual_worker_returns_required": [
+          {
+            "revision": 1,
+            "problem": {
+              "items": [
+                {
+                  "name": "badge",
+                  "cost": 2,
+                  "points": 4
+                },
+                {
+                  "name": "candle",
+                  "cost": 7,
+                  "points": 13
+                },
+                {
+                  "name": "marker",
+                  "cost": 11,
+                  "points": 13
+                },
+                {
+                  "name": "poster",
+                  "cost": 9,
+                  "points": 3
+                },
+                {
+                  "name": "pouch",
+                  "cost": 3,
+                  "points": 15
+                },
+                {
+                  "name": "ribbon",
+                  "cost": 7,
+                  "points": 3
+                }
+              ],
+              "budget": 19,
+              "required": "pouch",
+              "incompatible": [
+                "badge",
+                "candle"
+              ],
+              "choose_exactly": 3
+            },
+            "oracle": {
+              "names": [
+                "badge",
+                "marker",
+                "pouch"
+              ],
+              "cost": 16,
+              "points": 32
+            },
+            "deliverable": true
+          }
+        ],
+        "required_predicates": [
+          "native request selected without a forced RET marker",
+          "request context contains only actual arrived user words",
+          "real reasoning API response ID, input hash, completion and arrival times retained",
+          "basic question answered directly while reasoning is pending",
+          "final bundle spoken only after matching actual reasoning result arrival"
+        ],
+        "native_request_forcing_allowed": false,
+        "source_oracle_is_not_a_worker_receipt": true,
+        "minimum_result_delivery_delay_s": 3.0,
+        "lifecycle_event_after_actual_dispatch": false
+      },
+      "training_approved": false
+    },
+    {
+      "id": "native-reasoning4-train-018",
+      "split": "train",
+      "family": "cancel-reasoning",
+      "matched_instance": 4,
+      "user_voice": "alloy",
+      "assistant_voice": "marin",
+      "inference_inputs": {
+        "authored_user_utterances": [
+          "Choose exactly three different items. The badge costs two tokens and earns four points. The candle costs seven tokens and earns thirteen points. The marker costs eleven tokens and earns thirteen points. The poster costs nine tokens and earns three points. The pouch costs three tokens and earns fifteen points. The ribbon costs seven tokens and earns three points. Spend at most nineteen tokens. Include the pouch. Never choose both the badge and the candle. Maximize total points. Break ties by lower cost, then alphabetical order of the three names. Tell me the items, total cost and total points.",
+          "Cancel the bundle search. Instead, one pouch costs three tokens. How many tokens do two pouches cost?"
+        ],
+        "scoring_answers_or_oracles_supplied": false
+      },
+      "annotations_not_model_inputs": {
+        "expected_foreground_action": "request-reasoning",
+        "worker_route": "answer",
+        "explanation": "A native external request and the reasoning backend answer route are different decisions",
+        "expected_final_spoken_words": "Two pouches cost six tokens.",
+        "expected_pending_basic_words": null,
+        "actual_worker_returns_required": [
+          {
+            "revision": 1,
+            "problem": {
+              "items": [
+                {
+                  "name": "badge",
+                  "cost": 2,
+                  "points": 4
+                },
+                {
+                  "name": "candle",
+                  "cost": 7,
+                  "points": 13
+                },
+                {
+                  "name": "marker",
+                  "cost": 11,
+                  "points": 13
+                },
+                {
+                  "name": "poster",
+                  "cost": 9,
+                  "points": 3
+                },
+                {
+                  "name": "pouch",
+                  "cost": 3,
+                  "points": 15
+                },
+                {
+                  "name": "ribbon",
+                  "cost": 7,
+                  "points": 3
+                }
+              ],
+              "budget": 19,
+              "required": "pouch",
+              "incompatible": [
+                "badge",
+                "candle"
+              ],
+              "choose_exactly": 3
+            },
+            "oracle": {
+              "names": [
+                "badge",
+                "marker",
+                "pouch"
+              ],
+              "cost": 16,
+              "points": 32
+            },
+            "deliverable": false
+          }
+        ],
+        "required_predicates": [
+          "native request selected without a forced RET marker",
+          "request context contains only actual arrived user words",
+          "real reasoning API response ID, input hash, completion and arrival times retained",
+          "actual cancellation receipt precedes any cancellation confirmation",
+          "late original result rejected; latest basic question answered directly"
+        ],
+        "native_request_forcing_allowed": false,
+        "source_oracle_is_not_a_worker_receipt": true,
+        "minimum_result_delivery_delay_s": 16.0,
+        "lifecycle_event_after_actual_dispatch": true
+      },
+      "training_approved": false
+    },
+    {
+      "id": "native-reasoning4-train-019",
+      "split": "train",
+      "family": "replace-reasoning",
+      "matched_instance": 4,
+      "user_voice": "alloy",
+      "assistant_voice": "marin",
+      "inference_inputs": {
+        "authored_user_utterances": [
+          "Choose exactly three different items. The badge costs two tokens and earns four points. The candle costs seven tokens and earns thirteen points. The marker costs eleven tokens and earns thirteen points. The poster costs nine tokens and earns three points. The pouch costs three tokens and earns fifteen points. The ribbon costs seven tokens and earns three points. Spend at most nineteen tokens. Include the pouch. Never choose both the badge and the candle. Maximize total points. Break ties by lower cost, then alphabetical order of the three names. Tell me the items, total cost and total points.",
+          "Change the budget to fourteen tokens. Keep all the other rules the same."
+        ],
+        "scoring_answers_or_oracles_supplied": false
+      },
+      "annotations_not_model_inputs": {
+        "expected_foreground_action": "request-reasoning",
+        "worker_route": "answer",
+        "explanation": "A native external request and the reasoning backend answer route are different decisions",
+        "expected_final_spoken_words": "Choose the badge, pouch and ribbon. That costs twelve tokens and earns twenty two points.",
+        "expected_pending_basic_words": null,
+        "actual_worker_returns_required": [
+          {
+            "revision": 1,
+            "problem": {
+              "items": [
+                {
+                  "name": "badge",
+                  "cost": 2,
+                  "points": 4
+                },
+                {
+                  "name": "candle",
+                  "cost": 7,
+                  "points": 13
+                },
+                {
+                  "name": "marker",
+                  "cost": 11,
+                  "points": 13
+                },
+                {
+                  "name": "poster",
+                  "cost": 9,
+                  "points": 3
+                },
+                {
+                  "name": "pouch",
+                  "cost": 3,
+                  "points": 15
+                },
+                {
+                  "name": "ribbon",
+                  "cost": 7,
+                  "points": 3
+                }
+              ],
+              "budget": 19,
+              "required": "pouch",
+              "incompatible": [
+                "badge",
+                "candle"
+              ],
+              "choose_exactly": 3
+            },
+            "oracle": {
+              "names": [
+                "badge",
+                "marker",
+                "pouch"
+              ],
+              "cost": 16,
+              "points": 32
+            },
+            "deliverable": false
+          },
+          {
+            "revision": 2,
+            "problem": {
+              "items": [
+                {
+                  "name": "badge",
+                  "cost": 2,
+                  "points": 4
+                },
+                {
+                  "name": "candle",
+                  "cost": 7,
+                  "points": 13
+                },
+                {
+                  "name": "marker",
+                  "cost": 11,
+                  "points": 13
+                },
+                {
+                  "name": "poster",
+                  "cost": 9,
+                  "points": 3
+                },
+                {
+                  "name": "pouch",
+                  "cost": 3,
+                  "points": 15
+                },
+                {
+                  "name": "ribbon",
+                  "cost": 7,
+                  "points": 3
+                }
+              ],
+              "budget": 14,
+              "required": "pouch",
+              "incompatible": [
+                "badge",
+                "candle"
+              ],
+              "choose_exactly": 3
+            },
+            "oracle": {
+              "names": [
+                "badge",
+                "pouch",
+                "ribbon"
+              ],
+              "cost": 12,
+              "points": 22
+            },
+            "deliverable": true
+          }
+        ],
+        "required_predicates": [
+          "native request selected without a forced RET marker",
+          "request context contains only actual arrived user words",
+          "real reasoning API response ID, input hash, completion and arrival times retained",
+          "original revision retired; one new reasoning request contains the correction",
+          "late original result rejected; only current revision result spoken"
+        ],
+        "native_request_forcing_allowed": false,
+        "source_oracle_is_not_a_worker_receipt": true,
+        "minimum_result_delivery_delay_s": 16.0,
+        "lifecycle_event_after_actual_dispatch": true
+      },
+      "training_approved": false
+    },
+    {
+      "id": "native-reasoning4-train-020",
+      "split": "train",
+      "family": "direct-basic",
+      "matched_instance": 5,
+      "user_voice": "echo",
+      "assistant_voice": "marin",
+      "inference_inputs": {
+        "authored_user_utterances": [
+          "One ribbon costs six tokens. How many tokens do two ribbons cost?"
+        ],
+        "scoring_answers_or_oracles_supplied": false
+      },
+      "annotations_not_model_inputs": {
+        "expected_foreground_action": "answer-directly",
+        "worker_route": "none",
+        "explanation": "A native external request and the reasoning backend answer route are different decisions",
+        "expected_final_spoken_words": "Two ribbons cost twelve tokens.",
+        "expected_pending_basic_words": null,
+        "actual_worker_returns_required": [],
+        "required_predicates": [],
+        "native_request_forcing_allowed": false,
+        "source_oracle_is_not_a_worker_receipt": true,
+        "minimum_result_delivery_delay_s": 8.0,
+        "lifecycle_event_after_actual_dispatch": false
+      },
+      "training_approved": false
+    },
+    {
+      "id": "native-reasoning4-train-021",
+      "split": "train",
+      "family": "delegate-reasoning",
+      "matched_instance": 5,
+      "user_voice": "echo",
+      "assistant_voice": "marin",
+      "inference_inputs": {
+        "authored_user_utterances": [
+          "Choose exactly three different items. The badge costs six tokens and earns nine points. The candle costs seven tokens and earns nineteen points. The marker costs six tokens and earns eighteen points. The poster costs eleven tokens and earns fourteen points. The pouch costs two tokens and earns eight points. The ribbon costs six tokens and earns six points. Spend at most twenty tokens. Include the ribbon. Never choose both the candle and the marker. Maximize total points. Break ties by lower cost, then alphabetical order of the three names. Tell me the items, total cost and total points.",
+          "While that is pending, one ribbon costs six tokens. How many tokens do two ribbons cost?"
+        ],
+        "scoring_answers_or_oracles_supplied": false
+      },
+      "annotations_not_model_inputs": {
+        "expected_foreground_action": "request-reasoning",
+        "worker_route": "answer",
+        "explanation": "A native external request and the reasoning backend answer route are different decisions",
+        "expected_final_spoken_words": "Choose the badge, candle and ribbon. That costs nineteen tokens and earns thirty four points.",
+        "expected_pending_basic_words": "Two ribbons cost twelve tokens.",
+        "actual_worker_returns_required": [
+          {
+            "revision": 1,
+            "problem": {
+              "items": [
+                {
+                  "name": "badge",
+                  "cost": 6,
+                  "points": 9
+                },
+                {
+                  "name": "candle",
+                  "cost": 7,
+                  "points": 19
+                },
+                {
+                  "name": "marker",
+                  "cost": 6,
+                  "points": 18
+                },
+                {
+                  "name": "poster",
+                  "cost": 11,
+                  "points": 14
+                },
+                {
+                  "name": "pouch",
+                  "cost": 2,
+                  "points": 8
+                },
+                {
+                  "name": "ribbon",
+                  "cost": 6,
+                  "points": 6
+                }
+              ],
+              "budget": 20,
+              "required": "ribbon",
+              "incompatible": [
+                "candle",
+                "marker"
+              ],
+              "choose_exactly": 3
+            },
+            "oracle": {
+              "names": [
+                "badge",
+                "candle",
+                "ribbon"
+              ],
+              "cost": 19,
+              "points": 34
+            },
+            "deliverable": true
+          }
+        ],
+        "required_predicates": [
+          "native request selected without a forced RET marker",
+          "request context contains only actual arrived user words",
+          "real reasoning API response ID, input hash, completion and arrival times retained",
+          "basic question answered directly while reasoning is pending",
+          "final bundle spoken only after matching actual reasoning result arrival"
+        ],
+        "native_request_forcing_allowed": false,
+        "source_oracle_is_not_a_worker_receipt": true,
+        "minimum_result_delivery_delay_s": 8.0,
+        "lifecycle_event_after_actual_dispatch": false
+      },
+      "training_approved": false
+    },
+    {
+      "id": "native-reasoning4-train-022",
+      "split": "train",
+      "family": "cancel-reasoning",
+      "matched_instance": 5,
+      "user_voice": "echo",
+      "assistant_voice": "marin",
+      "inference_inputs": {
+        "authored_user_utterances": [
+          "Choose exactly three different items. The badge costs six tokens and earns nine points. The candle costs seven tokens and earns nineteen points. The marker costs six tokens and earns eighteen points. The poster costs eleven tokens and earns fourteen points. The pouch costs two tokens and earns eight points. The ribbon costs six tokens and earns six points. Spend at most twenty tokens. Include the ribbon. Never choose both the candle and the marker. Maximize total points. Break ties by lower cost, then alphabetical order of the three names. Tell me the items, total cost and total points.",
+          "Cancel the bundle search. Instead, one ribbon costs six tokens. How many tokens do two ribbons cost?"
+        ],
+        "scoring_answers_or_oracles_supplied": false
+      },
+      "annotations_not_model_inputs": {
+        "expected_foreground_action": "request-reasoning",
+        "worker_route": "answer",
+        "explanation": "A native external request and the reasoning backend answer route are different decisions",
+        "expected_final_spoken_words": "Two ribbons cost twelve tokens.",
+        "expected_pending_basic_words": null,
+        "actual_worker_returns_required": [
+          {
+            "revision": 1,
+            "problem": {
+              "items": [
+                {
+                  "name": "badge",
+                  "cost": 6,
+                  "points": 9
+                },
+                {
+                  "name": "candle",
+                  "cost": 7,
+                  "points": 19
+                },
+                {
+                  "name": "marker",
+                  "cost": 6,
+                  "points": 18
+                },
+                {
+                  "name": "poster",
+                  "cost": 11,
+                  "points": 14
+                },
+                {
+                  "name": "pouch",
+                  "cost": 2,
+                  "points": 8
+                },
+                {
+                  "name": "ribbon",
+                  "cost": 6,
+                  "points": 6
+                }
+              ],
+              "budget": 20,
+              "required": "ribbon",
+              "incompatible": [
+                "candle",
+                "marker"
+              ],
+              "choose_exactly": 3
+            },
+            "oracle": {
+              "names": [
+                "badge",
+                "candle",
+                "ribbon"
+              ],
+              "cost": 19,
+              "points": 34
+            },
+            "deliverable": false
+          }
+        ],
+        "required_predicates": [
+          "native request selected without a forced RET marker",
+          "request context contains only actual arrived user words",
+          "real reasoning API response ID, input hash, completion and arrival times retained",
+          "actual cancellation receipt precedes any cancellation confirmation",
+          "late original result rejected; latest basic question answered directly"
+        ],
+        "native_request_forcing_allowed": false,
+        "source_oracle_is_not_a_worker_receipt": true,
+        "minimum_result_delivery_delay_s": 16.0,
+        "lifecycle_event_after_actual_dispatch": true
+      },
+      "training_approved": false
+    },
+    {
+      "id": "native-reasoning4-train-023",
+      "split": "train",
+      "family": "replace-reasoning",
+      "matched_instance": 5,
+      "user_voice": "echo",
+      "assistant_voice": "marin",
+      "inference_inputs": {
+        "authored_user_utterances": [
+          "Choose exactly three different items. The badge costs six tokens and earns nine points. The candle costs seven tokens and earns nineteen points. The marker costs six tokens and earns eighteen points. The poster costs eleven tokens and earns fourteen points. The pouch costs two tokens and earns eight points. The ribbon costs six tokens and earns six points. Spend at most twenty tokens. Include the ribbon. Never choose both the candle and the marker. Maximize total points. Break ties by lower cost, then alphabetical order of the three names. Tell me the items, total cost and total points.",
+          "Change the budget to fifteen tokens. Keep all the other rules the same."
+        ],
+        "scoring_answers_or_oracles_supplied": false
+      },
+      "annotations_not_model_inputs": {
+        "expected_foreground_action": "request-reasoning",
+        "worker_route": "answer",
+        "explanation": "A native external request and the reasoning backend answer route are different decisions",
+        "expected_final_spoken_words": "Choose the candle, pouch and ribbon. That costs fifteen tokens and earns thirty three points.",
+        "expected_pending_basic_words": null,
+        "actual_worker_returns_required": [
+          {
+            "revision": 1,
+            "problem": {
+              "items": [
+                {
+                  "name": "badge",
+                  "cost": 6,
+                  "points": 9
+                },
+                {
+                  "name": "candle",
+                  "cost": 7,
+                  "points": 19
+                },
+                {
+                  "name": "marker",
+                  "cost": 6,
+                  "points": 18
+                },
+                {
+                  "name": "poster",
+                  "cost": 11,
+                  "points": 14
+                },
+                {
+                  "name": "pouch",
+                  "cost": 2,
+                  "points": 8
+                },
+                {
+                  "name": "ribbon",
+                  "cost": 6,
+                  "points": 6
+                }
+              ],
+              "budget": 20,
+              "required": "ribbon",
+              "incompatible": [
+                "candle",
+                "marker"
+              ],
+              "choose_exactly": 3
+            },
+            "oracle": {
+              "names": [
+                "badge",
+                "candle",
+                "ribbon"
+              ],
+              "cost": 19,
+              "points": 34
+            },
+            "deliverable": false
+          },
+          {
+            "revision": 2,
+            "problem": {
+              "items": [
+                {
+                  "name": "badge",
+                  "cost": 6,
+                  "points": 9
+                },
+                {
+                  "name": "candle",
+                  "cost": 7,
+                  "points": 19
+                },
+                {
+                  "name": "marker",
+                  "cost": 6,
+                  "points": 18
+                },
+                {
+                  "name": "poster",
+                  "cost": 11,
+                  "points": 14
+                },
+                {
+                  "name": "pouch",
+                  "cost": 2,
+                  "points": 8
+                },
+                {
+                  "name": "ribbon",
+                  "cost": 6,
+                  "points": 6
+                }
+              ],
+              "budget": 15,
+              "required": "ribbon",
+              "incompatible": [
+                "candle",
+                "marker"
+              ],
+              "choose_exactly": 3
+            },
+            "oracle": {
+              "names": [
+                "candle",
+                "pouch",
+                "ribbon"
+              ],
+              "cost": 15,
+              "points": 33
+            },
+            "deliverable": true
+          }
+        ],
+        "required_predicates": [
+          "native request selected without a forced RET marker",
+          "request context contains only actual arrived user words",
+          "real reasoning API response ID, input hash, completion and arrival times retained",
+          "original revision retired; one new reasoning request contains the correction",
+          "late original result rejected; only current revision result spoken"
+        ],
+        "native_request_forcing_allowed": false,
+        "source_oracle_is_not_a_worker_receipt": true,
+        "minimum_result_delivery_delay_s": 16.0,
+        "lifecycle_event_after_actual_dispatch": true
+      },
+      "training_approved": false
+    },
+    {
+      "id": "native-reasoning4-train-024",
+      "split": "train",
+      "family": "direct-basic",
+      "matched_instance": 6,
+      "user_voice": "alloy",
+      "assistant_voice": "marin",
+      "inference_inputs": {
+        "authored_user_utterances": [
+          "One badge costs five tokens. How many tokens do two badges cost?"
+        ],
+        "scoring_answers_or_oracles_supplied": false
+      },
+      "annotations_not_model_inputs": {
+        "expected_foreground_action": "answer-directly",
+        "worker_route": "none",
+        "explanation": "A native external request and the reasoning backend answer route are different decisions",
+        "expected_final_spoken_words": "Two badges cost ten tokens.",
+        "expected_pending_basic_words": null,
+        "actual_worker_returns_required": [],
+        "required_predicates": [],
+        "native_request_forcing_allowed": false,
+        "source_oracle_is_not_a_worker_receipt": true,
+        "minimum_result_delivery_delay_s": 12.0,
+        "lifecycle_event_after_actual_dispatch": false
+      },
+      "training_approved": false
+    },
+    {
+      "id": "native-reasoning4-train-025",
+      "split": "train",
+      "family": "delegate-reasoning",
+      "matched_instance": 6,
+      "user_voice": "alloy",
+      "assistant_voice": "marin",
+      "inference_inputs": {
+        "authored_user_utterances": [
+          "Choose exactly three different items. The badge costs five tokens and earns three points. The candle costs four tokens and earns four points. The marker costs nine tokens and earns fourteen points. The poster costs ten tokens and earns five points. The pouch costs four tokens and earns fifteen points. The ribbon costs six tokens and earns thirteen points. Spend at most twenty two tokens. Include the badge. Never choose both the candle and the poster. Maximize total points. Break ties by lower cost, then alphabetical order of the three names. Tell me the items, total cost and total points.",
+          "While that is pending, one badge costs five tokens. How many tokens do two badges cost?"
+        ],
+        "scoring_answers_or_oracles_supplied": false
+      },
+      "annotations_not_model_inputs": {
+        "expected_foreground_action": "request-reasoning",
+        "worker_route": "answer",
+        "explanation": "A native external request and the reasoning backend answer route are different decisions",
+        "expected_final_spoken_words": "Choose the badge, marker and pouch. That costs eighteen tokens and earns thirty two points.",
+        "expected_pending_basic_words": "Two badges cost ten tokens.",
+        "actual_worker_returns_required": [
+          {
+            "revision": 1,
+            "problem": {
+              "items": [
+                {
+                  "name": "badge",
+                  "cost": 5,
+                  "points": 3
+                },
+                {
+                  "name": "candle",
+                  "cost": 4,
+                  "points": 4
+                },
+                {
+                  "name": "marker",
+                  "cost": 9,
+                  "points": 14
+                },
+                {
+                  "name": "poster",
+                  "cost": 10,
+                  "points": 5
+                },
+                {
+                  "name": "pouch",
+                  "cost": 4,
+                  "points": 15
+                },
+                {
+                  "name": "ribbon",
+                  "cost": 6,
+                  "points": 13
+                }
+              ],
+              "budget": 22,
+              "required": "badge",
+              "incompatible": [
+                "candle",
+                "poster"
+              ],
+              "choose_exactly": 3
+            },
+            "oracle": {
+              "names": [
+                "badge",
+                "marker",
+                "pouch"
+              ],
+              "cost": 18,
+              "points": 32
+            },
+            "deliverable": true
+          }
+        ],
+        "required_predicates": [
+          "native request selected without a forced RET marker",
+          "request context contains only actual arrived user words",
+          "real reasoning API response ID, input hash, completion and arrival times retained",
+          "basic question answered directly while reasoning is pending",
+          "final bundle spoken only after matching actual reasoning result arrival"
+        ],
+        "native_request_forcing_allowed": false,
+        "source_oracle_is_not_a_worker_receipt": true,
+        "minimum_result_delivery_delay_s": 12.0,
+        "lifecycle_event_after_actual_dispatch": false
+      },
+      "training_approved": false
+    },
+    {
+      "id": "native-reasoning4-train-026",
+      "split": "train",
+      "family": "cancel-reasoning",
+      "matched_instance": 6,
+      "user_voice": "alloy",
+      "assistant_voice": "marin",
+      "inference_inputs": {
+        "authored_user_utterances": [
+          "Choose exactly three different items. The badge costs five tokens and earns three points. The candle costs four tokens and earns four points. The marker costs nine tokens and earns fourteen points. The poster costs ten tokens and earns five points. The pouch costs four tokens and earns fifteen points. The ribbon costs six tokens and earns thirteen points. Spend at most twenty two tokens. Include the badge. Never choose both the candle and the poster. Maximize total points. Break ties by lower cost, then alphabetical order of the three names. Tell me the items, total cost and total points.",
+          "Cancel the bundle search. Instead, one badge costs five tokens. How many tokens do two badges cost?"
+        ],
+        "scoring_answers_or_oracles_supplied": false
+      },
+      "annotations_not_model_inputs": {
+        "expected_foreground_action": "request-reasoning",
+        "worker_route": "answer",
+        "explanation": "A native external request and the reasoning backend answer route are different decisions",
+        "expected_final_spoken_words": "Two badges cost ten tokens.",
+        "expected_pending_basic_words": null,
+        "actual_worker_returns_required": [
+          {
+            "revision": 1,
+            "problem": {
+              "items": [
+                {
+                  "name": "badge",
+                  "cost": 5,
+                  "points": 3
+                },
+                {
+                  "name": "candle",
+                  "cost": 4,
+                  "points": 4
+                },
+                {
+                  "name": "marker",
+                  "cost": 9,
+                  "points": 14
+                },
+                {
+                  "name": "poster",
+                  "cost": 10,
+                  "points": 5
+                },
+                {
+                  "name": "pouch",
+                  "cost": 4,
+                  "points": 15
+                },
+                {
+                  "name": "ribbon",
+                  "cost": 6,
+                  "points": 13
+                }
+              ],
+              "budget": 22,
+              "required": "badge",
+              "incompatible": [
+                "candle",
+                "poster"
+              ],
+              "choose_exactly": 3
+            },
+            "oracle": {
+              "names": [
+                "badge",
+                "marker",
+                "pouch"
+              ],
+              "cost": 18,
+              "points": 32
+            },
+            "deliverable": false
+          }
+        ],
+        "required_predicates": [
+          "native request selected without a forced RET marker",
+          "request context contains only actual arrived user words",
+          "real reasoning API response ID, input hash, completion and arrival times retained",
+          "actual cancellation receipt precedes any cancellation confirmation",
+          "late original result rejected; latest basic question answered directly"
+        ],
+        "native_request_forcing_allowed": false,
+        "source_oracle_is_not_a_worker_receipt": true,
+        "minimum_result_delivery_delay_s": 16.0,
+        "lifecycle_event_after_actual_dispatch": true
+      },
+      "training_approved": false
+    },
+    {
+      "id": "native-reasoning4-train-027",
+      "split": "train",
+      "family": "replace-reasoning",
+      "matched_instance": 6,
+      "user_voice": "alloy",
+      "assistant_voice": "marin",
+      "inference_inputs": {
+        "authored_user_utterances": [
+          "Choose exactly three different items. The badge costs five tokens and earns three points. The candle costs four tokens and earns four points. The marker costs nine tokens and earns fourteen points. The poster costs ten tokens and earns five points. The pouch costs four tokens and earns fifteen points. The ribbon costs six tokens and earns thirteen points. Spend at most twenty two tokens. Include the badge. Never choose both the candle and the poster. Maximize total points. Break ties by lower cost, then alphabetical order of the three names. Tell me the items, total cost and total points.",
+          "Change the budget to seventeen tokens. Keep all the other rules the same."
+        ],
+        "scoring_answers_or_oracles_supplied": false
+      },
+      "annotations_not_model_inputs": {
+        "expected_foreground_action": "request-reasoning",
+        "worker_route": "answer",
+        "explanation": "A native external request and the reasoning backend answer route are different decisions",
+        "expected_final_spoken_words": "Choose the badge, pouch and ribbon. That costs fifteen tokens and earns thirty one points.",
+        "expected_pending_basic_words": null,
+        "actual_worker_returns_required": [
+          {
+            "revision": 1,
+            "problem": {
+              "items": [
+                {
+                  "name": "badge",
+                  "cost": 5,
+                  "points": 3
+                },
+                {
+                  "name": "candle",
+                  "cost": 4,
+                  "points": 4
+                },
+                {
+                  "name": "marker",
+                  "cost": 9,
+                  "points": 14
+                },
+                {
+                  "name": "poster",
+                  "cost": 10,
+                  "points": 5
+                },
+                {
+                  "name": "pouch",
+                  "cost": 4,
+                  "points": 15
+                },
+                {
+                  "name": "ribbon",
+                  "cost": 6,
+                  "points": 13
+                }
+              ],
+              "budget": 22,
+              "required": "badge",
+              "incompatible": [
+                "candle",
+                "poster"
+              ],
+              "choose_exactly": 3
+            },
+            "oracle": {
+              "names": [
+                "badge",
+                "marker",
+                "pouch"
+              ],
+              "cost": 18,
+              "points": 32
+            },
+            "deliverable": false
+          },
+          {
+            "revision": 2,
+            "problem": {
+              "items": [
+                {
+                  "name": "badge",
+                  "cost": 5,
+                  "points": 3
+                },
+                {
+                  "name": "candle",
+                  "cost": 4,
+                  "points": 4
+                },
+                {
+                  "name": "marker",
+                  "cost": 9,
+                  "points": 14
+                },
+                {
+                  "name": "poster",
+                  "cost": 10,
+                  "points": 5
+                },
+                {
+                  "name": "pouch",
+                  "cost": 4,
+                  "points": 15
+                },
+                {
+                  "name": "ribbon",
+                  "cost": 6,
+                  "points": 13
+                }
+              ],
+              "budget": 17,
+              "required": "badge",
+              "incompatible": [
+                "candle",
+                "poster"
+              ],
+              "choose_exactly": 3
+            },
+            "oracle": {
+              "names": [
+                "badge",
+                "pouch",
+                "ribbon"
+              ],
+              "cost": 15,
+              "points": 31
+            },
+            "deliverable": true
+          }
+        ],
+        "required_predicates": [
+          "native request selected without a forced RET marker",
+          "request context contains only actual arrived user words",
+          "real reasoning API response ID, input hash, completion and arrival times retained",
+          "original revision retired; one new reasoning request contains the correction",
+          "late original result rejected; only current revision result spoken"
+        ],
+        "native_request_forcing_allowed": false,
+        "source_oracle_is_not_a_worker_receipt": true,
+        "minimum_result_delivery_delay_s": 16.0,
+        "lifecycle_event_after_actual_dispatch": true
+      },
+      "training_approved": false
+    },
+    {
+      "id": "native-reasoning4-train-028",
+      "split": "train",
+      "family": "direct-basic",
+      "matched_instance": 7,
+      "user_voice": "echo",
+      "assistant_voice": "marin",
+      "inference_inputs": {
+        "authored_user_utterances": [
+          "One candle costs ten tokens. How many tokens do two candles cost?"
+        ],
+        "scoring_answers_or_oracles_supplied": false
+      },
+      "annotations_not_model_inputs": {
+        "expected_foreground_action": "answer-directly",
+        "worker_route": "none",
+        "explanation": "A native external request and the reasoning backend answer route are different decisions",
+        "expected_final_spoken_words": "Two candles cost twenty tokens.",
+        "expected_pending_basic_words": null,
+        "actual_worker_returns_required": [],
+        "required_predicates": [],
+        "native_request_forcing_allowed": false,
+        "source_oracle_is_not_a_worker_receipt": true,
+        "minimum_result_delivery_delay_s": 16.0,
+        "lifecycle_event_after_actual_dispatch": false
+      },
+      "training_approved": false
+    },
+    {
+      "id": "native-reasoning4-train-029",
+      "split": "train",
+      "family": "delegate-reasoning",
+      "matched_instance": 7,
+      "user_voice": "echo",
+      "assistant_voice": "marin",
+      "inference_inputs": {
+        "authored_user_utterances": [
+          "Choose exactly three different items. The badge costs two tokens and earns twelve points. The candle costs ten tokens and earns eight points. The marker costs seven tokens and earns ten points. The poster costs two tokens and earns fifteen points. The pouch costs six tokens and earns ten points. The ribbon costs five tokens and earns fifteen points. Spend at most fifteen tokens. Include the candle. Never choose both the marker and the pouch. Maximize total points. Break ties by lower cost, then alphabetical order of the three names. Tell me the items, total cost and total points.",
+          "While that is pending, one candle costs ten tokens. How many tokens do two candles cost?"
+        ],
+        "scoring_answers_or_oracles_supplied": false
+      },
+      "annotations_not_model_inputs": {
+        "expected_foreground_action": "request-reasoning",
+        "worker_route": "answer",
+        "explanation": "A native external request and the reasoning backend answer route are different decisions",
+        "expected_final_spoken_words": "Choose the badge, candle and poster. That costs fourteen tokens and earns thirty five points.",
+        "expected_pending_basic_words": "Two candles cost twenty tokens.",
+        "actual_worker_returns_required": [
+          {
+            "revision": 1,
+            "problem": {
+              "items": [
+                {
+                  "name": "badge",
+                  "cost": 2,
+                  "points": 12
+                },
+                {
+                  "name": "candle",
+                  "cost": 10,
+                  "points": 8
+                },
+                {
+                  "name": "marker",
+                  "cost": 7,
+                  "points": 10
+                },
+                {
+                  "name": "poster",
+                  "cost": 2,
+                  "points": 15
+                },
+                {
+                  "name": "pouch",
+                  "cost": 6,
+                  "points": 10
+                },
+                {
+                  "name": "ribbon",
+                  "cost": 5,
+                  "points": 15
+                }
+              ],
+              "budget": 15,
+              "required": "candle",
+              "incompatible": [
+                "marker",
+                "pouch"
+              ],
+              "choose_exactly": 3
+            },
+            "oracle": {
+              "names": [
+                "badge",
+                "candle",
+                "poster"
+              ],
+              "cost": 14,
+              "points": 35
+            },
+            "deliverable": true
+          }
+        ],
+        "required_predicates": [
+          "native request selected without a forced RET marker",
+          "request context contains only actual arrived user words",
+          "real reasoning API response ID, input hash, completion and arrival times retained",
+          "basic question answered directly while reasoning is pending",
+          "final bundle spoken only after matching actual reasoning result arrival"
+        ],
+        "native_request_forcing_allowed": false,
+        "source_oracle_is_not_a_worker_receipt": true,
+        "minimum_result_delivery_delay_s": 16.0,
+        "lifecycle_event_after_actual_dispatch": false
+      },
+      "training_approved": false
+    },
+    {
+      "id": "native-reasoning4-train-030",
+      "split": "train",
+      "family": "cancel-reasoning",
+      "matched_instance": 7,
+      "user_voice": "echo",
+      "assistant_voice": "marin",
+      "inference_inputs": {
+        "authored_user_utterances": [
+          "Choose exactly three different items. The badge costs two tokens and earns twelve points. The candle costs ten tokens and earns eight points. The marker costs seven tokens and earns ten points. The poster costs two tokens and earns fifteen points. The pouch costs six tokens and earns ten points. The ribbon costs five tokens and earns fifteen points. Spend at most fifteen tokens. Include the candle. Never choose both the marker and the pouch. Maximize total points. Break ties by lower cost, then alphabetical order of the three names. Tell me the items, total cost and total points.",
+          "Cancel the bundle search. Instead, one candle costs ten tokens. How many tokens do two candles cost?"
+        ],
+        "scoring_answers_or_oracles_supplied": false
+      },
+      "annotations_not_model_inputs": {
+        "expected_foreground_action": "request-reasoning",
+        "worker_route": "answer",
+        "explanation": "A native external request and the reasoning backend answer route are different decisions",
+        "expected_final_spoken_words": "Two candles cost twenty tokens.",
+        "expected_pending_basic_words": null,
+        "actual_worker_returns_required": [
+          {
+            "revision": 1,
+            "problem": {
+              "items": [
+                {
+                  "name": "badge",
+                  "cost": 2,
+                  "points": 12
+                },
+                {
+                  "name": "candle",
+                  "cost": 10,
+                  "points": 8
+                },
+                {
+                  "name": "marker",
+                  "cost": 7,
+                  "points": 10
+                },
+                {
+                  "name": "poster",
+                  "cost": 2,
+                  "points": 15
+                },
+                {
+                  "name": "pouch",
+                  "cost": 6,
+                  "points": 10
+                },
+                {
+                  "name": "ribbon",
+                  "cost": 5,
+                  "points": 15
+                }
+              ],
+              "budget": 15,
+              "required": "candle",
+              "incompatible": [
+                "marker",
+                "pouch"
+              ],
+              "choose_exactly": 3
+            },
+            "oracle": {
+              "names": [
+                "badge",
+                "candle",
+                "poster"
+              ],
+              "cost": 14,
+              "points": 35
+            },
+            "deliverable": false
+          }
+        ],
+        "required_predicates": [
+          "native request selected without a forced RET marker",
+          "request context contains only actual arrived user words",
+          "real reasoning API response ID, input hash, completion and arrival times retained",
+          "actual cancellation receipt precedes any cancellation confirmation",
+          "late original result rejected; latest basic question answered directly"
+        ],
+        "native_request_forcing_allowed": false,
+        "source_oracle_is_not_a_worker_receipt": true,
+        "minimum_result_delivery_delay_s": 16.0,
+        "lifecycle_event_after_actual_dispatch": true
+      },
+      "training_approved": false
+    },
+    {
+      "id": "native-reasoning4-train-031",
+      "split": "train",
+      "family": "replace-reasoning",
+      "matched_instance": 7,
+      "user_voice": "echo",
+      "assistant_voice": "marin",
+      "inference_inputs": {
+        "authored_user_utterances": [
+          "Choose exactly three different items. The badge costs two tokens and earns twelve points. The candle costs ten tokens and earns eight points. The marker costs seven tokens and earns ten points. The poster costs two tokens and earns fifteen points. The pouch costs six tokens and earns ten points. The ribbon costs five tokens and earns fifteen points. Spend at most fifteen tokens. Include the candle. Never choose both the marker and the pouch. Maximize total points. Break ties by lower cost, then alphabetical order of the three names. Tell me the items, total cost and total points.",
+          "Change the budget to eighteen tokens. Keep all the other rules the same."
+        ],
+        "scoring_answers_or_oracles_supplied": false
+      },
+      "annotations_not_model_inputs": {
+        "expected_foreground_action": "request-reasoning",
+        "worker_route": "answer",
+        "explanation": "A native external request and the reasoning backend answer route are different decisions",
+        "expected_final_spoken_words": "Choose the candle, poster and ribbon. That costs seventeen tokens and earns thirty eight points.",
+        "expected_pending_basic_words": null,
+        "actual_worker_returns_required": [
+          {
+            "revision": 1,
+            "problem": {
+              "items": [
+                {
+                  "name": "badge",
+                  "cost": 2,
+                  "points": 12
+                },
+                {
+                  "name": "candle",
+                  "cost": 10,
+                  "points": 8
+                },
+                {
+                  "name": "marker",
+                  "cost": 7,
+                  "points": 10
+                },
+                {
+                  "name": "poster",
+                  "cost": 2,
+                  "points": 15
+                },
+                {
+                  "name": "pouch",
+                  "cost": 6,
+                  "points": 10
+                },
+                {
+                  "name": "ribbon",
+                  "cost": 5,
+                  "points": 15
+                }
+              ],
+              "budget": 15,
+              "required": "candle",
+              "incompatible": [
+                "marker",
+                "pouch"
+              ],
+              "choose_exactly": 3
+            },
+            "oracle": {
+              "names": [
+                "badge",
+                "candle",
+                "poster"
+              ],
+              "cost": 14,
+              "points": 35
+            },
+            "deliverable": false
+          },
+          {
+            "revision": 2,
+            "problem": {
+              "items": [
+                {
+                  "name": "badge",
+                  "cost": 2,
+                  "points": 12
+                },
+                {
+                  "name": "candle",
+                  "cost": 10,
+                  "points": 8
+                },
+                {
+                  "name": "marker",
+                  "cost": 7,
+                  "points": 10
+                },
+                {
+                  "name": "poster",
+                  "cost": 2,
+                  "points": 15
+                },
+                {
+                  "name": "pouch",
+                  "cost": 6,
+                  "points": 10
+                },
+                {
+                  "name": "ribbon",
+                  "cost": 5,
+                  "points": 15
+                }
+              ],
+              "budget": 18,
+              "required": "candle",
+              "incompatible": [
+                "marker",
+                "pouch"
+              ],
+              "choose_exactly": 3
+            },
+            "oracle": {
+              "names": [
+                "candle",
+                "poster",
+                "ribbon"
+              ],
+              "cost": 17,
+              "points": 38
+            },
+            "deliverable": true
+          }
+        ],
+        "required_predicates": [
+          "native request selected without a forced RET marker",
+          "request context contains only actual arrived user words",
+          "real reasoning API response ID, input hash, completion and arrival times retained",
+          "original revision retired; one new reasoning request contains the correction",
+          "late original result rejected; only current revision result spoken"
+        ],
+        "native_request_forcing_allowed": false,
+        "source_oracle_is_not_a_worker_receipt": true,
+        "minimum_result_delivery_delay_s": 16.0,
+        "lifecycle_event_after_actual_dispatch": true
+      },
+      "training_approved": false
+    }
+  ],
+  "status": "authored source proposal only; no recordings, native teachers or new training",
+  "owner_conversations_used": false,
+  "existing_folds_or_heldouts_read_or_changed": false,
+  "api_calls": 0,
+  "optimizer_updates": 0,
+  "training_approved": false,
+  "existing_control40_or_retention_gates_changed": false,
+  "required_retention": {
+    "actual_histories": 28,
+    "old_native_teachers": 25,
+    "new_native_teachers": 24,
+    "original_objectives": 154,
+    "original_native_call_teachers": 49,
+    "kl": 1.0,
+    "hidden": 10.0,
+    "word": 64.0,
+    "clock": 64.0
+  },
+  "required_before_any_teacher_collection": [
+    "Explicit new source audio and real asynchronous reasoning/cancel/replacement teacher protocol",
+    "Measured lifecycle event must follow actual dispatch; do not invent a dispatch time",
+    "Cancellation/replacement must arrive while the original task is actually pending; retain real execution and transport-delay clocks separately",
+    "Each complete measured episode, native prefix and actual context spans must fit the existing1100-frame bound; never crop to fit",
+    "Same real-backend interface for both matched basic and hard questions; no hand-coded difficulty router",
+    "Separate operator/scoring annotations from every model and backend input"
+  ],
+  "required_before_training": [
+    "Whole32 source audio and actual native teacher receipts",
+    "Independent whole-corpus words, waveform quality, semantic and conversion approval",
+    "Native numerical and gradient approval plus combined retained-objective readiness",
+    "Distinct bounded pilot, full independent training-state restore and complete native behavior review"
+  ]
+}

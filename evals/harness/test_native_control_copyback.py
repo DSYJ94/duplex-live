@@ -32,5 +32,17 @@ class ControlCopyback(unittest.TestCase):
             root.symlink_to(other,target_is_directory=True)
             with self.assertRaises(ValueError):snapshot(base)
 
+    def test_new_versioned_training_output_triggers_its_own_verified_snapshot(self):
+        with tempfile.TemporaryDirectory() as directory:
+            base=Path(directory);old=base/ROOTS[2];old.mkdir(parents=True)
+            (old/'controller.json').write_text('{"phase":"retired"}')
+            first=snapshot(base)
+            new=base/ROOTS[3]/'training';new.mkdir(parents=True)
+            (new/'training-state.pt').write_bytes(b'new optimizer state')
+            second=snapshot(base,first['marker']);self.assertTrue(second['changed'])
+            copied=Path(second['snapshot'])/ROOTS[3]/'training/training-state.pt'
+            self.assertEqual(copied.read_bytes(),b'new optimizer state')
+            self.assertEqual(verify(Path(second['snapshot']),second['inventory_sha256']),2)
+
 
 if __name__=='__main__':unittest.main()

@@ -47,3 +47,36 @@ categories, not a claim our small LoRA already achieves them. Its broad RL recip
 is a separate larger workflow; do not replace the present supervised repair with
 an unbudgeted reproduction.
 [Paper](https://arxiv.org/html/2606.11167v1).
+
+
+## Authored reasoning/delegation source proposal — 23 October
+
+A distinct, deterministic [32-scene TRAIN source proposal](../evals/fixtures/native-reasoning-delegation-source-proposal-20261023.json)
+and [generator](../data/synthetic/native_reasoning_delegation.py) now cover eight
+matched public reasoning problems in each of four conditions: direct basic
+arithmetic, background constrained reasoning while answering a basic question,
+cancellation, and replacement after a changed budget. This includes reasoning
+without private-record lookup. The native model's request decision is separate
+from the external reasoner's `answer` route.
+
+Each hard task selects exactly three of six items under a budget, a required item,
+an incompatible pair and explicit tie rules. An exhaustive combinations solver
+produces annotation targets; an independent64-bitmask enumeration checked all32
+required original/replacement solutions. Every replacement changes the selected
+items. The candidate speech model and reasoner must receive only the actual user
+words; annotations and oracle solutions are never inference inputs or fabricated
+worker receipts. Cancellation/replacement must follow actual dispatch while the
+original task is pending, with execution and delivery-delay clocks separate.
+
+The proposal has32 cases and56 authored user utterances (2,845 words, maximum117
+user words per episode). No audio, API calls, native teacher collection, numerical
+approval or training has occurred. Existing TRAIN/validation/test folds and sealed
+holdouts were not read or changed. The complete measured episode plus prefix/spans
+must fit the existing1,100-frame bound without cropping. A new real asynchronous
+reasoning teacher protocol and the whole32 independent quality/semantic/conversion/
+numerical chain remain prerequisites; the historical private-record renderer must
+not silently consume this new schema. Three source/solver/mutation tests pass.
+
+This is the reasoning/lifecycle portion of the wider curriculum. Microturn,
+backchannel and nonlexical vocalization data still need their own approved source
+and audio annotation protocol; this proposal does not establish those behaviors.

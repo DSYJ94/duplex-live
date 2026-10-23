@@ -15,7 +15,7 @@ import time
 import os
 
 ROOTS=('native-control40-preflight-v3/numerical','native-control40-supervisor-v4',
-       'native-control40-training-followup-v1')
+       'native-control40-training-followup-v1','native-control40-training-followup-v2')
 FORBIDDEN={'session-token','.private','.env','keys','credentials','core','quarantine'}
 
 
@@ -28,12 +28,13 @@ def marker(base):
         path=base/name
         if path.exists():
             value=json.loads(path.read_text());values.append([name,len(value['cases']),value.get('passed')])
-    for name in (ROOTS[1]+'/controller.json',ROOTS[2]+'/controller.json'):
+    for name in (root+'/controller.json' for root in ROOTS[1:]):
         path=base/name
         if path.exists():
             value=json.loads(path.read_text());values.append([name,value['phase']])
-    for name in (ROOTS[2]+'/training/training-state.pt',ROOTS[2]+'/training/report.json',
-                 ROOTS[2]+'/training/reload-report.json',ROOTS[2]+'/combined-readiness/control40-combined-readiness.json'):
+    for name in (root+'/'+file for root in ROOTS[2:] for file in
+                 ('training/training-state.pt','training/report.json','training/reload-report.json',
+                  'combined-readiness/control40-combined-readiness.json')):
         path=base/name
         if path.exists():values.append([name,path.stat().st_size,path.stat().st_mtime_ns])
     return hashlib.sha256(json.dumps(values,separators=(',',':')).encode()).hexdigest()
