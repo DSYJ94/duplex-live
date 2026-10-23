@@ -1,3 +1,54 @@
+# LOCAL —source32 qualified;35/40 GPU; concrete repair status (23 October17:14UTC)
+
+LOCAL sole executor; goalACTIVE. Main81eeb28 before this commit. Actual SSH at
+17:10:17UTC confirms SAME21063/birth20582160 S, old4111/birth18985221 T/paused,
+actualCUDA14873/birth20219598 R:35/40 gradient cases,0optimizerupdates. Numerical40
+passed earlier. ModelC9 and orchestration7769270 unchanged; no duplicate GPU job,
+restart, loss/policy change or candidate adoption. Guard16271 actual armed17:09:39,
+Pod4yx8vahdmjsylx deletion23:22:37.9UTC retaining49yytzyoge. Pilot21:30/eval22:17/
+backup22:20 remain unchanged. Specific20USD payment remains pending; no charge.
+Latest completed trained candidate7590052 remains unadopted8updates; no new fit yet.
+
+SourceASR session56347 TERMINAL0: COMPLETE40/40 objects,56clips,32scenes PASS at
+unchanged WER<=0.05,peak<=0.995,8CPUthreads. Independent whole-source/report readback
+alsoPASS, qualitySHAd22e096126f0df20e413af5b7c8ca2bf3f15e8aa920752c5167ad8299a7cd3c8.
+Sourcev3 preserves39originals+one diagnosed newtake, parent-v2/rejectedWAV/receipt/
+failedquality/all42generationattempts. Source manifestcda077f431fcbbf48306441fce4b94fcd8def086e9cc1a5f5222c89c0064b72d.
+No more speechAPI required. Actual asynchronous teachers NOTcollected; no training
+approval follows. Qualification docNATIVE-REASONING32-SOURCE-QUALIFICATION-2026-10-23.json.
+
+Complete qualitybackup session75375 TERMINAL0, ALL42JSON files445151B remotely
+rehashedPASS17:11:14UTC on retained49yytzyoge, destination
+/workspace/migration/native-reasoning32-quality-v3-preserved-v1, inventory
+80d71c2f7f2abd23e1eaf687f7b6c96a754466639d913324593fab089bd88de5.
+Fullsource172files/51,884,725B backup alreadyPASS81eeb28. Mac+Runpod are two domains;
+S3samevolume, OneDriveuploadunverified; broaderstoppedMacbackupstillPARTIAL.
+
+New evals/native_reasoning_backend.py is OFFLINE/opt-in only: actual HTTP when
+explicitly invoked outside lifecycle lock, no retry/redirect/fallback, exact
+request/body/hash/provider+clientIDs and HTTPclocks, late stale bodies retained.
+New lifecycle.fail_backend retires uncertain delivery. Eleven offline lifecycle/
+transport tests PASS; fixtures makeZEROAPI calls. Neither is wired into current
+GPU source/proxy/collector; no actual teacher/backend call made in this work.
+Caller still must prove source-qualified/native-selected requests, pacing/drain,
+full1100-framebound and complete quality/semantic/conversion/native approval.
+
+User asks concrete fix/CPU. Diagnosis doc now distinguishes actual coverage repair
+(control40 and source32) from unresolved ordinary-answer regression. Batch size,
+loss interference, inherited Adam and prompt effects are NOT proven single causes.
+Ifpilotfails, matched currentruntime publishedbase/520/child +scopedpersona and
+exactcurrent objective/Adam gradient diagnostic, no unchanged longer training.
+All28/49retainedhistory/full154/native49/KL-hidden/word-clock objectives remain.
+Macactual17:10 nice0 localservices, lowpower0, no recordedthermal/performancewarning;
+sourceASRcompleted, no current heavyASR. Default8 chosen from actual4/8/10benchmark
+(about5% fasterthan4 on oneclip), no OSpriority/affinity/powercap change.
+
+Next SAMEfull40gradient ->retained154/native49/control40 readiness ->ONE8 from520
+->independentAdam/RNG/native restore/strictproof ->completepaired20/speech20/all4
+->eligiblefresh40. Prepared738 later takeover ONLYafter fullgradient and4111retired;
+useactualchildbirth/globallease/deadlineguard proofs. Separate source32 nextneeds
+actualnativeasynchronous teachercapture. Unrelated localfiles preserved/excluded.
+
 # LOCAL —sourcev3 complete+backed up; whole40 ASR8 live;31/40 GPU (23 October16:46UTC)
 
 LOCAL sole executor; goalACTIVE. Main1fb29e7 before this commit. Actual16:41:59UTC

@@ -91,6 +91,18 @@ class NativeReasoningLifecycle:
             self.event('backend_transport_start',at,task_id=identity,payload_sha256=task['payload_sha256'])
             return copy.deepcopy(payload)
 
+    async def fail_backend(self,identity,error_type):
+        """Retire delivery after a failed/uncertain call; never retry or fake content."""
+        async with self.lock:
+            at=self.now();task=self.tasks[identity]
+            if task['phase']!='executing' or task['response'] is not None:
+                raise ValueError('Only the actual unresolved backend call can fail')
+            if not isinstance(error_type,str) or not error_type:
+                raise ValueError('Explicit nonsecret transport error type required')
+            task.update(phase='transport_failed_preserved',error_type=error_type)
+            self.event('backend_transport_failed',at,task_id=identity,error_type=error_type,
+                       remote_execution_state_known=False,automatic_retry=False)
+
     async def complete_backend(self,identity,response,*,actual_transport):
         """Preserve a real completion even when a later cancellation hides it."""
         async with self.lock:

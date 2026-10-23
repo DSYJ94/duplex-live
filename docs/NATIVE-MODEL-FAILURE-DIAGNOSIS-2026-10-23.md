@@ -6,6 +6,34 @@ control40 repair has not made an optimizer update. Its full numerical gate passe
 its independent BF16 gate is running. Passing numerical/gradient checks establishes
 implementation readiness, not answer correctness or interaction quality.
 
+## Concrete repair and what remains unproven — 23 October17:10UTC
+
+There is no single demonstrated cause of the latest ordinary-answer regression.
+Narrow training coverage is established; whether loss interference, inherited
+optimization, prompt bias or limited adapter coverage causes that regression
+remains unresolved. Batch size has not been isolated as a cause. A longer run,
+larger batch or unfreezing the base is not an evidence-based fix at this point.
+
+| Failure | Concrete next intervention | Evidence required |
+| --- | --- | --- |
+| Speaking before a cue; pause/resume mistakes | Current40 control histories explicitly teach silence, release, distracting cues, pause/resume and replacement cues, preserving all existing objectives | Full current gate chain, one8-update pilot and complete paired behavior/speech tests; silence means no audible acknowledgment |
+| Unreliable hard-reasoning delegation | New32-scene matched direct/basic, delegated, cancellation and replacement curriculum; actual asynchronous teacher requests and returned content | Source-v3 all40 recordings now pass; teacher capture, semantic review, native conversion and training remain outstanding. Unnecessary delegation on direct/basic cases must fail |
+| Wrong ordinary answers after training | Matched published-base/parent/child comparison on the current runtime; separate scoped-persona diagnostic; exact current objective-group gradients and inherited Adam direction if pilot fails | Same audio/voice/runtime/sampling and all cases, with independent speech review. Historical gradient conflict and older ancestor regression do not isolate the latest damaging objective |
+| Stale/cancelled worker results | Backend work runs outside lifecycle lock; cancellation retires delivery; replacement keeps full arrived user history; late raw responses remain preserved |11 offline lifecycle/transport tests pass; actual native request/capture/wire/audio evidence still required |
+
+The actual GPU check at17:10:17UTC is35/40 gradient cases with0 optimizer updates;
+numerical40 already passed. The latest completed training is still7590052's eight
+updates, which remains unadopted. No performance improvement is claimed yet.
+
+Mac low-power mode is0, relevant local services have nice0, and no thermal or
+performance warning is recorded. No OS CPU priority/affinity/power cap was set.
+The real fixed-clip4/8/10-thread benchmark selected8:4.935s versus5.199s and5.233s,
+about5% faster than4 on that clip. New source audit used8 and completed; no current
+source ASR process remains. These observations do not prove that hardware never
+thermally throttles or establish full-corpus speed. See
+[CPU measurements](NATIVE-LOCAL-CPU-BENCHMARK-2026-10-23.json) and
+[complete source qualification](NATIVE-REASONING32-SOURCE-QUALIFICATION-2026-10-23.json).
+
 ## What the native behavioral evaluation actually asks
 
 [The fixed ten-case development plan](../evals/fixtures/native-v2-development-20261019.json)
@@ -27,7 +55,8 @@ comparison repeats the complete paired20, rather than selecting passing cases.
 
 These task-lifecycle tests primarily concern synthetic record retrieval. They do
 not establish that the voice model knows when to delegate arbitrary hard reasoning.
-The32-scene reasoning/lifecycle source proposal remains unrecorded/untrained;
+The32-scene reasoning/lifecycle source is recorded and source-qualified, but its
+actual asynchronous teachers remain uncollected and it remains untrained;
 microturn/backchannel teaching also remains incomplete. The40 current numerical
 cases concern TRAIN control histories, not40 independent reasoning questions.
 

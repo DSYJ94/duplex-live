@@ -1,10 +1,16 @@
 # Native reasoning teacher lifecycle preparation — 23 October2026
 
 The opt-in `evals/native_reasoning_lifecycle.py` boundary is implemented and has
-eight passing offline tests. It is not connected to the current GPU pilot,
-production voice client, a live API, or a teacher collector. No teacher or model
-is approved by these tests. Both previously requested specific approvals remain
-pending: the new40 synthetic source utterances and the one-time20USD top-up.
+eight passing offline lifecycle tests. The separate opt-in
+`evals/native_reasoning_backend.py` transport has three passing offline tests:
+pending HTTP does not block cancellation, late stale bodies are retained, HTTP
+failure never retries, and existing output cannot be overwritten. It records
+exact request/response hashes, provider/client request IDs and actual HTTP clocks;
+credentials stay local and unrecorded. No actual backend call was made in these
+tests. Neither component is connected to the current GPU pilot, production voice
+client or a teacher collector. No teacher or model is approved by these tests.
+The human approved the exact40 synthetic utterances; their complete source-v3
+word/waveform audit now passes. The one-time20USD top-up remains pending.
 
 A native voice delegation event must supply each distinct task identity. The
 boundary accepts only actual chronological USER transcript deltas that have
@@ -49,13 +55,14 @@ limits still apply. No timing schedule or source plan was changed by this note.
 
 Still required before collecting an eligible teacher corpus:
 
-- Specific approval and actual complete40-object source collection, then all32/56
-  independent source word/waveform qualification; no passing subset.
+- Source collection and whole40-object/32-scene/56-clip word/waveform
+  qualification are complete; bind that exact version into the future collector.
 - Wire this opt-in boundary to an actual GPT-Live teacher capture with continuous
   real input pacing and all raw output packets retained, without output filtering.
-- A real bounded backend transport and request-ID/input-hash/response association;
-  this module itself makes zero API calls. Fixture classifications cannot qualify
-  a teacher. No direct/basic request is forced; unnecessary delegation must fail.
+- Wire the bounded backend transport and request-ID/input-hash/response association
+  to actual native requests; the lifecycle itself makes zero API calls. Offline
+  fixture classifications cannot qualify a teacher. No direct/basic request is
+  forced; unnecessary delegation must fail.
 - Measured dispatch-dependent source replay, draining/finalization, immutable raw
   provider/WAV/event receipts, complete32 independent words/audio/semantic review,
   actual-time conversion and complete native numerical/gradient/retention approval.
