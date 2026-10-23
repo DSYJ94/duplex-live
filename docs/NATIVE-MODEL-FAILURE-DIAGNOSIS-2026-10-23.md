@@ -64,26 +64,26 @@ alone have already failed to solve the whole problem on that earlier candidate.
 [Saved actual recipe](NATIVE-7590052-RECIPE-2026-10-21.json) and original report:
 `runs/cloud-export-20261016/tree/runs/context-training-proof-7590052/report.json`.
 
--49 synthetic teacher histories:27 private lookup,12 simple,5 clarification,5
+- 49 synthetic teacher histories:27 private lookup,12 simple,5 clarification,5
 cancellation. Their real conversation timelines sum to30.656 minutes, including
 listening/pauses; this is not30.656 minutes of unique assistant speech. The simple
 set includes the keyword-wait and pause/resume scripts. This is a narrow synthetic
 curriculum, not broad conversational/reasoning training.
--The old28 actual-history components remain distinct from49 teacher histories.
+- The old28 actual-history components remain distinct from49 teacher histories.
 “154” counts retained loss contributions, not154 unique conversations. Membership
 per optimizer step is28 actual,4 reference,10 word anchors,14 clock anchors,49
 acoustic teachers,25 old teacher-text and24 new teacher-text contributions.
--Physical microbatch is one conversation. Gradients accumulate the full retained
+- Physical microbatch is one conversation. Gradients accumulate the full retained
 154 contribution set before each optimizer update; it is not one-random-example
 SGD. The supplementary native-call text objective exposes all49 once across8
 updates. The new control40 plan adds5 control histories per update, all40 once.
--Only1,894,400 rank8 adapter parameters in26 FP32 tensors are trained; base weights
+- Only1,894,400 rank8 adapter parameters in26 FP32 tensors are trained; base weights
 are frozen. Last4 temporal layers and text head are targeted. No controlled rank
 or layer-coverage sweep establishes this as an optimum.
--Latest stage:8 updates, effective LR2e-7, AdamW, clip norm1, KL1/hidden-MSE10,
+- Latest stage:8 updates, effective LR2e-7, AdamW, clip norm1, KL1/hidden-MSE10,
 word/clock anchors64. This follows an earlier higher-rate attempt; it is not proof
 that the lower rate or the combined objectives solve the regression.
--One retained text-loss component decreases only0.5719308→0.5718392 from update1
+- One retained text-loss component decreases only0.5719308→0.5718392 from update1
 to8; old-teacher CE0.4547952→0.4545460. These are component losses, not a complete
 objective/convergence curve. The model has earlier training history; eight refers
 to the latest stage, not its entire lifetime.
