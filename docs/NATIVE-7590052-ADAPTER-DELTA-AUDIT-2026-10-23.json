@@ -1,0 +1,723 @@
+{
+  "schema": "dl-native-adapter-saved-delta-audit-v1",
+  "created_utc": "2026-10-23T14:34:28.745800+00:00",
+  "code_sha256": "95031d247c2495125bd94bdb80c828e0a9dc04e4f329578a8633fd0f32b46f32",
+  "parent": {
+    "proof": "runs/cloud-export-20261016/tree/runs/context-training-proof-7510331",
+    "report_sha256": "7f69a321b87613b44c7d5a19b783c3c6ddcbb479bb2fc7bb94e96fe210119778",
+    "checkpoint_sha256": "0310c2563988f8f59d942dce98119230016136f13fc9729ad1c2f398318e7cb5",
+    "training_state_sha256": "b5e4320fba68a0b624a7be61778def8e6238517272637324824126ccaa1c6785",
+    "saved_completed_steps": 520,
+    "Adam_parameter_steps": [
+      520.0
+    ],
+    "saved_optimizer_lr": 1e-05,
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "eps": 1e-08,
+    "weight_decay": 0.0,
+    "rank": 8,
+    "scaling": 2.0,
+    "last_layers": 4,
+    "source_commit": "ca66cdafcf76c1e3b553e0ba63ca9883c96ead85"
+  },
+  "candidate": {
+    "proof": "runs/cloud-export-20261016/tree/runs/context-training-proof-7590052",
+    "report_sha256": "397a259d124948dec3aeed63564ad24dbf2f13bb2b3699565f9f1974e60fa3eb",
+    "checkpoint_sha256": "7bbb2e9f1822cb43db50f6ead7c14d510e7c280d520cc7e1436dced6edbcfeb5",
+    "training_state_sha256": "6a9fc6cb0949d1562f654af74cb6e86a827a0214a486f869e7bd92b1ae0b63b4",
+    "saved_completed_steps": 8,
+    "Adam_parameter_steps": [
+      528.0
+    ],
+    "saved_optimizer_lr": 2e-07,
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "eps": 1e-08,
+    "weight_decay": 0.0,
+    "rank": 8,
+    "scaling": 2.0,
+    "last_layers": 4,
+    "source_commit": "741872fe2f9e49f35d4deba9aba96caff26c51d4"
+  },
+  "trainable_parameters": 1894400,
+  "tensors": 26,
+  "modules": 13,
+  "changed_tensors": 26,
+  "changed_elements": 1894105,
+  "global_parent_parameter_norm": 7.729935510194255,
+  "global_parameter_delta_norm": 0.0012285420917046298,
+  "global_relative_parameter_delta": 0.00015893303250517755,
+  "actual_Adam_step_difference": 8.0,
+  "inherited_first_moment_coefficient": 0.4304672100000001,
+  "inherited_second_moment_coefficient": 0.992027944069944,
+  "moment_coefficients_are_not_percentages_of_update_influence": true,
+  "saved_frozen_parameter_hash_records_equal": true,
+  "full_frozen_base_weights_rehashed_by_this_audit": false,
+  "parameter_rows": [
+    {
+      "name": "text_linear.lora_A.weight",
+      "shape": [
+        8,
+        4096
+      ],
+      "elements": 32768,
+      "dtype": "torch.float32",
+      "parent_parameter_norm": 1.81176987557352,
+      "candidate_parameter_norm": 1.8118036946283151,
+      "delta_norm": 0.00013431457214575735,
+      "relative_parameter_delta": 7.413445490876138e-05,
+      "maximum_absolute_delta": 2.9420480132102966e-06,
+      "changed_elements": 32754,
+      "inherited_first_moment_contribution_norm": 0.005085068872723178,
+      "new_steps_first_moment_residual_norm": 0.021251281765278202,
+      "inherited_second_moment_contribution_norm": 1.3247867241761843e-05,
+      "new_steps_second_moment_residual_norm": 3.2775955661319097e-07,
+      "moment_residual_includes_saved_FP32_rounding": true
+    },
+    {
+      "name": "text_linear.lora_B.weight",
+      "shape": [
+        32000,
+        8
+      ],
+      "elements": 256000,
+      "dtype": "torch.float32",
+      "parent_parameter_norm": 3.9693315445273036,
+      "candidate_parameter_norm": 3.9701711630222496,
+      "delta_norm": 0.0008924717805430101,
+      "relative_parameter_delta": 0.00022484183307224645,
+      "maximum_absolute_delta": 5.324371159076691e-06,
+      "changed_elements": 255999,
+      "inherited_first_moment_contribution_norm": 0.05541164874545074,
+      "new_steps_first_moment_residual_norm": 0.35791702542148823,
+      "inherited_second_moment_contribution_norm": 0.03082753642825715,
+      "new_steps_second_moment_residual_norm": 0.0004849745270284635,
+      "moment_residual_includes_saved_FP32_rounding": true
+    },
+    {
+      "name": "transformer.layers.28.gating.linear_in.lora_A.weight",
+      "shape": [
+        8,
+        4096
+      ],
+      "elements": 32768,
+      "dtype": "torch.float32",
+      "parent_parameter_norm": 1.7928924897154714,
+      "candidate_parameter_norm": 1.7929264455065423,
+      "delta_norm": 0.00011461632830582032,
+      "relative_parameter_delta": 6.392816577864616e-05,
+      "maximum_absolute_delta": 1.8475111573934555e-06,
+      "changed_elements": 32755,
+      "inherited_first_moment_contribution_norm": 0.005684790387311113,
+      "new_steps_first_moment_residual_norm": 0.01801135502285862,
+      "inherited_second_moment_contribution_norm": 6.61183203284821e-06,
+      "new_steps_second_moment_residual_norm": 1.4314378872973297e-07,
+      "moment_residual_includes_saved_FP32_rounding": true
+    },
+    {
+      "name": "transformer.layers.28.gating.linear_in.lora_B.weight",
+      "shape": [
+        22528,
+        8
+      ],
+      "elements": 180224,
+      "dtype": "torch.float32",
+      "parent_parameter_norm": 0.9185925931888571,
+      "candidate_parameter_norm": 0.9186833541787837,
+      "delta_norm": 0.0003054368962240406,
+      "relative_parameter_delta": 0.0003325052896014856,
+      "maximum_absolute_delta": 4.130066372454166e-06,
+      "changed_elements": 180210,
+      "inherited_first_moment_contribution_norm": 0.014060997646519736,
+      "new_steps_first_moment_residual_norm": 0.07544773350544598,
+      "inherited_second_moment_contribution_norm": 0.0002513028660721117,
+      "new_steps_second_moment_residual_norm": 6.801486560985468e-06,
+      "moment_residual_includes_saved_FP32_rounding": true
+    },
+    {
+      "name": "transformer.layers.28.gating.linear_out.lora_A.weight",
+      "shape": [
+        8,
+        11264
+      ],
+      "elements": 90112,
+      "dtype": "torch.float32",
+      "parent_parameter_norm": 1.800039897230715,
+      "candidate_parameter_norm": 1.8000745283702277,
+      "delta_norm": 0.00015815411993137516,
+      "relative_parameter_delta": 8.786145250151875e-05,
+      "maximum_absolute_delta": 2.314336597919464e-06,
+      "changed_elements": 90088,
+      "inherited_first_moment_contribution_norm": 0.00305583336453465,
+      "new_steps_first_moment_residual_norm": 0.011803107568587828,
+      "inherited_second_moment_contribution_norm": 1.2947815229176496e-05,
+      "new_steps_second_moment_residual_norm": 1.4774234717527212e-07,
+      "moment_residual_includes_saved_FP32_rounding": true
+    },
+    {
+      "name": "transformer.layers.28.gating.linear_out.lora_B.weight",
+      "shape": [
+        4096,
+        8
+      ],
+      "elements": 32768,
+      "dtype": "torch.float32",
+      "parent_parameter_norm": 0.3407591971750762,
+      "candidate_parameter_norm": 0.3407917876689133,
+      "delta_norm": 0.00011057504128682123,
+      "relative_parameter_delta": 0.00032449613158939825,
+      "maximum_absolute_delta": 2.864282578229904e-06,
+      "changed_elements": 32765,
+      "inherited_first_moment_contribution_norm": 0.006660453820153913,
+      "new_steps_first_moment_residual_norm": 0.03978874277973928,
+      "inherited_second_moment_contribution_norm": 1.9922007719704694e-05,
+      "new_steps_second_moment_residual_norm": 5.341510998106526e-07,
+      "moment_residual_includes_saved_FP32_rounding": true
+    },
+    {
+      "name": "transformer.layers.28.self_attn.out_proj.lora_A.weight",
+      "shape": [
+        8,
+        4096
+      ],
+      "elements": 32768,
+      "dtype": "torch.float32",
+      "parent_parameter_norm": 1.702228977869893,
+      "candidate_parameter_norm": 1.7022484517771603,
+      "delta_norm": 0.00011020529961389228,
+      "relative_parameter_delta": 6.474175980237345e-05,
+      "maximum_absolute_delta": 2.539483830332756e-06,
+      "changed_elements": 32757,
+      "inherited_first_moment_contribution_norm": 0.003971637692383245,
+      "new_steps_first_moment_residual_norm": 0.020655409500458046,
+      "inherited_second_moment_contribution_norm": 1.2805623986011653e-05,
+      "new_steps_second_moment_residual_norm": 2.997618312727538e-07,
+      "moment_residual_includes_saved_FP32_rounding": true
+    },
+    {
+      "name": "transformer.layers.28.self_attn.out_proj.lora_B.weight",
+      "shape": [
+        4096,
+        8
+      ],
+      "elements": 32768,
+      "dtype": "torch.float32",
+      "parent_parameter_norm": 0.35105742187248884,
+      "candidate_parameter_norm": 0.35111438720672206,
+      "delta_norm": 0.00011530121507355312,
+      "relative_parameter_delta": 0.00032843975910992946,
+      "maximum_absolute_delta": 2.3902393877506256e-06,
+      "changed_elements": 32764,
+      "inherited_first_moment_contribution_norm": 0.004625182145543608,
+      "new_steps_first_moment_residual_norm": 0.028306532109804283,
+      "inherited_second_moment_contribution_norm": 1.1224874240564168e-05,
+      "new_steps_second_moment_residual_norm": 2.6359968284089547e-07,
+      "moment_residual_includes_saved_FP32_rounding": true
+    },
+    {
+      "name": "transformer.layers.29.gating.linear_in.lora_A.weight",
+      "shape": [
+        8,
+        4096
+      ],
+      "elements": 32768,
+      "dtype": "torch.float32",
+      "parent_parameter_norm": 1.764086000435767,
+      "candidate_parameter_norm": 1.7641137411350578,
+      "delta_norm": 0.00010872861972108301,
+      "relative_parameter_delta": 6.163453465093239e-05,
+      "maximum_absolute_delta": 1.8803402781486511e-06,
+      "changed_elements": 32754,
+      "inherited_first_moment_contribution_norm": 0.005926108856222182,
+      "new_steps_first_moment_residual_norm": 0.020699875159903836,
+      "inherited_second_moment_contribution_norm": 1.3481043293796472e-05,
+      "new_steps_second_moment_residual_norm": 2.1885958725885748e-07,
+      "moment_residual_includes_saved_FP32_rounding": true
+    },
+    {
+      "name": "transformer.layers.29.gating.linear_in.lora_B.weight",
+      "shape": [
+        22528,
+        8
+      ],
+      "elements": 180224,
+      "dtype": "torch.float32",
+      "parent_parameter_norm": 0.8860057037261246,
+      "candidate_parameter_norm": 0.8860938560425055,
+      "delta_norm": 0.00033486237465267234,
+      "relative_parameter_delta": 0.0003779460710516853,
+      "maximum_absolute_delta": 5.040201358497143e-06,
+      "changed_elements": 180208,
+      "inherited_first_moment_contribution_norm": 0.015699224747629935,
+      "new_steps_first_moment_residual_norm": 0.10570856327853373,
+      "inherited_second_moment_contribution_norm": 0.0023366166392977234,
+      "new_steps_second_moment_residual_norm": 2.577214987351928e-05,
+      "moment_residual_includes_saved_FP32_rounding": true
+    },
+    {
+      "name": "transformer.layers.29.gating.linear_out.lora_A.weight",
+      "shape": [
+        8,
+        11264
+      ],
+      "elements": 90112,
+      "dtype": "torch.float32",
+      "parent_parameter_norm": 1.7626023089134772,
+      "candidate_parameter_norm": 1.7626292399407784,
+      "delta_norm": 0.00014247404908093335,
+      "relative_parameter_delta": 8.083164782006826e-05,
+      "maximum_absolute_delta": 2.386048436164856e-06,
+      "changed_elements": 90086,
+      "inherited_first_moment_contribution_norm": 0.003211507923936124,
+      "new_steps_first_moment_residual_norm": 0.016004063560188152,
+      "inherited_second_moment_contribution_norm": 3.8194990368418236e-05,
+      "new_steps_second_moment_residual_norm": 3.4253541598490015e-07,
+      "moment_residual_includes_saved_FP32_rounding": true
+    },
+    {
+      "name": "transformer.layers.29.gating.linear_out.lora_B.weight",
+      "shape": [
+        4096,
+        8
+      ],
+      "elements": 32768,
+      "dtype": "torch.float32",
+      "parent_parameter_norm": 0.2665682425786249,
+      "candidate_parameter_norm": 0.26659108709204293,
+      "delta_norm": 9.974959528265104e-05,
+      "relative_parameter_delta": 0.0003741990955776725,
+      "maximum_absolute_delta": 2.2825843188911676e-06,
+      "changed_elements": 32764,
+      "inherited_first_moment_contribution_norm": 0.00936518895189057,
+      "new_steps_first_moment_residual_norm": 0.0580834144208246,
+      "inherited_second_moment_contribution_norm": 4.500979902450429e-05,
+      "new_steps_second_moment_residual_norm": 1.0938050026872581e-06,
+      "moment_residual_includes_saved_FP32_rounding": true
+    },
+    {
+      "name": "transformer.layers.29.self_attn.out_proj.lora_A.weight",
+      "shape": [
+        8,
+        4096
+      ],
+      "elements": 32768,
+      "dtype": "torch.float32",
+      "parent_parameter_norm": 1.7019561750189667,
+      "candidate_parameter_norm": 1.7019729229940561,
+      "delta_norm": 0.0001071089972870919,
+      "relative_parameter_delta": 6.293287621574526e-05,
+      "maximum_absolute_delta": 2.248212695121765e-06,
+      "changed_elements": 32756,
+      "inherited_first_moment_contribution_norm": 0.003807200695432434,
+      "new_steps_first_moment_residual_norm": 0.014833776762637125,
+      "inherited_second_moment_contribution_norm": 6.114377491866503e-06,
+      "new_steps_second_moment_residual_norm": 1.0671958959761497e-07,
+      "moment_residual_includes_saved_FP32_rounding": true
+    },
+    {
+      "name": "transformer.layers.29.self_attn.out_proj.lora_B.weight",
+      "shape": [
+        4096,
+        8
+      ],
+      "elements": 32768,
+      "dtype": "torch.float32",
+      "parent_parameter_norm": 0.33476024691785206,
+      "candidate_parameter_norm": 0.3348132380697183,
+      "delta_norm": 0.00011621320072057213,
+      "relative_parameter_delta": 0.0003471535279070638,
+      "maximum_absolute_delta": 2.673827111721039e-06,
+      "changed_elements": 32766,
+      "inherited_first_moment_contribution_norm": 0.00415824936256078,
+      "new_steps_first_moment_residual_norm": 0.025293151603980456,
+      "inherited_second_moment_contribution_norm": 8.140573971462552e-06,
+      "new_steps_second_moment_residual_norm": 2.0325946514455483e-07,
+      "moment_residual_includes_saved_FP32_rounding": true
+    },
+    {
+      "name": "transformer.layers.30.gating.linear_in.lora_A.weight",
+      "shape": [
+        8,
+        4096
+      ],
+      "elements": 32768,
+      "dtype": "torch.float32",
+      "parent_parameter_norm": 1.789402154729274,
+      "candidate_parameter_norm": 1.7894376249610873,
+      "delta_norm": 0.00011790469396265198,
+      "relative_parameter_delta": 6.58905510150625e-05,
+      "maximum_absolute_delta": 1.9990839064121246e-06,
+      "changed_elements": 32756,
+      "inherited_first_moment_contribution_norm": 0.006588991608863504,
+      "new_steps_first_moment_residual_norm": 0.022048866237221645,
+      "inherited_second_moment_contribution_norm": 1.0954407608223626e-05,
+      "new_steps_second_moment_residual_norm": 2.42377962259082e-07,
+      "moment_residual_includes_saved_FP32_rounding": true
+    },
+    {
+      "name": "transformer.layers.30.gating.linear_in.lora_B.weight",
+      "shape": [
+        22528,
+        8
+      ],
+      "elements": 180224,
+      "dtype": "torch.float32",
+      "parent_parameter_norm": 0.8989382914892688,
+      "candidate_parameter_norm": 0.8990243013328338,
+      "delta_norm": 0.00033857025782188613,
+      "relative_parameter_delta": 0.0003766334808821834,
+      "maximum_absolute_delta": 5.14741986989975e-06,
+      "changed_elements": 180214,
+      "inherited_first_moment_contribution_norm": 0.022572028147962324,
+      "new_steps_first_moment_residual_norm": 0.13366208119911804,
+      "inherited_second_moment_contribution_norm": 0.0004534026141282367,
+      "new_steps_second_moment_residual_norm": 2.292393710140535e-05,
+      "moment_residual_includes_saved_FP32_rounding": true
+    },
+    {
+      "name": "transformer.layers.30.gating.linear_out.lora_A.weight",
+      "shape": [
+        8,
+        11264
+      ],
+      "elements": 90112,
+      "dtype": "torch.float32",
+      "parent_parameter_norm": 1.7800244482331276,
+      "candidate_parameter_norm": 1.780033400116436,
+      "delta_norm": 0.00016518588798545303,
+      "relative_parameter_delta": 9.279978606440963e-05,
+      "maximum_absolute_delta": 3.909110091626644e-06,
+      "changed_elements": 90087,
+      "inherited_first_moment_contribution_norm": 0.0034325043373319517,
+      "new_steps_first_moment_residual_norm": 0.012237117164827522,
+      "inherited_second_moment_contribution_norm": 8.609776325376303e-06,
+      "new_steps_second_moment_residual_norm": 8.140201324393229e-08,
+      "moment_residual_includes_saved_FP32_rounding": true
+    },
+    {
+      "name": "transformer.layers.30.gating.linear_out.lora_B.weight",
+      "shape": [
+        4096,
+        8
+      ],
+      "elements": 32768,
+      "dtype": "torch.float32",
+      "parent_parameter_norm": 0.20364221042453465,
+      "candidate_parameter_norm": 0.20363566227176927,
+      "delta_norm": 9.131255565809291e-05,
+      "relative_parameter_delta": 0.00044839699720275504,
+      "maximum_absolute_delta": 2.061016857624054e-06,
+      "changed_elements": 32764,
+      "inherited_first_moment_contribution_norm": 0.015821586198403383,
+      "new_steps_first_moment_residual_norm": 0.09922943634491588,
+      "inherited_second_moment_contribution_norm": 0.00013186278954939028,
+      "new_steps_second_moment_residual_norm": 3.210196099744942e-06,
+      "moment_residual_includes_saved_FP32_rounding": true
+    },
+    {
+      "name": "transformer.layers.30.self_attn.out_proj.lora_A.weight",
+      "shape": [
+        8,
+        4096
+      ],
+      "elements": 32768,
+      "dtype": "torch.float32",
+      "parent_parameter_norm": 1.69129558574759,
+      "candidate_parameter_norm": 1.6913078240430464,
+      "delta_norm": 9.124672336372741e-05,
+      "relative_parameter_delta": 5.395078431745232e-05,
+      "maximum_absolute_delta": 2.25752592086792e-06,
+      "changed_elements": 32751,
+      "inherited_first_moment_contribution_norm": 0.006403091945216206,
+      "new_steps_first_moment_residual_norm": 0.028283727846392645,
+      "inherited_second_moment_contribution_norm": 3.932475907769812e-05,
+      "new_steps_second_moment_residual_norm": 3.512357221969561e-07,
+      "moment_residual_includes_saved_FP32_rounding": true
+    },
+    {
+      "name": "transformer.layers.30.self_attn.out_proj.lora_B.weight",
+      "shape": [
+        4096,
+        8
+      ],
+      "elements": 32768,
+      "dtype": "torch.float32",
+      "parent_parameter_norm": 0.40384173911650595,
+      "candidate_parameter_norm": 0.4039103009669056,
+      "delta_norm": 0.00011284092730793786,
+      "relative_parameter_delta": 0.0002794186840488618,
+      "maximum_absolute_delta": 2.3175962269306183e-06,
+      "changed_elements": 32766,
+      "inherited_first_moment_contribution_norm": 0.0038725058551780838,
+      "new_steps_first_moment_residual_norm": 0.02209011145351816,
+      "inherited_second_moment_contribution_norm": 7.412690620897161e-06,
+      "new_steps_second_moment_residual_norm": 1.428224453601627e-07,
+      "moment_residual_includes_saved_FP32_rounding": true
+    },
+    {
+      "name": "transformer.layers.31.gating.linear_in.lora_A.weight",
+      "shape": [
+        8,
+        4096
+      ],
+      "elements": 32768,
+      "dtype": "torch.float32",
+      "parent_parameter_norm": 1.7091654723700755,
+      "candidate_parameter_norm": 1.7091829854794065,
+      "delta_norm": 9.621618881787929e-05,
+      "relative_parameter_delta": 5.62942502486068e-05,
+      "maximum_absolute_delta": 2.2761523723602295e-06,
+      "changed_elements": 32755,
+      "inherited_first_moment_contribution_norm": 0.01689390140433538,
+      "new_steps_first_moment_residual_norm": 0.09941671405705059,
+      "inherited_second_moment_contribution_norm": 0.0003163941289498497,
+      "new_steps_second_moment_residual_norm": 5.059658028821017e-06,
+      "moment_residual_includes_saved_FP32_rounding": true
+    },
+    {
+      "name": "transformer.layers.31.gating.linear_in.lora_B.weight",
+      "shape": [
+        22528,
+        8
+      ],
+      "elements": 180224,
+      "dtype": "torch.float32",
+      "parent_parameter_norm": 0.9219591647838744,
+      "candidate_parameter_norm": 0.9220766045380712,
+      "delta_norm": 0.00028427439391578974,
+      "relative_parameter_delta": 0.00030833729385664204,
+      "maximum_absolute_delta": 4.880712367594242e-06,
+      "changed_elements": 180207,
+      "inherited_first_moment_contribution_norm": 0.020584118227286497,
+      "new_steps_first_moment_residual_norm": 0.15024872100112804,
+      "inherited_second_moment_contribution_norm": 0.0009834076168008582,
+      "new_steps_second_moment_residual_norm": 2.8209198853694555e-05,
+      "moment_residual_includes_saved_FP32_rounding": true
+    },
+    {
+      "name": "transformer.layers.31.gating.linear_out.lora_A.weight",
+      "shape": [
+        8,
+        11264
+      ],
+      "elements": 90112,
+      "dtype": "torch.float32",
+      "parent_parameter_norm": 1.7472601220918202,
+      "candidate_parameter_norm": 1.747273149699777,
+      "delta_norm": 0.00018495049806998732,
+      "relative_parameter_delta": 0.00010585172507031439,
+      "maximum_absolute_delta": 2.9224902391433716e-06,
+      "changed_elements": 90093,
+      "inherited_first_moment_contribution_norm": 0.019352374264349253,
+      "new_steps_first_moment_residual_norm": 0.09923951647188467,
+      "inherited_second_moment_contribution_norm": 0.0004171903923117237,
+      "new_steps_second_moment_residual_norm": 7.30566912589006e-06,
+      "moment_residual_includes_saved_FP32_rounding": true
+    },
+    {
+      "name": "transformer.layers.31.gating.linear_out.lora_B.weight",
+      "shape": [
+        4096,
+        8
+      ],
+      "elements": 32768,
+      "dtype": "torch.float32",
+      "parent_parameter_norm": 0.30374946651967927,
+      "candidate_parameter_norm": 0.30377952988008444,
+      "delta_norm": 9.396607888347966e-05,
+      "relative_parameter_delta": 0.0003093538894409607,
+      "maximum_absolute_delta": 2.347049303352833e-06,
+      "changed_elements": 32765,
+      "inherited_first_moment_contribution_norm": 0.02076999711723869,
+      "new_steps_first_moment_residual_norm": 0.12313708012420643,
+      "inherited_second_moment_contribution_norm": 0.0003886765564597475,
+      "new_steps_second_moment_residual_norm": 5.671745724891225e-06,
+      "moment_residual_includes_saved_FP32_rounding": true
+    },
+    {
+      "name": "transformer.layers.31.self_attn.out_proj.lora_A.weight",
+      "shape": [
+        8,
+        4096
+      ],
+      "elements": 32768,
+      "dtype": "torch.float32",
+      "parent_parameter_norm": 1.7039567450428494,
+      "candidate_parameter_norm": 1.7039759857157994,
+      "delta_norm": 0.00011251814996223966,
+      "relative_parameter_delta": 6.603345436413068e-05,
+      "maximum_absolute_delta": 2.9082875698804855e-06,
+      "changed_elements": 32757,
+      "inherited_first_moment_contribution_norm": 0.005680794532908533,
+      "new_steps_first_moment_residual_norm": 0.029198002163563403,
+      "inherited_second_moment_contribution_norm": 2.523079910902905e-05,
+      "new_steps_second_moment_residual_norm": 4.5686664927385836e-07,
+      "moment_residual_includes_saved_FP32_rounding": true
+    },
+    {
+      "name": "transformer.layers.31.self_attn.out_proj.lora_B.weight",
+      "shape": [
+        4096,
+        8
+      ],
+      "elements": 32768,
+      "dtype": "torch.float32",
+      "parent_parameter_norm": 0.3625007720018897,
+      "candidate_parameter_norm": 0.36257610989181904,
+      "delta_norm": 0.00012449647531150831,
+      "relative_parameter_delta": 0.00034343782117754863,
+      "maximum_absolute_delta": 2.40374356508255e-06,
+      "changed_elements": 32764,
+      "inherited_first_moment_contribution_norm": 0.005103912612110986,
+      "new_steps_first_moment_residual_norm": 0.03307589743309991,
+      "inherited_second_moment_contribution_norm": 1.2023354826373366e-05,
+      "new_steps_second_moment_residual_norm": 3.285062326655546e-07,
+      "moment_residual_includes_saved_FP32_rounding": true
+    }
+  ],
+  "effective_module_rows": [
+    {
+      "module": "text_linear",
+      "parent_effective_LoRA_frobenius": 6.97372776223549,
+      "candidate_effective_LoRA_frobenius": 6.975588548764833,
+      "delta_effective_LoRA_frobenius": 0.002086296733104861,
+      "relative_to_parent_LoRA_component": 0.0002991652103775385,
+      "parent_component_delta_cosine": 0.8918782650573054,
+      "relative_to_frozen_base_weight_not_measured": true,
+      "dense_product_materialized": false
+    },
+    {
+      "module": "transformer.layers.28.gating.linear_in",
+      "parent_effective_LoRA_frobenius": 1.397828423661813,
+      "candidate_effective_LoRA_frobenius": 1.398044681743339,
+      "delta_effective_LoRA_frobenius": 0.0005059830765715792,
+      "relative_to_parent_LoRA_component": 0.00036197795666944845,
+      "parent_component_delta_cosine": 0.42725388026701366,
+      "relative_to_frozen_base_weight_not_measured": true,
+      "dense_product_materialized": false
+    },
+    {
+      "module": "transformer.layers.28.gating.linear_out",
+      "parent_effective_LoRA_frobenius": 0.5147878381233826,
+      "candidate_effective_LoRA_frobenius": 0.5148597495944351,
+      "delta_effective_LoRA_frobenius": 0.00018855386827374416,
+      "relative_to_parent_LoRA_component": 0.00036627490843820637,
+      "parent_component_delta_cosine": 0.3812277262991325,
+      "relative_to_frozen_base_weight_not_measured": true,
+      "dense_product_materialized": false
+    },
+    {
+      "module": "transformer.layers.28.self_attn.out_proj",
+      "parent_effective_LoRA_frobenius": 0.47666256411907637,
+      "candidate_effective_LoRA_frobenius": 0.47676265673196133,
+      "delta_effective_LoRA_frobenius": 0.00017825840586882974,
+      "relative_to_parent_LoRA_component": 0.00037397190232102754,
+      "parent_component_delta_cosine": 0.5613748738463323,
+      "relative_to_frozen_base_weight_not_measured": true,
+      "dense_product_materialized": false
+    },
+    {
+      "module": "transformer.layers.29.gating.linear_in",
+      "parent_effective_LoRA_frobenius": 1.24080210340688,
+      "candidate_effective_LoRA_frobenius": 1.2409693172641572,
+      "delta_effective_LoRA_frobenius": 0.0005140537907781526,
+      "relative_to_parent_LoRA_component": 0.0004142915210787531,
+      "parent_component_delta_cosine": 0.32509951936779674,
+      "relative_to_frozen_base_weight_not_measured": true,
+      "dense_product_materialized": false
+    },
+    {
+      "module": "transformer.layers.29.gating.linear_out",
+      "parent_effective_LoRA_frobenius": 0.4053610573197264,
+      "candidate_effective_LoRA_frobenius": 0.40541565410485725,
+      "delta_effective_LoRA_frobenius": 0.00017062494883615006,
+      "relative_to_parent_LoRA_component": 0.00042092091915373736,
+      "parent_component_delta_cosine": 0.3197923423907508,
+      "relative_to_frozen_base_weight_not_measured": true,
+      "dense_product_materialized": false
+    },
+    {
+      "module": "transformer.layers.29.self_attn.out_proj",
+      "parent_effective_LoRA_frobenius": 0.45276969346885393,
+      "candidate_effective_LoRA_frobenius": 0.4528569684679997,
+      "delta_effective_LoRA_frobenius": 0.0001708799661814858,
+      "relative_to_parent_LoRA_component": 0.0003774103449201833,
+      "parent_component_delta_cosine": 0.510599145359855,
+      "relative_to_frozen_base_weight_not_measured": true,
+      "dense_product_materialized": false
+    },
+    {
+      "module": "transformer.layers.30.gating.linear_in",
+      "parent_effective_LoRA_frobenius": 1.3642566550045792,
+      "candidate_effective_LoRA_frobenius": 1.36447667849977,
+      "delta_effective_LoRA_frobenius": 0.0005605034040182277,
+      "relative_to_parent_LoRA_component": 0.0004108489425080696,
+      "parent_component_delta_cosine": 0.392372454628086,
+      "relative_to_frozen_base_weight_not_measured": true,
+      "dense_product_materialized": false
+    },
+    {
+      "module": "transformer.layers.30.gating.linear_out",
+      "parent_effective_LoRA_frobenius": 0.3352575487675144,
+      "candidate_effective_LoRA_frobenius": 0.33524513550433144,
+      "delta_effective_LoRA_frobenius": 0.00016415911762827118,
+      "relative_to_parent_LoRA_component": 0.0004896507721653359,
+      "parent_component_delta_cosine": -0.07586068855141681,
+      "relative_to_frozen_base_weight_not_measured": true,
+      "dense_product_materialized": false
+    },
+    {
+      "module": "transformer.layers.30.self_attn.out_proj",
+      "parent_effective_LoRA_frobenius": 0.535531071431454,
+      "candidate_effective_LoRA_frobenius": 0.5356383095908567,
+      "delta_effective_LoRA_frobenius": 0.00016827635237314512,
+      "relative_to_parent_LoRA_component": 0.00031422332213768456,
+      "parent_component_delta_cosine": 0.6371807847048547,
+      "relative_to_frozen_base_weight_not_measured": true,
+      "dense_product_materialized": false
+    },
+    {
+      "module": "transformer.layers.31.gating.linear_in",
+      "parent_effective_LoRA_frobenius": 1.2287773080428699,
+      "candidate_effective_LoRA_frobenius": 1.2289747472544543,
+      "delta_effective_LoRA_frobenius": 0.00041428473151027223,
+      "relative_to_parent_LoRA_component": 0.00033715200370205615,
+      "parent_component_delta_cosine": 0.47644824999682134,
+      "relative_to_frozen_base_weight_not_measured": true,
+      "dense_product_materialized": false
+    },
+    {
+      "module": "transformer.layers.31.gating.linear_out",
+      "parent_effective_LoRA_frobenius": 0.4179132760531408,
+      "candidate_effective_LoRA_frobenius": 0.417960765887097,
+      "delta_effective_LoRA_frobenius": 0.00015032178344580495,
+      "relative_to_parent_LoRA_component": 0.00035969611893040313,
+      "parent_component_delta_cosine": 0.3157592735777335,
+      "relative_to_frozen_base_weight_not_measured": true,
+      "dense_product_materialized": false
+    },
+    {
+      "module": "transformer.layers.31.self_attn.out_proj",
+      "parent_effective_LoRA_frobenius": 0.48839175096580945,
+      "candidate_effective_LoRA_frobenius": 0.4885165582134914,
+      "delta_effective_LoRA_frobenius": 0.00019124867811859224,
+      "relative_to_parent_LoRA_component": 0.0003915886739290584,
+      "parent_component_delta_cosine": 0.652479016253773,
+      "relative_to_frozen_base_weight_not_measured": true,
+      "dense_product_materialized": false
+    }
+  ],
+  "weights_modified": false,
+  "new_optimizer_updates": 0,
+  "GPU_used": false,
+  "API_calls": 0,
+  "behavior_reproduced": false,
+  "loss_group_causality_established": false,
+  "candidate_adopted": false,
+  "scope": "Saved-file numerical measurements only; not a native generation or convergence test"
+}

@@ -1,3 +1,46 @@
+# LOCAL —16/40 live; actual failed-pilot weight/Adam delta audit complete (23 October14:37UTC)
+
+LOCAL executor, goal ACTIVE. Main1d7e167 before this audit commit. Same immutable
+GPUC9 c9efaaac24d983342f7eded46617e6450bc102ce; active supervisor7769270 at21063/
+birth20582160 S/live; old4111/birth18985221 T/paused; originalCUDA14873/birth20219598
+R/live14:36:43UTC,16/40 all passing,0newoptimizerupdates. No job restart/newGPU.
+Current funded deadlines unchanged: supervisor21:30UTC, guard74352/session71225
+22:22:37.9UTC, current max62.50071830424946 of100USD cap; retainvolume49yytzyoge.
+Backup85270/session28881 v7 to22:20; waiter86013/session39293 v3 latest21:37/end22:17;
+proxy85512/session86213 v4 to22:19; tunnel session3455 unchanged. Latest23file backup
+independently verifiedcf8980147d752f952b926131b8be398b255cf358122c25524703ef3709258414.
+20USDtopup and distinct40synthetic-source-egress approvals remain PENDING after
+explicit automatic-review rejections; no charge/sourceAPI/audio/teacher/newguard.
+Do not repeat the rejected actions or infer approval from goal continuation.
+
+Read-only CPU measurement now hash-verifies actual parent7510331 and rejected7590052
+adapter+fulltrainingstate files against original reports. Savedstate adapter copies
+match every safetensor; all26 actual Adam clocks520→528; all26 tensors changed,
+1,894,105 of1,894,400 elements. Global adapter parameter relative change0.0158933%;
+effective13 LoRA module matrix changes0.0299165%–0.0489651% versus each parentLoRA
+component (NOT frozen7Bbase). Parent savedLR1e-5/candidate2e-7. Saved frozenhash
+records equal; no fullbase rehash claimed. Three independent dense/zero/invalid
+matrix tests pass. Actual values are docs/NATIVE-7590052-ADAPTER-DELTA-AUDIT-2026-10-23.json,
+SHAba2f64be1797d0340742b6107c08af9ca76036f1b81386c23d9ca20d2704bb8b;
+reproducible CPUtool evals/native_adapter_delta_audit.py. Failure-diagnosisdoc updated.
+
+After8 inherited Adam updates, coefficients on prior first/second moments are
+0.43046721/0.992027944, NOT percentages of influence. Actual inherited firstmoment
+norm0.0792 vsnewresidual0.4926 (newdominates); secondmoment0.0309432 vs0.00048719,
+63.51:1 normratio. FP32 saved-rounding included. This rules out a no-op/fullyfrozen
+adapter explanation; does NOT identify damaging loss, convergence/batch-sizecause,
+or justify resetting Adam, weakening retention or extending unchanged candidate.
+No weights modified, GPU/API use, inference, new optimizer or approval by this audit.
+
+Next same fullBF1640 ->combined154/native49/control40 readiness ->ONE8 ->independent
+state/native restore+strictproof ->complete native20/speech20/all4 ->fresh40 onlyif
+eligible. If failed, measure objective-group gradient directions/repeated matched
+behavior instead of inferring cause from aggregate losses. Broader reasoning32
+collector ready11tests but awaits specificpayloadapproval; actual asynchronous
+teacher protocol stillrequired, microturn corpus unrecorded. No heldout read or
+unrelatedlocal edit changed. Criticalnativearchive historicallyverified; broader
+stoppedMacbackup PARTIAL. Execution stays LOCAL; goal is not blocked while GPU lives.
+
 # LOCAL —15/40 live; source collector prepared, specific egress approval pending (23 October14:29UTC)
 
 LOCAL executor, goal ACTIVE; main886470f before this update. Same actual GPU source

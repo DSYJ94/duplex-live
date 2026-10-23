@@ -119,3 +119,44 @@ would fix these failures. A broad causal diagnosis and useful generalization are
 still unproven. Existing recorded differential loops supply the observed failures;
 new native reproductions/ablations await the currently owned GPU and are not
 claimed completed by this review. No model source or training objective changed.
+
+
+## Saved weight and optimizer measurements — 23 October14:35UTC
+
+A [CPU-only saved-file audit](NATIVE-7590052-ADAPTER-DELTA-AUDIT-2026-10-23.json)
+rehashes both adapter checkpoints and both full training-state files against their
+original proof reports, compares the saved state copies with every safetensor,
+and reads all26 Adam clocks/moments. It performs no model inference, GPU work,
+API call, optimizer update or checkpoint modification. Three mathematical tests
+compare its matrix-free norms with independent dense products, including a
+small-delta case and an exact no-change control.
+
+| Measurement | Actual saved-file result | Scope |
+| --- | --- | --- |
+| Adapter ownership |26 FP32 tensors,1,894,400 elements,13 rank8 modules,scale2,last4 temporal layers plus text head | Confirms actual stored topology; no optimal-rank/layer claim |
+| Changed tensors/elements |26/26;1,894,105/1,894,400 elements | The failed pilot was not a no-op or an accidentally frozen adapter |
+| Global adapter parameter change |L2norm0.0012285421 versus parentnorm7.7299355;relative0.0158933% | Relative to the saved adapter parameters, not7B base weights |
+| Effective per-module LoRA matrix change |0.0299165%–0.0489651% of the corresponding parent LoRA component | FP64 rank-sized Gram computation; no full dense base matrix |
+| Text-head LoRA component change |0.0299165% | Does not isolate the text head as the behavioral cause |
+| Actual Adam parameter clocks |All26 move520→528 | Candidate stagecounter8 is separate from inherited Adam clock528 |
+| Saved optimizer LR |Parent1e-5;candidate2e-7 | Actual saved group values; no retrospective recipe change |
+| Saved frozen-parameter hash records |Equal between parent and candidate | This audit did not rehash all frozen7B tensors |
+
+With inherited Adam betas0.9/0.999, after eight updates the algebraic coefficients
+on the old first/second moments are0.43046721 and0.992027944. These are not fractions
+of update influence. Measured across all26 tensors, the inherited first-moment
+contribution norm is0.07920 versus0.49261 for the new-step residual; the latter is
+larger. The inherited second-moment contribution norm is0.0309432 versus0.00048719
+for its new-step residual, a63.51:1 norm ratio. Residual calculations include saved
+FP32 rounding. This supports a cautious, history-dependent small-step experiment;
+it does not prove a defective optimizer, insufficient convergence, a batch-size
+cause or that resetting Adam would fix the model. Retained Adam/RNG state remains
+required and unchanged.
+
+The effective matrices are algebraic FP64 measurements, not measured BF16
+activation or logit differences. Small parameter changes can alter an
+autoregressive sampled trajectory. These measurements therefore do not dismiss the observed errors, prove their cause, or
+replace matched native behavioral comparisons. If the new control40 pilot fails,
+the next causal investigation should measure objective-group gradient directions
+and repeated matched behavior, rather than infer the offending loss from final
+aggregate loss or optimizer moments alone. No unchanged extension is authorized.
