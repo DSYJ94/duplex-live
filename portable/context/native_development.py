@@ -22,6 +22,33 @@ PLAN = 'evals/fixtures/native-v2-development-20261019.json'
 PROOFS = {'baseline520': '7510331', 'candidate7590052': '7590052'}
 
 
+def proofs(candidate=None):
+    if candidate is None:
+        return {role:ROOT/'runs'/('context-training-proof-'+number) for role,number in PROOFS.items()}
+    return {'baseline520':ROOT/'runs/context-training-proof-7510331',
+            'candidate-control40':Path(candidate)}
+
+
+def restored_control40(proof):
+    """Require the pilot's full fresh CUDA restore, not a state-only substitute."""
+    from evals.native_control_stage import verify_checkpoint,SCHEMA
+    identity,report=verify_checkpoint(proof)
+    reload=json.loads((proof/'reload-report.json').read_text())
+    if (report['schema']!=SCHEMA or report['updates_this_run']!=8
+            or report['adam_parameter_steps_after']!=[528]
+            or reload['pid']==report['training_pid']
+            or reload['parent_adam_parameter_steps_restored']!=[528]
+            or reload['optimizer_and_rng_independently_compared_exact'] is not True):
+        raise ValueError('New candidate requires complete independent retained154/native49/control40 restoration')
+    return dict(schema='dl-native-control40-existing-full-restore-verification-v1',passed=True,
+                proof=str(proof),identity=identity,optimizer_updates=0,
+                preexisting_fresh_full_cuda_restore_verified=True,new_restore_executed_by_this_check=False,
+                training_pid=report['training_pid'],independent_restore_pid=reload['pid'],
+                report_sha256=hashlib.sha256((proof/'report.json').read_bytes()).hexdigest(),
+                reload_sha256=hashlib.sha256((proof/'reload-report.json').read_bytes()).hexdigest(),
+                behavior_or_adoption_approved=False)
+
+
 def atomic(path, value):
     temp = path.with_suffix('.partial')
     temp.write_text(json.dumps(value, indent=2) + '\n')
@@ -38,7 +65,7 @@ def command(case, proof, out, asr_python, runtime_profile='container-default'):
               '--base', str(BASE), '--data', str(ROOT/'runs'/data),
               '--scenario', case['scenario'], '--expected-kind', case['kind'],
               '--private-value', case.get('value', 'red circle'),
-              '--adapter-proof', str(ROOT/'runs'/('context-training-proof-'+proof)),
+              '--adapter-proof', str(proof if isinstance(proof,Path) else ROOT/'runs'/('context-training-proof-'+proof)),
               '--voice', 'accepted-synthetic',
               '--voice-reference', str(ROOT/'runs/voice-quality-7414595/codec/reference.wav'),
               '--voice-provenance', str(ROOT/'runs/voice-quality-7414595/codec/report.json'),
@@ -81,10 +108,12 @@ def actor(args):
     plan = json.loads((args.source/PLAN).read_text())
     if len(plan['cases']) != 10 or plan['word_or_audio_forcing'] is not False:
         raise ValueError('Complete unchanged native development plan required')
+    selected=proofs(args.candidate_proof)
+    if args.role not in selected:raise ValueError('Actor role must match exact declared candidate')
     out = args.out / args.role
     out.mkdir(exist_ok=False)
     state = dict(schema='dl-native-paired-development-actor-v1', pid=os.getpid(),
-                 role=args.role, proof=PROOFS[args.role], assigned_main_gpu=args.device,
+                 role=args.role, proof=str(selected[args.role]), assigned_main_gpu=args.device,
                  assigned_asr_gpu=1-args.device, source_commit=args.source_commit,
                  started_utc=utc(), phase='parity', cases=[], optimizer_updates=0,
                  complete10=False, behavior_approved=False, training_approved=False,
@@ -100,7 +129,7 @@ def actor(args):
             raise RuntimeError('Pinned native evaluation source changed')
         os.environ['CUDA_VISIBLE_DEVICES'] = (str(args.device) if case['backend']=='observe-only'
                                              else str(args.device)+','+str(1-args.device))
-        probe(command(case, PROOFS[args.role], folder, args.asr_python,args.runtime_profile), session=session)
+        probe(command(case, selected[args.role], folder, args.asr_python,args.runtime_profile), session=session)
     try:
         run(plan['cases'][0], out/'parity-cold')
         run(plan['cases'][1], out/'parity-intervening')
@@ -114,7 +143,7 @@ def actor(args):
             state['cases'].append(dict(index=index, completed_utc=utc(), exit_code=0))
             atomic(out/'execution.json', state)
         (out/'ordinary-complete').write_text(utc()+'\n')
-        other = args.out / ('candidate7590052' if args.role=='baseline520' else 'baseline520')
+        other = args.out / next(role for role in selected if role!=args.role)
         while not (other/'ordinary-complete').exists():
             if (other/'failed').exists():
                 raise RuntimeError('Other paired actor failed before full ordinary barrier')
@@ -148,10 +177,15 @@ def main():
     ap.add_argument('--source-commit', required=True)
     ap.add_argument('--deadline-utc', required=True)
     ap.add_argument('--pod-id', required=True)
-    ap.add_argument('--role', choices=tuple(PROOFS))
+    ap.add_argument('--role', choices=tuple(PROOFS)+('candidate-control40',))
+    ap.add_argument('--candidate-proof',type=Path,
+                    help='Distinct fully restored bounded control40 pilot; default remains archived7590052')
     ap.add_argument('--device', type=int, choices=(0,1))
     ap.add_argument('--runtime-profile',choices=('container-default','archive-tf32-high-v1'),default='container-default')
     args = ap.parse_args()
+    selected=proofs(args.candidate_proof)
+    if args.candidate_proof and args.runtime_profile!='container-default':
+        ap.error('The new control40 pilot must retain its independently checked default runtime')
     args.deadline = datetime.fromisoformat(args.deadline_utc.replace('Z','+00:00')).timestamp()
     if args.role:
         if args.device is None:ap.error('Actor requires its explicit physical GPU')
@@ -173,6 +207,7 @@ def main():
                  phase='independent_restore', children=[], complete_paired20=False,
                  optimizer_updates=0, behavior_approved=False, training_approved=False,
                  provider_credential_transferred=False)
+    state['proofs']={role:str(path) for role,path in selected.items()}
     state['runtime_profile']=args.runtime_profile
     state['runtime_comparison_only']=args.runtime_profile!='container-default'
     atomic(args.out/'execution.json',state)
@@ -182,11 +217,14 @@ def main():
             if child.poll() is None:os.killpg(child.pid,signal.SIGTERM)
     signal.signal(signal.SIGTERM, lambda a,b: (stop(),sys.exit(128+a)))
     try:
-        for device, role in enumerate(PROOFS):
+        for device, role in enumerate(selected):
+            if role=='candidate-control40':
+                atomic(args.out/(role+'-independent-restore.json'),restored_control40(selected[role]))
+                continue
             restore_env = env.copy()
             restore_env['CUDA_VISIBLE_DEVICES'] = str(device)
             cmd = [sys.executable,'-u','-m','portable.context.restore_adapter_state',
-                   '--source',str(args.source),'--proof',str(ROOT/'runs'/('context-training-proof-'+PROOFS[role])),
+                   '--source',str(args.source),'--proof',str(selected[role]),
                    '--out',str(args.out/(role+'-independent-restore.json'))]
             with (args.out/(role+'-restore.log')).open('x') as log:
                 child = subprocess.Popen(cmd, cwd=args.source, env=restore_env, stdout=log,
@@ -195,13 +233,14 @@ def main():
                 child.wait(timeout=max(1,args.deadline-time.time()))
                 if child.returncode:raise RuntimeError(role+' independent restore failed')
         state['phase'] = 'paired_native_development'
-        for device, role in enumerate(PROOFS):
+        for device, role in enumerate(selected):
             cmd = [sys.executable,'-u','-m','portable.context.native_development',
                    '--source',str(args.source),'--source-commit',args.source_commit,
                    '--out',str(args.out),'--asr-python',str(args.asr_python),
                    '--deadline-utc',args.deadline_utc,'--pod-id',args.pod_id,
                    '--role',role,'--device',str(device)]
             cmd+=['--runtime-profile',args.runtime_profile]
+            if args.candidate_proof:cmd+=['--candidate-proof',str(args.candidate_proof)]
             log = (args.out/(role+'.log')).open('x')
             child = subprocess.Popen(cmd,cwd=args.source,env=env,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
             log.close()
@@ -211,7 +250,7 @@ def main():
         for child, role in children:
             child.wait(timeout=max(1,args.deadline-time.time()))
             if child.returncode:raise RuntimeError(role+' exited '+str(child.returncode))
-        for role in PROOFS:
+        for role in selected:
             result=json.loads((args.out/role/'execution.json').read_text())
             if not result['complete10'] or [c['index'] for c in result['cases']] != list(range(10)):
                 raise RuntimeError('Complete paired20 native results missing')

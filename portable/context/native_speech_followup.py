@@ -55,7 +55,11 @@ def main():
                 raise RuntimeError('Paired native execution ended without complete20')
             state['observed_paired_phase']=current['phase'];save();time.sleep(10)
         else:raise TimeoutError('Paired20 did not complete before deadline')
-        for device,role in enumerate(PROOFS):
+        roles=list(current.get('proofs',PROOFS))
+        if roles not in (list(PROOFS),['baseline520','candidate-control40']):
+            raise ValueError('Exact baseline and archived or fully restored control40 candidate required')
+        state['paired_roles']=roles;save()
+        for device,role in enumerate(roles):
             actor=json.loads((args.paired/role/'execution.json').read_text())
             if not actor['complete10'] or not actor['parity']['passed'] or [r['index'] for r in actor['cases']]!=list(range(10)):
                 raise RuntimeError('All ten actual native cases and output parity required')
@@ -72,7 +76,7 @@ def main():
             child.wait(timeout=max(1,deadline-time.time()))
             if child.returncode:raise RuntimeError('Independent speech process failed: '+str(child.returncode))
         reports={}
-        for role in PROOFS:
+        for role in roles:
             report=args.out/role/'report.json';measured=json.loads(report.read_text())
             if len(measured['results'])!=10:raise RuntimeError('Independent speech audit omitted cases')
             for index,row in enumerate(measured['results']):
