@@ -26,6 +26,15 @@ class RunpodBudget(unittest.TestCase):
             receipt=self.receipt();receipt.update(change)
             with self.subTest(change=change),self.assertRaises(ValueError):budget_seconds(receipt)
 
+    def test_replacement_can_use_only_the_remaining_bounded_project_funds(self):
+        r=self.receipt(24300);r['prior_attributed_spend_usd']=37.36308350742475
+        self.assertEqual(budget_seconds(r),24300)
+        self.assertLess(r['prior_attributed_spend_usd']+r['maximum_gpu_usd']+.25,50)
+        r['approved_gpu_wallclock_seconds']=25200;r['maximum_gpu_usd']=1.79*7
+        with self.assertRaises(ValueError):budget_seconds(r)
+        for seconds in (0,599,50401):
+            with self.subTest(seconds=seconds),self.assertRaises(ValueError):budget_seconds(self.receipt(seconds))
+
     def test_twelve_hour_primary_still_reserves_one_hour_paired_behavior_under_fifty(self):
         r=self.receipt(43200);r['prior_attributed_spend_usd']=23.696006687846968
         self.assertEqual(budget_seconds(r),43200)

@@ -59,6 +59,13 @@ class FreshProbe(unittest.TestCase):
         with self.assertRaises(ValueError):
             load(self.options(native_fresh_source_profile='owner-approved-turbo-spelling-v1'))
 
+    def test_resource_profile_must_match_complete_development_review_before_source_reads(self):
+        args=self.options(scenario='native-fresh2-016',native_asr_placement='shared-gpu-evaluation')
+        with patch('evals.native_fresh_review.validate',return_value={'native_asr_placement':'separate-gpu'}), \
+             patch('evals.native_fresh_inputs_v2.inference_input') as inputs:
+            with self.assertRaisesRegex(ValueError,'resource placement'):load(args)
+            inputs.assert_not_called()
+
     def test_output_is_evaluation_only_and_forced_or_training_results_are_rejected(self):
         base=dict(scheduled_dispatch=False,word_or_acoustic_tokens_forced=False,response_start_forced=False,
                   student_history=None,training_approved=False,real_user_samples_processed=1920,real_user_samples_expected=1920)

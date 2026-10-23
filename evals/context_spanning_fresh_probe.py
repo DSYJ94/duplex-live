@@ -18,7 +18,9 @@ from evals.context_spanning_download import SOURCE_COMMIT,MODEL_REVISION,WEIGHT_
 from evals.context_spanning_probe import audited_loads
 
 
-def main():
+def _main(argv=None,session=None):
+    if session is not None and session.scope!='fresh-full20':
+        raise ValueError('Fresh full20 requires its explicit evaluation-only session scope')
     ap=argparse.ArgumentParser(description=__doc__)
     for name in ('assets','base','data','out','native-fresh-quality','adapter-proof','voice-reference','voice-provenance'):
         ap.add_argument('--'+name,type=Path,required=True)
@@ -29,20 +31,21 @@ def main():
     ap.add_argument('--expected-kind',choices=('private','simple','clarify','cancel'),required=True)
     ap.add_argument('--backend-mode',choices=('native-asr','observe-only'),required=True)
     ap.add_argument('--asr-python',type=Path)
+    ap.add_argument('--native-asr-placement',choices=('separate-gpu','shared-gpu-evaluation'),default='separate-gpu')
     ap.add_argument('--lookup-delivery-delay-s',type=float,default=0.)
     ap.set_defaults(voice='accepted-synthetic',private_value=None,train_history=False,
         ret_logit_bias=0.,warm_audio=False,pending_status=False,adapter_disabled=False,adapter_zero=False,
         layout_audit=None,event_log_mode='immediate',backend_reference_profile='answer-only',
-        persona_profile='recorded-records',math_attention=False)
-    args=ap.parse_args()
+        persona_profile='recorded-records',math_attention=False,native_text_temperature=.7,native_runtime_profile='container-default')
+    args=ap.parse_args(argv)
     from evals.native_fresh_probe import validate_options
     validate_options(args)
     if not 0<=args.lookup_delivery_delay_s<=30:ap.error('Bounded predeclared lookup delay required')
     if args.backend_mode=='native-asr':
-        devices=os.environ.get('CUDA_VISIBLE_DEVICES','').split(',')
-        if len(devices)!=2 or len(set(devices))!=2 or not args.asr_python:
-            ap.error('Native-ASR consultation requires two distinct assigned GPUs and its isolated Python')
-        os.environ['CUDA_VISIBLE_DEVICES']=devices[0];args.asr_gpu=devices[1]
+        from evals.native_asr_placement import assign
+        try:main_gpu,args.asr_gpu=assign(os.environ.get('CUDA_VISIBLE_DEVICES',''),args.native_asr_placement,args.asr_python)
+        except ValueError as error:ap.error(str(error))
+        os.environ['CUDA_VISIBLE_DEVICES']=main_gpu
     import numpy as np
     import soundfile as sf
     import torch
@@ -55,12 +58,14 @@ def main():
             or subprocess.check_output(['git','-C',str(source),'status','--porcelain'],text=True)):
         raise RuntimeError('Context Spanning source/revision changed')
     for name,record in assets['files'].items():
-        if sha256(weights/name)!=record['sha256']:raise RuntimeError('Context Spanning asset changed')
+        if session is not None:session.verify_asset(weights/name,record['sha256'])
+        elif sha256(weights/name)!=record['sha256']:raise RuntimeError('Context Spanning asset changed')
     if (assets['files']['context_spanning_7b.pt']['sha256']!=WEIGHT_SHA256
             or assets['files']['voices/main.pt']['sha256']!=VOICE_SHA256):
         raise RuntimeError('Assets differ from pinned upstream LFS digests')
     for name,digest in MODEL_HASHES.items():
-        if sha256(args.base/name)!=digest:raise RuntimeError('PersonaPlex base asset changed')
+        if session is not None:session.verify_asset(args.base/name,digest)
+        elif sha256(args.base/name)!=digest:raise RuntimeError('PersonaPlex base asset changed')
     from evals.native_fresh_probe import load as load_fresh
     fresh,row=load_fresh(args)
     audio,rate=sf.read(row['path'],dtype='float32')
@@ -84,10 +89,12 @@ def main():
     if Path(inspect.getfile(Engine)).resolve()!=(source/'contextspan/model/engine.py').resolve():
         raise RuntimeError('Wrong Context Spanning engine module imported')
     records=[];started=time.monotonic()
-    with before_engine(engine_module,args.adapter_proof,args.adapter_disabled,args.adapter_zero) as adapter:
-        with audited_loads(records):
-            engine=Engine(checkpoint=str(checkpoint),device='cuda',temp=.8,temp_text=.7)
-            voice=load_voice('main')
+    def construct():
+        with before_engine(engine_module,args.adapter_proof,args.adapter_disabled,args.adapter_zero) as adapter:
+            with audited_loads(records):engine=Engine(checkpoint=str(checkpoint),device='cuda',temp=.8,temp_text=.7)
+        return engine,records,adapter
+    engine,records,adapter=construct() if session is None else session.load(args,construct)
+    with audited_loads(records):voice=load_voice('main')
     lm_loads=[r for r in records if r['module_identity']==id(engine.lm)]
     if (type(engine.lm).load_state_dict is not torch.nn.Module.load_state_dict
             or not lm_loads or not lm_loads[-1]['strict'] or lm_loads[-1]['missing'] or lm_loads[-1]['unexpected']):
@@ -131,6 +138,9 @@ def main():
         'lookup_delivery_minimum_delay_s':args.lookup_delivery_delay_s,
         'torch':torch.__version__,'torch_file':torch.__file__,'cuda':torch.version.cuda}
     loading['fresh_evaluation_input']=fresh
+    from evals.native_asr_placement import report as placement_report
+    loading['native_asr_resource_placement']=placement_report(args)
+    if session is not None:loading['persistent_evaluation']=session.receipt()
     (args.out/'loading.json').write_text(json.dumps(loading,indent=2)+'\n')
     world=RecordWorld(fresh['worker_only_world'])
     if args.backend_mode=='observe-only':
@@ -143,6 +153,14 @@ def main():
         from evals.native_fresh_probe import finish
         finish(args,fresh)
         return
+
+
+def main(argv=None,session=None):
+    succeeded=False
+    try:
+        result=_main(argv,session);succeeded=True;return result
+    finally:
+        if session is not None:session.finish_case(succeeded)
 
 
 if __name__=='__main__':main()

@@ -46,6 +46,7 @@ def _main(argv=None, session=None):
     ap.add_argument('--voice-provenance',type=Path)
     ap.add_argument('--backend-mode',choices=('scheduled','native-asr','observe-only'),default='scheduled')
     ap.add_argument('--asr-python',type=Path)
+    ap.add_argument('--native-asr-placement',choices=('separate-gpu','shared-gpu-evaluation'),default='separate-gpu')
     ap.add_argument('--warm-audio',action='store_true')
     ap.add_argument('--ret-logit-bias',type=float,default=0.)
     ap.add_argument('--backend-reference-profile',choices=('answer-only','query-and-result','plain-text'),default='answer-only')
@@ -101,10 +102,12 @@ def _main(argv=None, session=None):
             not args.train_history or args.expected_kind not in ('simple','clarify') or args.pending_status):
         ap.error('Observe-only requires unapproved TRAIN simple/clarification conditioning without backend state')
     if args.backend_mode=='native-asr':
-        devices=os.environ.get('CUDA_VISIBLE_DEVICES','').split(',')
-        if len(devices)!=2 or len(set(devices))!=2 or not args.asr_python:
-            ap.error('Native-ASR consultation requires two distinct assigned GPUs and its isolated Python')
-        os.environ['CUDA_VISIBLE_DEVICES']=devices[0];args.asr_gpu=devices[1]
+        from evals.native_asr_placement import assign
+        if args.native_asr_placement=='shared-gpu-evaluation' and args.train_history:
+            ap.error('Shared GPU profile cannot collect native-ASR TRAIN histories')
+        try:main_gpu,args.asr_gpu=assign(os.environ.get('CUDA_VISIBLE_DEVICES',''),args.native_asr_placement,args.asr_python)
+        except ValueError as error:ap.error(str(error))
+        os.environ['CUDA_VISIBLE_DEVICES']=main_gpu
     import numpy as np
     import soundfile as sf
     import torch
@@ -278,6 +281,8 @@ def _main(argv=None, session=None):
         'native_runtime_comparison_only':args.native_runtime_profile!='container-default',
         **({'persistent_evaluation':session.receipt()} if session is not None else {}),
         **({'native_sampling_diagnostic':sampling} if sampling else {})}
+    from evals.native_asr_placement import report as placement_report
+    loading['native_asr_resource_placement']=placement_report(args)
     if args.ret_logit_bias:
         from evals.context_ret_bias import install as install_ret_bias
         loading['ret_logit_calibration']=install_ret_bias(engine,args.ret_logit_bias)

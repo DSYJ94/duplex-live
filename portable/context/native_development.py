@@ -1,8 +1,10 @@
-"""Complete paired native10 on two real GPUs, without provider credentials.
+"""Complete paired native10 on an explicitly declared one/two-GPU allocation.
 
 Ordinary conversations run in parallel. Actual-ASR conversations run serially
 with the other physical GPU assigned to the isolated recognition subprocess.
-Cold/reused PCM, token and native-input parity must pass for BOTH models first.
+Serial mode puts each model and its separate ASR process on the same GPU in turn.
+It records a distinct resource/timing cohort. Cold/reused PCM, token and native-input
+parity must pass for BOTH models before either model's results can be qualified.
 No optimizer, scoring answers, scheduled worker or subset-approval path exists.
 """
 import argparse
@@ -59,7 +61,7 @@ def utc():
     return datetime.now(timezone.utc).isoformat()
 
 
-def command(case, proof, out, asr_python, runtime_profile='container-default'):
+def command(case, proof, out, asr_python, runtime_profile='container-default',gpu_mode='paired-two-gpu'):
     data = 'native-curriculum-v2-data-7541875' if case['source'] == 'native-v2' else 'recovery-data-7407554'
     result = ['--assets', str(ROOT/'runs/context-spanning-assets-7454205/manifest.json'),
               '--base', str(BASE), '--data', str(ROOT/'runs'/data),
@@ -71,6 +73,8 @@ def command(case, proof, out, asr_python, runtime_profile='container-default'):
               '--voice-provenance', str(ROOT/'runs/voice-quality-7414595/codec/report.json'),
               '--out', str(out), '--backend-mode', case['backend']]
     if runtime_profile!='container-default':result+=['--native-runtime-profile',runtime_profile]
+    if gpu_mode=='serial-one-gpu':result+=['--native-asr-placement','shared-gpu-evaluation']
+    elif gpu_mode!='paired-two-gpu':raise ValueError('Unknown paired evaluation GPU mode')
     if case['backend'] == 'observe-only':
         result += ['--train-history']
     else:
@@ -114,11 +118,12 @@ def actor(args):
     out.mkdir(exist_ok=False)
     state = dict(schema='dl-native-paired-development-actor-v1', pid=os.getpid(),
                  role=args.role, proof=str(selected[args.role]), assigned_main_gpu=args.device,
-                 assigned_asr_gpu=1-args.device, source_commit=args.source_commit,
+                 assigned_asr_gpu=args.device if args.gpu_mode=='serial-one-gpu' else 1-args.device, source_commit=args.source_commit,
                  started_utc=utc(), phase='parity', cases=[], optimizer_updates=0,
                  complete10=False, behavior_approved=False, training_approved=False,
                  provider_credential_present=False)
     state['runtime_profile']=args.runtime_profile
+    state['gpu_mode']=args.gpu_mode
     atomic(out/'execution.json', state)
     session = NativeEvalSession()
     def run(case, folder):
@@ -127,9 +132,9 @@ def actor(args):
         if (subprocess.check_output(['git','-C',str(args.source),'rev-parse','HEAD'],text=True).strip() != args.source_commit
                 or subprocess.check_output(['git','-C',str(args.source),'status','--porcelain'],text=True).strip()):
             raise RuntimeError('Pinned native evaluation source changed')
-        os.environ['CUDA_VISIBLE_DEVICES'] = (str(args.device) if case['backend']=='observe-only'
+        os.environ['CUDA_VISIBLE_DEVICES'] = (str(args.device) if case['backend']=='observe-only' or args.gpu_mode=='serial-one-gpu'
                                              else str(args.device)+','+str(1-args.device))
-        probe(command(case, selected[args.role], folder, args.asr_python,args.runtime_profile), session=session)
+        probe(command(case, selected[args.role], folder, args.asr_python,args.runtime_profile,args.gpu_mode), session=session)
     try:
         run(plan['cases'][0], out/'parity-cold')
         run(plan['cases'][1], out/'parity-intervening')
@@ -144,7 +149,7 @@ def actor(args):
             atomic(out/'execution.json', state)
         (out/'ordinary-complete').write_text(utc()+'\n')
         other = args.out / next(role for role in selected if role!=args.role)
-        while not (other/'ordinary-complete').exists():
+        while args.gpu_mode!='serial-one-gpu' and not (other/'ordinary-complete').exists():
             if (other/'failed').exists():
                 raise RuntimeError('Other paired actor failed before full ordinary barrier')
             if time.time() >= args.deadline:
@@ -182,6 +187,7 @@ def main():
                     help='Distinct fully restored bounded control40 pilot; default remains archived7590052')
     ap.add_argument('--device', type=int, choices=(0,1))
     ap.add_argument('--runtime-profile',choices=('container-default','archive-tf32-high-v1'),default='container-default')
+    ap.add_argument('--gpu-mode',choices=('paired-two-gpu','serial-one-gpu'),default='paired-two-gpu')
     args = ap.parse_args()
     selected=proofs(args.candidate_proof)
     if args.candidate_proof and args.runtime_profile!='container-default':
@@ -189,14 +195,16 @@ def main():
     args.deadline = datetime.fromisoformat(args.deadline_utc.replace('Z','+00:00')).timestamp()
     if args.role:
         if args.device is None:ap.error('Actor requires its explicit physical GPU')
+        if args.gpu_mode=='serial-one-gpu' and args.device!=0:ap.error('Single-GPU actor must use its actual sole device0')
         actor(args)
         return
     if args.out.exists() or args.deadline <= time.time()+60:
         ap.error('Fresh output directory and future bounded deadline required')
     args.out.mkdir(parents=True)
     gpus = subprocess.check_output(['nvidia-smi','--query-gpu=index,uuid,name,memory.total','--format=csv,noheader'],text=True)
-    if len(gpus.strip().splitlines()) != 2:
-        raise RuntimeError('Exactly two real assigned GPUs required')
+    required=1 if args.gpu_mode=='serial-one-gpu' else 2
+    if len(gpus.strip().splitlines()) != required:
+        raise RuntimeError('Exact number of actual physical GPUs required for selected evaluation mode')
     env = os.environ.copy()
     env.pop('OPENAI_API_KEY',None)
     if not env.get('DUPLEX_OPENAI_LOOPBACK_PROXY') or not env.get('DUPLEX_OPENAI_PROXY_RUN'):
@@ -209,6 +217,8 @@ def main():
                  provider_credential_transferred=False)
     state['proofs']={role:str(path) for role,path in selected.items()}
     state['runtime_profile']=args.runtime_profile
+    state['gpu_mode']=args.gpu_mode
+    state['resource_timing_comparable_to_two_gpu']=args.gpu_mode!='serial-one-gpu'
     state['runtime_comparison_only']=args.runtime_profile!='container-default'
     atomic(args.out/'execution.json',state)
     children = []
@@ -222,7 +232,7 @@ def main():
                 atomic(args.out/(role+'-independent-restore.json'),restored_control40(selected[role]))
                 continue
             restore_env = env.copy()
-            restore_env['CUDA_VISIBLE_DEVICES'] = str(device)
+            restore_env['CUDA_VISIBLE_DEVICES'] = str(0 if args.gpu_mode=='serial-one-gpu' else device)
             cmd = [sys.executable,'-u','-m','portable.context.restore_adapter_state',
                    '--source',str(args.source),'--proof',str(selected[role]),
                    '--out',str(args.out/(role+'-independent-restore.json'))]
@@ -238,14 +248,19 @@ def main():
                    '--source',str(args.source),'--source-commit',args.source_commit,
                    '--out',str(args.out),'--asr-python',str(args.asr_python),
                    '--deadline-utc',args.deadline_utc,'--pod-id',args.pod_id,
-                   '--role',role,'--device',str(device)]
+                   '--role',role,'--device',str(0 if args.gpu_mode=='serial-one-gpu' else device)]
             cmd+=['--runtime-profile',args.runtime_profile]
+            cmd+=['--gpu-mode',args.gpu_mode]
             if args.candidate_proof:cmd+=['--candidate-proof',str(args.candidate_proof)]
             log = (args.out/(role+'.log')).open('x')
             child = subprocess.Popen(cmd,cwd=args.source,env=env,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
             log.close()
             children.append((child,role))
             state['children'].append(dict(pid=child.pid,role=role))
+            if args.gpu_mode=='serial-one-gpu':
+                atomic(args.out/'execution.json',state)
+                child.wait(timeout=max(1,args.deadline-time.time()))
+                if child.returncode:raise RuntimeError(role+' exited '+str(child.returncode))
         atomic(args.out/'execution.json',state)
         for child, role in children:
             child.wait(timeout=max(1,args.deadline-time.time()))

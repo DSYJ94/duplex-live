@@ -106,5 +106,18 @@
   "guard_deadline_utc": "2026-10-23T13:14:52.804000+00:00",
   "guard_status_file": "runs/local-migration-20261023/runpod-control40-watchdog-v4.json",
   "old_guard_pid": 55922,
-  "old_guard_terminal_exit": 143
+  "old_guard_terminal_exit": 143,
+  "current_pod_state": "provider_deleted",
+  "provider_audit_actor": "Runpod Support",
+  "provider_deleted_utc": "2026-10-23T06:44:27Z",
+  "configured_guard_deadline_was_later": true,
+  "guard_phase": "pod_terminated",
+  "account_credit_available": false,
+  "credit_topup_requested_not_executed": true,
+  "replacement_created": false,
+  "prior_and_terminated_primary_plus_disk_upper": 37.36308350742475,
+  "remaining_project_compute_upper": 12.636916492575253,
+  "replacement_6h45_possible_project_upper": 49.69558350742474,
+  "funding_status": "Prepaid provider credit depleted; existing compute approval is not available wallet credit",
+  "network_volume_retained": true
 }

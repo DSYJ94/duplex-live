@@ -576,7 +576,9 @@
     "execution_source_commit": "20a35783f0e38a5156a12bc503d4803ad810cd3d",
     "numerical_pid": 11923,
     "numerical_birth_ticks": 17919447,
-    "all40_pass_still_required": true
+    "all40_pass_still_required": true,
+    "currently_deployed": false,
+    "historical_GPU_launch": true
   },
   "active_precise_pilot_chain": {
     "controller_pid": 11814,
@@ -584,17 +586,22 @@
     "source_commit": "20a35783f0e38a5156a12bc503d4803ad810cd3d",
     "source": "/opt/duplex-control40-precise-pilot-v1",
     "out": "/workspace/migration/native-control40-precise-pilot-v1",
-    "phase": "complete40_precise_numerical",
+    "phase": "externally_interrupted_by_provider_pod_deletion",
     "whole_workset_exit": 0,
     "whole_workset_ended_utc": "2026-10-23T06:26:18.654874+00:00",
     "numerical_pid": 11923,
     "numerical_birth_ticks": 17919447,
-    "actual_live_processes_verified": true,
+    "actual_live_processes_verified": false,
     "audit_deadline_utc": "2026-10-23T10:00:00Z",
     "total_deadline_utc": "2026-10-23T13:10:00Z",
     "new_optimizer_updates_observed": 0,
     "training_conditional_on_all_gates": true,
-    "adoption": false
+    "adoption": false,
+    "pod_id": "sjf72o8v64mjvb",
+    "pod_confirmed_absent": true,
+    "provider_deleted_utc": "2026-10-23T06:44:27Z",
+    "no_new_numerical_case_report_persisted": true,
+    "replacement_created": false
   },
   "active_backup_watcher": {
     "pid": 31679,
@@ -605,6 +612,33 @@
     "includes_precise_pilot_and_diagnostic": true,
     "deadline_utc": "2026-10-23T13:18:00Z",
     "old_pid": 89251,
-    "old_exit_code": 143
+    "old_exit_code": 143,
+    "phase": "retired_after_provider_deletion_and_S3_recovery",
+    "exit_code": 143
+  },
+  "provider_termination_recovery": {
+    "volume": "49yytzyoge",
+    "volume_exists": true,
+    "S3_recovered_files": 4,
+    "all_second_read_sizes_and_sha256_match": true,
+    "last_durable_controller_phase": "complete40_precise_numerical",
+    "whole_workset_exit": 0,
+    "numerical_report_present": false,
+    "gradient_or_training_started": false,
+    "checkpoint_adopted": false,
+    "model_unchanged": true,
+    "source_commit": "20a35783f0e38a5156a12bc503d4803ad810cd3d"
+  },
+  "single_GPU_evaluation_preparation": {
+    "mode": "serial-one-gpu",
+    "ASR_placement": "shared-gpu-evaluation",
+    "separate_ASR_process": true,
+    "full20_native_and_parity_still_required": true,
+    "native_math_audio_requests_receipts_and_clocks_AST_unchanged": true,
+    "CPU_tests_passed": 45,
+    "GPU_tested": false,
+    "fresh_persistent_session_requires_explicit_scope_and_review_quality_binding": true,
+    "portable_fresh_candidate_review_adapter_not_yet_implemented": true,
+    "heldout_audio_or_thresholds_changed": false
   }
 }

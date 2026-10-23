@@ -65,6 +65,7 @@ def main():
               'workset-inventory','original-inventory','prepared49','cost-guard-receipt','out'):
         p.add_argument('--'+n,type=Path,required=True)
     p.add_argument('--source-commit',required=True);p.add_argument('--deadline-utc',required=True)
+    p.add_argument('--pod-id',required=True)
     p.add_argument('--audit-deadline-utc',required=True)
     a=p.parse_args();deadline=datetime.fromisoformat(a.deadline_utc.replace('Z','+00:00')).timestamp()
     audit_deadline=datetime.fromisoformat(a.audit_deadline_utc.replace('Z','+00:00')).timestamp()
@@ -74,7 +75,7 @@ def main():
             raise ValueError('Exact clean immutable execution source required')
     clean()
     guard=json.loads(a.cost_guard_receipt.read_text())
-    if (guard['phase']!='armed' or guard['pod_id']!='sjf72o8v64mjvb'
+    if (guard['phase']!='armed' or guard['pod_id']!=a.pod_id
             or time.time()-datetime.fromisoformat(guard['at_utc']).timestamp()>90
             or datetime.fromisoformat(guard['deadline_utc']).timestamp()<deadline+120):
         raise ValueError('Actual fresh same-Pod budget guard must outlast all stages')
@@ -93,6 +94,7 @@ def main():
     (a.out/'engine').symlink_to(a.engine.resolve(),target_is_directory=True)
     stages=commands(a)
     state=dict(schema='dl-native-control40-precise-pilot-controller-v1',pid=os.getpid(),source_commit=a.source_commit,
+               pod_id=a.pod_id,
                execution_source=str(a.source),deadline_utc=a.deadline_utc,audit_deadline_utc=a.audit_deadline_utc,
                diagnostic_sha256=digest(a.diagnostic),original_failed_numerical_sha256=digest(a.original_failure),
                engine_alias_target=str(a.engine.resolve()),phase='prepared',stages=[],planned_commands=dict(stages),

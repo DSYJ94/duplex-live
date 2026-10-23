@@ -72,6 +72,33 @@ class NativeEvaluationSession(unittest.TestCase):
         assert argv[argv.index('--backend-mode')+1]=='native-asr'
         assert '--train-history' not in argv
 
+    def test_resource_placement_cannot_change_inside_one_resident_model_session(self):
+        args=options(self.tmp_path);session=NativeEvalSession()
+        engine=SimpleNamespace(lm=torch.nn.Linear(2,2).requires_grad_(False),inject_context_span=lambda _:0)
+        with patch('evals.context_execution.snapshot',return_value={}):
+            session.load(args,lambda:(engine,[],{}));session.finish_case(True)
+            args.native_asr_placement='shared-gpu-evaluation'
+            with self.assertRaisesRegex(RuntimeError,'changed between'):session.load(args,lambda:None)
+
+    def test_fresh_reuse_requires_review_and_quality_identity_and_rejects_training(self):
+        args=options(self.tmp_path)
+        for name in ('native_fresh_behavior_review','native_fresh_quality'):
+            p=self.tmp_path/name;p.write_text('approved fixture')
+            setattr(args,name,p)
+        args.native_fresh_candidate_proof=args.adapter_proof
+        args.source_split='fresh-evaluation';args.lookup_delivery_delay_s=16.;args.train_history=False
+        session=NativeEvalSession('fresh-full20')
+        engine=SimpleNamespace(lm=torch.nn.Linear(2,2).requires_grad_(False),inject_context_span=lambda _:0)
+        with patch('evals.context_execution.snapshot',return_value={}):
+            session.load(args,lambda:(engine,[],{}));session.finish_case(True)
+            args.lookup_delivery_delay_s=0.
+            session.load(args,lambda:None);session.finish_case(True)
+            self.assertEqual(session.receipt()['evaluation_scope'],'fresh-full20')
+            args.native_fresh_quality.write_text('changed approval')
+            with self.assertRaisesRegex(RuntimeError,'changed between'):session.load(args,lambda:None)
+        args.train_history=True
+        with self.assertRaisesRegex(ValueError,'Fresh reuse'):NativeEvalSession('fresh-full20').load(args,lambda:None)
+
 
     def test_parity_rejects_different_actual_native_input(self):
         tmp_path=self.tmp_path

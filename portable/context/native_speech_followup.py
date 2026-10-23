@@ -58,12 +58,13 @@ def main():
         roles=list(current.get('proofs',PROOFS))
         if roles not in (list(PROOFS),['baseline520','candidate-control40']):
             raise ValueError('Exact baseline and archived or fully restored control40 candidate required')
-        state['paired_roles']=roles;save()
+        state['paired_roles']=roles;state['gpu_mode']=current.get('gpu_mode','paired-two-gpu');save()
         for device,role in enumerate(roles):
             actor=json.loads((args.paired/role/'execution.json').read_text())
             if not actor['complete10'] or not actor['parity']['passed'] or [r['index'] for r in actor['cases']]!=list(range(10)):
                 raise RuntimeError('All ten actual native cases and output parity required')
-            env=os.environ.copy();env['CUDA_VISIBLE_DEVICES']=str(device);env.pop('OPENAI_API_KEY',None)
+            serial=current.get('gpu_mode')=='serial-one-gpu'
+            env=os.environ.copy();env['CUDA_VISIBLE_DEVICES']=str(0 if serial else device);env.pop('OPENAI_API_KEY',None)
             folders=[args.paired/role/('case-%02d'%i) for i in range(10)]
             cmd=[str(args.python),'-u','-m','evals.moshi_speech_audit','--runs',*map(str,folders),
                  '--device','cuda','--trim-leading-silence','--trim-trailing-silence',
@@ -71,6 +72,10 @@ def main():
             log=(args.out/(role+'.log')).open('x')
             child=subprocess.Popen(cmd,cwd=args.source,env=env,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
             log.close();children.append(child)
+            if serial:
+                state.update(phase='independent_speech20',children=[p.pid for p in children]);save()
+                child.wait(timeout=max(1,deadline-time.time()))
+                if child.returncode:raise RuntimeError('Independent speech process failed: '+str(child.returncode))
         state.update(phase='independent_speech20',children=[p.pid for p in children]);save()
         for child in children:
             child.wait(timeout=max(1,deadline-time.time()))

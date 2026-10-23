@@ -20,7 +20,11 @@ def load(args):
     if args.scenario.startswith('native-fresh2-'):
         from evals.native_fresh_inputs_v2 import inference_input
         from evals.native_fresh_review import validate
-        validate(args.native_fresh_behavior_review,args.native_fresh_candidate_proof,args.adapter_proof)
+        review=validate(args.native_fresh_behavior_review,args.native_fresh_candidate_proof,args.adapter_proof)
+        placement=getattr(args,'native_asr_placement','separate-gpu')
+        if ((isinstance(review,dict) and placement!=review.get('native_asr_placement','separate-gpu'))
+                or (not isinstance(review,dict) and placement!='separate-gpu')):
+            raise ValueError('Fresh execution resource placement must match the complete native development review')
         if profile=='owner-approved-turbo-spelling-v1':
             from evals.native_fresh_source_reapproval import inference_input
         elif profile!='sealed-large-v3':

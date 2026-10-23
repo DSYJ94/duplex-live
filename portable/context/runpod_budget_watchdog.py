@@ -18,8 +18,8 @@ import urllib.request
 def budget_seconds(receipt):
     """An explicit bounded trial must fit inside the user's existing50USD budget."""
     seconds = receipt['approved_gpu_wallclock_seconds']
-    if type(seconds) is not int or seconds not in (7200, 14400, 21600, 28800, 36000, 43200, 50400):
-        raise ValueError('Only explicit bounded2/4/6/8/10/12/14-hour trials are supported')
+    if type(seconds) is not int or not 600<=seconds<=50400:
+        raise ValueError('Explicit bounded trial from10minutes to14hours required')
     names = ('gpu_hourly_usd', 'maximum_gpu_usd', 'total_compute_budget_usd', 'prior_attributed_spend_usd')
     values = {name: receipt[name] for name in names}
     if any(type(x) not in (int, float) or not math.isfinite(x) or x < 0 for x in values.values()):
@@ -55,6 +55,8 @@ def main():
         tmp = args.status.with_suffix('.tmp')
         tmp.write_text(json.dumps(values, indent=2) + '\n')
         tmp.replace(args.status)
+        with args.status.with_suffix('.events.jsonl').open('a') as journal:
+            journal.write(json.dumps(values,separators=(',',':'))+'\n')
 
     awake = subprocess.Popen(['caffeinate', '-i', '-w', str(os.getpid())])
     try:
@@ -78,6 +80,8 @@ def main():
                 result = api('/pods/' + pod_id)
                 pod = result.get('pod', result)
                 assert pod['id'] == pod_id and pod['name'] == name
+                assert dt.datetime.fromisoformat(pod['createdAt'].replace('Z','+00:00'))==created
+                assert float(pod['cost'])<=receipt['gpu_hourly_usd']
                 assert any(m['volumeId'] == volume for m in pod['mounts']['network'])
                 state = pod['status']
                 if state in ('EXITED', 'STOPPED', 'TERMINATED'):
@@ -87,6 +91,8 @@ def main():
                 if now >= deadline:
                     # Terminate this trial only; all durable artifacts are on the
                     # separately retained network volume. No other Pod is touched.
+                    record(phase='deadline_termination_attempt',pod_id=pod_id,
+                           deadline_utc=deadline.isoformat(),network_volume_retained=volume)
                     api('/pods/' + pod_id, method='DELETE')
                     record(phase='deadline_termination_requested', pod_id=pod_id,
                            deadline_utc=deadline.isoformat(), network_volume_retained=volume)

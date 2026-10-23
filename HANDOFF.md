@@ -1,3 +1,71 @@
+# LOCAL — provider deleted GPU; wallet funding needed; logs recovered via S3 (23 October)
+
+NEWEST authoritative entry. LOCAL sole executor; goal ACTIVE, not complete. NO GPU
+or Slurm training running, no new optimizer updates, no new candidate. Do not trust
+stale controller.json phase as a live process. Podsjf72o8v64mjvb is ABSENT/GET404;
+official list-pods has only unrelated EXITED Aurium Pods, untouched. Browser audit
+log records Runpod Support deleted this Pod23Oct07:44:27BST =06:44:27UTC. Account
+prepaid credit is depleted; this is the apparent cause, but audit provides no reason.
+The configured local guard deadline was13:14UTC and did not explain this early
+provider deletion. Related Cloud chat is idle; no duplicate executor found.
+
+Existing approval remains50USD project compute. User asked asynchronously to add
+15USD prepaid credit in the official Runpod billing tab, then replydone. This is a
+funding prerequisite, not another command approval or a budget increase. Billing
+page is open/markedhandoff; no card purchase, autopay change or replacement occurred.
+Never ask for card details, API keys, passwords or tokens in chat. Continue useful
+CPU preparation while waiting; reverify actual account credit before any paid Pod.
+Remaining conservative project allowance12.636916492575253USD. Prior23.696006687846968
+plus primary7h29m44.065s upper at1.79/h +.25disk =37.36308350742475. A fresh6h45
+at1.79/h +.25disk would bound project49.69558350742474 <=50, not yet provisioned.
+Use actual new catalog/price and guard receipt, not the old14h reservation as spend.
+
+Runpod networkvolume49yytzyoge/100GB/EUR-IS-1 remains present. Using existing
+mode0600 S3 credentials ONLY on Mac, recovered4 known objects to
+runs/local-migration-20261023/native-control40-terminated-pod-recovery-v1:
+controller.json, full40 numerical log, wholeworkset log, launchreceipt. Every size
+andSHA256 confirmed by a SECOND independent S3 GET. No credentials transferred.
+Actual durable controller still lists only whole_workset EXIT0 and numerical11923
+without terminal code. numerical/numerical.json is NoSuchKey: no new case report
+persisted. Independent BF16/readiness/8updates/restore were never reached. Preserve
+these interrupted outputs unchanged; any replacement must use NEW versioned output.
+Source20a35783f0e38a5156a12bc503d4803ad810cd3d and all data remain recoverable; /opt
+execution/runtime aliases/staging were ephemeral and must be rebuilt on replacement.
+All original native67.76GB, optimizer/RNG, full49/prepared49, control40workset,
+Engine and speech/diagnostic inventories stay verified on Mac and/or retainedvolume;
+broader stopped Mac source backup remains PARTIAL. No claim of full project backup.
+
+Mac guard30256/exec67241 TERMINAL0 on confirmed404. SSH backupwatcher31679/exec76913
+TERMINAL143 deliberately retired only after S3 recovery; both prior verified progress
+snapshots retained. Its stale statefile may sayretrying; actual process is terminal.
+Do not reconnect/relaunch on old IP/port or reuse controller11814/numerical11923.
+Original full40 FAILED reportea78... and ONEcase FP64attention diagnostic PASSED
+remain intact; no passing-subset acceptance. Positive diagnostic: hidden0.000246525,
+logits0.000482082 < unchanged0.001; still needs NEW full40 before fitting.
+
+This source commit prepares an explicit SERIAL one-GPU native20 resource cohort,
+separate ASR Python sharing physicalGPU0; native frame/word/audio/request/receipt/
+clock calculation AST-identical except truthful resource metadata. All10 permodel,
+cold/intervening/reused PCM/token/input parity and independent full20 speech remain
+mandatory. Fresh optional resident-model scope requires evaluated input, committed
+review and unchanged quality identity; no conversation/results are cached, and
+source-declared lookup delay remains independently checked. No heldout source or
+threshold changed, no new native/fresh outputs, GPU acceptance still unproven.
+45 focused CPU tests pass. Portable fresh reviewer for non-Slurm control40 proof
+paths is still MISSING, so that guard currently remains closed. Do not fake jobIDs.
+
+Replacement preparation: controller now requires explicit --pod-id matching its
+fresh guard, rather than hardcoding the deleted resource. Costguard supports explicit
+10min..14h receipt limits ONLY within50USD, permits6h45 remaining-budget trial,
+checks actual resource identity/time/price, and journals status/deletion attempts.
+No new guard is running. Future run must use this committed version or later, a new
+immutable checkout, reverified canonical assets/vendor aliases/workset, original
+failed40 plus passed diagnostic, compiler probe, fresh budgetguard and new outputroot.
+Resume complete chain automatically only after those gates; independent restore,
+complete native10 review and sealed pairedfresh40 still precede any adoption.
+Latest actual model remains unadopted native7590052/Adam528; native520 is repairparent.
+Broader32 reasoning and microturn/backchannel curriculum stays unrecorded/untrained.
+
 # LOCAL — NEW full40 audit LIVE; conditional training/restore chain armed (23 October07:28 London)
 
 LOCAL sole executor, CLOUD read-only; goal ACTIVE. Execution source is EXACT pushed
