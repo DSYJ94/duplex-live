@@ -1,3 +1,56 @@
+# LOCAL —new reasoning32 source COMPLETE; ASR running;28/40 GPU (23 October16:18UTC)
+
+LOCAL sole executor, goal ACTIVE; maina708e54 before this commit. Human explicitly
+approved exact40utterances (reply call_ac130b3638034d0b8766e1ae43b7a4a6). Only that
+egressapproval is resolved; specific20USDpayment is STILL PENDING. No credit
+purchase, new GPU or changed current training command.
+
+Source v1 session66928 TERMINALexit1:17actual requests,16complete WAV/receipt
+pairs, request17 read timeout/ConnectionError. Original failed source preserved
+runs/local-migration-20261023/native-reasoning32-user-source-v1 unchanged. New
+versioned recovery reused all16 byte-identically, made one manual diagnosed
+replacement +23unattempted requests. Exactly same40approved payloads;41aggregate
+attempts visible, no automaticretry. All40objects/56clips/32scenes now complete
+and sourcebyte/receipt verification passes in native-reasoning32-user-source-v2.
+Partial new HTTP failures would retain raw bytes and halt, not retry. Source
+words/voices unchanged; no owner data/keys/oracles in payload. Tenoffline tests
+pass; quality assess/audit/verify function bodies AST-identical at this commit
+(only explicit v2 source-verifier import extended). Newcode
+evals/native_reasoning_source_recovery.py. Authorization/recovery/status in
+docs/NATIVE-REASONING32-SOURCE-{AUTHORIZATION,TRANSPORT-RECOVERY,COLLECTION}-2026-10-23.json.
+
+Session92061 now independent turboCPU ASR PID41175 on ALL40; output
+runs/local-migration-20261023/native-reasoning32-user-quality-v2. Not approved.
+Do NOT edit quality/recovery modules while running (code hashes bound). Initial
+in-memory flags fail while serialized ASR readback of first3 passes unchanged
+assess/words/waveforms; investigate timestamp scalar types after whole40 finishes.
+Preserve raw failed audit; any correction must be new complete derived readback
+with same recognizer, words/WAVs/timestamps/thresholds and all40 reverified.
+No passing subset, new teacher or optimizer work is approved by source capture.
+
+CPU actualMac:10physical/logical,4performance+6efficiency,32GiB RAM. AC lowpower0,
+normalASR nice0, no recordedthermal/performancewarning; ASR4threads uses~206%CPU
+(~2cores at sample). No OS throttle/affinity change. Actual4/8/10thread benchmark
+session46370 waits for41175 toexit before loading model; script/report under
+runs/local-migration-20261023/native-asr-thread-benchmark-v1.{py,json}. No overlapping
+heavyASR, API or GPU call. Native training remains remote, not on MacCPU.
+
+Actual16:12:27UTC SSH confirms same21063/birth20582160 S, old4111/birth18985221
+T/paused, CUDA14873/birth20219598 R;28/40 allrecorded pass,0optimizerupdates. C9
+c9efaaac24d983342f7eded46617e6450bc102ce /orchestration7769270 unchanged. Guard16271
+23:22:37.9UTC/pilot21:30/eval22:17/backup22:20 unchanged. Main full40 completion is
+not pipeline completion: static call accounting after26completed cases shows
+134306remaining native no-grad and134306 backward invocations, excluding batch
+acoustic/154work, setup and behavioral eval. Not a wall-clock ETA or deadline
+change; funded completion not proven. Ignored evidence native-control40-remaining-
+streamed-workload-v1.json. Do not weaken/remove repeated approval gates to fit.
+
+Next finish SAMEGPU40 ->retained154/native49/control40 readiness ->ONE8 ->fresh
+fullstate/native restore/strictproof ->wholepaired20/speech20/all4 ->eligiblefresh40.
+Prepare738 later-stage continuation onlyafter fullgradient and actualretirement4111.
+Original archives/workset/engine freshhashPASS18eb557; wholeMacbackupstillPARTIAL.
+Unrelated local files/edits preserved/excluded. No model adoption or duplicate job.
+
 # LOCAL —26/40 live; complete failed-pilot loss accounting (23 October15:55UTC)
 
 LOCAL sole executor; goal ACTIVE. Main18eb557 before this commit. Actual15:51:50UTC

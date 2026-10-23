@@ -1,0 +1,20 @@
+{
+  "schema": "dl-native-reasoning32-user-speech-authorization-v1",
+  "recorded_utc": "2026-10-23T15:59:05.247153+00:00",
+  "human_quote": "Approve these 40 synthetic utterances",
+  "question_call_id": "call_ac130b3638034d0b8766e1ae43b7a4a6",
+  "source_plan": "evals/fixtures/native-reasoning-delegation-source-proposal-20261023.json",
+  "source_plan_sha256": "8bf69aa79ce6c458e772042064c4abd3e2613e175c50d826f51371c92cc3788e",
+  "unique_utterances": 40,
+  "scene_clips": 56,
+  "scenes": 32,
+  "authored_user_characters": 7349,
+  "payload_review": "docs/NATIVE-REASONING32-SPEECH-PAYLOAD-2026-10-23.json",
+  "endpoint": "https://api.openai.com/v1/audio/speech",
+  "source_audio_only": true,
+  "owner_conversations_credentials_expected_answers_or_scoring_annotations_in_payload": false,
+  "automatic_retries_authorized": false,
+  "teacher_or_training_approved": false,
+  "prior_specific_egress_rejection_resolved_by_human_reply": true,
+  "unrelated20USD_payment_approved": false
+}

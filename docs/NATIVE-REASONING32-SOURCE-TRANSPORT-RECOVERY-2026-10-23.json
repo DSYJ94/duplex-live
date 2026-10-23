@@ -1,0 +1,19 @@
+{
+  "schema": "dl-native-reasoning32-diagnosed-transport-recovery-v1",
+  "original_failed_manifest_sha256": "494e53b271da7adbbef32829cf133f986f3a1dc5ebb5b0824522f048ebb96af7",
+  "original_attempts": 17,
+  "complete_original_objects_reused": 16,
+  "new_requests_bounded": 24,
+  "interrupted_payload_replacement_attempts": 1,
+  "new_unattempted_payloads": 23,
+  "aggregate_attempts_if_complete": 41,
+  "unique_authored_payloads_unchanged": 40,
+  "source_authorization": "docs/NATIVE-REASONING32-SOURCE-AUTHORIZATION-2026-10-23.json",
+  "diagnosis": "Request17 failed with an actual read timeout wrapped as requests.ConnectionError; no complete WAV or receipt returned. Failed original collection remains unchanged.",
+  "automatic_retry": false,
+  "read_timeout_s": 180,
+  "previous_read_timeout_s": 90,
+  "partial_response_bytes_preserved_in_new_run": true,
+  "quality_function_bodies_AST_unchanged": true,
+  "teacher_or_training_approved": false
+}
