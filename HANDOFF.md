@@ -1,3 +1,59 @@
+# LOCAL — whole32 speech PASS; one20 payment still Processing; prepaid pipeline23:33 (23 October23:32UTC)
+
+LOCAL sole executor, goal ACTIVE, no new submissions or cloud handoff. Main before
+this entrybeae92c; CPU qualification source13a0e57bc39f791d4d0277feed146f528c1cfa06.
+Human20USD approval recorded; one official card payment submitted23:21UTC, still
+Processing with no receipt/credit. Never submit a duplicate before resolving it.
+Read-only wallet watcher Mac session79755 ends23:33, latest2.4942332001USD at1.814/h,
+autopayFalse. Overnight guard request was automatically rejected before execution
+because posted credit absent. Conditional24h plan remains unexecuted.
+
+Safer prepaid-only five-minute preservation ACTUALLY executed: fresh23:27:06wallet
+2.6445816381 vs same-reserve requirement2.632020437. New guard31009 armed before
+retiring16409; deletes ONLY4yx8vahdmjsylx23:37:37.9UTC, retains49yytzyoge. Maxproject
+64.7382183<100. Original GPU41540/birth22014818 preserved uninterrupted; old waiter
+69088 actually retired23:27:49. Current waiter70675/birth24048516, v7 controller,
+original21063/birth20582160 staysT. Pipeline deadline23:33. Latest23:32:09 47/49 exact
+native rows, final49/combined40 absent,0new updates. Do not resume expired21063 or
+apply stale direct-child transitions after process/state changes. Funding cannot
+resurrect a killed readiness process. Verify actual controllers/Slurm/Pod state.
+
+Backup19619/v9 retired idle after its verified53files snapshot; current31946
+Mac/session70609 v10 through23:35:30, sourcef922ce85dd973b06568e45483a20c84e3b643497.
+Latest53files inventory6f4cbf59c590d539f3f056d2b588d6d2221c846c62f5d2daca9ce64d4ba643ec
+Mac verified. Helper catches final native49 receipt independently of combinedphase.
+V7 transition also copied and hashed; V7 live controller snapshot is separately
+progress-only (not included in immutable metadata hash claim). No credentials,
+owner conversations or cores transferred. Original full native67.76GB archive
+remains Mac+volume verified; broader stopped Mac source mirror remains partial.
+
+WHOLE32 CPU chain70154 actual three stages exit0, complete23:27:04. Typed all32
+transport/source checks and independent twice-recomputed full32 speech PASS32/32
+at unchanged gates, prepared reviewer inputs ready. Full speechSHA
+edd83524b4d6290c608028ad1e0af99df54e3a3646656506e901894218311d3e;
+readbackSHAa0416656700403ba2e9a315a99e803716d069260f73bfd38c94b55134860a244.
+New derivedteacher manifest5e2c5827e3f2222e3c591e4ac65e3c7b924991162bfb48953dba9b01cce4583a.
+Remote+Mac immutablemetadata9files930711B hashed. Localconfig
+runs/local-migration-20261023/native-reasoning32-derived-v10-local-inputs-v1.json.
+Prepared720152B payloadSHA63de073379fc9871f062f7c1616ab54f27bdc43037fb5deee739339dbb2fb6ee.
+Semantic launch automatically rejected BEFOREexecution: reviewer treats distinct
+32 synthetic transcript/wordtime/taskreceipt payload as requiring specifichuman
+approval beyond prior TTS approval. Separate exact-payload question pending; no
+semantic requests/output or reasoning32 training. No subset/threshold weakening.
+
+Next: resolve single pending payment (Chrome692863481, keptopen); verify posted
+wallet+samePod/rate/mount before funded guards; observe deadline outcome/backup.
+If semantic payload specifically approved, run prepared complete32 review locally
+using existing0600 key, max32/concurrency2; command is in module's CLI. No remote
+key transfer or local heavy ASR. Then only whole32semanticPASS permits new native
+conversion/readiness/training chain. Currentcontrol40 still requires all49/combined
+readiness->ONE8from520->independentAdam/RNG/native restore+strictproof->complete
+paired20/speech20/all4ordinary->eligible sealedfresh40. Longertraining after
+conclusive controlled improvement authorized; no failed-recipe extension/adoption.
+Unrelated pyc, capabilityprobe files androadmap.html untouched.
+
+---
+
 # LOCAL — explicit20 purchase submitted once; confirmation pending; same GPU45/49 (23 October23:26UTC)
 
 LOCAL remains sole executor. Source d04afb5 pushed to origin/main; immutable GPU C9

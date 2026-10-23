@@ -1,0 +1,18 @@
+{
+  "schema": "dl-native-reasoning32-derived-whole32-speech-actual-v1",
+  "source_commit": "13a0e57bc39f791d4d0277feed146f528c1cfa06",
+  "CPU_supervisor_PID": 70154,
+  "all_three_stages_actual_exit": 0,
+  "complete32_speech_passed": true,
+  "passed_cases": 32,
+  "speech_report_sha256": "edd83524b4d6290c608028ad1e0af99df54e3a3646656506e901894218311d3e",
+  "independent_readback_sha256": "a0416656700403ba2e9a315a99e803716d069260f73bfd38c94b55134860a244",
+  "prepared_payload_sha256": "63de073379fc9871f062f7c1616ab54f27bdc43037fb5deee739339dbb2fb6ee",
+  "copyback_verified_files": 9,
+  "copyback_verified_bytes": 930711,
+  "no_words_audio_gain_threshold_or_fold_changes": true,
+  "semantic_requests_sent": 0,
+  "semantic_status": "automatic_review_rejected_distinct_payload_waiting_specific_human_approval",
+  "training_approved": false,
+  "native_optimizer_updates": 0
+}
