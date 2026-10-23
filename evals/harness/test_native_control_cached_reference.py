@@ -30,6 +30,8 @@ class CachedReference(unittest.TestCase):
         self.assertIs(F.linear,before)
 
     def test_rejects_gradients_bf16_and_nested_reference(self):
+        with torch.no_grad(),self.assertRaises(ValueError):
+            with linear_reference(33*1024**3):pass
         with self.assertRaises(ValueError):
             with linear_reference():pass
         with torch.no_grad(),original(),self.assertRaisesRegex(ValueError,'nest'):

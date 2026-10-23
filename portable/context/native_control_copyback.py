@@ -15,7 +15,8 @@ import time
 import os
 
 ROOTS=('native-control40-preflight-v3/numerical','native-control40-supervisor-v4',
-       'native-control40-training-followup-v1','native-control40-training-followup-v2')
+       'native-control40-training-followup-v1','native-control40-training-followup-v2',
+       'native-control40-precise-pilot-v1','native-control40-attention-diagnostic-v1')
 FORBIDDEN={'session-token','.private','.env','keys','credentials','core','quarantine'}
 
 
@@ -24,7 +25,9 @@ def sha(path):return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 def marker(base):
     values=[]
-    for name in (ROOTS[0]+'/numerical.json',ROOTS[1]+'/gradient/gradient.json'):
+    for name in (ROOTS[0]+'/numerical.json',ROOTS[1]+'/gradient/gradient.json',
+                 'native-control40-precise-pilot-v1/numerical/numerical.json',
+                 'native-control40-precise-pilot-v1/gradient/gradient.json'):
         path=base/name
         if path.exists():
             value=json.loads(path.read_text());values.append([name,len(value['cases']),value.get('passed')])

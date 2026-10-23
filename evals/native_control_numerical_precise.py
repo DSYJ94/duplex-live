@@ -2,7 +2,7 @@
 
 All old call boundaries, inputs, masks, targets, causality and depth checks run
 again. The only new arithmetic is FP64 reference attention; FP64 linear casts
-are cached within20GiB without changing their values. Production BF16 is unchanged.
+are cached within32GiB without changing their values. Production BF16 is unchanged.
 This does not grant BF16-gradient, training, behavior or adoption approval.
 """
 import argparse
@@ -34,6 +34,34 @@ def original_failure(path,engine,parent=None):
             or (parent is not None and parent!=report['parent'])):
         raise ValueError('Exact immutable original failed whole40 evidence required')
     return report
+
+
+def verify_profile(report,folder,engine,parent):
+    old=original_failure(folder/'approved-original-failed-numerical.json',engine,parent)
+    from evals.native_control_gradient import reference_dependencies
+    reference_dependencies(old['source_commit'])
+    if (report['independent_reference_profile']!='fp32-state-fp64-linear-attention-fp32-output-v2'
+            or report['original_failure_sha256']!=ORIGINAL_FAILURE_SHA
+            or report['original_numerical_code_sha256']!=old['code_sha256']
+            or report['attention_reference_code_sha256']!=sha256(Path(__file__).with_name('native_control_attention_reference.py'))
+            or report['execution']!=old['execution']
+            or report['input_inventory_rechecked_and_execution_source_clean'] is not True
+            or report['reference']['arithmetic']!='fp32-weights-activations-fp64-linear-fp32-output'
+            or report['reference']['allocation_only'] is not True
+            or report['reference']['training_approved'] is not False
+            or report['reference']['calls']<1 or report['reference']['cast_cache_hits']<1
+            or report['reference']['maximum_cached_bytes']!=32*1024**3
+            or not 0<report['reference']['peak_cached_bytes']<=32*1024**3
+            or report['attention_reference']['calls']<1
+            or report['attention_reference']['accumulation_dtype']!='float64'
+            or report['attention_reference']['input_output_dtype']!='float32'
+            or report['attention_reference']['dropout']!=0.
+            or report['attention_reference']['production_or_training_execution_changed'] is not False
+            or report['immutable_input_hash_reuse']['all_cached_identities_rechecked'] is not True
+            or report['immutable_input_hash_reuse']['validation_results_or_model_outputs_cached'] is not False
+            or report['immutable_input_hash_reuse']['unique_hashed_files']<1):
+        raise ValueError('Complete explicit higher-precision reference provenance required; original failure must remain intact')
+    return True
 
 
 def run(lm,engine,out,parent,adapter):

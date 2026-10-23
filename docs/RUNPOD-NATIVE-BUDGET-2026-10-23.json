@@ -1,0 +1,104 @@
+{
+  "schema": "dl-native-runpod-budget-live-review-v1",
+  "at_utc": "2026-10-23 06:18:52 UTC",
+  "current_pod": {
+    "id": "sjf72o8v64mjvb",
+    "name": "duplex-native-validation-control40-20261023-v1",
+    "status": "RUNNING",
+    "cost": 1.79,
+    "createdAt": "2026-10-22T23:14:52.804Z",
+    "image": "nvcr.io/nvidia/pytorch:25.10-py3@sha256:42263b2424fc237b34c4fc4a91c30d603c57eed36e37d31ff6d9a4f1f801edee",
+    "dataCenterId": "EUR-IS-1",
+    "mounts": {
+      "network": [
+        {
+          "path": "/workspace",
+          "volumeId": "49yytzyoge"
+        }
+      ]
+    }
+  },
+  "owned_posted_records": [
+    {
+      "cpuAmount": 0,
+      "diskAmount": 0.00833333283662796,
+      "endTime": "2026-10-22T00:00:00Z",
+      "gpuAmount": 3.580867635086179,
+      "podId": "i20euy4x58fo1m",
+      "startTime": "2026-10-21T00:00:00Z",
+      "totalAmount": 3.5892009679228067
+    },
+    {
+      "cpuAmount": 0.09021293348632753,
+      "diskAmount": 0.003935185610316694,
+      "endTime": "2026-10-22T00:00:00Z",
+      "gpuAmount": 0,
+      "podId": "kgy1ygl8i5p1u5",
+      "startTime": "2026-10-21T00:00:00Z",
+      "totalAmount": 0.09414811909664422
+    },
+    {
+      "cpuAmount": 0,
+      "diskAmount": 0.013888888992369175,
+      "endTime": "2026-10-22T00:00:00Z",
+      "gpuAmount": 15.987963229417801,
+      "podId": "q3wqjwols44aos",
+      "startTime": "2026-10-21T00:00:00Z",
+      "totalAmount": 16.00185211841017
+    },
+    {
+      "cpuAmount": 0,
+      "diskAmount": 0.00069444440305233,
+      "endTime": "2026-10-22T00:00:00Z",
+      "gpuAmount": 0.4101110380142927,
+      "podId": "vgp8bfskvrcotf",
+      "startTime": "2026-10-21T00:00:00Z",
+      "totalAmount": 0.41080548241734505
+    },
+    {
+      "cpuAmount": 0,
+      "diskAmount": 0.010416666744276881,
+      "endTime": "2026-10-23T00:00:00Z",
+      "gpuAmount": 1.3300804048776627,
+      "podId": "sjf72o8v64mjvb",
+      "startTime": "2026-10-22T00:00:00Z",
+      "totalAmount": 1.3404970716219395
+    },
+    {
+      "cpuAmount": 0,
+      "diskAmount": 0.01273148157633841,
+      "endTime": "2026-10-24T00:00:00Z",
+      "gpuAmount": 3.3155523240566254,
+      "podId": "bs1rs2ml6u1cvt",
+      "startTime": "2026-10-23T00:00:00Z",
+      "totalAmount": 3.3282838056329638
+    },
+    {
+      "cpuAmount": 0,
+      "diskAmount": 0.0717592597939074,
+      "endTime": "2026-10-24T00:00:00Z",
+      "gpuAmount": 9.249216347932816,
+      "podId": "sjf72o8v64mjvb",
+      "startTime": "2026-10-23T00:00:00Z",
+      "totalAmount": 9.320975607726723
+    }
+  ],
+  "posted_total": 34.08576317282859,
+  "billing_is_delayed": true,
+  "conservative_prior_upper": 23.696006687846968,
+  "primary_12h_gpu_upper": 21.48,
+  "primary_disk_reserve": 0.25,
+  "project_upper_with_12h_primary": 45.42600668784697,
+  "possible_one_hour_dual_gpu_evaluation_upper": 3.58,
+  "possible_evaluation_disk_reserve": 0.25,
+  "combined_upper": 49.25600668784697,
+  "authorized_compute_budget": 50,
+  "network_volume_monthly_separately_approved": 7,
+  "extension_activated": false,
+  "other_resources_changed": false,
+  "selected_plan": "14h total lifetime on the existing single GPU, including restore and serial native evaluation; no additional evaluation Pod reserved",
+  "primary_14h_gpu_upper": 25.06,
+  "project_upper_with_14h_primary": 49.00600668784697,
+  "remaining_upper_headroom": 0.9939933121530302,
+  "additional_Pod_allowed_by_this_plan": false
+}

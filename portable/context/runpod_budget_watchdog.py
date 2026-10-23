@@ -18,8 +18,8 @@ import urllib.request
 def budget_seconds(receipt):
     """An explicit bounded trial must fit inside the user's existing50USD budget."""
     seconds = receipt['approved_gpu_wallclock_seconds']
-    if type(seconds) is not int or seconds not in (7200, 14400, 21600, 28800, 36000):
-        raise ValueError('Only explicit bounded2/4/6/8/10-hour trials are supported')
+    if type(seconds) is not int or seconds not in (7200, 14400, 21600, 28800, 36000, 43200, 50400):
+        raise ValueError('Only explicit bounded2/4/6/8/10/12/14-hour trials are supported')
     names = ('gpu_hourly_usd', 'maximum_gpu_usd', 'total_compute_budget_usd', 'prior_attributed_spend_usd')
     values = {name: receipt[name] for name in names}
     if any(type(x) not in (int, float) or not math.isfinite(x) or x < 0 for x in values.values()):

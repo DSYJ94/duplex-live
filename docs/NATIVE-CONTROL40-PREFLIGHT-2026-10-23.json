@@ -448,7 +448,7 @@
     "source_commit": "455975c8a882648cb4ae4a18dd478aa36a9b344c",
     "pid": 8805,
     "birth_ticks": 17473700,
-    "phase": "waiting_for_original_complete_audit",
+    "phase": "complete_diagnostic_only",
     "output": "/workspace/migration/native-control40-attention-diagnostic-v1",
     "deadline_utc": "2026-10-23T06:15:00Z",
     "waits_original4393_terminal_and_complete_failed40": true,
@@ -456,7 +456,14 @@
     "original_case": "native-control3-train-029",
     "threshold": 0.001,
     "changes_independent_attention_accumulation_only": true,
-    "complete40_or_training_approval": false
+    "complete40_or_training_approval": false,
+    "completed_utc": "2026-10-23T06:12:57.097959+00:00",
+    "within_original_threshold": true,
+    "hidden_maximum_error": 0.0002465248107910156,
+    "text_logits_maximum_error": 0.0004820823669433594,
+    "all_model_parameters_unchanged": true,
+    "execution_policy_unchanged": true,
+    "full40_or_training_approval": false
   },
   "prepared49_cache_build": {
     "exec_session": 92418,
@@ -543,8 +550,8 @@
   "reference_cast_cache_preparation": {
     "source": "evals/native_control_cached_reference.py",
     "CPU_bitwise_original_reference_and_guard_tests_passed": 9,
-    "maximum_cached_GiB": 24,
-    "default_cached_GiB": 20,
+    "maximum_cached_GiB": 32,
+    "default_cached_GiB": 32,
     "production_or_training_execution_changed": false,
     "GPU_deployed_or_approved": false
   },
@@ -553,7 +560,7 @@
     "schema": "dl-native-control40-numerical-fp64-attention-v2",
     "deployed": false,
     "GPU_started": false,
-    "training_approval_consumer_enabled": false,
+    "training_approval_consumer_enabled": true,
     "requires_original_failed_report_sha256": "ea78de49685707fdae3e5b7dbc1d92ff0ddd3860699e23f152d5b7579c300a3b",
     "all40_math_calls_inputs_masks_targets_causality_depth_and_threshold_AST_identical": true,
     "CPU_tests_passed": 14,
@@ -561,6 +568,8 @@
     "changes_reference_attention_precision_only": true,
     "production_BF16_unchanged": true,
     "threshold": 0.001,
-    "requires_complete_new40_and_separate_BF16_gradient_approval": true
+    "requires_complete_new40_and_separate_BF16_gradient_approval": true,
+    "full40_pass_still_missing": true,
+    "new_schema_provenance_fail_closed_tests_passed": true
   }
 }

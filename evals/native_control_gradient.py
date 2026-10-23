@@ -58,22 +58,30 @@ def numerical_gate(folder, engine, parent):
     path = folder / 'numerical.json'
     report = json.loads(path.read_text())
     current = json.loads((engine / 'engine-inputs.json').read_text())
-    if (report['schema'] != 'dl-native-control40-numerical-v1'
-            or report['complete40'] is not True or report['passed'] is not True
+    if report['schema']=='dl-native-control40-numerical-v1':
+        numerical_code='native_control_numerical.py';reference_code='native_control_reference.py'
+    elif report['schema']=='dl-native-control40-numerical-fp64-attention-v2':
+        from evals.native_control_numerical_precise import verify_profile
+        verify_profile(report,folder,engine,parent)
+        numerical_code='native_control_numerical_precise.py';reference_code='native_control_cached_reference.py'
+    else:raise ValueError('Explicit complete40 numerical schema required')
+    if (report['complete40'] is not True
+            or report['passed'] is not True
             or report['all_model_parameters_unchanged'] is not True
             or report['threshold'] != .001 or report['causal_prefix_error_required'] != 0.
             or report['optimizer_updates'] != 0 or report['new_checkpoint_written'] is not False
             or report['training_approved'] is not False or report['behavior_qualified'] is not False
             or report['peak_allocated_bytes'] >= 80_000_000_000
             or report['engine_report_sha256'] != sha256(engine / 'engine-inputs.json')
-            or report['code_sha256'] != sha256(Path(__file__).with_name('native_control_numerical.py'))
-            or report['reference_code_sha256'] != sha256(Path(__file__).with_name('native_control_reference.py'))
+            or report['code_sha256'] != sha256(Path(__file__).with_name(numerical_code))
+            or report['reference_code_sha256'] != sha256(Path(__file__).with_name(reference_code))
             or report['parent'] != parent or len(report['cases']) != 40
             or [r['id'] for r in report['cases']] != [r['id'] for r in current['cases']]
             or any(r['passed'] is not True or r['causal_prefix_maximum_error'] != 0.
-                   or r['native_training_text_alignment_max_error'] > .001
+                   or not 0<=r['native_training_text_alignment_max_error']<=.001
                    or not r['native_depth_parity']['passed']
-                   or any(c['maximum_absolute_error'] > .001 for c in r['comparisons'].values())
+                   or set(r['comparisons'])!={'hidden','text_logits'}
+                   or any(not 0<=c['maximum_absolute_error']<=.001 for c in r['comparisons'].values())
                    for r in report['cases'])):
         raise ValueError('Independent unchanged complete40 native numerical approval required')
     reference_dependencies(report['source_commit'])

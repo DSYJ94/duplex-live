@@ -1,3 +1,43 @@
+# LOCAL — precision diagnostic PASSED; full sequential chain ready to deploy (23 October07:24 London)
+
+LOCAL sole executor, goal ACTIVE. Diagnostic8805 TERMINAL, completed06:12:57UTC:
+hidden max0.0002465248107910156, textlogit max0.0004820823669433594, both BELOW
+unchanged0.001.19,360 FP64 attention calls, all model parameters and execution
+policy unchanged. Original failure max0.0017094612121582031 retained. This is ONE
+case, reference-only; not full40, BF16, training or behavioral approval. It compares
+to saved original failure rather than a same-process paired rerun, so supports the
+next full reference audit without proving sole causality. Complete diagnostic/log/
+launchreceipt inventoried remotely; copyback still to finish before source dispatch.
+
+New native_control_precise_pilot controller is PREPARED, not running yet. It requires
+terminal successful immutable diagnostic and idle GPU, exact clean Git, full7797-file
+workset, fresh costguard and pinned compiler. Stages strictly sequential and separate
+processes: wholeworkset, NEW full40 FP64 attention reference, independent full40 BF16
+gradients, complete154/native49/control40 readiness, new8 from native520, independent
+state/RNG/Adam/native restore, strict proof. No extension/adoption. New numeric consumer
+explicitly accepts ONLY the named higher-precision schema plus preserved original
+failed report, exact code/Engine/parent/runtime and unchanged0.001/all40; NaN rejected.
+Reference-only FP64 cast cache now32GiB, still same arithmetic, peak must remain below
+80GB. No GPU test/full40 pass exists yet. Old numerical/reference/math stay unchanged.
+
+Live official billing read confirms current Podsjf72o8v64mjvb is the sole running
+Pod,1.79USD/hour; other Aurium resources EXITED and untouched. Owned posted total
+34.08576317282859 is delayed; budget remains conservative prior23.696006687846968.
+To retain restore/behavior time, SELECTED plan is14h TOTAL on this SAME GPU:
+25.06GPU+.25disk+prior =49.00600668784697 <=50. No second evaluation Pod reserved;
+future native behavior must serialize on this GPU or fit remaining verified funds.
+Watchdog source supports bounded14h with tests; actual guard is STILL v3/10h until
+new receipt/process is confirmed armed, then old55922 retired. Do not infer an
+extension from this document. Intended new guard deadline13:14:52.804UTC; chain
+13:10UTC, numerical10:00UTC. Current harddeadline09:14:52.804UTC still applies now.
+
+Next immediate actions: finish/hash diagnostic copyback; commit/push this source;
+arm same-Pod14h guard and verify actual live process BEFORE retiring10h guard;
+deploy immutable Git bundle and regular-file fullworkset; launch exact sequential
+controller once with freshguardreceipt; transition verified backup watcher to new
+precise-pilot root. Preserve all old receipts/unrelated local files. Last actual
+candidate remains unadopted native7590052/Adam528; no new optimizer updates so far.
+
 # LOCAL — distinct full40 reference prepared, NOT deployed or approved (23 October07:03 London)
 
 LOCAL sole executor; goal ACTIVE. Prospective evals/native_control_numerical_precise.py

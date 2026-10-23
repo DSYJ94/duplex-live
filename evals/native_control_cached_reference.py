@@ -8,12 +8,12 @@ import weakref
 
 
 @contextmanager
-def linear_reference(maximum_cached_bytes=20*1024**3):
+def linear_reference(maximum_cached_bytes=32*1024**3):
     import torch
     from torch.nn import functional as F
     if torch.is_grad_enabled():raise ValueError('Independent cached reference requires no_grad')
-    if type(maximum_cached_bytes) is not int or not 0<=maximum_cached_bytes<=24*1024**3:
-        raise ValueError('Explicit bounded reference cache of at most24GiB required')
+    if type(maximum_cached_bytes) is not int or not 0<=maximum_cached_bytes<=32*1024**3:
+        raise ValueError('Explicit bounded reference cache of at most32GiB required')
     original=F.linear
     if not original.__module__.startswith('torch'):raise ValueError('Do not nest numerical references')
     cache={}
