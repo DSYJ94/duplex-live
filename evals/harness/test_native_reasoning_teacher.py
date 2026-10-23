@@ -15,6 +15,8 @@ from evals.harness.test_native_reasoning_stream import Socket
 
 
 class TeacherArtifacts(unittest.IsolatedAsyncioTestCase):
+    implementation=teacher
+    capture_stream=staticmethod(capture)
     async def make_record(self,root,*,broken_exit=False):
         source=root/'source';source.mkdir();wav=source/'user.wav';pcm=np.full(3840,123,dtype='int16')
         sf.write(wav,pcm,24000,subtype='PCM_16');(source/'source-audio.json').write_text('{}')
@@ -25,12 +27,12 @@ class TeacherArtifacts(unittest.IsolatedAsyncioTestCase):
             async def __aexit__(self,*args):
                 if broken_exit:raise ConnectionError('fixture finalization failure')
         async def wrapped(*args,**kwargs):
-            return await capture(*args,**kwargs,now=lambda:time.monotonic()*50,
+            return await self.capture_stream(*args,**kwargs,now=lambda:time.monotonic()*50,
                                  sleep=lambda delay:__import__('asyncio').sleep(delay/50))
         tokenizer=SimpleNamespace(encode=lambda text:text.split());folder=root/'record'
         row=dict(annotations_not_model_inputs=dict(minimum_result_delivery_delay_s=0.,oracle='must-not-enter-model'))
-        with patch.object(teacher,'source_manifest',return_value=(manifest,{})),patch.object(teacher,'capture',side_effect=wrapped):
-            record=await teacher.capture_one(source,scene,row,folder,'fixture-quality','fixture-only',None,tokenizer,
+        with patch.object(self.implementation,'source_manifest',return_value=(manifest,{})),patch.object(self.implementation,'capture',side_effect=wrapped):
+            record=await self.implementation.capture_one(source,scene,row,folder,'fixture-quality','fixture-only',None,tokenizer,
                                              connector=lambda *a,**kw:Connection())
         return source,scene,folder,record,pcm,socket,tokenizer
 
@@ -44,7 +46,7 @@ class TeacherArtifacts(unittest.IsolatedAsyncioTestCase):
             self.assertEqual((folder/'output-stream.pcm').read_bytes(),socket.output)
             saved,rate=sf.read(folder/'packet-stream.wav',dtype='int16');self.assertEqual(saved.tobytes(),socket.output)
             env=json.loads((folder/'environment.json').read_text());self.assertNotIn('must-not-enter-model',json.dumps(env['session_config']))
-            with self.assertRaisesRegex(ValueError,'actual unchanged'):teacher.verify_record(source,scene,folder,record,tokenizer)
+            with self.assertRaisesRegex(ValueError,'actual unchanged'):self.implementation.verify_record(source,scene,folder,record,tokenizer)
 
     async def test_context_manager_failure_keeps_spools_and_rendered_output(self):
         with tempfile.TemporaryDirectory()as directory:

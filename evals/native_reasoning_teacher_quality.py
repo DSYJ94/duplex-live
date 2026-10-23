@@ -18,6 +18,10 @@ SCHEMA='dl-native-reasoning32-independent-teacher-speech-v1'
 
 
 def whole_collection(source,quality,batch,engine,tokenizer_path):
+    header=json.loads((batch/'teacher-collection.json').read_text())
+    if header['schema']=='dl-native-reasoning32-teacher-recovery-v2':
+        from evals.native_reasoning_teacher_recovery import verify
+        return verify(source,quality,batch,engine,tokenizer_path)
     source_quality.verify(source,quality);manifest,plan=teacher.source_manifest(source)
     tokenizer=teacher.geometry(engine,tokenizer_path)
     value=json.loads((batch/'teacher-collection.json').read_text());ids=[s['id'] for s in manifest['scenes']]

@@ -1,3 +1,49 @@
+# LOCAL —whole32 versioned recovery ready; parent verified (23 October18:53UTC)
+
+Previous goal turn made progress: complete40 gradient proof, failedactualteacher
+collection+backup, testedclosev2, same-child fundedtakeover and live services,
+pushed5653e60. Currentturn wires actualv2recorder+versionedwhole32 recovery.
+LOCAL soleexecutor; goalACTIVE. Main5653e60 beforethiscommit. Actual18:43:16UTC
+GPU remainsSAME42932/birth22207653 S, old21063/birth20582160 T, child41540/
+birth22014818 R incombined_readiness. First3stagesactualexit0;0newupdates, no
+restart/newGPU/model/source/loss/policy changes. C9 and738orchestration unchanged.
+AllserviceIDs/deadlines remainaspreviousentry; no newpayment.
+
+New native_reasoning_teacher_v2.py bindsstream_v2andactualrawreadback, preserving
+originalv1modules. New native_reasoning_teacher_recovery.py preflight rehashes
+EXACT88-file59MBparent inventory7e21d... and failedcollection34278d...; actual
+parent6/allsource40/sourcequality/nativeprefix/tokenizer verificationPASS.
+Newroot willcontainfullparent6 unchanged +byte-identicaltopcopies000/001/004/005.
+Those4remainUNAPPROVED. Recorderversions/receiptlineage explicit, no passing subset.
+
+Capturephasesfixed BEFOREnewcalls: repair002/003 first(atmost2concurrent); ifboth
+transport/lifecycle/framepass, captureunattempted013ALONE next; ifthatpasses,
+collectother25unattempted(max2concurrent). Actualsourcepackingdiagnostic source45.75s
+for013leavesONLY5referenceframes(0.4s) under1100 beforeunknownnative/provider/ack/
+playoutlatency. ThisdoesNOTprovefit. Everymeasuredwholeepisode includesprefix232
++allrealtime+allactualsentcontextspans, no crop/limitrelaxation. Failurestopsnew
+sessions andpreservesallactiveattempts. Noautomaticretry/resume. Up to28newvoice
+attempts/34aggregateincluding6prior, <=168newbackendattempts+5prior<=192ceiling.
+Same localteacherlease. Genericnativevoicechoosesrequests, no forcedRET orfamily/
+oracle/answerpayload; annotationsonlyofflineplanning/scoring, neverrouting.
+
+Newwhole32qualitydispatches tostrictmixed-versionrecoveryverifier; partial32
+stillrefuses. Progressreview canreadv1/v2recordsviaactualimplementation.50offline
+source/backend/lifecycle/stream/artifact/recovery testsPASS. Code/protocol
+docs/NATIVE-REASONING32-TEACHER-RECOVERY-2026-10-23.md. AtthiscommitNOnewv2teacher
+callmade. NeedlaunchonceinNEW native-reasoning32-teachers-v2 root, exactsourcev3/
+qualityv3,parent-v1,inventory-v1,engine/tokenizer,local0600key. Do NOT editv2teacher/
+stream/recovery/lifecycle_review/backend/lifecycle/oldteacher whileactive; hashesbind.
+
+Next actualboundedrecovery, thenfull32independentteacherwords/audio, semantic,
+actual-timeconversion/nativeassembly/numerical/gradient/retention approvals before
+ANYnewreasoningpilot. Keep currentGPUreadiness->ONE8->independentrestore/strictproof
+->native20/speech20/all4->eligiblefresh40. Existing28/49histories/full154/native49/
+KL-hidden/word-clock preserved. Full40controlgradientPASS isnot modelbehaviorproof.
+No currentheavyMacASR;source40done8threads. Allpriorbackupsretained, unrelatedlocal
+files preserved/excluded. Failingtimingsourceorprotocoldoesnotpermitcuttingaudio,
+weakeninggates, acceptingreusedsubset or extendingfailednativepilot.
+
 # LOCAL —40/40 gradientPASS; same readiness child; teacher failure diagnosed (23 October18:39UTC)
 
 Previous goal turn made progress (all40sourcequality+backup and e715fa6). THIS

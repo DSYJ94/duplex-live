@@ -68,7 +68,11 @@ def review(source,quality,batch,engine,tokenizer_path,out):
     results=[]
     for record in collection['recordings']:
         if record['transport_complete'] is not True:continue
-        identity=record['id'];folder=batch/identity;teacher.verify_record(source,scenes[identity],folder,record,tokenizer)
+        implementation=teacher
+        if collection['schema']=='dl-native-reasoning32-teacher-recovery-v2':
+            from evals.native_reasoning_teacher_recovery import recording_implementation
+            implementation=recording_implementation(record)
+        identity=record['id'];folder=batch/identity;implementation.verify_record(source,scenes[identity],folder,record,tokenizer)
         r=case_review(rows[identity],json.loads((folder/'lifecycle.json').read_text()));results.append(r)
     value=dict(schema='dl-native-reasoning32-actual-lifecycle-diagnostic-v1',at_utc=datetime.now(timezone.utc).isoformat(),
         teacher_collection_snapshot_sha256=hashlib.sha256(snapshot).hexdigest(),complete32=len(results)==32,
