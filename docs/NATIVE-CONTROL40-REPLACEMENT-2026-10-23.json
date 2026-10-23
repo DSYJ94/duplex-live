@@ -1,6 +1,6 @@
 {
   "schema": "dl-native-control40-replacement-execution-v1",
-  "at_utc": "2026-10-23T09:02:00Z",
+  "at_utc": "2026-10-23T09:26:00Z",
   "executor": "LOCAL",
   "funding_verified": {
     "method": "official Runpod billing page after user confirmed done",
@@ -43,11 +43,11 @@
     "active_public_model_files": 6,
     "active_model_bytes": 33871112833,
     "vendor_bundles_rehashed": 3,
-    "all_original_model_source_hashes_rehashed_this_turn": false,
-    "actual_staging_completed": false,
-    "cpu_tests_passed": 9
+    "actual_staging_completed": true,
+    "cpu_tests_passed": 9,
+    "all_six_active_public_model_sources_and_copies_rehashed_this_turn": true
   },
-  "state": "SSH verified; exact input restoration is running; recognizer restored; new numerical/pilot not started",
+  "state": "complete40_precise_numerical running after successful full workset recheck",
   "new_optimizer_updates": 0,
   "new_candidate": false,
   "model_adopted": false,
@@ -74,8 +74,21 @@
     "out": "/workspace/migration/native-control40-replacement-preparation-v2.json",
     "stage": "/opt/control40-runtime-root-v2",
     "source": "/opt/duplex-control40-c9efaaa-v2",
-    "complete": false,
-    "archive_is_preserved_input": true
+    "complete": true,
+    "archive_is_preserved_input": true,
+    "phase": "complete_staging_only",
+    "original_runs": {
+      "files": 10390,
+      "bytes": 24661548106,
+      "all_independent_readback_hashes_match": true
+    },
+    "workset": {
+      "files": 7797,
+      "bytes": 8000842614,
+      "all_independent_readback_hashes_match": true
+    },
+    "all_active_model_hashes_independently_rehashed": true,
+    "receipt_sha256": "4389b9d73a44c52dbcef6043230888328789974a822319acbf4185766b8c84f6"
   },
   "asr_restoration": {
     "complete": true,
@@ -97,6 +110,55 @@
     "strict_host_keys": true,
     "superseded_current_watcher_90457_stopped": true,
     "old_watcher_31679_confirmed_absent": true,
-    "transport_regression_tests_passed": 6
-  }
+    "transport_regression_tests_passed": 6,
+    "verified_snapshots": 3,
+    "latest_snapshot_files": 15,
+    "latest_inventory_sha256": "7839e80b5453dd9a733e8c1ed9ba32f92a145e54b2ac59122d253f701cdccf7e",
+    "last_success_utc": "2026-10-23T09:25:44.718474+00:00"
+  },
+  "compiler_probe": {
+    "complete": true,
+    "receipt": "/workspace/migration/native-control40-replacement-compiler-v2/compiler.json",
+    "actual_triton_driver_compile_passed": true,
+    "actual_compiled_bf16_gpu_kernel_passed": true,
+    "header_sha256": "64025f81a9d6d2b10e9e11654f3523e5b046d01b883f0b9ca474e463274b80d4",
+    "assembler_sha256": "daba837a68265cae38c832d13399b61dab811891de9b8914defddef143b849f2",
+    "native_model_loaded": false,
+    "optimizer_updates": 0
+  },
+  "automatic_followup": {
+    "local_pid": 98442,
+    "session": 48776,
+    "receipt": "runs/local-migration-20261023/native-control40-auto-launch-v1.json",
+    "state": "launched_once",
+    "wait_deadline_utc": "2026-10-23T09:36:00Z",
+    "total_pipeline_deadline_utc": "2026-10-23T14:59:00Z",
+    "numerical_deadline": "Launch time plus at most four hours, also bounded before total deadline",
+    "single_launch_receipt": "/workspace/migration/native-control40-precise-pilot-v2-launch.json",
+    "fresh_output": "/workspace/migration/native-control40-precise-pilot-v2",
+    "independent_Mac_receipt_backup_before_launch": true,
+    "fresh_same_Pod_budget_status_required": true,
+    "optimizer_update_limit": 8,
+    "extension_or_adoption": false,
+    "never_automatically_retries_an_uncertain_launch": true,
+    "local_launcher_terminal_success": true,
+    "controller_pid": 4111,
+    "first_stage": "whole_workset",
+    "first_stage_pid": 4122,
+    "first_stage_birth": 18985364,
+    "launched_utc": "2026-10-23T09:23:56.550357+00:00",
+    "numerical_deadline_utc": "2026-10-23T13:23:54.034033+00:00",
+    "current_stage": "complete40_precise_numerical",
+    "current_stage_pid": 4216,
+    "current_stage_birth": 18993883,
+    "first_stage_exit_code": 0,
+    "first_stage_completed_utc": "2026-10-23T09:25:23.016336+00:00"
+  },
+  "prerequisite_receipt_backup": {
+    "files": 3,
+    "all_independent_local_hashes_match": true,
+    "inventory_sha256": "7349ce6821f0a0014fdce57b229cac89450696d9f5b6685bdc5bac4b53f46450",
+    "local_directory": "runs/local-migration-20261023/native-control40-replacement-environment-evidence-v1"
+  },
+  "complete_original_archive_rehashed_this_turn": false
 }

@@ -1,3 +1,67 @@
+# LOCAL — restoration verified; complete40 numerical RUNNING; new8 automatic behind gates (23 October10:26 London)
+
+NEWEST authoritative entry. LOCAL sole executor; goal ACTIVE/incomplete. No handoff
+to cloud. ONE owned Pod4yx8vahdmjsylx, A10080GB, EUR-IS-1, existing network
+volume49yytzyoge, SSHroot@157.157.221.29:16701. Current actual execution source
+c9efaaac24d983342f7eded46617e6450bc102ce at/opt/duplex-control40-c9efaaa-v2,
+immutable/clean, deployed using committed Git bundle. Main later documentation and
+Mac transport-fix commits do not change this execution checkout. No Slurm job,
+additional rental, GPU overlap or source/audio/threshold/loss/retention change.
+
+Actual controller4111 launched09:23:56.550357UTC; fresh output
+/workspace/migration/native-control40-precise-pilot-v2. Whole workset child4122,
+birth18985364, independently rechecked all7797 inputs and exited0 at09:25:23.016336.
+CURRENT complete40_precise_numerical child4216, birth18993883, started09:25:23.120893,
+finite audit deadline2026-10-23T13:23:54.034033+00:00. All-stage deadline14:59UTC.
+After full40 passes, existing controller automatically runs independent full40 BF16
+gradients, combined retained154/native49/control40 readiness, ONE new8 update pilot,
+then independent training-state/Adam/RNG/native restore and strict proof checks.
+It stops on failure, cannot extend or adopt. No new optimizer update/candidate or
+numerical PASS is claimed. Actual latest remains unadoptednative7590052/Adam528;
+new repair parentnative520. Native20/speech20 review and all4 ordinary gates must
+precede sealed fresh40 inference; no production qualification yet.
+
+Restoration PID2044 completed and exited. All selected original10390 files
+24,661,548,106B; complete7797 control files8,000,842,614B; six active public model
+files33,871,112,833B copied and independently readback-hashed. Total66,533,503,553B
+working closure plus pinned Git vendor clones. Canonical aliases activated only
+AFTER all verification; original archive untouched. Fresh compiler probe passed
+actual Triton driver compilation and compiled BF16 GPU kernel with exact original
+header64025f81a9d6d2b10e9e11654f3523e5b046d01b883f0b9ca474e463274b80d4 and
+assemblerdaba837a68265cae38c832d13399b61dab811891de9b8914defddef143b849f2.
+Separate ASR ready at/opt/native10-asr-env/bin/python; pinned public turbo rehash
+passed. Native runtime remains Torch2.9.0a0+145a3a7bda.nv25.10/CUDA13.0.
+Entire original28470-file67.76GB archive is PREVIOUSLY verified, not wholly rehashed
+this turn; stopped broader Mac source backup remains PARTIAL.
+
+Restoration/compiler/ASR receipts individually copied to Mac and independently
+size/SHA-checked against remote reads. Local environment-evidence-v1 inventory
+7349ce6821f0a0014fdce57b229cac89450696d9f5b6685bdc5bac4b53f46450;
+complete restoration receipt4389b9d73a44c52dbcef6043230888328789974a822319acbf4185766b8c84f6.
+ACTIVE sole Mac copyback watcher92170/session84773, local implementationDEE133D,
+remote snapshot sourceC9EFAAA, native-control40-continuous-copyback-v5. Strict pinned
+host keys; latest09:25:44 successful backup,3 verified snapshots; latest15 files,
+inventory7839e80b5453dd9a733e8c1ed9ba32f92a145e54b2ac59122d253f701cdccf7e.
+Old31679 and superseded90457 are terminal. Local automatic launcher98442/session48776
+finished0 after exactly ONE launch; receipt native-control40-auto-launch-v1.json.
+DO NOT rerun it: inspect live controller and
+/workspace/migration/native-control40-precise-pilot-v2-launch.json first.
+
+ACTIVE budgetguard73678/session54241, current Pod-specific status
+runs/local-migration-20261023/runpod-control40-replacement-budget-v1.json, verified
+armed. Terminates ONLY this owned Pod by15:07:37.9UTC, retaining network volume.
+Prior conservative37.36308350742475USD + new6h45 at1.79/h12.0825 +0.25 diskreserve
+=>maximum49.69558350742474USD under existing50USD compute cap. Funding29.91USD was
+verified, Auto-Paydisabled. Startup consumed roughly30minutes, included in bound.
+No credentials, owner conversations or core dumps transferred. Unrelated timeline.pyc,
+capability-retention probe files and roadmap.html untouched.
+
+NEXT: observe current4216/controller4111 and verified backups; do not duplicate.
+On failure retain every case/report/log and diagnose; no subset or threshold/mask
+weakening. If full restored pilot succeeds, proceed to complete paired native20 and
+independent speech20 with actual proof path; review before fresh40. Details:
+docs/NATIVE-CONTROL40-REPLACEMENT-2026-10-23.json. Execution remains LOCAL.
+
 # LOCAL — SSH restored, input copy running, ASR ready, Mac backups verified (23 October10:03 London)
 
 NEWEST authoritative entry. LOCAL remains sole executor, goal ACTIVE/incomplete.
