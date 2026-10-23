@@ -1,3 +1,33 @@
+# LOCAL — actual prepared49 loader preflight PASSED and backed up (23 October06:58 London)
+
+LOCAL sole executor, goal ACTIVE. Latest functional pushed source547b516; actual
+prepared49 execution sourcea5d01a1254210f40fca3b7ce4bb2ebb69b9b061b at clean
+/opt/duplex-control40-prepared-v1. Corrected CPU-only loader preflight10412 is now
+terminal with report PASSED:213.14819645881653s. Exact all10,390 files/24,661,548,106B
+rehash plus native520 identity, voice, vocabulary, source manifest and ALL49 native
+inputs/codes/masks/assistant targets match original approval. No CUDA, optimizer,
+new checkpoint or training approval. Whole49 independent numerical, whole40 BF16
+and combined154/native49/control40 readiness remain required. CLI opt-in flags
+--native-audio49-prepared /workspace/migration/native-retained49-prepared-data-v1
+--native-audio49-source-inventory /workspace/migration/native-original-runs-local-stage-v1.json
+must be carried identically across readiness/fit/independent restore.
+
+Remote successful CPU report/log and preserved failed v1launch log copied to Mac
+runs/local-migration-20261023/native-prepared49-loader-evidence-v1:3files, every
+size/SHA checked against inventoryf66092ec62941fca9a10a22c9f413b221320487feb542557766755bff1ed035d.
+Successful loaderpolicy sourceSHA7ffd824bac2c62cc554559d623105dbaecb08244737d47572fe564e33077ce18;
+reconstruction reportSHA38bdf12ec47eb3e3f4412af0632d4876f0708b9d49005e0d908fe9db43f26208.
+Original fullfailed40 report and all backup/checkpoint inventories remain intact.
+
+Actual Mac costguard55922 and backupwatcher89251 reverified live byps05:55UTC.
+Guard harddelete09:14:52.804UTC, project upper41.84600668784697USD, no budget/deadline
+change or new Pod. Next: collect already running diagnostic8805 (06:15UTC deadline),
+then decide the diagnosed numerical repair. Prospective exact FP64 cast-cache helper
+is committed/CPU tested but not GPU deployed or approved. Any precision-reference
+change requires distinct full40 evidence at unchanged0.001/allframes before actual
+BF16/combined readiness and bounded8/Adam520to528/independent restore. No training
+controller is currently armed, no new updates or candidate have occurred.
+
 # LOCAL — whole40 numerical TERMINAL FAILED; original evidence verified on Mac (23 October06:55 London)
 
 LOCAL sole executor; goal ACTIVE. Original4393 has finished with exit1; supervisor

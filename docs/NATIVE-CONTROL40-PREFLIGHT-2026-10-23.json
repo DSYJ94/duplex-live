@@ -472,10 +472,16 @@
     "completed_utc": "2026-10-23T05:41:33.293741+00:00",
     "prepared_sha256": "ea62a5660e2c9800fbbb39414dc57a1c51cd90acff8186ea0908a885e43e18f6",
     "original_manifest_sha256": "180ffb2c749c3917de0a02f8218d0f8e27bb0067c3b014fd1ef83ae0c583469f",
-    "source_loader_integration": "implemented_and_CPU_tested_not_yet_deployed_or_CUDA_qualified",
+    "source_loader_integration": "real_pod_CPU_full_inventory_parent_voice_vocabulary_and_all49_passed",
     "mac_backup_files": 4,
     "mac_backup_inventory_sha256": "b16d3c33da52aca90b526fcd79a274e594db48fba324c6d12c74cde73c725441",
-    "all_backup_sizes_and_hashes_match": true
+    "all_backup_sizes_and_hashes_match": true,
+    "real_source_preflight_seconds": 213.14819645881653,
+    "real_source_preflight_source_commit": "a5d01a1254210f40fca3b7ce4bb2ebb69b9b061b",
+    "loader_evidence_backup_files": 3,
+    "loader_evidence_backup_inventory_sha256": "f66092ec62941fca9a10a22c9f413b221320487feb542557766755bff1ed035d",
+    "loader_evidence_all_sizes_and_hashes_match": true,
+    "training_or_CUDA_readiness_approved": false
   },
   "dependency_evidence_mac_backup": {
     "files": 16,
