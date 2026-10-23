@@ -47,6 +47,7 @@ class VerificationSessionTests(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError, 'original rejection'): checked(root)
             self.assertEqual(len(calls), 2)
             with self.assertRaisesRegex(ValueError, 'escaped'): checked(root.parent)
+            with self.assertRaisesRegex(ValueError, 'escaped'): checked(root / '..' / 'outside')
 
     def test_added_changed_removed_files_and_symlinks_change_snapshot(self):
         with tempfile.TemporaryDirectory() as folder:

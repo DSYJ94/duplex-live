@@ -49,7 +49,7 @@ class Memo:
             for parameter, value in bound.arguments.items():
                 if isinstance(value, Path):
                     value = value.absolute()
-                    if not any(value == root or value.is_relative_to(root) for root in self.roots):
+                    if '..' in value.parts or not any(value == root or value.is_relative_to(root) for root in self.roots):
                         raise ValueError('Source readback escaped the complete input snapshot')
                     value = ('path', str(value))
                 elif type(value) not in (bool, str, int, type(None)):
