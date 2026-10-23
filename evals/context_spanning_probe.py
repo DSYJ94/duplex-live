@@ -35,7 +35,7 @@ def audited_loads(records):
     finally:torch.load=original;torch.nn.Module.load_state_dict=load_state
 
 
-def main():
+def _main(argv=None, session=None):
     ap=argparse.ArgumentParser(description=__doc__)
     for name in ('assets','base','data','out'):ap.add_argument('--'+name,type=Path,required=True)
     ap.add_argument('--scenario',default='recovery-validation-000')
@@ -76,7 +76,7 @@ def main():
     ap.add_argument('--native-precision-diagnostic',action='store_true')
     ap.add_argument('--native-precision-no-tf32',action='store_true')
     ap.add_argument('--native-precision-diagnostic-case',type=int,choices=range(16))
-    args=ap.parse_args()
+    args=ap.parse_args(argv)
     if (args.persona_profile=='records-request-only')!=args.native_persona_diagnostic:
         ap.error('Scoped records persona requires the explicit locked complete10 inference diagnostic')
     from evals.native_text_sampling_diagnostic import policy as sampling_policy,verify_engine as verify_sampling
@@ -121,12 +121,14 @@ def main():
             or subprocess.check_output(['git','-C',str(source),'status','--porcelain'],text=True)):
         raise RuntimeError('Context Spanning source/revision changed')
     for name,record in assets['files'].items():
-        if sha256(weights/name)!=record['sha256']:raise RuntimeError('Context Spanning asset changed')
+        if session is not None:session.verify_asset(weights/name,record['sha256'])
+        elif sha256(weights/name)!=record['sha256']:raise RuntimeError('Context Spanning asset changed')
     if (assets['files']['context_spanning_7b.pt']['sha256']!=WEIGHT_SHA256
             or assets['files']['voices/main.pt']['sha256']!=VOICE_SHA256):
         raise RuntimeError('Assets differ from pinned upstream LFS digests')
     for name,digest in MODEL_HASHES.items():
-        if sha256(args.base/name)!=digest:raise RuntimeError('PersonaPlex base asset changed')
+        if session is not None:session.verify_asset(args.base/name,digest)
+        elif sha256(args.base/name)!=digest:raise RuntimeError('PersonaPlex base asset changed')
     data=validate_conversion(args.data)
     row=next(r for r in data['accepted'] if r['scenario_id']==args.scenario)
     if args.expected_kind and row['kind'] != args.expected_kind:
@@ -164,14 +166,17 @@ def main():
     if args.native_precision_diagnostic:
         from evals.native_precision_diagnostic import transform
         precision_transform=transform(sampling)
-    with before_engine(engine_module,args.adapter_proof,args.adapter_disabled,args.adapter_zero,runtime_transform=precision_transform) as adapter:
-        with audited_loads(records):
-            engine=Engine(checkpoint=str(checkpoint),device='cuda',temp=.8,temp_text=args.native_text_temperature)
-            verify_sampling(engine,sampling)
-            if args.native_precision_diagnostic:
-                from evals.native_precision_diagnostic import verify_engine as verify_precision
-                verify_precision(engine,sampling,adapter)
-            voice=load_voice('main')
+    def construct():
+        with before_engine(engine_module,args.adapter_proof,args.adapter_disabled,args.adapter_zero,runtime_transform=precision_transform) as adapter:
+            with audited_loads(records):
+                engine=Engine(checkpoint=str(checkpoint),device='cuda',temp=.8,temp_text=args.native_text_temperature)
+                verify_sampling(engine,sampling)
+                if args.native_precision_diagnostic:
+                    from evals.native_precision_diagnostic import verify_engine as verify_precision
+                    verify_precision(engine,sampling,adapter)
+        return engine,records,adapter
+    engine,records,adapter=construct() if session is None else session.load(args,construct)
+    with audited_loads(records):voice=load_voice('main')
     if args.native_precision_diagnostic and torch.cuda.max_memory_allocated()>=80_000_000_000:raise RuntimeError('Precision diagnostic exceeded80GB')
     lm_loads=[r for r in records if r['module_identity']==id(engine.lm)]
     if (type(engine.lm).load_state_dict is not torch.nn.Module.load_state_dict
@@ -259,6 +264,7 @@ def main():
         'persona_text_sha256':hashlib.sha256(persona.encode()).hexdigest(),
         'lookup_delivery_minimum_delay_s':args.lookup_delivery_delay_s,
         'torch':torch.__version__,'torch_file':torch.__file__,'cuda':torch.version.cuda,
+        **({'persistent_evaluation':session.receipt()} if session is not None else {}),
         **({'native_sampling_diagnostic':sampling} if sampling else {})}
     if args.ret_logit_bias:
         from evals.context_ret_bias import install as install_ret_bias
@@ -347,6 +353,16 @@ def main():
         'microphone_acceptance':False,'spoken_value_use_verified':False,'quality_qualified':False,'training_approved':False}
     (args.out/'report.json').write_text(json.dumps(report,indent=2)+'\n')
     print(json.dumps({k:v for k,v in report.items() if k not in ('loading','worker_events','playout')}),flush=True)
+
+
+def main(argv=None, session=None):
+    succeeded=False
+    try:
+        result=_main(argv,session)
+        succeeded=True
+        return result
+    finally:
+        if session is not None:session.finish_case(succeeded)
 
 
 if __name__=='__main__':main()
