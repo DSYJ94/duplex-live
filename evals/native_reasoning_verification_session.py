@@ -67,11 +67,13 @@ class Memo:
 
 
 @contextmanager
-def source_readbacks(roots):
+def source_readbacks(roots, *, include_old_speech=False):
     # Load the real history chain BEFORE replacing imported aliases.
     importlib.import_module('evals.native_reasoning_teacher_recovery_v6')
     importlib.import_module('evals.native_reasoning_teacher_cutoff_readback')
     modules = [importlib.import_module('evals.' + n) for n in SOURCE_MODULES]
+    if include_old_speech:
+        modules.append(importlib.import_module('evals.native_reasoning_teacher_quality'))
     code = [Path(m.__file__) for m in sys.modules.copy().values()
             if getattr(m, '__name__', '').startswith('evals.native_reasoning_')
             and getattr(m, '__file__', None)]
