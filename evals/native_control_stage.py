@@ -190,6 +190,17 @@ def verify_checkpoint(proof):
             or sha256(proof/'control40-parent-selection.json')!=policy['parent_selection_sha256']):
         raise ValueError('Incomplete retained154/native49/control40 proof or independent restoration')
     check_readiness(proof/'approved-control40-combined-readiness.json',policy,r['repo_commit'])
+    if 'immutable_input_hashes' in r:
+        from portable.context.native_training_cached import verify_receipt,PROFILE
+        cache=r['immutable_input_hashes']
+        if (cache['profile']!=PROFILE
+                or sha256(proof/'immutable-input-training.json')!=cache['training_receipt_sha256']
+                or sha256(proof/'approved-immutable-input-readiness.json')!=cache['readiness_receipt_sha256']
+                or sha256(proof/'immutable-input-reload.json')!=v['immutable_input_hashes_receipt_sha256']):
+            raise ValueError('Changed bounded-stage immutable input verification receipt')
+        for name,kind in (('approved-immutable-input-readiness.json','readiness'),
+                          ('immutable-input-training.json','training'),('immutable-input-reload.json','reload')):
+            verify_receipt(proof/name,kind,r['repo_commit'])
     import subprocess
     root=Path(__file__).resolve().parents[1]
     for name,key in (('native_control_stage.py','stage_implementation_sha256'),('native_control_training.py','implementation_sha256')):

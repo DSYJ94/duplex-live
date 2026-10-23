@@ -14,6 +14,12 @@ MODELS = {
 
 
 def sha256(path):
+    from evals.immutable_file_hashes import active
+    session=active()
+    return session.digest(path,_sha256_uncached) if session is not None else _sha256_uncached(path)
+
+
+def _sha256_uncached(path):
     h = hashlib.sha256()
     with Path(path).open("rb") as stream:
         for block in iter(lambda: stream.read(8 * 1024 * 1024), b""):

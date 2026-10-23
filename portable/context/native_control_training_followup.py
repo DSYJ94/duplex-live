@@ -109,6 +109,8 @@ def main():
     p.add_argument('--supervisor-birth',type=int,required=True)
     p.add_argument('--deadline-utc',required=True)
     p.add_argument('--prepare-only',action='store_true',help='Validate command/data bindings without dispatching any stage')
+    p.add_argument('--immutable-input-hashes',action='store_true',
+                   help='Full first-read hashes plus fail-closed identity checks for immutable inputs; all validation still runs')
     a=p.parse_args();deadline=datetime.fromisoformat(a.deadline_utc.replace('Z','+00:00')).timestamp()
     audit_commit=a.supervisor_payload_commit or a.payload_commit
     def clean():
@@ -134,7 +136,8 @@ def main():
     a.out.mkdir(parents=True,exist_ok=False)
     lock=(a.preflight/'training-followup.lock').open('a');fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
     ready=a.out/'combined-readiness';proof=a.out/'training'
-    prefix=[str(a.python),'-u','-m','evals.context_training_proof']
+    prefix=[str(a.python),'-u','-m',
+            'portable.context.native_training_cached' if a.immutable_input_hashes else 'evals.context_training_proof']
     stages=[
         ('whole_workset',[str(a.python),'-u','-m','evals.native_control_snapshot','--inventory',str(a.inventory)]),
         ('combined_readiness',prefix+base+['--out',str(ready),'--native-audio49-preflight-only','--native-audio49-stream-gradient-readiness']),
@@ -148,6 +151,7 @@ def main():
                payload_commit=a.payload_commit,execution_source=str(a.payload),deadline_utc=a.deadline_utc,
                followed_supervisor_pid=a.supervisor_pid,followed_supervisor_birth=a.supervisor_birth,
                followed_supervisor_payload_commit=audit_commit,
+               immutable_input_hash_reuse=a.immutable_input_hashes,
                phase='prepared',stages=[],planned_commands=dict(stages),new_stage_optimizer_limit=8,
                passed=False,model_adopted=False,behavior_qualified=False,extension_approved=False)
     def save():
