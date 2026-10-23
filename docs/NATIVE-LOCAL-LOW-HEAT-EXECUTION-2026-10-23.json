@@ -1,0 +1,72 @@
+{
+  "schema": "dl-native-local-low-heat-execution-v1",
+  "at_utc": "2026-10-23T20:53:09.435890+00:00",
+  "source_before_documentation": "f3eb0d68b5093a9947964eecd1f267a748e9f32f",
+  "user_request": "Continue work without CPU throttling and reduce Mac fan load",
+  "local_asr_session": 25088,
+  "local_asr_actual_exit": 1,
+  "local_asr_terminal_at_utc": "2026-10-23T20:48:29.628849+00:00",
+  "heavy_local_asr_live": false,
+  "whole_teacher_speech_cases": 32,
+  "whole_teacher_speech_passed_cases": 3,
+  "whole_teacher_speech_passed": false,
+  "teacher_speech_sha256": "d8301519720865a154037cfe02b2ce38a78f8132690cd5dddb8b7478991bcc34",
+  "complete_raw_teacher_collection_sha256": "a958eac2d5b2634d62010be3b35bd48e996ea5d1607ec79aa3b086256770ec5a",
+  "raw_teacher_backup": {
+    "schema": "dl-native-reasoning32-complete-raw-teacher-preservation-v1",
+    "at_utc": "2026-10-23T20:41:51.051365+00:00",
+    "destination": "/workspace/migration/native-reasoning32-teachers-v6-preserved-v1",
+    "volume_id": "49yytzyoge",
+    "inventory_sha256": "11909117962926a5e3b2fb34908627ebd4ef3bfe4bf3dd6041225ceb8001a8bc",
+    "files": 1591,
+    "bytes": 1125643329,
+    "all_regular_size_sha256_match": true
+  },
+  "native_job_observation": {
+    "at_utc": "2026-10-23T20:51:16.807707+00:00",
+    "processes": {
+      "42932": {
+        "state": "S",
+        "birth": 22207653
+      },
+      "21063": {
+        "state": "T",
+        "birth": 20582160
+      },
+      "41540": {
+        "state": "R",
+        "birth": 22014818
+      }
+    },
+    "phase": "combined_readiness",
+    "completed_native49_rows": 25,
+    "all_logged_exact": true,
+    "last_completed_teacher": "teacher-recovery-train-007",
+    "final_native49_receipt_exists": false,
+    "final_combined_receipt_exists": false
+  },
+  "execution_policy": {
+    "heavy_speech_inference": "existing Runpod CPU only; CUDA disabled; separate packages outside frozen GPU runtime",
+    "mac": "SSH, lightweight API coordination, budget guard and checkpoint copyback",
+    "os_cpu_power_priority_affinity_changed": false,
+    "user_sync_or_indexing_processes_changed": false,
+    "new_billable_resource_created": false,
+    "native_readiness_restarted_or_duplicated": false
+  },
+  "measured_other_local_cpu_percent": {
+    "OneDrive": 109.3,
+    "macOS_suggestd": 100.0
+  },
+  "remote_cpu_quota_cores": 27.2,
+  "next_action": "Complete remote CPU environment/model staging, then versioned whole32 ASR timing/silence diagnosis; preserve genuine truncated teacher recordings as failed, repair only diagnosed cases and retain full gates",
+  "native_new_optimizer_updates": 0,
+  "training_or_behavioral_improvement_claimed": false,
+  "remote_cpu_import_check": {
+    "import_exit": 0,
+    "result": "{\"cpu_only\": true, \"whisper_timestamped\": \"1.15.9\", \"torch\": \"2.9.0a0+145a3a7bda.nv25.10\"}",
+    "error_tail": "",
+    "isolated_packages": "/tmp/duplex-reasoning32-asr-cpu-v1/packages",
+    "frozen_gpu_runtime_modified": false,
+    "cpu_audit_started": false
+  }
+}

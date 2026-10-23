@@ -1,3 +1,43 @@
+# LOCAL — heavy Mac inference ended; future audits on Runpod CPU (23 October20:53UTC)
+
+LOCAL remains sole executor, goal ACTIVE. Source before this documentation commit
+f3eb0d68b5093a9947964eecd1f267a748e9f32f. Human requests lower fan load without
+CPU throttling: no OS power/priority/affinity changes; no OneDrive/indexing changes.
+Heavy local ASR session25088 actually TERMINAL1 at20:48:29UTC after all32 cases;
+no local speech audit remains. Lightweight proxy, budget guard, copyback and
+observer remain. OneDrive109.3% and macOS suggestd100% measured after ASR ended.
+Future heavy speech inference MUST use existing Pod CPU, CUDA disabled, isolated
+packages outside immutable C9 runtime. No new GPU/resource/payment authorized here.
+Remote pinned ASR packages staged; CPU-only imports PASS (actual CUDA unavailable
+inside isolated check). Public weight transfer/hash verification session79773 still
+in progress. No second ASR launched.
+
+V6 actual capture session49445 EXIT0: first complete32 raw collection, only five
+new voice captures;026 actual cancellation repaired by documented neural delegation
+prompt, without forced runtime requests. Collection SHA
+a958eac2d5b2634d62010be3b35bd48e996ea5d1607ec79aa3b086256770ec5a.
+Full1591files1,125,643,329B remotely verified20:41:51UTC on volume49yytzyoge at
+/workspace/migration/native-reasoning32-teachers-v6-preserved-v1, inventory
+11909117962926a5e3b2fb34908627ebd4ef3bfe4bf3dd6041225ceb8001a8bc.
+Whole32 independent speech audit FAIL3/32; entire collection UNAPPROVED.
+Long-silence hallucinations and early ASR clocks are diagnosed, but inherited001
+also genuinely ends mid-answer;005 trailing speech requires review. Do not treat
+an ASR method fix as a repair of truncated audio. Preserve original audit, all
+WAVs and failed versions. New derived whole32 waveform-only speech-region ASR
+procedure is next, unchanged lexical/WER/peak/onset/frame gates, original waveforms
+untouched. Then repair only actually diagnosed teacher recordings in a new version.
+No semantic API requests, native conversion or reasoning32 training yet. New
+semantic reviewer/tests remain uncommitted drafts, not an approval.
+
+GPU20:51:16UTC:42932/birth22207653S;21063/birth20582160T;
+41540/birth22014818R; combined_readiness25/49 exact rows, final49 and combined40
+receipts absent. Numerical40/gradient40 PASS,0new optimizer updates. Do not resume
+21063, restart41540, duplicate jobs or nest takeover. Immutable C9/supervisor source,
+all154/native49/control40 gates and one8-update pilot remain as below. Hard GPU
+budget shutdown23:22:37.9UTC unchanged; existing prepaid only; specific20USD payment
+still pending/rejected previously. No native performance improvement claimed.
+Evidence: docs/NATIVE-LOCAL-LOW-HEAT-EXECUTION-2026-10-23.json.
+
 # LOCAL —source pacing repaired; replacement repaired; native cancel selection remains (23 October20:22UTC)
 
 Goal turn PROGRESS: one real diagnosed source take, complete40 independent source
