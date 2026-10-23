@@ -190,6 +190,13 @@ def verify_checkpoint(proof):
             or sha256(proof/'control40-parent-selection.json')!=policy['parent_selection_sha256']):
         raise ValueError('Incomplete retained154/native49/control40 proof or independent restoration')
     check_readiness(proof/'approved-control40-combined-readiness.json',policy,r['repo_commit'])
+    prepared=r['assistant_audio_auxiliary'].get('prepared_inputs')
+    if prepared is not None:
+        from evals.native_retained_prepared import verify_policy
+        verify_policy(prepared,r['repo_commit'])
+        if (sha256(proof/'prepared49-reconstruction.json')!=prepared['reconstruction_receipt_sha256']
+                or sha256(proof/'audio49-data.json')!=prepared['data_sha256']):
+            raise ValueError('Changed complete prepared49 reconstruction evidence')
     if 'immutable_input_hashes' in r:
         from portable.context.native_training_cached import verify_receipt,PROFILE
         cache=r['immutable_input_hashes']

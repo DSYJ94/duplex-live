@@ -1,6 +1,6 @@
 {
   "schema": "dl-native-control40-preflight-progress-v1",
-  "at_utc": "2026-10-23T05:04:07.552520+00:00",
+  "at_utc": "2026-10-23T05:33:13.116847+00:00",
   "active_executor": "LOCAL",
   "cloud_executor": "read-only",
   "native_payload_and_controller_commit": "7769e7cc06f80e609db3f8ac2611977cd0d7cb66",
@@ -69,12 +69,12 @@
     }
   ],
   "running_observation": {
-    "at_utc": "2026-10-23T05:04:07.552520+00:00",
+    "at_utc": "2026-10-23T05:28:30.550768+00:00",
     "original_controller_pid": 3406,
     "original_controller_state": "T",
     "numerical_pid": 4393,
     "numerical_birth_ticks": 16421263,
-    "numerical_cases_passed_so_far": 32,
+    "numerical_cases_passed_so_far": 36,
     "all_observed_cases_passed": false,
     "complete40_numerical": false,
     "numerical_threshold": 0.001,
@@ -83,7 +83,7 @@
     "gradient_output": "/workspace/migration/native-control40-supervisor-v4/gradient",
     "deadline_utc": "2026-10-23T09:13:45Z",
     "optimizer_updates": 0,
-    "numerical_cases_observed": 33,
+    "numerical_cases_observed": 37,
     "failed_cases": [
       "native-control3-train-029"
     ]
@@ -104,7 +104,7 @@
       "state": "RUNNING",
       "deadline_utc": "2026-10-23T09:14:52.804000+00:00",
       "network_volume_retained": "49yytzyoge",
-      "at_utc": "2026-10-23T03:59:21.527597+00:00",
+      "at_utc": "2026-10-23T05:38:21.151485+00:00",
       "pid": 55922
     },
     "watchdog_exec_session": 37595,
@@ -419,11 +419,21 @@
     "output": "/workspace/migration/native-control40-retained49-cpu-recheck-v4",
     "exec_session": 90762,
     "source_commit": "b6410bfa3b7ac0259124ff47d49d2ea10f99a932",
-    "phase": "running",
+    "phase": "TERMINAL0_PASSED",
     "cuda_visible_devices": "",
     "pinned_pythonpath": "/workspace/control40-vendor-moshi-rag/moshi",
     "requires_original_complete49_data_sha256_exact": true,
-    "optimizer_updates": 0
+    "optimizer_updates": 0,
+    "passed": true,
+    "cuda_used": false,
+    "complete49": true,
+    "original28": true,
+    "original_approved_data_sha256": "180ffb2c749c3917de0a02f8218d0f8e27bb0067c3b014fd1ef83ae0c583469f",
+    "elapsed_seconds": 865.1392482460069,
+    "completed_utc": "2026-10-23T05:16:51.774378+00:00",
+    "validation_decisions_cached": false,
+    "unique_full_hash_files": 1569,
+    "reused_hashes_with_identity_checks": 229270
   },
   "broader_reasoning_source_proposal": {
     "source_commit": "67bff3b627d59ef286d8185daf6cb9a22c65b1e2",
@@ -433,5 +443,45 @@
     "independent_exhaustive_solution_tests_passed": true,
     "audio_api_teacher_or_training_run": false,
     "broader_backchannel_microturn_curriculum_complete": false
+  },
+  "attention_diagnostic": {
+    "source_commit": "455975c8a882648cb4ae4a18dd478aa36a9b344c",
+    "pid": 8805,
+    "birth_ticks": 17473700,
+    "phase": "waiting_for_original_complete_audit",
+    "output": "/workspace/migration/native-control40-attention-diagnostic-v1",
+    "deadline_utc": "2026-10-23T06:15:00Z",
+    "waits_original4393_terminal_and_complete_failed40": true,
+    "requires_idle_gpu": true,
+    "original_case": "native-control3-train-029",
+    "threshold": 0.001,
+    "changes_independent_attention_accumulation_only": true,
+    "complete40_or_training_approval": false
+  },
+  "prepared49_cache_build": {
+    "exec_session": 92418,
+    "phase": "passed_complete49",
+    "source_commit": "b6410bfa3b7ac0259124ff47d49d2ea10f99a932",
+    "output": "/workspace/migration/native-retained49-prepared-data-v1",
+    "cuda_used": false,
+    "repeats_original_complete49_loader": true,
+    "requires_every_original_tensor_and_target_hash_exact": true,
+    "trainer_accepts_this_cache": true,
+    "training_approved": false,
+    "passed": true,
+    "completed_utc": "2026-10-23T05:41:33.293741+00:00",
+    "prepared_sha256": "ea62a5660e2c9800fbbb39414dc57a1c51cd90acff8186ea0908a885e43e18f6",
+    "original_manifest_sha256": "180ffb2c749c3917de0a02f8218d0f8e27bb0067c3b014fd1ef83ae0c583469f",
+    "source_loader_integration": "implemented_and_CPU_tested_not_yet_deployed_or_CUDA_qualified",
+    "mac_backup_files": 4,
+    "mac_backup_inventory_sha256": "b16d3c33da52aca90b526fcd79a274e594db48fba324c6d12c74cde73c725441",
+    "all_backup_sizes_and_hashes_match": true
+  },
+  "dependency_evidence_mac_backup": {
+    "files": 16,
+    "all_sizes_sha256_match": true,
+    "inventory_sha256": "cec4337f372f1bb378e5c177a04623c503d6fef5aa63ac7acfcdc43fc0724c53",
+    "complete_retained49_cpu_pass": true,
+    "numerical40_approved": false
   }
 }

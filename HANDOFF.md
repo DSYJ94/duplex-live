@@ -1,3 +1,117 @@
+# LOCAL — prepared49 input artifact verified and strict loader implemented (23 October)
+
+LOCAL remains sole executor; goal ACTIVE. This source commit adds an OPT-IN
+prepared49 input loader for the complete retained154/native49/control40 stage.
+It does not approve training or alter forward/loss/dtype/sampling/optimizer math.
+All26 focused CPU tests pass; actual archived prepared49 tensors also pass all49
+record/input/code/text-mask/audio-mask/assistant-target checks. The loader requires
+exact CPU reconstruction receipt/serialized artifact/original approved data SHA,
+all10,390 original runs files rehashed against inventory8a09b2544fd0f9e20ca5d7fb388814c0e466441cd7bcbf4396448c3f3865ed96,
+exact native520 parent, voice, vocabulary and assets. Original full49 numerical
+and new full40 numerical/BF16/combined readiness gates remain independently required.
+Independent training and restore must use the same input policy; proof verification
+pins the loader source and packaged reconstruction receipt. Legacy defaults unchanged.
+
+Prepared artifact build exec92418 PASSED at05:41:33.293741UTC,837.065s, CUDA unused.
+Mac backup runs/local-migration-20261023/native-retained49-prepared-data-v1 contains
+ALL4 files, every size/SHA verified; inventoryb16d3c33da52aca90b526fcd79a274e594db48fba324c6d12c74cde73c725441.
+prepared49.pt9,742,741bytes SHAea62a5660e2c9800fbbb39414dc57a1c51cd90acff8186ea0908a885e43e18f6;
+data manifest stays180ffb2c749c3917de0a02f8218d0f8e27bb0067c3b014fd1ef83ae0c583469f.
+Remote output /workspace/migration/native-retained49-prepared-data-v1 retained.
+No GPU job or optimizer update was submitted. Next deploy this exact committed
+source and run CPU real-source input preflight before any training controller use.
+
+Original numerical4393/supervisor5014/diagnostic8805 were reverified LIVE at05:47UTC;
+all40 case rows now written, but original process still hashes final parameters,
+complete40 remains false until its real terminal report. Case029 remains failed.
+Queued diagnostic still waits for original terminal and idle GPU. Preserve original
+failure; never accept the39 passing cases. Guard55922 current hard delete09:14:52.804UTC
+and total upper41.84600668784697USD unchanged. No new Pod or deadline extension.
+
+# LOCAL — complete retained49 CPU replay PASSED; numerical37/40 has029 failure; bounded diagnostic queued (23 October06:33 London)
+
+NEWEST entry. LOCAL sole executor, CLOUD read-only; goal ACTIVE. Latest functional
+pushed source455975c8a882648cb4ae4a18dd478aa36a9b344c. No new optimizer updates or
+adopted model. Unrelated timeline.pyc/capability probe files/roadmap remain untouched.
+
+Full retained-data CPU replayv4/exec90762 is TERMINAL0, PASSED at05:16:51UTC.
+ALL49 histories and original28 components revalidated, with EXACT original approved
+audio49-data SHA180ffb2c749c3917de0a02f8218d0f8e27bb0067c3b014fd1ef83ae0c583469f.
+All original source words/audio/receipts/masks/folds and approvals preserved. Source
+b6410bfa3b7ac0259124ff47d49d2ea10f99a932; elapsed865.139seconds, CUDA unused. Input
+hash session fully hashed1,569 files/2,812,240,925bytes, reused229,270 digests after
+identity checks, all identities rechecked at end. NO validation decisions, model
+outputs or gradients cached. This passes data reconstruction, NOT numerical40 or
+optimizer-start readiness. Output /workspace/migration/native-control40-retained49-cpu-recheck-v4.
+
+All16 dependency/voice/path/staging/full49 receipts and original data manifest/log
+copied to Mac and every size/SHA256 verified. Root
+runs/local-migration-20261023/native-control40-dependency-evidence-v2;
+inventorycec4337f372f1bb378e5c177a04623c503d6fef5aa63ac7acfcdc43fc0724c53,
+receipt native-control40-dependency-copyback-v2.json. This supplements the original
+67.76GB native archive, Engine/workset/native speech inventories. Local input alias
+now uses byte-verified10390-file24.66GB /opt/native-retained-inputs-v1/runs as below;
+original archive untouched, ephemeral staging is not a backup. Exact Interleaver
+constructor probe PASSED after all fixes: pinned vendor alias, pinned top-level
+Moshi PYTHONPATH and byte-identical legacy vocabulary alias. Future children MUST
+inherit PYTHONPATH=/workspace/control40-vendor-moshi-rag/moshi. Shared runtime unchanged.
+
+Original numerical4393/birth16421263/source7769e7c and supervisor5014/birth16839644/
+source738 remain LIVE (actual ps05:31). Latest verified copied snapshot05:28:30UTC
+has37/40 cases, only029 failed so far; text max0.0017094612121582031 > unchanged0.001,
+hidden max0.0008737444877624512, causal0/alignment0/depth passed. Collect ALL40.
+Supervisor must refuse BF16 gradients on final failure. Old waiting training5313
+remains intentionally retired/terminal143 with no child/update. No replacement
+training controller armed; do not restart it or bypass failed numerical approval.
+
+Bounded attention diagnostic is ACTUALLY QUEUED: PID8805/birth17473700, source455975c,
+checkout /opt/duplex-control40-attention-diag-v1. Output
+/workspace/migration/native-control40-attention-diagnostic-v1; source/command/PID receipt
+native-control40-attention-diagnostic-launch-v1.json; top log same rootname.log.
+Confirmed phasewaiting_for_original_complete_audit at05:31. It waits for original
+4393 to be terminal, complete failed40 result with unchanged parameters, and idle
+GPU before loading the same native520. It then tests full failed029 native call
+sequence with FP64 attention accumulation ONLY in independent reference, alongside
+existing FP64 linear; FP32 storage/outputs, unchanged0.001, all frames/calls/inputs.
+Deadline06:15UTC is an actual SIGALRM, source and execution immutability checks on.
+No optimizer, checkpoint or passing-subset approval. A positive diagnostic is not
+proof of production BF16 parity/behavior; a NEW complete40 approval and full BF16/
+combined readiness remain mandatory. Do not dispatch any parallel GPU workload.
+
+To avoid repeated CPU re-derivation during later GPU phases, one separate CPU-only
+cache build is RUNNING, exec92418, sourceb641, output
+/workspace/migration/native-retained49-prepared-data-v1. It runs original complete49
+loader AGAIN (unchanged), requires approved manifestSHA180ffb..., saves prepared49.pt,
+then reloads weights_only with no unsafe globals and independently compares EACH
+serialized codes/text-mask/audio-mask/native-input/assistant-target hash against the
+original approved49 records. It is not a trainer or numerical approval. No trainer
+currently accepts this artifact: an explicit cache loader/recipe field/independent
+readiness integration is still required. Preserve source gates and every retained
+objective; use this only for byte-identical input loading, never cached gradients.
+All original checks execute in the cache builder; no monkeypatched validation.
+
+Active Mac guard55922/exec37595, sourcefdb3a63, status watchdog-v3.json: armed at
+05:33:13UTC, HARD DELETE09:14:52.804UTC,10hTOTAL primaryGPU17.90USD. Upper reserved
+project total41.84600668784697 <=50. No deadline extension or new Pod has occurred.
+For later planning ONLY:12h primary at1.79 plus current prior/reserves would bound
+45.42600668784697, leaving room for a separately bounded1h two-A100 evaluation at
+3.58+0.25disk (total49.25600668784697). Current guard code permits at most10h; docs
+DO NOT extend it. Recompute actual spend/time and reserve native behavior/restore
+budget before any extension or new resource; never exceed original50TOTAL. Existing
+volume49yytzyoge remains separately approved7USD/month. Finished2GPU Pod stays deleted.
+
+Backup watcher89251/exec1322/source67bff3b stays live and verified; covers original
+numerical/supervisor and both training-followup-v1/v2 outputs. Old76295/85507 terminal143.
+New diagnostic/prepared-data auxiliary outputs are on durable /workspace; copy them
+back with inventories/hashes when complete (current automatic marker does not cover
+these extra roots). No source/fold/audio alteration or new teacher/API collection.
+New32 reasoning/lifecycle source proposal is committed, not recorded/trained; wider
+microturn/backchannel/nonlexical coverage remains incomplete. Next: preserve original
+whole40 failure; inspect queued diagnostic; finish/cache-backup prepared49; if warranted
+implement stronger NEW whole40 numerical reference without tolerance/mask/runtime
+relaxation, then full gradient/combined readiness/new8/independent restore and all
+native/audio/fresh40 reviews. Goal not achieved; no human/external-access blocker.
+
 # LOCAL — numerical33/40 includes strict029 failure; input migration repaired; training remains blocked by gates (23 October06:04 London)
 
 NEWEST entry. LOCAL sole executor; CLOUD read-only. Goal ACTIVE. No new optimizer

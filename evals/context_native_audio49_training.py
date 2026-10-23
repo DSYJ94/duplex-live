@@ -15,6 +15,12 @@ RELOAD_SCHEMA='dl-context-actual-audio49-adapter-reload-v1'
 
 
 def validate_configuration(args):
+    prepared=getattr(args,'native_audio49_prepared',None)
+    inventory=getattr(args,'native_audio49_source_inventory',None)
+    if (bool(prepared)!=bool(inventory) or (prepared and
+            (not getattr(args,'control40_cache',None) or not getattr(args,'native_audio49_complete_batch',False)
+             or not getattr(args,'native_audio49_stream_auxiliary',False)))):
+        raise ValueError('Prepared49 inputs require the explicit complete retained154/native49/control40 stage and source inventory')
     if getattr(args,'native_audio49_stream_gradient_readiness',False):
         from evals.context_native_stream_gradient import validate
         validate(args)
@@ -77,7 +83,12 @@ def prepare(args,spm,voice):
     from evals.context_native_audio49_data import load
     from evals.context_native_audio49_audit import implementations as audit_implementations
     folder=args.native_audio49_audit;gate_file=folder/'audio49-audit.json';gate=json.loads(gate_file.read_text())
-    data,batches=load(args.assets,args.out/'voice.pt',spm,voice)
+    prepared_policy=None
+    if getattr(args,'native_audio49_prepared',None):
+        from evals.native_retained_prepared import load as prepared_load
+        data,batches,prepared_policy=prepared_load(args.native_audio49_prepared,args.native_audio49_source_inventory,
+                                                 args.assets,args.out/'voice.pt',spm)
+    else:data,batches=load(args.assets,args.out/'voice.pt',spm,voice)
     encoded=json.dumps(data,indent=2)+'\n';digest=hashlib.sha256(encoded.encode()).hexdigest()
     checks=gate['complete49_numerical_cases'];grad=gate['predeclared_longest_kind_gradient_smoke']
     if (gate['schema']!='dl-native-audio49-numerical-gradient-audit-v1' or not gate['passed']
@@ -124,7 +135,11 @@ def prepare(args,spm,voice):
     if getattr(args,'native_audio49_stream_auxiliary',False):
         from evals.context_native_stream_training import policy as stream_policy
         policy.update(mode='native520-complete154-native-stream49-auxiliary-v1',native_stream_auxiliary=stream_policy(data))
-    for name,content in [('audio49-data.json',encoded),('approved-audio49-audit.json',gate_file.read_text())]:
+    if prepared_policy is not None:policy['prepared_inputs']=prepared_policy
+    artifacts=[('audio49-data.json',encoded),('approved-audio49-audit.json',gate_file.read_text())]
+    if prepared_policy is not None:
+        artifacts.append(('prepared49-reconstruction.json',(args.native_audio49_prepared/'report.json').read_text()))
+    for name,content in artifacts:
         p=args.out/name
         if args.reload:
             if p.read_text()!=content:raise ValueError('Independent audio49 data/audit reconstruction changed')

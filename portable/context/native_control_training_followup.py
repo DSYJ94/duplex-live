@@ -111,7 +111,11 @@ def main():
     p.add_argument('--prepare-only',action='store_true',help='Validate command/data bindings without dispatching any stage')
     p.add_argument('--immutable-input-hashes',action='store_true',
                    help='Full first-read hashes plus fail-closed identity checks for immutable inputs; all validation still runs')
+    p.add_argument('--native-audio49-prepared',type=Path)
+    p.add_argument('--native-audio49-source-inventory',type=Path)
     a=p.parse_args();deadline=datetime.fromisoformat(a.deadline_utc.replace('Z','+00:00')).timestamp()
+    if bool(a.native_audio49_prepared)!=bool(a.native_audio49_source_inventory):
+        raise ValueError('Prepared49 inputs and exact original source inventory must be supplied together')
     audit_commit=a.supervisor_payload_commit or a.payload_commit
     def clean():
         if git(a.payload,'rev-parse','HEAD')!=a.payload_commit or git(a.payload,'status','--porcelain'):
@@ -133,6 +137,9 @@ def main():
     for name in ('header','assembler'):
         if digest(compiler[name])!=compiler[name+'_sha256']:raise ValueError('Changed CUDA compiler')
     base=arguments(a.root,a.payload,a.cache,a.preflight,a.supervisor,a.supervisor.parent)
+    if a.native_audio49_prepared:
+        base+=['--native-audio49-prepared',str(a.native_audio49_prepared),
+               '--native-audio49-source-inventory',str(a.native_audio49_source_inventory)]
     a.out.mkdir(parents=True,exist_ok=False)
     lock=(a.preflight/'training-followup.lock').open('a');fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
     ready=a.out/'combined-readiness';proof=a.out/'training'
@@ -152,6 +159,7 @@ def main():
                followed_supervisor_pid=a.supervisor_pid,followed_supervisor_birth=a.supervisor_birth,
                followed_supervisor_payload_commit=audit_commit,
                immutable_input_hash_reuse=a.immutable_input_hashes,
+               prepared49_inputs=str(a.native_audio49_prepared) if a.native_audio49_prepared else None,
                phase='prepared',stages=[],planned_commands=dict(stages),new_stage_optimizer_limit=8,
                passed=False,model_adopted=False,behavior_qualified=False,extension_approved=False)
     def save():

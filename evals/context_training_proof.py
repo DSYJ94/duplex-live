@@ -101,6 +101,8 @@ def main():
     ap.add_argument('--actual-native-priming', action='store_true')
     ap.add_argument('--actual-cold-graphs', action='store_true')
     ap.add_argument('--native-audio49-audit',type=Path)
+    ap.add_argument('--native-audio49-prepared',type=Path)
+    ap.add_argument('--native-audio49-source-inventory',type=Path)
     ap.add_argument('--native-audio49-weight',type=float,choices=(0.,1.),default=0.)
     ap.add_argument('--native-audio49-preflight-only',action='store_true')
     ap.add_argument('--native-audio49-preflight',type=Path)
