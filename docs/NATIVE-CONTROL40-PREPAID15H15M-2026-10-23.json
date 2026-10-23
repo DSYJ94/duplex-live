@@ -10,5 +10,16 @@
   "same_Pod": "4yx8vahdmjsylx",
   "same_GPU_child": 41540,
   "retire_waiter_only": 69088,
-  "no_model_or_gate_changes": true
+  "no_model_or_gate_changes": true,
+  "executed": true,
+  "cost_guard_PID": 31009,
+  "waiter_PID": 70675,
+  "same_GPU_child_preserved_until_deadline": true,
+  "actual_deadline_outcome": "failed_TimeoutError_extended_adopted_stage_deadline_reached",
+  "completed_logged_native_rows": 47,
+  "full49_approval": false,
+  "combined_approval": false,
+  "new_optimizer_updates": 0,
+  "stopped_receipts_Mac_verified_files": 4,
+  "stopped_receipts_bytes": 73947
 }
