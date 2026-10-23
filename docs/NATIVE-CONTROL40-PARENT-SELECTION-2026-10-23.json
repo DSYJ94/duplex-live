@@ -1,0 +1,30 @@
+{
+  "schema": "dl-native-control40-bounded-repair-parent-selection-v1",
+  "at_utc": "2026-10-23T02:49:53.267542+00:00",
+  "complete_native_cases_reviewed": 40,
+  "complete_independent_speech_cases_reviewed": 40,
+  "default_review": "docs/NATIVE-PAIRED20-DEFAULT-RUNTIME-REVIEW-2026-10-23.json",
+  "archive_review": "docs/NATIVE-PAIRED20-ARCHIVE-RUNTIME-REVIEW-2026-10-23.json",
+  "parent_proof": "context-training-proof-7510331",
+  "parent_checkpoint_sha256": "0310c2563988f8f59d942dce98119230016136f13fc9729ad1c2f398318e7cb5",
+  "parent_training_state_sha256": "b5e4320fba68a0b624a7be61778def8e6238517272637324824126ccaa1c6785",
+  "parent_adam_clock": 520,
+  "selected_native_runtime": "container-default A100 BF16 MATH; observed matmulTF32false/highest and cudnnTF32true",
+  "selection_scope": "Parent only for a distinct bounded eight-update control40 repair stage; no adoption or unchanged continuation of rejected pilot",
+  "reason": "Default-runtime native520 retains two correct ordinary cores versus zero for7590052. Explicit archived TF32 policy does not restore4of4 and is not adopted. Retain the exact current Engine40/numerical runtime and every original objective while repairing diagnosed controls. All existing ordinary4, full-task, independent restore and fresh qualification gates remain unchanged.",
+  "baseline_is_production_qualified": false,
+  "candidate7590052_adopted": false,
+  "optimizer_start_ready": false,
+  "still_required_before_optimizer": [
+    "Complete40 native numerical approval at original0.001 threshold",
+    "Complete40 BF16 gradient readiness",
+    "Explicit integration with unchanged original154 plus native49, original28 histories and old25/new24 teachers, KL1 hidden10 word64 clock64",
+    "Accurate new data/recipe/checkpoint proof and complete independent combined readiness"
+  ],
+  "after_new8": [
+    "Independent full adapter, Adam and all RNG restoration",
+    "Complete native behavioral and independent speech review",
+    "Complete sealed paired fresh40 before adoption; ordinary4 gate unchanged"
+  ],
+  "optimizer_updates_this_selection": 0
+}

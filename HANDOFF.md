@@ -1,3 +1,207 @@
+# LOCAL — complete two-runtime native40+speech40 review; eval Pod released; numerical4/40 live (23 October 03:50 London)
+
+This is the NEWEST entry. LOCAL sole executor; CLOUD remains read-only. Goal ACTIVE.
+No optimizer updates since native7590052(stage8/Adam528), no adopted new model.
+Authoritative last primary process/case observation02:50:19UTC,23October.
+Current functional code35c669908ef0818693b8cd0fcc4a6753179e1b26; exact new documentation
+commit is git HEAD once this entry is pushed. All execution-source SHAs below stay
+immutable; no running payload was edited. Unrelated timeline.pyc/capability-retention
+probe files/roadmap.html remain uncommitted and untouched by this work.
+
+Both complete baseline520/candidate7590052 native20 collections AND both independent
+speech20 audits are now TERMINAL/completely reviewed,40 native +40 speech cases,
+including failures. Default A100 runtime ordinary core baseline2/4/candidate0/4.
+Archived global TF32high runtime baseline1/4/candidate1/4 under the unchanged core
+criterion: energy mention alone without food/photosynthesis remains incomplete.
+Both models still violate actual quiet intervals and pause/resume; lookup receipts
+are real but delivery/clarification/cancellation remain unreliable. TF32 alone does
+NOT restore old GH2004/4. No alternate precision profile adopted; original ordinary4,
+full task, independent restore, audio and sealed fresh40 gates remain unchanged.
+Full evidence reviews:
+- docs/NATIVE-PAIRED20-DEFAULT-RUNTIME-REVIEW-2026-10-23.json
+- docs/NATIVE-PAIRED20-ARCHIVE-RUNTIME-REVIEW-2026-10-23.json
+Both fresh adapter/Adam/allRNG restores and cold/reused native input/token/PCM16-WAV
+checks passed in each collection. This does not prove pre-quantization float PCM
+identity, semantic correctness or production acceptance. Invalid independent word
+clocks/WERs remain failed; never substitute sampled text for failed audio evidence.
+
+Selected native520/7510331 as parent ONLY for a distinct new bounded8 control40
+repair stage on the default A100 BF16/MATH runtime (TF32false/highest), after complete
+comparison. It is not a production-qualified baseline or unchanged continuation of
+rejected7530408/7590052. Native520 retains2 ordinary cores versus candidate0 and its
+runtime matches current Engine40 inputs. Exact decision and outstanding gates:
+docs/NATIVE-CONTROL40-PARENT-SELECTION-2026-10-23.json. No optimizer-start readiness.
+
+ALL first-run314 evidence files711,299,309bytes verified on Mac; inventory
+203d16c30d671012cf34ef5cd3a01220c3de37db1caefa53453e421975fada5c.
+ALL second-run316 evidence files713,772,882bytes verified on Mac; inventory
+3fd504c0ccc93b53158d87fff99552a7f6db02ece1f3cec1d07a86005517a5f3.
+Second evidence includes exact isolated ASR package versions. Roots under
+runs/local-migration-20261023/native10-complete-evidence-v1 and
+native10-archive-tf32-evidence-v1; receipts native10-backup-copyback-v1.json and
+native10-archive-tf32-copyback-v1.json. Remote originals persist on volume49yytzyoge
+under /workspace/migration. Original failed attempts/audio remain unchanged.
+
+Finished two-GPU Pod bs1rs2ml6u1cvt was deliberately TERMINATED to preserve compute
+budget AFTER all PIDs terminal, nvidia-smi showed no GPU processes and complete
+local hashes passed. DELETE204, follow-up GET404; Mac guard63883/PID30645 terminal
+pod_terminated at02:47:34.500UTC. Reverse SSH tunnel38065 TERMINAL255 on remote close.
+Do not reconnect/resubmit that finished Pod. Only reconstructible public models and
+isolated ASR installs were on its ephemeral disk; Git source, artifacts, receipts,
+package versions and weights remain saved. Original50USD TOTAL compute cap intact.
+Two-GPU1.79each/3.58hour lifetime bounded above by3.35USD (NOT a finalized invoice).
+Prior four owned Pods20.096006687846966 + primary maximum10.74 +second bound3.35
++two0.25 disk reserves <=34.68600668784697USD. Existing retained100GB volume remains
+separately approved7USD/month. No unrelated Pods/volumes changed.
+
+Primary sjf72o8v64mjvb remains the ONLY owned live GPU Pod: A10080GB1.79USD/hour.
+Engine40 final proof and independent recheck PASSED; ALL82 evidence234,689,568bytes
+copied back/hash verified. Inventoryd406ade8ed6000599bcf16ee2065a865bbddab66454496315af67584737bf247,
+Engine report8e14b636983ba4db9e31ca1179b00516383d8ccb5e56acc19d3b57e34b593d7e.
+Source/payload7769e7cc06f80e609db3f8ac2611977cd0d7cb66 unchanged.
+LIVE controller3406 birth15978541, numerical child4393;4/40 cases passed at02:50UTC,
+complete40 NOT yet passed. FP32/FP64-linear numerical reference remains threshold
+0.001 and causal prefix0. It is slow, CPU-bound between GPU operations; do not
+restart because of stale log/observation timeout. At02:40 GPU37percent/39,135MiB.
+Conditional BF16 gradient follow-up4247 live/waiting, controller source7a20fb3,
+exact payload7769; starts ALL40 only after original complete numerical success.
+Primary pipeline still has fixed05:13:45UTC deadline; guard57889/PID97499 armed for
+HARD DELETE05:14:52.804UTC (06:14London/07:14Berlin). Editing a receipt alone does
+NOT extend either running process. Numerical throughput may require a measured
+performance fix or a new explicit bounded controller interval within50USD; preserve
+all old partial evidence and never lower thresholds or approve a passing subset.
+
+Next critical work: integrate prepared native_control_training.py explicitly into
+original complete154 +native49 trainer, new accurate recipe/proof/Adam/RNG restore
+metadata, preserve all28 actual/old25/new24 teachers, KL1/hidden10, word64/clock64,
+all audio/masks/folds/heldouts. Matching independent combined readiness still needed
+before one bounded new8 optimizer pilot; then complete native/audio/fresh40 review
+before extension/adoption. All source40 quality/semantic/conversion, codec40 and
+Engine40 approvals are now complete and backed up. Numerical40 and gradient40 remain
+active/pending. Broader microturn/backchannel/easy-direct-hard-delegate curriculum is
+still required and has NOT been generated/trained. No Qwen fallback or gain hiding.
+
+# LOCAL — Engine40 PASSED/backed up; complete native20+speech20 reviewed; numerical live (23 October 03:40 London)
+
+LOCAL remains sole executor; CLOUD read-only. Goal ACTIVE, no new optimizer update
+or adopted model. Last authoritative observation 2026-10-23T02:40:01UTC.
+Latest pushed source at this observation is35c669908ef0818693b8cd0fcc4a6753179e1b26.
+This entry and the new review will be committed next; use git HEAD for their exact SHA.
+Unrelated tracked timeline.pyc and untracked capability-retention-probe.slurm,
+capability_retention_probe.py and roadmap.html remain untouched/uncommitted.
+
+Primary Pod sjf72o8v64mjvb: A10080GB1.79USD/hour, exact native payload/controller
+7769e7cc06f80e609db3f8ac2611977cd0d7cb66, /opt/duplex-control40-7769e7c.
+All40 Engine cases completed, frozen parameters unchanged, independent complete40
+revalidation PASSED; Engine3443 TERMINAL0 before numerical started02:16:36.959UTC.
+Engine reportSHA8e14b636983ba4db9e31ca1179b00516383d8ccb5e56acc19d3b57e34b593d7e.
+ALL82 Engine evidence files234,689,568bytes copied back to Mac and hashes match;
+inventorySHAd406ade8ed6000599bcf16ee2065a865bbddab66454496315af67584737bf247.
+Local runs/local-migration-20261023/native-control40-engine-complete-v3;
+receipt native-control40-engine-copyback-v1.json in the same migration root.
+Native codec40 remains complete/backed up as before (41files/3,839,020bytes).
+Full7797-file/8.000GB source workset and previously verified67.764GB archive intact.
+Broader project/stopped Mac source backup remains partial; do not claim otherwise.
+
+LIVE numerical controller3406, original birth15978541, child4393. At02:40UTC,
+2/40 numerical cases pass; actual GPU37percent/39,135MiB. Loading was CPU-bound
+for a long period; process remained live and was NEVER restarted. A bounded128MiB
+GPU-to-CPU/hash diagnostic took0.588s/1.366s; no optimizer/model changes.
+Numerical output /workspace/migration/native-control40-preflight-v3/numerical,
+log numerical.log under preflight root. Threshold remains0.001, causal prefix0,
+complete40 required. Conditional gradient follow-up4247 LIVE from committed
+7a20fb35d9465675e323905d4cbb34c1b09dff71 at /opt/duplex-gradient-followup-7a20fb3.
+It binds exact original controller PID/birth and clean7769 payload; waits for all
+three stages TERMINAL0 and controller exit, then runs ALL40 BF16 gradients, never
+optimizer work. Nonblocking lock prevents duplicate submissions. Follow-up output
+/workspace/migration/native-control40-gradient-v1 (gradient subdirectory + log).
+Both share05:13:45UTC pipeline deadline. Mac guard57889/PID97499 remains armed:
+HARD DELETE05:14:52.804UTC (06:14London/07:14Berlin),6hTOTAL,maxGPU10.74+0.25reserve.
+
+Second owned Pod bs1rs2ml6u1cvt was created01:51:53.841UTC for real paired native10:
+2xA10080GB, EUR-IS-1,3.58USD/hour, same retained volume49yytzyoge /workspace,
+100GB ephemeral root, same pinned NGC image as primary. SSH root@157.157.221.29
+port17423, existing local id_ed25519_runpod, ignored native10-known-hosts.
+Mac guard63883/PID30645 LIVE/armed; HARD DELETE03:51:53.841UTC
+(04:51London/05:51Berlin),2hTOTAL,maxGPU7.16+0.25reserve. Combined reserved
+worst-case prior four owned Pods20.096006687846966 +primary+second+disk reserves
+38.49600668784697USD, within existing50USD TOTAL. No new network volume.
+No other Pods touched. Do not create duplicate eval resources.
+
+Isolated setup source dca4f4b282fc1aa52ea19008d779ce60c4ac4ae0 at
+/opt/duplex-native10-dca4f4b. Public models locally copied and every MODEL_HASHES
+plus published asset hash matched. /opt/native10-runtime-root aliases only this
+container; durable originals unchanged. Shared /workspace/runtime-x86-ngc2510 was
+NOT modified. /opt/native10-asr-env uses identical NGC Torch2.9.0a0+145a3a7bda.nv25.10
+and pinned Whisper20250625/timestamped1.15.9/NumPy2.2.6/SciPy1.16.2/SoundFile0.13.1.
+Its initially installed Triton3.8 was removed BEFORE any ASR process; it now reads
+unchanged NGC Triton3.4.0. Alignment receipt /workspace/migration/native10-asr-triton-alignment-v1.json.
+Future setup pins both Torch and Triton. Public turbo1.51GiB hash aff26ae... verified.
+
+OpenAI credential NEVER copied to Runpod. Real Responses proxy remains on Mac,
+PID25526/exec83532, localhost53667, run native10-20261023-v1, max128requests,
+deadline07:00UTC. SSH reverse tunnel exec38065 exposes ONLY remote127.0.0.1:18788.
+Worker uses DUPLEX_OPENAI_LOOPBACK_PROXY=http://127.0.0.1:18788/v1/responses and
+DUPLEX_OPENAI_PROXY_RUN=native10-20261023-v1, no OPENAI_API_KEY. Actual4-response
+component smoke passed lookup/cancellation; component-only. Native run receipts
+prove real gpt-6-luna Responses and actual lookup_record; this is not native tool
+selection or complete delegation qualification. No owner conversations sent.
+
+First paired run /workspace/migration/native10-paired-v1 COMPLETED ALL20 at
+02:20:18.696UTC; controller1726/actors1767,1768 terminal. BOTH fresh independent
+adapter/Adam/Python/NumPy/TorchCPU/CUDARNG restores PASSED: baseline native520
+Adam520 (saved LR1e-5), candidate7590052 stage8/Adam528(LR2e-7). No new updates.
+Both actual GPU cold/reused PCM16 packet-stream WAV bytes, sampled tokens and delayed native input
+values were EXACT after a different intervening conversation. All10 each model
+were then collected afresh; private cases used distinct actual LM/ASR GPUs and
+real API receipts. No mock/oracle/scheduled worker or scoring answers in inputs.
+Independent speech ALL20 completed; controller3055/children3556,3557 terminal.
+ALL314 evidence files711,299,309bytes backed up on Mac and every SHA/size matches;
+inventory203d16c30d671012cf34ef5cd3a01220c3de37db1caefa53453e421975fada5c.
+Local runs/local-migration-20261023/native10-complete-evidence-v1;
+receipt native10-backup-copyback-v1.json. Full20 review:
+docs/NATIVE-PAIRED20-DEFAULT-RUNTIME-REVIEW-2026-10-23.json.
+
+CURRENT default-runtime measured ordinary core: baseline2/4, candidate0/4.
+Both speak during conservative complete-instruction-to-cue quiet intervals;
+both fail pause/resume; lookups execute but results are often ignored, clarification
+fails, cancellation has no actual cancellation receipt. Candidate copper-diamond
+value is delivered but repeats and independent WER0.13675 fails. All failed audio,
+word clocks and receipts retained. These are NOT adopted/extended candidates.
+Human listening not performed for this review; failures established from unchanged
+PCM, independent ASR, semantic content and tool receipts. Original gates unchanged.
+
+Discovered runtime difference against archived native520 ancestor7577202 (4/4):
+same original user WAV (case0SHA1bd5ef3c...), voice, persona, checkpoint and Torch
+build; archived GH200 execution matmulTF32true/float32 high, current A100 defaults
+matmulTF32false/highest. GPU architecture also differs; do NOT claim TF32 is proven
+cause. Source35c6699 adds explicit archive-tf32-high-v1 read-only comparison and
+fresh guard REJECTS silent adoption of its diagnostic profile. It does not change
+the primary numerical/gradient TF32 or thresholds.
+
+Second complete paired20 runtime comparison is /workspace/migration/native10-paired-archive-tf32-v1,
+source35c669908ef0818693b8cd0fcc4a6753179e1b26 at /opt/duplex-native-runtime-35c6699.
+Controller3805 birth28045989, actors3846/3847 terminal by02:40UTC, ALL20 native
+cases completed; both cold/reused parity checks PASSED again. Archived global
+TF32true/high observed in actual history, voice/sampler/weights/input unchanged.
+Both independent state restores reran/passed. NOT adopted or fresh-qualified.
+Independent speech follow-up4265 LIVE, children4934/4935 observed live, from
+/opt/duplex-speech-followup-d8b6f2e (d8b6f2e4ea413033a21df43029729f58ba38f5a2).
+Out /workspace/migration/native10-independent-speech-archive-tf32-v1. Pipeline
+ends03:50:45UTC, before Pod guard. Do not resubmit from a stale observation.
+
+Next: finish/review/back up second complete20 speech + runtime comparison; select
+repair parent only after complete evidence, never present old4/4 as current A100
+qualification. Finish numerical40, then automatically gradient40. Integration of
+native_control_training.py into original full154+native49 trainer remains NOT DONE;
+it currently has no optimizer/CLI. Must add accurate new recipe/proof/state and
+independent combined readiness, preserving all28 actual/all25+24 native teachers,
+original154, native49, word64/clock64, KL1/hidden10 and heldout hashes. Then bounded
+new8 pilot, independent complete state/RNG restore, actual native behavior and all40
+sealed paired fresh outputs before extension/adoption. Broader interaction/backchannel/
+easy-direct-hard-delegate curriculum is still required and has not been trained.
+No Qwen, gain hiding, weakened threshold or passing-subset acceptance.
+
 # LOCAL — native codec40 PASSED/backed up; native-graph Engine40 live (23 October 02:10 London)
 
 LOCAL sole executor; CLOUD read-only. Actual current payload AND controller source

@@ -1,6 +1,6 @@
 {
   "schema": "dl-native-control40-preflight-progress-v1",
-  "at_utc": "2026-10-23T01:10:58.844257+00:00",
+  "at_utc": "2026-10-23T02:55:23.202944+00:00",
   "active_executor": "LOCAL",
   "cloud_executor": "read-only",
   "native_payload_and_controller_commit": "7769e7cc06f80e609db3f8ac2611977cd0d7cb66",
@@ -69,72 +69,21 @@
     }
   ],
   "running_observation": {
-    "at_utc": "2026-10-23T01:08:05.837392+00:00",
-    "controller": {
-      "schema": "dl-native-control40-preflight-controller-v1",
-      "pid": 3406,
-      "controller_commit": "7769e7cc06f80e609db3f8ac2611977cd0d7cb66",
-      "source_commit": "7769e7cc06f80e609db3f8ac2611977cd0d7cb66",
-      "execution_source": "/opt/duplex-control40-7769e7c",
-      "deadline_utc": "2026-10-23T05:13:45Z",
-      "started_utc": "2026-10-23T01:02:50.208792+00:00",
-      "phase": "engine",
-      "stages": [
-        {
-          "name": "codec_verify",
-          "command": [
-            "/workspace/runtime-x86-ngc2510/bin/python",
-            "-u",
-            "-m",
-            "evals.native_control_cache",
-            "--verify",
-            "/workspace/migration/native-control40-preflight-v2/codes"
-          ],
-          "started_utc": "2026-10-23T01:03:05.923814+00:00",
-          "pid": 3426,
-          "exit_code": 0,
-          "finished_utc": "2026-10-23T01:04:20.199345+00:00"
-        },
-        {
-          "name": "engine",
-          "command": [
-            "/workspace/runtime-x86-ngc2510/bin/python",
-            "-u",
-            "-m",
-            "evals.native_control_engine",
-            "--cache",
-            "/workspace/migration/native-control40-preflight-v2/codes",
-            "--assets",
-            "/projects/u6si/duplex-live/runs/context-spanning-assets-7454205/manifest.json",
-            "--base",
-            "/projects/u6si/duplex-live/models/hf-cache/hub/models--nvidia--personaplex-7b-v1/snapshots/fdaf4090a61cb315c138a1faee287ffd6c716309",
-            "--proof",
-            "/projects/u6si/duplex-live/runs/context-training-proof-7510331",
-            "--out",
-            "/workspace/migration/native-control40-preflight-v3/engine"
-          ],
-          "started_utc": "2026-10-23T01:04:20.260324+00:00",
-          "pid": 3443
-        }
-      ],
-      "optimizer_updates": 0,
-      "checkpoint_written": false,
-      "training_approved": false,
-      "passed": false,
-      "native_cuda_environment": {
-        "CPATH": "/usr/local/cuda/include",
-        "TRITON_PTXAS_PATH": "/usr/local/cuda/bin/ptxas",
-        "TRITON_LIBCUDA_PATH": "/workspace/migration/native-control40-preflight-v3/driver"
-      },
-      "reused_complete_cache": "/workspace/migration/native-control40-preflight-v2/codes"
-    },
-    "controller_pid_live": true,
-    "child_pid_live": true,
-    "codec_verify_log_tail": [
-      "{\"complete\": 40, \"training_approved\": false, \"optimizer_updates\": 0}"
-    ],
-    "engine_log_tail": [],
-    "gpu": "0 %, 0 MiB"
+    "at_utc": "2026-10-23T02:50:19Z",
+    "controller_pid": 3406,
+    "controller_birth_ticks": 15978541,
+    "numerical_pid": 4393,
+    "numerical_cases_passed_so_far": 4,
+    "complete40_numerical": false,
+    "numerical_threshold": 0.001,
+    "cuda_memory_mib_observed": 39135,
+    "cuda_utilization_percent_observed": 37,
+    "conditional_gradient_controller_pid": 4247,
+    "conditional_gradient_controller_source": "7a20fb35d9465675e323905d4cbb34c1b09dff71",
+    "conditional_gradient_payload_source": "7769e7cc06f80e609db3f8ac2611977cd0d7cb66",
+    "conditional_gradient_output": "/workspace/migration/native-control40-gradient-v1",
+    "deadline_utc": "2026-10-23T05:13:45Z",
+    "optimizer_updates": 0
   },
   "execution_profiles": {
     "engine": "Published native CUDA graphs required; all17 input channels independently checked; teacher text/audio forced for input audit only; not behavior qualification",
@@ -185,17 +134,64 @@
     "Integrate the new control40 loss into the full retained154 plus native49 recipe, with accurate versioned proof/state/restore metadata and combined readiness"
   ],
   "native10_topology": {
-    "existing_probe_requires_two_distinct_assigned_gpus": true,
-    "current_pod_has_one_gpu": true,
-    "second_pod_created": false,
-    "read_only_catalog_at_utc": "2026-10-23T00:35:06Z",
-    "two_A100_EUR_IS_1_stock": "LOW",
-    "catalog_per_gpu_hourly_usd": 1.79,
-    "possible_two_hour_second_trial_gpu_cap_usd": 7.16,
-    "projected_two_trial_reserves_plus_prior_usd": 38.49600668784697,
-    "refresh_stock_and_budget_before_any_create": true,
-    "openai_provider_credential_must_stay_on_mac": true,
-    "remote_real_worker_transport_not_yet_implemented": true
+    "pod_id": "bs1rs2ml6u1cvt",
+    "name": "duplex-native-validation-native10-20261023-v1",
+    "gpus": 2,
+    "gpu_class": "NVIDIA A100-SXM4-80GB",
+    "hourly_usd": 3.58,
+    "created_utc": "2026-10-23T01:51:53.841Z",
+    "deadline_utc": "2026-10-23T03:51:53.841Z",
+    "guard_pid": 30645,
+    "guard_exec_session": 63883,
+    "maximum_gpu_usd": 7.16,
+    "complete_default_runtime_paired20": true,
+    "complete_default_runtime_independent_speech20": true,
+    "default_runtime_source": "dca4f4b282fc1aa52ea19008d779ce60c4ac4ae0",
+    "default_runtime_review": "docs/NATIVE-PAIRED20-DEFAULT-RUNTIME-REVIEW-2026-10-23.json",
+    "complete_default_evidence_backup": {
+      "schema": "dl-native-paired20-local-backup-verification-v1",
+      "at_utc": "2026-10-23T02:26:55.466066+00:00",
+      "all_files_size_sha256_match": true,
+      "files": 314,
+      "bytes": 711299309,
+      "inventory_sha256": "203d16c30d671012cf34ef5cd3a01220c3de37db1caefa53453e421975fada5c",
+      "complete20_native_and_independent_speech": true,
+      "candidate_adopted": false,
+      "training_approved": false
+    },
+    "archived_tf32_runtime_source": "35c669908ef0818693b8cd0fcc4a6753179e1b26",
+    "archived_tf32_controller_pid": 3805,
+    "archived_tf32_complete20_native": true,
+    "archived_tf32_independent_speech_controller_pid": 4265,
+    "archived_tf32_speech_children_observed": [
+      4934,
+      4935
+    ],
+    "archived_tf32_complete20_speech": true,
+    "archived_tf32_outputs": "/workspace/migration/native10-paired-archive-tf32-v1",
+    "archived_tf32_speech_outputs": "/workspace/migration/native10-independent-speech-archive-tf32-v1",
+    "provider_credential_transferred": false,
+    "mac_loopback_proxy_pid": 25526,
+    "ssh_reverse_tunnel_exec_session": 38065,
+    "source_unchanged_original_approval_thresholds": true,
+    "runtime_comparison_not_adopted": true,
+    "status": "TERMINATED",
+    "confirmed_get_http": 404,
+    "guard_terminal": true,
+    "ssh_reverse_tunnel_terminal_code": 255,
+    "archived_tf32_complete_evidence_backup": {
+      "schema": "dl-native-archive-tf32-paired20-local-backup-v1",
+      "at_utc": "2026-10-23T02:47:11.955678+00:00",
+      "complete20_native_and_independent_speech": true,
+      "files": 316,
+      "bytes": 713772882,
+      "all_files_size_sha256_match": true,
+      "inventory_sha256": "3fd504c0ccc93b53158d87fff99552a7f6db02ece1f3cec1d07a86005517a5f3",
+      "runtime_comparison_not_adopted": true,
+      "optimizer_updates": 0
+    },
+    "archived_tf32_review": "docs/NATIVE-PAIRED20-ARCHIVE-RUNTIME-REVIEW-2026-10-23.json",
+    "all_native_and_speech_processes_terminal": true
   },
   "optimizer_updates_since_native7590052": 0,
   "latest_actual_model": "native7590052:8 updates, Adam520->528, unadopted",
@@ -210,5 +206,58 @@
     "Held-out audio hashes",
     "Original failed artifacts and receipts",
     "No Qwen or frontend keyword mute fallback"
-  ]
+  ],
+  "native_engine_complete40": {
+    "passed": true,
+    "all_model_parameters_unchanged": true,
+    "independent_full40_revalidation_passed": true,
+    "engine_child_exit_code": 0,
+    "engine_stage_finished_utc": "2026-10-23T02:16:36.959328+00:00",
+    "backup": {
+      "schema": "dl-native-control40-engine-copyback-v1",
+      "at_utc": "2026-10-23T02:35:36.864129+00:00",
+      "complete40": true,
+      "files": 82,
+      "bytes": 234689568,
+      "all_files_size_sha256_match": true,
+      "inventory_sha256": "d406ade8ed6000599bcf16ee2065a865bbddab66454496315af67584737bf247",
+      "engine_report_sha256": "8e14b636983ba4db9e31ca1179b00516383d8ccb5e56acc19d3b57e34b593d7e",
+      "numerical_and_gradient_and_behavior_approval_still_required": true,
+      "optimizer_updates": 0
+    }
+  },
+  "budget_reserved_worst_case_total_usd": 38.49600668784697,
+  "original_scope_remains_incomplete": true,
+  "training_integration_status": "native_control_training.py prepared; not connected to original154/native49 trainer; no optimizer work authorized by these read-only readiness results alone",
+  "repair_parent_selection": {
+    "schema": "dl-native-control40-bounded-repair-parent-selection-v1",
+    "at_utc": "2026-10-23T02:49:53.267542+00:00",
+    "complete_native_cases_reviewed": 40,
+    "complete_independent_speech_cases_reviewed": 40,
+    "default_review": "docs/NATIVE-PAIRED20-DEFAULT-RUNTIME-REVIEW-2026-10-23.json",
+    "archive_review": "docs/NATIVE-PAIRED20-ARCHIVE-RUNTIME-REVIEW-2026-10-23.json",
+    "parent_proof": "context-training-proof-7510331",
+    "parent_checkpoint_sha256": "0310c2563988f8f59d942dce98119230016136f13fc9729ad1c2f398318e7cb5",
+    "parent_training_state_sha256": "b5e4320fba68a0b624a7be61778def8e6238517272637324824126ccaa1c6785",
+    "parent_adam_clock": 520,
+    "selected_native_runtime": "container-default A100 BF16 MATH; observed matmulTF32false/highest and cudnnTF32true",
+    "selection_scope": "Parent only for a distinct bounded eight-update control40 repair stage; no adoption or unchanged continuation of rejected pilot",
+    "reason": "Default-runtime native520 retains two correct ordinary cores versus zero for7590052. Explicit archived TF32 policy does not restore4of4 and is not adopted. Retain the exact current Engine40/numerical runtime and every original objective while repairing diagnosed controls. All existing ordinary4, full-task, independent restore and fresh qualification gates remain unchanged.",
+    "baseline_is_production_qualified": false,
+    "candidate7590052_adopted": false,
+    "optimizer_start_ready": false,
+    "still_required_before_optimizer": [
+      "Complete40 native numerical approval at original0.001 threshold",
+      "Complete40 BF16 gradient readiness",
+      "Explicit integration with unchanged original154 plus native49, original28 histories and old25/new24 teachers, KL1 hidden10 word64 clock64",
+      "Accurate new data/recipe/checkpoint proof and complete independent combined readiness"
+    ],
+    "after_new8": [
+      "Independent full adapter, Adam and all RNG restoration",
+      "Complete native behavioral and independent speech review",
+      "Complete sealed paired fresh40 before adoption; ordinary4 gate unchanged"
+    ],
+    "optimizer_updates_this_selection": 0
+  },
+  "budget_reserved_worst_case_after_second_terminated_usd": 34.68600668784697
 }
