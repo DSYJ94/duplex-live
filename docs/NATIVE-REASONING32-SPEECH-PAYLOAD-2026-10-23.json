@@ -1,0 +1,415 @@
+{
+  "schema": "dl-native-reasoning32-user-speech-payload-review-v1",
+  "status": "APPROVAL_PENDING_NO_API_CALL",
+  "endpoint": "https://api.openai.com/v1/audio/speech",
+  "request_count": 40,
+  "authored_user_characters": 7349,
+  "complete_scenes": 32,
+  "complete_scene_clips": 56,
+  "source_plan_sha256": "8bf69aa79ce6c458e772042064c4abd3e2613e175c50d826f51371c92cc3788e",
+  "owner_conversations_sent": false,
+  "answer_or_scoring_annotations_sent": false,
+  "provider_key_in_payload": false,
+  "requests": [
+    {
+      "payload_sha256": "cfd724fca98cf4fdbe3569936c2dcf145c9881fcc17ba7c7078196e22bb2e094",
+      "payload": {
+        "model": "gpt-4o-mini-tts-2025-12-15",
+        "input": "One badge costs four tokens. How many tokens do two badges cost?",
+        "voice": "alloy",
+        "response_format": "wav",
+        "instructions": "Speak naturally in clear conversational English. Read exactly the supplied words, without additions."
+      }
+    },
+    {
+      "payload_sha256": "c70091c99062e09c160dfaf2ca43f95e000ae535d5207bc31b0b343a4de62b5f",
+      "payload": {
+        "model": "gpt-4o-mini-tts-2025-12-15",
+        "input": "Choose exactly three different items. The badge costs four tokens and earns seventeen points. The candle costs two tokens and earns sixteen points. The marker costs six tokens and earns eight points. The poster costs ten tokens and earns fifteen points. The pouch costs three tokens and earns fourteen points. The ribbon costs two tokens and earns five points. Spend at most seventeen tokens. Include the badge. Never choose both the pouch and the candle. Maximize total points. Break ties by lower cost, then alphabetical order of the three names. Tell me the items, total cost and total points.",
+        "voice": "alloy",
+        "response_format": "wav",
+        "instructions": "Speak naturally in clear conversational English. Read exactly the supplied words, without additions."
+      }
+    },
+    {
+      "payload_sha256": "67b4c5c6df5b6e4bbaf9dacebd7b302d3e57bdf68afb6b780e00a5bbfa9e9d97",
+      "payload": {
+        "model": "gpt-4o-mini-tts-2025-12-15",
+        "input": "While that is pending, one badge costs four tokens. How many tokens do two badges cost?",
+        "voice": "alloy",
+        "response_format": "wav",
+        "instructions": "Speak naturally in clear conversational English. Read exactly the supplied words, without additions."
+      }
+    },
+    {
+      "payload_sha256": "4dfebff5460fbe51c3259cc0012e8f65d13d99be5ea1386b3bb3207a33bfcdef",
+      "payload": {
+        "model": "gpt-4o-mini-tts-2025-12-15",
+        "input": "Cancel the bundle search. Instead, one badge costs four tokens. How many tokens do two badges cost?",
+        "voice": "alloy",
+        "response_format": "wav",
+        "instructions": "Speak naturally in clear conversational English. Read exactly the supplied words, without additions."
+      }
+    },
+    {
+      "payload_sha256": "7acae062d4745c22b3f89744c2b963b5b5580d292ebb0c7062eb12d852f15d87",
+      "payload": {
+        "model": "gpt-4o-mini-tts-2025-12-15",
+        "input": "Change the budget to twelve tokens. Keep all the other rules the same.",
+        "voice": "alloy",
+        "response_format": "wav",
+        "instructions": "Speak naturally in clear conversational English. Read exactly the supplied words, without additions."
+      }
+    },
+    {
+      "payload_sha256": "d7ce49e74f7d967b7d85077263ceb458eb8e91966dc078e82d788eb633841ebb",
+      "payload": {
+        "model": "gpt-4o-mini-tts-2025-12-15",
+        "input": "One candle costs nine tokens. How many tokens do two candles cost?",
+        "voice": "echo",
+        "response_format": "wav",
+        "instructions": "Speak naturally in clear conversational English. Read exactly the supplied words, without additions."
+      }
+    },
+    {
+      "payload_sha256": "cfa7c6d2209a71950d59734639bdc360d0e07d2cdb066ec62f1e435f9d1a2184",
+      "payload": {
+        "model": "gpt-4o-mini-tts-2025-12-15",
+        "input": "Choose exactly three different items. The badge costs nine tokens and earns nineteen points. The candle costs nine tokens and earns four points. The marker costs four tokens and earns six points. The poster costs eleven tokens and earns three points. The pouch costs two tokens and earns eight points. The ribbon costs two tokens and earns seventeen points. Spend at most sixteen tokens. Include the candle. Never choose both the marker and the poster. Maximize total points. Break ties by lower cost, then alphabetical order of the three names. Tell me the items, total cost and total points.",
+        "voice": "echo",
+        "response_format": "wav",
+        "instructions": "Speak naturally in clear conversational English. Read exactly the supplied words, without additions."
+      }
+    },
+    {
+      "payload_sha256": "3e5de66cd6623192d250c66ad6877fa72ba7b627712c25f8706d4cab03f3a92c",
+      "payload": {
+        "model": "gpt-4o-mini-tts-2025-12-15",
+        "input": "While that is pending, one candle costs nine tokens. How many tokens do two candles cost?",
+        "voice": "echo",
+        "response_format": "wav",
+        "instructions": "Speak naturally in clear conversational English. Read exactly the supplied words, without additions."
+      }
+    },
+    {
+      "payload_sha256": "b3577423166a34946213d31d3c9917920956f59bbf84f8633cc1b23fbf66b51f",
+      "payload": {
+        "model": "gpt-4o-mini-tts-2025-12-15",
+        "input": "Cancel the bundle search. Instead, one candle costs nine tokens. How many tokens do two candles cost?",
+        "voice": "echo",
+        "response_format": "wav",
+        "instructions": "Speak naturally in clear conversational English. Read exactly the supplied words, without additions."
+      }
+    },
+    {
+      "payload_sha256": "7cbfe5e6ec8d68423d7ad894c0bf55f62007bc314d59deb0159e8a26776c7a94",
+      "payload": {
+        "model": "gpt-4o-mini-tts-2025-12-15",
+        "input": "Change the budget to twenty one tokens. Keep all the other rules the same.",
+        "voice": "echo",
+        "response_format": "wav",
+        "instructions": "Speak naturally in clear conversational English. Read exactly the supplied words, without additions."
+      }
+    },
+    {
+      "payload_sha256": "aea5ab2970a6c899bcde62af822d5aa7ce1a80260f0358847c1708dd075e7fd4",
+      "payload": {
+        "model": "gpt-4o-mini-tts-2025-12-15",
+        "input": "One marker costs ten tokens. How many tokens do two markers cost?",
+        "voice": "alloy",
+        "response_format": "wav",
+        "instructions": "Speak naturally in clear conversational English. Read exactly the supplied words, without additions."
+      }
+    },
+    {
+      "payload_sha256": "1bf12be20740b709d40fd08176845b8191d65bbdc97f6894856a830f86937104",
+      "payload": {
+        "model": "gpt-4o-mini-tts-2025-12-15",
+        "input": "Choose exactly three different items. The badge costs three tokens and earns eight points. The candle costs ten tokens and earns four points. The marker costs ten tokens and earns thirteen points. The poster costs ten tokens and earns nine points. The pouch costs eight tokens and earns six points. The ribbon costs two tokens and earns fifteen points. Spend at most nineteen tokens. Include the marker. Never choose both the badge and the poster. Maximize total points. Break ties by lower cost, then alphabetical order of the three names. Tell me the items, total cost and total points.",
+        "voice": "alloy",
+        "response_format": "wav",
+        "instructions": "Speak naturally in clear conversational English. Read exactly the supplied words, without additions."
+      }
+    },
+    {
+      "payload_sha256": "b1cd21676a45a7ce3acbd8557a866778a1bec3b2950720e25d05d52baf1e4e28",
+      "payload": {
+        "model": "gpt-4o-mini-tts-2025-12-15",
+        "input": "While that is pending, one marker costs ten tokens. How many tokens do two markers cost?",
+        "voice": "alloy",
+        "response_format": "wav",
+        "instructions": "Speak naturally in clear conversational English. Read exactly the supplied words, without additions."
+      }
+    },
+    {
+      "payload_sha256": "477c08ef6c7e0ab50029bb93f997e31358622fdb13fabff61cec29369b0d9600",
+      "payload": {
+        "model": "gpt-4o-mini-tts-2025-12-15",
+        "input": "Cancel the bundle search. Instead, one marker costs ten tokens. How many tokens do two markers cost?",
+        "voice": "alloy",
+        "response_format": "wav",
+        "instructions": "Speak naturally in clear conversational English. Read exactly the supplied words, without additions."
+      }
+    },
+    {
+      "payload_sha256": "ceef08a56e0487f86fa9e3fb68d413c0c7ab48be3e9913b74e7c33e857f85736",
+      "payload": {
+        "model": "gpt-4o-mini-tts-2025-12-15",
+        "input": "Change the budget to twenty two tokens. Keep all the other rules the same.",
+        "voice": "alloy",
+        "response_format": "wav",
+        "instructions": "Speak naturally in clear conversational English. Read exactly the supplied words, without additions."
+      }
+    },
+    {
+      "payload_sha256": "559854245eefd70e1b7e093d0a67b797dba0e5813e77a6e394b8d4a37a3858c8",
+      "payload": {
+        "model": "gpt-4o-mini-tts-2025-12-15",
+        "input": "One poster costs three tokens. How many tokens do two posters cost?",
+        "voice": "echo",
+        "response_format": "wav",
+        "instructions": "Speak naturally in clear conversational English. Read exactly the supplied words, without additions."
+      }
+    },
+    {
+      "payload_sha256": "8d57491280185df1844bbe328e658cd8f03172c075ea740376e8f63fb3928b77",
+      "payload": {
+        "model": "gpt-4o-mini-tts-2025-12-15",
+        "input": "Choose exactly three different items. The badge costs six tokens and earns thirteen points. The candle costs nine tokens and earns thirteen points. The marker costs two tokens and earns seven points. The poster costs three tokens and earns eight points. The pouch costs two tokens and earns ten points. The ribbon costs seven tokens and earns eight points. Spend at most eighteen tokens. Include the poster. Never choose both the pouch and the badge. Maximize total points. Break ties by lower cost, then alphabetical order of the three names. Tell me the items, total cost and total points.",
+        "voice": "echo",
+        "response_format": "wav",
+        "instructions": "Speak naturally in clear conversational English. Read exactly the supplied words, without additions."
+      }
+    },
+    {
+      "payload_sha256": "b58fc0c2d1ab9e0ecce9cee3946cd8ab90043d7f466b1ccd62a2df00927cd682",
+      "payload": {
+        "model": "gpt-4o-mini-tts-2025-12-15",
+        "input": "While that is pending, one poster costs three tokens. How many tokens do two posters cost?",
+        "voice": "echo",
+        "response_format": "wav",
+        "instructions": "Speak naturally in clear conversational English. Read exactly the supplied words, without additions."
+      }
+    },
+    {
+      "payload_sha256": "f28938740b9058565da15f9966a050cb82cde16066aaed092b9034f5a398ad0b",
+      "payload": {
+        "model": "gpt-4o-mini-tts-2025-12-15",
+        "input": "Cancel the bundle search. Instead, one poster costs three tokens. How many tokens do two posters cost?",
+        "voice": "echo",
+        "response_format": "wav",
+        "instructions": "Speak naturally in clear conversational English. Read exactly the supplied words, without additions."
+      }
+    },
+    {
+      "payload_sha256": "d5fcce67cad68611062520363b3e19ae62fc9be881431a35078c9673851e1e22",
+      "payload": {
+        "model": "gpt-4o-mini-tts-2025-12-15",
+        "input": "Change the budget to thirteen tokens. Keep all the other rules the same.",
+        "voice": "echo",
+        "response_format": "wav",
+        "instructions": "Speak naturally in clear conversational English. Read exactly the supplied words, without additions."
+      }
+    },
+    {
+      "payload_sha256": "3dec46d37f592caef356b9da0484e587a61eccbeae76b0868a3dee88c964da66",
+      "payload": {
+        "model": "gpt-4o-mini-tts-2025-12-15",
+        "input": "One pouch costs three tokens. How many tokens do two pouches cost?",
+        "voice": "alloy",
+        "response_format": "wav",
+        "instructions": "Speak naturally in clear conversational English. Read exactly the supplied words, without additions."
+      }
+    },
+    {
+      "payload_sha256": "a1ba0b9afe8e7a81f8cc1eb7918bad652a0fe2d86ceff6ffe08a024d096c3387",
+      "payload": {
+        "model": "gpt-4o-mini-tts-2025-12-15",
+        "input": "Choose exactly three different items. The badge costs two tokens and earns four points. The candle costs seven tokens and earns thirteen points. The marker costs eleven tokens and earns thirteen points. The poster costs nine tokens and earns three points. The pouch costs three tokens and earns fifteen points. The ribbon costs seven tokens and earns three points. Spend at most nineteen tokens. Include the pouch. Never choose both the badge and the candle. Maximize total points. Break ties by lower cost, then alphabetical order of the three names. Tell me the items, total cost and total points.",
+        "voice": "alloy",
+        "response_format": "wav",
+        "instructions": "Speak naturally in clear conversational English. Read exactly the supplied words, without additions."
+      }
+    },
+    {
+      "payload_sha256": "e394da7083e84e4aaf2f150331e16acd924c2fc176ba4081821e7c4cb213ed3a",
+      "payload": {
+        "model": "gpt-4o-mini-tts-2025-12-15",
+        "input": "While that is pending, one pouch costs three tokens. How many tokens do two pouches cost?",
+        "voice": "alloy",
+        "response_format": "wav",
+        "instructions": "Speak naturally in clear conversational English. Read exactly the supplied words, without additions."
+      }
+    },
+    {
+      "payload_sha256": "dabffdc0717070166257796f66f86c575aa2336799d66ec9987b166407596d97",
+      "payload": {
+        "model": "gpt-4o-mini-tts-2025-12-15",
+        "input": "Cancel the bundle search. Instead, one pouch costs three tokens. How many tokens do two pouches cost?",
+        "voice": "alloy",
+        "response_format": "wav",
+        "instructions": "Speak naturally in clear conversational English. Read exactly the supplied words, without additions."
+      }
+    },
+    {
+      "payload_sha256": "50619142430edb91d47eee77810910ef78cab117b1851652fa81725aab4a525b",
+      "payload": {
+        "model": "gpt-4o-mini-tts-2025-12-15",
+        "input": "Change the budget to fourteen tokens. Keep all the other rules the same.",
+        "voice": "alloy",
+        "response_format": "wav",
+        "instructions": "Speak naturally in clear conversational English. Read exactly the supplied words, without additions."
+      }
+    },
+    {
+      "payload_sha256": "a745fde1d839193d3feff8ded0cef245e9e39e7d6c56f65582d8158c058b5ea3",
+      "payload": {
+        "model": "gpt-4o-mini-tts-2025-12-15",
+        "input": "One ribbon costs six tokens. How many tokens do two ribbons cost?",
+        "voice": "echo",
+        "response_format": "wav",
+        "instructions": "Speak naturally in clear conversational English. Read exactly the supplied words, without additions."
+      }
+    },
+    {
+      "payload_sha256": "9fdf4d25b04fdc88ddc8b0cb7834c8e39a82b0f38e26b10d3eb3b508f3b21d5c",
+      "payload": {
+        "model": "gpt-4o-mini-tts-2025-12-15",
+        "input": "Choose exactly three different items. The badge costs six tokens and earns nine points. The candle costs seven tokens and earns nineteen points. The marker costs six tokens and earns eighteen points. The poster costs eleven tokens and earns fourteen points. The pouch costs two tokens and earns eight points. The ribbon costs six tokens and earns six points. Spend at most twenty tokens. Include the ribbon. Never choose both the candle and the marker. Maximize total points. Break ties by lower cost, then alphabetical order of the three names. Tell me the items, total cost and total points.",
+        "voice": "echo",
+        "response_format": "wav",
+        "instructions": "Speak naturally in clear conversational English. Read exactly the supplied words, without additions."
+      }
+    },
+    {
+      "payload_sha256": "613a113ee3a74e729260866012ec1c893d2957b3619434ecea7d806cbd75eec8",
+      "payload": {
+        "model": "gpt-4o-mini-tts-2025-12-15",
+        "input": "While that is pending, one ribbon costs six tokens. How many tokens do two ribbons cost?",
+        "voice": "echo",
+        "response_format": "wav",
+        "instructions": "Speak naturally in clear conversational English. Read exactly the supplied words, without additions."
+      }
+    },
+    {
+      "payload_sha256": "acaa1b01eaa67d94541fc46a02138ff9d949658893d0e33f707d1c43afe39d76",
+      "payload": {
+        "model": "gpt-4o-mini-tts-2025-12-15",
+        "input": "Cancel the bundle search. Instead, one ribbon costs six tokens. How many tokens do two ribbons cost?",
+        "voice": "echo",
+        "response_format": "wav",
+        "instructions": "Speak naturally in clear conversational English. Read exactly the supplied words, without additions."
+      }
+    },
+    {
+      "payload_sha256": "a1de60be2c11269a1ac07f0dd541b4f316168c4ba1309b28f87f937e5dae55ac",
+      "payload": {
+        "model": "gpt-4o-mini-tts-2025-12-15",
+        "input": "Change the budget to fifteen tokens. Keep all the other rules the same.",
+        "voice": "echo",
+        "response_format": "wav",
+        "instructions": "Speak naturally in clear conversational English. Read exactly the supplied words, without additions."
+      }
+    },
+    {
+      "payload_sha256": "1e38831c49b9f89d839c21cd0dff8b65c7089e3b09d4fbd069ab48c6c2a86137",
+      "payload": {
+        "model": "gpt-4o-mini-tts-2025-12-15",
+        "input": "One badge costs five tokens. How many tokens do two badges cost?",
+        "voice": "alloy",
+        "response_format": "wav",
+        "instructions": "Speak naturally in clear conversational English. Read exactly the supplied words, without additions."
+      }
+    },
+    {
+      "payload_sha256": "e5e7df249daf237133a90305caf431660900a1fb4576ee59ff0eb8681d061bcb",
+      "payload": {
+        "model": "gpt-4o-mini-tts-2025-12-15",
+        "input": "Choose exactly three different items. The badge costs five tokens and earns three points. The candle costs four tokens and earns four points. The marker costs nine tokens and earns fourteen points. The poster costs ten tokens and earns five points. The pouch costs four tokens and earns fifteen points. The ribbon costs six tokens and earns thirteen points. Spend at most twenty two tokens. Include the badge. Never choose both the candle and the poster. Maximize total points. Break ties by lower cost, then alphabetical order of the three names. Tell me the items, total cost and total points.",
+        "voice": "alloy",
+        "response_format": "wav",
+        "instructions": "Speak naturally in clear conversational English. Read exactly the supplied words, without additions."
+      }
+    },
+    {
+      "payload_sha256": "881b20fef7c02ed4ae303408f6a8e23cf7306940b970d77799eb0e8b16bcd978",
+      "payload": {
+        "model": "gpt-4o-mini-tts-2025-12-15",
+        "input": "While that is pending, one badge costs five tokens. How many tokens do two badges cost?",
+        "voice": "alloy",
+        "response_format": "wav",
+        "instructions": "Speak naturally in clear conversational English. Read exactly the supplied words, without additions."
+      }
+    },
+    {
+      "payload_sha256": "6ecf7c0751da94bb4a3e0f484b6eb89492a1aa62ffb5ad075b42fe3701543517",
+      "payload": {
+        "model": "gpt-4o-mini-tts-2025-12-15",
+        "input": "Cancel the bundle search. Instead, one badge costs five tokens. How many tokens do two badges cost?",
+        "voice": "alloy",
+        "response_format": "wav",
+        "instructions": "Speak naturally in clear conversational English. Read exactly the supplied words, without additions."
+      }
+    },
+    {
+      "payload_sha256": "383857b0cd1d78ec196e508a91fdc2bb0aa2927809d9f86ea32df58cde5b17fb",
+      "payload": {
+        "model": "gpt-4o-mini-tts-2025-12-15",
+        "input": "Change the budget to seventeen tokens. Keep all the other rules the same.",
+        "voice": "alloy",
+        "response_format": "wav",
+        "instructions": "Speak naturally in clear conversational English. Read exactly the supplied words, without additions."
+      }
+    },
+    {
+      "payload_sha256": "23835848ec2ee12959dac930bac4b947c566c1cff1c6d497db3207c5fe6bc7cd",
+      "payload": {
+        "model": "gpt-4o-mini-tts-2025-12-15",
+        "input": "One candle costs ten tokens. How many tokens do two candles cost?",
+        "voice": "echo",
+        "response_format": "wav",
+        "instructions": "Speak naturally in clear conversational English. Read exactly the supplied words, without additions."
+      }
+    },
+    {
+      "payload_sha256": "4d328bd59d0f8119fce3f0fc1cf1d8dbcbb5a24c65396ff0e3a0f0d9decab714",
+      "payload": {
+        "model": "gpt-4o-mini-tts-2025-12-15",
+        "input": "Choose exactly three different items. The badge costs two tokens and earns twelve points. The candle costs ten tokens and earns eight points. The marker costs seven tokens and earns ten points. The poster costs two tokens and earns fifteen points. The pouch costs six tokens and earns ten points. The ribbon costs five tokens and earns fifteen points. Spend at most fifteen tokens. Include the candle. Never choose both the marker and the pouch. Maximize total points. Break ties by lower cost, then alphabetical order of the three names. Tell me the items, total cost and total points.",
+        "voice": "echo",
+        "response_format": "wav",
+        "instructions": "Speak naturally in clear conversational English. Read exactly the supplied words, without additions."
+      }
+    },
+    {
+      "payload_sha256": "40e858fc3ed7729fe45fe7b3bbbef28fe66cddc2e6e8e1757d5f3518fbd0dde8",
+      "payload": {
+        "model": "gpt-4o-mini-tts-2025-12-15",
+        "input": "While that is pending, one candle costs ten tokens. How many tokens do two candles cost?",
+        "voice": "echo",
+        "response_format": "wav",
+        "instructions": "Speak naturally in clear conversational English. Read exactly the supplied words, without additions."
+      }
+    },
+    {
+      "payload_sha256": "76cc615007d99ff0e7cf916048690599db11a6be890c721c82328d884945b003",
+      "payload": {
+        "model": "gpt-4o-mini-tts-2025-12-15",
+        "input": "Cancel the bundle search. Instead, one candle costs ten tokens. How many tokens do two candles cost?",
+        "voice": "echo",
+        "response_format": "wav",
+        "instructions": "Speak naturally in clear conversational English. Read exactly the supplied words, without additions."
+      }
+    },
+    {
+      "payload_sha256": "0c170ecb0d3bbff18438dc65f0125341a54c956f3c18030dd5c154d389b0e994",
+      "payload": {
+        "model": "gpt-4o-mini-tts-2025-12-15",
+        "input": "Change the budget to eighteen tokens. Keep all the other rules the same.",
+        "voice": "echo",
+        "response_format": "wav",
+        "instructions": "Speak naturally in clear conversational English. Read exactly the supplied words, without additions."
+      }
+    }
+  ]
+}

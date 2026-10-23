@@ -1,3 +1,39 @@
+# LOCAL —15/40 live; source collector prepared, specific egress approval pending (23 October14:29UTC)
+
+LOCAL executor, goal ACTIVE; main886470f before this update. Same actual GPU source
+C9 c9efaaac24d983342f7eded46617e6450bc102ce; active supervisor7769270/21063 birth20582160
+S/live; old4111 birth18985221 T/paused; originalCUDA14873 birth20219598 R/live
+14:28:47UTC,15/40 all passing,0optimizerupdates. No restart/newGPU/trainer/checkpoint.
+Budgetguard74352/session71225 remains ARMED to22:22:37.9UTC, same100 cap/current
+62.50071830424946 total maximum. Supervisor21:30; v7backup85270/session28881 to22:20;
+evalwaiter86013/session39293 v3 latest21:37/end22:17; proxy85512/session86213 v4
+through22:19 and tunnel session3455 unchanged. Latest23-file inventory independently
+verified52b207d6854dffbf968424218e99eefdcf83b2c23d53e79ad59d0614ec809bbc.
+
+New source collector820711c +quality adapter tested11pass in local-asr interpreter.
+Actual launch was REJECTED by automatic approval review BEFORE execution: prior
+synthetic speech approvals covered different payloads, not these40 authored user
+utterances (7349chars, all32/56 through matched WAVreuse). A specific concise async
+source-egress approval question is now pending, separate from pending20USD top-up.
+NO new speech API call, raw source directory, real source ASR, teacher or optimizer
+was run. Do not retry/bypass until explicit approval for this exact collection.
+Concrete review docs/NATIVE-REASONING32-SPEECH-PAYLOAD-2026-10-23.json contains ONLY
+actual40 authored user speech payloads; no owner text/credentials/answer annotations.
+Status docs/NATIVE-REASONING32-SOURCE-COLLECTION-2026-10-23.json. Source/quality
+code remains outside immutable GPU checkout and cannot approve teacher/training.
+
+Current funded GPU run CONTINUES while both approvals pending; goal is not blocked.
+No longer guard/deadline or overnight supervisor armed; new preparedness source
+738bb25 actual25Linux tests passed at separatepreparedcheckout. Do not nest paused
+gradient supervisors. Next same BF1640 ->combined readiness ->one8 ->freshrestore/
+strictproof ->full native20/speech20/all4 ordinary ->sealedfresh only if eligible.
+After source-specific approval: collectone40requestsourceversion, then whole40/56/
+32 independent CPU source audit; actual asynchronous teacher protocol still required.
+After fundingapproval/verifiedcreditedwallet: safe exact later-stage handoff and
+longer guarded runtime may proceed within proposed80.40 total <100. No payments
+made; auto-pay disabled. Unrelated local changes preserved. Critical67.76GBarchive
+previouslyverified; broader stoppedMacbackup PARTIAL.
+
 # LOCAL — reasoning32 source collector tested; actual collection next (23 October14:27UTC)
 
 LOCAL executor, goal ACTIVE. Source collector820711c pushed. Active GPU remains
