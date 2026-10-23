@@ -1,3 +1,57 @@
+# LOCAL — NEW full40 audit LIVE; conditional training/restore chain armed (23 October07:28 London)
+
+LOCAL sole executor, CLOUD read-only; goal ACTIVE. Execution source is EXACT pushed
+20a35783f0e38a5156a12bc503d4803ad810cd3d at clean
+/opt/duplex-control40-precise-pilot-v1. ACTUAL controller11814/birth17910606 launched
+06:24:50UTC; output /workspace/migration/native-control40-precise-pilot-v1.
+whole_workset child11825 EXIT0 at06:26:18.654874UTC: ALL7797 original source files,
+word/quality/semantic/conversion gates independently rechecked. Now actual NEW
+whole40 numerical child11923/birth17919447 is LIVE, source20a3578, phase
+complete40_precise_numerical. Confirmed realps at06:26:42UTC. Do not duplicate.
+
+The controller will AUTOMATICALLY dispatch independent full40 BF16 gradient checks,
+complete154/native49/control40 readiness, new8 from native520, fresh state/Adam/RNG/
+native fingerprints restore and strict proof ONLY after every preceding child exits0
+and all gates pass. All children have distinct PIDs; sources/workset stay immutable.
+Numerical SIGALRM deadline10:00UTC; total controller13:10UTC. No native behavior
+approval or adoption; no new optimizer update yet. Old original failed40 remains
+SHAea78de49685707fdae3e5b7dbc1d92ff0ddd3860699e23f152d5b7579c300a3b, not overwritten.
+Original engine reused by explicit out/engine alias to old completev3 Engine;
+all frame/call/mask/word/audio/retention/KL/hidden/sampling/optimizer gates preserved.
+
+Actual diagnostic8805 TERMINAL completed06:12:57UTC, hidden0.0002465248107910156/
+logits0.0004820823669433594 <0.001, parameters and execution unchanged. Mac backup
+3files all size/SHA verified: inventorya270593a203f7a3bcf74e785e5981865ef1b2dcc22b350b36e23a575752eeb8c,
+runs/local-migration-20261023/native-control40-attention-diagnostic-evidence-v1.
+Actual diagnostic prerequisite gate rechecked locally against original failed40 and
+unchanged attention code. This positive ONEcase never substitutes for new full40.
+
+Budget transition ACTUAL: new Mac guard30256/exec67241 source20a3578 armed for
+13:14:52.804UTC,14hTOTAL,25.06GPU+.25disk+prior23.696006687846968 =49.00600668784697
+<=50. Old10h guard55922/exec37595 TERMINAL143 after replacement verified live/armed.
+Receipt runpod-control40-execution-v4.json; status watchdog-v4.json; exact transition
+runpod-control40-guard-v4-transition.json. No new Pod; no second evaluation Pod
+reserved. Native behavioral work must serialize on the same GPU within this cap.
+API keys remain only on Mac. Official posted owned billing34.085763USD is delayed;
+use conservative bounds, not posted balance, before any extra resource.
+
+Backup transition ACTUAL: Mac watcher31679/exec76913 source20a3578, remotehelper
+same immutable source, deadline13:18UTC. Initial snapshot9files ALL size/SHA checked,
+inventory58c2772de65b37f9f026bcabf4f0c75d997182119307dc3bd6c32af91035abba.
+ROOTS now include NEW precise-pilot numerical/gradient/readiness/training/restore
+and completed attention diagnostic, alongside originals. Old89251/exec1322 TERMINAL143
+only after new actual process + verified snapshot. Mac out native-control40-continuous-copyback-v3;
+transition native-control40-copyback-v3-transition.json. Original native67.76GB,
+full49/prepared49/Engine/workset/speech/receipt backups remain verified and intact;
+broader stopped Mac project/source backup still PARTIAL. Unrelated local work untouched.
+
+Next: poll SAME11814/11923 actual processes, inspect complete new40 result and peak
+memory; no restart on observation timeout. Prepare one-GPU serial native10 and
+sealed fresh40 evaluation path while audit runs, including fresh bounded Mac worker
+proxy/tunnel without transferring keys; require complete full10 review before fresh40
+and every strict adoption criterion. Last actual candidate still native7590052,
+unadopted; broader32 reasoning and microturn/backchannel data remain unrecorded/untrained.
+
 # LOCAL — precision diagnostic PASSED; full sequential chain ready to deploy (23 October07:24 London)
 
 LOCAL sole executor, goal ACTIVE. Diagnostic8805 TERMINAL, completed06:12:57UTC:

@@ -463,7 +463,9 @@
     "text_logits_maximum_error": 0.0004820823669433594,
     "all_model_parameters_unchanged": true,
     "execution_policy_unchanged": true,
-    "full40_or_training_approval": false
+    "full40_or_training_approval": false,
+    "mac_backup_inventory_sha256": "a270593a203f7a3bcf74e785e5981865ef1b2dcc22b350b36e23a575752eeb8c",
+    "all_mac_backup_sizes_and_hashes_match": true
   },
   "prepared49_cache_build": {
     "exec_session": 92418,
@@ -558,8 +560,8 @@
   "prospective_precise_reference": {
     "source": "evals/native_control_numerical_precise.py",
     "schema": "dl-native-control40-numerical-fp64-attention-v2",
-    "deployed": false,
-    "GPU_started": false,
+    "deployed": true,
+    "GPU_started": true,
     "training_approval_consumer_enabled": true,
     "requires_original_failed_report_sha256": "ea78de49685707fdae3e5b7dbc1d92ff0ddd3860699e23f152d5b7579c300a3b",
     "all40_math_calls_inputs_masks_targets_causality_depth_and_threshold_AST_identical": true,
@@ -570,6 +572,39 @@
     "threshold": 0.001,
     "requires_complete_new40_and_separate_BF16_gradient_approval": true,
     "full40_pass_still_missing": true,
-    "new_schema_provenance_fail_closed_tests_passed": true
+    "new_schema_provenance_fail_closed_tests_passed": true,
+    "execution_source_commit": "20a35783f0e38a5156a12bc503d4803ad810cd3d",
+    "numerical_pid": 11923,
+    "numerical_birth_ticks": 17919447,
+    "all40_pass_still_required": true
+  },
+  "active_precise_pilot_chain": {
+    "controller_pid": 11814,
+    "controller_birth_ticks": 17910606,
+    "source_commit": "20a35783f0e38a5156a12bc503d4803ad810cd3d",
+    "source": "/opt/duplex-control40-precise-pilot-v1",
+    "out": "/workspace/migration/native-control40-precise-pilot-v1",
+    "phase": "complete40_precise_numerical",
+    "whole_workset_exit": 0,
+    "whole_workset_ended_utc": "2026-10-23T06:26:18.654874+00:00",
+    "numerical_pid": 11923,
+    "numerical_birth_ticks": 17919447,
+    "actual_live_processes_verified": true,
+    "audit_deadline_utc": "2026-10-23T10:00:00Z",
+    "total_deadline_utc": "2026-10-23T13:10:00Z",
+    "new_optimizer_updates_observed": 0,
+    "training_conditional_on_all_gates": true,
+    "adoption": false
+  },
+  "active_backup_watcher": {
+    "pid": 31679,
+    "source_commit": "20a35783f0e38a5156a12bc503d4803ad810cd3d",
+    "exec_session": 76913,
+    "first_verified_files": 9,
+    "first_inventory_sha256": "58c2772de65b37f9f026bcabf4f0c75d997182119307dc3bd6c32af91035abba",
+    "includes_precise_pilot_and_diagnostic": true,
+    "deadline_utc": "2026-10-23T13:18:00Z",
+    "old_pid": 89251,
+    "old_exit_code": 143
   }
 }

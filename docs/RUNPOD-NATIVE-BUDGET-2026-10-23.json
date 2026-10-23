@@ -94,11 +94,17 @@
   "combined_upper": 49.25600668784697,
   "authorized_compute_budget": 50,
   "network_volume_monthly_separately_approved": 7,
-  "extension_activated": false,
+  "extension_activated": true,
   "other_resources_changed": false,
   "selected_plan": "14h total lifetime on the existing single GPU, including restore and serial native evaluation; no additional evaluation Pod reserved",
   "primary_14h_gpu_upper": 25.06,
   "project_upper_with_14h_primary": 49.00600668784697,
   "remaining_upper_headroom": 0.9939933121530302,
-  "additional_Pod_allowed_by_this_plan": false
+  "additional_Pod_allowed_by_this_plan": false,
+  "guard_pid": 30256,
+  "guard_source_commit": "20a35783f0e38a5156a12bc503d4803ad810cd3d",
+  "guard_deadline_utc": "2026-10-23T13:14:52.804000+00:00",
+  "guard_status_file": "runs/local-migration-20261023/runpod-control40-watchdog-v4.json",
+  "old_guard_pid": 55922,
+  "old_guard_terminal_exit": 143
 }
