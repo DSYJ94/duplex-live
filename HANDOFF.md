@@ -1,3 +1,61 @@
+# LOCAL —actual cancellation repaired; timing source repair next (23 October19:38UTC)
+
+LOCAL remains sole executor; goal ACTIVE. Main before this documentation commit
+e0022425b8e2175a333d10574e7d4973a29eea40. Native GPU code remains immutable
+c9efaaac24d983342f7eded46617e6450bc102ce; active supervisor source remains
+738bb25e56b79aed13acf4c5b3577f926391f81a. No optimizer update, duplicate job,
+new source take, resource purchase or payment in this status turn. No production
+candidate adopted. Historical7590052 ordinary regression remains causally open.
+
+V3 actual teacher session23799 TERMINAL1:002 cancellation transport/lifecycle
+PASS963frames, original result cancelled/not delivered, genuine cancellation
+receipt delivered. Slow barrier interleaving did not occur in this draw; old
+race/new prevention is regression-tested.013 transport complete/errors empty
+but1125>1100frames: STOP before remaining25. Collection SHA
+09bb11d17cc0cacfeb3d2c86d3855519571c658c4f8ba0dd86cdd8515488ff60. New2
+voices/3backend requests; aggregate10voices/12backend. Six transport/frame-valid
+recordings are not an approved subset. No whole32 ASR/semantics/native approval.
+
+Actual originals inspected: shared first question for013/014/015 is45.75s,
+24kHz mono, peak0.84744/no>0.995samples, independent last word45.38s. Teacher
+output69.238s/peak0.34180. Complete episode overrun25frames=2s. NEXT: ONE NEW
+versioned same99 approved words/echo voice provider take, brisk natural delivery,
+no crop/gain/resampling or1100limit change. Explicit actual new request hash and
+instruction change, preserve all originals, target useful timing headroom; no
+guaranteed fit. New sourceV4 must preserve39 untouched objects and all failed
+parents; re-assess complete40 with pinned independent ASR and unchanged limits.
+Reused teacher records retain their original source/quality versions and byte
+hashes; prove per-case equality againstV4 rather than falsifying old globalSHA.
+No take made yet. See docs/NATIVE-REASONING32-V3-RESULTS-2026-10-23.json.
+
+V3 full raw+all parent backup now PASS289files/196,112,261B19:36:55UTC,
+volume49yytzyoge,/workspace/migration/native-reasoning32-teachers-v3-preserved-v1,
+inventorye5b43d32a309a2d041b6f355ae646dd921471dd5b95bb90197b77ced5e710137.
+SourceV3/quality/old native archive previous verified inventories retained. Mac+
+Runpod two domains; S3 same volume, broader stopped Mac source backup PARTIAL.
+
+Actual19:36–19:37GPU: Pod4yx8vahdmjsylx; supervisor42932/birth22207653S, old
+21063/birth20582160T, readiness41540/birth22014818R/S. Phase combined_readiness,
+11/49 complete native teacher rows logged/all exact, final49/combined40 JSONs
+absent. Numerical40+gradient40 PASSED,0updates. DO NOT restart child or nest a
+new takeover until actual21063 terminal/missing; inherited retired flag unsafe.
+Continuation remains readiness ->ONE8 from520 ->independent Adam/RNG/native
+restore+strict proof ->complete paired20+speech20/all4 ->eligible sealedfresh40.
+
+GPU OMP_NUM_THREADS=8,19threads,nice0,allowedCPU0–254; optimal thread count and
+quota not proven. Mac LowPower0,nice0,no recorded thermal/performance warning;
+ASR8 selected by real4/8/10 benchmark, currently no ASR. No OS caps imposed.
+OneDrive/FileProvider/indexing consume substantial CPU; unchanged. Do not imply
+all255 CPUs are used or infer bottleneck from one13%GPU sample.
+
+Services remain costguard16271/session82942 delete23:22:37.9UTC retain volume;
+backup95445/session36808v8 to23:20; proxy95444/session28664v5Mac50258 to23:19;
+tunnel81044 remote18791; evaluator98191/session1702planv6 latest22:37/end23:17
+awaits actual42932 completion/all7exit0. Supervisor deadline22:30. Proxy16/128
+aggregate,112remaining. Wallet19:22UTC10.049084USD,spend1.814/h,no autopay; do
+not extend guard based on stale funds.100USD cap; specific20USDtopup pending
+review rejection, no payment made. Unrelated local edits preserved/excluded.
+
 # LOCAL —replacement repaired; actualcancel race isolated; causalv3 ready (23 October19:15UTC)
 
 Previous goalturn progressed to5653e60 withfull40gradientandv2stream. Currentturn

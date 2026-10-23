@@ -1,0 +1,75 @@
+{
+  "schema": "dl-native-reasoning32-v3-diagnosed-repair-status-v1",
+  "at_utc": "2026-10-23T19:39:24.704003+00:00",
+  "recorder_source_commit": "e0022425b8e2175a333d10574e7d4973a29eea40",
+  "teacher_collection_sha256": "09bb11d17cc0cacfeb3d2c86d3855519571c658c4f8ba0dd86cdd8515488ff60",
+  "status": "incomplete_failed_preserved_no_retry",
+  "new_actual_voice_sessions": 2,
+  "new_actual_backend_requests": 3,
+  "aggregate_voice_attempts": 10,
+  "aggregate_backend_requests": 12,
+  "cancellation": {
+    "actual_transport_and_lifecycle_diagnostic_pass": true,
+    "complete_frames": 963,
+    "original_result_cancelled": true,
+    "original_result_wire_delivered": false,
+    "actual_cancel_receipt_delivered": true,
+    "slow_pending_barrier_exercised_in_this_actual_draw": false,
+    "slow_race_regression_test_passed": true
+  },
+  "timing_failure": {
+    "id": "native-reasoning4-train-013",
+    "complete_frames": 1125,
+    "unchanged_limit": 1100,
+    "overrun_s": 2.0,
+    "transport_complete": true,
+    "independent_audio_or_semantic_approval": false,
+    "whole_measured_waveform": {
+      "schema": "dl-native-reasoning32-packing-waveform-inspection-v1",
+      "source_object_id": "8d57491280185df1844bbe328e658cd8f03172c075ea740376e8f63fb3928b77",
+      "original_source": {
+        "duration_s": 45.75,
+        "sample_rate": 24000,
+        "peak": 0.847442626953125,
+        "above_0995_samples": 0,
+        "first_active_s": 0.0,
+        "last_active_end_s": 45.68,
+        "active_20ms_blocks": 1765,
+        "all_20ms_blocks": 2288,
+        "waveform_modified": false
+      },
+      "failed_teacher_full_waveform": {
+        "duration_s": 69.23779166666667,
+        "sample_rate": 24000,
+        "peak": 0.341796875,
+        "above_0995_samples": 0,
+        "first_active_s": 47.86,
+        "last_active_end_s": 69.08,
+        "active_20ms_blocks": 300,
+        "all_20ms_blocks": 3462,
+        "waveform_modified": false
+      },
+      "original_source_first_word_s": 0.0,
+      "original_source_last_word_end_s": 45.38,
+      "complete_native_frames": 1125,
+      "unchanged_frame_limit": 1100,
+      "cause": "Full measured episode exceeds existing context by25frames; original source audio is valid but too slowly paced for this complete sequence.",
+      "proposed_repair": "One new provider take of identical approved words and voice, brisk natural pace. No trimming, gain change or resampling; all40 source objects must independently reapprove."
+    }
+  },
+  "full_parent_preservation": {
+    "schema": "dl-native-reasoning32-teachers-failed-complete-remote-preservation-v1",
+    "at_utc": "2026-10-23T19:36:55.537335+00:00",
+    "destination": "/workspace/migration/native-reasoning32-teachers-v3-preserved-v1",
+    "volume_id": "49yytzyoge",
+    "inventory_sha256": "e5b43d32a309a2d041b6f355ae646dd921471dd5b95bb90197b77ced5e710137",
+    "files": 289,
+    "bytes": 196112261,
+    "all_regular_size_sha256_match": true
+  },
+  "whole32_teacher_approval": false,
+  "passing_subset_accepted": false,
+  "historical7590052_regression_cause_established": false,
+  "new_optimizer_updates": 0,
+  "next_action": "One versioned identical-words/voice provider take with brisk natural delivery, retaining originals and actual new payload hash; independently reassess every source object in a new complete40 derived approval before any further teacher capture. No new source take yet made."
+}

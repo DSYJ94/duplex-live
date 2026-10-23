@@ -1,0 +1,39 @@
+{
+  "schema": "dl-native-current-CPU-resource-readback-v1",
+  "at_utc": "2026-10-23T19:39:24.704003+00:00",
+  "mac": {
+    "logical_cpus": 10,
+    "physical_cpus": 10,
+    "low_power_mode": 0,
+    "thermal_readback": "No thermal or performance warning recorded; not a proof of absent hardware throttling",
+    "process_nice_default": 0,
+    "OS_priority_affinity_or_power_modified": false,
+    "ASR_threads": 8,
+    "benchmark": "NATIVE-LOCAL-CPU-BENCHMARK-2026-10-23.json",
+    "ASR_currently_running": false,
+    "background_sample_cpu_percent": {
+      "OneDrive": 159.8,
+      "fileproviderd": 119.4,
+      "suggestd": 100.3,
+      "corespotlightd": 61.4
+    },
+    "background_processes_changed": false
+  },
+  "gpu_job": {
+    "at_utc": "2026-10-23T19:37:26.496829+00:00",
+    "thread_environment": {
+      "OMP_NUM_THREADS": "8"
+    },
+    "allowed_cpu_count": 255,
+    "status": [
+      "State:\tS (sleeping)",
+      "Threads:\t19",
+      "Cpus_allowed_list:\t0-254"
+    ],
+    "cgroup_cpu": {},
+    "native49_completed_logged_rows": 11,
+    "all_logged_forward_hashes_exact": true,
+    "last_completed_id": "teacher-cf-recovery-train-002-0"
+  },
+  "interpretation": "GPU process has an explicit OpenMP8 setting, not proven optimal;255 affinity CPUs do not prove dedicated capacity. No readable cgroup quota files in this observation. Low GPU utilization does not establish the exact bottleneck. Preserve the immutable current audit; use a matched workload throughput benchmark before changing future launch threads."
+}

@@ -303,3 +303,33 @@ corrected response in959 prefix/live/span frames. Independent whole32 audio and
 spoken semantics remain required. Both findings postdate the historical7590052
 model and cannot establish its earlier answer-regression cause. C9 GPU training
 code/objectives, stored histories and user-facing native runtime remain unchanged.
+
+
+## Current repair boundary —23 October19:38UTC
+
+[V3 actual results](NATIVE-REASONING32-V3-RESULTS-2026-10-23.json) now show an actual
+cancellation receipt, no stale original delivery and a963-frame episode. The
+slow pending-decision barrier is regression-tested, but that particular slow
+interleaving did not occur in this actual capture; whole32 remains unapproved.
+The next scene completed transport but measured1125frames against1100, so capture
+stopped. Its45.75s source is unclipped and word-qualified. A new same-words/voice
+provider take at a brisk natural pace is a proposed timing repair, not yet a
+proven fix for the full variable-latency episode. Preserve all old bytes/receipts,
+explicitly record the changed request instructions, and reapprove all40 source
+objects in a new derived version. No crop/gain/window change or passing subset.
+All289 raw teacher/history files are independently SHA256-verified on the approved
+persistent volume. No new source take or optimizer update occurred in this turn.
+
+At19:36–19:37UTC the existing readiness child41540 is still running;11/49 complete
+teacher rows are logged, all with exact native forward hashes. All49 and complete
+combined154/native49/control40 readiness remain required before the bounded8.
+The numerical40 and gradient40 gates passed earlier. No reliable completion ETA.
+
+[Fresh CPU readback](NATIVE-CPU-RESOURCE-READBACK-2026-10-23.json) separates OS
+settings from application threads: Mac Low Power Mode0, nice0, no recorded
+thermal/performance warning. ASR8 is the fastest of tested4/8/10 on one short
+clip; no current ASR is running. The GPU process ALSO has OMP_NUM_THREADS=8,19
+threads and affinity0–254. This application setting is not proven optimal; do not
+claim every available CPU is used or that hardware never throttles. Background
+OneDrive/FileProvider/indexing is active. Do not restart immutable readiness to
+change threads; benchmark a matched workload before a future launch change.
