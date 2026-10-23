@@ -67,12 +67,15 @@ def main():
     python=asr/'bin/python'
     version=subprocess.check_output([str(python),'-c','import torch;print(torch.__version__)'],text=True).strip()
     if version!='2.9.0a0+145a3a7bda.nv25.10':raise RuntimeError('Unexpected NGC Torch build')
-    constraint=asr/'torch-constraint.txt';constraint.write_text('torch==='+version+'\n')
+    triton_version=subprocess.check_output([str(python),'-c','import triton;print(triton.__version__)'],text=True).strip()
+    constraint=asr/'torch-constraint.txt';constraint.write_text('torch==='+version+'\ntriton==='+triton_version+'\n')
     subprocess.run([str(python),'-m','pip','install','--disable-pip-version-check','--constraint',str(constraint),
                     'openai-whisper==20250625','whisper-timestamped==1.15.9',
                     'numpy==2.2.6','scipy==1.16.2','soundfile==0.13.1'],check=True)
     if subprocess.check_output([str(python),'-c','import torch;print(torch.__version__)'],text=True).strip()!=version:
         raise RuntimeError('ASR installation replaced pinned Torch')
+    if subprocess.check_output([str(python),'-c','import triton;print(triton.__version__)'],text=True).strip()!=triton_version:
+        raise RuntimeError('ASR installation replaced pinned Triton')
     public_download=("import whisper,hashlib; from pathlib import Path; "
         "url=whisper._MODELS['turbo']; "
         "assert '/aff26ae408abcba5fbf8813c21e62b0941638c5f6eebfb145be0c9839262a19a/' in url; "
@@ -83,7 +86,7 @@ def main():
     receipt=dict(schema='dl-native-paired-container-preparation-v1',source_commit=args.source_commit,
                  original_archive_unchanged=True,public_model_hashes=expected,ephemeral_runtime=str(root),
                  public_copy_is_not_backup=True,shared_native_runtime_modified=False,
-                 asr_python=str(python),torch=version,provider_credential_transferred=False,
+                 asr_python=str(python),torch=version,triton=triton_version,provider_credential_transferred=False,
                  seconds=time.monotonic()-started,training_or_behavior_approved=False)
     with args.out.open('x') as stream:json.dump(receipt,stream,indent=2);stream.write('\n')
     print(json.dumps(receipt),flush=True)
