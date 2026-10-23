@@ -20,7 +20,8 @@ ROOTS=('native-control40-preflight-v3/numerical','native-control40-supervisor-v4
        'native-control40-precise-pilot-v1','native-control40-attention-diagnostic-v1',
        'native-control40-precise-pilot-v2','native-control40-native20-v1',
        'native-control40-native20-speech-v1','native-control40-fresh-paired40-v1',
-       'native-control40-precise-pilot-v3-adoption','native-control40-precise-pilot-v4-adoption')
+       'native-control40-precise-pilot-v3-adoption','native-control40-precise-pilot-v4-adoption',
+       'native-control40-precise-pilot-v5-adoption','native-control40-precise-pilot-v6-adoption')
 FORBIDDEN={'session-token','.private','.env','keys','credentials','core','quarantine',
            'owner-conversations','owner_conversations'}
 
@@ -54,7 +55,8 @@ def marker(base):
             value=json.loads(path.read_text());values.append([name,len(value['results']),sha(path)])
     for name in (root+'/'+file for root in ROOTS[2:] for file in
                  ('training/training-state.pt','training/report.json','training/reload-report.json',
-                  'combined-readiness/control40-combined-readiness.json')):
+                  'combined-readiness/control40-combined-readiness.json',
+                  'combined-readiness/native-stream49-gradient-readiness.json')):
         path=base/name
         if path.exists():values.append([name,path.stat().st_size,path.stat().st_mtime_ns])
     return hashlib.sha256(json.dumps(values,separators=(',',':')).encode()).hexdigest()

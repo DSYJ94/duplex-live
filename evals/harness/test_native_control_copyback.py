@@ -10,6 +10,25 @@ from portable.context.native_control_copyback import ROOTS,snapshot,verify,ssh_c
 
 
 class ControlCopyback(unittest.TestCase):
+    def test_native49_receipt_triggers_backup_before_combined_stage_changes(self):
+        with tempfile.TemporaryDirectory()as directory:
+            base=Path(directory);controller=base/'native-control40-precise-pilot-v3-adoption'
+            controller.mkdir();(controller/'controller.json').write_text('{"phase":"combined_readiness"}')
+            first=snapshot(base)
+            ready=base/'native-control40-precise-pilot-v2/combined-readiness';ready.mkdir(parents=True)
+            report=ready/'native-stream49-gradient-readiness.json'
+            report.write_text(json.dumps(dict(passed=True,cases=[dict(id=i)for i in range(49)])))
+            second=snapshot(base,first['marker']);self.assertTrue(second['changed'])
+            self.assertEqual(verify(Path(second['snapshot']),second['inventory_sha256']),2)
+            self.assertEqual((Path(second['snapshot'])/report.relative_to(base)).read_bytes(),report.read_bytes())
+
+    def test_current_v6_supervisor_metadata_is_included(self):
+        with tempfile.TemporaryDirectory()as directory:
+            base=Path(directory);controller=base/'native-control40-precise-pilot-v6-adoption'
+            controller.mkdir();(controller/'controller.json').write_text('{"phase":"combined_readiness"}')
+            result=snapshot(base)
+            self.assertEqual(verify(Path(result['snapshot']),result['inventory_sha256']),1)
+
     def test_material_progress_copies_exact_state_and_excludes_sensitive_or_temporary_files(self):
         with tempfile.TemporaryDirectory() as directory:
             base=Path(directory);numerical=base/ROOTS[0];numerical.mkdir(parents=True)
