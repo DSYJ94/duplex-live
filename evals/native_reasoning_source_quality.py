@@ -14,7 +14,7 @@ from pathlib import Path
 
 from data.synthetic.filter import norm_words,wer
 from evals.native_reasoning_source import requests_for,sha
-from evals.native_reasoning_source_recovery import verify as source_verify
+from evals.native_reasoning_source_repair import verify as source_verify
 from evals.native_control_teacher import atomic_json
 
 ASR_WEIGHT='aff26ae408abcba5fbf8813c21e62b0941638c5f6eebfb145be0c9839262a19a'

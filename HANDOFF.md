@@ -1,3 +1,53 @@
+# LOCAL —sourcev3 complete+backed up; whole40 ASR8 live;31/40 GPU (23 October16:46UTC)
+
+LOCAL sole executor; goalACTIVE. Main1fb29e7 before this commit. Actual16:41:59UTC
+SSH confirms same21063/birth20582160 S, old4111/birth18985221 T/paused, actual
+CUDA14873/birth20219598 R;31/40,0optimizerupdates. ModelC9 c9efaaac24d983342f7eded46617e6450bc102ce
+and orchestration7769270 unchanged; no restart/newGPU/duplicatejob/adoption.
+Guard16271 remainsarmed23:22:37.9UTC; pilot21:30, eval22:17,backup22:20 unchanged.
+Specific20USDpayment pending; no newcharge. Source40utterance egress approved.
+
+New evals/native_reasoning_source_repair.py COMPOSES complete sourcev3 without
+ANY API call:39 original objects byte-identical +existing diagnosed replacement
+take. Allparent-v2 originals, rejected WAV/receipt, original failedquality and
+single-take evidence copied inside newroot.40uniqueobjects/56clips/32scenes,
+42aggregate generationattempts remainvisible. Exactlysamewords/voices/payloads,
+no gain/edit/trim/resample. Newroot
+runs/local-migration-20261023/native-reasoning32-user-source-v3. Actual source
+verifier passes all172files/51,884,725B. All14offline source/repair/quality tests
+pass, including changedwords/overpeak replacement/nonactualfixtures rejection.
+Quality assess/verify/threshold logic unchanged; only source-schema verifier
+import extended. Do NOT edit source_repair or source_quality code while auditing.
+
+Session56347 is sole actual full40 independentturboCPU ASR at8threads, output
+runs/local-migration-20261023/native-reasoning32-user-quality-v3. First16 recorded
+pass at last observation, including the new budget-change WAV. No passing subset
+or sourceapproval yet; wait ALL40 +actualCLIexit0 +independentverify. Oldsessions
+92061 failed40 timestampaudit,46370benchmark,10986singletake are terminal. No more
+speechAPI requested; all42attempts alreadyaccounted. Whole32 teacher/backend/
+semantic/conversion/native pipeline still outstanding; actual lifecyclemodule
+exists offline but teacher capture/realtransport is not yet wired.
+
+Approved rsync-ar/exclude-session-token/no-owner/no-group backup session9351
+TERMINAL0. Independent remotehash readback ALL172files/51,884,725B matches Mac
+inventory43a2f5332d09e279d067f2890238e27d768fffbad4ad68f6be65d586a668feb6.
+Persistent destination /workspace/migration/native-reasoning32-source-v3-preserved-v1
+on49yytzyoge, inventory+verification siblingfiles. No code deployed by rsync,
+ownerconversations/credentials/cores excluded, no extra compute/storage purchase,
+no sourcequality/training approval. Receipt
+docs/NATIVE-REASONING32-SOURCE-V3-PRESERVATION-2026-10-23.json. Mac+networkvolume
+are two domains; S3samevolume, OneDriveuploadunverified. Oldnative67.76GB/full
+control40workset/engine preservationPASS18eb557; broaderMacbackupstillPARTIAL.
+
+Next keep SAME full40 GPU chain ->retained154/native49/control40readiness ->ONE8
+->independentstate/native restore/strictproof ->completepaired20/speech20/all4
+->eligiblefresh40. Source32 separatelyneedsfullsource40qualification thenactual
+GPT-Live/stronger-model asynchronous teacher pipeline with measured dynamic
+source replay, no oracle/family-basedrouting and fullnative1100-framebound.
+Preserve all28/49oldhistories/objectives/KL-hidden/word-clock anchors. No unchanged
+extension. Prepared738 later takeover onlyafter fullgradient and actualretired4111.
+Unrelated localfiles preserved/excluded.
+
 # LOCAL —30/40 native live; CPU benchmark done; source audit bug fixed (23 October16:32UTC)
 
 LOCAL sole executor; goalACTIVE. Mainc28f14e before this commit. Actual16:29:47UTC

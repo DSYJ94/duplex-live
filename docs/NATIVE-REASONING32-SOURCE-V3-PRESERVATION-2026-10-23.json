@@ -1,0 +1,18 @@
+{
+  "schema": "dl-native-reasoning32-source-complete-remote-preservation-v1",
+  "at_utc": "2026-10-23T16:43:44.070219+00:00",
+  "destination": "/workspace/migration/native-reasoning32-source-v3-preserved-v1",
+  "volume_id": "49yytzyoge",
+  "inventory_sha256": "43a2f5332d09e279d067f2890238e27d768fffbad4ad68f6be65d586a668feb6",
+  "files": 172,
+  "bytes": 51884725,
+  "all_regular_size_sha256_match": true,
+  "independent_storage_domains": [
+    "Mac",
+    "Runpod network volume49yytzyoge"
+  ],
+  "source_quality_approved": false,
+  "teacher_or_training_approved": false,
+  "API_or_GPU_calls": 0,
+  "originals_deleted": false
+}
