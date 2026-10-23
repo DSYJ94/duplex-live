@@ -1,0 +1,14 @@
+{
+  "schema": "dl-native-human-training-continuation-directive-v1",
+  "human_instruction": "So once the controlled training is conclusively done, please proceed to training",
+  "interpretation": "Proceed autonomously to a longer native training run once the controlled pilot has demonstrated improvement and passed its required independent restore, retention, speech and behavioral gates. No further command confirmation is needed.",
+  "total_project_compute_cap_USD": 100,
+  "specific_credit_purchase_authorization": "The separately rejected one-time20USD top-up remains pending; this instruction does not bypass automatic approval review.",
+  "current_pilot": "Complete original154/native49/control40 readiness, one bounded8-update repair from native520, independent Adam/RNG/native restore and strict checkpoint proof",
+  "behavior_required": "Complete paired native20 and independent speech20 review, including all4 ordinary reasoning cases and the silence, pause/resume and asynchronous task cases; eligible sealed fresh40 qualification remains required for adoption",
+  "longer_run_selection": "Choose the concrete continuation length and checkpoints from actual pilot behavior, comparable loss measurements, measured throughput and remaining approved funds; record the recipe and commit its review before submission",
+  "no_failed_candidate_extension_unchanged": true,
+  "base_weights_unfrozen_by_this_instruction": false,
+  "adoption_or_production_readiness_claimed": false,
+  "current_new_optimizer_updates": 0
+}

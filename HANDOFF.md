@@ -1,3 +1,90 @@
+# LOCAL — full speech25/32; seven diagnosed replacements; no new native updates (23 October22:25UTC)
+
+Goal turn PROGRESS. LOCAL remains sole executor; no handoff to cloud and no new
+native optimizer updates or model adoption. Main before this entry069b5d7af39b1bdc3a2484ed3802145f9366dbd7.
+Unrelated pyc, capability-retention probe files and roadmap.html remain untouched.
+Human now explicitly directs autonomous longer native training after a conclusive
+controlled pilot; see docs/NATIVE-TRAINING-CONTINUATION-2026-10-23.json. All original
+loss/data/restore/behavior/adoption gates and100USD compute cap remain. This does
+NOT approve the separately rejected20USD payment; that concise funding question
+was resurfaced because official wallet22:09:48UTC is4.9073809381USD,1.814/h,
+autopayFalse. No payment made, no guard or deadline extended.
+
+PRIMARY GPU22:22:44: SAME61857/birth23402235S supervises SAME41540/birth22014818R;
+21063/birth20582160T remains paused.37/49 completed native rows, all exact hashes;
+final49/combined40 absent,0new updates. C9 execution and738 orchestration unchanged.
+Never resume21063, nest another takeover or restart41540 from a poll timeout.
+Pipeline23:15UTC; budget16271 deletesPod4yx8vahdmjsylx23:22:37.9 and retains49yytzyoge.
+All40 numerical/gradient PASS; remaining readiness ->ONE8from520 ->independent
+Adam/RNG/native restore+strict proof ->complete paired native20/speech20/all4ordinary
+->eligible sealedfresh40. Current measured pace may miss the funded window.
+Local guard/proxy/copyback/evaluator16271/95444/95445/81214 alive0%CPU22:09; do not
+duplicate them. Evaluator still waits61857; latest launch22:37/end23:17. Backupv8
+to23:20, proxy50258 to23:19, tunnel18791 unchanged. Heavy ASR stays remoteCPU;
+no OS CPU power/priority/affinity changes. Actual local API capture measured1.6%CPU.
+
+SPEECH COMPLETION:57732 actualEXIT0/all32 recognition finished21:59:26; no rerun.
+Original full failed audit independently reproduced by62117/62118 actualEXIT0 at
+21:55:22, baseline remains FAIL. Old speech finalizer62171 actually timed out300s
+and ended22:04:44; preserved. Versioned performance repair5110ec0/f551ca793168bee4f7123e0093ca2abe36420231
+deployed by Git to its separate CPU checkout: exact source-check calls reused only
+within fully hashed immutable input snapshot, frozen modules unchanged, all teacher
+records and new verdicts still checked.10 offline tests PASS. Supervisor64295 actual
+EXIT0; complete independent finalize/readback ended22:10:26 in223.7145s.2006 snapshot
+members SHAeeeb351a110610c13d3b9d05af26b935cc42ff912a5857a20167170437ee0f20;
+418 duplicate source reads reused, five distinct source checkers actually executed.
+All32 recomputed:25PASS, wholeFALSE. Derived result SHA
+cfe45df2d97aa03b29381c6f0ce8618c28bb1a0a7b441aa5c8e9f655dc34ec01.
+Fail001/005/006/025/026/028/030; no spelling/filler alias, threshold weakening or subset.
+Detailed factual diagnosis in docs/NATIVE-REASONING32-SPEECH-REPAIR-V8-2026-10-23.json.
+Speech/finalizer/component copyback46files210746B, every Mac/remote SHA matches.
+
+CUTOFF001: preserved V7 replacement independently recognized on remoteCPU with
+same pinned weights/regions/beam/word/onset/peak policy. Actual component ASR PASS
+WER0, peak0.423828125, original WAV SHA13e768c66dae1f9375b7a0ea47440022583bcf7a2e34a195f8a4148a3fccfcbe,
+ASR SHA2f16acf070daa17262ac1e0781e3ff9f70e1279a678ad06f6ff19c145a20bbe7.
+Existing973frame/lifecycle/quiescent transport readback still required; no semantic/
+whole32 approval. No additional provider calls for this recognition.
+
+ACTUAL SIX REPAIRS: e762d82a2a83a53cffaae7597a05f000090a6c3e, local98192/session5334
+actually EXIT0/all6 sessions,8 backend calls. Only005/006/025/026/028/030 recaptured;
+passing25 and source words/audio/folds remain frozen. V8 isolates frozen transport
+functions without mutating global modules, fixes readback via existing independent
+checker.005 keeps original prompt with output-quiescent close; other5 add generic
+complete-word acknowledgment clarity, no answers/reference words/task IDs or forced
+requests. All6 actual transport/lifecycle/frame checks PASS (max1071/1100); independent
+speech still required.12 offline tests PASS. Totalvoice attempts45; conservative
+backend upper bound115<192. Raw97files75,654,419B preserved from /private/tmp spool
+to Mac native-reasoning32-repair-v8-components AND volume
+/workspace/migration/native-reasoning32-repair-v8-preserved-v1. All hashes match,
+inventory7f90c66cdc2d479b73ff5cbad61d616819afbfc18a26042e8621331be727b04b.
+Canonical runs/local-migration-20261023/.private/native-reasoning32-teacher.lock held across capture despite
+spooling outside OneDrive. Do not launch another teacher collection.
+
+NEW ASR: first ad-hoc batch66010 actually died from a generated-string SyntaxError
+BEFORE status/recognition/output existed. Error kept under speech-v1-control;
+no duplicate model inference. Corrected committed runner069b5d7af39b1bdc3a2484ed3802145f9366dbd7
+deployed by Git, separate checkout /tmp/duplex-reasoning32-verification-069b5d7.
+Supervisor66469/birth23669712 now diagnoses ALL6 replacements, max2 CPU processes,
+CUDA disabled, same frozen component recognizer b810bc00811e676526abd28342d5ea14cb8406102c6dde1b73e0d12f14afe4ba.
+Control /workspace/migration/native-reasoning32-repair-v8-speech-v2-control;
+out sibling native-reasoning32-repair-v8-speech-v2. Exact launch receipt copied Mac.
+Use /private/tmp/duplex-repair-v8-observer-v2.py and actual child exits. Never restart
+from observation timeout. Component passes do not approve the whole32.
+
+NEXT: collect same66469 status/child exits; preserve all six independent ASRs and
+diagnose any remaining failures. Build typed whole32 mixed-record readback including
+unchanged25 +existing001 +new6, recomputing every speech/frame/lifecycle case. Raw25
+ASR reuse requires identical WAV+ASR hashes under the SAME region procedure. Unknown
+mixed schema is currently rejected by semantic reviewer; implement explicit support
+before any semantic request/conversion. Existing semantic7de7449 has0actual requests;
+all32speech must PASS first. Native control40 pilot is separate and must not wait
+on reasoning32 data. If20USD funding is approved/completed, fresh wallet/Pod/rate/
+mount/budget checks precede any guarded deadline/proxy/evaluator transition; preserve
+the SAME41540 child, never replay completed optimizer stages. No new GPU needed.
+
+---
+
 # LOCAL — native33/49 preserved; speech25/32 remote; no new updates (23 October21:48UTC)
 
 Goal turn PROGRESS: versioned whole32 speech-region audit deployed through Git,

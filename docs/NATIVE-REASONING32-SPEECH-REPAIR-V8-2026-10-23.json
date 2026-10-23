@@ -1,0 +1,120 @@
+{
+  "schema": "dl-native-reasoning32-speech-repair-progress-v8",
+  "goal_turn_classification": "PROGRESS",
+  "native_optimizer_updates_this_turn": 0,
+  "completed_region_recognition": {
+    "supervisor": "57732/birth23162581",
+    "actual_exit": 0,
+    "cases": 32,
+    "recognition_sha256": "9a4dd996f7898ecbbd558cfdd54c0041e7d27a2533697e7d859cb588a0ecd92f",
+    "no_new_recognition_for_unchanged_parent_planned": true
+  },
+  "original_failed_audit_readback": {
+    "controller": "62117/birth23428614",
+    "child": "62118/birth23428652",
+    "actual_exit": 0,
+    "finished_UTC": "2026-10-23T21:55:22.375241+00:00",
+    "all32_original_failures_recomputed": true,
+    "baseline_passed": false
+  },
+  "old_finalizer": {
+    "pid": 62171,
+    "status": "actually_terminal_after_300_second_timeout",
+    "finished_UTC": "2026-10-23T22:04:44.550051+00:00",
+    "failure_preserved": true,
+    "not_restarted_unchanged": true
+  },
+  "new_snapshot_bound_finalizer": {
+    "source_commit": "f551ca793168bee4f7123e0093ca2abe36420231",
+    "supervisor": "64295/birth23561595",
+    "actual_exit": 0,
+    "finished_UTC": "2026-10-23T22:10:26.684473+00:00",
+    "elapsed_seconds": 223.71452466701157,
+    "whole32_result_sha256": "cfe45df2d97aa03b29381c6f0ce8618c28bb1a0a7b441aa5c8e9f655dc34ec01",
+    "passed_cases": 25,
+    "whole_corpus_passed": false,
+    "source_checkers_actually_executed": 5,
+    "duplicate_source_readbacks_reused": 418,
+    "unchanged_snapshot_members": 2006,
+    "snapshot_sha256": "eeeb351a110610c13d3b9d05af26b935cc42ff912a5857a20167170437ee0f20",
+    "all_teacher_records_and_all_new_speech_verdicts_checked": true,
+    "baseline_reproduced_exactly": true,
+    "source_modules_or_thresholds_changed": false,
+    "offline_regressions": "10 tests passed including the actual32 teacher-import/source-readback pattern, changed-file/symlink/strictness/alias restoration boundaries and unchanged speech gates"
+  },
+  "remaining_failed_ids": ["001", "005", "006", "025", "026", "028", "030"],
+  "diagnosis": {
+    "001": "Original actual answer is truncated and independent ASR reads80 instead of8. Preserved output-quiescent replacement now independently passes WER0.",
+    "005": "Independent transcript lacks the final points/twenty-nine words at the original recording tail. Test unchanged prompt with output-quiescent close.",
+    "006": "Independent text differs on Mm/Hmm and cancelled/canceled. Spelling/lexical normalization remains unchanged; this is not proof of a semantic failure.",
+    "025": "Provider fragment I'm checking differs from independently heard um/unchecking. Speech/transcript mismatch; acoustic cause not conclusively isolated.",
+    "026": "Independent recognizer omits provider Mm-hmm acknowledgment. No filler alias or passing-subset acceptance.",
+    "028": "Provider Twenty tokens independently recognized as20 only. Missing-word agreement fails unchanged0.05 gate.",
+    "030": "Only canceled/cancelled spelling mismatch exceeds the unchanged short-utterance WER threshold; no semantic failure inferred. No normalization change."
+  },
+  "cutoff001_replacement": {
+    "recognizer_source_commit": "066c05327d7f5c40beccd96aabc3f2261fb000fd",
+    "recognition_supervisor": "64647/birth23572986",
+    "original_waveform_sha256": "13e768c66dae1f9375b7a0ea47440022583bcf7a2e34a195f8a4148a3fccfcbe",
+    "independent_asr_sha256": "2f16acf070daa17262ac1e0781e3ff9f70e1279a678ad06f6ff19c145a20bbe7",
+    "speech_passed": true,
+    "WER": 0.0,
+    "peak": 0.423828125,
+    "full_frame_count": 973,
+    "whole32_or_semantic_approved": false,
+    "additional_provider_requests": 0
+  },
+  "copyback": {
+    "regular_files": 46,
+    "bytes": 210746,
+    "all_remote_and_Mac_size_SHA256_match": true,
+    "inventory_receipt": "runs/local-migration-20261023/native-reasoning32-speech-finalization-copyback-v1.json"
+  },
+  "bounded_repair_components": {
+    "source_commit": "e762d82a2a83a53cffaae7597a05f000090a6c3e",
+    "local_PID": 98192,
+    "tool_session": 5334,
+    "spool": "/private/tmp/duplex-native-reasoning32-repair-v8",
+    "canonical_lock": "runs/local-migration-20261023/.private/native-reasoning32-teacher.lock",
+    "maximum_new_sessions": 6,
+    "maximum_concurrent_sessions": 2,
+    "maximum_aggregate_voice_attempts": 45,
+    "maximum_aggregate_backend_request_upper_bound": 115,
+    "automatic_retry": false,
+    "recaptured_ids": ["005", "006", "025", "026", "028", "030"],
+    "passing25_unchanged": true,
+    "005_profile": "Original prompt with preserved output-quiescent transport and independently corrected transcript-loading readback",
+    "other5_profile": "Generic complete-word acknowledgment clarity only; no answers, reference words, forced requests or scoring fields supplied",
+    "offline_tests_passed": 12,
+    "actual_capture_exit": 0,
+    "actual_new_voice_sessions": 6,
+    "actual_new_backend_requests": 8,
+    "all6_transport_lifecycle_and_full_frame_checks_passed": true,
+    "maximum_measured_frames": 1071,
+    "status": "raw_components_complete_unapproved; capture process terminal, do not repeat",
+    "preservation": {
+      "files": 97,
+      "bytes": 75654419,
+      "inventory_sha256": "7f90c66cdc2d479b73ff5cbad61d616819afbfc18a26042e8621331be727b04b",
+      "Mac_spool_canonical_and_remote_all_SHA256_match": true,
+      "Mac_canonical": "runs/local-migration-20261023/native-reasoning32-repair-v8-components",
+      "remote": "/workspace/migration/native-reasoning32-repair-v8-preserved-v1"
+    },
+    "independent_recognition": {
+      "old_supervisor": "66010/birth23650776",
+      "old_actual_status": "terminal launcher SyntaxError before any recognition; preserved and never retried unchanged",
+      "committed_runner_source": "069b5d7af39b1bdc3a2484ed3802145f9366dbd7",
+      "new_supervisor": "66469/birth23669712",
+      "control": "/workspace/migration/native-reasoning32-repair-v8-speech-v2-control",
+      "output": "/workspace/migration/native-reasoning32-repair-v8-speech-v2",
+      "maximum_concurrency": 2,
+      "CUDA_disabled": true,
+      "new_provider_requests": 0,
+      "whole32_approved": false,
+      "status": "launched; inspect exact process and six actual child exits before any follow-up"
+    }
+  },
+  "semantic_requests_this_turn": 0,
+  "whole32_training_approved": false,
+  "next_action": "Finish and preserve the exact six-session repair, independently recognize only its new original WAVs under the same frozen policy, then recompute every case in a typed whole32 version. Only a full32 speech pass may precede independent semantic review/conversion. Existing control40 native pilot remains a separate workstream."
+}
