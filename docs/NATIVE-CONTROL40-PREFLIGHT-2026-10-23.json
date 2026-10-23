@@ -1,6 +1,6 @@
 {
   "schema": "dl-native-control40-preflight-progress-v1",
-  "at_utc": "2026-10-23T03:41:49.193973+00:00",
+  "at_utc": "2026-10-23T03:57:55.223900+00:00",
   "active_executor": "LOCAL",
   "cloud_executor": "read-only",
   "native_payload_and_controller_commit": "7769e7cc06f80e609db3f8ac2611977cd0d7cb66",
@@ -69,12 +69,12 @@
     }
   ],
   "running_observation": {
-    "at_utc": "2026-10-23T03:41:49.193973+00:00",
+    "at_utc": "2026-10-23T03:57:55.223900+00:00",
     "original_controller_pid": 3406,
     "original_controller_state": "T",
     "numerical_pid": 4393,
     "numerical_birth_ticks": 16421263,
-    "numerical_cases_passed_so_far": 18,
+    "numerical_cases_passed_so_far": 20,
     "all_observed_cases_passed": true,
     "complete40_numerical": false,
     "numerical_threshold": 0.001,
@@ -100,7 +100,7 @@
       "state": "RUNNING",
       "deadline_utc": "2026-10-23T09:14:52.804000+00:00",
       "network_volume_retained": "49yytzyoge",
-      "at_utc": "2026-10-23T03:43:54.815199+00:00",
+      "at_utc": "2026-10-23T03:59:21.527597+00:00",
       "pid": 55922
     },
     "watchdog_exec_session": 37595,
@@ -324,5 +324,35 @@
     "inventory_sha256": "125b412109a2f846fbacebd64de22f925d96a36d7cab963c0e9dd3faa909c985",
     "numerical_complete": false,
     "optimizer_updates": 0
+  },
+  "postpilot_evaluation_prepared": {
+    "source_commit": "4dabb1aa9bb587c11a50ea52a581701a9acf8170",
+    "complete_native20_and_speech20_supported": true,
+    "new_candidate_proof_path_supported_without_fabricated_Slurm_IDs": true,
+    "requires_full_fresh_retained154_native49_control40_state_restore": true,
+    "default_runtime_only": true,
+    "all_old_native_and_speech_checks_retained": true,
+    "focused_cpu_tests_passed": 13,
+    "new_gpu_job_submitted": false,
+    "fresh40_legacy_portable_identity_guard_still_needs_explicit_new_review_support_after_actual_native_review": true
+  },
+  "continuous_copyback": {
+    "schema": "dl-native-control40-copyback-watch-v1",
+    "pid": 76295,
+    "source_commit": "5288829d7f7ed99d3fce6777aa6abdd829893e25",
+    "deadline_utc": "2026-10-23T09:18:00Z",
+    "phase": "watching",
+    "snapshots": [
+      {
+        "path": "runs/local-migration-20261023/native-control40-continuous-copyback-v1/20261023T035725.677254Z",
+        "files": 5,
+        "inventory_sha256": "76a915233f039debe0d1ff516d37e18cc9754f09ea68cc57eb0f3488e337af53"
+      }
+    ],
+    "changes_to_remote_jobs": false,
+    "at_utc": "2026-10-23T03:57:27.330617+00:00",
+    "last_marker": "03deaace1e6c763ab1e1c3fc58d7169cfb5dc6fb51e9441d41bcb45384353bef",
+    "last_check_succeeded": true,
+    "exec_session": 85507
   }
 }

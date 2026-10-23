@@ -1,14 +1,14 @@
-# LOCAL — full-retention control40 training integrated; conditional launch armed; numerical18/40 live (23 October04:41 London)
+# LOCAL — full-retention control40 training integrated; conditional launch armed; numerical20/40 live (23 October04:57 London)
 
 This is the NEWEST entry. LOCAL sole executor, CLOUD read-only; goal ACTIVE.
-Last process/case observation2026-10-23T03:41:49UTC. Latest functional controller
+Last process/case observation2026-10-23T03:57:55UTC. Active training controller
 source e4ca22f1065f496d275df45137d48292ea9c2076 pushed to main. Training execution
 payload738150c0e2d2eba64ae62c9d7f435aaf068eeebf; original numerical source remains
 7769e7cc06f80e609db3f8ac2611977cd0d7cb66. No running payload was edited. This docs
 entry's exact commit is main HEAD after push. Unrelated timeline.pyc, capability
 probe files and roadmap.html remain untouched/uncommitted. No Cloud execution handoff.
 
-REAL original numerical4393/birth16421263 remains running,18/40 observed PASS;
+REAL original numerical4393/birth16421263 remains running,20/40 observed PASS;
 whole40 NOT yet approved, unchanged0.001 threshold/causal0. Original3406/birth15978541
 is intentionally SIGSTOP/stateT, NOT terminal. New supervisor5014/birth16839644
 from738150c adopted the SAME4393 without numerical restart; follows its actual Linux
@@ -59,6 +59,32 @@ Prior four20.096006687846966 + finishedsecondGPU bound3.35 + finisheddisk0.25 +
 primaryGPU17.90 + primarydisk0.25 <=41.84600668784697USD, within original50TOTAL.
 Conservative bound, not final invoice. Volume49yytzyoge stays separately approved7/month.
 Second Podbs1rs2ml6u1cvt remains DELETED/GET404; no reconnect/repeat of finished native20.
+
+Post-pilot evaluation PREPARED (not submitted): portable/context/native_development.py
+now accepts an explicit --candidate-proof pointing to the actual bounded control40
+training directory. Requires its complete fresh retained154/native49/control40 state
+restore before every native comparison; no invented numeric Slurm IDs. Still all10
+cases for baseline and candidate, ordinary4 and actual ASR/receipt/quiet/cancel review,
+exact cold/reused native/token/PCM parity. Independent speech follower accepts the
+new exact pair and preserves all20 waveform checks. Default runtime only for the new
+candidate;13 focused CPU tests passed. Source recorded in preflight JSON. No new GPU
+or inference job. Fresh40 still uses a legacy numeric evidence guard; prepare an
+explicit portable review/provenance adapter only after actual complete native10
+review exists, retaining ordinary4 and every existing criterion. No bypass/auto-adoption.
+
+Automatic Mac evidence watcher76295/exec85507 is actually LIVE from source
+5288829d7f7ed99d3fce6777aa6abdd829893e25. Remote immutable helper
+/opt/duplex-control40-copyback-5288829. Watches only original numerical output,
+supervisor-v4 and training-followup-v1 output directories, never owner conversations/
+keys/tokens/cores; no GPU/provider commands. Captures immutable progress snapshots
+on material changes and rsyncs using required flags; verifies every copied file size
+andSHA256. Labels snapshots as live/incomplete evidence, never approvals. Two exclusion/
+corruption tests passed. Macroot runs/local-migration-20261023/native-control40-continuous-copyback-v1,
+controller.json includes all snapshot inventorySHAs; first5files verified at03:57UTC,
+inventory76a915233f039debe0d1ff516d37e18cc9754f09ea68cc57eb0f3488e337af53.
+Will capture per-update atomic training-state.pt (adapter/Adam/allRNG) and final proof/
+reload as they appear, deadline09:18UTC. Existing guard55922 remains armed. These
+snapshots are additional to verified native archive/workset/Engine/dev backups.
 
 Both complete default/archived-runtime native20+speech20 reviews and all backups stay
 as below. Native520 selected as repair PARENT ONLY (ordinary2/4 versus7590/4 default);
