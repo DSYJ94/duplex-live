@@ -83,7 +83,7 @@ def answer(solution):
             f' and earns {words(solution["points"])} points.')
 
 
-def build():
+def _authored_plan():
     rows=[]
     for index in range(8):
         problem,corrected=instance(index);original=solve(problem);replacement=solve(corrected)
@@ -145,7 +145,13 @@ def build():
                   'Independent whole-corpus words, waveform quality, semantic and conversion approval',
                   'Native numerical and gradient approval plus combined retained-objective readiness',
                   'Distinct bounded pilot, full independent training-state restore and complete native behavior review'])
-    validate(plan);return plan
+    return plan
+
+
+def build():
+    plan=_authored_plan()
+    validate(plan)
+    return plan
 
 
 def validate(plan):
@@ -165,6 +171,14 @@ def validate(plan):
             raise ValueError('Separate native delegation choice from backend answer production')
         for result in labels['actual_worker_returns_required']:
             if solve(result['problem'])!=result['oracle']:raise ValueError('Changed independently computable source target')
+    # The optimizer oracle alone cannot bind the spoken question, answer text,
+    # revision/delivery labels or retention declaration. This version is one
+    # fixed authored source, rather than an arbitrary compatible data schema.
+    # Compare JSON representations so changed booleans/numeric types cannot
+    # exploit Python's True == 1 equality. New wording requires a new version.
+    canonical=lambda value:json.dumps(value,sort_keys=True,separators=(',',':'),allow_nan=False)
+    if canonical(plan)!=canonical(_authored_plan()):
+        raise ValueError('Exact whole32 authored words, targets, lifecycle and retention bindings required')
     return plan
 
 

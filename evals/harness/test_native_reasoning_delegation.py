@@ -45,5 +45,33 @@ class ReasoningDelegationSource(unittest.TestCase):
             with self.subTest(mode=mode),self.assertRaises(ValueError):validate(p)
         self.assertFalse(original['training_approved']);self.assertEqual(original['api_calls'],0)
 
+    def test_spoken_question_answer_and_lifecycle_annotations_remain_one_canonical_source(self):
+        original=build()
+        mutations={
+            'question':lambda p:p['cases'][1]['inference_inputs']['authored_user_utterances'].__setitem__(0,'Choose the most expensive bundle instead.'),
+            'answer':lambda p:p['cases'][1]['annotations_not_model_inputs'].update(expected_final_spoken_words='Choose the wrong items.'),
+            'pending_answer':lambda p:p['cases'][1]['annotations_not_model_inputs'].update(expected_pending_basic_words='Two badges cost nine tokens.'),
+            'lifecycle_delay':lambda p:p['cases'][2]['annotations_not_model_inputs'].update(minimum_result_delivery_delay_s=0.),
+            'lifecycle_dispatch':lambda p:p['cases'][2]['annotations_not_model_inputs'].update(lifecycle_event_after_actual_dispatch=False),
+            'revision':lambda p:p['cases'][3]['annotations_not_model_inputs']['actual_worker_returns_required'][1].update(revision=1),
+            'delivery':lambda p:p['cases'][2]['annotations_not_model_inputs']['actual_worker_returns_required'][0].update(deliverable=True),
+            'matched_instance':lambda p:p['cases'][1].update(matched_instance=7),
+            'voice':lambda p:p['cases'][1].update(user_voice='unapproved-voice'),
+        }
+        for name,mutate in mutations.items():
+            p=copy.deepcopy(original);mutate(p)
+            with self.subTest(mutation=name),self.assertRaises(ValueError):validate(p)
+
+    def test_source_cannot_weaken_retention_or_claim_owner_or_heldout_inputs(self):
+        original=build()
+        for field,value in [('owner_conversations_used',True),
+                            ('existing_folds_or_heldouts_read_or_changed',True),
+                            ('existing_control40_or_retention_gates_changed',True)]:
+            p=copy.deepcopy(original);p[field]=value
+            with self.subTest(field=field),self.assertRaises(ValueError):validate(p)
+        for field in original['required_retention']:
+            p=copy.deepcopy(original);p['required_retention'][field]=0
+            with self.subTest(retention=field),self.assertRaises(ValueError):validate(p)
+
 
 if __name__=='__main__':unittest.main()

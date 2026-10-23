@@ -1,0 +1,30 @@
+{
+  "schema": "dl-native-reasoning32-source-binding-audit-v1",
+  "at_utc": "2026-10-23T13:59:38.029778+00:00",
+  "fixture": "evals/fixtures/native-reasoning-delegation-source-proposal-20261023.json",
+  "fixture_sha256": "8bf69aa79ce6c458e772042064c4abd3e2613e175c50d826f51371c92cc3788e",
+  "complete_cases": 32,
+  "authored_user_utterances": 56,
+  "original_fixture_unchanged": true,
+  "original_fixture_matches_deterministic_generator": true,
+  "finding": "Previous source validator checked optimizer oracles but could accept independently mutated user wording, spoken answers, revision/delivery clocks, voice and retention declarations.",
+  "reproduction": {
+    "new_tests_before_repair": 5,
+    "mutation_subtests_failing_to_reject_before_repair": 21,
+    "new_tests_after_repair": 5,
+    "passed_after_repair": 5,
+    "independent_oracles_checked_by_existing_bitmask_search": 32
+  },
+  "repair": "Bind this exact source version to the deterministic complete authored JSON, including all inference inputs, separate annotations, lifecycle and retention declarations; require a new version for any change.",
+  "actual_corruption_found_in_original_fixture": false,
+  "cause_of_existing_native_model_failures_established": false,
+  "training_approved": false,
+  "api_calls": 0,
+  "optimizer_updates": 0,
+  "active_GPU_source_changed": false,
+  "required_next": [
+    "Implement explicit asynchronous reasoning teacher/source-audio protocol with actual dispatch/completion/arrival clocks and full original+correction user context",
+    "Record and independently approve all32 source and actual native teacher episodes",
+    "Complete semantic/conversion/native numerical/gradient/combined-retention chain before a distinct bounded reasoning pilot"
+  ]
+}

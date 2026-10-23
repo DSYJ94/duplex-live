@@ -1,3 +1,36 @@
+# LOCAL —11/40 BF16 live; broader reasoning-source bindings repaired (23 October14:00UTC)
+
+LOCAL sole executor; goal ACTIVE. Main412da73 before this source-audit commit.
+Actual GPU source remains immutableC9 c9efaaac24d983342f7eded46617e6450bc102ce;
+separate active supervisor source7769270c8b0ce2b915b28c664b867f2dd7232e17 unchanged.
+Exact new supervisor21063/birth20582160 S/live, old4111/birth18985221 T/paused,
+same CUDA gradient14873/birth20219598 R/live at13:59:42UTC,11/40 all passing,
+optimizer_updates0. New pipeline deadline21:30UTC. Do not restart14873 or resume4111.
+All7 complete original stages plus actual exit still required before native20.
+
+Local active services unchanged: costguard74352/session71225 ->22:22:37.9UTC
+(100USD cap, current full-life maximum62.50071830424946USD; retainedvolume49yytzyoge),
+backup85270/session28881 v7 ->22:20; waiter86013/session39293 v3 latestlaunch21:37,
+evaluationend22:17; proxy85512/session86213 v4 ->22:19; tunnel session3455,
+Podloopback18790 ->Mac50258. Last23-file backup independently verified inventory
+86f49a0e159c80536bf737958d0df35f289c7b3483d00d470cb4f59dc2dddbff.
+Actualprocess readings appended to native-control40-verified-observations-v1.jsonl.
+No new Pod, optimizer, candidate adoption or sealed fresh input read.
+
+Independent preparation: unchanged authored reasoning32 fixture hash
+8bf69aa79ce6c458e772042064c4abd3e2613e175c50d826f51371c92cc3788e
+matches deterministic generation. Old source validator wrongly accepted21 mutated
+question/answer/lifecycle/voice/retention variants despite valid optimizer oracles.
+New exact whole-source binding rejects them; all5 tests pass inclindependent32
+bitmask solutions. This source is still unrecorded/untrained; originalfixture was
+not corrupt, and this finding is NOT a cause established for existing model failures.
+Audit docs/NATIVE-REASONING32-SOURCE-BINDING-AUDIT-2026-10-23.json. GPU checkout,
+approved histories/targets/folds and every current loss/threshold remain untouched.
+Broader asynchronous teacher/audio protocol still required; microturndata absent.
+Unrelated local changes preserved. Original67.76GB native archive previously
+verified; broader stopped Mac source backup PARTIAL. Next finish same BF1640 ->
+combined readiness ->one8 ->independent restore/proof ->full native20/speech20.
+
 # LOCAL — exact live gradient PRESERVED; all deadline services rearmed (23 October13:54UTC)
 
 LOCAL sole executor; goal ACTIVE/incomplete. Source main7769270 pushed; actual

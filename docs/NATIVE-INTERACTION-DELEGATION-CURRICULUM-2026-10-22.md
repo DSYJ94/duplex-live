@@ -80,3 +80,20 @@ not silently consume this new schema. Three source/solver/mutation tests pass.
 This is the reasoning/lifecycle portion of the wider curriculum. Microturn,
 backchannel and nonlexical vocalization data still need their own approved source
 and audio annotation protocol; this proposal does not establish those behaviors.
+
+
+## Whole-source binding audit — 23 October
+
+The unchanged32-case source fixture passes exact deterministic regeneration and
+independent combinatorial target checks. A mutation audit exposed a validator gap:
+valid optimizer oracles could coexist with changed spoken questions/answers,
+revision/delivery labels or retention declarations. Twenty-one intentionally
+corrupted variants were accepted by the old validator. The repaired validator
+binds the complete authored JSON for this version; all five tests now pass,
+including the existing independent bitmask solver check.
+
+This found no corruption in the original fixture and establishes no cause for
+existing model failures: this source has never been recorded or trained. It
+prevents mismatched future reasoning labels. No API call, new recording, source
+audio repair, GPU source change or optimizer update occurred in this audit. See
+[the exact audit](NATIVE-REASONING32-SOURCE-BINDING-AUDIT-2026-10-23.json).
