@@ -19,7 +19,8 @@ ROOTS=('native-control40-preflight-v3/numerical','native-control40-supervisor-v4
        'native-control40-training-followup-v1','native-control40-training-followup-v2',
        'native-control40-precise-pilot-v1','native-control40-attention-diagnostic-v1',
        'native-control40-precise-pilot-v2','native-control40-native20-v1',
-       'native-control40-native20-speech-v1','native-control40-fresh-paired40-v1')
+       'native-control40-native20-speech-v1','native-control40-fresh-paired40-v1',
+       'native-control40-precise-pilot-v3-adoption')
 FORBIDDEN={'session-token','.private','.env','keys','credentials','core','quarantine',
            'owner-conversations','owner_conversations'}
 

@@ -1,3 +1,18 @@
+# LOCAL — exact-child supervisor implementation ready for Linux verification (23 October13:56UTC)
+
+LOCAL sole executor, goal ACTIVE. Current gradient14873/birth20219598 verified
+R/live at13:48UTC;9/40 cases passed, no optimizer update. Original supervisor
+4111/birth18985221 still owns chain with14:59 deadline. New costguard74352 remains
+armed through22:22:37.9UTC within62.50071830424946USD maximum of human100 total.
+New native_control_pilot_takeover preserves exact original CUDA child and queued
+commands, pauses only old parent, requires actual child exit0 and complete40
+unchanged BF16 proof, then retires old parent and acquires same global GPU lease.
+GPU payload remains immutableC9; orchestration source explicitly separate.
+Five local gate/chain tests pass; actual Linux process-handoff test pending remote
+checkout verification. Adoption NOT dispatched yet. Copyback adds new adoption
+output root; old watcher/dispatcher/proxy deadlines still await replacement.
+Unrelated local work preserved. No new Pod, training restart or threshold change.
+
 # LOCAL —100USD authorization recorded; new guard ACTIVE; supervisor adoption NEXT (23 October13:38UTC)
 
 LOCAL sole executor, goal ACTIVE. Current source main236cc11. Human explicitly
