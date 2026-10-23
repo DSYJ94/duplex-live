@@ -1,6 +1,6 @@
 {
   "schema": "dl-native-control40-live-numerical-and-evaluation-followup-v1",
-  "observed_utc": "2026-10-23T10:34:20.250979+00:00",
+  "observed_utc": "2026-10-23T12:06:48.777070+00:00",
   "execution_source_commit": "c9efaaac24d983342f7eded46617e6450bc102ce",
   "pod_id": "4yx8vahdmjsylx",
   "controller_pid": 4111,
@@ -8,7 +8,7 @@
   "numerical_pid": 4216,
   "numerical_birth": 18993883,
   "numerical_created_utc": "2026-10-23T09:38:13.615016+00:00",
-  "completed_cases": 12,
+  "completed_cases": 32,
   "all_completed_cases_pass": true,
   "complete40": false,
   "whole40_approved": false,
@@ -85,28 +85,151 @@
       "passed": true,
       "hidden_max_error": 4.00543212890625e-05,
       "logit_max_error": 3.528594970703125e-05
+    },
+    {
+      "id": "native-control3-train-012",
+      "passed": true,
+      "hidden_max_error": 1.0013580322265625e-05,
+      "logit_max_error": 1.3768672943115234e-05
+    },
+    {
+      "id": "native-control3-train-013",
+      "passed": true,
+      "hidden_max_error": 1.8596649169921875e-05,
+      "logit_max_error": 1.239776611328125e-05
+    },
+    {
+      "id": "native-control3-train-014",
+      "passed": true,
+      "hidden_max_error": 1.239776611328125e-05,
+      "logit_max_error": 8.463859558105469e-06
+    },
+    {
+      "id": "native-control3-train-015",
+      "passed": true,
+      "hidden_max_error": 5.21540641784668e-05,
+      "logit_max_error": 9.703636169433594e-05
+    },
+    {
+      "id": "native-control3-train-016",
+      "passed": true,
+      "hidden_max_error": 2.384185791015625e-05,
+      "logit_max_error": 1.5020370483398438e-05
+    },
+    {
+      "id": "native-control3-train-017",
+      "passed": true,
+      "hidden_max_error": 4.696846008300781e-05,
+      "logit_max_error": 2.288818359375e-05
+    },
+    {
+      "id": "native-control3-train-018",
+      "passed": true,
+      "hidden_max_error": 5.984306335449219e-05,
+      "logit_max_error": 4.9948692321777344e-05
+    },
+    {
+      "id": "native-control3-train-019",
+      "passed": true,
+      "hidden_max_error": 1.4781951904296875e-05,
+      "logit_max_error": 1.4483928680419922e-05
+    },
+    {
+      "id": "native-control3-train-020",
+      "passed": true,
+      "hidden_max_error": 3.504753112792969e-05,
+      "logit_max_error": 7.450580596923828e-05
+    },
+    {
+      "id": "native-control3-train-021",
+      "passed": true,
+      "hidden_max_error": 1.049041748046875e-05,
+      "logit_max_error": 8.58306884765625e-06
+    },
+    {
+      "id": "native-control3-train-022",
+      "passed": true,
+      "hidden_max_error": 1.7940998077392578e-05,
+      "logit_max_error": 1.5020370483398438e-05
+    },
+    {
+      "id": "native-control3-train-023",
+      "passed": true,
+      "hidden_max_error": 1.0967254638671875e-05,
+      "logit_max_error": 1.4223158359527588e-05
+    },
+    {
+      "id": "native-control3-train-024",
+      "passed": true,
+      "hidden_max_error": 1.049041748046875e-05,
+      "logit_max_error": 1.817941665649414e-05
+    },
+    {
+      "id": "native-control3-train-025",
+      "passed": true,
+      "hidden_max_error": 4.297494888305664e-05,
+      "logit_max_error": 5.936622619628906e-05
+    },
+    {
+      "id": "native-control3-train-026",
+      "passed": true,
+      "hidden_max_error": 7.62939453125e-06,
+      "logit_max_error": 1.1920928955078125e-05
+    },
+    {
+      "id": "native-control3-train-027",
+      "passed": true,
+      "hidden_max_error": 1.4424324035644531e-05,
+      "logit_max_error": 1.3560056686401367e-05
+    },
+    {
+      "id": "native-control3-train-028",
+      "passed": true,
+      "hidden_max_error": 1.3947486877441406e-05,
+      "logit_max_error": 1.138448715209961e-05
+    },
+    {
+      "id": "native-control3-train-029",
+      "passed": true,
+      "hidden_max_error": 0.0002465248107910156,
+      "logit_max_error": 0.0004820823669433594
+    },
+    {
+      "id": "native-control3-train-030",
+      "passed": true,
+      "hidden_max_error": 1.4781951904296875e-05,
+      "logit_max_error": 9.5367431640625e-06
+    },
+    {
+      "id": "native-control3-train-031",
+      "passed": true,
+      "hidden_max_error": 8.58306884765625e-06,
+      "logit_max_error": 7.62939453125e-06
     }
   ],
   "final_parameter_hash_and_peak_checks_pending": true,
   "new_optimizer_updates": 0,
   "new_candidate_or_adoption": false,
   "backup": {
-    "watcher_pid": 92170,
+    "watcher_pid": 42219,
     "current_successful": true,
-    "snapshots_verified": 15,
-    "latest_inventory_sha256": "9510108f39f83eeacf204e3ddc485c67752ab255167f03de5de709bc5d31e1a6",
+    "snapshots_verified": 2,
+    "latest_inventory_sha256": "79f69950050f9f19bef380bc1e0aa9aeb3f077964a382f0239790a092d185676",
     "latest_files": 18,
-    "numerical_progress_sha256": "d5b65a4d728f63e526646c79d8ec42661620175b86ac8a847a564f9b6d8a14bc"
+    "numerical_progress_sha256": "c7d443c127ac155249e8526baaa219d2ccb68839ec5bf541cc8c86816c05f673",
+    "watcher_session": 46974,
+    "path": "runs/local-migration-20261023/native-control40-continuous-copyback-v6",
+    "deadline_utc": "2026-10-23T15:30:00Z"
   },
   "next_evaluation": {
-    "local_waiter_pid": 20789,
-    "session": 68528,
+    "local_waiter_pid": 40212,
+    "session": 26593,
     "phase": "waiting_for_complete_independent_restored_pilot",
     "upstream_pid": 4111,
     "upstream_birth": 18985221,
     "all_seven_stages_must_exit_zero": true,
-    "latest_launch_utc": "2026-10-23T14:20:00+00:00",
-    "evaluation_deadline_utc": "2026-10-23T15:03:00+00:00",
+    "latest_launch_utc": "2026-10-23T14:44:00+00:00",
+    "evaluation_deadline_utc": "2026-10-23T15:27:00+00:00",
     "candidate_proof": "/workspace/migration/native-control40-precise-pilot-v2/training",
     "paired_out": "/workspace/migration/native-control40-native20-v1",
     "speech_out": "/workspace/migration/native-control40-native20-speech-v1",
@@ -115,15 +238,22 @@
     "gpu_owner_lease_inherited_by_both_controllers": true,
     "no_optimizer_or_extension_or_adoption": true,
     "sealed_fresh_audio_not_read": true,
-    "never_retries_uncertain_launch_automatically": true
+    "never_retries_uncertain_launch_automatically": true,
+    "local_source_commit": "5889a33b503ef4cf1b447ec6835b643c3e27edcf",
+    "status": "runs/local-migration-20261023/native-control40-development-followup-v2.json",
+    "read_only_observation_errors_retried": true,
+    "previous_waiter20789_terminal_network_unreachable": true
   },
   "budget": {
-    "guard_pid": 73678,
+    "guard_pid": 36001,
     "phase": "armed",
-    "deadline_utc": "2026-10-23T15:07:37.900000+00:00",
+    "deadline_utc": "2026-10-23T15:31:37.900000+00:00",
     "total_Runpod_compute_cap_USD": 50,
-    "maximum_conservative_total_USD": 49.69558350742474,
-    "last_armed_utc": "2026-10-23T10:34:25.751083+00:00"
+    "maximum_conservative_total_USD": 49.98921830424946,
+    "last_armed_utc": "2026-10-23T10:34:25.751083+00:00",
+    "guard_session": 74278,
+    "posted_closed_pod_total_USD": 36.94071830424946,
+    "guard_status": "runs/local-migration-20261023/runpod-control40-replacement-budget-v2.json"
   },
   "storage": {
     "measured_retained_volume_bytes": 80131205660,
@@ -133,18 +263,20 @@
     "complete_original_archive_rehashed_this_turn": false
   },
   "last_goal_turn": {
-    "classification": "verified_wait",
-    "exact_numerical_pid": 4216,
-    "exact_numerical_birth": 18993883,
-    "process_state_observed": "R",
-    "observed_case_counts": [
-      10,
-      11,
-      12
-    ],
-    "bounded_observer_session": 84079,
-    "observer_finished_zero_without_restarting_job": true,
-    "new_submissions": 0,
+    "classification": "progress",
+    "actual_numerical_process_continued_without_restart": true,
+    "billing_reconciled_inside_existing50_cap": true,
+    "recovered_backend_and_rearmed_read_retrying_evaluation": true,
+    "new_gpu_resources": 0,
     "new_optimizer_updates": 0
+  },
+  "original_failed_train029_current_reference": {
+    "passed": true,
+    "hidden_max_error": 0.0002465248107910156,
+    "logit_max_error": 0.0004820823669433594,
+    "causal_prefix_error": 0.0,
+    "text_alignment_error": 0.0,
+    "same_threshold": 0.001,
+    "production_execution_or_model_weights_changed": false
   }
 }
