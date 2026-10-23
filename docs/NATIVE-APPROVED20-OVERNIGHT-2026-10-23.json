@@ -1,0 +1,31 @@
+{
+  "schema": "dl-native-approved20-single-purchase-funded-plan-v1",
+  "human_approval": "Approve the one-time $20 top-up",
+  "single_credit_purchase_USD": 20,
+  "auto_pay_remains_disabled": true,
+  "purchase_status": "submitted_once_processing_not_yet_verified",
+  "pod": "4yx8vahdmjsylx",
+  "volume_retained": "49yytzyoge",
+  "guard_deadline_UTC": "2026-10-24T08:22:37.900000+00:00",
+  "pipeline_deadline_UTC": "2026-10-24T07:00:00+00:00",
+  "evaluation_deadline_UTC": "2026-10-24T08:17:00+00:00",
+  "maximum_project_compute_USD": 80.40071830424947,
+  "human_compute_cap_USD": 100,
+  "extension_requires_posted_wallet_and_exact_same_Pod_rate_mount_readback": true,
+  "unchanged_GPU_child": 41540,
+  "unchanged_birth": 22014818,
+  "current_waiter_to_retire_after_new_guard_and_exact_preflight_only": 69088,
+  "paused_original_parent_must_never_resume": 21063,
+  "optimizer_limit": 8,
+  "execution_commit": "c9efaaac24d983342f7eded46617e6450bc102ce",
+  "orchestration_commit": "738bb25e56b79aed13acf4c5b3577f926391f81a",
+  "model_commands_losses_data_gates_unchanged": true,
+  "training_extension_requires_conclusive_restore_retention_behavior": true,
+  "CPU_qualification": {
+    "pid": 70154,
+    "birth": 24011572,
+    "source": "13a0e57bc39f791d4d0277feed146f528c1cfa06",
+    "provider_requests": 0,
+    "training": false
+  }
+}
