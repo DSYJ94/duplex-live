@@ -22,9 +22,36 @@ def digest(path):
     return h.hexdigest()
 
 
+def prepare_asr(asr):
+    """Install only the separately pinned recognizer; leave native runtime intact."""
+    if asr.exists() or asr.is_symlink():raise RuntimeError('Fresh separate ASR environment required')
+    subprocess.run([sys.executable,'-m','venv','--system-site-packages',str(asr)],check=True)
+    python=asr/'bin/python'
+    version=subprocess.check_output([str(python),'-c','import torch;print(torch.__version__)'],text=True).strip()
+    if version!='2.9.0a0+145a3a7bda.nv25.10':raise RuntimeError('Unexpected NGC Torch build')
+    triton_version=subprocess.check_output([str(python),'-c','import triton;print(triton.__version__)'],text=True).strip()
+    constraint=asr/'torch-constraint.txt';constraint.write_text('torch==='+version+'\ntriton==='+triton_version+'\n')
+    subprocess.run([str(python),'-m','pip','install','--disable-pip-version-check','--constraint',str(constraint),
+                    'openai-whisper==20250625','whisper-timestamped==1.15.9',
+                    'numpy==2.2.6','scipy==1.16.2','soundfile==0.13.1'],check=True)
+    if subprocess.check_output([str(python),'-c','import torch;print(torch.__version__)'],text=True).strip()!=version:
+        raise RuntimeError('ASR installation replaced pinned Torch')
+    if subprocess.check_output([str(python),'-c','import triton;print(triton.__version__)'],text=True).strip()!=triton_version:
+        raise RuntimeError('ASR installation replaced pinned Triton')
+    public_download=("import whisper,hashlib; from pathlib import Path; "
+        "url=whisper._MODELS['turbo']; "
+        "assert '/aff26ae408abcba5fbf8813c21e62b0941638c5f6eebfb145be0c9839262a19a/' in url; "
+        "path=whisper._download(url,str(Path.home()/'.cache/whisper'),False); "
+        "assert hashlib.sha256(Path(path).read_bytes()).hexdigest()=='aff26ae408abcba5fbf8813c21e62b0941638c5f6eebfb145be0c9839262a19a'; "
+        "print('Pinned public Whisper turbo hash verified')")
+    subprocess.run([str(python),'-c',public_download],check=True)
+    return python,version,triton_version
+
+
 def main():
     ap=argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--source-commit',required=True)
+    ap.add_argument('--asr-only',action='store_true')
     ap.add_argument('--out',type=Path,required=True)
     args=ap.parse_args()
     source=Path(__file__).resolve().parents[2]
@@ -33,6 +60,17 @@ def main():
         raise RuntimeError('Exact clean Git source required')
     if args.out.exists():raise RuntimeError('Preparation receipt already exists')
     started=time.monotonic()
+    if args.asr_only:
+        python,version,triton_version=prepare_asr(Path('/opt/native10-asr-env'))
+        receipt=dict(schema='dl-native-independent-asr-preparation-v1',source_commit=args.source_commit,
+                     asr_python=str(python),torch=version,triton=triton_version,
+                     public_whisper_turbo_sha256='aff26ae408abcba5fbf8813c21e62b0941638c5f6eebfb145be0c9839262a19a',
+                     original_archive_unchanged=True,shared_native_runtime_modified=False,
+                     provider_credential_transferred=False,seconds=time.monotonic()-started,
+                     training_or_behavior_approved=False)
+        with args.out.open('x') as stream:json.dump(receipt,stream,indent=2);stream.write('\n')
+        print(json.dumps(receipt),flush=True)
+        return
     from evals.personaplex_train import MODEL_HASHES
     from evals.context_spanning_download import WEIGHT_SHA256,VOICE_SHA256
     original=Path('/workspace/duplex-live')
@@ -62,27 +100,7 @@ def main():
         print(json.dumps({'verified_public_model':path,'sha256':wanted}),flush=True)
     # No installation into /workspace/runtime-x86-ngc2510: that runtime may be
     # serving the other live audit. System NGC Torch is shared read-only here.
-    asr=Path('/opt/native10-asr-env')
-    subprocess.run([sys.executable,'-m','venv','--system-site-packages',str(asr)],check=True)
-    python=asr/'bin/python'
-    version=subprocess.check_output([str(python),'-c','import torch;print(torch.__version__)'],text=True).strip()
-    if version!='2.9.0a0+145a3a7bda.nv25.10':raise RuntimeError('Unexpected NGC Torch build')
-    triton_version=subprocess.check_output([str(python),'-c','import triton;print(triton.__version__)'],text=True).strip()
-    constraint=asr/'torch-constraint.txt';constraint.write_text('torch==='+version+'\ntriton==='+triton_version+'\n')
-    subprocess.run([str(python),'-m','pip','install','--disable-pip-version-check','--constraint',str(constraint),
-                    'openai-whisper==20250625','whisper-timestamped==1.15.9',
-                    'numpy==2.2.6','scipy==1.16.2','soundfile==0.13.1'],check=True)
-    if subprocess.check_output([str(python),'-c','import torch;print(torch.__version__)'],text=True).strip()!=version:
-        raise RuntimeError('ASR installation replaced pinned Torch')
-    if subprocess.check_output([str(python),'-c','import triton;print(triton.__version__)'],text=True).strip()!=triton_version:
-        raise RuntimeError('ASR installation replaced pinned Triton')
-    public_download=("import whisper,hashlib; from pathlib import Path; "
-        "url=whisper._MODELS['turbo']; "
-        "assert '/aff26ae408abcba5fbf8813c21e62b0941638c5f6eebfb145be0c9839262a19a/' in url; "
-        "path=whisper._download(url,str(Path.home()/'.cache/whisper'),False); "
-        "assert hashlib.sha256(Path(path).read_bytes()).hexdigest()=='aff26ae408abcba5fbf8813c21e62b0941638c5f6eebfb145be0c9839262a19a'; "
-        "print('Pinned public Whisper turbo hash verified')")
-    subprocess.run([str(python),'-c',public_download],check=True)
+    python,version,triton_version=prepare_asr(Path('/opt/native10-asr-env'))
     receipt=dict(schema='dl-native-paired-container-preparation-v1',source_commit=args.source_commit,
                  original_archive_unchanged=True,public_model_hashes=expected,ephemeral_runtime=str(root),
                  public_copy_is_not_backup=True,shared_native_runtime_modified=False,
