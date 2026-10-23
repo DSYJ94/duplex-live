@@ -2,8 +2,8 @@
 
 There is no adopted production candidate. The latest completed training stage is
 native7590052: eight new updates carrying native520 Adam clocks520→528. The new
-control40 repair has not made an optimizer update. Its full numerical gate passed;
-its independent BF16 gate is running. Passing numerical/gradient checks establishes
+control40 repair has not made an optimizer update. Its full numerical and independent40-case BF16 gradient gates passed;
+combined retained-objective readiness is running. Passing numerical/gradient checks establishes
 implementation readiness, not answer correctness or interaction quality.
 
 ## Concrete repair and what remains unproven — 23 October17:10UTC
@@ -264,3 +264,23 @@ running pilot. Do not repeat an identical old probe or report all gradient
 analysis as absent. If the new pilot fails, a useful next diagnostic must cover
 its exact current complete154/native49/control40 weights and actual inherited
 Adam direction, with matched behavior; preserve every required objective.
+
+
+## Complete40 gradients and new teacher failures —23 October18:39UTC
+
+All40 control gradients now pass independent readback, with0new optimizer updates.
+The full local text/acoustic geometry has9negative dot products, median cosine
+0.03519363 and median acoustic/text norm ratio3.9915%. This remains teacher-local
+evidence; it does not isolate the original154/native49/Adam conflict or establish
+the cause of7590052's answer regression. The exact retained-objective readiness
+child is still running, preserved under a22:30UTC supervisor deadline.
+
+The separate new reasoning teacher corpus stopped at6/32: cancellation lacked
+a state-changing request and delivered stale content; replacement computed the
+correct new result but exposed an early-close recorder bug. Both diagnoses are
+bound in the teacher-failure receipt. They explain rejection of these NEW
+teachers, which postdate7590052; they cannot explain the old model regression.
+The new completion/ack-aware recorder passes its regression tests but has not
+collected a repaired teacher. All32 independent quality/semantic/native gates
+remain required. No additional current native training or behavior success is
+claimed by teacher or numerical transport tests.

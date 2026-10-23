@@ -1,6 +1,6 @@
 {
   "schema": "dl-native-reasoning32-source-collection-status-v1",
-  "status": "COMPLETE_SOURCE_V3_ALL40_INDEPENDENT_ASR_AND_READBACK_PASS",
+  "status": "SOURCE_V3_ALL40_QUALIFIED_TEACHER_V1_FAILED_PRESERVED",
   "collector_source_commit": "820711c",
   "collector_code_sha256": "0b1e7b0dfefe49c11991304d53eda398b241234c32fe60829a49ed18b625ec4c",
   "independent_source_quality_code_sha256": "1ddaa9e3757d14b38db164fff350b558dbe0567ef83d2251d312833ec51b886a",
@@ -43,10 +43,14 @@
   "quality_diagnosis": "docs/NATIVE-REASONING32-SOURCE-AUDIT-DIAGNOSIS-2026-10-23.json",
   "latest_quality_code_sha256": "1ddaa9e3757d14b38db164fff350b558dbe0567ef83d2251d312833ec51b886a",
   "old_quality_code_sha256": "af47365e03122406c9a57e438df8bfa56b30a245c3fb61baac2d9606ae749ad8",
-  "next_action": "Wire actual native asynchronous teacher capture; source qualification alone approves no teacher, training or native behavior.",
+  "next_action": "Prepare explicit versioned whole32 recovery, preserving the four original transport/structural-pass records byte-identically unless independently diagnosed otherwise; repair002/003 first and collect26 unattempted scenes only after repaired protocol checks. All32 still require independent speech, semantic, frame/conversion and native approval. Assess tight full prefix/span timing before further calls; never crop or weaken1100-frame limit.",
   "source_repair_code_sha256": "4e43c86317dfde11317b54e432077744bef5c8bf87873436e9695d2fe6fa7fdb",
   "last_ASR_object_passed": true,
   "whole40_reapproval_still_required": false,
   "backup_receipt": "docs/NATIVE-REASONING32-SOURCE-V3-PRESERVATION-2026-10-23.json",
-  "qualification_receipt": "docs/NATIVE-REASONING32-SOURCE-QUALIFICATION-2026-10-23.json"
+  "qualification_receipt": "docs/NATIVE-REASONING32-SOURCE-QUALIFICATION-2026-10-23.json",
+  "actual_teacher_sessions": 6,
+  "actual_teacher_backend_requests": 5,
+  "complete_teacher32": false,
+  "teacher_failure_receipt": "docs/NATIVE-REASONING32-TEACHER-FAILURE-2026-10-23.json"
 }

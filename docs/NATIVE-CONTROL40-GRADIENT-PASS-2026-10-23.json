@@ -1,0 +1,16 @@
+{
+  "schema": "dl-native-control40-complete-independent-gradient-readback-v1",
+  "at_utc": "2026-10-23T18:33:43.816564+00:00",
+  "source_commit": "c9efaaac24d983342f7eded46617e6450bc102ce",
+  "gradient_sha256": "661840d74546a45d18744151704e38e1fdf0ad8f7e38339d0818d789750ff481",
+  "complete40": true,
+  "passed": true,
+  "cases": 40,
+  "peak_allocated_bytes": 22139412480,
+  "optimizer_updates": 0,
+  "all_parameters_and_execution_unchanged": true,
+  "verified_backup_inventory_sha256": "6c6116027bbcdf32f4f693fb6215a5f8810ec640330aa9cb3efc358bdc355cff",
+  "verified_backup_files": 47,
+  "original154_and_old49_readiness_still_required": true,
+  "training_or_behavior_qualified": false
+}

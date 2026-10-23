@@ -1,0 +1,76 @@
+{
+  "schema": "dl-native-reasoning32-teacher-failure-diagnosis-v1",
+  "at_utc": "2026-10-23T18:37:19.676092+00:00",
+  "collection_source_commit": "b5ce44c97e66836ac2d6475f62415622d11fbb52",
+  "collection_sha256": "34278d0e3014613a86d5066ded971055343143fc533809824210bece294f3c6b",
+  "collection_status": "incomplete_failed_preserved_no_retry",
+  "actual_terminal_exit": 1,
+  "actual_sessions": 6,
+  "expected_whole_corpus": 32,
+  "actual_backend_requests": 5,
+  "all_backend_HTTP_200": true,
+  "native_GPU_or_optimizer_calls": 0,
+  "training_approved": false,
+  "passing_subset_accepted": false,
+  "cancellation_failure": {
+    "id": "native-reasoning4-train-002",
+    "native_requests": 1,
+    "actual_cancellation_receipt": false,
+    "original_result_delivered_after_cancel_utterance": true,
+    "output_basic_answer": "Eight tokens.",
+    "later_stale_bundle_claim": "Badge, candle, and poster. Sixteen tokens, forty-eight points.",
+    "cause": "Teacher did not emit a new control delegation; application did not invent one or silently suppress the old result."
+  },
+  "replacement_failure": {
+    "id": "native-reasoning4-train-003",
+    "native_requests": 2,
+    "actual_replace_reasoning_receipt": true,
+    "original_revision_retired": true,
+    "actual_corrected_backend_content": "Badge, candle, and marker; total cost twelve tokens and total points forty-one.",
+    "provider_finished_at_s": 49.9775571670034,
+    "server_closed_at_s": 51.379338291997556,
+    "errors": [
+      {
+        "type": "error",
+        "error_type": "server_error",
+        "error_code": "context_injection_incomplete"
+      },
+      {
+        "type": "missing_commentary_ack",
+        "task_id": "item_EcDRRtNQT5n2pkgaJ5Rqb"
+      }
+    ],
+    "diagnosed_close_bug": "v1 close floor used HTTP dispatch plus declared minimum delay, omitting actual provider completion and context acknowledgment. A zero-added-delay replacement therefore had less than a full response window before close."
+  },
+  "v2_repair": {
+    "module": "evals/native_reasoning_stream_v2.py",
+    "code_sha256": "5cf697e28dd2eda4668fd76da7d9ac0168535365318bb225af0afe2ed56ff3a3",
+    "status": "PREPARED_TESTED_NOT_WIRED_OR_CALLED",
+    "close_window": "Fixed five seconds after actual eligible completion and matching context acknowledgment; continues sending actual-paced input while waiting.",
+    "generic_teacher_policy": "Explicit new client delegation for actual cancel/replace application-state updates; simple arithmetic remains local.",
+    "changes_to_original_v1_modules": false,
+    "actual_new_teacher_calls": 0,
+    "independent_whole32_source_quality_semantic_conversion_and_native_approval_still_required": true
+  },
+  "four_transport_and_structural_pass_records_still_unapproved": [
+    "native-reasoning4-train-000",
+    "native-reasoning4-train-001",
+    "native-reasoning4-train-004",
+    "native-reasoning4-train-005"
+  ],
+  "backup": {
+    "schema": "dl-native-reasoning32-teachers-failed-complete-remote-preservation-v1",
+    "at_utc": "2026-10-23T18:19:13.690828+00:00",
+    "destination": "/workspace/migration/native-reasoning32-teachers-v1-preserved-v1",
+    "volume_id": "49yytzyoge",
+    "inventory_sha256": "7e21d018b38cdc40cf2ac177aa3b99a1e41b0a64b7635fd52b71f068096cc8b2",
+    "files": 88,
+    "bytes": 58908880,
+    "all_regular_size_sha256_match": true
+  },
+  "whole32_quality_guard_refused_actual_partial6": true,
+  "source40_still_qualified": true,
+  "historical_7590052_regression_cause_established": false,
+  "historical_model_limitation": "These new teacher attempts postdate7590052 and cannot explain its earlier weight regression.",
+  "next_action": "Prepare explicit versioned whole32 recovery, preserving the four original transport/structural-pass records byte-identically unless independently diagnosed otherwise; repair002/003 first and collect26 unattempted scenes only after repaired protocol checks. All32 still require independent speech, semantic, frame/conversion and native approval. Assess tight full prefix/span timing before further calls; never crop or weaken1100-frame limit."
+}

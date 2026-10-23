@@ -13,10 +13,11 @@ from evals.native_reasoning_stream import capture,configuration,RESPONSE_WINDOW_
 
 
 class Socket:
-    def __init__(self,*,control=False,delegate=True,ack=True,pending_original=True):
+    def __init__(self,*,control=False,delegate=True,ack=True,pending_original=True,provider_delay_s=0.,ack_delay_s=0.):
         self.queue=asyncio.Queue();self.sent=[];self.control=control;self.delegate=delegate
         self.ack=ack;self.stage=0;self.input=bytearray();self.output=np.arange(1920,dtype='<i2').tobytes()
         self.pending_original=pending_original
+        self.provider_delay_s=provider_delay_s;self.ack_delay_s=ack_delay_s
     async def send(self,raw):
         e=json.loads(raw);self.sent.append(e)
         def put(e):self.queue.put_nowait(e)
@@ -31,7 +32,11 @@ class Socket:
                 self.stage=2;put(dict(type='session.input_transcript.delta',delta='Cancel it. What is two plus two?',start_ms=200,end_ms=300))
                 put(dict(type='session.delegation.created',delegation=dict(id='cancel',target='client'),offset_ms=300))
         if e['type']=='session.commentary.append':
-            if self.ack:put(dict(type='session.commentary.appended',client_event_id=e['event_id']))
+            if self.ack:
+                async def acknowledge():
+                    await asyncio.sleep(self.ack_delay_s/50)
+                    put(dict(type='session.commentary.appended',client_event_id=e['event_id']))
+                asyncio.create_task(acknowledge())
             put(dict(type='session.output_audio.delta',delta=base64.b64encode(self.output).decode()))
         if e['type']=='session.close':put(dict(type='session.closed',usage=dict(fixture_only=True)))
         await asyncio.sleep(0)
@@ -40,6 +45,7 @@ class Socket:
 
 
 class ReasoningStreamTests(unittest.IsolatedAsyncioTestCase):
+    capture_impl=staticmethod(capture)
     async def run_capture(self,socket,clips):
         events=[];audio=bytearray();inputs=bytearray();calls=[];release=asyncio.Event()
         now=lambda:time.monotonic()*50
@@ -49,6 +55,7 @@ class ReasoningStreamTests(unittest.IsolatedAsyncioTestCase):
             out.mkdir();atomic_json(out/'transport.json',dict(http_call_started_monotonic=now(),actual_provider_transport=False))
             started.set()
             if socket.control and socket.pending_original and identity=='original':await release.wait()
+            await sleep(socket.provider_delay_s)
             operation='cancel_reasoning' if identity=='cancel' else 'respond_to_user'
             args=dict(content='Delivery cancelled.' if identity=='cancel' else 'Actual computed answer.')
             if identity=='cancel':args['task_ids']=['original']
@@ -57,7 +64,7 @@ class ReasoningStreamTests(unittest.IsolatedAsyncioTestCase):
             if identity=='cancel':release.set()
             return r
         with tempfile.TemporaryDirectory()as folder:
-            report,packets,transcripts=await capture(socket,clips,Path(folder),events.append,
+            report,packets,transcripts=await self.capture_impl(socket,clips,Path(folder),events.append,
                 backend_model='fixture-only',env_file=None,minimum_delay_s=0.,input_sink=inputs.extend,
                 audio_sink=audio.extend,runner=runner,now=now,sleep=sleep)
             ledger=json.loads((Path(folder)/'lifecycle.json').read_text())

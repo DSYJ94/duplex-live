@@ -1,3 +1,95 @@
+# LOCAL —40/40 gradientPASS; same readiness child; teacher failure diagnosed (23 October18:39UTC)
+
+Previous goal turn made progress (all40sourcequality+backup and e715fa6). THIS
+turn adds actual native teacher evidence, complete40 BF16 gate, tested v2 close
+repair and funded same-child orchestration takeover. LOCAL sole executor;
+goalACTIVE, not complete/blocked. Mainb5ce44c97e66836ac2d6475f62415622d11fbb52
+before this commit. C9model c9efaaac24d983342f7eded46617e6450bc102ce unchanged.
+
+Actual18:35:43UTC: ALL40 independentgradientPASS,0optimizerupdates. Backup
+independently rehashed and gradient_gate readbackPASS; proofSHA
+661840d74546a45d18744151704e38e1fdf0ad8f7e38339d0818d789750ff481,
+peak22,139,412,480B. Wholeworkset/numerical/gradient stages actualexit0. Gradient
+14873 completed and old4111 retired; combinedreadiness41540/birth22014818 began
+17:48:52 and remainsR/live. Latesttrained7590052 stillunadopted; no newfit yet.
+Full40localgeometry nowincludesallfamilies:9opposing,mediancos0.03519363,
+medianacoustic/textnorm3.9915%. Not original154/native49/Adam causal analysis.
+Docs NATIVE-CONTROL40-GRADIENT-{PASS,GEOMETRY-COMPLETE40}-2026-10-23.json.
+
+NEW sole supervising adopter42932/birth22207653 S, source738bb25e56b79aed13acf4c5b3577f926391f81a,
+/opt/duplex-control40-orchestration-738bb25-prepared. It preserved SAME41540 and
+pausedONLY21063/birth20582160 T; latter must notresume. Out
+/workspace/migration/native-control40-precise-pilot-v4-adoption, deadline22:30UTC.
+One earlierpreparation process42569/birth22193568 failedbeforepause/outcreation
+becauseSSHenvlackedlegacyPYTHONPATH. Failedlaunchv1/outerlog preserved. Corrected
+launchv2 inherits exactoriginalsupervisorenv withcredentialsremoved. Actual
+source/child/compiledkernel/commands/globalGPUlease unchanged. Do not relaunch.
+trainingaliasv4->v3->v2. All7exit0+actualsupervisorexit requiredforevaluation.
+Readinesslog is still v3/combined_readiness.log; noprovenfinishETA or fullfunded
+finish claim. Samefull154/native49/control40 readiness ->ONE8from520 ->independent
+Adam/RNG/native restore/strictproof ->paired20/speech20/all4 ->eligiblefresh40.
+Atomicadapter/Adam/RNG saveaftereveryupdate retained; neverextendfailedrecipe.
+
+AllnewLOCAL serviceidentities (oldwatchers/dispatchers/proxy explicitlyretired):
+- costguard16271/session82942, unchangedexistingprepaid15h, deletePod4yx8vahdmjsylx
+  at23:22:37.9UTC retaining49yytzyoge; totalprojectplanned64.29<100. Fresharmed
+  status18:38:12. No newpayment; specific20USDtopupSTILLPENDING.
+- backup95445/session36808, source738prepared, outnative-control40-continuous-copyback-v8,
+  deadline23:20UTC, includesv4output. Latestwatch18:37:32PASS. Old85270/85271retired.
+- proxy95444/session28664, native-responses-proxy-v5, Mac127.0.0.1:50258,
+  runnative-control40-20261023-v5, deadline23:19UTC, max116newcalls afterprior12.
+  Newcomponent4actualHTTP200 ->aggregate16/128,remaining112. Keyonlylocal0600.
+- tunnel session81044: actualreverse127.0.0.1:18791 ->Mac50258. Oldsession3455
+  authoritativelyexit255 brokenpipe; stale18790listenerblockedrebindandleftalone.
+  Failedsmoke-v5 readtimeout reachedZEROproxy/providercalls, preserved. New
+  smoke-v6PASS4actuallookup/cancelcomponents onC9, Maccopybackall3filesverified,
+  inventoryda58aa05fa7daf06b2b9dd2afa272dacceb061191f6a730f3630d49b0e4ffb1f.
+- evaluator98191/session1702, plan...development-followup-plan-v6.json/statusv6,
+  upstream42932/birth22207653, latestlaunch22:37UTC, evalend23:17UTC, remoteproxy
+  port18791. Freshwaiting18:38:24; all7real0+actualupstreamdeadguardpreserved.
+  Old17063/17069retired; interim95878v5retiredbeforenewportdispatcher. No native20
+  orspeech20 launchedyet. Samepaired/speechoutputv1 paths, no duplicate evaluation.
+
+Actualreasoning32 teacher session61225 TERMINAL1: sixsessions000..005, fivegenuine
+ResponsesrequestsallHTTP200, no GPU/optimizer. Rawfailedcorpus preserved, no retry:
+ runs/local-migration-20261023/native-reasoning32-teachers-v1
+ sourceb5ce44c; originalfourcollector/stream/backend/lifecycle modules IMMUTABLE.
+000/004 direct had0delegations;001/005 delegation structurallypass butword/audio/
+spoken-semanticapprovaloutstanding.002hascorrectbasic8tokens thenSTALEoriginal
+bundleaftercancel: only1native request, nocancelreceipt.003reallyrequested
+replacement; backendretiredoldrevisionandcomputedcorrect12tokens/41points, but
+recorderclosed51.379s shortlyafterprovidercompletion49.978s. Servererror
+context_injection_incomplete +missingcommentaryack; outputonly'Badge,'.
+
+Diagnosedclosebug: v1floor useddispatch+delay+5 andignoredactualprovidercompletion/
+contextack. NEW native_reasoning_stream_v2.py keepsv1immutable, requires5seconds
+fromactualeligiblecompletion ANDmatchingcontextack whilecontinuingpacedinput;
+alsoexplicitgenericnativecancel/replace-delegationpolicy.45offline testsPASS,
+includingactualfailurecounterexample(originalfails/revisedpasses). V2STREAMONLY
+prepared; NOTwiredtocollector, NOnewv2teachercalls. Newqualitymodule requiresall32
+and independentlyreconstructsallrawinputs/output/actualbackendassociations before
+pinnedturboASR8. Actualpartial6correctlyrefused; no passing-subsetASR launched.
+Newlifecycle_review givespartial5diagnostic1failure, NOTsemanticapproval. These
+newteacherfailurespostdate7590052 andcannotexplainitshistoricalweightregression.
+
+FailedteacherFULL88files/58,908,880B Mac+retainedvolumehashPASS18:19:13,
+/workspace/migration/native-reasoning32-teachers-v1-preserved-v1, inventory
+7e21d018b38cdc40cf2ac177aa3b99a1e41b0a64b7635fd52b71f068096cc8b2.
+Source40qualificationstillPASS; sourcev3all172files/51,884,725B andquality42files/
+445151B alreadybackedup. Criticalnative67.76GB/all28470files+8symlinks+control40
+workset/enginehashes freshlyPASSearlier23Oct. Mac+Runpodtwodomains; S3samevolume,
+OneDriveuploadunverified; broadstoppedMacsourcebackupstillPARTIAL.
+
+Next: keep sameGPUreadiness/pilot chain. Prepareexplicitversionedwhole32teacher
+recovery: preservefourtransport/structural-passoriginals byte-identically unless
+laterindependentauditdiagnosesfailure; repair002/003usingtestedv2protocol FIRST,
+then26unattemptedscenes. All32stillmustpass independentwords/audio/semantic/
+actual-timeconversion/nativefullsequence/gradient/retention gates. Measuretight
+prefix232+realepisode+allactualsentcontextspan1100framepacking beforefurthercalls;
+nevercrop, raisecontextbar, weakenWER/peak or forceRET/classifyfamily inrouting.
+No owner/heldoutaudio changed. LocalASRsource40done(default8fromactualbenchmark),
+no currentheavyMacASR orOSpriority/power/affinitycap. Unrelatedlocalfiles excluded.
+
 # LOCAL —actual reasoning32 collector ready;37/40 GPU (23 October17:32UTC)
 
 Previous goal turn made progress: source-v3 all40 qualified and audit backed up;

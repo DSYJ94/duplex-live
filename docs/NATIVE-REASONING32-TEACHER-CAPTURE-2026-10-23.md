@@ -70,3 +70,14 @@ requires retaining the connection through `session.closed` and treating client
 backend work separately; [request debugging](https://developers.openai.com/api/reference/overview)
 documents provider and client request identifiers. These API rules are transport
 requirements, not evidence that our native model has learned delegation.
+
+
+Actual run update,23 October: the v1 collection stopped after six sessions and
+five successful backend HTTP calls. The cancellation teacher delivered a stale
+result without a receipt; replacement control succeeded but the close timer
+ended the session before context acknowledgment. All88 raw files are preserved
+and independently backed up. No teacher corpus qualifies. See
+[NATIVE-REASONING32-TEACHER-FAILURE-2026-10-23.json](NATIVE-REASONING32-TEACHER-FAILURE-2026-10-23.json).
+The separately versioned stream_v2 waits a full fixed response window after both
+actual eligible completion and context acknowledgment. It is tested but not yet
+wired into a recovery collector. Original v1 modules and receipts stay unchanged.
