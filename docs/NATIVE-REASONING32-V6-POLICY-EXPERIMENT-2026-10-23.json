@@ -1,0 +1,53 @@
+{
+  "schema": "dl-native-reasoning32-documented-voice-policy-experiment-v1",
+  "official_source": "https://developers.openai.com/api/docs/guides/live-prompting",
+  "official_topic": "Neural delegation instruction and concise Backchannel/Interruption/Delegation policy",
+  "hypotheses_ranked": [
+    "Generic delegate wording does not match the documented GPT-Live delegation instruction",
+    "The accompanying basic question takes precedence over pending-work state change",
+    "Stochastic native teacher failure may persist despite either prompt"
+  ],
+  "first_scene": "native-reasoning4-train-026",
+  "preserved_valid_recordings": 27,
+  "only_other_new_scenes": [
+    "native-reasoning4-train-028",
+    "native-reasoning4-train-029",
+    "native-reasoning4-train-030",
+    "native-reasoning4-train-031"
+  ],
+  "maximum_new_voice_attempts": 5,
+  "prior_voice_attempts": 33,
+  "maximum_aggregate_voice_attempts": 38,
+  "prior_backend_requests": 43,
+  "maximum_aggregate_backend_requests": 192,
+  "effective_maximum_backend_requests": 73,
+  "source_words_WAVs_or_quality_changed": false,
+  "backend_changed": false,
+  "transport_or_timing_changed": false,
+  "thresholds_or_retention_changed": false,
+  "old_voice_configuration_sha256": "971d2ebc056ca2a468b3672b09cd0700a60e2a478bf1990c75b61a7e06f165f8",
+  "new_voice_configuration_sha256": "13cacb6056311fa0e0de5faa0400804e8c6124d6269a0593306dbdf87aa42e75",
+  "new_voice_configuration": {
+    "model": "gpt-live-1",
+    "delegation": {
+      "type": "client"
+    },
+    "audio": {
+      "format": {
+        "type": "audio/pcm",
+        "rate": 24000
+      },
+      "output": {
+        "voice": "marin"
+      }
+    },
+    "instructions": "You are a concise English voice assistant. Use complete user premises and never invent facts or results.\n\nBackchannel policy: Keep acknowledgments brief and avoid competing with the user.\nInterruption policy: Listen when interrupted. Interrupting speech does not cancel backend work.\n\nDelegation policy:\nBackend tools:\n- Solve difficult multi-constraint reasoning.\n- Commit cancellation or replacement of pending external work. Speaking alone cannot change that state.\n\nGenerate <|SpawnThinking|> when:\n- A complete request needs careful multi-constraint reasoning.\n- The user withdraws or changes pending work. Create a NEW delegation for that update before answering accompanying simple arithmetic. A result awaiting delivery is still pending.\n\nDo not generate <|SpawnThinking|> when:\n- An independent question needs only basic reasoning or arithmetic. Answer it yourself while unrelated work continues.\n- You still need to hear missing premises or ask a brief clarification.\n\nAwait the actual backend receipt before confirming cancellation or replacement, or stating a bundle result. Keep all original premises when one rule changes. Never repeat an obsolete result. Once a cancellation request has been dispatched, answer its accompanying arithmetic directly, once; cancellation status is not that arithmetic answer. After a current bundle receipt, state its items, total cost and total points once in at most twenty words. Never guess a task identifier or force an action from incomplete speech.\n"
+  },
+  "runtime_request_injection": false,
+  "keyword_or_case_classifier": false,
+  "oracle_or_expected_answer_in_model_inputs": false,
+  "required_before_training": "Complete32 independent audio, semantic, conversion, native numerical and gradient/retention approval; distinct bounded pilot and independent training-state restore/native behavior.",
+  "offline_tests_passed": 30,
+  "actual_V6_voice_capture_completed": false,
+  "training_approved": false
+}

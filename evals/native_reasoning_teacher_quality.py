@@ -19,6 +19,9 @@ SCHEMA='dl-native-reasoning32-independent-teacher-speech-v1'
 
 def whole_collection(source,quality,batch,engine,tokenizer_path):
     header=json.loads((batch/'teacher-collection.json').read_text())
+    if header['schema']=='dl-native-reasoning32-teacher-recovery-v6':
+        from evals.native_reasoning_teacher_recovery_v6 import verify
+        return verify(source,quality,batch,engine,tokenizer_path)
     if header['schema']=='dl-native-reasoning32-teacher-recovery-v5':
         from evals.native_reasoning_teacher_recovery_v5 import verify
         return verify(source,quality,batch,engine,tokenizer_path)
