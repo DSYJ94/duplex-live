@@ -1,0 +1,148 @@
+{
+  "schema": "dl-native-posted-cost-reconciliation-v1",
+  "window": {
+    "bucketSize": "day",
+    "endTime": "2026-10-24T00:00:00Z",
+    "startTime": "2026-10-21T00:00:00Z"
+  },
+  "billing_is_delayed_for_current_pod": true,
+  "aggregate_account_totals": {
+    "clusterDiskAmount": 0,
+    "clusterGpuAmount": 0,
+    "clusterNetworkingAmount": 0,
+    "endpointAmount": 0,
+    "podCpuAmount": 0.09021293348632753,
+    "podDiskAmount": 0.17152777884621173,
+    "podGpuAmount": 39.64860105141997,
+    "serverlessCpuAmount": 0,
+    "serverlessDiskAmount": 0,
+    "serverlessFeeAmount": 0,
+    "serverlessGpuAmount": 0,
+    "storageHighPerformanceAmount": 0,
+    "storageStandardAmount": 0.5055555738508701,
+    "totalAmount": 40.41589733760338
+  },
+  "project_closed_pod_ids": [
+    "i20euy4x58fo1m",
+    "kgy1ygl8i5p1u5",
+    "q3wqjwols44aos",
+    "vgp8bfskvrcotf",
+    "sjf72o8v64mjvb",
+    "bs1rs2ml6u1cvt"
+  ],
+  "project_closed_rows": [
+    {
+      "cpuAmount": 0,
+      "diskAmount": 0.00833333283662796,
+      "endTime": "2026-10-22T00:00:00Z",
+      "gpuAmount": 3.580867635086179,
+      "podId": "i20euy4x58fo1m",
+      "startTime": "2026-10-21T00:00:00Z",
+      "totalAmount": 3.5892009679228067
+    },
+    {
+      "cpuAmount": 0.09021293348632753,
+      "diskAmount": 0.003935185610316694,
+      "endTime": "2026-10-22T00:00:00Z",
+      "gpuAmount": 0,
+      "podId": "kgy1ygl8i5p1u5",
+      "startTime": "2026-10-21T00:00:00Z",
+      "totalAmount": 0.09414811909664422
+    },
+    {
+      "cpuAmount": 0,
+      "diskAmount": 0.013888888992369175,
+      "endTime": "2026-10-22T00:00:00Z",
+      "gpuAmount": 15.987963229417801,
+      "podId": "q3wqjwols44aos",
+      "startTime": "2026-10-21T00:00:00Z",
+      "totalAmount": 16.00185211841017
+    },
+    {
+      "cpuAmount": 0,
+      "diskAmount": 0.00069444440305233,
+      "endTime": "2026-10-22T00:00:00Z",
+      "gpuAmount": 0.4101110380142927,
+      "podId": "vgp8bfskvrcotf",
+      "startTime": "2026-10-21T00:00:00Z",
+      "totalAmount": 0.41080548241734505
+    },
+    {
+      "cpuAmount": 0,
+      "diskAmount": 0.010416666744276881,
+      "endTime": "2026-10-23T00:00:00Z",
+      "gpuAmount": 1.3300804048776627,
+      "podId": "sjf72o8v64mjvb",
+      "startTime": "2026-10-22T00:00:00Z",
+      "totalAmount": 1.3404970716219395
+    },
+    {
+      "cpuAmount": 0,
+      "diskAmount": 0.01273148157633841,
+      "endTime": "2026-10-24T00:00:00Z",
+      "gpuAmount": 3.3155523240566254,
+      "podId": "bs1rs2ml6u1cvt",
+      "startTime": "2026-10-23T00:00:00Z",
+      "totalAmount": 3.3282838056329638
+    },
+    {
+      "cpuAmount": 0,
+      "diskAmount": 0.09375000069849193,
+      "endTime": "2026-10-24T00:00:00Z",
+      "gpuAmount": 12.082180738449097,
+      "podId": "sjf72o8v64mjvb",
+      "startTime": "2026-10-23T00:00:00Z",
+      "totalAmount": 12.175930739147589
+    }
+  ],
+  "project_closed_posted_total_usd": 36.94071830424946,
+  "closed_resource_ownership_sources": [
+    "docs/NATIVE-BUDGET-AUTHORIZATION-2026-10-22.json",
+    "docs/NATIVE-CONTROL40-PREFLIGHT-2026-10-23.json",
+    "docs/NATIVE-RUNPOD-EXECUTION-2026-10-21.json"
+  ],
+  "old_prior_upper_usd": 37.36308350742475,
+  "unused_old_reserve_difference_usd": 0.42236520317528914,
+  "current_owned_pod": "4yx8vahdmjsylx",
+  "current_owned_pod_posted_rows": [
+    {
+      "cpuAmount": 0,
+      "diskAmount": 0.018518518656492233,
+      "endTime": "2026-10-24T00:00:00Z",
+      "gpuAmount": 2.2907729037106037,
+      "podId": "4yx8vahdmjsylx",
+      "startTime": "2026-10-23T00:00:00Z",
+      "totalAmount": 2.309291422367096
+    }
+  ],
+  "unrelated_rows_excluded": [
+    {
+      "cpuAmount": 0,
+      "diskAmount": 0.009259259328246117,
+      "endTime": "2026-10-22T00:00:00Z",
+      "gpuAmount": 0.6510727778077126,
+      "podId": "zqdabv0k9zbtvo",
+      "startTime": "2026-10-21T00:00:00Z",
+      "totalAmount": 0.6603320371359587
+    }
+  ],
+  "approved_total_compute_cap_usd": 50,
+  "network_storage_separately_approved": true,
+  "proposed_owned_pod_lifetime_seconds": 25740,
+  "locked_gpu_hourly_usd": 1.79,
+  "proposed_full_lifetime_gpu_maximum_usd": 12.7985,
+  "current_pod_disk_and_termination_reserve_usd": 0.25,
+  "proposed_total_project_upper_usd": 49.98921830424946,
+  "proposed_guard_deadline_utc": "2026-10-23T15:31:37.9Z",
+  "added_minutes_within_existing_cap": 24,
+  "resource_mutation_by_this_read_only_audit": false,
+  "proposal_not_yet_activated": false,
+  "no_new_gpu_or_storage_resource": true,
+  "activation_utc": "2026-10-23T11:52:50.817340+00:00",
+  "active_guard_pid": 36001,
+  "active_guard_session": 74278,
+  "active_guard_status": "runs/local-migration-20261023/runpod-control40-replacement-budget-v2.json",
+  "old_guard_pid": 73678,
+  "old_guard_confirmed_retired": true,
+  "existing_training_controller_deadline_unchanged": "2026-10-23T14:59:00Z"
+}

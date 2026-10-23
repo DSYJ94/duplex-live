@@ -1,3 +1,34 @@
+# LOCAL — guard reconciled within50USD; network recovery in progress (23 October11:50UTC)
+
+NEWEST interim authoritative operational entry. LOCAL sole executor, goal ACTIVE.
+GPU controller4111/numerical4216 on4yx8vahdmjsylx CONTINUE untouched; latest actual
+27/40 passing, no failed cases, no optimizer update. Exact execution sourceC9EFAAA
+unchanged. Original numerical13:23:54/whole-chain14:59UTC deadlines unchanged.
+
+READ THIS BEFORE USING OLD LOCAL PIDS: new ACTIVE costguard36001/session74278,
+status runs/local-migration-20261023/runpod-control40-replacement-budget-v2.json;
+old73678 explicitly retired only AFTER new guard readback armed. Same Pod/creation
+08:22:37.9UTC; lifetime25740s=7h9, DELETE15:31:37.9UTC. Posted closed project Pods
+36.94071830424946USD + full current lifetime GPU12.7985 +0.25 disk/shutdown reserve
+=49.98921830424946USD, within existing50 cap. Six closed IDs reconcile exactly to
+approved project receipts. Active billing is delayed and NOT used to undercount
+elapsed current-Pod time. Separate network storage approval unchanged; no rental.
+See docs/NATIVE-POSTED-COST-RECONCILIATION-2026-10-23.json.
+
+Old evaluation waiter20789 actually ENDED10:43:50UTC after Network is unreachable;
+confirmed PID absent. Remote native20/speech20 output/launch files do NOT exist.
+Old tunnel8825 also terminal. GPU job kept running throughout outage. Backups
+retain original outputs; watcher92170 retries automatically, no data/source repair.
+
+Old idle proxy8309 retired after preserving its4 completed real requests. New
+proxy37256/session29966, SAME Mac127.0.0.1:50257, runnative-control40-20261023-v3,
+max124 NEW requests (combined old4+new124 <= original128), deadline15:29UTC.
+New SSH tunnel session38332 uses remote127.0.0.1:18789 ->Mac50257. No API key
+transferred. Reverification/rearming of the evaluation follower is IN PROGRESS;
+no evaluator currently owns GPU and do NOT launch one before full8 restore.
+New evaluation end planned15:27, latest start14:44 with same full40-minute window.
+Canonical detailed handoff will be updated after current recovery finishes.
+
 # LOCAL — VERIFIED WAIT:12/40 numerical cases passing and backed up (23 October11:34 London)
 
 NEWEST authoritative entry. LOCAL remains sole executor; goal ACTIVE/incomplete.
