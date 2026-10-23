@@ -1,3 +1,79 @@
+# LOCAL — full-retention control40 training integrated; conditional launch armed; numerical18/40 live (23 October04:41 London)
+
+This is the NEWEST entry. LOCAL sole executor, CLOUD read-only; goal ACTIVE.
+Last process/case observation2026-10-23T03:41:49UTC. Latest functional controller
+source e4ca22f1065f496d275df45137d48292ea9c2076 pushed to main. Training execution
+payload738150c0e2d2eba64ae62c9d7f435aaf068eeebf; original numerical source remains
+7769e7cc06f80e609db3f8ac2611977cd0d7cb66. No running payload was edited. This docs
+entry's exact commit is main HEAD after push. Unrelated timeline.pyc, capability
+probe files and roadmap.html remain untouched/uncommitted. No Cloud execution handoff.
+
+REAL original numerical4393/birth16421263 remains running,18/40 observed PASS;
+whole40 NOT yet approved, unchanged0.001 threshold/causal0. Original3406/birth15978541
+is intentionally SIGSTOP/stateT, NOT terminal. New supervisor5014/birth16839644
+from738150c adopted the SAME4393 without numerical restart; follows its actual Linux
+zombie exit status, then retires paused3406 before full40 gradient dispatch. Original
+fixed05:13 deadline superseded by actual new supervisor deadline09:13:45UTC. Tested
+real Linux parent/child pause/exit/retirement and identity mismatch first. Old gradient
+follower4247 was retired while waiting with no GPU child; new supervisor owns its
+exclusive lock. Authoritative controller: /workspace/migration/native-control40-supervisor-v4/controller.json;
+future gradient folder there/gradient. Do NOT resume3406 or restart4393.
+
+Training integration738150c explicitly retains every original154 objective,28 actual
+histories, old25/new24 teachers, native49 auxiliary, KL1/hidden10, word64/clock64;
+adds all40 native text/assistant-acoustic losses, all5 families perupdate, exactly8
+new updates from native520 with original Adam520, effectiveLR2e-7. Distinct new
+proof/reload schemas, exact all40 target counts and native fingerprints plus old28/
+old49/native49 and adapter/Adam/allRNG restoration required. Independent combined
+readiness reuses the EXACT validated154 gradient at unchanged parent across8
+supplemental partitions; actual fit recomputes154 every update. No optimizer in
+readiness. CPU regression checks passed; CUDA integration not yet proven.
+
+Conditional training controller5313/birth16922038 is actually LIVE, currently waiting
+for5014 complete40 numeric AND gradient success; no optimizer child/no new updates.
+Source e4ca22f, clean launcher /opt/duplex-control40-launcher-e4ca22f. Exact execution
+checkout /opt/duplex-control40-training-738150c contains regular copied8GB runs data;
+never use a runs symlink (full snapshot verifier rejects outside-root resolutions).
+Real Linux command prepare-only passed: full28 order/dataSHA, approved49 auditSHA,
+all retained flags, actual520 parent and complete40 development-evidence binding.
+25 focused local tests and3 Linux launch tests passed. CPU complete7797-file/current40
+snapshot independently PASSED on exact738 source, exec67097 TERMINAL0; logSHA
+7467dccbef7fd47accffd0cf8d32a5d5b3858678add3ebb4e71036759747de65.
+Mac receipt/log: runs/local-migration-20261023/native-control40-training-source-snapshot-738150c-v1.{json,log}.
+
+Controller5313 will sequentially run full7797/current40 recheck, independent combined
+readiness, one bounded8 fit, fresh full state restore, strict proof verification.
+Every gate/exit must pass; no subset or silent extension/adoption. Output root
+/workspace/migration/native-control40-training-followup-v1, planned commands and live
+controller.json there; launch receipt native-control40-training-followup-launch-v1.json.
+Controller deadline09:10UTC, before supervisor09:13:45 and cost guard09:14:52.804UTC.
+Provider/API credentials removed from training environment; no extra Pod purchased.
+All outputs on retained /workspace volume, not ephemeral execution source.
+
+ACTUAL new cost guard MacPID55922/exec37595 is armed, sourcefdb3a63, receipt
+runs/local-migration-20261023/runpod-control40-execution-v3.json, status watchdog-v3.json.
+HARD DELETE primary sjf72o8v64mjvb at09:14:52.804UTC (10:14London/11:14Berlin),10h TOTAL
+from original Pod creation; max17.90USD. Old6h guard97499/exec57889 terminal143;
+transition receipt runpod-control40-guard-transition-v3.json. Never use stale v2.
+Prior four20.096006687846966 + finishedsecondGPU bound3.35 + finisheddisk0.25 +
+primaryGPU17.90 + primarydisk0.25 <=41.84600668784697USD, within original50TOTAL.
+Conservative bound, not final invoice. Volume49yytzyoge stays separately approved7/month.
+Second Podbs1rs2ml6u1cvt remains DELETED/GET404; no reconnect/repeat of finished native20.
+
+Both complete default/archived-runtime native20+speech20 reviews and all backups stay
+as below. Native520 selected as repair PARENT ONLY (ordinary2/4 versus7590/4 default);
+neither production qualified. Full codec41/Engine82,7797-file workset and both complete
+native/speech evidence inventories remain independently saved on Mac+volume. Native
+archive67,764,285,650bytes remains verified; broader/stopped Mac source backup partial.
+Latest7 controller/numerical/source receipts copied to Mac; all sizes+SHA256 verified,
+inventory125b412109a2f846fbacebd64de22f925d96a36d7cab963c0e9dd3faa909c985. Receipt runs/local-migration-20261023/native-control40-live-evidence-copyback-v1.json.
+Current numerical output is partial
+and cannot be reported as a complete approval. Next: monitor original4393 then5014/
+5313, preserve completed evidence/hashes, diagnose any actual failing gate; follow with
+complete native speech/behavior and sealed paired fresh40 before extension/adoption.
+Broader microturn/backchannel/easy-direct-hard-delegate curriculum is specified but
+NOT generated/trained; control40 alone does not meet the full model goal.
+
 # LOCAL — complete two-runtime native40+speech40 review; eval Pod released; numerical4/40 live (23 October 03:50 London)
 
 This is the NEWEST entry. LOCAL sole executor; CLOUD remains read-only. Goal ACTIVE.

@@ -1,6 +1,6 @@
 {
   "schema": "dl-native-control40-preflight-progress-v1",
-  "at_utc": "2026-10-23T02:55:23.202944+00:00",
+  "at_utc": "2026-10-23T03:41:49.193973+00:00",
   "active_executor": "LOCAL",
   "cloud_executor": "read-only",
   "native_payload_and_controller_commit": "7769e7cc06f80e609db3f8ac2611977cd0d7cb66",
@@ -69,20 +69,19 @@
     }
   ],
   "running_observation": {
-    "at_utc": "2026-10-23T02:50:19Z",
-    "controller_pid": 3406,
-    "controller_birth_ticks": 15978541,
+    "at_utc": "2026-10-23T03:41:49.193973+00:00",
+    "original_controller_pid": 3406,
+    "original_controller_state": "T",
     "numerical_pid": 4393,
-    "numerical_cases_passed_so_far": 4,
+    "numerical_birth_ticks": 16421263,
+    "numerical_cases_passed_so_far": 18,
+    "all_observed_cases_passed": true,
     "complete40_numerical": false,
     "numerical_threshold": 0.001,
-    "cuda_memory_mib_observed": 39135,
-    "cuda_utilization_percent_observed": 37,
-    "conditional_gradient_controller_pid": 4247,
-    "conditional_gradient_controller_source": "7a20fb35d9465675e323905d4cbb34c1b09dff71",
-    "conditional_gradient_payload_source": "7769e7cc06f80e609db3f8ac2611977cd0d7cb66",
-    "conditional_gradient_output": "/workspace/migration/native-control40-gradient-v1",
-    "deadline_utc": "2026-10-23T05:13:45Z",
+    "supervisor_pid": 5014,
+    "supervisor_source": "738150c0e2d2eba64ae62c9d7f435aaf068eeebf",
+    "gradient_output": "/workspace/migration/native-control40-supervisor-v4/gradient",
+    "deadline_utc": "2026-10-23T09:13:45Z",
     "optimizer_updates": 0
   },
   "execution_profiles": {
@@ -99,19 +98,30 @@
       "phase": "armed",
       "pod_id": "sjf72o8v64mjvb",
       "state": "RUNNING",
-      "deadline_utc": "2026-10-23T05:14:52.804000+00:00",
+      "deadline_utc": "2026-10-23T09:14:52.804000+00:00",
       "network_volume_retained": "49yytzyoge",
-      "at_utc": "2026-10-23T01:10:55.091783+00:00",
-      "pid": 97499
+      "at_utc": "2026-10-23T03:43:54.815199+00:00",
+      "pid": 55922
     },
-    "watchdog_exec_session": 57889,
-    "old_watchdog_exec_session": 67422,
+    "watchdog_exec_session": 37595,
+    "old_watchdog_exec_session": 57889,
     "old_watchdog_terminal_exit_code": 143,
-    "maximum_current_trial_gpu_usd": 10.74,
+    "maximum_current_trial_gpu_usd": 17.9,
     "prior_four_owned_pods_usd": 20.096006687846966,
     "total_authorized_compute_budget_usd": 50,
-    "projected_prior_plus_maximum_current_gpu_plus_disk_reserve_usd": 31.086006687846968,
-    "billing_api_has_not_yet_posted_this_pod": true
+    "projected_prior_plus_maximum_current_gpu_plus_disk_reserve_usd": 41.84600668784697,
+    "billing_api_has_not_yet_posted_this_pod": true,
+    "budget_bound_detail": {
+      "prior_four_owned_gpu_usd": 20.096006687846966,
+      "terminated_second_gpu_upper_bound_usd": 3.35,
+      "terminated_second_disk_reserve_usd": 0.25,
+      "primary_gpu_maximum_total_lifetime_usd": 17.9,
+      "primary_disk_reserve_usd": 0.25,
+      "total_upper_bound_usd": 41.84600668784697,
+      "budget_usd": 50,
+      "final_invoice": false,
+      "volume_storage_separately_approved_usd_per_month": 7
+    }
   },
   "prepared_repair_module": {
     "file": "evals/native_control_training.py",
@@ -121,17 +131,19 @@
     "text_epoch_mean_weight": 1,
     "assistant_audio_epoch_mean_weight": 1,
     "no_prefix_span_user_audio_targets": true,
-    "connected_to_original154_trainer": false,
+    "connected_to_original154_trainer": true,
     "original154_and_native49_must_be_retained": true,
     "complete40_restore_fingerprints_prepared": true,
     "cpu_focused_tests_passed": 21,
-    "gpu_gradient_validation_done": false
+    "gpu_gradient_validation_done": false,
+    "integration_payload_commit": "738150c0e2d2eba64ae62c9d7f435aaf068eeebf",
+    "accurate_distinct_proof_and_independent_full_state_restore_implemented": true,
+    "cpu_integration_and_followup_tests_passed": 25
   },
   "mandatory_before_optimizer": [
-    "Complete40 native Engine and numerical approval",
+    "Complete40 native numerical approval at unchanged0.001 threshold",
     "Complete40 actual BF16 gradient readiness",
-    "Complete baseline520/candidate7590052 native10 plus independent speech and ordinary4 review before choosing repair parent",
-    "Integrate the new control40 loss into the full retained154 plus native49 recipe, with accurate versioned proof/state/restore metadata and combined readiness"
+    "Independent matching combined154/native49/control40 zero-update readiness; trainer rechecks the complete data/parent/recipe bindings"
   ],
   "native10_topology": {
     "pod_id": "bs1rs2ml6u1cvt",
@@ -226,9 +238,9 @@
       "optimizer_updates": 0
     }
   },
-  "budget_reserved_worst_case_total_usd": 38.49600668784697,
+  "budget_reserved_worst_case_total_usd": 41.84600668784697,
   "original_scope_remains_incomplete": true,
-  "training_integration_status": "native_control_training.py prepared; not connected to original154/native49 trainer; no optimizer work authorized by these read-only readiness results alone",
+  "training_integration_status": "Implemented in738150c; exact real-data command construction and full40 development-evidence binding passed on Linux; conditional controller5313 waiting for complete40 numeric/gradient gates. No new optimizer updates yet.",
   "repair_parent_selection": {
     "schema": "dl-native-control40-bounded-repair-parent-selection-v1",
     "at_utc": "2026-10-23T02:49:53.267542+00:00",
@@ -259,5 +271,58 @@
     ],
     "optimizer_updates_this_selection": 0
   },
-  "budget_reserved_worst_case_after_second_terminated_usd": 34.68600668784697
+  "budget_reserved_worst_case_after_second_terminated_usd": 41.84600668784697,
+  "original_native_numerical_payload_commit": "7769e7cc06f80e609db3f8ac2611977cd0d7cb66",
+  "training_payload_commit": "738150c0e2d2eba64ae62c9d7f435aaf068eeebf",
+  "training_payload_source": "/opt/duplex-control40-training-738150c",
+  "supervisor_takeover": {
+    "source_commit": "738150c0e2d2eba64ae62c9d7f435aaf068eeebf",
+    "pid": 5014,
+    "birth_ticks": 16839644,
+    "output": "/workspace/migration/native-control40-supervisor-v4",
+    "original_controller_pid": 3406,
+    "original_controller_birth_ticks": 15978541,
+    "original_controller_state": "T (paused, not terminal)",
+    "adopted_numerical_pid": 4393,
+    "adopted_numerical_birth_ticks": 16421263,
+    "numerical_restarted": false,
+    "old_gradient_follower_4247_retired_before_child_dispatch": true,
+    "actual_linux_process_identity_and_zombie_exit_test_passed": true,
+    "deadline_utc": "2026-10-23T09:13:45Z"
+  },
+  "training_followup": {
+    "controller_commit": "e4ca22f1065f496d275df45137d48292ea9c2076",
+    "payload_commit": "738150c0e2d2eba64ae62c9d7f435aaf068eeebf",
+    "pid": 5313,
+    "birth_ticks": 16922038,
+    "output": "/workspace/migration/native-control40-training-followup-v1",
+    "deadline_utc": "2026-10-23T09:10:00Z",
+    "phase": "waiting_for_exact_numerical_and_gradient40",
+    "stage_order": [
+      "whole7797_workset_reverification",
+      "independent_combined154_native49_control40_readiness",
+      "new_bounded8_optimizer_stage",
+      "fresh_full_adapter_Adam_all_RNG_native_fingerprint_restore",
+      "strict_complete_proof_verification"
+    ],
+    "retains_original28_old25_new24_all154_native49_kl1_hidden10_word64_clock64": true,
+    "provider_credentials_in_training_environment": false,
+    "extension_or_adoption_approved": false,
+    "linux_real_command_prepare_only_passed": true,
+    "cpu_followup_tests_on_linux_passed": 3,
+    "exact_whole40_development_evidence_binding_passed": true,
+    "complete7797_regular_workset_and_current40_recheck_passed": true,
+    "source_snapshot_receipt": "runs/local-migration-20261023/native-control40-training-source-snapshot-738150c-v1.json",
+    "source_snapshot_log_sha256": "7467dccbef7fd47accffd0cf8d32a5d5b3858678add3ebb4e71036759747de65"
+  },
+  "broader_microturn_backchannel_direct_or_delegate_curriculum_generated_or_trained": false,
+  "live_partial_evidence_mac_backup": {
+    "schema": "dl-native-control40-partial-local-copyback-v1",
+    "snapshot_at_utc": "2026-10-23T03:44:43.758577+00:00",
+    "files": 7,
+    "all_size_and_sha256_match": true,
+    "inventory_sha256": "125b412109a2f846fbacebd64de22f925d96a36d7cab963c0e9dd3faa909c985",
+    "numerical_complete": false,
+    "optimizer_updates": 0
+  }
 }
