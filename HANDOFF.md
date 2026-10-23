@@ -1,3 +1,77 @@
+# LOCAL —7/40 numerical cases passing; real backend ready; full native20/speech20 follow-up armed (23 October11:20 London)
+
+NEWEST authoritative entry. LOCAL sole executor; goal ACTIVE/incomplete. Previous
+goal turn restored the worker and launched the bounded chain; THIS turn made
+concrete progress by restoring/testing the actual backend and arming its fully
+gated evaluation follow-up. GPU/source/retention/thresholds unchanged. No optimizer
+update or new candidate/adoption yet. Native7590052 remains unadopted; parent520.
+
+ONE running owned Pod4yx8vahdmjsylx read back; all4 unrelated Aurium Pods EXITED,
+untouched. Same immutable actual executionc9efaaac24d983342f7eded46617e6450bc102ce,
+/opt/duplex-control40-c9efaaa-v2. Controller4111/birth18985221 and numerical
+4216/birth18993883 confirmed LIVE, including actual GPU use~72,351MiB. Reference
+created09:38:13.615016UTC after original input/model checks. Latest independently
+backed observation completes7/40 TRAIN cases000..006, all passing. First hidden
+max2.1457672119140625e-05; first logitmax1.5974044799804688e-05, unchanged0.001
+threshold. Whole40 is INCOMPLETE; final parameter/peak checks and BF16/combined
+readiness are still pending. No passing subset grants training approval. Audit
+13:23:54.034033UTC, whole-chain14:59UTC deadlines unchanged. Pipeline will launch
+new8 and independent full state/Adam/RNG/native restore ONLY after its gates pass.
+
+Actual Mac backend transport RESTORED and component-tested. Default Mac python3
+lacks NumPy; use EXISTING runs/local-asr-20261021/env/bin/python. Scoped proxy8309/
+session62464, Mac127.0.0.1:50257, runnative-control40-20261023-v2, max128 provider
+requests, deadline15:05UTC. Only4 used so far. Tunnel8825/session95469 exposes
+ONLY Pod127.0.0.1:18788 ->Mac50257; actual kernel socket table AND local listener
+verified loopback-only. Strict host fingerprints retained; API key stays on Mac.
+Future native evaluation environment:
+DUPLEX_OPENAI_LOOPBACK_PROXY=http://127.0.0.1:18788/v1/responses
+DUPLEX_OPENAI_PROXY_RUN=native-control40-20261023-v2
+Do NOT transfer OPENAI_API_KEY or launch duplicate proxy/tunnel.
+
+Real authored Falcon fixture lookup/cancellation PASSED via the new Pod/tunnel:
+4 actual gpt-6-luna responses, allHTTP200; original pending lookup becomes
+undeliverable after cancellation. No owner records/conversations or injected
+response executor. Remote execution is NOT aborted; this is a delivery guard.
+All4 worker response IDs match Mac actual-provider receipts. Three remote JSON
+artifacts independently size/SHA-verified on Mac. Inventory
+2d47b2d03cb2aef66a0b01468dd2b9922b4f71abda92b186aa6fe218b4260f24;
+Mac independent-readback9b01042537b04348d83159f41d94af7c7569092aef00924de85b8d547ec2210c.
+This proves backend COMPONENTS/transport, never learned native routing/voice.
+Docs/NATIVE-CONTROL40-BACKEND-READY-2026-10-23.json has exact details.
+
+ACTIVE sole local evaluation follow-up20789/session68528, receipt
+runs/local-migration-20261023/native-control40-development-followup-v1.json.
+Waits for EXACT controller4111/birth18985221 to finish all7 stages successfully,
+passedcomplete_restored_pilot_only AND exit. Then rechecks current costguard,
+actual scoped proxy/tunnel and empty GPU; starts COMPLETE pairednative20 (baseline520
+and ACTUAL newtrainingproof) and independent speech20 from exact sourceC9EFAAA.
+No sealed fresh waveform/answer access, optimizer, extension or adoption. BOTH
+controllers inherit the shared GPU-owner lease; actual oneGPU0/serial-one-gpu.
+Latest launch14:20UTC (at least40min full window), common evaluation deadline15:03UTC;
+otherwise records not_started_insufficient_remaining_full20_window. NEVER retries
+uncertain launch. Future roots native-control40-native20-v1 and
+native-control40-native20-speech-v1; atomic launch receipt
+/workspace/migration/native-control40-native20-v1-launch.json. Neither evaluation
+has started yet. DO NOT submit it manually while waiter20789 is active. Full native20/
+speech20 semantic/quiet/pause/receipt/audio review must pass before any fresh40.
+
+Backup92170/session84773 LIVE/watching/successful; use live controller for the exact
+snapshot count. Latest recorded snapshot101229.528376Z contains18 files incl7-case
+numerical progress; inventory502d445cb2ce3300df9c53980df2834bea0f53ea89229899e28aa0f775de0564.
+Budgetguard73678/session54241 LIVE/armed, maxconservative49.69558350742474USD under
+50USD Runpod compute cap. Deletes owned Pod15:07:37.9UTC retaining volume49yytzyoge.
+Actual retained-volume usage80,131,205,660B; approved100GB size unchanged. Recheck
+space/snapshot growth before any later fresh40. Original67.76GB archive remains
+PREVIOUSLY verified; no full archive rehash this turn. Broader stopped Mac source
+backup PARTIAL. No new GPU rental/source repair or unrelated local edit included.
+
+NEXT: keep observing existing full40 audit, never resubmit it. If successful the
+existing chain handles BF16/readiness/new8/fresh restore, then waiter20789 handles
+complete native20/speech20. Inspect actual results and failed waveforms before
+repairs or further training. Current7-case progress and follow-up conditions are
+in docs/NATIVE-CONTROL40-LIVE-FOLLOWUP-2026-10-23.json. Execution remains LOCAL.
+
 # LOCAL — restoration verified; complete40 numerical RUNNING; new8 automatic behind gates (23 October10:26 London)
 
 NEWEST authoritative entry. LOCAL sole executor; goal ACTIVE/incomplete. No handoff

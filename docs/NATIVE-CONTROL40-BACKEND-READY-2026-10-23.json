@@ -1,0 +1,65 @@
+{
+  "schema": "dl-native-control40-restored-backend-components-v1",
+  "at_utc": "2026-10-23T09:50:49Z",
+  "pod_id": "4yx8vahdmjsylx",
+  "native_execution_source_commit": "c9efaaac24d983342f7eded46617e6450bc102ce",
+  "Mac_proxy_source_commit": "52bd1ddc5afbe10045d748a4e2a4144eaa5300f5",
+  "Mac_python": "runs/local-asr-20261021/env/bin/python",
+  "Mac_default_python_lacks_Numpy_use_existing_asr_environment": true,
+  "proxy": {
+    "pid": 8309,
+    "session": 62464,
+    "listen": "127.0.0.1:50257",
+    "run_id": "native-control40-20261023-v2",
+    "deadline_utc": "2026-10-23T15:05:00+00:00",
+    "maximum_requests": 128,
+    "actual_requests_so_far": 4,
+    "provider_key_stays_on_Mac": true,
+    "actual_Mac_listener_verified_only_loopback": true
+  },
+  "reverse_tunnel": {
+    "pid": 8825,
+    "session": 95469,
+    "remote_listener": "127.0.0.1:18788",
+    "target": "127.0.0.1:50257",
+    "ssh_host": "157.157.221.29",
+    "ssh_port": 16701,
+    "strict_pinned_host_keys": true,
+    "actual_kernel_socket_verified_only_loopback": true
+  },
+  "native_evaluation_environment": {
+    "DUPLEX_OPENAI_LOOPBACK_PROXY": "http://127.0.0.1:18788/v1/responses",
+    "DUPLEX_OPENAI_PROXY_RUN": "native-control40-20261023-v2",
+    "OPENAI_API_KEY_must_not_be_transferred": true
+  },
+  "actual_backend_test": {
+    "status": "passed_backend_components_only",
+    "model": "gpt-6-luna",
+    "provider_responses": 4,
+    "all_HTTP_status": 200,
+    "lookup_before_cancel_deliverable": true,
+    "lookup_after_cancel_deliverable": false,
+    "remote_execution_aborted": false,
+    "owner_conversations_or_records_used": false,
+    "worker_provider_credential_present": false,
+    "response_executor_injected": false,
+    "all_response_ids_match_Mac_provider_receipts": true
+  },
+  "backup": {
+    "path": "runs/local-migration-20261023/native-control40-backend-smoke-v2",
+    "remote_inventory_sha256": "2d47b2d03cb2aef66a0b01468dd2b9922b4f71abda92b186aa6fe218b4260f24",
+    "all_component_sizes_and_hashes_match": true,
+    "Mac_readback_sha256": "9b01042537b04348d83159f41d94af7c7569092aef00924de85b8d547ec2210c",
+    "Mac_proxy_receipt_sha256": "9242f2b4cf4688388a303cd6dce110b7144d18f420d3511a077b737e49706fd8"
+  },
+  "native_voice_or_learned_delegation_qualified": false,
+  "training_approved_by_this_component_test": false,
+  "optimizer_updates": 0,
+  "official_documentation_checked": "https://developers.openai.com/api/docs/guides/function-calling",
+  "running_provider_inventory": {
+    "owned_running_pods": 1,
+    "id": "4yx8vahdmjsylx",
+    "other_pods_only_four_unrelated_EXITED": true,
+    "other_resources_changed": false
+  }
+}

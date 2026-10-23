@@ -1,0 +1,104 @@
+{
+  "schema": "dl-native-control40-live-numerical-and-evaluation-followup-v1",
+  "observed_utc": "2026-10-23T10:16:38.706076+00:00",
+  "execution_source_commit": "c9efaaac24d983342f7eded46617e6450bc102ce",
+  "pod_id": "4yx8vahdmjsylx",
+  "controller_pid": 4111,
+  "controller_birth": 18985221,
+  "numerical_pid": 4216,
+  "numerical_birth": 18993883,
+  "numerical_created_utc": "2026-10-23T09:38:13.615016+00:00",
+  "completed_cases": 7,
+  "all_completed_cases_pass": true,
+  "complete40": false,
+  "whole40_approved": false,
+  "unchanged_error_threshold": 0.001,
+  "cases": [
+    {
+      "id": "native-control3-train-000",
+      "passed": true,
+      "hidden_max_error": 2.1457672119140625e-05,
+      "logit_max_error": 1.5974044799804688e-05
+    },
+    {
+      "id": "native-control3-train-001",
+      "passed": true,
+      "hidden_max_error": 1.3828277587890625e-05,
+      "logit_max_error": 1.7464160919189453e-05
+    },
+    {
+      "id": "native-control3-train-002",
+      "passed": true,
+      "hidden_max_error": 3.6716461181640625e-05,
+      "logit_max_error": 3.4332275390625e-05
+    },
+    {
+      "id": "native-control3-train-003",
+      "passed": true,
+      "hidden_max_error": 1.2636184692382812e-05,
+      "logit_max_error": 1.0609626770019531e-05
+    },
+    {
+      "id": "native-control3-train-004",
+      "passed": true,
+      "hidden_max_error": 6.198883056640625e-06,
+      "logit_max_error": 4.76837158203125e-06
+    },
+    {
+      "id": "native-control3-train-005",
+      "passed": true,
+      "hidden_max_error": 1.049041748046875e-05,
+      "logit_max_error": 1.0967254638671875e-05
+    },
+    {
+      "id": "native-control3-train-006",
+      "passed": true,
+      "hidden_max_error": 9.059906005859375e-06,
+      "logit_max_error": 7.867813110351562e-06
+    }
+  ],
+  "final_parameter_hash_and_peak_checks_pending": true,
+  "new_optimizer_updates": 0,
+  "new_candidate_or_adoption": false,
+  "backup": {
+    "watcher_pid": 92170,
+    "current_successful": true,
+    "snapshots_verified": 10,
+    "latest_inventory_sha256": "502d445cb2ce3300df9c53980df2834bea0f53ea89229899e28aa0f775de0564",
+    "latest_files": 18,
+    "numerical_progress_sha256": "78533af3ccd55304684daf27042a93ffc473287f56b3769d7b98ae99dbb317ba"
+  },
+  "next_evaluation": {
+    "local_waiter_pid": 20789,
+    "session": 68528,
+    "phase": "waiting_for_complete_independent_restored_pilot",
+    "upstream_pid": 4111,
+    "upstream_birth": 18985221,
+    "all_seven_stages_must_exit_zero": true,
+    "latest_launch_utc": "2026-10-23T14:20:00+00:00",
+    "evaluation_deadline_utc": "2026-10-23T15:03:00+00:00",
+    "candidate_proof": "/workspace/migration/native-control40-precise-pilot-v2/training",
+    "paired_out": "/workspace/migration/native-control40-native20-v1",
+    "speech_out": "/workspace/migration/native-control40-native20-speech-v1",
+    "full20_native_and_full20_independent_speech_required": true,
+    "gpu_mode": "serial-one-gpu",
+    "gpu_owner_lease_inherited_by_both_controllers": true,
+    "no_optimizer_or_extension_or_adoption": true,
+    "sealed_fresh_audio_not_read": true,
+    "never_retries_uncertain_launch_automatically": true
+  },
+  "budget": {
+    "guard_pid": 73678,
+    "phase": "armed",
+    "deadline_utc": "2026-10-23T15:07:37.900000+00:00",
+    "total_Runpod_compute_cap_USD": 50,
+    "maximum_conservative_total_USD": 49.69558350742474
+  },
+  "storage": {
+    "measured_retained_volume_bytes": 80131205660,
+    "approved_network_volume_GB": 100,
+    "volume_resized": false,
+    "broader_stopped_Mac_source_backup": "PARTIAL",
+    "complete_original_archive_rehashed_this_turn": false
+  }
+}
