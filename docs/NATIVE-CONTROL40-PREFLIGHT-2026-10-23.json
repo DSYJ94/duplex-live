@@ -641,7 +641,10 @@
     "portable_fresh_candidate_review_adapter_not_yet_implemented": false,
     "portable_review_and_complete40_preflight_source": "f466d93f216929f582cda143f546d9e0591260f3",
     "portable_review_and_preflight_focused_CPU_tests_passed": 62,
-    "portable_fresh_inference_collector_still_needed": true,
+    "portable_fresh_inference_collector_still_needed": false,
+    "portable_fresh_collector_and_backup_source": "da7b69fd5dfb9e1c1bb9b0bfe0e0131fa1f0fadf",
+    "portable_fresh_collector_CPU_validated_GPU_unproven": true,
+    "portable_fresh_and_related_focused_CPU_tests_passed": 79,
     "heldout_audio_or_thresholds_changed": false
   }
 }

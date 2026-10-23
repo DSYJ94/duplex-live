@@ -1,3 +1,59 @@
+# LOCAL — full portable fresh40/speech40 collector prepared; no new GPU; funding pending (23 October08:54 London)
+
+NEWEST authoritative entry. LOCAL sole executor; goal ACTIVE/incomplete. Previous
+goal turn made concrete progress with the review/preflight atf466d93; this turn
+implemented the actual collector and repaired stale backup targeting, EXACT source
+da7b69fd5dfb9e1c1bb9b0bfe0e0131fa1f0fadf. CPU fixtures only: no GPU/native/heldout
+inference, API request, optimizer update, new candidate, source audio change or
+adoption. Actual latest remains unadoptednative7590052/Adam528; native520 repairparent.
+
+portable/context/native_fresh_development.py requires the prior strict restored
+retained154/native49/control40 candidate and committed full native20/speech20 review
+with all4 ordinary cores, before fresh source/quality reads. All20 fixed questions
+run for baseline520 and the ACTUAL candidate path, serially on physicalGPU0 with
+separate arrived-audio ASR. No Slurm placeholders or scoring answers; no TRAIN
+history recording. Each actor checks exact live parentPID/birth/active role,
+preflight/review/quality/source identity and common bounded deadline. Global GPU
+ownerlock and occupied-GPU check prevent overlap. Cold/intervening/reused actual
+fresh packetPCM/userPCM/text-token parity must pass; delayed-input tensors are NOT
+recorded on heldout data. Prior development actual delayed-input parity remains
+mandatory. Every per-case raw/audio/event artifact is bound. Both actors must exit
+before distinct independent ASR processes audit ALL40 outputs, retaining silent and
+word failures. Complete collection is NOT semantic/task/audio/latency qualification.
+Actual GPU acceptance and full semantic/quiet/pause/causal-receipt/audio review are
+still missing. No actual review authorizing fresh inference exists yet.
+
+Backup watcher now REQUIRES explicit current --pod-id --host --port; no deleted
+Pod/IP default. Strict host-key checks retained. Adds precise-pilot-v2,
+native-control40-native20-v1, native-control40-native20-speech-v1 and
+native-control40-fresh-paired40-v1 roots; case-count and independent speech changes
+trigger verified snapshots even if controller phase stays unchanged. Credentials,
+owner-conversation paths, session-token and core dumps excluded both at snapshot
+and independent Mac verification. No new watcher launched. ALL79 focused CPU tests
+pass (17 collector/backup), including existing native review/clock/resource/session/
+budget guards. CLI --help loads on Mac without CUDA. Evidence:
+docs/NATIVE-CONTROL40-PORTABLE-FRESH-COLLECTOR-2026-10-23.json.
+
+Official billing refreshed again: balance-0.09USD, Auto-Paydisabled; existing15USD
+funding question still pending, not repeated. Current COMPLETE list-pods07:54UTC
+again only4 unrelated EXITED Aurium resources; none changed. Volume49yytzyoge100GB
+read back present. No duplicate owned GPU/job. Old sjf72o8v64mjvb and all old pipeline/
+watcher handles remain terminal. No new Slurm query/submission. Conservative project
+remaining12.636916492575253USD of50, unchanged. Full67.76GB native archive and
+critical inventories remain PREVIOUSLY verified; not rehashed this turn. Broader
+stopped Mac source backup PARTIAL. No new artifact transfer or credentials read.
+
+Next useful CPU work: review/prepare replacement staging from the retained archive
+to rebuild ephemeral /opt runtime, source/vendor/model/original-runs aliases and
+compiled BF16/Triton probe. On actual funding: fresh stock/price/credit read, ONE
+replacement within remaining cap, arm/verify live budgetguard BEFORE GPU work,
+NEW outputroot and current-target watcher; full40 numerical then independent BF16,
+combined154/native49/control40 readiness, new8, independent state/Adam/RNG/native
+restore; complete native20/speech20 review, then this gated pairedfresh40 collector.
+No passing subset, loss/threshold/retention weakening or silent adoption. Broader32
+reasoning and microturn/backchannel curriculum remains unrecorded/untrained.
+Unrelated timeline.pyc, capability-retention probe files and roadmap.html preserved.
+
 # LOCAL — portable review gate and full40 preflight prepared; funding still pending (23 October08:35 London)
 
 NEWEST authoritative entry. LOCAL remains sole executor; goal ACTIVE and incomplete.
