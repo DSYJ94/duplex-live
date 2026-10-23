@@ -1,3 +1,93 @@
+# LOCAL — native codec40 PASSED/backed up; native-graph Engine40 live (23 October 02:10 London)
+
+LOCAL sole executor; CLOUD read-only. Actual current payload AND controller source
+7769e7cc06f80e609db3f8ac2611977cd0d7cb66 at /opt/duplex-control40-7769e7c.
+Full source/data quality/semantic/conversion chain passed40/40. CUDA Mimi/native
+text encoding and independent cache verification PASSED ALL40,27372 real native
+frames. Immutable codes41 files/3,839,020bytes copied to Mac and all hashes match:
+runs/local-migration-20261023/native-control40-preflight-v2/codes. Cache manifest
+SHA256374854c1d4865d8bfbf5f9a5213d3e01cdd2c1ebb0c1758b63b146b711040633.
+
+ONE Pod sjf72o8v64mjvb, A10080GB, EUR-IS-1,1.79USD/hour, volume49yytzyoge.
+New guard57889 LIVE/PID97499, sourcea448e6d; actual armed deadline23October
+05:14:52.804UTC =06:14London/07:14Berlin. Initial two-hour guard67422/PID72825
+was intentionally retired ONLY after new guard armed; terminal143 confirmed.
+Do not use stale watchdog-v1.json. Current trial6hours TOTAL from creation,
+maximum10.74USD GPU plus0.25USD disk reserve. Prior four owned Pods20.096006687846966,
+TOTAL budget50USD. Projected prior+maximum current trial+reserve31.086006687846968.
+New receipt/status runpod-control40-execution-v2.json and watchdog-v2.json under
+runs/local-migration-20261023. Billing API has not yet posted this new Pod; never
+interpret that as free compute. Unrelated Pods untouched; NO second Pod created.
+
+LIVE sole preflight v3, detached controllerPID3406, birthticks15978541. Current
+Engine childPID3443; complete cache re-verification3426 TERMINAL0. Last direct
+observation01:08:05UTC confirmed BOTH live. Out /workspace/migration/native-control40-preflight-v3;
+controller.json, codec_verify.log, engine.log, numerical.log and observation-latest.json.
+Do NOT duplicate/restart from a stale observation. New per128-frame trace logs
+will show progress once loading/graph warmup completes. Pipeline deadline05:13:45UTC.
+Dispatch /workspace/control40-stage-e658c20/preflight-dispatch-v3.json. Direct SSH
+root@157.157.221.29 port16728 with local id_ed25519_runpod and ignored known-hosts.
+
+Earlier v1 TERMINAL failed at codec compile: ptxas environment was not inherited
+from the successful compiler-only subprocess. Actual minimal Triton probe failed
+without the variable and passed with only TRITON_PTXAS_PATH changed. Controller
+now exports verified header/assembler and actual libcuda shim. Earlier v2 codec40
+passed but its eager Engine audit was deliberately interrupted after its first
+42-second case took >8minutes with compilation/graphs forced off; it had not
+qualified any complete40 result. Controller2599/child2871 terminal before v3.
+Both attempts and partial artifacts remain. Diagnostic py-spy is isolated under
+/opt/control40-debug; stack attachment denied SYS_PTRACE, no model env modified.
+
+v3 uses original native compilation/CUDA graphs for ACTUAL ENGINE INPUT audit,
+schema dl-native-control40-engine-inputs-v2; requires main graph really captured,
+all17 channels/forced targets/all real frames unchanged. This is NOT an unforced
+behavior pass. Numerical reference stays precise_native FP32/FP64-linear MATH,
+threshold0.001; standalone BF16 gradient explicitly disables compilation/graphs
+exactly as retained trainer. No precision/sampler/TF32/mask/threshold lowering.
+
+All7797 workset files/8,000,842,614bytes individually verified on volume and again
+on local disk. Same inventory79401e2c.../archive87717cdf... as preceding entry.
+Durable full workset /workspace/source-control40-e658c20 unchanged; source/data
+/opt working copy is ephemeral, not a backup. Local model tree also copied and
+all MODEL_HASHES plus every published asset-manifest hash passed. Logical aliases
+/projects/u6si/duplex-live and /lus/lfs1aip2/projects/u6si/duplex-live now point to
+/opt/control40-runtime-root. Its models are local, while runs/vendor/worktrees/tmp/logs
+link to existing durable originals. Same-inode checks prove logical model paths
+resolve to the PREVIOUSLY hash-verified local files; original manifests/content
+unchanged. Receipt /workspace/migration/native-control40-local-models-alias-v1.json.
+The model-copy helper56792 ended1 only because alias switch was deliberately
+deferred; separate deployment52082 TERMINAL0 completed the safe mapping after old
+audit termination. Do not rerun duplicate copies. Original67.764GB archive remains;
+broader project/stopped Mac source backup still partial. Put NEW outputs under
+/workspace/migration, not into the immutable native-preservation-v3/runs tree.
+
+Next: finish v3 ALL40 Engine and numerical checks; run complete40 BF16 gradient
+readiness. New native_control_training.py is PREPARED,21 focused CPU tests pass,
+but NOT connected to original trainer and NOT approved for optimizer work. It
+adds all40 once across8 updates/all5 families each update, native text and
+assistant-only acoustic losses, plus complete40 restore fingerprints. Must retain
+all original154 objectives, original49 native auxiliary/all28 actual histories,
+KL1/hidden10, all masks/folds/heldouts, and implement accurate new proof/state and
+independent combined readiness before a bounded8 pilot. No new optimizer update.
+
+IMPORTANT parent-selection gate still pending: complete paired baseline520 /
+candidate7590052 native10 + independent speech + ordinary4 review before choosing
+repair parent. Existing context_spanning_probe native-ASR mode requires TWO real
+distinct assigned GPUs; current Pod has one. Read-only count2 catalog00:35UTC found
+A10080GB in EUR-IS-1 stockLOW at1.79USD/GPU/hour; refresh before create. A separate
+two-GPU2hour trial would cap7.16USD; combined worst-case prior/current/new GPU plus
+two0.25 disk reserves38.49600668784697 fits existing50USD. NO such Pod submitted.
+OpenAI credential remains Mac only. Real worker transport on Runpod must be
+implemented without copying it (e.g. scoped localhost Responses proxy over SSH),
+preserving actual API/tool receipts and unchanged complete native tests. Do not
+substitute oracle/scheduled workers or a passing subset. This is implementation
+work within authorization, not a new permission blocker. Before adoption still
+require independent complete training-state/Adam/RNG restore and actual native
+behavior, then all40 sealed paired fresh outputs. native7590052 remains unadopted,
+latest actual training8updates/Adam520->528. Goal ACTIVE.
+
+Machine-readable current record: docs/NATIVE-CONTROL40-PREFLIGHT-2026-10-23.json.
+
 # LOCAL — complete40 data chain passed; archive verified on A100, extraction live (23 October 01:04 London)
 
 LOCAL sole executor; CLOUD read-only. Latest actually deployed executable source is
