@@ -1,3 +1,34 @@
+# LOCAL — whole40 numerical TERMINAL FAILED; original evidence verified on Mac (23 October06:55 London)
+
+LOCAL sole executor; goal ACTIVE. Original4393 has finished with exit1; supervisor
+5014 terminalfailed, no BF16 gradient or optimizer child submitted. ALL40 cases
+were collected. Only native-control3-train-029/pause-resume failed: textlogit max
+0.0017094612121582031 > unchanged0.001; hidden0.0008737444877624512, causal0,
+training textalignment0, native depthpassed. All parameters unchanged; peak
+38,043,650,048bytes. Full reportSHAea78de49685707fdae3e5b7dbc1d92ff0ddd3860699e23f152d5b7579c300a3b.
+Verified Mac snapshot20261023T055053.617840Z,5files, inventory
+c98d6e62c1eb5605b6a71e8da713aba3906b7ffa9f0eaa128526bb4c9d8b48ad.
+Failure review docs/NATIVE-CONTROL40-NUMERICAL-FAILURE-2026-10-23.json.
+
+Queued reference-only diagnostic8805/source455975c started model loading05:50:18UTC,
+actual liveRsl at05:52UTC. It retains06:15UTC SIGALRM and no optimizer approval.
+Do not dispatch another GPU process; wait for its actual result. Positive one-case
+result would still require a NEW complete40 audit and independent BF16/combined
+readiness. Original failed whole40 stays immutable. New exact FP64 cast-cache helper
+has9 focused CPU equivalence/attention/reference/guard tests passing, maximum24GiB,
+default20GiB; allocation/cast reuse only, NOT used/approved on GPU or in training.
+Original reference/numerical modules unchanged; helper is prospective reference-only.
+
+Prepared49 loader sourcea5d01a1254210f40fca3b7ce4bb2ebb69b9b061b pushed and deployed
+cleanly at/opt/duplex-control40-prepared-v1. First operational CPUlaunch10278 failed
+before imports due shell quoting; v1log retained, no GPU touched. Corrected structured
+stdin launch10412 uses v2log/report, same committed source/CUDA_VISIBLE_DEVICES empty.
+Wait for its actual full10,390-file source inventory/native520/voice/vocabulary/all49
+result before using the opt-in cache in any readiness/training/restore stage. Cache
+artifact itself and all4 backup files alreadyverified, as preceding entry. Default
+legacy loader and original math are unchanged. Current guard harddelete09:14:52.804UTC
+and projectupper41.84600668784697USD unchanged; no extension or new resource.
+
 # LOCAL — prepared49 input artifact verified and strict loader implemented (23 October)
 
 LOCAL remains sole executor; goal ACTIVE. This source commit adds an OPT-IN

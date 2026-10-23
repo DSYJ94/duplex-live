@@ -1,0 +1,50 @@
+{
+  "schema": "dl-native-control40-numerical-failure-review-v1",
+  "source_commit": "7769e7cc06f80e609db3f8ac2611977cd0d7cb66",
+  "complete40": true,
+  "passed": false,
+  "all_model_parameters_unchanged": true,
+  "optimizer_updates": 0,
+  "new_checkpoint_written": false,
+  "threshold": 0.001,
+  "failed_cases": [
+    {
+      "id": "native-control3-train-029",
+      "family": "pause-resume",
+      "comparisons": {
+        "hidden": {
+          "maximum_absolute_error": 0.0008737444877624512,
+          "mean_absolute_error": 1.7969804275708157e-06
+        },
+        "text_logits": {
+          "maximum_absolute_error": 0.0017094612121582031,
+          "mean_absolute_error": 1.831299414334353e-06
+        }
+      },
+      "causal_prefix_error": 0.0,
+      "native_training_text_alignment_error": 0.0,
+      "native_depth_passed": true,
+      "assistant_audio_target_counts": [
+        603,
+        602,
+        602,
+        602,
+        602,
+        602,
+        602,
+        602
+      ]
+    }
+  ],
+  "passing_cases": 39,
+  "peak_allocated_bytes": 38043650048,
+  "numerical_report_sha256": "ea78de49685707fdae3e5b7dbc1d92ff0ddd3860699e23f152d5b7579c300a3b",
+  "mac_backup_inventory_sha256": "c98d6e62c1eb5605b6a71e8da713aba3906b7ffa9f0eaa128526bb4c9d8b48ad",
+  "mac_backup_snapshot": "runs/local-migration-20261023/native-control40-continuous-copyback-v2/20261023T055053.617840Z",
+  "all_backup_files_verified": true,
+  "supervisor_terminal_phase": "failed",
+  "actual_numerical_exit_code": 1,
+  "BF16_gradient_submitted": false,
+  "training_approved": false,
+  "next_action": "Wait for already running reference-only precision diagnostic8805; preserve the complete failure. Any reference change requires a NEW complete40 numerical audit followed by independent BF16 and combined retained-objective readiness."
+}
