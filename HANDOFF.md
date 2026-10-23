@@ -1,3 +1,43 @@
+# LOCAL —100USD authorization recorded; new guard ACTIVE; supervisor adoption NEXT (23 October13:38UTC)
+
+LOCAL sole executor, goal ACTIVE. Current source main236cc11. Human explicitly
+raised project compute cap to100USD if needed. New ACTIVE guard74352/session71225,
+status runs/local-migration-20261023/runpod-control40-replacement-budget-v3.json,
+same Pod4yx8vahdmjsylx deletion22:22:37.9UTC. Full14h Pod lifetime25.06USD +closed
+project36.94071830424946 +0.50 reserve =62.50071830424946USD maximum for this first
+extension, below100. Official refreshed wallet21.08USD, billing1h behind. No new
+payment, Pod, recurring setting or storage size change. Old guard36001 explicitly
+SIGTERM retired only AFTER new guard readback armed; don't use stale v2 status.
+Guard source/test/authorization236cc11 pushed;8 budget tests pass.
+
+URGENT NEXT: implement/test supervisor adoption of actual healthy BF16 child14873/
+birth20219598 BEFORE old controller4111/birth18985221 deadline14:59UTC. Adoption
+has NOT yet been implemented or dispatched. Do not restart this child. Actual
+13:37:23UTC:7/40 BF16 rows pass, child R, no optimizer update. Full40 numerical
+already passed (reportbdf4ac935249b7e5cd31dbbd1936389ce8b537f2bb7fb44f7b273bff809413af).
+Immutable GPU sourceC9 remains unchanged at/opt/duplex-control40-c9efaaa-v2.
+Existing old controller4111 still owns GPU and has14:59UTC deadline even though
+new cost guard is longer. Read-only observer69010 ended normally; no job mutation.
+
+After tested adoption, rearm/replace evaluation dispatcher40212 (old guardv2),
+backup42219/v6 through15:30, proxy37256 through15:29 and tunnel37281 with deadlines
+covered by new guard; preserve all old artifacts and aggregate128 request cap.
+No new8 before full40 BF16 and combined retained154/native49/control40 readiness.
+All original28/49 histories, losses, words/audio/receipts/folds/heldouts preserved.
+No extension/adoption without independent state restore and behavioral qualification.
+
+User asks objective causes and exact evaluations. New evidence review:
+docs/NATIVE-MODEL-FAILURE-DIAGNOSIS-2026-10-23.md. Current A100 candidate0/4 ordinary,
+parent2/4; both quiet/pause/async failures. Earlier controlled GH200 ancestor
+comparison: published base4/4,5204/4, earlier audio49 child0/4 (distinct latest759).
+Persona-only older complete10 also failed overall.49 teacher histories =27private,
+12simple,5clarify,5cancel,30.656 minutes of real scene timelines including quiet.
+Batch physically1, accumulated154 retained loss contributions per optimizer step;
+newest trained759 has8 new updates at2e-7 with Adam520→528. No causal batch-size or
+complete objective attribution established. Broader32 reasoning/microturn data
+remain unrecorded/untrained. Current new repair has not trained. Unrelated local
+files/edits remain untouched. Execution stays LOCAL; no human command approval needed.
+
 # LOCAL — human approves up to100USD; deadline recovery being prepared (23 October13:22UTC)
 
 NEWEST interim entry. Human instruction: "Lift the cap to 100 if needed. I just
