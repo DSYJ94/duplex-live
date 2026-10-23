@@ -1,3 +1,39 @@
+# LOCAL —17/40 live; offline native reasoning lifecycle component tested (23 October14:49UTC)
+
+LOCAL executor, goal ACTIVE; mainca04124 before this component commit. Actual GPU
+source remainsC9 c9efaaac24d983342f7eded46617e6450bc102ce, active orchestration7769270.
+Supervisor21063/birth20582160 S/live, old4111/birth18985221 T/paused, sameCUDA14873/
+birth20219598 R/live14:48:09UTC;17/40 all passing,0newoptimizerupdates. Keep exact
+child running; old14:59 deadline belongs to paused4111 and must NOT be resumed.
+New active controllerdeadline21:30UTC; costguard74352/session71225 to22:22:37.9UTC,
+current totalmax62.50071830424946 of100 cap; retainedvolume49yytzyoge unchanged.
+Backup85270/session28881 v7 to22:20, evaluatorwaiter86013/session39293 v3 latest21:37/
+end22:17, proxy85512/session86213 v4 to22:19, tunnel session3455 unchanged.
+Latest23-file backup independently verifiedab23c113381d1b74f0b36bdc810ef8e88c06bf954e115c4f8c937961b7d284d7.
+
+New opt-in CPU-only component evals/native_reasoning_lifecycle.py +7passing tests
+binds exact arrived user snapshots, model-selected semantic actions, atomic current
+cancellation/replacement, real completion vsconfiguredtransportdelay, no stale/replayed
+result delivery and no retry after uncertain wirewrite. Full original question is
+retained for replacement. It uses no case/difficulty/intent router, oracle, forced
+request, model/API/GPU call or speech filter. This is OFFLINE COMPONENT evidence,
+not native model routing/teacher/latency/production qualification. It is not wired
+to current GPU/voice/teachercollector. Details docs/NATIVE-REASONING32-TEACHER-LIFECYCLE-2026-10-23.md.
+Whole raw capture, actual HTTP association, dispatch-dependent input pacing, drain,
+sourceword/semantic/conversion/numerical/gradient/fullretention gates still required.
+
+Both specific approvals remain pending after automatic-review rejection:20USD
+Runpodcredit and40newsynthetic user-source utterances. No charges/newsourceAPI,
+recording/teacher, longer budgetguard or overnight supervisor were run. Do not
+infer approval from goal continuation. Current funded GPU run remains productive,
+so goal is not blocked. Next observe same40gradient through old14:59 deadline,
+then combined154/native49/control40 readiness ->one8 ->independentstate/native
+restore+strictproof ->complete native20/speech20/all4 ->eligiblefresh40 only.
+Broader source collector ready11tests; after its exactapproval collectandindependently
+qualify all40unique/56sceneclips/32scenes before newnative teachers. Native base,
+all28/49 histories/losses/folds/heldouthashes unchanged. Unrelatedlocal work preserved;
+criticalnativearchive previouslyverified, broader stoppedMacbackup PARTIAL.
+
 # LOCAL —16/40 live; actual failed-pilot weight/Adam delta audit complete (23 October14:37UTC)
 
 LOCAL executor, goal ACTIVE. Main1d7e167 before this audit commit. Same immutable
