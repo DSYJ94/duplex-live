@@ -35,5 +35,59 @@
   "readiness47_process_already_terminal_cannot_resume": true,
   "recovery": "Same C9 parameters and all49 gate in new v8 output; first three completed stages hash-bound and independently rechecked; no partial49 reuse",
   "recovery_optimizer_limit": 8,
-  "automatic_adoption": false
+  "automatic_adoption": false,
+  "recovery_launched": {
+    "pid": 71679,
+    "birth": 24121629,
+    "command": [
+      "/workspace/runtime-x86-ngc2510/bin/python",
+      "-u",
+      "-m",
+      "portable.context.native_control_pilot_recovery",
+      "--previous",
+      "/workspace/migration/native-control40-precise-pilot-v7-adoption/controller.json",
+      "--previous-sha256",
+      "ae3b6e3e1f2417211d52580c804e99b4f8a4b5ec4a013d4de04194c7500e13fa",
+      "--compiler",
+      "/workspace/migration/native-control40-replacement-compiler-v2/compiler.json",
+      "--cost-guard",
+      "/workspace/migration/native-control40-v8-funded-cost-guard-v1.json",
+      "--out",
+      "/workspace/migration/native-control40-precise-pilot-v8-recovery",
+      "--deadline-utc",
+      "2026-10-24T07:00:00+00:00"
+    ],
+    "orchestration_commit": "fb3adfc29f63c7dace63c9ab6a109d828288897e",
+    "execution_commit": "c9efaaac24d983342f7eded46617e6450bc102ce",
+    "optimizer_limit": 8,
+    "one_recovery_only": true
+  },
+  "recovery_live_child": {
+    "pid": 71818,
+    "state": "R",
+    "birth": 24130859
+  },
+  "workset_all7797_rechecked": true,
+  "recovery_tests_passed": 11,
+  "backup_PID": 37222,
+  "backup_deadline_UTC": "2026-10-24T08:20:00Z",
+  "backup_last_verified_snapshot": {
+    "path": "runs/local-migration-20261023/native-control40-continuous-copyback-v11/20261023T234232.270326Z",
+    "files": 58,
+    "inventory_sha256": "ba3e87d533a1da000119cb621f21978ca6b994ee2b541ebfb8214882173694d6"
+  },
+  "proxy_PID": 37279,
+  "proxy_mac_port": 50259,
+  "proxy_remote_loopback_port": 18792,
+  "proxy_health_verified": {
+    "run_id": "native-control40-20261023-v6",
+    "actual_requests": 0,
+    "real_requests_transport": true
+  },
+  "evaluation_dispatcher_PID": 37551,
+  "evaluation_plan": "runs/local-migration-20261023/native-control40-development-followup-plan-v8-funded.json",
+  "complete_paired20_latest_launch_UTC": "2026-10-24T07:37:00+00:00",
+  "reasoning32_semantic_requests": 0,
+  "reasoning32_specific_payload_approval_pending": true,
+  "native_optimizer_updates": 0
 }

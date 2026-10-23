@@ -1,3 +1,63 @@
+# LOCAL — single20 POSTED; funded recovery and complete evaluation chain active (23 October23:44UTC)
+
+Goal turn PROGRESS; LOCAL sole executor. Main code fb3adfc29f63c7dace63c9ab6a109d828288897e,
+GPU execution C9 c9efaaac24d983342f7eded46617e6450bc102ce remains immutable.
+The ONE approved20USD payment has now posted: official UI+API23:35:47 wallet
+22.3439235455USD, rate1.814/h, auto-payFalse. No duplicate payment. Earlier payment/
+bank status question is resolved; do not ask the user to pay again. Receipt journal
+runs/local-migration-20261023/native-approved20-posted-funding-v1.json. UI evidence
+is local/private only. Old47/49 process actually ended; it was not resumed.
+
+FUNDED guard35030/session32522 armed before scoped retirement of31009; same owned
+Pod4yx8vahdmjsylx/volume49yytzyoge/rate1.79 confirmed. Deadline24Oct08:22:37.9UTC,
+whole lifetime24h maxproject80.4007183<100. No new Pod purchased/created. Never retire
+this guard without verifying a funded replacement and fresh exact Pod/rate/mount.
+
+RECOVERY71679/birth24121629 from isolated clean Gitfb3adfc, unique output
+/workspace/migration/native-control40-precise-pilot-v8-recovery/controller.json.
+New tested recovery controller reuses actual original completed stage0/1/2 exit0
+receipts, binds stoppedV7 SHAae3b6e3e1f2417211d52580c804e99b4f8a4b5ec4a013d4de04194c7500e13fa,
+rechecks ALL7797 files/complete40 source approval (ACTUAL completed). Only output/
+readiness directory arguments differ from the original C9 plan. Full49 readiness
+RESTARTED in new directory; no47-row partial approval or hidden-hash reconstruction.
+Current child71818/birth24130859R (actual23:43); phasecombined_readiness, preparing
+inputs; nvidia query at that observation empty, so no GPU allocation claim yet.
+0new optimizer updates.11 recovery/backup tests PASS. Whole49+combined154/control40
+must pass ->ONE8from520 ->fresh independent Adam/RNG/native restore ->strictproof.
+Failed V7 and originals retained. Recovery deadline07:00UTC; no adoption/extension.
+
+BACKUP37222/session87194, sourcefb3adfc, out native-control40-continuous-copyback-v11,
+deadline08:20UTC. ROOTS now includes V7 and V8; all atomic training states, final49
+and combined receipts watched. First verified57file inventory
+fb443fef09af043dc330e2d19119f2f7c7db292e7ba49d226b049438088807f1.
+Old v10/31946 actual terminal at deadline; final53file16da0fd... retained. Additional
+stoppedV7 fourfiles73947B separately verified. Full native67.76GB archive remains
+Mac+volume verified; broader stopped source mirror is still partial. No credentials,
+owner conversations, cores or unrelated files transferred/committed.
+
+EVALUATION backend rearmed: Mac37279/session38732 at127.0.0.1:50259; reverse SSH
+session61404 only remote127.0.0.1:18792 ->Mac50259. Exact runnative-control40-20261023-v6
+health HTTP read verified actualtransportTrue/requests0. Max112 further backend
+calls (prior aggregate16/128), gpt-6-luna only/restricted existing4tools/max2048tokens,
+keys stay local0600, deadline08:20. No smoke provider request needed; health only.
+Dispatcher37551/session34942 waits exact71679/birth, full7 stages actual0 including
+restore+strictproof and upstream process terminal before complete native20/speech20.
+Plan native-control40-development-followup-plan-v8-funded.json; latestlaunch07:37,
+evalend08:17 (entire40min mandatory), same original fixed outputs still uncreated.
+No fresh heldout inputs, model adoption or larger training from partial metrics.
+
+Whole derived32 transport/speech PASS and exact720152B prepared semanticpayload
+stay backed up. Automaticreview rejection of distinct32 payload remains unresolved;
+specific human approval question is pending, semanticrequests0. DO NOT retry its
+provider call indirectly. Funding blocker resolved; this is a separate pending data
+transmission approval. Work on the already approved control40 native pilot continues.
+Next: verify live recovery stage, maintain automatic backup/evaluation, assess full
+pilot results before any larger training; run full32 semantic only if approved.
+No Mac neural ASR or OS CPU/power/priority/affinity changes; proxy/watchers light.
+Unrelated pyc, capabilityprobe files androadmap.html preserved.
+
+---
+
 # LOCAL — bounded native job stopped47/49; complete32 speech preserved; payment unresolved (23 October23:34UTC)
 
 LOCAL sole executor; goal ACTIVE. Main before entry3980475. Native GPU readiness
