@@ -5,6 +5,7 @@ ignored mode0600 file on this Mac. Run this before creating the execution receip
 """
 import argparse
 import datetime as dt
+import hashlib
 import json
 import math
 import os
@@ -14,21 +15,34 @@ import time
 import urllib.error
 import urllib.request
 
+AUTHORIZATION = Path(__file__).resolve().parents[2] / 'docs/NATIVE-BUDGET-AUTHORIZATION-2026-10-23.json'
+
 
 def budget_seconds(receipt):
-    """An explicit bounded trial must fit inside the user's existing50USD budget."""
+    """Count the entire Pod lifetime against the explicitly approved project cap."""
+    cap = receipt['total_compute_budget_usd']
+    expanded = cap == 100 and type(cap) in (int, float)
+    if expanded:
+        document = AUTHORIZATION.read_bytes()
+        authorization = json.loads(document)
+        if (receipt.get('budget_authorization_sha256') != hashlib.sha256(document).hexdigest()
+                or authorization.get('schema') != 'dl-native-human-budget-authorization-v1'
+                or authorization.get('total_compute_budget_usd') != 100
+                or authorization.get('human_instruction') != 'Lift the cap to 100 if needed. I just want to know the current status of the model and how its performance is'):
+            raise ValueError('The explicit 23 October human100USD authorization must match')
     seconds = receipt['approved_gpu_wallclock_seconds']
-    if type(seconds) is not int or not 600<=seconds<=50400:
-        raise ValueError('Explicit bounded trial from10minutes to14hours required')
+    if type(seconds) is not int or not 600<=seconds<=(129600 if expanded else 50400):
+        raise ValueError('Explicit finite trial duration inside the approved budget required')
     names = ('gpu_hourly_usd', 'maximum_gpu_usd', 'total_compute_budget_usd', 'prior_attributed_spend_usd')
     values = {name: receipt[name] for name in names}
     if any(type(x) not in (int, float) or not math.isfinite(x) or x < 0 for x in values.values()):
         raise ValueError('Finite nonnegative budget figures required')
     maximum = values['gpu_hourly_usd'] * seconds / 3600
-    if (not 0 < values['total_compute_budget_usd'] <= 50 or values['gpu_hourly_usd'] <= 0
+    reserve = .5 if expanded else .25
+    if (not (0 < cap <= 50 or expanded) or values['gpu_hourly_usd'] <= 0
             or abs(values['maximum_gpu_usd'] - maximum) > 1e-8
-            or values['prior_attributed_spend_usd'] + maximum + .25 > values['total_compute_budget_usd']):
-        raise ValueError('Trial must fit the existing at-most50USD budget including0.25USD disk reserve')
+            or values['prior_attributed_spend_usd'] + maximum + reserve > cap):
+        raise ValueError('Full Pod lifetime and disk/shutdown reserve must fit the approved project cap')
     return seconds
 
 

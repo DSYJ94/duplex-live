@@ -1,4 +1,9 @@
 import unittest
+import hashlib
+import json
+import tempfile
+from pathlib import Path
+from unittest.mock import patch
 from portable.context.runpod_budget_watchdog import budget_seconds
 
 
@@ -49,6 +54,40 @@ class RunpodBudget(unittest.TestCase):
         self.assertEqual(budget_seconds(r),50400)
         self.assertAlmostEqual(r['prior_attributed_spend_usd']+r['maximum_gpu_usd']+.25,49.00600668784697)
         r['prior_attributed_spend_usd']+=1.
+        with self.assertRaises(ValueError):budget_seconds(r)
+
+    def test_human_expansion_requires_the_exact_recorded_authorization(self):
+        from portable.context.runpod_budget_watchdog import AUTHORIZATION
+        with tempfile.TemporaryDirectory() as folder:
+            path=Path(folder)/'authorization.json';path.write_bytes(AUTHORIZATION.read_bytes())
+            r=self.receipt(72000);r.update(total_compute_budget_usd=100,
+                prior_attributed_spend_usd=36.94071830424946,
+                budget_authorization_sha256=hashlib.sha256(path.read_bytes()).hexdigest())
+            with patch('portable.context.runpod_budget_watchdog.AUTHORIZATION',path):
+                self.assertEqual(budget_seconds(r),72000)
+                for changed in ('missing','digest','document'):
+                    item=r.copy()
+                    if changed=='missing':item.pop('budget_authorization_sha256')
+                    if changed=='digest':item['budget_authorization_sha256']='0'*64
+                    if changed=='document':
+                        d=json.loads(path.read_text());d['human_instruction']='unapproved budget change'
+                        path.write_text(json.dumps(d));item['budget_authorization_sha256']=hashlib.sha256(path.read_bytes()).hexdigest()
+                    with self.subTest(changed=changed),self.assertRaises(ValueError):budget_seconds(item)
+
+    def test_expanded_cap_still_counts_full_lifetime_and_larger_disk_reserve(self):
+        from portable.context.runpod_budget_watchdog import AUTHORIZATION
+        r=self.receipt(120000);r.update(total_compute_budget_usd=100,
+            prior_attributed_spend_usd=36.94071830424946,
+            budget_authorization_sha256=hashlib.sha256(AUTHORIZATION.read_bytes()).hexdigest())
+        self.assertEqual(budget_seconds(r),120000)
+        for change in (dict(approved_gpu_wallclock_seconds=129601),
+                       dict(prior_attributed_spend_usd=41),dict(maximum_gpu_usd=1)):
+            item=r.copy();item.update(change)
+            with self.subTest(change=change),self.assertRaises(ValueError):budget_seconds(item)
+        r=self.receipt(7200);r.update(total_compute_budget_usd=100,
+            prior_attributed_spend_usd=96.1,
+            budget_authorization_sha256=hashlib.sha256(AUTHORIZATION.read_bytes()).hexdigest())
+        # GPU3.58 + prior96.1 fits a0.25 reserve, but fails the expanded0.50 reserve.
         with self.assertRaises(ValueError):budget_seconds(r)
 
 

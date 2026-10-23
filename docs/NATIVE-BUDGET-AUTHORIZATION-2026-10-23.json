@@ -1,0 +1,12 @@
+{
+  "schema": "dl-native-human-budget-authorization-v1",
+  "recorded_utc": "2026-10-23T13:21:09.488515+00:00",
+  "human_instruction": "Lift the cap to 100 if needed. I just want to know the current status of the model and how its performance is",
+  "previous_total_compute_budget_usd": 50,
+  "total_compute_budget_usd": 100,
+  "scope": "Existing native duplex qualification and bounded repair pilot, including Runpod compute; no extension or adoption without independent restore and behavioral gates.",
+  "same_owned_pod": "4yx8vahdmjsylx",
+  "no_new_pod_planned": true,
+  "storage_approval_unchanged": true,
+  "actual_training_or_behavior_qualification": false
+}

@@ -1,3 +1,27 @@
+# LOCAL — human approves up to100USD; deadline recovery being prepared (23 October13:22UTC)
+
+NEWEST interim entry. Human instruction: "Lift the cap to 100 if needed. I just
+want to know the current status of the model and how its performance is".
+Authorization is docs/NATIVE-BUDGET-AUTHORIZATION-2026-10-23.json. Goal ACTIVE,
+LOCAL sole executor. No new Pod or optimizer update. Immutable GPU sourceC9,
+controller4111 and healthy BF16 child14873/birth20219598 continue untouched.
+Full40 numerical passed and is independently backed. First3 BF16 cases pass,
+all26 adapter gradients finite, frozen-gradient count0 and exact text/audio
+outputs. Complete BF1640 and remaining gates are NOT approved.
+
+The measured BF16 rate is much slower than the earlier clock assumed. Preparing
+a tested supervisor adoption to preserve this exact child beyond old14:59UTC;
+no child restart, subset acceptance, threshold/loss/retention change or new8 yet.
+Old budgetguard36001 is STILL ACTIVE with15:31:37.9UTC deadline until replacement
+is verified armed. Proposed first funded extension is same Pod14h lifetime,
+22:22:37.9UTC stop, maximum62.50071830424946USD total including0.50 reserve,
+below new100 cap. Official refreshed wallet21.08USD, spend1.814USD/h, billing1h
+behind; no new payment or recurring setting change. Backup42219, dispatcher40212,
+proxy37256 and tunnel37281 still have their OLD15:27..15:30 deadlines until rearmed.
+Do not assume adoption or deadline replacements are complete from this entry.
+Current old model performance remains candidate0/4 ordinary versusbaseline2/4 on
+A100 default; both fail quiet/pause and async behaviors; no production adoption.
+
 # LOCAL — COMPLETE40 numerical PASS; independent BF16 gradient running (23 October12:51UTC)
 
 NEWEST authoritative entry. LOCAL sole executor; goal ACTIVE/incomplete. Same
