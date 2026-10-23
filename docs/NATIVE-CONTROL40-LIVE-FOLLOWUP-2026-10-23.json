@@ -1,6 +1,6 @@
 {
   "schema": "dl-native-control40-live-numerical-and-evaluation-followup-v1",
-  "observed_utc": "2026-10-23T10:16:38.706076+00:00",
+  "observed_utc": "2026-10-23T10:21:51.978946+00:00",
   "execution_source_commit": "c9efaaac24d983342f7eded46617e6450bc102ce",
   "pod_id": "4yx8vahdmjsylx",
   "controller_pid": 4111,
@@ -8,7 +8,7 @@
   "numerical_pid": 4216,
   "numerical_birth": 18993883,
   "numerical_created_utc": "2026-10-23T09:38:13.615016+00:00",
-  "completed_cases": 7,
+  "completed_cases": 9,
   "all_completed_cases_pass": true,
   "complete40": false,
   "whole40_approved": false,
@@ -55,6 +55,18 @@
       "passed": true,
       "hidden_max_error": 9.059906005859375e-06,
       "logit_max_error": 7.867813110351562e-06
+    },
+    {
+      "id": "native-control3-train-007",
+      "passed": true,
+      "hidden_max_error": 1.0967254638671875e-05,
+      "logit_max_error": 7.62939453125e-06
+    },
+    {
+      "id": "native-control3-train-008",
+      "passed": true,
+      "hidden_max_error": 2.956390380859375e-05,
+      "logit_max_error": 4.2438507080078125e-05
     }
   ],
   "final_parameter_hash_and_peak_checks_pending": true,
@@ -63,10 +75,10 @@
   "backup": {
     "watcher_pid": 92170,
     "current_successful": true,
-    "snapshots_verified": 10,
-    "latest_inventory_sha256": "502d445cb2ce3300df9c53980df2834bea0f53ea89229899e28aa0f775de0564",
+    "snapshots_verified": 12,
+    "latest_inventory_sha256": "fcb3f99e0f03b5064c8044aa6f2e1628e2591332c72086ee25f30fad49d98319",
     "latest_files": 18,
-    "numerical_progress_sha256": "78533af3ccd55304684daf27042a93ffc473287f56b3769d7b98ae99dbb317ba"
+    "numerical_progress_sha256": "0af88384386a6879c60cd4c8a75e4517f60f5a92fd690cd67dd402fc56c04dfc"
   },
   "next_evaluation": {
     "local_waiter_pid": 20789,

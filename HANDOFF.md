@@ -1,4 +1,4 @@
-# LOCAL —7/40 numerical cases passing; real backend ready; full native20/speech20 follow-up armed (23 October11:20 London)
+# LOCAL —8/40 numerical cases passing; real backend ready; full native20/speech20 follow-up armed (23 October11:20 London)
 
 NEWEST authoritative entry. LOCAL sole executor; goal ACTIVE/incomplete. Previous
 goal turn restored the worker and launched the bounded chain; THIS turn made
@@ -11,7 +11,7 @@ untouched. Same immutable actual executionc9efaaac24d983342f7eded46617e6450bc102
 /opt/duplex-control40-c9efaaa-v2. Controller4111/birth18985221 and numerical
 4216/birth18993883 confirmed LIVE, including actual GPU use~72,351MiB. Reference
 created09:38:13.615016UTC after original input/model checks. Latest independently
-backed observation completes7/40 TRAIN cases000..006, all passing. First hidden
+backed observation completes8/40 TRAIN cases000..007, all passing. First hidden
 max2.1457672119140625e-05; first logitmax1.5974044799804688e-05, unchanged0.001
 threshold. Whole40 is INCOMPLETE; final parameter/peak checks and BF16/combined
 readiness are still pending. No passing subset grants training approval. Audit
@@ -38,7 +38,7 @@ artifacts independently size/SHA-verified on Mac. Inventory
 2d47b2d03cb2aef66a0b01468dd2b9922b4f71abda92b186aa6fe218b4260f24;
 Mac independent-readback9b01042537b04348d83159f41d94af7c7569092aef00924de85b8d547ec2210c.
 This proves backend COMPONENTS/transport, never learned native routing/voice.
-Docs/NATIVE-CONTROL40-BACKEND-READY-2026-10-23.json has exact details.
+docs/NATIVE-CONTROL40-BACKEND-READY-2026-10-23.json has exact details.
 
 ACTIVE sole local evaluation follow-up20789/session68528, receipt
 runs/local-migration-20261023/native-control40-development-followup-v1.json.
@@ -57,8 +57,8 @@ has started yet. DO NOT submit it manually while waiter20789 is active. Full nat
 speech20 semantic/quiet/pause/receipt/audio review must pass before any fresh40.
 
 Backup92170/session84773 LIVE/watching/successful; use live controller for the exact
-snapshot count. Latest recorded snapshot101229.528376Z contains18 files incl7-case
-numerical progress; inventory502d445cb2ce3300df9c53980df2834bea0f53ea89229899e28aa0f775de0564.
+snapshot count. Latest recorded snapshot20261023T102149.583938Z contains18 files incl8-case
+numerical progress; inventoryfcb3f99e0f03b5064c8044aa6f2e1628e2591332c72086ee25f30fad49d98319.
 Budgetguard73678/session54241 LIVE/armed, maxconservative49.69558350742474USD under
 50USD Runpod compute cap. Deletes owned Pod15:07:37.9UTC retaining volume49yytzyoge.
 Actual retained-volume usage80,131,205,660B; approved100GB size unchanged. Recheck
@@ -69,7 +69,7 @@ backup PARTIAL. No new GPU rental/source repair or unrelated local edit included
 NEXT: keep observing existing full40 audit, never resubmit it. If successful the
 existing chain handles BF16/readiness/new8/fresh restore, then waiter20789 handles
 complete native20/speech20. Inspect actual results and failed waveforms before
-repairs or further training. Current7-case progress and follow-up conditions are
+repairs or further training. Current8-case progress and follow-up conditions are
 in docs/NATIVE-CONTROL40-LIVE-FOLLOWUP-2026-10-23.json. Execution remains LOCAL.
 
 # LOCAL — restoration verified; complete40 numerical RUNNING; new8 automatic behind gates (23 October10:26 London)
