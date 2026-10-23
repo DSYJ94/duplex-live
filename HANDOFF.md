@@ -1,11 +1,11 @@
-# LOCAL —34/40 passing; backend recovered; one GPU job continuing (23 October12:23UTC)
+# LOCAL —36/40 passing; backend recovered; one GPU job continuing (23 October12:28UTC)
 
 NEWEST authoritative operational entry. LOCAL sole executor; goal ACTIVE.
 Actual Pod4yx8vahdmjsylx RUNNING, original controller4111/birth18985221 and
 numerical4216/birth18993883 LIVE. No restart or duplicate submission. Immutable
 GPU source c9efaaac24d983342f7eded46617e6450bc102ce at
 /opt/duplex-control40-c9efaaa-v2. Local dispatcher source5889a33; source main
-e4bcef7 before this verified-wait update. Latest independent Mac backup34/40 cases
+483b9be before this cookbook/progress update. Latest independent Mac backup36/40 cases
 all pass unchanged0.001 thresholds, including original failed029 (text logits
 0.0004820823669433594). Whole40 final parameter/peak checks NOT complete.
 No new optimizer updates, new candidate, extension or adoption.
@@ -25,8 +25,8 @@ Old guard73678 retired. Separate approved100GB storage unchanged.
 
 ACTIVE backup42219/session46974, controller
 runs/local-migration-20261023/native-control40-continuous-copyback-v6/controller.json,
-deadline15:30UTC. Latest inventoryf81c63c8a43776713c48c6708cee5097c96dbc3dec0ffdf63dbf187fa2221906,
-18 files independently verified, including34-case numerical JSON. Old watcher
+deadline15:30UTC. Latest inventorye03f78c2d30b256555da3aa80b8a993229a58d8ef16660fad5591d316e8d5c43,
+18 files independently verified, including36-case numerical JSON. Old watcher
 92170 retired; all prior snapshots preserved. Original67.76GB critical archive
 already verified historically; broader stopped Mac source backup remains PARTIAL.
 No full original archive rehash this turn.
@@ -60,6 +60,12 @@ Execution stays LOCAL; no handoff or new user permission needed.
 Verified-wait evidence: docs/NATIVE-CONTROL40-VERIFIED-WAIT-2026-10-23.json.
 Actual retained-volume usage80,150,787,037B; progress snapshots32,565,499B.
 No quota or storage approval changed. Complete semantic review remains pending.
+
+Cookbook corrected with a dated23 October addendum: actual default0/4 candidate
+versus2/4 parent; archived1/4 each. Historical21 October export unchanged.
+Actual controller commands exported to docs/NATIVE-CONTROL40-PLANNED-RECIPE-2026-10-23.json;
+explicitly unexecuted, not an actual new training report or approval. Broader32
+reasoning and microturn/backchannel data remain unrecorded/untrained.
 
 # LOCAL — guard reconciled within50USD; network recovery in progress (23 October11:50UTC)
 

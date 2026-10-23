@@ -1,6 +1,6 @@
 {
   "schema": "dl-native-control40-live-numerical-and-evaluation-followup-v1",
-  "observed_utc": "2026-10-23T12:21:41.829570+00:00",
+  "observed_utc": "2026-10-23T12:27:54.837067+00:00",
   "execution_source_commit": "c9efaaac24d983342f7eded46617e6450bc102ce",
   "pod_id": "4yx8vahdmjsylx",
   "controller_pid": 4111,
@@ -8,7 +8,7 @@
   "numerical_pid": 4216,
   "numerical_birth": 18993883,
   "numerical_created_utc": "2026-10-23T09:38:13.615016+00:00",
-  "completed_cases": 34,
+  "completed_cases": 36,
   "all_completed_cases_pass": true,
   "complete40": false,
   "whole40_approved": false,
@@ -217,6 +217,18 @@
       "passed": true,
       "hidden_max_error": 2.1457672119140625e-05,
       "logit_max_error": 1.138448715209961e-05
+    },
+    {
+      "id": "native-control3-train-034",
+      "passed": true,
+      "hidden_max_error": 3.0040740966796875e-05,
+      "logit_max_error": 2.6401132345199585e-05
+    },
+    {
+      "id": "native-control3-train-035",
+      "passed": true,
+      "hidden_max_error": 5.841255187988281e-05,
+      "logit_max_error": 4.220008850097656e-05
     }
   ],
   "final_parameter_hash_and_peak_checks_pending": true,
@@ -225,10 +237,10 @@
   "backup": {
     "watcher_pid": 42219,
     "current_successful": true,
-    "snapshots_verified": 4,
-    "latest_inventory_sha256": "f81c63c8a43776713c48c6708cee5097c96dbc3dec0ffdf63dbf187fa2221906",
+    "snapshots_verified": 6,
+    "latest_inventory_sha256": "e03f78c2d30b256555da3aa80b8a993229a58d8ef16660fad5591d316e8d5c43",
     "latest_files": 18,
-    "numerical_progress_sha256": "4eaccf5c3915ff475e4577e6b73a1cf3d10eb5ebfdf370d85aba43406b7d83d4",
+    "numerical_progress_sha256": "215b93f46b48d676f7acdda29dba7870282b63ba7ffa3ddf9349f23045cfb0d2",
     "watcher_session": 46974,
     "path": "runs/local-migration-20261023/native-control40-continuous-copyback-v6",
     "deadline_utc": "2026-10-23T15:30:00Z"
@@ -275,8 +287,10 @@
     "complete_original_archive_rehashed_this_turn": false
   },
   "last_goal_turn": {
-    "classification": "verified_wait",
+    "classification": "progress",
     "exact_original_remote_processes_live_confirmed": true,
+    "dated_cookbook_corrected_from_actual_behavioral_evidence": true,
+    "planned_recipe_exported_from_actual_controller": true,
     "new_gpu_resources": 0,
     "new_optimizer_updates": 0
   },

@@ -1,5 +1,51 @@
 # What we trained, what is saved, and what to test
 
+## 23 October update — current status
+
+There is still no adopted production model. The Runpod A100 comparison has now
+completed for both native520 and native7590052. Under the default runtime,
+native520 answered2/4 ordinary core questions correctly and native7590052 answered
+0/4; both failed quiet/pause and asynchronous task behaviors. The separate archived
+TF32 comparison answered1/4 for each. These results replace the pending-evaluation
+status in the original21 October snapshot below. Full case, speech, receipt and
+waveform evidence remains in the [default review](NATIVE-PAIRED20-DEFAULT-RUNTIME-REVIEW-2026-10-23.json)
+and [archived-runtime review](NATIVE-PAIRED20-ARCHIVE-RUNTIME-REVIEW-2026-10-23.json).
+
+The current repair starts again from native520, with its Adam state. It adds40
+approved control teachers across five families: no release, release with ordinary
+reasoning, distractor before release, pause/resume, and replacement cue. It retains
+all28 original histories, all154 original objectives, all49 existing native teacher
+histories, KL1/hidden10 and the ordinary word/clock anchors. The same1,894,400 adapter
+parameters are eligible for eight updates at planned effective LR2e-7. Each of the
+40 new teachers is scheduled once across those eight updates; five control families
+are represented at each update. The original full model weights remain frozen.
+
+**This new training has not started.** The running pipeline first requires the
+complete40 numerical audit, independent BF16 gradients and combined readiness.
+Then it may train8 updates, independently restore weights/Adam/RNG/native outputs,
+and run the full paired20 native and independent20 speech evaluation. All ten
+candidate conversations need semantic/receipt/audio review and all four ordinary
+core questions must pass before sealed fresh qualification. No successful subset,
+lower loss or exact restore establishes behavioral improvement or convergence.
+The [planned recipe](NATIVE-CONTROL40-PLANNED-RECIPE-2026-10-23.json) contains the
+actual queued commands, clearly separated from a completed training report.
+[Live evidence](NATIVE-CONTROL40-LIVE-FOLLOWUP-2026-10-23.json) and
+[HANDOFF](../HANDOFF.md) carry current process and backup state.
+
+This pilot addresses control behavior; it does not establish the broader objective
+of natural microturns and reliable difficult-reasoning delegation. The additional
+[32-scene reasoning/lifecycle source proposal](../evals/fixtures/native-reasoning-delegation-source-proposal-20261023.json)
+is authored, not recorded, independently approved or trained. Microturn/backchannel
+examples still require their own source and audio annotation protocol. The broader
+[curriculum](NATIVE-INTERACTION-DELEGATION-CURRICULUM-2026-10-22.md) preserves this
+scope. Explicit quiet must override every acknowledgment or filler.
+
+## Original21 October recipe snapshot
+
+The paragraphs and actual recipe export below describe the21 October handoff.
+Their then-pending evaluation has since completed as recorded above. The exported
+historical training report, weights and original failed artifacts are unchanged.
+
 There is no adopted final production model yet. The latest research candidate is
 **native7590052**, a small adapter on the released **Context Spanning DuetaSpan-7B**
 full-duplex speech model, itself based on NVIDIA PersonaPlex/Moshi. The retained
