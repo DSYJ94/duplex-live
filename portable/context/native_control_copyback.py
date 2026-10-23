@@ -1,0 +1,140 @@
+"""Snapshot only this control40 run's outputs and verify incremental Mac backups.
+
+No GPU jobs or provider calls. SSH keys stay local; remote snapshots contain only
+the approved synthetic/derived audit and training output roots listed below.
+"""
+import argparse
+from datetime import datetime, timezone
+import hashlib
+import json
+from pathlib import Path
+import shlex
+import shutil
+import subprocess
+import time
+import os
+
+ROOTS=('native-control40-preflight-v3/numerical','native-control40-supervisor-v4',
+       'native-control40-training-followup-v1')
+FORBIDDEN={'session-token','.private','.env','keys','credentials','core','quarantine'}
+
+
+def sha(path):return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def marker(base):
+    values=[]
+    for name in (ROOTS[0]+'/numerical.json',ROOTS[1]+'/gradient/gradient.json'):
+        path=base/name
+        if path.exists():
+            value=json.loads(path.read_text());values.append([name,len(value['cases']),value.get('passed')])
+    for name in (ROOTS[1]+'/controller.json',ROOTS[2]+'/controller.json'):
+        path=base/name
+        if path.exists():
+            value=json.loads(path.read_text());values.append([name,value['phase']])
+    for name in (ROOTS[2]+'/training/training-state.pt',ROOTS[2]+'/training/report.json',
+                 ROOTS[2]+'/training/reload-report.json',ROOTS[2]+'/combined-readiness/control40-combined-readiness.json'):
+        path=base/name
+        if path.exists():values.append([name,path.stat().st_size,path.stat().st_mtime_ns])
+    return hashlib.sha256(json.dumps(values,separators=(',',':')).encode()).hexdigest()
+
+
+def snapshot(base,last_marker=None):
+    current=marker(base)
+    if current==last_marker:return dict(changed=False,marker=current)
+    stamp=datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S.%fZ')
+    out=base/'native-control40-backup-snapshots'/stamp;out.mkdir(parents=True,exist_ok=False)
+    files=[]
+    for name in ROOTS:
+        folder=base/name
+        if folder.is_symlink() or not folder.resolve().is_relative_to(base.resolve()):
+            raise ValueError('Approved output root must stay inside migration storage')
+        if not folder.is_dir():continue
+        for source in sorted(folder.rglob('*')):
+            relative=source.relative_to(base)
+            if (source.is_symlink() or not source.is_file() or source.suffix in ('.tmp','.partial','.lock')
+                    or FORBIDDEN.intersection(relative.parts) or source.name.endswith('.core')
+                    or source.name.startswith('core.')):continue
+            if not source.resolve().is_relative_to(folder.resolve()):raise ValueError('Output escaped approved root')
+            # Mutable logs/JSON are explicitly a progress snapshot. An atomic
+            # training-state rename leaves the opened old/new inode intact.
+            target=out/relative;target.parent.mkdir(parents=True,exist_ok=True)
+            with source.open('rb') as a,target.open('xb') as b:shutil.copyfileobj(a,b)
+            files.append(dict(path=str(relative),bytes=target.stat().st_size,sha256=sha(target)))
+    manifest=dict(schema='dl-native-control40-progress-backup-inventory-v1',at_utc=stamp,
+                  marker=current,files=files,source_roots=list(ROOTS),
+                  live_progress_snapshot=True,not_a_training_or_behavior_approval=True,
+                  symlinks_credentials_owner_conversations_and_cores_excluded=True)
+    inventory=out/'inventory.json';inventory.write_text(json.dumps(manifest,indent=2)+'\n')
+    return dict(changed=True,marker=current,snapshot=str(out),inventory_sha256=sha(inventory),files=len(files))
+
+
+def verify(root,expected):
+    inventory=root/'inventory.json'
+    if sha(inventory)!=expected:raise ValueError('Changed backup inventory')
+    value=json.loads(inventory.read_text())
+    seen=set()
+    for row in value['files']:
+        name=Path(row['path']);p=root/name
+        if (name.is_absolute() or '..' in name.parts or str(name) in seen or p.is_symlink()
+                or not p.resolve().is_relative_to(root.resolve())
+                or p.stat().st_size!=row['bytes'] or sha(p)!=row['sha256']):
+            raise ValueError('Missing, changed or unsafe local evidence copy')
+        seen.add(str(name))
+    if not seen:raise ValueError('Empty evidence backup')
+    return len(seen)
+
+
+def main():
+    p=argparse.ArgumentParser(description=__doc__)
+    p.add_argument('--remote-snapshot',action='store_true');p.add_argument('--last-marker')
+    p.add_argument('--source-commit',required=True)
+    for n in ('key','known-hosts','remote-source','out'):p.add_argument('--'+n,type=Path)
+    p.add_argument('--deadline-utc');a=p.parse_args()
+    source=Path(__file__).resolve().parents[2]
+    if a.remote_snapshot:
+        if (subprocess.check_output(['git','-C',str(source),'rev-parse','HEAD'],text=True).strip()!=a.source_commit
+                or subprocess.check_output(['git','-C',str(source),'status','--porcelain'],text=True).strip()):
+            raise ValueError('Exact clean committed backup source required')
+        print(json.dumps(snapshot(Path('/workspace/migration'),a.last_marker)));return
+    if not all((a.key,a.known_hosts,a.remote_source,a.out,a.deadline_utc)):
+        p.error('Local copyback requires exact SSH paths, output and finite deadline')
+    deadline=datetime.fromisoformat(a.deadline_utc.replace('Z','+00:00')).timestamp()
+    if not time.time()+60<deadline<time.time()+12*3600:raise ValueError('Bounded future backup interval required')
+    a.out.mkdir(parents=True,exist_ok=False)
+    ssh=['ssh','-i',str(a.key),'-p','16728','-o','IdentitiesOnly=yes','-o','BatchMode=yes',
+         '-o','ConnectTimeout=10','-o','StrictHostKeyChecking=yes','-o','UserKnownHostsFile='+str(a.known_hosts)]
+    host='root@157.157.221.29';last=None
+    status=dict(schema='dl-native-control40-copyback-watch-v1',pid=os.getpid(),source_commit=a.source_commit,
+                deadline_utc=a.deadline_utc,phase='starting',snapshots=[],changes_to_remote_jobs=False)
+    def save():
+        status['at_utc']=datetime.now(timezone.utc).isoformat()
+        temp=a.out/'controller.partial';temp.write_text(json.dumps(status,indent=2)+'\n');temp.replace(a.out/'controller.json')
+    save()
+    while time.time()<deadline:
+        try:
+            command=['env','PYTHONDONTWRITEBYTECODE=1','python3',str(a.remote_source/'portable/context/native_control_copyback.py'),
+                     '--remote-snapshot','--source-commit',a.source_commit]
+            if last:command+=['--last-marker',last]
+            result=subprocess.run(ssh+[host,shlex.join(command)],check=True,capture_output=True,text=True,timeout=90)
+            info=json.loads(result.stdout)
+            if info['changed']:
+                remote=Path(info['snapshot'])
+                if remote.parent!=Path('/workspace/migration/native-control40-backup-snapshots'):
+                    raise ValueError('Unexpected remote snapshot root')
+                target=a.out/remote.name
+                subprocess.run(['rsync','-ar','--exclude=session-token','--no-owner','--no-group',
+                                '-e',shlex.join(ssh),host+':'+str(remote)+'/',str(target)+'/'],
+                               check=True,capture_output=True,text=True,timeout=120)
+                count=verify(target,info['inventory_sha256'])
+                status['snapshots'].append(dict(path=str(target),files=count,inventory_sha256=info['inventory_sha256']))
+                last=info['marker']
+            status.update(phase='watching',last_marker=last,last_check_succeeded=True);save()
+        except (subprocess.SubprocessError,OSError,ValueError) as error:
+            status.update(phase='retrying',last_check_succeeded=False,error_type=type(error).__name__)
+            save()
+        time.sleep(min(120,max(0,deadline-time.time())))
+    status['phase']='deadline_reached';save()
+
+
+if __name__=='__main__':main()
