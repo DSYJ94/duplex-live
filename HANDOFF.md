@@ -1,3 +1,31 @@
+# LOCAL — distinct full40 reference prepared, NOT deployed or approved (23 October07:03 London)
+
+LOCAL sole executor; goal ACTIVE. Prospective evals/native_control_numerical_precise.py
+adds distinct schema dl-native-control40-numerical-fp64-attention-v2. It preserves
+EXACT original40 run calculation except explicit independent attention FP64 and
+reference-only exact FP64 cast reuse (20GiB). Structural AST comparison verifies
+all original40 calls, frames, masks, target positions/counts, text/audio losses,
+causality, alignment, depth checks, unchanged0.001 and parameter immutability. Red
+mutation checks detect subset, mask and tolerance edits.14 focused CPU tests pass;
+its original-failure gate accepts the ACTUAL backed-up immutable40 failure SHAea78...
+and exact original Engine report. Original numerical/reference modules unchanged.
+
+This source is PREPARATION ONLY: no GPU deployment/run, no complete40 result, and
+existing native_control_gradient.numerical_gate does NOT accept its new schema.
+Do not pass it off as numeric/training approval. Wait for actual diagnostic8805:
+if it supports precision repair, independently review/enable strict new-profile
+consumer preserving original failure/code/Engine/parent bindings, run NEW complete40
+then all40 BF16 gradients and complete154/native49/control40 readiness before8updates.
+If it does not, diagnose the actual result; do not launch an unhelpful full repeat.
+The entrypoint requires exact clean executionGit, idle GPU, bounded SIGALRM deadline,
+full frozenworkset source and immutable input verification; no optimizer/newcheckpoint.
+
+Actual8805 was reverified live at06:02UTC, still model loading, GPU16,868MiB, original
+06:15UTC deadline intact. Do not duplicate it. Successful actualprepared49 loader
+CPU213.148s and all source/backup receipts stay as preceding entry. Guard55922 and
+copyback89251 active, unchanged harddelete09:14:52.804UTC/projectupper41.846USD. No
+new candidate, optimizer updates, training controller, resource or extension.
+
 # LOCAL — actual prepared49 loader preflight PASSED and backed up (23 October06:58 London)
 
 LOCAL sole executor, goal ACTIVE. Latest functional pushed source547b516; actual

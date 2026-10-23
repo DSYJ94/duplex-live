@@ -547,5 +547,20 @@
     "default_cached_GiB": 20,
     "production_or_training_execution_changed": false,
     "GPU_deployed_or_approved": false
+  },
+  "prospective_precise_reference": {
+    "source": "evals/native_control_numerical_precise.py",
+    "schema": "dl-native-control40-numerical-fp64-attention-v2",
+    "deployed": false,
+    "GPU_started": false,
+    "training_approval_consumer_enabled": false,
+    "requires_original_failed_report_sha256": "ea78de49685707fdae3e5b7dbc1d92ff0ddd3860699e23f152d5b7579c300a3b",
+    "all40_math_calls_inputs_masks_targets_causality_depth_and_threshold_AST_identical": true,
+    "CPU_tests_passed": 14,
+    "actual_failed40_and_Engine_binding_verified": true,
+    "changes_reference_attention_precision_only": true,
+    "production_BF16_unchanged": true,
+    "threshold": 0.001,
+    "requires_complete_new40_and_separate_BF16_gradient_approval": true
   }
 }
