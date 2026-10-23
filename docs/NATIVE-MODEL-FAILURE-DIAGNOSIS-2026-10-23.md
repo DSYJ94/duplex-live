@@ -6,6 +6,21 @@ control40 repair has not made an optimizer update. Its full numerical and indepe
 combined retained-objective readiness is running. Passing numerical/gradient checks establishes
 implementation readiness, not answer correctness or interaction quality.
 
+## Live progress — 23 October21:48UTC
+
+Still0new native updates. Numerical40 and BF16 gradient40 passed; retained-history
+readiness33/49 is live, with all completed native hashes exact. The same CUDA child
+was preserved under a new waiting supervisor without source/loss/data changes.
+Raw reasoning32 capture is complete, but original independent speech fails29/32;
+new waveform-only recognition-region audit is25/32 complete on Runpod CPU. The
+first timing error improves from nearly7s early to20ms near original onset; this
+is recognition timing evidence, not native capability improvement. Actual001 was
+also genuinely truncated: one new complete capture and separate corrected readback
+fit973frames and match actual backend/oracle state. Independent speech/semantic
+qualification and whole32 reapproval remain outstanding. A separate profiled CPU
+verifier exited-11; crash cause is unresolved, original checks remain unchanged.
+These data/recorder defects do not isolate the older native7590052 regression.
+
 ## Concrete repair and what remains unproven — 23 October17:10UTC
 
 There is no single demonstrated cause of the latest ordinary-answer regression.

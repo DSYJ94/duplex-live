@@ -1,0 +1,415 @@
+{
+  "schema": "dl-native-reasoning32-speech-cutoff-progress-v1",
+  "at_utc": "2026-10-23T21:47:35.783967+00:00",
+  "source_before_documentation": "baf6091e229054e933b25ba9ec7729a21de0b892",
+  "executor": "LOCAL only",
+  "native_new_optimizer_updates": 0,
+  "model_improvement_claimed": false,
+  "source_commits": {
+    "raw_v6": "f3eb0d68b5093a9947964eecd1f267a748e9f32f",
+    "independent_regions": "6aff221203fdd0b06b3bc337af0038afda24b1bf",
+    "cutoff_probe": "c056dde4544dd553e71039f20b3d98a57b2bebc1",
+    "independent_readback": "28fe2df0256a3985ba973e94dcf92966e706a2ed",
+    "speech_followup": "3ba0cb1082fdadb488512a13ae30d3c716c3ca84",
+    "semantic_reviewer": "7de744992cdc32349f5da38320cda04902b81f8e"
+  },
+  "current_jobs": {
+    "at_utc": "2026-10-23T21:47:35.783967+00:00",
+    "processes": {
+      "61857": {
+        "state": "S",
+        "birth": 23402235
+      },
+      "21063": {
+        "state": "T",
+        "birth": 20582160
+      },
+      "41540": {
+        "state": "R",
+        "birth": 22014818
+      },
+      "57732": {
+        "state": "S",
+        "birth": 23162581
+      },
+      "57733": {
+        "state": "R",
+        "birth": 23162602
+      },
+      "62117": {
+        "state": "S",
+        "birth": 23428614
+      },
+      "62171": {
+        "state": "S",
+        "birth": 23432868
+      }
+    },
+    "native_controller": {
+      "pid": 61857,
+      "phase": "combined_readiness",
+      "source_commit": "c9efaaac24d983342f7eded46617e6450bc102ce",
+      "deadline_utc": "2026-10-23T23:15:00+00:00",
+      "passed": false,
+      "optimizer_update_limit": 8
+    },
+    "native_stage_exits": [
+      {
+        "name": "whole_workset",
+        "exit_code": 0,
+        "pid": 4122
+      },
+      {
+        "name": "complete40_precise_numerical",
+        "exit_code": 0,
+        "pid": 4216
+      },
+      {
+        "name": "complete40_independent_BF16_gradient",
+        "exit_code": 0,
+        "pid": 14873
+      },
+      {
+        "name": "combined_readiness",
+        "exit_code": null,
+        "pid": 41540
+      }
+    ],
+    "native49_completed": 33,
+    "all_logged_exact_native_hashes": true,
+    "speech": {
+      "complete": 25,
+      "expected": 32,
+      "training_approved": false
+    },
+    "lineage": {
+      "pid": 62117,
+      "birth": 23428614,
+      "phase": "recomputing_complete_failed32",
+      "passed": false,
+      "staged_root": "/tmp/duplex-reasoning32-verifier-v1",
+      "checks_or_thresholds_changed": false,
+      "profiling_or_trace_instrumentation": false,
+      "at_utc": "2026-10-23T21:44:30.868773+00:00",
+      "verifier_pid": 62118,
+      "verifier_birth": 23428652
+    },
+    "speech_followup": {
+      "schema": "dl-native-reasoning32-speech-only-followup-v1",
+      "pid": 62171,
+      "source_commit": "3ba0cb1082fdadb488512a13ae30d3c716c3ca84",
+      "upstream_pid": 57732,
+      "upstream_birth": 23162581,
+      "phase": "waiting_for_exact_cpu_audit_and_staged_lineage",
+      "training_approved": false,
+      "provider_requests": 0,
+      "recognition_restarted": false,
+      "optimizer_updates": 0,
+      "at_utc": "2026-10-23T21:45:13.471140+00:00"
+    },
+    "speech_actual_exit": null,
+    "full_native49_receipt": false,
+    "full_combined_receipt": false
+  },
+  "raw_complete32_manifest_sha256": "a958eac2d5b2634d62010be3b35bd48e996ea5d1607ec79aa3b086256770ec5a",
+  "original_whole_speech_audit": {
+    "complete": 32,
+    "passed": 3,
+    "entire_collection_failed": true,
+    "terminal_session": 25088,
+    "actual_exit": 1,
+    "preserved": true
+  },
+  "cutoff_component": {
+    "original_terminal_session": 49215,
+    "actual_exit": 1,
+    "failure": "NameError in added readback: transcripts not loaded",
+    "original_failure_preserved": true,
+    "independent_readback": {
+      "schema": "dl-native-reasoning32-cutoff-independent-readback-v1",
+      "at_utc": "2026-10-23T21:15:33.124936+00:00",
+      "source_commit": "28fe2df0256a3985ba973e94dcf92966e706a2ed",
+      "code_sha256": "acae52027a3f622a78c6d771453e0fd9bf444de8e9b6802cf6cba599bbd0ab62",
+      "original_failed_component_sha256": "82755a0d7bdeaf1d2e88e40a120a3820b4a452aefa6d70a8f276f16190976884",
+      "raw_recording_canonical_sha256": "254f65fd2a9e9f83fc2560da52357f4662182dc1cc36416bc84227ed3572113c",
+      "original_recording_code_hashes": {
+        "native_reasoning_teacher_v7.py": "1d8eb3a5a181ef59bf923d483ae32180ef388f62178a332a0eadd0b00868fc42",
+        "native_reasoning_stream_v6.py": "4d119694a9adf099e0546174f3f2e622127a2cab003598d37abe87d947ba518d",
+        "native_reasoning_lifecycle_v3.py": "6f184fe1083073d8077b602e3b2b62a17b3c39160d78d44846acb7a27b7f8fe0",
+        "native_reasoning_lifecycle_v2.py": "1cf30118ed0a263ec8817570104b058e660da3e4a0b92e3f8eac0ddbd8278f77",
+        "native_reasoning_teacher.py": "ed43bb76ef91cc10e78cbb8bfa55e02ffe0b1f5c2626b46159f37482e83b53f2",
+        "native_reasoning_backend.py": "96b7bc4fec8fa6f4ccc5a4ba29b027a5882fc928ebc1d9bde6c3de85ea2a430e",
+        "native_reasoning_lifecycle.py": "c3e21154357e297ca35a25855c382ae2faf9a6046154de2c3789a94da387d0f1",
+        "native_reasoning_source_pacing.py": "cb96eb4b0df316d3f118c054b2f23b87029fcee8f8760a27c50011c86890cbdf",
+        "native_reasoning_source_quality_v4.py": "6125af26515b455cf911129ca12a35038f1b9ba0c58bd105b8a46b035d122035",
+        "native_reasoning_teacher_cutoff_probe.py": "3e7e861b280738a139c6191a2da73edcdb399aa11689e0c08d83af3a4d528dc3"
+      },
+      "original_failure_and_files_unchanged": true,
+      "complete_actual_transport_and_quiescent_output": true,
+      "full_frame_budget": {
+        "prefix_frames": 232,
+        "full_measured_real_frames": 717,
+        "actual_sent_context_spans": [
+          {
+            "task_id": "item_EcGqOICAFFEEhBnj3qVcR",
+            "frames": 24
+          }
+        ],
+        "full_measured_prefix_live_and_span_frames": 973,
+        "unchanged_frame_limit": 1100,
+        "frame_count_diagnostic_pass": true,
+        "complete_native_assembly_and_numerical_approval": false,
+        "original_audio_cropped": false
+      },
+      "actual_lifecycle_diagnostic": {
+        "id": "native-reasoning4-train-001",
+        "family": "delegate-reasoning",
+        "native_requests": 1,
+        "structural_pass": true,
+        "reasons": [],
+        "independent_output_audio_and_spoken_semantics_still_required": true,
+        "task_states": {
+          "item_EcGqOICAFFEEhBnj3qVcR": {
+            "phase": "wire_sent",
+            "cancelled": false,
+            "provider_finished_at_s": 43.875068791996455,
+            "wire_write_completed_at_s": 50.079131584003335,
+            "operation": "respond_to_user"
+          }
+        }
+      },
+      "additional_provider_requests": 0,
+      "independent_speech_and_spoken_semantics_still_required": true,
+      "whole32_approved": false,
+      "teacher_approved": false,
+      "training_approved": false
+    },
+    "backup": {
+      "destination": "/workspace/migration/native-reasoning32-cutoff001-v7-preserved-v1",
+      "volume_id": "49yytzyoge",
+      "files": 17,
+      "bytes": 13670614,
+      "inventory_sha256": "9ad2c239e2a8559180e9f07227adf4cff3197e342db35b921b5effd8a99a4f9b",
+      "all_regular_size_sha256_match": true
+    },
+    "additional_readback_provider_requests": 0
+  },
+  "failed_audit_backup": {
+    "files": 37,
+    "bytes": 4251496,
+    "all_sizes_sha256_match": true,
+    "files_bound": [
+      {
+        "path": "/workspace/migration/native-reasoning32-teacher-speech-v6-original-audit-preserved-v1/native-reasoning4-train-000-asr.json",
+        "bytes": 708,
+        "sha256": "8345522c44eaba850079531275b7c18a2bc7be10b9aa2a06022830675d36b5b9"
+      },
+      {
+        "path": "/workspace/migration/native-reasoning32-teacher-speech-v6-original-audit-preserved-v1/native-reasoning4-train-001-asr.json",
+        "bytes": 1436,
+        "sha256": "52083ffc97386784010e848c9a331f475951000d323b6039055e5861bdcc2487"
+      },
+      {
+        "path": "/workspace/migration/native-reasoning32-teacher-speech-v6-original-audit-preserved-v1/native-reasoning4-train-002-asr.json",
+        "bytes": 4395,
+        "sha256": "564c92c976afa90cb618260cf84ef4a13eb51cdba6fa59461f84502d44aac105"
+      },
+      {
+        "path": "/workspace/migration/native-reasoning32-teacher-speech-v6-original-audit-preserved-v1/native-reasoning4-train-003-asr.json",
+        "bytes": 5811,
+        "sha256": "02929de4b3b55adac401e088bed259d215478a01778d2cd7be7efb46ae9c0d6f"
+      },
+      {
+        "path": "/workspace/migration/native-reasoning32-teacher-speech-v6-original-audit-preserved-v1/native-reasoning4-train-004-asr.json",
+        "bytes": 726,
+        "sha256": "de2d6a5ce7902083d8213538fa009042cf0cbe3e354ed5fc8dbd5d7508c97f9d"
+      },
+      {
+        "path": "/workspace/migration/native-reasoning32-teacher-speech-v6-original-audit-preserved-v1/native-reasoning4-train-005-asr.json",
+        "bytes": 6357,
+        "sha256": "acd8fd7f991c500ce8ce39217aedf7773e49fd533f0a535c666404fffdaa91b6"
+      },
+      {
+        "path": "/workspace/migration/native-reasoning32-teacher-speech-v6-original-audit-preserved-v1/native-reasoning4-train-006-asr.json",
+        "bytes": 4652,
+        "sha256": "d5396040b096915217f53ff7961fe35643d80b606a29d973431316a4bf50a0d4"
+      },
+      {
+        "path": "/workspace/migration/native-reasoning32-teacher-speech-v6-original-audit-preserved-v1/native-reasoning4-train-007-asr.json",
+        "bytes": 5311,
+        "sha256": "15252575614992940aecc482896f859d7107b4f08db5f7d202f1942cf1fbd88d"
+      },
+      {
+        "path": "/workspace/migration/native-reasoning32-teacher-speech-v6-original-audit-preserved-v1/native-reasoning4-train-008-asr.json",
+        "bytes": 742,
+        "sha256": "1e3a8f0945bd41d9907d381a31bb188b1c489130427c651ac410155e87cd8ad2"
+      },
+      {
+        "path": "/workspace/migration/native-reasoning32-teacher-speech-v6-original-audit-preserved-v1/native-reasoning4-train-009-asr.json",
+        "bytes": 4579,
+        "sha256": "008e097c5d339165a3597c9c415a05840052cfd670713759eb38ceabe17f275b"
+      },
+      {
+        "path": "/workspace/migration/native-reasoning32-teacher-speech-v6-original-audit-preserved-v1/native-reasoning4-train-010-asr.json",
+        "bytes": 14525,
+        "sha256": "10921b3fb17b324f60a624d583a7d3a8ef51adaadd32ee94ce979da62a8c5495"
+      },
+      {
+        "path": "/workspace/migration/native-reasoning32-teacher-speech-v6-original-audit-preserved-v1/native-reasoning4-train-011-asr.json",
+        "bytes": 6023,
+        "sha256": "52787493090f6c373e93cba75bf6b0b09fc5b139fd89872acd51b1f52ffba67d"
+      },
+      {
+        "path": "/workspace/migration/native-reasoning32-teacher-speech-v6-original-audit-preserved-v1/native-reasoning4-train-012-asr.json",
+        "bytes": 708,
+        "sha256": "cb335a5c8f92b64b6ab70c43ed63a62089a0af99b677f57c0ace8fdf30b08148"
+      },
+      {
+        "path": "/workspace/migration/native-reasoning32-teacher-speech-v6-original-audit-preserved-v1/native-reasoning4-train-013-asr.json",
+        "bytes": 2442,
+        "sha256": "6e02437a288bf9d3fb24e910bba27bbf0437e46e5f4edb3fdc153c08df1b0c7a"
+      },
+      {
+        "path": "/workspace/migration/native-reasoning32-teacher-speech-v6-original-audit-preserved-v1/native-reasoning4-train-014-asr.json",
+        "bytes": 6615,
+        "sha256": "151a42f84819f5e6d5d7710c6105163c857a6b866fb90687fd5abcf0d691c884"
+      },
+      {
+        "path": "/workspace/migration/native-reasoning32-teacher-speech-v6-original-audit-preserved-v1/native-reasoning4-train-015-asr.json",
+        "bytes": 4591,
+        "sha256": "b1eb3e7e45a3b1230b1eb8390e39ab03730bb76122503561ca9820423fefbb2b"
+      },
+      {
+        "path": "/workspace/migration/native-reasoning32-teacher-speech-v6-original-audit-preserved-v1/native-reasoning4-train-016-asr.json",
+        "bytes": 574,
+        "sha256": "be89592a5669cdc7dba9fb9a09cec81663ce919e4dd5e02c758b25d1f7ca64f1"
+      },
+      {
+        "path": "/workspace/migration/native-reasoning32-teacher-speech-v6-original-audit-preserved-v1/native-reasoning4-train-017-asr.json",
+        "bytes": 4134,
+        "sha256": "1cec1f3ff681094f4f23164c0ac65e326aac5b8138279f95edefe39bff8b11bb"
+      },
+      {
+        "path": "/workspace/migration/native-reasoning32-teacher-speech-v6-original-audit-preserved-v1/native-reasoning4-train-018-asr.json",
+        "bytes": 18922,
+        "sha256": "27feae00d8a9b60660aff9426bb4bb5c0edd325d5fc0648a389fb276e6952f9d"
+      },
+      {
+        "path": "/workspace/migration/native-reasoning32-teacher-speech-v6-original-audit-preserved-v1/native-reasoning4-train-019-asr.json",
+        "bytes": 4993,
+        "sha256": "67cdd7bd5a9d3448208f29e32ce207e5ee262e4a6a2132785369f61cf8c9e8ab"
+      },
+      {
+        "path": "/workspace/migration/native-reasoning32-teacher-speech-v6-original-audit-preserved-v1/native-reasoning4-train-020-asr.json",
+        "bytes": 728,
+        "sha256": "4e7353eb6a6db678d1cdc5e3ee689a12055c7120f92b7cc2ff3a67c125bf9588"
+      },
+      {
+        "path": "/workspace/migration/native-reasoning32-teacher-speech-v6-original-audit-preserved-v1/native-reasoning4-train-021-asr.json",
+        "bytes": 5946,
+        "sha256": "195d0ff81d6a62a7ee59503aa5b76886b2d66f773d724e04682f2fec10e976ce"
+      },
+      {
+        "path": "/workspace/migration/native-reasoning32-teacher-speech-v6-original-audit-preserved-v1/native-reasoning4-train-022-asr.json",
+        "bytes": 20428,
+        "sha256": "52aed5b678cbbd52ef2b88417b3ce5c5d5efd0b0376d659104dc2a87444f4757"
+      },
+      {
+        "path": "/workspace/migration/native-reasoning32-teacher-speech-v6-original-audit-preserved-v1/native-reasoning4-train-023-asr.json",
+        "bytes": 5501,
+        "sha256": "d410c6e9b4d87d4cf6e9859766c7ecffc16fedce48fa981882cbf9ded3f95b3e"
+      },
+      {
+        "path": "/workspace/migration/native-reasoning32-teacher-speech-v6-original-audit-preserved-v1/native-reasoning4-train-024-asr.json",
+        "bytes": 890,
+        "sha256": "a464ae3f1a91cf12f0a780dc1a213885a2a1a87806275bd43f52c23dc7e79dc5"
+      },
+      {
+        "path": "/workspace/migration/native-reasoning32-teacher-speech-v6-original-audit-preserved-v1/native-reasoning4-train-025-asr.json",
+        "bytes": 2593,
+        "sha256": "1bc7f47f368ba80f98810e13634624d9ce7f23bea3978033dec75ea86703eaf7"
+      },
+      {
+        "path": "/workspace/migration/native-reasoning32-teacher-speech-v6-original-audit-preserved-v1/native-reasoning4-train-026-asr.json",
+        "bytes": 3801,
+        "sha256": "d36b4673f135cb7a820541dbf17be4c2545e562b07fb5e027618117879d61efb"
+      },
+      {
+        "path": "/workspace/migration/native-reasoning32-teacher-speech-v6-original-audit-preserved-v1/native-reasoning4-train-027-asr.json",
+        "bytes": 5997,
+        "sha256": "43bd6bfc7520e6f63f10644f0ee0dece533aa53a49a15593e30b4881117b756b"
+      },
+      {
+        "path": "/workspace/migration/native-reasoning32-teacher-speech-v6-original-audit-preserved-v1/native-reasoning4-train-028-asr.json",
+        "bytes": 557,
+        "sha256": "5ff3d5430adc377665955b108bc8a066400ffbb20d816ce990309338fec799f5"
+      },
+      {
+        "path": "/workspace/migration/native-reasoning32-teacher-speech-v6-original-audit-preserved-v1/native-reasoning4-train-029-asr.json",
+        "bytes": 4590,
+        "sha256": "2054ab2064332f048dfb943e13a15cad70c965d1ae45e3ea4057925a77a8f678"
+      },
+      {
+        "path": "/workspace/migration/native-reasoning32-teacher-speech-v6-original-audit-preserved-v1/native-reasoning4-train-030-asr.json",
+        "bytes": 13155,
+        "sha256": "5c237a3458725ddab670a63e5e679751b7e433a3e81152a5acea2ae98dcb808f"
+      },
+      {
+        "path": "/workspace/migration/native-reasoning32-teacher-speech-v6-original-audit-preserved-v1/native-reasoning4-train-031-asr.json",
+        "bytes": 5213,
+        "sha256": "379d91f4f57d44fa82ea5da9960f979a96c095461a62cb298848eb20a252cfbf"
+      },
+      {
+        "path": "/workspace/migration/native-reasoning32-teacher-speech-v6-original-audit-preserved-v1/progress.json",
+        "bytes": 101,
+        "sha256": "92c6d0215288a675f01964212612bd5fc208cdbc90998742bd6d7770e48bded1"
+      },
+      {
+        "path": "/workspace/migration/native-reasoning32-teacher-speech-v6-original-audit-preserved-v1/teacher-speech-quality.json",
+        "bytes": 117741,
+        "sha256": "d8301519720865a154037cfe02b2ce38a78f8132690cd5dddb8b7478991bcc34"
+      },
+      {
+        "path": "/workspace/migration/native-reasoning32-asr-shared-inputs-v1/engine-inputs.json",
+        "bytes": 3404389,
+        "sha256": "8e14b636983ba4db9e31ca1179b00516383d8ccb5e56acc19d3b57e34b593d7e"
+      },
+      {
+        "path": "/workspace/migration/native-reasoning32-asr-shared-inputs-v1/tokenizer_spm_32k_3.model",
+        "bytes": 552778,
+        "sha256": "78d4336533ddc26f9acf7250d7fb83492152196c6ea4212c841df76933f18d2d"
+      },
+      {
+        "path": "/workspace/migration/native-reasoning32-asr-shared-inputs-v1/native-reasoning32-teacher-speech-region-plan-v2.json",
+        "bytes": 8844,
+        "sha256": "22348769e734c27f46230aa58a601ff2920f196986ca109d65d16fa9a10ffac7"
+      }
+    ]
+  },
+  "remote_verifier_failures": {
+    "network_storage_timeout_seconds": 260,
+    "local_disk_timeout_seconds": 240,
+    "profiled_verifier_actual_exit": -11,
+    "no_core_dump_transferred": true,
+    "cause_of_crash_unproven": true,
+    "confirmed_stack_hot_path": "Repeated nested full source hashing/peak/ASR-verdict validation under per-record source_manifest; profiling stack evidence retained on volume"
+  },
+  "semantic_review": {
+    "prepared_and_six_offline_tests_passed": true,
+    "actual_requests": 0,
+    "requires_all32_speech_pass": true,
+    "source_oracles_in_payload": false
+  },
+  "native_training_adoption_or_whole_teacher_approval": false,
+  "mac_policy": {
+    "no_new_heavy_speech_inference": true,
+    "no_os_power_priority_or_affinity_changes": true,
+    "future_active_synthetic_spools": "Prefer /private/tmp with canonical repository collection lock held across capture and archival; no new spooling implementation deployed"
+  },
+  "next_actions": [
+    "Monitor same live native41540 and never resume21063 or nest another takeover while it is live",
+    "Complete unchanged32 ASR and uninstrumented full failed-audit reverification62117/62118; speech-only62171 gates finalization",
+    "Preserve all derived verdicts; repair only diagnosed failed teacher clips using new version and full32 recomputation, including immutable new001 component if independently qualified",
+    "All32 semantic/conversion/native numerical and gradient approvals remain required before adding reasoning32 to native training; current C9 control40 pilot chain remains unchanged"
+  ]
+}

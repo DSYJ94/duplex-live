@@ -1,3 +1,115 @@
+# LOCAL — native33/49 preserved; speech25/32 remote; no new updates (23 October21:48UTC)
+
+Goal turn PROGRESS: versioned whole32 speech-region audit deployed through Git,
+actual diagnosed cutoff001 recapture, independent corrected readback, verified
+backups, tested fail-closed semantic reviewer and preservation of the SAME CUDA
+readiness process. LOCAL sole executor; goal ACTIVE. Main before this doc commit
+baf6091e229054e933b25ba9ec7729a21de0b892. No model adoption or native performance improvement.
+No new GPU, payment, training-recipe/loss/gate changes; unrelated local edits excluded.
+
+AUTHORITATIVE GPU21:47:35UTC: supervisor61857/birth23402235S, readiness41540/
+birth22014818R, original parent21063/birth20582160T. C9 execution source remains
+c9efaaac24d983342f7eded46617e6450bc102ce; orchestration738bb25e56b79aed13acf4c5b3577f926391f81a.
+Combined readiness33/49 rows, all exact native forward hashes; final49/combined40
+receipts absent,0new optimizer updates. Numerical40 and independent gradient40
+PASSED. Whole original154/native49/control40 ->ONE8from520 ->independent Adam/RNG/
+native restore+strict proof ->complete native20/speech20/all4ordinary ->eligible
+sealedfresh40 remains REQUIRED. No subset, loss/mask change or gate weakening.
+
+Preservation transition21:40:06: waiting42932 retired terminal via scoped SIGKILL
+AFTER exact PID/birth/parent/commands/ancestor/GPU-owner preflight. This specifically
+avoided its finally handler resuming expired21063. Original21063 NEVER resumed;
+its older4111 already terminal. Same41540 continued uninterrupted. Existing committed
+738 orchestration now directly waits21063/41540 under new v5-adoption controller,
+deadline23:15UTC within UNCHANGED cost guard23:22:37.9UTC. All seven original C9
+commands identical. Do NOT resume21063 or nest another takeover while it is live;
+inherited retired flag does not prove actual immediate-parent retirement.
+New correct observer /private/tmp/duplex-native-current-observer-v5.py; older v4
+reads retired42932. v5/training ->v3/training ->v2/training, so proof output unchanged.
+Transition/preflight receipts plus verified state are in docs/NATIVE-CONTROL40-READINESS-PRESERVATION-V5-2026-10-23.json.
+
+Evaluator98191/session1702 actually EXIT130 while only waiting; no eval launched.
+Replacement81214/session38271 plan/status development-followup-v7 waits61857/birth
+23402235 and ALL7 actual exit0 + supervisor ended before launch. Latest launch22:37,
+full eval deadline23:17 unchanged; it cannot waive the full window or adopt. Existing
+budget guard16271, proxy95444 and copyback95445 confirmed alive/nice0/0%CPU21:23.
+Copyback session36808/v8 to23:20; proxy28664/v5Mac50258 to23:19, tunnel81044 remote18791.
+Backend16/128 aggregate112remain, teacher API separate. Guard82942 deletes sole Pod
+4yx8vahdmjsylx23:22:37.9 and retains49yytzyoge. Latest wallet21:18:29$6.5719582667,
+account1.814/h/autopayFalse;100USDcap; specific20USDtopup remains pending/no purchase.
+At measured pace full readiness/pilot/evaluation may not all fit; do not promise ETA.
+
+RAW TEACHERS: V6 collection49445 actual EXIT0/full32, sourcef3eb0d68b5093a9947964eecd1f267a748e9f32f,
+manifest a958eac2d5b2634d62010be3b35bd48e996ea5d1607ec79aa3b086256770ec5a.
+Full1591files1,125,643,329B remote SHA PASS inventory11909117962926a5e3b2fb34908627ebd4ef3bfe4bf3dd6041225ceb8001a8bc.
+Original whole32 independent speech25088 actual EXIT1,3/32pass; collection FAILED.
+All34 audit files +3 pinned inputs37files4,251,496B remotely rehashed/preserved.
+No source waveform, reference words, held-out hashes or original audit changed.
+
+New speech method6aff221203fdd0b06b3bc337af0038afda24b1bf: same pinned Whisper turbo,
+beam5/best5/temp0/FP32, waveform-only20ms RMS>.001 regions,160ms pad,merge1s;
+recognizer16k COPY only, API maps clocks back to originals. Original24k waveforms/
+full frames/peak.995/WER.05/onset200ms gates unchanged; no reference words in worker
+plan. ALL32 independently rerun, no passing subset. Actual000 alignment repaired
+from6.96s early to20ms near onset; this is diagnostic, not whole-corpus approval.
+CPU-only supervisor57732/birth23162581S and worker57733/birth23162602R,25/32 at21:47,
+no actual exit receipt yet. Output /workspace/migration/native-reasoning32-teacher-speech-v6-regions-v2;
+control suffix-control. Source /tmp/duplex-reasoning32-asr-source-6aff221 is frozen.
+Packages isolated /tmp/duplex-reasoning32-asr-cpu-v1/packages; CUDA disabled.
+Weight aff26ae408abcba5fbf8813c21e62b0941638c5f6eebfb145be0c9839262a19a,
+1,617,941,637B remote verified;public/tmp weights not sole critical backup.
+
+Verifier chronology: network old32 readback timed out260s; no live process remained.
+Local-disk staging59716 completed copying all inputs to /tmp/duplex-reasoning32-verifier-v1,
+but full old verifier exceeded240s. First speech follower60135 stopped on that failed
+stage. Profiled verifier60684 child actual EXIT-11; follower60743 failed safely.
+No live process from those stages, no core transferred. Stacks show repeated nested
+full source verification/hashing/peak/RMS checks; segmentation cause UNPROVEN.
+Py-spy readonly sample also failed SYS_PTRACE permission; no security/runtime change.
+CURRENT uninstrumented verifier62117/birth23428614S, child62118/birth23428652,
+20min bound, unchanged full checks, no profiler or new core files. Control
+/workspace/migration/native-reasoning32-verifier-uninstrumented-v3. NEW only live
+speech finalizer62171/birth23432868S, source3ba0cb1082fdadb488512a13ae30d3c716c3ca84,
+/tmp/duplex-reasoning32-followup-3ba0cb1, deadline23:00, control speech-followup-v3.
+It needs actual57732 exit0/terminal identity AND full lineage exit0 before rechecking
+ALL32 on ORIGINAL waves; cannot restart recognition, use API/GPU or train.
+Do not infer terminal from an observation timeout or restart unchanged jobs.
+
+Cutoff001: original actual recorder closed mid-answer. New generic stream_v6 waits
+1s original output/text quiescence, same prompt/backend/source/88s and1100frames.
+13 offline stream/probe tests pass. ONE real c056dde4544dd553e71039f20b3d98a57b2bebc1
+capture49215 EXIT1 because added recorder verifier hit NameError(transcripts).
+Keep frozen V7 recorder/checker and original failed verdict! Actual transport complete,
+spoken full badge/candle/poster16cost48points plus8tokens,973frames. NEW independent
+readback28fe2df (full SHA in proof) actual EXIT0/five offline tests, no API retry;
+original byte hashes, full quiescence/frame/lifecycle/oracle checks pass. Independent
+speech AND spoken semantic approval still REQUIRED; no whole32 approval. Totalvoice
+attempts39, backend upper bound79<192. Component path native-reasoning32-cutoff001-v7-component;
+separate proof native-reasoning32-cutoff001-v7-readback-v1.json. ALL17files13,670,614B
+remote hash PASS inventory9ad2c239e2a8559180e9f07227adf4cff3197e342db35b921b5effd8a99a4f9b,
+/workspace/migration/native-reasoning32-cutoff001-v7-preserved-v1.
+
+Semantic reviewer7de7449 committed/tested6 fixtures,0actual requests. Full32 speech
+must pass before any request; V2 additionally needs original failed audit and plan.
+Reviewer receives authored user premises/measured speech/actual task receipts/clocks,
+NO expected answers/oracles/owner data. Bounded32 gpt-6-astra requests/max2, no retry;
+all in-flight calls finish before key cleanup on failure. Conversion/numerical/gradient/
+retention/native behavior still required. No reasoning32 data entered native training.
+
+MAC: no heavy speech inference remains, no OS CPU power/priority/affinity changes.
+Heavy ASR/lineage now remote CPU, measured quota27.2cores. Prefer future active synthetic
+spools outside OneDrive with canonical collection lock held, archive once; no such
+new spooling implementation deployed. Source/baseline archive last full Mac hash pass
+15:32 preserved; stopped broader Mac source backup remains PARTIAL. No owner conversations,
+credentials/session-token or cores transferred. Unrelated pycache/probes/roadmap kept.
+
+NEXT: monitor SAME41540 until all49/combined40, protect budget/copyback, never accept
+partial readiness. Inspect actual exit/results of62117/62118 and all32ASR57732/57733,
+then full derived verdict. If failed, diagnose original waves and repair ONLY failed
+teacher cases in a new whole32 version; reuse preserved001 component only after its
+independent speech/semantic qualification. Typed V7 mixed-record quality/conversion
+is NOT implemented yet. No passing subset. See docs/NATIVE-REASONING32-SPEECH-CUTOFF-PROGRESS-2026-10-23.json.
+
 # LOCAL — heavy Mac inference ended; future audits on Runpod CPU (23 October20:53UTC)
 
 LOCAL remains sole executor, goal ACTIVE. Source before this documentation commit
