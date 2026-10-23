@@ -1,3 +1,44 @@
+# LOCAL — complete40 data chain passed; archive verified on A100, extraction live (23 October 01:04 London)
+
+LOCAL sole executor; CLOUD read-only. Latest actually deployed executable source is
+e658c208e5a92a0c78b546ddcaae65b7e29006a1, clean Git checkout
+/workspace/source-control40-e658c20. Full-history source bundle SHA256
+5a5c79f511b556f87a1fe50f782c82a0169f62434517264ba84c276b156560d1.
+The prior follow-on13707 is TERMINAL0: all40 quality, all40 independent semantic
+responses and all40 conversions passed. Canonical Mac copyback408+246 files matched.
+Authoritative receipt docs/NATIVE-CONTROL40-COMPLETE-DATA-CHAIN-2026-10-23.json.
+
+One owned A10080GB Pod sjf72o8v64mjvb RUNNING, 1.79USD/hour, volume49yytzyoge.
+Actual direct SSH and native Torch2.9.0a0+145a3a7bda.nv25.10/CUDA13.0 GPU operation
+passed. Original67.764GB archive and runtime already persist; aliases recreated
+safely. Direct SSH root@157.157.221.29 port16728 uses local id_ed25519_runpod and
+ignored runs/local-migration-20261023/.private/control40-known-hosts. No API key
+transferred. Timer67422/PID72825 is armed; DELETE deadline01:14:52.804UTC23October
+=02:14London/03:14Berlin, retaining network volume. Total compute budget50USD;
+prior attributed spend20.096006687846966USD, this initial trial cap3.58USD plus disk.
+
+Complete7797-file workset1,023,720,756-byte archive is on the Pod and independently
+matches SHA25687717cdf3e80977dbe78b18b0f1e75367411eab535d327dbee4679dcd9483616.
+Inventory SHA25679401e2c1051361d150da644250e8acf87814bda1c48b167af8a34345214fa8f.
+Both initial rsync operations completed payload transfer with a MooseFS ownership
+warning; exact content hashes passed. Future transfers use rsync -ar --no-owner
+--no-group --exclude=session-token. Do not repeat a verified payload transfer.
+Safe streaming extraction/individual hashes LIVE exec58363, remotePID1403; log
+runs/local-migration-20261023/control40-workset-remote-validation-v1.log. It then
+runs complete frozen-snapshot verification and actual compiled BF16 kernel check.
+Do not duplicate while handle/process live. No CUDA codec/Engine/numerical stage
+or new optimizer update submitted yet. Next: finish this process, Git-clone pinned
+MoshiRAG/finetune bundles, run one sequential codec40 -> Engine40 -> numerical40.
+
+New native_control_gradient.py prepares separate all40 actual BF16 streaming text
+and native acoustic gradient readiness, exact grad/no-grad outputs, unchanged
+parameters and text-head acoustic isolation. Eight focused CPU tests pass. This
+new module is NOT yet deployed/executed on GPU; it requires complete40 numerical
+approval and does not replace original154/old49 readiness or qualify behavior.
+Latest actual training remains native7590052 eight updates/Adam520->528, unadopted.
+Preserve original49 teachers/all28 histories/all154 objectives/KL1+hidden10 and all
+held-out hashes. Whole-project/old Mac source backup remains partial. Goal ACTIVE.
+
 # LOCAL — full40 quality and semantic pass; one bounded A100 Pod initializing (23 October 00:26 London)
 
 LOCAL sole executor; CLOUD read-only. Executable source7a69158e5fbc9c725031b5c1b598fffc52fdfbd8.
