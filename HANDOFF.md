@@ -1,3 +1,55 @@
+# LOCAL — SSH restored, input copy running, ASR ready, Mac backups verified (23 October10:03 London)
+
+NEWEST authoritative entry. LOCAL remains sole executor, goal ACTIVE/incomplete.
+ONE owned A100 Pod4yx8vahdmjsylx remains; no new training/numerical child yet.
+Budgetguard73678/session54241 remains armed until2026-10-23T15:07:37.9Z;
+maximum total49.69558350742474USD including reserve, existing50USD cap unchanged.
+Funding29.91USD was verified in official UI. No changes to unrelated Aurium Pods.
+
+Pinned image finally started after roughly30minutes extraction. Actual bounded
+SSH succeeded atroot@157.157.221.29:16701, hostname7ad265e54100; all three scanned
+host fingerprints independently match provider container logs. ED25519
+SHA256:YhH1r2DGIksdIUpm2IG+kox9L5Cssp7exNQZ/bTpjdo. Strict checking stays enabled.
+GPU actual A100-SXM4-80GB81920MiB, driver595.91.07; saved native Python imports
+exact Torch2.9.0a0+145a3a7bda.nv25.10/CUDA13.0. Ephemeral free107,228,430,336B.
+
+Actual execution source is now immutable C9EFAAA:
+c9efaaac24d983342f7eded46617e6450bc102ce,
+/opt/duplex-control40-c9efaaa-v2, cloned from committed Git bundle. New ASR-only
+entry point reuses the unchanged pinned installer without duplicate model copy or
+alias mutation. Restoration PID2044 launched08:55:18UTC from original archive,
+exact10390+7797 inventories/six public model files to/opt/control40-runtime-root-v2.
+It is copying inputs and independently readback-hashing, deadline09:35UTC.
+Receipt/workspace/migration/native-control40-replacement-preparation-v2.json;
+DO NOT duplicate, overwrite or activate aliases manually. No complete staging
+approval yet. Complete new pipeline output remains native-control40-precise-pilot-v2.
+
+Independent ASR preparation PID2110 finished in134.522s, no model inference.
+Whisper turbo public SHAaff26ae408abcba5fbf8813c21e62b0941638c5f6eebfb145be0c9839262a19a
+rehash passed; exact Torch preserved, separate Triton3.4.0. ASR interpreter
+/opt/native10-asr-env/bin/python; receipt native-control40-asr-preparation-v2.json.
+Native environment and archive not modified. Compiler GPU probe still pending.
+
+Old watcher31679 confirmed absent. Superseded current watcher90457 was stopped
+explicitly after diagnosing the spaced absolute known-hosts filename. Fix
+DEE133D dee133dcd3dd775751d722bd945e84b15ca8c4db is committed/pushed locally;
+6 tests pass including OpenSSH's ACTUAL effective-config parser with spaced paths.
+This preserves StrictHostKeyChecking=yes. ACTIVE watcher92170/session84773 now
+uses current endpoint and remote sourceC9EFAAA; local watcher implementationDEE133D.
+Output runs/local-migration-20261023/native-control40-continuous-copyback-v5.
+First12-file snapshot independently verified on Mac, inventory
+110ce18132add45bef22c633c5ba06588ebdabbd66c69d3fb51d10a7511fb0a3.
+Never reuse old v3/v4 watcher directories or deleted Pod endpoint16728.
+
+Next: finish verified restoration; actual fresh compiler GPU kernel probe; refresh
+credential-free same-Pod cost status; launch NEW full40 precise numerical, separate
+BF16 gradient, combined154/native49/control40 readiness, new8 and independent
+state/Adam/RNG/native restore. Complete native20/speech20 review before fresh40
+inference. Actual latest model is still unadoptednative7590052/Adam528, parent520;
+no new optimizer updates. Full archive remains previously verified, stopped broader
+Mac source backup PARTIAL. No threshold/loss/retention or exact-word changes.
+Details docs/NATIVE-CONTROL40-REPLACEMENT-2026-10-23.json. Unrelated local edits preserved.
+
 # LOCAL — funding verified; ONE replacement A100 created, restoring runtime (23 October09:25 London)
 
 NEWEST authoritative entry. LOCAL remains sole executor; goal ACTIVE/incomplete.

@@ -1,6 +1,6 @@
 {
   "schema": "dl-native-control40-replacement-execution-v1",
-  "at_utc": "2026-10-23T08:24:30Z",
+  "at_utc": "2026-10-23T09:02:00Z",
   "executor": "LOCAL",
   "funding_verified": {
     "method": "official Runpod billing page after user confirmed done",
@@ -8,7 +8,7 @@
     "auto_pay_enabled": false,
     "total_project_compute_cap_usd": 50
   },
-  "execution_source_commit": "ce4972776415a53a836325b5c98f27bfb76154a3",
+  "execution_source_commit": "c9efaaac24d983342f7eded46617e6450bc102ce",
   "pod": {
     "id": "4yx8vahdmjsylx",
     "name": "duplex-native-validation-control40-20261023-v2",
@@ -47,9 +47,56 @@
     "actual_staging_completed": false,
     "cpu_tests_passed": 9
   },
-  "state": "pinned image downloading/extracting; SSH not ready",
+  "state": "SSH verified; exact input restoration is running; recognizer restored; new numerical/pilot not started",
   "new_optimizer_updates": 0,
   "new_candidate": false,
   "model_adopted": false,
-  "next_action": "SSH and stage exact verified inputs; fresh compiler probe; full40 numerical then independent BF16, retained154/native49/control40 readiness, new8 and independent restore in new output root. Complete native20/speech20 review before sealed fresh40 inference."
+  "next_action": "SSH and stage exact verified inputs; fresh compiler probe; full40 numerical then independent BF16, retained154/native49/control40 readiness, new8 and independent restore in new output root. Complete native20/speech20 review before sealed fresh40 inference.",
+  "staging_helper_introduced_commit": "ce4972776415a53a836325b5c98f27bfb76154a3",
+  "ssh_verified": {
+    "host": "157.157.221.29",
+    "port": 16701,
+    "hostname": "7ad265e54100",
+    "strict_host_keys": true,
+    "ed25519_fingerprint": "SHA256:YhH1r2DGIksdIUpm2IG+kox9L5Cssp7exNQZ/bTpjdo",
+    "fingerprints_independently_matched_provider_container_logs": true,
+    "actual_gpu": "NVIDIA A100-SXM4-80GB",
+    "memory_MiB": 81920,
+    "driver": "595.91.07",
+    "torch": "2.9.0a0+145a3a7bda.nv25.10",
+    "cuda": "13.0",
+    "initial_ephemeral_available_bytes": 107228430336
+  },
+  "restoration": {
+    "pid": 2044,
+    "launched_utc": "2026-10-23T08:55:18.012704+00:00",
+    "deadline_utc": "2026-10-23T09:35:00Z",
+    "out": "/workspace/migration/native-control40-replacement-preparation-v2.json",
+    "stage": "/opt/control40-runtime-root-v2",
+    "source": "/opt/duplex-control40-c9efaaa-v2",
+    "complete": false,
+    "archive_is_preserved_input": true
+  },
+  "asr_restoration": {
+    "complete": true,
+    "receipt": "/workspace/migration/native-control40-asr-preparation-v2.json",
+    "seconds": 134.52232544799335,
+    "torch": "2.9.0a0+145a3a7bda.nv25.10",
+    "triton": "3.4.0",
+    "whisper_turbo_sha256": "aff26ae408abcba5fbf8813c21e62b0941638c5f6eebfb145be0c9839262a19a",
+    "shared_native_runtime_modified": false,
+    "GPU_inference_or_training": false
+  },
+  "copyback": {
+    "pid": 92170,
+    "version": "native-control40-continuous-copyback-v5",
+    "remote_source_commit": "c9efaaac24d983342f7eded46617e6450bc102ce",
+    "local_transport_fix_commit": "dee133dcd3dd775751d722bd945e84b15ca8c4db",
+    "verified_first_snapshot_files": 12,
+    "verified_first_inventory_sha256": "110ce18132add45bef22c633c5ba06588ebdabbd66c69d3fb51d10a7511fb0a3",
+    "strict_host_keys": true,
+    "superseded_current_watcher_90457_stopped": true,
+    "old_watcher_31679_confirmed_absent": true,
+    "transport_regression_tests_passed": 6
+  }
 }
