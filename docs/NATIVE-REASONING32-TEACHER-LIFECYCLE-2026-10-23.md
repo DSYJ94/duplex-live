@@ -72,3 +72,11 @@ Still required before collecting an eligible teacher corpus:
 
 The current control40 pipeline, immutableC9 source, gates, data and one-eight-update
 limit remain unchanged. This preparation neither extends nor adopts a candidate.
+
+
+23 October implementation update: the boundary and actual transport are now wired
+to the opt-in whole32 collector described in
+[NATIVE-REASONING32-TEACHER-CAPTURE-2026-10-23.md](NATIVE-REASONING32-TEACHER-CAPTURE-2026-10-23.md).
+Nineteen offline lifecycle/transport/stream/artifact tests pass. This supersedes
+the earlier preparation-only wiring status; no actual teacher call had been made
+at the collector implementation commit. Existing GPU source remains unchanged.

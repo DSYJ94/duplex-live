@@ -1,3 +1,44 @@
+# LOCAL —actual reasoning32 collector ready;37/40 GPU (23 October17:32UTC)
+
+Previous goal turn made progress: source-v3 all40 qualified and audit backed up;
+new actual asynchronous transport committed e715fa6. Current turn adds tested
+whole32 native teacher capture. LOCAL remains sole executor, goalACTIVE.
+ActualSSH17:29:36UTC SAME21063/birth20582160 S, old4111/birth18985221 T/paused,
+CUDA14873/birth20219598 S/live,37/40gradient,0updates. C9model/7769270orchestration
+unchanged. No restart/newGPU/duplicatejob. Guard16271 until23:22:37.9UTC,
+pilot21:30/eval22:17/backup22:20 unchanged; specific20USDpayment stillpending.
+
+New native_reasoning_stream.py +native_reasoning_teacher.py capture fullsource32
+with native-selected GPT-Live requests and actual gpt-6-luna Responses. At this
+commit NO actual teacher call made; ready for one immutable whole32 collection.
+Exact source/quality reverified; nativeprefix232 fromhash-pinned completeengine
+and retainedtokenizer loaded. 33offline source/lifecycle/backend/stream/artifact
+testsPASS. Fixtures never qualify actualtransport. No held-out/owner/secretinput.
+
+Generic timing: firstclip0.56s, followup onlyafter ACTUALHTTP dispatch and firstclip
+completion +0.56s; declared originaldelay=max(source minimum,.56+followupduration+4),
+laterrequestsdelay0. Five-second response/closewindow fixedbeforecapture, independent
+of answercorrectness. Cancelled originaldeliverywait retires promptly; executing
+HTTP still completes/preservesrawbody. Actualinputs paced80ms, allPCM preserved,
+maxrawinput88s and maxoutputdrain20s; no cropping. Fullmeasuredprefix/live/all-sent
+span framecount mustfit1100; actualnativeassemblyapproval stilloutstanding.
+
+Collection max32sessions/twoconcurrent/sixrequestspernativeepisode192aggregate,
+no retries/resume. Stop new sessions after transport/readback failure, preserve
+all active rawattempts; a partial neverqualifies. Native request events alone
+select work; no oracle/family/expectedanswer in modelpayload. Cancellationstatus
+backend supplies no basicanswer: voice mustcomputeitself. Requests/responsebodies/
+providerIDs/clientIDs/clocks/actualarrivedcontext/acks/inputoutputspools retained.
+Complete rawreadback rechecks sourcebytes, actualresponses and fulloutputplayout.
+Newprotocol docs/NATIVE-REASONING32-TEACHER-CAPTURE-2026-10-23.md, officialAPIrefs.
+
+Next launch exact newwhole32 collector under its separate locallease; immutable
+C9GPU pilot continues. All independentteacherword/audio/semantic/conversion/native
+numerical/gradient/fullretention/pilot/Adam-RNG-native-restore/behavior/fresh gates
+remainrequired. No unchanged extension/adoption or trainingonnewreasoning yet.
+Prepared738 laterGPUtakeover onlyafter full40gradient and4111actuallyretired.
+Unrelated localfiles preserved/excluded; originalbackups retained.
+
 # LOCAL —source32 qualified;35/40 GPU; concrete repair status (23 October17:14UTC)
 
 LOCAL sole executor; goalACTIVE. Main81eeb28 before this commit. Actual SSH at
