@@ -1,3 +1,62 @@
+# LOCAL —33/40 passing; backend recovered; one GPU job continuing (23 October12:18UTC)
+
+NEWEST authoritative operational entry. LOCAL sole executor; goal ACTIVE.
+Actual Pod4yx8vahdmjsylx RUNNING, original controller4111/birth18985221 and
+numerical4216/birth18993883 LIVE. No restart or duplicate submission. Immutable
+GPU source c9efaaac24d983342f7eded46617e6450bc102ce at
+/opt/duplex-control40-c9efaaa-v2. Local dispatcher source5889a33; source main
+7919147 before this handoff update. Latest independent Mac backup33/40 cases
+all pass unchanged0.001 thresholds, including original failed029 (text logits
+0.0004820823669433594). Whole40 final parameter/peak checks NOT complete.
+No new optimizer updates, new candidate, extension or adoption.
+
+Current pipeline owns the sequence: all40 numerical -> separate full40 BF16
+gradient -> combined retained154/native49/control40 readiness -> ONE8 updates
+from native520 -> independent Adam/RNG/native restore -> strict proof. Audit
+13:23:54.034033UTC; whole-chain14:59UTC. Do not submit another training job.
+
+ACTIVE costguard36001/session74278, status
+runs/local-migration-20261023/runpod-control40-replacement-budget-v2.json.
+Delete exact owned Pod15:31:37.9UTC, retain networkvolume49yytzyoge. Closed project
+charges36.94071830424946USD + whole current GPU lifetime12.7985 +0.25 reserve
+=49.98921830424946USD maximum within existing50 TOTAL compute cap. Posted active
+billing lags and is not used to discount elapsed runtime. No extra rental.
+Old guard73678 retired. Separate approved100GB storage unchanged.
+
+ACTIVE backup42219/session46974, controller
+runs/local-migration-20261023/native-control40-continuous-copyback-v6/controller.json,
+deadline15:30UTC. Latest inventory54dc6dfd8dd883d52d6591dc379e5334c83b9a92ff406355d9a6ecc591c9b3f2,
+18 files independently verified, including33-case numerical JSON. Old watcher
+92170 retired; all prior snapshots preserved. Original67.76GB critical archive
+already verified historically; broader stopped Mac source backup remains PARTIAL.
+No full original archive rehash this turn.
+
+ACTIVE evaluation dispatcher40212/session26593, source5889a33, status
+runs/local-migration-20261023/native-control40-development-followup-v2.json.
+Read-only SSH timeouts retry; latest read12:15:30UTC succeeded and confirms
+numerical stage. A timeout is not proof of job termination. Old waiter20789
+actually ended10:43:50UTC; remote native20/speech20/launch output was absent.
+New dispatcher requires ALL7 successful stages and actual upstream process exit;
+then starts full paired native20 + independent speech20 with same GPU owner lease.
+Latest launch14:44UTC, evaluation deadline15:27UTC; no subset, sealed fresh input,
+extension or adoption. Review complete outputs and all4 ordinary tasks beforefresh40.
+
+ACTIVE proxy37256/session29966, Mac127.0.0.1:50257, run
+native-control40-20261023-v3, deadline15:29UTC, max124 new requests plus4 old<=128.
+ACTIVE tunnel37281/session38332, Pod ONLY127.0.0.1:18789 ->Mac50257. StrictSSH
+root@157.157.221.29:16701 with ~/.ssh/id_ed25519_runpod and local ignored
+runs/local-migration-20261021/.private/runpod-control40-replacement-v2-known-hosts.
+No provider key transferred. Actual reconnected backend smoke4 HTTP200 calls
+passed; response IDs matched local transport. Component evidence is not native
+voice/delegation qualification. Inventory68ea49907deee8ef27b6da73e93b66b10ceb65af3dca31e13d111b9d6eccb6ad.
+
+NEXT: observe existing chain, inspect actual losses/state after8, then complete
+native20/speech20 behavioral review. Latest actual model remains unadopted
+native7590052/Adam528; current repair parent native520. All original audio,
+receipts, histories, KL/hidden retention and approval thresholds preserved.
+Unrelated timeline.pyc, capability-retention probe files and roadmap.html untouched.
+Execution stays LOCAL; no handoff or new user permission needed.
+
 # LOCAL — guard reconciled within50USD; network recovery in progress (23 October11:50UTC)
 
 NEWEST interim authoritative operational entry. LOCAL sole executor, goal ACTIVE.
