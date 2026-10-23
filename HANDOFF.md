@@ -1,3 +1,66 @@
+# LOCAL —replacement repaired; actualcancel race isolated; causalv3 ready (23 October19:15UTC)
+
+Previous goalturn progressed to5653e60 withfull40gradientandv2stream. Currentturn
+pushed58cd2cc and ran actualrecoveryv2 session23523 TERMINAL1. LOCAL soleexecutor;
+goalACTIVE. Main58cd2cc beforethiscommit. AllC9GPU/738source/guards unchanged.
+Latestactual19:13GPUobservation below; do not restart anylivechild.
+
+V2newactualsessions002/003 used4genuineResponsesHTTP200, aggregatevoices8/backend9.
+003 REPLACEMENT repaired: fulloldrevisionretired,current12tokens41points correctly
+returnedandspoken, actualtransport/lifecyclediagnosticPASS, fullframecount959.
+Stillnot independentlyASR/spoken-semanticapproved.002 CANCEL selectedanactualnew
+nativecontrolrequest, butbackend decisionbegan49.620s, OLDresultwire54.996s,
+correctcancelreturned59.747s ->rejectedbecausealreadydelivered. V2stoppedbefore
+26unattempted; no retry/subsetapproval. Diagnosisprovesapplicationdeliveryrace,
+NOT historical7590052reasoningregression. Timing/source/data/modelweightsunchanged.
+DocsNATIVE-REASONING32-V2-RESULTS-2026-10-23.json.
+
+Fullv2 raw181files/119,510,244B backedupandremotehashPASS19:00:45UTC, retained
+49yytzyoge,/workspace/migration/native-reasoning32-teachers-v2-preserved-v1,
+inventorye56c751702c45e9238ff06efff12d8c12129cd836bc3936bb966f322e1ec8132.
+ParentcollectionSHA54870fb4d813f4b779c052897cd5c6dc08303679876aa2f2416a1cc74be7ef20.
+Originalv1parent/source40/allpriornativebackupsretained. Mac+Runpodtwo domains;
+S3samevolume,OneDriveuploadunverified; broaderstoppedMacsourcebackupPARTIAL.
+
+NEW native_reasoning_lifecycle_v2.py extendsoldimmutableledger: newerreserved or
+executingallowed-targetstate decisions HOLDOlderresultdelivery. Unrelatedresolved
+answerreleasesold; actualcancel/replace retires; failed/uncertain decisionfails
+closed. No word/intentclassifier,familyrouter,forcedRET orfakecancellation. Actual
+providerexecution,mintransportholdandcausaldeliverybarrier are separateclocks.
+NEW stream_v3 waits/rechecksbarrier atomicallywithoneboundedwireno-retrywhileinput
+andHTTPcontinue. Genericvoicepromptunchangedfromv2. Oldv1/v2modulesimmutable.
+66offline testsPASS inclpriorrecorderreproducesrace/newpathprevents stale delivery,
+reservationgap, unrelatedrelease, uncertainfailclosed, bytes/lineage/whole32guards.
+
+NEW teacher_v3 +recovery_v3 actualrecorderandwhole32mix verifier preflightPASS:
+rehashentirev2parent +nestedv1parent, actualcorrected003andactualcancelrace.
+Preservefive000/001/003/004/005byte-identicallywithv1/v2versionsandparentreceipthashes.
+RepairONLY002first, thenunattempted013ALONE(tight5referenceframes/0.4smargin),then
+remaining25atmax2concurrent. Atmost27newsessions/35aggregatevoices and9+27*6<=192
+backendceiling; noautomaticretry/resume. Whole32independentwords/audio/semantic/
+actual-time/nativeassembly/numerical/gradient/retention gatesrequired. No crop/
+1100limitrelaxation orpartialapproval. AtthiscommitNOv3teachercallmade; nextlaunch
+once NEW native-reasoning32-teachers-v3 usingparentv2+inventoryv2,source/qualityv3.
+FreezeV3sourcefiles+oldparentswhileactive; hashesbindall. Newqualitydispatchstrictly
+verifiesall32byactualrecorder. DocsNATIVE-REASONING32-CAUSAL-RECOVERY-2026-10-23.md.
+
+CausalapplicationfixcurrentlyTEACHERPIPELINEONLY: immutableC9anduserfacingvoice
+runtimeunchanged; runtimeintegration/nativelearnedbehaviorstillneedsproof.
+CurrentGPU remainsfull154/native49/control40readiness->ONE8from520->independent
+Adam/RNG/native restore/strictproof->native20/speech20/all4->eligiblefresh40. All
+28/49oldhistories/KL-hidden/word-clockretained, no unchangedextension/adoption.
+No currentlyrunningMacASR; futureaudits8threadsfromactualbenchmark, nice0/power
+settingsunchanged. Relatedtests/teacherHTTPdo notconstitutenewoptimizerupdates.
+
+Runningservicesunchanged: adopter42932/birth22207653 (deadline22:30),old21063T,
+actualreadiness41540/birth22014818; costguard16271/session82942delete23:22:37.9UTC,
+backup95445/session36808v8to23:20;proxy95444/session28664v5Mac50258to23:19,
+tunnel81044remote18791; evaluator98191/session1702plan/statusv6 latest22:37/end23:17.
+Currentproxy16/128aggregate,remaining112; no newproxycallsforthisteachercapture.
+Separateteacherbackendcalls9aggregate. Existingprepaidonly,totalcompute cap100,
+plannedguard64.29; specific20USDpaymentSTILLPENDING,no newcharge. Unrelatedlocal
+filespreserved/excluded. Seepreviousentryforfailedoldadopter/tunnelreceipts.
+
 # LOCAL —whole32 versioned recovery ready; parent verified (23 October18:53UTC)
 
 Previous goal turn made progress: complete40 gradient proof, failedactualteacher

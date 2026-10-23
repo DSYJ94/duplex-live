@@ -29,7 +29,11 @@ class RecoveryGuards(unittest.TestCase):
 
 
 class RecoveryPhaseTests(unittest.IsolatedAsyncioTestCase):
+    implementation=recovery
+    maximum_new_sessions=28
+    maximum_aggregate_voices=34
     async def test_failed_two_case_repair_preserves_originals_and_never_starts_26_unattempted(self):
+        recovery=self.implementation
         with tempfile.TemporaryDirectory()as folder:
             root=Path(folder);source=root/'source';source.mkdir();(source/'source-audio.json').write_text('{}')
             q=root/'quality.json';q.write_text('{}');parent=root/'parent';parent.mkdir();inventory=root/'inventory.json';inventory.write_text('{}')
@@ -47,14 +51,15 @@ class RecoveryPhaseTests(unittest.IsolatedAsyncioTestCase):
                 r=await recovery.recover(source,q,parent,inventory,root/'out',None,root/'engine',root/'spm')
             self.assertTrue(attempted);self.assertTrue(set(attempted)<=set(recovery.REPAIR))
             self.assertEqual(r['status'],'incomplete_failed_preserved_no_retry');self.assertFalse(r['training_approved'])
-            self.assertEqual(r['reused_ids'],recovery.REUSE);self.assertEqual(r['maximum_new_sessions'],28)
-            self.assertEqual(r['maximum_aggregate_voice_attempts'],34)
+            self.assertEqual(r['reused_ids'],recovery.REUSE);self.assertEqual(r['maximum_new_sessions'],self.maximum_new_sessions)
+            self.assertEqual(r['maximum_aggregate_voice_attempts'],self.maximum_aggregate_voices)
             for identity,data in original_bytes.items():
                 self.assertEqual((parent/identity/'original.wav').read_bytes(),data)
                 self.assertEqual((root/'out'/identity/'original.wav').read_bytes(),data)
-                self.assertEqual((root/'out/parent-v1'/identity/'original.wav').read_bytes(),data)
-            self.assertEqual(len(r['new_attempt_order']),28)
-            self.assertEqual(r['new_attempt_order'][:3],recovery.REPAIR+[recovery.SENTINEL])
+                parent_name='parent-v1' if self.maximum_new_sessions==28 else 'parent-v2'
+                self.assertEqual((root/'out'/parent_name/identity/'original.wav').read_bytes(),data)
+            self.assertEqual(len(r['new_attempt_order']),self.maximum_new_sessions)
+            self.assertEqual(r['new_attempt_order'][:len(recovery.REPAIR)+1],recovery.REPAIR+[recovery.SENTINEL])
 
 
 if __name__=='__main__':unittest.main()

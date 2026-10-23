@@ -284,3 +284,22 @@ The new completion/ack-aware recorder passes its regression tests but has not
 collected a repaired teacher. All32 independent quality/semantic/native gates
 remain required. No additional current native training or behavior success is
 claimed by teacher or numerical transport tests.
+
+
+## Actual cancellation-state race —23 October19:13UTC
+
+The v2 reasoning teacher selected a real cancellation request before the old
+result was delivered: backend start49.620s, old wire54.996s, completed cancellation
+59.747s. The application published the old result while that newer state decision
+was still executing, then correctly rejected the now-late cancel action. This
+is a demonstrated application ordering defect in the new teacher workflow.
+A versioned state barrier holds older delivery while later native-selected
+reserved/allowed-target decisions are unresolved; unrelated completed decisions
+release it and uncertain failures stay closed. The old and repaired paths have
+a reproducing integration test. Native v3 acceptance is still outstanding.
+
+The replacement timing fix DID pass an actual teacher capture with the full
+corrected response in959 prefix/live/span frames. Independent whole32 audio and
+spoken semantics remain required. Both findings postdate the historical7590052
+model and cannot establish its earlier answer-regression cause. C9 GPU training
+code/objectives, stored histories and user-facing native runtime remain unchanged.

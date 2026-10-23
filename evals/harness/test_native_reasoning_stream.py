@@ -13,11 +13,12 @@ from evals.native_reasoning_stream import capture,configuration,RESPONSE_WINDOW_
 
 
 class Socket:
-    def __init__(self,*,control=False,delegate=True,ack=True,pending_original=True,provider_delay_s=0.,ack_delay_s=0.):
+    def __init__(self,*,control=False,delegate=True,ack=True,pending_original=True,provider_delay_s=0.,ack_delay_s=0.,provider_delays=None):
         self.queue=asyncio.Queue();self.sent=[];self.control=control;self.delegate=delegate
         self.ack=ack;self.stage=0;self.input=bytearray();self.output=np.arange(1920,dtype='<i2').tobytes()
         self.pending_original=pending_original
         self.provider_delay_s=provider_delay_s;self.ack_delay_s=ack_delay_s
+        self.provider_delays={} if provider_delays is None else provider_delays
     async def send(self,raw):
         e=json.loads(raw);self.sent.append(e)
         def put(e):self.queue.put_nowait(e)
@@ -55,7 +56,7 @@ class ReasoningStreamTests(unittest.IsolatedAsyncioTestCase):
             out.mkdir();atomic_json(out/'transport.json',dict(http_call_started_monotonic=now(),actual_provider_transport=False))
             started.set()
             if socket.control and socket.pending_original and identity=='original':await release.wait()
-            await sleep(socket.provider_delay_s)
+            await sleep(socket.provider_delays.get(identity,socket.provider_delay_s))
             operation='cancel_reasoning' if identity=='cancel' else 'respond_to_user'
             args=dict(content='Delivery cancelled.' if identity=='cancel' else 'Actual computed answer.')
             if identity=='cancel':args['task_ids']=['original']

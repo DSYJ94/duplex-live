@@ -1,0 +1,53 @@
+{
+  "schema": "dl-native-reasoning32-v2-actual-results-and-race-diagnosis-v1",
+  "at_utc": "2026-10-23T19:12:32.574712+00:00",
+  "source_commit": "58cd2cca51b0d8d292374d388c8655ac06c2dd2d",
+  "parent_collection_sha256": "54870fb4d813f4b779c052897cd5c6dc08303679876aa2f2416a1cc74be7ef20",
+  "actual_terminal_exit": 1,
+  "actual_new_voice_sessions": 2,
+  "aggregate_voice_attempts": 8,
+  "actual_new_backend_requests": 4,
+  "aggregate_backend_requests": 9,
+  "all_new_backend_HTTP_200": true,
+  "unattempted26_not_started": true,
+  "replacement": {
+    "id": "native-reasoning4-train-003",
+    "actual_transport_and_lifecycle_diagnostic_pass": true,
+    "full_measured_prefix_live_span_frames": 959,
+    "spoken_words": "Okay. I'll check carefully. Sure, I'll rerun it with that update. Badge, candle, and marker; total cost twelve tokens; total points forty-one.",
+    "independent_ASR_and_semantic_approval": false
+  },
+  "cancellation": {
+    "id": "native-reasoning4-train-002",
+    "new_native_request_selected": true,
+    "state_decision_started_at_s": 49.62037354099448,
+    "original_result_wire_written_at_s": 54.99557729098888,
+    "actual_cancel_decision_completed_at_s": 59.74674295799923,
+    "actual_cancel_function_returned": true,
+    "commit_rejected_because_original_already_delivered": true,
+    "cause": "Older delivery remained eligible while a newer native-selected state decision was executing. The control call took about10.1seconds; an older result was published before that actual cancellation decision returned."
+  },
+  "repair": {
+    "lifecycle": "evals/native_reasoning_lifecycle_v2.py",
+    "stream": "evals/native_reasoning_stream_v3.py",
+    "lifecycle_code_sha256": "1cf30118ed0a263ec8817570104b058e660da3e4a0b92e3f8eac0ddbd8278f77",
+    "stream_code_sha256": "85beca2a9bb9272b23eb2c3eeeb37fc961f041d05bdd72578067d858c354717a",
+    "policy": "Actual newer reserved/allowed-target unresolved decisions hold older delivery; unrelated completed decisions release it; failed/uncertain decisions fail closed. No word/intent classifier or answer-conditioned timing.",
+    "actual_v3_teacher_completed": false
+  },
+  "full_parent_backup": {
+    "schema": "dl-native-reasoning32-teachers-failed-complete-remote-preservation-v1",
+    "at_utc": "2026-10-23T19:00:45.652926+00:00",
+    "destination": "/workspace/migration/native-reasoning32-teachers-v2-preserved-v1",
+    "volume_id": "49yytzyoge",
+    "inventory_sha256": "e56c751702c45e9238ff06efff12d8c12129cd836bc3936bb966f322e1ec8132",
+    "files": 181,
+    "bytes": 119510244,
+    "all_regular_size_sha256_match": true
+  },
+  "source_words_WAVs_folds_quality_limits_or_native_retention_changed": false,
+  "training_approved": false,
+  "passing_subset_accepted": false,
+  "new_optimizer_updates": 0,
+  "historical7590052_regression_cause_established": false
+}
