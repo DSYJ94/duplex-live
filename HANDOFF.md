@@ -1,4 +1,48 @@
-# LOCAL — exact-child supervisor implementation ready for Linux verification (23 October13:56UTC)
+# LOCAL — exact live gradient PRESERVED; all deadline services rearmed (23 October13:54UTC)
+
+LOCAL sole executor; goal ACTIVE/incomplete. Source main7769270 pushed; actual
+GPU source remains immutablec9efaaac24d983342f7eded46617e6450bc102ce at
+/opt/duplex-control40-c9efaaa-v2. Separate orchestration checkout7769270 at
+/opt/duplex-control40-orchestration-7769270-v1. 18 backup/dispatcher/budget tests pass locally. All6 takeover/chain tests passed ON LINUX,
+including actual parent pause, same child completion, real exit status and retirement.
+
+ADOPTION ACTIVE: new supervisor21063/birth20582160, output
+/workspace/migration/native-control40-precise-pilot-v3-adoption, deadline21:30UTC.
+Old parent4111/birth18985221 confirmedT/paused; exact original CUDA gradient child
+14873/birth20219598 confirmedR/live13:53:31UTC with10/40 cases passing, no updates.
+No restart, new GPU or source/math/loss/data change. New supervisor waits for actual
+child zombie exit0 plus ALL40 unchanged BF16 proof before retiring old parent,
+acquiring original global GPU lease and executing EXACT original four queued
+commands: combined readiness -> ONE8 fromnative520 -> independent Adam/RNG/native
+restore -> strict proof. Actual proof remains v2/training; v3/training is an alias.
+Do not resume4111, kill14873 or submit another trainer. Original failed audits retained.
+
+ACTIVE local services (old40212/42219/37256/37281 explicitly retired):
+- backup85270/session28881, copybackv7 through22:20UTC, new adoption root included;
+  latest independently verified23files inventory86f49a0e159c80536bf737958d0df35f289c7b3483d00d470cb4f59dc2dddbff
+  (later snapshots continue; re-read actual controller).
+- evaluation waiter86013/session39293, plan development-followup-plan-v3.json,
+  same new upstream21063/birth20582160, latestlaunch21:37UTC, end22:17UTC;
+  requires all7 actualexit0 and actual upstream exit, then complete native20/speech20.
+  Verified no existing native20/speech20/launch outputs at replacement. No uncertain retry.
+- Macproxy85512/session86213, runnative-control40-20261023-v4,127.0.0.1:50258,
+  deadline22:19UTC; tunnel session3455 to Pod ONLY127.0.0.1:18790 (kernel confirmed).
+  Previous proxies8calls +newmax120 =aggregate128; new4componentcalls HTTP200 and
+  actual responseIDs independently match copied receipts. No provider key transferred.
+- costguard74352/session71225 remains ARMED, exact Pod4yx8vahdmjsylx deletion
+  22:22:37.9UTC, retain100GB volume49yytzyoge. Human total cap100USD; first14h
+  extension maximum62.50071830424946USD total inclclosed36.94071830424946 +reserve0.50.
+
+Evidence docs/NATIVE-CONTROL40-SUPERVISOR-ADOPTION-2026-10-23.json; livefollowupdoc
+now consistent with actual new guard/services. Full40 numerical already passed;
+BF16 is still incomplete. No new optimizer update/checkpoint/model adoption.
+Next observe same14873 until complete, inspect exact combined readiness and8 fit,
+then full native20/speech20 behavior/all4 ordinary before sealedfresh40. Broader32
+reasoning proposal and microturn/backchannel training remain unrecorded/untrained.
+Original67.76GB critical archive previously verified; broader Mac source backup PARTIAL.
+Unrelated local edits preserved; execution stays LOCAL, no human action needed.
+
+# LOCAL — exact-child supervisor implementation ready for Linux verification (23 October13:49UTC)
 
 LOCAL sole executor, goal ACTIVE. Current gradient14873/birth20219598 verified
 R/live at13:48UTC;9/40 cases passed, no optimizer update. Original supervisor

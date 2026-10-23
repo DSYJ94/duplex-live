@@ -1,10 +1,10 @@
 {
   "schema": "dl-native-control40-live-numerical-and-evaluation-followup-v1",
-  "observed_utc": "2026-10-23T12:50:33.301629+00:00",
+  "observed_utc": "2026-10-23T13:53:31.186793+00:00",
   "execution_source_commit": "c9efaaac24d983342f7eded46617e6450bc102ce",
   "pod_id": "4yx8vahdmjsylx",
-  "controller_pid": 4111,
-  "controller_birth": 18985221,
+  "controller_pid": 21063,
+  "controller_birth": 20582160,
   "numerical_pid": 4216,
   "numerical_birth": 18993883,
   "numerical_created_utc": "2026-10-23T09:38:13.615016+00:00",
@@ -259,26 +259,26 @@
   "new_optimizer_updates": 0,
   "new_candidate_or_adoption": false,
   "backup": {
-    "watcher_pid": 42219,
+    "watcher_pid": 85270,
     "current_successful": true,
-    "snapshots_verified": 11,
-    "latest_inventory_sha256": "8407ab1141c83ff0cf1ab545262f4d4b94f0fe3beed05353f4736958f3909230",
-    "latest_files": 19,
+    "snapshots_verified": 2,
+    "latest_inventory_sha256": "86f49a0e159c80536bf737958d0df35f289c7b3483d00d470cb4f59dc2dddbff",
+    "latest_files": 23,
     "numerical_progress_sha256": "bdf4ac935249b7e5cd31dbbd1936389ce8b537f2bb7fb44f7b273bff809413af",
-    "watcher_session": 46974,
-    "path": "runs/local-migration-20261023/native-control40-continuous-copyback-v6",
-    "deadline_utc": "2026-10-23T15:30:00Z"
+    "watcher_session": 28881,
+    "path": "runs/local-migration-20261023/native-control40-continuous-copyback-v7",
+    "deadline_utc": "2026-10-23T22:20:00Z"
   },
   "next_evaluation": {
-    "local_waiter_pid": 40212,
-    "session": 26593,
+    "local_waiter_pid": 86013,
+    "session": 39293,
     "phase": "waiting_for_complete_independent_restored_pilot",
-    "upstream_pid": 4111,
-    "upstream_birth": 18985221,
+    "upstream_pid": 21063,
+    "upstream_birth": 20582160,
     "all_seven_stages_must_exit_zero": true,
-    "latest_launch_utc": "2026-10-23T14:44:00+00:00",
-    "evaluation_deadline_utc": "2026-10-23T15:27:00+00:00",
-    "candidate_proof": "/workspace/migration/native-control40-precise-pilot-v2/training",
+    "latest_launch_utc": "2026-10-23T21:37:00+00:00",
+    "evaluation_deadline_utc": "2026-10-23T22:17:00+00:00",
+    "candidate_proof": "/workspace/migration/native-control40-precise-pilot-v3-adoption/training",
     "paired_out": "/workspace/migration/native-control40-native20-v1",
     "speech_out": "/workspace/migration/native-control40-native20-speech-v1",
     "full20_native_and_full20_independent_speech_required": true,
@@ -287,21 +287,21 @@
     "no_optimizer_or_extension_or_adoption": true,
     "sealed_fresh_audio_not_read": true,
     "never_retries_uncertain_launch_automatically": true,
-    "local_source_commit": "5889a33b503ef4cf1b447ec6835b643c3e27edcf",
-    "status": "runs/local-migration-20261023/native-control40-development-followup-v2.json",
+    "local_source_commit": "7769270c8b0ce2b915b28c664b867f2dd7232e17",
+    "status": "runs/local-migration-20261023/native-control40-development-followup-v3.json",
     "read_only_observation_errors_retried": true,
     "previous_waiter20789_terminal_network_unreachable": true
   },
   "budget": {
-    "guard_pid": 36001,
+    "guard_pid": 74352,
     "phase": "armed",
-    "deadline_utc": "2026-10-23T15:31:37.900000+00:00",
-    "total_Runpod_compute_cap_USD": 50,
-    "maximum_conservative_total_USD": 49.98921830424946,
-    "last_armed_utc": "2026-10-23T12:16:00.629610+00:00",
-    "guard_session": 74278,
+    "deadline_utc": "2026-10-23T22:22:37.900000+00:00",
+    "total_Runpod_compute_cap_USD": 100,
+    "maximum_conservative_total_USD": 62.50071830424946,
+    "last_armed_utc": "2026-10-23T13:54:15.579754+00:00",
+    "guard_session": 71225,
     "posted_closed_pod_total_USD": 36.94071830424946,
-    "guard_status": "runs/local-migration-20261023/runpod-control40-replacement-budget-v2.json"
+    "guard_status": "runs/local-migration-20261023/runpod-control40-replacement-budget-v3.json"
   },
   "storage": {
     "measured_retained_volume_bytes": 80150787037,
@@ -316,7 +316,9 @@
     "actual_numerical_exit_zero": true,
     "independent_BF16_child_live_confirmed": true,
     "new_gpu_resources": 0,
-    "new_optimizer_updates": 0
+    "new_optimizer_updates": 0,
+    "exact_gradient_preserved_under_tested_new_supervisor": true,
+    "all_local_deadline_services_rearmed": true
   },
   "original_failed_train029_current_reference": {
     "passed": true,
@@ -336,5 +338,10 @@
   "numerical_exit_code": 0,
   "gradient_pid": 14873,
   "gradient_birth": 20219598,
-  "gradient_started_utc": "2026-10-23T12:49:40.293806+00:00"
+  "gradient_started_utc": "2026-10-23T12:49:40.293806+00:00",
+  "orchestration_source_commit": "7769270c8b0ce2b915b28c664b867f2dd7232e17",
+  "adoption_evidence": "docs/NATIVE-CONTROL40-SUPERVISOR-ADOPTION-2026-10-23.json",
+  "pipeline_deadline_utc": "2026-10-23T21:30:00+00:00",
+  "gradient_completed_cases": 10,
+  "gradient_complete40": false
 }

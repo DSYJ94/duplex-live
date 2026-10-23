@@ -1,0 +1,85 @@
+{
+  "schema": "dl-native-control40-exact-gradient-supervisor-adoption-v1",
+  "observed_utc": "2026-10-23T13:53:31.186793+00:00",
+  "pod_id": "4yx8vahdmjsylx",
+  "execution_source_commit": "c9efaaac24d983342f7eded46617e6450bc102ce",
+  "orchestration_commit": "7769270c8b0ce2b915b28c664b867f2dd7232e17",
+  "adopter_pid": 21063,
+  "adopter_birth": 20582160,
+  "original_controller_pid": 4111,
+  "original_controller_birth": 18985221,
+  "original_controller_state": "T paused; retained GPU lease until exact child exits",
+  "gradient_pid": 14873,
+  "gradient_birth": 20219598,
+  "gradient_restarted": false,
+  "complete_cases": 10,
+  "all_completed_passed": true,
+  "gradient_process_state": "R",
+  "gradient_complete": false,
+  "new_optimizer_updates": 0,
+  "pipeline_deadline_utc": "2026-10-23T21:30:00+00:00",
+  "original_queued_commands_unchanged": true,
+  "original_receipt_preserved": true,
+  "training_proof_actual_path": "/workspace/migration/native-control40-precise-pilot-v2/training",
+  "training_proof_symlink": "/workspace/migration/native-control40-precise-pilot-v3-adoption/training",
+  "tests": {
+    "passed": 6,
+    "actual_Linux_pause_child_exit_and_parent_retirement_test_passed": true
+  },
+  "backup": {
+    "pid": 85270,
+    "session": 28881,
+    "deadline_utc": "2026-10-23T22:20:00Z",
+    "latest_snapshot": {
+      "path": "runs/local-migration-20261023/native-control40-continuous-copyback-v7/20261023T135253.592366Z",
+      "files": 23,
+      "inventory_sha256": "86f49a0e159c80536bf737958d0df35f289c7b3483d00d470cb4f59dc2dddbff"
+    },
+    "verified_files": 23
+  },
+  "evaluation": {
+    "pid": 86013,
+    "session": 39293,
+    "phase": "waiting_for_complete_independent_restored_pilot",
+    "plan": "runs/local-migration-20261023/native-control40-development-followup-plan-v3.json",
+    "latest_launch_utc": "2026-10-23T21:37:00+00:00",
+    "deadline_utc": "2026-10-23T22:17:00+00:00",
+    "all_seven_actual_zero_exits_and_actual_upstream_exit_required": true
+  },
+  "backend": {
+    "proxy_pid": 85512,
+    "proxy_session": 86213,
+    "tunnel_session": 3455,
+    "run_id": "native-control40-20261023-v4",
+    "local_endpoint": "http://127.0.0.1:50258/v1/responses",
+    "remote_endpoint": "http://127.0.0.1:18790/v1/responses",
+    "deadline_utc": "2026-10-23T22:19:00+00:00",
+    "previous_proxy_requests": 8,
+    "new_proxy_maximum_requests": 120,
+    "new_proxy_actual_requests": 4,
+    "aggregate_maximum_requests": 128,
+    "current_four_actual_HTTP200_ids_match": true,
+    "component_inventory_sha256": "15c5a40a84b51b021b964aedd54c13aadaccc7275eaefcb6377c8b5f80892f2f",
+    "credential_transferred": false
+  },
+  "budget": {
+    "guard_pid": 74352,
+    "guard_session": 71225,
+    "guard_status": "runs/local-migration-20261023/runpod-control40-replacement-budget-v3.json",
+    "deadline_utc": "2026-10-23T22:22:37.900000+00:00",
+    "project_compute_cap_USD": 100,
+    "current_full_lifetime_maximum_project_total_USD": 62.50071830424946,
+    "retained_volume": "49yytzyoge"
+  },
+  "retired_local_pids": [
+    40212,
+    42219,
+    37256,
+    37281
+  ],
+  "candidate_adopted": false,
+  "behavior_qualified": false,
+  "sealed_fresh_audio_read": false,
+  "goal_status": "ACTIVE",
+  "next": "Finish same complete40 BF16 child, then exact original combined readiness, one8 fit, independent restore and strict proof; automatic complete paired native20/speech20 thereafter."
+}
