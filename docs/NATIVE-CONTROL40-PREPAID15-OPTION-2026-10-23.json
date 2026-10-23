@@ -1,15 +1,15 @@
 {
   "schema": "dl-native-control40-existing-prepaid-window-option-v1",
-  "status": "PROPOSED_NOT_ARMED",
+  "status": "COST_GUARD_ARMED_ONLY_PIPELINE_DEADLINES_UNCHANGED",
   "at_utc": "2026-10-23T14:59:39.620575+00:00",
-  "official_fresh_wallet_readback_USD": 18.06,
+  "official_fresh_wallet_readback_USD": 17.75,
   "official_account_rate_USD_per_hour": 1.814,
   "billing_delay_reserve_hours": 1,
   "shutdown_reserve_USD": 0.5,
   "proposed_same_pod_lifetime_hours": 15,
   "proposed_deadline_utc": "2026-10-23T23:22:37.900000+00:00",
   "estimated_remaining_account_cost_USD": 15.206499688041667,
-  "required_wallet_with_reserves_USD": 17.520499688041667,
+  "required_wallet_with_reserves_USD": 17.266659772322225,
   "proposed_project_maximum_compute_USD": 64.29071830424945,
   "human_project_compute_cap_USD": 100,
   "no_topup_or_payment_required": true,
@@ -22,5 +22,15 @@
     "One exact later-child handoff with already-armed longer guard; rearm sole backup/backend/evaluator to its bounded funded deadlines"
   ],
   "active_guard_unchanged": "74352 through2026-10-23T22:22:37.9UTC",
-  "active_pilot_unchanged": "21063 through2026-10-23T21:30UTC"
+  "active_pilot_unchanged": "21063 through2026-10-23T21:30UTC",
+  "actual_guard_pid": 16271,
+  "actual_guard_session": 82942,
+  "actual_guard_status": "runs/local-migration-20261023/runpod-control40-replacement-budget-v4-prepaid15.json",
+  "actual_guard_deadline_utc": "2026-10-23T23:22:37.900000+00:00",
+  "official_wallet_readback_utc": "2026-10-23T15:08:03.382260+00:00",
+  "superseded_guard74352_retired_after_replacement_armed": true,
+  "current_pilot_deadline_utc": "2026-10-23T21:30:00+00:00",
+  "actual_later_stage_takeover_dispatched": false,
+  "current_evaluation_deadline_utc": "2026-10-23T22:17:00+00:00",
+  "new_payment_made": false
 }

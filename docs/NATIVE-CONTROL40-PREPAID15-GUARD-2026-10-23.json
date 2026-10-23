@@ -1,0 +1,49 @@
+{
+  "schema": "dl-native-control40-prepaid15-guard-armed-v1",
+  "pod_id": "4yx8vahdmjsylx",
+  "new_guard": {
+    "phase": "armed",
+    "pod_id": "4yx8vahdmjsylx",
+    "state": "RUNNING",
+    "deadline_utc": "2026-10-23T23:22:37.900000+00:00",
+    "network_volume_retained": "49yytzyoge",
+    "at_utc": "2026-10-23T15:16:38.826656+00:00",
+    "pid": 16271
+  },
+  "new_guard_session": 82942,
+  "old_guard_pid": 74352,
+  "old_guard_verified_retired": true,
+  "existing_prepaid_credit_only": true,
+  "new_payment": false,
+  "project_compute_cap_USD": 100,
+  "maximum_full_lifetime_project_compute_USD": 64.29071830424945,
+  "closed_project_compute_USD": 36.94071830424946,
+  "full15h_Pod_GPU_USD": 26.85,
+  "shutdown_reserve_USD": 0.5,
+  "official_fresh_wallet_USD": 17.75,
+  "wallet_readback_utc": "2026-10-23T15:08:03.382260+00:00",
+  "required_remaining_wallet_including_one_hour_billing_and_shutdown_reserves_USD": 17.266659772322225,
+  "actual_Pod_rate_USD_per_hour": 1.79,
+  "actual_Pod_status": "RUNNING",
+  "retained_volume_id": "49yytzyoge",
+  "model_GPU_execution_source_unchanged": "c9efaaac24d983342f7eded46617e6450bc102ce",
+  "main_supervisor_unchanged": {
+    "pid": 21063,
+    "birth": 20582160,
+    "deadline_utc": "2026-10-23T21:30:00+00:00"
+  },
+  "evaluator_guard_retarget_only": {
+    "pid": 17063,
+    "session": 96881,
+    "plan": "runs/local-migration-20261023/native-control40-development-followup-plan-v4-guard-only.json",
+    "status": "runs/local-migration-20261023/native-control40-development-followup-v4-guard-only.json",
+    "retired_old_pid": 86013,
+    "upstream_pid": 21063,
+    "upstream_birth": 20582160,
+    "latest_launch_utc": "2026-10-23T21:37:00+00:00",
+    "evaluation_deadline_utc": "2026-10-23T22:17:00+00:00",
+    "no_existing_remote_native20_outputs_verified": true
+  },
+  "source_payload_and20USD_topup_approvals_still_pending": true,
+  "no_additional_model_update_or_adoption": true
+}

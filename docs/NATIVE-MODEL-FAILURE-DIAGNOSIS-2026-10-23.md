@@ -160,3 +160,25 @@ replace matched native behavioral comparisons. If the new control40 pilot fails,
 the next causal investigation should measure objective-group gradient directions
 and repeated matched behavior, rather than infer the offending loss from final
 aggregate loss or optimizer moments alone. No unchanged extension is authorized.
+
+
+## Partial teacher-local gradient geometry — 23 October15:12UTC
+
+The [first20 current control40 cases](NATIVE-CONTROL40-GRADIENT-GEOMETRY-PROGRESS20-2026-10-23.json)
+supply text-gradient norm a, combined-gradient norm b, and norm d of the actual
+FP32 acoustic accumulation increment. Its text-head delta is exactly zero, so
+cosine=(b²−a²−d²)/(2ad) describes these two local vectors. The calculation uses
+all recorded cases from an independently hash-verified backup; two tests compare
+the identity with direct vectors and prevent partial evidence being an approval.
+
+Median acoustic-increment/text norm ratio is4.1822% (range1.3340%–10.5726%).
+Cosines range−0.05247 to+0.18885, median+0.04097; six of20 are negative. Local
+directions are generally near perpendicular, with weak opposition in those six.
+This does not show a dominant acoustic gradient on these current20 examples.
+
+This is PARTIAL diagnostic evidence:8 no-release,8 release-reason,4 distractor-release,
+with pause/resume and cue-replacement cases still absent. The complete40 gate is
+not approved. It does not measure gradient sums across examples, the original154
+or old49 objectives, Adam preconditioning, behavioral correctness or the cause of
+the earlier7590052 regression. No additional GPU call, loss change or optimizer
+update occurs. Preserve the remaining whole-corpus gates and current pilot.

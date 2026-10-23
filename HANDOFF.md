@@ -1,3 +1,57 @@
+# LOCAL —21/40 live; prepaid15 guard ACTIVE, no payment (23 October15:19UTC)
+
+LOCAL sole executor; goal ACTIVE. Main260fb64 before this commit. Immutable GPU
+executionC9 c9efaaac24d983342f7eded46617e6450bc102ce and active supervisor7769270 unchanged.
+Actual15:18:47UTC: supervisor21063/birth20582160 S/live, old4111/birth18985221 T/paused,
+originalCUDA14873/birth20219598 R/live,21/40 all passing,0newoptimizerupdates. Old14:59
+timeout safely passed. Do not resume4111 or restart14873; no newGPU/trainer/adoption.
+
+NEW ACTIVE costguard16271/session82942, status
+runs/local-migration-20261023/runpod-control40-replacement-budget-v4-prepaid15.json,
+exact Pod4yx8vahdmjsylx deletion23:22:37.9UTC, retained100GBvolume49yytzyoge. Full15h
+Pod GPU26.85USD +closed36.94071830424946 +0.50reserve =64.29071830424945USD <100cap.
+Uses EXISTING prepaid credit only. Officialfreshwallet17.75 at15:07UTC, account
+rate1.814/h; remaining spend +1h billingreserve +0.50shutdown17.26666 <17.75.
+FreshMCP read confirms samecreation08:22:37.9UTC, RUNNING,1.79/h, samevolumemount.
+Oldguard74352 explicitly SIGTERM retired ONLY AFTER replacement confirmedarmed
+and kernelidentity checked. Oldv3/v2 statuses are stale; never use theirPIDs.
+No creditpurchase, cardcharge, recurringpayment or newresource. Specific20USD
+payment approval remains pending; full24h/80.40 proposal is NOT funded/armed.
+Evidence docs/NATIVE-CONTROL40-PREPAID15-GUARD-2026-10-23.json.
+
+NEW evaluatorwaiter17063/session96881, guard-only plan/status
+native-control40-development-followup-plan-v4-guard-only.json and
+native-control40-development-followup-v4-guard-only.json. Old86013 explicitlyretired,
+remote native20/speech20/launch outputs verifiedabsent before replacement. SAME
+upstream21063/birth20582160, all7exit0 +actualexitrequired, latestlaunch21:37UTC,
+evaluationend22:17UTC; ONLY guardreceipt changed, no uncertainlaunch retry.
+Current mainpilotdeadline STILL21:30UTC. Existing backup85270/session28881 v7
+through22:20 and proxy85512/session86213 v4 through22:19/tunnel session3455 unchanged.
+Latest23-file backup independently verifiedbf22ef8607db5d7c1e884368c6ef3842f63a8de439a8946dcb6e26f00709634e.
+The whole pipeline has NOT yet been extended by the extra guardhour. After full40
+and old4111 actuallyretired, use prepared738bb25 (25Linux tests pass) to preserve
+an exact later readiness/fit/restore child if needed: targetmain22:30/eval23:17,
+then rearm sole backend/backup/waiter to actualnewPID/deadlines. Never nest paused
+gradient supervisors or repeat a completed optimizer. Recheck wallet before use.
+
+New CPU-only diagnostic derives text-vs-acoustic gradient cosines from ALL20 cases
+in the prior verifiedsnapshot (not a selectedsubset). Median acousticincrement/
+text norm4.1822%; cosines−0.05247..0.18885, median0.04097;6negative. This is PARTIAL
+teacher-local evidence,3/5families only; not full154/old49 interference, Adam-
+preconditioned update, previous7590052 causal attribution, whole40 approval or
+modelbehavior. Two direct-vector/partial-rejection tests pass. Source andreport:
+evals/native_control_gradient_angles.py and
+docs/NATIVE-CONTROL40-GRADIENT-GEOMETRY-PROGRESS20-2026-10-23.json. No extraGPU/API,
+model/loss change or optimizer update. Original full numericalpassed; BF16incomplete.
+
+New40synthetic-source egressapproval STILL PENDING after automaticreview rejection;
+no sourceAPI/audio/ASR/teacher collected. Collector12tests and lifecycle8tests are
+offline only. No inferredapproval from goalcontinuation. NextsamefullBF1640 ->
+combined154/native49/control40 readiness ->ONE8 ->independentstate/native restore/
+strictproof ->full native20/speech20/all4 ->eligiblefresh40. Preserve all28/49
+histories/objectives/words/audio/receipts/folds/heldouthashes. Unrelatedlocal work
+untouched. Criticalnativearchive previouslyverified; broader stoppedMacbackup PARTIAL.
+
 # LOCAL —19/40 live AFTER superseded deadline; no child restart (23 October15:02UTC)
 
 LOCAL executor; goal ACTIVE. Main4a34abc before this supplemental commit. Actual
