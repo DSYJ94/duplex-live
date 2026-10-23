@@ -1,0 +1,57 @@
+{
+  "schema": "dl-native-reasoning32-pacing-repair-qualified-source-v1",
+  "source_collector_commit": "19ab9b0",
+  "source_quality_commit": "efe81a9",
+  "source_manifest_sha256": "3bccef7ba53835efc6c5be8b5d490551a2ad31bd5d3875d1cf0692e2d9f0254c",
+  "quality_sha256": "e9f0296a5fcddd892556bfa409ef692b5f51956c76335f1d24e7b4691781ca0d",
+  "same_approved_words_model_voice": true,
+  "new_delivery_instructions": true,
+  "canonical_object_id": "8d57491280185df1844bbe328e658cd8f03172c075ea740376e8f63fb3928b77",
+  "actual_payload_sha256": "088a08ce640a1df0027b7e0360ed48962c5140b373436e24bb0fb990a1932d48",
+  "original_duration_s": 45.75,
+  "new_duration_s": 39.85,
+  "new_peak": 0.671295166015625,
+  "new_independent_WER": 0.0,
+  "whole40_passed": true,
+  "unchanged_WAV_and_ASR_objects": 39,
+  "new_WAV_and_independent_ASR_objects": 1,
+  "source_attempts_aggregate": 43,
+  "all32_teacher_native_episodes_still_required": true,
+  "source_preservation": {
+    "schema": "dl-native-reasoning32-complete-source-preservation-v1",
+    "at_utc": "2026-10-23T19:48:05.785972+00:00",
+    "destination": "/workspace/migration/native-reasoning32-user-source-v4-preserved-v1",
+    "volume_id": "49yytzyoge",
+    "inventory_sha256": "16f767f97d89ccc2466e5d290c0ba55f970dae0ecb2258bd9ceda29e317995f1",
+    "files": 304,
+    "bytes": 81695210,
+    "all_regular_size_sha256_match": true
+  },
+  "quality_preservation": {
+    "schema": "dl-native-reasoning32-complete-source-preservation-v1",
+    "at_utc": "2026-10-23T19:48:11.312240+00:00",
+    "destination": "/workspace/migration/native-reasoning32-user-quality-v4-preserved-v1",
+    "volume_id": "49yytzyoge",
+    "inventory_sha256": "eb55de84c1f6d5651afdd1fd634558ebaea95b814f100d979dfb5907303e855c",
+    "files": 41,
+    "bytes": 447035,
+    "all_regular_size_sha256_match": true
+  },
+  "actual_teacher_preflight": {
+    "actual_full_parent_verified": true,
+    "whole40_source_qualified": true,
+    "reused_teacher_count": 6,
+    "new_teacher_count": 26,
+    "sentinel": {
+      "id": "native-reasoning4-train-013",
+      "source_durations_s": [
+        39.85,
+        6.8
+      ],
+      "reference_frames_without_native_provider_ack_or_playout_latency": 1021,
+      "reference_frame_margin": 79
+    }
+  },
+  "training_approved": false,
+  "optimizer_updates": 0
+}
