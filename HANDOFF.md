@@ -33,7 +33,9 @@ Prepared generic exact-child takeover can preserve a LATER readiness/fit/restore
 child after original4111 retires, with all prior actual stages0 and original queued
 commands intact; never repeats completed optimizer work. It REJECTS nesting the
 current two paused-gradient supervisors. This source is NOT deployed to active7769270.
-24 local tests pass +actualLinux test pending remote (Mac skip). Longer proposal:
+All25 tests now pass ON LINUX, including actual process handoff, in separate
+/opt/duplex-control40-orchestration-738bb25-prepared at738bb25e56b79aed13acf4c5b3577f926391f81a.
+No new active supervisor/guard dispatched; active7769270 unchanged. Longer proposal:
 docs/NATIVE-CONTROL40-OVERNIGHT-PROPOSAL-2026-10-23.json. Candidateguardreceipt
 runpod-control40-replacement-v4-PROPOSED.json is arithmetic-checked but NOT ARMED.
 Next: continue same BF1640; inspect real combined-readiness throughput; only use
