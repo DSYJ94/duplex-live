@@ -1,0 +1,166 @@
+{
+  "schema": "dl-native-preservation-current-readback-v1",
+  "at_utc": "2026-10-23T15:44:49.613789+00:00",
+  "source_main_before_commit": "0078cc8",
+  "model_execution_source_commit": "c9efaaac24d983342f7eded46617e6450bc102ce",
+  "original_native_full_Mac_readback": {
+    "at_utc": "2026-10-23T15:32:00.854113+00:00",
+    "files": 28470,
+    "bytes": 67764285650,
+    "symlinks": 8,
+    "failed": [],
+    "all_size_sha256_and_symlinks_match": true,
+    "whole_remote_project_backup": false,
+    "destination_gpu_restore_or_behavior_qualified": false,
+    "manifest_sha256": "4eac15590dc9def6dfb5e34b2cea92f30d9a067fabe0940e2876b6acdcbe6dce",
+    "evidence": {
+      "path": "runs/local-migration-20261023/native-full-Mac-integrity-refresh-v1.json",
+      "sha256": "0c85ca6bbba1f758e8c319a05ae01423a4e5eb773bb8e47fbd68e4902925c775"
+    }
+  },
+  "new_control40_engine_full_Mac_readback": {
+    "schema": "dl-control40-engine-full-backup-readback-v1",
+    "at_utc": "2026-10-23T15:43:33.269875+00:00",
+    "files": 82,
+    "bytes": 234689568,
+    "manifest_sha256": "8e14b636983ba4db9e31ca1179b00516383d8ccb5e56acc19d3b57e34b593d7e",
+    "all_files_sha256_match": true,
+    "prefix_identity_scope": "Logical tensor digest in engine manifest, not a separate prefix.pt file; native-control engine independently rebuilds and verifies prefix from pinned persona and voice",
+    "optimizer_updates": 0,
+    "training_approved": false,
+    "evidence": {
+      "path": "runs/local-migration-20261023/native-control40-engine-Mac-integrity-refresh-v1.json",
+      "sha256": "defa94310d27f769c234cf2c256f6773f333e1e1d50af13fd730bb686d30429f"
+    }
+  },
+  "new_control40_workset_full_Mac_readback": {
+    "schema": "dl-control40-workset-full-backup-readback-v1",
+    "at_utc": "2026-10-23T15:43:40.716212+00:00",
+    "inventory_sha256": "79401e2c1051361d150da644250e8acf87814bda1c48b167af8a34345214fa8f",
+    "archive_sha256": "87717cdf3e80977dbe78b18b0f1e75367411eab535d327dbee4679dcd9483616",
+    "archive_bytes": 1023720756,
+    "files": 7797,
+    "uncompressed_bytes": 8000842614,
+    "all_member_hashes_match": true,
+    "archive_extracted": false,
+    "training_approved": false,
+    "evidence": {
+      "path": "runs/local-migration-20261023/native-control40-workset-Mac-integrity-refresh-v1.json",
+      "sha256": "add69b5fd457339d3075feea344ff6dcf8becc41950017910c81b770d9e6222e"
+    }
+  },
+  "selected_Runpod_S3_readback": {
+    "schema": "dl-native-current-storage-access-and-selected-integrity-v1",
+    "at_utc": "2026-10-23T15:29:21.171414+00:00",
+    "bucket": "49yytzyoge",
+    "endpoint": "https://s3api-eur-is-1.runpod.io",
+    "archive_prefix_keys": [
+      "native-archive-v3/index.json",
+      "native-archive-v3/manifest.json",
+      "native-archive-v3/upload-pending-verification.json"
+    ],
+    "archive_prefix_listing_truncated": false,
+    "derived_tar_container_count": 0,
+    "selected_readbacks": [
+      {
+        "key": "native-archive-v3/manifest.json",
+        "bytes": 6413940,
+        "sha256": "4eac15590dc9def6dfb5e34b2cea92f30d9a067fabe0940e2876b6acdcbe6dce",
+        "expected_sha256": "4eac15590dc9def6dfb5e34b2cea92f30d9a067fabe0940e2876b6acdcbe6dce",
+        "matched": true,
+        "actual_GET": true
+      },
+      {
+        "key": "native-preservation-v3/runs/context-training-proof-7510331/adapters.safetensors",
+        "bytes": 7580728,
+        "sha256": "0310c2563988f8f59d942dce98119230016136f13fc9729ad1c2f398318e7cb5",
+        "expected_sha256": "0310c2563988f8f59d942dce98119230016136f13fc9729ad1c2f398318e7cb5",
+        "matched": true,
+        "actual_GET": true
+      },
+      {
+        "key": "native-preservation-v3/runs/context-training-proof-7590052/training-state.pt",
+        "bytes": 22948619,
+        "sha256": "6a9fc6cb0949d1562f654af74cb6e86a827a0214a486f869e7bd92b1ae0b63b4",
+        "expected_sha256": "6a9fc6cb0949d1562f654af74cb6e86a827a0214a486f869e7bd92b1ae0b63b4",
+        "matched": true,
+        "actual_GET": true
+      },
+      {
+        "key": "migration/native-control40-precise-pilot-v2/numerical/numerical.json",
+        "bytes": 262970,
+        "sha256": "bdf4ac935249b7e5cd31dbbd1936389ce8b537f2bb7fb44f7b273bff809413af",
+        "expected_sha256": "bdf4ac935249b7e5cd31dbbd1936389ce8b537f2bb7fb44f7b273bff809413af",
+        "matched": true,
+        "actual_GET": true
+      }
+    ],
+    "all_selected_readbacks_match": true,
+    "S3_and_mounted_network_volume_are_same_storage": true,
+    "independent_full_native_backup_domains": [
+      "verified Mac native archive",
+      "Runpod network volume49yytzyoge; S3 is an access path"
+    ],
+    "OneDrive_upload_independently_verified": false,
+    "whole_native_archive_rehashed_this_turn": false,
+    "broader_Mac_source_backup": "PARTIAL",
+    "provider_key_transferred_or_recorded": false,
+    "no_new_GPU_or_storage_resource": true,
+    "evidence": {
+      "path": "runs/local-migration-20261023/native-storage-access-and-selected-integrity-v1.json",
+      "sha256": "a2949be9e8a59cc5a9b78116eac79dc136cd2efce8dd39007cab823f36599db3"
+    }
+  },
+  "remote_full_archive_prior_readback": "docs/NATIVE-RUNPOD-ARCHIVE-VERIFICATION-2026-10-21.json",
+  "remote_full_archive_rehashed_today": false,
+  "remote_archive_container_state": {
+    "derived_tar_containers": 0,
+    "reason": "unpack_native_archive.py --remove-derived-tars removes containers only after destination member hashes pass; extracted files remain in native-preservation-v3",
+    "metadata_prefix": "native-archive-v3",
+    "extracted_prefix": "native-preservation-v3"
+  },
+  "storage_independence": {
+    "verified_domains": [
+      "Mac native preservation tree",
+      "Runpod network volume 49yytzyoge"
+    ],
+    "S3_is_same_network_volume_not_third_copy": true,
+    "provider_documentation": "https://docs.runpod.io/storage/s3-api",
+    "OneDrive_cloud_upload_independently_verified": false,
+    "ephemeral_runtime_layout_is_not_independent_backup": true,
+    "broader_stopped_Mac_source_backup": "PARTIAL"
+  },
+  "live_observation": {
+    "at_utc": "2026-10-23T15:43:01.308415+00:00",
+    "processes": {
+      "21063": {
+        "state": "S",
+        "birth": 20582160
+      },
+      "4111": {
+        "state": "T",
+        "birth": 18985221
+      },
+      "14873": {
+        "state": "R",
+        "birth": 20219598
+      }
+    },
+    "gradient": {
+      "cases": 24,
+      "complete40": false,
+      "passed": false,
+      "optimizer_updates": 0
+    },
+    "gpu": "NVIDIA A100-SXM4-80GB, 10 %, 29929 MiB",
+    "evidence": {
+      "path": "runs/local-migration-20261023/native-control40-live-observation-1543-v1.json",
+      "sha256": "b7ce8a620a930d82677714c8b82044c03493a8413e628566629b0d8c9c96b97c"
+    }
+  },
+  "new_optimizer_updates": 0,
+  "model_or_loss_changed": false,
+  "new_GPU_or_storage_purchased": false,
+  "model_adopted": false,
+  "whole_goal_complete": false
+}

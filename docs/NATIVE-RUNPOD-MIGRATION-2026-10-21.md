@@ -256,3 +256,20 @@ The verifier rejects missing/changed regular bytes, excluded paths and parent
 symlink escapes, and checks the eight archived symlink targets without executing
 them. It never submits jobs, transfers data or grants model approval. Historical
 manifests/receipts remain immutable. New inventory/report filenames are required.
+
+
+## Preservation refresh — 23 October 2026 15:45 UTC
+
+[The current readback receipt](NATIVE-PRESERVATION-READBACK-2026-10-23.json) records
+a complete fresh Mac rehash of the original 67.76 GB native archive, all 82 new
+control40 engine files, and all 7,797 files inside the 1.02 GB compressed control40
+workset (8.00 GB uncompressed). All hashes match. Selected actual S3 GETs also
+match the original manifest, native520 adapter, native7590052 optimizer/RNG state
+and complete numerical report. This does not claim a fresh full remote rehash.
+
+The independently verified storage domains are Mac and Runpod volume49yytzyoge.
+Runpod S3 and the mounted network volume expose the same files; S3 is not a third
+backup. OneDrive cloud upload is not independently verified. The broader stopped
+Mac source backup remains partial. Derived tar containers were removed only after
+extracted member verification; the extracted native preservation tree remains.
+No new resource or destructive cleanup occurred in this refresh.

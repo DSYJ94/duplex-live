@@ -1,3 +1,50 @@
+# LOCAL —24/40 audit live; full Mac native/workset/engine backups rehashed (23 October15:45UTC)
+
+LOCAL sole executor; goal ACTIVE. Main0078cc8 before this commit. Actual SSH
+15:43:01UTC confirms SAME supervisor21063/birth20582160 S, old4111/birth18985221
+T/paused and CUDA14873/birth20219598 R/live. Full40 gradient24/40 recorded,
+0optimizerupdates; no child restart, new submission, model/loss change or adoption.
+Immutable model execution C9 c9efaaac24d983342f7eded46617e6450bc102ce unchanged;
+active orchestration7769270, prepared later-stage738bb25 still not dispatched.
+
+Fresh complete Mac hash readbacks:
+- Original native archive:28,470files /67,764,285,650B +8links, all size/SHA/link
+  targets match at15:32UTC; manifest4eac15590dc9def6dfb5e34b2cea92f30d9a067fabe0940e2876b6acdcbe6dce.
+- New control40 Engine:all82files /234,689,568B match. Includes40inputs,
+  40teacher-forced WAVs, voice.pt and engine-inputs.json. Prefix SHA is a logical
+  tensor identity rebuilt by the engine verifier, NOT a separate prefix.pt file.
+  Engine manifest8e14b636983ba4db9e31ca1179b00516383d8ccb5e56acc19d3b57e34b593d7e.
+- New control40 workset:compressed1,023,720,756B archive SHA
+  87717cdf3e80977dbe78b18b0f1e75367411eab535d327dbee4679dcd9483616;
+  streamed and independently hashed ALL7,797members /8,000,842,614B without
+  extraction. Exact inventory79401e2c1051361d150da644250e8acf87814bda1c48b167af8a34345214fa8f.
+- Actual Runpod S3 GET hashes match original manifest, parent520adapter,
+  candidate7590052full optimizer/RNG training-state, completed40 numerical report.
+  This is SELECTED remote verification, NOT a fresh whole67GB remote rehash.
+
+Two independently verified storage domains:Mac +Runpod volume49yytzyoge.
+S3 and /workspace access SAME files; not a third independent backup. OneDrive
+upload not independently verified. Broader stopped Mac source backup stillPARTIAL.
+Old35tar containers are intentionally absent after extraction/member rehash;
+extracted native-preservation-v3 remains, metadata native-archive-v3 remains.
+No destructive cleanup/new volume/purchase. Evidence:
+docs/NATIVE-PRESERVATION-READBACK-2026-10-23.json.
+
+Guard16271 prepaid15 remains ACTIVE, exactPod4yx8vahdmjsylx, deletion23:22:37.9UTC,
+retaining49yytzyoge, maxproject64.29071830424945 <100USD. Supervisor deadline STILL
+21:30; backup85270 to22:20; proxy85512/tunnel3455 to22:19; evaluator17063 waits
+all7actualexit0 +upstreamexit, latestlaunch21:37/end22:17. Prepared later-stage
+extension requires currentfull40 completion and actualretirement4111; never nest
+paused gradient supervisors or replay completed optimizer steps. Specific20USD
+payment and new40synthetic-speech payload approvals remain pending, not inferred.
+
+Next:complete same40 BF16 ->retained154/native49/control40 readiness ->ONE8 from
+native520 ->independent fullstate/native restore ->strictproof ->completepaired
+native20 +independent speech20/all4ordinary ->eligible sealedfresh40. No subset
+acceptance, unchanged extension or adoption. Exact eval prompts and unresolved
+causes were explained to human; no claim batchsize or convergence caused failure.
+Unrelated local files/edits preserved and excluded from this commit.
+
 # LOCAL —21/40 live; prepaid15 guard ACTIVE, no payment (23 October15:19UTC)
 
 LOCAL sole executor; goal ACTIVE. Main260fb64 before this commit. Immutable GPU
