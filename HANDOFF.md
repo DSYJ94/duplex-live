@@ -1,7 +1,7 @@
 # LOCAL — provider deleted GPU; wallet funding needed; logs recovered via S3 (23 October)
 
-NEWEST authoritative entry. LOCAL sole executor; goal ACTIVE, not complete. NO GPU
-or Slurm training running, no new optimizer updates, no new candidate. Do not trust
+NEWEST authoritative entry. LOCAL sole executor; goal ACTIVE, not complete. No owned
+Runpod GPU remains running; no new Slurm submission, optimizer update or candidate. Do not trust
 stale controller.json phase as a live process. Podsjf72o8v64mjvb is ABSENT/GET404;
 official list-pods has only unrelated EXITED Aurium Pods, untouched. Browser audit
 log records Runpod Support deleted this Pod23Oct07:44:27BST =06:44:27UTC. Account
