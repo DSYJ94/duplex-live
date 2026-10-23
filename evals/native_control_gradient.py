@@ -15,6 +15,14 @@ import subprocess
 from data.synthetic.native_control_render import sha256
 
 
+def implementations():
+    names = ('native_control_gradient.py', 'native_control_numerical.py', 'native_control_engine.py',
+             'context_native_stream_gradient.py', 'context_native_audio49_training.py',
+             'context_native_audio49_loss.py', 'context_adapter_load.py', 'personaplex_adapters.py',
+             'personaplex_depth.py', 'context_execution.py')
+    return {name: sha256(Path(__file__).with_name(name)) for name in names}
+
+
 def numerical_gate(folder, engine, parent):
     path = folder / 'numerical.json'
     report = json.loads(path.read_text())
@@ -95,7 +103,9 @@ def run(lm, engine, numerical, out, parent, adapter):
                   parent=parent, adapter=adapter, execution=execution, cases=[], passed=False, complete40=False,
                   engine_report_sha256=sha256(engine / 'engine-inputs.json'), numerical_report_sha256=sha256(numerical / 'numerical.json'),
                   code_sha256=sha256(Path(__file__)), source_commit=subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip(),
+                  implementation_pins=implementations(),
                   trainable_parameters=1894400, optimizer_updates=0, checkpoint_written=False,
+                  native_execution_profile='BF16 native recorded-call autograd; compile and CUDA graphs disabled as in retained trainer',
                   training_approved=False, behavior_qualified=False, original154_and_old49_readiness_still_required=True,
                   stream_autograd_truncation='Recorded native call boundaries; exact cache values; no cache recomputation')
     for record in manifest['cases']:
@@ -157,7 +167,9 @@ def main():
     args.out.mkdir(parents=True, exist_ok=False)
     from evals.native_control_numerical import load_model
     lm, parent, adapter = load_model(args)
-    run(lm, args.engine_inputs, args.numerical, args.out, parent, adapter)
+    from contextspan.moshi.utils.compile import no_compile, no_cuda_graph
+    with no_compile(), no_cuda_graph():
+        run(lm, args.engine_inputs, args.numerical, args.out, parent, adapter)
 
 
 if __name__ == '__main__':

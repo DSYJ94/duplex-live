@@ -34,6 +34,8 @@ def main():
     for name in ('source', 'python', 'inventory', 'compiler', 'codec-source', 'interleaver-source', 'model', 'assets', 'proof', 'out'):
         parser.add_argument('--' + name, type=Path, required=True)
     parser.add_argument('--source-commit', required=True)
+    parser.add_argument('--approved-cache', type=Path,
+                        help='Reuse only a complete cache after independent full40 revalidation')
     parser.add_argument('--deadline-utc', required=True)
     args = parser.parse_args()
     deadline = datetime.fromisoformat(args.deadline_utc.replace('Z', '+00:00')).timestamp()
@@ -69,7 +71,8 @@ def main():
         prefix + ['evals.cuda_linker_path', '--out', str(args.out / 'driver')],
         cwd=args.source, env=env, text=True).strip()
     state['native_cuda_environment'] = {k: env[k] for k in ('CPATH', 'TRITON_PTXAS_PATH', 'TRITON_LIBCUDA_PATH')}
-    shared = ['--cache', str(args.out / 'codes'), '--assets', str(args.assets),
+    cache = args.approved_cache if args.approved_cache is not None else args.out / 'codes'
+    shared = ['--cache', str(cache), '--assets', str(args.assets),
               '--base', str(args.model), '--proof', str(args.proof)]
     stages = [
         ('codec', prefix + ['evals.native_control_cache', '--data', 'runs/native-control3-webrtc-postteacher-20261022-v1/converted',
@@ -80,6 +83,9 @@ def main():
         ('numerical', prefix + ['evals.native_control_numerical'] + shared +
          ['--engine-inputs', str(args.out / 'engine'), '--out', str(args.out / 'numerical')]),
     ]
+    if args.approved_cache is not None:
+        stages[0] = ('codec_verify', prefix + ['evals.native_control_cache', '--verify', str(cache)])
+        state['reused_complete_cache'] = str(cache)
     child = None
     def terminate(*_):
         if child is not None and child.poll() is None:

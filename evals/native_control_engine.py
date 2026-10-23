@@ -11,11 +11,13 @@ import os
 from pathlib import Path
 import subprocess
 import sys
+import time
 
 from data.synthetic.native_control_render import sha256
 from evals.native_control_cache import verify as verify_cache
 
-SCHEMA = 'dl-native-control40-engine-inputs-v1'
+SCHEMA = 'dl-native-control40-engine-inputs-v2'
+GRAPH_POLICY = 'published-native-compile-and-cuda-graphs-with-math-attention'
 DELAYS = [0,0,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1]
 
 
@@ -77,16 +79,15 @@ def validate_trace(clean,prefix,saved,calls,delay_sequence,initial):
                 assistant_acoustic_source_frames_per_head=frames,native_depth_target_mask_approval_required=True,training_approved=False)
 
 
-def trace(engine,voice,clean,pcm):
+def trace(engine,voice,clean,pcm,label=None):
     import numpy as np
     import torch
-    from contextspan.moshi.utils.compile import no_compile,no_cuda_graph
     from evals.lychee_context import BASE_INSTRUCTIONS
     lm=engine.lm;engine.reset()
     state=engine.lm_gen._streaming_state;gen=engine.lm_gen
     direct,graph,step,prepare=lm.forward_codes,state.graphed_main,gen.step,gen.prepare_step_input
     chunks,calls,user,provided,targets,waves=[],[],[],[],[],[]
-    phase='prefix';frame=-1;cursor=0
+    phase='prefix';frame=-1;cursor=0;began=time.monotonic()
     def capture(original,route):
         def wrapped(value):
             nonlocal cursor
@@ -114,19 +115,26 @@ def trace(engine,voice,clean,pcm):
     lm.forward_codes,state.graphed_main=capture(direct,'direct'),capture(graph,'graph')
     gen.step,gen.prepare_step_input=forced,prepared
     try:
-        with torch.no_grad(),no_compile(),no_cuda_graph():
+        with torch.no_grad():
             engine.set_persona(BASE_INSTRUCTIONS,voice)
+            print(json.dumps(dict(native_trace=label,phase='persona_complete',elapsed_seconds=time.monotonic()-began)),flush=True)
             for frame in range(clean.shape[1]):
                 phase='live';result=engine.step(pcm[frame*1920:(frame+1)*1920])
                 packet=np.asarray(result['agent_pcm'],dtype=np.float32)
                 if packet.shape!=(1920,) or not np.isfinite(packet).all():
                     raise ValueError('Native teacher decoder lost a complete real PCM frame')
                 waves.append(packet.copy())
+                if (frame+1)%128==0:
+                    print(json.dumps(dict(native_trace=label,real_frames=frame+1,total_frames=clean.shape[1],elapsed_seconds=time.monotonic()-began)),flush=True)
     finally:
         lm.forward_codes,state.graphed_main=direct,graph
         gen.step,gen.prepare_step_input=step,prepare
+    execution=dict(cuda_main_graph_captured=graph._graph is not None,graph_policy=GRAPH_POLICY,
+                   elapsed_seconds=time.monotonic()-began)
+    if not execution['cuda_main_graph_captured']:
+        raise ValueError('Actual published native CUDA graph must execute; no silent eager fallback')
     return dict(inputs=torch.cat(chunks,dim=2),streamed_user_codes=torch.cat(user,dim=2),
-                provided=torch.cat(provided,dim=2),current_targets=torch.cat(targets,dim=2)),calls,np.concatenate(waves)
+                provided=torch.cat(provided,dim=2),current_targets=torch.cat(targets,dim=2)),calls,np.concatenate(waves),execution
 
 
 def run(engine,voice,cache,report,out):
@@ -148,14 +156,14 @@ def run(engine,voice,cache,report,out):
                 prefix_sha256=digest(prefix),voice_sha256=sha256(out/'voice.pt'),execution=snapshot(engine.lm),
                 cases=[],complete40=False,passed=False,optimizer_updates=0,training_approved=False,
                 numerical_gradient_and_behavior_approval_required=True,teacher_text_and_agent_audio_forced=True,
-                latency_qualified=False,original_source_pcm_or_cache_changed=False)
+                latency_qualified=False,original_source_pcm_or_cache_changed=False,native_graph_policy=GRAPH_POLICY)
     for entry,source in zip(report['examples'],conversion['accepted']):
         folder=out/entry['id'];folder.mkdir()
         clean=torch.load(cache/entry['file'],weights_only=True,map_location='cpu')['codes'][0]
         audio,rate=sf.read(source['path'],dtype='float32',always_2d=True)
         if rate!=24000 or audio.shape!=(clean.shape[1]*1920,2):
             raise ValueError('Every original stereo PCM frame must be consumed')
-        saved,calls,wave=trace(engine,voice,clean,audio[:,1])
+        saved,calls,wave,execution=trace(engine,voice,clean,audio[:,1],entry['id'])
         codes,mask=assemble(clean,prefix,saved['streamed_user_codes'])
         original,_=assemble(clean,prefix)
         saved.update(codes=codes,mask=mask,targets=codes[0],offline_inputs=delayed(original,_delay_sequence,initial))
@@ -165,7 +173,7 @@ def run(engine,voice,cache,report,out):
         record=dict(id=entry['id'],family=entry['family'],split='train',calls=calls,ownership=ownership,
                     file='inputs.pt',sha256=sha256(folder/'inputs.pt'),source_cache_sha256=entry['sha256'],
                     audio_file='teacher-forced-native.wav',audio_sha256=sha256(folder/'teacher-forced-native.wav'),
-                    audio_peak=float(np.abs(wave).max()),passed=True)
+                    audio_peak=float(np.abs(wave).max()),native_execution=execution,passed=True)
         result['cases'].append(record)
         (out/'engine-inputs.json').write_text(json.dumps(result,indent=2)+'\n')
         print(json.dumps(dict(id=entry['id'],complete=len(result['cases']),ownership_passed=True)),flush=True)
@@ -193,6 +201,7 @@ def verify(cache,out):
             or result['optimizer_updates']!=0 or result['training_approved'] is not False
             or result['all_model_parameters_unchanged'] is not True
             or result['teacher_text_and_agent_audio_forced'] is not True
+            or result['native_graph_policy']!=GRAPH_POLICY
             or result['numerical_gradient_and_behavior_approval_required'] is not True
             or result['latency_qualified'] is not False or result['original_source_pcm_or_cache_changed'] is not False
             or manifest['source_commit']!=SOURCE_COMMIT
@@ -219,6 +228,9 @@ def verify(cache,out):
         if (row['file']!='inputs.pt' or row['audio_file']!='teacher-forced-native.wav'
                 or row['family']!=entry['family'] or row['split']!='train'
                 or row['source_cache_sha256']!=entry['sha256'] or row['passed'] is not True
+                or row['native_execution']['graph_policy']!=GRAPH_POLICY
+                or row['native_execution']['cuda_main_graph_captured'] is not True
+                or not 0<row['native_execution']['elapsed_seconds']<float('inf')
                 or sha256(folder/row['file'])!=row['sha256'] or sha256(folder/row['audio_file'])!=row['audio_sha256']):
             raise ValueError('Native control trace artifact or source identity changed')
         clean=torch.load(cache/entry['file'],weights_only=True,map_location='cpu')['codes'][0]
@@ -264,7 +276,6 @@ def main():
     configure_cuda_toolkit()
     import torch
     import contextspan.model.engine as native
-    from contextspan.moshi.utils.compile import no_compile,no_cuda_graph
     from evals.context_adapter_load import before_engine
     from evals.context_spanning_probe import audited_loads
     from evals.moshi_training_smoke import tensor_hashes
@@ -272,7 +283,7 @@ def main():
     from evals.context_native_audio49_data import digest
     math_attention();torch.backends.cuda.matmul.allow_tf32=False;torch.backends.cudnn.allow_tf32=True
     native.seed_all(42424242);loads=[]
-    with before_engine(native,a.proof) as adapter,audited_loads(loads),no_compile(),no_cuda_graph():
+    with before_engine(native,a.proof) as adapter,audited_loads(loads):
         engine=native.Engine(checkpoint=str(weights/'context_spanning_7b.pt'),device='cuda',temp=.8,temp_text=.7)
     final=[r for r in loads if r['module_identity']==id(engine.lm)]
     if not final or not final[-1]['strict'] or final[-1]['missing'] or final[-1]['unexpected']:
