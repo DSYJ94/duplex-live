@@ -638,7 +638,10 @@
     "CPU_tests_passed": 45,
     "GPU_tested": false,
     "fresh_persistent_session_requires_explicit_scope_and_review_quality_binding": true,
-    "portable_fresh_candidate_review_adapter_not_yet_implemented": true,
+    "portable_fresh_candidate_review_adapter_not_yet_implemented": false,
+    "portable_review_and_complete40_preflight_source": "f466d93f216929f582cda143f546d9e0591260f3",
+    "portable_review_and_preflight_focused_CPU_tests_passed": 62,
+    "portable_fresh_inference_collector_still_needed": true,
     "heldout_audio_or_thresholds_changed": false
   }
 }

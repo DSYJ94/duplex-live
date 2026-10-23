@@ -1,3 +1,53 @@
+# LOCAL — portable review gate and full40 preflight prepared; funding still pending (23 October08:35 London)
+
+NEWEST authoritative entry. LOCAL remains sole executor; goal ACTIVE and incomplete.
+Previous conversational turn explained the curriculum but made no training progress.
+This turn completed and committed concrete CPU preparation at EXACT source
+f466d93f216929f582cda143f546d9e0591260f3. No new optimizer update, candidate,
+GPU submission, external speech generation or heldout inference occurred.
+
+Portable review schema dl-native-control40-development-review-v1 now uses actual
+checkpoint directories, with no fabricated Slurm/job identities. It requires the
+strict independent full retained154/native49/control40 CUDA state/Adam/RNG/native
+restore; complete paired native20 and independent speech20; all10 candidate cases
+reviewed; and unchanged all4 ordinary reasoning/speech gates. This authorizes only
+fresh measurement, never extension/adoption. No actual candidate/review exists yet.
+Both baseline520 and candidate checkpoint identities are checked; all actor/case
+report/audio/user-PCM hashes and cold/intervening/reused parity artifacts are bound.
+Parity is independently recomputed from actual PCM/text tokens/delayed inputs.
+Speech source and completed native controller hashes are bound; empty ordinary
+speech cannot pass via vacuous timestamp flags. Real Git blobs for27 native and3
+independent speech implementation files matched sourcef466d93 after commit.
+
+Separate portable full40 preflight schedules all20 fixed questions for each model,
+using actual proof paths and explicit serial GPU0/shared separate ASR process.
+It validates the complete native review BEFORE fresh source waveform/quality reads,
+requires original native520 data/voice/protocol and complete independently reapproved
+inputs, and passes no scoring answers. Old numeric/Slurm scheduler stays intact.
+All62 focused CPU tests pass, including existing legacy review/resource/clock/
+session/budget guards and new artifact mutation/partial/NaN/forcing/silence tests.
+No GPU acceptance, native improvement or fresh qualification is established.
+Portable fresh INFERENCE COLLECTOR remains to be implemented; preflight is not it.
+
+Official billing page refreshed this turn still shows balance-0.09USD and Auto-Pay
+disabled; existing15USD funding request remains pending, not repeated. Complete
+current list-pods again contains ONLY the4 unrelated EXITED Aurium Pods; no duplex
+GPU, no duplicate job, no changes to unrelated resources. Volume49yytzyoge100GB
+read back present. Existing S3/Mac archive and recovered4-file inventories unchanged.
+Old sjf72o8v64mjvb, controller11814/numerical11923 and watcher31679 remain terminal;
+the raw interrupted controller phase is stale, not a live process. Actual old GPU
+source20a35783f0e38a5156a12bc503d4803ad810cd3d never reached BF16/training/restore.
+
+Next safe local work: implement portable full40 fresh collector behind this gate.
+On funding: recheck stock/price/account credit, single bounded replacement within
+remaining12.636916492575253USD of50, arm live new costguard before work, rebuild
+ephemeral runtime/vendor/canonical aliases, NEW outputroot; resume full40 numerical,
+independent BF16, retained154/native49/control40 readiness, new8 from native520,
+independent restore, complete native20/speech20/review, then sealed paired fresh40.
+No training gate weakened. Broader32 reasoning and microturn/backchannel curriculum
+remains unrecorded/untrained. Latest model still unadopted7590052/Adam528.
+Unrelated timeline.pyc, capability-retention probe files and roadmap.html preserved.
+
 # LOCAL — provider deleted GPU; wallet funding needed; logs recovered via S3 (23 October)
 
 NEWEST authoritative entry. LOCAL sole executor; goal ACTIVE, not complete. No owned
