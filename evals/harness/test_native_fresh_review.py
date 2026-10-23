@@ -50,10 +50,10 @@ class NativeFreshReviewTests(unittest.TestCase):
 
     def test_rehashed_diagnostic_runtime_cannot_silently_become_stock_fresh_runtime(self):
         from evals.moshi_model_download import sha256
-        for diagnostic in ('native_sampling_diagnostic','runtime_precision_diagnostic'):
+        for diagnostic in ('native_sampling_diagnostic','native_runtime_comparison_only','runtime_precision_diagnostic'):
             review=self.fresh();p=self.runs/'native-v2-development-200_0/report.json';r=json.loads(p.read_text())
-            r['loading'].pop('native_sampling_diagnostic',None);r['loading']['adapter'].pop('runtime_precision_diagnostic',None)
-            target=r['loading'] if diagnostic=='native_sampling_diagnostic' else r['loading']['adapter']
+            r['loading'].pop('native_sampling_diagnostic',None);r['loading'].pop('native_runtime_comparison_only',None);r['loading']['adapter'].pop('runtime_precision_diagnostic',None)
+            target=r['loading'] if diagnostic!='runtime_precision_diagnostic' else r['loading']['adapter']
             target[diagnostic]=dict(diagnostic_only=True)
             p.write_text(json.dumps(r));review['cases'][0]['run_report_sha256']=sha256(p)
             with self.subTest(diagnostic=diagnostic),self.assertRaises(ValueError):self.check(review)

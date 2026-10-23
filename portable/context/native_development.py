@@ -32,7 +32,7 @@ def utc():
     return datetime.now(timezone.utc).isoformat()
 
 
-def command(case, proof, out, asr_python):
+def command(case, proof, out, asr_python, runtime_profile='container-default'):
     data = 'native-curriculum-v2-data-7541875' if case['source'] == 'native-v2' else 'recovery-data-7407554'
     result = ['--assets', str(ROOT/'runs/context-spanning-assets-7454205/manifest.json'),
               '--base', str(BASE), '--data', str(ROOT/'runs'/data),
@@ -43,6 +43,7 @@ def command(case, proof, out, asr_python):
               '--voice-reference', str(ROOT/'runs/voice-quality-7414595/codec/reference.wav'),
               '--voice-provenance', str(ROOT/'runs/voice-quality-7414595/codec/report.json'),
               '--out', str(out), '--backend-mode', case['backend']]
+    if runtime_profile!='container-default':result+=['--native-runtime-profile',runtime_profile]
     if case['backend'] == 'observe-only':
         result += ['--train-history']
     else:
@@ -88,6 +89,7 @@ def actor(args):
                  started_utc=utc(), phase='parity', cases=[], optimizer_updates=0,
                  complete10=False, behavior_approved=False, training_approved=False,
                  provider_credential_present=False)
+    state['runtime_profile']=args.runtime_profile
     atomic(out/'execution.json', state)
     session = NativeEvalSession()
     def run(case, folder):
@@ -98,7 +100,7 @@ def actor(args):
             raise RuntimeError('Pinned native evaluation source changed')
         os.environ['CUDA_VISIBLE_DEVICES'] = (str(args.device) if case['backend']=='observe-only'
                                              else str(args.device)+','+str(1-args.device))
-        probe(command(case, PROOFS[args.role], folder, args.asr_python), session=session)
+        probe(command(case, PROOFS[args.role], folder, args.asr_python,args.runtime_profile), session=session)
     try:
         run(plan['cases'][0], out/'parity-cold')
         run(plan['cases'][1], out/'parity-intervening')
@@ -148,6 +150,7 @@ def main():
     ap.add_argument('--pod-id', required=True)
     ap.add_argument('--role', choices=tuple(PROOFS))
     ap.add_argument('--device', type=int, choices=(0,1))
+    ap.add_argument('--runtime-profile',choices=('container-default','archive-tf32-high-v1'),default='container-default')
     args = ap.parse_args()
     args.deadline = datetime.fromisoformat(args.deadline_utc.replace('Z','+00:00')).timestamp()
     if args.role:
@@ -170,6 +173,8 @@ def main():
                  phase='independent_restore', children=[], complete_paired20=False,
                  optimizer_updates=0, behavior_approved=False, training_approved=False,
                  provider_credential_transferred=False)
+    state['runtime_profile']=args.runtime_profile
+    state['runtime_comparison_only']=args.runtime_profile!='container-default'
     atomic(args.out/'execution.json',state)
     children = []
     def stop(*_):
@@ -196,6 +201,7 @@ def main():
                    '--out',str(args.out),'--asr-python',str(args.asr_python),
                    '--deadline-utc',args.deadline_utc,'--pod-id',args.pod_id,
                    '--role',role,'--device',str(device)]
+            cmd+=['--runtime-profile',args.runtime_profile]
             log = (args.out/(role+'.log')).open('x')
             child = subprocess.Popen(cmd,cwd=args.source,env=env,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
             log.close()

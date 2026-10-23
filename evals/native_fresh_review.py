@@ -29,7 +29,8 @@ def validate_review(review, proof, parent, identity):
     for index in range(10):
         report=Path(proof).parent/('native-v2-development-'+str(review['native_evaluation_array_job'])+'_'+str(index))/'report.json'
         loading=json.loads(report.read_text())['loading']
-        if loading.get('native_sampling_diagnostic') or loading['adapter'].get('runtime_precision_diagnostic'):
+        if (loading.get('native_sampling_diagnostic') or loading.get('native_runtime_comparison_only')
+                or loading['adapter'].get('runtime_precision_diagnostic')):
             raise ValueError('Fresh runtime does not implement diagnostic sampler/precision profiles; independently reapprove an explicit runtime version first')
     return validated
 

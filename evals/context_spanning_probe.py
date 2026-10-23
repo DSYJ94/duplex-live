@@ -76,6 +76,8 @@ def _main(argv=None, session=None):
     ap.add_argument('--native-precision-diagnostic',action='store_true')
     ap.add_argument('--native-precision-no-tf32',action='store_true')
     ap.add_argument('--native-precision-diagnostic-case',type=int,choices=range(16))
+    ap.add_argument('--native-runtime-profile',choices=('container-default','archive-tf32-high-v1'),default='container-default',
+        help='Explicit read-only runtime comparison with archived global TF32 policy; no training/adoption approval')
     args=ap.parse_args(argv)
     if (args.persona_profile=='records-request-only')!=args.native_persona_diagnostic:
         ap.error('Scoped records persona requires the explicit locked complete10 inference diagnostic')
@@ -106,6 +108,14 @@ def _main(argv=None, session=None):
     import numpy as np
     import soundfile as sf
     import torch
+    if args.native_runtime_profile=='archive-tf32-high-v1':
+        if args.native_precision_diagnostic or args.math_attention:
+            raise ValueError('Do not combine the archived runtime comparison with another precision diagnostic')
+        # Use only the existing legacy setter, as required by this pinned NGC
+        # build. Do not mix it with set_float32_matmul_precision/new precision APIs.
+        torch.backends.cuda.matmul.allow_tf32=True
+        if not torch.backends.cudnn.allow_tf32 or torch.get_float32_matmul_precision()!='high':
+            raise RuntimeError('Archived global matmul high/cudnn TF32 policy not reproduced')
     if args.math_attention:
         from evals.context_execution import math_attention
         math_attention()
@@ -264,6 +274,8 @@ def _main(argv=None, session=None):
         'persona_text_sha256':hashlib.sha256(persona.encode()).hexdigest(),
         'lookup_delivery_minimum_delay_s':args.lookup_delivery_delay_s,
         'torch':torch.__version__,'torch_file':torch.__file__,'cuda':torch.version.cuda,
+        'native_runtime_profile':args.native_runtime_profile,
+        'native_runtime_comparison_only':args.native_runtime_profile!='container-default',
         **({'persistent_evaluation':session.receipt()} if session is not None else {}),
         **({'native_sampling_diagnostic':sampling} if sampling else {})}
     if args.ret_logit_bias:

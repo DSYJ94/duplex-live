@@ -61,7 +61,8 @@ class NativeEvalSession:
                 or args.voice != 'accepted-synthetic'):
             raise ValueError('Persistent evaluation requires the unchanged native development profile')
         binding = tuple(str(getattr(args, n)) for n in
-                        ('assets', 'base', 'adapter_proof', 'voice_reference', 'voice_provenance'))
+                        ('assets', 'base', 'adapter_proof', 'voice_reference', 'voice_provenance')) + (
+                            getattr(args,'native_runtime_profile','container-default'),)
         from evals.context_execution import snapshot
         if self.engine is None:
             self.engine, self.records, self.adapter = factory()
