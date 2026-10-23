@@ -1,7 +1,9 @@
-"""Preserve an exact running gradient child and finish its original seven-stage pilot.
+"""Preserve one exact running child and finish its original seven-stage pilot.
 
 Only the superseded supervisor is paused. Its child's actual Linux exit status
 and complete40 report are required before the original remaining commands run.
+Later readiness/fit/restore stages may be preserved after the old gradient parent
+has actually retired. Nested takeover of two paused gradient supervisors rejects.
 GPU execution remains in the original immutable checkout; no model is adopted.
 """
 import argparse
@@ -22,15 +24,22 @@ from portable.context.native_preflight_takeover import exact, pause, process, re
 
 
 def original_gate(c, pid, child, commit, pod):
+    try:index=STAGES.index(c['phase'])
+    except ValueError:raise ValueError('An actual original pilot stage must be running') from None
     if (c['pid'] != pid or c['source_commit'] != commit or c['pod_id'] != pod
-            or c['phase'] != STAGES[2] or c['passed'] is not False
-            or c['optimizer_update_limit'] != 8 or len(c['stages']) != 3
-            or [r['name'] for r in c['stages']] != list(STAGES[:3])
-            or any(r.get('exit_code') != 0 for r in c['stages'][:2])
-            or c['stages'][2]['pid'] != child or 'exit_code' in c['stages'][2]
+            or index < 2 or c['passed'] is not False
+            or c['optimizer_update_limit'] != 8 or len(c['stages']) != index+1
+            or [r['name'] for r in c['stages']] != list(STAGES[:index+1])
+            or any(r.get('exit_code') != 0 for r in c['stages'][:index])
+            or c['stages'][index]['pid'] != child or 'exit_code' in c['stages'][index]
             or list(c['planned_commands']) != list(STAGES)
             or any(r['command'] != c['planned_commands'][r['name']] for r in c['stages'])):
-        raise ValueError('Exact live gradient stage and original complete bounded chain required')
+        raise ValueError('Exact live stage, all passed predecessors and original complete bounded chain required')
+    if c['schema']=='dl-native-control40-pilot-supervisor-takeover-v1':
+        if index==2 or c.get('old_supervisor_retired_after_child_exit') is not True:
+            raise ValueError('Nested paused-gradient supervisors must not be retired by this transition')
+    elif c['schema']!='dl-native-control40-precise-pilot-controller-v1':
+        raise ValueError('Explicit original pilot or safely retired-parent takeover schema required')
     return c
 
 
@@ -84,6 +93,7 @@ def main():
         raise ValueError('Original controller differs from the independently observed snapshot')
     original = original_gate(json.loads((a.original/'controller.json').read_text()),
                              a.controller_pid, a.child_pid, a.source_commit, a.pod_id)
+    index=STAGES.index(original['phase'])
     source = Path(original['execution_source'])
     orchestration = Path(__file__).resolve().parents[2]
     orchestration_commit = git(orchestration, 'rev-parse', 'HEAD')
@@ -94,10 +104,10 @@ def main():
     clean()
     exact(a.controller_pid, a.controller_birth)
     exact(a.child_pid, a.child_birth)
-    if original['stages'][2]['birth'] != a.child_birth:
+    if original['stages'][index]['birth'] != a.child_birth:
         raise ValueError('Recorded child birth changed')
     cmdline = (Path('/proc')/str(a.child_pid)/'cmdline').read_bytes().rstrip(b'\0').decode().split('\0')
-    if cmdline != original['stages'][2]['command']:
+    if cmdline != original['stages'][index]['command']:
         raise ValueError('Actual child command differs from approved original')
     compiler = json.loads(a.compiler.read_text())
     if (compiler['packages_changed'] is not False or not compiler['actual_compiled_bf16_gpu_kernel_passed']
@@ -115,13 +125,17 @@ def main():
     # the existing evaluation dispatcher without changing any training argument.
     (a.out/'training').symlink_to(a.original/'training', target_is_directory=True)
     state = copy.deepcopy(original)
+    # The previous supervisor's zero was an initial observation, not a live fit
+    # counter. Actual completed optimizer clocks belong to the training report.
+    state.pop('optimizer_updates',None)
     state.update(schema='dl-native-control40-pilot-supervisor-takeover-v1', pid=os.getpid(),
                  deadline_utc=a.deadline_utc, orchestration_commit=orchestration_commit,
                  original_controller_pid=a.controller_pid, original_controller_birth=a.controller_birth,
                  original_controller_sha256=digest(a.out/'original-controller-before-takeover.json'),
-                 adopted_gradient_pid=a.child_pid, adopted_gradient_birth=a.child_birth,
+                 adopted_stage=STAGES[index],adopted_child_pid=a.child_pid,adopted_child_birth=a.child_birth,
                  original_deadline_utc=original['deadline_utc'], gradient_restarted=False,
-                 phase='preparing_takeover', optimizer_updates=0)
+                 phase='preparing_takeover')
+    if index==2:state.update(adopted_gradient_pid=a.child_pid,adopted_gradient_birth=a.child_birth)
     def save():
         state['at_utc'] = datetime.now(timezone.utc).isoformat()
         temp = a.out/'controller.partial'
@@ -134,29 +148,34 @@ def main():
     save()
     try:
         pause(a.controller_pid, a.controller_birth);paused = True
-        state.update(phase=STAGES[2], old_supervisor_pause_confirmed=True);save()
+        state.update(phase=STAGES[index], old_supervisor_pause_confirmed=True);save()
         while time.time() < deadline:
             actual = exact(a.child_pid, a.child_birth)
             if actual['state'] == 'Z':
                 code = os.waitstatus_to_exitcode(actual['exit_status'])
-                state['actual_adopted_gradient_exit_code'] = code;save()
-                if code != 0:raise RuntimeError('Original gradient child failed: '+str(code))
+                state['actual_adopted_child_exit_code'] = code
+                if index==2:state['actual_adopted_gradient_exit_code']=code
+                save()
+                if code != 0:raise RuntimeError('Original '+STAGES[index]+' child failed: '+str(code))
                 break
             if exact(a.controller_pid, a.controller_birth)['state'] not in ('T','t'):
                 raise RuntimeError('Original supervisor resumed unexpectedly')
-            try:
-                g = json.loads((a.original/'gradient/gradient.json').read_text())
-                state['gradient_cases_observed'] = len(g['cases'])
-            except (FileNotFoundError, json.JSONDecodeError):pass
+            if index==2:
+                try:
+                    g = json.loads((a.original/'gradient/gradient.json').read_text())
+                    state['gradient_cases_observed'] = len(g['cases'])
+                except (FileNotFoundError, json.JSONDecodeError):pass
             save();time.sleep(5)
         else:
             exact(a.child_pid, a.child_birth)
             os.killpg(a.child_pid, signal.SIGTERM)
-            raise TimeoutError('Extended gradient deadline reached')
+            raise TimeoutError('Extended adopted-stage deadline reached')
         clean()
-        gradient_gate(json.loads((a.original/'gradient/gradient.json').read_text()),
-                      a.original/'engine', a.original/'numerical', a.source_commit)
-        stage = state['stages'][2]
+        gradient_command=original['planned_commands'][STAGES[2]]
+        def argument(name):return Path(gradient_command[gradient_command.index('--'+name)+1])
+        gradient_gate(json.loads((argument('out')/'gradient.json').read_text()),
+                      argument('engine-inputs'),argument('numerical'),a.source_commit)
+        stage = state['stages'][index]
         stage.update(exit_code=code, ended_utc=datetime.now(timezone.utc).isoformat(),
                      exit_evidence='actual Linux zombie wait status before original parent retirement')
         save()
@@ -166,7 +185,7 @@ def main():
         fcntl.flock(lease, fcntl.LOCK_EX|fcntl.LOCK_NB)
         gpu = subprocess.check_output(['nvidia-smi','--query-compute-apps=pid','--format=csv,noheader'], text=True)
         if any(x.strip().isdigit() for x in gpu.splitlines()):raise RuntimeError('GPU still occupied')
-        for name in STAGES[3:]:
+        for name in STAGES[index+1:]:
             clean()
             if deadline <= time.time():raise TimeoutError('Pilot deadline reached')
             command = original['planned_commands'][name]

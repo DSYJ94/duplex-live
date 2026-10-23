@@ -1,3 +1,46 @@
+# LOCAL —13/40 live; overnight proposal ready, specific credit approval pending (23 October14:16UTC)
+
+LOCAL sole executor; goal ACTIVE. Main2509575 before this preparation commit.
+Exact actual pipeline unchanged: immutable GPUC9, separate active supervisor7769270,
+new21063/birth20582160 S/live; old4111/birth18985221 T/paused; original CUDA14873/
+birth20219598 R/live14:13:55UTC,13/40 all passing, optimizer_updates0. Observer
+session86534 ended normally after its bounded interval; it did NOT change jobs.
+One35s read timeout recovered on next check. No duplicate GPU/Slurm submissions.
+
+ACTIVE funded deadlines remain supervisor21:30UTC, guard74352/session71225
+22:22:37.9UTC, max62.50071830424946USD total within100. Backup85270/session28881
+v7 through22:20, waiter86013/session39293 v3 latestlaunch21:37/eval22:17, proxy85512/
+session86213 v4 through22:19, tunnel session3455. Latest independently verified
+23-file backup inventoryc6ac6d10724b7018436041598f24f58f417de6b9a5be56238831dcd8af4956ca.
+
+Measured14:06:20UTC:7373/27412 recorded native calls completed over3886.88s since
+first gradient report; simple extrapolation ~17:02UTC for THIS gate ONLY. Complete
+combined154/native49/control40 readiness itself includes more native gradients;
+fit and full49/40 fresh restore fingerprints also remain. Current21:30 pipeline
+window may be too short. Do not skip checks or reset the healthy CUDA child.
+
+PROPOSED ONLY: samePod24h lifetime to24Oct08:22:37.9UTC, max80.40071830424946USD
+project compute; pilot07:00, evaluation08:17. Actual official wallet19.42USD and
+1.814USD/h, billing1h behind, auto-pay disabled. Automatic approval review rejected
+ENTERING20USD in the credit form:100USD compute cap did not explicitly authorize
+that specific payment. One concise async20USD top-up approval question is pending.
+No payment made and NO longer guard/deadline armed. Do not bypass the rejection.
+Browser officialbilling tab692863481 markedhandoff; saved review screenshot in
+ignored runs/local-migration-20261023/runpod-billing-topup-review-v1.png. Original
+paid run continues while approval pending; this is not a blocked goal.
+
+Prepared generic exact-child takeover can preserve a LATER readiness/fit/restore
+child after original4111 retires, with all prior actual stages0 and original queued
+commands intact; never repeats completed optimizer work. It REJECTS nesting the
+current two paused-gradient supervisors. This source is NOT deployed to active7769270.
+24 local tests pass +actualLinux test pending remote (Mac skip). Longer proposal:
+docs/NATIVE-CONTROL40-OVERNIGHT-PROPOSAL-2026-10-23.json. Candidateguardreceipt
+runpod-control40-replacement-v4-PROPOSED.json is arithmetic-checked but NOT ARMED.
+Next: continue same BF1640; inspect real combined-readiness throughput; only use
+longer window after actual approved/verified credit and exact safe later-stage
+handoff. One8 only; no candidate extension/adoption or sealed input read. Unrelated
+local edits preserved; critical nativearchive previouslyverified, broader Macbackup PARTIAL.
+
 # LOCAL —11/40 BF16 live; broader reasoning-source bindings repaired (23 October14:00UTC)
 
 LOCAL sole executor; goal ACTIVE. Main412da73 before this source-audit commit.

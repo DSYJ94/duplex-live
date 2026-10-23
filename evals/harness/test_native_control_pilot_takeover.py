@@ -16,7 +16,7 @@ class PilotTakeoverGates(unittest.TestCase):
         commands = {n:['python','-m',n] for n in STAGES}
         stages = [dict(name=n, command=commands[n], pid=10+i, birth=20+i) for i,n in enumerate(STAGES[:3])]
         for s in stages[:2]:s['exit_code']=0
-        return dict(pid=1, source_commit='source', pod_id='pod', phase=STAGES[2], passed=False,
+        return dict(schema='dl-native-control40-precise-pilot-controller-v1',pid=1, source_commit='source', pod_id='pod', phase=STAGES[2], passed=False,
                     optimizer_update_limit=8, stages=stages, planned_commands=commands)
 
     def test_original_requires_passed_predecessors_exact_live_child_and_complete_commands(self):
@@ -32,6 +32,23 @@ class PilotTakeoverGates(unittest.TestCase):
                        lambda x:x['stages'][2].update(command=['changed'])):
             bad=copy.deepcopy(c);mutate(bad)
             with self.assertRaises(ValueError):original_gate(bad,1,12,'source','pod')
+
+    def test_later_child_preserves_all_completed_stages_and_never_replays_an_optimizer(self):
+        for index in range(3,7):
+            c=self.original();c.update(schema='dl-native-control40-pilot-supervisor-takeover-v1',
+                                      old_supervisor_retired_after_child_exit=True,phase=STAGES[index])
+            c['stages'][-1]['exit_code']=0
+            for i in range(3,index+1):
+                r=dict(name=STAGES[i],command=c['planned_commands'][STAGES[i]],pid=10+i,birth=20+i)
+                if i<index:r['exit_code']=0
+                c['stages'].append(r)
+            self.assertIs(original_gate(c,1,10+index,'source','pod'),c)
+            self.assertEqual(list(c['planned_commands'])[index+1:],list(STAGES[index+1:]))
+            bad=copy.deepcopy(c);bad['stages'][index-1]['exit_code']=1
+            with self.assertRaises(ValueError):original_gate(bad,1,10+index,'source','pod')
+        nested=self.original();nested['schema']='dl-native-control40-pilot-supervisor-takeover-v1'
+        nested['old_supervisor_retired_after_child_exit']=True
+        with self.assertRaises(ValueError):original_gate(nested,1,12,'source','pod')
 
     def test_guard_requires_fresh_same_pod_and_longer_deadline(self):
         now=datetime.now(timezone.utc);deadline=(now+timedelta(hours=1)).timestamp()
