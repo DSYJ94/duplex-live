@@ -1,6 +1,6 @@
 {
   "schema": "dl-native-control40-preflight-progress-v1",
-  "at_utc": "2026-10-23T03:57:55.223900+00:00",
+  "at_utc": "2026-10-23T05:04:07.552520+00:00",
   "active_executor": "LOCAL",
   "cloud_executor": "read-only",
   "native_payload_and_controller_commit": "7769e7cc06f80e609db3f8ac2611977cd0d7cb66",
@@ -69,20 +69,24 @@
     }
   ],
   "running_observation": {
-    "at_utc": "2026-10-23T03:57:55.223900+00:00",
+    "at_utc": "2026-10-23T05:04:07.552520+00:00",
     "original_controller_pid": 3406,
     "original_controller_state": "T",
     "numerical_pid": 4393,
     "numerical_birth_ticks": 16421263,
-    "numerical_cases_passed_so_far": 20,
-    "all_observed_cases_passed": true,
+    "numerical_cases_passed_so_far": 32,
+    "all_observed_cases_passed": false,
     "complete40_numerical": false,
     "numerical_threshold": 0.001,
     "supervisor_pid": 5014,
     "supervisor_source": "738150c0e2d2eba64ae62c9d7f435aaf068eeebf",
     "gradient_output": "/workspace/migration/native-control40-supervisor-v4/gradient",
     "deadline_utc": "2026-10-23T09:13:45Z",
-    "optimizer_updates": 0
+    "optimizer_updates": 0,
+    "numerical_cases_observed": 33,
+    "failed_cases": [
+      "native-control3-train-029"
+    ]
   },
   "execution_profiles": {
     "engine": "Published native CUDA graphs required; all17 input channels independently checked; teacher text/audio forced for input audit only; not behavior qualification",
@@ -240,7 +244,7 @@
   },
   "budget_reserved_worst_case_total_usd": 41.84600668784697,
   "original_scope_remains_incomplete": true,
-  "training_integration_status": "Implemented in738150c; exact real-data command construction and full40 development-evidence binding passed on Linux; conditional controller5313 waiting for complete40 numeric/gradient gates. No new optimizer updates yet.",
+  "training_integration_status": "Source integrated; original childless launcher retired for reproduced legacy validation/import dependencies. New fixed source/local inputs ready; full CPU49 replayv4 running. Numerical029 fails strict0.001; no gradient or optimizer may start.",
   "repair_parent_selection": {
     "schema": "dl-native-control40-bounded-repair-parent-selection-v1",
     "at_utc": "2026-10-23T02:49:53.267542+00:00",
@@ -297,7 +301,7 @@
     "birth_ticks": 16922038,
     "output": "/workspace/migration/native-control40-training-followup-v1",
     "deadline_utc": "2026-10-23T09:10:00Z",
-    "phase": "waiting_for_exact_numerical_and_gradient40",
+    "phase": "intentionally_retired_while_waiting",
     "stage_order": [
       "whole7797_workset_reverification",
       "independent_combined154_native49_control40_readiness",
@@ -313,7 +317,12 @@
     "exact_whole40_development_evidence_binding_passed": true,
     "complete7797_regular_workset_and_current40_recheck_passed": true,
     "source_snapshot_receipt": "runs/local-migration-20261023/native-control40-training-source-snapshot-738150c-v1.json",
-    "source_snapshot_log_sha256": "7467dccbef7fd47accffd0cf8d32a5d5b3858678add3ebb4e71036759747de65"
+    "source_snapshot_log_sha256": "7467dccbef7fd47accffd0cf8d32a5d5b3858678add3ebb4e71036759747de65",
+    "retirement_utc": "2026-10-23T04:29:01.850154+00:00",
+    "optimizer_child_started": false,
+    "replacement_armed": false,
+    "replacement_payload_commit": "b6410bfa3b7ac0259124ff47d49d2ea10f99a932",
+    "replacement_output": "/workspace/migration/native-control40-training-followup-v2"
   },
   "broader_microturn_backchannel_direct_or_delegate_curriculum_generated_or_trained": false,
   "live_partial_evidence_mac_backup": {
@@ -334,25 +343,95 @@
     "all_old_native_and_speech_checks_retained": true,
     "focused_cpu_tests_passed": 13,
     "new_gpu_job_submitted": false,
-    "fresh40_legacy_portable_identity_guard_still_needs_explicit_new_review_support_after_actual_native_review": true
+    "fresh40_legacy_portable_identity_guard_still_needs_explicit_new_review_support_after_actual_native_review": true,
+    "current_execution_source_not_selected": true
   },
   "continuous_copyback": {
     "schema": "dl-native-control40-copyback-watch-v1",
-    "pid": 76295,
-    "source_commit": "5288829d7f7ed99d3fce6777aa6abdd829893e25",
+    "pid": 89251,
+    "source_commit": "67bff3b627d59ef286d8185daf6cb9a22c65b1e2",
     "deadline_utc": "2026-10-23T09:18:00Z",
     "phase": "watching",
     "snapshots": [
       {
-        "path": "runs/local-migration-20261023/native-control40-continuous-copyback-v1/20261023T035725.677254Z",
+        "path": "runs/local-migration-20261023/native-control40-continuous-copyback-v2/20261023T043225.898971Z",
         "files": 5,
-        "inventory_sha256": "76a915233f039debe0d1ff516d37e18cc9754f09ea68cc57eb0f3488e337af53"
+        "inventory_sha256": "8fd143a7ebdbc888d721e366e494f5f9e450d20023661872cc8ee6116cb0731f"
+      },
+      {
+        "path": "runs/local-migration-20261023/native-control40-continuous-copyback-v2/20261023T043831.996047Z",
+        "files": 5,
+        "inventory_sha256": "cff1ae8af3197b8e4a221865c0a2414063be13691dfa8c3cb126f38e42c2cfbf"
+      },
+      {
+        "path": "runs/local-migration-20261023/native-control40-continuous-copyback-v2/20261023T044343.710076Z",
+        "files": 5,
+        "inventory_sha256": "ac7d7653b60c1378203329f167fc481594533e49b02a4e6c7c4d30dac9c234a4"
+      },
+      {
+        "path": "runs/local-migration-20261023/native-control40-continuous-copyback-v2/20261023T044748.620462Z",
+        "files": 5,
+        "inventory_sha256": "0f82ddd2153787f67762a1586ff0000b5f1dfb77d1761ba622afd22c98501d89"
+      },
+      {
+        "path": "runs/local-migration-20261023/native-control40-continuous-copyback-v2/20261023T045153.293425Z",
+        "files": 5,
+        "inventory_sha256": "2085c454522e0310760d3a53f84192de3f413e2039db2e05963932a7a8582c4b"
+      },
+      {
+        "path": "runs/local-migration-20261023/native-control40-continuous-copyback-v2/20261023T045557.951053Z",
+        "files": 5,
+        "inventory_sha256": "7f5cfee0c2582ca4795909c9543f5488b791f5223820a40ed7cf687760fe5110"
+      },
+      {
+        "path": "runs/local-migration-20261023/native-control40-continuous-copyback-v2/20261023T050204.195525Z",
+        "files": 5,
+        "inventory_sha256": "6569ddcf68cfcd5049ab2778e609a2f5161cdd3c2c514b1daa130ff5c8b05b11"
       }
     ],
     "changes_to_remote_jobs": false,
-    "at_utc": "2026-10-23T03:57:27.330617+00:00",
-    "last_marker": "03deaace1e6c763ab1e1c3fc58d7169cfb5dc6fb51e9441d41bcb45384353bef",
+    "at_utc": "2026-10-23T05:06:09.084585+00:00",
+    "last_marker": "f923f61976fa41cd9a12aa0d75fa38ef99f53c4ec6f1f77d0021646b1382c0b4",
     "last_check_succeeded": true,
-    "exec_session": 85507
+    "exec_session": 1322
+  },
+  "numerical_failure_observed": {
+    "id": "native-control3-train-029",
+    "maximum_text_logit_error": 0.0017094612121582031,
+    "maximum_hidden_error": 0.0008737444877624512,
+    "unchanged_threshold": 0.001,
+    "causal_prefix_error": 0.0,
+    "native_text_alignment_error": 0.0,
+    "complete40_still_running": true,
+    "passing_subset_approved": false
+  },
+  "local_retained_input_stage": {
+    "files": 10390,
+    "bytes": 24661548106,
+    "all_hashes_original_inventory_match": true,
+    "inventory_sha256": "8a09b2544fd0f9e20ca5d7fb388814c0e466441cd7bcbf4396448c3f3865ed96",
+    "path": "/opt/native-retained-inputs-v1/runs",
+    "runtime_alias_activated_utc": "2026-10-23T04:56:28.124836+00:00",
+    "original_archive_unchanged": true,
+    "ephemeral_not_backup": true
+  },
+  "retained49_cpu_replay": {
+    "output": "/workspace/migration/native-control40-retained49-cpu-recheck-v4",
+    "exec_session": 90762,
+    "source_commit": "b6410bfa3b7ac0259124ff47d49d2ea10f99a932",
+    "phase": "running",
+    "cuda_visible_devices": "",
+    "pinned_pythonpath": "/workspace/control40-vendor-moshi-rag/moshi",
+    "requires_original_complete49_data_sha256_exact": true,
+    "optimizer_updates": 0
+  },
+  "broader_reasoning_source_proposal": {
+    "source_commit": "67bff3b627d59ef286d8185daf6cb9a22c65b1e2",
+    "cases": 32,
+    "user_utterances": 56,
+    "source_fixture": "evals/fixtures/native-reasoning-delegation-source-proposal-20261023.json",
+    "independent_exhaustive_solution_tests_passed": true,
+    "audio_api_teacher_or_training_run": false,
+    "broader_backchannel_microturn_curriculum_complete": false
   }
 }

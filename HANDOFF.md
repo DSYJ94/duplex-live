@@ -1,3 +1,132 @@
+# LOCAL — numerical33/40 includes strict029 failure; input migration repaired; training remains blocked by gates (23 October06:04 London)
+
+NEWEST entry. LOCAL sole executor; CLOUD read-only. Goal ACTIVE. No new optimizer
+updates, new checkpoint or adopted model. Native7590052 remains the last actual
+unadopted8-update/Adam528 model; native520 is only the proposed repair parent.
+Latest completed pushed sourcea9dce39; current entry/diagnostic source pinning will
+be committed next (use Git HEAD for its exact SHA). Unrelated timeline.pyc,
+capability-retention-probe files and roadmap.html remain untouched/uncommitted.
+
+Latest hash-verified Mac snapshot20261023T050204.195525Z has33/40 numerical cases,
+FAILED native-control3-train-029. Hidden max0.0008737444877624512; text logit max
+0.0017094612121582031 exceeds UNCHANGED0.001. Causal prefix0, native text alignment0,
+all depth context15 checks pass. Original audit4393/birth16421263/source7769e7c
+continues collecting ALL40; do not restart or accept33/40 or39/40. Supervisor5014/
+birth16839644/source738150c will refuse gradient dispatch when original numerical
+exits failed. Original3406 remains paused until5014 collects child status/resumes it.
+Actual original4393/5014 processes confirmed live at04:47. Original numerical output
+/workspace/migration/native-control40-preflight-v3/numerical; current supervised root
+/workspace/migration/native-control40-supervisor-v4. No BF16 gradient or fit has run.
+
+Waiting training controller5313/birth16922038 was INTENTIONALLY retired at04:29UTC
+while phasewaiting/stagesempty/no children. Actual statusfailed is SIGTERM143, not a
+failed optimizer. Payload738 had a reproduced CPU data-validation dependency bug.
+Retirement receipt /workspace/migration/native-control40-training-followup-v1-retirement.json.
+Do NOT restart5313 or reuse its output. A replacement must use versioned outputv2,
+--supervisor-payload-commit738150c0e2d2eba64ae62c9d7f435aaf068eeebf, and a separately
+pinned training payload (prepared b6410bfa3b7ac0259124ff47d49d2ea10f99a932). No
+replacement training controller is armed yet: full49 CPU replay and numerical40
+approval are still required. Any replacement must retain full154/native49/control40,
+all28 histories/old25/new24/KL1/hidden10/word64/clock64, parentAdam520/effective2e-7,
+new8 only, independent combined readiness, fresh full state restore and complete
+native/audio/fresh40 gates. Neither one-case diagnostics nor source proposals approve it.
+
+CPU diagnosis/fixes (all old data/audio/masks/receipts untouched):
+- Sourcea265d5bcab4f647515c1ef36e9e06130785bb125 scopes the unused filter_report.jsonl
+  read to NEW native-v2 conversions only. Legacy canonical quality.jsonl SHA and
+  checked_rows/raw teacher words/facts/timing/all artifact/fold checks remain mandatory.
+  Minimized regression failed before fix and passed after; new24 still requires its
+  full intermediate quality evidence. The original archived canonical stamp was intact.
+- Original CPU checkv1/exec50082 terminal1 on that unused legacy intermediate read.
+  Fixed uncached6256/birth17124312/exec48703 and cached6535/birth17183791/exec95206
+  later BOTH TERMINAL1 on missing legacy vendor path, not approved and NOT killed.
+  Retirement probe1402 found both already terminal. Keep their partial evidence.
+- Runtime vendor overlay /opt/control40-vendor-runtime-v1 preserves every old vendor
+  target and adds missing moshi-finetune-2acc879fe7c48f885a18f6cc9548bccb2674d87b
+  pointing to existing clean /workspace/control40-vendor-moshi-finetune at that exact
+  GitSHA. Original archive untouched. Receipt native-control40-vendor-alias-repair-v1.json.
+- Every future CPU/training child needs
+  PYTHONPATH=/workspace/control40-vendor-moshi-rag/moshi (clean Git8c6dfc101b7871baa428424bcdc583b74fb561d9).
+  Without it, exact Interleaver probe failed No module named moshi. Constructor now
+  PASSED on CPU with actual module paths recorded in
+  /workspace/migration/native-control40-interleaver-import-preflight-v1.json; launcher
+  training_environment preserves this inherited PYTHONPATH. Do not mutate shared runtime.
+- Added only the legacy MoshiRAG vocabulary PATH as a symlink to the byte-identical
+  already verified PersonaPlex vocabulary. SHA78d4336533ddc26f9acf7250d7fb83492152196c6ea4212c841df76933f18d2d.
+  No MoshiRAG model substitution/download. Receipt native-control40-legacy-vocabulary-alias-v1.json.
+- Exact trainer torch.save voice roundtrip independently PASSED CPU; native520 SHA
+  2085b3d58d2f2b20042e2e57a60206dd43c3028173cd9140e83d6c7b5136404d.
+  Receipt /workspace/migration/native-control40-voice-serialization-v1/report.json.
+
+Measured validation I/O was expensive on network storage (uncached >92GB read;
+cached replay still issued many FUSE metadata waits). Staged ALL10,390 original
+runs files24,661,548,106bytes from verified67.76GB native archive onto local scratch;
+EVERY size/SHA256 matched original inventory before runtime activation. Derived
+inventory8a09b2544fd0f9e20ca5d7fb388814c0e466441cd7bcbf4396448c3f3865ed96,
+Mac files native-original-runs-local-stage-v1.{json,files}. Actual rsync1899 TERMINAL0;
+full rehash83302 TERMINAL0; receipt native-original-runs-local-stage-v1-verification.json.
+At04:56:28UTC only /opt/control40-runtime-root/runs changed to
+/opt/native-retained-inputs-v1/runs. Original /workspace/native-preservation-v3,
+/workspace/duplex-live/runs and all model weights untouched; original numerical
+Engine inputs under /workspace/migration unchanged. This is ephemeral input staging,
+NOT an extra backup. Receipt native-control40-local-input-alias-v1.json.
+
+Prepared training source /opt/duplex-control40-training-b6410bf is clean, full8GB
+regular control40 workset copied and independently reverified (exec13433 TERMINAL0,
+log /workspace/migration/native-control40-source-b6410bf-workset-check-v1.log).
+Sourceb641 adds opt-in immutable-input hash reuse: first full byte hash, resolved
+path/device/inode/size/mtime/ctime checked every reuse and all checked at exit.
+NO validation decisions, tensors, model outputs or gradients cached. Default hash
+callers unchanged. Four real mutation/identity tests and explicit receipt tests
+pass;16 relevant tests total. All original numerical/gradient implementation pins
+are byte-identical to738150c. Wrapper portable/context/native_training_cached.py
+records independent readiness/fit/reload hash receipts and binds them into the
+strict proof. Enable only with --immutable-input-hashes and the pinned PYTHONPATH.
+
+CURRENT CPU full-data replayv4 is exec90762, CUDA_VISIBLE_DEVICES empty, sourceb641,
+local verified inputs plus all three path/import fixes. Output
+/workspace/migration/native-control40-retained49-cpu-recheck-v4; validation.log is
+line-buffered. It must finish ALL49 and reconstruct byte-identical original
+native-audio49-audit-7572398 data-manifest SHA plus all28 original components.
+As of this entry it is RUNNING, not yet an approval. Do not launch a duplicate.
+
+Numerical diagnosis PREPARED: evals/native_control_attention_diagnostic.py and
+native_control_attention_reference.py, feature sourcea9dce39. Hypotheses in order:
+FP32 attention accumulation, positional encoding, residual rounding. New diagnostic
+waits for original4393 to terminate AND complete failed40 report, then requires idle
+GPU and identical native520/Engine inputs. Changes ONLY attention accumulation to
+FP64 INSIDE independent reference; keeps FP32 storage/outputs and existing FP64-linear
+reference. Unchanged0.001 threshold, native call partition and all frames. Two CPU
+reference/causal/mask/restoration tests pass. No optimizer/new checkpoint; schema is
+diagnostic-only and cannot authorize training. It has not been launched yet. A
+passing029 diagnostic still requires a NEW whole40 numerical approval, full BF16
+gradients/combined readiness and every existing model behavior gate; never retag the
+failed original approval or change production precision silently.
+
+Backup watcher89251/exec1322/source67bff3b627d59ef286d8185daf6cb9a22c65b1e2 is LIVE.
+Remote helper /opt/duplex-control40-copyback-67bff3b includes old training-followup-v1
+AND replacementv2, each checkpoint/report change triggers immutable verified copyback.
+Mac root runs/local-migration-20261023/native-control40-continuous-copyback-v2.
+Older76295/exec85507 TERMINAL143 after new snapshots verified. Transition receipt
+native-control40-copyback-v2-transition.json. Current snapshots preserve actual failed
+numerical evidence. Auxiliary CPU/path/staging receipts still need Mac copyback.
+Original67.76GB native archive, Engine82, control workset7797 and both runtime native/
+speech full evidence backups remain verified as below. Whole project/stopped Mac
+source backup remains partial. Source proposal32 is committed at67bff3b: basic versus
+public constrained reasoning, cancel/replacement; independent64-mask solver matches
+all32 target solutions. NO audio/API/teacher/training; broader microturn/backchannel
+and nonlexical vocalization source/audio protocol still outstanding.
+
+Cost guard55922/exec37595 stays LIVE/armed, hard DELETE09:14:52.804UTC, max10h TOTAL
+primary lifetime17.90USD. Worst bound41.84600668784697USD within original50TOTAL;
+separate approved volume49yytzyoge remains7USD/month. No new Pod or compute purchase.
+Do not extend the actual controller/guard merely by editing docs. Before another
+whole40 audit, measure remaining time and reserve independent restore/native behavior
+compute within50. Latest main-source changes are committed/pushed; active numerical
+source7769 and gradient supervisor738 unchanged. Next: finish originalall40 and
+preserve failures; finish CPUv4; run bounded failing-case precision diagnostic with
+an actual idle GPU; only then decide a full corrected reference audit and gated pilot.
+
 # LOCAL — full-retention control40 training integrated; conditional launch armed; numerical20/40 live (23 October04:57 London)
 
 This is the NEWEST entry. LOCAL sole executor, CLOUD read-only; goal ACTIVE.

@@ -23,6 +23,12 @@ def main():
     p.add_argument('--case',required=True);p.add_argument('--original-pid',type=int,required=True)
     p.add_argument('--original-birth',type=int,required=True);p.add_argument('--deadline-utc',required=True)
     a=p.parse_args();deadline=datetime.fromisoformat(a.deadline_utc.replace('Z','+00:00')).timestamp()
+    root=Path(__file__).resolve().parents[1];commit=os.environ['DL_TASK_COMMIT']
+    def clean():
+        if (subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True).strip()!=commit
+                or subprocess.check_output(['git','status','--porcelain'],cwd=root,text=True).strip()):
+            raise ValueError('Exact clean immutable diagnostic source required')
+    clean()
     if deadline<=time.time()+60:raise ValueError('Future bounded diagnostic deadline required')
     def timeout(*_):raise TimeoutError('Bounded diagnostic deadline reached')
     signal.signal(signal.SIGALRM,timeout);signal.setitimer(signal.ITIMER_REAL,deadline-time.time())
@@ -32,6 +38,7 @@ def main():
                original_birth=a.original_birth,deadline_utc=a.deadline_utc,
                optimizer_updates=0,training_approved=False,behavior_qualified=False,
                complete40_retested=False,diagnostic_only=True)
+    state['execution_source_commit']=commit
     def save():
         state['at_utc']=datetime.now(timezone.utc).isoformat()
         tmp=a.out/'diagnostic.partial';tmp.write_text(json.dumps(state,indent=2)+'\n');tmp.replace(a.out/'diagnostic.json')
@@ -43,6 +50,7 @@ def main():
             if old is None or old['state']=='Z':break
             save();time.sleep(5)
         else:raise TimeoutError('Original audit still live at diagnostic deadline; do not duplicate GPU work')
+        clean()
         original=json.loads((a.original_numerical/'numerical.json').read_text())
         if (original['schema']!='dl-native-control40-numerical-v1' or not original['complete40']
                 or original['passed'] is not False or not original['all_model_parameters_unchanged']
@@ -66,6 +74,7 @@ def main():
         from evals.native_control_reference import linear_reference
         from evals.native_control_attention_reference import attention_reference
         from evals.moshi_training_smoke import tensor_hashes
+        from evals.context_execution import snapshot
         import torch
         lm,parent,adapter=load_model(a)
         if parent!=original['parent']:raise ValueError('Diagnostic changed original parent identity')
@@ -73,7 +82,7 @@ def main():
         if sha256(a.engine/'engine-inputs.json')!=original['engine_report_sha256']:raise ValueError('Original all40 Engine inputs changed')
         record=next(r for r in manifest['cases'] if r['id']==a.case)
         saved=torch.load(a.engine/a.case/record['file'],weights_only=True,map_location='cpu')
-        inputs=saved['inputs'].cuda();before=tensor_hashes(lm.named_parameters())
+        inputs=saved['inputs'].cuda();before=tensor_hashes(lm.named_parameters());execution=snapshot(lm)
         state['phase']='fp64_attention_reference_comparison';save()
         with torch.no_grad(),precise_native(lm),linear_reference() as linear,attention_reference() as attention:
             bh,bz=lm.forward_codes(inputs);hidden=[];logits=[]
@@ -88,6 +97,7 @@ def main():
                          reference_linear=dict(linear),reference_attention=dict(attention),
                          within_original_threshold=all(x['maximum_absolute_error']<=.001 for x in comparisons.values()))
         state.update(phase='complete_diagnostic_only',all_model_parameters_unchanged=before==tensor_hashes(lm.named_parameters()),
+                     original_execution=execution,execution_policy_unchanged=execution==snapshot(lm),
                      reference_module_sha256=sha256(Path(__file__).with_name('native_control_attention_reference.py')))
         save()
     except BaseException as error:
