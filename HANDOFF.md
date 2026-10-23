@@ -1,3 +1,30 @@
+# LOCAL — reasoning32 source collector tested; actual collection next (23 October14:27UTC)
+
+LOCAL executor, goal ACTIVE. Source collector820711c pushed. Active GPU remains
+immutableC9, supervisor7769270/21063 birth20582160, old4111 birth18985221 paused,
+same14873 birth20219598 live14:18:47UTC with13/40 passing and0optimizerupdates.
+Funded current deadlines/services unchanged: guard74352 at22:22:37.9UTC, supervisor
+21:30; backup85270 v7, evalwaiter86013 v3, proxy85512 v4/tunnel session3455.
+20USD top-up approval remains PENDING after automatic-review rejection; no charge,
+no longer guard and no overnight supervisor deployed. Proposal80.40 total <100.
+
+Separate new reasoning32 USER-source collector and independent source-quality
+adapter implemented/tested (11tests pass in local-asr env).40 unique authored-only
+speech requests cover56 utterances/all32 scenes, matched original questions share
+provider WAV bytes, no oracle/answer/operator fields sent; no owner data. Source
+objects and receipts immutable; no automatic retry, resampling, gain or subset.
+New-source quality is pinned independent Whisper turbo CPU, WER0.05/peak0.995.
+Long-question source still subject to full native1100-frame episode bound after
+actual measured prefix/result/lifecycle conversion; old40/49 limits unchanged.
+NO real API request or teacher from this new collector yet at this commit.
+Next execute one bounded40-request source collection locally, then complete
+independent source audit while the current GPU gate runs. Actual asynchronous
+native teacher/source-timing protocol remains required; raw source cannot train.
+Use runs/local-asr-20261021/env/bin/python, NOT defaultpython3, for source collector
+and audit (shared helper imports NumPy). Existing100USD Runpod cap/current62.50
+guard unaffected, unrelated local work preserved. Critical archive previously
+verified; broader Macbackup PARTIAL.
+
 # LOCAL —13/40 live; overnight proposal ready, specific credit approval pending (23 October14:16UTC)
 
 LOCAL sole executor; goal ACTIVE. Main2509575 before this preparation commit.

@@ -97,3 +97,25 @@ existing model failures: this source has never been recorded or trained. It
 prevents mismatched future reasoning labels. No API call, new recording, source
 audio repair, GPU source change or optimizer update occurred in this audit. See
 [the exact audit](NATIVE-REASONING32-SOURCE-BINDING-AUDIT-2026-10-23.json).
+
+
+## Reasoning source-audio collection adapter — 23 October
+
+The separate `evals/native_reasoning_source.py` collector extracts only authored
+user words and voices from the exact32-case proposal. Forty unique speech requests
+cover all56 scene utterances; the original hard question WAV is shared byte for
+byte across each matched delegate/cancel/replace condition. No answer annotation
+or oracle enters any provider payload. The collector preserves provider WAVs,
+request IDs and payload/WAV/receipt hashes, with no automatic retry, gain change,
+resampling, timeline, teacher, inference or optimizer path. Fixture transports
+are marked and rejected by production verification.
+
+A separate pinned Whisper-turbo CPU audit checks every unique original source
+object and its complete32/56 membership at WER≤0.05 and peak≤0.995, without a
+reference prompt. This new long-question source schema retains the whole native
+episode1100-frame bound: an individual clip cannot exceed88seconds, and actual
+prefix, spans, worker/result and lifecycle time must still fit together during
+subsequent measured conversion. The historical control40/old49 clip limits are
+unchanged. Source-only success never approves a teacher or model training. Eleven
+local source/quality/independent-solver tests pass. No real collection had run at
+this source commit; actual receipts must supply its eventual status.
