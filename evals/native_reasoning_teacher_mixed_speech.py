@@ -28,7 +28,7 @@ def recognition(c,kind,identity):
         return c.region_worker/record['asr_file'],dict(kind='unchanged-v6',
             wav_sha256=record['wav_sha256'],asr_sha256=record['asr_sha256'])
     folder={'cutoff-v7':c.cutoff_speech,'repair-v8':c.repair_speech/identity}
-    if hasattr(c,'ack_speech'):folder['ack-v9']=c.ack_speech
+    if hasattr(c,'ack_speech'):folder.update({'ack-v9':c.ack_speech,'ack-v10':c.ack_speech})
     if kind not in folder:raise ValueError('Unsupported independent recognition lineage')
     root=folder[kind];value=json.loads((root/'component-speech.json').read_text())
     if (value['schema']!='dl-native-reasoning-component-speech-diagnostic-v1'

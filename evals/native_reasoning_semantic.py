@@ -50,15 +50,14 @@ def qualified_speech(source,source_quality,batch,engine,tokenizer,approval,faile
     return speech.verify(source,source_quality,batch,engine,tokenizer,approval)
 
 
-def messages(source,source_quality,batch,engine,tokenizer,approval,failed_speech=None,recognition_plan=None):
-    qualified=qualified_speech(source,source_quality,batch,engine,tokenizer,approval,failed_speech,recognition_plan)
-    manifest,plan=source_manifest(source)
+def build_messages(manifest,plan,qualified,batch,folders=None):
     if (len(qualified['results'])!=32 or not qualified['passed']
             or [r['id']for r in qualified['results']]!=[r['id']for r in plan['cases']]):
         raise ValueError('Complete independent32 speech approval required before any semantic request')
     result={};objects={r['object_id']:r for r in manifest['objects']}
     for scene,case,audio in zip(manifest['scenes'],plan['cases'],qualified['results']):
-        folder=batch/scene['id'];report=json.loads((folder/'report.json').read_text())
+        folder=batch/scene['id']if folders is None else folders[scene['id']]
+        report=json.loads((folder/'report.json').read_text())
         env=json.loads((folder/'environment.json').read_text())
         ledger=json.loads((folder/'lifecycle.json').read_text())
         events=[json.loads(line)for line in (folder/'events.jsonl').read_text().splitlines()]
@@ -84,8 +83,20 @@ def messages(source,source_quality,batch,engine,tokenizer,approval,failed_speech
     return result
 
 
+def messages(source,source_quality,batch,engine,tokenizer,approval,failed_speech=None,recognition_plan=None):
+    qualified=qualified_speech(source,source_quality,batch,engine,tokenizer,approval,failed_speech,recognition_plan)
+    manifest,plan=source_manifest(source)
+    return build_messages(manifest,plan,qualified,batch)
+
+
 async def review(source,source_quality,batch,engine,tokenizer,speech_approval,out,env_file,failed_speech=None,recognition_plan=None):
     sent=messages(source,source_quality,batch,engine,tokenizer,speech_approval,failed_speech,recognition_plan)
+    return await review_messages(sent,source_quality,batch,speech_approval,out,env_file,failed_speech,recognition_plan)
+
+
+async def review_messages(sent,source_quality,batch,speech_approval,out,env_file,failed_speech=None,recognition_plan=None,prepared_inputs=None):
+    if list(sent)!=[f'native-reasoning4-train-{i:03d}'for i in range(32)]:
+        raise ValueError('Exactly all32 ordered semantic inputs required')
     with collection_lock(out.parent/'.private/native-reasoning32-semantic.lock'):
         out.mkdir(parents=True,exist_ok=False)
         r=dict(schema=SCHEMA,started_utc=datetime.now(timezone.utc).isoformat(),model=MODEL,
@@ -94,6 +105,7 @@ async def review(source,source_quality,batch,engine,tokenizer,speech_approval,ou
             source_quality_sha256=sha(source_quality),selected_ids=list(sent),maximum_requests=32,concurrency=2,
             failed_speech_sha256=sha(failed_speech)if failed_speech else None,
             recognition_plan_sha256=sha(recognition_plan)if recognition_plan else None,
+            prepared_inputs_sha256=sha(prepared_inputs)if prepared_inputs else None,
             results=[],status='reviewing_unapproved',passed=False,automatic_retry=False,source_oracles_sent=False,
             training_approved=False,native_conversion_and_numerical_required=True,native_behavior_qualified=False)
         target=out/'semantic.json';atomic_json(target,r)
@@ -134,13 +146,19 @@ async def review(source,source_quality,batch,engine,tokenizer,speech_approval,ou
 
 
 def verify(source,source_quality,batch,engine,tokenizer,speech_approval,approval,failed_speech=None,recognition_plan=None):
-    sent=messages(source,source_quality,batch,engine,tokenizer,speech_approval,failed_speech,recognition_plan);r=json.loads(approval.read_text())
+    sent=messages(source,source_quality,batch,engine,tokenizer,speech_approval,failed_speech,recognition_plan)
+    return verify_responses(sent,source_quality,batch,speech_approval,approval,failed_speech,recognition_plan)
+
+
+def verify_responses(sent,source_quality,batch,speech_approval,approval,failed_speech=None,recognition_plan=None,prepared_inputs=None):
+    r=json.loads(approval.read_text())
     if (r['schema']!=SCHEMA or r['model']!=MODEL or r['code_sha256']!=sha(Path(__file__))
             or r['request_code_sha256']!=sha(Path('training/control/teacher_data.py'))
             or r['teacher_manifest_sha256']!=sha(batch/'teacher-collection.json')
             or r['speech_approval_sha256']!=sha(speech_approval) or r['source_quality_sha256']!=sha(source_quality)
             or r['failed_speech_sha256']!=(sha(failed_speech)if failed_speech else None)
             or r['recognition_plan_sha256']!=(sha(recognition_plan)if recognition_plan else None)
+            or r['prepared_inputs_sha256']!=(sha(prepared_inputs)if prepared_inputs else None)
             or r['selected_ids']!=list(sent) or r['maximum_requests']!=32 or r['concurrency']!=2
             or [x['id']for x in r['results']]!=list(sent) or r['passed']is not True
             or r['status']!='complete_independent_review' or r.get('failures') or r['native_conversion_and_numerical_required']is not True

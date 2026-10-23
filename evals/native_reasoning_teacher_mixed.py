@@ -18,6 +18,7 @@ from evals import native_reasoning_teacher_recovery_v6 as legacy
 from evals import native_reasoning_teacher_v6 as v6
 from evals import native_reasoning_teacher_v8 as v8
 from evals import native_reasoning_teacher_ack_probe as v9
+from evals import native_reasoning_teacher_quiet_probe as v10
 from evals import native_reasoning_teacher_cutoff_readback as cutoff
 from evals import native_reasoning_teacher_repair_v8 as repair
 from evals.native_reasoning_source import sha
@@ -35,7 +36,8 @@ PATHS=('source','source_quality','parent','old_failed','region_plan','region_wor
 
 def load(path):
     value=json.loads(path.read_text())
-    if set(value) not in (set(PATHS),set(PATHS)|{'ack','ack_speech'}):
+    if set(value) not in (set(PATHS),set(PATHS)|{'ack','ack_speech'},
+                          set(PATHS)|{'ack','ack_speech','ack_parent','ack_parent_speech'}):
         raise ValueError('Explicit complete input map required; no unknown/missing roots')
     return SimpleNamespace(**{k:Path(v)for k,v in value.items()})
 
@@ -46,7 +48,11 @@ def source_pins(c):
                original_region_plan=c.region_plan,original_region_speech=c.region_worker/'teacher-speech-quality.json',
                cutoff_component=c.cutoff/'cutoff-component.json',cutoff_readback=c.cutoff_proof,
                repair_components=c.repairs/'repair-components.json')
-    if hasattr(c,'ack'):files['ack_component']=c.ack/'ack-component.json'
+    if hasattr(c,'ack'):
+        files['ack_component']=c.ack/('quiet-component.json'if hasattr(c,'ack_parent')else'ack-component.json')
+    if hasattr(c,'ack_parent'):
+        files.update(failed_ack_parent=c.ack_parent/'ack-component.json',
+                     failed_ack_speech=c.ack_parent_speech/'component-speech.json')
     return {k:sha(p)for k,p in files.items()}
 
 
@@ -92,7 +98,22 @@ def derive(c):
         if record['recorder_version']!='v8' or record['clarity_profile']!=(record['id']!='native-reasoning4-train-005'):
             raise ValueError('Exact diagnosed V8 recorder profile required')
         records[record['id']]=('repair-v8',record,c.repairs/record['id'])
-    if hasattr(c,'ack'):
+    if hasattr(c,'ack_parent'):
+        v10.diagnosis(c.ack_parent,c.ack_parent_speech/'component-speech.json')
+        ack=json.loads((c.ack/'quiet-component.json').read_text())
+        if (ack['schema']!=v10.SCHEMA or ack['status']!='raw_component_complete_independent_speech_and_semantics_required'
+                or ack['case_id']!=v10.CASE or ack['code_hashes']!=v10.code_hashes()
+                or ack['parent_ack_manifest_sha256']!=sha(c.ack_parent/'ack-component.json')
+                or ack['failed_component_speech_sha256']!=sha(c.ack_parent_speech/'component-speech.json')
+                or ack['source_manifest_sha256']!=sha(c.source/'source-audio.json')
+                or ack['source_quality_sha256']!=sha(c.source_quality)
+                or tuple(ack[k]for k in ('maximum_new_voice_sessions','maximum_backend_requests',
+                    'maximum_aggregate_voice_attempts','maximum_aggregate_backend_request_upper_bound'))!=(1,6,47,127)
+                or any(ack[k]is not False for k in ('automatic_retry','original_audio_or_source_words_changed',
+                    'teacher_approved','semantic_approved','training_approved'))):
+            raise ValueError('Exact bounded diagnosed006 silent-listening experiment required')
+        records[v10.CASE]=('ack-v10',ack['recording'],c.ack/v10.CASE)
+    elif hasattr(c,'ack'):
         v9.diagnosis(c.repairs,c.repair_speech/v9.CASE/'component-speech.json')
         ack=json.loads((c.ack/'ack-component.json').read_text())
         if (ack['status']!='raw_component_complete_independent_speech_and_semantics_required'
@@ -143,6 +164,7 @@ def validate_view(c,batch,expected,manifest,plan,records):
         elif kind=='cutoff-v7':report=cutoff.verify_record(c.source,scene,folder,record,tokenizer)
         elif kind=='repair-v8':report=v8.implementation(record['clarity_profile'])[1](c.source,scene,folder,record,tokenizer)
         elif kind=='ack-v9':report=v9.implementation()[1](c.source,scene,folder,record,tokenizer)
+        elif kind=='ack-v10':report=v10.implementation()[1](c.source,scene,folder,record,tokenizer)
         else:raise ValueError('Unknown recorder profile')
         if (report['native_frame_budget']['frame_count_diagnostic_pass']is not True
                 or not case_review(cases[identity],json.loads((folder/'lifecycle.json').read_text()))['structural_pass']):
