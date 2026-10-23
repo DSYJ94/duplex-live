@@ -15,8 +15,13 @@ from evals.native_control_teacher import atomic_json, collection_lock, local_key
 from evals.recovery_worker import RecordWorld, run_worker
 
 
-def run(out, env_file, lock):
-    key = local_key(env_file)
+def run(out, env_file, lock, loopback_url=None, loopback_run=None):
+    from evals.recovery_transport import endpoint, PROXY_ENV, RUN_ENV
+    if loopback_url:
+        endpoint({PROXY_ENV:loopback_url,RUN_ENV:loopback_run})
+        key = None
+    else:
+        key = local_key(env_file)
     with collection_lock(lock):
         out.mkdir(parents=True, exist_ok=False)
         records = {'Falcon': {'access_code': 'rainy maple'}}
@@ -32,8 +37,15 @@ def run(out, env_file, lock):
                       native_voice_or_routing_qualified=False, training_approved=False)
         target = out / 'report.json'
         atomic_json(target, report)
-        previous = os.environ.get('OPENAI_API_KEY')
-        os.environ['OPENAI_API_KEY'] = key
+        previous = {k:os.environ.get(k) for k in ('OPENAI_API_KEY',PROXY_ENV,RUN_ENV)}
+        if loopback_url:
+            os.environ.pop('OPENAI_API_KEY',None)
+            os.environ[PROXY_ENV]=loopback_url;os.environ[RUN_ENV]=loopback_run
+        else:
+            os.environ['OPENAI_API_KEY'] = key
+            os.environ.pop(PROXY_ENV,None);os.environ.pop(RUN_ENV,None)
+        report['worker_provider_credential_present']=bool(os.environ.get('OPENAI_API_KEY'))
+        report['http_transport']='mac-loopback-responses-proxy' if loopback_url else 'direct-openai-https'
         try:
             context = [dict(role='user', text='Look up the access code for project Falcon.')]
             revision = world.reserve('synthetic-lookup', context)
@@ -66,10 +78,9 @@ def run(out, env_file, lock):
                 atomic_json(out / 'contract-failure.json', exc.result)
             raise
         finally:
-            if previous is None:
-                os.environ.pop('OPENAI_API_KEY', None)
-            else:
-                os.environ['OPENAI_API_KEY'] = previous
+            for name,value in previous.items():
+                if value is None:os.environ.pop(name,None)
+                else:os.environ[name]=value
             report.update(finished_utc=datetime.now(timezone.utc).isoformat(), world_receipts=world.receipts,
                           world_tasks=world.tasks)
             atomic_json(target, report)
@@ -79,11 +90,13 @@ def run(out, env_file, lock):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--out', type=Path, required=True)
-    parser.add_argument('--env-file', type=Path, required=True)
+    parser.add_argument('--env-file', type=Path)
+    parser.add_argument('--loopback-url')
+    parser.add_argument('--loopback-run')
     parser.add_argument('--lock', type=Path,
                         default=Path('runs/local-migration-20261021/.private/real-backend-probe.lock'))
     args = parser.parse_args()
-    report = run(args.out, args.env_file, args.lock)
+    report = run(args.out, args.env_file, args.lock,args.loopback_url,args.loopback_run)
     print(json.dumps({k: report[k] for k in ('status', 'actual_provider_responses', 'native_voice_or_routing_qualified')}))
 
 

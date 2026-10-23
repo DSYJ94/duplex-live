@@ -147,11 +147,11 @@ def tool(name,description,properties):
 
 def run_worker(context,world,task_id,model="gpt-6-luna",expected_revision=None,dispatch_protocol="legacy",pending_speech=None,response_executor=None,scope_read_tools=False,execution_observer=None):
     if dispatch_protocol not in ("legacy","required-action","state-aware"):raise ValueError("Unknown controller dispatch protocol")
-    key=None
+    transport=None
     if response_executor is None:
         import requests
-        key=os.environ.get('OPENAI_API_KEY')
-        if not key:raise RuntimeError('Backend API credential unavailable')
+        from evals.recovery_transport import endpoint
+        url,headers,transport=endpoint(os.environ)
     provider=getattr(response_executor,'provider_name','custom-executor') if response_executor is not None else 'openai'
 
     tools = [tool("lookup_record","Read an identified private project field. Ask for missing identification before calling.",
@@ -236,7 +236,7 @@ def run_worker(context,world,task_id,model="gpt-6-luna",expected_revision=None,d
     def request(payload):
         start = time.monotonic()
         if response_executor is None:
-            response=requests.post("https://api.openai.com/v1/responses",headers={"Authorization":"Bearer "+key},json=payload,timeout=90)
+            response=requests.post(url,headers=headers,json=payload,timeout=90)
             if response.status_code!=200:raise RuntimeError(f"Backend HTTP {response.status_code}")
             data=response.json()
         else:data=response_executor({**payload,'local_worker_state':dict(available=available,pending_speech=pending_speech,dispatch_protocol=dispatch_protocol)})
@@ -244,7 +244,7 @@ def run_worker(context,world,task_id,model="gpt-6-luna",expected_revision=None,d
         if data.get("status") != "completed":
             raise RuntimeError("Backend did not complete within the token budget")
         events.append({"response_id":data["id"],"model":data.get("model"),"usage":data.get("usage"),
-            "seconds":time.monotonic()-start,"provider":provider,"local_inference":data.get('local_inference'),"output":[{k:v for k,v in item.items() if k != "encrypted_content"}
+            "seconds":time.monotonic()-start,"provider":provider,"http_transport":transport,"local_inference":data.get('local_inference'),"output":[{k:v for k,v in item.items() if k != "encrypted_content"}
                 for item in data.get("output",[])]})
         return data
     response = request(first)

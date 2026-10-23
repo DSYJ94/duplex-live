@@ -1,4 +1,4 @@
-"""Independent destination restore of the pinned native7590052 adapter/Adam/RNG.
+"""Independent destination restore of pinned native520/7590052 adapter/Adam/RNG.
 
 This does not claim native28/acoustic49/stream49 numerical or behavioral approval.
 Expose exactly one GPU before launching, matching the saved RNG device inventory.
@@ -11,6 +11,39 @@ import json
 from pathlib import Path
 import random
 import sys
+
+
+PINS = {
+    'context-training-proof-7510331': dict(
+        hashes={'adapters.safetensors':'0310c2563988f8f59d942dce98119230016136f13fc9729ad1c2f398318e7cb5',
+                'training-state.pt':'b5e4320fba68a0b624a7be61778def8e6238517272637324824126ccaa1c6785',
+                'report.json':'7f69a321b87613b44c7d5a19b783c3c6ddcbb479bb2fc7bb94e96fe210119778'},
+        steps=520, adam=520, recipe_export='docs/NATIVE-520-RECIPE-2026-10-23.json',
+        recipe_export_sha256='02a808e8754d664b3b762d77a3e0070f1a5e2edc0199c89a2a7a97b1aae80de5'),
+    'context-training-proof-7590052': dict(
+        hashes={'adapters.safetensors':'7bbb2e9f1822cb43db50f6ead7c14d510e7c280d520cc7e1436dced6edbcfeb5',
+                'training-state.pt':'6a9fc6cb0949d1562f654af74cb6e86a827a0214a486f869e7bd92b1ae0b63b4',
+                'report.json':'397a259d124948dec3aeed63564ad24dbf2f13bb2b3699565f9f1974e60fa3eb'},
+        steps=8, adam=528),
+}
+
+
+def metadata_from_report(source, proof, report):
+    pin = PINS[proof.name]
+    keys = ['source_commit', 'repo_commit', 'assets_manifest_sha256', 'data_sha256',
+            'native_protocol', 'voice_sha256', 'frozen_hashes', 'retention_examples',
+            'warm_start', 'warm_start_optimizer_reset']
+    metadata = {key: report[key] for key in keys}
+    if 'recipe_export' in pin:
+        path = source / pin['recipe_export']
+        assert hashlib.sha256(path.read_bytes()).hexdigest() == pin['recipe_export_sha256']
+        exported = json.loads(path.read_text())
+        assert exported['proof'] == proof.name and exported['source_files'] == pin['hashes']
+        assert exported['optimizer_steps'] == pin['steps'] and exported['adam_clocks'] == [pin['adam']]
+        metadata['recipe'] = exported['recipe']
+    else:
+        metadata['recipe'] = report['combined_recipe']
+    return metadata
 
 
 def main():
@@ -26,12 +59,11 @@ def main():
     from evals.context_training_state import restore
     from training.control.train_context import assert_equal, cpu_tree
     assert torch.cuda.device_count() == 1
-    for name, wanted in [
-        ('adapters.safetensors', '7bbb2e9f1822cb43db50f6ead7c14d510e7c280d520cc7e1436dced6edbcfeb5'),
-        ('training-state.pt', '6a9fc6cb0949d1562f654af74cb6e86a827a0214a486f869e7bd92b1ae0b63b4'),
-        ('report.json', '397a259d124948dec3aeed63564ad24dbf2f13bb2b3699565f9f1974e60fa3eb')]:
+    pin = PINS[args.proof.name]
+    for name, wanted in pin['hashes'].items():
         assert hashlib.sha256((args.proof/name).read_bytes()).hexdigest() == wanted
     report = json.loads((args.proof/'report.json').read_text())
+    metadata = metadata_from_report(args.source, args.proof, report)
     checkpoint = load_file(args.proof/'adapters.safetensors')
     # Installation order and nn.Module traversal order differ: text_linear is
     # registered before the temporal stack. Reconstruct traversal from the pinned
@@ -50,14 +82,9 @@ def main():
     assert set(names) == set(checkpoint) and len(names) == 26
     learned = OrderedDict((n, torch.nn.Parameter(torch.zeros_like(checkpoint[n], device='cuda')))
                           for n in names)
-    optimizer = torch.optim.AdamW(list(learned.values()), lr=2e-7, weight_decay=0.)
-    keys = ['source_commit', 'repo_commit', 'assets_manifest_sha256', 'data_sha256',
-            'native_protocol', 'voice_sha256', 'frozen_hashes', 'retention_examples',
-            'warm_start', 'warm_start_optimizer_reset']
-    metadata = {key: report[key] for key in keys}
-    metadata['recipe'] = report['combined_recipe']
+    optimizer = torch.optim.AdamW(list(learned.values()), lr=metadata['recipe']['lr'], weight_decay=0.)
     saved = restore(args.proof/'training-state.pt', learned, optimizer, metadata)
-    assert saved['completed_steps'] == 8
+    assert saved['completed_steps'] == pin['steps']
     for name in names:
         assert_equal(learned[name].detach().cpu(), checkpoint[name])
     assert_equal(saved['optimizer'], cpu_tree(optimizer.state_dict()))
@@ -71,12 +98,12 @@ def main():
             rng[3] == saved['numpy_rng']['has_gauss'] and
             rng[4] == saved['numpy_rng']['cached_gauss'])
     clocks = sorted({int(x['step']) for x in optimizer.state.values()})
-    assert clocks == [528]
+    assert clocks == [pin['adam']]
     result = {'schema': 'dl-runpod-independent-adapter-state-restore-v1',
               'at_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
               'passed': True, 'optimizer_updates': 0, 'adapter_tensors': 26,
               'trainable_parameters': sum(p.numel() for p in learned.values()),
-              'phase_updates_restored': 8, 'adam_clocks': clocks,
+              'proof': args.proof.name, 'phase_updates_restored': pin['steps'], 'adam_clocks': clocks,
               'optimizer_and_python_numpy_torch_cpu_cuda_rng_exact': True,
               'metadata_reconstructed_from_pinned_report': True,
               'parameter_order_from_published_model_state_dict': True,
