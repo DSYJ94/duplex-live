@@ -2,6 +2,9 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+import shlex
+import shutil
+import subprocess
 
 from portable.context.native_control_copyback import ROOTS,snapshot,verify,ssh_command
 
@@ -69,6 +72,17 @@ class ControlCopyback(unittest.TestCase):
         for host,port in [('-oProxyCommand=bad',22),('root@host;bad',22),('root@host',0),('root@host',65536),('root@host',True)]:
             with self.subTest(host=host,port=port),self.assertRaises(ValueError):
                 ssh_command(Path('/key'),Path('/known-hosts'),host,port)
+
+    @unittest.skipUnless(shutil.which('ssh'),'OpenSSH is required for effective configuration verification')
+    def test_real_openssh_config_preserves_known_hosts_filename_with_spaces(self):
+        filename=Path('/local/Shared GitHub Repos/duplex-live/known-hosts')
+        command=ssh_command(Path('/local/key'),filename,'root@192.0.2.10',22022)
+        # Exercise OpenSSH's own parser after the rsync remote-shell round trip.
+        command=shlex.split(shlex.join(command))
+        result=subprocess.run(command+['-G','-F','/dev/null','root@192.0.2.10'],
+                              check=True,capture_output=True,text=True,timeout=5)
+        actual=next(line for line in result.stdout.splitlines() if line.startswith('userknownhostsfile '))
+        self.assertEqual(actual.partition(' ')[2],str(filename))
 
 
 if __name__=='__main__':unittest.main()

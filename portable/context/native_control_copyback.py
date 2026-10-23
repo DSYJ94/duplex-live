@@ -110,8 +110,12 @@ def ssh_command(key,known_hosts,host,port):
     if (not re.fullmatch(r'root@(?:[A-Za-z0-9][A-Za-z0-9.-]*|\[[0-9a-fA-F:]+\])',host)
             or type(port) is not int or not 1<=port<=65535):
         raise ValueError('Explicit actual root SSH host and TCP port required')
+    filename=str(known_hosts)
+    if any(c in filename for c in ('\n','\r','\0')):raise ValueError('Single known-hosts filename required')
+    # OpenSSH parses -o through its config grammar even for a single argv item.
+    filename='"'+filename.replace('\\','\\\\').replace('"','\\"')+'"'
     return ['ssh','-i',str(key),'-p',str(port),'-o','IdentitiesOnly=yes','-o','BatchMode=yes',
-        '-o','ConnectTimeout=10','-o','StrictHostKeyChecking=yes','-o','UserKnownHostsFile='+str(known_hosts)]
+        '-o','ConnectTimeout=10','-o','StrictHostKeyChecking=yes','-o','UserKnownHostsFile='+filename]
 
 
 def main():
