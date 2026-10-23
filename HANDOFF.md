@@ -1,3 +1,51 @@
+# LOCAL — funding verified; ONE replacement A100 created, restoring runtime (23 October09:25 London)
+
+NEWEST authoritative entry. LOCAL remains sole executor; goal ACTIVE/incomplete.
+User confirmed funding; official Runpod billing independently showed29.91USD,
+Auto-Pay disabled. Existing TOTAL project compute cap remains50USD. Two refused
+capacity attempts created no resources. Third attempt created ONLY
+4yx8vahdmjsylx, duplex-native-validation-control40-20261023-v2, at
+2026-10-23T08:22:37.9Z, EUR-IS-1, one A100-SXM4-80GB at1.79USD/hour,
+100GB ephemeral disk, existing100GB network volume49yytzyoge mounted/workspace.
+Pinned original NGC25.10 image digest42263b2424fc237b34c4fc4a91c30d603c57eed36e37d31ff6d9a4f1f801edee.
+No unrelated Aurium resources changed; no duplicate owned GPU/job.
+
+LIVE Mac costguard73678 (session54241) verified armed against exact Pod/name/
+creation timestamp/rate/volume. Terminates this Pod by2026-10-23T15:07:37.9Z,
+retaining volume. Conservative prior spend37.36308350742475USD; new6h45 GPU
+maximum12.0825 plus0.25 disk reserve =>49.69558350742474USD maximum.
+Receipt runs/local-migration-20261023/runpod-control40-replacement-v1.json;
+live status runpod-control40-replacement-budget-v1.json. Credentials stay local.
+Old sjf72o8v64mjvb and its processes remain dead; never use its SSH endpoint.
+
+Replacement staging helper is committed/pushed at EXACT source
+ce4972776415a53a836325b5c98f27bfb76154a3. Nine CPU tests passed. Real Mac metadata
+rehearsal verifies exact inventories:10390 original files24,661,548,106B;
+7797 complete control files8,000,842,614B; six active public model files
+33,871,112,833B stat-bound to original manifests; three vendor bundles rehashed.
+NOT a new full archive/model rehash or GPU acceptance. Actual staging independently
+rehashes copies and destination reads before creating canonical aliases, preserving
+archive, exact words/audio/receipts, folds, all154 objectives/native49/KL/hidden.
+Git bundle prepared for source deployment. Fresh compiler probe already exists in
+portable.context.native_audition --compiler-check-only; no new runtime packages needed.
+
+At this entry the pinned image is extracting, SSH/runtime not ready. No new
+optimizer update, candidate or numerical report. Actual latest remains unadopted
+native7590052/Adam528; repair parentnative520. Prior interrupted full40 precision
+controller never reached BF16/training/restore. New target output MUST be
+/workspace/migration/native-control40-precise-pilot-v2. Next: verify actual SSH,
+working disk/runtime and retained source closure; stage/copy/readback hashes;
+fresh compiler GPU probe; full40 numerical, independent BF16, combined154/native49/
+control40 readiness, new8, independent state/Adam/RNG/native restore. Start current-
+Pod copyback watcher with explicit NEW host/port and source. Native20/speech20 review
+must pass all ordinary tasks before sealed fresh40 inference. No extension/adoption.
+
+Archive67.76GB previously verified on Mac/Runpod/S3; broader stopped Mac source
+backup remains PARTIAL. Runtime restoration and new output backups are pending.
+See docs/NATIVE-CONTROL40-REPLACEMENT-2026-10-23.json. Unrelated timeline.pyc,
+capability-retention probe files and roadmap.html preserved. Do not hand execution
+to cloud while this LOCAL owned resource/guard is active.
+
 # LOCAL — full portable fresh40/speech40 collector prepared; no new GPU; funding pending (23 October08:54 London)
 
 NEWEST authoritative entry. LOCAL sole executor; goal ACTIVE/incomplete. Previous
