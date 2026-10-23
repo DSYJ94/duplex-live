@@ -17,6 +17,16 @@ import time
 from portable.context.native_development import atomic, PROOFS
 from portable.context.native_gradient_followup import process_birth
 
+SPEECH_FILES=('portable/context/native_speech_followup.py','evals/moshi_speech_audit.py',
+              'data/synthetic/filter.py')
+
+
+def source_identity(source):
+    commit=subprocess.check_output(['git','-C',str(source),'rev-parse','HEAD'],text=True).strip()
+    if subprocess.check_output(['git','-C',str(source),'status','--porcelain'],text=True).strip():
+        raise RuntimeError('Independent speech audit requires immutable committed source')
+    return commit,{name:hashlib.sha256((source/name).read_bytes()).hexdigest() for name in SPEECH_FILES}
+
 
 def main():
     ap=argparse.ArgumentParser(description=__doc__)
@@ -27,11 +37,13 @@ def main():
     ap.add_argument('--paired-source-commit',required=True)
     ap.add_argument('--deadline-utc',required=True)
     args=ap.parse_args()
+    source_commit,implementation=source_identity(args.source)
     deadline=datetime.fromisoformat(args.deadline_utc.replace('Z','+00:00')).timestamp()
     args.out.mkdir(exist_ok=False)
     lock=(args.paired/'speech-followup.lock').open('a');fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
     state=dict(schema='dl-runpod-paired20-independent-speech-followup-v1',pid=os.getpid(),
                phase='waiting_for_complete_paired20',paired_source=args.paired_source_commit,
+               source_commit=source_commit,speech_implementation_sha256=implementation,
                controller_pid=args.controller_pid,controller_birth=args.controller_birth,
                deadline_utc=args.deadline_utc,complete20=False,behavior_approved=False,training_approved=False)
     def save():
@@ -58,6 +70,9 @@ def main():
         roles=list(current.get('proofs',PROOFS))
         if roles not in (list(PROOFS),['baseline520','candidate-control40']):
             raise ValueError('Exact baseline and archived or fully restored control40 candidate required')
+        if roles==['baseline520','candidate-control40'] and source_commit!=args.paired_source_commit:
+            raise ValueError('Portable candidate speech audit must use the exact paired execution source')
+        state['paired_execution_sha256']=hashlib.sha256((args.paired/'execution.json').read_bytes()).hexdigest()
         state['paired_roles']=roles;state['gpu_mode']=current.get('gpu_mode','paired-two-gpu');save()
         for device,role in enumerate(roles):
             actor=json.loads((args.paired/role/'execution.json').read_text())
@@ -89,6 +104,10 @@ def main():
                 if Path(row['run'])!=folder or row['wav_sha256']!=hashlib.sha256((folder/'model.wav').read_bytes()).hexdigest():
                     raise RuntimeError('Independent speech audit changed actual native audio')
             reports[role]=hashlib.sha256(report.read_bytes()).hexdigest()
+        if source_identity(args.source)!=(source_commit,implementation):
+            raise RuntimeError('Independent speech implementation changed during audit')
+        if hashlib.sha256((args.paired/'execution.json').read_bytes()).hexdigest()!=state['paired_execution_sha256']:
+            raise RuntimeError('Paired execution changed during independent speech audit')
         state.update(phase='complete_speech20_only',complete20=True,reports_sha256=reports,
                      semantic_quiet_pause_receipt_and_audio_review_still_required=True)
         save()

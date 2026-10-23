@@ -22,6 +22,16 @@ ROOT = Path('/projects/u6si/duplex-live')
 BASE = ROOT / 'models/hf-cache/hub/models--nvidia--personaplex-7b-v1/snapshots/fdaf4090a61cb315c138a1faee287ffd6c716309'
 PLAN = 'evals/fixtures/native-v2-development-20261019.json'
 PROOFS = {'baseline520': '7510331', 'candidate7590052': '7590052'}
+INFERENCE_FILES=('portable/context/native_development.py','evals/context_spanning_probe.py',
+    'evals/context_spanning_native.py','evals/context_spanning_asr.py','evals/native_asr_placement.py',
+    'evals/native_eval_session.py','evals/context_adapter_load.py','evals/context_execution.py',
+    'evals/personaplex_adapters.py','evals/context_native_layout.py','evals/context_span_trace.py',
+    'evals/context_student_history.py','evals/context_prefix_trace.py','evals/audio_playout.py',
+    'evals/context_event_log.py','evals/context_backend_failure.py','evals/context_backend_reference.py',
+    'evals/context_delivery_hold.py','evals/context_query_reference.py','evals/recovery_worker.py',
+    'evals/recovery_transport.py','evals/recovery_context.py','evals/recovery_data.py',
+    'evals/lychee_context.py','evals/context_spanning_download.py','evals/personaplex_train.py',
+    'evals/moshi_model_download.py')
 
 
 def proofs(candidate=None):
@@ -59,6 +69,14 @@ def atomic(path, value):
 
 def utc():
     return datetime.now(timezone.utc).isoformat()
+
+
+def artifact_hashes(folder, names):
+    return {name:hashlib.sha256((folder/name).read_bytes()).hexdigest() for name in names}
+
+
+CASE_FILES=('report.json','model.wav','user_in.wav')
+PARITY_FILES=('report.json','packet-stream.wav','events.jsonl','student-history.pt')
 
 
 def command(case, proof, out, asr_python, runtime_profile='container-default',gpu_mode='paired-two-gpu'):
@@ -102,8 +120,8 @@ def compare_native(left, right):
 
 
 def actor(args):
-    # Set the main CUDA device before importing Torch. Every native-ASR call
-    # receives BOTH actual devices; the unchanged probe isolates its main one.
+    # Set the native device before Torch import. Resource placement is explicit;
+    # serial mode keeps the isolated ASR process on the same physical GPU.
     os.environ['CUDA_VISIBLE_DEVICES'] = str(args.device)
     if os.environ.get('OPENAI_API_KEY'):
         raise RuntimeError('Provider credential must remain on Mac')
@@ -140,12 +158,15 @@ def actor(args):
         run(plan['cases'][1], out/'parity-intervening')
         run(plan['cases'][0], out/'parity-reused')
         state['parity'] = compare_native(out/'parity-cold', out/'parity-reused')
+        state['parity_artifact_sha256']={name:artifact_hashes(out/name,PARITY_FILES)
+            for name in ('parity-cold','parity-intervening','parity-reused')}
         atomic(out/'parity.json', state['parity'])
         state['phase'] = 'ordinary'
         atomic(out/'execution.json', state)
         for index, case in enumerate(plan['cases'][:6]):
             run(case, out/('case-%02d'%index))
-            state['cases'].append(dict(index=index, completed_utc=utc(), exit_code=0))
+            state['cases'].append(dict(index=index, completed_utc=utc(), exit_code=0,
+                artifact_sha256=artifact_hashes(out/('case-%02d'%index),CASE_FILES)))
             atomic(out/'execution.json', state)
         (out/'ordinary-complete').write_text(utc()+'\n')
         other = args.out / next(role for role in selected if role!=args.role)
@@ -164,7 +185,8 @@ def actor(args):
             atomic(out/'execution.json', state)
             for index in range(6,10):
                 run(plan['cases'][index], out/('case-%02d'%index))
-                state['cases'].append(dict(index=index, completed_utc=utc(), exit_code=0))
+                state['cases'].append(dict(index=index, completed_utc=utc(), exit_code=0,
+                    artifact_sha256=artifact_hashes(out/('case-%02d'%index),CASE_FILES)))
                 atomic(out/'execution.json', state)
         state.update(phase='complete', complete10=True, finished_utc=utc())
         atomic(out/'execution.json', state)
@@ -216,6 +238,8 @@ def main():
                  optimizer_updates=0, behavior_approved=False, training_approved=False,
                  provider_credential_transferred=False)
     state['proofs']={role:str(path) for role,path in selected.items()}
+    state['execution_implementation_sha256']={name:hashlib.sha256((args.source/name).read_bytes()).hexdigest()
+                                            for name in INFERENCE_FILES}
     state['runtime_profile']=args.runtime_profile
     state['gpu_mode']=args.gpu_mode
     state['resource_timing_comparable_to_two_gpu']=args.gpu_mode!='serial-one-gpu'
