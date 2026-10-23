@@ -1,0 +1,60 @@
+{
+  "schema": "dl-local-native-source-ASR-thread-benchmark-v1",
+  "at_utc": "2026-10-23T16:22:11.348007+00:00",
+  "physical_cores": 10,
+  "performance_cores": 4,
+  "efficiency_cores": 6,
+  "low_power_mode": 0,
+  "nice": 0,
+  "original_ASR_completed_before_benchmark": true,
+  "source_wav_sha256": "57ba1686b5d11860259008881934f3cc4b0f05633b7b0ea252230d9ea19de1bf",
+  "source_duration_s": 5.7,
+  "asr_model": "whisper-turbo",
+  "rows": [
+    {
+      "torch_threads": 4,
+      "seconds": [
+        5.213585999998031,
+        5.184048541006632
+      ],
+      "median_seconds": 5.198817270502332,
+      "texts": [
+        " One badge costs four tokens. How many tokens do two badges cost?",
+        " One badge costs four tokens. How many tokens do two badges cost?"
+      ]
+    },
+    {
+      "torch_threads": 8,
+      "seconds": [
+        4.92120862500451,
+        4.949342666994198
+      ],
+      "median_seconds": 4.935275645999354,
+      "texts": [
+        " One badge costs four tokens. How many tokens do two badges cost?",
+        " One badge costs four tokens. How many tokens do two badges cost?"
+      ]
+    },
+    {
+      "torch_threads": 10,
+      "seconds": [
+        5.439315833005821,
+        5.026973208005074
+      ],
+      "median_seconds": 5.233144520505448,
+      "texts": [
+        " One badge costs four tokens. How many tokens do two badges cost?",
+        " One badge costs four tokens. How many tokens do two badges cost?"
+      ]
+    }
+  ],
+  "fastest_tested_threads": 8,
+  "scope": "One fixed TRAIN utterance; diagnostic throughput only, not a source approval, quality procedure change or native model benchmark",
+  "API_calls": 0,
+  "GPU_calls": 0,
+  "measured_speedup8_vs4": 0.05069261156730609,
+  "future_source_audit_default_threads": 8,
+  "macOS_power_priority_or_affinity_changed": false,
+  "thermal_readback": "No thermal or performance warning recorded by pmset",
+  "note": "Timing is two repeats per thread count on one5.7s TRAIN utterance, not a full-corpus or native GPU speed claim"
+}

@@ -1,3 +1,58 @@
+# LOCAL —30/40 native live; CPU benchmark done; source audit bug fixed (23 October16:32UTC)
+
+LOCAL sole executor; goalACTIVE. Mainc28f14e before this commit. Actual16:29:47UTC
+SSH confirms same21063/birth20582160 S, old4111/birth18985221 T/paused, actual
+CUDA14873/birth20219598 R;30/40 allrecorded pass,0optimizerupdates. All nice0;
+actualCUDA affinity allows255CPUs. C9model/orchestration7769270 unchanged.
+Guard16271 deadline23:22:37.9UTC, pilot21:30/eval22:17/backup22:20 unchanged.
+No new GPU or duplicate training. Specific20USDpayment approval STILL pending;
+40source utterance authorization explicitly resolved in docs/source auth.
+
+Source session92061 TERMINALexit1 AFTER all40 actualCPU ASR outputs and full
+failed report saved. Source recovery40objects/56clips/32scenes completed with
+41aggregateAPI attempts; WAVs/receipts/sourcev1+v2 remain immutable. All40 in-memory
+audit flags failed because NumPyfloat64 timestamp types differ from persisted
+JSON/Pythonfloat; audit/verification disagreed. New persisted_asr reads the exact
+unchanged JSON before assess, keeping ALL words/times/WAVs/thresholds. Assess and
+verify bodies AST-identical to c28f14e;12tests pass, including finite/invalid
+clock guards. Original failedaudit/codeSHAaf47365e03122406c9a57e438df8bfa56b30a245c3fb61baac2d9606ae749ad8
+preserved, no old report reapproved or overwritten.
+
+Whole40 serialized readback gives39pass/1fail, no lexical WERfail. Actual waveform
+inspection found a tail transient in budget-change object
+7acae062d4745c22b3f89744c2b963b5b5580d292ebb0c7062eb12d852f15d87:6.45s, peak
+0.99996948,2samples>0.995,one absolute32767sample at5.503s; last recognizedword
+ends4.30s. No flat clipping run inferred; definite unchangedpeakbar failure.
+Original samples plotted/inspected, no gain reduction or tail trimming.
+
+ONE diagnosed exactsamepayload new take session10986 TERMINAL0, under same
+sourcecollection lock, no automaticretry. TotalAPIattempts now42 for SAME40
+uniqueapproved payloads. Output native-reasoning32-budget-repair-take-v1, new
+replacement.wav5.10s peak0.681884765625, request/providerreceipt saved. NOT yet
+independently word-approved or composed into an accepted full40 corpus.
+Next ASSEMBLE explicit sourcev3/overlay with39originals +thisnewtake, preserve
+parents/all42attempts, then full40 independentquality at unchangedbars. Do not
+call more speechAPI before testing this existing take or accept the39subset.
+Evidence docs/NATIVE-REASONING32-SOURCE-AUDIT-DIAGNOSIS-2026-10-23.json.
+
+CPU concern answered with actual measurements. Mac10cores=4performance+6efficiency,
+32GiB, lowpower0, nice0, no recordedthermal/performancewarning. No OS affinity/power
+throttle imposed. Benchmark session46370 TERMINAL0 AFTER priorASR exited: same
+5.7s TRAINclip, two timed repeats per4/8/10threads; medians5.1988/4.9353/5.2331s,
+8threads~5.07%faster than4, allsixtextoutputs identical. Future sourceaudits now
+default8 (previous4). This oneclipbenchmark is not a generalGPU/CPU claim.
+docs/NATIVE-LOCAL-CPU-BENCHMARK-2026-10-23.json. No overlapping heavyASR remains.
+
+User asks concrete model fix: causal regression remains unresolved; new40 control
+teachers address silence/pause/cue coverage, new32 authoredsource addresses basic
+vs hard reasoning/lifecycle coverage but teacher/native training not done. Scope
+recordpersona only in a matched diagnostic; olderpersona-only test remainedfailed.
+After current ONE8, complete native behavior then matched publishedbase/520/child
+currentruntime and exactcurrent objective gradients ifneeded. No unchangedlonger
+run, batchsize guess, lostretention term or unfreezing justified. Keep existing
+full40/154/native49/restore/native20/speech20/fresh40 approvalchain.
+Unrelated localfiles preserved/excluded. Criticalnativebackups verified18eb557.
+
 # LOCAL —new reasoning32 source COMPLETE; ASR running;28/40 GPU (23 October16:18UTC)
 
 LOCAL sole executor, goal ACTIVE; maina708e54 before this commit. Human explicitly

@@ -1,7 +1,10 @@
 import copy
+import json
+from pathlib import Path
+import tempfile
 import unittest
 import numpy as np
-from evals.native_reasoning_source_quality import assess
+from evals.native_reasoning_source_quality import assess,persisted_asr
 
 
 class ReasoningSourceQuality(unittest.TestCase):
@@ -29,6 +32,24 @@ class ReasoningSourceQuality(unittest.TestCase):
         self.assertTrue(assess('Two badges.',r,self.pcm,24000)['passed'])
         r['text']='3 badges.';r['segments'][0]['words'][0]['text']='3'
         self.assertFalse(assess('Two badges.',r,self.pcm,24000)['passed'])
+
+    def test_numpy_clocks_are_assessed_from_the_same_persisted_values_as_verification(self):
+        r=copy.deepcopy(self.result)
+        for word in r['segments'][0]['words']:
+            word['start']=np.float64(word['start']);word['end']=np.float64(word['end'])
+        self.assertFalse(assess('Two badges.',r,self.pcm,24000)['passed'])
+        with tempfile.TemporaryDirectory()as folder:
+            path=Path(folder)/'asr.json';saved=persisted_asr(path,r)
+            self.assertEqual(saved,json.loads(path.read_text()))
+            self.assertEqual(saved,r)
+            self.assertTrue(assess('Two badges.',saved,self.pcm,24000)['passed'])
+
+    def test_readback_cannot_hide_invalid_or_nonfinite_clock_values(self):
+        for bad in [-1.,float('nan'),float('inf'),2.]:
+            r=copy.deepcopy(self.result);r['segments'][0]['words'][0]['end']=np.float64(bad)
+            with tempfile.TemporaryDirectory()as folder:
+                saved=persisted_asr(Path(folder)/'asr.json',r)
+                self.assertFalse(assess('Two badges.',saved,self.pcm,24000)['passed'])
 
 
 if __name__=='__main__':unittest.main()

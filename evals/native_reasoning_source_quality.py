@@ -54,7 +54,18 @@ def assess(text,result,pcm,rate):
                 reference_text_prompt_used=False,waveform_changed=False)
 
 
-def audit(source,weights,out,threads=4):
+def persisted_asr(path,result):
+    """Assess the exact JSON representation the independent verifier will read.
+
+    Whisper's NumPy float64 clocks serialize as ordinary JSON numbers. Keeping
+    an in-memory NumPy scalar here falsely rejects valid clocks while readback
+    accepts them. No value, interval, word, waveform or threshold is changed.
+    """
+    atomic_json(path,result)
+    return json.loads(path.read_text())
+
+
+def audit(source,weights,out,threads=8):
     import numpy as np
     import soundfile as sf
     from scipy.signal import resample_poly
@@ -73,7 +84,7 @@ def audit(source,weights,out,threads=4):
         if rate!=24000 or pcm.ndim!=1:raise ValueError('Original provider must supply24kHz mono; never repair input silently')
         result=whisper.transcribe(model,resample_poly(pcm,2,3).astype(np.float32),language='en',
             vad=False,best_of=5,beam_size=5,temperature=0.,fp16=False,verbose=None)
-        name=identity+'-asr.json';atomic_json(out/name,result)
+        name=identity+'-asr.json';result=persisted_asr(out/name,result)
         verdict=assess(objects[identity]['input'],result,pcm,rate)
         results.append(dict(object_id=identity,wav_sha256=sha(wav),asr_file=name,
                             asr_sha256=sha(out/name),**verdict))
@@ -131,5 +142,5 @@ def verify(source,approval,*,require_pass=True):
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
     for n in ('source','weights','out'):p.add_argument('--'+n,type=Path,required=True)
-    p.add_argument('--threads',type=int,default=4);a=p.parse_args()
+    p.add_argument('--threads',type=int,default=8);a=p.parse_args()
     audit(a.source,a.weights,a.out,a.threads);verify(a.source,a.out/'source-quality.json')
