@@ -107,7 +107,11 @@ def validate_teacher_conversion(data,receipt):
         raise RuntimeError("Independent teacher speech report changed")
     spoken = {Path(r["run"]).name:r for r in json.loads((checks.parent / "report.json").read_text())["results"]}
     decisions = {"teacher-"+r["scenario_id"]:r for r in approval["results"]}
-    quality_rows={r['scenario_id']:r for r in map(json.loads,(data/'filter_report.jsonl').read_text().splitlines())}
+    # Only V2 compares the extra per-utterance raw/canonical ASR detail below.
+    # Historical conversions retain their hash-bound quality.jsonl, checked_rows,
+    # original measured speech/facts and every source/derived artifact check.
+    quality_rows=({r['scenario_id']:r for r in map(json.loads,(data/'filter_report.jsonl').read_text().splitlines())}
+                  if raw_manifest.get('collection_schema')=='dl-native-dialogue-teacher-v2' else {})
     passed = {"teacher-"+r["scenario_id"] for r in approval["results"] if r["speech_and_fact_checks_pass"]}
     if any(r["split"] != "train" or r["scenario_id"] not in passed for r in receipt["accepted"]):
         raise RuntimeError("Unapproved teacher or held-out audio entered conversion")

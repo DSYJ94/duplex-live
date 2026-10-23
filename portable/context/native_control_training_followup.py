@@ -103,11 +103,14 @@ def main():
     for name in ('payload','python','root','cache','preflight','supervisor','compiler','inventory','out','cost-guard-receipt'):
         p.add_argument('--'+name,type=Path,required=True)
     p.add_argument('--payload-commit',required=True)
+    p.add_argument('--supervisor-payload-commit',
+                   help='Explicit original audit payload when a metadata-only dependency repair uses a later training source')
     p.add_argument('--supervisor-pid',type=int,required=True)
     p.add_argument('--supervisor-birth',type=int,required=True)
     p.add_argument('--deadline-utc',required=True)
     p.add_argument('--prepare-only',action='store_true',help='Validate command/data bindings without dispatching any stage')
     a=p.parse_args();deadline=datetime.fromisoformat(a.deadline_utc.replace('Z','+00:00')).timestamp()
+    audit_commit=a.supervisor_payload_commit or a.payload_commit
     def clean():
         if git(a.payload,'rev-parse','HEAD')!=a.payload_commit or git(a.payload,'status','--porcelain'):
             raise ValueError('Exact immutable execution payload required')
@@ -144,6 +147,7 @@ def main():
                controller_commit=git(Path(__file__).resolve().parents[2],'rev-parse','HEAD'),
                payload_commit=a.payload_commit,execution_source=str(a.payload),deadline_utc=a.deadline_utc,
                followed_supervisor_pid=a.supervisor_pid,followed_supervisor_birth=a.supervisor_birth,
+               followed_supervisor_payload_commit=audit_commit,
                phase='prepared',stages=[],planned_commands=dict(stages),new_stage_optimizer_limit=8,
                passed=False,model_adopted=False,behavior_qualified=False,extension_approved=False)
     def save():
@@ -164,7 +168,7 @@ def main():
         state['phase']='waiting_for_exact_numerical_and_gradient40';save()
         while time.time()<deadline:
             s=json.loads((a.supervisor/'controller.json').read_text())
-            if gradient_complete(s,a.supervisor_pid,a.supervisor_birth,a.payload_commit):break
+            if gradient_complete(s,a.supervisor_pid,a.supervisor_birth,audit_commit):break
             state['observed_audit_phase']=s['phase'];save();time.sleep(5)
         else:raise TimeoutError('Original full40 audits did not finish before training deadline')
         for name,command in stages:
