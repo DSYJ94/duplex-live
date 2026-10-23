@@ -1,0 +1,132 @@
+{
+  "schema": "dl-native-control40-complete-numerical-approval-evidence-v1",
+  "recorded_utc": "2026-10-23T12:51:50.314866+00:00",
+  "observation": {
+    "at_utc": "2026-10-23T12:50:33.301629+00:00",
+    "phase": "complete40_independent_BF16_gradient",
+    "processes": [
+      {
+        "pid": 4111,
+        "state": "S",
+        "birth": 18985221
+      },
+      {
+        "pid": 4122,
+        "state": null,
+        "birth": null
+      },
+      {
+        "pid": 4216,
+        "state": null,
+        "birth": null
+      },
+      {
+        "pid": 14873,
+        "state": "R",
+        "birth": 20219598
+      }
+    ],
+    "stages": [
+      {
+        "name": "whole_workset",
+        "started_utc": "2026-10-23T09:23:57.942069+00:00",
+        "pid": 4122,
+        "birth": 18985364,
+        "exit_code": 0,
+        "ended_utc": "2026-10-23T09:25:23.016336+00:00"
+      },
+      {
+        "name": "complete40_precise_numerical",
+        "started_utc": "2026-10-23T09:25:23.120893+00:00",
+        "pid": 4216,
+        "birth": 18993883,
+        "exit_code": 0,
+        "ended_utc": "2026-10-23T12:49:40.255084+00:00"
+      },
+      {
+        "name": "complete40_independent_BF16_gradient",
+        "started_utc": "2026-10-23T12:49:40.293806+00:00",
+        "pid": 14873,
+        "birth": 20219598
+      }
+    ],
+    "numerical": {
+      "schema": "dl-native-control40-numerical-fp64-attention-v2",
+      "created_utc": "2026-10-23T09:38:13.615016+00:00",
+      "engine_report_sha256": "8e14b636983ba4db9e31ca1179b00516383d8ccb5e56acc19d3b57e34b593d7e",
+      "complete40": true,
+      "passed": true,
+      "threshold": 0.001,
+      "causal_prefix_error_required": 0.0,
+      "optimizer_updates": 0,
+      "new_checkpoint_written": false,
+      "training_approved": false,
+      "behavior_qualified": false,
+      "bf16_gradient_approval_required": true,
+      "code_sha256": "2e8d77993279884fadff04637ded3407bea6e41dfe5d54991dca893176746f03",
+      "reference_code_sha256": "914706361e33d0a7fce6477e188cbf433a8ec3b9e585001d3f08041a03df2736",
+      "attention_reference_code_sha256": "0de9bf2f22d0be4c576607232ab0e37b3bde5410d9578676f360e4998811551f",
+      "original_numerical_code_sha256": "fb97aa26284e23b1afcc6e4d38daaf0c7d295b2a1ec455e0503935dd06fc8916",
+      "original_failure_sha256": "ea78de49685707fdae3e5b7dbc1d92ff0ddd3860699e23f152d5b7579c300a3b",
+      "independent_reference_profile": "fp32-state-fp64-linear-attention-fp32-output-v2",
+      "source_commit": "c9efaaac24d983342f7eded46617e6450bc102ce",
+      "reference": {
+        "calls": 4440060,
+        "cast_cache_hits": 3033209,
+        "cast_cache_misses": 1406851,
+        "cached_fp64_weight_bytes": 34358116352,
+        "maximum_cached_bytes": 34359738368,
+        "peak_cached_bytes": 34358116352,
+        "arithmetic": "fp32-weights-activations-fp64-linear-fp32-output",
+        "allocation_only": true,
+        "training_approved": false
+      },
+      "attention_reference": {
+        "calls": 895504,
+        "accumulation_dtype": "float64",
+        "input_output_dtype": "float32",
+        "dropout": 0.0,
+        "production_or_training_execution_changed": false
+      },
+      "all_model_parameters_unchanged": true,
+      "peak_allocated_bytes": 72406452224,
+      "immutable_input_hash_reuse": {
+        "mode": "full-first-read-plus-file-identity-every-reuse-v1",
+        "roots": [
+          "/opt/control40-runtime-root-v2/runs",
+          "/opt/duplex-control40-c9efaaa-v2/runs",
+          "/opt/control40-runtime-root-v2/models/hf-cache/hub/models--nvidia--personaplex-7b-v1/snapshots/fdaf4090a61cb315c138a1faee287ffd6c716309",
+          "/opt/control40-runtime-root-v2/models/hf-cache/hub/models--mindlogicinc--context-spanning-7b/snapshots/e62a4494a295ff8cee345451cf40aae85719a9f5"
+        ],
+        "unique_hashed_files": 7,
+        "reused_hashes": 12,
+        "bytes_fully_hashed": 31530028,
+        "full_hash_seconds": 0.2717502720479388,
+        "all_cached_identities_rechecked": true,
+        "validation_results_or_model_outputs_cached": false
+      },
+      "input_inventory_rechecked_and_execution_source_clean": true,
+      "cases": 40,
+      "all_rows_passed": true,
+      "sha256": "bdf4ac935249b7e5cd31dbbd1936389ce8b537f2bb7fb44f7b273bff809413af"
+    },
+    "error": null
+  },
+  "backup": {
+    "path": "runs/local-migration-20261023/native-control40-continuous-copyback-v6/20261023T125026.525413Z",
+    "files": 19,
+    "inventory_sha256": "8407ab1141c83ff0cf1ab545262f4d4b94f0fe3beed05353f4736958f3909230"
+  },
+  "backup_hashes_independently_verified": true,
+  "all40_rows_passed": true,
+  "threshold_unchanged": 0.001,
+  "maximum_text_logit_error": 0.0004820823669433594,
+  "maximum_hidden_error": 0.0002465248107910156,
+  "all_causal_prefix_errors_zero": true,
+  "original_failed_audit_preserved": true,
+  "production_or_training_execution_changed": false,
+  "gradient_or_combined_readiness_approved": false,
+  "new_optimizer_updates": 0,
+  "candidate_adopted": false,
+  "next_action": "Observe existing BF16 child14873/birth20219598; same controller4111 owns all remaining gates and bounded8/independent restore."
+}

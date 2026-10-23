@@ -1,3 +1,49 @@
+# LOCAL — COMPLETE40 numerical PASS; independent BF16 gradient running (23 October12:51UTC)
+
+NEWEST authoritative entry. LOCAL sole executor; goal ACTIVE/incomplete. Same
+Pod4yx8vahdmjsylx and controller4111/birth18985221; actual GPU execution source
+c9efaaac24d983342f7eded46617e6450bc102ce at/opt/duplex-control40-c9efaaa-v2.
+Main bdd55af before this update. No duplicate GPU, Slurm submission or restart.
+
+Original numerical4216/birth18993883 EXITED0 at12:49:40.255084UTC. ALL40 cases
+and final checks PASS: complete40true, all_model_parameters_unchangedtrue,
+input_inventory_rechecked_and_execution_source_cleantrue. Threshold0.001 unchanged;
+peak72,406,452,224B <80,000,000,000B. Completed report SHA
+bdf4ac935249b7e5cd31dbbd1936389ce8b537f2bb7fb44f7b273bff809413af.
+Original failed audit and production BF16/model weights unchanged. Reference
+FP64 attention/cast caching only; no numerical threshold, mask or target weakening.
+This is numerical approval ONLY; no new optimizer update, checkpoint or adoption.
+
+CURRENT distinct BF16 child14873/birth20219598 actually R/live12:50:33UTC,
+started12:49:40.293806UTC. Same controller automatically owns full40 BF16 ->
+combined retained154/native49/control40 readiness -> ONE8 updates from native520 ->
+independent Adam/RNG/native restore -> strict proof. Overall14:59UTC deadline.
+Do not submit another trainer/auditor. No stage may skip remaining gates.
+
+ACTIVE backup42219/session46974, v6 watcher through15:30UTC. Latest completed
+numerical independently matches Mac snapshot19 files, inventory
+8407ab1141c83ff0cf1ab545262f4d4b94f0fe3beed05353f4736958f3909230.
+Guard36001/session74278 ARMED, exact owned Pod deletion15:31:37.9UTC; retain
+volume49yytzyoge. Same50USD TOTAL cap; full lifetime maximum49.98921830424946USD.
+No new spend cap or storage size change. Retained volume last80,150,787,037B.
+Original67.76GB critical native archive previously verified; broader Mac source
+backup PARTIAL; no whole-archive rehash this turn.
+
+Evaluation dispatcher40212/session26593 remains live, requires ALL7 exit0 and
+actual upstream exit, then complete native20/speech20. Latest launch14:44UTC,
+evaluation15:27UTC deadline. Proxy37256/session29966 runnative-control40-20261023-v3,
+Mac127.0.0.1:50257 ->tunnel37281/session38332 ->Pod ONLY127.0.0.1:18789.
+No key transferred; no sealed fresh input, extension or adoption. Read-only
+observer session92890 ended normally after its ten-minute bound; GPU job untouched.
+
+NEXT: observe same BF16 child14873 and controller4111; inspect actual fit/state
+only after all gates and8 updates complete; review full native20/speech20 and all4
+ordinary tasks before fresh40. Evidence docs/NATIVE-CONTROL40-NUMERICAL-PASS-2026-10-23.json.
+Cookbook now has dated actual failed old-candidate results; planned recipe is
+explicitly not a completed training report. Broader32 reasoning and microturn/
+backchannel data remain unrecorded/untrained. Unrelated local edits preserved.
+Execution stays LOCAL; no human action needed.
+
 # LOCAL —36/40 passing; backend recovered; one GPU job continuing (23 October12:28UTC)
 
 NEWEST authoritative operational entry. LOCAL sole executor; goal ACTIVE.

@@ -1,6 +1,6 @@
 {
   "schema": "dl-native-control40-live-numerical-and-evaluation-followup-v1",
-  "observed_utc": "2026-10-23T12:27:54.837067+00:00",
+  "observed_utc": "2026-10-23T12:50:33.301629+00:00",
   "execution_source_commit": "c9efaaac24d983342f7eded46617e6450bc102ce",
   "pod_id": "4yx8vahdmjsylx",
   "controller_pid": 4111,
@@ -8,10 +8,10 @@
   "numerical_pid": 4216,
   "numerical_birth": 18993883,
   "numerical_created_utc": "2026-10-23T09:38:13.615016+00:00",
-  "completed_cases": 36,
+  "completed_cases": 40,
   "all_completed_cases_pass": true,
-  "complete40": false,
-  "whole40_approved": false,
+  "complete40": true,
+  "whole40_approved": true,
   "unchanged_error_threshold": 0.001,
   "cases": [
     {
@@ -229,18 +229,42 @@
       "passed": true,
       "hidden_max_error": 5.841255187988281e-05,
       "logit_max_error": 4.220008850097656e-05
+    },
+    {
+      "id": "native-control3-train-036",
+      "passed": true,
+      "hidden_max_error": 2.2530555725097656e-05,
+      "logit_max_error": 1.9788742065429688e-05
+    },
+    {
+      "id": "native-control3-train-037",
+      "passed": true,
+      "hidden_max_error": 1.9550323486328125e-05,
+      "logit_max_error": 2.0503997802734375e-05
+    },
+    {
+      "id": "native-control3-train-038",
+      "passed": true,
+      "hidden_max_error": 1.5616416931152344e-05,
+      "logit_max_error": 2.1219253540039062e-05
+    },
+    {
+      "id": "native-control3-train-039",
+      "passed": true,
+      "hidden_max_error": 2.3603439331054688e-05,
+      "logit_max_error": 3.7670135498046875e-05
     }
   ],
-  "final_parameter_hash_and_peak_checks_pending": true,
+  "final_parameter_hash_and_peak_checks_pending": false,
   "new_optimizer_updates": 0,
   "new_candidate_or_adoption": false,
   "backup": {
     "watcher_pid": 42219,
     "current_successful": true,
-    "snapshots_verified": 6,
-    "latest_inventory_sha256": "e03f78c2d30b256555da3aa80b8a993229a58d8ef16660fad5591d316e8d5c43",
-    "latest_files": 18,
-    "numerical_progress_sha256": "215b93f46b48d676f7acdda29dba7870282b63ba7ffa3ddf9349f23045cfb0d2",
+    "snapshots_verified": 11,
+    "latest_inventory_sha256": "8407ab1141c83ff0cf1ab545262f4d4b94f0fe3beed05353f4736958f3909230",
+    "latest_files": 19,
+    "numerical_progress_sha256": "bdf4ac935249b7e5cd31dbbd1936389ce8b537f2bb7fb44f7b273bff809413af",
     "watcher_session": 46974,
     "path": "runs/local-migration-20261023/native-control40-continuous-copyback-v6",
     "deadline_utc": "2026-10-23T15:30:00Z"
@@ -288,9 +312,9 @@
   },
   "last_goal_turn": {
     "classification": "progress",
-    "exact_original_remote_processes_live_confirmed": true,
-    "dated_cookbook_corrected_from_actual_behavioral_evidence": true,
-    "planned_recipe_exported_from_actual_controller": true,
+    "complete40_final_numerical_gate_passed": true,
+    "actual_numerical_exit_zero": true,
+    "independent_BF16_child_live_confirmed": true,
     "new_gpu_resources": 0,
     "new_optimizer_updates": 0
   },
@@ -302,5 +326,15 @@
     "text_alignment_error": 0.0,
     "same_threshold": 0.001,
     "production_execution_or_model_weights_changed": false
-  }
+  },
+  "whole40_numerical_passed": true,
+  "training_approved": false,
+  "all_model_parameters_unchanged": true,
+  "peak_allocated_bytes": 72406452224,
+  "numerical_report_sha256": "bdf4ac935249b7e5cd31dbbd1936389ce8b537f2bb7fb44f7b273bff809413af",
+  "current_stage": "complete40_independent_BF16_gradient",
+  "numerical_exit_code": 0,
+  "gradient_pid": 14873,
+  "gradient_birth": 20219598,
+  "gradient_started_utc": "2026-10-23T12:49:40.293806+00:00"
 }
