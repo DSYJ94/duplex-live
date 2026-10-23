@@ -123,6 +123,10 @@ def run(lm, spm, voice, examples, components, audits, args):
     if getattr(args,'native_audio49_stream_auxiliary',False):
         from evals.context_native_stream_training import bindings as stream_bindings
         stream_bound=stream_bindings(args,native_teacher_batches,additional_batches)
+    control_policy=None;control_bound=None
+    if getattr(args,'control40_cache',None):
+        from evals.native_control_stage import prepare as prepare_control40
+        control_policy,control_bound=prepare_control40(args,warm_start)
     def forward(inputs): return lm.forward_codes(inputs)
     def digests():
         result = {}
@@ -175,6 +179,7 @@ def run(lm, spm, voice, examples, components, audits, args):
                 'gradient_clip':1.,'retention_kl_weight':base_retention_weight,'retention_hidden_mse_weight':10.*base_retention_weight,
                 **({'retention_teacher_text':teacher} if teacher else {}),
                 **({'additional_native_v2':additional_policy} if additional_policy else {}),
+                **({'control40':control_policy} if control_policy else {}),
                 **({'warm_ordinary_retention':warm_policy} if warm_policy else {}),
                 **({'warm_ordinary_clock_retention':clock_policy} if clock_policy else {}),
                 'text_pad3_loss_weight':.5,
@@ -207,6 +212,11 @@ def run(lm, spm, voice, examples, components, audits, args):
         learned = adapter_parameters(lm)
         if {n for n,p in lm.named_parameters() if p.requires_grad} != set(learned):
             raise RuntimeError('Unexpected temporal trainable parameters')
+        if control_policy:
+            from evals.context_execution import snapshot as execution_snapshot
+            actual_execution=execution_snapshot(lm)
+            if any(actual_execution[k]!=v for k,v in control_policy['execution_required'].items()):
+                raise RuntimeError('Control40 fit must use the independently checked native execution policy')
         if getattr(args,'native_v2_warm_ordinary_weight',0.):
             from evals.context_warm_ordinary_retention import prepare as warm_prepare
             warm_policy,warm_references=warm_prepare(lm,learned,native_teacher_batches,additional_batches,
@@ -217,7 +227,10 @@ def run(lm, spm, voice, examples, components, audits, args):
                 batches,audits,args,forward,warm_policy)
         if args.reload:
             report = json.loads((args.out/'report.json').read_text())
-            if (report['schema'] != ('dl-context-actual-audio49-adapter-proof-v1' if audio49_policy else 'dl-context-actual-adapter-proof-v1') or report['frozen_hashes'] != frozen
+            if control_policy:
+                from evals.native_control_stage import SCHEMA as expected_schema
+            else:expected_schema='dl-context-actual-audio49-adapter-proof-v1' if audio49_policy else 'dl-context-actual-adapter-proof-v1'
+            if (report['schema'] != expected_schema or report['frozen_hashes'] != frozen
                     or report['retention_examples'] != [r[2] for r in retention]
                     or report['data_sha256'] != sha256(args.out/'data.json')
                     or report['voice_sha256'] != sha256(args.out/'voice.pt')
@@ -263,6 +276,12 @@ def run(lm, spm, voice, examples, components, audits, args):
                 from evals.context_native_stream_training import fingerprints as stream_fingerprints
                 stream_actual=stream_fingerprints(lm,stream_bound)
                 if stream_actual!=report['expected_native_stream49_logits']:raise RuntimeError('Independent all49 native stream restore changed')
+            control_actual=None
+            if control_policy:
+                from evals.native_control_training import fingerprints as control_fingerprints
+                control_actual=control_fingerprints(lm,control_bound)
+                if control_actual!=report['expected_native_control40_logits']:
+                    raise RuntimeError('Independent all40 control text/audio restoration changed')
             actual = digests(); passed = actual == report['expected_logits']
             result = {'schema':('dl-context-actual-audio49-adapter-reload-v1' if audio49_policy else 'dl-context-actual-adapter-reload-v1'),'fresh_process':True,
                 'all_valid_logits_exact':passed,'actual':actual,'checkpoint_sha256':report['checkpoint_sha256'],
@@ -275,6 +294,10 @@ def run(lm, spm, voice, examples, components, audits, args):
                 if result['pid']==result['training_pid']:raise RuntimeError('Audio49 restore must use a fresh process')
             if stream_actual is not None:
                 result.update(all49_native_stream_logits_exact=True,actual_native_stream49_logits=stream_actual)
+            if control_actual is not None:
+                from evals.native_control_stage import RELOAD_SCHEMA
+                result.update(schema=RELOAD_SCHEMA,all40_native_control_logits_exact=True,
+                              actual_native_control40_logits=control_actual)
             if getattr(args,'native_audio49_parent_adam',False):
                 clocks=sorted(set(int(x['step']) for x in opt.state.values()))
                 if clocks!=[528] or snapshot['completed_steps']!=8:raise RuntimeError('Independent restore lost stage8/Adam528 clocks')
@@ -339,12 +362,21 @@ def run(lm, spm, voice, examples, components, audits, args):
                 from evals.context_native_complete_batch import preflight as complete_preflight
                 from evals.context_native_stream_gradient import run as stream_readiness
                 bf16_preflight(lm,learned,audio49_batches,audio49_policy,args)
-                complete_digest=complete_preflight(lm,learned,args,audio49_policy,batches,retention,references,native_teacher_batches,additional_batches,component_kinds,response_boundaries,audits,warm_references,clock_references,audio49_batches,forward,args.actual_response_first_word_weight)
+                control_base={} if control_policy else None
+                complete_digest=complete_preflight(lm,learned,args,audio49_policy,batches,retention,references,native_teacher_batches,additional_batches,component_kinds,response_boundaries,audits,warm_references,clock_references,audio49_batches,forward,args.actual_response_first_word_weight,capture_gradients=control_base)
                 stream_readiness(lm,learned,native_teacher_batches,additional_batches,args,audio49_policy)
+                control_ready=None
+                if control_policy:
+                    from evals.native_control_stage import combined_readiness
+                    control_ready=combined_readiness(lm,learned,control_base,stream_bound,audio49_policy,control_policy,control_bound,args)
+                    del control_base
                 path=args.out/'audio49-bf16-preflight.json';checked=json.loads(path.read_text())
                 checked.update(complete_balanced_preflight_sha256=complete_digest,
                     native_stream_readiness_sha256=sha256(args.out/'native-stream49-gradient-readiness.json'),
                     peak_allocated_bytes=max(checked['peak_allocated_bytes'],json.loads((args.out/'complete-balanced-preflight.json').read_text())['peak_allocated_bytes'],json.loads((args.out/'native-stream49-gradient-readiness.json').read_text())['peak_allocated_bytes']))
+                if control_ready:
+                    checked['control40_combined_readiness_sha256']=control_ready
+                    checked['peak_allocated_bytes']=max(checked['peak_allocated_bytes'],json.loads((args.out/'control40-combined-readiness.json').read_text())['peak_allocated_bytes'])
                 path.write_text(json.dumps(checked,indent=2)+'\n')
                 return
             if getattr(args,'native_audio49_bf16_stream_diagnostic',False):
@@ -457,6 +489,10 @@ def run(lm, spm, voice, examples, components, audits, args):
             if stream_bound is not None:
                 from evals.context_native_stream_training import backward as stream_backward
                 native_stream_rows=stream_backward(lm,stream_bound,audio49_policy['native_stream_auxiliary'],local_step)
+            control_rows=[]
+            if control_policy:
+                from evals.native_control_training import backward as control_backward
+                control_rows=control_backward(lm,control_bound,local_step)
             if not all(torch.isfinite(v) for v in ((ce,kl,hidden,supervised) if teacher else (ce,kl,hidden))):
                 raise RuntimeError('Nonfinite actual or retention loss')
             if any(p.grad is None or not torch.isfinite(p.grad).all() for p in learned.values()):
@@ -492,6 +528,7 @@ def run(lm, spm, voice, examples, components, audits, args):
             if getattr(args,'native_audio49_complete_batch',False):
                 row.update(scenario='all28-balanced-kind-mean',component_index=None,supervision_kind='all8-balanced-kinds',retention_kind='all4-reference-mean',retention_index=None,native_teacher_index=None,complete_balanced_microbatches=complete_groups,legacy_nominal_schedule_anchor=dict(component_index=index,retention_index=ri))
             if stream_bound is not None:row['native_stream_teacher_microbatch']=native_stream_rows
+            if control_policy:row['control40_microbatch']=control_rows
             steps.append(row); print(json.dumps(row),flush=True)
         if getattr(args,'native_audio49_complete_batch',False):
             from evals.context_native_complete_batch import validate_exposure as validate_complete
@@ -511,6 +548,9 @@ def run(lm, spm, voice, examples, components, audits, args):
         if stream_bound is not None:
             from evals.context_native_stream_training import exposure as stream_exposure
             stream_exposure(steps,audio49_policy['native_stream_auxiliary'])
+        if control_policy:
+            from evals.native_control_training import exposure as control_exposure
+            control_exposure(steps,control_policy)
         if not seen_a or not seen_b: raise RuntimeError('Dead actual temporal adapter')
         if frozen != tensor_hashes((n,p) for n,p in lm.named_parameters() if not p.requires_grad):
             raise RuntimeError('Frozen speech/base weights changed')
@@ -579,5 +619,20 @@ def run(lm, spm, voice, examples, components, audits, args):
             report['execution']='Native BF16 batch MATH original154 plus recorded-call streaming49 teacher CE; truncated call-boundary autograd; no compilation or CUDA graphs'
             report['training_seconds_scope']='Eight updates plus post-fit frozen-weight/digest checks, checkpoint writing and original28 final metrics; excludes final acoustic49/native49 fingerprints and fresh-process restoration'
             report['retention_objective']+='; supplemental balanced49 native-call teacher text CE with declared truncated autograd; original154 unchanged'
+        if control_policy:
+            from evals.native_control_stage import SCHEMA
+            from evals.native_control_training import fingerprints as control_fingerprints
+            control_targets=sum(sum(x['acoustic_objective']['assistant_audio_targets']) for step in steps for x in step['control40_microbatch'])
+            text_targets=sum(x['text_targets'] for step in steps for x in step['control40_microbatch'])
+            if control_targets!=control_policy['assistant_audio_loss_targets_per8'] or text_targets!=control_policy['text_loss_targets_per8']:
+                raise RuntimeError('Control40 complete source target count changed')
+            report.update(schema=SCHEMA,control40=control_policy,
+                control40_audio_loss_targets=control_targets,control40_text_loss_targets=text_targets,
+                total_assistant_audio_loss_targets=report['audio_loss_targets']+control_targets,
+                audio_loss_targets_scope='Original49 assistant acoustic objective; additional control40 and total counts are explicit separate fields',
+                expected_native_control40_logits=control_fingerprints(lm,control_bound),
+                control40_combined_readiness_sha256=sha256(args.out/'approved-control40-combined-readiness.json'))
+            report['execution']+='; supplemental all40 native-call text plus assistant-only acoustic CE'
+            report['training_seconds_scope']+='; also excludes final all40 native text/acoustic fingerprints'
         (args.out/'report.json').write_text(json.dumps(report,indent=2)+'\n')
         print(json.dumps({k:report[k] for k in ('passed','checkpoint_sha256','final_metrics','peak_allocated_bytes')}),flush=True)

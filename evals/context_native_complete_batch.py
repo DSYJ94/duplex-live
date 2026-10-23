@@ -100,7 +100,7 @@ def validate_exposure(steps,teacher_ids,unique_acoustic_targets,expected):
     return True
 
 
-def preflight(lm,learned,args,policy,*inputs):
+def preflight(lm,learned,args,policy,*inputs,capture_gradients=None):
     import torch
     from evals.moshi_training_smoke import tensor_hashes
     from evals.moshi_model_download import sha256
@@ -112,6 +112,9 @@ def preflight(lm,learned,args,policy,*inputs):
     if any(p.grad is not None for n,p in lm.named_parameters() if n not in learned):raise ValueError('Frozen parameter received a gradient')
     norm=sum(float(p.grad.detach().double().square().sum()) for p in learned.values())**.5
     if norm<=0 or before!=tensor_hashes(lm.named_parameters()):raise ValueError('Complete gradient dead or parameters changed')
+    if capture_gradients is not None:
+        if capture_gradients:raise ValueError('Validated gradient destination must start empty')
+        capture_gradients.update({n:p.grad.detach().clone() for n,p in learned.items()})
     for p in learned.values():p.grad=None
     peak=torch.cuda.max_memory_allocated()
     if peak>=80_000_000_000:raise ValueError('Complete-batch readiness exceeded80GB')

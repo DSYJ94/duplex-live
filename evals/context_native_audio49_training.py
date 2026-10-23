@@ -224,11 +224,20 @@ def committed_implementations(commit):
 
 
 def verify_checkpoint(proof):
+    return verify_retained_checkpoint(proof,SCHEMA,RELOAD_SCHEMA)
+
+
+def verify_retained_checkpoint(proof,schema,reload_schema):
+    """Shared strict retained154/native49 validation for explicitly named schemas.
+
+    New supplemental schemas must call this AND their own full validator. The
+    public legacy entry point above continues to accept only its original schema.
+    """
     from evals.context_rollout_conditioning import verify_checkpoint as old_verify
     from evals.context_spanning_download import SOURCE_COMMIT
     proof=Path(proof);r=json.loads((proof/'report.json').read_text());v=json.loads((proof/'reload-report.json').read_text())
     p=r.get('assistant_audio_auxiliary',{});data=json.loads((proof/'data.json').read_text())
-    if (r['schema']!=SCHEMA or not r['passed'] or not r['frozen_weights_unchanged'] or not r['base_audio_parameters_frozen']
+    if (r['schema']!=schema or not r['passed'] or not r['frozen_weights_unchanged'] or not r['base_audio_parameters_frozen']
             or r['source_commit']!=SOURCE_COMMIT or r['optimizer_steps']!=8 or r['initial_optimizer_steps']!=0
             or r['updates_this_run']!=8 or r['warm_start_optimizer_reset']!=(p.get('mode') not in ('native520-all49-assistant-audio-parent-adam-v1','native520-all49-assistant-audio-complete-batch-v1','native520-complete154-native-stream49-auxiliary-v1')) or r['resumed_from_training_state']
             or r['last_layers']!=4 or r['rank']!=8 or r['scaling']!=2. or r['past_loss_targets']!=0
@@ -243,7 +252,7 @@ def verify_checkpoint(proof):
             or p['implementations']!=committed_implementations(r['repo_commit']) or not p['original_word64_clock64_and_all_text_losses_unchanged']
             or len(r['retention_teacher_text']['teachers'])!=25 or len(r['additional_native_v2']['teacher']['teachers'])!=24
             or r['warm_ordinary_retention']['weight']!=64. or r['warm_ordinary_clock_retention']['weight']!=64.
-            or v['schema']!=RELOAD_SCHEMA or not v['passed'] or not v['fresh_process'] or v['pid']==v['training_pid']
+            or v['schema']!=reload_schema or not v['passed'] or not v['fresh_process'] or v['pid']==v['training_pid']
             or not v['all_valid_logits_exact'] or not v['all49_auxiliary_logits_exact'] or not v['optimizer_rng_state_restored']
             or r['combined_recipe']['assistant_audio_auxiliary']!=p
             or r['combined_recipe']['retention_kl_weight']!=1. or r['combined_recipe']['retention_hidden_mse_weight']!=10.

@@ -5,6 +5,7 @@ Assistant acoustic gradients use the independently checked native depth layout.
 This is additional readiness, not a replacement for the complete154/old49 gates.
 """
 import argparse
+import ast
 from datetime import datetime, timezone
 import hashlib
 import json
@@ -21,6 +22,36 @@ def implementations():
              'context_native_audio49_loss.py', 'context_adapter_load.py', 'personaplex_adapters.py',
              'personaplex_depth.py', 'context_execution.py')
     return {name: sha256(Path(__file__).with_name(name)) for name in names}
+
+
+def function_tree(source,name):
+    nodes=[n for n in ast.walk(ast.parse(source)) if isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef)) and n.name==name]
+    if len(nodes)!=1:raise ValueError('Unique mathematical function required: '+name)
+    return ast.dump(nodes[0],include_attributes=False)
+
+
+def reference_dependencies(source_commit):
+    """Metadata-only extensions cannot silently alter an approved numeric path."""
+    if len(source_commit)!=40 or any(c not in '0123456789abcdef' for c in source_commit):
+        raise ValueError('Exact original numerical source commit required')
+    root=Path(__file__).resolve().parents[1]
+    # These files are numerical dependencies in full. The two metadata-bearing
+    # modules below may add explicit schemas, but their called math/loader bodies
+    # must remain AST-identical to the complete numerical audit's Git source.
+    files=('context_native_audio49_loss.py','personaplex_depth.py','context_training_parity.py',
+           'context_execution.py','personaplex_adapters.py')
+    functions={'context_native_audio49_training.py':('forward',),
+               'context_adapter_load.py':('load','init_with_protocol')}
+    for name in files+tuple(functions):
+        old=subprocess.check_output(['git','show',source_commit+':evals/'+name],cwd=root,text=True)
+        current=(root/'evals'/name).read_text()
+        if name in files:
+            if old!=current:raise ValueError('Numerical dependency changed: '+name)
+        else:
+            for function in functions[name]:
+                if function_tree(old,function)!=function_tree(current,function):
+                    raise ValueError('Approved numerical function changed: '+name+':'+function)
+    return True
 
 
 def numerical_gate(folder, engine, parent):
@@ -45,6 +76,7 @@ def numerical_gate(folder, engine, parent):
                    or any(c['maximum_absolute_error'] > .001 for c in r['comparisons'].values())
                    for r in report['cases'])):
         raise ValueError('Independent unchanged complete40 native numerical approval required')
+    reference_dependencies(report['source_commit'])
     return report
 
 
