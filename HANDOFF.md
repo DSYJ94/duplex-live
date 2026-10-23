@@ -1,3 +1,40 @@
+# LOCAL —26/40 live; complete failed-pilot loss accounting (23 October15:55UTC)
+
+LOCAL sole executor; goal ACTIVE. Main18eb557 before this commit. Actual15:51:50UTC
+SSH confirms SAME21063/birth20582160 S, old4111/birth18985221 T/paused, actual
+CUDA14873/birth20219598 R;26/40,0optimizerupdates. No restart/submission/adoption.
+Model execution C9 c9efaaac24d983342f7eded46617e6450bc102ce and orchestration7769270
+unchanged. Current localps confirms guard16271,backup85270,evaluator17063,proxy85512
+all live. Guarddeadline23:22:37.9UTC; pilotdeadline21:30/eval22:17 still unchanged.
+
+New read-only evals/native_retained_loss_audit.py +4offline tests bind original
+7590052report397a259...; full same154 membership/weights across all8 and independent
+decimal arithmetic checked. Retained154 weighted sum2.55472406→2.67042598 from
+BEFOREupdate1 to BEFOREupdate8 (0→7newupdates). Word/clock anchor costs0→0.11633751
+combined account for most scalar rise; not proof their gradients caused failure.
+Original28 actual component has true initial/final8 measurement0.571930776→
+0.571255577:small TRAIN teacher-forced improvement, not behavioral convergence.
+Rotating native49 step loss is not same-example convergence; full combined post8
+objective unrecorded. All8preclip norms5.83018–8.75904 exceed unchangedclip1.
+No loss/mask/Adam/math/criterion change or GPU/API call. New receipt
+docs/NATIVE-7590052-RETAINED-LOSS-AUDIT-2026-10-23.json and diagnosis addendum.
+
+Historical154gradient7580878 already measured all154 at frozen520; raw SHA
+d8a379672e4ad19d59762fa138d4c7bd6caf937d5b4898e785068987ed8e5f83 verified.
+Some opposing directions exist under THAT earlier schedule; exposure predates
+latest full154+recordedcall49 and lackscontrol40. Do not claim no gradient
+analysis ever existed, duplicate an unchanged oldprobe, or attribute current
+failures causally to those historical vectors. Currentpilot stays unchanged.
+
+Previous full preservation refresh is committed18eb557:67.76GB original Mac,
+82enginefiles,7797worksetmembers pass allhashes; selected S3 GETpass; Mac+Runpod
+are two domains, S3 samevolume, OneDrive upload unverified, broaderMacbackupPARTIAL.
+Specific20USDpayment/new40speech approvals remainpending. No newAPI call.
+Next SAMEfull40 ->full154/native49/control40 readiness ->ONE8 ->independent
+state/native restore/strictproof ->completepaired20/speech20/all4 ->eligiblefresh40.
+Unrelated local files/edits preserved and excluded. Prepared738 later-stage
+extension onlyafter fullgradient and actualretirement4111; no nestedtakeover.
+
 # LOCAL —24/40 audit live; full Mac native/workset/engine backups rehashed (23 October15:45UTC)
 
 LOCAL sole executor; goal ACTIVE. Main0078cc8 before this commit. Actual SSH

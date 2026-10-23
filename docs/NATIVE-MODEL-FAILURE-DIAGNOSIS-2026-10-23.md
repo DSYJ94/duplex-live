@@ -182,3 +182,56 @@ not approved. It does not measure gradient sums across examples, the original154
 or old49 objectives, Adam preconditioning, behavioral correctness or the cause of
 the earlier7590052 regression. No additional GPU call, loss change or optimizer
 update occurs. Preserve the remaining whole-corpus gates and current pilot.
+
+
+## Full retained-loss accounting and historical gradient scope — 23 October
+
+The [new CPU-only accounting](NATIVE-7590052-RETAINED-LOSS-AUDIT-2026-10-23.json)
+binds original7590052 report SHA397a259d124948dec3aeed63564ad24dbf2f13bb2b3699565f9f1974e60fa3eb.
+All eight records preserve all154 component identities and weights. Weighted
+products/sums are independently recomputed with decimal arithmetic; four offline
+tests reject missing steps, changed membership, missing rotating exposure,
+changed KL/hidden formulas, changed initial criteria and incomplete final metrics.
+This does not execute the model or change the running pilot.
+
+| Weighted retained group | Before update1 | Before update8 |
+| --- | ---: | ---: |
+| Original28 actual text |0.571930776|0.571839228|
+| Four reference KL +10 hidden |0.180896606|0.180866666|
+| Old25 teacher text |0.454795210|0.454545964|
+| New24 teacher text |0.760396476|0.760218150|
+| Word anchors, total weight64 |0|0.067804090|
+| Clock anchors, total weight64 |0|0.048533420|
+| Audio49 |0.586704992|0.586618460|
+| Retained154 sum |2.554724060|2.670425979|
+
+The scalar increase comes mostly from the word/clock anchor penalties; their
+zero initial value is expected because they compare with the warm parent.
+Scalar magnitudes do not determine gradient direction or the cause of wrong
+answers. These records were calculated BEFORE the corresponding optimizer call,
+then logged afterward: row8 measures seven new updates, not the final eighth.
+The rotating native49 call objective uses different examples at each update;
+its per-step totals are not a same-example convergence curve. The complete
+post-update8 combined154/native49 objective was not recorded.
+
+There is a genuine final measurement for the original28 actual-history component:
+its same weighted teacher-forced loss changes0.571930776→0.571255577 after all
+eight updates. This is a small training-set improvement, not held-out convergence
+or an explanation for the failed spoken results. All eight recorded aggregate
+gradient norms exceed the unchanged unit clip bound (range5.83018–8.75904).
+That confirms clipping occurs; it does not identify clipping or batch size as
+the cause, and does not authorize changing a weight or threshold.
+
+A [historical154 gradient diagnostic already exists](NATIVE-GRADIENT154-REVIEW-2026-10-20.json),
+with raw archive SHA d8a379672e4ad19d59762fa138d4c7bd6caf937d5b4898e785068987ed8e5f83.
+It measured all154 individual components at the frozen native520 parent and
+compared directions for its then-current first/mean-eight schedule. Some
+directions opposed one another (actual/reference cosine−0.62790 in its mean
+schedule), supporting objective interference as a hypothesis. Its exposure
+weights predate the latest complete154-at-every-update plus recorded-call49
+auxiliary, and it contains no new control40 objective or sequential candidate
+measurement. It is historical evidence, not a causal isolation of7590052 or the
+running pilot. Do not repeat an identical old probe or report all gradient
+analysis as absent. If the new pilot fails, a useful next diagnostic must cover
+its exact current complete154/native49/control40 weights and actual inherited
+Adam direction, with matched behavior; preserve every required objective.

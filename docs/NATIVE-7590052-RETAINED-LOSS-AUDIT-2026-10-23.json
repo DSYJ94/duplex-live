@@ -1,0 +1,305 @@
+{
+  "schema": "dl-native7590052-retained-loss-accounting-v1",
+  "complete_step_records": 8,
+  "retained_components_per_update": 154,
+  "independently_recomputed_decimal_sums": true,
+  "stable_retained_membership_and_weights": true,
+  "curves": [
+    {
+      "logged_step": 1,
+      "optimizer_updates_already_applied_when_losses_computed": 0,
+      "retained154_weighted_group_losses": {
+        "actual": 0.5719307761896094,
+        "reference": 0.1808966062963009,
+        "old25": 0.454795209617403,
+        "new24": 0.7603964759036899,
+        "word": 0.0,
+        "clock": 0.0,
+        "audio49": 0.5867049919099223
+      },
+      "retained154_weighted_sum": 2.5547240599169254,
+      "rotating_native_stream_weighted_loss": 0.9820209119646995,
+      "rotating_native_stream_ids": [
+        "teacher-cf-recovery-train-000-1",
+        "teacher-cf-recovery-train-001-0",
+        "teacher-cf-recovery-train-006-2",
+        "teacher-recovery-train-007",
+        "teacher-native2-train-021",
+        "teacher-native2-train-023",
+        "teacher-native2-train-015"
+      ],
+      "gradient_norm_before_clip": 6.862292289733887,
+      "approximate_unit_clip_multiplier": 0.14572387943488482
+    },
+    {
+      "logged_step": 2,
+      "optimizer_updates_already_applied_when_losses_computed": 1,
+      "retained154_weighted_group_losses": {
+        "actual": 0.5735433740199022,
+        "reference": 0.18085423484444618,
+        "old25": 0.45502152364995135,
+        "new24": 0.7603121595457196,
+        "word": 0.06770032420754434,
+        "clock": 0.04549711011350155,
+        "audio49": 0.5866956102604768
+      },
+      "retained154_weighted_sum": 2.669624336641542,
+      "rotating_native_stream_weighted_loss": 0.2652455519758421,
+      "rotating_native_stream_ids": [
+        "teacher-recovery-train-008",
+        "teacher-recovery-train-011",
+        "teacher-cf-recovery-train-006-3",
+        "teacher-native2-train-000",
+        "teacher-native2-train-002",
+        "teacher-native2-train-004"
+      ],
+      "gradient_norm_before_clip": 5.928499698638916,
+      "approximate_unit_clip_multiplier": 0.1686767111673923
+    },
+    {
+      "logged_step": 3,
+      "optimizer_updates_already_applied_when_losses_computed": 2,
+      "retained154_weighted_group_losses": {
+        "actual": 0.5739043144757098,
+        "reference": 0.18099533021450043,
+        "old25": 0.4550647477766401,
+        "new24": 0.7606288995593786,
+        "word": 0.06768946498632432,
+        "clock": 0.045776463246771266,
+        "audio49": 0.5866121382129436
+      },
+      "retained154_weighted_sum": 2.670671358472268,
+      "rotating_native_stream_weighted_loss": 0.6725849250205092,
+      "rotating_native_stream_ids": [
+        "teacher-recovery-train-019",
+        "teacher-cf-recovery-train-002-0",
+        "teacher-cf-recovery-train-007-0",
+        "teacher-native2-train-008",
+        "teacher-native2-train-010",
+        "teacher-native2-train-012"
+      ],
+      "gradient_norm_before_clip": 7.567202568054199,
+      "approximate_unit_clip_multiplier": 0.1321492135115292
+    },
+    {
+      "logged_step": 4,
+      "optimizer_updates_already_applied_when_losses_computed": 3,
+      "retained154_weighted_group_losses": {
+        "actual": 0.5712521986407366,
+        "reference": 0.18064319342374802,
+        "old25": 0.45518813353325976,
+        "new24": 0.7604550216346979,
+        "word": 0.06720433197915554,
+        "clock": 0.0465591943689755,
+        "audio49": 0.5866357811859675
+      },
+      "retained154_weighted_sum": 2.667937854766541,
+      "rotating_native_stream_weighted_loss": 0.8630663211476078,
+      "rotating_native_stream_ids": [
+        "teacher-recovery-train-020",
+        "teacher-cf-recovery-train-002-1",
+        "teacher-recovery-train-000",
+        "teacher-native2-train-016",
+        "teacher-native2-train-018",
+        "teacher-native2-train-005"
+      ],
+      "gradient_norm_before_clip": 6.867091178894043,
+      "approximate_unit_clip_multiplier": 0.14562204408344664
+    },
+    {
+      "logged_step": 5,
+      "optimizer_updates_already_applied_when_losses_computed": 4,
+      "retained154_weighted_group_losses": {
+        "actual": 0.5721918029861887,
+        "reference": 0.18080822750926018,
+        "old25": 0.4550452761254028,
+        "new24": 0.7603396931663156,
+        "word": 0.0703931137919426,
+        "clock": 0.04706633011145251,
+        "audio49": 0.5865683193717683
+      },
+      "retained154_weighted_sum": 2.6724127630623307,
+      "rotating_native_stream_weighted_loss": 0.9761927600193995,
+      "rotating_native_stream_ids": [
+        "teacher-cf-recovery-train-000-2",
+        "teacher-cf-recovery-train-002-3",
+        "teacher-recovery-train-001",
+        "teacher-native2-train-020",
+        "teacher-native2-train-022",
+        "teacher-native2-train-013"
+      ],
+      "gradient_norm_before_clip": 8.75903606414795,
+      "approximate_unit_clip_multiplier": 0.1141678009439131
+    },
+    {
+      "logged_step": 6,
+      "optimizer_updates_already_applied_when_losses_computed": 5,
+      "retained154_weighted_group_losses": {
+        "actual": 0.5731082364296266,
+        "reference": 0.1808333359658718,
+        "old25": 0.4545935768094894,
+        "new24": 0.7601515436545014,
+        "word": 0.06742376573383808,
+        "clock": 0.04615678718047483,
+        "audio49": 0.5867081260194583
+      },
+      "retained154_weighted_sum": 2.6689753717932607,
+      "rotating_native_stream_weighted_loss": 0.25427482308881116,
+      "rotating_native_stream_ids": [
+        "teacher-recovery-train-009",
+        "teacher-cf-recovery-train-003-2",
+        "teacher-recovery-train-004",
+        "teacher-native2-train-001",
+        "teacher-native2-train-003",
+        "teacher-native2-train-006"
+      ],
+      "gradient_norm_before_clip": 5.830180644989014,
+      "approximate_unit_clip_multiplier": 0.1715212425430159
+    },
+    {
+      "logged_step": 7,
+      "optimizer_updates_already_applied_when_losses_computed": 6,
+      "retained154_weighted_group_losses": {
+        "actual": 0.5710374074782781,
+        "reference": 0.18073564022779465,
+        "old25": 0.4547893685582829,
+        "new24": 0.7608820451423526,
+        "word": 0.06861114613711834,
+        "clock": 0.04728100581892899,
+        "audio49": 0.5866639072797736
+      },
+      "retained154_weighted_sum": 2.670000520642529,
+      "rotating_native_stream_weighted_loss": 0.620566279993284,
+      "rotating_native_stream_ids": [
+        "teacher-cf-recovery-train-000-3",
+        "teacher-cf-recovery-train-004-1",
+        "teacher-recovery-train-005",
+        "teacher-native2-train-009",
+        "teacher-native2-train-011",
+        "teacher-native2-train-014"
+      ],
+      "gradient_norm_before_clip": 8.546609878540039,
+      "approximate_unit_clip_multiplier": 0.11700544393695662
+    },
+    {
+      "logged_step": 8,
+      "optimizer_updates_already_applied_when_losses_computed": 7,
+      "retained154_weighted_group_losses": {
+        "actual": 0.5718392278753787,
+        "reference": 0.18086666613817215,
+        "old25": 0.4545459643643545,
+        "new24": 0.7602181499823928,
+        "word": 0.06780409030616284,
+        "clock": 0.04853342021150248,
+        "audio49": 0.5866184599545536
+      },
+      "retained154_weighted_sum": 2.670425978832517,
+      "rotating_native_stream_weighted_loss": 0.8440660032748876,
+      "rotating_native_stream_ids": [
+        "teacher-recovery-train-010",
+        "teacher-cf-recovery-train-004-3",
+        "teacher-recovery-train-006",
+        "teacher-native2-train-017",
+        "teacher-native2-train-019",
+        "teacher-native2-train-007"
+      ],
+      "gradient_norm_before_clip": 7.2955241203308105,
+      "approximate_unit_clip_multiplier": 0.13707032509740102
+    }
+  ],
+  "group_changes": {
+    "actual": {
+      "components": 28,
+      "weight_mass": 1.0,
+      "before_first_update": 0.5719307761896094,
+      "before_eighth_update": 0.5718392278753787,
+      "weighted_delta": -9.154831423074938e-05,
+      "component_loss_increases": 15,
+      "component_loss_decreases": 13,
+      "component_loss_unchanged": 0
+    },
+    "reference": {
+      "components": 4,
+      "weight_mass": 1.0,
+      "before_first_update": 0.1808966062963009,
+      "before_eighth_update": 0.18086666613817215,
+      "weighted_delta": -2.9940158128738403e-05,
+      "component_loss_increases": 2,
+      "component_loss_decreases": 2,
+      "component_loss_unchanged": 0
+    },
+    "old25": {
+      "components": 25,
+      "weight_mass": 1.0,
+      "before_first_update": 0.454795209617403,
+      "before_eighth_update": 0.4545459643643545,
+      "weighted_delta": -0.0002492452530484801,
+      "component_loss_increases": 12,
+      "component_loss_decreases": 13,
+      "component_loss_unchanged": 0
+    },
+    "new24": {
+      "components": 24,
+      "weight_mass": 1.0,
+      "before_first_update": 0.7603964759036899,
+      "before_eighth_update": 0.7602181499823928,
+      "weighted_delta": -0.00017832592129707336,
+      "component_loss_increases": 13,
+      "component_loss_decreases": 11,
+      "component_loss_unchanged": 0
+    },
+    "word": {
+      "components": 10,
+      "weight_mass": 64.0,
+      "before_first_update": 0.0,
+      "before_eighth_update": 0.06780409030616284,
+      "weighted_delta": 0.06780409030616284,
+      "component_loss_increases": 10,
+      "component_loss_decreases": 0,
+      "component_loss_unchanged": 0
+    },
+    "clock": {
+      "components": 14,
+      "weight_mass": 64.0,
+      "before_first_update": 0.0,
+      "before_eighth_update": 0.04853342021150248,
+      "weighted_delta": 0.04853342021150248,
+      "component_loss_increases": 14,
+      "component_loss_decreases": 0,
+      "component_loss_unchanged": 0
+    },
+    "audio49": {
+      "components": 49,
+      "weight_mass": 0.9999999999999999,
+      "before_first_update": 0.5867049919099223,
+      "before_eighth_update": 0.5866184599545536,
+      "weighted_delta": -8.653195536867386e-05,
+      "component_loss_increases": 19,
+      "component_loss_decreases": 30,
+      "component_loss_unchanged": 0
+    }
+  },
+  "retained154_weighted_sum_before_first_update": 2.5547240599169254,
+  "retained154_weighted_sum_before_eighth_update": 2.670425978832517,
+  "all_recorded_steps_clip_gradients": true,
+  "actual28_initial_and_post_eighth_update": {
+    "before": 0.5719307761896094,
+    "after": 0.5712555771782111,
+    "weighted_delta": -0.0006751990113983419,
+    "scope": "Same ordered28 actual-history metrics and objective weights; optimization_nll or unchanged pad-weighted nll for no-content targets"
+  },
+  "comparison_scope": "Before update1 versus before update8: zero versus seven new updates; not the complete post-update8 objective",
+  "rotating_stream_loss_is_same_examples_convergence_curve": false,
+  "held_out_convergence_measured": false,
+  "loss_group_gradient_directions_measured": false,
+  "complete_post_update8_objective_measured": false,
+  "causal_failure_component_identified": false,
+  "actual_API_calls": 0,
+  "GPU_calls": 0,
+  "optimizer_updates": 0,
+  "model_or_loss_changes": false,
+  "training_or_extension_or_adoption_approved": false,
+  "source_report": "runs/cloud-export-20261016/tree/runs/context-training-proof-7590052/report.json",
+  "source_report_sha256": "397a259d124948dec3aeed63564ad24dbf2f13bb2b3699565f9f1974e60fa3eb",
+  "code_sha256": "15a1c440a9fa0442065e680b33a934c36b8d398d24945cc6aeb1d8a9dbf66a95"
+}
