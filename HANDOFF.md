@@ -1,3 +1,45 @@
+# LOCAL — explicit20 purchase submitted once; confirmation pending; same GPU45/49 (23 October23:26UTC)
+
+LOCAL remains sole executor. Source d04afb5 pushed to origin/main; immutable GPU C9
+and orchestration738 unchanged. Human explicitly approved one-time20USD Runpod
+credit. Official existing-account Google sign-in completed; checkout showed20USD
+one-time total, auto-pay disabled. Pay clicked ONCE about23:21UTC; still Processing,
+no success/decline/receipt. Fresh wallet23:25:07UTC2.6445816381USD at1.814/h,
+autopayFalse. DO NOT submit a second purchase while outcome unresolved.
+Automatic review blocked attempting the overnight guard because posted credit
+prerequisite not met; no extension executed. Concrete conditional overnight plan
+in docs/NATIVE-APPROVED20-OVERNIGHT-2026-10-23.json, max80.4007183<100.
+
+CURRENT actual sole readiness41540/birth22014818R,45/49 exact native rows23:23:10;
+waiter69088/birth23880586S (v6), original21063/birth20582160T. Never resume21063.
+Pipeline23:28UTC; cost guard16409 active deletes ONLY Pod4yx8vahdmjsylx at23:32:37.9,
+retains volume49yytzyoge. Fixed-copyback19619/v9 through23:30 active53files inventory
+cc1c9204563b3ad943cc8365b9b09823c62606dcf20072bea89220043795ac36 Mac verified.
+All40 numerical and gradient PASS; final49/combined40 absent,0new native updates.
+Old full20 evaluator81214 ended insufficient40min window, no evaluation; proxy95444
+expired23:19. After confirmed funding: arm new24h guard before retiring16409,
+exact preflight then replace only69088 with738 waiter directly adopting21063/41540,
+retain identical seven commands; extend backup/proxy and full paired20 evaluator.
+Prepared /private/tmp/duplex-*v7-{preflight,execute}.py NOT EXECUTED and require
+fresh exact identity checks. If stage changes do not apply stale transition.
+
+REASONING32: V8 component speech five PASS,006 FAIL. V9 diagnosed actual extra
+spoken Okay missing from providertext, WER.1 FAIL; frozen. V10 one policy probe
+actual exit0/lifecycle937frames, complete progress phrases/cancellation/directreply;
+independent remoteCPU ASR actual exit0 WER0 peak.4609375. No native silence claim.
+V10 raw19files13,590,400B inventory390909b381d0a47da2e643eb651d352875b9473fc8fd3ea6d4fdd42dac93236e
+Mac+volume verified; ASR/control6files12,142B Mac copied/hashed. Original recordings,
+failed audits and targets unchanged; no synonym/gain/threshold relaxation.
+One CPU qualification70154/birth24011572 from clean Git13a0e57:
+/workspace/migration/native-reasoning32-derived-v10-qualification-v1/status.json.
+Typed full32 stage actual exit0 at23:24:11 (25 originals+001+fiveV8+006V10);
+independent whole32 speech70352/birth24026719 running, then prepared semantic inputs.
+No provider requests, semantic approval or reasoning32 training yet. CPU deadline
+00:20UTC but Pod guard remains23:32 until funded; preserve completed outputs.
+Heavy work remoteCPU, no OS CPU settings changed. Unrelated pyc/probes/roadmap untouched.
+
+---
+
 # LOCAL — full speech25/32; seven diagnosed replacements; no new native updates (23 October22:25UTC)
 
 Goal turn PROGRESS. LOCAL remains sole executor; no handoff to cloud and no new
