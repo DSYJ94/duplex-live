@@ -1,3 +1,43 @@
+# LOCAL — VERIFIED WAIT:12/40 numerical cases passing and backed up (23 October11:34 London)
+
+NEWEST authoritative entry. LOCAL remains sole executor; goal ACTIVE/incomplete.
+Previous goal turn made progress restoring the actual backend and arming native20/
+speech20. THIS turn is a VERIFIED WAIT on the same live numerical job, not a new
+submission: controller4111/birth18985221, child4216/birth18993883 confirmed R/live
+on Pod4yx8vahdmjsylx. Bounded read-only observer session84079 finished0 after
+observing10,11,12 completed cases; it did NOT restart or stop the actual audit.
+
+Exact actual execution source remains
+c9efaaac24d983342f7eded46617e6450bc102ce at/opt/duplex-control40-c9efaaa-v2.
+All12 TRAIN cases000..011 pass unchanged0.001 numerical thresholds. Whole40,
+final parameter/peak checks, independent BF16 gradients and combined readiness
+remain incomplete. NO optimizer update/new candidate/adoption. Latest actual
+native7590052/Adam528 remains unadopted, repair parentnative520. No source/audio/
+loss/mask/retention changes and no GPU rental or duplicate submission this turn.
+
+All12 progress rows independently match the Mac snapshot inventory/hash. ACTIVE
+backup92170/session84773, latest snapshot20261023T103316.136555Z,
+18 files, inventory9510108f39f83eeacf204e3ddc485c67752ab255167f03de5de709bc5d31e1a6;
+last success2026-10-23T10:34:20.250979+00:00. ACTIVE guard73678/session54241 verified LIVE/armed,
+owned Pod deletion15:07:37.9UTC; existing50USD Runpod compute cap unchanged,
+maxconservative49.69558350742474USD. Audit deadline13:23:54.034033UTC;
+whole training/restore chain14:59UTC. No whole-archive rehash; broader stopped
+Mac source backup remains PARTIAL. Unrelated local files/edits preserved.
+
+ACTIVE evaluation waiter20789/session68528 remains waiting for ALL7 successful
+training/restore stages and original controller exit. Only then can it launch
+complete native20 plus independent speech20 from actual candidate proof, with
+shared GPU lease, actual Mac backend and fixed15:03UTC evaluation deadline.
+Latest automatic launch14:20UTC. No sealed fresh inputs, extension or adoption.
+Proxy8309/session62464 and tunnel8825/session95469 unchanged; credentials stay
+on Mac. Full connection/output details in the immediately preceding entry.
+
+NEXT: observe existing4111/4216; do not resubmit. Existing chain owns BF16,
+readiness, new8 and independent fresh restore; existing20789 owns the conditional
+complete native20/speech20 dispatch. Review actual results before any fresh40 or
+repair. Current captured12-case evidence:
+docs/NATIVE-CONTROL40-LIVE-FOLLOWUP-2026-10-23.json. Execution remains LOCAL.
+
 # LOCAL —9/40 numerical cases passing; real backend ready; full native20/speech20 follow-up armed (23 October11:21 London)
 
 NEWEST authoritative entry. LOCAL sole executor; goal ACTIVE/incomplete. Previous
