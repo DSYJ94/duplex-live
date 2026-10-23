@@ -5,6 +5,7 @@ from the explicitly pinned execution checkout containing the verified workset.
 """
 import argparse
 from datetime import datetime, timezone
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -15,6 +16,17 @@ import time
 
 def git(root, *args):
     return subprocess.check_output(['git', '-C', str(root), *args], text=True).strip()
+
+
+def native_environment(compiler, inherited):
+    env = inherited.copy()
+    env.update(PYTHONDONTWRITEBYTECODE='1', HF_HUB_OFFLINE='1', OMP_NUM_THREADS='8')
+    include = str(Path(compiler['header']).parent)
+    prior = env.get('CPATH', '')
+    if include not in prior.split(os.pathsep):
+        env['CPATH'] = include + (os.pathsep + prior if prior else '')
+    env['TRITON_PTXAS_PATH'] = compiler['assembler']
+    return env
 
 
 def main():
@@ -35,6 +47,9 @@ def main():
             or compiler['actual_compiled_bf16_gpu_kernel_passed'] is not True
             or compiler['packages_changed'] is not False):
         raise ValueError('Actual pinned-runtime compiled GPU kernel must pass first')
+    for name in ('header', 'assembler'):
+        if hashlib.sha256(Path(compiler[name]).read_bytes()).hexdigest() != compiler[name + '_sha256']:
+            raise ValueError('Previously checked native CUDA toolkit changed')
     args.out.mkdir(parents=True, exist_ok=False)
     controller_root = Path(__file__).resolve().parents[2]
     state = dict(schema='dl-native-control40-preflight-controller-v1', pid=os.getpid(),
@@ -46,9 +61,14 @@ def main():
         temp = args.out / 'controller.json.partial'
         temp.write_text(json.dumps(state, indent=2) + '\n')
         temp.replace(args.out / 'controller.json')
-    env = os.environ.copy()
-    env.update(PYTHONDONTWRITEBYTECODE='1', HF_HUB_OFFLINE='1', OMP_NUM_THREADS='8')
+    env = native_environment(compiler, os.environ)
     prefix = [str(args.python), '-u', '-m']
+    state['phase'] = 'cuda_environment'
+    save()
+    env['TRITON_LIBCUDA_PATH'] = subprocess.check_output(
+        prefix + ['evals.cuda_linker_path', '--out', str(args.out / 'driver')],
+        cwd=args.source, env=env, text=True).strip()
+    state['native_cuda_environment'] = {k: env[k] for k in ('CPATH', 'TRITON_PTXAS_PATH', 'TRITON_LIBCUDA_PATH')}
     shared = ['--cache', str(args.out / 'codes'), '--assets', str(args.assets),
               '--base', str(args.model), '--proof', str(args.proof)]
     stages = [

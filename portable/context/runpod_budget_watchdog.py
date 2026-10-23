@@ -6,12 +6,30 @@ ignored mode0600 file on this Mac. Run this before creating the execution receip
 import argparse
 import datetime as dt
 import json
+import math
 import os
 from pathlib import Path
 import subprocess
 import time
 import urllib.error
 import urllib.request
+
+
+def budget_seconds(receipt):
+    """An explicit2/4/6-hour trial must fit inside the user's existing budget."""
+    seconds = receipt['approved_gpu_wallclock_seconds']
+    if type(seconds) is not int or seconds not in (7200, 14400, 21600):
+        raise ValueError('Only explicit bounded2/4/6-hour trials are supported')
+    names = ('gpu_hourly_usd', 'maximum_gpu_usd', 'total_compute_budget_usd', 'prior_attributed_spend_usd')
+    values = {name: receipt[name] for name in names}
+    if any(type(x) not in (int, float) or not math.isfinite(x) or x < 0 for x in values.values()):
+        raise ValueError('Finite nonnegative budget figures required')
+    maximum = values['gpu_hourly_usd'] * seconds / 3600
+    if (not 0 < values['total_compute_budget_usd'] <= 50 or values['gpu_hourly_usd'] <= 0
+            or abs(values['maximum_gpu_usd'] - maximum) > 1e-8
+            or values['prior_attributed_spend_usd'] + maximum + .25 > values['total_compute_budget_usd']):
+        raise ValueError('Trial must fit the existing at-most50USD budget including0.25USD disk reserve')
+    return seconds
 
 
 def main():
@@ -47,13 +65,13 @@ def main():
                 raise RuntimeError('No trial Pod receipt appeared within30minutes')
             time.sleep(2)
         receipt = json.loads(args.receipt.read_text())
-        assert receipt['approved_gpu_wallclock_seconds'] == 7200
+        seconds = budget_seconds(receipt)
         pod_id = receipt['pod_id']
         name = receipt['pod_name']
         volume = receipt['network_volume_id']
         assert name.startswith('duplex-native-validation-') and volume
         created = dt.datetime.fromisoformat(receipt['created_at_utc'].replace('Z', '+00:00'))
-        deadline = created + dt.timedelta(seconds=7200)
+        deadline = created + dt.timedelta(seconds=seconds)
         while True:
             now = dt.datetime.now(dt.timezone.utc)
             try:
