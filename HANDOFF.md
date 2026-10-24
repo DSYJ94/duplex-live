@@ -1,3 +1,35 @@
+# LOCAL — dedicated GCP project created; Runpod joint readiness live
+
+Goal turn PROGRESS. User authorized a dedicated project in the existing GCP
+organisation. Created and dashboard-verified Duplex Live Native,
+project aurium-duplex-live-20261024, number964780708143. Existing billing link
+observed. Financial credit evidence and screenshot are LOCAL ignored artifacts:
+runs/local-migration-20261023/gcp-project-setup-20261024.json and
+ gcp-duplex-project-created-20261024.jpg. Do not commit billing/credit identifiers,
+account credentials or unrelated organisation membership details.
+
+Compute Engine API was initially not enabled. Exactly ONE enable operation
+completed; API Enabled and Manage button verified on official Compute API page.
+Do not enable again from a stale observer. GPU quota and promotion coverage
+remain unverified.
+No GCP VM, bucket, archive transfer, credential or permission grant created by us.
+Cloud Shell activation remained blank; no shell command was submitted.
+Next inspect global/regional single-A10080 quota and credit
+eligibility before any compute provisioning. Runpod remains sole GPU executor.
+
+Runpod controller8514/sourceDA389A7, child15566/birth39956182, remains live at
+13:44:32UTC in combined_readiness. Original154 and all49 final PASS reports backed
+up; first joint partition logged finite norm16.85216022004957, frozen gradients0.
+New32 gradient delta8.810691951738844 vs retained11.8038137738305, cosine.32229395;
+this is a fixed-parent diagnostic, NOT learning/behavior approval. Seven joint
+partitions and then bounded8/independent restore/complete20 evaluation remain.
+Zero optimizer updates in this pilot as last observed. Pod8fsk2kouknoiac and
+hard stop18:39:58.8UTC unchanged; no duplicate GPU job or additional purchase.
+Read-only observers13710 and66251 finished finite windows, not model termination.
+Recorded 2026-10-24T13:45:30.189982+00:00. All unrelated edits retained.
+
+---
+
 # LOCAL — retained154 and all49 readiness PASS; joint8 still live
 
 Goal turn PROGRESS and verified wait. Substage report
