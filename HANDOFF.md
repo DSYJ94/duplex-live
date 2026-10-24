@@ -1,3 +1,30 @@
+# LOCAL — Single-GPU GCP budget guard prepared; archive transfer still live
+
+Heartbeat21:46UTC re-polled SAMEupload10044 + CPUrestore3415 LIVE. CPUtransfer
+observation34,885,524,976B,175GiBfree; no new GPU or optimizer. DeployedCPUstage
+source stillf5c2ed0; originalDA and pinned runtimes already prepared, no reruns.
+
+New portable/context/gcp_budget_watchdog.py is MAC-side source only, NOT ARMED.
+Requires actualcomplete40132/81.15GB/8link receipt and exact97c8d43fownergrant;
+actualrecordedGPUid/birth/name, original250GBdiskid, nativeSTOP/max12h/noautorestart,
+CPUstopped, liveGCP+Runpodnon-overlap. WholeGPU lifetime+16.88USD CPU/storage/network
+reserve must fit100USD (example5.63/h*12+reserve84.44USD). Freshguard published via
+rsync only after livechecks; credentialsMaconly. Failure stops ONLYsame recorded
+resource after recheckingidentity; no create/restart/delete/data mutation. Single
+Macfilelease preventsduplicatewatchdogs.6 policyfixtures PASS; no actualcloudguard
+or modelvalidation claimed. CLI/requiredleasefields/hashes/remainingrequirements:
+docs/GCP-NATIVE-BUDGET-WATCHDOG-2026-10-24.json. Continuous childguardfreshness and
+actualsuccessful terminalrecord controller still required before model execution.
+
+Do NOT arm without realfull destinationpass/actualapprovedGPU/freshpriceandlease.
+CurrentCPUSTOP00:55:15UTC25Oct and existingarchivewatcher unchanged. Lettransfer/
+fullhashstagefinish; then exactaliases/vendor/tmp/snapshot restoration, STOPCPU/
+detachsamedisk, oneboundedA100, liveguard + ZERO-update recovery/independentrestore/
+strictnativegates. No newtraining, weakenedgates or cloudexecutor handoff. Active
+15minheartbeat remainsquiet for healthy inprogress. Unrelated local edits intact.
+
+---
+
 # LOCAL — Runtime prepared on CPU; 28.34GB received; existing transfer/restore unchanged
 
 Heartbeat21:31UTC re-polled SAMEupload10044 and restorewatcher3415 LIVE; no restart.

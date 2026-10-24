@@ -1,0 +1,58 @@
+{
+  "schema": "dl-gcp-native-budget-watchdog-preparation-v1",
+  "at_utc": "2026-10-24T21:53:13.755964+00:00",
+  "source_parent": "ede6e37",
+  "implementation_sha256": {
+    "portable/context/gcp_budget_watchdog.py": "c8dc7d615054f70fb59774ecb5d3e68c6462582c5561f42e98845368928c17ca",
+    "evals/harness/test_gcp_budget_watchdog.py": "f882066fb495c0bbc0f6df6cec9884b3860c4cf087b771e15b152ebcbef164f7"
+  },
+  "status": "PREPARED_NOT_ARMED_NO_GPU_EXISTS",
+  "tests_passed": 6,
+  "lease_schema": "dl-native-gcp-bounded-gpu-lease-v1",
+  "required_lease_fields": [
+    "schema",
+    "project",
+    "zone",
+    "name",
+    "id",
+    "disk_name",
+    "disk_id",
+    "authorization_sha256",
+    "optimizer_updates",
+    "created_utc",
+    "stop_utc",
+    "hourly_upper_usd",
+    "destination_report_sha256"
+  ],
+  "cli_arguments": [
+    "--lease",
+    "--destination",
+    "--runpod-key-file",
+    "--ssh-argv",
+    "--status"
+  ],
+  "policy": [
+    "Exact approved owner authorization bytes and complete physical destination receipt",
+    "One recorded A10080 and original250GB non-auto-deleted bootdisk in europe-west4-a",
+    "Native provider STOP/max12h/noautomaticRestart and exact resource birth/id",
+    "Stop original CPU first; reject overlapping project GPU/native Runpod GPU",
+    "Count whole GPU lifetime plus0.48CPU/6.40storage/10network reserve against100USD",
+    "Live GCP/Runpod checks before publishing each fresh execution guard by approved rsync",
+    "Credentials and gcloud auth remainMac; no creation/restart/deletion",
+    "On guard failure, stop only current instance with exact recordedid/name/creation"
+  ],
+  "fresh_guard_remote_path": "/workspace/migration/gcp-budget-live-v1.json",
+  "full_budget_at_example5p63_per_hour_12h_usd": 84.44,
+  "actual_gpu_created": false,
+  "actual_guard_armed": false,
+  "actual_destination_passed": false,
+  "optimizer_updates_authorized": 0,
+  "remaining_before_execution": [
+    "Complete current archive transfer and full CPU destination verification",
+    "Reconstruct exact native aliases/vendor/tmp/snapshot and source/runtime inputs",
+    "Fresh actual price/quota/stock and bounded GPU creation after CPUstop/diskdetach",
+    "Start/readback this guard with actual lease and verified strict GPU SSH",
+    "Authorized model controller must continuously monitor guard freshness and own actual child timeouts/terminal records",
+    "Run existing zero-update recovery and separate independentrestore before strict native evaluation"
+  ]
+}
