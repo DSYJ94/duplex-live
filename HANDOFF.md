@@ -5,8 +5,8 @@ Goal turn PROGRESS; LOCAL sole executor. Main before receipt
 supervisor a5958a0343383728639940c4eb82e31ca3aa96f2 unchanged.
 Same supervisor101648/birth25974639. Fit101677/birth25975025 ACTUALLY EXITED0:
 all8 optimizer updates, all49 acoustic/native +all40 control references generated.
-Fresh independent restore115807/birth26750060 automatically started; live07:04:56,
-GPU51%/22409MiB, native-stream2/49, control0/40. No reload report/strict proof yet.
+Fresh independent restore115807/birth26750060 automatically started; live07:11:45,
+GPU51%/22409MiB, native-stream17/49, control0/40. No reload report/strict proof yet.
 Never duplicate stages or manually dispatch evaluation.
 
 Final training report6,345,518B SHA
@@ -23,12 +23,16 @@ Adam528 and RNG saved; full native independent restoration still pending.
 Fixed teacher-forced original28 component means before/after ALL8: NLL
 0.6350999576 ->0.6367036077; token top1 0.7912144118 ->0.7789758721.
 Unweighted component means, NOT complete weighted154 objective or free-running
-behavior/convergence. No improvement/adoption claim. Full fit review and exact
+behavior/convergence. All782 supervised token counts independently reconstructed:
+604 ->601 correct (77.23785% ->76.85422%), two fewer in ordinary component2,
+one fewer in three-token cancellation component27; the macro mean gives each
+component equal weight. All28 included; no subset or threshold adjustment. No improvement/adoption claim. Complete28 token-count review in
+docs/NATIVE-CONTROL40-ACTUAL28-METRICS-2026-10-24.json. Full fit review and exact
 reproduction program in docs/NATIVE-CONTROL40-COMPLETED-FIT-2026-10-24.json
 and docs/diagnostics/native-control40-completed-fit-review-20261024.py.
 No model/Torch/GPU load on Mac; original losses/data/sampler/CPU settings unchanged.
 
-Backup1184 sourcebb3f885 watching/healthy07:04:19; final weights/optimizer/RNG/
+Backup1184 sourcebb3f885 watching/healthy07:10:35; final weights/optimizer/RNG/
 receipts safe on Mac and volume. Broader stopped Mac source backup PARTIAL.
 Guard70540 armed07:06:26, shutdown10:22:37.9UTC, volume49yytzyoge retained.
 Pipeline deadline09:00; evaluator63289 waiting same supervisor all7 exit0,
