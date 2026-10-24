@@ -1,0 +1,82 @@
+{
+  "saved_state_CPU_review": {
+    "schema": "dl-native-control40-complete8-saved-state-cpu-review-v1",
+    "at_utc": "2026-10-24T06:10:25.404638+00:00",
+    "checkpoint_sha256": "86dde08eb1591d0bc04a36c47be0dc7ee1b90019d7ae520f1d049cc37d8dc278",
+    "checkpoint_bytes": 22959307,
+    "completed_updates": 8,
+    "actual_Adam_clocks": [
+      528
+    ],
+    "adapter_tensors": 26,
+    "trainable_parameter_count": 1894400,
+    "all_adapters_and_optimizer_tensors_finite": true,
+    "source_commit": "c9efaaac24d983342f7eded46617e6450bc102ce",
+    "learning_rate": 2e-07,
+    "optimizer_betas": [
+      0.9,
+      0.999
+    ],
+    "weight_decay": 0.0,
+    "all_four_RNG_families_preserved": true,
+    "Torch_CPU_RNG_bytes": 5056,
+    "Torch_CUDA_RNG_bytes": [
+      16
+    ],
+    "native_attention_backend": "math",
+    "model_loaded": false,
+    "GPU_initialized": false,
+    "optimizer_executed": false,
+    "independent_native_restore_passed": false,
+    "behavior_qualified": false,
+    "model_adopted": false,
+    "scope": "CPU inspection of complete saved state only; full independent model/native fingerprint restore remains required.",
+    "Mac_checkpoint_hash_verified": true,
+    "backup_inventory_sha256": "2662276f689a7404d3aa6def2047ab671ed5ea56a2d1010b11b7c57e47d2a282",
+    "remote_closed_snapshot_state": "/tmp/duplex-control40-backup-snapshots/20261024T060702.951913Z/native-control40-precise-pilot-v11-environment-retry/training/training-state.pt",
+    "Mac_snapshot_state": "/Users/daryl/Library/CloudStorage/OneDrive-Personal/Shared GitHub Repos/duplex-live/runs/local-migration-20261023/native-control40-continuous-copyback-v16/20261024T060702.951913Z/native-control40-precise-pilot-v11-environment-retry/training/training-state.pt"
+  },
+  "recorded_exposure_review": {
+    "schema": "dl-native-control40-complete8-recorded-exposure-review-v1",
+    "at_utc": "2026-10-24T06:14:09.353852+00:00",
+    "source_commit": "c9efaaac24d983342f7eded46617e6450bc102ce",
+    "log_sha256": "8a9fda5876bc5f518ac4c2715675e3c5676cd737cae191d985e824abe7eb667d",
+    "steps": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "existing_C9_complete154_validator_passed": true,
+    "existing_C9_all49_native_exposure_validator_passed": true,
+    "existing_C9_all40_five_family_exposure_validator_passed": true,
+    "existing_C9_exact_control_target_counts_passed": true,
+    "original154_terms_per_update": 154,
+    "original154_term_exposures": 1232,
+    "original28_actual_histories_present_every_update": true,
+    "all25_old_and24_new_text_teachers_present_every_update": true,
+    "all49_assistant_audio_teachers_present_every_update": true,
+    "all10_word_and14_clock_anchors_present_every_update": true,
+    "all49_native_stream_teachers_seen_exactly_once": true,
+    "all40_control_teachers_seen_exactly_once": true,
+    "all5_control_families_present_every_update": true,
+    "all26_adapters_have_nonzero_gradients_every_update": true,
+    "original49_acoustic_targets_per_update": 183297,
+    "control40_text_targets": 27372,
+    "control40_assistant_acoustic_targets": 218696,
+    "prefix_span_user_audio_targets": 0,
+    "model_loaded": false,
+    "GPU_work_executed": false,
+    "Torch_imported": false,
+    "independent_native_restore_passed": false,
+    "behavior_qualified": false,
+    "model_adopted": false,
+    "scope": "Independent recorded-log/membership review with unchanged existing C9 validators; not a second gradient execution or proof of behavior."
+  },
+  "independent_native_restore_passed": false,
+  "model_adopted": false
+}

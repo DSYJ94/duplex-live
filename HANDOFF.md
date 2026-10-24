@@ -1,3 +1,51 @@
+# LOCAL — ALL8 optimizer updates saved; post-fit fingerprints live (24 October 06:16 UTC)
+
+Goal turn PROGRESS; previous turn PROGRESS. LOCAL sole executor. Main before
+receipt 30174f3147d4e94eae45baa9df79b755e7136e6f. Model C9 c9efaaac24d983342f7eded46617e6450bc102ce;
+orchestration a5958a0343383728639940c4eb82e31ca3aa96f2 unchanged.
+SAME supervisor101648/birth25974639 and trainer101677/birth25975025 live06:14:20,
+onlyGPU53%/30015MiB. ALL8 saved, last06:06:56UTC. Stage stillbounded8_training:
+postfit native49 fingerprints15/49, control40=0. No final report/native restore yet.
+Do NOT duplicate any stage or manually dispatch restore/evaluation.
+
+Final state22,959,307B SHA
+86dde08eb1591d0bc04a36c47be0dc7ee1b90019d7ae520f1d049cc37d8dc278.
+V16 snapshot20261024T060702.951913Z inventorySHA
+2662276f689a7404d3aa6def2047ab671ed5ea56a2d1010b11b7c57e47d2a282;
+complete snapshot verified, state/log independently rehashed on Mac. Saved state
+CPU-only inspection: completed8, ALL26 Adam clocks528,1,894,400 FP32 parameters,
+adapters/moments finite, lr2e-7,betas.9/.999,wd0,allfour RNG families preserved
+(CPU5056B,CUDA16B). This is NOT independent native model restore. Originals and
+all prior checkpoints/failed attempts preserved; broader stopped Mac backup PARTIAL.
+
+Independent CPU-only review used unchanged C9 validators on complete8 recorded log:
+PASS all154 each update (1232 term exposures), all28 actual histories, old25/new24
+text, all49 acoustic,10word/14clock anchors. All49 native stream teachers once;
+all40 controls once/five families every update. Exact target counts183297 original49
+acoustic per update,27372 control text/218696 control acoustic; prefix/span/user
+loss targets0. All26 A/B gradients nonzero every update. No Torch/model/GPU execution
+for this recorded-exposure check. Existing thresholds/data/recipe remain unchanged.
+
+Eight pre-update fixed154 loss points (after0..7 updates):
+[2.5525739946,2.6808978326,2.6922974746,2.6909541311,2.6882728817,2.6891397410,
+2.6895885335,2.6917229081]. Last+5.4513% versus parent; no convergence/improvement
+claim. Last matched partition8 native/text/acoustic deltas
+[+.0014867922,-.0006726137,+.0001051739]. No post-update8 full154 loss was measured.
+
+Next: SAME process ->remaining native49/control40 fingerprints ->training actualexit0
+->fresh independent Adam528/RNG/full49/control40 native restore ->strict proof
+->complete paired20/speech20/ordinary4 ->eligible sealedfresh ->larger-run decision.
+No behavior qualification, extension or adoption. Guard70540 shutdown10:22:37.9UTC,
+pipeline09:00; evaluator63289 latest09:37/end10:17; backup63290/backend71254 to10:20.
+Fully prepaid26h/maxproject83.9807183<100; no purchase or deadline change. Distinct
+reasoning32 semantic payload approval pending;0requests/conversion/training.
+No Mac neural work or OS CPU settings changes; unrelated local files preserved.
+Observer now counts both training and independent-restore fingerprints; exact read-only
+copy under runs/local-migration-20261023/native-control40-live-v11-observer-v1.py.
+See docs/NATIVE-CONTROL40-COMPLETE8-SAVED-STATE-2026-10-24.json and pilot progress JSON.
+
+---
+
 # LOCAL — update6 saved and hash verified on Mac (24 October 05:53 UTC)
 
 Goal turn PROGRESS; previous turn PROGRESS. LOCAL sole executor. Main before
