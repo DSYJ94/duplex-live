@@ -30,6 +30,10 @@ CONTROL_ROOTS=ROOTS
 REASONING_ROOTS=('native-reasoning32-numerical-v14',
                  'native-reasoning32-numerical-v14-control',
                  'native-reasoning32-retained-pilot-v15',
+                 'native-reasoning32-retained-pilot-v16',
+                 'native-reasoning32-retained-pilot-v17',
+                 'native-reasoning32-native20-v17',
+                 'native-reasoning32-native20-speech-v17',
                  'native-reasoning32-numerical-v12-control',
                  'native-reasoning32-numerical-v13-control')
 FORBIDDEN={'session-token','.private','.env','keys','credentials','core','quarantine',
