@@ -1,3 +1,35 @@
+# LOCAL — update6 saved and hash verified on Mac (24 October 05:53 UTC)
+
+Goal turn PROGRESS; previous turn PROGRESS. LOCAL sole executor. Main before
+receipt 16efce75bbd967021c1c61f86d988efc657ac456. Model/math C9 c9efaaac24d983342f7eded46617e6450bc102ce;
+orchestration a5958a0343383728639940c4eb82e31ca3aa96f2 unchanged.
+SAME supervisor101648/birth25974639, trainer101677/birth25975025 live05:49:54,
+onlyGPU80%/30015MiB. Logged1..6; newest state saved05:49:41UTC. Do NOT duplicate.
+
+Checkpoint6=22,959,307B SHA
+f126d69f85975aec3dabb7124d1124019dad71380a9ffc6f123a737cad2a6f41.
+V16 closed inventorySHA5e5b4d8e615e9fc0d7010f6a691af53b9c2398aa55ce89ad41ed8132830efa0a;
+watcher verified complete snapshot, checkpoint and six-point log rechecked on Mac.
+All earlier snapshots/originals preserved; broader stopped source backup PARTIAL.
+
+Fixed154 pre-update losses after0..5 completed updates:
+[2.5525739946,2.6808978326,2.6922974746,2.6909541311,2.6882728817,2.6891397410].
+Latest +5.3501% versus parent; no convergence claim. Matched same-parent partition6
+native/text/acoustic deltas[-.0004276057,-.0012403402,-.0005053222]; small changes,
+not behavioral qualification. Original154/native49/control40, all28/old25/new24,
+KL/hidden, words/audio/folds/heldouts and strict gates unchanged.
+
+Next: SAME final2 updates ->final fingerprints ->independent Adam528/RNG/full49/
+control40 restore/proof ->complete paired20/speech20/ordinary4 ->eligible sealedfresh
+->larger-run decision. No final training/restore/behavior yet and no extension/adoption.
+Guard70540 shutdown10:22:37.9UTC, pipeline09:00; evaluator63289 latest09:37/end10:17,
+backup63290/backend71254 to10:20 unchanged and healthy. Fully prepaid26h/maxproject
+83.9807183<100; no purchase/deadline/CPU change. Distinct reasoning32 semantic payload
+approval still pending;0requests/conversion/training. Unrelated files preserved.
+See docs/NATIVE-CONTROL40-PILOT-PROGRESS-2026-10-24.json for exact receipts.
+
+---
+
 # LOCAL — update5 and complete loss records backed up (24 October 05:44 UTC)
 
 Goal turn PROGRESS: updates4/5 independently observed, checkpoints verified on Mac,

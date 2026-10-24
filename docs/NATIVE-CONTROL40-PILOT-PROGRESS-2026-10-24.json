@@ -1,10 +1,10 @@
 {
   "schema": "dl-native-control40-pilot-progress-v1",
-  "at_utc": "2026-10-24T05:44:55.765055+00:00",
+  "at_utc": "2026-10-24T05:53:16.835748+00:00",
   "executor": "LOCAL",
   "classification": "progress",
   "previous_goal_turn": "progress",
-  "source_main_before_receipt": "ac36575",
+  "source_main_before_receipt": "16efce75bbd967021c1c61f86d988efc657ac456",
   "execution_source": "c9efaaac24d983342f7eded46617e6450bc102ce",
   "orchestration_source": "a5958a0343383728639940c4eb82e31ca3aa96f2",
   "supervisor": {
@@ -18,7 +18,7 @@
   "output": "/workspace/migration/native-control40-precise-pilot-v11-environment-retry",
   "training_loss_summary": {
     "schema": "dl-native-control40-recorded-loss-summary-v1",
-    "recorded_updates": 5,
+    "recorded_updates": 6,
     "complete8_recorded": false,
     "steps": [
       {
@@ -281,11 +281,63 @@
             "delta": -6.741285324074475e-06
           }
         }
+      },
+      {
+        "step": 6,
+        "losses_measured_before_this_update": true,
+        "completed_updates_at_loss_measurement": 5,
+        "fixed154_weighted_groups": {
+          "actual": 0.5708904668693624,
+          "reference": 0.18111462891101837,
+          "old25": 0.45577411522696676,
+          "new24": 0.7608151407912374,
+          "word": 0.08105710372328759,
+          "clock": 0.05278485667492662,
+          "audio49": 0.5867034288085237
+        },
+        "fixed154_weighted_total": 2.689139741005323,
+        "selected_native49_weighted_loss": 0.2541554443212839,
+        "selected_control40_weighted_text_loss": 1.0338991806636384,
+        "selected_control40_weighted_acoustic_loss": 0.1894334137439728,
+        "selected_total_weighted_objective": 4.166627779734218,
+        "selected_native_teacher_ids": [
+          "teacher-recovery-train-009",
+          "teacher-cf-recovery-train-003-2",
+          "teacher-recovery-train-004",
+          "teacher-native2-train-001",
+          "teacher-native2-train-003",
+          "teacher-native2-train-006"
+        ],
+        "selected_control_teacher_ids": [
+          "native-control3-train-021",
+          "native-control3-train-005",
+          "native-control3-train-029",
+          "native-control3-train-013",
+          "native-control3-train-037"
+        ],
+        "gradient_norm_before_clip": 8.72301197052002,
+        "matched_parent_teacher_losses": {
+          "balanced_spoken_clock_ce": {
+            "current": 0.2541554443212839,
+            "parent_same_teachers": 0.2545830499716328,
+            "delta": -0.0004276056503488834
+          },
+          "text_ce": {
+            "current": 1.0338991806636384,
+            "parent_same_teachers": 1.035139520821896,
+            "delta": -0.0012403401582576912
+          },
+          "acoustic_ce": {
+            "current": 0.1894334137439728,
+            "parent_same_teachers": 0.18993873596191407,
+            "delta": -0.0005053222179412786
+          }
+        }
       }
     ],
-    "fixed154_change_covers_completed_updates": 4,
-    "fixed154_loss_delta": 0.13569888713065925,
-    "fixed154_relative_reduction": -0.053161588036156074,
+    "fixed154_change_covers_completed_updates": 5,
+    "fixed154_loss_delta": 0.13656574644428376,
+    "fixed154_relative_reduction": -0.05350119006746706,
     "fixed154_membership_exact_across_recorded_updates": true,
     "comparable_across_steps": "Only the fixed154 objective repeats the same terms and weights every update.",
     "rotating_partition_totals_are_not_a_convergence_curve": true,
@@ -295,20 +347,20 @@
     "behavioral_improvement_established": false,
     "training_extension_or_adoption_approved": false,
     "interpretation": "Training losses describe fit on TRAIN teachers; validation, native restore and behavioral tests remain separate requirements.",
-    "source_log": "/Users/daryl/Library/CloudStorage/OneDrive-Personal/Shared GitHub Repos/duplex-live/runs/local-migration-20261023/native-control40-continuous-copyback-v16/20261024T054140.264978Z/native-control40-precise-pilot-v11-environment-retry/bounded8_training.log",
-    "source_log_sha256": "b39d53347c1c72a3c402e2e9ebaee2735671cd3db1ec4da32c4f8eeadadec4a0",
+    "source_log": "/Users/daryl/Library/CloudStorage/OneDrive-Personal/Shared GitHub Repos/duplex-live/runs/local-migration-20261023/native-control40-continuous-copyback-v16/20261024T055003.753422Z/native-control40-precise-pilot-v11-environment-retry/bounded8_training.log",
+    "source_log_sha256": "e1b4b9b2aa7ee7b55613af242dc8dc7ace7b884762ea6492271132c2ef04c868",
     "analysis_implementation_sha256": "e031c04029583c357ea809f3ababffb4f91ece25b57992920ba068cae95d64c2",
     "model_or_GPU_loaded": false,
     "parent_readiness_sha256": "568117e69f18fd7d1282592e726953edbedc80569dc959bdb2db2807459cf352",
     "checkpoint_backup": {
       "path": "native-control40-precise-pilot-v11-environment-retry/training/training-state.pt",
       "bytes": 22959307,
-      "sha256": "9158c3a0981754e8bb80f7243a2c0afbf53f9ae47fd62a63d8fb7c080d09cbf1",
+      "sha256": "f126d69f85975aec3dabb7124d1124019dad71380a9ffc6f123a737cad2a6f41",
       "Mac_hash_verified": true
     },
-    "backup_inventory_sha256": "18ac7e59c6293439a637947aa55f6d95d4fbf17c554be66ae1eb2dab0fcc0bb4",
+    "backup_inventory_sha256": "5e5b4d8e615e9fc0d7010f6a691af53b9c2398aa55ce89ad41ed8132830efa0a",
     "backup_files": 151,
-    "snapshot": "runs/local-migration-20261023/native-control40-continuous-copyback-v16/20261024T054140.264978Z"
+    "snapshot": "runs/local-migration-20261023/native-control40-continuous-copyback-v16/20261024T055003.753422Z"
   },
   "prepaid_funding": {
     "at_utc": "2026-10-24T05:26:35.999890+00:00",
@@ -397,11 +449,11 @@
   "latest_checkpoint_backup": {
     "path": "native-control40-precise-pilot-v11-environment-retry/training/training-state.pt",
     "bytes": 22959307,
-    "sha256": "9158c3a0981754e8bb80f7243a2c0afbf53f9ae47fd62a63d8fb7c080d09cbf1",
+    "sha256": "f126d69f85975aec3dabb7124d1124019dad71380a9ffc6f123a737cad2a6f41",
     "Mac_hash_verified": true
   },
-  "latest_backup_inventory_sha256": "18ac7e59c6293439a637947aa55f6d95d4fbf17c554be66ae1eb2dab0fcc0bb4",
-  "logged_completed_updates": 5,
+  "latest_backup_inventory_sha256": "5e5b4d8e615e9fc0d7010f6a691af53b9c2398aa55ce89ad41ed8132830efa0a",
+  "logged_completed_updates": 6,
   "second_measurement_interpretation": {
     "measured_after_completed_updates": 1,
     "fixed154_relative_increase": 0.050272328381799306,
@@ -625,27 +677,27 @@
     "no_restarts_or_new_resources": true
   },
   "latest_measurement_interpretation": {
-    "measured_after_completed_updates": 4,
-    "fixed154_weighted_total": 2.6882728816916983,
-    "relative_increase_vs_parent": 0.053161588036156074,
+    "measured_after_completed_updates": 5,
+    "fixed154_weighted_total": 2.689139741005323,
+    "relative_increase_vs_parent": 0.05350119006746706,
     "matched_parent_teacher_losses": {
       "balanced_spoken_clock_ce": {
-        "current": 0.9778478713328772,
-        "parent_same_teachers": 0.9805117279480372,
-        "delta": -0.0026638566151599985
+        "current": 0.2541554443212839,
+        "parent_same_teachers": 0.2545830499716328,
+        "delta": -0.0004276056503488834
       },
       "text_ce": {
-        "current": 1.0242113629120504,
-        "parent_same_teachers": 1.023744149747958,
-        "delta": 0.0004672131640923727
+        "current": 1.0338991806636384,
+        "parent_same_teachers": 1.035139520821896,
+        "delta": -0.0012403401582576912
       },
       "acoustic_ce": {
-        "current": 0.19947687387466434,
-        "parent_same_teachers": 0.19948361515998841,
-        "delta": -6.741285324074475e-06
+        "current": 0.1894334137439728,
+        "parent_same_teachers": 0.18993873596191407,
+        "delta": -0.0005053222179412786
       }
     },
-    "conclusion": "Early retained objective remains above parent; matched teacher changes are small and mixed. Continue the same bounded8 without extension/adoption, then independent native restore and all20 native/speech evaluation."
+    "conclusion": "Retained objective remains above parent; selected same-teacher text/audio losses improved slightly in this partition. Complete unchanged bounded8 and full independent/native behavioral gates; no convergence or adoption claim."
   },
   "evaluation_storage_reference": {
     "source": "docs/NATIVE-PAIRED20-DEFAULT-RUNTIME-REVIEW-2026-10-23.json",
