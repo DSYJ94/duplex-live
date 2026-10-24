@@ -1,3 +1,42 @@
+# LOCAL — update2 saved; early retained loss increased (24 October 05:20 UTC)
+
+Goal turn PROGRESS: second update/checkpoint verified and matched-parent losses
+measured. Previous goal turn PROGRESS. LOCAL sole executor. Main before receipt
+df6f1cd2680ee9761762ef5bfb4e67f706536835. Model C9 and orchestration a5958a0 unchanged.
+SAME supervisor101648/birth25974639 and trainer101677/birth25975025; bounded8 live.
+Logged updates1,2. Step2 checkpoint saved05:12:45UTC,22,959,307B SHA
+5e9ddb1d4fd445d238e3dc7a8ec4409274cac733e67a9415f40ec23471c43a86.
+V16 snapshot20261024T051311.824669Z:151files fully verified on Mac, inventorySHA
+abc34f3e59a9f6b262d5680c27134be69e4c627835fb6ceb27c5981229810eff.
+149 verified files reused;24,298,626B transferred. All older snapshots retained on
+Mac; originals/checkpoints retained. Broader stopped Mac source backup PARTIAL.
+
+Two recorded losses cover parent0 ->AFTER ONE update (loss measured BEFORE each
+reported optimizer step). Fixed154 weighted objective2.5525739946 ->2.6808978326,
+UP5.0272% (+.1283238381). Word+clock retention penalties rose from0 to.1274122013,
+~99.29% of that increase. This is early retention drift, NOT evidence of convergence.
+Actual28 CE.5675211192 ->.5694228369; old25/new24 text slightly lower.
+
+Matched source-pinned parent-readiness SAME partition2 teachers/weights/targets:
+native CE.2651299057 ->.2645637531 (delta-.0005661526);
+control text.7376280046 ->.7373262246 (delta-.0003017800);
+control acoustic.1474157572 ->.1474216193 (delta+.0000058621).
+Do NOT compare rotating total4.41736 ->3.83021 as loss reduction: different teachers.
+Offline reporter now includes matched baselines and explicit pre-update clocks.
+No model/GPU execution added for analysis; all154 membership and weights exact.
+
+Continue SAME originally authorized8 without altering recipe or gates. No restart,
+larger extension, model adoption, native restore or behavioral improvement claim.
+All original154/native49/control40 objectives, old28/old25/new24 and KL/hidden retained.
+Independent Adam528/RNG/native49/control40 restore and strict proof remain required,
+then complete paired20/speech20/ordinary4 ->eligible sealedfresh ->larger-run decision.
+Guard70540 and shutdown10:22:37.9UTC unchanged; pipeline09:00. Backup63290,
+evaluator63289 and backend71254 remain armed. No new purchase/deadline/CPU change.
+Distinct reasoning32 semantic payload approval pending;0requests/conversion/training.
+See docs/NATIVE-CONTROL40-PILOT-PROGRESS-2026-10-24.json for exact evidence.
+
+---
+
 # LOCAL — first retry update saved and backed up (24 October 05:07 UTC)
 
 Goal turn PROGRESS: loss reporter committed and new checkpoint1 independently
