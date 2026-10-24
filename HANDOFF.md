@@ -13,7 +13,12 @@ completed; API Enabled and Manage button verified on official Compute API page.
 Do not enable again from a stale observer. Global GPU quota verified360, usage0. europe-west4 on-demand and preemptible
 A10080 quotas both0. Exactly ONE on-demand quota request0→1 submitted; console
 confirmed processing, case bd254371-b3ca-406c-8bd1-da7e538f058f. Do not duplicate.
-Partner promotion GPU coverage remains unverified.
+Original Google award email and linked public services definition now support
+documentary eligibility for directly billed Compute Engine GPU use. Evidence
+is LOCAL .private/gcp-credit-eligibility-v1.json (0600), not committed. Actual
+credit application to a GPU billing line remains unmeasured. No email sent.
+General Increase requests history has no rows yet; original case submission
+receipt remains authoritative, not a reason to resubmit.
 No GCP VM, bucket, archive transfer, credential or permission grant created by us.
 Cloud Shell activation remained blank; no shell command was submitted.
 Next await that regional quota request and verify credit eligibility plus a
