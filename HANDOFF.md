@@ -1,3 +1,37 @@
+# LOCAL — prepaid Pod terminated; volume and verified artifacts retained (24 October10:22UTC)
+
+Goal turn PROGRESS. Main before this receiptf8a0fc0. LOCAL sole executor remains.
+Guard70540 reports pod_terminated10:22:42.512605UTC. Independent Runpod MCP
+get_pod(4yx8vahdmjsylx) returned404 at10:22:55UTC; get_network_volume(49yytzyoge)
+returned retained100GB STANDARD EUR-IS-1 volume duplex-native-preservation-s3-20261021.
+No new Pod, purchase, job, training update or adoption. Old SSH host/port and
+all Pod process IDs below are HISTORICAL; never try to resubmit to that address.
+Backup1184 and backend71254 had exited by10:21:35; guard completed termination.
+See docs/NATIVE-PREPAID26H-SHUTDOWN-2026-10-24.json.
+
+All critical native weights/Adam/RNG, original67.76GB archive, complete20 model
+outputs, qualified32 source/semantic/conversion/codec and Engine32 remain preserved.
+Engine32 backup70files164694584B and terminal numerical backup4files100250B have
+remote/Mac SHA equality. Numerical remains14/32 and UNAPPROVED, stopped by deadline,
+not a measured threshold failure. Full-model final unchanged hash proof absent.
+Broader stopped Mac source backup remains PARTIAL; do not call every Mac file complete.
+
+Sources03b5c01/4482f04 prepare gradient32 and complete32 training objective;
+eight offline tests PASS, no actual gradient32 or optimizer run, retained trainer
+integration/combined readiness/full independent restore wiring still required.
+Original154/native49/control40, original histories, KL/hidden and all thresholds stay.
+
+Single15USD purchase request is still unanswered. Its earlier same-Pod continuation
+is now impossible because the planned guard retired that Pod. If approved, verify
+posted credit, recheck current capacity and remaining100USD project cap, and use a
+replacement Pod on the SAME49yytzyoge volume with a fresh identity-bound guard.
+Do not restart old numericv11, discard failures or infer approval from elapsed time.
+Complete numerical32 in a new output version with sufficient bounded headroom,
+then gradient32 and integrated readiness before a distinct bounded native520 fit.
+Continue source preparation locally without model/ASR workloads or CPU throttling.
+
+---
+
 # LOCAL — whole32 training-objective preparation committed (24 October10:18UTC)
 
 Goal turn PROGRESS; source4482f04. New evals/native_reasoning_training.py provides
