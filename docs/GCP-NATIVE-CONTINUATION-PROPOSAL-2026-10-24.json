@@ -1,0 +1,380 @@
+{
+  "schema": "dl-gcp-native-continuation-proposal-v1",
+  "status": "UNAPPROVED_ADDITIONAL_GCP_USAGE_AND_ARTIFACT_TRANSFER",
+  "prepared_utc": "2026-10-24T16:51:07.702104+00:00",
+  "purpose": "Finish preservation, full independent restore/numerical/native qualification of the already trained eight-update reasoning32 candidate; never repeat the eight updates or weaken gates",
+  "destination_project": "aurium-duplex-live-20261024",
+  "destination_region": "europe-west4",
+  "maximum_additional_gcp_usage_usd": 100,
+  "additional_to_existing_runpod_cap_usd": 100,
+  "existing_credits_intended": true,
+  "new_credit_purchase": false,
+  "credit_application_on_actual_gpu_bill_verified": false,
+  "compute": {
+    "maximum_vms": 1,
+    "maximum_concurrent_gpu_jobs_across_providers": 1,
+    "gpu": "A100 80GB",
+    "machine_type": "a2-ultragpu-1g",
+    "maximum_gpu_runtime_hours": 12,
+    "provider_native_runtime_limit_required": true,
+    "stop_earlier_when_complete_idle_or_blocked": true,
+    "persistent_disk_gib": 250,
+    "quoted_default_disk_hourly_usd_rounded": 5.58,
+    "planned_machine_plus_250gib_disk_12h_usd_estimate": 67.423,
+    "up_to_7_days_250gib_disk_storage_usd_estimate": 6.329,
+    "remaining_allowance_for_egress_and_variance_usd": 26.248,
+    "stop_gpu_before_budget_can_exceed": true,
+    "temporary_disk_cleanup_only_after_verified_off_vm_copyback": true
+  },
+  "transfer": {
+    "maximum_verified_native_artifact_bytes": 100000000000,
+    "native_archive": {
+      "files": 28470,
+      "bytes": 67764285650,
+      "manifest_sha256": "4eac15590dc9def6dfb5e34b2cea92f30d9a067fabe0940e2876b6acdcbe6dce",
+      "source_root": "/workspace/native-preservation-v3"
+    },
+    "control_workset": {
+      "files": 7797,
+      "uncompressed_bytes": 8000842614,
+      "inventory_sha256": "79401e2c1051361d150da644250e8acf87814bda1c48b167af8a34345214fa8f",
+      "source_root": "/workspace/source-control40-e658c20/runs"
+    },
+    "candidate_exports": {
+      "snapshot": "20261024T164021.631309Z",
+      "inventory_sha256": "80aa6bf50e839e6d19ad8cdcd842de64c033ff2d5fcc1b715ddc549c4ff7979a",
+      "files": [
+        {
+          "path": "native-reasoning32-retained-pilot-v18/training/adapters.safetensors",
+          "bytes": 7580728,
+          "sha256": "34edb69c696fef1ac02e498bb1351a7655442d6c7c041562ca145abfb3a77176"
+        },
+        {
+          "path": "native-reasoning32-retained-pilot-v18/training/additional-native-v2/voice.pt",
+          "bytes": 9499,
+          "sha256": "2085b3d58d2f2b20042e2e57a60206dd43c3028173cd9140e83d6c7b5136404d"
+        },
+        {
+          "path": "native-reasoning32-retained-pilot-v18/training/data.json",
+          "bytes": 128708,
+          "sha256": "de92099057ded15a1af0e387c96b457cdf4c1731c26594dcdca211d4c442fc1e"
+        },
+        {
+          "path": "native-reasoning32-retained-pilot-v18/training/training-state.pt",
+          "bytes": 22970059,
+          "sha256": "75fd39b1dc9a7f66b8125a1804cab87cfad384446d592df4534c3e1cff5f0367"
+        },
+        {
+          "path": "native-reasoning32-retained-pilot-v18/training/voice.pt",
+          "bytes": 9499,
+          "sha256": "2085b3d58d2f2b20042e2e57a60206dd43c3028173cd9140e83d6c7b5136404d"
+        }
+      ],
+      "mac_hashes_verified": true,
+      "fit_report_approved": false,
+      "independent_restore_approved": false
+    },
+    "additional_scope": "Only verified reasoning32 source/teacher synthetic audio, derived targets/caches, approvals, finalization outputs, native20 evaluation evidence, manifests and receipts needed by the pinned fit references. Materialize and verify a closed file inventory before transfer. No arbitrary directory mirroring.",
+    "fit_artifact_references": [
+      {
+        "flag": "--assets",
+        "path": "/projects/u6si/duplex-live/runs/context-spanning-assets-7454205/manifest.json"
+      },
+      {
+        "flag": "--base",
+        "path": "/projects/u6si/duplex-live/models/hf-cache/hub/models--nvidia--personaplex-7b-v1/snapshots/fdaf4090a61cb315c138a1faee287ffd6c716309"
+      },
+      {
+        "flag": "--voice-reference",
+        "path": "/projects/u6si/duplex-live/runs/voice-quality-7414595/codec/reference.wav"
+      },
+      {
+        "flag": "--voice-provenance",
+        "path": "/projects/u6si/duplex-live/runs/voice-quality-7414595/codec/report.json"
+      },
+      {
+        "flag": "--cache",
+        "path": "/projects/u6si/duplex-live/runs/recovery-mixed-codes-7411513"
+      },
+      {
+        "flag": "--cache",
+        "path": "/projects/u6si/duplex-live/runs/recovery-codes-7434926"
+      },
+      {
+        "flag": "--cache",
+        "path": "/projects/u6si/duplex-live/runs/recovery-codes-7435538"
+      },
+      {
+        "flag": "--actual-source-data",
+        "path": "/projects/u6si/duplex-live/runs/recovery-data-7407554"
+      },
+      {
+        "flag": "--warm-start-proof",
+        "path": "/projects/u6si/duplex-live/runs/context-training-proof-7510331"
+      },
+      {
+        "flag": "--actual-native-teacher-cache",
+        "path": "/projects/u6si/duplex-live/runs/native-old25-codes-7543730"
+      },
+      {
+        "flag": "--actual-native-teacher-approval",
+        "path": "/projects/u6si/duplex-live/runs/native-old25-native-approval-7544805/report.json"
+      },
+      {
+        "flag": "--actual-native-teacher-scope",
+        "path": "/projects/u6si/duplex-live/runs/native-old25-native-scope-7543889/report.json"
+      },
+      {
+        "flag": "--actual-native-teacher-preflight",
+        "path": "/projects/u6si/duplex-live/runs/native-old25-native-math-7545975"
+      },
+      {
+        "flag": "--native-v2-cache",
+        "path": "/projects/u6si/duplex-live/runs/native-v2-codes-7545905"
+      },
+      {
+        "flag": "--native-v2-scope",
+        "path": "/projects/u6si/duplex-live/runs/native-v2-native-scope-7545907/report.json"
+      },
+      {
+        "flag": "--native-v2-approval",
+        "path": "/projects/u6si/duplex-live/runs/native-v2-native-approval-7545909/report.json"
+      },
+      {
+        "flag": "--native-v2-preflight",
+        "path": "/projects/u6si/duplex-live/runs/native-v2-native-math-7546608"
+      },
+      {
+        "flag": "--native-v2-warm-ordinary-approval",
+        "path": "/projects/u6si/duplex-live/runs/native-v2-retention-drift-audit-7554946/native-v2-retention-drift-audit.json"
+      },
+      {
+        "flag": "--native-audio49-audit",
+        "path": "/projects/u6si/duplex-live/runs/native-audio49-audit-7572398"
+      },
+      {
+        "flag": "--actual-mixed-data",
+        "path": "/projects/u6si/duplex-live/runs/context-training-proof-7505207"
+      },
+      {
+        "flag": "--actual-mixed-data",
+        "path": "/projects/u6si/duplex-live/runs/context-training-proof-7505214"
+      },
+      {
+        "flag": "--actual-mixed-data",
+        "path": "/projects/u6si/duplex-live/runs/context-training-proof-7505216"
+      },
+      {
+        "flag": "--actual-mixed-data",
+        "path": "/projects/u6si/duplex-live/runs/context-training-proof-7505217"
+      },
+      {
+        "flag": "--actual-mixed-data",
+        "path": "/projects/u6si/duplex-live/runs/context-training-proof-7495655"
+      },
+      {
+        "flag": "--actual-mixed-data",
+        "path": "/projects/u6si/duplex-live/runs/context-training-proof-7495632"
+      },
+      {
+        "flag": "--actual-mixed-data",
+        "path": "/projects/u6si/duplex-live/runs/context-training-proof-7495656"
+      },
+      {
+        "flag": "--actual-mixed-data",
+        "path": "/projects/u6si/duplex-live/runs/context-training-proof-7495657"
+      },
+      {
+        "flag": "--actual-mixed-data",
+        "path": "/projects/u6si/duplex-live/runs/context-training-proof-7495658"
+      },
+      {
+        "flag": "--actual-mixed-data",
+        "path": "/projects/u6si/duplex-live/runs/context-training-proof-7495664"
+      },
+      {
+        "flag": "--actual-mixed-data",
+        "path": "/projects/u6si/duplex-live/runs/context-training-proof-7495665"
+      },
+      {
+        "flag": "--actual-mixed-data",
+        "path": "/projects/u6si/duplex-live/runs/context-training-proof-7495666"
+      },
+      {
+        "flag": "--actual-mixed-data",
+        "path": "/projects/u6si/duplex-live/runs/context-training-proof-7495675"
+      },
+      {
+        "flag": "--actual-mixed-data",
+        "path": "/projects/u6si/duplex-live/runs/context-training-proof-7495677"
+      },
+      {
+        "flag": "--actual-mixed-data",
+        "path": "/projects/u6si/duplex-live/runs/context-training-proof-7495653"
+      },
+      {
+        "flag": "--actual-mixed-data",
+        "path": "/projects/u6si/duplex-live/runs/context-training-proof-7500187"
+      },
+      {
+        "flag": "--actual-mixed-data",
+        "path": "/projects/u6si/duplex-live/runs/context-training-proof-7505218"
+      },
+      {
+        "flag": "--actual-mixed-data",
+        "path": "/projects/u6si/duplex-live/runs/context-training-proof-7501220"
+      },
+      {
+        "flag": "--actual-mixed-data",
+        "path": "/projects/u6si/duplex-live/runs/context-training-proof-7501751"
+      },
+      {
+        "flag": "--actual-mixed-data",
+        "path": "/projects/u6si/duplex-live/runs/context-training-proof-7504055"
+      },
+      {
+        "flag": "--actual-mixed-data",
+        "path": "/projects/u6si/duplex-live/runs/context-training-proof-7504056"
+      },
+      {
+        "flag": "--actual-mixed-data",
+        "path": "/projects/u6si/duplex-live/runs/context-training-proof-7504057"
+      },
+      {
+        "flag": "--actual-mixed-data",
+        "path": "/projects/u6si/duplex-live/runs/context-training-proof-7505219"
+      },
+      {
+        "flag": "--actual-mixed-data",
+        "path": "/projects/u6si/duplex-live/runs/context-training-proof-7505220"
+      },
+      {
+        "flag": "--actual-mixed-data",
+        "path": "/projects/u6si/duplex-live/runs/context-training-proof-7505221"
+      },
+      {
+        "flag": "--actual-mixed-data",
+        "path": "/projects/u6si/duplex-live/runs/context-training-proof-7504669"
+      },
+      {
+        "flag": "--actual-mixed-data",
+        "path": "/projects/u6si/duplex-live/runs/context-training-proof-7505893"
+      },
+      {
+        "flag": "--actual-mixed-data",
+        "path": "/projects/u6si/duplex-live/runs/context-training-proof-7505895"
+      },
+      {
+        "flag": "--actual-temporal-preflight",
+        "path": "/projects/u6si/duplex-live/runs/context-training-proof-7505910"
+      },
+      {
+        "flag": "--control40-cache",
+        "path": "/workspace/migration/native-control40-preflight-v2/codes"
+      },
+      {
+        "flag": "--control40-engine",
+        "path": "/workspace/migration/native-control40-precise-pilot-v2/engine"
+      },
+      {
+        "flag": "--control40-numerical",
+        "path": "/workspace/migration/native-control40-precise-pilot-v2/numerical"
+      },
+      {
+        "flag": "--control40-gradient",
+        "path": "/workspace/migration/native-control40-precise-pilot-v2/gradient"
+      },
+      {
+        "flag": "--native-audio49-prepared",
+        "path": "/workspace/migration/native-retained49-prepared-data-v1"
+      },
+      {
+        "flag": "--native-audio49-source-inventory",
+        "path": "/workspace/migration/native-original-runs-local-stage-v1.json"
+      },
+      {
+        "flag": "--reasoning32-inputs",
+        "path": "/workspace/migration/native-reasoning32-timing-v11-inputs-v1.json"
+      },
+      {
+        "flag": "--reasoning32-version",
+        "path": "/workspace/migration/native-reasoning32-timing-v11-reapproval-v1"
+      },
+      {
+        "flag": "--reasoning32-semantic",
+        "path": "/workspace/migration/native-reasoning32-timing-v11-semantic-v1/semantic.json"
+      },
+      {
+        "flag": "--reasoning32-data",
+        "path": "/workspace/migration/native-reasoning32-converted-v11"
+      },
+      {
+        "flag": "--reasoning32-model",
+        "path": "/projects/u6si/duplex-live/models/hf-cache/hub/models--nvidia--personaplex-7b-v1/snapshots/fdaf4090a61cb315c138a1faee287ffd6c716309"
+      },
+      {
+        "flag": "--reasoning32-codec-source",
+        "path": "/workspace/control40-vendor-moshi-rag"
+      },
+      {
+        "flag": "--reasoning32-interleaver-source",
+        "path": "/workspace/control40-vendor-moshi-finetune"
+      },
+      {
+        "flag": "--reasoning32-cache",
+        "path": "/workspace/migration/native-reasoning32-codes-v11"
+      },
+      {
+        "flag": "--reasoning32-engine",
+        "path": "/workspace/migration/native-reasoning32-engine-v11"
+      },
+      {
+        "flag": "--reasoning32-numerical",
+        "path": "/workspace/migration/native-reasoning32-numerical-v14"
+      },
+      {
+        "flag": "--reasoning32-gradient",
+        "path": "/workspace/migration/native-reasoning32-retained-pilot-v17/gradient"
+      },
+      {
+        "flag": "--out",
+        "path": "/workspace/migration/native-reasoning32-retained-pilot-v18/training"
+      },
+      {
+        "flag": "--native-audio49-preflight",
+        "path": "/workspace/migration/native-reasoning32-retained-pilot-v17/combined-readiness"
+      }
+    ],
+    "control_development_evidence_closed_roots": [
+      "/workspace/migration/native10-paired-v1",
+      "/workspace/migration/native10-independent-speech-v1",
+      "/workspace/migration/native10-paired-archive-tf32-v1",
+      "/workspace/migration/native10-independent-speech-archive-tf32-v1"
+    ],
+    "exclusions": [
+      "owner conversations",
+      "credentials",
+      "session-token",
+      ".private",
+      "quarantined core dumps",
+      "unrelated source work",
+      "whole /workspace/migration"
+    ],
+    "source_deployment": "Git commits/push/fetch or verified Git bundle; historical archived source is preservation only",
+    "artifact_transport": "rsync -ar --exclude=session-token; preserve exact inventories and hashes"
+  },
+  "execution_preconditions": [
+    "Current Runpod GPU workload actually terminal and preserved before any GCP GPU starts",
+    "Credit eligibility and current regional quote rechecked before billable activation",
+    "Final transfer inventory is within approved scope, byte limit and exclusions",
+    "Exact pinned runtime and source, with a provider-native deadline and fresh cost guard",
+    "If original fit times out without a report, no GPU continuation until an independently tested zero-optimizer recovery path preserves original failure and all original checks",
+    "No new optimizer updates under this recovery/qualification proposal",
+    "No candidate adoption, passing subset, threshold relaxation or sealed evaluation before its existing development gates pass"
+  ],
+  "approval_reason": "New usage allowance beyond the Runpod cap and a new provider/data destination; project creation alone did not set this allowance.",
+  "vm_created": false,
+  "data_transferred_to_gcp": false,
+  "optimizer_updates_authorized": 0,
+  "candidate_approved": false
+}
