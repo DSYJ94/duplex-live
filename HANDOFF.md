@@ -1,3 +1,34 @@
+# LOCAL — all49 reference fingerprints preserved; control pass live (24 October 06:45 UTC)
+
+Goal turn PROGRESS: all49 reference IDs/hashes checked against approved inventory
+and Mac backup; read-only backend auth/model access verified. Previous turn PROGRESS.
+LOCAL sole executor. Main before receipt5bc2b388aafa251595583177c71d08195aa1770f. Model C9 and a5958a0 supervisor
+remain unchanged. SAME101648/birth25974639 +trainer101677/birth25975025 live06:43:04,
+GPU52%/30015MiB. ALL8 saved; postfit native49=49/49, controls19/40. No final report,
+independent restore or behavioral qualification. Never duplicate or manually start stages.
+
+All49 unique reference IDs exactly match original old25/new24 inventory; each SHA
+valid and raw log hash matched to V17 snapshot20261024T063019.577500Z. InventorySHA
+377bd7e446304d94f4cdee3a8048a25239a59ba0681619f9737d909197705daf (152files).
+This is reference generation/copyback, NOT independent native replay. Original data,
+all checkpoints, final adapter0cb85b4a... and PT86dde08e... remain backed up. Broader
+stopped Mac source backup PARTIAL. Backup1184 sourcebb3f885 remains healthy.
+
+Official OpenAI GET /v1/models06:40:59 returned200; configured gpt-6-luna visible.
+No synthetic/owner content sent, no inference requests, proxyrunv7 count stays0;
+no credential transferred to Pod or logged. This verifies auth/catalog access,
+NOT actual inference capacity or async correctness. Actual native20 still required.
+
+Next SAME remaining control fingerprints ->fit actualexit0 ->fresh independent
+Adam528/allRNG/native49/control40 restore/proof ->complete paired20/speech20 and
+ordinary4 ->eligible sealedfresh ->larger-run decision. Guard70540 shutdown10:22:37.9,
+pipeline09:00, evaluator63289 latest09:37/end10:17, backup1184/backend71254 to10:20.
+No purchases/submissions/deadline/CPU changes. Distinct reasoning32 semantic payload
+approval pending;0requests/conversion/training. Unrelated local edits preserved.
+See postfit49 reference JSON and pilot-progress JSON for exact full hashes.
+
+---
+
 # LOCAL — standalone adapter backed up; intermediate fingerprints protected (24 October 06:29 UTC)
 
 Goal turn PROGRESS (backup robustness and actual adapter verification); previous
