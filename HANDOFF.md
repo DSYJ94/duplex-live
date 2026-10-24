@@ -1,3 +1,43 @@
+# LOCAL — COMPLETE32 numerical approval; gradient32 actual first case (24 October11:45UTC)
+
+Goal turn PROGRESS. NumericalV14 ALL32 PASS at original.001/causality0 thresholds,
+final all_model_parameters_unchanged true, actual childEXIT0. Controller3687 phase
+complete32_numerical_only/complete32_numerical_passed true; both3687 and3700 handles
+absent after completion. Final maximum comparison error0.0004506111145019531,
+maximum causal error0; peak38037638144bytes. Source9d57928 unchanged. This proves
+numerical readiness only: no optimizer or behavior/adoption approval.
+
+Final complete32 pure gate revalidated on Mac with original Engine32 manifest,
+NO model/Torch loaded. Four regular files219607bytes have independent remote/Mac
+size+SHA equality. Two CUDA symlink target strings preserved without dereferencing
+(public driver binary not copied). ReportSHA1dd651301bf4382dce64de7a93bfe75e1e9a34c1f39e5d3de81258a5b06ff58d;
+controllerSHA3c3422ff722e3d2b018fc9797d7e935e4fd34f2d6de6ae86d66bbf45a0348db2.
+Mac native-reasoning32-numerical-v14-final-v1/{numerical,control}; inventory receipt
+native-reasoning32-numerical-v14-final-copyback-v1.json. Full public evidence doc
+NATIVE-REASONING32-NUMERICAL-COMPLETE-2026-10-24.json. Older partial/failed versions
+remain preserved and never treated as approval.
+
+Automatic corrected follower8514/birth39640315, sourceda389a7 at
+/opt/duplex-reasoning32-da389a7-v15 advanced in NEW output
+/workspace/migration/native-reasoning32-retained-pilot-v17. Whole-workset9581/
+birth39673531 actualEXIT0. NOW gradient32 child9704/birth39674733 verified LIVE,
+first1/32 gradient case completed, no failure; not yet full gradient approval.
+Do not duplicate or restart from empty/slow logs. No new optimizer updates.
+
+Backup38347 source7079b0e and eval38348/upstream8514 remain the current processes;
+old4051/28132/31286 are STOPPED and historical. Corrected package path remains
+inherited by current follower. All32 gradient, combined154+49+40+32 readiness,
+bounded8 fit and fresh full restore still precede complete20 native+speech.
+Current backup whitelist already coversV17 pilot/native20/speech outputs.
+Budgets unchanged: controller17:45/eval18:20/backup18:30/guard18:39:58.8UTC.
+
+NEXT monitor exact gradient child9704. On full successful terminal32 approval,
+controller automatically proceeds to combined retained readiness, then fit.
+Require independent full training-state restore and complete behavior results
+before any extension/adoption. Stop paid compute early if no justified successor.
+
+---
+
 # LOCAL — numerical30/32; corrected queued environment and V17 chain (24 October11:38UTC)
 
 Goal turn PROGRESS/VERIFIED WAIT. Exact numerical3687/birth39444297, child3700/

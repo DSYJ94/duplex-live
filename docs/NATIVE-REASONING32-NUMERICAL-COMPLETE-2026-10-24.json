@@ -1,0 +1,72 @@
+{
+  "schema": "dl-native-reasoning32-complete-numerical-approval-v1",
+  "numerical_source": "9d57928f03572f51862e952c513c1063a45e6511",
+  "complete_cases": 32,
+  "complete_cases_passed": 32,
+  "actual_child_exit": 0,
+  "actual_controller_phase": "complete32_numerical_only",
+  "numerical_and_controller_handles_missing_after_completion": true,
+  "all_model_parameters_unchanged": true,
+  "maximum_comparison_error": 0.0004506111145019531,
+  "required_maximum_comparison_error": 0.001,
+  "maximum_causal_error": 0.0,
+  "required_causal_error": 0,
+  "peak_allocated_bytes": 38037638144,
+  "backup": {
+    "schema": "dl-native-reasoning32-numerical-final-copyback-v1",
+    "at_utc": "2026-10-24T11:44:38.338871+00:00",
+    "files": [
+      {
+        "path": "numerical/driver/driver.json",
+        "bytes": 132,
+        "sha256": "4f6fa39f5d8f6a25c6e5db05c328c2a467dd2c4da049f50308381dac46748fa7"
+      },
+      {
+        "path": "numerical/numerical.json",
+        "bytes": 214126,
+        "sha256": "1dd651301bf4382dce64de7a93bfe75e1e9a34c1f39e5d3de81258a5b06ff58d"
+      },
+      {
+        "path": "control/controller.json",
+        "bytes": 1879,
+        "sha256": "3c3422ff722e3d2b018fc9797d7e935e4fd34f2d6de6ae86d66bbf45a0348db2"
+      },
+      {
+        "path": "control/numerical.log",
+        "bytes": 3470,
+        "sha256": "09ceed7e47bfcc939731cdded9583ea25c32a19d0eac1d4e3c7d8c178019e66b"
+      }
+    ],
+    "preserved_symlink_targets_not_followed": [
+      {
+        "path": "numerical/driver/libcuda.so",
+        "target": "/usr/lib/x86_64-linux-gnu/libcuda.so.595.91.07"
+      },
+      {
+        "path": "numerical/driver/libcuda.so.1",
+        "target": "/usr/lib/x86_64-linux-gnu/libcuda.so.595.91.07"
+      }
+    ],
+    "total_bytes": 219607,
+    "all_remote_local_hashes_match": true,
+    "complete32_pure_approval_revalidated": true,
+    "actual_child_exit": 0,
+    "all_model_parameters_unchanged": true,
+    "peak_allocated_bytes": 38037638144,
+    "maximum_comparison_error": 0.0004506111145019531,
+    "maximum_causal_error": 0.0,
+    "optimizer_updates": 0
+  },
+  "live_successor": {
+    "controller_pid": 8514,
+    "controller_birth": 39640315,
+    "phase": "gradient32",
+    "child_pid": 9704,
+    "child_birth": 39674733,
+    "completed_gradient_cases_observed": 1,
+    "whole_workset_actual_exit": 0,
+    "source": "da389a7031a5504495397d1575952194ffa209f1"
+  },
+  "new_optimizer_updates": 0,
+  "training_quality_or_adoption_approved": false
+}
