@@ -69,6 +69,19 @@ def completed_numerical(folder, control, engine, proof):
                 numerical_sha256=digest(folder / 'numerical.json'), actual_exit=0)
 
 
+def numerical_finished(r, live, pid, birth, source_commit):
+    if (r['pid'] != pid or r['birth'] != birth or r['source_commit'] != source_commit
+            or live is not None and live['birth'] != birth):
+        raise ValueError('Exact upstream numerical identity changed')
+    if r['phase'] == 'complete32_numerical_only':
+        if r['actual_exit'] != 0 or r['complete32_numerical_passed'] is not True:
+            raise ValueError('Complete numerical32 must actually exit0')
+        return live is None or live['state'] == 'Z'
+    if (r['phase'].startswith(('failed', 'interrupted')) or live is None or live['state'] == 'Z'):
+        raise ValueError('Upstream numerical terminated without full approval')
+    return False
+
+
 def guard_check(guard, pod, deadline, now):
     if (guard['phase'] != 'armed' or guard['pod_id'] != pod
             or not 0 <= now - datetime.fromisoformat(guard['at_utc']).timestamp() <= 90
@@ -97,11 +110,17 @@ def main():
     p.add_argument('--prepare-only', action='store_true')
     p.add_argument('--approved-numerical', type=Path)
     p.add_argument('--numerical-control', type=Path)
+    p.add_argument('--follow-numerical-pid', type=int)
+    p.add_argument('--follow-numerical-birth', type=int)
+    p.add_argument('--follow-numerical-source-commit')
     a = p.parse_args()
     deadline = datetime.fromisoformat(a.deadline_utc.replace('Z', '+00:00')).timestamp()
     numerical_deadline = datetime.fromisoformat(a.numerical_deadline_utc.replace('Z', '+00:00')).timestamp()
     if bool(a.approved_numerical) != bool(a.numerical_control):
         raise ValueError('Existing numerical32 report and exact terminal controller are required together')
+    follow = (a.follow_numerical_pid, a.follow_numerical_birth, a.follow_numerical_source_commit)
+    if any(follow) and (not all(follow) or not a.approved_numerical):
+        raise ValueError('Waiting requires explicit numerical output, control and all three identity fields')
     if not ((a.approved_numerical or time.time() + 3600 <= numerical_deadline)
             and numerical_deadline < deadline and time.time() + 3600 < deadline):
         raise ValueError('Complete numerical32 needs at least one hour of bounded headroom')
@@ -124,10 +143,26 @@ def main():
     save()
     if a.prepare_only:
         return
+    guard_check(json.loads(a.cost_guard_receipt.read_text()), a.pod_id, deadline, time.time())
+    if all(follow):
+        state.update(phase='waiting_exact_numerical32', followed_numerical_identity=list(follow))
+        save()
+        try:
+            while time.time() < numerical_deadline:
+                clean()
+                numeric = json.loads((a.numerical_control / 'controller.json').read_text())
+                if numerical_finished(numeric, process(a.follow_numerical_pid), *follow):
+                    break
+                time.sleep(10)
+            else:
+                raise TimeoutError('No complete terminal numerical32 within bounded start window')
+        except BaseException as error:
+            state.update(phase='upstream_failed_no_dispatch', error_type=type(error).__name__, error=str(error))
+            save()
+            raise
     if a.approved_numerical:
         state['reused_numerical'] = completed_numerical(a.approved_numerical, a.numerical_control,
             a.engine_inputs, a.root / 'runs/context-training-proof-7510331')
-    guard_check(json.loads(a.cost_guard_receipt.read_text()), a.pod_id, deadline, time.time())
     compiler = json.loads(a.compiler.read_text())
     if (compiler['packages_changed'] is not False or not compiler['actual_compiled_bf16_gpu_kernel_passed']
             or not compiler['actual_triton_driver_compile_passed']):

@@ -9,6 +9,21 @@ from portable.context import native_reasoning_pilot as pilot
 
 
 class ReasoningPilot(unittest.TestCase):
+    def test_wait_binds_exact_live_numerical_and_actual_full_completion(self):
+        r = dict(pid=1, birth=2, source_commit='a'*40, phase='complete32_numerical_running')
+        self.assertFalse(pilot.numerical_finished(r, dict(birth=2,state='R'), 1,2,'a'*40))
+        for live in (None, dict(birth=2,state='Z'), dict(birth=3,state='R')):
+            with self.assertRaises(ValueError):
+                pilot.numerical_finished(r, live, 1,2,'a'*40)
+        for changed in ({**r,'phase':'failed_preserved_no_retry'}, {**r,'pid':10}):
+            with self.assertRaises(ValueError):
+                pilot.numerical_finished(changed, dict(birth=2,state='R'),1,2,'a'*40)
+        complete = dict(r, phase='complete32_numerical_only', actual_exit=0, complete32_numerical_passed=True)
+        self.assertFalse(pilot.numerical_finished(complete,dict(birth=2,state='R'),1,2,'a'*40))
+        self.assertTrue(pilot.numerical_finished(complete,None,1,2,'a'*40))
+        with self.assertRaises(ValueError):
+            pilot.numerical_finished(dict(complete,actual_exit=-15),None,1,2,'a'*40)
+
     def test_reuse_rejects_partial_failed_or_still_live_numerical(self):
         with tempfile.TemporaryDirectory() as folder:
             control = Path(folder)
