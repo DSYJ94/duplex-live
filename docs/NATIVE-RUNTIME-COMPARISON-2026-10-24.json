@@ -1,0 +1,102 @@
+{
+  "schema": "dl-native-runtime-comparison-evidence-v1",
+  "recorded_utc": "2026-10-24T01:39:38.573920+00:00",
+  "source_commit": "38fd556",
+  "execution_commit": "c9efaaac24d983342f7eded46617e6450bc102ce",
+  "historical_source_commit": "741872fe2f9e49f35d4deba9aba96caff26c51d4",
+  "same49_teacher_ids_and_native_call_counts": true,
+  "native_calls": 23078,
+  "gradient_calls": 22992,
+  "identical_native_source_sha256": {
+    "evals/context_native_stream_gradient.py": "9bbfde02a98d18d379f90002e116db788c7489a6a36216a7fd0b35814ac3a015",
+    "evals/context_native_stream_training.py": "bd0885dfeba56ce60af0b9fcfe8b6d649bae33dd134887a865fe74eb9f7ef781"
+  },
+  "historical_training_seconds": 1871.6025426369742,
+  "historical_timing_scope": "Eight optimizer calls; excludes final49 stream fingerprints and fresh-process independent restoration",
+  "raw_diagnostic": {
+    "local": "runs/local-migration-20261023/native-runtime-comparison-diagnostic-v1.json",
+    "volume": "/workspace/migration/native-runtime-comparison-diagnostic-v1.json",
+    "bytes": 17544,
+    "sha256": "1539757e1ad8e6b810f994d232753059445710f5f461b4feefdbae456cf23440",
+    "both_actual_hashes_verified": true
+  },
+  "hardware_sample": {
+    "wall_seconds": 11.209514,
+    "process_CPU_seconds": 11.1899999999996,
+    "no_new_cgroup_throttle_events": true,
+    "process_IO_counters_unchanged": true,
+    "model_forward_or_backward_launched": false,
+    "CPU_or_power_or_affinity_settings_changed": false
+  },
+  "interpretation": "Same native call inventory and implementation, but hardware/runtime and workload differ. Current readiness uses both no-grad and gradient passes; old training uses one gradient pass plus original154 objectives across8 updates and excludes final49 fingerprints and restore. No matched end-to-end speed ratio or cause established. Low utilization and a busy CPU do not prove a specific Python/driver/kernel defect. Per-core MHz readings can be stale or sampled after migration and are not proof of imposed throttling.",
+  "latest_actual_process_observation": {
+    "at_utc": "2026-10-24T01:38:13.967391+00:00",
+    "controller": {
+      "pid": 79780,
+      "birth": 24607807,
+      "state": "S",
+      "CPU_seconds": 3.69
+    },
+    "phase": "combined_readiness",
+    "child": {
+      "pid": 71818,
+      "birth": 24130859,
+      "state": "R",
+      "CPU_seconds": 6970.09
+    },
+    "original_parent": {
+      "pid": 71679,
+      "birth": 24121629,
+      "state": "T",
+      "CPU_seconds": 12.37
+    },
+    "complete_native49_rows": 17,
+    "all_logged_rows_exact": true,
+    "stages": [
+      {
+        "name": "whole_workset",
+        "pid": 4122,
+        "birth": 18985364,
+        "exit_code": 0
+      },
+      {
+        "name": "complete40_precise_numerical",
+        "pid": 4216,
+        "birth": 18993883,
+        "exit_code": 0
+      },
+      {
+        "name": "complete40_independent_BF16_gradient",
+        "pid": 14873,
+        "birth": 20219598,
+        "exit_code": 0
+      },
+      {
+        "name": "combined_readiness",
+        "pid": 71818,
+        "birth": 24130859,
+        "exit_code": null
+      }
+    ],
+    "pipeline_deadline_utc": "2026-10-24T09:00:00+00:00",
+    "readiness_reports": {
+      "complete-balanced-preflight.json": true,
+      "native-stream49-gradient-readiness.json": null,
+      "control40-combined-readiness.json": null
+    },
+    "GPU": "17 %, 24231 MiB",
+    "backend_health": {
+      "run_id": "native-control40-20261023-v7",
+      "actual_requests": 0,
+      "real_requests_transport": true
+    }
+  },
+  "qualification": {
+    "new_optimizer_updates": 0,
+    "full49_gradient_passed": false,
+    "combined_readiness_passed": false,
+    "model_adopted": false,
+    "gate_or_data_changes": false
+  },
+  "next_action": "Preserve the same child through full49/combined readiness, ONE8, independent restore and strict complete behavior chain. Do not switch runtime or weaken gates based on this read-only diagnostic."
+}

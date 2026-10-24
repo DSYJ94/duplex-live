@@ -1,3 +1,13 @@
+24Oct01:39UTC — Same child71818 actualR17/49 exact rows, full154 PASS,0new updates.
+Read-only runtime sample:~11.21s wall/~11.19CPU, low GPU utilization; no new cgroup
+throttle events or process IO changes. Historical all49 identities/call counts and
+native implementation match, but hardware/runtime/workloads differ; no cause or
+acceleration established.17,544B diagnostic Mac+volume hashes verified. All existing
+readiness/restore/behavior gates and funded deadlines unchanged. See newestHANDOFF
+and NATIVE-RUNTIME-COMPARISON-2026-10-24.json.
+
+---
+
 24Oct01:32UTC — Same child71818 actualR,15/49 exact native rows; full154 gradient
 PASS, full49/combined reports absent,0new updates. Posted single20USD credit
 reverified: wallet18.8645, auto-payFalse,26h samePod guard10:22 fully prepaid with

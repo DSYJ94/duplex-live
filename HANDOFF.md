@@ -1,3 +1,36 @@
+# LOCAL — same native child17/49; runtime sample preserved (24 October01:39UTC)
+
+Goal turn PROGRESS: actual runtime evidence narrows two possible bottlenecks;
+no model/source/gate/data/CPU-setting change. LOCAL remains sole executor.
+ExecutionC9 and supervisor2e unchanged; source reviewed38fd556. Actual01:38:13UTC
+same CUDA71818/birth24130859 R, supervisor79780 S, original71679 intentionally T.
+Native17/49 logged exact rows; complete154 PASS; full49/combined pending;0new updates.
+Existing guard10:22:37.9/pipeline09:00/evaluator71424/backup71453 remain unchanged.
+
+Historical7590052 all49 teacher identities and23,078 native-call counts match this
+workset. Native streaming gradient/training source files are byte-identical across
+741872fe2f9e49f35d4deba9aba96caff26c51d4 and C9. Old1871.6025s training timing
+covers eight updates plus final original metrics/checkpoint work, excluding final49
+fingerprints and independent restore. Current readiness includes no-grad AND grad
+passes. Different hardware/runtime/workloads prevent a matched speedup claim.
+
+Bounded read-only actual-child sample01:36:07–18:11.209514s wall/11.19CPU seconds,
+GPU7–14%,93–98W,1155/1410MHz; no process IO-counter changes or new cgroup throttle
+events. EPYC7713 host quota27.2cores. Per-core MHz samples may be stale/migrated,
+NOT proof of imposed throttling. No causal kernel/Python/driver diagnosis established;
+no profiler injection, OS changes, runtime patch, model load or provider requests.
+17,544B consolidated report Mac+volume actual SHA verified:
+1539757e1ad8e6b810f994d232753059445710f5f461b4feefdbae456cf23440.
+See docs/NATIVE-RUNTIME-COMPARISON-2026-10-24.json for exact evidence and limits.
+
+Next: verified wait for same full49/combined child; automatic ONE8 -> independent
+Adam/RNG/native restore/proof ->complete paired20/speech20/all4 ordinary ->eligible
+sealedfresh qualification. No larger run/adoption yet. Single20USD already posted;
+no new purchase. Separate32 semantic-payload approval pending;0requests/conversion/
+reasoning32training. Unrelated edits preserved. Prior funding/backups detailed below.
+
+---
+
 # LOCAL — prepaid credit verified; same child15/49; behavior coverage recorded (24 October01:32UTC)
 
 Goal turn PROGRESS. LOCAL remains sole executor. Source reviewed05352d75e80d162f905114c048e2ce2daecec4d6;
