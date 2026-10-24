@@ -190,6 +190,11 @@ def verify_control_layer(proof,identity,r):
     """
     from evals.native_control_training import exposure
     proof=Path(proof);v=json.loads((proof/'reload-report.json').read_text());policy=r['control40']
+    if 'gradient_implementation_binding' in policy:
+        from evals.native_control_gradient_binding import verify as verify_implementation_binding
+        gradient=json.loads((proof/'approved-control40-gradient.json').read_text())
+        if verify_implementation_binding(gradient)!=policy['gradient_implementation_binding']:
+            raise ValueError('Changed independently checked control40 gradient source binding')
     exposure(r['steps'],policy)
     if (r['combined_recipe']['control40']!=policy or r['control40_audio_loss_targets']!=policy['assistant_audio_loss_targets_per8']
             or r['total_assistant_audio_loss_targets']!=r['audio_loss_targets']+r['control40_audio_loss_targets']

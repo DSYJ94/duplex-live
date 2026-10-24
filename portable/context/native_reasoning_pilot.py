@@ -24,7 +24,8 @@ def commands(a):
         shared += ['--' + name.replace('_', '-'), str(getattr(a, name))]
     shared += ['--assets', str(a.root / 'runs/context-spanning-assets-7454205/manifest.json'),
                '--proof', str(a.root / 'runs/context-training-proof-7510331')]
-    numerical, gradient = a.out / 'numerical', a.out / 'gradient'
+    numerical = getattr(a, 'approved_numerical', None) or a.out / 'numerical'
+    gradient = a.out / 'gradient'
     ready, proof = a.out / 'combined-readiness', a.out / 'training'
     base = arguments(a.root, a.source, a.control_cache, a.control_approval,
                      a.control_approval, a.development_evidence)
@@ -35,7 +36,7 @@ def commands(a):
         base += ['--reasoning32-' + option.replace('_', '-'), str(getattr(a, name))]
     base += ['--reasoning32-numerical', str(numerical), '--reasoning32-gradient', str(gradient)]
     fit = prefix + ['portable.context.native_training_cached'] + base
-    return [
+    stages = [
         ('whole_workset', prefix + ['evals.native_control_snapshot', '--inventory', str(a.workset_inventory)]),
         ('numerical32', prefix + ['evals.native_reasoning_numerical'] + shared + ['--out', str(numerical)]),
         ('gradient32', prefix + ['evals.native_reasoning_gradient'] + shared +
@@ -48,6 +49,24 @@ def commands(a):
          'from pathlib import Path; from evals.native_reasoning_stage import verify_checkpoint; '
          'verify_checkpoint(Path(' + repr(str(proof)) + ')); print("Complete retained and reasoning32 restore verified")']),
     ]
+    return [s for s in stages if s[0] != 'numerical32' or not getattr(a, 'approved_numerical', None)]
+
+
+def completed_numerical(folder, control, engine, proof):
+    from evals.context_rollout_conditioning import verify_checkpoint
+    from evals.native_reasoning_gradient import numerical_gate
+    r = json.loads((control / 'controller.json').read_text())
+    if (r['phase'] != 'complete32_numerical_only' or r['complete32_numerical_passed'] is not True
+            or r['actual_exit'] != 0 or r['optimizer_updates'] != 0
+            or Path(r['command'][r['command'].index('--out') + 1]) != folder):
+        raise ValueError('Exact complete numerical32 controller exit0 required before reuse')
+    live = process(r['pid'])
+    if live is not None and (live['birth'] != r['birth'] or live['state'] != 'Z'):
+        raise ValueError('Numerical controller still live or PID reused')
+    parent, _ = verify_checkpoint(proof)
+    numerical_gate(folder, engine, parent)
+    return dict(controller_sha256=digest(control / 'controller.json'),
+                numerical_sha256=digest(folder / 'numerical.json'), actual_exit=0)
 
 
 def guard_check(guard, pod, deadline, now):
@@ -76,10 +95,15 @@ def main():
     for name in ('source-commit', 'pod-id', 'deadline-utc', 'numerical-deadline-utc'):
         p.add_argument('--' + name, required=True)
     p.add_argument('--prepare-only', action='store_true')
+    p.add_argument('--approved-numerical', type=Path)
+    p.add_argument('--numerical-control', type=Path)
     a = p.parse_args()
     deadline = datetime.fromisoformat(a.deadline_utc.replace('Z', '+00:00')).timestamp()
     numerical_deadline = datetime.fromisoformat(a.numerical_deadline_utc.replace('Z', '+00:00')).timestamp()
-    if not time.time() + 3600 <= numerical_deadline < deadline:
+    if bool(a.approved_numerical) != bool(a.numerical_control):
+        raise ValueError('Existing numerical32 report and exact terminal controller are required together')
+    if not ((a.approved_numerical or time.time() + 3600 <= numerical_deadline)
+            and numerical_deadline < deadline and time.time() + 3600 < deadline):
         raise ValueError('Complete numerical32 needs at least one hour of bounded headroom')
     def clean():
         if git(a.source, 'rev-parse', 'HEAD') != a.source_commit or git(a.source, 'status', '--porcelain'):
@@ -100,6 +124,9 @@ def main():
     save()
     if a.prepare_only:
         return
+    if a.approved_numerical:
+        state['reused_numerical'] = completed_numerical(a.approved_numerical, a.numerical_control,
+            a.engine_inputs, a.root / 'runs/context-training-proof-7510331')
     guard_check(json.loads(a.cost_guard_receipt.read_text()), a.pod_id, deadline, time.time())
     compiler = json.loads(a.compiler.read_text())
     if (compiler['packages_changed'] is not False or not compiler['actual_compiled_bf16_gpu_kernel_passed']

@@ -1,4 +1,6 @@
 import unittest
+import json
+import tempfile
 from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import patch
@@ -7,6 +9,21 @@ from portable.context import native_reasoning_pilot as pilot
 
 
 class ReasoningPilot(unittest.TestCase):
+    def test_reuse_rejects_partial_failed_or_still_live_numerical(self):
+        with tempfile.TemporaryDirectory() as folder:
+            control = Path(folder)
+            original = dict(phase='complete32_numerical_only', complete32_numerical_passed=True,
+                actual_exit=0, optimizer_updates=0, command=['--out', '/numerical'], pid=100, birth=200)
+            variants = ({**original, 'phase': 'failed_preserved_no_retry'},
+                        {**original, 'complete32_numerical_passed': False},
+                        {**original, 'actual_exit': -15},
+                        {**original, 'command': ['--out', '/different']}, original)
+            for value in variants:
+                (control / 'controller.json').write_text(json.dumps(value))
+                with self.subTest(value=value), patch.object(pilot, 'process', return_value=dict(birth=200, state='R')):
+                    with self.assertRaises(ValueError):
+                        pilot.completed_numerical(Path('/numerical'), control, Path('/engine'), Path('/proof'))
+
     def test_sequence_preserves_old_approvals_and_new_complete_stages(self):
         names = (*pilot.INPUTS, 'python', 'root', 'out', 'source', 'control_cache',
                  'control_approval', 'development_evidence', 'prepared49',
@@ -26,6 +43,12 @@ class ReasoningPilot(unittest.TestCase):
         self.assertNotIn('--reload', stages['bounded8_training'])
         self.assertIn('--reload', stages['independent_restore'])
         self.assertIn('evals.native_reasoning_stage', stages['strict_proof'][-1])
+        args.approved_numerical = Path('/approved/complete32')
+        with patch.object(pilot, 'arguments', return_value=['--actual-fit-updates', '8']):
+            reused = dict(pilot.commands(args))
+        self.assertNotIn('numerical32', reused)
+        self.assertIn(str(args.approved_numerical), reused['gradient32'])
+        self.assertIn('--reasoning32-numerical', reused['bounded8_training'])
 
     def test_fit_requires_restore_headroom_and_numeric_is_bounded(self):
         self.assertEqual(pilot.stage_seconds('numerical32', 100, 20000, 4000), 3900)

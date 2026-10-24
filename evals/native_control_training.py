@@ -25,10 +25,12 @@ def schedule(records):
 
 def prepare(cache, engine, numerical, gradient, parent):
     from evals.native_control_engine import verify
-    from evals.native_control_gradient import numerical_gate, implementations
+    from evals.native_control_gradient import numerical_gate
+    from evals.native_control_gradient_binding import verify as verify_implementation_binding
     manifest = verify(cache, engine)
     numerical_gate(numerical, engine, parent)
     path = gradient / 'gradient.json'; ready = json.loads(path.read_text())
+    implementation_binding = verify_implementation_binding(ready)
     if (ready['schema'] != 'dl-native-control40-gradient-readiness-v1' or ready['passed'] is not True
             or ready['complete40'] is not True or ready['all_parameters_and_execution_unchanged'] is not True
             or ready['trainable_parameters'] != 1894400 or ready['optimizer_updates'] != 0
@@ -39,7 +41,6 @@ def prepare(cache, engine, numerical, gradient, parent):
             or ready['engine_report_sha256'] != sha256(engine / 'engine-inputs.json')
             or ready['numerical_report_sha256'] != sha256(numerical / 'numerical.json')
             or ready['code_sha256'] != sha256(Path(__file__).with_name('native_control_gradient.py'))
-            or ready['implementation_pins'] != implementations()
             or [r['id'] for r in ready['cases']] != [r['id'] for r in manifest['cases']]
             or any(r['passed'] is not True or r['exact_native_streamed_text_outputs'] is not True
                    or r['exact_native_acoustic_outputs'] is not True
@@ -58,6 +59,7 @@ def prepare(cache, engine, numerical, gradient, parent):
                   prefix_span_user_audio_targets=0, native_text_truncation='recorded call boundaries',
                   implementation_sha256=sha256(Path(__file__)),
                   gradient_readiness_sha256=sha256(path), numerical_sha256=sha256(numerical / 'numerical.json'),
+                  gradient_implementation_binding=implementation_binding,
                   engine_sha256=sha256(engine / 'engine-inputs.json'), cache_sha256=sha256(cache / 'cache.json'),
                   extends_rejected_joint_or_unqualified_candidate=False, training_approved=False)
     records = {r['id']: r for r in manifest['cases']}
