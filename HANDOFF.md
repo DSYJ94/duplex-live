@@ -1,3 +1,23 @@
+# LOCAL — two semantic timing ambiguities diagnosed in original PCM (24 October08:42UTC)
+
+Main before receipt6707266; LOCAL sole executor. No new training or API requests.
+Raw waveform diagnosis on remoteCPU:029 original regions36.70-37.92,47.80-50.50,
+53.22-57.90s; ASR badge49.84-50.50 is at the prior utterance end, while provider
+badge delta53.1556 and next original voice region53.22 agree on a later utterance.
+030 ASR stopped52.32 starts at the detector's padded region edge; actual52.32 to
+ACK52.4777 PCM RMS4.18e-6/peak1PCM quantization step, versus .0547RMS afterACK.
+This establishes a word-clock ambiguity; neither failure is silently approved.
+All original recordings and both audits retained. New independent burst-clock
+probe decodes each unchanged waveform-only region separately, preserving exact
+sample-offset clocks and existing detector/decoder; no reference text/model/GPU/
+provider work on Mac. Two sample-clock regressions PASS. Probe output is diagnostic
+only and cannot grant whole32 speech/semantic/conversion/training approval.
+Next deploy committed probe with Git and run ONLY diagnosed029/030 on existing
+Runpod CPU runtime, no new API requests; then choose complete derived reapproval.
+Same Pod/guard/volume/deadline and failed pilot conclusions below remain unchanged.
+
+---
+
 # LOCAL — complete pilot behavior FAIL; approved semantic32 complete30/32 (24 October08:38UTC)
 
 Goal turn PROGRESS; LOCAL sole executor. Main before this receipt fe5b443.
