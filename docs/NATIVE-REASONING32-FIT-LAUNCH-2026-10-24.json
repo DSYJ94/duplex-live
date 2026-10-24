@@ -1,7 +1,7 @@
 {
   "schema": "dl-native-reasoning32-fit-launch-v1",
   "at_utc": "2026-10-24T15:06:44.710870+00:00",
-  "status": "IN_PROGRESS_SEVEN_OF_EIGHT_UPDATES_OBSERVED",
+  "status": "ALL_EIGHT_UPDATES_SAVED_FIT_REPORT_PENDING",
   "controller": {
     "pid": 28726,
     "birth": 40829059,
@@ -52,17 +52,18 @@
   "behavior_qualified": false,
   "model_adopted": false,
   "optimizer_progress": {
-    "observed_utc": "2026-10-24T16:19:35.197158+00:00",
-    "completed_updates": 7,
-    "checkpoint_sha256": "f87bfe8b90e9dea72ad829af51696e25e0470eb4f5606178dbfb7f9c80de5e0b",
+    "observed_utc": "2026-10-24T16:31:18.539798+00:00",
+    "completed_updates": 8,
+    "checkpoint_sha256": "75fd39b1dc9a7f66b8125a1804cab87cfad384446d592df4534c3e1cff5f0367",
     "checkpoint_bytes": 22970059,
     "backup_verified": true,
-    "backup_snapshot_utc": "20261024T161932.453255Z",
-    "inventory_sha256": "f85c7f4547cbfea158102a516c54671124552ab307ed7bb25aca0e4443e1dba1",
+    "backup_snapshot_utc": "20261024T163048.473073Z",
+    "inventory_sha256": "7439b8823f5592792627c1f3605b6f43812c4298ae3da01f9adc563cf4e6da53",
+    "fit_final_report_approved": false,
     "independent_restore_approved": false
   },
   "latest_live_progress_observation": {
-    "at_utc": "2026-10-24T16:19:35.197158+00:00",
+    "at_utc": "2026-10-24T16:31:18.539798+00:00",
     "phase": "bounded8_training",
     "stages": [
       {
@@ -141,6 +142,12 @@
         "gradient_norm_before_clip": 12.057445526123047,
         "retention_kl": 0.06858113408088684,
         "retention_hidden_mse": 0.011275502853095531
+      },
+      {
+        "step": 8,
+        "gradient_norm_before_clip": 15.885963439941406,
+        "retention_kl": 0.06860057264566422,
+        "retention_hidden_mse": 0.011271210387349129
       }
     ],
     "handles": [
@@ -151,7 +158,7 @@
       },
       {
         "pid": 28807,
-        "state": "S",
+        "state": "R",
         "birth": 40829227
       }
     ],
@@ -160,6 +167,7 @@
       "run_id": "native-reasoning32-native20-v15",
       "actual_requests": 0,
       "real_requests_transport": true
-    }
+    },
+    "fit_report_exists": false
   }
 }

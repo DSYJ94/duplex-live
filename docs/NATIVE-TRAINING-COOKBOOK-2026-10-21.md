@@ -1,6 +1,31 @@
 # What we trained, what is saved, and what to test
 
 
+## 24 October — reading the reasoning32 fit results
+
+The current status is in [the fit record](NATIVE-REASONING32-FIT-LAUNCH-2026-10-24.json)
+and the newest `HANDOFF.md` entry. The dated entries below preserve earlier observations.
+
+To measure the effect of this corrective stage, compare `initial_stage_metrics`
+with `final_metrics` in the completed training report. The initial stage metrics
+are recorded after the native520 adapter and parent Adam state are loaded, before
+these eight updates. `baseline_metrics` is recorded before that warm start; it is
+not the native520 comparator for the effect of this stage. The implementation is
+`evals/context_actual_train.py` at the fixed model source `da389a7`.
+
+Compare the same ordered 28 actual-history components and report the chosen NLL
+aggregation explicitly. Keep `nll`, `optimization_nll`, `non_pad_nll` and token
+`top1` separate: they use different target weightings or subsets. Per-update
+reasoning losses use different four-teacher batches and do not form a matched
+before/after evaluation. Raw retained-batch weighted losses also have a different
+aggregation from a simple mean of final per-component NLL values.
+
+Lower teacher-forced loss is evidence about those training targets. It does not
+prove free-running silence, pause/resume, correct reasoning or real cancellation.
+The independent full training-state restore, complete native20/speech20 review
+and gated fresh evaluation remain required before extension or adoption.
+
+
 ## 24 October — first reasoning32 optimizer update saved and backed up
 
 The [first real optimizer update](NATIVE-REASONING32-FIRST-UPDATE-2026-10-24.json)

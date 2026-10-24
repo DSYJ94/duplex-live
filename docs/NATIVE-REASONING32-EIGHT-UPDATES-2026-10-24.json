@@ -1,0 +1,107 @@
+{
+  "schema": "dl-native-reasoning32-actual-eight-update-exposure-v1",
+  "at_utc": "2026-10-24T16:32:02.666852+00:00",
+  "snapshot": "20261024T163048.473073Z",
+  "inventory_sha256": "7439b8823f5592792627c1f3605b6f43812c4298ae3da01f9adc563cf4e6da53",
+  "training_log_sha256": "c55873024aceaefd7932a54d705d55d06559a321a2215ba1fc9fb35b5135d60e",
+  "readiness_report_sha256": "46753a71712712250aff747661bf3de0d9e8d165f12977f03c90ac6d04df20eb",
+  "optimizer_rows": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "reasoning32_actual_complete_exposure_passed": true,
+  "retained_components_per_update": [
+    {
+      "actual": 28,
+      "reference": 4,
+      "old25": 25,
+      "new24": 24,
+      "word": 10,
+      "clock": 14,
+      "audio49": 49
+    },
+    {
+      "actual": 28,
+      "reference": 4,
+      "old25": 25,
+      "new24": 24,
+      "word": 10,
+      "clock": 14,
+      "audio49": 49
+    },
+    {
+      "actual": 28,
+      "reference": 4,
+      "old25": 25,
+      "new24": 24,
+      "word": 10,
+      "clock": 14,
+      "audio49": 49
+    },
+    {
+      "actual": 28,
+      "reference": 4,
+      "old25": 25,
+      "new24": 24,
+      "word": 10,
+      "clock": 14,
+      "audio49": 49
+    },
+    {
+      "actual": 28,
+      "reference": 4,
+      "old25": 25,
+      "new24": 24,
+      "word": 10,
+      "clock": 14,
+      "audio49": 49
+    },
+    {
+      "actual": 28,
+      "reference": 4,
+      "old25": 25,
+      "new24": 24,
+      "word": 10,
+      "clock": 14,
+      "audio49": 49
+    },
+    {
+      "actual": 28,
+      "reference": 4,
+      "old25": 25,
+      "new24": 24,
+      "word": 10,
+      "clock": 14,
+      "audio49": 49
+    },
+    {
+      "actual": 28,
+      "reference": 4,
+      "old25": 25,
+      "new24": 24,
+      "word": 10,
+      "clock": 14,
+      "audio49": 49
+    }
+  ],
+  "teacher_exposures": 32,
+  "distinct_teachers": 32,
+  "text_targets": 19132,
+  "assistant_audio_targets": 152640,
+  "torch_imported": false,
+  "fit_final_report_approved": false,
+  "independent_restore_approved": false,
+  "behavior_qualified": false,
+  "model_adopted": false,
+  "checkpoint_backup": {
+    "path": "native-reasoning32-retained-pilot-v18/training/training-state.pt",
+    "bytes": 22970059,
+    "sha256": "75fd39b1dc9a7f66b8125a1804cab87cfad384446d592df4534c3e1cff5f0367"
+  }
+}

@@ -1,3 +1,41 @@
+# LOCAL — ALL8 OPTIMIZER UPDATES SAVED; fit finalization and restore pending
+
+Actual16:31:18.539798UTC:V18bounded8_training,controller28726/birth40829059
+stateS,fit28807/birth40829227stateR,noerror,all8rows logged. Fitreport not yet
+present; final fingerprints/report mustfinish andchildactualexit0 before restore.
+Step8norm15.885963439941406,retentionKL0.06860057264566422,
+hiddenMSE0.011271210387349129 (pre-update trainingmetrics, notconvergence).
+Mac snapshot20261024T163048.473073Z inventorySHA
+7439b8823f5592792627c1f3605b6f43812c4298ae3da01f9adc563cf4e6da53.
+Checkpoint22970059bytesSHA
+75fd39b1dc9a7f66b8125a1804cab87cfad384446d592df4534c3e1cff5f0367.
+Inventory/checkpoint/log/readinessreport rehashed onMac. Pureactualcomplete32
+exposurevalidatorpassed:32distinctepisodes/8updates,19132texttargets,
+152640assistantacoustictargets,all154retainedcomponentsineveryupdate. NoTorch
+onMac. Details docs/NATIVE-REASONING32-EIGHT-UPDATES-2026-10-24.json andfitrecord.
+Not fullfit/independentrestore/behavior approval. No extension/adoption.
+
+ModelsourceDA/controller0d/evalC078 unchanged. Controllerautomatically runs
+independentrestorethenstrictproofafterfitexit0; evalwaiter20887 requires allsix
+exactstageexits0 andterminalcontroller. Backendtunnel40689remotehealthpassed
+16:31UTC,actualrequests0. Finiteobserver ended normally after8, nottrainingstop.
+Next: observeactualfitexit0/finalreport, verify fullrestoration and strictproof,
+thenfullpairednative20/speech20; preserve allstate/results beforehardstop.
+Same18:10UTCcontroller,17:40latestevaldispatch/18:20evaldeadline,
+18:30backup/18:35proxy/18:39:58.8UTChardPodtermination and100USDcap. Goalactive.
+
+Cookbook now explains correctstagecomparison:initial_stage_metrics(after
+native520warmstart) vsfinal_metrics;baseline_metricsisBEFOREwarmstart and must
+notbeusedasthe effectofthisstage. No lossreduction claimpendingactualreport.
+GCP runtimeportability requirements prepared fromofficialNVIDIA/Google docs:
+exactNGC25.10image/Torch2.9.0a0/CUDA13.0.2, GCPA2R580recommendedbranch
+(minLinux580.95.05),durablecheckpointdisk,coldfullrestore/numericalchecks.
+CurrentRunpoddriver595.91.07. See docs/GCP-NATIVE-RUNTIME-PORTABILITY-2026-10-24.json.
+No GCPmachine/driverinstall/upload/credentialorpermissionchange/newbudget.
+BroaderMacsourcebackupstillPARTIAL; unrelatedlocalfilespreserved.
+
+---
+
 # LOCAL — SEVEN actual optimizer updates; final update pending
 
 Actual2026-10-24T16:19:35.197158UTC:V18bounded8_training,controller28726/

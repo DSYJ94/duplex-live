@@ -1,0 +1,49 @@
+{
+  "schema": "dl-gcp-native-runtime-portability-v1",
+  "at_utc": "2026-10-24T16:21:52.123578+00:00",
+  "scope": "Preparation only; no GCP VM, driver installation, data transfer or optimizer work",
+  "target": {
+    "project": "aurium-duplex-live-20261024",
+    "machine_type": "a2-ultragpu-1g",
+    "region": "europe-west4",
+    "gpu": "A100 80GB",
+    "host_os_candidate": "Ubuntu 24.04 x86_64"
+  },
+  "pinned_container": "nvcr.io/nvidia/pytorch:25.10-py3@sha256:42263b2424fc237b34c4fc4a91c30d603c57eed36e37d31ff6d9a4f1f801edee",
+  "vendor_release": {
+    "pytorch": "2.9.0a0+145a3a7bda",
+    "cuda_toolkit": "13.0.2",
+    "container_os": "Ubuntu 24.04",
+    "source": "https://docs.nvidia.com/deeplearning/frameworks/pytorch-release-notes/rel-25-10.html"
+  },
+  "gcp_documented_driver": {
+    "machine_family": "A2 Standard and A2 Ultra",
+    "recommended_branch": "R580",
+    "linux_recommended_minimum": "580.95.05",
+    "ubuntu_24_supported_by_vendor_install_script": true,
+    "source": "https://docs.cloud.google.com/compute/docs/gpus/install-drivers-gpu"
+  },
+  "current_runpod_observation": {
+    "driver": "595.91.07",
+    "gpu": "NVIDIA A100-SXM4-80GB",
+    "memory_mib": 81920,
+    "training_controller_pid": 28726,
+    "fit_pid": 28807,
+    "both_live": true,
+    "remote_backend_health": true
+  },
+  "migration_requirements": [
+    "Verify compatible host driver and container GPU visibility before model loading",
+    "Keep exact pinned image, vendored Moshi code and model source; no opportunistic package upgrades",
+    "Bind copied archive and candidate checkpoint to approved inventories and SHA256 hashes",
+    "Keep weights, optimizer, Python/NumPy/Torch/CUDA RNG, source data, manifests and receipts on persistent disk",
+    "Use local SSD only for disposable caches; provider timed stop can discard local SSD",
+    "Cold independently restore the full training state and run existing numerical/native approval checks before new optimizer work",
+    "Maintain a provider-native hard deadline and active cost guard; quota is not proof of capacity",
+    "Do not overlap another training job with the existing Runpod trainer"
+  ],
+  "migration_executed": false,
+  "gcp_gpu_capacity_verified": false,
+  "gcp_spending_budget_changed": false,
+  "credit_billing_application_verified": false
+}
