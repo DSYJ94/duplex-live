@@ -1,0 +1,33 @@
+{
+  "schema": "dl-native-gcp-destination-verifier-preparation-v1",
+  "at_utc": "2026-10-24T19:20:44Z",
+  "parent_source_commit": "3c4a82d1596cdd649bb960f5029a023e4596ba35",
+  "owner_authorization": "docs/GCP-NATIVE-CONTINUATION-AUTHORIZATION-2026-10-24.json",
+  "owner_authorization_sha256": "97c8d43fe7be11595e7d00775af4e1f2c7666a469041c720bf7586ee8a020322",
+  "closed_inventory_sha256": "94b42bae0152e8150ba7842146f66711b13df3b8ece9125bcb5db92a761196fb",
+  "implementation": "evals/native_gcp_destination_verify.py",
+  "implementation_sha256": "475f285c5ab565c3d86ecd3c8ce95446303cb62e6f13ec7633d45a731505b9fb",
+  "tests_sha256": "71be63d1af849c6bce9d066b47240b9feb1ea9db90e5bbf8032f1143be5f09a1",
+  "test_command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest evals.harness.test_native_gcp_destination_verify evals.harness.test_native_gcp_transfer_inventory",
+  "focused_tests_passed": 16,
+  "scope": [
+    "Pinned complete catalog only; no subset mode",
+    "Every regular file: exact byte count, streaming SHA256 and unchanged file identity",
+    "Refuse symlink parent traversal and substituted final files; allow regular hardlinks",
+    "Verify every historical symlink target without following or executing it",
+    "Check every catalog entry even after a failure; never accept the passing subset",
+    "Exclusive new receipt, no overwrite; no unrelated destination file traversal"
+  ],
+  "destination_command": "PYTHONDONTWRITEBYTECODE=1 python3 -m evals.native_gcp_destination_verify --root /workspace --inventory docs/GCP-NATIVE-TRANSFER-INVENTORY-2026-10-24.json.gz --report /workspace/migration/gcp-destination-hashes-v1.json",
+  "full_destination_hashing_executed": false,
+  "gcp_data_transfer_executed": false,
+  "gpu_recovery_executed": false,
+  "new_optimizer_updates": 0,
+  "model_qualified": false,
+  "google_sign_in": {
+    "session": 59648,
+    "state": "Live CLI callback re-polled; official Google page still requires user password verification"
+  },
+  "resource_state": "No GCP VM in live project table. Runpod remains stopped at preceding authoritative readback; no new compute operations performed.",
+  "next_action": "Complete existing Google sign-in, verify account/project/resources, stage approved archive efficiently, verify full destination, arm bounded provider deadline/cost guard, run zero-update recovery and independent behavioral qualification."
+}

@@ -1,3 +1,34 @@
+# LOCAL — Complete destination verifier prepared; Google verification still required
+
+Owner-approved GCP scope remains unchanged: authorization97c8d43f...,
+additional100USD, one A10080GB/max12h/250GB, max100GB artifacts, ZERO optimizer
+updates. Parent source3c4a82d1596cdd649bb960f5029a023e4596ba35 was pushed to main.
+No model fit, duplicate pilot or compute resource was started this turn.
+
+New evals/native_gcp_destination_verify.py pins closed catalog94b42bae... and
+streams every40,132 regular-file SHA/size plus all8 archival link targets. It
+rejects symlink parents, substituted files, changed-during-read data, partial
+catalogs and existing output receipts. Regular hardlinks remain valid for the
+closed snapshot. All failures are collected; no passing subset can qualify.
+16 focused filesystem/catalog tests PASS, including same-size corruption,
+missing files, escaping symlinks, FIFO rejection and concurrent modification.
+Evidence/command/hashes: docs/GCP-NATIVE-DESTINATION-VERIFIER-2026-10-24.json.
+This is unexecuted destination preparation, NOT an actual81GB transfer/hash or
+GPU/model acceptance. No heavy model/checksum workload was run on the Mac.
+
+Google CLI session59648 was re-polled and confirmed LIVE. Official Google tab
+692863943 still requires human password verification; handoff mark renewed.
+Do not restart login or request passwords/codes in chat. Fresh GCP VM table is
+empty. Runpod remains stopped per preceding provider readback. Data/old states,
+failed originalfitexit-15, native/KL/hidden objectives and all strict gates intact.
+Next: user completes existing Google sign-in; then verify CLI account/resources,
+stage within approved scope, hash full destination, arm fresh deadline/cost guard,
+and execute zero-update recovery + independent restore before native evaluation.
+LOCAL remains sole executor, goalACTIVE, unrelated edits untouched.
+Recorded2026-10-24T19:20:44Z.
+
+---
+
 # LOCAL — GCP APPROVED; closed81.15GB catalog; Google sign-in pending
 
 Human explicitly APPROVED the exact b5a3b05 GCP continuation proposal, with the
