@@ -1,3 +1,27 @@
+# LOCAL — Reasoning32 fresh compatibility prepared; candidate still unapproved
+
+Added explicit reasoning32 development-review/fresh-preflight cohort, same native520
+baseline, and strict restored_reasoning32 validation. Existing control40 path kept.
+All existing full10/all4/paired20/speech20/unforced/PCM/source/restore requirements
+remain. Collector derives exactly baseline520/candidate-reasoning32 from its
+schema; no generic relabelling. Held-out waveform/quality reads remain AFTER
+complete committed development review and strict restore. No passing subset,
+threshold change, new training or adoption. Current candidate NOT fresh-authorized.
+
+Runtime source d70194168f669d7b43091b0f92eb1de12c9eafc3 staged in separate
+/opt/duplex-reasoning32-fresh-cohort-d701941 via hash-verified Gitbundle.
+Remote CPU-only synthetic artifact tests38PASS (1.751s), no GPUvisible, no sealed
+inputs/inference. Local lightweight checks15PASS includes new complete40 preflight
+fixture; no MacTorch. Details docs/NATIVE-REASONING32-FRESH-COHORT-SUPPORT-2026-10-24.json.
+Current model/trainingDA and automatic development-evalC078 checkouts unchanged.
+Do not switch active evalwaiter or run fresh until actual complete development
+review passes. Next: finish V18fit8/restore/proof/paired20speech20; if passes,
+commit exact new-schema development review, then bounded fresh preflight.
+Repaired tunnel40689 verified healthy at16:00UTC, trainer28726/28807 live.
+No new GPU/credit commitment. Goal active.
+
+---
+
 # LOCAL — FIVE actual optimizer updates; new checkpoint hash-verified
 
 Finiteobserver actual15:57:37.703058UTC:V18phasebounded8_training,

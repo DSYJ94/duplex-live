@@ -49,6 +49,34 @@ class ReasoningFreshCohortTests(unittest.TestCase):
                 preflight('/candidate',ROOT/'docs/unapproved-fixture.json','/sealed','/quality','/out')
             planned.assert_not_called();inputs.assert_not_called();restored.assert_not_called()
 
+    def test_reviewed_reasoning_preflight_preserves_complete_same_resource_contract(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp).resolve();proof=root/'candidate';baseline=root/'context-training-proof-7510331'
+            review=root/'review.json';quality=root/'quality.json'
+            review.write_text('{}');quality.write_text('{}')
+            base_identity=dict(proof=str(baseline),checkpoint_sha256='base',native_protocol='fixed')
+            identity=dict(checkpoint_sha256='candidate',native_protocol='fixed')
+            base=dict(voice_sha256='voice',data_sha256='data')
+            parent=dict(base,warm_start=base_identity)
+            rows=[dict(index=i,scenario='fixture-%02d'%(i%20),role=REASONING_ROLES[i//20]) for i in range(40)]
+            def restored(path):
+                return (identity,parent) if path==proof else (base_identity,base)
+            with patch('evals.native_control40_fresh_session.ROOT',root), \
+                    patch('evals.native_fresh_review.validate',return_value=dict(schema=REASONING_SCHEMA,
+                        native_asr_placement='shared-gpu-evaluation')), \
+                    patch('evals.context_rollout_conditioning.verify_checkpoint',side_effect=restored), \
+                    patch('evals.native_control40_fresh_session.cases',return_value=rows) as planned, \
+                    patch('evals.native_fresh_source_reapproval.approved_inputs',return_value=dict(
+                        rows=[dict(scenario_id=r['scenario']) for r in rows[:20]])):
+                result=preflight(proof,review,root/'unread-inputs',quality,root/'preflight.json')
+            self.assertEqual(planned.call_args.args[2],'candidate-reasoning32')
+            self.assertEqual(result['schema'],'dl-native-reasoning32-fresh-paired40-preflight-v1')
+            self.assertTrue(result['complete40']);self.assertTrue(result['no_passing_subset'])
+            self.assertEqual(result['cases'],rows);self.assertEqual(result['maximum_gpus'],1)
+            self.assertEqual(result['gpu_mode'],'serial-one-gpu')
+            self.assertFalse(result['training_approved']);self.assertFalse(result['checkpoint_adopted'])
+            self.assertFalse(result['actual_inference_executed'])
+
     def test_collector_binds_reasoning_role_to_preflight_schema(self):
         with tempfile.TemporaryDirectory() as tmp:
             out=Path(tmp);review=out/'review.json';quality=out/'quality.json'

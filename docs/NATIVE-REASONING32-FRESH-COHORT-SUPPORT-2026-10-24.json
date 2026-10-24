@@ -1,0 +1,39 @@
+{
+  "schema": "dl-native-reasoning32-fresh-cohort-support-v1",
+  "at_utc": "2026-10-24T16:04:39.497789+00:00",
+  "runtime_source_commit": "d70194168f669d7b43091b0f92eb1de12c9eafc3",
+  "source_bundle_sha256": "b3f45b8addf4f21f19e9780c6f7c53bd709c08ec326c86b3e768d8d205880713",
+  "remote_cpu_artifact_tests": {
+    "count": 38,
+    "exit_code": 0,
+    "gpu_visible": false,
+    "scope": "CPU synthetic artifact fixtures; no native inference, sealed inputs, training or approval"
+  },
+  "local_lightweight_checks": {
+    "count": 15,
+    "passed": true,
+    "torch_imported": false,
+    "includes_additional_complete40_preflight_test": true
+  },
+  "review_schema": "dl-native-reasoning32-development-review-v1",
+  "fresh_preflight_schema": "dl-native-reasoning32-fresh-paired40-preflight-v1",
+  "candidate_role": "candidate-reasoning32",
+  "required_baseline": "native520",
+  "unchanged_requirements": [
+    "full8 independently restored training state with Adam/RNG exact",
+    "full native10 candidate review and complete paired20",
+    "all4 ordinary cores correct",
+    "complete paired20 independent speech and valid word timings",
+    "identical user PCM, voice, checkpoint and unchanged inference source",
+    "no forced words/acoustic tokens, starts or dispatch",
+    "complete paired40 fresh and independent speech40",
+    "same serial single GPU cohort and active bounded cost guard",
+    "no passing subset, extension, adoption or training on evaluation outputs"
+  ],
+  "training_source_or_math_changed": false,
+  "active_development_evaluation_source_changed": false,
+  "real_fresh_inputs_opened": false,
+  "fresh_inference_executed": false,
+  "fresh_evaluation_authorized_for_current_candidate": false,
+  "model_adopted": false
+}
