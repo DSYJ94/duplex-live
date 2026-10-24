@@ -1,7 +1,7 @@
 {
   "schema": "dl-native-reasoning32-fit-launch-v1",
   "at_utc": "2026-10-24T15:06:44.710870+00:00",
-  "status": "IN_PROGRESS_FIVE_OF_EIGHT_UPDATES_OBSERVED",
+  "status": "IN_PROGRESS_SIX_OF_EIGHT_UPDATES_OBSERVED",
   "controller": {
     "pid": 28726,
     "birth": 40829059,
@@ -52,17 +52,17 @@
   "behavior_qualified": false,
   "model_adopted": false,
   "optimizer_progress": {
-    "observed_utc": "2026-10-24T15:57:37.703058+00:00",
-    "completed_updates": 5,
-    "checkpoint_sha256": "f2345886ffadb298e63025264ac6052f215ce754c11c532377be7acd8c157959",
+    "observed_utc": "2026-10-24T16:09:05.004855+00:00",
+    "completed_updates": 6,
+    "checkpoint_sha256": "282550b325be8bfebe340dc876ae8addb28ab18c2b92cff7af3448cfc42f04a1",
     "checkpoint_bytes": 22970059,
     "backup_verified": true,
-    "backup_snapshot_utc": "20261024T155801.044084Z",
-    "inventory_sha256": "c42cafa3a703a95650c73dbbf711c36db4ebbd88df0b95fd477b74804e30904c",
+    "backup_snapshot_utc": "20261024T160917.886217Z",
+    "inventory_sha256": "87816797845e8b73b70896654f1c001b67cbedb6cb9d06866e7b0566c628cca7",
     "independent_restore_approved": false
   },
   "latest_live_progress_observation": {
-    "at_utc": "2026-10-24T15:57:37.703058+00:00",
+    "at_utc": "2026-10-24T16:09:05.004855+00:00",
     "phase": "bounded8_training",
     "stages": [
       {
@@ -129,6 +129,12 @@
         "gradient_norm_before_clip": 24.806386947631836,
         "retention_kl": 0.0685616135597229,
         "retention_hidden_mse": 0.01127505861222744
+      },
+      {
+        "step": 6,
+        "gradient_norm_before_clip": 14.38829231262207,
+        "retention_kl": 0.06848586350679398,
+        "retention_hidden_mse": 0.01127371285110712
       }
     ],
     "handles": [

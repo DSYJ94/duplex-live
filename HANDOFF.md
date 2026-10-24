@@ -1,3 +1,31 @@
+# LOCAL — SIX actual reasoning32 optimizer updates; checkpoint hash-backed up
+
+Actual observation2026-10-24T16:09:05.004855UTC:V18bounded8_training,
+controller28726/birth40829059stateS,fit28807/birth40829227stateS, noerror,
+rows1..6 saved. Step6norm14.38829231262207,retentionKL0.06848586350679398,
+hiddenMSE0.01127371285110712 arepre-update metrics, notbehavior/convergence.
+New Mac snapshot20261024T160917.886217Z inventorySHA
+87816797845e8b73b70896654f1c001b67cbedb6cb9d06866e7b0566c628cca7.
+Checkpoint22970059bytesSHA
+282550b325be8bfebe340dc876ae8addb28ab18c2b92cff7af3448cfc42f04a1.
+Both rehashed onMac; loghas all6rows. Exactprogress/backups in
+ docs/NATIVE-REASONING32-FIT-LAUNCH-2026-10-24.json. Copy/hash isNOTindependent
+trainingstate restore. All8fit/finalreport/fullrestore/strictproof/native20/
+speech20 andfreshqualification remainrequired. No extension/adoption.
+
+Same model/mathsourceDA389A7 andcontroller0d75986. LiveevaluationC078unchanged;
+futurefreshcohort runtimeD701941 only staged/tested, not fresh-authorized.
+Localguard12953,backup8236,evalwaiter20887,proxy30380,tunnel40689 allpsverified
+live16:07UTC. Backupsuccess16:09UTC, tunnelremotehealthtrue16:09UTC,actual
+providerrequests0. Finiteobserver ended normally after6(not model cancellation).
+No newjobs/GCPGPU/budgetextension. Same17:10UTCfitreserve,18:10controller,
+17:40latestnativeevaldispatch/18:20evaldeadline,18:30backup,18:35proxy and
+18:39:58.8UTChardPodtermination. Goalactive. Next:retain remaining2updates,
+verifycomplete8andautomaticindependentrestore/strictproof, thenfullnative20/
+speech20; preservenewcheckpoints andexactresults beforehardstop.
+
+---
+
 # LOCAL — Both fresh collector cohorts tested without sealed inputs or MacTorch
 
 Extended existing collector artifact fixtures to bothcontrol40/reasoning32 roles
