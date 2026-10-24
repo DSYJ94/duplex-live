@@ -39,7 +39,8 @@ def validate(path, proof, actual_proof):
     if path is None or proof is None:raise ValueError('Committed complete10 behavior review required before fresh V2 inference')
     proof=Path(proof).resolve()
     review=committed_document(path)
-    if review.get('schema')=='dl-native-control40-development-review-v1':
+    if review.get('schema') in ('dl-native-control40-development-review-v1',
+                               'dl-native-reasoning32-development-review-v1'):
         from evals.native_control40_fresh_review import validate as validate_control40
         return validate_control40(review,proof,actual_proof)
     if Path(actual_proof).resolve() not in (proof,proof.parent/'context-training-proof-7510331'):

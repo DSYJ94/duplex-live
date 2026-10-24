@@ -12,7 +12,9 @@ from evals.moshi_model_download import sha256
 from evals.native_fresh_session import PLAN,PLAN_SHA256,PROFILE,ROOT
 
 
-def cases(proof,baseline):
+def cases(proof,baseline,candidate_role='candidate-control40'):
+    if candidate_role not in ('candidate-control40','candidate-reasoning32'):
+        raise ValueError('Explicit supported candidate role required')
     proof=Path(proof).resolve();baseline=Path(baseline).resolve()
     if proof==baseline or baseline.name!='context-training-proof-7510331':
         raise ValueError('Distinct actual candidate and exact native520 comparator required')
@@ -24,7 +26,7 @@ def cases(proof,baseline):
     for index in range(40):
         case=plan['cases'][index%20]
         rows.append(dict(index=index,question_index=index%20,scenario=case['id'],
-            role='baseline520' if index<20 else 'candidate-control40',
+            role='baseline520' if index<20 else candidate_role,
             proof=str(baseline if index<20 else proof),
             kind={'ordinary':'simple','quiet':'simple','pause':'simple'}.get(case['kind'],case['kind']),
             backend=case['backend'],minimum_lookup_delay_s=case.get('minimum_actual_lookup_delay_s',0.),
@@ -45,8 +47,9 @@ def preflight(proof,review,data,quality,out):
         raise ValueError('Behavior review must be committed inside this immutable source')
     # Review/independent restore must be checked BEFORE fresh waveform/quality reads.
     validated=validate(review,proof,proof)
-    if (validated['schema']!='dl-native-control40-development-review-v1'
-            or validated['native_asr_placement']!='shared-gpu-evaluation'):
+    from evals.native_control40_fresh_review import cohort,REASONING_ROLES
+    roles,_=cohort(validated['schema'])
+    if validated['native_asr_placement']!='shared-gpu-evaluation':
         raise ValueError('Explicit complete portable same-resource native review required')
     identity,parent=verify_checkpoint(proof)
     baseline=Path(parent['warm_start']['proof'])
@@ -55,12 +58,13 @@ def preflight(proof,review,data,quality,out):
             or parent['voice_sha256']!=base['voice_sha256'] or parent['data_sha256']!=base['data_sha256']
             or identity['native_protocol']!=base_identity['native_protocol']):
         raise ValueError('Paired original source data, voice, native protocol and parent must remain identical')
-    rows=cases(proof,baseline)
+    rows=(cases(proof,baseline,roles[1]) if roles==REASONING_ROLES else cases(proof,baseline))
     manifest=approved_inputs(Path(data),Path(quality))
     if (len(manifest['rows'])!=20 or {r['scenario_id'] for r in manifest['rows']}
             !={r['scenario'] for r in rows}):
         raise ValueError('Complete independently reapproved20 source inputs required')
-    result=dict(schema='dl-native-control40-fresh-paired40-preflight-v1',complete40=True,
+    result=dict(schema=('dl-native-reasoning32-fresh-paired40-preflight-v1' if roles==REASONING_ROLES
+                        else 'dl-native-control40-fresh-paired40-preflight-v1'),complete40=True,
         evaluation_only=True,training_approved=False,checkpoint_adopted=False,
         candidate_proof=str(proof),baseline_proof=str(baseline),
         candidate_identity=identity,baseline_identity=base_identity,

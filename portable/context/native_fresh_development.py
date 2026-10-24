@@ -22,6 +22,14 @@ from portable.context.native_speech_followup import SPEECH_FILES
 from portable.context.native_gradient_followup import process_birth
 
 ROLES=('baseline520','candidate-control40')
+REASONING_ROLES=('baseline520','candidate-reasoning32')
+
+
+def plan_roles(schema):
+    if schema=='dl-native-control40-fresh-paired40-preflight-v1':return ROLES
+    if schema=='dl-native-reasoning32-fresh-paired40-preflight-v1':return REASONING_ROLES
+    raise ValueError('Explicit supported fresh cohort required')
+
 CASE_FILES=('report.json','loading.json','model.wav','user_in.wav','packet-stream.wav',
             'events.jsonl','worker-events.json')
 PARITY_FOLDERS=('parity-cold','parity-intervening','parity-reused')
@@ -48,8 +56,11 @@ def preflight_document(args):
     path=args.out/'preflight.json'
     if sha256(path)!=args.preflight_sha256:raise ValueError('Changed portable fresh preflight')
     plan=json.loads(path.read_text())
-    if (plan['schema']!='dl-native-control40-fresh-paired40-preflight-v1' or plan['complete40'] is not True
-            or plan['cases']!=cases(Path(plan['candidate_proof']),Path(plan['baseline_proof']))
+    roles=plan_roles(plan['schema'])
+    expected=(cases(Path(plan['candidate_proof']),Path(plan['baseline_proof']),roles[1])
+              if roles==REASONING_ROLES else cases(Path(plan['candidate_proof']),Path(plan['baseline_proof'])))
+    if (plan['complete40'] is not True
+            or plan['cases']!=expected
             or Path(plan['candidate_proof']).resolve()!=args.proof.resolve()
             or plan['gpu_mode']!='serial-one-gpu' or plan['maximum_gpus']!=1
             or plan['behavior_review_sha256']!=sha256(args.review)
@@ -218,7 +229,7 @@ def main():
     for name in ('source','proof','review','data','quality','asr-python','cost-guard-receipt','out'):
         parser.add_argument('--'+name,type=Path,required=True)
     for name in ('source-commit','pod-id','deadline-utc'):parser.add_argument('--'+name,required=True)
-    parser.add_argument('--role',choices=ROLES);parser.add_argument('--preflight-sha256')
+    parser.add_argument('--role',choices=(*ROLES,REASONING_ROLES[1]));parser.add_argument('--preflight-sha256')
     parser.add_argument('--controller-pid',type=int);parser.add_argument('--controller-birth',type=int)
     args=parser.parse_args()
     args.deadline=datetime.fromisoformat(args.deadline_utc.replace('Z','+00:00')).timestamp()
@@ -245,6 +256,7 @@ def main():
     from evals.native_control40_fresh_session import preflight
     plan=preflight(args.proof,args.review,args.data,args.quality,args.out/'preflight.json')
     args.preflight_sha256=sha256(args.out/'preflight.json')
+    roles=plan_roles(plan['schema'])
     files=('portable/context/native_fresh_development.py','evals/native_control40_fresh_session.py',
            'evals/native_control40_fresh_review.py','evals/context_spanning_fresh_probe.py',
            'evals/native_fresh_probe.py','evals/native_fresh_source_reapproval.py',
@@ -282,7 +294,7 @@ def main():
             if code:raise RuntimeError(name+' failed with exit '+str(code))
     try:
         actors={}
-        for role in ROLES:
+        for role in roles:
             cmd=[sys.executable,'-u','-m','portable.context.native_fresh_development']
             for key in ('source','proof','review','data','quality','asr_python','cost_guard_receipt','out',
                         'source_commit','pod_id','deadline_utc','preflight_sha256','controller_pid','controller_birth'):
@@ -292,11 +304,11 @@ def main():
             execute(role,cmd)
             actors[role]=complete_actor(args.out,role,plan,args.source_commit,args.preflight_sha256)
         for i in range(20):
-            if sha256(args.out/ROLES[0]/('case-%02d'%i)/'user_in.wav')!=sha256(args.out/ROLES[1]/('case-%02d'%i)/'user_in.wav'):
+            if sha256(args.out/roles[0]/('case-%02d'%i)/'user_in.wav')!=sha256(args.out/roles[1]/('case-%02d'%i)/'user_in.wav'):
                 raise ValueError('Every baseline/candidate fresh question must receive identical user PCM')
         state.update(phase='independent_speech40',complete_paired40=True,actor_execution_sha256=actors)
         atomic(args.out/'execution.json',state);reports={}
-        for role in ROLES:
+        for role in roles:
             folders=[args.out/role/('case-%02d'%i) for i in range(20)]
             out=args.out/'independent-speech40'/role;out.parent.mkdir(exist_ok=True)
             execute('speech-'+role,[str(args.asr_python),'-u','-m','evals.moshi_speech_audit',
@@ -304,7 +316,7 @@ def main():
                 '--trim-trailing-silence','--keep-silent-failures','--out',str(out)])
             reports[role]=speech_report(out/'report.json',folders)
         clean(args.source,args.source_commit);preflight_document(args)
-        for role in ROLES:
+        for role in roles:
             if complete_actor(args.out,role,plan,args.source_commit,args.preflight_sha256)!=actors[role]:
                 raise ValueError('Actual paired fresh output changed during independent speech audit')
         state.update(phase='complete_fresh40_and_speech40_only',complete_independent_speech40=True,

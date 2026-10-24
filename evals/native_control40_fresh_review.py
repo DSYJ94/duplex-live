@@ -14,6 +14,16 @@ from evals.native_fresh_inputs_v2 import PLAN_SHA256
 
 SCHEMA='dl-native-control40-development-review-v1'
 ROLES=('baseline520','candidate-control40')
+REASONING_SCHEMA='dl-native-reasoning32-development-review-v1'
+REASONING_ROLES=('baseline520','candidate-reasoning32')
+
+
+def cohort(schema):
+    if schema==SCHEMA:
+        return ROLES,'dl-native-control40-retained154-stream49-proof-v1'
+    if schema==REASONING_SCHEMA:
+        return REASONING_ROLES,'dl-native-reasoning32-retained154-stream49-control40-proof-v1'
+    raise ValueError('Explicit complete control40 or reasoning32 development review required')
 
 
 def implementations(commit,files=None):
@@ -31,9 +41,10 @@ def implementations(commit,files=None):
 def validate_review(review,proof,parent,identity):
     from portable.context.native_development import artifact_hashes,CASE_FILES,PARITY_FILES,compare_native
     from portable.context.native_speech_followup import SPEECH_FILES
+    roles,parent_schema=cohort(review['schema'])
     proof=Path(proof).resolve();plan=Path(__file__).with_name('fixtures')/'native-v2-development-20261019.json'
     cases=json.loads(plan.read_text())['cases']
-    if (review['schema']!=SCHEMA or Path(review['candidate_proof']).resolve()!=proof
+    if (Path(review['candidate_proof']).resolve()!=proof
             or review['candidate_checkpoint_sha256']!=identity['checkpoint_sha256']
             or review['candidate_training_state_sha256']!=identity['training_state_sha256']
             or review['independent_reload_report_sha256']!=identity['reload_report_sha256']
@@ -41,11 +52,11 @@ def validate_review(review,proof,parent,identity):
             or review['all10_native_cases_reviewed'] is not True or review['all4_ordinary_core_correct'] is not True
             or review['fresh_evaluation_authorized'] is not True or review['checkpoint_adopted'] is not False
             or review['native_asr_placement']!='shared-gpu-evaluation'
-            or parent['schema']!='dl-native-control40-retained154-stream49-proof-v1'
+            or parent['schema']!=parent_schema
             or parent['updates_this_run']!=8 or parent['adam_parameter_steps_after']!=[528]
             or not parent['additional_native_v2'].get('complete24_per8')
             or [c['index'] for c in review['cases']]!=list(range(10))):
-        raise ValueError('Complete restored control40 candidate and unchanged full10/ordinary4 review required')
+        raise ValueError('Complete restored candidate and unchanged full10/ordinary4 review required')
     baseline=Path(parent['warm_start']['proof']).resolve()
     if baseline.name!='context-training-proof-7510331':raise ValueError('Exact original native520 comparator required')
     pair=Path(review['native_pair_root']);speech=Path(review['independent_speech_root'])
@@ -57,8 +68,8 @@ def validate_review(review,proof,parent,identity):
             or p['gpu_mode']!='serial-one-gpu' or p['runtime_profile']!='container-default'
             or p['runtime_comparison_only'] is not False or p['optimizer_updates']!=0
             or p['provider_credential_transferred'] is not False or len(p['gpus'])!=1
-            or list(p['proofs'])!=list(ROLES)
-            or Path(p['proofs'][ROLES[0]]).resolve()!=baseline or Path(p['proofs'][ROLES[1]]).resolve()!=proof
+            or list(p['proofs'])!=list(roles)
+            or Path(p['proofs'][roles[0]]).resolve()!=baseline or Path(p['proofs'][roles[1]]).resolve()!=proof
             or p['plan_sha256']!=sha256(plan) or p['source_commit']!=review['native_execution_source_commit']
             or p['execution_implementation_sha256']!=implementations(p['source_commit'])
             or s['phase']!='complete_speech20_only' or s['complete20'] is not True
@@ -67,9 +78,9 @@ def validate_review(review,proof,parent,identity):
             or s['source_commit']!=p['source_commit']
             or s['speech_implementation_sha256']!=implementations(s['source_commit'],SPEECH_FILES)
             or s['paired_execution_sha256']!=review['native_pair_execution_sha256']
-            or s['paired_roles']!=list(ROLES)):
+            or s['paired_roles']!=list(roles)):
         raise ValueError('Complete paired20 native and independent speech20 with unchanged runtime provenance required')
-    for role in ROLES:
+    for role in roles:
         actor=json.loads((pair/role/'execution.json').read_text())
         if (sha256(pair/role/'execution.json')!=review['actor_execution_sha256'][role]
                 or actor['schema']!='dl-native-paired-development-actor-v1'
@@ -119,7 +130,7 @@ def validate_review(review,proof,parent,identity):
                     or raw['asr_environment']['reference_transcript_supplied'] is not False
                     or raw['asr_environment']['assigned_visible_gpu']!='0'):
                 raise ValueError('Actual arrived-audio ASR placement and independent process required')
-            if role=='candidate-control40':
+            if role==roles[1]:
                 case=review['cases'][i]
                 if (adapter['checkpoint_sha256']!=identity['checkpoint_sha256']
                         or case['run_report_sha256']!=sha256(run/'report.json') or case['audio_sha256']!=audio['wav_sha256']
@@ -133,16 +144,17 @@ def validate_review(review,proof,parent,identity):
                         or not audio['word_starts_within_recorded_audio'] or not 0<=audio['wer_against_model_text']<=.08):
                     raise ValueError('All four ordinary reasoning and independent speech gates remain mandatory')
     for i in range(10):
-        if sha256(pair/ROLES[0]/('case-%02d'%i)/'user_in.wav')!=sha256(pair/ROLES[1]/('case-%02d'%i)/'user_in.wav'):
+        if sha256(pair/roles[0]/('case-%02d'%i)/'user_in.wav')!=sha256(pair/roles[1]/('case-%02d'%i)/'user_in.wav'):
             raise ValueError('Baseline and candidate must receive byte-identical development user PCM')
     return review
 
 
 def validate(review,proof,actual_proof):
-    from portable.context.native_development import restored_control40
-    restored=restored_control40(proof)
+    from portable.context.native_development import restored_control40,restored_reasoning32
+    roles,_=cohort(review['schema'])
+    restored=(restored_reasoning32 if roles==REASONING_ROLES else restored_control40)(proof)
     parent=json.loads((Path(proof)/'report.json').read_text())
     if sha256(Path(proof)/'report.json')!=restored['report_sha256']:raise ValueError('Candidate changed after strict restore verification')
     allowed=(Path(proof).resolve(),Path(parent['warm_start']['proof']).resolve())
-    if Path(actual_proof).resolve() not in allowed:raise ValueError('Only locked control40 candidate and original native520 comparator permitted')
+    if Path(actual_proof).resolve() not in allowed:raise ValueError('Only locked candidate and original native520 comparator permitted')
     return validate_review(review,proof,parent,restored['identity'])

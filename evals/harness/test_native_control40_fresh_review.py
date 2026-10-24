@@ -16,6 +16,10 @@ from portable.context.native_development import artifact_hashes,CASE_FILES,PARIT
 
 
 class PortableFreshReviewTests(unittest.TestCase):
+    roles=ROLES
+    review_schema=SCHEMA
+    parent_schema='dl-native-control40-retained154-stream49-proof-v1'
+    restorer='restored_control40'
     def setUp(self):
         self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup)
         root=Path(self.temp.name)
@@ -26,19 +30,19 @@ class PortableFreshReviewTests(unittest.TestCase):
         plan=Path(__file__).resolve().parents[1]/'fixtures/native-v2-development-20261019.json'
         self.cases=json.loads(plan.read_text())['cases']
         self.identity=dict(checkpoint_sha256='candidate',training_state_sha256='state',reload_report_sha256='reload')
-        self.parent=dict(schema='dl-native-control40-retained154-stream49-proof-v1',
+        self.parent=dict(schema=self.parent_schema,
             updates_this_run=8,adam_parameter_steps_after=[528],additional_native_v2=dict(complete24_per8=True),
             warm_start=dict(proof=str(self.baseline),checkpoint_sha256='baseline'),voice_sha256='same-voice')
         self.native=dict(schema='dl-runpod-paired-native10-v1',phase='complete',complete_paired20=True,
             gpu_mode='serial-one-gpu',runtime_profile='container-default',runtime_comparison_only=False,
             optimizer_updates=0,provider_credential_transferred=False,gpus=['actual-fixture-device'],
-            proofs=dict(zip(ROLES,map(str,(self.baseline,self.proof)))),plan_sha256=sha256(plan),
+            proofs=dict(zip(self.roles,map(str,(self.baseline,self.proof)))),plan_sha256=sha256(plan),
             source_commit='a'*40,execution_implementation_sha256={'fixture-code':'digest'})
         self.audio=dict(schema='dl-runpod-paired20-independent-speech-followup-v1',
             phase='complete_speech20_only',complete20=True,paired_source='a'*40,source_commit='a'*40,
-            gpu_mode='serial-one-gpu',paired_roles=list(ROLES),reports_sha256={},
+            gpu_mode='serial-one-gpu',paired_roles=list(self.roles),reports_sha256={},
             speech_implementation_sha256={'fixture-code':'digest'})
-        self.review=dict(schema=SCHEMA,candidate_proof=str(self.proof),
+        self.review=dict(schema=self.review_schema,candidate_proof=str(self.proof),
             candidate_checkpoint_sha256='candidate',candidate_training_state_sha256='state',
             independent_reload_report_sha256='reload',evaluation_plan_sha256=sha256(plan),
             fresh_plan_sha256=PLAN_SHA256,all10_native_cases_reviewed=True,all4_ordinary_core_correct=True,
@@ -46,7 +50,7 @@ class PortableFreshReviewTests(unittest.TestCase):
             native_pair_root=str(self.pair),independent_speech_root=str(self.speech),
             native_execution_source_commit='a'*40,actor_execution_sha256={},cases=[])
         self.actors={};self.audits={}
-        for role in ROLES:
+        for role in self.roles:
             actor_root=self.pair/role;actor_root.mkdir();(self.speech/role).mkdir()
             for name in ('parity-cold','parity-intervening','parity-reused'):
                 folder=actor_root/name;folder.mkdir()
@@ -83,7 +87,7 @@ class PortableFreshReviewTests(unittest.TestCase):
                     asr_segments=[dict(words=[dict(start=0.,end=1.,text='Fixture words')])],
                     asr_time_bounds_valid=True,asr_word_bounds_valid=True,word_starts_within_recorded_audio=True,
                     wer_against_model_text=0.))
-                if role=='candidate-control40':self.review['cases'].append(dict(index=i,
+                if role==self.roles[1]:self.review['cases'].append(dict(index=i,
                     run_report_sha256=sha256(folder/'report.json'),audio_sha256=sha256(folder/'model.wav'),
                     behavior_and_receipts_reviewed=True,speech_quality_issue_reviewed=True,
                     behavior_verdict='pass',ordinary_core_correct=True,reason='CPU fixture only'))
@@ -100,7 +104,7 @@ class PortableFreshReviewTests(unittest.TestCase):
         self.write(self.pair/'execution.json',self.native)
         self.review['native_pair_execution_sha256']=sha256(self.pair/'execution.json')
         self.audio['paired_execution_sha256']=self.review['native_pair_execution_sha256']
-        for role in ROLES:
+        for role in self.roles:
             self.write(self.pair/role/'execution.json',self.actors[role])
             self.review['actor_execution_sha256'][role]=sha256(self.pair/role/'execution.json')
             self.write(self.speech/role/'report.json',self.audits[role])
@@ -114,7 +118,7 @@ class PortableFreshReviewTests(unittest.TestCase):
         folder=self.pair/role/('case-%02d'%index);path=folder/'report.json'
         raw=json.loads(path.read_text());mutate(raw);self.write(path,raw)
         self.actors[role]['cases'][index]['artifact_sha256']=artifact_hashes(folder,CASE_FILES)
-        if role=='candidate-control40':self.review['cases'][index]['run_report_sha256']=sha256(path)
+        if role==self.roles[1]:self.review['cases'][index]['run_report_sha256']=sha256(path)
         self.seal()
 
     def test_complete_non_slurm_candidate_authorizes_measurement_only(self):
@@ -134,7 +138,7 @@ class PortableFreshReviewTests(unittest.TestCase):
         with self.assertRaises(ValueError):self.check()
 
     def test_incomplete_actor_or_speech_cannot_pass(self):
-        for role in ROLES:
+        for role in self.roles:
             saved=copy.deepcopy(self.actors[role]);self.actors[role]['cases'].pop();self.seal()
             with self.subTest(role=role),self.assertRaises(ValueError):self.check()
             self.actors[role]=saved;self.seal()
@@ -166,18 +170,18 @@ class PortableFreshReviewTests(unittest.TestCase):
             self.review['cases'][9][key]=saved
 
     def test_silence_cannot_vacuously_pass_ordinary_speech(self):
-        row=self.audits['candidate-control40']['results'][0]
+        row=self.audits[self.roles[1]]['results'][0]
         row.update(asr_text='',asr_segments=[],wer_against_model_text=0.);self.seal()
         with self.assertRaises(ValueError):self.check()
 
     def test_nan_or_regressed_ordinary_speech_rejected(self):
-        row=self.audits['candidate-control40']['results'][3]
+        row=self.audits[self.roles[1]]['results'][3]
         for value in (float('nan'),float('inf'),-.01,.081):
             row['wer_against_model_text']=value;self.seal()
             with self.subTest(value=value),self.assertRaises(ValueError):self.check()
 
     def test_diagnostic_forcing_or_reference_transcript_rejected(self):
-        rawpath=self.pair/'candidate-control40/case-09/report.json'
+        rawpath=self.pair/self.roles[1]/'case-09/report.json'
         original=json.loads(rawpath.read_text())
         mutations=[lambda r:r.update(scheduled_dispatch=True),
             lambda r:r.update(response_start_forced=True),lambda r:r.update(word_or_acoustic_tokens_forced=True),
@@ -186,11 +190,11 @@ class PortableFreshReviewTests(unittest.TestCase):
             lambda r:r['asr_environment'].update(reference_transcript_supplied=True),
             lambda r:r['asr_environment'].update(assigned_visible_gpu='1')]
         for mutate in mutations:
-            self.write(rawpath,original);self.edit_raw('candidate-control40',9,mutate)
+            self.write(rawpath,original);self.edit_raw(self.roles[1],9,mutate)
             with self.assertRaises(ValueError):self.check()
 
     def test_altered_baseline_or_candidate_audio_rejected(self):
-        for role in ROLES:
+        for role in self.roles:
             path=self.pair/role/'case-08/model.wav';original=path.read_bytes();path.write_bytes(b'altered')
             with self.subTest(role=role),self.assertRaises(ValueError):self.check()
             path.write_bytes(original)
@@ -201,9 +205,9 @@ class PortableFreshReviewTests(unittest.TestCase):
         with self.assertRaises(ValueError):self.check()
 
     def test_saved_parity_true_cannot_hide_changed_native_tensor(self):
-        folder=self.pair/'candidate-control40/parity-reused'
+        folder=self.pair/self.roles[1]/'parity-reused'
         torch.save(dict(delayed_inputs=torch.tensor([1,3])),folder/'student-history.pt')
-        self.actors['candidate-control40']['parity_artifact_sha256']['parity-reused']=artifact_hashes(folder,PARITY_FILES)
+        self.actors[self.roles[1]]['parity_artifact_sha256']['parity-reused']=artifact_hashes(folder,PARITY_FILES)
         self.seal()
         with self.assertRaises(RuntimeError):self.check()
 
@@ -214,11 +218,11 @@ class PortableFreshReviewTests(unittest.TestCase):
     def test_actual_proof_lock_and_strict_restore_precede_review(self):
         restored=dict(identity=self.identity,report_sha256='not-the-parent-report')
         self.write(self.proof/'report.json',self.parent);restored['report_sha256']=sha256(self.proof/'report.json')
-        with patch('portable.context.native_development.restored_control40',return_value=restored) as strict:
+        with patch('portable.context.native_development.'+self.restorer,return_value=restored) as strict:
             self.assertTrue(validate(self.review,self.proof,self.baseline)['fresh_evaluation_authorized'])
             with self.assertRaises(ValueError):validate(self.review,self.proof,self.proof.parent/'other')
             self.assertEqual(strict.call_count,2)
-        with patch('portable.context.native_development.restored_control40',side_effect=ValueError('missing restore')):
+        with patch('portable.context.native_development.'+self.restorer,side_effect=ValueError('missing restore')):
             with self.assertRaises(ValueError):validate(self.review,self.proof,self.proof)
 
     def test_public_router_keeps_new_schema_out_of_legacy_numeric_guard(self):
@@ -227,6 +231,19 @@ class PortableFreshReviewTests(unittest.TestCase):
             from evals.native_fresh_review import validate as route
             self.assertTrue(route('committed-review',self.proof,self.proof)['fresh_evaluation_authorized'])
             portable.assert_called_once_with(self.review,self.proof.resolve(),self.proof)
+
+
+class Reasoning32FreshReviewTests(PortableFreshReviewTests):
+    from evals.native_control40_fresh_review import REASONING_SCHEMA as review_schema,REASONING_ROLES as roles
+    parent_schema='dl-native-reasoning32-retained154-stream49-control40-proof-v1'
+    restorer='restored_reasoning32'
+
+    def test_other_candidate_family_cannot_be_relabelled(self):
+        self.parent['schema']='dl-native-control40-retained154-stream49-proof-v1'
+        with self.assertRaises(ValueError):self.check()
+        self.parent['schema']=self.parent_schema
+        self.review['schema']=SCHEMA
+        with self.assertRaises(ValueError):self.check()
 
 
 class ImplementationIdentityTests(unittest.TestCase):
