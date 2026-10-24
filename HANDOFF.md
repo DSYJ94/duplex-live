@@ -1,3 +1,21 @@
+# LOCAL — Delegation evaluation SSH tunnel restored; training unchanged
+
+Monitored wait found localproxy30380 healthy butoldtunnel30575 actuallyabsent;
+oldlogBrokenpipe/Can'tassignrequestedaddress. Remote loopbackhealth initially
+reset. StartedONEsameendpointtunnel40689 at15:52:34UTC withExitOnForwardFailure
+and15skeepalive. Remote127.0.0.1:18795health nowverified actualtransporttrue,
+runidnative-reasoning32-native20-v15,actualrequests0. No credentials transferred,
+API requests ortraining/math/sourcechanges. Existing evalwaiter20887 retains same
+endpoint and exactV18candidate/restore gates; no restart or duplicateeval.
+Current trainer28726/28807 liveverified15:52UTC. No GCPGPU; same100USDcap/
+18:39:58.8UTC hardstop. Originaltunnelreceipt/log preserved; replacement local
+receipt native-reasoning32-eval-tunnel-v18-repair-v1.json. Publicsummary
+ docs/NATIVE-REASONING32-EVAL-TRANSPORT-REPAIR-2026-10-24.json.
+Next: retain all8 fit, independentrestore/strictproof then complete paired20/
+speech20, keeping repairedtunnelhealthy. Goalactive; no adoption/extension.
+
+---
+
 # LOCAL — UPDATE4 checkpoint hash-verified; GCP regional estimate prepared
 
 Four completed updates are now in verified Mac snapshot20261024T154644.282319Z.

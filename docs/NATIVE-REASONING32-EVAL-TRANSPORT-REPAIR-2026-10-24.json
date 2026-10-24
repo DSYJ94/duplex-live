@@ -1,0 +1,20 @@
+{
+  "schema": "dl-native-reasoning32-evaluation-transport-repair-v1",
+  "at_utc": "2026-10-24T15:53:08.528092+00:00",
+  "old_tunnel_pid": 30575,
+  "old_tunnel_absent_verified": true,
+  "old_error": "Broken pipe / cannot assign requested address",
+  "replacement_tunnel_pid": 40689,
+  "same_remote_loopback_port": 18795,
+  "same_local_proxy_port": 50064,
+  "local_proxy_pid": 30380,
+  "same_run_id": "native-reasoning32-native20-v15",
+  "remote_loopback_health_verified": true,
+  "actual_provider_requests": 0,
+  "credentials_transferred": false,
+  "training_controller_pid": 28726,
+  "fit_pid": 28807,
+  "training_processes_live_verified": true,
+  "training_or_model_changes": false,
+  "new_gpu_jobs": 0
+}
