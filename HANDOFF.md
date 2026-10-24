@@ -1,3 +1,30 @@
+# LOCAL — Smaller artifact upload EXIT0; archive upload live; CPU restore worker prepared
+
+Source parentcb07860 pushed. Small rsync58487 actually exited0 at21:06:33.808912UTC;
+wrapper10044 remainsLIVE and advanced to archive rsync61436.36 large archive
+containers now copying; don't duplicate. Same CPU1784642133801608667/providerSTOP
+00:55:15UTC25Oct,4h/max0.48USD, same250GBdisk; no A100. Exact-image preparation
+session42418 stillLIVE last poll. OSLogin owneraccess/strict hostkeys verified.
+Caffeinate60354 tied to actual upload wrapper58482; no CPU throttling or system
+performance settings changed. No native/model workload on Mac.
+
+New portable/context/native_gcp_stage.py performs complete CPU restoration only:
+regular nonoverwriting hardlinks for3865 small artifacts; unchanged native archive
+extractor with pinned manifest; exact7797control members, no unexpected/link/path
+escape; full40132-file+8link destination hash pass required. Tars retained.20 real
+filesystem/catalog fixtures PASS. This is prepared source, NOT an executed full
+restore or verified GCP archive. No threshold/model/data/optimizer change.
+Evidence: docs/GCP-NATIVE-STAGE-WORKER-2026-10-24.json.
+
+Next Git-deploy this worker in a separate clean checkout and arm it only after
+actual complete rsync0. Inspect real full destination report; reconstruct original
+aliases/tmp regular inputs. Then STOPCPU/detachpersistentdisk; separate approved
+A10080/max12h/freshcostguard/oneGPU for zero-update saved8 recovery/independent
+restore/native evaluation. Do not rerun original8. LOCAL soleexecutor; unrelated
+work untouched, originalfailedfit-15/checkpoints/oldhistories retained.
+
+---
+
 # LOCAL — CPU staging APPROVED/RUNNING; rsync and exact runtime download live
 
 Human explicitly approved bounded CPU staging/restricted access. New authority

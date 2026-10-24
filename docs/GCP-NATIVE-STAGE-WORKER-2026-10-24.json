@@ -1,0 +1,28 @@
+{
+  "schema": "dl-gcp-native-stage-worker-preparation-v1",
+  "at_utc": "2026-10-24T21:08:38.200930+00:00",
+  "parent_source_commit": "cb07860",
+  "code_sha256": {
+    "portable/context/native_gcp_stage.py": "aebe305acee8d904cde87416daa13aafbf2c8a204c28320bf63b0ec282e10359",
+    "evals/harness/test_native_gcp_stage.py": "204ddc737353305463cb68486e57a5e900995bc1204f54ad5429cd45ca96ad8d"
+  },
+  "focused_filesystem_and_catalog_tests_passed": 20,
+  "new_provider_calls_or_model_math": false,
+  "stage_steps": [
+    "Materialize every smaller catalogued object as a regular hardlink, without overwriting",
+    "Run unchanged native archive extractor with pinned original manifest, preserving all tars",
+    "Restore only complete catalogued control40 regular members from the pinned compressed archive",
+    "Stream every full closed-catalog destination checksum and every archival link target"
+  ],
+  "gpu_or_training_approved_by_stage_worker": false,
+  "actual_full_staging_executed": false,
+  "live_transfer": {
+    "session": 10044,
+    "small_phase_actual_exit": 0,
+    "small_phase_end_utc": "2026-10-24T21:06:33.808912+00:00",
+    "archives_pid": 61436,
+    "archives_phase": "RUNNING_LAST_LIVE_POLL"
+  },
+  "runtime_preparation_session": 42418,
+  "next_action": "Git-deploy this worker separately, run only after actual complete archive rsync exits zero, then inspect the real complete destination receipt before moving the disk to any GPU"
+}
