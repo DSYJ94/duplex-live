@@ -26,8 +26,21 @@ ROOTS=('native-control40-preflight-v3/numerical','native-control40-supervisor-v4
        'native-control40-precise-pilot-v7-adoption','native-control40-precise-pilot-v8-recovery','native-control40-precise-pilot-v9-adoption',
        'native-control40-precise-pilot-v10-quota-retry','native-control40-precise-pilot-v11-environment-retry')
 EPHEMERAL_SNAPSHOTS=Path('/tmp/duplex-control40-backup-snapshots')
+CONTROL_ROOTS=ROOTS
+REASONING_ROOTS=('native-reasoning32-numerical-v14',
+                 'native-reasoning32-numerical-v14-control',
+                 'native-reasoning32-retained-pilot-v15',
+                 'native-reasoning32-numerical-v12-control',
+                 'native-reasoning32-numerical-v13-control')
 FORBIDDEN={'session-token','.private','.env','keys','credentials','core','quarantine',
            'owner-conversations','owner_conversations'}
+
+
+def select_profile(reasoning32=False):
+    global ROOTS,EPHEMERAL_SNAPSHOTS
+    ROOTS=REASONING_ROOTS if reasoning32 else CONTROL_ROOTS
+    EPHEMERAL_SNAPSHOTS=Path('/tmp/duplex-reasoning32-backup-snapshots' if reasoning32
+                            else '/tmp/duplex-control40-backup-snapshots')
 
 
 def sha(path):
@@ -249,9 +262,11 @@ def main():
     p.add_argument('--remote-snapshot',action='store_true');p.add_argument('--last-marker')
     p.add_argument('--ephemeral-snapshots',action='store_true',help='Stage backup replicas on container disk; originals stay on the network volume')
     p.add_argument('--source-commit',required=True)
+    p.add_argument('--reasoning32',action='store_true',help='Only the exact current reasoning32 audit/pilot roots')
     for n in ('key','known-hosts','remote-source','out'):p.add_argument('--'+n,type=Path)
     p.add_argument('--deadline-utc');p.add_argument('--host');p.add_argument('--port',type=int)
     p.add_argument('--pod-id');p.add_argument('--reference-snapshot',type=Path);a=p.parse_args()
+    select_profile(a.reasoning32)
     source=Path(__file__).resolve().parents[2]
     if a.remote_snapshot:
         if (subprocess.check_output(['git','-C',str(source),'rev-parse','HEAD'],text=True).strip()!=a.source_commit
@@ -279,6 +294,7 @@ def main():
                      '--remote-snapshot','--source-commit',a.source_commit]
             if last:command+=['--last-marker',last]
             if a.ephemeral_snapshots:command+=['--ephemeral-snapshots']
+            if a.reasoning32:command+=['--reasoning32']
             result=subprocess.run(ssh+[host,shlex.join(command)],check=True,capture_output=True,text=True,timeout=120)
             info=json.loads(result.stdout)
             if info['changed']:
