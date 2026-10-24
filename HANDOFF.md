@@ -1,3 +1,37 @@
+# LOCAL — BOTH A100 requests terminal STOCKOUT; no compute running; zoneB proposal awaiting scope decision
+
+On-demand create session43564 actuallyCLI1 at23:31UTC: ZONE_RESOURCE_POOL_EXHAUSTED.
+Flex-start session24227 also actuallyCLI1/STOCKOUT; despite30min requestvalid flag,
+Google immediately rejected it. No pending request/queued VM; DO NOT claim it is
+waiting for allocation. Actualliveinventory after both: only oldE2TERMINATED,
+no A100. Same250GBdisk1828090267781080539 READY/detached/no users, retained.
+No model/newupdates, no current compute charges; storage persists. Original backup
+and exact-input PASS0/receipts describedbelow remain valid. Requests/terminal
+records gpu-create-{request,terminal}-v1 and-v2-flex are preserved on Mac.
+
+Macguard now committed7bea9ad supports exact boundedFlex-start10h nativeSTOP from
+actual providerstart;20 focused tests PASS. No actualGPUguard armed/model loaded.
+GPUproducer/guest source75b3bfd remains frozen/deployed; originalDA unchanged.
+
+Read-only alternative research: A10080type existsin west4a ANDwest4b; stocknotknown.
+Legacy moveDisk API is deprecated and unavailable to this new2026project; do not
+try it or silently snapshot/createextra storage under SAMEdisk grant. Concrete
+UNAPPROVED proposal docs/GCP-NATIVE-ZONE-B-PLACEMENT-PROPOSAL-2026-10-25.json keeps
+100USDtotal/oneA100/max12h/zero newupdates, but explicitly changes SAMEdisk to
+one250GBreplacement inzoneB, temporarysnapshot, <=1h/0.12CPUverification (totalCPU
+still<=4h/0.48), <=12USDextra reserve; conservativewhole scope96.44USD. Retireold
+only after actual fullreplacementhashes and off-machineproof. Owner approval is
+required for this material disk/zone change; no new resources under proposal yet.
+
+OriginalzoneA route may retry AFTER a reasonable cooldown (>=15min after latest
+terminalstockout), FIRST verify no GPU/queuedrequest exists; never duplicate on
+observationtimeout. All retryGPUloads still require actualcostguards/nativemax12h
+and originalreceipts. Ifcapacity remains unavailable and approvalabsent, preserve
+stoppedstate, report externalcapacity blocker honestly; no widerGPU/provider/data
+spend. LOCALsoleexecutor, no cloudhandoff. Originalunrelatedlocalwork untouched.
+
+---
+
 # LOCAL — Inputs VERIFIED0; CPU stopped/same disk detached; A100 on-demand STOCKOUT
 
 CPUcontainerunitv4 ACTUAL terminal success/ExecMainStatus0/active-exited at23:29UTC.

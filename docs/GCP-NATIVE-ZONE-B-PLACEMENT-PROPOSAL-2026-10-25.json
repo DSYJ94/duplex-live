@@ -1,0 +1,60 @@
+{
+  "schema": "dl-gcp-native-zone-b-placement-proposal-v1",
+  "status": "UNAPPROVED_REPLACEMENT_DISK_AND_ZONE_CHANGE",
+  "recorded_utc": "2026-10-24T23:39:54.432601+00:00",
+  "reason": "Both terminal on-demand and Flex-start attempts returned confirmed zone-a A10080/localSSD stockout; no GPU exists. Legacy native moveDisk is deprecated for this new project.",
+  "project": "aurium-duplex-live-20261024",
+  "original_authorization": "docs/GCP-NATIVE-CONTINUATION-AUTHORIZATION-2026-10-24.json",
+  "unchanged_maximum_total_additional_gcp_usage_usd": 100,
+  "unchanged_optimizer_updates": 0,
+  "unchanged_maximum_concurrent_gpu_jobs": 1,
+  "unchanged_gpu": "one A100 80GB",
+  "unchanged_maximum_gpu_hours": 12,
+  "source": {
+    "zone": "europe-west4-a",
+    "disk": "duplex-native-stage-20261024-v1",
+    "disk_id": "1828090267781080539",
+    "size_gib": 250,
+    "state": "READY, detached; original CPU TERMINATED"
+  },
+  "replacement": {
+    "zone": "europe-west4-b",
+    "disk_name": "duplex-native-stage-20261025-b-v1",
+    "size_gib": 250,
+    "type": "pd-balanced",
+    "boot_disk_auto_delete": false
+  },
+  "temporary_snapshot": {
+    "source_disk_id": "1828090267781080539",
+    "maximum_logical_gib": 250
+  },
+  "temporary_cpu_verification": {
+    "type": "e2-standard-2",
+    "maximum_hours": 1,
+    "maximum_cost_usd": 0.12,
+    "maximum_cumulative_staging_hours": 4,
+    "maximum_cumulative_staging_cost_usd": 0.48,
+    "no_cpu_overlap": true
+  },
+  "extra_migration_storage_network_reserve_usd": 12,
+  "original_whole_gpu_lifetime_and_reserves_usd": 84.44,
+  "revised_conservative_whole_scope_upper_usd": 96.44,
+  "stock_in_zone_b_not_proven": true,
+  "source_archive_catalog_unchanged": true,
+  "additional_training_data_or_owner_conversations": false,
+  "credentials_remain_on_mac": true,
+  "new_purchases_or_reservations": false,
+  "steps": [
+    "Create one temporary snapshot of the stopped verified source disk; no artifact changes or renewed source collection",
+    "Restore to one replacement250GBdisk in zoneB; no second concurrently running CPU/GPU",
+    "Boot short boundedE2 in zoneB; rehash all40132files/81154452891bytes/8links plus pinned semanticclosure and reconstructed inputs; preserve exactNGC/source/model/losses",
+    "Stop replacementCPU, detach replacementdisk, attempt one boundedA10080 in zoneB with nativeSTOP/costguards before model load; never overlap GPUs or extend optimizer",
+    "Retire original disk and temporary snapshot ONLY after replacement full hashes and off-machine receipts prove preservation; until then preserve original source",
+    "Perform exact saved8 zero-update finalization/independentAdamRNG restore, unchanged full native behavior gates and real voice/delegation testing"
+  ],
+  "required_new_authorization": "Allow a replacement250GBdisk in zoneB, temporary snapshot/storage overlap and bounded replacementCPU; original approval required SAMEdisk, so do not execute this proposal without explicit owner approval",
+  "references": [
+    "https://docs.cloud.google.com/compute/docs/reference/rest/v1/projects/moveDisk",
+    "https://docs.cloud.google.com/compute/docs/instances/create-flex-start-vm"
+  ]
+}
