@@ -1,3 +1,31 @@
+# LOCAL — SEVEN actual optimizer updates; final update pending
+
+Actual2026-10-24T16:19:35.197158UTC:V18bounded8_training,controller28726/
+birth40829059stateS,fit28807/birth40829227stateS,noerror,rows1..7 saved.
+Step7norm12.057445526123047,retentionKL0.06858113408088684,
+hiddenMSE0.011275502853095531 arepre-update metrics,NOTconvergence/behavior.
+Newverified Mac snapshot20261024T161932.453255Z inventorySHA
+f85c7f4547cbfea158102a516c54671124552ab307ed7bb25aca0e4443e1dba1.
+Checkpoint22970059bytesSHA
+f87bfe8b90e9dea72ad829af51696e25e0470eb4f5606178dbfb7f9c80de5e0b.
+Inventory/checkpoint rehashed onMac; savedlog has all7rows. Full8 finalreport,
+independentfullrestore/strictproof/native20/speech20/freshqualification still
+required. No extension oradoption. SourceDA/modelmath and0d75986controller
+unchanged; exactprogress docs/NATIVE-REASONING32-FIT-LAUNCH-2026-10-24.json.
+
+Evalwaiter20887 was independently checked to reference exactV18proof, controller
+28726/birth40829059/sourceDA andcandidate_kindreasoning32 (notoldcontrol40).
+ActualevaluationexecutionC078 remains unchanged; outputnamesV17 retainedunused,
+notdifferentcandidate. Waiterlatestdispatch17:40UTC/deadline18:20UTC. Repaired
+loopbacktunnel40689remotehealthtrue16:19UTC,actualproviderrequests0.
+Backup8236watchingsuccess16:19UTC,guardarmedfixed18:39:58.8UTChardstop.
+Finiteobserver ended normally after7, NOTtrainingcancellation. No duplicate
+job/GCPGPU/newspendcommitment. Goal active. Next:retain finalupdate andactual
+fitexit0/fullreport, thenautomaticindependentrestore/strictproof/evaluation;
+verifycheckpoint/reportbackup beforehardstop. BroaderMacsourcebackupPARTIAL.
+
+---
+
 # LOCAL — SIX actual reasoning32 optimizer updates; checkpoint hash-backed up
 
 Actual observation2026-10-24T16:09:05.004855UTC:V18bounded8_training,
