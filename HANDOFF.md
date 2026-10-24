@@ -1,3 +1,44 @@
+# LOCAL — numerical32 time-bound stop14/32; all artifacts preserved (24 October10:12UTC)
+
+Goal turn PROGRESS. Main before this receipt03b5c01; LOCAL still sole executor.
+No model update/adoption/extension. Latest user direction retains basic reasoning
+in the native voice model and selectively delegates complex reasoning/tools.
+
+Exact numerical controller131524/birth27728076 and child132022/birth27800163
+are terminal. Child actualexit-15 at10:12:00.368500UTC from its planned deadline;
+controller phase failed_preserved_no_retry, error TimeoutExpired. GPU0%/0MiB at
+10:12:22.245602.14/32 completed, all14 passed their checks, maximum error
+0.00022917194291949272 <=.001, causal prefix errors0 and training alignment errors0.
+This is INCOMPLETE, NOT numerical approval; final unchanged-parameter proof absent.
+No passing subset accepted, no retry submitted, no new optimizer update.
+See docs/NATIVE-REASONING32-NUMERICAL-TIMEBOUND-2026-10-24.json.
+
+Finite backup watcher96838 COMPLETED10:12:11.902338. All4 terminal numerical/control
+files100250B independently hashed remote/Mac exact. Receipt
+ runs/local-migration-20261023/native-reasoning32-numerical-copyback-v11-v1.json.
+Complete Engine32 remains independently PASS and backed70files164694584B.
+No running native GPU job now. Earlier native training/restore/behavior, full32
+source/semantic/conversion/codec and critical archive backups remain as below.
+
+Next gradient implementation prepared in03b5c01: evals/native_reasoning_gradient.py
+uses separate verified text/audio masks, exact original26 adapters and BF16
+forward/gradient ownership checks. Four offline adversarial gate tests PASS;
+actual incomplete14 receipt correctly rejected. This code is NOT GPU-run or
+training-ready evidence. No live source checkout was changed or redeployed.
+
+Funding decision pending: one15USD top-up proposal at6ef03a8. No user response,
+new purchase or guard extension yet. Current guard70540 still terminates own
+Pod4yx8vahdmjsylx10:22:37.9UTC, preserving volume49yytzyoge. Existing V17backup/
+backend deadline10:20. If specific purchase approved, verify actual posted balance
+and replace guard safely before any dependent continuation. Whole32 numerical
+needs a new output version and at least60min planned headroom; preserve failedv11.
+Then complete BF16gradient32 and retained154/native49/control40/reasoning32 combined
+readiness before a distinct bounded fit from native520. Never extend rejectedV11
+unchanged, alter thresholds, accept subsets or infer behavior from checks.
+Mac CPU settings unchanged; model/ASR stayed on Runpod. Unrelated local work kept.
+
+---
+
 # LOCAL — intelligent duplex frontend retained; Engine32 PASS, numerical32 running (24 October10:04UTC)
 
 LOCAL remains sole executor; no handoff to cloud. Main before this receipt45608537a6952325751f45cf6756014b921772be.
