@@ -1,10 +1,10 @@
 {
   "schema": "dl-native-control40-pilot-progress-v1",
-  "at_utc": "2026-10-24T07:11:59.345425+00:00",
+  "at_utc": "2026-10-24T07:24:50.141401+00:00",
   "executor": "LOCAL",
   "classification": "progress",
   "previous_goal_turn": "progress",
-  "source_main_before_receipt": "2cbfd8a6cf76d9701b4cd10033b8feef4903bcf3",
+  "source_main_before_receipt": "757bf3d8de185d52fd0aae6cdc8a8e16842b8850",
   "execution_source": "c9efaaac24d983342f7eded46617e6450bc102ce",
   "orchestration_source": "a5958a0343383728639940c4eb82e31ca3aa96f2",
   "supervisor": {
@@ -886,7 +886,7 @@
   },
   "latest_live_observation": {
     "schema": "dl-native-control40-quota-retry-observation-v1",
-    "at_utc": "2026-10-24T07:11:45.316310+00:00",
+    "at_utc": "2026-10-24T07:24:16.711624+00:00",
     "controller": {
       "pid": 101648,
       "state": "S",
@@ -1018,7 +1018,7 @@
         "control40": 40
       },
       "restore": {
-        "native49": 17,
+        "native49": 44,
         "control40": 0
       }
     },
@@ -1038,7 +1038,7 @@
     "restore_report": null,
     "log_bytes": 4348030,
     "log_tail": null,
-    "GPU": "51 %, 22409 MiB",
+    "GPU": "53 %, 22411 MiB",
     "GPU_compute_PIDs": [
       "115807"
     ],
@@ -1147,14 +1147,38 @@
         "reused_verified_files": 156,
         "reused_verified_bytes": 2443568091,
         "transferred_file_bytes": 256407
+      },
+      {
+        "path": "runs/local-migration-20261023/native-control40-continuous-copyback-v17/20261024T071338.413906Z",
+        "files": 157,
+        "inventory_sha256": "4488e6bcd72bdf30a402008b2a21894b3468b42a4349630fa8716017e585c929",
+        "reused_verified_files": 156,
+        "reused_verified_bytes": 2443568091,
+        "transferred_file_bytes": 258058
+      },
+      {
+        "path": "runs/local-migration-20261023/native-control40-continuous-copyback-v17/20261024T071853.467913Z",
+        "files": 157,
+        "inventory_sha256": "32cafb1a986d237a0b131eab573a091d8859c3f950647d94a8adab9a55545fe9",
+        "reused_verified_files": 156,
+        "reused_verified_bytes": 2443568091,
+        "transferred_file_bytes": 259657
+      },
+      {
+        "path": "runs/local-migration-20261023/native-control40-continuous-copyback-v17/20261024T072306.695660Z",
+        "files": 157,
+        "inventory_sha256": "d4fd2ea06affcd3043f96e98341cee06188d9891f11d5f068d6fc8f24a9640ac",
+        "reused_verified_files": 156,
+        "reused_verified_bytes": 2443568091,
+        "transferred_file_bytes": 260962
       }
     ],
     "changes_to_remote_jobs": false,
     "pod_id": "4yx8vahdmjsylx",
     "ssh_host": "root@157.157.221.29",
     "ssh_port": 16701,
-    "at_utc": "2026-10-24T07:11:36.776306+00:00",
-    "last_marker": "7e88b64f1683811b15ec0ba1223dca91bb38688a6aae934de84a2e12fda6b8ed",
+    "at_utc": "2026-10-24T07:24:23.338980+00:00",
+    "last_marker": "85a58e6b893a3e3866cc313c263de587e02d7e94dfb0eac2efc545e5e801eb7e",
     "last_check_succeeded": true
   },
   "prior_backup_retirement": {
@@ -1769,5 +1793,14 @@
     "GPU_work_executed": false,
     "behavior_qualified": false,
     "model_adopted": false
+  },
+  "completed_actual_recipe": {
+    "path": "docs/NATIVE-CONTROL40-COMPLETED-RECIPE-2026-10-24.json",
+    "sha256": "ced484b8388182717e89e9959725c7a658051127c152fde468816a3635c743b7"
+  },
+  "completed_input_backup_review": {
+    "path": "docs/NATIVE-CONTROL40-INPUT-BACKUP-REVIEW-2026-10-24.json",
+    "all45_derived_files_verified_Mac_and_volume": true,
+    "source7797_closed_archive_rehashed_now": true
   }
 }

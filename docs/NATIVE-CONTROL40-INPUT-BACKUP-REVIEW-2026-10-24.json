@@ -1,0 +1,309 @@
+{
+  "schema": "dl-native-control40-completed-input-backup-review-v1",
+  "at_utc": "2026-10-24T07:19:28.675541+00:00",
+  "full_native_report_sha256": "500781444712ebb6368d534406ee25f663df4b511c6f920fae9e985db9aa5a18",
+  "derived_input_inventory": {
+    "schema": "dl-native-control40-derived-input-preservation-inventory-v1",
+    "at_utc": "2026-10-24T07:18:09.816994+00:00",
+    "roots": [
+      "native-control40-preflight-v2/codes",
+      "native-retained49-prepared-data-v1"
+    ],
+    "files": [
+      {
+        "path": "native-control40-preflight-v2/codes/cache.json",
+        "bytes": 43604,
+        "sha256": "374854c1d4865d8bfbf5f9a5213d3e01cdd2c1ebb0c1758b63b146b711040633"
+      },
+      {
+        "path": "native-control40-preflight-v2/codes/native-control3-train-000.pt",
+        "bytes": 74023,
+        "sha256": "56e7825de4e00ad12385884826f63082795772fe5b243163e7da115703cc937c"
+      },
+      {
+        "path": "native-control40-preflight-v2/codes/native-control3-train-001.pt",
+        "bytes": 91303,
+        "sha256": "52965386634cd65ed3a3cc5d0b61d3d5a9a5374f85517d8d43e9650eb1919038"
+      },
+      {
+        "path": "native-control40-preflight-v2/codes/native-control3-train-002.pt",
+        "bytes": 110183,
+        "sha256": "aa8ef8ac36f7d43e4c6603b3518a46b94e11edc3eb46095f3cf3f0b82106b54c"
+      },
+      {
+        "path": "native-control40-preflight-v2/codes/native-control3-train-003.pt",
+        "bytes": 79591,
+        "sha256": "2300435200f2a31d2acf51ebc87d6d5865484adbafc6adcd8b0fdde3b56cf5cd"
+      },
+      {
+        "path": "native-control40-preflight-v2/codes/native-control3-train-004.pt",
+        "bytes": 90471,
+        "sha256": "e5e69b48aad711b2566cd4b3efe7348cb4d0c4d7eba0b8080950db959faa3d4d"
+      },
+      {
+        "path": "native-control40-preflight-v2/codes/native-control3-train-005.pt",
+        "bytes": 108327,
+        "sha256": "cf180d91d2095fca3b5638f3c77762f78dec78cd3f3a88f04f26e2f5d71f413c"
+      },
+      {
+        "path": "native-control40-preflight-v2/codes/native-control3-train-006.pt",
+        "bytes": 81895,
+        "sha256": "f2fe5151cdc9c74014ab425b001f6469eb0a1d68b7ab559cc61bbcfd6c01c330"
+      },
+      {
+        "path": "native-control40-preflight-v2/codes/native-control3-train-007.pt",
+        "bytes": 98919,
+        "sha256": "31a064e20627a89b9e999b4ce6aef8ec76b827fe3b18a4e1df96810ab0e65377"
+      },
+      {
+        "path": "native-control40-preflight-v2/codes/native-control3-train-008.pt",
+        "bytes": 66279,
+        "sha256": "d1be0eb853ea772277893aa8aca400523964e4444befe9b04a6d2a57b0f9e940"
+      },
+      {
+        "path": "native-control40-preflight-v2/codes/native-control3-train-009.pt",
+        "bytes": 77415,
+        "sha256": "12074c573d7bd86942628d10d853e2d7bf5158ea633199a7d0e26b33dbcd09c3"
+      },
+      {
+        "path": "native-control40-preflight-v2/codes/native-control3-train-010.pt",
+        "bytes": 78375,
+        "sha256": "f18473c19d9b3d41b164b4472fff642f30141a9a63fe959a5541b15972dce56c"
+      },
+      {
+        "path": "native-control40-preflight-v2/codes/native-control3-train-011.pt",
+        "bytes": 66023,
+        "sha256": "cf9be93d777cba3aa50264fa05680acd4b2c7554434e06cc9d520513ab5e11e9"
+      },
+      {
+        "path": "native-control40-preflight-v2/codes/native-control3-train-012.pt",
+        "bytes": 75559,
+        "sha256": "52a0abacf186229cf7ec7cb385d78e2ac6297a4356df968f423c3394999a3fda"
+      },
+      {
+        "path": "native-control40-preflight-v2/codes/native-control3-train-013.pt",
+        "bytes": 83175,
+        "sha256": "118518b6e4402c40db3973f83b6e48dc80f09229760c24abc9099c32b8ae655f"
+      },
+      {
+        "path": "native-control40-preflight-v2/codes/native-control3-train-014.pt",
+        "bytes": 66023,
+        "sha256": "df2ae85cbd7ba1c2bea0297180f32a76c803fff4c5a81dc9b7a5f197c4b7f4b3"
+      },
+      {
+        "path": "native-control40-preflight-v2/codes/native-control3-train-015.pt",
+        "bytes": 73191,
+        "sha256": "92187fcf40dc13b5360d08b3f18ccb95a52cd0148c6b02d1d8056bd2aebc74c6"
+      },
+      {
+        "path": "native-control40-preflight-v2/codes/native-control3-train-016.pt",
+        "bytes": 114023,
+        "sha256": "60c68c7a3a6de21a66e5c43a908e051310289a63455e355a71b3463091b0e126"
+      },
+      {
+        "path": "native-control40-preflight-v2/codes/native-control3-train-017.pt",
+        "bytes": 111847,
+        "sha256": "12f43eaef69557961acff2907cc1b6656625acfbb537e9f8fd14c37f2d3b43aa"
+      },
+      {
+        "path": "native-control40-preflight-v2/codes/native-control3-train-018.pt",
+        "bytes": 107751,
+        "sha256": "0d1f72c02e41bf8e58117b240b8961fa8fb5af4132e65d48a56ec55b633d7900"
+      },
+      {
+        "path": "native-control40-preflight-v2/codes/native-control3-train-019.pt",
+        "bytes": 109671,
+        "sha256": "d807ab0a4d02f853933ea47d7af762479de44541958c0ae969650e88cfb13488"
+      },
+      {
+        "path": "native-control40-preflight-v2/codes/native-control3-train-020.pt",
+        "bytes": 104935,
+        "sha256": "26e1f5223f515cb55b5330b6dbff8909c837779e60c4f916d619c3e09eb9b91f"
+      },
+      {
+        "path": "native-control40-preflight-v2/codes/native-control3-train-021.pt",
+        "bytes": 114983,
+        "sha256": "2bd00ec8d7e69922897d9109d09055c96db7ca0a7ec425c2a891ff3ce67741da"
+      },
+      {
+        "path": "native-control40-preflight-v2/codes/native-control3-train-022.pt",
+        "bytes": 110631,
+        "sha256": "605af4b77aa6b2225b572484b4215fdb8dc548067d379a3116057625d6466623"
+      },
+      {
+        "path": "native-control40-preflight-v2/codes/native-control3-train-023.pt",
+        "bytes": 117415,
+        "sha256": "8c65a125bb899515fc11bece1aaa84f9c89812eaa0b34f9e6992cee249442956"
+      },
+      {
+        "path": "native-control40-preflight-v2/codes/native-control3-train-024.pt",
+        "bytes": 77287,
+        "sha256": "f18bd56805f786de381e60f058a5011995a48f73c05bd70b770000efc891e46b"
+      },
+      {
+        "path": "native-control40-preflight-v2/codes/native-control3-train-025.pt",
+        "bytes": 88743,
+        "sha256": "012969b4b07ee1a1aa633f37c353252d16923ad51d7f68eaac81006837238377"
+      },
+      {
+        "path": "native-control40-preflight-v2/codes/native-control3-train-026.pt",
+        "bytes": 92007,
+        "sha256": "7eff18a8f8927abf77ffddb9dfa7c820b50987c0ec7c44b555e4c3e700477bd4"
+      },
+      {
+        "path": "native-control40-preflight-v2/codes/native-control3-train-027.pt",
+        "bytes": 81127,
+        "sha256": "badb20cf1196de248ccc273dec7dcc4f48ae313d7f4a00d30c1cea4e8de29750"
+      },
+      {
+        "path": "native-control40-preflight-v2/codes/native-control3-train-028.pt",
+        "bytes": 83175,
+        "sha256": "a7175ae2c2af8984194803dff06a18dd3defacb41427bf46554b278491334660"
+      },
+      {
+        "path": "native-control40-preflight-v2/codes/native-control3-train-029.pt",
+        "bytes": 83815,
+        "sha256": "3945835419cc075fd71efaf22d6b4157b06de91325a882c7849d3acdac7aea7b"
+      },
+      {
+        "path": "native-control40-preflight-v2/codes/native-control3-train-030.pt",
+        "bytes": 79207,
+        "sha256": "79a52a73d01a031653c60faa51ab001df69e9c065423409291026ac94d720c12"
+      },
+      {
+        "path": "native-control40-preflight-v2/codes/native-control3-train-031.pt",
+        "bytes": 85735,
+        "sha256": "48ef0cbbcc9cf3233da5424bf695f739696f259667bb7ab752eebf83fa501e1d"
+      },
+      {
+        "path": "native-control40-preflight-v2/codes/native-control3-train-032.pt",
+        "bytes": 117159,
+        "sha256": "ff8f93b058c99251610132a14bdc33b15434387c19847d6b6b40c6ae20388ae9"
+      },
+      {
+        "path": "native-control40-preflight-v2/codes/native-control3-train-033.pt",
+        "bytes": 115111,
+        "sha256": "0acc35bca60c6015e5ef17cdaf322590957959438d2e008ee5dd0f5190f9e540"
+      },
+      {
+        "path": "native-control40-preflight-v2/codes/native-control3-train-034.pt",
+        "bytes": 118887,
+        "sha256": "13a0c75d8f5a6984de9ae3c1fd776e7c4fd49328000e7489fb4e383446447298"
+      },
+      {
+        "path": "native-control40-preflight-v2/codes/native-control3-train-035.pt",
+        "bytes": 114151,
+        "sha256": "5416cf36174d7d85b445c0a265eb6cbd822fbcbeb3aa08e8a8d4207dc42e9a2b"
+      },
+      {
+        "path": "native-control40-preflight-v2/codes/native-control3-train-036.pt",
+        "bytes": 108711,
+        "sha256": "d0c163985fd4ee95f263cf4527ddf7ea4dc09149821d9ae7ee6794a52847f014"
+      },
+      {
+        "path": "native-control40-preflight-v2/codes/native-control3-train-037.pt",
+        "bytes": 110503,
+        "sha256": "b279285fc96271119fe4713f3285997c0cab7724a3d96d31c1571958f74281fe"
+      },
+      {
+        "path": "native-control40-preflight-v2/codes/native-control3-train-038.pt",
+        "bytes": 114023,
+        "sha256": "af3de0b41c2acbfbc6f472af88e876cbab3cfd437b0083d5d19e75f0014a49d8"
+      },
+      {
+        "path": "native-control40-preflight-v2/codes/native-control3-train-039.pt",
+        "bytes": 113767,
+        "sha256": "27a1f3a1d1ee8df034e86331501fda527c04fb38a6e6d13e87f682aaf67fbbb2"
+      },
+      {
+        "path": "native-retained49-prepared-data-v1/audio49-data.json",
+        "bytes": 324617,
+        "sha256": "180ffb2c749c3917de0a02f8218d0f8e27bb0067c3b014fd1ef83ae0c583469f"
+      },
+      {
+        "path": "native-retained49-prepared-data-v1/prepared49.pt",
+        "bytes": 9742741,
+        "sha256": "ea62a5660e2c9800fbbb39414dc57a1c51cd90acff8186ea0908a885e43e18f6"
+      },
+      {
+        "path": "native-retained49-prepared-data-v1/report.json",
+        "bytes": 1246,
+        "sha256": "38bdf12ec47eb3e3f4412af0632d4876f0708b9d49005e0d908fe9db43f26208"
+      },
+      {
+        "path": "native-retained49-prepared-data-v1/validation.log",
+        "bytes": 179748,
+        "sha256": "46f45f893035577f146dafb43fbf46d13513ef05e1770911160428b7d1df1edc"
+      }
+    ],
+    "bytes": 14087372,
+    "source_snapshot": {
+      "inventory_sha256": "79401e2c1051361d150da644250e8acf87814bda1c48b167af8a34345214fa8f",
+      "archive": "control40-complete-workset-v1.tar.gz",
+      "archive_sha256": "87717cdf3e80977dbe78b18b0f1e75367411eab535d327dbee4679dcd9483616",
+      "files": 7797,
+      "bytes": 8000842614,
+      "roots": [
+        "native-control3-approval-20261021-v1",
+        "native-control3-approval-20261021-v2",
+        "native-control3-approval-20261021-v3",
+        "native-control3-approval-20261021-v4",
+        "native-control3-postteacher-20261022-v4",
+        "native-control3-postteacher-20261022-v5",
+        "native-control3-postteacher-20261022-v6",
+        "native-control3-postteacher-20261022-v7",
+        "native-control3-source-20261021-v1",
+        "native-control3-source-20261021-v2",
+        "native-control3-source-20261021-v3",
+        "native-control3-source-20261021-v4",
+        "native-control3-source-20261021-v5",
+        "native-control3-teacher-derived-20261021-v2",
+        "native-control3-teacher-diagnostic-20261022-v3",
+        "native-control3-teacher-diagnostic-20261022-v4",
+        "native-control3-teacher-diagnostic-20261022-v6",
+        "native-control3-teacher-diagnostic-20261022-v7",
+        "native-control3-teacher-quality-20261022-v3",
+        "native-control3-teachers-20261021-v2",
+        "native-control3-teachers-20261022-v3",
+        "native-control3-teachers-drained-20261022-v6",
+        "native-control3-teachers-drained-20261022-v7",
+        "native-control3-teachers-drained-20261022-v8",
+        "native-control3-teachers-exact-20261022-v4",
+        "native-control3-teachers-exact-20261022-v5",
+        "native-control3-teachers-scoped-20261022-v9",
+        "native-control3-webrtc-20261022-v1",
+        "native-control3-webrtc-20261022-v2",
+        "native-control3-webrtc-diagnostic-20261022-v1",
+        "native-control3-webrtc-diagnostic-20261022-v2",
+        "native-control3-webrtc-diagnostic-20261022-v3",
+        "native-control3-webrtc-postteacher-20261022-v1",
+        "native-control3-webrtc-reapproval-20261022-v1"
+      ]
+    },
+    "model_loaded": false,
+    "GPU_work_executed": false
+  },
+  "derived_inventory_sha256": "8770a7074ec20f5cafd875ed265c9c5b68629e470fa8c41ccd8ff2276a65c78f",
+  "all45_Mac_and_volume_file_hashes_exact": true,
+  "all40_control_cache_manifest_bound_to_completed_fit": true,
+  "prepared49_tensor_and_data_hashes_bound_to_completed_fit": true,
+  "original_selected_runs_inventory_bound_to_completed_fit": true,
+  "source_archive": {
+    "Mac_path": "runs/local-migration-20261023/control40-complete-workset-v1/control40-complete-workset-v1.tar.gz",
+    "bytes": 1023720756,
+    "sha256": "87717cdf3e80977dbe78b18b0f1e75367411eab535d327dbee4679dcd9483616",
+    "inventory_sha256": "79401e2c1051361d150da644250e8acf87814bda1c48b167af8a34345214fa8f",
+    "exact_archive_rehashed_now": true,
+    "files": 7797,
+    "uncompressed_bytes": 8000842614,
+    "internal_contents_previously_hash_verified": true,
+    "internal_contents_not_decompressed_again": true
+  },
+  "original_native_archive": "Original67.76GB/28470-file archive previously fully Mac-hashed23October; not rehashed in this smaller input review.",
+  "broader_stopped_Mac_source_backup_still_partial": true,
+  "CPU_OS_settings_changed": false,
+  "model_or_ASR_loaded": false,
+  "GPU_work_executed": false,
+  "training_data_or_thresholds_changed": false,
+  "scope": "Backup and completed-fit input binding, not independent native restoration or behavior acceptance."
+}

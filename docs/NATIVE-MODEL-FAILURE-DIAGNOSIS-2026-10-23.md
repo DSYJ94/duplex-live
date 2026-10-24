@@ -1,5 +1,11 @@
 # Native model failures: evidence and open causes — 23 October 2026
 
+**24 October status:** the control40 V11 pilot has now completed all8 updates
+and exited0. Independent full native restore is running; this candidate's
+behavioral performance remains unmeasured. The dated23 October observations
+below are historical, not the current job state. See the [updated cookbook](NATIVE-TRAINING-COOKBOOK-2026-10-21.md)
+and [completed recipe](NATIVE-CONTROL40-COMPLETED-RECIPE-2026-10-24.json).
+
 There is no adopted production candidate. The latest completed training stage is
 native7590052: eight new updates carrying native520 Adam clocks520→528. The new
 control40 repair has not made an optimizer update. Its full numerical and independent40-case BF16 gradient gates passed;

@@ -1,6 +1,63 @@
 # What we trained, what is saved, and what to test
 
-## 23 October update — current status
+## 24 October update — control40 pilot fit completed
+
+The **control40 V11 adapter has completed all eight updates** on Runpod, starting
+from native520's adapters and Adam state. The training process exited0 at
+06:58:04 UTC. This supersedes the “not started” status in the dated23 October
+snapshot below. The candidate is **unadopted**: its separate full native restore
+is running, and its native behavioral evaluation has not yet run. Live process
+state belongs in [HANDOFF](../HANDOFF.md), not in the historical recipe exports.
+
+The [completed recipe](NATIVE-CONTROL40-COMPLETED-RECIPE-2026-10-24.json) is exported
+from the actual final report, saved-state inspection and closed controller. It
+includes the exact152-argument command, all13 adapter module names, input/audit
+hashes, source SHAs, optimizer settings, parent lineage and final artifact hashes.
+It is distinct from the earlier planned recipe. The full6.35MB report and saved
+artifacts are preserved in the verified Mac snapshot recorded in that export.
+The [input backup review](NATIVE-CONTROL40-INPUT-BACKUP-REVIEW-2026-10-24.json)
+rechecks all45 derived files against the Mac, volume and actual fit bindings,
+and rehashes the closed archive containing all7,797 source/approval/failed-ancestor
+files. The broader stopped Mac source backup remains partial.
+
+| Setting | Completed control40 V11 run |
+| --- | --- |
+| Training source | `c9efaaac24d983342f7eded46617e6450bc102ce` |
+| Warm parent / Adam clocks | native520 /7510331; **520→528**, moments preserved |
+| Parameters | Same **1,894,400** FP32 LoRA parameters,26 tensors, rank8/scaling2; base frozen |
+| Updates / optimizer | **8**, AdamW LR2e-7, betas.9/.999, epsilon1e-8, weight decay0, norm clip1 |
+| Retained objectives | Every original154 term at each update:28 histories, old25/new24 text,10 word/14 clock anchors and49 acoustic teachers; KL1/hidden10 and both64-weight anchors |
+| Native streaming auxiliary | All49 once across8 updates; recorded-call forward values preserved with declared call-boundary autograd truncation |
+| New control teachers | All40 once across8; all five families per update; text/acoustic epoch weights1 each |
+| Execution | Native BF16 MATH, one A10080GB; no compile/CUDA graphs for fitting |
+| Reported peak allocation |23,076,832,256 bytes; the recorded fit/report window, not a whole-process memory guarantee |
+| Fit process elapsed |7,750.31seconds including post-fit reference generation; report timer4,385.91seconds has the narrower scope stated in the recipe |
+| Saved state | Final adapters, Adam528, Python/NumPy/Torch CPU/CUDA RNG, complete report, exact input and approval bindings |
+
+[The final fit audit](NATIVE-CONTROL40-COMPLETED-FIT-2026-10-24.json) verifies all
+original objectives, all49 native teachers and all40 controls. On the fixed28
+original teacher-forced history components, token accuracy changes604/782 to
+601/782; the [complete denominator review](NATIVE-CONTROL40-ACTUAL28-METRICS-2026-10-24.json)
+includes every component. This is training diagnostics, not conversational
+accuracy. The loss evidence does not establish convergence or improvement.
+
+The fresh-process restore must reproduce all28 original, all49 acoustic, all49
+native-stream and all40 control fingerprints, plus exact Adam/RNG restoration.
+Then the already waiting dispatcher runs the complete10 development cases on
+baseline and candidate, followed by independent speech checks of all20 outputs.
+All-case review and ordinary4/4 remain mandatory before sealed fresh measurement;
+fresh measurement permission does not establish adoption. A larger training run
+still requires conclusive restore, retention and native behavior evidence.
+
+The additional32-scene reasoning/delegation collection has progressed beyond the
+23 October snapshot: source audio and the complete derived teacher audio version
+are recorded and speech-qualified. Its separate semantic payload approval is
+pending; no semantic provider requests, physical native conversion or reasoning32
+training have occurred. Control40 teaches cue silence and pause/resume, not the
+whole reasoning/delegation or natural backchannel objective. No production model
+or natural microturn qualification is claimed.
+
+## 23 October snapshot — historical status
 
 There is still no adopted production model. The Runpod A100 comparison has now
 completed for both native520 and native7590052. Under the default runtime,

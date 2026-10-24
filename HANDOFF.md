@@ -1,3 +1,53 @@
+# LOCAL — completed recipe exported; full input backup verified (24 October 07:25 UTC)
+
+Goal turn PROGRESS; previous turn PROGRESS. LOCAL sole executor. Main before
+receipt757bf3d. Actual model C9 c9efaaac24d983342f7eded46617e6450bc102ce;
+supervisor a5958a0343383728639940c4eb82e31ca3aa96f2 unchanged.
+SAME101648/birth25974639 supervising fresh restore115807/birth26750060,
+LIVE07:24:16 GPU53%/22411MiB, native44/49, controls0/40. Fit101677 actuallyexit0,
+all8 updates; full restore/report/strict proof/behavior NOT passed yet. No duplicates.
+
+New completed recipe export and cookbook supersede dated23October not-started
+status. Actual152-argument fit command,13 module names, data/receipt/source/parent
+bindings, Adam520->528, LR2e-7, all154+native49/control40 exposure and final
+artifact hashes recorded in docs/NATIVE-CONTROL40-COMPLETED-RECIPE-2026-10-24.json.
+RecipeSHAced484b8388182717e89e9959725c7a658051127c152fde468816a3635c743b7.
+Exact recipe-export program retained under docs/diagnostics/. No model/math changes.
+
+Input preservation independently verified NOW:45 files/14,087,372B exact SHA256
+between Mac and volume, including all40 control caches and prepared49 tensors.
+Cache/prepared/data and original-runs inventory bindings exactly match final fit.
+Closed1,023,720,756B source archive rehashed NOW SHA
+87717cdf3e80977dbe78b18b0f1e75367411eab535d327dbee4679dcd9483616;
+its unchanged pinned inventory79401e2c... binds all7,797 files/8,000,842,614B
+including failed ancestors, source audio, receipts, folds and conversions. Internal
+archive contents already independently verified22October; not decompressed again.
+Mac archive runs/local-migration-20261023/control40-complete-workset-v1/.
+See docs/NATIVE-CONTROL40-INPUT-BACKUP-REVIEW-2026-10-24.json for all45 hashes.
+Original67.76GB archive previously fully rehashed23October; not repeated here.
+Broader stopped Mac source backup remains PARTIAL. No model/ASR loaded on Mac.
+
+Same backup1184/V17 sourcebb3f885 live; latest closed intermediate snapshot at
+07:13:38 inventorySHA4488e6bcd72bdf30a402008b2a21894b3468b42a4349630fa8716017e585c929;
+all21 then-emitted native restore hashes exactly match final fit references.
+Partial progress only, never acceptance. Final SF0cb85b4a.../PT86dde08e... remain
+safe on Mac/volume. No CPU OS/source/data/gain/threshold/fold changes.
+
+Guard70540 remains sole prepaid26h shutdown10:22:37.9UTC, volume49yytzyoge retained.
+Pipeline09:00; evaluator63289 waits all7 actualexit0 and upstreamended, latestlaunch
+09:37/end10:17; backend71254/backup1184 to10:20. No further purchase; approved20USD
+already posted, auto-payFalse, maxproject83.9807183<100. Reasoning32 remains frozen
+pending separate semantic payload approval:0semantic requests/conversion/training.
+
+Next SAME115807 complete all28/acoustic49/native49/control40+Adam528/allRNG restore
+->strictproof actualexit0 ->existing automatic fullpaired20/speech20 ->complete10
+review/ordinary4 ->eligible sealedfresh ->larger-run decision. Read-only eval observer
+prepared at runs/local-migration-20261023/native-control40-evaluation-observer-v1.py
+and /private/tmp/duplex-control40-evaluation-observer-v1.py; it launches nothing.
+Unrelated pyc/probes/roadmap preserved. No adoption/convergence/behavior claim.
+
+---
+
 # LOCAL — fit exited0; fresh independent restore live (24 October 07:07 UTC)
 
 Goal turn PROGRESS; LOCAL sole executor. Main before receipt
