@@ -1,0 +1,60 @@
+{
+  "schema": "dl-native-reasoning32-backup-and-evaluation-preparation-v1",
+  "numerical_observation": {
+    "measured": 7,
+    "passing": 7,
+    "complete32": false,
+    "child_pid": 3700,
+    "child_birth": 39444310
+  },
+  "follower": {
+    "pid": 4051,
+    "birth": 39474669,
+    "phase": "waiting_exact_numerical32"
+  },
+  "backup": {
+    "pid": 28132,
+    "source_commit": "e77e7c9f539c62157e60e09a8a5f4003a3c5c797",
+    "phase": "watching",
+    "last_check_succeeded": true,
+    "verified_snapshots": [
+      {
+        "path": "runs/local-migration-20261023/native-reasoning32-continuous-copyback-v1/20261024T111147.823579Z",
+        "files": 9,
+        "inventory_sha256": "8bebea9923b6616d89351dc112e965753166535fef375e72887e998a2f4bf95e",
+        "reused_verified_files": 0,
+        "reused_verified_bytes": 0,
+        "transferred_file_bytes": 80982
+      },
+      {
+        "path": "runs/local-migration-20261023/native-reasoning32-continuous-copyback-v1/20261024T111250.020928Z",
+        "files": 9,
+        "inventory_sha256": "fc29f87ef9040b9a3a7fb7d052f108aefd81d7fc8469b024aaea313301e2c1ee",
+        "reused_verified_files": 7,
+        "reused_verified_bytes": 43952,
+        "transferred_file_bytes": 43705
+      },
+      {
+        "path": "runs/local-migration-20261023/native-reasoning32-continuous-copyback-v1/20261024T111353.856030Z",
+        "files": 9,
+        "inventory_sha256": "f938c5419f7011c4f978e1a03345ac64a034c7bc6e53192f354e52676dec87fd",
+        "reused_verified_files": 7,
+        "reused_verified_bytes": 43952,
+        "transferred_file_bytes": 50386
+      }
+    ],
+    "deadline_utc": "2026-10-24T18:30:00Z",
+    "fixed_synthetic_output_roots_only": true
+  },
+  "evaluation_preparation": {
+    "native_baseline_and_reasoning_candidate_roles": true,
+    "independent_complete20_speech_routing": true,
+    "requires_full_restored_pilot_and_reused_numerical_binding": true,
+    "tests_passed": 6,
+    "evaluation_started": false,
+    "provider_requests": 0
+  },
+  "backup_tests_passed": 17,
+  "optimizer_updates": 0,
+  "adopted": false
+}

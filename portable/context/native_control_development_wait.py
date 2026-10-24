@@ -17,6 +17,8 @@ from portable.context.native_control_copyback import ssh_command
 
 STAGES=('whole_workset','complete40_precise_numerical','complete40_independent_BF16_gradient',
         'combined_readiness','bounded8_training','independent_restore','strict_proof_verification')
+REASONING_STAGES=('whole_workset','gradient32','combined_readiness','bounded8_training',
+                  'independent_restore','strict_proof')
 
 
 class ObservationUnavailable(RuntimeError):pass
@@ -24,14 +26,19 @@ class ObservationUnavailable(RuntimeError):pass
 
 def ready(value,plan):
     c=value['controller'];birth=value['birth']
-    if (c['pid']!=plan['upstream_pid'] or c['source_commit']!=plan['source_commit']
+    if (c['pid']!=plan['upstream_pid'] or c['source_commit']!=plan.get('upstream_source_commit',plan['source_commit'])
             or c['pod_id']!=plan['pod_id'] or birth not in (None,plan['upstream_birth'])):
         raise ValueError('Exact original upstream identity changed')
     if c['phase']=='complete_restored_pilot_only' and c['passed'] is True:
-        if [r['name'] for r in c['stages']]!=list(STAGES) or any(r.get('exit_code')!=0 for r in c['stages']):
-            raise ValueError('All seven numerical/training/independent-restore stages required')
+        reasoning=plan.get('candidate_kind')=='reasoning32'
+        stages=REASONING_STAGES if reasoning else STAGES
+        exit_key='actual_exit' if reasoning else 'exit_code'
+        if ([r['name'] for r in c['stages']]!=list(stages) or any(r.get(exit_key)!=0 for r in c['stages'])
+                or reasoning and (c.get('reused_numerical',{}).get('actual_exit')!=0
+                    or any(len(c['reused_numerical'].get(k,''))!=64 for k in ('controller_sha256','numerical_sha256')))):
+            raise ValueError('All numerical/training/independent-restore stages and exact numerical binding required')
         return birth is None
-    if c['phase']=='failed' or birth is None:
+    if c['phase'].startswith(('failed','upstream_failed')) or birth is None:
         raise ValueError('Upstream actually ended without a complete restored pilot')
     return False
 
@@ -56,7 +63,8 @@ def native_command(p):
         '--source',p['source'],'--source-commit',p['source_commit'],'--out',p['paired_out'],
         '--asr-python',p['asr_python'],'--deadline-utc',p['deadline_utc'],'--pod-id',p['pod_id'],
         '--gpu-mode','serial-one-gpu','--runtime-profile','container-default',
-        '--candidate-proof',str(Path(p['upstream'])/'training')]
+        '--reasoning32-candidate-proof' if p.get('candidate_kind')=='reasoning32' else '--candidate-proof',
+        str(Path(p['upstream'])/'training')]
 
 
 def launch_payload(p):

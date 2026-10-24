@@ -21,6 +21,16 @@ SPEECH_FILES=('portable/context/native_speech_followup.py','evals/moshi_speech_a
               'data/synthetic/filter.py')
 
 
+def checked_roles(current,source_commit,paired_commit):
+    roles=list(current.get('proofs',PROOFS))
+    candidates=(['baseline520','candidate-control40'],['baseline520','candidate-reasoning32'])
+    if roles not in (list(PROOFS),*candidates):
+        raise ValueError('Exact complete baseline/candidate role pair required')
+    if roles in candidates and source_commit!=paired_commit:
+        raise ValueError('Portable candidate speech audit must use the exact paired execution source')
+    return roles
+
+
 def source_identity(source):
     commit=subprocess.check_output(['git','-C',str(source),'rev-parse','HEAD'],text=True).strip()
     if subprocess.check_output(['git','-C',str(source),'status','--porcelain'],text=True).strip():
@@ -67,11 +77,7 @@ def main():
                 raise RuntimeError('Paired native execution ended without complete20')
             state['observed_paired_phase']=current['phase'];save();time.sleep(10)
         else:raise TimeoutError('Paired20 did not complete before deadline')
-        roles=list(current.get('proofs',PROOFS))
-        if roles not in (list(PROOFS),['baseline520','candidate-control40']):
-            raise ValueError('Exact baseline and archived or fully restored control40 candidate required')
-        if roles==['baseline520','candidate-control40'] and source_commit!=args.paired_source_commit:
-            raise ValueError('Portable candidate speech audit must use the exact paired execution source')
+        roles=checked_roles(current,source_commit,args.paired_source_commit)
         state['paired_execution_sha256']=hashlib.sha256((args.paired/'execution.json').read_bytes()).hexdigest()
         state['paired_roles']=roles;state['gpu_mode']=current.get('gpu_mode','paired-two-gpu');save()
         for device,role in enumerate(roles):

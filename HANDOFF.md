@@ -1,3 +1,39 @@
+# LOCAL — numerical7/32; incremental backup live; evaluation routes prepared (24 October11:13UTC)
+
+Goal turn PROGRESS/VERIFIED WAIT. Same exact numerical child3700/birth39444310
+and waiting follower4051/birth39474669 remain live.7/32 measured, all7pass;
+not a complete numerical approval. No optimizer updates or adoption.
+
+New bounded Mac backup watcher28132 runs sourcee77e7c9f539c62157e60e09a8a5f4003a3c5c797,
+remote/opt/duplex-reasoning32-backup-e77e7c9. Status
+runs/local-migration-20261023/native-reasoning32-continuous-copyback-v1/controller.json,
+deadline18:30UTC. Fixed whitelist contains numericalV14/control, pilotV15 and
+failedV12/V13controls only. Remote replicas/tmp/duplex-reasoning32-backup-snapshots;
+originals remain/workspace.17 backup boundary/reuse tests PASS. First two source
+snapshot inventories verified on Mac:9files each, inventory SHA8bebea9923b6616d89351dc112e965753166535fef375e72887e998a2f4bf95e
+andfc29f87ef9040b9a3a7fb7d052f108aefd81d7fc8469b024aaea313301e2c1ee.
+No credentials, owner conversations, symlinks or core dumps. No Mac model/ASR work.
+
+Prepared complete20 evaluation dispatch for reasoning32 candidate, without changing
+legacy control40 gates. New explicit candidate_kind=reasoning32 requires all SIX
+actualexit0 pilot stages AND exact complete numerical reused hashes/actualexit0.
+Different evaluation source may be declared separately from exact upstream source;
+identity, terminal controller and strict candidate proof still required. Native
+command uses --reasoning32-candidate-proof. Independent speech followup now accepts
+baseline520/candidate-reasoning32 ONLY as complete paired roles with identical
+speech/native execution source. Six lightweight eval/legacy dispatcher tests PASS.
+No behavioral evaluation or API calls started; eval code PREPARATION ONLY, not
+installed into any live numerical/training source. Need deploy separate evaluation
+checkout once candidate full restore passes, recreate isolated ASR environment and
+scoped Mac Responses proxy/SSH tunnel, then use all20 native and independent speech
+cases. Preserve all failures, require fresh qualification before any adoption.
+
+NEXT monitor exact numerical/follower; no manual duplicate GPU submission needed.
+Guard12953 fixed18:39:58.8UTC, follower17:45, backup18:30. If follower fails, inspect
+actual terminal report and budget before a distinct diagnosed successor.
+
+---
+
 # LOCAL — numerical2/32 pass; exact follow-on armed (24 October11:08UTC)
 
 Goal turn PROGRESS/VERIFIED WAIT. Model loaded on A100. Current numericalV14
