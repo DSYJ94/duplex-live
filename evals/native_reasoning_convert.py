@@ -1,7 +1,7 @@
 """Measured complete32 native data, gated by full speech and semantic approvals.
 
 No provider requests, codec/model loading or optimizer work. Preserve every
-original PCM sample, spoken word and actual request/delivery receipt. Only
+original PCM sample, independently measured word and actual request/delivery receipt. Only
 observed-end/grid-tail silence is added. Numerical/native approval stays required.
 """
 import argparse
@@ -179,6 +179,9 @@ def convert(c,batch,speech_approval,prepared,semantic_approval,out):
             teacher_collection_sha256=sha(batch/'teacher-collection.json'),source_quality_sha256=sha(c.source_quality),
             speech_approval_sha256=sha(speech_approval),prepared_inputs_sha256=sha(prepared),semantic_approval_sha256=sha(semantic_approval),
             complete32=True,accepted=rows,channel_order=['assistant','user'],optimizer_updates=0,training_approved=False,
+            word_label_source='Complete independent measured ASR; actual provider deltas retained separately',
+            nonzero_word_agreement_cases=[dict(id=r['id'],raw_wer=r['raw_wer'])for r in checked['results']if r['raw_wer']],
+            human_listening='pending',
             native_codec_numerical_gradient_and_behavior_approval_required=True,original_words_audio_receipts_folds_unchanged=True)
         (out/'ingestion.json').write_text(json.dumps(value,indent=2)+'\n')
         verify_derived(out,value,derived)
@@ -228,6 +231,10 @@ def verify(c,batch,speech_approval,prepared,semantic_approval,out):
         derived=[derive(c,batch,s,case,a,source_checks,objects,tokenizer)
                  for s,case,a in zip(manifest['scenes'],plan['cases'],checked['results'])]
         value=json.loads((out/'ingestion.json').read_text())
+        if (value['nonzero_word_agreement_cases']!=[dict(id=r['id'],raw_wer=r['raw_wer'])for r in checked['results']if r['raw_wer']]
+                or value['word_label_source']!='Complete independent measured ASR; actual provider deltas retained separately'
+                or value['human_listening']!='pending'):
+            raise ValueError('Independent label provenance or residual transcript disagreements changed')
         for key,path in [('teacher_collection',batch/'teacher-collection.json'),('source_quality',c.source_quality),
                          ('speech_approval',speech_approval),('prepared_inputs',prepared),('semantic_approval',semantic_approval)]:
             if value[key+'_sha256']!=sha(path):raise ValueError('Conversion approval/source byte binding changed')
