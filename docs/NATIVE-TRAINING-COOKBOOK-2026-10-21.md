@@ -1,5 +1,25 @@
 # What we trained, what is saved, and what to test
 
+## 24 October09:20 update — model rejected; new32 data ready through codec
+
+The completed8-update control40 model remains unadopted:2/4 ordinary cores and
+failed quiet/pause/delegation behavior. A matched adapter-disabled base scores3/4;
+[all four comparisons](NATIVE-CONTROL40-MATCHED-BASE4-REVIEW-2026-10-24.json) show
+that earlier adapters change some answers, while ice already fails in the base.
+Batch size, a particular loss coefficient and a longer run are not isolated fixes.
+
+The additional32 reasoning/delegation episodes now have complete speech, semantic,
+conversion and independently verified native codec approval. Two diagnosed ASR
+clock errors were repaired in a new derived version using the same unchanged
+recordings;30 exact original passing reviews were retained and two new reviews
+passed. All40 actual request markers and24 delivered contexts remain.
+[Complete evidence and hashes](NATIVE-REASONING32-COMPLETE-CONVERSION-CODEC-2026-10-24.json).
+These32 have received **zero native training updates**. Engine-input, numerical,
+gradient and combined retained-objective approvals remain before a new fit.
+Natural backchannels and production performance remain unqualified.
+
+The earlier24 October status below records the progression before this update.
+
 ## 24 October update — control40 pilot fit completed
 
 The **control40 V11 adapter has completed all eight updates** on Runpod, starting

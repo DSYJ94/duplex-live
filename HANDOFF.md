@@ -1,3 +1,64 @@
+# LOCAL — reasoning32 all speech/semantic/conversion/codec PASS; native pilot still FAIL (24 October09:20UTC)
+
+Goal turn PROGRESS; LOCAL sole executor. Main before receipt8499a3430eef56ef80120dacff1d1c80048485b3.
+No current training, no candidate adoption/extension or sealed-fresh reads.
+Original C9 model/eval source c9efaaac24d983342f7eded46617e6450bc102ce unchanged.
+
+Full32 data progress: diagnosed029/030 ASR clocks repaired by independent decoding
+of EACH SAME waveform-only region; no new recordings, source word changes, gain,
+normalization or threshold changes. All32 original transport/speech verified again.
+30 original semantic inputs/responses EXACT, two new gpt-6-astra reviews actualPASS;
+full32 unchanged strict semantic response binding verifier PASS. Original failed
+32 report and all original ASRs/recordings preserved. Whole32 approved derived
+speech b9c52876a514a6017718c9e7dbfcf99389d30d7f686e4ee359cf2840665142db;
+prepared62f1f020d6f6362819bd9a16613fdfbea7ca7786fdbe97706014d399df17727e.
+
+Complete32 physical conversion actualPASS, sourcea806f436b44b46c29ba6d2082da4474b4c43a2f9,
+/workspace/migration/native-reasoning32-converted-v11; ingestion
+786ebdccb9dd53ba72eeb05b69c8e661941828028ee6211ceade209c1f313550.
+19132nativeframes/1530.56s, all words/PCM/receipts/folds retained; allTRAIN.
+Native codec32 complete AND cold independent verification actualexit0 each:
+controller129565/birth27554159, build129576/birth27554181, verify129808/birth27560543,
+allended by09:13:54. Source8499a34; /workspace/migration/native-reasoning32-codes-v11.
+ALL40 actual native request targets and24 actual context deliveries retained.
+No model numerical/gradient/restore/behavior or optimizer approval inferred.
+See docs/NATIVE-REASONING32-COMPLETE-CONVERSION-CODEC-2026-10-24.json.
+
+New backups VERIFIED Mac and volume:231files/729837642B for complete conversion
+and complete base4 plus original failed diagnostic attempts;36files/2710053B for
+all32 code tensors/controller/actual exits. Allremote/Mac hashes exact, symlinks
+retained without following; credentials/owner/sessiontokens/cores excluded.
+Earlier complete20 V17 snapshot473files/3158279025B stillverified; original67.76GB
+archive and exact final SF/Adam/RNG retained. Broader stopped Mac source PARTIAL.
+
+Complete matched base4 (adapters disabled, unchanged C9/voice/persona/sourcePCM)
+gets3/4 cores versus native5202/4 and control40V11 2/4. All4 nativeactualexit0;
+independent ASR4 WER0 and clocksvalid. Original v1 failed CUDA header search before
+any case. New v2 corrected EXACT paired20 CPATH/PTXAS environment, completedall4,
+then missing ASR dependency failed. Separate129039/birth27502700 speech audit used
+EXACT successful paired20 interpreter /opt/native10-asr-env/bin/python, all4 final
+speech rows complete; detached ASR actual exit notcaptured, no rerun. Outputs retained.
+All4 userWAV byte-identical across all3 models. Ice fails even without adapters;
+native520 loses photosynthesis, V11 regains it but loses metal. This isolates some
+adapter-dependent changes; batch size/loss/duration causality remains unisolated.
+No base adoption. See docs/NATIVE-CONTROL40-MATCHED-BASE4-REVIEW-2026-10-24.json.
+
+Existing pilot8 full exact28/49/49/40 restoration PASS, development behavior FAIL:
+quiet/pause violated; wrong TWO before correct yellow/copper receipts; cancel action
+missing. Unchanged fresh guard rejects. No longer fit from that failed candidate.
+Next complete32 actual native Engine input/ownership audit with supplied spans,
+independent numerical32 at original.001/causality0, BF16 gradient32, then integrated
+retained154/native49/control40/reasoning32 bounded-repair readiness/fit/restore/
+behavior decision. No arbitrary whole-model unfreezing or relaxed old objectives.
+
+Funding09:17 wallet$4.8071034333,1.814/h, auto-payOFF. One20USD purchase alreadyposted;
+NO duplicate/new purchase.26h requires4.2889794064 inclreserve: prepaid.
+27h/34h NOT prepaid. Same guard70540 terminates OWN Pod4yx8vahdmjsylx10:22:37.9UTC,
+retains volume49yytzyoge; maxproject83.9807183<100. Backup1184/V17/backend71254 to10:20.
+No local model/ASR or OSCPU changes. Unrelated pyc/probes/roadmap untouched.
+
+---
+
 # LOCAL — two semantic timing ambiguities diagnosed in original PCM (24 October08:42UTC)
 
 Main before receipt6707266; LOCAL sole executor. No new training or API requests.

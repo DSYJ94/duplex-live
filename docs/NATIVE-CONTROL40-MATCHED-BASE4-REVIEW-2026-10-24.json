@@ -1,0 +1,1168 @@
+{
+  "schema": "dl-native-control40-published-base4-diagnostic-review-inputs-v1",
+  "at_utc": "2026-10-24T09:13:48.903105+00:00",
+  "execution_source": "c9efaaac24d983342f7eded46617e6450bc102ce",
+  "controller_sha256": "958302d4aab53b5ad5f0feffd2b690144d20f08904d427ddfb254428083ecbca",
+  "speech_report_sha256": "1ae3322a4abadc363853820a88f3f44e7e8ccbdc6466b3962e17c0a9f3c8ff80",
+  "paired_execution_sha256": "1cb71c8db743cb1e4415cb3edf0fed3fb47d9d49940db216d5fec5410ac1c52b",
+  "all4_native_exited0": true,
+  "all4_independent_speech_records_present": true,
+  "asr_exit_code_not_captured_by_detached_launcher": true,
+  "original_controller_failed_at_speech_dependency_only": true,
+  "inference_implementation_sha256": {
+    "portable/context/native_development.py": "fbb613eb42d5b36217adc5e8b7b4391ed6406b86f1b2469fe0e3cae3090cd67e",
+    "evals/context_spanning_probe.py": "3f78f83de82a7dec84250aca696bcba5250adfacc11606916b1da083347dca6f",
+    "evals/context_spanning_native.py": "1c1ccb668c80267a1df63bc57f55204e04e4f9954d9c7d5c2ceadd322cab76fb",
+    "evals/context_spanning_asr.py": "3c39f53d883d15dea73232b5f2de866af05a13adc9a4f7e4d93d4d0b27bfa079",
+    "evals/native_asr_placement.py": "c0c16a4a0a7fd925547ffa6a8ebef73c69ced8e5b360206b8ad94ec620034e15",
+    "evals/native_eval_session.py": "00abe763d94c0115f1ec4ce08c9462f4d8bc35f6d96034d5ba95e6cada0925ec",
+    "evals/context_adapter_load.py": "33720190e4564edfbd0a669477f2099f8f120049eef3037516a620574b27d89f",
+    "evals/context_execution.py": "66e6ac0f8630a79443b764e37c2cef248a65c6678be6baeb3eac79d12cc65dcf",
+    "evals/personaplex_adapters.py": "4230e4b6ca1883b85a3e17aee63110333e7a0e4f170a52fe075bfe081177dfdc",
+    "evals/context_native_layout.py": "bbf0699025b40be9376491334f787b488fe04a9b6262c2509f44888121250320",
+    "evals/context_span_trace.py": "353ee52a2c6f7389a0f1825e77ffa8759941e04d389eb297b13add5d38687118",
+    "evals/context_student_history.py": "84d25bf9cd8baf4c468fc772d87a0607842c21b63330faa000b64a90c18a0487",
+    "evals/context_prefix_trace.py": "2b66a794a7ce22c72df1c9e502b56701bfee6d0fabb6a2238e82af113ea05577",
+    "evals/audio_playout.py": "ff1b7ffcbbb6282c43f1e8f03e3529b526b94d8b21407657ccc33f3d545c8122",
+    "evals/context_event_log.py": "1a12bf40b14f35eaafe0bbcf7868f772de351a444eaa37ee71490c9347529a77",
+    "evals/context_backend_failure.py": "723ec377b99c15cf190ebb96324213eff070f0285d9cbed135f573e281d3fa83",
+    "evals/context_backend_reference.py": "5110d0dedb6dbfaf2d560aad3c9441996d4d457a768534a43e7ee0766e343456",
+    "evals/context_delivery_hold.py": "b5072db85a78a6044839d96e564614f9c3b1bd893b1777ed44073120aabffc79",
+    "evals/context_query_reference.py": "6e748071f88cd09e6e54b9f6b658af24c0f5a1d8d20d885a81372fb3c39b726a",
+    "evals/recovery_worker.py": "446346046a65f59613fbe67f20f768f53d75cf44f85365685e5ef025de46697b",
+    "evals/recovery_transport.py": "8df631286ac943792fd8e24e47afa570ab704a9cbf2e1f324d0a8f1ed442f124",
+    "evals/recovery_context.py": "454a295964742836a5202a43080c4a36dfb769d50d918b583297a376f8952cc4",
+    "evals/recovery_data.py": "29002bc49bce808d175318b82f9e567949d85f2b5223ef6ae53942e92a029b10",
+    "evals/lychee_context.py": "b3269e976a75a9c1796687507b651ad0c988362738b1701498ba885632132513",
+    "evals/context_spanning_download.py": "ec3c573ef1c1891f7b600bfed90238cecb67095dff09f8e249302df5cfce92db",
+    "evals/personaplex_train.py": "e8f7f6ddcc3f5ff56f1c4e1ea69698cb531a750adc53f05f61a32e867bf0d3de",
+    "evals/moshi_model_download.py": "77356b2b923bfe5592be5abb4b851510a5b53f3de64715c81d63c34b6d9aa186"
+  },
+  "cases": [
+    {
+      "index": 0,
+      "scenario": "recovery-train-012",
+      "artifact_sha256": {
+        "report.json": "12505bc0ea895198c971d7135bcd17a0fbe06f2f5ef2f4282b671a5a78d34bb8",
+        "model.wav": "1eac7aeb8a5aff819eb4b029160952b7478e24ef66bd645bdd4b6a992f59c2b0",
+        "user_in.wav": "1bd5ef3c206f748b90259defdcabc74fa5c985d873654010f69054a06229564f"
+      },
+      "model_text": "Let me see what I can find, the water's surface tension creates a kind of barrier that prevents the molecules from moving into the air.",
+      "independent_speech": {
+        "run": "/workspace/migration/native-control40-base4-ablation-v2/case-00",
+        "wav_sha256": "1eac7aeb8a5aff819eb4b029160952b7478e24ef66bd645bdd4b6a992f59c2b0",
+        "audio_duration_s": 30.171041666666667,
+        "model_text": "Let me see what I can find, the water's surface tension creates a kind of barrier that prevents the molecules from moving into the air.",
+        "asr_input_duration_s": 10.66,
+        "trailing_silence_trimmed_s": 17.8210625,
+        "silence_trim_enabled": true,
+        "asr_text": " Let me see what I can find. The water's surface tension creates a kind of barrier that prevents the molecules from moving into the air.",
+        "asr_segments": [
+          {
+            "id": 0,
+            "seek": 0,
+            "start": 5.41,
+            "end": 6.75,
+            "text": " Let me see what I can find.",
+            "tokens": [
+              50365,
+              961,
+              385,
+              536,
+              437,
+              286,
+              393,
+              915,
+              13,
+              50644
+            ],
+            "temperature": 0.0,
+            "avg_logprob": -0.20358144215175084,
+            "compression_ratio": 1.25,
+            "no_speech_prob": 9.431972347248574e-13,
+            "confidence": 0.85,
+            "words": [
+              {
+                "text": "Let",
+                "start": 5.41,
+                "end": 5.529999999999999,
+                "confidence": 0.45
+              },
+              {
+                "text": "me",
+                "start": 5.529999999999999,
+                "end": 5.6899999999999995,
+                "confidence": 0.992
+              },
+              {
+                "text": "see",
+                "start": 5.6899999999999995,
+                "end": 5.93,
+                "confidence": 0.997
+              },
+              {
+                "text": "what",
+                "start": 5.93,
+                "end": 6.109999999999999,
+                "confidence": 0.994
+              },
+              {
+                "text": "I",
+                "start": 6.109999999999999,
+                "end": 6.23,
+                "confidence": 0.959
+              },
+              {
+                "text": "can",
+                "start": 6.23,
+                "end": 6.390000000000001,
+                "confidence": 0.998
+              },
+              {
+                "text": "find.",
+                "start": 6.390000000000001,
+                "end": 6.75,
+                "confidence": 0.801
+              }
+            ]
+          },
+          {
+            "id": 1,
+            "seek": 0,
+            "start": 7.17,
+            "end": 11.129999999999999,
+            "text": " The water's surface tension creates a kind of barrier that prevents the molecules from",
+            "tokens": [
+              50644,
+              440,
+              1281,
+              311,
+              3753,
+              8980,
+              7829,
+              257,
+              733,
+              295,
+              13357,
+              300,
+              22367,
+              264,
+              13093,
+              490,
+              50838
+            ],
+            "temperature": 0.0,
+            "avg_logprob": -0.20358144215175084,
+            "compression_ratio": 1.25,
+            "no_speech_prob": 9.431972347248574e-13,
+            "confidence": 0.966,
+            "words": [
+              {
+                "text": "The",
+                "start": 7.17,
+                "end": 7.33,
+                "confidence": 0.745
+              },
+              {
+                "text": "water's",
+                "start": 7.33,
+                "end": 7.789999999999999,
+                "confidence": 0.977
+              },
+              {
+                "text": "surface",
+                "start": 7.789999999999999,
+                "end": 7.99,
+                "confidence": 0.999
+              },
+              {
+                "text": "tension",
+                "start": 7.99,
+                "end": 8.43,
+                "confidence": 0.999
+              },
+              {
+                "text": "creates",
+                "start": 8.43,
+                "end": 8.91,
+                "confidence": 0.994
+              },
+              {
+                "text": "a",
+                "start": 8.91,
+                "end": 9.09,
+                "confidence": 0.994
+              },
+              {
+                "text": "kind",
+                "start": 9.09,
+                "end": 9.209999999999999,
+                "confidence": 0.998
+              },
+              {
+                "text": "of",
+                "start": 9.209999999999999,
+                "end": 9.33,
+                "confidence": 0.998
+              },
+              {
+                "text": "barrier",
+                "start": 9.33,
+                "end": 9.61,
+                "confidence": 0.997
+              },
+              {
+                "text": "that",
+                "start": 9.61,
+                "end": 9.889999999999999,
+                "confidence": 0.9
+              },
+              {
+                "text": "prevents",
+                "start": 9.889999999999999,
+                "end": 10.17,
+                "confidence": 0.994
+              },
+              {
+                "text": "the",
+                "start": 10.17,
+                "end": 10.45,
+                "confidence": 0.992
+              },
+              {
+                "text": "molecules",
+                "start": 10.45,
+                "end": 10.809999999999999,
+                "confidence": 0.985
+              },
+              {
+                "text": "from",
+                "start": 10.809999999999999,
+                "end": 11.129999999999999,
+                "confidence": 0.979
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "seek": 0,
+            "start": 11.17,
+            "end": 12.03,
+            "text": " moving into the air.",
+            "tokens": [
+              50838,
+              2684,
+              666,
+              264,
+              1988,
+              13,
+              50886
+            ],
+            "temperature": 0.0,
+            "avg_logprob": -0.20358144215175084,
+            "compression_ratio": 1.25,
+            "no_speech_prob": 9.431972347248574e-13,
+            "confidence": 0.919,
+            "words": [
+              {
+                "text": "moving",
+                "start": 11.17,
+                "end": 11.469999999999999,
+                "confidence": 0.874
+              },
+              {
+                "text": "into",
+                "start": 11.469999999999999,
+                "end": 11.65,
+                "confidence": 0.988
+              },
+              {
+                "text": "the",
+                "start": 11.65,
+                "end": 11.79,
+                "confidence": 0.999
+              },
+              {
+                "text": "air.",
+                "start": 11.79,
+                "end": 12.03,
+                "confidence": 0.872
+              }
+            ]
+          }
+        ],
+        "wer_against_model_text": 0.0,
+        "semantic_review": "pending",
+        "human_listening": "pending",
+        "leading_silence_trimmed_s": 1.69,
+        "asr_window_start_s": 1.69,
+        "asr_window_end_s": 12.35,
+        "timestamps_restored_to_original_wav": true,
+        "internal_silence_removed": false,
+        "asr_activity_floor": 0.001,
+        "asr_margin_s": 0.25,
+        "first_nonzero_wav_sample_s": 1.9393333333333334,
+        "word_starts_within_recorded_audio": true,
+        "source_kind": "native",
+        "asr_time_bounds_valid": true,
+        "asr_word_bounds_valid": true
+      },
+      "adapter": {
+        "proof": "/projects/u6si/duplex-live/runs/context-training-proof-7510331",
+        "checkpoint_sha256": "0310c2563988f8f59d942dce98119230016136f13fc9729ad1c2f398318e7cb5",
+        "disabled": true,
+        "zero": false,
+        "installed_before_native_graphs": false,
+        "voice_codes_sha256": "2085b3d58d2f2b20042e2e57a60206dd43c3028173cd9140e83d6c7b5136404d",
+        "voice_reference_sha256": "6d5c88747333eddf3efd65d1a33973b48b0185bd119bcee16ebaae441c6e28e1",
+        "quality_qualified": false,
+        "native_protocol": {
+          "name": "bootstrap-preserve-provided-v1",
+          "code_sha256": "bbf0699025b40be9376491334f787b488fe04a9b6262c2509f44888121250320",
+          "attention_backend": "math"
+        }
+      },
+      "runtime": null,
+      "actual_exit": 0,
+      "same_user_PCM_as_both_adapted_models": true,
+      "ordinary_core_correct": false,
+      "behavior_verdict": "fail",
+      "reason": "Incorrect ice surface-tension/barrier explanation; lower density is absent.",
+      "human_listening_qualification": false
+    },
+    {
+      "index": 1,
+      "scenario": "recovery-train-013",
+      "artifact_sha256": {
+        "report.json": "d5aa5d4e508676f6353068f5e88ce306066a34c767ed951518a46e6fd233ce34",
+        "model.wav": "807c7c1458b9828dc8c24bb507b065ca4893b5221f58f01083212e24024b3aa2",
+        "user_in.wav": "8f0c8caac122f314070c26078f3b584d18cc381cf574d460dd2679af020567b9"
+      },
+      "model_text": "Let me see what I can find, and it turns out sound is produced by mechanical vibrations.",
+      "independent_speech": {
+        "run": "/workspace/migration/native-control40-base4-ablation-v2/case-01",
+        "wav_sha256": "807c7c1458b9828dc8c24bb507b065ca4893b5221f58f01083212e24024b3aa2",
+        "audio_duration_s": 31.10375,
+        "model_text": "Let me see what I can find, and it turns out sound is produced by mechanical vibrations.",
+        "asr_input_duration_s": 9.3,
+        "trailing_silence_trimmed_s": 19.91375,
+        "silence_trim_enabled": true,
+        "asr_text": " Let me see what I can find, and it turns out sound is produced by Mechanical Vibrations.",
+        "asr_segments": [
+          {
+            "id": 0,
+            "seek": 0,
+            "start": 5.63,
+            "end": 10.71,
+            "text": " Let me see what I can find, and it turns out sound is produced by Mechanical Vibrations.",
+            "tokens": [
+              50365,
+              961,
+              385,
+              536,
+              437,
+              286,
+              393,
+              915,
+              11,
+              293,
+              309,
+              4523,
+              484,
+              1626,
+              307,
+              7126,
+              538,
+              30175,
+              804,
+              691,
+              6414,
+              763,
+              13,
+              50809
+            ],
+            "temperature": 0.0,
+            "avg_logprob": -0.1551458740234375,
+            "compression_ratio": 1.0602409638554218,
+            "no_speech_prob": 5.566663666481397e-13,
+            "confidence": 0.938,
+            "words": [
+              {
+                "text": "Let",
+                "start": 5.63,
+                "end": 5.7299999999999995,
+                "confidence": 0.784
+              },
+              {
+                "text": "me",
+                "start": 5.7299999999999995,
+                "end": 5.89,
+                "confidence": 0.994
+              },
+              {
+                "text": "see",
+                "start": 5.89,
+                "end": 6.109999999999999,
+                "confidence": 0.998
+              },
+              {
+                "text": "what",
+                "start": 6.109999999999999,
+                "end": 6.27,
+                "confidence": 0.997
+              },
+              {
+                "text": "I",
+                "start": 6.27,
+                "end": 6.43,
+                "confidence": 0.989
+              },
+              {
+                "text": "can",
+                "start": 6.43,
+                "end": 6.63,
+                "confidence": 0.999
+              },
+              {
+                "text": "find,",
+                "start": 6.63,
+                "end": 7.029999999999999,
+                "confidence": 0.741
+              },
+              {
+                "text": "and",
+                "start": 7.25,
+                "end": 7.529999999999999,
+                "confidence": 0.896
+              },
+              {
+                "text": "it",
+                "start": 7.529999999999999,
+                "end": 7.6499999999999995,
+                "confidence": 0.993
+              },
+              {
+                "text": "turns",
+                "start": 7.6499999999999995,
+                "end": 7.909999999999999,
+                "confidence": 0.997
+              },
+              {
+                "text": "out",
+                "start": 7.909999999999999,
+                "end": 8.15,
+                "confidence": 0.982
+              },
+              {
+                "text": "sound",
+                "start": 8.15,
+                "end": 8.49,
+                "confidence": 0.897
+              },
+              {
+                "text": "is",
+                "start": 8.49,
+                "end": 8.71,
+                "confidence": 0.988
+              },
+              {
+                "text": "produced",
+                "start": 8.71,
+                "end": 9.03,
+                "confidence": 0.994
+              },
+              {
+                "text": "by",
+                "start": 9.03,
+                "end": 9.35,
+                "confidence": 0.988
+              },
+              {
+                "text": "Mechanical",
+                "start": 9.35,
+                "end": 9.97,
+                "confidence": 0.92
+              },
+              {
+                "text": "Vibrations.",
+                "start": 9.97,
+                "end": 10.71,
+                "confidence": 0.977
+              }
+            ]
+          }
+        ],
+        "wer_against_model_text": 0.0,
+        "semantic_review": "pending",
+        "human_listening": "pending",
+        "leading_silence_trimmed_s": 1.89,
+        "asr_window_start_s": 1.89,
+        "asr_window_end_s": 11.19,
+        "timestamps_restored_to_original_wav": true,
+        "internal_silence_removed": false,
+        "asr_activity_floor": 0.001,
+        "asr_margin_s": 0.25,
+        "first_nonzero_wav_sample_s": 2.13975,
+        "word_starts_within_recorded_audio": true,
+        "source_kind": "native",
+        "asr_time_bounds_valid": true,
+        "asr_word_bounds_valid": true
+      },
+      "adapter": {
+        "proof": "/projects/u6si/duplex-live/runs/context-training-proof-7510331",
+        "checkpoint_sha256": "0310c2563988f8f59d942dce98119230016136f13fc9729ad1c2f398318e7cb5",
+        "disabled": true,
+        "zero": false,
+        "installed_before_native_graphs": false,
+        "voice_codes_sha256": "2085b3d58d2f2b20042e2e57a60206dd43c3028173cd9140e83d6c7b5136404d",
+        "voice_reference_sha256": "6d5c88747333eddf3efd65d1a33973b48b0185bd119bcee16ebaae441c6e28e1",
+        "quality_qualified": false,
+        "native_protocol": {
+          "name": "bootstrap-preserve-provided-v1",
+          "code_sha256": "bbf0699025b40be9376491334f787b488fe04a9b6262c2509f44888121250320",
+          "attention_backend": "math"
+        }
+      },
+      "runtime": null,
+      "actual_exit": 0,
+      "same_user_PCM_as_both_adapted_models": true,
+      "ordinary_core_correct": true,
+      "behavior_verdict": "pass",
+      "reason": "Correct mechanical-vibrations core.",
+      "human_listening_qualification": false
+    },
+    {
+      "index": 2,
+      "scenario": "recovery-train-014",
+      "artifact_sha256": {
+        "report.json": "034c41c3993eb58840bbb22d53909e37c683a27619cc9dddca40533d9c1b43db",
+        "model.wav": "26c38428f8135d1f9d6b3ea9d0e02222620742bf0604bf92577d9cba2fe1484f",
+        "user_in.wav": "2239caf13fecd09fe494bbd2920d10127b8ae06e37401d0c44bdd0421fd25187"
+      },
+      "model_text": "Let me see what I can find, plants need light to carry out photosynthesis.",
+      "independent_speech": {
+        "run": "/workspace/migration/native-control40-base4-ablation-v2/case-02",
+        "wav_sha256": "26c38428f8135d1f9d6b3ea9d0e02222620742bf0604bf92577d9cba2fe1484f",
+        "audio_duration_s": 31.4345,
+        "model_text": "Let me see what I can find, plants need light to carry out photosynthesis.",
+        "asr_input_duration_s": 8.02,
+        "trailing_silence_trimmed_s": 21.6645,
+        "silence_trim_enabled": true,
+        "asr_text": " Let me see what I can find. Plants need light to carry out photosynthesis.",
+        "asr_segments": [
+          {
+            "id": 0,
+            "seek": 0,
+            "start": 5.109999999999999,
+            "end": 9.15,
+            "text": " Let me see what I can find. Plants need light to carry out photosynthesis.",
+            "tokens": [
+              50365,
+              961,
+              385,
+              536,
+              437,
+              286,
+              393,
+              915,
+              13,
+              2149,
+              1719,
+              643,
+              1442,
+              281,
+              3985,
+              484,
+              5787,
+              45601,
+              13,
+              50738
+            ],
+            "temperature": 0.0,
+            "avg_logprob": -0.15530703181312197,
+            "compression_ratio": 1.0,
+            "no_speech_prob": 5.880364554664008e-13,
+            "confidence": 0.944,
+            "words": [
+              {
+                "text": "Let",
+                "start": 5.109999999999999,
+                "end": 5.17,
+                "confidence": 0.794
+              },
+              {
+                "text": "me",
+                "start": 5.17,
+                "end": 5.35,
+                "confidence": 0.995
+              },
+              {
+                "text": "see",
+                "start": 5.35,
+                "end": 5.529999999999999,
+                "confidence": 0.999
+              },
+              {
+                "text": "what",
+                "start": 5.529999999999999,
+                "end": 5.67,
+                "confidence": 0.998
+              },
+              {
+                "text": "I",
+                "start": 5.67,
+                "end": 5.79,
+                "confidence": 0.989
+              },
+              {
+                "text": "can",
+                "start": 5.79,
+                "end": 5.95,
+                "confidence": 0.998
+              },
+              {
+                "text": "find.",
+                "start": 5.95,
+                "end": 6.29,
+                "confidence": 0.956
+              },
+              {
+                "text": "Plants",
+                "start": 6.53,
+                "end": 7.17,
+                "confidence": 0.736
+              },
+              {
+                "text": "need",
+                "start": 7.17,
+                "end": 7.39,
+                "confidence": 0.995
+              },
+              {
+                "text": "light",
+                "start": 7.39,
+                "end": 7.63,
+                "confidence": 0.984
+              },
+              {
+                "text": "to",
+                "start": 7.63,
+                "end": 7.89,
+                "confidence": 0.993
+              },
+              {
+                "text": "carry",
+                "start": 7.89,
+                "end": 8.129999999999999,
+                "confidence": 0.993
+              },
+              {
+                "text": "out",
+                "start": 8.129999999999999,
+                "end": 8.39,
+                "confidence": 0.99
+              },
+              {
+                "text": "photosynthesis.",
+                "start": 8.39,
+                "end": 9.15,
+                "confidence": 0.985
+              }
+            ]
+          }
+        ],
+        "wer_against_model_text": 0.0,
+        "semantic_review": "pending",
+        "human_listening": "pending",
+        "leading_silence_trimmed_s": 1.75,
+        "asr_window_start_s": 1.75,
+        "asr_window_end_s": 9.77,
+        "timestamps_restored_to_original_wav": true,
+        "internal_silence_removed": false,
+        "asr_activity_floor": 0.001,
+        "asr_margin_s": 0.25,
+        "first_nonzero_wav_sample_s": 2.009625,
+        "word_starts_within_recorded_audio": true,
+        "source_kind": "native",
+        "asr_time_bounds_valid": true,
+        "asr_word_bounds_valid": true
+      },
+      "adapter": {
+        "proof": "/projects/u6si/duplex-live/runs/context-training-proof-7510331",
+        "checkpoint_sha256": "0310c2563988f8f59d942dce98119230016136f13fc9729ad1c2f398318e7cb5",
+        "disabled": true,
+        "zero": false,
+        "installed_before_native_graphs": false,
+        "voice_codes_sha256": "2085b3d58d2f2b20042e2e57a60206dd43c3028173cd9140e83d6c7b5136404d",
+        "voice_reference_sha256": "6d5c88747333eddf3efd65d1a33973b48b0185bd119bcee16ebaae441c6e28e1",
+        "quality_qualified": false,
+        "native_protocol": {
+          "name": "bootstrap-preserve-provided-v1",
+          "code_sha256": "bbf0699025b40be9376491334f787b488fe04a9b6262c2509f44888121250320",
+          "attention_backend": "math"
+        }
+      },
+      "runtime": null,
+      "actual_exit": 0,
+      "same_user_PCM_as_both_adapted_models": true,
+      "ordinary_core_correct": true,
+      "behavior_verdict": "pass",
+      "reason": "Correct photosynthesis core.",
+      "human_listening_qualification": false
+    },
+    {
+      "index": 3,
+      "scenario": "recovery-train-015",
+      "artifact_sha256": {
+        "report.json": "a7b6975af0e4a02b5b0e916a27395f63d4304cddd1c2d20eb34e4d91a9470ba7",
+        "model.wav": "7f62cbd2ee34fe435b8bfdbd294afa359e83e4a6a0d343e6752146b2fabf91f4",
+        "user_in.wav": "eb744a904140fa81174c1976e1dbf8f3a5c4585970358bca992c053d5a703f12"
+      },
+      "model_text": "Let me see. It is because metal conducts heat very well. Would you like to hear about how that happens? Are you looking to find out why that happens? Do you want to hear more about how it works? Heat travels",
+      "independent_speech": {
+        "run": "/workspace/migration/native-control40-base4-ablation-v2/case-03",
+        "wav_sha256": "7f62cbd2ee34fe435b8bfdbd294afa359e83e4a6a0d343e6752146b2fabf91f4",
+        "audio_duration_s": 29.979875,
+        "model_text": "Let me see. It is because metal conducts heat very well. Would you like to hear about how that happens? Are you looking to find out why that happens? Do you want to hear more about how it works? Heat travels",
+        "asr_input_duration_s": 28.309875,
+        "trailing_silence_trimmed_s": 0.0,
+        "silence_trim_enabled": true,
+        "asr_text": " Let me see. It is because metal conducts heat very well. Would you like to hear about how that happens? Are you looking to find out why that happens? Do you want to hear more about how it works? Heat travels.",
+        "asr_segments": [
+          {
+            "id": 0,
+            "seek": 0,
+            "start": 5.01,
+            "end": 8.65,
+            "text": " Let me see. It is because metal conducts heat very well.",
+            "tokens": [
+              50365,
+              961,
+              385,
+              536,
+              13,
+              467,
+              307,
+              570,
+              5760,
+              6018,
+              82,
+              3738,
+              588,
+              731,
+              13,
+              50715
+            ],
+            "temperature": 0.0,
+            "avg_logprob": -0.18329795490611683,
+            "compression_ratio": 1.4477611940298507,
+            "no_speech_prob": 7.639156234667821e-13,
+            "confidence": 0.877,
+            "words": [
+              {
+                "text": "Let",
+                "start": 5.01,
+                "end": 5.09,
+                "confidence": 0.735
+              },
+              {
+                "text": "me",
+                "start": 5.09,
+                "end": 5.25,
+                "confidence": 0.992
+              },
+              {
+                "text": "see.",
+                "start": 5.25,
+                "end": 5.529999999999999,
+                "confidence": 0.669
+              },
+              {
+                "text": "It",
+                "start": 5.77,
+                "end": 6.25,
+                "confidence": 0.559
+              },
+              {
+                "text": "is",
+                "start": 6.25,
+                "end": 6.39,
+                "confidence": 0.994
+              },
+              {
+                "text": "because",
+                "start": 6.39,
+                "end": 6.77,
+                "confidence": 0.996
+              },
+              {
+                "text": "metal",
+                "start": 6.77,
+                "end": 7.13,
+                "confidence": 0.985
+              },
+              {
+                "text": "conducts",
+                "start": 7.13,
+                "end": 7.83,
+                "confidence": 0.991
+              },
+              {
+                "text": "heat",
+                "start": 7.83,
+                "end": 8.030000000000001,
+                "confidence": 0.982
+              },
+              {
+                "text": "very",
+                "start": 8.030000000000001,
+                "end": 8.35,
+                "confidence": 0.99
+              },
+              {
+                "text": "well.",
+                "start": 8.35,
+                "end": 8.65,
+                "confidence": 0.967
+              }
+            ]
+          },
+          {
+            "id": 1,
+            "seek": 0,
+            "start": 13.31,
+            "end": 15.11,
+            "text": " Would you like to hear about how that happens?",
+            "tokens": [
+              50715,
+              6068,
+              291,
+              411,
+              281,
+              1568,
+              466,
+              577,
+              300,
+              2314,
+              30,
+              51015
+            ],
+            "temperature": 0.0,
+            "avg_logprob": -0.18329795490611683,
+            "compression_ratio": 1.4477611940298507,
+            "no_speech_prob": 7.639156234667821e-13,
+            "confidence": 0.734,
+            "words": [
+              {
+                "text": "Would",
+                "start": 13.31,
+                "end": 13.41,
+                "confidence": 0.554
+              },
+              {
+                "text": "you",
+                "start": 13.41,
+                "end": 13.59,
+                "confidence": 0.996
+              },
+              {
+                "text": "like",
+                "start": 13.59,
+                "end": 13.79,
+                "confidence": 0.997
+              },
+              {
+                "text": "to",
+                "start": 13.79,
+                "end": 13.91,
+                "confidence": 0.996
+              },
+              {
+                "text": "hear",
+                "start": 13.91,
+                "end": 14.13,
+                "confidence": 0.996
+              },
+              {
+                "text": "about",
+                "start": 14.13,
+                "end": 14.35,
+                "confidence": 0.978
+              },
+              {
+                "text": "how",
+                "start": 14.35,
+                "end": 14.59,
+                "confidence": 0.989
+              },
+              {
+                "text": "that",
+                "start": 14.59,
+                "end": 14.83,
+                "confidence": 0.992
+              },
+              {
+                "text": "happens?",
+                "start": 14.83,
+                "end": 15.11,
+                "confidence": 0.295
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "seek": 0,
+            "start": 18.93,
+            "end": 21.090000000000003,
+            "text": " Are you looking to find out why that happens?",
+            "tokens": [
+              51015,
+              2014,
+              291,
+              1237,
+              281,
+              915,
+              484,
+              983,
+              300,
+              2314,
+              30,
+              51315
+            ],
+            "temperature": 0.0,
+            "avg_logprob": -0.18329795490611683,
+            "compression_ratio": 1.4477611940298507,
+            "no_speech_prob": 7.639156234667821e-13,
+            "confidence": 0.68,
+            "words": [
+              {
+                "text": "Are",
+                "start": 18.93,
+                "end": 18.950000000000003,
+                "confidence": 0.07
+              },
+              {
+                "text": "you",
+                "start": 18.950000000000003,
+                "end": 19.189999999999998,
+                "confidence": 0.997
+              },
+              {
+                "text": "looking",
+                "start": 19.189999999999998,
+                "end": 19.450000000000003,
+                "confidence": 0.995
+              },
+              {
+                "text": "to",
+                "start": 19.450000000000003,
+                "end": 19.67,
+                "confidence": 0.995
+              },
+              {
+                "text": "find",
+                "start": 19.67,
+                "end": 19.950000000000003,
+                "confidence": 0.999
+              },
+              {
+                "text": "out",
+                "start": 19.950000000000003,
+                "end": 20.15,
+                "confidence": 0.997
+              },
+              {
+                "text": "why",
+                "start": 20.15,
+                "end": 20.509999999999998,
+                "confidence": 0.992
+              },
+              {
+                "text": "that",
+                "start": 20.509999999999998,
+                "end": 20.75,
+                "confidence": 0.994
+              },
+              {
+                "text": "happens?",
+                "start": 20.75,
+                "end": 21.090000000000003,
+                "confidence": 0.56
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "seek": 0,
+            "start": 24.67,
+            "end": 26.17,
+            "text": " Do you want to hear more about how it works?",
+            "tokens": [
+              51315,
+              1144,
+              291,
+              528,
+              281,
+              1568,
+              544,
+              466,
+              577,
+              309,
+              1985,
+              30,
+              51565
+            ],
+            "temperature": 0.0,
+            "avg_logprob": -0.18329795490611683,
+            "compression_ratio": 1.4477611940298507,
+            "no_speech_prob": 7.639156234667821e-13,
+            "confidence": 0.577,
+            "words": [
+              {
+                "text": "Do",
+                "start": 24.67,
+                "end": 24.729999999999997,
+                "confidence": 0.683
+              },
+              {
+                "text": "you",
+                "start": 24.729999999999997,
+                "end": 24.869999999999997,
+                "confidence": 0.997
+              },
+              {
+                "text": "want",
+                "start": 24.869999999999997,
+                "end": 25.049999999999997,
+                "confidence": 0.995
+              },
+              {
+                "text": "to",
+                "start": 25.049999999999997,
+                "end": 25.189999999999998,
+                "confidence": 0.995
+              },
+              {
+                "text": "hear",
+                "start": 25.189999999999998,
+                "end": 25.35,
+                "confidence": 0.998
+              },
+              {
+                "text": "more",
+                "start": 25.35,
+                "end": 25.61,
+                "confidence": 0.994
+              },
+              {
+                "text": "about",
+                "start": 25.61,
+                "end": 25.85,
+                "confidence": 0.983
+              },
+              {
+                "text": "how",
+                "start": 25.85,
+                "end": 26.130000000000003,
+                "confidence": 0.966
+              },
+              {
+                "text": "it",
+                "start": 26.130000000000003,
+                "end": 26.15,
+                "confidence": 0.012
+              },
+              {
+                "text": "works?",
+                "start": 26.15,
+                "end": 26.17,
+                "confidence": 0.554
+              }
+            ]
+          },
+          {
+            "id": 4,
+            "seek": 2400,
+            "start": 29.049999999999997,
+            "end": 29.810000000000002,
+            "text": " Heat travels.",
+            "tokens": [
+              50365,
+              27359,
+              19863,
+              13,
+              50665
+            ],
+            "temperature": 0.0,
+            "avg_logprob": -0.5764380693435669,
+            "compression_ratio": 0.6190476190476191,
+            "no_speech_prob": 1.4490414076973046e-12,
+            "confidence": 0.041,
+            "words": [
+              {
+                "text": "Heat",
+                "start": 29.049999999999997,
+                "end": 29.270000000000003,
+                "confidence": 0.001
+              },
+              {
+                "text": "travels.",
+                "start": 29.270000000000003,
+                "end": 29.810000000000002,
+                "confidence": 0.251
+              }
+            ]
+          }
+        ],
+        "wer_against_model_text": 0.0,
+        "semantic_review": "pending",
+        "human_listening": "pending",
+        "leading_silence_trimmed_s": 1.67,
+        "asr_window_start_s": 1.67,
+        "asr_window_end_s": 29.979875,
+        "timestamps_restored_to_original_wav": true,
+        "internal_silence_removed": false,
+        "asr_activity_floor": 0.001,
+        "asr_margin_s": 0.25,
+        "first_nonzero_wav_sample_s": 1.9338333333333333,
+        "word_starts_within_recorded_audio": true,
+        "source_kind": "native",
+        "asr_time_bounds_valid": true,
+        "asr_word_bounds_valid": true
+      },
+      "adapter": {
+        "proof": "/projects/u6si/duplex-live/runs/context-training-proof-7510331",
+        "checkpoint_sha256": "0310c2563988f8f59d942dce98119230016136f13fc9729ad1c2f398318e7cb5",
+        "disabled": true,
+        "zero": false,
+        "installed_before_native_graphs": false,
+        "voice_codes_sha256": "2085b3d58d2f2b20042e2e57a60206dd43c3028173cd9140e83d6c7b5136404d",
+        "voice_reference_sha256": "6d5c88747333eddf3efd65d1a33973b48b0185bd119bcee16ebaae441c6e28e1",
+        "quality_qualified": false,
+        "native_protocol": {
+          "name": "bootstrap-preserve-provided-v1",
+          "code_sha256": "bbf0699025b40be9376491334f787b488fe04a9b6262c2509f44888121250320",
+          "attention_backend": "math"
+        }
+      },
+      "runtime": null,
+      "actual_exit": 0,
+      "same_user_PCM_as_both_adapted_models": true,
+      "ordinary_core_correct": true,
+      "behavior_verdict": "partial",
+      "reason": "Correct heat-conduction core; unnecessary repeated questions and unfinished final phrase retained.",
+      "human_listening_qualification": false
+    }
+  ],
+  "behavior_qualified": false,
+  "training_approved": false,
+  "ordinary_cores_correct": 3,
+  "ordinary_cores_total": 4,
+  "matched_native520_cores_correct": 2,
+  "matched_control40_v11_cores_correct": 2,
+  "conclusion": "Within this fixed four-question C9/A100/voice/persona/seed cohort, adapter presence changes correctness: native520 loses photosynthesis versus the base; V11 regains it but loses metal. Ice already fails with adapters disabled. This does not isolate batch size, a loss coefficient, training duration or a universal architecture limitation.",
+  "development_inputs_reused_not_held_out": true,
+  "base_not_adopted": true,
+  "training_extension_authorized": false,
+  "backup_review_sha256": "5536d45b78b8c66389fd1c775d18731e00b999794e908f07c2cecaff45cdbf6a"
+}
