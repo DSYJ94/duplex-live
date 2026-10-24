@@ -1,0 +1,96 @@
+{
+  "schema": "dl-gcp-native-cpu-staging-proposal-v1",
+  "status": "AWAITING_EXPLICIT_OWNER_APPROVAL",
+  "recorded_utc": "2026-10-24T20:50:43.249096+00:00",
+  "project": "aurium-duplex-live-20261024",
+  "purpose": "Stage and verify the existing approved archive before paying for A100 time; no optimization or inference on the CPU",
+  "machine": {
+    "name": "duplex-native-stage-20261024-v1",
+    "zone": "europe-west4-a",
+    "type": "e2-standard-2",
+    "vcpus": 2,
+    "ram_gib": 8,
+    "gpu_count": 0,
+    "maximum_runtime_hours": 4,
+    "provider_termination_action": "STOP",
+    "automatic_restart": false,
+    "service_account": null
+  },
+  "cost": {
+    "live_console_cpu_monthly_usd": 53.85,
+    "live_console_10gb_pd_balanced_monthly_usd": 1.1,
+    "planned_pd_balanced_gib": 250,
+    "planned_disk_monthly_usd": 27.5,
+    "cpu_plus_disk_hourly_usd": 0.11143835616438355,
+    "external_ipv4_hourly_allowance_usd": 0.005,
+    "conservative_all_in_hourly_upper_usd": 0.12,
+    "maximum_staging_compute_disk_ip_usd": 0.48,
+    "gcp_total_limit_usd_unchanged": 100,
+    "additional_budget_requested_usd": 0,
+    "payment_purchase": false
+  },
+  "access": {
+    "public_ip_for_outbound_package_downloads": true,
+    "only_inbound_port": 22,
+    "inbound_source": "This Mac current public IPv4 /32, kept only in ignored private local access file",
+    "dedicated_local_ssh_key": true,
+    "private_key_transferred": false,
+    "public_key_expiry_hours": 16,
+    "block_project_ssh_keys": true,
+    "firewall_rules": [
+      {
+        "name": "duplex-native-mac-ssh-v1",
+        "direction": "INGRESS",
+        "priority": 800,
+        "action": "ALLOW tcp:22",
+        "source": "This Mac /32",
+        "target_tag": "duplex-native-bounded"
+      },
+      {
+        "name": "duplex-native-deny-other-ingress-v1",
+        "direction": "INGRESS",
+        "priority": 900,
+        "action": "DENY all",
+        "source": "0.0.0.0/0",
+        "target_tag": "duplex-native-bounded"
+      }
+    ],
+    "existing_firewall_rules_modified": false,
+    "other_project_resources_targeted": false,
+    "public_app_or_inference_ports": []
+  },
+  "persistent_disk_handoff": {
+    "same_250gb_disk": true,
+    "cpu_stop_then_detach": true,
+    "attach_as_boot_disk_to_separate_approved_A100_vm": true,
+    "cpu_vm_converted_to_a2": false,
+    "extra_persistent_disk_requested": false,
+    "critical_state_on_local_ssd": false,
+    "delete_archive_or_original_state": false
+  },
+  "transfer": {
+    "existing_inventory_sha256": "94b42bae0152e8150ba7842146f66711b13df3b8ece9125bcb5db92a761196fb",
+    "new_payload_authorization_requested": false,
+    "artifact_transport": "rsync -ar --exclude=session-token --no-owner --no-group",
+    "source_transport": "Git bundle from committed main, fetched by destination Git; repository requires authentication, no GitHub credential is copied",
+    "exclusions": [
+      "owner conversations",
+      "credentials",
+      ".private",
+      "session-token",
+      "core dumps",
+      "unrelated local work"
+    ]
+  },
+  "optimizer_updates": 0,
+  "repeated_original_updates": false,
+  "a100_maximum_hours_unchanged": 12,
+  "automatic_approval_review": {
+    "rejected_action": "CPU staging machine and two tagged firewall rules",
+    "reason": "The existing specific approval covers A100 recovery/storage but does not explicitly cover the CPU machine or access-control changes",
+    "executed": false
+  },
+  "google_sign_in": "Completed and independently verified daryl@aurium-labs.com ACTIVE; original login session59648 terminal exit0",
+  "current_resources": "Fresh CLI lists no GCP instances or disks; Runpod8fsk2kouknoiac independently read EXITED",
+  "next_if_approved": "Create the exact bounded staging resources, transfer complete catalog, deploy source by Git fetch, verify destination, then stop CPU and use the same disk for the approved separate A100 recovery."
+}

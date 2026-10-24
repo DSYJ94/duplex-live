@@ -1,3 +1,28 @@
+# LOCAL — Google sign-in COMPLETE; CPU staging/access proposal awaits decision
+
+Google CLI session59648 endedexit0. Live auth list confirms daryl@aurium-labs.com
+ACTIVE, project aurium-duplex-live-20261024 ACTIVE/billingEnabledtrue. CLI instance
+and disk inventories both EMPTY. A10080 regionalquota1usage0; A2CPU12usage0.
+Runpod8fsk2kouknoiac freshly read EXITED. No GPU or transfer job started.
+Previous Google-verification blocker is resolved; do not ask user to sign in again.
+
+Automatic approval review REJECTED the exact CPU staging creation plus two tagged
+firewall rules because the existing explicit scope covers A100/storage, not CPU
+staging or these access-control changes. Entire command rejected before execution;
+no firewall or VM created. Do not bypass by opening broad/default public SSH.
+Concrete proposal: docs/GCP-CPU-STAGING-PROPOSAL-2026-10-24.json. One E2standard2,
+4h providerSTOP, shared250GBpersistentdisk, max0.48USD WITHIN existing GCP100USD;
+allowSSH onlythisMac/32, denyotheringress, onlytaggednewVM affected. No existing
+rule changed. No increase to data/GPU/training/budget authority. Stop/detachsame
+disk for separate A100; do not convert CPU family into A2. No source deployment
+auth copied: GitHub anonymous access fails, use a committed Git bundle + fetch.
+Dedicated private local SSH key exists only in ignored .private/, public metadata
+expires16h, not uploaded yet. Source0b4c222 prior published, unrelated edits intact.
+Goal remains incomplete: exact saved8 checkpoint, zero-repeat recovery, complete
+numerical/restore/native gates still required. LOCAL sole executor.
+
+---
+
 # LOCAL — Access blocked: Google human verification; saved8 recovery not executed
 
 Same Google account-verification blocker confirmed across three consecutive goal
