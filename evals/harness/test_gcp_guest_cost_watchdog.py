@@ -1,10 +1,20 @@
 import unittest
 
-from portable.context.gcp_guest_cost_watchdog import stop_reason
-from portable.context.gcp_budget_watchdog import AUTH_SHA, stamp
+from portable.context.gcp_guest_cost_watchdog import stop_reason,verify_guest
+from portable.context.gcp_budget_watchdog import AUTH_SHA, PROJECT, stamp
 
 
 class GuestCostGuardTests(unittest.TestCase):
+    def test_guest_cpu_cannot_be_treated_as_gpu_even_with_misrecorded_id(self):
+        lease=dict(id='123',name='duplex-native-saved8-gpu-fixture')
+        values={'project/project-id':PROJECT,'instance/id':'123','instance/name':lease['name'],
+                'instance/machine-type':'projects/1/machineTypes/e2-standard-2'}
+        with self.assertRaises(ValueError):verify_guest(lease,values.__getitem__)
+        values['instance/machine-type']='projects/1/machineTypes/a2-ultragpu-1g'
+        verify_guest(lease,values.__getitem__)
+        values['instance/name']='duplex-native-stage-20261024-v1'
+        with self.assertRaises(ValueError):verify_guest(lease,values.__getitem__)
+
     def setUp(self):
         self.lease=dict(id='123',stop_utc='2026-10-25T12:00:00Z')
         self.now=stamp('2026-10-25T00:05:00Z')

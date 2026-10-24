@@ -1,13 +1,13 @@
 {
   "schema": "dl-gcp-native-guest-cost-watchdog-preparation-v1",
-  "at_utc": "2026-10-24T22:22:34.942383+00:00",
-  "parent_source": "edb887b",
+  "at_utc": "2026-10-24T23:10:00Z",
+  "parent_source": "2d8d15413690b4368f25c98cd1d56bae7bc78da1",
   "implementation_sha256": {
-    "portable/context/gcp_guest_cost_watchdog.py": "60e103ad1695ddc436e052f19414337731037b813a0ee76f257cb8044023f583",
-    "evals/harness/test_gcp_guest_cost_watchdog.py": "5bd1b37bfb1951792d513279f14449841b7ab9b40d8d7e0c04a2e0f74bdcadda"
+    "portable/context/gcp_guest_cost_watchdog.py": "bb53894973fa18ffc462adeab70c2377c82cf7897a9163f43bc813aef2dd6b8d",
+    "evals/harness/test_gcp_guest_cost_watchdog.py": "505125d51e42092d2282cc68268d33402631a74c720fdda99f782ddee3b08d90"
   },
   "status": "PREPARED_NOT_INSTALLED_OR_ARMED_NO_GPU",
-  "focused_guest_mac_guard_controller_tests_passed": 16,
+  "focused_guest_mac_guard_controller_tests_passed": 17,
   "cli": [
     "--lease",
     "--destination",
@@ -17,7 +17,7 @@
   "host_requirements": [
     "Root transient systemd service on actual owned GPU host; reject container PID1",
     "Exact approved100USD/max12h/same250GB/zero-update lease and complete destination receipt",
-    "Metadata-Flavor Google project/id must match recorded owned GPU; no service-account/credential required",
+    "Metadata-Flavor Google project/id/exact name/A2-ultragpu-1g machine type must match the recorded owned GPU; reject staging CPU even with a misrecorded matching ID; no credentials required",
     "Mac guard must already be fresh before arming; then publish host armed state every5s"
   ],
   "stop_policy": [

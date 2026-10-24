@@ -1,3 +1,36 @@
+# LOCAL — Upload complete; original CPU verifier survives dropped SSH; product priority
+
+At23:01:47UTC the original local observer recorded actualSSH255/brokenpipe. This
+is an observation failure, not evidence the remote job stopped. Fresh boundedSSH
+succeeded23:08UTC: originalCPUstage23551 and extractor23553 STILL LIVE, no duplicate
+started. They retain sourcef5c2ed0 and /workspace/migration/gcp-full-stage-v1;
+26+archives extracted, full40132/81,154,452,891B+8link PASS still pending. Preserve
+original failed watcher receipts and logs; never rewrite SSH255 as successful0.
+CPU1784642133801608667 retains providerSTOP00:55:15UTC25Oct/same250GB/nondelete.
+Archiveupload10044/61436 actual0 remains complete; never repeat transfer.
+
+Exactinput watcher40309/PID3588 correctly stopped on upstream observation failure;
+no input reconstruction ran. Its prepared clean Git worktree is
+/opt/duplex-gcp-recovery-2d8d154-v1 at2d8d15413690b4368f25c98cd1d56bae7bc78da1.
+Recover observation of SAME remote job, then obtain actual complete hash evidence
+and exactCPUinput reconstruction before any GPU. No A100/model/newupdates.
+
+Human goal now prioritizes a working native voice/delegation product ASAP: use
+existing native_audition/local_responses_proxy app after required restore and
+behavior checks, repair/train only against measured failures. Current GCP grant
+still authorizes ZERO new optimizer updates; saved8 must not repeat. No larger
+transfer/purchase/storage/GPU overlap or weaker qualification implied.
+
+Guestguard identity fix additionally checks exact instance name and A2ultragpu1g
+metadata, preventing stagingCPU from matching a mistaken leaseID.17 focused
+guest/Macguard/controller tests PASS; SOURCE ONLY, no guard/model installed.
+Deploy this producer separately after commit; freeze f5c2ed0 and2d8d154 while used.
+LOCAL remains sole executor. Unrelated local files preserved. Next observe actual
+remote completion/failure, complete exact inputs, then bounded same-disk GPU
+restore/evaluation and existing end-to-end delegation app.
+
+---
+
 # LOCAL — COMPLETE archive rsync EXIT0; full CPU extraction/hash stage LIVE
 
 Archive rsync61436 ACTUALLY exited0 at22:41:29.377578UTC; wrapper10044 terminal0.

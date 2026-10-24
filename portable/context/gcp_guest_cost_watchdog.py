@@ -47,6 +47,14 @@ def metadata(name):
         return response.read(1024).decode().strip()
 
 
+def verify_guest(lease, read=metadata):
+    if (read('project/project-id') != PROJECT
+            or read('instance/id') != str(lease['id'])
+            or read('instance/name') != lease['name']
+            or not read('instance/machine-type').endswith('/machineTypes/a2-ultragpu-1g')):
+        raise ValueError('Guest identity/type differs from approved recorded GPU')
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ('lease', 'destination', 'guard', 'status'):
@@ -58,9 +66,7 @@ def main():
     authority = Path(__file__).resolve().parents[2]/'docs/GCP-NATIVE-CONTINUATION-AUTHORIZATION-2026-10-24.json'
     validate_lease(lease, authority.read_bytes(), args.destination.read_bytes())
     # Never shut down a staging CPU or some other instance on a bad invocation.
-    if (metadata('project/project-id') != PROJECT
-            or metadata('instance/id') != str(lease['id'])):
-        raise ValueError('Guest identity differs from approved recorded GPU')
+    verify_guest(lease)
 
     def record(phase, reason=None):
         value = dict(schema='dl-gcp-guest-cost-guard-v1', phase=phase, reason=reason,
