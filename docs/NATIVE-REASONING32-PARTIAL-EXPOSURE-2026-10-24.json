@@ -1,0 +1,139 @@
+{
+  "schema": "dl-native-reasoning32-partial-exposure-diagnostic-v1",
+  "at_utc": "2026-10-24T15:56:04.788463+00:00",
+  "snapshot": "20261024T154644.282319Z",
+  "inventory_sha256": "44ae6f0a201368aab75cbd7ef9cabca782ea52457c5f9a80700ab7b0ae349937",
+  "log_sha256": "8110716005266c0a4bdcc91ca53302a2799e122ba3c5901be7fcc194a5a07723",
+  "rows": [
+    {
+      "step": 1,
+      "retained_component_counts": {
+        "actual": 28,
+        "reference": 4,
+        "old25": 25,
+        "new24": 24,
+        "word": 10,
+        "clock": 14,
+        "audio49": 49
+      },
+      "retained_component_count": 154,
+      "retained_ids_weights_same_as_first_update": true,
+      "retained_losses_finite": true,
+      "actual28_weighted_training_loss": 0.5675211192473875,
+      "reasoning_families": [
+        "cancel-reasoning",
+        "delegate-reasoning",
+        "direct-basic",
+        "replace-reasoning"
+      ],
+      "reasoning_ids": [
+        "native-reasoning4-train-002",
+        "native-reasoning4-train-001",
+        "native-reasoning4-train-000",
+        "native-reasoning4-train-003"
+      ],
+      "reasoning_losses_finite": true,
+      "reasoning_user_audio_targets_zero": true,
+      "reasoning_weights_quarter": true
+    },
+    {
+      "step": 2,
+      "retained_component_counts": {
+        "actual": 28,
+        "reference": 4,
+        "old25": 25,
+        "new24": 24,
+        "word": 10,
+        "clock": 14,
+        "audio49": 49
+      },
+      "retained_component_count": 154,
+      "retained_ids_weights_same_as_first_update": true,
+      "retained_losses_finite": true,
+      "actual28_weighted_training_loss": 0.5697513132660484,
+      "reasoning_families": [
+        "cancel-reasoning",
+        "delegate-reasoning",
+        "direct-basic",
+        "replace-reasoning"
+      ],
+      "reasoning_ids": [
+        "native-reasoning4-train-006",
+        "native-reasoning4-train-005",
+        "native-reasoning4-train-004",
+        "native-reasoning4-train-007"
+      ],
+      "reasoning_losses_finite": true,
+      "reasoning_user_audio_targets_zero": true,
+      "reasoning_weights_quarter": true
+    },
+    {
+      "step": 3,
+      "retained_component_counts": {
+        "actual": 28,
+        "reference": 4,
+        "old25": 25,
+        "new24": 24,
+        "word": 10,
+        "clock": 14,
+        "audio49": 49
+      },
+      "retained_component_count": 154,
+      "retained_ids_weights_same_as_first_update": true,
+      "retained_losses_finite": true,
+      "actual28_weighted_training_loss": 0.5720321887438331,
+      "reasoning_families": [
+        "cancel-reasoning",
+        "delegate-reasoning",
+        "direct-basic",
+        "replace-reasoning"
+      ],
+      "reasoning_ids": [
+        "native-reasoning4-train-010",
+        "native-reasoning4-train-009",
+        "native-reasoning4-train-008",
+        "native-reasoning4-train-011"
+      ],
+      "reasoning_losses_finite": true,
+      "reasoning_user_audio_targets_zero": true,
+      "reasoning_weights_quarter": true
+    },
+    {
+      "step": 4,
+      "retained_component_counts": {
+        "actual": 28,
+        "reference": 4,
+        "old25": 25,
+        "new24": 24,
+        "word": 10,
+        "clock": 14,
+        "audio49": 49
+      },
+      "retained_component_count": 154,
+      "retained_ids_weights_same_as_first_update": true,
+      "retained_losses_finite": true,
+      "actual28_weighted_training_loss": 0.5682374892413853,
+      "reasoning_families": [
+        "cancel-reasoning",
+        "delegate-reasoning",
+        "direct-basic",
+        "replace-reasoning"
+      ],
+      "reasoning_ids": [
+        "native-reasoning4-train-014",
+        "native-reasoning4-train-013",
+        "native-reasoning4-train-012",
+        "native-reasoning4-train-015"
+      ],
+      "reasoning_losses_finite": true,
+      "reasoning_user_audio_targets_zero": true,
+      "reasoning_weights_quarter": true
+    }
+  ],
+  "distinct_reasoning_teachers_so_far": 16,
+  "total_reasoning_exposures_so_far": 16,
+  "all32_exposure_approved": false,
+  "all8_training_complete": false,
+  "learning_or_behavior_improvement_proven": false,
+  "scope": "Interim actual training exposure and raw pre-update metrics only. Repeated retained IDs/weights do not independently prove identical stochastic forward conditions, convergence or held-out improvement."
+}

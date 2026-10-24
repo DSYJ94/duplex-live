@@ -1,3 +1,24 @@
+# LOCAL — Actual first4 exposure independently checked; same fit live
+
+Verified snapshot20261024T154644.282319Z traininglogSHA
+8110716005266c0a4bdcc91ca53302a2799e122ba3c5901be7fcc194a5a07723.
+Details:docs/NATIVE-REASONING32-PARTIAL-EXPOSURE-2026-10-24.json.
+For each actual optimizer row1..4:28actual+4reference+25old+24new+10word+
+14clock+49audio=154 retainedcomponents. IDs/weights same across these4rows,
+all losses finite. Newreasoning4perupdate:one eachcancel/delegate/directbasic/
+replace,16distinctepisodes,weights.25,zero prefix/span/useraudio targets.
+This is partial exposure diagnostic,NOT full32 approval or convergence.
+Raw weightedactual28losses .56752112,.56975131,.57203219,.56823749 do NOT
+show monotonic lossreduction; thesepre-update trainingmetrics are notheldout
+behavior or matchedindependent before/after eval. No recipechanges made.
+
+Finiteobserver observedexacttrainer28726/birth40829059 and28807/birth40829227
+liveat15:56:51UTC,phasebounded8_training,noerror,4savedrows. Repairedtunnel40689
+remotehealth stilltrue,actualproviderrequests0. Backup/evalguard unchanged.
+Next: finishall8 then independentrestore/proof/fullnative20speech20. Goalactive.
+
+---
+
 # LOCAL — Delegation evaluation SSH tunnel restored; training unchanged
 
 Monitored wait found localproxy30380 healthy butoldtunnel30575 actuallyabsent;
