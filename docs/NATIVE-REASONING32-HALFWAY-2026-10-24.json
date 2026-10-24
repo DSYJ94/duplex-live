@@ -86,5 +86,12 @@
   "independent_restore_approved": false,
   "behavior_qualified": false,
   "model_adopted": false,
-  "checkpoint_backup_scope": "Three-update checkpoint already hash verified; fourth-update backup not independently rehashed in this record"
+  "checkpoint_backup_scope": "Four completed updates in hash-verified Mac checkpoint snapshot",
+  "checkpoint_backup": {
+    "snapshot": "20261024T154644.282319Z",
+    "inventory_sha256": "44ae6f0a201368aab75cbd7ef9cabca782ea52457c5f9a80700ab7b0ae349937",
+    "path": "native-reasoning32-retained-pilot-v18/training/training-state.pt",
+    "bytes": 22970059,
+    "sha256": "130f07d44c553d0d30a4ade387e6ae0c86df5ed361f5fd13c79b4df9eb7dcbac"
+  }
 }

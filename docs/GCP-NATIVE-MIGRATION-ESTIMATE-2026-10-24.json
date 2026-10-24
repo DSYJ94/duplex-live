@@ -1,0 +1,41 @@
+{
+  "schema": "dl-gcp-native-a100-regional-estimate-v1",
+  "observed_utc": "2026-10-24T15:49:22.503099+00:00",
+  "project": "aurium-duplex-live-20261024",
+  "region": "europe-west4",
+  "zone": "Any",
+  "machine_type": "a2-ultragpu-1g",
+  "gpu": "1 NVIDIA A100 80GB",
+  "vcpus": 12,
+  "ram_gb": 170,
+  "provisioning": "Standard",
+  "console_monthly_usd": 4075.17,
+  "console_rounded_hourly_usd": 5.58,
+  "itemized_monthly_usd": {
+    "cpu_memory": 883.67,
+    "gpu": 3157.4,
+    "mandatory_375gib_local_ssd": 33,
+    "default_10gb_balanced_persistent_disk": 1.1
+  },
+  "planned_durable_disk_gib": 250,
+  "planned_disk_monthly_usd_estimate": 27.5,
+  "six_hour_machine_plus_250gib_disk_estimate_usd": 33.7115,
+  "estimate_excludes": [
+    "network egress",
+    "tax and currency conversion",
+    "variable logging and snapshots"
+  ],
+  "public_price_table_rejected_as_regional_quote": true,
+  "console_form_submitted": false,
+  "instance_inventory_empty_verified": true,
+  "actual_capacity_verified": false,
+  "credit_applied_to_gpu_bill_verified": false,
+  "gcp_compute_budget_approved": false,
+  "migration_started": false,
+  "sources": [
+    "https://cloud.google.com/products/compute/pricing/accelerator-optimized",
+    "https://docs.cloud.google.com/compute/docs/gpus",
+    "https://docs.cloud.google.com/compute/docs/instances/limit-vm-runtime"
+  ],
+  "next_action": "Finish existing Runpod pilot and evaluation; pin archive/checkpoint inventory before a separately bounded GCP restore. Never put sole optimizer/RNG/checkpoint state on local SSD."
+}

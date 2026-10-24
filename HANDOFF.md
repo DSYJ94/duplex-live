@@ -1,3 +1,28 @@
+# LOCAL — UPDATE4 checkpoint hash-verified; GCP regional estimate prepared
+
+Four completed updates are now in verified Mac snapshot20261024T154644.282319Z.
+Checkpoint22970059bytes SHA130f07d44c553d0d30a4ade387e6ae0c86df5ed361f5fd13c79b4df9eb7dcbac.
+Inventory and checkpoint independently rehashed on Mac; exact inventory in
+ docs/NATIVE-REASONING32-HALFWAY-2026-10-24.json. This is preservation, not full
+training-state restore. Existing trainer28726/28807 verified live15:47UTC,
+fit sole GPU process30012MiB. All8 then independent restore/proof and native20/
+speech20 still required; no convergence/adoption claim or new submissions.
+
+GCP unsubmitted console quote for exactproject/europe-west4/a2-ultragpu-1g,
+Standard1xA10080GB/12vCPU/170GB/375GiBlocalSSD/default10GBpd-balanced:
+4075.17USDmonth, displayed5.58USDhour. CPU/RAM883.67,GPU3157.40,
+localSSD33.00,persistentboot1.10 monthly. Public marketing table remained at
+unbound5.06879789 and was NOT used as a regional quote. Plan250GiBdurable disk,
+estimated6h33.7115USD excludesegress/tax/currency/variablelogging/snapshots.
+See docs/GCP-NATIVE-MIGRATION-ESTIMATE-2026-10-24.json. Consoleform NOTsubmitted;
+actual project VM inventory empty verified. No GCPcapacity/application-of-credit
+bill or newcompute budget claimed. No credentials/permissions/upload created.
+GCP next step after current Runpod results: exact inventory-bound restore with
+persistentcheckpointstate andprovider-native deadline. CurrentRunpod100USDcap/
+18:39:58.8UTChardstop unchanged. Broader source backupPARTIAL. Goal active.
+
+---
+
 # LOCAL — FOUR actual reasoning32 optimizer updates; fit LIVE
 
 Progress observed2026-10-24T15:46:05.178018UTC:4/8 completed updates,
