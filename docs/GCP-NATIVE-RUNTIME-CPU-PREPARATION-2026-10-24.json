@@ -1,0 +1,62 @@
+{
+  "schema": "dl-gcp-native-runtime-cpu-preparation-observation-v1",
+  "at_utc": "2026-10-24T21:38:16Z",
+  "source_parent": "bba5996",
+  "deployed_source": "f5c2ed0d570733ddabb89b17d5a4f693123427c3",
+  "model_source": "da389a7031a5504495397d1575952194ffa209f1",
+  "model_source_git_deployed_clean": true,
+  "model_trainer_sha256": "2e504fac5d3171680e3277d1e436f7db51d9403b45a1e77f09d4c2c7ccc893c5",
+  "cpu_runtime": {
+    "driver_toolkit_session": 57119,
+    "driver_toolkit_actual_exit": 0,
+    "driver": "580.178.04-0ubuntu0.24.04.1",
+    "toolkit": "1.20.1-1",
+    "host_kernel": "7.0.0-1014-gcp",
+    "native_python_session": 16194,
+    "native_python_actual_exit": 0,
+    "native_python": "/workspace/runtime-x86-ngc2510/bin/python",
+    "asr_session": 44591,
+    "asr_actual_exit": 0,
+    "asr_python": "/workspace/native10-asr-env/bin/python",
+    "python": "3.12.3",
+    "torch": "2.9.0a0+145a3a7bda.nv25.10",
+    "triton": "3.4.0",
+    "public_whisper_turbo_sha256": "aff26ae408abcba5fbf8813c21e62b0941638c5f6eebfb145be0c9839262a19a",
+    "native_torch_or_triton_replaced": false,
+    "model_loaded": false,
+    "audio_transcribed": false,
+    "optimizer_updates": 0
+  },
+  "receipts_copied_back": {
+    "asr-python-freeze-v1.txt": {
+      "bytes": 5739,
+      "sha256": "fc17814d9ca18932a1853b7b3ebf1cf516f9d9743a4ae3555dfdf9f4dcfb1a52"
+    },
+    "asr-python-v1.json": {
+      "bytes": 373,
+      "sha256": "541869d4d31bb59a2fa71fbb588d3cc1e3474fb4895032c8949f9e06442f0fe7"
+    },
+    "native-python-freeze-v1.txt": {
+      "bytes": 5858,
+      "sha256": "5831992aa71d36272fb55318b09b447d72fb52f42cc565480a9e20aa459e50ca"
+    },
+    "native-python-v1.json": {
+      "bytes": 603,
+      "sha256": "643591c18174e6fd7876866f47134c8c852d0f72cb9fb4c8a6328a32dce0c50e"
+    }
+  },
+  "transport": {
+    "observed_received_bytes": 28340051440,
+    "source_archive_transport_bytes": 74228899463,
+    "available_disk": "181GiB",
+    "upload_session": 10044,
+    "last_polled_live": true,
+    "cpu_restore_watcher_session": 3415,
+    "last_restore_watcher_poll_live": true,
+    "destination_full_verified": false,
+    "gpu_started": false
+  },
+  "provider_stop_utc": "2026-10-25T00:55:15Z",
+  "heartbeat": "continue-native-gcp-recovery",
+  "next_action": "Preserve existing live archive upload/restore watcher; finish full hashes, then reconstruct exact native vendor/data/snapshot inputs and separately provision the approved bounded GPU only with fresh controls."
+}

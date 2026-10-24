@@ -1,3 +1,35 @@
+# LOCAL — Runtime prepared on CPU; 28.34GB received; existing transfer/restore unchanged
+
+Heartbeat21:31UTC re-polled SAMEupload10044 and restorewatcher3415 LIVE; no restart.
+At21:38:16UTC received28,340,051,440B of74,228,899,463B archive transport;181GiBfree.
+CPUproviderSTOP00:55:15UTC25Oct unchanged, same250GBdisk; no A100/newupdates.
+
+Driver/toolkit57119 ACTUALexit0: Ubuntu580.178.04 for7.0.0-1014-gcp, NVIDIAtoolkit
+1.20.1-1. Dockerdaemonrestart finished before new CPUcontainers. Nativevenv16194
+ACTUALexit0 at /workspace/runtime-x86-ngc2510; independentASR44591 ACTUALexit0
+at /workspace/native10-asr-env. Both exactNGC Torch2.9.0a0+145a3a7bda.nv25.10 and
+Triton3.4.0 retained via constraints/checks; primaryrequirements pinned. Public
+Whisperturboaff26ae... freshlydownloaded/hashed; no audio transcribed or model
+loaded. Both preparationreceipts and fullpipfreezes copiedback to ignored
+runs/local-migration-20261024/gcp-runtime-checks-v1. These are NOT GPUvalidation.
+
+OriginalDA clean Gitworktree actually created separately at
+/opt/duplex-reasoning32-da389a7-v15 (session16186 exit0), context_actual_train.py
+SHA2e504fac5d3171680e3277d1e436f7db51d9403b45a1e77f09d4c2c7ccc893c5 unchanged.
+Deployed recovery/stage source remainsf5c2ed0; this new commit is handoff/receipts
+only. Evidence: docs/GCP-NATIVE-RUNTIME-CPU-PREPARATION-2026-10-24.json.
+
+Do not rerun finished prep or duplicate live upload61436/wrapper58482/restore62943.
+Restoreawake66398 keeps Macawake through watcher completion; no CPUthrottlechange.
+Same15minheartbeat active, quiet because mainphasehealthy/inprogress. Full40132+8
+hashes have NOT passed yet. Afterfullreceipt, exact legacy/vendor/tmp/snapshot
+reconstruction remains before GPU. STOPCPU/detachsame disk, freshoneA10080/max12h/
+providerSTOP/costguard/singleGPUstate, ZERO-update finalization+independentrestore+
+unchangednativegates. No newtraining/thresholddata changes or cloudexecutorhandoff.
+Unrelated local edits preserved. Scope remains exact existing approvals.
+
+---
+
 # LOCAL — 13.51GB reached GCP; existing transfer/CPU restore live; follow-up ACTIVE
 
 At21:17:43UTC transportdu=13,509,051,888B,197GiB diskfree. Smallphase actualexit0;
