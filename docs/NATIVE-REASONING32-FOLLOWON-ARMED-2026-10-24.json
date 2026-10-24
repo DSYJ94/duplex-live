@@ -1,0 +1,31 @@
+{
+  "schema": "dl-native-reasoning32-followon-armed-v1",
+  "pod_id": "8fsk2kouknoiac",
+  "numerical": {
+    "pid": 3687,
+    "birth": 39444297,
+    "child_pid": 3700,
+    "child_birth": 39444310,
+    "source": "9d57928f03572f51862e952c513c1063a45e6511",
+    "measured_rows": 2,
+    "passing_rows": 2,
+    "complete32": false,
+    "approval": false,
+    "gpu_model_loaded": true
+  },
+  "follower": {
+    "pid": 4051,
+    "birth": 39474669,
+    "source": "da389a7031a5504495397d1575952194ffa209f1",
+    "phase": "waiting_exact_numerical32",
+    "stages_dispatched": [],
+    "out": "/workspace/migration/native-reasoning32-retained-pilot-v15"
+  },
+  "numerical_deadline_utc": "2026-10-24T12:30:00Z",
+  "follower_deadline_utc": "2026-10-24T17:45:00Z",
+  "pod_shutdown_utc": "2026-10-24T18:39:58.8Z",
+  "optimizer_updates": 0,
+  "adopted": false,
+  "tests": "Six lightweight tests passed for exact live/terminal identity binding and source-extension rejection",
+  "source_or_approval_thresholds_weakened": false
+}

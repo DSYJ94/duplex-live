@@ -1,3 +1,31 @@
+# LOCAL — numerical2/32 pass; exact follow-on armed (24 October11:08UTC)
+
+Goal turn PROGRESS/VERIFIED WAIT. Model loaded on A100. Current numericalV14
+PID3687/birth39444297; child3700/birth39444310:2/32 measured rows pass, full32
+not approved. Same9d57928 immutable numerical source. No optimizer. Do not repeat.
+
+One actual LIVE follow-on PID4051/birth39474669, source
+da389a7031a5504495397d1575952194ffa209f1 at/opt/duplex-reasoning32-da389a7-v15.
+Controller/workspace/migration/native-reasoning32-retained-pilot-v15/controller.json
+phase waiting_exact_numerical32, stages[]. Exact tuple3687/39444297/9d57928 bound.
+Command native-reasoning32-pilot-v15-command.json and launch receipt are on Mac;
+command also/workspace/migration. New source clean, workset read-only hardlinks.
+Six tests pass for live/terminal/PID reuse/actualexit0/all32 and exact loader AST.
+Follower waits until complete terminal numerical actualexit0, then rechecks full
+original numerical gate before whole-workset, gradient32, combined retained
+readiness, bounded8 fit, independent full restore and strict verification. No
+passing subset or fresh audit duplication. Exact failed/missing upstream stops it.
+
+Budget guard12953 stays armed for18:39:58.8UTC, volume49yytzyoge retained. Follower
+17:45deadline,3h fit-start headroom and1h restore reserve unchanged. No purchases.
+NEXT inspect exact processes and reports; no manual duplicate stage needed after
+numerical. Preserve resulting partial/full numeric report and actual terminal
+controller receipts. After strict full candidate restore, launch complete native
+behavior evaluation with actual async backend; a passed restore is not adoption.
+Current small controller/log copyback saved; no final numerical hash claim yet.
+
+---
+
 # LOCAL — restored runtime; numericalV14 live, no optimizer (24 October11:05UTC)
 
 Goal turn PROGRESS/VERIFIED WAIT. SamePod8fsk2kouknoiac, hard guard18:39:58.8UTC,
