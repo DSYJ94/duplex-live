@@ -1,3 +1,22 @@
+# LOCAL — whole32 training-objective preparation committed (24 October10:18UTC)
+
+Goal turn PROGRESS; source4482f04. New evals/native_reasoning_training.py provides
+complete32 schedule (all four families each of eight updates), source-bound
+numerical/gradient prerequisite checks, exact distinct text/acoustic masks,
+full exposure verification and all32 native restore fingerprints. Eight offline
+tests pass across gradient/training modules. No Torch/model/ASR work on Mac.
+This is PREPARATION ONLY: no optimizer or CLI, no retained-trainer integration yet,
+no deployment/GPU run or training approval. Next integrate with retained154,
+native49 and control40 plus combined readiness and independent full restore.
+
+Numerical14/32 terminal and all verified backups remain as immediately below.
+No new GPU jobs. The one15USD purchase question remains unanswered; no purchase
+or guard extension. Guard70540's10:22:37.9UTC Pod termination still applies.
+Verify actual provider termination and final backup/backend closure at that time.
+Preserve volume49yytzyoge and originals. Never approve partial numerical14.
+
+---
+
 # LOCAL — numerical32 time-bound stop14/32; all artifacts preserved (24 October10:12UTC)
 
 Goal turn PROGRESS. Main before this receipt03b5c01; LOCAL still sole executor.
