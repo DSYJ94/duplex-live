@@ -1,3 +1,20 @@
+# LOCAL — FOUR actual reasoning32 optimizer updates; fit LIVE
+
+Progress observed2026-10-24T15:46:05.178018UTC:4/8 completed updates,
+controller28726/birth40829059stateS andfit28807/birth40829227stateR.
+No error; same modelDA389A7/controller0d75986, no loss/math/data changes.
+Step4preclipnorm22.685853958129883;retentionKL0.06860277056694031,
+hiddenMSE0.011277709156274796. Pre-update metrics are not matched loss
+reduction, convergence or behavior evidence. Three-update checkpoint backup
+hash verified in preceding entry; fourth-update backup not yet rehashed.
+Exact observation:docs/NATIVE-REASONING32-HALFWAY-2026-10-24.json.
+Next: retain all8, independent restore/strict proof, then full paired20/native
+and speech20. Eval waiter20887 remains waiting, backup8236 recovered/healthy,
+guard12953 armed. No duplicate job/new GCP GPU/budget extension. Same fixed
+18:10UTC controller deadline and18:39:58.8UTC hardPodtermination. Goal active.
+
+---
+
 # LOCAL — THREE actual reasoning32 updates in verified Mac backup
 
 Progress evidence: snapshot 20261024T153831.118537Z, inventorySHA

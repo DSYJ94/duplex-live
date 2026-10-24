@@ -1,0 +1,90 @@
+{
+  "schema": "dl-native-reasoning32-halfway-v1",
+  "observation": {
+    "at_utc": "2026-10-24T15:46:05.178018+00:00",
+    "phase": "bounded8_training",
+    "stages": [
+      {
+        "name": "whole_workset",
+        "started_utc": "2026-10-24T11:41:11.861165+00:00",
+        "pid": 9581,
+        "birth": 39673531,
+        "actual_exit": 0,
+        "ended_utc": "2026-10-24T11:41:23.842055+00:00",
+        "reused_from_controller": "/workspace/migration/native-reasoning32-retained-pilot-v17/controller.json"
+      },
+      {
+        "name": "gradient32",
+        "started_utc": "2026-10-24T11:41:23.874849+00:00",
+        "pid": 9704,
+        "birth": 39674733,
+        "actual_exit": 0,
+        "ended_utc": "2026-10-24T12:28:18.333244+00:00",
+        "reused_from_controller": "/workspace/migration/native-reasoning32-retained-pilot-v17/controller.json"
+      },
+      {
+        "name": "combined_readiness",
+        "started_utc": "2026-10-24T12:28:18.366336+00:00",
+        "pid": 15566,
+        "birth": 39956182,
+        "actual_exit": 0,
+        "ended_utc": "2026-10-24T14:48:23.115117+00:00",
+        "reused_from_controller": "/workspace/migration/native-reasoning32-retained-pilot-v17/controller.json"
+      },
+      {
+        "name": "bounded8_training",
+        "started_utc": "2026-10-24T14:53:48.828373+00:00",
+        "pid": 28807,
+        "birth": 40829227
+      }
+    ],
+    "updates": [
+      {
+        "step": 1,
+        "gradient_norm_before_clip": 16.85215950012207,
+        "retention_kl": 0.06867368519306183,
+        "retention_hidden_mse": 0.011277739889919758
+      },
+      {
+        "step": 2,
+        "gradient_norm_before_clip": 25.566822052001953,
+        "retention_kl": 0.06856595724821091,
+        "retention_hidden_mse": 0.011277998797595501
+      },
+      {
+        "step": 3,
+        "gradient_norm_before_clip": 17.434288024902344,
+        "retention_kl": 0.06863545626401901,
+        "retention_hidden_mse": 0.01127601321786642
+      },
+      {
+        "step": 4,
+        "gradient_norm_before_clip": 22.685853958129883,
+        "retention_kl": 0.06860277056694031,
+        "retention_hidden_mse": 0.011277709156274796
+      }
+    ],
+    "handles": [
+      {
+        "pid": 28726,
+        "state": "S",
+        "birth": 40829059
+      },
+      {
+        "pid": 28807,
+        "state": "R",
+        "birth": 40829227
+      }
+    ],
+    "error": null
+  },
+  "planned_updates": 8,
+  "completed_updates_observed": 4,
+  "model_source_commit": "da389a7031a5504495397d1575952194ffa209f1",
+  "controller_source_commit": "0d75986fca9f1ef943dfece77c7859235163c0ad",
+  "training_complete": false,
+  "independent_restore_approved": false,
+  "behavior_qualified": false,
+  "model_adopted": false,
+  "checkpoint_backup_scope": "Three-update checkpoint already hash verified; fourth-update backup not independently rehashed in this record"
+}
