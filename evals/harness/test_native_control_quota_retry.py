@@ -3,7 +3,7 @@ from pathlib import Path
 import unittest
 
 from portable.context.native_control_development_wait import STAGES
-from portable.context.native_control_quota_retry import retry_commands, COMMIT, POD
+from portable.context.native_control_quota_retry import retry_commands, legacy_environment, LEGACY_MOSHI, COMMIT, POD
 
 
 def previous():
@@ -20,6 +20,14 @@ def previous():
 
 
 class QuotaRetry(unittest.TestCase):
+    def test_clean_ssh_environment_gets_same_pinned_moshi_dependency_and_strips_provider_keys(self):
+        compiler=dict(header='/cuda/include/cuda.h',assembler='/cuda/bin/ptxas')
+        env=legacy_environment(compiler,dict(PATH='/bin',OPENAI_API_KEY='fixture',RUNPOD_API_KEY='fixture'))
+        self.assertEqual(env['PYTHONPATH'],LEGACY_MOSHI)
+        self.assertEqual(env['CUDA_VISIBLE_DEVICES'],'0')
+        self.assertEqual(env['DL_TASK_COMMIT'],COMMIT)
+        self.assertNotIn('OPENAI_API_KEY',env);self.assertNotIn('RUNPOD_API_KEY',env)
+
     def test_reuses_all_four_passed_stages_and_changes_only_three_output_paths(self):
         p=previous();before=copy.deepcopy(p);c=retry_commands(p,Path('/new'))
         self.assertEqual(p,before)

@@ -21,11 +21,18 @@ from portable.context.native_preflight_takeover import process
 
 COMMIT = 'c9efaaac24d983342f7eded46617e6450bc102ce'
 POD = '4yx8vahdmjsylx'
+LEGACY_MOSHI = '/workspace/control40-vendor-moshi-rag/moshi'
 REPORTS = {
     'complete-balanced-preflight.json': 'b99575a23cf16365a26a3033aee03c292a9afb665087b85c6a3dc6d82bae5638',
     'native-stream49-gradient-readiness.json': '26ee9b0f55c4331736fe71076f4d3364aa534df598bf11f7b6f112fd1b929acc',
     'control40-combined-readiness.json': '568117e69f18fd7d1282592e726953edbedc80569dc959bdb2db2807459cf352',
 }
+
+
+def legacy_environment(compiler, inherited):
+    env = training_environment(compiler, inherited, COMMIT)
+    env['PYTHONPATH'] = LEGACY_MOSHI
+    return env
 
 
 def retry_commands(previous, out):
@@ -74,7 +81,7 @@ def run(a):
             or failure['actual_2GiB_write_after_reclaim_succeeded'] is not True):
         raise ValueError('Preserved partial state and actual quota recovery evidence required')
     guard_gate(json.loads(a.cost_guard.read_text()), POD, deadline)
-    for pid in (79780, 97250, 71679, 71818):
+    for pid in (79780, 97250, 71679, 71818, 100803, 100823):
         p = process(pid)
         if p is not None and p['state'] != 'Z':
             raise ValueError('Previous execution still live; never duplicate it')
@@ -108,7 +115,11 @@ def run(a):
             or not compiler['actual_triton_driver_compile_passed']
             or any(digest(compiler[n]) != compiler[n+'_sha256'] for n in ('header', 'assembler'))):
         raise ValueError('Original compiled runtime required')
-    env = training_environment(compiler, os.environ, COMMIT)
+    env = legacy_environment(compiler, os.environ)
+    # Exercise the dependency that failed before any new model load/update.
+    subprocess.run([commands[STAGES[4]][0], '-c',
+                    'from moshi.conditioners import ConditionAttributes; print("Pinned native Moshi import passed")'],
+                   cwd=source, env=dict(env, CUDA_VISIBLE_DEVICES=''), check=True, timeout=45)
     a.out.mkdir(parents=True, exist_ok=False)
     (a.out/'interrupted-controller.json').write_bytes(a.previous.read_bytes())
     (a.out/'quota-recovery.json').write_bytes(a.failure.read_bytes())

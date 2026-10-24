@@ -24,7 +24,7 @@ ROOTS=('native-control40-preflight-v3/numerical','native-control40-supervisor-v4
        'native-control40-precise-pilot-v3-adoption','native-control40-precise-pilot-v4-adoption',
        'native-control40-precise-pilot-v5-adoption','native-control40-precise-pilot-v6-adoption',
        'native-control40-precise-pilot-v7-adoption','native-control40-precise-pilot-v8-recovery','native-control40-precise-pilot-v9-adoption',
-       'native-control40-precise-pilot-v10-quota-retry')
+       'native-control40-precise-pilot-v10-quota-retry','native-control40-precise-pilot-v11-environment-retry')
 EPHEMERAL_SNAPSHOTS=Path('/tmp/duplex-control40-backup-snapshots')
 FORBIDDEN={'session-token','.private','.env','keys','credentials','core','quarantine',
            'owner-conversations','owner_conversations'}
