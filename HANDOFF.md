@@ -10,18 +10,21 @@ account credentials or unrelated organisation membership details.
 
 Compute Engine API was initially not enabled. Exactly ONE enable operation
 completed; API Enabled and Manage button verified on official Compute API page.
-Do not enable again from a stale observer. GPU quota and promotion coverage
-remain unverified.
+Do not enable again from a stale observer. Global GPU quota verified360, usage0. europe-west4 on-demand and preemptible
+A10080 quotas both0. Exactly ONE on-demand quota request0→1 submitted; console
+confirmed processing, case bd254371-b3ca-406c-8bd1-da7e538f058f. Do not duplicate.
+Partner promotion GPU coverage remains unverified.
 No GCP VM, bucket, archive transfer, credential or permission grant created by us.
 Cloud Shell activation remained blank; no shell command was submitted.
-Next inspect global/regional single-A10080 quota and credit
-eligibility before any compute provisioning. Runpod remains sole GPU executor.
+Next await that regional quota request and verify credit eligibility plus a
+bounded migration cost before any compute provisioning. Runpod remains sole GPU executor.
 
 Runpod controller8514/sourceDA389A7, child15566/birth39956182, remains live at
 13:44:32UTC in combined_readiness. Original154 and all49 final PASS reports backed
-up; first joint partition logged finite norm16.85216022004957, frozen gradients0.
+up; first two joint partitions logged finite norms16.85216022004957 and
+24.531588275162903, frozen gradients0, latest observed13:49:31UTC.
 New32 gradient delta8.810691951738844 vs retained11.8038137738305, cosine.32229395;
-this is a fixed-parent diagnostic, NOT learning/behavior approval. Seven joint
+this is a fixed-parent diagnostic, NOT learning/behavior approval. Six joint
 partitions and then bounded8/independent restore/complete20 evaluation remain.
 Zero optimizer updates in this pilot as last observed. Pod8fsk2kouknoiac and
 hard stop18:39:58.8UTC unchanged; no duplicate GPU job or additional purchase.
