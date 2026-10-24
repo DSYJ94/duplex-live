@@ -1,0 +1,57 @@
+{
+  "schema": "dl-native-reasoning32-queued-environment-repair-v1",
+  "numerical": {
+    "pid": 3687,
+    "birth": 39444297,
+    "child_pid": 3700,
+    "child_birth": 39444310,
+    "measured": 30,
+    "passing": 30,
+    "complete32": false,
+    "source_unchanged": true
+  },
+  "diagnosis": "Queued native runtime omitted isolated verifier package path; actual metadata lookup fails without it and passes with original pinned packages",
+  "original_follower": {
+    "pid": 4051,
+    "birth": 39474669,
+    "stopped_with_SIGTERM_while_waiting": true,
+    "stages_dispatched": 0,
+    "original_receipts_preserved": true
+  },
+  "v16": {
+    "pid": 8455,
+    "handle_missing_after_stale_guard_rejection": true,
+    "stages_dispatched": 0,
+    "actual_parent_exit_not_captured": true,
+    "receipts_preserved": true
+  },
+  "current_follower": {
+    "pid": 8514,
+    "birth": 39640315,
+    "phase": "waiting_exact_numerical32",
+    "source": "da389a7031a5504495397d1575952194ffa209f1",
+    "out": "/workspace/migration/native-reasoning32-retained-pilot-v17",
+    "pythonpath": "/tmp/duplex-reasoning32-asr-cpu-v1/packages:/workspace/control40-vendor-moshi-rag/moshi"
+  },
+  "backup": {
+    "pid": 38347,
+    "source": "7079b0eff93494d828929b2a79cd3a63220c85b8",
+    "prior_pid": 28132,
+    "prior_stopped": true,
+    "includes_pilot_v17_and_native20_speech_v17": true
+  },
+  "evaluation": {
+    "pid": 38348,
+    "prior_pid": 31286,
+    "prior_stopped": true,
+    "upstream_pid": 8514,
+    "upstream_birth": 39640315,
+    "paired": "/workspace/migration/native-reasoning32-native20-v17",
+    "speech": "/workspace/migration/native-reasoning32-native20-speech-v17",
+    "original_scoped_proxy_retained": true,
+    "provider_requests": 0
+  },
+  "optimizer_updates": 0,
+  "training_or_adoption_approved": false,
+  "budget_or_deadlines_extended": false
+}

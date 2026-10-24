@@ -1,3 +1,45 @@
+# LOCAL — numerical30/32; corrected queued environment and V17 chain (24 October11:38UTC)
+
+Goal turn PROGRESS/VERIFIED WAIT. Exact numerical3687/birth39444297, child3700/
+birth39444310 remains live and UNMODIFIED at source9d57928:30/32 allpass, final32
+and unchanged hash not yet approved. No optimizer or behavioral results yet.
+
+Diagnosed before GPU dispatch: queued follower environment lacked/tmp/duplex-
+reasoning32-asr-cpu-v1/packages. Native interpreter metadata lookup fails without
+it, passes exact20250625/1.15.9 with it. Stopped4051/birth39474669 while confirmed
+waiting/stages[]; originalV15 receipt plus stopped-before-dispatch.json preserved.
+Stopped matching local eval31286 before any launch. First replacementV16 PID8455
+was rejected by stale copied guard BEFORE dispatch; handle absent, stages[], actual
+parent exit not captured. Preserved all receipts/logs. Refreshed real guard receipt.
+No numerical/gradient/teacher threshold or runtime math was changed.
+
+CURRENT ONE follower8514/birth39640315, source unchangedda389a7031a5504495397d1575952194ffa209f1
+at/opt/duplex-reasoning32-da389a7-v15, NEW output/workspace/migration/native-reasoning32-retained-pilot-v17,
+phase waiting_exact_numerical32/stages[]. Launch receipt native-reasoning32-pilot-v17-launch.json.
+Correct inherited PYTHONPATH=/tmp/duplex-reasoning32-asr-cpu-v1/packages:/workspace/control40-vendor-moshi-rag/moshi.
+Original numeric exact tuple/deadline and all gates retained. Never submit duplicate.
+
+BackupV1 watcher28132 stopped in watching phase, all snapshots retained. NEW watcher
+38347 source7079b0eff93494d828929b2a79cd3a63220c85b8 at remote/opt/duplex-reasoning32-backup-7079b0e,
+status native-reasoning32-continuous-copyback-v2/controller.json, healthy2snapshots
+at observation; reuses verified finalV1 snapshot. Whitelist now includesV15/V16/V17
+pilot roots plus exact planned native20V17 and speechV17, preserving all originals.
+17 backup tests PASS. Same18:30UTC deadline. No model/ASR workloads on Mac.
+
+NEW local evaluation dispatcher38348, status native-reasoning32-evaluation-v17-dispatch.json,
+healthy waiting. Plan native-reasoning32-evaluation-v17-plan.json binds upstream
+8514/birth39640315 and native20-v17/native20-speech-v17 outputs. Evaluation source
+stillc07873b, proxy30380/run_id native-reasoning32-native20-v15 and tunnel30575
+unchanged; same20synthetic cases, ZERO prior API calls, no credentials transferred.
+ASR preparation exit0 retained. Eval lateststart17:00/deadline18:20 unchanged.
+Guard12953 still hard18:39:58.8UTC; no purchase, cap increase or provider change.
+
+NEXT monitor numeric terminal32 and automaticV17 gradient/readiness/fit/restore.
+If complete numerical appears, require actual child/controllerexit0 and finalmodel
+hash proof, not rows alone. New backup already tracks all current artifact roots.
+
+---
+
 # LOCAL — numerical13/32; complete20 evaluation dispatcher armed (24 October11:19UTC)
 
 Goal turn PROGRESS/VERIFIED WAIT. Same numericalV14 child3700/birth39444310
