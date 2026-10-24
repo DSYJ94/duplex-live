@@ -38,6 +38,14 @@ def original_gate(c, pid, child, commit, pod):
     if c['schema']=='dl-native-control40-pilot-supervisor-takeover-v1':
         if index==2 or c.get('old_supervisor_retired_after_child_exit') is not True:
             raise ValueError('Nested paused-gradient supervisors must not be retired by this transition')
+    elif c['schema']=='dl-native-control40-precise-recovery-controller-v1':
+        if (index<3 or c.get('prior_workset_independently_rechecked') is not True
+                or c.get('completed_predecessors_reused_with_original_actual_exits') is not True
+                or c.get('partial49_approval_reused') is not False
+                or c.get('readiness_all49_restarted') is not True
+                or c.get('recovery_source_commit')!='fb3adfc29f63c7dace63c9ab6a109d828288897e'
+                or c.get('previous_controller_sha256')!='ae3b6e3e1f2417211d52580c804e99b4f8a4b5ec4a013d4de04194c7500e13fa'):
+            raise ValueError('Exact independently rechecked recovery without partial49 reuse required')
     elif c['schema']!='dl-native-control40-precise-pilot-controller-v1':
         raise ValueError('Explicit original pilot or safely retired-parent takeover schema required')
     return c
@@ -93,6 +101,12 @@ def main():
         raise ValueError('Original controller differs from the independently observed snapshot')
     original = original_gate(json.loads((a.original/'controller.json').read_text()),
                              a.controller_pid, a.child_pid, a.source_commit, a.pod_id)
+    if original['schema']=='dl-native-control40-precise-recovery-controller-v1':
+        from portable.context.native_control_pilot_recovery import recovered_commands
+        previous=Path(original['previous_controller'])
+        if (digest(previous)!=original['previous_controller_sha256']
+                or recovered_commands(json.loads(previous.read_text()),a.original)!=original['planned_commands']):
+            raise ValueError('Recovery provenance or original seven commands changed')
     index=STAGES.index(original['phase'])
     source = Path(original['execution_source'])
     orchestration = Path(__file__).resolve().parents[2]
@@ -129,6 +143,7 @@ def main():
     # counter. Actual completed optimizer clocks belong to the training report.
     state.pop('optimizer_updates',None)
     state.update(schema='dl-native-control40-pilot-supervisor-takeover-v1', pid=os.getpid(),
+                 birth=process(os.getpid())['birth'],
                  deadline_utc=a.deadline_utc, orchestration_commit=orchestration_commit,
                  original_controller_pid=a.controller_pid, original_controller_birth=a.controller_birth,
                  original_controller_sha256=digest(a.out/'original-controller-before-takeover.json'),

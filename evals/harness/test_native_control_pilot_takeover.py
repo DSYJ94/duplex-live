@@ -50,6 +50,22 @@ class PilotTakeoverGates(unittest.TestCase):
         nested['old_supervisor_retired_after_child_exit']=True
         with self.assertRaises(ValueError):original_gate(nested,1,12,'source','pod')
 
+    def test_exact_running_recovery_can_transfer_without_restarting_its_child(self):
+        c=self.original();c['stages'][-1]['exit_code']=0
+        c.update(schema='dl-native-control40-precise-recovery-controller-v1',phase=STAGES[3],
+            recovery_source_commit='fb3adfc29f63c7dace63c9ab6a109d828288897e',
+            previous_controller_sha256='ae3b6e3e1f2417211d52580c804e99b4f8a4b5ec4a013d4de04194c7500e13fa',
+            completed_predecessors_reused_with_original_actual_exits=True,
+            prior_workset_independently_rechecked=True,partial49_approval_reused=False,
+            readiness_all49_restarted=True)
+        c['stages'].append(dict(name=STAGES[3],command=c['planned_commands'][STAGES[3]],pid=13,birth=23))
+        self.assertIs(original_gate(c,1,13,'source','pod'),c)
+        for field,value in [('partial49_approval_reused',True),('prior_workset_independently_rechecked',False),
+                            ('readiness_all49_restarted',False),('recovery_source_commit','different'),
+                            ('previous_controller_sha256','0'*64)]:
+            bad=copy.deepcopy(c);bad[field]=value
+            with self.subTest(field=field),self.assertRaises(ValueError):original_gate(bad,1,13,'source','pod')
+
     def test_guard_requires_fresh_same_pod_and_longer_deadline(self):
         now=datetime.now(timezone.utc);deadline=(now+timedelta(hours=1)).timestamp()
         g=dict(phase='armed',pod_id='pod',at_utc=now.isoformat(),
