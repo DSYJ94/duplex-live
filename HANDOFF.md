@@ -1,3 +1,33 @@
+# LOCAL — replacement Pod created, cost guard armed (24 October10:40UTC)
+
+Goal turn PROGRESS. ONE owned replacement8fsk2kouknoiac created10:39:58.8UTC,
+A10080GB EUR-IS-1 Secure1.79USD/h, retained volume49yytzyoge mounted/workspace.
+Current provider RUNNING, image layers still initializing at observation; direct
+SSH/runtime not yet populated. Never create a duplicate because boot observation
+is slow. Same-Pod startup command was simplified to avoid API quote escaping.
+No source deployment, model job or optimizer update yet.
+
+Local guard12953 is armed; status
+runs/local-migration-20261023/runpod-reasoning32-v12-budget-status.json.
+Receipt runpod-reasoning32-v12-budget-receipt.json records28800seconds; hard
+termination18:39:58.8UTC. Conservative project maximum98.80071830424945USD,
+including prior83.98071830424945 and new0.50reserve. No purchase. Retain volume.
+Source9d57928f03572f51862e952c513c1063a45e6511 bundled at
+/tmp/duplex-reasoning32-9d57928.bundle for Git deployment.
+
+NEXT: read same Pod boot/SSH state, verify actual bounded SSH, transfer Git bundle,
+clone clean source under/opt, inspect preserved volume paths then run existing
+prepare_control40_replacement with NEW ephemeral staging. Archived original
+/workspace/native-preservation-v3; original inventory
+/workspace/migration/native-original-runs-local-stage-v1.json; workset inventory
+control40-complete-workset-v1/inventory.json (locate remote exact path).
+Fresh compiler check via portable.context.native_audition --compiler-check-only.
+Do not assume old /opt or /tmp aliases/packages survived. Then launch the prepared
+complete32 chain with at least1hour numerical headroom,3hours before fit,1hour
+reserved restore and separate copyback window. All old failures preserved.
+
+---
+
 # LOCAL — sequential reasoning32 launch controller prepared (24 October)
 
 Goal turn PROGRESS. Prior integrationc7a7bc5 remains; new controller
