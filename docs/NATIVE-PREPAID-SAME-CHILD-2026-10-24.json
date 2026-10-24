@@ -1,0 +1,593 @@
+{
+  "schema": "dl-native-prepaid-preserved-child-v1",
+  "recorded_utc": "2026-10-24T01:09:14.428588+00:00",
+  "execution_commit": "c9efaaac24d983342f7eded46617e6450bc102ce",
+  "supervision_commit": "2e652ce06354abdf996447662231cd79cab9161f",
+  "single_previous20_posted": true,
+  "new_credit_purchase": false,
+  "authorization_100_SHA256": "c8037a81e8c9a2a278a42b898f1e1fed7df7c9d3e4ccb2a6a581b685eeb99338",
+  "same_pod": "4yx8vahdmjsylx",
+  "same_volume_retained": "49yytzyoge",
+  "funding": {
+    "at_utc": "2026-10-24T00:59:56.505685+00:00",
+    "wallet": {
+      "clientBalance": 19.7760194945,
+      "currentSpendPerHr": 1.814,
+      "isAutoPayEnabled": false
+    },
+    "required_wallet_USD": 19.325991468725,
+    "prepaid_wallet_verified": true,
+    "new_credit_purchase": false,
+    "old_guard_PID": 35030,
+    "new_guard_PID": 70540,
+    "new_guard_armed_before_old_retirement": true,
+    "deadline_utc": "2026-10-24T10:22:37.900000+00:00",
+    "same_Pod": "4yx8vahdmjsylx",
+    "volume_retained": "49yytzyoge"
+  },
+  "maximum_project_compute_USD": 83.98071830424945,
+  "human_cap_USD": 100,
+  "guard_PID": 70540,
+  "guard_deadline_UTC": "2026-10-24T10:22:37.900000+00:00",
+  "supervisor": {
+    "new_supervisor": {
+      "pid": 79780,
+      "state": "S",
+      "birth": 24607807
+    },
+    "paused_previous_supervisor": {
+      "pid": 71679,
+      "state": "T",
+      "birth": 24121629
+    },
+    "unchanged_running_child": {
+      "pid": 71818,
+      "state": "R",
+      "birth": 24130859
+    },
+    "deadline_utc": "2026-10-24T09:00:00+00:00",
+    "command": [
+      "/workspace/runtime-x86-ngc2510/bin/python",
+      "-u",
+      "-m",
+      "portable.context.native_control_pilot_takeover",
+      "--original",
+      "/workspace/migration/native-control40-precise-pilot-v8-recovery",
+      "--compiler",
+      "/workspace/migration/native-control40-replacement-compiler-v2/compiler.json",
+      "--cost-guard-receipt",
+      "/workspace/migration/native-control40-v9-prepaid-cost-guard-v1.json",
+      "--out",
+      "/workspace/migration/native-control40-precise-pilot-v9-adoption",
+      "--controller-pid",
+      "71679",
+      "--controller-birth",
+      "24121629",
+      "--child-pid",
+      "71818",
+      "--child-birth",
+      "24130859",
+      "--source-commit",
+      "c9efaaac24d983342f7eded46617e6450bc102ce",
+      "--pod-id",
+      "4yx8vahdmjsylx",
+      "--deadline-utc",
+      "2026-10-24T09:00:00+00:00",
+      "--original-controller-sha256",
+      "49ae7029ec2140aefecf3b6410e3fde7c66b97cae01a338003aef3d472e7cd47"
+    ],
+    "execution_source_unchanged": true,
+    "model_commands_unchanged": true,
+    "optimizer_limit": 8,
+    "new_optimizer_updates": 0,
+    "new_GPU_child_submitted": false,
+    "source_commit": "2e652ce06354abdf996447662231cd79cab9161f"
+  },
+  "CPU_Linux_integration": {
+    "schema": "dl-native-recovery-supervisor-integration-v1",
+    "actual_Linux_process_test": true,
+    "parent_pid": 79669,
+    "child_pid": 79670,
+    "child_birth": 24604038,
+    "child_continued_while_only_parent_paused": true,
+    "actual_child_zombie_exit_code": 0,
+    "parent_retired_only_after_actual_child_exit": true,
+    "GPU_model_or_provider_calls": false,
+    "passed": true
+  },
+  "offline_tests_passed": 20,
+  "last_live_observation": {
+    "at_utc": "2026-10-24T01:03:12.893148+00:00",
+    "controller": {
+      "pid": 79780,
+      "birth": 24607807,
+      "state": "S",
+      "CPU_seconds": 1.17
+    },
+    "phase": "combined_readiness",
+    "child": {
+      "pid": 71818,
+      "birth": 24130859,
+      "state": "R",
+      "CPU_seconds": 4875.81
+    },
+    "original_parent": {
+      "pid": 71679,
+      "birth": 24121629,
+      "state": "T",
+      "CPU_seconds": 12.37
+    },
+    "complete_native49_rows": 7,
+    "all_logged_rows_exact": true,
+    "stages": [
+      {
+        "name": "whole_workset",
+        "pid": 4122,
+        "birth": 18985364,
+        "exit_code": 0
+      },
+      {
+        "name": "complete40_precise_numerical",
+        "pid": 4216,
+        "birth": 18993883,
+        "exit_code": 0
+      },
+      {
+        "name": "complete40_independent_BF16_gradient",
+        "pid": 14873,
+        "birth": 20219598,
+        "exit_code": 0
+      },
+      {
+        "name": "combined_readiness",
+        "pid": 71818,
+        "birth": 24130859,
+        "exit_code": null
+      }
+    ],
+    "pipeline_deadline_utc": "2026-10-24T09:00:00+00:00",
+    "readiness_reports": {
+      "complete-balanced-preflight.json": true,
+      "native-stream49-gradient-readiness.json": null,
+      "control40-combined-readiness.json": null
+    },
+    "GPU": "7 %, 24229 MiB",
+    "backend_health": {
+      "run_id": "native-control40-20261023-v7",
+      "actual_requests": 0,
+      "real_requests_transport": true
+    }
+  },
+  "latest_native_workload_observation": {
+    "at_utc": "2026-10-24T01:04:29.269705+00:00",
+    "complete154_receipt_mtime_utc": "2026-10-24T00:15:03+00:00",
+    "complete154_receipt_present_passed": true,
+    "current_combined_readiness_started_utc": "2026-10-23T23:41:32.899078+00:00",
+    "complete_native49_rows": 8,
+    "total_native_calls": 23078,
+    "completed_native_calls": 3468,
+    "total_frames": 34890,
+    "completed_frames": 5380,
+    "original_completed_stage_times": [
+      {
+        "name": "whole_workset",
+        "started_utc": "2026-10-23T09:23:57.942069+00:00",
+        "ended_utc": "2026-10-23T09:25:23.016336+00:00",
+        "exit_code": 0
+      },
+      {
+        "name": "complete40_precise_numerical",
+        "started_utc": "2026-10-23T09:25:23.120893+00:00",
+        "ended_utc": "2026-10-23T12:49:40.255084+00:00",
+        "exit_code": 0
+      },
+      {
+        "name": "complete40_independent_BF16_gradient",
+        "started_utc": "2026-10-23T12:49:40.293806+00:00",
+        "ended_utc": "2026-10-23T17:48:52.041296+00:00",
+        "exit_code": 0
+      }
+    ],
+    "native49": [
+      {
+        "id": "teacher-cf-recovery-train-000-1",
+        "frames": 717,
+        "native_calls": 473,
+        "non_prefix_or_span_calls": 471
+      },
+      {
+        "id": "teacher-recovery-train-008",
+        "frames": 557,
+        "native_calls": 326,
+        "non_prefix_or_span_calls": 325
+      },
+      {
+        "id": "teacher-recovery-train-019",
+        "frames": 832,
+        "native_calls": 588,
+        "non_prefix_or_span_calls": 586
+      },
+      {
+        "id": "teacher-recovery-train-020",
+        "frames": 742,
+        "native_calls": 499,
+        "non_prefix_or_span_calls": 497
+      },
+      {
+        "id": "teacher-cf-recovery-train-000-2",
+        "frames": 713,
+        "native_calls": 469,
+        "non_prefix_or_span_calls": 467
+      },
+      {
+        "id": "teacher-recovery-train-009",
+        "frames": 553,
+        "native_calls": 322,
+        "non_prefix_or_span_calls": 321
+      },
+      {
+        "id": "teacher-cf-recovery-train-000-3",
+        "frames": 716,
+        "native_calls": 472,
+        "non_prefix_or_span_calls": 470
+      },
+      {
+        "id": "teacher-recovery-train-010",
+        "frames": 550,
+        "native_calls": 319,
+        "non_prefix_or_span_calls": 318
+      },
+      {
+        "id": "teacher-cf-recovery-train-001-0",
+        "frames": 706,
+        "native_calls": 462,
+        "non_prefix_or_span_calls": 460
+      },
+      {
+        "id": "teacher-recovery-train-011",
+        "frames": 566,
+        "native_calls": 335,
+        "non_prefix_or_span_calls": 334
+      },
+      {
+        "id": "teacher-cf-recovery-train-002-0",
+        "frames": 712,
+        "native_calls": 468,
+        "non_prefix_or_span_calls": 466
+      },
+      {
+        "id": "teacher-cf-recovery-train-002-1",
+        "frames": 714,
+        "native_calls": 470,
+        "non_prefix_or_span_calls": 468
+      },
+      {
+        "id": "teacher-cf-recovery-train-002-3",
+        "frames": 715,
+        "native_calls": 470,
+        "non_prefix_or_span_calls": 468
+      },
+      {
+        "id": "teacher-cf-recovery-train-003-2",
+        "frames": 760,
+        "native_calls": 516,
+        "non_prefix_or_span_calls": 514
+      },
+      {
+        "id": "teacher-cf-recovery-train-004-1",
+        "frames": 721,
+        "native_calls": 477,
+        "non_prefix_or_span_calls": 475
+      },
+      {
+        "id": "teacher-cf-recovery-train-004-3",
+        "frames": 721,
+        "native_calls": 477,
+        "non_prefix_or_span_calls": 475
+      },
+      {
+        "id": "teacher-cf-recovery-train-006-2",
+        "frames": 715,
+        "native_calls": 471,
+        "non_prefix_or_span_calls": 469
+      },
+      {
+        "id": "teacher-cf-recovery-train-006-3",
+        "frames": 717,
+        "native_calls": 472,
+        "non_prefix_or_span_calls": 470
+      },
+      {
+        "id": "teacher-cf-recovery-train-007-0",
+        "frames": 760,
+        "native_calls": 516,
+        "non_prefix_or_span_calls": 514
+      },
+      {
+        "id": "teacher-recovery-train-000",
+        "frames": 717,
+        "native_calls": 473,
+        "non_prefix_or_span_calls": 471
+      },
+      {
+        "id": "teacher-recovery-train-001",
+        "frames": 706,
+        "native_calls": 461,
+        "non_prefix_or_span_calls": 459
+      },
+      {
+        "id": "teacher-recovery-train-004",
+        "frames": 721,
+        "native_calls": 477,
+        "non_prefix_or_span_calls": 475
+      },
+      {
+        "id": "teacher-recovery-train-005",
+        "frames": 713,
+        "native_calls": 469,
+        "non_prefix_or_span_calls": 467
+      },
+      {
+        "id": "teacher-recovery-train-006",
+        "frames": 717,
+        "native_calls": 473,
+        "non_prefix_or_span_calls": 471
+      },
+      {
+        "id": "teacher-recovery-train-007",
+        "frames": 761,
+        "native_calls": 516,
+        "non_prefix_or_span_calls": 514
+      },
+      {
+        "id": "teacher-native2-train-000",
+        "frames": 751,
+        "native_calls": 508,
+        "non_prefix_or_span_calls": 506
+      },
+      {
+        "id": "teacher-native2-train-008",
+        "frames": 565,
+        "native_calls": 334,
+        "non_prefix_or_span_calls": 333
+      },
+      {
+        "id": "teacher-native2-train-016",
+        "frames": 790,
+        "native_calls": 546,
+        "non_prefix_or_span_calls": 544
+      },
+      {
+        "id": "teacher-native2-train-020",
+        "frames": 805,
+        "native_calls": 562,
+        "non_prefix_or_span_calls": 560
+      },
+      {
+        "id": "teacher-native2-train-001",
+        "frames": 713,
+        "native_calls": 469,
+        "non_prefix_or_span_calls": 467
+      },
+      {
+        "id": "teacher-native2-train-009",
+        "frames": 550,
+        "native_calls": 319,
+        "non_prefix_or_span_calls": 318
+      },
+      {
+        "id": "teacher-native2-train-017",
+        "frames": 825,
+        "native_calls": 582,
+        "non_prefix_or_span_calls": 580
+      },
+      {
+        "id": "teacher-native2-train-021",
+        "frames": 805,
+        "native_calls": 556,
+        "non_prefix_or_span_calls": 554
+      },
+      {
+        "id": "teacher-native2-train-002",
+        "frames": 761,
+        "native_calls": 516,
+        "non_prefix_or_span_calls": 514
+      },
+      {
+        "id": "teacher-native2-train-010",
+        "frames": 569,
+        "native_calls": 338,
+        "non_prefix_or_span_calls": 337
+      },
+      {
+        "id": "teacher-native2-train-018",
+        "frames": 773,
+        "native_calls": 529,
+        "non_prefix_or_span_calls": 527
+      },
+      {
+        "id": "teacher-native2-train-022",
+        "frames": 822,
+        "native_calls": 569,
+        "non_prefix_or_span_calls": 567
+      },
+      {
+        "id": "teacher-native2-train-003",
+        "frames": 780,
+        "native_calls": 536,
+        "non_prefix_or_span_calls": 534
+      },
+      {
+        "id": "teacher-native2-train-011",
+        "frames": 576,
+        "native_calls": 345,
+        "non_prefix_or_span_calls": 344
+      },
+      {
+        "id": "teacher-native2-train-019",
+        "frames": 853,
+        "native_calls": 609,
+        "non_prefix_or_span_calls": 607
+      },
+      {
+        "id": "teacher-native2-train-023",
+        "frames": 839,
+        "native_calls": 598,
+        "non_prefix_or_span_calls": 596
+      },
+      {
+        "id": "teacher-native2-train-004",
+        "frames": 756,
+        "native_calls": 512,
+        "non_prefix_or_span_calls": 510
+      },
+      {
+        "id": "teacher-native2-train-012",
+        "frames": 573,
+        "native_calls": 342,
+        "non_prefix_or_span_calls": 341
+      },
+      {
+        "id": "teacher-native2-train-005",
+        "frames": 720,
+        "native_calls": 477,
+        "non_prefix_or_span_calls": 475
+      },
+      {
+        "id": "teacher-native2-train-013",
+        "frames": 586,
+        "native_calls": 355,
+        "non_prefix_or_span_calls": 354
+      },
+      {
+        "id": "teacher-native2-train-006",
+        "frames": 741,
+        "native_calls": 496,
+        "non_prefix_or_span_calls": 494
+      },
+      {
+        "id": "teacher-native2-train-014",
+        "frames": 649,
+        "native_calls": 418,
+        "non_prefix_or_span_calls": 417
+      },
+      {
+        "id": "teacher-native2-train-007",
+        "frames": 796,
+        "native_calls": 552,
+        "non_prefix_or_span_calls": 550
+      },
+      {
+        "id": "teacher-native2-train-015",
+        "frames": 770,
+        "native_calls": 539,
+        "non_prefix_or_span_calls": 538
+      }
+    ],
+    "completed": [
+      {
+        "id": "teacher-cf-recovery-train-000-1",
+        "native_calls": 473,
+        "gradient_calls": 471
+      },
+      {
+        "id": "teacher-recovery-train-008",
+        "native_calls": 326,
+        "gradient_calls": 325
+      },
+      {
+        "id": "teacher-recovery-train-019",
+        "native_calls": 588,
+        "gradient_calls": 586
+      },
+      {
+        "id": "teacher-recovery-train-020",
+        "native_calls": 499,
+        "gradient_calls": 497
+      },
+      {
+        "id": "teacher-cf-recovery-train-000-2",
+        "native_calls": 469,
+        "gradient_calls": 467
+      },
+      {
+        "id": "teacher-recovery-train-009",
+        "native_calls": 322,
+        "gradient_calls": 321
+      },
+      {
+        "id": "teacher-cf-recovery-train-000-3",
+        "native_calls": 472,
+        "gradient_calls": 470
+      },
+      {
+        "id": "teacher-recovery-train-010",
+        "native_calls": 319,
+        "gradient_calls": 318
+      }
+    ],
+    "diagnostic_only": true,
+    "model_or_GPU_job_changed": false
+  },
+  "actual_completed_stage_seconds": [
+    {
+      "name": "whole_workset",
+      "seconds": 85.074267,
+      "actual_exit": 0
+    },
+    {
+      "name": "complete40_precise_numerical",
+      "seconds": 12257.134191,
+      "actual_exit": 0
+    },
+    {
+      "name": "complete40_independent_BF16_gradient",
+      "seconds": 17951.74749,
+      "actual_exit": 0
+    }
+  ],
+  "native49_linear_call_projection": {
+    "observed_elapsed_seconds_after_complete154": 2966.269705,
+    "completed_calls": 3468,
+    "total_calls": 23078,
+    "remaining_seconds_if_same_average_per_call": 16772.937980118222,
+    "remaining_work_excludes_combined_partitions_training_final_fingerprints_restore_and_behavior": true,
+    "not_a_guaranteed_ETA": true
+  },
+  "backup_PID": 71453,
+  "backup_session": 54870,
+  "backup_deadline_UTC": "2026-10-24T10:20:00Z",
+  "backup_last_verified": {
+    "path": "runs/local-migration-20261023/native-control40-continuous-copyback-v14/20261024T010214.248962Z",
+    "files": 83,
+    "inventory_sha256": "52baeb8a780b8aa726c05fa1406a3ec49cfdafd9c668ef0618a257921cef299a",
+    "reused_verified_files": 81,
+    "reused_verified_bytes": 1176817004,
+    "transferred_file_bytes": 302571
+  },
+  "old_backup67279_retired_only_after_new_verified": true,
+  "proxy_PID": 71254,
+  "proxy_session": 69236,
+  "remaining_provider_request_limit": 112,
+  "actual_new_provider_requests": 0,
+  "existing_reverse_SSH_tunnel_session": 61404,
+  "evaluation_dispatcher_PID": 71424,
+  "evaluation_dispatcher_session": 87030,
+  "evaluation_latest_launch_UTC": "2026-10-24T09:37:00+00:00",
+  "evaluation_deadline_UTC": "2026-10-24T10:17:00+00:00",
+  "all_original_seven_commands_unchanged": true,
+  "optimizer_limit": 8,
+  "new_optimizer_updates": 0,
+  "adoption_or_longer_training_approved": false,
+  "larger_training_requires_conclusive_restore_retention_behavior": true,
+  "CPU_profile_feasibility": {
+    "CAP_SYS_PTRACE": false,
+    "ptrace_scope": 1,
+    "profiler_installed": false,
+    "live_stack_sample_performed": false,
+    "kernel_security_or_CPU_policy_modified": false,
+    "container_restart": false
+  },
+  "reasoning32_semantic_requests": 0,
+  "reasoning32_specific_payload_approval_still_pending": true
+}

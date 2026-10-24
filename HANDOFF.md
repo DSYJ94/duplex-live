@@ -1,3 +1,76 @@
+# LOCAL — same child preserved; prepaid supervisor extended without purchase (24 October01:08UTC)
+
+Goal turn PROGRESS. LOCAL sole executor. Operational source2e652ce06354abdf996447662231cd79cab9161f
+adds only explicit audited recovery-supervisor acceptance and the v9 backup root.
+C9 c9efaaac24d983342f7eded46617e6450bc102ce model execution and ALL seven original
+model/training/restore commands are unchanged. No GPU stage restarted or duplicated.
+Unrelated local pyc/capability probes/roadmap.html remain untouched.
+
+RUNTIME RISK: original full40 numerical ACTUAL12,257.134191s, full40 gradient
+ACTUAL17,951.747490s. Full154 receipt finished00:15:03. New native49 at01:04:29:
+8/49 rows,3,468/23,078 native calls,5,380/34,890 frames covered. A simple call-linear
+projection leaves approximately4.66h for ONLY the remaining full49 pass, not the
+subsequent combined native49/control40 partitions, eight optimizer updates, final
+fingerprints, independent restore or behavior. It is an uncertain projection,
+not a promised finish. Current funded window may still be insufficient for the
+whole chain. Do not silently promise training completion or relax gates to fit it.
+
+Actual Linux disposable-process integration PASSED: pause parent only, child keeps
+running, read actual zombie exit0, retire parent ONLY after exit.20offline tests
+PASS incl rejection of partial49 reuse/missing predecessor/bad provenance/nested
+paused gradient. Source Git-bundle deployed into isolated2e checkout; live C9 and
+FB3 recovery files remain clean/unchanged. Fresh original-controller hash
+49ae7029ec2140aefecf3b6410e3fde7c66b97cae01a338003aef3d472e7cd47 bound at launch.
+
+CURRENT supervisor79780/birth24607807 (v9-adoption) adopted EXACT71818/birth24130859;
+original71679/birth24121629 is intentionallyT/paused, NEVER resume independently.
+Actual01:03:12 confirms new79780S, original71679T, unchanged71818R, GPU7%/24229MiB.
+No new optimizer updates. Only original parent timeout replaced: deadline09:00UTC.
+New supervisor consumes actual child exit status, then retires old71679 and takes
+GPU lease BEFORE launching the remaining original commands. Strict full49/combined
+readiness, ONE8 from520, independent Adam/RNG/native restore and strict proof remain.
+No subset, new optimizer, larger run, adoption, attention/dtype/loss/data change.
+
+FUNDING: actual00:59:56 posted wallet19.7760194945,rate1.814/h,auto-payFalse;
+required19.325991468725 includes one-hour billing lag plus0.50shutdown reserve.
+NO additional credit purchase. Existing posted funds cover samePod26h total,
+new guard70540 armed BEFORE retiring35030; cutoff10:22:37.9UTC, volume49yytzyoge
+retained. Maximum project compute83.98071830424945<100. Budget authorization SHA
+c8037a81e8c9a2a278a42b898f1e1fed7df7c9d3e4ccb2a6a581b685eeb99338 unchanged.
+27h or34h windows were NOT prepaid under the same reserve and were NOT executed.
+Any further credit purchase needs purchase-specific authorization; no auto-pay.
+
+Backup71453/session54870 to10:20, latest83files SHA
+52baeb8a780b8aa726c05fa1406a3ec49cfdafd9c668ef0618a257921cef299a:
+81files/1,176,817,004B reused,302,571B logical payload transferred, full local hashes
+verified. Newv9 metadata included, originalv8 readiness/training outputs preserved.
+Oldbackup67279 retired ONLY after new verification. All prior snapshots retained.
+Full native original archive remains preserved; broader stopped Mac backup PARTIAL.
+
+Old evaluator37551 retired while actuallywaiting; oldproxy37279 had actualrequests0
+and no inflight receipts before replacement. New proxy71254/session69236, same
+Mac50259/remote18792 existing tunnel61404; runv7,112remaining calls, newrequests0,
+loopback-only/key stays Mac. Remotehealth reverified. New evaluator71424/session87030
+waits EXACT79780/birth24607807 and all7 actual passed stages; latestlaunch09:37/end10:17.
+Same paired20/speech20 fixed output paths still uncreated. No sealedfresh read.
+
+Live stack profiling FEASIBILITY only: container CAP_SYS_PTRACE=False/ptrace_scope1,
+py-spy absent. No stack sample performed, no profiler installed, kernel/CPU/security
+settings changed or container restart. Low GPU utilization plus one busy CPU core
+is an observation, not proof of a specific performance bug. CPU-only metadata work
+continues; no Mac neuralASR/model load. Original cache-validation probe remains
+bounded evidence for one component only.
+
+Next: preserve SAME child and all gates; monitor actual remaining workload against
+prepaid deadline. Full49 report will be a separate durable milestone; do not treat
+8/49 as approval. Full combined ->ONE8 ->independent restore/proof ->complete paired20/
+speech20/all4 ordinary ->eligible sealedfresh40; only then a larger training decision.
+Distinct full32 semantic payload approval still pending,0requests/0conversion/
+0reasoning32training. No indirect retry. See
+ docs/NATIVE-PREPAID-SAME-CHILD-2026-10-24.json for exact receipts and measured workload.
+
+---
+
 # LOCAL — retained154 gradient passed; incremental81-file backup verified (24 October00:54UTC)
 
 Goal turn PROGRESS. LOCAL sole executor; no cloud handoff or duplicate GPU job.
