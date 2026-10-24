@@ -256,10 +256,10 @@ def main():
     save()
     while time.time()<deadline:
         try:
-            command=['env','PYTHONDONTWRITEBYTECODE=1','python3',str(a.remote_source/'portable/context/native_control_copyback.py'),
+            command=['timeout','--signal=TERM','110s','env','PYTHONDONTWRITEBYTECODE=1','python3',str(a.remote_source/'portable/context/native_control_copyback.py'),
                      '--remote-snapshot','--source-commit',a.source_commit]
             if last:command+=['--last-marker',last]
-            result=subprocess.run(ssh+[host,shlex.join(command)],check=True,capture_output=True,text=True,timeout=45)
+            result=subprocess.run(ssh+[host,shlex.join(command)],check=True,capture_output=True,text=True,timeout=120)
             info=json.loads(result.stdout)
             if info['changed']:
                 remote=Path(info['snapshot'])
