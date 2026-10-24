@@ -1,3 +1,45 @@
+# LOCAL — Finalization live; exported adapter AND resume state hash-backed up
+
+V18actualfinalization16:43:09.100354UTC:fit28807/birth40829227stateR,
+controller28726 phasebounded8_training/noerror; native_stream fingerprint
+markers28of49 produced, fitreportstillabsent. All8optimizerupdates already
+saved, NOT newoptimizerwork. Originalnative49 then control40/reasoning32 final
+fingerprints/report mustfinish beforeactualfitexit0 and independentrestore.
+Currentrate creates a risk of missing downstream evaluation time; do NOT
+extenddeadlines,acceptsubset,restartoptimizer orclaimapproval. Fixedfitstop17:10UTC
+(reserves1h),controller18:10UTC,evaluationlatest17:40/deadline18:20,
+Podhardtermination18:39:58.8UTC/100USDcap remain.
+
+Mac snapshot20261024T164021.631309Z inventorySHA
+80aa6bf50e839e6d19ad8cdcd842de64c033ff2d5fcc1b715ddc549c4ff7979a.
+Rehashed adapter7580728bytesSHA
+34edb69c696fef1ac02e498bb1351a7655442d6c7c041562ca145abfb3a77176;
+resume22970059bytesSHA
+75fd39b1dc9a7f66b8125a1804cab87cfad384446d592df4534c3e1cff5f0367;
+data.jsonSHAde92099057ded15a1af0e387c96b457cdf4c1731c26594dcdca211d4c442fc1e;
+voice.ptSHA2085b3d58d2f2b20042e2e57a60206dd43c3028173cd9140e83d6c7b5136404d.
+AlltheseMacfiles match verifiedsnapshotinventory, notindependentGPUrestore.
+Evidenceadded to docs/NATIVE-REASONING32-EIGHT-UPDATES-2026-10-24.json andfitrecord.
+
+GCPcontinuation artifactreferences inspected/prepared LOCALLY(no transfer): complete
+nativearchive28470files67764285650bytes manifestSHA4eac15590dc9def6dfb5e34b2cea92f30d9a067fabe0940e2876b6acdcbe6dce,
+completecontrolworkset7797files8000842614bytes inventorySHA
+79401e2c1051361d150da644250e8acf87814bda1c48b167af8a34345214fa8f.
+Nativearchive fullverificationreceipt re-read fromretainedvolume; old local
+native-archive-staging-v1.json isONLYpartial33.225GB and mustNOTbeusedascomplete
+archiveinventory. Do NOT transferwhole/workspace/migration fordevelopmentevidence:
+closed rootsnative10-paired-v1,native10-independent-speech-v1,
+native10-paired-archive-tf32-v1,native10-independent-speech-archive-tf32-v1.
+Current8state and reasoning32dependencies also required forfuturemigration.
+No GCPGPU, upload, credential or newbudget commitment; setup/quote/runtime notes
+alreadycommitted. BroaderMacsourcebackupPARTIAL. Goalactive.
+Next: preservefitfinalization asfarasexistingguardpermits; observeactualterminal
+state/report; independentrestore/fullpaired20speech20 onlyifallgatescomplete.
+Ifwindowexhausts,preservecomplete8state andrequireconcreteboundedGCPbudget/data
+recipient authorization before billablemigration; donotrepeat8updates.
+
+---
+
 # LOCAL — ALL8 OPTIMIZER UPDATES SAVED; fit finalization and restore pending
 
 Actual16:31:18.539798UTC:V18bounded8_training,controller28726/birth40829059

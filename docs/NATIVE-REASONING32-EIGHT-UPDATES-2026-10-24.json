@@ -103,5 +103,39 @@
     "path": "native-reasoning32-retained-pilot-v18/training/training-state.pt",
     "bytes": 22970059,
     "sha256": "75fd39b1dc9a7f66b8125a1804cab87cfad384446d592df4534c3e1cff5f0367"
+  },
+  "adapter_export_backup": {
+    "snapshot": "20261024T164021.631309Z",
+    "inventory_sha256": "80aa6bf50e839e6d19ad8cdcd842de64c033ff2d5fcc1b715ddc549c4ff7979a",
+    "files": [
+      {
+        "path": "native-reasoning32-retained-pilot-v18/training/adapters.safetensors",
+        "bytes": 7580728,
+        "sha256": "34edb69c696fef1ac02e498bb1351a7655442d6c7c041562ca145abfb3a77176"
+      },
+      {
+        "path": "native-reasoning32-retained-pilot-v18/training/additional-native-v2/voice.pt",
+        "bytes": 9499,
+        "sha256": "2085b3d58d2f2b20042e2e57a60206dd43c3028173cd9140e83d6c7b5136404d"
+      },
+      {
+        "path": "native-reasoning32-retained-pilot-v18/training/data.json",
+        "bytes": 128708,
+        "sha256": "de92099057ded15a1af0e387c96b457cdf4c1731c26594dcdca211d4c442fc1e"
+      },
+      {
+        "path": "native-reasoning32-retained-pilot-v18/training/training-state.pt",
+        "bytes": 22970059,
+        "sha256": "75fd39b1dc9a7f66b8125a1804cab87cfad384446d592df4534c3e1cff5f0367"
+      },
+      {
+        "path": "native-reasoning32-retained-pilot-v18/training/voice.pt",
+        "bytes": 9499,
+        "sha256": "2085b3d58d2f2b20042e2e57a60206dd43c3028173cd9140e83d6c7b5136404d"
+      }
+    ],
+    "mac_hashes_verified": true,
+    "fit_report_approved": false,
+    "independent_restore_approved": false
   }
 }

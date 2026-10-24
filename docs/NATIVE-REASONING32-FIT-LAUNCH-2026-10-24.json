@@ -169,5 +169,91 @@
       "real_requests_transport": true
     },
     "fit_report_exists": false
+  },
+  "postfit_finalization": {
+    "at_utc": "2026-10-24T16:44:40.434422+00:00",
+    "phase": "bounded8_training",
+    "stages": [
+      {
+        "name": "whole_workset",
+        "started_utc": "2026-10-24T11:41:11.861165+00:00",
+        "pid": 9581,
+        "birth": 39673531,
+        "actual_exit": 0,
+        "ended_utc": "2026-10-24T11:41:23.842055+00:00",
+        "reused_from_controller": "/workspace/migration/native-reasoning32-retained-pilot-v17/controller.json"
+      },
+      {
+        "name": "gradient32",
+        "started_utc": "2026-10-24T11:41:23.874849+00:00",
+        "pid": 9704,
+        "birth": 39674733,
+        "actual_exit": 0,
+        "ended_utc": "2026-10-24T12:28:18.333244+00:00",
+        "reused_from_controller": "/workspace/migration/native-reasoning32-retained-pilot-v17/controller.json"
+      },
+      {
+        "name": "combined_readiness",
+        "started_utc": "2026-10-24T12:28:18.366336+00:00",
+        "pid": 15566,
+        "birth": 39956182,
+        "actual_exit": 0,
+        "ended_utc": "2026-10-24T14:48:23.115117+00:00",
+        "reused_from_controller": "/workspace/migration/native-reasoning32-retained-pilot-v17/controller.json"
+      },
+      {
+        "name": "bounded8_training",
+        "started_utc": "2026-10-24T14:53:48.828373+00:00",
+        "pid": 28807,
+        "birth": 40829227
+      }
+    ],
+    "active_process": {
+      "pid": 28807,
+      "state": "R",
+      "birth": 40829227
+    },
+    "error": null,
+    "fit_report_exists": false,
+    "finalization_markers": {
+      "native_stream_restore_fingerprint": 32
+    },
+    "last_marker": {
+      "native_stream_restore_fingerprint": "teacher-native2-train-017"
+    }
+  },
+  "adapter_export_backup": {
+    "snapshot": "20261024T164021.631309Z",
+    "inventory_sha256": "80aa6bf50e839e6d19ad8cdcd842de64c033ff2d5fcc1b715ddc549c4ff7979a",
+    "files": [
+      {
+        "path": "native-reasoning32-retained-pilot-v18/training/adapters.safetensors",
+        "bytes": 7580728,
+        "sha256": "34edb69c696fef1ac02e498bb1351a7655442d6c7c041562ca145abfb3a77176"
+      },
+      {
+        "path": "native-reasoning32-retained-pilot-v18/training/additional-native-v2/voice.pt",
+        "bytes": 9499,
+        "sha256": "2085b3d58d2f2b20042e2e57a60206dd43c3028173cd9140e83d6c7b5136404d"
+      },
+      {
+        "path": "native-reasoning32-retained-pilot-v18/training/data.json",
+        "bytes": 128708,
+        "sha256": "de92099057ded15a1af0e387c96b457cdf4c1731c26594dcdca211d4c442fc1e"
+      },
+      {
+        "path": "native-reasoning32-retained-pilot-v18/training/training-state.pt",
+        "bytes": 22970059,
+        "sha256": "75fd39b1dc9a7f66b8125a1804cab87cfad384446d592df4534c3e1cff5f0367"
+      },
+      {
+        "path": "native-reasoning32-retained-pilot-v18/training/voice.pt",
+        "bytes": 9499,
+        "sha256": "2085b3d58d2f2b20042e2e57a60206dd43c3028173cd9140e83d6c7b5136404d"
+      }
+    ],
+    "mac_hashes_verified": true,
+    "fit_report_approved": false,
+    "independent_restore_approved": false
   }
 }
