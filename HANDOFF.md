@@ -1,3 +1,36 @@
+# LOCAL — Saved export metadata verified; GCP decision pending
+
+The closed V18 snapshot remains intact. A standard-library reader now verifies
+its exact checkpoint and adapter hashes without loading tensors or importing
+Torch. It stops at the next root dictionary key, after the complete parameter
+name list, rather than accepting a partially constructed list. On the actual
+export it confirms eight stage updates, 26 FP32 tensors / 13 LoRA modules /
+1,894,400 parameters, rank 8, scaling 2, learning rate 2e-7, KL 1 and hidden MSE 10.
+Metadata SHA256 caae1dfc5ba1c39761189087283aa31ff314532e1db417c6b32407df459a9d8b.
+Original model source remains da389a7031a5504495397d1575952194ffa209f1.
+Implementation SHA256 84dd90e4ee3e19fc47e0550537668b3785c3a2dd45c7590bf6a7ca6bca8deb29.
+Evidence: docs/NATIVE-REASONING32-SAVED-EXPORT-METADATA-2026-10-24.json.
+
+18 offline fixtures pass (nine reader, nine saved-stage audit); no Torch imported.
+Actual metadata inspection also passes with standard Python. Tensor values,
+Adam clocks/moments and RNG have NOT been independently restored. No full
+zero-optimizer recovery producer exists yet, no fit report was fabricated and
+original failed fit exit -15 / TimeoutExpired is unchanged. No behavioral or
+convergence claim; candidate remains unqualified and unadopted.
+
+Runpod Pod 8fsk2kouknoiac was stopped and read back EXITED in the preceding entry;
+network volume 49yytzyoge is retained. No GPU has been restarted. No GCP VM,
+upload or access grant has been performed. The existing bounded GCP usage and
+transfer question remains pending; do not ask again or infer approval. Project
+creation/available credits do not alter that pending scope. The next offline
+work is a distinct, tested zero-update recovery path preserving all source,
+data, recipe, original failure and complete finalization checks. Do not repeat
+training, loosen gates or start a GPU with the historical stopped budget guard.
+LOCAL remains the active executor. Unrelated local changes are preserved.
+Recorded 2026-10-24T17:39:26.072932+00:00.
+
+---
+
 # LOCAL — V18terminal after8savedupdates; PodSTOPPED; noGPUworkrunning
 
 Authoritativeoriginaloutcome:17:10:00.493036UTCcontrollerphase

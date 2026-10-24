@@ -1,0 +1,48 @@
+{
+  "schema": "dl-native-saved-export-metadata-v1",
+  "source_commit": "da389a7031a5504495397d1575952194ffa209f1",
+  "at_utc": "2026-10-24T17:38:39.345161+00:00",
+  "implementation_sha256": "84dd90e4ee3e19fc47e0550537668b3785c3a2dd45c7590bf6a7ca6bca8deb29",
+  "training_state_sha256": "75fd39b1dc9a7f66b8125a1804cab87cfad384446d592df4534c3e1cff5f0367",
+  "adapter_sha256": "34edb69c696fef1ac02e498bb1351a7655442d6c7c041562ca145abfb3a77176",
+  "metadata_sha256": "caae1dfc5ba1c39761189087283aa31ff314532e1db417c6b32407df459a9d8b",
+  "completed_stage_updates": 8,
+  "adapter_parameters": 1894400,
+  "adapter_tensors": 26,
+  "adapter_modules": 13,
+  "rank": 8,
+  "scaling": 2.0,
+  "effective_learning_rate": 2e-07,
+  "retention_kl_weight": 1.0,
+  "retention_hidden_mse_weight": 10.0,
+  "tensor_values_loaded": false,
+  "optimizer_state_restored": false,
+  "rng_restored": false,
+  "gpu_execution": false,
+  "training_or_behavior_approved": false,
+  "model_adopted": false,
+  "status": "PINNED_EXPORT_STRUCTURE_VERIFIED_ONLY",
+  "verified_snapshot": "20261024T171028.002879Z",
+  "verified_inventory_sha256": "318a30c25a47719ba745475a27c7b240f973ce9010a2dfc7873fa4dbb5535135",
+  "checks": {
+    "fixture_tests_passed": 18,
+    "torch_imported": false,
+    "note": "Nine metadata reader fixtures plus nine complete saved-stage audit fixtures; actual export independently read with standard Python."
+  },
+  "original_outcome": {
+    "phase": "failed_preserved_no_retry",
+    "error_type": "TimeoutExpired",
+    "fit_actual_exit": -15,
+    "fit_report_present": false,
+    "fit_result_relabelled": false
+  },
+  "limits": [
+    "Tensor values were not loaded or validated by this metadata inspection.",
+    "Adam moments, parameter clocks and Python/NumPy/Torch/CUDA RNG remain to be independently restored.",
+    "Full zero-optimizer recovery/report construction is not implemented or authorized to run by this result.",
+    "No native behavioral, ordinary reasoning, silence or delegation improvement is established.",
+    "Original failed V18 output must remain immutable; any recovery needs a new version and truthful provenance.",
+    "GCP usage/transfer proposal remains pending; no activation or transfer occurred."
+  ],
+  "next_action": "Implement and test a distinct zero-update recovery producer, reconstructing all pinned source/data/voice/recipe checks and full final metrics/fingerprints before independent restore and native behavioral evaluation."
+}
