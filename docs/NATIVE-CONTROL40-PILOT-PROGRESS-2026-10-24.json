@@ -1,10 +1,10 @@
 {
   "schema": "dl-native-control40-pilot-progress-v1",
-  "at_utc": "2026-10-24T06:16:11.630934+00:00",
+  "at_utc": "2026-10-24T06:29:27.280757+00:00",
   "executor": "LOCAL",
   "classification": "progress",
   "previous_goal_turn": "progress",
-  "source_main_before_receipt": "30174f3147d4e94eae45baa9df79b755e7136e6f",
+  "source_main_before_receipt": "bb3f885095aca0f51060ae6185057feb9932a66f",
   "execution_source": "c9efaaac24d983342f7eded46617e6450bc102ce",
   "orchestration_source": "a5958a0343383728639940c4eb82e31ca3aa96f2",
   "supervisor": {
@@ -467,9 +467,9 @@
     "snapshot": "runs/local-migration-20261023/native-control40-continuous-copyback-v16/20261024T060702.951913Z"
   },
   "prepaid_funding": {
-    "at_utc": "2026-10-24T05:26:35.999890+00:00",
+    "at_utc": "2026-10-24T06:16:36.132028+00:00",
     "wallet": {
-      "clientBalance": 11.75710493,
+      "clientBalance": 10.2453899946,
       "currentSpendPerHr": 1.814,
       "isAutoPayEnabled": false
     },
@@ -479,28 +479,28 @@
       {
         "lifetime_hours": 24,
         "deadline_utc": "2026-10-24T08:22:37.900000+00:00",
-        "required_remaining_wallet_USD": 7.636024110983334,
+        "required_remaining_wallet_USD": 6.124290861446667,
         "fully_prepaid_with_one_hour_reserve": true,
         "project_compute_cap_USD": 80.40071830424947
       },
       {
         "lifetime_hours": 26,
         "deadline_utc": "2026-10-24T10:22:37.900000+00:00",
-        "required_remaining_wallet_USD": 11.264024110983334,
+        "required_remaining_wallet_USD": 9.752290861446667,
         "fully_prepaid_with_one_hour_reserve": true,
         "project_compute_cap_USD": 83.98071830424945
       },
       {
         "lifetime_hours": 27,
         "deadline_utc": "2026-10-24T11:22:37.900000+00:00",
-        "required_remaining_wallet_USD": 13.078024110983334,
+        "required_remaining_wallet_USD": 11.566290861446667,
         "fully_prepaid_with_one_hour_reserve": false,
         "project_compute_cap_USD": 85.77071830424946
       },
       {
         "lifetime_hours": 34,
         "deadline_utc": "2026-10-24T18:22:37.900000+00:00",
-        "required_remaining_wallet_USD": 25.776024110983336,
+        "required_remaining_wallet_USD": 24.264290861446668,
         "fully_prepaid_with_one_hour_reserve": false,
         "project_compute_cap_USD": 98.30071830424946
       }
@@ -891,7 +891,7 @@
   },
   "latest_live_observation": {
     "schema": "dl-native-control40-quota-retry-observation-v1",
-    "at_utc": "2026-10-24T06:14:20.183712+00:00",
+    "at_utc": "2026-10-24T06:26:59.177657+00:00",
     "controller": {
       "pid": 101648,
       "state": "S",
@@ -1013,7 +1013,7 @@
     ],
     "fingerprint_progress": {
       "training": {
-        "native49": 15,
+        "native49": 42,
         "control40": 0
       },
       "restore": {
@@ -1027,7 +1027,7 @@
     },
     "training_report": null,
     "restore_report": null,
-    "log_bytes": 4317372,
+    "log_bytes": 4321317,
     "log_tail": null,
     "GPU": "53 %, 30015 MiB",
     "GPU_compute_PIDs": [
@@ -1047,5 +1047,77 @@
   },
   "optimizer_updates_completed": true,
   "postfit_training_process_passed": false,
-  "full_native_restore_passed": false
+  "full_native_restore_passed": false,
+  "standalone_adapter_export_review": {
+    "schema": "dl-native-control40-standalone-adapter-export-review-v1",
+    "at_utc": "2026-10-24T06:26:08.509960+00:00",
+    "adapter_sha256": "0cb85b4a3b712ba5687e3e23dba6541891cbad954bde4a155ae9cb913517bcff",
+    "adapter_bytes": 7580728,
+    "training_state_sha256": "86dde08eb1591d0bc04a36c47be0dc7ee1b90019d7ae520f1d049cc37d8dc278",
+    "all26_standalone_adapter_tensors_exactly_match_final_training_state": true,
+    "trainable_parameters": 1894400,
+    "completed_updates": 8,
+    "CPU_only": true,
+    "model_loaded": false,
+    "GPU_initialized": false,
+    "independent_native_restore_passed": false,
+    "model_adopted": false,
+    "requires_pinned_native_base_and_voice_assets": true,
+    "Mac_and_closed_remote_hashes_verified": true,
+    "backup_inventory_sha256": "28d9bb1e236f802d9cddf2357ecae3b83434440eb6ac786d371293a027c443ba",
+    "backup_files": 152,
+    "Mac_adapter": "/Users/daryl/Library/CloudStorage/OneDrive-Personal/Shared GitHub Repos/duplex-live/runs/local-migration-20261023/native-control40-continuous-copyback-v17/20261024T062237.979232Z/native-control40-precise-pilot-v11-environment-retry/training/adapters.safetensors"
+  },
+  "current_backup_watcher": {
+    "schema": "dl-native-control40-copyback-watch-v1",
+    "pid": 1184,
+    "source_commit": "bb3f885095aca0f51060ae6185057feb9932a66f",
+    "deadline_utc": "2026-10-24T10:20:00Z",
+    "phase": "watching",
+    "snapshots": [
+      {
+        "path": "runs/local-migration-20261023/native-control40-continuous-copyback-v17/20261024T062237.979232Z",
+        "files": 152,
+        "inventory_sha256": "28d9bb1e236f802d9cddf2357ecae3b83434440eb6ac786d371293a027c443ba",
+        "reused_verified_files": 150,
+        "reused_verified_bytes": 2425283914,
+        "transferred_file_bytes": 11900740
+      },
+      {
+        "path": "runs/local-migration-20261023/native-control40-continuous-copyback-v17/20261024T062602.516015Z",
+        "files": 152,
+        "inventory_sha256": "63ac403a9e5b7e4b1f87e13297d26e537703a993457c041cedf6ab93301c5902",
+        "reused_verified_files": 151,
+        "reused_verified_bytes": 2432864642,
+        "transferred_file_bytes": 4321027
+      }
+    ],
+    "changes_to_remote_jobs": false,
+    "pod_id": "4yx8vahdmjsylx",
+    "ssh_host": "root@157.157.221.29",
+    "ssh_port": 16701,
+    "at_utc": "2026-10-24T06:29:18.785873+00:00",
+    "last_marker": "62299b2241e38d91a4f5a16c1810fbfad2c01af9ebabc7708213d6e98e809fa1",
+    "last_check_succeeded": true
+  },
+  "prior_backup_retirement": {
+    "at_utc": "2026-10-24T06:26:04.969656+00:00",
+    "retired_only_old_backup_pid": 63290,
+    "new_backup_pid": 1184,
+    "new_source_commit": "bb3f885095aca0f51060ae6185057feb9932a66f",
+    "new_snapshot_files": 152,
+    "new_snapshot_inventory_sha256": "28d9bb1e236f802d9cddf2357ecae3b83434440eb6ac786d371293a027c443ba",
+    "new_snapshot_hash_verified_on_Mac": true,
+    "no_active_transfer_child_at_retirement": true,
+    "training_and_supervisor_unchanged": true
+  },
+  "backup_improvement": {
+    "source_commit": "bb3f885095aca0f51060ae6185057feb9932a66f",
+    "chunked_hash_bytes": 4194304,
+    "complete_SHA256_hashes_preserved": true,
+    "standalone_adapter_publication_triggers_backup": true,
+    "training_and_restore_intermediate_fingerprints_every10_and_final_counts": true,
+    "tests_passed": 23,
+    "no_CPU_OS_settings_or_model_source_changes": true
+  }
 }

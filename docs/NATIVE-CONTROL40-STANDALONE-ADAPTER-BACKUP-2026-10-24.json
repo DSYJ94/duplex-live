@@ -1,0 +1,51 @@
+{
+  "adapter_export": {
+    "schema": "dl-native-control40-standalone-adapter-export-review-v1",
+    "at_utc": "2026-10-24T06:26:08.509960+00:00",
+    "adapter_sha256": "0cb85b4a3b712ba5687e3e23dba6541891cbad954bde4a155ae9cb913517bcff",
+    "adapter_bytes": 7580728,
+    "training_state_sha256": "86dde08eb1591d0bc04a36c47be0dc7ee1b90019d7ae520f1d049cc37d8dc278",
+    "all26_standalone_adapter_tensors_exactly_match_final_training_state": true,
+    "trainable_parameters": 1894400,
+    "completed_updates": 8,
+    "CPU_only": true,
+    "model_loaded": false,
+    "GPU_initialized": false,
+    "independent_native_restore_passed": false,
+    "model_adopted": false,
+    "requires_pinned_native_base_and_voice_assets": true,
+    "Mac_and_closed_remote_hashes_verified": true,
+    "backup_inventory_sha256": "28d9bb1e236f802d9cddf2357ecae3b83434440eb6ac786d371293a027c443ba",
+    "backup_files": 152,
+    "Mac_adapter": "/Users/daryl/Library/CloudStorage/OneDrive-Personal/Shared GitHub Repos/duplex-live/runs/local-migration-20261023/native-control40-continuous-copyback-v17/20261024T062237.979232Z/native-control40-precise-pilot-v11-environment-retry/training/adapters.safetensors"
+  },
+  "backup_improvement": {
+    "source_commit": "bb3f885095aca0f51060ae6185057feb9932a66f",
+    "chunked_hash_bytes": 4194304,
+    "complete_SHA256_hashes_preserved": true,
+    "standalone_adapter_publication_triggers_backup": true,
+    "training_and_restore_intermediate_fingerprints_every10_and_final_counts": true,
+    "tests_passed": 23,
+    "no_CPU_OS_settings_or_model_source_changes": true
+  },
+  "first_verified_snapshot": {
+    "path": "runs/local-migration-20261023/native-control40-continuous-copyback-v17/20261024T062237.979232Z",
+    "files": 152,
+    "inventory_sha256": "28d9bb1e236f802d9cddf2357ecae3b83434440eb6ac786d371293a027c443ba",
+    "reused_verified_files": 150,
+    "reused_verified_bytes": 2425283914,
+    "transferred_file_bytes": 11900740
+  },
+  "retirement": {
+    "at_utc": "2026-10-24T06:26:04.969656+00:00",
+    "retired_only_old_backup_pid": 63290,
+    "new_backup_pid": 1184,
+    "new_source_commit": "bb3f885095aca0f51060ae6185057feb9932a66f",
+    "new_snapshot_files": 152,
+    "new_snapshot_inventory_sha256": "28d9bb1e236f802d9cddf2357ecae3b83434440eb6ac786d371293a027c443ba",
+    "new_snapshot_hash_verified_on_Mac": true,
+    "no_active_transfer_child_at_retirement": true,
+    "training_and_supervisor_unchanged": true
+  },
+  "model_or_behavior_adopted": false
+}

@@ -1,3 +1,45 @@
+# LOCAL — standalone adapter backed up; intermediate fingerprints protected (24 October 06:29 UTC)
+
+Goal turn PROGRESS (backup robustness and actual adapter verification); previous
+turn PROGRESS (all8 saved/full exposure reviewed). LOCAL sole executor. Main before
+receipt bb3f885095aca0f51060ae6185057feb9932a66f. LIVE model C9 c9efaaac24d983342f7eded46617e6450bc102ce and
+supervisor a5958a0343383728639940c4eb82e31ca3aa96f2 UNCHANGED.
+SAME101648/birth25974639 +trainer101677/birth25975025 live06:26:59, GPU53%/30015MiB.
+ALL8 saved; final postfit native49 fingerprints42/49, control40=0; restore not started.
+No final training report/behavior approval. Do NOT duplicate any stage.
+
+NEW backup watcher1184 (V17), sourcebb3f885095aca0f51060ae6185057feb9932a66f, healthy.
+Source deployed via Git bundle to isolated /tmp/duplex-reasoning32-verification-bb3f885.
+Backup hashes now stream4MiB chunks (same complete SHA256), reducing memory allocation.
+Standalone adapters.safetensors and every10/final native/control fingerprint counts
+trigger snapshots during training AND restore.23 testsPASS. No GPU/model/OS CPU change.
+Old63290 V16 retired06:26:04 ONLY after first V17 snapshot fully verified and no
+active transfer child; never resume it. Old watcher data and snapshots preserved.
+
+V17 closed20261024T062237.979232Z:152files fully Mac-verified, inventorySHA
+28d9bb1e236f802d9cddf2357ecae3b83434440eb6ac786d371293a027c443ba.
+150 files reused/2,425,283,914B,11,900,740B transferred. Includes standalone adapter
+7,580,728B SHA0cb85b4a3b712ba5687e3e23dba6541891cbad954bde4a155ae9cb913517bcff.
+CPU-only comparison: all26 tensors/1,894,400 parameters EXACTLY equal final8 PT
+SHA86dde08eb1591d0bc04a36c47be0dc7ee1b90019d7ae520f1d049cc37d8dc278.
+This adapter requires pinned native base/voice assets; not a complete7B checkpoint.
+No model loaded/GPU initialized. Full independent native restore still required.
+Original/full archives and all previous checkpoints remain safe; broader stopped
+Mac source backup PARTIAL. No owner conversations/credentials/core dumps copied.
+
+Guard70540 shutdown10:22:37.9UTC; pipeline09:00; evaluator63289 latest09:37/end10:17;
+backup1184/backend71254 to10:20. Wallet actual06:16:36=$10.2453899946 at1.814/h,
+auto-payFalse;26h guard fully prepaid incl reserve, maxproject83.9807183<100.
+No new purchase, storage or deadline change. Distinct reasoning32 semantic payload
+approval pending;0requests/conversion/training. Unrelated local edits preserved.
+
+Next SAME postfit49/40 ->actual fitexit0 ->fresh independent Adam528/RNG/native49/
+control40 restore ->strict proof ->complete paired20/speech20/ordinary4 ->eligible
+sealedfresh ->larger-run decision. No continuation/adoption/behavior claim.
+See standalone-adapter backup JSON and pilot-progress JSON for exact evidence.
+
+---
+
 # LOCAL — ALL8 optimizer updates saved; post-fit fingerprints live (24 October 06:16 UTC)
 
 Goal turn PROGRESS; previous turn PROGRESS. LOCAL sole executor. Main before
