@@ -24,5 +24,37 @@
     "archives_phase": "RUNNING_LAST_LIVE_POLL"
   },
   "runtime_preparation_session": 42418,
-  "next_action": "Git-deploy this worker separately, run only after actual complete archive rsync exits zero, then inspect the real complete destination receipt before moving the disk to any GPU"
+  "next_action": "Git-deploy this worker separately, run only after actual complete archive rsync exits zero, then inspect the real complete destination receipt before moving the disk to any GPU",
+  "deployed_stage_source_commit": "f5c2ed0d570733ddabb89b17d5a4f693123427c3",
+  "deployed_source_actual_git_fetch_exit": 0,
+  "automatic_cpu_restore": {
+    "session": 3415,
+    "local_pid": 62943,
+    "phase": "waiting_for_existing_archive_rsync",
+    "provider_stop_utc": "2026-10-25T00:55:15Z",
+    "latest_start_utc": "2026-10-24T23:55:15Z",
+    "actual_gpu_started": false
+  },
+  "runtime": {
+    "exact_pinned_container_pull_actual_exit": 0,
+    "driver_toolkit_session": 57119,
+    "driver_toolkit_local_ssh_pid": 63831,
+    "last_observed_driver_stage": "DKMS building580.178.04 for7.0.0-1014-gcp on CPU; no terminal exit yet"
+  },
+  "unattended_followup": {
+    "id": "continue-native-gcp-recovery",
+    "status": "ACTIVE",
+    "kind": "heartbeat",
+    "target_thread": "01a1535a-39b7-7c53-ab9c-19ad096f4d7b",
+    "cadence_minutes": 15,
+    "scope": "Same LOCAL chat; approved zero-update GCP continuation only; quiet on unchanged/nonactionable state; disable on completion or human-input blocker"
+  },
+  "latest_transfer_observation": {
+    "at_utc": "2026-10-24T21:17:43Z",
+    "physical_transport_bytes": 13509051888,
+    "available_disk": "197GiB",
+    "archive_rsync_session": 10044,
+    "archive_rsync_pid": 61436,
+    "destination_full_hashes_passed": false
+  }
 }

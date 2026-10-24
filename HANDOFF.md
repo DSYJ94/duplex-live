@@ -1,3 +1,39 @@
+# LOCAL — 13.51GB reached GCP; existing transfer/CPU restore live; follow-up ACTIVE
+
+At21:17:43UTC transportdu=13,509,051,888B,197GiB diskfree. Smallphase actualexit0;
+archive rsync61436/wrapper58482/session10044 remainsLIVE. Never duplicate. Source
+f5c2ed0d570733ddabb89b17d5a4f693123427c3 actually Git-fetched into clean
+/opt/duplex-recovery-source (deployment session25295 exit0). CPU restore watcher
+3415/PID62943 polledLIVE, waiting only for actual complete rsync0; then fullnative
+unpack/control7797/fullcatalog40132+8links; lateststart23:55:15UTC, CPUproviderSTOP
+00:55:15UTC25Oct. Logs/state in ignored runs/local-migration-20261024. No GPU yet.
+
+Pinned NVIDIA image download42418 ACTUALexit0 and RepoDigest42263b... confirmed.
+Official host driver580.178.04/toolkit1.20.1 preparation session57119/SSH63831 is
+LIVE; latestlog DKMS compile for7.0.0-1014-gcp. Do not run Docker containers until
+that task's daemon restart is terminal; inspect actualresult rather than retry.
+Macawake60354 tieduploadwrapper; CPUperformance settings unchanged.
+
+Owner asked autonomous overnight continuation. Created/readback ACTIVE heartbeat
+continue-native-gcp-recovery, every15min, THISchat01a1535a-39b7-7c53-ab9c-19ad096f4d7b.
+No earlier matching active native automation existed; unrelated paused automations
+untouched. Follow-up prompt keeps LOCALsoleexecutor, exact100USD/oneA100/max12h/
+same250GB/dataexclusions/ZEROupdates scope, actualjobreadbacks, no duplicates or
+purchases/weakergates, quietunlessmeaningful, disableoncompletion/humanblocker.
+The old goal registry was blocked on Google; sign-in is resolved and no supported
+goal-resume tool exists. Active heartbeat now continues this same full objective;
+do not mistake old Google/blocker entries for missing permission/access.
+
+Next after fullCPUreceipt: preserve originals/receipts, reconstruct exact original
+paths/tmp regular inputs, STOPCPU/detachsame250GBdisk. Separate approved A10080
+requires freshactualquota/stock/price/provider12hSTOP+livecostguard+oneGPUcheck,
+then saved8 ZERO-updatefinalization, distinctAdam/RNGrestore, strictproof and full
+nativebehaviorchain. No actualGPUrestore/modelimprovement claim yet. Latesttracked
+sourcebeforethisdocupdatef5c2ed0; source/data/losses/thresholds unchanged. Relevant
+handoffcommitpush only; unrelated local edits preserved. No cloud executor handoff.
+
+---
+
 # LOCAL — Smaller artifact upload EXIT0; archive upload live; CPU restore worker prepared
 
 Source parentcb07860 pushed. Small rsync58487 actually exited0 at21:06:33.808912UTC;
