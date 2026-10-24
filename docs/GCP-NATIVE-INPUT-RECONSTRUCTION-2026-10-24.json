@@ -4,10 +4,10 @@
   "parent_source": "a6dab9f",
   "implementation_sha256": {
     "portable/context/native_gcp_inputs.py": "38056eb54c3e87d443d8750cddf728cd0f6a9be4749506469ef2f0600c09bef7",
-    "evals/harness/test_native_gcp_inputs.py": "0c4a916f2a449a8a566523b576975203afb52a53f336cb2e5355bf2ac3a82f5b"
+    "evals/harness/test_native_gcp_inputs.py": "9f8b494e032218d625b631edab7dae48827fbcfab1db9590e386fc3bc975a31d"
   },
   "status": "PREPARED_NOT_RUN_AWAITING_FULL_DESTINATION",
-  "focused_filesystem_tests_passed": 17,
+  "focused_filesystem_tests_passed": 18,
   "cli": [
     "--root",
     "--destination-report",
@@ -41,5 +41,7 @@
   "actual_input_reconstruction_executed": false,
   "actual_model_loaded": false,
   "new_optimizer_updates": 0,
-  "next_action": "Finish current full CPU archive stage. Git-deploy prepared helper/guards/controller in separate worktree, reconstruct/audit these inputs on CPU, then use the approved separate bounded A100."
+  "next_action": "Finish current full CPU archive stage. Git-deploy prepared helper/guards/controller in separate worktree, reconstruct/audit these inputs on CPU, then use the approved separate bounded A100.",
+  "head_only_bundle_sparse_clone_fixture_passed": true,
+  "preserved_three_vendor_bundle_bytes_and_sha_verified_on_mac": true
 }

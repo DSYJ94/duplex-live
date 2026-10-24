@@ -1,3 +1,28 @@
+# LOCAL — COMPLETE archive rsync EXIT0; full CPU extraction/hash stage LIVE
+
+Archive rsync61436 ACTUALLY exited0 at22:41:29.377578UTC; wrapper10044 terminal0.
+All36containers +3865smallerobjects +source/receipts uploaded. Do not restart rsync.
+CPUrestore3415/PID62943 actually advanced at22:41:33.496942UTC to complete CPU
+extraction/hash verification; actualSSHchild97015. ProviderSTOP00:55:15UTC25Oct,
+same250GBdisk, no A100/optimizer/model. Full40132+8 destinationpass stillPENDING.
+Restoreawake66398 remains tiedwatcher; uploadawake60354 naturallyendswithupload.
+
+Exactinputhelper preparedsourcee4c7493, plus one new HEAD-only bundle sparse-clone
+fixture (18 filesystem/stage/destination checks PASS). Allthree preserved public
+vendorbundles freshlymemberSHAchecked from Mac tars: ContextSpan27,591,749B,
+MoshiRag2,523,799B, finetune638,257B; headers all advertise pinnedSHA HEAD, no
+prerequisites. This doesn't substitute fullGCParchive verification. No source/data
+changed; updatedprepdoc recordsactualbundle evidence/testhash. Next deploy complete
+prepared guards/controller/inputhelper in SEPARATE Gitworktree; keepf5c2ed0 CPU
+worker sourcefixed. Then arm exactreconstruction AFTER actualfullCPUreceipt0.
+
+Samebounds100USD/oneA10080/max12h/same250GB/zero updates, strict native gates.
+CPUreconstruction before GPU prevents paying for missing ephemeral paths; durable
+verifier directory must bind to exact/tmp inside GPUcontainer after diskreboot.
+LOCALsoleexecutor; no cloudhandoff or unrelatededit included.
+
+---
+
 # LOCAL — Exact input reconstruction prepared; durable verifier paths survive GPU reboot
 
 Heartbeat22:31UTC re-polled SAMEupload10044 and CPUrestore3415 LIVE; received

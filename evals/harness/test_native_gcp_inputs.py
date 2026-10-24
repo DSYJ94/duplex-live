@@ -1,12 +1,31 @@
 import hashlib
 from pathlib import Path
 import tempfile
+import subprocess
 import unittest
 
-from portable.context.native_gcp_inputs import regular_link, regular_copy_tree
+from portable.context.native_gcp_inputs import regular_link, regular_copy_tree, clone_bundle
 
 
 class InputMaterializationTests(unittest.TestCase):
+    def test_head_only_git_bundle_clones_exact_sparse_source(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory).resolve();source=root/'source'
+            def run(*words):return subprocess.check_output(['git',*map(str,words)],text=True,stderr=subprocess.DEVNULL).strip()
+            run('init',source)
+            run('-C',source,'config','user.name','Fixture')
+            run('-C',source,'config','user.email','fixture@example.invalid')
+            for name in ('contextspan/a.py','docs/a.md','omitted/a.txt'):
+                file=source/name;file.parent.mkdir(parents=True,exist_ok=True);file.write_text('fixture')
+            run('-C',source,'add','.')
+            run('-C',source,'commit','-qm','fixture')
+            commit=run('-C',source,'rev-parse','HEAD');bundle=root/'source.bundle'
+            run('-C',source,'bundle','create',bundle,'HEAD')
+            clone_bundle(bundle,root/'clone',commit,('contextspan','docs'))
+            self.assertTrue((root/'clone/contextspan/a.py').is_file())
+            self.assertFalse((root/'clone/omitted/a.txt').exists())
+            self.assertEqual(run('-C',root/'clone','rev-parse','HEAD'),commit)
+
     def test_snapshot_hardlink_preserves_exact_bytes_and_refuses_overwrite(self):
         with tempfile.TemporaryDirectory() as directory:
             root=Path(directory).resolve();source=root/'source';source.write_bytes(b'checkpoint')
