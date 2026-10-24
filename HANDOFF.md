@@ -1,3 +1,39 @@
+# LOCAL — contingency source staged; backup V3 verified; original6/8 live
+
+Goal turn PROGRESS. Source0d75986fca9f1ef943dfece77c7859235163c0ad is hash-verified
+and clean at /opt/duplex-reasoning32-followup-0d75986; CLI help passes. Git bundle
+SHAf7524c7783e8a2733f2466fbe2182b6363e95a5d438f5e6ac502bf408b07db26,
+35161bytes. Initial transfer timed out; retry exited0 and remote SHA/checkout
+verified. Earlier two direct inspection approval-review timeouts recovered.
+No successor/GPU work dispatched. Do not mistake source staging for a pilot run.
+
+At14:31:06UTC exact original child15566/birth39956182 remained live/S under
+controller8514/model sourceDA389A7,6/8 joint partitions, no reported error.
+Existing eval observer38348 verified exact original controller at14:34UTC still
+combined_readiness. Its stale prior TimeoutExpired field is historical; current
+last_read_succeeded true and waiting phase are authoritative. No optimizer yet.
+
+Backup watcher38347 was verified and stopped before replacing only its fixed
+backup profile. New watcher8236/source0d75986, local output
+runs/local-migration-20261023/native-reasoning32-continuous-copyback-v3,
+remote source /opt/duplex-reasoning32-followup-0d75986, deadline18:30UTC.
+First snapshot verified and watching/last_check_succeeded true at14:34:07UTC.
+All V1/V2 snapshots retained; latest V2 is verified reference for incremental reuse.
+No training process stopped. Eval38348 and guard12953 unchanged; guard fresh.
+
+Next finish exact original readiness. If original starts bounded8 itself, follow
+it and NEVER start V18. Only after exact actual terminal pre-fit time refusal and
+all8 approval may committed readiness-followup run V18 (18:10 controller deadline,
+15:10 latest fit start) inside unchanged18:39:58.8 hard Pod stop and100USD cap.
+Before any such launch refresh remote guard status from live local guard, verify
+no GPU process/exclusive lease, and then bind evaluation to actual new PID/birth
+only after launch. All complete restore/native20/speech20/fresh gates retained.
+GCP remains quota-request-only, no compute or data migration. Original archive
+verified; broader stopped source backup still PARTIAL. Unrelated edits preserved.
+Recorded 2026-10-24T14:35:12.473955+00:00.
+
+---
+
 # LOCAL — late-start contingency prepared; original job unchanged
 
 Goal turn PROGRESS. Added native_reasoning_readiness_followup.py and five focused

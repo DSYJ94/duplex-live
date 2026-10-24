@@ -1,7 +1,7 @@
 {
   "schema": "dl-native-reasoning32-readiness-reuse-contingency-v1",
   "at_utc": "2026-10-24T14:15:10.682329+00:00",
-  "status": "PREPARED_NOT_DISPATCHED",
+  "status": "SOURCE_STAGED_CLEAN_NO_GPU_DISPATCH",
   "reason": "Observed audit duration may cross the original pre-fit three-hour headroom gate; preserve completed approvals without repeating GPU audits",
   "original": {
     "pid": 8514,
@@ -46,5 +46,20 @@
     "passed": true,
     "mac_model_workloads": false
   },
-  "adopted": false
+  "adopted": false,
+  "deployment": {
+    "at_utc": "2026-10-24T14:31:06.512440+00:00",
+    "source": "0d75986fca9f1ef943dfece77c7859235163c0ad",
+    "checkout": "/opt/duplex-reasoning32-followup-0d75986",
+    "bundle_sha256": "f7524c7783e8a2733f2466fbe2182b6363e95a5d438f5e6ac502bf408b07db26",
+    "clean": true,
+    "help_passed": true,
+    "gpu_work_dispatched": false
+  },
+  "backup_watcher": {
+    "pid": 8236,
+    "source_commit": "0d75986fca9f1ef943dfece77c7859235163c0ad",
+    "first_snapshot_verified": true,
+    "deadline_utc": "2026-10-24T18:30:00Z"
+  }
 }
