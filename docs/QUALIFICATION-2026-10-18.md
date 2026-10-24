@@ -1,3 +1,14 @@
+24Oct01:32UTC — Same child71818 actualR,15/49 exact native rows; full154 gradient
+PASS, full49/combined reports absent,0new updates. Posted single20USD credit
+reverified: wallet18.8645, auto-payFalse,26h samePod guard10:22 fully prepaid with
+reserve; no additional purchase. Existing pilot/restore/complete20 dispatch and
+83-file verified continuous backup remain active. Research coverage note records
+ten reused development cases/two models, missing positive backchannel and broad
+reasoning-routing coverage; no gate/fixture change or qualification inferred.
+See newestHANDOFF and research/2026-10-24-native-behavior-coverage.md.
+
+---
+
 24Oct01:24UTC — Same native child71818 actualR,13/49 logged exact rows; full154
 preflight PASS, no full49/combined report/new optimizer update. Complete32 local
 necessary-fact audit from authored premises:32backend bundle receipts,16final bundle

@@ -1,3 +1,51 @@
+# LOCAL — prepaid credit verified; same child15/49; behavior coverage recorded (24 October01:32UTC)
+
+Goal turn PROGRESS. LOCAL remains sole executor. Source reviewed05352d75e80d162f905114c048e2ce2daecec4d6;
+executionC9 c9efaaac24d983342f7eded46617e6450bc102ce and operational supervisor2e652ce
+unchanged. No new GPU submission, restart, optimizer update or credit purchase.
+The user's single20USD purchase approval has already been consumed by the posted
+top-up; never interpret the repeated approval as authorization for a second charge.
+
+ACTUAL01:31:24UTC: supervisor79780/birth24607807 S; unchanged CUDA71818/birth24130859 R;
+original71679/birth24121629 intentionally T. Native15/49 logged rows, all exact
+forward hashes. Complete154 gradient PASS; native49 and combined final reports
+absent, no new optimizer updates. Same seven-stage pipeline remains automatic:
+full49+combined ->ONE8 from520 ->independent Adam/RNG/native restore ->strict proof.
+Do not resume the paused original parent or duplicate the GPU child.
+
+ACTUAL01:32:00UTC read-only wallet18.8645323251USD, account rate1.814/h, auto-payFalse.
+SamePod4yx8vahdmjsylx/volume49yytzyoge; existing26h guard70540 cutoff10:22:37.9UTC
+remains fully prepaid with one-hour billing lag and0.50shutdown reserve
+(required18.356648705815USD). Maximum project compute83.98071830424945USD<100.
+27h/34h alternatives still not prepaid and not executed. Pipeline deadline09:00;
+complete paired20/speech20 dispatcher71424 waiting for exact79780 and all7 stages,
+latest launch09:37/end10:17. Actual backend runv7 requests0, health good. Backup71453
+active, latest83-file snapshot SHA52baeb8a780b8aa726c05fa1406a3ec49cfdafd9c668ef0618a257921cef299a
+fully verified; continuous watcher latest read succeeded01:31. Full archive remains
+preserved; broader stopped Mac source backup PARTIAL. Runtime remains a material
+completion risk; partial rows are not approval and no finish time is promised.
+
+Research-only coverage report docs/research/2026-10-24-native-behavior-coverage.md
+completed through the research skill's required background agent. Paired20 is the
+same10 development cases on two models; speech20 audits those same outputs. Four
+ordinary science anchors and specific quiet/pause/lookup/clarify/cancel cases give
+narrow coverage. No positive context-sensitive backchannel test or broad matched
+easy-direct/hard-delegate matrix. Fresh-entry permits measurement after all4
+ordinary success and complete10 review; this is not all-behavior adoption. Saved
+default runtime ordinary baseline5202/4 vs75900520/4 remain historical, not live
+repair results. Kyutai paper/code support added interaction diagnostics, but short
+vocalization rewards cannot replace strict explicit silence. Proposed additions
+change no running fixture/gate/teacher/audio/loss. All local report links resolve;
+no source implementation changed, so no new neural tests run on this Mac.
+
+Next: preserve same child and incremental backups; finish existing readiness,
+pilot, independent restore and full behavior chain before any larger run. Separate
+reasoning32 semantic payload approval remains pending after automatic review;
+0semantic requests/0conversion/0reasoning32 training. Local fact checks never
+substitute for it. Unrelated pyc/capability probes/roadmap preserved.
+
+---
+
 # LOCAL — complete32 local fact audit; same native child13/49 (24 October01:24UTC)
 
 Goal turn PROGRESS. LOCAL sole executor. New CPU-only diagnostic source
