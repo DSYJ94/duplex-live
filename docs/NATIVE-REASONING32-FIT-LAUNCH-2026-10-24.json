@@ -1,7 +1,7 @@
 {
   "schema": "dl-native-reasoning32-fit-launch-v1",
   "at_utc": "2026-10-24T15:06:44.710870+00:00",
-  "status": "IN_PROGRESS_FOUR_OF_EIGHT_UPDATES_OBSERVED",
+  "status": "IN_PROGRESS_FIVE_OF_EIGHT_UPDATES_OBSERVED",
   "controller": {
     "pid": 28726,
     "birth": 40829059,
@@ -52,12 +52,102 @@
   "behavior_qualified": false,
   "model_adopted": false,
   "optimizer_progress": {
-    "observed_utc": "2026-10-24T15:46:05.178018+00:00",
-    "completed_updates": 4,
-    "checkpoint_sha256": "130f07d44c553d0d30a4ade387e6ae0c86df5ed361f5fd13c79b4df9eb7dcbac",
+    "observed_utc": "2026-10-24T15:57:37.703058+00:00",
+    "completed_updates": 5,
+    "checkpoint_sha256": "f2345886ffadb298e63025264ac6052f215ce754c11c532377be7acd8c157959",
     "checkpoint_bytes": 22970059,
     "backup_verified": true,
-    "backup_snapshot_utc": "20261024T154644.282319Z",
+    "backup_snapshot_utc": "20261024T155801.044084Z",
+    "inventory_sha256": "c42cafa3a703a95650c73dbbf711c36db4ebbd88df0b95fd477b74804e30904c",
     "independent_restore_approved": false
+  },
+  "latest_live_progress_observation": {
+    "at_utc": "2026-10-24T15:57:37.703058+00:00",
+    "phase": "bounded8_training",
+    "stages": [
+      {
+        "name": "whole_workset",
+        "started_utc": "2026-10-24T11:41:11.861165+00:00",
+        "pid": 9581,
+        "birth": 39673531,
+        "actual_exit": 0,
+        "ended_utc": "2026-10-24T11:41:23.842055+00:00",
+        "reused_from_controller": "/workspace/migration/native-reasoning32-retained-pilot-v17/controller.json"
+      },
+      {
+        "name": "gradient32",
+        "started_utc": "2026-10-24T11:41:23.874849+00:00",
+        "pid": 9704,
+        "birth": 39674733,
+        "actual_exit": 0,
+        "ended_utc": "2026-10-24T12:28:18.333244+00:00",
+        "reused_from_controller": "/workspace/migration/native-reasoning32-retained-pilot-v17/controller.json"
+      },
+      {
+        "name": "combined_readiness",
+        "started_utc": "2026-10-24T12:28:18.366336+00:00",
+        "pid": 15566,
+        "birth": 39956182,
+        "actual_exit": 0,
+        "ended_utc": "2026-10-24T14:48:23.115117+00:00",
+        "reused_from_controller": "/workspace/migration/native-reasoning32-retained-pilot-v17/controller.json"
+      },
+      {
+        "name": "bounded8_training",
+        "started_utc": "2026-10-24T14:53:48.828373+00:00",
+        "pid": 28807,
+        "birth": 40829227
+      }
+    ],
+    "updates": [
+      {
+        "step": 1,
+        "gradient_norm_before_clip": 16.85215950012207,
+        "retention_kl": 0.06867368519306183,
+        "retention_hidden_mse": 0.011277739889919758
+      },
+      {
+        "step": 2,
+        "gradient_norm_before_clip": 25.566822052001953,
+        "retention_kl": 0.06856595724821091,
+        "retention_hidden_mse": 0.011277998797595501
+      },
+      {
+        "step": 3,
+        "gradient_norm_before_clip": 17.434288024902344,
+        "retention_kl": 0.06863545626401901,
+        "retention_hidden_mse": 0.01127601321786642
+      },
+      {
+        "step": 4,
+        "gradient_norm_before_clip": 22.685853958129883,
+        "retention_kl": 0.06860277056694031,
+        "retention_hidden_mse": 0.011277709156274796
+      },
+      {
+        "step": 5,
+        "gradient_norm_before_clip": 24.806386947631836,
+        "retention_kl": 0.0685616135597229,
+        "retention_hidden_mse": 0.01127505861222744
+      }
+    ],
+    "handles": [
+      {
+        "pid": 28726,
+        "state": "S",
+        "birth": 40829059
+      },
+      {
+        "pid": 28807,
+        "state": "S",
+        "birth": 40829227
+      }
+    ],
+    "error": null,
+    "backend_health": {
+      "run_id": "native-reasoning32-native20-v15",
+      "actual_requests": 0,
+      "real_requests_transport": true
+    }
   }
 }

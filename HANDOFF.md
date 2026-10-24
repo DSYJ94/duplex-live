@@ -1,3 +1,27 @@
+# LOCAL — FIVE actual optimizer updates; new checkpoint hash-verified
+
+Finiteobserver actual15:57:37.703058UTC:V18phasebounded8_training,
+controller28726/birth40829059stateS andfit28807/birth40829227stateS,
+noerror,updates1..5 saved. Step5norm24.806386947631836,retentionKL
+0.0685616135597229,hiddenMSE0.01127505861222744 (pre-update metrics only).
+New Mac snapshot20261024T155801.044084Z inventorySHA
+c42cafa3a703a95650c73dbbf711c36db4ebbd88df0b95fd477b74804e30904c.
+Checkpoint22970059bytes SHA
+f2345886ffadb298e63025264ac6052f215ce754c11c532377be7acd8c157959.
+Both inventory/checkpoint rehashed on Mac; complete5 rows in saved log.
+Exact progress/backups:docs/NATIVE-REASONING32-FIT-LAUNCH-2026-10-24.json.
+Copy/hash is NOT independent training-state restore. All8, full restore/
+strictproof/native20/speech20 and later freshqualification stillrequired.
+
+Repaired reverseSSH40689 same endpoint18795 health remains transporttrue,
+actualproviderrequests0. Evalwaiter20887 remains gated on complete restored
+pilot,backup8236 watching/success15:58UTC,guard unchanged. Finiteobserver ended
+normally afterupdate5 (not trainingcancellation). No additional GPU job,
+GCPmachine,model/math change,budgetextension oradoption. Goalactive.
+Next: retain remaining3 updates, automaticindependentrestore/proof/eval.
+
+---
+
 # LOCAL — Actual first4 exposure independently checked; same fit live
 
 Verified snapshot20261024T154644.282319Z traininglogSHA
