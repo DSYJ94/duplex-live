@@ -1,0 +1,38 @@
+{
+  "schema": "dl-gcp-native-guest-cost-watchdog-preparation-v1",
+  "at_utc": "2026-10-24T22:22:34.942383+00:00",
+  "parent_source": "edb887b",
+  "implementation_sha256": {
+    "portable/context/gcp_guest_cost_watchdog.py": "60e103ad1695ddc436e052f19414337731037b813a0ee76f257cb8044023f583",
+    "evals/harness/test_gcp_guest_cost_watchdog.py": "5bd1b37bfb1951792d513279f14449841b7ab9b40d8d7e0c04a2e0f74bdcadda"
+  },
+  "status": "PREPARED_NOT_INSTALLED_OR_ARMED_NO_GPU",
+  "focused_guest_mac_guard_controller_tests_passed": 16,
+  "cli": [
+    "--lease",
+    "--destination",
+    "--guard",
+    "--status"
+  ],
+  "host_requirements": [
+    "Root transient systemd service on actual owned GPU host; reject container PID1",
+    "Exact approved100USD/max12h/same250GB/zero-update lease and complete destination receipt",
+    "Metadata-Flavor Google project/id must match recorded owned GPU; no service-account/credential required",
+    "Mac guard must already be fresh before arming; then publish host armed state every5s"
+  ],
+  "stop_policy": [
+    "Clean guest shutdown at the recorded native deadline",
+    "Clean guest shutdown on missing/malformed/changed-resource/changed-authority/changed-deadline/permission-false guard",
+    "Clean guest shutdown when Mac control guard is older than90s or clock-invalid",
+    "Immutable checkpoint/optimizer/archives remain on persistent disk; disposable localSSD discarded"
+  ],
+  "source_references": [
+    "https://docs.cloud.google.com/compute/docs/instances/stop-start-instance",
+    "https://docs.cloud.google.com/compute/docs/metadata/overview"
+  ],
+  "does_not_create_restart_delete_or_train": true,
+  "actual_gpu_created": false,
+  "actual_host_guard_started": false,
+  "actual_model_loaded": false,
+  "next_action": "Keep existing upload/CPUrestore running. After full real hashes and exact input reconstruction, prepare approvedGPU lease with nativeSTOP and Macguard; only then install/readback this host guard before any model job."
+}

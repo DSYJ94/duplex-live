@@ -1,3 +1,33 @@
+# LOCAL — Credential-free guest idle shutdown prepared; same upload/watcher healthy
+
+Heartbeat22:16UTC re-polled SAMEupload10044 and CPUrestore3415 LIVE. Observed
+56,272,307,696B received/155GiBfree; no A100, newupdates or duplicate transfer.
+CPU1784642133801608667/providerSTOP00:55:15UTC25Oct, same250GBdisk unchanged.
+Deployedrestore sourcef5c2ed0 stays fixed; Macsourceparentedb887b. Runtime/DAprep0.
+
+New portable/context/gcp_guest_cost_watchdog.py is SOURCE ONLY, not installed or
+armed. Solves idleGPU spend if Mac controlconnection disappears: root HOSTsystemd
+service verifies GCPmetadata project/id against exact approvedGPUlease + complete
+destinationreceipt before it can act. Rejectscontainer/stagingCPU/wrongresource;
+requires no cloudcredentials/serviceaccount. After Macguard is actuallyfresh,
+checks5s; cleanshutdownatdeadline or on malformed/missing/changed/stale>90sguard.
+Uses Google's documented guest shutdown: persistentdisk retained, only disposable
+localSSD discarded. Parent modelcontroller already kills its own child on stale
+30sguard; guestshutdown prevents remainingGPUidle if Mac cannot reach cloudAPI.
+16 combined guest/Macguard/controller fixtures PASS; no model/GPU evidence.
+CLI/hashes/references: docs/GCP-NATIVE-GUEST-COST-GUARD-2026-10-24.json.
+
+Next unchanged: letactualarchiveupload0 + CPUfull40132/81.15GB/8link verification
+finish. Reconstructexactlegacy/vendor/tmp/snapshot onCPU. STOPCPU/detachsamedisk,
+freshprice/quota/stock, oneA10080/native12hSTOP/discardlocalSSD, actualMacguard,
+actualhostguard/readback, then same-PIDnamespace two-child ZERO-updatefinalization/
+independentrestore/proof/nativebehaviorchain. New guard/controller SOURCE must be
+Git-deployed separately; do not change f5c2ed0 under the running CPUrestoreworker.
+Never repeat8, weaken gates, addstorage/purchases/data or handexecutiontocloud.
+Active15minheartbeat remainsquiet on healthyprogress; unrelated local edits intact.
+
+---
+
 # LOCAL — Guard-monitored fresh-process recovery controller prepared; upload ongoing
 
 Heartbeat22:01UTC re-polled SAMEupload10044 + CPUrestore3415 LIVE. Observed
