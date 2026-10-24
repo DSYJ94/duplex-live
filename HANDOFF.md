@@ -1,3 +1,36 @@
+# LOCAL — COMPLETE32 gradient PASS; combined readiness live (24 October12:32UTC)
+
+Goal turn PROGRESS. Gradient32 child9704/birth39674733 completed ALL32 PASS and
+actualEXIT0 at12:28:18.333244UTC. Full model parameters/execution unchanged true,
+all26 adapter gradients finite, frozen gradients0, exact native text/acoustic
+outputs, acoustic text-head delta0 and positive temporal acoustic deltas. Peak
+22035680256bytes. This is gradient readiness, no new optimizer or behavior approval.
+
+Final gradient reportSHA43a4c7c0364bc68889108fb8ea7eb615f3ef68f94eb1ab7f0f435e7c10f87016.
+Two regular files56588bytes plus two public CUDA link target strings have exact
+remote/Mac equality, no links dereferenced. Mac full32 pure gradient gate rechecked
+against closed numerical32 and original Engine32 parent, no model/Torch loaded.
+Artifacts native-reasoning32-gradient-v17-final-v1; receipt
+native-reasoning32-gradient-v17-final-copyback-v1.json. Doc
+NATIVE-REASONING32-GRADIENT-COMPLETE-2026-10-24.json includes closed exit row.
+Numerical32 final approval and hashes in prior entry remain valid.
+
+CURRENT controller8514/birth39640315/sourceDA389A7 advanced automatically to
+combined_readiness at12:28:18.366336UTC, child15566/birth39956182 verified LIVE/R.
+Output /workspace/migration/native-reasoning32-retained-pilot-v17;
+log combined_readiness.log. At last read it was verifying original retained input
+lineage; no terminal failure or new optimizer update. Do not restart it from a
+slow/empty observation. It must combine original154, native49, control40 and
+reasoning32 at unchanged parent before eight-update fit and independent full restore.
+
+Read-only observer5418 ended its own window; NOT a model cancellation. No current
+observer session required; inspect authoritative controller/child directly.
+Next observe exact15566, readiness reports and automatic bounded8 dispatch.
+Backup38347 and eval38348 remain current, guard12953 still18:39:58.8UTC hard stop.
+All source, originals, previous failures and other local work remain preserved.
+
+---
+
 # LOCAL — COMPLETE32 numerical approval; gradient32 actual first case (24 October11:45UTC)
 
 Goal turn PROGRESS. NumericalV14 ALL32 PASS at original.001/causality0 thresholds,

@@ -1,0 +1,74 @@
+{
+  "schema": "dl-native-reasoning32-complete-gradient-approval-v1",
+  "source_commit": "da389a7031a5504495397d1575952194ffa209f1",
+  "complete32": true,
+  "passed": true,
+  "actual_gradient_exit": 0,
+  "all_model_parameters_and_execution_unchanged": true,
+  "peak_allocated_bytes": 22035680256,
+  "all26_adapter_gradients_finite": true,
+  "frozen_parameter_gradients": 0,
+  "all32_original_native_text_and_acoustic_outputs_exact": true,
+  "acoustic_text_head_gradient_delta_exactly_zero": true,
+  "all32_acoustic_temporal_gradient_deltas_positive": true,
+  "backup": {
+    "schema": "dl-native-reasoning32-gradient-final-copyback-v1",
+    "at_utc": "2026-10-24T12:31:49.712859+00:00",
+    "inventory": {
+      "files": [
+        {
+          "path": "driver/driver.json",
+          "bytes": 132,
+          "sha256": "4f6fa39f5d8f6a25c6e5db05c328c2a467dd2c4da049f50308381dac46748fa7"
+        },
+        {
+          "path": "gradient.json",
+          "bytes": 56456,
+          "sha256": "43a4c7c0364bc68889108fb8ea7eb615f3ef68f94eb1ab7f0f435e7c10f87016"
+        }
+      ],
+      "symlinks": [
+        {
+          "path": "driver/libcuda.so",
+          "target": "/usr/lib/x86_64-linux-gnu/libcuda.so.595.91.07"
+        },
+        {
+          "path": "driver/libcuda.so.1",
+          "target": "/usr/lib/x86_64-linux-gnu/libcuda.so.595.91.07"
+        }
+      ],
+      "closed_stage": {
+        "name": "gradient32",
+        "started_utc": "2026-10-24T11:41:23.874849+00:00",
+        "pid": 9704,
+        "birth": 39674733,
+        "actual_exit": 0,
+        "ended_utc": "2026-10-24T12:28:18.333244+00:00"
+      },
+      "current_phase": "combined_readiness",
+      "current_stage": {
+        "name": "combined_readiness",
+        "started_utc": "2026-10-24T12:28:18.366336+00:00",
+        "pid": 15566,
+        "birth": 39956182
+      }
+    },
+    "all_remote_local_hashes_match": true,
+    "complete32_pure_gate_revalidated": true,
+    "all_parameters_and_execution_unchanged": true,
+    "peak_allocated_bytes": 22035680256,
+    "optimizer_updates": 0
+  },
+  "new_optimizer_updates": 0,
+  "current_stage": {
+    "name": "combined_readiness",
+    "pid": 15566,
+    "birth": 39956182,
+    "controller_pid": 8514,
+    "controller_birth": 39640315,
+    "source_commit": "da389a7031a5504495397d1575952194ffa209f1",
+    "actual_started_utc": "2026-10-24T12:28:18.366336+00:00",
+    "observed_live": true
+  },
+  "training_and_behavior_or_adoption_approved": false
+}
