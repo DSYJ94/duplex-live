@@ -6,7 +6,7 @@ import shlex
 import shutil
 import subprocess
 
-from portable.context.native_control_copyback import ROOTS,snapshot,verify,ssh_command
+from portable.context.native_control_copyback import ROOTS,snapshot,verify,ssh_command,inventory_rows,reuse_local_files,receive_snapshot
 
 
 class ControlCopyback(unittest.TestCase):
@@ -21,6 +21,70 @@ class ControlCopyback(unittest.TestCase):
             second=snapshot(base,first['marker']);self.assertTrue(second['changed'])
             self.assertEqual(verify(Path(second['snapshot']),second['inventory_sha256']),2)
             self.assertEqual((Path(second['snapshot'])/report.relative_to(base)).read_bytes(),report.read_bytes())
+
+    def test_retained154_receipt_triggers_backup_with_same_controller_phase(self):
+        with tempfile.TemporaryDirectory()as directory:
+            base=Path(directory);root=base/'native-control40-precise-pilot-v8-recovery';root.mkdir()
+            (root/'controller.json').write_text('{"phase":"combined_readiness"}')
+            first=snapshot(base);ready=root/'combined-readiness';ready.mkdir()
+            (ready/'complete-balanced-preflight.json').write_text('{"passed":true,"total_components":154}')
+            second=snapshot(base,first['marker']);self.assertTrue(second['changed'])
+            self.assertEqual(verify(Path(second['snapshot']),second['inventory_sha256']),2)
+
+    def test_snapshots_reuse_verified_immutable_bytes_without_linking_live_outputs(self):
+        with tempfile.TemporaryDirectory()as directory:
+            base=Path(directory);root=base/'native-control40-precise-pilot-v8-recovery';root.mkdir()
+            (root/'controller.json').write_text('{"phase":"combined_readiness"}')
+            payload=root/'reference.pt';payload.write_bytes(b'unchanged reference tensors')
+            first=snapshot(base);second=snapshot(base)
+            a=Path(first['snapshot'])/payload.relative_to(base);b=Path(second['snapshot'])/payload.relative_to(base)
+            self.assertTrue(a.samefile(b));self.assertFalse(payload.samefile(b))
+            payload.write_bytes(b'new live output')
+            self.assertEqual(a.read_bytes(),b'unchanged reference tensors')
+            self.assertEqual(b.read_bytes(),b'unchanged reference tensors')
+            self.assertEqual(verify(Path(second['snapshot']),second['inventory_sha256']),2)
+
+    def test_local_reuse_links_only_matching_verified_bytes_and_rejects_path_escape(self):
+        with tempfile.TemporaryDirectory()as directory:
+            base=Path(directory);root=base/'native-control40-precise-pilot-v8-recovery';root.mkdir()
+            live=root/'reference.pt';live.write_bytes(b'immutable saved reference')
+            previous=snapshot(base);reference=Path(previous['snapshot']);rows=inventory_rows(reference)
+            target=base/'local-new';target.mkdir()
+            missing,reused=reuse_local_files(reference,target,rows)
+            self.assertEqual(missing,[]);self.assertEqual(reused,[rows[0]['path']])
+            self.assertTrue((target/rows[0]['path']).samefile(reference/rows[0]['path']))
+            second=base/'local-after-corruption';second.mkdir();(reference/rows[0]['path']).write_bytes(b'bad source')
+            missing,reused=reuse_local_files(reference,second,rows)
+            self.assertEqual(missing,[rows[0]['path']]);self.assertEqual(reused,[])
+            bad=dict(rows[0],path='../outside')
+            with self.assertRaises(ValueError):reuse_local_files(None,second,[bad])
+
+    def test_receive_transfers_only_changed_files_but_verifies_entire_inventory(self):
+        from unittest.mock import patch
+        with tempfile.TemporaryDirectory()as directory:
+            base=Path(directory);root=base/'native-control40-precise-pilot-v8-recovery';root.mkdir()
+            (root/'reference.pt').write_bytes(b'large immutable reference')
+            (root/'controller.json').write_text('{"phase":"prepared"}')
+            prior=snapshot(base);reference=Path(prior['snapshot'])
+            (root/'controller.json').write_text('{"phase":"combined_readiness"}')
+            current=snapshot(base);provider=Path(current['snapshot']);info=dict(current,snapshot='/workspace/migration/native-control40-backup-snapshots/'+provider.name)
+            transferred=[]
+            def transfer(command,**kwargs):
+                if command[-2].endswith('/inventory.json'):
+                    shutil.copyfile(provider/'inventory.json',Path(command[-1])/'inventory.json')
+                else:
+                    names=Path(command[command.index('--files-from')+1]).read_bytes().decode().strip('\0').split('\0')
+                    transferred.extend(names)
+                    for name in names:
+                        dest=Path(command[-1])/name;dest.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(provider/name,dest)
+                return subprocess.CompletedProcess(command,0,'','')
+            with patch('portable.context.native_control_copyback.subprocess.run',side_effect=transfer):
+                count,receipt=receive_snapshot(info,base/'received',['ssh'],'root@example.test',reference)
+            self.assertEqual(count,2);self.assertEqual(receipt['reused_verified_files'],1)
+            self.assertEqual(transferred,[(root/'controller.json').relative_to(base).as_posix()])
+            self.assertEqual(receipt['transferred_file_bytes'],(root/'controller.json').stat().st_size)
+            (base/'received'/transferred[0]).write_text('corrupt')
+            with self.assertRaises(ValueError):verify(base/'received',info['inventory_sha256'])
 
     def test_current_v6_supervisor_metadata_is_included(self):
         with tempfile.TemporaryDirectory()as directory:
