@@ -1,0 +1,32 @@
+{
+  "schema": "dl-native-single15-credit-continuation-proposal-v1",
+  "status": "PROPOSAL_ONLY_NO_PURCHASE_OR_EXTENSION",
+  "at_utc": "2026-10-24T10:01:52.011529+00:00",
+  "same_pod": "4yx8vahdmjsylx",
+  "same_volume": "49yytzyoge",
+  "current_wallet_usd": 3.4522222418,
+  "account_rate_usd_per_hour": 1.814,
+  "autopay": false,
+  "one_time_credit_purchase_usd": 15,
+  "duplicate_prior20_purchase": false,
+  "current_guard_deadline_utc": "2026-10-24T10:22:37.9Z",
+  "proposed_latest_deadline_utc": "2026-10-24T18:22:37.900000+00:00",
+  "project_compute_cap_usd": 100,
+  "maximum_project_compute_with_proposed34h_usd": 98.30071830424946,
+  "remaining_wallet_required_at_observation_usd_including_one_hour_plus_half_dollar_reserve": 17.453789357331665,
+  "wallet_after_single15_at_observation_usd": 18.4522222418,
+  "margin_above_required_wallet_usd": 0.9984328844683361,
+  "no_payment_or_guard_change_without_specific_purchase_approval_and_actual_posted_balance_readback": true,
+  "proposed_work_order": [
+    "Preserve every current numerical result and exact terminal exits; never approve a passing subset.",
+    "Complete full32 numerical and BF16-gradient checks, retaining original thresholds and exact training/stream alignment.",
+    "Prepare a distinct reasoning32 integration preserving original154/native49/control40, KL/hidden retention and complete target coverage.",
+    "Only after complete readiness, run one bounded repair pilot from retained native520 parent; do not extend rejected control40V11 unchanged.",
+    "Independent full training-state restore, complete native behavioral evaluation and verified artifact copyback.",
+    "Stop new GPU work early when no justified next step exists; hard terminate own Pod at latest deadline, retain network volume."
+  ],
+  "does_not_authorize": [
+    "Lower thresholds, subset acceptance, base unfreezing, sealed heldout reads, production adoption, unlimited follow-on training, another provider, auto-pay or repeated purchases"
+  ],
+  "completion_not_guaranteed_by_funding": true
+}

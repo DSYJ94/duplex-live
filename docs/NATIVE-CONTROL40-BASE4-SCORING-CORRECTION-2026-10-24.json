@@ -1,0 +1,65 @@
+{
+  "schema": "dl-native-base4-complete-explanation-correction-v1",
+  "at_utc": "2026-10-24T10:01:00Z",
+  "supersedes_preliminary_3_of_4_core_summary": true,
+  "original_review_path": "docs/NATIVE-CONTROL40-MATCHED-BASE4-REVIEW-2026-10-24.json",
+  "original_review_sha256": "1e78f74bd2178979048d594d57a9b0eacb5ae4912f80b52b7e71875c98ac8859",
+  "frozen_expectations": "evals/fixtures/native-v2-development-20261019.json",
+  "method": "Require the complete expected explanation; naming a relevant mechanism alone is partial. Original recordings, ASRs, expected answers and previous review remain unchanged.",
+  "cases": [
+    {
+      "index": 0,
+      "scenario": "recovery-train-012",
+      "model_text": "Let me see what I can find, the water's surface tension creates a kind of barrier that prevents the molecules from moving into the air.",
+      "verdict": "incorrect",
+      "reason": "Surface tension does not explain lower-density ice floating.",
+      "artifact_sha256": {
+        "report.json": "12505bc0ea895198c971d7135bcd17a0fbe06f2f5ef2f4282b671a5a78d34bb8",
+        "model.wav": "1eac7aeb8a5aff819eb4b029160952b7478e24ef66bd645bdd4b6a992f59c2b0",
+        "user_in.wav": "1bd5ef3c206f748b90259defdcabc74fa5c985d873654010f69054a06229564f"
+      }
+    },
+    {
+      "index": 1,
+      "scenario": "recovery-train-013",
+      "model_text": "Let me see what I can find, and it turns out sound is produced by mechanical vibrations.",
+      "verdict": "complete",
+      "reason": "Explicitly attributes sound to mechanical vibrations.",
+      "artifact_sha256": {
+        "report.json": "d5aa5d4e508676f6353068f5e88ce306066a34c767ed951518a46e6fd233ce34",
+        "model.wav": "807c7c1458b9828dc8c24bb507b065ca4893b5221f58f01083212e24024b3aa2",
+        "user_in.wav": "8f0c8caac122f314070c26078f3b584d18cc381cf574d460dd2679af020567b9"
+      }
+    },
+    {
+      "index": 2,
+      "scenario": "recovery-train-014",
+      "model_text": "Let me see what I can find, plants need light to carry out photosynthesis.",
+      "verdict": "partial",
+      "reason": "Names photosynthesis but omits making food using light energy.",
+      "artifact_sha256": {
+        "report.json": "034c41c3993eb58840bbb22d53909e37c683a27619cc9dddca40533d9c1b43db",
+        "model.wav": "26c38428f8135d1f9d6b3ea9d0e02222620742bf0604bf92577d9cba2fe1484f",
+        "user_in.wav": "2239caf13fecd09fe494bbd2920d10127b8ae06e37401d0c44bdd0421fd25187"
+      }
+    },
+    {
+      "index": 3,
+      "scenario": "recovery-train-015",
+      "model_text": "Let me see. It is because metal conducts heat very well. Would you like to hear about how that happens? Are you looking to find out why that happens? Do you want to hear more about how it works? Heat travels",
+      "verdict": "partial",
+      "reason": "Names heat conduction but omits heat transfer away from skin; ends unfinished.",
+      "artifact_sha256": {
+        "report.json": "a7b6975af0e4a02b5b0e916a27395f63d4304cddd1c2d20eb34e4d91a9470ba7",
+        "model.wav": "7f62cbd2ee34fe435b8bfdbd294afa359e83e4a6a0d343e6752146b2fabf91f4",
+        "user_in.wav": "eb744a904140fa81174c1976e1dbf8f3a5c4585970358bca992c053d5a703f12"
+      }
+    }
+  ],
+  "complete": 1,
+  "partial": 2,
+  "incorrect": 1,
+  "behavior_qualified": false,
+  "base_adopted": false,
+  "conclusion": "Ice already fails with adapters disabled. The older native520 adapter gives the complete heat-from-skin explanation; V11 loses it. This four-question reused-development comparison does not establish a globally better base, batch-size cause, loss cause or training-duration fix."
+}

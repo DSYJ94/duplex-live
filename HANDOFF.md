@@ -1,3 +1,60 @@
+# LOCAL — intelligent duplex frontend retained; Engine32 PASS, numerical32 running (24 October10:04UTC)
+
+LOCAL remains sole executor; no handoff to cloud. Main before this receipt45608537a6952325751f45cf6756014b921772be.
+User clarification: retain basic reasoning and answer simple questions directly;
+delegate deeper reasoning/current facts/tools asynchronously while remaining present.
+This is already the existing reasoning32 target, NOT a request to turn every answer
+into a backend call. No frozen gates, objectives or model lineage changed.
+Research refreshed against primary sources in
+ docs/NATIVE-DUPLEX-REASONING-RESEARCH-SWEEP-2026-10-24.md.
+
+Model unchanged: control40V11 completed8 updates Adam520->528; exact independent
+state restoration PASS, complete20 native behavior FAIL, unadopted/unextended.
+2/4 ordinary cores are FOUR REUSED DEVELOPMENT questions, not a global ability score.
+New reasoning32 has received ZERO optimizer updates. It has8 direct-basic,
+8 delegate-reasoning,8 cancel-reasoning and8 replace-reasoning scenes, including
+simple questions during actual pending complex work. Full32 speech/semantic/
+conversion/codec PASS remains; no production, convergence or new training claim.
+
+Engine32 sourceb74e2fac4115ed236a4b43ed8dd1ed05d5270379 now COMPLETE PASS.
+Controller130938/birth27674972 gone; capture130949/birth27674994 actualexit0
+09:51:17.604792; independent verify131899/birth27789332 actualexit0
+09:53:05.622372. All32 teacher-forced native Engine traces, unchanged parameters.
+These are engineering inputs, not successful free-running model answers.
+Exact upstream pre-span acoustic mask exclusions retained, not silently dropped.
+See docs/NATIVE-REASONING32-COMPLETE-ENGINE-2026-10-24.json.
+Engine/control roots independently copied to Mac:70files/164694584B, ALL remote/Mac
+SHA hashes exact, original volume retained; receipt
+ runs/local-migration-20261023/native-reasoning32-engine-copyback-v11-v1.json.
+
+ONE numerical controller131524/birth27728076, child132022, source4560853,
+is currently running on the A100. At10:04:21,6/32 complete, whole32 stillUNAPPROVED.
+Deadline10:12UTC. DO NOT submit another copy or accept a passing subset.
+One finite local terminal-copyback watcher96838 waits for this exact
+controller+child to end, then hashes both terminal numerical roots against Mac.
+Receipt runs/local-migration-20261023/native-reasoning32-numerical-terminal-copyback-watch-v1.json.
+Next inspect actual terminal exit/report/backup, then gradient32+combined readiness
+before any distinct bounded fit from retained parent; do not extend failedV11.
+
+Correction: preliminary base4 score3/4 was overly generous mechanism-mention
+counting. Frozen complete expected explanations give1 complete,2 partial,1 incorrect.
+All prior outputs/review unchanged; explicit correction
+ docs/NATIVE-CONTROL40-BASE4-SCORING-CORRECTION-2026-10-24.json.
+Ice already fails in base. V11 loses older adapter's complete heat-from-skin answer.
+No batch-size, specific-loss, duration or global model ranking cause isolated.
+
+Funding actual10:01:52: wallet3.4522222418USD, rate1.814/h, auto-payOFF.
+Same guard70540 ends OWN Pod4yx8vahdmjsylx at10:22:37.9UTC (11:22BST),
+retains volume49yytzyoge. Current26h maxproject83.9807183<100, prepaid with reserve;
+27h/34h notprepaid. Prior single20USD credit posted; NO new/duplicate purchase.
+BackupV17/old backend deadline10:20. Engine/new32 backups independent above;
+complete20 snapshot473files/3158279025B and original67.76GB archive verified;
+broader stopped Mac source backup stillPARTIAL. No local model/ASR/CPUthrottling.
+Unrelated pyc, capability probes and roadmap untouched. No new source deployment
+or current GPU job altered during this architecture/status sweep.
+
+---
+
 # LOCAL — reasoning32 all speech/semantic/conversion/codec PASS; native pilot still FAIL (24 October09:20UTC)
 
 Goal turn PROGRESS; LOCAL sole executor. Main before receipt8499a3430eef56ef80120dacff1d1c80048485b3.

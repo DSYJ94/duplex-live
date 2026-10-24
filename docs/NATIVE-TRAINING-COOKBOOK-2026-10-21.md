@@ -3,9 +3,11 @@
 ## 24 October09:20 update — model rejected; new32 data ready through codec
 
 The completed8-update control40 model remains unadopted:2/4 ordinary cores and
-failed quiet/pause/delegation behavior. A matched adapter-disabled base scores3/4;
-[all four comparisons](NATIVE-CONTROL40-MATCHED-BASE4-REVIEW-2026-10-24.json) show
-that earlier adapters change some answers, while ice already fails in the base.
+failed quiet/pause/delegation behavior. The preliminary adapter-disabled base score3/4 was too generous: strict complete
+explanations yield1 complete,2 partial and1 incorrect. The
+[explicit scoring correction](NATIVE-CONTROL40-BASE4-SCORING-CORRECTION-2026-10-24.json)
+preserves every original output and frozen expectation. Ice already fails in the
+base; V11 loses the older adapter's complete heat-from-skin explanation.
 Batch size, a particular loss coefficient and a longer run are not isolated fixes.
 
 The additional32 reasoning/delegation episodes now have complete speech, semantic,

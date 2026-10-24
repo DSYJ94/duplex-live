@@ -1,0 +1,53 @@
+{
+  "schema": "dl-native-reasoning32-complete-engine-review-v1",
+  "at_utc": "2026-10-24T10:04:21Z",
+  "execution_source": "b74e2fac4115ed236a4b43ed8dd1ed05d5270379",
+  "controller_pid": 130938,
+  "controller_birth": 27674972,
+  "phase": "complete32_engine_only",
+  "stages": [
+    {
+      "name": "complete32_engine_capture",
+      "started_utc": "2026-10-24T09:32:14.273341+00:00",
+      "pid": 130949,
+      "birth": 27674994,
+      "actual_exit": 0,
+      "finished_utc": "2026-10-24T09:51:17.604792+00:00"
+    },
+    {
+      "name": "independent_complete32_engine_verify",
+      "started_utc": "2026-10-24T09:51:17.649155+00:00",
+      "pid": 131899,
+      "birth": 27789332,
+      "actual_exit": 0,
+      "finished_utc": "2026-10-24T09:53:05.622372+00:00"
+    }
+  ],
+  "complete32": true,
+  "passed": true,
+  "all_model_parameters_unchanged": true,
+  "teacher_text_and_agent_audio_forced": true,
+  "optimizer_updates": 0,
+  "behavior_qualified": false,
+  "training_approved": false,
+  "engine_report_sha256": "c666021e1a5e02a8f4106595c06c93028dfd5335d1382c23b97ea587743d48c9",
+  "controller_sha256": "817c5e2bdb897fc63c3f776f56e702243b584523a96116336c31c4c9b23030f2",
+  "copyback_receipt": "runs/local-migration-20261023/native-reasoning32-engine-copyback-v11-v1.json",
+  "copyback_receipt_sha256": "1352648de335c2eb010ee8c90e12d891f400dd857d61528dfd735ee455f5fa68",
+  "backup_files": 70,
+  "backup_bytes": 164694584,
+  "all_remote_and_Mac_file_hashes_exact": true,
+  "mask_policy": "Pinned upstream assembly preserves every source code as conditioning; text losses cover real frames, acoustic loss excludes exactly one pre-span frame for each of24 actual delivered spans plus existing native delayed-head tails. No extra exclusions.",
+  "next_required": "Complete numerical32 at .001/causality0, then gradient32 and combined retained154/native49/control40/reasoning32 readiness before a new fit.",
+  "numerical_at_review": {
+    "source": "45608537a6952325751f45cf6756014b921772be",
+    "controller_pid": 131524,
+    "controller_birth": 27728076,
+    "child_pid": 132022,
+    "phase": "complete32_numerical_running",
+    "complete_cases": 6,
+    "whole32_approved": false,
+    "deadline_utc": "2026-10-24T10:12:00Z"
+  },
+  "terminal_copyback_watcher_pid": 96838
+}
