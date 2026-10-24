@@ -1,3 +1,65 @@
+# LOCAL — gated reasoning32 converter prepared; same funded readiness live (24 October00:04UTC)
+
+Goal turn PROGRESS. LOCAL sole executor. Main converter code now
+3c99049d011ba75a344519ca00fe99633a307665 (initial50254743ff215c7d7349e3c8890d965cf6d6690e).
+This code is PREPARATION, not deployed into the live model or a conversion approval.
+No provider requests, physical32 conversion, new native updates or adoption.
+Unrelated pyc/capabilityprobe files/roadmap.html remain untouched.
+
+NEW evals/native_reasoning_convert.py requires full32 independent semantic approval
+BEFORE output, revalidates full typed transport and independent speech on remoteCPU,
+retains all original PCM without rescale/crop/internal-silence removal, all measured
+words and original provider text separately, every actual native request marker,
+completed wire-write reference span and its server acknowledgment/retirement ledger.
+Full232-prefix/live/all-span geometry still1100, measured timing bar still200ms.
+Derives all32 before writing output; refuses output within immutable source roots,
+partial scenes, heldout rows, linked/extra files or altered PCM even with newhashes.
+Separate verify rebuilds all32 from originals. No codec/numerical/gradient/behavior
+approval inferred. Explicit sample vs native-frame counts, relative artifact paths.
+14offline tests PASS; tiny fixtures only, no Mac neuralASR/GPU or OS CPU settings.
+
+COMPLETE32 metadata diagnostic v4 actual0.3s current3c source recomputed all32:
+40actual native requests,24actually delivered contexts, allTRAIN, maxword-grid80ms
+within unchanged200ms. All request/context control frames representable. Evidence
+runs/local-migration-20261023/native-reasoning32-conversion-metadata-diagnostic-v4.json
+SHA1dfc3e5832f0958188997cfe91e155faa2e7332bf60d12a7801a764332e32c02.
+Diagnostic ONLY; no audio encoded or conversion artifact emitted. V1/V2/V3 kept.
+Whole32speech remains PASS under unchangedWER<=.05, NOT zeroWER throughout:
+026=.05(provider Stopped vsASR Stop);027=.04(extra provider e. absent inASR).
+No aliases, word substitutions or forced alignment introduced. Actual ASR labels,
+provider fragments, rawWER and pending listening status are explicitly retained.
+Full32semantic is still a separate gate; specific human payload approval remains
+pending after automaticreview rejection. DO NOT resend indirectly or infer it from
+funding approval. Exact prepared payload remains63de0733...;32requests/max2 if approved.
+
+CURRENT recovery71679/birth24121629 and child71818/birth24130859 still liveR,
+phasecombined_readiness. Latest actual 2026-10-24T00:02:08.269021+00:00: 0/49 logged complete rows,
+CPUtime1223.76s, GPU36 %, 17357 MiB. Data preparation has advanced: audio49-data,
+prepared49-reconstruction and packaged control40 approvals now present; complete
+balanced/native49/combined reports still pending. Do not call this optimizer work.
+No poll timeout/restart/source mutation. C9 model execution unchanged; orchestration
+fb3adfc29f63c7dace63c9ab6a109d828288897e remains frozen separately. Original failed47/49
+attempt retained; its partial rows are not approval for the new attempt.
+
+Funded guard35030 to08:22:37.9, solePod4yx8vahdmjsylx/volume49yytzyoge, maxproject
+80.4007183<100. Single20 purchase already POSTED; no more payment needed now.
+Backup37222/session87194 to08:20, latest58file inventory
+ba3e87d533a1da000119cb621f21978ca6b994ee2b541ebfb8214882173694d6 Macverified.
+Evaluation37551/session34942 waits exactrecovery and all7actual passed stages;
+latestlaunch07:37/end08:17. Proxy37279/session38732, runv6, Mac50259/remote18792,
+tunnel61404, restricted112remaining calls, actualrequests0. No duplicate submissions.
+
+Next: allow fullretained154/native49/control40 readiness ->ONE8 ->independent
+Adam/RNG/native restore+strictproof ->complete paired20/speech20/all4ordinary,
+then eligible sealedfresh40 and conclusive larger-training decision. Monitor actual
+pace against funded window; never lower gates or claim convergence from readiness.
+If specific32 payload approval arrives, complete all32independent semantic before
+using new converter, then new native codec/full32 numerical/gradient/retention gates.
+No cloud handoff. Fullnativearchive remains preserved; broader stoppedMacsource
+backup remains PARTIAL. Do not restart broad hashing or local heavy ASR.
+
+---
+
 # LOCAL — single20 POSTED; funded recovery and complete evaluation chain active (23 October23:44UTC)
 
 Goal turn PROGRESS; LOCAL sole executor. Main code fb3adfc29f63c7dace63c9ab6a109d828288897e,

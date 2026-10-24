@@ -1,0 +1,40 @@
+{
+  "schema": "dl-native-reasoning32-conversion-preparation-v1",
+  "at_utc": "2026-10-24T00:02:47.482160+00:00",
+  "converter_source_commit": "3c99049d011ba75a344519ca00fe99633a307665",
+  "code": "evals/native_reasoning_convert.py",
+  "tests": "evals/harness/test_native_reasoning_convert.py",
+  "offline_tests_passed": 14,
+  "complete32_metadata_cases": 32,
+  "native_requests": 40,
+  "actual_delivered_contexts": 24,
+  "max_measured_word_grid_offset_ms": 80.0,
+  "unchanged_word_grid_bar_ms": 200,
+  "unchanged_complete_native_frame_limit": 1100,
+  "diagnostic_sha256": "1dfc3e5832f0958188997cfe91e155faa2e7332bf60d12a7801a764332e32c02",
+  "all_source_scenes_TRAIN": true,
+  "original_PCM_provider_text_and_independent_ASR_retained_separately": true,
+  "nonzero_existing_word_agreement": [
+    {
+      "id": "native-reasoning4-train-026",
+      "raw_wer": 0.05,
+      "disagreement": "Stopped versus Stop"
+    },
+    {
+      "id": "native-reasoning4-train-027",
+      "raw_wer": 0.04,
+      "disagreement": "Extra provider e. fragment absent from independent ASR"
+    }
+  ],
+  "unchanged_WER_bar": 0.05,
+  "new_aliases_or_forced_alignment": false,
+  "complete32_semantic_approval_required_before_output": true,
+  "pending_specific_semantic_payload_approval": true,
+  "actual_conversion_files_emitted": 0,
+  "provider_requests": 0,
+  "actual_source_audio_modified": false,
+  "training_approved": false,
+  "live_GPU_execution_commit": "c9efaaac24d983342f7eded46617e6450bc102ce",
+  "live_orchestration_commit": "fb3adfc29f63c7dace63c9ab6a109d828288897e",
+  "live_training_commands_changed": false
+}
