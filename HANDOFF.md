@@ -1,3 +1,45 @@
+# LOCAL — all49 independent native replays exact; control restore live (24 October 07:29 UTC)
+
+Goal turn PROGRESS; previous turn PROGRESS. LOCAL sole executor. Main before
+receipt bcbff2ff032e9888e3b04cab70379ecd68806b69. Runtime C9 c9efaaac24d983342f7eded46617e6450bc102ce;
+supervisor a5958a0343383728639940c4eb82e31ca3aa96f2 unchanged.
+Same101648/birth25974639 +fresh restore115807/birth26750060 live07:28:14,
+GPU54%/22687MiB. ALL49 native-stream replays complete and independently compared
+EXACTLY to final fit references. Control2/40; full reload report/strict proof still
+pending. Fit101677/birth25975025 actualexit0/all8 updates. Never duplicate stages.
+
+All49 replay hashes independently verified in closed Mac V17 snapshot
+20261024T072625.055330Z,157files, inventorySHA
+da3a33a31a51d76f59e4d81d62a9396c998b2b3170bc204c73fe40c6affade78.
+RestorelogSHA9c663cab7150b660081893c89d71bc4b1724b616f9eac0b386aa4542205aaafa.
+TrainingreportSHA500781444712ebb6368d534406ee25f663df4b511c6f920fae9e985db9aa5a18.
+No acceptance of a subset: complete28/acoustic49/control40/Adam528/allRNG and actual
+fresh-process exit0/strict proof remain required before automatic paired20.
+See docs/NATIVE-CONTROL40-NATIVE49-REPLAY-2026-10-24.json for complete49 digests.
+
+Recipe/cookbook and all45 input preservation review now committed/pushed in
+bcbff2f. Final SF0cb85b4a.../PT86dde08e... and all previous checkpoints safe on Mac
+and volume. Source archive7797/8.0008GB exact closed archive rehashed; original
+67.76GB archive previously fully hashed23October. Broader stopped Mac source
+backup PARTIAL. Same backup1184/V17 healthy; no model/ASR loaded on Mac.
+
+Actual provider wallet07:28:02=$8.1317910464, wholeaccount1.814/h, auto-payFalse;
+same Pod4yx8vahdmjsylx/volume49yytzyoge.26h to10:22:37.9 requires7.5926025482
+incl1h billing reserve+.5 shutdown reserve: fully prepaid.27h/34h NOT prepaid.
+Maxproject83.9807183<100. No new purchase/resource/deadline/CPU changes.
+Guard70540 remains armed. Pipeline09:00; evaluator63289 latest09:37/end10:17;
+backend71254/backup1184 to10:20. Actual proxyrequests0; no new training submitted.
+
+Next SAME115807 finish all40 control and full restore ->strict proof actualexit0
+->existing automatic paired20/speech20 ->complete10/ordinary4 review ->eligible
+sealedfresh ->larger-run decision. Reasoning32 semantic payload approval pending;
+0semantic requests/conversion/training. No adoption/convergence/behavior claim.
+Unrelated pyc/probes/roadmap preserved. Existing read-only evaluation observer in
+/private/tmp/duplex-control40-evaluation-observer-v1.py (copy under local23October
+runs) can inspect actual outputs after dispatch without starting anything.
+
+---
+
 # LOCAL — completed recipe exported; full input backup verified (24 October 07:25 UTC)
 
 Goal turn PROGRESS; previous turn PROGRESS. LOCAL sole executor. Main before
