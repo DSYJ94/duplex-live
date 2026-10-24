@@ -1,13 +1,13 @@
 {
   "schema": "dl-gcp-native-budget-watchdog-preparation-v1",
-  "at_utc": "2026-10-24T21:53:13.755964+00:00",
-  "source_parent": "ede6e37",
+  "at_utc": "2026-10-24T23:19:57.621329+00:00",
+  "source_parent": "fb7178a",
   "implementation_sha256": {
-    "portable/context/gcp_budget_watchdog.py": "c8dc7d615054f70fb59774ecb5d3e68c6462582c5561f42e98845368928c17ca",
-    "evals/harness/test_gcp_budget_watchdog.py": "f882066fb495c0bbc0f6df6cec9884b3860c4cf087b771e15b152ebcbef164f7"
+    "portable/context/gcp_budget_watchdog.py": "655556d5e43bb2983f7f794e3f8ad7cd99e2bbec5bc4a3364bcf97e574a3326f",
+    "evals/harness/test_gcp_budget_watchdog.py": "857dd42c95c425bdf5592585a9e6e08988c87759cd7540c263a2aefec7cc6c1b"
   },
   "status": "PREPARED_NOT_ARMED_NO_GPU_EXISTS",
-  "tests_passed": 6,
+  "tests_passed": 7,
   "lease_schema": "dl-native-gcp-bounded-gpu-lease-v1",
   "required_lease_fields": [
     "schema",
@@ -39,7 +39,8 @@
     "Count whole GPU lifetime plus0.48CPU/6.40storage/10network reserve against100USD",
     "Live GCP/Runpod checks before publishing each fresh execution guard by approved rsync",
     "Credentials and gcloud auth remainMac; no creation/restart/deletion",
-    "On guard failure, stop only current instance with exact recordedid/name/creation"
+    "On guard failure, stop only current instance with exact recordedid/name/creation",
+    "Actual manual early-stop call explicitly discards only mandatory disposable A2 Local SSD; original persistent boot disk is retained. Identity is freshly rechecked before issuing any stop."
   ],
   "fresh_guard_remote_path": "/workspace/migration/gcp-budget-live-v1.json",
   "full_budget_at_example5p63_per_hour_12h_usd": 84.44,

@@ -1,3 +1,28 @@
+# LOCAL — Original full hash pass still live; fix A100 early-stop CLI before arming
+
+23:19:19UTC23551 original verifier remains LIVE; remote unit
+ duplex-native-exact-inputs-v2/MainPID24659 still waiting. No duplicate extraction,
+GPU or new optimizer update. All native28470/control7797 extracted; combinedfull
+40132/81.15GB/8link destination PASS still pending. Source/workers/CPUdeadline in
+entry below unchanged. Current turn is verified progress/wait, not a blocked job.
+
+Diagnosed pre-GPU issue: gcloud stop requires explicit --discard-local-ssd=True
+for mandatory A2 scratch storage. Earlier Macguard stop omitted this, so early
+stop could fail despite provider12hSTOP. Fixed both deadline/failure stop paths,
+rechecking exact instance birth/id/name first; persistent250GB bootdisk remains
+non-auto-deleted, no delete operation. Regression also verifies replacementVM
+never receives a stop API call.18 combined guest/Mac/controller tests PASS.
+Macguard updated source must be used after commit; deployed8bb5436 input/GPU
+producer may remain frozen (its model/runtime/guestguard code unchanged).
+
+Next poll SAME processes/hostunit; once actualfullhash and exactinputs0 receipts
+exist, copybackbeforeCPUstop/detachSAMEdisk, oneA100<=12h/100USD scope, actual
+Mac+guestguards, saved8 ZERO-update finalization and independentrestore then full
+native behavior and actual existing product/delegation path. No fabricatedfit0,
+subsetapproval, newupdates or redoingoriginal8. Unrelated local work untouched.
+
+---
+
 # LOCAL — Native/control extraction complete; supervised exact-input step waiting on full hashes
 
 23:15:36UTC actual SSH: original CPUstage23551/startticks635946 STILL running,

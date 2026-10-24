@@ -120,6 +120,17 @@ def check_live(lease, vm, disk, instances, runpod_pods, now):
                 resource_id=str(vm['id']), authorization_sha256=AUTH_SHA)
 
 
+def stop_owned(lease, vm_read, run=subprocess.run):
+    current = vm_read()
+    if not owned(current, lease):
+        raise ValueError('Refusing to stop a different instance')
+    # A2 Ultra always includes disposable Local SSD. Explicitly discard only
+    # that scratch storage; the non-auto-deleted persistent boot disk survives.
+    run(['gcloud', 'compute', 'instances', 'stop', lease['name'],
+         '--zone='+ZONE, '--project='+PROJECT, '--quiet', '--discard-local-ssd=True'],
+        check=True, timeout=90, capture_output=True, text=True)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ('lease', 'destination', 'runpod-key-file', 'ssh-argv', 'status'):
@@ -147,14 +158,6 @@ def main():
     def vm_read():
         return gcloud('instances', 'describe', lease['name'], '--zone='+ZONE)
 
-    def stop_owned():
-        current = vm_read()
-        if not owned(current, lease):
-            raise ValueError('Refusing to stop a different instance')
-        subprocess.run(['gcloud', 'compute', 'instances', 'stop', lease['name'],
-                        '--zone='+ZONE, '--project='+PROJECT, '--quiet'],
-                       check=True, timeout=90, capture_output=True, text=True)
-
     def record(phase, **extra):
         value = dict(phase=phase, pid=os.getpid(), resource_id=str(lease['id']),
                      at_utc=datetime.now(timezone.utc).isoformat(), **extra)
@@ -173,7 +176,7 @@ def main():
                 if vm['status'] in STOPPED:
                     record('gpu_not_billing_compute'); return
                 if time.time() >= deadline:
-                    stop_owned(); record('provider_deadline_stop_requested'); return
+                    stop_owned(lease, vm_read); record('provider_deadline_stop_requested'); return
                 disk = gcloud('disks', 'describe', DISK, '--zone='+ZONE)
                 instances = gcloud('instances', 'list')
                 request = urllib.request.Request('https://api.runpod.io/v2/pods',
@@ -196,7 +199,7 @@ def main():
             except Exception as error:
                 record('guard_failed_no_fresh_execution_permission', error_type=type(error).__name__)
                 # Stop only this recorded lease; never retry a model or touch the disk.
-                stop_owned(); record('owned_gpu_stopped_after_guard_failure')
+                stop_owned(lease, vm_read); record('owned_gpu_stopped_after_guard_failure')
                 raise
             time.sleep(min(10, max(0.1, deadline-time.time())))
     finally:

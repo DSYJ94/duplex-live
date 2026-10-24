@@ -5,7 +5,7 @@ from pathlib import Path
 import unittest
 
 from portable.context.gcp_budget_watchdog import (
-    AUTH_SHA, CATALOG_SHA, DISK, PROJECT, ZONE, check_live, owned, validate_lease)
+    AUTH_SHA, CATALOG_SHA, DISK, PROJECT, ZONE, check_live, owned, stop_owned, validate_lease)
 
 
 class BudgetTests(unittest.TestCase):
@@ -74,6 +74,20 @@ class BudgetTests(unittest.TestCase):
         replacement=dict(self.vm,id='999')
         self.assertFalse(owned(replacement,self.lease))
         with self.assertRaisesRegex(ValueError,'identity changed'):self.check(replacement)
+
+    def test_actual_stop_rechecks_identity_and_discards_only_disposable_local_ssd(self):
+        calls=[]
+        def run(command, **kwargs):calls.append((command,kwargs))
+        with self.assertRaisesRegex(ValueError,'different instance'):
+            stop_owned(self.lease,lambda:dict(self.vm,id='999'),run)
+        self.assertFalse(calls)
+        stop_owned(self.lease,lambda:self.vm,run)
+        command,options=calls[0]
+        self.assertEqual(command[1:4],['compute','instances','stop'])
+        self.assertIn(self.lease['name'],command)
+        self.assertIn('--discard-local-ssd=True',command)
+        self.assertNotIn('delete',command)
+        self.assertTrue(options['check'])
 
     def test_other_gpu_or_live_staging_cpu_prevents_execution(self):
         for other in (dict(self.vm,id='999',name='other'),
