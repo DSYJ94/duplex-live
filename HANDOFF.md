@@ -1,3 +1,28 @@
+# LOCAL — Full GCP backup HASH PASS; final CPU audit needs prepared container
+
+Actual destination receipt finished23:20:28.650525UTC: ALL40132regularfiles,
+81,154,452,891bytes and8archivallinks MATCH, failures[]. Copied to ignored Mac
+runs/local-migration-20261024/gcp-full-stage-v1/destination-hashes.json. Original
+SSH255 remains255; fresh rsynccopyback actually0. No fabricated original job exit.
+
+Hostunit duplex-native-exact-inputs-v2 actuallyFAILED ExecMainStatus1, after all
+runtime/hardlinks/three Gitclones/aliases/five durable copies/82snapshot links were
+materialized. Actual traceback in its preserved log: verified_inputs -> exposure
+imports -> data.synthetic.filter -> NumPy missing from minimal HOST Python.
+No GPU/model/newupdates. DO NOT rerun materialization or remove its partial tree.
+
+Diagnosed correction: new --verify-existing mode performs READONLY full materialized
+hardlink/vendorSHA/alias/independent complete temporary-copy/snapshot verification,
+then SAME strict original saved8 metadata/command presence audit.19 filesystem/
+stage/destination fixtures PASS including changed/missing/hardlinked-copy rejection.
+Execute via existing exact NGC CPUcontainer/venv (NumPy already installed), new
+receipt gcp-exact-inputs-v3.json, preserve v2failedunit/log. Commit/Gitdeploy source
+separately; no change to old pinned model or original approvals. After actual0,
+copybackreceipt/unit/log before CPUstop/same-diskGPUtransfer. Macbudgetguard must
+use2c03217-or-later LocalSSD early-stop correction. CPUSTOP00:55:15UTC25Oct intact.
+
+---
+
 # LOCAL — Original full hash pass still live; fix A100 early-stop CLI before arming
 
 23:19:19UTC23551 original verifier remains LIVE; remote unit

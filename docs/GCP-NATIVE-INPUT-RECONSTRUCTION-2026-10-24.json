@@ -1,17 +1,18 @@
 {
   "schema": "dl-gcp-native-exact-input-reconstruction-preparation-v1",
-  "at_utc": "2026-10-24T22:45:19.451443+00:00",
-  "parent_source": "a6dab9f",
+  "at_utc": "2026-10-24T23:23:58.970939+00:00",
+  "parent_source": "2c03217",
   "implementation_sha256": {
-    "portable/context/native_gcp_inputs.py": "38056eb54c3e87d443d8750cddf728cd0f6a9be4749506469ef2f0600c09bef7",
-    "evals/harness/test_native_gcp_inputs.py": "9f8b494e032218d625b631edab7dae48827fbcfab1db9590e386fc3bc975a31d"
+    "portable/context/native_gcp_inputs.py": "1396233c44bbe3d1fc1adb5e17a1fb4b6f418356a5ff2110024b079d064a6bbc",
+    "evals/harness/test_native_gcp_inputs.py": "401464bfe7aade3a7e020cb08fa7d201185676cec202072e617970f2c982cb48"
   },
-  "status": "PREPARED_NOT_RUN_AWAITING_FULL_DESTINATION",
-  "focused_filesystem_tests_passed": 18,
+  "status": "MATERIALIZED_HOST_AUDIT_FAILED_NUMPY_REVERIFY_IN_EXISTING_CPU_CONTAINER",
+  "focused_filesystem_tests_passed": 19,
   "cli": [
     "--root",
     "--destination-report",
-    "--out"
+    "--out",
+    "--verify-existing"
   ],
   "operator_preparation": [
     "Only after actual full destination receipt passes",
@@ -38,10 +39,12 @@
     "Run with OSLogin UID/GID1653480290 to preserve Git ownership; HOME=/workspace/gcp-runtime-home; no credentials passed",
     "Keep all model/checkpoint/data on250GB persistentdisk, not disposablelocalSSD"
   ],
-  "actual_input_reconstruction_executed": false,
+  "actual_input_reconstruction_executed": true,
   "actual_model_loaded": false,
   "new_optimizer_updates": 0,
-  "next_action": "Finish current full CPU archive stage. Git-deploy prepared helper/guards/controller in separate worktree, reconstruct/audit these inputs on CPU, then use the approved separate bounded A100.",
+  "next_action": "Git-deploy this source separately. Run read-only --verify-existing in already prepared exact NGC CPU container/runtime; verify every hardlink, public Git SHA, alias, independent complete temporary copy, snapshot, original metadata, and CLI path before writing a NEW receipt. No re-extraction, overwrite, optimizer or GPU.",
   "head_only_bundle_sparse_clone_fixture_passed": true,
-  "preserved_three_vendor_bundle_bytes_and_sha_verified_on_mac": true
+  "preserved_three_vendor_bundle_bytes_and_sha_verified_on_mac": true,
+  "actual_input_reconstruction_passed": false,
+  "diagnosed_failure": "Host /usr/bin/python3 lacks NumPy imported transitively by preserved exposure audit; all path materialization completed before failure. Preserve failure and partial data."
 }

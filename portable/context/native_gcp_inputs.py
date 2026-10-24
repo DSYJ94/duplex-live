@@ -77,11 +77,96 @@ def clone_bundle(bundle, target, commit, sparse=None):
         raise ValueError('Exact clean preserved vendor source required')
 
 
+def verify_existing(root, catalog):
+    """Read-only recovery after materialization succeeded but its audit failed."""
+    mirrored = 0
+    for row in catalog['files']:
+        prefix = 'native-preservation-v3/'
+        if not row['path'].startswith(prefix):
+            continue
+        relative = safe(row['path'][len(prefix):])
+        if Path(relative).parts[0] in {'models', 'runs', 'tmp', 'logs', 'worktrees'}:
+            target = RUNTIME/relative
+            if (target.is_symlink() or not target.is_file()
+                    or not os.path.samefile(target, root/row['path'])
+                    or any(p.is_symlink() for p in (target.parent, *target.parent.parents))):
+                raise ValueError('Reconstructed regular hardlink changed')
+            mirrored += 1
+    for target, commit in ((RUNTIME/('vendor/context-spanning-'+CONTEXT), CONTEXT),
+                           (root/'control40-vendor-moshi-rag', RAG),
+                           (root/'control40-vendor-moshi-finetune', FINETUNE)):
+        if (target.is_symlink() or git('-C', target, 'rev-parse', 'HEAD') != commit
+                or git('-C', target, 'status', '--porcelain')):
+            raise ValueError('Reconstructed vendor checkout changed')
+    for alias in (*ALIASES, root/'duplex-live'):
+        if not alias.is_symlink() or alias.readlink() != RUNTIME:
+            raise ValueError('Exact reconstructed alias required')
+    source_runs = ORIGINAL/'runs'
+    if source_runs.is_symlink() or not source_runs.is_dir() or any(source_runs.iterdir()):
+        raise ValueError('Empty physical original source runs required')
+    temporary = []
+    for group in catalog['temporary_materializations']:
+        source = root/safe(group['source_prefix'])
+        relative = Path(group['destination']).relative_to('/tmp/duplex-reasoning32-verifier-v1')
+        target = root/'gcp-verifier-inputs-v1'/safe(str(relative))
+        count = verify_copy_tree(source, target)
+        temporary.append(dict(container_destination=group['destination'], host_source=str(target), regular_files=count))
+    spec = catalog['snapshot_materialization']
+    snapshot = root/safe(spec['destination_prefix'])
+    if digest(snapshot/'inventory.json') != spec['inventory_sha256']:
+        raise ValueError('Reconstructed snapshot inventory changed')
+    rows = json.loads((snapshot/'inventory.json').read_text())['files']
+    if len(rows) != 82:
+        raise ValueError('Complete closed snapshot required')
+    for row in rows:
+        target = snapshot/safe(row['path'])
+        if target.is_symlink() or not os.path.samefile(target, root/safe(spec['source_prefix'])/row['path']):
+            raise ValueError('Reconstructed snapshot regular hardlink changed')
+    return mirrored, temporary, snapshot
+
+
+def verify_copy_tree(source, target):
+    for tree in (source, target):
+        if tree.is_symlink() or not tree.is_dir() or any(p.is_symlink() for p in tree.rglob('*')):
+            raise ValueError('Physical regular verifier trees required')
+    files = {p.relative_to(source) for p in source.rglob('*') if p.is_file()}
+    if files != {p.relative_to(target) for p in target.rglob('*') if p.is_file()}:
+        raise ValueError('Complete verifier copy required')
+    for relative in files:
+        if os.path.samefile(source/relative, target/relative) or digest(source/relative) != digest(target/relative):
+            raise ValueError('Independent exact verifier copy required')
+    return len(files)
+
+
+def finish(args, root, catalog, mirrored, temporary, snapshot):
+    spec = catalog['snapshot_materialization']
+    checked = verified_inputs(snapshot, root/safe(spec['original_observation']))
+    command = checked['controller']['planned_commands']['bounded8_training']
+    missing = [word for word in command if word.startswith('/')
+               and word != command[command.index('--out')+1] and not Path(word).exists()]
+    if missing:
+        raise ValueError('Original command still has missing physical inputs: '+repr(missing))
+    receipt = dict(schema='dl-gcp-native-exact-inputs-v1', source_commit=git('rev-parse', 'HEAD'),
+        destination_report_sha256=digest(args.destination_report), mirrored_regular_files=mirrored,
+        temporary_inputs=temporary, snapshot_regular_files=82, original_saved8_metadata_verified=True,
+        original_command_inputs_present=True, new_optimizer_updates=0,
+        historical_code_source_only=True, model_loaded=False, native_behavior_evaluated=False,
+        runtime_root=str(RUNTIME), original_da=str(ORIGINAL),
+        existing_materialization_independently_reverified=args.verify_existing)
+    receipt['required_temporary_bind_mount'] = dict(source=str(root/'gcp-verifier-inputs-v1'),
+        destination='/tmp/duplex-reasoning32-verifier-v1', readonly=True, symlink_root_allowed=False)
+    with args.out.open('x') as writer:
+        json.dump(receipt, writer, indent=2); writer.write('\n')
+    print(json.dumps(receipt), flush=True)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--root', type=Path, required=True)
     parser.add_argument('--destination-report', type=Path, required=True)
     parser.add_argument('--out', type=Path, required=True)
+    parser.add_argument('--verify-existing', action='store_true',
+                        help='Reverify every existing materialization and finish its audit; never overwrite or recreate')
     args = parser.parse_args()
     root = args.root.resolve(strict=True)
     if root != Path('/workspace') or os.uname().sysname != 'Linux':
@@ -99,6 +184,9 @@ def main():
     archive = root/'native-preservation-v3'
     if git('-C', ORIGINAL, 'rev-parse', 'HEAD') != 'da389a7031a5504495397d1575952194ffa209f1':
         raise ValueError('Original DA checkout required')
+    if args.verify_existing:
+        finish(args, root, catalog, *verify_existing(root, catalog))
+        return
     if RUNTIME.is_symlink() or RUNTIME.exists() and any(RUNTIME.iterdir()):
         raise ValueError('New or operator-created empty runtime directory required')
     RUNTIME.mkdir(exist_ok=True)
@@ -147,24 +235,7 @@ def main():
     for row in rows:
         name = safe(row['path'])
         regular_link(root/safe(spec['source_prefix'])/name, snapshot/name, row)
-    checked = verified_inputs(snapshot, root/safe(spec['original_observation']))
-    command = checked['controller']['planned_commands']['bounded8_training']
-    # Only check file presence. NEVER execute the old eight-update command.
-    missing = [word for word in command if word.startswith('/')
-               and word != command[command.index('--out')+1] and not Path(word).exists()]
-    if missing:
-        raise ValueError('Original command still has missing physical inputs: '+repr(missing))
-    receipt = dict(schema='dl-gcp-native-exact-inputs-v1', source_commit=git('rev-parse', 'HEAD'),
-        destination_report_sha256=digest(args.destination_report), mirrored_regular_files=mirrored,
-        temporary_inputs=temporary, snapshot_regular_files=82, original_saved8_metadata_verified=True,
-        original_command_inputs_present=True, new_optimizer_updates=0,
-        historical_code_source_only=True, model_loaded=False, native_behavior_evaluated=False,
-        runtime_root=str(RUNTIME), original_da=str(ORIGINAL))
-    receipt['required_temporary_bind_mount'] = dict(source=str(durable_temporary),
-        destination=str(logical_temporary), readonly=True, symlink_root_allowed=False)
-    with args.out.open('x') as writer:
-        json.dump(receipt, writer, indent=2); writer.write('\n')
-    print(json.dumps(receipt), flush=True)
+    finish(args, root, catalog, mirrored, temporary, snapshot)
 
 
 if __name__ == '__main__':

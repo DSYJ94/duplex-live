@@ -4,7 +4,7 @@ import tempfile
 import subprocess
 import unittest
 
-from portable.context.native_gcp_inputs import regular_link, regular_copy_tree, clone_bundle
+from portable.context.native_gcp_inputs import regular_link, regular_copy_tree, clone_bundle, verify_copy_tree
 
 
 class InputMaterializationTests(unittest.TestCase):
@@ -51,7 +51,21 @@ class InputMaterializationTests(unittest.TestCase):
             self.assertEqual(regular_copy_tree(source,target),1)
             self.assertEqual((target/'teacher.json').read_bytes(),(source/'teacher.json').read_bytes())
             self.assertNotEqual((target/'teacher.json').stat().st_ino,(source/'teacher.json').stat().st_ino)
+            self.assertEqual(verify_copy_tree(source,target),1)
+            (target/'teacher.json').write_text('changed')
+            with self.assertRaisesRegex(ValueError,'exact verifier'):
+                verify_copy_tree(source,target)
             with self.assertRaises(FileExistsError):regular_copy_tree(source,target)
+
+    def test_recovery_rejects_subset_and_shared_inode_copy(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory).resolve();source=root/'source';source.mkdir()
+            (source/'receipt.json').write_text('{}');target=root/'target';target.mkdir()
+            with self.assertRaisesRegex(ValueError,'Complete'):
+                verify_copy_tree(source,target)
+            regular_link(source/'receipt.json',target/'receipt.json')
+            with self.assertRaisesRegex(ValueError,'Independent'):
+                verify_copy_tree(source,target)
 
     def test_temporary_symlink_roots_and_members_are_rejected(self):
         with tempfile.TemporaryDirectory() as directory:
