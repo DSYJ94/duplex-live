@@ -1,3 +1,33 @@
+# LOCAL — Guard-monitored fresh-process recovery controller prepared; upload ongoing
+
+Heartbeat22:01UTC re-polled SAMEupload10044 + CPUrestore3415 LIVE. Observed
+45,483,556,336B received/165GiBfree; no model/GPU/newupdates. SoleexecutorLOCAL.
+CPUproviderdeadline00:55:15UTC25Oct unchanged. Current sourceparent260bc23; deployed
+CPUrestoreworker remainsf5c2ed0, exactDA worktree/runtimes preserved. No restarts.
+
+New portable/context/native_saved_stage_controller.py is SOURCE ONLY, NOT RUN.
+Requires exactclean producer and fresh published97c8d43fGCPlease bound to same
+resource/deadline. Two distinct fresh children, same containerPIDnamespace, call
+existing zero-update bridge, never originalfit. Parent monitors guard everysecond,
+terminates/reaps OWNactualchild group on guard loss/interruption, no retry. Actual
+exit0 jobs recorded with existing helper; strict existing complete proof package
+only after both finalization + independentAdam/RNGrestore. Originalfit-15 preserved,
+eight historical/zero newupdates; no behavior/adoption flag granted.40 focused
+controller/recovery/proof/budget fixtures PASS; not actualmodel/GPU evidence.
+Hashes/CLI/prerequisites: docs/GCP-NATIVE-SAVED-STAGE-CONTROLLER-2026-10-24.json.
+
+Before GPU still need: fullcurrentCPUdestinationreceipt, exactaliases/vendor/tmp/
+snapshot reconstruction; freshprice/quota/stock; STOPCPU/detachsame250GBdisk; separate
+A10080 native12hSTOP and actuallyarmedMacguard. Hostidle-shutdown on lost control
+is still needed if avoiding GPUidle charges when Mac disconnects. A2Ultra has
+mandatory disposablelocalSSD: STOP requires discard-local-ssds-at-termination-
+timestamp=true; preserve ALL critical bytes on250GBpersistentbootdisk. Never
+weaken restore/proof/native gates or rerun8. After newproof, fullpairednative20/
+speech20/unchangedbehaviorchain remains. No extra purchases/storage/data scope.
+Active15minheartbeat, quiet on healthyinprogress. Unrelated local edits untouched.
+
+---
+
 # LOCAL — Single-GPU GCP budget guard prepared; archive transfer still live
 
 Heartbeat21:46UTC re-polled SAMEupload10044 + CPUrestore3415 LIVE. CPUtransfer

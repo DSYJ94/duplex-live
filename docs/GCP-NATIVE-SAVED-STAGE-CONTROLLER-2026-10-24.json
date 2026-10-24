@@ -1,0 +1,47 @@
+{
+  "schema": "dl-native-saved-stage-controller-preparation-v1",
+  "at_utc": "2026-10-24T22:15:03.545994+00:00",
+  "parent_source": "260bc23",
+  "implementation_sha256": {
+    "portable/context/native_saved_stage_controller.py": "7e14fdab340f5ad6867930396cf9c37fb9fd662de3922aa514da29d7e779bd9a",
+    "evals/harness/test_native_saved_stage_controller.py": "22b9e039d6cde5b88b918dc1a86a18fff07a45ad508f92b7a4dfb8f7bd4d3573"
+  },
+  "status": "PREPARED_NOT_EXECUTED_NO_GPU",
+  "focused_tests_passed": 40,
+  "tests_scope": "Controller guard binding/child termination plus existing complete recovery/proof and budget-policy fixtures; no model/GPU validation",
+  "cli": [
+    "--source",
+    "--snapshot",
+    "--observation",
+    "--out",
+    "--guard",
+    "--producer-commit",
+    "--proof"
+  ],
+  "behavior": [
+    "Exact clean committed producer required",
+    "Two separate fresh children in same container PID namespace; original DA source remains unchanged",
+    "Fresh same-resource/same-authority/same-deadline guard before/during/after each child",
+    "Terminate and reap only actual owned child group on stale guard or interruption",
+    "Record actual successful terminal children with existing strict helper",
+    "Package only after both complete numerical results and independent restore pass unchanged proof validator",
+    "No creation/restart/retry/trainer invocation or optimizer step"
+  ],
+  "execution_prerequisites": [
+    "Real complete destination verification and exact alias/vendor/tmp/snapshot reconstruction",
+    "Original CPU stopped and same disk on separately approved A100",
+    "Fresh real price/quota/stock/native12hSTOP/costguard/singleGPU state",
+    "GPU-driver/container/compiler visibility smoke before model",
+    "Mac guard actually armed; host-level shutdown on lost control should prevent idle GPU charges if Mac disconnects"
+  ],
+  "optimizer_updates_this_run": 0,
+  "original_stage_updates_preserved": 8,
+  "original_fit_exit_preserved": -15,
+  "model_source": "da389a7031a5504495397d1575952194ffa209f1",
+  "deployed_cpu_restore_source_unchanged": "f5c2ed0d570733ddabb89b17d5a4f693123427c3",
+  "actual_controller_started": false,
+  "actual_numerical_passed": false,
+  "actual_independent_restore_passed": false,
+  "actual_behavior_evaluated": false,
+  "model_adopted": false
+}
