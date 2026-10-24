@@ -167,7 +167,7 @@ class RuntimeContractTests(unittest.TestCase):
     def test_other_provider_or_nan_budget_fails_closed(self):
         with patch('portable.context.native_saved_stage_runtime.time.time',return_value=1000):
             for key,value in [('provider','unapproved-provider'),('remaining_budget_usd',float('nan')),
-                    ('planned_maximum_cost_usd',float('inf'))]:
+                    ('planned_maximum_cost_usd',float('inf')),('planned_maximum_cost_usd',True)]:
                 changed=self.guard();changed[key]=value
                 with self.assertRaises(ValueError):guard_receipt(lambda:changed)
 

@@ -15,10 +15,11 @@ import time
 
 from evals.native_reasoning_saved_stage_audit import SOURCE,FIT_COMMAND_SHA256
 from evals.native_saved_stage_context import bind
-from evals.native_saved_stage_recovery import finish,verified_inputs
+from evals.native_saved_stage_recovery import canonical,finish,verified_inputs
+from evals.native_saved_stage_proof import PRODUCER_FILES,digest
 
 PURE_HELPERS={'evals.native_reasoning_saved_stage_audit','evals.native_saved_export_metadata',
-    'evals.native_saved_stage_context','evals.native_saved_stage_recovery'}
+    'evals.native_saved_stage_context','evals.native_saved_stage_recovery','evals.native_saved_stage_proof'}
 
 
 def arguments(controller,out):
@@ -41,6 +42,8 @@ def guard_receipt(guard):
     required=('execution_authorized','live_provider_deadline_verified',
         'live_external_cost_guard_verified','single_gpu_across_providers_verified')
     if (not isinstance(value,dict) or any(value.get(k) is not True for k in required)
+            or any(type(value.get(k)) not in (int,float) for k in
+                ('checked_unix','deadline_unix','remaining_budget_usd','planned_maximum_cost_usd'))
             or not 0<=now-value.get('checked_unix',0)<=30
             or not now<value.get('deadline_unix',0)<=now+12*3600
             or value.get('provider') not in ('gcp','runpod')
@@ -125,6 +128,8 @@ def execute(source,snapshot,observation,out,producer_commit,guard,reference=None
                 source_commit=SOURCE,producer_commit=producer_commit,cache=reads.receipt(),
                 profile=PROFILE,code_sha256={name:sha(source/name) for name in CODE},
                 context=prefix_receipt,initial_guard=initial_guard,
+                result_sha256=canonical(captured[0]) if passed else None,
+                producer_implementation_sha256={name:digest(producer/name) for name in PRODUCER_FILES},
                 optimizer_updates_during_recovery=0,original_fit_relabelled=False,
                 model_adopted=False)
             with (out/'recovery-runtime-inputs.json').open('x') as stream:

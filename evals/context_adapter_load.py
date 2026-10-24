@@ -52,6 +52,10 @@ def before_engine(engine_module, proof, disabled=False, zero=False, runtime_tran
             specific = (specific and sha256(proof/'training-state.pt') == report['training_state_sha256']
                 and reload['training_state_sha256'] == report['training_state_sha256']
                 and reload['optimizer_rng_state_restored'] is True)
+    elif report['schema'] == 'dl-native-reasoning32-recovered-saved8-proof-v1':
+        from evals.native_saved_stage_proof import verify_checkpoint as verify_saved
+        verify_saved(proof)
+        specific=True
     elif report['schema'] == 'dl-native-reasoning32-retained154-stream49-control40-proof-v1':
         from evals.native_reasoning_stage import verify_checkpoint as verify_reasoning32
         verify_reasoning32(proof)
@@ -83,7 +87,8 @@ def before_engine(engine_module, proof, disabled=False, zero=False, runtime_tran
     if report['schema'] in ('dl-context-actual-adapter-proof-v1','dl-context-result-head-proof-v1',
             'dl-native-assistant-joint-proof-v1','dl-context-actual-audio49-adapter-proof-v1',
             'dl-native-control40-retained154-stream49-proof-v1',
-            'dl-native-reasoning32-retained154-stream49-control40-proof-v1'):
+            'dl-native-reasoning32-retained154-stream49-control40-proof-v1',
+            'dl-native-reasoning32-recovered-saved8-proof-v1'):
         # These legacy schemas were produced only through the audited bootstrap/
         # provided-token-preserving replay. Keep their exact implementation pin.
         protocol=report.get('native_protocol',{'name':'bootstrap-preserve-provided-v1',

@@ -42,6 +42,13 @@ def validate_review(review,proof,parent,identity):
     from portable.context.native_development import artifact_hashes,CASE_FILES,PARITY_FILES,compare_native
     from portable.context.native_speech_followup import SPEECH_FILES
     roles,parent_schema=cohort(review['schema'])
+    recovered=parent.get('schema')=='dl-native-reasoning32-recovered-saved8-proof-v1'
+    if recovered:
+        if (roles!=REASONING_ROLES or identity.get('recovered_saved_stage') is not True
+                or identity.get('recovery_optimizer_updates')!=0
+                or parent.get('original_stage_updates')!=8 or parent.get('updates_this_run')!=0
+                or parent.get('original_fit_actual_exit')!=-15 or parent.get('original_fit_passed') is not False):
+            raise ValueError('Explicit complete zero-update recovery proof required')
     proof=Path(proof).resolve();plan=Path(__file__).with_name('fixtures')/'native-v2-development-20261019.json'
     cases=json.loads(plan.read_text())['cases']
     if (Path(review['candidate_proof']).resolve()!=proof
@@ -52,8 +59,8 @@ def validate_review(review,proof,parent,identity):
             or review['all10_native_cases_reviewed'] is not True or review['all4_ordinary_core_correct'] is not True
             or review['fresh_evaluation_authorized'] is not True or review['checkpoint_adopted'] is not False
             or review['native_asr_placement']!='shared-gpu-evaluation'
-            or parent['schema']!=parent_schema
-            or parent['updates_this_run']!=8 or parent['adam_parameter_steps_after']!=[528]
+            or (not recovered and (parent['schema']!=parent_schema or parent['updates_this_run']!=8))
+            or parent['adam_parameter_steps_after']!=[528]
             or not parent['additional_native_v2'].get('complete24_per8')
             or [c['index'] for c in review['cases']]!=list(range(10))):
         raise ValueError('Complete restored candidate and unchanged full10/ordinary4 review required')

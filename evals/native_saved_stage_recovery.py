@@ -26,6 +26,15 @@ def canonical(value):
     return hashlib.sha256(json.dumps(value,sort_keys=True,separators=(',',':'),allow_nan=False).encode()).hexdigest()
 
 
+def process_identity():
+    """Container PID plus Linux boot/start identity; a PID alone is insufficient."""
+    from portable.context.native_preflight_takeover import process
+    pid=os.getpid();handle=process(pid)
+    if handle is None:raise ValueError('Live recovery process identity unavailable')
+    return dict(pid=pid,birth=handle['birth'],host=os.uname().nodename,
+        boot_id=Path('/proc/sys/kernel/random/boot_id').read_text().strip())
+
+
 def partial_fingerprints(text,ready):
     """Bind the complete surviving prefix, never use it as a passing subset."""
     fields={'native_stream_restore_fingerprint':'native49',
@@ -237,19 +246,24 @@ def finish(context,inputs,context_receipt,producer_commit,reference=None):
     # again, then compare every optimizer and RNG stream independently.
     restore(saved_path,learned,optimizer,metadata)
     exact_state()
+    identity=process_identity()
     evidence=dict(metadata_sha256=METADATA,initial_stage_metrics_recomputed=initial_metrics,
         final_metrics_recomputed=final_metrics,all_fingerprints=fingerprints,
-        state_metadata=metadata,original_steps=inputs['steps'])
+        state_metadata=metadata,original_steps=inputs['steps'],adapter_modules=context['modules'])
     phase='independent_restore' if reference is not None else 'finalization'
     if reference is not None:
         if (reference['schema']!=SCHEMA or reference['phase']!='finalization'
                 or reference['producer_commit']!=producer_commit or reference['pid']==os.getpid()
                 or reference['evidence']!=evidence or reference['context']!=context_receipt
-                or reference['optimizer_updates_during_recovery']!=0 or not reference['passed']):
+                or reference['optimizer_updates_during_recovery']!=0 or not reference['passed']
+                or any(reference['process_identity'][k]!=identity[k] for k in ('host','boot_id'))
+                or reference['process_identity']==identity):
             raise ValueError('Fresh-process complete state, metrics and fingerprints must match')
     # Re-audit all pinned inputs after computation to detect a concurrent edit.
     verified_inputs(inputs['root'],inputs['observation'])
-    result=dict(schema=SCHEMA,phase=phase,pid=os.getpid(),at_utc=datetime.now(timezone.utc).isoformat(),
+    result=dict(schema=SCHEMA,phase=phase,pid=os.getpid(),process_identity=identity,
+        reference_finalization_sha256=None if reference is None else canonical(reference),
+        at_utc=datetime.now(timezone.utc).isoformat(),
         producer_commit=producer_commit,model_source_commit=SOURCE,context=context_receipt,evidence=evidence,
         original_inventory_sha256=INVENTORY,original_terminal_observation_sha256=OBSERVATION,
         training_state_sha256=PINNED[PILOT+'/training/training-state.pt'],

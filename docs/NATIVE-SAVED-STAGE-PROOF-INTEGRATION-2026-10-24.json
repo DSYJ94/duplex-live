@@ -1,0 +1,48 @@
+{
+  "schema": "dl-native-saved-stage-proof-integration-v1",
+  "at_utc": "2026-10-24T18:10:52.697870+00:00",
+  "status": "OFFLINE_CONSUMER_INTEGRATION_PASS_ACTUAL_GPU_RECOVERY_UNEXECUTED",
+  "original_model_source": "da389a7031a5504495397d1575952194ffa209f1",
+  "original_fit_actual_exit": -15,
+  "original_fit_passed": false,
+  "saved_optimizer_updates": 8,
+  "new_optimizer_updates": 0,
+  "model_adopted": false,
+  "gpu_started": false,
+  "artifacts_transferred_to_gcp": false,
+  "code_sha256": {
+    "evals/native_saved_stage_proof.py": "09ea36c0517edff704dfa5f18b4e99f080a0f91ba4836140e3e981a732d8754f",
+    "evals/native_saved_stage_recovery.py": "1efc8922933d6788a39e38d3b359c25a3f66ec474afdbb4ea32517df5027fcbc",
+    "portable/context/native_saved_stage_runtime.py": "8c1db9287aed5b19f76332e82e6881260df02ae670d290131a93759cfb036128",
+    "evals/context_rollout_conditioning.py": "f4145c38bae57f5db7bf968d1840f96487588198f1ab16e5ad4b0f67a7a5f260",
+    "evals/context_adapter_load.py": "acdd61de0311bbf02f640bed4eb02daab66bac12dec03c61627992cb1dd1eb2c",
+    "portable/context/native_development.py": "f8d8de9d1931a71db35f16cc5300a140614cf387daec47b2ea21f9c5c62b9f91",
+    "evals/native_control40_fresh_review.py": "a5c41bbe8764a9bdf59169b4abce96d9f3371d8c0cf065bd5355777db27f1fd4",
+    "evals/harness/test_native_saved_stage_proof.py": "b8dea05f670830bf0451a8c2c4b024c63e85372d9796e0f7b75705227741f353",
+    "evals/harness/test_native_saved_stage_recovery.py": "e31c441a9352b54567dbf1523533c42387778df6795e06655c7d740a96950d22"
+  },
+  "proof_schema": "dl-native-reasoning32-recovered-saved8-proof-v1",
+  "reload_schema": "dl-native-reasoning32-recovered-saved8-reload-v1",
+  "tests": {
+    "passed": 71,
+    "torch_imported": false,
+    "scope": "Pure artifact/contract fixtures plus existing lightweight development and both-cohort fresh collector fixtures. No real model, PCM, GPU restoration or behavioral validation."
+  },
+  "requirements": [
+    "Exact original closed snapshot, original-host terminal observation, eight update receipts, complete retained objective exposure and checkpoint metadata.",
+    "All original28/audio49/native49/control40/reasoning32 fingerprints, including every surviving original partial fingerprint and exact text/audio target count.",
+    "Two distinct processes on the same host/boot; exact full named Adam528 state and all RNG streams, identical independently recomputed metrics and fingerprints.",
+    "Actual exit-zero terminal job records bound to child PID/start identity and complete runtime receipts; failed/missing/active/reused handles cannot qualify.",
+    "Pinned producer source and original immutable input hash code; same explicitly authorized resource, live cost guard and provider deadline.",
+    "A NEW derived proof with copied exact adapter/state/data/voice bytes; original fit stays failed, updates_this_run=0, original_stage_updates=8, adoption/quality false.",
+    "Strict new schema routed through cold adapter loading and original native reasoning development. Full native20/speech20 review and ordinary4 gate remain unchanged before sealed fresh evaluation."
+  ],
+  "remaining": [
+    "Pending GCP up-to-100USD usage and approved artifact transfer decision; no additional authorization inferred.",
+    "Produce a closed transfer inventory covering every required current artifact, within the proposed 100GB scope and exclusions.",
+    "When authorized: provider-native hard deadline and fresh live guard, verified transfer/runtime/compiler, then finalization and full independent restore inside the same container PID namespace.",
+    "The new terminal recorder must supervise its actual Python child inside that PID namespace; do not pass a host docker-client PID as the model PID.",
+    "Package actual complete exit-zero records, run strict verification, then invoke paired native20 directly with the new proof. Do not restart the old failed V18 waiter or relabel its exit.",
+    "Actual GPU restore, real native PCM parity, full native20/speech20 behavior and subsequent complete fresh gates are still unexecuted."
+  ]
+}

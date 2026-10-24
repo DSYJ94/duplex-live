@@ -31,7 +31,10 @@ INFERENCE_FILES=('portable/context/native_development.py','evals/context_spannin
     'evals/context_delivery_hold.py','evals/context_query_reference.py','evals/recovery_worker.py',
     'evals/recovery_transport.py','evals/recovery_context.py','evals/recovery_data.py',
     'evals/lychee_context.py','evals/context_spanning_download.py','evals/personaplex_train.py',
-    'evals/moshi_model_download.py')
+    'evals/moshi_model_download.py','evals/context_rollout_conditioning.py',
+    'evals/native_saved_stage_proof.py','evals/native_saved_stage_recovery.py',
+    'evals/native_saved_stage_context.py','evals/native_saved_export_metadata.py',
+    'evals/native_reasoning_saved_stage_audit.py')
 
 
 def proofs(candidate=None, reasoning_candidate=None):
@@ -53,6 +56,17 @@ def restored_control40(proof):
 
 
 def restored_reasoning32(proof):
+    if json.loads((Path(proof)/'report.json').read_text())['schema']=='dl-native-reasoning32-recovered-saved8-proof-v1':
+        from evals.native_saved_stage_proof import verify_checkpoint
+        identity,report=verify_checkpoint(proof)
+        reload=json.loads((Path(proof)/'reload-report.json').read_text())
+        return dict(schema='dl-native-reasoning32-existing-full-restore-verification-v1',passed=True,
+            proof=str(proof),identity=identity,optimizer_updates=0,
+            preexisting_fresh_full_cuda_restore_verified=True,new_restore_executed_by_this_check=False,
+            original_fit_passed=False,original_stage_updates=8,recovery_optimizer_updates=0,
+            finalization_pid=reload['finalization_pid'],independent_restore_pid=reload['pid'],
+            report_sha256=identity['report_sha256'],reload_sha256=identity['reload_report_sha256'],
+            behavior_or_adoption_approved=False)
     from evals.native_reasoning_stage import verify_checkpoint,SCHEMA
     return restored_candidate(proof,verify_checkpoint,SCHEMA,'reasoning32')
 

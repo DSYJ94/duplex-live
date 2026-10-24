@@ -1,3 +1,43 @@
+# LOCAL — Strict recovered-proof consumers integrated; 71 offline checks pass
+
+New evals/native_saved_stage_proof.py validates complete finalization + independent
+restore records, both pinned runtime receipts and actual exit-zero terminal job
+records. It requires the exact original eight-update state, metadata, complete
+objective exposure, all original28/audio49/native49/control40/reasoning32 outputs,
+all preserved partial hashes, Adam528/RNG comparison, same recorded host/boot,
+distinct process identities and the same bounded authorized resource/deadline.
+No subset, incomplete output, altered target count or relabelled original exit
+may qualify. Package creates a NEW derived proof only after actual jobs complete.
+
+Explicit NEW schema dl-native-reasoning32-recovered-saved8-proof-v1 is routed
+through context_rollout_conditioning, cold context_adapter_load and reasoning32
+native development. Original fit remains failed/-15; derived updates_this_run=0,
+original_stage_updates=8, all adoption/quality flags false. No legacy report is
+fabricated. Full paired native20, independent speech20, full10 review, all4
+ordinary answers, same voice/unforced PCM parity and sealed fresh gates remain.
+No original model/training math, state restore primitive or source corpus changed.
+
+71 lightweight offline checks PASS with no Torch imported. These are artifact and
+contract fixtures, NOT actual model/PCM/GPU restore evidence. Actual recovery,
+independent restoration, proof packaging and behavior have NOT run. Neither GPU
+has restarted; no GCP upload or access grant. Exact implementation hashes and
+remaining work: docs/NATIVE-SAVED-STAGE-PROOF-INTEGRATION-2026-10-24.json.
+
+GCP usage/transfer approval remains PENDING; do not re-ask or infer approval.
+Next safe offline work: finish the CLOSED transfer inventory for every current
+artifact/dependency, within the proposed100GB scope/exclusions. When authorized,
+verify provider/runtime/compiler and arm fresh native deadline/cost guard before
+recovery. Terminal job controller and model child must share the container PID
+namespace; host docker-client PID is not the model PID. Use finalization + a
+separate fresh restore, package/strict-verify, then paired native20 directly with
+the new proof. Do NOT restart the old failed V18 development waiter or repeat8.
+Runpod Pod8fsk2kouknoiac remains stopped per preceding authoritative readback;
+network volume49yytzyoge retained. Closed Mac snapshot/checkpoints preserved;
+broader Mac source backup remains PARTIAL. LOCAL sole executor; goal ACTIVE.
+Unrelated local work remains untouched. Recorded 2026-10-24T18:10:52.697870+00:00.
+
+---
+
 # LOCAL — Zero-update recovery libraries prepared; GPU and consumer not qualified
 
 New source: evals/native_saved_stage_context.py, native_saved_stage_recovery.py,
