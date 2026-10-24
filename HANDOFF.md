@@ -1,3 +1,65 @@
+# LOCAL — GCP APPROVED; closed81.15GB catalog; Google sign-in pending
+
+Human explicitly APPROVED the exact b5a3b05 GCP continuation proposal, with the
+condition that training is not repeated/redundant. Authority is now
+ docs/GCP-NATIVE-CONTINUATION-AUTHORIZATION-2026-10-24.json
+SHA97c8d43fe7be11595e7d00775af4e1f2c7666a469041c720bf7586ee8a020322.
+This supersedes ALL older pending/UNAPPROVED status entries. Additional GCP usage
+max100USD from existing credits; one A10080GB at most12h,250GB persistent storage,
+max100GB native artifacts to aurium-duplex-live-20261024, no overlapping GPU jobs.
+Runpod100USD cap unchanged. ZERO new optimizer updates under this proposal;
+recover/restore/evaluate saved8, never repeat the pilot or weaken any gate.
+User was told that8 updates are saved but benefit remains unmeasured, and the
+first GCP job performs zero-update recovery/evaluation rather than retraining.
+
+Closed expected-hash catalog:
+ docs/GCP-NATIVE-TRANSFER-INVENTORY-2026-10-24.json.gz
+SHA94b42bae0152e8150ba7842146f66711b13df3b8ece9125bcb5db92a761196fb.
+40,132 regular files81,154,452,891B +8 archival links; archive transport alternative
+74,228,899,463B. No unknown/conflicting hash or forbidden credential/owner/core
+path. Catalog preparation flags false describe its original state; authorization
+is the separate APPROVED owner record above.78 offline checks PASS, no Torch.
+Summary and exact provenance: docs/GCP-NATIVE-TRANSFER-PREPARATION-2026-10-24.json.
+Native28,470/67.76GB and control7,797/8.00GB exact manifests retained; ALL10,390
+original49 source rows/24.66GB match native manifest.35 Mac native tars exist with
+matching sizes/index, full hashes last verified21Oct; do NOT claim fresh67GBhash.
+Control1.024GB Mac tar freshly rehashed87717cdf... equals original approved archive.
+Large native S3 listing timed out and ACTUALLY endedexit1, not data-loss evidence.
+
+Required old control-engine path returns S3HTTP404. All82 files/234,689,568B in
+local runs/local-migration-20261023/native-control40-engine-complete-v3 freshly
+size/SHA verified against inventoryd406ade8ed6000599bcf16ee2065a865bbddab66454496315af67584737bf247.
+Use that Mac seed at canonical GCP migration/native-control40-precise-pilot-v2/engine.
+No regeneration or altered data. Frozen v11 config references /tmp verification
+inputs; recreate source/quality/batch/failed/shared as REGULAR copies from the five
+preserved directories listed in catalog. Original verifiers reject symlink roots.
+Preserve exact closed8 snapshot inventory318a30... and observation04d856...;
+materialize regular files/hardlinks as catalog specifies. Full destination file,
+archive-member and link hashes remain mandatory before any model qualification.
+
+Live browser recheck: regional on-demand A10080GB quota1, usage0. No GCP VM or
+upload yet. Local gcloud had no signed-in account. Official gcloud auth login
+--brief session59648 is awaiting Google account password verification in Chrome3
+tab692863943 (marked handoff); user asked via async question to finish sign-in
+only on Google's page and replydone. Do NOT ask for passwords/codes in chat or
+start a second login while this callback is live. First --no-browser attempt
+endedEOF/exit1 before normal browser flow; only59648 is current. CLI config/logs
+need normal network/host access via approved tool escalation. No keys transferred.
+
+Next: verify actual Google login completion, inspect current GCP resources, and
+stage efficiently within100USD BEFORE paying for idle GPU where possible. A2
+Ultra cannot be converted from another machine family (official docs checked);
+do not assume a cheap CPU VM can become an A2 Ultra. Enforce one GPU/12h/provider
+hard deadline and fresh cost guard, exact runtime/source, then zero-update
+finalization + independent restore + strict new proof + paired native20/speech20.
+Keep original failure/-15, data/losses/KL/hidden/source unchanged. Runpod remains
+stopped per latest GetPod readback; volume49yytzyoge retained. No training/eval or
+metadata job remains active except Google CLI sign-in. LOCAL sole executor,
+goalACTIVE, broader whole-project Mac source backupPARTIAL. Unrelated work intact.
+Recorded 2026-10-24T19:13:09.592791+00:00.
+
+---
+
 # LOCAL — Strict recovered-proof consumers integrated; 71 offline checks pass
 
 New evals/native_saved_stage_proof.py validates complete finalization + independent

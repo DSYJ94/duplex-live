@@ -1,0 +1,98 @@
+{
+  "schema": "dl-native-gcp-transfer-preparation-v1",
+  "at_utc": "2026-10-24T19:13:09.592791+00:00",
+  "status": "INVENTORY_CLOSED_OWNER_AUTHORIZED_AWAITING_GOOGLE_SIGN_IN",
+  "owner_authorization": "docs/GCP-NATIVE-CONTINUATION-AUTHORIZATION-2026-10-24.json",
+  "owner_authorization_sha256": "97c8d43fe7be11595e7d00775af4e1f2c7666a469041c720bf7586ee8a020322",
+  "inventory": {
+    "schema": "dl-native-gcp-closed-transfer-inventory-v1",
+    "regular_files": 40132,
+    "expanded_artifact_bytes": 81154452891,
+    "archived_symlinks": 8,
+    "all_paths_scoped_and_hashes_present": true,
+    "transfer_or_compute_authorized": false,
+    "destination_verified": false,
+    "model_adopted": false,
+    "compressed_inventory": "docs/GCP-NATIVE-TRANSFER-INVENTORY-2026-10-24.json.gz",
+    "compressed_sha256": "94b42bae0152e8150ba7842146f66711b13df3b8ece9125bcb5db92a761196fb",
+    "json_sha256": "92b0aeaa959b3c580bc78bb040f22f429602aeef65a1cb71c4856398cbf36e0e",
+    "compressed_bytes": 1882507,
+    "archive_transport_bytes": 74228899463,
+    "source_volume": "49yytzyoge",
+    "gcp_project": "aurium-duplex-live-20261024"
+  },
+  "regular_files": 40132,
+  "expanded_bytes": 81154452891,
+  "archived_symlinks": 8,
+  "archive_transport_bytes": 74228899463,
+  "expected_hashes_complete": true,
+  "conflicting_hashes": 0,
+  "unhashed_files": 0,
+  "forbidden_source_paths": 0,
+  "source_preservation": {
+    "native_files": 28470,
+    "native_bytes": 67764285650,
+    "native_manifest_sha256": "4eac15590dc9def6dfb5e34b2cea92f30d9a067fabe0940e2876b6acdcbe6dce",
+    "control_files": 7797,
+    "control_bytes": 8000842614,
+    "control_inventory_sha256": "79401e2c1051361d150da644250e8acf87814bda1c48b167af8a34345214fa8f",
+    "original49_source_files": 10390,
+    "original49_source_bytes": 24661548106,
+    "all_original49_rows_exactly_covered": true,
+    "native_mac_tar_containers_present": 35,
+    "native_tar_sizes_and_index_match": true,
+    "native_tar_sha256_last_full_check": "2026-10-21",
+    "control_mac_compressed_archive_bytes": 1023720756,
+    "control_mac_archive_fresh_sha256": "87717cdf3e80977dbe78b18b0f1e75367411eab535d327dbee4679dcd9483616",
+    "control_engine_api_path_status": 404,
+    "control_engine_mac_files_freshly_verified": 82,
+    "control_engine_mac_bytes": 234689568,
+    "large_native_s3_prefix_listing": "ReadTimeoutError; actual process terminal exit1; no data-loss conclusion",
+    "full_gcp_destination_hash_verification_required": true
+  },
+  "ephemeral_input_reconstruction": {
+    "root": "/tmp/duplex-reasoning32-verifier-v1",
+    "preserved_source_directories": 5,
+    "regular_copies_required": true,
+    "symlink_roots_rejected_by_original_verifier": true
+  },
+  "tests": {
+    "passed": 78,
+    "torch_imported": false,
+    "scope": "Offline metadata and artifact contracts only; no real model or GPU validation"
+  },
+  "model": {
+    "model_source_commit": "da389a7031a5504495397d1575952194ffa209f1",
+    "recovery_source_commit": "f793f7c4654e9e694fa492a0c836ea83ccc01f3b",
+    "frozen_base_parameters": 7689623552,
+    "adapter_parameters": 1894400,
+    "saved_updates": 8,
+    "original_fit_exit": -15,
+    "independent_restore_executed": false,
+    "behavior_evaluated": false,
+    "model_adopted": false
+  },
+  "approved_next_action": "Complete official Google Cloud CLI account verification, stage verified artifacts within the approved GCP project, enforce provider-native deadline and cost guard, then ZERO-update finalization, independent restore and native evaluation",
+  "approval_scope": {
+    "additional_gcp_usage_usd": 100,
+    "maximum_a100_80gb": 1,
+    "maximum_gpu_hours": 12,
+    "persistent_disk_gib": 250,
+    "maximum_artifact_bytes": 100000000000,
+    "optimizer_updates": 0
+  },
+  "resource_state": {
+    "runpod_pod": "8fsk2kouknoiac",
+    "last_verified_runpod_status": "EXITED",
+    "retained_volume": "49yytzyoge",
+    "gcp_vms_created": 0,
+    "gcp_gpu_started": false,
+    "gcp_data_transferred": false
+  },
+  "google_sign_in": {
+    "cli_session": 59648,
+    "official_browser_tab": "692863943",
+    "state": "Google account password verification required; user asked to complete official page; no credentials requested in chat"
+  },
+  "source_migration_note": "Source code deployed through Git; archived source/env files remain historical data. Use rsync -ar --exclude=session-token with owner/group propagation disabled. No owner conversations, credentials, session-token, private paths, quarantined cores or unrelated work."
+}
