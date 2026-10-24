@@ -1,3 +1,42 @@
+# LOCAL — CPU staging APPROVED/RUNNING; rsync and exact runtime download live
+
+Human explicitly approved bounded CPU staging/restricted access. New authority
+ docs/GCP-CPU-STAGING-AUTHORIZATION-2026-10-24.json (proposal f8738de). GCP100USD
+cap unchanged; E2standard2,max4h/0.48USD, same250GBdisk,no GPU/optimizer updates.
+Google login blocker resolved. Existing project OS Login ENABLED and preserved;
+metadata-only duplex login was refused, so owner OS Login with dedicated16h public
+key was used successfully. Private key remains only Mac ignored .private/, no
+service account on VM, strict host identity bound to Google API guest hostkeys.
+Allow800 SSHonlythisMac/32, deny900otheringress targetonlyduplex-native-bounded.
+
+Actual VM duplex-native-stage-20261024-v1,id1784642133801608667,europe-west4-a,
+RUNNING. Provider STOP00:55:15UTC25Oct, automaticRestartfalse,250GBpersistentboot
+NOT auto-deleted. E2 requires maintenanceMIGRATE; rejectedTERMINATE request created
+no VM/disk. Two exact approved tagged firewall rules exist. Source currentf8738de;
+new tracked authority/observation will be included by this next source commit.
+
+Local transport: all3865 smaller objects/5,389,324,627B SHAverified. One transient
+ReadTimeout for reasoning4-train013stem_user.wav retried successfully at exact
+640bd56c...; originalfailedv1receipt preserved, successfulv2 separate.36 archive
+carriers use existing Mac hardlinks, no67GB local rehash/heavy model.6.6MB Git
+bundle f8738de verified; anonymous GitHub access unavailable, no credentials copied.
+Upload via authorized rsync-ar/excludesession-token/noowner/nogroup, exactfilelists:
+wrapper session10044, initialsmallrsync58487, archives follow only on actualexit0.
+Pinned NVIDIA image/officialpackages preparation session42418, SSHchild58782.
+Both polled LIVE; don't duplicate on observation timeout. No A100 started; Runpod
+freshproviderread EXITED. No restore/behavior qualification or new training yet.
+Evidence: docs/GCP-CPU-STAGING-OBSERVATION-2026-10-24.json and ignored runs/local-
+migration-20261024/{rsync-transport-current-v1.json,stage-*-v1.*,gcp-transport-v1/}.
+
+Next finish complete transfer plus full destination hashes on CPU; Git-fetch source
+and originalDA checkout. Keep archive/oldcheckpoint intact. StopCPU, detach same
+250GBdisk, create separate A10080 with fresh12h providerSTOP/costguard/oneGPU check,
+then ZERO-update finalization + independent restore + unchanged native tests.
+LOCAL sole executor; user said no repeat/redundant training. Broader source Mac
+backupPARTIAL; closed native archive remains preserved. Unrelated edits untouched.
+
+---
+
 # LOCAL — Google sign-in COMPLETE; CPU staging/access proposal awaits decision
 
 Google CLI session59648 endedexit0. Live auth list confirms daryl@aurium-labs.com

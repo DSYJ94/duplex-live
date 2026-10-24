@@ -1,0 +1,23 @@
+{
+  "schema": "dl-gcp-cpu-staging-owner-authorization-v1",
+  "status": "APPROVED",
+  "recorded_utc": "2026-10-24T20:53:48.810839+00:00",
+  "proposal_commit": "f8738de3a5e36a9db66ac274cb41a397b81c23f1",
+  "proposal_sha256": "29fc10efed34f978ceec8994a94d27901fc0875e5fc23aceae353834be09caf8",
+  "direct_owner_reply": "Approve bounded CPU staging and restricted access",
+  "project": "aurium-duplex-live-20261024",
+  "maximum_cpu_runtime_hours": 4,
+  "maximum_cpu_disk_ip_cost_usd": 0.48,
+  "gcp_total_usage_cap_unchanged_usd": 100,
+  "machine_type": "e2-standard-2",
+  "persistent_disk_gib": 250,
+  "approved_firewall_rules": [
+    "duplex-native-mac-ssh-v1",
+    "duplex-native-deny-other-ingress-v1"
+  ],
+  "scope": "SSH from this Mac /32 only and deny other incoming traffic; targets only new tagged native recovery machines",
+  "optimizer_updates": 0,
+  "maximum_concurrent_gpus": 1,
+  "a100_maximum_hours": 12,
+  "new_credit_purchase": false
+}
