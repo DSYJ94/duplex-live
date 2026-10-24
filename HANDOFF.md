@@ -1,3 +1,26 @@
+# LOCAL — GCP regional A100 quota APPROVED; original Runpod7/8 live
+
+Goal turn PROGRESS and verified wait. Google Cloud approval email at13:49:58UTC
+explicitly approved NVIDIA_A100_80GB_GPUS=1 in europe-west4 for project
+ aurium-duplex-live-20261024, ticket8d801499e720479b9a. Original request caseUUID
+bd254371-b3ca-406c-8bd1-da7e538f058f. General quota history was empty; do not
+interpret that as denial or submit another. Local ignored setup receipt records
+approval evidence; no financial award email or raw mail headers committed.
+Next read back quota, inspect single-A100 price/capacity and bounded migration
+configuration. No GCP GPU, bucket or archive transfer has been created.
+
+Exact original controller8514/birth39640315 and child15566/birth39956182 verified
+live at14:42:16UTC, combined_readiness7/8, no reported failure. Zero optimizer
+updates as last observed. Current sourceDA389A7 stays immutable. Contingency0d75986
+is staged clean, live original command shape and committed fitSHA verified; new
+output V18 not launched. Backup8236 current/verified; eval38348 and guard12953
+unchanged. Finish original8/8 and actual exit first. If original starts fitting,
+do not use contingency; otherwise only exact pre-fit start-window refusal allows
+one late-start V18 inside existing hard18:39:58.8UTC stop and100USD cap.
+Recorded 2026-10-24T14:45:30.278594+00:00. All unrelated edits preserved.
+
+---
+
 # LOCAL — contingency source staged; backup V3 verified; original6/8 live
 
 Goal turn PROGRESS. Source0d75986fca9f1ef943dfece77c7859235163c0ad is hash-verified
