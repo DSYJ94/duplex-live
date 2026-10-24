@@ -1,0 +1,57 @@
+{
+  "schema": "dl-native-reasoning32-progress-backup-v1",
+  "at_utc": "2026-10-24T15:43:08.451071+00:00",
+  "snapshot_utc": "20261024T153831.118537Z",
+  "snapshot_inventory_sha256": "1f89d3eaa3afcd5e188f45c6685388f566699df6c807e5316f72d9ce7a20bdc2",
+  "verified_files": [
+    {
+      "path": "native-reasoning32-retained-pilot-v18/bounded8_training.log",
+      "bytes": 1814328,
+      "sha256": "e2fd7585df26113959e3511df876f114493f79ce99d69976aa8cd3d9aef90359"
+    },
+    {
+      "path": "native-reasoning32-retained-pilot-v18/controller.json",
+      "bytes": 19537,
+      "sha256": "502cc8493fd08a13180b3f7e982a4deb4f09f613a401438c0593fea0ba39cba8"
+    },
+    {
+      "path": "native-reasoning32-retained-pilot-v18/training/training-state.pt",
+      "bytes": 22970059,
+      "sha256": "50810d8363f707895a672b95fe8489ae0cdefba272f6b170ce7c2d5f1046796a"
+    }
+  ],
+  "completed_update_rows": [
+    {
+      "step": 1,
+      "gradient_norm_before_clip": 16.85215950012207,
+      "retention_kl": 0.06867368519306183,
+      "retention_hidden_mse": 0.011277739889919758
+    },
+    {
+      "step": 2,
+      "gradient_norm_before_clip": 25.566822052001953,
+      "retention_kl": 0.06856595724821091,
+      "retention_hidden_mse": 0.011277998797595501
+    },
+    {
+      "step": 3,
+      "gradient_norm_before_clip": 17.434288024902344,
+      "retention_kl": 0.06863545626401901,
+      "retention_hidden_mse": 0.01127601321786642
+    }
+  ],
+  "planned_updates": 8,
+  "independent_restore_approved": false,
+  "behavior_qualified": false,
+  "scope": "Verified saved optimizer progress and current sole GPU process. This does not establish convergence or behavioral improvement.",
+  "live_process_verification": {
+    "at_utc": "2026-10-24T15:43:28.372975+00:00",
+    "controller_pid": 28726,
+    "fit_pid": 28807,
+    "both_ps_state": "Ssl",
+    "gpu_compute_pids": [
+      28807
+    ],
+    "fit_gpu_memory_mib": 30012
+  }
+}

@@ -1,3 +1,22 @@
+# LOCAL — THREE actual reasoning32 updates in verified Mac backup
+
+Progress evidence: snapshot 20261024T153831.118537Z, inventorySHA
+1f89d3eaa3afcd5e188f45c6685388f566699df6c807e5316f72d9ce7a20bdc2. Mac checkpoint, training log and controller rehashed
+against remote-verified inventory. Training rows 1/2/3 saved; gradients finite.
+Full8, independent restore, strict proof and paired20/speech20 remain incomplete.
+See docs/NATIVE-REASONING32-THREE-UPDATES-2026-10-24.json for exact checkpoint hash.
+No inference of loss reduction, convergence, behavior approval or adoption.
+Same V18 controller28726/fit28807; direct SSH repoll succeeded, both live/Ssl,
+fit28807 the sole GPU compute process using30012MiB. Automatic eval watcher
+read succeeded at15:41UTC and observed
+bounded8_training. Backup watcher recovered from transient rsync timeout and
+read succeeded15:41UTC. Guard remains armed through18:39:58.8UTC; no new jobs,
+GCP GPU, budget extension or source/math changes. Next: retain all8 fit, then
+independent restore/proof and complete paired native20/speech20. Recorded
+2026-10-24T15:43:08.451071+00:00.
+
+---
+
 # LOCAL — REAL reasoning32 UPDATE1/8 saved and hash-backed up
 
 Goal turn PROGRESS and verified wait. Actual fit row step1 observed15:16:44UTC;
