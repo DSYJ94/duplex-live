@@ -1,0 +1,63 @@
+{
+  "schema": "dl-native-control40-recorded-loss-summary-v1",
+  "recorded_updates": 1,
+  "complete8_recorded": false,
+  "steps": [
+    {
+      "step": 1,
+      "losses_measured_before_this_update": true,
+      "fixed154_weighted_groups": {
+        "actual": 0.5675211192473875,
+        "reference": 0.18145108222961426,
+        "old25": 0.45558632162742707,
+        "new24": 0.7613897360861301,
+        "word": 0.0,
+        "clock": 0.0,
+        "audio49": 0.5866257353704802
+      },
+      "fixed154_weighted_total": 2.552573994561039,
+      "selected_native49_weighted_loss": 0.9814703155907574,
+      "selected_control40_weighted_text_loss": 0.7285357997824292,
+      "selected_control40_weighted_acoustic_loss": 0.15478459745645523,
+      "selected_total_weighted_objective": 4.417364707390681,
+      "selected_native_teacher_ids": [
+        "teacher-cf-recovery-train-000-1",
+        "teacher-cf-recovery-train-001-0",
+        "teacher-cf-recovery-train-006-2",
+        "teacher-recovery-train-007",
+        "teacher-native2-train-021",
+        "teacher-native2-train-023",
+        "teacher-native2-train-015"
+      ],
+      "selected_control_teacher_ids": [
+        "native-control3-train-016",
+        "native-control3-train-000",
+        "native-control3-train-024",
+        "native-control3-train-008",
+        "native-control3-train-032"
+      ],
+      "gradient_norm_before_clip": 11.803813934326172
+    }
+  ],
+  "fixed154_loss_delta": null,
+  "fixed154_relative_reduction": null,
+  "fixed154_membership_exact_across_recorded_updates": true,
+  "comparable_across_steps": "Only the fixed154 objective repeats the same terms and weights every update.",
+  "rotating_partition_totals_are_not_a_convergence_curve": true,
+  "convergence_established": false,
+  "independent_restore_established": false,
+  "behavioral_improvement_established": false,
+  "training_extension_or_adoption_approved": false,
+  "interpretation": "Training losses describe fit on TRAIN teachers; validation, native restore and behavioral tests remain separate requirements.",
+  "source_log": "/Users/daryl/Library/CloudStorage/OneDrive-Personal/Shared GitHub Repos/duplex-live/runs/local-migration-20261023/native-control40-continuous-copyback-v16/20261024T044909.210438Z/native-control40-precise-pilot-v9-adoption/bounded8_training.log",
+  "source_log_sha256": "1e4b904ea71bb3928edfc6dfb1446fb9259e467b24db5d81ee00f221f34a7a0d",
+  "analysis_implementation_sha256": "b2c6d0e1aecaf5535e7270ec31b7075cf02dda30c08a2af030f3d7a8af650896",
+  "model_or_GPU_loaded": false,
+  "at_utc": "2026-10-24T04:56:28.308391+00:00",
+  "experiment": "Interrupted V9/V8-recovery attempt; one saved update, no extension/adoption.",
+  "checkpoint_sha256": "5128b3c8718db5d89c145f2c1b65bedf7b92c8e2279b1d84bc0221850a44382c",
+  "all154_loss_records_exactly_match_independent_parent_readiness": true,
+  "measurement_model": "native520 before its first update",
+  "current_retry": "V11 remains a separate active attempt; this is not a current V11 result.",
+  "live_execution_source": "c9efaaac24d983342f7eded46617e6450bc102ce"
+}
