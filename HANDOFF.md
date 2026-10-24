@@ -1,3 +1,28 @@
+# LOCAL — CPU audit now passes reconstruction/metadata; missing pinned semantic receipt diagnosed
+
+Actual CPUcontainerunitv3 exited1 on one absent original CLI file:
+/workspace/migration/native-reasoning32-timing-v11-semantic-v1/semantic.json.
+It successfully passed full reconstructed-input checks and saved8 metadata first;
+NumPy host issue resolved in prepared CPUcontainer. No GPU/model/newupdates.
+New deployed source75b3bfd1dbec24a46664a3de63d13fcb0f62d23c at
+/opt/duplex-gcp-recovery-75b3bfd-v1 includes Macguard SSDstopfix and readonly
+--verify-existing. Its failed unit/log retained; don't rerun materialization.
+
+Closure omission diagnosed: original passing complete32 semantic receipt exists
+on Mac and is pinned BY ALREADY CATALOGUED converted-v11/ingestion.json:
+56d9ad2aee313edda063e28ffb00b26e59ebaf406499d005548a44f29952b46b.
+30 exact review responses already exist under approved v10 paths; only receipt
+plus029/030 responses need copying (53,210B, not new audio/data generation).
+New exact manifest docs/GCP-NATIVE-SEMANTIC-RECEIPT-CLOSURE-2026-10-25.json lists
+all33 hashes and reuse sources. Same original approved synthetic32 native proof;
+no new corpus/owner conversations/credentials/provider requests. Preserve original
+closed40132catalog and its completePASS unchanged; supplement is separately hashed.
+Transfer3 missing ORIGINAL receipts only, hardlink30 already verified responses,
+verifyall33 against exact manifest and ingestion pin, then fresh CPUauditv4.
+Total scoped bytes81,154,506,101 below100GB grant. GPU remainsOFF until inputs0.
+
+---
+
 # LOCAL — Full GCP backup HASH PASS; final CPU audit needs prepared container
 
 Actual destination receipt finished23:20:28.650525UTC: ALL40132regularfiles,

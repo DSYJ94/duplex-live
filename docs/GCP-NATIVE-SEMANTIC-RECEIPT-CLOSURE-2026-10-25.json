@@ -1,0 +1,218 @@
+{
+  "schema": "dl-gcp-native-pinned-semantic-receipt-closure-v1",
+  "recorded_utc": "2026-10-24T23:27:38.755460+00:00",
+  "purpose": "Recover omitted original review receipts required by the saved native candidate; no new corpus or approval generated",
+  "authorization": "docs/GCP-NATIVE-CONTINUATION-AUTHORIZATION-2026-10-24.json",
+  "original_inventory_sha256": "94b42bae0152e8150ba7842146f66711b13df3b8ece9125bcb5db92a761196fb",
+  "original_inventory_unchanged": true,
+  "already_verified_ingestion": "migration/native-reasoning32-converted-v11/ingestion.json",
+  "ingestion_semantic_approval_sha256": "56d9ad2aee313edda063e28ffb00b26e59ebaf406499d005548a44f29952b46b",
+  "destination_prefix": "migration/native-reasoning32-timing-v11-semantic-v1",
+  "additional_existing_native_receipt_bytes": 53210,
+  "total_approved_native_bytes_after_closure": 81154506101,
+  "reused_previously_verified_responses": 30,
+  "additional_files": 3,
+  "synthetic_same32_collection_only": true,
+  "no_new_provider_requests": true,
+  "no_owner_conversations_credentials_or_new_audio": true,
+  "files": [
+    {
+      "name": "semantic.json",
+      "bytes": 41370,
+      "sha256": "56d9ad2aee313edda063e28ffb00b26e59ebaf406499d005548a44f29952b46b",
+      "additional_transfer_source": "runs/local-migration-20261023/native-reasoning32-timing-v11-semantic-v1/semantic.json"
+    },
+    {
+      "name": "native-reasoning4-train-000.response.json",
+      "bytes": 4995,
+      "sha256": "f6cd6239e5deb3792a83a3226d1b550b671f28ee2c9282e1ef2ac239d452534c",
+      "existing_catalog_source": "migration/native-reasoning32-derived-v10-semantic-v1/native-reasoning4-train-000.response.json"
+    },
+    {
+      "name": "native-reasoning4-train-001.response.json",
+      "bytes": 7305,
+      "sha256": "674e2b015141fe8c582db0c076302c09206b919559975940a872ecb17fabbbcd",
+      "existing_catalog_source": "migration/native-reasoning32-derived-v10-semantic-v1/native-reasoning4-train-001.response.json"
+    },
+    {
+      "name": "native-reasoning4-train-002.response.json",
+      "bytes": 6449,
+      "sha256": "dc8de8c17c70bbd7ffd1f1a2e4fd9ee8f362282835b96339bd8a79796e393fc4",
+      "existing_catalog_source": "migration/native-reasoning32-derived-v10-semantic-v1/native-reasoning4-train-002.response.json"
+    },
+    {
+      "name": "native-reasoning4-train-003.response.json",
+      "bytes": 6386,
+      "sha256": "7a5daa670acad122ff64be64c7237bf03d62086cae4477bd52c9d0164de1cdae",
+      "existing_catalog_source": "migration/native-reasoning32-derived-v10-semantic-v1/native-reasoning4-train-003.response.json"
+    },
+    {
+      "name": "native-reasoning4-train-004.response.json",
+      "bytes": 4883,
+      "sha256": "2032eadc310b85f2d368c70f4fa5d793d92f07f88d9dd25084c939ad3a8fe798",
+      "existing_catalog_source": "migration/native-reasoning32-derived-v10-semantic-v1/native-reasoning4-train-004.response.json"
+    },
+    {
+      "name": "native-reasoning4-train-005.response.json",
+      "bytes": 7143,
+      "sha256": "70a9d8843bd13ca5281fe50dec36c00740cf76448c5939f6d8351810ff18a9c9",
+      "existing_catalog_source": "migration/native-reasoning32-derived-v10-semantic-v1/native-reasoning4-train-005.response.json"
+    },
+    {
+      "name": "native-reasoning4-train-006.response.json",
+      "bytes": 5697,
+      "sha256": "fc28f8126444757f823720cdbcdad28b4548b619deb7f0dc1a3f9815e94c180f",
+      "existing_catalog_source": "migration/native-reasoning32-derived-v10-semantic-v1/native-reasoning4-train-006.response.json"
+    },
+    {
+      "name": "native-reasoning4-train-007.response.json",
+      "bytes": 7389,
+      "sha256": "de5cc30f4b32a8bf4c5a1ef2417a43dcf9fcfbe044b2f14afbb25e692a125bd9",
+      "existing_catalog_source": "migration/native-reasoning32-derived-v10-semantic-v1/native-reasoning4-train-007.response.json"
+    },
+    {
+      "name": "native-reasoning4-train-008.response.json",
+      "bytes": 4823,
+      "sha256": "9ac48f1567737b62937a0b08627575901bd49b453c8bcb4d791c78510a80a825",
+      "existing_catalog_source": "migration/native-reasoning32-derived-v10-semantic-v1/native-reasoning4-train-008.response.json"
+    },
+    {
+      "name": "native-reasoning4-train-009.response.json",
+      "bytes": 5402,
+      "sha256": "adfb6d600e2764b62bb0509374a3c839f59c7210bcda64a958f28f49efafb257",
+      "existing_catalog_source": "migration/native-reasoning32-derived-v10-semantic-v1/native-reasoning4-train-009.response.json"
+    },
+    {
+      "name": "native-reasoning4-train-010.response.json",
+      "bytes": 6085,
+      "sha256": "adc4b9b96e43436d8e98582bb06cf152e2222a68768b284d19ed95fb56b8cd7b",
+      "existing_catalog_source": "migration/native-reasoning32-derived-v10-semantic-v1/native-reasoning4-train-010.response.json"
+    },
+    {
+      "name": "native-reasoning4-train-011.response.json",
+      "bytes": 6099,
+      "sha256": "91c3627fc173fbaba214971403e00c38af337fdb73d5453ac2bbe31790f350cf",
+      "existing_catalog_source": "migration/native-reasoning32-derived-v10-semantic-v1/native-reasoning4-train-011.response.json"
+    },
+    {
+      "name": "native-reasoning4-train-012.response.json",
+      "bytes": 4889,
+      "sha256": "da0076faff9ff4d4e97ab378254b018033f30ad7da6aebeef59591cb6df4cb42",
+      "existing_catalog_source": "migration/native-reasoning32-derived-v10-semantic-v1/native-reasoning4-train-012.response.json"
+    },
+    {
+      "name": "native-reasoning4-train-013.response.json",
+      "bytes": 5571,
+      "sha256": "6ec7c44eea9d9a0fe1d69e4375fae80bdc0e19ba12ba37a79dde29e01deced0f",
+      "existing_catalog_source": "migration/native-reasoning32-derived-v10-semantic-v1/native-reasoning4-train-013.response.json"
+    },
+    {
+      "name": "native-reasoning4-train-014.response.json",
+      "bytes": 5815,
+      "sha256": "248b3e0c8be0c54777107822d72596506f9c64eaaffd3470f0c584bcd104cdc8",
+      "existing_catalog_source": "migration/native-reasoning32-derived-v10-semantic-v1/native-reasoning4-train-014.response.json"
+    },
+    {
+      "name": "native-reasoning4-train-015.response.json",
+      "bytes": 6344,
+      "sha256": "7627cb2a3d05afcbd2c1a6d4ce7442f815b3ceaf0ad308c0decbe2743df84c9d",
+      "existing_catalog_source": "migration/native-reasoning32-derived-v10-semantic-v1/native-reasoning4-train-015.response.json"
+    },
+    {
+      "name": "native-reasoning4-train-016.response.json",
+      "bytes": 4843,
+      "sha256": "7d37525cbadbf916d7ffdfe34cd55944129cd147de0186ed6ecce10cdf5c216b",
+      "existing_catalog_source": "migration/native-reasoning32-derived-v10-semantic-v1/native-reasoning4-train-016.response.json"
+    },
+    {
+      "name": "native-reasoning4-train-017.response.json",
+      "bytes": 8082,
+      "sha256": "5a485bd9cd0ffdd79aee67c8a229eb095ff33c391334d33bb46e34a948038ae7",
+      "existing_catalog_source": "migration/native-reasoning32-derived-v10-semantic-v1/native-reasoning4-train-017.response.json"
+    },
+    {
+      "name": "native-reasoning4-train-018.response.json",
+      "bytes": 6217,
+      "sha256": "97f7bdedf7209978b4bba6a6c16c20a06250edd9ba80272de110a2860ad619b7",
+      "existing_catalog_source": "migration/native-reasoning32-derived-v10-semantic-v1/native-reasoning4-train-018.response.json"
+    },
+    {
+      "name": "native-reasoning4-train-019.response.json",
+      "bytes": 6493,
+      "sha256": "9b0e8c3ec9f8fb948076e3a2a251be0b7c762b5853a2e4deb02afc75fe3d83fb",
+      "existing_catalog_source": "migration/native-reasoning32-derived-v10-semantic-v1/native-reasoning4-train-019.response.json"
+    },
+    {
+      "name": "native-reasoning4-train-020.response.json",
+      "bytes": 3022,
+      "sha256": "9a4940c12e87c65fa8d3ac2c19ebad6e60ce8b171341e41b79a2472e9fb3916c",
+      "existing_catalog_source": "migration/native-reasoning32-derived-v10-semantic-v1/native-reasoning4-train-020.response.json"
+    },
+    {
+      "name": "native-reasoning4-train-021.response.json",
+      "bytes": 6266,
+      "sha256": "192e55e0b07caa6ee771a6093722c49e4181dc2266122e87fd6d43ceb273f54c",
+      "existing_catalog_source": "migration/native-reasoning32-derived-v10-semantic-v1/native-reasoning4-train-021.response.json"
+    },
+    {
+      "name": "native-reasoning4-train-022.response.json",
+      "bytes": 6192,
+      "sha256": "f2fffa6c32f4b8d934816fffb3d8d640b0e2604b50f573818fe728a0cdc2807b",
+      "existing_catalog_source": "migration/native-reasoning32-derived-v10-semantic-v1/native-reasoning4-train-022.response.json"
+    },
+    {
+      "name": "native-reasoning4-train-023.response.json",
+      "bytes": 6332,
+      "sha256": "e48c77a7c03e67f85bf0d037fa43ce0d61caa2526eb9854ca73945fdd427eedf",
+      "existing_catalog_source": "migration/native-reasoning32-derived-v10-semantic-v1/native-reasoning4-train-023.response.json"
+    },
+    {
+      "name": "native-reasoning4-train-024.response.json",
+      "bytes": 5019,
+      "sha256": "8a65e09915bd439c21f6aaac30806777d21a94d5261a3f80c0b6efc32b667d61",
+      "existing_catalog_source": "migration/native-reasoning32-derived-v10-semantic-v1/native-reasoning4-train-024.response.json"
+    },
+    {
+      "name": "native-reasoning4-train-025.response.json",
+      "bytes": 5796,
+      "sha256": "fef23f736e89adc6be0602c6247e9c5f53c1dd8fdbbae163a78ec75ec5518cfb",
+      "existing_catalog_source": "migration/native-reasoning32-derived-v10-semantic-v1/native-reasoning4-train-025.response.json"
+    },
+    {
+      "name": "native-reasoning4-train-026.response.json",
+      "bytes": 6289,
+      "sha256": "384490ff8c1f17589d48afede99de69674fc1400f7acc2dfb7f86509a9e17a78",
+      "existing_catalog_source": "migration/native-reasoning32-derived-v10-semantic-v1/native-reasoning4-train-026.response.json"
+    },
+    {
+      "name": "native-reasoning4-train-027.response.json",
+      "bytes": 6478,
+      "sha256": "837706c5e0032506785cb33b0c631edaa44993cea9ad935cfa450db1da334236",
+      "existing_catalog_source": "migration/native-reasoning32-derived-v10-semantic-v1/native-reasoning4-train-027.response.json"
+    },
+    {
+      "name": "native-reasoning4-train-028.response.json",
+      "bytes": 3028,
+      "sha256": "bae1b77450351bbbef13ee5d930a67783df55284935343367c14db127babec86",
+      "existing_catalog_source": "migration/native-reasoning32-derived-v10-semantic-v1/native-reasoning4-train-028.response.json"
+    },
+    {
+      "name": "native-reasoning4-train-029.response.json",
+      "bytes": 5912,
+      "sha256": "b9b1e7a80ec7889bcc60ad98c39de91dd80491509aafc82486f7e527eaf6a437",
+      "additional_transfer_source": "runs/local-migration-20261023/native-reasoning32-timing-v11-semantic-v1/native-reasoning4-train-029.response.json"
+    },
+    {
+      "name": "native-reasoning4-train-030.response.json",
+      "bytes": 5928,
+      "sha256": "a270d184bff548df2ab466c5ab7eb6b5d3682ef9f3d3c2517bedf040f1b6a299",
+      "additional_transfer_source": "runs/local-migration-20261023/native-reasoning32-timing-v11-semantic-v1/native-reasoning4-train-030.response.json"
+    },
+    {
+      "name": "native-reasoning4-train-031.response.json",
+      "bytes": 6862,
+      "sha256": "6c339609d01e9d0bddf759229e40c09f9db24f10e9eeb02e0e310958ded07ba1",
+      "existing_catalog_source": "migration/native-reasoning32-derived-v10-semantic-v1/native-reasoning4-train-031.response.json"
+    }
+  ]
+}
