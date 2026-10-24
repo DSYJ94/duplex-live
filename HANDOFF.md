@@ -1,3 +1,44 @@
+# LOCAL — old25 gradient traces complete; whole49 still pending (24 October 02:10 UTC)
+
+Goal turn: verified wait plus preserved workload/funding evidence. LOCAL remains
+sole executor. Source reviewed 4a90c07bb8743307bfd2bad2b4530e1bdb4b759b;
+execution c9efaaac24d983342f7eded46617e6450bc102ce and supervisor
+2e652ce06354abdf996447662231cd79cab9161f are unchanged.
+
+Actual 02:09:05 UTC: supervisor 79780/birth24607807 S; same CUDA child
+71818/birth24130859 R; original parent 71679/birth24121629 intentionally T.
+25/49 gradient traces logged, all exact. Those are all old25 traces; all new24
+must also complete. Full154 gradient PASS; whole49 and combined final reports
+absent. Zero new optimizer updates. Never resume the paused original parent.
+
+Measured 02:07:14: completed traces cover 11,471/23,078 recorded-call positions
+and 17,522/34,890 frames. Each trace is executed without and with gradients;
+these counts describe the call inventory, not just one forward pass. Roughly
+half remains. Combined partitions, eight updates, final fingerprints, independent
+restore and behavior are additional work. No full-chain completion time promised.
+Partial observation 16,466 bytes preserved on Mac and retained volume, actual SHA:
+741c838aaae8702a2b57df6b9345d2e629cd88416ee9b38bff3ee0b4cc92b814.
+See docs/NATIVE-CONTROL40-READINESS25-2026-10-24.json for exact measured evidence.
+
+Wallet reverified 01:59:40: $17.9604194946, account rate $1.814/h, auto-pay off.
+Same Pod 4yx8vahdmjsylx/volume49yytzyoge. Existing guard70540 at10:22:37.9 UTC
+requires $17.519863808 with one-hour billing-lag and $0.50 reserve; fully prepaid.
+Maximum project compute $83.98071830424945 < $100. No purchase or deadline change.
+Pipeline09:00, evaluation71424 latest09:37/end10:17, backup71453 end10:20.
+Both watchers' latest reads succeeded; proxy runv7 actual requests0/healthy.
+Latest full continuous snapshot83 files remains hash verified (inventory
+52baeb8a780b8aa726c05fa1406a3ec49cfdafd9c668ef0618a257921cef299a).
+No new checkpoint exists to copy. Full native archive preserved; broader stopped
+Mac source backup PARTIAL. Unrelated pyc/capability probes/roadmap preserved.
+
+Next: preserve SAME child through full49 and combined -> ONE8 from520 ->
+independent Adam/RNG/native restore/proof -> complete paired20/speech20 and
+ordinary4 -> eligible sealedfresh qualification. No partial approval, extension
+or adoption. Distinct reasoning32 semantic payload approval still pending;
+zero semantic requests/conversion/reasoning32 training. No indirect retry.
+
+---
+
 # LOCAL — same native child17/49; runtime sample preserved (24 October01:39UTC)
 
 Goal turn PROGRESS: actual runtime evidence narrows two possible bottlenecks;

@@ -1,0 +1,158 @@
+{
+  "schema": "dl-native-control40-readiness25-progress-v1",
+  "recorded_utc": "2026-10-24T02:09:55.494116+00:00",
+  "source_commit": "4a90c07bb8743307bfd2bad2b4530e1bdb4b759b",
+  "execution_commit": "c9efaaac24d983342f7eded46617e6450bc102ce",
+  "supervision_commit": "2e652ce06354abdf996447662231cd79cab9161f",
+  "partial_observation": {
+    "local": "runs/local-migration-20261023/native-control40-native25-observation-v1.json",
+    "volume": "/workspace/migration/native-control40-native25-observation-v1.json",
+    "bytes": 16466,
+    "sha256": "741c838aaae8702a2b57df6b9345d2e629cd88416ee9b38bff3ee0b4cc92b814",
+    "Mac_and_volume_hashes_verified": true
+  },
+  "measured_at_utc": "2026-10-24T02:07:14.594068+00:00",
+  "completed_teacher_traces": 25,
+  "required_teacher_traces": 49,
+  "completed_recorded_call_positions": 11471,
+  "total_recorded_call_positions": 23078,
+  "remaining_recorded_call_positions": 11607,
+  "completed_frames": 17522,
+  "total_frames": 34890,
+  "recorded_call_fraction": 0.49705347083802753,
+  "call_count_scope": "Each approved teacher trace is checked without and with gradients; these are positions in the recorded native call inventory, not a claim of only one forward pass.",
+  "latest_actual_process_observation": {
+    "at_utc": "2026-10-24T02:09:05.528105+00:00",
+    "controller": {
+      "pid": 79780,
+      "birth": 24607807,
+      "state": "S",
+      "CPU_seconds": 5.54
+    },
+    "phase": "combined_readiness",
+    "child": {
+      "pid": 71818,
+      "birth": 24130859,
+      "state": "R",
+      "CPU_seconds": 8824.58
+    },
+    "original_parent": {
+      "pid": 71679,
+      "birth": 24121629,
+      "state": "T",
+      "CPU_seconds": 12.37
+    },
+    "complete_native49_rows": 25,
+    "all_logged_rows_exact": true,
+    "stages": [
+      {
+        "name": "whole_workset",
+        "pid": 4122,
+        "birth": 18985364,
+        "exit_code": 0
+      },
+      {
+        "name": "complete40_precise_numerical",
+        "pid": 4216,
+        "birth": 18993883,
+        "exit_code": 0
+      },
+      {
+        "name": "complete40_independent_BF16_gradient",
+        "pid": 14873,
+        "birth": 20219598,
+        "exit_code": 0
+      },
+      {
+        "name": "combined_readiness",
+        "pid": 71818,
+        "birth": 24130859,
+        "exit_code": null
+      }
+    ],
+    "pipeline_deadline_utc": "2026-10-24T09:00:00+00:00",
+    "readiness_reports": {
+      "complete-balanced-preflight.json": true,
+      "native-stream49-gradient-readiness.json": null,
+      "control40-combined-readiness.json": null
+    },
+    "GPU": "18 %, 24231 MiB",
+    "backend_health": {
+      "run_id": "native-control40-20261023-v7",
+      "actual_requests": 0,
+      "real_requests_transport": true
+    }
+  },
+  "funding_readback": {
+    "at_utc": "2026-10-24T01:59:40.882520+00:00",
+    "wallet": {
+      "clientBalance": 17.9604194946,
+      "currentSpendPerHr": 1.814,
+      "isAutoPayEnabled": false
+    },
+    "same_pod": "4yx8vahdmjsylx",
+    "same_volume": "49yytzyoge",
+    "funding_options": [
+      {
+        "lifetime_hours": 24,
+        "deadline_utc": "2026-10-24T08:22:37.900000+00:00",
+        "required_remaining_wallet_USD": 13.891863807977778,
+        "fully_prepaid_with_one_hour_reserve": true,
+        "project_compute_cap_USD": 80.40071830424947
+      },
+      {
+        "lifetime_hours": 26,
+        "deadline_utc": "2026-10-24T10:22:37.900000+00:00",
+        "required_remaining_wallet_USD": 17.519863807977778,
+        "fully_prepaid_with_one_hour_reserve": true,
+        "project_compute_cap_USD": 83.98071830424945
+      },
+      {
+        "lifetime_hours": 27,
+        "deadline_utc": "2026-10-24T11:22:37.900000+00:00",
+        "required_remaining_wallet_USD": 19.333863807977778,
+        "fully_prepaid_with_one_hour_reserve": false,
+        "project_compute_cap_USD": 85.77071830424946
+      },
+      {
+        "lifetime_hours": 34,
+        "deadline_utc": "2026-10-24T18:22:37.900000+00:00",
+        "required_remaining_wallet_USD": 32.03186380797778,
+        "fully_prepaid_with_one_hour_reserve": false,
+        "project_compute_cap_USD": 98.30071830424946
+      }
+    ],
+    "new_credit_purchase": false
+  },
+  "current_backup": {
+    "schema": "dl-native-control40-copyback-watch-v1",
+    "pid": 71453,
+    "source_commit": "2e652ce06354abdf996447662231cd79cab9161f",
+    "deadline_utc": "2026-10-24T10:20:00Z",
+    "phase": "watching",
+    "snapshots": [
+      {
+        "path": "runs/local-migration-20261023/native-control40-continuous-copyback-v14/20261024T010214.248962Z",
+        "files": 83,
+        "inventory_sha256": "52baeb8a780b8aa726c05fa1406a3ec49cfdafd9c668ef0618a257921cef299a",
+        "reused_verified_files": 81,
+        "reused_verified_bytes": 1176817004,
+        "transferred_file_bytes": 302571
+      }
+    ],
+    "changes_to_remote_jobs": false,
+    "pod_id": "4yx8vahdmjsylx",
+    "ssh_host": "root@157.157.221.29",
+    "ssh_port": 16701,
+    "at_utc": "2026-10-24T02:08:36.126159+00:00",
+    "last_marker": "146f2fb827d65257424096c802f5f5929d471fb811762b4d22b43855e870d5ac",
+    "last_check_succeeded": true
+  },
+  "new_optimizer_updates": 0,
+  "full49_approval": false,
+  "combined_readiness_approval": false,
+  "model_adopted": false,
+  "model_data_loss_gate_and_CPU_settings_changed": false,
+  "next_action": "Continue the same child through all49 and combined readiness, then the original bounded8, independent restore/proof and complete behavior chain. No partial approval.",
+  "runtime_limit": "Roughly half the call inventory remains. Combined partitions, eight optimizer updates, final fingerprints, independent restore and behavior remain additional work; no full-chain completion estimate is established."
+}

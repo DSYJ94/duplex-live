@@ -1,3 +1,13 @@
+24 October 02:10 UTC — Same child71818 live,25/49 exact gradient traces (all old25).
+All new24, full49 and combined readiness still pending; full154 PASS,0new updates.
+Measured11,471/23,078 recorded-call positions covered; each trace checks both
+no-grad and grad execution. Small16,466B partial observation Mac+volume hashes
+verified. Wallet17.9604 at01:59 fully covers unchanged26h guard with reserve.
+Queued pilot/restore/behavior and strict gates unchanged. See newest HANDOFF and
+NATIVE-CONTROL40-READINESS25-2026-10-24.json. This is not whole49 approval.
+
+---
+
 24Oct01:39UTC — Same child71818 actualR17/49 exact rows, full154 PASS,0new updates.
 Read-only runtime sample:~11.21s wall/~11.19CPU, low GPU utilization; no new cgroup
 throttle events or process IO changes. Historical all49 identities/call counts and
