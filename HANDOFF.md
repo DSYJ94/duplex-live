@@ -1,3 +1,40 @@
+# LOCAL — Zero-update recovery libraries prepared; GPU and consumer not qualified
+
+New source: evals/native_saved_stage_context.py, native_saved_stage_recovery.py,
+and portable/context/native_saved_stage_runtime.py. Original model source remains
+DA (da389a7031a5504495397d1575952194ffa209f1); original trainer, restore function,
+all data/recipe gates and native evaluation consumers are unchanged. Recovery
+uses a separately recorded, SHA-pinned construction prefix ending BEFORE the
+optimizer/reload branch. It never executes the old fit loop or writes its report.
+
+33 offline fixtures pass, with no Torch imported. Actual closed snapshot passes
+complete eight-update exposure/metadata/packaged JSON verification; all49 native
+and31 control preserved fingerprints are bound, not accepted as a final subset.
+The new library requires full original28/audio49/native49/control40/reasoning32
+recomputation, every preserved hash, exact named Adam528 state and all RNG streams.
+A separate fresh-process result must match all metrics and fingerprints. All
+original failures and unqualified/adoption flags remain explicit. See
+ docs/NATIVE-SAVED-STAGE-RECOVERY-PREPARATION-2026-10-24.json for exact hashes.
+
+This is prepared SOURCE, not an executed recovery or verified restore. No GPU
+was started or transferred to. No GCP controller/provider guard currently exists
+for this bridge. Runtime requires a fresh explicit authorization, native provider
+deadline, live cost guard and cross-provider single-GPU check supplied by its
+caller; it has no resource-creation operation or auto-launch entry point.
+Strict recovered-proof consumption and paired native20/speech20 routing remain
+unimplemented. Next authorized offline work is that strict consumer integration;
+then a separately authorized provider run can establish actual GPU evidence.
+Do not pass the new record to legacy proof loaders, fabricate original fit exit0,
+repeat eight updates or treat fixtures as real model validation.
+
+GCP usage/transfer question remains PENDING; do not re-ask or infer approval.
+Runpod Pod8fsk2kouknoiac was stopped/read back EXITED; retained volume49yytzyoge
+and original closed Mac checkpoint remain. No new submissions or live watchers.
+Goal remains ACTIVE; LOCAL sole executor, unrelated local work preserved.
+Recorded 2026-10-24T17:55:22.926764+00:00.
+
+---
+
 # LOCAL — Saved export metadata verified; GCP decision pending
 
 The closed V18 snapshot remains intact. A standard-library reader now verifies

@@ -1,0 +1,51 @@
+{
+  "schema": "dl-native-saved-stage-recovery-preparation-v1",
+  "at_utc": "2026-10-24T17:55:22.926764+00:00",
+  "status": "OFFLINE_CONTRACTS_PASS_GPU_RECOVERY_UNEXECUTED_CONSUMER_INTEGRATION_PENDING",
+  "original_model_source": "da389a7031a5504495397d1575952194ffa209f1",
+  "original_inventory_sha256": "318a30c25a47719ba745475a27c7b240f973ce9010a2dfc7873fa4dbb5535135",
+  "original_observation_sha256": "04d8569f4d343271c7b234e87fc40806cb00b80caf0ef4f97ac33f03185bf136",
+  "original_fit_actual_exit": -15,
+  "original_fit_passed": false,
+  "original_stage_updates": 8,
+  "recovery_optimizer_updates_executed": 0,
+  "gpu_execution": false,
+  "torch_imported_on_mac": false,
+  "code_sha256": {
+    "evals/native_saved_stage_context.py": "e39ae5f8711e08bddecfacf0f1d68ac73e386a81eaef8f7aee4ae6e968a5ae7a",
+    "evals/native_saved_stage_recovery.py": "9dbb1867a2062d463df25e2645866343142e176c599a066a8f76824c3eb96389",
+    "portable/context/native_saved_stage_runtime.py": "eb96201a90e6ea679ae75a1a4ca3270dabd3fc2060660422164a8ed1ef7c2ec0",
+    "evals/harness/test_native_saved_stage_recovery.py": "b410ae20a2166829533552b11f6bfd423e2ca4c09d7a1b2b244dd352a7ee2c74"
+  },
+  "tests": {
+    "passed": 33,
+    "recovery_contracts": 15,
+    "metadata_reader": 9,
+    "saved_stage_audit": 9,
+    "scope": "Offline fixtures only; actual saved-state metadata, complete exposure and preserved partial prefixes also verified without Torch."
+  },
+  "existing_partial_fingerprints_verified": {
+    "native49": 49,
+    "control40": 31,
+    "reasoning32": 0
+  },
+  "implemented": [
+    "Pure SHA-pinned original construction prefix, cut before optimizer/reload branches; derived AST identity explicitly recorded.",
+    "Exact original-host terminal observation, all eight optimizer receipts, full retained exposure, closed inventory and all consumed packaged JSON hashes required.",
+    "Separate zero-update finalization library recomputes native520 initial metrics and saved-candidate final original28 metrics, full audio49/native49/control40/reasoning32 fingerprints.",
+    "Library compares every preserved partial fingerprint, all target counts, named state tensors, Adam528 clocks/moments and Python/NumPy/Torch/CUDA RNG; then independently repeats in a fresh process.",
+    "New finalization schema explicitly preserves original fit failure and all qualification/adoption false flags.",
+    "Isolated runtime bridge reuses an unchanged clean DA checkout and its complete immutable-input hash checks, with one fresh output per process.",
+    "Runtime requires a caller-supplied fresh explicit authorization, provider deadline, live external cost guard and verified single GPU across providers. No resource creation or CLI auto-launch."
+  ],
+  "pending": [
+    "GCP usage/transfer approval still pending; no VM, transfer or credentials/access grants performed.",
+    "No provider guard/controller currently supplies the runtime bridge; it cannot be treated as an active job.",
+    "GPU execution and independent full optimizer/RNG restore remain unverified.",
+    "Strict recovered-proof consumer and native paired20/speech20 evaluation routing remain to be integrated and tested without weakening existing gates.",
+    "Native behavioral evaluation and existing complete development/fresh gates remain mandatory; no performance or convergence claim."
+  ],
+  "rationale": "Original recipe approvals hash runtime source files. Reusing only the original construction prefix preserves those physical source identities while separately declaring the recovery instrumentation and producer. Original training/reload loops are excluded, and no original report is fabricated.",
+  "model_adopted": false,
+  "extension_approved": false
+}
