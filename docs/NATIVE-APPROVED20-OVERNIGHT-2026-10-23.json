@@ -12,13 +12,10 @@
   "maximum_project_compute_USD": 80.40071830424947,
   "human_compute_cap_USD": 100,
   "extension_requires_posted_wallet_and_exact_same_Pod_rate_mount_readback": true,
-  "unchanged_GPU_child": 41540,
-  "unchanged_birth": 22014818,
-  "current_waiter_to_retire_after_new_guard_and_exact_preflight_only": 69088,
   "paused_original_parent_must_never_resume": 21063,
   "optimizer_limit": 8,
   "execution_commit": "c9efaaac24d983342f7eded46617e6450bc102ce",
-  "orchestration_commit": "738bb25e56b79aed13acf4c5b3577f926391f81a",
+  "orchestration_commit": "fb3adfc29f63c7dace63c9ab6a109d828288897e",
   "model_commands_losses_data_gates_unchanged": true,
   "training_extension_requires_conclusive_restore_retention_behavior": true,
   "CPU_qualification": {
@@ -26,7 +23,8 @@
     "birth": 24011572,
     "source": "13a0e57bc39f791d4d0277feed146f528c1cfa06",
     "provider_requests": 0,
-    "training": false
+    "training": false,
+    "status": "complete_three_CPU_stages_exit0"
   },
   "posted_wallet_USD": 22.3439235455,
   "posted_wallet_UTC": "2026-10-23T23:35:47.362483+00:00",
@@ -65,16 +63,23 @@
   "recovery_live_child": {
     "pid": 71818,
     "state": "R",
-    "birth": 24130859
+    "birth": 24130859,
+    "last_verified_UTC": "2026-10-24T00:52:14.446385+00:00",
+    "native49_complete_logged_rows": 5,
+    "all_logged_exact": true,
+    "complete154_gradient_preflight_passed": true
   },
   "workset_all7797_rechecked": true,
   "recovery_tests_passed": 11,
-  "backup_PID": 37222,
+  "backup_PID": 67279,
   "backup_deadline_UTC": "2026-10-24T08:20:00Z",
   "backup_last_verified_snapshot": {
-    "path": "runs/local-migration-20261023/native-control40-continuous-copyback-v11/20261023T234232.270326Z",
-    "files": 58,
-    "inventory_sha256": "ba3e87d533a1da000119cb621f21978ca6b994ee2b541ebfb8214882173694d6"
+    "path": "runs/local-migration-20261023/native-control40-continuous-copyback-v13/20261024T005211.763005Z",
+    "files": 81,
+    "inventory_sha256": "8ce08f4a22c3aa44596e9f2090135a1c8f217a62654e70cae2e14ce7e4025953",
+    "reused_verified_files": 80,
+    "reused_verified_bytes": 1176781594,
+    "transferred_file_bytes": 263322
   },
   "proxy_PID": 37279,
   "proxy_mac_port": 50259,
@@ -89,5 +94,12 @@
   "complete_paired20_latest_launch_UTC": "2026-10-24T07:37:00+00:00",
   "reasoning32_semantic_requests": 0,
   "reasoning32_specific_payload_approval_pending": true,
-  "native_optimizer_updates": 0
+  "native_optimizer_updates": 0,
+  "retired_previous_GPU_child": 41540,
+  "retired_previous_GPU_birth": 22014818,
+  "retired_previous_waiter": 69088,
+  "new_backup_PID": 67279,
+  "new_backup_source": "730f19dd9459c0f82baf83406aefb8ed76f82fd0",
+  "new_backup_initial_snapshot_pending": false,
+  "old_backup37222_retired_after_replacement_verified": true
 }

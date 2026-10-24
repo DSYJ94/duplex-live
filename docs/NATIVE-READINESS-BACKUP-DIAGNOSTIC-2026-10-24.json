@@ -1,0 +1,150 @@
+{
+  "schema": "dl-native-readiness-backup-diagnostic-v1",
+  "execution_commit": "c9efaaac24d983342f7eded46617e6450bc102ce",
+  "diagnostic_source_unchanged": true,
+  "live_GPU_job_restarted": false,
+  "CPU_source_probe": {
+    "two_passes": [
+      {
+        "pass_index": 1,
+        "seconds": 9.665033952012891,
+        "return_sha256": "1d33a94df5f967f769b1ef944cd167bcf8d71c26629999a64625656cf8977e33",
+        "file_hash_cache_reuses": 731
+      },
+      {
+        "pass_index": 2,
+        "seconds": 2.462325172004057,
+        "return_sha256": "1d33a94df5f967f769b1ef944cd167bcf8d71c26629999a64625656cf8977e33",
+        "file_hash_cache_reuses": 1906
+      }
+    ],
+    "actual_full_hash_bytes": 774208667,
+    "instrumented_outside_eligible_roots_hash_bytes": 0,
+    "actual_source_cache_validation_completed": true,
+    "interpretation": "Repeated checks reproduced. A warm in-process hash cache reduced this isolated component. This does not explain total model startup or behavioral failures; full pipeline not profiled.",
+    "model_outputs_or_validation_verdicts_reused": false,
+    "GPU_or_provider_requests": false,
+    "artifacts": {
+      "files": 6,
+      "bytes": 11785,
+      "all_remote_and_Mac_SHA256_match": true,
+      "inventory": [
+        {
+          "path": "native-source-repetition-diagnostic-v1/diagnostic.json",
+          "bytes": 2660,
+          "sha256": "5d9c93c17e0fa7e0dff84732598809a117eed7a934ba2ab943c0a2500ab7855c"
+        },
+        {
+          "path": "native-source-repetition-diagnostic-v1/original-source-checks.log",
+          "bytes": 966,
+          "sha256": "36acf213b862e2f94f01c78feef4398861d85a49bc3c6d05cf06521c362f857c"
+        },
+        {
+          "path": "native-source-repetition-diagnostic-v1/progress.json",
+          "bytes": 1507,
+          "sha256": "fbce02c01be1d7a7d17c235313bc7db49e1f9439a6b8390b8ba5ba5eb9a48b45"
+        },
+        {
+          "path": "native-source-repetition-diagnostic-v2/diagnostic.json",
+          "bytes": 3211,
+          "sha256": "2dd624303652d711add4936fd9b9e368ec93fa1a066bf604ec20fac424a1d52c"
+        },
+        {
+          "path": "native-source-repetition-diagnostic-v2/original-source-checks.log",
+          "bytes": 1932,
+          "sha256": "b4df479edc62cd99d7533f19baab2d810741165f862d20620f715cdbd016dc8e"
+        },
+        {
+          "path": "native-source-repetition-diagnostic-v2/progress.json",
+          "bytes": 1509,
+          "sha256": "fce2fddd81b3c31716d623cac5c4a2ee7b2204de9591bdc1332051b6641458a7"
+        }
+      ]
+    }
+  },
+  "backup_fix": {
+    "source_commit": "64fd668bc1e849090724289fa2f4b56cd8aa067b",
+    "tests_passed": 15,
+    "retained154_receipts_now_trigger_snapshot": true,
+    "closed_snapshot_reuse_only": true,
+    "full_inventory_and_every_file_hash_still_verified": true,
+    "local_hardlink_capability_actual": true,
+    "live_model_source_changed": false,
+    "timeout_source_commit": "730f19dd9459c0f82baf83406aefb8ed76f82fd0",
+    "observed_remote_snapshot_seconds": 58,
+    "previous_local_wait_seconds": 45,
+    "new_local_wait_seconds": 120,
+    "remote_helper_deadline_seconds": 110,
+    "recovered_already_closed_snapshot": true,
+    "actual_receipt": {
+      "snapshot": "/workspace/migration/native-control40-backup-snapshots/20261024T004946.428239Z",
+      "inventory_sha256": "cb3ed37aec22f0115b03f81580beabdc3b136c7eaaa0f4d327058311774d0276",
+      "marker": "ad2eeaf4271c2ca212825439b5d0d31cde13b9f224f98170ec3269dd6ddaa1cf",
+      "files": 81,
+      "reused_remote_files": 80,
+      "reused_remote_bytes": 1176781594,
+      "reused_verified_files": 80,
+      "reused_verified_bytes": 1176781594,
+      "transferred_file_bytes": 261639,
+      "local_snapshot": "runs/local-migration-20261023/native-control40-v12-closed-copyback-v1/20261024T004946.428239Z",
+      "all_files_verified": 81,
+      "model_or_GPU_job_unchanged": true
+    },
+    "old_watcher_still_active_pending_new_verified_snapshot": false,
+    "retired_backup_PID": 37222,
+    "replacement_backup_PID": 67279,
+    "replacement_backup_tool_session": 27763,
+    "replacement_snapshot": {
+      "path": "runs/local-migration-20261023/native-control40-continuous-copyback-v13/20261024T005211.763005Z",
+      "files": 81,
+      "inventory_sha256": "8ce08f4a22c3aa44596e9f2090135a1c8f217a62654e70cae2e14ce7e4025953",
+      "reused_verified_files": 80,
+      "reused_verified_bytes": 1176781594,
+      "transferred_file_bytes": 263322
+    }
+  },
+  "new_optimizer_updates": 0,
+  "not_training_convergence_or_behavior_approval": true,
+  "native_readiness": {
+    "at_utc": "2026-10-24T00:52:14.446385+00:00",
+    "controller_pid": 71679,
+    "phase": "combined_readiness",
+    "child_pid": 71818,
+    "child_birth": 24130859,
+    "child_state": "R",
+    "child_CPU_seconds": 4220.4,
+    "complete_native49_rows": 5,
+    "all_logged_rows_exact": true,
+    "top_level_files": [
+      "additional-native-v2",
+      "approved-audio49-audit.json",
+      "approved-control40-cache.json",
+      "approved-control40-engine.json",
+      "approved-control40-gradient.json",
+      "approved-control40-numerical.json",
+      "approved-native-teacher-math.json",
+      "approved-temporal-audit.json",
+      "audio49-bf16-preflight.json",
+      "audio49-data.json",
+      "complete-balanced-preflight.json",
+      "control40-parent-selection.json",
+      "data.json",
+      "driver",
+      "parent-adam-import.json",
+      "prepared49-reconstruction.json",
+      "voice.pt",
+      "warm-ordinary-clock-reference-audit.json",
+      "warm-ordinary-clock-references.pt",
+      "warm-ordinary-reference-audit.json",
+      "warm-ordinary-references.pt"
+    ],
+    "GPU": "8 %, 24229 MiB",
+    "complete154_preflight_passed": true,
+    "combined_gradient_norm": 5.426088944310253,
+    "complete154_peak_allocated_bytes": 21952886272,
+    "all26_adapter_gradients_present_finite": true,
+    "frozen_parameter_gradients": 0,
+    "parameters_unchanged": true,
+    "native49_final_or_combined_approval": false
+  }
+}

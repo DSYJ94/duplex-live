@@ -1,3 +1,66 @@
+# LOCAL — retained154 gradient passed; incremental81-file backup verified (24 October00:54UTC)
+
+Goal turn PROGRESS. LOCAL sole executor; no cloud handoff or duplicate GPU job.
+Backup code source730f19dd9459c0f82baf83406aefb8ed76f82fd0 (initial64fd668bc1e849090724289fa2f4b56cd8aa067b)
+deployed through Git bundle into isolated /tmp/duplex-reasoning32-verification-730f19d.
+Live executionC9 c9efaaac24d983342f7eded46617e6450bc102ce and orchestration
+fb3adfc29f63c7dace63c9ab6a109d828288897e remain unchanged. Unrelated local
+pyc/capability probes/roadmap.html preserved. No new optimizer updates or adoption.
+
+ACTUAL retained complete154 gradient preflight passed: norm5.426088944310253,
+peak21,952,886,272B, all26 adapter gradients present/finite, frozen gradients0,
+parameters unchanged. Original28/old25/new24 and all loss/retention terms remain.
+Audio49 longest-kind four-case BF16 smoke also passed; this is NOT full49 approval.
+Recovery71679/birth24121629, child71818/birth24130859 still liveR. Latest actual
+00:52:14UTC:5/49 complete native rows, all exact forward hashes; CPU4220.4s,
+GPU8%,24229MiB. Full49/combined control40 readiness remains pending. Continue
+same process; do not restart due to a local observation timeout. Pipeline deadline
+07:00UTC. Watch remaining runtime against full readiness+eight-update+restore cost.
+
+Backup defect reproduced/fixed: retained154 receipts now trigger a snapshot even
+when controller phase is unchanged. Reuse only closed verified snapshot files,
+never hardlink mutable live outputs. Full inventory and every file hash still
+verified, privacy exclusions unchanged.15offline tests PASS; actual Mac hardlinks
+supported. Initial helper completed in58s, beyond old45s SSH wait: recovered its
+ALREADY CLOSED snapshot rather than launch another GPU job. New helper bounded
+110s/local wait120s. Original timeout evidence and all snapshots preserved.
+Replacement backup67279/session27763 to08:20, fully verified BEFORE retiring only
+oldbackup37222. Temporary retrying backup66149 retired; helper actually terminal.
+Latest81-file snapshot inventory8ce08f4a22c3aa44596e9f2090135a1c8f217a62654e70cae2e14ce7e4025953:
+80files/1,176,781,594B reused by fullhash;263,322B logical file payload transferred.
+All81 local hashes match remote inventory. Prior milestone81files1,177,039,880B
+also fully verified (inventory7313ddf386a95f37cea4746f147ddb666ab47b39eedb8572b011c3942917ff71).
+These are readiness/progress archives, not new trained checkpoints.
+
+Isolated CPU source-validation probe confirms repeated checks: two actual original
+cache passes9.6650s/2.4623s, same canonical return SHA1d33a94df5f967f769b1ef944cd167bcf8d71c26629999a64625656cf8977e33.
+774,208,667B fully hashed,731->1906 hash reuses. No validation verdict/model output
+reuse; no live source change/GPU/API calls. Instrumented eligible-cache functions
+show0 bytes outside roots; full pipeline remains unprofiled. This does NOT prove
+startup bottleneck, model failure cause, batch-size cause or training convergence.
+Six diagnostic files11,785B remote+Mac SHA verified. No local neuralASR/model load
+or OS CPU/power/priority settings changed. Details in
+ docs/NATIVE-READINESS-BACKUP-DIAGNOSTIC-2026-10-24.json.
+
+ONE20USD top-up already POSTED; no duplicate purchase. Guard35030/session32522
+still solePod4yx8vahdmjsylx/volume49yytzyoge,08:22:37.9UTC teardown retaining volume,
+project maximum80.4007183<100. Auto-pay off. Evaluator37551/session34942 still waits
+exact recovery+all7actual passed stages before complete paired20/speech20. Latest
+launch07:37/end08:17. Proxy37279/session38732, Mac50259/remote18792, tunnel61404,
+112remaining calls/actualrequests0; backend health reverified. No public port/key
+transfer. Budget authorization file unchanged.
+
+Next: full49+combined154/control40 ->ONE8 from520 ->independent Adam/RNG/native
+restore and strict proof ->complete paired20/speech20/all4 ordinary, then eligible
+sealedfresh40 and evidence-led longer training. No automatic adoption or larger
+training from readiness alone. Full32 source/speech PASS and converter preparation
+remain separate;0semantic requests/0conversion/0reasoning32training. Distinct
+semantic payload approval still pending after automaticreview rejection; never
+infer approval from this20USD purchase or retry indirectly. Full native original
+archive preserved; broader stopped Mac source backup remains PARTIAL.
+
+---
+
 # LOCAL — gated reasoning32 converter prepared; same funded readiness live (24 October00:04UTC)
 
 Goal turn PROGRESS. LOCAL sole executor. Main converter code now
