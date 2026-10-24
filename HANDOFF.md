@@ -1,3 +1,34 @@
+# LOCAL — Inputs VERIFIED0; CPU stopped/same disk detached; A100 on-demand STOCKOUT
+
+CPUcontainerunitv4 ACTUAL terminal success/ExecMainStatus0/active-exited at23:29UTC.
+Receipt gcp-exact-inputs-v4.json SHA7dd226f8610fede508ac59305582570e05eb012508a9c74fd29315c2171a816e:
+11655regular mirroredlinks, complete5durabletmpgroups,82snapshotfiles, original
+saved8metadata AND allCLIinputspresent. No model/GPU/newupdates.33semanticreceipts
+verified incl30reusedhardlinks/53210B original missingreceipts, newclosure SHA
+ e7581becb3e7f32a20d1343c712966b043752f1e5af1b38a7afbdd00c2aff3d9.
+All receipts/logs/actualterminal copiedMac cpu-final-receipts-v1; prior failures kept.
+
+CPU1784642133801608667 ACTUALLY stopped0/TERMINATED, no containers left. SAME250GB
+pd-balanced disk id1828090267781080539 detached0, READY/no users, nondeleted.
+One A10080 request actualCLI1: ZONE_RESOURCE_POOL_EXHAUSTED_WITH_DETAILS/STOCKOUT
+in europe-west4-a, no alternatezone suggested. Freshliveinventory has ONLY old
+TERMINATED E2, no GPU created. RunpodallpodsEXITED beforeattempt. Original request/
+terminal v1 preserved; never restart a request merely on observation timeout.
+
+Within SAMEoneA100/same250GB/100USD grant, prepare queued Flex-start option:
+requestvalid30min, nativeSTOP afterTENhours, no reservation/Spot/purchase/newdisk.
+Macguard now pins exact FLEX_START + maxRunDuration36000s + actual provider
+lastStartTimestamp-derived deadline; complete created/queued/run lease remains
+<=12h and original100USD cap. Standard terminationTime checks unchanged.
+20 combined guard/controller fixtures PASS, incl wrong duration/start/mode and
+queue+run over12h rejection. Existing GPUproducer/guest source75b3bfd remains
+correct; MACguard must use this new committed source. No job/model before both
+actualguards. Official sources in updatedbudgetdoc; no queue actually submitted
+until next command. If actualrequest accepted, poll SAMEhandle/id; don't submit
+another GPU. No userinput blocker yet; current issue is external capacity.
+
+---
+
 # LOCAL — CPU audit now passes reconstruction/metadata; missing pinned semantic receipt diagnosed
 
 Actual CPUcontainerunitv3 exited1 on one absent original CLI file:

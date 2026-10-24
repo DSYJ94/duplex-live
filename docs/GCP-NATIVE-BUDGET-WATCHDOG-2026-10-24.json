@@ -1,13 +1,13 @@
 {
   "schema": "dl-gcp-native-budget-watchdog-preparation-v1",
-  "at_utc": "2026-10-24T23:19:57.621329+00:00",
-  "source_parent": "fb7178a",
+  "at_utc": "2026-10-24T23:35:53.439143+00:00",
+  "source_parent": "fd025f1",
   "implementation_sha256": {
-    "portable/context/gcp_budget_watchdog.py": "655556d5e43bb2983f7f794e3f8ad7cd99e2bbec5bc4a3364bcf97e574a3326f",
-    "evals/harness/test_gcp_budget_watchdog.py": "857dd42c95c425bdf5592585a9e6e08988c87759cd7540c263a2aefec7cc6c1b"
+    "portable/context/gcp_budget_watchdog.py": "e708d7b243b6944651e09c041e9988beced5ca6f207c90c5f2546636850d92ea",
+    "evals/harness/test_gcp_budget_watchdog.py": "2a174d26cfab75b7cb4a3f2b3ec12599ad7976386df8f07b0bd761af334dc6d2"
   },
   "status": "PREPARED_NOT_ARMED_NO_GPU_EXISTS",
-  "tests_passed": 7,
+  "tests_passed": 9,
   "lease_schema": "dl-native-gcp-bounded-gpu-lease-v1",
   "required_lease_fields": [
     "schema",
@@ -40,7 +40,8 @@
     "Live GCP/Runpod checks before publishing each fresh execution guard by approved rsync",
     "Credentials and gcloud auth remainMac; no creation/restart/deletion",
     "On guard failure, stop only current instance with exact recordedid/name/creation",
-    "Actual manual early-stop call explicitly discards only mandatory disposable A2 Local SSD; original persistent boot disk is retained. Identity is freshly rechecked before issuing any stop."
+    "Actual manual early-stop call explicitly discards only mandatory disposable A2 Local SSD; original persistent boot disk is retained. Identity is freshly rechecked before issuing any stop.",
+    "Same approved GPU/disk may use Flex-start with native STOP after exactly36000s, deadline computed from actual provider lastStartTimestamp, exact mode required; full creation/queue/run lease still <=43200s and100USD. No Spot/reservation or larger machine."
   ],
   "fresh_guard_remote_path": "/workspace/migration/gcp-budget-live-v1.json",
   "full_budget_at_example5p63_per_hour_12h_usd": 84.44,
@@ -55,5 +56,9 @@
     "Start/readback this guard with actual lease and verified strict GPU SSH",
     "Authorized model controller must continuously monitor guard freshness and own actual child timeouts/terminal records",
     "Run existing zero-update recovery and separate independentrestore before strict native evaluation"
+  ],
+  "source_references": [
+    "https://docs.cloud.google.com/compute/docs/instances/create-flex-start-vm",
+    "https://docs.cloud.google.com/compute/docs/instances/provisioning-models"
   ]
 }

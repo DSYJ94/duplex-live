@@ -97,6 +97,28 @@ class BudgetTests(unittest.TestCase):
             self.check(pods=[dict(name='duplex-native-other',status='RUNNING',computeType='GPU')])
         self.check(pods=[dict(name='duplex-native-old',status='EXITED')])
 
+    def test_flex_start_uses_actual_provider_start_and_exact_bounded_runtime(self):
+        self.lease.update(provisioning_model='FLEX_START',max_run_seconds=36000,
+                          stop_utc='2026-10-25T10:05:00Z')
+        self.vm['lastStartTimestamp']='2026-10-25T00:05:00Z'
+        self.vm['scheduling'].pop('terminationTime')
+        self.vm['scheduling'].update(provisioningModel='FLEX_START',maxRunDuration={'seconds':'36000'})
+        validate_lease(self.lease,self.authority,self.destination)
+        self.check()
+        for change in ('duration','start','mode'):
+            vm=copy.deepcopy(self.vm)
+            if change=='duration':vm['scheduling']['maxRunDuration']['seconds']='43200'
+            if change=='start':vm['lastStartTimestamp']='2026-10-25T00:06:00Z'
+            if change=='mode':vm['scheduling']['provisioningModel']='SPOT'
+            with self.subTest(change=change),self.assertRaises(ValueError):self.check(vm)
+
+    def test_flex_start_rejects_total_queue_and_run_over_twelve_hours(self):
+        self.lease.update(provisioning_model='FLEX_START',max_run_seconds=36000,
+                          stop_utc='2026-10-25T12:00:00Z')
+        self.vm['lastStartTimestamp']='2026-10-25T02:00:01Z'
+        self.vm['scheduling'].update(provisioningModel='FLEX_START',maxRunDuration={'seconds':'36000'})
+        with self.assertRaisesRegex(ValueError,'twelve-hour'):self.check()
+
 
 if __name__ == '__main__':
     unittest.main()

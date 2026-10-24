@@ -50,6 +50,10 @@ def validate_lease(lease, authority, destination):
             or type(lease['optimizer_updates']) is not int or lease['optimizer_updates'] != 0):
         raise ValueError('One exact recorded project/GPU/disk lease required')
     start, deadline = stamp(lease['created_utc']), stamp(lease['stop_utc'])
+    model = lease.get('provisioning_model', 'STANDARD')
+    if model not in ('STANDARD', 'FLEX_START') or (model == 'FLEX_START'
+            and lease.get('max_run_seconds') != 36000):
+        raise ValueError('Only standard or explicitly bounded ten-hour Flex-start lease allowed')
     rate = lease['hourly_upper_usd']
     if (type(rate) not in (int, float) or not math.isfinite(rate) or rate <= 0
             or not 0 < deadline-start <= 43200
@@ -74,6 +78,24 @@ def owned(vm, lease):
             and vm['zone'].endswith('/zones/'+ZONE))
 
 
+def native_deadline(vm, lease):
+    scheduling = vm['scheduling']
+    model = lease.get('provisioning_model', 'STANDARD')
+    if scheduling.get('provisioningModel', 'STANDARD') != model:
+        raise ValueError('Provider provisioning model changed')
+    if model == 'STANDARD':
+        return stamp(scheduling['terminationTime'])
+    duration = scheduling.get('maxRunDuration', {}).get('seconds')
+    if (model != 'FLEX_START' or str(duration) != '36000'
+            or lease.get('max_run_seconds') != 36000):
+        raise ValueError('Exact native ten-hour Flex-start STOP required')
+    # Actual provider start time, never a guessed allocation/queued timestamp.
+    end = stamp(vm['lastStartTimestamp']) + 36000
+    if not stamp(vm['creationTimestamp']) < end <= stamp(vm['creationTimestamp']) + 43200:
+        raise ValueError('Queue plus complete native run exceeds twelve-hour lease')
+    return end
+
+
 def check_live(lease, vm, disk, instances, runpod_pods, now):
     if not owned(vm, lease):
         raise ValueError('Resource identity changed; never stop a replacement')
@@ -81,7 +103,7 @@ def check_live(lease, vm, disk, instances, runpod_pods, now):
     if (vm['status'] != 'RUNNING' or not stamp(lease['created_utc']) <= now < deadline
             or not vm['machineType'].endswith('/machineTypes/a2-ultragpu-1g')
             or vm['scheduling'].get('instanceTerminationAction') != 'STOP'
-            or stamp(vm['scheduling']['terminationTime']) != deadline
+            or native_deadline(vm, lease) != deadline
             or vm['scheduling'].get('automaticRestart') is not False):
         raise ValueError('Exact live singleA100 and native STOP deadline required')
     expected = '/projects/'+PROJECT+'/zones/'+ZONE+'/disks/'+DISK
