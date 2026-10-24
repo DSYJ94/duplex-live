@@ -1,0 +1,91 @@
+{
+  "schema": "dl-native-control40-completed-fit-review-v1",
+  "at_utc": "2026-10-24T07:06:20.846907+00:00",
+  "source_commit": "c9efaaac24d983342f7eded46617e6450bc102ce",
+  "report_passed": true,
+  "fit_actual_exit_code": 0,
+  "training_pid": 101677,
+  "training_birth": 25975025,
+  "reference_fingerprints": {
+    "actual28": 28,
+    "assistant_audio49": 49,
+    "native_stream49": 49,
+    "control40": 40
+  },
+  "unchanged_C9_exposure_and_immutable_receipt_validators_passed": true,
+  "verified_local_backup": "runs/local-migration-20261023/native-control40-continuous-copyback-v17/20261024T065903.224466Z",
+  "backup_inventory_sha256": "3eb0fcea82c9d82bf42646642ab37be48e5c46b7d4a268e45134e56b252eb3df",
+  "backup_files": 157,
+  "verified_final_files": {
+    "report.json": {
+      "bytes": 6345518,
+      "sha256": "500781444712ebb6368d534406ee25f663df4b511c6f920fae9e985db9aa5a18"
+    },
+    "immutable-input-training.json": {
+      "bytes": 1031,
+      "sha256": "07182ddd1afd587540e55191c31ec8eeb7f5e7c320f1bb58ad30c0dbbce4989d"
+    },
+    "approved-immutable-input-readiness.json": {
+      "bytes": 1032,
+      "sha256": "75f16c405274618dd3aa9318c526007fb81ae1bfce8ca850071fc3379983c772"
+    },
+    "adapters.safetensors": {
+      "bytes": 7580728,
+      "sha256": "0cb85b4a3b712ba5687e3e23dba6541891cbad954bde4a155ae9cb913517bcff"
+    },
+    "training-state.pt": {
+      "bytes": 22959307,
+      "sha256": "86dde08eb1591d0bc04a36c47be0dc7ee1b90019d7ae520f1d049cc37d8dc278"
+    },
+    "audio49-data.json": {
+      "bytes": 324617,
+      "sha256": "180ffb2c749c3917de0a02f8218d0f8e27bb0067c3b014fd1ef83ae0c583469f"
+    },
+    "data.json": {
+      "bytes": 128708,
+      "sha256": "de92099057ded15a1af0e387c96b457cdf4c1731c26594dcdca211d4c442fc1e"
+    }
+  },
+  "optimizer_updates": 8,
+  "final_Adam_clock": 528,
+  "trainable_parameters": 1894400,
+  "all_original_objective_weights_and_exposures_preserved": true,
+  "actual28_teacher_forced_metrics": {
+    "nll": {
+      "parent520_unweighted_component_mean": 0.6350999576409647,
+      "after8_unweighted_component_mean": 0.6367036076813487,
+      "delta": 0.001603650040383986
+    },
+    "top1": {
+      "parent520_unweighted_component_mean": 0.7912144118121692,
+      "after8_unweighted_component_mean": 0.7789758720568248,
+      "delta": -0.012238539755344391
+    }
+  },
+  "metrics_scope": "All28 original components, unweighted component means on fixed teacher-forced inputs before and after all8 updates. Not the complete weighted154 objective, free-running behavior, or convergence.",
+  "Torch_imported": false,
+  "model_loaded": false,
+  "GPU_work_executed": false,
+  "independent_native_restore_passed": false,
+  "behavior_qualified": false,
+  "model_adopted": false,
+  "live_restore_at_review": {
+    "at_utc": "2026-10-24T07:04:56.848608+00:00",
+    "phase": "independent_restore",
+    "child": {
+      "pid": 115807,
+      "state": "R",
+      "birth": 26750060
+    },
+    "fingerprint_progress": {
+      "training": {
+        "native49": 49,
+        "control40": 40
+      },
+      "restore": {
+        "native49": 2,
+        "control40": 0
+      }
+    }
+  }
+}

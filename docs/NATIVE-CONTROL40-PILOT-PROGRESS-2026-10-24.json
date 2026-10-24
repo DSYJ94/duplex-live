@@ -1,10 +1,10 @@
 {
   "schema": "dl-native-control40-pilot-progress-v1",
-  "at_utc": "2026-10-24T06:45:25.893949+00:00",
+  "at_utc": "2026-10-24T07:07:01.801226+00:00",
   "executor": "LOCAL",
   "classification": "progress",
   "previous_goal_turn": "progress",
-  "source_main_before_receipt": "5bc2b388aafa251595583177c71d08195aa1770f",
+  "source_main_before_receipt": "2cbfd8a6cf76d9701b4cd10033b8feef4903bcf3",
   "execution_source": "c9efaaac24d983342f7eded46617e6450bc102ce",
   "orchestration_source": "a5958a0343383728639940c4eb82e31ca3aa96f2",
   "supervisor": {
@@ -512,7 +512,7 @@
   "convergence_established": false,
   "behavior_qualified": false,
   "model_adopted": false,
-  "next_action": "Continue SAME101677 through all8, final fingerprints, fresh independent native/Adam528/RNG restore and strict proof, then full paired20/speech20. No duplicate submissions or premature extension.",
+  "next_action": "Same115807 independent complete native restore, strict proof, then existing63289 complete paired20/speech20 dispatcher. No duplicate stages or extension/adoption.",
   "reasoning32_semantic_provider_requests": 0,
   "reasoning32_semantic_human_payload_approval_still_pending": true,
   "first_checkpoint_review": {
@@ -550,13 +550,8 @@
     "Mac_checkpoint": "/Users/daryl/Library/CloudStorage/OneDrive-Personal/Shared GitHub Repos/duplex-live/runs/local-migration-20261023/native-control40-continuous-copyback-v16/20261024T050444.013404Z/native-control40-precise-pilot-v11-environment-retry/training/training-state.pt",
     "scope": "CPU dictionary comparison and recorded first-step replay evidence only; no model loading, optimizer execution or native restore."
   },
-  "latest_checkpoint_backup": {
-    "path": "native-control40-precise-pilot-v11-environment-retry/training/training-state.pt",
-    "bytes": 22959307,
-    "sha256": "86dde08eb1591d0bc04a36c47be0dc7ee1b90019d7ae520f1d049cc37d8dc278",
-    "Mac_hash_verified": true
-  },
-  "latest_backup_inventory_sha256": "2662276f689a7404d3aa6def2047ab671ed5ea56a2d1010b11b7c57e47d2a282",
+  "latest_checkpoint_backup": "runs/local-migration-20261023/native-control40-continuous-copyback-v17/20261024T065903.224466Z",
+  "latest_backup_inventory_sha256": "3eb0fcea82c9d82bf42646642ab37be48e5c46b7d4a268e45134e56b252eb3df",
   "logged_completed_updates": 8,
   "second_measurement_interpretation": {
     "measured_after_completed_updates": 1,
@@ -891,19 +886,19 @@
   },
   "latest_live_observation": {
     "schema": "dl-native-control40-quota-retry-observation-v1",
-    "at_utc": "2026-10-24T06:43:04.122711+00:00",
+    "at_utc": "2026-10-24T07:04:56.848608+00:00",
     "controller": {
       "pid": 101648,
       "state": "S",
       "birth": 25974639
     },
-    "phase": "bounded8_training",
+    "phase": "independent_restore",
     "passed": false,
     "error": null,
     "child": {
-      "pid": 101677,
+      "pid": 115807,
       "state": "R",
-      "birth": 25975025
+      "birth": 26750060
     },
     "stages": [
       {
@@ -934,6 +929,12 @@
         "name": "bounded8_training",
         "pid": 101677,
         "birth": 25975025,
+        "exit_code": 0
+      },
+      {
+        "name": "independent_restore",
+        "pid": 115807,
+        "birth": 26750060,
         "exit_code": null
       }
     ],
@@ -1014,10 +1015,10 @@
     "fingerprint_progress": {
       "training": {
         "native49": 49,
-        "control40": 19
+        "control40": 40
       },
       "restore": {
-        "native49": 0,
+        "native49": 2,
         "control40": 0
       }
     },
@@ -1025,13 +1026,21 @@
       "bytes": 22959307,
       "mtime_utc": "2026-10-24T06:06:56+00:00"
     },
-    "training_report": null,
+    "training_report": {
+      "schema": "dl-native-control40-retained154-stream49-proof-v1",
+      "passed": true,
+      "optimizer_steps": 8,
+      "updates_this_run": 8,
+      "training_pid": 101677,
+      "checkpoint_sha256": "0cb85b4a3b712ba5687e3e23dba6541891cbad954bde4a155ae9cb913517bcff",
+      "training_state_sha256": "86dde08eb1591d0bc04a36c47be0dc7ee1b90019d7ae520f1d049cc37d8dc278"
+    },
     "restore_report": null,
-    "log_bytes": 4328982,
+    "log_bytes": 4348030,
     "log_tail": null,
-    "GPU": "52 %, 30015 MiB",
+    "GPU": "51 %, 22409 MiB",
     "GPU_compute_PIDs": [
-      "101677"
+      "115807"
     ],
     "old_processes": {
       "79780": null,
@@ -1046,7 +1055,7 @@
     }
   },
   "optimizer_updates_completed": true,
-  "postfit_training_process_passed": false,
+  "postfit_training_process_passed": true,
   "full_native_restore_passed": false,
   "standalone_adapter_export_review": {
     "schema": "dl-native-control40-standalone-adapter-export-review-v1",
@@ -1090,14 +1099,54 @@
         "reused_verified_files": 151,
         "reused_verified_bytes": 2432864642,
         "transferred_file_bytes": 4321027
+      },
+      {
+        "path": "runs/local-migration-20261023/native-control40-continuous-copyback-v17/20261024T063019.577500Z",
+        "files": 152,
+        "inventory_sha256": "377bd7e446304d94f4cdee3a8048a25239a59ba0681619f9737d909197705daf",
+        "reused_verified_files": 151,
+        "reused_verified_bytes": 2432864642,
+        "transferred_file_bytes": 4322682
+      },
+      {
+        "path": "runs/local-migration-20261023/native-control40-continuous-copyback-v17/20261024T063739.011905Z",
+        "files": 152,
+        "inventory_sha256": "a8461e8be6ff1e85f3dd17413046cffdf2083c3b6a7100bc5f04eeb4635302be",
+        "reused_verified_files": 151,
+        "reused_verified_bytes": 2432864642,
+        "transferred_file_bytes": 4326182
+      },
+      {
+        "path": "runs/local-migration-20261023/native-control40-continuous-copyback-v17/20261024T064359.779722Z",
+        "files": 152,
+        "inventory_sha256": "e17aef8ed34719abac6717f719cf4d3cc599e48d2be647aa5b2a2ef8c08b9253",
+        "reused_verified_files": 151,
+        "reused_verified_bytes": 2432864642,
+        "transferred_file_bytes": 4329682
+      },
+      {
+        "path": "runs/local-migration-20261023/native-control40-continuous-copyback-v17/20261024T065034.448861Z",
+        "files": 152,
+        "inventory_sha256": "a58dfe3a21b9dd176c41b6c19b138a30a50828a505c83969944bb1c103a50dee",
+        "reused_verified_files": 151,
+        "reused_verified_bytes": 2432864642,
+        "transferred_file_bytes": 4333182
+      },
+      {
+        "path": "runs/local-migration-20261023/native-control40-continuous-copyback-v17/20261024T065903.224466Z",
+        "files": 157,
+        "inventory_sha256": "3eb0fcea82c9d82bf42646642ab37be48e5c46b7d4a268e45134e56b252eb3df",
+        "reused_verified_files": 152,
+        "reused_verified_bytes": 2432822657,
+        "transferred_file_bytes": 10756986
       }
     ],
     "changes_to_remote_jobs": false,
     "pod_id": "4yx8vahdmjsylx",
     "ssh_host": "root@157.157.221.29",
     "ssh_port": 16701,
-    "at_utc": "2026-10-24T06:29:18.785873+00:00",
-    "last_marker": "62299b2241e38d91a4f5a16c1810fbfad2c01af9ebabc7708213d6e98e809fa1",
+    "at_utc": "2026-10-24T07:06:21.283104+00:00",
+    "last_marker": "e06ea6415442178b07695d561aa492e91b842b9de9a7c09b1f92798680e730fb",
     "last_check_succeeded": true
   },
   "prior_backup_retirement": {
@@ -1202,5 +1251,96 @@
     "credentials_or_response_body_logged": false,
     "inference_success_or_capacity_proven": false,
     "scope": "Authentication/model visibility read only. Real asynchronous requests remain part of complete native evaluation."
+  },
+  "completed_fit_review": {
+    "schema": "dl-native-control40-completed-fit-review-v1",
+    "at_utc": "2026-10-24T07:06:20.846907+00:00",
+    "source_commit": "c9efaaac24d983342f7eded46617e6450bc102ce",
+    "report_passed": true,
+    "fit_actual_exit_code": 0,
+    "training_pid": 101677,
+    "training_birth": 25975025,
+    "reference_fingerprints": {
+      "actual28": 28,
+      "assistant_audio49": 49,
+      "native_stream49": 49,
+      "control40": 40
+    },
+    "unchanged_C9_exposure_and_immutable_receipt_validators_passed": true,
+    "verified_local_backup": "runs/local-migration-20261023/native-control40-continuous-copyback-v17/20261024T065903.224466Z",
+    "backup_inventory_sha256": "3eb0fcea82c9d82bf42646642ab37be48e5c46b7d4a268e45134e56b252eb3df",
+    "backup_files": 157,
+    "verified_final_files": {
+      "report.json": {
+        "bytes": 6345518,
+        "sha256": "500781444712ebb6368d534406ee25f663df4b511c6f920fae9e985db9aa5a18"
+      },
+      "immutable-input-training.json": {
+        "bytes": 1031,
+        "sha256": "07182ddd1afd587540e55191c31ec8eeb7f5e7c320f1bb58ad30c0dbbce4989d"
+      },
+      "approved-immutable-input-readiness.json": {
+        "bytes": 1032,
+        "sha256": "75f16c405274618dd3aa9318c526007fb81ae1bfce8ca850071fc3379983c772"
+      },
+      "adapters.safetensors": {
+        "bytes": 7580728,
+        "sha256": "0cb85b4a3b712ba5687e3e23dba6541891cbad954bde4a155ae9cb913517bcff"
+      },
+      "training-state.pt": {
+        "bytes": 22959307,
+        "sha256": "86dde08eb1591d0bc04a36c47be0dc7ee1b90019d7ae520f1d049cc37d8dc278"
+      },
+      "audio49-data.json": {
+        "bytes": 324617,
+        "sha256": "180ffb2c749c3917de0a02f8218d0f8e27bb0067c3b014fd1ef83ae0c583469f"
+      },
+      "data.json": {
+        "bytes": 128708,
+        "sha256": "de92099057ded15a1af0e387c96b457cdf4c1731c26594dcdca211d4c442fc1e"
+      }
+    },
+    "optimizer_updates": 8,
+    "final_Adam_clock": 528,
+    "trainable_parameters": 1894400,
+    "all_original_objective_weights_and_exposures_preserved": true,
+    "actual28_teacher_forced_metrics": {
+      "nll": {
+        "parent520_unweighted_component_mean": 0.6350999576409647,
+        "after8_unweighted_component_mean": 0.6367036076813487,
+        "delta": 0.001603650040383986
+      },
+      "top1": {
+        "parent520_unweighted_component_mean": 0.7912144118121692,
+        "after8_unweighted_component_mean": 0.7789758720568248,
+        "delta": -0.012238539755344391
+      }
+    },
+    "metrics_scope": "All28 original components, unweighted component means on fixed teacher-forced inputs before and after all8 updates. Not the complete weighted154 objective, free-running behavior, or convergence.",
+    "Torch_imported": false,
+    "model_loaded": false,
+    "GPU_work_executed": false,
+    "independent_native_restore_passed": false,
+    "behavior_qualified": false,
+    "model_adopted": false,
+    "live_restore_at_review": {
+      "at_utc": "2026-10-24T07:04:56.848608+00:00",
+      "phase": "independent_restore",
+      "child": {
+        "pid": 115807,
+        "state": "R",
+        "birth": 26750060
+      },
+      "fingerprint_progress": {
+        "training": {
+          "native49": 49,
+          "control40": 40
+        },
+        "restore": {
+          "native49": 2,
+          "control40": 0
+        }
+      }
+    }
   }
 }

@@ -1,3 +1,49 @@
+# LOCAL — fit exited0; fresh independent restore live (24 October 07:07 UTC)
+
+Goal turn PROGRESS; LOCAL sole executor. Main before receipt
+2cbfd8a. Execution C9 c9efaaac24d983342f7eded46617e6450bc102ce;
+supervisor a5958a0343383728639940c4eb82e31ca3aa96f2 unchanged.
+Same supervisor101648/birth25974639. Fit101677/birth25975025 ACTUALLY EXITED0:
+all8 optimizer updates, all49 acoustic/native +all40 control references generated.
+Fresh independent restore115807/birth26750060 automatically started; live07:04:56,
+GPU51%/22409MiB, native-stream2/49, control0/40. No reload report/strict proof yet.
+Never duplicate stages or manually dispatch evaluation.
+
+Final training report6,345,518B SHA
+500781444712ebb6368d534406ee25f663df4b511c6f920fae9e985db9aa5a18.
+Report, immutable training/readiness receipts, final adapter/state/data independently
+rehashed on Mac against closed V17 snapshot20261024T065903.224466Z,157files,
+inventorySHA3eb0fcea82c9d82bf42646642ab37be48e5c46b7d4a268e45134e56b252eb3df.
+Unchanged C9 validators PASS all154 exposure/every update, native49/control40
+complete exposure/target counts, input receipt/code bindings. All28/49/49/40 final
+reference inventories complete. Adapter SHA0cb85b4a3b712ba5687e3e23dba6541891cbad954bde4a155ae9cb913517bcff;
+PT SHA86dde08eb1591d0bc04a36c47be0dc7ee1b90019d7ae520f1d049cc37d8dc278.
+Adam528 and RNG saved; full native independent restoration still pending.
+
+Fixed teacher-forced original28 component means before/after ALL8: NLL
+0.6350999576 ->0.6367036077; token top1 0.7912144118 ->0.7789758721.
+Unweighted component means, NOT complete weighted154 objective or free-running
+behavior/convergence. No improvement/adoption claim. Full fit review and exact
+reproduction program in docs/NATIVE-CONTROL40-COMPLETED-FIT-2026-10-24.json
+and docs/diagnostics/native-control40-completed-fit-review-20261024.py.
+No model/Torch/GPU load on Mac; original losses/data/sampler/CPU settings unchanged.
+
+Backup1184 sourcebb3f885 watching/healthy07:04:19; final weights/optimizer/RNG/
+receipts safe on Mac and volume. Broader stopped Mac source backup PARTIAL.
+Guard70540 armed07:06:26, shutdown10:22:37.9UTC, volume49yytzyoge retained.
+Pipeline deadline09:00; evaluator63289 waiting same supervisor all7 exit0,
+latestlaunch09:37/end10:17; backup/backend71254 to10:20. Backend actualrequests0.
+Already-posted approved20USD top-up is NOT repeated;26h funded, maxproject
+83.9807183<100, auto-payFalse. No purchase/deadline/newjob/CPU changes.
+
+Next same115807 full28/49/49/40 exact logits +Adam528/allRNG fresh-process restore
+-> strict proof actualexit0 -> full paired20/speech20 -> ordinary4/complete10 review
+-> eligible sealedfresh -> larger-run decision. Reasoning32 semantic payload
+approval remains separately pending;0provider requests/conversion/training.
+Unrelated pyc/probes/roadmap preserved. See progress JSON for complete stage PIDs.
+
+---
+
 # LOCAL — all49 reference fingerprints preserved; control pass live (24 October 06:45 UTC)
 
 Goal turn PROGRESS: all49 reference IDs/hashes checked against approved inventory
