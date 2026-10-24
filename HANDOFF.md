@@ -1,3 +1,27 @@
+# LOCAL — sequential reasoning32 launch controller prepared (24 October)
+
+Goal turn PROGRESS. Prior integrationc7a7bc5 remains; new controller
+portable/context/native_reasoning_pilot.py sequences whole-workset verification,
+complete numerical32, gradient32, combined retained readiness, eight updates,
+fresh-process restore and strict proof verification. Stops on first nonzero exit
+or deadline; no retries, subset acceptance, extension or adoption. Uses the saved
+control40 approvals through their existing validators, without rerunning their
+unchanged expensive audits. GPU owner lock is inherited by children.
+
+Three lightweight controller tests pass: full command sequence/all32 options,
+original approvals, fresh same-Pod guard, numerical deadline, fit headroom and
+one-hour restore reserve. No model imported on Mac. No GPU Pod provisioned or
+job dispatched. docs/NATIVE-REASONING32-NEXT-LAUNCH-2026-10-24.json captures exact
+historical input paths and outstanding replacement-runtime requirements.
+
+Next: resolve the saved workset inventory and runtime preparation receipt, finish
+fresh launch arguments, then provision a budget-guarded replacement on49yytzyoge
+using current capacity/rate within remaining100USD project cap. Reconstruct lost
+ephemeral aliases/compiler paths before execution; preserve all old results.
+User-funded wallet verified17.7461412984USD earlier; no assistant purchase.
+
+---
+
 # LOCAL — user credit posted; no GPU rental during launch preparation (24 October)
 
 User reports the top-up is complete and asks for intentional credit use. Read-only

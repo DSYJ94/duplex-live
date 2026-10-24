@@ -1,0 +1,44 @@
+{
+  "schema": "dl-native-reasoning32-next-launch-v1",
+  "status": "PREPARED_NOT_DISPATCHED",
+  "prior_turn": "progress: committed trainer integration and verified posted user credit",
+  "controller": "portable.context.native_reasoning_pilot",
+  "verified_historical_input_paths": {
+    "inputs": "/workspace/migration/native-reasoning32-timing-v11-inputs-v1.json",
+    "version": "/workspace/migration/native-reasoning32-timing-v11-reapproval-v1",
+    "semantic": "/workspace/migration/native-reasoning32-timing-v11-semantic-v1/semantic.json",
+    "data": "/workspace/migration/native-reasoning32-converted-v11",
+    "model": "/projects/u6si/duplex-live/models/hf-cache/hub/models--nvidia--personaplex-7b-v1/snapshots/fdaf4090a61cb315c138a1faee287ffd6c716309",
+    "codec-source": "/workspace/control40-vendor-moshi-rag",
+    "interleaver-source": "/workspace/control40-vendor-moshi-finetune",
+    "cache": "/workspace/migration/native-reasoning32-codes-v11",
+    "engine-inputs": "/workspace/migration/native-reasoning32-engine-v11",
+    "python": "/workspace/runtime-x86-ngc2510/bin/python",
+    "root": "/projects/u6si/duplex-live",
+    "control-cache": "/workspace/migration/native-control40-preflight-v2/codes",
+    "control-approval": "/workspace/migration/native-control40-precise-pilot-v2",
+    "development-evidence": "/workspace/migration",
+    "prepared49": "/workspace/migration/native-retained49-prepared-data-v1",
+    "original-inventory": "/workspace/migration/native-original-runs-local-stage-v1.json",
+    "out": "/workspace/migration/native-reasoning32-retained-pilot-v12"
+  },
+  "replacement_runtime_requirements": [
+    "Fresh source checkout via Git, exact commit, clean status",
+    "Reconstruct canonical runtime aliases from preserved verified archive",
+    "Revalidate retained control40 approval artifacts under current validators",
+    "Recreate and test compiled BF16 runtime; new compiler proof",
+    "Fresh provider identity and live cost guard; no historical PID reuse",
+    "Current catalog rate and total remaining100USD project budget check"
+  ],
+  "deadlines": {
+    "numerical_headroom_seconds_minimum": 3600,
+    "fit_start_remaining_seconds_minimum": 10800,
+    "reserved_restore_seconds": 3600,
+    "backup_window_outside_controller_required": true
+  },
+  "offline_tests": 3,
+  "torch_or_model_loaded_on_mac": false,
+  "gpu_dispatched": false,
+  "optimizer_updates": 0,
+  "complete_numerical32_approved": false
+}
