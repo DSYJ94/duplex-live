@@ -1,3 +1,15 @@
+24Oct01:24UTC — Same native child71818 actualR,13/49 logged exact rows; full154
+preflight PASS, no full49/combined report/new optimizer update. Complete32 local
+necessary-fact audit from authored premises:32backend bundle receipts,16final bundle
+utterances and24basic answers contain corresponding facts; NOT semantic/model
+approval.005 early numeric echo separately flagged; no repair or rewriting. Full32
+independent semantic payload approval still pending. Meta-only actual ContextSpan
+state getter~0.562ms/call, no weights/GPU or live runtime change; not a loaded model
+count or end-to-end acceleration claim. Both diagnostic reports Mac+volume SHA
+verified. See newestHANDOFF and NATIVE-REASONING32-LOCAL-FACT-DIAGNOSTIC-2026-10-24.json.
+
+---
+
 24Oct01:08UTC — SAME CUDA child71818 preserved under tested supervisor79780;
 no GPU restart/new updates. Full154 PASS; native49 at01:04:8/49 exact rows. Measured
 full40gradient~5h exposes runtime risk beyond the native49 pass. Existing prepaid

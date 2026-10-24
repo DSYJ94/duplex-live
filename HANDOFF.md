@@ -1,3 +1,72 @@
+# LOCAL — complete32 local fact audit; same native child13/49 (24 October01:24UTC)
+
+Goal turn PROGRESS. LOCAL sole executor. New CPU-only diagnostic source
+c2975d32df813330b7197a71b1003bfa8e3ed2b7, evals/native_reasoning_fact_diagnostic.py.
+No model/data/loss/gate/proxy allowance changes. ExecutionC9 and operational2e
+remain pinned separately; no new GPU submission or optimizer update. Unrelated
+local pyc/capability probes/roadmap.html preserved.
+
+ALL32 authored synthetic episodes inspected from unchanged prepared payload
+63de073379fc9871f062f7c1616ab54f27bdc43037fb5deee739339dbb2fb6ee.
+Independent local exhaustive enumeration checks all20 possible three-item sets
+for each stated problem, enforcing required/forbidden items, budget, maximal
+points, lower-cost and alphabetical tie breaks. NO source scoring annotations or
+oracle answers read.32backend bundle receipts (including retired originals) match
+necessary item/cost/point facts.16final bundle utterances contain corresponding
+necessary facts;24basic/pending/cancel utterances contain the expected numeric
+answer. This is NUMBER/ITEM PRESENCE ONLY, not full meaning/timing/label approval.
+New corpus has not trained the current pupil; cannot explain away pupil failures.
+
+One diagnostic concern retained:005 provider says Nine tokens. before Eighteen.
+ASR nine starts42.86/ends43.26 while last user question word arrives45.5880;
+it may be a premature unit-price echo. Final18 and hard13/29 facts are present.
+Do not automatically excuse, reject, repair or rewrite it. Complete independent
+semantic/listening review must decide its suitability.026/027 original ASR
+residual differences remain untouched. Whole32 speech/transport approvals and all
+failed ancestors preserved.0semantic requests/0conversion/0reasoning32 training;
+distinct payload approval remains pending after automaticreview rejection.
+DO NOT append this diagnostic's computed answers to the sealed reviewer payload.
+
+Fact audit ACTUAL v1 and committed CLI v2 both completed all32. New57,910B report
+Mac+retained volume SHA verified:
+5545afc3554da747359275d029e2e37998dda50cb6779182efa287fd5f467a19,
+/workspace/migration/native-reasoning32-local-fact-diagnostic-v2.json.
+Local runs/local-migration-20261023/native-reasoning32-local-fact-diagnostic-v2
+includes exact reproduce.py and volume-preservation.json. Diagnostic source saved in Git; only the
+JSON report transferred by approved rsync. No audio/key/owner data transferred.
+
+Separate remoteCPU metadata-only benchmark: actual pinned ContextSpan79df source,
+7.69B-shape META tensors plus our13 rank8 modules/1,894,400 adapter elements;
+NO weights loaded, GPU initialized, forward/backward or provider calls.1000inactive
+get_streaming_state calls0.562132649s (~0.562ms/call);46,156calls projection25.9458s.
+This specific structural bookkeeping is too small to account for multi-hour
+work; actual CUDA/autograd/KV costs unprofiled. No runtime optimization adopted.
+Do NOT present META shape count as a measured loaded-checkpoint parameter count.
+Auxiliary newerMoshi source caches children; actual ContextSpan fork traverses
+recursively; measurement used the ACTUAL ContextSpan source, not the auxiliary
+library. Report994B SHA56eacb90334b212903e70f9496e0f80823992dfa53225e66cf93d87b7eae8156
+Mac+volume matched. No CPU/power/affinity/security settings changed on this Mac or
+live child; own CPU-only probe environment isolated, no container restart.
+
+ACTUAL01:23:05UTC: supervisor79780/birth24607807S, child71818/birth24130859R,
+original71679/birth24121629 intentionallyT. Native13/49 complete, all logged
+forward hashes exact; GPU34%/24231MiB. Complete154preflight PASS, full49 and combined
+reports absent,0new updates. Never independently resume original71679.
+Guard70540 cutoff10:22:37.9, pipeline09:00, maxproject83.9807183<100 from prepaid
+wallet, NO new credit purchase. Backup71453/session54870 to10:20, last83files fully
+verified. Evaluation71424/session87030 exactupstream79780 and all7 successful
+stages required; latest09:37/end10:17. Proxy71254/session69236, runv7/112remaining,
+actualrequests0; loopbacktunnel61404 healthy. Runtime risk from prior entry remains.
+
+Next: preserve same child ->full49+combined ->ONE8 ->independent Adam/RNG/native
+restore/proof ->complete paired20/speech20/all4 ordinary ->eligible sealedfresh40,
+then conclusive larger training decision. While waiting, judge the whole32
+semantics only after its specific payload approval; do not substitute this local
+necessary-fact check or a passing subset. See
+ docs/NATIVE-REASONING32-LOCAL-FACT-DIAGNOSTIC-2026-10-24.json.
+
+---
+
 # LOCAL — same child preserved; prepaid supervisor extended without purchase (24 October01:08UTC)
 
 Goal turn PROGRESS. LOCAL sole executor. Operational source2e652ce06354abdf996447662231cd79cab9161f

@@ -1,0 +1,93 @@
+{
+  "schema": "dl-native-reasoning32-local-diagnostic-evidence-v1",
+  "at_utc": "2026-10-24T01:23:06.295215+00:00",
+  "diagnostic_source_commit": "c2975d32df813330b7197a71b1003bfa8e3ed2b7",
+  "diagnostic_source": "evals/native_reasoning_fact_diagnostic.py",
+  "source_code_SHA256": "5c924892dd10df50338b027ead7538da7df968382ea2f5c32b38747896d5d867",
+  "diagnostic_report_sha256": "5545afc3554da747359275d029e2e37998dda50cb6779182efa287fd5f467a19",
+  "diagnostic_report_bytes": 57910,
+  "Mac_and_volume_report_hashes_verified": true,
+  "remote_report": "/workspace/migration/native-reasoning32-local-fact-diagnostic-v2.json",
+  "scope": {
+    "schema": "dl-native-reasoning32-local-necessary-fact-diagnostic-v1",
+    "at_utc": "2026-10-24T01:15:11.524006+00:00",
+    "diagnostic_code_sha256": "5c924892dd10df50338b027ead7538da7df968382ea2f5c32b38747896d5d867",
+    "prepared_source_sha256": "63de073379fc9871f062f7c1616ab54f27bdc43037fb5deee739339dbb2fb6ee",
+    "all32_examined": true,
+    "case_count": 32,
+    "independent_exhaustive_solver_uses_source_oracles": false,
+    "backend_bundle_receipts_examined": 32,
+    "backend_bundle_receipts_matching_necessary_facts": 32,
+    "final_bundle_utterances_examined": 16,
+    "final_bundle_utterances_matching_necessary_facts": 16,
+    "basic_utterances_examined": 24,
+    "basic_utterances_with_expected_number_present": 24,
+    "pre_question_numeric_echoes": [
+      {
+        "id": "native-reasoning4-train-005",
+        "mentions": [
+          {
+            "text": "nine",
+            "start": 42.86,
+            "end": 43.26,
+            "unit_cost": 9,
+            "last_arrived_user_word_s": 45.58802283401019
+          }
+        ],
+        "interpretation": "Numeric one-item echo before the complete two-item question; requires semantic/listening review, not an automatic factual failure."
+      }
+    ],
+    "semantic_approved": false,
+    "training_approved": false,
+    "provider_requests": 0
+  },
+  "important_limits": [
+    "Necessary facts only: number presence does not prove unambiguous wording, timing, good interaction, or correct use of delivered context.",
+    "The entire source-bound independent semantic review is still required; this local diagnostic does not replace it.",
+    "No audio was played or transcribed by this script; existing complete independent ASR was inspected.",
+    "All32 retained; no teacher rewritten, rejected source erased, gate changed or training run started.",
+    "This new corpus has not trained the current pupil. Correct teacher arithmetic cannot explain away the current pupil failures.",
+    "The solver examines only the authored synthetic item-selection problems, not general reasoning competence.",
+    "Do not append this diagnostic or its independently computed answers to the sealed semantic reviewer payload. That payload remains unchanged and oracle-free."
+  ],
+  "source005": {
+    "provider_words": "Okay, checking the combos.Nine tokens.Eighteen.Candle, pouch, and ribbon; total cost thirteen tokens; total points twenty-nine.",
+    "independent_ASR": " okay checking the combos nine tokens 18. candle pouch and ribbon total cost 13 tokens total points 29.",
+    "original_rendered_wav_SHA256": "9cfa34b4fce34d3bbda023de244fab645e74be8e7d9ce2f808736518be6880fb",
+    "diagnosis": "Possible premature one-item numeric echo before the complete two-item question; not an automatic rejection or approval.",
+    "automatic_repair_selected": false,
+    "full_independent_semantic_review_still_required": true
+  },
+  "metadata_only_performance_probe": {
+    "actual": {
+      "schema": "dl-native-meta-state-accessor-diagnostic-v1",
+      "at_utc": "2026-10-24T01:21:10.675533+00:00",
+      "actual_pinned_contextspan_source": "/projects/u6si/duplex-live/vendor/context-spanning-79df302fa2820cae10c61bb2b7f302c52edb6ed2",
+      "streaming_code_sha256": "9fbdd77237d53ef6d95d1a08bce3b2438d661223ad8b795edfccc1b87eb4b81b",
+      "meta_parameter_count": 7689623552,
+      "adapter_parameter_count": 1894400,
+      "adapter_modules": 13,
+      "streaming_state_entries": 66,
+      "calls": 1000,
+      "seconds": 0.5621326490072533,
+      "seconds_per_call": 0.0005621326490072533,
+      "estimated_two_pass_23078_call_accessor_seconds": 25.945794547578785,
+      "all_parameter_devices_meta": true,
+      "GPU_initialized": false,
+      "weights_loaded": false,
+      "provider_requests": 0,
+      "actual_live_child_changed": false,
+      "limitation": "Structural getter only with inactive streaming states; excludes actual native math, CUDA execution, KV tensors and autograd. Not a live stack profile or end-to-end speedup claim."
+    },
+    "preservation": {
+      "bytes": 994,
+      "sha256": "56eacb90334b212903e70f9496e0f80823992dfa53225e66cf93d87b7eae8156",
+      "Mac_and_volume_SHA_match": true
+    },
+    "interpretation": "Inactive-state structural getter is too small in this isolated benchmark to account for hours of elapsed native work. No claim about actual CUDA/autograd/KV costs or end-to-end acceleration.",
+    "runtime_change_adopted": false
+  },
+  "native_model_execution_unchanged": true,
+  "training_or_behavior_approved": false,
+  "provider_requests": 0
+}
