@@ -1,3 +1,38 @@
+# LOCAL — actual SSH/compiler pass; verified runtime restoration live (24 October10:49UTC)
+
+Goal turn PROGRESS/VERIFIED WAIT. SamePod8fsk2kouknoiac direct SSH verified
+root@157.157.221.29:11093, local identity id_ed25519_runpod and ignored knownhosts
+runpod-reasoning32-v12-known-hosts. Execution source9d57928f03572f51862e952c513c1063a45e6511
+clean Git clone at/opt/duplex-reasoning32-9d57928-v12. Pinned Torch2.9.0a0nv25.10,
+CUDA13.0 confirmed. Actual tiny compiled BF16 GPU check PASSED; receipt at
+/workspace/migration/native-reasoning32-compiler-v12/compiler.json, copied to Mac.
+An initial compiler invocation stopped on old audition-driver receipt; fresh
+versioned directory succeeded, no previous receipt removed or weakened.
+
+Runtime restoration LIVE PID2181/birth39344652, exec session42197; approximately
+20GiB copied at last check. Same command prepare_control40_replacement is copying
+and independently rehashing approved original10390 and workset7797 inputs and models.
+Do not restart: poll42197 or authoritative/proc/2181 birth. Its bounded deadline
+11:15UTC. Source/workset flags are recorded in live process; workset root is
+/workspace/source-control40-e658c20, inventory/workspace/control40-stage-e658c20/inventory.json.
+Output/workspace/migration/native-reasoning32-runtime-v12.json, staging
+/opt/reasoning32-runtime-root-v12. No model numerical/gradient/optimizer job yet.
+
+NEXT after actual exit0 and complete_staging_only: copy fresh local guard status
+again; use planned command runs/local-migration-20261023/native-reasoning32-pilot-v12-planned-command.json
+(compiler path corrected to new directory). Prepare-only in distinct output first
+if needed, then actual detached controller in NEWv12 output. Its numerical deadline
+12:30UTC and controller17:45UTC leave copyback before hard Pod18:39:58.8UTC.
+Confirm source clean, active GPU owner, exact paths and report actual PID/birth.
+All old partial numerical14 and failed evidence remain unchanged.
+
+User GCP question does not cancel Runpod. gcloud exists but config returned null;
+no project/credits/quota verified. Official Google docs prohibit GPU VMs on a
+non-billable Free Trial account. Need actual credit/account type before migration.
+Do not create GCP resources or move archives before scope and eligibility confirmed.
+
+---
+
 # LOCAL — replacement Pod created, cost guard armed (24 October10:40UTC)
 
 Goal turn PROGRESS. ONE owned replacement8fsk2kouknoiac created10:39:58.8UTC,
