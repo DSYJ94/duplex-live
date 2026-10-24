@@ -1,10 +1,10 @@
 {
   "schema": "dl-native-control40-pilot-progress-v1",
-  "at_utc": "2026-10-24T07:29:07.984731+00:00",
+  "at_utc": "2026-10-24T07:56:29.478557+00:00",
   "executor": "LOCAL",
   "classification": "progress",
   "previous_goal_turn": "progress",
-  "source_main_before_receipt": "bcbff2ff032e9888e3b04cab70379ecd68806b69",
+  "source_main_before_receipt": "d9b7de516c09d9b525a09f330bd71dc7378bbf94",
   "execution_source": "c9efaaac24d983342f7eded46617e6450bc102ce",
   "orchestration_source": "a5958a0343383728639940c4eb82e31ca3aa96f2",
   "supervisor": {
@@ -512,7 +512,7 @@
   "convergence_established": false,
   "behavior_qualified": false,
   "model_adopted": false,
-  "next_action": "Same115807 independent complete native restore, strict proof, then existing63289 complete paired20/speech20 dispatcher. No duplicate stages or extension/adoption.",
+  "next_action": "Same122058/birth27072474 complete full paired20, same122071/birth27072529 independent speech20, then all10 candidate semantic/receipt/audio review and mandatory ordinary4. No duplicate launch, training extension or adoption.",
   "reasoning32_semantic_provider_requests": 0,
   "reasoning32_semantic_human_payload_approval_still_pending": true,
   "first_checkpoint_review": {
@@ -886,20 +886,12 @@
   },
   "latest_live_observation": {
     "schema": "dl-native-control40-quota-retry-observation-v1",
-    "at_utc": "2026-10-24T07:28:14.069417+00:00",
-    "controller": {
-      "pid": 101648,
-      "state": "S",
-      "birth": 25974639
-    },
-    "phase": "independent_restore",
-    "passed": false,
+    "at_utc": "2026-10-24T07:51:51.771280+00:00",
+    "controller": null,
+    "phase": "complete_restored_pilot_only",
+    "passed": true,
     "error": null,
-    "child": {
-      "pid": 115807,
-      "state": "R",
-      "birth": 26750060
-    },
+    "child": null,
     "stages": [
       {
         "name": "whole_workset",
@@ -935,7 +927,13 @@
         "name": "independent_restore",
         "pid": 115807,
         "birth": 26750060,
-        "exit_code": null
+        "exit_code": 0
+      },
+      {
+        "name": "strict_proof_verification",
+        "pid": 121918,
+        "birth": 27070269,
+        "exit_code": 0
       }
     ],
     "logged_updates": [
@@ -1019,7 +1017,7 @@
       },
       "restore": {
         "native49": 49,
-        "control40": 2
+        "control40": 40
       }
     },
     "training_state": {
@@ -1035,12 +1033,28 @@
       "checkpoint_sha256": "0cb85b4a3b712ba5687e3e23dba6541891cbad954bde4a155ae9cb913517bcff",
       "training_state_sha256": "86dde08eb1591d0bc04a36c47be0dc7ee1b90019d7ae520f1d049cc37d8dc278"
     },
-    "restore_report": null,
+    "restore_report": {
+      "schema": "dl-native-control40-retained154-stream49-reload-v1",
+      "passed": true,
+      "training_pid": 101677,
+      "checkpoint_sha256": "0cb85b4a3b712ba5687e3e23dba6541891cbad954bde4a155ae9cb913517bcff",
+      "training_state_sha256": "86dde08eb1591d0bc04a36c47be0dc7ee1b90019d7ae520f1d049cc37d8dc278",
+      "fresh_process": true,
+      "all_valid_logits_exact": true,
+      "optimizer_rng_state_restored": true,
+      "optimizer_and_rng_independently_compared_exact": true,
+      "all49_auxiliary_logits_exact": true,
+      "all49_native_stream_logits_exact": true,
+      "all40_native_control_logits_exact": true,
+      "parent_adam_parameter_steps_restored": [
+        528
+      ]
+    },
     "log_bytes": 4348030,
     "log_tail": null,
-    "GPU": "54 %, 22687 MiB",
+    "GPU": "0 %, 1 MiB",
     "GPU_compute_PIDs": [
-      "115807"
+      "122061"
     ],
     "old_processes": {
       "79780": null,
@@ -1056,7 +1070,7 @@
   },
   "optimizer_updates_completed": true,
   "postfit_training_process_passed": true,
-  "full_native_restore_passed": false,
+  "full_native_restore_passed": true,
   "standalone_adapter_export_review": {
     "schema": "dl-native-control40-standalone-adapter-export-review-v1",
     "at_utc": "2026-10-24T06:26:08.509960+00:00",
@@ -1179,14 +1193,62 @@
         "reused_verified_files": 156,
         "reused_verified_bytes": 2443568091,
         "transferred_file_bytes": 262122
+      },
+      {
+        "path": "runs/local-migration-20261023/native-control40-continuous-copyback-v17/20261024T073346.476267Z",
+        "files": 157,
+        "inventory_sha256": "0a040ea8e3b1f90f091fb2c06c577b1ee48d5aff602f3be441b8c13b5a2dca94",
+        "reused_verified_files": 156,
+        "reused_verified_bytes": 2443568091,
+        "transferred_file_bytes": 265972
+      },
+      {
+        "path": "runs/local-migration-20261023/native-control40-continuous-copyback-v17/20261024T074008.380427Z",
+        "files": 157,
+        "inventory_sha256": "f6c7f3a5e18bf2034c9f449360423bf22c76d9102cbe5fe0ace34d449b5cfb18",
+        "reused_verified_files": 156,
+        "reused_verified_bytes": 2443568091,
+        "transferred_file_bytes": 269472
+      },
+      {
+        "path": "runs/local-migration-20261023/native-control40-continuous-copyback-v17/20261024T074522.834308Z",
+        "files": 157,
+        "inventory_sha256": "4b85097678f974c871e2b2dfd766d5b8f9330c30026681cc2eb7be6ae25a1bca",
+        "reused_verified_files": 156,
+        "reused_verified_bytes": 2443568091,
+        "transferred_file_bytes": 273322
+      },
+      {
+        "path": "runs/local-migration-20261023/native-control40-continuous-copyback-v17/20261024T075140.913692Z",
+        "files": 160,
+        "inventory_sha256": "17f3c294d9e8801386384af255c11a95637b741231a5b07e896ca35bb0cfd1f4",
+        "reused_verified_files": 155,
+        "reused_verified_bytes": 2443517236,
+        "transferred_file_bytes": 385336
+      },
+      {
+        "path": "runs/local-migration-20261023/native-control40-continuous-copyback-v17/20261024T075252.147601Z",
+        "files": 169,
+        "inventory_sha256": "8531cfd84d4d936c088edc4c6da07ed55d5795cd4bdfb2062f0f59a4881a7fcb",
+        "reused_verified_files": 161,
+        "reused_verified_bytes": 2443902704,
+        "transferred_file_bytes": 1359949
+      },
+      {
+        "path": "runs/local-migration-20261023/native-control40-continuous-copyback-v17/20261024T075503.741218Z",
+        "files": 217,
+        "inventory_sha256": "1e7db594546993ee1b5f20e7b6a7506f4cf7e5104ee1dac5261d5a91cb30d461",
+        "reused_verified_files": 171,
+        "reused_verified_bytes": 2447964829,
+        "transferred_file_bytes": 130109570
       }
     ],
     "changes_to_remote_jobs": false,
     "pod_id": "4yx8vahdmjsylx",
     "ssh_host": "root@157.157.221.29",
     "ssh_port": 16701,
-    "at_utc": "2026-10-24T07:28:42.093680+00:00",
-    "last_marker": "3044b1653637570a5ce903de04f45a17f1c389c6c3b6416ebe513850ed1f7139",
+    "at_utc": "2026-10-24T07:55:19.343538+00:00",
+    "last_marker": "47d113bebfce6ae45a64d6d1518d655285f0c5e01cc64c60ebf16a8682d39b34",
     "last_check_succeeded": true
   },
   "prior_backup_retirement": {
@@ -1924,5 +1986,295 @@
       }
     ],
     "new_credit_purchase": false
+  },
+  "full_native_restore_review": {
+    "schema": "dl-native-control40-complete-fresh-restore-and-proof-review-v1",
+    "at_utc": "2026-10-24T07:54:11.689864+00:00",
+    "source_commit": "c9efaaac24d983342f7eded46617e6450bc102ce",
+    "orchestration_commit": "a5958a0343383728639940c4eb82e31ca3aa96f2",
+    "training_pid": 101677,
+    "fresh_restore_pid": 115807,
+    "fresh_restore_birth": 26750060,
+    "strict_proof_pid": 121918,
+    "strict_proof_birth": 27070269,
+    "all7_actual_exit_codes_zero": true,
+    "upstream_supervisor_actually_ended": true,
+    "completed_updates": 8,
+    "exact_restored_inventories": {
+      "original_histories": 28,
+      "assistant_acoustic_teachers": 49,
+      "native_stream_teachers": 49,
+      "control_native_text_and_acoustic_teachers": 40
+    },
+    "all4_complete_inventory_dictionaries_exact": true,
+    "all_named_adapters_Adam_moments_and_state_and_all4_RNG_families_independently_compared_exact": true,
+    "Adam_clocks": [
+      528
+    ],
+    "exact_code_and_immutable_input_receipts_verified": true,
+    "source_assertions_reviewed": "Pinned C9 context_actual_train.py compares all adapter arrays, full optimizer state_dict, Torch CPU/CUDA, Python and NumPy RNG before replaying every inventory.",
+    "full_native_restore_passed": true,
+    "strict_proof_passed": true,
+    "verified_Mac_snapshot": "runs/local-migration-20261023/native-control40-continuous-copyback-v17/20261024T075140.913692Z",
+    "snapshot_files": 160,
+    "inventory_sha256": "17f3c294d9e8801386384af255c11a95637b741231a5b07e896ca35bb0cfd1f4",
+    "verified_final_files": {
+      "controller.json": {
+        "bytes": 51569,
+        "sha256": "400e17d98e3739c3700bd8a7e81e842c335f8b0c217ffbaf18fd931062ea4d22"
+      },
+      "strict_proof_verification.log": {
+        "bytes": 69,
+        "sha256": "846c701dbb3c3e92d7a35c2c4bdc97e40974e2aa63e63157b91a54dd6a06f760"
+      },
+      "independent_restore.log": {
+        "bytes": 301936,
+        "sha256": "842fa574bc19853ddfe2c2af1ff14e88620cd75353c374c10ac9e2445ce855e2"
+      },
+      "training/report.json": {
+        "bytes": 6345518,
+        "sha256": "500781444712ebb6368d534406ee25f663df4b511c6f920fae9e985db9aa5a18"
+      },
+      "training/reload-report.json": {
+        "bytes": 30733,
+        "sha256": "9dec1e0a98dd38c27c8366ef330b508665b0d71190f22c69b2ca52b362c3ffd3"
+      },
+      "training/immutable-input-training.json": {
+        "bytes": 1031,
+        "sha256": "07182ddd1afd587540e55191c31ec8eeb7f5e7c320f1bb58ad30c0dbbce4989d"
+      },
+      "training/immutable-input-reload.json": {
+        "bytes": 1029,
+        "sha256": "0dd3fbe9fbdb503569fe9ed100a65f7fc57be319c828eabaa5e10ab01c6d0221"
+      },
+      "training/approved-immutable-input-readiness.json": {
+        "bytes": 1032,
+        "sha256": "75f16c405274618dd3aa9318c526007fb81ae1bfce8ca850071fc3379983c772"
+      },
+      "training/adapters.safetensors": {
+        "bytes": 7580728,
+        "sha256": "0cb85b4a3b712ba5687e3e23dba6541891cbad954bde4a155ae9cb913517bcff"
+      },
+      "training/training-state.pt": {
+        "bytes": 22959307,
+        "sha256": "86dde08eb1591d0bc04a36c47be0dc7ee1b90019d7ae520f1d049cc37d8dc278"
+      }
+    },
+    "model_or_Torch_loaded_on_Mac": false,
+    "additional_GPU_or_optimizer_work_executed": false,
+    "behavior_qualified": false,
+    "model_adopted": false,
+    "training_extension_approved": false,
+    "scope": "Complete independent native training-state restoration and existing strict proof, not native behavioral qualification, convergence or adoption."
+  },
+  "automatic_native20_launch": {
+    "schema": "dl-native-control40-development-followup-v2",
+    "pid": 63289,
+    "pod_id": "4yx8vahdmjsylx",
+    "source_commit": "c9efaaac24d983342f7eded46617e6450bc102ce",
+    "upstream_pid": 101648,
+    "upstream_birth": 25974639,
+    "latest_launch_utc": "2026-10-24T09:37:00+00:00",
+    "evaluation_deadline_utc": "2026-10-24T10:17:00+00:00",
+    "paired_out": "/workspace/migration/native-control40-native20-v1",
+    "speech_out": "/workspace/migration/native-control40-native20-speech-v1",
+    "local_dispatcher_sha256": "ee818317b4d934a99f220d295e085202acc3b2028f83ba019a103a51b8616a0a",
+    "plan_sha256": "c20f3d9caf1d6edc171ef7e888ae622f7a089dc3e202fe3666dccf4ae0219b3d",
+    "may_extend_or_adopt": false,
+    "may_read_sealed_fresh_inputs": false,
+    "planned_optimizer_updates": 0,
+    "phase": "launched_native20_and_independent_speech",
+    "at_utc": "2026-10-24T07:51:49.674629+00:00",
+    "last_read_succeeded": true,
+    "observed_upstream_phase": "complete_restored_pilot_only",
+    "native_command": [
+      "/workspace/runtime-x86-ngc2510/bin/python",
+      "-u",
+      "-m",
+      "portable.context.native_development",
+      "--source",
+      "/opt/duplex-control40-c9efaaa-v2",
+      "--source-commit",
+      "c9efaaac24d983342f7eded46617e6450bc102ce",
+      "--out",
+      "/workspace/migration/native-control40-native20-v1",
+      "--asr-python",
+      "/opt/native10-asr-env/bin/python",
+      "--deadline-utc",
+      "2026-10-24T10:17:00+00:00",
+      "--pod-id",
+      "4yx8vahdmjsylx",
+      "--gpu-mode",
+      "serial-one-gpu",
+      "--runtime-profile",
+      "container-default",
+      "--candidate-proof",
+      "/workspace/migration/native-control40-precise-pilot-v11-environment-retry/training"
+    ],
+    "launch": {
+      "phase": "native20_and_independent_speech_followup_launched",
+      "native_pid": 122058,
+      "native_command": [
+        "/workspace/runtime-x86-ngc2510/bin/python",
+        "-u",
+        "-m",
+        "portable.context.native_development",
+        "--source",
+        "/opt/duplex-control40-c9efaaa-v2",
+        "--source-commit",
+        "c9efaaac24d983342f7eded46617e6450bc102ce",
+        "--out",
+        "/workspace/migration/native-control40-native20-v1",
+        "--asr-python",
+        "/opt/native10-asr-env/bin/python",
+        "--deadline-utc",
+        "2026-10-24T10:17:00+00:00",
+        "--pod-id",
+        "4yx8vahdmjsylx",
+        "--gpu-mode",
+        "serial-one-gpu",
+        "--runtime-profile",
+        "container-default",
+        "--candidate-proof",
+        "/workspace/migration/native-control40-precise-pilot-v11-environment-retry/training"
+      ],
+      "pod_id": "4yx8vahdmjsylx",
+      "source_commit": "c9efaaac24d983342f7eded46617e6450bc102ce",
+      "launched_utc": "2026-10-24T07:51:49.082725+00:00",
+      "shared_gpu_lease_inherited": true,
+      "native_birth": 27072474,
+      "speech_pid": 122071,
+      "speech_command": [
+        "/workspace/runtime-x86-ngc2510/bin/python",
+        "-u",
+        "-m",
+        "portable.context.native_speech_followup",
+        "--source",
+        "/opt/duplex-control40-c9efaaa-v2",
+        "--paired",
+        "/workspace/migration/native-control40-native20-v1",
+        "--python",
+        "/opt/native10-asr-env/bin/python",
+        "--out",
+        "/workspace/migration/native-control40-native20-speech-v1",
+        "--controller-pid",
+        "122058",
+        "--controller-birth",
+        "27072474",
+        "--paired-source-commit",
+        "c9efaaac24d983342f7eded46617e6450bc102ce",
+        "--deadline-utc",
+        "2026-10-24T10:17:00+00:00"
+      ],
+      "behavior_approved": false,
+      "model_adopted": false
+    }
+  },
+  "latest_native20_observation": {
+    "schema": "dl-native-control40-readonly-evaluation-observation-v1",
+    "at_utc": "2026-10-24T07:55:09.049345+00:00",
+    "paired": {
+      "exists": true,
+      "sha256": "dc10864060f797f6c1849293d0ba4e08a8e7c3272ae537cae3206f5e72accfce",
+      "process": {
+        "pid": 122058,
+        "state": "S",
+        "birth": 27072474
+      },
+      "schema": "dl-runpod-paired-native10-v1",
+      "phase": "paired_native_development",
+      "pid": 122058,
+      "source_commit": "c9efaaac24d983342f7eded46617e6450bc102ce",
+      "complete_paired20": false,
+      "started_utc": "2026-10-24T07:51:49.240532+00:00",
+      "optimizer_updates": 0,
+      "deadline_utc": "2026-10-24T10:17:00+00:00",
+      "runtime_profile": "container-default",
+      "gpu_mode": "serial-one-gpu",
+      "children": [
+        {
+          "pid": 122169,
+          "role": "baseline520"
+        }
+      ],
+      "pod_id": "4yx8vahdmjsylx",
+      "completed_indices": []
+    },
+    "independent_speech": {
+      "exists": true,
+      "sha256": "0bc3603f8e57e9ea507d240216960256749ab35daacf4463ad42a83edea42081",
+      "process": {
+        "pid": 122071,
+        "state": "S",
+        "birth": 27072529
+      },
+      "schema": "dl-runpod-paired20-independent-speech-followup-v1",
+      "phase": "waiting_for_complete_paired20",
+      "pid": 122071,
+      "source_commit": "c9efaaac24d983342f7eded46617e6450bc102ce",
+      "complete20": false,
+      "at_utc": "2026-10-24T07:55:00.247356+00:00",
+      "deadline_utc": "2026-10-24T10:17:00+00:00",
+      "paired_source": "c9efaaac24d983342f7eded46617e6450bc102ce",
+      "completed_indices": []
+    },
+    "roles": {
+      "baseline520": {
+        "controller": {
+          "exists": true,
+          "sha256": "31befb98b0f87c707113b25194e03bf5c5d4fedac0b9599aa44c2dc41524d0c0",
+          "process": {
+            "pid": 122169,
+            "state": "R",
+            "birth": 27073122
+          },
+          "schema": "dl-native-paired-development-actor-v1",
+          "phase": "ordinary",
+          "pid": 122169,
+          "source_commit": "c9efaaac24d983342f7eded46617e6450bc102ce",
+          "complete10": false,
+          "started_utc": "2026-10-24T07:51:55.664767+00:00",
+          "optimizer_updates": 0,
+          "runtime_profile": "container-default",
+          "gpu_mode": "serial-one-gpu",
+          "completed_indices": [
+            0
+          ]
+        },
+        "case_records": [
+          {
+            "index": 0,
+            "report_sha256": "a69e38b1674bcd7fa8adc7f461be5e4114917b5cb19cb25d5012eea9c14fb9c3",
+            "schema": "dl-context-simple-observation-v1",
+            "scenario": "recovery-train-012",
+            "text": "Because the heat from the Earth's surface makes the air above it almost like a solid surface, so the ice can't melt.",
+            "audio_sha256": "2d897900fc64c2115b2f559b67e0103290a9d03c85de72f0e3cca659c168354e",
+            "scheduled_dispatch": false,
+            "word_or_acoustic_tokens_forced": false,
+            "response_start_forced": false,
+            "real_user_samples_processed": 675840,
+            "real_user_samples_expected": 675840,
+            "maximum_input_backlog_s": 0.3274175239983015,
+            "input_seconds": 28.16,
+            "wall_seconds": 28.703782221011352,
+            "adapter_checkpoint_sha256": "0310c2563988f8f59d942dce98119230016136f13fc9729ad1c2f398318e7cb5",
+            "worker_event_counts": {}
+          }
+        ],
+        "speech_records": []
+      },
+      "candidate-control40": {
+        "controller": {
+          "exists": false
+        },
+        "case_records": [],
+        "speech_records": []
+      }
+    },
+    "GPU": "48 %, 19421 MiB",
+    "GPU_compute_PIDs": [
+      "122169"
+    ],
+    "observation_only_not_qualification": true
   }
 }

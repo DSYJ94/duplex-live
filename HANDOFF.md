@@ -1,3 +1,54 @@
+# LOCAL — full native restore/proof PASS; paired20 running (24 October 07:56 UTC)
+
+Goal turn PROGRESS; previous turn PROGRESS. LOCAL sole executor. Main before
+receipt d9b7de516c09d9b525a09f330bd71dc7378bbf94. Execution C9 c9efaaac24d983342f7eded46617e6450bc102ce;
+completed supervisor a5958a0343383728639940c4eb82e31ca3aa96f2 unchanged.
+All7 stages ACTUALLY EXITED0: fit101677/birth25975025 (all8), fresh full native
+restore115807/birth26750060, strictproof121918/birth27070269; original four
+readiness stages retained their actual0 receipts. Supervisor101648/birth25974639
+actuallyended. No manual/duplicate dispatch.
+
+Full independent restore PASS: exact complete28 original,49 acoustic,49 native
+stream and40 control text/acoustic dictionaries. All named adapters, full Adam
+state/moments/clocks528, Torch CPU/CUDA/Python/NumPy RNG independently compared.
+All training/readiness/reload immutable-input/code receipts verified with unchanged
+C9 function. Model source checks reviewed; no Torch/model load or GPU work on Mac.
+Final reload30,733B SHA9dec1e0a98dd38c27c8366ef330b508665b0d71190f22c69b2ca52b362c3ffd3.
+TrainingreportSHA500781444712ebb6368d534406ee25f663df4b511c6f920fae9e985db9aa5a18.
+Final SF0cb85b4a... and PT86dde08e... unchanged/exact. Full proof and all receipts
+rehashed against closed V17 snapshot20261024T075140.913692Z,160files,
+inventorySHA17f3c294d9e8801386384af255c11a95637b741231a5b07e896ca35bb0cfd1f4.
+See docs/NATIVE-CONTROL40-FULL-RESTORE-PASS-2026-10-24.json for full hashes/coverage.
+This proves restoration, NOT native behavior, convergence, adoption or extension.
+
+Existing63289 dispatcher automatically launched native controller122058/
+birth27072474 at07:51:49, independent speech followup122071/birth27072529.
+Actual07:55:09: controller122058 live; baseline actor122169/birth27073122 LIVE R,
+GPU48%/19421MiB, paritypassed and case0 complete. Candidate not started (serial
+one GPU). Speech122071 live waitingforcompletepaired20. All eval uses C9,
+container-default, same native520 comparator, no forcing/new optimizer updates.
+Outputs /workspace/migration/native-control40-native20-v1 and
+/workspace/migration/native-control40-native20-speech-v1. NEVER duplicate them.
+Read-only eval observer /private/tmp/duplex-control40-evaluation-observer-v1.py
+(copy under local23October runs) monitors actual PIDs, cases and speech results.
+Prepared complete20 review-input extractor there also launches nothing; run only
+after BOTH complete20 chains, then review all ten candidate cases/receipts/audio.
+
+Same backup1184/V17 sourcebb3f885 healthy; all final model/state/input/source data
+preserved on Mac/volume, broader stopped Mac source backup still PARTIAL. Recipe/
+cookbook updated to actual restorePASS; no source/math/data/fold/gain/threshold/
+CPU changes. Guard70540 shutdown10:22:37.9UTC, volume49yytzyoge retained; evalend
+10:17, backend71254/backup1184 to10:20. Wallet07:28=$8.1317910464/1.814h, auto-pay
+False,26h prepaid withreserve; maxproject83.9807183<100. No new purchase/resources.
+
+Next same122058 fullpaired20 ->same122071 independentspeech20 ->complete10
+semantic/receipt/audio review/ordinary4 ->eligible sealedfresh ->larger-run
+training decision. No passing subset/adoption. Reasoning32 semantic payload
+approval separately pending:0semanticrequests/conversion/training. Unrelated
+pyc/probes/roadmap preserved. Goal remains incomplete and active.
+
+---
+
 # LOCAL — all49 independent native replays exact; control restore live (24 October 07:29 UTC)
 
 Goal turn PROGRESS; previous turn PROGRESS. LOCAL sole executor. Main before

@@ -5,8 +5,10 @@
 The **control40 V11 adapter has completed all eight updates** on Runpod, starting
 from native520's adapters and Adam state. The training process exited0 at
 06:58:04 UTC. This supersedes the “not started” status in the dated23 October
-snapshot below. The candidate is **unadopted**: its separate full native restore
-is running, and its native behavioral evaluation has not yet run. Live process
+snapshot below. The candidate is **unadopted**. Its [complete fresh-process native restore and
+strict proof](NATIVE-CONTROL40-FULL-RESTORE-PASS-2026-10-24.json) passed at07:51 UTC.
+The complete paired native/independent speech evaluation has automatically launched;
+its behavioral results remain pending. Live process
 state belongs in [HANDOFF](../HANDOFF.md), not in the historical recipe exports.
 
 The [completed recipe](NATIVE-CONTROL40-COMPLETED-RECIPE-2026-10-24.json) is exported
@@ -41,10 +43,11 @@ original teacher-forced history components, token accuracy changes604/782 to
 includes every component. This is training diagnostics, not conversational
 accuracy. The loss evidence does not establish convergence or improvement.
 
-The fresh-process restore must reproduce all28 original, all49 acoustic, all49
-native-stream and all40 control fingerprints, plus exact Adam/RNG restoration.
-Then the already waiting dispatcher runs the complete10 development cases on
-baseline and candidate, followed by independent speech checks of all20 outputs.
+The fresh-process restore reproduced all28 original, all49 acoustic, all49
+native-stream and all40 control fingerprints, plus exact named Adam state and all
+four RNG families. All seven pipeline stages actually exited0. The dispatcher
+then launched the complete10 development cases on baseline and candidate, followed
+by independent speech checks of all20 outputs.
 All-case review and ordinary4/4 remain mandatory before sealed fresh measurement;
 fresh measurement permission does not establish adoption. A larger training run
 still requires conclusive restore, retention and native behavior evidence.

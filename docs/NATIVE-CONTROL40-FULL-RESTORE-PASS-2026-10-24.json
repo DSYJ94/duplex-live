@@ -1,0 +1,80 @@
+{
+  "schema": "dl-native-control40-complete-fresh-restore-and-proof-review-v1",
+  "at_utc": "2026-10-24T07:54:11.689864+00:00",
+  "source_commit": "c9efaaac24d983342f7eded46617e6450bc102ce",
+  "orchestration_commit": "a5958a0343383728639940c4eb82e31ca3aa96f2",
+  "training_pid": 101677,
+  "fresh_restore_pid": 115807,
+  "fresh_restore_birth": 26750060,
+  "strict_proof_pid": 121918,
+  "strict_proof_birth": 27070269,
+  "all7_actual_exit_codes_zero": true,
+  "upstream_supervisor_actually_ended": true,
+  "completed_updates": 8,
+  "exact_restored_inventories": {
+    "original_histories": 28,
+    "assistant_acoustic_teachers": 49,
+    "native_stream_teachers": 49,
+    "control_native_text_and_acoustic_teachers": 40
+  },
+  "all4_complete_inventory_dictionaries_exact": true,
+  "all_named_adapters_Adam_moments_and_state_and_all4_RNG_families_independently_compared_exact": true,
+  "Adam_clocks": [
+    528
+  ],
+  "exact_code_and_immutable_input_receipts_verified": true,
+  "source_assertions_reviewed": "Pinned C9 context_actual_train.py compares all adapter arrays, full optimizer state_dict, Torch CPU/CUDA, Python and NumPy RNG before replaying every inventory.",
+  "full_native_restore_passed": true,
+  "strict_proof_passed": true,
+  "verified_Mac_snapshot": "runs/local-migration-20261023/native-control40-continuous-copyback-v17/20261024T075140.913692Z",
+  "snapshot_files": 160,
+  "inventory_sha256": "17f3c294d9e8801386384af255c11a95637b741231a5b07e896ca35bb0cfd1f4",
+  "verified_final_files": {
+    "controller.json": {
+      "bytes": 51569,
+      "sha256": "400e17d98e3739c3700bd8a7e81e842c335f8b0c217ffbaf18fd931062ea4d22"
+    },
+    "strict_proof_verification.log": {
+      "bytes": 69,
+      "sha256": "846c701dbb3c3e92d7a35c2c4bdc97e40974e2aa63e63157b91a54dd6a06f760"
+    },
+    "independent_restore.log": {
+      "bytes": 301936,
+      "sha256": "842fa574bc19853ddfe2c2af1ff14e88620cd75353c374c10ac9e2445ce855e2"
+    },
+    "training/report.json": {
+      "bytes": 6345518,
+      "sha256": "500781444712ebb6368d534406ee25f663df4b511c6f920fae9e985db9aa5a18"
+    },
+    "training/reload-report.json": {
+      "bytes": 30733,
+      "sha256": "9dec1e0a98dd38c27c8366ef330b508665b0d71190f22c69b2ca52b362c3ffd3"
+    },
+    "training/immutable-input-training.json": {
+      "bytes": 1031,
+      "sha256": "07182ddd1afd587540e55191c31ec8eeb7f5e7c320f1bb58ad30c0dbbce4989d"
+    },
+    "training/immutable-input-reload.json": {
+      "bytes": 1029,
+      "sha256": "0dd3fbe9fbdb503569fe9ed100a65f7fc57be319c828eabaa5e10ab01c6d0221"
+    },
+    "training/approved-immutable-input-readiness.json": {
+      "bytes": 1032,
+      "sha256": "75f16c405274618dd3aa9318c526007fb81ae1bfce8ca850071fc3379983c772"
+    },
+    "training/adapters.safetensors": {
+      "bytes": 7580728,
+      "sha256": "0cb85b4a3b712ba5687e3e23dba6541891cbad954bde4a155ae9cb913517bcff"
+    },
+    "training/training-state.pt": {
+      "bytes": 22959307,
+      "sha256": "86dde08eb1591d0bc04a36c47be0dc7ee1b90019d7ae520f1d049cc37d8dc278"
+    }
+  },
+  "model_or_Torch_loaded_on_Mac": false,
+  "additional_GPU_or_optimizer_work_executed": false,
+  "behavior_qualified": false,
+  "model_adopted": false,
+  "training_extension_approved": false,
+  "scope": "Complete independent native training-state restoration and existing strict proof, not native behavioral qualification, convergence or adoption."
+}
