@@ -1,3 +1,31 @@
+# LOCAL — retained154 and all49 readiness PASS; joint8 still live
+
+Goal turn PROGRESS and verified wait. Substage report
+ docs/NATIVE-REASONING32-RETAINED-READINESS-2026-10-24.json records original154
+complete-gradient PASS and all49 exact streamed-gradient readiness PASS.
+All49 model parameters/execution unchanged, finite adapter gradients, frozen
+gradients0, unchanged.001 threshold; zero optimizer updates/checkpoint writes.
+This is NOT whole combined readiness, training or behavioral approval.
+
+Final report hashes: original154
+2c695e6006cc82af426903be3d0a5a813bfd4fafcae72f010acf47b53722c086;
+all49 c264e183ee0d61fb91b68b4b11e84d3c453410f76ce8676b7ecc15865635e2a3.
+Both copied via approved rsync exclusions to Mac
+runs/local-migration-20261023/native-reasoning32-retained-readiness-v17-final-v1.
+Exact remote/local hashes and pure complete49 gate rechecked, no Mac Torch/model.
+Copyback receipt native-reasoning32-retained-readiness-v17-copyback-v1.json.
+
+At13:28:21UTC controller8514/sourceDA389A7 is combined_readiness;
+child15566/birth39956182 is live,49 rows and0 joint partitions logged.
+Same Pod8fsk2kouknoiac, no new GPU submission. Next complete joint8 then automatic
+bounded8 training, independent full restore and complete20 evaluation.
+Local guard12953/backup38347/eval38348/proxy30380/tunnel30575 actual processes
+verified present. Hard stop18:39:58.8UTC unchanged, no purchase/GCP resource.
+Read-only observer66251 has a finite window; its expiry is not model termination.
+Recorded 2026-10-24T13:29:16.672774+00:00. Broader source backup remains PARTIAL.
+
+---
+
 # LOCAL — recipe exported; combined readiness29/49 live (24 October)
 
 Goal turn PROGRESS plus verified wait. Exact queued eight-update command,

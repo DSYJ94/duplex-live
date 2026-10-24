@@ -1,0 +1,39 @@
+{
+  "schema": "dl-native-reasoning32-retained-readiness-substage-v1",
+  "at_utc": "2026-10-24T13:28:49.298216+00:00",
+  "source_commit": "da389a7031a5504495397d1575952194ffa209f1",
+  "original154_passed": true,
+  "complete49_passed": true,
+  "exact_native_outputs": true,
+  "all_parameters_unchanged": true,
+  "all_gradients_finite": true,
+  "frozen_gradients": 0,
+  "optimizer_updates": 0,
+  "backup": {
+    "schema": "dl-native-reasoning32-retained-readiness-copyback-v1",
+    "at_utc": "2026-10-24T13:28:49.298216+00:00",
+    "source_commit": "da389a7031a5504495397d1575952194ffa209f1",
+    "files": [
+      {
+        "path": "native-stream49-gradient-readiness.json",
+        "bytes": 4199941,
+        "remote_sha256": "c264e183ee0d61fb91b68b4b11e84d3c453410f76ce8676b7ecc15865635e2a3",
+        "local_sha256": "c264e183ee0d61fb91b68b4b11e84d3c453410f76ce8676b7ecc15865635e2a3"
+      },
+      {
+        "path": "complete-balanced-preflight.json",
+        "bytes": 124838,
+        "remote_sha256": "2c695e6006cc82af426903be3d0a5a813bfd4fafcae72f010acf47b53722c086",
+        "local_sha256": "2c695e6006cc82af426903be3d0a5a813bfd4fafcae72f010acf47b53722c086"
+      }
+    ],
+    "complete49_pure_gate_rechecked": true,
+    "mac_model_or_torch_loaded": false,
+    "whole_combined_readiness_approved": false
+  },
+  "whole_combined_readiness_approved": false,
+  "training_started": false,
+  "behavior_qualified": false,
+  "model_adopted": false,
+  "next_action": "Complete all8 joint retained154/native49/control40/reasoning32 partitions before bounded8 fit"
+}

@@ -18,6 +18,12 @@ on Pod8fsk2kouknoiac. Its child15566 is live; the original154 complete-gradient
 preflight passed and29/49 retained native histories have logged exact forward
 hash parity. Complete49 and all eight joint partitions are still required.
 
+The later [retained-readiness substage report](NATIVE-REASONING32-RETAINED-READINESS-2026-10-24.json)
+records all49 PASS, in addition to original154 PASS. Both final reports have exact
+remote/Mac hash equality and the pure complete49 gate was rechecked locally.
+The eight joint partitions remain in progress; this does not change the planned
+status of training or imply behavioral improvement.
+
 The queued fit starts from native520, trains1,894,400 adapter parameters in26
 FP32 tensors across13 modules (rank8, scaling2), and keeps the7,689,623,552
 base parameters, Mimi and depth transformer frozen. It plans eight AdamW
