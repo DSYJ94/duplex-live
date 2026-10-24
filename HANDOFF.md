@@ -1,3 +1,39 @@
+# LOCAL — Exact input reconstruction prepared; durable verifier paths survive GPU reboot
+
+Heartbeat22:31UTC re-polled SAMEupload10044 and CPUrestore3415 LIVE; received
+67,322,211,824B/144GiBfree. No A100/model/newupdates; CPUdeadline00:55:15UTC25Oct.
+Runtime/ASR/DA completed earlier; don't duplicate. DeployedCPUstage staysf5c2ed0.
+
+New portable/context/native_gcp_inputs.py SOURCE ONLY, awaits actualfull40132/8
+hashpass. Rebuild exact oldphysical /opt/reasoning32-runtime-root-v12 with regular
+hardlinks for approvedmodels/runs/tmp/logs/worktrees; sourcearchive unmodified.
+Gitclone verified preserved publicbundles into exactContext79df/MoshiRag8c6d/
+finetune2acc paths; originalDA remainsclean. Fixed /projects,/lus,/workspace aliases,
+82snapshot links and strict existing saved8metadataaudit; NEVER run oldfit command.
+Old readiness receipt physically scoped Root12/runs and DA/runs; preserve those
+roots (emptyphysicalDA/runs), no expanded digest-cache scope/modeloutputcache.
+
+Important: CPUhost /tmp may disappear when disk boots on GPU. Five verifier roots
+are REGULAR independent copies under durable /workspace/gcp-verifier-inputs-v1,
+then READONLY bind to exact /tmp/duplex-reasoning32-verifier-v1 in each container.
+No symlink root accepted, no configJSON/audio/word/hash rewrite.17 filesystem/
+stage/destination fixtures PASS, notactualmodel. CLI/mounts/preparation/hashes:
+docs/GCP-NATIVE-INPUT-RECONSTRUCTION-2026-10-24.json.
+
+Operator first creates EMPTYRoot12 + fixedaliasparents owned1653480290. Newhelper,
+guards/controller must be Git-deployed in SEPARATEworktree; don't checkout over
+f5c2ed0 while CPUarchiveworker runs. GPUcontainer must bind originalDA, newproducer
+AND sharedGit /opt/duplex-recovery-source (worktree.git points there), Root12,
+/projects,/lus,/workspace and durabletmpbind; sameUID/GID avoids dubiousGitowner.
+
+Next finishfullstage, exactreconstructionCPU, then STOPCPU/detachsame250GBdisk,
+onefreshboundedA10080/native12hSTOP/discardlocalSSD, actualMac+hostguards, twofresh
+zero-update numerical/AdamRNGchildren, strictproof and unchangednativebehavior.
+Existingapprovals100USD/oneGPU/noextra storage/purchases/data/updates intact.
+Sharedhandoffcommit/push onlyrelevantfiles; unrelatedlocalwork preserved.
+
+---
+
 # LOCAL — Credential-free guest idle shutdown prepared; same upload/watcher healthy
 
 Heartbeat22:16UTC re-polled SAMEupload10044 and CPUrestore3415 LIVE. Observed

@@ -1,0 +1,45 @@
+{
+  "schema": "dl-gcp-native-exact-input-reconstruction-preparation-v1",
+  "at_utc": "2026-10-24T22:45:19.451443+00:00",
+  "parent_source": "a6dab9f",
+  "implementation_sha256": {
+    "portable/context/native_gcp_inputs.py": "38056eb54c3e87d443d8750cddf728cd0f6a9be4749506469ef2f0600c09bef7",
+    "evals/harness/test_native_gcp_inputs.py": "0c4a916f2a449a8a566523b576975203afb52a53f336cb2e5355bf2ac3a82f5b"
+  },
+  "status": "PREPARED_NOT_RUN_AWAITING_FULL_DESTINATION",
+  "focused_filesystem_tests_passed": 17,
+  "cli": [
+    "--root",
+    "--destination-report",
+    "--out"
+  ],
+  "operator_preparation": [
+    "Only after actual full destination receipt passes",
+    "Create /opt/reasoning32-runtime-root-v12 EMPTY and owned by OSLogin UID1653480290/GID1653480290; helper refuses nonempty runtime",
+    "Create fixed alias parent directories /projects/u6si and /lus/lfs1aip2/projects/u6si for that user; aliases themselves must not exist",
+    "Execute from a separately Git-deployed current producer; do not change running CPUstage sourcef5c2ed0"
+  ],
+  "data_actions": [
+    "Regular hardlinks for catalogued models/runs/tmp/logs/worktrees into exact old /opt/reasoning32-runtime-root-v12",
+    "Separate Git clones from verified preserved bundles: ContextSpanning79df302f sparsecontextspan/docs, MoshiRag8c6dfc10, finetune2acc879f; originals untouched",
+    "Exact /projects and /lus and /workspace/duplex-live aliases",
+    "Empty physical originalDA/runs to preserve cache scope",
+    "Five regular independent verifier-tree copies under durable /workspace/gcp-verifier-inputs-v1; never rely on host/tmp surviving reboot",
+    "Complete82file snapshot hardlinks and existing strict saved8 metadata audit",
+    "Presence-check every original absolute CLI input; NEVER execute old bounded8 command"
+  ],
+  "gpu_container_requirements": [
+    "Bind /workspace RW for new outputs/runtime",
+    "Bind original physical /opt/reasoning32-runtime-root-v12 at same path",
+    "Bind originalDA /opt/duplex-reasoning32-da389a7-v15 at same path",
+    "Bind separately deployed producer worktree AND shared Git repository /opt/duplex-recovery-source at same paths; worktree.git references shared repo",
+    "Bind /projects and /lus at same paths",
+    "Bind /workspace/gcp-verifier-inputs-v1 to /tmp/duplex-reasoning32-verifier-v1 READONLY; roots remain real directories, never symlinks",
+    "Run with OSLogin UID/GID1653480290 to preserve Git ownership; HOME=/workspace/gcp-runtime-home; no credentials passed",
+    "Keep all model/checkpoint/data on250GB persistentdisk, not disposablelocalSSD"
+  ],
+  "actual_input_reconstruction_executed": false,
+  "actual_model_loaded": false,
+  "new_optimizer_updates": 0,
+  "next_action": "Finish current full CPU archive stage. Git-deploy prepared helper/guards/controller in separate worktree, reconstruct/audit these inputs on CPU, then use the approved separate bounded A100."
+}
