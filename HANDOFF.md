@@ -1,3 +1,36 @@
+# LOCAL — late-start contingency prepared; original job unchanged
+
+Goal turn PROGRESS. Added native_reasoning_readiness_followup.py and five focused
+adversarial tests. Complete31 related offline checks PASS in existing .venv-api;
+no model/Torch workload on Mac. Initial system-Python broader test attempt lacked
+NumPy; rerunning in existing dependency environment resolved it without installs.
+Model/math sourceDA389A7, all thresholds, original28/154/native49/control40 and new32
+losses, optimizer recipe and eight-update limit unchanged. No successor launched.
+
+Concrete scope docs/NATIVE-REASONING32-READINESS-REUSE-CONTINGENCY-2026-10-24.json.
+Only if exact controller8514/birth39640315 terminates AFTER complete exit0 readiness
+but BEFORE ANY FIT due solely to its three-hour start-window refusal, a distinct
+V18 controller may reuse complete approvals and execute the identical planned
+fit/restore/strict proof. Original command bound to committed SHA8f33eb01b23b8e095d263321e714b059f519dc6f848a3f4059ddcb3f393ac2de.
+New controller deadline18:10UTC, latest fit start15:10, still three hours headroom
+and one-hour restore reserve. Existing Pod hard18:39:58.8UTC and conservative
+98.80071830424945 compute maximum unchanged. No budget extension or purchase.
+Reject any audit failure, missing stage, changed source, live controller, prior
+training output, partial32/49 or occupied GPU. Independent restore/full20/fresh
+behavior gates remain; never adopt from readiness. Backup whitelist adds only
+fixed synthetic/model output root native-reasoning32-retained-pilot-v18.
+
+At14:05:44UTC original child15566/birth39956182 was live,3/8 joint partitions
+finite, frozen gradients0; no new optimizer update. Continue observing original
+until actual terminal or its own training dispatch; do not duplicate it. Existing
+backup38347 and eval38348 remain bound to V17 until any actual takeover is proven.
+GCP quota case remains submitted, no duplicate request and no GCP GPU. Original
+award plus public services definition support documentary Compute GPU eligibility;
+actual credit billing application remains unmeasured, evidence local/private.
+Recorded 2026-10-24T14:15:10.684463+00:00. Unrelated local work preserved.
+
+---
+
 # LOCAL — dedicated GCP project created; Runpod joint readiness live
 
 Goal turn PROGRESS. User authorized a dedicated project in the existing GCP

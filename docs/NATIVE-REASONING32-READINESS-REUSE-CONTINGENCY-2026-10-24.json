@@ -1,0 +1,50 @@
+{
+  "schema": "dl-native-reasoning32-readiness-reuse-contingency-v1",
+  "at_utc": "2026-10-24T14:15:10.682329+00:00",
+  "status": "PREPARED_NOT_DISPATCHED",
+  "reason": "Observed audit duration may cross the original pre-fit three-hour headroom gate; preserve completed approvals without repeating GPU audits",
+  "original": {
+    "pid": 8514,
+    "birth": 39640315,
+    "source_commit": "da389a7031a5504495397d1575952194ffa209f1",
+    "pod_id": "8fsk2kouknoiac",
+    "out": "/workspace/migration/native-reasoning32-retained-pilot-v17",
+    "controller_deadline_utc": "2026-10-24T17:45:00Z"
+  },
+  "required_before_dispatch": [
+    "Original controller actually terminal, exact source and Pod identity unchanged",
+    "Original whole_workset, gradient32 and combined_readiness stages each actual exit0",
+    "Original terminal failure exactly TimeoutError: Insufficient bounded headroom for bounded8_training",
+    "Original training output absent; no prior optimizer attempt",
+    "Full8 joint readiness pure approval and exact Engine/numerical/gradient hashes",
+    "Exact original fit command SHA256 equals separately committed planned recipe",
+    "Clean unchanged model source, compiled BF16 runtime, fresh same-Pod cost guard",
+    "Exclusive same-Pod GPU lease; no active GPU process; new output directory"
+  ],
+  "successor": {
+    "controller": "portable/context/native_reasoning_readiness_followup.py",
+    "out": "/workspace/migration/native-reasoning32-retained-pilot-v18",
+    "controller_deadline_utc": "2026-10-24T18:10:00Z",
+    "latest_fit_start_utc": "2026-10-24T15:10:00Z",
+    "optimizer_updates": 8,
+    "original_fit_command_sha256": "8f33eb01b23b8e095d263321e714b059f519dc6f848a3f4059ddcb3f393ac2de",
+    "only_model_command_change": "new output directory; completed original readiness paths retained",
+    "independent_restore_and_strict_proof_required": true,
+    "fit_headroom_hours": 3,
+    "restore_reserve_hours": 1
+  },
+  "budget": {
+    "hard_pod_termination_utc": "2026-10-24T18:39:58.8Z",
+    "deadline_or_purchase_extension": false,
+    "project_compute_cap_usd": 100,
+    "prior_conservative_maximum_usd": 98.80071830424944,
+    "extra_gpu_or_paid_api_requests": 0
+  },
+  "evaluation": "Complete native20 and independent speech20 remain required; no partial-set qualification or adoption. Existing dispatcher stays bound to original controller until an actual successor launch is verified; any rebind requires exact new PID/birth/source and full restore.",
+  "verification": {
+    "offline_tests": 31,
+    "passed": true,
+    "mac_model_workloads": false
+  },
+  "adopted": false
+}
