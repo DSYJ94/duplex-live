@@ -1,3 +1,63 @@
+# LOCAL — full49 native gradient readiness PASS and backed up (24 October 02:59 UTC)
+
+Goal turn PROGRESS. LOCAL remains sole executor. Source reviewed
+024be30c30b27dc8b9fbc54b5503ee4d19184575. Execution
+c9efaaac24d983342f7eded46617e6450bc102ce and supervisor
+2e652ce06354abdf996447662231cd79cab9161f remain pinned and unchanged.
+
+ACTUAL full49 gradient readiness PASS by02:54:45: all old25/new24,23,078 recorded
+native calls,22,992 gradient calls. Every case has exact grad/no-grad forward
+hashes, all26 finite/present adapter gradients, frozen gradients0, unchanged
+parameters/execution. Norm range1.839457485394395–13.998120632135462; peak
+22,023,353,856 bytes. BF16 native MATH, matmul TF32 off/FP32 highest; cuDNN disabled.
+No BF16 batch/stream
+numerical equivalence claim or threshold relaxation. Complete154 remains PASS.
+The native49 report is4,199,941 bytes, SHA
+26ee9b0f55c4331736fe71076f4d3364aa534df598bf11f7b6f112fd1b929acc.
+
+CPU-only independent metadata review ran the EXISTING C9 check_readiness validator,
+bound the policy to prior complete154, verified all49 original manifest/capture
+bindings, source/implementation and actual native520 adapter hash. No Torch import,
+model load or second GPU gradient execution. Review4,693B is Mac+volume hash matched:
+791f241d5a660d6f7d5ae34a1c5785af6acc465fe650b8aca5c47a7532ce6753.
+Full native49 raw report is preserved in closed automatic snapshot
+20261024T025434.033302Z:84 files/1,181,390,829 bytes fully verified by watcher.
+Inventory SHA2721de1edca5c1391db82aa31f26e160fe903b02fec0972c0a42dfd7ed8a6161;
+local inventory and native49 report hashes crosschecked against remote review.
+81 verified files reused;4,573,825 logical bytes transferred. No source backups deleted.
+
+Actual02:58:54: supervisor79780/birth24607807 S; SAME CUDA71818/birth24130859 R,
+only GPU process; original71679/birth24121629 intentionally T. Now executing
+combined partitions,0/8 completed as of that observation. Zero new optimizer
+updates; no training-state file. Do NOT restart readiness or resume paused parent.
+Use phase-aware READ-ONLY observer /private/tmp/duplex-v9-progress-observer-v2.py
+(PYTHONPATH=.,PYTHONDONTWRITEBYTECODE=1,local3.12env). Preserved copy under runs/
+local-migration-20261023/native-control40-live-observer-v2.py. It separately reports
+combined partitions, logged optimizer steps and checkpoint stat; never loads weights
+or optimizer contents. Prior v1 lacks the later-phase progress fields.
+
+Guard70540, backup71453, evaluation71424 and proxy71254 actual live at02:58.
+Pipeline09:00; funded Pod shutdown10:22:37.9; evaluation latest09:37/end10:17;
+backup/proxy to10:20. Wallet actual02:56:29=$16.2995052021,rate1.814/h,auto-payFalse;
+26h required15.802313429625 including billing-lag/shutdown reserve, fully prepaid.
+Maxproject83.98071830424945<100. No new purchase, submission or deadline change.
+Backend runv7 actualrequests0,healthy. Full original native archive preserved;
+broader stopped Mac source backup PARTIAL. Unrelated local edits preserved.
+
+Storage read: provider confirms49yytzyoge100GB STANDARD/EUR-IS-1, no usage field.
+Metadata-only walk02:53 completed58,930 paths/no errors in6.61s:89,454,987,264
+allocated bytes by unique inode;92,988,285,402 logical bytes across file paths.
+Estimate only, not provider quota accounting; no file contents read/resize/deletion.
+Sufficient estimated room for the small upcoming outputs; no storage change needed.
+
+Next: same child ->all8 combined partitions ->ONE8 from520 ->independent Adam/RNG/
+native restore/proof ->complete paired20/speech20 and ordinary4 ->eligible sealedfresh.
+No model/behavior qualification or larger run yet. Distinct reasoning32 semantic
+payload approval still pending;0semantic requests/conversion/reasoning32training.
+See docs/NATIVE-CONTROL40-FULL49-GRADIENT-2026-10-24.json for exact receipts.
+
+---
+
 # LOCAL — old25 gradient traces complete; whole49 still pending (24 October 02:10 UTC)
 
 Goal turn: verified wait plus preserved workload/funding evidence. LOCAL remains

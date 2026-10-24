@@ -1,0 +1,256 @@
+{
+  "schema": "dl-native-control40-full49-gradient-milestone-v1",
+  "recorded_utc": "2026-10-24T03:00:36.185700+00:00",
+  "source_commit": "024be30c30b27dc8b9fbc54b5503ee4d19184575",
+  "execution_commit": "c9efaaac24d983342f7eded46617e6450bc102ce",
+  "supervision_commit": "2e652ce06354abdf996447662231cd79cab9161f",
+  "native49": {
+    "passed": true,
+    "cases": 49,
+    "old25_and_new24": true,
+    "report_bytes": 4199941,
+    "report_sha256": "26ee9b0f55c4331736fe71076f4d3364aa534df598bf11f7b6f112fd1b929acc",
+    "native_call_count": 23078,
+    "gradient_call_count": 22992,
+    "all_exact_grad_vs_no_grad_hashes": true,
+    "all_parameters_and_execution_unchanged": true,
+    "all26_gradients_present_and_finite_each_case": true,
+    "frozen_parameter_gradients": 0,
+    "gradient_norm_min": 1.839457485394395,
+    "gradient_norm_max": 13.998120632135462,
+    "peak_allocated_bytes": 22023353856,
+    "execution": {
+      "torch": "2.9.0a0+145a3a7bda.nv25.10",
+      "cuda": "13.0",
+      "device": "NVIDIA A100-SXM4-80GB",
+      "capability": [
+        8,
+        0
+      ],
+      "cudnn": false,
+      "cudnn_sdp": false,
+      "flash_sdp": false,
+      "mem_efficient_sdp": false,
+      "math_sdp": true,
+      "matmul_tf32": false,
+      "cudnn_tf32": true,
+      "bf16_reduction": true,
+      "float32_precision": "highest",
+      "deterministic_algorithms": false,
+      "cudnn_deterministic": false,
+      "cudnn_benchmark": false,
+      "threads": 8,
+      "parameter_dtypes": {
+        "torch.bfloat16": 475,
+        "torch.float32": 26
+      },
+      "environment": {
+        "NO_CUDA_GRAPH": null,
+        "NO_TORCH_COMPILE": null,
+        "TORCH_CUDNN_SDPA_ENABLED": null,
+        "CUBLAS_WORKSPACE_CONFIG": null
+      }
+    },
+    "parent_native520_checkpoint_sha256": "0310c2563988f8f59d942dce98119230016136f13fc9729ad1c2f398318e7cb5",
+    "implementation_sha256": "9bbfde02a98d18d379f90002e116db788c7489a6a36216a7fd0b35814ac3a015",
+    "complete154_policy_sha256": "b99575a23cf16365a26a3033aee03c292a9afb665087b85c6a3dc6d82bae5638"
+  },
+  "metadata_review": {
+    "local": "runs/local-migration-20261023/native-control40-full49-metadata-review-v1.json",
+    "volume": "/workspace/migration/native-control40-full49-metadata-review-v1.json",
+    "bytes": 4693,
+    "sha256": "791f241d5a660d6f7d5ae34a1c5785af6acc465fe650b8aca5c47a7532ce6753",
+    "Mac_and_volume_hashes_identical": true,
+    "scope": "Independent CPU-only metadata/binding review of the actual complete49 gradient report using its existing validator; no second gradient execution.",
+    "second_GPU_execution_claimed": false
+  },
+  "backup": {
+    "schema": "dl-native-control40-full49-copyback-crosscheck-v1",
+    "snapshot": {
+      "path": "runs/local-migration-20261023/native-control40-continuous-copyback-v14/20261024T025434.033302Z",
+      "files": 84,
+      "inventory_sha256": "2721de1edca5c1391db82aa31f26e160fe903b02fec0972c0a42dfd7ed8a6161",
+      "reused_verified_files": 81,
+      "reused_verified_bytes": 1176817004,
+      "transferred_file_bytes": 4573825
+    },
+    "inventory_files": 84,
+    "inventory_bytes": 1181390829,
+    "native49_report_path": "runs/local-migration-20261023/native-control40-continuous-copyback-v14/20261024T025434.033302Z/native-control40-precise-pilot-v8-recovery/combined-readiness/native-stream49-gradient-readiness.json",
+    "native49_report_sha256": "26ee9b0f55c4331736fe71076f4d3364aa534df598bf11f7b6f112fd1b929acc",
+    "native49_report_bytes": 4199941,
+    "inventory_and_report_hashes_rechecked": true,
+    "full84_file_hash_verification_completed_by_continuous_watcher": true,
+    "new_optimizer_updates": 0,
+    "training_approved": false
+  },
+  "latest_actual_process_observation": {
+    "schema": "dl-native-control40-live-observer-v2",
+    "at_utc": "2026-10-24T02:58:54.154420+00:00",
+    "controller": {
+      "pid": 79780,
+      "birth": 24607807,
+      "state": "S",
+      "CPU_seconds": 7.93
+    },
+    "phase": "combined_readiness",
+    "controller_passed": false,
+    "controller_error": null,
+    "child": {
+      "pid": 71818,
+      "birth": 24130859,
+      "state": "R",
+      "CPU_seconds": 11817.62
+    },
+    "child_identity_matches_recorded_birth": true,
+    "original_parent": {
+      "pid": 71679,
+      "birth": 24121629,
+      "state": "T",
+      "CPU_seconds": 12.37
+    },
+    "complete_native49_rows": 49,
+    "all_logged_rows_exact": true,
+    "unique_logged_teacher_ids": 49,
+    "combined_partitions_completed": [],
+    "combined_partition_sequence_valid": true,
+    "logged_completed_optimizer_updates": [],
+    "logged_update_sequence_valid": true,
+    "training_state_file": null,
+    "training_report_passed": null,
+    "training_report_optimizer_steps": null,
+    "independent_restore_passed": null,
+    "stages": [
+      {
+        "name": "whole_workset",
+        "pid": 4122,
+        "birth": 18985364,
+        "exit_code": 0
+      },
+      {
+        "name": "complete40_precise_numerical",
+        "pid": 4216,
+        "birth": 18993883,
+        "exit_code": 0
+      },
+      {
+        "name": "complete40_independent_BF16_gradient",
+        "pid": 14873,
+        "birth": 20219598,
+        "exit_code": 0
+      },
+      {
+        "name": "combined_readiness",
+        "pid": 71818,
+        "birth": 24130859,
+        "exit_code": null
+      }
+    ],
+    "pipeline_deadline_utc": "2026-10-24T09:00:00+00:00",
+    "readiness_reports": {
+      "complete-balanced-preflight.json": true,
+      "native-stream49-gradient-readiness.json": true,
+      "control40-combined-readiness.json": null
+    },
+    "GPU": "47 %, 24239 MiB",
+    "GPU_compute_PIDs": [
+      "71818"
+    ],
+    "read_only_observation_not_qualification": true,
+    "backend_health": {
+      "run_id": "native-control40-20261023-v7",
+      "actual_requests": 0,
+      "real_requests_transport": true
+    }
+  },
+  "funding": {
+    "at_utc": "2026-10-24T02:56:29.472025+00:00",
+    "wallet": {
+      "clientBalance": 16.2995052021,
+      "currentSpendPerHr": 1.814,
+      "isAutoPayEnabled": false
+    },
+    "same_pod": "4yx8vahdmjsylx",
+    "same_volume": "49yytzyoge",
+    "funding_options": [
+      {
+        "lifetime_hours": 24,
+        "deadline_utc": "2026-10-24T08:22:37.900000+00:00",
+        "required_remaining_wallet_USD": 12.174313429625,
+        "fully_prepaid_with_one_hour_reserve": true,
+        "project_compute_cap_USD": 80.40071830424947
+      },
+      {
+        "lifetime_hours": 26,
+        "deadline_utc": "2026-10-24T10:22:37.900000+00:00",
+        "required_remaining_wallet_USD": 15.802313429625,
+        "fully_prepaid_with_one_hour_reserve": true,
+        "project_compute_cap_USD": 83.98071830424945
+      },
+      {
+        "lifetime_hours": 27,
+        "deadline_utc": "2026-10-24T11:22:37.900000+00:00",
+        "required_remaining_wallet_USD": 17.616313429625002,
+        "fully_prepaid_with_one_hour_reserve": false,
+        "project_compute_cap_USD": 85.77071830424946
+      },
+      {
+        "lifetime_hours": 34,
+        "deadline_utc": "2026-10-24T18:22:37.900000+00:00",
+        "required_remaining_wallet_USD": 30.314313429625,
+        "fully_prepaid_with_one_hour_reserve": false,
+        "project_compute_cap_USD": 98.30071830424946
+      }
+    ],
+    "new_credit_purchase": false
+  },
+  "volume": {
+    "provider_read": {
+      "tool": "get_network_volume",
+      "id": "49yytzyoge",
+      "dataCenter": "EUR-IS-1",
+      "name": "duplex-native-preservation-s3-20261021",
+      "size": 100,
+      "type": "STANDARD"
+    },
+    "metadata_size_walk": {
+      "schema": "dl-native-volume-metadata-size-walk-v1",
+      "at_utc": "2026-10-24T02:53:20.473275+00:00",
+      "root": "/workspace",
+      "complete": true,
+      "scan_seconds": 6.607105335016968,
+      "files": 58930,
+      "unique_file_inodes": 58675,
+      "directories": 8469,
+      "symlinks_not_followed": 166,
+      "metadata_errors": 0,
+      "logical_bytes_all_paths": 92988285402,
+      "logical_bytes_unique_inodes": 89439648071,
+      "allocated_bytes_unique_inodes": 89454987264,
+      "provider_volume_id": "49yytzyoge",
+      "provider_allocated_GB": 100,
+      "provider_used_bytes_not_exposed_by_volume_read": true,
+      "file_contents_read": false,
+      "files_or_resources_changed": false,
+      "limitation": "Metadata estimate with hard links counted once. Not an authoritative provider quota-usage read; mutable outputs may grow during the scan."
+    },
+    "storage_changed": false
+  },
+  "observer": {
+    "path": "/private/tmp/duplex-v9-progress-observer-v2.py",
+    "preserved_local": "runs/local-migration-20261023/native-control40-live-observer-v2.py",
+    "sha256": "97ac9140edc497c8728dc0cf29d5203f5cdfdc1f1df2d82d2e3d4cdc846d6191",
+    "reads_logs_and_checkpoint_stat_only": true,
+    "model_or_training_state_contents_loaded": false
+  },
+  "qualification": {
+    "combined_readiness_pending": true,
+    "combined_partitions_completed": [],
+    "new_optimizer_updates": 0,
+    "training_state_file_present": false,
+    "independent_restore_pending": true,
+    "behavior_pending": true,
+    "training_extension_or_adoption_approved": false
+  },
+  "next_action": "Preserve the same71818 child through all8 combined partitions; then original ONE8 from520, independent Adam/RNG/native restore/proof and full paired20/speech20 before any larger-run decision. No readiness restart."
+}

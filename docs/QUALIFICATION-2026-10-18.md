@@ -1,3 +1,14 @@
+24 October02:59UTC — Full49 native gradient readiness ACTUAL PASS (old25+new24):
+all exact grad/no-grad outputs, all26 gradients finite/present, frozen0, parameters
+unchanged, peak22.023GB. Existing validator and all49 bindings independently checked
+CPU-only; no second GPU execution. Raw4,199,941B report SHA26ee9b0f55c4331736fe71076f4d3364aa534df598bf11f7b6f112fd1b929acc
+preserved in full84-file/1.181GB verified snapshot; inventory/report crosschecked.
+Same child71818 now on combined partitions(0/8 as of02:58),0optimizer updates,
+no checkpoint/restore/behavior approval. Existing funded guard and strict pipeline
+unchanged. See newestHANDOFF and NATIVE-CONTROL40-FULL49-GRADIENT-2026-10-24.json.
+
+---
+
 24 October 02:10 UTC — Same child71818 live,25/49 exact gradient traces (all old25).
 All new24, full49 and combined readiness still pending; full154 PASS,0new updates.
 Measured11,471/23,078 recorded-call positions covered; each trace checks both
