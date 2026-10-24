@@ -30,7 +30,11 @@ FORBIDDEN={'session-token','.private','.env','keys','credentials','core','quaran
            'owner-conversations','owner_conversations'}
 
 
-def sha(path):return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+def sha(path):
+    digest=hashlib.sha256()
+    with Path(path).open('rb')as stream:
+        for block in iter(lambda:stream.read(4*1024*1024),b''):digest.update(block)
+    return digest.hexdigest()
 
 
 def marker(base):
@@ -58,7 +62,7 @@ def marker(base):
         if path.exists():
             value=json.loads(path.read_text());values.append([name,len(value['results']),sha(path)])
     for name in (root+'/'+file for root in ROOTS[2:] for file in
-                 ('training/training-state.pt','training/report.json','training/reload-report.json',
+                 ('training/training-state.pt','training/adapters.safetensors','training/report.json','training/reload-report.json',
                   'combined-readiness/control40-combined-readiness.json',
                   'combined-readiness/native-stream49-gradient-readiness.json',
                   'combined-readiness/complete-balanced-preflight.json',
@@ -66,6 +70,16 @@ def marker(base):
                   'combined-readiness/parent-adam-import.json')):
         path=base/name
         if path.exists():values.append([name,path.stat().st_size,path.stat().st_mtime_ns])
+    # Preserve intermediate audit evidence every ten completed fingerprints,
+    # including each exact final count. Avoid copying a large snapshot per case.
+    for root in ROOTS[2:]:
+        for file in ('bounded8_training.log','independent_restore.log'):
+            path=base/root/file
+            if not path.is_file():continue
+            content=path.read_text()
+            native=content.count('"native_stream_restore_fingerprint":')
+            control=content.count('"control40_restore_fingerprint":')
+            values.append([str(path.relative_to(base)),native//10,native==49,control//10,control==40])
     return hashlib.sha256(json.dumps(values,separators=(',',':')).encode()).hexdigest()
 
 

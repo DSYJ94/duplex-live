@@ -6,10 +6,44 @@ import shlex
 import shutil
 import subprocess
 
-from portable.context.native_control_copyback import ROOTS,snapshot,verify,ssh_command,inventory_rows,reuse_local_files,receive_snapshot
+from portable.context.native_control_copyback import ROOTS,snapshot,verify,ssh_command,inventory_rows,reuse_local_files,receive_snapshot,sha,marker
 
 
 class ControlCopyback(unittest.TestCase):
+    def test_large_file_hash_includes_multiple_chunks_and_non_aligned_tail(self):
+        import hashlib
+        with tempfile.TemporaryDirectory()as directory:
+            p=Path(directory)/'tensor.pt';data=bytes(range(256))*(32768+1)+b'nonaligned tail'
+            p.write_bytes(data)
+            self.assertEqual(sha(p),hashlib.sha256(data).hexdigest())
+
+    def test_adapter_file_triggers_backup_before_final_report(self):
+        with tempfile.TemporaryDirectory()as directory:
+            base=Path(directory);root=base/'native-control40-precise-pilot-v11-environment-retry'
+            root.mkdir();(root/'controller.json').write_text('{"phase":"bounded8_training"}')
+            first=snapshot(base);training=root/'training';training.mkdir()
+            p=training/'adapters.safetensors';p.write_bytes(b'final standalone adapter')
+            second=snapshot(base,first['marker']);self.assertTrue(second['changed'])
+            self.assertEqual((Path(second['snapshot'])/p.relative_to(base)).read_bytes(),p.read_bytes())
+
+    def test_training_and_restore_fingerprints_trigger_coarse_milestones_not_each_case(self):
+        with tempfile.TemporaryDirectory()as directory:
+            base=Path(directory);root=base/'native-control40-precise-pilot-v11-environment-retry';root.mkdir()
+            path=root/'bounded8_training.log';path.write_text('')
+            zero=marker(base)
+            def write(n,c=0):
+                path.write_text(('"native_stream_restore_fingerprint":\n'*n)+('"control40_restore_fingerprint":\n'*c))
+            write(9);self.assertEqual(marker(base),zero)
+            write(10);ten=marker(base);self.assertNotEqual(ten,zero)
+            write(19);self.assertEqual(marker(base),ten)
+            write(40);forty=marker(base)
+            write(49);final49=marker(base);self.assertNotEqual(final49,forty)
+            write(49,9);self.assertEqual(marker(base),final49)
+            write(49,10);self.assertNotEqual(marker(base),final49)
+            restore=root/'independent_restore.log';restore.write_text('')
+            before=marker(base);restore.write_text('"native_stream_restore_fingerprint":\n'*10)
+            self.assertNotEqual(marker(base),before)
+
     def test_quota_recovery_stages_snapshots_outside_source_volume_and_reuses_verified_bytes(self):
         with tempfile.TemporaryDirectory()as directory, tempfile.TemporaryDirectory()as disk:
             base=Path(directory);root=base/'native-control40-precise-pilot-v10-quota-retry/training'
