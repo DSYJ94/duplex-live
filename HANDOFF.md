@@ -1,3 +1,30 @@
+# LOCAL — user credit posted; no GPU rental during launch preparation (24 October)
+
+User reports the top-up is complete and asks for intentional credit use. Read-only
+Runpod wallet verification:17.7461412984USD, account spend0.01USD/hour. No project
+GPU Pod is running; no assistant purchase was made. This supersedes the unanswered
+purchase status below. The100USD project compute cap remains; additional wallet
+credit does not increase it. Preserve volume49yytzyoge. Never reconnect old Pod.
+See docs/NATIVE-USER-TOPUP-READBACK-2026-10-24.json.
+
+Retained trainer integration is now prepared: complete reasoning32 objective,
+combined readiness retaining154/native49/control40, exact independent full32
+restore, and native development candidate routing.19 lightweight offline tests
+pass; CLI help exposes all32 options without importing Torch. Numerical reference
+math remains unchanged. No model/ASR work or CPU throttling on Mac.
+This is source validation, NOT GPU numerical/gradient/optimizer approval.
+
+Next: finish replacement launch/controller preparation before renting a GPU;
+recheck current rate and remaining project cap, arm a fresh identity-bound finite
+shutdown guard, then run complete numerical32 in a NEW output version with
+sufficient headroom. Only after all32 numerical, gradient and combined readiness
+pass may the bounded eight-update pilot run, followed by independent complete
+restore and native behavior evaluation. Stop early on a blocker; do not pay for
+idle source development. Old partial14 and all failed evidence remain preserved.
+LOCAL remains sole executor; no duplicate submissions.
+
+---
+
 # LOCAL — prepaid Pod terminated; volume and verified artifacts retained (24 October10:22UTC)
 
 Goal turn PROGRESS. Main before this receiptf8a0fc0. LOCAL sole executor remains.

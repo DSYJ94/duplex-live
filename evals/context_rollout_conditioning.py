@@ -8,6 +8,9 @@ def verify_checkpoint(proof):
     from evals.context_spanning_download import SOURCE_COMMIT
     proof=Path(proof)
     report=json.loads((proof/'report.json').read_text());reload=json.loads((proof/'reload-report.json').read_text())
+    if report['schema']=='dl-native-reasoning32-retained154-stream49-control40-proof-v1':
+        from evals.native_reasoning_stage import verify_checkpoint as verify_reasoning32
+        return verify_reasoning32(proof)
     if report['schema']=='dl-native-control40-retained154-stream49-proof-v1':
         from evals.native_control_stage import verify_checkpoint as verify_control40
         return verify_control40(proof)

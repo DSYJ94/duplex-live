@@ -115,6 +115,9 @@ def main():
     ap.add_argument('--native-audio49-complete-batch',action='store_true')
     for name in ('cache','engine','numerical','gradient','parent-review','development-evidence'):
         ap.add_argument('--control40-'+name,type=Path)
+    from evals.native_reasoning_stage import FIELDS as reasoning_fields
+    for name in reasoning_fields:
+        ap.add_argument('--reasoning32-'+name.replace('_','-'),type=Path)
     ap.add_argument('--reload', action='store_true')
     ap.add_argument('--history-audit-only', action='store_true')
     ap.add_argument('--history-audit', action='store_true')
@@ -135,6 +138,8 @@ def main():
     validate_audio49(args)
     from evals.native_control_stage import validate as validate_control40
     validate_control40(args)
+    from evals.native_reasoning_stage import validate as validate_reasoning32
+    validate_reasoning32(args)
     if args.native_v2_gradient_audit and (not args.native_v2_cache or args.reload or args.resume_training):
         ap.error('Native-v2 gradient diagnosis needs the complete warm-start corpus and zero optimizer/reload')
     if args.teacher_engine_native_audio and (not args.teacher_engine_input_audit

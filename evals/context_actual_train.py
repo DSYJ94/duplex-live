@@ -127,6 +127,10 @@ def run(lm, spm, voice, examples, components, audits, args):
     if getattr(args,'control40_cache',None):
         from evals.native_control_stage import prepare as prepare_control40
         control_policy,control_bound=prepare_control40(args,warm_start)
+    reasoning_policy=None;reasoning_bound=None
+    if getattr(args,'reasoning32_cache',None):
+        from evals.native_reasoning_stage import prepare as prepare_reasoning32
+        reasoning_policy,reasoning_bound=prepare_reasoning32(args,warm_start,control_policy,audio49_policy)
     def forward(inputs): return lm.forward_codes(inputs)
     def digests():
         result = {}
@@ -180,6 +184,7 @@ def run(lm, spm, voice, examples, components, audits, args):
                 **({'retention_teacher_text':teacher} if teacher else {}),
                 **({'additional_native_v2':additional_policy} if additional_policy else {}),
                 **({'control40':control_policy} if control_policy else {}),
+                **({'reasoning32':reasoning_policy} if reasoning_policy else {}),
                 **({'warm_ordinary_retention':warm_policy} if warm_policy else {}),
                 **({'warm_ordinary_clock_retention':clock_policy} if clock_policy else {}),
                 'text_pad3_loss_weight':.5,
@@ -227,7 +232,9 @@ def run(lm, spm, voice, examples, components, audits, args):
                 batches,audits,args,forward,warm_policy)
         if args.reload:
             report = json.loads((args.out/'report.json').read_text())
-            if control_policy:
+            if reasoning_policy:
+                from evals.native_reasoning_stage import SCHEMA as expected_schema
+            elif control_policy:
                 from evals.native_control_stage import SCHEMA as expected_schema
             else:expected_schema='dl-context-actual-audio49-adapter-proof-v1' if audio49_policy else 'dl-context-actual-adapter-proof-v1'
             if (report['schema'] != expected_schema or report['frozen_hashes'] != frozen
@@ -282,6 +289,12 @@ def run(lm, spm, voice, examples, components, audits, args):
                 control_actual=control_fingerprints(lm,control_bound)
                 if control_actual!=report['expected_native_control40_logits']:
                     raise RuntimeError('Independent all40 control text/audio restoration changed')
+            reasoning_actual=None
+            if reasoning_policy:
+                from evals.native_reasoning_training import fingerprints as reasoning_fingerprints
+                reasoning_actual=reasoning_fingerprints(lm,reasoning_bound)
+                if reasoning_actual!=report['expected_native_reasoning32_logits']:
+                    raise RuntimeError('Independent all32 reasoning text/audio restoration changed')
             actual = digests(); passed = actual == report['expected_logits']
             result = {'schema':('dl-context-actual-audio49-adapter-reload-v1' if audio49_policy else 'dl-context-actual-adapter-reload-v1'),'fresh_process':True,
                 'all_valid_logits_exact':passed,'actual':actual,'checkpoint_sha256':report['checkpoint_sha256'],
@@ -298,6 +311,10 @@ def run(lm, spm, voice, examples, components, audits, args):
                 from evals.native_control_stage import RELOAD_SCHEMA
                 result.update(schema=RELOAD_SCHEMA,all40_native_control_logits_exact=True,
                               actual_native_control40_logits=control_actual)
+            if reasoning_actual is not None:
+                from evals.native_reasoning_stage import RELOAD_SCHEMA
+                result.update(schema=RELOAD_SCHEMA,all32_native_reasoning_logits_exact=True,
+                              actual_native_reasoning32_logits=reasoning_actual)
             if getattr(args,'native_audio49_parent_adam',False):
                 clocks=sorted(set(int(x['step']) for x in opt.state.values()))
                 if clocks!=[528] or snapshot['completed_steps']!=8:raise RuntimeError('Independent restore lost stage8/Adam528 clocks')
@@ -365,8 +382,13 @@ def run(lm, spm, voice, examples, components, audits, args):
                 control_base={} if control_policy else None
                 complete_digest=complete_preflight(lm,learned,args,audio49_policy,batches,retention,references,native_teacher_batches,additional_batches,component_kinds,response_boundaries,audits,warm_references,clock_references,audio49_batches,forward,args.actual_response_first_word_weight,capture_gradients=control_base)
                 stream_readiness(lm,learned,native_teacher_batches,additional_batches,args,audio49_policy)
-                control_ready=None
-                if control_policy:
+                control_ready=None;reasoning_ready=None
+                if reasoning_policy:
+                    from evals.native_reasoning_stage import combined_readiness
+                    control_ready,reasoning_ready=combined_readiness(lm,learned,control_base,stream_bound,
+                        audio49_policy,control_policy,control_bound,reasoning_policy,reasoning_bound,args)
+                    del control_base
+                elif control_policy:
                     from evals.native_control_stage import combined_readiness
                     control_ready=combined_readiness(lm,learned,control_base,stream_bound,audio49_policy,control_policy,control_bound,args)
                     del control_base
@@ -377,6 +399,9 @@ def run(lm, spm, voice, examples, components, audits, args):
                 if control_ready:
                     checked['control40_combined_readiness_sha256']=control_ready
                     checked['peak_allocated_bytes']=max(checked['peak_allocated_bytes'],json.loads((args.out/'control40-combined-readiness.json').read_text())['peak_allocated_bytes'])
+                if reasoning_ready:
+                    checked['reasoning32_combined_readiness_sha256']=reasoning_ready
+                    checked['peak_allocated_bytes']=max(checked['peak_allocated_bytes'],json.loads((args.out/'reasoning32-combined-readiness.json').read_text())['peak_allocated_bytes'])
                 path.write_text(json.dumps(checked,indent=2)+'\n')
                 return
             if getattr(args,'native_audio49_bf16_stream_diagnostic',False):
@@ -493,6 +518,10 @@ def run(lm, spm, voice, examples, components, audits, args):
             if control_policy:
                 from evals.native_control_training import backward as control_backward
                 control_rows=control_backward(lm,control_bound,local_step)
+            reasoning_rows=[]
+            if reasoning_policy:
+                from evals.native_reasoning_training import backward as reasoning_backward
+                reasoning_rows=reasoning_backward(lm,reasoning_bound,local_step)
             if not all(torch.isfinite(v) for v in ((ce,kl,hidden,supervised) if teacher else (ce,kl,hidden))):
                 raise RuntimeError('Nonfinite actual or retention loss')
             if any(p.grad is None or not torch.isfinite(p.grad).all() for p in learned.values()):
@@ -529,6 +558,7 @@ def run(lm, spm, voice, examples, components, audits, args):
                 row.update(scenario='all28-balanced-kind-mean',component_index=None,supervision_kind='all8-balanced-kinds',retention_kind='all4-reference-mean',retention_index=None,native_teacher_index=None,complete_balanced_microbatches=complete_groups,legacy_nominal_schedule_anchor=dict(component_index=index,retention_index=ri))
             if stream_bound is not None:row['native_stream_teacher_microbatch']=native_stream_rows
             if control_policy:row['control40_microbatch']=control_rows
+            if reasoning_policy:row['reasoning32_microbatch']=reasoning_rows
             steps.append(row); print(json.dumps(row),flush=True)
         if getattr(args,'native_audio49_complete_batch',False):
             from evals.context_native_complete_batch import validate_exposure as validate_complete
@@ -551,6 +581,9 @@ def run(lm, spm, voice, examples, components, audits, args):
         if control_policy:
             from evals.native_control_training import exposure as control_exposure
             control_exposure(steps,control_policy)
+        if reasoning_policy:
+            from evals.native_reasoning_training import exposure as reasoning_exposure
+            reasoning_exposure(steps,reasoning_policy)
         if not seen_a or not seen_b: raise RuntimeError('Dead actual temporal adapter')
         if frozen != tensor_hashes((n,p) for n,p in lm.named_parameters() if not p.requires_grad):
             raise RuntimeError('Frozen speech/base weights changed')
@@ -634,5 +667,21 @@ def run(lm, spm, voice, examples, components, audits, args):
                 control40_combined_readiness_sha256=sha256(args.out/'approved-control40-combined-readiness.json'))
             report['execution']+='; supplemental all40 native-call text plus assistant-only acoustic CE'
             report['training_seconds_scope']+='; also excludes final all40 native text/acoustic fingerprints'
+        if reasoning_policy:
+            from evals.native_reasoning_stage import SCHEMA
+            from evals.native_reasoning_training import fingerprints as reasoning_fingerprints
+            reasoning_targets=sum(sum(x['acoustic_objective']['assistant_audio_targets']) for step in steps for x in step['reasoning32_microbatch'])
+            reasoning_text=sum(x['text_targets'] for step in steps for x in step['reasoning32_microbatch'])
+            if (reasoning_targets!=reasoning_policy['assistant_audio_loss_targets_per8']
+                    or reasoning_text!=reasoning_policy['text_loss_targets_per8']):
+                raise RuntimeError('Reasoning32 exact source target counts changed')
+            report.update(schema=SCHEMA,reasoning32=reasoning_policy,
+                reasoning32_audio_loss_targets=reasoning_targets,reasoning32_text_loss_targets=reasoning_text,
+                all_training_assistant_audio_loss_targets=report['total_assistant_audio_loss_targets']+reasoning_targets,
+                total_assistant_audio_loss_targets_scope='Retained original49 plus control40 subtotal; all_training_assistant_audio_loss_targets includes reasoning32',
+                expected_native_reasoning32_logits=reasoning_fingerprints(lm,reasoning_bound),
+                reasoning32_combined_readiness_sha256=sha256(args.out/'approved-reasoning32-combined-readiness.json'))
+            report['execution']+='; supplemental all32 reasoning native-call text plus pinned-span-mask assistant acoustic CE'
+            report['training_seconds_scope']+='; also excludes final all32 native text/acoustic fingerprints'
         (args.out/'report.json').write_text(json.dumps(report,indent=2)+'\n')
         print(json.dumps({k:report[k] for k in ('passed','checkpoint_sha256','final_metrics','peak_allocated_bytes')}),flush=True)

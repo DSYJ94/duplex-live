@@ -159,13 +159,18 @@ def combined_readiness(lm,learned,base_gradients,stream_bound,retained_policy,po
         for p in learned.values():p.grad=None
     exposure(steps,policy);stream_exposure(steps,retained_policy['native_stream_auxiliary'])
     unchanged=before==tensor_hashes(lm.named_parameters())
+    return write_readiness(base_hashes,steps,policy,args,unchanged,torch.cuda.max_memory_allocated())
+
+
+def write_readiness(base_hashes,steps,policy,args,unchanged,peak):
+    """Package the unchanged control layer, also within a larger audited stage."""
     r=dict(schema='dl-native-control40-combined-readiness-v1',policy=policy,steps=steps,
            passed=unchanged,all_parameters_unchanged=unchanged,
            optimizer_updates=0,checkpoint_written=False,training_approved=False,original154_components=154,
            base154_gradient_sha256=base_hashes,fixed_parent154_gradient_reused_exactly=True,
            original154_gradient_source_sha256=sha256(args.out/'complete-balanced-preflight.json'),
            native49_readiness_sha256=sha256(args.out/'native-stream49-gradient-readiness.json'),
-           source_commit=os.environ['DL_TASK_COMMIT'],peak_allocated_bytes=torch.cuda.max_memory_allocated())
+           source_commit=os.environ['DL_TASK_COMMIT'],peak_allocated_bytes=peak)
     path=args.out/'control40-combined-readiness.json';path.write_text(json.dumps(r,indent=2)+'\n')
     check_readiness(path,policy)
     return sha256(path)
@@ -173,8 +178,17 @@ def combined_readiness(lm,learned,base_gradients,stream_bound,retained_policy,po
 
 def verify_checkpoint(proof):
     from evals.context_native_audio49_training import verify_retained_checkpoint
-    from evals.native_control_training import exposure
     identity,r=verify_retained_checkpoint(proof,SCHEMA,RELOAD_SCHEMA)
+    return verify_control_layer(proof,identity,r)
+
+
+def verify_control_layer(proof,identity,r):
+    """Require the full control40 layer after a caller verifies retained state.
+
+    A supplemental stage must additionally validate its own objectives. The
+    legacy public entry point continues to require its exact original schemas.
+    """
+    from evals.native_control_training import exposure
     proof=Path(proof);v=json.loads((proof/'reload-report.json').read_text());policy=r['control40']
     exposure(r['steps'],policy)
     if (r['combined_recipe']['control40']!=policy or r['control40_audio_loss_targets']!=policy['assistant_audio_loss_targets_per8']

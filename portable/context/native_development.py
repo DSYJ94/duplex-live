@@ -34,7 +34,12 @@ INFERENCE_FILES=('portable/context/native_development.py','evals/context_spannin
     'evals/moshi_model_download.py')
 
 
-def proofs(candidate=None):
+def proofs(candidate=None, reasoning_candidate=None):
+    if candidate is not None and reasoning_candidate is not None:
+        raise ValueError('Choose one distinct candidate')
+    if reasoning_candidate is not None:
+        return {'baseline520':ROOT/'runs/context-training-proof-7510331',
+                'candidate-reasoning32':Path(reasoning_candidate)}
     if candidate is None:
         return {role:ROOT/'runs'/('context-training-proof-'+number) for role,number in PROOFS.items()}
     return {'baseline520':ROOT/'runs/context-training-proof-7510331',
@@ -44,6 +49,15 @@ def proofs(candidate=None):
 def restored_control40(proof):
     """Require the pilot's full fresh CUDA restore, not a state-only substitute."""
     from evals.native_control_stage import verify_checkpoint,SCHEMA
+    return restored_candidate(proof,verify_checkpoint,SCHEMA,'control40')
+
+
+def restored_reasoning32(proof):
+    from evals.native_reasoning_stage import verify_checkpoint,SCHEMA
+    return restored_candidate(proof,verify_checkpoint,SCHEMA,'reasoning32')
+
+
+def restored_candidate(proof,verify_checkpoint,SCHEMA,label):
     identity,report=verify_checkpoint(proof)
     reload=json.loads((proof/'reload-report.json').read_text())
     if (report['schema']!=SCHEMA or report['updates_this_run']!=8
@@ -51,8 +65,8 @@ def restored_control40(proof):
             or reload['pid']==report['training_pid']
             or reload['parent_adam_parameter_steps_restored']!=[528]
             or reload['optimizer_and_rng_independently_compared_exact'] is not True):
-        raise ValueError('New candidate requires complete independent retained154/native49/control40 restoration')
-    return dict(schema='dl-native-control40-existing-full-restore-verification-v1',passed=True,
+        raise ValueError('New '+label+' candidate requires complete independent retained objectives and candidate restoration')
+    return dict(schema='dl-native-'+label+'-existing-full-restore-verification-v1',passed=True,
                 proof=str(proof),identity=identity,optimizer_updates=0,
                 preexisting_fresh_full_cuda_restore_verified=True,new_restore_executed_by_this_check=False,
                 training_pid=report['training_pid'],independent_restore_pid=reload['pid'],
@@ -130,7 +144,7 @@ def actor(args):
     plan = json.loads((args.source/PLAN).read_text())
     if len(plan['cases']) != 10 or plan['word_or_audio_forcing'] is not False:
         raise ValueError('Complete unchanged native development plan required')
-    selected=proofs(args.candidate_proof)
+    selected=proofs(args.candidate_proof,getattr(args,'reasoning32_candidate_proof',None))
     if args.role not in selected:raise ValueError('Actor role must match exact declared candidate')
     out = args.out / args.role
     out.mkdir(exist_ok=False)
@@ -204,16 +218,19 @@ def main():
     ap.add_argument('--source-commit', required=True)
     ap.add_argument('--deadline-utc', required=True)
     ap.add_argument('--pod-id', required=True)
-    ap.add_argument('--role', choices=tuple(PROOFS)+('candidate-control40',))
-    ap.add_argument('--candidate-proof',type=Path,
+    ap.add_argument('--role', choices=tuple(PROOFS)+('candidate-control40','candidate-reasoning32'))
+    candidates=ap.add_mutually_exclusive_group()
+    candidates.add_argument('--candidate-proof',type=Path,
                     help='Distinct fully restored bounded control40 pilot; default remains archived7590052')
+    candidates.add_argument('--reasoning32-candidate-proof',type=Path,
+                    help='Distinct fully restored retained154/native49/control40/reasoning32 pilot')
     ap.add_argument('--device', type=int, choices=(0,1))
     ap.add_argument('--runtime-profile',choices=('container-default','archive-tf32-high-v1'),default='container-default')
     ap.add_argument('--gpu-mode',choices=('paired-two-gpu','serial-one-gpu'),default='paired-two-gpu')
     args = ap.parse_args()
-    selected=proofs(args.candidate_proof)
-    if args.candidate_proof and args.runtime_profile!='container-default':
-        ap.error('The new control40 pilot must retain its independently checked default runtime')
+    selected=proofs(args.candidate_proof,args.reasoning32_candidate_proof)
+    if (args.candidate_proof or args.reasoning32_candidate_proof) and args.runtime_profile!='container-default':
+        ap.error('The new pilot must retain its independently checked default runtime')
     args.deadline = datetime.fromisoformat(args.deadline_utc.replace('Z','+00:00')).timestamp()
     if args.role:
         if args.device is None:ap.error('Actor requires its explicit physical GPU')
@@ -255,6 +272,9 @@ def main():
             if role=='candidate-control40':
                 atomic(args.out/(role+'-independent-restore.json'),restored_control40(selected[role]))
                 continue
+            if role=='candidate-reasoning32':
+                atomic(args.out/(role+'-independent-restore.json'),restored_reasoning32(selected[role]))
+                continue
             restore_env = env.copy()
             restore_env['CUDA_VISIBLE_DEVICES'] = str(0 if args.gpu_mode=='serial-one-gpu' else device)
             cmd = [sys.executable,'-u','-m','portable.context.restore_adapter_state',
@@ -276,6 +296,7 @@ def main():
             cmd+=['--runtime-profile',args.runtime_profile]
             cmd+=['--gpu-mode',args.gpu_mode]
             if args.candidate_proof:cmd+=['--candidate-proof',str(args.candidate_proof)]
+            if args.reasoning32_candidate_proof:cmd+=['--reasoning32-candidate-proof',str(args.reasoning32_candidate_proof)]
             log = (args.out/(role+'.log')).open('x')
             child = subprocess.Popen(cmd,cwd=args.source,env=env,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
             log.close()
