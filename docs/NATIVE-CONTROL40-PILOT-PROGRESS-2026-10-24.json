@@ -1,10 +1,10 @@
 {
   "schema": "dl-native-control40-pilot-progress-v1",
-  "at_utc": "2026-10-24T05:20:08.827022+00:00",
+  "at_utc": "2026-10-24T05:31:33.704689+00:00",
   "executor": "LOCAL",
   "classification": "progress",
   "previous_goal_turn": "progress",
-  "source_main_before_receipt": "df6f1cd2680ee9761762ef5bfb4e67f706536835",
+  "source_main_before_receipt": "e2b5afd",
   "execution_source": "c9efaaac24d983342f7eded46617e6450bc102ce",
   "orchestration_source": "a5958a0343383728639940c4eb82e31ca3aa96f2",
   "supervisor": {
@@ -18,7 +18,7 @@
   "output": "/workspace/migration/native-control40-precise-pilot-v11-environment-retry",
   "training_loss_summary": {
     "schema": "dl-native-control40-recorded-loss-summary-v1",
-    "recorded_updates": 2,
+    "recorded_updates": 3,
     "complete8_recorded": false,
     "steps": [
       {
@@ -125,11 +125,63 @@
             "delta": 5.862116813665219e-06
           }
         }
+      },
+      {
+        "step": 3,
+        "losses_measured_before_this_update": true,
+        "completed_updates_at_loss_measurement": 2,
+        "fixed154_weighted_groups": {
+          "actual": 0.5742642307077837,
+          "reference": 0.1812216080725193,
+          "old25": 0.45565552676194593,
+          "new24": 0.7613723231479526,
+          "word": 0.08047242239117623,
+          "clock": 0.052506663703492704,
+          "audio49": 0.586804699836945
+        },
+        "fixed154_weighted_total": 2.6922974746218156,
+        "selected_native49_weighted_loss": 0.6724072185764383,
+        "selected_control40_weighted_text_loss": 1.0569444243736428,
+        "selected_control40_weighted_acoustic_loss": 0.14257062673568727,
+        "selected_total_weighted_objective": 4.564219744307584,
+        "selected_native_teacher_ids": [
+          "teacher-recovery-train-019",
+          "teacher-cf-recovery-train-002-0",
+          "teacher-cf-recovery-train-007-0",
+          "teacher-native2-train-008",
+          "teacher-native2-train-010",
+          "teacher-native2-train-012"
+        ],
+        "selected_control_teacher_ids": [
+          "native-control3-train-018",
+          "native-control3-train-002",
+          "native-control3-train-026",
+          "native-control3-train-010",
+          "native-control3-train-034"
+        ],
+        "gradient_norm_before_clip": 13.569869041442871,
+        "matched_parent_teacher_losses": {
+          "balanced_spoken_clock_ce": {
+            "current": 0.6724072185764383,
+            "parent_same_teachers": 0.6722838083858557,
+            "delta": 0.00012341019058259572
+          },
+          "text_ce": {
+            "current": 1.0569444243736428,
+            "parent_same_teachers": 1.0620863729701353,
+            "delta": -0.005141948596492529
+          },
+          "acoustic_ce": {
+            "current": 0.14257062673568727,
+            "parent_same_teachers": 0.14265976548194886,
+            "delta": -8.913874626159668e-05
+          }
+        }
       }
     ],
-    "fixed154_change_covers_completed_updates": 1,
-    "fixed154_loss_delta": 0.12832383807341374,
-    "fixed154_relative_reduction": -0.050272328381799306,
+    "fixed154_change_covers_completed_updates": 2,
+    "fixed154_loss_delta": 0.1397234800607765,
+    "fixed154_relative_reduction": -0.05473826825725554,
     "fixed154_membership_exact_across_recorded_updates": true,
     "comparable_across_steps": "Only the fixed154 objective repeats the same terms and weights every update.",
     "rotating_partition_totals_are_not_a_convergence_curve": true,
@@ -139,16 +191,25 @@
     "behavioral_improvement_established": false,
     "training_extension_or_adoption_approved": false,
     "interpretation": "Training losses describe fit on TRAIN teachers; validation, native restore and behavioral tests remain separate requirements.",
-    "source_log": "/Users/daryl/Library/CloudStorage/OneDrive-Personal/Shared GitHub Repos/duplex-live/runs/local-migration-20261023/native-control40-continuous-copyback-v16/20261024T051311.824669Z/native-control40-precise-pilot-v11-environment-retry/bounded8_training.log",
-    "source_log_sha256": "51b7502a7d60152b430b28fe382190517e26e7dc20a4397f3370c72fab1ff394",
+    "source_log": "/Users/daryl/Library/CloudStorage/OneDrive-Personal/Shared GitHub Repos/duplex-live/runs/local-migration-20261023/native-control40-continuous-copyback-v16/20261024T052140.861373Z/native-control40-precise-pilot-v11-environment-retry/bounded8_training.log",
+    "source_log_sha256": "1070bf4b9ebbfee5a871d3e813caa1860db757104fb2edd2b687a95c926c54df",
     "analysis_implementation_sha256": "e031c04029583c357ea809f3ababffb4f91ece25b57992920ba068cae95d64c2",
     "model_or_GPU_loaded": false,
-    "parent_readiness_sha256": "568117e69f18fd7d1282592e726953edbedc80569dc959bdb2db2807459cf352"
+    "parent_readiness_sha256": "568117e69f18fd7d1282592e726953edbedc80569dc959bdb2db2807459cf352",
+    "checkpoint_backup": {
+      "path": "native-control40-precise-pilot-v11-environment-retry/training/training-state.pt",
+      "bytes": 22959307,
+      "sha256": "a42fc514d418879c32d53be70772aeaeab5232c01325129aa8e30f19377e2783",
+      "Mac_hash_verified": true
+    },
+    "backup_inventory_sha256": "49b41070ab0dfff0cb628ee0895beb6206d2ae2d58e56fbe1cb0cc28777dcc5e",
+    "backup_files": 151,
+    "snapshot": "runs/local-migration-20261023/native-control40-continuous-copyback-v16/20261024T052140.861373Z"
   },
   "prepaid_funding": {
-    "at_utc": "2026-10-24T05:04:18.355434+00:00",
+    "at_utc": "2026-10-24T05:26:35.999890+00:00",
     "wallet": {
-      "clientBalance": 12.5218500142,
+      "clientBalance": 11.75710493,
       "currentSpendPerHr": 1.814,
       "isAutoPayEnabled": false
     },
@@ -158,28 +219,28 @@
       {
         "lifetime_hours": 24,
         "deadline_utc": "2026-10-24T08:22:37.900000+00:00",
-        "required_remaining_wallet_USD": 8.310048289645556,
+        "required_remaining_wallet_USD": 7.636024110983334,
         "fully_prepaid_with_one_hour_reserve": true,
         "project_compute_cap_USD": 80.40071830424947
       },
       {
         "lifetime_hours": 26,
         "deadline_utc": "2026-10-24T10:22:37.900000+00:00",
-        "required_remaining_wallet_USD": 11.938048289645558,
+        "required_remaining_wallet_USD": 11.264024110983334,
         "fully_prepaid_with_one_hour_reserve": true,
         "project_compute_cap_USD": 83.98071830424945
       },
       {
         "lifetime_hours": 27,
         "deadline_utc": "2026-10-24T11:22:37.900000+00:00",
-        "required_remaining_wallet_USD": 13.752048289645558,
+        "required_remaining_wallet_USD": 13.078024110983334,
         "fully_prepaid_with_one_hour_reserve": false,
         "project_compute_cap_USD": 85.77071830424946
       },
       {
         "lifetime_hours": 34,
         "deadline_utc": "2026-10-24T18:22:37.900000+00:00",
-        "required_remaining_wallet_USD": 26.450048289645554,
+        "required_remaining_wallet_USD": 25.776024110983336,
         "fully_prepaid_with_one_hour_reserve": false,
         "project_compute_cap_USD": 98.30071830424946
       }
@@ -232,11 +293,11 @@
   "latest_checkpoint_backup": {
     "path": "native-control40-precise-pilot-v11-environment-retry/training/training-state.pt",
     "bytes": 22959307,
-    "sha256": "5e9ddb1d4fd445d238e3dc7a8ec4409274cac733e67a9415f40ec23471c43a86",
+    "sha256": "a42fc514d418879c32d53be70772aeaeab5232c01325129aa8e30f19377e2783",
     "Mac_hash_verified": true
   },
-  "latest_backup_inventory_sha256": "abc34f3e59a9f6b262d5680c27134be69e4c627835fb6ceb27c5981229810eff",
-  "logged_completed_updates": 2,
+  "latest_backup_inventory_sha256": "49b41070ab0dfff0cb628ee0895beb6206d2ae2d58e56fbe1cb0cc28777dcc5e",
+  "logged_completed_updates": 3,
   "second_measurement_interpretation": {
     "measured_after_completed_updates": 1,
     "fixed154_relative_increase": 0.050272328381799306,
@@ -256,5 +317,207 @@
     "matched_parent_native49_change": -0.0005661526177424547,
     "matched_parent_control_acoustic_change": 5.862116813665219e-06,
     "conclusion": "Mixed early optimization evidence: retained objective increased, selected same-teacher native/control text losses improved slightly. Complete the authorized bounded8 unchanged; no convergence, extension or adoption claim."
+  },
+  "first_step_Adam_direction_diagnostic": {
+    "schema": "dl-native-first-adam-direction-diagnostic-v1",
+    "at_utc": "2026-10-24T05:27:03.724647+00:00",
+    "parent_state_sha256": "b5e4320fba68a0b624a7be61778def8e6238517272637324824126ccaa1c6785",
+    "first_state_sha256": "52ef1ca99c780bded4e66d4fdfb57cc814ba03682a688f1579f14d5033778e9e",
+    "parameter_count": 1894400,
+    "reconstructed_clipped_gradient_norm": 0.9999999508583911,
+    "expected_clipped_gradient_norm_approximately": 1.0,
+    "actual_parameter_delta_norm": 9.802157399620044e-05,
+    "gradient_dot_actual_delta": -1.4678195708621124e-05,
+    "gradient_update_cosine": -0.14974454940399423,
+    "gradient_parent_moment_cosine": 0.03871799608691897,
+    "conservative_FP32_reconstruction_dot_tolerance": 1.7525327478417335e-10,
+    "dot_sign_outside_diagnostic_tolerance": true,
+    "linearized_first_step_direction": "descent",
+    "maximum_absolute_actual_vs_double_Adam_delta_error": 9.313085234359501e-10,
+    "per_parameter": [
+      {
+        "parameter": "text_linear.lora_A.weight",
+        "gradient_dot_actual_delta": -1.2633324318175353e-07,
+        "delta_norm": 1.0702420728333576e-05
+      },
+      {
+        "parameter": "text_linear.lora_B.weight",
+        "gradient_dot_actual_delta": -1.4884148172228947e-06,
+        "delta_norm": 7.055662404860238e-05
+      },
+      {
+        "parameter": "transformer.layers.28.self_attn.out_proj.lora_A.weight",
+        "gradient_dot_actual_delta": -6.364735684916106e-08,
+        "delta_norm": 9.84041270110915e-06
+      },
+      {
+        "parameter": "transformer.layers.28.self_attn.out_proj.lora_B.weight",
+        "gradient_dot_actual_delta": -1.353703816552882e-07,
+        "delta_norm": 7.634299346431293e-06
+      },
+      {
+        "parameter": "transformer.layers.28.gating.linear_in.lora_A.weight",
+        "gradient_dot_actual_delta": -9.178563839131425e-08,
+        "delta_norm": 1.0500906983857189e-05
+      },
+      {
+        "parameter": "transformer.layers.28.gating.linear_in.lora_B.weight",
+        "gradient_dot_actual_delta": -1.110078449832782e-06,
+        "delta_norm": 2.4323782052950855e-05
+      },
+      {
+        "parameter": "transformer.layers.28.gating.linear_out.lora_A.weight",
+        "gradient_dot_actual_delta": -5.4941774073739185e-08,
+        "delta_norm": 1.610307256805574e-05
+      },
+      {
+        "parameter": "transformer.layers.28.gating.linear_out.lora_B.weight",
+        "gradient_dot_actual_delta": -3.3998685848976557e-07,
+        "delta_norm": 7.963273196625134e-06
+      },
+      {
+        "parameter": "transformer.layers.29.self_attn.out_proj.lora_A.weight",
+        "gradient_dot_actual_delta": -4.5959539905545584e-08,
+        "delta_norm": 9.71136207660361e-06
+      },
+      {
+        "parameter": "transformer.layers.29.self_attn.out_proj.lora_B.weight",
+        "gradient_dot_actual_delta": -1.5438864396952704e-07,
+        "delta_norm": 7.989247010572125e-06
+      },
+      {
+        "parameter": "transformer.layers.29.gating.linear_in.lora_A.weight",
+        "gradient_dot_actual_delta": -1.1926846544870914e-07,
+        "delta_norm": 1.0204658899948912e-05
+      },
+      {
+        "parameter": "transformer.layers.29.gating.linear_in.lora_B.weight",
+        "gradient_dot_actual_delta": -1.5817998345808464e-06,
+        "delta_norm": 2.5610558843545916e-05
+      },
+      {
+        "parameter": "transformer.layers.29.gating.linear_out.lora_A.weight",
+        "gradient_dot_actual_delta": -3.499110639731306e-08,
+        "delta_norm": 1.4506753455574229e-05
+      },
+      {
+        "parameter": "transformer.layers.29.gating.linear_out.lora_B.weight",
+        "gradient_dot_actual_delta": -4.758137326728386e-07,
+        "delta_norm": 7.098012817395952e-06
+      },
+      {
+        "parameter": "transformer.layers.30.self_attn.out_proj.lora_A.weight",
+        "gradient_dot_actual_delta": -5.1238529193341224e-08,
+        "delta_norm": 8.551175949271827e-06
+      },
+      {
+        "parameter": "transformer.layers.30.self_attn.out_proj.lora_B.weight",
+        "gradient_dot_actual_delta": -1.4291308870761954e-07,
+        "delta_norm": 8.324319842728866e-06
+      },
+      {
+        "parameter": "transformer.layers.30.gating.linear_in.lora_A.weight",
+        "gradient_dot_actual_delta": -9.274314791730951e-08,
+        "delta_norm": 1.0057922951913948e-05
+      },
+      {
+        "parameter": "transformer.layers.30.gating.linear_in.lora_B.weight",
+        "gradient_dot_actual_delta": -2.4101355701856405e-06,
+        "delta_norm": 2.520420020915138e-05
+      },
+      {
+        "parameter": "transformer.layers.30.gating.linear_out.lora_A.weight",
+        "gradient_dot_actual_delta": -1.2474230340029208e-07,
+        "delta_norm": 1.6353429480162714e-05
+      },
+      {
+        "parameter": "transformer.layers.30.gating.linear_out.lora_B.weight",
+        "gradient_dot_actual_delta": -9.154460468826415e-07,
+        "delta_norm": 6.875124295797431e-06
+      },
+      {
+        "parameter": "transformer.layers.31.self_attn.out_proj.lora_A.weight",
+        "gradient_dot_actual_delta": -1.3788836391861387e-07,
+        "delta_norm": 9.87712369073839e-06
+      },
+      {
+        "parameter": "transformer.layers.31.self_attn.out_proj.lora_B.weight",
+        "gradient_dot_actual_delta": -2.4502183230828503e-07,
+        "delta_norm": 8.625584294303883e-06
+      },
+      {
+        "parameter": "transformer.layers.31.gating.linear_in.lora_A.weight",
+        "gradient_dot_actual_delta": -6.368628561386874e-07,
+        "delta_norm": 7.480620235820393e-06
+      },
+      {
+        "parameter": "transformer.layers.31.gating.linear_in.lora_B.weight",
+        "gradient_dot_actual_delta": -1.917594942045362e-06,
+        "delta_norm": 2.2151274440383357e-05
+      },
+      {
+        "parameter": "transformer.layers.31.gating.linear_out.lora_A.weight",
+        "gradient_dot_actual_delta": -1.1050430970553288e-06,
+        "delta_norm": 1.3854652503858943e-05
+      },
+      {
+        "parameter": "transformer.layers.31.gating.linear_out.lora_B.weight",
+        "gradient_dot_actual_delta": -1.0757860881965242e-06,
+        "delta_norm": 7.253468248396606e-06
+      }
+    ],
+    "model_loaded": false,
+    "GPU_initialized": false,
+    "optimizer_executed": false,
+    "training_settings_changed": false,
+    "scope": "Approximate clipped gradient reconstructed from saved FP32 Adam moments; checks local first-order direction of the first selected joint objective. This does not measure post-update loss on the same partition, establish a cause of behavioral failure, or approve any optimizer change.",
+    "training_extension_or_adoption_approved": false,
+    "executed_source_sha256": "d57d841e54e6ccbc2effeee2c39a46267368304cdc73634876b85263cce8fdea",
+    "reproduction_source": "docs/diagnostics/native-control40-first-adam-direction-20261024.py",
+    "reproduction_command": [
+      "env",
+      "OMP_NUM_THREADS=1",
+      "MKL_NUM_THREADS=1",
+      "OPENBLAS_NUM_THREADS=1",
+      "PYTHONDONTWRITEBYTECODE=1",
+      "/workspace/runtime-x86-ngc2510/bin/python",
+      "docs/diagnostics/native-control40-first-adam-direction-20261024.py"
+    ],
+    "first_optional_CPU_attempt_timed_out_seconds": 45,
+    "retry_used_one_remote_CPU_worker": true,
+    "Mac_model_or_torch_imports": false,
+    "actual_training_process_unmodified": true,
+    "interpretation": "The first saved update is a local descent direction for its reconstructed clipped joint gradient. This does not support the simple uphill-Adam-step hypothesis; it does not explain or qualify subsequent behavior, quantify finite-step curvature, or authorize resetting moments."
+  },
+  "third_measurement_interpretation": {
+    "measured_after_completed_updates": 2,
+    "fixed154_weighted_total": 2.6922974746218156,
+    "relative_increase_vs_parent": 0.05473826825725554,
+    "matched_parent_teacher_losses": {
+      "balanced_spoken_clock_ce": {
+        "current": 0.6724072185764383,
+        "parent_same_teachers": 0.6722838083858557,
+        "delta": 0.00012341019058259572
+      },
+      "text_ce": {
+        "current": 1.0569444243736428,
+        "parent_same_teachers": 1.0620863729701353,
+        "delta": -0.005141948596492529
+      },
+      "acoustic_ce": {
+        "current": 0.14257062673568727,
+        "parent_same_teachers": 0.14265976548194886,
+        "delta": -8.913874626159668e-05
+      }
+    },
+    "conclusion": "Mixed early results; same-teacher control text/audio improved slightly, retained objective remains above parent. Complete unchanged bounded8, independent restore and full native behavior before any extension/adoption."
+  },
+  "provider_control_api_incident": {
+    "first_observed_503": "2026-10-24T05:20:13.991386+00:00",
+    "last_observed_503": "2026-10-24T05:23:15.552247+00:00",
+    "recovered_and_same_watchdog_armed": "2026-10-24T05:23:36.140173+00:00",
+    "watchdog_pid": 70540,
+    "training_and_SSH_continued": true,
+    "no_restarts_or_new_resources": true
   }
 }

@@ -1,0 +1,171 @@
+{
+  "schema": "dl-native-first-adam-direction-diagnostic-v1",
+  "at_utc": "2026-10-24T05:27:03.724647+00:00",
+  "parent_state_sha256": "b5e4320fba68a0b624a7be61778def8e6238517272637324824126ccaa1c6785",
+  "first_state_sha256": "52ef1ca99c780bded4e66d4fdfb57cc814ba03682a688f1579f14d5033778e9e",
+  "parameter_count": 1894400,
+  "reconstructed_clipped_gradient_norm": 0.9999999508583911,
+  "expected_clipped_gradient_norm_approximately": 1.0,
+  "actual_parameter_delta_norm": 9.802157399620044e-05,
+  "gradient_dot_actual_delta": -1.4678195708621124e-05,
+  "gradient_update_cosine": -0.14974454940399423,
+  "gradient_parent_moment_cosine": 0.03871799608691897,
+  "conservative_FP32_reconstruction_dot_tolerance": 1.7525327478417335e-10,
+  "dot_sign_outside_diagnostic_tolerance": true,
+  "linearized_first_step_direction": "descent",
+  "maximum_absolute_actual_vs_double_Adam_delta_error": 9.313085234359501e-10,
+  "per_parameter": [
+    {
+      "parameter": "text_linear.lora_A.weight",
+      "gradient_dot_actual_delta": -1.2633324318175353e-07,
+      "delta_norm": 1.0702420728333576e-05
+    },
+    {
+      "parameter": "text_linear.lora_B.weight",
+      "gradient_dot_actual_delta": -1.4884148172228947e-06,
+      "delta_norm": 7.055662404860238e-05
+    },
+    {
+      "parameter": "transformer.layers.28.self_attn.out_proj.lora_A.weight",
+      "gradient_dot_actual_delta": -6.364735684916106e-08,
+      "delta_norm": 9.84041270110915e-06
+    },
+    {
+      "parameter": "transformer.layers.28.self_attn.out_proj.lora_B.weight",
+      "gradient_dot_actual_delta": -1.353703816552882e-07,
+      "delta_norm": 7.634299346431293e-06
+    },
+    {
+      "parameter": "transformer.layers.28.gating.linear_in.lora_A.weight",
+      "gradient_dot_actual_delta": -9.178563839131425e-08,
+      "delta_norm": 1.0500906983857189e-05
+    },
+    {
+      "parameter": "transformer.layers.28.gating.linear_in.lora_B.weight",
+      "gradient_dot_actual_delta": -1.110078449832782e-06,
+      "delta_norm": 2.4323782052950855e-05
+    },
+    {
+      "parameter": "transformer.layers.28.gating.linear_out.lora_A.weight",
+      "gradient_dot_actual_delta": -5.4941774073739185e-08,
+      "delta_norm": 1.610307256805574e-05
+    },
+    {
+      "parameter": "transformer.layers.28.gating.linear_out.lora_B.weight",
+      "gradient_dot_actual_delta": -3.3998685848976557e-07,
+      "delta_norm": 7.963273196625134e-06
+    },
+    {
+      "parameter": "transformer.layers.29.self_attn.out_proj.lora_A.weight",
+      "gradient_dot_actual_delta": -4.5959539905545584e-08,
+      "delta_norm": 9.71136207660361e-06
+    },
+    {
+      "parameter": "transformer.layers.29.self_attn.out_proj.lora_B.weight",
+      "gradient_dot_actual_delta": -1.5438864396952704e-07,
+      "delta_norm": 7.989247010572125e-06
+    },
+    {
+      "parameter": "transformer.layers.29.gating.linear_in.lora_A.weight",
+      "gradient_dot_actual_delta": -1.1926846544870914e-07,
+      "delta_norm": 1.0204658899948912e-05
+    },
+    {
+      "parameter": "transformer.layers.29.gating.linear_in.lora_B.weight",
+      "gradient_dot_actual_delta": -1.5817998345808464e-06,
+      "delta_norm": 2.5610558843545916e-05
+    },
+    {
+      "parameter": "transformer.layers.29.gating.linear_out.lora_A.weight",
+      "gradient_dot_actual_delta": -3.499110639731306e-08,
+      "delta_norm": 1.4506753455574229e-05
+    },
+    {
+      "parameter": "transformer.layers.29.gating.linear_out.lora_B.weight",
+      "gradient_dot_actual_delta": -4.758137326728386e-07,
+      "delta_norm": 7.098012817395952e-06
+    },
+    {
+      "parameter": "transformer.layers.30.self_attn.out_proj.lora_A.weight",
+      "gradient_dot_actual_delta": -5.1238529193341224e-08,
+      "delta_norm": 8.551175949271827e-06
+    },
+    {
+      "parameter": "transformer.layers.30.self_attn.out_proj.lora_B.weight",
+      "gradient_dot_actual_delta": -1.4291308870761954e-07,
+      "delta_norm": 8.324319842728866e-06
+    },
+    {
+      "parameter": "transformer.layers.30.gating.linear_in.lora_A.weight",
+      "gradient_dot_actual_delta": -9.274314791730951e-08,
+      "delta_norm": 1.0057922951913948e-05
+    },
+    {
+      "parameter": "transformer.layers.30.gating.linear_in.lora_B.weight",
+      "gradient_dot_actual_delta": -2.4101355701856405e-06,
+      "delta_norm": 2.520420020915138e-05
+    },
+    {
+      "parameter": "transformer.layers.30.gating.linear_out.lora_A.weight",
+      "gradient_dot_actual_delta": -1.2474230340029208e-07,
+      "delta_norm": 1.6353429480162714e-05
+    },
+    {
+      "parameter": "transformer.layers.30.gating.linear_out.lora_B.weight",
+      "gradient_dot_actual_delta": -9.154460468826415e-07,
+      "delta_norm": 6.875124295797431e-06
+    },
+    {
+      "parameter": "transformer.layers.31.self_attn.out_proj.lora_A.weight",
+      "gradient_dot_actual_delta": -1.3788836391861387e-07,
+      "delta_norm": 9.87712369073839e-06
+    },
+    {
+      "parameter": "transformer.layers.31.self_attn.out_proj.lora_B.weight",
+      "gradient_dot_actual_delta": -2.4502183230828503e-07,
+      "delta_norm": 8.625584294303883e-06
+    },
+    {
+      "parameter": "transformer.layers.31.gating.linear_in.lora_A.weight",
+      "gradient_dot_actual_delta": -6.368628561386874e-07,
+      "delta_norm": 7.480620235820393e-06
+    },
+    {
+      "parameter": "transformer.layers.31.gating.linear_in.lora_B.weight",
+      "gradient_dot_actual_delta": -1.917594942045362e-06,
+      "delta_norm": 2.2151274440383357e-05
+    },
+    {
+      "parameter": "transformer.layers.31.gating.linear_out.lora_A.weight",
+      "gradient_dot_actual_delta": -1.1050430970553288e-06,
+      "delta_norm": 1.3854652503858943e-05
+    },
+    {
+      "parameter": "transformer.layers.31.gating.linear_out.lora_B.weight",
+      "gradient_dot_actual_delta": -1.0757860881965242e-06,
+      "delta_norm": 7.253468248396606e-06
+    }
+  ],
+  "model_loaded": false,
+  "GPU_initialized": false,
+  "optimizer_executed": false,
+  "training_settings_changed": false,
+  "scope": "Approximate clipped gradient reconstructed from saved FP32 Adam moments; checks local first-order direction of the first selected joint objective. This does not measure post-update loss on the same partition, establish a cause of behavioral failure, or approve any optimizer change.",
+  "training_extension_or_adoption_approved": false,
+  "executed_source_sha256": "d57d841e54e6ccbc2effeee2c39a46267368304cdc73634876b85263cce8fdea",
+  "reproduction_source": "docs/diagnostics/native-control40-first-adam-direction-20261024.py",
+  "reproduction_command": [
+    "env",
+    "OMP_NUM_THREADS=1",
+    "MKL_NUM_THREADS=1",
+    "OPENBLAS_NUM_THREADS=1",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "/workspace/runtime-x86-ngc2510/bin/python",
+    "docs/diagnostics/native-control40-first-adam-direction-20261024.py"
+  ],
+  "first_optional_CPU_attempt_timed_out_seconds": 45,
+  "retry_used_one_remote_CPU_worker": true,
+  "Mac_model_or_torch_imports": false,
+  "actual_training_process_unmodified": true,
+  "interpretation": "The first saved update is a local descent direction for its reconstructed clipped joint gradient. This does not support the simple uphill-Adam-step hypothesis; it does not explain or qualify subsequent behavior, quantify finite-step curvature, or authorize resetting moments."
+}

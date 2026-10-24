@@ -1,3 +1,48 @@
+# LOCAL — update3 backed up; momentum diagnostic excludes simple uphill step (24 October 05:31 UTC)
+
+Goal turn PROGRESS. LOCAL sole executor. Main before receipt e2b5afd; model/math
+C9 c9efaaac24d983342f7eded46617e6450bc102ce and orchestrationa5958a0 unchanged.
+SAME101648/birth25974639 and trainer101677/birth25975025 live05:29:48; soleGPU49%,
+30009MiB. Logged1,2,3; step3 saved05:21:34UTC. No final report/native restore/behavior.
+Never duplicate/restart or extend beyond originally authorized8.
+
+Checkpoint3=22,959,307B SHAa42fc514d418879c32d53be70772aeaeab5232c01325129aa8e30f19377e2783
+fully hash matched on Mac, V16 closed inventorySHA
+49b41070ab0dfff0cb628ee0895beb6206d2ae2d58e56fbe1cb0cc28777dcc5e.
+All originals and older checkpoint snapshots preserved; broader stopped Mac backup
+PARTIAL. Backup63290 and evaluator63289 remain unchanged.
+
+Fixed154 losses measured after0/1/2 completed updates:
+[2.5525739946,2.6808978326,2.6922974746], +5.4738% after2. Not convergence.
+Latest same-teacher partition3 versus parent: native CE delta+.0001234102,
+control text-.0051419486, control acoustic-.0000891387. Different teacher partitions
+still cannot form a raw total-loss curve. No behavior or adoption evidence yet.
+
+Read-only remote CPU diagnostic reconstructed first clipped gradient from native520
+and first saved Adam moments: norm.9999999509, actual parameter delta norm
+9.8021574e-5, g dot delta=-1.46781957e-5, cosine-.14974455. FP32 reconstruction
+diagnostic tolerance1.75253e-10; predicted Adam delta agrees within9.31309e-10.
+Thus first step's local joint-gradient direction is DESCENT, ruling out the simple
+uphill-Adam-step hypothesis for that step. Does NOT establish the cause of native
+behavior failures or justify any optimizer change. Optional first CPU attempt
+exceeded45s; repeat with one remote CPU worker passed. No local Torch/model work,
+no GPU/optimizer execution and no training/OS CPU changes. Exact standalone CPU
+program and hashes saved under docs/diagnostics/ and paired JSON receipt.
+
+Provider REST control API briefly503 (~05:20–05:25); MCP independently reproduced.
+SSH/training/backups stayed live. SAME watchdog70540 automatically recovered toarmed;
+no process/resource restart. API/wallet reread05:26:35: balance11.75710493,rate1.814/h,
+auto-payFalse.26h shutdown10:22:37.9 remains prepaid incl reserve, maxproject83.9807183<100.
+Pipeline09:00; evaluator latest09:37/end10:17; backup/backend10:20 unchanged. No purchase.
+
+Next: SAME8 ->final fingerprints ->fresh independent Adam528/RNG/native49/control40
+restore/proof ->complete paired20/speech20/ordinary4 ->eligible sealedfresh ->larger
+run decision. Distinct reasoning32 semantic payload approval pending;0requests/
+conversion/training. Original retention/data/gates and unrelated local work preserved.
+See docs/NATIVE-CONTROL40-PILOT-PROGRESS-2026-10-24.json and new Adam-direction receipt.
+
+---
+
 # LOCAL — update2 saved; early retained loss increased (24 October 05:20 UTC)
 
 Goal turn PROGRESS: second update/checkpoint verified and matched-parent losses
