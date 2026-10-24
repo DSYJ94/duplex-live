@@ -1,7 +1,7 @@
 {
   "schema": "dl-native-reasoning32-fit-launch-v1",
   "at_utc": "2026-10-24T15:06:44.710870+00:00",
-  "status": "ALL_EIGHT_UPDATES_SAVED_FIT_REPORT_PENDING",
+  "status": "FAILED_POSTFIT_TIME_LIMIT_AFTER_ALL_EIGHT_UPDATES_SAVED",
   "controller": {
     "pid": 28726,
     "birth": 40829059,
@@ -171,6 +171,79 @@
     "fit_report_exists": false
   },
   "postfit_finalization": {
+    "schema": "dl-native-reasoning32-postfit-timeout-preserved-v1",
+    "observed_utc": "2026-10-24T17:12:24.355019+00:00",
+    "original_controller_at_utc": "2026-10-24T17:10:00.493036+00:00",
+    "model_source_commit": "da389a7031a5504495397d1575952194ffa209f1",
+    "controller_source_commit": "0d75986fca9f1ef943dfece77c7859235163c0ad",
+    "original_phase": "failed_preserved_no_retry",
+    "original_error_type": "TimeoutExpired",
+    "fit_exit_code": -15,
+    "original_controller_handle": null,
+    "original_fit_handle": null,
+    "gpu_processes": [],
+    "optimizer_updates_saved": 8,
+    "final_fingerprint_counts": {
+      "native_stream_restore_fingerprint": 49,
+      "control40_restore_fingerprint": 31
+    },
+    "fit_report_exists": false,
+    "independent_restore_executed": false,
+    "native_evaluation_executed": false,
+    "speech_evaluation_executed": false,
+    "terminal_timeout_verified": true,
+    "verified_final_snapshot": "20261024T171028.002879Z",
+    "snapshot_inventory_sha256": "318a30c25a47719ba745475a27c7b240f973ce9010a2dfc7873fa4dbb5535135",
+    "closed_original_controller_sha256": "0605e35166606ae55a5beca5ce56757f69acb68aceeffb989735a4239bda3a32",
+    "model_adopted": false,
+    "recovery_gpu_authorized": false,
+    "scope": "Original time-bound process failed during post-fit validation after all eight saved updates. Closed-state copyback and objective receipts pass; no fit/restore/behavior approval is implied."
+  },
+  "adapter_export_backup": {
+    "snapshot": "20261024T164021.631309Z",
+    "inventory_sha256": "80aa6bf50e839e6d19ad8cdcd842de64c033ff2d5fcc1b715ddc549c4ff7979a",
+    "files": [
+      {
+        "path": "native-reasoning32-retained-pilot-v18/training/adapters.safetensors",
+        "bytes": 7580728,
+        "sha256": "34edb69c696fef1ac02e498bb1351a7655442d6c7c041562ca145abfb3a77176"
+      },
+      {
+        "path": "native-reasoning32-retained-pilot-v18/training/additional-native-v2/voice.pt",
+        "bytes": 9499,
+        "sha256": "2085b3d58d2f2b20042e2e57a60206dd43c3028173cd9140e83d6c7b5136404d"
+      },
+      {
+        "path": "native-reasoning32-retained-pilot-v18/training/data.json",
+        "bytes": 128708,
+        "sha256": "de92099057ded15a1af0e387c96b457cdf4c1731c26594dcdca211d4c442fc1e"
+      },
+      {
+        "path": "native-reasoning32-retained-pilot-v18/training/training-state.pt",
+        "bytes": 22970059,
+        "sha256": "75fd39b1dc9a7f66b8125a1804cab87cfad384446d592df4534c3e1cff5f0367"
+      },
+      {
+        "path": "native-reasoning32-retained-pilot-v18/training/voice.pt",
+        "bytes": 9499,
+        "sha256": "2085b3d58d2f2b20042e2e57a60206dd43c3028173cd9140e83d6c7b5136404d"
+      }
+    ],
+    "mac_hashes_verified": true,
+    "fit_report_approved": false,
+    "independent_restore_approved": false
+  },
+  "gcp_continuation_proposal": {
+    "path": "GCP-NATIVE-CONTINUATION-PROPOSAL-2026-10-24.json",
+    "source_commit": "b5a3b05",
+    "status": "PENDING_USER_DECISION",
+    "additional_gcp_usage_limit_usd_proposed": 100,
+    "maximum_gpu_hours_proposed": 12,
+    "new_optimizer_updates_authorized": 0,
+    "compute_created": false,
+    "artifacts_transferred": false
+  },
+  "last_live_postfit_observation": {
     "at_utc": "2026-10-24T16:54:51.373056+00:00",
     "phase": "bounded8_training",
     "stages": [
@@ -223,48 +296,50 @@
       "control40_restore_fingerprint": "native-control3-train-018"
     }
   },
-  "adapter_export_backup": {
-    "snapshot": "20261024T164021.631309Z",
-    "inventory_sha256": "80aa6bf50e839e6d19ad8cdcd842de64c033ff2d5fcc1b715ddc549c4ff7979a",
-    "files": [
+  "compute_closure": {
+    "schema": "dl-native-runpod-early-stop-v1",
+    "at_utc": "2026-10-24 17:17:37 UTC",
+    "pod_id": "8fsk2kouknoiac",
+    "pod_name": "duplex-native-validation-reasoning32-20261024-v12",
+    "fresh_readback_status": "EXITED",
+    "retained_network_volume_id": "49yytzyoge",
+    "retained_volume_size_gb": 100,
+    "retained_volume_data_center": "EUR-IS-1",
+    "gpu_hourly_rate_before_stop_usd": 1.79,
+    "original_workload_terminal_observation": "native-reasoning32-v18-terminal-observation-v1.json",
+    "closed_final_backup_snapshot": "20261024T171028.002879Z",
+    "closed_backup_inventory_sha256": "318a30c25a47719ba745475a27c7b240f973ce9010a2dfc7873fa4dbb5535135",
+    "network_volume_deleted": false,
+    "optimizer_updates_repeated": 0,
+    "new_gpu_created": false,
+    "reason": "Guarded fit actually ended after all eight updates saved; finalization incomplete and closed backup verified. Release idle GPU rather than wait for hard deadline."
+  },
+  "local_watcher_closure": {
+    "schema": "dl-native-reasoning32-local-closure-v1",
+    "at_utc": "2026-10-24T17:18:54.704040+00:00",
+    "pod_id": "8fsk2kouknoiac",
+    "pod_fresh_readback": "EXITED",
+    "network_volume_retained": "49yytzyoge",
+    "closed_remote_stage_verified": true,
+    "closed_final_backup_snapshot": "20261024T171028.002879Z",
+    "processes": [
       {
-        "path": "native-reasoning32-retained-pilot-v18/training/adapters.safetensors",
-        "bytes": 7580728,
-        "sha256": "34edb69c696fef1ac02e498bb1351a7655442d6c7c041562ca145abfb3a77176"
+        "pid": 8236,
+        "exact_identity_verified": true,
+        "signal": "SIGTERM",
+        "terminal_verified": true
       },
       {
-        "path": "native-reasoning32-retained-pilot-v18/training/additional-native-v2/voice.pt",
-        "bytes": 9499,
-        "sha256": "2085b3d58d2f2b20042e2e57a60206dd43c3028173cd9140e83d6c7b5136404d"
-      },
-      {
-        "path": "native-reasoning32-retained-pilot-v18/training/data.json",
-        "bytes": 128708,
-        "sha256": "de92099057ded15a1af0e387c96b457cdf4c1731c26594dcdca211d4c442fc1e"
-      },
-      {
-        "path": "native-reasoning32-retained-pilot-v18/training/training-state.pt",
-        "bytes": 22970059,
-        "sha256": "75fd39b1dc9a7f66b8125a1804cab87cfad384446d592df4534c3e1cff5f0367"
-      },
-      {
-        "path": "native-reasoning32-retained-pilot-v18/training/voice.pt",
-        "bytes": 9499,
-        "sha256": "2085b3d58d2f2b20042e2e57a60206dd43c3028173cd9140e83d6c7b5136404d"
+        "pid": 30380,
+        "exact_identity_verified": true,
+        "signal": "SIGTERM",
+        "terminal_verified": true
       }
     ],
-    "mac_hashes_verified": true,
-    "fit_report_approved": false,
-    "independent_restore_approved": false
+    "proxy_requests_before_close": 0,
+    "provider_credential_transferred": false,
+    "no_remote_jobs_changed_by_local_cleanup": true
   },
-  "gcp_continuation_proposal": {
-    "path": "GCP-NATIVE-CONTINUATION-PROPOSAL-2026-10-24.json",
-    "source_commit": "b5a3b05",
-    "status": "PENDING_USER_DECISION",
-    "additional_gcp_usage_limit_usd_proposed": 100,
-    "maximum_gpu_hours_proposed": 12,
-    "new_optimizer_updates_authorized": 0,
-    "compute_created": false,
-    "artifacts_transferred": false
-  }
+  "independent_restore_approved": false,
+  "next_action": "Prepare/test zero-optimizer recovery of this exact saved stage without relabelling the original failure; GPU continuation and transfer await the explicit GCP decision."
 }

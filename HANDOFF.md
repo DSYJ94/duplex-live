@@ -1,3 +1,55 @@
+# LOCAL — V18terminal after8savedupdates; PodSTOPPED; noGPUworkrunning
+
+Authoritativeoriginaloutcome:17:10:00.493036UTCcontrollerphase
+failed_preserved_no_retry,error_typeTimeoutExpired,fitactual_exit-15.
+Originalcontroller28726andfit28807handles ABSENT onoriginalhost at17:12:24UTC;
+nvidia-smi computeprocess listEMPTY. No fitreport. Finalnative_stream49/49,
+control40fingerprints31/40,reasoning32finalfingerprints0/32. All8actualoptimizer
+updates saved and FULLoriginal154/native49/control40/reasoning32 exposure passed
+read-onlyaudit. No independenttraining-state restore/native20/speech20 executed;
+no modeladoption/extension/behavior-improvement claim. Time allowance was too
+short forpostfit checks, not a measuredbehavioral verdict.
+
+ClosedfinalMacsnapshot20261024T171028.002879Z inventorySHA
+318a30c25a47719ba745475a27c7b240f973ce9010a2dfc7873fa4dbb5535135;
+closedoriginalcontrollerSHA0605e35166606ae55a5beca5ce56757f69acb68aceeffb989735a4239bda3a32.
+AdapterSHA34edb69c696fef1ac02e498bb1351a7655442d6c7c041562ca145abfb3a77176;
+8stateSHA75fd39b1dc9a7f66b8125a1804cab87cfad384446d592df4534c3e1cff5f0367.
+Exactterminal/closedbackup/read-onlyaudit in
+ docs/NATIVE-REASONING32-POSTFIT-TIMEOUT-2026-10-24.json.
+
+STOPPED conversation-createdPod8fsk2kouknoiac afterterminal/closedbackupverification.
+FreshGetPod readbackEXITED; GetNetworkVolume49yytzyoge still100GB/EUR-IS-1.
+No volume deletion. PriorRUNNINGrate1.79USDhour released; existing budgetguard
+12953recordedpod_not_billing_compute/EXITED17:15:39UTC andended. Old18:39hardstop
+is historical; guardis NOTactive foranyfuture restart. DO NOTrestartwithanassumed
+liveguard. Confirmcurrentremainingbudget andarmafreshguardbeforeanynewcompute.
+Networkvolume andMacfilesretain criticalstate; container-onlyruntime canberebuilt.
+
+Evalwaiter20887endedfailed_inspect_before_retry beforeanyGPUeval; pairedV17/speechV17
+outputdirs nevercreated. Reversetunnel40689ended. Localbackup8236andproxy30380
+exactcommand identitiesverified, SIGTERM andactualterminalverified17:18:54UTC
+afterfinalsnapshot. Proxyactualrequests0. Allthese watchers/proxies areCLOSED;
+oldstatusfilesarehistorical, NOTlivehandles. Credentialsremainonlylocalignoredfile.
+Localclosure receipt native-reasoning32-v18-local-closure-v1.json.
+
+GCPproposal b5a3b05 (docs/GCP-NATIVE-CONTINUATION-PROPOSAL-2026-10-24.json) still
+PENDINGuserdecision; no newGCPGPU/upload/access/budgetcommitment. Do notaskagain
+or inferapprovalfromtime/projectcreation/balance. GCPproject/quota/quote/runtime
+prepared. Nextmeaningfulauthorizedofflinework: build/test aZEROoptimizerrecovery
+path for exact8state, preservingoriginalfailure andALLoriginalchecks. Noneis
+implemented/approvedyet; saved-stageaudit isONLYinputverification, notrestore or
+reportconstruction. Neverfabricateoriginalfitexit0,overwritefailedV18/report,
+repeat8updatesoruse--resume-trainingtoexecuteadditionalupdates. Independentfull
+Adam/RNGandallnativefingerprints mustpassbeforecompletepaired20/speech20, then
+existingfreshgates; no unqualifiedextension/adoption. ActiveexecutorLOCAL.
+BroaderMacsourcebackupstillPARTIAL; unrelatedlocalfilespreserved.
+Rawretainedtrainingtrace mixed; docs/NATIVE-REASONING32-RETAINED-TRAINING-TRACE-2026-10-24.json
+ispre-update teacher-forceddata, notmissingfinalmetrics/behavior. GoalACTIVE.
+Recorded 2026-10-24T17:28:30.596160+00:00.
+
+---
+
 # LOCAL — Saved-stage audit verifies ALL objectives/bytes; timeout guard unchanged
 
 Read-onlyaudit prepared evals/native_reasoning_saved_stage_audit.py. ActualMac

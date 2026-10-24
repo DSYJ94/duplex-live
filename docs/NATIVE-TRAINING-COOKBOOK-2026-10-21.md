@@ -1,6 +1,35 @@
 # What we trained, what is saved, and what to test
 
 
+## 24 October — eight updates preserved; post-fit checks timed out
+
+All eight reasoning32 optimizer updates were saved. The guarded fit then ended
+at 17:10 UTC during post-fit fingerprint collection: all49 retained native
+fingerprints and31/40 control fingerprints were written. The fit report,
+independent full restore and native behavioral evaluation did not complete.
+The time allowance was too short for those post-fit checks; this outcome does
+not supply a behavioral verdict for the new candidate.
+
+The adapter, full optimizer/RNG checkpoint, exact eight update receipts and
+all retained154/native49/control40/reasoning32 exposure are hash-verified on the
+Mac. See [the closed result](NATIVE-REASONING32-POSTFIT-TIMEOUT-2026-10-24.json).
+The dedicated Runpod machine is stopped, with the100GB network volume retained.
+No additional GPU or provider transfer has been started.
+
+The [raw retained training trace](NATIVE-REASONING32-RETAINED-TRAINING-TRACE-2026-10-24.json)
+contains pre-update values, not a final post-update evaluation. The original28
+weighted loss is0.56752112 before update1 and0.56746160 before update8; the sum
+of retained154 weighted group losses rises from2.55257399 to2.68811505 over the
+same observations. This mixed trace does not prove convergence or better voice
+behavior. The completed matched initial/final report remains unavailable.
+
+The next step is a separately verified zero-optimizer recovery and full restore,
+then complete native/speech evaluation. The original timeout remains preserved;
+no repeated optimization, subset acceptance, extension or adoption is authorized
+by the saved-stage audit. GCP continuation has a concrete proposal and awaits the
+new usage-and-transfer decision.
+
+
 ## 24 October — reading the reasoning32 fit results
 
 The current status is in [the fit record](NATIVE-REASONING32-FIT-LAUNCH-2026-10-24.json)

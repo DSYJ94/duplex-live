@@ -1,0 +1,106 @@
+{
+  "schema": "dl-native-reasoning32-retained-training-trace-v1",
+  "optimizer_receipts_sha256": "2eef7695db0d090a95b8cc77a0bac090acae8ceb734209249db9ca7f0bb3384d",
+  "rows": [
+    {
+      "before_optimizer_update": 1,
+      "weighted_group_training_loss": {
+        "actual": 0.5675211192473875,
+        "reference": 0.18145108222961426,
+        "old25": 0.45558632162742707,
+        "new24": 0.7613897360861301,
+        "word": 0.0,
+        "clock": 0.0,
+        "audio49": 0.5866257353704802
+      }
+    },
+    {
+      "before_optimizer_update": 2,
+      "weighted_group_training_loss": {
+        "actual": 0.5697513132660484,
+        "reference": 0.18134593777358532,
+        "old25": 0.4560937322676182,
+        "new24": 0.7617931282147765,
+        "word": 0.07894347161054611,
+        "clock": 0.051493298262357705,
+        "audio49": 0.586600946528571
+      }
+    },
+    {
+      "before_optimizer_update": 3,
+      "weighted_group_training_loss": {
+        "actual": 0.5720321887438331,
+        "reference": 0.18139559403061867,
+        "old25": 0.45536069670005846,
+        "new24": 0.7610361902043223,
+        "word": 0.08239100053906441,
+        "clock": 0.05248147009738854,
+        "audio49": 0.586737143445988
+      }
+    },
+    {
+      "before_optimizer_update": 4,
+      "weighted_group_training_loss": {
+        "actual": 0.5682374892413853,
+        "reference": 0.18137986585497856,
+        "old25": 0.4561939395130857,
+        "new24": 0.7612388739362359,
+        "word": 0.0806520126760006,
+        "clock": 0.052546679441417964,
+        "audio49": 0.5868797010304976
+      }
+    },
+    {
+      "before_optimizer_update": 5,
+      "weighted_group_training_loss": {
+        "actual": 0.5675474264662626,
+        "reference": 0.1813122071325779,
+        "old25": 0.455232523430727,
+        "new24": 0.7617822401225567,
+        "word": 0.08030184507369996,
+        "clock": 0.05329097754188946,
+        "audio49": 0.5866632452424692
+      }
+    },
+    {
+      "before_optimizer_update": 6,
+      "weighted_group_training_loss": {
+        "actual": 0.5676988352345992,
+        "reference": 0.18122299015522003,
+        "old25": 0.45518730544044,
+        "new24": 0.7615362433716655,
+        "word": 0.08091761022806168,
+        "clock": 0.05381038598716259,
+        "audio49": 0.5866783425516011
+      }
+    },
+    {
+      "before_optimizer_update": 7,
+      "weighted_group_training_loss": {
+        "actual": 0.572277059423002,
+        "reference": 0.1813361681997776,
+        "old25": 0.45541639998555183,
+        "new24": 0.7612512987107038,
+        "word": 0.0811768613755703,
+        "clock": 0.053950175642967224,
+        "audio49": 0.5866222317729677
+      }
+    },
+    {
+      "before_optimizer_update": 8,
+      "weighted_group_training_loss": {
+        "actual": 0.5674616004285954,
+        "reference": 0.1813126839697361,
+        "old25": 0.45541096622075294,
+        "new24": 0.7606558362022042,
+        "word": 0.08256769552826881,
+        "clock": 0.053953641759497774,
+        "audio49": 0.5867526266647844
+      }
+    }
+  ],
+  "scope": "Pre-update, teacher-forced retained154 losses. Not the absent final post-update report or a behavioral/generalization assessment. Reasoning/control/native stream batches differ by step and are excluded from this matched-membership table.",
+  "optimizer_updates_saved": 8,
+  "final_metrics_available": false,
+  "convergence_or_behavior_improvement_proven": false
+}

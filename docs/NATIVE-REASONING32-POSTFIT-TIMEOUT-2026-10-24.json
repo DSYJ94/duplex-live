@@ -1,0 +1,133 @@
+{
+  "schema": "dl-native-reasoning32-postfit-timeout-preserved-v1",
+  "observed_utc": "2026-10-24T17:12:24.355019+00:00",
+  "original_controller_at_utc": "2026-10-24T17:10:00.493036+00:00",
+  "model_source_commit": "da389a7031a5504495397d1575952194ffa209f1",
+  "controller_source_commit": "0d75986fca9f1ef943dfece77c7859235163c0ad",
+  "original_phase": "failed_preserved_no_retry",
+  "original_error_type": "TimeoutExpired",
+  "fit_exit_code": -15,
+  "original_controller_handle": null,
+  "original_fit_handle": null,
+  "gpu_processes": [],
+  "optimizer_updates_saved": 8,
+  "final_fingerprint_counts": {
+    "native_stream_restore_fingerprint": 49,
+    "control40_restore_fingerprint": 31
+  },
+  "fit_report_exists": false,
+  "independent_restore_executed": false,
+  "native_evaluation_executed": false,
+  "speech_evaluation_executed": false,
+  "terminal_timeout_verified": true,
+  "verified_final_snapshot": "20261024T171028.002879Z",
+  "snapshot_inventory_sha256": "318a30c25a47719ba745475a27c7b240f973ce9010a2dfc7873fa4dbb5535135",
+  "closed_original_controller_sha256": "0605e35166606ae55a5beca5ce56757f69acb68aceeffb989735a4239bda3a32",
+  "saved_stage_audit": {
+    "schema": "dl-native-reasoning32-saved-eight-audit-v1",
+    "at_utc": "2026-10-24T17:14:01.495802+00:00",
+    "inventory_sha256": "318a30c25a47719ba745475a27c7b240f973ce9010a2dfc7873fa4dbb5535135",
+    "audit_implementation_sha256": "e5b622f35fc367575120640cf2e260009f039e6ff3239b304d26eebd888792f1",
+    "optimizer_receipts_sha256": "2eef7695db0d090a95b8cc77a0bac090acae8ceb734209249db9ca7f0bb3384d",
+    "source_commit": "da389a7031a5504495397d1575952194ffa209f1",
+    "verified_files": {
+      "native-reasoning32-retained-pilot-v18/training/training-state.pt": {
+        "bytes": 22970059,
+        "sha256": "75fd39b1dc9a7f66b8125a1804cab87cfad384446d592df4534c3e1cff5f0367"
+      },
+      "native-reasoning32-retained-pilot-v18/training/adapters.safetensors": {
+        "bytes": 7580728,
+        "sha256": "34edb69c696fef1ac02e498bb1351a7655442d6c7c041562ca145abfb3a77176"
+      },
+      "native-reasoning32-retained-pilot-v18/training/data.json": {
+        "bytes": 128708,
+        "sha256": "de92099057ded15a1af0e387c96b457cdf4c1731c26594dcdca211d4c442fc1e"
+      },
+      "native-reasoning32-retained-pilot-v18/training/voice.pt": {
+        "bytes": 9499,
+        "sha256": "2085b3d58d2f2b20042e2e57a60206dd43c3028173cd9140e83d6c7b5136404d"
+      },
+      "native-reasoning32-retained-pilot-v18/training/approved-complete-balanced-preflight.json": {
+        "bytes": 124838,
+        "sha256": "2c695e6006cc82af426903be3d0a5a813bfd4fafcae72f010acf47b53722c086"
+      },
+      "native-reasoning32-retained-pilot-v17/combined-readiness/reasoning32-combined-readiness.json": {
+        "bytes": 4593774,
+        "sha256": "46753a71712712250aff747661bf3de0d9e8d165f12977f03c90ac6d04df20eb"
+      },
+      "native-reasoning32-retained-pilot-v18/bounded8_training.log": {
+        "bytes": 4355705,
+        "sha256": "f7dd2e1bc8d5f4c2c6ab26964f38a908f0dfd72fcd8d95b8dca523a8db34b482"
+      },
+      "native-reasoning32-retained-pilot-v18/controller.json": {
+        "bytes": 26884,
+        "sha256": "0605e35166606ae55a5beca5ce56757f69acb68aceeffb989735a4239bda3a32"
+      }
+    },
+    "complete_eight_optimizer_rows": true,
+    "retained154_native49_control40_reasoning32_exposure_verified": true,
+    "observed_original_phase": "failed_preserved_no_retry",
+    "optimizer_updates_executed": 0,
+    "original_fit_exit_zero_inferred": false,
+    "training_state_loaded_or_restored": false,
+    "fit_finalization_approved": false,
+    "independent_restore_approved": false,
+    "gpu_or_training_authorized": false,
+    "behavior_qualified": false,
+    "model_adopted": false
+  },
+  "model_adopted": false,
+  "recovery_gpu_authorized": false,
+  "scope": "Original time-bound process failed during post-fit validation after all eight saved updates. Closed-state copyback and objective receipts pass; no fit/restore/behavior approval is implied.",
+  "compute_closure": {
+    "schema": "dl-native-runpod-early-stop-v1",
+    "at_utc": "2026-10-24 17:17:37 UTC",
+    "pod_id": "8fsk2kouknoiac",
+    "pod_name": "duplex-native-validation-reasoning32-20261024-v12",
+    "fresh_readback_status": "EXITED",
+    "retained_network_volume_id": "49yytzyoge",
+    "retained_volume_size_gb": 100,
+    "retained_volume_data_center": "EUR-IS-1",
+    "gpu_hourly_rate_before_stop_usd": 1.79,
+    "original_workload_terminal_observation": "native-reasoning32-v18-terminal-observation-v1.json",
+    "closed_final_backup_snapshot": "20261024T171028.002879Z",
+    "closed_backup_inventory_sha256": "318a30c25a47719ba745475a27c7b240f973ce9010a2dfc7873fa4dbb5535135",
+    "network_volume_deleted": false,
+    "optimizer_updates_repeated": 0,
+    "new_gpu_created": false,
+    "reason": "Guarded fit actually ended after all eight updates saved; finalization incomplete and closed backup verified. Release idle GPU rather than wait for hard deadline."
+  },
+  "local_watcher_closure": {
+    "schema": "dl-native-reasoning32-local-closure-v1",
+    "at_utc": "2026-10-24T17:18:54.704040+00:00",
+    "pod_id": "8fsk2kouknoiac",
+    "pod_fresh_readback": "EXITED",
+    "network_volume_retained": "49yytzyoge",
+    "closed_remote_stage_verified": true,
+    "closed_final_backup_snapshot": "20261024T171028.002879Z",
+    "processes": [
+      {
+        "pid": 8236,
+        "exact_identity_verified": true,
+        "signal": "SIGTERM",
+        "terminal_verified": true
+      },
+      {
+        "pid": 30380,
+        "exact_identity_verified": true,
+        "signal": "SIGTERM",
+        "terminal_verified": true
+      }
+    ],
+    "proxy_requests_before_close": 0,
+    "provider_credential_transferred": false,
+    "no_remote_jobs_changed_by_local_cleanup": true
+  },
+  "budget_guard_final_observation": {
+    "phase": "pod_not_billing_compute",
+    "state": "EXITED",
+    "pod_id": "8fsk2kouknoiac",
+    "network_volume_retained": "49yytzyoge",
+    "at_utc": "2026-10-24T17:15:39.344595+00:00"
+  }
+}
