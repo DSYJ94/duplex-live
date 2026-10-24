@@ -1,3 +1,65 @@
+# LOCAL — eight-update TRAINING PROCESS LAUNCHED (24 October 04:07 UTC)
+
+Goal turn PROGRESS. LOCAL remains sole executor. Source reviewed
+932140bec38d032f3ce3fafd1bb5802844e37e7d. Execution
+c9efaaac24d983342f7eded46617e6450bc102ce and orchestration
+2e652ce06354abdf996447662231cd79cab9161f are unchanged.
+
+ACTUAL bounded8 training started03:58:30.486383 UTC. Current child
+97250/birth25672616, supervisor79780/birth24607807. At04:06:37 childR, sole GPU
+process, GPU48%/24791MiB. ZERO logged optimizer updates and no training-state file
+at that observation; do not claim trained weights or loss reduction yet.
+Actual /proc command matches the original planned command byte-for-byte; all seven
+original commands unchanged. All four predecessor stages exited0. Readiness71818
+actually exited0; original paused parent71679 retired only afterward. Both old
+/proc handles absent. NEVER restart them. This is ONE8 from native520, preserved
+Adam520 moments ->528, all original154/native49/control40 losses retained. No larger
+run or model adoption. Actual output /workspace/migration/
+native-control40-precise-pilot-v8-recovery/training; V9 training link points there.
+Launch receipt1,273B Mac+volume SHA
+228a1639e74c219f0833d774a1014b186cf93448045b33c09b47b3652bba2b2a.
+
+All8 combined partitions PASS: same fixed-parent154 gradient plus all49 retained
+native teachers and all40 control teachers/five families, exact target counts,
+parameters unchanged, frozen gradients0. Combined norms
+[11.8038,13.8745,13.5863,10.3553,11.0902,8.5063,10.4933,13.0743];
+peak23,088,837,120 bytes. These are readiness norms, NOT a training-loss curve.
+Raw report4,524,636B SHA
+568117e69f18fd7d1282592e726953edbedc80569dc959bdb2db2807459cf352.
+Existing validator and source/approval/exposure bindings reviewed CPU-only,
+no Torch import/model load/second GPU pass. Corrected supplementary reader's
+cache schema (examples vs engine cases); actual validator/trainer unaffected.
+Review1,818B Mac+volume SHA
+df9d6b880d728af7d61b757d729aca08619635243f75495667b0478ed33f2b09.
+Full49 and full154 approvals remain preserved.
+
+Combined raw report and successful immutable-input-readiness receipt are in closed
+snapshot20261024T035838.829559Z:87files/1,185,925,356B fully verified by watcher;
+inventorySHAa9044a7a8682e7c814df6fdadc76a8df1d107a74979d24481f191f32aff14d9d.
+Local inventory/report hashes crosschecked against reviewed remote report.
+80verified files reused;4,984,232B transferred. Successful immutable input receipt
+SHA75f16c405274618dd3aa9318c526007fb81ae1bfce8ca850071fc3379983c772;
+no model-output/validation-result caching. First optimizer checkpoint copyback pending.
+Original native archive complete; broader stopped Mac source backup remains PARTIAL.
+
+Phase-aware observer /private/tmp/duplex-v9-progress-observer-v2.py (PYTHONPATH=.,
+PYTHONDONTWRITEBYTECODE=1,local3.12env) reports actual step logs and checkpoint stat.
+All guarded services actual live04:05: guard70540 shutdown10:22:37.9; pipeline09:00;
+evaluation71424 latest09:37/end10:17; backup71453 and proxy71254 to10:20.
+Wallet read03:54:44=$14.4857886799,rate1.814/h,auto-payFalse;26h required14.0412406653
+including reserve, fully prepaid. Maxproject83.9807183<100. No purchase, deadline,
+source, data, gain, sampler, threshold or CPU-setting change. Backend runv7 healthy,
+actualrequests0. Unrelated pyc/capability probes/roadmap preserved.
+
+Next: monitor SAME97250 ->8 atomic optimizer/RNG checkpoints ->independent fresh
+Adam/RNG/native restore and strict proof ->complete paired20/speech20/all4 ordinary
+->eligible sealedfresh, then conclusive larger-run decision. First8 completion,
+restore and behavior are still pending. Distinct reasoning32 semantic payload
+approval pending;0requests/conversion/reasoning32training. No indirect retry.
+See docs/NATIVE-CONTROL40-TRAINING-START-2026-10-24.json for exact receipts.
+
+---
+
 # LOCAL — full49 native gradient readiness PASS and backed up (24 October 02:59 UTC)
 
 Goal turn PROGRESS. LOCAL remains sole executor. Source reviewed

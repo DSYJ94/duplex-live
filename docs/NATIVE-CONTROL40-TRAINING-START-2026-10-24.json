@@ -1,0 +1,245 @@
+{
+  "schema": "dl-native-control40-training-start-milestone-v1",
+  "recorded_utc": "2026-10-24T04:08:32.829940+00:00",
+  "source_commit": "932140bec38d032f3ce3fafd1bb5802844e37e7d",
+  "execution_commit": "c9efaaac24d983342f7eded46617e6450bc102ce",
+  "supervision_commit": "2e652ce06354abdf996447662231cd79cab9161f",
+  "actual_launch": {
+    "schema": "dl-native-control40-actual-training-launch-observation-v1",
+    "at_utc": "2026-10-24T04:04:03.078782+00:00",
+    "controller_pid": 79780,
+    "controller_birth": 24607807,
+    "source_commit": "c9efaaac24d983342f7eded46617e6450bc102ce",
+    "orchestration_commit": "2e652ce06354abdf996447662231cd79cab9161f",
+    "phase": "bounded8_training",
+    "stage_started_utc": "2026-10-24T03:58:30.486383+00:00",
+    "training_pid": 97250,
+    "training_birth": 25672616,
+    "training_state": "R",
+    "actual_command_matches_original": true,
+    "all7_original_commands_unchanged": true,
+    "actual_training_command_sha256": "87ed4517de2b1831cbd19bca8d872a1f5aaea69caa219d0ef4a02db2cb02bb53",
+    "completed4_predecessor_exit_codes": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "actual_readiness_child_exit_code": 0,
+    "old_supervisor_retired_after_child_exit": true,
+    "old_supervisor_proc_present": false,
+    "old_readiness_child_proc_present": false,
+    "actual_training_out": "/workspace/migration/native-control40-precise-pilot-v8-recovery/training",
+    "pipeline_deadline_utc": "2026-10-24T09:00:00+00:00",
+    "GPU_compute_PIDs": [
+      "97250"
+    ],
+    "controller_snapshot_sha256": "1f366ef63f9d1b221c6a85db9701eb2b8ec95dd81a23f0c88986ca1fbaccf3f1",
+    "observation_only_not_model_adoption": true
+  },
+  "launch_receipt": {
+    "local": "runs/local-migration-20261023/native-control40-actual-training-launch-observation-v1.json",
+    "volume": "/workspace/migration/native-control40-actual-training-launch-observation-v1.json",
+    "bytes": 1273,
+    "sha256": "228a1639e74c219f0833d774a1014b186cf93448045b33c09b47b3652bba2b2a",
+    "Mac_and_volume_hashes_identical": true
+  },
+  "combined_readiness": {
+    "passed": true,
+    "all8_complete": true,
+    "all154_retained_components_and49_native_and40_control_required": true,
+    "report_sha256": "568117e69f18fd7d1282592e726953edbedc80569dc959bdb2db2807459cf352",
+    "report_bytes": 4524636,
+    "gradient_norms": [
+      11.8038137738305,
+      13.87453139431342,
+      13.58633791500387,
+      10.355340576479655,
+      11.090179858794706,
+      8.506251047061104,
+      10.49331932985231,
+      13.074285309537453
+    ],
+    "peak_allocated_bytes": 23088837120,
+    "all_parameters_unchanged": true,
+    "frozen_parameter_gradients": 0
+  },
+  "metadata_review": {
+    "local": "runs/local-migration-20261023/native-control40-combined-metadata-review-v1.json",
+    "volume": "/workspace/migration/native-control40-combined-metadata-review-v1.json",
+    "bytes": 1818,
+    "sha256": "df9d6b880d728af7d61b757d729aca08619635243f75495667b0478ed33f2b09",
+    "Mac_and_volume_hashes_identical": true,
+    "scope": "Independent CPU-only metadata and provenance review using the existing combined checker; no second gradient execution or new gate.",
+    "new_GPU_gradient_execution": false
+  },
+  "backup": {
+    "schema": "dl-native-control40-combined-copyback-crosscheck-v1",
+    "snapshot": {
+      "path": "runs/local-migration-20261023/native-control40-continuous-copyback-v14/20261024T035838.829559Z",
+      "files": 87,
+      "inventory_sha256": "a9044a7a8682e7c814df6fdadc76a8df1d107a74979d24481f191f32aff14d9d",
+      "reused_verified_files": 80,
+      "reused_verified_bytes": 1180941124,
+      "transferred_file_bytes": 4984232
+    },
+    "inventory_files": 87,
+    "inventory_bytes": 1185925356,
+    "combined_report_path": "runs/local-migration-20261023/native-control40-continuous-copyback-v14/20261024T035838.829559Z/native-control40-precise-pilot-v8-recovery/combined-readiness/control40-combined-readiness.json",
+    "combined_report_bytes": 4524636,
+    "combined_report_sha256": "568117e69f18fd7d1282592e726953edbedc80569dc959bdb2db2807459cf352",
+    "inventory_and_report_hashes_rechecked": true,
+    "full_file_hash_verification_completed_by_continuous_watcher": true,
+    "immutable_input_readiness_passed": true,
+    "immutable_input_readiness_sha256": "75f16c405274618dd3aa9318c526007fb81ae1bfce8ca850071fc3379983c772",
+    "input_hash_reuse_does_not_cache_model_outputs": true,
+    "training_extension_or_adoption_approved": false
+  },
+  "latest_actual_training_observation": {
+    "schema": "dl-native-control40-live-observer-v2",
+    "at_utc": "2026-10-24T04:06:37.891134+00:00",
+    "controller": {
+      "pid": 79780,
+      "birth": 24607807,
+      "state": "S",
+      "CPU_seconds": 9.75
+    },
+    "phase": "bounded8_training",
+    "controller_passed": false,
+    "controller_error": null,
+    "child": {
+      "pid": 97250,
+      "birth": 25672616,
+      "state": "R",
+      "CPU_seconds": 479.78
+    },
+    "child_identity_matches_recorded_birth": true,
+    "original_parent": null,
+    "complete_native49_rows": 49,
+    "all_logged_rows_exact": true,
+    "unique_logged_teacher_ids": 49,
+    "combined_partitions_completed": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "combined_partition_sequence_valid": true,
+    "logged_completed_optimizer_updates": [],
+    "logged_update_sequence_valid": true,
+    "training_state_file": null,
+    "training_report_passed": null,
+    "training_report_optimizer_steps": null,
+    "independent_restore_passed": null,
+    "stages": [
+      {
+        "name": "whole_workset",
+        "pid": 4122,
+        "birth": 18985364,
+        "exit_code": 0
+      },
+      {
+        "name": "complete40_precise_numerical",
+        "pid": 4216,
+        "birth": 18993883,
+        "exit_code": 0
+      },
+      {
+        "name": "complete40_independent_BF16_gradient",
+        "pid": 14873,
+        "birth": 20219598,
+        "exit_code": 0
+      },
+      {
+        "name": "combined_readiness",
+        "pid": 71818,
+        "birth": 24130859,
+        "exit_code": 0
+      },
+      {
+        "name": "bounded8_training",
+        "pid": 97250,
+        "birth": 25672616,
+        "exit_code": null
+      }
+    ],
+    "pipeline_deadline_utc": "2026-10-24T09:00:00+00:00",
+    "readiness_reports": {
+      "complete-balanced-preflight.json": true,
+      "native-stream49-gradient-readiness.json": true,
+      "control40-combined-readiness.json": true
+    },
+    "GPU": "48 %, 24791 MiB",
+    "GPU_compute_PIDs": [
+      "97250"
+    ],
+    "read_only_observation_not_qualification": true,
+    "backend_health": {
+      "run_id": "native-control40-20261023-v7",
+      "actual_requests": 0,
+      "real_requests_transport": true
+    }
+  },
+  "funding": {
+    "at_utc": "2026-10-24T03:54:44.434512+00:00",
+    "wallet": {
+      "clientBalance": 14.4857886799,
+      "currentSpendPerHr": 1.814,
+      "isAutoPayEnabled": false
+    },
+    "same_pod": "4yx8vahdmjsylx",
+    "same_volume": "49yytzyoge",
+    "funding_options": [
+      {
+        "lifetime_hours": 24,
+        "deadline_utc": "2026-10-24T08:22:37.900000+00:00",
+        "required_remaining_wallet_USD": 10.413240665342222,
+        "fully_prepaid_with_one_hour_reserve": true,
+        "project_compute_cap_USD": 80.40071830424947
+      },
+      {
+        "lifetime_hours": 26,
+        "deadline_utc": "2026-10-24T10:22:37.900000+00:00",
+        "required_remaining_wallet_USD": 14.041240665342222,
+        "fully_prepaid_with_one_hour_reserve": true,
+        "project_compute_cap_USD": 83.98071830424945
+      },
+      {
+        "lifetime_hours": 27,
+        "deadline_utc": "2026-10-24T11:22:37.900000+00:00",
+        "required_remaining_wallet_USD": 15.855240665342222,
+        "fully_prepaid_with_one_hour_reserve": false,
+        "project_compute_cap_USD": 85.77071830424946
+      },
+      {
+        "lifetime_hours": 34,
+        "deadline_utc": "2026-10-24T18:22:37.900000+00:00",
+        "required_remaining_wallet_USD": 28.553240665342223,
+        "fully_prepaid_with_one_hour_reserve": false,
+        "project_compute_cap_USD": 98.30071830424946
+      }
+    ],
+    "new_credit_purchase": false
+  },
+  "qualification": {
+    "training_process_launched": true,
+    "logged_completed_optimizer_updates": 0,
+    "training_state_file_present": false,
+    "independent_restore_pending": true,
+    "behavior_pending": true,
+    "training_extension_or_adoption_approved": false
+  },
+  "unchanged_scope": {
+    "parent": "native520",
+    "bounded_updates": 8,
+    "final_parent_Adam_clock_required": 528,
+    "all7_original_commands_unchanged": true,
+    "all_original154_native49_and_control40_objectives_retained": true,
+    "no_runtime_or_sampler_or_data_or_gain_or_threshold_changes": true
+  },
+  "next_action": "Monitor existing97250 through ONE8; verify every atomic optimizer/RNG checkpoint copyback, then independent restore/proof and full paired20/speech20 before extension or adoption. No duplicate submissions."
+}

@@ -1,3 +1,15 @@
+24 October04:07UTC — Actual bounded8 training process launched03:58:30 from native520:
+97250/birth25672616 under79780. All four predecessor stages actualexit0; old71818/
+71679 retired. Original seven commands unchanged. All8 combined partitions PASS,
+all154/native49/control40 retained, unchanged parameters/frozen0, peak23.089GB.
+Raw4,524,636B report568117e69f18fd7d1282592e726953edbedc80569dc959bdb2db2807459cf352
+and successful immutable-input receipt in full87-file/1.186GB verified snapshot.
+CPU-only existing-checker/binding review complete. At04:06 still0logged optimizer
+updates/no checkpoint; independent restore/behavior/adoption pending. Funded guard
+unchanged. See newestHANDOFF and NATIVE-CONTROL40-TRAINING-START-2026-10-24.json.
+
+---
+
 24 October02:59UTC — Full49 native gradient readiness ACTUAL PASS (old25+new24):
 all exact grad/no-grad outputs, all26 gradients finite/present, frozen0, parameters
 unchanged, peak22.023GB. Existing validator and all49 bindings independently checked
