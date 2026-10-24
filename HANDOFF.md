@@ -1,3 +1,42 @@
+# LOCAL — partial pilot preserved; quota recovery verified (24 October 04:49 UTC)
+
+LOCAL remains sole executor; active goal PROGRESS. Original V9 supervisor79780/
+birth24607807 and trainer97250/birth25672616 are actually absent. GPU empty.
+The old controller remains stale at bounded8_training; do NOT treat it as live.
+Actual training exit status unavailable; no final report. One completed saved update
+is verified: Adam521,26 adapter/optimizer states, CPU/CUDA/Python/NumPy RNG fields.
+State22,959,371B SHA5128b3c8718db5d89c145f2c1b65bedf7b92c8e2279b1d84bc0221850a44382c
+is hash matched on Mac and live volume. This partial candidate is unadopted and
+has NOT passed independent native restore or behavior.
+
+Actual backup reproduction raised errno122 Disk quota exceeded. No trainer
+traceback survived; zero-length pending writes and no final report were observed.
+Ten incomplete snapshot folders/542,531,829B were fully copied and hash verified on
+Mac before reclaim. Nine older closed snapshot copies were reverified file by file
+on Mac and volume before reclaim. Their Mac inventories and files remain intact.
+Latest closed035838 (87files) and ALL original data/checkpoints/receipts retained.
+Actual2GiB write probe PASS after cleanup; no volume resize or storage purchase.
+Paused failing backup71453 must NEVER resume unchanged. Evaluation71424 ended with
+failed_inspect_before_retry because original upstream disappeared; no evaluation
+outputs or backend requests created. Original training/restoration never complete.
+
+Next authorized fault recovery: NEW V10 output, same C9 model source and unchanged
+ONE8 recipe from native520, never resume or extend partial521. Reuse all FOUR
+completed actual-exit0 predecessor stages with exact full154/native49/combined
+report hashes. Only fit/restore/proof output paths change. New backup staging uses
+container /tmp, verified copies go to Mac; original/final artifacts stay on volume.
+All original numerical, retention, independent restore and behavioral gates remain.
+19 operational tests PASS. Git deployment required before launch; actual new PID
+and submission still pending at this entry. Do not duplicate jobs.
+
+Guard70540 remains10:22:37.9UTC; pipeline09:00. One20USD credit already POSTED,
+NO second purchase. Max project compute83.9807183<100; auto-pay off. No Mac neural
+work or CPU/power/priority changes. Distinct reasoning32 semantic payload approval
+still pending: zero provider requests/conversion/training. Unrelated pyc/capability
+probe files/roadmap preserved. See docs/NATIVE-CONTROL40-QUOTA-RECOVERY-2026-10-24.json.
+
+---
+
 # LOCAL — eight-update TRAINING PROCESS LAUNCHED (24 October 04:07 UTC)
 
 Goal turn PROGRESS. LOCAL remains sole executor. Source reviewed

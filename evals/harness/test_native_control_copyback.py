@@ -10,6 +10,21 @@ from portable.context.native_control_copyback import ROOTS,snapshot,verify,ssh_c
 
 
 class ControlCopyback(unittest.TestCase):
+    def test_quota_recovery_stages_snapshots_outside_source_volume_and_reuses_verified_bytes(self):
+        with tempfile.TemporaryDirectory()as directory, tempfile.TemporaryDirectory()as disk:
+            base=Path(directory);root=base/'native-control40-precise-pilot-v10-quota-retry/training'
+            root.mkdir(parents=True);state=root/'training-state.pt';state.write_bytes(b'checkpoint1')
+            snapshots=Path(disk)/'snapshots'
+            first=snapshot(base,snapshot_root=snapshots)
+            second=snapshot(base,snapshot_root=snapshots)
+            self.assertFalse((base/'native-control40-backup-snapshots').exists())
+            self.assertTrue((Path(first['snapshot'])/state.relative_to(base)).samefile(Path(second['snapshot'])/state.relative_to(base)))
+            self.assertFalse(state.samefile(Path(first['snapshot'])/state.relative_to(base)))
+            state.write_bytes(b'checkpoint2')
+            third=snapshot(base,first['marker'],snapshot_root=snapshots)
+            self.assertTrue(third['changed']);self.assertEqual(verify(Path(third['snapshot']),third['inventory_sha256']),1)
+            self.assertEqual((Path(first['snapshot'])/state.relative_to(base)).read_bytes(),b'checkpoint1')
+
     def test_native49_receipt_triggers_backup_before_combined_stage_changes(self):
         with tempfile.TemporaryDirectory()as directory:
             base=Path(directory);controller=base/'native-control40-precise-pilot-v3-adoption'

@@ -1,0 +1,88 @@
+{
+  "schema": "dl-native-control40-quota-recovery-plan-v1",
+  "at_utc": "2026-10-24T04:44:20.310579+00:00",
+  "execution_source": "c9efaaac24d983342f7eded46617e6450bc102ce",
+  "interrupted_supervisor": {
+    "pid": 79780,
+    "birth": 24607807
+  },
+  "interrupted_training": {
+    "pid": 97250,
+    "birth": 25672616
+  },
+  "actual_completed_saved_updates": 1,
+  "saved_adam_clock": 521,
+  "partial_state_bytes": 22959371,
+  "partial_state_sha256": "5128b3c8718db5d89c145f2c1b65bedf7b92c8e2279b1d84bc0221850a44382c",
+  "checkpoint_Mac_and_volume_verified": true,
+  "backup_reproduction": "OSError errno 122 Disk quota exceeded",
+  "actual_training_exit_status_unavailable": true,
+  "terminal_observation": "Both original PIDs absent; GPU empty; only one saved step; zero-length pending writes; no final training report.",
+  "reclaimed_incomplete_snapshot_copies": {
+    "schema": "dl-native-owned-incomplete-backup-reclaim-v1",
+    "at_utc": "2026-10-24T04:40:10.480524+00:00",
+    "folders": [
+      "20261024T041407.059822Z",
+      "20261024T041513.733600Z",
+      "20261024T041614.588379Z",
+      "20261024T041715.639860Z",
+      "20261024T041816.544552Z",
+      "20261024T041917.449249Z",
+      "20261024T042011.712991Z",
+      "20261024T042018.303287Z",
+      "20261024T042119.140928Z",
+      "20261024T042220.089257Z"
+    ],
+    "removed_redundant_partial_bytes": 542531829,
+    "all_bytes_preserved_and_hash_verified_on_Mac": true,
+    "originals_checkpoints_closed_snapshots_unchanged": true,
+    "actual_64MiB_write_succeeded": true
+  },
+  "reclaimed_redundant_closed_copies": {
+    "schema": "dl-native-redundant-closed-backup-reclaim-v1",
+    "at_utc": "2026-10-24T04:42:02.825797+00:00",
+    "removed_snapshots": [
+      "20261023T182439.044827Z",
+      "20261023T230455.541236Z",
+      "20261023T232935.359277Z",
+      "20261023T233324.243229Z",
+      "20261023T234051.227758Z",
+      "20261023T234232.270326Z",
+      "20261024T005211.763005Z",
+      "20261024T010214.248962Z",
+      "20261024T025434.033302Z"
+    ],
+    "all_snapshots_remain_hash_verified_on_Mac": true,
+    "latest_full_closed_snapshot_retained": "20261024T035838.829559Z",
+    "all_originals_and_checkpoints_retained": true,
+    "actual_2GiB_write_succeeded": true,
+    "tmp_disk": "Filesystem        1B-blocks        Used   Available Use% Mounted on\noverlay        107374182400 72424022016 34950160384  68% /\n"
+  },
+  "recovery": {
+    "original_partial_candidate_preserved": true,
+    "original_parent": "native520",
+    "resume_partial": false,
+    "optimizer_update_limit": 8,
+    "readiness_stages_reused": 4,
+    "readiness_unchanged_and_complete": true,
+    "model_source_unchanged": true,
+    "only_three_output_paths_changed": true,
+    "output": "/workspace/migration/native-control40-precise-pilot-v10-quota-retry",
+    "backup_staging": "/tmp/duplex-control40-backup-snapshots",
+    "originals_and_final_outputs_stay_on_network_volume": true,
+    "Mac_verified_backup_required": true
+  },
+  "training_and_independent_restore_pending": true,
+  "behavior_qualified": false,
+  "model_adopted": false,
+  "larger_run_approved": false,
+  "project_compute_limit": 100,
+  "purchase": {
+    "amount": 20,
+    "already_posted": true,
+    "additional_purchase": false
+  },
+  "pipeline_deadline_utc": "2026-10-24T09:00:00+00:00",
+  "pod_shutdown_utc": "2026-10-24T10:22:37.900000+00:00",
+  "tests": "19 orchestration/copyback/dispatcher tests PASS; no local model or ASR work; CPU settings unchanged"
+}

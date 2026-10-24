@@ -23,7 +23,9 @@ ROOTS=('native-control40-preflight-v3/numerical','native-control40-supervisor-v4
        'native-control40-native20-speech-v1','native-control40-fresh-paired40-v1',
        'native-control40-precise-pilot-v3-adoption','native-control40-precise-pilot-v4-adoption',
        'native-control40-precise-pilot-v5-adoption','native-control40-precise-pilot-v6-adoption',
-       'native-control40-precise-pilot-v7-adoption','native-control40-precise-pilot-v8-recovery','native-control40-precise-pilot-v9-adoption')
+       'native-control40-precise-pilot-v7-adoption','native-control40-precise-pilot-v8-recovery','native-control40-precise-pilot-v9-adoption',
+       'native-control40-precise-pilot-v10-quota-retry')
+EPHEMERAL_SNAPSHOTS=Path('/tmp/duplex-control40-backup-snapshots')
 FORBIDDEN={'session-token','.private','.env','keys','credentials','core','quarantine',
            'owner-conversations','owner_conversations'}
 
@@ -91,8 +93,8 @@ def inventory_rows(root,expected=None):
     return rows
 
 
-def previous_snapshot(base):
-    root=base/'native-control40-backup-snapshots'
+def previous_snapshot(base,snapshot_root=None):
+    root=snapshot_root if snapshot_root is not None else base/'native-control40-backup-snapshots'
     if root.is_symlink():raise ValueError('Backup output root must not be linked elsewhere')
     if root.is_dir():
         for folder in sorted(root.iterdir(),reverse=True):
@@ -115,12 +117,13 @@ def verified_link(previous,source,target,row):
     return True
 
 
-def snapshot(base,last_marker=None):
+def snapshot(base,last_marker=None,snapshot_root=None):
     current=marker(base)
     if current==last_marker:return dict(changed=False,marker=current)
-    previous,old_rows=previous_snapshot(base);old={r['path']:r for r in old_rows}
+    previous,old_rows=previous_snapshot(base,snapshot_root);old={r['path']:r for r in old_rows}
     stamp=datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S.%fZ')
-    out=base/'native-control40-backup-snapshots'/stamp;out.mkdir(parents=True,exist_ok=False)
+    root=snapshot_root if snapshot_root is not None else base/'native-control40-backup-snapshots'
+    out=root/stamp;out.mkdir(parents=True,exist_ok=False)
     files=[];reused=0;reused_bytes=0
     for name in ROOTS:
         folder=base/name
@@ -196,7 +199,7 @@ def reuse_local_files(reference,target,rows):
 
 def receive_snapshot(info,target,ssh,host,reference=None):
     remote=Path(info['snapshot'])
-    if remote.parent!=Path('/workspace/migration/native-control40-backup-snapshots'):
+    if remote.parent not in (Path('/workspace/migration/native-control40-backup-snapshots'),EPHEMERAL_SNAPSHOTS):
         raise ValueError('Unexpected remote snapshot root')
     target.mkdir(parents=True,exist_ok=False)
     prefix=['rsync','-ar','--exclude=session-token','--no-owner','--no-group','-e',shlex.join(ssh)]
@@ -230,6 +233,7 @@ def ssh_command(key,known_hosts,host,port):
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--remote-snapshot',action='store_true');p.add_argument('--last-marker')
+    p.add_argument('--ephemeral-snapshots',action='store_true',help='Stage backup replicas on container disk; originals stay on the network volume')
     p.add_argument('--source-commit',required=True)
     for n in ('key','known-hosts','remote-source','out'):p.add_argument('--'+n,type=Path)
     p.add_argument('--deadline-utc');p.add_argument('--host');p.add_argument('--port',type=int)
@@ -239,7 +243,8 @@ def main():
         if (subprocess.check_output(['git','-C',str(source),'rev-parse','HEAD'],text=True).strip()!=a.source_commit
                 or subprocess.check_output(['git','-C',str(source),'status','--porcelain'],text=True).strip()):
             raise ValueError('Exact clean committed backup source required')
-        print(json.dumps(snapshot(Path('/workspace/migration'),a.last_marker)));return
+        print(json.dumps(snapshot(Path('/workspace/migration'),a.last_marker,
+                                  EPHEMERAL_SNAPSHOTS if a.ephemeral_snapshots else None)));return
     if not all((a.key,a.known_hosts,a.remote_source,a.out,a.deadline_utc,a.host,a.port,a.pod_id)):
         p.error('Local copyback requires actual Pod/SSH host/port, exact SSH paths, output and finite deadline')
     deadline=datetime.fromisoformat(a.deadline_utc.replace('Z','+00:00')).timestamp()
@@ -259,11 +264,12 @@ def main():
             command=['timeout','--signal=TERM','110s','env','PYTHONDONTWRITEBYTECODE=1','python3',str(a.remote_source/'portable/context/native_control_copyback.py'),
                      '--remote-snapshot','--source-commit',a.source_commit]
             if last:command+=['--last-marker',last]
+            if a.ephemeral_snapshots:command+=['--ephemeral-snapshots']
             result=subprocess.run(ssh+[host,shlex.join(command)],check=True,capture_output=True,text=True,timeout=120)
             info=json.loads(result.stdout)
             if info['changed']:
                 remote=Path(info['snapshot'])
-                if remote.parent!=Path('/workspace/migration/native-control40-backup-snapshots'):
+                if remote.parent not in (Path('/workspace/migration/native-control40-backup-snapshots'),EPHEMERAL_SNAPSHOTS):
                     raise ValueError('Unexpected remote snapshot root')
                 target=a.out/remote.name
                 count,reuse=receive_snapshot(info,target,ssh,host,reference)
@@ -271,7 +277,9 @@ def main():
                 reference=target;last=info['marker']
             status.update(phase='watching',last_marker=last,last_check_succeeded=True);save()
         except (subprocess.SubprocessError,OSError,ValueError) as error:
-            status.update(phase='retrying',last_check_succeeded=False,error_type=type(error).__name__)
+            status.update(phase='retrying',last_check_succeeded=False,error_type=type(error).__name__,
+                          error=str(error)[-1000:],returncode=getattr(error,'returncode',None),
+                          stderr=(getattr(error,'stderr','')or'')[-2500:])
             save()
         time.sleep(min(60,max(0,deadline-time.time())))
     status['phase']='deadline_reached';save()
