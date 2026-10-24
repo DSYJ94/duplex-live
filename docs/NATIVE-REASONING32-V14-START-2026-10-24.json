@@ -1,0 +1,43 @@
+{
+  "schema": "dl-native-reasoning32-numerical-v14-progress-v1",
+  "at_utc": "2026-10-24T11:05:24.860046+00:00",
+  "pod_id": "8fsk2kouknoiac",
+  "numerical_source": "9d57928f03572f51862e952c513c1063a45e6511",
+  "followon_training_source": "35af581",
+  "controller_pid": 3687,
+  "controller_birth": 39444297,
+  "child_pid": 3700,
+  "child_birth": 39444310,
+  "observed_phase": "LIVE input/lineage verification; no model GPU process or numeric row observed yet",
+  "numerical_deadline_utc": "2026-10-24T12:30:00Z",
+  "guard_deadline_utc": "2026-10-24T18:39:58.8Z",
+  "optimizer_updates": 0,
+  "failed_versions": {
+    "v12": "actual child exit1: missing original temporary verifier roots; preserved",
+    "v13": "actual child exit1: missing exact openai-whisper package metadata; preserved"
+  },
+  "diagnosed_repairs": [
+    "Restored original five temporary root directories from preserved native snapshots",
+    "Installed original openai-whisper20250625/whisper-timestamped1.15.9 into original isolated verifier package root; no model download"
+  ],
+  "activation": {
+    "schema": "dl-native-replacement-cold-activation-v1",
+    "passed": true,
+    "source_commit": "9d57928f03572f51862e952c513c1063a45e6511",
+    "pod_id": "8fsk2kouknoiac",
+    "failed_receipt_sha256": "d87fddfddd4dca3951db9bbae277e98517d25fd9d47254bcf75950c57e4f1a23",
+    "cold_verified_files": 18193,
+    "cold_verified_bytes": 66533503553,
+    "stage": "/opt/reasoning32-runtime-root-v12",
+    "originals_or_prior_failure_mutated": false,
+    "model_or_optimizer_run": false
+  },
+  "source_binding": {
+    "actual_original_control40_gradient_report_checked": true,
+    "original_gradient_source": "c9efaaac24d983342f7eded46617e6450bc102ce",
+    "mode": "All original dependency hashes match their Git source; only exact two proof-routing additions may normalize from complete loader AST",
+    "old_model_math_or_thresholds_changed": false,
+    "offline_tests_passed": 13
+  },
+  "followon_preparation": "Exact CLI command prepare-only actual exit0; GPU/gradient/fit readiness not established"
+}

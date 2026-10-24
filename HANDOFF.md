@@ -1,3 +1,54 @@
+# LOCAL — restored runtime; numericalV14 live, no optimizer (24 October11:05UTC)
+
+Goal turn PROGRESS/VERIFIED WAIT. SamePod8fsk2kouknoiac, hard guard18:39:58.8UTC,
+no additional purchase or extension. Runtime copy PID2181 is TERMINAL FAILED:
+vendor Git clone SIGPIPE after interrupted stdout. Never restart it. Failure
+/workspace/migration/native-reasoning32-runtime-v12.json is preserved. Recovery
+source039ffd8 ran detached; cold rehashed18193files/66533503553B and activated
+canonical aliases; receipt native-reasoning32-activation-v12.json PASSED, copied Mac.
+Original and workset files remain exact, no original artifacts mutated.
+
+NumericalV12 controller3166/birth39417715, child3179/birth39417730 actualexit1:
+missing five original/tmp verifier directories. Reconstructed exact directory
+mapping from original saved run.py, regular copies from approved preserved roots.
+V13 controller3487/birth39430829, child3500/birth39430843 actualexit1:
+missing original ASR package metadata. Installed ONLY pinned openai-whisper20250625
+and whisper-timestamped1.15.9 with --no-deps into original/tmp verifier packages.
+No recognizer or model downloaded; GPU runtime packages unchanged. Both failures
+remain unchanged. Neither ran optimizer or measured a failing numerical row.
+
+CURRENT numericalV14: controller3687/birth39444297, child3700/birth39444310,
+source9d57928f03572f51862e952c513c1063a45e6511 at
+/opt/duplex-reasoning32-9d57928-v12; verified live, input/lineage checking, no GPU
+model process/numeric row observed at last check. Deadline12:30UTC. Control
+/workspace/migration/native-reasoning32-numerical-v14-control, output
+/workspace/migration/native-reasoning32-numerical-v14, controller log suffix-controller.log.
+Never resubmit based on an empty log or observation timeout; inspect exact PID/birth.
+
+Follow-on source35af581 committed/pushed/deployed at
+/opt/duplex-reasoning32-35af581-v14. Verified read-only workset inputs hardlinked
+from existing source, both clean. New strict source-binding proof handles ONLY
+the exact two added loader schema-routing AST nodes; all remaining whole-file
+AST and all old gradient dependency Git hashes must match. Actual original40
+report at sourcec9efaaa passes; model/protocol mutations are rejected.13 offline
+tests PASS. Independent restore rechecks this binding. No threshold or math change.
+New controller may reuse a full numerical32 only after exact actualexit0/terminal
+controller plus original complete numerical gate; incomplete/live/failing reports
+reject. Exact planned command native-reasoning32-pilot-v14-planned-command.json is
+on Mac and/workspace/migration; prepare-only in ...pilot-v14-prepare actualexit0.
+It does NOT approve gradient/fit. Main controller deadline17:45, restore reserve1h.
+
+NEXT poll exactV14. Once complete32 actualexit0 and controller terminal, copy fresh
+local cost guard status to remote and launch exact prepared35af581 command detached,
+with PYTHONPATH=/workspace/control40-vendor-moshi-rag/moshi and TRITON_LIBCUDA_PATH=
+/workspace/migration/native-reasoning32-compiler-v12/audition-driver. No duplicate
+numeric audit: --approved-numerical and --numerical-control already nameV14.
+All32 gradient/combined154+49+40+32 readiness must pass before bounded8 fit, then
+fresh full restore and complete native behavior evaluation. Back up terminal
+numerical/controller reports and all candidate weights/Adam/RNG before shutdown.
+
+---
+
 # LOCAL — actual SSH/compiler pass; verified runtime restoration live (24 October10:49UTC)
 
 Goal turn PROGRESS/VERIFIED WAIT. SamePod8fsk2kouknoiac direct SSH verified
