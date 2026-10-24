@@ -1,3 +1,44 @@
+# LOCAL — update5 and complete loss records backed up (24 October 05:44 UTC)
+
+Goal turn PROGRESS: updates4/5 independently observed, checkpoints verified on Mac,
+complete matched-parent loss reports saved. Previous goal turn PROGRESS.
+LOCAL remains sole executor; main before receiptac36575. Model/math C9
+c9efaaac24d983342f7eded46617e6450bc102ce and orchestrationa5958a0 unchanged.
+SAME supervisor101648/birth25974639 and trainer101677/birth25975025 live05:41:01,
+only GPU process97%/30015MiB. Logged1..5; newest state saved05:40:41UTC.
+No final training report/native restore/behavior; never duplicate or restart.
+
+Checkpoint5=22,959,307B SHA
+9158c3a0981754e8bb80f7243a2c0afbf53f9ae47fd62a63d8fb7c080d09cbf1.
+V16 closed inventorySHA18ac7e59c6293439a637947aa55f6d95d4fbf17c554be66ae1eb2dab0fcc0bb4;
+all files verified by watcher, checkpoint/hash and full five-point log independently
+rechecked on Mac. All prior checkpoint copies, originals and failed attempts
+preserved. Broader stopped Mac source backup remains PARTIAL.
+
+Fixed154 totals measured after0/1/2/3/4 updates:
+[2.5525739946,2.6808978326,2.6922974746,2.6909541311,2.6882728817].
+Latest remains5.3162% above parent; no convergence or behavioral improvement claim.
+Matched same-parent partition5: native CE delta-.0026638566, control text+.0004672132,
+control acoustic-.0000067413. Changes small and mixed. Rotating raw totals may NOT
+be treated as convergence. Original154/native49/control40 data, weights and gates
+unchanged. All26 A/B gradients remain nonzero; no new model code or GPU diagnostics.
+
+Same guard70540 shutdown10:22:37.9UTC, pipeline09:00; evaluator63289 latest09:37/
+end10:17; backup63290/backend71254 to10:20. Guardarmed and backuphealthy after
+providerAPI recovery. Wallet05:26:35=$11.75710493,rate1.814/h,auto-payFalse;26h fully
+prepaid incl reserve, maxproject83.9807183<100. No purchase/storage/deadline change.
+Prior complete paired20+speech20 used711,299,309B/314files; backup replicas stage on
+container disk. Actual quota usage unknown; no large probe while live training.
+
+Next: SAME8 ->final fingerprints ->fresh actual Adam528/RNG/native49/control40
+restore ->strict proof ->complete paired20/speech20 and ordinary4 ->eligible
+sealedfresh ->larger-run decision. No extension/adoption now. Distinct reasoning32
+semantic payload approval pending;0requests/conversion/training. No Mac neural
+work or OS CPU/power/priority changes; unrelated local work preserved.
+See docs/NATIVE-CONTROL40-PILOT-PROGRESS-2026-10-24.json for exact evidence.
+
+---
+
 # LOCAL — update3 backed up; momentum diagnostic excludes simple uphill step (24 October 05:31 UTC)
 
 Goal turn PROGRESS. LOCAL sole executor. Main before receipt e2b5afd; model/math
