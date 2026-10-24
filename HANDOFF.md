@@ -1,3 +1,50 @@
+# LOCAL — first retry update saved and backed up (24 October 05:07 UTC)
+
+Goal turn PROGRESS: loss reporter committed and new checkpoint1 independently
+inspected/copied. Previous goal turn PROGRESS (quota recovery and corrected launch).
+LOCAL remains sole executor. Main before receipt948436b; model source unchanged
+c9efaaac24d983342f7eded46617e6450bc102ce, orchestrationa5958a0343383728639940c4eb82e31ca3aa96f2.
+
+SAME supervisor101648/birth25974639, trainer101677/birth25975025. V11 first update
+saved05:03:47UTC; actual logged step1, Adam521. Still bounded8_training, no final
+report/independent native restore/behavior. NEVER duplicate or resume old attempts.
+State22,959,307B SHA52ef1ca99c780bded4e66d4fdfb57cc814ba03682a688f1579f14d5033778e9e.
+Mac copy in V16 snapshot20261024T050444.013404Z;151files fully hash verified,
+inventorySHA9e402d1373540130f081ae1b1f5f1fd03590ef8202afb7d581a77a730f9c4755.
+150 verified files reused; only22,959,307B transferred. Original/full archives and
+all failed-attempt evidence preserved; broader stopped Mac source backup PARTIAL.
+
+CPU-only comparison on CLOSED snapshot: all26 adapters and Adam states/groups
+exactly equal the rescued old first update;1,894,400 parameters. ALL154 first-step
+loss records, selected native call hashes/losses, control losses/targets and norm
+are exact between attempts. Metadata identical. Cross-run Torch CPU/CUDA/Python/
+NumPy RNG states differ; each captured separately. This is comparison of saved
+dictionaries, NOT independent native restore. That still requires the new run's
+own complete8/Adam528/RNG state plus full49/control40 native fingerprints.
+
+New committed offline loss reporter reads logs only. All154 first-point losses
+also exactly match the independent parent readiness. Fixed154 weighted total
+2.552573994561039; actual28=.5675211192, reference=.1814510822, old25=.4555863216,
+new24=.7613897361, word=clock=0, audio49=.5866257354. Selected native auxiliary
+.9814703156, control text .7285357998/acoustic .1547845975, total4.4173647074.
+Pre-clip norm11.8038139343. Losses measured BEFORE first optimizer update.
+One point establishes NO reduction/convergence. Only fixed154 repeats identical
+terms/weights across steps; rotating auxiliary totals cannot form a convergence
+curve. No new GPU or Mac model execution was added for these reports.
+
+Backup63290, evaluator63289, proxy71254 and guard70540 remain armed as previously.
+Pipeline09:00; shutdown10:22:37.9UTC; evaluation latest09:37/end10:17; backup/proxy10:20.
+Wallet actual05:04:18=$12.5218500142 at1.814/h, auto-payFalse.26h guard fully prepaid
+with billing-lag/shutdown reserve; maxproject83.9807183<100. No new credit purchase,
+storage resize or deadline change. Distinct reasoning32 semantic payload approval
+still pending;0requests/conversion/training. Unrelated local files preserved.
+
+Next: same8 ->final fingerprints ->independent native restore/proof ->complete
+paired20/speech20/ordinary4 ->eligible sealedfresh, then larger-run decision.
+See docs/NATIVE-CONTROL40-PILOT-PROGRESS-2026-10-24.json for exact receipts.
+
+---
+
 # LOCAL — corrected bounded8 retry LIVE; backups restored (24 October 04:50 UTC)
 
 LOCAL sole executor. Active goal PROGRESS. Main includes orchestration fix
