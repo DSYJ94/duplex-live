@@ -1,3 +1,45 @@
+# LOCAL — Native/control extraction complete; supervised exact-input step waiting on full hashes
+
+23:15:36UTC actual SSH: original CPUstage23551/startticks635946 STILL running,
+not a duplicate. Native extractor23553 finished:28470nativefiles; its complete
+native-extracted.json now exists.7797controlfiles extracted. Combined full
+40132files/81,154,452,891B/8links destination-hashes.json still PENDING.
+No GPU/model/optimizer update. Original SSH255 failure receipts remain unchanged.
+
+New HOST transient unit duplex-native-exact-inputs-v2.service actually launched0
+at23:15:27UTC, MainPID24659, invocation23088b17163a4b009a8e25f0ebb7fa10. Fresh
+readback active/running; it waits on exact23551+birth635946. Only after it ends and
+the actual full destination receipt exists does unchanged native_gcp_inputs run.
+Helper itself checks ALL40132/8/fullhashPASS before linking inputs. RuntimeMax5400s,
+latest start00:25:15UTC25Oct, CPUproviderSTOP00:55:15UTC25Oct unchanged. Durable
+logs /workspace/migration/gcp-exact-inputs-v2.log and new receipt
+/workspace/migration/gcp-exact-inputs-v2.json. Inspect actual unit ActiveState/
+SubState/ExecMainStatus/Result plus full receipts; launch0 is NOT completion.
+Empty operator-owned Root12/aliasparents were prepared, no aliases/data rebuilt yet.
+Ignored Mac launch receipt: input-reconstruction-supervisor-v2.json. Old local
+watchers3415/40309 are terminal observation failures, NOT live; do not restart.
+
+Actual separate Git deployment0: /opt/duplex-gcp-recovery-8bb5436-v1 at
+8bb54365e8f1a41069ddf07bb4abf91d26cca8f7, includes guest exactname/A2type fix.
+Initial mkdir permission error preserved as deployment-v2; diagnosed missing
+operator-owned directory fixed, deployment-v3 actual0. Original f5c2ed0 unchanged.
+This source is frozen for input/GPU recovery, future HANDOFF commits need not
+change the running producer. Original model source remains da389a7031a5504495397d1575952194ffa209f1.
+
+Fresh regional GCPquota:1unused A10080,12unusedA2CPU; only existingE2 running.
+Official authenticated CreateVM UI quote1A10080/europe-west4:5.58USD/h with10GBdisk;
+same250GB conservative rate5.63/h,12h+16.88reserve=84.44USDwithin100. Create NOT
+clicked; actual stock unknown. Mac worker env is configured0600, no value exposed.
+Important product gap: native_audition is explicitly observe-only with tools off;
+voice audition does NOT demonstrate asyncdelegation. Next after actual hash/input
+completion: same-disk boundedGPU/realguards/independentrestore/fullbehavior, then
+connect existing native request/backend path for end-to-end product testing.
+Automation refreshed with these actual handles and working-delegation priority.
+No new optimizer updates approved; no repeat saved8, subsetadoption or gates weakened.
+LOCAL sole executor; unrelated local edits untouched.
+
+---
+
 # LOCAL — Upload complete; original CPU verifier survives dropped SSH; product priority
 
 At23:01:47UTC the original local observer recorded actualSSH255/brokenpipe. This
