@@ -1,3 +1,39 @@
+# LOCAL — Saved-stage audit verifies ALL objectives/bytes; timeout guard unchanged
+
+Read-onlyaudit prepared evals/native_reasoning_saved_stage_audit.py. ActualMac
+snapshot verifies pinned8state75fd39b...,adapter34edb69...,data/voice,original154
+preflight2c695e6...,combinedreadiness46753a7... and canonical ALL8optimizerreceipt
+SHA2eef7695db0d090a95b8cc77a0bac090acae8ceb734209249db9ca7f0bb3384d.
+Original8receiptSHAmatchesfirst8snapshot163048 andlatest170511 despitegrowing
+postfitfingerprintlog. Existing COMPLETE original154/native49/control40/reasoning32
+exposurevalidators ALLPASS onactualeightrows, notcounts-only. No Torch/Macmodel,
+GPUwork,state loading,newoptimizer,fitreport orapproval. Publicresult
+ docs/NATIVE-REASONING32-SAVED-STAGE-AUDIT-2026-10-24.json.18offline testsPASS;
+alteredbytes,duplicate/incompleteupdates,source/commandmismatch,live/reusedPIDs,
+otherfailurecauses andfalselyrelabelling originalexit0 are rejected.
+Terminaltimeout helper checks original-host observations only; it is NOT aGPU
+launch/recovery permit. A fullzerooptimizerreport-recovery path is NOTimplemented
+orapproved. Preserve this distinction ifthecurrentfit hits17:10bound.
+
+LiveGetPod8fsk2kouknoiac confirmedRUNNING,1.79USDhour,actionsstop/restart/terminate,
+/workspace networkvolume49yytzyoge,unlocked; this isconversation-createdPod.
+No lifecycleaction yet: originalfit28807/controller28726 stilllive. Onceactual
+terminalstate andfinalsnapshot/hashverified, release idlecompute early rather
+thanwait18:39hardstop. PreferSTOP/read-backEXITED retainingnetworkvolume; existing
+budgetwatchdog returnsafterEXITED so recordit. Container-onlyruntime canberebuilt
+frompinnedimage/source; criticalweights/data/checkpoints areonretainedvolume/Mac.
+DoNOTstopwhileanyoriginalGPUwork remains ordeletevolume49yytzyoge.
+
+GCPbudget/transferquestionstillPENDING; noanswer inferred andnonewGCPcompute/
+transfer/access. Source/mathDA+controller0d+evalC078 unchanged. All8updates saved,
+finalization incomplete; no independentrestore/behavior/adoption. Goalactive.
+Next: inspectactual17:10 terminalstate andclosedlogs; verifyfinalsnapshot and
+exactexporthashes, thenstopidlePod ifnoapprovedGPUwork remains. Build/test a
+zerooptimizerrecoverypathoffline ifneeded whileawaitingGCPdecision; neverrepeat8.
+Recorded 2026-10-24T17:09:32.658673+00:00.
+
+---
+
 # LOCAL — Retained49 final fingerprints complete; control40 at3; GCPdecisionpending
 
 Actual16:54:51.373056UTC:controller28726/fit28807birth40829227stateR,

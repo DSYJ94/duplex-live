@@ -1,0 +1,65 @@
+{
+  "schema": "dl-native-reasoning32-saved-eight-audit-v1",
+  "at_utc": "2026-10-24T17:06:52.865897+00:00",
+  "inventory_sha256": "0ce4448a4d156f4cbe616e93e6243e187684765eb1e336cfe2fbe14bd578cdf1",
+  "audit_implementation_sha256": "e5b622f35fc367575120640cf2e260009f039e6ff3239b304d26eebd888792f1",
+  "optimizer_receipts_sha256": "2eef7695db0d090a95b8cc77a0bac090acae8ceb734209249db9ca7f0bb3384d",
+  "source_commit": "da389a7031a5504495397d1575952194ffa209f1",
+  "snapshot": "20261024T170511.003576Z",
+  "verified_files": {
+    "native-reasoning32-retained-pilot-v18/training/training-state.pt": {
+      "bytes": 22970059,
+      "sha256": "75fd39b1dc9a7f66b8125a1804cab87cfad384446d592df4534c3e1cff5f0367"
+    },
+    "native-reasoning32-retained-pilot-v18/training/adapters.safetensors": {
+      "bytes": 7580728,
+      "sha256": "34edb69c696fef1ac02e498bb1351a7655442d6c7c041562ca145abfb3a77176"
+    },
+    "native-reasoning32-retained-pilot-v18/training/data.json": {
+      "bytes": 128708,
+      "sha256": "de92099057ded15a1af0e387c96b457cdf4c1731c26594dcdca211d4c442fc1e"
+    },
+    "native-reasoning32-retained-pilot-v18/training/voice.pt": {
+      "bytes": 9499,
+      "sha256": "2085b3d58d2f2b20042e2e57a60206dd43c3028173cd9140e83d6c7b5136404d"
+    },
+    "native-reasoning32-retained-pilot-v18/training/approved-complete-balanced-preflight.json": {
+      "bytes": 124838,
+      "sha256": "2c695e6006cc82af426903be3d0a5a813bfd4fafcae72f010acf47b53722c086"
+    },
+    "native-reasoning32-retained-pilot-v17/combined-readiness/reasoning32-combined-readiness.json": {
+      "bytes": 4593774,
+      "sha256": "46753a71712712250aff747661bf3de0d9e8d165f12977f03c90ac6d04df20eb"
+    },
+    "native-reasoning32-retained-pilot-v18/bounded8_training.log": {
+      "bytes": 4352205,
+      "sha256": "f20b5fb5235c96c3239041069b2f7099ad5b79eb77829d4450b41cc48979f0ce"
+    },
+    "native-reasoning32-retained-pilot-v18/controller.json": {
+      "bytes": 19537,
+      "sha256": "502cc8493fd08a13180b3f7e982a4deb4f09f613a401438c0593fea0ba39cba8"
+    }
+  },
+  "complete_eight_optimizer_rows": true,
+  "retained154_native49_control40_reasoning32_exposure_verified": true,
+  "observed_original_phase": "bounded8_training",
+  "optimizer_updates_executed": 0,
+  "original_fit_exit_zero_inferred": false,
+  "training_state_loaded_or_restored": false,
+  "fit_finalization_approved": false,
+  "independent_restore_approved": false,
+  "gpu_or_training_authorized": false,
+  "behavior_qualified": false,
+  "model_adopted": false,
+  "torch_imported": false,
+  "offline_checks": {
+    "tests_passed": 18,
+    "suites": [
+      "evals.harness.test_native_reasoning_saved_stage_audit",
+      "evals.harness.test_native_reasoning_readiness_followup",
+      "evals.harness.test_native_control_development_wait"
+    ],
+    "cpu_only": true,
+    "torch_imported": false
+  }
+}
