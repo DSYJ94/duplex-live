@@ -1,6 +1,30 @@
 # What we trained, what is saved, and what to test
 
 
+## 24 October — complete readiness passed; reasoning32 fit process launched
+
+The [complete joint readiness audit](NATIVE-REASONING32-JOINT-READINESS-COMPLETE-2026-10-24.json)
+passed all eight partitions and exited0 at14:48:23UTC. It combines the unchanged
+original154, native49, control40 and new32 objectives at native520. Model parameters
+remained unchanged; peak allocation was23,088,837,120bytes. This proves execution
+readiness, not learning or behavior.
+
+The original controller then refused its first training launch solely because
+its conservative start window had closed. The staged followup reused the complete
+approvals and [launched the same eight-update fit](NATIVE-REASONING32-FIT-LAUNCH-2026-10-24.json)
+at14:53:47UTC. Controller28726/fit child28807 use unchanged model sourceDA389A7;
+controller source0d75986 changes orchestration only. The model command differs
+only in output directory. All hyperparameters in the planned recipe remain.
+At15:03:47UTC the fit child was live and its actual command matched; no optimizer
+step had yet been logged. Do not report eight completed updates or convergence.
+
+A new local evaluation waiter20887 follows exact controller PID/birth and requires
+complete training, independent restore and strict proof before full paired native20
+and independent speech20. Its latest launch is17:40UTC, retaining the existing
+minimum40-minute window and unchanged18:20UTC evaluation deadline. All cases and
+thresholds remain required; sealed fresh inputs stay closed. Backup8236 covers
+V17 and V18. The Pod hard stop remains18:39:58.8UTC; compute cap is unchanged.
+
 ## 24 October 13:08 UTC — numerical and gradient approval complete; fit still planned
 
 The new reasoning32 corpus passed complete32 numerical and gradient approval.

@@ -1,0 +1,90 @@
+{
+  "schema": "dl-native-reasoning32-complete-joint-readiness-v1",
+  "at_utc": "2026-10-24T15:06:44.710870+00:00",
+  "model_source_commit": "da389a7031a5504495397d1575952194ffa209f1",
+  "passed": true,
+  "complete_partitions": 8,
+  "all_parameters_unchanged": true,
+  "optimizer_updates": 0,
+  "original154_components": 154,
+  "all49_and_control40_and_reasoning32_exposure_passed": true,
+  "peak_allocated_bytes": 23088837120,
+  "report_sha256": "46753a71712712250aff747661bf3de0d9e8d165f12977f03c90ac6d04df20eb",
+  "actual_audit_exit": 0,
+  "actual_audit_end_utc": "2026-10-24T14:48:23.115117+00:00",
+  "original_controller": {
+    "pid": 8514,
+    "birth": 39640315,
+    "terminal": true,
+    "phase": "failed_preserved_no_retry",
+    "error_type": "TimeoutError",
+    "error": "Insufficient bounded headroom for bounded8_training",
+    "training_started": false
+  },
+  "gradient_interactions": [
+    {
+      "partition": 1,
+      "retained_gradient_norm": 11.8038137738305,
+      "incremental_reasoning32_gradient_delta_norm": 8.810691951738844,
+      "cosine_with_retained_gradient": 0.3222939518490139,
+      "scope": "Fixed-parent accumulated-gradient difference; diagnostic, not an independent loss or learning approval"
+    },
+    {
+      "partition": 2,
+      "retained_gradient_norm": 13.87453139431342,
+      "incremental_reasoning32_gradient_delta_norm": 13.908636552062827,
+      "cosine_with_retained_gradient": 0.5592566916202859,
+      "scope": "Fixed-parent accumulated-gradient difference; diagnostic, not an independent loss or learning approval"
+    },
+    {
+      "partition": 3,
+      "retained_gradient_norm": 13.58633791500387,
+      "incremental_reasoning32_gradient_delta_norm": 7.4875442943976696,
+      "cosine_with_retained_gradient": 0.3033602514216223,
+      "scope": "Fixed-parent accumulated-gradient difference; diagnostic, not an independent loss or learning approval"
+    },
+    {
+      "partition": 4,
+      "retained_gradient_norm": 10.355340576479655,
+      "incremental_reasoning32_gradient_delta_norm": 12.146301550991053,
+      "cosine_with_retained_gradient": 0.492794649949453,
+      "scope": "Fixed-parent accumulated-gradient difference; diagnostic, not an independent loss or learning approval"
+    },
+    {
+      "partition": 5,
+      "retained_gradient_norm": 11.090179858794706,
+      "incremental_reasoning32_gradient_delta_norm": 22.53516170755856,
+      "cosine_with_retained_gradient": 0.037574180773037646,
+      "scope": "Fixed-parent accumulated-gradient difference; diagnostic, not an independent loss or learning approval"
+    },
+    {
+      "partition": 6,
+      "retained_gradient_norm": 8.506251047061104,
+      "incremental_reasoning32_gradient_delta_norm": 11.905499651319813,
+      "cosine_with_retained_gradient": 0.21115386820083523,
+      "scope": "Fixed-parent accumulated-gradient difference; diagnostic, not an independent loss or learning approval"
+    },
+    {
+      "partition": 7,
+      "retained_gradient_norm": 10.49331932985231,
+      "incremental_reasoning32_gradient_delta_norm": 6.906975767836026,
+      "cosine_with_retained_gradient": -0.03344574574670025,
+      "scope": "Fixed-parent accumulated-gradient difference; diagnostic, not an independent loss or learning approval"
+    },
+    {
+      "partition": 8,
+      "retained_gradient_norm": 13.074285309537453,
+      "incremental_reasoning32_gradient_delta_norm": 7.41806780075948,
+      "cosine_with_retained_gradient": 0.5350988975880883,
+      "scope": "Fixed-parent accumulated-gradient difference; diagnostic, not an independent loss or learning approval"
+    }
+  ],
+  "backup": {
+    "snapshot": "/Users/daryl/Library/CloudStorage/OneDrive-Personal/Shared GitHub Repos/duplex-live/runs/local-migration-20261023/native-reasoning32-continuous-copyback-v3/20261024T145426.880465Z",
+    "inventory_sha256": "9f63368e954ba72590c83df093a3dcf37314b10d5192ecb30cce1980f4d06ce0",
+    "report_remote_and_mac_sha256_equal": true,
+    "pure_gate_rechecked_without_model": true
+  },
+  "learning_or_behavior_proven": false,
+  "model_adopted": false
+}

@@ -1,7 +1,7 @@
 {
   "schema": "dl-native-reasoning32-readiness-reuse-contingency-v1",
   "at_utc": "2026-10-24T14:15:10.682329+00:00",
-  "status": "SOURCE_STAGED_CLEAN_NO_GPU_DISPATCH",
+  "status": "FIT_CONTROLLER_LAUNCHED_NOT_COMPLETED",
   "reason": "Observed audit duration may cross the original pre-fit three-hour headroom gate; preserve completed approvals without repeating GPU audits",
   "original": {
     "pid": 8514,
@@ -61,5 +61,15 @@
     "source_commit": "0d75986fca9f1ef943dfece77c7859235163c0ad",
     "first_snapshot_verified": true,
     "deadline_utc": "2026-10-24T18:30:00Z"
+  },
+  "actual_launch": {
+    "pid": 28726,
+    "birth": 40829059,
+    "fit_child_pid": 28807,
+    "fit_child_birth": 40829227,
+    "model_source_commit": "da389a7031a5504495397d1575952194ffa209f1",
+    "controller_source_commit": "0d75986fca9f1ef943dfece77c7859235163c0ad",
+    "launched_utc": "2026-10-24T14:53:47.165325+00:00",
+    "completed_optimizer_updates_at_last_observation": 0
   }
 }

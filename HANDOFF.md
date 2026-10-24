@@ -1,3 +1,48 @@
+# LOCAL — COMPLETE8 readiness PASS; same-recipe fit V18 LIVE
+
+Goal turn PROGRESS. Original V17 combined readiness all8 PASS, actual child15566
+exit0 at14:48:23.115117UTC. Final reportSHA
+46753a71712712250aff747661bf3de0d9e8d165f12977f03c90ac6d04df20eb.
+All model parameters unchanged, original154 plus native49/control40/reasoning32
+full exposure verified; peak23088837120bytes. Full report is in verified Mac
+copybackV3 snapshot20261024T144835.161249Z and subsequent snapshots; exact remote/
+Mac SHA and pure complete8 gate rechecked without model/Torch. Public summary
+ docs/NATIVE-REASONING32-JOINT-READINESS-COMPLETE-2026-10-24.json.
+
+Original controller8514 and child15566 handles absent. It ended BEFORE ANY FIT
+with exact TimeoutError: Insufficient bounded headroom for bounded8_training.
+No original training output. Staged successor passed all strict reuse/source/
+compiler/cost/lease gates and launched14:53:47UTC. Current controller28726,
+birth40829059, controller source0d75986fca9f1ef943dfece77c7859235163c0ad,
+model/math source da389a7031a5504495397d1575952194ffa209f1.
+Current fit child28807/birth40829227 verified LIVE at15:03:47UTC; no optimizer
+step logged yet. Output /workspace/migration/native-reasoning32-retained-pilot-v18,
+log bounded8_training.log. Actual fit commandSHA
+e4ad94d23096960c0c81800d6983adcaa304f842638218cd840afb69e36bfc9f;
+only output differs from original8f33eb... recipe. SAME eight updates, no math,
+loss/data/threshold change or extension/adoption. Controller deadline18:10UTC;
+hard Pod8fsk2kouknoiac termination18:39:58.8UTC,100USD cap unchanged.
+
+Old local eval38348 actually ended before any remote evaluation. New waiter20887
+follows controller28726/birth40829059/model sourceDA. Local plan/status
+native-reasoning32-evaluation-v18-plan.json (0600, NEVER transfer whole plan) and
+native-reasoning32-evaluation-v18-dispatch.json. Evaluation sourcec07873bc5d699d88622e91c72d17a07489f2e4fa,
+checkout /opt/duplex-reasoning32-evaluation-c07873b. Outputs retain the unused
+native-reasoning32-native20-v17 and native20-speech-v17 names, now bound to V18
+candidate proof. No prior outputs/launch receipt existed. Latest launch17:40UTC,
+minimum40-minute complete window unchanged, eval deadline18:20UTC. Requires full
+training/independent restore/strict proof. No sealed fresh inputs or adoption.
+
+Backup8236/source0d watcherV3 verified watching; deadline18:30UTC. Guard12953 armed,
+proxy30380 and tunnel30575 retain same scoped v15 runid, zero provider requests
+at last health read; no credentials moved. Next observe first real optimizer
+step and complete8 fit, independent restore, then automatic full20 evaluation.
+GCP regional quota1 approved and console-verified, global360; no GCP compute or
+migration. Broader stopped source backup remains PARTIAL. Unrelated work retained.
+Recorded 2026-10-24T15:06:44.710870+00:00.
+
+---
+
 # LOCAL — GCP regional A100 quota APPROVED; original Runpod7/8 live
 
 Goal turn PROGRESS and verified wait. Google Cloud approval email at13:49:58UTC
