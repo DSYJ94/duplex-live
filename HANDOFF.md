@@ -1,3 +1,28 @@
+# LOCAL — recipe exported; combined readiness29/49 live (24 October)
+
+Goal turn PROGRESS plus verified wait. Exact queued eight-update command,
+sourceDA389A7 and hyperparameters now exported to
+ docs/NATIVE-REASONING32-PLANNED-RECIPE-2026-10-24.json; cookbook updated.
+Recipe is PLANNED, not completed. Zero optimizer updates in this pilot at this
+observation. Numerical32 and gradient32 final approvals remain unchanged.
+
+Direct SSH verified controller8514/birth39640315 and child15566/birth39956182
+live; phase combined_readiness, original154 complete-gradient preflight passed,
+29/49 exact native forward rows and zero joint partitions yet. No restart.
+Same Pod8fsk2kouknoiac, source da389a7031a5504495397d1575952194ffa209f1,
+output /workspace/migration/native-reasoning32-retained-pilot-v17.
+Next complete49, joint8 readiness, automatic bounded8 fit, independent full
+restore, complete20 native/speech evaluation. No adoption or convergence proven.
+Guard12953 hard cutoff18:39:58.8UTC; backup38347 and eval dispatcher38348 retained.
+
+GCP option discussed: local gcloud has no configured account/project. No GCP
+resource created or archive transferred. Await project/credit eligibility without
+interrupting current executor or duplicating jobs. Broader stopped source backup
+remains PARTIAL; verified native archive and ongoing fixed-root copyback retained.
+Observed/documented at 2026-10-24T13:08:25.082636+00:00 . Unrelated local files preserved.
+
+---
+
 # LOCAL — COMPLETE32 gradient PASS; combined readiness live (24 October12:32UTC)
 
 Goal turn PROGRESS. Gradient32 child9704/birth39674733 completed ALL32 PASS and

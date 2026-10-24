@@ -1,5 +1,45 @@
 # What we trained, what is saved, and what to test
 
+
+## 24 October 13:08 UTC — numerical and gradient approval complete; fit still planned
+
+The new reasoning32 corpus passed complete32 numerical and gradient approval.
+[Numerical evidence](NATIVE-REASONING32-NUMERICAL-COMPLETE-2026-10-24.json)
+and [gradient evidence](NATIVE-REASONING32-GRADIENT-COMPLETE-2026-10-24.json)
+record actual process exits, unchanged model parameters and final report hashes.
+These checks establish that the objective executes correctly; they do not show
+learning, convergence or behavioral improvement.
+
+The exact queued command and hyperparameters are saved in the
+[planned recipe](NATIVE-REASONING32-PLANNED-RECIPE-2026-10-24.json).
+This pilot has **zero optimizer updates** at this observation. Controller8514,
+source da389a7031a5504495397d1575952194ffa209f1, is running combined readiness
+on Pod8fsk2kouknoiac. Its child15566 is live; the original154 complete-gradient
+preflight passed and29/49 retained native histories have logged exact forward
+hash parity. Complete49 and all eight joint partitions are still required.
+
+The queued fit starts from native520, trains1,894,400 adapter parameters in26
+FP32 tensors across13 modules (rank8, scaling2), and keeps the7,689,623,552
+base parameters, Mimi and depth transformer frozen. It plans eight AdamW
+updates, effective learning rate2e-7 (2e-6 times0.1), betas0.9/0.999,
+epsilon1e-8, weight decay0 and gradient norm clip1. Expected Adam step528
+is conditional on all eight updates actually completing.
+
+Each update retains the original154 objectives, original28 histories and
+approved old25/new24 histories. KL1, hidden retention10, word-clock anchor64
+and first-word weight16 remain. Native49 and control40 each cover the complete
+set per eight updates. The added32 scenes cover direct basic reasoning,
+delegation, cancellation and replacement: four scenes per update, one from each
+family, all32 once per eight updates. Selected teacher weight is0.25; text and
+acoustic epoch mean weights are1 each. The pinned upstream assembler's exact24
+pre-span acoustic exclusions remain explicit; source audio and words are unchanged.
+
+After fit, a separate process must restore full training state and verify it.
+Complete paired native development and independent speech evaluation follow;
+strict behavioral and fresh qualification remain necessary before extension or
+adoption. The earlier rejected control40 candidate remains unadopted. No broad
+reasoning, natural-backchannel or production-quality claim follows from readiness.
+
 ## 24 October09:20 update — model rejected; new32 data ready through codec
 
 The completed8-update control40 model remains unadopted:2/4 ordinary cores and
