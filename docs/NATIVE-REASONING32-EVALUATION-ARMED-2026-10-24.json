@@ -1,0 +1,43 @@
+{
+  "schema": "dl-native-reasoning32-evaluation-armed-v1",
+  "numerical_rows_observed": 13,
+  "numerical_rows_passed": 13,
+  "complete32_approved": false,
+  "optimizer_updates": 0,
+  "asr_preparation": {
+    "schema": "dl-native-independent-asr-preparation-v1",
+    "source_commit": "e77e7c9f539c62157e60e09a8a5f4003a3c5c797",
+    "asr_python": "/opt/native10-asr-env/bin/python",
+    "torch": "2.9.0a0+145a3a7bda.nv25.10",
+    "triton": "3.4.0",
+    "public_whisper_turbo_sha256": "aff26ae408abcba5fbf8813c21e62b0941638c5f6eebfb145be0c9839262a19a",
+    "original_archive_unchanged": true,
+    "shared_native_runtime_modified": false,
+    "provider_credential_transferred": false,
+    "seconds": 84.24774824501947,
+    "training_or_behavior_approved": false
+  },
+  "asr_actual_exit": 0,
+  "dispatcher": {
+    "pid": 31286,
+    "phase": "waiting_for_complete_independent_restored_pilot",
+    "last_read_succeeded": true,
+    "upstream_pid": 4051,
+    "upstream_birth": 39474669
+  },
+  "evaluation_source": "c07873bc5d699d88622e91c72d17a07489f2e4fa",
+  "training_source": "da389a7031a5504495397d1575952194ffa209f1",
+  "proxy": {
+    "pid": 30380,
+    "run_id": "native-reasoning32-native20-v15",
+    "actual_requests": 0,
+    "maximum_requests": 128,
+    "key_remains_on_mac": true
+  },
+  "tunnel_pid": 30575,
+  "latest_evaluation_launch_utc": "2026-10-24T17:00:00Z",
+  "evaluation_deadline_utc": "2026-10-24T18:20:00Z",
+  "backup_deadline_utc": "2026-10-24T18:30:00Z",
+  "pod_shutdown_utc": "2026-10-24T18:39:58.8Z",
+  "behavior_or_adoption_approved": false
+}

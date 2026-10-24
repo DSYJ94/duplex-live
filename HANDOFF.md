@@ -1,3 +1,44 @@
+# LOCAL — numerical13/32; complete20 evaluation dispatcher armed (24 October11:19UTC)
+
+Goal turn PROGRESS/VERIFIED WAIT. Same numericalV14 child3700/birth39444310
+live;13/32 allpass, NOT complete approval. Follower4051/birth39474669 waiting.
+No optimizer, no behavioral score, no adoption. No additional GPU or purchase.
+
+Isolated ASR setup wrapper4918/birth39521431 completed actualexit0; receipts
+/workspace/migration/native-reasoning32-asr-preparation-v15{,-exit}.json copied Mac.
+/opt/native10-asr-env/bin/python uses unchanged NGC Torch2.9.0a0nv25.10; pinned
+Whisper turbo SHAaff26ae408abcba5fbf8813c21e62b0941638c5f6eebfb145be0c9839262a19a
+verified. Setup CUDA disabled, no native runtime modification. Public weights in
+/root/.cache/whisper are ephemeral. This is setup, no recognition result yet.
+
+Mac-only proxy30380 serves scoped native-reasoning32-native20-v15, maximum128
+requests, deadline18:35UTC, ACTUAL REQUESTS0. Key remains original local0600 file;
+never transferred. Local proxy receipt native-reasoning32-eval-proxy-v15/proxy.json.
+SSH reverse tunnel30575 verified actual remote loopback18795 /health; no provider
+request from health. Tunnel/proxy receipts and logs in runs/local-migration-20261023.
+No model/ASR work or CPU throttling on Mac; only HTTP/SSH/backup coordination.
+
+Evaluation sourcec07873bc5d699d88622e91c72d17a07489f2e4fa deployed clean at
+/opt/duplex-reasoning32-evaluation-c07873b, read-only input hardlinks. ONE local
+dispatcher31286 live; native-reasoning32-evaluation-v15-dispatch.json reports
+waiting_for_complete_independent_restored_pilot, last_read_succeeded true,
+observed upstream waiting_exact_numerical32. Explicit upstream4051/birth39474669,
+training sourceda389a7. Plan native-reasoning32-evaluation-v15-plan.json stays Mac
+(contains local credential PATHS only; never transfer). It waits for actual complete
+six stages/exit0 + numeric binding and terminal controller, then current live budget
+and scoped proxy checks before complete paired20 native and independent speech.
+Outputs /workspace/migration/native-reasoning32-native20-v15 and
+...native20-speech-v15. Latest evaluation start17:00, deadline18:20UTC.
+
+NEXT monitor exact numerical and follower; evaluation automatically follows strict
+full restore if time permits. Backup28132 continues verified current numerical/pilot
+snapshots. Its fixed whitelist does NOT yet include future native20/speech outputs;
+add a separate scoped copyback/terminal hash inventory for those once present.
+Preserve all candidate weights/optimizer/RNG and evaluation evidence before hard
+Pod18:39:58.8UTC. Stop paid compute earlier if no justified next action remains.
+
+---
+
 # LOCAL — numerical7/32; incremental backup live; evaluation routes prepared (24 October11:13UTC)
 
 Goal turn PROGRESS/VERIFIED WAIT. Same exact numerical child3700/birth39444310
