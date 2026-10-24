@@ -7,8 +7,11 @@ from native520's adapters and Adam state. The training process exited0 at
 06:58:04 UTC. This supersedes the “not started” status in the dated23 October
 snapshot below. The candidate is **unadopted**. Its [complete fresh-process native restore and
 strict proof](NATIVE-CONTROL40-FULL-RESTORE-PASS-2026-10-24.json) passed at07:51 UTC.
-The complete paired native/independent speech evaluation has automatically launched;
-its behavioral results remain pending. Live process
+The complete paired native/independent speech evaluation has finished. Both models
+answer2/4 ordinary cores correctly. The candidate violates cue silence and pause,
+fails both changed-value deliveries and lacks a real cancellation action. The
+[complete20 review](NATIVE-CONTROL40-COMPLETE20-BEHAVIOR-REVIEW-2026-10-24.json)
+rejects fresh measurement and training extension. Live process
 state belongs in [HANDOFF](../HANDOFF.md), not in the historical recipe exports.
 
 The [completed recipe](NATIVE-CONTROL40-COMPLETED-RECIPE-2026-10-24.json) is exported
@@ -54,9 +57,11 @@ still requires conclusive restore, retention and native behavior evidence.
 
 The additional32-scene reasoning/delegation collection has progressed beyond the
 23 October snapshot: source audio and the complete derived teacher audio version
-are recorded and speech-qualified. Its separate semantic payload approval is
-pending; no semantic provider requests, physical native conversion or reasoning32
-training have occurred. Control40 teaches cue silence and pause/resume, not the
+are recorded and speech-qualified. The user authorized the exact separate
+semantic payload; all32 actual independent reviews completed, with30 passing and
+two timing failures (029/030). No physical conversion or reasoning32 training has
+occurred. The entire collection remains unapproved; failed originals and all32
+responses are preserved. Control40 teaches cue silence and pause/resume, not the
 whole reasoning/delegation or natural backchannel objective. No production model
 or natural microturn qualification is claimed.
 

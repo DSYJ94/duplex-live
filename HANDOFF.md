@@ -1,3 +1,56 @@
+# LOCAL — complete pilot behavior FAIL; approved semantic32 complete30/32 (24 October08:38UTC)
+
+Goal turn PROGRESS; LOCAL sole executor. Main before this receipt fe5b443.
+Training/evaluation source c9efaaac24d983342f7eded46617e6450bc102ce unchanged.
+Completed8fit, full28/49/49/40 independent native restore, Adam528/allRNG and strict
+proof PASS. No current training. Same paired controller122058/birth27072474 and
+speech followup122071/birth27072529 ACTUALLY completed and gone; both actors gone.
+Actual08:35:28 GPU0%/0MiB/no computePIDs. Never relaunch these output roots.
+
+Complete20 behavior review now recorded in
+ docs/NATIVE-CONTROL40-COMPLETE20-BEHAVIOR-REVIEW-2026-10-24.json
+(reproduction docs/diagnostics/native-control40-complete20-review-20261024.py).
+Baseline2/4 ordinary cores (sound/metal); candidate2/4 (sound/photosynthesis).
+Candidate still speaks inside both explicit quiet intervals, says wrong marker
+TWO before both correct actual changed-value results and never revises, omits
+project clarification and has NO actual cancellation receipt. Baseline DOES have
+one actual cancellation receipt but fails the native spoken workflow. Independent
+ASR/clocks failures retained. All10 cases per model reviewed, no passing subset.
+Unchanged fresh validator REJECTS this negative review. No sealed fresh payloads
+or outputs opened, no extension/adoption. Full exact restore does not prove native
+behavior. No conclusive attribution to batch size or a need to unfreeze7B.
+
+Complete20 closed Mac V17 snapshot20261024T081518.534321Z:473files,
+3,158,279,025B, ALL rehashed; inventorySHA
+ a572638fa2e0ebbde7b8579a53d7a35020710b50462eb1d2ea45f2dce07491e5.
+All20 actor report/model/userWAV bindings exact; training checkpoints/Adam/RNG,
+source data and full results preserved. Broader stopped Mac source backup PARTIAL.
+
+Latest human explicitly approved the exact complete32 semantic payload
+SHA63de073379fc9871f062f7c1616ab54f27bdc43037fb5deee739339dbb2fb6ee,
+720152B, gpt-6-astra, maximum32requests/concurrency2. Ran ONCE from Mac using
+ignored0600 key; no credentials transferred. Local execsession3812 actuallyexit1
+AFTER ALL32 returned: completed semantic judgments30PASS/2FAIL (029/030), not an
+HTTP failure. Final verifier correctly rejects incomplete whole32 approval.
+No automatic retry/subset/conversion/training. All32 rawresponses preserved under
+runs/local-migration-20261023/native-reasoning32-derived-v10-semantic-v1/.
+See docs/NATIVE-REASONING32-SEMANTIC-REVIEW-2026-10-24.json.
+029 badge ASR49.84 precedes wirewrite52.504/ack53.157 while actual provider badge
+transcript arrives53.1556: diagnose original waveform/timing before any repair.
+030 stopped ASR52.32 precedes ACK52.4777 but follows real committed cancel51.6161
+and wirewrite51.6192. Preserve ambiguity; do not claim proven premature action
+from client ACK alone or silently weaken approval. Both full episodes rejected.
+
+One approved$20 purchase already POSTED; latest human confirms added. NO duplicate
+purchase. Same guard70540 terminates OWN Pod4yx8vahdmjsylx10:22:37.9UTC, retains
+volume49yytzyoge. Backup1184/V17 and backend71254 to10:20; maxproject83.9807183<100.
+No new resource/OSCPU/power/affinity changes; no Mac model/ASR loads. Unrelated
+pyc/capabilityprobes/roadmap preserved. Next diagnose two actual semantic timing
+failures, repair ONLY diagnosed failures in a new version if needed, then full32
+reapproval/conversion/native chain. No longer run from this failed native pilot.
+
+---
+
 # LOCAL — full native restore/proof PASS; paired20 running (24 October 07:56 UTC)
 
 Goal turn PROGRESS; previous turn PROGRESS. LOCAL sole executor. Main before

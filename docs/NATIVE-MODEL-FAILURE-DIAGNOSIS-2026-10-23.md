@@ -2,8 +2,10 @@
 
 **24 October status:** the control40 V11 pilot has now completed all8 updates
 and exited0. Independent full native restore and strict proof have passed; the paired20
-native/independent speech evaluation is now running. This candidate's behavioral
-performance remains unqualified. The dated23 October observations
+native/independent speech evaluation has completed: baseline2/4 ordinary cores,
+candidate2/4, with candidate ice/metal errors, both explicit quiet failures and
+failed asynchronous workflows. The complete review rejects extension and fresh
+measurement. The exact optimizer/data/coverage cause remains unisolated. The dated23 October observations
 below are historical, not the current job state. See the [updated cookbook](NATIVE-TRAINING-COOKBOOK-2026-10-21.md)
 and [completed recipe](NATIVE-CONTROL40-COMPLETED-RECIPE-2026-10-24.json).
 
