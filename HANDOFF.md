@@ -1,3 +1,33 @@
+# LOCAL — Retained49 final fingerprints complete; control40 at3; GCPdecisionpending
+
+Actual16:54:51.373056UTC:controller28726/fit28807birth40829227stateR,
+phasebounded8_training/noerror/reportstillabsent. All49native_stream fingerprints
+produced; control40fingerprints3of40; reasoning32finalfingerprintsnotyetstarted.
+All8optimizerupdatesandexport/resumestate alreadyverified onMac (precedinghashes).
+Fitstage remains17:10UTCbound; no weakening/extension/restart. Fullfitreport,
+actualexit0,independentfullrestore/strictproof/native20speech20 remainrequired.
+
+ConcreteGCPproposal COMMITTED/PUSHEDb5a3b05:
+ docs/GCP-NATIVE-CONTINUATION-PROPOSAL-2026-10-24.json.
+PENDING explicituserdecision viaasyncquestion: up to100USDadditionalGCPusage
+fromexistingcredits,oneA10080GBmax12h/250GBtemporarydisk,nativeartifacttransfer
+max100GBtocurrentproject. Additional toRunpod100cap; no newcreditpurchase,
+no repeated8updates/newoptimizerunderproposal, no weaker gates. Ownerconvos,
+credentials/core/session-token/private paths excluded; closedinventoryrequired.
+No GCPGPUoverlap, billableactivation ortransfer untilauthorization. If original
+fit timesoutwithoutreport, separatelytestedzerooptimizerrecovery mustpreserve
+originalfailure/source/state andALLoriginalchecks beforeanyGPUGCPcontinuation.
+No originalfailedfit may be relabelled exit0; do notfakecompletedfitreport.
+OriginalCPU/NumPy/Torch/CUDARNG andAdam528 mustbeindependentlyverified.
+
+CurrentRunpodchecks continuewhiledecisionpending. Do not askagain absentnewscope
+or a new access requirement. Noanswer inferred fromtime, projectcreation orcredit
+balance. Existingbudgetguard/backup/evalwaiter remainactive; no new submissions.
+Next:observefitthrough originaldeadline/preserveexactterminalstate; keepzeroopt
+state andartifactsintact. Goalactive; no behavior/modeladoption orlossclaim.
+
+---
+
 # LOCAL — Finalization live; exported adapter AND resume state hash-backed up
 
 V18actualfinalization16:43:09.100354UTC:fit28807/birth40829227stateR,

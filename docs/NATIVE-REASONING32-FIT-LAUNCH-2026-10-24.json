@@ -171,7 +171,7 @@
     "fit_report_exists": false
   },
   "postfit_finalization": {
-    "at_utc": "2026-10-24T16:44:40.434422+00:00",
+    "at_utc": "2026-10-24T16:54:51.373056+00:00",
     "phase": "bounded8_training",
     "stages": [
       {
@@ -216,10 +216,11 @@
     "error": null,
     "fit_report_exists": false,
     "finalization_markers": {
-      "native_stream_restore_fingerprint": 32
+      "native_stream_restore_fingerprint": 49,
+      "control40_restore_fingerprint": 3
     },
     "last_marker": {
-      "native_stream_restore_fingerprint": "teacher-native2-train-017"
+      "control40_restore_fingerprint": "native-control3-train-018"
     }
   },
   "adapter_export_backup": {
@@ -255,5 +256,15 @@
     "mac_hashes_verified": true,
     "fit_report_approved": false,
     "independent_restore_approved": false
+  },
+  "gcp_continuation_proposal": {
+    "path": "GCP-NATIVE-CONTINUATION-PROPOSAL-2026-10-24.json",
+    "source_commit": "b5a3b05",
+    "status": "PENDING_USER_DECISION",
+    "additional_gcp_usage_limit_usd_proposed": 100,
+    "maximum_gpu_hours_proposed": 12,
+    "new_optimizer_updates_authorized": 0,
+    "compute_created": false,
+    "artifacts_transferred": false
   }
 }
