@@ -1,7 +1,7 @@
 {
   "schema": "dl-native-reasoning32-fit-launch-v1",
   "at_utc": "2026-10-24T15:06:44.710870+00:00",
-  "status": "FIT_PROCESS_STARTED_NOT_COMPLETED",
+  "status": "IN_PROGRESS_ONE_OF_EIGHT_UPDATES_OBSERVED",
   "controller": {
     "pid": 28726,
     "birth": 40829059,
@@ -50,5 +50,13 @@
   "hard_pod_stop_utc": "2026-10-24T18:39:58.8Z",
   "spending_limit_changed": false,
   "behavior_qualified": false,
-  "model_adopted": false
+  "model_adopted": false,
+  "optimizer_progress": {
+    "observed_utc": "2026-10-24T15:16:44.323785+00:00",
+    "completed_updates": 1,
+    "checkpoint_sha256": "5ff1a415dafe8bd450418bec3d78d1554d425c9b20bc3cbb765804fa5ef70716",
+    "checkpoint_bytes": 22970059,
+    "backup_verified": true,
+    "independent_restore_approved": false
+  }
 }

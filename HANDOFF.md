@@ -1,3 +1,38 @@
+# LOCAL — REAL reasoning32 UPDATE1/8 saved and hash-backed up
+
+Goal turn PROGRESS and verified wait. Actual fit row step1 observed15:16:44UTC;
+optimizer.step ran and training-state checkpoint exists. Child28807/birth40829227
+remained LIVE/R, controller28726/birth40829059, model/math sourceDA389A7,
+controller source0d75986. No reported failure. Planned updates8; do not call full8
+complete or claim convergence. First pre-clip norm16.85215950012207, retentionKL
+0.06867368519306183, hiddenMSE0.011277739889919758 are PRE-UPDATE loss metrics.
+
+Checkpoint22970059bytes backed in verified copybackV3 snapshot
+20261024T151246.091547Z; SHA
+5ff1a415dafe8bd450418bec3d78d1554d425c9b20bc3cbb765804fa5ef70716.
+Snapshot inventorySHA8d9e00b64ecb89ffd9705e42c3f6a6950b5888593239c9064f0ad86e10f03ecd.
+Mac file SHA/size rechecked against remote-verified inventory. Local receipt
+native-reasoning32-v18-first-checkpoint-backup-v1.json; public summary
+ docs/NATIVE-REASONING32-FIRST-UPDATE-2026-10-24.json. This is checkpoint preservation,
+not independent training-state restore/adoption. Continue all8 before full restore
+and actual complete20 native/speech evaluation. Original520 baseline preserved.
+
+Backup8236 remains watching/successful at15:20UTC, eval20887 waits on exact new
+controller after full restore; guard12953 remains armed. Current GPU child is the
+only GPU process, verified used28134MiB and48percent utilization around15:12UTC.
+No duplicate job, budget extension or GCP GPU. Controller deadline18:10UTC,
+fit retains one-hour restore reserve; hard Pod termination18:39:58.8UTC unchanged.
+
+GCP project has approved and console-read-back one on-demand A10080 in europe-west4,
+global360; source award supports documentary GPU credit eligibility. No VM/bucket/
+archive transfer. Official single-A100 candidate a2-ultragpu-1g and provider-native
+runtime limit/durable-checkpoint requirements saved in LOCAL ignored setup receipt;
+regional price and capacity not yet verified. No spending approval inferred from
+available credit balance. Broader source backup remains PARTIAL, unrelated edits
+preserved. Recorded 2026-10-24T15:23:26.241983+00:00.
+
+---
+
 # LOCAL — COMPLETE8 readiness PASS; same-recipe fit V18 LIVE
 
 Goal turn PROGRESS. Original V17 combined readiness all8 PASS, actual child15566

@@ -1,6 +1,21 @@
 # What we trained, what is saved, and what to test
 
 
+## 24 October — first reasoning32 optimizer update saved and backed up
+
+The [first real optimizer update](NATIVE-REASONING32-FIRST-UPDATE-2026-10-24.json)
+is complete: stage step1/8 was observed at15:16:44UTC. The fit remains running.
+Its pre-clip gradient norm is16.85215950012207, retention KL0.06867368519306183
+and hidden MSE0.011277739889919758. These are pre-update training metrics;
+there is no matched after-update loss or behavioral improvement claim yet.
+
+The22,970,059-byte training-state checkpoint is preserved in the verified Mac
+copybackV3 snapshot20261024T151246.091547Z with SHA256
+5ff1a415dafe8bd450418bec3d78d1554d425c9b20bc3cbb765804fa5ef70716.
+The Mac file hash matches its verified remote snapshot inventory. Full independent
+training-state restoration remains pending after all eight planned updates.
+The baseline, frozen weights, original objectives and all quality gates remain.
+
 ## 24 October — complete readiness passed; reasoning32 fit process launched
 
 The [complete joint readiness audit](NATIVE-REASONING32-JOINT-READINESS-COMPLETE-2026-10-24.json)
