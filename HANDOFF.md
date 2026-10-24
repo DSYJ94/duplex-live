@@ -1,4 +1,54 @@
-# LOCAL — partial pilot preserved; quota recovery verified (24 October 04:49 UTC)
+# LOCAL — corrected bounded8 retry LIVE; backups restored (24 October 04:50 UTC)
+
+LOCAL sole executor. Active goal PROGRESS. Main includes orchestration fix
+ a5958a0343383728639940c4eb82e31ca3aa96f2 (pushed/deployed in isolated checkout).
+Model/math/data execution remains clean C9 c9efaaac24d983342f7eded46617e6450bc102ce.
+
+ACTUAL new supervisor101648/birth25974639, trainer101677/birth25975025 launched
+04:48:54 UTC. Output /workspace/migration/native-control40-precise-pilot-v11-environment-retry.
+04:49:59 trainerR, sole GPU process17231MiB, loading/validating original inputs;
+ZERO new logged updates/checkpoints at that observation. Do NOT duplicate/restart.
+This is the original eight-update parent520 experiment, not partial521 resume.
+Four completed actual-exit0 predecessor stages reused with exact report hashes;
+all original154/native49/control40 losses, Adam520 moments and numerical/restore/
+behavior gates retained. Only fit/restore/proof output paths changed. No adoption.
+
+V10 retry100803/100823 actually exited1 BEFORE ANY updates: launch wrapper omitted
+legacy Moshi PYTHONPATH. V10 receipts and failed outputs preserved. Fixed wrapper
+explicitly restores original /workspace/control40-vendor-moshi-rag/moshi path;
+actual remote CPU import PASS before V11 launch.20 operational tests PASS.
+Do NOT patch C9 or rerun full49 readiness. V9 partial update1/Adam521 state remains
+preserved on Mac+volume; no independent native restore/adoption of that partial.
+Original V9 final exit unavailable; stale controller must never be treated as live.
+
+Backup watcher63290 (V16) now healthy; closed snapshot044909126files, inventorySHA
+1282547f73c7f10673b836cd2bb5606cebedd886b3f04e9876efe6b8b8f8e376,
+fully hash verified on Mac.118 verified files reused;24,021,745B transferred.
+Backup replicas stage in /tmp/duplex-control40-backup-snapshots, avoiding network
+volume quota. ALL original/final training artifacts remain on retained volume.
+Old failing watcher71453 and superseded61762 retired only after replacements were
+verified; no active transfer child at61762 retirement. Do NOT resume either.
+Original archive remains complete; stopped broader Mac source backup PARTIAL.
+
+Evaluator63289 waits exact101648/birth25974639, all7actualexit0/independent restore
+before same complete paired20/speech20. Old71424/61761 exited; no outputs created.
+Backend71254/runv7 healthy, actualrequests0. Same guard70540 shutdown10:22:37.9UTC,
+pipeline09:00, latest eval09:37/end10:17, backup/proxy10:20. Wallet04:44:46=$12.9731847114,
+rate1.814/h, auto-payFalse;26h guard fully prepaid incl reserve. Maxproject83.9807183<100.
+One20USD top-up already POSTED; never duplicate or make another purchase.
+No Mac neural work or CPU/power/priority changes; unrelated files preserved.
+
+Next: monitor SAME101677 ->all8 saved updates ->final fingerprints ->fresh actual
+independent Adam528/RNG/native49/control40 restore ->strict proof ->complete
+paired20/speech20 and ordinary4 ->eligible sealedfresh, then larger-run decision.
+No claimed loss reduction or behavioral improvement yet. Distinct reasoning32
+semantic payload approval still pending; zero requests/conversion/training.
+Observer /private/tmp/duplex-v11-progress-observer-v1.py reads actual state only.
+See docs/NATIVE-CONTROL40-QUOTA-RECOVERY-2026-10-24.json for exact receipts.
+
+---
+
+# LOCAL — partial pilot preserved; quota recovery verified (24 October 04:44 UTC)
 
 LOCAL remains sole executor; active goal PROGRESS. Original V9 supervisor79780/
 birth24607807 and trainer97250/birth25672616 are actually absent. GPU empty.

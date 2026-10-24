@@ -67,7 +67,7 @@
     "readiness_unchanged_and_complete": true,
     "model_source_unchanged": true,
     "only_three_output_paths_changed": true,
-    "output": "/workspace/migration/native-control40-precise-pilot-v10-quota-retry",
+    "output": "/workspace/migration/native-control40-precise-pilot-v11-environment-retry",
     "backup_staging": "/tmp/duplex-control40-backup-snapshots",
     "originals_and_final_outputs_stay_on_network_volume": true,
     "Mac_verified_backup_required": true
@@ -84,5 +84,210 @@
   },
   "pipeline_deadline_utc": "2026-10-24T09:00:00+00:00",
   "pod_shutdown_utc": "2026-10-24T10:22:37.900000+00:00",
-  "tests": "19 orchestration/copyback/dispatcher tests PASS; no local model or ASR work; CPU settings unchanged"
+  "tests": "20 orchestration/copyback/dispatcher tests PASS; actual remote pinned Moshi import PASS.",
+  "corrected_launch": {
+    "phase": "bounded8_training_launched",
+    "at_utc": "2026-10-24T04:48:54.644562+00:00",
+    "command": [
+      "/workspace/runtime-x86-ngc2510/bin/python",
+      "-u",
+      "-m",
+      "portable.context.native_control_quota_retry",
+      "--previous",
+      "/workspace/migration/native-control40-interrupted-v9-controller-v1.json",
+      "--previous-sha256",
+      "1f366ef63f9d1b221c6a85db9701eb2b8ec95dd81a23f0c88986ca1fbaccf3f1",
+      "--failure",
+      "/workspace/migration/native-control40-quota-failure-recovery-v1.json",
+      "--compiler",
+      "/workspace/migration/native-control40-replacement-compiler-v2/compiler.json",
+      "--cost-guard",
+      "/workspace/migration/native-control40-v11-cost-guard-v1.json",
+      "--out",
+      "/workspace/migration/native-control40-precise-pilot-v11-environment-retry",
+      "--deadline-utc",
+      "2026-10-24T09:00:00+00:00"
+    ],
+    "supervisor_pid": 101648,
+    "supervisor_birth": 25974639,
+    "training_pid": 101677,
+    "training_birth": 25975025,
+    "orchestration_commit": "a5958a0343383728639940c4eb82e31ca3aa96f2",
+    "execution_commit": "c9efaaac24d983342f7eded46617e6450bc102ce",
+    "all_four_completed_predecessors_reused": true,
+    "partial521_resumed": false,
+    "original_parent520": true,
+    "new_completed_updates": 0,
+    "model_adopted": false,
+    "source": "/tmp/duplex-reasoning32-verification-a5958a0",
+    "out": "/workspace/migration/native-control40-precise-pilot-v11-environment-retry"
+  },
+  "latest_read_only_observation": {
+    "schema": "dl-native-control40-quota-retry-observation-v1",
+    "at_utc": "2026-10-24T04:49:59.720628+00:00",
+    "controller": {
+      "pid": 101648,
+      "state": "S",
+      "birth": 25974639
+    },
+    "phase": "bounded8_training",
+    "passed": false,
+    "error": null,
+    "child": {
+      "pid": 101677,
+      "state": "R",
+      "birth": 25975025
+    },
+    "stages": [
+      {
+        "name": "whole_workset",
+        "pid": 4122,
+        "birth": 18985364,
+        "exit_code": 0
+      },
+      {
+        "name": "complete40_precise_numerical",
+        "pid": 4216,
+        "birth": 18993883,
+        "exit_code": 0
+      },
+      {
+        "name": "complete40_independent_BF16_gradient",
+        "pid": 14873,
+        "birth": 20219598,
+        "exit_code": 0
+      },
+      {
+        "name": "combined_readiness",
+        "pid": 71818,
+        "birth": 24130859,
+        "exit_code": 0
+      },
+      {
+        "name": "bounded8_training",
+        "pid": 101677,
+        "birth": 25975025,
+        "exit_code": null
+      }
+    ],
+    "logged_updates": [],
+    "training_state": null,
+    "training_report": null,
+    "restore_report": null,
+    "log_bytes": 11709,
+    "log_tail": " \u2014 fresh conditioned RAG training may proceed\n[quality] /projects/u6si/duplex-live/runs/recovery-repaired-7407535: 38/40 conversations verified (timing ok) \u2014 fresh conditioned RAG training may proceed\n[quality] /projects/u6si/duplex-live/runs/recovery-repaired-7407535: 38/40 conversations verified (timing ok) \u2014 fresh conditioned RAG training may proceed\n[quality] /projects/u6si/duplex-live/runs/recovery-teacher-data-7410969: 10/10 conversations verified (timing ok) \u2014 measured TRAIN-only teacher conversion may proceed\n[quality] /projects/u6si/duplex-live/runs/recovery-repaired-7407535: 38/40 conversations verified (timing ok) \u2014 fresh conditioned RAG training may proceed\n[quality] /projects/u6si/duplex-live/runs/recovery-teacher-data-7434749: 13/13 conversations verified (timing ok) \u2014 measured TRAIN-only teacher conversion may proceed\n[quality] /projects/u6si/duplex-live/runs/recovery-repaired-7407535: 38/40 conversations verified (timing ok) \u2014 fresh conditioned RAG training may proceed\n",
+    "GPU": "0 %, 17231 MiB",
+    "GPU_compute_PIDs": [
+      "101677"
+    ],
+    "old_processes": {
+      "79780": null,
+      "97250": null
+    },
+    "pipeline_deadline_utc": "2026-10-24T09:00:00+00:00",
+    "read_only_not_qualification": true,
+    "backend_health": {
+      "run_id": "native-control40-20261023-v7",
+      "actual_requests": 0,
+      "real_requests_transport": true
+    }
+  },
+  "zero_update_import_failure": {
+    "output": "/workspace/migration/native-control40-precise-pilot-v10-quota-retry",
+    "supervisor_pid": 100803,
+    "training_pid": 100823,
+    "actual_exit_code": 1,
+    "optimizer_updates": 0,
+    "error": "ModuleNotFoundError: No module named moshi",
+    "cause": "Launch wrapper omitted the original pinned legacy PYTHONPATH.",
+    "fix": "Explicitly restore the same pinned Moshi path and require actual remote CPU import before starting any model.",
+    "original_source_and_failed_outputs_preserved": true
+  },
+  "corrected_orchestration_commit": "a5958a0343383728639940c4eb82e31ca3aa96f2",
+  "replacement_backup": {
+    "schema": "dl-native-control40-copyback-watch-v1",
+    "pid": 63290,
+    "source_commit": "a5958a0343383728639940c4eb82e31ca3aa96f2",
+    "deadline_utc": "2026-10-24T10:20:00Z",
+    "phase": "watching",
+    "snapshots": [
+      {
+        "path": "runs/local-migration-20261023/native-control40-continuous-copyback-v16/20261024T044909.210438Z",
+        "files": 126,
+        "inventory_sha256": "1282547f73c7f10673b836cd2bb5606cebedd886b3f04e9876efe6b8b8f8e376",
+        "reused_verified_files": 118,
+        "reused_verified_bytes": 1782300932,
+        "transferred_file_bytes": 24021745
+      }
+    ],
+    "changes_to_remote_jobs": false,
+    "pod_id": "4yx8vahdmjsylx",
+    "ssh_host": "root@157.157.221.29",
+    "ssh_port": 16701,
+    "at_utc": "2026-10-24T04:50:32.054794+00:00",
+    "last_marker": "ad386f141ccb183d09aa2b25620f3361cd1615adbe1c46ab9c82df4a64c619d2",
+    "last_check_succeeded": true
+  },
+  "development_dispatcher": {
+    "schema": "dl-native-control40-development-followup-v2",
+    "pid": 63289,
+    "pod_id": "4yx8vahdmjsylx",
+    "source_commit": "c9efaaac24d983342f7eded46617e6450bc102ce",
+    "upstream_pid": 101648,
+    "upstream_birth": 25974639,
+    "latest_launch_utc": "2026-10-24T09:37:00+00:00",
+    "evaluation_deadline_utc": "2026-10-24T10:17:00+00:00",
+    "paired_out": "/workspace/migration/native-control40-native20-v1",
+    "speech_out": "/workspace/migration/native-control40-native20-speech-v1",
+    "local_dispatcher_sha256": "ee818317b4d934a99f220d295e085202acc3b2028f83ba019a103a51b8616a0a",
+    "plan_sha256": "c20f3d9caf1d6edc171ef7e888ae622f7a089dc3e202fe3666dccf4ae0219b3d",
+    "may_extend_or_adopt": false,
+    "may_read_sealed_fresh_inputs": false,
+    "planned_optimizer_updates": 0,
+    "phase": "waiting_for_complete_independent_restored_pilot",
+    "at_utc": "2026-10-24T04:50:41.108793+00:00",
+    "last_read_succeeded": true,
+    "observed_upstream_phase": "bounded8_training"
+  },
+  "prepaid_wallet_readback": {
+    "at_utc": "2026-10-24T04:44:46.653833+00:00",
+    "wallet": {
+      "clientBalance": 12.9731847114,
+      "currentSpendPerHr": 1.814,
+      "isAutoPayEnabled": false
+    },
+    "same_pod": "4yx8vahdmjsylx",
+    "same_volume": "49yytzyoge",
+    "funding_options": [
+      {
+        "lifetime_hours": 24,
+        "deadline_utc": "2026-10-24T08:22:37.900000+00:00",
+        "required_remaining_wallet_USD": 8.900455707482777,
+        "fully_prepaid_with_one_hour_reserve": true,
+        "project_compute_cap_USD": 80.40071830424947
+      },
+      {
+        "lifetime_hours": 26,
+        "deadline_utc": "2026-10-24T10:22:37.900000+00:00",
+        "required_remaining_wallet_USD": 12.52845570748278,
+        "fully_prepaid_with_one_hour_reserve": true,
+        "project_compute_cap_USD": 83.98071830424945
+      },
+      {
+        "lifetime_hours": 27,
+        "deadline_utc": "2026-10-24T11:22:37.900000+00:00",
+        "required_remaining_wallet_USD": 14.34245570748278,
+        "fully_prepaid_with_one_hour_reserve": false,
+        "project_compute_cap_USD": 85.77071830424946
+      },
+      {
+        "lifetime_hours": 34,
+        "deadline_utc": "2026-10-24T18:22:37.900000+00:00",
+        "required_remaining_wallet_USD": 27.040455707482778,
+        "fully_prepaid_with_one_hour_reserve": false,
+        "project_compute_cap_USD": 98.30071830424946
+      }
+    ],
+    "new_credit_purchase": false
+  }
 }
