@@ -15,22 +15,34 @@ from portable.context.native_fresh_development import (ROLES,CASE_FILES,command,
 
 
 class FreshCollectorFixtures(unittest.TestCase):
+    roles=ROLES
+    preflight_schema='dl-native-control40-fresh-paired40-preflight-v1'
+
     def setUp(self):
         self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup)
         self.root=Path(self.temp.name).resolve()
         self.out=self.root/'evaluation';self.out.mkdir()
         self.proof=self.root/'pilot/training';self.baseline=self.root/'context-training-proof-7510331'
+        # Use authored placeholders, never the sealed real question plan/audio.
+        fixture=self.root/'placeholder-plan.json'
+        self.write(fixture,dict(do_not_train=True,training_approved=False,cases=[
+            dict(id='fixture-%02d'%i,kind='ordinary' if i<4 else 'private',
+                backend='observe-only' if i<4 else 'native-asr',minimum_actual_lookup_delay_s=1.)
+            for i in range(20)]))
+        for target,value in [('PLAN',fixture),('PLAN_SHA256',sha256(fixture))]:
+            patched=patch('evals.native_control40_fresh_session.'+target,value)
+            patched.start();self.addCleanup(patched.stop)
         self.review=self.root/'review.json';self.review.write_text('{}')
         self.quality=self.root/'quality.json';self.quality.write_text('{}')
-        self.plan=dict(schema='dl-native-control40-fresh-paired40-preflight-v1',complete40=True,
-            cases=cases(self.proof,self.baseline),candidate_proof=str(self.proof),baseline_proof=str(self.baseline),
+        self.plan=dict(schema=self.preflight_schema,complete40=True,
+            cases=cases(self.proof,self.baseline,self.roles[1]),candidate_proof=str(self.proof),baseline_proof=str(self.baseline),
             baseline_identity=dict(checkpoint_sha256='base'),candidate_identity=dict(checkpoint_sha256='candidate'),
             gpu_mode='serial-one-gpu',maximum_gpus=1,behavior_review_sha256=sha256(self.review),
             source_quality_sha256=sha256(self.quality),source_profile='owner-approved-turbo-spelling-v1',
             evaluation_only=True,training_approved=False,checkpoint_adopted=False)
         self.args=SimpleNamespace(source=self.root,source_commit='a'*40,out=self.out,proof=self.proof,
             review=self.review,quality=self.quality,data=self.root/'inputs',asr_python=Path('/isolated/asr/python'),
-            deadline=4102444800.,role=ROLES[0])
+            deadline=4102444800.,role=self.roles[0])
         self.seal()
 
     @staticmethod
@@ -67,7 +79,7 @@ class FreshCollectorFixtures(unittest.TestCase):
         fields=dict(zip(argv[::2],argv[1::2]))
         row=next(r for r in self.plan['cases'] if r['scenario']==fields['--scenario']
                  and r['proof']==fields['--adapter-proof'])
-        identity=self.plan['baseline_identity' if row['role']==ROLES[0] else 'candidate_identity']
+        identity=self.plan['baseline_identity' if row['role']==self.roles[0] else 'candidate_identity']
         self.make_case(Path(fields['--out']),row,identity)
 
     def run_actor(self,side_effect=None):
@@ -98,39 +110,39 @@ class FreshCollectorFixtures(unittest.TestCase):
 
     def test_complete_actor_executes_all20_plus_cold_intervening_reused_parity(self):
         self.assertEqual(self.run_actor(),23)
-        state=json.loads((self.out/ROLES[0]/'execution.json').read_text())
+        state=json.loads((self.out/self.roles[0]/'execution.json').read_text())
         self.assertEqual([c['question_index'] for c in state['cases']],list(range(20)))
         self.assertEqual([c['index'] for c in state['cases']],list(range(20)))
         self.assertTrue(state['complete20']);self.assertFalse(state['behavior_approved'])
         self.assertFalse(state['parity']['native_delayed_input_tensors_recorded_or_compared'])
-        self.assertEqual(complete_actor(self.out,ROLES[0],self.plan,'a'*40,self.args.preflight_sha256),
-                         sha256(self.out/ROLES[0]/'execution.json'))
+        self.assertEqual(complete_actor(self.out,self.roles[0],self.plan,'a'*40,self.args.preflight_sha256),
+                         sha256(self.out/self.roles[0]/'execution.json'))
         self.assertFalse(list(self.out.rglob('student-history.pt')))
 
     def test_candidate_actor_uses_all20_indices_and_exact_candidate_proof(self):
-        self.args.role=ROLES[1];self.assertEqual(self.run_actor(),23)
-        state=json.loads((self.out/ROLES[1]/'execution.json').read_text())
+        self.args.role=self.roles[1];self.assertEqual(self.run_actor(),23)
+        state=json.loads((self.out/self.roles[1]/'execution.json').read_text())
         self.assertEqual([c['index'] for c in state['cases']],list(range(20,40)))
         self.assertEqual(Path(state['proof']),self.proof)
-        complete_actor(self.out,ROLES[1],self.plan,'a'*40,self.args.preflight_sha256)
+        complete_actor(self.out,self.roles[1],self.plan,'a'*40,self.args.preflight_sha256)
 
     def test_final_case_failure_is_preserved_and_cannot_be_complete(self):
         def probe(argv,session):
             if argv[argv.index('--out')+1].endswith('case-19'):raise RuntimeError('fixture final failure')
             self.fake_probe(argv,session)
         with self.assertRaisesRegex(RuntimeError,'fixture final failure'):self.run_actor(probe)
-        state=json.loads((self.out/ROLES[0]/'execution.json').read_text())
+        state=json.loads((self.out/self.roles[0]/'execution.json').read_text())
         self.assertEqual(state['phase'],'failed');self.assertEqual(len(state['cases']),19)
         self.assertFalse(state['complete20'])
-        with self.assertRaises(ValueError):complete_actor(self.out,ROLES[0],self.plan,'a'*40,self.args.preflight_sha256)
+        with self.assertRaises(ValueError):complete_actor(self.out,self.roles[0],self.plan,'a'*40,self.args.preflight_sha256)
 
     def test_changed_parity_or_final_case_artifact_cannot_hide_behind_saved_success(self):
         self.run_actor()
-        path=self.out/ROLES[0]/'parity-reused/events.jsonl';original=path.read_text();path.write_text('{"text_token":13}\n')
-        with self.assertRaises(ValueError):complete_actor(self.out,ROLES[0],self.plan,'a'*40,self.args.preflight_sha256)
+        path=self.out/self.roles[0]/'parity-reused/events.jsonl';original=path.read_text();path.write_text('{"text_token":13}\n')
+        with self.assertRaises(ValueError):complete_actor(self.out,self.roles[0],self.plan,'a'*40,self.args.preflight_sha256)
         path.write_text(original)
-        (self.out/ROLES[0]/'case-19/user_in.wav').write_bytes(b'changed')
-        with self.assertRaises(ValueError):complete_actor(self.out,ROLES[0],self.plan,'a'*40,self.args.preflight_sha256)
+        (self.out/self.roles[0]/'case-19/user_in.wav').write_bytes(b'changed')
+        with self.assertRaises(ValueError):complete_actor(self.out,self.roles[0],self.plan,'a'*40,self.args.preflight_sha256)
 
     def test_cold_reused_output_parity_is_actual_PCM_tokens_and_user_audio(self):
         row=self.plan['cases'][0]
@@ -176,20 +188,20 @@ class FreshCollectorFixtures(unittest.TestCase):
                 patch('evals.context_spanning_fresh_probe.main') as probe:
             with self.assertRaises(ValueError):actor(self.args)
             probe.assert_not_called()
-        self.assertFalse((self.out/ROLES[0]).exists())
+        self.assertFalse((self.out/self.roles[0]).exists())
 
     def test_actor_requires_actual_parent_birth_active_role_and_preflight(self):
         self.args.controller_pid=41001;self.args.controller_birth=123;self.args.pod_id='fixture-pod'
         self.args.deadline_utc='2100-01-01T00:00:00Z'
         state=dict(schema='dl-native-portable-fresh40-controller-v1',pid=41001,
             source_commit=self.args.source_commit,pod_id='fixture-pod',preflight_sha256=self.args.preflight_sha256,
-            phase='paired_fresh40',active_actor_role=ROLES[0],deadline_utc=self.args.deadline_utc,
+            phase='paired_fresh40',active_actor_role=self.roles[0],deadline_utc=self.args.deadline_utc,
             cost_guard_deadline_utc='2100-01-01T00:03:00Z')
         path=self.out/'execution.json';self.write(path,state)
         with patch('portable.context.native_fresh_development.os.getppid',return_value=41001), \
                 patch('portable.context.native_fresh_development.process_birth',return_value=123):
             controller_identity(self.args)
-            for key,value in [('active_actor_role',ROLES[1]),('phase','failed'),('preflight_sha256','changed'),
+            for key,value in [('active_actor_role',self.roles[1]),('phase','failed'),('preflight_sha256','changed'),
                     ('pod_id','other'),('cost_guard_deadline_utc','2100-01-01T00:01:00Z')]:
                 self.write(path,dict(state,**{key:value}))
                 with self.subTest(key=key),self.assertRaises(ValueError):controller_identity(self.args)
@@ -199,6 +211,11 @@ class FreshCollectorFixtures(unittest.TestCase):
         with patch('portable.context.native_fresh_development.os.getppid',return_value=41001), \
                 patch('portable.context.native_fresh_development.process_birth',return_value=999):
             with self.assertRaises(ValueError):controller_identity(self.args)
+
+
+class ReasoningFreshCollectorFixtures(FreshCollectorFixtures):
+    roles=('baseline520','candidate-reasoning32')
+    preflight_schema='dl-native-reasoning32-fresh-paired40-preflight-v1'
 
 
 class FreshBudgetGuardTests(unittest.TestCase):

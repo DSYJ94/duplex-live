@@ -35,5 +35,22 @@
   "real_fresh_inputs_opened": false,
   "fresh_inference_executed": false,
   "fresh_evaluation_authorized_for_current_candidate": false,
-  "model_adopted": false
+  "model_adopted": false,
+  "collector_fixture_checks": {
+    "at_utc": "2026-10-24T16:06:36.534385+00:00",
+    "tests_run": 29,
+    "passed": true,
+    "torch_imported": false,
+    "real_sealed_inputs_read": false,
+    "suites": [
+      "evals.harness.test_native_fresh_development",
+      "evals.harness.test_native_reasoning32_fresh_cohort"
+    ],
+    "test_file_sha256": {
+      "evals.harness.test_native_fresh_development": "eda16811946e7f42c0a35a6f1555a9547d2aadad5258a98eb92892a48399d9f0",
+      "evals.harness.test_native_reasoning32_fresh_cohort": "424037f049bae4e7db34848ec5bca4f092cc43041b8f1d1987036a5fd08e8c20"
+    },
+    "output": ".............................\n----------------------------------------------------------------------\nRan 29 tests in 0.499s\n\nOK\n"
+  },
+  "collector_fixture_scope": "Both old and reasoning32 candidates: complete20 actor plus cold/intervening/reused parity, final-case failures, changed PCM, timestamps/resource guards and no training-history recording. Placeholder authored plan replaces real sealed plan in these tests."
 }

@@ -1,3 +1,25 @@
+# LOCAL — Both fresh collector cohorts tested without sealed inputs or MacTorch
+
+Extended existing collector artifact fixtures to bothcontrol40/reasoning32 roles
+and replaced realsealedplan reads in those tests with20authored placeholders.
+Actualcollectors all20+3paritycalls, exactproof/index paths, failingfinalcase,
+changedPCM/tokens, forcedtokens, wrongproof/resource/deadline and incomplete
+speech cases are exercised.29testsPASS at16:06:36UTC,0.499s; Torchabsent from
+Macsys.modules. No models/ASR/realfreshinputs/GPUcalls. Testfilehashes/results in
+ docs/NATIVE-REASONING32-FRESH-COHORT-SUPPORT-2026-10-24.json. Runtimepatch remains
+D701941, remote38reviewchecks previouslypassed; currentchange is tests only.
+
+ActualV18observed16:06:22.993371UTC:5savedupdates,controller28726/birth40829059
+stateS,fit28807/birth40829227stateR,noerror. Backup8236readsuccess16:06UTC,
+eval20887waitingcompleteindependentrestoredpilot/readsuccess16:05UTC,
+guard12953armed16:06UTC. Repairedtunnel40689remotehealth passed16:05UTC.
+No new GPU, source/math change to livefitDA, oractiveevalC078 change. Keep
+all8fit/restore/strictproof/native20speech20 first; committed complete review
+mustpassbeforeanyfresh preflight. No qualification/adoption/extension claimed.
+Goal active. Next: observe6thupdate andpreservecheckpoint; no restart.
+
+---
+
 # LOCAL — Reasoning32 fresh compatibility prepared; candidate still unapproved
 
 Added explicit reasoning32 development-review/fresh-preflight cohort, same native520
