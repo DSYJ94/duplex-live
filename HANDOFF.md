@@ -1,3 +1,25 @@
+# LOCAL — Effective-update settings independently audited while corrected job runs
+
+25Oct15:05UTC. CPU-only checkpoint literal-opcode audit (NOunpickling/tensor load)
+confirms actual effectiveLR2e-7, Adam betas0.9/0.999/eps1e-8, weightdecay0, clipnorm1.
+Pinned training-state SHA75fd39b... and acceptedfinalizationrecord bindmetadata.
+ParentAdam import receipt recordsoriginalLR1e-5→2e-7 (50x lower), namedmoments/steps520
+exact; finalstep528. All8preclipnorms12.057–25.567>1, all32newscenesoneexposure.
+Rank8/scaling2/last4temporalLayers, 13modules/26matrices/1894400parameters retained.
+Newartifact docs/NATIVE-SAVED8-EFFECTIVE-UPDATE-AUDIT-2026-10-25.json. Momentrecurrence
+coefficientsafter8 are0.43046721(m)/0.992027944(v), NOT fractions of finalmagnitude
+or proof of historical-gradient dominance. Lowrate/oneexposure support a TESTABLE
+limited-adaptation hypothesis, not a causal conclusion or automatic largerLRchoice;
+largerupdatescouldamplifyoldtaskregression. No rate/optimizer/RNG/model/data/gates/API/
+GPUjobs changed bythisaudit; diagnosisplan updated with exactsettings/limitations.
+
+Current corrected timingcontroller-v6/tool19466 andpreserver-v2/tool14591 remainsole
+live processes asbelow; all64results/finalchecks stillpending. No newoptimizer authorized
+bycurrentGCPgrant. Originalonehourtimeoutpreserved/unqualified; corrected80minchild/
+90minnativeSTOP/94.017536USDupper/12h100scope unchanged. LOCALsoleexecutor/goalunfinished.
+
+---
+
 # LOCAL — Corrected full32 timing run ACTUALLY launched and verified live
 
 25Oct15:00UTC. Samecontroller-v6 PID71491/tool19466 LIVE; exactsourcec1006f90fbd08dfa887b1ee117d317ad36026441

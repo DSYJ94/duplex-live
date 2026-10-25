@@ -94,6 +94,17 @@ request-specific CE endpoint. A lower aggregate CE cannot establish improved
 request selection; keep the real unforced-request behavioral gate and do not
 silently treat loss improvement as permission to scale or adopt.
 
+The [effective-update CPU audit](NATIVE-SAVED8-EFFECTIVE-UPDATE-AUDIT-2026-10-25.json)
+also verifies the actual optimizer group directly from literal checkpoint metadata:
+effective learning rate 2e-7, inherited Adam moments with betas 0.9/0.999, clip norm
+1 and no weight decay. The parent import receipt records 1e-5 before the rate
+change, so the pilot rate is 50 times lower. All new scenes were seen once. These
+are recorded experimental settings, not a demonstrated cause. Retained moments,
+adaptive normalization and clipping mean the scalar rate or norm alone cannot
+predict update direction or displacement. A future rate/exposure experiment must
+retain the old-task and behavior gates; a larger rate could magnify regression.
+No optimizer reset or rate change has been made by this audit.
+
 Any new optimizer stage needs a separate concrete changed recipe and authorization:
 the current GCP grant explicitly permits zero new optimizer updates. Preserve all
 28 actual histories, all25 old teachers, native49, control40, the new32, old losses,

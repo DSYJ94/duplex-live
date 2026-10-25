@@ -1,0 +1,69 @@
+{
+  "schema": "dl-native-saved8-effective-update-cpu-audit-v1",
+  "recorded_utc": "2026-10-25T15:10:07.571168+00:00",
+  "proof_sha256": "27a6676dd95ef8100e5211b6e24ddca7e9b716c0cbcae4d3e8fb02215d9ccac7",
+  "training_state_sha256": "75fd39b1dc9a7f66b8125a1804cab87cfad384446d592df4534c3e1cff5f0367",
+  "finalization_record_sha256": "56cad2bf545dd8a175eb1e89a630f8f84198e7c19a500a0542f78f2e861d695e",
+  "import_receipt_sha256": "1b90a0fb68da86e077f5ffc497ad1fa57917ce9eebba838dd85d3aaa545923ed",
+  "method": "Literal opcode inspection of bounded zip data.pkl; no deserialization or tensor/model load.",
+  "adapter": {
+    "rank": 8,
+    "scaling": 2.0,
+    "last_temporal_layers": 4,
+    "modules": [
+      "transformer.layers.28.self_attn.out_proj",
+      "transformer.layers.28.gating.linear_in",
+      "transformer.layers.28.gating.linear_out",
+      "transformer.layers.29.self_attn.out_proj",
+      "transformer.layers.29.gating.linear_in",
+      "transformer.layers.29.gating.linear_out",
+      "transformer.layers.30.self_attn.out_proj",
+      "transformer.layers.30.gating.linear_in",
+      "transformer.layers.30.gating.linear_out",
+      "transformer.layers.31.self_attn.out_proj",
+      "transformer.layers.31.gating.linear_in",
+      "transformer.layers.31.gating.linear_out",
+      "text_linear"
+    ],
+    "trainable_matrices": 26,
+    "trainable_parameters": 1894400
+  },
+  "optimizer": {
+    "effective_learning_rate": 2e-07,
+    "parent_learning_rate_from_import_receipt": 1e-05,
+    "parent_to_pilot_rate_ratio": 50.0,
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "epsilon": 1e-08,
+    "weight_decay": 0.0,
+    "clip_norm": 1.0,
+    "pre_clip_norm_min": 12.057445526123047,
+    "pre_clip_norm_max": 25.566822052001953,
+    "all8_steps_clipped": true,
+    "parent_adam_steps": 520,
+    "final_adam_steps": 528,
+    "moments_imported_exact": true
+  },
+  "exposure": {
+    "updates": 8,
+    "new_reasoning_scenes": 32,
+    "scenes_per_update": 4,
+    "exposures_per_scene": 1
+  },
+  "moment_history_coefficients_after8": {
+    "first_moment": 0.4304672100000001,
+    "second_moment": 0.992027944069944,
+    "interpretation": "Coefficient multiplying the initial moment in the recurrence, not the fraction of final moment magnitude or an estimate of effective update direction."
+  },
+  "limits": [
+    "Low effective rate and one exposure make limited adaptation a testable explanation; neither is independently established as the behavioral cause.",
+    "All8 gradients were clipped; Adam normalization and inherited moments mean clipping factors do not directly predict parameter displacement.",
+    "A larger rate can amplify old-task regression. Preserve old28/KL/hidden/audio/native objectives and unchanged full behavioral/adoption gates.",
+    "The matched full32 endpoint comparison remains incomplete; no convergence, sufficiency or capacity conclusion is inferred from settings alone.",
+    "No optimizer reset, hyperparameter change, checkpoint write, API call or new GPU/model run was performed."
+  ],
+  "optimizer_updates_during_audit": 0,
+  "model_adopted": false
+}
