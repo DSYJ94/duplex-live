@@ -20,6 +20,15 @@ authorization explicitly permits ZERO new optimizer updates. Goal remains ACTIVE
 UNFINISHED; local source preparation can continue, but do not start training or a
 new funded phase without its concrete authorization.
 
+Next experiment is now concrete in
+[changed-rate8 proposal](docs/NATIVE-CHANGED-RATE8-CONTINUATION-PROPOSAL-2026-10-25.json):
+exact528 ->536, eight NEW updates at LR1e-6 instead of2e-7, all data/losses retained.
+PROPOSED ONLY: implementation and GPU parity remain required before launch. Single
+changed continuation cannot isolate rate from added exposure. It explicitly needs
+a bounded exploration exception from rejected528 and new GCP limits (additional
+50USD/6GPUh, cumulative150USD/18GPUh), same VM/disk, one GPU, no purchases. No
+authorization inferred, no training started, no extension/adoption gate weakened.
+
 Actual model producer c1006f90fbd08dfa887b1ee117d317ad36026441, original model/trainer
 source da389a7031a5504495397d1575952194ffa209f1, exact NGC digest42263b2424fc237b34c4fc4a91c30d603c57eed36e37d31ff6d9a4f1f801edee.
 Successful systemd journal binds invocation924cca8d0f234690ae918b3dd786cd98/messageID

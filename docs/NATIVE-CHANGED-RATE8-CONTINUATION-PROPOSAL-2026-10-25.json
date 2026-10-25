@@ -1,0 +1,102 @@
+{
+  "schema": "dl-native-changed-rate-eight-continuation-proposal-v1",
+  "status": "PROPOSED_NOT_AUTHORIZED_NOT_LAUNCHED",
+  "recorded_utc": "2026-10-25T16:59:08.667216+00:00",
+  "question": "Does a fivefold higher rate produce useful additional adaptation from the exact saved528 state without unacceptable retention or native behavior regression?",
+  "evidence": [
+    "NATIVE-SAVED8-COMPLETE32-FIT-REVIEW-2026-10-25.json",
+    "NATIVE-SAVED8-EFFECTIVE-UPDATE-AUDIT-2026-10-25.json",
+    "GCP-NATIVE-SAVED8-COMPLETE20-REVIEW-2026-10-25.json"
+  ],
+  "why_this_experiment": [
+    "After one exposure the complete32 TRAIN text CE fell only0.123416percent, while retained old28 objective worsened0.802614percent; ordinary development correctness fell2/4to1/4.",
+    "The actual LR2e-7 was50times below the imported parent LR1e-5. Test1e-6, five times the last rate and ten times below the parent rate. These ratios do not establish an optimal rate.",
+    "Continue the exact saved528 state; do not recreate the already executed520to528 optimizer trajectory. A second exposure to approved TRAIN scenes is intentional.",
+    "This single continuation changes learning rate and adds exposure; comparison against528 cannot isolate rate from exposure. It is a bounded utility experiment, not a causal learning-rate sweep or convergence claim.",
+    "A higher rate may amplify existing forgetting. No unchanged long run, adapter expansion or full-weight training is proposed."
+  ],
+  "parent": {
+    "global_adam_step": 528,
+    "adapter_sha256": "34edb69c696fef1ac02e498bb1351a7655442d6c7c041562ca145abfb3a77176",
+    "training_state_sha256": "75fd39b1dc9a7f66b8125a1804cab87cfad384446d592df4534c3e1cff5f0367",
+    "proof_report_sha256": "27a6676dd95ef8100e5211b6e24ddca7e9b716c0cbcae4d3e8fb02215d9ccac7",
+    "restore": "Exact named Adam moments, all counters, adapter and RNG from saved528; independently compare before changing only the optimizer group LR. No optimizer reset."
+  },
+  "recipe": {
+    "additional_optimizer_updates": 8,
+    "global_steps": [
+      529,
+      536
+    ],
+    "learning_rate": 1e-06,
+    "previous_learning_rate": 2e-07,
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "epsilon": 1e-08,
+    "weight_decay": 0,
+    "gradient_clip_norm": 1,
+    "trainable_parameters": 1894400,
+    "rank": 8,
+    "scaling": 2,
+    "temporal_layers": [
+      28,
+      29,
+      30,
+      31
+    ],
+    "text_head": true,
+    "full_weight_training": false,
+    "reasoning_scene_count": 32,
+    "reasoning_scenes_per_update": 4,
+    "all_four_families_every_update": true,
+    "each_reasoning_scene_additional_exposures": 1,
+    "schedule": "Original exact stride8 family-major schedule, local steps0..7; global529..536 in a NEW continuation schema/output directory.",
+    "unchanged_objectives": "Every retained154/native49/control40/reasoning32 component, all28 actual histories, old25 approved native histories, new24, KL1/hidden10, word/clock and assistant audio masks/weights remain unchanged. No data, words, audio, receipts, folds or heldout modifications."
+  },
+  "necessary_explicit_exception": "Allow this single changed bounded experiment from rejected528 despite ordinary1/4. This does not waive the all4 ordinary gate before any further extension or adoption; authorization automatically ends after this stage and its review.",
+  "implementation_before_gpu": [
+    "New continuation stage/schema validates parent528 and final536, exactly8 updates, unchanged complete exposure and full objective recipe; do not edit old approval records to make them pass.",
+    "Pin new Git source and all existing data/proof hashes. Keep originalDA389a7, exact NGC digest, native recorded-call BF16/math execution and voice.",
+    "Integrate optional endpoint loss capture into mandatory complete fingerprint collection. Require exact default fingerprint parity and frozen/adapter/RNG preservation before using new metrics; source hook is currently CPU-tested only.",
+    "Prepare one sequential controller with provider STOP, independent Mac/guest guards, whole-project budget ledger, phase-specific deadlines and real terminal/copyback receipts; no concurrent GPU jobs or automatic retries."
+  ],
+  "execution_and_review": [
+    "Verify provider price/stock/auth and one-GPU state immediately before start; never repeat completed full32 diagnostic or saved8 recovery/native20.",
+    "Validate changed stage numerical execution and full parent state restore; if this fails, stop before optimization.",
+    "Run exactly8 new optimizer updates once. Persist full adapter/Adam/RNG and receipts after every update; record full retained composite and component loss, gradient norms, effective rate and parameter displacement.",
+    "Collect complete32 text/acoustic CE during mandatory final fingerprints, all old/native/control fingerprints and complete loss/exposure receipts; no passing subset or hidden extra model forwards.",
+    "In a separate fresh process restore complete final Adam/RNG/native logits, verify exact536 and unchanged frozen weights. Require actual successful terminals, not checkpoint existence alone.",
+    "Run the full unchanged native10 and independent speech audits for the new candidate, paired to the preserved exact baseline under the same pinned driver. Reuse existing baseline evidence only where the gate explicitly permits hash/profile identity; otherwise collect required pairing.",
+    "Keep all ordinary4, silence/keyword, pause/resume, unforced request/result-use/cancel/replace and independent pending-question gates. TRAIN loss improvement never overrides behavior rejection.",
+    "Open no fresh evaluation payload before the existing development gates qualify. Any subsequent fresh20 evaluation remains under its sealed existing protocol and authorization; no new external API payloads are authorized by this proposal.",
+    "Hash and copy back the complete new outputs, stop paid compute early on a genuine blocker, record exact results and next decision. No automatic next stage or adoption."
+  ],
+  "resource_proposal": {
+    "provider": "GCP",
+    "project": "aurium-duplex-live-20261024",
+    "new_credit_purchase": false,
+    "additional_usage_cap_usd": 50,
+    "combined_with_original_usage_cap_usd": 150,
+    "additional_gpu_hours_cap": 6,
+    "cumulative_gpu_hours_cap": 18,
+    "maximum_concurrent_gpus": 1,
+    "gpu": "A100 80GB",
+    "hourly_price_admission_ceiling_usd": 7.25,
+    "six_hour_compute_reserve_usd": 43.5,
+    "storage_network_other_reserve_usd": 6.5,
+    "existing_vm_and_original250gb_disk_only": true,
+    "new_vm_disk_snapshot_region_quota_or_api_activation": false,
+    "extra_cpu_staging_authorized": false,
+    "no_automatic_credit_purchase": true,
+    "deadline_policy": "End before earliest native6hSTOP, remaining original-plus-new dollar cap, or phase deadline; preserve and stop if all work cannot fit. Additional time/cost is not inferred from credits balance."
+  },
+  "not_authorized_by_original_grant": true,
+  "new_optimizer_updates_executed": 0,
+  "gpu_started": false,
+  "source_implementation_complete": false,
+  "gpu_parity_validated": false,
+  "model_adopted": false,
+  "goal_complete": false
+}
