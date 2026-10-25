@@ -1,3 +1,45 @@
+# LOCAL — Target35/policy/portableAST PASS; zero-update recovery v6 LIVE
+
+ACTUAL01:25:53UTC25Oct: service duplex-native-saved8-recovery-v6 active/running,
+MainPID38115/invocation6533c2ea62de42d9a7a2e05d8ae0f121. Docker same name,
+parent38162, finalization child38198/internal12/birth552770 alive. Started01:25:10UTC.
+Controller finalization actual_exit=null. Output /workspace/migration/gcp-saved8-recovery-v6,
+parentlog /workspace/migration/gcp-saved8-controller-v6.log, pending derivedproof
+/workspace/migration/native-reasoning32-saved8-recovered-proof-gcp-v6. ZEROupdates.
+
+NEW FROZENproducer e0827f54f058e986ee57116f6de3c783a1ccefbd at
+/opt/duplex-gcp-recovery-e0827f5-v1, separateGitbundlefetch/worktree. Originalmodel
+source da389a7031a5504495397d1575952194ffa209f1 unchanged. OLD75b3bfd MUSTNOT be
+used for further recovery: diagnosed NGCprecision default+crossPythonAST mismatch.
+New runtime restores ORIGINAL highest/TF32false beforeconstruction; original
+control40 policy gate unchanged, BF16/MATH/weights/data/objectives unchanged.
+Canonical fullfieldAST7907f6de7ddbdaa1a22111829a67cfb1a4a2e5df629482f1693c4676549d15f0
+nowidentical actualPython3.12 andMac3.14; no executabletree/captureboundary change.
+
+Target35 puretests ACTUAL0 on Python3.12.3 before Torch import, then actual
+model-freeA100 policy probe PASS all7 requiredkeys using NEWruntimehelper. Local
+35alsoPASS. No model loaded in preflight. Exactevidence in
+ docs/GCP-NATIVE-SAVED8-POLICY-REPAIR-2026-10-25.json and ignored
+ gcp-policy-portability-preflight-v1.json. v5 ACTUALFAILED1 preserved/copiedMac;
+allv1-v5 failures remain, originalfit-15 neverrelabelled. No qualification yet.
+
+SameGPU951004838667287080/same250GBdisk1828090267781080539/providerSTOP11:52:37UTC;
+serviceRuntimeMax36000s ends earlier. Macguard48672/PID26959 remains; hostguard2092
+actuallyarmed01:25:51UTC. PrelaunchsingleGPUidle/freshcostguard verified,
+remaining74.45USD. No purchases/newresources/extraoptimizerupdates.
+
+NEXT preserve SAMEv6 through fullconstruction/numerics/freshindependentAdamRNGrestore,
+then strictproof only bothactual0. Do not overwrite producer/sourceDA/sharedrepo
+workingfiles while running. Complete unchanged native20/speech20 afterproof;
+prefer newclean e082producer for consumers so crossPythonhash fix also applies.
+Existing separate58c966c evalsource stilloldprepared, noevalstarted.
+Macproxy69582/PID75507 local49884/run gcp-saved8-native20-v2 max128deadline11:45UTC;
+tunnel46162/PID75642 remote58051 ->local49884. Health0APIcalls atlastread, notauthproof.
+Credentials stayMac; preserve theseactualhandles, no duplicates. See priorbackend
+handoff for runtime/mount/envs. LOCALsoleexecutor/unrelatedworkpreserved.
+
+---
+
 # LOCAL — v5 failed at original policy gate; diagnosed portability repair prepared
 
 Recovery-v5 ACTUALLYFAILED1 at01:19:16UTC (unitMainPID0). All originalcontrol40/

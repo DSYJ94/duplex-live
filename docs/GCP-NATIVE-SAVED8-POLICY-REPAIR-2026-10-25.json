@@ -1,7 +1,7 @@
 {
   "schema": "dl-gcp-saved8-policy-portability-repair-v1",
-  "at_utc": "2026-10-25T01:23:51.979368+00:00",
-  "status": "DIAGNOSED_REPAIR_PREPARED_LOCAL35_PASS_TARGET_PREFLIGHT_PENDING",
+  "at_utc": "2026-10-25T01:26:36.381476+00:00",
+  "status": "ACTUAL_TARGET_PY312_35TESTS_POLICY_AND_AST_PASS_RECOVERY_V6_RUNNING",
   "original_model_source": "da389a7031a5504495397d1575952194ffa209f1",
   "failed_recovery": "v5",
   "failed_service_actual_exit": 1,
@@ -107,7 +107,67 @@
     "evals/harness/test_native_saved_stage_recovery.py": "84e69473a64e8ae2a80745743e2372548d09de6f9bdea2c81e30042b3dcd49b0"
   },
   "scope": "Restore the ORIGINAL highest/TF32-disabled control40 execution policy, preserve BF16 and original attention controls; canonical full-field syntax hash only, no broader acceptance list or original code/gate/data/recipe changes.",
-  "next_action": "Git-deploy a new immutable producer; run all35 pure tests on actual Python3.12 plus model-free restored-policy probe before distinct recovery-v6. Preserve v5, all earlier failures, originalfit-15. Do not reuse frozen75b3bfd because its hash comparison is not portable.",
+  "next_action": "Poll SAME recovery-v6 service38115/parent38162/child38198 and dualguards. New producer e0827f5 in separate immutable worktree; originalDA unchanged. After finalization actual0, distinct independent restore; strictproof only after both actual0, then complete pairednative20/speech20 and unchanged gates. No additional updates.",
   "model_adopted": false,
-  "behavior_qualified": false
+  "behavior_qualified": false,
+  "deployed_producer": "e0827f54f058e986ee57116f6de3c783a1ccefbd",
+  "actual_target_preflight_exit": 0,
+  "actual_target_preflight": {
+    "passed": true,
+    "python": "3.12.3 (main, Aug 14 2025, 17:47:21) [GCC 13.3.0]",
+    "tests_passed": 35,
+    "context": {
+      "schema": "dl-native-saved-stage-context-prefix-v1",
+      "original_source_sha256": "2e504fac5d3171680e3277d1e436f7db51d9403b45a1e77f09d4c2c7ccc893c5",
+      "derived_ast_sha256": "7907f6de7ddbdaa1a22111829a67cfb1a4a2e5df629482f1693c4676549d15f0",
+      "cut_before": "original args.reload branch",
+      "optimizer_branch_included": false,
+      "model_loaded": false,
+      "gpu_execution_authorized": false
+    },
+    "execution_policy": {
+      "before": {
+        "float32_precision": "high",
+        "matmul_tf32": true
+      },
+      "after": {
+        "float32_precision": "highest",
+        "matmul_tf32": false
+      },
+      "original_execution_policy_restored": true,
+      "model_dtype_or_attention_changed": false,
+      "optimizer_updates": 0
+    },
+    "actual_execution": {
+      "torch": "2.9.0a0+145a3a7bda.nv25.10",
+      "cuda": "13.0",
+      "device": "NVIDIA A100-SXM4-80GB",
+      "capability": [
+        8,
+        0
+      ],
+      "cudnn": true,
+      "cudnn_sdp": false,
+      "flash_sdp": false,
+      "mem_efficient_sdp": false,
+      "math_sdp": true,
+      "matmul_tf32": false,
+      "cudnn_tf32": true,
+      "bf16_reduction": true,
+      "float32_precision": "highest",
+      "deterministic_algorithms": false,
+      "cudnn_deterministic": false,
+      "cudnn_benchmark": false,
+      "threads": 6,
+      "parameter_dtypes": {},
+      "environment": {
+        "NO_CUDA_GRAPH": null,
+        "NO_TORCH_COMPILE": null,
+        "TORCH_CUDNN_SDPA_ENABLED": null,
+        "CUBLAS_WORKSPACE_CONFIG": null
+      }
+    },
+    "model_loaded": false,
+    "optimizer_updates": 0
+  }
 }
