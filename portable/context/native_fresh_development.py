@@ -44,6 +44,17 @@ def clean(source,commit):
 def budget_guard(path,pod_id,deadline,now=None):
     now=time.time() if now is None else now
     guard=json.loads(Path(path).read_text())
+    if guard.get('provider')=='gcp':
+        from portable.context.native_saved_stage_controller import fresh_guard
+        live=fresh_guard(path)
+        if live['resource_id']!=pod_id or live['deadline_unix']<deadline+120:
+            raise ValueError('Same authorized GCP resource and complete evaluation deadline required')
+        # Preserve the actual GCP authority and thirty-second freshness gate.
+        # Only normalize the existing collector's historical resource/time keys
+        # in memory; never manufacture or rewrite a provider receipt on disk.
+        return dict(live,phase='armed',pod_id=live['resource_id'],
+            at_utc=datetime.fromtimestamp(live['checked_unix'],tz=timezone.utc).isoformat(),
+            deadline_utc=datetime.fromtimestamp(live['deadline_unix'],tz=timezone.utc).isoformat())
     age=now-datetime.fromisoformat(guard['at_utc']).timestamp()
     if (guard['phase']!='armed' or guard['pod_id']!=pod_id or not 0<=age<=90
             or datetime.fromisoformat(guard['deadline_utc']).timestamp()<deadline+120):
@@ -267,6 +278,8 @@ def main():
         behavior_review_sha256=plan['behavior_review_sha256'],source_quality_sha256=plan['source_quality_sha256'],
         implementation_sha256={name:sha256(args.source/name) for name in files},
         initial_cost_guard_sha256=sha256(args.cost_guard_receipt),cost_guard_deadline_utc=guard['deadline_utc'],
+        cost_guard_provider=guard.get('provider','runpod'),
+        cost_guard_resource_id=guard.get('resource_id',args.pod_id),
         gpu_mode='serial-one-gpu',complete_paired40=False,complete_independent_speech40=False,
         optimizer_updates=0,training_approved=False,behavior_approved=False,checkpoint_adopted=False,
         full20_task_qualification_passed=False,provider_credential_transferred=False)

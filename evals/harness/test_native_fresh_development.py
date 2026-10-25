@@ -232,4 +232,57 @@ class FreshBudgetGuardTests(unittest.TestCase):
                 with self.subTest(key=key),self.assertRaises(ValueError):budget_guard(path,'actual-pod',now+200,now=now)
 
 
+class GcpFreshBudgetGuardTests(unittest.TestCase):
+    def setUp(self):
+        from portable.context.gcp_budget_watchdog import AUTH_SHA
+        self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup)
+        self.path=Path(self.temp.name)/'actual-gcp-lease.json'
+        self.now=1_800_000_000.;self.deadline=self.now+3600
+        self.resource='951004838667287080'
+        self.good=dict(provider='gcp',resource_id=self.resource,authorization_sha256=AUTH_SHA,
+            execution_authorized=True,live_provider_deadline_verified=True,
+            live_external_cost_guard_verified=True,single_gpu_across_providers_verified=True,
+            checked_unix=self.now-1,deadline_unix=self.now+7200,
+            remaining_budget_usd=50.,planned_maximum_cost_usd=20.)
+
+    def check(self,receipt=None,resource=None):
+        self.path.write_text(json.dumps(self.good if receipt is None else receipt))
+        with patch('time.time',return_value=self.now):
+            return budget_guard(self.path,self.resource if resource is None else resource,self.deadline)
+
+    def test_actual_gcp_lease_is_validated_without_rewriting_it_as_a_runpod_receipt(self):
+        value=self.check();original=self.path.read_bytes()
+        self.assertEqual(value['provider'],'gcp')
+        self.assertEqual(value['resource_id'],self.resource)
+        self.assertEqual(value['pod_id'],self.resource)
+        self.assertEqual(value['authorization_sha256'],self.good['authorization_sha256'])
+        self.assertEqual(datetime.fromisoformat(value['at_utc']).timestamp(),self.good['checked_unix'])
+        self.assertEqual(datetime.fromisoformat(value['deadline_utc']).timestamp(),self.good['deadline_unix'])
+        self.assertEqual(self.path.read_bytes(),original)
+
+    def test_legacy_looking_fields_cannot_bypass_gcp_authorization(self):
+        value=dict(self.good,execution_authorized=False,phase='armed',pod_id=self.resource,
+            at_utc=datetime.fromtimestamp(self.now,tz=timezone.utc).isoformat(),
+            deadline_utc=datetime.fromtimestamp(self.now+7200,tz=timezone.utc).isoformat())
+        with self.assertRaises(ValueError):self.check(value)
+
+    def test_same_gcp_authority_resource_freshness_budget_and_deadline_remain_required(self):
+        for key,value in [('authorization_sha256','0'*64),('checked_unix',self.now-31),
+                ('checked_unix',self.now+1),('deadline_unix',self.deadline+119),
+                ('deadline_unix',self.now+12*3600+1),('remaining_budget_usd',101.),
+                ('planned_maximum_cost_usd',51.),('planned_maximum_cost_usd',True),
+                ('execution_authorized',False),('live_provider_deadline_verified',False),
+                ('live_external_cost_guard_verified',False),('single_gpu_across_providers_verified',False)]:
+            with self.subTest(key=key,value=value),self.assertRaises(ValueError):
+                self.check(dict(self.good,**{key:value}))
+        with self.assertRaises(ValueError):self.check(resource='different-resource')
+
+    def test_only_guard_file_is_read_and_no_fresh_plan_or_model_is_opened(self):
+        original_read=Path.read_text
+        def read(path,*args,**kwargs):
+            if path!=self.path:raise AssertionError('Only the actual guard receipt may be read')
+            return original_read(path,*args,**kwargs)
+        with patch.object(Path,'read_text',read):self.check()
+
+
 if __name__=='__main__':unittest.main()

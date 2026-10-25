@@ -1,3 +1,31 @@
+# LOCAL — GCP fresh guard source prepared; current restore unchanged
+
+Found futureportablefreshcollector budget_guard expectedRunpod receiptshape;
+actualGCPlease rejected(KeyErrorat_utc), and legacylookingfields couldbypassGCP
+flags. Newbranch REUSES existing exactfresh_guard(GCPAUTH/flags/resource/fresh30s/
+<=12h/<=100USD/singleGPU) +sameactualresource +120sdeadlinepadding. Normalizes
+oldresource/time keys ONLYinmemory; originalreceipt neverrewritten/fabricated;
+outputprovenance nowexplicitprovider/resource. LegacyRunpod90sguard unchanged.
+New4regressions REDbeforefix; full27freshcollectorpurefixturetests nowPASS local,
+including nofreshplan/modelreads fromguard. Allplaceholderplans, NOsealedpayload/
+audio/API/GPU/newupdate. Everymodelinference+recoveryproducerfile unchangedfrom
+0619b17 byactualGitfilehashcomparison. Only native_fresh_development.py resource
+check/provenance +itsfixtures changed. DocGCP-NATIVE-FRESH-COST-GUARD-PREPARATION-
+2026-10-25.json exacthashes. TargetCPUpreflight pending separateGitdeployment.
+Do NOTalter running0619worker orprepared0619fullnative20source. Freshcollection
+NOTstarted; all4ordinary/full10native20/speech20review/sealedsourcequality gates
+unchangedandmandatory. Do notopenfreshstimuli unless allentrygatespass.
+
+Current SAMEindependent restore97226/container530/birth1800685, unitV7Main67425/
+invocationf8d6f198ef0e43baa97e2874b5928bef remainslive (observer41983samehandle).
+Independentnative49EXACTfirst49; control29/40/reasoning0/32 at05:59:17UTC. Need
+remainingfullcompareactual0 +parent0/strictproof before ANYbehaviorcollection.
+FirststagePASS0/backupand lossdiagnosticbelow preserved; NOconvergence/behavior
+claim. SameA100/disk/11:52:37UTCSTOP/100USD/dualguards/zeronewupdates unchanged.
+CredentialsMac/exclusions/no purchases/no newresources, LOCALsoleexecutor.
+
+---
+
 # LOCAL — Closed saved8 loss diagnosis; independent restore continues unchanged
 
 Actualsame-runtime closedfirststage metrics nowanalyzed (recordSHA
