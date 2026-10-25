@@ -1,3 +1,37 @@
+# LOCAL — V7 full49 +40 computed; reasoning32 LIVE, originalcontrol31 EXACT
+
+Actual04:29:09UTC25Oct: SAMEV7/MainPID67425/invocation
+f8d6f198ef0e43baa97e2874b5928bef ACTUALactive, finalizationchild67555/internal12.
+All49native fingerprints previouslyexactoriginal49. ALL40control nowcomputed;
+ALL31survivingoriginalcontrolrows EXACT, zero differences. Nine additional rows
+have no survivingoriginalfingerprints, so fullfresh independentcomparison remains
+mandatory. All40alsoequalfailedV6diagnosticrows; that comparison is NOT independent
+approval and does NOT rehabilitate failedV6. Control40 canonical rowsSHA
+0a263f8b2b18567939a18037b327480268314505b09bc8443e87cc8e6627a4c2.
+Reasoning32 currently1/32. Wholefinalization/independentrestore/strictproof/behavior
+NOTpassed; zero newoptimizerupdates/no repeatsaved8. Source0619b17 +originalDA,
+sameA100/disk/11:52:37UTCSTOP/100USD/dualguards unchanged.
+Evidence docs/GCP-NATIVE-SAVED8-V7-CONTROL40-PROGRESS-2026-10-25.json and ignored
+runs/local-migration-20261024/saved8-recovery-v7-control40-comparison-v1.json
+containsall40rows. Read-onlyobservers39007 and27033 ACTUALLYexited0; this is NOT
+recoveryterminal. Do NOTpoll/restart them asGPUjobs. Poll SAMEactualrecovery.
+
+Next finish ALL32reasoning/fullvalidation actual0, then parentautomaticallystarts
+distinctfresh fullAdam/RNG/metrics/fingerprints restore. Need BOTHchildactual0 +
+parentactual0/strictproof before fixed0619guarded fullnative20/speech20. Existing
+preparedlaunchplan requires genuinefresh terminalobservation, exactV7invocation,
+newoutput/unit, freshlease/idleGPU/sharedlock, liveunusedMacproxy/deadlines. No old
+E082/edbad validator, no fabricatedlegacyreport, no subset/adoption. Originalfit-15
+staysfailed; alloldhistories/KLhidden/data/audio/receipts/folds/heldouts retained.
+Actual04:03:19UTC existingMacguard48672/proxy69582/tunnel46162 stilllive; remote58051
+health scopegcp-saved8-native20-v2/realtransport/0requests. Diskavailable67219980288B;
+no extra storage needed. No credentials moved/API requestsmade by healthcheck.
+Guardobservedarmed04:28:48UTC/Macfresh04:28:38UTC. CriticalarchivefullhashPASS;
+broadMacsourcebackuppartial. No purchases/resources/newtraining/ownerdata transfers.
+LOCALsoleexecutor, preserve unrelatedPYC/probes/roadmap; stopcompute if trulyblocked.
+
+---
+
 # LOCAL — V7 complete49 native fingerprints EXACT; control40 started
 
 Actual03:54:52UTC25Oct: SAME V7 MainPID67425/invocation
