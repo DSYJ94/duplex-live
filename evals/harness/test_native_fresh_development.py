@@ -251,7 +251,7 @@ class GcpFreshBudgetGuardTests(unittest.TestCase):
             return budget_guard(self.path,self.resource if resource is None else resource,self.deadline)
 
     def test_actual_gcp_lease_is_validated_without_rewriting_it_as_a_runpod_receipt(self):
-        value=self.check();original=self.path.read_bytes()
+        original=json.dumps(self.good).encode();value=self.check()
         self.assertEqual(value['provider'],'gcp')
         self.assertEqual(value['resource_id'],self.resource)
         self.assertEqual(value['pod_id'],self.resource)

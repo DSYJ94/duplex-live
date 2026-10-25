@@ -1,7 +1,7 @@
 {
   "schema": "dl-gcp-fresh-cost-guard-portability-v1",
   "recorded_utc": "2026-10-25T06:03:58.021117+00:00",
-  "status": "LOCAL27_PASS_TARGET_PENDING_FRESH_CASES_NOT_OPENED",
+  "status": "LOCAL27_AND_TARGET27_PASS_REAL_GCP_LEASE_ACCEPTED_NO_FRESH_PAYLOAD_OR_INFERENCE",
   "cause": "Fresh collector expected legacy Runpod receipt field names and rejected the actual GCP lease; legacy-looking fields also bypassed GCP authority checks.",
   "repair": "Reuse exact existing fresh_guard for GCP authority SHA, provider, live authorization flags, single GPU, 30s freshness, <=12h and <=100USD budget, then require same actual resource and >=120s deadline padding. Normalize historical resource/time names only in memory, preserve provider/resource in output provenance, never rewrite or fabricate provider receipts.",
   "original_runpod_guard_unchanged": true,
@@ -17,7 +17,7 @@
   },
   "implementation_sha256": {
     "portable/context/native_fresh_development.py": "1e4238770d28e6fe0ab3cbfd902284f476621b67ab1e38a070a81da16eb4ae33",
-    "evals/harness/test_native_fresh_development.py": "fb20e774e6df259d228bda1429823f51f9752a02b0b96e3851732af87bbdbb96"
+    "evals/harness/test_native_fresh_development.py": "f9e6a62e74557973873222d041d782a0faf25e638d6a9e8592aa295d99472f86"
   },
   "unchanged_from_frozen0619": {
     "evals/audio_playout.py": true,
@@ -55,12 +55,38 @@
     "portable/context/native_development.py": true,
     "portable/context/native_saved_stage_runtime.py": true
   },
-  "target_preflight_pending": true,
+  "target_preflight_pending": false,
   "actual_fresh_evaluation_started": false,
   "optimizer_updates": 0,
   "ordinary4_and_full_native20_review_gates_changed": false,
   "sealed_plan_audio_quality_hashes_or_thresholds_changed": false,
   "native_behavior_qualified": false,
   "model_adopted": false,
-  "next_action": "Git-deploy a separate preparation source; CPU-only target27 placeholder tests and actual GCP guard metadata check without reading fresh plan/audio. Keep current0619 recovery and preparednative20 source frozen. Actual fresh40/speech40 only after full recovery proof and complete native20/speech20 review/ordinary4 gate, within same GCP deadline/budget."
+  "next_action": "Keep recovery/native20 on frozen0619. If full native20/speech20 review and ordinary4 pass, commit the actual review and Git-deploy a fresh source including that review; verify underlying inference hashes still equal reviewed0619. Complete original fresh entry gates before any fresh plan/audio read or collection. Preparation source b15 has no future passed review and is not launch authorization.",
+  "target_preflight_actual_exit": 0,
+  "target_preflight": {
+    "schema": "dl-gcp-fresh-guard-target-cpu-preflight-v1",
+    "source_commit": "b15b4096497c36821e8562677a9a8d65000d2be1",
+    "source": "/workspace/migration/gcp-fresh-source-b15b409-v1",
+    "target_tests_passed": 27,
+    "actual_live_gcp_guard_accepted": true,
+    "provider": "gcp",
+    "resource_id": "951004838667287080",
+    "guard_checked_unix": 1792908379.455332,
+    "guard_deadline_utc": "2026-10-25T11:52:37+00:00",
+    "original_provider_receipt_not_rewritten": true,
+    "real_fixture_directory_reads_blocked_by_audit_hook": true,
+    "torch_imported": false,
+    "model_loaded": false,
+    "gpu_process_started": false,
+    "provider_requests": 0,
+    "optimizer_updates": 0,
+    "fresh_evaluation_started": false,
+    "native_behavior_qualified": false
+  },
+  "target_source_commit": "b15b4096497c36821e8562677a9a8d65000d2be1",
+  "target_source": "/workspace/migration/gcp-fresh-source-b15b409-v1",
+  "bundle_sha256": "7461cb47bf422c78da21a259c9bc5fdb985c8246546aa0fc5788316464bce90c",
+  "local_readonly_assertion_tightened_and_27_repassed": true,
+  "target_test_source_is_explicitly_pinned": true
 }

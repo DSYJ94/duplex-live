@@ -1,3 +1,36 @@
+# LOCAL — GCP fresh guard target27 +real lease PASS; fresh entry stilllocked
+
+Separate preparation sourceb15b4096497c36821e8562677a9a8d65000d2be1 Gitbundlefetched
+and cleanworktree /workspace/migration/gcp-fresh-source-b15b409-v1 on SAMEdisk;
+bundleSHA7461cb47bf422c78da21a259c9bc5fdb985c8246546aa0fc5788316464bce90c.
+ExistingV7container CPU-only27tests ACTUAL0, plusACTUALGCPbudget_guard validation
+accepted currentauth/resource/deadline. Audit hook BLOCKEDALLreal evals/fixtures
+reads throughouttests; noTorch/model/ASR/API/newGPUprocess/freshdata/inference.
+Targetreceipt ignored gcp-fresh-guard-target-cpu-preflight-v1.json anddeployment
+receipt gcp-fresh-guard-source-deployment-v1.json. Local27alsoPASS; read-onlyreceipt
+assertion tightened tocompare pre-callserializedoriginalbytes, local27repassed.
+GCPguardhelpercode sameasactualtargetb15; targettestsourceexplicitlypinnedb15.
+DocGCP-NATIVE-FRESH-COST-GUARD-PREPARATION-2026-10-25.json updatedevidence.
+
+This isFUTUREfreshresourceguard preparation ONLY. No freshpreflight/plan/audio or
+casecollection accessed. If currentnative20/speech20 complete reviewandordinary4
+PASS, firstcommitACTUALreview, thenGitdeploysourceincludingthatreview (b15doesNOT
+containafuturepassedreview), preserving allreviewed0619inferencefilehashes and
+originalsourcequality/fold/heldout gates. Do NOTusefreshprep toalter currentworker
+or prepared0619fullnative20. No newacceptancegate/threshold/optimizer/model change.
+
+Actual06:07:45UTC independentrestore97226/container530/birth1800685 ACTIVE, same
+unitV7/MainPID67425/invocationf8d6f198ef0e43baa97e2874b5928bef. Independentnative49
+EXACTfirst49; control38/40/reasoning0/32, observer41983samehandle. Stillneedfull
+remaining40/32/Adam/RNG/metrics exact, actualchild0/parent0/strictproof before ANY
+behaviorcollection. FirststagePASS0+backup and lossdiagnosticbelow preserved.
+Same0619producer/originalDA/A100951004838667287080/disk1828090267781080539/STOP
+11:52:37UTC/100USD/dualguards/zero newupdates. Guardfresh06:07, remaining47.95USD
+inclreserves notactualbilling. No newresources/purchases/broadertransfers, Mac-only
+credentials/exclusions unchanged. LOCALsoleexecutor, preserve unrelatedlocalwork.
+
+---
+
 # LOCAL — GCP fresh guard source prepared; current restore unchanged
 
 Found futureportablefreshcollector budget_guard expectedRunpod receiptshape;
