@@ -1,0 +1,93 @@
+{
+  "schema": "dl-gcp-saved8-recovery-complete-native20-live-v1",
+  "observed_utc": "2026-10-25T06:37:27.258133+00:00",
+  "status": "NUMERICAL_PROOF_PASS_NATIVE20_SPEECH20_RUNNING",
+  "producer_commit": "0619b17e9bb57a01701d24b7c7182f99a6a0ecf5",
+  "model_source_commit": "da389a7031a5504495397d1575952194ffa209f1",
+  "original_fit_actual_exit": -15,
+  "original_fit_relabelled": false,
+  "original_stage_updates": 8,
+  "recovery_optimizer_updates": 0,
+  "children": [
+    {
+      "phase": "finalization",
+      "pid": 12,
+      "birth": 1204049,
+      "started_unix": 1792898023.4558792,
+      "actual_exit": 0,
+      "ended_unix": 1792903989.6608908
+    },
+    {
+      "phase": "independent_restore",
+      "pid": 530,
+      "birth": 1800685,
+      "started_unix": 1792903989.8170981,
+      "actual_exit": 0,
+      "ended_unix": 1792910115.191685
+    }
+  ],
+  "recovery_unit": "duplex-native-saved8-recovery-v7.service",
+  "recovery_invocation": "f8d6f198ef0e43baa97e2874b5928bef",
+  "actual_parent_terminal_success": true,
+  "terminal_evidence": "Matching INVOCATION_ID systemd unit_log_success / Deactivated successfully; transient unit then unloaded. Default not-found ExecMainStatus was not used as success evidence.",
+  "proof_identity": {
+    "proof": "/workspace/migration/native-reasoning32-saved8-recovered-proof-gcp-v7",
+    "report_sha256": "27a6676dd95ef8100e5211b6e24ddca7e9b716c0cbcae4d3e8fb02215d9ccac7",
+    "reload_report_sha256": "0d29f315d956d273800699706d9892e317a8eab7bc8eef6624eb19a39be59439",
+    "checkpoint_sha256": "34edb69c696fef1ac02e498bb1351a7655442d6c7c041562ca145abfb3a77176",
+    "training_state_sha256": "75fd39b1dc9a7f66b8125a1804cab87cfad384446d592df4534c3e1cff5f0367",
+    "native_protocol": {
+      "attention_backend": "math",
+      "code_sha256": "bbf0699025b40be9376491334f787b488fe04a9b6262c2509f44888121250320",
+      "name": "bootstrap-preserve-provided-v1"
+    },
+    "optimizer_steps": 8,
+    "recovered_saved_stage": true,
+    "recovery_optimizer_updates": 0
+  },
+  "all_original_and_supplemental_logits_exact": true,
+  "optimizer_and_rng_independently_compared_exact": true,
+  "first_and_independent_full_evidence_exact": true,
+  "counts": {
+    "original28": 28,
+    "audio49": 49,
+    "native49": 49,
+    "control40": 40,
+    "reasoning32": 32,
+    "initial_metrics": 28,
+    "final_metrics": 28
+  },
+  "backup": {
+    "actual_rsync_exit": 0,
+    "all_remote_hashes_match_local": true,
+    "file_count": 76,
+    "bytes": 99948711,
+    "inventory_sha256": "cdcbd894368ca000570bca1572dc8d51a2e6a68c3d392f4e80e24bb19e43aa6b",
+    "destination": "runs/local-migration-20261024/saved8-recovery-v7-complete-copyback",
+    "scope": "Closed complete V7 recovery JSON/log plus all strict proof artifacts; owner conversations, credentials and cores excluded"
+  },
+  "behavior": {
+    "unit": "duplex-native-saved8-behavior-v1.service",
+    "invocation": "21aec4525e95442784efff97204f230b",
+    "main_pid": 128856,
+    "container": "duplex-native-saved8-behavior-v1",
+    "children": {
+      "native20": 40,
+      "speech20": 56
+    },
+    "source_commit": "0619b17e9bb57a01701d24b7c7182f99a6a0ecf5",
+    "out": "/workspace/migration/gcp-saved8-behavior-v1",
+    "actual_launch_exit": 0,
+    "phase": "collecting_complete_native20_then_speech20",
+    "deadline_utc": "2026-10-25T11:40:00Z",
+    "runtime_max_seconds": 18152,
+    "terminal_observation_sha256": "7320c28f42b858e5cb001e3e7ae48b504b47ece7a114f437d14fb781dc8c85ba"
+  },
+  "provider_stop_utc": "2026-10-25T11:52:37Z",
+  "resource_id": "951004838667287080",
+  "disk_id": "1828090267781080539",
+  "same_resources": true,
+  "model_adopted": false,
+  "behavior_approved": false,
+  "next_action": "Poll SAME collection. Preserve all paired20 and independent speech20; full 10-case review and ordinary4 correct required before any sealed fresh collection. Zero new optimizer updates. Stop billed compute on genuine blocker or completed approved scope."
+}

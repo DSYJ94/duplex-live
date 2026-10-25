@@ -1,3 +1,58 @@
+# LOCAL — Saved8 recovery fully passed; native20/speech20 evaluation running
+
+At 06:35:18 UTC on 25 October, BOTH fresh recovery children actually exited 0:
+finalization PID12/birth1204049 and independent PID530/birth1800685. All evidence
+matches exactly: original28, audio49, native49, control40, reasoning32, both sets
+of 28 loss metrics, all Adam tensors/clocks528 and RNG state. Strict derived proof
+PASSED. Original fit exit -15 remains failed; recovery made ZERO optimizer updates
+and did not repeat the eight historical updates. Old28 weighted loss regression
+(+0.8026%) is now independently reproduced; this is not a behavioral verdict.
+
+Recovery unit duplex-native-saved8-recovery-v7.service actually deactivated
+successfully at 06:35:18.638629 UTC. Journal records the SAME invocation
+f8d6f198ef0e43baa97e2874b5928bef. The transient unit then unloaded, clearing its
+InvocationID; success was established from that actual journal event plus both
+terminal child records, not from default not-found status fields.
+
+Closed backup verified: 76 files / 99,948,711 bytes, actual rsync 0, every remote
+hash matches Mac. Inventory SHA cdcbd894368ca000570bca1572dc8d51a2e6a68c3d392f4e80e24bb19e43aa6b.
+Ignored destination runs/local-migration-20261024/saved8-recovery-v7-complete-copyback.
+Includes all strict proof artifacts, exact adapter and optimizer/RNG state plus
+closed recovery JSON/logs. Full critical native archive remains verified; broader
+Mac source backup remains partial. Proof report SHA
+27a6676dd95ef8100e5211b6e24ddca7e9b716c0cbcae4d3e8fb02215d9ccac7;
+reload SHA 0d29f315d956d273800699706d9892e317a8eab7bc8eef6624eb19a39be59439.
+
+At 06:37:27 UTC launched ONE prepared full paired native20/speech20 evaluation:
+unit/container duplex-native-saved8-behavior-v1, MainPID128856,
+invocation21aec4525e95442784efff97204f230b; wrapper PID1, native child40,
+speech follow-up56. Actual phase collecting_complete_native20_then_speech20.
+Output /workspace/migration/gcp-saved8-behavior-v1. BOTH source and producer remain
+0619b17e9bb57a01701d24b7c7182f99a6a0ecf5 at /opt/duplex-gcp-recovery-0619b17-v1;
+original model/trainer da389a7031a5504495397d1575952194ffa209f1 unchanged.
+Fresh actual host observation SHA
+7320c28f42b858e5cb001e3e7ae48b504b47ece7a114f437d14fb781dc8c85ba.
+Wrapper independently verified strict proof, unused live Mac proxy and idle GPU
+before collection. No optimizer updates, fresh stimuli access, scoring or adoption.
+
+Same A100 resource951004838667287080 and 250GB disk1828090267781080539;
+provider STOP11:52:37 UTC, collector deadline11:40, RuntimeMaxSec18152, proxy11:45.
+Mac guard48672/PID26959 and guest guard2092 remain armed. Initial collector lease
+remaining45.1369USD includes reserves (not actual billing), planned remaining
+maximum29.5732USD, within existing100USD approval. No other GPU job, resources,
+purchases or broader transfers. Credentials stay Mac; exclusions unchanged.
+
+NEXT poll SAME collection handles; do not duplicate on observer timeout. Retrieve
+complete paired20/speech20, require actual successful terminal records and review
+ALL10 cases/both roles. Ordinary4 correctness is mandatory before sealed fresh40.
+Prepared b15 fresh source needs an ACTUAL committed passed review before use.
+Keep original source quality, quiet/pause/cancellation/receipt/audio/fresh gates.
+If genuinely blocked or approved evaluation complete, stop billed GPU promptly.
+Doc docs/GCP-NATIVE-SAVED8-RECOVERY-COMPLETE-2026-10-25.json is current evidence.
+LOCAL remains sole executor; preserve unrelated PYC/probes/roadmap edits.
+
+---
+
 # LOCAL — Independent49 +40 EXACT; final reasoning32/state verification LIVE
 
 Actual06:10:39UTC25Oct: independentrestore97226/container530/birth1800685 LIVE,

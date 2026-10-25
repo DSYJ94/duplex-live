@@ -57,7 +57,7 @@
     "correct_after": 10,
     "not_a_measure_of_complete_answer_correctness": true
   },
-  "interpretation": "Slight old-history text loss/accuracy regression in same-runtime recomputation; text-padding prediction also decreased. This does not establish data causality, full-objective convergence, audible silence failure or behavioral task quality. Complete independent restore and actual native behavioral tests remain mandatory.",
+  "interpretation": "Slight old-history text loss/accuracy regression independently reproduced exactly, including both complete sets of 28 metrics. This does not establish data causality, full-objective convergence, audible silence failure or behavioral task quality. Actual complete native behavioral tests remain mandatory.",
   "balanced_old28_optimization_objective": {
     "components": 28,
     "kinds": 8,
@@ -101,5 +101,14 @@
   "source_commit": "da389a7031a5504495397d1575952194ffa209f1",
   "original_training_code_sha256": "2e504fac5d3171680e3277d1e436f7db51d9403b45a1e77f09d4c2c7ccc893c5",
   "recorded_utc": "2026-10-25T05:43:09.223300+00:00",
-  "no_new_acceptance_gate_or_threshold": true
+  "no_new_acceptance_gate_or_threshold": true,
+  "independent_reproduction": {
+    "status": "COMPLETE_EXACT",
+    "independent_actual_exit": 0,
+    "parent_actual_terminal_success": true,
+    "all_initial_and_final_metric_rows_exact": true,
+    "independent_record_sha256": "b86200b52785c8afa9554c2f0420ab185e9e07035f8eaea1ca6d80e2fddce6ce",
+    "proof_report_sha256": "27a6676dd95ef8100e5211b6e24ddca7e9b716c0cbcae4d3e8fb02215d9ccac7",
+    "evidence": "docs/GCP-NATIVE-SAVED8-RECOVERY-COMPLETE-2026-10-25.json"
+  }
 }
