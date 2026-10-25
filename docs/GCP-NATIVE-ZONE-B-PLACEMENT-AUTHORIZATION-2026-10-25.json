@@ -1,0 +1,15 @@
+{
+  "schema": "dl-gcp-zone-b-fallback-owner-authorization-v1",
+  "status": "APPROVED_FALLBACK_NOT_EXECUTED",
+  "recorded_utc": "2026-10-25T07:54:33.277265+00:00",
+  "direct_owner_reply": "Approve zone-B replacement within $100",
+  "proposal_commit": "ce626ee",
+  "proposal_sha256": "4c61bfbf01d810eafeda65d98edd3971c251f49e5e546301e9e94a5afea9b003",
+  "unchanged_total_gcp_cap_usd": 100,
+  "optimizer_updates": 0,
+  "maximum_concurrent_gpus": 1,
+  "maximum_gpu_hours": 12,
+  "scope": "Only the exact proposal: zoneB replacement250GB disk, temporary snapshot and bounded CPU verification if needed; source retained until complete hashes/off-machine receipts verify preservation",
+  "current_state": "ZoneA later completed recovery and full behavior evaluation; same original disk preserved. No migration currently needed or executed.",
+  "no_new_purchase": true
+}

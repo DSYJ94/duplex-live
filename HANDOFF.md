@@ -1,3 +1,30 @@
+# LOCAL — Matched32 helper locally checked; GPU remains stopped
+
+Prepared portable/context/native_matched_reasoning_loss.py +5 pure checks against
+all32 authored TRAIN ids/families. New5+existing37 recovery/proof/controller tests
+ALL42PASS locally; ASTcontains NOoptimizer/backward calls. No model/ASR/GPU/API
+execution during tests. Exact originalDA constructionprefix and lossfunctions;
+all32 text+acoustic endpoints520/528, exact saved528 five-field fingerprints,
+finite coverage, unchanged frozen/adapter hashes, actual RNG restoration checks;
+separate diagnostic schema, no training proof/adoption. Parent verifies existing
+strictproof, originalresource/costguard, onehour bound/actualchild0. Original8not
+repeated; source/weights/data/objectives unchanged. TargetCPUpreflight and actual
+measurement NOTyetdone. No restart pending observation of anotherjob.
+
+Human late-reply now explicitly approved originalce626ee zoneB fallback within100.
+Recorded docs/GCP-NATIVE-ZONE-B-PLACEMENT-AUTHORIZATION-2026-10-25.json; immutable
+proposal bytes verified against ce626ee. ZoneA alreadycompleted recovery+native20
+and isstopped withsame250GB disk; no snapshot/replacement/migration necessary or
+executed. Latestsource review remainsREJECTED/basic1of4; no new optimizer stage.
+Next verify live sameVM/disk/price/quota/stock/original11:52:37STOP/100cap and noother
+GPU, Gitdeploy helper, run targetpurechecks before any model. If exactzero-update
+measurementfits existinggrant/window, rearm dualcostguards and collectONE full32
+comparison, copybackallhashes andstoppromptly; no broader compute/source transfer.
+If no authorizedwindow/capacity, retainpreparedhelper andreport actualblocker.
+Originalnoise/capabilityprobes/roadmap edits preserved. LOCALsoleexecutor.
+
+---
+
 # LOCAL — Full native20/speech20 complete and rejected; A100 stopped, disk safe
 
 Actual25Oct07:06:19UTC provider read: VM951004838667287080 TERMINATED,
