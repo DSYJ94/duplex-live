@@ -8,6 +8,7 @@ import json
 from pathlib import Path
 
 from evals.native_gcp_destination_verify import verify, _verify_entries
+from evals.native_gcp_transfer_inventory import rows
 
 INVENTORIES = {
     'saved8-recovery-v7-complete-remote-inventory.json':
@@ -24,6 +25,28 @@ def semantic_entries(closure):
                    for row in closure['files']), key=lambda row: row['path'])
 
 
+def ordered_files(files):
+    result = sorted(files, key=lambda row: row['path'])
+    rows(result)  # Validate the complete list, including duplicates, before I/O.
+    return result
+
+
+def preservation_inputs(source, inventories):
+    closure = json.loads((source/'docs/GCP-NATIVE-SEMANTIC-RECEIPT-CLOSURE-2026-10-25.json').read_text())
+    semantic = ordered_files(semantic_entries(closure))
+    catalogs = {}
+    for name, expected in INVENTORIES.items():
+        raw = (inventories/name).read_bytes()
+        if hashlib.sha256(raw).hexdigest() != expected:
+            raise ValueError('Exact completed off-machine inventory required')
+        inventory = json.loads(raw)
+        files = ordered_files(inventory['files'])
+        if len(files) != inventory['file_count'] or rows(files) != inventory['bytes']:
+            raise ValueError('Whole saved-result inventory required')
+        catalogs[name] = (files, inventory.get('links', []))
+    return closure['destination_prefix'], semantic, catalogs
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--root', type=Path, required=True)
@@ -31,21 +54,17 @@ def main():
     parser.add_argument('--out', type=Path, required=True)
     args = parser.parse_args()
     source = Path(__file__).resolve().parents[2]
+    # Precheck every exact input list before the expensive full archive read.
+    prefix, files, catalogs = preservation_inputs(source, args.inventories)
     args.out.mkdir(exist_ok=False)
     result = verify(args.root, source/'docs/GCP-NATIVE-TRANSFER-INVENTORY-2026-10-24.json.gz')
     (args.out/'destination-hashes.json').write_text(json.dumps(result, indent=2)+'\n')
     if not result['passed']:
         raise ValueError('Full original destination failed')
     results = {}
-    closure = json.loads((source/'docs/GCP-NATIVE-SEMANTIC-RECEIPT-CLOSURE-2026-10-25.json').read_text())
-    files = semantic_entries(closure)
-    results['semantic'] = _verify_entries(args.root/closure['destination_prefix'], files, [])
-    for name, expected in INVENTORIES.items():
-        raw = (args.inventories/name).read_bytes()
-        if hashlib.sha256(raw).hexdigest() != expected:
-            raise ValueError('Exact completed off-machine inventory required')
-        inventory = json.loads(raw)
-        results[name] = _verify_entries(args.root/'migration', inventory['files'], inventory.get('links', []))
+    results['semantic'] = _verify_entries(args.root/prefix, files, [])
+    for name, (files, links) in catalogs.items():
+        results[name] = _verify_entries(args.root/'migration', files, links)
     passed = all(row['passed'] for row in results.values())
     (args.out/'additional-preservation.json').write_text(json.dumps(dict(
         schema='dl-zoneb-additional-preservation-v1', passed=passed,
