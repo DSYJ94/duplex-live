@@ -1,3 +1,35 @@
+# LOCAL — Saved8 recovery v5 continues; downstream delegation transport ready
+
+Actual01:14:00UTC recovery-v5 service31767 and child31847 alive (5m55s), child
+17224MiB, still original context/approval reconstruction; no terminal success.
+Same frozen75b3bfd, originalDA, sameA100/samedisk/nativeSTOP11:52:37UTC and guards.
+No new optimizer updates. Do not duplicate/restart this running recovery.
+
+Prepared actual Mac-only Responses connection for full native20 AFTER strictproof:
+proxy toolsession69582/PID75507, local127.0.0.1:49884, run gcp-saved8-native20-v2,
+maximum128calls/deadline11:45UTC. SSH reverse tunnel session46162/supervisor75642,
+remote127.0.0.1:58051 -> local49884. StrictSSH existinggpuargv/keys. RemoteGEThealth
+actual0 confirmed scoped run/real_requests_transport=true/actual_requests0.
+Health is NOT provider authentication, actual delegation, voice quality or adoption.
+All credentials stayMac. New tiny ignored local runtime .private/backend-proxy-env-v1
+with exact freeze; no localASR/model/CPU throttling. Initial proxy prep failures
+missingrequests/numpy preserved; successful proxyv2 nowlistening. Do not duplicate;
+poll real toolhandles and scopedhealth. Localreceipt gcp-native20-proxy-tunnel-v1.json;
+tracked docs/GCP-NATIVE20-BACKEND-PREPARATION-2026-10-25.json has exactscope/evidence.
+
+Separate clean evaluation source /opt/duplex-native-evaluation-58c966c-v1 ready;
+use /workspace/runtime-x86-ngc2510/bin/python plus independentASR
+/workspace/native10-asr-env/bin/python, HOME=/workspace/gcp-runtime-home for verified
+durableturbo cache. Evaluator requires serial-one-gpu/container-default and
+DUPLEX_OPENAI_LOOPBACK_PROXY=http://127.0.0.1:58051/v1/responses,
+DUPLEX_OPENAI_PROXY_RUN=gcp-saved8-native20-v2; container hostnetwork for loopback.
+No evaluation launched yet. Wait strictv5 proof actualbothchildren0/parent0, then
+complete pairednative20/speech20 unchanged; do not use old pilotwaiter bound to
+failedv18 or training subdir as recoveredproof. Exact expected proof v5 below.
+Preserve all existing objectives/qualification gates/originalfit-15. LOCALsoleexecutor.
+
+---
+
 # LOCAL — Original full40/full32 CPU checks PASS; saved8 recovery v5 LIVE
 
 At01:08:22UTC25Oct actual service duplex-native-saved8-recovery-v5 active/running,

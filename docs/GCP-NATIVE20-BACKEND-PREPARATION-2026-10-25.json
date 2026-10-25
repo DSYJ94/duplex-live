@@ -1,0 +1,41 @@
+{
+  "schema": "dl-gcp-native20-scoped-backend-preparation-v1",
+  "at_utc": "2026-10-25T01:14:47.712434+00:00",
+  "status": "LOOPBACK_TRANSPORT_ACTUALLY_REACHABLE_ZERO_PROVIDER_REQUESTS",
+  "observation": {
+    "actual_exit": 0,
+    "stdout": "{\"run_id\": \"gcp-saved8-native20-v2\", \"actual_requests\": 0, \"real_requests_transport\": true}\n",
+    "stderr": "",
+    "remote_proxy": "http://127.0.0.1:58051/v1/responses",
+    "local_proxy": "http://127.0.0.1:49884/v1/responses",
+    "run_id": "gcp-saved8-native20-v2",
+    "proxy_session": 69582,
+    "proxy_pid": 75507,
+    "tunnel_session": 46162,
+    "tunnel_supervisor_pid": 75642,
+    "deadline_utc": "2026-10-25T11:45:00Z",
+    "provider_credential_transferred": false,
+    "provider_api_authentication_verified": false,
+    "native_behavior_verified": false
+  },
+  "maximum_requests": 128,
+  "local_runtime_packages": [
+    "certifi==2026.10.23",
+    "charset-normalizer==3.5.2",
+    "idna==3.20",
+    "numpy==2.5.4",
+    "requests==2.32.5",
+    "urllib3==2.8.0"
+  ],
+  "local_proxy_implementation_sha256": "d6945c19bab43961ce1a89b2e0e750ae76580032a36c3ba7e09af73513512f80",
+  "failed_preparation_preserved": [
+    "Bundled Python lacked requests; proxyv1 failed before listening",
+    "Isolated Python initially lacked NumPy needed by existing helper imports; no source or provider requests changed"
+  ],
+  "scope": "Existing authored synthetic pairednative20 only; no owner conversations or credentials sent to GCP",
+  "next_action": "Keep SAME local proxy/tunnel alive; verify actual handles and /health before native20. After saved8 strict proof and full actual terminal records only, launch existing serial-one-gpu native_development with recovered proof, then native_speech_followup complete20. No training updates, no sealed fresh data opened, no adoption.",
+  "native_evaluation_started": false,
+  "provider_api_authentication_verified": false,
+  "behavior_qualified": false,
+  "model_adopted": false
+}
