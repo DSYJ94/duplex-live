@@ -9,7 +9,8 @@ import unittest
 
 from portable.context.gcp_budget_watchdog import (
     AUTH_SHA, CATALOG_SHA, DISK, PROJECT, ZONE, check_live, owned, stop_owned, validate_lease,
-    read_runpod_pods, ZONE_B_AUTH_SHA, ZONE_B_DISK, PRIOR_GPU_SECONDS_UPPER)
+    read_runpod_pods, ZONE_B_AUTH_SHA, ZONE_B_DISK, PRIOR_GPU_SECONDS_UPPER,
+    FLEX90_SCOPE, FLEX90_NAME, FLEX90_PLAN_SHA)
 
 
 class LiveReadTransportTests(unittest.TestCase):
@@ -235,6 +236,43 @@ class OriginalARemainingRuntimeTests(unittest.TestCase):
                        dict(lastStopTimestamp='2026-10-25T19:59:00Z')):
             with self.subTest(change=change),self.assertRaises(ValueError):
                 self.check(vm=dict(self.vm,**change))
+
+
+class SameDiskFlex90Tests(unittest.TestCase):
+    check = BudgetTests.check
+
+    def setUp(self):
+        BudgetTests.setUp(self)
+        self.lease.update(id='777', disk_id='1828090267781080539', name=FLEX90_NAME,
+            runtime_scope=FLEX90_SCOPE, plan_sha256=FLEX90_PLAN_SHA,
+            placement_authorization_sha256=ZONE_B_AUTH_SHA,
+            prior_gpu_seconds_upper=PRIOR_GPU_SECONDS_UPPER, extra_migration_reserve_usd=12,
+            provisioning_model='FLEX_START', max_run_seconds=5400, max_queue_seconds=7200,
+            budget_window_start_utc='2026-10-25T01:00:00Z', stop_utc='2026-10-25T02:30:00Z')
+        self.vm.update(id='777', name=FLEX90_NAME, lastStartTimestamp=self.lease['budget_window_start_utc'])
+        self.vm['scheduling'].pop('terminationTime')
+        self.vm['scheduling'].update(provisioningModel='FLEX_START',maxRunDuration={'seconds':'5400'})
+        self.disk['id']=self.lease['disk_id']
+        self.now += 3600
+
+    def test_exact_committed_plan_and_all_prior_runtime_required(self):
+        source=Path(__file__).resolve().parents[2]
+        self.assertEqual(hashlib.sha256((source/'docs/GCP-FLEX90-EXISTING-SCOPE-PLAN-2026-10-25.json').read_bytes()).hexdigest(),FLEX90_PLAN_SHA)
+        validate_lease(self.lease,self.authority,self.destination)
+        self.assertTrue(self.check()['single_gpu_across_providers_verified'])
+        self.assertLess(self.check()['remaining_budget_usd'],22)
+
+    def test_no_new_disk_longer_duration_or_reset_historical_budget(self):
+        for change in (dict(disk_id='other'),dict(max_run_seconds=7200),dict(max_queue_seconds=14400),
+                       dict(prior_gpu_seconds_upper=0),dict(plan_sha256='0'*64),
+                       dict(stop_utc='2026-10-25T03:30:00Z'),dict(created_utc='2026-10-24T21:00:00Z')):
+            with self.subTest(change=change),self.assertRaises(ValueError):
+                validate_lease(dict(self.lease,**change),self.authority,self.destination)
+
+    def test_provider_duration_or_actual_start_mismatch_is_rejected(self):
+        vm=copy.deepcopy(self.vm);vm['scheduling']['maxRunDuration']['seconds']='7200'
+        with self.assertRaises(ValueError):self.check(vm=vm)
+        with self.assertRaises(ValueError):self.check(vm=dict(self.vm,lastStartTimestamp='2026-10-25T01:01:00Z'))
 
 
 if __name__ == '__main__':

@@ -27,9 +27,27 @@ RESERVE_USD = 0.48 + 6.40 + 10.00
 ZONE_B_AUTH_SHA = 'e1ffc0ffc323cf051d8b24bb8bc8d3f8bcb62bd42ba0e6467146a1aea5a89e4b'
 PRIOR_GPU_SECONDS_UPPER = 32086.0
 ZONE_B_DISK = 'duplex-native-stage-20261025-b-v1'
+FLEX90_SCOPE = 'original-disk-flex90-v1'
+FLEX90_NAME = 'duplex-native-saved8-gpu-flex90-20261025-v1'
+FLEX90_PLAN_SHA = 'fde96cde565e72b34f1d7ac9c77719740cddf796997e2afa99b19bb69c86f90b'
 
 
 def placement(lease):
+    if lease.get('runtime_scope') == FLEX90_SCOPE:
+        history = lease.get('prior_gpu_seconds_upper')
+        if (lease.get('zone') != ZONE or lease.get('disk_name') != DISK
+                or str(lease.get('disk_id')) != '1828090267781080539'
+                or lease.get('name') != FLEX90_NAME
+                or lease.get('plan_sha256') != FLEX90_PLAN_SHA
+                or lease.get('placement_authorization_sha256') != ZONE_B_AUTH_SHA
+                or type(history) not in (int, float) or not math.isfinite(history)
+                or history < PRIOR_GPU_SECONDS_UPPER
+                or lease.get('extra_migration_reserve_usd') != 12
+                or lease.get('provisioning_model') != 'FLEX_START'
+                or lease.get('max_run_seconds') != 5400 or lease.get('max_queue_seconds') != 7200
+                or 'budget_window_start_utc' not in lease):
+            raise ValueError('Exact same-disk bounded Flex90 plan required')
+        return ZONE, DISK, history, RESERVE_USD+12
     cumulative_a = lease.get('zone') == ZONE and 'budget_window_start_utc' in lease
     if lease.get('zone') == ZONE and not cumulative_a:
         return ZONE, DISK, 0.0, RESERVE_USD
@@ -109,9 +127,14 @@ def validate_lease(lease, authority, destination):
     start = stamp(lease.get('budget_window_start_utc', lease['created_utc']))
     deadline = stamp(lease['stop_utc'])
     model = lease.get('provisioning_model', 'STANDARD')
+    flex90 = lease.get('runtime_scope') == FLEX90_SCOPE
+    duration = 5400 if flex90 else 36000
     if model not in ('STANDARD', 'FLEX_START') or (model == 'FLEX_START'
-            and lease.get('max_run_seconds') != 36000):
-        raise ValueError('Only standard or explicitly bounded ten-hour Flex-start lease allowed')
+            and lease.get('max_run_seconds') != duration):
+        raise ValueError('Only standard or the explicitly pinned Flex-start duration allowed')
+    if flex90 and (not 0 <= start-stamp(lease['created_utc']) <= 7440
+                   or deadline != start+5400):
+        raise ValueError('Exact actual-start Flex90 duration and bounded queue required')
     rate = lease['hourly_upper_usd']
     if (type(rate) not in (int, float) or not math.isfinite(rate) or rate <= 0
             or not 0 < deadline-start <= 43200-history
@@ -144,11 +167,12 @@ def native_deadline(vm, lease):
     if model == 'STANDARD':
         return stamp(scheduling['terminationTime'])
     duration = scheduling.get('maxRunDuration', {}).get('seconds')
-    if (model != 'FLEX_START' or str(duration) != '36000'
-            or lease.get('max_run_seconds') != 36000):
-        raise ValueError('Exact native ten-hour Flex-start STOP required')
+    expected = 5400 if lease.get('runtime_scope') == FLEX90_SCOPE else 36000
+    if (model != 'FLEX_START' or str(duration) != str(expected)
+            or lease.get('max_run_seconds') != expected):
+        raise ValueError('Exact requested native Flex-start STOP duration required')
     # Actual provider start time, never a guessed allocation/queued timestamp.
-    end = stamp(vm['lastStartTimestamp']) + 36000
+    end = stamp(vm['lastStartTimestamp']) + expected
     if not stamp(vm['creationTimestamp']) < end <= stamp(vm['creationTimestamp']) + 43200:
         raise ValueError('Queue plus complete native run exceeds twelve-hour lease')
     return end
@@ -166,8 +190,11 @@ def check_live(lease, vm, disk, instances, runpod_pods, now):
             or vm['scheduling'].get('automaticRestart') is not False):
         raise ValueError('Exact live singleA100 and native STOP deadline required')
     if 'budget_window_start_utc' in lease:
-        if (not start <= stamp(vm['lastStartTimestamp']) <= now
-                or stamp(vm['lastStopTimestamp']) != stamp(lease['accounted_prior_last_stop_utc'])):
+        if lease.get('runtime_scope') == FLEX90_SCOPE:
+            if stamp(vm['lastStartTimestamp']) != start or now < start:
+                raise ValueError('Flex90 actual start changed; never reset runtime')
+        elif (not start <= stamp(vm['lastStartTimestamp']) <= now
+              or stamp(vm['lastStopTimestamp']) != stamp(lease['accounted_prior_last_stop_utc'])):
             raise ValueError('Unaccounted GPU start or stop; cumulative permission refused')
     zone, disk_name, history, reserve = placement(lease)
     expected = '/projects/'+PROJECT+'/zones/'+zone+'/disks/'+disk_name

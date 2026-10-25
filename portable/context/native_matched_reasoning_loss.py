@@ -180,12 +180,16 @@ def measure_context(context, inputs, prefix, producer_commit, proof_path, guard)
 
 def verify_resource(args, guard):
     """Bind either original placement or explicitly approved replacement lease."""
-    from portable.context.gcp_budget_watchdog import AUTH_SHA, ZONE_B_AUTH_SHA, validate_lease, stamp
+    from portable.context.gcp_budget_watchdog import (
+        AUTH_SHA, ZONE_B_AUTH_SHA, FLEX90_SCOPE, FLEX90_PLAN_SHA, validate_lease, stamp)
     source = Path(__file__).resolve().parents[2]
     lease = read(args.lease)
     if lease.get('zone') == 'europe-west4-b':
         if sha(source/'docs/GCP-NATIVE-ZONE-B-PLACEMENT-AUTHORIZATION-2026-10-25.json') != ZONE_B_AUTH_SHA:
             raise ValueError('Exact recorded replacement authorization required')
+    elif lease.get('runtime_scope') == FLEX90_SCOPE:
+        if sha(source/'docs/GCP-FLEX90-EXISTING-SCOPE-PLAN-2026-10-25.json') != FLEX90_PLAN_SHA:
+            raise ValueError('Exact bounded same-disk Flex90 plan required')
     elif lease.get('id') != '951004838667287080':
         raise ValueError('Exact original resource required')
     validate_lease(lease, (source/'docs/GCP-NATIVE-CONTINUATION-AUTHORIZATION-2026-10-24.json').read_bytes(),
