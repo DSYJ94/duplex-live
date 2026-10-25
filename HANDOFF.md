@@ -1,3 +1,28 @@
+# LOCAL — ALL49 native-stream fingerprints exactly match original; v6 LIVE
+
+Actual02:05:42UTC25Oct: recovery-v6 service38115 active; finalizationchild38198
+has emitted ALL49 native_stream_restore_fingerprint rows. Read-only comparison
+against original preserved v18 failed-fit log: complete49/49 dictionaries EXACT,
+zero disagreements. Control40/reasoning32 fingerprint rows still0 atthisread.
+This validates only that fullcohort; wholefinalization/independentrestore/proof/
+behavior/adoption remain UNPROVEN. No optimizerupdates. Do not accept49aswholepass.
+Evidence ignored saved8-v6-native49-progress-v1.txt and tracked
+ docs/GCP-NATIVE-SAVED8-POLICY-REPAIR-2026-10-25.json. All21reconstructeddata/voice/
+approval/reference/Adamimport bytes hadalready independentlymatched originals.
+
+Continue SAME v6 unit/container/child, frozen e0827f54f058e986ee57116f6de3c783a1ccefbd;
+originalDA unchanged, sameA100/samedisk/providerSTOP11:52:37UTC/dualguards/no purchases.
+Full40control/32reasoning fingerprint work follows, then distinct fresh independent
+Adam/RNG/metrics/fingerprints process undercontroller. Only actualbothchild0+
+parent0+strictproof verification permit native20/speech20 collection.
+Prepared separate guardedcollector edbad904 at/opt/duplex-native-gcp-development-v1
+haslocal+target11testsPASS; use genuine fresh hostterminalobservation asprevious
+handoff describes, never fabricate or reuse a failedfitreport. Macproxy/tunnel
+reservedexistinghandles/keysremainMac, verifyalive/unused/deadlines beforeeval.
+LOCALsoleexecutor; no overlappingGPUjobs/timeoutrestarts/unrelatedfile changes.
+
+---
+
 # LOCAL — Guarded full native20/speech20 runner Gitdeployed, target11PASS
 
 NEW separate wrapperproducer edbad904ee66ab43baf4de9b26bf5af8a4160c09 at

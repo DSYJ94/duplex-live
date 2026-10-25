@@ -1,7 +1,7 @@
 {
   "schema": "dl-gcp-saved8-policy-portability-repair-v1",
-  "at_utc": "2026-10-25T01:38:32.959586+00:00",
-  "status": "V6_PASSED_ORIGINAL_POLICY_AND_COMPLETE_CONTEXT_ENTERED_SAVED_STATE_NUMERICAL_FINGERPRINTS",
+  "at_utc": "2026-10-25T02:06:54.231401+00:00",
+  "status": "V6_COMPLETE_NATIVE49_EXACT_ORIGINAL_PARITY_CONTROL40_REASONING32_AND_INDEPENDENT_RESTORE_PENDING",
   "original_model_source": "da389a7031a5504495397d1575952194ffa209f1",
   "failed_recovery": "v5",
   "failed_service_actual_exit": 1,
@@ -315,5 +315,20 @@
     "independent_restore_started": false,
     "numerical_proof_passed": false,
     "behavior_evaluated": false
+  },
+  "native49_progress": {
+    "observed_utc": "2026-10-25T02:05:42Z",
+    "actual_service_active": true,
+    "main_pid": 38115,
+    "finalization_child": 38198,
+    "actual_native49_count": 49,
+    "original_surviving_native49_count": 49,
+    "all_native49_fingerprints_exact": true,
+    "observed_control40_count": 0,
+    "observed_reasoning32_count": 0,
+    "finalization_actual_exit": null,
+    "independent_restore_started": false,
+    "whole_recovery_passed": false,
+    "model_qualified": false
   }
 }
