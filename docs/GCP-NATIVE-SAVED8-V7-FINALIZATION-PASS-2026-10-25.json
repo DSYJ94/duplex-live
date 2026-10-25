@@ -1,0 +1,65 @@
+{
+  "schema": "dl-gcp-v7-actual-finalization-pass-independent-live-v1",
+  "status": "FINALIZATION_ACTUAL_EXIT0_INDEPENDENT_FULL_RESTORE_LIVE",
+  "observed_utc": "2026-10-25T04:53:43.153025+00:00",
+  "producer_commit": "0619b17e9bb57a01701d24b7c7182f99a6a0ecf5",
+  "original_model_source": "da389a7031a5504495397d1575952194ffa209f1",
+  "original_fit_actual_exit": -15,
+  "original_stage_updates": 8,
+  "recovery_optimizer_updates": 0,
+  "finalization_actual_exit": 0,
+  "actual_terminal_observed": true,
+  "finalization_process_identity": {
+    "pid": 12,
+    "birth": 1204049,
+    "host": "9be0f7c8c39e",
+    "boot_id": "2a0e0083-4da2-423f-a944-c332229a9c98"
+  },
+  "finalization_ended_utc": "2026-10-25T04:53:09.813416+00:00",
+  "all_fingerprint_counts": {
+    "original28": 28,
+    "audio49": 49,
+    "native49": 49,
+    "control40": 40,
+    "reasoning32": 32
+  },
+  "initial_metric_rows": 28,
+  "final_metric_rows": 28,
+  "optimizer_and_rng_exact": true,
+  "adam_parameter_steps": [
+    528
+  ],
+  "record_sha256": "56cad2bf545dd8a175eb1e89a630f8f84198e7c19a500a0542f78f2e861d695e",
+  "runtime_sha256": "6a7658aeaa3154283618d7d2f4ea29df74239a0d4a2e696fac95a94d7d490a13",
+  "terminal_sha256": "b7da61c9a2a1c52473a4945b6b72189fe6502f66ef958942b1816809bfe7c2ae",
+  "independent_restore": {
+    "host_pid": 97226,
+    "phase": "independent_restore",
+    "pid": 530,
+    "birth": 1800685,
+    "started_unix": 1792903989.8170981,
+    "actual_exit": null
+  },
+  "recovery_service": {
+    "main_pid": 67425,
+    "invocation_id": "f8d6f198ef0e43baa97e2874b5928bef",
+    "phase": "independent_restore"
+  },
+  "closed_backup": {
+    "actual_rsync_exits": [
+      0,
+      0,
+      0
+    ],
+    "all_remote_hashes_match_local": true,
+    "file_count": 31,
+    "bytes": 28020562,
+    "inventory_sha256": "9b5289c34a8f69e2b8a68350431b3d14a948046375f470fa82d1f0ca15612b63",
+    "destination": "runs/local-migration-20261024/saved8-recovery-v7-closed-finalization-json-copyback",
+    "scope": "Closed finalization JSON/log and actual terminal record only; complete independent restore/proof still pending; original critical binary state already separately archived."
+  },
+  "numerical_proof_passed": false,
+  "native_behavior_qualified": false,
+  "model_adopted": false,
+  "next_action": "Poll SAME independent restore host97226/container530/birth1800685 and controller; require full fresh exact evidence match, actual restore0 and parent0/strict proof, then closed proof copyback and guarded native20/speech20. Do not rerun saved8 or accept first process as independent proof."
+}

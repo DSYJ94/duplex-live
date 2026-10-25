@@ -1,3 +1,51 @@
+# LOCAL — V7 FINALIZATION actuallyPASS0; distinct full restore LIVE
+
+Actual04:53:43UTC25Oct: firstV7 finalization ACTUALLYEXITED0 at04:53:09.660891UTC,
+child12/birth1204049/host67555 terminal, saved-stage-finalization passedtrue and
+recovery-runtime-inputs passedtrue, actual finalization-terminal observedtrue/exit0.
+All fullfingerprintgroups present: original28/audio49/native49/control40/reasoning32
+=28/49/49/40/32; all28initial +28final metricrows, exactAdam/RNG/clocks528, zero
+newupdates. Originalfit-15 remains failed, original8historicalupdatesnotrepeated.
+This FIRSTprocess PASS is NOT independentrestore/proof/behavior/adoption.
+
+Controller AUTOMATICALLYstarted distinctfresh independent_restore at04:53:09.817UTC:
+hostPID97226/containerPID530/birth1800685, parenthost67471/internal1. Actualdocker
+top confirms onlycontroller andnewrestorechild, oldchildgone. SAMEservice
+MainPID67425/invocationf8d6f198ef0e43baa97e2874b5928bef active. Poll SAME handles;
+no duplicate/restart on observationtimeout. Observer6980 actuallyexited0 onphase
+change; NOTrecoveryterminal. Expected proofV7root notyetapproved. Producer
+0619b17e9bb57a01701d24b7c7182f99a6a0ecf5 at/opt/duplex-gcp-recovery-0619b17-v1;
+originalmodel/trainer da389a7031a5504495397d1575952194ffa209f1 unchanged.
+
+Closedfirststage JSON/logcopyback ACTUALrsync0/0/0 to ignored
+runs/local-migration-20261024/saved8-recovery-v7-closed-finalization-json-copyback:
+31files/28020562B, ALLremoteinventoryhashesMATCHMac, inventorySHA
+9b5289c34a8f69e2b8a68350431b3d14a948046375f470fa82d1f0ca15612b63.
+RecordSHA56cad2bf545dd8a175eb1e89a630f8f84198e7c19a500a0542f78f2e861d695e,
+runtimeSHA6a7658aeaa3154283618d7d2f4ea29df74239a0d4a2e696fac95a94d7d490a13,
+terminalSHAb7da61c9a2a1c52473a4945b6b72189fe6502f66ef958942b1816809bfe7c2ae.
+Unvalidatedprogressfile also preserved asdiagnostic, neverproof. Criticaloriginal
+binarycheckpoint/RNG/nativearchive alreadyseparatelypreserved; no newoptimizerstate
+created. No private/owner/core transfer. Tracked
+ docs/GCP-NATIVE-SAVED8-V7-FINALIZATION-PASS-2026-10-25.json has actualevidence.
+
+NEXT distinctfullrestore must recompute ALLsameobjectives/Adam/RNG/metrics/
+fingerprints and matchexactly, actualexit0; then controllerpackagesstrictnewproof
+and mustACTUALLYterminal0. Copybackclosedproof/reports+hashes. ONLYthen use fixed0619
+for BOTHproducer/consumer fullguardednative20/speech20, realfresh terminalobservation
+with actualV7invocation/unit/resource/controller/proofSHAs. No oldE082/edbad schema
+validator, no fabricatedlegacyreport/subset acceptance/adoption. Full allcase,
+ordinary4, semantic/audio/quiet/pause/receipt/fresh/live gates unchanged.
+SameA100951004838667287080/same250GBdisk1828090267781080539/nativeSTOP11:52:37UTC/
+100USD/dualguards. Guardarmed04:53:28UTC/Macfresh04:53:26UTC, remaining54.90USD incl
+reserves (NOTactualbilledspend). ExistingMacproxy69582/tunnel46162/guard48672 same;
+health0requests/realtransport confirmed04:03, recheckbeforeeval. Proxy11:45deadline,
+collector11:40/provider11:52:37. CredentialsMac only; no newresources/purchases/
+training/broadertransfers. Macfree199200000KiB, GCPfree67219980288B atlastchecks.
+LOCALsoleexecutor, preserve unrelatedPYC/probes/roadmap; stopcompute if trulyblocked.
+
+---
+
 # LOCAL — V7 full49 +40 computed; reasoning32 LIVE, originalcontrol31 EXACT
 
 Actual04:29:09UTC25Oct: SAMEV7/MainPID67425/invocation
