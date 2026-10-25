@@ -1,7 +1,7 @@
 {
   "schema": "dl-native-recovery-reasoning-fingerprint-schema-repair-v1",
   "at_utc": "2026-10-25T03:10:31.404238+00:00",
-  "status": "REAL_PRODUCER_SCHEMA_REPRODUCED_FIXED_LOCAL42_PASS_TARGET_PENDING",
+  "status": "TARGET42_AND_REAL_SCHEMA_REPLAY_PASS_V7_FINALIZATION_RUNNING",
   "failed_run": "v6",
   "failed_producer": "e0827f54f058e986ee57116f6de3c783a1ccefbd",
   "actual_finalization_exit": 1,
@@ -37,5 +37,23 @@
     "evals/harness/test_native_saved_stage_recovery.py": "3086254b85bfd78964a692c027e3653bd2a456844962ba22f672d9543f8c6df0",
     "evals/harness/test_native_saved_stage_proof.py": "65cd12f4557190abdbf5fb2b974db87cd2d074f5d7ff3ed30befcc8e681a542b"
   },
-  "next_action": "Separate Git-deployed repaired producer; target42 pure tests plus actual raw 49/40/32 schema replay with original metadata before new V7 checkpoint load. V6 stays failed. New finalization and distinct independent full restore both actual0, then strict proof and guarded native20/speech20 under repaired consumer source. No weakened gate or repeated optimizer updates."
+  "next_action": "Continue SAME V7, never duplicate on observation timeout. Require full finalization actual0 then distinct fresh-process complete Adam/RNG/numerical restore actual0, parent actual0 and strict proof. Then guarded native20/speech20 using fixed0619b17 for BOTH producer and consumer source. No new optimizer updates or weaker gates.",
+  "repair_source_commit": "0619b17e9bb57a01701d24b7c7182f99a6a0ecf5",
+  "target_tests_actual_exit": 0,
+  "target_tests_passed": 42,
+  "target_real_schema_replay_actual_exit": 0,
+  "target_receipt": "runs/local-migration-20261024/gcp-reasoning-schema-target-preflight-v1.json",
+  "live_observed_utc": "2026-10-25T03:16:01Z",
+  "recovery_v7": {
+    "unit": "duplex-native-saved8-recovery-v7.service",
+    "main_pid": 67425,
+    "invocation_id": "f8d6f198ef0e43baa97e2874b5928bef",
+    "controller_host_pid": 67471,
+    "finalization_host_pid": 67555,
+    "finalization_container_pid": 12,
+    "finalization_birth": 1204049,
+    "phase": "finalization",
+    "actual_exit": null,
+    "started_utc": "2026-10-25T03:13:43Z"
+  }
 }

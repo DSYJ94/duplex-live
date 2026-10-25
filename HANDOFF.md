@@ -1,3 +1,44 @@
+# LOCAL — V7 actually LIVE; target42 and real fingerprint schema replay PASS
+
+Actual03:16:01UTC25Oct: SAME authorized A100 recovery-v7 service ACTIVE/running,
+MainPID67425, invocation f8d6f198ef0e43baa97e2874b5928bef. Dockercontroller67471,
+finalizationchild67555/internal12/birth1204049; child actual_exit null. Started
+03:13:43UTC. Producer0619b17e9bb57a01701d24b7c7182f99a6a0ecf5 at
+/opt/duplex-gcp-recovery-0619b17-v1. Originalmodel/trainerDA unchanged.
+Before launch targetPython3.12 42puretests actual0 and realV6 49/40/32 schema
+replay against savedmetadata actual0. All32 acousticmaskcounts match. This CPU
+schema test used explicitly placeholder original28/audio49 groups; NOT numerical
+qualification. V6 remains actualFAILED1; originalfit remains -15. No model
+adoption/behavior claim. Full failedV6backup/inventory recorded below.
+
+Currentcontroller /workspace/migration/gcp-saved8-recovery-v7/controller.json;
+finalization.log in same directory; parentlog gcp-saved8-controller-v7.log;
+expected NEWproof /workspace/migration/native-reasoning32-saved8-recovered-proof-gcp-v7.
+Poll SAME processes/actualrecords; no duplicate or restart on timeout. Systemctl
+ExecMainStatus0 while ACTIVE is not terminal success. ZERO newupdates/no repeatsaved8.
+Need fullfinalization0 then distinctfresh independent completeAdam/RNG/numerical
+restore0, parentterminal0 and strictproof. Only then guardedfullnative20/speech20.
+Use0619b17 as BOTH producer AND consumer/nativeeval source; oldE082/edbad validators
+cannot verify corrected original5fieldreasoning schema. Obtain genuinefresh host
+terminalobservation beforecollection (actualV7unit/invocation, MainPID0/inactive/
+success/exit0, actualcontroller/proofSHAs), never fabricate legacyreport.
+
+SameVM951004838667287080, disk1828090267781080539, nativeSTOP11:52:37UTC,
+serviceRuntimeMax28000s. Guards Mac48672/PID26959 and host2092 actualarmed/fresh;
+remainingbudget64.06USD inclreserves at03:16 (NOT providerbilledspend). No extra
+resources/purchases/updates. ExistingreservedMacproxy69582/PID75507 and SSHtunnel
+46162/PID75642 actualalive; remote58051health actual0/scopegcp-saved8-native20-v2/
+0requests. Deadline11:45UTC, max128 unchanged; credentialsMac only. Priorseparate
+authsmokecompleted and shut down. Collector deadline11:40UTC/provider11:52:37UTC,
+fullpaired20+speech20+unchangedsemantic/audio/quiet/pause/receipt/freshgates required.
+Criticalnativearchive fullhashPASS; broadMacsourcebackupstillpartial. Preserve
+unrelatedPYC/capabilityprobes/roadmap. LOCALsoleexecutor; stopcompute if trulyblocked.
+Relevant receipts ignored runs/local-migration-20261024/saved8-recovery-launch-v7.json,
+saved8-recovery-v7-live-observation.txt, saved8-recovery-v7-progress-observation.txt,
+gcp-reasoning-schema-target-preflight-v1.json. Tracked schema repairdoc updated.
+
+---
+
 # LOCAL — V6 actuallyFAILED1; original reasoning fingerprint schema repair ready
 
 V6 completed49native/40control/32reasoning calculations then ACTUALLYFAILED1 at
