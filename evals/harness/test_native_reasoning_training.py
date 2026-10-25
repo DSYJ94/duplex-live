@@ -1,11 +1,19 @@
 """Whole32 exposure and context-span targets cannot silently become a subset."""
 from copy import deepcopy
 import unittest
+from unittest.mock import patch
+import sys
 
-from evals.native_reasoning_training import FAMILIES, schedule, exposure, validate_gradient
+from evals.native_reasoning_training import FAMILIES, schedule, exposure, validate_gradient, fingerprints
 
 
 class ReasoningTraining(unittest.TestCase):
+    def test_observations_cannot_reuse_another_endpoint_or_load_model_on_bad_collector(self):
+        with patch.dict(sys.modules, {'torch': None}):
+            for collector in ([dict(id='previous-endpoint')], {}, (), True):
+                with self.subTest(collector=collector), self.assertRaises(ValueError):
+                    fingerprints(None, None, metrics=collector)
+
     def fixture(self):
         rows = [dict(id=f'{family}-{i}', family=family) for family in sorted(FAMILIES) for i in range(8)]
         teachers = schedule(rows)

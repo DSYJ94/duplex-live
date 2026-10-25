@@ -1,3 +1,30 @@
+# LOCAL — Future endpoint metric hook PREPARED ONLY; live GPU source unchanged
+
+25Oct15:43UTC. Sourcepreparation in evals/native_reasoning_training.fingerprints adds
+optional keywordmetrics=[] collector; DEFAULTreturn remains original5fieldfingerprints.
+Enabledpath retains alreadycomputednative textCE and computes acousticCE from SAME
+existingoutput (NO extraMoshiforward/backward/optimizer), bindsrowtofingerprint/counts,
+rejects reused/non-listcollectors, nonfinitevalues, missing32/familycoverage. This
+addresses why oldsaved8 discardedfull32scalars and requiredseparateGPUdiagnostic.
+No live originalDA/c1006f9worktree, masks/data/losses/trainingreceipt ormodel changed.
+
+88relevantCPUtests PASS using bundledPython (systemPythonlacksNumpy). A broaderstage
+suite imports a Torch-dependent test unavailablelocally; doNOTclaimfullGPUparity or
+newenabledpathapproval. Beforefuturetrainingenablement requireindependentall32
+fingerprintparity/frozen+adapter+RNG/memory/runtime validation underactualimage, and
+newexactsource/receiptpins. Neverrewrite/relabeloldapprovedsourcehashes. Newpath is
+PREPARED, NOTDEPLOYED/NOTGPUVALIDATED; currentonlyactiveproducer remainsc1006f9.
+
+Samecorrectedv6/tool19466/model1985 andpreserver-v2/tool14591 continue; latestcopied
+counts15:39:27 native52032/saved5282, freshMacguardarmed. Firstcompletebaseline done;
+fullcorrectedpair/finalchecks/copyhashes/terminal stillpending. Preparedoutputfullcopy
+refreshedrsync0 at15:36:22.004216 into livepreservation-v2 (UNQUALIFIED; receipt
+ gcp-flex90-timing-prepared-copy-receipt-v2.json), reducingcriticalshutdowntransfer.
+No additionalGPUjob, sourceaudio/APIpayload, trainingupdates oradoption. Child16:17:06.981/
+native16:26:13.653/94.017536USDupper/original12h100scope unchanged. Goalunfinished.
+
+---
+
 # LOCAL — Direct-supervision membership checked; no eval-to-train leakage
 
 25Oct15:16UTC. CPUmanifest check: retained28 actual-history direct-answer scenes are

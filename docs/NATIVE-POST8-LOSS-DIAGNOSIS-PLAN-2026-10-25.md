@@ -119,3 +119,24 @@ the current GCP grant explicitly permits zero new optimizer updates. Preserve al
 28 actual histories, all25 old teachers, native49, control40, the new32, old losses,
 KL/hidden retention and unchanged ordinary4/full-behavior/fresh gates. The earlier
 persona-only complete10 remained2/4; do not present another prompt edit as the fix.
+
+## Prepared loss logging for future stages
+
+`evals.native_reasoning_training.fingerprints` now has an optional, initially empty
+`metrics` list. The default return remains the original fingerprint mapping. When
+explicitly enabled, it retains the already-computed native text CE and computes
+assistant acoustic CE from the existing acoustic output; it launches no additional
+model forward. Rows retain their exact fingerprint and target ownership. Mixed
+endpoints, nonfinite losses, or an incomplete family set are rejected.
+
+This preparation is **not deployed to the running c1006f9 diagnostic** and is not an
+approval of the enabled GPU path. Before a future fit uses it, independently verify
+all32 fingerprint parity, frozen/adapter/RNG invariants and actual memory/runtime
+under the target image. Pin the new source in new receipts; never relabel the old
+approval files. Existing state-restore and behavior gates remain mandatory. The
+purpose is to save endpoint losses during a pass already required by those gates,
+so another full diagnostic is not needed merely because scalar metrics were dropped.
+
+88 relevant CPU tests pass with the bundled Python runtime. The broader stage suite
+contains a Torch-dependent test unavailable in this local runtime; the new enabled
+GPU path remains unvalidated. No training or model inference was performed locally.

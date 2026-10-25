@@ -161,7 +161,15 @@ def exposure(steps, policy):
     return True
 
 
-def fingerprints(lm, bound):
+def fingerprints(lm, bound, *, metrics=None):
+    """Keep legacy fingerprints; optionally retain losses from the same forwards.
+
+    The optional list is observational and must start empty. Callers still need
+    the complete state/restore and behavioral approval chain. This is not a fit
+    approval or permission to replace paired numerical evidence with scalar loss.
+    """
+    if metrics is not None and (type(metrics) is not list or metrics):
+        raise ValueError('A new empty metric list is required; never mix endpoints')
     import torch
     from evals.context_native_stream_gradient import capture
     from evals.context_native_audio49_training import forward
@@ -182,6 +190,22 @@ def fingerprints(lm, bound):
                 native_text_calls_sha256=hashlib.sha256(json.dumps(text['call_output_hashes'], separators=(',', ':')).encode()).hexdigest(),
                 assistant_audio_logits_sha256=hashlib.sha256(selected.cpu().contiguous().view(torch.uint8).numpy().tobytes()).hexdigest(),
                 assistant_audio_targets=counts, text_targets=text['valid_targets'], audio_mask_frames=int(audio_mask.sum()))
+            if metrics is not None:
+                from evals.context_native_audio49_loss import loss
+                acoustic, detail = loss(output, codes, audio_mask[None])
+                text_ce = text['balanced_spoken_clock_ce']
+                acoustic_ce = float(acoustic.detach())
+                if (detail['assistant_audio_targets'] != counts
+                        or any(not math.isfinite(x) or x < 0 for x in (text_ce, acoustic_ce))):
+                    raise ValueError('Existing forward must yield finite losses and exact target ownership')
+                metrics.append(dict(id=declared['id'], family=declared['family'],
+                                    text_ce=text_ce, acoustic_ce=acoustic_ce,
+                                    fingerprint=dict(result[declared['id']])))
+                del acoustic
             print(json.dumps(dict(reasoning32_restore_fingerprint=declared['id'], **result[declared['id']])), flush=True)
             del inputs, mask, targets, codes, audio_mask, output, selected
+    if metrics is not None and (len(metrics) != 32
+            or {r['id'] for r in metrics} != set(result)
+            or Counter(r['family'] for r in metrics) != Counter({f: 8 for f in FAMILIES})):
+        raise ValueError('Observed losses require all32 scenes and all four families')
     return result
