@@ -6,9 +6,9 @@
     "portable/context/native_live.py": "5bb55c590bba09929c73b84158bc9bde7a92af2d7afc58fa6212bdf1f9e5d74b",
     "portable/context/native_live_asr.py": "e08a016dbddc8fd822bb3a1d79a559e62fa8dca67ef4f9f9c8523b0bab4d2099",
     "portable/context/native_audition.py": "4b567902a01e74cf8f50f294fbba4b92336ba8902871abf98c23b97f6f88c779",
-    "portable/context/native_audition.html": "5cad22d611cd81adbfc895d43f3cce2166c689d7947c86fbdb2e34998f3048f5",
+    "portable/context/native_audition.html": "ed45acedaa73d2e945ef86951c51e0667d78585083787cd4b9ddb1e0f730e3d0",
     "evals/harness/test_native_live.py": "fc198af2101f0ac32ccef5b7e32448759923769f6d97f180c7444bc5b7e83e01",
-    "evals/harness/test_native_audition_page.mjs": "8e7164aebecfdd8ff9ac5f0357bd3c6e94838e3321d5d2038434180c05c530d9"
+    "evals/harness/test_native_audition_page.mjs": "708c07771d02a5953deaa58260afec749ac1f4273803a87d3d2ae34897455b87"
   },
   "diagnosed_live_app_gaps": [
     "Old voice audition explicitly disconnected external backend",
@@ -31,17 +31,20 @@
   "verification": {
     "python_native_live_tests": 6,
     "python_existing_worker_tests": 27,
-    "node_page_logic_fixtures": 3,
+    "node_page_logic_fixtures": 7,
     "real_gpu_live_session_executed": false,
     "real_asr_executed": false,
     "actual_provider_requests": 0,
     "actual_browser_qa": false,
     "native_behavior_qualified": false,
-    "model_adopted": false
+    "model_adopted": false,
+    "actual_browser_ui_only_fixture": true,
+    "actual_gpu_asr_provider_browser_qa": false
   },
   "cli": [
     "--live-delegation",
     "--asr-python /workspace/native10-asr-env/bin/python"
   ],
-  "next_action": "Finish actual saved8 recovery/independent restore and unchanged full native gates using frozen75b3bfd. Git-deploy this separate experimental app version after source is committed; run actual synthetic websocket/ASR/provider round trip and measured interruption/cancellation tests before claiming a working delegation product. No new optimizer updates."
+  "next_action": "Complete V7 separate independent restore and strict proof using frozen0619b17, then unchanged full native20/speech20 and behavior/fresh gates. Git-deploy this separate experimental app version afterwards for actual synthetic websocket/ASR/provider round trip, interruption/cancellation and audio/browser qualification. UI-only local fixture does not qualify the native model. No new optimizer updates.",
+  "ui_session_repair": "docs/NATIVE-AUDITION-CONSENT-SESSION-REPAIR-2026-10-25.json"
 }

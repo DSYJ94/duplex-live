@@ -1,0 +1,59 @@
+{
+  "schema": "dl-native-audition-consent-session-repair-v1",
+  "recorded_utc": "2026-10-25T05:04:29.883257+00:00",
+  "status": "SOURCE_FIXED_NODE7_PASS_BROWSER_UI_FIXTURE_PASS_NOT_GPU_DEPLOYED",
+  "diagnosed_cause": "The consent change handler could re-enable Start with an existing socket, while the Start handler did not guard an active connection. Withdrawing consent did not close the active session.",
+  "repair": [
+    "Require no current socket before Start can become enabled or dispatch a connection",
+    "Withdrawing external reasoning consent calls existing session teardown, closing the socket, microphone tracks and AudioContext",
+    "Keep stale microphone permission callbacks and old socket events isolated from a new connection"
+  ],
+  "red_before_fix": {
+    "actual_node_exit": 1,
+    "new_regression_failures": 3,
+    "existing_tests_passed": 3
+  },
+  "verification": {
+    "command": "node --test evals/harness/test_native_audition_page.mjs",
+    "actual_exit": 0,
+    "passed": 7,
+    "new_tests": 4,
+    "fixture_correction": "AudioWorkletNode.connect fixture returns its destination, matching real Web Audio chaining so the installed-microphone path executes.",
+    "browser_ui_fixture": {
+      "scope": "UI fixture only; no model, ASR, microphone-ready message or provider",
+      "html_sha256": "ed45acedaa73d2e945ef86951c51e0667d78585083787cd4b9ddb1e0f730e3d0",
+      "upgrades": 2,
+      "active": 0,
+      "ready_messages_sent": 0,
+      "browser": "Codex in-app browser",
+      "ui_start_disabled_without_consent": true,
+      "ui_start_disabled_while_connecting": true,
+      "ui_revocation_closed_both_connections": true,
+      "fresh_reconsent_reconnect_verified": true,
+      "actual_model_or_asr_or_provider_executed": false,
+      "owner_microphone_used": false,
+      "native_behavior_qualified": false,
+      "screenshot": "runs/local-migration-20261024/native-audition-consent-stopped-ui-v1.png",
+      "screenshot_sha256": "1dcb30935485e2e8506d84bc272ccfc7c25e064d968a610d94bcc9857059740b"
+    },
+    "actual_gpu_asr_or_provider_validation": false,
+    "model_or_data_changed": false,
+    "native_behavior_qualified": false,
+    "owner_microphone_used": false
+  },
+  "implementation_sha256": {
+    "portable/context/native_audition.html": "ed45acedaa73d2e945ef86951c51e0667d78585083787cd4b9ddb1e0f730e3d0",
+    "evals/harness/test_native_audition_page.mjs": "708c07771d02a5953deaa58260afec749ac1f4273803a87d3d2ae34897455b87"
+  },
+  "running_recovery_unchanged": {
+    "producer_commit": "0619b17e9bb57a01701d24b7c7182f99a6a0ecf5",
+    "unit": "duplex-native-saved8-recovery-v7.service",
+    "phase": "independent_restore",
+    "host_pid": 97226,
+    "container_pid": 530,
+    "birth": 1800685,
+    "finalization_actual_exit": 0,
+    "new_optimizer_updates": 0
+  },
+  "deployment": "Separate experimental UI source only. Do not change the running recovery or prepared0619 fullnative20 collector. Git-deploy app separately after strict recovery/behavior gates; live GPU/ASR/provider/browser/audio qualification remains."
+}

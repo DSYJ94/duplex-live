@@ -1,3 +1,39 @@
+# LOCAL — Independent restore LIVE; separate audition UI session bug fixed
+
+Actual05:02:54UTC25Oct: SAMEV7 independent restore host97226/container530/
+birth1800685 stilllive, MainPID67425/invocationf8d6f198ef0e43baa97e2874b5928bef.
+Firstfinalization actualPASS0/closedbackup verified asbelow; fullindependentproof
+and behavior stillpending. Frozenproducer0619b17/originalDA untouched. Read-only
+observer21846 LIVE max60polls/50s, ignored independent-watch-v1.jsonl; stops on
+independent native49complete oractualrecoveryphasechange. Poll SAMEhandle, do NOT
+restartGPUjob on observer timeout. Guardsfresh05:02/remaining54.02USD inclreserves.
+
+Whilewaiting, diagnosed actualexperimentalUI bug: consentchange re-enabled Start
+withanactivesocket; onclick couldstartanotherconnection, leavingoldsession behind;
+uncheckingconsent didnotretireconnection. Added THREEregressions, actualRED3/3 on
+oldscript; fixed active-socket Startguard +consentrevocationteardown. Added fourth
+installed-microphone-path regression; corrected WebAudiofixture.connect toreturn
+its destination so that path reallyexecutes. Node7/7actualPASS. Realin-appbrowser
+UI-onlyfixture verified initialStartdisabled, checkedStartenabled, connectingStart
+disabled, uncheckretiredsocket, freshreconsent/reconnect, seconduncheckretiredagain.
+Anonymousfixturecounters2upgrades/0active/0READYmessages, NOownermicrophone/model/
+ASR/API. BrowserAX/screenshot savedignored native-audition-consent-stopped-ui-v1.*.
+Localfixture bounded300s; temporarytabclosed. This is NOTnativebehavior/browservoice
+qualification. Docs NATIVE-AUDITION-CONSENT-SESSION-REPAIR-2026-10-25.json and
+updated NATIVE-LIVE-DELEGATION-BRIDGE-2026-10-25.json exactevidence/hashes.
+
+UI changes only portable/context/native_audition.html +itsJSfixture, NOTdeployed
+onrunningGCP. Keep same0619 recovery andpreparedfullnative20/speech20source unchanged;
+separateexperimentalappGitdeployment onlyafterappropriateproof/behaviorgates. No
+training/data/model/threshold changes, no newGPU/APIcall, no additionalpurchase.
+Need currentindependentfullmetrics/fingerprints/Adam/RNGexactcompareactual0 then
+parentactual0/strictproof, closedcopyback+hashes, genuinefreshterminalobservation
+before guardedfullbehaviorcollection. SameVM/disk/11:52:37UTCSTOP/100USD/dualguards/
+credentialsonMac/allhistoriesKLhidden/exclusions remain. SourceGitcommitpushfetch.
+LOCALsoleexecutor; preserve unrelatedPYC/probes/roadmap; stopcompute if trulyblocked.
+
+---
+
 # LOCAL — V7 FINALIZATION actuallyPASS0; distinct full restore LIVE
 
 Actual04:53:43UTC25Oct: firstV7 finalization ACTUALLYEXITED0 at04:53:09.660891UTC,

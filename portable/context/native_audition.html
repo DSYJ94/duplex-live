@@ -15,8 +15,11 @@ h1{font-size:30px;line-height:1.2}p{color:#aebdca}button{font:inherit;padding:10
 <p><small id="disclosure">Reading session settings…</small></p>
 <script>
 let ws,ctx,stream,mic,player,external=false,configured=false;const $=id=>document.getElementById(id);
-function startAllowed(){return configured&&(!external||$('allow').checked)}
-$('allow').onchange=()=>{$('start').disabled=!startAllowed()};
+function startAllowed(){return configured&&!ws&&(!external||$('allow').checked)}
+$('allow').onchange=async()=>{
+ if(external&&!$('allow').checked&&ws){await stop();if(!ws)$('status').textContent='Stopped · external reasoning disabled';}
+ $('start').disabled=!startAllowed();
+};
 fetch('/session').then(r=>{if(!r.ok)throw Error();return r.json()}).then(v=>{configured=true;external=v.external_backend_enabled;$('consent').hidden=!external;$('start').disabled=!startAllowed();$('disclosure').textContent=external?'Experimental 60-second session. The model chooses when to ask OpenAI for help. Temporary recognition audio is deleted after each request; this app saves no conversation history. The candidate has not passed its full behavior tests.':'Experimental voice test. External reasoning is disconnected. This app saves no conversation history. The candidate has not passed its full behavior tests.'}).catch(()=>{$('status').textContent='Cannot read session settings. Refresh to try again.'});
 async function stop(){const oldStream=stream,oldSocket=ws,oldContext=ctx;ws=ctx=stream=mic=player=null;if(oldStream)oldStream.getTracks().forEach(t=>t.stop());if(oldSocket)oldSocket.close();if(oldContext&&oldContext.state!=='closed')await oldContext.close();$('start').disabled=!startAllowed();$('stop').disabled=true;}
 async function audio(format,socket){const ac=new AudioContext({sampleRate:format.sample_rate});let recording,installed=false;
