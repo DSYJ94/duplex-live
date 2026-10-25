@@ -21,6 +21,10 @@ ALIASES = (Path('/projects/u6si/duplex-live'), Path('/lus/lfs1aip2/projects/u6si
 CONTEXT = '79df302fa2820cae10c61bb2b7f302c52edb6ed2'
 RAG = '8c6dfc101b7871baa428424bcdc583b74fb561d9'
 FINETUNE = '2acc879fe7c48f885a18f6cc9548bccb2674d87b'
+TOKENIZER_SHA = '78d4336533ddc26f9acf7250d7fb83492152196c6ea4212c841df76933f18d2d'
+TOKENIZER_BYTES = 552778
+OLD_MODEL = 'models/hf-cache/hub/models--kyutai--moshika-rag-pytorch-bf16/snapshots/7135a6e3c46abb66c2cd95cb04cbfcbe8376f83d'
+PERSONA_MODEL = 'models/hf-cache/hub/models--nvidia--personaplex-7b-v1/snapshots/fdaf4090a61cb315c138a1faee287ffd6c716309'
 
 
 def digest(path):
@@ -86,10 +90,37 @@ def vendor_checkouts(root):
 
 def verify_vendors(root):
     for target, commit, _ in vendor_checkouts(root):
-        if (target.is_symlink() or not target.is_dir()
+        old25 = target == RUNTIME/('vendor/moshi-finetune-'+FINETUNE)
+        if old25:
+            if not target.is_symlink() or target.readlink() != root/'control40-vendor-moshi-finetune':
+                raise ValueError('Exact shared old25 vendor checkout alias required')
+        elif target.is_symlink():
+            raise ValueError('Physical canonical vendor checkout required')
+        if (not target.is_dir()
                 or git('-C', target, 'rev-parse', 'HEAD') != commit
                 or git('-C', target, 'status', '--porcelain')):
             raise ValueError('Exact clean reconstructed vendor checkout required')
+
+
+def historical_tokenizer(create=False):
+    """Old25 needs the identical shared vocabulary, not a substituted backbone."""
+    model = json.loads((RUNTIME/'runs/native-old25-codes-7543730/cache.json').read_text())['model']
+    name = 'tokenizer_spm_32k_3.model'
+    expected = dict(bytes=TOKENIZER_BYTES, sha256=TOKENIZER_SHA)
+    if (model['repo'] != 'kyutai/moshika-rag-pytorch-bf16'
+            or model['path'] != '/projects/u6si/duplex-live/'+OLD_MODEL
+            or model['files'][name] != expected):
+        raise ValueError('Exact original old25 vocabulary reference required')
+    source, target = RUNTIME/PERSONA_MODEL/name, RUNTIME/OLD_MODEL/name
+    if source.is_symlink() or source.stat().st_size != TOKENIZER_BYTES or digest(source) != TOKENIZER_SHA:
+        raise ValueError('Preserved shared vocabulary changed')
+    if create:
+        regular_link(source, target, expected)
+    if (target.is_symlink() or not os.path.samefile(source, target)
+            or digest(target) != TOKENIZER_SHA):
+        raise ValueError('Exact regular historical vocabulary alias required')
+    return dict(path=str(target), bytes=TOKENIZER_BYTES, sha256=TOKENIZER_SHA,
+                tokenizer_only=True, full_kyutai_backbone_restored=False)
 
 
 def verify_existing(root, catalog):
@@ -149,6 +180,7 @@ def verify_copy_tree(source, target):
 
 
 def finish(args, root, catalog, mirrored, temporary, snapshot):
+    tokenizer = historical_tokenizer()
     spec = catalog['snapshot_materialization']
     checked = verified_inputs(snapshot, root/safe(spec['original_observation']))
     command = checked['controller']['planned_commands']['bounded8_training']
@@ -162,7 +194,9 @@ def finish(args, root, catalog, mirrored, temporary, snapshot):
         original_command_inputs_present=True, new_optimizer_updates=0,
         historical_code_source_only=True, model_loaded=False, native_behavior_evaluated=False,
         runtime_root=str(RUNTIME), original_da=str(ORIGINAL),
-        existing_materialization_independently_reverified=args.verify_existing)
+        existing_materialization_independently_reverified=args.verify_existing,
+        historical_tokenizer=tokenizer,
+        required_pythonpath=str(root/'control40-vendor-moshi-rag/moshi'))
     receipt['required_temporary_bind_mount'] = dict(source=str(root/'gcp-verifier-inputs-v1'),
         destination='/tmp/duplex-reasoning32-verifier-v1', readonly=True, symlink_root_allowed=False)
     with args.out.open('x') as writer:
@@ -211,8 +245,13 @@ def main():
             mirrored += 1
     bundles = archive/'runs/local-preservation-vendor-sources-20261019'
     for target, commit, prefix in vendor_checkouts(root):
-        clone_bundle(bundles/(prefix+'-'+commit+'.bundle'), target, commit,
-                     ('contextspan', 'docs') if prefix == 'context-spanning' else None)
+        if target == RUNTIME/('vendor/moshi-finetune-'+FINETUNE):
+            target.symlink_to(root/'control40-vendor-moshi-finetune', target_is_directory=True)
+        else:
+            clone_bundle(bundles/(prefix+'-'+commit+'.bundle'), target, commit,
+                         ('contextspan', 'docs') if prefix == 'context-spanning' else None)
+    verify_vendors(root)
+    historical_tokenizer(create=True)
     source_runs = ORIGINAL/'runs'
     if source_runs.is_symlink() or source_runs.exists() and any(source_runs.iterdir()):
         raise ValueError('Original source runs directory must be empty and physical')

@@ -1,4 +1,5 @@
 import hashlib
+import json
 from pathlib import Path
 import tempfile
 import subprocess
@@ -10,6 +11,28 @@ from portable.context.native_gcp_inputs import regular_link, regular_copy_tree, 
 
 
 class InputMaterializationTests(unittest.TestCase):
+    def test_historical_vocab_alias_requires_identical_bytes_and_original_reference(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory).resolve();data=b'fixture shared vocabulary'
+            digest=hashlib.sha256(data).hexdigest()
+            source=root/inputs.PERSONA_MODEL/'tokenizer_spm_32k_3.model'
+            source.parent.mkdir(parents=True);source.write_bytes(data)
+            receipt=root/'runs/native-old25-codes-7543730/cache.json'
+            receipt.parent.mkdir(parents=True)
+            model=dict(repo='kyutai/moshika-rag-pytorch-bf16',path='/projects/u6si/duplex-live/'+inputs.OLD_MODEL,
+                files={'tokenizer_spm_32k_3.model':dict(bytes=len(data),sha256=digest)})
+            receipt.write_text(json.dumps(dict(model=model)))
+            with patch.object(inputs,'RUNTIME',root),patch.object(inputs,'TOKENIZER_SHA',digest),\
+                    patch.object(inputs,'TOKENIZER_BYTES',len(data)):
+                inputs.historical_tokenizer(create=True)
+                self.assertTrue((root/inputs.OLD_MODEL/'tokenizer_spm_32k_3.model').samefile(source))
+                self.assertFalse(inputs.historical_tokenizer()['full_kyutai_backbone_restored'])
+                source.write_bytes(b'wrong vocabulary')
+                with self.assertRaisesRegex(ValueError,'changed'):inputs.historical_tokenizer()
+                source.write_bytes(data);model['path']='/projects/u6si/duplex-live/.private'
+                receipt.write_text(json.dumps(dict(model=model)))
+                with self.assertRaisesRegex(ValueError,'original'):inputs.historical_tokenizer()
+
     def test_old25_runtime_vendor_is_required_even_when_control40_vendor_exists(self):
         with tempfile.TemporaryDirectory() as directory:
             root=Path(directory).resolve();source=root/'source'
@@ -26,9 +49,12 @@ class InputMaterializationTests(unittest.TestCase):
                 vendors=inputs.vendor_checkouts(root)
                 for target, _, _ in vendors[:3]:inputs.clone_bundle(bundle,target,commit)
                 with self.assertRaisesRegex(ValueError,'vendor checkout'):inputs.verify_vendors(root)
-                target=vendors[3][0];inputs.clone_bundle(bundle,target,changed)
+                target=vendors[3][0];target.symlink_to(source,target_is_directory=True)
                 with self.assertRaisesRegex(ValueError,'vendor checkout'):inputs.verify_vendors(root)
-                run('-C',target,'checkout','--detach',commit)
+                target.unlink();target.symlink_to(root/'control40-vendor-moshi-finetune',target_is_directory=True)
+                run('-C',root/'control40-vendor-moshi-finetune','checkout','--detach',changed)
+                with self.assertRaisesRegex(ValueError,'vendor checkout'):inputs.verify_vendors(root)
+                run('-C',root/'control40-vendor-moshi-finetune','checkout','--detach',commit)
                 inputs.verify_vendors(root)
 
     def test_head_only_git_bundle_clones_exact_sparse_source(self):

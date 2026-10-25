@@ -1,3 +1,56 @@
+# LOCAL — Recovery v4 live; historical cache dependencies repaired
+
+Actual strict SSH read at 00:53:48 UTC 25 October: service
+`duplex-native-saved8-recovery-v4` active/running, MainPID23061,
+invocation30efa9b4728e4babb23aabf3cbf11c15. Docker parent23104 and
+finalization child23142 alive; child uses17224MiB. Started00:49:53UTC.
+Controller records finalization actual_exit=null: no terminal success or
+numerical qualification yet. ZERO new updates; do not repeat saved8.
+
+v1, v2 and v3 actually failed and their full outputs are preserved/copied to
+Mac saved8-recovery-vN-failed-copyback. v1 missing old25 vendor; v2 missing
+moshi import; v3 missing historical tokenizer. Final targeted fixes:
+PYTHONPATH=/workspace/control40-vendor-moshi-rag/moshi; old25 Root12 vendor
+address resolves to SAME canonical /workspace/control40-vendor-moshi-finetune
+clean2acc source (separate clone preserved in migration, not deleted); original
+old25 vocabulary path holds only a regular hardlink to identical552778B
+vocabulary SHA78d4336533ddc26f9acf7250d7fb83492152196c6ea4212c841df76933f18d2d.
+Original cache receipt unchanged; no replacement backbone or model change.
+
+CPU preflight actually passed all5 original caches (48,13,2,25,24 examples),
+CUDA uninitialized, no model weights or optimizer updates. Sequential original
+old25 then native codec/interleaver import-origin probe v2 passed actual0 after
+canonical source alias repair; failed v1 preserved. Receipts in ignored
+runs/local-migration-20261024, including original-cache-cpu-preflight-copyback-v1,
+old25-tokenizer-path-repair-v1, old25-canonical-source-alias-v1 and
+sequential-import-probe-v2. Bootstrap now reproduces these diagnosed fixes;
+21 focused filesystem/stage/destination tests pass. New source stays separate
+from running frozen producer75b3bfd1dbec24a46664a3de63d13fcb0f62d23c.
+
+CURRENT output /workspace/migration/gcp-saved8-recovery-v4/controller.json and
+finalization.log; parent /workspace/migration/gcp-saved8-controller-v4.log.
+Proof target /workspace/migration/native-reasoning32-saved8-recovered-proof-gcp-v4
+pending. Model source da389a7031a5504495397d1575952194ffa209f1 unchanged.
+Controller runs distinct independent_restore only after finalization actual0,
+then strict proof only after both children actual0. Preserve originalfit-15.
+Legacy38/40 source-construction messages do not qualify current data/candidate.
+
+A100951004838667287080, same250GBdisk1828090267781080539,
+providerSTOP2026-10-25T11:52:37Z. Host guardPID2092 actually armed/fresh at
+00:53:45UTC; controller verified live Mac guard and no overlapping GPU.
+Mac guard session48672/PID26959 remains owned active execution context; verify
+actual handle/identity. No zoneB disk/snapshot/newGPU required. All original
+full archive40132files/81154452891B+8links hashes PASS; 53210B original semantic
+receipt closure separately verified. Runpod stays EXITED; volume retained.
+
+Next: poll SAME v4/controller and guards, preserve results, diagnose actual
+failure before any new attempt. After strict numerical proof run complete
+unchanged pairednative20/speech20/behavior gates and actual synthetic live
+bridge roundtrip. No new optimizer updates, weaker gates or premature adoption.
+LOCAL sole executor; additional GCP<=100USD, oneA100<=12h, same disk, no purchases.
+
+---
+
 # LOCAL — Repaired saved8 recovery v2 LIVE on the guarded A100
 
 At 00:16:37 UTC 25 October, actual host service

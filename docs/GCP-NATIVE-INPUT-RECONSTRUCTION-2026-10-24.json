@@ -1,13 +1,13 @@
 {
   "schema": "dl-gcp-native-exact-input-reconstruction-preparation-v1",
-  "at_utc": "2026-10-25T00:18:33.305248+00:00",
+  "at_utc": "2026-10-25T00:54:24.386497+00:00",
   "parent_source": "e9da0f5",
   "implementation_sha256": {
-    "portable/context/native_gcp_inputs.py": "d8d10e6abcd218ee97991fb678d03c12e39eaa50fa513670c9d8d3a244cae7c8",
-    "evals/harness/test_native_gcp_inputs.py": "675f2c102a5f57b4ec09343a08d20f360c1766f8d2556b865d425f0984e16c9d"
+    "portable/context/native_gcp_inputs.py": "f9f1e1ab76a9acd3abca22a479720004530cc71433112a8ded9de195eae9236f",
+    "evals/harness/test_native_gcp_inputs.py": "c7dc1d340c3f9ee905f9828de2d30841565c5329167a039dd3df3f9950d88d56"
   },
-  "status": "EXACT_INPUTS_V4_PASSED_WITH_ADDITIONAL_DIAGNOSED_OLD25_VENDOR_REPAIR",
-  "focused_filesystem_tests_passed": 20,
+  "status": "FIVE_ORIGINAL_CACHE_CHECKS_AND_SEQUENTIAL_SOURCE_PROVENANCE_PASSED_RECOVERY_V4_RUNNING",
+  "focused_filesystem_tests_passed": 21,
   "cli": [
     "--root",
     "--destination-report",
@@ -22,12 +22,13 @@
   ],
   "data_actions": [
     "Regular hardlinks for catalogued models/runs/tmp/logs/worktrees into exact old /opt/reasoning32-runtime-root-v12",
-    "Separate Git clones from verified preserved bundles: ContextSpanning79df302f sparsecontextspan/docs, MoshiRag8c6dfc10, finetune2acc879f; originals untouched",
+    "Three physical Git clones from preserved bundles: ContextSpanning79df302f, MoshiRag8c6dfc10, finetune2acc879f. Fourth logical old25 source address is an exact symlink to the same canonical finetune checkout, preserving strict import-origin checks.",
     "Exact /projects and /lus and /workspace/duplex-live aliases",
     "Empty physical originalDA/runs to preserve cache scope",
     "Five regular independent verifier-tree copies under durable /workspace/gcp-verifier-inputs-v1; never rely on host/tmp surviving reboot",
     "Complete82file snapshot hardlinks and existing strict saved8 metadata audit",
-    "Presence-check every original absolute CLI input; NEVER execute old bounded8 command"
+    "Presence-check every original absolute CLI input; NEVER execute old bounded8 command",
+    "Historical Kyutai tokenizer path receives only a regular hardlink to the identical already-verified 552778-byte Persona vocabulary, SHA78d4336533ddc26f9acf7250d7fb83492152196c6ea4212c841df76933f18d2d. No Kyutai backbone substitution or download; original cache receipt unchanged."
   ],
   "gpu_container_requirements": [
     "Bind /workspace RW for new outputs/runtime",
@@ -37,14 +38,23 @@
     "Bind /projects and /lus at same paths",
     "Bind /workspace/gcp-verifier-inputs-v1 to /tmp/duplex-reasoning32-verifier-v1 READONLY; roots remain real directories, never symlinks",
     "Run with OSLogin UID/GID1653480290 to preserve Git ownership; HOME=/workspace/gcp-runtime-home; no credentials passed",
-    "Keep all model/checkpoint/data on250GB persistentdisk, not disposablelocalSSD"
+    "Keep all model/checkpoint/data on250GB persistentdisk, not disposablelocalSSD",
+    "PYTHONPATH=/workspace/control40-vendor-moshi-rag/moshi; same UID plus USER/LOGNAME=daryl_aurium_labs_com; exact R580 driver aliases and toolkit/cache environment recorded in HANDOFF."
   ],
   "actual_input_reconstruction_executed": true,
   "actual_model_loaded": false,
   "new_optimizer_updates": 0,
-  "next_action": "Current guarded recoveryv2 uses frozen75b3bfd and actual repaired runtime path. Do not change its source while running. New bootstrap helper additionally creates/verifies that fourth checkout; regression rejects missing/wrong old25 checkout even when control40 checkout exists. All words/audio/approval/objectives remain unchanged.",
+  "next_action": "Poll actual recovery-v4 on frozen producer75b3bfd; never overwrite its source. After finalization actual0, controller runs separate fresh Adam/RNG restore before strict proof. Zero new optimizer updates. Then complete unchanged native behavioral gates; no adoption from cache or numerical checks.",
   "head_only_bundle_sparse_clone_fixture_passed": true,
   "preserved_three_vendor_bundle_bytes_and_sha_verified_on_mac": true,
   "actual_input_reconstruction_passed": true,
-  "diagnosed_failure": "First GPU context construction found additional old25 fixed vendor dependency, not a CLI argument: Root12/vendor/moshi-finetune-2acc879fe7c48f885a18f6cc9548bccb2674d87b. Restored via Git clone from the preserved verified bundle, unchanged2acc commit. Prior failed outputs preserved and copied to Mac."
+  "diagnosed_failure": "Preserved v1 failed on old25 fixed vendor path, v2 on missing moshi import, v3 on historical tokenizer path. Sequential CPU probe also exposed strict physical import provenance: old25 must resolve to canonical workspace finetune checkout.",
+  "actual_cpu_preflight": {
+    "all_five_original_caches_passed": true,
+    "old25_examples": 25,
+    "native_train_examples": 24,
+    "cuda_initialized": false,
+    "sequential_import_provenance_passed": true,
+    "receipts": "ignored runs/local-migration-20261024/original-cache-cpu-preflight-copyback-v1 and sequential-import-probe-v2.json"
+  }
 }
