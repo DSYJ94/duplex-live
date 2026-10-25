@@ -1,8 +1,8 @@
 {
   "schema": "dl-gcp-zoneb-live-execution-v1",
-  "recorded_utc": "2026-10-25T10:57:38.855295+00:00",
-  "status": "FULL_PRESERVATION_HASHING_RUNNING_GPU_NOT_SUBMITTED",
-  "source_commit": "42888adc63fbc15d5f90c8a12802a8db368fd2da",
+  "recorded_utc": "2026-10-25T11:26:01.478996+00:00",
+  "status": "CORRECTED_FULL_PRESERVATION_HASHING_RUNNING_GPU_NOT_SUBMITTED",
+  "source_commit": "972f1c71776b07b289c6b3a432dc981b7f18a253",
   "snapshot": {
     "name": "duplex-native-zoneb-20261025-v1",
     "id": "5040266406897149263",
@@ -20,14 +20,15 @@
     "name": "duplex-native-stage-20261025-b-v1",
     "id": "2417394621566968621",
     "native_stop_utc": "2026-10-25T11:40:20Z",
-    "controller_pid": 55698,
-    "remote_verifier_pid": 1655,
-    "verification_started_utc": "2026-10-25T10:53:35.372010+00:00",
-    "actual_terminal_exit": null
+    "controller_pid": 67499,
+    "remote_verifier_pid": 1484,
+    "verification_started_utc": "2026-10-25T11:23:52.700903+00:00",
+    "actual_terminal_exit": null,
+    "controller_session": 36564
   },
   "next_controller": {
-    "pid": 57030,
-    "session": 8353,
+    "pid": 68389,
+    "session": 25859,
     "phase": "waiting_actual_complete_cpu_preservation_and_stop_no_gpu",
     "maximum_new_gpu_seconds": 7200,
     "optimizer_updates": 0,
@@ -41,7 +42,8 @@
     "completed_recovery_inventory_sha256": "cdcbd894368ca000570bca1572dc8d51a2e6a68c3d392f4e80e24bb19e43aa6b",
     "completed_behavior_inventory_sha256": "820f0856fba22b2daedfa77232ea318ba13ac379d879c0979515cff18b645d46",
     "original_disk_retained": true,
-    "broader_mac_source_backup_complete": false
+    "broader_mac_source_backup_complete": false,
+    "full_replacement_and_offmachine_verification_complete": false
   },
   "price": {
     "at_utc": "2026-10-25T10:45:48.675192+00:00",
@@ -76,8 +78,31 @@
     "hourly_estimate_usd": 5.618589712328767,
     "hourly_upper_usd": 5.63
   },
-  "local_related_checks_passed": 71,
+  "local_related_checks_passed": 72,
   "target_checks_and_model_diagnostic_complete": false,
   "model_adopted": false,
-  "heartbeat": "continue-native-gcp-recovery ACTIVE/15min/quiet on unchanged; observe existing handles only"
+  "heartbeat": "continue-native-gcp-recovery ACTIVE/15min/quiet on unchanged; observe existing handles only",
+  "prior_failed_attempts": {
+    "v5_verifier_actual_exit": 1,
+    "reason": "Complete archive pass, then strict reader rejected unsorted authored semantic receipt list before hashing those entries",
+    "data_corruption_established": false,
+    "fix": "972f1c7 sorts exactly all33 identities without changes",
+    "regression_checks_passed": 72,
+    "v5_cpu_actual_stop_utc": "2026-10-25T11:03:42.400Z",
+    "v5_waiting_controller_actual_exit": 1,
+    "v6_actual_exit": 1,
+    "v6_reason": "SSH source IPv4 stale; no verifier/model started",
+    "v6_cpu_actual_stop_utc": "2026-10-25T11:19:52.240Z",
+    "v6_waiting_controller_actual_exit": 1
+  },
+  "ssh_origin_refresh": {
+    "at_utc": "2026-10-25T11:22:15.366991+00:00",
+    "actual_authenticated_ipv4_operation": "operation-1792927221875-65ea8662b0242-8c5e0ac9-68e3c0a5",
+    "current_source_changed": true,
+    "old_range_sha256": "c670eeb0006a3e7e5a9b0653ea0bcb5e0076b4e403ad77cff4388aab0552d6f7",
+    "new_range_sha256": "13e1d4ebfa6b6ab16b57358fc840ab4d11d17a003eb8a6b4f7d88c2e92d5e53e",
+    "one_mac_source_range": true,
+    "port22_tag_and_priority_unchanged": true,
+    "external_ip_service_used": false
+  }
 }

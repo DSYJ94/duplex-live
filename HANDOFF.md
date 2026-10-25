@@ -1,3 +1,68 @@
+# LOCAL — Corrected full preservation live; observe v7/v3, never rerun old controllers
+
+25Oct11:26UTC. Source972f1c71776b07b289c6b3a432dc981b7f18a253 pushed and Gitdeployed
+/workspace/migration/duplex-zoneb-972f1c7-v2. Actual72 relatedtestsPASS locally.
+Corrected remote CPUverifierPID1484 (actual pgrep0) running allhashes since11:23:52.700.
+Output /workspace/migration/zoneb-preservation-v2. CPU sameid2417394621566968621,
+Bdisk8246893242108371884/snapshot5040266406897149263 unchanged; nativeSTOP11:40:20UTC
+UNCHANGED. Local stage session36564/PID67499 useszoneb-stage-controller-v7.py,
+state gcp-zoneb-stage-controller-v7.json andlog gcp-zoneb-preservation-v2.log.
+
+Oldv5fullarchive40132/81154452891B/8linkspassed, but verifier ACTUAL1 on unsorted
+33semantic list BEFORE extra checks. Not fullpreservation acceptance. Fixed only
+semantic entry ordering with exact33row regression, no data/threshold/modelchange.
+Originalfailedoutputzoneb-preservation-v1 preserved. Oldv5stage83339 and waiting8353
+ACTUAL1. CPUstopped11:03:42.400. Oldv6stage92073 and waiting83316 ACTUAL1: sourceMac
+IPv4changed, no verifier/model started. CPUstopped11:19:52.240. Verified currentMac
+IPv4 from exactauthenticatedGCPunchangedschedulingoperation
+operation-1792927221875-65ea8662b0242-8c5e0ac9-68e3c0a5 (CloudAuditoperation.id is
+operationNAME, not numericID). ReplacedONE/32 ofexistingMacrule; same22/tag/800/
+denyothers900, no externalIPservice. Receipt gcp-zoneb-current-ssh-origin-v1.json.
+ActualstrictSSH0 at11:23:51.110 and persistentmux stage-v7 used for subsequentfetch.
+
+ALREADYRUNNING waitingcontroller session25859/PID68389 ignoredzoneb-diagnostic-
+controller-v3.py/state gcp-zoneb-diagnostic-controller-v3.json. Waits SAME v7 complete
+allcatalog+semantic33+recovery76+behavior324/52links and actualCPUstop. Do NOT rerun,
+restart or duplicate on observationtimeout. It then livechecks nooverlap/quota/type/
+price, detachBdisk and attempts ONE separateA10080 B with nativeSTOPnow+2h,
+Mac+guest cumulativeguards BEFOREmodel, target72CPUchecks/pinnedstrictproof,
+ONE complete32 zero-update matched520/528 teacher-forcedtext/audioCE+fingerprints,
+realterminal0/allhashcopyback and STOP. GPU NOT YET SUBMITTED; stockunproven.
+Corrected producer972f1c7, originalDA/NGCdigest unchanged. Newlease/resourceIDs will
+be saved bythatcontroller. SourceGit; no secrets toGPU, rsyncar/excludesession-token/
+noowner/nogroup; original/source/failed receipts intact. No optimizer/repeated8/
+recovery/native20/freshpayload/adoption. Allhistory/loss/retention gates unchanged.
+
+PriorGPU32079.865sec+B<=7200sec <=12h TOTAL,100USD unchanged (upper90.3094 incl
+16.88oldreserve+12migration). CPUprior9318.551sec+B cumulative<=3600sec <=4h/.48.
+Same11:40:20CPUdeadline bounds all these starts; no budgetreset. OriginalA still
+TERMINATED, sourceA disk retained; RunpodnativeEXITED/volume49yytzyoge retained.
+Complete currentMac critical/checkpoint/evalbackups unchanged; broadMacsourcebackup
+PARTIAL. Native20 candidate1/4 vsbaseline2/4 REJECTED, productgoal unfinished.
+Heartbeat15min quiet monitor must follow THESE v7/v3 handles; pause on bounded
+completion/humanblocker. Preserve unrelatedPYC/probes/roadmap. LOCALsoleexecutor.
+
+---
+
+# LOCAL — Complete archive hashes passed; semantic-list verifier fixed, rerun pending
+
+25Oct11:08UTC. Actual v5 remote verifier exited1 after writing complete40132file
+archivepass: subsequent semanticreceipt-list order rejected before those33 hashes.
+Original source closure lists semantic.json first; strictreader requires lexical
+order. Fixed only derivedlistordering at972f1c7; all33identities/bytes/hashes retained;
+newactualclosure regression +existing suite ALL72PASS. No data/threshold/modelchange.
+CPU2417394621566968621 ACTUALLY TERMINATED at11:03:42.400UTC. Localcontroller83339
+actual1; GPUwaiting8353 actual1 without anyGPUsubmission. No job remains fromthem.
+Original11:40:20 CPUdeadline unchanged; all original/source disks/snapshot intact.
+Next prepared sameCPU v6/newoutputzoneb-preservation-v2 redoes fullclosedcatalog+
+allsemantic/recovery/behavior checks. Source972f1c7 viaGitbundle. One command approval
+review timedout BEFORE execution; no action rejectedasunsafe, no newresource.
+Exactlyone permittedretry pending. Do NOT duplicate any successful pending restart.
+Read actual newcontrollerhandles/receipts below onceupdated; oldv5/v1IDs terminal.
+No newoptimizer/repeated8/recovery/native20/freshpayload/adoption. Productgoal active.
+
+---
+
 # LOCAL — Zone-B full preservation running; one bounded diagnostic controller waiting
 
 25Oct10:57UTC. Git-deployed producer42888adc63fbc15d5f90c8a12802a8db368fd2da.
