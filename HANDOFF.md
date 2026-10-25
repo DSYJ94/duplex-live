@@ -1,3 +1,41 @@
+# LOCAL — Continuation state primitives prepared; no new compute/training
+
+25 October. Previous goal turn was PROGRESS: objective composition852c6a7 pushed.
+This turn adds evals/native_reasoning_continuation_state.py with separately named
+metadata and per-update checkpoint closure. It reconstructs the EXACT pinned
+parent metadata before any restore, compares adapter/Adam/all RNG streams before
+AND after changing ONLY groupLR2e-7->1e-6, keeps parent local8 distinct from
+Adamglobal528, and requires new local1..8/global529..536. All26 moment clocks,
+betas/epsilon/no-weight-decay and clean gradients are checked. New producer,
+source-file hashes, explicit authorization reference and parent proof/state pins
+are in distinct continuation metadata; original state/legacy proof rules remain
+unchanged. A reference hash by itself NEVER supplies owner authorization.
+
+Each update gets a NEW update-00N directory; state and adapter hashes precede
+publication of checkpoint.json through a temporary file. Interrupted directories
+are preserved and cannot be overwritten. Final state restore requires exact closed
+local8/global536 bytes and independently compares adapter/Adam/RNG; returned flags
+explicitly do NOT claim fresh-process/native-logit/behavior qualification.
+
+28 related CPU tests PASS. Exact original state75fd39b1dc9a7f66b8125a1804cab87cfad384446d592df4534c3e1cff5f0367
+was primitive-prefix inspected WITHOUT tensor loading/deserialization: metadata
+caae1dfc5ba1c39761189087283aa31ff314532e1db417c6b32407df459a9d8b,
+local8/all26 parameter names match original finalization evidence. Reversing only
+the declared source/provenance/rate edits reproduces EVERY parent metadata field.
+Source-preparation report docs/NATIVE-CHANGED-RATE8-STATE-PREPARATION-2026-10-25.json.
+Test producer/auth digests are explicit placeholders, never a launch approval.
+
+NOT deployed; tensor restore/save path NOT GPU-validated; no new optimizer steps,
+model forwards or resource starts. Remaining safe source work: guarded8-update
+optimizer/runtime bridge, full fresh-process final536 logits/proof, actual native
+runtime/optional metric parity and controller deadlines/checkpoint receipts.
+Before launch, obtain the NEW concrete update/budget/bounded-exploration approval
+specified in changed-rate8 proposal; original GCP grant permitsZEROupdates.
+Current model remains REJECTED; goalACTIVE/UNFINISHED. No heartbeat recreated,
+other chats messaged or agents spawned. Preserve unrelated PYC/probes/roadmap.
+
+---
+
 # LOCAL — Changed continuation objective prepared; no new compute/training
 
 25 October. Prior turn was PROGRESS: complete32 evidence and resource closure

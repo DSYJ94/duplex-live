@@ -1,0 +1,29 @@
+{
+  "schema": "dl-native-continuation-state-source-preparation-v1",
+  "status": "PREPARED_NOT_DEPLOYED_TENSOR_PATH_UNVALIDATED",
+  "parent_state_sha256": "75fd39b1dc9a7f66b8125a1804cab87cfad384446d592df4534c3e1cff5f0367",
+  "parent_metadata_sha256": "caae1dfc5ba1c39761189087283aa31ff314532e1db417c6b32407df459a9d8b",
+  "parent_local_steps": 8,
+  "parent_global_adam_steps": 528,
+  "parent_parameter_names": 26,
+  "exact_primitive_checkpoint_metadata_verified": true,
+  "all_parent_fields_reproduced_after_reversing_declared_edits": true,
+  "test_producer_and_authorization_digests_are_placeholders": true,
+  "owner_training_authorization_received": false,
+  "source_sha256": {
+    "evals/native_reasoning_continuation_state.py": "cdbfd8e40411adbac8c7136fcc402737fed0ed1d1758798e728198ae302e66cf",
+    "evals/harness/test_native_reasoning_continuation_state.py": "52d4f70b49f716a498295e0b621c1eb87944713344ab42db814712d1c7222b0a"
+  },
+  "checks": "CPU metadata/rejection tests plus exact physical checkpoint primitive-prefix comparison; no tensor load or executable pickle deserialization.",
+  "runtime_tensor_restore_executed": false,
+  "new_optimizer_updates": 0,
+  "gpu_started": false,
+  "model_adopted": false,
+  "remaining": [
+    "Guarded optimizer/runtime bridge and explicit new authorization before launch.",
+    "Exact image GPU Adam/RNG and execution parity; distinct independent final logits/state proof.",
+    "All unchanged behavioral/audio/fresh gates; checkpoint closure alone never qualifies a model."
+  ],
+  "related_cpu_tests_passed": 28,
+  "interrupted_checkpoint_overwrite_rejected_before_runtime_load": true
+}
