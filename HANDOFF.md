@@ -1,3 +1,33 @@
+# LOCAL — Changed continuation objective prepared; no new compute/training
+
+25 October. Prior turn was PROGRESS: complete32 evidence and resource closure
+committed/pushed027ff38, exact changed-rate proposal7545a01. This turn prepares
+`evals/native_reasoning_continuation_objective.py`, a library with no optimizer,
+resource allocation, checkpoint write or CLI. It calls the SAME retained154,
+native49, control40 and reasoning32 backward implementations in original order;
+no targets, weights, native context boundaries or objectives change. The new
+receipt distinguishes local1..8 from global529..536 and records the weighted
+sampled pre-update loss by group, never claiming complete endpoints/convergence.
+Complete exposure across all original groups and all32 is required; changed/missing
+replay, old/duplicate clocks, wrongLR, frozen gradients and forged losses reject.
+
+20 related CPU tests PASS. Separate no-model replay against exact original
+finalization record56cad2bf545dd8a175eb1e89a630f8f84198e7c19a500a0542f78f2e861d695e
+reproduces ALL56 retained group sums over the historical8 rows within1e-14.
+Historical520..528 receipt replay is NOT new529..536 training. Distinct source
+preparation report: docs/NATIVE-CHANGED-RATE8-SOURCE-PREPARATION-2026-10-25.json.
+
+NOT deployed/GPU-validated/end-to-end ready. Next source work: exact parent528
+Adam/RNG restoration + onlyLRchange, new stage metadata, guarded atomic8-update
+runtime and distinct independent final536 restore/proof. Do not relax original
+verifiers or relabel failed fit-15. New budget/update/bounded-exploration approval
+remains necessary before launch; original grantZEROupdates. All GCP compute was
+fresh-read TERMINATED this session before source preparation; no starts/submissions
+or remote mutation this turn. Model remains rejected; goalACTIVE/UNFINISHED.
+Preserve unrelated PYC/probes/roadmap. No heartbeat recreated or other chat contacted.
+
+---
+
 # LOCAL — Recovery and complete fitting review CLOSED; model NOT qualified; all GCP compute stopped
 
 25 October, 16:43 UTC. Final review:
