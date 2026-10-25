@@ -1,0 +1,42 @@
+{
+  "schema": "dl-v7-independent-native49-exact-progress-v1",
+  "observed_utc": "2026-10-25T05:34:24.707766+00:00",
+  "all49_independent_native_fingerprints_exact": true,
+  "difference_ids": [],
+  "first_finalization_record_sha256": "56cad2bf545dd8a175eb1e89a630f8f84198e7c19a500a0542f78f2e861d695e",
+  "first_native49_canonical_sha256": "737337816c9b0ba415cf86f69c20930405f340b96485526d80a95932b8246615",
+  "independent_native49_canonical_sha256": "737337816c9b0ba415cf86f69c20930405f340b96485526d80a95932b8246615",
+  "independent_native49_count": 49,
+  "independent_other_counts": {
+    "control40_restore_fingerprint": 0,
+    "reasoning32_restore_fingerprint": 0
+  },
+  "controller_phase": "independent_restore",
+  "children": [
+    {
+      "phase": "finalization",
+      "pid": 12,
+      "birth": 1204049,
+      "started_unix": 1792898023.4558792,
+      "actual_exit": 0,
+      "ended_unix": 1792903989.6608908
+    },
+    {
+      "phase": "independent_restore",
+      "pid": 530,
+      "birth": 1800685,
+      "started_unix": 1792903989.8170981,
+      "actual_exit": null
+    }
+  ],
+  "actual_independent_exit": null,
+  "full_independent_restore_proven": false,
+  "whole_recovery_proof_passed": false,
+  "optimizer_updates": 0,
+  "behavior_qualified": false,
+  "model_adopted": false,
+  "process": "  97226   67471 Rsl        41:14\n",
+  "receipt": "runs/local-migration-20261024/saved8-recovery-v7-independent-native49-comparison-v1.json",
+  "receipt_sha256": "4b9259d50cfe73c88771cec0b58aeb197b7d7b32aeeeb68f4029d6cd90ddf19f",
+  "next_action": "Continue SAME independent restore host97226/container530 through fullcontrol40/reasoning32 and exact Adam/RNG/metrics comparisons; actual child0 + parent0 + strict proof required before native20/speech20."
+}

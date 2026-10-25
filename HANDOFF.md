@@ -1,3 +1,43 @@
+# LOCAL — Independent full49 native EXACT; full40/32 and terminalproof stillpending
+
+Actual05:34:24UTC25Oct: SAMEindependent restore host97226/container530/birth1800685
+ACTUALlive, MainPID67425/invocationf8d6f198ef0e43baa97e2874b5928bef. Independently
+computed ALL49native fingerprint digests EXACTLYmatch successfulfirstfinalization,
+ZERO differences. Firstrecord pinnedSHA56cad2bf545dd8a175eb1e89a630f8f84198e7c19a500a0542f78f2e861d695e.
+Both49digestmaps canonicalSHA737337816c9b0ba415cf86f69c20930405f340b96485526d80a95932b8246615.
+Independentcontrol40/reasoning32 counts0/0 atthisread; no fullrestore/proof/behavior/
+adoption claim. FirstfinalizationactualPASS0 and closedbackupremainvalid asbelow.
+Zero newupdates/no repeatsaved8. Originalfit-15 remainsfailed. Producer0619b17 +
+originalDA/sameA100/disk/11:52:37UTCSTOP/100USD/dualguards unchanged.
+Read-onlyobserver21846 ACTUALLYexit0 after49milestone, NOTrecoveryterminal. Do NOT
+restartGPUjob. Poll SAMEactualrestore/parent. Progress doc
+ docs/GCP-NATIVE-SAVED8-V7-INDEPENDENT-NATIVE49-PROGRESS-2026-10-25.json; ignored
+saved8-recovery-v7-independent-native49-comparison-v1.json containsall49actualrows.
+Guardarmed05:34:09UTC/Macfresh05:34:00UTC; remaining51.09USD inclreserves, notbilling.
+
+Useful downstreampreflight actual0: exactbaseline520reportpin +exportedrecipepin
+match, historicalpublishedparameter-order sourceexists16743028866B, nativeRequests
+packageavailable. Ran insideSAME0619container, NOtorch/model/GPU/APIcall. File
+ gcp-native20-baseline-dependencies-v1.json. Separately realclosedfirstfinalization
+ALL28initial/28final metricrows pass strictproof's metricvalidator, NOplaceholder
+or fabricatedindependentrecord. PurelocalnoTorch; file
+ saved8-recovery-v7-real-metric-proof-preflight.json. Neither isactualbaselineCUDA
+restore or fullproof. Collectorpreparationdoc updated with exactreceipts.
+
+NEXT finish completeindependent40control+32reasoning/allobjectives/AdamRNG/metrics
+and exactmatch againstfirststage, actualchild0 then parent0/strictproof. Closed
+copyback/hashes then genuinefreshhostterminalobservation and guarded0619full
+native20/speech20 (notnewUI app source; do notuseoldE082/edbad validators). Allcase/
+ordinary4/semantic/audio/quiet/pause/receipt/fresh/live gates unchanged. Existing
+Macproxy/tunnel/guard handles unchanged; recheckunusedhealth/deadlinesbeforeeval.
+ExperimentalUI sourceece476f fixes session/consentbug with7Nodepasses/browserUI-only
+fixture, NOTdeployed toGCP/model. Localfixture54034ACTUALLYexit0 at300s; tabclosed,
+noowner microphone/ASR/API used. CredentialsonMac. No extraresources/purchases/
+training/broadertransfers; criticalnativearchive+closedfirststagebackupverified,
+broadMacsourcebackuppartial. LOCALsoleexecutor; preserve unrelatedPYC/probes/roadmap.
+
+---
+
 # LOCAL — Independent restore LIVE; separate audition UI session bug fixed
 
 Actual05:02:54UTC25Oct: SAMEV7 independent restore host97226/container530/

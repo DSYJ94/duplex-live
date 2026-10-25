@@ -116,5 +116,33 @@
   },
   "fixed_source_receipt_sha256": "4660c1636e3e821c33e2ddf7ac53e8a792e09cdaaf194c2aa6d00ca29d163bcb",
   "fixed_source_receipt": "runs/local-migration-20261024/gcp-fixed-source-native20-readiness-v1.json",
-  "current_bundle_sha256": null
+  "current_bundle_sha256": null,
+  "additional_baseline_dependency_preflight": {
+    "schema": "dl-gcp-fixed-baseline520-eval-dependencies-v1",
+    "baseline_report_pin_matches": true,
+    "baseline_exported_recipe_pin_matches": true,
+    "baseline_adam_clock": 520,
+    "published_parameter_order_source_exists": "/projects/u6si/duplex-live/models/hf-cache/hub/models--mindlogicinc--context-spanning-7b/snapshots/e62a4494a295ff8cee345451cf40aae85719a9f5/context_spanning_7b.pt",
+    "published_parameter_order_source_bytes": 16743028866,
+    "requests_package_available": true,
+    "torch_imported": false,
+    "model_loaded": false,
+    "gpu_process_started": false,
+    "provider_requests": 0,
+    "optimizer_updates": 0,
+    "source_commit": "0619b17e9bb57a01701d24b7c7182f99a6a0ecf5"
+  },
+  "real_first_finalization_metric_schema_preflight": {
+    "schema": "dl-v7-real-finalization-metric-proof-schema-check-v1",
+    "actual_exit": 0,
+    "all28_initial_and_final_real_rows_pass_proof_metric_schema": true,
+    "uses_actual_closed_finalization_rows": true,
+    "placeholder_or_fabricated_independent_records": false,
+    "torch_imported": false,
+    "model_loaded": false,
+    "provider_requests": 0,
+    "independent_restore_proven": false,
+    "full_proof_passed": false,
+    "finalization_record_sha256": "56cad2bf545dd8a175eb1e89a630f8f84198e7c19a500a0542f78f2e861d695e"
+  }
 }
