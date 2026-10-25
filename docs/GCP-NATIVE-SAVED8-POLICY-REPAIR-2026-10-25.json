@@ -1,7 +1,7 @@
 {
   "schema": "dl-gcp-saved8-policy-portability-repair-v1",
-  "at_utc": "2026-10-25T02:06:54.231401+00:00",
-  "status": "V6_COMPLETE_NATIVE49_EXACT_ORIGINAL_PARITY_CONTROL40_REASONING32_AND_INDEPENDENT_RESTORE_PENDING",
+  "at_utc": "2026-10-25T02:45:28.107029+00:00",
+  "status": "V6_NATIVE49_EXACT_CONTROL40_COMPUTED_ALL31_ORIGINAL_ROWS_EXACT_REASONING32_RUNNING",
   "original_model_source": "da389a7031a5504495397d1575952194ffa209f1",
   "failed_recovery": "v5",
   "failed_service_actual_exit": 1,
@@ -330,5 +330,29 @@
     "independent_restore_started": false,
     "whole_recovery_passed": false,
     "model_qualified": false
+  },
+  "control40_progress": {
+    "observed_utc": "2026-10-25T02:40:40Z",
+    "actual_service_active": true,
+    "main_pid": 38115,
+    "finalization_child": 38198,
+    "native49_count": 49,
+    "control40_count": 40,
+    "original_control40_rows_available": 31,
+    "all_original_control40_rows_exact": true,
+    "reasoning32_count_at_024329": 3,
+    "finalization_actual_exit": null,
+    "independent_restore_started": false,
+    "whole_recovery_passed": false,
+    "behavior_qualified": false
+  },
+  "progress_json_copyback": {
+    "path": "runs/local-migration-20261024/saved8-recovery-v6-progress-json-20261025T024236Z",
+    "actual_rsync_exit": 0,
+    "files": 29,
+    "bytes": 21374097,
+    "inventory_sha256": "2a0218c40f98895df93280bce046c54510b12231457356035098644af4df3a3b",
+    "progress_only": true,
+    "qualification": false
   }
 }

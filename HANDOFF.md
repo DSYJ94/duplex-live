@@ -1,3 +1,34 @@
+# LOCAL — Full49 +40 fingerprints computed; reasoning32 LIVE; progress backed up
+
+Actual02:40:40UTC25Oct: recovery-v6 service38115/child38198 live, ALL49native +
+ALL40control fingerprint rows computed. Full49 exactlymatches original49;
+ALL31originalsurvivingcontrol rows exactlymatch currentcorrespondingrows, ZERO
+disagreements. Ninecontrolrows lacked originalsurvivingfingerprints and still
+require the strict fullindependent comparison. At02:43:29UTC reasoning32 reached
+3/32. Parent/finalization/independentrestore/proof NOTyetpassed; no adoption.
+Do not accept these cohortcounts as complete proof or behavioral qualification.
+
+Progress JSON/log copyback actualrsync0 to ignored
+ runs/local-migration-20261024/saved8-recovery-v6-progress-json-20261025T024236Z.
+29files/21374097B, allMacfiles SHAinventoried; inventorySHA
+2a0218c40f98895df93280bce046c54510b12231457356035098644af4df3a3b.
+PROGRESSsnapshot only, capturedwhileworkeractive. No credentials/ownerconvos/cores,
+no redundantbinaryreference/weights copies. Originaltrainedadapter/optimizer/RNG
+and fulloldarchive already independentlypreserved separately. Finalclosedproof/
+reports stillneed copyback and hashes afteractualcompletion.
+Tracked evidence docs/GCP-NATIVE-SAVED8-POLICY-REPAIR-2026-10-25.json.
+
+Continue SAMEv6/frozen e0827f54f058e986ee57116f6de3c783a1ccefbd/DA, sameGPU/disk/STOP
+11:52:37UTC, dualguards, ZEROnewupdates. After full32 andwholefinalization actual0,
+controller starts distinctfresh fullAdam/RNG/metrics/fingerprints restore. Only
+bothchildren0+parent0+strictproof allow preparededbad fullnative20/speech20runner.
+ExistingreservedMacproxy/tunnel authentictransport0requests remain; separate
+single-call authsmokeHTTP200/completed succeeded, no nativepolicy claim. Before
+nativeeval genuinefresh hostterminalobservation and allsource/guard/health/deadline
+checks mandatory. No overlappingjobs/restarts/subsets/newpurchases. LOCALsoleexecutor.
+
+---
+
 # LOCAL — Actual backend authentication PASS; reserved full-eval connection unused
 
 One bounded real OpenAI gpt-6-luna request via a SEPARATE Mac-only proxy completed
