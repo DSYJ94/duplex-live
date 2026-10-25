@@ -1,8 +1,8 @@
 {
   "schema": "dl-gcp-zoneb-live-execution-v1",
-  "recorded_utc": "2026-10-25T11:26:01.478996+00:00",
+  "recorded_utc": "2026-10-25T11:40:41.761609+00:00",
   "status": "CORRECTED_FULL_PRESERVATION_HASHING_RUNNING_GPU_NOT_SUBMITTED",
-  "source_commit": "972f1c71776b07b289c6b3a432dc981b7f18a253",
+  "source_commit": "6a6799e335b9f855794a16227e1d38eb52533ed6",
   "snapshot": {
     "name": "duplex-native-zoneb-20261025-v1",
     "id": "5040266406897149263",
@@ -19,16 +19,16 @@
   "cpu": {
     "name": "duplex-native-stage-20261025-b-v1",
     "id": "2417394621566968621",
-    "native_stop_utc": "2026-10-25T11:40:20Z",
-    "controller_pid": 67499,
-    "remote_verifier_pid": 1484,
-    "verification_started_utc": "2026-10-25T11:23:52.700903+00:00",
+    "native_stop_utc": "2026-10-25T11:57:51Z",
+    "controller_pid": 73288,
+    "remote_verifier_pid": 1478,
+    "verification_started_utc": "2026-10-25T11:38:36.307152+00:00",
     "actual_terminal_exit": null,
-    "controller_session": 36564
+    "controller_session": 26904
   },
   "next_controller": {
-    "pid": 68389,
-    "session": 25859,
+    "pid": 74126,
+    "session": 48489,
     "phase": "waiting_actual_complete_cpu_preservation_and_stop_no_gpu",
     "maximum_new_gpu_seconds": 7200,
     "optimizer_updates": 0,
@@ -78,7 +78,7 @@
     "hourly_estimate_usd": 5.618589712328767,
     "hourly_upper_usd": 5.63
   },
-  "local_related_checks_passed": 72,
+  "local_related_checks_passed": 74,
   "target_checks_and_model_diagnostic_complete": false,
   "model_adopted": false,
   "heartbeat": "continue-native-gcp-recovery ACTIVE/15min/quiet on unchanged; observe existing handles only",
@@ -93,7 +93,11 @@
     "v6_actual_exit": 1,
     "v6_reason": "SSH source IPv4 stale; no verifier/model started",
     "v6_cpu_actual_stop_utc": "2026-10-25T11:19:52.240Z",
-    "v6_waiting_controller_actual_exit": 1
+    "v6_waiting_controller_actual_exit": 1,
+    "v7_actual_exit": 1,
+    "v7_reason": "Archive passed, saved-result file lists require same lexical ordering; fixed all3 manifest inputs/preflight before fullhash",
+    "v7_cpu_actual_stop_utc": "2026-10-25T11:33:37.639Z",
+    "v7_waiting_controller_actual_exit": 1
   },
   "ssh_origin_refresh": {
     "at_utc": "2026-10-25T11:22:15.366991+00:00",
@@ -104,5 +108,7 @@
     "one_mac_source_range": true,
     "port22_tag_and_priority_unchanged": true,
     "external_ip_service_used": false
-  }
+  },
+  "all_real_manifest_input_preflight_passed": true,
+  "remaining_cpu_bound": "GCP-NATIVE-ZONE-B-REMAINING-CPU-BOUND-2026-10-25.json"
 }

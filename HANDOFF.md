@@ -1,3 +1,50 @@
+# LOCAL — v8 full verifier live; v4 diagnostic controller waiting, cumulative CPU counted
+
+25Oct11:40UTC. Source6a6799e335b9f855794a16227e1d38eb52533ed6 pushed/Gitdeployed
+/workspace/migration/duplex-zoneb-6a6799e-v3. Actual ALL3 real manifest inputlists
+preflight locally: semantic33, recovery76, behavior324+52links. All74 relatedtests
+PASS. Sorting fixes retain EVERY originalrecord/hash; duplicates reject, nodata/
+threshold/modelchange. Entire schema preflight occurs BEFORE another81GBread.
+
+Previous v7 allarchive40132pass again but saved-result inventories also unsorted;
+verifier actual1, CPU stopped11:33:37.639, waitingv3 actual1, noGPU. I missed same
+reader requirement on those lists at first repair; preservedfailedv1/v2 outputs,
+not accepted. Source6a6799e fixes/prechecks allthree. Current ACTUAL remote worker
+PID1478 verified11:40, since11:38:36.307 allfullhashes, outputzoneb-preservation-v3.
+Localstage session26904/PID73288 zoneb-stage-controller-v8.py/statev8; sameCPU
+2417394621566968621, Bdisk8246893242108371884/snapshot5040266406897149263 unchanged.
+No qualification result yet. Read gcp-zoneb-preservation-v3.log; NEVERduplicate.
+
+CPUdeadline correctlyrebounded11:57:51UTC whileTERMINATED using ACTUALterminal
+provider intervals: priorB1844.351s (30.739min), remaining1755.649s. Newnativewindow
+1200s +120s shutdownreserve gives B3164.351s <3600s/$0.12 and allCPU12482.902s
+<14400s/$0.48, not runtime reset. Exact docGCP-NATIVE-ZONE-B-REMAINING-CPU-BOUND-
+2026-10-25.json +ignoredactualoperations/cumulative receipts. Old11:40wallSTOP no
+longer current; owner grant bounds cumulative actualruntime. SameCPU/no newstorage.
+Macidle prevention session77766 caffeinate30min; v8 controller alsoowns awake.
+
+ALREADYRUNNING waitingcontroller session48489/PID74126 zoneb-diagnostic-controller-
+v4.py/events gcp-zoneb-diagnostic-controller-v4.json. Waits SAME v8 all40132files/
+81154452891B/8links +semantic33/recovery76/behavior324+52links PASS/offmachine
+receipts and actualCPUstop. Then fresh live nooverlap/quota/type/price checks,
+detachBdisk, ONE separateA10080 B withnativeSTOPnow+2h/Mac+guest cumulativeguards,
+target74CPU+pinnedstrictproof checks BEFOREmodel, ONE full32 matched520/528 no-grad
+loss/fingerprints diagnostic, realterminal0/allhashcopyback and STOP. GPU NOT YET
+SUBMITTED; stockunproven. DO NOT rerun/restart on observationtimeouts; inspect
+SAMEprocess/operation/lease. Old v5/v6/v7 and waitingv1/v2/v3 allterminal1.
+
+Currentofficialprice re-read11:38 unchanged5.6185897/hour <=5.63; GPUprior32079.865s
++Bmax7200 <=12h, whole conservative90.3094 <=100 incl16.88+12reserves. No new100
+budget/purchases/optimizer/repeated8/recovery/native20/freshpayload/adoption. Exact
+originalDA/NGC/history/loss/AdamRNG/hashes unchanged. Native20REJECTED baseline2/4,
+candidate1/4; productgoal unfinished. SourceA diskretained/GPUA stopped; Runpodnative
+EXITED/volume49yytzyoge retained. BroaderMacsourcebackupPARTIAL. SourceGit/approved
+rsync excludes, credentialsMAC, noownerconversations/cores/.private transfers.
+Heartbeat15min mustfollow currentv8/v4; quietunchanged, pausewhenboundedcomplete/
+humanblocked. Preserve unrelatedPYC/probes/roadmap, LOCALsoleexecutor/noagents/chats.
+
+---
+
 # LOCAL — Corrected full preservation live; observe v7/v3, never rerun old controllers
 
 25Oct11:26UTC. Source972f1c71776b07b289c6b3a432dc981b7f18a253 pushed and Gitdeployed

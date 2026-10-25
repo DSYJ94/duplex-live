@@ -1,0 +1,55 @@
+{
+  "schema": "dl-zoneb-remaining-cpu-runtime-bound-v1",
+  "authorization": "docs/GCP-NATIVE-ZONE-B-PLACEMENT-AUTHORIZATION-2026-10-25.json",
+  "actual_provider_history": {
+    "id": "2417394621566968621",
+    "at_utc": "2026-10-25T11:35:05.323270+00:00",
+    "intervals": [
+      {
+        "start": "2026-10-25T03:45:23.031-07:00",
+        "end": "2026-10-25T03:48:24.727-07:00",
+        "seconds_upper": 181.69600009918213
+      },
+      {
+        "start": "2026-10-25T03:49:32.548-07:00",
+        "end": "2026-10-25T03:51:22.875-07:00",
+        "seconds_upper": 110.32699990272522
+      },
+      {
+        "start": "2026-10-25T03:52:03.784-07:00",
+        "end": "2026-10-25T04:03:42.622-07:00",
+        "seconds_upper": 698.8380000591278
+      },
+      {
+        "start": "2026-10-25T04:16:11.285-07:00",
+        "end": "2026-10-25T04:19:53.156-07:00",
+        "seconds_upper": 221.87099981307983
+      },
+      {
+        "start": "2026-10-25T04:23:08.495-07:00",
+        "end": "2026-10-25T04:33:40.114-07:00",
+        "seconds_upper": 631.6190001964569
+      }
+    ],
+    "total_seconds_upper": 1844.351000070572,
+    "all_operations_terminal": true,
+    "remaining_b_cpu_seconds": 1755.648999929428,
+    "original_a_cpu_seconds_upper": 9318.551,
+    "maximum_all_cpu_seconds": 14400
+  },
+  "maximum_new_native_cpu_window_seconds": 1200,
+  "shutdown_reserve_seconds": 120,
+  "maximum_total_b_cpu_seconds": 3164.352,
+  "maximum_all_cpu_seconds": 12482.903,
+  "maximum_authorized_b_cpu_seconds": 3600,
+  "maximum_authorized_all_cpu_seconds": 14400,
+  "maximum_total_b_cpu_usd": 0.10548,
+  "maximum_authorized_b_cpu_usd": 0.12,
+  "maximum_total_all_cpu_usd": 0.4161,
+  "maximum_authorized_all_cpu_usd": 0.48,
+  "budget_reset": false,
+  "new_instance": false,
+  "new_storage": false,
+  "optimizer_updates": 0,
+  "reason": "Original fixed11:40 deadline no longer fits a whole rehash after two diagnosed list-order bugs and the Mac ingress repair. Owner grant bounds cumulative actual CPU runtime, not a fixed wall deadline. Use only remaining measured allowance on SAME stopped CPU, full checks unchanged, fresh nativeSTOP before restart."
+}
