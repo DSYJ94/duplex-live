@@ -77,6 +77,21 @@ def clone_bundle(bundle, target, commit, sparse=None):
         raise ValueError('Exact clean preserved vendor source required')
 
 
+def vendor_checkouts(root):
+    return ((RUNTIME/('vendor/context-spanning-'+CONTEXT), CONTEXT, 'context-spanning'),
+            (root/'control40-vendor-moshi-rag', RAG, 'moshi-rag'),
+            (root/'control40-vendor-moshi-finetune', FINETUNE, 'moshi-finetune'),
+            (RUNTIME/('vendor/moshi-finetune-'+FINETUNE), FINETUNE, 'moshi-finetune'))
+
+
+def verify_vendors(root):
+    for target, commit, _ in vendor_checkouts(root):
+        if (target.is_symlink() or not target.is_dir()
+                or git('-C', target, 'rev-parse', 'HEAD') != commit
+                or git('-C', target, 'status', '--porcelain')):
+            raise ValueError('Exact clean reconstructed vendor checkout required')
+
+
 def verify_existing(root, catalog):
     """Read-only recovery after materialization succeeded but its audit failed."""
     mirrored = 0
@@ -92,12 +107,7 @@ def verify_existing(root, catalog):
                     or any(p.is_symlink() for p in (target.parent, *target.parent.parents))):
                 raise ValueError('Reconstructed regular hardlink changed')
             mirrored += 1
-    for target, commit in ((RUNTIME/('vendor/context-spanning-'+CONTEXT), CONTEXT),
-                           (root/'control40-vendor-moshi-rag', RAG),
-                           (root/'control40-vendor-moshi-finetune', FINETUNE)):
-        if (target.is_symlink() or git('-C', target, 'rev-parse', 'HEAD') != commit
-                or git('-C', target, 'status', '--porcelain')):
-            raise ValueError('Reconstructed vendor checkout changed')
+    verify_vendors(root)
     for alias in (*ALIASES, root/'duplex-live'):
         if not alias.is_symlink() or alias.readlink() != RUNTIME:
             raise ValueError('Exact reconstructed alias required')
@@ -200,10 +210,9 @@ def main():
             regular_link(root/row['path'], RUNTIME/relative)
             mirrored += 1
     bundles = archive/'runs/local-preservation-vendor-sources-20261019'
-    clone_bundle(bundles/('context-spanning-'+CONTEXT+'.bundle'),
-                 RUNTIME/('vendor/context-spanning-'+CONTEXT), CONTEXT, ('contextspan', 'docs'))
-    clone_bundle(bundles/('moshi-rag-'+RAG+'.bundle'), root/'control40-vendor-moshi-rag', RAG)
-    clone_bundle(bundles/('moshi-finetune-'+FINETUNE+'.bundle'), root/'control40-vendor-moshi-finetune', FINETUNE)
+    for target, commit, prefix in vendor_checkouts(root):
+        clone_bundle(bundles/(prefix+'-'+commit+'.bundle'), target, commit,
+                     ('contextspan', 'docs') if prefix == 'context-spanning' else None)
     source_runs = ORIGINAL/'runs'
     if source_runs.is_symlink() or source_runs.exists() and any(source_runs.iterdir()):
         raise ValueError('Original source runs directory must be empty and physical')

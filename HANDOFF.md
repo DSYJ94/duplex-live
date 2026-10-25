@@ -1,3 +1,50 @@
+# LOCAL — Repaired saved8 recovery v2 LIVE on the guarded A100
+
+At 00:16:37 UTC 25 October, actual host service
+`duplex-native-saved8-recovery-v2` was active/running, MainPID 9478,
+invocation `dbdb6d4309f540b9a8205c3f661dad8e`. Docker has the same name;
+actual host parent 9525 and finalization child 9563 were alive, with the child
+using 17,224 MiB of GPU memory. It has passed the previous missing-vendor point
+and is constructing/checking the preserved context. No new optimizer updates.
+
+The first recovery v1 actually failed (unit/child exit 1), before finalization,
+because the old25 cache loader expects a SECOND finetune checkout at
+`/opt/reasoning32-runtime-root-v12/vendor/moshi-finetune-2acc879fe7c48f885a18f6cc9548bccb2674d87b`.
+The existing control40 checkout was insufficient. Full failed outputs were copied
+to ignored Mac `runs/local-migration-20261024/saved8-recovery-v1-failed-copyback`.
+Do not relabel or restart v1. Exact repair: Git clone the already preserved bundle
+at that required path; actual clone/checkout exit 0, clean HEAD 2acc879f. Receipt
+`old25-vendor-path-repair-v1.json` records it. No files/audio/words/receipts/losses
+changed. New bootstrap source now creates/verifies all FOUR checkouts; 20 focused
+filesystem/stage/destination tests pass, including missing/wrong old25 checkout.
+This new helper is not checked out over the frozen running producer.
+
+CURRENT recovery output: `/workspace/migration/gcp-saved8-recovery-v2`, with
+`controller.json` and `finalization.log`; parent log
+`/workspace/migration/gcp-saved8-controller-v2.log`. New derived proof target:
+`/workspace/migration/native-reasoning32-saved8-recovered-proof-gcp-v2` (pending).
+Launch receipt `saved8-recovery-launch-v2.json`; original source/producer remain
+DA389a7 and 75b3bfd1dbec24a46664a3de63d13fcb0f62d23c respectively. The controller
+will run a separate independent-restore process after successful finalization;
+neither its pending state nor a launch exit 0 proves numerical qualification.
+
+A100 resource 951004838667287080, same disk 1828090267781080539, native STOP
+2026-10-25T11:52:37Z, Mac guard session48672/PID26959 and host guard PID2092 remain
+the current execution context. Keep them alive; poll real handles before acting.
+Compiler-v4 actual success and earlier failures are now copied to Mac
+`gpu-runtime-copyback-v1`. Both guards must stay fresh; stop billed compute early
+if genuinely blocked. No zoneB snapshot, replacement disk, or new GPU is needed.
+The earlier zoneB permission question/proposal is obsolete while this GPU works.
+
+Product bridge is committed at e9da0f5, offline-tested only (33 Python +3 JS logic
+fixtures); it is NOT deployed to running75b3bfd, and no live/native qualification
+is claimed. After strict recovery proof, continue unchanged full pairednative20,
+speech20, behavior and actual synthetic live-delegation testing. Preserve original
+fit-15, saved8, all old history/KL/hidden/teacher objectives and strict gates.
+LOCAL remains sole executor; unrelated local work is intact.
+
+---
+
 # LOCAL — SAME-disk A100 RUNNING; dualguards ARMED; saved8 recovery LIVE
 
 Cooldown retry v3 ACTUALLY createCLI0 at23:52UTC24Oct. GPU

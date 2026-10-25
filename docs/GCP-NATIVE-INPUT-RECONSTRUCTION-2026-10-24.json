@@ -1,13 +1,13 @@
 {
   "schema": "dl-gcp-native-exact-input-reconstruction-preparation-v1",
-  "at_utc": "2026-10-24T23:23:58.970939+00:00",
-  "parent_source": "2c03217",
+  "at_utc": "2026-10-25T00:18:33.305248+00:00",
+  "parent_source": "e9da0f5",
   "implementation_sha256": {
-    "portable/context/native_gcp_inputs.py": "1396233c44bbe3d1fc1adb5e17a1fb4b6f418356a5ff2110024b079d064a6bbc",
-    "evals/harness/test_native_gcp_inputs.py": "401464bfe7aade3a7e020cb08fa7d201185676cec202072e617970f2c982cb48"
+    "portable/context/native_gcp_inputs.py": "d8d10e6abcd218ee97991fb678d03c12e39eaa50fa513670c9d8d3a244cae7c8",
+    "evals/harness/test_native_gcp_inputs.py": "675f2c102a5f57b4ec09343a08d20f360c1766f8d2556b865d425f0984e16c9d"
   },
-  "status": "MATERIALIZED_HOST_AUDIT_FAILED_NUMPY_REVERIFY_IN_EXISTING_CPU_CONTAINER",
-  "focused_filesystem_tests_passed": 19,
+  "status": "EXACT_INPUTS_V4_PASSED_WITH_ADDITIONAL_DIAGNOSED_OLD25_VENDOR_REPAIR",
+  "focused_filesystem_tests_passed": 20,
   "cli": [
     "--root",
     "--destination-report",
@@ -42,9 +42,9 @@
   "actual_input_reconstruction_executed": true,
   "actual_model_loaded": false,
   "new_optimizer_updates": 0,
-  "next_action": "Git-deploy this source separately. Run read-only --verify-existing in already prepared exact NGC CPU container/runtime; verify every hardlink, public Git SHA, alias, independent complete temporary copy, snapshot, original metadata, and CLI path before writing a NEW receipt. No re-extraction, overwrite, optimizer or GPU.",
+  "next_action": "Current guarded recoveryv2 uses frozen75b3bfd and actual repaired runtime path. Do not change its source while running. New bootstrap helper additionally creates/verifies that fourth checkout; regression rejects missing/wrong old25 checkout even when control40 checkout exists. All words/audio/approval/objectives remain unchanged.",
   "head_only_bundle_sparse_clone_fixture_passed": true,
   "preserved_three_vendor_bundle_bytes_and_sha_verified_on_mac": true,
-  "actual_input_reconstruction_passed": false,
-  "diagnosed_failure": "Host /usr/bin/python3 lacks NumPy imported transitively by preserved exposure audit; all path materialization completed before failure. Preserve failure and partial data."
+  "actual_input_reconstruction_passed": true,
+  "diagnosed_failure": "First GPU context construction found additional old25 fixed vendor dependency, not a CLI argument: Root12/vendor/moshi-finetune-2acc879fe7c48f885a18f6cc9548bccb2674d87b. Restored via Git clone from the preserved verified bundle, unchanged2acc commit. Prior failed outputs preserved and copied to Mac."
 }

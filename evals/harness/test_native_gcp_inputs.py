@@ -3,11 +3,34 @@ from pathlib import Path
 import tempfile
 import subprocess
 import unittest
+from unittest.mock import patch
+from portable.context import native_gcp_inputs as inputs
 
 from portable.context.native_gcp_inputs import regular_link, regular_copy_tree, clone_bundle, verify_copy_tree
 
 
 class InputMaterializationTests(unittest.TestCase):
+    def test_old25_runtime_vendor_is_required_even_when_control40_vendor_exists(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory).resolve();source=root/'source'
+            def run(*words):return subprocess.check_output(['git',*map(str,words)],text=True,stderr=subprocess.DEVNULL).strip()
+            run('init',source);run('-C',source,'config','user.name','Fixture')
+            run('-C',source,'config','user.email','fixture@example.invalid')
+            (source/'code.py').write_text('original');run('-C',source,'add','.')
+            run('-C',source,'commit','-qm','original');commit=run('-C',source,'rev-parse','HEAD')
+            (source/'code.py').write_text('changed');run('-C',source,'commit','-qam','changed')
+            changed=run('-C',source,'rev-parse','HEAD');bundle=root/'source.bundle'
+            run('-C',source,'bundle','create',bundle,'HEAD')
+            with patch.object(inputs,'RUNTIME',root/'runtime'),patch.object(inputs,'CONTEXT',commit),\
+                    patch.object(inputs,'RAG',commit),patch.object(inputs,'FINETUNE',commit):
+                vendors=inputs.vendor_checkouts(root)
+                for target, _, _ in vendors[:3]:inputs.clone_bundle(bundle,target,commit)
+                with self.assertRaisesRegex(ValueError,'vendor checkout'):inputs.verify_vendors(root)
+                target=vendors[3][0];inputs.clone_bundle(bundle,target,changed)
+                with self.assertRaisesRegex(ValueError,'vendor checkout'):inputs.verify_vendors(root)
+                run('-C',target,'checkout','--detach',commit)
+                inputs.verify_vendors(root)
+
     def test_head_only_git_bundle_clones_exact_sparse_source(self):
         with tempfile.TemporaryDirectory() as directory:
             root=Path(directory).resolve();source=root/'source'
