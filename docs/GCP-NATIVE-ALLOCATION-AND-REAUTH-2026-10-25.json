@@ -1,6 +1,6 @@
 {
   "schema": "dl-gcp-allocation-and-reauth-status-v1",
-  "recorded_utc": "2026-10-25T15:02:08.542398+00:00",
+  "recorded_utc": "2026-10-25T16:53:52.374856+00:00",
   "zone_b_operation": "operation-1792928965865-65ea8ce1e2f72-2a556336-fc03e075",
   "zone_b_actual_result": "DONE/error configuration_availability; instance not created",
   "original_a_operation": "operation-1792929991159-65ea90b3aed48-ba8bdc52-27dd587e",
@@ -17,8 +17,8 @@
   "reauth_tab_id": "692863985",
   "reauth_cli_session": 85715,
   "credentials_requested_in_chat": false,
-  "heartbeat_status": "ACTIVE",
-  "current_training_or_new_measurement": "One timing-only corrected complete32 matched loss diagnostic ACTUALLY running; zero optimizer updates",
+  "heartbeat_status": "DELETED",
+  "current_training_or_new_measurement": "COMPLETED_AND_PRESERVED; all GCP compute stopped; no new training",
   "optimizer_updates": 0,
   "model_adopted": false,
   "references": {
@@ -129,7 +129,12 @@
     "first_live_main_pid": 1985,
     "invocation_id": "924cca8d0f234690ae918b3dd786cd98",
     "actual_child_deadline_utc": "2026-10-25T16:17:06.981779Z",
-    "actual_successful_terminal": null
+    "actual_successful_terminal": true,
+    "actual_model_docker_exit": 0,
+    "actual_model_child_exit": 0,
+    "actual_local_controller_exit": 1,
+    "local_copy_inventory_failure": "Incorrect rejection of two pinned CUDA driver links; separately rescued without model rerun",
+    "actual_gpu_stop_utc": "2026-10-25T16:04:01.611Z"
   },
   "timing_evidence_preserver_v2": {
     "pid": 74541,
@@ -138,5 +143,30 @@
     "initial_copy_utc": "2026-10-25T14:59:23.266784Z",
     "path": "runs/local-migration-20261024/gcp-flex90-timing-live-preservation-v2",
     "qualified": false
-  }
+  },
+  "model_measurement_completed": true,
+  "model_qualified": false,
+  "training_extension_authorized": false,
+  "goal_complete": false,
+  "artifact_cpu_rescue_v3": {
+    "actual_controller_exit": 0,
+    "source_commit": "6ea2e6b0b0769d3275c4ca411b20ffe32350f56a",
+    "cpu_id": "1784642133801608667",
+    "disk_id": "1828090267781080539",
+    "actual_cpu_stop_utc": "2026-10-25T16:33:22.897Z",
+    "same_root_restored_to_stopped_gpu": true,
+    "all34_source_regular_hashes_and2_driver_targets_match": true,
+    "strict_host_checking": true,
+    "model_rerun": false
+  },
+  "closed_runtime_ledger": {
+    "all_project_compute_stopped": true,
+    "verified_utc": "2026-10-25T16:42:36.858481Z",
+    "gpu_seconds_upper": 40351,
+    "cpu_seconds_upper": 12053,
+    "conservative_all_scope_with_original_reserves_usd": 91.98448055555555,
+    "cpu_upper_usd": 0.40176666666666666,
+    "not_invoice": true
+  },
+  "final_review": "NATIVE-SAVED8-COMPLETE32-FIT-REVIEW-2026-10-25.json"
 }

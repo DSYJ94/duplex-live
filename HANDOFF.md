@@ -1,3 +1,77 @@
+# LOCAL — Recovery and complete fitting review CLOSED; model NOT qualified; all GCP compute stopped
+
+25 October, 16:43 UTC. Final review:
+[complete32 fitting and preservation](docs/NATIVE-SAVED8-COMPLETE32-FIT-REVIEW-2026-10-25.json).
+All 32 TRAIN scenes at BOTH native520 and saved528 endpoints completed. Mean balanced
+text CE 1.4258719087310747 -> 1.4241121481627803 (-0.123416%); assistant acoustic CE
+0.4088965505361557 -> 0.4087267713621259 (-0.041521%). Text improved on24/worsened8;
+audio improved20/worsened12; direct-basic/delegate mean acoustic CE worsened slightly.
+All32 final fingerprints EXACT against accepted independent saved8 record; all64
+baseline scalars EXACT against original BF16 gradient readiness. Frozen/adapter/RNG
+and no-gradient/no-checkpoint-write checks PASS. These are TRAIN endpoints, NOT
+convergence, generalization or behavioral approval. New optimizer updates: ZERO.
+
+Retained old28 balanced objective worsened0.802614%; unchanged full native20 review
+still rejects saved528 (ordinary1/4 vs native5202/4, speech agreement/bounds7/10 vs8/10;
+not task-pass counts). Silence/pause/resume/real async result-use/cancellation remain
+unqualified. No fresh payload opened, candidate adopted or training extended. No
+unchanged larger run; prepare a concrete changed native pilot next. Current GCP
+authorization explicitly permits ZERO new optimizer updates. Goal remains ACTIVE /
+UNFINISHED; local source preparation can continue, but do not start training or a
+new funded phase without its concrete authorization.
+
+Actual model producer c1006f90fbd08dfa887b1ee117d317ad36026441, original model/trainer
+source da389a7031a5504495397d1575952194ffa209f1, exact NGC digest42263b2424fc237b34c4fc4a91c30d603c57eed36e37d31ff6d9a4f1f801edee.
+Successful systemd journal binds invocation924cca8d0f234690ae918b3dd786cd98/messageID
+7ad2d189f7e94e70a38c781354912448; actual Docker0 and child0. Successful diagnostic
+result SHA fa44198072ed0af143a2438bc73b6869a2e907ea2012978e1d7aadfa55de9352.
+Original fit-15 remains failed; accepted derived proof27a6676dd95ef8100e5211b6e24ddca7e9b716c0cbcae4d3e8fb02215d9ccac7
+and independent Adam/RNG restore remain unchanged. No fabricated legacy fit/controller.
+
+Original one-hour diagnostic ACTUAL timeout32/26 remains failed/unqualified. The
+single timing-corrected full64 MODEL succeeded; its LOCAL controller-v6 ACTUAL1 was
+only an incorrect no-symlink artifact predicate. Subsequent artifact-only rescue is
+DISTINCT, not a relabelled controller success. Exact pinned driver links
+measurement/driver/libcuda.so and.so.1 -> /usr/lib/x86_64-linux-gnu/libcuda.so.580.178.04
+are preserved as links (never followed), alongside ALL34 regular files603813907bytes.
+Every regular SHA and both raw link targets MATCH source. Inventory SHA
+fdb93e2a93954f26768c85a09f26048f7174245c7dbc60e7e6bec158036dd7a4.
+Source verifier6ea2e6b0b0769d3275c4ca411b20ffe32350f56a; raw rescue receipt
+runs/local-migration-20261024/gcp-flex90-timing-artifact-rescue-receipt-v1.json.
+Closed full copy: gcp-flex90-matched32-timing-copyback-v2. Old timeout copy separately
+retained. No driver-link failure is a model numerical failure or permission to rerun.
+
+CPU rescue v1/tool18053 ACTUAL1 BEFORE start (provider truncates submillisecond
+terminationTime; fixed exact seconds/device-name instead of scratch-source parsing).
+v2/tool69795 ACTUAL1 after strict SSH rejected stale CPU-instance host-key metadata;
+actual CPU STOP16:26:53.063, disk restored. v3/PID35363/tool72480 ACTUAL0: authenticated
+same physical boot disk's source-GPU host keys via GCP AND previously strict-verified
+known keys; strict host checking stayed ON. Exact disk identity1828090267781080539 was
+verified before/after migration. Target inventory tests0, closed source hash/link
+comparison0, terminal/hostlog transfers0; CPU STOP16:33:22.897 and root restored to
+STOPPED GPU/non-auto-delete16:33:31.736. No GPU/model rerun for artifact rescue.
+All intermediate failed receipts retained. Do not restart ANY old controller/watchers.
+
+Fresh provider ledger16:42:36.858481: all4 project VMs TERMINATED; GPU conservative
+40351seconds=11.208611h <12h; CPU12053seconds=3.348056h <4h. GPU plus ALL original
+storage/network/CPU/migration reserves upper91.984481USD <100 (NOT an invoice), CPU
+lifetime upper0.401767USD <0.48. Original root250GB1828090267781080539 attached to
+STOPPED Flex GPU4443302983961393208 in europe-west4-a, non-auto-delete. B disk8246893242108371884
+and snapshot5040266406897149263 retained. Full B native preservation40132files/
+81154452891B/8links +semantic/recovery/behavior/off-machine receipts remains PASS;
+broader Mac source backup remains PARTIAL. Backup disks still retained under the
+original storage reserve. Raw final ledger gcp-native-final-runtime-and-storage-state-v1.json.
+
+Recovery heartbeat continue-native-gcp-recovery was DELETED after model/artifact
+closure; no paid compute/job remains to monitor. Active goal is NOT paused/completed.
+LOCAL remains sole executor until explicit cloud handoff. Main prior to this close
+commit6ea2e6b; do not include unrelated modified PYC/untracked capability probes/roadmap.
+Future optional FP-loss logging hook a6cceb0 is PREPARED/NOT deployed/NOT GPU-validated;
+88 CPU tests, broader Torch stage suite unavailable locally. Current completed model
+used c1006f9, so its approved source/data were not changed by that future hook.
+
+---
+
 # LOCAL — Corrected model PASS; GPU stopped; copy inventory bug isolated to two driver links
 
 25Oct16:12UTC. Corrected c1006f9 model ACTUALdocker0; child/controller phase complete,

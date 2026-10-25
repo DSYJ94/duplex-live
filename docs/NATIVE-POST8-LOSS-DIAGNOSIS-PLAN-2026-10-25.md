@@ -1,28 +1,33 @@
-# Next diagnostic: matched full32 loss at native520 and saved528
+# Completed diagnostic: matched full32 loss at native520 and saved528
 
-Current status at 25 October 13:58 UTC: the complete diagnostic is running on the
-same original 250 GB disk in zone A. The exact producer is
-`cd5666c2514830c44c940a79ffc3508102799b9e`; the model and original training source
-remain unchanged. All 80 target preflight tests and a separate strict saved8 proof
-check passed. No optimizer updates or repeated training are running.
+Completed at 25 October 16:43 UTC: all32 scenes at both endpoints finished, with
+exact saved528 fingerprints and unchanged frozen/adapter/RNG state. The successful
+terminal journal binds the exact model invocation. All34 regular files (603,813,907
+bytes) and both pinned CUDA driver links subsequently matched source hashes/link
+targets on the Mac. Every project VM is stopped and the original250GB disk is
+restored to the stopped GPU with automatic deletion disabled.
 
-The actual unit is `duplex-native-flex90-matched32-v1`, first observed host PID 1978,
-invocation `68fec3824f674a1b9958f221ea7208a3`. Its original child is live and the GPU
-process has been observed. This proves execution, not a completed loss result.
-The [current allocation record](GCP-NATIVE-ALLOCATION-AND-REAUTH-2026-10-25.json) and
-newest HANDOFF identify the exact controller and receipts; observe that job rather
-than resubmitting it.
+The [complete fitting and preservation review](NATIVE-SAVED8-COMPLETE32-FIT-REVIEW-2026-10-25.json)
+records the result. New32 mean balanced text CE fell1.4258719087→1.4241121482
+(0.1234%); assistant acoustic CE fell0.4088965505→0.4087267714 (0.0415%). Text loss
+fell on24 scenes and rose on8; acoustic loss fell on20 and rose on12. Mean acoustic
+loss worsened in the direct-basic and delegate-reasoning families. These small
+TRAIN endpoint changes are not convergence or behavioral qualification.
 
-The approved original limit remains $100 and 12 cumulative GPU hours. Successful
-provider operation intervals, including duplicate STOP end times, conservatively
-account for 32,491 prior seconds; the current 5,400-second native maximum gives
-37,891 seconds and an $88.137314 whole-scope upper estimate including reserves.
-The native STOP is 15:22:10.600 UTC, with independent live Mac and guest guards.
-Earlier planning estimates and fixed wall-clock deadlines are historical and are
-superseded by this explicit actual-runtime accounting; no allowance is reset.
-The full zone-B replacement preservation completed successfully before this run.
-Do not repeat the 81 GB archive verification, exact saved-stage recovery, native20
-behavioral collection, or the eight original updates.
+The original one-hour diagnostic timed out with32/26 rows and remained failed.
+A single timing-only corrected run used the same disk and model, an80-minute
+internal limit inside the original90-minute native STOP, and all original gates.
+Its model succeeded; its copy controller then incorrectly rejected two driver
+symlinks. A separate bounded CPU artifact rescue verified the complete copied
+files and exact link metadata without following links or rerunning the model.
+Original failures remain recorded; no controller success was fabricated.
+
+The [closed runtime ledger](GCP-NATIVE-ALLOCATION-AND-REAUTH-2026-10-25.json) records
+40,351 conservatively counted GPU seconds (11.2086h) and12,053 CPU seconds (3.3481h).
+The whole-scope upper estimate is91.9845USD including the original storage/network
+reserves, not an invoice. Original100USD/12GPUh and0.48USD/4CPUh bounds hold. Backup
+disks remain retained. The recovery heartbeat was deleted after closure; the goal
+is unfinished and no model or new training stage is approved.
 
 The completed review is [here](GCP-NATIVE-SAVED8-COMPLETE20-REVIEW-2026-10-25.json).
 The [CPU objective audit](NATIVE-SAVED8-OBJECTIVE-CREDIT-AUDIT-2026-10-25.json) and
@@ -40,6 +45,8 @@ recipe, not proof that clipping causes failures. Native-stream text capture deta
 KV autograd history per recorded call, while retaining forward cache values; the
 original full-sequence objectives still exist. Do not describe the model as losing
 its forward memory or all temporal gradient training.
+
+## Historical rationale and protocol (now completed)
 
 The original readiness already measured every reasoning32 example at fixed520.
 Training receipts measure each same example once, immediately before its own
@@ -61,14 +68,11 @@ consumed by observation. Write a distinct diagnostic report; it must not have a
 training-proof or adoption schema. No fresh input or answer, owner audio, backend
 request, new source audio, target repair or loss modification enters this run.
 
-All 32 scenes at both endpoints are mandatory; a partial endpoint cannot support a
-fitting or convergence conclusion. Require the existing child deadline, real
-successful terminal record, unchanged checkpoint/frozen-state/RNG checks and all
-32 saved528 fingerprints, followed by complete copied-back artifact hashes. The
-current controller stops the owned GPU after verified preservation. If the job
-fails or its observation is interrupted, inspect the same process and preserve
-its partial evidence; do not automatically repeat it or infer completion from a
-healthy unit alone.
+All32 scenes, both endpoints, real terminal records, unchanged state and complete
+artifact preservation were required and are now recorded. The diagnostic answered
+the missing endpoint question; do not rerun it or the completed recovery/native20.
+The saved candidate remains rejected, and new optimizer updates require a separate
+concrete changed proposal and authorization.
 
 Predictions, not conclusions:
 

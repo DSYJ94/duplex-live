@@ -1,7 +1,50 @@
 # What we trained, what is saved, and what to test
 
 
-## 25 October12:55UTC — complete replacement backup; further measurement blocked by sign-in
+## 25 October, 16:43 UTC — full fitting comparison complete; candidate remains rejected
+
+The [complete32 review](NATIVE-SAVED8-COMPLETE32-FIT-REVIEW-2026-10-25.json) now has
+all 32 TRAIN scenes before and after the saved eight updates, exact final native
+fingerprints, unchanged frozen/adapter/RNG state, a real successful terminal, and
+source-verified copied artifacts. No optimizer update was repeated or added.
+
+| Measurement | Native520 | Saved528 | Change |
+|---|---:|---:|---:|
+| New 32 mean balanced text CE | 1.425872 | 1.424112 | −0.1234% |
+| New 32 mean assistant acoustic CE | 0.408897 | 0.408727 | −0.0415% |
+| Old 28 kind-balanced weighted objective | 0.567521 | 0.572076 | +0.8026% |
+| Ordinary development correctness | 2/4 | 1/4 | Worse |
+| Speech agreement and bounds audit | 8/10 | 7/10 | Worse |
+
+The measurements cover different objectives and must not be summed into a claimed
+full 154 convergence curve. 24/32 text losses and 20/32 acoustic losses improved;
+no passing subset was accepted. Both direct-basic and delegation mean acoustic
+losses worsened slightly. The existing full native10 behavior rejection remains
+applicable because weights are unchanged. The model is not ready for adoption.
+
+The [effective-update audit](NATIVE-SAVED8-EFFECTIVE-UPDATE-AUDIT-2026-10-25.json)
+verifies rank 8 / scaling 2 LoRA on the last 4 temporal layers and text head (1,894,400
+parameters), effective LR 2e-7, Adam betas 0.9/0.999, clip norm 1 and no weight decay.
+The parent import receipt records LR 1e-5 before the 50× reduction. Each new scene was
+seen once. These settings make limited adaptation a testable explanation; they do
+not establish rate, exposure, data, clipping or capacity as the sole failure cause.
+
+All GCP compute is stopped. All 34 diagnostic files / 603,813,907 bytes and 2 pinned
+CUDA driver links match source; original 250 GB disk is restored to the stopped GPU
+and is not auto-deleted. Full native zone-B preservation remains valid; broader
+Mac source backup is still partial. Conservatively counted GPU use is 11.2086 hours,
+CPU 3.3481 hours; $91.9845 is an upper estimate including original storage/network
+reserves, not a bill. The recovery monitor was removed after closure.
+
+Next: prepare a changed bounded native pilot with the preserved baseline, exact
+optimizer/RNG provenance, all old-history/KL/hidden/native losses and unchanged
+behavior/fresh gates. The current GCP grant authorizes ZERO new optimizer updates;
+no new training has started. A future optional endpoint-metrics hook is prepared
+in source but is not deployed or GPU-validated; it can retain loss during the
+mandatory fingerprint pass once independently approved, avoiding another run
+merely to recover discarded scalars.
+
+## Historical: 25 October, 12:55 UTC — complete replacement backup; further measurement blocked by sign-in
 
 The complete [zone-B preservation](GCP-NATIVE-ZONE-B-PRESERVATION-COMPLETE-2026-10-25.json)
 passed every archive, semantic, recovery and behavioral-artifact hash/link check.

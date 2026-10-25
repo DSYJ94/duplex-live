@@ -1,0 +1,696 @@
+{
+  "schema": "dl-native-saved8-complete32-fit-and-preservation-review-v1",
+  "recorded_utc": "2026-10-25T16:51:37.023144+00:00",
+  "status": "COMPLETE_DIAGNOSTIC_MODEL_REMAINS_REJECTED",
+  "scope": "All32 identical approved TRAIN scenes at native520 and saved528, same process/profile; endpoint fitting only, not convergence/generalization or live behavior.",
+  "source_commit": "da389a7031a5504495397d1575952194ffa209f1",
+  "producer_commit": "c1006f90fbd08dfa887b1ee117d317ad36026441",
+  "original_training_updates": 8,
+  "new_optimizer_updates": 0,
+  "backward_calls": 0,
+  "checkpoint_hashes": {
+    "native520": "0310c2563988f8f59d942dce98119230016136f13fc9729ad1c2f398318e7cb5",
+    "saved528": "34edb69c696fef1ac02e498bb1351a7655442d6c7c041562ca145abfb3a77176"
+  },
+  "full32_both_endpoints": true,
+  "all32_saved_fingerprints_exact": true,
+  "all64_baseline_scalars_match_original_bf16_readiness": true,
+  "frozen_adapter_rng_checks_passed": true,
+  "actual_docker_exit": 0,
+  "actual_unit_terminal": {
+    "unit": "duplex-native-flex90-matched32-timing-v2.service",
+    "invocation_id": "924cca8d0f234690ae918b3dd786cd98",
+    "message_id": "7ad2d189f7e94e70a38c781354912448",
+    "realtime_timestamp": "1792944163636364"
+  },
+  "artifact_preservation": {
+    "regular_files": 34,
+    "regular_bytes": 603813907,
+    "symlinks": 2,
+    "all_regular_hashes_and_link_targets_match": true,
+    "model_qualified": false,
+    "source_inventory_sha256": "fdb93e2a93954f26768c85a09f26048f7174245c7dbc60e7e6bec158036dd7a4",
+    "rescue_receipt_sha256": "7ec6259cf15538c7bff14fe6456de8b77aa211d353d7c6b4a883cd9857e11bd0",
+    "original_local_copy_controller_exit": 1,
+    "artifact_rescue_controller_exit": 0,
+    "copy_inventory_bug": "Two pinned CUDA driver symlinks were wrongly rejected; strict complete regular hashes and link targets subsequently matched through bounded CPU staging.",
+    "legacy_controller_success_fabricated": false
+  },
+  "artifact_sha256": {
+    "result": "fa44198072ed0af143a2438bc73b6869a2e907ea2012978e1d7aadfa55de9352",
+    "controller": "ba479b03370ee80e3965ddd43c8263a9d6aced463c8f07f3bce7ea88f1e77ef4",
+    "runtime": "8c3473d33d7fea80b9c8a0642bb6263dec9b9ed31f5940071a624b93d037d9c0",
+    "actual_terminal": "8af456514e2b292718bb8d0256eb2748f9b409dc95e741300afe02bcd5622ded",
+    "terminal_journal": "a18f55888b56b0b7790baae48bcedd1fbd2a3637fa20b5fad702049d3f344b7f"
+  },
+  "comparison": {
+    "overall": {
+      "text_ce": {
+        "before": 1.4258719087310747,
+        "after": 1.4241121481627803,
+        "delta": -0.0017597605682944106,
+        "relative_percent": -0.12341645539959288
+      },
+      "acoustic_ce": {
+        "before": 0.4088965505361557,
+        "after": 0.4087267713621259,
+        "delta": -0.00016977917402982712,
+        "relative_percent": -0.0415213025904005
+      }
+    },
+    "families": {
+      "cancel-reasoning": {
+        "text_ce": {
+          "before": 1.3967044399484219,
+          "after": 1.3949212965282394,
+          "delta": -0.001783143420182487,
+          "relative_percent": -0.12766791378198353
+        },
+        "acoustic_ce": {
+          "before": 0.3468594588339329,
+          "after": 0.34640906006097794,
+          "delta": -0.0004503987729549408,
+          "relative_percent": -0.12985050904164036
+        }
+      },
+      "delegate-reasoning": {
+        "text_ce": {
+          "before": 1.3511499093939738,
+          "after": 1.3490323663735495,
+          "delta": -0.0021175430204243284,
+          "relative_percent": -0.1567215455296224
+        },
+        "acoustic_ce": {
+          "before": 0.3719491511583328,
+          "after": 0.3720434457063675,
+          "delta": 9.429454803466797e-05,
+          "relative_percent": 0.025351462085882886
+        }
+      },
+      "direct-basic": {
+        "text_ce": {
+          "before": 1.7120795979090957,
+          "after": 1.710918866857039,
+          "delta": -0.0011607310520567182,
+          "relative_percent": -0.06779655884424296
+        },
+        "acoustic_ce": {
+          "before": 0.5042904168367386,
+          "after": 0.5043870769441128,
+          "delta": 9.666010737419128e-05,
+          "relative_percent": 0.01916754793408745
+        }
+      },
+      "replace-reasoning": {
+        "text_ce": {
+          "before": 1.243553687672808,
+          "after": 1.2415760628922938,
+          "delta": -0.001977624780514109,
+          "relative_percent": -0.15903010864091
+        },
+        "acoustic_ce": {
+          "before": 0.4124871753156185,
+          "after": 0.4120675027370453,
+          "delta": -0.00041967257857322693,
+          "relative_percent": -0.10174197009933955
+        }
+      }
+    },
+    "case_directions": {
+      "text_ce": {
+        "lower": 24,
+        "equal": 0,
+        "higher": 8
+      },
+      "acoustic_ce": {
+        "lower": 20,
+        "equal": 0,
+        "higher": 12
+      }
+    },
+    "rows": [
+      {
+        "id": "native-reasoning4-train-000",
+        "family": "direct-basic",
+        "before": {
+          "text_ce": 2.874438182810593,
+          "acoustic_ce": 0.49318933486938477
+        },
+        "after": {
+          "text_ce": 2.8859721150002144,
+          "acoustic_ce": 0.493691623210907
+        },
+        "delta": {
+          "text_ce": 0.01153393218962151,
+          "acoustic_ce": 0.0005022883415222168
+        }
+      },
+      {
+        "id": "native-reasoning4-train-001",
+        "family": "delegate-reasoning",
+        "before": {
+          "text_ce": 1.7009536943395176,
+          "acoustic_ce": 0.4120292365550995
+        },
+        "after": {
+          "text_ce": 1.6988487319937136,
+          "acoustic_ce": 0.4119390547275543
+        },
+        "delta": {
+          "text_ce": -0.00210496234580404,
+          "acoustic_ce": -9.018182754516602e-05
+        }
+      },
+      {
+        "id": "native-reasoning4-train-002",
+        "family": "cancel-reasoning",
+        "before": {
+          "text_ce": 1.3477165129628652,
+          "acoustic_ce": 0.42006006836891174
+        },
+        "after": {
+          "text_ce": 1.3450515355136652,
+          "acoustic_ce": 0.4191097617149353
+        },
+        "delta": {
+          "text_ce": -0.0026649774492000233,
+          "acoustic_ce": -0.0009503066539764404
+        }
+      },
+      {
+        "id": "native-reasoning4-train-003",
+        "family": "replace-reasoning",
+        "before": {
+          "text_ce": 1.3388373306052515,
+          "acoustic_ce": 0.424003928899765
+        },
+        "after": {
+          "text_ce": 1.3348079311086671,
+          "acoustic_ce": 0.42324790358543396
+        },
+        "delta": {
+          "text_ce": -0.004029399496584318,
+          "acoustic_ce": -0.0007560253143310547
+        }
+      },
+      {
+        "id": "native-reasoning4-train-004",
+        "family": "direct-basic",
+        "before": {
+          "text_ce": 2.0285362885691143,
+          "acoustic_ce": 0.48846152424812317
+        },
+        "after": {
+          "text_ce": 2.0242533518988353,
+          "acoustic_ce": 0.4868433177471161
+        },
+        "delta": {
+          "text_ce": -0.004282936670279014,
+          "acoustic_ce": -0.00161820650100708
+        }
+      },
+      {
+        "id": "native-reasoning4-train-005",
+        "family": "delegate-reasoning",
+        "before": {
+          "text_ce": 1.7424785621325718,
+          "acoustic_ce": 0.49025222659111023
+        },
+        "after": {
+          "text_ce": 1.7379547770327584,
+          "acoustic_ce": 0.4900619685649872
+        },
+        "delta": {
+          "text_ce": -0.004523785099813438,
+          "acoustic_ce": -0.00019025802612304688
+        }
+      },
+      {
+        "id": "native-reasoning4-train-006",
+        "family": "cancel-reasoning",
+        "before": {
+          "text_ce": 2.2661685223780736,
+          "acoustic_ce": 0.4205947816371918
+        },
+        "after": {
+          "text_ce": 2.2606906579228294,
+          "acoustic_ce": 0.4200165569782257
+        },
+        "delta": {
+          "text_ce": -0.00547786445524423,
+          "acoustic_ce": -0.0005782246589660645
+        }
+      },
+      {
+        "id": "native-reasoning4-train-007",
+        "family": "replace-reasoning",
+        "before": {
+          "text_ce": 0.8687411135258074,
+          "acoustic_ce": 0.3953501582145691
+        },
+        "after": {
+          "text_ce": 0.8652332243818179,
+          "acoustic_ce": 0.3938767910003662
+        },
+        "delta": {
+          "text_ce": -0.0035078891439894733,
+          "acoustic_ce": -0.0014733672142028809
+        }
+      },
+      {
+        "id": "native-reasoning4-train-008",
+        "family": "direct-basic",
+        "before": {
+          "text_ce": 0.5278519419013605,
+          "acoustic_ce": 0.5140203833580017
+        },
+        "after": {
+          "text_ce": 0.5289393841626691,
+          "acoustic_ce": 0.5134276151657104
+        },
+        "delta": {
+          "text_ce": 0.0010874422613085244,
+          "acoustic_ce": -0.0005927681922912598
+        }
+      },
+      {
+        "id": "native-reasoning4-train-009",
+        "family": "delegate-reasoning",
+        "before": {
+          "text_ce": 0.8786459072108173,
+          "acoustic_ce": 0.42191368341445923
+        },
+        "after": {
+          "text_ce": 0.8778879372398869,
+          "acoustic_ce": 0.42219287157058716
+        },
+        "delta": {
+          "text_ce": -0.0007579699709303611,
+          "acoustic_ce": 0.0002791881561279297
+        }
+      },
+      {
+        "id": "native-reasoning4-train-010",
+        "family": "cancel-reasoning",
+        "before": {
+          "text_ce": 1.033972142400632,
+          "acoustic_ce": 0.24818119406700134
+        },
+        "after": {
+          "text_ce": 1.0339924488343648,
+          "acoustic_ce": 0.24756938219070435
+        },
+        "delta": {
+          "text_ce": 2.030643373274188e-05,
+          "acoustic_ce": -0.0006118118762969971
+        }
+      },
+      {
+        "id": "native-reasoning4-train-011",
+        "family": "replace-reasoning",
+        "before": {
+          "text_ce": 0.972753664928085,
+          "acoustic_ce": 0.3693867623806
+        },
+        "after": {
+          "text_ce": 0.972422699542431,
+          "acoustic_ce": 0.3694188892841339
+        },
+        "delta": {
+          "text_ce": -0.0003309653856540251,
+          "acoustic_ce": 3.212690353393555e-05
+        }
+      },
+      {
+        "id": "native-reasoning4-train-012",
+        "family": "direct-basic",
+        "before": {
+          "text_ce": 0.8793278914557163,
+          "acoustic_ce": 0.5629697442054749
+        },
+        "after": {
+          "text_ce": 0.8791048356748661,
+          "acoustic_ce": 0.5625487565994263
+        },
+        "delta": {
+          "text_ce": -0.00022305578085024536,
+          "acoustic_ce": -0.000420987606048584
+        }
+      },
+      {
+        "id": "native-reasoning4-train-013",
+        "family": "delegate-reasoning",
+        "before": {
+          "text_ce": 1.528005203275029,
+          "acoustic_ce": 0.29905155301094055
+        },
+        "after": {
+          "text_ce": 1.520801768532948,
+          "acoustic_ce": 0.29940736293792725
+        },
+        "delta": {
+          "text_ce": -0.007203434742081072,
+          "acoustic_ce": 0.00035580992698669434
+        }
+      },
+      {
+        "id": "native-reasoning4-train-014",
+        "family": "cancel-reasoning",
+        "before": {
+          "text_ce": 0.668763641564027,
+          "acoustic_ce": 0.322557270526886
+        },
+        "after": {
+          "text_ce": 0.6676284663991652,
+          "acoustic_ce": 0.32194992899894714
+        },
+        "delta": {
+          "text_ce": -0.0011351751648618347,
+          "acoustic_ce": -0.0006073415279388428
+        }
+      },
+      {
+        "id": "native-reasoning4-train-015",
+        "family": "replace-reasoning",
+        "before": {
+          "text_ce": 1.4825186521925673,
+          "acoustic_ce": 0.3254658579826355
+        },
+        "after": {
+          "text_ce": 1.4805304244554236,
+          "acoustic_ce": 0.32484886050224304
+        },
+        "delta": {
+          "text_ce": -0.0019882277371436885,
+          "acoustic_ce": -0.0006169974803924561
+        }
+      },
+      {
+        "id": "native-reasoning4-train-016",
+        "family": "direct-basic",
+        "before": {
+          "text_ce": 3.8354925411996135,
+          "acoustic_ce": 0.5184995532035828
+        },
+        "after": {
+          "text_ce": 3.8197593811425463,
+          "acoustic_ce": 0.5182605981826782
+        },
+        "delta": {
+          "text_ce": -0.015733160057067153,
+          "acoustic_ce": -0.00023895502090454102
+        }
+      },
+      {
+        "id": "native-reasoning4-train-017",
+        "family": "delegate-reasoning",
+        "before": {
+          "text_ce": 1.8836595873792064,
+          "acoustic_ce": 0.3317696750164032
+        },
+        "after": {
+          "text_ce": 1.8809175902508315,
+          "acoustic_ce": 0.3319459855556488
+        },
+        "delta": {
+          "text_ce": -0.0027419971283748623,
+          "acoustic_ce": 0.00017631053924560547
+        }
+      },
+      {
+        "id": "native-reasoning4-train-018",
+        "family": "cancel-reasoning",
+        "before": {
+          "text_ce": 0.9931243254842101,
+          "acoustic_ce": 0.3662474453449249
+        },
+        "after": {
+          "text_ce": 0.9911007588418954,
+          "acoustic_ce": 0.3671967685222626
+        },
+        "delta": {
+          "text_ce": -0.0020235666423147336,
+          "acoustic_ce": 0.0009493231773376465
+        }
+      },
+      {
+        "id": "native-reasoning4-train-019",
+        "family": "replace-reasoning",
+        "before": {
+          "text_ce": 1.221991023568279,
+          "acoustic_ce": 0.4554443061351776
+        },
+        "after": {
+          "text_ce": 1.2245121810181203,
+          "acoustic_ce": 0.455502986907959
+        },
+        "delta": {
+          "text_ce": 0.0025211574498413825,
+          "acoustic_ce": 5.868077278137207e-05
+        }
+      },
+      {
+        "id": "native-reasoning4-train-020",
+        "family": "direct-basic",
+        "before": {
+          "text_ce": 1.3203653781260982,
+          "acoustic_ce": 0.44033563137054443
+        },
+        "after": {
+          "text_ce": 1.309035321978115,
+          "acoustic_ce": 0.4426901340484619
+        },
+        "delta": {
+          "text_ce": -0.011330056147983214,
+          "acoustic_ce": 0.0023545026779174805
+        }
+      },
+      {
+        "id": "native-reasoning4-train-021",
+        "family": "delegate-reasoning",
+        "before": {
+          "text_ce": 0.8246033949254254,
+          "acoustic_ce": 0.3032597601413727
+        },
+        "after": {
+          "text_ce": 0.8230193483477564,
+          "acoustic_ce": 0.30345529317855835
+        },
+        "delta": {
+          "text_ce": -0.0015840465776690849,
+          "acoustic_ce": 0.00019553303718566895
+        }
+      },
+      {
+        "id": "native-reasoning4-train-022",
+        "family": "cancel-reasoning",
+        "before": {
+          "text_ce": 2.172108644004709,
+          "acoustic_ce": 0.3577655851840973
+        },
+        "after": {
+          "text_ce": 2.1703252013360483,
+          "acoustic_ce": 0.35696983337402344
+        },
+        "delta": {
+          "text_ce": -0.0017834426686604843,
+          "acoustic_ce": -0.0007957518100738525
+        }
+      },
+      {
+        "id": "native-reasoning4-train-023",
+        "family": "replace-reasoning",
+        "before": {
+          "text_ce": 1.1164508199960892,
+          "acoustic_ce": 0.48491325974464417
+        },
+        "after": {
+          "text_ce": 1.1150941602596163,
+          "acoustic_ce": 0.4846023917198181
+        },
+        "delta": {
+          "text_ce": -0.0013566597364729205,
+          "acoustic_ce": -0.0003108680248260498
+        }
+      },
+      {
+        "id": "native-reasoning4-train-024",
+        "family": "direct-basic",
+        "before": {
+          "text_ce": 1.3367100188745837,
+          "acoustic_ce": 0.45522937178611755
+        },
+        "after": {
+          "text_ce": 1.3302485398557167,
+          "acoustic_ce": 0.4572451710700989
+        },
+        "delta": {
+          "text_ce": -0.006461479018867067,
+          "acoustic_ce": 0.0020157992839813232
+        }
+      },
+      {
+        "id": "native-reasoning4-train-025",
+        "family": "delegate-reasoning",
+        "before": {
+          "text_ce": 1.3520448055669725,
+          "acoustic_ce": 0.3524022698402405
+        },
+        "after": {
+          "text_ce": 1.3529080006475667,
+          "acoustic_ce": 0.3523973822593689
+        },
+        "delta": {
+          "text_ce": 0.0008631950805941813,
+          "acoustic_ce": -4.887580871582031e-06
+        }
+      },
+      {
+        "id": "native-reasoning4-train-026",
+        "family": "cancel-reasoning",
+        "before": {
+          "text_ce": 1.346308397949091,
+          "acoustic_ce": 0.3543431758880615
+        },
+        "after": {
+          "text_ce": 1.3433888134879268,
+          "acoustic_ce": 0.35372892022132874
+        },
+        "delta": {
+          "text_ce": -0.0029195844611642485,
+          "acoustic_ce": -0.0006142556667327881
+        }
+      },
+      {
+        "id": "native-reasoning4-train-027",
+        "family": "replace-reasoning",
+        "before": {
+          "text_ce": 1.8597442556803259,
+          "acoustic_ce": 0.4343954026699066
+        },
+        "after": {
+          "text_ce": 1.856112176275598,
+          "acoustic_ce": 0.43487560749053955
+        },
+        "delta": {
+          "text_ce": -0.0036320794047277616,
+          "acoustic_ce": 0.00048020482063293457
+        }
+      },
+      {
+        "id": "native-reasoning4-train-028",
+        "family": "direct-basic",
+        "before": {
+          "text_ce": 0.8939145403356861,
+          "acoustic_ce": 0.5616177916526794
+        },
+        "after": {
+          "text_ce": 0.910038005143349,
+          "acoustic_ce": 0.5603893995285034
+        },
+        "delta": {
+          "text_ce": 0.016123464807662913,
+          "acoustic_ce": -0.0012283921241760254
+        }
+      },
+      {
+        "id": "native-reasoning4-train-029",
+        "family": "delegate-reasoning",
+        "before": {
+          "text_ce": 0.8988081203222507,
+          "acoustic_ce": 0.36491480469703674
+        },
+        "after": {
+          "text_ce": 0.8999207769429347,
+          "acoustic_ce": 0.364947646856308
+        },
+        "delta": {
+          "text_ce": 0.0011126566206840494,
+          "acoustic_ce": 3.2842159271240234e-05
+        }
+      },
+      {
+        "id": "native-reasoning4-train-030",
+        "family": "cancel-reasoning",
+        "before": {
+          "text_ce": 1.345473332843767,
+          "acoustic_ce": 0.2851261496543884
+        },
+        "after": {
+          "text_ce": 1.3471924898900198,
+          "acoustic_ce": 0.28473132848739624
+        },
+        "delta": {
+          "text_ce": 0.001719157046252917,
+          "acoustic_ce": -0.0003948211669921875
+        }
+      },
+      {
+        "id": "native-reasoning4-train-031",
+        "family": "replace-reasoning",
+        "before": {
+          "text_ce": 1.0873926408860584,
+          "acoustic_ce": 0.41093772649765015
+        },
+        "after": {
+          "text_ce": 1.0838957060966763,
+          "acoustic_ce": 0.41016659140586853
+        },
+        "delta": {
+          "text_ce": -0.003496934789382067,
+          "acoustic_ce": -0.0007711350917816162
+        }
+      }
+    ]
+  },
+  "retained_old28": {
+    "components": 28,
+    "kinds": 8,
+    "weights_from_original_complete_balanced_microbatches": true,
+    "before_native520": 0.5675211192473875,
+    "after_saved528": 0.5720761260258552,
+    "after_minus_before": 0.004555006778467763,
+    "relative_increase_percent": 0.8026144973262594,
+    "logged_pre_update1": 0.5675210952758789,
+    "logged_pre_update8": 0.5674616098403931,
+    "recomputed_before_minus_logged_pre_update1": 2.397150855593111e-08,
+    "logged_losses_are_pre_update_forwards_not_post_update8_metrics": true,
+    "source": "evals/context_actual_train.py:437,538; evals/context_native_complete_batch.py:60; evals/context_decision_loss.py:11"
+  },
+  "unchanged_behavior": {
+    "review_sha256": "2c89524ce10967a9b6c15653a559d0353101adfec7530f3ac1ead29e8e60ce16",
+    "all10_both_models_reviewed": true,
+    "ordinary_core_baseline": 2,
+    "ordinary_core_saved": 1,
+    "speech_agreement_baseline": 8,
+    "speech_agreement_saved": 7,
+    "speech_counts_are_not_task_quality": true,
+    "full_task_qualified": false
+  },
+  "resource_closure": {
+    "at_utc": "2026-10-25T16:42:36.858481+00:00",
+    "all_project_compute_stopped": true,
+    "gpu_seconds_upper": 40351,
+    "gpu_hours_upper": 11.20861111111111,
+    "cpu_seconds_upper": 12053,
+    "cpu_hours_upper": 3.3480555555555553,
+    "conservative_gpu_plus_all_original_reserves_usd": 91.98448055555555,
+    "cpu_lifetime_upper_usd": 0.40176666666666666,
+    "not_an_invoice": true,
+    "original_disk_attached_to_stopped_gpu_non_auto_delete": true
+  },
+  "interpretation": [
+    "New32 TRAIN balanced text CE fell only0.1234percent and mean assistant acoustic CE fell0.0415percent after one exposure; these are modest fitting changes, not demonstrated convergence.",
+    "Allfour family mean text losses fell slightly; mean acoustic CE worsened for direct-basic and delegate-reasoning. Preserve complete32, never select passing rows.",
+    "Old28 kind-balanced weighted objective worsened0.8026percent and native ordinary correctness fell2/4to1/4. Neither loss decrease nor exact restoration qualifies the candidate.",
+    "EffectiveLR2e-7 (50xlowerthanparent), one exposure, inheritedAdam moments and rare request-coefficient mass are testable explanations, not independently established causes.",
+    "No evidence isolates batch size, source quality, adapter capacity, clipping or gradient conflict as the sole failure cause.",
+    "Do not extend/adopt the unchanged rejected candidate; prepare a concrete changed native training pilot with preserved baseline, data, oldhistories/KL/hidden and unchanged numerical/audio/behavior/fresh gates.",
+    "Current GCP authorization permitsZEROnewoptimizerupdates; a new training stage needs a concrete separate authorization before execution."
+  ],
+  "fresh_payload_opened": false,
+  "training_extension_authorized": false,
+  "quality_qualified": false,
+  "model_adopted": false,
+  "goal_complete": false
+}
