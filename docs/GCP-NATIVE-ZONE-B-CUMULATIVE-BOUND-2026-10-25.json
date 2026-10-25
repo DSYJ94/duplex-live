@@ -1,0 +1,66 @@
+{
+  "schema": "dl-gcp-zoneb-cumulative-bound-v1",
+  "prior_gpu": {
+    "resource_id": "951004838667287080",
+    "all_operations_terminal": true,
+    "intervals": [
+      {
+        "start": "2026-10-24T16:52:39.416-07:00",
+        "end": "2026-10-25T00:06:16.879-07:00",
+        "seconds_upper": 26017.463
+      },
+      {
+        "start": "2026-10-25T01:15:17.472-07:00",
+        "end": "2026-10-25T01:17:27.293-07:00",
+        "seconds_upper": 129.821
+      },
+      {
+        "start": "2026-10-25T01:28:49.533-07:00",
+        "end": "2026-10-25T03:01:44.158-07:00",
+        "seconds_upper": 5574.625
+      },
+      {
+        "start": "2026-10-25T03:02:59.839-07:00",
+        "end": "2026-10-25T03:05:03.645-07:00",
+        "seconds_upper": 123.806
+      },
+      {
+        "start": "2026-10-25T03:06:39.692-07:00",
+        "end": "2026-10-25T03:08:34.342-07:00",
+        "seconds_upper": 114.65
+      },
+      {
+        "start": "2026-10-25T03:14:14.461-07:00",
+        "end": "2026-10-25T03:16:13.961-07:00",
+        "seconds_upper": 119.5
+      }
+    ],
+    "run_seconds_upper": 32079.864999999998,
+    "read_utc": "2026-10-25T10:31:25.065780+00:00",
+    "source": "Actual successful provider insert/start insertTime through stop endTime; upper bound includes provisioning/shutdown"
+  },
+  "prior_cpu": {
+    "resource_id": "1784642133801608667",
+    "all_operations_terminal": true,
+    "intervals": [
+      {
+        "start": "2026-10-24T13:55:16.727-07:00",
+        "end": "2026-10-24T16:30:35.278-07:00",
+        "seconds_upper": 9318.551
+      }
+    ],
+    "run_seconds_upper": 9318.551,
+    "read_utc": "2026-10-25T10:31:27.627312+00:00",
+    "source": "Actual successful provider insert/start insertTime through stop endTime; upper bound includes provisioning/shutdown"
+  },
+  "maximum_total_gpu_seconds": 43200,
+  "maximum_zone_b_gpu_seconds": 7200,
+  "maximum_zone_b_cpu_seconds": 3600,
+  "hourly_gpu_upper_usd": 5.63,
+  "migration_reserve_usd": 12,
+  "other_reserve_usd": 16.88,
+  "total_conservative_upper_usd": 90.30934443055556,
+  "optimizer_updates": 0,
+  "repeat_recovery_or_native20": false,
+  "scope": "Only one complete32 matched teacher-forced loss diagnostic; no optimizer or adoption"
+}

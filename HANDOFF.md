@@ -1,3 +1,36 @@
+# LOCAL — Approved zone-B fallback executing; all prior usage counted
+
+25Oct10:39UTC. ZoneA two actual terminal stockouts v7/v8 (operations
+operation-1792923574492-65ea78cc45d6e-e85a7d0d-d1e4c0e9 and
+operation-1792923955814-65ea7a37edef2-d298ba2a-22360677); A VM951004838667287080
+TERMINATED with original disk1828090267781080539 intact. No diagnostic loaded.
+Explicit late owner approval now used for ce626ee zoneB placement. ONE snapshot
+`duplex-native-zoneb-20261025-v1` operation
+operation-1792924576444-65ea7c87ceecb-b141bc73-96f07146 actually submitted; UPLOADING
+at10:37, do NOT duplicate. No replacement disk/CPU/GPU created yet.
+
+Actual provider successful insert/start-to-stop intervals conservatively total
+GPU32079.865sec (8.911h), CPU9318.551sec (2.588h), all operations terminal.
+Tracked GCP-NATIVE-ZONE-B-CUMULATIVE-BOUND-2026-10-25.json. One B GPU planned<=7200sec,
+CPU<=3600sec; cumulative GPU<=12h/CPU<=4h, reserve12 migration +16.88 existing;
+whole conservative upper90.31USD, total100 unchanged. Historical usage never reset.
+B actual project catalog supports A2ultra/A10080; STOCK STILL UNPROVEN.
+
+Mac costguard now explicit approvedB branch, exact authorizationSHA, replacement
+name, prior usage floor, cumulative runtime/cost and migrationreserve; A branch
+unchanged. Diagnostic parent/child now bind validated recorded lease/destination,
+not spoof originalA resource ID. All62 related local testsPASS; no model/GPU run.
+Next wait SAME snapshot actualDONE, create exact replacement250GBpd-balancedB;
+short nativeSTOP E2standard2 rehash ALL40132files/81154452891bytes+8links, semantic
+closure and recoveredproof/newnative20 hashes, copy receipts back. Stop/detachCPU;
+one bounded B A100 only with actual stock/price/quota/nativeSTOP and independent
+Mac/guest guards, targetCPUtests first. ZERO new updates/repeated8/recovery/native20.
+Preserve originaldisk/snapshot until replacement/offmachine hashes prove retention.
+LOCAL sole executor; unrelated PYC/probes/roadmap preserved. Model remains REJECTED,
+candidate ordinary1/4 vsbaseline2/4. Heartbeat paused, activeproductgoal unfinished.
+
+---
+
 # LOCAL — Diagnostic not yet loaded; bootstrap blockers diagnosed, guard repaired
 
 Saved8 strictproof/native20 rejection/complete backups unchanged. Diagnostic code

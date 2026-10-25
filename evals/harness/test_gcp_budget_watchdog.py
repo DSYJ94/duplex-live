@@ -9,7 +9,7 @@ import unittest
 
 from portable.context.gcp_budget_watchdog import (
     AUTH_SHA, CATALOG_SHA, DISK, PROJECT, ZONE, check_live, owned, stop_owned, validate_lease,
-    read_runpod_pods)
+    read_runpod_pods, ZONE_B_AUTH_SHA, ZONE_B_DISK, PRIOR_GPU_SECONDS_UPPER)
 
 
 class LiveReadTransportTests(unittest.TestCase):
@@ -169,6 +169,35 @@ class BudgetTests(unittest.TestCase):
         self.vm['lastStartTimestamp']='2026-10-25T02:00:01Z'
         self.vm['scheduling'].update(provisioningModel='FLEX_START',maxRunDuration={'seconds':'36000'})
         with self.assertRaisesRegex(ValueError,'twelve-hour'):self.check()
+
+
+class ZoneBReplacementTests(unittest.TestCase):
+    check = BudgetTests.check
+    def setUp(self):
+        BudgetTests.setUp(self)
+        self.lease.update(zone='europe-west4-b', disk_name=ZONE_B_DISK,
+            placement_authorization_sha256=ZONE_B_AUTH_SHA,
+            prior_gpu_seconds_upper=PRIOR_GPU_SECONDS_UPPER,
+            extra_migration_reserve_usd=12, stop_utc='2026-10-25T02:00:00Z')
+        self.vm['zone']=self.vm['zone'].replace('europe-west4-a','europe-west4-b')
+        self.vm['disks'][0]['source']=self.vm['disks'][0]['source'].replace(
+            'europe-west4-a','europe-west4-b').replace(DISK,ZONE_B_DISK)
+        self.vm['scheduling']['terminationTime']=self.lease['stop_utc']
+        self.disk['name']=ZONE_B_DISK
+
+    # Original-placement cases remain exercised on BudgetTests; replacement has
+    # a shorter cumulative allowance and therefore uses distinct scenarios.
+    def test_real_owner_scope_and_complete_destination_required(self):
+        validate_lease(self.lease,self.authority,self.destination)
+        guard=self.check()
+        self.assertLess(guard['remaining_budget_usd'], 22)
+        for change in (dict(prior_gpu_seconds_upper=0),dict(prior_gpu_seconds_upper=True),
+                       dict(prior_gpu_seconds_upper=float('nan')),
+                       dict(placement_authorization_sha256='a'*64),
+                       dict(extra_migration_reserve_usd=0),dict(stop_utc='2026-10-25T04:00:00Z')):
+            with self.subTest(change=change),self.assertRaises(ValueError):
+                validate_lease(dict(self.lease,**change),self.authority,self.destination)
+
 
 
 if __name__ == '__main__':

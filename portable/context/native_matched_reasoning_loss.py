@@ -178,6 +178,24 @@ def measure_context(context, inputs, prefix, producer_commit, proof_path, guard)
     return canonical(result)
 
 
+def verify_resource(args, guard):
+    """Bind either original placement or explicitly approved replacement lease."""
+    from portable.context.gcp_budget_watchdog import AUTH_SHA, ZONE_B_AUTH_SHA, validate_lease, stamp
+    source = Path(__file__).resolve().parents[2]
+    lease = read(args.lease)
+    if lease.get('zone') == 'europe-west4-b':
+        if sha(source/'docs/GCP-NATIVE-ZONE-B-PLACEMENT-AUTHORIZATION-2026-10-25.json') != ZONE_B_AUTH_SHA:
+            raise ValueError('Exact recorded replacement authorization required')
+    elif lease.get('id') != '951004838667287080':
+        raise ValueError('Exact original resource required')
+    validate_lease(lease, (source/'docs/GCP-NATIVE-CONTINUATION-AUTHORIZATION-2026-10-24.json').read_bytes(),
+                   args.destination.read_bytes())
+    if (guard['resource_id'] != str(lease['id']) or guard['deadline_unix'] !=
+            stamp(lease['stop_utc'])
+            or guard['authorization_sha256'] != AUTH_SHA):
+        raise ValueError('Fresh guard must match exact validated lease')
+
+
 def child(args):
     """Reuse pinned construction only; no original optimizer/recovery tail runs."""
     from portable.context import native_saved_stage_runtime as runtime
@@ -189,8 +207,7 @@ def child(args):
             or runtime.git(producer, 'status', '--porcelain')):
         raise ValueError('Exact clean committed diagnostic producer required')
     initial = fresh_guard(args.guard)
-    if initial['resource_id'] != '951004838667287080':
-        raise ValueError('Only the existing exact approved GPU may be used')
+    verify_resource(args, initial)
     pinned_proof(args.proof)
     source = runtime.isolate(args.source)
     inputs = verified_inputs(args.snapshot, args.observation)
@@ -243,7 +260,7 @@ def child(args):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
-    for name in ('source', 'snapshot', 'observation', 'proof', 'guard', 'out'):
+    for name in ('source', 'snapshot', 'observation', 'proof', 'guard', 'out', 'lease', 'destination'):
         ap.add_argument('--'+name, type=Path, required=True)
     ap.add_argument('--producer-commit', required=True)
     ap.add_argument('--child', action='store_true')
@@ -259,7 +276,8 @@ def main():
     pinned_proof(args.proof)
     identity, _ = verify_checkpoint(args.proof)
     initial = fresh_guard(args.guard)
-    if (initial['resource_id'] != '951004838667287080' or args.out.exists()
+    verify_resource(args, initial)
+    if (args.out.exists()
             or initial['deadline_unix']-time.time() < 3720):
         raise ValueError('Exact existing resource and complete bounded diagnostic window required')
     import fcntl
@@ -269,7 +287,7 @@ def main():
     deadline = min(time.time()+3600, initial['deadline_unix']-120)
     command = [sys.executable, '-u', '-m', 'portable.context.native_matched_reasoning_loss',
                '--child', '--producer-commit', args.producer_commit]
-    for name in ('source', 'snapshot', 'observation', 'proof', 'guard'):
+    for name in ('source', 'snapshot', 'observation', 'proof', 'guard', 'lease', 'destination'):
         command += ['--'+name, str(getattr(args, name))]
     command += ['--out', str(args.out/'measurement')]
     state = dict(schema='dl-native-matched32-diagnostic-controller-v1', phase='starting',

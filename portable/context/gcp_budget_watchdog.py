@@ -24,6 +24,26 @@ AUTH_SHA = '97c8d43fe7be11595e7d00775af4e1f2c7666a469041c720bf7586ee8a020322'
 CATALOG_SHA = '94b42bae0152e8150ba7842146f66711b13df3b8ece9125bcb5db92a761196fb'
 # Full approved CPU lifetime, seven days durable storage, and network reserve.
 RESERVE_USD = 0.48 + 6.40 + 10.00
+ZONE_B_AUTH_SHA = 'e1ffc0ffc323cf051d8b24bb8bc8d3f8bcb62bd42ba0e6467146a1aea5a89e4b'
+PRIOR_GPU_SECONDS_UPPER = 32079.865
+ZONE_B_DISK = 'duplex-native-stage-20261025-b-v1'
+
+
+def placement(lease):
+    if lease.get('zone') == ZONE:
+        return ZONE, DISK, 0.0, RESERVE_USD
+    history = lease.get('prior_gpu_seconds_upper')
+    if (lease.get('zone') != 'europe-west4-b'
+            or lease.get('placement_authorization_sha256') != ZONE_B_AUTH_SHA
+            or lease.get('disk_name') != ZONE_B_DISK
+            or type(history) not in (int, float) or not math.isfinite(history)
+            or history < PRIOR_GPU_SECONDS_UPPER
+            or lease.get('extra_migration_reserve_usd') != 12
+            or lease.get('provisioning_model', 'STANDARD') != 'STANDARD'):
+        raise ValueError('Exact approved zoneB placement and cumulative historical usage required')
+    return 'europe-west4-b', ZONE_B_DISK, history, RESERVE_USD+12
+
+
 STOPPED = {'EXITED', 'STOPPED', 'TERMINATED', 'DELETED'}
 
 
@@ -67,10 +87,11 @@ def validate_lease(lease, authority, destination):
             or grant['maximum_additional_gcp_usage_usd'] != 100
             or grant['optimizer_updates_authorized_by_this_proposal'] != 0):
         raise ValueError('Unchanged bounded zero-update scope required')
+    zone, disk_name, history, reserve = placement(lease)
     if (lease['schema'] != 'dl-native-gcp-bounded-gpu-lease-v1'
-            or lease['project'] != PROJECT or lease['zone'] != ZONE
+            or lease['project'] != PROJECT or lease['zone'] != zone
             or not lease['name'].startswith('duplex-native-saved8-gpu-')
-            or not str(lease['id']).isdigit() or lease['disk_name'] != DISK
+            or not str(lease['id']).isdigit() or lease['disk_name'] != disk_name
             or not str(lease['disk_id']).isdigit()
             or lease['authorization_sha256'] != AUTH_SHA
             or type(lease['optimizer_updates']) is not int or lease['optimizer_updates'] != 0):
@@ -82,8 +103,8 @@ def validate_lease(lease, authority, destination):
         raise ValueError('Only standard or explicitly bounded ten-hour Flex-start lease allowed')
     rate = lease['hourly_upper_usd']
     if (type(rate) not in (int, float) or not math.isfinite(rate) or rate <= 0
-            or not 0 < deadline-start <= 43200
-            or rate*(deadline-start)/3600+RESERVE_USD > 100):
+            or not 0 < deadline-start <= 43200-history
+            or rate*(history+deadline-start)/3600+reserve > 100):
         raise ValueError('Whole GPU lifetime plus reserves must fit100USD/max12h')
     if (hashlib.sha256(destination).hexdigest() != lease['destination_report_sha256']):
         raise ValueError('Actual complete destination receipt changed')
@@ -101,7 +122,7 @@ def validate_lease(lease, authority, destination):
 def owned(vm, lease):
     return (str(vm['id']) == str(lease['id']) and vm['name'] == lease['name']
             and stamp(vm['creationTimestamp']) == stamp(lease['created_utc'])
-            and vm['zone'].endswith('/zones/'+ZONE))
+            and vm['zone'].endswith('/zones/'+lease['zone']))
 
 
 def native_deadline(vm, lease):
@@ -132,12 +153,13 @@ def check_live(lease, vm, disk, instances, runpod_pods, now):
             or native_deadline(vm, lease) != deadline
             or vm['scheduling'].get('automaticRestart') is not False):
         raise ValueError('Exact live singleA100 and native STOP deadline required')
-    expected = '/projects/'+PROJECT+'/zones/'+ZONE+'/disks/'+DISK
+    zone, disk_name, history, reserve = placement(lease)
+    expected = '/projects/'+PROJECT+'/zones/'+zone+'/disks/'+disk_name
     persistent = [d for d in vm['disks'] if d.get('type') == 'PERSISTENT']
     if (len(persistent) != 1 or not persistent[0]['source'].endswith(expected)
             or persistent[0].get('autoDelete') is not False
             or persistent[0].get('boot') is not True or persistent[0].get('mode') != 'READ_WRITE'
-            or str(disk['id']) != str(lease['disk_id']) or disk['name'] != DISK
+            or str(disk['id']) != str(lease['disk_id']) or disk['name'] != disk_name
             or int(disk['sizeGb']) != 250):
         raise ValueError('Same250GB persistent non-auto-deleted disk required')
     accelerators = vm.get('guestAccelerators', [])
@@ -145,7 +167,7 @@ def check_live(lease, vm, disk, instances, runpod_pods, now):
             or not accelerators[0]['acceleratorType'].endswith('/nvidia-a100-80gb')):
         raise ValueError('Exactly one A10080GB required')
     for other in instances:
-        if other['name'] == DISK and other['status'] not in STOPPED:
+        if (other['name'] in (DISK, ZONE_B_DISK) or other['name'].startswith('duplex-native-stage-')) and other['status'] not in STOPPED:
             raise ValueError('The original staging CPU must be stopped')
         if (str(other['id']) != str(vm['id']) and other['status'] not in STOPPED
                 and (other.get('guestAccelerators') or '/machineTypes/a2-' in other['machineType']
@@ -157,7 +179,7 @@ def check_live(lease, vm, disk, instances, runpod_pods, now):
                 and pod.get('computeType') != 'CPU'):
             raise ValueError('Another native Runpod GPU may be active')
     elapsed = max(0, now-stamp(lease['created_utc']))
-    remaining = 100-RESERVE_USD-elapsed*lease['hourly_upper_usd']/3600
+    remaining = 100-reserve-(history+elapsed)*lease['hourly_upper_usd']/3600
     planned = (deadline-now)*lease['hourly_upper_usd']/3600
     if not 0 < planned <= remaining:
         raise ValueError('Remaining full GPU window exceeds budget')
@@ -175,7 +197,7 @@ def stop_owned(lease, vm_read, run=subprocess.run):
     # A2 Ultra always includes disposable Local SSD. Explicitly discard only
     # that scratch storage; the non-auto-deleted persistent boot disk survives.
     run(['gcloud', 'compute', 'instances', 'stop', lease['name'],
-         '--zone='+ZONE, '--project='+PROJECT, '--quiet', '--discard-local-ssd=True'],
+         '--zone='+lease['zone'], '--project='+PROJECT, '--quiet', '--discard-local-ssd=True'],
         check=True, timeout=90, capture_output=True, text=True)
 
 
@@ -204,7 +226,7 @@ def main():
         return json.loads(result.stdout)
 
     def vm_read():
-        return gcloud('instances', 'describe', lease['name'], '--zone='+ZONE)
+        return gcloud('instances', 'describe', lease['name'], '--zone='+lease['zone'])
 
     def record(phase, **extra):
         value = dict(phase=phase, pid=os.getpid(), resource_id=str(lease['id']),
@@ -226,7 +248,7 @@ def main():
                     record('gpu_not_billing_compute'); return
                 if time.time() >= deadline:
                     stop_owned(lease, vm_read); record('provider_deadline_stop_requested'); return
-                disk = gcloud('disks', 'describe', DISK, '--zone='+ZONE)
+                disk = gcloud('disks', 'describe', lease['disk_name'], '--zone='+lease['zone'])
                 instances = gcloud('instances', 'list')
                 pods = read_runpod_pods(key)
                 if isinstance(pods, dict): pods = pods['pods']
