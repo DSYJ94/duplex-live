@@ -1,3 +1,29 @@
+# LOCAL — Complete baseline32 recorded; all64 losses match original BF16 readiness exactly
+
+25Oct14:36UTC. Same live diagnostic completed all32native520scenes. CPU audit
+ docs/NATIVE-FULL32-BASELINE-INTERIM-2026-10-25.json pins copiedlogsnapshot and original
+approved BF16gradient-readiness SHA via saved8finalizationrecipe; ALL64scalar values
+(text+acoustic for32) EXACT, maxdifferences0. Baseline meantext1.4258719087310747,
+meanacoustic0.4088965505361557. This is INTERIM, not completed pair/finalhash/RNGproof,
+qualityapproval or adoption. Saved528 stillmust completeall32/exactfingerprints.
+
+Initialcomparison mistakenly used numerical.json, whose precise_native/linear_reference
+profile differs from actual native BF16 recorded-call training. That unmatched
+comparison is retained only in ignored baseline32-unmatched-numerical-reference-
+diagnostic-v1.json; no modeldrift conclusion/modelcodechange wasmade. Correct
+comparison uses approved-reasoning32-gradient.json, all64exact asabove. No threshold
+weakened, no GPUrerun or newtraining. This also cautions against comparing differently
+profiled scalar reports as a learning curve.
+
+Currentcontroller-v5/tool81390 and evidencepreserver/tool26003 unchanged; doNOT
+restart either. Protective partialcopy remains UNQUALIFIED; finalactualterminal0/
+completepair/frozen+RNG/allfingerprints/fullhashcopyback stillrequired. Existing
+child14:53:05.747UTC deadline/native15:22:10.600UTC STOP andoriginal12h/100USD remain.
+No optimizer extension/adoption authorized; currentcandidatebehaviorstillrejected.
+Source deployment of this CPUaudit does notalter pinned running producercd5666c.
+
+---
+
 # LOCAL — Protective diagnostic copy active; SAME model job remains sole executor
 
 25Oct14:29UTC. Read-only local evidence preserver PID53548/tool26003 launched ONCE,

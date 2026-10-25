@@ -1,0 +1,287 @@
+{
+  "schema": "dl-native-full32-baseline-interim-audit-v1",
+  "recorded_utc": "2026-10-25T14:36:09.297008+00:00",
+  "model_source_commit": "da389a7031a5504495397d1575952194ffa209f1",
+  "producer_commit": "cd5666c2514830c44c940a79ffc3508102799b9e",
+  "log_snapshot_sha256": "50ec46e7505f109d02470ca6ebb5a2fb8895cbd9bfd762d6b000d6af18ea2767",
+  "summary": {
+    "complete_baseline32": true,
+    "complete_pair": false,
+    "maximum_absolute_text_delta": 0.0,
+    "maximum_absolute_acoustic_delta": 0.0,
+    "all64_scalar_values_exact": true,
+    "baseline_mean_text_ce": 1.4258719087310747,
+    "baseline_mean_acoustic_ce": 0.4088965505361557
+  },
+  "rows": [
+    {
+      "id": "native-reasoning4-train-002",
+      "family": "cancel-reasoning",
+      "text_ce": 1.3477165129628652,
+      "acoustic_ce": 0.42006006836891174,
+      "text_delta_from_original_ready": 0.0,
+      "acoustic_delta_from_original_ready": 0.0
+    },
+    {
+      "id": "native-reasoning4-train-006",
+      "family": "cancel-reasoning",
+      "text_ce": 2.2661685223780736,
+      "acoustic_ce": 0.4205947816371918,
+      "text_delta_from_original_ready": 0.0,
+      "acoustic_delta_from_original_ready": 0.0
+    },
+    {
+      "id": "native-reasoning4-train-010",
+      "family": "cancel-reasoning",
+      "text_ce": 1.033972142400632,
+      "acoustic_ce": 0.24818119406700134,
+      "text_delta_from_original_ready": 0.0,
+      "acoustic_delta_from_original_ready": 0.0
+    },
+    {
+      "id": "native-reasoning4-train-014",
+      "family": "cancel-reasoning",
+      "text_ce": 0.668763641564027,
+      "acoustic_ce": 0.322557270526886,
+      "text_delta_from_original_ready": 0.0,
+      "acoustic_delta_from_original_ready": 0.0
+    },
+    {
+      "id": "native-reasoning4-train-018",
+      "family": "cancel-reasoning",
+      "text_ce": 0.9931243254842101,
+      "acoustic_ce": 0.3662474453449249,
+      "text_delta_from_original_ready": 0.0,
+      "acoustic_delta_from_original_ready": 0.0
+    },
+    {
+      "id": "native-reasoning4-train-022",
+      "family": "cancel-reasoning",
+      "text_ce": 2.172108644004709,
+      "acoustic_ce": 0.3577655851840973,
+      "text_delta_from_original_ready": 0.0,
+      "acoustic_delta_from_original_ready": 0.0
+    },
+    {
+      "id": "native-reasoning4-train-026",
+      "family": "cancel-reasoning",
+      "text_ce": 1.346308397949091,
+      "acoustic_ce": 0.3543431758880615,
+      "text_delta_from_original_ready": 0.0,
+      "acoustic_delta_from_original_ready": 0.0
+    },
+    {
+      "id": "native-reasoning4-train-030",
+      "family": "cancel-reasoning",
+      "text_ce": 1.345473332843767,
+      "acoustic_ce": 0.2851261496543884,
+      "text_delta_from_original_ready": 0.0,
+      "acoustic_delta_from_original_ready": 0.0
+    },
+    {
+      "id": "native-reasoning4-train-001",
+      "family": "delegate-reasoning",
+      "text_ce": 1.7009536943395176,
+      "acoustic_ce": 0.4120292365550995,
+      "text_delta_from_original_ready": 0.0,
+      "acoustic_delta_from_original_ready": 0.0
+    },
+    {
+      "id": "native-reasoning4-train-005",
+      "family": "delegate-reasoning",
+      "text_ce": 1.7424785621325718,
+      "acoustic_ce": 0.49025222659111023,
+      "text_delta_from_original_ready": 0.0,
+      "acoustic_delta_from_original_ready": 0.0
+    },
+    {
+      "id": "native-reasoning4-train-009",
+      "family": "delegate-reasoning",
+      "text_ce": 0.8786459072108173,
+      "acoustic_ce": 0.42191368341445923,
+      "text_delta_from_original_ready": 0.0,
+      "acoustic_delta_from_original_ready": 0.0
+    },
+    {
+      "id": "native-reasoning4-train-013",
+      "family": "delegate-reasoning",
+      "text_ce": 1.528005203275029,
+      "acoustic_ce": 0.29905155301094055,
+      "text_delta_from_original_ready": 0.0,
+      "acoustic_delta_from_original_ready": 0.0
+    },
+    {
+      "id": "native-reasoning4-train-017",
+      "family": "delegate-reasoning",
+      "text_ce": 1.8836595873792064,
+      "acoustic_ce": 0.3317696750164032,
+      "text_delta_from_original_ready": 0.0,
+      "acoustic_delta_from_original_ready": 0.0
+    },
+    {
+      "id": "native-reasoning4-train-021",
+      "family": "delegate-reasoning",
+      "text_ce": 0.8246033949254254,
+      "acoustic_ce": 0.3032597601413727,
+      "text_delta_from_original_ready": 0.0,
+      "acoustic_delta_from_original_ready": 0.0
+    },
+    {
+      "id": "native-reasoning4-train-025",
+      "family": "delegate-reasoning",
+      "text_ce": 1.3520448055669725,
+      "acoustic_ce": 0.3524022698402405,
+      "text_delta_from_original_ready": 0.0,
+      "acoustic_delta_from_original_ready": 0.0
+    },
+    {
+      "id": "native-reasoning4-train-029",
+      "family": "delegate-reasoning",
+      "text_ce": 0.8988081203222507,
+      "acoustic_ce": 0.36491480469703674,
+      "text_delta_from_original_ready": 0.0,
+      "acoustic_delta_from_original_ready": 0.0
+    },
+    {
+      "id": "native-reasoning4-train-000",
+      "family": "direct-basic",
+      "text_ce": 2.874438182810593,
+      "acoustic_ce": 0.49318933486938477,
+      "text_delta_from_original_ready": 0.0,
+      "acoustic_delta_from_original_ready": 0.0
+    },
+    {
+      "id": "native-reasoning4-train-004",
+      "family": "direct-basic",
+      "text_ce": 2.0285362885691143,
+      "acoustic_ce": 0.48846152424812317,
+      "text_delta_from_original_ready": 0.0,
+      "acoustic_delta_from_original_ready": 0.0
+    },
+    {
+      "id": "native-reasoning4-train-008",
+      "family": "direct-basic",
+      "text_ce": 0.5278519419013605,
+      "acoustic_ce": 0.5140203833580017,
+      "text_delta_from_original_ready": 0.0,
+      "acoustic_delta_from_original_ready": 0.0
+    },
+    {
+      "id": "native-reasoning4-train-012",
+      "family": "direct-basic",
+      "text_ce": 0.8793278914557163,
+      "acoustic_ce": 0.5629697442054749,
+      "text_delta_from_original_ready": 0.0,
+      "acoustic_delta_from_original_ready": 0.0
+    },
+    {
+      "id": "native-reasoning4-train-016",
+      "family": "direct-basic",
+      "text_ce": 3.8354925411996135,
+      "acoustic_ce": 0.5184995532035828,
+      "text_delta_from_original_ready": 0.0,
+      "acoustic_delta_from_original_ready": 0.0
+    },
+    {
+      "id": "native-reasoning4-train-020",
+      "family": "direct-basic",
+      "text_ce": 1.3203653781260982,
+      "acoustic_ce": 0.44033563137054443,
+      "text_delta_from_original_ready": 0.0,
+      "acoustic_delta_from_original_ready": 0.0
+    },
+    {
+      "id": "native-reasoning4-train-024",
+      "family": "direct-basic",
+      "text_ce": 1.3367100188745837,
+      "acoustic_ce": 0.45522937178611755,
+      "text_delta_from_original_ready": 0.0,
+      "acoustic_delta_from_original_ready": 0.0
+    },
+    {
+      "id": "native-reasoning4-train-028",
+      "family": "direct-basic",
+      "text_ce": 0.8939145403356861,
+      "acoustic_ce": 0.5616177916526794,
+      "text_delta_from_original_ready": 0.0,
+      "acoustic_delta_from_original_ready": 0.0
+    },
+    {
+      "id": "native-reasoning4-train-003",
+      "family": "replace-reasoning",
+      "text_ce": 1.3388373306052515,
+      "acoustic_ce": 0.424003928899765,
+      "text_delta_from_original_ready": 0.0,
+      "acoustic_delta_from_original_ready": 0.0
+    },
+    {
+      "id": "native-reasoning4-train-007",
+      "family": "replace-reasoning",
+      "text_ce": 0.8687411135258074,
+      "acoustic_ce": 0.3953501582145691,
+      "text_delta_from_original_ready": 0.0,
+      "acoustic_delta_from_original_ready": 0.0
+    },
+    {
+      "id": "native-reasoning4-train-011",
+      "family": "replace-reasoning",
+      "text_ce": 0.972753664928085,
+      "acoustic_ce": 0.3693867623806,
+      "text_delta_from_original_ready": 0.0,
+      "acoustic_delta_from_original_ready": 0.0
+    },
+    {
+      "id": "native-reasoning4-train-015",
+      "family": "replace-reasoning",
+      "text_ce": 1.4825186521925673,
+      "acoustic_ce": 0.3254658579826355,
+      "text_delta_from_original_ready": 0.0,
+      "acoustic_delta_from_original_ready": 0.0
+    },
+    {
+      "id": "native-reasoning4-train-019",
+      "family": "replace-reasoning",
+      "text_ce": 1.221991023568279,
+      "acoustic_ce": 0.4554443061351776,
+      "text_delta_from_original_ready": 0.0,
+      "acoustic_delta_from_original_ready": 0.0
+    },
+    {
+      "id": "native-reasoning4-train-023",
+      "family": "replace-reasoning",
+      "text_ce": 1.1164508199960892,
+      "acoustic_ce": 0.48491325974464417,
+      "text_delta_from_original_ready": 0.0,
+      "acoustic_delta_from_original_ready": 0.0
+    },
+    {
+      "id": "native-reasoning4-train-027",
+      "family": "replace-reasoning",
+      "text_ce": 1.8597442556803259,
+      "acoustic_ce": 0.4343954026699066,
+      "text_delta_from_original_ready": 0.0,
+      "acoustic_delta_from_original_ready": 0.0
+    },
+    {
+      "id": "native-reasoning4-train-031",
+      "family": "replace-reasoning",
+      "text_ce": 1.0873926408860584,
+      "acoustic_ce": 0.41093772649765015,
+      "text_delta_from_original_ready": 0.0,
+      "acoustic_delta_from_original_ready": 0.0
+    }
+  ],
+  "optimizer_updates": 0,
+  "checkpoint_or_rng_final_validation_complete": false,
+  "full_diagnostic_terminal_observed": false,
+  "behavior_approved": false,
+  "model_adopted": false,
+  "limitations": [
+    "This is all32baseline scalar output from a running paired diagnostic, not its final successful result or preservation proof.",
+    "The saved528 endpoint and complete final fingerprint/frozen-state/RNG checks remain required.",
+    "Agreement with the old readiness baseline does not establish learning or task correctness."
+  ],
+  "original_approved_bf16_gradient_readiness_sha256": "43a4c7c0364bc68889108fb8ea7eb615f3ef68f94eb1ab7f0f435e7c10f87016",
+  "reference_profile": "BF16 native recorded-call autograd; compile and CUDA graphs disabled as in retained trainer",
+  "reference_comparison_note": "Use the actual native BF16 recorded-call gradient readiness, not numerical.json which uses precise_native/linear_reference. The initial unmatched comparison is retained only in ignored diagnostics; no model change was made."
+}
