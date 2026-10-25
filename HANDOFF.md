@@ -1,3 +1,64 @@
+# LOCAL — Full32 diagnostic ACTUALLY LAUNCHED; watch SAME job
+
+25Oct13:53UTC. v5 PID27079/tool81390 LIVE, actual single model unit
+ duplex-native-flex90-matched32-v1 launched13:53:01.706867UTC, independentread
+ActiveState=active/MainPID1978/InvocationID68fec3824f674a1b9958f221ea7208a3. No terminal
+record yet. Actual80targettestsPASS (0.755s), separate strict pinned saved8 proof
+preflight actual0. Exact Gitcd5666c clean. Fresh Macguard PID28014 and guestguard
+PID1763/invocation9cf03e8b1190446f9cf5f4099279c141 botharmed; bootstrapidleSTOP
+cancelled onlyafterliveverification. FIXED actual Docker permission failure by
+sudo preflight matching existing root systemd launcher; no permissions/group changes.
+
+SAME existing FlexVM4443302983961393208/name duplex-native-saved8-gpu-flex90-20261025-v1,
+zoneeurope-west4-a/original250GBdisk1828090267781080539/nonautoDelete. Actual lastStart
+13:52:10.600UTC; native5400s STOP15:22:10.600UTC. Actualstartoperation
+operation-1792936297178-65eaa831926d8-0c54f16c-d1167922. All3failedstartupintervals
+includingduplicate successfulSTOPends counted405sec; original32086+405=32491prior;
+newmax5400=>37891seconds<43200; conservative88.137314USD<100 incl28.88reserves.
+Originalplan initialestimate superseded by real higher cumulative accounting; no
+reset/no newpurchase/VM/storage/region/quota/APIactivation. Original12h/100 intact.
+
+Current ignoredcontroller flex90-diagnostic-controller-v5.py/events
+ gcp-flex90-diagnostic-controller-v5.json; actualrequest gcp-flex90-resume-request-v3;
+lease gcp-flex90-gpu-lease-v4/Macguard-v4/guest-v4; SSHargvflex90-gpu-ssh-argv-v1.
+Do NOT run any controller again, do NOT repeat model on timeout. Observe SAMEactual
+process/providerstate. Priorv2/v3/v4 ACTUAL1/stopped BEFOREanymodel/tests finished,
+allreceipts preserved. Original currentmodel producer cd5666c2514830c44c940a79ffc3508102799b9e,
+localstartuphelper source db223e1; originalmodelDA/image/objectives unchanged.
+
+ONE complete32 matchednative520/saved528 no-gradCE/acousticCE/fingerprints diagnostic,
+maxchild3600s/unit3900s, no optimizer or repeatedtraining. Out
+/workspace/migration/gcp-flex90-matched32-v1; hostlog gcp-flex90-matched32-host-v1.log,
+terminal gcp-flex90-matched32-terminal-v1.json. Require actualterminal0, all32bothends,
+allfingerprint/retentionproof constraints and completecopyback hashes THENSTOP.
+Controllerhandlescopyback to gcp-flex90-matched32-copyback-v1 andfullreceipt. No result
+or convergence improvement/adoption claimed until actual records. Candidate remains
+REJECTED baselineordinary2/4saved8 1/4; priornative20complete/AdamRNGrestorepassed.
+ZEROnewoptimizer/recovery/native20/freshpayload. FullBpreservation alreadyPASS81GBplus
+allsemantic/recovery/behavior/offmachine receipts; doNOTrepeatfullhashing. BroadMac
+sourcebackupPARTIAL. Quietheartbeat monitoring samejob. PreserveunrelatedPYC/probes/
+roadmap. LOCALsoleexecutor; goalunfinished. Sourcehandoffpush afterthisentry.
+
+---
+
+# LOCAL — Preflight root cause identified; preparing SAME-resource corrected resume
+
+25Oct13:51UTC. v3 ACTUAL1 preflight output lost (stdout captured but omitted from
+exception). v4 PID25307/tool50704 captured exact failure13:50:15: Docker socket
+permission denied. Clean Git state at exact cd5666c confirmed; both Mac/guest guards
+fresh armed and bootstrap timer cancelled correctly. No tests/proof/model loaded.
+Cause: pure/proof preflight invoked docker as SSH user while existing model systemd
+launcher runs as root. Fix local preflight to sudo docker, matching existing launch;
+no group/socket/permissions/source model changes. Current v4 cleanup STOP in flight;
+observe same actual session until terminal, never start another while stopping.
+Next controller-v5 must audit all three prior Flex intervals before same-ID start,
+use separate receipts/lease/guards/mux, preserve failedstdout, sudo pure/proof checks.
+Do not rerun v2/v3/v4 or duplicate VM/model. All historical startup runtime counts
+against original12h/$100. No model measurement/optimizer updates yet. Current status
+JSON may lag until v4 actualSTOP; newest actual events remain authoritative.
+
+---
+
 # LOCAL — SAME Flex A100 resumed with corrected startup wait; no model launched yet
 
 25Oct13:46UTC. Startup fix db223e1 pushed (30 focused tests PASS), localcontroller-v3
