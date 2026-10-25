@@ -17,6 +17,13 @@ INVENTORIES = {
 }
 
 
+def semantic_entries(closure):
+    # The authored closure lists semantic.json first; the closed-catalog reader
+    # requires lexical path order. Retain every declared identity and hash.
+    return sorted((dict(path=row['name'], bytes=row['bytes'], sha256=row['sha256'])
+                   for row in closure['files']), key=lambda row: row['path'])
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--root', type=Path, required=True)
@@ -31,8 +38,7 @@ def main():
         raise ValueError('Full original destination failed')
     results = {}
     closure = json.loads((source/'docs/GCP-NATIVE-SEMANTIC-RECEIPT-CLOSURE-2026-10-25.json').read_text())
-    files = [dict(path=row['name'], bytes=row['bytes'], sha256=row['sha256'])
-             for row in closure['files']]
+    files = semantic_entries(closure)
     results['semantic'] = _verify_entries(args.root/closure['destination_prefix'], files, [])
     for name, expected in INVENTORIES.items():
         raw = (args.inventories/name).read_bytes()
