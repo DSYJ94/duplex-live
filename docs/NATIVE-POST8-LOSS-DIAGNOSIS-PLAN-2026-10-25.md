@@ -1,20 +1,28 @@
 # Next diagnostic: matched full32 loss at native520 and saved528
 
-Status at25October11:00UTC: diagnostic not yet executed. The explicitly approved
-[zone-B fallback](GCP-NATIVE-ZONE-B-PLACEMENT-AUTHORIZATION-2026-10-25.json) is now
-performing full replacement-disk preservation checks. One existing controller waits
-for actual complete hashes and CPU shutdown before one bounded A100 attempt;
-[exact live process and resource records](GCP-NATIVE-ZONE-B-LIVE-EXECUTION-2026-10-25.json)
-and the newest HANDOFF govern continuation. Producer42888ad, local71 related checks
-passed. No optimizer/repeated8/recovery/native20/fresh evaluation or adoption.
+Current status at 25 October 13:58 UTC: the complete diagnostic is running on the
+same original 250 GB disk in zone A. The exact producer is
+`cd5666c2514830c44c940a79ffc3508102799b9e`; the model and original training source
+remain unchanged. All 80 target preflight tests and a separate strict saved8 proof
+check passed. No optimizer updates or repeated training are running.
 
-The original zone-A placement/window paragraph below describes preparation-time
-restrictions. It is superseded only for placement by the owner's explicit zone-B
-approval and the [cumulative bound](GCP-NATIVE-ZONE-B-CUMULATIVE-BOUND-2026-10-25.json):
-count prior32079.865 GPU seconds, plan at most7200 additional seconds, total≤12GPU
-runtime hours and≤100USD including both prior usage and migration reserves. The
-new CPU's original11:40:20UTC nativeSTOP remains unchanged. No total limit is reset.
-Current checkpoints and the rejected complete20 remain frozen and unadopted.
+The actual unit is `duplex-native-flex90-matched32-v1`, first observed host PID 1978,
+invocation `68fec3824f674a1b9958f221ea7208a3`. Its original child is live and the GPU
+process has been observed. This proves execution, not a completed loss result.
+The [current allocation record](GCP-NATIVE-ALLOCATION-AND-REAUTH-2026-10-25.json) and
+newest HANDOFF identify the exact controller and receipts; observe that job rather
+than resubmitting it.
+
+The approved original limit remains $100 and 12 cumulative GPU hours. Successful
+provider operation intervals, including duplicate STOP end times, conservatively
+account for 32,491 prior seconds; the current 5,400-second native maximum gives
+37,891 seconds and an $88.137314 whole-scope upper estimate including reserves.
+The native STOP is 15:22:10.600 UTC, with independent live Mac and guest guards.
+Earlier planning estimates and fixed wall-clock deadlines are historical and are
+superseded by this explicit actual-runtime accounting; no allowance is reset.
+The full zone-B replacement preservation completed successfully before this run.
+Do not repeat the 81 GB archive verification, exact saved-stage recovery, native20
+behavioral collection, or the eight original updates.
 
 The completed review is [here](GCP-NATIVE-SAVED8-COMPLETE20-REVIEW-2026-10-25.json).
 The [CPU objective audit](NATIVE-SAVED8-OBJECTIVE-CREDIT-AUDIT-2026-10-25.json) and
@@ -53,14 +61,14 @@ consumed by observation. Write a distinct diagnostic report; it must not have a
 training-proof or adoption schema. No fresh input or answer, owner audio, backend
 request, new source audio, target repair or loss modification enters this run.
 
-All32 are mandatory; no passing subset. An external fresh cost/deadline guard and
-real terminal observation remain required. Before any restart, revalidate that the
-exact zero-update measurement fits the existing GCP grant, same stopped VM/disk,
-original11:52:37UTC provider stop and100USD whole allowance, live price/availability
-and one-GPU state. Do not extend that deadline or its12h scope, create resources,
-or restart until the helper is concrete and locally checked. If the window or
-scope does not support it, preserve the prepared measurement and stop at that
-material decision. No further GPU work has been authorized by this document.
+All 32 scenes at both endpoints are mandatory; a partial endpoint cannot support a
+fitting or convergence conclusion. Require the existing child deadline, real
+successful terminal record, unchanged checkpoint/frozen-state/RNG checks and all
+32 saved528 fingerprints, followed by complete copied-back artifact hashes. The
+current controller stops the owned GPU after verified preservation. If the job
+fails or its observation is interrupted, inspect the same process and preserve
+its partial evidence; do not automatically repeat it or infer completion from a
+healthy unit alone.
 
 Predictions, not conclusions:
 
