@@ -1,3 +1,34 @@
+# LOCAL — v5 failed at original policy gate; diagnosed portability repair prepared
+
+Recovery-v5 ACTUALLYFAILED1 at01:19:16UTC (unitMainPID0). All originalcontrol40/
+reasoning32 approvals reconstructed, then context_actual_train.py:224 rejected
+runtimepolicy. Full v5 outputs copied Mac saved8-recovery-v5-failed-copyback.
+No optimizerupdates/no qualification/adoption. Preserve originalfit-15.
+
+Model-free realA100 diagnostic ACTUAL0 reproduced failure: NGC default
+matmul_tf32=true/float32_precision=high versus original requiredfalse/highest.
+Setting highest restores BOTH and matches every7-key originalcontrolpolicy;
+MATH attention and BF16/modeldtype unchanged. Pinnedvendor source has no later
+set_float32 override. New recovery runtime will explicitly restore this original
+setting BEFORE model construction, and originalpolicy gate remains unchanged.
+
+Also diagnosed latent hash failure before another costlyload: Python3.14 default
+ast.dump omits emptyfields ->41e749..., while target3.12 includes them ->7907f6...
+for SAME executabletree. Explicit fullfields serialization onboth nowpins
+7907f6de7ddbdaa1a22111829a67cfb1a4a2e5df629482f1693c4676549d15f0.
+Originalsource SHA2e504fac.../capture boundary/nooptimizer checks unchanged.
+35focused puretestsPASS locally; targetPython3.12 tests+actualmodel-freepolicy
+preflight required before fresh recovery-v6. Need NEWGitproducer, not old75b3bfd;
+never overwrite existing worktrees. OriginalDA remains unchanged.
+Exactdiagnosis/hashes docs/GCP-NATIVE-SAVED8-POLICY-REPAIR-2026-10-25.json.
+
+Same A100/disk/STOP11:52:37UTC/dualguards active; freshremaining74.6469USD at
+01:22:57UTC. No GPUmodel job running now; repair promptly, stop billedGPU if
+truly blocked. Existing Macproxy69582/PID75507 and tunnel46162/PID75642 remain
+prepared, zeroAPI requests atlasthealth; do not duplicate. LOCAL soleexecutor.
+
+---
+
 # LOCAL — Saved8 recovery v5 continues; downstream delegation transport ready
 
 Actual01:14:00UTC recovery-v5 service31767 and child31847 alive (5m55s), child

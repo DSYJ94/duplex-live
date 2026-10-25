@@ -62,6 +62,20 @@ def git(root,*args):
     return subprocess.check_output(['git','-C',str(root),*args],text=True).strip()
 
 
+def restore_recorded_precision(torch):
+    """Match the original control40 execution policy before model construction."""
+    def snapshot():
+        return dict(float32_precision=torch.get_float32_matmul_precision(),
+                    matmul_tf32=torch.backends.cuda.matmul.allow_tf32)
+    before=snapshot()
+    torch.set_float32_matmul_precision('highest')
+    after=snapshot()
+    if after!=dict(float32_precision='highest',matmul_tf32=False):
+        raise ValueError('Original highest/TF32-disabled execution policy required')
+    return dict(before=before,after=after,original_execution_policy_restored=True,
+                model_dtype_or_attention_changed=False,optimizer_updates=0)
+
+
 def isolate(source):
     source=Path(source).resolve(strict=True)
     if git(source,'rev-parse','HEAD')!=SOURCE or git(source,'status','--porcelain'):
@@ -116,6 +130,7 @@ def execute(source,snapshot,observation,out,producer_commit,guard,reference=None
     module.run=function
     from evals.immutable_file_hashes import verified_reads
     sys.argv=['saved-stage-zero-update',*args]
+    execution_policy=restore_recorded_precision(importlib.import_module('torch'))
     passed=False;reads=None
     try:
         with verified_reads(roots[:2]) as reads:
@@ -128,6 +143,7 @@ def execute(source,snapshot,observation,out,producer_commit,guard,reference=None
                 source_commit=SOURCE,producer_commit=producer_commit,cache=reads.receipt(),
                 profile=PROFILE,code_sha256={name:sha(source/name) for name in CODE},
                 context=prefix_receipt,initial_guard=initial_guard,
+                execution_policy=execution_policy,
                 result_sha256=canonical(captured[0]) if passed else None,
                 producer_implementation_sha256={name:digest(producer/name) for name in PRODUCER_FILES},
                 optimizer_updates_during_recovery=0,original_fit_relabelled=False,

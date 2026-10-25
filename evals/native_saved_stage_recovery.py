@@ -178,7 +178,7 @@ def finish(context,inputs,context_receipt,producer_commit,reference=None):
     metadata=validate_context(context,inputs)
     lm=context['lm'];learned=context['learned'];out=Path(context['args'].out)
     if (context_receipt['original_source_sha256']!='2e504fac5d3171680e3277d1e436f7db51d9403b45a1e77f09d4c2c7ccc893c5'
-            or context_receipt['derived_ast_sha256']!='41e7492a802f20dc6ba3c1410ac591a318d7380ee94471d63bc5310dd7f98c1f'
+            or context_receipt['derived_ast_sha256']!='7907f6de7ddbdaa1a22111829a67cfb1a4a2e5df629482f1693c4676549d15f0'
             or context_receipt['optimizer_branch_included'] is not False
             or len(producer_commit)!=40 or any(c not in '0123456789abcdef' for c in producer_commit)):
         raise ValueError('Exact separately recorded recovery producer and construction prefix required')

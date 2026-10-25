@@ -10,7 +10,7 @@ from unittest.mock import patch
 
 from evals.native_saved_stage_context import bind,construction_tree
 from evals.native_saved_stage_recovery import partial_fingerprints,validate_complete_fingerprints
-from portable.context.native_saved_stage_runtime import arguments,canonical_command,guard_receipt,isolate
+from portable.context.native_saved_stage_runtime import arguments,canonical_command,guard_receipt,isolate,restore_recorded_precision
 
 
 class ConstructionTests(unittest.TestCase):
@@ -50,7 +50,7 @@ class ConstructionTests(unittest.TestCase):
         original=(Path(__file__).resolve().parents[1]/'context_actual_train.py').read_bytes()
         tree,receipt=construction_tree(original)
         self.assertEqual(receipt['derived_ast_sha256'],
-            '41e7492a802f20dc6ba3c1410ac591a318d7380ee94471d63bc5310dd7f98c1f')
+            '7907f6de7ddbdaa1a22111829a67cfb1a4a2e5df629482f1693c4676549d15f0')
         self.assertFalse(any(isinstance(n,ast.For) and isinstance(n.iter,ast.Call)
             and isinstance(n.iter.func,ast.Name) and n.iter.func.id=='range'
             and any(isinstance(a,ast.Attribute) and a.attr=='actual_fit_updates' for a in n.iter.args)
@@ -137,6 +137,20 @@ class FingerprintTests(unittest.TestCase):
 
 
 class RuntimeContractTests(unittest.TestCase):
+    def test_ngc_default_precision_is_restored_to_original_policy(self):
+        matmul=SimpleNamespace(allow_tf32=True)
+        state=dict(precision='high')
+        def set_precision(value):
+            state['precision']=value;matmul.allow_tf32=False
+        torch=SimpleNamespace(backends=SimpleNamespace(cuda=SimpleNamespace(matmul=matmul)),
+            get_float32_matmul_precision=lambda:state['precision'],set_float32_matmul_precision=set_precision)
+        result=restore_recorded_precision(torch)
+        self.assertEqual(result['before'],dict(float32_precision='high',matmul_tf32=True))
+        self.assertEqual(result['after'],dict(float32_precision='highest',matmul_tf32=False))
+        self.assertEqual(result['optimizer_updates'],0)
+        matmul.allow_tf32=True;torch.set_float32_matmul_precision=lambda value:None
+        with self.assertRaises(ValueError):restore_recorded_precision(torch)
+
     def test_exact_command_only_changes_output_and_never_requests_reload(self):
         command=['fixture-python','-u','-m','portable.context.native_training_cached',
             '--actual-temporal-fit','--actual-fit-updates','8','--out','old']

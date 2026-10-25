@@ -1,0 +1,113 @@
+{
+  "schema": "dl-gcp-saved8-policy-portability-repair-v1",
+  "at_utc": "2026-10-25T01:23:51.979368+00:00",
+  "status": "DIAGNOSED_REPAIR_PREPARED_LOCAL35_PASS_TARGET_PREFLIGHT_PENDING",
+  "original_model_source": "da389a7031a5504495397d1575952194ffa209f1",
+  "failed_recovery": "v5",
+  "failed_service_actual_exit": 1,
+  "failed_controller_utc": "2026-10-25T01:19:16Z",
+  "original_fit_still_failed": true,
+  "new_optimizer_updates": 0,
+  "diagnostic_actual_exit": 0,
+  "model_free_gpu_policy_probe": {
+    "schema": "dl-gcp-recorded-policy-diagnostic-v1",
+    "expected": {
+      "matmul_tf32": false,
+      "cudnn_tf32": true,
+      "math_sdp": true,
+      "flash_sdp": false,
+      "mem_efficient_sdp": false,
+      "cudnn_sdp": false,
+      "float32_precision": "highest"
+    },
+    "before": {
+      "torch": "2.9.0a0+145a3a7bda.nv25.10",
+      "cuda": "13.0",
+      "device": "NVIDIA A100-SXM4-80GB",
+      "capability": [
+        8,
+        0
+      ],
+      "cudnn": true,
+      "cudnn_sdp": false,
+      "flash_sdp": false,
+      "mem_efficient_sdp": false,
+      "math_sdp": true,
+      "matmul_tf32": true,
+      "cudnn_tf32": true,
+      "bf16_reduction": true,
+      "float32_precision": "high",
+      "deterministic_algorithms": false,
+      "cudnn_deterministic": false,
+      "cudnn_benchmark": false,
+      "threads": 6,
+      "parameter_dtypes": {},
+      "environment": {
+        "NO_CUDA_GRAPH": null,
+        "NO_TORCH_COMPILE": null,
+        "TORCH_CUDNN_SDPA_ENABLED": null,
+        "CUBLAS_WORKSPACE_CONFIG": null
+      }
+    },
+    "mismatches_before": {
+      "matmul_tf32": [
+        true,
+        false
+      ],
+      "float32_precision": [
+        "high",
+        "highest"
+      ]
+    },
+    "after": {
+      "torch": "2.9.0a0+145a3a7bda.nv25.10",
+      "cuda": "13.0",
+      "device": "NVIDIA A100-SXM4-80GB",
+      "capability": [
+        8,
+        0
+      ],
+      "cudnn": true,
+      "cudnn_sdp": false,
+      "flash_sdp": false,
+      "mem_efficient_sdp": false,
+      "math_sdp": true,
+      "matmul_tf32": false,
+      "cudnn_tf32": true,
+      "bf16_reduction": true,
+      "float32_precision": "highest",
+      "deterministic_algorithms": false,
+      "cudnn_deterministic": false,
+      "cudnn_benchmark": false,
+      "threads": 6,
+      "parameter_dtypes": {},
+      "environment": {
+        "NO_CUDA_GRAPH": null,
+        "NO_TORCH_COMPILE": null,
+        "TORCH_CUDNN_SDPA_ENABLED": null,
+        "CUBLAS_WORKSPACE_CONFIG": null
+      }
+    },
+    "mismatches_after": {},
+    "model_loaded": false,
+    "optimizer_updates": 0
+  },
+  "ast_serialization": {
+    "original_source_sha256": "2e504fac5d3171680e3277d1e436f7db51d9403b45a1e77f09d4c2c7ccc893c5",
+    "python314_omitting_empty_fields": "41e7492a802f20dc6ba3c1410ac591a318d7380ee94471d63bc5310dd7f98c1f",
+    "full_fields_both_python_versions": "7907f6de7ddbdaa1a22111829a67cfb1a4a2e5df629482f1693c4676549d15f0",
+    "executable_ast_changed": false,
+    "optimizer_boundary_or_original_source_changed": false
+  },
+  "local_focused_tests_passed": 35,
+  "implementation_sha256": {
+    "evals/native_saved_stage_context.py": "8c8d85d58286c8109cda43c82041b57d3b3338d93231d6df787ac76e9a60f8f5",
+    "evals/native_saved_stage_recovery.py": "c7c0309d733cc2ff1348f386cb47c08ad7b7457c62a42fbaecb5982583ee61bf",
+    "portable/context/native_saved_stage_runtime.py": "f7d195050868644132ad158d6afef46c74d0d1da77ddca4c7513ce5470db8ede",
+    "evals/harness/test_native_saved_stage_recovery.py": "84e69473a64e8ae2a80745743e2372548d09de6f9bdea2c81e30042b3dcd49b0"
+  },
+  "scope": "Restore the ORIGINAL highest/TF32-disabled control40 execution policy, preserve BF16 and original attention controls; canonical full-field syntax hash only, no broader acceptance list or original code/gate/data/recipe changes.",
+  "next_action": "Git-deploy a new immutable producer; run all35 pure tests on actual Python3.12 plus model-free restored-policy probe before distinct recovery-v6. Preserve v5, all earlier failures, originalfit-15. Do not reuse frozen75b3bfd because its hash comparison is not portable.",
+  "model_adopted": false,
+  "behavior_qualified": false
+}

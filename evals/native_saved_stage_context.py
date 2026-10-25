@@ -8,6 +8,7 @@ This module neither loads a model nor authorizes execution or training.
 import ast
 import copy
 import hashlib
+import inspect
 
 ORIGINAL_SHA256='2e504fac5d3171680e3277d1e436f7db51d9403b45a1e77f09d4c2c7ccc893c5'
 
@@ -48,7 +49,10 @@ def construction_tree(source):
     scope.body.append(ast.Return(value=ast.Call(func=ast.Name(id='__saved_stage_capture',ctx=ast.Load()),
         args=[ast.Call(func=ast.Name(id='locals',ctx=ast.Load()),args=[],keywords=[])],keywords=[])))
     derived=ast.fix_missing_locations(ast.Module(body=[function],type_ignores=[]))
-    digest=hashlib.sha256(ast.dump(derived,include_attributes=False).encode()).hexdigest()
+    # Python 3.13+ omits empty fields by default; 3.12 always includes them.
+    # Serialize all fields on both runtimes without changing the executable tree.
+    options={'show_empty':True} if 'show_empty' in inspect.signature(ast.dump).parameters else {}
+    digest=hashlib.sha256(ast.dump(derived,include_attributes=False,**options).encode()).hexdigest()
     return derived,dict(schema='dl-native-saved-stage-context-prefix-v1',
         original_source_sha256=ORIGINAL_SHA256,derived_ast_sha256=digest,
         cut_before='original args.reload branch',optimizer_branch_included=False,
