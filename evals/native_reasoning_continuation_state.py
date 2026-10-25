@@ -145,7 +145,7 @@ def restore_parent(context, inputs, producer_commit, authorization_sha256):
         numerical_restore_approved=False, model_adopted=False)
 
 
-def save_update(out, learned, optimizer, local_steps, metadata):
+def save_update(out, learned, optimizer, local_steps, metadata, *, step_record):
     """Keep every update separately; publish the receipt after both files exist.
 
     An interrupted/incomplete directory is preserved and cannot be overwritten.
@@ -154,6 +154,10 @@ def save_update(out, learned, optimizer, local_steps, metadata):
     if type(local_steps) is not int or not 1 <= local_steps <= UPDATES:
         raise ValueError('Exactly local update1..8 required')
     validate_metadata(metadata)
+    if (step_record.get('step') != local_steps
+            or step_record.get('global_adam_step') != START + local_steps
+            or step_record.get('learning_rate') != RATE):
+        raise ValueError('Matching actual step receipt required before checkpoint closure')
     _adam(optimizer, START + local_steps, RATE)
     if any(p.grad is not None for p in learned.values()):
         raise ValueError('Clear accumulated gradients before committing a checkpoint')
@@ -168,9 +172,11 @@ def save_update(out, learned, optimizer, local_steps, metadata):
               folder / 'adapters.safetensors.partial')
     (folder / 'adapters.safetensors.partial').replace(folder / 'adapters.safetensors')
     _exact(state, learned, optimizer, local_steps, START + local_steps, rate_override=RATE)
+    with (folder / 'step.json').open('x') as stream:
+        stream.write(json.dumps(step_record, indent=2, allow_nan=False) + '\n')
     receipt = dict(schema=SCHEMA, local_completed_steps=local_steps,
         global_adam_step=START + local_steps, metadata_sha256=canonical(metadata),
-        files={name: _sha(folder / name) for name in ('training-state.pt', 'adapters.safetensors')},
+        files={name: _sha(folder / name) for name in ('training-state.pt', 'adapters.safetensors', 'step.json')},
         independent_restore_approved=False, behavior_qualified=False, model_adopted=False)
     with (folder / 'checkpoint.json.partial').open('x') as stream:
         stream.write(json.dumps(receipt, indent=2) + '\n')
@@ -187,7 +193,7 @@ def restore_final(folder, learned, optimizer, metadata):
             or receipt['local_completed_steps'] != UPDATES
             or receipt['global_adam_step'] != START + UPDATES
             or receipt['metadata_sha256'] != canonical(metadata)
-            or set(receipt['files']) != {'training-state.pt', 'adapters.safetensors'}
+            or set(receipt['files']) != {'training-state.pt', 'adapters.safetensors', 'step.json'}
             or any(_sha(folder / name) != value for name, value in receipt['files'].items())):
         raise ValueError('Complete closed local8/global536 checkpoint required')
     from evals.context_training_state import restore

@@ -11,8 +11,8 @@
   "test_producer_and_authorization_digests_are_placeholders": true,
   "owner_training_authorization_received": false,
   "source_sha256": {
-    "evals/native_reasoning_continuation_state.py": "cdbfd8e40411adbac8c7136fcc402737fed0ed1d1758798e728198ae302e66cf",
-    "evals/harness/test_native_reasoning_continuation_state.py": "52d4f70b49f716a498295e0b621c1eb87944713344ab42db814712d1c7222b0a"
+    "evals/native_reasoning_continuation_state.py": "9f93747c180cd62371a6dafe4669200dce820ecb02962e75fe360e3c47863353",
+    "evals/harness/test_native_reasoning_continuation_state.py": "e0de584dadfc3e3e2511fa5ffb3a0131bce45f1c4c85cf8ae9dc7e96857d792f"
   },
   "checks": "CPU metadata/rejection tests plus exact physical checkpoint primitive-prefix comparison; no tensor load or executable pickle deserialization.",
   "runtime_tensor_restore_executed": false,
@@ -25,5 +25,12 @@
     "All unchanged behavioral/audio/fresh gates; checkpoint closure alone never qualifies a model."
   ],
   "related_cpu_tests_passed": 28,
-  "interrupted_checkpoint_overwrite_rejected_before_runtime_load": true
+  "interrupted_checkpoint_overwrite_rejected_before_runtime_load": true,
+  "current_related_cpu_tests_passed": 35,
+  "updated_utc": "2026-10-25T17:20:38.029757+00:00",
+  "checkpoint_receipt_files": [
+    "training-state.pt",
+    "adapters.safetensors",
+    "step.json"
+  ]
 }

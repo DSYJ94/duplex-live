@@ -1,3 +1,43 @@
+# LOCAL — Guarded continuation loop prepared; no new training/compute
+
+25 October. Previous goal turn PROGRESS: state/checkpoint primitives a0fc5e3 pushed.
+New evals/native_reasoning_continuation_loop.py separates a deterministic loop
+protocol from REAL native backward/clip/Adam operations. It has no CLI/model loader
+or provider mutation; the fresh original-source construction/parity bridge is still
+required. A NEW exact changed-rate8 owner authorization record is required before
+native operations; actual originalZEROupdate grant is tested and rejects. No new
+authorization record has been created or approval inferred from automatic goals.
+
+Guards refresh before gradient work, after backward and immediately before EACH
+optimizer step. They carry original40351GPUseconds and91.9844806USD scope upper
+forward; no reset. New proposed50USD/6h/cumulative150USD/18h limits, native deadline,
+one exact existingVM4443302983961393208, hourly admission ceiling7.25USD plus6.5USD
+reserve and independent cost/provider/single-GPU checks remain required. These
+are proposed new bounds, NOT currently approved spending. Exactly8 new step calls
+max; no retry/resume of a partially completed loop. Event records distinguish
+stepINTENT, stepRETURNED, checkpointCLOSED and stateREQUIRESAUDIT. A thrown optimizer
+call may have partly mutated moments; zero RETURNEDcalls never proves zero mutation.
+
+Per-update checkpoint marker now binds training-state.pt, adapters.safetensors AND
+step.json (actual exposure/loss/gradient receipt); state helper's new schema remains
+separate from legacy proof. Native loop retains pre-clip A/B gradient liveness,
+all26 finite gradients, originalclip1, frozen ownership/full exposure and nonzero
+finite parameter displacement. Native final frozen hashes and all original exposure
+validators must pass; loop completion still explicitly does NOT approve native
+restore, behavior or adoption. All intermediate failures remain failures.
+
+35 related CPU tests PASS, including interrupted/partial optimizer/checkpoint
+ordering. No actual Torch/model/backend/provider execution in those tests. Exact
+GPU tensor path still UNVALIDATED. Reports source/state prep refreshed with current
+source hashes; new docs/NATIVE-CHANGED-RATE8-LOOP-PREPARATION-2026-10-25.json records
+remaining construction/parent observer/final fingerprint/independent proof/live
+controller work. Do NOT launch directly from this library or weaken parity gates.
+Current candidateREJECTED; goalACTIVE/UNFINISHED. No new optimizer updates or GPU
+starts this turn. Preserve unrelated PYC/probes/roadmap. No heartbeat recreated,
+other chats messaged or agents spawned.
+
+---
+
 # LOCAL — Continuation state primitives prepared; no new compute/training
 
 25 October. Previous goal turn was PROGRESS: objective composition852c6a7 pushed.

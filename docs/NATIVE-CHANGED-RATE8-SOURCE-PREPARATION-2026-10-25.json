@@ -7,8 +7,8 @@
     "evals/harness/test_native_reasoning_continuation_objective.py"
   ],
   "source_sha256": {
-    "evals/native_reasoning_continuation_objective.py": "9e1c3e3cc0d429e4558523693140b161a474b00b57129ba1a151b18805ae0f1f",
-    "evals/harness/test_native_reasoning_continuation_objective.py": "39323c44473b5e4e379bed60823f64b470b83dd944d7c0222e1c0d5eb2b70a02"
+    "evals/native_reasoning_continuation_objective.py": "8936dfa847c8f9359354c3fa7392152cc33855b5012811a27cc51025fec93b74",
+    "evals/harness/test_native_reasoning_continuation_objective.py": "caec34f42222b6ddcc5556501c97664e95f8fcb8ba4571f9f8e02f1b7d885ebf"
   },
   "behavior": "Composes the unchanged retained154/native49/control40/reasoning32 backward functions and validates all exposure/weights. Records weighted pre-update objectives separately from full endpoint losses, with local1to8 and new global529to536.",
   "checks": {
@@ -33,5 +33,7 @@
   "source_implementation_complete": false,
   "gpu_parity_validated": false,
   "quality_qualified": false,
-  "model_adopted": false
+  "model_adopted": false,
+  "current_related_cpu_tests_passed": 35,
+  "updated_utc": "2026-10-25T17:20:38.029233+00:00"
 }

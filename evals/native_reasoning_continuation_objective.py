@@ -117,6 +117,12 @@ def validate_stage(rows, audio_policy, control_policy, reasoning_policy):
                 or row['gradient_clip_norm'] != 1.
                 or row['loss_record'] != loss_record(row)):
             raise ValueError('Changed rate, gradient ownership or measured objective receipt')
+        if any(type(row[key]) is not int or row[key] < 0
+               for key in ('nonzero_A_gradients', 'nonzero_B_gradients')):
+            raise ValueError('Measured nonnegative adapter gradient counts required')
+    if any(not any(row[key] > 0 for row in rows)
+           for key in ('nonzero_A_gradients', 'nonzero_B_gradients')):
+        raise ValueError('Both A and B adapters must receive a live gradient in this stage')
     return dict(schema=SCHEMA, complete_exposure=True, new_optimizer_updates=8,
                 initial_global_adam_step=START, final_global_adam_step=536,
                 original_eight_updates_repeated=False,

@@ -36,6 +36,7 @@ class ContinuationObjective(unittest.TestCase):
                        assistant_audio49_microbatch=deepcopy(groups['audio49']),
                        additional_native_v2_microbatch=deepcopy(groups['new24']),
                        learning_rate=1e-6, all26_gradients_finite=True,
+                       nonzero_A_gradients=100, nonzero_B_gradients=200,
                        frozen_parameter_gradients=0, pre_clip_gradient_norm=12.,
                        gradient_clip_norm=1.)
             row['loss_record'] = objective.loss_record(row)
@@ -68,7 +69,7 @@ class ContinuationObjective(unittest.TestCase):
 
     def test_subset_replay_clock_lr_and_frozen_gradient_failures(self):
         for mode in ('old25', 'native49', 'control40', 'reasoning32', 'old_clock',
-                     'duplicate_clock', 'wrong_rate', 'frozen', 'nan', 'forged_loss'):
+                     'duplicate_clock', 'wrong_rate', 'frozen', 'nan', 'forged_loss', 'dead_A'):
             rows, *policies = self.fixture()
             row = rows[-1]
             if mode == 'old25': row['complete_balanced_microbatches']['old25'].pop()
@@ -81,6 +82,8 @@ class ContinuationObjective(unittest.TestCase):
             if mode == 'frozen': row['frozen_parameter_gradients'] = 1
             if mode == 'nan': row['pre_clip_gradient_norm'] = float('nan')
             if mode == 'forged_loss': row['loss_record']['retained154']['actual'] = 0.
+            if mode == 'dead_A':
+                for step in rows: step['nonzero_A_gradients'] = 0
             with self.subTest(mode=mode), self.assertRaises(ValueError):
                 objective.validate_stage(rows, *policies)
 

@@ -100,10 +100,10 @@ class ContinuationState(unittest.TestCase):
         with tempfile.TemporaryDirectory() as name:
             for local_step in (True, 0, 9, 528):
                 with self.subTest(local_step=local_step), self.assertRaises(ValueError):
-                    state.save_update(name, {}, None, local_step, {})
+                    state.save_update(name, {}, None, local_step, {}, step_record={})
             with patch.dict(sys.modules, {'torch': None}), self.assertRaises(ValueError):
                 state.save_update(name, dict(p=SimpleNamespace(grad=object())),
-                                  self.optimizer(529, 1e-6), 1, self.metadata())
+                                  self.optimizer(529, 1e-6), 1, self.metadata(), step_record=dict(step=1, global_adam_step=529, learning_rate=1e-6))
             self.assertEqual(list(Path(name).iterdir()), [])
 
     def test_partial_checkpoint_and_changed_bytes_reject_before_loading(self):
@@ -112,12 +112,12 @@ class ContinuationState(unittest.TestCase):
             metadata = self.metadata()
             with self.assertRaises(FileNotFoundError):
                 state.restore_final(folder, {}, None, metadata)
-            for filename in ('training-state.pt', 'adapters.safetensors'):
+            for filename in ('training-state.pt', 'adapters.safetensors', 'step.json'):
                 (folder / filename).write_bytes(filename.encode())
             receipt = dict(schema=state.SCHEMA, local_completed_steps=8,
                 global_adam_step=536, metadata_sha256=state.canonical(metadata),
                 files={filename:state._sha(folder / filename)
-                       for filename in ('training-state.pt', 'adapters.safetensors')})
+                       for filename in ('training-state.pt', 'adapters.safetensors', 'step.json')})
             (folder / 'training-state.pt').write_bytes(b'changed')
             (folder / 'checkpoint.json').write_text(json.dumps(receipt))
             with patch.dict(sys.modules, {'torch': None}), self.assertRaises(ValueError):
@@ -131,7 +131,7 @@ class ContinuationState(unittest.TestCase):
             marker.write_bytes(b'preserve-interrupted-state')
             learned = {str(i):SimpleNamespace(grad=None) for i in range(26)}
             with patch.dict(sys.modules, {'torch': None}), self.assertRaises(FileExistsError):
-                state.save_update(name, learned, self.optimizer(529, 1e-6), 1, self.metadata())
+                state.save_update(name, learned, self.optimizer(529, 1e-6), 1, self.metadata(), step_record=dict(step=1, global_adam_step=529, learning_rate=1e-6))
             self.assertEqual(marker.read_bytes(), b'preserve-interrupted-state')
             self.assertEqual([p.name for p in folder.iterdir()], ['training-state.pt.tmp'])
 
