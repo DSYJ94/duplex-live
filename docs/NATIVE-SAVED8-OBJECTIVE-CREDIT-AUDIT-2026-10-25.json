@@ -1,0 +1,749 @@
+{
+  "schema": "dl-native-saved8-cpu-objective-and-credit-audit-v1",
+  "source_commit": "da389a7031a5504495397d1575952194ffa209f1",
+  "source_files_sha256": {
+    "evals/context_native_stream_gradient.py": "9bbfde02a98d18d379f90002e116db788c7489a6a36216a7fd0b35814ac3a015",
+    "evals/context_native_complete_batch.py": "b73a25c71c5932823d8bea24525e913e809acd4c9ad25e1eb26af9143f4b73b0",
+    "evals/native_reasoning_training.py": "995ac14ebd049bb570dfc884e94cc8f6d1bffa5ddcb3e18624b27d913ece1b33",
+    "evals/context_actual_train.py": "2e504fac5d3171680e3277d1e436f7db51d9403b45a1e77f09d4c2c7ccc893c5"
+  },
+  "closed_record_sha256": "56cad2bf545dd8a175eb1e89a630f8f84198e7c19a500a0542f78f2e861d695e",
+  "all8_pre_update_rows": true,
+  "all154_group_membership_and_weights_identical_every_update": true,
+  "full154_loss_curve_is_fixed_membership_but_only_pre_update": true,
+  "final_post8_154_loss_not_available": true,
+  "original28_final_matched_recomputation_available": true,
+  "gradient_norm_range": [
+    12.057445526123047,
+    25.566822052001953
+  ],
+  "updates_clipped_at_norm1": 8,
+  "scalar_weights": {
+    "actual_kind_balanced_mass": 1.0,
+    "old25_kind_balanced_mass": 1.0,
+    "new24_kind_balanced_mass": 1.0,
+    "reference_mean_kl_coefficient": 1.0,
+    "reference_mean_hidden_mse_coefficient": 10.0,
+    "word_anchor_total_mass": 64.0,
+    "clock_anchor_total_mass": 64.0,
+    "audio49_total_mass": 1.0,
+    "first_response_word_multiplier": 16.0
+  },
+  "native_stream_text_coefficients": {
+    "spoken_mass": 0.5,
+    "clock_mass": 0.5,
+    "pad3_relative_clock_weight": 0.5
+  },
+  "native_stream_temporal_history": "KV cache values remain; autograd graph detached after every recorded native call. Backward is executed on each masked call before detachment. This truncates temporal gradients; it does not erase forward context.",
+  "new_reasoning32_exposure": {
+    "each_unique_scene_once": true,
+    "total_unique_scenes": 32,
+    "scenes_per_update": 4
+  },
+  "silent_loss_missing": false,
+  "legacy_replay_omitted": false,
+  "source_changes": 0,
+  "optimizer_updates": 0,
+  "gpu_work": 0,
+  "api_calls": 0,
+  "rows": [
+    {
+      "actual": 0.5675211192473875,
+      "reference": 0.18145108222961426,
+      "old25": 0.45558632162742707,
+      "new24": 0.7613897360861301,
+      "word": 0.0,
+      "clock": 0.0,
+      "audio49": 0.5866257353704802,
+      "step": 1,
+      "pre_clip_gradient_norm": 16.85215950012207,
+      "control40_ids": [
+        "native-control3-train-016",
+        "native-control3-train-000",
+        "native-control3-train-024",
+        "native-control3-train-008",
+        "native-control3-train-032"
+      ],
+      "reasoning32_ids": [
+        "native-reasoning4-train-002",
+        "native-reasoning4-train-001",
+        "native-reasoning4-train-000",
+        "native-reasoning4-train-003"
+      ]
+    },
+    {
+      "actual": 0.5697513132660484,
+      "reference": 0.18134593777358532,
+      "old25": 0.4560937322676182,
+      "new24": 0.7617931282147765,
+      "word": 0.07894347161054611,
+      "clock": 0.051493298262357705,
+      "audio49": 0.586600946528571,
+      "step": 2,
+      "pre_clip_gradient_norm": 25.566822052001953,
+      "control40_ids": [
+        "native-control3-train-017",
+        "native-control3-train-001",
+        "native-control3-train-025",
+        "native-control3-train-009",
+        "native-control3-train-033"
+      ],
+      "reasoning32_ids": [
+        "native-reasoning4-train-006",
+        "native-reasoning4-train-005",
+        "native-reasoning4-train-004",
+        "native-reasoning4-train-007"
+      ]
+    },
+    {
+      "actual": 0.5720321887438331,
+      "reference": 0.18139559403061867,
+      "old25": 0.45536069670005846,
+      "new24": 0.7610361902043223,
+      "word": 0.08239100053906441,
+      "clock": 0.05248147009738854,
+      "audio49": 0.586737143445988,
+      "step": 3,
+      "pre_clip_gradient_norm": 17.434288024902344,
+      "control40_ids": [
+        "native-control3-train-018",
+        "native-control3-train-002",
+        "native-control3-train-026",
+        "native-control3-train-010",
+        "native-control3-train-034"
+      ],
+      "reasoning32_ids": [
+        "native-reasoning4-train-010",
+        "native-reasoning4-train-009",
+        "native-reasoning4-train-008",
+        "native-reasoning4-train-011"
+      ]
+    },
+    {
+      "actual": 0.5682374892413853,
+      "reference": 0.18137986585497856,
+      "old25": 0.4561939395130857,
+      "new24": 0.7612388739362359,
+      "word": 0.0806520126760006,
+      "clock": 0.052546679441417964,
+      "audio49": 0.5868797010304976,
+      "step": 4,
+      "pre_clip_gradient_norm": 22.685853958129883,
+      "control40_ids": [
+        "native-control3-train-019",
+        "native-control3-train-003",
+        "native-control3-train-027",
+        "native-control3-train-011",
+        "native-control3-train-035"
+      ],
+      "reasoning32_ids": [
+        "native-reasoning4-train-014",
+        "native-reasoning4-train-013",
+        "native-reasoning4-train-012",
+        "native-reasoning4-train-015"
+      ]
+    },
+    {
+      "actual": 0.5675474264662626,
+      "reference": 0.1813122071325779,
+      "old25": 0.455232523430727,
+      "new24": 0.7617822401225567,
+      "word": 0.08030184507369996,
+      "clock": 0.05329097754188946,
+      "audio49": 0.5866632452424692,
+      "step": 5,
+      "pre_clip_gradient_norm": 24.806386947631836,
+      "control40_ids": [
+        "native-control3-train-020",
+        "native-control3-train-004",
+        "native-control3-train-028",
+        "native-control3-train-012",
+        "native-control3-train-036"
+      ],
+      "reasoning32_ids": [
+        "native-reasoning4-train-018",
+        "native-reasoning4-train-017",
+        "native-reasoning4-train-016",
+        "native-reasoning4-train-019"
+      ]
+    },
+    {
+      "actual": 0.5676988352345992,
+      "reference": 0.18122299015522003,
+      "old25": 0.45518730544044,
+      "new24": 0.7615362433716655,
+      "word": 0.08091761022806168,
+      "clock": 0.05381038598716259,
+      "audio49": 0.5866783425516011,
+      "step": 6,
+      "pre_clip_gradient_norm": 14.38829231262207,
+      "control40_ids": [
+        "native-control3-train-021",
+        "native-control3-train-005",
+        "native-control3-train-029",
+        "native-control3-train-013",
+        "native-control3-train-037"
+      ],
+      "reasoning32_ids": [
+        "native-reasoning4-train-022",
+        "native-reasoning4-train-021",
+        "native-reasoning4-train-020",
+        "native-reasoning4-train-023"
+      ]
+    },
+    {
+      "actual": 0.572277059423002,
+      "reference": 0.1813361681997776,
+      "old25": 0.45541639998555183,
+      "new24": 0.7612512987107038,
+      "word": 0.0811768613755703,
+      "clock": 0.053950175642967224,
+      "audio49": 0.5866222317729677,
+      "step": 7,
+      "pre_clip_gradient_norm": 12.057445526123047,
+      "control40_ids": [
+        "native-control3-train-022",
+        "native-control3-train-006",
+        "native-control3-train-030",
+        "native-control3-train-014",
+        "native-control3-train-038"
+      ],
+      "reasoning32_ids": [
+        "native-reasoning4-train-026",
+        "native-reasoning4-train-025",
+        "native-reasoning4-train-024",
+        "native-reasoning4-train-027"
+      ]
+    },
+    {
+      "actual": 0.5674616004285954,
+      "reference": 0.1813126839697361,
+      "old25": 0.45541096622075294,
+      "new24": 0.7606558362022042,
+      "word": 0.08256769552826881,
+      "clock": 0.053953641759497774,
+      "audio49": 0.5867526266647844,
+      "step": 8,
+      "pre_clip_gradient_norm": 15.885963439941406,
+      "control40_ids": [
+        "native-control3-train-023",
+        "native-control3-train-007",
+        "native-control3-train-031",
+        "native-control3-train-015",
+        "native-control3-train-039"
+      ],
+      "reasoning32_ids": [
+        "native-reasoning4-train-030",
+        "native-reasoning4-train-029",
+        "native-reasoning4-train-028",
+        "native-reasoning4-train-031"
+      ]
+    }
+  ],
+  "limits": [
+    "Scalar losses and coefficient masses do not determine gradient norms or interference.",
+    "All8 gradients were clipped, which is a recipe behavior, not proof that clipping causes failure.",
+    "No evidence isolates batch size, data quality, optimizer capacity, truncated credit or low exposure as the behavioral cause.",
+    "Forward and restore equality do not certify learning dynamics.",
+    "No failed evaluation output is a training target; no fresh payload was read."
+  ],
+  "individual_factual_group_gradient_norms_or_cosines_recorded": false,
+  "existing_fixed_parent_aggregate_gradient_interactions": {
+    "report_sha256": "46753a71712712250aff747661bf3de0d9e8d165f12977f03c90ac6d04df20eb",
+    "partitions": [
+      {
+        "step": 1,
+        "retained_gradient_norm": 11.8038137738305,
+        "incremental_reasoning32_gradient_delta_norm": 8.810691951738844,
+        "cosine_with_retained_gradient": 0.3222939518490139,
+        "scope": "Fixed-parent accumulated-gradient difference; diagnostic, not an independent loss or learning approval"
+      },
+      {
+        "step": 2,
+        "retained_gradient_norm": 13.87453139431342,
+        "incremental_reasoning32_gradient_delta_norm": 13.908636552062827,
+        "cosine_with_retained_gradient": 0.5592566916202859,
+        "scope": "Fixed-parent accumulated-gradient difference; diagnostic, not an independent loss or learning approval"
+      },
+      {
+        "step": 3,
+        "retained_gradient_norm": 13.58633791500387,
+        "incremental_reasoning32_gradient_delta_norm": 7.4875442943976696,
+        "cosine_with_retained_gradient": 0.3033602514216223,
+        "scope": "Fixed-parent accumulated-gradient difference; diagnostic, not an independent loss or learning approval"
+      },
+      {
+        "step": 4,
+        "retained_gradient_norm": 10.355340576479655,
+        "incremental_reasoning32_gradient_delta_norm": 12.146301550991053,
+        "cosine_with_retained_gradient": 0.492794649949453,
+        "scope": "Fixed-parent accumulated-gradient difference; diagnostic, not an independent loss or learning approval"
+      },
+      {
+        "step": 5,
+        "retained_gradient_norm": 11.090179858794706,
+        "incremental_reasoning32_gradient_delta_norm": 22.53516170755856,
+        "cosine_with_retained_gradient": 0.037574180773037646,
+        "scope": "Fixed-parent accumulated-gradient difference; diagnostic, not an independent loss or learning approval"
+      },
+      {
+        "step": 6,
+        "retained_gradient_norm": 8.506251047061104,
+        "incremental_reasoning32_gradient_delta_norm": 11.905499651319813,
+        "cosine_with_retained_gradient": 0.21115386820083523,
+        "scope": "Fixed-parent accumulated-gradient difference; diagnostic, not an independent loss or learning approval"
+      },
+      {
+        "step": 7,
+        "retained_gradient_norm": 10.49331932985231,
+        "incremental_reasoning32_gradient_delta_norm": 6.906975767836026,
+        "cosine_with_retained_gradient": -0.03344574574670025,
+        "scope": "Fixed-parent accumulated-gradient difference; diagnostic, not an independent loss or learning approval"
+      },
+      {
+        "step": 8,
+        "retained_gradient_norm": 13.074285309537453,
+        "incremental_reasoning32_gradient_delta_norm": 7.41806780075948,
+        "cosine_with_retained_gradient": 0.5350988975880883,
+        "scope": "Fixed-parent accumulated-gradient difference; diagnostic, not an independent loss or learning approval"
+      }
+    ],
+    "positive_cosines": 7,
+    "negative_cosines": 1,
+    "limits": "Aggregate retained-vs-new32 at fixed native520; not per-objective ordinary-vs-audio and not actual updated-state gradients. No blanket conflict diagnosis."
+  },
+  "reasoning32_actual_batch_families": [
+    {
+      "step": 1,
+      "families": [
+        "cancel-reasoning",
+        "delegate-reasoning",
+        "direct-basic",
+        "replace-reasoning"
+      ]
+    },
+    {
+      "step": 2,
+      "families": [
+        "cancel-reasoning",
+        "delegate-reasoning",
+        "direct-basic",
+        "replace-reasoning"
+      ]
+    },
+    {
+      "step": 3,
+      "families": [
+        "cancel-reasoning",
+        "delegate-reasoning",
+        "direct-basic",
+        "replace-reasoning"
+      ]
+    },
+    {
+      "step": 4,
+      "families": [
+        "cancel-reasoning",
+        "delegate-reasoning",
+        "direct-basic",
+        "replace-reasoning"
+      ]
+    },
+    {
+      "step": 5,
+      "families": [
+        "cancel-reasoning",
+        "delegate-reasoning",
+        "direct-basic",
+        "replace-reasoning"
+      ]
+    },
+    {
+      "step": 6,
+      "families": [
+        "cancel-reasoning",
+        "delegate-reasoning",
+        "direct-basic",
+        "replace-reasoning"
+      ]
+    },
+    {
+      "step": 7,
+      "families": [
+        "cancel-reasoning",
+        "delegate-reasoning",
+        "direct-basic",
+        "replace-reasoning"
+      ]
+    },
+    {
+      "step": 8,
+      "families": [
+        "cancel-reasoning",
+        "delegate-reasoning",
+        "direct-basic",
+        "replace-reasoning"
+      ]
+    }
+  ],
+  "reasoning32_baseline_and_pre_exposure_per_case": {
+    "rows": [
+      {
+        "id": "native-reasoning4-train-002",
+        "family": "cancel-reasoning",
+        "previous_updates": 0,
+        "text_at_native520": 1.3477165129628652,
+        "text_before_single_exposure": 1.3477165129628652,
+        "text_delta": 0.0,
+        "audio_at_native520": 0.42006006836891174,
+        "audio_before_single_exposure": 0.42006006836891174,
+        "audio_delta": 0.0
+      },
+      {
+        "id": "native-reasoning4-train-001",
+        "family": "delegate-reasoning",
+        "previous_updates": 0,
+        "text_at_native520": 1.7009536943395176,
+        "text_before_single_exposure": 1.7009536943395176,
+        "text_delta": 0.0,
+        "audio_at_native520": 0.4120292365550995,
+        "audio_before_single_exposure": 0.4120292365550995,
+        "audio_delta": 0.0
+      },
+      {
+        "id": "native-reasoning4-train-000",
+        "family": "direct-basic",
+        "previous_updates": 0,
+        "text_at_native520": 2.874438182810593,
+        "text_before_single_exposure": 2.874438182810593,
+        "text_delta": 0.0,
+        "audio_at_native520": 0.49318933486938477,
+        "audio_before_single_exposure": 0.49318933486938477,
+        "audio_delta": 0.0
+      },
+      {
+        "id": "native-reasoning4-train-003",
+        "family": "replace-reasoning",
+        "previous_updates": 0,
+        "text_at_native520": 1.3388373306052515,
+        "text_before_single_exposure": 1.3388373306052515,
+        "text_delta": 0.0,
+        "audio_at_native520": 0.424003928899765,
+        "audio_before_single_exposure": 0.424003928899765,
+        "audio_delta": 0.0
+      },
+      {
+        "id": "native-reasoning4-train-006",
+        "family": "cancel-reasoning",
+        "previous_updates": 1,
+        "text_at_native520": 2.2661685223780736,
+        "text_before_single_exposure": 2.265141751078552,
+        "text_delta": -0.001026771299521556,
+        "audio_at_native520": 0.4205947816371918,
+        "audio_before_single_exposure": 0.4208642244338989,
+        "audio_delta": 0.0002694427967071533
+      },
+      {
+        "id": "native-reasoning4-train-005",
+        "family": "delegate-reasoning",
+        "previous_updates": 1,
+        "text_at_native520": 1.7424785621325718,
+        "text_before_single_exposure": 1.7390772731634883,
+        "text_delta": -0.003401288969083538,
+        "audio_at_native520": 0.49025222659111023,
+        "audio_before_single_exposure": 0.49003854393959045,
+        "audio_delta": -0.0002136826515197754
+      },
+      {
+        "id": "native-reasoning4-train-004",
+        "family": "direct-basic",
+        "previous_updates": 1,
+        "text_at_native520": 2.0285362885691143,
+        "text_before_single_exposure": 2.0240928698331686,
+        "text_delta": -0.00444341873594567,
+        "audio_at_native520": 0.48846152424812317,
+        "audio_before_single_exposure": 0.4864270091056824,
+        "audio_delta": -0.002034515142440796
+      },
+      {
+        "id": "native-reasoning4-train-007",
+        "family": "replace-reasoning",
+        "previous_updates": 1,
+        "text_at_native520": 0.8687411135258074,
+        "text_before_single_exposure": 0.8667195063352793,
+        "text_delta": -0.0020216071905281296,
+        "audio_at_native520": 0.3953501582145691,
+        "audio_before_single_exposure": 0.3941676616668701,
+        "audio_delta": -0.0011824965476989746
+      },
+      {
+        "id": "native-reasoning4-train-010",
+        "family": "cancel-reasoning",
+        "previous_updates": 2,
+        "text_at_native520": 1.033972142400632,
+        "text_before_single_exposure": 1.0340373213179639,
+        "text_delta": 6.517891733182068e-05,
+        "audio_at_native520": 0.24818119406700134,
+        "audio_before_single_exposure": 0.2480132281780243,
+        "audio_delta": -0.00016796588897705078
+      },
+      {
+        "id": "native-reasoning4-train-009",
+        "family": "delegate-reasoning",
+        "previous_updates": 2,
+        "text_at_native520": 0.8786459072108173,
+        "text_before_single_exposure": 0.8791231164706517,
+        "text_delta": 0.0004772092598344102,
+        "audio_at_native520": 0.42191368341445923,
+        "audio_before_single_exposure": 0.42214229702949524,
+        "audio_delta": 0.00022861361503601074
+      },
+      {
+        "id": "native-reasoning4-train-008",
+        "family": "direct-basic",
+        "previous_updates": 2,
+        "text_at_native520": 0.5278519419013605,
+        "text_before_single_exposure": 0.5342644308297508,
+        "text_delta": 0.006412488928390303,
+        "audio_at_native520": 0.5140203833580017,
+        "audio_before_single_exposure": 0.5145114064216614,
+        "audio_delta": 0.000491023063659668
+      },
+      {
+        "id": "native-reasoning4-train-011",
+        "family": "replace-reasoning",
+        "previous_updates": 2,
+        "text_at_native520": 0.972753664928085,
+        "text_before_single_exposure": 0.97274464364218,
+        "text_delta": -9.021285904964316e-06,
+        "audio_at_native520": 0.3693867623806,
+        "audio_before_single_exposure": 0.3688875138759613,
+        "audio_delta": -0.0004992485046386719
+      },
+      {
+        "id": "native-reasoning4-train-014",
+        "family": "cancel-reasoning",
+        "previous_updates": 3,
+        "text_at_native520": 0.668763641564027,
+        "text_before_single_exposure": 0.666718048190301,
+        "text_delta": -0.002045593373726007,
+        "audio_at_native520": 0.322557270526886,
+        "audio_before_single_exposure": 0.32184213399887085,
+        "audio_delta": -0.0007151365280151367
+      },
+      {
+        "id": "native-reasoning4-train-013",
+        "family": "delegate-reasoning",
+        "previous_updates": 3,
+        "text_at_native520": 1.528005203275029,
+        "text_before_single_exposure": 1.5229163629288571,
+        "text_delta": -0.005088840346171963,
+        "audio_at_native520": 0.29905155301094055,
+        "audio_before_single_exposure": 0.29919305443763733,
+        "audio_delta": 0.00014150142669677734
+      },
+      {
+        "id": "native-reasoning4-train-012",
+        "family": "direct-basic",
+        "previous_updates": 3,
+        "text_at_native520": 0.8793278914557163,
+        "text_before_single_exposure": 0.8740244907718875,
+        "text_delta": -0.0053034006838288406,
+        "audio_at_native520": 0.5629697442054749,
+        "audio_before_single_exposure": 0.561966598033905,
+        "audio_delta": -0.0010031461715698242
+      },
+      {
+        "id": "native-reasoning4-train-015",
+        "family": "replace-reasoning",
+        "previous_updates": 3,
+        "text_at_native520": 1.4825186521925673,
+        "text_before_single_exposure": 1.4794687148497943,
+        "text_delta": -0.0030499373427730347,
+        "audio_at_native520": 0.3254658579826355,
+        "audio_before_single_exposure": 0.32538163661956787,
+        "audio_delta": -8.422136306762695e-05
+      },
+      {
+        "id": "native-reasoning4-train-018",
+        "family": "cancel-reasoning",
+        "previous_updates": 4,
+        "text_at_native520": 0.9931243254842101,
+        "text_before_single_exposure": 0.9899480383389729,
+        "text_delta": -0.003176287145237211,
+        "audio_at_native520": 0.3662474453449249,
+        "audio_before_single_exposure": 0.3675708770751953,
+        "audio_delta": 0.0013234317302703857
+      },
+      {
+        "id": "native-reasoning4-train-017",
+        "family": "delegate-reasoning",
+        "previous_updates": 4,
+        "text_at_native520": 1.8836595873792064,
+        "text_before_single_exposure": 1.881663438498066,
+        "text_delta": -0.0019961488811404138,
+        "audio_at_native520": 0.3317696750164032,
+        "audio_before_single_exposure": 0.3314903676509857,
+        "audio_delta": -0.00027930736541748047
+      },
+      {
+        "id": "native-reasoning4-train-016",
+        "family": "direct-basic",
+        "previous_updates": 4,
+        "text_at_native520": 3.8354925411996135,
+        "text_before_single_exposure": 3.842896197853861,
+        "text_delta": 0.00740365665424747,
+        "audio_at_native520": 0.5184995532035828,
+        "audio_before_single_exposure": 0.5177809596061707,
+        "audio_delta": -0.0007185935974121094
+      },
+      {
+        "id": "native-reasoning4-train-019",
+        "family": "replace-reasoning",
+        "previous_updates": 4,
+        "text_at_native520": 1.221991023568279,
+        "text_before_single_exposure": 1.2245109555226108,
+        "text_delta": 0.0025199319543318666,
+        "audio_at_native520": 0.4554443061351776,
+        "audio_before_single_exposure": 0.4557430148124695,
+        "audio_delta": 0.0002987086772918701
+      },
+      {
+        "id": "native-reasoning4-train-022",
+        "family": "cancel-reasoning",
+        "previous_updates": 5,
+        "text_at_native520": 2.172108644004709,
+        "text_before_single_exposure": 2.1734425240488804,
+        "text_delta": 0.0013338800441715648,
+        "audio_at_native520": 0.3577655851840973,
+        "audio_before_single_exposure": 0.35792991518974304,
+        "audio_delta": 0.00016433000564575195
+      },
+      {
+        "id": "native-reasoning4-train-021",
+        "family": "delegate-reasoning",
+        "previous_updates": 5,
+        "text_at_native520": 0.8246033949254254,
+        "text_before_single_exposure": 0.8231485746924463,
+        "text_delta": -0.0014548202329791593,
+        "audio_at_native520": 0.3032597601413727,
+        "audio_before_single_exposure": 0.3034224212169647,
+        "audio_delta": 0.00016266107559204102
+      },
+      {
+        "id": "native-reasoning4-train-020",
+        "family": "direct-basic",
+        "previous_updates": 5,
+        "text_at_native520": 1.3203653781260982,
+        "text_before_single_exposure": 1.3171585463966267,
+        "text_delta": -0.00320683172947156,
+        "audio_at_native520": 0.44033563137054443,
+        "audio_before_single_exposure": 0.4419260323047638,
+        "audio_delta": 0.0015904009342193604
+      },
+      {
+        "id": "native-reasoning4-train-023",
+        "family": "replace-reasoning",
+        "previous_updates": 5,
+        "text_at_native520": 1.1164508199960892,
+        "text_before_single_exposure": 1.1147513684401815,
+        "text_delta": -0.0016994515559076717,
+        "audio_at_native520": 0.48491325974464417,
+        "audio_before_single_exposure": 0.4851151406764984,
+        "audio_delta": 0.00020188093185424805
+      },
+      {
+        "id": "native-reasoning4-train-026",
+        "family": "cancel-reasoning",
+        "previous_updates": 6,
+        "text_at_native520": 1.346308397949091,
+        "text_before_single_exposure": 1.3477921783582936,
+        "text_delta": 0.0014837804092024953,
+        "audio_at_native520": 0.3543431758880615,
+        "audio_before_single_exposure": 0.35404422879219055,
+        "audio_delta": -0.0002989470958709717
+      },
+      {
+        "id": "native-reasoning4-train-025",
+        "family": "delegate-reasoning",
+        "previous_updates": 6,
+        "text_at_native520": 1.3520448055669725,
+        "text_before_single_exposure": 1.3521829599521205,
+        "text_delta": 0.00013815438514797052,
+        "audio_at_native520": 0.3524022698402405,
+        "audio_before_single_exposure": 0.35239484906196594,
+        "audio_delta": -7.420778274536133e-06
+      },
+      {
+        "id": "native-reasoning4-train-024",
+        "family": "direct-basic",
+        "previous_updates": 6,
+        "text_at_native520": 1.3367100188745837,
+        "text_before_single_exposure": 1.3303369173466137,
+        "text_delta": -0.006373101527969993,
+        "audio_at_native520": 0.45522937178611755,
+        "audio_before_single_exposure": 0.4553191363811493,
+        "audio_delta": 8.976459503173828e-05
+      },
+      {
+        "id": "native-reasoning4-train-027",
+        "family": "replace-reasoning",
+        "previous_updates": 6,
+        "text_at_native520": 1.8597442556803259,
+        "text_before_single_exposure": 1.8600462418073889,
+        "text_delta": 0.0003019861270630031,
+        "audio_at_native520": 0.4343954026699066,
+        "audio_before_single_exposure": 0.43564480543136597,
+        "audio_delta": 0.0012494027614593506
+      },
+      {
+        "id": "native-reasoning4-train-030",
+        "family": "cancel-reasoning",
+        "previous_updates": 7,
+        "text_at_native520": 1.345473332843767,
+        "text_before_single_exposure": 1.3455403348528066,
+        "text_delta": 6.70020090396406e-05,
+        "audio_at_native520": 0.2851261496543884,
+        "audio_before_single_exposure": 0.28395918011665344,
+        "audio_delta": -0.0011669695377349854
+      },
+      {
+        "id": "native-reasoning4-train-029",
+        "family": "delegate-reasoning",
+        "previous_updates": 7,
+        "text_at_native520": 0.8988081203222507,
+        "text_before_single_exposure": 0.8985675492198908,
+        "text_delta": -0.00024057110235986556,
+        "audio_at_native520": 0.36491480469703674,
+        "audio_before_single_exposure": 0.36520883440971375,
+        "audio_delta": 0.00029402971267700195
+      },
+      {
+        "id": "native-reasoning4-train-028",
+        "family": "direct-basic",
+        "previous_updates": 7,
+        "text_at_native520": 0.8939145403356861,
+        "text_before_single_exposure": 0.9032884982760265,
+        "text_delta": 0.00937395794034046,
+        "audio_at_native520": 0.5616177916526794,
+        "audio_before_single_exposure": 0.5611395835876465,
+        "audio_delta": -0.000478208065032959
+      },
+      {
+        "id": "native-reasoning4-train-031",
+        "family": "replace-reasoning",
+        "previous_updates": 7,
+        "text_at_native520": 1.0873926408860584,
+        "text_before_single_exposure": 1.0855572887900706,
+        "text_delta": -0.00183535209598773,
+        "audio_at_native520": 0.41093772649765015,
+        "audio_before_single_exposure": 0.4111005365848541,
+        "audio_delta": 0.0001628100872039795
+      }
+    ],
+    "scope": "Fixed native520 readiness versus each same example immediately before its sole training exposure after0\u20137 prior updates, BOTH original Runpod execution. This is NOT a full post8 matched loss or a convergence curve."
+  },
+  "reasoning32_every_update_already_has_all4_families": true,
+  "native_stream_temporal_history_scope": "Only supplemental native-stream text capture truncates after each call. Original full-sequence actual/teacher/reference/audio objectives remain; do not claim all temporal credit is absent.",
+  "matched_final32_text_and_acoustic_losses_recorded": false
+}

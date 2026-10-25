@@ -45,6 +45,21 @@ words, timings/receipts, per-case reasons and limits. Cookbook and failure track
 updated. Initial25Octgrant<=100GCP/oneA100<=12h/same250GB/zerooptimizer remains.
 GPU compute ended roughly4h46before nativeSTOP; no bill-exact estimate claimed.
 
+CPU follow-up now complete: docs/NATIVE-SAVED8-OBJECTIVE-CREDIT-AUDIT-2026-10-25.json
+and full154 pre-update CSV. All154 memberships/weights identical; all32 minibatches
+ALREADY balanced oneperfamily. Existing fixed520 aggregate gradient cosines7positive/
+1mildnegative(-.03345), so blanket new32-vs-retained conflict is NOTproven. Eight
+norms12.057–25.567 clippedat1; no clipping-causality claim. Native-stream text-only
+per-call detach confirmed, while original full-sequence objectives remain. Existing
+readiness has all32 initial losses; actual receipts measure each scene before its
+single exposure after0–7 updates, NOT a final32 endpoint. New32 final scalar losses
+were omitted by fingerprint summaries. Prepared next measurement is SAME-runtime
+full32 text/audio loss520vs528, zero-update/no-grad, exact finalfingerprint match,
+no repeated recovery/behavior or freshpayload. Plan docs/NATIVE-POST8-LOSS-DIAGNOSIS-
+PLAN-2026-10-25.md; helper NOTyetimplemented, GPU remainsSTOPPED. Revalidate exact
+original grant/window/provider/cost/guards before any restart; no scope/deadline
+extension, newresource or optimizer authorization is inferred from this plan.
+
 NEXT CPU-only diagnosis/changed repair design. Shared-objective interference,
 per-frame temporal detach, and one exposure per new32 are ranked hypotheses;
 none is proven causal. Existing20Oct persona-only complete10 already failed2/4;
