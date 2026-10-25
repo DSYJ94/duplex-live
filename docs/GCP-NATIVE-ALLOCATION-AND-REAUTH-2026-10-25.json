@@ -1,6 +1,6 @@
 {
   "schema": "dl-gcp-allocation-and-reauth-status-v1",
-  "recorded_utc": "2026-10-25T13:53:55.466691+00:00",
+  "recorded_utc": "2026-10-25T14:58:04.227949+00:00",
   "zone_b_operation": "operation-1792928965865-65ea8ce1e2f72-2a556336-fc03e075",
   "zone_b_actual_result": "DONE/error configuration_availability; instance not created",
   "original_a_operation": "operation-1792929991159-65ea90b3aed48-ba8bdc52-27dd587e",
@@ -18,7 +18,7 @@
   "reauth_cli_session": 85715,
   "credentials_requested_in_chat": false,
   "heartbeat_status": "ACTIVE",
-  "current_training_or_new_measurement": "Complete matched32 zero-update diagnostic launched 13:53:01.706867UTC; actual unit active",
+  "current_training_or_new_measurement": "ONE timing-only corrected zero-update request allocated; preparing guards/preflight",
   "optimizer_updates": 0,
   "model_adopted": false,
   "references": {
@@ -91,7 +91,12 @@
     "main_pid_first_live": 1978,
     "invocation_id": "68fec3824f674a1b9958f221ea7208a3",
     "actual_successful_terminal": null,
-    "optimizer_updates": 0
+    "optimizer_updates": 0,
+    "actual_exit": 1,
+    "actual_child_exit": -15,
+    "actual_docker_exit": 1,
+    "failure": "Actual one-hour TimeoutError; incomplete32/26 pair, all32 source outputfile hashes copied and verified",
+    "actual_gpu_stop_utc": "2026-10-25T14:54:12.398Z"
   },
   "diagnostic_evidence_preserver": {
     "pid": 53548,
@@ -102,5 +107,20 @@
     "qualified": false,
     "observer_deadline_utc": "2026-10-25T14:56:30Z",
     "new_provider_jobs": 0
+  },
+  "flex_controller_v6": {
+    "pid": 71491,
+    "tool_session": 19466,
+    "operation": "operation-1792940144147-65eab68653b78-d3424b9f-4f3ad4c2",
+    "same_resource_id": "4443302983961393208",
+    "source_commit": "c1006f90fbd08dfa887b1ee117d317ad36026441",
+    "prior_gpu_seconds_upper": 36251,
+    "full_scope_runtime_upper_seconds": 41651,
+    "full_scope_cost_upper_usd": 94.01753611111111,
+    "maximum_child_seconds": 4800,
+    "maximum_host_seconds": 5100,
+    "native_stop_utc": "2026-10-25T16:26:13.653Z",
+    "model_launched": false,
+    "optimizer_updates": 0
   }
 }

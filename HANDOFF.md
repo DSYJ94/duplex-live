@@ -1,3 +1,49 @@
+# LOCAL — Old diagnostic ACTUAL timeout preserved; ONE corrected timing run allocated
+
+25Oct14:57UTC. Old original3600s job ACTUALLYtimedout14:53:05.747 deadline; child-15,
+docker1, originalmodelparenterror TimeoutError (wrapperAssertionErrornotnumeric).
+32native520+26saved528rows only; fullpair/finalfrozen/RNG checks INCOMPLETE. No pass/
+convergence/adoption/optimizer update claimed. ActualVM STOP14:54:12.398UTC. Read-only
+preserver53548/tool26003 ACTUAL0, ALL32source regularfiles603736229B hashesmatch;
+terminal+hostlog alsoMac. docs/NATIVE-MATCHED32-ACTUAL-TIMEOUT-2026-10-25.json records
+exactinventorySHA/provenance. All failedoriginalout/receipts remainunaltered.
+
+ONE conditional timing correction nowACTUALsubmitted: controller-v6 PID71491/tool19466,
+source c1006f90fbd08dfa887b1ee117d317ad36026441 (83localtestsPASS/pushed), newworktree
+/workspace/migration/duplex-flex90-c1006f9-v2. SameVM4443302983961393208/original250GBdisk
+1828090267781080539, europe-west4-a. Actualoperation
+operation-1792940144147-65eab68653b78-d3424b9f-4f3ad4c2; lastStart14:56:13.653UTC,
+native5400sSTOP16:26:13.653UTC. No new VM/disk/region/purchase/optimizer. Sourcebundle
+ gcp-flex90-timing-c1006f9-v1.bundle actualHEADverified; Gitfetch/newcleanworktree before
+model. Currentcontroller preparing guards/preflight; correctedmodel NOTYETlaunched
+atthisentry. Neverduplicate/relaunchv5/v6 onobservationtimeout.
+
+Fresh complete providerhistory union inclall4Flexintervals/duplicateSTOPends gives
+36251priorGPUseconds. Correctednative5400max =>41651seconds(11.5697h)<43200; whole
+upper94.017536USD<100 incl28.88reserves atfreshofficial5.6185897123/h(upper5.63).
+Originalowner100USD/12cumulativeGPUh/ZEROoptimizer grant intact. Revisedinternalchild
+4800s/host5100s fitsunchangednative90minSTOP with>=4920s remainingatlaunch; no data/
+model/numeric/behavior acceptance threshold changed. Original3600 default remains
+foroldcallers; oldjobwasnotextended. Conditionalrootcause satisfied byactualTimeoutError,
+not an observationtimeout. AtmostONEcorrectedrun; ifthisfails preserve/STOP/no blindretry.
+
+Correctedout /workspace/migration/gcp-flex90-matched32-timing-v2, unit
+ duplex-native-flex90-matched32-timing-v2, terminal gcp-flex90-matched32-timing-terminal-v2,
+hostlog gcp-flex90-matched32-timing-host-v2. Freshlease-v5/Macguard-v5/guest-v5/mux-v5.
+Must pass83targetCPUtests+strictsaved8proof+freshdualguards, thenALL32bothendpoints/
+exactall5fieldfinalfingerprints/frozen+adapter+RNG/no-grad/no-checkpoint checks,
+actualterminal0/allhashcopyback into gcp-flex90-matched32-timing-copyback-v2 THENSTOP.
+No trainingupdates/recovery/native20/freshpayload/adoption. OriginalDA/image/objectives
+unchanged. PrepareONEnewread-onlypreserver ONLYaftercorrectedout exists/modelactually
+launched; originalpreserverterminal andoldpartialcopy mustnotbeoverwritten.
+
+FullBnativearchive verification/criticalproofsbackups remainPASS; broadMacsourcebackup
+PARTIAL. Candidateordinarybaseline2/4saved8 1/4stillREJECTED. All64native520scalarlosses
+matchedoriginalBF16readiness exactly (f9189c8). Requestauditall40targets/weightbounds
+740e51b unchanged. UnrelatedPYC/probes/roadmap preserved. LOCALsoleexecutor/goalunfinished.
+
+---
+
 # LOCAL — Timing-only correction PREPARED; current original run unchanged/live
 
 25Oct14:50UTC. Current live full32pair at lastcopiedlog14:49:39: native52032,

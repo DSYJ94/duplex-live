@@ -1,0 +1,34 @@
+{
+  "schema": "dl-native-matched32-actual-timeout-preservation-v1",
+  "recorded_utc": "2026-10-25T14:58:04.225783+00:00",
+  "status": "FAILED_TIMING_INCOMPLETE_NOT_QUALIFIED",
+  "producer_commit": "cd5666c2514830c44c940a79ffc3508102799b9e",
+  "actual_controller_phase": "failed_preserved_no_retry",
+  "actual_error_type": "TimeoutError",
+  "actual_child_exit": -15,
+  "actual_docker_exit": 1,
+  "original_child_maximum_seconds": 3600,
+  "original_child_deadline_utc": "2026-10-25T14:53:05.747233Z",
+  "completed_rows": {
+    "native520": 32,
+    "saved528": 26
+  },
+  "full_pair_complete": false,
+  "frozen_adapter_rng_final_checks_complete": false,
+  "actual_gpu_stop_utc": "2026-10-25T14:54:12.398Z",
+  "preservation": {
+    "actual_rsync_exit": 0,
+    "all_source_regular_file_hashes_match": true,
+    "regular_files": 32,
+    "source_bytes": 603736229,
+    "inventory_sha256": "22aabf42590e4ff3bbaa09372d74f65af2d8e8464e5188ba313e4cae874717ac",
+    "path": "runs/local-migration-20261024/gcp-flex90-live-preservation-v1",
+    "actual_terminal_sha256": "91914fe854737ca719b05df655bfade06ebfec324c4c23fa235f0777b0a87c46"
+  },
+  "optimizer_updates": 0,
+  "original_training_eight_updates_repeated": false,
+  "model_adopted": false,
+  "candidate_behavior_rejection_unchanged": true,
+  "interpretation": "The implementation one-hour diagnostic timer expired; no numerical exception was reported before it. This is not a passing comparison, convergence finding, or model repair.",
+  "conditional_timing_repair": "NATIVE-MATCHED32-TIMING-REPAIR-2026-10-25.json"
+}
