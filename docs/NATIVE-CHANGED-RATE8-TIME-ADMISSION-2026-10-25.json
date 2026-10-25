@@ -1,0 +1,38 @@
+{
+  "schema": "dl-native-changed-stage-phase-time-admission-v1",
+  "scope": "Historical execution evidence and conservative planning allowances, NOT a measured runtime for the proposed new pilot.",
+  "historical_jobs": {
+    "finalization-job.json": {
+      "actual_exit": 0,
+      "seconds": 5966.357537031174,
+      "sha256": "b7da61c9a2a1c52473a4945b6b72189fe6502f66ef958942b1816809bfe7c2ae"
+    },
+    "independent-job.json": {
+      "actual_exit": 0,
+      "seconds": 6125.520883798599,
+      "sha256": "14994e711eb28accc0beee2e2e8c3e581e72d2c14462d1726a37bc3afff7becd"
+    }
+  },
+  "historical_failed_fit": {
+    "controller_sha256": "0605e35166606ae55a5beca5ce56757f69acb68aceeffb989735a4239bda3a32",
+    "actual_exit": -15,
+    "interval_to_failed_controller_observation_seconds": 8171.664663,
+    "all8updates_saved": true,
+    "finalization_incomplete": true
+  },
+  "planning": {
+    "fit_partition_seconds": 1022,
+    "additional_final_fingerprint_allowance_seconds": 2700,
+    "independent_restore_allowance_seconds": 6126,
+    "native_speech_review_allowance_seconds": 3600,
+    "copyback_allowance_seconds": 900
+  },
+  "forecast_guaranteed": false,
+  "old6hour_proposal_superseded": true,
+  "proposed_new_gpu_hours": 9,
+  "proposed_additional_cap_usd": 75,
+  "owner_authorization_received": false,
+  "new_gpu_started": false,
+  "partition_allowance_method": "ceil(failed fit interval/8); the interval includes construction/post-fit work and is NOT a measured per-update duration.",
+  "native_speech_allowance_scope": "Development evaluation only. Sealed fresh evaluation may open only after development qualification and its own complete-time admission; no adoption is promised within this cap."
+}

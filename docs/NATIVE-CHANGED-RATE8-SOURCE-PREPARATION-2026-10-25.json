@@ -21,11 +21,9 @@
     "historical_replay_is_not_new_training": true
   },
   "remaining_before_launch": [
-    "Explicit new optimizer/budget/bounded-exploration authorization; current GCP grant remainsZEROupdates.",
-    "Independent exact parent528 adapter/Adam/RNG restore before the rate change; new stage state metadata and fresh-process final536 restore.",
-    "Guarded runtime/controller, per-update atomic checkpoint/receipt persistence and native provider STOP/cost limits.",
-    "GPU execution and optional endpoint-metrics parity at exact image/source/profile before optimization.",
-    "Complete unchanged numerical/native/speech/fresh approval chain; source tests do not qualify a model."
+    "Strict new numerical proof and native-driver integration binding real terminal records and the fresh full-state/native-logit comparison.",
+    "Live external controller/deadline/cost-guard/copyback preparation; no provider changes or owner authorization have occurred.",
+    "Actual exact-image GPU validation of new helpers and unchanged complete behavioral/audio/fresh gates."
   ],
   "new_optimizer_updates": 0,
   "new_model_forwards": 0,
@@ -34,6 +32,7 @@
   "gpu_parity_validated": false,
   "quality_qualified": false,
   "model_adopted": false,
-  "current_related_cpu_tests_passed": 35,
-  "updated_utc": "2026-10-25T17:20:38.029233+00:00"
+  "current_related_cpu_tests_passed": 42,
+  "updated_utc": "2026-10-25T17:47:11.832496+00:00",
+  "proposal_sha256": "2f6ee724a101d69be0f79261b5f033ee06bf33358df6f9606e3cde7bf2c4335f"
 }

@@ -1,0 +1,35 @@
+{
+  "schema": "dl-native-changed-rate8-runtime-source-preparation-v1",
+  "status": "RUNTIME_OBSERVER_PREPARED_NOT_DEPLOYED_NOT_GPU_VALIDATED",
+  "recorded_utc": "2026-10-25T17:47:11.834793+00:00",
+  "proposal_sha256": "2f6ee724a101d69be0f79261b5f033ee06bf33358df6f9606e3cde7bf2c4335f",
+  "source_sha256": {
+    "portable/context/native_reasoning_continuation_runtime.py": "3e3efead6d9c707b279e141a797ab03847525e1bfe10b06b74d4bad45a708913",
+    "evals/native_reasoning_continuation_observation.py": "d73106e7a770246526ec0bd6e976f1820c6217d9df7228e5bda267c860526fab",
+    "evals/native_reasoning_continuation_policy.py": "9c93f8db77b6e23b232c0db2647948588e6b001da1ee50381c600d0154002875",
+    "evals/harness/test_native_reasoning_continuation_runtime.py": "c58d27868fa6128b934a88dbd1356bf997c643f58ed0dcf508d52dbae38f85f0",
+    "evals/harness/test_native_reasoning_continuation_observation.py": "04cedacbb3ba090cc3668d1075415dae3c11f63ca8f05145a133b2ae31ef55b3"
+  },
+  "related_cpu_tests_passed": 42,
+  "source_isolation": "OriginalDA model/trainer modules resolve FIRST; new absent helpers resolve from the clean producer SECOND; the optional same-forward observer is loaded under a separate module name and never replaces the original trainer.",
+  "observations": "All original28/audio49/native49/control40/reasoning32 fingerprints plus original28 metrics and complete32 text/acoustic CE; exact parent comparison before fit, final measurement, separate-process final state restore and exact repeated measured fingerprints/losses. Frozen/adapter/optimizer/RNG and80GB bounds remain checked.",
+  "parent_reference_physical_record_verified_locally": true,
+  "local_tensor_execution": false,
+  "old_original_zero_update_grant_rejected_before_guard_or_model": true,
+  "proposed_additional_cap_usd": 75,
+  "proposed_gpu_hours": 9,
+  "proposal_only": true,
+  "owner_training_authorization_received": false,
+  "new_optimizer_updates": 0,
+  "new_model_forwards": 0,
+  "new_gpu_started": false,
+  "actual_terminal_records": false,
+  "numerical_proof_approved": false,
+  "behavior_qualified": false,
+  "model_adopted": false,
+  "remaining_before_launch": [
+    "Strict new proof verifier and native inference driver integration.",
+    "Live controller/guard/phase timeout/hash-copyback preparation.",
+    "Explicit new owner update/budget/bounded-exploration authorization, then exact-image GPU validation and unchanged behavioral gates."
+  ]
+}

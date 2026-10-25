@@ -1,3 +1,64 @@
+# LOCAL — Fresh runtime/observer prepared; timing-admitted proposal revised, NOT authorized
+
+25 October. This turn changes SOURCE ONLY after the prior explanatory/status turn;
+no new model data, updates, inference, provider mutation or deployment occurred.
+Last committed source before this entry fc078f8. Current paid GCP machines remain
+all4 TERMINATED on a fresh provider read; current authorization is STILL the original
+100USD/12GPUh grant withZEROoptimizerupdates, NOT the newly proposed bounds below.
+
+Prepared portable/context/native_reasoning_continuation_runtime.py. A fresh child
+retains originalDA model/trainer modules FIRST and adds absent new producer helpers
+SECOND; preloaded model/Torch state rejects. Exact old optimizer-free construction
+AST and immutable input readiness/physical source hashes remain required. Relative
+paths are resolved before changing cwd. The optional same-forward metrics observer
+loads under a separate name without replacing native_reasoning_training. Parent
+528 adapter/Adam/RNG restoration and ALL original28/audio49/native49/control40/
+reasoning32 fingerprints plus original28 metrics must match the exact accepted
+independent saved8 record BEFORE the changed loop can execute.
+
+Post-fit observer retains complete32 CE during those same mandatory forwards.
+ALL adapter/frozen/optimizer/RNG, target counts and80GB bounds are checked; RNG is
+restored and compared independently. Separate process restores final local8/global536,
+compares ALL native fingerprints/losses and verifies distinct PID/birth on the SAME
+host/boot. Records remain unapproved until actual terminal0/proof validation;
+original failedfit-15 and completed rejected saved8 proof are never relabelled.
+Actual native execution profile/frozen ownership/A&B liveness stay unchanged.
+
+NEW timing evidence: exact closed successful finalization5966.3575s (~99.44min)
+and independent restore6125.5209s (~102.09min). HistoricalV18 fit ran8171.6647s to
+failed-controller observation, saved8 updates but incomplete postfit, ACTUAL-15.
+This is NOT a measured duration for a successful new fit. Splitting that failed
+interval across8 remaining updates is a conservative FORECAST allowance1022s each,
+not observed per-update timing. Plus2700s finalFP/6126s independent/3600s development
+native-speech/900s copyback gives21502s remaining admission before the FIRST update.
+A six-hour GPU window after model construction/parent parity cannot be relied on
+for this full chain. Loop now admits remaining completion budget before EACH
+mutation, not just time to finish the training calculation. Forecast is NOT a
+runtime guarantee; deadlines/early stop/complete gates still take precedence.
+
+UNAPPROVED changed-rate8 proposal revised to additional75USD/9GPUh, cumulative
+175USD/21GPUh, exact same VM/disk, oneGPU, ZERO purchases/resources/other transfers.
+Native hourly admission ceiling7.25USD gives65.25USD compute +6.5USD other reserve
+=71.75USD, with3.25USD headroom. Actual stock/price/guards MUST be freshly checked
+before launch. Original40351GPU seconds/91.9844806USD conservative scope upper are
+carried forward and never reset. Pure policy schema binds the NEW proposal hash;
+old grant still rejects. NO new owner authorization record exists. Historical50USD/
+6h proposal entries below are superseded, never approved. Sealed fresh evaluation
+needs its OWN full remaining-time admission AFTER development qualification.
+
+42 related CPU tests PASS, including subprocess module-isolation checks; actual
+GPU/tensor/helper paths remain NOT deployed/NOT validated. Actual parent reference
+hash and metadata were also checked locally without model load. Reports:
+ docs/NATIVE-CHANGED-RATE8-RUNTIME-PREPARATION-2026-10-25.json
+ docs/NATIVE-CHANGED-RATE8-TIME-ADMISSION-2026-10-25.json
+Next safe SOURCE work: strict new numerical proof/real terminal validator and native
+inference integration, then controller/phase deadlines/hash-copyback. Obtain explicit
+new update/budget/bounded-exploration approval before GPU launch. No gate weakened,
+fresh payload opened, candidate adopted or heartbeat recreated. GoalACTIVE/UNFINISHED;
+current modelREJECTED. Preserve unrelated PYC/probes/roadmap; LOCAL sole executor.
+
+---
+
 # LOCAL — Guarded continuation loop prepared; no new training/compute
 
 25 October. Previous goal turn PROGRESS: state/checkpoint primitives a0fc5e3 pushed.

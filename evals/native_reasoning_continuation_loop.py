@@ -10,61 +10,28 @@ from pathlib import Path
 import time
 
 from evals.native_reasoning_continuation_objective import RATE, START, UPDATES
-from evals.native_reasoning_continuation_state import _sha, validate_metadata
+from evals.native_reasoning_continuation_state import validate_metadata
 
 SCHEMA = 'dl-native-changed-rate8-loop-v1'
-PROPOSAL_SHA = '750f5886f9f6d90fb17eabadb80f99e41b9e1c420da9a8929faaab942113c40a'
-ORIGINAL_GRANT_SHA = '97c8d43fe7be11595e7d00775af4e1f2c7666a469041c720bf7586ee8a020322'
-RESOURCE_ID = '4443302983961393208'
+from evals.native_reasoning_continuation_policy import (
+    PROPOSAL_SHA, ORIGINAL_GRANT_SHA, RESOURCE_ID, authorization, check_guard)
 
 
-def authorization(path):
-    """Read a NEW direct-owner authorization; the old zero-update grant fails."""
-    path = Path(path)
-    record = json.loads(path.read_text())
-    expected = dict(schema='dl-native-changed-rate-eight-owner-authorization-v1',
-        status='APPROVED', approval_source='Direct human reply in active LOCAL chat',
-        proposal_sha256=PROPOSAL_SHA, original_grant_sha256=ORIGINAL_GRANT_SHA,
-        project='aurium-duplex-live-20261024', additional_optimizer_updates=8,
-        initial_global_adam_step=528, final_global_adam_step=536,
-        learning_rate=1e-6, maximum_additional_gcp_usage_usd=50,
-        cumulative_gcp_usage_cap_usd=150, additional_gpu_hours=6,
-        cumulative_gpu_hours=18, maximum_concurrent_gpus=1,
-        rejected_parent_bounded_exploration_approved=True,
-        new_credit_purchase=False, new_vm_or_storage=False,
-        further_extension_authorized=False, model_adoption_authorized=False)
-    if (any(record.get(k) != v or type(record.get(k)) is not type(v)
-            for k, v in expected.items())
-            or type(record.get('owner_reply')) is not str or not record['owner_reply'].strip()):
-        raise ValueError('Exact separate changed-rate/update/budget owner authorization required')
-    return dict(record=record, sha256=_sha(path))
+def required_completion_seconds(completed_updates):
+    """Conservative forecast allowances, not measured future runtimes.
+
+    The old failed fit interval gives1022s per partition; the successful full
+    independent restore took6126s. Preserve additional final32/native-speech/
+    copyback allowances. See the committed phase-time evidence document.
+    """
+    if type(completed_updates) is not int or not 0 <= completed_updates <= UPDATES:
+        raise ValueError('A bounded completed-update count is required')
+    return (UPDATES - completed_updates) * 1022 + 2700 + 6126 + 3600 + 900
 
 
-def check_guard(guard, approved):
-    raw = guard()
-    from portable.context.native_saved_stage_runtime import guard_receipt
-    checked = guard_receipt(lambda: raw)
-    now = time.time()
-    numeric = ('native_start_unix', 'maximum_new_gpu_seconds', 'hourly_price_usd',
-               'prior_gpu_seconds_upper', 'prior_scope_cost_upper_usd')
-    if (any(type(raw.get(k)) not in (int, float) or not math.isfinite(raw[k]) for k in numeric)
-            or checked['provider'] != 'gcp' or checked['resource_id'] != RESOURCE_ID
-            or checked['authorization_sha256'] != approved['sha256']
-            or raw.get('optimizer_updates_authorized') != 8
-            or raw.get('parent_global_adam_step') != 528
-            or raw.get('final_global_adam_step_limit') != 536
-            or not 0 < raw['native_start_unix'] <= now
-            or not 0 < raw['maximum_new_gpu_seconds'] <= 21600
-            or checked['deadline_unix'] > raw['native_start_unix'] + raw['maximum_new_gpu_seconds']
-            or raw['prior_gpu_seconds_upper'] < 40351
-            or raw['prior_gpu_seconds_upper'] + raw['maximum_new_gpu_seconds'] > 64800
-            or raw['prior_scope_cost_upper_usd'] < 91.98448055555555
-            or checked['planned_maximum_cost_usd'] > 50
-            or checked['remaining_budget_usd'] > 50
-            or not 0 < raw['hourly_price_usd'] <= 7.25
-            or checked['planned_maximum_cost_usd'] < raw['hourly_price_usd'] * raw['maximum_new_gpu_seconds'] / 3600 + 6.5
-            or checked['planned_maximum_cost_usd'] + raw['prior_scope_cost_upper_usd'] > 150):
-        raise ValueError('Fresh unchanged provider/budget/update bounds required')
+def _admit(checked, completed_updates):
+    if checked['deadline_unix'] - time.time() < required_completion_seconds(completed_updates):
+        raise ValueError('Insufficient remaining time for updates AND complete approval/copyback')
     return checked
 
 
@@ -75,7 +42,7 @@ def _write(path, value):
 
 def _drive(operations, out, approved, guard):
     """Protocol seam for deterministic failure tests; no automatic retry."""
-    first_guard = check_guard(guard, approved)
+    first_guard = _admit(check_guard(guard, approved), 0)
     out = Path(out)
     out.mkdir()  # Existing/partial runs cannot be reused.
     rows = []
@@ -89,12 +56,12 @@ def _drive(operations, out, approved, guard):
     event('started', authorization_sha256=approved['sha256'])
     try:
         for local_step in range(UPDATES):
-            check_guard(guard, approved)
+            _admit(check_guard(guard, approved), local_step)
             row = operations.backward(local_step)
-            check_guard(guard, approved)  # Backward may outlast a prior lease.
+            _admit(check_guard(guard, approved), local_step)  # Backward may outlast a prior lease.
             gradient = operations.clip_and_check()
             row.update(gradient, learning_rate=RATE)
-            check_guard(guard, approved)  # Last check immediately before mutation.
+            _admit(check_guard(guard, approved), local_step)  # Last check immediately before mutation.
             event('optimizer_step_intent', local_step=local_step + 1,
                   expected_global_adam_step=START + local_step + 1)
             step_in_flight = True
@@ -130,9 +97,13 @@ class NativeOperations:
         import torch
         from evals.moshi_training_smoke import tensor_hashes
         from evals.native_reasoning_continuation_state import _adam
+        from evals.context_execution import snapshot
         validate_metadata(metadata)
         self.context, self.optimizer, self.metadata = context, optimizer, metadata
         self.learned = context['learned']
+        self.execution = snapshot(context['lm'])
+        if any(self.execution[k] != v for k, v in context['control_policy']['execution_required'].items()):
+            raise ValueError('Original independently approved native execution profile required')
         _adam(optimizer, START, RATE)
         if ({n for n, p in context['lm'].named_parameters() if p.requires_grad} != set(self.learned)
                 or any(p.grad is not None for p in context['lm'].parameters())):
@@ -183,12 +154,18 @@ class NativeOperations:
                            self.metadata, step_record=row)
 
     def finish(self, rows):
+        import torch
         from evals.moshi_training_smoke import tensor_hashes
+        from evals.context_execution import snapshot
         from evals.native_reasoning_continuation_objective import validate_stage
         if self.frozen != tensor_hashes((n, p) for n, p in self.context['lm'].named_parameters() if not p.requires_grad):
             raise ValueError('Frozen base changed during continuation')
-        return validate_stage(rows, self.context['audio49_policy'],
-                              self.context['control_policy'], self.context['reasoning_policy'])
+        peak = torch.cuda.max_memory_allocated()
+        if snapshot(self.context['lm']) != self.execution or not 0 < peak < 80_000_000_000:
+            raise ValueError('Changed execution profile or exceeded original80GB bound')
+        result = validate_stage(rows, self.context['audio49_policy'],
+                                self.context['control_policy'], self.context['reasoning_policy'])
+        return dict(result, peak_allocated_bytes=peak, native_execution_profile=self.execution)
 
 
 def run(context, optimizer, metadata, out, authorization_path, guard):

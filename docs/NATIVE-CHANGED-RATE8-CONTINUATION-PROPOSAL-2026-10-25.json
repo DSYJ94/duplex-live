@@ -60,7 +60,8 @@
     "New continuation stage/schema validates parent528 and final536, exactly8 updates, unchanged complete exposure and full objective recipe; do not edit old approval records to make them pass.",
     "Pin new Git source and all existing data/proof hashes. Keep originalDA389a7, exact NGC digest, native recorded-call BF16/math execution and voice.",
     "Integrate optional endpoint loss capture into mandatory complete fingerprint collection. Require exact default fingerprint parity and frozen/adapter/RNG preservation before using new metrics; source hook is currently CPU-tested only.",
-    "Prepare one sequential controller with provider STOP, independent Mac/guest guards, whole-project budget ledger, phase-specific deadlines and real terminal/copyback receipts; no concurrent GPU jobs or automatic retries."
+    "Prepare one sequential controller with provider STOP, independent Mac/guest guards, whole-project budget ledger, phase-specific deadlines and real terminal/copyback receipts; no concurrent GPU jobs or automatic retries.",
+    "Time-admit all remaining updates/final fingerprints/independent restoration/native-speech review/copyback before any optimizer mutation using historical phase intervals and explicit forecast allowances. A forecast is not a runtime guarantee."
   ],
   "execution_and_review": [
     "Verify provider price/stock/auth and one-GPU state immediately before start; never repeat completed full32 diagnostic or saved8 recovery/native20.",
@@ -77,20 +78,21 @@
     "provider": "GCP",
     "project": "aurium-duplex-live-20261024",
     "new_credit_purchase": false,
-    "additional_usage_cap_usd": 50,
-    "combined_with_original_usage_cap_usd": 150,
-    "additional_gpu_hours_cap": 6,
-    "cumulative_gpu_hours_cap": 18,
+    "additional_usage_cap_usd": 75,
+    "combined_with_original_usage_cap_usd": 175,
+    "additional_gpu_hours_cap": 9,
+    "cumulative_gpu_hours_cap": 21,
     "maximum_concurrent_gpus": 1,
     "gpu": "A100 80GB",
     "hourly_price_admission_ceiling_usd": 7.25,
-    "six_hour_compute_reserve_usd": 43.5,
     "storage_network_other_reserve_usd": 6.5,
     "existing_vm_and_original250gb_disk_only": true,
     "new_vm_disk_snapshot_region_quota_or_api_activation": false,
     "extra_cpu_staging_authorized": false,
     "no_automatic_credit_purchase": true,
-    "deadline_policy": "End before earliest native6hSTOP, remaining original-plus-new dollar cap, or phase deadline; preserve and stop if all work cannot fit. Additional time/cost is not inferred from credits balance."
+    "deadline_policy": "Stop before earliest native9hSTOP, original-plus-new175USD cumulative cap, or phase deadline; require completion-time admission BEFORE every optimizer step and preserve all outputs if work cannot fit.",
+    "nine_hour_compute_reserve_usd": 65.25,
+    "unused_headroom_usd": 3.25
   },
   "not_authorized_by_original_grant": true,
   "new_optimizer_updates_executed": 0,
@@ -98,5 +100,7 @@
   "source_implementation_complete": false,
   "gpu_parity_validated": false,
   "model_adopted": false,
-  "goal_complete": false
+  "goal_complete": false,
+  "revision": "v2: timing-evidence revision; neither prior50USD/6h proposal nor this75USD/9h revision is authorized",
+  "timing_evidence": "NATIVE-CHANGED-RATE8-TIME-ADMISSION-2026-10-25.json"
 }

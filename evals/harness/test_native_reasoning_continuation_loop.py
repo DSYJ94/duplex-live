@@ -51,13 +51,13 @@ class ContinuationLoop(unittest.TestCase):
         now = time.time()
         return dict(execution_authorized=True, live_provider_deadline_verified=True,
             live_external_cost_guard_verified=True, single_gpu_across_providers_verified=True,
-            checked_unix=now, deadline_unix=now + 900, provider='gcp',
-            remaining_budget_usd=50, planned_maximum_cost_usd=40,
+            checked_unix=now, deadline_unix=now + 30000, provider='gcp',
+            remaining_budget_usd=75, planned_maximum_cost_usd=60,
             resource_id=loop.RESOURCE_ID, authorization_sha256=self.approved['sha256'],
             optimizer_updates_authorized=8, parent_global_adam_step=528,
             final_global_adam_step_limit=536, native_start_unix=now - 60,
             hourly_price_usd=5.5,
-            maximum_new_gpu_seconds=21600, prior_gpu_seconds_upper=40351,
+            maximum_new_gpu_seconds=32400, prior_gpu_seconds_upper=40351,
             prior_scope_cost_upper_usd=91.98448055555555)
 
     def test_exactly_eight_mutations_and_checkpoints_never_claim_qualification(self):
@@ -143,14 +143,27 @@ class ContinuationLoop(unittest.TestCase):
         cases = [('checked_unix', time.time() - 31), ('prior_gpu_seconds_upper', 0),
                  ('prior_scope_cost_upper_usd', 0), ('optimizer_updates_authorized', 0),
                  ('parent_global_adam_step', 520), ('resource_id', 'different-vm'),
-                 ('planned_maximum_cost_usd', 51), ('maximum_new_gpu_seconds', 300),
-                 ('hourly_price_usd', 7.26), ('planned_maximum_cost_usd', 39),
+                 ('planned_maximum_cost_usd', 76), ('maximum_new_gpu_seconds', 300),
+                 ('hourly_price_usd', 7.26), ('planned_maximum_cost_usd', 55),
                  ('authorization_sha256', 'c' * 64)]
         for key, value in cases:
             raw = self.guard()
             raw[key] = value
             with self.subTest(key=key), self.assertRaises(ValueError):
                 loop.check_guard(lambda:raw, self.approved)
+
+    def test_training_that_fits_alone_cannot_consume_validation_reserve(self):
+        raw = self.guard()
+        raw['deadline_unix'] = time.time() + 20000
+        with tempfile.TemporaryDirectory() as name, redirect_stdout(io.StringIO()):
+            ops = Operations()
+            out = Path(name) / 'fit'
+            with self.assertRaisesRegex(ValueError, 'Insufficient remaining time'):
+                loop._drive(ops, out, self.approved, lambda:raw)
+            self.assertEqual(ops.calls, [])
+            self.assertFalse(out.exists())
+        self.assertGreater(loop.required_completion_seconds(0), loop.required_completion_seconds(7))
+        self.assertEqual(loop.required_completion_seconds(8), 13326)
 
     def test_actual_old_zero_update_grant_cannot_authorize_this_stage(self):
         root = Path(__file__).resolve().parents[2]

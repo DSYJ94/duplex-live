@@ -2,16 +2,16 @@
   "schema": "dl-native-changed-rate8-loop-source-preparation-v1",
   "status": "LOOP_PREPARED_NOT_DEPLOYED_NOT_GPU_VALIDATED",
   "recorded_utc": "2026-10-25T17:20:38.030107+00:00",
-  "proposal_sha256": "750f5886f9f6d90fb17eabadb80f99e41b9e1c420da9a8929faaab942113c40a",
+  "proposal_sha256": "2f6ee724a101d69be0f79261b5f033ee06bf33358df6f9606e3cde7bf2c4335f",
   "source_sha256": {
-    "evals/native_reasoning_continuation_loop.py": "a295152759a1f485e8a7dc6fbc5102dbcfc7a7fce9afc3abec5cbab2a4e62420",
-    "evals/harness/test_native_reasoning_continuation_loop.py": "3d30dd80e8e6e0b7dfe20f1e7b04558f0ed216d2ce5d4890bdc01baab95ef825"
+    "evals/native_reasoning_continuation_loop.py": "0c436cb6f396acf9c73492903f9dfae862948469988c19e2a7bea7a86c10a206",
+    "evals/harness/test_native_reasoning_continuation_loop.py": "330ad9706c379c353a4d4033cd24a83fa9c6224b93ee9c807ac563f434fc85cf"
   },
   "cpu_tests_passed": 35,
   "protocol_checks": [
     "Actual original zero-update authorization rejected.",
     "Stale/revoked guard after backward and immediately before step stops mutation.",
-    "Original GPU/cost ledger carried forward; hourly admission ceiling and6.5USD reserve stay within proposed additional50USD/6hours and cumulative150USD/18hours.",
+    "Original GPU/cost ledger carried forward; hourly admission ceiling and6.5USD reserve stay within proposed additional75USD/9hours and cumulative175USD/21hours.",
     "Exactly8 step calls maximum; every closed checkpoint binds its actual step receipt and exact adapter/state hashes.",
     "Optimizer exception may have partially mutated state; returned calls and closed checkpoints are separate counts. No automatic retry or inference of unchanged state.",
     "Checkpoint failure after a returned step stops and marks state for audit, without rerunning that update.",
@@ -24,10 +24,10 @@
   "owner_training_authorization_received": false,
   "model_adopted": false,
   "remaining_before_launch": [
-    "Fresh-process original-source construction bridge with correct module isolation.",
-    "Parent observer/full numerical parity and final all-group fingerprints with same-forward32 endpoint metrics.",
-    "Distinct independent final536 native logits/Adam/RNG proof and native driver integration.",
-    "Live provider/cost-controller preparation and actual new explicit authorization; original grant remainsZEROupdates.",
-    "Actual exact-image GPU validation, unchanged full native/speech/fresh gates and complete hash copyback."
-  ]
+    "Strict new numerical proof and native-driver integration binding real terminal records and the fresh full-state/native-logit comparison.",
+    "Live external controller/deadline/cost-guard/copyback preparation; no provider changes or owner authorization have occurred.",
+    "Actual exact-image GPU validation of new helpers and unchanged complete behavioral/audio/fresh gates."
+  ],
+  "current_related_cpu_tests_passed": 42,
+  "updated_utc": "2026-10-25T17:47:11.834298+00:00"
 }

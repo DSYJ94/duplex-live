@@ -51,7 +51,14 @@ def stage_metadata(parent, producer_commit, authorization_sha256):
         additional_updates=UPDATES, final_global_adam_step=START + UPDATES,
         objective_implementation_sha256=_sha(Path(__file__).with_name('native_reasoning_continuation_objective.py')),
         state_implementation_sha256=_sha(Path(__file__)),
+        loop_implementation_sha256=_sha(Path(__file__).with_name('native_reasoning_continuation_loop.py')),
+        policy_implementation_sha256=_sha(Path(__file__).with_name('native_reasoning_continuation_policy.py')),
+        observer_implementation_sha256=_sha(Path(__file__).with_name('native_reasoning_training.py')),
+        observation_implementation_sha256=_sha(Path(__file__).with_name('native_reasoning_continuation_observation.py')),
+        runtime_implementation_sha256=_sha(Path(__file__).resolve().parents[1] / 'portable/context/native_reasoning_continuation_runtime.py'),
         completed_steps_scope='Local updates in this NEW stage; Adam clocks remain global',
+        parent_quality_qualified=False, rejected_parent_continuation=True,
+        retained_recipe_policies_scope='Historical objective/data identities only; no current stage approval inherited',
         change='Only optimizer group learning rate2e-7 ->1e-6; all moments/RNG retained',
         original_fit_actual_exit=-15, model_adopted=False)
     return result
