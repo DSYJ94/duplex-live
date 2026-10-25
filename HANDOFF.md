@@ -37,6 +37,21 @@ Relevant receipts ignored runs/local-migration-20261024/saved8-recovery-launch-v
 saved8-recovery-v7-live-observation.txt, saved8-recovery-v7-progress-observation.txt,
 gcp-reasoning-schema-target-preflight-v1.json. Tracked schema repairdoc updated.
 
+
+Downstream readiness checked INSIDE SAME0619container without Torch/model/API:
+5collector contract tests actual0, all36 listed implementation hashes MATCHlocal,
+10case unchangedplan SHAeb9622a14bb3e444e3b8604a1e44a2f26b02fe01866a948483cad368628781f5;
+base/baselineproof/assets/voice/twoinputsets/ASRpython all EXISTS. Existence does
+not substitute for collector hash/proof checks. New ignored readinessreceipt
+ gcp-fixed-source-native20-readiness-v1.json. Tracked collectorpreparation doc now
+points to0619/V7 and preserves historicaledbad/E082 deployment. Prepared ignored
+ gcp-native20-launch-plan-v7.json has exactnewcontainer/collectorargv, EXPLICIT
+PENDINGactualterminalpath/SHA fields and executable_now=false; do NOT launch until
+actualterminal/proof/guard/idle/proxy/deadline checks, then fillgenuineobservation.
+No collection launched/no credentials moved/no updates. V7actualprocess67425/
+67471/67555 stillLIVE03:17:52UTC, guardfresh. Previous goalturn madeprogress;
+current recovery is verifiedwait, not blocked. Heartbeat15min remainsactive.
+
 ---
 
 # LOCAL — V6 actuallyFAILED1; original reasoning fingerprint schema repair ready
