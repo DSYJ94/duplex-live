@@ -1,3 +1,48 @@
+# LOCAL — Corrected model PASS; GPU stopped; copy inventory bug isolated to two driver links
+
+25Oct16:12UTC. Corrected c1006f9 model ACTUALdocker0; child/controller phase complete,
+full32BOTHendpoints, frozen+adapter/RNG/no-grad/no-checkpoint flags PASS. Actual
+journal record (Mac gcp-flex90-timing-model-terminal-journal-v2.json) binds successful
+DeactivatedmessageID7ad2d189f7e94e70a38c781354912448 to exactinvocation
+924cca8d0f234690ae918b3dd786cd98. Transientunitproperties had alreadybeenreleased
+(emptyInvocationID); doNOTtreatthosefallbackdefaults asidentityproof. Actualjournal
+andrealDockerterminal0 arepreserved. Finalresult copiedinto
+ gcp-flex90-matched32-timing-copyback-v2/measurement/matched-reasoning32-loss.json.
+
+LOCALcontroller-v6 ACTUAL1 solely during artifactinventory: assertNOsymlinks wrongly
+rejected expectedmeasurement/driver/libcuda.so andlibcuda.so.1, both rawtargets
+/usr/lib/x86_64-linux-gnu/libcuda.so.580.178.04. Sourceartifacts werealreadyrsynced0;
+finalsourceSHAreceipt NOTcomplete. Remotehashrescue SSHattempt timedoutaftershutdown;
+no hashmatch claimed. MainVM4443302983961393208 ACTUALSTOP16:04:01.611UTC. AllGCPVMs
+providerverifiedTERMINATED16:11:27. New modelrun NOTneeded; doNOTrerun measurement.
+Preserver-v2 ACTUAL0 sawmodelterminal0 andleftfinalcopytomain (no finalhashclaim).
+Old timedout32/26output/fullhashinventory remainspreserved separately.
+
+Artifact-only fix portable/context/native_diagnostic_inventory.py inventories ALL
+regularfiles and exactlyTWO pinneddriverlinks withoutfollowinglinks; unknown/wrong
+links/specialfiles/missing/extra/modifiedfilesreject. 88relatedCPUtestsPASS. Thisis
+backupverification NOT modelapproval. Modelphysics/numerical/behaviorgates unchanged.
+SourceGitcommit/bundle beforedeploy helper; no liveDA/c1006modelsource edits.
+
+FreshfullCPUoperationhistory: prior11845seconds conservativelyunionroundedUP (both
+A1784642133801608667 and B2417394621566968621, duplicates STOPends included). Remaining
+approvedCPUstaging cancover900s nativeSTOP+120sRPCmargin: total12865<14400 and
+0.428833USD<0.48 atoriginal0.12/hupper, included inexisting100USD reserve. Preflight
+receipt gcp-artifact-cpu-preflight-history-v1.json. Preparing reuse SAMEoriginalE2
+CPU A (currentlyTERMINATED/no disks) to read finalsourcehashes: detach SAMEoriginal
+250GBdisk1828090267781080539 fromSTOPPEDGPU444..., attachasCPUboot/nonautoDelete,
+setproviderSTOPnow+15min/noautorestart, startONCE/strictOSLoginhostkeys/existingMac/32,
+Gitdeployartifacthelper, hashclosedout+linkmetadata, copyinventoryandterminal/logs,
+verifyALLMacbytes/links THENSTOPCPU andreattachdisk toSTOPPEDGPU/nonautoDelete.
+No newVM/disk/snapshot/region/GPU/model/optimizer/API-generation orcredentials transfer.
+DoNOTstartCPUuntilfreshIDs/history/source/deadlinechecks; doNOTduplicate ontimeout.
+CurrentCPUcopycontroller hasNOTbeenlaunched yet atthisentry.
+
+Fullendpointlossesavailablebut finalpreservationhashreview stillpending; no adoption.
+Candidate remainsbehaviorREJECTED. Goalunfinished; allunrelatedlocalwork preserved.
+
+---
+
 # LOCAL — Future endpoint metric hook PREPARED ONLY; live GPU source unchanged
 
 25Oct15:43UTC. Sourcepreparation in evals/native_reasoning_training.fingerprints adds
