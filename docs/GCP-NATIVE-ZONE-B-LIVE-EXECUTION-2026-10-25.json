@@ -1,7 +1,7 @@
 {
   "schema": "dl-gcp-zoneb-live-execution-v1",
-  "recorded_utc": "2026-10-25T11:40:41.761609+00:00",
-  "status": "CORRECTED_FULL_PRESERVATION_HASHING_RUNNING_GPU_NOT_SUBMITTED",
+  "recorded_utc": "2026-10-25T13:00:10.686561+00:00",
+  "status": "FULL_PRESERVATION_PASSED_NO_LIVE_COMPUTE_REAUTH_REQUIRED",
   "source_commit": "6a6799e335b9f855794a16227e1d38eb52533ed6",
   "snapshot": {
     "name": "duplex-native-zoneb-20261025-v1",
@@ -23,16 +23,21 @@
     "controller_pid": 73288,
     "remote_verifier_pid": 1478,
     "verification_started_utc": "2026-10-25T11:38:36.307152+00:00",
-    "actual_terminal_exit": null,
-    "controller_session": 26904
+    "actual_terminal_exit": 0,
+    "controller_session": 26904,
+    "status": "TERMINATED",
+    "actual_stop_utc": "2026-10-25T11:49:14.111Z"
   },
   "next_controller": {
-    "pid": 74126,
-    "session": 48489,
-    "phase": "waiting_actual_complete_cpu_preservation_and_stop_no_gpu",
-    "maximum_new_gpu_seconds": 7200,
-    "optimizer_updates": 0,
-    "repeat_saved8_or_recovery_or_native20": false
+    "current_live_controller": null,
+    "last_zone_b_controller_actual_exit": 1,
+    "zone_b_operation": "operation-1792928965865-65ea8ce1e2f72-2a556336-fc03e075",
+    "zone_b_instance_created": false,
+    "original_a_start_operation": "operation-1792929991159-65ea90b3aed48-ba8bdc52-27dd587e",
+    "original_a_controller_actual_exit": 1,
+    "prepared_flex90_controller": "runs/local-migration-20261024/flex90-diagnostic-controller-v2.py",
+    "flex90_submitted": false,
+    "google_reauth_cli_session": 85715
   },
   "preservation": {
     "full_archive_files_required": 40132,
@@ -43,7 +48,7 @@
     "completed_behavior_inventory_sha256": "820f0856fba22b2daedfa77232ea318ba13ac379d879c0979515cff18b645d46",
     "original_disk_retained": true,
     "broader_mac_source_backup_complete": false,
-    "full_replacement_and_offmachine_verification_complete": false
+    "full_replacement_and_offmachine_verification_complete": true
   },
   "price": {
     "at_utc": "2026-10-25T10:45:48.675192+00:00",
@@ -81,7 +86,7 @@
   "local_related_checks_passed": 74,
   "target_checks_and_model_diagnostic_complete": false,
   "model_adopted": false,
-  "heartbeat": "continue-native-gcp-recovery ACTIVE/15min/quiet on unchanged; observe existing handles only",
+  "heartbeat": "PAUSED on actual human Google verification blocker; no live compute/pending GPU request",
   "prior_failed_attempts": {
     "v5_verifier_actual_exit": 1,
     "reason": "Complete archive pass, then strict reader rejected unsorted authored semantic receipt list before hashing those entries",
@@ -110,5 +115,8 @@
     "external_ip_service_used": false
   },
   "all_real_manifest_input_preflight_passed": true,
-  "remaining_cpu_bound": "GCP-NATIVE-ZONE-B-REMAINING-CPU-BOUND-2026-10-25.json"
+  "remaining_cpu_bound": "GCP-NATIVE-ZONE-B-REMAINING-CPU-BOUND-2026-10-25.json",
+  "preservation_source_commit": "6a6799e335b9f855794a16227e1d38eb52533ed6",
+  "current_prepared_producer_commit": "cd5666c2514830c44c940a79ffc3508102799b9e",
+  "complete_preservation_proof": "GCP-NATIVE-ZONE-B-PRESERVATION-COMPLETE-2026-10-25.json"
 }

@@ -1,6 +1,20 @@
 # What we trained, what is saved, and what to test
 
 
+## 25 October12:55UTC — complete replacement backup; further measurement blocked by sign-in
+
+The complete [zone-B preservation](GCP-NATIVE-ZONE-B-PRESERVATION-COMPLETE-2026-10-25.json)
+passed every archive, semantic, recovery and behavioral-artifact hash/link check.
+The CPU stopped. A100 allocation in both attempted placements was rejected; no
+new model measurement or optimizer update ran. A same-original-disk queued90-minute
+alternative is prepared with80 local checks, native expiry and an idle shutdown
+failsafe. Its first provider read requires renewed Google sign-in, so it submitted
+no request. See [exact allocation/auth state](GCP-NATIVE-ALLOCATION-AND-REAUTH-2026-10-25.json).
+The saved eight-update model remains unadopted and the full behavioral rejection
+below remains current. Backup completion and infrastructure tests do not improve
+model performance. The broader Mac source backup remains partial.
+
+
 ## 25 October — saved8 recovered exactly; full behavioral evaluation rejected
 
 The exact saved eight-update reasoning32 candidate has now passed zero-update

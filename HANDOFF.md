@@ -1,3 +1,70 @@
+# LOCAL — Full B backup PASSED; no Flex request; Google verification needed
+
+25Oct12:55UTC. Main source cd5666c2514830c44c940a79ffc3508102799b9e pushed:
+80relatedlocal testsPASS, bounded same-original-disk Flex90 guards/bootstrap180s
+idle-stop prepared. NO new optimizer/repeated8/recovery/native20/freshpayload/adoption.
+
+COMPLETE actual Bpreservation source6a6799e, verifier0 at11:48:21.713; all40132files/
+81154452891B/8links +semantic33(229404B) +recovery76(99948711B) +behavior324
+(717377986B)/52links ALLPASS. Actualrsync0/offmachine receipts present under
+runs/local-migration-20261024/zoneb-preservation-v3. See completeproofdoc withactual
+reportSHA values. CPU2417394621566968621 stopped11:49:14.111. Bdisk8246893242108371884
+READY/detached/nonautoDelete, snapshot5040266406897149263 retained; source original
+Adisk1828090267781080539 retained/stillattached originalA. BroadMacsourcebackupPARTIAL.
+Do NOT repeat entire archive hashing or completed saved8/native20 work.
+
+B GPUcreate operation-1792928965865-65ea8ce1e2f72-2a556336-fc03e075 ACTUALDONE/error
+configuration_availability, VMNOTFOUND. OriginalA resume source930babb/controller
+session75626/PID84438 ACTUAL1; start operation-1792929991159-65ea90b3aed48-ba8bdc52-
+27dd587e terminalsameerror; A VM951004838667287080 remainsTERMINATED. NativeA STOP
+now14:06:24UTC (setwhileSTOPPED within owner12actualGPUh), no GPUallocated/newmodel.
+All projectVMs provider-verifiedTERMINATED afterthose failures; no later successful
+provider mutations. Catalogentries are NOTallocation proof. Officiallocations lists
+A2UltraA butnotB; actualAconfig rejection remainsunresolved, do notblindlyrestart.
+
+Full provider-history union now includes overlappingstarts+latestduplicateStopends,
+roundedUP priorGPU32086sec. Twohour bound39286<43200 and90.31894<100. Flex90plan
+uses5400sec nativeSTOP/7200sec requestTTL/180sec bootstrap idleSTOP, total37486sec/
+87.504USD including16.88+12reserves. Same ORIGINAL250GBAdisk in SAMEzoneA; no new
+volume/region/creditpurchase/reservation/quota preference. Exactplanhash bound by
+newguards; source/model objectives unchanged. Guardcountsactualstart; rejectsreset.
+Original APIcreationidentity preserved forlegacyA mode; Flexnewlease mustbindactual
+newVMID, originaldisk andexactplan, freshMac+guestguards beforemodel. SourceGitbundle
+runs/local-migration-20261024/gcp-flex90-source-cd5666c-v1.bundle (^0619b17), newwork
+/workspace/migration/duplex-flex90-cd5666c-v1, nativeimage/originalDA unchanged.
+
+FLEX NOT SUBMITTED: localcontroller v1 PID99509 ACTUAL1 at12:45:39.945 on FIRST
+provider read: Google token refresh requiresreauthentication. This occurred BEFORE
+anydetach/create/lease/model action. Preserve ignored gcp-flex90-diagnostic-controller-
+v1.json asfailedauth receipt; no request/operation toresume fromit. Preparedcorrected
+resumecontroller flex90-diagnostic-controller-v2.py writesSEPARATE eventsJSONv2,
+freshlyaudits alloriginalGPU ops and rejectsunexpectedVMIDs/priorusage beforecreate.
+Afterauth success, verify liveproviderstate/price/sourcecommit and refreshing exact
+publicOSLoginkey locally; then launch thisv2 ONCE (unless a realnewFlexresource/op
+alreadyexists). It queuewaits SAMEoperation, neverduplicates on readtimeout, guards
+full32 matched520/528 zero-grad loss/fingerprint measurement, actualterminal/allhash
+copyback andSTOP. Ifpending realrequest everexists, observeit, never reruncontroller.
+
+ACTUALAUTHBLOCKER: GoogleCloudSDK refresh saysreauthfailed/noninteractive. Official
+sameexistingaccount login started CLI SESSION85715 (stilllive lastpoll), log0600
+runs/local-migration-20261024/.private/gcloud-reauth-20261025-v1.log. Chrome tab692863985
+/accounts.google.com shows Verify that it is you/PASSWORD field, correctexisting
+Auriumaccount verified offline. Human prompted ONCE tofinishofficiallogin/replydone;
+no password/code/token requestedinchat. Do NOT create anotherauthprocess while85715
+isstilllive; ifoldloginactuallyterminal/timedout, thenonefresh officialflow. No secrets
+orOAuthURLs/screenshots intracked files. Screenshotonlyignored.private. RecheckCLI
+actualexit andauthenticatedproviderread afterdone; do notassumebrowserreply provesAPI.
+
+Heartbeatcontinue-native-gcp-recovery PAUSED: no paid/pendingjob toobserve; human
+sign-in needed. GoalACTIVE/unfinished, first sign-in blockerturn (not3turnthreshold).
+Native20 stillREJECTED baseline2/4candidate1/4; saved8 exactAdam/RNG/fullrestorepassed,
+originalfit-15 preserved. Preserve allhistories/KLhidden/losses/audiofoldhashes/gates.
+CredentialsstayMac; sourceGit; artifacts scopedrsync excludes/private/owner/cores/
+session-token/noowner/nogroup. No agents/otherchatmessages/archive, LOCALsoleexecutor.
+UnrelatedPYC/capabilityprobes/roadmap preserved. Updatehere/commitpushbeforenext handoff.
+
+---
+
 # LOCAL — v8 full verifier live; v4 diagnostic controller waiting, cumulative CPU counted
 
 25Oct11:40UTC. Source6a6799e335b9f855794a16227e1d38eb52533ed6 pushed/Gitdeployed

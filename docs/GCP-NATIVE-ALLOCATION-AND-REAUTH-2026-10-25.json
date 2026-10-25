@@ -1,0 +1,30 @@
+{
+  "schema": "dl-gcp-allocation-and-reauth-status-v1",
+  "recorded_utc": "2026-10-25T12:57:05.503930+00:00",
+  "zone_b_operation": "operation-1792928965865-65ea8ce1e2f72-2a556336-fc03e075",
+  "zone_b_actual_result": "DONE/error configuration_availability; instance not created",
+  "original_a_operation": "operation-1792929991159-65ea90b3aed48-ba8bdc52-27dd587e",
+  "original_a_actual_result": "DONE/error configuration_availability; original instance TERMINATED",
+  "last_provider_all_instances_terminated_receipt": "runs/local-migration-20261024/gcp-post-b-and-a-failed-starts-v1.json",
+  "flex_plan": "GCP-FLEX90-EXISTING-SCOPE-PLAN-2026-10-25.json",
+  "source_commit": "cd5666c2514830c44c940a79ffc3508102799b9e",
+  "local_checks_passed": 80,
+  "actual_flex_controller_exit": 1,
+  "flex_request_submitted": false,
+  "flex_disk_detached": false,
+  "reauth_needed": true,
+  "reauth_browser": "Chrome official accounts.google.com Verify that it is you",
+  "reauth_tab_id": "692863985",
+  "reauth_cli_session": 85715,
+  "credentials_requested_in_chat": false,
+  "heartbeat_status": "PAUSED",
+  "current_training_or_new_measurement": false,
+  "optimizer_updates": 0,
+  "model_adopted": false,
+  "references": {
+    "configuration_availability": "https://docs.cloud.google.com/compute/docs/troubleshooting/troubleshooting-resource-availability",
+    "supported_gpu_zones": "https://docs.cloud.google.com/compute/docs/regions-zones/gpu-regions-zones",
+    "flex90_alternative": "https://docs.cloud.google.com/compute/docs/instances/create-flex-start-vm",
+    "quota_fallback": "https://docs.cloud.google.com/compute/resource-usage"
+  }
+}

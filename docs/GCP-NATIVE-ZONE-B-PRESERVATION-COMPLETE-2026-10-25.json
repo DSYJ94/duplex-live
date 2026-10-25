@@ -1,0 +1,57 @@
+{
+  "schema": "dl-zoneb-complete-preservation-v1",
+  "status": "PASSED_ALL_REQUIRED_CHECKS",
+  "source_commit": "6a6799e335b9f855794a16227e1d38eb52533ed6",
+  "actual_verifier_exit": 0,
+  "verifier_terminal_utc": "2026-10-25T11:48:21.713337+00:00",
+  "all_required_archive_files": 40132,
+  "all_required_archive_bytes": 81154452891,
+  "all_required_archive_links": 8,
+  "full_destination_receipt_sha256": "44bb353e589795312844ba45c857ec37da09be165eb34c07663c3b48c35819c1",
+  "additional_receipt_sha256": "d328dfa60c5a837012a4bb5a6dba46541b31dedc5ad69e0a0080e87a09e70bc5",
+  "additional_checks": {
+    "semantic": {
+      "passed": true,
+      "all_catalog_entries_verified": true,
+      "expected_regular_files": 33,
+      "verified_regular_files": 33,
+      "expected_bytes": 229404,
+      "verified_bytes": 229404,
+      "expected_archival_links": 0,
+      "verified_archival_links": 0,
+      "failures": []
+    },
+    "saved8-recovery-v7-complete-remote-inventory.json": {
+      "passed": true,
+      "all_catalog_entries_verified": true,
+      "expected_regular_files": 76,
+      "verified_regular_files": 76,
+      "expected_bytes": 99948711,
+      "verified_bytes": 99948711,
+      "expected_archival_links": 0,
+      "verified_archival_links": 0,
+      "failures": []
+    },
+    "gcp-native20-complete-remote-inventory-v1.json": {
+      "passed": true,
+      "all_catalog_entries_verified": true,
+      "expected_regular_files": 324,
+      "verified_regular_files": 324,
+      "expected_bytes": 717377986,
+      "verified_bytes": 717377986,
+      "expected_archival_links": 52,
+      "verified_archival_links": 52,
+      "failures": []
+    }
+  },
+  "actual_rsync_exit": 0,
+  "offmachine_receipts_present": true,
+  "cpu_actual_stop_utc": "2026-10-25T11:49:14.111Z",
+  "source_disk_id": "1828090267781080539",
+  "replacement_disk_id": "8246893242108371884",
+  "snapshot_id": "5040266406897149263",
+  "originals_and_failed_attempts_preserved": true,
+  "broad_mac_source_backup_complete": false,
+  "new_optimizer_updates": 0,
+  "model_adopted": false
+}
