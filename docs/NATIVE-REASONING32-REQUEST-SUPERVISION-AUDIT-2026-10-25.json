@@ -1,0 +1,342 @@
+{
+  "schema": "dl-native-reasoning32-request-supervision-cpu-audit-v1",
+  "recorded_utc": "2026-10-25T14:06:14.099783+00:00",
+  "proof_sha256": "27a6676dd95ef8100e5211b6e24ddca7e9b716c0cbcae4d3e8fb02215d9ccac7",
+  "source_commit": "da389a7031a5504495397d1575952194ffa209f1",
+  "input_hashes": {
+    "cache": "9736e5421736a7343e78e335403fb0d7b6ace1e83f43844098d5504af7ea9b06",
+    "numerical": "1dd651301bf4382dce64de7a93bfe75e1e9a34c1f39e5d3de81258a5b06ff58d",
+    "engine": "c666021e1a5e02a8f4106595c06c93028dfd5335d1382c23b97ea587743d48c9"
+  },
+  "coefficient_code_sha256": "9bbfde02a98d18d379f90002e116db788c7489a6a36216a7fd0b35814ac3a015",
+  "complete32": true,
+  "all40_requests_are_real_masked_native_token4_targets": true,
+  "spoken_acknowledgement_only_training": false,
+  "formula": "Spoken tokens>=5 share0.5. Clock tokens<5 share0.5; token3 weight0.5, all other clock tokens including request4 weight1. Request coefficient mass bounded using actual counts; no token3 histogram assumed.",
+  "families": {
+    "cancel-reasoning": {
+      "scenes": 8,
+      "request_targets": 16,
+      "average_request_text_mass_lower": 0.0013720310684454124,
+      "average_request_text_mass_upper": 0.002736531023328441
+    },
+    "delegate-reasoning": {
+      "scenes": 8,
+      "request_targets": 8,
+      "average_request_text_mass_lower": 0.000693746688144055,
+      "average_request_text_mass_upper": 0.001385566997133437
+    },
+    "direct-basic": {
+      "scenes": 8,
+      "request_targets": 0,
+      "average_request_text_mass_lower": 0.0,
+      "average_request_text_mass_upper": 0.0
+    },
+    "replace-reasoning": {
+      "scenes": 8,
+      "request_targets": 16,
+      "average_request_text_mass_lower": 0.0014247704236027578,
+      "average_request_text_mass_upper": 0.0028414354950491647
+    }
+  },
+  "rows": [
+    {
+      "id": "native-reasoning4-train-000",
+      "family": "direct-basic",
+      "request_targets": 0,
+      "clock_targets": 148,
+      "spoken_targets": 3,
+      "request_total_text_coefficient_lower": 0.0,
+      "request_total_text_coefficient_upper": 0.0
+    },
+    {
+      "id": "native-reasoning4-train-001",
+      "family": "delegate-reasoning",
+      "request_targets": 1,
+      "clock_targets": 692,
+      "spoken_targets": 25,
+      "request_total_text_coefficient_lower": 0.000722543352601156,
+      "request_total_text_coefficient_upper": 0.001443001443001443
+    },
+    {
+      "id": "native-reasoning4-train-002",
+      "family": "cancel-reasoning",
+      "request_targets": 2,
+      "clock_targets": 697,
+      "spoken_targets": 26,
+      "request_total_text_coefficient_lower": 0.0014347202295552368,
+      "request_total_text_coefficient_upper": 0.002861230329041488
+    },
+    {
+      "id": "native-reasoning4-train-003",
+      "family": "replace-reasoning",
+      "request_targets": 2,
+      "clock_targets": 667,
+      "spoken_targets": 40,
+      "request_total_text_coefficient_lower": 0.0014992503748125937,
+      "request_total_text_coefficient_upper": 0.0029895366218236174
+    },
+    {
+      "id": "native-reasoning4-train-004",
+      "family": "direct-basic",
+      "request_targets": 0,
+      "clock_targets": 153,
+      "spoken_targets": 4,
+      "request_total_text_coefficient_lower": 0.0,
+      "request_total_text_coefficient_upper": 0.0
+    },
+    {
+      "id": "native-reasoning4-train-005",
+      "family": "delegate-reasoning",
+      "request_targets": 1,
+      "clock_targets": 689,
+      "spoken_targets": 28,
+      "request_total_text_coefficient_lower": 0.000725689404934688,
+      "request_total_text_coefficient_upper": 0.0014492753623188406
+    },
+    {
+      "id": "native-reasoning4-train-006",
+      "family": "cancel-reasoning",
+      "request_targets": 2,
+      "clock_targets": 670,
+      "spoken_targets": 26,
+      "request_total_text_coefficient_lower": 0.0014925373134328358,
+      "request_total_text_coefficient_upper": 0.002976190476190476
+    },
+    {
+      "id": "native-reasoning4-train-007",
+      "family": "replace-reasoning",
+      "request_targets": 2,
+      "clock_targets": 691,
+      "spoken_targets": 33,
+      "request_total_text_coefficient_lower": 0.001447178002894356,
+      "request_total_text_coefficient_upper": 0.002886002886002886
+    },
+    {
+      "id": "native-reasoning4-train-008",
+      "family": "direct-basic",
+      "request_targets": 0,
+      "clock_targets": 138,
+      "spoken_targets": 5,
+      "request_total_text_coefficient_lower": 0.0,
+      "request_total_text_coefficient_upper": 0.0
+    },
+    {
+      "id": "native-reasoning4-train-009",
+      "family": "delegate-reasoning",
+      "request_targets": 1,
+      "clock_targets": 697,
+      "spoken_targets": 33,
+      "request_total_text_coefficient_lower": 0.0007173601147776184,
+      "request_total_text_coefficient_upper": 0.0014326647564469914
+    },
+    {
+      "id": "native-reasoning4-train-010",
+      "family": "cancel-reasoning",
+      "request_targets": 2,
+      "clock_targets": 709,
+      "spoken_targets": 24,
+      "request_total_text_coefficient_lower": 0.0014104372355430183,
+      "request_total_text_coefficient_upper": 0.0028129395218002813
+    },
+    {
+      "id": "native-reasoning4-train-011",
+      "family": "replace-reasoning",
+      "request_targets": 2,
+      "clock_targets": 707,
+      "spoken_targets": 39,
+      "request_total_text_coefficient_lower": 0.0014144271570014145,
+      "request_total_text_coefficient_upper": 0.0028208744710860366
+    },
+    {
+      "id": "native-reasoning4-train-012",
+      "family": "direct-basic",
+      "request_targets": 0,
+      "clock_targets": 142,
+      "spoken_targets": 4,
+      "request_total_text_coefficient_lower": 0.0,
+      "request_total_text_coefficient_upper": 0.0
+    },
+    {
+      "id": "native-reasoning4-train-013",
+      "family": "delegate-reasoning",
+      "request_targets": 1,
+      "clock_targets": 777,
+      "spoken_targets": 22,
+      "request_total_text_coefficient_lower": 0.0006435006435006435,
+      "request_total_text_coefficient_upper": 0.0012853470437017994
+    },
+    {
+      "id": "native-reasoning4-train-014",
+      "family": "cancel-reasoning",
+      "request_targets": 2,
+      "clock_targets": 738,
+      "spoken_targets": 26,
+      "request_total_text_coefficient_lower": 0.0013550135501355014,
+      "request_total_text_coefficient_upper": 0.002702702702702703
+    },
+    {
+      "id": "native-reasoning4-train-015",
+      "family": "replace-reasoning",
+      "request_targets": 2,
+      "clock_targets": 727,
+      "spoken_targets": 25,
+      "request_total_text_coefficient_lower": 0.001375515818431912,
+      "request_total_text_coefficient_upper": 0.0027434842249657062
+    },
+    {
+      "id": "native-reasoning4-train-016",
+      "family": "direct-basic",
+      "request_targets": 0,
+      "clock_targets": 152,
+      "spoken_targets": 1,
+      "request_total_text_coefficient_lower": 0.0,
+      "request_total_text_coefficient_upper": 0.0
+    },
+    {
+      "id": "native-reasoning4-train-017",
+      "family": "delegate-reasoning",
+      "request_targets": 1,
+      "clock_targets": 716,
+      "spoken_targets": 21,
+      "request_total_text_coefficient_lower": 0.0006983240223463687,
+      "request_total_text_coefficient_upper": 0.001394700139470014
+    },
+    {
+      "id": "native-reasoning4-train-018",
+      "family": "cancel-reasoning",
+      "request_targets": 2,
+      "clock_targets": 769,
+      "spoken_targets": 27,
+      "request_total_text_coefficient_lower": 0.0013003901170351106,
+      "request_total_text_coefficient_upper": 0.0025940337224383916
+    },
+    {
+      "id": "native-reasoning4-train-019",
+      "family": "replace-reasoning",
+      "request_targets": 2,
+      "clock_targets": 697,
+      "spoken_targets": 31,
+      "request_total_text_coefficient_lower": 0.0014347202295552368,
+      "request_total_text_coefficient_upper": 0.002861230329041488
+    },
+    {
+      "id": "native-reasoning4-train-020",
+      "family": "direct-basic",
+      "request_targets": 0,
+      "clock_targets": 142,
+      "spoken_targets": 4,
+      "request_total_text_coefficient_lower": 0.0,
+      "request_total_text_coefficient_upper": 0.0
+    },
+    {
+      "id": "native-reasoning4-train-021",
+      "family": "delegate-reasoning",
+      "request_targets": 1,
+      "clock_targets": 725,
+      "spoken_targets": 32,
+      "request_total_text_coefficient_lower": 0.000689655172413793,
+      "request_total_text_coefficient_upper": 0.0013774104683195593
+    },
+    {
+      "id": "native-reasoning4-train-022",
+      "family": "cancel-reasoning",
+      "request_targets": 2,
+      "clock_targets": 754,
+      "spoken_targets": 15,
+      "request_total_text_coefficient_lower": 0.001326259946949602,
+      "request_total_text_coefficient_upper": 0.0026455026455026454
+    },
+    {
+      "id": "native-reasoning4-train-023",
+      "family": "replace-reasoning",
+      "request_targets": 2,
+      "clock_targets": 692,
+      "spoken_targets": 36,
+      "request_total_text_coefficient_lower": 0.001445086705202312,
+      "request_total_text_coefficient_upper": 0.002881844380403458
+    },
+    {
+      "id": "native-reasoning4-train-024",
+      "family": "direct-basic",
+      "request_targets": 0,
+      "clock_targets": 156,
+      "spoken_targets": 8,
+      "request_total_text_coefficient_lower": 0.0,
+      "request_total_text_coefficient_upper": 0.0
+    },
+    {
+      "id": "native-reasoning4-train-025",
+      "family": "delegate-reasoning",
+      "request_targets": 1,
+      "clock_targets": 778,
+      "spoken_targets": 24,
+      "request_total_text_coefficient_lower": 0.0006426735218508997,
+      "request_total_text_coefficient_upper": 0.0012836970474967907
+    },
+    {
+      "id": "native-reasoning4-train-026",
+      "family": "cancel-reasoning",
+      "request_targets": 2,
+      "clock_targets": 801,
+      "spoken_targets": 30,
+      "request_total_text_coefficient_lower": 0.0012484394506866417,
+      "request_total_text_coefficient_upper": 0.0024906600249066002
+    },
+    {
+      "id": "native-reasoning4-train-027",
+      "family": "replace-reasoning",
+      "request_targets": 2,
+      "clock_targets": 748,
+      "spoken_targets": 32,
+      "request_total_text_coefficient_lower": 0.001336898395721925,
+      "request_total_text_coefficient_upper": 0.0026666666666666666
+    },
+    {
+      "id": "native-reasoning4-train-028",
+      "family": "direct-basic",
+      "request_targets": 0,
+      "clock_targets": 143,
+      "spoken_targets": 5,
+      "request_total_text_coefficient_lower": 0.0,
+      "request_total_text_coefficient_upper": 0.0
+    },
+    {
+      "id": "native-reasoning4-train-029",
+      "family": "delegate-reasoning",
+      "request_targets": 1,
+      "clock_targets": 704,
+      "spoken_targets": 33,
+      "request_total_text_coefficient_lower": 0.0007102272727272727,
+      "request_total_text_coefficient_upper": 0.0014184397163120568
+    },
+    {
+      "id": "native-reasoning4-train-030",
+      "family": "cancel-reasoning",
+      "request_targets": 2,
+      "clock_targets": 710,
+      "spoken_targets": 19,
+      "request_total_text_coefficient_lower": 0.0014084507042253522,
+      "request_total_text_coefficient_upper": 0.0028089887640449437
+    },
+    {
+      "id": "native-reasoning4-train-031",
+      "family": "replace-reasoning",
+      "request_targets": 2,
+      "clock_targets": 692,
+      "spoken_targets": 30,
+      "request_total_text_coefficient_lower": 0.001445086705202312,
+      "request_total_text_coefficient_upper": 0.002881844380403458
+    }
+  ],
+  "limits": [
+    "Bounds concern only the supplemental balanced text objective, not the whole retained joint gradient or actual loss share.",
+    "Forty supervised request targets over one exposure each establish presence, not sufficient learning or a behavioral cause.",
+    "Aggregate clock CE can improve while rare request selection worsens; full32 CE alone does not measure request-specific learning.",
+    "No native request/cancellation/routing gate or data/threshold was changed; real inference must emit requests unforced.",
+    "No new GPU run, API request, optimizer update, model adoption or tensor load was performed."
+  ],
+  "optimizer_updates": 0,
+  "api_requests": 0,
+  "new_gpu_jobs": 0
+}

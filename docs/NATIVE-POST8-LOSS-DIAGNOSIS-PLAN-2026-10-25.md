@@ -82,6 +82,18 @@ Predictions, not conclusions:
    distinction between training-distribution fit and free-running/context-credit
    behavior; investigate a changed native training method before scaling.
 
+The independent [request-supervision CPU audit](NATIVE-REASONING32-REQUEST-SUPERVISION-AUDIT-2026-10-25.json)
+confirms that all 40 real native request-token targets survive the approved engine
+mask. Training is not limited to acknowledgement words. Under the unchanged
+balanced text coefficients, however, the delegation family's average request-token
+coefficient mass is bounded between 0.000693747 and 0.001385567 of its supplemental
+text objective (about 0.069–0.139%). These are coefficient bounds from all eight
+scenes, not measured loss shares, gradient shares, or a demonstrated cause. The
+current matched32 report records aggregate balanced text and acoustic CE, not a
+request-specific CE endpoint. A lower aggregate CE cannot establish improved
+request selection; keep the real unforced-request behavioral gate and do not
+silently treat loss improvement as permission to scale or adopt.
+
 Any new optimizer stage needs a separate concrete changed recipe and authorization:
 the current GCP grant explicitly permits zero new optimizer updates. Preserve all
 28 actual histories, all25 old teachers, native49, control40, the new32, old losses,

@@ -1,3 +1,29 @@
+# LOCAL — Request-supervision audit completed while SAME diagnostic runs
+
+25Oct14:07UTC. CPU-only all32 audit tied to exact pinned saved8 proof/finalization
+record and approved cache/numerical/engine SHA values confirms ALL40request4 targets
+are included in real text loss masks; not acknowledgement-only supervision. No new
+GPU/API/tensor load/optimizer/data/loss/gate changes. New evidence:
+docs/NATIVE-REASONING32-REQUEST-SUPERVISION-AUDIT-2026-10-25.json.
+All8delegation scenes have one request each; aggregate request coefficient mass in
+the supplemental text objective averages within0.000693747–0.001385567 (0.069–0.139%).
+Cancel/replace each have16requests/all8scenes, bounds recorded separately; direct8
+have0positive requests (normal clock negatives remain supervised). Bounds use exact
+clock/request counts and unchangedPAD3halfweight; no assumed token3histogram.
+These are NOT gradient or actual loss shares and NOT proof of failure cause.
+Current complete32loss diagnostic cannot isolate request-specific CE; lower overall
+CE cannot certify routing. Keep actual unforced native-request behavioral gates.
+
+Same controller-v5 PID27079/tool81390/modelunitinvocation asbelow remains sole job;
+no duplicate/restart. Latest child process live and GPUallocated; actualCPU/I/O
+samples14:02:30–35 show read_bytes54053306368→54824939520, so construction advances.
+No scalar endpoint or successfulterminal available at this entry. Current diagnostic
+must finish full32bothends or preserve failure; all prior runtime/15:22:10.600STOP/
+100USD bounds remainasbelow. Updated diagnosis plan with audit limitations. Goal
+unfinished; no extension/adoption/retraining authorized by current zero-updategrant.
+
+---
+
 # LOCAL — Full32 diagnostic ACTUALLY LAUNCHED; watch SAME job
 
 25Oct13:53UTC. v5 PID27079/tool81390 LIVE, actual single model unit
