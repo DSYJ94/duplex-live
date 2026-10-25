@@ -77,13 +77,13 @@ class FingerprintTests(unittest.TestCase):
         control=dict(self.ready['control40_policy'],target_counts={
             'c'+str(i):dict(text=3,audio=[2]*8) for i in range(40)})
         reasoning=dict(teachers=[dict(id='r'+str(i)) for i in range(32)],target_counts={
-            'r'+str(i):dict(text=3,audio=[2]*8) for i in range(32)})
+            'r'+str(i):dict(text=3,audio=[2]*8,audio_mask_frames=2) for i in range(32)})
         self.metadata=dict(recipe=dict(assistant_audio_auxiliary=audio,control40=control,reasoning32=reasoning))
         self.actual=dict(original28={'o'+str(i):'a'*64 for i in range(28)},
             audio49={i:'a'*64 for i in audio['teacher_ids']},
             native49={r['id']:'a'*64 for r in audio['native_stream_auxiliary']['teachers']},
             control40={r['id']:self.native() for r in control['teachers']},
-            reasoning32={r['id']:self.native() for r in reasoning['teachers']})
+            reasoning32={r['id']:dict(self.native(),audio_mask_frames=2) for r in reasoning['teachers']})
 
     def native(self):
         return dict(native_text_calls_sha256='b'*64,assistant_audio_logits_sha256='c'*64,
@@ -134,6 +134,25 @@ class FingerprintTests(unittest.TestCase):
             changed=copy.deepcopy(self.actual);changed[name][key][field]=value
             with self.subTest(field=field),self.assertRaises(ValueError):
                 validate_complete_fingerprints(changed,self.metadata,self.partials())
+
+    def test_actual_reasoning_producer_shape_and_pinned_audio_mask(self):
+        # Shape and counts from the immutable original producer's real V6 log.
+        row=dict(native_text_calls_sha256='2a31827df5fd550ffd9a243018d15e61301dc231b30917b65d9279a3fb827599',
+            assistant_audio_logits_sha256='623ae2544e9666ec0638cf7395a9a042b72b265cb997f24f401baf1503476c12',
+            assistant_audio_targets=[706]+[705]*7,text_targets=707,audio_mask_frames=706)
+        self.actual['reasoning32']['r0']=row
+        self.metadata['recipe']['reasoning32']['target_counts']['r0']=dict(
+            text=707,audio=[706]+[705]*7,audio_mask_frames=706)
+        self.assertTrue(validate_complete_fingerprints(self.actual,self.metadata,self.partials()))
+        for value in (None,0,True,705,707):
+            changed=copy.deepcopy(self.actual)
+            if value is None:changed['reasoning32']['r0'].pop('audio_mask_frames')
+            else:changed['reasoning32']['r0']['audio_mask_frames']=value
+            with self.subTest(value=value),self.assertRaises(ValueError):
+                validate_complete_fingerprints(changed,self.metadata,self.partials())
+        for name in ('reasoning32','control40'):
+            changed=copy.deepcopy(self.actual);changed[name][next(iter(changed[name]))]['unknown']=1
+            with self.assertRaises(ValueError):validate_complete_fingerprints(changed,self.metadata,self.partials())
 
 
 class RuntimeContractTests(unittest.TestCase):

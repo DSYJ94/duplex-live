@@ -80,8 +80,10 @@ def validate_complete_fingerprints(actual,metadata,partials):
         if set(recipe[name]['target_counts'])!=set(actual[name]):
             raise ValueError('Complete source target counts required')
         for identifier,value in actual[name].items():
-            if (set(value)!={'native_text_calls_sha256','assistant_audio_logits_sha256',
+            fields={'native_text_calls_sha256','assistant_audio_logits_sha256',
                     'assistant_audio_targets','text_targets'}
+            if name=='reasoning32':fields.add('audio_mask_frames')
+            if (set(value)!=fields
                     or not digest(value['native_text_calls_sha256'])
                     or not digest(value['assistant_audio_logits_sha256'])
                     or type(value['text_targets']) is not int or value['text_targets']<=0
@@ -93,6 +95,9 @@ def validate_complete_fingerprints(actual,metadata,partials):
             target=recipe[name]['target_counts'][identifier]
             if value['text_targets']!=target['text'] or value['assistant_audio_targets']!=target['audio']:
                 raise ValueError('Pinned native text/acoustic target counts changed')
+            if name=='reasoning32' and (type(value['audio_mask_frames']) is not int
+                    or value['audio_mask_frames']<=0 or value['audio_mask_frames']!=target['audio_mask_frames']):
+                raise ValueError('Pinned native reasoning acoustic mask count changed')
     for name,rows in partials.items():
         for identifier,expected in rows.items():
             if actual[name].get(identifier)!=expected:
@@ -225,6 +230,16 @@ def finish(context,inputs,context_receipt,producer_commit,reference=None):
             native49=streaming(lm,context['stream_bound']),
             control40=control(lm,context['control_bound']),
             reasoning32=reasoning(lm,context['reasoning_bound']))
+    # Preserve expensive measurements even if a subsequent validator fails.
+    # This distinct diagnostic is never a terminal record or accepted proof.
+    with (out/'unvalidated-numerical-progress.json').open('x') as stream:
+        stream.write(json.dumps(dict(schema='dl-native-saved-stage-numerical-progress-v1',
+            producer_commit=producer_commit,model_source_commit=SOURCE,
+            process_identity=process_identity(),metadata_sha256=METADATA,
+            initial_metrics=initial_metrics,final_metrics=final_metrics,
+            all_fingerprints=fingerprints,validation_completed=False,
+            optimizer_updates_during_recovery=0,original_fit_actual_exit=-15,
+            native_behavior_evaluated=False,model_adopted=False),indent=2)+'\n')
     if before!=tensor_hashes(learned.items()) or context['frozen']!=tensor_hashes(
             (n,p) for n,p in lm.named_parameters() if not p.requires_grad):
         raise ValueError('Recovery checks changed adapter or frozen base weights')

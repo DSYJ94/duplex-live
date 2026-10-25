@@ -1,3 +1,43 @@
+# LOCAL — V6 actuallyFAILED1; original reasoning fingerprint schema repair ready
+
+V6 completed49native/40control/32reasoning calculations then ACTUALLYFAILED1 at
+03:05:21UTC25Oct in validate_complete_fingerprints, MainPID0. Original immutable
+native_reasoning_training.fingerprints emits FIVEfields including audio_mask_frames;
+recovery checker incorrectly required control40 FOURfields for reasoning too.
+FrozenE082worker was NOTchanged. No model/data/optimizer changes or proofsuccess.
+Originalfit-15 remains failed; do not relabel V6 orreuse failedout as passingproof.
+
+ReproducedRED onrealproducer-shapedrow. Newvalidator requires exactreasoning5fields,
+positiveinteger acousticmaskcount EXACTLYmatches originalcheckpointmetadata, and
+control4fields unchanged. Rejectunknown/missing/wrong/bool/zero counts; all original
+fullcohort/hash/partial/restore/behavior gates remain.42focused puretestsPASS locally.
+CPU schema-only replay of ACTUALclosedV6 49/40/32rows against originalmetadata
+passed all32maskcounts (original28/audio49 hashgroups explicitlyplaceholders in
+this STRUCTURALtest, never numericalproof). Evidence ignored
+reasoning-fingerprint-schema-replay-v1.json. New unvalidated-numerical-progress.json
+willpersist expensive metrics/fingerprints beforevalidators; alwaysunqualified,
+and regression proves it cannot substitute for terminalrecord.
+Doc docs/GCP-NATIVE-REASONING-FINGERPRINT-SCHEMA-REPAIR-2026-10-25.json.
+
+Closed failedV6 JSON/logcopyback actualrsync0:30files/21390602B at ignored
+saved8-recovery-v6-failed-json-copyback, inventorySHA
+baa0d4f62198f4cf8c74c3fce784c0c869c9f1e1f0ebdf0f55d488d38fdce7cd.
+AllfullGCPoutputs/binaryrefs retained; originalcheckpoint/RNG/archive separately
+preserved. Data folds/heldouts/voice/allretention/KLhidden/native objectives intact.
+
+NEXT promptly Gitdeploy NEWschema-fixproducer separateworktree; target42CPUtests+
+realproducer schema replay before V7 model load. No GPUmodel currentlyrunning;
+sameVM/disk/dualguards/STOP11:52:37UTC/100USD remain. Do NOT use oldE082 forfurther
+recovery OR proofconsumers (samebadvalidator). Preparedguardedcollector module
+must run fromNEWfixedproducer and nativeevalSOURCEalsoNEWfixedcommit, not oldedbad/
+E082. Inference code/profile/data unchanged; only proofgate correctedschema.
+V7 needs freshout/proof, newactualfinalization0 AND independentfullrestore0; ZERO
+optimizerupdates/no repeatsaved8. Expectedextra numerical work remains within
+existing12h/100USD; stopbilledcompute if trulyblocked. ExistingreservedMacproxy/
+tunnel/backendauthpass stayready; no newkeys/transfers/purchases. LOCALsoleexecutor.
+
+---
+
 # LOCAL — Full49 +40 fingerprints computed; reasoning32 LIVE; progress backed up
 
 Actual02:40:40UTC25Oct: recovery-v6 service38115/child38198 live, ALL49native +

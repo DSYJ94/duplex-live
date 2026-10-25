@@ -23,6 +23,7 @@ class SavedStageProofTests(unittest.TestCase):
         policies={name:dict(teachers=[dict(id=prefix+str(i)) for i in range(count)],
             target_counts={prefix+str(i):dict(text=3,audio=[2]*8) for i in range(count)})
             for name,prefix,count in (('control40','c',40),('reasoning32','r',32))}
+        for row in policies['reasoning32']['target_counts'].values():row['audio_mask_frames']=2
         meta=dict(recipe=dict(assistant_audio_auxiliary=audio,**policies))
         self.inputs=dict(training=root,steps=[dict(step=i) for i in range(1,9)],
             prefix=dict(metadata=meta,parameter_names=[m+'.lora_'+p+'.weight'
@@ -36,7 +37,7 @@ class SavedStageProofTests(unittest.TestCase):
             audio49={i:'a'*64 for i in audio['teacher_ids']},
             native49={'n'+str(i):'a'*64 for i in range(49)},
             control40={'c'+str(i):native() for i in range(40)},
-            reasoning32={'r'+str(i):native() for i in range(32)})
+            reasoning32={'r'+str(i):dict(native(),audio_mask_frames=2) for i in range(32)})
         first=dict(schema=RESULT_SCHEMA,phase='finalization',producer_commit='d'*40,
             model_source_commit=SOURCE,pid=100,process_identity=dict(pid=100,birth=1,host='fixture',boot_id='fixture-boot'),
             at_utc='2026-10-24T18:00:00+00:00',context=self.context,
@@ -188,6 +189,16 @@ class SavedStageProofTests(unittest.TestCase):
         child.poll=lambda:-15
         with self.assertRaises(ValueError):record_terminal(child,folder,'d'*40,1792864750.,folder/'refused.json')
         self.assertFalse((folder/'refused.json').exists())
+
+    def test_unvalidated_progress_cannot_substitute_for_a_terminal_record(self):
+        from types import SimpleNamespace
+        folder=Path(self.temp.name)/'progress-only';folder.mkdir()
+        (folder/'unvalidated-numerical-progress.json').write_text(json.dumps(dict(
+            schema='dl-native-saved-stage-numerical-progress-v1',validation_completed=False,
+            optimizer_updates_during_recovery=0,model_adopted=False)))
+        child=SimpleNamespace(pid=100,returncode=0,poll=lambda:0)
+        with self.assertRaises(ValueError):record_terminal(child,folder,'d'*40,1792864750.,folder/'job.json')
+        self.assertFalse((folder/'job.json').exists())
 
     def test_reasoning_development_dispatch_uses_strict_recovery_only(self):
         from portable.context.native_development import restored_reasoning32

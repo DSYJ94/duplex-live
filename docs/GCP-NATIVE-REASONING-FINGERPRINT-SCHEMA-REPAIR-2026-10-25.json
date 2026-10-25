@@ -1,0 +1,41 @@
+{
+  "schema": "dl-native-recovery-reasoning-fingerprint-schema-repair-v1",
+  "at_utc": "2026-10-25T03:10:31.404238+00:00",
+  "status": "REAL_PRODUCER_SCHEMA_REPRODUCED_FIXED_LOCAL42_PASS_TARGET_PENDING",
+  "failed_run": "v6",
+  "failed_producer": "e0827f54f058e986ee57116f6de3c783a1ccefbd",
+  "actual_finalization_exit": 1,
+  "actual_failure_utc": "2026-10-25T03:05:21Z",
+  "original_model_source": "da389a7031a5504495397d1575952194ffa209f1",
+  "original_fit_actual_exit": -15,
+  "new_optimizer_updates": 0,
+  "cause": "Original immutable reasoning32.fingerprints emits audio_mask_frames; recovery validator incorrectly required control40 four-field shape for both cohorts.",
+  "repair": "Require exact five-field reasoning32 shape and positive integer audio_mask_frames equal to each saved metadata target; retain exact four-field control40 shape, reject unknown/missing fields, preserve all counts/hashes/oldpartials.",
+  "real_schema_replay": {
+    "schema": "dl-native-recovery-real-producer-schema-replay-v1",
+    "schema_gate_passed": true,
+    "real_native49_rows": 49,
+    "real_control40_rows": 40,
+    "real_reasoning32_rows": 32,
+    "all32_acoustic_mask_counts_match_saved_metadata": true,
+    "placeholder_groups": [
+      "original28",
+      "audio49"
+    ],
+    "placeholder_groups_used_for_schema_test_only": true,
+    "model_loaded": false,
+    "numerical_recovery_or_terminal_success_proven": false,
+    "optimizer_updates": 0,
+    "source_failed": true
+  },
+  "progress_logging": "New distinct unvalidated-numerical-progress.json preserves computed metrics/fingerprints before validators; never accepted as a terminal result or proof.",
+  "tests_passed": 42,
+  "model_adopted": false,
+  "quality_qualified": false,
+  "code_sha256": {
+    "evals/native_saved_stage_recovery.py": "81cd4ab1948d2c31dae818802c0aa008b68185264ef62a19d27794d482c72410",
+    "evals/harness/test_native_saved_stage_recovery.py": "3086254b85bfd78964a692c027e3653bd2a456844962ba22f672d9543f8c6df0",
+    "evals/harness/test_native_saved_stage_proof.py": "65cd12f4557190abdbf5fb2b974db87cd2d074f5d7ff3ed30befcc8e681a542b"
+  },
+  "next_action": "Separate Git-deployed repaired producer; target42 pure tests plus actual raw 49/40/32 schema replay with original metadata before new V7 checkpoint load. V6 stays failed. New finalization and distinct independent full restore both actual0, then strict proof and guarded native20/speech20 under repaired consumer source. No weakened gate or repeated optimizer updates."
+}
