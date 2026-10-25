@@ -1,3 +1,43 @@
+# LOCAL — Independent49 +40 EXACT; final reasoning32/state verification LIVE
+
+Actual06:10:39UTC25Oct: independentrestore97226/container530/birth1800685 LIVE,
+MainPID67425/invocationf8d6f198ef0e43baa97e2874b5928bef. ALL40independentcontrol
+fingerprintrows EXACTLYmatchsuccessfulfirstfinalization, zero differences;
+bothcanonicalSHA0a263f8b2b18567939a18037b327480268314505b09bc8443e87cc8e6627a4c2.
+Independentnative49 alreadyEXACTfirst49. Independentreasoning32 now1/32. Whole
+restore/parent/strictproof stillNOTterminal/passed. FirststageactualPASS0 and
+closed31filebackup unchanged. Source0619b17/originalDA/sameA100/disk/STOP11:52:37UTC/
+100USD/dualguards/zero newupdates unchanged. No repeat saved8. Originalfit-15 remains
+failed. DocGCP-NATIVE-SAVED8-V7-INDEPENDENT-CONTROL40-PROGRESS-2026-10-25.json,
+ignored comparisonreceipt includesALL40actualrows. Observer41983 ACTUALLYexit0 on
+40milestone, NOTrecoveryterminal. Poll SAMEindependentprocess/parent; do notrestart.
+
+Futurefreshguard preparation complete: sourceb15b4096497c36821e8562677a9a8d65000d2be1
+at/workspace/migration/gcp-fresh-source-b15b409-v1, Gitbundle/fetch/cleancheckout,
+actualtarget27puretests0 andREALGCPlease acceptedthroughsharedstrictfresh_guard;
+noTorch/model/newGPU/API/freshpayload. Audithookforbadeallactualfixturefolderreads.
+Local27alsoPASSafterread-onlyassertiontightening. New GCPbranch normalizes only
+inmemoryfromactuallease, keepsAUTH/resource/30sfreshness/100USD/12h/120spadding;
+Runpodlegacy90s unchanged, no fabricatedproviderreceipt. No freshcollection yet.
+Aftercomplete native20/speech20 review +ordinary4PASS, commitactualreview and
+Gitdeployfreshsource INCLUDINGthatreview, retainingreviewed0619inferencehashes.
+Preparedb15hasnofuturepassedreview and isNOT launchauthorization. All sealed
+sourcequality/fold/heldout/semantic/audio/quiet/pause/receipt/fresh gates intact.
+Currentrecovery AND preparednative20 muststilluse0619, NOTfreshpreparationsource.
+
+NEXT finish ALL32reasoning +alloriginalgroups/metrics/Adam/RNG EXACTsameevidence,
+actualindependent0 and actualparent0/strictnewproof. Copybackclosedproof/reports+
+hashes. Then realfreshhostterminalobservation (sameV7unit/invocation/resource,
+actualMainPID0/inactive/success/exit0/controller+proofSHAs), then prepared0619
+native20/speech20 within11:40UTCdeadline/existingMacproxy11:45. No halfproof/subset/
+adoption. Lossdiagnostic(+0.8%old28weightedCE) belowremainsprovisionaluntilreplicated;
+not convergence or free-running voicequality. Guardfresh06:10/remaining47.70USD
+inclreserves notactualbilling. ExistingMacguard/proxy/tunnel unchanged, recheck
+beforeeval. Criticalnativearchive/closedfirststagebackupverified, broaderMacsource
+backuppartial. SourceGit/exclusions/credentialsonMac/LOCALsoleexecutor unchanged.
+
+---
+
 # LOCAL — GCP fresh guard target27 +real lease PASS; fresh entry stilllocked
 
 Separate preparation sourceb15b4096497c36821e8562677a9a8d65000d2be1 Gitbundlefetched

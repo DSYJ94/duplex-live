@@ -1,0 +1,61 @@
+{
+  "schema": "dl-v7-independent-control40-exact-progress-v1",
+  "observed_utc": "2026-10-25T06:10:39.899217+00:00",
+  "all40_independent_control_fingerprints_exact": true,
+  "difference_ids": [],
+  "first_record_sha256": "56cad2bf545dd8a175eb1e89a630f8f84198e7c19a500a0542f78f2e861d695e",
+  "first_control40_canonical_sha256": "0a263f8b2b18567939a18037b327480268314505b09bc8443e87cc8e6627a4c2",
+  "independent_control40_canonical_sha256": "0a263f8b2b18567939a18037b327480268314505b09bc8443e87cc8e6627a4c2",
+  "independent_control40_count": 40,
+  "independent_reasoning32_count": 1,
+  "controller": {
+    "schema": "dl-native-saved-stage-controller-v1",
+    "pid": 1,
+    "source_commit": "0619b17e9bb57a01701d24b7c7182f99a6a0ecf5",
+    "model_source_commit": "da389a7031a5504495397d1575952194ffa209f1",
+    "original_stage_updates": 8,
+    "optimizer_updates_this_run": 0,
+    "initial_guard": {
+      "execution_authorized": true,
+      "live_provider_deadline_verified": true,
+      "live_external_cost_guard_verified": true,
+      "single_gpu_across_providers_verified": true,
+      "checked_unix": 1792898022.823636,
+      "deadline_unix": 1792929157.0,
+      "provider": "gcp",
+      "remaining_budget_usd": 64.25405198014644,
+      "planned_maximum_cost_usd": 48.69039248028066,
+      "resource_id": "951004838667287080",
+      "authorization_sha256": "97c8d43fe7be11595e7d00775af4e1f2c7666a469041c720bf7586ee8a020322"
+    },
+    "children": [
+      {
+        "phase": "finalization",
+        "pid": 12,
+        "birth": 1204049,
+        "started_unix": 1792898023.4558792,
+        "actual_exit": 0,
+        "ended_unix": 1792903989.6608908
+      },
+      {
+        "phase": "independent_restore",
+        "pid": 530,
+        "birth": 1800685,
+        "started_unix": 1792903989.8170981,
+        "actual_exit": null
+      }
+    ],
+    "phase": "independent_restore",
+    "model_adopted": false,
+    "at_utc": "2026-10-25T04:53:09.817964+00:00"
+  },
+  "process": "  97226   67471 Rsl     01:17:30\n",
+  "actual_independent_exit": null,
+  "full_recovery_proof_passed": false,
+  "optimizer_updates": 0,
+  "behavior_qualified": false,
+  "model_adopted": false,
+  "receipt": "runs/local-migration-20261024/saved8-recovery-v7-independent-control40-comparison-v1.json",
+  "receipt_sha256": "90e9476960079b8c7473cf8ab9988eba01dac29d159de574fceb873cb3a7e4fc",
+  "next_action": "Continue SAME independent reasoning32 plus final full Adam/RNG/metrics exact match, actual child0 then parent0/strict proof, closed copyback before prepared0619 native20/speech20. No optimizer update or behavior/adoption claim."
+}
