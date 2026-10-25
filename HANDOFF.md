@@ -1,3 +1,34 @@
+# LOCAL — Recovery v4 failed; exact control40 relative-path repair prepared
+
+At00:58:06UTC25Oct service recovery-v4 actually FAILED1, MainPID0.
+Controller phase failed_preserved_no_retry, finalization child actual_exit1 at
+00:57:43UTC. No new optimizer updates, no proof, no adoption. Do not reuse v4.
+Original snapshot verifier rejected its frozen complete7797-file workset.
+Fast CPU file check reproduced ALL7797 missing at originalDA relative runs/;
+archive verification remains valid, but bootstrap never mirrored the separate
+source-control40-e658c20 corpus into the original verifier cwd. Root12 also
+lacks those separately archived files. Next verify exact preserved source,
+regular-hardlink ALL7797 at DA/runs, then run unchanged original complete
+control40/reasoning32 CPU approval checks BEFORE another model load.
+New bootstrap control_workset and missing/symlink regression prepared;22 focused
+tests PASS. It creates no new data/updates, changes no original verifier gate.
+
+Separate evaluation source58c966c358e01bbb24a196e1b6ec424697a457fc deployed via
+hash-verified Git bundle at /opt/duplex-native-evaluation-58c966c-v1 (worktree add
+actual0 after fixing /opt directory ownership). Direct GitHub fetch unavailable
+without credentials; never copy credentials. Bundle SHA
+b8bf3548109442a82dcdd6402a5a6a9dbf44839f23eb03175d5a61c8141322f7.
+Public Whisper staging cache was ephemeral: restored exact1617941637B turbo.pt
+at /workspace/gcp-runtime-home/.cache/whisper/turbo.pt, SHA
+ aff26ae408abcba5fbf8813c21e62b0941638c5f6eebfb145be0c9839262a19a.
+Actual ASR import/hash preflight v2 exited0, CUDA uninitialized/no weights loaded.
+Receipts ignored gcp-public-asr-durable-cache-v1 and gcp-asr-evaluation-preflight-v2.
+No ASR/model/source precision changes. Same GPU/same disk/guards/nativeSTOP
+11:52:37UTC remain; diagnose promptly and stop billed compute if truly blocked.
+LOCAL sole executor; prior live-v4 entries below are historical.
+
+---
+
 # LOCAL — Recovery v4 live; historical cache dependencies repaired
 
 Actual strict SSH read at 00:53:48 UTC 25 October: service

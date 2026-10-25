@@ -1,13 +1,13 @@
 {
   "schema": "dl-gcp-native-exact-input-reconstruction-preparation-v1",
-  "at_utc": "2026-10-25T00:54:24.386497+00:00",
+  "at_utc": "2026-10-25T01:00:02.372285+00:00",
   "parent_source": "e9da0f5",
   "implementation_sha256": {
-    "portable/context/native_gcp_inputs.py": "f9f1e1ab76a9acd3abca22a479720004530cc71433112a8ded9de195eae9236f",
-    "evals/harness/test_native_gcp_inputs.py": "c7dc1d340c3f9ee905f9828de2d30841565c5329167a039dd3df3f9950d88d56"
+    "portable/context/native_gcp_inputs.py": "3c74ac2fa7ae93603b9ce43f7340666acccf62c7190604130576b2dad7de3616",
+    "evals/harness/test_native_gcp_inputs.py": "d59c6c740c92cfa7b0f858ca71163a086cc44b75012961e5d596051f4af7dfd4"
   },
-  "status": "FIVE_ORIGINAL_CACHE_CHECKS_AND_SEQUENTIAL_SOURCE_PROVENANCE_PASSED_RECOVERY_V4_RUNNING",
-  "focused_filesystem_tests_passed": 21,
+  "status": "RECOVERY_V4_FAILED_MISSING_ORIGINAL_CWD_CONTROL40_WORKSET_REPAIR_PREPARED",
+  "focused_filesystem_tests_passed": 22,
   "cli": [
     "--root",
     "--destination-report",
@@ -28,7 +28,8 @@
     "Five regular independent verifier-tree copies under durable /workspace/gcp-verifier-inputs-v1; never rely on host/tmp surviving reboot",
     "Complete82file snapshot hardlinks and existing strict saved8 metadata audit",
     "Presence-check every original absolute CLI input; NEVER execute old bounded8 command",
-    "Historical Kyutai tokenizer path receives only a regular hardlink to the identical already-verified 552778-byte Persona vocabulary, SHA78d4336533ddc26f9acf7250d7fb83492152196c6ea4212c841df76933f18d2d. No Kyutai backbone substitution or download; original cache receipt unchanged."
+    "Historical Kyutai tokenizer path receives only a regular hardlink to the identical already-verified 552778-byte Persona vocabulary, SHA78d4336533ddc26f9acf7250d7fb83492152196c6ea4212c841df76933f18d2d. No Kyutai backbone substitution or download; original cache receipt unchanged.",
+    "Regular hardlinks for ALL7797 separately catalogued source-control40-e658c20 files at originalDA/runs, preserving original cwd-relative frozen verifier and all bytes; not an empty original source runs directory."
   ],
   "gpu_container_requirements": [
     "Bind /workspace RW for new outputs/runtime",
@@ -44,7 +45,7 @@
   "actual_input_reconstruction_executed": true,
   "actual_model_loaded": false,
   "new_optimizer_updates": 0,
-  "next_action": "Poll actual recovery-v4 on frozen producer75b3bfd; never overwrite its source. After finalization actual0, controller runs separate fresh Adam/RNG restore before strict proof. Zero new optimizer updates. Then complete unchanged native behavioral gates; no adoption from cache or numerical checks.",
+  "next_action": "Git-deploy helper separately; materialize and hash exact control40 relative paths then original complete control40/reasoning32 CPU verification before any fresh recovery attempt. Preserve v4 actual1, all previous failures, originalfit-15; zero updates.",
   "head_only_bundle_sparse_clone_fixture_passed": true,
   "preserved_three_vendor_bundle_bytes_and_sha_verified_on_mac": true,
   "actual_input_reconstruction_passed": true,

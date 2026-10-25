@@ -123,6 +123,29 @@ def historical_tokenizer(create=False):
                 tokenizer_only=True, full_kyutai_backbone_restored=False)
 
 
+def control_workset(root, catalog, create=False):
+    """Restore the frozen control corpus at the original verifier's relative cwd."""
+    prefix = 'source-control40-e658c20/'
+    rows = [row for row in catalog['files'] if row['path'].startswith(prefix)]
+    carrier = catalog['archive_carriers']['control40']
+    if (len(rows) != carrier['expanded_files']
+            or sum(row['bytes'] for row in rows) != carrier['expanded_bytes']):
+        raise ValueError('Complete catalogued control workset required')
+    for row in rows:
+        name = safe(row['path'][len(prefix):])
+        if Path(name).parts[0] != 'runs' or not Path(name).parts[1].startswith('native-control3-'):
+            raise ValueError('Only original control corpus paths may be reconstructed')
+        source, target = root/row['path'], ORIGINAL/name
+        if create:
+            regular_link(source, target, row)
+        if (target.is_symlink() or not target.is_file()
+                or not os.path.samefile(source, target)
+                or target.stat().st_size != row['bytes'] or digest(target) != row['sha256']
+                or any(p.is_symlink() for p in target.parents)):
+            raise ValueError('Exact regular original-cwd control workset required')
+    return dict(files=len(rows), bytes=carrier['expanded_bytes'], root=str(ORIGINAL))
+
+
 def verify_existing(root, catalog):
     """Read-only recovery after materialization succeeded but its audit failed."""
     mirrored = 0
@@ -143,8 +166,9 @@ def verify_existing(root, catalog):
         if not alias.is_symlink() or alias.readlink() != RUNTIME:
             raise ValueError('Exact reconstructed alias required')
     source_runs = ORIGINAL/'runs'
-    if source_runs.is_symlink() or not source_runs.is_dir() or any(source_runs.iterdir()):
-        raise ValueError('Empty physical original source runs required')
+    if source_runs.is_symlink() or not source_runs.is_dir():
+        raise ValueError('Physical original source runs required')
+    control_workset(root, catalog)
     temporary = []
     for group in catalog['temporary_materializations']:
         source = root/safe(group['source_prefix'])
@@ -181,6 +205,7 @@ def verify_copy_tree(source, target):
 
 def finish(args, root, catalog, mirrored, temporary, snapshot):
     tokenizer = historical_tokenizer()
+    control = control_workset(root, catalog)
     spec = catalog['snapshot_materialization']
     checked = verified_inputs(snapshot, root/safe(spec['original_observation']))
     command = checked['controller']['planned_commands']['bounded8_training']
@@ -195,7 +220,7 @@ def finish(args, root, catalog, mirrored, temporary, snapshot):
         historical_code_source_only=True, model_loaded=False, native_behavior_evaluated=False,
         runtime_root=str(RUNTIME), original_da=str(ORIGINAL),
         existing_materialization_independently_reverified=args.verify_existing,
-        historical_tokenizer=tokenizer,
+        historical_tokenizer=tokenizer, original_cwd_control_workset=control,
         required_pythonpath=str(root/'control40-vendor-moshi-rag/moshi'))
     receipt['required_temporary_bind_mount'] = dict(source=str(root/'gcp-verifier-inputs-v1'),
         destination='/tmp/duplex-reasoning32-verifier-v1', readonly=True, symlink_root_allowed=False)
@@ -256,6 +281,7 @@ def main():
     if source_runs.is_symlink() or source_runs.exists() and any(source_runs.iterdir()):
         raise ValueError('Original source runs directory must be empty and physical')
     source_runs.mkdir(exist_ok=True)
+    control_workset(root, catalog, create=True)
     # Fixed parent directories are created/chowned by the approved SSH operator.
     for alias in ALIASES:
         alias.symlink_to(RUNTIME, target_is_directory=True)

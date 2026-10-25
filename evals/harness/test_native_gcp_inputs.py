@@ -11,6 +11,22 @@ from portable.context.native_gcp_inputs import regular_link, regular_copy_tree, 
 
 
 class InputMaterializationTests(unittest.TestCase):
+    def test_control40_relative_workset_requires_regular_exact_links_at_original_cwd(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory).resolve(); original=root/'original';original.mkdir()
+            name='runs/native-control3-fixture/conversation.json';data=b'original frozen bytes'
+            source=root/'source-control40-e658c20'/name
+            source.parent.mkdir(parents=True);source.write_bytes(data)
+            row=dict(path='source-control40-e658c20/'+name,bytes=len(data),sha256=hashlib.sha256(data).hexdigest())
+            catalog=dict(files=[row],archive_carriers=dict(control40=dict(expanded_files=1,expanded_bytes=len(data))))
+            with patch.object(inputs,'ORIGINAL',original):
+                with self.assertRaises(ValueError):inputs.control_workset(root,catalog)
+                inputs.control_workset(root,catalog,create=True)
+                self.assertTrue((original/name).samefile(source))
+                inputs.control_workset(root,catalog)
+                (original/name).unlink();(original/name).symlink_to(source)
+                with self.assertRaises(ValueError):inputs.control_workset(root,catalog)
+
     def test_historical_vocab_alias_requires_identical_bytes_and_original_reference(self):
         with tempfile.TemporaryDirectory() as directory:
             root=Path(directory).resolve();data=b'fixture shared vocabulary'
