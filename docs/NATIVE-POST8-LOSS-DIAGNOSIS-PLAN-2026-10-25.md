@@ -1,7 +1,20 @@
 # Next diagnostic: matched full32 loss at native520 and saved528
 
-Status: prepared, not executed. No GPU restarted, optimizer update or new artifact
-transfer. Current checkpoints and failed complete20 remain frozen and unadopted.
+Status at25October11:00UTC: diagnostic not yet executed. The explicitly approved
+[zone-B fallback](GCP-NATIVE-ZONE-B-PLACEMENT-AUTHORIZATION-2026-10-25.json) is now
+performing full replacement-disk preservation checks. One existing controller waits
+for actual complete hashes and CPU shutdown before one bounded A100 attempt;
+[exact live process and resource records](GCP-NATIVE-ZONE-B-LIVE-EXECUTION-2026-10-25.json)
+and the newest HANDOFF govern continuation. Producer42888ad, local71 related checks
+passed. No optimizer/repeated8/recovery/native20/fresh evaluation or adoption.
+
+The original zone-A placement/window paragraph below describes preparation-time
+restrictions. It is superseded only for placement by the owner's explicit zone-B
+approval and the [cumulative bound](GCP-NATIVE-ZONE-B-CUMULATIVE-BOUND-2026-10-25.json):
+count prior32079.865 GPU seconds, plan at most7200 additional seconds, total≤12GPU
+runtime hours and≤100USD including both prior usage and migration reserves. The
+new CPU's original11:40:20UTC nativeSTOP remains unchanged. No total limit is reset.
+Current checkpoints and the rejected complete20 remain frozen and unadopted.
 
 The completed review is [here](GCP-NATIVE-SAVED8-COMPLETE20-REVIEW-2026-10-25.json).
 The [CPU objective audit](NATIVE-SAVED8-OBJECTIVE-CREDIT-AUDIT-2026-10-25.json) and
