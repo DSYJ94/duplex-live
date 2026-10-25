@@ -200,5 +200,42 @@ class ZoneBReplacementTests(unittest.TestCase):
 
 
 
+class OriginalARemainingRuntimeTests(unittest.TestCase):
+    check = BudgetTests.check
+
+    def setUp(self):
+        BudgetTests.setUp(self)
+        self.lease.update(id='951004838667287080', disk_id='1828090267781080539',
+            name='duplex-native-saved8-gpu-20261024-v1',
+            placement_authorization_sha256=ZONE_B_AUTH_SHA,
+            prior_gpu_seconds_upper=PRIOR_GPU_SECONDS_UPPER, extra_migration_reserve_usd=12,
+            budget_window_start_utc='2026-10-25T20:00:00Z',
+            accounted_prior_last_stop_utc='2026-10-25T19:00:00Z',
+            stop_utc='2026-10-25T22:00:00Z')
+        self.vm.update(id=self.lease['id'], name=self.lease['name'],
+            lastStartTimestamp='2026-10-25T20:00:30Z',
+            lastStopTimestamp=self.lease['accounted_prior_last_stop_utc'])
+        self.vm['scheduling']['terminationTime']=self.lease['stop_utc']
+        self.disk['id']=self.lease['disk_id']
+        self.now += 20*3600
+
+    def test_actual_runtime_budget_does_not_reset_original_resource_creation(self):
+        validate_lease(self.lease,self.authority,self.destination)
+        self.assertTrue(owned(self.vm,self.lease))
+        self.assertLess(self.check()['remaining_budget_usd'],22)
+
+    def test_historical_runtime_and_migration_reserve_cannot_be_omitted(self):
+        for change in (dict(prior_gpu_seconds_upper=0), dict(extra_migration_reserve_usd=0),
+                       dict(stop_utc='2026-10-26T00:00:00Z'),dict(id='999')):
+            with self.subTest(change=change),self.assertRaises(ValueError):
+                validate_lease(dict(self.lease,**change),self.authority,self.destination)
+
+    def test_unaccounted_resource_restart_is_rejected(self):
+        for change in (dict(lastStartTimestamp='2026-10-25T19:59:00Z'),
+                       dict(lastStopTimestamp='2026-10-25T19:59:00Z')):
+            with self.subTest(change=change),self.assertRaises(ValueError):
+                self.check(vm=dict(self.vm,**change))
+
+
 if __name__ == '__main__':
     unittest.main()

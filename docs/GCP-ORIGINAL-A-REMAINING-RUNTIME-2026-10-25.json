@@ -1,0 +1,33 @@
+{
+  "schema": "dl-original-a-remaining-owner-runtime-v1",
+  "status": "WITHIN_EXISTING_OWNER_GRANT_NOT_NEW_USAGE_AUTHORIZATION",
+  "authorization": "GCP-NATIVE-CONTINUATION-AUTHORIZATION-2026-10-24.json",
+  "owner_grant_field": "maximum_gpu_runtime_hours",
+  "maximum_authorized_cumulative_gpu_seconds": 43200,
+  "actual_prior_gpu_seconds_upper": 32086,
+  "maximum_new_window_seconds": 7200,
+  "maximum_total_gpu_seconds": 39286,
+  "maximum_total_scope_usd": 90.3189388888889,
+  "migration_reserve_still_counted_usd": 12,
+  "original_other_reserves_usd": 16.88,
+  "resource_id": "951004838667287080",
+  "original_disk_id": "1828090267781080539",
+  "new_resource": false,
+  "transfer_to_new_destination": false,
+  "optimizer_updates": 0,
+  "repeat_saved8_recovery_or_native20": false,
+  "reason": "ZoneB actual allocation unsupported. Same original A VM/disk remains within originally authorized12 cumulative GPU runtime hours. Preserve original APIcreation identity, bind lastStop, conservative union of ALL actual successful intervals incl overlapping starts/duplicate stop end-times and roundedUP prior, plus one2h budgetwindow. Reject unaccounted restart/history omission. Legacy fixed-lifetime leases unchanged.",
+  "behavioral_numerical_thresholds_changed": false,
+  "local_related_checks_passed": 77,
+  "zone_b_complete_backup": {
+    "archive_files": 40132,
+    "archive_bytes": 81154452891,
+    "archive_links": 8,
+    "semantic33": true,
+    "recovery76": true,
+    "behavior324_and52links": true,
+    "all_passed": true
+  },
+  "b_actual_failed_operation": "operation-1792928965865-65ea8ce1e2f72-2a556336-fc03e075",
+  "b_instance_created": false
+}

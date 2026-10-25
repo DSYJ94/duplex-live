@@ -25,22 +25,32 @@ CATALOG_SHA = '94b42bae0152e8150ba7842146f66711b13df3b8ece9125bcb5db92a761196fb'
 # Full approved CPU lifetime, seven days durable storage, and network reserve.
 RESERVE_USD = 0.48 + 6.40 + 10.00
 ZONE_B_AUTH_SHA = 'e1ffc0ffc323cf051d8b24bb8bc8d3f8bcb62bd42ba0e6467146a1aea5a89e4b'
-PRIOR_GPU_SECONDS_UPPER = 32079.865
+PRIOR_GPU_SECONDS_UPPER = 32086.0
 ZONE_B_DISK = 'duplex-native-stage-20261025-b-v1'
 
 
 def placement(lease):
-    if lease.get('zone') == ZONE:
+    cumulative_a = lease.get('zone') == ZONE and 'budget_window_start_utc' in lease
+    if lease.get('zone') == ZONE and not cumulative_a:
         return ZONE, DISK, 0.0, RESERVE_USD
     history = lease.get('prior_gpu_seconds_upper')
-    if (lease.get('zone') != 'europe-west4-b'
+    if ((not cumulative_a and lease.get('zone') != 'europe-west4-b')
             or lease.get('placement_authorization_sha256') != ZONE_B_AUTH_SHA
-            or lease.get('disk_name') != ZONE_B_DISK
+            or lease.get('disk_name') != (DISK if cumulative_a else ZONE_B_DISK)
             or type(history) not in (int, float) or not math.isfinite(history)
             or history < PRIOR_GPU_SECONDS_UPPER
             or lease.get('extra_migration_reserve_usd') != 12
             or lease.get('provisioning_model', 'STANDARD') != 'STANDARD'):
         raise ValueError('Exact approved zoneB placement and cumulative historical usage required')
+    if cumulative_a:
+        if (str(lease.get('id')) != '951004838667287080'
+                or str(lease.get('disk_id')) != '1828090267781080539'
+                or lease.get('name') != 'duplex-native-saved8-gpu-20261024-v1'
+                or stamp(lease['budget_window_start_utc']) < stamp(lease['created_utc'])
+                or not lease.get('accounted_prior_last_stop_utc')):
+            raise ValueError('Only the original exact stopped A resource may use remaining runtime')
+        stamp(lease['accounted_prior_last_stop_utc'])
+        return ZONE, DISK, history, RESERVE_USD+12
     return 'europe-west4-b', ZONE_B_DISK, history, RESERVE_USD+12
 
 
@@ -96,7 +106,8 @@ def validate_lease(lease, authority, destination):
             or lease['authorization_sha256'] != AUTH_SHA
             or type(lease['optimizer_updates']) is not int or lease['optimizer_updates'] != 0):
         raise ValueError('One exact recorded project/GPU/disk lease required')
-    start, deadline = stamp(lease['created_utc']), stamp(lease['stop_utc'])
+    start = stamp(lease.get('budget_window_start_utc', lease['created_utc']))
+    deadline = stamp(lease['stop_utc'])
     model = lease.get('provisioning_model', 'STANDARD')
     if model not in ('STANDARD', 'FLEX_START') or (model == 'FLEX_START'
             and lease.get('max_run_seconds') != 36000):
@@ -147,12 +158,17 @@ def check_live(lease, vm, disk, instances, runpod_pods, now):
     if not owned(vm, lease):
         raise ValueError('Resource identity changed; never stop a replacement')
     deadline = stamp(lease['stop_utc'])
-    if (vm['status'] != 'RUNNING' or not stamp(lease['created_utc']) <= now < deadline
+    start = stamp(lease.get('budget_window_start_utc', lease['created_utc']))
+    if (vm['status'] != 'RUNNING' or not start <= now < deadline
             or not vm['machineType'].endswith('/machineTypes/a2-ultragpu-1g')
             or vm['scheduling'].get('instanceTerminationAction') != 'STOP'
             or native_deadline(vm, lease) != deadline
             or vm['scheduling'].get('automaticRestart') is not False):
         raise ValueError('Exact live singleA100 and native STOP deadline required')
+    if 'budget_window_start_utc' in lease:
+        if (not start <= stamp(vm['lastStartTimestamp']) <= now
+                or stamp(vm['lastStopTimestamp']) != stamp(lease['accounted_prior_last_stop_utc'])):
+            raise ValueError('Unaccounted GPU start or stop; cumulative permission refused')
     zone, disk_name, history, reserve = placement(lease)
     expected = '/projects/'+PROJECT+'/zones/'+zone+'/disks/'+disk_name
     persistent = [d for d in vm['disks'] if d.get('type') == 'PERSISTENT']
@@ -178,7 +194,7 @@ def check_live(lease, vm, disk, instances, runpod_pods, now):
                 and pod.get('status', pod.get('desiredStatus')) not in STOPPED
                 and pod.get('computeType') != 'CPU'):
             raise ValueError('Another native Runpod GPU may be active')
-    elapsed = max(0, now-stamp(lease['created_utc']))
+    elapsed = max(0, now-start)
     remaining = 100-reserve-(history+elapsed)*lease['hourly_upper_usd']/3600
     planned = (deadline-now)*lease['hourly_upper_usd']/3600
     if not 0 < planned <= remaining:
