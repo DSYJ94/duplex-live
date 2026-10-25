@@ -1,3 +1,32 @@
+# LOCAL — Protective diagnostic copy active; SAME model job remains sole executor
+
+25Oct14:29UTC. Read-only local evidence preserver PID53548/tool26003 launched ONCE,
+script runs/local-migration-20261024/flex90-evidence-preserver-v1.py. Initial approved
+newdiagnostic output copy603710218bytes rsyncACTUAL0 at14:29:21.325702UTC into
+ gcp-flex90-live-preservation-v1. LIVEPARTIAL/UNQUALIFIED, not complete hashproof.
+Small measurement.log refreshed every15sec while samecontroller-v5/model runs.
+Preserver submits NO GPU/CPU providerjobs, changes NO model/source/gate, stops NO
+machine. Required rsync-ar/noowner/nogroup/excludesession-token/private/cores used.
+
+Mainv5 currently copies only successfulterminal results, thenstops; protective
+watcher covers failurebeforeSTOP: on actualnonzero terminal it recopies partialout,
+terminal+hostlog and verifies everynewsource regularfile hash ifSSHstillavailable.
+Ifactualterminal0, it leaves final verified fullcopy to existingmaincontroller.
+Its own14:56:30UTC observationdeadline is NOT model/provider permission or extension.
+Observer transporttimeouts are NOT modelterminals. Preserve allpartialfailedreceipts.
+Status gcp-flex90-live-preservation-status-v1.json. DO NOT start anotherpreserver or
+modelcontroller. Current model actualunit/PID/source/nativeSTOP/budget asbelow.
+
+Latest independentmodelread14:26:55 mainPID1978/active; all24baseline scenes through
+native-reasoning4-train-028 completed, remaining8baseline andsaved32 unqualified.
+Originalchild deadline14:53:05.747UTC; unit3900sec/nativeSTOP15:22:10.600 unchanged.
+Full pair/allfingerprints/actualterminal0/fullcopy hashes still required. No new
+optimizer/source/data/API/job. CPU requestaudit740e51b pushed; no causal diagnosis
+or adoption from partial losses. BroadsourceMacbackup remainsPARTIAL, fullB/native
+archive preservation remainsPASS. LOCALsoleexecutor; goalunfinished.
+
+---
+
 # LOCAL — Request-supervision audit completed while SAME diagnostic runs
 
 25Oct14:07UTC. CPU-only all32 audit tied to exact pinned saved8 proof/finalization

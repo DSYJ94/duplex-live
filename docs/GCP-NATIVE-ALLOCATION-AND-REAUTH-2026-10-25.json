@@ -92,5 +92,15 @@
     "invocation_id": "68fec3824f674a1b9958f221ea7208a3",
     "actual_successful_terminal": null,
     "optimizer_updates": 0
+  },
+  "diagnostic_evidence_preserver": {
+    "pid": 53548,
+    "tool_session": 26003,
+    "initial_copy_actual_rsync_exit": 0,
+    "initial_copy_utc": "2026-10-25T14:29:21.325702Z",
+    "path": "runs/local-migration-20261024/gcp-flex90-live-preservation-v1",
+    "qualified": false,
+    "observer_deadline_utc": "2026-10-25T14:56:30Z",
+    "new_provider_jobs": 0
   }
 }
