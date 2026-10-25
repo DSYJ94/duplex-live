@@ -1,7 +1,7 @@
 {
   "schema": "dl-gcp-saved8-policy-portability-repair-v1",
-  "at_utc": "2026-10-25T01:26:36.381476+00:00",
-  "status": "ACTUAL_TARGET_PY312_35TESTS_POLICY_AND_AST_PASS_RECOVERY_V6_RUNNING",
+  "at_utc": "2026-10-25T01:38:32.959586+00:00",
+  "status": "V6_PASSED_ORIGINAL_POLICY_AND_COMPLETE_CONTEXT_ENTERED_SAVED_STATE_NUMERICAL_FINGERPRINTS",
   "original_model_source": "da389a7031a5504495397d1575952194ffa209f1",
   "failed_recovery": "v5",
   "failed_service_actual_exit": 1,
@@ -169,5 +169,151 @@
     },
     "model_loaded": false,
     "optimizer_updates": 0
+  },
+  "reconstructed_artifact_observation": {
+    "observed_existing_files": 21,
+    "failures": [],
+    "rows": [
+      {
+        "file": "approved-audio49-audit.json",
+        "bytes": 267400,
+        "sha256": "6b03571ab251a7ba22d144ade4ab55b5c575273b5f588b9c61838ca77a0c00f2",
+        "exact": true
+      },
+      {
+        "file": "approved-audio49-bf16-preflight.json",
+        "bytes": 40843,
+        "sha256": "cf201eed615571d9bbd8f640e12e6132c6cb2b5bb1636b78f787ac07f2c62c5e",
+        "exact": true
+      },
+      {
+        "file": "approved-complete-balanced-preflight.json",
+        "bytes": 124838,
+        "sha256": "2c695e6006cc82af426903be3d0a5a813bfd4fafcae72f010acf47b53722c086",
+        "exact": true
+      },
+      {
+        "file": "approved-control40-cache.json",
+        "bytes": 43604,
+        "sha256": "374854c1d4865d8bfbf5f9a5213d3e01cdd2c1ebb0c1758b63b146b711040633",
+        "exact": true
+      },
+      {
+        "file": "approved-control40-combined-readiness.json",
+        "bytes": 4527247,
+        "sha256": "bcdc263eb9d29cc62f4d13fb53213ee8624670ad64b3a992c44194197c76b99f",
+        "exact": true
+      },
+      {
+        "file": "approved-control40-engine.json",
+        "bytes": 3404389,
+        "sha256": "8e14b636983ba4db9e31ca1179b00516383d8ccb5e56acc19d3b57e34b593d7e",
+        "exact": true
+      },
+      {
+        "file": "approved-control40-gradient.json",
+        "bytes": 64649,
+        "sha256": "661840d74546a45d18744151704e38e1fdf0ad8f7e38339d0818d789750ff481",
+        "exact": true
+      },
+      {
+        "file": "approved-control40-numerical.json",
+        "bytes": 262970,
+        "sha256": "bdf4ac935249b7e5cd31dbbd1936389ce8b537f2bb7fb44f7b273bff809413af",
+        "exact": true
+      },
+      {
+        "file": "approved-native-stream49-gradient-readiness.json",
+        "bytes": 4199941,
+        "sha256": "c264e183ee0d61fb91b68b4b11e84d3c453410f76ce8676b7ecc15865635e2a3",
+        "exact": true
+      },
+      {
+        "file": "approved-native-teacher-math.json",
+        "bytes": 94303,
+        "sha256": "ef01b6d875c2346f71ac03b7e6b38f1bd7dbec4e333c55dbb94dac6ed6678fd6",
+        "exact": true
+      },
+      {
+        "file": "approved-reasoning32-cache.json",
+        "bytes": 37613,
+        "sha256": "9736e5421736a7343e78e335403fb0d7b6ace1e83f43844098d5504af7ea9b06",
+        "exact": true
+      },
+      {
+        "file": "approved-reasoning32-combined-readiness.json",
+        "bytes": 4593774,
+        "sha256": "46753a71712712250aff747661bf3de0d9e8d165f12977f03c90ac6d04df20eb",
+        "exact": true
+      },
+      {
+        "file": "approved-reasoning32-engine.json",
+        "bytes": 2402223,
+        "sha256": "c666021e1a5e02a8f4106595c06c93028dfd5335d1382c23b97ea587743d48c9",
+        "exact": true
+      },
+      {
+        "file": "approved-reasoning32-gradient.json",
+        "bytes": 56456,
+        "sha256": "43a4c7c0364bc68889108fb8ea7eb615f3ef68f94eb1ab7f0f435e7c10f87016",
+        "exact": true
+      },
+      {
+        "file": "approved-reasoning32-numerical.json",
+        "bytes": 214126,
+        "sha256": "1dd651301bf4382dce64de7a93bfe75e1e9a34c1f39e5d3de81258a5b06ff58d",
+        "exact": true
+      },
+      {
+        "file": "approved-temporal-audit.json",
+        "bytes": 147823,
+        "sha256": "bf84c05c8206ee4a584f13ccb6e6c57e2465ef7baa27f6b30deb2dd1ebb324dd",
+        "exact": true
+      },
+      {
+        "file": "data.json",
+        "bytes": 128708,
+        "sha256": "de92099057ded15a1af0e387c96b457cdf4c1731c26594dcdca211d4c442fc1e",
+        "exact": true
+      },
+      {
+        "file": "parent-adam-import.json",
+        "bytes": 860,
+        "sha256": "1b90a0fb68da86e077f5ffc497ad1fa57917ce9eebba838dd85d3aaa545923ed",
+        "exact": true
+      },
+      {
+        "file": "voice.pt",
+        "bytes": 9499,
+        "sha256": "2085b3d58d2f2b20042e2e57a60206dd43c3028173cd9140e83d6c7b5136404d",
+        "exact": true
+      },
+      {
+        "file": "warm-ordinary-clock-reference-audit.json",
+        "bytes": 25006,
+        "sha256": "b99bec4ecef87a0782d9eb51879ba4bd66b9b4ec19bd26d5ae4e2e13a73a0b63",
+        "exact": true
+      },
+      {
+        "file": "warm-ordinary-reference-audit.json",
+        "bytes": 7765,
+        "sha256": "78dbcb6c864527452cfefe23c343f783b5cb3878478561ee7574fa8b9a270614",
+        "exact": true
+      }
+    ],
+    "complete_numerical_recovery_verified": false,
+    "optimizer_updates": 0
+  },
+  "actual_numerical_progress": {
+    "observed_utc": "2026-10-25T01:37:43Z",
+    "unit": "duplex-native-saved8-recovery-v6",
+    "main_pid": 38115,
+    "host_finalization_pid": 38198,
+    "first_native_stream_fingerprint": "teacher-cf-recovery-train-000-1",
+    "first_native_stream_fingerprint_sha256": "a1885c6e2235124e6d520646d5c5db1d5880b7b4b2e900f88b68b78deb526d64",
+    "finalization_actual_exit": null,
+    "independent_restore_started": false,
+    "numerical_proof_passed": false,
+    "behavior_evaluated": false
   }
 }

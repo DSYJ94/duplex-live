@@ -1,3 +1,33 @@
+# LOCAL — v6 passed repaired gate/context; saved-state numerical fingerprints LIVE
+
+Actual01:37:43UTC25Oct recovery-v6 service38115 active, finalizationchild38198
+live. It passed the original control40 execution-policy gate, reached unchanged
+context capture, validated reconstructed metadata/input counts/approval artifacts,
+and produced parent-adam-import.json. Initial/final metrics and subsequent
+fingerprint calls are executing; first native_stream_restore_fingerprint observed
+teacher-cf-recovery-train-000-1 SHAa1885c6e2235124e6d520646d5c5db1d5880b7b4b2e900f88b68b78deb526d64.
+No finalization terminal success/independent restore/proof/behavior approval yet.
+Do not mistake live fingerprints for complete-set acceptance.
+
+Read-only compare independently checked ALL21 emitted data/voice/approval/reference
+and parentAdam-import records against original saved export: exactbytes/hashes,
+zero failures. Includes original data SHAde920990..., voice2085b3d5..., warm word/
+clock audits, allcontrol40/reasoning32 approvals. Evidence rows in
+ docs/GCP-NATIVE-SAVED8-POLICY-REPAIR-2026-10-25.json and ignored
+ saved8-v6-reconstructed-artifact-check-v2.json. Originalfit-15 remains unchanged.
+
+Same producer e0827f54f058e986ee57116f6de3c783a1ccefbd FROZEN, originalDA unchanged,
+output /workspace/migration/gcp-saved8-recovery-v6 and pendingproof
+/workspace/migration/native-reasoning32-saved8-recovered-proof-gcp-v6. Poll SAME
+actualunit/container/child; no duplicate or timeout-driven retry. ZEROnewupdates.
+Hostguard2092 actuallyarmed01:37:41UTC; Macguard48672, proxy69582, tunnel46162
+all actualtoolhandles polledLIVE this turn. SameA100/samedisk/nativeSTOP11:52:37UTC,
+no purchases or newresources. Keep strict fullcounts/fingerprints and independent
+fresh Adam/RNG restore; only BOTHchild0+parent0 then proofverification permit full
+unchanged native20/speech20/behavior. LOCALsoleexecutor; unrelatedwork intact.
+
+---
+
 # LOCAL — Target35/policy/portableAST PASS; zero-update recovery v6 LIVE
 
 ACTUAL01:25:53UTC25Oct: service duplex-native-saved8-recovery-v6 active/running,
