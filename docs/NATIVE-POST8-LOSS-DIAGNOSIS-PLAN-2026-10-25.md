@@ -105,6 +105,15 @@ predict update direction or displacement. A future rate/exposure experiment must
 retain the old-task and behavior gates; a larger rate could magnify regression.
 No optimizer reset or rate change has been made by this audit.
 
+The old-corpus ordinary-development gate uses `recovery-train-012` through `015`
+with the backend in observe-only mode. The checked retained actual-history and old25
+manifests contain direct-answer scenes `008` through `011` instead. The name prefix
+alone does not establish training membership, and different IDs alone do not prove
+that a fact or paraphrase is absent elsewhere. Direct-answer supervision is present;
+do not diagnose its absence or insert the development answers into a new training
+set. Keep the original ordinary gate and data identities unchanged while testing
+generalization.
+
 Any new optimizer stage needs a separate concrete changed recipe and authorization:
 the current GCP grant explicitly permits zero new optimizer updates. Preserve all
 28 actual histories, all25 old teachers, native49, control40, the new32, old losses,

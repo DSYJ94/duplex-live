@@ -1,3 +1,23 @@
+# LOCAL — Direct-supervision membership checked; no eval-to-train leakage
+
+25Oct15:16UTC. CPUmanifest check: retained28 actual-history direct-answer scenes are
+recovery-train-008..011 (ordinary_answer_without_backend_context=true); old25 simple
+teacherIDs likewise008..011. Ordinarydevgate IDs012..015/backendobserve-only are
+DIFFERENT exactscenes. Nameprefix recovery-train doesNOTbyitselfestablish thattheir
+answers were fit; differentIDs doNOTprove topic/paraphrase absentelsewhere. Direct
+supervision exists, so don't diagnose its absence or adddevelopmentanswers tonew
+training. Earlier conversational wording calledtheseexistingtraining scenes; corrected
+explicitly. No sourceaudio/labels/targets/gates/optimizer/API/GPUjob changes. Diagnosis
+plan records thismembership boundary; alloriginalfold/heldout protections intact.
+
+Same correctedv6/tool19466 actualunitMainPID1985/Invocation924cca8d0f234690ae918b3dd786cd98
+was reverifiedlive15:14:27, childcontainerPID28 measuring_complete32, GPUhost2088
+20288MiB. Preserver-v2/tool14591 live; no terminal result. Child16:17:06.981/native
+STOP16:26:13.653 and94.017536USDmax/zero-updateownergrant unchanged. Allfull64/final
+fingerprints/frozen+RNG/copyhashes stillpending; no adoption or trainingextension.
+
+---
+
 # LOCAL — Effective-update settings independently audited while corrected job runs
 
 25Oct15:05UTC. CPU-only checkpoint literal-opcode audit (NOunpickling/tensor load)
