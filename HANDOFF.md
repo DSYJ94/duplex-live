@@ -1,3 +1,30 @@
+# LOCAL — Original control40 PASS; reasoning32 CPU verification v2 LIVE
+
+CPU preflightv1 ACTUALLYFAILED1 after original control40_cache.verify passed
+ALL40 (complete true). Reasoning32 reached original source-quality package
+provenance and found missing openai-whisper metadata in native Python. Separate
+ASR interpreter already had both; source verifier checks native interpreter too.
+Preserve preflightv1 log; no numerical/model/optimizer run from these CPU checks.
+
+Bounded native package install service actual0: ONLY openai-whisper20250625 and
+whisper-timestamped1.15.9 installed via publicPyPI with --no-deps/--ignore-installed
+into /workspace/runtime-x86-ngc2510. Torch/Triton not replaced. Nextpreflight
+asserts exact ASR versions and Triton3.4.0 before original checks. Package install
+log /workspace/migration/gcp-native-asr-package-install-v1.log, ignored launch
+native-asr-package-install-launch-v1.json. No model source/threshold change.
+
+CURRENT CPU-only service duplex-native-remaining-cache-preflight-v2/MainPID30217,
+invocationf449e3b6685c4b8aac2cd56bbc512c49 actually active/running at dispatch.
+Log /workspace/migration/gcp-remaining-original-cache-preflight-v2.log; result
+samebase.json pending. Original complete control40 then reasoning32; no GPU
+exposed, no model loaded. Poll actual SAMEservice/container before retrying.
+After actual0 (including complete32), fresh recovery-v5 using frozen75b3bfd and
+originalDA, same mounts/envs. v4 remains actual1 and copiedback; no proof/adoption.
+Macguard fresh01:04:12UTC confirms singleGPU and remainingbudget76.4067USD;
+providerSTOP remains11:52:37UTC25Oct. No new GPU/resource/purchase or updates.
+
+---
+
 # LOCAL — All7797 control40 paths restored; remaining original CPU checks LIVE
 
 Actual materialization exit0 from committed7910acdf67d720e47cabd743bc6645419f6a8ece:

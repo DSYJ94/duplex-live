@@ -1,12 +1,12 @@
 {
   "schema": "dl-gcp-native-exact-input-reconstruction-preparation-v1",
-  "at_utc": "2026-10-25T01:02:56.595277+00:00",
+  "at_utc": "2026-10-25T01:05:06.978825+00:00",
   "parent_source": "e9da0f5",
   "implementation_sha256": {
     "portable/context/native_gcp_inputs.py": "3c74ac2fa7ae93603b9ce43f7340666acccf62c7190604130576b2dad7de3616",
     "evals/harness/test_native_gcp_inputs.py": "d59c6c740c92cfa7b0f858ca71163a086cc44b75012961e5d596051f4af7dfd4"
   },
-  "status": "ALL7797_CONTROL40_CWD_FILES_RESTORED_HASH_VERIFIED_ORIGINAL_CPU_CHECKS_RUNNING",
+  "status": "ORIGINAL_CONTROL40_PASS_REASONING32_CPU_RECHECK_RUNNING_AFTER_EXACT_PACKAGE_INSTALL",
   "focused_filesystem_tests_passed": 22,
   "cli": [
     "--root",
@@ -44,7 +44,7 @@
   "actual_input_reconstruction_executed": true,
   "actual_model_loaded": false,
   "new_optimizer_updates": 0,
-  "next_action": "Poll existing CPU-only duplex-native-remaining-cache-preflight-v1/MainPID28955/invocationac368a362f744ce0b45563ab9a840144 before any fresh GPU recovery. No restart on observation timeout. It runs original control40 and reasoning32 cache checks at original cwd. After actual0 only, distinct new recovery version with frozen75b3bfd.",
+  "next_action": "Poll duplex-native-remaining-cache-preflight-v2/MainPID30217/invocationf449e3b6685c4b8aac2cd56bbc512c49. v1 original control40 complete40 passed then missing installed ASR metadata blocked reasoning32; exact two packages installed actual0. Require full original complete32 CPUcheck actual0 before distinct recovery-v5. No originalsource/gate changes or newupdates.",
   "head_only_bundle_sparse_clone_fixture_passed": true,
   "preserved_three_vendor_bundle_bytes_and_sha_verified_on_mac": true,
   "actual_input_reconstruction_passed": true,
@@ -65,5 +65,10 @@
     "regular_hardlinks": true,
     "original_verifier_changed": false,
     "new_optimizer_updates": 0
+  },
+  "native_runtime_required_metadata_packages": {
+    "openai-whisper": "20250625",
+    "whisper-timestamped": "1.15.9",
+    "installation": "Exact public packages only, dependencies disabled; original verifier checks installed versions. ASR execution remains isolated interpreter."
   }
 }
