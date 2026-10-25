@@ -1,6 +1,6 @@
 {
   "schema": "dl-gcp-allocation-and-reauth-status-v1",
-  "recorded_utc": "2026-10-25T13:41:50.726429+00:00",
+  "recorded_utc": "2026-10-25T13:46:41.558824+00:00",
   "zone_b_operation": "operation-1792928965865-65ea8ce1e2f72-2a556336-fc03e075",
   "zone_b_actual_result": "DONE/error configuration_availability; instance not created",
   "original_a_operation": "operation-1792929991159-65ea90b3aed48-ba8bdc52-27dd587e",
@@ -18,7 +18,7 @@
   "reauth_cli_session": 85715,
   "credentials_requested_in_chat": false,
   "heartbeat_status": "ACTIVE",
-  "current_training_or_new_measurement": "GPU allocated; runtime/guards preparation; no measurement yet",
+  "current_training_or_new_measurement": "Same GPU resumed; preparing guards, no model launched yet",
   "optimizer_updates": 0,
   "model_adopted": false,
   "references": {
@@ -45,6 +45,21 @@
     "native_stop_utc": "2026-10-25T15:11:07.523Z",
     "maximum_runtime_seconds": 5400,
     "prior_gpu_seconds_upper": 32086,
-    "source_commit": "cd5666c2514830c44c940a79ffc3508102799b9e"
+    "source_commit": "cd5666c2514830c44c940a79ffc3508102799b9e",
+    "actual_exit": 1,
+    "failure": "First status read raced guest service status creation; no model loaded",
+    "actual_stop_utc": "2026-10-25T13:42:47.416Z"
+  },
+  "flex_controller_v3": {
+    "pid": 23418,
+    "tool_session": 13039,
+    "operation": "operation-1792935930581-65eaa6d3f51df-5c8ffe73-b882ba99",
+    "same_resource_id": "4443302983961393208",
+    "prior_gpu_seconds_upper": 32219,
+    "full_scope_runtime_upper_seconds": 37619,
+    "full_scope_cost_upper_usd": 87.71193611111111,
+    "native_stop_utc": "2026-10-25T15:15:58.443Z",
+    "startup_fix_source": "db223e1",
+    "model_source_producer": "cd5666c2514830c44c940a79ffc3508102799b9e"
   }
 }

@@ -1,3 +1,32 @@
+# LOCAL — SAME Flex A100 resumed with corrected startup wait; no model launched yet
+
+25Oct13:46UTC. Startup fix db223e1 pushed (30 focused tests PASS), localcontroller-v3
+PID23418/tool13039 LIVE. Do not rerun v2/v3/create another VM. SAME exact VM
+4443302983961393208/SAME original250GBdisk1828090267781080539 resumed through actual
+operation-1792935930581-65eaa6d3f51df-5c8ffe73-b882ba99. Actual RUNNING at
+13:45:58.443UTC, native5400s STOP15:15:58.443UTC. Existing model source producer
+cd5666c/worktree unchanged; helper fixes only local guest-guard startup wait.
+Fresh guard-v2/lease-v2; fresh armed status + exact activePID/invocation required.
+Controller will then run target80checks/strictproof and ONE full32matched loss
+measurement; no model launch yet at this entry. ZEROoptimizer/repeated8/extension.
+
+Completed first Flexstartup conservatively133sec: actual successful insertTime
+13:40:40.137 through latest of both successful STOPendTimes13:42:53.058UTC;
+actual VMstop13:42:47.416. Original32086+133=32219priorGPUseconds; newmax5400 yields
+37619<43200 and87.711936USD within100 including28.88reserves. Immutable firstFlexplan
+estimate37486/87.504 superseded by explicit real cumulative accounting; existing
+strictguard requires prior>=32086 and enforces unchanged original12h/100. No budget
+reset; no model was loaded in failedstartup. Receipt gcp-flex90-first-start-runtime-v1.
+
+Currentevents runs/local-migration-20261024/gcp-flex90-diagnostic-controller-v3.json.
+Lease gcp-flex90-gpu-lease-v2.json/Macguard-v2/guest-v2. Quiet15min heartbeat updated
+with exactsamejob/source/budget. Watch SAMEcontroller/providerhandle, preserve real
+terminal records and copyback allresult hashes then STOP; never duplicate on timeout.
+Google access verified actualCLI0/providerread; no human blocker remains. FullBbackup
+complete/native20REJECTED/retention objectives/unrelated localwork asbelow unchanged.
+
+---
+
 # LOCAL — Flex startup race reproduced; GPU stopped; correcting controller
 
 25Oct13:46UTC. Flexcontroller-v2/tool5724 ACTUAL1 before target tests/proof/model
