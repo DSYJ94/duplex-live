@@ -1,0 +1,83 @@
+{
+  "schema": "dl-gcp-zoneb-live-execution-v1",
+  "recorded_utc": "2026-10-25T10:57:38.855295+00:00",
+  "status": "FULL_PRESERVATION_HASHING_RUNNING_GPU_NOT_SUBMITTED",
+  "source_commit": "42888adc63fbc15d5f90c8a12802a8db368fd2da",
+  "snapshot": {
+    "name": "duplex-native-zoneb-20261025-v1",
+    "id": "5040266406897149263",
+    "status": "READY",
+    "source_disk_id": "1828090267781080539"
+  },
+  "replacement": {
+    "name": "duplex-native-stage-20261025-b-v1",
+    "id": "8246893242108371884",
+    "zone": "europe-west4-b",
+    "size_gib": 250,
+    "type": "pd-balanced"
+  },
+  "cpu": {
+    "name": "duplex-native-stage-20261025-b-v1",
+    "id": "2417394621566968621",
+    "native_stop_utc": "2026-10-25T11:40:20Z",
+    "controller_pid": 55698,
+    "remote_verifier_pid": 1655,
+    "verification_started_utc": "2026-10-25T10:53:35.372010+00:00",
+    "actual_terminal_exit": null
+  },
+  "next_controller": {
+    "pid": 57030,
+    "session": 8353,
+    "phase": "waiting_actual_complete_cpu_preservation_and_stop_no_gpu",
+    "maximum_new_gpu_seconds": 7200,
+    "optimizer_updates": 0,
+    "repeat_saved8_or_recovery_or_native20": false
+  },
+  "preservation": {
+    "full_archive_files_required": 40132,
+    "full_archive_bytes_required": 81154452891,
+    "archival_links_required": 8,
+    "semantic_receipts_required": 33,
+    "completed_recovery_inventory_sha256": "cdcbd894368ca000570bca1572dc8d51a2e6a68c3d392f4e80e24bb19e43aa6b",
+    "completed_behavior_inventory_sha256": "820f0856fba22b2daedfa77232ea318ba13ac379d879c0979515cff18b645d46",
+    "original_disk_retained": true,
+    "broader_mac_source_backup_complete": false
+  },
+  "price": {
+    "at_utc": "2026-10-25T10:45:48.675192+00:00",
+    "source": "Authenticated official Cloud Billing Catalog current Netherlands OnDemand SKUs",
+    "rates": {
+      "5CFD-16B2-4F41": {
+        "description": "Balanced PD Capacity in Netherlands",
+        "usage_unit": "GiBy.mo",
+        "price": 0.11
+      },
+      "896E-DB80-1131": {
+        "description": "A2 Instance Core running in Netherlands",
+        "usage_unit": "h",
+        "price": 0.034802
+      },
+      "A78A-A063-7D5A": {
+        "description": "A2 Instance Ram running in Netherlands",
+        "usage_unit": "GiBy.h",
+        "price": 0.004664
+      },
+      "AC33-B5A5-C20F": {
+        "description": "Nvidia Tesla A100 80GB GPU running in Netherlands",
+        "usage_unit": "h",
+        "price": 4.325209
+      },
+      "EFD6-4D88-8C94": {
+        "description": "SSD backed Local Storage in Netherlands",
+        "usage_unit": "GiBy.mo",
+        "price": 0.088
+      }
+    },
+    "hourly_estimate_usd": 5.618589712328767,
+    "hourly_upper_usd": 5.63
+  },
+  "local_related_checks_passed": 71,
+  "target_checks_and_model_diagnostic_complete": false,
+  "model_adopted": false,
+  "heartbeat": "continue-native-gcp-recovery ACTIVE/15min/quiet on unchanged; observe existing handles only"
+}

@@ -1,3 +1,55 @@
+# LOCAL — Zone-B full preservation running; one bounded diagnostic controller waiting
+
+25Oct10:57UTC. Git-deployed producer42888adc63fbc15d5f90c8a12802a8db368fd2da.
+Source/main commits91b4328 cumulativeB guards and42888ad full verifier pushed;
+local related71 testsPASS. OriginalDA389a7031a5504495397d1575952194ffa209f1 and
+NGCdigest42263b2424fc237b34c4fc4a91c30d603c57eed36e37d31ff6d9a4f1f801edee unchanged.
+Actual snapshotREADY5040266406897149263, replacement250GBpd-balancedB
+8246893242108371884/duplex-native-stage-20261025-b-v1; originalA disk retained.
+
+CPU same name/id2417394621566968621 nativeSTOP11:40:20UTC unchanged; controller
+session83339/PID55698 sourceignoredzoneb-stage-controller-v5.py. ACTUAL remote
+verifierPID1655 observed10:57, all-catalog hashing since10:53:35. No terminal0 or
+fullhash result yet. Checks ALL40132/81154452891B/8links +semantic33 +recovery76
++behavior324/52links against EXACT completed Mac inventories. Offmachine receipts
+will copyback, then ownedCPUstop. Sourcecheckout /workspace/migration/duplex-zoneb-
+42888ad-v1. Provider-authenticated hostkeys +OSLogin +strictSSH; persistent local
+mux /private/tmp/duplex-gcp-zoneb-stage-v5/mux. Existingargv zoneb-stage-ssh-argv-v1.json.
+Earlier CLIhostkey-list shape/newTCPtimeout attempts stoppedCPU before any verifier;
+CLIunsupportedasyncdisk flag rejected before mutation. Localv2 controller actual143;
+other failedattempts actual1. No duplicate disks/snapshots/modeljobs created.
+
+ALREADY-LAUNCHED separate controller session8353/PID57030 waits SAME realfullhash
+success AND CPUstopped; ignoredzoneb-diagnostic-controller-v1.py/eventsJSON. Do NOT
+rerun it or submit another GPU on observation timeout. It rechecks currentGCP/Runpod
+no-overlap/quota/type/price, renews SAME publicOSLoginkey locally, detachBdisk, attempts
+ONE separate A10080 B VMduplex-native-saved8-gpu-20261025-b-v1 with nativeSTOP now+2h.
+StockUNPROVEN; GPU NOT YET SUBMITTED. Before model: exact receiptbytehashes, fresh
+Mac+guest cumulativeguards, target71 purechecks +pinnedstrictproof CPUpreflight,
+idleGPU. ThenONE complete32 teacher-forced520/528 loss+fingerprint comparison,
+no-grad/nooptimizer/backward, onehourchildbound, realterminal0, completecopyback
+hashes and STOP. Recovery/native20/saved8 are NOT repeated, no newtraining/adoption.
+
+Bounds: priorGPU32079.865sec +B<=7200sec <=12h TOTAL; CPUprior9318.551sec +B
+cumulative<=3600sec <=4h/.48USD. Same unchangedCPUdeadline prevents restart budget
+reset. Current officialhourly5.6185897 <=guard5.63. Existing16.88reserve +new12migration;
+wholeconservative90.3094 <=100USD, not invoice and not fresh100. Runtime/costdoc
+GCP-NATIVE-ZONE-B-CUMULATIVE-BOUND-2026-10-25.json; liveexecutiondoc records IDs.
+OriginalA GPU951004838667287080 stopped, Runpodnative8fsk2kouknoiac EXITED/
+volume49yytzyoge retained. Originaldisk/snapshot not retired before complete new
+preservation/offmachine evidence. Macbroader sourcebackup PARTIAL.
+
+Heartbeatcontinue-native-gcp-recovery REACTIVATED15min with this exact scope,
+quietunchanged, no duplicate starts. Pause after bounded completion/humanblocker.
+Query actual IDs/PIDs/leases/operations before acting; historical hints not authority.
+Native20 remainsREJECTED candidateordinary1/4 vsbaseline2/4; preserve originalfit-15,
+restoredAdam/RNG, old28/25/native49/control40/new32/KLhidden and allunchanged gates.
+LOCAL soleexecutor; credentialsMac/noownerdata/cores/sessiontoken/.private transfers;
+Git source deployment. No other-chat messages/agents. UnrelatedPYC/probes/roadmap
+untouched. Activeproductgoal unfinished.
+
+---
+
 # LOCAL — Approved zone-B fallback executing; all prior usage counted
 
 25Oct10:39UTC. ZoneA two actual terminal stockouts v7/v8 (operations
