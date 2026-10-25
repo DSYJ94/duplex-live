@@ -1,3 +1,23 @@
+# LOCAL — Goal blocked on human Google verification after three verified turns
+
+25Oct13:05UTC. Sameauth session85715 ACTUALLYlive; Chrome692863985 ACTUALLYstill
+Verify that it is you/passwordpage. Third consecutivegoalturn withsamehuman-only
+blocker; no furthermeaningfulauthorized execution withoutsignin. MarkgoalBLOCKED,
+notcomplete; heartbeatremainsPAUSED so no repetitivewakes. HumanalreadyaskedONCE;
+no duplicateGoogleflow/GPUrequest created. ExistingSDKcallbackserver leftopen.
+Afterhumanreplydone/resume: freshblockaudit, inspect SAMEauthhandle/actualexit and
+verifyauthenticatedGCPread. Ifoldflowreallyterminal/timedout, startoneofficialfresh
+flow; neverrequestpassword/code/tokeninchat. Use preparedFlexcontroller-v2 ONCE
+onlyafterfreshprovider/price/runtime/source checks andabsenceofactualFlexoperation.
+All modelupdates/behavior results remainasbelow; no training/measurement submitted.
+FullBpreservationverified/sourcecd5666c/80tests, originalAdiskstillattached (Flex
+failedonFIRSTreadbeforeanymutation). Allpaidcompute lastverifiedTERMINATED; no later
+successfulprovideraction. No futurejobexists toresume yet. Currentrepo main66f5104
+beforethishandoffcommit; originalruntime/data/failedreceipts/excludedprivatefiles
+andunrelatedPYC/probes/roadmap preserved. LOCALsoleexecutor/no cloudhandoff/messages.
+
+---
+
 # LOCAL — Full B backup PASSED; no Flex request; Google verification needed
 
 25Oct12:55UTC. Main source cd5666c2514830c44c940a79ffc3508102799b9e pushed:

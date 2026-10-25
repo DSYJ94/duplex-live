@@ -26,5 +26,10 @@
     "supported_gpu_zones": "https://docs.cloud.google.com/compute/docs/regions-zones/gpu-regions-zones",
     "flex90_alternative": "https://docs.cloud.google.com/compute/docs/instances/create-flex-start-vm",
     "quota_fallback": "https://docs.cloud.google.com/compute/resource-usage"
-  }
+  },
+  "blocked_audit_turns": 3,
+  "blocker_revalidated_utc": "2026-10-25T13:06:15.080580+00:00",
+  "goal_status_after_blocked_audit": "BLOCKED_REQUIRES_HUMAN_GOOGLE_VERIFICATION",
+  "auth_session_confirmed_live": true,
+  "official_password_page_confirmed": true
 }
