@@ -1,0 +1,47 @@
+{
+  "schema": "dl-native-live-delegation-bridge-preparation-v1",
+  "at_utc": "2026-10-25T00:07:59.033962+00:00",
+  "status": "PREPARED_OFFLINE_TESTED_NOT_GPU_OR_PROVIDER_VALIDATED",
+  "implementation_sha256": {
+    "portable/context/native_live.py": "5bb55c590bba09929c73b84158bc9bde7a92af2d7afc58fa6212bdf1f9e5d74b",
+    "portable/context/native_live_asr.py": "e08a016dbddc8fd822bb3a1d79a559e62fa8dca67ef4f9f9c8523b0bab4d2099",
+    "portable/context/native_audition.py": "4b567902a01e74cf8f50f294fbba4b92336ba8902871abf98c23b97f6f88c779",
+    "portable/context/native_audition.html": "5cad22d611cd81adbfc895d43f3cce2166c689d7947c86fbdb2e34998f3048f5",
+    "evals/harness/test_native_live.py": "fc198af2101f0ac32ccef5b7e32448759923769f6d97f180c7444bc5b7e83e01",
+    "evals/harness/test_native_audition_page.mjs": "8e7164aebecfdd8ff9ac5f0357bd3c6e94838e3321d5d2038434180c05c530d9"
+  },
+  "diagnosed_live_app_gaps": [
+    "Old voice audition explicitly disconnected external backend",
+    "Pinned upstream runtime drops references later than2.5s; model reasoning may take longer",
+    "Pinned upstream single pending request prevents new native requests while waiting",
+    "Pending callbacks may survive a closed or reset conversation sharing one engine"
+  ],
+  "behavior": [
+    "Only actual engine is_ret markers dispatch recognition and existing semantic worker",
+    "All arrived audio frames continue while recognition/provider calls run in other threads",
+    "No2.5s response cutoff; actual cancellation/session retirement rejects stale results",
+    "Existing state-aware worker and receipt validation used; unavailable record tools not exposed",
+    "Provider/recognition failures supply an explicit failure reference, never a fabricated answer",
+    "No forced words, audio, response starts, keyword rules or substitute reasoning router",
+    "Mac-only scoped Responses transport required; provider keys rejected on model host",
+    "User explicitly enables external reasoning in local page before microphone starts",
+    "Experimental sessions limited60s and6native requests; voice-only default stays disconnected",
+    "Transient recognition WAV removed per request; conversation state in memory, no local conversation history saved"
+  ],
+  "verification": {
+    "python_native_live_tests": 6,
+    "python_existing_worker_tests": 27,
+    "node_page_logic_fixtures": 3,
+    "real_gpu_live_session_executed": false,
+    "real_asr_executed": false,
+    "actual_provider_requests": 0,
+    "actual_browser_qa": false,
+    "native_behavior_qualified": false,
+    "model_adopted": false
+  },
+  "cli": [
+    "--live-delegation",
+    "--asr-python /workspace/native10-asr-env/bin/python"
+  ],
+  "next_action": "Finish actual saved8 recovery/independent restore and unchanged full native gates using frozen75b3bfd. Git-deploy this separate experimental app version after source is committed; run actual synthetic websocket/ASR/provider round trip and measured interruption/cancellation tests before claiming a working delegation product. No new optimizer updates."
+}

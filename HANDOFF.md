@@ -1,3 +1,60 @@
+# LOCAL — SAME-disk A100 RUNNING; dualguards ARMED; saved8 recovery LIVE
+
+Cooldown retry v3 ACTUALLY createCLI0 at23:52UTC24Oct. GPU
+ duplex-native-saved8-gpu-20261024-v1/id951004838667287080/europe-west4-a RUNNING,
+actual A100-SXM4-80GB/81920MiB/driver580.178.04/UUIDb72a6886-2020-d5c1-d73a-fb8be5cfffbe.
+SAME250GBpd1828090267781080539 attachedboot/non-auto-deleted. NativeproviderSTOP
+2026-10-25T11:52:37Z, automaticRestartfalse, discardLocalSsdtrue. OldCPU remains
+TERMINATED/detached. ZoneB proposal is NOWUNNECESSARY; no snapshot/replacement made.
+Ignore late approval for it while currentGPU is healthy; never create overlap.
+Fresh authenticatedGoogle guesthostkeys -> strictSSH actual0; endpoint remains
+34.12.74.123 but NEWhostalias gcp-native-saved8-gpu-v1, ignored gpu-ssh-argv-v1.json.
+
+MACbudgetwatchdog ACTUAL session48672/PID26959 publishes fresh samegrant97c8 guard;
+HOST duplex-native-gpu-guest-budget-v1/PID2092 armed, invocation815b87cb156443d3a815a8e8256d0c7c.
+Lease ignored gcp-gpu-lease-v1.json, sameFULLdestination3870271c..., original100USD
+wholecost84.44upper/max12h/zero newupdates. Preserve Mac daemon/session/awake; poll
+actual handles before acts. Hostguard shutsdown on missing/staleMac90s; controller
+kills its owned children on stale30s. All credentials remainMac.
+
+Actual GPUcompiler v4 PASSED0: realTriton driver compile + compiledBF16kernel,
+CUDA13.0/exactNGCdigest42263b... unchanged. Priorfailures preserved: v1getpassUID,
+v2existingaliasdir, v3unconditionaldefaultcachegetpass. Correct container USER/
+LOGNAME=daryl_aurium_labs_com for sameUID1653480290 plus task-specificcache dirs;
+not a precision/source/model change. All later containers use these envs and fresh
+R580aliases /workspace/migration/gcp-gpu-runtime-v4/audition-driver, CPATH/toolkit.
+
+ZEROUPDATE recovery actually launched00:02:05UTC25Oct: HOSTservice
+ duplex-native-saved8-recovery-v1/MainPID5212/invocation3cc8ecdd6b1d48c88ae5edee6a9bdad1;
+Docker same name, hostparent5258/internalPID1, finalization hostchild5295/internal12/
+birth54301. 00:06:28UTC actualdocker top confirms alive, child reading inputs/
+constructing original context, nvidia-smi5295/17224MiB. Output
+/workspace/migration/gcp-saved8-recovery-v1 (controller.json,finalization.log), parent
+log /workspace/migration/gcp-saved8-controller-v1.log. ProducerFROZEN75b3bfd1dbec24a46664a3de63d13fcb0f62d23c
+at/opt/duplex-gcp-recovery-75b3bfd-v1, modelsourceDA389a7 unchanged. Planned derived
+proof /workspace/migration/native-reasoning32-saved8-recovered-proof-gcp-v1, notyet
+created/qualified. Parent runs TWOactualfreshchildren(finalization,independentrestore),
+no optimizerupdates/no repeat8. Legacy38/40data messages are old source construction
+logs, not new24TRAIN/candidate approval. No adoption/inventedoriginalfitreport.
+
+While awaitingcapacity, prepared NEW opt-in liveapp bridge (NOTdeployed to running
+producer, notqualified): native_live + isolatedASR, nativeRET-only asyncdispatch,
+latecancellation/session isolation, no2.5s cutoff, allframescontinue, consentbefore
+mic/externalreasoning. Default voice-only stays disconnected.6newlive +27existing
+worker Python tests and3page-logic fixtures PASS (no GPU/ASR/provider/browser proof).
+Exact scope/hashes docs/NATIVE-LIVE-DELEGATION-BRIDGE-2026-10-25.json. Experimental
+60s/6request limits; actualcandidate behavior stillunproven. Complete strict saved8
+proof/fullpairednative20/speech20 before adoption; actualsynthetic livebackend test
+needed for productclaim. No newtraining/data/APIcalls from this feature work.
+
+Next poll SAMErecovery/guards and copyback newactualreceipts; diagnose genuine
+failures without weakergates, preserve and stop billedGPU earlyifblocked. After
+numericalproof run unchanged fullbehavior and actuallive delegation using NEW
+Git-deployed appsource separately; don't checkout under frozen75b3bfd worker.
+LOCALsoleexecutor; unrelatedPYC/capabilityprobe/roadmap edits preserved.
+
+---
+
 # LOCAL — BOTH A100 requests terminal STOCKOUT; no compute running; zoneB proposal awaiting scope decision
 
 On-demand create session43564 actuallyCLI1 at23:31UTC: ZONE_RESOURCE_POOL_EXHAUSTED.

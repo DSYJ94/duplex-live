@@ -1,8 +1,10 @@
 """Experimental native voice audition through localhost SSH forwarding.
 
 Uses the actual pinned engine/adapter/layout/voice, with unforced words/audio.
-This audition has no external tool backend and is not an acceptance evaluation.
-No microphone audio or conversation transcripts are persisted by this launcher.
+Default mode has no external backend. Opt-in live delegation uses actual arrived
+audio recognition and native RET requests through the Mac-only Responses proxy.
+This is an experiment, not an acceptance evaluation. Conversation history is not
+saved; opt-in recognition uses transient audio files removed after each request.
 """
 import argparse
 import asyncio
@@ -60,7 +62,18 @@ def main():
     ap.add_argument('--ui-origin', default='http://127.0.0.1:8765')
     ap.add_argument('--receipt', type=Path, required=True)
     ap.add_argument('--compiler-check-only', action='store_true')
+    ap.add_argument('--live-delegation', action='store_true')
+    ap.add_argument('--asr-python', type=Path)
     args = ap.parse_args()
+    if args.receipt.exists() or (args.receipt.parent/'audition-driver').exists():
+        ap.error('Use a new receipt directory; preserve prior driver aliases and receipts')
+    if args.live_delegation:
+        from evals.recovery_transport import endpoint, PROXY_ENV, RUN_ENV
+        if (args.asr_python is None or not args.asr_python.is_file()
+                or not os.environ.get(PROXY_ENV) or not os.environ.get(RUN_ENV)
+                or os.environ.get('OPENAI_API_KEY')):
+            ap.error('Live delegation requires isolated ASR and scoped Mac loopback transport; no provider key on this host')
+        endpoint(os.environ)
     sys.path.insert(0, str(args.source))
     # Use the same driver-library discovery as the pinned native probe. Some
     # provider images expose libcuda.so.1 without the linker-name symlink.
@@ -110,12 +123,21 @@ def main():
     assert actual and actual[-1]['strict'] and not actual[-1]['missing'] and not actual[-1]['unexpected']
     assert engine.frame_size == 1920 and engine.frame_rate == 12.5
     voice = torch.load(args.proof/'voice.pt', map_location='cpu', weights_only=True)['codes']
+    asr = NoExternalASR()
+    handler = upstream.ws_handler
+    if args.live_delegation:
+        from portable.context.native_live_asr import IsolatedLiveASR
+        from portable.context.native_live import ws_handler
+        asr = IsolatedLiveASR(args.asr_python, args.source)
+        handler = ws_handler
     receipt = {'schema': 'dl-native-voice-audition-v1', 'model_job': args.proof.name,
                'launcher_commit': subprocess.check_output(['git','rev-parse','HEAD'], text=True).strip(),
                'adapter': adapter, 'runtime': snapshot(engine.lm),
                'cuda_compiler': compiler,
                'strict_published_lm_load': True, 'word_or_audio_forcing': False,
                'voice_codes_from_verified_proof': True, 'external_backend_connected': False,
+               'external_backend_configured': args.live_delegation,
+               'actual_live_delegation_verified': False,
                'conversation_audio_or_transcripts_saved': False,
                'native_full_numerical_or_behavior_approved': False}
     with args.receipt.open('x') as stream:
@@ -134,15 +156,25 @@ def main():
     async def index(request):
         return web.FileResponse(Path(__file__).with_name('native_audition.html'))
 
+    async def configuration(request):
+        return web.json_response(dict(external_backend_enabled=args.live_delegation,
+            session_maximum_seconds=60 if args.live_delegation else None,
+            native_behavior_qualified=False))
+
     app = web.Application(middlewares=[same_origin])
-    app.update(engine=engine, backend=ObserveOnlyBackend(), asr=NoExternalASR(),
+    app.update(engine=engine, backend=ObserveOnlyBackend(), asr=asr,
                persona=BASE_INSTRUCTIONS, voice=voice, token='', listen_s=12.,
                raw_user_audio=True, enhancer=None, lock=asyncio.Lock())
-    app.add_routes([web.get('/', index), web.get('/health', upstream.health),
-                    web.get('/ws', upstream.ws_handler), web.static('/static', upstream.WEB)])
+    app.add_routes([web.get('/', index), web.get('/health', upstream.health), web.get('/session', configuration),
+                    web.get('/ws', handler), web.static('/static', upstream.WEB)])
+    if args.live_delegation:
+        async def cleanup(application):
+            await asyncio.to_thread(asr.close)
+        app.on_cleanup.append(cleanup)
     logging.getLogger('contextspan.runtime.websocket_server').setLevel(logging.WARNING)
     logging.getLogger('aiohttp.access').setLevel(logging.WARNING)
-    print('NATIVE_AUDITION_READY model7590052 actual sampled voice; external tools disconnected', flush=True)
+    print('NATIVE_AUDITION_READY '+args.proof.name+' actual sampled voice; external backend '+
+          ('configured; live qualification pending' if args.live_delegation else 'disconnected'), flush=True)
     web.run_app(app, host='127.0.0.1', port=args.port, print=None, access_log=None)
 
 
