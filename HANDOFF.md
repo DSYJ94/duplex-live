@@ -1,3 +1,50 @@
+# LOCAL — Diagnostic not yet loaded; bootstrap blockers diagnosed, guard repaired
+
+Saved8 strictproof/native20 rejection/complete backups unchanged. Diagnostic code
+bfc950c93d6bfebc27e665977db898a22a11a724 passes42pure checks, no optimizer/backward
+path. SAMEVM951004838667287080/disk1828090267781080539 have not loaded a newmodel.
+Latest bootstrap16020 ACTUALLYfailed/exit1 and stopped ownedVM at10:08:35UTC.
+Reason actualRunpod TLS EOF, not candidate/source/data failure. PreparedMacguard
+repair new30relatedtestsPASS +oneREALauthenticated IPv4 sameRunpodendpoint read
+verified5PodsEXITED. One transport retry only, strictTLS, stdincredential, no cached
+permission/no auth retry; fresh30s/model and90s/guest unchanged; all-providerread
+age now bounded25s (stronger). Sourcehash47028cf503c1f06e021af0a7ff6b0738bccee5b836265e3e6e3377f6ce02d477.
+DocGCP-MATCHED32-GUARD-TRANSPORT-REPAIR-2026-10-25.json. NeedGitcommit/push before
+next guard use. GPU diagnostic producer staysbfc950c; onlyMac externaltransport changes.
+
+Actual strictSSH andA10081920MiB/580.178.04 verified10:00:38,10:03:46,10:07:29.
+Sourcecheckout /opt path lackeduserwrite; corrected to writable /workspace/migration/
+duplex-matched32-bfc950c-v1, SAMEdisk. Gitbundle already copied/fetched; actualnew
+worktree NOTyetcreated because guards stopped before that step. Do NOTrepeat old
+/opt mkdir failure. Originalguard63240/19660 ended1 afterSSHtimeout. Laterguard
+34095 and35867 ended after intentional bootstrap stops; queryactualPID/locks first.
+Local shortawake session55819 (20min) prevents idle sleep during setup; main live
+Macguard will own caffeinate after successful bootstrap. Diagnosticjob NOTsubmitted.
+
+Current finalnativeSTOP11:40UTC is EARLIER than originalapproved11:52:37, no ceiling
+extension. Use ignored gcp-gpu-lease-matched32-v1.json for Mac/guest guards; sameIDs,
+AUTH97c8...,100USD/max12h/zero updates. GCP cannotchange terminationTime whileRUNNING;
+setearlierfinaldeadline whileTERMINATED andkeep it. Earlier8minute bootstrapSTOP
+protectedVM whileMacidle: actualstart08:29:04,stop08:35:30. Neverrestarton observation
+timeout alone; actualproviderTERMINATED was verified before subsequent boot.
+
+MacSSHsourceIPv4 changed. Verifiedusing OWN authenticated GCP setScheduling audit
+records FORCEDIPv4, not IPv6/API assumptions or an externalIP service. Replaced
+ONE /32 in alreadyapprovedrule; sameport22/tag/priority800, denyothers900 unchanged.
+Ignored firewallrefreshreceipt stores hashesonly intrackedsummary. Optionalipify
+lookup auto-reviewrejected; NOTexecuted. Completed safer GCP-only diagnosis.
+ZoneB lateapproval recordedbutunused; no snapshot/newdisk/CPU/providertransfer.
+
+NEXT bounded sameVM bootstrapv6 using correctedwritableGitpath/repairedMacguard,
+actualfresh dualguards BEFOREmodel. Target42CPUchecks andstrictproof validation
+thenONE all32 matched520/528 no-grad diagnostic under onehour child and11:40STOP.
+No optimizer/repeated8/freshpayload/gateweakening/adoption. Copybackexactresults+
+hashes, stopGPU promptly. Preserve full28/old25/native49/control40/new32/KL/hidden,
+credentialsMac, ownerconversations/.private/session-token/cores excluded.
+LOCALsoleexecutor, activeproductgoal unfinished. Preserve unrelatedPYC/probes/roadmap.
+
+---
+
 # LOCAL — Matched32 helper locally checked; GPU remains stopped
 
 Prepared portable/context/native_matched_reasoning_loss.py +5 pure checks against

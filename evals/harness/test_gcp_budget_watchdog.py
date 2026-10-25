@@ -1,11 +1,62 @@
 import copy
 import hashlib
 import json
+import io
 from pathlib import Path
+from types import SimpleNamespace
+import urllib.error
 import unittest
 
 from portable.context.gcp_budget_watchdog import (
-    AUTH_SHA, CATALOG_SHA, DISK, PROJECT, ZONE, check_live, owned, stop_owned, validate_lease)
+    AUTH_SHA, CATALOG_SHA, DISK, PROJECT, ZONE, check_live, owned, stop_owned, validate_lease,
+    read_runpod_pods)
+
+
+class LiveReadTransportTests(unittest.TestCase):
+    def test_successful_live_read_does_not_retry(self):
+        def opener(request, timeout):
+            self.assertEqual(request.full_url, 'https://api.runpod.io/v2/pods')
+            self.assertEqual(timeout, 15)
+            return io.StringIO('[{"id":"fixture","status":"EXITED"}]')
+        def forbidden(*args, **kwargs):
+            raise AssertionError('No fallback expected')
+        self.assertEqual(read_runpod_pods('fixture-key', opener, forbidden)[0]['status'], 'EXITED')
+
+    def test_transient_tls_failure_uses_same_verified_ipv4_endpoint_and_stdin_key(self):
+        def opener(*args, **kwargs):
+            raise urllib.error.URLError('fixture TLS EOF')
+        def run(command, **kwargs):
+            self.assertEqual(command[-1], 'https://api.runpod.io/v2/pods')
+            self.assertIn('-4', command)
+            self.assertNotIn('-k', command)
+            self.assertNotIn('--insecure', command)
+            self.assertNotIn('fixture-key', ' '.join(command))
+            self.assertEqual(kwargs['input'], 'header = "Authorization: Bearer fixture-key"\n')
+            self.assertEqual(kwargs['timeout'], 10)
+            return SimpleNamespace(returncode=0, stdout='[{"status":"RUNNING"}]')
+        self.assertEqual(read_runpod_pods('fixture-key', opener, run)[0]['status'], 'RUNNING')
+
+    def test_both_transport_failures_never_return_cached_permission(self):
+        def opener(*args, **kwargs):
+            raise urllib.error.URLError('fixture EOF')
+        def run(*args, **kwargs):
+            return SimpleNamespace(returncode=1, stdout='[]')
+        with self.assertRaises(RuntimeError):
+            read_runpod_pods('fixture-key', opener, run)
+
+    def test_http_auth_failure_is_not_retried(self):
+        def opener(*args, **kwargs):
+            raise urllib.error.HTTPError('https://api.runpod.io/v2/pods', 401, 'fixture', {}, io.BytesIO())
+        def forbidden(*args, **kwargs):
+            raise AssertionError('Auth failure must stop')
+        with self.assertRaises(urllib.error.HTTPError) as error:
+            read_runpod_pods('fixture-key', opener, forbidden)
+        error.exception.close()
+
+    def test_invalid_key_cannot_inject_curl_configuration(self):
+        for key in ('', 'fixture\nkey', 'fixture"key', 'fixture\\key'):
+            with self.subTest(key=key), self.assertRaises(ValueError):
+                read_runpod_pods(key)
 
 
 class BudgetTests(unittest.TestCase):

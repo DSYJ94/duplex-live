@@ -14,6 +14,7 @@ from pathlib import Path
 import shlex
 import subprocess
 import time
+import urllib.error
 import urllib.request
 
 PROJECT = 'aurium-duplex-live-20261024'
@@ -24,6 +25,31 @@ CATALOG_SHA = '94b42bae0152e8150ba7842146f66711b13df3b8ece9125bcb5db92a761196fb'
 # Full approved CPU lifetime, seven days durable storage, and network reserve.
 RESERVE_USD = 0.48 + 6.40 + 10.00
 STOPPED = {'EXITED', 'STOPPED', 'TERMINATED', 'DELETED'}
+
+
+def read_runpod_pods(key, opener=urllib.request.urlopen, run=subprocess.run):
+    """Read live status; retry a transport failure over verified TLS/IPv4 once.
+
+    No cached status or permission is returned after a failed read. The fallback
+    uses the same endpoint and local credential, passed on stdin, never argv.
+    """
+    if not key or any(c in key for c in ('\n', '\r', '"', '\\')):
+        raise ValueError('One bounded local credential required')
+    endpoint = 'https://api.runpod.io/v2/pods'
+    request = urllib.request.Request(endpoint, headers={'Authorization': 'Bearer '+key})
+    try:
+        with opener(request, timeout=15) as response:
+            return json.load(response)
+    except urllib.error.HTTPError:
+        raise  # Authentication/HTTP failures are not transport retries.
+    except (urllib.error.URLError, TimeoutError, ConnectionError):
+        result = run(['curl', '-4', '--silent', '--show-error', '--fail',
+                      '--connect-timeout', '4', '--max-time', '8', '--config', '-', endpoint],
+                     input='header = "Authorization: Bearer '+key+'"\n',
+                     capture_output=True, text=True, timeout=10)
+        if result.returncode != 0:
+            raise RuntimeError('Live provider read failed; no fresh execution permission')
+        return json.loads(result.stdout)
 
 
 def stamp(value):
@@ -192,6 +218,7 @@ def main():
     try:
         while True:
             try:
+                cycle_started = time.monotonic()
                 vm = vm_read()
                 if not owned(vm, lease):
                     raise ValueError('Resource identity changed')
@@ -201,12 +228,11 @@ def main():
                     stop_owned(lease, vm_read); record('provider_deadline_stop_requested'); return
                 disk = gcloud('disks', 'describe', DISK, '--zone='+ZONE)
                 instances = gcloud('instances', 'list')
-                request = urllib.request.Request('https://api.runpod.io/v2/pods',
-                    headers={'Authorization': 'Bearer '+key})
-                with urllib.request.urlopen(request, timeout=15) as response:
-                    pods = json.load(response)
+                pods = read_runpod_pods(key)
                 if isinstance(pods, dict): pods = pods['pods']
                 if not isinstance(pods, list): raise ValueError('Live provider list required')
+                if time.monotonic()-cycle_started > 25:
+                    raise TimeoutError('Provider snapshots too old for fresh execution permission')
                 guard = check_live(lease, vm, disk, instances, pods, time.time())
                 ip = vm['networkInterfaces'][0]['accessConfigs'][0]['natIP']
                 if ssh[-1].split('@')[-1] != ip:

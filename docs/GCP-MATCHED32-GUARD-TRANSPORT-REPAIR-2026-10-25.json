@@ -1,0 +1,28 @@
+{
+  "schema": "dl-gcp-matched32-guard-transport-repair-v1",
+  "status": "LOCAL_CHECKED_NOT_MODEL_QUALIFICATION",
+  "cause": "Actual native SSH/GPU became ready; last guard refused a transient Runpod urllib TLS EOF before any model loaded",
+  "source": "portable/context/gcp_budget_watchdog.py",
+  "source_sha256": "47028cf503c1f06e021af0a7ff6b0738bccee5b836265e3e6e3377f6ce02d477",
+  "change": "One bounded same-endpoint verified-TLS IPv4 curl retry for transport errors only; credential stdin, never argv; no auth-error retry or cached provider state",
+  "old_freshness_or_approval_threshold_weakened": false,
+  "maximum_all_provider_read_age_seconds": 25,
+  "model_guard_freshness_seconds_unchanged": 30,
+  "guest_shutdown_staleness_seconds_unchanged": 90,
+  "pure_related_tests_passed": 30,
+  "actual_same_endpoint_ipv4_validation": {
+    "scope": "One actual same-endpoint IPv4 GET with verified TLS; credentials only stdin on Mac",
+    "actual_ipv4_read_passed": true,
+    "all5_pods_exited": true,
+    "pod_count": 5,
+    "source_sha256": "47028cf503c1f06e021af0a7ff6b0738bccee5b836265e3e6e3377f6ce02d477",
+    "primary_live_request_sent": false,
+    "cached_status_used": false
+  },
+  "optimizer_updates": 0,
+  "model_loaded": false,
+  "diagnostic_producer_commit": "bfc950c93d6bfebc27e665977db898a22a11a724",
+  "planned_source": "/workspace/migration/duplex-matched32-bfc950c-v1",
+  "earlier_final_native_stop": "2026-10-25T11:40:00Z",
+  "original_approved_ceiling": "2026-10-25T11:52:37Z"
+}
