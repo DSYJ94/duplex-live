@@ -1,6 +1,41 @@
 # What we trained, what is saved, and what to test
 
 
+## 25 October — saved8 recovered exactly; full behavioral evaluation rejected
+
+The exact saved eight-update reasoning32 candidate has now passed zero-update
+finalization and a distinct fresh-process full Adam/RNG/logit restore. No optimizer
+updates were repeated. Original fit exit−15 remains recorded. The independently
+recomputed old28 kind-balanced weighted loss worsened from0.5675211192 to0.5720761260
+(+0.8026%); the pre-update step8 trace was not a final loss or convergence result.
+See [complete recovery](GCP-NATIVE-SAVED8-RECOVERY-COMPLETE-2026-10-25.json).
+
+Both models completed all ten native development cases, followed by independent
+speech audits of all twenty original output WAVs. Basic ordinary correctness is
+2/4 for native520 and1/4 for saved528. The candidate gets photosynthesis correct,
+but gives wrong ice/sound explanations and answers the metal question with water
+freezing. Independent speech confirms those errors. It fails pause/resume, clean
+result use and actual cancellation; repetition remains. Speech agreement/bounds
+passes8/10 baseline and7/10 candidate at the unchanged WER≤0.08/bounds rule. These
+counts are not full-task qualification. All10 cases/both roles are reviewed in
+[the complete rejection](GCP-NATIVE-SAVED8-COMPLETE20-REVIEW-2026-10-25.json).
+
+No fresh payload was opened, candidate adopted or training extension run. Every
+paired user PCM matches, both native cold/intervening/reused parity checks pass,
+and all user samples were processed without forced words/requests. Steady compute
+p95 is52–59ms per80ms frame, but approximately0.5s initial backlog and one113–126ms
+playout gap per run remain; this is not microphone/product acceptance.
+
+The full evaluation backup is324 regular files/717,377,986 bytes plus52 driver-link
+records, all remote hashes/link targets verified on the Mac. The exact A100 was
+stopped early; provider confirms TERMINATED at07:06UTC, same250GB disk READY and
+non-auto-deleted. Critical checkpoints/optimizer/RNG/data/receipts remain preserved.
+No further GPU is running for this work. Current grant authorizes zero new updates.
+The next repair must change a diagnosed cause and retain all histories/losses,
+independent restore, ordinary4 and full native/fresh gates. Do not extend this
+rejected stage unchanged or repeat earlier persona-only experiments as a cure.
+
+
 ## 24 October — eight updates preserved; post-fit checks timed out
 
 All eight reasoning32 optimizer updates were saved. The guarded fit then ended

@@ -1,5 +1,17 @@
 # Native model failures: evidence and open causes — 23 October 2026
 
+**25 October current state:** the exact saved reasoning32 eight-update stage is
+fully recovered and independently restored, with no new optimizer updates. Full
+paired native20/speech20 is complete: ordinary cores baseline2/4, candidate1/4;
+pause/resume, clean result delivery and actual cancellation remain unqualified.
+[Complete review](GCP-NATIVE-SAVED8-COMPLETE20-REVIEW-2026-10-25.json) binds every
+original report/WAV/receipt. The A100 is provider-verified TERMINATED; same250GB
+persistent disk and complete hash-verified Mac backups remain. No fresh collection,
+extension or adoption. The dated findings below preserve history; they do not
+replace this current result. Shared-objective interference, temporal credit and
+new-data exposure remain hypotheses, not established causes.
+
+
 **24 October status:** the control40 V11 pilot has now completed all8 updates
 and exited0. Independent full native restore and strict proof have passed; the paired20
 native/independent speech evaluation has completed: baseline2/4 ordinary cores,

@@ -1,3 +1,63 @@
+# LOCAL — Full native20/speech20 complete and rejected; A100 stopped, disk safe
+
+Actual25Oct07:06:19UTC provider read: VM951004838667287080 TERMINATED,
+lastStop2026-10-25T00:06:14.904-07:00. SAME disk1828090267781080539 READY/250GB,
+autoDeletefalse. Stop command ACTUAL0; only375GB disposable localSSD discarded.
+No restart/new GPU authorized or submitted. Guard48672 actually exit1 because it
+observed the deliberate STOP transition; it no longer authorizes fresh execution.
+Mac scoped proxy69582/PID75507 terminated143 after17 real requests; tunnel46162
+actually returned255 after remote shutdown (wrapper exit0). Credentials untouched.
+Runpod native Pod remains exited/volume49yytzyoge retained; no overlapping jobs.
+
+Collection unit duplex-native-saved8-behavior-v1.service/invocation
+21aec4525e95442784efff97204f230b ACTUALLY deactivated successfully at
+07:02:47.909070UTC. Both owned native/speech children actually exit0. Complete all10
+baseline520 + all10candidate-reasoning32, then independent speech20. SOURCE/producer
+0619b17e9bb57a01701d24b7c7182f99a6a0ecf5, originalmodelDA389A7 unchanged.
+Original8 optimizer updates retained, recovery/evaluation ZERO new updates.
+Strict recovered proof passed; original fit−15 never relabelled. No fresh payload
+opened, no extension/adoption. All20 real user sample counts complete, pairedPCM
+byte-exact, both native cold/intervening/reused parity checks passed.
+
+RESULT: mandatory ordinary4 fails — baseline2/4, candidate1/4. Candidate wrong
+ice/sound/metal answers independently audible in ASR; onlyphotosynthesis correct.
+Candidate pause: Okay I am ready at18.13–18.95s inside mandatory17.54–22.10s;
+wrong first/second steps. Actual yellow-circle/copper-diamond receipts arrive but
+hallucinated84.85/84.3 and repeated speech remain; no lookup at all in candidate
+clarify case8, no actual cancellation receipt in case9. Full case review retained.
+Candidatecase4 quiet timing NOT precisely claimed: ASR misses early model-text
+acknowledgement and stretches a word; WER0.119 fails and silence success unproven.
+Case8 ASR invalid timestamps/extra repeats remain unaccepted, not claimed as proven
+acoustic content. Independent speech agreement/bounds8/10baseline,7/10candidate at
+unchangedWER<=.08; not full-task pass. No human listening performed. Actual
+steady p95compute52–59ms/80ms frame; one113–126ms playout gap each, initialbacklog
+about.5s. No microphone/product qualification.
+
+COMPLETE backup:324regularfiles717377986B +52 driver symlink records,
+actualrsync0, ALLremotehashes/linktargets matchMac. InventorySHA
+820f0856fba22b2daedfa77232ea318ba13ac379d879c0979515cff18b645d46.
+Ignored destination runs/local-migration-20261024/gcp-native20-complete-copyback-v1.
+Symlinks preserved as records to original NVIDIA driver, never dereferenced/copied
+fromMac. Earlier complete strictproof76files99948711B and full critical native
+archive40132files81154452891B+8links remain verified; broaderMacsourcebackup PARTIAL.
+DocGCP-NATIVE-SAVED8-COMPLETE20-REVIEW-2026-10-25.json records ALL20 with raw hashes,
+words, timings/receipts, per-case reasons and limits. Cookbook and failure tracker
+updated. Initial25Octgrant<=100GCP/oneA100<=12h/same250GB/zerooptimizer remains.
+GPU compute ended roughly4h46before nativeSTOP; no bill-exact estimate claimed.
+
+NEXT CPU-only diagnosis/changed repair design. Shared-objective interference,
+per-frame temporal detach, and one exposure per new32 are ranked hypotheses;
+none is proven causal. Existing20Oct persona-only complete10 already failed2/4;
+do not blindly repeat it or claim changing batch size/data will fix this. Do not
+extend rejected528 or open fresh40. New training would need a concrete changed
+recipe and separate authorization because exact currentGCPgrant says ZEROupdates.
+Keep all28actual histories/25oldteachers/native49/KL/hidden/objectives and strict
+ordinary4/fullbehavior/fresh gates. Stop recovery heartbeat now approved scoped
+recovery/evaluation ended; active product goal remains unfinished. LOCALsoleexecutor.
+Preserve unrelated PYC/capabilityprobes/roadmap. Git deployment and exclusions remain.
+
+---
+
 # LOCAL — Saved8 recovery fully passed; native20/speech20 evaluation running
 
 At 06:35:18 UTC on 25 October, BOTH fresh recovery children actually exited 0:
