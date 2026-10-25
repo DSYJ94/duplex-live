@@ -1,3 +1,54 @@
+# LOCAL — Flex startup race reproduced; GPU stopped; correcting controller
+
+25Oct13:46UTC. Flexcontroller-v2/tool5724 ACTUAL1 before target tests/proof/model
+launch: first guest-status read found no file and aborted immediately instead of
+waiting. Deterministic local replay reproduced abort on first read; startup helper
+now waits only for pending file while requiring fresh armed status/exact active
+systemd PID, rejects failed/stale/mismatched/denied states. 30 focused tests PASS.
+Control-only fix; no model/loss/gates changed. GPU4443302983961393208 ACTUALLY
+TERMINATED at13:42:47.416UTC; all model measurements/updates remain unlaunched.
+Mac guard denied permission after controller requested stop (expected stopped-state
+rejection), preserve v2 and all previous receipts. Preparing SAME stopped resource
+resume with cumulative runtime including this failed startup; no duplicate VM/job,
+no reset of the original12h/$100 allowance. Original pinned plan's cost/runtime
+estimate will be superseded by explicit cumulative live accounting; guard already
+requires prior usage >=32086 and enforces original12h/$100. Do not rerun v2.
+
+---
+
+# LOCAL — Google access restored; ONE Flex90 A100 allocated
+
+25Oct13:42UTC. Human completed same Google sign-in; actual CLI session85715 exit0,
+authenticated provider read succeeded. All three previous VMs were TERMINATED before
+submission; full original-GPU operation audit confirms prior32086seconds. Current
+price authenticated13:37:32: estimate5.6185897123/h, upper5.63. Native Runpod stopped
+per fresh controller precheck. No duplicate jobs or optimizer updates.
+
+ONE Flex90 request submitted13:40:40: operation-1792935639457-65eaa5be51d66-c7ee2511-
+239cf4d3, VM duplex-native-saved8-gpu-flex90-20261025-v1/id4443302983961393208,
+europe-west4-a. Actual RUNNING, lastStart13:41:07.523UTC; native5400s STOP deadline
+15:11:07.523UTC, no automatic restart. Original SAME250GB disk1828090267781080539
+attached/nonautoDelete; detached from stopped originalA. No replacement region/disk.
+Controller-v2 PID20843/toolsession5724 LIVE, events in ignored
+runs/local-migration-20261024/gcp-flex90-diagnostic-controller-v2.json. Observe SAME
+handle/provider operation; NEVER rerun controller or duplicate after a timeout.
+Source producer cd5666c2514830c44c940a79ffc3508102799b9e, exact pinned plan unchanged.
+Controller prepares strict SSH, bootstrap180s idleSTOP, fresh Mac+guest guards,
+Git deployment, target80 checks and strict proof BEFORE loading. Full32 matched
+native520/saved528 no-grad CE/fingerprint diagnostic only, zero optimizer/repeated8;
+actual successful terminal/fullhash copyback then STOP required. Measurement NOT YET
+launched at this entry. Prior32086+5400=37486<43200; upper87.504USD within100 total.
+
+Heartbeat reactivated with exact controller/operation identity; quiet while unchanged.
+Goal unfinished, human resumed prior sign-in blocker; no adoption. Candidate remains
+REJECTED: ordinary baseline2/4 versus saved8 1/4; fullnative20 complete, exactAdam/RNG
+restore passed. Do not repeat completed recovery/native20/full81GB hashes. Full B
+backup PASS (40132files/81154452891B/8links plus semantic33/recovery76/behavior324+52links)
+and off-machine receipts preserved. Broad Mac source backup still PARTIAL. Preserve
+unrelated modified PYC/untracked capability probes/roadmap. LOCAL sole executor.
+
+---
+
 # LOCAL — Goal blocked on human Google verification after three verified turns
 
 25Oct13:05UTC. Sameauth session85715 ACTUALLYlive; Chrome692863985 ACTUALLYstill
