@@ -1,3 +1,30 @@
+# LOCAL — Actual backend authentication PASS; reserved full-eval connection unused
+
+One bounded real OpenAI gpt-6-luna request via a SEPARATE Mac-only proxy completed
+HTTP200/statuscompleted, actualrequests1/max1. Only authored synthetic TRAIN000
+question from already-approved reasoning32 proposal was sent; no scoring answers/
+annotations/audio/ownerdata. This is APIauthentication/availability only, NOT
+native routing, ASR, voice quality or anymodel score. Testproxy shut down/reaped
+actualexit0; no new model/GPU/training job. Evidence ignored
+ gcp-reasoning-backend-auth-smoke-v1/{observation,proxy}.json and tracked
+ docs/GCP-NATIVE20-BACKEND-PREPARATION-2026-10-25.json. ExactresponseID retained.
+
+Reserved full-eval proxy69582/PID75507/run gcp-saved8-native20-v2 was NOTused by
+smoke. Actual02:24:04UTC remote58051/health successful, same scopedrealtransport,
+actualrequests0. Keyfilemtime predates initialreservedproxy receipt: no keyfile
+change since loaded. Credentials remainMac. Existingtunnel46162/PID75642 alive
+by actualremotehealth. Keep SAMEproxy/tunnel, max128/deadline11:45UTC unchanged.
+
+Recovery-v6 service38115 ACTUALactive02:24:04UTC; no newfailure/updates. Native49
+fullparity alreadyPASS, control40/reasoning32 fingerprint work continues; parent
+and independentrestore notyetterminal. Frozen e082producer/DA/model/data/gates,
+sameA100/disk/nativeSTOP11:52:37UTC remain unchanged. No overlap/restarts.
+After full actual recovery0/strictproof, use preparededbad guardednative20/
+speech20runner and actualfresh hostterminalobservation aspriorhandoff. Allquality,
+ordinary4/allcases/fresh/adoption gates stillrequired. LOCALsoleexecutor.
+
+---
+
 # LOCAL — ALL49 native-stream fingerprints exactly match original; v6 LIVE
 
 Actual02:05:42UTC25Oct: recovery-v6 service38115 active; finalizationchild38198

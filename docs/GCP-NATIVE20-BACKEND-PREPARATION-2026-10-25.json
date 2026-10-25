@@ -1,7 +1,7 @@
 {
   "schema": "dl-gcp-native20-scoped-backend-preparation-v1",
-  "at_utc": "2026-10-25T01:14:47.712434+00:00",
-  "status": "LOOPBACK_TRANSPORT_ACTUALLY_REACHABLE_ZERO_PROVIDER_REQUESTS",
+  "at_utc": "2026-10-25T02:24:40.179560+00:00",
+  "status": "TRANSPORT_REACHABLE_SEPARATE_ACTUAL_AUTH_SMOKE_PASS_NATIVE_EVALUATION_PENDING",
   "observation": {
     "actual_exit": 0,
     "stdout": "{\"run_id\": \"gcp-saved8-native20-v2\", \"actual_requests\": 0, \"real_requests_transport\": true}\n",
@@ -35,7 +35,36 @@
   "scope": "Existing authored synthetic pairednative20 only; no owner conversations or credentials sent to GCP",
   "next_action": "Keep SAME local proxy/tunnel alive; verify actual handles and /health before native20. After saved8 strict proof and full actual terminal records only, launch existing serial-one-gpu native_development with recovered proof, then native_speech_followup complete20. No training updates, no sealed fresh data opened, no adoption.",
   "native_evaluation_started": false,
-  "provider_api_authentication_verified": false,
+  "provider_api_authentication_verified": true,
   "behavior_qualified": false,
-  "model_adopted": false
+  "model_adopted": false,
+  "subsequent_actual_authentication_smoke": {
+    "schema": "dl-native-existing-synthetic-backend-auth-smoke-v1",
+    "http_status": 200,
+    "provider_status": "completed",
+    "response_id": "resp_0e6fc357a69c0a09006add67dc405087d2b76c025d459f7bfe",
+    "model": "gpt-6-luna",
+    "actual_requests": 1,
+    "maximum_requests": 1,
+    "question_source": "evals/fixtures/native-reasoning-delegation-source-proposal-20261023.json",
+    "question_source_sha256": "8bf69aa79ce6c458e772042064c4abd3e2613e175c50d826f51371c92cc3788e",
+    "question_case": "native-reasoning4-train-000",
+    "only_authored_utterance_sent": true,
+    "scoring_answers_or_annotations_sent": false,
+    "owner_conversations_sent": false,
+    "provider_credential_transferred_to_gcp": false,
+    "native_model_executed": false,
+    "native_routing_or_voice_qualified": false,
+    "training_approved": false,
+    "passed": true
+  },
+  "reserved_transport_post_smoke": {
+    "actual_exit": 0,
+    "stdout": "Sun Oct 25 02:24:04 UTC 2026\n{\"run_id\": \"gcp-saved8-native20-v2\", \"actual_requests\": 0, \"real_requests_transport\": true}\nMainPID=38115\nExecMainStatus=0\nActiveState=active\n",
+    "stderr": "",
+    "reserved_proxy_key_file_unchanged_since_initial_receipt": true,
+    "actual_native_evaluation_provider_requests": 0,
+    "credential_transferred_to_gcp": false
+  },
+  "auth_smoke_proxy_receipt_sha256": "4dad1a3e98a5d4f012651f33031f2207585b1980884baeb51fc01ecdd41afb67"
 }
