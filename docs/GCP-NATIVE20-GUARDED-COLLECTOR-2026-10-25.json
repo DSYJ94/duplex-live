@@ -1,0 +1,35 @@
+{
+  "schema": "dl-gcp-native20-guarded-collector-preparation-v1",
+  "at_utc": "2026-10-25T01:49:21.716303+00:00",
+  "status": "PREPARED_OFFLINE_11_CONTRACT_TESTS_PASS_NOT_LAUNCHED",
+  "implementation_sha256": {
+    "portable/context/native_gcp_development.py": "4adc5f74c2c3c88b0f8b23d10edf2624d1496e699a1a338c40807de896f167b1",
+    "evals/harness/test_native_gcp_development.py": "0111edfff74b19b0a4a5b813d614fafb483f87c79ff2cf6d94719561afbf19d3"
+  },
+  "tests": {
+    "local_passed": 11,
+    "model_loaded": false,
+    "provider_requests": 0,
+    "actual_native_or_speech_evaluation": false
+  },
+  "native_source": "e0827f54f058e986ee57116f6de3c783a1ccefbd",
+  "expected_recovery_unit": "duplex-native-saved8-recovery-v6.service",
+  "expected_recovery_invocation": "6533c2ea62de42d9a7a2e05d8ae0f121",
+  "expected_proof": "/workspace/migration/native-reasoning32-saved8-recovered-proof-gcp-v6",
+  "gates": [
+    "Fresh hash-bound host observation of actual recovery service inactive/success/exit0/MainPID0 and exact invocation/resource; complete matching upstream controller/two distinct children actual0",
+    "Strict recovered checkpoint verification before any model loading",
+    "Exact clean committed wrapper and original collector source, fresh unchanged GCP lease, no GPU process already active, inherited shared GPU lock",
+    "At least40min full evaluation window and deadline120s before provider limit; caller also verifies existing Mac proxy and tunnel alive and proxy deadline at least60s beyond evaluation",
+    "Existing scoped Mac-only synthetic backend, zero requests at start, no credential on model host",
+    "Existing unmodified native_development serial-one-gpu/container-default, recovered proof root directly (no training suffix), both full10 model cohorts and cold/reused PCM parity",
+    "Existing native_speech_followup actual live native parent PID/birth then complete independent speech20 after native exit; no added scores or thresholds",
+    "Monitor live lease and deadline everysecond; terminate/reap only owned child process groups if blocked/failing/stale",
+    "Collection completion always behavior_approved=false/model_adopted=false; complete independent semantic/audio/quiet/pause/receipt review and all fresh gates remain"
+  ],
+  "source_deployment": "Git commit/push; hash-verified bundle fetch into separate immutable worktree",
+  "target_preflight_pending": true,
+  "actual_collection_started": false,
+  "optimizer_updates": 0,
+  "model_adopted": false
+}

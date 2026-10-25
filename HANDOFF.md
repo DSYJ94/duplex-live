@@ -1,3 +1,36 @@
+# LOCAL — v6 fingerprints continue; guarded downstream collector prepared
+
+Actual01:47:41UTC recovery-v6 service38115 still active, finalization live and
+emitting successive native_stream_restore_fingerprint rows. Hostguard2092 armed
+same timestamp. No terminal success yet; do not duplicate/restart. Frozen e082
+producer/originalDA, sameGPU/disk/providerSTOP/zero updates unchanged.
+
+Prepared NEW portable.context.native_gcp_development wrapper for actual native20
+and speech20 once recovery succeeds; no current model/source changes.11focused
+local contract tests PASS, no model/provider/GPU calls from tests. Wrapper:
+ requires fresh SHA-bound genuine host observation of exact recovered-v6 service
+ inactive/success/exit0/MainPID0/invocation plus upstream fullchildren0/proof;
+ strict recovered proof; clean source/wrapper; same fresh GCP lease; GPUidlelock;
+ unchanged original full native_development serial-one-gpu/container-default;
+ original independent speech20 bound to actual nativePID/birth; monitors guard/
+ deadline and reaps only owned children. Complete collection never adoption.
+Doc docs/GCP-NATIVE20-GUARDED-COLLECTOR-2026-10-25.json, still NOTlaunched.
+NEXT Gitdeploy separate wrapperproducer and CPU-only target11tests, preserving
+runninge082. After v6 fullproof/actualparent0 only, realhost terminalobservation
+JSON and its SHA (never fabricate oldreport) then launch new wrapper with original
+ e082 inference source and recoveredproofV6 root(no training suffix). Keep at
+ least40min fullwindow, evaldeadline11:40UTC/providerSTOP11:52:37UTC; Mac proxy
+ deadline11:45UTC mustoutlast eval+60s and beactualalive/unused atlaunch.
+Container hostnetwork for scopedloopback; all existing mounts/envs retained.
+
+Macproxy69582/PID75507 port49884/run gcp-saved8-native20-v2 max128, tunnel46162/
+PID75642 remote58051 remain existing reservedbackend; verifySAMEhandles/health,
+no duplicates, no APIkey transfer. Unchanged complete20/speech20/ordinary4 and
+independent allcase semantic/quiet/pause/receipt/audio/fresh qualification remain.
+LOCALsoleexecutor; unrelatedPYC/capabilityprobes/roadmap preserved.
+
+---
+
 # LOCAL — v6 passed repaired gate/context; saved-state numerical fingerprints LIVE
 
 Actual01:37:43UTC25Oct recovery-v6 service38115 active, finalizationchild38198
