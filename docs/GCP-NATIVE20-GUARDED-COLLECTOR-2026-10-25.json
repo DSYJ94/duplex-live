@@ -1,7 +1,7 @@
 {
   "schema": "dl-gcp-native20-guarded-collector-preparation-v1",
-  "at_utc": "2026-10-25T01:49:21.716303+00:00",
-  "status": "PREPARED_OFFLINE_11_CONTRACT_TESTS_PASS_NOT_LAUNCHED",
+  "at_utc": "2026-10-25T01:52:32.238570+00:00",
+  "status": "SEPARATELY_GIT_DEPLOYED_TARGET_CPU_11_CONTRACT_TESTS_PASS_NOT_LAUNCHED",
   "implementation_sha256": {
     "portable/context/native_gcp_development.py": "4adc5f74c2c3c88b0f8b23d10edf2624d1496e699a1a338c40807de896f167b1",
     "evals/harness/test_native_gcp_development.py": "0111edfff74b19b0a4a5b813d614fafb483f87c79ff2cf6d94719561afbf19d3"
@@ -28,8 +28,21 @@
     "Collection completion always behavior_approved=false/model_adopted=false; complete independent semantic/audio/quiet/pause/receipt review and all fresh gates remain"
   ],
   "source_deployment": "Git commit/push; hash-verified bundle fetch into separate immutable worktree",
-  "target_preflight_pending": true,
+  "target_preflight_pending": false,
   "actual_collection_started": false,
   "optimizer_updates": 0,
-  "model_adopted": false
+  "model_adopted": false,
+  "target_preflight_actual_exit": 0,
+  "target_preflight": {
+    "passed": true,
+    "tests_passed": 11,
+    "torch_imported": false,
+    "model_loaded": false,
+    "provider_requests": 0,
+    "optimizer_updates": 0,
+    "python": "3.12.3 (main, Aug 14 2025, 17:47:21) [GCC 13.3.0]"
+  },
+  "producer_commit": "edbad904ee66ab43baf4de9b26bf5af8a4160c09",
+  "producer_source": "/opt/duplex-native-gcp-development-v1",
+  "bundle_sha256": "d405c3c3c51cd3e5f936789bec8a3af5ee882d8f1cd76ae8029b3633ec2e0f24"
 }

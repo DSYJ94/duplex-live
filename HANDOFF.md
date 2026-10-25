@@ -1,3 +1,46 @@
+# LOCAL — Guarded full native20/speech20 runner Gitdeployed, target11PASS
+
+NEW separate wrapperproducer edbad904ee66ab43baf4de9b26bf5af8a4160c09 at
+/opt/duplex-native-gcp-development-v1 actuallyGitbundlefetched/cleancheckout.
+BundleSHA d405c3c3c51cd3e5f936789bec8a3af5ee882d8f1cd76ae8029b3633ec2e0f24.
+TargetPython3.12 CPU-only11contracttests actual0, TorchNOTimported, no model/GPU/
+provider/training calls. Local11PASS. Do NOTlaunch until realrecoveryterminal0.
+Doc docs/GCP-NATIVE20-GUARDED-COLLECTOR-2026-10-25.json records exactscope/evidence.
+
+After v6actualparent0/fullproof: obtain REAL hostsystemctl terminal observation
+for duplex-native-saved8-recovery-v6.service invocation6533c2ea62de42d9a7a2e05d8ae0f121,
+resource951004838667287080. JSON schema dl-gcp-recovery-terminal-observation-v1:
+ observed_unix fresh time.time(), resource_id, unit, invocation_id, actual_exit
+ from ExecMainStatus, main_pid, result, active_state, controller_sha256 and
+ proof_report_sha256 from actualfiles. Requireinactive/success/MainPID0/exit0;
+never invent oldfitreport. Persist new observation, compute actualSHA. Wrapper
+requires observedage<=90s and exactupstreamcomplete/twochild0/strictproof.
+
+Future container module portable.context.native_gcp_development from NEWedbad
+producer (bind thisworktree+shareGit along with allusualmounts), --producer-commit
+edbad904ee66ab43baf4de9b26bf5af8a4160c09; --source /opt/duplex-gcp-recovery-e0827f5-v1
+--source-commit e0827f54f058e986ee57116f6de3c783a1ccefbd; --proof actualV6 recovered
+proofROOT, --upstream /workspace/migration/gcp-saved8-recovery-v6, --guard existing
+/workspace/migration/gcp-budget-live-v1.json; --resource-id951004838667287080,
+--recovery-commit e0827f54f058e986ee57116f6de3c783a1ccefbd, --recovery-unit and
+--recovery-invocation exactabove, --terminal-observation actualpath plus
+--terminal-observation-sha256 actualhash. New --out under/workspace/migration,
+--asr-python /workspace/native10-asr-env/bin/python, --deadline-utc11:40UTC25Oct.
+FreshGPUidle/lease/sharedlock; at least40min fullwindow. Caller firstverifies
+SAME Macproxy69582/PID75507/tunnel46162/PID75642 alive, scopedhealth0requests,
+proxydeadline11:45UTC outlastseval+60s. No newproxy/keys/transfers/purchases.
+Run hostnetwork loopback env aspriorhandoff. Original collector source e082 and
+behavior/ASR/scoring gates unchanged. No collection/behavior/adoption approvalyet.
+
+Actual01:50:57UTC recovery-v6 service38115 stillactive, child38198 progressing;
+24/49 native-stream fingerprints observed, ZERO discrepancies against preserved
+original rows, control40/reasoning32 notstarted. Diagnosticpartialonly, neverpass.
+Hostguardfresh01:47:41UTC, sameGPU/disk/providerSTOP11:52:37UTC/zero updates.
+Continue SAMErecovery first; no overlappingGPUjob or timeout-driven retries.
+LOCALsoleexecutor/unrelatedfilesintact.
+
+---
+
 # LOCAL — v6 fingerprints continue; guarded downstream collector prepared
 
 Actual01:47:41UTC recovery-v6 service38115 still active, finalization live and
