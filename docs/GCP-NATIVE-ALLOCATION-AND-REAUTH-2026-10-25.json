@@ -1,6 +1,6 @@
 {
   "schema": "dl-gcp-allocation-and-reauth-status-v1",
-  "recorded_utc": "2026-10-25T14:58:04.227949+00:00",
+  "recorded_utc": "2026-10-25T15:02:08.542398+00:00",
   "zone_b_operation": "operation-1792928965865-65ea8ce1e2f72-2a556336-fc03e075",
   "zone_b_actual_result": "DONE/error configuration_availability; instance not created",
   "original_a_operation": "operation-1792929991159-65ea90b3aed48-ba8bdc52-27dd587e",
@@ -18,7 +18,7 @@
   "reauth_cli_session": 85715,
   "credentials_requested_in_chat": false,
   "heartbeat_status": "ACTIVE",
-  "current_training_or_new_measurement": "ONE timing-only corrected zero-update request allocated; preparing guards/preflight",
+  "current_training_or_new_measurement": "One timing-only corrected complete32 matched loss diagnostic ACTUALLY running; zero optimizer updates",
   "optimizer_updates": 0,
   "model_adopted": false,
   "references": {
@@ -120,7 +120,23 @@
     "maximum_child_seconds": 4800,
     "maximum_host_seconds": 5100,
     "native_stop_utc": "2026-10-25T16:26:13.653Z",
-    "model_launched": false,
-    "optimizer_updates": 0
+    "model_launched": true,
+    "optimizer_updates": 0,
+    "model_launched_utc": "2026-10-25T14:57:02.952035Z",
+    "actual_target_tests_passed": 83,
+    "strict_saved8_proof_actual_exit": 0,
+    "unit": "duplex-native-flex90-matched32-timing-v2",
+    "first_live_main_pid": 1985,
+    "invocation_id": "924cca8d0f234690ae918b3dd786cd98",
+    "actual_child_deadline_utc": "2026-10-25T16:17:06.981779Z",
+    "actual_successful_terminal": null
+  },
+  "timing_evidence_preserver_v2": {
+    "pid": 74541,
+    "tool_session": 14591,
+    "initial_copy_actual_rsync_exit": 0,
+    "initial_copy_utc": "2026-10-25T14:59:23.266784Z",
+    "path": "runs/local-migration-20261024/gcp-flex90-timing-live-preservation-v2",
+    "qualified": false
   }
 }

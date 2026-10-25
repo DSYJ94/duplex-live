@@ -1,3 +1,46 @@
+# LOCAL — Corrected full32 timing run ACTUALLY launched and verified live
+
+25Oct15:00UTC. Samecontroller-v6 PID71491/tool19466 LIVE; exactsourcec1006f90fbd08dfa887b1ee117d317ad36026441
+Gitdeployedclean /workspace/migration/duplex-flex90-c1006f9-v2. Actual83targettestsPASS
+(0.732s), separate strictpinnedproofactual0. ONE correctedmodelunit
+ duplex-native-flex90-matched32-timing-v2 launched14:57:02.952035UTC; independent
+read actualMainPID1985/active/invocation924cca8d0f234690ae918b3dd786cd98; internal
+phase measuring_complete32/maximum_seconds4800/childcontainerPID28 live. Actualchild
++preparation deadline16:17:06.981779UTC; host5100s/nativeSTOP16:26:13.653UTC unchanged.
+Macguard-v5 PID72763 andguest-v5 PID1778/invocation1302ecbc7bb8406b8009ec4694077409
+botharmed beforemodel; bootstrap180sSTOP cancelled ONLYafterfreshdualverification.
+
+Newreadonlypreserver-v2 PID74541/tool14591 launchedONCE14:59:23; initialnewout rsync0
+at14:59:23.266784UTC. script flex90-evidence-preserver-v2.py; target
+ gcp-flex90-timing-live-preservation-v2; status gcp-flex90-timing-live-preservation-status-v2.
+Initialcopy is LIVEPARTIAL/UNQUALIFIED; currentlymostlystartupmetadata. Refresheslog15s;
+onactualfailure copiesallnewout+terminal+hostlog andsourcehashes ifSSHallows, onactual0
+existingmaincontroller owns fullfinalcopy/receipt. Observerdeadline16:26:50UTC isNOT
+executionpermission/extension. Originalpreserver-v1 terminal0 andfailedout preserved.
+Neverduplicate/restart eithercontroller orpreserver after an observationtimeout.
+
+SameVM4443302983961393208/SAMEoriginal250GBdisk1828090267781080539/zoneA, current
+startop operation-1792940144147-65eab68653b78-d3424b9f-4f3ad4c2. Fullhistory prior36251s;
+currentnative5400max ->41651s<43200, upper94.017536USD<100 incl28.88reserves. This is
+ONE timing-only correction after ACTUALonehour TimeoutError, NOT newtraining, weakened
+modelgate, newhardware/storage/region orpurchase. AtmostONE correction/no blindretry.
+CurrentNATIVEownergrant remains12actualGPUh/100USD/ZEROoptimizer; correctedinternal
+80min duration fits original90minnativeSTOP andownerbudget. Allprotectedmodel/data/
+objectives/sourceDA/NGCdigest and full32bothends/fingerprints/frozen+RNG checks unchanged.
+
+Currentout /workspace/migration/gcp-flex90-matched32-timing-v2, newterminal
+ gcp-flex90-matched32-timing-terminal-v2.json/hostlog gcp-flex90-matched32-timing-host-v2.log.
+Finaltarget gcp-flex90-matched32-timing-copyback-v2; requireactualterminal0/all64scenes/
+finalexactfingerprints/allhashcopy THENSTOP. No convergence/quality/adoption claimyet.
+Earlierjob failed32native520+26saved528; all32sourcefiles603736229B hashverifiedMac
+(NATIVE-MATCHED32-ACTUAL-TIMEOUT doc), no partialacceptance. All64baseline scalarvalues
+matchedoriginalBF16readiness exactly, interimf9189c8; no approvedpairresult. Candidate
+ordinary2/4baseline vs1/4savedstillREJECTED. FullBbackupPASS/broadMacsourcePARTIAL,
+unrelatedPYC/probes/roadmappreserved, LOCALsoleexecutor/goalunfinished. Quietheartbeat
+mustobserve THIS currentjob/handles anddelete monitor after finalreview/humanblocker.
+
+---
+
 # LOCAL — Old diagnostic ACTUAL timeout preserved; ONE corrected timing run allocated
 
 25Oct14:57UTC. Old original3600s job ACTUALLYtimedout14:53:05.747 deadline; child-15,
