@@ -1,3 +1,31 @@
+# LOCAL — All7797 control40 paths restored; remaining original CPU checks LIVE
+
+Actual materialization exit0 from committed7910acdf67d720e47cabd743bc6645419f6a8ece:
+ALL7797 files/8000842614B from /workspace/source-control40-e658c20 regularhardlinked
+at /opt/duplex-reasoning32-da389a7-v15/runs. Every byte/hash checked; original
+verifier/source/audio/receipts unchanged. Fast missing-file reproduction diagnosed
+path restoration, not corrupt approved data. Original five cache preflight had
+not covered this separate40 or reasoning32; do not mistake it for full closure.
+
+CPU-only unit duplex-native-remaining-cache-preflight-v1/MainPID28955,
+invocationac368a362f744ce0b45563ab9a840144 actually active/running01:02:34UTC.
+No GPUs exposed; original control40_cache.verify then reasoning32_cache.verify.
+Log /workspace/migration/gcp-remaining-original-cache-preflight-v1.log;
+result /workspace/migration/gcp-remaining-original-cache-preflight-v1.json pending.
+Launch ignored remaining-cache-preflight-launch-v1.json. RuntimeMax900s.
+Poll same actual handle; never restart on observation timeout. v4 failed1 preserved
+and copiedback, no model recovery currently running. After full CPU actual0,
+launch distinct fresh recovery-v5 only, frozen75b3bfd and all existing mounts/envs.
+
+Actual separate evaluation worktree cleanHEAD58c966c verified01:02:34UTC.
+ASRimport/hash preflightv2 actual0; publicturbo cache durable and exact. Bothcost
+guards remain; hostarmed01:02:31UTC. SameA100/samedisk/nativeSTOP11:52:37UTC;
+additionalGCP100USD cap/zero newupdates/no overlap/no purchases still apply.
+No candidate numerical/behavior qualification yet. Continue autonomously;
+stopbilledGPU if truly blocked. Preserve all unrelated localwork.
+
+---
+
 # LOCAL — Recovery v4 failed; exact control40 relative-path repair prepared
 
 At00:58:06UTC25Oct service recovery-v4 actually FAILED1, MainPID0.

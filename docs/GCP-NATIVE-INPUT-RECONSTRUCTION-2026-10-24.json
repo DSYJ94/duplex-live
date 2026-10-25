@@ -1,12 +1,12 @@
 {
   "schema": "dl-gcp-native-exact-input-reconstruction-preparation-v1",
-  "at_utc": "2026-10-25T01:00:02.372285+00:00",
+  "at_utc": "2026-10-25T01:02:56.595277+00:00",
   "parent_source": "e9da0f5",
   "implementation_sha256": {
     "portable/context/native_gcp_inputs.py": "3c74ac2fa7ae93603b9ce43f7340666acccf62c7190604130576b2dad7de3616",
     "evals/harness/test_native_gcp_inputs.py": "d59c6c740c92cfa7b0f858ca71163a086cc44b75012961e5d596051f4af7dfd4"
   },
-  "status": "RECOVERY_V4_FAILED_MISSING_ORIGINAL_CWD_CONTROL40_WORKSET_REPAIR_PREPARED",
+  "status": "ALL7797_CONTROL40_CWD_FILES_RESTORED_HASH_VERIFIED_ORIGINAL_CPU_CHECKS_RUNNING",
   "focused_filesystem_tests_passed": 22,
   "cli": [
     "--root",
@@ -24,7 +24,6 @@
     "Regular hardlinks for catalogued models/runs/tmp/logs/worktrees into exact old /opt/reasoning32-runtime-root-v12",
     "Three physical Git clones from preserved bundles: ContextSpanning79df302f, MoshiRag8c6dfc10, finetune2acc879f. Fourth logical old25 source address is an exact symlink to the same canonical finetune checkout, preserving strict import-origin checks.",
     "Exact /projects and /lus and /workspace/duplex-live aliases",
-    "Empty physical originalDA/runs to preserve cache scope",
     "Five regular independent verifier-tree copies under durable /workspace/gcp-verifier-inputs-v1; never rely on host/tmp surviving reboot",
     "Complete82file snapshot hardlinks and existing strict saved8 metadata audit",
     "Presence-check every original absolute CLI input; NEVER execute old bounded8 command",
@@ -45,7 +44,7 @@
   "actual_input_reconstruction_executed": true,
   "actual_model_loaded": false,
   "new_optimizer_updates": 0,
-  "next_action": "Git-deploy helper separately; materialize and hash exact control40 relative paths then original complete control40/reasoning32 CPU verification before any fresh recovery attempt. Preserve v4 actual1, all previous failures, originalfit-15; zero updates.",
+  "next_action": "Poll existing CPU-only duplex-native-remaining-cache-preflight-v1/MainPID28955/invocationac368a362f744ce0b45563ab9a840144 before any fresh GPU recovery. No restart on observation timeout. It runs original control40 and reasoning32 cache checks at original cwd. After actual0 only, distinct new recovery version with frozen75b3bfd.",
   "head_only_bundle_sparse_clone_fixture_passed": true,
   "preserved_three_vendor_bundle_bytes_and_sha_verified_on_mac": true,
   "actual_input_reconstruction_passed": true,
@@ -57,5 +56,14 @@
     "cuda_initialized": false,
     "sequential_import_provenance_passed": true,
     "receipts": "ignored runs/local-migration-20261024/original-cache-cpu-preflight-copyback-v1 and sequential-import-probe-v2.json"
+  },
+  "actual_control40_cwd_materialization": {
+    "passed": true,
+    "files": 7797,
+    "bytes": 8000842614,
+    "source_commit": "7910acdf67d720e47cabd743bc6645419f6a8ece",
+    "regular_hardlinks": true,
+    "original_verifier_changed": false,
+    "new_optimizer_updates": 0
   }
 }
