@@ -1,3 +1,25 @@
+# LOCAL — Owner asks for proper sustained training; direction corrected, no new authorization
+
+25 October. The next proposed experiment should measure learning across checkpoints,
+not treat another standalone8-update job as the desired training endpoint. See
+ docs/NATIVE-CONVERGENCE-TRAINING-DIRECTION-2026-10-25.md.
+Verified current exposure:32 new scenes, four selected per update, one exposure in8;
+FULL154 retention membership remains present every update. More epochs are useful
+to test learning but do not expand narrow data coverage. No causal explanation or
+higherLR cure has been established. Prepare an epoch/token/frame-based bounded
+learning-curve recipe, appropriate validation coverage and whole-run budget, with
+cheap in-run monitoring and full independent/native/audio/fresh gates retained.
+
+This is a PROPOSED DIRECTION only. Existing code is still hard-bounded8, and the
+unapproved75USD/9h proposal is NOT expanded. A longer run from rejected528 needs its
+own exact update/budget/exploration authorization; old unrelated32-update approval
+cannot be reused. No new optimizer updates/GPU starts/source audio/API payloads or
+heldout access. Current model remains REJECTED, goalACTIVE/UNFINISHED. Prior runtime
+preparation at3b999db is reusable source, not improved model performance. Preserve
+unrelated PYC/probes/roadmap; LOCAL sole executor; no heartbeat recreated.
+
+---
+
 # LOCAL — Fresh runtime/observer prepared; timing-admitted proposal revised, NOT authorized
 
 25 October. This turn changes SOURCE ONLY after the prior explanatory/status turn;
