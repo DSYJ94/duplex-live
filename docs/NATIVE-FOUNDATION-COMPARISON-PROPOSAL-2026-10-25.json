@@ -1,0 +1,134 @@
+{
+  "schema": "dl-native-foundation-comparison-proposal-v1",
+  "status": "PROPOSED_NOT_AUTHORIZED",
+  "purpose": "One inference-only Realtime-Venus-Audio comparison before committing to further Moshi adaptation or a sustained training budget.",
+  "candidate": {
+    "repo": "inclusionAI/Realtime-Venus",
+    "revision": "4681004131ea1f1fb9aca9f0db76be322657cc79",
+    "directory": "Realtime-Venus-Audio",
+    "nominal_parameters": "9B",
+    "source_repo": "https://github.com/inclusionAI/Realtime-Venus",
+    "source_revision": "e53ae8d5bde92b30364b26f2e4c13c9db7a8ffea",
+    "public_acquisition_files": 35,
+    "public_acquisition_bytes": 19993772218,
+    "native_streaming_required": true,
+    "full_duplex_not_cascaded_fallback": true,
+    "optimizer_updates": 0,
+    "weights_frozen": true,
+    "adopted": false
+  },
+  "baseline": {
+    "reuse_existing_complete_native520_saved528_recordings": true,
+    "complete_review": "docs/GCP-NATIVE-SAVED8-COMPLETE20-REVIEW-2026-10-25.json",
+    "base4_correction": "docs/NATIVE-CONTROL40-BASE4-SCORING-CORRECTION-2026-10-24.json",
+    "older_execution_discrepancy": "docs/NATIVE-ANCESTOR12-COMPLETE-REVIEW-2026-10-20.json",
+    "new_cross_architecture_ranking_is_product_diagnostic_not_identical_protocol_ablation": true,
+    "no_new_recovery_or_training_repeat": true
+  },
+  "development_cases": [
+    {"id": "ordinary-ice", "existing_scenario": "recovery-train-012", "expected": "Ice is less dense than liquid water; a relevant mechanism alone is insufficient."},
+    {"id": "ordinary-sound", "existing_scenario": "recovery-train-013", "expected": "Sound is produced by vibrations."},
+    {"id": "ordinary-plants", "existing_scenario": "recovery-train-014", "expected": "Plants use light energy to make food through photosynthesis."},
+    {"id": "ordinary-metal", "existing_scenario": "recovery-train-015", "expected": "Metal conducts heat away from skin."},
+    {
+      "id": "quiet-geronimo",
+      "authored_user_turns": ["Keep completely quiet. Do not speak until I say Geronimo. That word in this instruction is not the release cue.", "I am still thinking. Stay quiet.", "Geronimo. Tell me what a timer measures."],
+      "observation": "Eight seconds of listening after the instruction and after the distractor; then ordinary response only after the later cue.",
+      "expected": "No intelligible speech, acknowledgment or request for the keyword in either quiet interval; after the cue explain elapsed time."
+    },
+    {
+      "id": "quiet-cue-change",
+      "authored_user_turns": ["Stay completely silent until I say lantern. Do not acknowledge this instruction.", "Keep waiting.", "Lantern. What is two plus three?"],
+      "observation": "Eight seconds after each waiting turn.",
+      "expected": "No speech while waiting; answer five only after the later cue. This varies the cue rather than installing a Geronimo-specific rule."
+    },
+    {
+      "id": "pause-resume",
+      "authored_user_turns": ["Tell me these steps slowly: put the book on the shelf, then close the cupboard.", "Pause now. Say nothing until I say continue.", "Continue."],
+      "observation": "Inject pause during the first spoken step; hold eight seconds; resume from the interrupted instruction without restarting the entire answer.",
+      "expected": "Yield to interruption, remain silent, resume the remaining content; save actual pause onset and audio stop times."
+    },
+    {
+      "id": "pending-followup",
+      "authored_user_turns": ["Ask the background worker to total these numbers: 318, 247 and 569.", "While that runs, what is two plus three?"],
+      "worker": "An actual isolated read-only arithmetic worker delays completion eight seconds, computes the sum and returns a per-session receipt. No external model or canned spoken answer.",
+      "expected": "Native delegation; answer five while work is pending; subsequently speak the actual total1134. Preserve request/receipt/playback times."
+    },
+    {
+      "id": "counterfactual-result",
+      "authored_user_turns": ["Ask the background worker to total these numbers: 318, 247 and 570."],
+      "worker": "Same isolated delayed arithmetic implementation in a fresh session; actual sum1135.",
+      "expected": "The changed worker result changes spoken output to1135; no1134 carryover or result merely spoken from an answer-forcing wrapper."
+    },
+    {
+      "id": "cancel-pending",
+      "authored_user_turns": ["Ask the background worker to total318,247 and569.", "Cancel that request. Instead, what causes sound?"],
+      "worker": "Cancel a genuinely pending eight-second task; retain cancellation and any late-completion receipt.",
+      "expected": "Cancellation recorded before any completion delivery; no cancelled total spoken; answer vibrations without reviving the old request."
+    }
+  ],
+  "evidence": {
+    "development_only_not_unseen_qualification": true,
+    "all10_cases_required_no_passing_subset": true,
+    "raw_output_before_any_playback_filter_required": true,
+    "no_keyword_mute_canned_speech_text_forcing_or_oracle_task_calls": true,
+    "natural_nonverbal_audio_and_intelligible_speech_reviewed_separately": true,
+    "independent_listening_to_original_waveforms_required": true,
+    "reported_text_alone_is_insufficient": true,
+    "runtime_versions_precision_attention_sampler_prompt_voice_and_seed_recorded": true,
+    "input_content_and_protocol_resampling_recorded_original_pcm_preserved": true,
+    "record_first_audio_yield_time_continuity_and_realtime_factor": true,
+    "source_audio": "Existing approved synthetic ordinary inputs plus newly authored local development speech; no owner recordings or external TTS payloads.",
+    "no_sealed_fresh20_access_or_training_on_these_outputs": true,
+    "mechanics_worker_is_not_heavy_reasoning_model_evaluation": true,
+    "no_production_or_candidate_adoption_claim": true
+  },
+  "resources": {
+    "provider": "GCP",
+    "project": "aurium-duplex-live-20261024",
+    "same_existing_vm_id": "4443302983961393208",
+    "same_original250gb_disk_id": "1828090267781080539",
+    "gpu": "A10080GB",
+    "maximum_concurrent_gpu_jobs_across_providers": 1,
+    "maximum_additional_gcp_usage_usd": 35,
+    "original_plus_new_gcp_authorization_cap_usd": 135,
+    "maximum_additional_gpu_hours": 4,
+    "original_plus_new_cumulative_gpu_hours": 16,
+    "hourly_price_admission_ceiling_usd": 7.25,
+    "compute_at_ceiling_usd": 29,
+    "other_usage_reserve_usd": 6,
+    "prior_gpu_seconds_upper": 40351,
+    "prior_scope_cost_upper_usd": 91.98448055555555,
+    "prior_plus_this_scope_upper_usd": 126.98448055555555,
+    "prior_plus_this_gpu_seconds_upper": 54751,
+    "credit_purchase": false,
+    "new_vm_disk_snapshot_region_quota_or_api_activation": false,
+    "additional_cpu_vm": false,
+    "new_resources_if_existing_vm_lacks_capacity": false,
+    "independent_native_stop_and_live_budget_guard_required": true,
+    "setup_failure_limit_minutes": 30,
+    "stop_early_if_genuinely_blocked": true,
+    "paid_compute_starts_only_after_local_artifacts_and_launch_source_are_ready": true,
+    "only_one_candidate_first": true
+  },
+  "transfers_and_execution": {
+    "maximum_new_candidate_public_artifact_bytes": 21000000000,
+    "maximum_diagnostic_input_output_bytes": 1000000000,
+    "public_dataset_audio14gb_not_transferred_for_this_comparison": true,
+    "original_native_archives_and_runtime_untouched": true,
+    "isolated_python_environment_required": true,
+    "source_deployment": "Git commit/push/fetch; upstream source pinned to the specified official Git commit.",
+    "artifact_transfer": "rsync -ar --exclude=session-token --no-owner --no-group, scoped verified inventory; exclude owner conversations, credentials, .private and core dumps.",
+    "credentials_remain_on_mac": true,
+    "external_model_api_calls": 0,
+    "default_codex_backend_disabled": true,
+    "other_chats_agents_or_owner_accounts": false,
+    "new_optimizer_updates": 0,
+    "full_native_archive_rehash": false
+  },
+  "decision": "Compare actual voice and all required behaviors, not parameter count or vendor claims. If clearly stronger, integrate the existing reasoning backend next; otherwise retain current artifacts and consider VoiceChat before paying for a long training repair. Further training has a separate recipe and scope.",
+  "owner_authorization_received": false,
+  "new_gpu_started": false,
+  "gpu_validated": false,
+  "launcher_implementation_complete": false
+}

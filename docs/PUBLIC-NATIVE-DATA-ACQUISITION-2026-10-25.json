@@ -1,0 +1,63 @@
+{
+  "schema": "dl-public-data-acquisition-v1",
+  "complete": true,
+  "files": 5092,
+  "bytes": 14771623383,
+  "cache": "/Users/daryl/.cache/duplex-live/public-data",
+  "elapsed_s": 1542.3501529693604,
+  "inventories": [
+    {
+      "repo": "kyutai/DailyTalkContiguous",
+      "revision": "33e1b501f725a6f4ed4ded95e16cd7f66b9d4bdc",
+      "declared_license": "cc-by-sa-4.0",
+      "files": 5085,
+      "bytes": 13768398819
+    },
+    {
+      "repo": "glaiveai/glaive-function-calling-v2",
+      "revision": "e7f4b6456019f5d8bcb991ef0dd67d8ff23221ac",
+      "declared_license": "apache-2.0",
+      "files": 3,
+      "bytes": 271192546
+    },
+    {
+      "repo": "HuggingFaceH4/ultrachat_200k",
+      "revision": "8049631c405ae6576f93f445c6b8166f76f5505a",
+      "declared_license": "mit",
+      "files": 4,
+      "bytes": 732032018
+    }
+  ],
+  "journal_sha256": "2e2e668b8264addc0f477cec4de92def824052b869d4f49d62b263746e422ce2",
+  "all_upstream_hashes_verified": true,
+  "owner_conversations_used": false,
+  "credentials_used": false,
+  "training_approved": false,
+  "model_adopted": false,
+  "receipt_sha256": "8bdfc0ac42215f588de80eafd3c0acc2bbdc93accc389396d88633188b732cfb",
+  "inventory_sha256": "3a49cea9e00504d8ca4234546200ebb04e5e7541b07728d35a6a4a68c6d4ea93",
+  "journal_path": "runs/public-data-20261025/acquisition-receipt.jsonl",
+  "receipt_path": "runs/public-data-20261025/acquisition-receipt.json",
+  "verified_counts": {
+    "dailytalk_dialogues": 2541,
+    "dailytalk_hours": 21.673979925674,
+    "glaive_rows": 112960,
+    "glaive_rows_with_functioncall_marker": 63218,
+    "glaive_rows_with_response_marker": 63376,
+    "ultrachat_shards": 3,
+    "ultrachat_rows_physically_counted": null
+  },
+  "split_selection": {
+    "dailytalk": "public train only, candidate",
+    "glaive": "public train only, candidate",
+    "ultrachat": "train_sft only; test_sft/test_gen/train_gen excluded"
+  },
+  "limitations": [
+    "Source acquisition is complete; native conversion, quality, semantic review, fold assignment and training are not performed or approved by this receipt.",
+    "Glaive is synchronous text tool-use data, not native asynchronous delegation training.",
+    "DailyTalk supplies natural conversation; it is not a reasoning/delegation corpus.",
+    "DailyTalk declared CC-BY-SA-4.0 has not been approved for a commercially released training mixture.",
+    "No sealed project evaluation data was opened, added to this cache or used for selection.",
+    "Full per-file ledger and inventories remain ignored locally; pinned public revisions make acquisition reproducible."
+  ]
+}
