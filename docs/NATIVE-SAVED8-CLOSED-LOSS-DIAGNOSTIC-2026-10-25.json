@@ -1,0 +1,105 @@
+{
+  "schema": "dl-v7-closed-finalization-loss-diagnostic-v1",
+  "finalization_record_sha256": "56cad2bf545dd8a175eb1e89a630f8f84198e7c19a500a0542f78f2e861d695e",
+  "rows": 28,
+  "mean_metrics": {
+    "nll": {
+      "native520_before": 0.6350999576409647,
+      "saved528_after": 0.6373665345735,
+      "after_minus_before": 0.0022665769325352914
+    },
+    "top1": {
+      "native520_before": 0.7912144118121692,
+      "saved528_after": 0.7817851730755397,
+      "after_minus_before": -0.009429238736629486
+    },
+    "first_supervised_token_probability": {
+      "native520_before": 0.6543259631310191,
+      "saved528_after": 0.6520059598343713,
+      "after_minus_before": -0.0023200032966478323
+    },
+    "optimization_nll": {
+      "component_count": 20,
+      "native520_before": 0.504361954331398,
+      "saved528_after": 0.5049108996987343,
+      "after_minus_before": 0.0005489453673362954
+    },
+    "non_pad_nll": {
+      "component_count": 27,
+      "native520_before": 0.6702940313046349,
+      "saved528_after": 0.6724955862769598,
+      "after_minus_before": 0.0022015549723248817
+    }
+  },
+  "component_counts": {
+    "nll_lower": 11,
+    "nll_equal": 0,
+    "nll_higher": 17
+  },
+  "scope": "Actual recomputed old28 history metrics only, before native520 and after the saved historical8 updates. This is not a full154-objective loss curve, convergence, held-out behavior, routing correctness or voice quality. Independent full restore still pending.",
+  "new_optimizer_updates": 0,
+  "full_independent_restore_passed": false,
+  "behavior_qualified": false,
+  "model_adopted": false,
+  "aggregation": "Unweighted mean of per-component metrics unless explicitly marked target-weighted. All28 old teacher-forced text histories only.",
+  "teacher_forced_text_padding_top1": {
+    "component_count": 10,
+    "total_text_padding_targets": 276,
+    "component_mean_before": 0.615256416797638,
+    "component_mean_after": 0.5123717963695527,
+    "target_weighted_before": 0.8115942201752594,
+    "target_weighted_after": 0.7971014475476914,
+    "not_a_measure_of_audible_silence_compliance": true
+  },
+  "first_content_text_top1": {
+    "component_count": 20,
+    "correct_before": 10,
+    "correct_after": 10,
+    "not_a_measure_of_complete_answer_correctness": true
+  },
+  "interpretation": "Slight old-history text loss/accuracy regression in same-runtime recomputation; text-padding prediction also decreased. This does not establish data causality, full-objective convergence, audible silence failure or behavioral task quality. Complete independent restore and actual native behavioral tests remain mandatory.",
+  "balanced_old28_optimization_objective": {
+    "components": 28,
+    "kinds": 8,
+    "weights_from_original_complete_balanced_microbatches": true,
+    "before_native520": 0.5675211192473875,
+    "after_saved528": 0.5720761260258552,
+    "after_minus_before": 0.004555006778467763,
+    "relative_increase_percent": 0.8026144973262594,
+    "logged_pre_update1": 0.5675210952758789,
+    "logged_pre_update8": 0.5674616098403931,
+    "recomputed_before_minus_logged_pre_update1": 2.397150855593111e-08,
+    "logged_losses_are_pre_update_forwards_not_post_update8_metrics": true,
+    "source": "evals/context_actual_train.py:437,538; evals/context_native_complete_batch.py:60; evals/context_decision_loss.py:11"
+  },
+  "historical_microbatch_exposure": {
+    "optimizer_updates": 8,
+    "reasoning32_rows_per_step": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "unique_reasoning32_ids": 32,
+    "control40_rows_per_step": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "unique_control40_ids": 40,
+    "losses_from_different_microbatches_must_not_be_compared_as_fixed_set_convergence": true
+  },
+  "source_commit": "da389a7031a5504495397d1575952194ffa209f1",
+  "original_training_code_sha256": "2e504fac5d3171680e3277d1e436f7db51d9403b45a1e77f09d4c2c7ccc893c5",
+  "recorded_utc": "2026-10-25T05:43:09.223300+00:00",
+  "no_new_acceptance_gate_or_threshold": true
+}

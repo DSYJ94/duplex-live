@@ -1,3 +1,43 @@
+# LOCAL — Closed saved8 loss diagnosis; independent restore continues unchanged
+
+Actualsame-runtime closedfirststage metrics nowanalyzed (recordSHA
+56cad2bf545dd8a175eb1e89a630f8f84198e7c19a500a0542f78f2e861d695e).
+Reconstructed EXACToriginal8kindbalanced old28 objective from loggedcomponent
+weights and first-word-weighted metricrows: native520before0.5675211192473875,
+saved528after0.5720761260258552 (+0.8026%). Before matches historicalpre-update1
+0.5675210952758789 within2.4e-8. Loggedstep8 0.5674616098403931 is PRE-update8,
+NOT aftereighthupdate: pinnedoriginalcode computesforward, callsoptimizer.step,
+thenprints savedpre-updateCE. Therefore first/lasttraininglogs doNOTprovefinal
+lossreduction. This isold28retention/text objective ONLY, notfullmixed154 or new32
+objective/convergence/taskquality. Unweightedcomponentnll0.63510->0.63737; 17/28
+nllworse,11better. Target-weighted text-PADaccuracy276targets/10components
+81.16%->79.71%; NOTaudiblesilence compliance. First-content-token correct10/20
+beforeandafter; NOTwholeanswercorrectness. No cause/data/batch-size conclusion.
+Teacher32 actualexposure4perstep*8=32unique, control5*8=40unique: differingnew
+microbatches cannot be used as fixedsetconvergence curves. RaworiginalsourceSHA
+2e504fac5d3171680e3277d1e436f7db51d9403b45a1e77f09d4c2c7ccc893c5 verified atDA.
+Docs/NATIVE-SAVED8-CLOSED-LOSS-DIAGNOSTIC-2026-10-25.json holds exactvalues/scopes.
+Independentsecondprocess must stillmatchevidence; no extraacceptancegate,
+thresholdchange, training or adoption introduced bythisdiagnostic.
+
+Currentcompute ACTUAL05:41:33UTC independentrestore97226/container530/birth1800685
+live, MainPID67425/invocationf8d6f198ef0e43baa97e2874b5928bef. Independentnative49
+alreadyEXACTfirst49, control7/40, reasoning0/32. FirststageactualPASS0/closedbackup
+verified. Read-onlyobserver41983 LIVE max50polls/50s, independent-watch-v2.jsonl;
+priorobserver21846 actuallyexit0 afterfull49. Poll SAMEactualhandles; no duplicate
+or restart on observationtimeout. Producer0619b17/originalDA, sameA100/disk/native
+STOP11:52:37UTC/100USD/dualguards unchanged. Guardfresh05:41, remaining50.40USD incl
+reserves notbilling. No GPU/API/newoptimizer work fromlossanalysis; tinyMacJSONonly.
+
+NEXT finish independentfull40/32 +allstate/metrics/fingerprints EXACT, actualexit0,
+parentactual0/strictproof, closedcopyback/hashes then genuinefreshterminalobservation
+and preparedguarded0619fullnative20/speech20. Allcase/ordinary4/semantic/audio/quiet/
+pause/receipt/fresh/live gates remain; no convergence/behaviorclaimfromnumerical
+restore. StillZEROnewupdates/no repeatsaved8. SourceGit, owner/private/coreexcluded,
+credentialsMac; experimentalUI ece476f onlyseparateapp notGCPdeployed. LOCALsoleexecutor.
+
+---
+
 # LOCAL — Independent full49 native EXACT; full40/32 and terminalproof stillpending
 
 Actual05:34:24UTC25Oct: SAMEindependent restore host97226/container530/birth1800685
