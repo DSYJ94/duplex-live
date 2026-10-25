@@ -1,3 +1,45 @@
+# LOCAL — Original full40/full32 CPU checks PASS; saved8 recovery v5 LIVE
+
+At01:08:22UTC25Oct actual service duplex-native-saved8-recovery-v5 active/running,
+MainPID31767/invocationbf651dff49f64c918f1735d292066161. Docker parent31810,
+finalization child31847/internal12/birth450251 actually alive. Controller
+finalization actual_exit=null. Started01:08:05UTC; ZERO new optimizer updates.
+Output /workspace/migration/gcp-saved8-recovery-v5/controller.json/finalization.log;
+parentlog /workspace/migration/gcp-saved8-controller-v5.log. Pending proof target
+/workspace/migration/native-reasoning32-saved8-recovered-proof-gcp-v5. Neither
+launch0 nor CPU PASS grants numerical/behavior/adoption approval.
+
+Original CPU preflightv3 ACTUALunitexit0: complete control40 all40 AND reasoning32
+all32 cache/approval checks PASS, CUDAuninitialized/no model load/no updates.
+All7797 control40 relative source files restored/hashverified as regularhardlinks
+at originalDA/runs. ASR provenance exact packages installed without dependencies;
+Triton3.4.0 module preserved (our v2 dist-metadata check was incorrect, preserved
+failure). v1 passed40 then missing ASR metadata; v2 failed our additional guard;
+v3 originalfullchecks PASS. Receipts/logs copied Mac original-cache-closure-copyback-v1.
+Exact SHA/bytes/source/failed-run evidence: docs/GCP-NATIVE-ORIGINAL-CACHE-CLOSURE-2026-10-25.json.
+
+Frozen recovery producer75b3bfd1dbec24a46664a3de63d13fcb0f62d23c and modelsource
+da389a7031a5504495397d1575952194ffa209f1 unchanged. Helper7910acdf Gitdeployed
+separately; clean evaluation58c966c worktree separately prepared. PublicWhisper
+cache now durable/exactSHA; no further download needed. All prior model failures
+v1-v4 preserved, v4copiedback actual1. Never restart/relabel old fit or old v4.
+
+Fresh prelaunch guard verified sameGPU951004838667287080 idle/single acrossproviders;
+remainingGCP76.05USD, no purchases. Same250GBdisk1828090267781080539. HostguardPID2092
+armed01:08:21UTC; Macguard session48672/PID26959 alive lastactualpoll. NativeSTOP
+2026-10-25T11:52:37Z remains authoritative; current serviceRuntimeMax36000s ends
+earlier. Dualguards muststayfresh. RunpodEXITED/volume49yytzyoge retained.
+
+NEXT poll SAMEv5service/container/child and guards; no duplicate/restart on
+observationtimeout. After finalization actual0 controller runs distinct fresh
+Adam/RNG restore; only BOTHterminal0 permit strictproof. Then complete unchanged
+pairednative20/speech20/allbehavior/freshgates and actualsynthetic livebridge.
+Preserve old histories/KL/hidden/native objectives, checkpoint bytes, originalfit-15.
+No additionalupdates/extension/adoption/weakergates. LOCAL soleexecutor; sourceGit
+deploy/artifactrsync exclusions; allcredentialsMac; unrelatedlocalwork intact.
+
+---
+
 # LOCAL — Original control40 PASS; reasoning32 CPU verification v2 LIVE
 
 CPU preflightv1 ACTUALLYFAILED1 after original control40_cache.verify passed

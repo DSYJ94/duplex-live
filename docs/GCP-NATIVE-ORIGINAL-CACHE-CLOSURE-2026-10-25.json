@@ -1,0 +1,93 @@
+{
+  "schema": "dl-gcp-original-cache-closure-v1",
+  "at_utc": "2026-10-25T01:08:55.549626+00:00",
+  "status": "ORIGINAL_CONTROL40_AND_REASONING32_CPU_PASS_SAVED8_RECOVERY_V5_RUNNING",
+  "original_model_source": "da389a7031a5504495397d1575952194ffa209f1",
+  "recovery_producer": "75b3bfd1dbec24a46664a3de63d13fcb0f62d23c",
+  "repair_source": "7910acdf67d720e47cabd743bc6645419f6a8ece",
+  "evaluation_source": "58c966c358e01bbb24a196e1b6ec424697a457fc",
+  "original_cpu_checks": {
+    "schema": "dl-gcp-remaining-original-cache-preflight-v3",
+    "model_loaded": false,
+    "optimizer_updates": 0,
+    "caches": [
+      {
+        "kind": "control40",
+        "examples": 40,
+        "complete": true
+      },
+      {
+        "kind": "reasoning32",
+        "examples": 32,
+        "complete": true
+      }
+    ],
+    "cuda_initialized": false,
+    "passed": true
+  },
+  "original_cpu_service_actual_exit": 0,
+  "repair": {
+    "control40_files": 7797,
+    "control40_bytes": 8000842614,
+    "regular_hardlinks_at_original_cwd": true,
+    "original_data_and_verifiers_unchanged": true,
+    "native_python_additional_exact_packages": {
+      "openai-whisper": "20250625",
+      "whisper-timestamped": "1.15.9"
+    },
+    "dependencies_installed": false,
+    "torch_or_triton_replaced": false
+  },
+  "preserved_failures": [
+    "saved8 recovery v1,v2,v3,v4 actual exit1; no optimizer updates",
+    "CPU v1: control40 PASS then missing ASR package metadata",
+    "CPU v2: added Triton distribution metadata guard incorrect for NVIDIA installation; corrected to actual module version in v3"
+  ],
+  "copyback_receipt_hashes": {
+    "gcp-public-asr-durable-cache-v1.json": {
+      "bytes": 303,
+      "sha256": "67e8532e6a0d5af018a03705950661155fa3b24ae42f090ee781e81efc786697"
+    },
+    "gcp-control40-original-cwd-materialization-v1.json": {
+      "bytes": 92,
+      "sha256": "2116f8d546dbc1b0931b81b808a01c3276ea40f7afcd240491b82e3f09344048"
+    },
+    "gcp-remaining-original-cache-preflight-v1.log": {
+      "bytes": 8136,
+      "sha256": "380009eb5450cf3fd11e524e2747a56615d856f4508fc3b5bc78375c25394d19"
+    },
+    "gcp-native-asr-package-install-v1.log": {
+      "bytes": 1586,
+      "sha256": "cc307c8653c6a623fae1959413804db0c56e7eaebdeadd6b7895404c0416fb14"
+    },
+    "gcp-remaining-original-cache-preflight-v2.log": {
+      "bytes": 931,
+      "sha256": "cb82ddfca7edb2200ffa4b226a6829981fe13f3e2f9d8004cbab88bb0d452bf5"
+    },
+    "gcp-remaining-original-cache-preflight-v3.log": {
+      "bytes": 452,
+      "sha256": "9b96381c966ba7f0ba8e621ecb7ef3661ab4e6f5adee75339a9a2c9944aae759"
+    },
+    "gcp-remaining-original-cache-preflight-v3.json": {
+      "bytes": 351,
+      "sha256": "be7c7b24d389ec877e6a8659d15e15ba0a740ac26f59370e57eae9ce0b367514"
+    }
+  },
+  "recovery": {
+    "unit": "duplex-native-saved8-recovery-v5",
+    "main_pid": 31767,
+    "host_parent_pid": 31810,
+    "host_finalization_pid": 31847,
+    "invocation": "bf651dff49f64c918f1735d292066161",
+    "observed_utc": "2026-10-25T01:08:22Z",
+    "phase": "finalization",
+    "actual_child_exit": null,
+    "optimizer_updates": 0,
+    "output": "/workspace/migration/gcp-saved8-recovery-v5",
+    "proof": "/workspace/migration/native-reasoning32-saved8-recovered-proof-gcp-v5",
+    "proof_created_or_qualified": false
+  },
+  "model_adopted": false,
+  "behavior_qualified": false,
+  "next_action": "Poll actual same recovery-v5 and both cost guards. Separate fresh Adam/RNG restore after finalization0; strict proof only after both actual0, then unchanged full pairednative20/speech20 and behavioral gates. Zero new updates."
+}

@@ -6,7 +6,7 @@
     "portable/context/native_gcp_inputs.py": "3c74ac2fa7ae93603b9ce43f7340666acccf62c7190604130576b2dad7de3616",
     "evals/harness/test_native_gcp_inputs.py": "d59c6c740c92cfa7b0f858ca71163a086cc44b75012961e5d596051f4af7dfd4"
   },
-  "status": "ORIGINAL_CONTROL40_PASS_REASONING32_CPU_RECHECK_RUNNING_AFTER_EXACT_PACKAGE_INSTALL",
+  "status": "ORIGINAL_FULL40_FULL32_CPU_PASS_RECOVERY_V5_RUNNING",
   "focused_filesystem_tests_passed": 22,
   "cli": [
     "--root",
@@ -44,7 +44,7 @@
   "actual_input_reconstruction_executed": true,
   "actual_model_loaded": false,
   "new_optimizer_updates": 0,
-  "next_action": "Poll duplex-native-remaining-cache-preflight-v2/MainPID30217/invocationf449e3b6685c4b8aac2cd56bbc512c49. v1 original control40 complete40 passed then missing installed ASR metadata blocked reasoning32; exact two packages installed actual0. Require full original complete32 CPUcheck actual0 before distinct recovery-v5. No originalsource/gate changes or newupdates.",
+  "next_action": "Poll actual recovery-v5/MainPID31767 and dualguards; frozen producer75b3bfd. CPU full40/full32 original checks passed actual0; numerical recovery and separate restore remain unproven. Closure evidence docs/GCP-NATIVE-ORIGINAL-CACHE-CLOSURE-2026-10-25.json.",
   "head_only_bundle_sparse_clone_fixture_passed": true,
   "preserved_three_vendor_bundle_bytes_and_sha_verified_on_mac": true,
   "actual_input_reconstruction_passed": true,
