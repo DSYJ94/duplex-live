@@ -1,3 +1,77 @@
+# LOCAL — Public data and native Audio candidate acquired; foundation comparison next
+
+25 October. Latest direct human steering: acquire data, maintain the product view,
+and consider delegation or a different native backbone before more adapters/full
+fine-tuning. Source278190f0fec020ce84fb9273f61200b4b28ddbd9 is pushed. See
+[product sense check](docs/PROJECT-RESET-2026-10-25.md). LOCAL remains sole executor;
+this is NOT a handoff to cloud. No agents, other-chat messages or heartbeat started.
+
+COMPLETED acquisition, both actual process0, no restart/duplicate:
+- Dataset session85629:5092 files/14771623383bytes, upstream hashes PASS;2541
+  DailyTalk dialogues/21.674h,112960 Glaive rows,three UltraChat train_sft shards.
+  Pin/count/license/ledger hashes:docs/PUBLIC-NATIVE-DATA-ACQUISITION-2026-10-25.json.
+- Model session15229:35 files/19993772218bytes, upstream hashes PASS, actual0;
+  Realtime-Venus-Audio9B at4681004131ea1f1fb9aca9f0db76be322657cc79. Official code
+  e53ae8d5bde92b30364b26f2e4c13c9db7a8ffea statically confirms Audio integrated in
+  demos/model/adapter.py (Harness README's Omni-only naming is incomplete).
+  Receipt:docs/NATIVE-FOUNDATION-AUDIO-ACQUISITION-2026-10-25.json.
+  Earlier Omni acquisition18919/PID16491 intentionally TERM143 after choosing
+  Audio; no full Omni model claimed. Own incomplete3.735GB partials removed;
+  six identical verified assets reused. No acquisition remains running.
+- Large reproducible PUBLIC files are outside OneDrive:~/.cache/duplex-live/
+  public-data and public-models. Full ledgers/inventories/metadata remain ignored
+  in runs/public-data-20261025. No owner recordings/credentials/API payloads used.
+  Public data remains RAW CANDIDATE, not native TRAIN approval. No sealed project
+  qualification audio accessed; no test_sft/test_gen/train_gen downloaded.
+
+MODEL remains REJECTED: latest reasoning8 updates520->528,1,894,400 adapter params;
+new32 textCE-0.1234%,audioCE-0.0415%,old28 objective+0.8026%. Complete paired dev:
+ordinary2/4->1/4,speech-agreement8/10->7/10 (not task-pass counts). Quiet/pause and
+reliable async behavior remain deficient. Different older execution reported
+published-base/native5204/4 vs later strict base1complete/2partial/1wrong. Do NOT
+claim intrinsic7B incapacity or that larger parameter count fixes this. Runtime,
+precision, prompts and decoding must be recorded; compare actual native speech.
+
+Next spend recommendation is ONE frozen-weight Venus-Audio native comparison,
+not the draft sustained32 Moshi run. Exact ten development cases and proposed
+bounds:docs/NATIVE-FOUNDATION-COMPARISON-PROPOSAL-2026-10-25.json. Ordinary questions,
+Geronimo+alternate cue silence,pause/resume,pending simple follow-up,changed actual
+result,cancel/late-result suppression. No keyword mute/canned answer/forced speech.
+Default Codex backend MUST stay disabled; use isolated read-only synthetic worker,
+not other chats/agents/accounts. This tests mechanics, NOT heavy-backend reasoning
+or production qualification. VoiceChat11B is a second option only if needed; no
+second model weights acquired. Keep original native checkpoints/runtime immutable.
+
+GPU SCOPE DECISION PENDING: owner asked once via async tool to approve additional
+35USD/fourGPUh from existing credits, sameVM4443302983961393208/same250GB disk
+1828090267781080539; caps would become135USD/16 cumulativeGPUh. ZERO new optimizer
+updates, purchases, resources or external model calls. This is NOT authorized yet.
+Current authorization REMAINS100USD/12GPUh/saved8 recovery/ZEROupdates. Carry prior
+40351GPUseconds and91.9844806USD conservative scope upper forward; not an invoice.
+Fresh gcloud list actual0 found ALL FOUR GCP machines TERMINATED; readback retained
+in runs/public-data-20261025/provider-stopped-readback.json. Runpod last knownEXITED,
+not freshly rechecked this turn; recheck before any GPU start. No paid compute or
+training started for this turn. Before start: complete Git-deployed isolated launch
+source, verify free disk/runtime/price/stock, exact guards/providerSTOP/singleGPU;
+no default Codex installer/backend. Thirty-minute blocked setup limit in proposal.
+
+Critical native backup remains previously PASS40132files/81154452891B/8links plus
+closed semantic/recovery/behavior backups; no81GB rehash. Broad Mac source backup
+PARTIAL. Latest candidate not adopted. Existing application goal was reported
+PAUSED/unfinished; no fake completion or duplicate replacement goal was created.
+Human-directed local preparation continued; paid next phase awaits the decision.
+
+Parked OUR untracked local source:docs/NATIVE-SUSTAINED32-{EXPOSURE-PLAN,TRAINING-
+PROPOSAL}-2026-10-25.json and evals/native_reasoning_learning_curve.py with its
+harness test. JSONs explicitly marked PARKED; nine focused CPU tests passed, no
+GPU execution. Not the next recommendation and not included in this source push.
+Preserve UNRELATED modified timelinePYC, capability-retention-probe.py/.slurm and
+roadmap.html. Do not commit them. Next action: receive bounded comparison decision,
+then implement/launch once under actual guards; if declined remain stopped and
+finish low-cost data curation. No repeat of saved8, long backup audit or old pilot.
+
+---
+
 # LOCAL — Owner asks for proper sustained training; direction corrected, no new authorization
 
 25 October. The next proposed experiment should measure learning across checkpoints,

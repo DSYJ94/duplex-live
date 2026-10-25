@@ -1,0 +1,42 @@
+{
+  "schema": "dl-public-data-acquisition-v1",
+  "complete": true,
+  "files": 35,
+  "bytes": 19993772218,
+  "cache": "/Users/daryl/.cache/duplex-live/public-models",
+  "elapsed_s": 525.3067741394043,
+  "inventories": [
+    {
+      "repo": "inclusionAI/Realtime-Venus",
+      "revision": "4681004131ea1f1fb9aca9f0db76be322657cc79",
+      "repository_type": "model",
+      "declared_license": "apache-2.0",
+      "files": 35,
+      "bytes": 19993772218
+    }
+  ],
+  "journal_sha256": "ec06b1ab4f73f305764daf67ae649874dd16a72a49e07eefc1d2161adb8730c7",
+  "all_upstream_hashes_verified": true,
+  "owner_conversations_used": false,
+  "credentials_used": false,
+  "training_approved": false,
+  "model_adopted": false,
+  "recorded_utc": "2026-10-25T19:25:11.533570+00:00",
+  "actual_tool_session": 15229,
+  "actual_process_exit": 0,
+  "source_commit": "278190f0fec020ce84fb9273f61200b4b28ddbd9",
+  "collector_sha256": "c1c6561a3e59afd0b487ea4f8a1578e6c163141a50b81915136a3b6ecc362c1e",
+  "receipt_sha256": "d0a8c3944e1658c9cc30fd41ebd4befd470d5c4831da5e9f5c47f68be96ea41f",
+  "inventory_sha256": "7cf01e90339b8c1dfa411b423b9baf084c2be1f737df9f51b505293356ed08ae",
+  "official_code_revision": "e53ae8d5bde92b30364b26f2e4c13c9db7a8ffea",
+  "selected_variant": "Realtime-Venus-Audio",
+  "nominal_parameters": "9B",
+  "all35_physical_sizes_and_unique_paths_rechecked": true,
+  "model_loaded": false,
+  "gpu_started": false,
+  "optimizer_updates": 0,
+  "qualification_passed": false,
+  "receipt_path": "runs/public-data-20261025/venus-audio-acquisition-receipt.json",
+  "journal_path": "runs/public-data-20261025/venus-audio-acquisition-receipt.jsonl",
+  "next_action": "One bounded frozen-weight native comparison; explicit new GCP scope/budget decision pending, not covered by saved8 recovery grant."
+}
