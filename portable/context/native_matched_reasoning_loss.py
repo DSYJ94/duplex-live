@@ -24,6 +24,16 @@ FIELDS = {'native_text_calls_sha256', 'assistant_audio_logits_sha256',
           'assistant_audio_targets', 'text_targets', 'audio_mask_frames'}
 
 
+def diagnostic_deadline(now, provider_deadline, maximum_seconds):
+    """Bound preparation plus both endpoints inside the existing native STOP."""
+    if type(maximum_seconds) is not int or maximum_seconds not in (3600, 4800):
+        raise ValueError('Only the original or corrected bounded diagnostic duration is allowed')
+    if (not math.isfinite(now) or not math.isfinite(provider_deadline)
+            or provider_deadline-now < maximum_seconds+120):
+        raise ValueError('Complete diagnostic duration plus preservation margin required')
+    return now+maximum_seconds
+
+
 def read(path):
     return json.loads(Path(path).read_text())
 
@@ -267,6 +277,7 @@ def main():
     for name in ('source', 'snapshot', 'observation', 'proof', 'guard', 'out', 'lease', 'destination'):
         ap.add_argument('--'+name, type=Path, required=True)
     ap.add_argument('--producer-commit', required=True)
+    ap.add_argument('--maximum-seconds', type=int, choices=(3600, 4800), default=3600)
     ap.add_argument('--child', action='store_true')
     args = ap.parse_args()
     if os.environ.get('OPENAI_API_KEY'):
@@ -281,22 +292,23 @@ def main():
     identity, _ = verify_checkpoint(args.proof)
     initial = fresh_guard(args.guard)
     verify_resource(args, initial)
-    if (args.out.exists()
-            or initial['deadline_unix']-time.time() < 3720):
+    if args.out.exists():
         raise ValueError('Exact existing resource and complete bounded diagnostic window required')
+    deadline = diagnostic_deadline(time.time(), initial['deadline_unix'], args.maximum_seconds)
     import fcntl
     lock = (args.out.parent/'native-matched32-controller.lock').open('a')
     fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
     args.out.mkdir()
-    deadline = min(time.time()+3600, initial['deadline_unix']-120)
     command = [sys.executable, '-u', '-m', 'portable.context.native_matched_reasoning_loss',
-               '--child', '--producer-commit', args.producer_commit]
+               '--child', '--producer-commit', args.producer_commit,
+               '--maximum-seconds', str(args.maximum_seconds)]
     for name in ('source', 'snapshot', 'observation', 'proof', 'guard', 'lease', 'destination'):
         command += ['--'+name, str(getattr(args, name))]
     command += ['--out', str(args.out/'measurement')]
     state = dict(schema='dl-native-matched32-diagnostic-controller-v1', phase='starting',
                  producer_commit=args.producer_commit, proof_identity=identity,
                  optimizer_updates=0, deadline_unix=deadline, model_adopted=False)
+    state['maximum_seconds'] = args.maximum_seconds
     def save():
         temp = args.out/'controller.tmp'
         temp.write_text(json.dumps(state, indent=2)+'\n'); temp.replace(args.out/'controller.json')

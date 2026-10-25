@@ -3,7 +3,24 @@ import json
 from pathlib import Path
 import unittest
 
-from portable.context.native_matched_reasoning_loss import summarize
+from portable.context.native_matched_reasoning_loss import summarize, diagnostic_deadline
+
+
+class DiagnosticWindowTests(unittest.TestCase):
+    def test_original_and_corrected_duration_retain_preservation_margin(self):
+        self.assertEqual(diagnostic_deadline(100, 5500, 3600), 3700)
+        self.assertEqual(diagnostic_deadline(100, 5500, 4800), 4900)
+        self.assertEqual(diagnostic_deadline(100, 5020, 4800), 4900)
+
+    def test_duration_cannot_shorten_or_exceed_explicit_bounds(self):
+        for maximum in (True, 3600., 0, 3599, 3601, 4801, 5400):
+            with self.subTest(maximum=maximum), self.assertRaises(ValueError):
+                diagnostic_deadline(100, 10000, maximum)
+
+    def test_short_or_nonfinite_provider_window_cannot_start(self):
+        for end in (5019, float('nan'), float('inf')):
+            with self.subTest(end=end), self.assertRaises(ValueError):
+                diagnostic_deadline(100, end, 4800)
 
 
 class MatchedReasoningLossTests(unittest.TestCase):

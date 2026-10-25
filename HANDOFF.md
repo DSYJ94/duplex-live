@@ -1,3 +1,34 @@
+# LOCAL — Timing-only correction PREPARED; current original run unchanged/live
+
+25Oct14:50UTC. Current live full32pair at lastcopiedlog14:49:39: native52032,
+saved52818; original child deadline14:53:05.747UTC unchanged. No final result/pass.
+Code prepared in portable/context/native_matched_reasoning_loss.py keeps3600s DEFAULT,
+adds explicit4800s option with mandatory complete4800+120s remaining nativewindow.
+Both endpoints/fingerprints/frozen/adapter/RNG/checkpoint/no-grad gates UNCHANGED.
+83related local tests PASS, including rejectedshort/nonfinite/oversize/bool windows.
+No currentremote source/limits changed; runningproducer remainscd5666c.
+
+Conditional concrete plan docs/NATIVE-MATCHED32-TIMING-REPAIR-2026-10-25.json:
+ONLY if old diagnostic ACTUALLY fails its one-hour timeout, preserveactualfailure,
+stoporiginalVM, audit ALLsuccessful oldGPU+Flexstart/stopintervals (roundup/union/
+duplicateSTOPends), require prior<=37800, freshprice<=5.63 andoneGPUstate, then atmost
+ONE corrected zero-update measurement on SAME VM/disk with native5400sSTOP/child4800/
+host5100 andfreshdualguards/new exactGitworktree/new output+terminal+unit+copyback.
+Original owner grant remains100USD/12actualGPUh/oneA100/ZEROoptimizer; no per-child
+onehour limit exists in that ownerauthorization. This repairs implementationtiming
+inside originalhardware/budget, NOT a numerical/data/behaviorgate relaxation ornew
+training. Latestoriginal3600 instruction continues to govern CURRENT job unchanged.
+If current fulljob ACTUALLY succeeds, DO NOT run timingcorrection. If actualfailure
+is not TimeoutError orfreshcumulativebudget doesn'tfit, don'tlaunch it blindly.
+No duplicate/concurrentmodelrun, no repeated8updates/recovery/native20/freshpayload.
+All oldfailedoutputs/proofs/receipts remain intact. Sourcecommit/push beforeany future
+correctedexecution; nevereditcd5666c liveworktree. No correctedjobexists yet.
+
+Evidencepreserver53548/tool26003 remainslive/sourcecopyUNQUALIFIED; doNOTduplicate.
+Currentmodelunit/IDs/budgets/backups/CPUaudits asbelow; goalunfinished/unadopted.
+
+---
+
 # LOCAL — Complete baseline32 recorded; all64 losses match original BF16 readiness exactly
 
 25Oct14:36UTC. Same live diagnostic completed all32native520scenes. CPU audit
