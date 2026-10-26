@@ -1,3 +1,34 @@
+# LOCAL — Current stop point: capacity exhausted; verified model/runtime retained, behavior UNSCORED
+
+26 October11:48UTC. All three spaced warm attempts7/8/9 ACTUAL stockout; local
+wrapper session18829 exited0 because its bounded retry loop finished, NOT because
+any model evaluation passed. Every child actual1. Final provider read confirms
+four original VMs TERMINATED, replacement ABSENT; no GPU/guard/controller remains.
+No further submissions pending. Last source41c592ed04dd0f218082c8e9ed1251547e50a443.
+See docs/NATIVE-VENUS-PROGRESS-2026-10-26.json for actual native-load health, failed
+benchmark, corrected18-input preflight, exact resource IDs and final operations.
+
+Correction: use1200seconds conservative NEW-scope prior, superseding1000. Retired
+first VM's later provider lastStopTimestamp includes a failed-restart interval;
+closed provider timestamp envelopes total1106.919s. The original paid first boot
+was234.445s, but1200 safely covers all three envelopes. No GPU allocated after
+1000 was carried. Original40351seconds/91.9844806USD bound unchanged; not invoice.
+Same35USD/4h grant, cumulative135USD/16h. Preserve actual interval receipts; NEVER
+reset on another placement. No optimizer updates or external model calls.
+
+Human decision pending: docs/NATIVE-REGIONAL-PLACEMENT-PROPOSAL-2026-10-26.json
+permits supported US-central1 A10040GB zones plus one temporary100GB PUBLIC-ONLY
+boot disk, within SAME35USD/4h. Read-only quota1/usage0 and catalog zonesa/b/c/f
+verified. This new placement/storage change is NOT authorized yet. Original
+Netherlands disks/archives stay intact; no owner data/credentials move. If approved,
+finish same full10 diagnostic and interactive prototype; no new research sweep,
+training framework, re-audit of81GB, or score/adoption claim without actual audio.
+
+LOCAL remains sole executor; no cloud handoff/agents/heartbeat. App goal unfinished,
+not marked complete. Preserve unrelated PYC/probes/roadmap and parked sustained32.
+
+---
+
 # LOCAL — Native Venus loads on40GB; corrected complete10 driver; warm capacity retry next
 
 26 October. LOCAL is sole executor. User asked what Venus is and to continue to a

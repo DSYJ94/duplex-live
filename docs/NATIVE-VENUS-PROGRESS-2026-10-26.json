@@ -1,0 +1,99 @@
+{
+  "schema": "dl-venus-foundation-progress-v1",
+  "recorded_utc": "2026-10-26T11:56:14.484006+00:00",
+  "status": "NATIVE_MODEL_LOAD_VERIFIED_BEHAVIOR_UNSCORED_CAPACITY_BLOCKED",
+  "candidate": "Realtime-Venus-Audio9B",
+  "snapshot": "4681004131ea1f1fb9aca9f0db76be322657cc79",
+  "native_model_source_commit": "5a622dc2df613708fd7e0e3bb7f656b1cb315cee",
+  "dependency_repair_commit": "5c89eb1",
+  "current_source_before_report": "41c592ed04dd0f218082c8e9ed1251547e50a443",
+  "destination_hashes": {
+    "files": 35,
+    "bytes": 19993772218,
+    "all_hashes_verified": true,
+    "receipt_sha256": "f5b1eac5fb6090b958e1fe328260cc2ff0c11335d86d3f4b5d31308ff4a36242"
+  },
+  "actual_health": {
+    "ready": true,
+    "busy": false,
+    "model": "Realtime-Venus-Audio",
+    "seed": 42,
+    "torch": "2.4.0+cu121",
+    "cuda": "12.1",
+    "gpu": "NVIDIA A100-SXM4-40GB",
+    "precision": "bfloat16",
+    "attention": "sdpa",
+    "input_sample_rate": 16000,
+    "output_sample_rate": 24000,
+    "system_prompt": "Streaming Omni Conversation.",
+    "decode_mode": "sampling",
+    "max_new_speak_tokens_per_chunk": 20,
+    "temperature": 0.7,
+    "top_k": 20,
+    "top_p": 0.8,
+    "listen_prob_scale": 1.0,
+    "optimizer_updates": 0,
+    "force_listen_count": 0,
+    "listen_speak_mode": "explicit"
+  },
+  "native_unit": {
+    "invocation": "5dc666d2b3ac4350b65b55d57beb404a",
+    "main_pid": 2806,
+    "ready_utc": "2026-10-26T11:05:04.451504+00:00"
+  },
+  "first_benchmark": {
+    "invocation": "8cb1c1cd341c47f0aeac61d3a3db9f1c",
+    "actual_exit": 1,
+    "questions_run": 0,
+    "error": "Input manifest nested one level below declared path; fixed and locally preflight-tested before next model load."
+  },
+  "corrected_input_preflight": {
+    "cases": 10,
+    "recordings": 18,
+    "all_physical_hashes_and_formats_pass": true,
+    "native_behavior_pass": false
+  },
+  "runtime_protocol_cpu_tests_passed": 6,
+  "closed_resources": [
+    {
+      "vm_id": "1962162267540853286",
+      "created": "2026-10-26T03:34:49.643-07:00",
+      "last_start": "2026-10-26T03:35:24.504-07:00",
+      "last_stop": "2026-10-26T03:43:28.555-07:00",
+      "provider_timestamp_envelope_seconds": 484.0510001182556
+    },
+    {
+      "vm_id": "742566064293056781",
+      "created": "2026-10-26T03:48:02.415-07:00",
+      "last_start": "2026-10-26T03:48:35.151-07:00",
+      "last_stop": "2026-10-26T03:50:03.312-07:00",
+      "provider_timestamp_envelope_seconds": 88.16100001335144
+    },
+    {
+      "vm_id": "4809735600652586756",
+      "created": "2026-10-26T03:56:44.026-07:00",
+      "last_start": "2026-10-26T03:57:18.589-07:00",
+      "last_stop": "2026-10-26T04:06:13.296-07:00",
+      "provider_timestamp_envelope_seconds": 534.7070000171661
+    }
+  ],
+  "new_gpu_seconds_conservative_upper": 1200,
+  "prior1000_bound_superseded": true,
+  "why_bound_increased": "Later provider lastStopTimestamp on first VM includes a failed-restart interval; sum of closed provider timestamp envelopes1106.919s is conservatively covered by1200s. No new GPU was allocated after the prior1000 bound was used.",
+  "no_adoption": true,
+  "optimizer_updates": 0,
+  "external_model_calls": 0,
+  "all_compute_stopped": true,
+  "logical_replacement_absent": true,
+  "retained_disk_id": "8246893242108371884",
+  "original_disk_id_untouched": "1828090267781080539",
+  "all_original_moshi_checkpoints_optimizer_rng_and_approvals_preserved": true,
+  "backup81gb_previous_verification_unchanged": true,
+  "broad_mac_source_backup": "PARTIAL",
+  "blocked_reason": "Approved Netherlands A100 allocation returned actual stockout on all final spaced retries.",
+  "final_operations": [
+    "operation-1793014609430-65ebcbedf4609-7dadd7ef-cb5e4d3f",
+    "operation-1793014947754-65ebcd309b398-29079a35-732a9c85",
+    "operation-1793015280548-65ebce6dfbadf-4743b071-65305e4b"
+  ]
+}

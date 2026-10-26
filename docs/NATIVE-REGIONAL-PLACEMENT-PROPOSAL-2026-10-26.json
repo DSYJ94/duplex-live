@@ -1,0 +1,65 @@
+{
+  "schema": "dl-native-regional-placement-flexibility-proposal-v1",
+  "status": "PROPOSED_NOT_AUTHORIZED",
+  "purpose": "Complete the same frozen native comparison and testable prototype using supported capacity in another region; no spending increase.",
+  "current_block": "Repeated actual Netherlands A100 stockout after the working model/runtime were preserved.",
+  "resources": {
+    "project": "aurium-duplex-live-20261024",
+    "gpu": "One A10040GB/a2-highgpu-1g at a time",
+    "allowed_region": "us-central1",
+    "supported_catalog_zones": [
+      "us-central1-a",
+      "us-central1-b",
+      "us-central1-c",
+      "us-central1-f"
+    ],
+    "verified_regional_quota": 1,
+    "verified_quota_usage": 0,
+    "allowed_one_new_logical_gpu_vm_at_a_time": true,
+    "maximum_one_temporary_boot_disk_gib": 100,
+    "no_snapshot_or_extra_cpu_vm": true,
+    "public_official_gpu_image_or_cuda_container_pinned_before_launch": true,
+    "new_quota_api_activation_or_credit_purchase": false
+  },
+  "unchanged_limits": {
+    "maximum_additional_gcp_usage_usd": 35,
+    "maximum_new_scope_gpu_seconds_total": 14400,
+    "prior_new_scope_gpu_seconds_conservative_upper": 1200,
+    "prior_original_scope_gpu_seconds_upper": 40351,
+    "prior_original_scope_cost_upper_usd": 91.98448055555555,
+    "cumulative_gcp_cap_usd": 135,
+    "cumulative_gpu_cap_seconds": 57600,
+    "hourly_admission_ceiling_usd": 7.25,
+    "maximum_native_run_per_allocation_seconds": 7200,
+    "current_live_price_and_quota_required_before_creation": true,
+    "actual_allocation_intervals_must_all_be_carried_forward": true,
+    "new_optimizer_updates": 0,
+    "external_model_api_calls": 0,
+    "auto_provider_stop_and_both_independent_guards": true,
+    "stop_early_when_blocked": true
+  },
+  "data": {
+    "only_public_pinned_venus_weights_and18_authored_synthetic_development_inputs": true,
+    "maximum_candidate_public_bytes": 21000000000,
+    "maximum_diagnostic_bytes": 1000000000,
+    "no_original_native_archives_or_owner_conversations_moved": true,
+    "no_credentials_session_tokens_private_files_or_core_dumps": true,
+    "source_deployed_through_Git": true,
+    "scoped_artifact_transfer": "rsync -ar --exclude=session-token --no-owner --no-group; retain exclusions"
+  },
+  "evaluation": {
+    "same10_cases_same_original_audio_hashes": true,
+    "bfloat16_no_quantization": true,
+    "no_keyword_mute_canned_answers_or_subset_acceptance": true,
+    "no_sealed_evaluation_access": true,
+    "all_native_speech_and_worker_evidence_required": true,
+    "no_model_adoption_from_smoke_test": true
+  },
+  "cleanup": {
+    "retain_all_original_and_Netherlands_disks": true,
+    "delete_our_temporary_node_and_disk_only_after_all_unique_output_hashes_verify_on_Mac": true,
+    "no_other_resources_touched": true
+  },
+  "scope_difference": "The earlier grants fixed Netherlands placement and existing disks. This allows supported US-central1 capacity and one temporary100GB public-only boot disk inside the SAME35USD/4h total; no additional budget or purchases.",
+  "owner_authorization_received": false
+}
