@@ -17,7 +17,9 @@ OLD=BASE/'allocation-v2'
 
 
 def main():
-    c.R=BASE/'native-v8';assert not c.R.exists(),'Never duplicate a real warm restart'
+    c.R=BASE/'native-v9';assert not c.R.exists(),'Never duplicate a real warm restart'
+    for prior in BASE.glob('native-v*/events.json'):
+        assert not any(e['event']=='one_actual_warm_restart' for e in json.loads(prior.read_text())), 'Carry any actual prior warm interval before a further start'
     assert not c.run(['git','status','--porcelain','--','training/venus','data/venus','portable/venus/guard.py']).strip()
     approval=BASE/'data-approval-v7.json';assert json.loads(approval.read_text())['approved']
     a=json.loads(AUTH.read_text());r=a['existing_resource'];zone=r['zone']
@@ -30,18 +32,18 @@ def main():
     assert subprocess.run(['/bin/ps','-p',str(oldguard),'-o','pid='],capture_output=True).returncode!=0
     vms=c.cloud('compute','instances','list');assert all(v['status'] in ('TERMINATED','STOPPED') for v in vms)
     vm=next(v for v in vms if v['name']==c.NAME);assert str(vm['id'])==r['vm_id']
+    assert vm['lastStartTimestamp']==previous['lastStartTimestamp'] and vm['lastStopTimestamp']==previous['lastStopTimestamp'],'Unrecorded interval must never reset the ledger'
     disk=c.cloud('compute','disks','describe',c.NAME,'--zone='+zone);assert str(disk['id'])==r['disk_id'] and int(disk['sizeGb'])==100
     pods=read_runpod_pods(Path('runs/local-migration-20261021/.private/runpod-budget-api-key').read_text().strip());pods=pods.get('pods',[]) if isinstance(pods,dict) else pods
     assert all(p['status'] in ('EXITED','STOPPED','TERMINATED') for p in pods)
     price=json.loads(Path('runs/venus-20261026/us-current-price40-v1.json').read_text());assert 0<price['hourly_estimate_usd']<=4 and time.time()-datetime.fromisoformat(price['at_utc']).timestamp()<3600
     c.R.mkdir();c.source=c.run(['git','rev-parse','HEAD']).strip();c.remote=c.ROOT+'/duplex-venus-native-'+c.source[:12]
     c.run(['git','bundle','create',str(c.R/'source.bundle'),'HEAD'],120)
-    c.record('warm_restart_preflight',source=c.source,vm_id=r['vm_id'],disk_id=r['disk_id'],prior_new_seconds_upper=6400,next_max_seconds=6000,verified_price=price['hourly_estimate_usd'])
+    c.record('warm_restart_preflight',source=c.source,vm_id=r['vm_id'],disk_id=r['disk_id'],prior_new_seconds_upper=6400,next_max_seconds=7200,verified_price=price['hourly_estimate_usd'])
     awake=subprocess.Popen(['caffeinate','-i','-w',str(os.getpid())]);guard=None;started=False
     try:
-        # Shorter provider deadline on the stopped SAME Flex VM; no replacement.
-        c.cloud('compute','instances','set-scheduling',c.NAME,'--zone='+zone,'--max-run-duration=6000s','--instance-termination-action=STOP')
-        check=c.cloud('compute','instances','describe',c.NAME,'--zone='+zone);assert str(check['id'])==r['vm_id'] and check['status']=='TERMINATED' and int(check['scheduling']['maxRunDuration']['seconds'])==6000
+        # Flex scheduling is immutable; retain the existing authorized7200s STOP.
+        check=c.cloud('compute','instances','describe',c.NAME,'--zone='+zone);assert str(check['id'])==r['vm_id'] and check['status']=='TERMINATED' and int(check['scheduling']['maxRunDuration']['seconds'])==7200
         operation=c.cloud('compute','instances','start',c.NAME,'--zone='+zone,'--async');operation=operation[0] if isinstance(operation,list) else operation;started=True
         c.record('one_actual_warm_restart',operation=operation['name'])
         until=time.time()+180
@@ -50,7 +52,7 @@ def main():
             time.sleep(3);operation=c.cloud('compute','operations','describe',operation['name'],'--zone='+zone)
         if operation.get('error'):raise RuntimeError(json.dumps(operation['error']))
         vm=c.cloud('compute','instances','describe',c.NAME,'--zone='+zone);assert str(vm['id'])==r['vm_id'] and vm['status']=='RUNNING'
-        start=datetime.fromisoformat(vm['lastStartTimestamp']).timestamp();end=start+6000
+        start=datetime.fromisoformat(vm['lastStartTimestamp']).timestamp();end=start+7200
         c.record('actual_running',last_start=vm['lastStartTimestamp'],native_stop_unix=end)
         c.ssh_argv=json.loads((OLD/'ssh.json').read_text())
         for _ in range(20):
@@ -67,7 +69,7 @@ def main():
             if guard.poll() is not None:raise RuntimeError('Independent Mac guard ended')
             if time.time()>until:raise TimeoutError('No new live verified guard')
             time.sleep(1)
-        c.ssh('sudo systemd-run --unit=duplex-venus-native-guest-guard-v8 --property=RuntimeMaxSec=6100 --working-directory='+c.remote+' /usr/bin/python3 -u -m portable.venus.guard --guest --guard '+c.ROOT+'/venus-live-guard-v1.json --lease '+c.ROOT+'/venus-native-gradient-lease-v8.json')
+        c.ssh('sudo systemd-run --unit=duplex-venus-native-guest-guard-v8 --property=RuntimeMaxSec=7300 --working-directory='+c.remote+' /usr/bin/python3 -u -m portable.venus.guard --guest --guard '+c.ROOT+'/venus-live-guard-v1.json --lease '+c.ROOT+'/venus-native-gradient-lease-v8.json')
         assert c.props('duplex-venus-native-guest-guard-v8')['ActiveState']=='active'
         c.ssh('sudo systemctl stop duplex-venus-train-bootstrap-stop.timer');c.record('both_new_guards_live',mac_pid=guard.pid)
         py=c.ROOT+'/venus-runtime-v1/venv/bin/python';env='CUBLAS_WORKSPACE_CONFIG=:4096:8 DUPLEX_LIVE_GUARD_FILE='+c.ROOT+'/venus-live-guard-v1.json DUPLEX_LIVE_LEASE_FILE='+c.ROOT+'/venus-native-gradient-lease-v8.json HF_HOME='+c.ROOT+'/venus-runtime-v1/hf-cache'

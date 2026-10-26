@@ -1,3 +1,11 @@
+# LOCAL — Flex scheduling constraint resolved without a restart; warm native-v9 next
+
+2026-10-26T20:49:33.104673+00:00. Source5939ae7 native-v8/session63567 ACTUAL1 before ANY restart/model work: GCP rejects SetScheduling onFlexStart. VM6904003500048518959/SAMEdisk4375908109499109167 remainsTERMINATED; priorNEW6400s unchanged. Keep original approved native7200sSTOP (no provider/resource/ingress change), rather than unsupported decrease. NEW hourlyadmission remainsSTRICTER4USD; allprior6400s chargedat7.25upper. Totalmaximum13600newseconds<14400, worstscope30.888889USD<35 including6other+4semanticreserves; cumulative53951s<57600. No purchase/budgetreset. Continuationauthority updated before any lease/start; original failed histories intact.
+
+Next training.venus.native_controller uses FRESH runs/venus-training-20261026/native-v9, requires allpreviouswarmattempts had noactualstart and exactlastStart/lastStop unchanged, verifiesallGPUoff/oldguardgone, thenstartsSAMEmachine ONCE. Source uses native-segmented fullKVautograd at unchanged gates; CPU24testsPASS. All159word/peak andall224semantic alreadyPASS; no new data/API work. Observeactualoperation/units/deadline afterlaunch; NEVER repeat ontimeout. Below entries preserve history;6000sproposal is superseded by verified immutable7200s configuration within originalscope. LOCALsoleexecutor; no agents/otherchat/heartbeat; unrelated files untouched.
+
+---
+
 # LOCAL — Data fully APPROVED; fast BF16 path rejected; native-gradient continuation prepared
 
 2026-10-26T20:45:17.781768+00:00. All159 exact-word source recordings PASS full aggregate quality/peak; all224 teachers PASS independent Astra semantic review, sevenremainingrequests after reusing one exact source-bound completed batch. Full data approval runs/venus-training-20261026/data-approval-v7.json; manifest4c2f90583cbdc850b39e21867b5c00e396519e86934754846405e5b74815e08e. TRAIN152/DEV36/HOLDOUT36 unchanged; sourceplanSHAcb23a9708be2eca8ad81f6f3a94e5836948f318982504a05a0aed35bdc92785c. Repaired ONLY15 diagnosed lexical recordings in new versions; all originals/rawfailedaudits retained. Orthography-only US/UKacknowledgment and0..20digit/word normalization; no in/and orgranite/granted equivalence. Nativeword/timing/source/receipt/split gates remainfull-set.

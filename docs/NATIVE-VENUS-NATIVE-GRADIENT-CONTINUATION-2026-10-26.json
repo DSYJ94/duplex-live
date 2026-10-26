@@ -17,8 +17,8 @@
     "prior_before_interval": 4600,
     "rounded_prior_after_interval": 6400
   },
-  "maximum_single_restart_seconds": 6000,
-  "total_conservative_scope_usd": 29.555555555555557,
+  "maximum_single_restart_seconds": 7200,
+  "total_conservative_scope_usd": 30.88888888888889,
   "cumulative_gcp_cap_usd": 135,
   "cumulative_gpu_cap_seconds": 57600,
   "hourly_admission_ceiling_usd": 4,
@@ -97,5 +97,6 @@
     "broad_mac_source_backup": "PARTIAL"
   },
   "prior_hourly_cost_ceiling_usd": 7.25,
-  "price_bound_reason": "New US A10040 actual official rate3.68708363USD/hour. Tighten NEW hourly admission from7.25 to4.00; retain7.25 on ALL prior6400seconds. No cost/clock reset or increase."
+  "price_bound_reason": "New US A10040 actual official rate3.68708363USD/hour. Tighten NEW hourly admission from7.25 to4.00; retain7.25 on ALL prior6400seconds. No cost/clock reset or increase.",
+  "provider_constraint": "Actual SetScheduling request failed before any restart: Flex Start scheduling is immutable. Retain the SAME already-approved native7200sSTOP; no provider scheduling or resource change. Total13600newseconds<14400 and30.888889USD<35 at the stricter NEW4USD/hour admission."
 }
