@@ -1,3 +1,35 @@
+# LOCAL — Approved IAP works; ONE policy test is live, observe same process
+
+2026-10-26T18:12:14.457821+00:00. Human explicitly answered "Approve IAP within existing limit".
+Authority docs/NATIVE-IAP-ACCESS-AUTHORIZATION-2026-10-26.json committed84bd295;
+IAP setupactualsuccess after SDKdenyflag repair8735530. Onlyiap.googleapis.com enabled,
+twoapprovedfirewallrulesnewtagduplex-venus-iap-bounded on EXACT VM5664322998932521310/
+SAME100GBdisk7763575121976148318/us-central1-a; originalVMtags/rules/IAM unchanged.
+ActualstrictSSH18:10:15 reportsGoogleproxy35.235.241.48; no publicsourceallowlist loop.
+
+Currentcontroller toolsession62766/PID89745, guard90374, source
+b9defb86de66e607c1d378472bd669515f2c4937. Actualrestartoperation-1793038154026-65ec23a3d4c66-9ff3b9b4-3428686e,
+lastStart18:09:51.563UTC, native3600sSTOP19:09:51.563GMT. BothguardsLIVE18:10:23.
+Read events/leases/logs under runs/venus-20261026/us-policy-iap-v3. NEVER duplicate
+on observationtimeout. Modelnotloaded/questionsnotstarted atthisentry: publicweights
+fetch +isolatedbaseline-pinnedTorch2.4Python3.10 setup LIVE. Same35files/19.99GB hashes
+required, all18originalinputhashes preflight, exactbaselinepipfreeze comparebeforeload,
+actualgenericpolicytext mustmatchhealthbeforecomplete10. No newdata/heldout/APIcalls/
+training/quantization/muting/subset/adoption. Originalbaseline495files preserved.
+
+PriorNEW3600seconds +thismax3600 remainswithin14400, original40351seconds/
+91.9844806USD carried, same35USD andcumulative135USD/57600seconds. ExistingVM
+supplementalIAPauthorizationallowsonehour afterstoppedwalltime, neverresets paidhistory.
+CurrentverifiedUSNDOD3.68708363USD/hour. RunpodallEXITED/GCPothersTERMINATED precheck.
+Afterfullactualterminal anduniqueoutputhashcopybackSTOP, reviewall10; cleanupONLY
+thisVM/disk andour2IAPrules afteruniquehashesverify. Preserve partialevidence onfailure.
+
+LOCALsoleexecutor; no agents/otherchatmessages/heartbeat. No further userdecision needed
+for thisauthorizedtest. Existinggoalunfinished. PreserveunrelatedPYC/probes/roadmap and
+parked sustained32. Oldnativearchives unchanged; broadMacsourcebackup PARTIAL.
+
+---
+
 # LOCAL — Awaiting exact IAP access decision; no GPU job remains
 
 Final source7fda677 (pushed); preparedaccess +nativepolicy +workerfix;10focusedCPUtestsPASS.
