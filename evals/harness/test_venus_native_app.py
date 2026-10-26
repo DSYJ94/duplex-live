@@ -55,10 +55,10 @@ class NativeProtocolTests(unittest.IsolatedAsyncioTestCase):
         from portable.venus.guard import stamp
         raw=Path('docs/NATIVE-FOUNDATION-CAPACITY-FALLBACK-AUTHORIZATION-2026-10-26.json').read_bytes()
         start=stamp('2026-10-26T10:00:00Z')
-        lease=dict(resource_key='zone-b-a10040',vm_id='12345',authorization_sha256=hashlib.sha256(raw).hexdigest(),
+        lease=dict(resource_key='zone-b-a10040',vm_id='1962162267540853286',authorization_sha256=hashlib.sha256(raw).hexdigest(),
             creation_timestamp='2026-10-26T09:59:30Z',stop_unix=start+14000,
             prior_gpu_seconds=PRIOR_SECONDS,prior_scope_usd=PRIOR_USD)
-        vm=dict(id='12345',name='duplex-venus-audio-20261026-b-v1',zone='/europe-west4-b',status='RUNNING',
+        vm=dict(id='1962162267540853286',name='duplex-venus-audio-20261026-b-v1',zone='/europe-west4-b',status='RUNNING',
             creationTimestamp=lease['creation_timestamp'],lastStartTimestamp='2026-10-26T10:00:00Z',
             machineType='/a2-highgpu-1g',disks=[dict(source='/disks/duplex-native-stage-20261025-b-v1',boot=True,autoDelete=False)],
             scheduling=dict(provisioningModel='STANDARD',terminationTime='2026-10-26T13:53:20Z',instanceTerminationAction='STOP',automaticRestart=False))

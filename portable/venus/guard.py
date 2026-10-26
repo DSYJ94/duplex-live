@@ -61,19 +61,27 @@ def validate(vm,instances,runpods,lease,now):
     s=vm['scheduling'];start=stamp(vm['lastStartTimestamp'])
     fallback=lease.get('resource_key')=='zone-b-a10040'
     flex_b=fallback and s.get('provisioningModel')=='FLEX_START'
-    end=(start+14400 if flex_b else stamp(s['terminationTime'])) if fallback else start+5400
+    flex_seconds=int(s.get('maxRunDuration',{}).get('seconds',0)) if flex_b else 0
+    end=(start+flex_seconds if flex_b else stamp(s['terminationTime'])) if fallback else start+5400
     if fallback:
         # One replacement VM's whole wall lifetime bounds all its billed starts.
         # A restart cannot reset the approved additional four-hour allowance.
         end=min(end,stamp(vm['creationTimestamp'])+14400)
     model_ok=((s.get('provisioningModel','STANDARD')=='STANDARD' or
-               (flex_b and str(s.get('maxRunDuration',{}).get('seconds'))=='14400')) and
+               (flex_b and flex_seconds in (7200,14400))) and
               vm['creationTimestamp']==lease['creation_timestamp'] and 0<end-start<=14400) if fallback else (
               s.get('provisioningModel')=='FLEX_START' and str(s.get('maxRunDuration',{}).get('seconds'))=='5400')
     if (not model_ok or
         s.get('instanceTerminationAction')!='STOP' or s.get('automaticRestart') is not False or
         end!=lease['stop_unix'] or not start<=now<end):
         raise ValueError('Exact existing provider90min STOP deadline required')
+    if fallback and b['ident']!='1962162267540853286':
+        # Closed prior bootstrap:234.445s, rounded UP. A replacement cannot reset
+        # this consumption; use at most two hours on the queued recreation.
+        if lease.get('prior_new_gpu_seconds_upper',0)<235 or flex_seconds!=7200:
+            raise ValueError('Preserve prior bootstrap and shorter recreation allowance')
+        if lease['prior_new_gpu_seconds_upper']+flex_seconds>14400:
+            raise ValueError('Additional four-hour allowance cannot reset')
     if (PRIOR_SECONDS+14400>16*3600 or PRIOR_USD+7.25*4+6>135 or
         lease['prior_gpu_seconds']!=PRIOR_SECONDS or lease['prior_scope_usd']!=PRIOR_USD):
         raise ValueError('Cumulative budget cannot reset')
