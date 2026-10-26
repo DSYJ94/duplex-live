@@ -1,3 +1,15 @@
+# LOCAL — ONE conditional training allocation LIVE; observe, never resubmit
+
+2026-10-26T20:09:40.636041+00:00. Controller session15872, sourceaf2e36e5b3a6472953ec2ccbfe53f708178b08f6; events runs/venus-training-20261026/allocation-v2/events.json. Actual Flex operationoperation-1793044928088-65ec3ce01492d-2af8341d-f59f3aad, VM6904003500048518959/disk4375908109499109167/name duplex-venus-train-20261026-v1/us-central1-a, A10040. lastStart2026-10-26T20:02:43.480Z; native7200sSTOP22:02:43.480UTC. Both guards live: MacPID3054 and guestunitduplex-venus-train-guest-guard-v1. Strict IAP/Google hostkeys verified; only two isolated training-tag ingress rules, no IAM/API activation or purchase.
+
+Pinned public model fetch unitPID1859/invocation618686eb816f41078c3313547c4d15d0 actual0 at20:06:06; all35files/19993772218B destinationSHA verified. Setup unitPID1330/invocationface6213db16451d81b6ca498505f948 still installing exact baseline-pinned isolated runtime at this entry. NO native inference, ASR, API review or optimizer update yet. v1 controller session28889 actual1 before any resource creation due provider-invalid tag filter; fixedaf2e36e, no duplicated allocation. v2 is the ONLY actual submission.
+
+Controller will run full159 independent source word audit, exact native teacher replay and full224 independent semantic review; only then native188TRAIN+DEV cache, zero/causal proof, independent Adam/RNG restore and one sustained304-update schedule, with measured admission and all prior caps. Known corpus limits: explicit worker requests/single synthetic user voice; this is control training, not proof of implicit difficulty routing or a complete reasoning backend. Details docs/NATIVE-VENUS-CONTROL-TRAINING-RECIPE-2026-10-26.md. Candidate adoption forbidden without complete native behavior and speech retention.
+
+Observe SAME handles and actual unit terminals; do not duplicate on timeout. Preserve/hash-copyback every unique output and checkpoint on failure before resource retirement. PriorNEW4600s/original40351s/91.9844806USD carried; scope35USD/14400s unchanged. Original fourVMs TERMINATED and RunpodfiveEXITED at fresh preflight; archives/volumes retained, broadMacsourcebackupPARTIAL. LOCALsoleexecutor, no agents/otherchats/heartbeat; unrelated edits preserved. Goal unfinished.
+
+---
+
 # LOCAL — Conditional native control training authorized; source/data prepared; GPU still OFF
 
 2026-10-26T20:00:27.427228+00:00. Latest human instruction explicitly requests necessary diagnostics, then training data and training. Recorded authority docs/NATIVE-VENUS-CONTROL-TRAINING-AUTHORIZATION-2026-10-26.json supersedes old ZERO-optimizer restriction only for this new Venus intervention. SAME35USD/14400s scope; priorNEW4600s/original40351s/91.9844806USD carried, oneA10040/100GBtempdisk/IAP-only, max7200s allocation. Worst admission33.763889USD includes priorNEW GPU,6USD other reserve,4USD synthetic semantic reserve. No purchases, new IAM/API or owner-data transfer.
