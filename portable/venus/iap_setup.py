@@ -20,13 +20,22 @@ def main():
  assert all(v['status']=='TERMINATED' for v in command('compute','instances','list'))
  names=['duplex-venus-iap-ssh-v1','duplex-venus-iap-deny-other-v1']
  existing=command('compute','firewall-rules','list','--filter=name:duplex-venus-iap-')
- assert not existing,'Do not overwrite un-attributed existing firewall rules'
- (r/'before-access.json').write_text(json.dumps(dict(vm=vm,disk=disk),indent=2)+'\n')
+ before=r/'before-access.json'
+ if existing:
+  assert before.exists() and str(json.loads(before.read_text())['vm']['id'])==VM_ID,'Existing rules need this attempt attribution'
+  for rule in existing:
+   assert rule['name'] in names and rule['targetTags']==[TAG] and rule['direction']=='INGRESS'
+   if rule['name']==names[0]:
+    assert rule['priority']==800 and rule['sourceRanges']==['35.235.240.0/20'] and rule['allowed']==[{'IPProtocol':'tcp','ports':['22']}]
+   else:
+    assert rule['priority']==900 and rule['sourceRanges']==['0.0.0.0/0'] and rule['denied']==[{'IPProtocol':'all'}]
+ else:before.write_text(json.dumps(dict(vm=vm,disk=disk),indent=2)+'\n')
  command('services','enable','iap.googleapis.com')
- command('compute','firewall-rules','create',names[0],'--network=default','--direction=INGRESS','--priority=800','--source-ranges=35.235.240.0/20','--target-tags='+TAG,'--allow=tcp:22')
- command('compute','firewall-rules','create',names[1],'--network=default','--direction=INGRESS','--priority=900','--source-ranges=0.0.0.0/0','--target-tags='+TAG,'--deny=all')
+ present={x['name'] for x in existing}
+ if names[0] not in present:command('compute','firewall-rules','create',names[0],'--network=default','--direction=INGRESS','--priority=800','--source-ranges=35.235.240.0/20','--target-tags='+TAG,'--allow=tcp:22')
+ if names[1] not in present:command('compute','firewall-rules','create',names[1],'--network=default','--direction=INGRESS','--priority=900','--source-ranges=0.0.0.0/0','--target-tags='+TAG,'--action=DENY','--rules=all')
  command('compute','instances','add-tags',NAME,'--zone='+ZONE,'--tags='+TAG)
- old=vm.get('tags',{}).get('items',[])
+ old=[x for x in vm.get('tags',{}).get('items',[]) if x!=TAG]
  if old:command('compute','instances','remove-tags',NAME,'--zone='+ZONE,'--tags='+','.join(old))
  after=command('compute','instances','describe',NAME,'--zone='+ZONE)
  assert set(after['tags']['items'])=={TAG} and after['status']=='TERMINATED' and str(after['id'])==VM_ID
