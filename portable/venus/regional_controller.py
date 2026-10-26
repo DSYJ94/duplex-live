@@ -71,6 +71,10 @@ try:
  quota=cloud('regions','describe','us-central1');q={x['metric']:x for x in quota['quotas']}
  assert q['NVIDIA_A100_GPUS']['limit']>=1 and q['NVIDIA_A100_GPUS']['usage']==0
  pinned=json.loads(Path('runs/venus-20261026/us-image-pinned-v1.json').read_text());assert pinned['name']==IMAGE and pinned['status']=='READY'
+ import ipaddress
+ origin=run(['curl','-4','--noproxy','*','--silent','--show-error','--fail','--max-time','8','https://api.ipify.org'],15).strip();assert ipaddress.ip_address(origin).version==4
+ run(['gcloud','compute','firewall-rules','update','duplex-native-mac-ssh-v1','--project='+PROJECT,'--source-ranges='+origin+'/32','--quiet'])
+ record('same_controller_egress_pinned',source_ipv4=origin)
  run(['gcloud','compute','os-login','ssh-keys','add','--key-file=runs/local-migration-20261024/.private/gcp-native-ssh.pub','--ttl=3h','--project='+PROJECT,'--quiet'])
  startup=R/'bootstrap.sh';startup.write_text('#!/bin/sh\nset -eu\ntest "$(curl -sf -H \'Metadata-Flavor: Google\' http://metadata.google.internal/computeMetadata/v1/instance/name)" = '+NAME+'\nmkdir -p '+ROOT+'\nchmod 1777 '+ROOT+'\nsystemd-run --unit=duplex-venus-bootstrap-stop --on-active=600s /sbin/shutdown -h now || /sbin/shutdown -h now\n')
  if REUSE:
