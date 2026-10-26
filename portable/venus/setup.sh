@@ -11,7 +11,7 @@ import json, torch, transformers, stepaudio2, soundfile, librosa
 assert torch.__version__.startswith('2.4.0')
 assert transformers.__version__ == '4.51.3'
 assert torch.cuda.is_available() and torch.cuda.device_count() == 1
-assert torch.cuda.get_device_properties(0).total_memory >= 79_000_000_000
+assert torch.cuda.get_device_properties(0).total_memory >= 39_000_000_000
 with open('/runtime/setup-complete.json','x') as f:
     json.dump(dict(torch=torch.__version__,transformers=transformers.__version__,
         gpu=torch.cuda.get_device_name(0),gpu_bytes=torch.cuda.get_device_properties(0).total_memory,

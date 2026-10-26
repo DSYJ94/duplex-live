@@ -7,17 +7,17 @@
 <section><div id="state">Ready to connect</div><p id="words"></p><small id="work">Background worker: arithmetic only. General reasoning backend is not connected yet.</small></section>
 <p><small>Microphone audio goes to your GCP GPU through the local tunnel. This prototype does not save microphone audio or conversation transcripts.</small></p>
 <script>
-let socket,ctx,input,processor,stream,nextPlay=0,queued=0;
+let socket,ctx,input,processor,stream,nextPlay=0,queued=0,closing=false;
 const start=document.querySelector('#start'),stop=document.querySelector('#stop'),state=document.querySelector('#state'),words=document.querySelector('#words'),work=document.querySelector('#work');
-async function end(){if(processor)processor.disconnect();if(input)input.disconnect();if(stream)stream.getTracks().forEach(t=>t.stop());if(socket)socket.close();if(ctx)await ctx.close();socket=ctx=input=processor=stream=null;queued=0;nextPlay=0;start.disabled=false;stop.disabled=true;state.textContent='Conversation ended';}
+async function end(){if(closing)return;closing=true;if(socket)socket.onclose=null;if(processor)processor.disconnect();if(input)input.disconnect();if(stream)stream.getTracks().forEach(t=>t.stop());if(socket)socket.close();if(ctx)await ctx.close();socket=ctx=input=processor=stream=null;queued=0;nextPlay=0;start.disabled=false;stop.disabled=true;state.textContent='Conversation ended';closing=false;}
 start.onclick=async()=>{start.disabled=true;words.textContent='';state.textContent='Connecting…';try{
 ctx=new AudioContext({sampleRate:16000});await ctx.resume();
 if(ctx.sampleRate!==16000)throw Error('This browser did not provide16kHz audio. Try Chrome.');
 socket=new WebSocket(`${location.protocol==='https:'?'wss':'ws'}://${location.host}/ws`);
-socket.onmessage=async event=>{const m=JSON.parse(event.data);if(m.error){state.textContent=m.error;await end();return;}
+socket.onmessage=async event=>{const m=JSON.parse(event.data);if(m.error){await end();state.textContent=m.error;return;}
 if(m.ready){state.textContent='Listening';stop.disabled=false;stream=await navigator.mediaDevices.getUserMedia({audio:{channelCount:1,echoCancellation:true,noiseSuppression:true,autoGainControl:false}});input=ctx.createMediaStreamSource(stream);
 const code=`class Capture extends AudioWorkletProcessor{constructor(){super();this.b=new Float32Array(16000);this.n=0;}process(i,o){const a=i[0][0];if(a)for(const x of a){this.b[this.n++]=x;if(this.n===16000){const p=new Int16Array(16000);for(let j=0;j<16000;j++)p[j]=Math.round(Math.max(-1,Math.min(1,this.b[j]))*32767);this.port.postMessage(p.buffer,[p.buffer]);this.n=0;}}return true;}}registerProcessor('capture',Capture);`;
-const url=URL.createObjectURL(new Blob([code],{type:'application/javascript'}));await ctx.audioWorklet.addModule(url);URL.revokeObjectURL(url);processor=new AudioWorkletNode(ctx,'capture');processor.port.onmessage=e=>{if(socket?.readyState===1){if(queued>=8){state.textContent='The model cannot keep up with live audio; please reconnect.';end();return;}socket.send(e.data);queued++;}};input.connect(processor);processor.connect(ctx.destination);return;}
+const url=URL.createObjectURL(new Blob([code],{type:'application/javascript'}));await ctx.audioWorklet.addModule(url);URL.revokeObjectURL(url);processor=new AudioWorkletNode(ctx,'capture');processor.port.onmessage=e=>{if(socket?.readyState===1){if(queued>=8){end().then(()=>{state.textContent='The model cannot keep up with live audio; please reconnect.';});return;}socket.send(e.data);queued++;}};input.connect(processor);processor.connect(ctx.destination);return;}
 queued=Math.max(0,queued-1);state.textContent=m.is_listen?'Listening':'Speaking';if(m.text)words.textContent+=m.text;
 if(m.audio){const b=Uint8Array.from(atob(m.audio),c=>c.charCodeAt(0));const samples=new Float32Array(b.buffer);if(samples.length){const buf=ctx.createBuffer(1,samples.length,m.audio_sample_rate);buf.copyToChannel(samples,0);const node=ctx.createBufferSource();node.buffer=buf;node.connect(ctx.destination);nextPlay=Math.max(ctx.currentTime+.02,nextPlay);node.start(nextPlay);nextPlay+=buf.duration;}}
 for(const e of m.events||[])if(e.type.startsWith('worker_')||e.type==='native_delegate'||e.type==='cancel_requested')work.textContent=`Background work: ${e.type.replaceAll('_',' ')}${e.result?' · '+e.result:''}`;

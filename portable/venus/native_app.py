@@ -18,7 +18,11 @@ import uuid
 
 def ensure_guard():
     g=json.loads(Path(os.environ['DUPLEX_LIVE_GUARD_FILE']).read_text())
-    if (g['vm_id']!='4443302983961393208' or g['disk_id']!='1828090267781080539'
+    from .guard import resource
+    lease=json.loads(Path(os.environ['DUPLEX_LIVE_LEASE_FILE']).read_text()) if os.environ.get('DUPLEX_LIVE_LEASE_FILE') else {}
+    b=resource(lease)
+    if (g['vm_id']!=b['ident'] or g['disk_id']!=b['disk']
+            or (lease and g['authorization_sha256']!=lease['authorization_sha256'])
             or not time.time()<min(g['expires_unix'],g['stop_unix'])):
         raise RuntimeError('Independent provider/cost guard is absent or expired')
 
@@ -41,9 +45,16 @@ class ArithmeticWorker:
             for k in pending:
                 self.tasks[k].cancel()
             self.event('cancel_requested', work_id=ident, targets=pending)
+            self.tasks[ident] = asyncio.create_task(self.confirm_cancel(ident, pending))
             return ident
         self.tasks[ident] = asyncio.create_task(self.execute(ident, query))
         return ident
+
+    async def confirm_cancel(self, ident, targets):
+        await asyncio.gather(*(self.tasks[k] for k in targets), return_exceptions=True)
+        self.event('cancellation_confirmed', work_id=ident, targets=targets)
+        self.completed.append(dict(work_id=ident, cancelled_work_ids=targets,
+            result='The pending work has been cancelled.' if targets else 'No work was pending.'))
 
     async def execute(self, ident, query):
         self.event('worker_started', work_id=ident)
