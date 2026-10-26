@@ -39,12 +39,15 @@ def validate(vm,instances,runpods,lease,now):
         not any(d.get('source','').endswith('/disks/duplex-native-stage-20261024-v1') and
                 d.get('boot') and not d.get('autoDelete') for d in vm['disks'])):
         raise ValueError('Exact approved live GPU/durable disk required')
-    s=vm['scheduling'];start=stamp(vm['lastStartTimestamp']);end=start+14400
+    # Existing Flex configuration is immutable. Its shorter90min STOP is inside
+    # the approved four-hour maximum; never recreate a VM to change that field.
+    duration=5400
+    s=vm['scheduling'];start=stamp(vm['lastStartTimestamp']);end=start+duration
     if (s.get('provisioningModel')!='FLEX_START' or
-        str(s.get('maxRunDuration',{}).get('seconds'))!='14400' or
+        str(s.get('maxRunDuration',{}).get('seconds'))!=str(duration) or
         s.get('instanceTerminationAction')!='STOP' or s.get('automaticRestart') is not False or
         end!=lease['stop_unix'] or not start<=now<end):
-        raise ValueError('Exact provider four-hour STOP deadline required')
+        raise ValueError('Exact existing provider90min STOP deadline required')
     if (PRIOR_SECONDS+14400>16*3600 or PRIOR_USD+7.25*4+6>135 or
         lease['prior_gpu_seconds']!=PRIOR_SECONDS or lease['prior_scope_usd']!=PRIOR_USD):
         raise ValueError('Cumulative budget cannot reset')

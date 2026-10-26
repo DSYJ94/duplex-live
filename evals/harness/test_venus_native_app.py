@@ -36,12 +36,12 @@ class NativeProtocolTests(unittest.IsolatedAsyncioTestCase):
             zone='/europe-west4-a',status='RUNNING',machineType='/a2-ultragpu-1g',
             lastStartTimestamp='2026-10-26T08:00:00Z',
             disks=[dict(source='/disks/duplex-native-stage-20261024-v1',boot=True,autoDelete=False)],
-            scheduling=dict(provisioningModel='FLEX_START',maxRunDuration={'seconds':'14400'},
+            scheduling=dict(provisioningModel='FLEX_START',maxRunDuration={'seconds':'5400'},
                 instanceTerminationAction='STOP',automaticRestart=False))
         from portable.venus.guard import stamp
         start=stamp(vm['lastStartTimestamp'])
-        lease=dict(stop_unix=start+14400,prior_gpu_seconds=PRIOR_SECONDS,prior_scope_usd=PRIOR_USD)
-        self.assertEqual(validate(vm,[vm],[],lease,start+10),start+14400)
+        lease=dict(stop_unix=start+5400,prior_gpu_seconds=PRIOR_SECONDS,prior_scope_usd=PRIOR_USD)
+        self.assertEqual(validate(vm,[vm],[],lease,start+10),start+5400)
         with self.assertRaises(ValueError):validate(vm,[vm],[{'status':'RUNNING'}],lease,start+10)
         with self.assertRaises(ValueError):validate(vm,[vm],[],{**lease,'prior_gpu_seconds':0},start+10)
-        with self.assertRaises(ValueError):validate(vm,[vm],[],lease,start+14401)
+        with self.assertRaises(ValueError):validate(vm,[vm],[],lease,start+5401)
