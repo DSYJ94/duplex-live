@@ -1,0 +1,93 @@
+{
+  "schema": "dl-native-foundation-capacity-fallback-proposal-v1",
+  "status": "PROPOSED_NOT_AUTHORIZED",
+  "recorded_utc": "2026-10-26T09:30:43.000923+00:00",
+  "purpose": "Get the same frozen9B native comparison and prototype running despite confirmed80GB stockout; no new training recipe or larger spending request.",
+  "evidence": {
+    "original_vm_id": "4443302983961393208",
+    "actual_failed_allocation_operations": [
+      "operation-1793006555962-65ebaded91b80-0330d0e9-95040fef",
+      "operation-1793006782167-65ebaec54b958-b35c3369-7162f109"
+    ],
+    "both_terminal": "ZONE_RESOURCE_POOL_EXHAUSTED_WITH_DETAILS",
+    "vm_after_both": "TERMINATED",
+    "gpu_seconds_added": 0,
+    "model_loaded": false,
+    "region": "europe-west4",
+    "regional_a10040_quota": 1,
+    "regional_a10040_usage": 0,
+    "regional_a10080_quota": 1,
+    "regional_a10080_usage": 0
+  },
+  "unchanged_bounds": {
+    "maximum_additional_gcp_usage_usd": 35,
+    "maximum_additional_gpu_seconds": 14400,
+    "cumulative_gcp_cap_usd": 135,
+    "cumulative_gpu_cap_hours": 16,
+    "prior_gpu_seconds_upper": 40351,
+    "prior_scope_cost_upper_usd": 91.98448055555555,
+    "maximum_concurrent_gpu_jobs": 1,
+    "credit_purchases": 0,
+    "optimizer_updates": 0,
+    "external_model_api_calls": 0,
+    "model_revision": "4681004131ea1f1fb9aca9f0db76be322657cc79",
+    "all10_cases_required": true,
+    "sealed_evaluation_access": false,
+    "raw_native_audio_required": true,
+    "no_keyword_mute_or_forced_answer": true
+  },
+  "placement_sequence": [
+    {
+      "priority": 1,
+      "action": "Reuse existing stopped standard GPU VM, change toA10040GB, move the SAME durable boot disk from stopped FlexVM to it.",
+      "vm_id": "951004838667287080",
+      "name": "duplex-native-saved8-gpu-20261024-v1",
+      "zone": "europe-west4-a",
+      "machine_type": "a2-highgpu-1g",
+      "disk_id": "1828090267781080539",
+      "disk_name": "duplex-native-stage-20261024-v1",
+      "new_vm": false,
+      "new_disk": false,
+      "restore_original_disk_attachment_after_failed_allocation": true
+    },
+    {
+      "priority": 2,
+      "condition": "Only if first placement ends in actual resource-stock failure and no GPU is running.",
+      "action": "Create at most ONE replacement standard A10040GB VM using the already verified existing unattached zoneB250GB boot disk.",
+      "name": "duplex-venus-audio-20261026-b-v1",
+      "zone": "europe-west4-b",
+      "machine_type": "a2-highgpu-1g",
+      "disk_id": "8246893242108371884",
+      "disk_name": "duplex-native-stage-20261025-b-v1",
+      "new_vm": true,
+      "new_disk": false,
+      "preserve_both_existing250gb_disks": true
+    }
+  ],
+  "operating_rules": {
+    "current_official_hourly_price_must_be_verified_before_allocation": true,
+    "hourly_admission_ceiling_usd": 7.25,
+    "compute_upper_at_four_hours_usd": 29,
+    "other_reserve_usd": 6,
+    "automatic_provider_stop_seconds_maximum": 14400,
+    "independent_live_provider_cost_and_guest_guards": true,
+    "exact_resource_id_binding_before_model_load": true,
+    "strict_existing_ssh_hostkeys_and_google_oslogin": true,
+    "ingress_only_existing_mac_restricted22_rule": true,
+    "no_new_firewall_api_quota_storage_snapshot_cpu_or_credit_purchase": true,
+    "boot_disk_auto_delete": false,
+    "setup_failure_limit_seconds": 1800,
+    "precision": "bfloat16",
+    "no_quantization_or_shorter_case_subset": true,
+    "if_40gb_memory_is_insufficient": "Stop; preserve evidence; do not silently quantize or reduce quality gates.",
+    "artifact_transfer": "Same scoped35-file public model and18synthetic input clips, rsync-ar/excludesession-token/noowner/nogroup; no owner recordings, credentials or core dumps.",
+    "source_deployment": "Git commit/push/fetch",
+    "old_native_archives_optimizers_and_runtime_unchanged": true,
+    "restore_original_A_disk_attachment_on_failure": true,
+    "all_actual_start_intervals_carry_into_cumulative_caps": true
+  },
+  "scope_difference": "Allows a40GB A100, rebinds the exact VM/disk pair, and conditionally permits one new GPU VM using existing storage. The original comparison proposal explicitly forbids these resource changes, so this needs a human placement decision. It adds NO spending or GPU-time budget.",
+  "owner_authorization_received": false,
+  "new_gpu_allocated": false,
+  "model_adopted": false
+}
