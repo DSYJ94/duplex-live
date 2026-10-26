@@ -27,6 +27,14 @@ class DataTests(unittest.TestCase):
         assert wer('Go.','Go. Go.')==1
         assert wer('Stay silent','')==1
 
+    def test_repair_orthography_never_accepts_lexical_errors(self):
+        from data.venus.repair import wer as repaired_wer
+        assert repaired_wer('No acknowledgment now.','No acknowledgement now.')==0
+        assert repaired_wer('What is two plus four?','What is2 plus4?')>0 # missing spaces still differ
+        assert repaired_wer('What is two plus four?','What is 2 plus 4?')==0
+        assert repaired_wer('marker in bottle','marker and bottle')==1/3
+        assert repaired_wer('granite','granted')==1
+
     def test_training_guard_preserves_budget_and_one_gpu(self):
         raw=AUTH.read_bytes();a=json.loads(raw);start=stamp('2026-10-26T20:00:00Z')
         lease=dict(resource_key='venus-training-v1',vm_id='123',disk_id='456',zone='us-central1-a',disk_size_gib=100,creation_timestamp='2026-10-26T19:59:00Z',stop_unix=start+7200,prior_new_gpu_seconds_upper=4600,prior_gpu_seconds=40351,prior_scope_usd=a['prior_original_scope_cost_upper_usd'],authorization_sha256=hashlib.sha256(raw).hexdigest())
