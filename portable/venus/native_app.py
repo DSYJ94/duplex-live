@@ -126,6 +126,8 @@ class NativeEngine:
             system_prompt='Streaming Omni Conversation.', decode_mode='sampling',
             max_new_speak_tokens_per_chunk=20, temperature=0.7, top_k=20,
             top_p=0.8, listen_prob_scale=1.0, optimizer_updates=0)
+        self.profile.update(force_listen_count=int(self.duplex.force_listen_count),
+                            listen_speak_mode=str(self.duplex.ls_mode))
 
     def prepare(self):
         ensure_guard()

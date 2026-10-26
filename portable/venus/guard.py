@@ -84,6 +84,9 @@ def mac(args):
     key=Path(args.runpod_key).read_text().strip()
     try:
         while True:
+            if args.stop_file and Path(args.stop_file).exists():return
+            birth=run(['/bin/ps','-p',str(lease['controller_pid']),'-o','lstart=']).strip()
+            if birth!=lease['controller_birth']:raise ValueError('Controller identity no longer live')
             vm=cloud('instances','describe',NAME,'--zone='+ZONE)
             if vm['status']=='TERMINATED':return
             disk=cloud('disks','describe','duplex-native-stage-20261024-v1','--zone='+ZONE)
@@ -106,4 +109,4 @@ def mac(args):
 
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--guest',action='store_true');p.add_argument('--guard');p.add_argument('--lease');p.add_argument('--ssh-argv');p.add_argument('--runpod-key');p.add_argument('--status');args=p.parse_args();guest(args) if args.guest else mac(args)
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--guest',action='store_true');p.add_argument('--guard');p.add_argument('--lease');p.add_argument('--ssh-argv');p.add_argument('--runpod-key');p.add_argument('--status');p.add_argument('--stop-file');args=p.parse_args();guest(args) if args.guest else mac(args)
