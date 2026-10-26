@@ -1,3 +1,24 @@
+# LOCAL — US placement APPROVED; one public-only native diagnostic next
+
+26 October. Human explicitly answered "Approve US placement within $35" to the
+exact07e95d8 regional proposal. Authority is docs/NATIVE-REGIONAL-PLACEMENT-
+AUTHORIZATION-2026-10-26.json. SAME new35USD/14400GPU seconds; carry1200 prior new
+seconds plus original40351seconds/91.9844806USD bound. No optimizer/API calls.
+One US-central1 A10040GB with one temporary100GB disk; original Netherlands disks
+and archive untouched. Pinned official Google common-cu129-ubuntu-2204-nvidia-580-
+v20261019/image3569341709764027003; isolated Torch2.4 host venv, no driver rebuild.
+Seven focused protocol/budget tests and complete18-input preflight PASS locally.
+Current resource/controller/output state must be read from ignored
+runs/venus-20261026/us-v1/events.json and actual provider before any submission.
+No US resource was running at this entry. Do not duplicate on observation timeout.
+Source portable/venus/regional_controller.py runs one complete10 diagnostic then
+hash-verifies all unique output copyback and stops compute; no adoption implied.
+New14 synthetic input word audits remain pending; arithmetic worker only, no real
+reasoning backend yet. All original4 GCP VMs freshly TERMINATED before launch.
+Preserve unrelated PYC/probes/roadmap and parked sustained32 helpers.
+
+---
+
 # LOCAL — Current stop point: capacity exhausted; verified model/runtime retained, behavior UNSCORED
 
 26 October11:48UTC. All three spaced warm attempts7/8/9 ACTUAL stockout; local

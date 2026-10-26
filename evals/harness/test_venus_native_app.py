@@ -69,3 +69,22 @@ class NativeProtocolTests(unittest.IsolatedAsyncioTestCase):
         next_lease={**lease,'vm_id':'777','stop_unix':start+3600,'prior_new_gpu_seconds_upper':1200}
         self.assertEqual(validate(newer,[newer],[],next_lease,start+10),start+3600)
         with self.assertRaises(ValueError):validate(newer,[newer],[],{**next_lease,'prior_new_gpu_seconds_upper':0},start+10)
+
+    def test_regional_binding_carries_budget_and_rejects_other_zones(self):
+        import json,hashlib
+        from pathlib import Path
+        from portable.venus.guard import stamp,resource
+        raw=Path('docs/NATIVE-REGIONAL-PLACEMENT-AUTHORIZATION-2026-10-26.json').read_bytes()
+        start=stamp('2026-10-26T15:00:00Z')
+        lease=dict(resource_key='us-a10040',vm_id='123',disk_id='456',zone='us-central1-a',
+            authorization_sha256=hashlib.sha256(raw).hexdigest(),disk_size_gib=100,
+            creation_timestamp='2026-10-26T14:59:30Z',stop_unix=start+7200,
+            prior_new_gpu_seconds_upper=1200,prior_gpu_seconds=PRIOR_SECONDS,prior_scope_usd=PRIOR_USD)
+        vm=dict(id='123',name='duplex-venus-us-20261026-v1',zone='/us-central1-a',status='RUNNING',
+            creationTimestamp=lease['creation_timestamp'],lastStartTimestamp='2026-10-26T15:00:00Z',
+            machineType='/a2-highgpu-1g',disks=[dict(source='/disks/duplex-venus-us-20261026-v1',boot=True,autoDelete=False)],
+            scheduling=dict(provisioningModel='FLEX_START',maxRunDuration={'seconds':'7200'},instanceTerminationAction='STOP',automaticRestart=False))
+        self.assertEqual(validate(vm,[vm],[],lease,start+10),start+7200)
+        for bad in ({'zone':'europe-west1-b'},{'authorization_sha256':'bad'},{'prior_new_gpu_seconds_upper':0},
+                    {'disk_size_gib':250},{'prior_new_gpu_seconds_upper':10000}):
+            with self.assertRaises(ValueError):validate(vm,[vm],[],{**lease,**bad},start+10)

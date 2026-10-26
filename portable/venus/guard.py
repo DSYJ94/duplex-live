@@ -20,6 +20,18 @@ PRIOR_USD=91.98448055555555
 
 
 def resource(lease):
+    if lease.get('resource_key')=='us-a10040':
+        path=Path('docs/NATIVE-REGIONAL-PLACEMENT-AUTHORIZATION-2026-10-26.json')
+        authority=path.read_bytes();a=json.loads(authority)
+        if (a['status']!='APPROVED' or a['maximum_additional_gcp_usage_usd']!=35 or
+            a['maximum_additional_gpu_seconds']!=14400 or
+            lease.get('authorization_sha256')!=hashlib.sha256(authority).hexdigest() or
+            lease.get('zone') not in a['resources']['supported_catalog_zones'] or
+            not all(str(lease.get(k,'')).isdigit() for k in ('vm_id','disk_id'))):
+            raise ValueError('Explicit regional authority and actual resource identities required')
+        return dict(name='duplex-venus-us-20261026-v1',zone=lease['zone'],
+            ident=str(lease['vm_id']),disk=str(lease['disk_id']),disk_name='duplex-venus-us-20261026-v1',
+            machine='a2-highgpu-1g',authority=path)
     if lease.get('resource_key')=='zone-b-a10040':
         path=Path('docs/NATIVE-FOUNDATION-CAPACITY-FALLBACK-AUTHORIZATION-2026-10-26.json')
         authority=path.read_bytes();a=json.loads(authority)
@@ -60,7 +72,8 @@ def validate(vm,instances,runpods,lease,now):
     # Existing Flex configuration is immutable. Its shorter90min STOP is inside
     # the approved four-hour maximum; never recreate a VM to change that field.
     s=vm['scheduling'];start=stamp(vm['lastStartTimestamp'])
-    fallback=lease.get('resource_key')=='zone-b-a10040'
+    regional=lease.get('resource_key')=='us-a10040'
+    fallback=lease.get('resource_key') in ('zone-b-a10040','us-a10040')
     flex_b=fallback and s.get('provisioningModel')=='FLEX_START'
     flex_seconds=int(s.get('maxRunDuration',{}).get('seconds',0)) if flex_b else 0
     end=(start+flex_seconds if flex_b else stamp(s['terminationTime'])) if fallback else start+5400
@@ -83,6 +96,8 @@ def validate(vm,instances,runpods,lease,now):
             raise ValueError('Preserve prior bootstrap and shorter recreation allowance')
         if lease['prior_new_gpu_seconds_upper']+flex_seconds>14400:
             raise ValueError('Additional four-hour allowance cannot reset')
+    if regional and (flex_seconds>7200 or lease.get('disk_size_gib')!=100):
+        raise ValueError('Regional allocation must retain its shorter window and100GB limit')
     if (PRIOR_SECONDS+14400>16*3600 or PRIOR_USD+7.25*4+6>135 or
         lease['prior_gpu_seconds']!=PRIOR_SECONDS or lease['prior_scope_usd']!=PRIOR_USD):
         raise ValueError('Cumulative budget cannot reset')
@@ -130,6 +145,8 @@ def mac(args):
             if vm['status']=='TERMINATED':return
             disk=cloud('disks','describe',b['disk_name'],'--zone='+b['zone'])
             assert str(disk['id'])==b['disk']
+            if lease.get('resource_key')=='us-a10040':
+                assert int(disk['sizeGb'])==100
             pods=read_runpod_pods(key);pods=pods.get('pods',[]) if isinstance(pods,dict) else pods
             end=validate(vm,cloud('instances','list'),pods,lease,time.time())
             g=dict(vm_id=b['ident'],disk_id=b['disk'],checked_unix=time.time(),expires_unix=min(time.time()+90,end),
