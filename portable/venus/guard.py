@@ -21,6 +21,9 @@ PRIOR_USD=91.98448055555555
 
 
 def resource(lease):
+    if lease.get('resource_key')=='venus-training-v1':
+        from training.venus.guard import resource as training_resource
+        return training_resource(lease)
     if lease.get('resource_key')=='us-a10040':
         path=Path('docs/NATIVE-REGIONAL-PLACEMENT-AUTHORIZATION-2026-10-26.json')
         authority=path.read_bytes();a=json.loads(authority)
@@ -88,6 +91,9 @@ def provider_snapshot(binding,key):
 
 
 def validate(vm,instances,runpods,lease,now):
+    if lease.get('resource_key')=='venus-training-v1':
+        from training.venus.guard import validate as training_validate
+        return training_validate(vm,instances,runpods,lease,now)
     b=resource(lease)
     if (str(vm['id'])!=b['ident'] or vm['name']!=b['name'] or
         not vm['zone'].endswith('/'+b['zone']) or vm['status']!='RUNNING' or
@@ -174,7 +180,7 @@ def mac(args):
             vm,disk,instances,pods,snapshot_start=provider_snapshot(b,key)
             if vm['status']=='TERMINATED':return
             assert str(disk['id'])==b['disk']
-            if lease.get('resource_key')=='us-a10040':
+            if lease.get('resource_key') in ('us-a10040','venus-training-v1'):
                 assert int(disk['sizeGb'])==100
             pods=pods.get('pods',[]) if isinstance(pods,dict) else pods
             end=validate(vm,instances,pods,lease,time.time())

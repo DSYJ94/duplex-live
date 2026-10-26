@@ -1,0 +1,4716 @@
+{
+  "schema": "dl-venus-native-control-corpus-v2",
+  "status": "UNAPPROVED_PENDING_AUDIO_WORD_SEMANTIC_AND_NATIVE_CONVERSION",
+  "model_revision": "4681004131ea1f1fb9aca9f0db76be322657cc79",
+  "seed": 20261026,
+  "counts": {
+    "TRAIN": {
+      "quiet": 32,
+      "pause": 24,
+      "delegate": 32,
+      "pending": 16,
+      "cancel": 16,
+      "ordinary": 32
+    },
+    "DEV": {
+      "quiet": 8,
+      "pause": 4,
+      "delegate": 8,
+      "pending": 4,
+      "cancel": 4,
+      "ordinary": 8
+    },
+    "HOLDOUT": {
+      "quiet": 8,
+      "pause": 4,
+      "delegate": 8,
+      "pending": 4,
+      "cancel": 4,
+      "ordinary": 8
+    }
+  },
+  "scenes": [
+    {
+      "id": "venus-control-v1-train-ordinary-0131",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:ordinary-11",
+      "user_turns": [
+        "Why does a magnet attract an iron nail?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "Iron responds strongly to a magnetic field.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-cancel-0117",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "split_group": "TRAIN:cancel-fir",
+      "user_turns": [
+        "Ask the background worker to look up the marker in fir.",
+        "Cancel that task.",
+        "Why does a wet towel dry?"
+      ],
+      "teacher_program": {
+        "kind": "cancel_lookup",
+        "query": "lookup fir",
+        "cancel_query": "cancel pending",
+        "worker_delay_seconds": 8,
+        "cancel_acknowledgment": "Cancelled.",
+        "ordinary_answer": "Liquid water evaporates into the surrounding air.",
+        "no_cancelled_value_delivery": true
+      },
+      "synthetic_private_world": {
+        "fir": "silver crescent"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-dev-pause-0161",
+      "fold": "DEV",
+      "family": "pause",
+      "split_group": "DEV:steps-roll the cloth",
+      "user_turns": [
+        "Walk me through this slowly: roll the cloth, and then put it in the basket.",
+        "Pause now. Stay silent until I say continue.",
+        "Continue."
+      ],
+      "teacher_program": {
+        "kind": "pause_resume",
+        "first_text": "First, roll the cloth.",
+        "remaining_text": "Then, put it in the basket.",
+        "quiet_gap_seconds": 4,
+        "no_restart": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-pause-0035",
+      "fold": "TRAIN",
+      "family": "pause",
+      "split_group": "TRAIN:steps-rinse the cup",
+      "user_turns": [
+        "Explain this sequence slowly: rinse the cup, followed by dry it with a towel.",
+        "Pause now. Stay silent until I say continue.",
+        "Continue."
+      ],
+      "teacher_program": {
+        "kind": "pause_resume",
+        "first_text": "First, rinse the cup.",
+        "remaining_text": "Then, dry it with a towel.",
+        "quiet_gap_seconds": 4,
+        "no_restart": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-dev-delegate-0166",
+      "fold": "DEV",
+      "family": "delegate",
+      "split_group": "DEV:lookup-maple",
+      "user_turns": [
+        "Ask the background worker to look up the marker in maple."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup maple",
+        "worker_delay_seconds": 8,
+        "result_answer": "The marker is ivory oval.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "maple": "ivory oval"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0003",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "split_group": "TRAIN:cue-marigold",
+      "user_turns": [
+        "Do not make any spoken response until I later say marigold. Keep listening, including through pauses.",
+        "I am still thinking. Keep waiting silently.",
+        "marigold. What makes a shadow?"
+      ],
+      "teacher_program": {
+        "kind": "quiet_until_later_cue",
+        "cue": "marigold",
+        "quiet_gap_seconds": 4,
+        "release_answer": "An object blocks light and creates a shadow.",
+        "no_acknowledgment": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0000",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "split_group": "TRAIN:cue-marigold",
+      "user_turns": [
+        "Stay silent until I say marigold. Do not acknowledge this instruction. The word in this instruction is not a release.",
+        "I am still thinking. Keep waiting silently.",
+        "marigold. What makes a shadow?"
+      ],
+      "teacher_program": {
+        "kind": "quiet_until_later_cue",
+        "cue": "marigold",
+        "quiet_gap_seconds": 4,
+        "release_answer": "An object blocks light and creates a shadow.",
+        "no_acknowledgment": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0141",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:ordinary-21",
+      "user_turns": [
+        "What is the opposite of noisy?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "Quiet.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0030",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "split_group": "TRAIN:cue-velvet",
+      "user_turns": [
+        "Please listen without speaking. Wait for my later cue, velvet. Mentioning the cue now does not release you.",
+        "I am still thinking. Keep waiting silently.",
+        "velvet. What makes a shadow?"
+      ],
+      "teacher_program": {
+        "kind": "quiet_until_later_cue",
+        "cue": "velvet",
+        "quiet_gap_seconds": 4,
+        "release_answer": "An object blocks light and creates a shadow.",
+        "no_acknowledgment": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-dev-quiet-0154",
+      "fold": "DEV",
+      "family": "quiet",
+      "split_group": "DEV:cue-meadow",
+      "user_turns": [
+        "Hold your voice until I say meadow in a future turn. This instruction does not release you.",
+        "I am still thinking. Keep waiting silently.",
+        "meadow. What is a clock used for?"
+      ],
+      "teacher_program": {
+        "kind": "quiet_until_later_cue",
+        "cue": "meadow",
+        "quiet_gap_seconds": 4,
+        "release_answer": "It tells the time.",
+        "no_acknowledgment": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0008",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "split_group": "TRAIN:cue-saffron",
+      "user_turns": [
+        "Stay silent until I say saffron. Do not acknowledge this instruction. The word in this instruction is not a release.",
+        "I am still thinking. Keep waiting silently.",
+        "saffron. What makes a shadow?"
+      ],
+      "teacher_program": {
+        "kind": "quiet_until_later_cue",
+        "cue": "saffron",
+        "quiet_gap_seconds": 4,
+        "release_answer": "An object blocks light and creates a shadow.",
+        "no_acknowledgment": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0031",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "split_group": "TRAIN:cue-velvet",
+      "user_turns": [
+        "Do not make any spoken response until I later say velvet. Keep listening, including through pauses.",
+        "I am still thinking. Keep waiting silently.",
+        "velvet. What makes a shadow?"
+      ],
+      "teacher_program": {
+        "kind": "quiet_until_later_cue",
+        "cue": "velvet",
+        "quiet_gap_seconds": 4,
+        "release_answer": "An object blocks light and creates a shadow.",
+        "no_acknowledgment": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0120",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:ordinary-0",
+      "user_turns": [
+        "What makes a shadow?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "An object blocks light and creates a shadow.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0067",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "split_group": "TRAIN:lookup-elm",
+      "user_turns": [
+        "Ask the background worker to look up the marker in elm."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup elm",
+        "worker_delay_seconds": 8,
+        "result_answer": "The marker is violet circle.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "elm": "violet circle"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0018",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "split_group": "TRAIN:cue-harbour",
+      "user_turns": [
+        "Please listen without speaking. Wait for my later cue, harbour. Mentioning the cue now does not release you.",
+        "I am still thinking. Keep waiting silently.",
+        "harbour. What makes a shadow?"
+      ],
+      "teacher_program": {
+        "kind": "quiet_until_later_cue",
+        "cue": "harbour",
+        "quiet_gap_seconds": 4,
+        "release_answer": "An object blocks light and creates a shadow.",
+        "no_acknowledgment": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0126",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:ordinary-6",
+      "user_turns": [
+        "Why do we put lids on jars?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "A lid closes the opening and helps keep the contents inside.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-pause-0041",
+      "fold": "TRAIN",
+      "family": "pause",
+      "split_group": "TRAIN:steps-pick up the pencil",
+      "user_turns": [
+        "Walk me through this slowly: pick up the pencil, and then put it in the box.",
+        "Pause now. Stay silent until I say continue.",
+        "Continue."
+      ],
+      "teacher_program": {
+        "kind": "pause_resume",
+        "first_text": "First, pick up the pencil.",
+        "remaining_text": "Then, put it in the box.",
+        "quiet_gap_seconds": 4,
+        "no_restart": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0132",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:ordinary-12",
+      "user_turns": [
+        "What happens to water when it boils?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "Liquid water turns into water vapour.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-dev-quiet-0159",
+      "fold": "DEV",
+      "family": "quiet",
+      "split_group": "DEV:cue-granite",
+      "user_turns": [
+        "Listen in silence for now. The later release word is granite. Please do not reply to this instruction.",
+        "I am still thinking. Keep waiting silently.",
+        "granite. What is a clock used for?"
+      ],
+      "teacher_program": {
+        "kind": "quiet_until_later_cue",
+        "cue": "granite",
+        "quiet_gap_seconds": 4,
+        "release_answer": "It tells the time.",
+        "no_acknowledgment": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-pending-0096",
+      "fold": "TRAIN",
+      "family": "pending",
+      "split_group": "TRAIN:pending-elm",
+      "user_turns": [
+        "Ask the background worker to look up the marker in elm.",
+        "While that runs, What does a compass needle point towards?"
+      ],
+      "teacher_program": {
+        "kind": "lookup_with_followup",
+        "query": "lookup elm",
+        "worker_delay_seconds": 8,
+        "followup_answer": "It aligns with the Earth's magnetic field.",
+        "result_answer": "The marker is cobalt triangle.",
+        "answer_followup_while_pending": true,
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "elm": "cobalt triangle"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0147",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:ordinary-27",
+      "user_turns": [
+        "What do scissors do?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "They cut materials between two blades.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-holdout-quiet-0192",
+      "fold": "HOLDOUT",
+      "family": "quiet",
+      "split_group": "HOLDOUT:cue-orchard",
+      "user_turns": [
+        "Wait without speaking until my later cue orchard. Hearing it in this instruction is not the cue.",
+        "I am still thinking. Keep waiting silently.",
+        "orchard. What does a telescope help us see?"
+      ],
+      "teacher_program": {
+        "kind": "quiet_until_later_cue",
+        "cue": "orchard",
+        "quiet_gap_seconds": 4,
+        "release_answer": "Distant objects.",
+        "no_acknowledgment": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0059",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "split_group": "TRAIN:lookup-cedar",
+      "user_turns": [
+        "Ask the background worker to look up the marker in cedar."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup cedar",
+        "worker_delay_seconds": 8,
+        "result_answer": "The marker is violet circle.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "cedar": "violet circle"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0151",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:ordinary-31",
+      "user_turns": [
+        "Why can a sponge absorb water?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "Water enters the many small spaces inside it.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0011",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "split_group": "TRAIN:cue-saffron",
+      "user_turns": [
+        "Do not make any spoken response until I later say saffron. Keep listening, including through pauses.",
+        "I am still thinking. Keep waiting silently.",
+        "saffron. What makes a shadow?"
+      ],
+      "teacher_program": {
+        "kind": "quiet_until_later_cue",
+        "cue": "saffron",
+        "quiet_gap_seconds": 4,
+        "release_answer": "An object blocks light and creates a shadow.",
+        "no_acknowledgment": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-pause-0044",
+      "fold": "TRAIN",
+      "family": "pause",
+      "split_group": "TRAIN:steps-open the notebook",
+      "user_turns": [
+        "Describe these steps slowly: open the notebook, then write the date.",
+        "Pause now. Stay silent until I say continue.",
+        "Continue."
+      ],
+      "teacher_program": {
+        "kind": "pause_resume",
+        "first_text": "First, open the notebook.",
+        "remaining_text": "Then, write the date.",
+        "quiet_gap_seconds": 4,
+        "no_restart": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-holdout-ordinary-0220",
+      "fold": "HOLDOUT",
+      "family": "ordinary",
+      "split_group": "HOLDOUT:ordinary-4",
+      "user_turns": [
+        "What is the opposite of shallow?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "Deep.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-dev-delegate-0171",
+      "fold": "DEV",
+      "family": "delegate",
+      "split_group": "DEV:lookup-spruce",
+      "user_turns": [
+        "Ask the background worker to look up the marker in spruce."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup spruce",
+        "worker_delay_seconds": 8,
+        "result_answer": "The marker is teal diamond.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "spruce": "teal diamond"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0021",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "split_group": "TRAIN:cue-willow",
+      "user_turns": [
+        "I need quiet while I think. Say nothing until a later message from me says willow. No acknowledgment now.",
+        "I am still thinking. Keep waiting silently.",
+        "willow. What makes a shadow?"
+      ],
+      "teacher_program": {
+        "kind": "quiet_until_later_cue",
+        "cue": "willow",
+        "quiet_gap_seconds": 4,
+        "release_answer": "An object blocks light and creates a shadow.",
+        "no_acknowledgment": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0146",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:ordinary-26",
+      "user_turns": [
+        "What shape has no corners and is round?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "A circle.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-holdout-cancel-0212",
+      "fold": "HOLDOUT",
+      "family": "cancel",
+      "split_group": "HOLDOUT:cancel-beech",
+      "user_turns": [
+        "Ask the background worker to look up the marker in beech.",
+        "Cancel that task.",
+        "How many months are in a year?"
+      ],
+      "teacher_program": {
+        "kind": "cancel_lookup",
+        "query": "lookup beech",
+        "cancel_query": "cancel pending",
+        "worker_delay_seconds": 8,
+        "cancel_acknowledgment": "Cancelled.",
+        "ordinary_answer": "Twelve.",
+        "no_cancelled_value_delivery": true
+      },
+      "synthetic_private_world": {
+        "beech": "bronze star"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-holdout-pending-0209",
+      "fold": "HOLDOUT",
+      "family": "pending",
+      "split_group": "HOLDOUT:pending-beech",
+      "user_turns": [
+        "Ask the background worker to look up the marker in beech.",
+        "While that runs, What does a lever help us do?"
+      ],
+      "teacher_program": {
+        "kind": "lookup_with_followup",
+        "query": "lookup beech",
+        "worker_delay_seconds": 8,
+        "followup_answer": "It helps move a load using a pivot.",
+        "result_answer": "The marker is mint hexagon.",
+        "answer_followup_while_pending": true,
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "beech": "mint hexagon"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0085",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "split_group": "TRAIN:lookup-yew",
+      "user_turns": [
+        "Ask the background worker to look up the marker in yew."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup yew",
+        "worker_delay_seconds": 8,
+        "result_answer": "The marker is silver crescent.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "yew": "silver crescent"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-pause-0051",
+      "fold": "TRAIN",
+      "family": "pause",
+      "split_group": "TRAIN:steps-wash the spoon",
+      "user_turns": [
+        "Explain this sequence slowly: wash the spoon, followed by leave it on the rack.",
+        "Pause now. Stay silent until I say continue.",
+        "Continue."
+      ],
+      "teacher_program": {
+        "kind": "pause_resume",
+        "first_text": "First, wash the spoon.",
+        "remaining_text": "Then, leave it on the rack.",
+        "quiet_gap_seconds": 4,
+        "no_restart": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-cancel-0116",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "split_group": "TRAIN:cancel-fir",
+      "user_turns": [
+        "Ask the background worker to look up the marker in fir.",
+        "Cancel that task.",
+        "Why does a wet towel dry?"
+      ],
+      "teacher_program": {
+        "kind": "cancel_lookup",
+        "query": "lookup fir",
+        "cancel_query": "cancel pending",
+        "worker_delay_seconds": 8,
+        "cancel_acknowledgment": "Cancelled.",
+        "ordinary_answer": "Liquid water evaporates into the surrounding air.",
+        "no_cancelled_value_delivery": true
+      },
+      "synthetic_private_world": {
+        "fir": "cobalt triangle"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0065",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "split_group": "TRAIN:lookup-elm",
+      "user_turns": [
+        "Ask the background worker to look up the marker in elm."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup elm",
+        "worker_delay_seconds": 8,
+        "result_answer": "The marker is silver crescent.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "elm": "silver crescent"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0012",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "split_group": "TRAIN:cue-compass",
+      "user_turns": [
+        "Stay silent until I say compass. Do not acknowledge this instruction. The word in this instruction is not a release.",
+        "I am still thinking. Keep waiting silently.",
+        "compass. What makes a shadow?"
+      ],
+      "teacher_program": {
+        "kind": "quiet_until_later_cue",
+        "cue": "compass",
+        "quiet_gap_seconds": 4,
+        "release_answer": "An object blocks light and creates a shadow.",
+        "no_acknowledgment": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0060",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "split_group": "TRAIN:lookup-birch",
+      "user_turns": [
+        "Ask the background worker to look up the marker in birch."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup birch",
+        "worker_delay_seconds": 8,
+        "result_answer": "The marker is cobalt triangle.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "birch": "cobalt triangle"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-dev-quiet-0156",
+      "fold": "DEV",
+      "family": "quiet",
+      "split_group": "DEV:cue-granite",
+      "user_turns": [
+        "Please make no spoken response until a later message from me contains granite. Wait silently now.",
+        "I am still thinking. Keep waiting silently.",
+        "granite. What is a clock used for?"
+      ],
+      "teacher_program": {
+        "kind": "quiet_until_later_cue",
+        "cue": "granite",
+        "quiet_gap_seconds": 4,
+        "release_answer": "It tells the time.",
+        "no_acknowledgment": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0016",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "split_group": "TRAIN:cue-harbour",
+      "user_turns": [
+        "Stay silent until I say harbour. Do not acknowledge this instruction. The word in this instruction is not a release.",
+        "I am still thinking. Keep waiting silently.",
+        "harbour. What makes a shadow?"
+      ],
+      "teacher_program": {
+        "kind": "quiet_until_later_cue",
+        "cue": "harbour",
+        "quiet_gap_seconds": 4,
+        "release_answer": "An object blocks light and creates a shadow.",
+        "no_acknowledgment": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-holdout-delegate-0207",
+      "fold": "HOLDOUT",
+      "family": "delegate",
+      "split_group": "HOLDOUT:lookup-poplar",
+      "user_turns": [
+        "Ask the background worker to look up the marker in poplar."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup poplar",
+        "worker_delay_seconds": 8,
+        "result_answer": "The marker is coral ellipse.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "poplar": "coral ellipse"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-pause-0053",
+      "fold": "TRAIN",
+      "family": "pause",
+      "split_group": "TRAIN:steps-lift the lid",
+      "user_turns": [
+        "Walk me through this slowly: lift the lid, and then place it on the mat.",
+        "Pause now. Stay silent until I say continue.",
+        "Continue."
+      ],
+      "teacher_program": {
+        "kind": "pause_resume",
+        "first_text": "First, lift the lid.",
+        "remaining_text": "Then, place it on the mat.",
+        "quiet_gap_seconds": 4,
+        "no_restart": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0026",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "split_group": "TRAIN:cue-tulip",
+      "user_turns": [
+        "Please listen without speaking. Wait for my later cue, tulip. Mentioning the cue now does not release you.",
+        "I am still thinking. Keep waiting silently.",
+        "tulip. What makes a shadow?"
+      ],
+      "teacher_program": {
+        "kind": "quiet_until_later_cue",
+        "cue": "tulip",
+        "quiet_gap_seconds": 4,
+        "release_answer": "An object blocks light and creates a shadow.",
+        "no_acknowledgment": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-holdout-ordinary-0219",
+      "fold": "HOLDOUT",
+      "family": "ordinary",
+      "split_group": "HOLDOUT:ordinary-3",
+      "user_turns": [
+        "Why does a window have glass?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "It lets light through while closing the opening.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-dev-cancel-0179",
+      "fold": "DEV",
+      "family": "cancel",
+      "split_group": "DEV:cancel-maple",
+      "user_turns": [
+        "Ask the background worker to look up the marker in maple.",
+        "Cancel that task.",
+        "How many legs does an insect have?"
+      ],
+      "teacher_program": {
+        "kind": "cancel_lookup",
+        "query": "lookup maple",
+        "cancel_query": "cancel pending",
+        "worker_delay_seconds": 8,
+        "cancel_acknowledgment": "Cancelled.",
+        "ordinary_answer": "Six.",
+        "no_cancelled_value_delivery": true
+      },
+      "synthetic_private_world": {
+        "maple": "teal diamond"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-dev-cancel-0178",
+      "fold": "DEV",
+      "family": "cancel",
+      "split_group": "DEV:cancel-maple",
+      "user_turns": [
+        "Ask the background worker to look up the marker in maple.",
+        "Cancel that task.",
+        "How many legs does an insect have?"
+      ],
+      "teacher_program": {
+        "kind": "cancel_lookup",
+        "query": "lookup maple",
+        "cancel_query": "cancel pending",
+        "worker_delay_seconds": 8,
+        "cancel_acknowledgment": "Cancelled.",
+        "ordinary_answer": "Six.",
+        "no_cancelled_value_delivery": true
+      },
+      "synthetic_private_world": {
+        "maple": "ivory oval"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-dev-quiet-0153",
+      "fold": "DEV",
+      "family": "quiet",
+      "split_group": "DEV:cue-meadow",
+      "user_turns": [
+        "I am going to think aloud. Keep completely quiet until I later use meadow as your release signal.",
+        "I am still thinking. Keep waiting silently.",
+        "meadow. What is a clock used for?"
+      ],
+      "teacher_program": {
+        "kind": "quiet_until_later_cue",
+        "cue": "meadow",
+        "quiet_gap_seconds": 4,
+        "release_answer": "It tells the time.",
+        "no_acknowledgment": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-holdout-pause-0198",
+      "fold": "HOLDOUT",
+      "family": "pause",
+      "split_group": "HOLDOUT:steps-uncap the pen",
+      "user_turns": [
+        "Describe these steps slowly: uncap the pen, then place the cap on the desk.",
+        "Pause now. Stay silent until I say continue.",
+        "Continue."
+      ],
+      "teacher_program": {
+        "kind": "pause_resume",
+        "first_text": "First, uncap the pen.",
+        "remaining_text": "Then, place the cap on the desk.",
+        "quiet_gap_seconds": 4,
+        "no_restart": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0005",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "split_group": "TRAIN:cue-quartz",
+      "user_turns": [
+        "I need quiet while I think. Say nothing until a later message from me says quartz. No acknowledgment now.",
+        "I am still thinking. Keep waiting silently.",
+        "quartz. What makes a shadow?"
+      ],
+      "teacher_program": {
+        "kind": "quiet_until_later_cue",
+        "cue": "quartz",
+        "quiet_gap_seconds": 4,
+        "release_answer": "An object blocks light and creates a shadow.",
+        "no_acknowledgment": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-holdout-ordinary-0223",
+      "fold": "HOLDOUT",
+      "family": "ordinary",
+      "split_group": "HOLDOUT:ordinary-7",
+      "user_turns": [
+        "What does a knot do to a rope?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "It can fasten the rope or hold it in place.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0019",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "split_group": "TRAIN:cue-harbour",
+      "user_turns": [
+        "Do not make any spoken response until I later say harbour. Keep listening, including through pauses.",
+        "I am still thinking. Keep waiting silently.",
+        "harbour. What makes a shadow?"
+      ],
+      "teacher_program": {
+        "kind": "quiet_until_later_cue",
+        "cue": "harbour",
+        "quiet_gap_seconds": 4,
+        "release_answer": "An object blocks light and creates a shadow.",
+        "no_acknowledgment": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-holdout-ordinary-0217",
+      "fold": "HOLDOUT",
+      "family": "ordinary",
+      "split_group": "HOLDOUT:ordinary-1",
+      "user_turns": [
+        "How many months are in a year?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "Twelve.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-pending-0097",
+      "fold": "TRAIN",
+      "family": "pending",
+      "split_group": "TRAIN:pending-elm",
+      "user_turns": [
+        "Ask the background worker to look up the marker in elm.",
+        "While that runs, What does a compass needle point towards?"
+      ],
+      "teacher_program": {
+        "kind": "lookup_with_followup",
+        "query": "lookup elm",
+        "worker_delay_seconds": 8,
+        "followup_answer": "It aligns with the Earth's magnetic field.",
+        "result_answer": "The marker is silver crescent.",
+        "answer_followup_while_pending": true,
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "elm": "silver crescent"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-cancel-0113",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "split_group": "TRAIN:cancel-elm",
+      "user_turns": [
+        "Ask the background worker to look up the marker in elm.",
+        "Cancel that task.",
+        "Why does a wet towel dry?"
+      ],
+      "teacher_program": {
+        "kind": "cancel_lookup",
+        "query": "lookup elm",
+        "cancel_query": "cancel pending",
+        "worker_delay_seconds": 8,
+        "cancel_acknowledgment": "Cancelled.",
+        "ordinary_answer": "Liquid water evaporates into the surrounding air.",
+        "no_cancelled_value_delivery": true
+      },
+      "synthetic_private_world": {
+        "elm": "silver crescent"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-dev-pending-0175",
+      "fold": "DEV",
+      "family": "pending",
+      "split_group": "DEV:pending-maple",
+      "user_turns": [
+        "Ask the background worker to look up the marker in maple.",
+        "While that runs, What do roots take up from soil?"
+      ],
+      "teacher_program": {
+        "kind": "lookup_with_followup",
+        "query": "lookup maple",
+        "worker_delay_seconds": 8,
+        "followup_answer": "Water and dissolved minerals.",
+        "result_answer": "The marker is teal diamond.",
+        "answer_followup_while_pending": true,
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "maple": "teal diamond"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-pending-0093",
+      "fold": "TRAIN",
+      "family": "pending",
+      "split_group": "TRAIN:pending-birch",
+      "user_turns": [
+        "Ask the background worker to look up the marker in birch.",
+        "While that runs, What does a compass needle point towards?"
+      ],
+      "teacher_program": {
+        "kind": "lookup_with_followup",
+        "query": "lookup birch",
+        "worker_delay_seconds": 8,
+        "followup_answer": "It aligns with the Earth's magnetic field.",
+        "result_answer": "The marker is silver crescent.",
+        "answer_followup_while_pending": true,
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "birch": "silver crescent"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-holdout-ordinary-0222",
+      "fold": "HOLDOUT",
+      "family": "ordinary",
+      "split_group": "HOLDOUT:ordinary-6",
+      "user_turns": [
+        "What is a funnel used for?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "It guides material into a smaller opening.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-dev-cancel-0176",
+      "fold": "DEV",
+      "family": "cancel",
+      "split_group": "DEV:cancel-maple",
+      "user_turns": [
+        "Ask the background worker to look up the marker in maple.",
+        "Cancel that task.",
+        "How many legs does an insect have?"
+      ],
+      "teacher_program": {
+        "kind": "cancel_lookup",
+        "query": "lookup maple",
+        "cancel_query": "cancel pending",
+        "worker_delay_seconds": 8,
+        "cancel_acknowledgment": "Cancelled.",
+        "ordinary_answer": "Six.",
+        "no_cancelled_value_delivery": true
+      },
+      "synthetic_private_world": {
+        "maple": "golden arrow"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-holdout-pending-0211",
+      "fold": "HOLDOUT",
+      "family": "pending",
+      "split_group": "HOLDOUT:pending-beech",
+      "user_turns": [
+        "Ask the background worker to look up the marker in beech.",
+        "While that runs, What does a lever help us do?"
+      ],
+      "teacher_program": {
+        "kind": "lookup_with_followup",
+        "query": "lookup beech",
+        "worker_delay_seconds": 8,
+        "followup_answer": "It helps move a load using a pivot.",
+        "result_answer": "The marker is coral ellipse.",
+        "answer_followup_while_pending": true,
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "beech": "coral ellipse"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-holdout-quiet-0189",
+      "fold": "HOLDOUT",
+      "family": "quiet",
+      "split_group": "HOLDOUT:cue-pebble",
+      "user_turns": [
+        "For the next part, only listen. Resume speech after I later say pebble. Stay silent now.",
+        "I am still thinking. Keep waiting silently.",
+        "pebble. What does a telescope help us see?"
+      ],
+      "teacher_program": {
+        "kind": "quiet_until_later_cue",
+        "cue": "pebble",
+        "quiet_gap_seconds": 4,
+        "release_answer": "Distant objects.",
+        "no_acknowledgment": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-dev-ordinary-0184",
+      "fold": "DEV",
+      "family": "ordinary",
+      "split_group": "DEV:ordinary-4",
+      "user_turns": [
+        "What is the opposite of empty?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "Full.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-dev-pending-0173",
+      "fold": "DEV",
+      "family": "pending",
+      "split_group": "DEV:pending-maple",
+      "user_turns": [
+        "Ask the background worker to look up the marker in maple.",
+        "While that runs, What do roots take up from soil?"
+      ],
+      "teacher_program": {
+        "kind": "lookup_with_followup",
+        "query": "lookup maple",
+        "worker_delay_seconds": 8,
+        "followup_answer": "Water and dissolved minerals.",
+        "result_answer": "The marker is maroon star.",
+        "answer_followup_while_pending": true,
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "maple": "maroon star"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-dev-delegate-0170",
+      "fold": "DEV",
+      "family": "delegate",
+      "split_group": "DEV:lookup-spruce",
+      "user_turns": [
+        "Ask the background worker to look up the marker in spruce."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup spruce",
+        "worker_delay_seconds": 8,
+        "result_answer": "The marker is ivory oval.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "spruce": "ivory oval"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0076",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "split_group": "TRAIN:lookup-oak",
+      "user_turns": [
+        "Ask the background worker to look up the marker in oak."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup oak",
+        "worker_delay_seconds": 8,
+        "result_answer": "The marker is cobalt triangle.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "oak": "cobalt triangle"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-holdout-ordinary-0221",
+      "fold": "HOLDOUT",
+      "family": "ordinary",
+      "split_group": "HOLDOUT:ordinary-5",
+      "user_turns": [
+        "What is five minus two?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "Three.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-holdout-delegate-0206",
+      "fold": "HOLDOUT",
+      "family": "delegate",
+      "split_group": "HOLDOUT:lookup-poplar",
+      "user_turns": [
+        "Ask the background worker to look up the marker in poplar."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup poplar",
+        "worker_delay_seconds": 8,
+        "result_answer": "The marker is navy rectangle.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "poplar": "navy rectangle"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-cancel-0107",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "split_group": "TRAIN:cancel-cedar",
+      "user_turns": [
+        "Ask the background worker to look up the marker in cedar.",
+        "Cancel that task.",
+        "Why does a wet towel dry?"
+      ],
+      "teacher_program": {
+        "kind": "cancel_lookup",
+        "query": "lookup cedar",
+        "cancel_query": "cancel pending",
+        "worker_delay_seconds": 8,
+        "cancel_acknowledgment": "Cancelled.",
+        "ordinary_answer": "Liquid water evaporates into the surrounding air.",
+        "no_cancelled_value_delivery": true
+      },
+      "synthetic_private_world": {
+        "cedar": "violet circle"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-pause-0043",
+      "fold": "TRAIN",
+      "family": "pause",
+      "split_group": "TRAIN:steps-pick up the pencil",
+      "user_turns": [
+        "Explain this sequence slowly: pick up the pencil, followed by put it in the box.",
+        "Pause now. Stay silent until I say continue.",
+        "Continue."
+      ],
+      "teacher_program": {
+        "kind": "pause_resume",
+        "first_text": "First, pick up the pencil.",
+        "remaining_text": "Then, put it in the box.",
+        "quiet_gap_seconds": 4,
+        "no_restart": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0130",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:ordinary-10",
+      "user_turns": [
+        "Why does sugar disappear when stirred into water?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "It dissolves and spreads through the water.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0128",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:ordinary-8",
+      "user_turns": [
+        "What does a thermometer measure?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "It measures temperature.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0074",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "split_group": "TRAIN:lookup-ash",
+      "user_turns": [
+        "Ask the background worker to look up the marker in ash."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup ash",
+        "worker_delay_seconds": 8,
+        "result_answer": "The marker is amber square.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "ash": "amber square"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-holdout-delegate-0202",
+      "fold": "HOLDOUT",
+      "family": "delegate",
+      "split_group": "HOLDOUT:lookup-beech",
+      "user_turns": [
+        "Ask the background worker to look up the marker in beech."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup beech",
+        "worker_delay_seconds": 8,
+        "result_answer": "The marker is navy rectangle.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "beech": "navy rectangle"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-holdout-quiet-0191",
+      "fold": "HOLDOUT",
+      "family": "quiet",
+      "split_group": "HOLDOUT:cue-pebble",
+      "user_turns": [
+        "I need silent listening. Wait for pebble in a later message before answering me.",
+        "I am still thinking. Keep waiting silently.",
+        "pebble. What does a telescope help us see?"
+      ],
+      "teacher_program": {
+        "kind": "quiet_until_later_cue",
+        "cue": "pebble",
+        "quiet_gap_seconds": 4,
+        "release_answer": "Distant objects.",
+        "no_acknowledgment": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0143",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:ordinary-23",
+      "user_turns": [
+        "What is seven minus three?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "Four.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-pending-0092",
+      "fold": "TRAIN",
+      "family": "pending",
+      "split_group": "TRAIN:pending-birch",
+      "user_turns": [
+        "Ask the background worker to look up the marker in birch.",
+        "While that runs, What does a compass needle point towards?"
+      ],
+      "teacher_program": {
+        "kind": "lookup_with_followup",
+        "query": "lookup birch",
+        "worker_delay_seconds": 8,
+        "followup_answer": "It aligns with the Earth's magnetic field.",
+        "result_answer": "The marker is cobalt triangle.",
+        "answer_followup_while_pending": true,
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "birch": "cobalt triangle"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-dev-pause-0163",
+      "fold": "DEV",
+      "family": "pause",
+      "split_group": "DEV:steps-take the lid off",
+      "user_turns": [
+        "Walk me through this slowly: take the lid off, and then set it beside the bowl.",
+        "Pause now. Stay silent until I say continue.",
+        "Continue."
+      ],
+      "teacher_program": {
+        "kind": "pause_resume",
+        "first_text": "First, take the lid off.",
+        "remaining_text": "Then, set it beside the bowl.",
+        "quiet_gap_seconds": 4,
+        "no_restart": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0139",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:ordinary-19",
+      "user_turns": [
+        "Why is a raincoat useful in rain?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "Its material helps prevent water reaching your clothes.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-holdout-quiet-0194",
+      "fold": "HOLDOUT",
+      "family": "quiet",
+      "split_group": "HOLDOUT:cue-orchard",
+      "user_turns": [
+        "Please suppress all acknowledgments and replies until a future utterance from me says orchard.",
+        "I am still thinking. Keep waiting silently.",
+        "orchard. What does a telescope help us see?"
+      ],
+      "teacher_program": {
+        "kind": "quiet_until_later_cue",
+        "cue": "orchard",
+        "quiet_gap_seconds": 4,
+        "release_answer": "Distant objects.",
+        "no_acknowledgment": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-pause-0047",
+      "fold": "TRAIN",
+      "family": "pause",
+      "split_group": "TRAIN:steps-open the notebook",
+      "user_turns": [
+        "Explain this sequence slowly: open the notebook, followed by write the date.",
+        "Pause now. Stay silent until I say continue.",
+        "Continue."
+      ],
+      "teacher_program": {
+        "kind": "pause_resume",
+        "first_text": "First, open the notebook.",
+        "remaining_text": "Then, write the date.",
+        "quiet_gap_seconds": 4,
+        "no_restart": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-dev-pause-0160",
+      "fold": "DEV",
+      "family": "pause",
+      "split_group": "DEV:steps-roll the cloth",
+      "user_turns": [
+        "Describe these steps slowly: roll the cloth, then put it in the basket.",
+        "Pause now. Stay silent until I say continue.",
+        "Continue."
+      ],
+      "teacher_program": {
+        "kind": "pause_resume",
+        "first_text": "First, roll the cloth.",
+        "remaining_text": "Then, put it in the basket.",
+        "quiet_gap_seconds": 4,
+        "no_restart": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-dev-ordinary-0186",
+      "fold": "DEV",
+      "family": "ordinary",
+      "split_group": "DEV:ordinary-6",
+      "user_turns": [
+        "Why does a boat need a rudder?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "It helps steer the boat.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0009",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "split_group": "TRAIN:cue-saffron",
+      "user_turns": [
+        "I need quiet while I think. Say nothing until a later message from me says saffron. No acknowledgment now.",
+        "I am still thinking. Keep waiting silently.",
+        "saffron. What makes a shadow?"
+      ],
+      "teacher_program": {
+        "kind": "quiet_until_later_cue",
+        "cue": "saffron",
+        "quiet_gap_seconds": 4,
+        "release_answer": "An object blocks light and creates a shadow.",
+        "no_acknowledgment": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0145",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:ordinary-25",
+      "user_turns": [
+        "How many sides does a square have?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "Four.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-holdout-quiet-0190",
+      "fold": "HOLDOUT",
+      "family": "quiet",
+      "split_group": "HOLDOUT:cue-pebble",
+      "user_turns": [
+        "Please suppress all acknowledgments and replies until a future utterance from me says pebble.",
+        "I am still thinking. Keep waiting silently.",
+        "pebble. What does a telescope help us see?"
+      ],
+      "teacher_program": {
+        "kind": "quiet_until_later_cue",
+        "cue": "pebble",
+        "quiet_gap_seconds": 4,
+        "release_answer": "Distant objects.",
+        "no_acknowledgment": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-holdout-delegate-0200",
+      "fold": "HOLDOUT",
+      "family": "delegate",
+      "split_group": "HOLDOUT:lookup-beech",
+      "user_turns": [
+        "Ask the background worker to look up the marker in beech."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup beech",
+        "worker_delay_seconds": 8,
+        "result_answer": "The marker is bronze star.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "beech": "bronze star"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-holdout-ordinary-0216",
+      "fold": "HOLDOUT",
+      "family": "ordinary",
+      "split_group": "HOLDOUT:ordinary-0",
+      "user_turns": [
+        "What does a telescope help us see?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "Distant objects.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-holdout-ordinary-0218",
+      "fold": "HOLDOUT",
+      "family": "ordinary",
+      "split_group": "HOLDOUT:ordinary-2",
+      "user_turns": [
+        "What does a lever help us do?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "It helps move a load using a pivot.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0066",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "split_group": "TRAIN:lookup-elm",
+      "user_turns": [
+        "Ask the background worker to look up the marker in elm."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup elm",
+        "worker_delay_seconds": 8,
+        "result_answer": "The marker is amber square.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "elm": "amber square"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-pending-0089",
+      "fold": "TRAIN",
+      "family": "pending",
+      "split_group": "TRAIN:pending-cedar",
+      "user_turns": [
+        "Ask the background worker to look up the marker in cedar.",
+        "While that runs, What does a compass needle point towards?"
+      ],
+      "teacher_program": {
+        "kind": "lookup_with_followup",
+        "query": "lookup cedar",
+        "worker_delay_seconds": 8,
+        "followup_answer": "It aligns with the Earth's magnetic field.",
+        "result_answer": "The marker is silver crescent.",
+        "answer_followup_while_pending": true,
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "cedar": "silver crescent"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-pause-0054",
+      "fold": "TRAIN",
+      "family": "pause",
+      "split_group": "TRAIN:steps-lift the lid",
+      "user_turns": [
+        "Give me the steps one at a time: lift the lid, then place it on the mat.",
+        "Pause now. Stay silent until I say continue.",
+        "Continue."
+      ],
+      "teacher_program": {
+        "kind": "pause_resume",
+        "first_text": "First, lift the lid.",
+        "remaining_text": "Then, place it on the mat.",
+        "quiet_gap_seconds": 4,
+        "no_restart": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-cancel-0111",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "split_group": "TRAIN:cancel-birch",
+      "user_turns": [
+        "Ask the background worker to look up the marker in birch.",
+        "Cancel that task.",
+        "Why does a wet towel dry?"
+      ],
+      "teacher_program": {
+        "kind": "cancel_lookup",
+        "query": "lookup birch",
+        "cancel_query": "cancel pending",
+        "worker_delay_seconds": 8,
+        "cancel_acknowledgment": "Cancelled.",
+        "ordinary_answer": "Liquid water evaporates into the surrounding air.",
+        "no_cancelled_value_delivery": true
+      },
+      "synthetic_private_world": {
+        "birch": "violet circle"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-pause-0048",
+      "fold": "TRAIN",
+      "family": "pause",
+      "split_group": "TRAIN:steps-wash the spoon",
+      "user_turns": [
+        "Describe these steps slowly: wash the spoon, then leave it on the rack.",
+        "Pause now. Stay silent until I say continue.",
+        "Continue."
+      ],
+      "teacher_program": {
+        "kind": "pause_resume",
+        "first_text": "First, wash the spoon.",
+        "remaining_text": "Then, leave it on the rack.",
+        "quiet_gap_seconds": 4,
+        "no_restart": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-pause-0038",
+      "fold": "TRAIN",
+      "family": "pause",
+      "split_group": "TRAIN:steps-fold the shirt",
+      "user_turns": [
+        "Give me the steps one at a time: fold the shirt, then place it in the drawer.",
+        "Pause now. Stay silent until I say continue.",
+        "Continue."
+      ],
+      "teacher_program": {
+        "kind": "pause_resume",
+        "first_text": "First, fold the shirt.",
+        "remaining_text": "Then, place it in the drawer.",
+        "quiet_gap_seconds": 4,
+        "no_restart": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-pending-0088",
+      "fold": "TRAIN",
+      "family": "pending",
+      "split_group": "TRAIN:pending-cedar",
+      "user_turns": [
+        "Ask the background worker to look up the marker in cedar.",
+        "While that runs, What does a compass needle point towards?"
+      ],
+      "teacher_program": {
+        "kind": "lookup_with_followup",
+        "query": "lookup cedar",
+        "worker_delay_seconds": 8,
+        "followup_answer": "It aligns with the Earth's magnetic field.",
+        "result_answer": "The marker is cobalt triangle.",
+        "answer_followup_while_pending": true,
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "cedar": "cobalt triangle"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-pause-0046",
+      "fold": "TRAIN",
+      "family": "pause",
+      "split_group": "TRAIN:steps-open the notebook",
+      "user_turns": [
+        "Give me the steps one at a time: open the notebook, then write the date.",
+        "Pause now. Stay silent until I say continue.",
+        "Continue."
+      ],
+      "teacher_program": {
+        "kind": "pause_resume",
+        "first_text": "First, open the notebook.",
+        "remaining_text": "Then, write the date.",
+        "quiet_gap_seconds": 4,
+        "no_restart": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-holdout-cancel-0214",
+      "fold": "HOLDOUT",
+      "family": "cancel",
+      "split_group": "HOLDOUT:cancel-beech",
+      "user_turns": [
+        "Ask the background worker to look up the marker in beech.",
+        "Cancel that task.",
+        "How many months are in a year?"
+      ],
+      "teacher_program": {
+        "kind": "cancel_lookup",
+        "query": "lookup beech",
+        "cancel_query": "cancel pending",
+        "worker_delay_seconds": 8,
+        "cancel_acknowledgment": "Cancelled.",
+        "ordinary_answer": "Twelve.",
+        "no_cancelled_value_delivery": true
+      },
+      "synthetic_private_world": {
+        "beech": "navy rectangle"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-dev-ordinary-0187",
+      "fold": "DEV",
+      "family": "ordinary",
+      "split_group": "DEV:ordinary-7",
+      "user_turns": [
+        "What is a bookmark for?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "It marks a place in a book.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0062",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "split_group": "TRAIN:lookup-birch",
+      "user_turns": [
+        "Ask the background worker to look up the marker in birch."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup birch",
+        "worker_delay_seconds": 8,
+        "result_answer": "The marker is amber square.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "birch": "amber square"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0081",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "split_group": "TRAIN:lookup-pine",
+      "user_turns": [
+        "Ask the background worker to look up the marker in pine."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup pine",
+        "worker_delay_seconds": 8,
+        "result_answer": "The marker is silver crescent.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "pine": "silver crescent"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-pause-0040",
+      "fold": "TRAIN",
+      "family": "pause",
+      "split_group": "TRAIN:steps-pick up the pencil",
+      "user_turns": [
+        "Describe these steps slowly: pick up the pencil, then put it in the box.",
+        "Pause now. Stay silent until I say continue.",
+        "Continue."
+      ],
+      "teacher_program": {
+        "kind": "pause_resume",
+        "first_text": "First, pick up the pencil.",
+        "remaining_text": "Then, put it in the box.",
+        "quiet_gap_seconds": 4,
+        "no_restart": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0142",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:ordinary-22",
+      "user_turns": [
+        "What is two plus four?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "Six.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-pause-0036",
+      "fold": "TRAIN",
+      "family": "pause",
+      "split_group": "TRAIN:steps-fold the shirt",
+      "user_turns": [
+        "Describe these steps slowly: fold the shirt, then place it in the drawer.",
+        "Pause now. Stay silent until I say continue.",
+        "Continue."
+      ],
+      "teacher_program": {
+        "kind": "pause_resume",
+        "first_text": "First, fold the shirt.",
+        "remaining_text": "Then, place it in the drawer.",
+        "quiet_gap_seconds": 4,
+        "no_restart": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0056",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "split_group": "TRAIN:lookup-cedar",
+      "user_turns": [
+        "Ask the background worker to look up the marker in cedar."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup cedar",
+        "worker_delay_seconds": 8,
+        "result_answer": "The marker is cobalt triangle.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "cedar": "cobalt triangle"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0010",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "split_group": "TRAIN:cue-saffron",
+      "user_turns": [
+        "Please listen without speaking. Wait for my later cue, saffron. Mentioning the cue now does not release you.",
+        "I am still thinking. Keep waiting silently.",
+        "saffron. What makes a shadow?"
+      ],
+      "teacher_program": {
+        "kind": "quiet_until_later_cue",
+        "cue": "saffron",
+        "quiet_gap_seconds": 4,
+        "release_answer": "An object blocks light and creates a shadow.",
+        "no_acknowledgment": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0027",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "split_group": "TRAIN:cue-tulip",
+      "user_turns": [
+        "Do not make any spoken response until I later say tulip. Keep listening, including through pauses.",
+        "I am still thinking. Keep waiting silently.",
+        "tulip. What makes a shadow?"
+      ],
+      "teacher_program": {
+        "kind": "quiet_until_later_cue",
+        "cue": "tulip",
+        "quiet_gap_seconds": 4,
+        "release_answer": "An object blocks light and creates a shadow.",
+        "no_acknowledgment": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0004",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "split_group": "TRAIN:cue-quartz",
+      "user_turns": [
+        "Stay silent until I say quartz. Do not acknowledge this instruction. The word in this instruction is not a release.",
+        "I am still thinking. Keep waiting silently.",
+        "quartz. What makes a shadow?"
+      ],
+      "teacher_program": {
+        "kind": "quiet_until_later_cue",
+        "cue": "quartz",
+        "quiet_gap_seconds": 4,
+        "release_answer": "An object blocks light and creates a shadow.",
+        "no_acknowledgment": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0063",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "split_group": "TRAIN:lookup-birch",
+      "user_turns": [
+        "Ask the background worker to look up the marker in birch."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup birch",
+        "worker_delay_seconds": 8,
+        "result_answer": "The marker is violet circle.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "birch": "violet circle"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-dev-delegate-0169",
+      "fold": "DEV",
+      "family": "delegate",
+      "split_group": "DEV:lookup-spruce",
+      "user_turns": [
+        "Ask the background worker to look up the marker in spruce."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup spruce",
+        "worker_delay_seconds": 8,
+        "result_answer": "The marker is maroon star.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "spruce": "maroon star"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-cancel-0114",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "split_group": "TRAIN:cancel-elm",
+      "user_turns": [
+        "Ask the background worker to look up the marker in elm.",
+        "Cancel that task.",
+        "Why does a wet towel dry?"
+      ],
+      "teacher_program": {
+        "kind": "cancel_lookup",
+        "query": "lookup elm",
+        "cancel_query": "cancel pending",
+        "worker_delay_seconds": 8,
+        "cancel_acknowledgment": "Cancelled.",
+        "ordinary_answer": "Liquid water evaporates into the surrounding air.",
+        "no_cancelled_value_delivery": true
+      },
+      "synthetic_private_world": {
+        "elm": "amber square"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0150",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:ordinary-30",
+      "user_turns": [
+        "What is a map used for?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "It shows locations and how places relate to each other.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0023",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "split_group": "TRAIN:cue-willow",
+      "user_turns": [
+        "Do not make any spoken response until I later say willow. Keep listening, including through pauses.",
+        "I am still thinking. Keep waiting silently.",
+        "willow. What makes a shadow?"
+      ],
+      "teacher_program": {
+        "kind": "quiet_until_later_cue",
+        "cue": "willow",
+        "quiet_gap_seconds": 4,
+        "release_answer": "An object blocks light and creates a shadow.",
+        "no_acknowledgment": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-cancel-0109",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "split_group": "TRAIN:cancel-birch",
+      "user_turns": [
+        "Ask the background worker to look up the marker in birch.",
+        "Cancel that task.",
+        "Why does a wet towel dry?"
+      ],
+      "teacher_program": {
+        "kind": "cancel_lookup",
+        "query": "lookup birch",
+        "cancel_query": "cancel pending",
+        "worker_delay_seconds": 8,
+        "cancel_acknowledgment": "Cancelled.",
+        "ordinary_answer": "Liquid water evaporates into the surrounding air.",
+        "no_cancelled_value_delivery": true
+      },
+      "synthetic_private_world": {
+        "birch": "silver crescent"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0083",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "split_group": "TRAIN:lookup-pine",
+      "user_turns": [
+        "Ask the background worker to look up the marker in pine."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup pine",
+        "worker_delay_seconds": 8,
+        "result_answer": "The marker is violet circle.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "pine": "violet circle"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-pending-0098",
+      "fold": "TRAIN",
+      "family": "pending",
+      "split_group": "TRAIN:pending-elm",
+      "user_turns": [
+        "Ask the background worker to look up the marker in elm.",
+        "While that runs, What does a compass needle point towards?"
+      ],
+      "teacher_program": {
+        "kind": "lookup_with_followup",
+        "query": "lookup elm",
+        "worker_delay_seconds": 8,
+        "followup_answer": "It aligns with the Earth's magnetic field.",
+        "result_answer": "The marker is amber square.",
+        "answer_followup_while_pending": true,
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "elm": "amber square"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-pause-0045",
+      "fold": "TRAIN",
+      "family": "pause",
+      "split_group": "TRAIN:steps-open the notebook",
+      "user_turns": [
+        "Walk me through this slowly: open the notebook, and then write the date.",
+        "Pause now. Stay silent until I say continue.",
+        "Continue."
+      ],
+      "teacher_program": {
+        "kind": "pause_resume",
+        "first_text": "First, open the notebook.",
+        "remaining_text": "Then, write the date.",
+        "quiet_gap_seconds": 4,
+        "no_restart": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0123",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:ordinary-3",
+      "user_turns": [
+        "Why does a ball fall when I let go?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "Gravity pulls it towards the ground.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-dev-delegate-0164",
+      "fold": "DEV",
+      "family": "delegate",
+      "split_group": "DEV:lookup-maple",
+      "user_turns": [
+        "Ask the background worker to look up the marker in maple."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup maple",
+        "worker_delay_seconds": 8,
+        "result_answer": "The marker is golden arrow.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "maple": "golden arrow"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0007",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "split_group": "TRAIN:cue-quartz",
+      "user_turns": [
+        "Do not make any spoken response until I later say quartz. Keep listening, including through pauses.",
+        "I am still thinking. Keep waiting silently.",
+        "quartz. What makes a shadow?"
+      ],
+      "teacher_program": {
+        "kind": "quiet_until_later_cue",
+        "cue": "quartz",
+        "quiet_gap_seconds": 4,
+        "release_answer": "An object blocks light and creates a shadow.",
+        "no_acknowledgment": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-cancel-0106",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "split_group": "TRAIN:cancel-cedar",
+      "user_turns": [
+        "Ask the background worker to look up the marker in cedar.",
+        "Cancel that task.",
+        "Why does a wet towel dry?"
+      ],
+      "teacher_program": {
+        "kind": "cancel_lookup",
+        "query": "lookup cedar",
+        "cancel_query": "cancel pending",
+        "worker_delay_seconds": 8,
+        "cancel_acknowledgment": "Cancelled.",
+        "ordinary_answer": "Liquid water evaporates into the surrounding air.",
+        "no_cancelled_value_delivery": true
+      },
+      "synthetic_private_world": {
+        "cedar": "amber square"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-holdout-cancel-0215",
+      "fold": "HOLDOUT",
+      "family": "cancel",
+      "split_group": "HOLDOUT:cancel-beech",
+      "user_turns": [
+        "Ask the background worker to look up the marker in beech.",
+        "Cancel that task.",
+        "How many months are in a year?"
+      ],
+      "teacher_program": {
+        "kind": "cancel_lookup",
+        "query": "lookup beech",
+        "cancel_query": "cancel pending",
+        "worker_delay_seconds": 8,
+        "cancel_acknowledgment": "Cancelled.",
+        "ordinary_answer": "Twelve.",
+        "no_cancelled_value_delivery": true
+      },
+      "synthetic_private_world": {
+        "beech": "coral ellipse"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0001",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "split_group": "TRAIN:cue-marigold",
+      "user_turns": [
+        "I need quiet while I think. Say nothing until a later message from me says marigold. No acknowledgment now.",
+        "I am still thinking. Keep waiting silently.",
+        "marigold. What makes a shadow?"
+      ],
+      "teacher_program": {
+        "kind": "quiet_until_later_cue",
+        "cue": "marigold",
+        "quiet_gap_seconds": 4,
+        "release_answer": "An object blocks light and creates a shadow.",
+        "no_acknowledgment": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0006",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "split_group": "TRAIN:cue-quartz",
+      "user_turns": [
+        "Please listen without speaking. Wait for my later cue, quartz. Mentioning the cue now does not release you.",
+        "I am still thinking. Keep waiting silently.",
+        "quartz. What makes a shadow?"
+      ],
+      "teacher_program": {
+        "kind": "quiet_until_later_cue",
+        "cue": "quartz",
+        "quiet_gap_seconds": 4,
+        "release_answer": "An object blocks light and creates a shadow.",
+        "no_acknowledgment": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-dev-ordinary-0182",
+      "fold": "DEV",
+      "family": "ordinary",
+      "split_group": "DEV:ordinary-2",
+      "user_turns": [
+        "What do roots take up from soil?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "Water and dissolved minerals.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0125",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:ordinary-5",
+      "user_turns": [
+        "Why does a mirror show my face?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "Its smooth surface reflects light from your face.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-holdout-delegate-0205",
+      "fold": "HOLDOUT",
+      "family": "delegate",
+      "split_group": "HOLDOUT:lookup-poplar",
+      "user_turns": [
+        "Ask the background worker to look up the marker in poplar."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup poplar",
+        "worker_delay_seconds": 8,
+        "result_answer": "The marker is mint hexagon.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "poplar": "mint hexagon"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-cancel-0112",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "split_group": "TRAIN:cancel-elm",
+      "user_turns": [
+        "Ask the background worker to look up the marker in elm.",
+        "Cancel that task.",
+        "Why does a wet towel dry?"
+      ],
+      "teacher_program": {
+        "kind": "cancel_lookup",
+        "query": "lookup elm",
+        "cancel_query": "cancel pending",
+        "worker_delay_seconds": 8,
+        "cancel_acknowledgment": "Cancelled.",
+        "ordinary_answer": "Liquid water evaporates into the surrounding air.",
+        "no_cancelled_value_delivery": true
+      },
+      "synthetic_private_world": {
+        "elm": "cobalt triangle"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0073",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "split_group": "TRAIN:lookup-ash",
+      "user_turns": [
+        "Ask the background worker to look up the marker in ash."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup ash",
+        "worker_delay_seconds": 8,
+        "result_answer": "The marker is silver crescent.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "ash": "silver crescent"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0068",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "split_group": "TRAIN:lookup-fir",
+      "user_turns": [
+        "Ask the background worker to look up the marker in fir."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup fir",
+        "worker_delay_seconds": 8,
+        "result_answer": "The marker is cobalt triangle.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "fir": "cobalt triangle"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0133",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:ordinary-13",
+      "user_turns": [
+        "Why does the Moon appear bright?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "It reflects sunlight.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0080",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "split_group": "TRAIN:lookup-pine",
+      "user_turns": [
+        "Ask the background worker to look up the marker in pine."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup pine",
+        "worker_delay_seconds": 8,
+        "result_answer": "The marker is cobalt triangle.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "pine": "cobalt triangle"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0077",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "split_group": "TRAIN:lookup-oak",
+      "user_turns": [
+        "Ask the background worker to look up the marker in oak."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup oak",
+        "worker_delay_seconds": 8,
+        "result_answer": "The marker is silver crescent.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "oak": "silver crescent"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-dev-quiet-0152",
+      "fold": "DEV",
+      "family": "quiet",
+      "split_group": "DEV:cue-meadow",
+      "user_turns": [
+        "Please make no spoken response until a later message from me contains meadow. Wait silently now.",
+        "I am still thinking. Keep waiting silently.",
+        "meadow. What is a clock used for?"
+      ],
+      "teacher_program": {
+        "kind": "quiet_until_later_cue",
+        "cue": "meadow",
+        "quiet_gap_seconds": 4,
+        "release_answer": "It tells the time.",
+        "no_acknowledgment": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0137",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:ordinary-17",
+      "user_turns": [
+        "What do wheels help a cart do?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "They let it roll instead of sliding.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0135",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:ordinary-15",
+      "user_turns": [
+        "What does a seed need to start growing?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "It needs suitable moisture, warmth and oxygen.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-cancel-0105",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "split_group": "TRAIN:cancel-cedar",
+      "user_turns": [
+        "Ask the background worker to look up the marker in cedar.",
+        "Cancel that task.",
+        "Why does a wet towel dry?"
+      ],
+      "teacher_program": {
+        "kind": "cancel_lookup",
+        "query": "lookup cedar",
+        "cancel_query": "cancel pending",
+        "worker_delay_seconds": 8,
+        "cancel_acknowledgment": "Cancelled.",
+        "ordinary_answer": "Liquid water evaporates into the surrounding air.",
+        "no_cancelled_value_delivery": true
+      },
+      "synthetic_private_world": {
+        "cedar": "silver crescent"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0020",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "split_group": "TRAIN:cue-willow",
+      "user_turns": [
+        "Stay silent until I say willow. Do not acknowledge this instruction. The word in this instruction is not a release.",
+        "I am still thinking. Keep waiting silently.",
+        "willow. What makes a shadow?"
+      ],
+      "teacher_program": {
+        "kind": "quiet_until_later_cue",
+        "cue": "willow",
+        "quiet_gap_seconds": 4,
+        "release_answer": "An object blocks light and creates a shadow.",
+        "no_acknowledgment": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-cancel-0118",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "split_group": "TRAIN:cancel-fir",
+      "user_turns": [
+        "Ask the background worker to look up the marker in fir.",
+        "Cancel that task.",
+        "Why does a wet towel dry?"
+      ],
+      "teacher_program": {
+        "kind": "cancel_lookup",
+        "query": "lookup fir",
+        "cancel_query": "cancel pending",
+        "worker_delay_seconds": 8,
+        "cancel_acknowledgment": "Cancelled.",
+        "ordinary_answer": "Liquid water evaporates into the surrounding air.",
+        "no_cancelled_value_delivery": true
+      },
+      "synthetic_private_world": {
+        "fir": "amber square"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0075",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "split_group": "TRAIN:lookup-ash",
+      "user_turns": [
+        "Ask the background worker to look up the marker in ash."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup ash",
+        "worker_delay_seconds": 8,
+        "result_answer": "The marker is violet circle.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "ash": "violet circle"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0064",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "split_group": "TRAIN:lookup-elm",
+      "user_turns": [
+        "Ask the background worker to look up the marker in elm."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup elm",
+        "worker_delay_seconds": 8,
+        "result_answer": "The marker is cobalt triangle.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "elm": "cobalt triangle"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0024",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "split_group": "TRAIN:cue-tulip",
+      "user_turns": [
+        "Stay silent until I say tulip. Do not acknowledge this instruction. The word in this instruction is not a release.",
+        "I am still thinking. Keep waiting silently.",
+        "tulip. What makes a shadow?"
+      ],
+      "teacher_program": {
+        "kind": "quiet_until_later_cue",
+        "cue": "tulip",
+        "quiet_gap_seconds": 4,
+        "release_answer": "An object blocks light and creates a shadow.",
+        "no_acknowledgment": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-pending-0091",
+      "fold": "TRAIN",
+      "family": "pending",
+      "split_group": "TRAIN:pending-cedar",
+      "user_turns": [
+        "Ask the background worker to look up the marker in cedar.",
+        "While that runs, What does a compass needle point towards?"
+      ],
+      "teacher_program": {
+        "kind": "lookup_with_followup",
+        "query": "lookup cedar",
+        "worker_delay_seconds": 8,
+        "followup_answer": "It aligns with the Earth's magnetic field.",
+        "result_answer": "The marker is violet circle.",
+        "answer_followup_while_pending": true,
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "cedar": "violet circle"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0025",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "split_group": "TRAIN:cue-tulip",
+      "user_turns": [
+        "I need quiet while I think. Say nothing until a later message from me says tulip. No acknowledgment now.",
+        "I am still thinking. Keep waiting silently.",
+        "tulip. What makes a shadow?"
+      ],
+      "teacher_program": {
+        "kind": "quiet_until_later_cue",
+        "cue": "tulip",
+        "quiet_gap_seconds": 4,
+        "release_answer": "An object blocks light and creates a shadow.",
+        "no_acknowledgment": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0070",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "split_group": "TRAIN:lookup-fir",
+      "user_turns": [
+        "Ask the background worker to look up the marker in fir."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup fir",
+        "worker_delay_seconds": 8,
+        "result_answer": "The marker is amber square.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "fir": "amber square"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0071",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "split_group": "TRAIN:lookup-fir",
+      "user_turns": [
+        "Ask the background worker to look up the marker in fir."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup fir",
+        "worker_delay_seconds": 8,
+        "result_answer": "The marker is violet circle.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "fir": "violet circle"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-dev-delegate-0168",
+      "fold": "DEV",
+      "family": "delegate",
+      "split_group": "DEV:lookup-spruce",
+      "user_turns": [
+        "Ask the background worker to look up the marker in spruce."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup spruce",
+        "worker_delay_seconds": 8,
+        "result_answer": "The marker is golden arrow.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "spruce": "golden arrow"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-pause-0042",
+      "fold": "TRAIN",
+      "family": "pause",
+      "split_group": "TRAIN:steps-pick up the pencil",
+      "user_turns": [
+        "Give me the steps one at a time: pick up the pencil, then put it in the box.",
+        "Pause now. Stay silent until I say continue.",
+        "Continue."
+      ],
+      "teacher_program": {
+        "kind": "pause_resume",
+        "first_text": "First, pick up the pencil.",
+        "remaining_text": "Then, put it in the box.",
+        "quiet_gap_seconds": 4,
+        "no_restart": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-dev-quiet-0157",
+      "fold": "DEV",
+      "family": "quiet",
+      "split_group": "DEV:cue-granite",
+      "user_turns": [
+        "I am going to think aloud. Keep completely quiet until I later use granite as your release signal.",
+        "I am still thinking. Keep waiting silently.",
+        "granite. What is a clock used for?"
+      ],
+      "teacher_program": {
+        "kind": "quiet_until_later_cue",
+        "cue": "granite",
+        "quiet_gap_seconds": 4,
+        "release_answer": "It tells the time.",
+        "no_acknowledgment": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-pause-0032",
+      "fold": "TRAIN",
+      "family": "pause",
+      "split_group": "TRAIN:steps-rinse the cup",
+      "user_turns": [
+        "Describe these steps slowly: rinse the cup, then dry it with a towel.",
+        "Pause now. Stay silent until I say continue.",
+        "Continue."
+      ],
+      "teacher_program": {
+        "kind": "pause_resume",
+        "first_text": "First, rinse the cup.",
+        "remaining_text": "Then, dry it with a towel.",
+        "quiet_gap_seconds": 4,
+        "no_restart": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-cancel-0115",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "split_group": "TRAIN:cancel-elm",
+      "user_turns": [
+        "Ask the background worker to look up the marker in elm.",
+        "Cancel that task.",
+        "Why does a wet towel dry?"
+      ],
+      "teacher_program": {
+        "kind": "cancel_lookup",
+        "query": "lookup elm",
+        "cancel_query": "cancel pending",
+        "worker_delay_seconds": 8,
+        "cancel_acknowledgment": "Cancelled.",
+        "ordinary_answer": "Liquid water evaporates into the surrounding air.",
+        "no_cancelled_value_delivery": true
+      },
+      "synthetic_private_world": {
+        "elm": "violet circle"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-dev-ordinary-0181",
+      "fold": "DEV",
+      "family": "ordinary",
+      "split_group": "DEV:ordinary-1",
+      "user_turns": [
+        "How many legs does an insect have?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "Six.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-dev-pause-0162",
+      "fold": "DEV",
+      "family": "pause",
+      "split_group": "DEV:steps-take the lid off",
+      "user_turns": [
+        "Describe these steps slowly: take the lid off, then set it beside the bowl.",
+        "Pause now. Stay silent until I say continue.",
+        "Continue."
+      ],
+      "teacher_program": {
+        "kind": "pause_resume",
+        "first_text": "First, take the lid off.",
+        "remaining_text": "Then, set it beside the bowl.",
+        "quiet_gap_seconds": 4,
+        "no_restart": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0129",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:ordinary-9",
+      "user_turns": [
+        "What does a weighing scale measure?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "It measures how heavy something is.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-holdout-cancel-0213",
+      "fold": "HOLDOUT",
+      "family": "cancel",
+      "split_group": "HOLDOUT:cancel-beech",
+      "user_turns": [
+        "Ask the background worker to look up the marker in beech.",
+        "Cancel that task.",
+        "How many months are in a year?"
+      ],
+      "teacher_program": {
+        "kind": "cancel_lookup",
+        "query": "lookup beech",
+        "cancel_query": "cancel pending",
+        "worker_delay_seconds": 8,
+        "cancel_acknowledgment": "Cancelled.",
+        "ordinary_answer": "Twelve.",
+        "no_cancelled_value_delivery": true
+      },
+      "synthetic_private_world": {
+        "beech": "mint hexagon"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0136",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:ordinary-16",
+      "user_turns": [
+        "Why does rubbing your hands warm them?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "Friction converts movement into heat.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0079",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "split_group": "TRAIN:lookup-oak",
+      "user_turns": [
+        "Ask the background worker to look up the marker in oak."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup oak",
+        "worker_delay_seconds": 8,
+        "result_answer": "The marker is violet circle.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "oak": "violet circle"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-pending-0101",
+      "fold": "TRAIN",
+      "family": "pending",
+      "split_group": "TRAIN:pending-fir",
+      "user_turns": [
+        "Ask the background worker to look up the marker in fir.",
+        "While that runs, What does a compass needle point towards?"
+      ],
+      "teacher_program": {
+        "kind": "lookup_with_followup",
+        "query": "lookup fir",
+        "worker_delay_seconds": 8,
+        "followup_answer": "It aligns with the Earth's magnetic field.",
+        "result_answer": "The marker is silver crescent.",
+        "answer_followup_while_pending": true,
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "fir": "silver crescent"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0028",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "split_group": "TRAIN:cue-velvet",
+      "user_turns": [
+        "Stay silent until I say velvet. Do not acknowledge this instruction. The word in this instruction is not a release.",
+        "I am still thinking. Keep waiting silently.",
+        "velvet. What makes a shadow?"
+      ],
+      "teacher_program": {
+        "kind": "quiet_until_later_cue",
+        "cue": "velvet",
+        "quiet_gap_seconds": 4,
+        "release_answer": "An object blocks light and creates a shadow.",
+        "no_acknowledgment": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-dev-ordinary-0185",
+      "fold": "DEV",
+      "family": "ordinary",
+      "split_group": "DEV:ordinary-5",
+      "user_turns": [
+        "What is three plus four?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "Seven.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-holdout-delegate-0201",
+      "fold": "HOLDOUT",
+      "family": "delegate",
+      "split_group": "HOLDOUT:lookup-beech",
+      "user_turns": [
+        "Ask the background worker to look up the marker in beech."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup beech",
+        "worker_delay_seconds": 8,
+        "result_answer": "The marker is mint hexagon.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "beech": "mint hexagon"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0015",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "split_group": "TRAIN:cue-compass",
+      "user_turns": [
+        "Do not make any spoken response until I later say compass. Keep listening, including through pauses.",
+        "I am still thinking. Keep waiting silently.",
+        "compass. What makes a shadow?"
+      ],
+      "teacher_program": {
+        "kind": "quiet_until_later_cue",
+        "cue": "compass",
+        "quiet_gap_seconds": 4,
+        "release_answer": "An object blocks light and creates a shadow.",
+        "no_acknowledgment": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0061",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "split_group": "TRAIN:lookup-birch",
+      "user_turns": [
+        "Ask the background worker to look up the marker in birch."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup birch",
+        "worker_delay_seconds": 8,
+        "result_answer": "The marker is silver crescent.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "birch": "silver crescent"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0121",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:ordinary-1",
+      "user_turns": [
+        "Why does a wet towel dry?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "Liquid water evaporates into the surrounding air.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0057",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "split_group": "TRAIN:lookup-cedar",
+      "user_turns": [
+        "Ask the background worker to look up the marker in cedar."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup cedar",
+        "worker_delay_seconds": 8,
+        "result_answer": "The marker is silver crescent.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "cedar": "silver crescent"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-dev-delegate-0167",
+      "fold": "DEV",
+      "family": "delegate",
+      "split_group": "DEV:lookup-maple",
+      "user_turns": [
+        "Ask the background worker to look up the marker in maple."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup maple",
+        "worker_delay_seconds": 8,
+        "result_answer": "The marker is teal diamond.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "maple": "teal diamond"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0144",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:ordinary-24",
+      "user_turns": [
+        "How many sides does a triangle have?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "Three.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-holdout-quiet-0193",
+      "fold": "HOLDOUT",
+      "family": "quiet",
+      "split_group": "HOLDOUT:cue-orchard",
+      "user_turns": [
+        "For the next part, only listen. Resume speech after I later say orchard. Stay silent now.",
+        "I am still thinking. Keep waiting silently.",
+        "orchard. What does a telescope help us see?"
+      ],
+      "teacher_program": {
+        "kind": "quiet_until_later_cue",
+        "cue": "orchard",
+        "quiet_gap_seconds": 4,
+        "release_answer": "Distant objects.",
+        "no_acknowledgment": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0140",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:ordinary-20",
+      "user_turns": [
+        "What is the opposite of narrow?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "Wide.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-pause-0039",
+      "fold": "TRAIN",
+      "family": "pause",
+      "split_group": "TRAIN:steps-fold the shirt",
+      "user_turns": [
+        "Explain this sequence slowly: fold the shirt, followed by place it in the drawer.",
+        "Pause now. Stay silent until I say continue.",
+        "Continue."
+      ],
+      "teacher_program": {
+        "kind": "pause_resume",
+        "first_text": "First, fold the shirt.",
+        "remaining_text": "Then, place it in the drawer.",
+        "quiet_gap_seconds": 4,
+        "no_restart": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0014",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "split_group": "TRAIN:cue-compass",
+      "user_turns": [
+        "Please listen without speaking. Wait for my later cue, compass. Mentioning the cue now does not release you.",
+        "I am still thinking. Keep waiting silently.",
+        "compass. What makes a shadow?"
+      ],
+      "teacher_program": {
+        "kind": "quiet_until_later_cue",
+        "cue": "compass",
+        "quiet_gap_seconds": 4,
+        "release_answer": "An object blocks light and creates a shadow.",
+        "no_acknowledgment": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-pause-0050",
+      "fold": "TRAIN",
+      "family": "pause",
+      "split_group": "TRAIN:steps-wash the spoon",
+      "user_turns": [
+        "Give me the steps one at a time: wash the spoon, then leave it on the rack.",
+        "Pause now. Stay silent until I say continue.",
+        "Continue."
+      ],
+      "teacher_program": {
+        "kind": "pause_resume",
+        "first_text": "First, wash the spoon.",
+        "remaining_text": "Then, leave it on the rack.",
+        "quiet_gap_seconds": 4,
+        "no_restart": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-dev-ordinary-0180",
+      "fold": "DEV",
+      "family": "ordinary",
+      "split_group": "DEV:ordinary-0",
+      "user_turns": [
+        "What is a clock used for?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "It tells the time.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-cancel-0119",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "split_group": "TRAIN:cancel-fir",
+      "user_turns": [
+        "Ask the background worker to look up the marker in fir.",
+        "Cancel that task.",
+        "Why does a wet towel dry?"
+      ],
+      "teacher_program": {
+        "kind": "cancel_lookup",
+        "query": "lookup fir",
+        "cancel_query": "cancel pending",
+        "worker_delay_seconds": 8,
+        "cancel_acknowledgment": "Cancelled.",
+        "ordinary_answer": "Liquid water evaporates into the surrounding air.",
+        "no_cancelled_value_delivery": true
+      },
+      "synthetic_private_world": {
+        "fir": "violet circle"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-pending-0094",
+      "fold": "TRAIN",
+      "family": "pending",
+      "split_group": "TRAIN:pending-birch",
+      "user_turns": [
+        "Ask the background worker to look up the marker in birch.",
+        "While that runs, What does a compass needle point towards?"
+      ],
+      "teacher_program": {
+        "kind": "lookup_with_followup",
+        "query": "lookup birch",
+        "worker_delay_seconds": 8,
+        "followup_answer": "It aligns with the Earth's magnetic field.",
+        "result_answer": "The marker is amber square.",
+        "answer_followup_while_pending": true,
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "birch": "amber square"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0122",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:ordinary-2",
+      "user_turns": [
+        "What does a compass needle point towards?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "It aligns with the Earth's magnetic field.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0149",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:ordinary-29",
+      "user_turns": [
+        "What is a calendar used for?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "It shows and helps organise dates.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-holdout-quiet-0188",
+      "fold": "HOLDOUT",
+      "family": "quiet",
+      "split_group": "HOLDOUT:cue-pebble",
+      "user_turns": [
+        "Wait without speaking until my later cue pebble. Hearing it in this instruction is not the cue.",
+        "I am still thinking. Keep waiting silently.",
+        "pebble. What does a telescope help us see?"
+      ],
+      "teacher_program": {
+        "kind": "quiet_until_later_cue",
+        "cue": "pebble",
+        "quiet_gap_seconds": 4,
+        "release_answer": "Distant objects.",
+        "no_acknowledgment": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-dev-ordinary-0183",
+      "fold": "DEV",
+      "family": "ordinary",
+      "split_group": "DEV:ordinary-3",
+      "user_turns": [
+        "Why does a door have hinges?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "They allow the door to rotate open and closed.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-cancel-0108",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "split_group": "TRAIN:cancel-birch",
+      "user_turns": [
+        "Ask the background worker to look up the marker in birch.",
+        "Cancel that task.",
+        "Why does a wet towel dry?"
+      ],
+      "teacher_program": {
+        "kind": "cancel_lookup",
+        "query": "lookup birch",
+        "cancel_query": "cancel pending",
+        "worker_delay_seconds": 8,
+        "cancel_acknowledgment": "Cancelled.",
+        "ordinary_answer": "Liquid water evaporates into the surrounding air.",
+        "no_cancelled_value_delivery": true
+      },
+      "synthetic_private_world": {
+        "birch": "cobalt triangle"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-pause-0037",
+      "fold": "TRAIN",
+      "family": "pause",
+      "split_group": "TRAIN:steps-fold the shirt",
+      "user_turns": [
+        "Walk me through this slowly: fold the shirt, and then place it in the drawer.",
+        "Pause now. Stay silent until I say continue.",
+        "Continue."
+      ],
+      "teacher_program": {
+        "kind": "pause_resume",
+        "first_text": "First, fold the shirt.",
+        "remaining_text": "Then, place it in the drawer.",
+        "quiet_gap_seconds": 4,
+        "no_restart": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-holdout-pause-0196",
+      "fold": "HOLDOUT",
+      "family": "pause",
+      "split_group": "HOLDOUT:steps-stack the cards",
+      "user_turns": [
+        "Describe these steps slowly: stack the cards, then put the stack in the tray.",
+        "Pause now. Stay silent until I say continue.",
+        "Continue."
+      ],
+      "teacher_program": {
+        "kind": "pause_resume",
+        "first_text": "First, stack the cards.",
+        "remaining_text": "Then, put the stack in the tray.",
+        "quiet_gap_seconds": 4,
+        "no_restart": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0086",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "split_group": "TRAIN:lookup-yew",
+      "user_turns": [
+        "Ask the background worker to look up the marker in yew."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup yew",
+        "worker_delay_seconds": 8,
+        "result_answer": "The marker is amber square.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "yew": "amber square"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0017",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "split_group": "TRAIN:cue-harbour",
+      "user_turns": [
+        "I need quiet while I think. Say nothing until a later message from me says harbour. No acknowledgment now.",
+        "I am still thinking. Keep waiting silently.",
+        "harbour. What makes a shadow?"
+      ],
+      "teacher_program": {
+        "kind": "quiet_until_later_cue",
+        "cue": "harbour",
+        "quiet_gap_seconds": 4,
+        "release_answer": "An object blocks light and creates a shadow.",
+        "no_acknowledgment": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0072",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "split_group": "TRAIN:lookup-ash",
+      "user_turns": [
+        "Ask the background worker to look up the marker in ash."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup ash",
+        "worker_delay_seconds": 8,
+        "result_answer": "The marker is cobalt triangle.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "ash": "cobalt triangle"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0082",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "split_group": "TRAIN:lookup-pine",
+      "user_turns": [
+        "Ask the background worker to look up the marker in pine."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup pine",
+        "worker_delay_seconds": 8,
+        "result_answer": "The marker is amber square.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "pine": "amber square"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-cancel-0110",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "split_group": "TRAIN:cancel-birch",
+      "user_turns": [
+        "Ask the background worker to look up the marker in birch.",
+        "Cancel that task.",
+        "Why does a wet towel dry?"
+      ],
+      "teacher_program": {
+        "kind": "cancel_lookup",
+        "query": "lookup birch",
+        "cancel_query": "cancel pending",
+        "worker_delay_seconds": 8,
+        "cancel_acknowledgment": "Cancelled.",
+        "ordinary_answer": "Liquid water evaporates into the surrounding air.",
+        "no_cancelled_value_delivery": true
+      },
+      "synthetic_private_world": {
+        "birch": "amber square"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-pending-0100",
+      "fold": "TRAIN",
+      "family": "pending",
+      "split_group": "TRAIN:pending-fir",
+      "user_turns": [
+        "Ask the background worker to look up the marker in fir.",
+        "While that runs, What does a compass needle point towards?"
+      ],
+      "teacher_program": {
+        "kind": "lookup_with_followup",
+        "query": "lookup fir",
+        "worker_delay_seconds": 8,
+        "followup_answer": "It aligns with the Earth's magnetic field.",
+        "result_answer": "The marker is cobalt triangle.",
+        "answer_followup_while_pending": true,
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "fir": "cobalt triangle"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0134",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:ordinary-14",
+      "user_turns": [
+        "What causes day and night?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "The Earth rotates, bringing places into and out of sunlight.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-holdout-pause-0197",
+      "fold": "HOLDOUT",
+      "family": "pause",
+      "split_group": "HOLDOUT:steps-stack the cards",
+      "user_turns": [
+        "Walk me through this slowly: stack the cards, and then put the stack in the tray.",
+        "Pause now. Stay silent until I say continue.",
+        "Continue."
+      ],
+      "teacher_program": {
+        "kind": "pause_resume",
+        "first_text": "First, stack the cards.",
+        "remaining_text": "Then, put the stack in the tray.",
+        "quiet_gap_seconds": 4,
+        "no_restart": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0078",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "split_group": "TRAIN:lookup-oak",
+      "user_turns": [
+        "Ask the background worker to look up the marker in oak."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup oak",
+        "worker_delay_seconds": 8,
+        "result_answer": "The marker is amber square.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "oak": "amber square"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-cancel-0104",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "split_group": "TRAIN:cancel-cedar",
+      "user_turns": [
+        "Ask the background worker to look up the marker in cedar.",
+        "Cancel that task.",
+        "Why does a wet towel dry?"
+      ],
+      "teacher_program": {
+        "kind": "cancel_lookup",
+        "query": "lookup cedar",
+        "cancel_query": "cancel pending",
+        "worker_delay_seconds": 8,
+        "cancel_acknowledgment": "Cancelled.",
+        "ordinary_answer": "Liquid water evaporates into the surrounding air.",
+        "no_cancelled_value_delivery": true
+      },
+      "synthetic_private_world": {
+        "cedar": "cobalt triangle"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-pending-0099",
+      "fold": "TRAIN",
+      "family": "pending",
+      "split_group": "TRAIN:pending-elm",
+      "user_turns": [
+        "Ask the background worker to look up the marker in elm.",
+        "While that runs, What does a compass needle point towards?"
+      ],
+      "teacher_program": {
+        "kind": "lookup_with_followup",
+        "query": "lookup elm",
+        "worker_delay_seconds": 8,
+        "followup_answer": "It aligns with the Earth's magnetic field.",
+        "result_answer": "The marker is violet circle.",
+        "answer_followup_while_pending": true,
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "elm": "violet circle"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-pause-0033",
+      "fold": "TRAIN",
+      "family": "pause",
+      "split_group": "TRAIN:steps-rinse the cup",
+      "user_turns": [
+        "Walk me through this slowly: rinse the cup, and then dry it with a towel.",
+        "Pause now. Stay silent until I say continue.",
+        "Continue."
+      ],
+      "teacher_program": {
+        "kind": "pause_resume",
+        "first_text": "First, rinse the cup.",
+        "remaining_text": "Then, dry it with a towel.",
+        "quiet_gap_seconds": 4,
+        "no_restart": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-holdout-quiet-0195",
+      "fold": "HOLDOUT",
+      "family": "quiet",
+      "split_group": "HOLDOUT:cue-orchard",
+      "user_turns": [
+        "I need silent listening. Wait for orchard in a later message before answering me.",
+        "I am still thinking. Keep waiting silently.",
+        "orchard. What does a telescope help us see?"
+      ],
+      "teacher_program": {
+        "kind": "quiet_until_later_cue",
+        "cue": "orchard",
+        "quiet_gap_seconds": 4,
+        "release_answer": "Distant objects.",
+        "no_acknowledgment": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-pause-0052",
+      "fold": "TRAIN",
+      "family": "pause",
+      "split_group": "TRAIN:steps-lift the lid",
+      "user_turns": [
+        "Describe these steps slowly: lift the lid, then place it on the mat.",
+        "Pause now. Stay silent until I say continue.",
+        "Continue."
+      ],
+      "teacher_program": {
+        "kind": "pause_resume",
+        "first_text": "First, lift the lid.",
+        "remaining_text": "Then, place it on the mat.",
+        "quiet_gap_seconds": 4,
+        "no_restart": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-dev-quiet-0158",
+      "fold": "DEV",
+      "family": "quiet",
+      "split_group": "DEV:cue-granite",
+      "user_turns": [
+        "Hold your voice until I say granite in a future turn. This instruction does not release you.",
+        "I am still thinking. Keep waiting silently.",
+        "granite. What is a clock used for?"
+      ],
+      "teacher_program": {
+        "kind": "quiet_until_later_cue",
+        "cue": "granite",
+        "quiet_gap_seconds": 4,
+        "release_answer": "It tells the time.",
+        "no_acknowledgment": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-holdout-delegate-0203",
+      "fold": "HOLDOUT",
+      "family": "delegate",
+      "split_group": "HOLDOUT:lookup-beech",
+      "user_turns": [
+        "Ask the background worker to look up the marker in beech."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup beech",
+        "worker_delay_seconds": 8,
+        "result_answer": "The marker is coral ellipse.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "beech": "coral ellipse"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-holdout-pause-0199",
+      "fold": "HOLDOUT",
+      "family": "pause",
+      "split_group": "HOLDOUT:steps-uncap the pen",
+      "user_turns": [
+        "Walk me through this slowly: uncap the pen, and then place the cap on the desk.",
+        "Pause now. Stay silent until I say continue.",
+        "Continue."
+      ],
+      "teacher_program": {
+        "kind": "pause_resume",
+        "first_text": "First, uncap the pen.",
+        "remaining_text": "Then, place the cap on the desk.",
+        "quiet_gap_seconds": 4,
+        "no_restart": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-pause-0055",
+      "fold": "TRAIN",
+      "family": "pause",
+      "split_group": "TRAIN:steps-lift the lid",
+      "user_turns": [
+        "Explain this sequence slowly: lift the lid, followed by place it on the mat.",
+        "Pause now. Stay silent until I say continue.",
+        "Continue."
+      ],
+      "teacher_program": {
+        "kind": "pause_resume",
+        "first_text": "First, lift the lid.",
+        "remaining_text": "Then, place it on the mat.",
+        "quiet_gap_seconds": 4,
+        "no_restart": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0013",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "split_group": "TRAIN:cue-compass",
+      "user_turns": [
+        "I need quiet while I think. Say nothing until a later message from me says compass. No acknowledgment now.",
+        "I am still thinking. Keep waiting silently.",
+        "compass. What makes a shadow?"
+      ],
+      "teacher_program": {
+        "kind": "quiet_until_later_cue",
+        "cue": "compass",
+        "quiet_gap_seconds": 4,
+        "release_answer": "An object blocks light and creates a shadow.",
+        "no_acknowledgment": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-pending-0095",
+      "fold": "TRAIN",
+      "family": "pending",
+      "split_group": "TRAIN:pending-birch",
+      "user_turns": [
+        "Ask the background worker to look up the marker in birch.",
+        "While that runs, What does a compass needle point towards?"
+      ],
+      "teacher_program": {
+        "kind": "lookup_with_followup",
+        "query": "lookup birch",
+        "worker_delay_seconds": 8,
+        "followup_answer": "It aligns with the Earth's magnetic field.",
+        "result_answer": "The marker is violet circle.",
+        "answer_followup_while_pending": true,
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "birch": "violet circle"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-dev-pending-0174",
+      "fold": "DEV",
+      "family": "pending",
+      "split_group": "DEV:pending-maple",
+      "user_turns": [
+        "Ask the background worker to look up the marker in maple.",
+        "While that runs, What do roots take up from soil?"
+      ],
+      "teacher_program": {
+        "kind": "lookup_with_followup",
+        "query": "lookup maple",
+        "worker_delay_seconds": 8,
+        "followup_answer": "Water and dissolved minerals.",
+        "result_answer": "The marker is ivory oval.",
+        "answer_followup_while_pending": true,
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "maple": "ivory oval"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-dev-cancel-0177",
+      "fold": "DEV",
+      "family": "cancel",
+      "split_group": "DEV:cancel-maple",
+      "user_turns": [
+        "Ask the background worker to look up the marker in maple.",
+        "Cancel that task.",
+        "How many legs does an insect have?"
+      ],
+      "teacher_program": {
+        "kind": "cancel_lookup",
+        "query": "lookup maple",
+        "cancel_query": "cancel pending",
+        "worker_delay_seconds": 8,
+        "cancel_acknowledgment": "Cancelled.",
+        "ordinary_answer": "Six.",
+        "no_cancelled_value_delivery": true
+      },
+      "synthetic_private_world": {
+        "maple": "maroon star"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-holdout-pending-0208",
+      "fold": "HOLDOUT",
+      "family": "pending",
+      "split_group": "HOLDOUT:pending-beech",
+      "user_turns": [
+        "Ask the background worker to look up the marker in beech.",
+        "While that runs, What does a lever help us do?"
+      ],
+      "teacher_program": {
+        "kind": "lookup_with_followup",
+        "query": "lookup beech",
+        "worker_delay_seconds": 8,
+        "followup_answer": "It helps move a load using a pivot.",
+        "result_answer": "The marker is bronze star.",
+        "answer_followup_while_pending": true,
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "beech": "bronze star"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0127",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:ordinary-7",
+      "user_turns": [
+        "What does a ruler measure?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "It measures length or distance.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0069",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "split_group": "TRAIN:lookup-fir",
+      "user_turns": [
+        "Ask the background worker to look up the marker in fir."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup fir",
+        "worker_delay_seconds": 8,
+        "result_answer": "The marker is silver crescent.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "fir": "silver crescent"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-dev-quiet-0155",
+      "fold": "DEV",
+      "family": "quiet",
+      "split_group": "DEV:cue-meadow",
+      "user_turns": [
+        "Listen in silence for now. The later release word is meadow. Please do not reply to this instruction.",
+        "I am still thinking. Keep waiting silently.",
+        "meadow. What is a clock used for?"
+      ],
+      "teacher_program": {
+        "kind": "quiet_until_later_cue",
+        "cue": "meadow",
+        "quiet_gap_seconds": 4,
+        "release_answer": "It tells the time.",
+        "no_acknowledgment": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-dev-delegate-0165",
+      "fold": "DEV",
+      "family": "delegate",
+      "split_group": "DEV:lookup-maple",
+      "user_turns": [
+        "Ask the background worker to look up the marker in maple."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup maple",
+        "worker_delay_seconds": 8,
+        "result_answer": "The marker is maroon star.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "maple": "maroon star"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-pause-0049",
+      "fold": "TRAIN",
+      "family": "pause",
+      "split_group": "TRAIN:steps-wash the spoon",
+      "user_turns": [
+        "Walk me through this slowly: wash the spoon, and then leave it on the rack.",
+        "Pause now. Stay silent until I say continue.",
+        "Continue."
+      ],
+      "teacher_program": {
+        "kind": "pause_resume",
+        "first_text": "First, wash the spoon.",
+        "remaining_text": "Then, leave it on the rack.",
+        "quiet_gap_seconds": 4,
+        "no_restart": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0087",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "split_group": "TRAIN:lookup-yew",
+      "user_turns": [
+        "Ask the background worker to look up the marker in yew."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup yew",
+        "worker_delay_seconds": 8,
+        "result_answer": "The marker is violet circle.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "yew": "violet circle"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0084",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "split_group": "TRAIN:lookup-yew",
+      "user_turns": [
+        "Ask the background worker to look up the marker in yew."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup yew",
+        "worker_delay_seconds": 8,
+        "result_answer": "The marker is cobalt triangle.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "yew": "cobalt triangle"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-pending-0090",
+      "fold": "TRAIN",
+      "family": "pending",
+      "split_group": "TRAIN:pending-cedar",
+      "user_turns": [
+        "Ask the background worker to look up the marker in cedar.",
+        "While that runs, What does a compass needle point towards?"
+      ],
+      "teacher_program": {
+        "kind": "lookup_with_followup",
+        "query": "lookup cedar",
+        "worker_delay_seconds": 8,
+        "followup_answer": "It aligns with the Earth's magnetic field.",
+        "result_answer": "The marker is amber square.",
+        "answer_followup_while_pending": true,
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "cedar": "amber square"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0148",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:ordinary-28",
+      "user_turns": [
+        "Why do we use an umbrella?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "It provides shelter from rain or sunlight.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-pending-0102",
+      "fold": "TRAIN",
+      "family": "pending",
+      "split_group": "TRAIN:pending-fir",
+      "user_turns": [
+        "Ask the background worker to look up the marker in fir.",
+        "While that runs, What does a compass needle point towards?"
+      ],
+      "teacher_program": {
+        "kind": "lookup_with_followup",
+        "query": "lookup fir",
+        "worker_delay_seconds": 8,
+        "followup_answer": "It aligns with the Earth's magnetic field.",
+        "result_answer": "The marker is amber square.",
+        "answer_followup_while_pending": true,
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "fir": "amber square"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0002",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "split_group": "TRAIN:cue-marigold",
+      "user_turns": [
+        "Please listen without speaking. Wait for my later cue, marigold. Mentioning the cue now does not release you.",
+        "I am still thinking. Keep waiting silently.",
+        "marigold. What makes a shadow?"
+      ],
+      "teacher_program": {
+        "kind": "quiet_until_later_cue",
+        "cue": "marigold",
+        "quiet_gap_seconds": 4,
+        "release_answer": "An object blocks light and creates a shadow.",
+        "no_acknowledgment": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0022",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "split_group": "TRAIN:cue-willow",
+      "user_turns": [
+        "Please listen without speaking. Wait for my later cue, willow. Mentioning the cue now does not release you.",
+        "I am still thinking. Keep waiting silently.",
+        "willow. What makes a shadow?"
+      ],
+      "teacher_program": {
+        "kind": "quiet_until_later_cue",
+        "cue": "willow",
+        "quiet_gap_seconds": 4,
+        "release_answer": "An object blocks light and creates a shadow.",
+        "no_acknowledgment": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0138",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:ordinary-18",
+      "user_turns": [
+        "What does a battery provide in a torch?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "It provides electrical energy for the light.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-pending-0103",
+      "fold": "TRAIN",
+      "family": "pending",
+      "split_group": "TRAIN:pending-fir",
+      "user_turns": [
+        "Ask the background worker to look up the marker in fir.",
+        "While that runs, What does a compass needle point towards?"
+      ],
+      "teacher_program": {
+        "kind": "lookup_with_followup",
+        "query": "lookup fir",
+        "worker_delay_seconds": 8,
+        "followup_answer": "It aligns with the Earth's magnetic field.",
+        "result_answer": "The marker is violet circle.",
+        "answer_followup_while_pending": true,
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "fir": "violet circle"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0124",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:ordinary-4",
+      "user_turns": [
+        "What makes an echo?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "Sound reflects from a surface and returns to your ears.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-holdout-pending-0210",
+      "fold": "HOLDOUT",
+      "family": "pending",
+      "split_group": "HOLDOUT:pending-beech",
+      "user_turns": [
+        "Ask the background worker to look up the marker in beech.",
+        "While that runs, What does a lever help us do?"
+      ],
+      "teacher_program": {
+        "kind": "lookup_with_followup",
+        "query": "lookup beech",
+        "worker_delay_seconds": 8,
+        "followup_answer": "It helps move a load using a pivot.",
+        "result_answer": "The marker is navy rectangle.",
+        "answer_followup_while_pending": true,
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "beech": "navy rectangle"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-pause-0034",
+      "fold": "TRAIN",
+      "family": "pause",
+      "split_group": "TRAIN:steps-rinse the cup",
+      "user_turns": [
+        "Give me the steps one at a time: rinse the cup, then dry it with a towel.",
+        "Pause now. Stay silent until I say continue.",
+        "Continue."
+      ],
+      "teacher_program": {
+        "kind": "pause_resume",
+        "first_text": "First, rinse the cup.",
+        "remaining_text": "Then, dry it with a towel.",
+        "quiet_gap_seconds": 4,
+        "no_restart": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-dev-pending-0172",
+      "fold": "DEV",
+      "family": "pending",
+      "split_group": "DEV:pending-maple",
+      "user_turns": [
+        "Ask the background worker to look up the marker in maple.",
+        "While that runs, What do roots take up from soil?"
+      ],
+      "teacher_program": {
+        "kind": "lookup_with_followup",
+        "query": "lookup maple",
+        "worker_delay_seconds": 8,
+        "followup_answer": "Water and dissolved minerals.",
+        "result_answer": "The marker is golden arrow.",
+        "answer_followup_while_pending": true,
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "maple": "golden arrow"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0058",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "split_group": "TRAIN:lookup-cedar",
+      "user_turns": [
+        "Ask the background worker to look up the marker in cedar."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup cedar",
+        "worker_delay_seconds": 8,
+        "result_answer": "The marker is amber square.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "cedar": "amber square"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-holdout-delegate-0204",
+      "fold": "HOLDOUT",
+      "family": "delegate",
+      "split_group": "HOLDOUT:lookup-poplar",
+      "user_turns": [
+        "Ask the background worker to look up the marker in poplar."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup poplar",
+        "worker_delay_seconds": 8,
+        "result_answer": "The marker is bronze star.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "poplar": "bronze star"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0029",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "split_group": "TRAIN:cue-velvet",
+      "user_turns": [
+        "I need quiet while I think. Say nothing until a later message from me says velvet. No acknowledgment now.",
+        "I am still thinking. Keep waiting silently.",
+        "velvet. What makes a shadow?"
+      ],
+      "teacher_program": {
+        "kind": "quiet_until_later_cue",
+        "cue": "velvet",
+        "quiet_gap_seconds": 4,
+        "release_answer": "An object blocks light and creates a shadow.",
+        "no_acknowledgment": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false
+    }
+  ],
+  "sealed_existing_project_evaluations_accessed": false,
+  "external_api_calls": 0
+}

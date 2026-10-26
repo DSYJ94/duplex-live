@@ -1,3 +1,15 @@
+# LOCAL — Conditional native control training authorized; source/data prepared; GPU still OFF
+
+2026-10-26T20:00:27.427228+00:00. Latest human instruction explicitly requests necessary diagnostics, then training data and training. Recorded authority docs/NATIVE-VENUS-CONTROL-TRAINING-AUTHORIZATION-2026-10-26.json supersedes old ZERO-optimizer restriction only for this new Venus intervention. SAME35USD/14400s scope; priorNEW4600s/original40351s/91.9844806USD carried, oneA10040/100GBtempdisk/IAP-only, max7200s allocation. Worst admission33.763889USD includes priorNEW GPU,6USD other reserve,4USD synthetic semantic reserve. No purchases, new IAM/API or owner-data transfer.
+
+224 authored synthetic scenes:152TRAIN/36DEV/36HOLDOUT,159 exact USER recordings. v3 Mac Samantha175 audio nonempty/peak checked; v2 IPC sandbox yielded zero frames and is REJECTED/preserved. v4 changes worker-delay metadata only, reuses v3 audio with original/current SHA lineage. All96 real read-only background-worker collections COMPLETE; full source/split/causality audit PASS with24 matched four-world groups. Timeline root runs/venus-training-20261026/timelines-v4-bound; manifest999b475aa8b81b14431a3267f5f500aa45cbcf86e156b500f74a3fa816cf2851. Training data remains UNAPPROVED pending all159 independent ASR and all224 independent semantic review; no subset acceptance.
+
+Native capture hooks the released streaming feed/decode with forced teacher histories, no student-success claim; exact segmented native replay required. New explicit q/v LoRA rank16 across36 Qwen3 layers, expected7667712parameters; frozen published Venus4681004 +audio/TTS/base/head, original system prompt. Recipe8epochs/304updates, effectivebatch4, AdamWlr1e-4/warmup16/cosine, gradclip1, ordinaryKL0.1/hidden0.01. No acoustic-loss training. Exact zero-adapter/causal check precedes optimizer; step1 checkpoint must restore Adam/RNG in a DISTINCT process and reproduce step2 exactly before continued schedule. Full36DEV losses saved every76updates; adoption still requires native behavior and speech retention. Small tests20PASS, not native/GPU qualification.
+
+Fresh19:51UTC GCPfour originalVMsTERMINATED/RunpodfiveEXITED; quotaA10040=1/usage0; current officialUSprice3.68708363USD/hour. No allocation launched at this entry. New controller training.venus.controller records actual IDs/SHAs/terminals in ignored runs/venus-training-20261026/allocation-v1, never rerun if directory exists. Both independent guards +native7200sSTOP and 600sbootstrap stop. ASRpublicpin41f01f3; semantic exact payload prepared only after full ASR, key staysMac0600. On failure preserve all partials and hash-copyback before any cleanup. Original archives/old histories/retention objectives untouched; broadMacsourcebackupPARTIAL. LOCALsoleexecutor; no agents/otherchat/heartbeat. UnrelatedPYC/probes/roadmap/parkedMoshi proposal preserved. Goal remains unfinished (tool currently paused, cannot resume with available API).
+
+---
+
 # LOCAL — IAP repaired; long-policy variant REJECTED; evidence saved; ALL GPU OFF
 
 2026-10-26T18:44:30.234700+00:00. ApprovedIAP successfully applied: onlyiap API +twoisolatedrules/exacttemporaryVM,
