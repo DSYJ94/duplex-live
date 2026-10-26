@@ -60,8 +60,10 @@ def validate(vm,instances,runpods,lease,now):
     # the approved four-hour maximum; never recreate a VM to change that field.
     s=vm['scheduling'];start=stamp(vm['lastStartTimestamp'])
     fallback=lease.get('resource_key')=='zone-b-a10040'
-    end=stamp(s['terminationTime']) if fallback else start+5400
-    model_ok=(s.get('provisioningModel','STANDARD')=='STANDARD' and
+    flex_b=fallback and s.get('provisioningModel')=='FLEX_START'
+    end=(start+14400 if flex_b else stamp(s['terminationTime'])) if fallback else start+5400
+    model_ok=((s.get('provisioningModel','STANDARD')=='STANDARD' or
+               (flex_b and str(s.get('maxRunDuration',{}).get('seconds'))=='14400')) and
               vm['creationTimestamp']==lease['creation_timestamp'] and 0<end-start<=14400) if fallback else (
               s.get('provisioningModel')=='FLEX_START' and str(s.get('maxRunDuration',{}).get('seconds'))=='5400')
     if (not model_ok or
