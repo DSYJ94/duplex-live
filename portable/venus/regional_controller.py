@@ -102,7 +102,7 @@ try:
  while vm['status']!='RUNNING':
   if time.time()>deadline:raise TimeoutError('No duplicate while allocation pending')
   time.sleep(5);vm=cloud('instances','describe',NAME,'--zone='+ZONE)
- start=datetime.fromisoformat(vm['lastStartTimestamp']).timestamp();end=min(start+RUN_SECONDS,datetime.fromisoformat(vm['creationTimestamp']).timestamp()+14400);setup_end=start+1800
+ start=datetime.fromisoformat(vm['lastStartTimestamp']).timestamp();end=start+RUN_SECONDS if IAP else min(start+RUN_SECONDS,datetime.fromisoformat(vm['creationTimestamp']).timestamp()+14400);setup_end=start+1800
  disk=cloud('disks','describe',NAME,'--zone='+ZONE);assert int(disk['sizeGb'])==100
  record('actual_running',vm_id=vm['id'],disk_id=disk['id'],last_start=vm['lastStartTimestamp'],native_stop_unix=end)
  for _ in range(30):
@@ -126,6 +126,9 @@ try:
  ssh('git init --bare '+ROOT+'/source.git && git --git-dir='+ROOT+'/source.git fetch '+ROOT+'/source.bundle HEAD && git --git-dir='+ROOT+'/source.git worktree add --detach '+remote+' '+source)
  birth=run(['/bin/ps','-p',str(os.getpid()),'-o','lstart=']).strip()
  lease=dict(resource_key='us-a10040',zone=ZONE,vm_id=str(vm['id']),disk_id=str(disk['id']),disk_size_gib=100,creation_timestamp=vm['creationTimestamp'],stop_unix=end,prior_new_gpu_seconds_upper=PRIOR_NEW,prior_gpu_seconds=PRIOR_SECONDS,prior_scope_usd=PRIOR_USD,authorization_sha256=hashlib.sha256(auth).hexdigest(),controller_pid=os.getpid(),controller_birth=birth)
+ if IAP:
+  from portable.venus.access import AUTH
+  lease.update(access_mode='iap',iap_authorization_sha256=hashlib.sha256(AUTH.read_bytes()).hexdigest())
  (R/'lease.json').write_text(json.dumps(lease,indent=2)+'\n');sync(R/'lease.json',ROOT+'/venus-lease-us-v1.json')
  guard=subprocess.Popen([sys.executable,'-u','-m','portable.venus.guard','--lease',str(R/'lease.json'),'--ssh-argv',str(R/'ssh.json'),'--runpod-key','runs/local-migration-20261021/.private/runpod-budget-api-key','--status',str(R/'guard.json'),'--stop-file',str(R/'stop-requested')],stdout=(R/'guard.log').open('x'),stderr=subprocess.STDOUT,env={**os.environ,'PYTHONDONTWRITEBYTECODE':'1'})
  until=time.time()+90

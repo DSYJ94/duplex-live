@@ -29,6 +29,12 @@ def resource(lease):
             lease.get('zone') not in a['resources']['supported_catalog_zones'] or
             not all(str(lease.get(k,'')).isdigit() for k in ('vm_id','disk_id'))):
             raise ValueError('Explicit regional authority and actual resource identities required')
+        if lease.get('access_mode')=='iap':
+            from .access import approved_iap_proxy,AUTH,VM_ID,DISK_ID
+            approved_iap_proxy()
+            if (str(lease['vm_id'])!=VM_ID or str(lease['disk_id'])!=DISK_ID or
+                lease.get('iap_authorization_sha256')!=hashlib.sha256(AUTH.read_bytes()).hexdigest()):
+                raise ValueError('Exact supplemental IAP authority and resource required')
         return dict(name='duplex-venus-us-20261026-v1',zone=lease['zone'],
             ident=str(lease['vm_id']),disk=str(lease['disk_id']),disk_name='duplex-venus-us-20261026-v1',
             machine='a2-highgpu-1g',authority=path)
@@ -73,11 +79,12 @@ def validate(vm,instances,runpods,lease,now):
     # the approved four-hour maximum; never recreate a VM to change that field.
     s=vm['scheduling'];start=stamp(vm['lastStartTimestamp'])
     regional=lease.get('resource_key')=='us-a10040'
+    iap=lease.get('access_mode')=='iap'
     fallback=lease.get('resource_key') in ('zone-b-a10040','us-a10040')
     flex_b=fallback and s.get('provisioningModel')=='FLEX_START'
     flex_seconds=int(s.get('maxRunDuration',{}).get('seconds',0)) if flex_b else 0
     end=(start+flex_seconds if flex_b else stamp(s['terminationTime'])) if fallback else start+5400
-    if fallback:
+    if fallback and not iap:
         # One replacement VM's whole wall lifetime bounds all its billed starts.
         # A restart cannot reset the approved additional four-hour allowance.
         end=min(end,stamp(vm['creationTimestamp'])+14400)
@@ -98,6 +105,9 @@ def validate(vm,instances,runpods,lease,now):
             raise ValueError('Additional four-hour allowance cannot reset')
     if regional and (flex_seconds>7200 or lease.get('disk_size_gib')!=100):
         raise ValueError('Regional allocation must retain its shorter window and100GB limit')
+    if iap and (flex_seconds!=3600 or lease.get('prior_new_gpu_seconds_upper',0)<3600 or
+                set(vm.get('tags',{}).get('items',[]))!={'duplex-venus-iap-bounded'}):
+        raise ValueError('One newly authorized hour, carried history and exact isolated IAP tag required')
     if (PRIOR_SECONDS+14400>16*3600 or PRIOR_USD+7.25*4+6>135 or
         lease['prior_gpu_seconds']!=PRIOR_SECONDS or lease['prior_scope_usd']!=PRIOR_USD):
         raise ValueError('Cumulative budget cannot reset')

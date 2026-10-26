@@ -105,3 +105,22 @@ class NativeProtocolTests(unittest.IsolatedAsyncioTestCase):
         for bad in ({'zone':'europe-west1-b'},{'authorization_sha256':'bad'},{'prior_new_gpu_seconds_upper':0},
                     {'disk_size_gib':250},{'prior_new_gpu_seconds_upper':10000}):
             with self.assertRaises(ValueError):validate(vm,[vm],[],{**lease,**bad},start+10)
+
+    def test_supplemental_iap_hour_never_resets_paid_history(self):
+        from unittest.mock import patch
+        from portable.venus.guard import stamp
+        start=stamp('2026-10-27T10:00:00Z')
+        b=dict(name='duplex-venus-us-20261026-v1',zone='us-central1-a',ident='5664322998932521310',
+            disk='7763575121976148318',disk_name='duplex-venus-us-20261026-v1',machine='a2-highgpu-1g')
+        lease=dict(resource_key='us-a10040',access_mode='iap',disk_size_gib=100,creation_timestamp='2026-10-26T16:28:00Z',
+            prior_new_gpu_seconds_upper=3600,prior_gpu_seconds=PRIOR_SECONDS,prior_scope_usd=PRIOR_USD,stop_unix=start+3600)
+        vm=dict(id=b['ident'],name=b['name'],zone='/us-central1-a',status='RUNNING',machineType='/a2-highgpu-1g',
+            creationTimestamp=lease['creation_timestamp'],lastStartTimestamp='2026-10-27T10:00:00Z',
+            tags={'items':['duplex-venus-iap-bounded']},disks=[dict(source='/disks/'+b['disk_name'],boot=True,autoDelete=False)],
+            scheduling=dict(provisioningModel='FLEX_START',maxRunDuration={'seconds':'3600'},instanceTerminationAction='STOP',automaticRestart=False))
+        # resource() separately requires the direct-human supplemental authority.
+        with patch('portable.venus.guard.resource',return_value=b):
+            self.assertEqual(validate(vm,[vm],[],lease,start+10),start+3600)
+            with self.assertRaises(ValueError):validate(vm,[vm],[],{**lease,'prior_new_gpu_seconds_upper':0},start+10)
+            with self.assertRaises(ValueError):validate(vm,[vm],[],{**lease,'prior_new_gpu_seconds_upper':14000},start+10)
+            with self.assertRaises(ValueError):validate({**vm,'tags':{'items':['duplex-native-bounded']}},[vm],[],lease,start+10)

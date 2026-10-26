@@ -58,7 +58,9 @@
     "provider_native_stop_and_both_guards_required": true,
     "maximum_concurrent_gpu_jobs": 1,
     "purchases": 0,
-    "stop_early_when_blocked": true
+    "stop_early_when_blocked": true,
+    "one_supplemental_restart_uses_carried_gpu_time_not_stopped_wall_time": true,
+    "no_reset_of_any_paid_interval": true
   },
   "diagnostic": {
     "prepared_native_policy_source": "47ecc484e03615d496aec453eb6a74e90470ab8c",
