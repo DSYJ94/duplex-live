@@ -29,7 +29,7 @@
     "new_name": "duplex-venus-memory-20261026-v1",
     "zone": "us-central1-a",
     "machine": "a2-highgpu-1g",
-    "provisioning": "STANDARD",
+    "provisioning": "FLEX_START",
     "maximum_new_logical_vm_count": 1,
     "same_disk_id": "4375908109499109167",
     "same_disk_name": "duplex-venus-train-20261026-v1",
@@ -39,7 +39,8 @@
     "existing_tag": "duplex-venus-train-bounded",
     "iap_only": true,
     "provider_hard_stop_seconds": 4800,
-    "reason": "Flex Start cannot shorten its immutable7200s stop. A sequential STANDARD replacement on the SAME already-staged100GBdisk permits a4800s nativeSTOP within the remaining4900s. No overlapping VM or GPU; oldVMretired only after verified full unique copyback."
+    "reason": "Flex Start cannot shorten its immutable7200s stop. A sequential STANDARD replacement on the SAME already-staged100GBdisk permits a4800s nativeSTOP within the remaining4900s. No overlapping VM or GPU; oldVMretired only after verified full unique copyback.",
+    "request_valid_for_seconds": 900
   },
   "diagnosis": {
     "optimizer_updates": 0,
@@ -93,5 +94,6 @@
   "training_inputs": "Derived frozen-prefix cache from same native input features; no audio, word, fold, original or teacher change.",
   "lower35_cached_prefix_is_not_truncated_gradient": "Lower35 layers have no trainable parameters. Full gradients through final-layer q/v and suffix KV history are retained and independently tested.",
   "owner_explicitly_approved_specific_replacement": false,
-  "authorization_basis": "Prior approved US placement permits one temporary GPU VM and100GBdisk within35USD/4h. Latest direct instruction authorizes requisite repairs and actual training. This necessary sequential replacement reuses the SAMEdisk and tighter native4800s stop; no new budget/privacy/API scope."
+  "authorization_basis": "Prior approved US placement permits one temporary GPU VM and100GBdisk within35USD/4h. Latest direct instruction authorizes requisite repairs and actual training. This necessary sequential replacement reuses the SAMEdisk and tighter native4800s stop; no new budget/privacy/API scope.",
+  "capacity_recovery": "The actual STANDARDoperationoperation-1793053294083-65ec5c0a83db9-8c81394f-e101fb3d terminalZONE_RESOURCE_POOL_EXHAUSTED. No newVM/GPU was created; oldVMretired/diskpreserved and all3311hashesindependentlyreverified. Permit one boundedFlexStart request onSAMEdisk/zone/type with4800s nativeSTOP; no ledger reset or overlap."
 }

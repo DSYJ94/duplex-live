@@ -8,12 +8,20 @@ from portable.context.gcp_budget_watchdog import read_runpod_pods
 BASE=Path('runs/venus-training-20261026');OLD=BASE/'sustain-v10'
 
 def main():
-    c.R=BASE/'memory-v11';assert not c.R.exists(),'Observe the real operation; never duplicate'
+    flex='--flex-after-stockout' in sys.argv
+    c.R=BASE/('memory-v12' if flex else 'memory-v11');assert not c.R.exists(),'Observe the real operation; never duplicate'
     assert not c.run(['git','status','--porcelain','--','training/venus','data/venus','portable/venus/guard.py']).strip()
     grant=json.loads(AUTH.read_text());r=grant['resources'];zone=r['zone'];c.NAME=r['new_name']
     vms=c.cloud('compute','instances','list');assert all(v['status']=='TERMINATED' for v in vms)
-    old=next(v for v in vms if str(v['id'])==r['retire_only_vm_id']);assert old['name']==r['retire_only_vm_name']
-    last=json.loads((OLD/'provider-final.json').read_text());assert old['lastStopTimestamp']==last['lastStopTimestamp']
+    last=json.loads((OLD/'provider-final.json').read_text())
+    if flex:
+        previous=json.loads((BASE/'memory-v11/events.json').read_text())
+        assert any(e['event']=='only_old_vm_retired_same_disk_preserved' and e['old_vm_id']==r['retire_only_vm_id'] for e in previous)
+        assert any(e['event']=='memory_continuation_failure' and 'ZONE_RESOURCE_POOL_EXHAUSTED' in e.get('error','') for e in previous)
+        assert not any(v['name'] in (r['retire_only_vm_name'],c.NAME) for v in vms)
+        old=dict(id=r['retire_only_vm_id'],name=r['retire_only_vm_name']) # Historical retirement identity, NOT a live VM report.
+    else:
+        old=next(v for v in vms if str(v['id'])==r['retire_only_vm_id']);assert old['name']==r['retire_only_vm_name'] and old['lastStopTimestamp']==last['lastStopTimestamp']
     assert 6400+datetime.fromisoformat(last['lastStopTimestamp']).timestamp()-datetime.fromisoformat(last['lastStartTimestamp']).timestamp()<=9500
     # Full independent local inventory check before retiring ONLY our stopped VM.
     rows=json.loads((OLD/'unique-inventory.json').read_text());assert len(rows)==3311 and sum(x['bytes'] for x in rows)==1256325325
@@ -28,14 +36,15 @@ def main():
     c.record('preflight_full_unique_backup_reverified',files=3311,bytes=1256325325,old_vm=old['id'],same_disk=disk['id'],prior_new_gpu_seconds_upper=9500,next_max_seconds=4800,hourly_price=price['hourly_estimate_usd'])
     awake=subprocess.Popen(['caffeinate','-i','-w',str(os.getpid())]);guard=None;created=False;vm=None
     try:
-        c.run(['gcloud','compute','instances','delete',old['name'],'--zone='+zone,'--project='+c.PROJECT,'--keep-disks=boot','--quiet'],150)
+        if not flex:c.run(['gcloud','compute','instances','delete',old['name'],'--zone='+zone,'--project='+c.PROJECT,'--keep-disks=boot','--quiet'],150)
         disk=c.cloud('compute','disks','describe',r['same_disk_name'],'--zone='+zone);assert str(disk['id'])==r['same_disk_id'] and not disk.get('users')
         c.record('only_old_vm_retired_same_disk_preserved',old_vm_id=old['id'],disk_id=disk['id'])
         c.cloud('compute','os-login','ssh-keys','add','--key-file=runs/local-migration-20261024/.private/gcp-native-ssh.pub','--ttl=2h')
         startup=c.R/'bootstrap.sh';startup.write_text('#!/bin/sh\nset -eu\nmkdir -p '+c.ROOT+'\nchmod 1777 '+c.ROOT+'\nsystemd-run --unit=duplex-venus-memory-bootstrap-stop --on-active=600s /sbin/shutdown -h now || /sbin/shutdown -h now\n')
-        operation=c.cloud('compute','instances','create',c.NAME,'--zone='+zone,'--machine-type=a2-highgpu-1g','--provisioning-model=STANDARD','--maintenance-policy=TERMINATE','--no-restart-on-failure','--no-service-account','--no-scopes','--tags=duplex-venus-train-bounded','--disk=name='+r['same_disk_name']+',boot=yes,auto-delete=no,mode=rw','--metadata=enable-oslogin=TRUE,enable-guest-attributes=TRUE,block-project-ssh-keys=TRUE','--metadata-from-file=startup-script='+str(startup),'--max-run-duration=4800s','--instance-termination-action=STOP','--async');operation=operation[0] if isinstance(operation,list) else operation;created=True
+        provisioning=['--provisioning-model=FLEX_START','--request-valid-for-duration=900s'] if flex else ['--provisioning-model=STANDARD']
+        operation=c.cloud('compute','instances','create',c.NAME,'--zone='+zone,'--machine-type=a2-highgpu-1g',*provisioning,'--maintenance-policy=TERMINATE','--no-restart-on-failure','--no-service-account','--no-scopes','--tags=duplex-venus-train-bounded','--disk=name='+r['same_disk_name']+',boot=yes,auto-delete=no,mode=rw','--metadata=enable-oslogin=TRUE,enable-guest-attributes=TRUE,block-project-ssh-keys=TRUE','--metadata-from-file=startup-script='+str(startup),'--max-run-duration=4800s','--instance-termination-action=STOP','--async');operation=operation[0] if isinstance(operation,list) else operation;created=True
         c.record('one_standard_replacement_submitted',operation=operation['name'],source=c.source,same_disk_id=disk['id'])
-        until=time.time()+240
+        until=time.time()+(960 if flex else 240)
         while operation['status']!='DONE':
             if time.time()>until:raise TimeoutError('Observe same operation; no duplicate')
             time.sleep(3);operation=c.cloud('compute','operations','describe',operation['name'],'--zone='+zone)
@@ -94,10 +103,14 @@ def main():
             try:guard.wait(timeout=150)
             except subprocess.TimeoutExpired:c.record('guard_stop_observation_timeout',pid=guard.pid)
         if created:
-            current=c.cloud('compute','instances','describe',c.NAME,'--zone='+zone)
-            if vm:assert str(current['id'])==str(vm['id'])
-            if current['status'] not in ('TERMINATED','STOPPED'):c.run(['gcloud','compute','instances','stop',c.NAME,'--zone='+zone,'--project='+c.PROJECT,'--quiet'],150)
-            current=c.cloud('compute','instances','describe',c.NAME,'--zone='+zone);(c.R/'provider-final.json').write_text(json.dumps(current,indent=2)+'\n');c.record('provider_stopped',vm_id=current['id'],status=current['status'])
+            try:current=c.cloud('compute','instances','describe',c.NAME,'--zone='+zone)
+            except RuntimeError as error:
+                if 'not found' not in str(error):raise
+                current=None;c.record('no_vm_exists_after_terminal_allocation_failure')
+            if current:
+                if vm:assert str(current['id'])==str(vm['id'])
+                if current['status'] not in ('TERMINATED','STOPPED'):c.run(['gcloud','compute','instances','stop',c.NAME,'--zone='+zone,'--project='+c.PROJECT,'--quiet'],150)
+                current=c.cloud('compute','instances','describe',c.NAME,'--zone='+zone);(c.R/'provider-final.json').write_text(json.dumps(current,indent=2)+'\n');c.record('provider_stopped',vm_id=current['id'],status=current['status'])
         awake.terminate()
 
 if __name__=='__main__':main()

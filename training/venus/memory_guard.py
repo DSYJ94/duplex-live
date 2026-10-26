@@ -21,7 +21,7 @@ def validate(vm,instances,pods,lease,now):
     assert vm['machineType'].endswith('/'+r['machine']) and vm['zone'].endswith('/'+r['zone']) and vm['creationTimestamp']==lease['creation_timestamp']
     assert vm['tags']['items']==['duplex-venus-train-bounded']
     assert any(d.get('boot') and not d.get('autoDelete') and d['source'].endswith('/disks/'+r['disk_name']) for d in vm['disks'])
-    s=vm['scheduling'];assert s.get('provisioningModel','STANDARD')=='STANDARD' and int(s['maxRunDuration']['seconds'])==4800
+    s=vm['scheduling'];assert s.get('provisioningModel','STANDARD')==json.loads(AUTH.read_text())['resources']['provisioning'] and int(s['maxRunDuration']['seconds'])==4800
     assert s['instanceTerminationAction']=='STOP' and not s['automaticRestart'] and start<=now<end and lease['stop_unix']==end
     assert lease['prior_new_gpu_seconds_upper']==9500 and lease['prior_gpu_seconds']==40351 and lease['prior_scope_usd']==91.98448055555555 and lease['disk_size_gib']==100
     assert 0<lease['verified_hourly_price_usd']<=4 and 9500+4800<=14400 and 40351+9500+4800<=57600
