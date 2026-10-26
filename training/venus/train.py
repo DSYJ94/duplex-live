@@ -148,7 +148,7 @@ def main(a):
         for step in range(2,304):
             assert_deadline(a.lease,max(seconds[-8:])*1.5+120)
             row=train_step(llm,opt,cache,batches[step],step);frozen_ok();seconds.append(row['seconds']);log.write(json.dumps(row)+'\n');log.flush();print(json.dumps(row),flush=True)
-            if (step+1)%19==0 or step==303:
+            if (step+1)%38==0 or step==303:
                 save(out/f'step-{step+1:04d}.pt',llm,opt,step+1,metadata)
             if (step+1)%76==0:
                 result=dict(step=step+1,full36_dev_teacher_forced=dev_loss(llm,cache,manifest['scenes']),native_behavior_qualified=False)

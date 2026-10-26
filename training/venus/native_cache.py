@@ -124,7 +124,8 @@ def whole_sequence_proof(model,example):
     from .lora import selected_forward
     limits=dict(minimum_cosine=.9999,maximum_relative_l2=.01,
                 maximum_target_ce_delta=.03,minimum_argmax_agreement=.95)
-    with torch.no_grad():logits,_=selected_forward(model.llm,example,'cuda')
+    device=next(model.llm.parameters()).device
+    with torch.no_grad():logits,_=selected_forward(model.llm,example,device)
     indices={int(p):i for i,p in enumerate(example['positions'])}
     proof=example['logit_proofs'];assert proof
     selected=torch.stack([logits[indices[r['position']]] for r in proof]).float().cpu()

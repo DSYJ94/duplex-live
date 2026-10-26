@@ -67,3 +67,18 @@ def test_exact_adam_rng_restore(tmp_path):
     freshopt.zero_grad();loss,_=scene_loss(fresh,e,'cpu');loss.backward();freshopt.step()
     assert all(torch.equal(v,adapter_state(fresh)[n]) for n,v in expected.items())
     with pytest.raises(ValueError):load(path,fresh,freshopt,dict(wrong=True))
+
+
+def test_native_segment_to_training_alignment_is_red_capable():
+    from types import SimpleNamespace
+    from training.venus.native_cache import whole_sequence_proof
+    m=model();e=example(m);e['positions']=torch.tensor([0,1,2,3,4]);e['targets']=torch.tensor([2,3,4,5,6])
+    refs=[];cache=None
+    with torch.no_grad():
+        for i in range(5):
+            o=m(inputs_embeds=e['embeddings'][i:i+1].unsqueeze(0),position_ids=torch.tensor([[i]]),past_key_values=cache,use_cache=True,output_hidden_states=True,return_dict=True)
+            cache=o.past_key_values;refs.append(dict(position=i,logits=m.lm_head(o.hidden_states[-1])[:,-1].clone()))
+    e['logit_proofs']=refs
+    assert whole_sequence_proof(SimpleNamespace(llm=m),e)['passed']
+    wrong=dict(e);wrong['embeddings']=e['embeddings'].roll(1,0)
+    assert not whole_sequence_proof(SimpleNamespace(llm=m),wrong)['passed']
