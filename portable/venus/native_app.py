@@ -27,6 +27,45 @@ def ensure_guard():
         raise RuntimeError('Independent provider/cost guard is absent or expired')
 
 
+def explicit_sum_numbers(query):
+    """Bounded integers, including comma/plus-separated English forms below1000.
+
+    Ambiguous word sequences fail closed; no model, eval, or shell interpretation.
+    """
+    small=dict(zip(('zero one two three four five six seven eight nine ten eleven twelve '
+        'thirteen fourteen fifteen sixteen seventeen eighteen nineteen').split(),range(20)))
+    tens=dict(zip('twenty thirty forty fifty sixty seventy eighty ninety'.split(),range(20,100,10)))
+    words=set(small)|set(tens)|{'hundred','and'}
+    if set(re.findall(r'[a-z]+',query.lower()))&{'thousand','million','billion','minus','negative'}:
+        raise ValueError('Unsupported scale or signed word form needs clarification')
+    if re.search(r'\d',query):
+        if re.search(r'\d\.\d',query) or any(w in small or w in tens or w=='hundred' for w in re.findall(r'[a-z]+',query.lower())):
+            raise ValueError('Mixed or fractional numeric form needs clarification')
+        return [int(x) for x in re.findall(r'[+-]?\d+',query)]
+    numbers=[]
+    for part in re.split(r'[,;]|\bplus\b',query.lower().replace('-',' ')):
+        tokens=re.findall(r'[a-z]+',part)
+        indices=[i for i,w in enumerate(tokens) if w in small or w in tens]
+        if not indices:continue
+        first=indices[0];end=first
+        while end<len(tokens) and tokens[end] in words:end+=1
+        if indices[-1]>=end:raise ValueError('Separate integer groups require explicit delimiters')
+        seq=tokens[first:end]
+        if any(w not in words for w in seq):raise ValueError('Non-numeric words inside an integer')
+        seq=[w for w in seq if w!='and'];value=0
+        if len(seq)>=2 and seq[0] in small and 1<=small[seq[0]]<=9 and seq[1]=='hundred':
+            value=small[seq[0]]*100;seq=seq[2:]
+        if seq:
+            if seq[0] in tens:
+                value+=tens[seq[0]];seq=seq[1:]
+                if seq and seq[0] in small and 0<small[seq[0]]<10:value+=small[seq.pop(0)]
+            elif seq[0] in small:value+=small[seq.pop(0)]
+            else:raise ValueError('Unsupported English integer')
+        if seq:raise ValueError('Ambiguous English integer sequence')
+        numbers.append(value)
+    return numbers
+
+
 class ArithmeticWorker:
     def __init__(self, delay=8):
         self.delay = delay
@@ -61,10 +100,11 @@ class ArithmeticWorker:
         try:
             await asyncio.sleep(self.delay)
             # Read-only, bounded deterministic capability, never eval()/shell.
-            # In this small capability commas separate input numbers. Thousands
-            # grouping/word-number interpretation needs the real reasoning backend.
-            numbers = [int(x) for x in re.findall(r'[+-]?\d+', query)]
-            if len(numbers) > 20 or any(abs(x) > 10**9 for x in numbers):
+            try:numbers=explicit_sum_numbers(query)
+            except ValueError:numbers=None
+            if numbers is None:
+                result = 'Arithmetic request is ambiguous; provide comma-separated integers.'
+            elif len(numbers) > 20 or any(abs(x) > 10**9 for x in numbers):
                 result = 'Arithmetic request exceeds this diagnostic worker limit.'
             elif numbers and re.search(r'sum|total|add|plus', query, re.I):
                 result = f'Computed sum: {sum(numbers)}. Input numbers: {numbers}.'

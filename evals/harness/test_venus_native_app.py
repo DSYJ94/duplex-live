@@ -1,10 +1,27 @@
 import asyncio
 import unittest
-from portable.venus.native_app import ArithmeticWorker, DelegateParser
+from portable.venus.native_app import ArithmeticWorker, DelegateParser, explicit_sum_numbers
 from portable.venus.guard import validate, IDENT, PRIOR_SECONDS, PRIOR_USD
 
 
 class NativeProtocolTests(unittest.IsolatedAsyncioTestCase):
+    async def test_actual_recorded_english_delegate_is_computed_not_rejected(self):
+        w=ArithmeticWorker(0)
+        w.submit('Total three hundred eighteen, two hundred forty seven, and five hundred seventy.')
+        await asyncio.gather(*w.tasks.values())
+        self.assertIn('Computed sum: 1135',w.take_results())
+        w.submit('Total three hundred and eighteen, two hundred and forty seven, and five hundred sixty-nine.')
+        await asyncio.gather(*w.tasks.values())
+        self.assertIn('Computed sum: 1134',w.take_results())
+        await w.close()
+
+    def test_ambiguous_word_numbers_and_decimals_are_not_silently_added(self):
+        self.assertEqual(explicit_sum_numbers('Total one hundred, twenty, and zero.'),[100,20,0])
+        with self.assertRaises(ValueError):explicit_sum_numbers('Add three hundred eighteen and two hundred forty seven')
+        with self.assertRaises(ValueError):explicit_sum_numbers('Add1.5 and2.5')
+        with self.assertRaises(ValueError):explicit_sum_numbers('Add one thousand, two.')
+        with self.assertRaises(ValueError):explicit_sum_numbers('Add negative three, two.')
+
     def test_split_private_request(self):
         p=DelegateParser()
         self.assertEqual(p.feed('<unit><dele'),[])
