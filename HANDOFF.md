@@ -1,3 +1,30 @@
+# LOCAL — SAME US VM live, direct public download; observe controller79648
+
+26 October15:53UTC. Current actual source21ca67895075c1cd64c1505201ad4e94b5421b2d,
+controller toolsession88920/PID79648, guard80287; events/leases/logs under
+runs/venus-20261026/us-direct-v1. NEVER rerun this controller on observation timeout.
+SameVM1034804594119724521/disk5187703876730670569/us-central1-a, no new resource.
+Actual restart operation-1793029780723-65ec04726d613-191c7fb6-d317e468; lastStart
+15:50:07.750UTC, native7200s STOP17:50:07.750GMT; both guardsLIVE15:52:20.
+TCPserver independently confirms46.149.103.2; current SSHallowlist exactlythat/32,
+strictControlMaster reused. Denylogging disabled after diagnosis. Auto-review rejected
+keepingfour cumulativehostaddresses; safer current-single-address policy succeeded.
+Public35-file download now from pinnedHF4681004131ea1f1fb9aca9f0db76be322657cc79,
+only public releasefiles, concurrent2; all exactbytes/SHA256 before model load.
+4.7GBphysicallyarrived by15:52:51. Isolated Torch2.4/Python3.10 setup in progress.
+No model/questions yet. Samecomplete10, actualrawspeech, noadoption/training/APIcalls.
+Prior slowMacupload controller51714 ACTUAL130 (deliberateINT for bandwidth); unique
+logs3files12677B hashcopybackPASS. ActualSTOP15:48:17.450; closed392seconds plusfirst
+239.345seconds. New prior2400 conservatively covers old1200+these631.345; do notreset.
+Original40351seconds/91.9844806USD scope bound unchanged; SAME35USD/14400seconds,
+cumulative135USD/57600seconds. No purchases/extra disk/oldarchive transfer.
+Original4GCP machines stopped, RunpodEXITED precheck; oldnativearchives untouched.
+After complete10, copyback/full uniquehashes thenSTOP; inspect actual results before
+any recommendation or adoption. Keep partialoutputs/failures. No new userinput needed.
+Preserve unrelatedPYC/probes/roadmap and parked sustained32. LOCALsoleexecutor.
+
+---
+
 # LOCAL — US native comparison LIVE; observe same controller, never duplicate
 
 26 October15:43UTC. Human US placement approval recorded. Source30700d6e38b34f359ab61679d2522e80232b957b
