@@ -1,3 +1,76 @@
+# LOCAL — Native Venus loads on40GB; corrected complete10 driver; warm capacity retry next
+
+26 October. LOCAL is sole executor. User asked what Venus is and to continue to a
+usable product, then explicitly approved capacity fallback within SAME35USD.
+Authorizations:docs/NATIVE-FOUNDATION-COMPARISON-AUTHORIZATION-2026-10-26.json and
+ docs/NATIVE-FOUNDATION-CAPACITY-FALLBACK-AUTHORIZATION-2026-10-26.json. OriginalGCP
+100USD/12h recovery scope +new35USD/4h; cumulative135USD/16h, zero purchases/updates/
+external model calls. Do not start old Moshi training or any other chat/agent.
+
+ACTUAL progress: frozen Realtime-Venus-Audio9B loaded successfully on A10040GB,
+Torch2.4.0+cu121/Transformers4.51.3/BF16/SDPA/seed42/native16k->24k speech. Native
+model source5a622dc2df613708fd7e0e3bb7f656b1cb315cee; dependency repair5c89eb1
+removed an erroneous librosa override, honoring minicpmo-utils1.0.6. New requirements
+were Git-deployed as a file overlay; original failed setup invocation preserved.
+Actual successful setup ecd1513cc49f48c1b2d69b12f6d9f7c5, native app PID2806/
+invocation5dc666d2b3ac4350b65b55d57beb404a. Full destination35files/19993772218B
+hashes PASS11:04:42UTC. Reuse this retained model/runtime; do NOT reinstall or
+rehash unchanged20GB as routine. Native snapshot4681004131ea1f1fb9aca9f0db76be322657cc79.
+
+NO behavioral result yet. Benchmark unit8cb1c1cd341c47f0aeac61d3a3db9f1c ACTUAL1
+before any question: manifest nested at /inputs/inputs/container-manifest.json.
+Fixed benchmark at cbe1cb5: manifest-relative input resolution plus actual18-WAV
+hash/format preflight before model load; local preflight PASS/all10cases/18turns.
+Six CPU protocol/guard tests PASS; not a model score. Original first failed driver
+and logs remain intact. New synthetic speech is Mac Samantha, no external TTS;
+new14turn word audits still pending, old4 audio preserved. No sealed fresh20 opened.
+Prototype uses actual native delegate tags and bounded asynchronous arithmetic;
+no keyword mute, forced answer or external reasoning backend. No model adopted.
+
+Paid startup history retained, NO budget reset: B VM1962162267540853286 first
+boot234.445s (SSH allow rule used proxy address); B742566064293056781 stopped on
+bad guard import (fixed+live provider preflight PASS); B4809735600652586756 loaded
+model, then stopped after failed benchmark launch. Those three stopped objects
+were retired with --keep-disks=boot; SAME B disk8246893242108371884 retained.
+Conservative new-scope prior1000GPU seconds covers closed startup intervals;
+old prior40351GPU seconds/91.9844806USD scope upper unchanged (not invoice).
+Original A disk1828090267781080539 NEVER detached; A2Ultra conversion unsupported,
+so existing original VMs remain stopped/unmodified. Critical81GB native archive
+and old originalfit-15/Adam/RNG/history/retention evidence remain preserved.
+Broad Mac source backup still PARTIAL. Public acquisition14.77GB remains candidate.
+
+GCP immediate80GB/A and40GB/B attempts stockout. Flex queued40GB allocated three
+times; stopped Flex cannot queue restart. Recovery keeps one logical B replacement
+at a time, same named placement/disk, carrying all measured prior time. Current
+warm-v4 create op operation-1793013491957-65ebc7c43fd84-25b95844-9f450e30 ACTUAL
+stockout/no object. All last known machines stopped; no GPU/model/guard currently
+running. Next exact local controller runs/venus-20261026/controller-b-warm-v5.py
+(prepared NOT launched at this entry) queues same B/name for <=900s, native7200s
+STOP, prior1000s+7200s<14400s new allowance, both live guards and no repeats of
+installation/model transfer. Warm input/runtime preflights before model; reuse
+physical35-file sizes and previous full hash proof. Read actual latest process
+state before any launch; never duplicate pending operation on observation timeout.
+
+Runtime on B: /workspace/migration/venus-runtime-v1; public model
+/workspace/migration/venus-public-v1; inputs nested /workspace/migration/
+venus-inputs-v1/inputs. Local receipts/logs/retired VM metadata and controllers in
+ignored runs/venus-20261026/. Cost guard provider reader corrected to actual
+read_runpod_pods; authenticated local check found all5 Runpod pods EXITED. SSH
+uses Google-authenticated guest hostkeys/OSLogin. Existing Mac-only22 rule corrected
+to direct165.65.45.242/32; default curl had returned proxy195.26.119.145. Always use
+--noproxy '*' to verify direct address. No credentials transferred. Both original
+and B250GB disks preserved; no extra disk/snapshot/CPU/purchase. Official40GB
+on-demand estimate incl existing PD3.785643USD/h; admission ceiling7.25USD/h.
+
+Prior native Moshi saved528 still REJECTED; latest8-update pilot not repeated.
+This work is a native foundation diagnostic and usable prototype preparation,
+not production qualification or new fine-tuning. Existing app goal remains
+unfinished/paused in tool state; no fake completion/new goal. Preserve unrelated
+PYC/probes/roadmap and parked untracked sustained32 helpers. Update exact current
+job IDs/results/remaining budget before final handoff; cloud remains read-only.
+
+---
+
 # LOCAL — Public data and native Audio candidate acquired; foundation comparison next
 
 25 October. Latest direct human steering: acquire data, maintain the product view,
