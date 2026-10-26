@@ -153,7 +153,7 @@ class DelegateParser:
 
 
 class NativeEngine:
-    def __init__(self, model_dir):
+    def __init__(self, model_dir, system_prompt='Streaming Omni Conversation.'):
         ensure_guard()
         import numpy as np
         import torch
@@ -174,7 +174,7 @@ class NativeEngine:
             torch=torch.__version__, cuda=torch.version.cuda,
             gpu=torch.cuda.get_device_name(), precision='bfloat16', attention='sdpa',
             input_sample_rate=16000, output_sample_rate=24000,
-            system_prompt='Streaming Omni Conversation.', decode_mode='sampling',
+            system_prompt=system_prompt, decode_mode='sampling',
             max_new_speak_tokens_per_chunk=20, temperature=0.7, top_k=20,
             top_p=0.8, listen_prob_scale=1.0, optimizer_updates=0)
         self.profile.update(force_listen_count=int(self.duplex.force_listen_count),
@@ -221,7 +221,7 @@ class NativeEngine:
             audio_sample_rate=24000)
 
 
-def create_app(model_dir):
+def create_app(model_dir, system_prompt='Streaming Omni Conversation.'):
     from contextlib import asynccontextmanager
     from fastapi import FastAPI, WebSocket
     from fastapi.responses import FileResponse
@@ -229,7 +229,7 @@ def create_app(model_dir):
 
     @asynccontextmanager
     async def lifespan(app):
-        app.state.engine = await asyncio.to_thread(NativeEngine, model_dir)
+        app.state.engine = await asyncio.to_thread(NativeEngine, model_dir, system_prompt)
         yield
 
     app = FastAPI(lifespan=lifespan, docs_url=None, redoc_url=None)
@@ -291,7 +291,10 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--model-dir', required=True)
     parser.add_argument('--port', type=int, default=8032)
+    parser.add_argument('--system-prompt-file')
     args = parser.parse_args()
     import uvicorn
     # Loopback and SSH tunnel only. No microphone or conversation recording.
-    uvicorn.run(create_app(args.model_dir), host='127.0.0.1', port=args.port)
+    prompt=Path(args.system_prompt_file).read_text().strip() if args.system_prompt_file else 'Streaming Omni Conversation.'
+    if not prompt or len(prompt)>4000:raise ValueError('Bounded nonempty system prompt required')
+    uvicorn.run(create_app(args.model_dir,prompt), host='127.0.0.1', port=args.port)
