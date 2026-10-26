@@ -5,8 +5,8 @@ from pathlib import Path
 from portable.venus.guard import PROJECT,PRIOR_SECONDS,PRIOR_USD
 
 REUSE='--reuse' in sys.argv
-R=Path('runs/venus-20261026/us-recovery-v1' if REUSE else 'runs/venus-20261026/us-v1');R.mkdir(exist_ok=True)
-PRIOR_NEW=1600 if REUSE else 1200
+R=Path('runs/venus-20261026/us-direct-v1' if REUSE else 'runs/venus-20261026/us-v1');R.mkdir(exist_ok=True)
+PRIOR_NEW=2400 if REUSE else 1200
 NAME='duplex-venus-us-20261026-v1';ZONE=sys.argv[1] if len(sys.argv)>1 else 'us-central1-a'
 IMAGE='common-cu129-ubuntu-2204-nvidia-580-v20261019'
 ROOT='/workspace/migration';guard=None;vm=None;a=None;events=[];created=False
@@ -46,7 +46,7 @@ for base in [root/'venus-receipts',root/'venus-runtime-v1'/'diagnostic-v1']:
  if base.exists():
   for p in sorted(base.rglob('*')):
    if p.is_file():out.append(dict(path=str(p.relative_to(root)),bytes=p.stat().st_size,sha256=digest(p)))
-for p in [root/'venus-runtime-v1'/'setup-complete.json',root/'venus-runtime-v1'/'pip-freeze.txt']:
+for p in [root/'venus-runtime-v1'/'setup-complete.json',root/'venus-runtime-v1'/'pip-freeze.txt',root/'venus-public-download.log',root/'public-model-manifest.json']:
  if p.exists():out.append(dict(path=str(p.relative_to(root)),bytes=p.stat().st_size,sha256=digest(p)))
 print(json.dumps(out))"""
  rows=json.loads(ssh('/usr/bin/python3 -c '+shlex.quote(code),90));(R/'unique-inventory.json').write_text(json.dumps(rows,indent=2)+'\n')
@@ -123,10 +123,11 @@ try:
  ssh('sudo systemctl stop duplex-venus-bootstrap-stop.timer');record('both_independent_guards_live',mac_pid=guard.pid)
  # One isolated host venv on official driver580 image; no change to original runtimes.
  ssh('mkdir -p '+ROOT+'/venus-runtime-v1 '+ROOT+'/venus-public-v1 '+ROOT+'/venus-inputs-v1 && df -h '+ROOT)
- setup='set -eu; sudo apt-get update -qq; sudo apt-get install -y -qq python3-venv libsndfile1; /usr/bin/python3 -m venv '+ROOT+'/venus-runtime-v1/venv; '+ROOT+'/venus-runtime-v1/venv/bin/pip install --disable-pip-version-check --no-cache-dir -r '+remote+'/portable/venus/requirements.txt; '+ROOT+'/venus-runtime-v1/venv/bin/pip freeze > '+ROOT+'/venus-runtime-v1/pip-freeze.txt; '+ROOT+'/venus-runtime-v1/venv/bin/python -c '+shlex.quote("import json,torch,transformers,stepaudio2;assert torch.cuda.is_available() and torch.cuda.device_count()==1;assert torch.__version__.startswith('2.4.0');assert transformers.__version__=='4.51.3';json.dump(dict(torch=torch.__version__,gpu=torch.cuda.get_device_name(0),optimizer_updates=0),open('/workspace/migration/venus-runtime-v1/setup-complete.json','x'))")
+ setup='set -eu; sudo apt-get update -qq; sudo apt-get install -y -qq python3-venv libsndfile1; /usr/bin/python3 -m venv '+ROOT+'/venus-runtime-v1/venv; '+ROOT+'/venus-runtime-v1/venv/bin/pip install --disable-pip-version-check --no-cache-dir -r '+remote+'/portable/venus/requirements.txt; '+ROOT+'/venus-runtime-v1/venv/bin/pip freeze > '+ROOT+'/venus-runtime-v1/pip-freeze.txt; '+ROOT+'/venus-runtime-v1/venv/bin/python -c '+shlex.quote("import json,torch,transformers,stepaudio2;assert torch.cuda.is_available() and torch.cuda.device_count()==1;assert torch.__version__.startswith('2.4.0');assert transformers.__version__=='4.51.3';p='/workspace/migration/venus-runtime-v1/setup-complete.json';__import__('pathlib').Path(p).exists() or json.dump(dict(torch=torch.__version__,gpu=torch.cuda.get_device_name(0),optimizer_updates=0),open(p,'x'))")
  ssh('sudo systemd-run --unit=duplex-venus-setup-us-v1 --uid=daryl_aurium_labs_com --property=RuntimeMaxSec=1500 /bin/bash -c '+shlex.quote(setup))
  modelbase=Path.home()/'.cache/duplex-live/public-models/inclusionAI--Realtime-Venus@4681004131ea'
- run(['rsync','-ar','--no-owner','--no-group','--exclude=session-token','--exclude=.private','--exclude=core','--exclude=core.*','--files-from=runs/venus-20261026/public-model-files.txt','-e',shlex.join(a[:-1]),str(modelbase)+'/',a[-1]+':'+ROOT+'/venus-public-v1/'],900)
+ sync('runs/venus-20261026/public-model-manifest.json',ROOT+'/public-model-manifest.json')
+ ssh('cd '+remote+' && /usr/bin/python3 -u -m portable.venus.fetch_public --manifest '+ROOT+'/public-model-manifest.json --output '+ROOT+'/venus-public-v1 > '+ROOT+'/venus-public-download.log 2>&1',900)
  sync('runs/venus-20261026/inputs/',ROOT+'/venus-inputs-v1/',90)
  sync('runs/venus-20261026/public-model-manifest.json',ROOT+'/public-model-manifest.json')
  code="""import hashlib,json
