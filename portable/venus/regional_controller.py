@@ -4,7 +4,9 @@ from datetime import datetime,timezone
 from pathlib import Path
 from portable.venus.guard import PROJECT,PRIOR_SECONDS,PRIOR_USD
 
-R=Path('runs/venus-20261026/us-v1');R.mkdir(exist_ok=True)
+REUSE='--reuse' in sys.argv
+R=Path('runs/venus-20261026/us-recovery-v1' if REUSE else 'runs/venus-20261026/us-v1');R.mkdir(exist_ok=True)
+PRIOR_NEW=1600 if REUSE else 1200
 NAME='duplex-venus-us-20261026-v1';ZONE=sys.argv[1] if len(sys.argv)>1 else 'us-central1-a'
 IMAGE='common-cu129-ubuntu-2204-nvidia-580-v20261019'
 ROOT='/workspace/migration';guard=None;vm=None;a=None;events=[];created=False
@@ -61,7 +63,8 @@ try:
  price=json.loads(Path('runs/venus-20261026/us-current-price40-v1.json').read_text())
  assert 0<price['hourly_estimate_usd']<=7.25 and time.time()-datetime.fromisoformat(price['at_utc']).timestamp()<3600
  allv=cloud('instances','list');assert all(v['status'] in ('TERMINATED','STOPPED') for v in allv)
- assert not any(v['name']==NAME for v in allv)
+ existing=[v for v in allv if v['name']==NAME]
+ assert (len(existing)==1 and str(existing[0]['id'])=='1034804594119724521' and ZONE=='us-central1-a') if REUSE else not existing
  from portable.context.gcp_budget_watchdog import read_runpod_pods
  pods=read_runpod_pods(Path('runs/local-migration-20261021/.private/runpod-budget-api-key').read_text().strip());pods=pods.get('pods',[]) if isinstance(pods,dict) else pods
  assert all(v['status'] in ('EXITED','TERMINATED','STOPPED') for v in pods)
@@ -70,8 +73,13 @@ try:
  pinned=json.loads(Path('runs/venus-20261026/us-image-pinned-v1.json').read_text());assert pinned['name']==IMAGE and pinned['status']=='READY'
  run(['gcloud','compute','os-login','ssh-keys','add','--key-file=runs/local-migration-20261024/.private/gcp-native-ssh.pub','--ttl=3h','--project='+PROJECT,'--quiet'])
  startup=R/'bootstrap.sh';startup.write_text('#!/bin/sh\nset -eu\ntest "$(curl -sf -H \'Metadata-Flavor: Google\' http://metadata.google.internal/computeMetadata/v1/instance/name)" = '+NAME+'\nmkdir -p '+ROOT+'\nchmod 1777 '+ROOT+'\nsystemd-run --unit=duplex-venus-bootstrap-stop --on-active=600s /sbin/shutdown -h now || /sbin/shutdown -h now\n')
- op=json.loads(run(['gcloud','compute','instances','create',NAME,'--project='+PROJECT,'--zone='+ZONE,'--machine-type=a2-highgpu-1g','--provisioning-model=FLEX_START','--request-valid-for-duration=900s','--maintenance-policy=TERMINATE','--no-restart-on-failure','--no-service-account','--no-scopes','--tags=duplex-native-bounded','--image='+IMAGE,'--image-project=deeplearning-platform-release','--boot-disk-size=100GB','--boot-disk-type=pd-balanced','--boot-disk-device-name='+NAME,'--no-boot-disk-auto-delete','--metadata=enable-oslogin=TRUE,enable-guest-attributes=TRUE,block-project-ssh-keys=TRUE','--metadata-from-file=startup-script='+str(startup),'--max-run-duration=7200s','--instance-termination-action=STOP','--format=json','--async','--quiet'],90));op=op[0] if isinstance(op,list) else op;created=True
- record('approved_us_allocation_submitted',operation=op['name'],zone=ZONE,source=source,image=IMAGE,image_id=pinned['id'],hourly_estimate_usd=price['hourly_estimate_usd'],prior_new_gpu_seconds_upper=1200)
+ if REUSE:
+  disk=cloud('disks','describe',NAME,'--zone='+ZONE);assert str(disk['id'])=='5187703876730670569'
+  op=json.loads(run(['gcloud','compute','instances','start',NAME,'--project='+PROJECT,'--zone='+ZONE,'--async','--format=json','--quiet'],60));op=op[0] if isinstance(op,list) else op;created=True
+  record('same_existing_us_vm_restart_submitted',operation=op['name'],source=source,prior_new_gpu_seconds_upper=PRIOR_NEW)
+ else:
+  op=json.loads(run(['gcloud','compute','instances','create',NAME,'--project='+PROJECT,'--zone='+ZONE,'--machine-type=a2-highgpu-1g','--provisioning-model=FLEX_START','--request-valid-for-duration=900s','--maintenance-policy=TERMINATE','--no-restart-on-failure','--no-service-account','--no-scopes','--tags=duplex-native-bounded','--image='+IMAGE,'--image-project=deeplearning-platform-release','--boot-disk-size=100GB','--boot-disk-type=pd-balanced','--boot-disk-device-name='+NAME,'--no-boot-disk-auto-delete','--metadata=enable-oslogin=TRUE,enable-guest-attributes=TRUE,block-project-ssh-keys=TRUE','--metadata-from-file=startup-script='+str(startup),'--max-run-duration=7200s','--instance-termination-action=STOP','--format=json','--async','--quiet'],90));op=op[0] if isinstance(op,list) else op;created=True
+  record('approved_us_allocation_submitted',operation=op['name'],zone=ZONE,source=source,image=IMAGE,image_id=pinned['id'],hourly_estimate_usd=price['hourly_estimate_usd'],prior_new_gpu_seconds_upper=1200)
  deadline=time.time()+960
  while op['status']!='DONE':
   if time.time()>deadline:raise TimeoutError('Observe same pending operation; no duplicate')
@@ -81,7 +89,7 @@ try:
  while vm['status']!='RUNNING':
   if time.time()>deadline:raise TimeoutError('No duplicate while allocation pending')
   time.sleep(5);vm=cloud('instances','describe',NAME,'--zone='+ZONE)
- start=datetime.fromisoformat(vm['lastStartTimestamp']).timestamp();end=start+7200;setup_end=start+1800
+ start=datetime.fromisoformat(vm['lastStartTimestamp']).timestamp();end=min(start+7200,datetime.fromisoformat(vm['creationTimestamp']).timestamp()+14400);setup_end=start+1800
  disk=cloud('disks','describe',NAME,'--zone='+ZONE);assert int(disk['sizeGb'])==100
  record('actual_running',vm_id=vm['id'],disk_id=disk['id'],last_start=vm['lastStartTimestamp'],native_stop_unix=end)
  for _ in range(30):
@@ -91,16 +99,17 @@ try:
   time.sleep(3)
  else:raise RuntimeError('No authenticated guest hostkeys')
  (R/'.private').mkdir(mode=0o700,exist_ok=True);known=R/'.private/known-hosts';alias='gcp-venus-us-v1';known.write_text(''.join(alias+' '+v['key']+' '+v['value']+'\n' for v in keys));known.chmod(0o600)
- a=['ssh','-i','runs/local-migration-20261024/.private/gcp-native-ssh','-o','IdentitiesOnly=yes','-o','BatchMode=yes','-o','StrictHostKeyChecking=yes','-o','HostKeyAlias='+alias,'-o','UserKnownHostsFile='+str(known),'-o','ConnectTimeout=10','-o','ServerAliveInterval=10','-o','ServerAliveCountMax=2','daryl_aurium_labs_com@'+vm['networkInterfaces'][0]['accessConfigs'][0]['natIP']]
+ a=['ssh','-i','runs/local-migration-20261024/.private/gcp-native-ssh','-o','IdentitiesOnly=yes','-o','BatchMode=yes','-o','StrictHostKeyChecking=yes','-o','HostKeyAlias='+alias,'-o','UserKnownHostsFile='+str(known),'-o','ConnectTimeout=10','-o','ServerAliveInterval=10','-o','ServerAliveCountMax=2','-o','ControlMaster=auto','-o','ControlPersist=180','-o','ControlPath=/private/tmp/duplex-venus-us-mux','daryl_aurium_labs_com@'+vm['networkInterfaces'][0]['accessConfigs'][0]['natIP']]
  (R/'ssh.json').write_text(json.dumps(a)+'\n')
  for _ in range(12):
-  try:ssh('test -d '+ROOT+' && nvidia-smi',20);break
+  try:
+   tcp=ssh('test -d '+ROOT+' && nvidia-smi && echo TCP_CLIENT=$SSH_CONNECTION',20);record('strict_tcp_gpu_verified',stdout=tcp);break
   except RuntimeError:time.sleep(3)
  else:raise RuntimeError('Strict SSH/GPU not ready')
  sync(R/'source.bundle',ROOT+'/source.bundle')
  ssh('git init --bare '+ROOT+'/source.git && git --git-dir='+ROOT+'/source.git fetch '+ROOT+'/source.bundle HEAD && git --git-dir='+ROOT+'/source.git worktree add --detach '+remote+' '+source)
  birth=run(['/bin/ps','-p',str(os.getpid()),'-o','lstart=']).strip()
- lease=dict(resource_key='us-a10040',zone=ZONE,vm_id=str(vm['id']),disk_id=str(disk['id']),disk_size_gib=100,creation_timestamp=vm['creationTimestamp'],stop_unix=end,prior_new_gpu_seconds_upper=1200,prior_gpu_seconds=PRIOR_SECONDS,prior_scope_usd=PRIOR_USD,authorization_sha256=hashlib.sha256(auth).hexdigest(),controller_pid=os.getpid(),controller_birth=birth)
+ lease=dict(resource_key='us-a10040',zone=ZONE,vm_id=str(vm['id']),disk_id=str(disk['id']),disk_size_gib=100,creation_timestamp=vm['creationTimestamp'],stop_unix=end,prior_new_gpu_seconds_upper=PRIOR_NEW,prior_gpu_seconds=PRIOR_SECONDS,prior_scope_usd=PRIOR_USD,authorization_sha256=hashlib.sha256(auth).hexdigest(),controller_pid=os.getpid(),controller_birth=birth)
  (R/'lease.json').write_text(json.dumps(lease,indent=2)+'\n');sync(R/'lease.json',ROOT+'/venus-lease-us-v1.json')
  guard=subprocess.Popen([sys.executable,'-u','-m','portable.venus.guard','--lease',str(R/'lease.json'),'--ssh-argv',str(R/'ssh.json'),'--runpod-key','runs/local-migration-20261021/.private/runpod-budget-api-key','--status',str(R/'guard.json'),'--stop-file',str(R/'stop-requested')],stdout=(R/'guard.log').open('x'),stderr=subprocess.STDOUT,env={**os.environ,'PYTHONDONTWRITEBYTECODE':'1'})
  until=time.time()+90
