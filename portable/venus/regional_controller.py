@@ -4,11 +4,12 @@ from datetime import datetime,timezone
 from pathlib import Path
 from portable.venus.guard import PROJECT,PRIOR_SECONDS,PRIOR_USD
 
-REUSE='--reuse' in sys.argv
-POLICY='--policy-v2' in sys.argv
+IAP='--iap' in sys.argv
+REUSE='--reuse' in sys.argv or IAP
+POLICY='--policy-v2' in sys.argv or IAP
 RUN_SECONDS=3600 if POLICY else 7200
-R=Path('runs/venus-20261026/us-policy-v2' if POLICY else ('runs/venus-20261026/us-direct-v1' if REUSE else 'runs/venus-20261026/us-v1'));R.mkdir(exist_ok=True)
-PRIOR_NEW=3200 if POLICY else (2400 if REUSE else 1200)
+R=Path('runs/venus-20261026/us-policy-iap-v3' if IAP else ('runs/venus-20261026/us-policy-v2' if POLICY else ('runs/venus-20261026/us-direct-v1' if REUSE else 'runs/venus-20261026/us-v1')));R.mkdir(exist_ok=True)
+PRIOR_NEW=3600 if IAP else (3200 if POLICY else (2400 if REUSE else 1200))
 NAME='duplex-venus-us-20261026-v1';ZONE=sys.argv[1] if len(sys.argv)>1 else 'us-central1-a'
 IMAGE='common-cu129-ubuntu-2204-nvidia-580-v20261019'
 ROOT='/workspace/migration';guard=None;vm=None;a=None;events=[];created=False
@@ -66,21 +67,27 @@ try:
  assert 0<price['hourly_estimate_usd']<=7.25 and time.time()-datetime.fromisoformat(price['at_utc']).timestamp()<3600
  allv=cloud('instances','list');assert all(v['status'] in ('TERMINATED','STOPPED') for v in allv)
  existing=[v for v in allv if v['name']==NAME]
- assert (len(existing)==1 and str(existing[0]['id'])=='1034804594119724521' and ZONE=='us-central1-a') if REUSE else not existing
+ expected_vm='5664322998932521310' if IAP else '1034804594119724521'
+ if IAP:
+  from portable.venus.access import approved_iap_proxy
+  proxy=approved_iap_proxy()
+  assert set(existing[0].get('tags',{}).get('items',[]))=={'duplex-venus-iap-bounded'},'Apply approved scoped IAP setup before starting compute'
+ assert (len(existing)==1 and str(existing[0]['id'])==expected_vm and ZONE=='us-central1-a') if REUSE else not existing
  from portable.context.gcp_budget_watchdog import read_runpod_pods
  pods=read_runpod_pods(Path('runs/local-migration-20261021/.private/runpod-budget-api-key').read_text().strip());pods=pods.get('pods',[]) if isinstance(pods,dict) else pods
  assert all(v['status'] in ('EXITED','TERMINATED','STOPPED') for v in pods)
  quota=cloud('regions','describe','us-central1');q={x['metric']:x for x in quota['quotas']}
  assert q['NVIDIA_A100_GPUS']['limit']>=1 and q['NVIDIA_A100_GPUS']['usage']==0
  pinned=json.loads(Path('runs/venus-20261026/us-image-pinned-v1.json').read_text());assert pinned['name']==IMAGE and pinned['status']=='READY'
- import ipaddress
- origin=run(['curl','-4','--noproxy','*','--silent','--show-error','--fail','--max-time','8','https://api.ipify.org'],15).strip();assert ipaddress.ip_address(origin).version==4
- run(['gcloud','compute','firewall-rules','update','duplex-native-mac-ssh-v1','--project='+PROJECT,'--source-ranges='+origin+'/32','--quiet'])
- record('same_controller_egress_pinned',source_ipv4=origin)
+ if not IAP:
+  import ipaddress
+  origin=run(['curl','-4','--noproxy','*','--silent','--show-error','--fail','--max-time','8','https://api.ipify.org'],15).strip();assert ipaddress.ip_address(origin).version==4
+  run(['gcloud','compute','firewall-rules','update','duplex-native-mac-ssh-v1','--project='+PROJECT,'--source-ranges='+origin+'/32','--quiet'])
+  record('same_controller_egress_pinned',source_ipv4=origin)
  run(['gcloud','compute','os-login','ssh-keys','add','--key-file=runs/local-migration-20261024/.private/gcp-native-ssh.pub','--ttl=3h','--project='+PROJECT,'--quiet'])
  startup=R/'bootstrap.sh';startup.write_text('#!/bin/sh\nset -eu\ntest "$(curl -sf -H \'Metadata-Flavor: Google\' http://metadata.google.internal/computeMetadata/v1/instance/name)" = '+NAME+'\nmkdir -p '+ROOT+'\nchmod 1777 '+ROOT+'\nsystemd-run --unit=duplex-venus-bootstrap-stop --on-active=600s /sbin/shutdown -h now || /sbin/shutdown -h now\n')
  if REUSE:
-  disk=cloud('disks','describe',NAME,'--zone='+ZONE);assert str(disk['id'])=='5187703876730670569'
+  disk=cloud('disks','describe',NAME,'--zone='+ZONE);assert str(disk['id'])==('7763575121976148318' if IAP else '5187703876730670569')
   op=json.loads(run(['gcloud','compute','instances','start',NAME,'--project='+PROJECT,'--zone='+ZONE,'--async','--format=json','--quiet'],60));op=op[0] if isinstance(op,list) else op;created=True
   record('same_existing_us_vm_restart_submitted',operation=op['name'],source=source,prior_new_gpu_seconds_upper=PRIOR_NEW)
  else:
@@ -106,6 +113,9 @@ try:
  else:raise RuntimeError('No authenticated guest hostkeys')
  (R/'.private').mkdir(mode=0o700,exist_ok=True);known=R/'.private/known-hosts';alias='gcp-venus-us-v1';known.write_text(''.join(alias+' '+v['key']+' '+v['value']+'\n' for v in keys));known.chmod(0o600)
  a=['ssh','-i','runs/local-migration-20261024/.private/gcp-native-ssh','-o','IdentitiesOnly=yes','-o','BatchMode=yes','-o','StrictHostKeyChecking=yes','-o','HostKeyAlias='+alias,'-o','UserKnownHostsFile='+str(known),'-o','ConnectTimeout=10','-o','ServerAliveInterval=10','-o','ServerAliveCountMax=2','-o','ControlMaster=auto','-o','ControlPersist=180','-o','ControlPath=/private/tmp/duplex-venus-us-mux','daryl_aurium_labs_com@'+vm['networkInterfaces'][0]['accessConfigs'][0]['natIP']]
+ if IAP:
+  a[-1:-1]=['-o','ProxyCommand='+proxy]
+  a=[x.replace('/private/tmp/duplex-venus-us-mux','/private/tmp/duplex-venus-us-iap-v3-mux') for x in a]
  (R/'ssh.json').write_text(json.dumps(a)+'\n')
  for _ in range(12):
   try:

@@ -1,0 +1,56 @@
+{
+  "schema": "dl-venus-generic-policy-variant-attempt-v1",
+  "status": "BLOCKED_BEFORE_MODEL_BY_ACCESS",
+  "recorded_utc": "2026-10-26T16:41:14.882333+00:00",
+  "source_sha": "47ecc484e03615d496aec453eb6a74e90470ab8c",
+  "changes": [
+    "Generic interaction-policy system prompt without task answers or cue names",
+    "Diagnosed English-word integer worker repair"
+  ],
+  "same10_input_hashes": true,
+  "new_optimizer_updates": 0,
+  "external_model_api_calls": 0,
+  "netherlands": {
+    "operation": "operation-1793031915720-65ec0c6684f87-57327bff-1aaac914",
+    "actual_stockout": true,
+    "vm_created": false,
+    "new_gpu_seconds": 0,
+    "controller_session": 20005,
+    "actual_exit_code": 1
+  },
+  "us": {
+    "operation": "operation-1793032112480-65ec0d222a226-ce9f18c5-a68a966f",
+    "vm_id": "5664322998932521310",
+    "disk_id": "7763575121976148318",
+    "status": "TERMINATED",
+    "last_start": "2026-10-26T09:29:15.200-07:00",
+    "last_stop": "2026-10-26T09:33:20.445-07:00",
+    "closed_seconds": 245.245,
+    "model_loaded": false,
+    "questions_run": 0,
+    "controller_session": 43999,
+    "actual_exit_code": 1,
+    "temporary_disk_retained_for_exact_resource_repair": true
+  },
+  "access_evidence": {
+    "http_egress_observed": "46.149.103.6",
+    "denied_tcp_source_observed": "46.149.103.5",
+    "direct_ssh_timed_out": true,
+    "multiple_stale_source_allowlist_rejected_by_automatic_review": true,
+    "no_bypass_after_rejection": true,
+    "temporary_deny_logging_disabled": true,
+    "iap_api_already_enabled": false,
+    "existing_owner_account_verified": true
+  },
+  "budgets": {
+    "prior_original_seconds_upper": 40351,
+    "prior_new_scope_closed_seconds_upper": 3600,
+    "cumulative_seconds_upper": 43951,
+    "new_scope_usd_cap": 35,
+    "new_scope_seconds_cap": 14400,
+    "cumulative_usd_cap": 135,
+    "cumulative_seconds_cap": 57600,
+    "no_new_purchase": true
+  },
+  "next_action": "Await exact IAP access decision. Prepared fail-closed code exists; no IAP API, firewall or IAM change was performed. Reuse same stopped VM/disk if approved, not another resource."
+}

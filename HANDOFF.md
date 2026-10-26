@@ -1,3 +1,48 @@
+# LOCAL — Baseline full10 complete; policy variant blocked by access; ALL GPU OFF
+
+26 October16:38UTC. Current source47ecc484e03615d496aec453eb6a74e90470ab8c ran policyattempt.
+Netherlands onequeuedrequest operation-1793031915720-65ec0c6684f87-57327bff-1aaac914
+ACTUAL stockout/noVM/noGPU (session20005 actual1); no repeatloop. US one policyattempt
+operation-1793032112480-65ec0d222a226-ce9f18c5-a68a966f allocated NEWlogicalreplacement
+VM5664322998932521310, SAMElogicalname duplex-venus-us-20261026-v1/us-central1-a,
+only100GBtempdisk7763575121976148318. PreviousUS VM/disk had been removed after full
+verifiedbaselinecopyback; nooverlapping temporarydisk or GPU. Native3600sSTOP.
+Actualstart16:29:15.200/stop16:33:20.445UTC =245.245s. Controller43999/PID84532 actual1;
+no model loaded, no questions, no guard/model/backgroundjob stillrunning. SSHtimedout;
+HTTPsource6 and actualdeniedTCPsource5 differed. TemporarycontrollerSIGSTOP used only
+while inspectingfailcleanup; CONT sent, cleanup completed, processended. NoCPUthrottling.
+CurrentVM TERMINATED, disk retained for exactresourceaccessrepair; do notdeleteunique
+state or recreate/submit blindly. OriginalfourVMs stopped, originaldisks/archives intact.
+
+See docs/NATIVE-VENUS-POLICY-V2-ACCESS-BLOCK-2026-10-26.json. Newprior3600s carriesall
+closedNative scopeincl baseline1688.811s and latest245.245s plusold1200bound; original
+40351s/91.9844806USD unchanged. Same35USD/14400s, cumulative135USD/57600s, NO purchases,
+training/APIcalls/newdataset. Baselinecomplete10 evidence remains exact495files/
+43938169B, allSHAverified; source21ca678. Ordinarygeneratedtextcore4/4, bothquietfail,
+routingnotreliable; noadoption. OriginalworkerEnglishrequestnowcomputes1135 offline
+atd3abfe8;9focusedCPUtestsPASS. Genericpolicy at8b50544 is prepared but UNTESTED.
+Replay UI http://127.0.0.1:8033/ remainsliveonMac only(session72000/IABtab2deliverable),
+no paidGPU. Do not claim live mic, realreasoningbackend, passedaudio or productionready.
+
+HUMAN ACCESS DECISION: docs/NATIVE-IAP-ACCESS-PROPOSAL-2026-10-26.json permits ONLY
+IAPAPIactivation +twofirewallrules scopednewtag toexactstoppedcurrentVM, port22 from
+GoogleIAP35.235.240.0/20 +denyallothers; existingGoogleowner/OSLogin/strictkeys, no new
+IAMprincipal/role/key. IAPAPIcurrentlyNOTenabled. OriginalgrantforbidsnewAPI/ingress,
+so thisdecision isrequired. Auto-review rejectedretainingfourpotentiallystalepublic
+sourceaddresses; no bypass. Prepared access.py/iap_setup.py +controller --iap are
+FAIL-CLOSED without docs/NATIVE-IAP-ACCESS-AUTHORIZATION-2026-10-26.json. NO IAPchanges
+performed. Ifapproved recordexactreply/proposalhash first, then applyscopedsetup to
+SAME VM5664322998932521310/disk7763575121976148318, refreshprice/quota/nonoverlap,
+Gitbundlecurrentmain under us-policy-iap-v3/source.bundle, launchONCE --iap. Native
+3600s STOP/bothguards, prior3600s carried, sameall10 oldaudiohashes/newgenericprompt+
+workerrepair. ExistingFlexrestart maystockout: observeactualoperation, no duplicates.
+Afterfulloutputhashcopybackcleanup exacttemporaryVM/disk +onlyournewIAPrules. No
+newdata/APIpayload/training/adoption scope inferred. Beforefurthersteps readprovider.
+LOCALsoleexecutor; no agents/messages/heartbeat. Goalunfinished; preserve unrelated
+PYC/probes/roadmap and parked sustained32. BroadMacsourcebackup still PARTIAL.
+
+---
+
 # LOCAL — Complete US diagnostic backed up; one generic policy comparison prepared
 
 26 October16:23UTC. US run source21ca67895075c1cd64c1505201ad4e94b5421b2d ACTUAL0/full10.
