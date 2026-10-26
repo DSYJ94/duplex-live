@@ -32,6 +32,8 @@ def explicit_sum_numbers(query):
 
     Ambiguous word sequences fail closed; no model, eval, or shell interpretation.
     """
+    if '{' in query or '}' in query:
+        raise ValueError('Structured requests need an explicit argument schema')
     small=dict(zip(('zero one two three four five six seven eight nine ten eleven twelve '
         'thirteen fourteen fifteen sixteen seventeen eighteen nineteen').split(),range(20)))
     tens=dict(zip('twenty thirty forty fifty sixty seventy eighty ninety'.split(),range(20,100,10)))
@@ -76,9 +78,10 @@ class ArithmeticWorker:
     def event(self, kind, **details):
         self.events.append(dict(type=kind, monotonic=time.monotonic(), **details))
 
-    def submit(self, query):
+    def submit(self, query, raw_query=None):
         ident = str(uuid.uuid4())
-        self.event('native_delegate', work_id=ident, query=query)
+        self.event('native_delegate', work_id=ident, query=query,
+            raw_query=query if raw_query is None else raw_query)
         if re.search(r'\b(cancel|stop|abort)\b|never mind', query, re.I):
             pending = [k for k, t in self.tasks.items() if not t.done()]
             for k in pending:
@@ -135,8 +138,10 @@ class DelegateParser:
     """Consume raw generated token text incrementally, without editing speech."""
     def __init__(self):
         self.buffer = ''
+        self.last_raw_queries = []
 
     def feed(self, delta):
+        self.last_raw_queries = []
         self.buffer += delta
         if len(self.buffer) > 16384:
             raise ValueError('Native delegate stream exceeds bounded parser buffer')
@@ -145,7 +150,12 @@ class DelegateParser:
             end = self.buffer.index('</delegate>')
             start = self.buffer.rfind('<delegate>', 0, end)
             if start >= 0:
-                queries.append(self.buffer[start + len('<delegate>'):end])
+                raw=self.buffer[start + len('<delegate>'):end]
+                # Native unit framing is transport, not worker-request text.
+                # Remove only known frame tokens; keep original bytes in trace/events.
+                query=re.sub(r'</?unit>|<\|(?:speak|listen|turn_eos|chunk_eos|chunk_tts_eos|tts_bos|tts_eos)\|>','',raw)
+                self.last_raw_queries.append(raw)
+                queries.append(query)
             self.buffer = self.buffer[end + len('</delegate>'):]
         if '<delegate>' not in self.buffer:
             self.buffer = self.buffer[-len('<delegate>'):]
@@ -268,8 +278,9 @@ def create_app(model_dir, system_prompt='Streaming Omni Conversation.'):
                     if feedback:
                         worker.event('backend_injected', payload=feedback, sequence=sequence)
                     result = await asyncio.to_thread(engine.step, pcm, feedback)
-                    for query in parser.feed(result['raw_text']):
-                        worker.submit(query)
+                    queries=parser.feed(result['raw_text'])
+                    for query,raw_query in zip(queries,parser.last_raw_queries):
+                        worker.submit(query,raw_query=raw_query)
                     result.update(sequence=sequence, events=worker.events)
                     worker.events = []
                     sequence += 1

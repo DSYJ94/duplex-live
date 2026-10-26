@@ -21,6 +21,7 @@ class NativeProtocolTests(unittest.IsolatedAsyncioTestCase):
         with self.assertRaises(ValueError):explicit_sum_numbers('Add1.5 and2.5')
         with self.assertRaises(ValueError):explicit_sum_numbers('Add one thousand, two.')
         with self.assertRaises(ValueError):explicit_sum_numbers('Add negative three, two.')
+        with self.assertRaises(ValueError):explicit_sum_numbers('Sum query{"id":"w10","numbers":[318,247,570]}')
 
     def test_split_private_request(self):
         p=DelegateParser()
@@ -140,3 +141,16 @@ class NativeProtocolTests(unittest.IsolatedAsyncioTestCase):
         with patch('portable.venus.guard.cloud',side_effect=subprocess.TimeoutExpired('gcloud',12)) as call:
             with self.assertRaises(subprocess.TimeoutExpired):bounded_cloud_read('instances','list')
             self.assertEqual(call.call_count,2)
+
+    def test_actual_native_frame_markers_do_not_enter_worker_arguments(self):
+        p=DelegateParser()
+        raw='query{"task":"explain why<|chunk_eos|></unit><|speak|> plants need light"}'
+        self.assertEqual(p.feed('<delegate>'+raw+'</delegate>'),['query{"task":"explain why plants need light"}'])
+        self.assertEqual(p.last_raw_queries,[raw])
+
+    def test_native_chunk_boundary_inside_word_preserves_integer_meaning(self):
+        p=DelegateParser()
+        self.assertEqual(p.feed('<delegate>Total three hun<|chunk_eos|></unit><|speak|>'),[])
+        values=p.feed('dred eighteen, two hundred forty seven, and five hundred seventy.</delegate>')
+        self.assertEqual(explicit_sum_numbers(values[0]),[318,247,570])
+        self.assertIn('<|chunk_eos|>',p.last_raw_queries[0])

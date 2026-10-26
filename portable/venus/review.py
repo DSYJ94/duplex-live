@@ -19,12 +19,17 @@ def write_float_wav(path,pcm):
  path.write_bytes(b'RIFF'+struct.pack('<I',36+len(pcm))+b'WAVEfmt '+struct.pack('<I',16)+fmt+b'data'+struct.pack('<I',len(pcm))+pcm)
 
 def main():
- p=argparse.ArgumentParser();p.add_argument('--recordings',required=True);p.add_argument('--manifest',required=True);p.add_argument('--output',required=True);a=p.parse_args()
+ p=argparse.ArgumentParser();p.add_argument('--recordings',required=True);p.add_argument('--manifest',required=True);p.add_argument('--output',required=True);p.add_argument('--diagnostic-partial',action='store_true');a=p.parse_args()
  root=Path(a.recordings).resolve();manifest=Path(a.manifest).resolve();plan=json.loads(manifest.read_text());out=Path(a.output).resolve();out.mkdir(exist_ok=False)
- results=json.loads((root/'results.json').read_text());assert results['all10_complete'] and len(results['cases'])==10
+ results=json.loads((root/'results.json').read_text());all10=results['all10_complete'] and len(results['cases'])==10
+ assert all10 or a.diagnostic_partial,'Incomplete diagnostic requires an explicit partial-preview flag; never qualifies'
  metrics=[];cards=[]
  for case in plan['cases']:
-  ident=case['id'];rows=[json.loads(x) for x in (root/ident/'trace.jsonl').read_text().splitlines()];dest=out/ident;dest.mkdir();parts=[];peak=0.;clipped=0;samplecount=0;blocks=[];elapsed=[]
+  ident=case['id'];trace=root/ident/'trace.jsonl'
+  if not trace.exists() or not trace.stat().st_size:
+   metrics.append(dict(case=ident,recorded=False,qualified=False,status='NOT_COMPLETED'))
+   cards.append(f'<section><h2>{html.escape(ident)}</h2><p>NOT COMPLETED. No recording is claimed for this case.</p></section>');continue
+  rows=[json.loads(x) for x in trace.read_text().splitlines()];dest=out/ident;dest.mkdir();parts=[];peak=0.;clipped=0;samplecount=0;blocks=[];elapsed=[]
   for row in rows:
    pcm,samples=read_float_wav(root/ident/row['chunk_file']);parts.append(pcm);peak=max(peak,max(map(abs,samples),default=0));clipped+=sum(abs(x)>=.995 for x in samples);samplecount+=len(samples);elapsed.append(row['elapsed'])
    blocks.extend(max(map(abs,samples[i:i+480]),default=0) for i in range(0,len(samples),480))
@@ -44,8 +49,9 @@ def main():
   # Amplitude is displayed at its original scale; no gain/threshold alteration.
   svg=f'<svg viewBox="0 0 900 100" aria-label="Native waveform absolute peak per20ms, original scale"><path d="M0 90 H900" stroke="#888"/><polyline points="{points}" fill="none" stroke="#005a9c" stroke-width="1"/></svg>'
   cards.append(f'<section><h2>{html.escape(ident)}</h2>'+''.join(inputs)+f'<p>Native output, original float chunks joined in order; this playback is not a wall-clock latency proof.<br><audio controls preload="none" src="{ident}/native-joined.wav"></audio></p>'+svg+f'<p>Peak {peak:.4f}; samples ≥0.995: {clipped}; compute p95 {m["compute_p95_seconds"]:.3f}s per input second.</p><p>Generated text (not independent ASR): {html.escape(text)}</p><p>Worker events: {len(worker)}. <a href="{ident}/trace.jsonl">Original trace</a></p></section>')
- report=dict(all10_collected=True,qualified=False,recording_root=str(root),cases=metrics,notes=['No normalization/clipping/gain modification','New14 input word audits and independent output listening remain pending','Joined playback does not prove actual delivery timing','Diagnostic arithmetic backend only; no external reasoning-model calls'])
+ report=dict(all10_collected=all10,qualified=False,recording_root=str(root),cases=metrics,notes=['No normalization/clipping/gain modification','New14 input word audits and independent output listening remain pending','Joined playback does not prove actual delivery timing','Diagnostic arithmetic backend only; no external reasoning-model calls'])
  (out/'review.json').write_text(json.dumps(report,indent=2)+'\n')
- (out/'index.html').write_text('<!doctype html><meta charset="utf-8"><title>Venus native10 review</title><style>body{font:16px system-ui;max-width:1050px;margin:30px auto;padding:0 20px;color:#17212d}section{border-top:1px solid #aaa;padding:18px 0}audio{width:100%;max-width:650px}svg{width:100%;background:#f3f6f9}p{line-height:1.5}</style><h1>Venus native10 — recorded evidence</h1><p>All10 cases collected. Candidate UNQUALIFIED. Original native audio, no keyword mute or gain changes. Outputs and new synthetic inputs still require independent listening. Arithmetic test worker only; this is not a live microphone demo.</p><a href="review.json">Full measured review</a>'+''.join(cards))
- print(json.dumps(dict(review=str(out/'index.html'),all10_collected=True,qualified=False,global_peak=max(x['peak'] for x in metrics),clipped_samples=sum(x['samples_at_or_above_0995'] for x in metrics))))
+ status='All10 cases collected.' if all10 else 'INCOMPLETE diagnostic. Missing cases are explicitly marked; no passing subset is accepted.'
+ (out/'index.html').write_text('<!doctype html><meta charset="utf-8"><title>Venus native10 review</title><style>body{font:16px system-ui;max-width:1050px;margin:30px auto;padding:0 20px;color:#17212d}section{border-top:1px solid #aaa;padding:18px 0}audio{width:100%;max-width:650px}svg{width:100%;background:#f3f6f9}p{line-height:1.5}</style><h1>Venus native10 — recorded evidence</h1><p>'+status+' Candidate UNQUALIFIED. Original native audio, no keyword mute or gain changes. Outputs and new synthetic inputs still require independent listening. Arithmetic test worker only; this is not a live microphone demo.</p><a href="review.json">Full measured review</a>'+''.join(cards))
+ print(json.dumps(dict(review=str(out/'index.html'),all10_collected=all10,qualified=False,global_peak=max(x.get('peak',0) for x in metrics),clipped_samples=sum(x.get('samples_at_or_above_0995',0) for x in metrics))))
 if __name__=='__main__':main()
