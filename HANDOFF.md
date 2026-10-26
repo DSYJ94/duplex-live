@@ -1,3 +1,18 @@
+# LOCAL — Awaiting exact IAP access decision; no GPU job remains
+
+Final source7fda677 (pushed); preparedaccess +nativepolicy +workerfix;10focusedCPUtestsPASS.
+As of 2026-10-26T16:45:32.148610+00:00: final-idle-read.json verifiesall5GCP VM TERMINATED andall5Runpod podsEXITED.
+Current temporaryVM5664322998932521310/disk7763575121976148318 retained, stopped;
+no model or questions ran in latestpolicyattempt. Nativebaselinefull10 and495hashverified
+outputs remain accessible in localhost8033 replay. No newIAPAPI/ingress/IAM changes.
+Human was asked ONCE to approve docs/NATIVE-IAP-ACCESS-PROPOSAL-2026-10-26.json at7fda677.
+Do not askagain or inferanswer from elapsedtime. Ifapproved, recordexactreply +hash,
+commit/push authorityJSON before applyingiap_setup; source --iap failsclosed withoutit.
+That supplementalonehour usescarriedprior3600s (notstoppedwalltime); allcapsunchanged.
+Fullpreviousdetailsbelow. Noheartbeat/agents/newjobs. Preserveunrelatedlocalfiles.
+
+---
+
 # LOCAL — Baseline full10 complete; policy variant blocked by access; ALL GPU OFF
 
 26 October16:38UTC. Current source47ecc484e03615d496aec453eb6a74e90470ab8c ran policyattempt.
