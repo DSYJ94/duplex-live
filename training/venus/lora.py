@@ -59,6 +59,9 @@ def load_adapter(model, state):
     params = {n: p for n, p in model.named_parameters() if p.requires_grad}
     if set(params) != set(state):
         raise ValueError('Adapter parameter names do not match the exact architecture')
+    if any(not torch.is_tensor(state[n]) or state[n].shape != p.shape
+           or not torch.isfinite(state[n]).all() for n, p in params.items()):
+        raise ValueError('Adapter shapes and finite values must match exactly')
     with torch.no_grad():
         for name, value in state.items():
             params[name].copy_(value.to(params[name]))

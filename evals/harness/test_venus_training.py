@@ -69,6 +69,36 @@ def test_exact_adam_rng_restore(tmp_path):
     with pytest.raises(ValueError):load(path,fresh,freshopt,dict(wrong=True))
 
 
+def test_native_candidate_loading_preserves_trained_outputs_and_freezes_weights(tmp_path):
+    from training.venus.inference import load_candidate, MODEL_REVISION
+    m=model();e=example(m);install(m,2,2,last_layers=1)
+    opt=torch.optim.AdamW([p for p in m.parameters() if p.requires_grad],lr=.01)
+    loss,_=scene_loss(m,e,'cpu');loss.backward();opt.step();opt.zero_grad()
+    expected=selected_forward(m,e,'cpu')[0].detach()
+    path=tmp_path/'step-0001.pt'
+    metadata=dict(model_revision=MODEL_REVISION,source='a'*40,recipe=dict(rank=2,alpha=2,
+        last_layers=1,projections=['q_proj','v_proj'],forward_path='native-frozen-prefix-v1',updates=38))
+    save(path,m,opt,1,metadata)
+    fresh=model();profile=load_candidate(fresh,path)
+    assert torch.equal(expected,selected_forward(fresh,e,'cpu')[0])
+    assert not any(p.requires_grad for p in fresh.parameters())
+    assert profile['optimizer_updates']==1 and profile['planned_updates']==38
+    assert profile['experimental_candidate'] and not profile['adopted'] and not profile['native_behavior_qualified']
+    proof=tmp_path/'expected-step-0002-proof-only.pt';proof.write_bytes(path.read_bytes())
+    with pytest.raises(ValueError,match='proof-only'):load_candidate(model(),proof)
+    metadata['model_revision']='wrong';save(path,m,opt,1,metadata)
+    with pytest.raises(ValueError,match='revision'):load_candidate(model(),path)
+
+
+def test_adapter_loader_rejects_broadcastable_shapes_and_nonfinite_values():
+    from training.venus.lora import load_adapter
+    m=model();install(m,2,2,last_layers=1);state=adapter_state(m);name=next(iter(state))
+    bad=dict(state);bad[name]=state[name][:1]
+    with pytest.raises(ValueError,match='shapes'):load_adapter(m,bad)
+    bad=dict(state);bad[name]=state[name].clone();bad[name][0,0]=float('nan')
+    with pytest.raises(ValueError,match='finite'):load_adapter(m,bad)
+
+
 def test_native_segment_to_training_alignment_is_red_capable():
     from types import SimpleNamespace
     from training.venus.native_cache import training_input_proof
