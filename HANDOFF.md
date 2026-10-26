@@ -1,3 +1,39 @@
+# LOCAL — Complete US diagnostic backed up; one generic policy comparison prepared
+
+26 October16:23UTC. US run source21ca67895075c1cd64c1505201ad4e94b5421b2d ACTUAL0/full10.
+Native unit9685/invocation5cb3208cbfd5485cad0c58433fef9ada, benchmark9745/
+83ebcf9aaef34c1fa0347e0b7503cdb6; actualterminal16:06:27.311827UTC. All495files/
+43938169B copied and SHAverified twice. See docs/NATIVE-VENUS-COMPLETE10-REVIEW-
+2026-10-26.json. Generated-text ordinarycore4/4, NOT independent spoken-task scores.
+Both silencecases acknowledgebeforecue. Pending/cancel do not startworkers, hence
+pending/cancellation notexercised. Counterfactual actualnativeworker8s rejectsEnglish
+integers. Waveforms readall457chunks: peak0.9147339, zero samples>=0.995; no gainchange.
+Speechcompute p95=1.422s per1sinput, max2.046s; live latency notqualified. New14source
+wordaudits +independentoutputlistening pending; cancelledinput has numericformat risk.
+Model remains UNQUALIFIED, no training/API calls. Baseline/Moshi originals preserved.
+
+GPU actualSTOP16:07:45.216. TemporaryUS VM1034804594119724521 and disk5187703876730670569
+deleted ONLY after fullcopyback reverified; original4VMs freshlyTERMINATED. UScompute
+closed1688.811s atquotedNDOD estimated1.7297USD, not invoice. Carryoldnew1200+these
+intervals via NEW conservative3200s bound; original40351s/91.9844806USD unchanged.
+Same new35USD/14400s, cumulative135USD/57600s. Original/B250GB disks retained.
+Offline repair d3abfe84039a699d32ab68b1f7db53d181d004ba now computes1135 from exact
+recordedEnglishquery;9focusedCPU tests PASS. No newnativevoice result afterfix yet.
+Full synthetic replay UI http://127.0.0.1:8033/ (Maclocalhostonly, session72000), IABtab2
+marked deliverable; originalFloatWAV playback verified, no live mic connection.
+
+Next ONE nonredundant genericpolicy variant prepared at8b50544, no taskanswers/cuewords/
+forceddispatch/keywordmute. Sameall10 audiohashes, frozen9B, newworkerwordparser; no
+newdataset/heldout/API/training. Reuse existing Netherlands Bdisk/runtime under already
+APPROVED fallback, no new disk/snapshot/CPU; native3600sSTOP andbothguards, prior3200s.
+Controller runs/venus-20261026/controller-b-policy-v2.py; receipts b-policy-v2/.
+Not launched at this entry. Onequeuedattempt only; no retry spiral on actualstockout.
+CurrentNDODquote3.785643USD/hour refreshed16:22:11. Stopafter fullhashcopyback.
+LOCALsoleexecutor, noagents/otherchats/heartbeat; goalunfinished. Preserve unrelated
+PYC/probes/roadmap and all parked sustained32 source. Never duplicate running operation.
+
+---
+
 # LOCAL — SAME US VM live, direct public download; observe controller79648
 
 26 October15:53UTC. Current actual source21ca67895075c1cd64c1505201ad4e94b5421b2d,

@@ -1,0 +1,408 @@
+{
+  "schema": "dl-venus-complete10-native-development-review-v1",
+  "status": "COMPLETE_DIAGNOSTIC_NOT_QUALIFIED",
+  "recorded_utc": "2026-10-26T16:18:42.770497+00:00",
+  "producer_source_sha": "21ca67895075c1cd64c1505201ad4e94b5421b2d",
+  "offline_worker_repair_source_sha": "d3abfe84039a699d32ab68b1f7db53d181d004ba",
+  "model_revision": "4681004131ea1f1fb9aca9f0db76be322657cc79",
+  "profile": {
+    "ready": true,
+    "busy": false,
+    "model": "Realtime-Venus-Audio",
+    "seed": 42,
+    "torch": "2.4.0+cu121",
+    "cuda": "12.1",
+    "gpu": "NVIDIA A100-SXM4-40GB",
+    "precision": "bfloat16",
+    "attention": "sdpa",
+    "input_sample_rate": 16000,
+    "output_sample_rate": 24000,
+    "system_prompt": "Streaming Omni Conversation.",
+    "decode_mode": "sampling",
+    "max_new_speak_tokens_per_chunk": 20,
+    "temperature": 0.7,
+    "top_k": 20,
+    "top_p": 0.8,
+    "listen_prob_scale": 1.0,
+    "optimizer_updates": 0,
+    "force_listen_count": 0,
+    "listen_speak_mode": "explicit"
+  },
+  "optimizer_updates": 0,
+  "external_model_api_calls": 0,
+  "all10_collected": true,
+  "candidate_adopted": false,
+  "actual_benchmark": {
+    "invocation": "83ebcf9aaef34c1fa0347e0b7503cdb6",
+    "first_pid": 9745,
+    "started_utc": "2026-10-26T15:58:38.862383Z",
+    "terminal_utc": "2026-10-26T16:06:27.311827Z",
+    "result": "success",
+    "actual_exit_code": 0
+  },
+  "outcomes": {
+    "ordinary_generated_text_core_content_matches": "4/4; generated-text review only, not independently audited spoken-answer accuracy",
+    "silence": "Both cue cases generate acknowledgments before release; raw nonzero waveforms preserved",
+    "pause": "First step before pause, silence thereafter, remaining cupboard step after Continue; independent listening and yield-latency acceptance pending",
+    "pending_followup": "No real worker starts. Model answers five then generates incorrect total1234 rather than1134; pending-work test not exercised",
+    "counterfactual": "One real native delegate, actual eight-second worker and feedback injection. English-word integers rejected by original diagnostic worker; numeric result fidelity not established",
+    "cancel": "No pending worker starts, therefore real cancellation/late-result suppression not exercised. Generated sound answer contains vibrations",
+    "cancellation_source_risk": "Authored TTS string total318,247 and569 lacks separators; numerical reading needs independent listening before conclusions about argument fidelity",
+    "qualification": "No passing subset, no adoption. New14 input word audits and independent output listening remain pending"
+  },
+  "waveform": {
+    "raw_float32": true,
+    "files_read": 457,
+    "sample_count": 10899840,
+    "global_peak": 0.91473388671875,
+    "samples_at_or_above_0995": 0,
+    "gain_or_threshold_change": false
+  },
+  "timing": {
+    "steps": 457,
+    "median_compute_seconds": 0.22771771599991553,
+    "p95_compute_seconds": 1.4220986699999685,
+    "maximum_compute_seconds": 2.045625022000081,
+    "steps_above_one_second": 92,
+    "warning": "One-second chunks; speech-generation bursts exceed real time. These are server compute measurements, not microphone-to-ear latency or a production speed pass"
+  },
+  "cases": [
+    {
+      "case": "ordinary-ice",
+      "chunks": 49,
+      "native_generated_text": "Because ice isless dense thanliquid water.When water freezes,its moleculesform a lattice thattakes up morespace, so itfloats.",
+      "peak": 0.634033203125,
+      "samples_at_or_above_0995": 0,
+      "sample_count": 1182720,
+      "native_audio_seconds": 49.28,
+      "compute_median_seconds": 0.22910700900001757,
+      "compute_p95_seconds": 1.3782359729999598,
+      "turn_start_sequences": {
+        "0": 0
+      },
+      "worker_events": [],
+      "qualified": false,
+      "independent_audio_review_pending": true
+    },
+    {
+      "case": "ordinary-sound",
+      "chunks": 49,
+      "native_generated_text": "Sound is produced by vibrationsthat travelthrough air or other media.Whenan object vibrates,it pushes and pullsthe surrounding air molecules.These wavesthen reach our earsand our brains interpretthem as sound.",
+      "peak": 0.606903076171875,
+      "samples_at_or_above_0995": 0,
+      "sample_count": 1182720,
+      "native_audio_seconds": 49.28,
+      "compute_median_seconds": 0.23017019700000674,
+      "compute_p95_seconds": 1.4211470850000296,
+      "turn_start_sequences": {
+        "0": 0
+      },
+      "worker_events": [],
+      "qualified": false,
+      "independent_audio_review_pending": true
+    },
+    {
+      "case": "ordinary-plants",
+      "chunks": 50,
+      "native_generated_text": "Plants needlight tomake foodthrough photosynthesis.",
+      "peak": 0.315155029296875,
+      "samples_at_or_above_0995": 0,
+      "sample_count": 1163520,
+      "native_audio_seconds": 48.48,
+      "compute_median_seconds": 0.2283057629999803,
+      "compute_p95_seconds": 1.26303030400004,
+      "turn_start_sequences": {
+        "0": 0
+      },
+      "worker_events": [],
+      "qualified": false,
+      "independent_audio_review_pending": true
+    },
+    {
+      "case": "ordinary-metal",
+      "chunks": 48,
+      "native_generated_text": "It feels coldbecause metalconducts heat awayfrom your skinfast.That\u2019s why itfeels chilly, evenif the airis warm.",
+      "peak": 0.91473388671875,
+      "samples_at_or_above_0995": 0,
+      "sample_count": 1146240,
+      "native_audio_seconds": 47.76,
+      "compute_median_seconds": 0.22799902299993846,
+      "compute_p95_seconds": 1.3708353029999216,
+      "turn_start_sequences": {
+        "0": 0
+      },
+      "worker_events": [],
+      "qualified": false,
+      "independent_audio_review_pending": true
+    },
+    {
+      "case": "quiet-geronimo",
+      "chunks": 49,
+      "native_generated_text": "Understood.I willremain silentand unresponsiveuntilyou say GeronimoI will remain quiet.Please wait until you are readyA timermeasures thepassage of time,usuallyin seconds, minutes,or hours.It is often usedto track elapsedtime for cooking, exercise,or othertasks",
+      "peak": 0.690185546875,
+      "samples_at_or_above_0995": 0,
+      "sample_count": 1152000,
+      "native_audio_seconds": 48.0,
+      "compute_median_seconds": 0.4501093910000691,
+      "compute_p95_seconds": 1.4269104070000367,
+      "turn_start_sequences": {
+        "0": 0,
+        "1": 15,
+        "2": 26
+      },
+      "worker_events": [],
+      "qualified": false,
+      "independent_audio_review_pending": true,
+      "later_release_cue_sequence": 26,
+      "nonzero_audio_before_release_sequences": [
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        18,
+        19,
+        20,
+        21
+      ]
+    },
+    {
+      "case": "quiet-cue-change",
+      "chunks": 45,
+      "native_generated_text": "I will stay silent until you say LanternFive",
+      "peak": 0.61907958984375,
+      "samples_at_or_above_0995": 0,
+      "sample_count": 1075200,
+      "native_audio_seconds": 44.8,
+      "compute_median_seconds": 0.22608244100001684,
+      "compute_p95_seconds": 1.1225383369999236,
+      "turn_start_sequences": {
+        "0": 0,
+        "1": 13,
+        "2": 22
+      },
+      "worker_events": [],
+      "qualified": false,
+      "independent_audio_review_pending": true,
+      "later_release_cue_sequence": 22,
+      "nonzero_audio_before_release_sequences": [
+        5,
+        6,
+        7
+      ]
+    },
+    {
+      "case": "pause-resume",
+      "chunks": 37,
+      "native_generated_text": "Sure. Firstput the bookon the shelfNext closethe cupboard",
+      "peak": 0.58880615234375,
+      "samples_at_or_above_0995": 0,
+      "sample_count": 873600,
+      "native_audio_seconds": 36.4,
+      "compute_median_seconds": 0.22490478200006692,
+      "compute_p95_seconds": 1.3067907480000258,
+      "turn_start_sequences": {
+        "0": 0,
+        "1": 5,
+        "2": 16
+      },
+      "worker_events": [],
+      "qualified": false,
+      "independent_audio_review_pending": true
+    },
+    {
+      "case": "pending-followup",
+      "chunks": 51,
+      "native_generated_text": "Got it. I'll add them up for you. That's five. The total for the other numbers is twelve hundred thirty-four.",
+      "peak": 0.62261962890625,
+      "samples_at_or_above_0995": 0,
+      "sample_count": 1200960,
+      "native_audio_seconds": 50.04,
+      "compute_median_seconds": 0.22632643700001154,
+      "compute_p95_seconds": 1.4227983419999646,
+      "turn_start_sequences": {
+        "0": 0,
+        "1": 28
+      },
+      "worker_events": [],
+      "qualified": false,
+      "independent_audio_review_pending": true
+    },
+    {
+      "case": "counterfactual-result",
+      "chunks": 28,
+      "native_generated_text": "Understood. I will add three hundred eighteen, two hundred forty seven, and five hundred seventy. Total three hundred eighteen, two hundred forty seven, and five hundred seventy.This diagnostic worker only computes sums of explicitly supplied numbers.",
+      "peak": 0.516632080078125,
+      "samples_at_or_above_0995": 0,
+      "sample_count": 685440,
+      "native_audio_seconds": 28.56,
+      "compute_median_seconds": 0.2271572859999651,
+      "compute_p95_seconds": 1.7287053759999935,
+      "turn_start_sequences": {
+        "0": 0
+      },
+      "worker_events": [
+        {
+          "type": "native_delegate",
+          "monotonic": 902.613642732,
+          "work_id": "0984864d-93d1-4d66-8d2b-642786465db2",
+          "query": "Total three hundred eighteen, two hundred forty seven, and five hundred seventy."
+        },
+        {
+          "type": "worker_started",
+          "monotonic": 902.623441922,
+          "work_id": "0984864d-93d1-4d66-8d2b-642786465db2"
+        },
+        {
+          "type": "worker_completed",
+          "monotonic": 910.624100854,
+          "work_id": "0984864d-93d1-4d66-8d2b-642786465db2",
+          "query": "Total three hundred eighteen, two hundred forty seven, and five hundred seventy.",
+          "result": "This diagnostic worker only computes sums of explicitly supplied numbers.",
+          "sha256": "1df7e8be5111d23b801a08aad9ec66ece79824258dbb7f8adcf54e287db3a798"
+        },
+        {
+          "type": "backend_injected",
+          "monotonic": 910.922992352,
+          "payload": "<backend>[{\"work_id\": \"0984864d-93d1-4d66-8d2b-642786465db2\", \"query\": \"Total three hundred eighteen, two hundred forty seven, and five hundred seventy.\", \"result\": \"This diagnostic worker only computes sums of explicitly supplied numbers.\", \"sha256\": \"1df7e8be5111d23b801a08aad9ec66ece79824258dbb7f8adcf54e287db3a798\"}]</backend>",
+          "sequence": 23
+        }
+      ],
+      "qualified": false,
+      "independent_audio_review_pending": true
+    },
+    {
+      "case": "cancel-pending",
+      "chunks": 51,
+      "native_generated_text": "Got it. I\u2019ll add three hundred eighty thousand two hundred forty seven and five hundred sixty nine.Sound is caused by vibrations that travel through the air or other materials to our ears.",
+      "peak": 0.52801513671875,
+      "samples_at_or_above_0995": 0,
+      "sample_count": 1237440,
+      "native_audio_seconds": 51.56,
+      "compute_median_seconds": 0.22677711500000441,
+      "compute_p95_seconds": 1.4845016570000098,
+      "turn_start_sequences": {
+        "0": 0,
+        "1": 27
+      },
+      "worker_events": [],
+      "qualified": false,
+      "independent_audio_review_pending": true
+    }
+  ],
+  "backup": {
+    "files": 495,
+    "bytes": 43938169,
+    "all_sha256_verified": true,
+    "hashes_independently_reverified_before_cleanup": true,
+    "inventory_sha256": "041071a7bc2b77dbf4c8e22c1c4d0f3689b15f0b32d4528988f83d45ac887243",
+    "original_81gb_archive_unchanged_not_rehashed": true,
+    "broad_mac_source_backup": "PARTIAL"
+  },
+  "repair": {
+    "issue": "Native request used English integers; original digit-only worker returned unsupported",
+    "offline_replay": {
+      "original_native_query": "Total three hundred eighteen, two hundred forty seven, and five hundred seventy.",
+      "actual_new_worker_payload": "<backend>[{\"work_id\": \"e29c3dd7-7e10-441f-ba2d-d5b3e11e3a72\", \"query\": \"Total three hundred eighteen, two hundred forty seven, and five hundred seventy.\", \"result\": \"Computed sum: 1135. Input numbers: [318, 247, 570].\", \"sha256\": \"98fa77979fb1171f30d7ed65533f0ee8d961cae00b469da531fcc4762a0ae7dc\"}]</backend>",
+      "worker_events": [
+        {
+          "type": "native_delegate",
+          "monotonic": 291955.065462666,
+          "work_id": "e29c3dd7-7e10-441f-ba2d-d5b3e11e3a72",
+          "query": "Total three hundred eighteen, two hundred forty seven, and five hundred seventy."
+        },
+        {
+          "type": "worker_started",
+          "monotonic": 291955.0655695,
+          "work_id": "e29c3dd7-7e10-441f-ba2d-d5b3e11e3a72"
+        },
+        {
+          "type": "worker_completed",
+          "monotonic": 291955.065697958,
+          "work_id": "e29c3dd7-7e10-441f-ba2d-d5b3e11e3a72",
+          "query": "Total three hundred eighteen, two hundred forty seven, and five hundred seventy.",
+          "result": "Computed sum: 1135. Input numbers: [318, 247, 570].",
+          "sha256": "98fa77979fb1171f30d7ed65533f0ee8d961cae00b469da531fcc4762a0ae7dc"
+        }
+      ],
+      "voice_model_rerun": false,
+      "original_recordings_unchanged": true,
+      "external_api_calls": 0,
+      "optimizer_updates": 0
+    },
+    "focused_cpu_tests": 9,
+    "new_voice_test_after_repair": false
+  },
+  "resources": {
+    "us_intervals": [
+      {
+        "attempt": "us-v1",
+        "start_utc": "2026-10-26T15:35:02.557000+00:00",
+        "stop_utc": "2026-10-26T15:39:01.902000+00:00",
+        "seconds": 239.345,
+        "vm_id": "1034804594119724521"
+      },
+      {
+        "attempt": "us-recovery-v1",
+        "start_utc": "2026-10-26T15:41:45.450000+00:00",
+        "stop_utc": "2026-10-26T15:48:17.450000+00:00",
+        "seconds": 392.0,
+        "vm_id": "1034804594119724521"
+      },
+      {
+        "attempt": "us-direct-v1",
+        "start_utc": "2026-10-26T15:50:07.750000+00:00",
+        "stop_utc": "2026-10-26T16:07:45.216000+00:00",
+        "seconds": 1057.466,
+        "vm_id": "1034804594119724521"
+      }
+    ],
+    "measured_us_gpu_seconds": 1688.811,
+    "estimated_us_gpu_compute_at_current_ondemand_usd": 1.7296631645820202,
+    "not_provider_invoice": true,
+    "prior_new_scope_seconds_upper": 1200,
+    "new_scope_closed_seconds_upper": 3200,
+    "original_scope_seconds_upper": 40351,
+    "cumulative_seconds_upper": 43551,
+    "new_scope_cap_seconds": 14400,
+    "new_scope_cap_usd": 35,
+    "cumulative_cap_usd": 135,
+    "new_scope_cost_upper_including6usd_reserve": 12.444444444444443,
+    "temporary_vm_and_disk_deleted": true,
+    "cleanup": {
+      "at_utc": "2026-10-26T16:11:18.312405+00:00",
+      "unique_files495_full_hashes_reverified": true,
+      "temporary_vm_deleted": "1034804594119724521",
+      "temporary_disk_deleted": "5187703876730670569",
+      "remaining_instances": [
+        {
+          "id": "2417394621566968621",
+          "name": "duplex-native-stage-20261025-b-v1",
+          "status": "TERMINATED"
+        },
+        {
+          "id": "951004838667287080",
+          "name": "duplex-native-saved8-gpu-20261024-v1",
+          "status": "TERMINATED"
+        },
+        {
+          "id": "4443302983961393208",
+          "name": "duplex-native-saved8-gpu-flex90-20261025-v1",
+          "status": "TERMINATED"
+        },
+        {
+          "id": "1784642133801608667",
+          "name": "duplex-native-stage-20261024-v1",
+          "status": "TERMINATED"
+        }
+      ],
+      "original_archives_preserved": true
+    }
+  },
+  "next_action": "Review the complete original recordings; keep the successful ordinary-answer behavior, fix explicit routing/silence policy and source ambiguity, then one controlled full10 retest with the repaired worker. Do not start full fine-tuning or infer an intelligence ceiling from these tests.",
+  "local_review": "http://127.0.0.1:8033/",
+  "local_review_server_session": 72000
+}
