@@ -8,6 +8,7 @@ from pathlib import Path
 import shlex
 import subprocess
 import time
+from portable.context.gcp_budget_watchdog import read_runpod_pods
 
 PROJECT='aurium-duplex-live-20261024'
 ZONE='europe-west4-a'
@@ -76,9 +77,9 @@ def validate(vm,instances,runpods,lease,now):
         end!=lease['stop_unix'] or not start<=now<end):
         raise ValueError('Exact existing provider90min STOP deadline required')
     if fallback and b['ident']!='1962162267540853286':
-        # Closed prior bootstrap:234.445s, rounded UP. A replacement cannot reset
-        # this consumption; use at most two hours on the queued recreation.
-        if lease.get('prior_new_gpu_seconds_upper',0)<235 or flex_seconds!=7200:
+        # Two closed bootstraps:400s conservative whole-lifetime upper, including
+        # allocation/stop overhead. Use at most two hours on queued recreation.
+        if lease.get('prior_new_gpu_seconds_upper',0)<400 or flex_seconds!=7200:
             raise ValueError('Preserve prior bootstrap and shorter recreation allowance')
         if lease['prior_new_gpu_seconds_upper']+flex_seconds>14400:
             raise ValueError('Additional four-hour allowance cannot reset')
@@ -112,7 +113,6 @@ def guest(args):
 
 
 def mac(args):
-    from portable.context.gcp_budget_watchdog import load_runpod_pods
     lease=json.loads(Path(args.lease).read_text());b=resource(lease)
     authority=b['authority'].read_bytes()
     a=json.loads(authority)
@@ -130,7 +130,7 @@ def mac(args):
             if vm['status']=='TERMINATED':return
             disk=cloud('disks','describe',b['disk_name'],'--zone='+b['zone'])
             assert str(disk['id'])==b['disk']
-            pods=load_runpod_pods(key);pods=pods.get('pods',[]) if isinstance(pods,dict) else pods
+            pods=read_runpod_pods(key);pods=pods.get('pods',[]) if isinstance(pods,dict) else pods
             end=validate(vm,cloud('instances','list'),pods,lease,time.time())
             g=dict(vm_id=b['ident'],disk_id=b['disk'],checked_unix=time.time(),expires_unix=min(time.time()+90,end),
                 stop_unix=end,authorization_sha256=lease['authorization_sha256'],guard_pid=os.getpid(),

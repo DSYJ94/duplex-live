@@ -65,3 +65,7 @@ class NativeProtocolTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(validate(vm,[vm],[],lease,start+10),start+14000)
         with self.assertRaises(ValueError):validate({**vm,'id':'999'},[vm],[],lease,start+10)
         with self.assertRaises(ValueError):validate({**vm,'machineType':'/a2-highgpu-2g'},[vm],[],lease,start+10)
+        newer={**vm,'id':'777','scheduling':dict(provisioningModel='FLEX_START',maxRunDuration={'seconds':'7200'},instanceTerminationAction='STOP',automaticRestart=False)}
+        next_lease={**lease,'vm_id':'777','stop_unix':start+7200,'prior_new_gpu_seconds_upper':400}
+        self.assertEqual(validate(newer,[newer],[],next_lease,start+10),start+7200)
+        with self.assertRaises(ValueError):validate(newer,[newer],[],{**next_lease,'prior_new_gpu_seconds_upper':0},start+10)
