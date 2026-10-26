@@ -9,6 +9,24 @@ import time
 import wave
 
 
+def preflight(manifest):
+    path=Path(manifest).resolve();plan=json.loads(path.read_text());files=0
+    if len(plan['cases'])!=10:raise ValueError('Complete ten-case plan required')
+    for case in plan['cases']:
+        for turn in case['turns']:
+            declared=Path(turn['path'])
+            relative=declared.relative_to('/inputs') if declared.is_absolute() else Path(case['id'])/declared.name
+            actual=(path.parent/relative).resolve()
+            if path.parent not in actual.parents:raise ValueError('Input path escapes the manifest root')
+            if hashlib.sha256(actual.read_bytes()).hexdigest()!=turn['sha256']:raise ValueError('Input hash changed')
+            with wave.open(str(actual)) as w:
+                if (w.getframerate(),w.getnchannels(),w.getsampwidth())!=(16000,1,2) or w.getnframes()==0:
+                    raise ValueError('Nonempty16kHz mono PCM16 required')
+            turn['path']=str(actual);files+=1
+    if files!=18:raise ValueError('Complete eighteen input turns required')
+    return plan
+
+
 async def run_case(case, endpoint, output):
     import numpy as np
     import soundfile as sf
@@ -73,7 +91,10 @@ async def run_case(case, endpoint, output):
 
 
 async def main(args):
-    plan=json.loads(Path(args.manifest).read_text());out=Path(args.output);out.mkdir(parents=True,exist_ok=False)
+    plan=preflight(args.manifest)
+    if args.preflight_only:
+        print(json.dumps(dict(preflight_passed=True,cases=10,input_files=18,model_loaded=False)));return
+    out=Path(args.output);out.mkdir(parents=True,exist_ok=False)
     results=[]
     for case in plan['cases']:
         try:result=await run_case(case,args.endpoint,out)
@@ -84,4 +105,6 @@ async def main(args):
 
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--manifest',required=True);p.add_argument('--output',required=True);p.add_argument('--endpoint',default='ws://127.0.0.1:8032/ws');asyncio.run(main(p.parse_args()))
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--manifest',required=True);p.add_argument('--output');p.add_argument('--preflight-only',action='store_true');p.add_argument('--endpoint',default='ws://127.0.0.1:8032/ws');args=p.parse_args()
+    if not args.preflight_only and not args.output:p.error('--output required for inference')
+    asyncio.run(main(args))

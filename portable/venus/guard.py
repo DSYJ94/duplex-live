@@ -69,7 +69,7 @@ def validate(vm,instances,runpods,lease,now):
         # A restart cannot reset the approved additional four-hour allowance.
         end=min(end,stamp(vm['creationTimestamp'])+14400)
     model_ok=((s.get('provisioningModel','STANDARD')=='STANDARD' or
-               (flex_b and flex_seconds in (7200,14400))) and
+               (flex_b and flex_seconds in (3600,7200,14400))) and
               vm['creationTimestamp']==lease['creation_timestamp'] and 0<end-start<=14400) if fallback else (
               s.get('provisioningModel')=='FLEX_START' and str(s.get('maxRunDuration',{}).get('seconds'))=='5400')
     if (not model_ok or
@@ -77,9 +77,9 @@ def validate(vm,instances,runpods,lease,now):
         end!=lease['stop_unix'] or not start<=now<end):
         raise ValueError('Exact existing provider90min STOP deadline required')
     if fallback and b['ident']!='1962162267540853286':
-        # Two closed bootstraps:400s conservative whole-lifetime upper, including
-        # allocation/stop overhead. Use at most two hours on queued recreation.
-        if lease.get('prior_new_gpu_seconds_upper',0)<400 or flex_seconds!=7200:
+        # Closed startup intervals are carried conservatively, including
+        # allocation/stop overhead. Warm recovery now uses at most one hour.
+        if lease.get('prior_new_gpu_seconds_upper',0)<1000 or flex_seconds!=3600:
             raise ValueError('Preserve prior bootstrap and shorter recreation allowance')
         if lease['prior_new_gpu_seconds_upper']+flex_seconds>14400:
             raise ValueError('Additional four-hour allowance cannot reset')
