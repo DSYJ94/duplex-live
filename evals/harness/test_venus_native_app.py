@@ -124,3 +124,19 @@ class NativeProtocolTests(unittest.IsolatedAsyncioTestCase):
             with self.assertRaises(ValueError):validate(vm,[vm],[],{**lease,'prior_new_gpu_seconds_upper':0},start+10)
             with self.assertRaises(ValueError):validate(vm,[vm],[],{**lease,'prior_new_gpu_seconds_upper':14000},start+10)
             with self.assertRaises(ValueError):validate({**vm,'tags':{'items':['duplex-native-bounded']}},[vm],[],lease,start+10)
+
+    def test_single_read_timeout_retries_without_reusing_a_snapshot(self):
+        import subprocess
+        from unittest.mock import patch
+        from portable.venus.guard import bounded_cloud_read
+        with patch('portable.venus.guard.cloud',side_effect=[subprocess.TimeoutExpired('gcloud',12),[{'status':'TERMINATED'}]]) as call:
+            self.assertEqual(bounded_cloud_read('instances','list'),[{'status':'TERMINATED'}])
+            self.assertEqual([x.kwargs['timeout'] for x in call.call_args_list],[12,8])
+
+    def test_persistent_read_timeouts_still_fail_closed(self):
+        import subprocess
+        from unittest.mock import patch
+        from portable.venus.guard import bounded_cloud_read
+        with patch('portable.venus.guard.cloud',side_effect=subprocess.TimeoutExpired('gcloud',12)) as call:
+            with self.assertRaises(subprocess.TimeoutExpired):bounded_cloud_read('instances','list')
+            self.assertEqual(call.call_count,2)

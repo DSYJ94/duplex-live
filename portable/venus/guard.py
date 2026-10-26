@@ -1,5 +1,6 @@
 """Independent Mac provider/budget guard and fail-closed guest lease watchdog."""
 import argparse
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 import hashlib
 import json
@@ -63,8 +64,27 @@ def run(argv,timeout=40):
     return p.stdout
 
 
-def cloud(*args):
-    return json.loads(run(['gcloud','compute',*args,'--project='+PROJECT,'--format=json','--quiet']))
+def cloud(*args,timeout=40):
+    return json.loads(run(['gcloud','compute',*args,'--project='+PROJECT,'--format=json','--quiet'],timeout))
+
+
+def bounded_cloud_read(*args):
+    # Retry only a read timeout; never cache a state or renew an unverified lease.
+    for attempt,limit in enumerate((12,8)):
+        try:return cloud(*args,timeout=limit)
+        except subprocess.TimeoutExpired:
+            if attempt:raise
+            print(json.dumps(dict(event='bounded_provider_timeout_retry',read=list(args))),flush=True)
+
+
+def provider_snapshot(binding,key):
+    started=time.time()
+    with ThreadPoolExecutor(max_workers=4) as pool:
+        vm=pool.submit(bounded_cloud_read,'instances','describe',binding['name'],'--zone='+binding['zone'])
+        disk=pool.submit(bounded_cloud_read,'disks','describe',binding['disk_name'],'--zone='+binding['zone'])
+        instances=pool.submit(bounded_cloud_read,'instances','list')
+        pods=pool.submit(read_runpod_pods,key)
+        return vm.result(),disk.result(),instances.result(),pods.result(),started
 
 
 def validate(vm,instances,runpods,lease,now):
@@ -151,15 +171,16 @@ def mac(args):
             if args.stop_file and Path(args.stop_file).exists():return
             birth=run(['/bin/ps','-p',str(lease['controller_pid']),'-o','lstart=']).strip()
             if birth!=lease['controller_birth']:raise ValueError('Controller identity no longer live')
-            vm=cloud('instances','describe',b['name'],'--zone='+b['zone'])
+            vm,disk,instances,pods,snapshot_start=provider_snapshot(b,key)
             if vm['status']=='TERMINATED':return
-            disk=cloud('disks','describe',b['disk_name'],'--zone='+b['zone'])
             assert str(disk['id'])==b['disk']
             if lease.get('resource_key')=='us-a10040':
                 assert int(disk['sizeGb'])==100
-            pods=read_runpod_pods(key);pods=pods.get('pods',[]) if isinstance(pods,dict) else pods
-            end=validate(vm,cloud('instances','list'),pods,lease,time.time())
-            g=dict(vm_id=b['ident'],disk_id=b['disk'],checked_unix=time.time(),expires_unix=min(time.time()+90,end),
+            pods=pods.get('pods',[]) if isinstance(pods,dict) else pods
+            end=validate(vm,instances,pods,lease,time.time())
+            expires=min(snapshot_start+90,end)
+            if time.time()>=expires:raise ValueError('Provider snapshot is already stale')
+            g=dict(vm_id=b['ident'],disk_id=b['disk'],checked_unix=time.time(),snapshot_started_unix=snapshot_start,expires_unix=expires,
                 stop_unix=end,authorization_sha256=lease['authorization_sha256'],guard_pid=os.getpid(),
                 prior_gpu_seconds=PRIOR_SECONDS,prior_scope_usd=PRIOR_USD)
             raw=json.dumps(g);Path(args.status).write_text(raw+'\n')
