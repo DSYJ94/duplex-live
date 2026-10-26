@@ -1,3 +1,28 @@
+# LOCAL — US native comparison LIVE; observe same controller, never duplicate
+
+26 October15:43UTC. Human US placement approval recorded. Source30700d6e38b34f359ab61679d2522e80232b957b
+is actually deployed viaGit. SAME VM1034804594119724521/name duplex-venus-us-20261026-v1,
+US-central1-a, A10040GB, SAME temporary100GB disk5187703876730670569. Original Netherlands
+VMs/disks untouched; Runpod allEXITED before launch. Current controller toolsession51714/
+PID77833, events runs/venus-20261026/us-recovery-v1/events.json; guardPID78297.
+Native provider7200s STOP17:41:45GMT; both independent guards actualLIVE15:43:14.
+First US controller71764 ACTUAL1 before model/questions: HTTP-reported outbound address
+rotated; source rsync SSH timed out. VM actualSTOP15:39:01.902, closed239.345seconds.
+Preserve failed attempt runs/venus-20261026/us-v1. New prior1600seconds conservatively
+covers originalnew1200+this239.345; original40351seconds/91.9844806USD bound unchanged.
+Exact sameVM restart operation-1793029277787-65ec0292ca3c1-8abf234f-c370878b succeeded,
+lastStart15:41:45.450UTC. No extra VM/disk. Carry all intervals forward, never reset.
+TCPaddress actualserver verified46.149.103.4, strictSSH ControlMaster reused; firewall
+narrowed to that/32. Temporary denylogging diagnosed address and is disabled again.
+Runtime installation and approved35publicfiles transfer currently LIVE, zeroquestions
+at this entry. No second model/training/API/backend job. Same35USD/14400seconds cap;
+current officialA100+100GB price3.68708363USD/hour. Samecomplete10cases/all18WAVhashes,
+BF16/noquantization/no muting/no subsetacceptance. New14 wordaudits pending.
+Controller must copy/hash all unique output andSTOP. Do NOT rerun on tooltimeout.
+Read actualsameprocess andproviderstate. No user input needed; LOCALsoleexecutor.
+
+---
+
 # LOCAL — US placement APPROVED; one public-only native diagnostic next
 
 26 October. Human explicitly answered "Approve US placement within $35" to the
