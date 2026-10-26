@@ -158,7 +158,7 @@ print(json.dumps(dict(all_hashes_verified=True,files=len(rows),bytes=sum(x['byte
  manifest=ROOT+'/venus-inputs-v1/container-manifest.json'
  out=ssh('cd '+remote+' && '+py+' -m portable.venus.benchmark --preflight-only --manifest '+manifest,60);assert json.loads(out)['preflight_passed'];record('all18_inputs_preflight_pass',result=json.loads(out))
  env='HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 HF_HOME='+ROOT+'/venus-runtime-v1/hf-cache DUPLEX_LIVE_GUARD_FILE='+ROOT+'/venus-live-guard-v1.json DUPLEX_LIVE_LEASE_FILE='+ROOT+'/venus-lease-us-v1.json'
- ssh('sudo systemd-run --unit=duplex-venus-app-us-v1 --uid=daryl_aurium_labs_com --working-directory='+remote+' --property=RuntimeMaxSec='+str(max(1,int(end-time.time()-60)))+' /usr/bin/env '+env+' '+py+' -u -m portable.venus.native_app --model-dir '+ROOT+'/venus-public-v1/Realtime-Venus-Audio --port 8032')
+ ssh('sudo systemd-run --unit=duplex-venus-app-us-v1 --uid=daryl_aurium_labs_com --working-directory='+remote+' --property=RuntimeMaxSec='+str(max(1,int(end-time.time()-60)))+' /usr/bin/env '+env+' '+py+' -u -m portable.venus.native_app --model-dir '+ROOT+'/venus-public-v1/Realtime-Venus-Audio --port 8032'+(' --system-prompt-file '+remote+'/portable/venus/interaction-policy-v2.txt' if POLICY else ''))
  record('one_native_model_launch',terminal=props('duplex-venus-app-us-v1'))
  while True:
   try:
@@ -169,6 +169,7 @@ print(json.dumps(dict(all_hashes_verified=True,files=len(rows),bytes=sum(x['byte
   if state['ActiveState'] in ('failed','inactive'):raise RuntimeError('Actual model startup failed: '+str(state))
   if time.time()>setup_end:raise TimeoutError('Thirty-minute setup limit')
   time.sleep(3)
+ if POLICY:assert health['system_prompt']==Path('portable/venus/interaction-policy-v2.txt').read_text().strip(),'Do not rerun baseline accidentally'
  (R/'health.json').write_text(json.dumps(health,indent=2)+'\n');record('native_model_ready',profile=health)
  ssh('sudo systemd-run --unit=duplex-venus-benchmark-us-v1 --uid=daryl_aurium_labs_com --working-directory='+remote+' --property=RuntimeMaxSec=1200 '+py+' -u -m portable.venus.benchmark --manifest '+manifest+' --output '+ROOT+'/venus-runtime-v1/diagnostic-v1')
  record('actual_complete10_started',terminal=props('duplex-venus-benchmark-us-v1'))
