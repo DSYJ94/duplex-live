@@ -46,7 +46,7 @@ def prepare(a):
 
 
 def execute(a):
-    import urllib.request,urllib.error,shlex
+    import urllib.request,urllib.error,shlex,shutil
     prepared_path=Path(a.prepared);prepared=json.loads(prepared_path.read_text());out=Path(a.output);out.mkdir(parents=True,exist_ok=False)
     assert prepared['maximum_total_cost_usd']<=4 and prepared['maximum_requests']==len(prepared['batches'])==8
     keyfile=Path('runs/local-migration-20261021/.private/openai-backend.env')
@@ -56,19 +56,29 @@ def execute(a):
         if line.startswith('OPENAI_API_KEY='):
             fields=shlex.split(line.split('=',1)[1],comments=True);key=fields[0] if len(fields)==1 else None
     if not key:raise RuntimeError('Configured local reviewer key unavailable')
-    rows=[];usage=[]
+    rows=[];usage=[];reused=[];new_requests=0
+    if a.resume_from:
+        evidence=json.loads(Path(a.resume_events).read_text())
+        assert any(e.get('event')=='independent_semantic_review_started' and e.get('prepared_sha256')==sha(prepared_path) for e in evidence)
+        # One interrupted in-flight request is conservatively charged at its full cap.
+        assert prepared['maximum_total_cost_usd']+max(b['maximum_cost_usd'] for b in prepared['batches'])<=4
     for i,batch in enumerate(prepared['batches']):
-        request=urllib.request.Request('https://api.openai.com/v1/responses',data=json.dumps(batch['payload']).encode(),headers={'Authorization':'Bearer '+key,'Content-Type':'application/json'},method='POST')
-        try:
-            with urllib.request.urlopen(request,timeout=180) as response:data=json.load(response)
-        except urllib.error.HTTPError as error:
-            (out/f'batch-{i:02d}-http.json').write_text(json.dumps(dict(status=error.code))+'\n');raise RuntimeError('Reviewer HTTP '+str(error.code)) from None
+        old=Path(a.resume_from)/(f'batch-{i:02d}-raw.json') if a.resume_from else None
+        if old and old.exists():
+            data=json.loads(old.read_text());reused.append(dict(batch=i,original_sha256=sha(old)))
+        else:
+            request=urllib.request.Request('https://api.openai.com/v1/responses',data=json.dumps(batch['payload']).encode(),headers={'Authorization':'Bearer '+key,'Content-Type':'application/json'},method='POST')
+            try:
+                new_requests+=1
+                with urllib.request.urlopen(request,timeout=180) as response:data=json.load(response)
+            except urllib.error.HTTPError as error:
+                (out/f'batch-{i:02d}-http.json').write_text(json.dumps(dict(status=error.code))+'\n');raise RuntimeError('Reviewer HTTP '+str(error.code)) from None
         (out/f'batch-{i:02d}-raw.json').write_text(json.dumps(data,indent=2)+'\n')
         assert data['status']=='completed' and data.get('service_tier','default')=='default'
         calls=[x for x in data['output'] if x['type']=='function_call'];assert len(calls)==1 and calls[0]['name']==SCHEMA['name']
         reviewed=json.loads(calls[0]['arguments'])['rows'];assert {r['id'] for r in reviewed}==set(batch['ids']) and len(reviewed)==len(batch['ids'])
         rows.extend(reviewed);usage.append(data.get('usage'));print(json.dumps(dict(completed=i+1,total=8,passed=sum(r['passed'] for r in reviewed),scenes=len(reviewed))),flush=True)
-    report=dict(all_passed=len(rows)==224 and all(r['passed'] for r in rows),scenes=len(rows),rows=rows,usage=usage,prepared_sha256=sha(prepared_path),manifest_sha256=prepared['manifest_sha256'],independent_model=MODEL,model_behavior_qualified=False,subset_acceptance=False)
+    report=dict(all_passed=len(rows)==224 and all(r['passed'] for r in rows),scenes=len(rows),rows=rows,usage=usage,prepared_sha256=sha(prepared_path),manifest_sha256=prepared['manifest_sha256'],independent_model=MODEL,model_behavior_qualified=False,subset_acceptance=False,new_requests=new_requests,reused_completed_batches=reused,possible_prior_interrupted_requests=1 if a.resume_from else 0)
     (out/'semantic-quality.json').write_text(json.dumps(report,indent=2)+'\n')
     if not report['all_passed']:raise RuntimeError('Full teacher semantic audit failed; no training approval')
 
@@ -83,4 +93,4 @@ def approve(a):
 
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('stage',choices=['prepare','execute','approve']);p.add_argument('--timelines');p.add_argument('--word-quality');p.add_argument('--audit');p.add_argument('--semantic-quality');p.add_argument('--prepared');p.add_argument('--output',required=True);a=p.parse_args();dict(prepare=prepare,execute=execute,approve=approve)[a.stage](a)
+    p=argparse.ArgumentParser();p.add_argument('stage',choices=['prepare','execute','approve']);p.add_argument('--timelines');p.add_argument('--word-quality');p.add_argument('--audit');p.add_argument('--semantic-quality');p.add_argument('--prepared');p.add_argument('--resume-from');p.add_argument('--resume-events');p.add_argument('--output',required=True);a=p.parse_args();dict(prepare=prepare,execute=execute,approve=approve)[a.stage](a)

@@ -65,11 +65,36 @@ def load_adapter(model, state):
 
 def selected_forward(llm, example, device):
     """Position i predicts the next native token; no user/framing token is labelled."""
+    if example.get('forward_path')=='native-segmented-bptt-v1':
+        return native_segmented_forward(llm,example,device)
     x = example['embeddings'].to(device).unsqueeze(0).detach().requires_grad_(True)
     positions = torch.arange(x.shape[1], device=device).unsqueeze(0)
     output = llm.model(inputs_embeds=x, position_ids=positions, use_cache=False, return_dict=True)
     hidden = output.last_hidden_state[0, example['positions'].to(device)]
     return llm.lm_head(hidden).float(), hidden.float()
+
+
+def native_segmented_forward(llm,example,device):
+    """Actual native feed shapes with full autograd through the KV history.
+
+    No prefix/cache detach, no truncated temporal credit assignment. eval mode
+    preserves the native attention path; eval does NOT disable autograd.
+    """
+    if llm.training or getattr(llm,'is_gradient_checkpointing',False):
+        raise ValueError('Native attention mode and unmodified KV autograd required')
+    wanted={int(p):i for i,p in enumerate(example['positions'])};logits={};hidden={};cache=None;cursor=0
+    for segment in example['segments']:
+        start,n=segment['start'],segment['length'];assert start==cursor
+        x=example['embeddings'][start:start+n].to(device).unsqueeze(0).detach().requires_grad_(True)
+        positions=torch.arange(start,start+n,device=device).unsqueeze(0)
+        output=llm.model(inputs_embeds=x,position_ids=positions,past_key_values=cache,use_cache=True,return_dict=True)
+        cache=output.past_key_values;assert cache is not None
+        cursor+=n;last=cursor-1
+        if last in wanted:
+            # Preserve even the head's native GEMM shape, then take its last row.
+            h=output.last_hidden_state;logits[last]=llm.lm_head(h)[0,-1].float();hidden[last]=h[0,-1].float()
+    assert cursor==len(example['embeddings']) and set(logits)==set(wanted)
+    return torch.stack([logits[int(p)] for p in example['positions']]),torch.stack([hidden[int(p)] for p in example['positions']])
 
 
 def scene_loss(llm, example, device, kl_weight=.1, hidden_weight=.01):

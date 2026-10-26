@@ -44,3 +44,12 @@ class DataTests(unittest.TestCase):
             with self.assertRaises((AssertionError,ValueError)):validate(vm,[vm],[],dict(lease,**bad),start+10)
         with self.assertRaises(AssertionError):validate(vm,[vm],[dict(status='RUNNING')],lease,start+10)
         with self.assertRaises(AssertionError):validate(vm,[vm,dict(vm,id='999')],[],lease,start+10)
+
+    def test_same_vm_restart_carries_closed_interval_and_shorter_stop(self):
+        from training.venus.restart_guard import AUTH as authority,validate as check
+        raw=authority.read_bytes();a=json.loads(raw);r=a['existing_resource'];start=stamp('2026-10-26T21:00:00Z')
+        lease=dict(resource_key='venus-native-gradient-v8',vm_id=r['vm_id'],disk_id=r['disk_id'],zone=r['zone'],disk_size_gib=100,creation_timestamp='2026-10-26T20:02:00Z',stop_unix=start+6000,prior_new_gpu_seconds_upper=6400,prior_gpu_seconds=40351,prior_scope_usd=a['prior_original_scope_cost_upper_usd'],authorization_sha256=hashlib.sha256(raw).hexdigest(),hourly_admission_ceiling_usd=4,verified_hourly_price_usd=3.68708363)
+        vm=dict(id=r['vm_id'],name=r['name'],zone='/'+r['zone'],status='RUNNING',machineType='/'+r['machine'],creationTimestamp=lease['creation_timestamp'],lastStartTimestamp='2026-10-26T21:00:00Z',tags=dict(items=[r['tag']]),disks=[dict(boot=True,autoDelete=False,source='/disks/'+r['disk_name'])],scheduling=dict(provisioningModel='FLEX_START',maxRunDuration=dict(seconds=6000),instanceTerminationAction='STOP',automaticRestart=False))
+        assert check(vm,[vm],[],lease,start+10)==start+6000
+        for bad in ({'prior_new_gpu_seconds_upper':4600},{'stop_unix':start+7200},{'verified_hourly_price_usd':4.01},{'vm_id':'123'}):
+            with self.assertRaises(AssertionError):check(vm,[vm],[],dict(lease,**bad),start+10)

@@ -71,7 +71,7 @@ def test_exact_adam_rng_restore(tmp_path):
 
 def test_native_segment_to_training_alignment_is_red_capable():
     from types import SimpleNamespace
-    from training.venus.native_cache import whole_sequence_proof
+    from training.venus.native_cache import training_input_proof
     m=model();e=example(m);e['positions']=torch.tensor([0,1,2,3,4]);e['targets']=torch.tensor([2,3,4,5,6])
     refs=[];cache=None
     with torch.no_grad():
@@ -79,6 +79,21 @@ def test_native_segment_to_training_alignment_is_red_capable():
             o=m(inputs_embeds=e['embeddings'][i:i+1].unsqueeze(0),position_ids=torch.tensor([[i]]),past_key_values=cache,use_cache=True,output_hidden_states=True,return_dict=True)
             cache=o.past_key_values;refs.append(dict(position=i,logits=m.lm_head(o.hidden_states[-1])[:,-1].clone()))
     e['logit_proofs']=refs
-    assert whole_sequence_proof(SimpleNamespace(llm=m),e)['passed']
+    assert training_input_proof(SimpleNamespace(llm=m),e)['passed']
     wrong=dict(e);wrong['embeddings']=e['embeddings'].roll(1,0)
-    assert not whole_sequence_proof(SimpleNamespace(llm=m),wrong)['passed']
+    assert not training_input_proof(SimpleNamespace(llm=m),wrong)['passed']
+
+
+def test_native_segmented_gradient_preserves_full_history_credit():
+    from training.venus.lora import native_segmented_forward
+    m=model();e=example(m);install(m,2,2)
+    with torch.no_grad():
+        for name,p in m.named_parameters():
+            if p.requires_grad and name.endswith('.b'):p.normal_(std=.03)
+    e['segments']=[dict(start=i,length=1,return_logits=True) for i in range(6)]
+    logits,_=selected_forward(m,e,'cpu');loss=torch.nn.functional.cross_entropy(logits,e['targets']);loss.backward()
+    expected={n:p.grad.clone() for n,p in m.named_parameters() if p.requires_grad}
+    m.zero_grad();native,_=native_segmented_forward(m,e,'cpu')
+    assert torch.allclose(logits,native,atol=1e-6,rtol=1e-6)
+    torch.nn.functional.cross_entropy(native,e['targets']).backward()
+    assert all(torch.allclose(p.grad,expected[n],atol=1e-6,rtol=1e-5) for n,p in m.named_parameters() if p.requires_grad)

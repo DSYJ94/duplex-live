@@ -26,7 +26,8 @@ RECIPE=dict(rank=16,alpha=16,projections=['q_proj','v_proj'],epochs=8,microbatch
     adam_betas=[.9,.999],adam_eps=1e-8,weight_decay=.01,gradient_clip=1.,
     ordinary_kl_weight=.1,ordinary_hidden_weight=.01,seed=20261026,
     audio_encoder_frozen=True,tts_frozen=True,base_llm_frozen=True,
-    acoustic_loss_trained=False)
+    acoustic_loss_trained=False,forward_path='native-segmented-bptt-v1',gradient_checkpointing=False,
+    deterministic_algorithms=True,cublas_workspace=':4096:8')
 
 
 def digest(path):return hashlib.sha256(Path(path).read_bytes()).hexdigest()
@@ -54,6 +55,7 @@ def read_example(cache,row):
 
 
 def train_step(llm,opt,cache,batch,step):
+    torch.cuda.reset_peak_memory_stats()
     opt.zero_grad(set_to_none=True)
     for group in opt.param_groups:group['lr']=learning_rate(step)
     metrics=[];before=time.monotonic()
@@ -66,7 +68,7 @@ def train_step(llm,opt,cache,batch,step):
     norm=torch.nn.utils.clip_grad_norm_(params,RECIPE['gradient_clip'])
     if not torch.isfinite(norm) or norm<=0:raise ValueError('No meaningful finite native gradient')
     opt.step();torch.cuda.synchronize()
-    return dict(step=step+1,seconds=time.monotonic()-before,gradient_norm=float(norm),lr=learning_rate(step),
+    return dict(step=step+1,seconds=time.monotonic()-before,peak_gpu_bytes=torch.cuda.max_memory_allocated(),gradient_norm=float(norm),lr=learning_rate(step),
         ce=sum(x['ce'] for x in metrics)/len(metrics),kl=sum(x['kl'] for x in metrics)/len(metrics),hidden=sum(x['hidden'] for x in metrics)/len(metrics),
         ids=[r['id'] for r in batch],families=[r['family'] for r in batch])
 
@@ -97,6 +99,7 @@ def main(a):
     assert_deadline(a.lease,300)
     random.seed(RECIPE['seed']);np.random.seed(RECIPE['seed']);torch.manual_seed(RECIPE['seed']);torch.cuda.manual_seed_all(RECIPE['seed'])
     model,duplex=load_native(a.model);llm=model.llm
+    random.seed(RECIPE['seed']);np.random.seed(RECIPE['seed'])
     torch.manual_seed(RECIPE['seed']);torch.cuda.manual_seed_all(RECIPE['seed'])
     assert len(llm.model.layers)==36 and llm.config.attention_dropout==0
     checkrow=next(r for r in manifest['scenes'] if r['fold']=='TRAIN' and r['family']=='ordinary')
@@ -110,7 +113,7 @@ def main(a):
     with torch.no_grad():future_logits=selected_forward(llm,future,'cuda')[0].cpu()
     if not torch.equal(after,future_logits):raise ValueError('Future embedding changed earlier labelled predictions')
     frozen_versions={n:p._version for n,p in llm.named_parameters() if not p.requires_grad}
-    llm.gradient_checkpointing_enable(gradient_checkpointing_kwargs={'use_reentrant':False});llm.train()
+    llm.gradient_checkpointing_disable();llm.eval()  # Autograd stays enabled; match native attention and KV path.
     opt=torch.optim.AdamW([p for p in llm.parameters() if p.requires_grad],lr=RECIPE['learning_rate'],betas=tuple(RECIPE['adam_betas']),eps=RECIPE['adam_eps'],weight_decay=RECIPE['weight_decay'])
     batches=order(manifest['scenes']);start=0
     def frozen_ok():

@@ -6,6 +6,7 @@ never counted as free-running native behavior or successful student delegation.
 import argparse
 import hashlib
 import json
+import os
 from pathlib import Path
 import time
 import numpy as np
@@ -16,6 +17,8 @@ from transformers import AutoModel, set_seed
 def load_native(path):
     from portable.venus.native_app import ensure_guard
     ensure_guard()
+    os.environ.setdefault('CUBLAS_WORKSPACE_CONFIG',':4096:8')
+    torch.use_deterministic_algorithms(True)
     if not torch.cuda.is_available() or torch.cuda.device_count()!=1:
         raise RuntimeError('Exactly one GPU; no Mac CPU native inference')
     set_seed(42)
@@ -93,7 +96,7 @@ def capture(duplex, timeline, wav, retain_segments=False):
         duplex.decoder.feed,duplex.decoder.decode=original_feed,original_decode
     example=dict(id=timeline['scene_id'],fold=timeline['fold'],family=timeline['family'],
         embeddings=torch.cat(embeddings),positions=torch.tensor(positions),targets=torch.tensor(targets),
-        decision_mask=torch.tensor(decision),segments=segments if retain_segments else [],logit_proofs=logit_proofs,
+        decision_mask=torch.tensor(decision),segments=segments,logit_proofs=logit_proofs,forward_path='native-segmented-bptt-v1',
         native_teacher_forced=True,student_behavior_claimed=False,
         timeline_sha256=hashlib.sha256(json.dumps(timeline,sort_keys=True).encode()).hexdigest())
     if not positions or min(positions)<0 or max(positions)>=example['embeddings'].shape[0]-1:
@@ -115,7 +118,7 @@ def replay_proof(duplex,example):
     return dict(compared=len(errors),maximum_logit_error=max(errors),passed=True)
 
 
-def whole_sequence_proof(model,example):
+def training_input_proof(model,example):
     """Check the differentiable training input against the captured native choices.
 
     Same-segmentation replay above is exact. Full versus cached BF16 attention
@@ -135,7 +138,7 @@ def whole_sequence_proof(model,example):
     relative=float((selected-reference).norm()/reference.norm().clamp_min(1e-12))
     ce_delta=float((torch.nn.functional.cross_entropy(selected,targets,reduction='none')-torch.nn.functional.cross_entropy(reference,targets,reduction='none')).abs().max())
     agreement=float((selected.argmax(-1)==reference.argmax(-1)).float().mean())
-    report=dict(compared=len(proof),minimum_cosine=cosine,relative_l2=relative,maximum_target_ce_delta=ce_delta,argmax_agreement=agreement,maximum_absolute_logit_error=float((selected-reference).abs().max()),limits=limits)
+    report=dict(forward_path=example.get('forward_path','whole-sequence'),compared=len(proof),minimum_cosine=cosine,relative_l2=relative,maximum_target_ce_delta=ce_delta,argmax_agreement=agreement,maximum_absolute_logit_error=float((selected-reference).abs().max()),limits=limits)
     report['passed']=cosine>=limits['minimum_cosine'] and relative<=limits['maximum_relative_l2'] and ce_delta<=limits['maximum_target_ce_delta'] and agreement>=limits['minimum_argmax_agreement']
     return report
 
@@ -157,7 +160,7 @@ def main(a):
         timeline=json.loads((folder/'timeline.json').read_text());ex=capture(duplex,timeline,folder/'user.wav',retain_segments=(i==0))
         if i==0:
             (out/'native-replay-proof.json').write_text(json.dumps(replay_proof(duplex,ex),indent=2)+'\n')
-            parity=whole_sequence_proof(model,ex);(out/'whole-sequence-proof.json').write_text(json.dumps(parity,indent=2)+'\n')
+            parity=training_input_proof(model,ex);(out/'native-training-input-proof.json').write_text(json.dumps(parity,indent=2)+'\n')
             if not parity['passed']:raise ValueError('Native/training BF16 sequence parity failed: '+str(parity))
         path=out/(row['id']+'.pt');torch.save(ex,path);rows.append(dict(id=row['id'],fold=row['fold'],family=row['family'],file=path.name,sha256=hashlib.sha256(path.read_bytes()).hexdigest(),tokens=ex['embeddings'].shape[0],labels=len(ex['targets'])))
         print(json.dumps(dict(event='native_cache_scene',completed=i+1,total=len(scenes),elapsed=time.monotonic()-start,**rows[-1])),flush=True)

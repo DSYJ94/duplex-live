@@ -38,3 +38,9 @@ The cache records the released streaming API's exact audio embeddings and teache
 5. Native free-running behavior, all ordinary retention questions, actual receipt/result use and independent spoken output checks are still required before adoption. Lower loss alone does not qualify a useful voice model.
 
 The bounded allocation uses the existing35USD/4h additional scope, carrying4600 previous seconds, with one new7200s maximum A10040 interval. No credit purchase. Two independent guards plus provider STOP remain active. The exact code, job identities, outcomes and backup state belong in HANDOFF.md; run artifacts are ignored and hashed separately.
+
+## Native gradient correction after measured numerical failure
+
+The full159 recording/224 semantic reviews subsequently passed in source-audio-v7/timelines-v7. The first real9B check rejected the faster whole-sequence BF16 calculation: maximum target CE delta0.099097 exceeded0.03, even though all21 top-token decisions agreed and exact segmented replay was0. The original failed outputs and thresholds remain intact.
+
+Training now uses `native-segmented-bptt-v1`: the exact released native feed shapes, with full autograd through its KV history. No prefix/cache detach or truncated temporal credit assignment. The language module stays in eval mode to preserve the native attention path; autograd remains enabled. Gradient checkpointing is disabled because it conflicts with mutable native KV history. The small-model gradient test agrees with full-history gradients. Deterministic CUDA/CuBLAS settings support exact independent Adam/RNG continuation. Real9B proof and measured throughput still control admission. Eight-epoch/304-update maximum and all objectives remain unchanged; checkpoints are saved each38 updates (one epoch).
