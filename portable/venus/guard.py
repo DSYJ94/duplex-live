@@ -79,7 +79,7 @@ def validate(vm,instances,runpods,lease,now):
     if fallback and b['ident']!='1962162267540853286':
         # Closed startup intervals are carried conservatively, including
         # allocation/stop overhead. Either bounded warm window fits the grant.
-        if lease.get('prior_new_gpu_seconds_upper',0)<1000 or flex_seconds not in (3600,7200):
+        if lease.get('prior_new_gpu_seconds_upper',0)<1200 or flex_seconds not in (3600,7200):
             raise ValueError('Preserve prior bootstrap and shorter recreation allowance')
         if lease['prior_new_gpu_seconds_upper']+flex_seconds>14400:
             raise ValueError('Additional four-hour allowance cannot reset')
