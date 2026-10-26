@@ -62,6 +62,10 @@ def validate(vm,instances,runpods,lease,now):
     fallback=lease.get('resource_key')=='zone-b-a10040'
     flex_b=fallback and s.get('provisioningModel')=='FLEX_START'
     end=(start+14400 if flex_b else stamp(s['terminationTime'])) if fallback else start+5400
+    if fallback:
+        # One replacement VM's whole wall lifetime bounds all its billed starts.
+        # A restart cannot reset the approved additional four-hour allowance.
+        end=min(end,stamp(vm['creationTimestamp'])+14400)
     model_ok=((s.get('provisioningModel','STANDARD')=='STANDARD' or
                (flex_b and str(s.get('maxRunDuration',{}).get('seconds'))=='14400')) and
               vm['creationTimestamp']==lease['creation_timestamp'] and 0<end-start<=14400) if fallback else (
