@@ -5,8 +5,10 @@ from pathlib import Path
 from portable.venus.guard import PROJECT,PRIOR_SECONDS,PRIOR_USD
 
 REUSE='--reuse' in sys.argv
-R=Path('runs/venus-20261026/us-direct-v1' if REUSE else 'runs/venus-20261026/us-v1');R.mkdir(exist_ok=True)
-PRIOR_NEW=2400 if REUSE else 1200
+POLICY='--policy-v2' in sys.argv
+RUN_SECONDS=3600 if POLICY else 7200
+R=Path('runs/venus-20261026/us-policy-v2' if POLICY else ('runs/venus-20261026/us-direct-v1' if REUSE else 'runs/venus-20261026/us-v1'));R.mkdir(exist_ok=True)
+PRIOR_NEW=3200 if POLICY else (2400 if REUSE else 1200)
 NAME='duplex-venus-us-20261026-v1';ZONE=sys.argv[1] if len(sys.argv)>1 else 'us-central1-a'
 IMAGE='common-cu129-ubuntu-2204-nvidia-580-v20261019'
 ROOT='/workspace/migration';guard=None;vm=None;a=None;events=[];created=False
@@ -82,8 +84,8 @@ try:
   op=json.loads(run(['gcloud','compute','instances','start',NAME,'--project='+PROJECT,'--zone='+ZONE,'--async','--format=json','--quiet'],60));op=op[0] if isinstance(op,list) else op;created=True
   record('same_existing_us_vm_restart_submitted',operation=op['name'],source=source,prior_new_gpu_seconds_upper=PRIOR_NEW)
  else:
-  op=json.loads(run(['gcloud','compute','instances','create',NAME,'--project='+PROJECT,'--zone='+ZONE,'--machine-type=a2-highgpu-1g','--provisioning-model=FLEX_START','--request-valid-for-duration=900s','--maintenance-policy=TERMINATE','--no-restart-on-failure','--no-service-account','--no-scopes','--tags=duplex-native-bounded','--image='+IMAGE,'--image-project=deeplearning-platform-release','--boot-disk-size=100GB','--boot-disk-type=pd-balanced','--boot-disk-device-name='+NAME,'--no-boot-disk-auto-delete','--metadata=enable-oslogin=TRUE,enable-guest-attributes=TRUE,block-project-ssh-keys=TRUE','--metadata-from-file=startup-script='+str(startup),'--max-run-duration=7200s','--instance-termination-action=STOP','--format=json','--async','--quiet'],90));op=op[0] if isinstance(op,list) else op;created=True
-  record('approved_us_allocation_submitted',operation=op['name'],zone=ZONE,source=source,image=IMAGE,image_id=pinned['id'],hourly_estimate_usd=price['hourly_estimate_usd'],prior_new_gpu_seconds_upper=1200)
+  op=json.loads(run(['gcloud','compute','instances','create',NAME,'--project='+PROJECT,'--zone='+ZONE,'--machine-type=a2-highgpu-1g','--provisioning-model=FLEX_START','--request-valid-for-duration=900s','--maintenance-policy=TERMINATE','--no-restart-on-failure','--no-service-account','--no-scopes','--tags=duplex-native-bounded','--image='+IMAGE,'--image-project=deeplearning-platform-release','--boot-disk-size=100GB','--boot-disk-type=pd-balanced','--boot-disk-device-name='+NAME,'--no-boot-disk-auto-delete','--metadata=enable-oslogin=TRUE,enable-guest-attributes=TRUE,block-project-ssh-keys=TRUE','--metadata-from-file=startup-script='+str(startup),'--max-run-duration='+str(RUN_SECONDS)+'s','--instance-termination-action=STOP','--format=json','--async','--quiet'],90));op=op[0] if isinstance(op,list) else op;created=True
+  record('approved_us_allocation_submitted',operation=op['name'],zone=ZONE,source=source,image=IMAGE,image_id=pinned['id'],hourly_estimate_usd=price['hourly_estimate_usd'],prior_new_gpu_seconds_upper=PRIOR_NEW)
  deadline=time.time()+960
  while op['status']!='DONE':
   if time.time()>deadline:raise TimeoutError('Observe same pending operation; no duplicate')
@@ -93,7 +95,7 @@ try:
  while vm['status']!='RUNNING':
   if time.time()>deadline:raise TimeoutError('No duplicate while allocation pending')
   time.sleep(5);vm=cloud('instances','describe',NAME,'--zone='+ZONE)
- start=datetime.fromisoformat(vm['lastStartTimestamp']).timestamp();end=min(start+7200,datetime.fromisoformat(vm['creationTimestamp']).timestamp()+14400);setup_end=start+1800
+ start=datetime.fromisoformat(vm['lastStartTimestamp']).timestamp();end=min(start+RUN_SECONDS,datetime.fromisoformat(vm['creationTimestamp']).timestamp()+14400);setup_end=start+1800
  disk=cloud('disks','describe',NAME,'--zone='+ZONE);assert int(disk['sizeGb'])==100
  record('actual_running',vm_id=vm['id'],disk_id=disk['id'],last_start=vm['lastStartTimestamp'],native_stop_unix=end)
  for _ in range(30):
