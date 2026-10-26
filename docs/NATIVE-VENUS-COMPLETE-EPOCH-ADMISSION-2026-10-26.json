@@ -1,0 +1,46 @@
+{
+  "schema": "dl-venus-complete-epoch-admission-v1",
+  "recorded_utc": "2026-10-26T21:06:57.650810+00:00",
+  "status": "APPROVED_WITHIN_EXISTING_CONDITIONAL_TRAINING",
+  "human_authority": "Latest direct instruction to complete requisite diagnostics and proceed with data/training autonomously; no new resource, data transfer, spending or time authorization.",
+  "parent_authority": "docs/NATIVE-VENUS-NATIVE-GRADIENT-CONTINUATION-2026-10-26.json",
+  "parent_authority_sha256": "e15815e70c82d68231b619b1570c3695268a54efb00e96e02569c7866898d653",
+  "unchanged_native_stop_unix": 1793055023.293,
+  "unchanged_vm_id": "6904003500048518959",
+  "unchanged_disk_id": "4375908109499109167",
+  "cache_source": "08a67630b7d0aa2e44a853115e9b9b26701e455c",
+  "same_running_cache_unit": "duplex-venus-native-cache-v8",
+  "new_cache_submission": false,
+  "reason": "The native-correct full-gradient path has different throughput from the rejected fast whole-sequence path. Choose a viable complete schedule BEFORE optimizer work instead of running two updates then aborting on an unrealistic304-step estimate.",
+  "admission": {
+    "minimum_complete_epochs": 2,
+    "maximum_complete_epochs": 8,
+    "train_scenes_every_epoch": 152,
+    "effective_batch": 4,
+    "updates_per_epoch": 38,
+    "minimum_admitted_updates": 76,
+    "maximum_updates": 304,
+    "calibration": "One no-optimizer full-gradient batch of the four largest declared TRAIN feed workloads; all weights and Adam state unchanged.",
+    "selection": "Largest complete epoch count fitting measured throughput with1.35 step multiplier,1.25fullDEV multiplier and600s restore/backup reserve.",
+    "selection_reads_loss_or_heldout": false,
+    "never_select_passing_subset": true,
+    "lr": "Same1e-4/warmup16/cosine, cosine length bound to chosen complete schedule before first update.",
+    "all_other_hyperparameters_losses_and_gates_unchanged": true
+  },
+  "execution": {
+    "original_dispatcher_paused_only": true,
+    "same_cache_and_independent_guards_continue": true,
+    "new_training_source_clean_Git_worktree": true,
+    "cache_and_training_source_SHA_recorded_separately": true,
+    "independent_fresh_process_adam_rng_restore_required": true,
+    "no_epoch_count_or_update_claim_from_launcher_literals": true,
+    "actual_terminal_reports_selected_epochs_and_actual_updates": true
+  },
+  "data": {
+    "all159_word_peak_pass": true,
+    "all224_independent_semantic_pass": true,
+    "train152_dev36_holdout36": true,
+    "originals_and_failed_audits_preserved": true
+  },
+  "adoption": false
+}

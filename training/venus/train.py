@@ -28,6 +28,7 @@ RECIPE=dict(rank=16,alpha=16,projections=['q_proj','v_proj'],epochs=8,microbatch
     audio_encoder_frozen=True,tts_frozen=True,base_llm_frozen=True,
     acoustic_loss_trained=False,forward_path='native-segmented-bptt-v1',gradient_checkpointing=False,
     deterministic_algorithms=True,cublas_workspace=':4096:8')
+MAXIMUM_RECIPE=dict(RECIPE)
 
 
 def digest(path):return hashlib.sha256(Path(path).read_bytes()).hexdigest()
@@ -40,7 +41,7 @@ def order(rows):
     for epoch in range(RECIPE['epochs']):
         shuffled=list(train);random.Random(RECIPE['seed']+epoch).shuffle(shuffled)
         batches.extend(shuffled[i:i+4] for i in range(0,len(shuffled),4))
-    assert len(batches)==304 and all(len(b)==4 for b in batches)
+    assert len(batches)==38*RECIPE['epochs'] and all(len(b)==4 for b in batches)
     return batches
 
 
@@ -54,7 +55,7 @@ def read_example(cache,row):
     return torch.load(path,map_location='cpu',weights_only=False)
 
 
-def train_step(llm,opt,cache,batch,step):
+def train_step(llm,opt,cache,batch,step,update=True):
     torch.cuda.reset_peak_memory_stats()
     opt.zero_grad(set_to_none=True)
     for group in opt.param_groups:group['lr']=learning_rate(step)
@@ -67,8 +68,9 @@ def train_step(llm,opt,cache,batch,step):
     if not all(p.grad is not None and torch.isfinite(p.grad).all() for p in params):raise ValueError('Missing/nonfinite adapter gradient')
     norm=torch.nn.utils.clip_grad_norm_(params,RECIPE['gradient_clip'])
     if not torch.isfinite(norm) or norm<=0:raise ValueError('No meaningful finite native gradient')
-    opt.step();torch.cuda.synchronize()
-    return dict(step=step+1,seconds=time.monotonic()-before,peak_gpu_bytes=torch.cuda.max_memory_allocated(),gradient_norm=float(norm),lr=learning_rate(step),
+    if update:opt.step()
+    torch.cuda.synchronize()
+    return dict(step=step+1,optimizer_updated=update,seconds=time.monotonic()-before,peak_gpu_bytes=torch.cuda.max_memory_allocated(),gradient_norm=float(norm),lr=learning_rate(step),
         ce=sum(x['ce'] for x in metrics)/len(metrics),kl=sum(x['kl'] for x in metrics)/len(metrics),hidden=sum(x['hidden'] for x in metrics)/len(metrics),
         ids=[r['id'] for r in batch],families=[r['family'] for r in batch])
 
@@ -88,14 +90,31 @@ def assert_deadline(path,seconds_needed=0):
     if time.time()+seconds_needed>=lease['stop_unix']-180:raise TimeoutError('Preserve checkpoint/copyback reserve before native STOP')
 
 
+def admit_epochs(step_seconds,dev_seconds,available_seconds):
+    """Throughput only: no loss/holdout selection, no omitted TRAIN scenes."""
+    for epochs in range(8,1,-1):
+        required=38*epochs*step_seconds*1.35+((epochs+1)//2)*dev_seconds*1.25+600
+        if required<available_seconds:
+            return dict(epochs=epochs,updates=38*epochs,benchmark_step_seconds=step_seconds,
+                        baseline_dev_seconds=dev_seconds,available_seconds=available_seconds,
+                        conservative_required_seconds=required,minimum_complete_epochs=2,maximum_complete_epochs=8,
+                        all152_train_scenes_every_epoch=True,selection_uses_loss_or_heldout=False)
+    raise TimeoutError('Fewer than two complete152-scene epochs fit; no optimizer work admitted')
+
+
 def main(a):
     cache=Path(a.cache);manifest=json.loads((cache/'manifest.json').read_text());assert not manifest['proof_only']
     approval=json.loads(Path(a.approval).read_text());assert approval['approved'] and approval['manifest_sha256']==manifest['source_manifest_sha256']
     assert len(manifest['scenes'])==188 and sum(r['fold']=='TRAIN' for r in manifest['scenes'])==152
     out=Path(a.output);out.mkdir(parents=True,exist_ok=(a.stage=='restore-continue'))
-    metadata=dict(recipe=RECIPE,cache_sha256=digest(cache/'manifest.json'),approval_sha256=digest(a.approval),source=a.source,model_revision=manifest['model_revision'])
-    if a.stage=='start':(out/'recipe.json').write_text(json.dumps(metadata,indent=2)+'\n')
-    else:assert json.loads((out/'recipe.json').read_text())==metadata
+    identity=dict(cache_sha256=digest(cache/'manifest.json'),approval_sha256=digest(a.approval),source=a.source,cache_producer_source=a.cache_producer,model_revision=manifest['model_revision'])
+    metadata=None
+    if a.stage=='restore-continue':
+        metadata=json.loads((out/'recipe.json').read_text())
+        assert all(metadata[k]==v for k,v in identity.items())
+        chosen=metadata['recipe'];assert 2<=chosen['epochs']<=8 and chosen['updates']==38*chosen['epochs']
+        assert chosen==dict(MAXIMUM_RECIPE,epochs=chosen['epochs'],updates=chosen['updates'])
+        RECIPE.update(chosen)
     assert_deadline(a.lease,300)
     random.seed(RECIPE['seed']);np.random.seed(RECIPE['seed']);torch.manual_seed(RECIPE['seed']);torch.cuda.manual_seed_all(RECIPE['seed'])
     model,duplex=load_native(a.model);llm=model.llm
@@ -120,7 +139,22 @@ def main(a):
         if any(p._version!=frozen_versions[n] for n,p in llm.named_parameters() if n in frozen_versions):raise ValueError('Frozen native weight mutated')
     if a.stage=='start':
         (out/'numerical-zero-proof.json').write_text(json.dumps(dict(zero_adapter_max_error=0,causal_future_max_error=0,adapter=spec),indent=2)+'\n')
-        baseline=dev_loss(llm,cache,manifest['scenes']);(out/'dev-baseline.json').write_text(json.dumps(baseline,indent=2)+'\n')
+        before_dev=time.monotonic();baseline=dev_loss(llm,cache,manifest['scenes']);dev_seconds=time.monotonic()-before_dev
+        (out/'dev-baseline.json').write_text(json.dumps(baseline,indent=2)+'\n')
+        workload=[]
+        for row in manifest['scenes']:
+            if row['fold']=='TRAIN':
+                ex=read_example(cache,row)
+                score=len(ex['segments'])*(1.5 if row['family']=='ordinary' else 1)+len(ex['embeddings'])/64
+                workload.append((score,row))
+        calibration=[row for _,row in sorted(workload,key=lambda x:x[0],reverse=True)[:4]]
+        benchmark=train_step(llm,opt,cache,calibration,0,update=False);frozen_ok();opt.zero_grad(set_to_none=True)
+        benchmark['selection']='four largest TRAIN feed workloads; no loss or answer selection'
+        (out/'no-update-gradient-benchmark.json').write_text(json.dumps(benchmark,indent=2)+'\n')
+        admission=admit_epochs(benchmark['seconds'],dev_seconds,json.loads(Path(a.lease).read_text())['stop_unix']-time.time()-180)
+        RECIPE.update(epochs=admission['epochs'],updates=admission['updates']);batches=order(manifest['scenes'])
+        metadata=dict(**identity,recipe=dict(RECIPE),maximum_recipe=MAXIMUM_RECIPE,admission=admission)
+        (out/'recipe.json').write_text(json.dumps(metadata,indent=2)+'\n');print(json.dumps(dict(event='complete_epoch_schedule_admitted',**admission)),flush=True)
         first=train_step(llm,opt,cache,batches[0],0);frozen_ok();save(out/'step-0001.pt',llm,opt,1,metadata)
         rng_probe=dict(python=random.random(),numpy=float(np.random.rand()),cuda=torch.rand(8,device='cuda').cpu().tolist())
         second=train_step(llm,opt,cache,batches[1],1);frozen_ok();save(out/'expected-step-0002-proof-only.pt',llm,opt,2,metadata)
@@ -146,17 +180,15 @@ def main(a):
     log=(out/'training.jsonl').open('x');log.write(json.dumps(expected['first'])+'\n'+json.dumps(second)+'\n');log.flush()
     seconds=[expected['first']['seconds'],second['seconds']]
     try:
-        # A measured admission check, not a promise that304 steps fit any GPU window.
-        assert_deadline(a.lease,max(seconds)*1.3*(304-2)+600)
-        for step in range(2,304):
+        for step in range(2,RECIPE['updates']):
             assert_deadline(a.lease,max(seconds[-8:])*1.5+120)
             row=train_step(llm,opt,cache,batches[step],step);frozen_ok();seconds.append(row['seconds']);log.write(json.dumps(row)+'\n');log.flush();print(json.dumps(row),flush=True)
-            if (step+1)%38==0 or step==303:
+            if (step+1)%38==0 or step==RECIPE['updates']-1:
                 save(out/f'step-{step+1:04d}.pt',llm,opt,step+1,metadata)
-            if (step+1)%76==0:
+            if (step+1)%76==0 or step==RECIPE['updates']-1:
                 result=dict(step=step+1,full36_dev_teacher_forced=dev_loss(llm,cache,manifest['scenes']),native_behavior_qualified=False)
                 (out/f'dev-{step+1:04d}.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result),flush=True)
-        (out/'training-terminal.json').write_text(json.dumps(dict(actual_updates=304,completed=True,adopted=False,behavioral_evaluation_required=True),indent=2)+'\n')
+        (out/'training-terminal.json').write_text(json.dumps(dict(actual_updates=RECIPE['updates'],actual_complete_epochs=RECIPE['epochs'],maximum_authorized_updates=304,completed=True,adopted=False,behavioral_evaluation_required=True),indent=2)+'\n')
     except BaseException:
         completed=locals().get('step',1)
         # Save actual current state on a budget/readiness stop, with honest completed count.
@@ -166,4 +198,4 @@ def main(a):
 
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('--stage',choices=['start','restore-continue'],required=True);p.add_argument('--model',required=True);p.add_argument('--cache',required=True);p.add_argument('--approval',required=True);p.add_argument('--output',required=True);p.add_argument('--source',required=True);p.add_argument('--lease',required=True);main(p.parse_args())
+    p=argparse.ArgumentParser();p.add_argument('--stage',choices=['start','restore-continue'],required=True);p.add_argument('--model',required=True);p.add_argument('--cache',required=True);p.add_argument('--approval',required=True);p.add_argument('--output',required=True);p.add_argument('--source',required=True);p.add_argument('--cache-producer',required=True);p.add_argument('--lease',required=True);main(p.parse_args())

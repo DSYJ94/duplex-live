@@ -97,3 +97,18 @@ def test_native_segmented_gradient_preserves_full_history_credit():
     assert torch.allclose(logits,native,atol=1e-6,rtol=1e-6)
     torch.nn.functional.cross_entropy(native,e['targets']).backward()
     assert all(torch.allclose(p.grad,expected[n],atol=1e-6,rtol=1e-5) for n,p in m.named_parameters() if p.requires_grad)
+
+
+def test_admission_uses_full_epochs_and_never_drops_train_scenes():
+    from collections import Counter
+    from training.venus.train import RECIPE,order,admit_epochs
+    before=dict(RECIPE)
+    try:
+        admission=admit_epochs(10,20,2000)
+        assert admission['epochs']>=2 and admission['conservative_required_seconds']<2000
+        RECIPE.update(epochs=admission['epochs'],updates=admission['updates'])
+        rows=[dict(id=str(i),fold='TRAIN') for i in range(152)]+[dict(id='held',fold='HOLDOUT')]
+        batches=order(rows);counts=Counter(r['id'] for b in batches for r in b)
+        assert len(counts)==152 and set(counts.values())=={admission['epochs']}
+        with pytest.raises(TimeoutError):admit_epochs(100,100,1000)
+    finally:RECIPE.clear();RECIPE.update(before)
