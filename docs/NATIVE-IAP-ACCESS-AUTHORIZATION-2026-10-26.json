@@ -1,0 +1,90 @@
+{
+  "schema": "dl-native-iap-access-proposal-v1",
+  "status": "APPROVED",
+  "purpose": "Finish the prepared generic native control-policy diagnostic without repeated public-SSH source-address failures or additional disks.",
+  "project": "aurium-duplex-live-20261024",
+  "existing_resource": {
+    "name": "duplex-venus-us-20261026-v1",
+    "vm_id": "5664322998932521310",
+    "zone": "us-central1-a",
+    "disk_name": "duplex-venus-us-20261026-v1",
+    "disk_id": "7763575121976148318",
+    "disk_gib": 100,
+    "last_verified_status": "TERMINATED",
+    "model_questions_run": 0,
+    "no_new_gpu_vm_disk_snapshot_or_cpu": true
+  },
+  "access_changes": {
+    "enable_only_api": "iap.googleapis.com",
+    "api_currently_enabled": false,
+    "new_firewall_tag_only_on_exact_vm": "duplex-venus-iap-bounded",
+    "replace_exact_vm_tags_to_remove_direct_ssh_rule_application": true,
+    "allow_rule": {
+      "name": "duplex-venus-iap-ssh-v1",
+      "network": "default",
+      "direction": "INGRESS",
+      "priority": 800,
+      "source_range": "35.235.240.0/20",
+      "allow": "tcp:22",
+      "target_tag": "duplex-venus-iap-bounded"
+    },
+    "deny_rule": {
+      "name": "duplex-venus-iap-deny-other-v1",
+      "network": "default",
+      "direction": "INGRESS",
+      "priority": 900,
+      "source_range": "0.0.0.0/0",
+      "deny": "all",
+      "target_tag": "duplex-venus-iap-bounded"
+    },
+    "authenticated_tunnel": "gcloud compute start-iap-tunnel to this exact VM port22 over HTTPS",
+    "existing_account": "daryl@aurium-labs.com",
+    "existing_project_role_verified": "roles/owner",
+    "new_iam_principals_roles_keys_or_service_accounts": false,
+    "os_login_strict_host_keys_and_existing_mac_private_key_retained": true,
+    "credentials_remain_on_mac": true,
+    "no_public_microphone_or_other_service_port": true,
+    "no_changes_to_original_vm_tags_or_original_firewall_rules": true
+  },
+  "unchanged_budget": {
+    "additional_scope_cap_usd": 35,
+    "additional_scope_cap_gpu_seconds": 14400,
+    "closed_prior_new_scope_seconds_upper": 3600,
+    "original_scope_seconds_upper": 40351,
+    "original_scope_cost_upper_usd": 91.98448055555555,
+    "cumulative_gcp_cap_usd": 135,
+    "cumulative_gpu_cap_seconds": 57600,
+    "maximum_single_restart_seconds": 3600,
+    "provider_native_stop_and_both_guards_required": true,
+    "maximum_concurrent_gpu_jobs": 1,
+    "purchases": 0,
+    "stop_early_when_blocked": true,
+    "one_supplemental_restart_uses_carried_gpu_time_not_stopped_wall_time": true,
+    "no_reset_of_any_paid_interval": true
+  },
+  "diagnostic": {
+    "prepared_native_policy_source": "47ecc484e03615d496aec453eb6a74e90470ab8c",
+    "model": "Realtime-Venus-Audio9B",
+    "model_revision": "4681004131ea1f1fb9aca9f0db76be322657cc79",
+    "same10_cases_and_all18_original_input_hashes": true,
+    "generic_policy_and_diagnosed_english_number_worker_fix_only": true,
+    "no_task_answers_keyword_names_or_forced_dispatch_in_prompt": true,
+    "new_optimizer_updates": 0,
+    "external_model_api_calls": 0,
+    "no_owner_conversations_credentials_private_files_or_core_dumps": true,
+    "no_keyword_mute_quantization_weaker_thresholds_subset_acceptance_or_adoption": true
+  },
+  "cleanup": {
+    "retain_original_native_archives_and_both_original_disks": true,
+    "verify_all_unique_output_hashes_on_mac_before_retiring_temporary_resource": true,
+    "remove_only_our_new_iap_firewall_rules_after_temporary_resource_retirement": true,
+    "iap_api_may_remain_enabled_but_no_new_iam_grants": true
+  },
+  "why_decision_required": "The existing grant forbids new API activation and fixes direct Mac-source ingress. This enables one API and adds Google identity-authenticated proxy ingress for only the exact temporary VM. Automatic approval review separately rejected keeping multiple potentially stale public source addresses; that action was not performed after rejection. No IAP change has been attempted.",
+  "official_reference": "https://docs.cloud.google.com/iap/docs/using-tcp-forwarding",
+  "owner_reply": "Approve IAP within existing limit",
+  "approval_source": "Direct human answer in this LOCAL chat",
+  "recorded_utc": "2026-10-26T18:05:50.308554+00:00",
+  "proposal_commit": "7fda677",
+  "proposal_sha256": "26175afcb8dda0bdba2c1a42ec124b69ff08baed10385678c99c9c00eb8b08f4"
+}
