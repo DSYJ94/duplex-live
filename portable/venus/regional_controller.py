@@ -62,6 +62,7 @@ print(json.dumps(out))"""
 try:
  auth=Path('docs/NATIVE-REGIONAL-PLACEMENT-AUTHORIZATION-2026-10-26.json').read_bytes();grant=json.loads(auth)
  assert grant['status']=='APPROVED' and ZONE in grant['resources']['supported_catalog_zones']
+ if POLICY:assert not Path('docs/NATIVE-VENUS-POLICY-V2-REJECTION-2026-10-26.json').exists(),'Rejected policy variant must not be rerun or adopted unchanged'
  assert not (R/'lease.json').exists(),'Never duplicate a prior real allocation'
  price=json.loads(Path('runs/venus-20261026/us-current-price40-v1.json').read_text())
  assert 0<price['hourly_estimate_usd']<=7.25 and time.time()-datetime.fromisoformat(price['at_utc']).timestamp()<3600

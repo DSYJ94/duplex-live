@@ -1,3 +1,54 @@
+# LOCAL — IAP repaired; long-policy variant REJECTED; evidence saved; ALL GPU OFF
+
+2026-10-26T18:44:30.234700+00:00. ApprovedIAP successfully applied: onlyiap API +twoisolatedrules/exacttemporaryVM,
+no IAMgrants. Sourceb9defb86de66e607c1d378472bd669515f2c4937 actuallyloaded frozen9B
+BF16/SDPA/seed42, exactbaselinepackagepins/35filehashes/all18inputhashes. Actualnative
+PID2472/invocation3440888f7a39493abbf74532a0f65905; benchmark2532/
+e55f08caa2fc45e69644609e6d34b4cf. Fourordinarycasescollected: coregeneratedtext0/4
+vsbaseline4/4, metainstructions/irrelevantcancel/unnecessarydelegation; notindependent
+spoken-task scores. Other6NOTTESTED. LongpolicyREJECTED, defaultofficialprefixretained.
+Driverblocks rerunningthisknownrejectedvariant. See docs/NATIVE-VENUS-POLICY-V2-REJECTION-
+2026-10-26.json. DO NOT claimfull10 or adopt a subset. No training ormodelAPIcalls.
+
+Macwatchdog sequentialproviderreads exceededfreshness: instanceslist subprocess40s
+TIMEOUT; lastguard18:19:12.741/expires18:20:42.741UTC; guest/providerstoppedVM, actual
+18:09:51.563->18:21:24.469 =692.906GPU seconds. Originalcontroller62766 actual1.
+Guardfix893e4b5: freshreadsparallel, timeoutretry12+8, expiryUNCHANGED90s fromsnapshot
+start, no cached/unverifiedrenewal. AllstrictID/budget/oneGPU/STOPchecksretained.
+
+Necessarybackup-only restart operation-1793039326098-65ec28019b4f2-98ecc4ac-ee73253b,
+session92018 ACTUAL0, no model/setup/newtest. BOTHguards +original10minbootstrapstop.
+Actual18:29:20.507->18:31:19.380=118.873GPU seconds. Captured216files19078722B,
+allSHAverifiedandindependentlyrechecked; partialrawWAVs/trace/receipts/journals preserved
+under runs/venus-20261026/us-iap-output-recovery-v1/copyback. Waveforms actuallyread:
+196chunks/4721280samples, peak0.54504, zero>=0.995; no gainchange. Sixcasesmissing.
+Nativeframe tokens were enteringworkerquerytext; d463e6f stripsONLYnativeframing,
+retainsrawqueryintrace/events, rejectsstructuredmetadata asarithinputs. Englishnumber
+fixretained.14focusedCPUtestsPASS; theseharnessfixes are NOT nativevoicevalidation.
+
+Afterfullcopybackreverified, EXACTtemporaryVM5664322998932521310/disk7763575121976148318
+and ONLYour2IAPrules retired. Cleanupactual18:39:18; IAPAPIleftenabledasperapproval,
+noIAMgrants. Freshprovider: original4VMsTERMINATED; Runpodall5EXITED. OriginalA/B250GB
+disks/native81GBarchives/checkpoints/optimizer/RNG/oldhistories untouched. No81GBrehash;
+broadMacsourcebackup still PARTIAL. Baselinecomplete10/495files also preserved.
+
+CarryNEWprior4600s (includesalloldnewbound3600 +692.906+118.873, conservative), original
+40351s/91.9844806USD unchanged; cumulative44951s<57600. Newcap35USD/14400s, cumulative
+135USD unchanged; no purchases. No jobs/guards/controllers awaitingcompletion.
+Onlylocal synthetic replayserver8033 remains(session72000): baselinecomplete10 at /
+and rejectedpartial at /policy-v2-rejected/. Allmissingcasesvisiblymarked, no live mic.
+
+Nextproductdirection: keepofficialbaselineprefix andpreservebasicreasoning; retain
+diagnosedworker/protocolfixes. Do not repeatlongsystemprompt, confuseinferencefailure
+withtrainingconvergence, orstartfullweightfine-tuning. Further nativecontrol/routing
+intervention needs a concrete next run under its own model/data/compute scope; current
+GCPgrant authorizesZEROoptimizerupdates/modelAPIcalls. Goalstillunfinished; no new
+approvalquestionpending. LOCALsoleexecutor; noagents/otherchatmessages/heartbeat.
+Preserve unrelatedPYC/probes/roadmap andparked sustained32 sources. Updateexactstate
+beforeanyfutureallocation; neverreuseoldleases orrepeatfinishedjobs.
+
+---
+
 # LOCAL — Approved IAP works; ONE policy test is live, observe same process
 
 2026-10-26T18:12:14.457821+00:00. Human explicitly answered "Approve IAP within existing limit".

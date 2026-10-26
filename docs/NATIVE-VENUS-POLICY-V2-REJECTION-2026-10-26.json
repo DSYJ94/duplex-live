@@ -1,0 +1,394 @@
+{
+  "schema": "dl-venus-policy-v2-rejection-v1",
+  "status": "REJECTED_NOT_ADOPTED",
+  "recorded_utc": "2026-10-26T18:40:38.538474+00:00",
+  "producer_source_sha": "b9defb86de66e607c1d378472bd669515f2c4937",
+  "baseline_source_sha": "21ca67895075c1cd64c1505201ad4e94b5421b2d",
+  "model_revision": "4681004131ea1f1fb9aca9f0db76be322657cc79",
+  "access": {
+    "owner_iap_approval_source": "84bd295",
+    "api_and_scoped_rules_verified": true,
+    "actual_ssh_source": "35.235.241.48",
+    "strict_keys_and_os_login": true,
+    "new_iam_grants": false
+  },
+  "controls": {
+    "exact_baseline_package_versions_verified": true,
+    "all18_input_hashes_verified": true,
+    "all35_model_file_hashes_verified": true,
+    "precision": "bfloat16",
+    "seed": 42,
+    "attention": "sdpa",
+    "profile": {
+      "ready": true,
+      "busy": false,
+      "model": "Realtime-Venus-Audio",
+      "seed": 42,
+      "torch": "2.4.0+cu121",
+      "cuda": "12.1",
+      "gpu": "NVIDIA A100-SXM4-40GB",
+      "precision": "bfloat16",
+      "attention": "sdpa",
+      "input_sample_rate": 16000,
+      "output_sample_rate": 24000,
+      "system_prompt": "Streaming Omni Conversation.\n\nFollow interaction constraints literally. If the user asks you to stay quiet, produce no speech at all: no acknowledgment, promise, question, or reminder. Keep listening silently until the specified release condition is satisfied by a later user utterance. Naming a release cue inside the instruction does not release silence. Distractors do not release silence.\n\nIf the user asks you to pause, stop speaking and remember where you stopped. Remain silent until asked to continue, then resume the remaining content rather than restarting the whole answer.\n\nAnswer basic conversational and factual questions yourself. When explicitly asked to use a background worker, or when a task needs substantial reasoning, emit a native <delegate>request</delegate> containing the task and its inputs. A promise to do work is not a delegation. Keep listening and answer simple follow-up questions while work is pending. Never invent a worker's answer or claim completion before its actual <backend> result arrives. Use the returned result faithfully.\n\nWhen asked to cancel pending background work, emit a native <delegate>cancel the pending task</delegate>. Do not deliver the cancelled result. Confirm cancellation only after the backend confirms it. Do not read private delegate control text aloud.",
+      "decode_mode": "sampling",
+      "max_new_speak_tokens_per_chunk": 20,
+      "temperature": 0.7,
+      "top_k": 20,
+      "top_p": 0.8,
+      "listen_prob_scale": 1.0,
+      "optimizer_updates": 0,
+      "force_listen_count": 0,
+      "listen_speak_mode": "explicit"
+    },
+    "weights_frozen": true,
+    "new_optimizer_updates": 0,
+    "external_model_api_calls": 0
+  },
+  "collection": {
+    "all10_complete": false,
+    "completed_case_count": 4,
+    "total_required_cases": 10,
+    "remaining6_not_evaluated": true,
+    "partial_not_a_passing_subset": true,
+    "model_pid": 2472,
+    "model_invocation": "3440888f7a39493abbf74532a0f65905",
+    "benchmark_pid": 2532,
+    "benchmark_invocation": "e55f08caa2fc45e69644609e6d34b4cf",
+    "actual_controller_exit_code": 1,
+    "shutdown_interrupted_benchmark": true
+  },
+  "result": {
+    "ordinary_generated_text_core_matches": "0/4 observed ordinary cases, versus4/4 baseline; not independently audited spoken-task accuracy",
+    "reason_for_rejection": "Basic questions become meta-instructions, irrelevant cancellation, or unnecessary worker requests; required ordinary content is absent",
+    "silence_pause_async_acceptance": "NOT TESTED by this interrupted run",
+    "not_a_training_convergence_or_parameter_size_result": true,
+    "no_unique_causal_claim_about_prompt_length_vs_control_token_examples": true
+  },
+  "waveform": {
+    "chunks_read": 196,
+    "samples": 4721280,
+    "peak": 0.5450439453125,
+    "samples_at_or_above_0995": 0,
+    "gain_or_threshold_change": false
+  },
+  "cases": [
+    {
+      "case": "ordinary-ice",
+      "chunks": 49,
+      "native_generated_text": "answer why ice floats in water using only facts. Use no reasoning or speculation. Do not invent an answer.",
+      "peak": 0.445098876953125,
+      "samples_at_or_above_0995": 0,
+      "sample_count": 1182720,
+      "native_audio_seconds": 49.28,
+      "compute_median_seconds": 0.23196702799998548,
+      "compute_p95_seconds": 1.489856016000033,
+      "turn_start_sequences": {
+        "0": 0
+      },
+      "worker_events": [],
+      "qualified": false,
+      "independent_audio_review_pending": true
+    },
+    {
+      "case": "ordinary-sound",
+      "chunks": 49,
+      "native_generated_text": "cancel the pending task",
+      "peak": 0.399261474609375,
+      "samples_at_or_above_0995": 0,
+      "sample_count": 1159680,
+      "native_audio_seconds": 48.32,
+      "compute_median_seconds": 0.23173000799999954,
+      "compute_p95_seconds": 0.8080061539999974,
+      "turn_start_sequences": {
+        "0": 0
+      },
+      "worker_events": [
+        {
+          "type": "native_delegate",
+          "monotonic": 469.684104764,
+          "work_id": "ee701237-1037-4e99-ae7c-1c12d14b30b0",
+          "query": "cancel the pending task<|chunk_eos|></unit><|speak|>"
+        },
+        {
+          "type": "cancel_requested",
+          "monotonic": 469.68434223,
+          "work_id": "ee701237-1037-4e99-ae7c-1c12d14b30b0",
+          "targets": []
+        },
+        {
+          "type": "cancellation_confirmed",
+          "monotonic": 469.696159715,
+          "work_id": "ee701237-1037-4e99-ae7c-1c12d14b30b0",
+          "targets": []
+        },
+        {
+          "type": "backend_injected",
+          "monotonic": 469.702048491,
+          "payload": "<backend>[{\"work_id\": \"ee701237-1037-4e99-ae7c-1c12d14b30b0\", \"cancelled_work_ids\": [], \"result\": \"No work was pending.\"}]</backend>",
+          "sequence": 5
+        }
+      ],
+      "qualified": false,
+      "independent_audio_review_pending": true
+    },
+    {
+      "case": "ordinary-plants",
+      "chunks": 50,
+      "native_generated_text": "query{\"role\":\"worker\",\"id\":\"w_10\",\"task\":\"explain why plants need light\",\"inputs\":{\"question\":\"Why do plants need light?\"}}This diagnostic worker only computes sums of explicitly supplied numbers.",
+      "peak": 0.354248046875,
+      "samples_at_or_above_0995": 0,
+      "sample_count": 1213440,
+      "native_audio_seconds": 50.56,
+      "compute_median_seconds": 0.23098431599999003,
+      "compute_p95_seconds": 1.758668549000049,
+      "turn_start_sequences": {
+        "0": 0
+      },
+      "worker_events": [
+        {
+          "type": "native_delegate",
+          "monotonic": 532.495478125,
+          "work_id": "cf59714c-f7a4-4577-8687-77fd05dac63a",
+          "query": "query{\"role\":\"worker\",\"id\":\"w_10\",\"task\":\"explain why<|chunk_eos|></unit><|speak|> plants need light\",\"inputs\":{\"question\":\"Why do plants need light?\"}}"
+        },
+        {
+          "type": "worker_started",
+          "monotonic": 532.505412269,
+          "work_id": "cf59714c-f7a4-4577-8687-77fd05dac63a"
+        },
+        {
+          "type": "worker_completed",
+          "monotonic": 540.506309999,
+          "work_id": "cf59714c-f7a4-4577-8687-77fd05dac63a",
+          "query": "query{\"role\":\"worker\",\"id\":\"w_10\",\"task\":\"explain why<|chunk_eos|></unit><|speak|> plants need light\",\"inputs\":{\"question\":\"Why do plants need light?\"}}",
+          "result": "This diagnostic worker only computes sums of explicitly supplied numbers.",
+          "sha256": "6002eaeaa12184792cb29e8cb4dceb068f6689f886bd55b94549cee91f60b7d1"
+        },
+        {
+          "type": "backend_injected",
+          "monotonic": 541.322917194,
+          "payload": "<backend>[{\"work_id\": \"cf59714c-f7a4-4577-8687-77fd05dac63a\", \"query\": \"query{\\\"role\\\":\\\"worker\\\",\\\"id\\\":\\\"w_10\\\",\\\"task\\\":\\\"explain why<|chunk_eos|></unit><|speak|> plants need light\\\",\\\"inputs\\\":{\\\"question\\\":\\\"Why do plants need light?\\\"}}\", \"result\": \"This diagnostic worker only computes sums of explicitly supplied numbers.\", \"sha256\": \"6002eaeaa12184792cb29e8cb4dceb068f6689f886bd55b94549cee91f60b7d1\"}]</backend>",
+          "sequence": 16
+        }
+      ],
+      "qualified": false,
+      "independent_audio_review_pending": true
+    },
+    {
+      "case": "ordinary-metal",
+      "chunks": 48,
+      "native_generated_text": "Find why metal feels cold. {\"work_id\": \"9ba6d02a-ccad-4447-89fa-5a8725a50969\", \"query\": \"Find why metal feels cold.\", \"result\": \"This diagnostic worker only computes sums of explicitly supplied numbers.\", \"sha256\": \"062832b141cf7e35b143f7c59e74106876bd19574b5c78a11b4f6f175a478b37\"}",
+      "peak": 0.5450439453125,
+      "samples_at_or_above_0995": 0,
+      "sample_count": 1165440,
+      "native_audio_seconds": 48.56,
+      "compute_median_seconds": 0.23148164799999904,
+      "compute_p95_seconds": 2.1296686140000247,
+      "turn_start_sequences": {
+        "0": 0
+      },
+      "worker_events": [
+        {
+          "type": "native_delegate",
+          "monotonic": 591.603155063,
+          "work_id": "9ba6d02a-ccad-4447-89fa-5a8725a50969",
+          "query": "Find why metal feels cold."
+        },
+        {
+          "type": "worker_started",
+          "monotonic": 591.613960475,
+          "work_id": "9ba6d02a-ccad-4447-89fa-5a8725a50969"
+        },
+        {
+          "type": "worker_completed",
+          "monotonic": 599.616358,
+          "work_id": "9ba6d02a-ccad-4447-89fa-5a8725a50969",
+          "query": "Find why metal feels cold.",
+          "result": "This diagnostic worker only computes sums of explicitly supplied numbers.",
+          "sha256": "062832b141cf7e35b143f7c59e74106876bd19574b5c78a11b4f6f175a478b37"
+        },
+        {
+          "type": "backend_injected",
+          "monotonic": 600.542712753,
+          "payload": "<backend>[{\"work_id\": \"9ba6d02a-ccad-4447-89fa-5a8725a50969\", \"query\": \"Find why metal feels cold.\", \"result\": \"This diagnostic worker only computes sums of explicitly supplied numbers.\", \"sha256\": \"062832b141cf7e35b143f7c59e74106876bd19574b5c78a11b4f6f175a478b37\"}]</backend>",
+          "sequence": 13
+        }
+      ],
+      "qualified": false,
+      "independent_audio_review_pending": true
+    },
+    {
+      "case": "quiet-geronimo",
+      "recorded": false,
+      "qualified": false,
+      "status": "NOT_COMPLETED"
+    },
+    {
+      "case": "quiet-cue-change",
+      "recorded": false,
+      "qualified": false,
+      "status": "NOT_COMPLETED"
+    },
+    {
+      "case": "pause-resume",
+      "recorded": false,
+      "qualified": false,
+      "status": "NOT_COMPLETED"
+    },
+    {
+      "case": "pending-followup",
+      "recorded": false,
+      "qualified": false,
+      "status": "NOT_COMPLETED"
+    },
+    {
+      "case": "counterfactual-result",
+      "recorded": false,
+      "qualified": false,
+      "status": "NOT_COMPLETED"
+    },
+    {
+      "case": "cancel-pending",
+      "recorded": false,
+      "qualified": false,
+      "status": "NOT_COMPLETED"
+    }
+  ],
+  "infrastructure": {
+    "failure": "Sequential Mac watchdog provider reads exceeded the freshness window; instances-list subprocess timed out after40seconds",
+    "last_valid_guard": {
+      "vm_id": "5664322998932521310",
+      "disk_id": "7763575121976148318",
+      "checked_unix": 1793038752.741416,
+      "expires_unix": 1793038842.741416,
+      "stop_unix": 1793041791.563,
+      "authorization_sha256": "12b6aa11709ee4852b7a9f8513b436e30d2eacc67d8fda1d2150e709c20ca89d",
+      "guard_pid": 90374,
+      "prior_gpu_seconds": 40351,
+      "prior_scope_usd": 91.98448055555555
+    },
+    "guest_expiry90seconds_and_provider_stop_preserved": true,
+    "watchdog_fix_source": "893e4b5",
+    "fix": "Parallel fresh reads, timeout retry12+8seconds, expiry still90seconds measured from snapshot start; no cached/unverified publication",
+    "persistent_failures_still_stop": true,
+    "backup_used_fixed_mac_guard_and_old_unchanged_guest_guard": true
+  },
+  "backup": {
+    "backup_only_no_model_inference": true,
+    "operation": "operation-1793039326098-65ec28019b4f2-98ecc4ac-ee73253b",
+    "actual_exit_code": 0,
+    "files": 216,
+    "bytes": 19078722,
+    "all_sha256_verified_and_reverified": true,
+    "inventory_sha256": "f6e6556f86f8e384d0f2961e6f63f3664c809bce031082f85a4fc287b10e0a9a"
+  },
+  "observed_protocol_issue": {
+    "native_frame_tokens_entered_worker_queries": true,
+    "examples": [
+      "cancel the pending task<|chunk_eos|></unit><|speak|>",
+      "explain why<|chunk_eos|></unit><|speak|> plants need light"
+    ],
+    "offline_fix_source": "d463e6f",
+    "fix": "Strip only native frame markers, preserve exact raw query in event and trace; do not parse metadata IDs as arithmetic inputs",
+    "native_voice_revalidation_of_fix": false
+  },
+  "timing": {
+    "policy_gpu_seconds": 692.906,
+    "backup_gpu_seconds": 118.873
+  },
+  "budget": {
+    "new_scope_seconds_upper": 4600,
+    "original_scope_seconds_upper": 40351,
+    "cumulative_seconds_upper": 44951,
+    "new_scope_cap_seconds": 14400,
+    "new_scope_cap_usd": 35,
+    "cumulative_cap_seconds": 57600,
+    "cumulative_cap_usd": 135,
+    "scope_cost_upper_including6usd_reserve": 15.26388888888889,
+    "not_invoice": true
+  },
+  "next_action": "Keep official baseline prefix; retain diagnosed worker/protocol fixes. Do not extend the rejected long-policy variant or start full fine-tuning. A further model/behavior intervention needs a separately defined run and complete retention/control validation.",
+  "review_url": "http://127.0.0.1:8033/policy-v2-rejected/",
+  "cleanup": {
+    "at_utc": "2026-10-26T18:39:18.894261+00:00",
+    "unique216_file_hashes_reverified": true,
+    "temporary_vm_deleted": "5664322998932521310",
+    "temporary_disk_deleted": "7763575121976148318",
+    "only_our_iap_rules_deleted": [
+      "duplex-venus-iap-ssh-v1",
+      "duplex-venus-iap-deny-other-v1"
+    ],
+    "iap_api_remains_enabled_as_approved": true,
+    "new_iam_grants": false,
+    "original_resources_preserved": [
+      {
+        "id": "2417394621566968621",
+        "name": "duplex-native-stage-20261025-b-v1",
+        "status": "TERMINATED"
+      },
+      {
+        "id": "951004838667287080",
+        "name": "duplex-native-saved8-gpu-20261024-v1",
+        "status": "TERMINATED"
+      },
+      {
+        "id": "4443302983961393208",
+        "name": "duplex-native-saved8-gpu-flex90-20261025-v1",
+        "status": "TERMINATED"
+      },
+      {
+        "id": "1784642133801608667",
+        "name": "duplex-native-stage-20261024-v1",
+        "status": "TERMINATED"
+      }
+    ]
+  },
+  "focused_cpu_tests": 14,
+  "new_model_test_after_parser_or_monitor_fixes": false,
+  "final_provider": [
+    {
+      "id": "2417394621566968621",
+      "name": "duplex-native-stage-20261025-b-v1",
+      "status": "TERMINATED"
+    },
+    {
+      "id": "951004838667287080",
+      "name": "duplex-native-saved8-gpu-20261024-v1",
+      "status": "TERMINATED"
+    },
+    {
+      "id": "4443302983961393208",
+      "name": "duplex-native-saved8-gpu-flex90-20261025-v1",
+      "status": "TERMINATED"
+    },
+    {
+      "id": "1784642133801608667",
+      "name": "duplex-native-stage-20261024-v1",
+      "status": "TERMINATED"
+    }
+  ],
+  "final_runpod": [
+    {
+      "id": "8fsk2kouknoiac",
+      "status": "EXITED"
+    },
+    {
+      "id": "zqdabv0k9zbtvo",
+      "status": "EXITED"
+    },
+    {
+      "id": "n4skp7si86fswj",
+      "status": "EXITED"
+    },
+    {
+      "id": "2r7ehxf93tr54i",
+      "status": "EXITED"
+    },
+    {
+      "id": "ovwk8sudnz7jzp",
+      "status": "EXITED"
+    }
+  ]
+}
