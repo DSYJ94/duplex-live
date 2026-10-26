@@ -7,6 +7,7 @@ is copied and hashed before resource retirement. Native STOP + two guards apply.
 import hashlib
 import json
 import os
+import re
 from pathlib import Path
 import shlex
 import subprocess
@@ -96,7 +97,12 @@ print(json.dumps(rows))"""
 def main():
     global R,remote,vm,guard,ssh_argv,created,source
     zone=sys.argv[1] if len(sys.argv)>1 else 'us-central1-a'
+    attempt=sys.argv[2] if len(sys.argv)>2 else 'v1'
+    assert re.fullmatch(r'v[1-9][0-9]*',attempt)
+    R=Path('runs/venus-training-20261026')/('allocation-'+attempt)
     assert not R.exists(),'Never duplicate a real allocation or reuse its lease'
+    for prior in R.parent.glob('allocation-v*/events.json'):
+        assert not any(e['event']=='one_actual_allocation_submitted' for e in json.loads(prior.read_text())), 'Prior allocation history must be carried in a revised authority before another allocation'
     R.mkdir(parents=True)
     auth=AUTH.read_bytes();grant=json.loads(auth);assert grant['status']=='APPROVED' and zone in grant['resources']['zones']
     source=run(['git','rev-parse','HEAD']).strip();remote=ROOT+'/duplex-venus-train-'+source[:12]
@@ -116,7 +122,7 @@ def main():
     record('fresh_preflight_one_gpu_off',source=source,hourly_estimate_usd=price['hourly_estimate_usd'],prior_new_gpu_seconds_upper=4600,maximum_allocation_seconds=7200)
     awake=subprocess.Popen(['caffeinate','-i','-w',str(os.getpid())])
     try:
-        assert not cloud('compute','firewall-rules','list','--filter=targetTags:'+TAG)
+        assert not any(TAG in r.get('targetTags',[]) for r in cloud('compute','firewall-rules','list'))
         cloud('compute','firewall-rules','create',FIREWALL[0],'--network=default','--direction=INGRESS','--priority=800','--source-ranges=35.235.240.0/20','--target-tags='+TAG,'--allow=tcp:22')
         cloud('compute','firewall-rules','create',FIREWALL[1],'--network=default','--direction=INGRESS','--priority=900','--source-ranges=0.0.0.0/0','--target-tags='+TAG,'--action=DENY','--rules=all')
         cloud('compute','os-login','ssh-keys','add','--key-file=runs/local-migration-20261024/.private/gcp-native-ssh.pub','--ttl=3h')
