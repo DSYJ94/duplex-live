@@ -112,3 +112,33 @@ def test_admission_uses_full_epochs_and_never_drops_train_scenes():
         assert len(counts)==152 and set(counts.values())=={admission['epochs']}
         with pytest.raises(TimeoutError):admit_epochs(100,100,1000)
     finally:RECIPE.clear();RECIPE.update(before)
+
+
+def test_saved_activation_offload_preserves_native_gradients():
+    from training.venus.offload import ActivationOffload
+    m=model();e=example(m);install(m,2,2)
+    with torch.no_grad():
+        for n,p in m.named_parameters():
+            if p.requires_grad and n.endswith('.b'):p.normal_(std=.02)
+    e['segments']=[dict(start=i,length=1,return_logits=True) for i in range(6)]
+    e['forward_path']='native-segmented-bptt-v1'
+    loss,_=scene_loss(m,e,'cpu');loss.backward();expected={n:p.grad.clone() for n,p in m.named_parameters() if p.requires_grad}
+    m.zero_grad();hook=ActivationOffload(m,minimum_bytes=1,force_cpu_test=True)
+    with hook.context():
+        same,_=scene_loss(m,e,'cpu');assert torch.equal(loss,same);same.backward()
+    assert hook.saved_bytes>0 and hook.tensors>0
+    assert all(torch.equal(p.grad,expected[n]) for n,p in m.named_parameters() if p.requires_grad)
+
+
+def test_frozen_prefix_suffix_is_exact_and_keeps_all_trainable_gradients():
+    from training.venus.prefix_cache import capture_prefix
+    m=model();e=example(m);e['segments']=[dict(start=i,length=1,return_logits=True) for i in range(6)]
+    e['forward_path']='native-segmented-bptt-v1'
+    prefix,proof=capture_prefix(m,e);assert proof['passed'] and proof['logit_error']==0 and proof['hidden_error']==0
+    spec=install(m,2,2,last_layers=1);assert spec['parameters']==224
+    with torch.no_grad():
+        for n,p in m.named_parameters():
+            if p.requires_grad and n.endswith('.b'):p.normal_(std=.03)
+    full,_=scene_loss(m,e,'cpu');full.backward();expected={n:p.grad.clone() for n,p in m.named_parameters() if p.requires_grad}
+    m.zero_grad();same,_=scene_loss(m,prefix,'cpu');assert torch.equal(full,same);same.backward()
+    assert all(torch.allclose(p.grad,expected[n],atol=1e-7,rtol=1e-5) for n,p in m.named_parameters() if p.requires_grad)

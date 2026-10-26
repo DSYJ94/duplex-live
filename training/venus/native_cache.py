@@ -14,7 +14,7 @@ import torch
 from transformers import AutoModel, set_seed
 
 
-def load_native(path):
+def load_native(path,language_only=False):
     from portable.venus.native_app import ensure_guard
     ensure_guard()
     os.environ.setdefault('CUBLAS_WORKSPACE_CONFIG',':4096:8')
@@ -24,9 +24,9 @@ def load_native(path):
     set_seed(42)
     model=AutoModel.from_pretrained(str(path), trust_remote_code=True, local_files_only=True,
         attn_implementation='sdpa', torch_dtype=torch.bfloat16, init_vision=False,
-        init_audio=True, init_tts=True).eval().cuda()
+        init_audio=not language_only, init_tts=not language_only).eval().cuda()
     model.requires_grad_(False)
-    return model, model.as_duplex(generate_audio=False)
+    return model, None if language_only else model.as_duplex(generate_audio=False)
 
 
 def schedule(duplex, timeline):

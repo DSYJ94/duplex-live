@@ -23,10 +23,11 @@ class LoRALinear(nn.Module):
         return original + (delta * (self.alpha / self.rank)).to(original.dtype)
 
 
-def install(llm, rank=16, alpha=16):
+def install(llm, rank=16, alpha=16,last_layers=None):
     llm.requires_grad_(False)
     names = []
     for layer_id, layer in enumerate(llm.model.layers):
+        if last_layers is not None and layer_id<len(llm.model.layers)-last_layers:continue
         for name in ('q_proj', 'v_proj'):
             base = getattr(layer.self_attn, name)
             if not isinstance(base, nn.Linear):
@@ -67,6 +68,8 @@ def selected_forward(llm, example, device):
     """Position i predicts the next native token; no user/framing token is labelled."""
     if example.get('forward_path')=='native-segmented-bptt-v1':
         return native_segmented_forward(llm,example,device)
+    if example.get('forward_path')=='native-frozen-prefix-v1':
+        return suffix_forward(llm,example,device)
     x = example['embeddings'].to(device).unsqueeze(0).detach().requires_grad_(True)
     positions = torch.arange(x.shape[1], device=device).unsqueeze(0)
     output = llm.model(inputs_embeds=x, position_ids=positions, use_cache=False, return_dict=True)
@@ -94,6 +97,26 @@ def native_segmented_forward(llm,example,device):
             # Preserve even the head's native GEMM shape, then take its last row.
             h=output.last_hidden_state;logits[last]=llm.lm_head(h)[0,-1].float();hidden[last]=h[0,-1].float()
     assert cursor==len(example['embeddings']) and set(logits)==set(wanted)
+    return torch.stack([logits[int(p)] for p in example['positions']]),torch.stack([hidden[int(p)] for p in example['positions']])
+
+
+def suffix_forward(llm,example,device):
+    """Exact native suffix, with frozen lower-layer inputs and FULL suffix KV gradients."""
+    from transformers.cache_utils import DynamicCache
+    assert not llm.training and not getattr(llm,'is_gradient_checkpointing',False)
+    start_layer=example['prefix_layers'];assert start_layer==len(llm.model.layers)-1
+    wanted={int(p) for p in example['positions']};logits={};hidden={};cache=DynamicCache();cursor=0
+    for entry,segment in zip(example['prefix_inputs'],example['segments']):
+        start,n=segment['start'],segment['length'];assert start==cursor
+        # Lower layers are frozen: these inputs are constants, not truncated
+        # states of any trainable computation. Suffix KV gradients stay intact.
+        h=entry['hidden'].to(device).detach()
+        kwargs={k:(v.to(device) if torch.is_tensor(v) else tuple(t.to(device) for t in v) if isinstance(v,tuple) else v) for k,v in entry['kwargs'].items()}
+        kwargs.update(past_key_value=cache,use_cache=True,output_attentions=False)
+        for layer in llm.model.layers[start_layer:]:h=layer(h,**kwargs)[0]
+        h=llm.model.norm(h);cursor+=n;last=cursor-1
+        if last in wanted:logits[last]=llm.lm_head(h)[0,-1].float();hidden[last]=h[0,-1].float()
+    assert len(example['prefix_inputs'])==len(example['segments']) and cursor==len(example['embeddings']) and set(logits)==wanted
     return torch.stack([logits[int(p)] for p in example['positions']]),torch.stack([hidden[int(p)] for p in example['positions']])
 
 

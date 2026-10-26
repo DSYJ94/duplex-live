@@ -17,17 +17,20 @@ import sys
 import time
 import numpy as np
 import torch
+from contextlib import nullcontext
 from .lora import install,adapter_state,scene_loss,selected_forward
 from .native_cache import load_native
 from .state import load,save
+from .offload import ActivationOffload
 
-RECIPE=dict(rank=16,alpha=16,projections=['q_proj','v_proj'],epochs=8,microbatch=1,
+RECIPE=dict(rank=64,alpha=64,last_layers=1,projections=['q_proj','v_proj'],epochs=8,microbatch=1,
     accumulation=4,updates=304,learning_rate=.0001,warmup_updates=16,
     adam_betas=[.9,.999],adam_eps=1e-8,weight_decay=.01,gradient_clip=1.,
     ordinary_kl_weight=.1,ordinary_hidden_weight=.01,seed=20261026,
     audio_encoder_frozen=True,tts_frozen=True,base_llm_frozen=True,
-    acoustic_loss_trained=False,forward_path='native-segmented-bptt-v1',gradient_checkpointing=False,
-    deterministic_algorithms=True,cublas_workspace=':4096:8')
+    acoustic_loss_trained=False,forward_path='native-frozen-prefix-v1',gradient_checkpointing=False,
+    deterministic_algorithms=True,cublas_workspace=':4096:8',activation_offload=False,language_only_cached_training=True,
+    activation_offload_minimum_bytes=256*1024,activation_offload_cpu_limit_bytes=48*1024**3)
 MAXIMUM_RECIPE=dict(RECIPE)
 
 
@@ -61,9 +64,13 @@ def train_step(llm,opt,cache,batch,step,update=True):
     for group in opt.param_groups:group['lr']=learning_rate(step)
     metrics=[];before=time.monotonic()
     for row in batch:
-        ex=read_example(cache,row);loss,parts=scene_loss(llm,ex,'cuda')
-        if not torch.isfinite(loss):raise ValueError('Nonfinite native loss')
-        (loss/len(batch)).backward();metrics.append(parts)
+        ex=read_example(cache,row)
+        offload=ActivationOffload(llm,RECIPE['activation_offload_minimum_bytes'],RECIPE['activation_offload_cpu_limit_bytes'])
+        with offload.context() if RECIPE['activation_offload'] else nullcontext():
+            loss,parts=scene_loss(llm,ex,'cuda')
+            if not torch.isfinite(loss):raise ValueError('Nonfinite native loss')
+            (loss/len(batch)).backward()
+        parts.update(offloaded_bytes=offload.saved_bytes,offloaded_tensors=offload.tensors);metrics.append(parts)
     params=[p for p in llm.parameters() if p.requires_grad]
     if not all(p.grad is not None and torch.isfinite(p.grad).all() for p in params):raise ValueError('Missing/nonfinite adapter gradient')
     norm=torch.nn.utils.clip_grad_norm_(params,RECIPE['gradient_clip'])
@@ -71,7 +78,7 @@ def train_step(llm,opt,cache,batch,step,update=True):
     if update:opt.step()
     torch.cuda.synchronize()
     return dict(step=step+1,optimizer_updated=update,seconds=time.monotonic()-before,peak_gpu_bytes=torch.cuda.max_memory_allocated(),gradient_norm=float(norm),lr=learning_rate(step),
-        ce=sum(x['ce'] for x in metrics)/len(metrics),kl=sum(x['kl'] for x in metrics)/len(metrics),hidden=sum(x['hidden'] for x in metrics)/len(metrics),
+        ce=sum(x['ce'] for x in metrics)/len(metrics),kl=sum(x['kl'] for x in metrics)/len(metrics),hidden=sum(x['hidden'] for x in metrics)/len(metrics),offloaded_bytes=sum(x['offloaded_bytes'] for x in metrics),
         ids=[r['id'] for r in batch],families=[r['family'] for r in batch])
 
 
@@ -92,14 +99,14 @@ def assert_deadline(path,seconds_needed=0):
 
 def admit_epochs(step_seconds,dev_seconds,available_seconds):
     """Throughput only: no loss/holdout selection, no omitted TRAIN scenes."""
-    for epochs in range(8,1,-1):
+    for epochs in range(8,0,-1):
         required=38*epochs*step_seconds*1.35+((epochs+1)//2)*dev_seconds*1.25+600
         if required<available_seconds:
             return dict(epochs=epochs,updates=38*epochs,benchmark_step_seconds=step_seconds,
                         baseline_dev_seconds=dev_seconds,available_seconds=available_seconds,
-                        conservative_required_seconds=required,minimum_complete_epochs=2,maximum_complete_epochs=8,
+                        conservative_required_seconds=required,minimum_complete_epochs=1,maximum_complete_epochs=8,
                         all152_train_scenes_every_epoch=True,selection_uses_loss_or_heldout=False)
-    raise TimeoutError('Fewer than two complete152-scene epochs fit; no optimizer work admitted')
+    raise TimeoutError('No complete152-scene epoch fits; no optimizer work admitted')
 
 
 def main(a):
@@ -112,23 +119,27 @@ def main(a):
     if a.stage=='restore-continue':
         metadata=json.loads((out/'recipe.json').read_text())
         assert all(metadata[k]==v for k,v in identity.items())
-        chosen=metadata['recipe'];assert 2<=chosen['epochs']<=8 and chosen['updates']==38*chosen['epochs']
-        assert chosen==dict(MAXIMUM_RECIPE,epochs=chosen['epochs'],updates=chosen['updates'])
+        chosen=metadata['recipe'];assert 1<=chosen['epochs']<=8 and chosen['updates']==38*chosen['epochs']
+        assert isinstance(chosen['activation_offload'],bool)
+        assert chosen==dict(MAXIMUM_RECIPE,epochs=chosen['epochs'],updates=chosen['updates'],activation_offload=chosen['activation_offload'])
         RECIPE.update(chosen)
     assert_deadline(a.lease,300)
     random.seed(RECIPE['seed']);np.random.seed(RECIPE['seed']);torch.manual_seed(RECIPE['seed']);torch.cuda.manual_seed_all(RECIPE['seed'])
-    model,duplex=load_native(a.model);llm=model.llm
+    model,duplex=load_native(a.model,language_only=True);llm=model.llm
     random.seed(RECIPE['seed']);np.random.seed(RECIPE['seed'])
     torch.manual_seed(RECIPE['seed']);torch.cuda.manual_seed_all(RECIPE['seed'])
     assert len(llm.model.layers)==36 and llm.config.attention_dropout==0
     checkrow=next(r for r in manifest['scenes'] if r['fold']=='TRAIN' and r['family']=='ordinary')
     check=read_example(cache,checkrow)
     with torch.no_grad():before=selected_forward(llm,check,'cuda')[0].cpu()
-    spec=install(llm,RECIPE['rank'],RECIPE['alpha'])
-    assert spec['parameters']==7667712 and len(spec['modules'])==72
+    spec=install(llm,RECIPE['rank'],RECIPE['alpha'],RECIPE['last_layers'])
+    assert spec['parameters']==851968 and len(spec['modules'])==2
     with torch.no_grad():after=selected_forward(llm,check,'cuda')[0].cpu()
     if not torch.equal(before,after):raise ValueError('Zero LoRA must match frozen native base exactly')
-    future=dict(check);future['embeddings']=check['embeddings'].clone();future['embeddings'][-1]+=1
+    import copy
+    future=copy.deepcopy(check)
+    if check.get('forward_path')=='native-frozen-prefix-v1':future['prefix_inputs'][-1]['hidden']+=1
+    else:future['embeddings'][-1]+=1
     with torch.no_grad():future_logits=selected_forward(llm,future,'cuda')[0].cpu()
     if not torch.equal(after,future_logits):raise ValueError('Future embedding changed earlier labelled predictions')
     frozen_versions={n:p._version for n,p in llm.named_parameters() if not p.requires_grad}
@@ -139,7 +150,16 @@ def main(a):
         if any(p._version!=frozen_versions[n] for n,p in llm.named_parameters() if n in frozen_versions):raise ValueError('Frozen native weight mutated')
     if a.stage=='start':
         (out/'numerical-zero-proof.json').write_text(json.dumps(dict(zero_adapter_max_error=0,causal_future_max_error=0,adapter=spec),indent=2)+'\n')
-        before_dev=time.monotonic();baseline=dev_loss(llm,cache,manifest['scenes']);dev_seconds=time.monotonic()-before_dev
+        from .native_cache import training_input_proof
+        proofrow=next(r for r in manifest['scenes'] if read_example(cache,r)['logit_proofs'])
+        parity=training_input_proof(model,read_example(cache,proofrow));(out/'language-only-native-input-proof.json').write_text(json.dumps(parity,indent=2)+'\n')
+        assert parity['passed'],'Language-only cached training must retain native parity'
+        if a.baseline_reference:
+            reference=json.loads(Path(a.baseline_reference).read_text());assert reference['cache_sha256']==identity['cache_sha256']
+            baseline=reference['full36_dev_baseline'];dev_seconds=reference['conservative_baseline_dev_seconds']
+            (out/'baseline-reference.json').write_text(json.dumps(reference,indent=2)+'\n')
+        else:
+            before_dev=time.monotonic();baseline=dev_loss(llm,cache,manifest['scenes']);dev_seconds=time.monotonic()-before_dev
         (out/'dev-baseline.json').write_text(json.dumps(baseline,indent=2)+'\n')
         workload=[]
         for row in manifest['scenes']:
@@ -148,7 +168,15 @@ def main(a):
                 score=len(ex['segments'])*(1.5 if row['family']=='ordinary' else 1)+len(ex['embeddings'])/64
                 workload.append((score,row))
         calibration=[row for _,row in sorted(workload,key=lambda x:x[0],reverse=True)[:4]]
-        benchmark=train_step(llm,opt,cache,calibration,0,update=False);frozen_ok();opt.zero_grad(set_to_none=True)
+        fallback=False
+        try:benchmark=train_step(llm,opt,cache,calibration,0,update=False)
+        except torch.cuda.OutOfMemoryError:
+            fallback=True
+        if fallback:
+            opt.zero_grad(set_to_none=True);gc.collect();torch.cuda.empty_cache();RECIPE['activation_offload']=True
+            (out/'calibration-memory-fallback.json').write_text(json.dumps(dict(no_optimizer_update=True,language_only_no_offload_oom=True,lossless_saved_activation_offload=True),indent=2)+'\n')
+            benchmark=train_step(llm,opt,cache,calibration,0,update=False)
+        frozen_ok();opt.zero_grad(set_to_none=True)
         benchmark['selection']='four largest TRAIN feed workloads; no loss or answer selection'
         (out/'no-update-gradient-benchmark.json').write_text(json.dumps(benchmark,indent=2)+'\n')
         admission=admit_epochs(benchmark['seconds'],dev_seconds,json.loads(Path(a.lease).read_text())['stop_unix']-time.time()-180)
@@ -198,4 +226,4 @@ def main(a):
 
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('--stage',choices=['start','restore-continue'],required=True);p.add_argument('--model',required=True);p.add_argument('--cache',required=True);p.add_argument('--approval',required=True);p.add_argument('--output',required=True);p.add_argument('--source',required=True);p.add_argument('--cache-producer',required=True);p.add_argument('--lease',required=True);main(p.parse_args())
+    p=argparse.ArgumentParser();p.add_argument('--stage',choices=['start','restore-continue'],required=True);p.add_argument('--model',required=True);p.add_argument('--cache',required=True);p.add_argument('--approval',required=True);p.add_argument('--output',required=True);p.add_argument('--source',required=True);p.add_argument('--cache-producer',required=True);p.add_argument('--lease',required=True);p.add_argument('--baseline-reference');main(p.parse_args())
