@@ -115,6 +115,30 @@ def replay_proof(duplex,example):
     return dict(compared=len(errors),maximum_logit_error=max(errors),passed=True)
 
 
+def whole_sequence_proof(model,example):
+    """Check the differentiable training input against the captured native choices.
+
+    Same-segmentation replay above is exact. Full versus cached BF16 attention
+    uses different reduction shapes; declare separate tolerances before use.
+    """
+    from .lora import selected_forward
+    limits=dict(minimum_cosine=.9999,maximum_relative_l2=.01,
+                maximum_target_ce_delta=.03,minimum_argmax_agreement=.95)
+    with torch.no_grad():logits,_=selected_forward(model.llm,example,'cuda')
+    indices={int(p):i for i,p in enumerate(example['positions'])}
+    proof=example['logit_proofs'];assert proof
+    selected=torch.stack([logits[indices[r['position']]] for r in proof]).float().cpu()
+    reference=torch.cat([r['logits'] for r in proof]).float()
+    targets=torch.tensor([int(example['targets'][indices[r['position']]]) for r in proof])
+    cosine=float(torch.nn.functional.cosine_similarity(selected,reference,dim=-1).min())
+    relative=float((selected-reference).norm()/reference.norm().clamp_min(1e-12))
+    ce_delta=float((torch.nn.functional.cross_entropy(selected,targets,reduction='none')-torch.nn.functional.cross_entropy(reference,targets,reduction='none')).abs().max())
+    agreement=float((selected.argmax(-1)==reference.argmax(-1)).float().mean())
+    report=dict(compared=len(proof),minimum_cosine=cosine,relative_l2=relative,maximum_target_ce_delta=ce_delta,argmax_agreement=agreement,maximum_absolute_logit_error=float((selected-reference).abs().max()),limits=limits)
+    report['passed']=cosine>=limits['minimum_cosine'] and relative<=limits['maximum_relative_l2'] and ce_delta<=limits['maximum_target_ce_delta'] and agreement>=limits['minimum_argmax_agreement']
+    return report
+
+
 def main(a):
     root=Path(a.timelines);manifest=json.loads((root/'manifest.json').read_text())
     if a.approval:
@@ -130,7 +154,10 @@ def main(a):
         folder=root/row['id'];assert hashlib.sha256((folder/'timeline.json').read_bytes()).hexdigest()==row['timeline_sha256']
         assert hashlib.sha256((folder/'user.wav').read_bytes()).hexdigest()==row['user_wav_sha256']
         timeline=json.loads((folder/'timeline.json').read_text());ex=capture(duplex,timeline,folder/'user.wav',retain_segments=(i==0))
-        if i==0:(out/'native-replay-proof.json').write_text(json.dumps(replay_proof(duplex,ex),indent=2)+'\n')
+        if i==0:
+            (out/'native-replay-proof.json').write_text(json.dumps(replay_proof(duplex,ex),indent=2)+'\n')
+            parity=whole_sequence_proof(model,ex);(out/'whole-sequence-proof.json').write_text(json.dumps(parity,indent=2)+'\n')
+            if not parity['passed']:raise ValueError('Native/training BF16 sequence parity failed: '+str(parity))
         path=out/(row['id']+'.pt');torch.save(ex,path);rows.append(dict(id=row['id'],fold=row['fold'],family=row['family'],file=path.name,sha256=hashlib.sha256(path.read_bytes()).hexdigest(),tokens=ex['embeddings'].shape[0],labels=len(ex['targets'])))
         print(json.dumps(dict(event='native_cache_scene',completed=i+1,total=len(scenes),elapsed=time.monotonic()-start,**rows[-1])),flush=True)
     (out/'manifest.json').write_text(json.dumps(dict(source_manifest_sha256=hashlib.sha256((root/'manifest.json').read_bytes()).hexdigest(),model_revision='4681004131ea1f1fb9aca9f0db76be322657cc79',scenes=rows,proof_only=a.proof_only,optimizer_updates=0),indent=2)+'\n')

@@ -39,6 +39,7 @@ def render(a):
     out=Path(a.output);out.mkdir(parents=True,exist_ok=False)
     selected=[r for r in parent['utterances'] if r['id'] in checked and wer(r['text'],checked[r['id']]['recognized'])>.05]
     assert selected,'Only actually diagnosed lexical failures may be re-recorded'
+    assert all(checked[r['id']]['source_sha256']==r['sha256'] for r in selected),'Diagnosis must bind the actual parent waveform'
     for row in parent['utterances']:
         for ext in ('.wav','.aiff'):shutil.copy2(original/(row['id']+ext),out/(row['id']+ext))
     def one(row):
