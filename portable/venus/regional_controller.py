@@ -142,7 +142,8 @@ try:
  ssh('sudo systemctl stop duplex-venus-bootstrap-stop.timer');record('both_independent_guards_live',mac_pid=guard.pid)
  # One isolated host venv on official driver580 image; no change to original runtimes.
  ssh('mkdir -p '+ROOT+'/venus-runtime-v1 '+ROOT+'/venus-public-v1 '+ROOT+'/venus-inputs-v1 && df -h '+ROOT)
- setup='set -eu; sudo apt-get update -qq; sudo apt-get install -y -qq python3-venv libsndfile1; /usr/bin/python3 -m venv '+ROOT+'/venus-runtime-v1/venv; '+ROOT+'/venus-runtime-v1/venv/bin/pip install --disable-pip-version-check --no-cache-dir -r '+remote+'/portable/venus/requirements.txt; '+ROOT+'/venus-runtime-v1/venv/bin/pip freeze > '+ROOT+'/venus-runtime-v1/pip-freeze.txt; '+ROOT+'/venus-runtime-v1/venv/bin/python -c '+shlex.quote("import json,torch,transformers,stepaudio2;assert torch.cuda.is_available() and torch.cuda.device_count()==1;assert torch.__version__.startswith('2.4.0');assert transformers.__version__=='4.51.3';p='/workspace/migration/venus-runtime-v1/setup-complete.json';__import__('pathlib').Path(p).exists() or json.dump(dict(torch=torch.__version__,gpu=torch.cuda.get_device_name(0),optimizer_updates=0),open(p,'x'))")
+ constraints=(' -c '+remote+'/portable/venus/baseline-runtime-constraints-20261026.txt') if IAP else ''
+ setup='set -eu; sudo apt-get update -qq; sudo apt-get install -y -qq python3-venv libsndfile1; /usr/bin/python3 -m venv '+ROOT+'/venus-runtime-v1/venv; '+ROOT+'/venus-runtime-v1/venv/bin/pip install --disable-pip-version-check --no-cache-dir -r '+remote+'/portable/venus/requirements.txt'+constraints+'; '+ROOT+'/venus-runtime-v1/venv/bin/pip freeze > '+ROOT+'/venus-runtime-v1/pip-freeze.txt; '+ROOT+'/venus-runtime-v1/venv/bin/python -c '+shlex.quote("import json,torch,transformers,stepaudio2;assert torch.cuda.is_available() and torch.cuda.device_count()==1;assert torch.__version__.startswith('2.4.0');assert transformers.__version__=='4.51.3';p='/workspace/migration/venus-runtime-v1/setup-complete.json';__import__('pathlib').Path(p).exists() or json.dump(dict(torch=torch.__version__,gpu=torch.cuda.get_device_name(0),optimizer_updates=0),open(p,'x'))")
  ssh('sudo systemd-run --unit=duplex-venus-setup-us-v1 --uid=daryl_aurium_labs_com --property=RuntimeMaxSec=1500 /bin/bash -c '+shlex.quote(setup))
  modelbase=Path.home()/'.cache/duplex-live/public-models/inclusionAI--Realtime-Venus@4681004131ea'
  sync('runs/venus-20261026/public-model-manifest.json',ROOT+'/public-model-manifest.json')
@@ -167,6 +168,9 @@ print(json.dumps(dict(all_hashes_verified=True,files=len(rows),bytes=sum(x['byte
  (R/'setup-journal.log').write_text(ssh('sudo journalctl -u duplex-venus-setup-us-v1 --no-pager -o cat',60))
  assert terminal['Result']=='success' and terminal['ExecMainStatus']=='0',terminal
  record('isolated_runtime_actual_success',terminal=terminal)
+ if IAP:
+  check="from pathlib import Path;assert set(Path('/workspace/migration/venus-runtime-v1/pip-freeze.txt').read_text().splitlines())==set(Path("+repr(remote+'/portable/venus/baseline-runtime-constraints-20261026.txt')+").read_text().splitlines());print('Baseline package versions exactly matched')"
+  record('baseline_runtime_versions_match',stdout=ssh('/usr/bin/python3 -c '+shlex.quote(check),30))
  py=ROOT+'/venus-runtime-v1/venv/bin/python'
  manifest=ROOT+'/venus-inputs-v1/container-manifest.json'
  out=ssh('cd '+remote+' && '+py+' -m portable.venus.benchmark --preflight-only --manifest '+manifest,60);assert json.loads(out)['preflight_passed'];record('all18_inputs_preflight_pass',result=json.loads(out))
