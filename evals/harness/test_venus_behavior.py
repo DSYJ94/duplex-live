@@ -115,3 +115,14 @@ def test_paced_continuation_budget_cannot_restart_or_add_gpu(tmp_path,monkeypatc
         with pytest.raises(AssertionError):g.validate(vm,[vm],[],dict(lease,**wrong),start+1)
     with pytest.raises(AssertionError):g.validate(vm,[vm,dict(vm,id='456')],[],lease,start+1)
     with pytest.raises(AssertionError):g.validate(vm,[vm],[dict(status='RUNNING')],lease,start+1)
+
+
+def test_warm_recovery_guard_requires_exact_vm_and_carried_failed_start():
+    from training.venus import paced_guard as g
+    from datetime import datetime,timezone
+    a=json.loads(g.AUTH.read_text());r=a['resources'];p=json.loads(g.PLAN_V23.read_text());start=1800000000;ident='2800910655359330463'
+    lease=dict(resource_key='venus-paced-continuation-v23',vm_id=ident,disk_id=r['same_existing_disk_id'],zone=r['zone'],disk_size_gib=100,creation_timestamp='immutable',stop_unix=start+10000,prior_new_gpu_seconds_upper=2600,prior_gpu_seconds=54451,prior_scope_usd=91.98448055555555,authorization_sha256=hashlib.sha256(g.AUTH.read_bytes()).hexdigest(),execution_plan_sha256=hashlib.sha256(g.PLAN_V23.read_bytes()).hexdigest(),verified_hourly_price_usd=3.68708363)
+    vm=dict(id=ident,name=p['vm_name'],zone='/'+r['zone'],status='RUNNING',machineType='/a2-highgpu-1g',creationTimestamp='immutable',lastStartTimestamp=datetime.fromtimestamp(start,timezone.utc).isoformat(),tags=dict(items=['duplex-venus-train-bounded']),disks=[dict(boot=True,autoDelete=False,source='/disks/'+r['same_existing_disk_name'])],scheduling=dict(provisioningModel='FLEX_START',maxRunDuration=dict(seconds=10000),instanceTerminationAction='STOP',automaticRestart=False))
+    assert g.validate(vm,[vm],[],lease,start+1)==start+10000
+    for wrong in ({'vm_id':'123'},{'prior_new_gpu_seconds_upper':2400},{'stop_unix':start+12000}):
+        with pytest.raises(AssertionError):g.validate(vm,[vm],[],dict(lease,**wrong),start+1)
