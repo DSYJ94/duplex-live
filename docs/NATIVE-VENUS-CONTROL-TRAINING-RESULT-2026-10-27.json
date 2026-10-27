@@ -1,0 +1,181 @@
+{
+  "recorded_utc": "2026-10-27T16:00:14.928610+00:00",
+  "training_source": "2dcdf0f8b62400bda989fa68e88ebf291b967f62",
+  "checkpoint_sha256": "10354f93ec2b5e224ae7298b2f3b8687f9dc74d2fbf87c1db62bd79763155b63",
+  "actual_updates": 190,
+  "actual_complete_epochs": 5,
+  "train_scenes": 152,
+  "dev_scenes": 36,
+  "untouched_holdout_scenes_at_training_terminal": 36,
+  "candidate_scene_exposures": 760,
+  "independent_restore_reference_branch_extra_update": 1,
+  "adapter_parameters": 851968,
+  "recipe": {
+    "cache_sha256": "6300c45a7a0a0b6ed4fe7bd23a81676bbe7927b9ec33812a014b7b033c1fdd64",
+    "approval_sha256": "25ca08e015fd811c0174787bfc579531472648d713ae382e24efe1ff94fe43a8",
+    "source": "2dcdf0f8b62400bda989fa68e88ebf291b967f62",
+    "cache_producer_source": "2dcdf0f8b62400bda989fa68e88ebf291b967f62",
+    "model_revision": "4681004131ea1f1fb9aca9f0db76be322657cc79",
+    "recipe": {
+      "rank": 64,
+      "alpha": 64,
+      "last_layers": 1,
+      "projections": [
+        "q_proj",
+        "v_proj"
+      ],
+      "epochs": 5,
+      "microbatch": 1,
+      "accumulation": 4,
+      "updates": 190,
+      "learning_rate": 0.0001,
+      "warmup_updates": 16,
+      "adam_betas": [
+        0.9,
+        0.999
+      ],
+      "adam_eps": 1e-08,
+      "weight_decay": 0.01,
+      "gradient_clip": 1.0,
+      "ordinary_kl_weight": 0.1,
+      "ordinary_hidden_weight": 0.01,
+      "seed": 20261026,
+      "audio_encoder_frozen": true,
+      "tts_frozen": true,
+      "base_llm_frozen": true,
+      "acoustic_loss_trained": false,
+      "forward_path": "native-frozen-prefix-v1",
+      "gradient_checkpointing": false,
+      "deterministic_algorithms": true,
+      "cublas_workspace": ":4096:8",
+      "activation_offload": false,
+      "language_only_cached_training": true,
+      "activation_offload_minimum_bytes": 262144,
+      "activation_offload_cpu_limit_bytes": 51539607552
+    },
+    "maximum_recipe": {
+      "rank": 64,
+      "alpha": 64,
+      "last_layers": 1,
+      "projections": [
+        "q_proj",
+        "v_proj"
+      ],
+      "epochs": 8,
+      "microbatch": 1,
+      "accumulation": 4,
+      "updates": 304,
+      "learning_rate": 0.0001,
+      "warmup_updates": 16,
+      "adam_betas": [
+        0.9,
+        0.999
+      ],
+      "adam_eps": 1e-08,
+      "weight_decay": 0.01,
+      "gradient_clip": 1.0,
+      "ordinary_kl_weight": 0.1,
+      "ordinary_hidden_weight": 0.01,
+      "seed": 20261026,
+      "audio_encoder_frozen": true,
+      "tts_frozen": true,
+      "base_llm_frozen": true,
+      "acoustic_loss_trained": false,
+      "forward_path": "native-frozen-prefix-v1",
+      "gradient_checkpointing": false,
+      "deterministic_algorithms": true,
+      "cublas_workspace": ":4096:8",
+      "activation_offload": false,
+      "language_only_cached_training": true,
+      "activation_offload_minimum_bytes": 262144,
+      "activation_offload_cpu_limit_bytes": 51539607552
+    },
+    "admission": {
+      "epochs": 5,
+      "updates": 190,
+      "benchmark_step_seconds": 4.572931337,
+      "baseline_dev_seconds": 18.628784687999996,
+      "available_seconds": 1941.8462629318237,
+      "conservative_required_seconds": 1842.8148305205,
+      "minimum_complete_epochs": 1,
+      "maximum_complete_epochs": 8,
+      "all152_train_scenes_every_epoch": true,
+      "selection_uses_loss_or_heldout": false
+    }
+  },
+  "independent_restore": {
+    "passed": true,
+    "adapter_error": 0,
+    "adam_error": 0,
+    "rng_equal": true,
+    "loss_equal": true,
+    "actual_new_process": true,
+    "independent_continuation": true
+  },
+  "native_input_proof": {
+    "forward_path": "native-frozen-prefix-v1",
+    "compared": 21,
+    "minimum_cosine": 0.9999749660491943,
+    "relative_l2": 0.0,
+    "maximum_target_ce_delta": 0.0,
+    "argmax_agreement": 1.0,
+    "maximum_absolute_logit_error": 0.0,
+    "limits": {
+      "minimum_cosine": 0.9999,
+      "maximum_relative_l2": 0.01,
+      "maximum_target_ce_delta": 0.03,
+      "minimum_argmax_agreement": 0.95
+    },
+    "passed": true
+  },
+  "baseline_dev_ce": {
+    "pause": 0.6368196457624435,
+    "delegate": 2.3918133974075317,
+    "quiet": 1.2346778064966202,
+    "cancel": 3.0162323117256165,
+    "pending": 2.0053941905498505,
+    "ordinary": 1.1977849751710892
+  },
+  "final_dev_ce": {
+    "pause": 0.19876527041196823,
+    "delegate": 0.39472850039601326,
+    "quiet": 0.7481541857123375,
+    "cancel": 0.8900865763425827,
+    "pending": 0.7354223877191544,
+    "ordinary": 0.7622137330472469
+  },
+  "weighted_dev_ce_before": 1.7007776117987103,
+  "weighted_dev_ce_after": 0.6260518969761001,
+  "relative_dev_ce_reduction": 0.6319025529069615,
+  "epoch_train_ce": [
+    1.4388868579346883,
+    0.9716051481664181,
+    0.57241354966046,
+    0.442429113201797,
+    0.40351869332555096
+  ],
+  "epoch_total_objective": [
+    1.4397654055674134,
+    0.9781826131778621,
+    0.5860793163764634,
+    0.4577739340478652,
+    0.4197219625154608
+  ],
+  "maximum_training_peak_gpu_bytes": 16928924160,
+  "backup": {
+    "all_hashes_verified": true,
+    "files": 3674,
+    "bytes": 3590853080,
+    "source": "2dcdf0f8b62400bda989fa68e88ebf291b967f62"
+  },
+  "provider_final": {
+    "id": "1475631988610006589",
+    "name": "duplex-venus-recovery-20261027-v1",
+    "status": "TERMINATED",
+    "lastStartTimestamp": "2026-10-27T08:19:23.457-07:00",
+    "lastStopTimestamp": "2026-10-27T08:47:28.594-07:00"
+  },
+  "native_behavior_qualified": false,
+  "adopted": false,
+  "next_step": "Complete36 unforced native held-out collection, then independent speech/semantic review and paired baseline retention; no extension/adoption yet."
+}
