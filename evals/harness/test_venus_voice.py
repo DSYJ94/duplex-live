@@ -25,6 +25,12 @@ def test_reference_hash_change_or_clipping_is_rejected_without_audio_repair(tmp_
     sf.write(p,np.ones(48000),16000,subtype='FLOAT')
     with pytest.raises(ValueError):reference(tmp_path,p,hashlib.sha256(p.read_bytes()).hexdigest())
 
+def test_reference_runs_on_python310_without_hashlib_file_digest(tmp_path,monkeypatch):
+    monkeypatch.delattr(hashlib,'file_digest',raising=False)
+    p=tmp_path/'ref.wav';sf.write(p,.1*np.sin(np.arange(48000)*.1),16000,subtype='FLOAT')
+    digest=hashlib.sha256(p.read_bytes()).hexdigest()
+    assert reference(tmp_path,p,digest)['sha256']==digest
+
 def test_voice_comparison_is_the_complete_predeclared_ordinary_set():
     import json
     from pathlib import Path
@@ -65,3 +71,26 @@ def test_local_guard_readiness_is_never_exposed_before_remote_ack(tmp_path,monke
     monkeypatch.setattr('portable.venus.guard.subprocess.run',lambda *a,**kw:SimpleNamespace(returncode=1))
     with pytest.raises(RuntimeError):publish_guard(['ssh','strict-host'],'{}',ready)
     assert not ready.exists()
+
+def test_nonspoken_actions_preserve_every_ordinary_condition_and_original_history():
+    from types import SimpleNamespace
+    import torch
+    from portable.venus.speech_channel import install
+    names={'<delegate>':1,'</delegate>':2};calls=[]
+    tokenizer=SimpleNamespace(convert_tokens_to_ids=names.__getitem__,decode=lambda ids,**kw:{1:'<delegate>',2:'</delegate>'}[ids[0]],all_special_ids=[1,2,3])
+    def convert(rows):return torch.tensor([[[float(r[0]),float(r[0])+1] for r in rows]]) if rows else torch.zeros(1,1,2)
+    def generate(**kw):calls.append(kw);return 'original',kw.get('past_key_values')
+    tts=SimpleNamespace(generate_chunk=generate);duplex=SimpleNamespace(tokenizer=tokenizer,model=SimpleNamespace(tts=tts),_convert_results_to_tts_input=convert)
+    channel=install(duplex);ordinary=[[10,None,False],[11,None,False],[3,None,True]]
+    assert torch.equal(duplex._convert_results_to_tts_input(ordinary),convert(ordinary))
+    cache=object();kwargs=dict(inputs_embeds=convert(ordinary),past_key_values=cache,temperature=.8)
+    assert tts.generate_chunk(**kwargs)==('original',cache) and len(calls)==1
+    first=[[1,None,False],[20,None,False]];copy=[list(r) for r in first]
+    hidden=duplex._convert_results_to_tts_input(first);assert hidden.shape==(1,0,2) and first==copy
+    ids,returned_cache=tts.generate_chunk(inputs_embeds=hidden,past_key_values=cache)
+    assert ids.shape==(1,0) and returned_cache is cache and len(calls)==1
+    # A tool spanning units is hidden; speech after its closing tag survives.
+    second=[[21,None,False],[2,None,False],[12,None,False]]
+    assert torch.equal(duplex._convert_results_to_tts_input(second),convert(second[2:]))
+    assert not channel.inside and channel.hidden_tokens==4
+    channel.reset();assert channel.hidden_tokens==0 and not channel.inside

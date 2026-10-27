@@ -164,7 +164,7 @@ class DelegateParser:
 
 class NativeEngine:
     def __init__(self, model_dir, system_prompt='Streaming Omni Conversation.', adapter_checkpoint=None,
-                 voice_reference=None,voice_reference_sha256=None):
+                 voice_reference=None,voice_reference_sha256=None,nonspoken_actions=False):
         ensure_guard()
         import numpy as np
         import torch
@@ -187,6 +187,10 @@ class NativeEngine:
             from training.venus.inference import load_candidate
             candidate = load_candidate(self.model.llm, adapter_checkpoint)
         self.duplex = self.model.as_duplex(generate_audio=True)
+        self.action_channel=None
+        if nonspoken_actions:
+            from .speech_channel import install
+            self.action_channel=install(self.duplex)
         self.profile = dict(model='Realtime-Venus-Audio', seed=42,
             torch=torch.__version__, cuda=torch.version.cuda,
             gpu=torch.cuda.get_device_name(), precision='bfloat16', attention='sdpa',
@@ -194,7 +198,7 @@ class NativeEngine:
             system_prompt=system_prompt, decode_mode='sampling',
             max_new_speak_tokens_per_chunk=20, temperature=0.7, top_k=20,
             top_p=0.8, listen_prob_scale=1.0, optimizer_updates=0,
-            voice_reference=self.voice_reference)
+            voice_reference=self.voice_reference,nonspoken_action_channel=bool(self.action_channel))
         self.profile.update(force_listen_count=int(self.duplex.force_listen_count),
                             listen_speak_mode=str(self.duplex.ls_mode))
         if candidate:
@@ -202,6 +206,7 @@ class NativeEngine:
 
     def prepare(self):
         ensure_guard()
+        if self.action_channel:self.action_channel.reset()
         with self.torch.inference_mode():
             self.duplex.prepare(prefix_system_prompt=self.profile['system_prompt'],
                 prompt_wav_path=self.voice_reference['path'])
@@ -242,7 +247,7 @@ class NativeEngine:
 
 
 def create_app(model_dir, system_prompt='Streaming Omni Conversation.', adapter_checkpoint=None,
-               voice_reference=None,voice_reference_sha256=None):
+               voice_reference=None,voice_reference_sha256=None,nonspoken_actions=False):
     from contextlib import asynccontextmanager
     from fastapi import FastAPI, WebSocket
     from fastapi.responses import FileResponse
@@ -251,7 +256,7 @@ def create_app(model_dir, system_prompt='Streaming Omni Conversation.', adapter_
     @asynccontextmanager
     async def lifespan(app):
         app.state.engine = await asyncio.to_thread(NativeEngine, model_dir, system_prompt, adapter_checkpoint,
-                                                  voice_reference,voice_reference_sha256)
+                                                  voice_reference,voice_reference_sha256,nonspoken_actions)
         yield
 
     app = FastAPI(lifespan=lifespan, docs_url=None, redoc_url=None)
@@ -318,9 +323,10 @@ if __name__ == '__main__':
     parser.add_argument('--adapter-checkpoint', help='Verified project checkpoint; experimental native testing only')
     parser.add_argument('--voice-reference', help='Approved original/synthetic mono16k reference for the native voice generator')
     parser.add_argument('--voice-reference-sha256', help='Exact SHA256 required for a custom reference')
+    parser.add_argument('--nonspoken-actions',action='store_true',help='Experimental native protocol filter; full speech/behavior qualification still required')
     args = parser.parse_args()
     import uvicorn
     # Loopback and SSH tunnel only. No microphone or conversation recording.
     prompt=Path(args.system_prompt_file).read_text().strip() if args.system_prompt_file else 'Streaming Omni Conversation.'
     if not prompt or len(prompt)>4000:raise ValueError('Bounded nonempty system prompt required')
-    uvicorn.run(create_app(args.model_dir,prompt,args.adapter_checkpoint,args.voice_reference,args.voice_reference_sha256), host='127.0.0.1', port=args.port)
+    uvicorn.run(create_app(args.model_dir,prompt,args.adapter_checkpoint,args.voice_reference,args.voice_reference_sha256,args.nonspoken_actions), host='127.0.0.1', port=args.port)

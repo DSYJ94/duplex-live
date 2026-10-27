@@ -4,7 +4,8 @@ from pathlib import Path
 
 def reference(model_dir,override=None,expected_sha256=None):
     path=Path(override).resolve() if override else Path(model_dir).resolve()/'assets/HT_ref_audio.wav'
-    digest=hashlib.file_digest(path.open('rb'),'sha256').hexdigest()
+    # The cloud speech runtime is Python3.10 (file_digest arrived in3.11).
+    digest=hashlib.sha256(path.read_bytes()).hexdigest()
     if override and (not expected_sha256 or digest!=expected_sha256):
         raise ValueError('Custom voice reference requires its exact approved SHA256')
     import soundfile as sf

@@ -26,13 +26,19 @@ async def main(a):
     plan=json.loads(Path(a.execution_plan).read_text());ref=plan['voice_reference'];wav=Path(a.reference)
     assert hashlib.sha256(wav.read_bytes()).hexdigest()==ref['sha256']
     out=Path(a.output);out.mkdir(exist_ok=False);ensure_guard()
-    pipe=recognizer();data,sr=sf.read(wav,dtype='float32');assert sr==16000
-    recognized=pipe(dict(array=data,sampling_rate=16000),generate_kwargs=dict(language='en',task='transcribe',do_sample=False))['text']
-    source=dict(source_sha256=ref['sha256'],asr_text=recognized,expected_text=ref['authored_text'],wer=wer(ref['authored_text'],recognized),peak=float(np.abs(data).max()),asr_revision=REVISION)
-    source['passed']=source['wer']<=.05 and source['peak']<=.995
+    if plan.get('reuse_verified_reference_audit'):
+        audit=plan['reuse_verified_reference_audit'];p=Path(audit['path'])
+        assert hashlib.sha256(p.read_bytes()).hexdigest()==audit['sha256']
+        source=json.loads(p.read_text());assert source['source_sha256']==ref['sha256'] and source['expected_text']==ref['authored_text'] and source['asr_revision']==REVISION
+        source=dict(source,reused_from_exact_source_audit=audit)
+    else:
+        pipe=recognizer();data,sr=sf.read(wav,dtype='float32');assert sr==16000
+        recognized=pipe(dict(array=data,sampling_rate=16000),generate_kwargs=dict(language='en',task='transcribe',do_sample=False))['text']
+        source=dict(source_sha256=ref['sha256'],asr_text=recognized,expected_text=ref['authored_text'],wer=wer(ref['authored_text'],recognized),peak=float(np.abs(data).max()),asr_revision=REVISION)
+        source['passed']=source['wer']<=.05 and source['peak']<=.995
+        del pipe;gc.collect();torch.cuda.empty_cache()
     (out/'reference-source-audit.json').write_text(json.dumps(source,indent=2)+'\n')
     assert source['passed'],'No native custom-reference run from failed reference audio'
-    del pipe;gc.collect();torch.cuda.empty_cache()
     cases=[c for c in preflight(a.plan,a.timelines,a.approval) if c['family']=='ordinary'];assert len(cases)==8 and sum(c['frames'] for c in cases)==81
     assert hashlib.sha256(Path(a.checkpoint).read_bytes()).hexdigest()==a.checkpoint_sha256
     engine=NativeEngine(a.model,adapter_checkpoint=a.checkpoint)

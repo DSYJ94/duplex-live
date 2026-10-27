@@ -3,16 +3,16 @@ import hashlib,json,os,shlex,shutil,subprocess,sys,time
 from pathlib import Path
 from datetime import datetime
 from . import controller as c
-from .focused_guard import AUTH,NAME,IDENT,VOICE_PLAN,VOICE_PLAN_V17
+from .focused_guard import AUTH,NAME,IDENT,VOICE_PLAN,VOICE_PLAN_V17,VOICE_PLAN_V18
 from portable.context.gcp_budget_watchdog import read_runpod_pods
 
 def main():
     mode=sys.argv[1] if len(sys.argv)>1 else 'audit-v15'
-    assert mode in ('audit-v15','voice-v16','voice-v17')
+    assert mode in ('audit-v15','voice-v16','voice-v17','voice-v18')
     voice=mode.startswith('voice-');version=mode.rsplit('-',1)[-1]
     stage='voice-reference-'+version if voice else 'focused-audit-v15'
     key='venus-'+stage if voice else 'venus-focused-audit-v15'
-    voice_plan=VOICE_PLAN_V17 if version=='v17' else VOICE_PLAN
+    voice_plan={'v15':VOICE_PLAN,'v16':VOICE_PLAN,'v17':VOICE_PLAN_V17,'v18':VOICE_PLAN_V18}[version]
     c.R=Path('runs/venus-training-20261027')/stage;assert not c.R.exists(),'Observe existing run; never duplicate'
     assert not c.run(['git','status','--porcelain','--','training/venus','portable/venus/guard.py']).strip()
     a=json.loads(AUTH.read_text());r=a['resources'];c.NAME=NAME;zone=r['zone']
@@ -23,9 +23,9 @@ def main():
     assert all(p['status'] in ('EXITED','STOPPED','TERMINATED') for p in pods)
     price=json.loads(Path('runs/venus-20261026/us-current-price40-v1.json').read_text());assert 0<price['hourly_estimate_usd']<=4 and time.time()-datetime.fromisoformat(price['at_utc']).timestamp()<3600
     old=Path('runs/venus-training-20261027/behavior-v14');assert json.loads((old/'copyback-verified.json').read_text())['all_hashes_verified']
-    prior=300 if version=='v17' else 200 if voice else 0
+    prior={'v15':0,'v16':200,'v17':300,'v18':500}[version]
     if voice:
-        preceding=Path('runs/venus-training-20261027')/('voice-reference-v16' if version=='v17' else 'focused-audit-v15');last=json.loads((preceding/'provider-final.json').read_text())
+        preceding=Path('runs/venus-training-20261027')/{'v16':'focused-audit-v15','v17':'voice-reference-v16','v18':'voice-reference-v17'}[version];last=json.loads((preceding/'provider-final.json').read_text())
         assert vm['lastStartTimestamp']==last['lastStartTimestamp'] and vm['lastStopTimestamp']==last['lastStopTimestamp']
         elapsed=datetime.fromisoformat(last['lastStopTimestamp']).timestamp()-datetime.fromisoformat(last['lastStartTimestamp']).timestamp()
         assert 0<elapsed<=prior
