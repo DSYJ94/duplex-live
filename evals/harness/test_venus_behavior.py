@@ -17,6 +17,20 @@ class FakeEngine:
 
 
 class NativeWorkerProtocolTests(unittest.IsolatedAsyncioTestCase):
+    async def test_diagnosed_lookup_variants_and_missing_key_do_not_become_sum_jobs(self):
+        import asyncio
+        from data.venus.receipts import LookupWorker,lookup_key
+        for query in ('look up cabinet','lookup marker cabinet','lookup the marker in cabinet.'):
+            assert lookup_key(query)=='cabinet'
+            worker=LookupWorker({'cabinet':'violet'},0);worker.submit(query)
+            await asyncio.gather(*worker.tasks.values());assert worker.completed[0]['result']=='Lookup cabinet: violet'
+            await worker.close()
+        worker=LookupWorker({'cabinet':'violet'},0);worker.submit('lookup')
+        await asyncio.gather(*worker.tasks.values())
+        assert worker.completed[0]['error']=='lookup_requires_explicit_key'
+        assert 'violet' not in worker.take_results();await worker.close()
+        with pytest.raises(ValueError):lookup_key('lookup cabinet and jacket')
+
     async def test_only_model_dispatch_can_produce_backend_feedback(self):
         import tempfile
         with tempfile.TemporaryDirectory() as directory:
@@ -55,3 +69,21 @@ def test_native_behavior_guard_carries_training_time_and_rejects_larger_window()
     for bad in ({'prior_new_gpu_seconds_upper':11300},{'stop_unix':start+3000},{'verified_hourly_price_usd':4.01}):
         with pytest.raises(AssertionError):validate(vm,[vm],[],dict(lease,**bad),start+10)
     with pytest.raises(AssertionError):validate(vm,[vm,dict(vm,id='999')],[],lease,start+10)
+
+
+def test_spoken_audit_keeps_tool_words_separate_from_intended_speech():
+    from training.venus.spoken_audit import references
+    traces=[dict(text='',raw_text='<unit><|speak|><delegate>look'),dict(text='',raw_text=' up amber</delegate><|turn_eos|></unit>'),dict(text='',raw_text='<unit><|speak|>It is blue.<|turn_eos|></unit>')]
+    refs=references(traces)
+    assert refs['literal_generated']=='look up amber It is blue.'
+    assert refs['intended_user_facing']=='It is blue.' and refs['complete_tool_calls']==1
+    partial=references([dict(text='',raw_text='<unit><|speak|><delegate>look up amber')])
+    assert partial['unclosed_tool_call'] and not partial['intended_user_facing']
+
+
+def test_cue_boundary_is_the_cue_word_not_the_entire_question():
+    from training.venus.behavior_review import cue_frame
+    turn=dict(text='Pebble. What does a telescope do?',start_seconds=10,seconds=5,sha256='same-audio')
+    row=dict(source_sha256='same-audio',words=[dict(text=' Pebble.',timestamp=[0,.4])])
+    assert cue_frame(turn,row)==(10,10.4)
+    with pytest.raises(ValueError):cue_frame(dict(turn,sha256='other-audio'),row)

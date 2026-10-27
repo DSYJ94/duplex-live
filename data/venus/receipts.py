@@ -3,15 +3,27 @@ import argparse,asyncio,hashlib,json,re,time
 from pathlib import Path
 from portable.venus.native_app import ArithmeticWorker
 
+def lookup_key(query):
+ """Bounded emitted-tool grammar; never infer a missing key from the world."""
+ if not re.match(r'^\s*look\s*up\b',query,re.I):return None
+ match=re.fullmatch(r'\s*look\s*up\s+(?:(?:the\s+)?marker(?:\s+in)?\s+)?([a-z]+)[. ]*',query,re.I)
+ if not match:raise ValueError('Lookup requires one explicit alphabetic key.')
+ return match.group(1).lower()
+
 class LookupWorker(ArithmeticWorker):
  def __init__(self,world,delay=8):super().__init__(delay);self.world=dict(world)
  async def execute(self,ident,query):
-  match=re.fullmatch(r'\s*look\s*up\s+([a-z]+)[. ]*',query,re.I)
-  if not match:return await super().execute(ident,query)
+  try:key=lookup_key(query)
+  except ValueError as error:
+   self.event('worker_started',work_id=ident)
+   receipt=dict(work_id=ident,query=query,result=str(error),error='lookup_requires_explicit_key')
+   receipt['sha256']=hashlib.sha256(json.dumps(receipt,sort_keys=True).encode()).hexdigest()
+   self.completed.append(receipt);self.event('worker_completed',**receipt);return
+  if key is None:return await super().execute(ident,query)
   self.event('worker_started',work_id=ident)
   try:
    await asyncio.sleep(self.delay)
-   key=match.group(1).lower();value=self.world.get(key)
+   value=self.world.get(key)
    receipt=dict(work_id=ident,query=query,result=('Lookup '+key+': '+value) if value is not None else ('Entry '+key+' was not found.'),world_sha256=hashlib.sha256(json.dumps(self.world,sort_keys=True).encode()).hexdigest())
    receipt['sha256']=hashlib.sha256(json.dumps(receipt,sort_keys=True).encode()).hexdigest()
    self.completed.append(receipt);self.event('worker_completed',**receipt)

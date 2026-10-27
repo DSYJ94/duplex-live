@@ -1,0 +1,473 @@
+{
+  "complete36": true,
+  "cases": [
+    {
+      "id": "venus-control-v1-holdout-quiet-0192",
+      "family": "quiet",
+      "generated_text": "Understood.Telescopes help us see distant objects like stars, planets and galaxies that are too faintor far away for the naked eye.",
+      "actual_queries": [],
+      "actual_results": [],
+      "genuine_cancellation": false,
+      "qualified": false,
+      "cue_word_end_seconds": 17.62,
+      "first_chunk_that_has_heard_cue": 17,
+      "voiced_frames_before_cue_word": 1,
+      "voiced_frames_after_cue_word": 2,
+      "generated_text_after_cue": "Telescopes help us see distant objects like stars, planets and galaxies that are too faintor far away for the naked eye."
+    },
+    {
+      "id": "venus-control-v1-holdout-ordinary-0220",
+      "family": "ordinary",
+      "generated_text": "Deep.",
+      "actual_queries": [],
+      "actual_results": [],
+      "genuine_cancellation": false,
+      "qualified": false
+    },
+    {
+      "id": "venus-control-v1-holdout-cancel-0212",
+      "family": "cancel",
+      "generated_text": "lookupThere are twelve months in a year.This diagnostic worker only computes sums of explicitly supplied numbers.",
+      "actual_queries": [
+        "lookup"
+      ],
+      "actual_results": [
+        "This diagnostic worker only computes sums of explicitly supplied numbers."
+      ],
+      "genuine_cancellation": false,
+      "qualified": false,
+      "correct_requested_lookup_completed": false
+    },
+    {
+      "id": "venus-control-v1-holdout-pending-0209",
+      "family": "pending",
+      "generated_text": "lookup",
+      "actual_queries": [
+        "lookup"
+      ],
+      "actual_results": [
+        "This diagnostic worker only computes sums of explicitly supplied numbers."
+      ],
+      "genuine_cancellation": false,
+      "qualified": false,
+      "correct_requested_lookup_completed": false
+    },
+    {
+      "id": "venus-control-v1-holdout-delegate-0207",
+      "family": "delegate",
+      "generated_text": "lookup marker cabinetThis diagnostic worker only computes sums of explicitly supplied numbers.",
+      "actual_queries": [
+        "lookup marker cabinet"
+      ],
+      "actual_results": [
+        "This diagnostic worker only computes sums of explicitly supplied numbers."
+      ],
+      "genuine_cancellation": false,
+      "qualified": false,
+      "correct_requested_lookup_completed": false
+    },
+    {
+      "id": "venus-control-v1-holdout-ordinary-0219",
+      "family": "ordinary",
+      "generated_text": "Glass makes a window transparent.",
+      "actual_queries": [],
+      "actual_results": [],
+      "genuine_cancellation": false,
+      "qualified": false
+    },
+    {
+      "id": "venus-control-v1-holdout-pause-0198",
+      "family": "pause",
+      "generated_text": "First, remove the cap from the pen. Then place the cap on the desk.Understood.",
+      "actual_queries": [],
+      "actual_results": [],
+      "genuine_cancellation": false,
+      "qualified": false
+    },
+    {
+      "id": "venus-control-v1-holdout-ordinary-0223",
+      "family": "ordinary",
+      "generated_text": "It makes it tighter.",
+      "actual_queries": [],
+      "actual_results": [],
+      "genuine_cancellation": false,
+      "qualified": false
+    },
+    {
+      "id": "venus-control-v1-holdout-ordinary-0217",
+      "family": "ordinary",
+      "generated_text": "There are twelve months ina year",
+      "actual_queries": [],
+      "actual_results": [],
+      "genuine_cancellation": false,
+      "qualified": false
+    },
+    {
+      "id": "venus-control-v1-holdout-ordinary-0222",
+      "family": "ordinary",
+      "generated_text": "It is used for pouring liquids or powders into containers without spilling.",
+      "actual_queries": [],
+      "actual_results": [],
+      "genuine_cancellation": false,
+      "qualified": false
+    },
+    {
+      "id": "venus-control-v1-holdout-pending-0211",
+      "family": "pending",
+      "generated_text": "lookupThis diagnostic worker only computes sums of explicitly supplied numbers.",
+      "actual_queries": [
+        "lookup"
+      ],
+      "actual_results": [
+        "This diagnostic worker only computes sums of explicitly supplied numbers."
+      ],
+      "genuine_cancellation": false,
+      "qualified": false,
+      "correct_requested_lookup_completed": false
+    },
+    {
+      "id": "venus-control-v1-holdout-quiet-0189",
+      "family": "quiet",
+      "generated_text": "Understood.Waiting silently.A telescope helps us see distant objects in space, like stars and galaxies.",
+      "actual_queries": [],
+      "actual_results": [],
+      "genuine_cancellation": false,
+      "qualified": false,
+      "cue_word_end_seconds": 18.5,
+      "first_chunk_that_has_heard_cue": 18,
+      "voiced_frames_before_cue_word": 2,
+      "voiced_frames_after_cue_word": 1,
+      "generated_text_after_cue": "A telescope helps us see distant objects in space, like stars and galaxies."
+    },
+    {
+      "id": "venus-control-v1-holdout-ordinary-0221",
+      "family": "ordinary",
+      "generated_text": "Five minus two is three",
+      "actual_queries": [],
+      "actual_results": [],
+      "genuine_cancellation": false,
+      "qualified": false
+    },
+    {
+      "id": "venus-control-v1-holdout-delegate-0206",
+      "family": "delegate",
+      "generated_text": "lookup marker and cabinetThis diagnostic worker only computes sums of explicitly supplied numbers.",
+      "actual_queries": [
+        "lookup marker and cabinet"
+      ],
+      "actual_results": [
+        "This diagnostic worker only computes sums of explicitly supplied numbers."
+      ],
+      "genuine_cancellation": false,
+      "qualified": false,
+      "correct_requested_lookup_completed": false
+    },
+    {
+      "id": "venus-control-v1-holdout-delegate-0202",
+      "family": "delegate",
+      "generated_text": "lookupThis diagnostic worker only computes sums of explicitly supplied numbers.",
+      "actual_queries": [
+        "lookup"
+      ],
+      "actual_results": [
+        "This diagnostic worker only computes sums of explicitly supplied numbers."
+      ],
+      "genuine_cancellation": false,
+      "qualified": false,
+      "correct_requested_lookup_completed": false
+    },
+    {
+      "id": "venus-control-v1-holdout-quiet-0191",
+      "family": "quiet",
+      "generated_text": "Understood.The telescope helps us see distant stars and galaxies.",
+      "actual_queries": [],
+      "actual_results": [],
+      "genuine_cancellation": false,
+      "qualified": false,
+      "cue_word_end_seconds": 16.5,
+      "first_chunk_that_has_heard_cue": 16,
+      "voiced_frames_before_cue_word": 2,
+      "voiced_frames_after_cue_word": 1,
+      "generated_text_after_cue": "The telescope helps us see distant stars and galaxies."
+    },
+    {
+      "id": "venus-control-v1-holdout-quiet-0194",
+      "family": "quiet",
+      "generated_text": "Understood.Fine.Orchard.",
+      "actual_queries": [],
+      "actual_results": [],
+      "genuine_cancellation": false,
+      "qualified": false,
+      "cue_word_end_seconds": 16.62,
+      "first_chunk_that_has_heard_cue": 16,
+      "voiced_frames_before_cue_word": 2,
+      "voiced_frames_after_cue_word": 1,
+      "generated_text_after_cue": "Orchard."
+    },
+    {
+      "id": "venus-control-v1-holdout-quiet-0190",
+      "family": "quiet",
+      "generated_text": "It helps us see distant stars and galaxies.",
+      "actual_queries": [],
+      "actual_results": [],
+      "genuine_cancellation": false,
+      "qualified": false,
+      "cue_word_end_seconds": 16.5,
+      "first_chunk_that_has_heard_cue": 16,
+      "voiced_frames_before_cue_word": 0,
+      "voiced_frames_after_cue_word": 1,
+      "generated_text_after_cue": "It helps us see distant stars and galaxies."
+    },
+    {
+      "id": "venus-control-v1-holdout-delegate-0200",
+      "family": "delegate",
+      "generated_text": "lookup marquarin jacketThis diagnostic worker only computes sums of explicitly supplied numbers.sha256: ba6595d74e467be77475c6a1e39025fa255742faf84385d5b234c8418d1965d8",
+      "actual_queries": [
+        "lookup marquarin jacket"
+      ],
+      "actual_results": [
+        "This diagnostic worker only computes sums of explicitly supplied numbers."
+      ],
+      "genuine_cancellation": false,
+      "qualified": false,
+      "correct_requested_lookup_completed": false
+    },
+    {
+      "id": "venus-control-v1-holdout-ordinary-0216",
+      "family": "ordinary",
+      "generated_text": "It helps us see distant objects in space.",
+      "actual_queries": [],
+      "actual_results": [],
+      "genuine_cancellation": false,
+      "qualified": false
+    },
+    {
+      "id": "venus-control-v1-holdout-ordinary-0218",
+      "family": "ordinary",
+      "generated_text": "It helps us move things.",
+      "actual_queries": [],
+      "actual_results": [],
+      "genuine_cancellation": false,
+      "qualified": false
+    },
+    {
+      "id": "venus-control-v1-holdout-cancel-0214",
+      "family": "cancel",
+      "generated_text": "lookup thebackground worker and cancel that task",
+      "actual_queries": [
+        "lookup thebackground worker and cancel that task"
+      ],
+      "actual_results": [],
+      "genuine_cancellation": false,
+      "qualified": false,
+      "correct_requested_lookup_completed": false
+    },
+    {
+      "id": "venus-control-v1-holdout-cancel-0215",
+      "family": "cancel",
+      "generated_text": "lookupThis diagnostic worker only computes sums of explicitly supplied numbers.",
+      "actual_queries": [
+        "lookup"
+      ],
+      "actual_results": [
+        "This diagnostic worker only computes sums of explicitly supplied numbers."
+      ],
+      "genuine_cancellation": false,
+      "qualified": false,
+      "correct_requested_lookup_completed": false
+    },
+    {
+      "id": "venus-control-v1-holdout-delegate-0205",
+      "family": "delegate",
+      "generated_text": "lookup marker cabinetThis diagnostic worker only computes sums of explicitly supplied numbers.",
+      "actual_queries": [
+        "lookup marker cabinet"
+      ],
+      "actual_results": [
+        "This diagnostic worker only computes sums of explicitly supplied numbers."
+      ],
+      "genuine_cancellation": false,
+      "qualified": false,
+      "correct_requested_lookup_completed": false
+    },
+    {
+      "id": "venus-control-v1-holdout-cancel-0213",
+      "family": "cancel",
+      "generated_text": "lookup thebackground workerThere are twelve months in a year.This diagnostic worker only computes sums of explicitly supplied numbers.",
+      "actual_queries": [
+        "lookup thebackground worker"
+      ],
+      "actual_results": [
+        "This diagnostic worker only computes sums of explicitly supplied numbers."
+      ],
+      "genuine_cancellation": false,
+      "qualified": false,
+      "correct_requested_lookup_completed": false
+    },
+    {
+      "id": "venus-control-v1-holdout-delegate-0201",
+      "family": "delegate",
+      "generated_text": "lookupThis diagnostic worker only computes sums of explicitly supplied numbers.",
+      "actual_queries": [
+        "lookup"
+      ],
+      "actual_results": [
+        "This diagnostic worker only computes sums of explicitly supplied numbers."
+      ],
+      "genuine_cancellation": false,
+      "qualified": false,
+      "correct_requested_lookup_completed": false
+    },
+    {
+      "id": "venus-control-v1-holdout-quiet-0193",
+      "family": "quiet",
+      "generated_text": "Understood.A telescope helps us see distant objects like stars, planets and galaxies.",
+      "actual_queries": [],
+      "actual_results": [],
+      "genuine_cancellation": false,
+      "qualified": false,
+      "cue_word_end_seconds": 18.62,
+      "first_chunk_that_has_heard_cue": 18,
+      "voiced_frames_before_cue_word": 1,
+      "voiced_frames_after_cue_word": 1,
+      "generated_text_after_cue": "A telescope helps us see distant objects like stars, planets and galaxies."
+    },
+    {
+      "id": "venus-control-v1-holdout-quiet-0188",
+      "family": "quiet",
+      "generated_text": "Understood.",
+      "actual_queries": [],
+      "actual_results": [],
+      "genuine_cancellation": false,
+      "qualified": false,
+      "cue_word_end_seconds": 17.5,
+      "first_chunk_that_has_heard_cue": 17,
+      "voiced_frames_before_cue_word": 1,
+      "voiced_frames_after_cue_word": 0,
+      "generated_text_after_cue": ""
+    },
+    {
+      "id": "venus-control-v1-holdout-pause-0196",
+      "family": "pause",
+      "generated_text": "First, place the cards together. Then, lift and slide them into the tray.",
+      "actual_queries": [],
+      "actual_results": [],
+      "genuine_cancellation": false,
+      "qualified": false
+    },
+    {
+      "id": "venus-control-v1-holdout-pause-0197",
+      "family": "pause",
+      "generated_text": "First, place the cards in a pile. Then, slide them into the tray.",
+      "actual_queries": [],
+      "actual_results": [],
+      "genuine_cancellation": false,
+      "qualified": false
+    },
+    {
+      "id": "venus-control-v1-holdout-quiet-0195",
+      "family": "quiet",
+      "generated_text": "Understood.A telescope helps us see distant stars and planets.",
+      "actual_queries": [],
+      "actual_results": [],
+      "genuine_cancellation": false,
+      "qualified": false,
+      "cue_word_end_seconds": 16.62,
+      "first_chunk_that_has_heard_cue": 16,
+      "voiced_frames_before_cue_word": 2,
+      "voiced_frames_after_cue_word": 1,
+      "generated_text_after_cue": "A telescope helps us see distant stars and planets."
+    },
+    {
+      "id": "venus-control-v1-holdout-delegate-0203",
+      "family": "delegate",
+      "generated_text": "lookupThis diagnostic worker only computes sums of explicitly supplied numbers.",
+      "actual_queries": [
+        "lookup"
+      ],
+      "actual_results": [
+        "This diagnostic worker only computes sums of explicitly supplied numbers."
+      ],
+      "genuine_cancellation": false,
+      "qualified": false,
+      "correct_requested_lookup_completed": false
+    },
+    {
+      "id": "venus-control-v1-holdout-pause-0199",
+      "family": "pause",
+      "generated_text": "First, remove the cap from the pen. Then place the cap on the desk.Understood.",
+      "actual_queries": [],
+      "actual_results": [],
+      "genuine_cancellation": false,
+      "qualified": false
+    },
+    {
+      "id": "venus-control-v1-holdout-pending-0208",
+      "family": "pending",
+      "generated_text": "lookup the maroon jacketThis diagnostic worker only computes sums of explicitly supplied numbers.",
+      "actual_queries": [
+        "lookup the maroon jacket"
+      ],
+      "actual_results": [
+        "This diagnostic worker only computes sums of explicitly supplied numbers."
+      ],
+      "genuine_cancellation": false,
+      "qualified": false,
+      "correct_requested_lookup_completed": false
+    },
+    {
+      "id": "venus-control-v1-holdout-pending-0210",
+      "family": "pending",
+      "generated_text": "lookup themarkarian jacketThis diagnostic workeronly computes sums ofexplicitly supplied numbers.",
+      "actual_queries": [
+        "lookup themarkarian jacket"
+      ],
+      "actual_results": [
+        "This diagnostic worker only computes sums of explicitly supplied numbers."
+      ],
+      "genuine_cancellation": false,
+      "qualified": false,
+      "correct_requested_lookup_completed": false
+    },
+    {
+      "id": "venus-control-v1-holdout-delegate-0204",
+      "family": "delegate",
+      "generated_text": "lookup marker and cabinetThis diagnostic worker only computes sums of explicitly supplied numbers.",
+      "actual_queries": [
+        "lookup marker and cabinet"
+      ],
+      "actual_results": [
+        "This diagnostic worker only computes sums of explicitly supplied numbers."
+      ],
+      "genuine_cancellation": false,
+      "qualified": false,
+      "correct_requested_lookup_completed": false
+    }
+  ],
+  "quiet_early_voiced_cases": 7,
+  "quiet_voiced_after_actual_cue_cases": 7,
+  "delegate_correct_lookup_results": 0,
+  "cancellation_successes": 0,
+  "original_collection_sha256": "9f892be6c181eab47eba9a777b9a194e6dafebcb7f7e81d886ff8e0b89523966",
+  "metric_correction": "Legacy cue_end fields use end of the entire cue-plus-question utterance. This derived report uses the source-bound cue WORD timestamp. Original traces/results are preserved.",
+  "independent_spoken_and_semantic_review_required": true,
+  "qualified": false,
+  "adopted": false,
+  "native_collection_source": "a9ef510a449e171009739577af6020767b1c8d94",
+  "training_source": "2dcdf0f8b62400bda989fa68e88ebf291b967f62",
+  "checkpoint_sha256": "10354f93ec2b5e224ae7298b2f3b8687f9dc74d2fbf87c1db62bd79763155b63",
+  "current_adoption_decision": "REJECTED_FOR_ADOPTION",
+  "backup": {
+    "all_hashes_verified": true,
+    "files": 4539,
+    "bytes": 3664775282,
+    "source": "a9ef510a449e171009739577af6020767b1c8d94"
+  },
+  "interpretation": [
+    "Learning loss fell on all six DEV families; this does not qualify native behavior.",
+    "All8 delegate scenes invoked a worker, but requested facts were not retrieved under the current worker contract.",
+    "Actual malformed/mismatched queries and repeated closing tokens are preserved in raw traces. A bounded lookup parser repair is prepared; old results are not rescored as passing.",
+    "Seven quiet cases acknowledge before the actual later cue word. Cue WORD timing, not the whole combined question end, defines this derived measure.",
+    "Independent output ASR/semantic review remains pending. Nonzero native speech occurs while tool tokens enter speech conditioning; audibility/content needs independent review."
+  ]
+}

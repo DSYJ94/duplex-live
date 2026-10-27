@@ -1,0 +1,91 @@
+{
+  "schema": "dl-venus-focused-repair-continuation-proposal-v1",
+  "status": "PROPOSED_NOT_AUTHORIZED",
+  "recorded_utc": "2026-10-27T16:47:01.031193+00:00",
+  "purpose": "Turn measured native failures into one bounded product repair/data/training cycle, with independent speech checks; stop diagnostic loops that do not change the next decision.",
+  "current_evidence": {
+    "training_updates": 190,
+    "complete_epochs": 5,
+    "weighted_dev_ce_before": 1.7007776117987103,
+    "weighted_dev_ce_after": 0.6260518969761001,
+    "native_holdout_complete": 36,
+    "quiet_early_utterance_cases": "7/8",
+    "quiet_voice_after_cue_word": "7/8",
+    "correct_requested_lookup_results": "0/8",
+    "actual_pending_cancellations": "0/4",
+    "candidate_adopted": false,
+    "checkpoint_sha256": "10354f93ec2b5e224ae7298b2f3b8687f9dc74d2fbf87c1db62bd79763155b63"
+  },
+  "blocking_limit": {
+    "authority": "docs/NATIVE-REGIONAL-PLACEMENT-AUTHORIZATION-2026-10-26.json",
+    "old_additional_gpu_cap_seconds": 14400,
+    "current_additional_gpu_seconds_upper": 14100,
+    "remaining_seconds": 300,
+    "original_scope_gpu_seconds_upper": 40351,
+    "all_gpu_instances_stopped": true
+  },
+  "proposed_limits": {
+    "maximum_additional_total_usage_usd": 40,
+    "maximum_additional_gpu_seconds": 14400,
+    "gpu_hourly_ceiling_usd": 4,
+    "gpu_maximum_usd": 16,
+    "external_api_usage_maximum_usd": 10,
+    "storage_network_reserve_usd": 6,
+    "contingency_usd": 8,
+    "cumulative_project_cost_cap_usd": 175,
+    "cumulative_gpu_cap_seconds": 72000,
+    "no_purchase_or_top_up": true
+  },
+  "resources": {
+    "provider": "GCP",
+    "project": "aurium-duplex-live-20261024",
+    "maximum_concurrent_gpus": 1,
+    "gpu": "A10040GB/a2-highgpu-1g",
+    "zone": "us-central1-a",
+    "same_existing_disk_id": "4375908109499109167",
+    "same_existing_disk_name": "duplex-venus-train-20261026-v1",
+    "same_disk_gib": 100,
+    "new_disk_or_region": false,
+    "new_quota_api_iam_firewall": false,
+    "existing_iap_and_strict_ssh": true,
+    "provider_stop_and_two_independent_guards": true,
+    "prior_intervals_never_reset": true,
+    "stop_billed_compute_during_access_or_human_blocker": true
+  },
+  "work": [
+    {
+      "stage": 1,
+      "task": "Audit all36 existing native output WAVs with the cached independent Whisper model; inspect actual malformed queries and native speech-conditioning path. No new baseline sweep unless it changes the repair decision."
+    },
+    {
+      "stage": 2,
+      "task": "Repair the diagnosed tool contract: explicit bounded lookup forms, explicit missing-key errors, real accepted/running/cancel state receipts, and a nonspoken action channel verified against ordinary speech. Never fill missing arguments from scoring data; never mute based on the cue word."
+    },
+    {
+      "stage": 3,
+      "task": "Version targeted quiet/no-ack, correct query and actual pending-cancel training trajectories. Concrete initial addition:24quiet+24cancel+16tool-schema TRAIN,16DEV and24freshHOLDOUT; retain/replay all152oldTRAIN and all prior artifacts. Use ElevenLabs synthetic user voice diversity if existing access is available; do not block otherwise approved training on optional provider setup. All full quality/teacher/semantic/native approvals before optimizer work."
+    },
+    {
+      "stage": 4,
+      "task": "One nonredundant repair continuation from actualstep190/Adam/RNG, not a repeat of those190updates. Keep q/vLoRA851968parameters/base/audio/TTS frozen. Preserve word objective and ordinary KL/hidden retention; choose the smallest control/termination objective correction justified by stage1, pin recipe before updates. Maximum512additionalupdates/eightwholeepochs, using throughput admission and complete scenes; fresh-process restore proof required."
+    },
+    {
+      "stage": 5,
+      "task": "Evaluate the entire24freshheldout set, complete ordinary retention, and real asynchronous worker/cancellation paths with independent speech/semantic review. Old36 are development diagnostics after inspection. No adoption from lower loss, a passing subset, or native generated text alone. Stop after the bounded cycle on failure; report actual causes/checkpoints."
+    }
+  ],
+  "data": {
+    "authored_synthetic_only": true,
+    "owner_conversations": false,
+    "credentials_stay_mac": true,
+    "originals_folds_old_approvals_and_failed_audits_preserved": true,
+    "maximum_new_synthetic_artifacts_bytes": 10000000000,
+    "source_deployment": "Git commit/push/fetch",
+    "transfer": "rsync-ar/exclude-session-token/no-owner/no-group; exclude .private/credentials/owner-conversations/cores"
+  },
+  "external_services": {
+    "ElevenLabs": "Only authored synthetic USER utterances, within additionalAPIusage cap; no voice cloning, purchase or new-account terms acceptance.",
+    "OpenAI": "Only authored synthetic questions, native/teacher recognized words and word timings, and actual synthetic task receipts for teacher/independent semantic review or bounded reasoning-worker tests; no owner data, credentials or scoring answers. Combined external usage <=10USD; no purchases."
+  },
+  "completion": "Verified checkpoint/data/optimizer/RNG backups; measured full native results; useful experimental voice trial only if mandatory gates pass. No promise of production qualification or full-weight training under this proposal."
+}
