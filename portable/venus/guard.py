@@ -21,6 +21,9 @@ PRIOR_USD=91.98448055555555
 
 
 def resource(lease):
+    if lease.get('resource_key')=='venus-focused-audit-v15':
+        from training.venus.focused_guard import resource as focused_resource
+        return focused_resource(lease)
     if lease.get('resource_key')=='venus-behavior-v14':
         from training.venus.behavior_guard import resource as behavior_resource
         return behavior_resource(lease)
@@ -103,6 +106,9 @@ def provider_snapshot(binding,key):
 
 
 def validate(vm,instances,runpods,lease,now):
+    if lease.get('resource_key')=='venus-focused-audit-v15':
+        from training.venus.focused_guard import validate as focused_validate
+        return focused_validate(vm,instances,runpods,lease,now)
     if lease.get('resource_key')=='venus-behavior-v14':
         from training.venus.behavior_guard import validate as behavior_validate
         return behavior_validate(vm,instances,runpods,lease,now)
@@ -192,7 +198,8 @@ def mac(args):
     authority=b['authority'].read_bytes()
     a=json.loads(authority)
     expected='APPROVED_WITHIN_EXISTING_TRAINING_SCOPE' if lease.get('resource_key') in ('venus-memory-v11','venus-recovery-v13','venus-behavior-v14') else 'APPROVED'
-    assert a['status']==expected and a['maximum_additional_gcp_usage_usd']==35
+    maximum=40 if lease.get('resource_key')=='venus-focused-audit-v15' else 35
+    assert a['status']==expected and a['maximum_additional_gcp_usage_usd']==maximum
     assert lease['authorization_sha256']==hashlib.sha256(authority).hexdigest()
     ssh=json.loads(Path(args.ssh_argv).read_text())
     if 'StrictHostKeyChecking=yes' not in ssh:raise ValueError('Strict SSH required')
@@ -205,7 +212,7 @@ def mac(args):
             vm,disk,instances,pods,snapshot_start=provider_snapshot(b,key)
             if vm['status']=='TERMINATED':return
             assert str(disk['id'])==b['disk']
-            if lease.get('resource_key') in ('us-a10040','venus-training-v1','venus-native-gradient-v8','venus-memory-v11','venus-recovery-v13','venus-behavior-v14'):
+            if lease.get('resource_key') in ('us-a10040','venus-training-v1','venus-native-gradient-v8','venus-memory-v11','venus-recovery-v13','venus-behavior-v14','venus-focused-audit-v15'):
                 assert int(disk['sizeGb'])==100
             pods=pods.get('pods',[]) if isinstance(pods,dict) else pods
             end=validate(vm,instances,pods,lease,time.time())
@@ -213,7 +220,7 @@ def mac(args):
             if time.time()>=expires:raise ValueError('Provider snapshot is already stale')
             g=dict(vm_id=b['ident'],disk_id=b['disk'],checked_unix=time.time(),snapshot_started_unix=snapshot_start,expires_unix=expires,
                 stop_unix=end,authorization_sha256=lease['authorization_sha256'],guard_pid=os.getpid(),
-                prior_gpu_seconds=PRIOR_SECONDS,prior_scope_usd=PRIOR_USD)
+                prior_gpu_seconds=lease['prior_gpu_seconds'],prior_scope_usd=lease['prior_scope_usd'])
             raw=json.dumps(g);Path(args.status).write_text(raw+'\n')
             # Status contains no credentials. Publish by atomic rename on the guest.
             cmd='cat > /workspace/migration/venus-live-guard-v1.tmp && mv /workspace/migration/venus-live-guard-v1.tmp /workspace/migration/venus-live-guard-v1.json'
