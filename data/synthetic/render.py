@@ -319,6 +319,7 @@ def render_timeline(engine, tl, out_dir: Path, assets: Path, manifest,
                     clip_cache: Path | None = None,
                     asr_pipe=None, repair: int = 2,
                     wer_bar: float | None = None) -> None:
+    from data.synthetic.provenance import record as provenance_record,cache_namespace
     sc_dir = out_dir / tl.scenario_id
     utt_dir = sc_dir / "utterances"
     utt_dir.mkdir(parents=True, exist_ok=True)
@@ -353,7 +354,7 @@ def render_timeline(engine, tl, out_dir: Path, assets: Path, manifest,
     for i, ev in enumerate(speech):
         utt = utt_dir / f"{i:02d}_{ev.ch}.wav"
         vk = ref_key(ev)
-        cached = (clip_cache / cache_key(vk, ev.text, engine_name)
+        cached = (clip_cache / cache_key(vk, ev.text, cache_namespace(engine_name,engine))
                   if clip_cache is not None
                   and len(ev.text.split()) <= SHORT_CACHE_WORDS else None)
         attempt = 0
@@ -520,8 +521,7 @@ def render_timeline(engine, tl, out_dir: Path, assets: Path, manifest,
         "voices": channel_voice,
         "engine": engine_name,
         **tl.overlap_stats(),
-        "tts_engine": "openbmb/MiniCPM-o-4_5 (Apache-2.0) zero-shot voice-cloned TTS",
-        "license": "synthetic; open models only (ADR-0002); no closed-API content",
+        **provenance_record(engine_name,engine),
     }, ensure_ascii=False) + "\n")
     manifest.flush()
 

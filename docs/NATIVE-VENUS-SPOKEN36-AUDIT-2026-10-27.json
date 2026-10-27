@@ -1,0 +1,31 @@
+{
+  "recorded_utc": "2026-10-27T19:06:34.419419+00:00",
+  "status": "COMPLETE_AUDIT_REJECTED_SPEECH_QUALIFICATION",
+  "source": "faa2b1fe0cd21036ba5227d6bc291bc09b3a0105",
+  "asr_revision": "41f01f3fe87f28c78e2fbf8b568835947dd65ed9",
+  "complete_cases": 36,
+  "literal_word_matches": 4,
+  "user_facing_word_matches": 4,
+  "peak_pass_cases": 36,
+  "recognizer_references_are_generated_text_not_expected_answers": true,
+  "raw_report_sha256": "33a7a96f903dc543af1d2e82f3132d275689b0b64b3b5ff0609cac014da5d4b8",
+  "naturalness_not_approved": true,
+  "backup": {
+    "original_native_chunks_and_training_state": "previous complete hash-verified backup retained",
+    "complete_new_asr_report": "copied and matches destination inventory SHA256",
+    "new_derived_per_case_json_and_emitted_wavs": "transfer PARTIAL; retained on durable disk; all waveforms derivable from already backed up original chunks",
+    "cause": "Independent guard SSH publication timed out20seconds during rsync and stopped VM; no optimizer job or inference rerun",
+    "reconstruction": "Attempted local derived WAV did not match remote container hash; retained as local diagnostic only, never accepted as exact backup"
+  },
+  "gpu": {
+    "vm_id": "6535540622249260120",
+    "status": "TERMINATED",
+    "actual_interval_seconds": 169.4650001525879,
+    "new_scope_upper_seconds": 200,
+    "prior_upper_seconds": 54451,
+    "new_scope_remaining_upper_seconds": 14200,
+    "additional_optimizer_updates": 0
+  },
+  "next_action": "Repair nonspoken action channel/state and prepare versioned acoustic assistant data. Native voice-reference comparison uses original weights, fixed inputs/seed and same sampling; no acoustic success inferred from control loss.",
+  "word_normalizer": "Existing repair.words:0..20digit/word and established orthography; no homophone substitutions"
+}

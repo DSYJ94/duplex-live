@@ -163,7 +163,8 @@ class DelegateParser:
 
 
 class NativeEngine:
-    def __init__(self, model_dir, system_prompt='Streaming Omni Conversation.', adapter_checkpoint=None):
+    def __init__(self, model_dir, system_prompt='Streaming Omni Conversation.', adapter_checkpoint=None,
+                 voice_reference=None,voice_reference_sha256=None):
         ensure_guard()
         import numpy as np
         import torch
@@ -173,6 +174,8 @@ class NativeEngine:
             raise RuntimeError('Exactly one CUDA GPU required; never run this on the Mac CPU')
         set_seed(42)
         self.model_dir = Path(model_dir).resolve()
+        from .voice import reference
+        self.voice_reference=reference(self.model_dir,voice_reference,voice_reference_sha256)
         self.model = AutoModel.from_pretrained(
             str(self.model_dir), trust_remote_code=True, local_files_only=True,
             attn_implementation='sdpa', torch_dtype=torch.bfloat16,
@@ -190,7 +193,8 @@ class NativeEngine:
             input_sample_rate=16000, output_sample_rate=24000,
             system_prompt=system_prompt, decode_mode='sampling',
             max_new_speak_tokens_per_chunk=20, temperature=0.7, top_k=20,
-            top_p=0.8, listen_prob_scale=1.0, optimizer_updates=0)
+            top_p=0.8, listen_prob_scale=1.0, optimizer_updates=0,
+            voice_reference=self.voice_reference)
         self.profile.update(force_listen_count=int(self.duplex.force_listen_count),
                             listen_speak_mode=str(self.duplex.ls_mode))
         if candidate:
@@ -200,7 +204,7 @@ class NativeEngine:
         ensure_guard()
         with self.torch.inference_mode():
             self.duplex.prepare(prefix_system_prompt=self.profile['system_prompt'],
-                prompt_wav_path=str(self.model_dir / 'assets/HT_ref_audio.wav'))
+                prompt_wav_path=self.voice_reference['path'])
         self.cursor = 0
 
     def step(self, pcm, feedback):
@@ -237,7 +241,8 @@ class NativeEngine:
             audio_sample_rate=24000)
 
 
-def create_app(model_dir, system_prompt='Streaming Omni Conversation.', adapter_checkpoint=None):
+def create_app(model_dir, system_prompt='Streaming Omni Conversation.', adapter_checkpoint=None,
+               voice_reference=None,voice_reference_sha256=None):
     from contextlib import asynccontextmanager
     from fastapi import FastAPI, WebSocket
     from fastapi.responses import FileResponse
@@ -245,7 +250,8 @@ def create_app(model_dir, system_prompt='Streaming Omni Conversation.', adapter_
 
     @asynccontextmanager
     async def lifespan(app):
-        app.state.engine = await asyncio.to_thread(NativeEngine, model_dir, system_prompt, adapter_checkpoint)
+        app.state.engine = await asyncio.to_thread(NativeEngine, model_dir, system_prompt, adapter_checkpoint,
+                                                  voice_reference,voice_reference_sha256)
         yield
 
     app = FastAPI(lifespan=lifespan, docs_url=None, redoc_url=None)
@@ -310,9 +316,11 @@ if __name__ == '__main__':
     parser.add_argument('--port', type=int, default=8032)
     parser.add_argument('--system-prompt-file')
     parser.add_argument('--adapter-checkpoint', help='Verified project checkpoint; experimental native testing only')
+    parser.add_argument('--voice-reference', help='Approved original/synthetic mono16k reference for the native voice generator')
+    parser.add_argument('--voice-reference-sha256', help='Exact SHA256 required for a custom reference')
     args = parser.parse_args()
     import uvicorn
     # Loopback and SSH tunnel only. No microphone or conversation recording.
     prompt=Path(args.system_prompt_file).read_text().strip() if args.system_prompt_file else 'Streaming Omni Conversation.'
     if not prompt or len(prompt)>4000:raise ValueError('Bounded nonempty system prompt required')
-    uvicorn.run(create_app(args.model_dir,prompt,args.adapter_checkpoint), host='127.0.0.1', port=args.port)
+    uvicorn.run(create_app(args.model_dir,prompt,args.adapter_checkpoint,args.voice_reference,args.voice_reference_sha256), host='127.0.0.1', port=args.port)
