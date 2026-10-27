@@ -34,6 +34,16 @@ def schedule(duplex, timeline):
     for action in timeline['actions']:
         if action['kind']=='end_turn':
             chunks=[[duplex.speak_token_id,duplex.turn_eos_token_id,duplex.chunk_eos_token_id]]
+        elif action['kind']=='speak' and 'native_speech_units' in action:
+            from data.venus.repair import words
+            units=action['native_speech_units'];assert units and [u['offset'] for u in units]==list(range(len(units)))
+            assert words(' '.join(u['text'] for u in units))==words(action['text'])
+            assert [u['final'] for u in units]==[False]*(len(units)-1)+[True]
+            chunks=[]
+            for unit in units:
+                ids=duplex.tokenizer.encode(unit['text'],add_special_tokens=False)
+                if len(ids)>16:raise ValueError('Measured speech unit exceeds native decode capacity; repair source pacing, not thresholds')
+                chunks.append([duplex.speak_token_id]+ids+([duplex.turn_eos_token_id] if unit['final'] and action['final'] else [])+[duplex.chunk_eos_token_id])
         else:
             text=action['text']
             if action['kind']=='delegate':text='<delegate>'+text+'</delegate>'

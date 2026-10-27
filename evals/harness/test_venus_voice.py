@@ -94,3 +94,37 @@ def test_nonspoken_actions_preserve_every_ordinary_condition_and_original_histor
     assert torch.equal(duplex._convert_results_to_tts_input(second),convert(second[2:]))
     assert not channel.inside and channel.hidden_tokens==4
     channel.reset();assert channel.hidden_tokens==0 and not channel.inside
+
+def test_word_timed_native_targets_allow_speech_to_finish_before_turn_end():
+    from data.venus.pacing import units
+    from training.venus.spoken_audit import references
+    rows=[dict(text='Glass',timestamp=(.1,.5)),dict(text='lets',timestamp=(.6,.9)),dict(text='light',timestamp=(1.1,1.5)),dict(text='in.',timestamp=(1.6,2.3))]
+    result=units('Glass lets light in.',rows)
+    assert [r['text'] for r in result]==['Glass lets','light in.','']
+    assert [r['final'] for r in result]==[False,False,True]
+    with pytest.raises(ValueError):units('Glass lets light in.',rows[:-1])
+    ref=references([dict(text='',raw_text='<|speak|>The opposite of<|chunk_eos|></unit>'),dict(text='',raw_text='<|speak|>shallow is deep.<|turn_eos|><|chunk_eos|></unit>')])
+    assert ' '.join(ref['intended_user_facing'].split())=='The opposite of shallow is deep.'
+
+def test_native_schedule_uses_measured_duration_instead_of_one_sentence_frame():
+    from types import SimpleNamespace
+    from training.venus.native_cache import schedule
+    from data.venus.pacing import units
+    text='Glass lets light in.';aligned=[dict(text=w,timestamp=t) for w,t in zip(text.split(),[(.1,.5),(.6,.9),(1.1,1.5),(1.6,2.3)])]
+    duplex=SimpleNamespace(speak_token_id=1,turn_eos_token_id=2,chunk_eos_token_id=3,tokenizer=SimpleNamespace(encode=lambda s,**kw:list(range(10,10+len(s.split())))))
+    timeline=dict(frames=6,actions=[dict(frame=2,kind='speak',text=text,final=True,native_speech_units=units(text,aligned))])
+    result=schedule(duplex,timeline)
+    assert set(result)=={2,3,4} and all(2 not in result[f] for f in [2,3]) and 2 in result[4]
+
+def test_measured_pause_resumes_unsaid_words_instead_of_dropping_them():
+    from data.venus.paced_timeline import paced_scene
+    from data.venus.pacing import words
+    scene=dict(id='pause-fixture',fold='TRAIN',family='pause',user_turns=['instructions','Pause now.','Continue.'],teacher_program=dict(kind='pause_resume',first_text='First, rinse the cup.',remaining_text='Then, dry it.'))
+    audio={text:dict(seconds=seconds,id=text,sha256='fixture') for text,seconds in zip(scene['user_turns'],[2,.7,.5])}
+    def audit(text,times):return dict(passed=True,word_error_rate=0,peak=.5,source_sha256='fixture',words=[dict(text=w,timestamp=t) for w,t in zip(text.split(),times)])
+    source={'First, rinse the cup.':audit('First, rinse the cup.',[(.1,.4),(.6,.9),(1.1,1.3),(1.5,2.2)]),'Then, dry it.':audit('Then, dry it.',[(.1,.4),(.6,.9),(1.1,1.7)])}
+    result=paced_scene(scene,audio,None,source);first,stop,resume=result['actions']
+    assert words(first['text'])==['first','rinse'] and words(resume['text'])[:2]==['the','cup']
+    assert words(first['text']+' '+resume['text'])==words('First, rinse the cup. Then, dry it.')
+    assert resume['resumes_unspoken_first_step_without_restart']
+    assert first['frame']+len(first['native_speech_units'])==stop['frame']

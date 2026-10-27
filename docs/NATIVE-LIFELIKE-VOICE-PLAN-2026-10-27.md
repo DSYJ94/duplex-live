@@ -10,7 +10,13 @@ Plain words: the product needs clear, natural speech as well as correct silence 
 - Prepared67 exact ElevenLabs requests: the66 spoken targets plus one neutral reference passage,4168characters. No user context, scoring information, owner conversations or credentials enter payloads. A conservative0.50USD/1000character bound is2.084USD; the voice sub-cap is3USD inside the approved10USD API/40USD total allowance. No new speech request has been made while specific credential-file access awaits approval.
 - Confirmed ADR0003 Amendment A permits closed-content training under the owner's separate enterprise agreement. Corrected future factory manifests that incorrectly labeled ElevenLabs output as MiniCPM/open-only. New ElevenLabs cache namespaces include the model identity; old unpinned caches and receipts remain intact.
 
-## Finish the smallest useful comparison
+## Comparison completed; fix the diagnosed pacing first
+
+All24 recordings completed and4962files were independently hash-backed up. The base model uses multiple short speech units; step190 often emits a whole sentence andTURN_EOS together, cutting speech to roughly one second. The reference swap did not fix this. Repair the measured word-to-unit timing before more control training. The raw transcript scorer also merged words across unit boundaries; new derived reports retain boundary spaces, keep raw reports and thresholds unchanged, and do not rerun recognition. No naturalness approval follows from these scores.
+
+The new timing source collection has83exact assistant phrases. These local recordings supply word times, not the final voice identity. A new measured native-unit schedule and interrupted-tail resumption are implemented but await full source and native qualification. The additional85USER recordings and64TRAIN/16DEV/24freshHOLDOUT repair source plan are prepared. All originalTRAIN/DEV examples remain unchanged in the source plan.
+
+## Fixed comparison protocol
 
 Run the complete eight ordinary diagnostic scenes under three fixed conditions: base weights/released voice, step190/released voice, and step190/an existing synthetic ElevenLabs reference. The same original system prompt, input audio, seed and sampling apply. Independently recognize the reference first and all24 outputs afterward. Existing inspected scenes are diagnostic, never fresh held-out evidence.
 

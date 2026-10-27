@@ -1,0 +1,73 @@
+{
+  "schema": "dl-native-voice-pacing-diagnosis-v1",
+  "recorded_utc": "2026-10-27T19:41:03.082536+00:00",
+  "status": "DIAGNOSED_TIMING_REPAIR_REQUIRED_BEFORE_CONTINUATION",
+  "comparison_complete": true,
+  "producer": "e8f92d7263a6dc672b3d0dd7f64272fae1c99306",
+  "native_cases": 24,
+  "summary": {
+    "base-released-reference": {
+      "nonempty_speech_units": 41,
+      "median_words_per_nonempty_unit": 3,
+      "maximum_words_per_unit": 5,
+      "cases_with_generated_turn_end": 0,
+      "word_fidelity": {
+        "cases": 8,
+        "word_match": 3,
+        "median_wer": 0.0748663101604278
+      }
+    },
+    "step190-released-reference": {
+      "nonempty_speech_units": 9,
+      "median_words_per_nonempty_unit": 5,
+      "maximum_words_per_unit": 11,
+      "cases_with_generated_turn_end": 7,
+      "word_fidelity": {
+        "cases": 8,
+        "word_match": 1,
+        "median_wer": 0.55
+      }
+    },
+    "step190-eleven-reference": {
+      "nonempty_speech_units": 9,
+      "median_words_per_nonempty_unit": 5,
+      "maximum_words_per_unit": 13,
+      "cases_with_generated_turn_end": 6,
+      "word_fidelity": {
+        "cases": 8,
+        "word_match": 2,
+        "median_wer": 0.6125
+      }
+    }
+  },
+  "evidence": {
+    "case": "venus-control-v1-holdout-ordinary-0219",
+    "base": "The glass allows / light / to enter and offers / a view of / the outside. / It also helps / keep the room / cool in / summer.",
+    "candidate": "Glass helps protect you from the outside and lets light in. + TURN_EOS in ONE native speech unit",
+    "candidate_emitted_samples": 30720,
+    "candidate_emitted_seconds": 1.28,
+    "candidate_asr": "Glass helps"
+  },
+  "primary_cause": "Teacher compiler chunks up to16text tokens per1second frame and marks final chunk TURN_EOS. Training taught whole-sentence single-unit termination. Released TTS generates at most26acoustic tokens per unit (about1second); early turn closure truncates spoken content. Base uses multiple smaller units. A voice-reference swap does not repair this timing contract.",
+  "metric_correction": {
+    "raw_reference_join_removed_native_unit_boundaries": true,
+    "derived_fix": "Unit boundaries retained as spaces; no new recognition/audio/gate relaxation",
+    "parent_results_preserved": true,
+    "derived_report_sha256": "c395bd48a895ac6aec344b371fbca54c3cdba95c67e1824efa28551c45b86f19"
+  },
+  "action": "Build NEW word-timed native assistant units, retain exact original words and source clips, delay TURN_EOS until measured speech duration completes. Source timing audios generated locally; independent full word/time audit required. Do not extend old16token schedule unchanged or unfreeze larger model to compensate. Replay old152TRAIN with reapproved derived timing, plus64newcontrolTRAIN; fresh24remain excluded from optimizer.",
+  "voice_data": "72case assistant source plan remains separate, ElevenLabs new synthesis pending specific credential-file approval. Legacy Eleven reference word auditPASS; no voice/naturalness adoption.",
+  "budget": {
+    "focused_gpu_seconds_upper": 1100,
+    "remaining_focused_gpu_seconds": 13300,
+    "prior_gpu_seconds_upper": 54451,
+    "current_vm_status": "TERMINATED",
+    "new_optimizer_updates": 0
+  },
+  "backup": {
+    "files": 4962,
+    "bytes": 3786025871,
+    "all_hashes_verified": true,
+    "receipt": "runs/venus-training-20261027/voice-reference-v18/copyback-verified.json"
+  }
+}

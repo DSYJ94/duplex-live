@@ -1,0 +1,43 @@
+{
+  "schema": "dl-native-cadence-source-audit-execution-v19",
+  "status": "APPROVED_WITHIN_FOCUSED_REPAIR",
+  "at_utc": "2026-10-27T19:49:44.087207+00:00",
+  "parent_sha256": "869cfc14a7e31e5ee7459ff9248e38a318f7c80b42200134293689728f8c62a2",
+  "parent_authority": "docs/NATIVE-VENUS-FOCUSED-REPAIR-AUTHORIZATION-2026-10-27.json",
+  "prior_gpu_seconds_upper": 54451,
+  "focused_prior_gpu_seconds_upper": 1100,
+  "maximum_next_gpu_seconds": 1300,
+  "maximum_focused_gpu_seconds": 14400,
+  "maximum_cumulative_gpu_seconds": 72000,
+  "maximum_focused_usage_usd": 40,
+  "resources": {
+    "vm_id": "6535540622249260120",
+    "name": "duplex-venus-behavior-20261027-v1",
+    "disk_id": "4375908109499109167",
+    "zone": "us-central1-a",
+    "native_stop_seconds": 1300
+  },
+  "work": "One complete independent cached Whisper source word/time audit:83new local assistant TIMING references plus85new synthetic USER recordings. No native baseline repeat, optimizer or external API. All168 required; preserve complete failed reports for diagnosed-only source repair.",
+  "source_plan": "evals/fixtures/venus-control-repair-source-v1-20261027.json",
+  "source_plan_sha256": "575b62123cba56833b043e8afc561887a6c258d68d53aefe53a5e13a9fbb9f39",
+  "assistant_sources": "runs/venus-training-20261027/assistant-timing-sources-v1",
+  "assistant_receipts_sha256": "21aa01b7688e18fcf18a60d25e34e983063858d7a08168e775e5336cb8a6fd3b",
+  "user_sources": "runs/venus-training-20261027/control-repair-new-inputs-v1",
+  "user_receipts_sha256": "6918d6e61ac5ac2341196e7b149280268d0f23fc674a14d869d3f565f1b6083f",
+  "source_normalizer": "Predeclared exact spoken cardinal digits0..100 plus existing spelling conventions. No phonetic substitutions; WER<=0.05/peak<=0.995. Every assistant word also needs exact monotonic finite timing; stricter than WER alone.",
+  "source_role": "Assistant audio is timing supervision only, not acoustic targets or a claim the final voice becomes macOS Daniel. ElevenLabs voice-data generation still awaits explicit credential-file access; unrelated progress proceeds.",
+  "reason": "Measured step190 turns pack a sentence into1.28seconds and end it. Base spreads speech across native units. Repair only the diagnosed timing contract in NEW version, retain all exact old words/folds and originalheldout audio/receipts/KLhidden. Old16token/frame teacher cache cannot be extended unchanged.",
+  "previous_interval": {
+    "start": "2026-10-27T12:22:56.749-07:00",
+    "stop": "2026-10-27T12:32:30.878-07:00",
+    "actual_seconds_reported": 574.1289999485016,
+    "charged_upper_seconds": 600
+  },
+  "backups": {
+    "files": 4962,
+    "bytes": 3786025871,
+    "all_hashes_verified": true
+  },
+  "external_api_calls": 0,
+  "optimizer_updates": 0
+}

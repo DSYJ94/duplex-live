@@ -65,3 +65,17 @@ def test_recovery_budget_includes_interrupted_interval_and_shorter_native_stop()
         import pytest
         with pytest.raises(AssertionError):check(vm,[vm],[],dict(lease,**bad),start+10)
     with pytest.raises(AssertionError):check(vm,[vm,dict(vm,id='999')],[],lease,start+10)
+def test_repair_sources_preserve_old_examples_and_reserve_new_holdout_groups():
+    import json
+    from pathlib import Path
+    from data.venus.build_repair_corpus import build,PARENT
+    a=build();old=json.loads(PARENT.read_text());indexed={s['id']:s for s in a['scenes']}
+    for scene in old['scenes']:
+        if scene['fold'] in ('TRAIN','DEV'):assert indexed[scene['id']]==scene
+        else:assert scene['id'] not in indexed
+    for field in ('cue','keys'):
+        def values(fold):
+            scenes=[s for s in a['scenes'] if s['fold']==fold]
+            return {s['teacher_program']['cue'] for s in scenes if 'cue' in s['teacher_program']} if field=='cue' else {k for s in scenes for k in (s['synthetic_private_world'] or {})}
+        tr,dev,hold=(values(f) for f in ('TRAIN','DEV','HOLDOUT'))
+        assert not (tr&dev or tr&hold or dev&hold)

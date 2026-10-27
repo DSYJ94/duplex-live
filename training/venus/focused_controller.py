@@ -3,18 +3,18 @@ import hashlib,json,os,shlex,shutil,subprocess,sys,time
 from pathlib import Path
 from datetime import datetime
 from . import controller as c
-from .focused_guard import AUTH,NAME,IDENT,VOICE_PLAN,VOICE_PLAN_V17,VOICE_PLAN_V18
+from .focused_guard import AUTH,NAME,IDENT,VOICE_PLAN,VOICE_PLAN_V17,VOICE_PLAN_V18,CADENCE_PLAN
 from portable.context.gcp_budget_watchdog import read_runpod_pods
 
 def main():
     mode=sys.argv[1] if len(sys.argv)>1 else 'audit-v15'
-    assert mode in ('audit-v15','voice-v16','voice-v17','voice-v18')
-    voice=mode.startswith('voice-');version=mode.rsplit('-',1)[-1]
-    stage='voice-reference-'+version if voice else 'focused-audit-v15'
-    key='venus-'+stage if voice else 'venus-focused-audit-v15'
-    voice_plan={'v15':VOICE_PLAN,'v16':VOICE_PLAN,'v17':VOICE_PLAN_V17,'v18':VOICE_PLAN_V18}[version]
+    assert mode in ('audit-v15','voice-v16','voice-v17','voice-v18','cadence-v19')
+    voice=mode.startswith('voice-');cadence=mode=='cadence-v19';version=mode.rsplit('-',1)[-1]
+    stage='cadence-qualify-v19' if cadence else 'voice-reference-'+version if voice else 'focused-audit-v15'
+    key='venus-'+stage
+    voice_plan={'v15':VOICE_PLAN,'v16':VOICE_PLAN,'v17':VOICE_PLAN_V17,'v18':VOICE_PLAN_V18,'v19':CADENCE_PLAN}[version]
     c.R=Path('runs/venus-training-20261027')/stage;assert not c.R.exists(),'Observe existing run; never duplicate'
-    assert not c.run(['git','status','--porcelain','--','training/venus','portable/venus/guard.py']).strip()
+    assert not c.run(['git','status','--porcelain','--','training/venus','data/venus','portable/venus']).strip()
     a=json.loads(AUTH.read_text());r=a['resources'];c.NAME=NAME;zone=r['zone']
     vms=c.cloud('compute','instances','list');assert all(v['status']=='TERMINATED' for v in vms)
     vm=next(v for v in vms if str(v['id'])==IDENT);assert vm['name']==NAME and int(vm['scheduling']['maxRunDuration']['seconds'])==1300
@@ -23,9 +23,9 @@ def main():
     assert all(p['status'] in ('EXITED','STOPPED','TERMINATED') for p in pods)
     price=json.loads(Path('runs/venus-20261026/us-current-price40-v1.json').read_text());assert 0<price['hourly_estimate_usd']<=4 and time.time()-datetime.fromisoformat(price['at_utc']).timestamp()<3600
     old=Path('runs/venus-training-20261027/behavior-v14');assert json.loads((old/'copyback-verified.json').read_text())['all_hashes_verified']
-    prior={'v15':0,'v16':200,'v17':300,'v18':500}[version]
-    if voice:
-        preceding=Path('runs/venus-training-20261027')/{'v16':'focused-audit-v15','v17':'voice-reference-v16','v18':'voice-reference-v17'}[version];last=json.loads((preceding/'provider-final.json').read_text())
+    prior={'v15':0,'v16':200,'v17':300,'v18':500,'v19':1100}[version]
+    if voice or cadence:
+        preceding=Path('runs/venus-training-20261027')/{'v16':'focused-audit-v15','v17':'voice-reference-v16','v18':'voice-reference-v17','v19':'voice-reference-v18'}[version];last=json.loads((preceding/'provider-final.json').read_text())
         assert vm['lastStartTimestamp']==last['lastStartTimestamp'] and vm['lastStopTimestamp']==last['lastStopTimestamp']
         elapsed=datetime.fromisoformat(last['lastStopTimestamp']).timestamp()-datetime.fromisoformat(last['lastStartTimestamp']).timestamp()
         assert 0<elapsed<=prior
@@ -45,7 +45,7 @@ def main():
         end=datetime.fromisoformat(vm['lastStartTimestamp']).timestamp()+1300
         c.record('actual_same_vm_audit_running',vm_id=IDENT,last_start=vm['lastStartTimestamp'],native_stop_unix=end)
         c.ssh_argv=json.loads((old/'ssh.json').read_text());c.ssh_argv[-1]='daryl_aurium_labs_com@'+vm['networkInterfaces'][0]['accessConfigs'][0]['natIP']
-        if voice:c.ssh_argv=[x.replace('ControlPath=/private/tmp/duplex-venus-behavior-v14','ControlPath=/private/tmp/duplex-venus-voice-'+version) for x in c.ssh_argv]
+        if voice or cadence:c.ssh_argv=[x.replace('ControlPath=/private/tmp/duplex-venus-behavior-v14','ControlPath=/private/tmp/duplex-venus-'+version) for x in c.ssh_argv]
         # Same disk/VM, previously Google-verified host keys; never relax checking.
         (c.R/'ssh.json').write_text(json.dumps(c.ssh_argv)+'\n')
         for _ in range(30):
@@ -56,7 +56,7 @@ def main():
         c.sync(c.R/'source.bundle',bundle)
         c.ssh('git --git-dir='+c.ROOT+'/source.git fetch '+bundle+' HEAD && git --git-dir='+c.ROOT+'/source.git worktree add --detach '+c.remote+' '+c.source)
         lease=dict(resource_key=key,zone=zone,vm_id=IDENT,disk_id=str(disk['id']),disk_size_gib=100,creation_timestamp=vm['creationTimestamp'],stop_unix=end,prior_new_gpu_seconds_upper=prior,prior_gpu_seconds=54451,prior_scope_usd=91.98448055555555,verified_hourly_price_usd=price['hourly_estimate_usd'],authorization_sha256=hashlib.sha256(AUTH.read_bytes()).hexdigest(),controller_pid=os.getpid(),controller_birth=c.run(['/bin/ps','-p',str(os.getpid()),'-o','lstart=']).strip())
-        if voice:lease['execution_plan_sha256']=hashlib.sha256(voice_plan.read_bytes()).hexdigest()
+        if voice or cadence:lease['execution_plan_sha256']=hashlib.sha256(voice_plan.read_bytes()).hexdigest()
         (c.R/'lease.json').write_text(json.dumps(lease,indent=2)+'\n');c.sync(c.R/'lease.json',lease_path)
         guard=subprocess.Popen([sys.executable,'-u','-m','portable.venus.guard','--lease',str(c.R/'lease.json'),'--ssh-argv',str(c.R/'ssh.json'),'--runpod-key','runs/local-migration-20261021/.private/runpod-budget-api-key','--status',str(c.R/'guard.json'),'--stop-file',str(c.R/'stop-requested')],stdout=(c.R/'guard.log').open('x'),stderr=subprocess.STDOUT,env={**os.environ,'PYTHONDONTWRITEBYTECODE':'1'});c.guard=guard
         until=time.time()+90
@@ -70,7 +70,7 @@ def main():
         assert c.props(guest_unit)['ActiveState']=='active'
         c.ssh('sudo systemctl stop duplex-venus-behavior-bootstrap-stop.timer');c.record('both_guards_live',mac_pid=guard.pid)
         dest=c.R/'copyback';dest.mkdir()
-        seed=Path('runs/venus-training-20261027/focused-audit-v15') if voice else old
+        seed=preceding if cadence else Path('runs/venus-training-20261027/focused-audit-v15') if voice else old
         for row in json.loads((seed/'unique-inventory.json').read_text()):
             original=seed/'copyback'/row['path']
             if not original.is_file():continue
@@ -78,7 +78,14 @@ def main():
             try:os.link(original,target)
             except OSError:shutil.copy2(original,target)
         env='DUPLEX_LIVE_GUARD_FILE='+c.ROOT+'/venus-live-guard-v1.json DUPLEX_LIVE_LEASE_FILE='+lease_path+' HF_HOME='+c.ROOT+'/venus-runtime-v1/hf-cache'
-        if voice:
+        if cadence:
+            settings=json.loads(CADENCE_PLAN.read_text())
+            for kind,remote_name in [('assistant','assistant-timing-sources-v1'),('user','control-repair-new-inputs-v1')]:
+                source_dir=Path(settings[kind+'_sources']);assert hashlib.sha256((source_dir/'render-receipts.json').read_bytes()).hexdigest()==settings[kind+'_receipts_sha256']
+                c.sync(str(source_dir)+'/',c.OUT+'/'+remote_name+'/')
+            args=' --assistant '+c.OUT+'/assistant-timing-sources-v1 --user '+c.OUT+'/control-repair-new-inputs-v1 --output '+c.OUT+'/cadence-source-audit-v19 --lease '+lease_path
+            module='data.venus.cadence_audit';unit='duplex-venus-cadence-source-audit-v19'
+        elif voice:
             c.copyback() # Retrieve actual missing audit files first; no recomputation.
             source_dir=Path(json.loads(voice_plan.read_text())['local_artifact_root'])
             c.sync(str(source_dir)+'/',c.OUT+'/voice-sources-v1/')
@@ -89,9 +96,10 @@ def main():
             module='training.venus.spoken_audit';args=' --collection '+c.OUT+'/native-holdout36-v14 --output '+c.OUT+'/spoken-audit36-v15 --source '+c.source+' --lease '+lease_path;unit='duplex-venus-spoken-audit36-v15'
         cmd='/usr/bin/env '+env+' '+c.ROOT+'/venus-runtime-v1/venv/bin/python -u -m '+module+args
         c.start_unit(unit,cmd,max(1,int(end-time.time()-210)));c.wait_unit(unit,end-210)
-        filename='/voice-comparison-'+version+'/voice-comparison.json' if voice else '/spoken-audit36-v15/spoken-audit.json'
-        result=json.loads(c.ssh('cat '+c.OUT+filename));assert result['complete'] and len(result['cases'])==(24 if voice else 36)
-        c.record('complete_native_voice_comparison' if voice else 'complete36_spoken_audit',cases=len(result['cases']),qualified=False)
+        filename='/cadence-source-audit-v19/source-audit.json' if cadence else '/voice-comparison-'+version+'/voice-comparison.json' if voice else '/spoken-audit36-v15/spoken-audit.json'
+        result=json.loads(c.ssh('cat '+c.OUT+filename));assert result['complete']
+        count=sum(r['requested'] for r in result['reports'].values()) if cadence else len(result['cases']);assert count==(168 if cadence else 24 if voice else 36)
+        c.record('complete_cadence_source_audit' if cadence else 'complete_native_voice_comparison' if voice else 'complete36_spoken_audit',cases=count,qualified=False)
     except BaseException as e:c.record('audit_failure',error_type=type(e).__name__,error=str(e)[-2000:]);raise
     finally:
         if c.ssh_argv:

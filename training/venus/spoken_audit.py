@@ -13,12 +13,15 @@ REVISION='41f01f3fe87f28c78e2fbf8b568835947dd65ed9'
 
 def references(traces):
     text=''.join(t.get('raw_text',t['text']) for t in traces)
-    text=text.replace('<|turn_eos|>',' ')
+    # Native speech units are separate text segments (e.g. "of" then
+    # "shallow"). Removing their delimiters with no separator fabricated
+    # joined words and inflated WER; retain a boundary, not invented speech.
+    text=re.sub(r'</unit>|<\|(?:turn_eos|chunk_eos)\|>',' ',text)
     text=re.sub(r'<(?!/?delegate>)[^>]*>','',text)
     user=re.sub(r'<delegate>.*?</delegate>','',text,flags=re.S)
     unclosed='<delegate>' in user
     if unclosed:user=user.split('<delegate>',1)[0]
-    clean=lambda s:re.sub(r'<[^>]*>','',s).strip()
+    clean=lambda s:' '.join(re.sub(r'<[^>]*>','',s).split())
     return dict(literal_generated=clean(text),intended_user_facing=clean(user),unclosed_tool_call=unclosed,
         complete_tool_calls=len(re.findall(r'<delegate>.*?</delegate>',text,flags=re.S)))
 

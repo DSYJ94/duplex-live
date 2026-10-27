@@ -27,6 +27,8 @@ def main(a):
     import torch
     from transformers import AutoModelForSpeechSeq2Seq,AutoProcessor,pipeline
     import soundfile as sf
+    from portable.venus.native_app import ensure_guard
+    ensure_guard()
     assert torch.cuda.is_available() and torch.cuda.device_count()==1
     root=Path(a.audio);receipt=root/'render-receipts.json';source=json.loads(receipt.read_text());assert source['complete']
     utterances=source['utterances']
@@ -35,11 +37,12 @@ def main(a):
         utterances=[r for r in utterances if r['id'] in ids];assert len(utterances)==len(ids)
     out=Path(a.output);out.mkdir(parents=True,exist_ok=False)
     revision='41f01f3fe87f28c78e2fbf8b568835947dd65ed9'
-    model=AutoModelForSpeechSeq2Seq.from_pretrained(a.model,revision=revision,torch_dtype=torch.float16,low_cpu_mem_usage=True,attn_implementation='eager').cuda().eval()
-    processor=AutoProcessor.from_pretrained(a.model,revision=revision)
+    model=AutoModelForSpeechSeq2Seq.from_pretrained(a.model,revision=revision,local_files_only=True,torch_dtype=torch.float16,low_cpu_mem_usage=True,attn_implementation='eager').cuda().eval()
+    processor=AutoProcessor.from_pretrained(a.model,revision=revision,local_files_only=True)
     pipe=pipeline('automatic-speech-recognition',model=model,tokenizer=processor.tokenizer,feature_extractor=processor.feature_extractor,torch_dtype=torch.float16,device=0)
     results=[];start=time.monotonic()
     for row in utterances:
+        ensure_guard()
         wav=root/(row['id']+'.wav');assert hashlib.sha256(wav.read_bytes()).hexdigest()==row['sha256']
         data,sr=sf.read(wav,dtype='float32');assert sr==16000 and data.size>0
         result=pipe(dict(array=data,sampling_rate=sr),return_timestamps='word',generate_kwargs=dict(language='en',task='transcribe',do_sample=False))
