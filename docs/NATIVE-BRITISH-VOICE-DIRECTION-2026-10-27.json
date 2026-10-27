@@ -87,5 +87,15 @@
   "derived_copy_caveat": "Two16kApple-resampled American audit copies exceed peak bound; retain failed derived copies and do not use them for approval. All67original24kWAVs pass; originalsource24k audio must be audited directly with recognizer-internal floating resampling. No gain reduction.",
   "training_boundary": "ActiveGCPstep190continuation uses the alreadyapproved216/52/24pacedcontrolcorpus with frozenaudio/TTS. Newaccent recordings are not injected midrun; nativeaccent transfer and anyacousticoptimizer change require their own data/numerical/behavior evidence.",
   "no_youtube_download": true,
-  "owner_audio_sent": false
+  "owner_audio_sent": false,
+  "preferred_profile_from_owner": "british-george",
+  "owner_feedback_summary_sha256": "aab055d18007f6389e5b0dccf56b736b4a8cecefa99740f67b90375c0e75a337",
+  "native_voice_trial_order": [
+    "british-george",
+    "rp-ben",
+    "british-alice"
+  ],
+  "preferred_profile_numeric_ratings": 0,
+  "source_primary_profile_historical": "british-alice; frozen acquisition plan, not owner adoption",
+  "voice_adoption_pending": true
 }

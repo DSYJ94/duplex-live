@@ -7,7 +7,7 @@
   "voice_acceptance": "Source preferences guide the candidate; verify actual native speech, intelligibility, naturalness and stableaccent/identity on complete paired cases before adoption",
   "behaviour_acceptance": "No acknowledgements in required silence; pause/resume without losing content; real pending work, cancellation and receipt-grounded result use; retain ordinary reasoning",
   "training_acceptance": "Resume actual190Adam/RNG; no repeat190; retain all approved216TRAIN/52DEV/24freshHOLDOUT and ordinaryKL/hidden; independent restore plus actual terminals/full tests; no subset adoption",
-  "current_blocker": "Transient Runpod503 stopped the guard during prefixpreparation before newoptimizerupdates; repair bounded live-status retry and resume saved nativefeatures/prefixes",
+  "current_blocker": null,
   "budget": {
     "maximum_focused_gpu_seconds": 14400,
     "focused_consumed_upper_seconds": 6500,
@@ -25,5 +25,47 @@
     "Qualify sourcevoices and trial George through actual native conditioning",
     "Connect/test realreasoning delegation; expose a controlled live trial only when required gates pass"
   ],
-  "tool_goal_note": "Existing goal remainsunfinished; toolreports paused and exposes no resume/replace API. This durable goalrecords active authorizedexecution without falsely completing the old goal."
+  "tool_goal_note": "Existing goal remainsunfinished; toolreports paused and exposes no resume/replace API. This durable goalrecords active authorizedexecution without falsely completing the old goal.",
+  "pilot_success_evidence": {
+    "behaviour": "Complete fixed native scenes: no pre-cueacknowledgement, pause/resumecontentretention, correctreceiptuse, genuinependingcancellation; unchangedfullpairedordinaryretention",
+    "delegation": "Actual reasoningbackend requests/results: explicitANDimplicitcomplexityrouting, useful followupconversationwhilepending, cancellation/output-suppression and failurehandling; fixturelookup success alone insufficient",
+    "voice": "Native output from ownerpreferredGeorge must retain completewords and originalpeaklimits, stablevoice/accent and appropriateprosody; blindedcompletepairedlistening target median>=4/5 (newnativeevidence, notthe9source scores)",
+    "latency": "Measure native streaming compute/backlog and interruption response under actual runtime; no real-timeclaim from isolatedsourceaudio",
+    "adoption": "No passing subset, manufactured terminal, devloss-onlysuccess or automaticadoption of sourcevoicepreferences"
+  },
+  "initial_strategy": "Keep native9Bduplexfoundation and basicreasoning; offload heavierreasoning toactualbackend. Finishthisboundeddatarepairtraining/eval before deciding whethermoreadapters/fullweightoracoustictraining is necessary.",
+  "current_execution": {
+    "recorded_utc": "2026-10-27T23:49:37Z",
+    "phase": "Exact prefix conversion active; no new optimizer updates yet",
+    "vm_id": "5206948495605140134",
+    "vm_name": "duplex-venus-paced-503-20261027-v24",
+    "gpu": "A100 40GB",
+    "producer_sha": "8fea2b1b1720c6744390006cef435b6a80dddfd4",
+    "controller_pid": 82484,
+    "guard_pid": 83249,
+    "native_stop_utc": "2026-10-28T01:31:57.818Z",
+    "prefixes_complete": 96,
+    "prefixes_required": 268,
+    "prefix_proofs_seen": "Zero logits and hidden error; inherited 30 proofs explicitly distinguished",
+    "backup": {
+      "files": 9402,
+      "bytes": 5536309453,
+      "all_hashes_verified": true
+    },
+    "training": "Automatic continuation from saved step190 after complete prefix proof and throughput admission; no repetition of prior190 updates"
+  },
+  "reasoning_integration": {
+    "confirmed_gap": "portable/venus/native_app.py currently constructs ArithmeticWorker; full native qualification uses LookupWorker. Neither is the general reasoning backend.",
+    "existing_reusable_components": [
+      "evals/native_reasoning_backend.py",
+      "evals/native_reasoning_lifecycle.py",
+      "evals/duplex_reasoning_worker.py"
+    ],
+    "next_implementation": "Connect the Venus worker interface to the existing real reasoning lifecycle through a Mac-local credential boundary. Keep native selection, pending work and cancellation visible; do not add a second spoken controller.",
+    "cancellation_contract": "Existing foreground HTTP path suppresses cancelled or stale delivery; it does not prove upstream compute cancellation. Preserve this truthful distinction.",
+    "cloud_credentials": false,
+    "new_external_calls_this_followup": 0,
+    "remaining_external_api_budget_upper_usd": 0.3523875,
+    "training_artifacts_changed_mid_run": false
+  }
 }
