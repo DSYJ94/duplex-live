@@ -4,6 +4,7 @@ import array
 import concurrent.futures
 import hashlib
 import json
+import re
 from pathlib import Path
 import shutil
 import subprocess
@@ -33,6 +34,10 @@ def sha(path):return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
 def render(a):
+    listing=subprocess.run(['say','-v','?'],check=True,capture_output=True,text=True,timeout=15).stdout
+    available=[m.group(1).strip() for line in listing.splitlines() if (m:=re.match(r'^(.*?)\s+[a-z]{2}_[A-Z]{2}\s+#',line))]
+    if a.voice not in available and not any(v.startswith(a.voice+' (') for v in available):
+        raise ValueError('Requested system voice is not installed; no recordings changed')
     original=Path(a.original);parent=json.loads((original/'render-receipts.json').read_text());observed=json.loads(Path(a.observed).read_text())
     if isinstance(observed,dict):observed=observed['rows']
     checked={r['id']:r for r in observed};assert parent['complete']
@@ -47,13 +52,19 @@ def render(a):
         synthesis_text=row['text'].replace(' marker in ',' marker, in, ') if a.emphasize_in else row['text']
         if getattr(a,'emphasize_articles',False):synthesis_text=synthesis_text.replace('start a background','start, a, background')
         assert original_words(synthesis_text)==original_words(row['text']),'Only non-word prosody markup is permitted'
-        subprocess.run(['say','-v',a.voice,'-r',str(a.rate),'-o',str(out/(ident+'.aiff')),synthesis_text],check=True,capture_output=True,timeout=60)
-        subprocess.run(['/usr/bin/afconvert','-f','WAVE','-d','LEI16@16000','-c','1',str(out/(ident+'.aiff')),str(out/(ident+'.wav'))],check=True,capture_output=True,timeout=30)
-        with wave.open(str(out/(ident+'.wav'))) as w:
+        fresh_aiff=out/(ident+'.resynthesis.aiff');fresh_wav=out/(ident+'.resynthesis.wav')
+        assert not fresh_aiff.exists() and not fresh_wav.exists()
+        subprocess.run(['say','-v',a.voice,'-r',str(a.rate),'-o',str(fresh_aiff),synthesis_text],check=True,capture_output=True,timeout=60)
+        if not fresh_aiff.exists() or not fresh_aiff.stat().st_size:raise ValueError('Speech engine did not create fresh audio; copied originals are never a repair')
+        subprocess.run(['/usr/bin/afconvert','-f','WAVE','-d','LEI16@16000','-c','1',str(fresh_aiff),str(fresh_wav)],check=True,capture_output=True,timeout=30)
+        with wave.open(str(fresh_wav)) as w:
             assert (w.getframerate(),w.getnchannels(),w.getsampwidth())==(16000,1,2)
             duration=w.getnframes()/16000;pcm=array.array('h',w.readframes(w.getnframes()))
         assert pcm and duration>0
         peak=max(abs(x) for x in pcm)/32768;assert peak<=.995,'No gain reduction or clipping concealment'
+        with wave.open(str(original/(ident+'.wav'))) as w:parent_pcm=w.readframes(w.getnframes())
+        if parent_pcm==pcm.tobytes():raise ValueError('Resynthesis left the diagnosed waveform unchanged; no repair approval')
+        fresh_aiff.replace(out/(ident+'.aiff'));fresh_wav.replace(out/(ident+'.wav'))
         row.update(seconds=duration,sha256=sha(out/(ident+'.wav')),aiff_sha256=sha(out/(ident+'.aiff')),peak=peak,voice='macOS '+a.voice,rate=a.rate,parent_wav_sha256=old_sha,repair_reason=checked[ident]['recognized'],synthesis_text=synthesis_text,independent_word_audit='PENDING')
         return row
     with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:repairs={r['id']:r for r in pool.map(one,selected)}

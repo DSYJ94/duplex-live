@@ -154,3 +154,20 @@ def test_distinct_native_conversations_reset_audio_cache_before_preparing(monkey
     engine.profile=dict(system_prompt='Streaming Omni Conversation.');engine.voice_reference=dict(path='public.wav')
     engine.prepare();model.audio_past_key_values='another-conversation';engine.prepare()
     assert events==['reset','prepare','reset','prepare']
+
+def test_source_repair_never_accepts_copied_audio_when_renderer_writes_nothing(tmp_path,monkeypatch):
+    import json,wave
+    from types import SimpleNamespace
+    from data.venus.repair import render
+    original=tmp_path/'original';original.mkdir();ident='example'
+    with wave.open(str(original/(ident+'.wav')),'wb') as w:w.setnchannels(1);w.setsampwidth(2);w.setframerate(16000);w.writeframes(bytes(32000))
+    (original/(ident+'.aiff')).write_bytes(b'original-only')
+    digest=hashlib.sha256((original/(ident+'.wav')).read_bytes()).hexdigest()
+    (original/'render-receipts.json').write_text(json.dumps(dict(complete=True,utterances=[dict(id=ident,text='The lid.',sha256=digest)])))
+    observed=tmp_path/'observed.json';observed.write_text(json.dumps(dict(rows=[dict(id=ident,recognized='The lead.',source_sha256=digest)])))
+    def fake(args,**kwargs):
+        assert args[0]!='afconvert' and args[0]!='/usr/bin/afconvert'
+        return SimpleNamespace(stdout='Samantha             en_US    # hello\n' if args==['say','-v','?'] else '')
+    monkeypatch.setattr('data.venus.repair.subprocess.run',fake)
+    with pytest.raises(ValueError,match='did not create fresh audio'):
+        render(SimpleNamespace(original=str(original),observed=str(observed),output=str(tmp_path/'new'),voice='Samantha',rate=150,emphasize_in=False))

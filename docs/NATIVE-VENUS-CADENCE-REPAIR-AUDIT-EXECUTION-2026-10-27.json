@@ -20,10 +20,10 @@
   "work": "Complete83assistant timing re-audit with the diagnosed Transformers boolean timestamp-processor fix, plus17exact-word repaired USER recordings. Reuse only68unchanged source-SHA-bound passed USER word records; require full83/83+85/85. No native baseline repeat, optimizer or external API.",
   "source_plan": "evals/fixtures/venus-control-repair-source-v2-20261027.json",
   "source_plan_sha256": "0315beac785a4dbfc8e128628380dd19fe9f8dc9387ea81ba96d0c6b9af5158b",
-  "assistant_sources": "runs/venus-training-20261027/assistant-timing-sources-v2-repaired",
-  "assistant_receipts_sha256": "f9331fe7079d29b0d39277306f8dacd62270f565f384c6e1bfdfa05cd3d512db",
-  "user_sources": "runs/venus-training-20261027/control-repair-new-inputs-v3-repaired",
-  "user_receipts_sha256": "463729e1ca2691f641e0a2e1ef6147a1a4d681ed6311e1c6f676f215cafc3f17",
+  "assistant_sources": "runs/venus-training-20261027/assistant-timing-sources-v3-repaired",
+  "assistant_receipts_sha256": "01394dadeb31c3d4b8ccd049d02cb71d36dbc58739d9c51873efee8082a3a457",
+  "user_sources": "runs/venus-training-20261027/control-repair-new-inputs-v4-repaired",
+  "user_receipts_sha256": "ea5906fc08db13098eaf79a82a991e88e3763e05b232aa9aacbf68acb7949d7f",
   "source_normalizer": "Same predeclared cardinal0..100 orthography/WER<=.05/peak<=.995; finite nondecreasing quantized word times, allowing zero-width interior bins but requiring positive final interval. No missing timestamps or phonetic substitutions.",
   "source_role": "Assistant audio is timing supervision only, not acoustic targets or a claim the final voice becomes macOS Daniel. ElevenLabs voice-data generation still awaits explicit credential-file access; unrelated progress proceeds.",
   "reason": "Measured step190 turns pack a sentence into1.28seconds and end it. Base spreads speech across native units. Repair only the diagnosed timing contract in NEW version, retain all exact old words/folds and originalheldout audio/receipts/KLhidden. Old16token/frame teacher cache cannot be extended unchanged.",
@@ -51,5 +51,9 @@
   },
   "new_asr_requests": 100,
   "reused_unchanged_word_records": 68,
-  "source_plan_revision_reason": "Six new DEV/HOLDOUT counterfactual groups previously varied follow-up questions with private values. V2 corrects these to matched inputs before any recognition results were inspected. Original V1 stays intact/unapproved; no re-render needed for this correction."
+  "source_plan_revision_reason": "Six new DEV/HOLDOUT counterfactual groups previously varied follow-up questions with private values. V2 corrects these to matched inputs before any recognition results were inspected. Original V1 stays intact/unapproved; no re-render needed for this correction.",
+  "amended_before_any_v20_submission": {
+    "previous_plan_sha256": "b4c331700ab5c9385fb549d4260ece8313514001cc5c8c14d068cea885e04658",
+    "reason": "Local PCM/hash preflight caught unavailable SamanthaEnhanced request leaving copied waveforms unchanged. Only those4perrole were regenerated with validated installed Samantha; renderer now requires a fresh file and changed PCM, backed by regression test. Invalid attempts/receipts preserved. No GPU job had been submitted for V20."
+  }
 }
