@@ -171,3 +171,16 @@ def test_source_repair_never_accepts_copied_audio_when_renderer_writes_nothing(t
     monkeypatch.setattr('data.venus.repair.subprocess.run',fake)
     with pytest.raises(ValueError,match='did not create fresh audio'):
         render(SimpleNamespace(original=str(original),observed=str(observed),output=str(tmp_path/'new'),voice='Samantha',rate=150,emphasize_in=False))
+
+
+def test_original_voice_source_orthography_preserves_values_and_phonemes():
+    from data.venus.voice_source_quality import wer
+    assert wer('One hundred and twenty four.','124.')==0
+    assert wer('The twenty third of April.','The 23rd of April.')==0
+    assert wer('Three pounds and fifty pence.','£3.50.')==0
+    assert wer('Mm-hm.','Mm-hmm.')==0
+    assert wer('Favourite colours and two kilometres.','Favorite colors and two kilometers.')==0
+    assert wer('fifteen','50')>0
+    assert wer('room sign','rune sign')>0
+    assert wer('warm day','worn day')>0
+    assert wer('half past eight','eight thirty')>0

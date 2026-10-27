@@ -48,7 +48,16 @@ def sync(local,dest,timeout=180):
 
 
 def props(unit):
-    return dict(x.split('=',1) for x in ssh('sudo systemctl show '+unit+' -p ActiveState -p SubState -p Result -p ExecMainStatus -p MainPID -p InvocationID').splitlines())
+    command='sudo systemctl show '+unit+' -p ActiveState -p SubState -p Result -p ExecMainStatus -p MainPID -p InvocationID'
+    try:raw=ssh(command)
+    except RuntimeError as error:
+        if not any(s in str(error) for s in ('Broken pipe','Connection closed','read from master failed')):raise
+        # Reconnect a read only. Never retry a submission or model mutation.
+        # Removing option values would leave orphan -o flags: replace in place.
+        fresh=[('ControlMaster=no' if x.startswith('ControlMaster=') else 'ControlPath=none' if x.startswith('ControlPath=') else x) for x in ssh_argv]
+        raw=run(fresh+[command],25)
+        record('read_only_unit_status_reconnected',unit=unit)
+    return dict(x.split('=',1) for x in raw.splitlines())
 
 
 def start_unit(unit,cmd,seconds):

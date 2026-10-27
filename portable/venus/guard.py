@@ -9,6 +9,7 @@ from pathlib import Path
 import shlex
 import subprocess
 import time
+import urllib.error
 from portable.context.gcp_budget_watchdog import read_runpod_pods
 
 PROJECT='aurium-duplex-live-20261024'
@@ -21,10 +22,10 @@ PRIOR_USD=91.98448055555555
 
 
 def resource(lease):
-    if lease.get('resource_key') in ('venus-paced-continuation-v22','venus-paced-continuation-v23'):
+    if lease.get('resource_key') in ('venus-paced-continuation-v22','venus-paced-continuation-v23','venus-paced-recovery-v24'):
         from training.venus.paced_guard import resource as paced_resource
         return paced_resource(lease)
-    if lease.get('resource_key') in ('venus-focused-audit-v15','venus-voice-reference-v16','venus-voice-reference-v17','venus-voice-reference-v18','venus-cadence-qualify-v19','venus-cadence-qualify-v20','venus-cadence-qualify-v21','venus-paced-continuation-v22','venus-paced-continuation-v23'):
+    if lease.get('resource_key') in ('venus-focused-audit-v15','venus-voice-reference-v16','venus-voice-reference-v17','venus-voice-reference-v18','venus-cadence-qualify-v19','venus-cadence-qualify-v20','venus-cadence-qualify-v21','venus-paced-continuation-v22','venus-paced-continuation-v23','venus-paced-recovery-v24'):
         from training.venus.focused_guard import resource as focused_resource
         return focused_resource(lease)
     if lease.get('resource_key')=='venus-behavior-v14':
@@ -98,21 +99,31 @@ def bounded_cloud_read(*args):
             print(json.dumps(dict(event='bounded_provider_timeout_retry',read=list(args))),flush=True)
 
 
+def bounded_runpod_read(key,reader=read_runpod_pods,sleep=time.sleep):
+    """Retry transient HTTP failures only; never renew from a cached response."""
+    for attempt in range(3):
+        try:return reader(key)
+        except urllib.error.HTTPError as error:
+            if error.code not in (429,500,502,503,504) or attempt==2:raise
+            print(json.dumps(dict(event='bounded_runpod_http_retry',status=error.code,attempt=attempt+1)),flush=True)
+            sleep(attempt+1)
+
+
 def provider_snapshot(binding,key):
     started=time.time()
     with ThreadPoolExecutor(max_workers=4) as pool:
         vm=pool.submit(bounded_cloud_read,'instances','describe',binding['name'],'--zone='+binding['zone'])
         disk=pool.submit(bounded_cloud_read,'disks','describe',binding['disk_name'],'--zone='+binding['zone'])
         instances=pool.submit(bounded_cloud_read,'instances','list')
-        pods=pool.submit(read_runpod_pods,key)
+        pods=pool.submit(bounded_runpod_read,key)
         return vm.result(),disk.result(),instances.result(),pods.result(),started
 
 
 def validate(vm,instances,runpods,lease,now):
-    if lease.get('resource_key') in ('venus-paced-continuation-v22','venus-paced-continuation-v23'):
+    if lease.get('resource_key') in ('venus-paced-continuation-v22','venus-paced-continuation-v23','venus-paced-recovery-v24'):
         from training.venus.paced_guard import validate as paced_validate
         return paced_validate(vm,instances,runpods,lease,now)
-    if lease.get('resource_key') in ('venus-focused-audit-v15','venus-voice-reference-v16','venus-voice-reference-v17','venus-voice-reference-v18','venus-cadence-qualify-v19','venus-cadence-qualify-v20','venus-cadence-qualify-v21','venus-paced-continuation-v22','venus-paced-continuation-v23'):
+    if lease.get('resource_key') in ('venus-focused-audit-v15','venus-voice-reference-v16','venus-voice-reference-v17','venus-voice-reference-v18','venus-cadence-qualify-v19','venus-cadence-qualify-v20','venus-cadence-qualify-v21','venus-paced-continuation-v22','venus-paced-continuation-v23','venus-paced-recovery-v24'):
         from training.venus.focused_guard import validate as focused_validate
         return focused_validate(vm,instances,runpods,lease,now)
     if lease.get('resource_key')=='venus-behavior-v14':
@@ -213,7 +224,7 @@ def mac(args):
     authority=b['authority'].read_bytes()
     a=json.loads(authority)
     expected='APPROVED_WITHIN_EXISTING_TRAINING_SCOPE' if lease.get('resource_key') in ('venus-memory-v11','venus-recovery-v13','venus-behavior-v14') else 'APPROVED'
-    maximum=40 if lease.get('resource_key') in ('venus-focused-audit-v15','venus-voice-reference-v16','venus-voice-reference-v17','venus-voice-reference-v18','venus-cadence-qualify-v19','venus-cadence-qualify-v20','venus-cadence-qualify-v21','venus-paced-continuation-v22','venus-paced-continuation-v23') else 35
+    maximum=40 if lease.get('resource_key') in ('venus-focused-audit-v15','venus-voice-reference-v16','venus-voice-reference-v17','venus-voice-reference-v18','venus-cadence-qualify-v19','venus-cadence-qualify-v20','venus-cadence-qualify-v21','venus-paced-continuation-v22','venus-paced-continuation-v23','venus-paced-recovery-v24') else 35
     assert a['status']==expected and a['maximum_additional_gcp_usage_usd']==maximum
     assert lease['authorization_sha256']==hashlib.sha256(authority).hexdigest()
     ssh=json.loads(Path(args.ssh_argv).read_text())
@@ -230,7 +241,7 @@ def mac(args):
             vm,disk,instances,pods,snapshot_start=provider_snapshot(b,key)
             if vm['status']=='TERMINATED':return
             assert str(disk['id'])==b['disk']
-            if lease.get('resource_key') in ('us-a10040','venus-training-v1','venus-native-gradient-v8','venus-memory-v11','venus-recovery-v13','venus-behavior-v14','venus-focused-audit-v15','venus-voice-reference-v16','venus-voice-reference-v17','venus-voice-reference-v18','venus-cadence-qualify-v19','venus-cadence-qualify-v20','venus-cadence-qualify-v21','venus-paced-continuation-v22','venus-paced-continuation-v23'):
+            if lease.get('resource_key') in ('us-a10040','venus-training-v1','venus-native-gradient-v8','venus-memory-v11','venus-recovery-v13','venus-behavior-v14','venus-focused-audit-v15','venus-voice-reference-v16','venus-voice-reference-v17','venus-voice-reference-v18','venus-cadence-qualify-v19','venus-cadence-qualify-v20','venus-cadence-qualify-v21','venus-paced-continuation-v22','venus-paced-continuation-v23','venus-paced-recovery-v24'):
                 assert int(disk['sizeGb'])==100
             pods=pods.get('pods',[]) if isinstance(pods,dict) else pods
             end=validate(vm,instances,pods,lease,time.time())

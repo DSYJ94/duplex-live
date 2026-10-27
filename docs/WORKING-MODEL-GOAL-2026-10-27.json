@@ -1,0 +1,29 @@
+{
+  "schema": "dl-working-model-goal-v1",
+  "status": "ACTIVE_EXECUTION_UNFINISHED",
+  "objective": "Deliver a useful native full-duplex voice model: correct ordinary conversation and silence/pause/interrupt behaviour, reliable asynchronous delegation of harder reasoning, and a natural British voice led by ownerpreferenceGeorge.",
+  "source_of_authority": "Owner asks to continue nextsteps and setgoalifneeded; existing focused40USD/fourGPUhour grant still bounds execution",
+  "preferred_voice": "british-george",
+  "voice_acceptance": "Source preferences guide the candidate; verify actual native speech, intelligibility, naturalness and stableaccent/identity on complete paired cases before adoption",
+  "behaviour_acceptance": "No acknowledgements in required silence; pause/resume without losing content; real pending work, cancellation and receipt-grounded result use; retain ordinary reasoning",
+  "training_acceptance": "Resume actual190Adam/RNG; no repeat190; retain all approved216TRAIN/52DEV/24freshHOLDOUT and ordinaryKL/hidden; independent restore plus actual terminals/full tests; no subset adoption",
+  "current_blocker": "Transient Runpod503 stopped the guard during prefixpreparation before newoptimizerupdates; repair bounded live-status retry and resume saved nativefeatures/prefixes",
+  "budget": {
+    "maximum_focused_gpu_seconds": 14400,
+    "focused_consumed_upper_seconds": 6500,
+    "remaining_gpu_seconds": 7900,
+    "maximum_focused_usage_usd": 40,
+    "external_api_cap_usd": 10,
+    "external_api_usage_upper_usd": 9.6476125,
+    "no_purchases": true,
+    "no_overlap": true
+  },
+  "steps": [
+    "Bind ownerfeedback to originalwave hashes",
+    "Repair503monitoring and resume savedprefixes on same disk within remaining time",
+    "Complete nonredundant training and whole pairednative evaluation",
+    "Qualify sourcevoices and trial George through actual native conditioning",
+    "Connect/test realreasoning delegation; expose a controlled live trial only when required gates pass"
+  ],
+  "tool_goal_note": "Existing goal remainsunfinished; toolreports paused and exposes no resume/replace API. This durable goalrecords active authorizedexecution without falsely completing the old goal."
+}

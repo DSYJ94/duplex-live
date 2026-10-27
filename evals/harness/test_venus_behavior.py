@@ -126,3 +126,33 @@ def test_warm_recovery_guard_requires_exact_vm_and_carried_failed_start():
     assert g.validate(vm,[vm],[],lease,start+1)==start+10000
     for wrong in ({'vm_id':'123'},{'prior_new_gpu_seconds_upper':2400},{'stop_unix':start+12000}):
         with pytest.raises(AssertionError):g.validate(vm,[vm],[],dict(lease,**wrong),start+1)
+
+
+def test_transient_runpod_status_retry_never_reuses_permission():
+    import urllib.error
+    from portable.venus.guard import bounded_runpod_read
+    calls=[];pauses=[]
+    def reader(key):
+        calls.append(key)
+        if len(calls)<3:raise urllib.error.HTTPError('https://api.runpod.io/v2/pods',503,'unavailable',{},None)
+        return [{'status':'EXITED'}]
+    assert bounded_runpod_read('fixture',reader=reader,sleep=pauses.append)==[{'status':'EXITED'}]
+    assert len(calls)==3 and pauses==[1,2]
+    for code,expected in ((503,3),(401,1),(403,1)):
+        count=[]
+        def failing(key):
+            count.append(1);raise urllib.error.HTTPError('https://api.runpod.io/v2/pods',code,'failed',{},None)
+        with pytest.raises(urllib.error.HTTPError):bounded_runpod_read('fixture',reader=failing,sleep=lambda _:None)
+        assert len(count)==expected
+
+
+def test_recovery24_scope_carries_actual_interruption_without_budget_reset():
+    import json,hashlib
+    from datetime import datetime,timezone
+    from training.venus.paced_guard import AUTH,PLAN_V24,validate
+    p=json.loads(PLAN_V24.read_text());r=json.loads(AUTH.read_text())['resources'];start=1800000000
+    lease=dict(resource_key='venus-paced-recovery-v24',vm_id='321',disk_id=r['same_existing_disk_id'],zone=r['zone'],disk_size_gib=100,creation_timestamp='immutable',stop_unix=start+7200,prior_new_gpu_seconds_upper=6500,prior_gpu_seconds=54451,prior_scope_usd=91.98448055555555,authorization_sha256=hashlib.sha256(AUTH.read_bytes()).hexdigest(),execution_plan_sha256=hashlib.sha256(PLAN_V24.read_bytes()).hexdigest(),verified_hourly_price_usd=3.68708363)
+    vm=dict(id='321',name=p['vm_name'],zone='/'+r['zone'],status='RUNNING',machineType='/a2-highgpu-1g',creationTimestamp='immutable',lastStartTimestamp=datetime.fromtimestamp(start,timezone.utc).isoformat(),tags=dict(items=['duplex-venus-train-bounded']),disks=[dict(boot=True,autoDelete=False,source='/disks/'+r['same_existing_disk_name'])],scheduling=dict(provisioningModel='FLEX_START',maxRunDuration=dict(seconds=7200),instanceTerminationAction='STOP',automaticRestart=False))
+    assert validate(vm,[vm],[],lease,start+1)==start+7200
+    for wrong in ({'prior_new_gpu_seconds_upper':2600},{'stop_unix':start+10000},{'prior_gpu_seconds':40351}):
+        with pytest.raises(AssertionError):validate(vm,[vm],[],dict(lease,**wrong),start+1)

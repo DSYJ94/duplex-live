@@ -120,7 +120,7 @@ def main(a):
         assert a.parent_sha256=='10354f93ec2b5e224ae7298b2f3b8687f9dc74d2fbf87c1db62bd79763155b63' and digest(parent_checkpoint)==a.parent_sha256
         parent_state=torch.load(parent_checkpoint,map_location='cpu',weights_only=False)
         assert parent_state['step']==190 and parent_state['metadata']['source']=='2dcdf0f8b62400bda989fa68e88ebf291b967f62'
-        RECIPE.update(train_count=216,dev_count=52,epochs=8,updates=432,learning_rate=.00005,seed=20261027,post_training_reserve_seconds=3000)
+        RECIPE.update(train_count=216,dev_count=52,epochs=8,updates=432,learning_rate=.00005,seed=20261027,post_training_reserve_seconds=3600)
         MAXIMUM_RECIPE.update(RECIPE)
     cache=Path(a.cache);manifest=json.loads((cache/'manifest.json').read_text());assert not manifest['proof_only']
     approval=json.loads(Path(a.approval).read_text());assert approval['approved'] and approval['manifest_sha256']==manifest['source_manifest_sha256']

@@ -7,6 +7,7 @@ from .native_cache import load_native,training_input_proof
 from .lora import native_segmented_forward,suffix_forward
 
 PRIOR_PRODUCER='3fc3ff4491c55edf020fc3e6ed6f23a3e3957c19'
+PACED_PRIOR_PRODUCER='d6e3b9ffb20b1de253a3d94ec1d84a4bdcfa31cc'
 
 
 def same_value(a,b):
@@ -24,7 +25,7 @@ def reuse_prefix(path,example,witness,producer,expected_layers=35):
     leave valid completed entries. The original files/failed whole-job status
     remain intact. A corrupt/incomplete entry is diagnosed and recomputed.
     """
-    if producer!=PRIOR_PRODUCER:raise ValueError('Unknown prior prefix producer')
+    if producer not in (PRIOR_PRODUCER,PACED_PRIOR_PRODUCER):raise ValueError('Unknown prior prefix producer')
     if hashlib.sha256(path.read_bytes()).hexdigest()!=witness['sha256']:raise ValueError('Prior cache hash changed after verified copyback')
     result=torch.load(path,map_location='cpu',weights_only=False)
     expected=dict(example,forward_path='native-frozen-prefix-v1')
@@ -60,12 +61,15 @@ def main(a):
     root=Path(a.cache);manifest=json.loads((root/'manifest.json').read_text());assert not manifest['proof_only']
     counts={f:sum(r['fold']==f for r in manifest['scenes']) for f in ('TRAIN','DEV')}
     assert counts in (dict(TRAIN=152,DEV=36),dict(TRAIN=216,DEV=52)) and len(manifest['scenes'])==sum(counts.values())
-    if counts['TRAIN']==216:assert manifest['native_speech_timing_schema']=='word-aligned-native-v1' and not a.reuse_cache and not a.reuse_witness
+    if counts['TRAIN']==216:assert manifest['native_speech_timing_schema']=='word-aligned-native-v1'
     witness=json.loads(Path(a.reuse_witness).read_text()) if a.reuse_witness else None
     if bool(a.reuse_cache)!=bool(witness):raise ValueError('Prior cache requires verified copyback witness')
     prior={r['file']:r for r in witness['files']} if witness else {}
     if witness:
-        assert witness['producer_source']==PRIOR_PRODUCER and not witness['original_job_terminal_success']
+        assert witness['producer_source']==(PACED_PRIOR_PRODUCER if counts['TRAIN']==216 else PRIOR_PRODUCER) and not witness['original_job_terminal_success']
+        if counts['TRAIN']==216:
+            assert witness['native_cache_manifest_sha256']==hashlib.sha256((root/'manifest.json').read_bytes()).hexdigest()
+            assert witness['original_native_job_terminal_success'] and witness['all_prior_proofs_exact_zero']
         assert set(prior)<={r['file'] for r in manifest['scenes']} and len(prior)==len(witness['files'])
     model,_=load_native(a.model,language_only=True);out=Path(a.output);out.mkdir(parents=True,exist_ok=False);rows=[];start=time.monotonic()
     for row in manifest['scenes']:

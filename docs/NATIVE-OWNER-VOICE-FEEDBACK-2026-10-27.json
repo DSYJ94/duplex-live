@@ -1,0 +1,85 @@
+{
+  "schema": "dl-owner-voice-feedback-summary-v1",
+  "recorded_utc": "2026-10-27T23:21:26.260437+00:00",
+  "raw_feedback_kept_mac_private": true,
+  "raw_feedback_sent_to_services": false,
+  "source_binding": "b80711ec9ef8505b3885080278d07f563da891a3212b16c2489e85253898fb8d",
+  "source_feedback_binding": "All9ratedAmericanWAVs have identical SHA256 acrossV1/V2/V3, resolving missing sourcehash without pretending an exported binding existed",
+  "rated_american_clips": 9,
+  "metrics": {
+    "naturalness": {
+      "count": 9,
+      "mean": 2.4444444444444446,
+      "median": 2,
+      "minimum": 1,
+      "maximum": 4
+    },
+    "clarity": {
+      "count": 9,
+      "mean": 5,
+      "median": 5,
+      "minimum": 5,
+      "maximum": 5
+    },
+    "delivery": {
+      "count": 9,
+      "mean": 3.3333333333333335,
+      "median": 3,
+      "minimum": 3,
+      "maximum": 4
+    }
+  },
+  "family_metrics": {
+    "voice-v1-warm_conversation": {
+      "naturalness": {
+        "count": 6,
+        "mean": 2
+      },
+      "clarity": {
+        "count": 6,
+        "mean": 5
+      },
+      "delivery": {
+        "count": 6,
+        "mean": 3.3333333333333335
+      }
+    },
+    "voice-v1-explanation_and_emphasis": {
+      "naturalness": {
+        "count": 3,
+        "mean": 3.3333333333333335
+      },
+      "clarity": {
+        "count": 3,
+        "mean": 5
+      },
+      "delivery": {
+        "count": 3,
+        "mean": 3.3333333333333335
+      }
+    }
+  },
+  "preferred_profile": "british-george",
+  "preferred_profile_numeric_ratings": 0,
+  "accent_ratings": [
+    {
+      "profile": "rp-ben",
+      "id": "voice-v1-warm_conversation-01",
+      "rating": 3,
+      "source_sha256": "4461b5922b850c6e946801bc6e23ef262c7fbbe3b268362d11d7242ba7c0b8b4"
+    }
+  ],
+  "all_source_naturalness_approved": false,
+  "production_voice_adopted": false,
+  "decisions": [
+    "Use George British as the leading nativevoice-conditioning trial; retain RP as an option",
+    "Do not call clarity5/5 naturalness success: warmAmerican targets average2/5",
+    "Keep American source as baseline rather than an approved naturalness target",
+    "Preserve every source/fold/failedattempt; no changes to active optimizer data from subjective ratings alone"
+  ],
+  "completion_requires": [
+    "Current repairedcontrolcontinuation and complete nativebehavior/speech tests",
+    "Actual asynchronousreasoningbackend including pending/cancel/resume, not only fixturelookups",
+    "NativeGeorgevoice A/B with full word/peak/control retention and human naturalness review"
+  ]
+}
