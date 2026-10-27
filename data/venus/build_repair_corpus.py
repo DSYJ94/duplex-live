@@ -8,7 +8,7 @@ def build():
     original=json.loads(PARENT.read_text());retained=[copy.deepcopy(s) for s in original['scenes'] if s['fold'] in ('TRAIN','DEV')]
     additions=[]
     def add(fold,family,group,turns,program,world=None):
-        additions.append(dict(id=f'venus-repair-v1-{fold.lower()}-{family}-{len(additions):04d}',fold=fold,family=family,
+        additions.append(dict(id=f'venus-repair-v2-{fold.lower()}-{family}-{len(additions):04d}',fold=fold,family=family,
             split_group=fold+':repair:'+group,user_turns=turns,teacher_program=program,synthetic_private_world=world,source='authored_synthetic',owner_conversations=False))
     specs=[('TRAIN',['apricot','daffodil','bluebell','starlight','daybreak','windmill','sunbeam','rainbow'],
             ['suitcase','toolbox','mailbox','backpack','notepad','wallet','shelf','desk'],
@@ -29,7 +29,7 @@ def build():
                 add(fold,'quiet','cue-'+cue,[quiet_patterns[variant].format(cue=cue),'I have not released you yet. Please keep listening silently.',cue+'. '+question],dict(kind='quiet_until_later_cue',cue=cue,quiet_gap_seconds=4,release_answer=answer,no_acknowledgment=True))
         for key in keys:
             for variant in range(3 if fold=='TRAIN' else 2):
-                value=values[variant%len(values)];question,answer=facts[variant%len(facts)]
+                value=values[variant%len(values)];question,answer=facts[0]
                 add(fold,'cancel','cancel-'+key,[f'Please start a background lookup for the marker in {key}.','Cancel that pending lookup now. Do not bring back its result.',question],
                     dict(kind='cancel_lookup',query='lookup '+key,cancel_query='cancel pending',worker_delay_seconds=18,cancel_acknowledgment='Cancelled.',ordinary_answer=answer,no_cancelled_value_delivery=True),{key:value})
         for key in keys[:4 if fold=='TRAIN' else 2]:
@@ -44,18 +44,22 @@ def build():
                 add(fold,'pause','steps-'+str(n),[request,'Stop speaking for a moment. Wait until I say continue.','Continue.'],dict(kind='pause_resume',first_text='First, '+first+'.',remaining_text='Then, '+second+'.',quiet_gap_seconds=4,no_restart=True))
             for key in keys:
                 for variant,value in enumerate(values):
-                    question,answer=facts[variant]
+                    question,answer=facts[0]
                     add(fold,'pending','pending-'+key,[f'Use the background worker to look up the marker in {key}.','While you wait, '+question],dict(kind='lookup_with_followup',query='lookup '+key,worker_delay_seconds=22,followup_answer=answer,result_answer='The marker is '+value+'.',answer_followup_while_pending=True,result_must_follow_receipt=True),{key:value})
     scenes=retained+additions;counts={f:sum(s['fold']==f for s in scenes) for f in ['TRAIN','DEV','HOLDOUT']}
     assert counts==dict(TRAIN=216,DEV=52,HOLDOUT=24) and len(additions)==104
     assert {s['id']:s for s in retained}=={s['id']:s for s in original['scenes'] if s['fold'] in ('TRAIN','DEV')}
     assert not ({s['id'] for s in scenes}&{s['id'] for s in original['scenes'] if s['fold']=='HOLDOUT'})
     random.Random(20261027).shuffle(scenes)
-    return dict(schema='dl-venus-focused-control-repair-v1',status='UNAPPROVED_PENDING_COMPLETE_SOURCE_TEACHER_SEMANTIC_NATIVE_GATES',
+    return dict(schema='dl-venus-focused-control-repair-v2',status='UNAPPROVED_PENDING_COMPLETE_SOURCE_TEACHER_SEMANTIC_NATIVE_GATES',
+        model_revision=original['model_revision'],native_speech_timing_required=True,
+        native_word_normalizer='Fixed spelling conventions and spoken cardinal digits0..100, declared before any new native evaluation; no phonetic substitutions',
         parent_plan=str(PARENT),parent_plan_sha256=hashlib.sha256(PARENT.read_bytes()).hexdigest(),counts=counts,
         added_counts={f:sum(s['fold']==f for s in additions) for f in counts},scenes=scenes,
         old_train_and_dev_preserved_exactly=True,old_holdout_retained_in_parent_as_inspected_diagnostic=True,
-        fresh_holdout_never_used_for_optimizer=True,optimizer_updates=0,external_api_calls=0)
+        fresh_holdout_never_used_for_optimizer=True,optimizer_updates=0,external_api_calls=0,
+        supersedes='evals/fixtures/venus-control-repair-source-v1-20261027.json',
+        repair_reason='Before source recognition results, CPU inspection found follow-up questions varied with private values in six DEV/HOLDOUT groups. V2 holds every user turn fixed across private worlds. Original V1 and all recordings remain intact; no new audio needed and no optimizer has used either plan.')
 
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('--output',required=True);a=p.parse_args();out=Path(a.output);assert not out.exists();out.write_text(json.dumps(build(),indent=2)+'\n')

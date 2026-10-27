@@ -69,5 +69,7 @@
     "bytes": 3786025871,
     "all_hashes_verified": true,
     "receipt": "runs/venus-training-20261027/voice-reference-v18/copyback-verified.json"
-  }
+  },
+  "comparison_limitation": "Public duplex.prepare resets decoder/streaming processor but not model.audio_past_key_values. Existing sequential-case comparisons carried audio history; they are descriptive diagnostics, not isolated causal effect estimates. NativeEngine and teacher capture now explicitly call the released model.reset_session only at new conversations/scenes; future native evaluations/caches require fresh audio state. No need to rerun old comparisons to justify fixing the direct16token/turn-EOS timing error.",
+  "source_timing_recognizer_fix": "Installed Transformers4.51 pipeline forwards return_timestamps=word but Whisper installs its timestamp processor only if return_timestamps is True. ASR adapter now passes boolean True to generation while retaining word-level postprocessing. Old failed timestamp reports preserved; full assistant timing audit required before training."
 }

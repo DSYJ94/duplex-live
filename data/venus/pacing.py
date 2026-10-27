@@ -25,7 +25,9 @@ def units(text,aligned_words):
     spans=list(re.finditer(r"[A-Za-z0-9]+(?:['’][A-Za-z]+)?",text));observed=[]
     for row in aligned_words:
         start,end=row['timestamp']
-        if start is None or end is None or not math.isfinite(start+end) or not 0<=start<end:raise ValueError('Complete finite word timings required')
+        # DTW timestamps are quantized: interior function words can occupy a
+        # zero-width bin. Preserve that measured bin, never invent an endpoint.
+        if start is None or end is None or not math.isfinite(start+end) or not 0<=start<=end:raise ValueError('Complete finite word timings required')
         observed.extend((word,start,end) for word in words(row['text']))
     # Source WER approval alone cannot justify assigning a missing or different
     # word a time. Orthographic normalization is the existing fixed rule only.
@@ -33,6 +35,7 @@ def units(text,aligned_words):
         raise ValueError('Every authored word needs its own exact aligned target')
     if any(observed[i+1][1]<observed[i][1] for i in range(len(observed)-1)):
         raise ValueError('Word onsets must be monotonic')
+    if not observed or observed[-1][2]<=observed[-1][1]:raise ValueError('Final word needs a positive measured ending interval')
     last=max(math.floor(observed[-1][2]-1e-6),math.floor(observed[-1][1]));result=[]
     for frame in range(last+1):
         indices=[i for i,(_,start,end) in enumerate(observed) if math.floor(start)==frame]

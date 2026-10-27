@@ -82,12 +82,12 @@ def digest(p):
   for b in iter(lambda:f.read(4*1024*1024),b''):h.update(b)
  return h.hexdigest()
 r=Path('/workspace/migration/venus-training-v1')
-rows=[dict(path=str(p.relative_to(r)),bytes=p.stat().st_size,sha256=digest(p)) for p in sorted(r.rglob('*')) if p.is_file() and '.private' not in p.parts and p.name!='session-token' and not p.name.startswith('core.')]
+rows=[dict(path=str(p.relative_to(r)),bytes=p.stat().st_size,sha256=digest(p)) for p in sorted(r.rglob('*')) if p.is_file() and not {'.private','credentials','owner-conversations','keys'}&set(p.relative_to(r).parts) and p.name not in ('session-token','core','API keys.md') and not p.name.startswith('core.')]
 print(json.dumps(rows))"""
     rows=json.loads(ssh('/usr/bin/python3 -c '+shlex.quote(code),180));assert rows
     (R/'unique-inventory.json').write_text(json.dumps(rows,indent=2)+'\n')
     dest=R/'copyback';dest.mkdir(exist_ok=True)
-    run(['rsync','-ar','--no-owner','--no-group','--exclude=session-token','--exclude=.private','--exclude=core','--exclude=core.*','-e',shlex.join(ssh_argv[:-1]),ssh_argv[-1]+':'+OUT+'/',str(dest)+'/'],240)
+    run(['rsync','-ar','--no-owner','--no-group','--exclude=session-token','--exclude=.private','--exclude=credentials','--exclude=owner-conversations','--exclude=keys','--exclude=API keys.md','--exclude=core','--exclude=core.*','-e',shlex.join(ssh_argv[:-1]),ssh_argv[-1]+':'+OUT+'/',str(dest)+'/'],240)
     for row in rows:
         path=dest/row['path'];assert path.stat().st_size==row['bytes'] and hashlib.file_digest(path.open('rb'),'sha256').hexdigest()==row['sha256']
     result=dict(all_hashes_verified=True,files=len(rows),bytes=sum(r['bytes'] for r in rows),source=source)

@@ -208,6 +208,9 @@ class NativeEngine:
         ensure_guard()
         if self.action_channel:self.action_channel.reset()
         with self.torch.inference_mode():
+            # duplex.prepare resets text/processor state, but the released
+            # model's audio KV cache otherwise survives across conversations.
+            self.model.reset_session()
             self.duplex.prepare(prefix_system_prompt=self.profile['system_prompt'],
                 prompt_wav_path=self.voice_reference['path'])
         self.cursor = 0

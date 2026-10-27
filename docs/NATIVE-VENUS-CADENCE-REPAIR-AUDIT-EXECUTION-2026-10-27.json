@@ -1,0 +1,55 @@
+{
+  "schema": "dl-native-cadence-repair-audit-execution-v20",
+  "status": "APPROVED_WITHIN_FOCUSED_REPAIR",
+  "at_utc": "2026-10-27T20:24:56.046399+00:00",
+  "parent_sha256": "869cfc14a7e31e5ee7459ff9248e38a318f7c80b42200134293689728f8c62a2",
+  "parent_authority": "docs/NATIVE-VENUS-FOCUSED-REPAIR-AUTHORIZATION-2026-10-27.json",
+  "prior_gpu_seconds_upper": 54451,
+  "focused_prior_gpu_seconds_upper": 1700,
+  "maximum_next_gpu_seconds": 1300,
+  "maximum_focused_gpu_seconds": 14400,
+  "maximum_cumulative_gpu_seconds": 72000,
+  "maximum_focused_usage_usd": 40,
+  "resources": {
+    "vm_id": "6535540622249260120",
+    "name": "duplex-venus-behavior-20261027-v1",
+    "disk_id": "4375908109499109167",
+    "zone": "us-central1-a",
+    "native_stop_seconds": 1300
+  },
+  "work": "Complete83assistant timing re-audit with the diagnosed Transformers boolean timestamp-processor fix, plus17exact-word repaired USER recordings. Reuse only68unchanged source-SHA-bound passed USER word records; require full83/83+85/85. No native baseline repeat, optimizer or external API.",
+  "source_plan": "evals/fixtures/venus-control-repair-source-v2-20261027.json",
+  "source_plan_sha256": "0315beac785a4dbfc8e128628380dd19fe9f8dc9387ea81ba96d0c6b9af5158b",
+  "assistant_sources": "runs/venus-training-20261027/assistant-timing-sources-v2-repaired",
+  "assistant_receipts_sha256": "f9331fe7079d29b0d39277306f8dacd62270f565f384c6e1bfdfa05cd3d512db",
+  "user_sources": "runs/venus-training-20261027/control-repair-new-inputs-v3-repaired",
+  "user_receipts_sha256": "463729e1ca2691f641e0a2e1ef6147a1a4d681ed6311e1c6f676f215cafc3f17",
+  "source_normalizer": "Same predeclared cardinal0..100 orthography/WER<=.05/peak<=.995; finite nondecreasing quantized word times, allowing zero-width interior bins but requiring positive final interval. No missing timestamps or phonetic substitutions.",
+  "source_role": "Assistant audio is timing supervision only, not acoustic targets or a claim the final voice becomes macOS Daniel. ElevenLabs voice-data generation still awaits explicit credential-file access; unrelated progress proceeds.",
+  "reason": "Measured step190 turns pack a sentence into1.28seconds and end it. Base spreads speech across native units. Repair only the diagnosed timing contract in NEW version, retain all exact old words/folds and originalheldout audio/receipts/KLhidden. Old16token/frame teacher cache cannot be extended unchanged.",
+  "previous_interval": {
+    "start": "2026-10-27T12:56:01.367-07:00",
+    "stop": "2026-10-27T13:06:00.853-07:00",
+    "actual_seconds": 599.4859998226166,
+    "charged_upper_seconds": 600
+  },
+  "backups": {
+    "files": 5474,
+    "bytes": 3835898165,
+    "all_hashes_verified": true
+  },
+  "external_api_calls": 0,
+  "optimizer_updates": 0,
+  "prior_user_quality": "/workspace/migration/venus-training-v1/cadence-source-audit-v19/user-quality.json",
+  "prior_user_quality_sha256": "6add58b5c940d10ac787aa12f5ab15f7a64ce7ed76a2aed232311aadf5f5e0b4",
+  "diagnosed_repairs": {
+    "assistant_lexical": 4,
+    "user_lexical": 17,
+    "assistant_timestamp_missing_endpoints": 83,
+    "words_and_originals_preserved": true,
+    "word_or_peak_thresholds_relaxed": false
+  },
+  "new_asr_requests": 100,
+  "reused_unchanged_word_records": 68,
+  "source_plan_revision_reason": "Six new DEV/HOLDOUT counterfactual groups previously varied follow-up questions with private values. V2 corrects these to matched inputs before any recognition results were inspected. Original V1 stays intact/unapproved; no re-render needed for this correction."
+}

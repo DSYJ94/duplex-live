@@ -3,16 +3,16 @@ import hashlib,json,os,shlex,shutil,subprocess,sys,time
 from pathlib import Path
 from datetime import datetime
 from . import controller as c
-from .focused_guard import AUTH,NAME,IDENT,VOICE_PLAN,VOICE_PLAN_V17,VOICE_PLAN_V18,CADENCE_PLAN
+from .focused_guard import AUTH,NAME,IDENT,VOICE_PLAN,VOICE_PLAN_V17,VOICE_PLAN_V18,CADENCE_PLAN,CADENCE_REPAIR_PLAN
 from portable.context.gcp_budget_watchdog import read_runpod_pods
 
 def main():
     mode=sys.argv[1] if len(sys.argv)>1 else 'audit-v15'
-    assert mode in ('audit-v15','voice-v16','voice-v17','voice-v18','cadence-v19')
-    voice=mode.startswith('voice-');cadence=mode=='cadence-v19';version=mode.rsplit('-',1)[-1]
-    stage='cadence-qualify-v19' if cadence else 'voice-reference-'+version if voice else 'focused-audit-v15'
+    assert mode in ('audit-v15','voice-v16','voice-v17','voice-v18','cadence-v19','cadence-v20')
+    voice=mode.startswith('voice-');cadence=mode.startswith('cadence-');version=mode.rsplit('-',1)[-1]
+    stage='cadence-qualify-'+version if cadence else 'voice-reference-'+version if voice else 'focused-audit-v15'
     key='venus-'+stage
-    voice_plan={'v15':VOICE_PLAN,'v16':VOICE_PLAN,'v17':VOICE_PLAN_V17,'v18':VOICE_PLAN_V18,'v19':CADENCE_PLAN}[version]
+    voice_plan={'v15':VOICE_PLAN,'v16':VOICE_PLAN,'v17':VOICE_PLAN_V17,'v18':VOICE_PLAN_V18,'v19':CADENCE_PLAN,'v20':CADENCE_REPAIR_PLAN}[version]
     c.R=Path('runs/venus-training-20261027')/stage;assert not c.R.exists(),'Observe existing run; never duplicate'
     assert not c.run(['git','status','--porcelain','--','training/venus','data/venus','portable/venus']).strip()
     a=json.loads(AUTH.read_text());r=a['resources'];c.NAME=NAME;zone=r['zone']
@@ -23,9 +23,9 @@ def main():
     assert all(p['status'] in ('EXITED','STOPPED','TERMINATED') for p in pods)
     price=json.loads(Path('runs/venus-20261026/us-current-price40-v1.json').read_text());assert 0<price['hourly_estimate_usd']<=4 and time.time()-datetime.fromisoformat(price['at_utc']).timestamp()<3600
     old=Path('runs/venus-training-20261027/behavior-v14');assert json.loads((old/'copyback-verified.json').read_text())['all_hashes_verified']
-    prior={'v15':0,'v16':200,'v17':300,'v18':500,'v19':1100}[version]
+    prior={'v15':0,'v16':200,'v17':300,'v18':500,'v19':1100,'v20':1700}[version]
     if voice or cadence:
-        preceding=Path('runs/venus-training-20261027')/{'v16':'focused-audit-v15','v17':'voice-reference-v16','v18':'voice-reference-v17','v19':'voice-reference-v18'}[version];last=json.loads((preceding/'provider-final.json').read_text())
+        preceding=Path('runs/venus-training-20261027')/{'v16':'focused-audit-v15','v17':'voice-reference-v16','v18':'voice-reference-v17','v19':'voice-reference-v18','v20':'cadence-qualify-v19'}[version];last=json.loads((preceding/'provider-final.json').read_text())
         assert vm['lastStartTimestamp']==last['lastStartTimestamp'] and vm['lastStopTimestamp']==last['lastStopTimestamp']
         elapsed=datetime.fromisoformat(last['lastStopTimestamp']).timestamp()-datetime.fromisoformat(last['lastStartTimestamp']).timestamp()
         assert 0<elapsed<=prior
@@ -79,12 +79,17 @@ def main():
             except OSError:shutil.copy2(original,target)
         env='DUPLEX_LIVE_GUARD_FILE='+c.ROOT+'/venus-live-guard-v1.json DUPLEX_LIVE_LEASE_FILE='+lease_path+' HF_HOME='+c.ROOT+'/venus-runtime-v1/hf-cache'
         if cadence:
-            settings=json.loads(CADENCE_PLAN.read_text())
-            for kind,remote_name in [('assistant','assistant-timing-sources-v1'),('user','control-repair-new-inputs-v1')]:
+            settings=json.loads(voice_plan.read_text());remote_folders={}
+            for kind in ('assistant','user'):
+                remote_name=Path(settings[kind+'_sources']).name;remote_folders[kind]=c.OUT+'/'+remote_name
                 source_dir=Path(settings[kind+'_sources']);assert hashlib.sha256((source_dir/'render-receipts.json').read_bytes()).hexdigest()==settings[kind+'_receipts_sha256']
                 c.sync(str(source_dir)+'/',c.OUT+'/'+remote_name+'/')
-            args=' --assistant '+c.OUT+'/assistant-timing-sources-v1 --user '+c.OUT+'/control-repair-new-inputs-v1 --output '+c.OUT+'/cadence-source-audit-v19 --lease '+lease_path
-            module='data.venus.cadence_audit';unit='duplex-venus-cadence-source-audit-v19'
+            args=' --assistant '+remote_folders['assistant']+' --user '+remote_folders['user']+' --output '+c.OUT+'/cadence-source-audit-'+version
+            if version=='v20':
+                prior_quality=settings['prior_user_quality'];assert c.ssh('sha256sum '+prior_quality).split()[0]==settings['prior_user_quality_sha256']
+                args+=' --prior-user-quality '+prior_quality;module='data.venus.cadence_repair_audit'
+            else:args+=' --lease '+lease_path;module='data.venus.cadence_audit'
+            unit='duplex-venus-cadence-source-audit-'+version
         elif voice:
             c.copyback() # Retrieve actual missing audit files first; no recomputation.
             source_dir=Path(json.loads(voice_plan.read_text())['local_artifact_root'])
@@ -96,9 +101,9 @@ def main():
             module='training.venus.spoken_audit';args=' --collection '+c.OUT+'/native-holdout36-v14 --output '+c.OUT+'/spoken-audit36-v15 --source '+c.source+' --lease '+lease_path;unit='duplex-venus-spoken-audit36-v15'
         cmd='/usr/bin/env '+env+' '+c.ROOT+'/venus-runtime-v1/venv/bin/python -u -m '+module+args
         c.start_unit(unit,cmd,max(1,int(end-time.time()-210)));c.wait_unit(unit,end-210)
-        filename='/cadence-source-audit-v19/source-audit.json' if cadence else '/voice-comparison-'+version+'/voice-comparison.json' if voice else '/spoken-audit36-v15/spoken-audit.json'
+        filename='/cadence-source-audit-'+version+'/source-audit.json' if cadence else '/voice-comparison-'+version+'/voice-comparison.json' if voice else '/spoken-audit36-v15/spoken-audit.json'
         result=json.loads(c.ssh('cat '+c.OUT+filename));assert result['complete']
-        count=sum(r['requested'] for r in result['reports'].values()) if cadence else len(result['cases']);assert count==(168 if cadence else 24 if voice else 36)
+        count=(result['assistant']['required']+result['user']['required'] if version=='v20' else sum(r['requested'] for r in result['reports'].values())) if cadence else len(result['cases']);assert count==(168 if cadence else 24 if voice else 36)
         c.record('complete_cadence_source_audit' if cadence else 'complete_native_voice_comparison' if voice else 'complete36_spoken_audit',cases=count,qualified=False)
     except BaseException as e:c.record('audit_failure',error_type=type(e).__name__,error=str(e)[-2000:]);raise
     finally:

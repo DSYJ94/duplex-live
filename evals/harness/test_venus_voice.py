@@ -128,3 +128,29 @@ def test_measured_pause_resumes_unsaid_words_instead_of_dropping_them():
     assert words(first['text']+' '+resume['text'])==words('First, rinse the cup. Then, dry it.')
     assert resume['resumes_unspoken_first_step_without_restart']
     assert first['frame']+len(first['native_speech_units'])==stop['frame']
+
+def test_whisper_word_mode_enables_the_boolean_timestamp_processor():
+    from types import SimpleNamespace
+    from data.venus.asr import enable_complete_word_timestamps
+    recorded=[];model=SimpleNamespace(generate=lambda **kwargs:recorded.append(kwargs))
+    enable_complete_word_timestamps(model)
+    options=dict(return_timestamps='word',return_token_timestamps=True,return_segments=True)
+    model.generate(**options)
+    assert options['return_timestamps']=='word' and recorded[0]['return_timestamps'] is True
+    assert recorded[0]['return_token_timestamps'] and recorded[0]['return_segments']
+
+def test_distinct_native_conversations_reset_audio_cache_before_preparing(monkeypatch):
+    from contextlib import nullcontext
+    from types import SimpleNamespace
+    from portable.venus.native_app import NativeEngine
+    monkeypatch.setattr('portable.venus.native_app.ensure_guard',lambda:None)
+    events=[];model=SimpleNamespace(audio_past_key_values='old-conversation')
+    def reset():model.audio_past_key_values=None;events.append('reset')
+    def prepare(**kwargs):
+        assert model.audio_past_key_values is None;events.append('prepare')
+    model.reset_session=reset
+    engine=NativeEngine.__new__(NativeEngine);engine.model=model;engine.action_channel=None
+    engine.torch=SimpleNamespace(inference_mode=nullcontext);engine.duplex=SimpleNamespace(prepare=prepare)
+    engine.profile=dict(system_prompt='Streaming Omni Conversation.');engine.voice_reference=dict(path='public.wav')
+    engine.prepare();model.audio_past_key_values='another-conversation';engine.prepare()
+    assert events==['reset','prepare','reset','prepare']

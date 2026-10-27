@@ -45,6 +45,7 @@ def render(a):
     def one(row):
         row=dict(row);ident=row['id'];old_sha=row['sha256']
         synthesis_text=row['text'].replace(' marker in ',' marker, in, ') if a.emphasize_in else row['text']
+        if getattr(a,'emphasize_articles',False):synthesis_text=synthesis_text.replace('start a background','start, a, background')
         assert original_words(synthesis_text)==original_words(row['text']),'Only non-word prosody markup is permitted'
         subprocess.run(['say','-v',a.voice,'-r',str(a.rate),'-o',str(out/(ident+'.aiff')),synthesis_text],check=True,capture_output=True,timeout=60)
         subprocess.run(['/usr/bin/afconvert','-f','WAVE','-d','LEI16@16000','-c','1',str(out/(ident+'.aiff')),str(out/(ident+'.wav'))],check=True,capture_output=True,timeout=30)
@@ -80,4 +81,4 @@ def merge(a):
 
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('stage',choices=['render','merge']);p.add_argument('--original');p.add_argument('--observed');p.add_argument('--voice',default='Daniel (Enhanced)');p.add_argument('--rate',type=int,default=150);p.add_argument('--emphasize-in',action='store_true');p.add_argument('--original-quality');p.add_argument('--repair-quality');p.add_argument('--audio');p.add_argument('--output',required=True);a=p.parse_args();dict(render=render,merge=merge)[a.stage](a)
+    p=argparse.ArgumentParser();p.add_argument('stage',choices=['render','merge']);p.add_argument('--original');p.add_argument('--observed');p.add_argument('--voice',default='Daniel (Enhanced)');p.add_argument('--rate',type=int,default=150);p.add_argument('--emphasize-in',action='store_true');p.add_argument('--emphasize-articles',action='store_true');p.add_argument('--original-quality');p.add_argument('--repair-quality');p.add_argument('--audio');p.add_argument('--output',required=True);a=p.parse_args();dict(render=render,merge=merge)[a.stage](a)

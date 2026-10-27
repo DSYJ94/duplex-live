@@ -79,3 +79,13 @@ def test_repair_sources_preserve_old_examples_and_reserve_new_holdout_groups():
             return {s['teacher_program']['cue'] for s in scenes if 'cue' in s['teacher_program']} if field=='cue' else {k for s in scenes for k in (s['synthetic_private_world'] or {})}
         tr,dev,hold=(values(f) for f in ('TRAIN','DEV','HOLDOUT'))
         assert not (tr&dev or tr&hold or dev&hold)
+
+def test_repair_private_values_never_change_model_visible_user_inputs():
+    from collections import defaultdict
+    from data.venus.build_repair_corpus import build
+    groups=defaultdict(set)
+    for scene in build()['scenes']:
+        if scene['synthetic_private_world']:
+            key=next(iter(scene['synthetic_private_world']))
+            groups[(scene['fold'],scene['family'],key)].add(tuple(scene['user_turns']))
+    assert groups and all(len(variants)==1 for variants in groups.values())

@@ -85,6 +85,7 @@ def capture(duplex, timeline, wav, retain_segments=False):
     duplex.decoder.feed,duplex.decoder.decode=feed,decode
     try:
         with torch.no_grad():
+            duplex.model.reset_session()  # Independent scenes must not inherit audio KV history.
             duplex.prepare(prefix_system_prompt='Streaming Omni Conversation.')
             for frame in range(timeline['frames']):
                 from portable.venus.native_app import ensure_guard

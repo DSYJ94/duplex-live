@@ -22,6 +22,18 @@ def wer(reference,hypothesis):
         row=nxt
     return row[-1]/max(1,len(a))
 
+def enable_complete_word_timestamps(model):
+    """Transformers4.51 passes'word'; Whisper enables its processor only onTrue.
+
+    Keep pipeline postprocessing in word mode, but pass the actual boolean to
+    Whisper generation. Otherwise the final word can have no ending timestamp.
+    """
+    original=model.generate
+    def generate(*args,**kwargs):
+        if kwargs.get('return_timestamps')=='word':kwargs['return_timestamps']=True
+        return original(*args,**kwargs)
+    model.generate=generate
+
 
 def main(a):
     import torch
@@ -38,6 +50,7 @@ def main(a):
     out=Path(a.output);out.mkdir(parents=True,exist_ok=False)
     revision='41f01f3fe87f28c78e2fbf8b568835947dd65ed9'
     model=AutoModelForSpeechSeq2Seq.from_pretrained(a.model,revision=revision,local_files_only=True,torch_dtype=torch.float16,low_cpu_mem_usage=True,attn_implementation='eager').cuda().eval()
+    enable_complete_word_timestamps(model)
     processor=AutoProcessor.from_pretrained(a.model,revision=revision,local_files_only=True)
     pipe=pipeline('automatic-speech-recognition',model=model,tokenizer=processor.tokenizer,feature_extractor=processor.feature_extractor,torch_dtype=torch.float16,device=0)
     results=[];start=time.monotonic()
