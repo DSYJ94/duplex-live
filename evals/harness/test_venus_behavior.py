@@ -20,7 +20,7 @@ def test_focused_budget_retains_previous_intervals_and_forbids_overlap():
     from training.venus.focused_guard import AUTH,IDENT,NAME,validate
     a=json.loads(AUTH.read_text());r=a['resources'];start=1800000000
     from datetime import datetime,timezone
-    lease=dict(vm_id=IDENT,disk_id=r['same_existing_disk_id'],zone=r['zone'],disk_size_gib=100,creation_timestamp='immutable',stop_unix=start+1300,prior_new_gpu_seconds_upper=0,prior_gpu_seconds=54451,prior_scope_usd=91.98448055555555,authorization_sha256=hashlib.sha256(AUTH.read_bytes()).hexdigest(),verified_hourly_price_usd=3.68708363)
+    lease=dict(resource_key='venus-focused-audit-v15',vm_id=IDENT,disk_id=r['same_existing_disk_id'],zone=r['zone'],disk_size_gib=100,creation_timestamp='immutable',stop_unix=start+1300,prior_new_gpu_seconds_upper=0,prior_gpu_seconds=54451,prior_scope_usd=91.98448055555555,authorization_sha256=hashlib.sha256(AUTH.read_bytes()).hexdigest(),verified_hourly_price_usd=3.68708363)
     vm=dict(id=IDENT,name=NAME,zone='/'+r['zone'],status='RUNNING',machineType='/a2-highgpu-1g',creationTimestamp='immutable',lastStartTimestamp=datetime.fromtimestamp(start,timezone.utc).isoformat(),tags=dict(items=['duplex-venus-train-bounded']),disks=[dict(boot=True,autoDelete=False,source='/disks/'+r['same_existing_disk_name'])],scheduling=dict(provisioningModel='FLEX_START',maxRunDuration=dict(seconds=1300),instanceTerminationAction='STOP',automaticRestart=False))
     assert validate(vm,[vm],[],lease,start+10)==start+1300
     for bad in ({'prior_gpu_seconds':40351},{'prior_new_gpu_seconds_upper':100},{'stop_unix':start+3000},{'verified_hourly_price_usd':4.01}):

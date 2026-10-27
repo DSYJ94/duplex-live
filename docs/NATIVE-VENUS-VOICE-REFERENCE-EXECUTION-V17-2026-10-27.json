@@ -1,0 +1,63 @@
+{
+  "schema": "dl-native-voice-reference-execution-v17",
+  "status": "APPROVED_WITHIN_FOCUSED_REPAIR",
+  "at_utc": "2026-10-27T19:15:12.870945+00:00",
+  "parent_authority": "docs/NATIVE-VENUS-FOCUSED-REPAIR-AUTHORIZATION-2026-10-27.json",
+  "parent_sha256": "869cfc14a7e31e5ee7459ff9248e38a318f7c80b42200134293689728f8c62a2",
+  "prior_gpu_seconds_upper": 54451,
+  "focused_prior_gpu_seconds_upper": 300,
+  "maximum_next_gpu_seconds": 1300,
+  "maximum_focused_gpu_seconds": 14400,
+  "maximum_cumulative_gpu_seconds": 72000,
+  "maximum_focused_usage_usd": 40,
+  "resource": {
+    "vm_id": "6535540622249260120",
+    "name": "duplex-venus-behavior-20261027-v1",
+    "disk_id": "4375908109499109167",
+    "zone": "us-central1-a",
+    "native_stop_seconds": 1300
+  },
+  "work": "ONE complete all8ordinary diagnostic comparison: native base/released reference, step190/released reference, step190/legacy synthetic ElevenLabs reference. Same inputs, original system prompt, seed42 and sampling; no new optimizer. First independently word-audit reference; if it fails, no custom-reference inference. No adoption claim or heldout score.",
+  "conditions": [
+    "base-released-reference",
+    "step190-released-reference",
+    "step190-eleven-reference"
+  ],
+  "cases_per_condition": 8,
+  "input_seconds_per_condition": 81,
+  "voice_reference": {
+    "schema": "dl-native-voice-reference-source-v1",
+    "status": "RESEARCH_COMPARISON_ONLY_PENDING_WORD_AUDIT",
+    "wav": "legacy-eleven-reference.wav",
+    "sha256": "aa988dbf41b1045987aab4281caeea9c556ea20f76c123fbd2e0de4cb59433d9",
+    "source_path": "runs/local/audio/dense_dialog-000/utterances/03_assistant.wav",
+    "authored_text": "A microphone samples the outside noise, the electronics generate the exact opposite waveform, and the two cancel before reaching your ear.",
+    "source_timeline_sha256": "1a90178c5d3defeffa0b4493eb826411835d8d764e66cf8d60bc6e69dc507d63",
+    "source_manifest_sha256": "c01d2e15b06aaa767beca4f5ebb14f6b282932247b232144d666597390046d87",
+    "provider": "ElevenLabs per original engine receipt",
+    "source_model": "not recorded in legacy manifest; do not invent",
+    "provenance_class": "closed-content",
+    "authority": "ADR0003 Amendment A plus owner voice request20261027",
+    "legacy_manifest_license_field_incorrect": true,
+    "originals_preserved": true,
+    "acoustic_training_approved": false
+  },
+  "local_artifact_root": "runs/venus-training-20261027/voice-sources-v1",
+  "maximum_artifact_bytes": 10000000000,
+  "copyback": "Retrieve missing derived ASR files first; all output full inventory/hashes beforeSTOP; original disk retained. Fix sharedSSHguard contention using separate strict control socket.",
+  "external_api_calls": 0,
+  "training_updates": 0,
+  "supersedes_unstarted_voice_comparison": {
+    "source": "34af5dc2ebbe103e24cc116069b4b3efe806edb6",
+    "controller_pid": 14330,
+    "operation": "operation-1793128295448-65ed737163eba-b0b6b7eb-5787f411",
+    "actual_start": "2026-10-27T19:12:13.312Z",
+    "actual_stop": "2026-10-27T19:13:21.634Z",
+    "actual_seconds": 68.322,
+    "charged_upper_seconds": 100,
+    "model_unit_started": false,
+    "optimizer_updates": 0,
+    "reason": "Local guard readiness was written before actual remote SSH publication. New source acknowledges remote publication before exposing readiness and checks remote guard before starting guest watchdog. Previous guard remains fail-closed; no threshold/deadline weakening."
+  },
+  "previous_execution_plan_sha256": "364712c70d3471b50c58b03afeb65fd0b29f940a671444f51511ccf51ab56d7e"
+}
