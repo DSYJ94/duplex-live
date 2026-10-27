@@ -172,3 +172,20 @@ def test_frozen_prefix_suffix_is_exact_and_keeps_all_trainable_gradients():
     full,_=scene_loss(m,e,'cpu');full.backward();expected={n:p.grad.clone() for n,p in m.named_parameters() if p.requires_grad}
     m.zero_grad();same,_=scene_loss(m,prefix,'cpu');assert torch.equal(full,same);same.backward()
     assert all(torch.allclose(p.grad,expected[n],atol=1e-7,rtol=1e-5) for n,p in m.named_parameters() if p.requires_grad)
+
+
+def test_interrupted_prefix_reuse_binds_inputs_and_never_claims_recomputation(tmp_path):
+    import hashlib
+    from training.venus.prefix_cache import capture_prefix,reuse_prefix,PRIOR_PRODUCER
+    m=model();e=example(m);e['segments']=[dict(start=i,length=1,return_logits=True) for i in range(6)]
+    e['forward_path']='native-segmented-bptt-v1'
+    prefix,_=capture_prefix(m,e);path=tmp_path/'partial.pt';torch.save(prefix,path)
+    witness=dict(sha256=hashlib.sha256(path.read_bytes()).hexdigest())
+    reused,proof=reuse_prefix(path,e,witness,PRIOR_PRODUCER,expected_layers=1)
+    assert torch.equal(selected_forward(m,reused,'cpu')[0],selected_forward(m,prefix,'cpu')[0])
+    assert proof['passed'] and not proof['independently_recomputed_this_process']
+    with pytest.raises(ValueError,match='producer'):reuse_prefix(path,e,witness,'unknown',expected_layers=1)
+    changed=copy.deepcopy(e);changed['targets'][0]+=1
+    with pytest.raises(ValueError,match='exact approved'):reuse_prefix(path,changed,witness,PRIOR_PRODUCER,expected_layers=1)
+    path.write_bytes(b'incomplete')
+    with pytest.raises(ValueError,match='hash'):reuse_prefix(path,e,witness,PRIOR_PRODUCER,expected_layers=1)

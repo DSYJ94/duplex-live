@@ -21,6 +21,9 @@ PRIOR_USD=91.98448055555555
 
 
 def resource(lease):
+    if lease.get('resource_key')=='venus-recovery-v13':
+        from training.venus.recovery_guard import resource as recovery_resource
+        return recovery_resource(lease)
     if lease.get('resource_key')=='venus-memory-v11':
         from training.venus.memory_guard import resource as memory_resource
         return memory_resource(lease)
@@ -97,6 +100,9 @@ def provider_snapshot(binding,key):
 
 
 def validate(vm,instances,runpods,lease,now):
+    if lease.get('resource_key')=='venus-recovery-v13':
+        from training.venus.recovery_guard import validate as recovery_validate
+        return recovery_validate(vm,instances,runpods,lease,now)
     if lease.get('resource_key')=='venus-memory-v11':
         from training.venus.memory_guard import validate as memory_validate
         return memory_validate(vm,instances,runpods,lease,now)
@@ -179,7 +185,7 @@ def mac(args):
     lease=json.loads(Path(args.lease).read_text());b=resource(lease)
     authority=b['authority'].read_bytes()
     a=json.loads(authority)
-    expected='APPROVED_WITHIN_EXISTING_TRAINING_SCOPE' if lease.get('resource_key')=='venus-memory-v11' else 'APPROVED'
+    expected='APPROVED_WITHIN_EXISTING_TRAINING_SCOPE' if lease.get('resource_key') in ('venus-memory-v11','venus-recovery-v13') else 'APPROVED'
     assert a['status']==expected and a['maximum_additional_gcp_usage_usd']==35
     assert lease['authorization_sha256']==hashlib.sha256(authority).hexdigest()
     ssh=json.loads(Path(args.ssh_argv).read_text())
@@ -193,7 +199,7 @@ def mac(args):
             vm,disk,instances,pods,snapshot_start=provider_snapshot(b,key)
             if vm['status']=='TERMINATED':return
             assert str(disk['id'])==b['disk']
-            if lease.get('resource_key') in ('us-a10040','venus-training-v1','venus-native-gradient-v8','venus-memory-v11'):
+            if lease.get('resource_key') in ('us-a10040','venus-training-v1','venus-native-gradient-v8','venus-memory-v11','venus-recovery-v13'):
                 assert int(disk['sizeGb'])==100
             pods=pods.get('pods',[]) if isinstance(pods,dict) else pods
             end=validate(vm,instances,pods,lease,time.time())

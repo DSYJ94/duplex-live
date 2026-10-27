@@ -53,3 +53,15 @@ class DataTests(unittest.TestCase):
         assert check(vm,[vm],[],lease,start+10)==start+7200
         for bad in ({'prior_new_gpu_seconds_upper':4600},{'stop_unix':start+9000},{'verified_hourly_price_usd':4.01},{'vm_id':'123'}):
             with self.assertRaises(AssertionError):check(vm,[vm],[],dict(lease,**bad),start+10)
+
+
+def test_recovery_budget_includes_interrupted_interval_and_shorter_native_stop():
+    from training.venus.recovery_guard import AUTH as authority,validate as check
+    raw=authority.read_bytes();a=json.loads(raw);r=a['resources'];start=stamp('2026-10-27T16:00:00Z')
+    lease=dict(resource_key='venus-recovery-v13',vm_id='123',disk_id=r['same_disk_id'],zone=r['zone'],disk_size_gib=100,creation_timestamp='2026-10-27T15:59:00Z',stop_unix=start+3000,prior_new_gpu_seconds_upper=11300,prior_gpu_seconds=40351,prior_scope_usd=a['prior_original_usd_upper'],authorization_sha256=hashlib.sha256(raw).hexdigest(),verified_hourly_price_usd=3.68708363)
+    vm=dict(id='123',name=r['new_name'],zone='/'+r['zone'],status='RUNNING',machineType='/'+r['machine'],creationTimestamp=lease['creation_timestamp'],lastStartTimestamp='2026-10-27T16:00:00Z',tags=dict(items=['duplex-venus-train-bounded']),disks=[dict(boot=True,autoDelete=False,source='/disks/'+r['same_disk_name'])],scheduling=dict(provisioningModel='FLEX_START',maxRunDuration=dict(seconds=3000),instanceTerminationAction='STOP',automaticRestart=False))
+    assert check(vm,[vm],[],lease,start+10)==start+3000
+    for bad in ({'prior_new_gpu_seconds_upper':9500},{'stop_unix':start+4800},{'verified_hourly_price_usd':4.01},{'disk_id':'1'}):
+        import pytest
+        with pytest.raises(AssertionError):check(vm,[vm],[],dict(lease,**bad),start+10)
+    with pytest.raises(AssertionError):check(vm,[vm,dict(vm,id='999')],[],lease,start+10)
