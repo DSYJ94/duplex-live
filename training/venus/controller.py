@@ -72,7 +72,7 @@ def wait_unit(unit,deadline):
         time.sleep(5)
 
 
-def copyback():
+def copyback(transfer_timeout=240):
     ssh('mkdir -p '+OUT+'/journals; '+''.join('sudo journalctl -u '+u+' --no-pager -o cat > '+OUT+'/journals/'+u+'.log; ' for u in UNITS))
     code="""import hashlib,json
 from pathlib import Path
@@ -87,7 +87,7 @@ print(json.dumps(rows))"""
     rows=json.loads(ssh('/usr/bin/python3 -c '+shlex.quote(code),180));assert rows
     (R/'unique-inventory.json').write_text(json.dumps(rows,indent=2)+'\n')
     dest=R/'copyback';dest.mkdir(exist_ok=True)
-    run(['rsync','-ar','--no-owner','--no-group','--exclude=session-token','--exclude=.private','--exclude=credentials','--exclude=owner-conversations','--exclude=keys','--exclude=API keys.md','--exclude=core','--exclude=core.*','-e',shlex.join(ssh_argv[:-1]),ssh_argv[-1]+':'+OUT+'/',str(dest)+'/'],240)
+    run(['rsync','-ar','--no-owner','--no-group','--exclude=session-token','--exclude=.private','--exclude=credentials','--exclude=owner-conversations','--exclude=keys','--exclude=API keys.md','--exclude=core','--exclude=core.*','-e',shlex.join(ssh_argv[:-1]),ssh_argv[-1]+':'+OUT+'/',str(dest)+'/'],transfer_timeout)
     for row in rows:
         path=dest/row['path'];assert path.stat().st_size==row['bytes'] and hashlib.file_digest(path.open('rb'),'sha256').hexdigest()==row['sha256']
     result=dict(all_hashes_verified=True,files=len(rows),bytes=sum(r['bytes'] for r in rows),source=source)

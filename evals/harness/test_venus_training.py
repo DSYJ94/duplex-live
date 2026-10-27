@@ -189,3 +189,36 @@ def test_interrupted_prefix_reuse_binds_inputs_and_never_claims_recomputation(tm
     with pytest.raises(ValueError,match='exact approved'):reuse_prefix(path,changed,witness,PRIOR_PRODUCER,expected_layers=1)
     path.write_bytes(b'incomplete')
     with pytest.raises(ValueError,match='hash'):reuse_prefix(path,e,witness,PRIOR_PRODUCER,expected_layers=1)
+
+
+def test_repair_schedule_replays_all216_and_reserves_native_evaluation():
+    from collections import Counter
+    from training.venus.train import RECIPE,order,admit_epochs
+    before=dict(RECIPE)
+    try:
+        RECIPE.update(train_count=216,dev_count=52,post_training_reserve_seconds=2600,epochs=8)
+        admission=admit_epochs(10,30,8000)
+        assert admission['updates']==54*admission['epochs']<=432
+        assert admission['conservative_required_seconds']>=2600
+        RECIPE.update(epochs=admission['epochs'])
+        rows=[dict(id=str(i),fold='TRAIN') for i in range(216)]+[dict(id='dev',fold='DEV'),dict(id='hold',fold='HOLDOUT')]
+        counts=Counter(r['id'] for b in order(rows) for r in b)
+        assert len(counts)==216 and set(counts.values())=={admission['epochs']}
+        with pytest.raises(TimeoutError):admit_epochs(10,30,2700)
+    finally:RECIPE.clear();RECIPE.update(before)
+
+
+def test_parent_restore_preserves_nonzero_adapter_adam_and_rng(tmp_path):
+    from training.venus.state import save,restore_parent,exact_state,rng_state
+    m=model();e=example(m);install(m,2,2)
+    opt=torch.optim.AdamW([p for p in m.parameters() if p.requires_grad],lr=.001)
+    loss,_=scene_loss(m,e,'cpu');loss.backward();opt.step()
+    path=tmp_path/'parent.pt';save(path,m,opt,190,dict(source='parent'))
+    saved=torch.load(path,weights_only=False)
+    for p in m.parameters():
+        if p.requires_grad:p.data.zero_()
+    torch.rand(4)
+    proof=restore_parent(saved,m,opt)
+    assert proof==dict(adapter_exact=True,adam_exact=True,rng_exact=True,new_optimizer_updates=0)
+    assert exact_state(saved['rng'],rng_state())
+    assert exact_state(saved['optimizer'],opt.state_dict())

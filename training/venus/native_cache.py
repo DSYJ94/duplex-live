@@ -159,6 +159,10 @@ def main(a):
     if a.approval:
         approval=json.loads(Path(a.approval).read_text())
         assert approval['approved'] and approval['manifest_sha256']==hashlib.sha256((root/'manifest.json').read_bytes()).hexdigest()
+        counts={f:sum(r['fold']==f for r in manifest['scenes']) for f in ('TRAIN','DEV','HOLDOUT')}
+        assert (approval['train'],approval['dev'],approval['holdout']) in ((152,36,36),(216,52,24))
+        assert counts==dict(TRAIN=approval['train'],DEV=approval['dev'],HOLDOUT=approval['holdout'])
+        if approval['train']==216:assert manifest['native_speech_timing_schema']=='word-aligned-native-v1'
     elif not a.proof_only:raise ValueError('Independent full data approval required before cache collection')
     model,duplex=load_native(a.model);out=Path(a.output);out.mkdir(parents=True,exist_ok=False);rows=[]
     scenes=manifest['scenes']
@@ -175,7 +179,7 @@ def main(a):
             if not parity['passed']:raise ValueError('Native/training BF16 sequence parity failed: '+str(parity))
         path=out/(row['id']+'.pt');torch.save(ex,path);rows.append(dict(id=row['id'],fold=row['fold'],family=row['family'],file=path.name,sha256=hashlib.sha256(path.read_bytes()).hexdigest(),tokens=ex['embeddings'].shape[0],labels=len(ex['targets'])))
         print(json.dumps(dict(event='native_cache_scene',completed=i+1,total=len(scenes),elapsed=time.monotonic()-start,**rows[-1])),flush=True)
-    (out/'manifest.json').write_text(json.dumps(dict(source_manifest_sha256=hashlib.sha256((root/'manifest.json').read_bytes()).hexdigest(),model_revision='4681004131ea1f1fb9aca9f0db76be322657cc79',scenes=rows,proof_only=a.proof_only,optimizer_updates=0),indent=2)+'\n')
+    (out/'manifest.json').write_text(json.dumps(dict(source_manifest_sha256=hashlib.sha256((root/'manifest.json').read_bytes()).hexdigest(),model_revision='4681004131ea1f1fb9aca9f0db76be322657cc79',scenes=rows,proof_only=a.proof_only,optimizer_updates=0,native_speech_timing_schema=manifest.get('native_speech_timing_schema')),indent=2)+'\n')
 
 
 if __name__=='__main__':

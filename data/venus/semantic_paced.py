@@ -2,6 +2,8 @@
 import argparse,concurrent.futures,hashlib,json,shlex,urllib.request,urllib.error
 from pathlib import Path
 from .semantic import MODEL,INSTRUCTIONS,SCHEMA
+from .pacing import words
+NATIVE_PROTOCOL='Native protocol: a speak action at frame f emits one-second OUTPUT units over [f+offset,f+offset+1). final=True places TURN_EOS AFTER that unit text; it does not mute the text or close at unit onset. Released source generates TTS for that unit, then flushes token2wav before reset. Independently aligned source word ends determine the final unit, with empty continuation when the final word spans another unit. Do not invent an extra silence interval after every final spoken word. Evaluate teacher wording, source-bound pacing and causal task timing; actual acoustic completion still requires independent native audio evaluation.'
 
 def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
 
@@ -15,22 +17,31 @@ def prepare(a):
         users=[]
         for u in t['user_turns']:
             r=recognized[u['sha256']];assert r['passed'] and r['authored']==u['text']
-            users.append(dict(text=u['text'],recognized=r['recognized'],start=u['start_seconds'],end=u['start_seconds']+u['seconds']))
+            item=dict(text=u['text'],start=u['start_seconds'],end=u['start_seconds']+u['seconds'])
+            if words(r['recognized'])==words(u['text']):item['independent_asr_exact_orthographic_words']=True
+            else:item['recognized']=r['recognized']
+            users.append(item)
         actions=[{k:v for k,v in x.items() if k in ('frame','kind','text','final','native_speech_units')} for x in t['actions']]
+        for action in actions:
+            if action['kind']=='speak':action['output_interval_seconds']=[action['frame'],action['frame']+len(action['native_speech_units'])]
         rows.append(dict(id=record['id'],user=users,actions=actions,actual_feedback=t['backend_feedback']))
     batches=[]
     for start in range(0,len(rows),28):
-        selected=rows[start:start+28];payload=dict(model=MODEL,service_tier='default',store=False,reasoning=dict(effort='low'),max_output_tokens=3000,
-            input=[dict(role='system',content=INSTRUCTIONS+' Native speech units must allow the spoken phrase to finish before final turn closure. After interruption, retain unsaid words rather than skip them.'),dict(role='user',content=json.dumps(selected,separators=(',',':')))],tools=[SCHEMA],tool_choice='required',parallel_tool_calls=False)
-        maximum=((len(json.dumps(payload,ensure_ascii=True).encode())+2048)*12.5+3000*50)/1e6
+        selected=rows[start:start+28];payload=dict(model=MODEL,service_tier='default',store=False,reasoning=dict(effort='low'),max_output_tokens=2200,
+            input=[dict(role='system',content=INSTRUCTIONS+' '+NATIVE_PROTOCOL+' After interruption, retain unsaid words rather than skip them.'),dict(role='user',content=json.dumps(selected,separators=(',',':')))],tools=[SCHEMA],tool_choice='required',parallel_tool_calls=False)
+        maximum=((len(json.dumps(payload,ensure_ascii=True).encode())+2048)*12.5+2200*50)/1e6
         batches.append(dict(ids=[r['id'] for r in selected],payload=payload,maximum_cost_usd=maximum))
-    maximum=sum(b['maximum_cost_usd'] for b in batches);assert len(rows)==292 and len(batches)==11 and maximum<=7
+    prior_path=Path(a.prior_review) if getattr(a,'prior_review',None) else None
+    prior=json.loads(prior_path.read_text()) if prior_path else None
+    prior_cost=sum(u['input_tokens']*12.5/1e6+u['output_tokens']*50/1e6 for u in prior['usage']) if prior else 0
+    maximum=sum(b['maximum_cost_usd'] for b in batches);assert len(rows)==292 and len(batches)==11 and maximum+prior_cost<=7.5, (maximum,prior_cost)
     result=dict(schema='dl-paced-native-teacher-semantic-request-v1',model=MODEL,manifest_sha256=sha(root/'manifest.json'),audit_sha256=sha(a.audit),word_quality_sha256=sha(a.word_quality),assistant_word_quality_sha256=audit['assistant_word_quality_sha256'],batches=batches,maximum_total_cost_usd=maximum,maximum_requests=11,concurrency=2,
-        maximum_semantic_usage_usd=7,maximum_voice_usage_usd=3,combined_external_cap_usd=10,pricing_source='https://developers.openai.com/api/docs/models/gpt-6-astra',input_cost_ceiling_per_million=12.5,output_cost_per_million=50,price_basis='Standard short-context; input includes cache-write ceiling and byte/token bound; no Fast or regional endpoint',owner_data=False,credentials=False,only_authored_synthetic_data=True)
-    Path(a.output).write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(dict(requests=11,scenes=292,maximum_usd=maximum,prepared_sha256=sha(a.output))))
+        maximum_semantic_usage_usd=7.5,maximum_voice_usage_usd=2.5,combined_external_cap_usd=10,pricing_source='https://developers.openai.com/api/docs/models/gpt-6-astra',input_cost_ceiling_per_million=12.5,output_cost_per_million=50,price_basis='Standard short-context; input includes cache-write ceiling and byte/token bound; no Fast or regional endpoint',owner_data=False,credentials=False,only_authored_synthetic_data=True)
+    result.update(prior_review_sha256=sha(prior_path) if prior_path else None,prior_review_cost_upper_usd=prior_cost,all_reviews_maximum_cost_usd=prior_cost+maximum,native_protocol=NATIVE_PROTOCOL)
+    Path(a.output).write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(dict(requests=11,scenes=292,maximum_usd=maximum,all_reviews_maximum_usd=prior_cost+maximum,prepared_sha256=sha(a.output))))
 
 def execute(a):
-    prepared_path=Path(a.prepared);prepared=json.loads(prepared_path.read_text());assert prepared['maximum_total_cost_usd']<=7 and len(prepared['batches'])==11 and prepared['concurrency']==2
+    prepared_path=Path(a.prepared);prepared=json.loads(prepared_path.read_text());assert prepared['maximum_total_cost_usd']<=7.5 and prepared.get('all_reviews_maximum_cost_usd',prepared['maximum_total_cost_usd'])<=7.5 and len(prepared['batches'])==11 and prepared['concurrency']==2
     keyfile=Path('runs/local-migration-20261021/.private/openai-backend.env');assert keyfile.stat().st_mode&0o077==0
     key=None
     for line in keyfile.read_text().splitlines():
@@ -72,4 +83,4 @@ def approve(a):
     Path(a.output).write_text(json.dumps(result,indent=2)+'\n')
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('stage',choices=['prepare','execute','approve']);[p.add_argument('--'+x) for x in ('timelines','word-quality','audit','prepared','semantic-quality')];p.add_argument('--output',required=True);a=p.parse_args();dict(prepare=prepare,execute=execute,approve=approve)[a.stage](a)
+    p=argparse.ArgumentParser();p.add_argument('stage',choices=['prepare','execute','approve']);[p.add_argument('--'+x) for x in ('timelines','word-quality','audit','prepared','semantic-quality','prior-review')];p.add_argument('--output',required=True);a=p.parse_args();dict(prepare=prepare,execute=execute,approve=approve)[a.stage](a)

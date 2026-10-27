@@ -18,7 +18,9 @@ def preflight(plan_path,timelines,approval_path):
     approval=json.loads(Path(approval_path).read_text());assert approval['approved'] and approval['manifest_sha256']==sha(root/'manifest.json')
     assert manifest['source_sha256']==sha(plan_path)
     plan=json.loads(Path(plan_path).read_text());selected={s['id']:s for s in plan['scenes'] if s['fold']=='HOLDOUT'}
-    rows=[r for r in manifest['scenes'] if r['fold']=='HOLDOUT'];assert len(rows)==36 and set(selected)=={r['id'] for r in rows}
+    rows=[r for r in manifest['scenes'] if r['fold']=='HOLDOUT'];required=approval['holdout']
+    assert required in (24,36) and len(rows)==required and set(selected)=={r['id'] for r in rows}
+    if required==24:assert (approval['train'],approval['dev'])==(216,52) and manifest['native_speech_timing_schema']=='word-aligned-native-v1'
     cases=[]
     for row in rows:
         folder=root/row['id'];assert sha(folder/'timeline.json')==row['timeline_sha256'] and sha(folder/'user.wav')==row['user_wav_sha256']

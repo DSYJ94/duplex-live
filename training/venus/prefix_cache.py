@@ -57,7 +57,10 @@ def capture_prefix(llm,example):
     return result,dict(logit_error=error,hidden_error=hidden_error,positions=len(example['positions']),passed=True)
 
 def main(a):
-    root=Path(a.cache);manifest=json.loads((root/'manifest.json').read_text());assert len(manifest['scenes'])==188 and not manifest['proof_only']
+    root=Path(a.cache);manifest=json.loads((root/'manifest.json').read_text());assert not manifest['proof_only']
+    counts={f:sum(r['fold']==f for r in manifest['scenes']) for f in ('TRAIN','DEV')}
+    assert counts in (dict(TRAIN=152,DEV=36),dict(TRAIN=216,DEV=52)) and len(manifest['scenes'])==sum(counts.values())
+    if counts['TRAIN']==216:assert manifest['native_speech_timing_schema']=='word-aligned-native-v1' and not a.reuse_cache and not a.reuse_witness
     witness=json.loads(Path(a.reuse_witness).read_text()) if a.reuse_witness else None
     if bool(a.reuse_cache)!=bool(witness):raise ValueError('Prior cache requires verified copyback witness')
     prior={r['file']:r for r in witness['files']} if witness else {}
@@ -77,7 +80,7 @@ def main(a):
         if reused:shutil.copyfile(old,dest)
         else:result,proof=capture_prefix(model.llm,ex);torch.save(result,dest)
         rows.append(dict(row,sha256=hashlib.sha256(dest.read_bytes()).hexdigest(),native_prefix_proof=proof))
-        print(json.dumps(dict(event='reused_exact_prefix' if reused else 'exact_frozen_prefix',completed=len(rows),total=188,elapsed=time.monotonic()-start,id=row['id'],proof=proof)),flush=True)
+        print(json.dumps(dict(event='reused_exact_prefix' if reused else 'exact_frozen_prefix',completed=len(rows),total=len(manifest['scenes']),elapsed=time.monotonic()-start,id=row['id'],proof=proof)),flush=True)
     updated=dict(manifest,scenes=rows,source_native_cache_sha256=hashlib.sha256((root/'manifest.json').read_bytes()).hexdigest(),prefix_layers=len(model.llm.model.layers)-1,prefix_producer=a.source)
     (out/'manifest.json').write_text(json.dumps(updated,indent=2)+'\n')
 

@@ -10,6 +10,7 @@ import gc
 import hashlib
 import json
 import math
+import os
 from pathlib import Path
 import random
 import subprocess
@@ -39,12 +40,12 @@ def digest(path):return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 def order(rows):
     train=sorted([r for r in rows if r['fold']=='TRAIN'],key=lambda r:r['id'])
-    assert len(train)==152
+    count=RECIPE.get('train_count',152);assert count in (152,216) and len(train)==count
     batches=[]
     for epoch in range(RECIPE['epochs']):
         shuffled=list(train);random.Random(RECIPE['seed']+epoch).shuffle(shuffled)
         batches.extend(shuffled[i:i+4] for i in range(0,len(shuffled),4))
-    assert len(batches)==38*RECIPE['epochs'] and all(len(b)==4 for b in batches)
+    assert len(batches)==count//4*RECIPE['epochs'] and all(len(b)==4 for b in batches)
     return batches
 
 
@@ -88,38 +89,53 @@ def dev_loss(llm,cache,rows):
         for row in rows:
             if row['fold']=='DEV':
                 _,parts=scene_loss(llm,read_example(cache,row),'cuda');groups[row['family']].append(parts['ce'])
-    assert sum(map(len,groups.values()))==36
+    assert sum(map(len,groups.values()))==RECIPE.get('dev_count',36)
     return {k:sum(v)/len(v) for k,v in groups.items()}
 
 
 def assert_deadline(path,seconds_needed=0):
+    if os.environ.get('DUPLEX_LIVE_GUARD_FILE'):
+        from portable.venus.native_app import ensure_guard
+        ensure_guard()
     lease=json.loads(Path(path).read_text())
     if time.time()+seconds_needed>=lease['stop_unix']-180:raise TimeoutError('Preserve checkpoint/copyback reserve before native STOP')
 
 
 def admit_epochs(step_seconds,dev_seconds,available_seconds):
     """Throughput only: no loss/holdout selection, no omitted TRAIN scenes."""
+    count=RECIPE.get('train_count',152);steps=count//4
     for epochs in range(8,0,-1):
-        required=38*epochs*step_seconds*1.35+((epochs+1)//2)*dev_seconds*1.25+600
+        required=steps*epochs*step_seconds*1.35+((epochs+1)//2)*dev_seconds*1.25+RECIPE.get('post_training_reserve_seconds',600)
         if required<available_seconds:
-            return dict(epochs=epochs,updates=38*epochs,benchmark_step_seconds=step_seconds,
+            return dict(epochs=epochs,updates=steps*epochs,benchmark_step_seconds=step_seconds,
                         baseline_dev_seconds=dev_seconds,available_seconds=available_seconds,
                         conservative_required_seconds=required,minimum_complete_epochs=1,maximum_complete_epochs=8,
-                        all152_train_scenes_every_epoch=True,selection_uses_loss_or_heldout=False)
-    raise TimeoutError('No complete152-scene epoch fits; no optimizer work admitted')
+                        train_scenes_per_epoch=count,all152_train_scenes_every_epoch=count==152,all_train_scenes_every_epoch=True,selection_uses_loss_or_heldout=False)
+    raise TimeoutError('No complete TRAIN epoch fits; no optimizer work admitted')
 
 
 def main(a):
+    parent_checkpoint=getattr(a,'parent_checkpoint',None);parent_state=None
+    if parent_checkpoint:
+        assert a.parent_sha256=='10354f93ec2b5e224ae7298b2f3b8687f9dc74d2fbf87c1db62bd79763155b63' and digest(parent_checkpoint)==a.parent_sha256
+        parent_state=torch.load(parent_checkpoint,map_location='cpu',weights_only=False)
+        assert parent_state['step']==190 and parent_state['metadata']['source']=='2dcdf0f8b62400bda989fa68e88ebf291b967f62'
+        RECIPE.update(train_count=216,dev_count=52,epochs=8,updates=432,learning_rate=.00005,seed=20261027,post_training_reserve_seconds=3000)
+        MAXIMUM_RECIPE.update(RECIPE)
     cache=Path(a.cache);manifest=json.loads((cache/'manifest.json').read_text());assert not manifest['proof_only']
     approval=json.loads(Path(a.approval).read_text());assert approval['approved'] and approval['manifest_sha256']==manifest['source_manifest_sha256']
-    assert len(manifest['scenes'])==188 and sum(r['fold']=='TRAIN' for r in manifest['scenes'])==152
+    train_count=216 if parent_checkpoint else 152;dev_count=52 if parent_checkpoint else 36;per_epoch=train_count//4
+    assert len(manifest['scenes'])==train_count+dev_count and sum(r['fold']=='TRAIN' for r in manifest['scenes'])==train_count and sum(r['fold']=='DEV' for r in manifest['scenes'])==dev_count
+    assert approval['train']==train_count and approval['dev']==dev_count
+    if parent_checkpoint:assert manifest['native_speech_timing_schema']=='word-aligned-native-v1'
     out=Path(a.output);out.mkdir(parents=True,exist_ok=(a.stage=='restore-continue'))
     identity=dict(cache_sha256=digest(cache/'manifest.json'),approval_sha256=digest(a.approval),source=a.source,cache_producer_source=a.cache_producer,model_revision=manifest['model_revision'])
+    if parent_checkpoint:identity.update(parent_checkpoint_sha256=a.parent_sha256,parent_training_steps=190,parent_training_source=parent_state['metadata']['source'])
     metadata=None
     if a.stage=='restore-continue':
         metadata=json.loads((out/'recipe.json').read_text())
         assert all(metadata[k]==v for k,v in identity.items())
-        chosen=metadata['recipe'];assert 1<=chosen['epochs']<=8 and chosen['updates']==38*chosen['epochs']
+        chosen=metadata['recipe'];assert 1<=chosen['epochs']<=8 and chosen['updates']==per_epoch*chosen['epochs'] and (not parent_checkpoint or chosen['updates']<=512)
         assert isinstance(chosen['activation_offload'],bool)
         assert chosen==dict(MAXIMUM_RECIPE,epochs=chosen['epochs'],updates=chosen['updates'],activation_offload=chosen['activation_offload'])
         RECIPE.update(chosen)
@@ -145,6 +161,10 @@ def main(a):
     frozen_versions={n:p._version for n,p in llm.named_parameters() if not p.requires_grad}
     llm.gradient_checkpointing_disable();llm.eval()  # Autograd stays enabled; match native attention and KV path.
     opt=torch.optim.AdamW([p for p in llm.parameters() if p.requires_grad],lr=RECIPE['learning_rate'],betas=tuple(RECIPE['adam_betas']),eps=RECIPE['adam_eps'],weight_decay=RECIPE['weight_decay'])
+    if parent_checkpoint and a.stage=='start':
+        from .state import restore_parent
+        proof=restore_parent(parent_state,llm,opt)
+        (out/'parent-restore.json').write_text(json.dumps(dict(parent_step=190,parent_checkpoint_sha256=a.parent_sha256,**proof),indent=2)+'\n')
     batches=order(manifest['scenes']);start=0
     def frozen_ok():
         if any(p._version!=frozen_versions[n] for n,p in llm.named_parameters() if n in frozen_versions):raise ValueError('Frozen native weight mutated')
@@ -152,7 +172,9 @@ def main(a):
         (out/'numerical-zero-proof.json').write_text(json.dumps(dict(zero_adapter_max_error=0,causal_future_max_error=0,adapter=spec),indent=2)+'\n')
         from .native_cache import training_input_proof
         proofrow=next(r for r in manifest['scenes'] if read_example(cache,r)['logit_proofs'])
-        parity=training_input_proof(model,read_example(cache,proofrow));(out/'language-only-native-input-proof.json').write_text(json.dumps(parity,indent=2)+'\n')
+        from .lora import disabled
+        with disabled(llm):parity=training_input_proof(model,read_example(cache,proofrow))
+        (out/'language-only-native-input-proof.json').write_text(json.dumps(parity,indent=2)+'\n')
         assert parity['passed'],'Language-only cached training must retain native parity'
         if a.baseline_reference:
             reference=json.loads(Path(a.baseline_reference).read_text());assert reference['cache_sha256']==identity['cache_sha256']
@@ -211,12 +233,13 @@ def main(a):
         for step in range(2,RECIPE['updates']):
             assert_deadline(a.lease,max(seconds[-8:])*1.5+120)
             row=train_step(llm,opt,cache,batches[step],step);frozen_ok();seconds.append(row['seconds']);log.write(json.dumps(row)+'\n');log.flush();print(json.dumps(row),flush=True)
-            if (step+1)%38==0 or step==RECIPE['updates']-1:
+            if (step+1)%per_epoch==0 or step==RECIPE['updates']-1:
                 save(out/f'step-{step+1:04d}.pt',llm,opt,step+1,metadata)
-            if (step+1)%76==0 or step==RECIPE['updates']-1:
-                result=dict(step=step+1,full36_dev_teacher_forced=dev_loss(llm,cache,manifest['scenes']),native_behavior_qualified=False)
+            if (step+1)%(per_epoch*2)==0 or step==RECIPE['updates']-1:
+                result=dict(step=step+1,parent_training_steps=190 if parent_checkpoint else 0,dev_scenes=dev_count,full_dev_teacher_forced=dev_loss(llm,cache,manifest['scenes']),native_behavior_qualified=False)
+                if not parent_checkpoint:result['full36_dev_teacher_forced']=result['full_dev_teacher_forced']
                 (out/f'dev-{step+1:04d}.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result),flush=True)
-        (out/'training-terminal.json').write_text(json.dumps(dict(actual_updates=RECIPE['updates'],actual_complete_epochs=RECIPE['epochs'],maximum_authorized_updates=304,completed=True,adopted=False,behavioral_evaluation_required=True),indent=2)+'\n')
+        (out/'training-terminal.json').write_text(json.dumps(dict(actual_updates=RECIPE['updates'],parent_training_steps=190 if parent_checkpoint else 0,total_optimizer_updates=RECIPE['updates']+(190 if parent_checkpoint else 0),actual_complete_epochs=RECIPE['epochs'],maximum_authorized_updates=512 if parent_checkpoint else 304,completed=True,adopted=False,behavioral_evaluation_required=True),indent=2)+'\n')
     except BaseException:
         completed=locals().get('step',1)
         # Save actual current state on a budget/readiness stop, with honest completed count.
@@ -226,4 +249,4 @@ def main(a):
 
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('--stage',choices=['start','restore-continue'],required=True);p.add_argument('--model',required=True);p.add_argument('--cache',required=True);p.add_argument('--approval',required=True);p.add_argument('--output',required=True);p.add_argument('--source',required=True);p.add_argument('--cache-producer',required=True);p.add_argument('--lease',required=True);p.add_argument('--baseline-reference');main(p.parse_args())
+    p=argparse.ArgumentParser();p.add_argument('--stage',choices=['start','restore-continue'],required=True);p.add_argument('--model',required=True);p.add_argument('--cache',required=True);p.add_argument('--approval',required=True);p.add_argument('--output',required=True);p.add_argument('--source',required=True);p.add_argument('--cache-producer',required=True);p.add_argument('--lease',required=True);p.add_argument('--baseline-reference');p.add_argument('--parent-checkpoint');p.add_argument('--parent-sha256');main(p.parse_args())

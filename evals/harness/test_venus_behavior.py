@@ -100,3 +100,18 @@ def test_cue_boundary_is_the_cue_word_not_the_entire_question():
     row=dict(source_sha256='same-audio',words=[dict(text=' Pebble.',timestamp=[0,.4])])
     assert cue_frame(turn,row)==(10,10.4)
     with pytest.raises(ValueError):cue_frame(dict(turn,sha256='other-audio'),row)
+
+
+def test_paced_continuation_budget_cannot_restart_or_add_gpu(tmp_path,monkeypatch):
+    from training.venus import paced_guard as g
+    from datetime import datetime,timezone
+    auth=json.loads(g.AUTH.read_text());r=auth['resources'];start=1800000000
+    plan=dict(status='WITHIN_APPROVED_FOCUSED_REPAIR',parent_sha256=hashlib.sha256(g.AUTH.read_bytes()).hexdigest(),vm_name='fixture-paced-only',maximum_gpu_seconds=10000,focused_gpu_seconds_upper_before_launch=2400)
+    path=tmp_path/'plan.json';path.write_text(json.dumps(plan));monkeypatch.setattr(g,'PLAN',path)
+    lease=dict(resource_key='venus-paced-continuation-v22',vm_id='123',disk_id=r['same_existing_disk_id'],zone=r['zone'],disk_size_gib=100,creation_timestamp='immutable',stop_unix=start+10000,prior_new_gpu_seconds_upper=2400,prior_gpu_seconds=54451,prior_scope_usd=91.98448055555555,authorization_sha256=hashlib.sha256(g.AUTH.read_bytes()).hexdigest(),execution_plan_sha256=hashlib.sha256(path.read_bytes()).hexdigest(),verified_hourly_price_usd=3.68708363)
+    vm=dict(id='123',name='fixture-paced-only',zone='/'+r['zone'],status='RUNNING',machineType='/a2-highgpu-1g',creationTimestamp='immutable',lastStartTimestamp=datetime.fromtimestamp(start,timezone.utc).isoformat(),tags=dict(items=['duplex-venus-train-bounded']),disks=[dict(boot=True,autoDelete=False,source='/disks/'+r['same_existing_disk_name'])],scheduling=dict(provisioningModel='FLEX_START',maxRunDuration=dict(seconds=10000),instanceTerminationAction='STOP',automaticRestart=False))
+    assert g.validate(vm,[vm],[],lease,start+1)==start+10000
+    for wrong in ({'prior_new_gpu_seconds_upper':0},{'prior_gpu_seconds':40351},{'stop_unix':start+11000},{'disk_id':'999'},{'execution_plan_sha256':'wrong'}):
+        with pytest.raises(AssertionError):g.validate(vm,[vm],[],dict(lease,**wrong),start+1)
+    with pytest.raises(AssertionError):g.validate(vm,[vm,dict(vm,id='456')],[],lease,start+1)
+    with pytest.raises(AssertionError):g.validate(vm,[vm],[dict(status='RUNNING')],lease,start+1)

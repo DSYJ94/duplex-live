@@ -8,7 +8,7 @@ from pathlib import Path
 from datetime import datetime,timezone
 
 RATE_CEILING=.0005  # USD/character, conservative versus published0.10/1K.
-VOICE_BUDGET=3.0    # Inside the approved10USD API /40USD total repair allowance.
+VOICE_BUDGET=2.5    # Inside the approved10USD API /40USD total repair allowance.
 MODEL='eleven_v3'
 VOICE='21m00Tcm4TlvDq8ikWAM'  # Existing stock voice; no voice cloning.
 
