@@ -1,0 +1,91 @@
+{
+  "schema": "dl-british-voice-direction-v1",
+  "status": "SOURCES_RENDERED_UNQUALIFIED",
+  "recorded_utc": "2026-10-27T22:22:18.691188+00:00",
+  "human_requests": [
+    "Use the existing ElevenLabs key",
+    "i would like to have more british accents/have the model go beyond american accents as well",
+    "add RP accent alongside those as well"
+  ],
+  "preferred_language": "en-GB",
+  "preferred_accent_direction": "British English and distinct RP, with explicit regional options",
+  "production_voice_adopted": false,
+  "profiles": [
+    {
+      "id": "rp-ben",
+      "label": "Received Pronunciation \u00b7 Ben"
+    },
+    {
+      "id": "british-alice",
+      "label": "British English \u00b7 Alice"
+    },
+    {
+      "id": "british-george",
+      "label": "British English \u00b7 George"
+    },
+    {
+      "id": "northern-mark",
+      "label": "Northern English \u00b7 Mark"
+    },
+    {
+      "id": "welsh-hannah",
+      "label": "Welsh \u00b7 Hannah"
+    },
+    {
+      "id": "scottish-edinburgh",
+      "label": "Scottish \u00b7 Edinburgh"
+    },
+    {
+      "id": "scottish-glasgow",
+      "label": "Scottish \u00b7 Glasgow"
+    },
+    {
+      "id": "irish-rory",
+      "label": "Irish English \u00b7 Rory"
+    },
+    {
+      "id": "american-rachel",
+      "label": "American English \u00b7 Rachel"
+    }
+  ],
+  "effective_recordings": 174,
+  "effective_seconds": 760.96,
+  "fold_counts": {
+    "TRAIN": 99,
+    "DEV": 33,
+    "HOLDOUT": 33,
+    "REFERENCE_ONLY": 9
+  },
+  "all_original_source_hashes_verified": true,
+  "all_original_source_peak_checks_pass": true,
+  "peak_threshold": 0.995,
+  "word_threshold": 0.05,
+  "all_originals_failed_audits_folds_and_native_holdout_hashes_preserved": true,
+  "new_voice_clone_created": false,
+  "library_entries_added": [
+    "Hannah Welsh",
+    "Mark Durham Northern English",
+    "Ben British RP"
+  ],
+  "library_addition_authority": "Explicit user reply to the Welsh/Northern collection-addition question, adding RP alongside those",
+  "matched_scripts_per_voice": 4,
+  "reference_context": "Generated assistant reference speech, not native model adoption",
+  "api_ledger": "runs/venus-training-20261027/external-api-ledger-v1.json",
+  "api_ledger_sha256": "16a29904377aade2bed4cb457d5c0c36d22c30836bb92c6aa039d19d0792a802",
+  "all_api_usage_upper_usd": 9.647612500000001,
+  "api_cap_usd": 10,
+  "credentials_stay_mac": true,
+  "source_index": "runs/venus-training-20261027/voice-eleven-listening-v1/accents/source-index.json",
+  "source_index_sha256": "75104426529c409618f118eb52a7ec959009b5a3707a621398655b43e467da7f",
+  "listening_url": "http://127.0.0.1:8036/accents/#rp-ben",
+  "source_binding": "b80711ec9ef8505b3885080278d07f563da891a3212b16c2489e85253898fb8d",
+  "quality_pending": [
+    "Complete independent word audit of all174 ORIGINAL24kWAVs, retaining original peak checks",
+    "Human listening for naturalness/accent/pronunciation/identity and context fit",
+    "Native voice-conditioning A/B before adoption; no passing subset"
+  ],
+  "derived_copy_caveat": "Two16kApple-resampled American audit copies exceed peak bound; retain failed derived copies and do not use them for approval. All67original24kWAVs pass; originalsource24k audio must be audited directly with recognizer-internal floating resampling. No gain reduction.",
+  "training_boundary": "ActiveGCPstep190continuation uses the alreadyapproved216/52/24pacedcontrolcorpus with frozenaudio/TTS. Newaccent recordings are not injected midrun; nativeaccent transfer and anyacousticoptimizer change require their own data/numerical/behavior evidence.",
+  "no_youtube_download": true,
+  "owner_audio_sent": false
+}
