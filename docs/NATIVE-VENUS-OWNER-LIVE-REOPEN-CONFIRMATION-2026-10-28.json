@@ -1,0 +1,14 @@
+{
+  "schema": "dl-native-live-approval-confirmation-v1",
+  "recorded_utc": "2026-10-28T23:37:48.380007+00:00",
+  "human_approval": "Approve 30 minutes; keep $70 cap",
+  "question": "One30-minute GPU restart under exact71ed41691proposal, no purchase/newdisk/training",
+  "fulfillment": "The already-running v32 allocation fulfills this approval. DO NOT submit another GPU job.",
+  "active_authorization": "docs/NATIVE-VENUS-OWNER-LIVE-REOPEN-AUTHORIZATION-2026-10-28.json",
+  "active_authorization_sha256": "a4ad43144bd2f16115051bc9ea576bfb32314d61fdf8e81308ac0d6c8f5b0930",
+  "active_authorization_immutable": true,
+  "vm_id": "2589084612077501210",
+  "controller_pid": 27566,
+  "maximum_gpu_seconds": 1800,
+  "phase_cap_usd": 70
+}
