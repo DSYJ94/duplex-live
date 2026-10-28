@@ -1,0 +1,47 @@
+{
+  "schema": "dl-native-live-latency-review-v1",
+  "recorded_utc": "2026-10-28T23:48:40.736670+00:00",
+  "scope": "One existing approved synthetic TRAIN scene through the live Original Venus service; separate3frame silence probes bothmodels. No owner audio or adoption score.",
+  "speaking_frames": 3,
+  "speaking_processing_seconds": [
+    1.6522576029999527,
+    2.368248785999981,
+    2.666885774999969
+  ],
+  "speaking_processing_min": 1.6522576029999527,
+  "speaking_processing_max": 2.666885774999969,
+  "listening_processing_mean": 0.3784551572499879,
+  "non_model_roundtrip_overhead_range": [
+    0.10237665699753506,
+    0.15080072499870312
+  ],
+  "input_seconds_per_chunk": 1,
+  "latency_scope": "Processing per1s inputchunk, not end-of-utterance-to-first-audio latency; client probe serially awaits responses, so doesnot itself measureconcurrentinputbacklog.",
+  "baseline_variant": "released",
+  "training_regression_established": false,
+  "current_voice": "Released HT_ref_audio.wav, SHA cb8f06ba5080cdf548969138881fb8ad8b04e2516108f4e08ba0363b68b613ea; NOT ownerpreferredGeorge",
+  "owner_accent_feedback": "sounds Chinese",
+  "independent_accent_judgment_done": false,
+  "browser_red_repro": {
+    "stale_nonfinal_speech_not_stopped": true,
+    "silent_listen_buffers_queued": true,
+    "mic_permission_after_end_leaked": true,
+    "red_tests": 2
+  },
+  "browser_fix": {
+    "skip_listen_silence_buffers": true,
+    "cancel_obsolete_nonfinal_audio": true,
+    "preserve_valid_final_speech": true,
+    "session_generation_prevents_late_microphone_stream": true,
+    "visible_timing_and_reference_label": true
+  },
+  "remaining": [
+    "Measure nativeLLM/TTS/token-to-waveform substage costs before kernel/runtimechanges",
+    "BritishGeorge explicitreference live trial; independentreferencewordaudit WER0 exists, but174cohortremainsunapprovedfortraining and nativeaccentunqualified",
+    "Nativebehavior and end-to-end latency remain unqualified"
+  ],
+  "api_calls": 0,
+  "optimizer_updates": 0,
+  "new_gpu_allocations": 0,
+  "raw_receipts": "runs/venus-training-20261028/live-latency-repro-v1"
+}
