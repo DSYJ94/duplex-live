@@ -38,10 +38,12 @@ def restore_parent(state, model, optimizer):
     return dict(adapter_exact=True,adam_exact=True,rng_exact=True,new_optimizer_updates=0)
 
 
-def save(path, model, optimizer, step, metadata):
+def save(path, model, optimizer, step, metadata, reactive_state=None):
     path = Path(path)
     state = dict(adapter=adapter_state(model), optimizer=optimizer.state_dict(), rng=rng_state(),
                  step=step, metadata=metadata)
+    if reactive_state is not None:
+        state['reactive_control'] = reactive_state
     temp = path.with_suffix(path.suffix + '.tmp')
     torch.save(state, temp); os.replace(temp, path)
     return hashlib.sha256(path.read_bytes()).hexdigest()
