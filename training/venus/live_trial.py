@@ -36,7 +36,9 @@ def websocket_probe(url):
                 behavioral_approval=False)
 
 
-def serve(controller, python_command, end, unit_prefix, *, port=8037):
+def serve(controller, python_command, end, unit_prefix, *, port=8037,unused_timeout=300,idle_timeout=90):
+    if not 90<=idle_timeout<=300 or not 300<=unused_timeout<=1800:
+        raise ValueError("Bounded live waiting windows required")
     c = controller
     unit = unit_prefix + '-microphone'
     checkpoint = c.OUT + '/paced-candidate-v25/step-0054.pt'
@@ -87,10 +89,10 @@ def serve(controller, python_command, end, unit_prefix, *, port=8037):
                     microphone_recorded=False, general_reasoning_backend=False)
             if health['busy']:
                 first_conversation=True; last_busy=time.time()
-            elif first_conversation and time.time()-last_busy>90:
+            elif first_conversation and time.time()-last_busy>idle_timeout:
                 c.record('live_trial_idle_after_conversation'); break
-            elif not first_conversation and time.time()-ready>300:
-                c.record('live_trial_unused_five_minutes'); break
+            elif not first_conversation and time.time()-ready>unused_timeout:
+                c.record('live_trial_unused_five_minutes' if unused_timeout==300 else 'live_trial_unused_window_elapsed',unused_seconds=unused_timeout); break
             time.sleep(3)
     finally:
         tunnel.terminate()

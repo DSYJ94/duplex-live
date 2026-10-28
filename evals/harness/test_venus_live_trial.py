@@ -73,3 +73,14 @@ def test_original_variant_matches_frozen_foundation_and_restores_candidate_even_
     assert variant_profile(profile,'candidate')['optimizer_updates']==244
     assert profile['optimizer_updates']==244 and 'candidate' in profile
     with pytest.raises(ValueError):variant_context(m,'arbitrary-checkpoint')
+
+
+def test_owner_retry_has_time_to_connect_but_never_extends_native_deadline(monkeypatch,tmp_path):
+    c,clock,calls,events=setup(monkeypatch,tmp_path,lambda now:False)
+    live_trial.serve(c,'python',2700,'trial',unused_timeout=1800,idle_timeout=300)
+    assert events[-1]=='live_trial_unused_window_elapsed'
+    assert 1800<clock.now<1810 and calls[-1]=='terminated'
+    second=tmp_path/'second';second.mkdir()
+    c,clock,calls,events=setup(monkeypatch,second,lambda now:False)
+    live_trial.serve(c,'python',1000,'trial',unused_timeout=1800,idle_timeout=300)
+    assert 820<=clock.now<825 and calls[-1]=='terminated'

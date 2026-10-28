@@ -3,22 +3,23 @@ import hashlib,json,os,shlex,shutil,subprocess,sys,time
 from pathlib import Path
 from datetime import datetime
 from . import controller as c
-from .paced_guard import AUTH as ORIGINAL_AUTH,PLAN_V24,PLAN_V25,PLAN_V26,PLAN_V27,PLAN_V28,PLAN_V29,PLAN_V30,LIVE_AUTH
+from .paced_guard import AUTH as ORIGINAL_AUTH,PLAN_V24,PLAN_V25,PLAN_V26,PLAN_V27,PLAN_V28,PLAN_V29,PLAN_V30,PLAN_V31,LIVE_AUTH
 from portable.venus.guard import bounded_runpod_read
 
 def digest(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
 
 def main():
-    resume_live='--resume-repaired-live' in sys.argv
+    repeat_live='--repeat-live' in sys.argv
+    resume_live='--resume-repaired-live' in sys.argv or repeat_live
     repaired_live='--repaired-live' in sys.argv or resume_live
     AUTH=LIVE_AUTH if repaired_live else ORIGINAL_AUTH
     retry_live='--retry-live' in sys.argv
     live_trial='--live-trial' in sys.argv or retry_live or repaired_live
     evaluation_only='--evaluation-only' in sys.argv
-    assert sum(flag in sys.argv for flag in ('--live-trial','--retry-live','--repaired-live','--resume-repaired-live','--evaluation-only','--prepared-reactive'))<=1
+    assert sum(flag in sys.argv for flag in ('--live-trial','--retry-live','--repaired-live','--resume-repaired-live','--repeat-live','--evaluation-only','--prepared-reactive'))<=1
     prepared='--prepared-reactive' in sys.argv or evaluation_only or live_trial
-    version='v30' if resume_live else 'v29' if repaired_live else 'v28' if retry_live else 'v27' if live_trial else 'v26' if evaluation_only else 'v25' if prepared else 'v24'
-    PLAN=PLAN_V30 if resume_live else PLAN_V29 if repaired_live else PLAN_V28 if retry_live else PLAN_V27 if live_trial else PLAN_V26 if evaluation_only else PLAN_V25 if prepared else PLAN_V24
+    version='v31' if repeat_live else 'v30' if resume_live else 'v29' if repaired_live else 'v28' if retry_live else 'v27' if live_trial else 'v26' if evaluation_only else 'v25' if prepared else 'v24'
+    PLAN=PLAN_V31 if repeat_live else PLAN_V30 if resume_live else PLAN_V29 if repaired_live else PLAN_V28 if retry_live else PLAN_V27 if live_trial else PLAN_V26 if evaluation_only else PLAN_V25 if prepared else PLAN_V24
     live_plan=json.loads(PLAN.read_text()) if live_trial else None
     prior,duration=(live_plan['focused_gpu_seconds_upper_before_launch'],live_plan['maximum_gpu_seconds']) if live_trial else (10500,3900) if evaluation_only else (9900,4500) if prepared else (6500,7200)
     unit_prefix='duplex-venus-recovery'+version[1:]
@@ -26,7 +27,7 @@ def main():
     assert not c.run(['git','status','--porcelain','--','training/venus','data/venus','portable/venus']).strip()
     p=json.loads(PLAN.read_text());a=json.loads(AUTH.read_text());r=a['resources'];zone=r['zone'];c.NAME=p['vm_name']
     assert p['status']=='WITHIN_APPROVED_FOCUSED_REPAIR' and p['parent_sha256']==digest(AUTH)
-    previous=Path('runs/venus-training-20261027')/('paced-recovery-v29' if resume_live else 'paced-recovery-v28' if repaired_live else 'paced-recovery-v27' if retry_live else 'paced-recovery-v26' if live_trial else 'paced-recovery-v25' if evaluation_only else 'paced-recovery-v24' if prepared else 'paced-continuation-v23')
+    previous=Path('runs/venus-training-20261027')/('paced-recovery-v30' if repeat_live else 'paced-recovery-v29' if resume_live else 'paced-recovery-v28' if repaired_live else 'paced-recovery-v27' if retry_live else 'paced-recovery-v26' if live_trial else 'paced-recovery-v25' if evaluation_only else 'paced-recovery-v24' if prepared else 'paced-continuation-v23')
     events=json.loads((previous/'events.json').read_text());last=json.loads((previous/'provider-final.json').read_text())
     backup_run=Path('runs/venus-training-20261027/paced-recovery-v26') if (retry_live or repaired_live) else previous
     if live_trial:
@@ -34,7 +35,7 @@ def main():
         with socket.socket() as probe:probe.bind(('127.0.0.1',8037))
         final=next(e for e in reversed(events) if e['event']=='provider_stopped')
         assert final['focused_seconds_upper']==prior
-        assert (prior,duration)==((14000,3300) if resume_live else (13700,3600)) if repaired_live else duration==min(900,14400-prior) and duration>=600
+        assert (prior,duration)==((14600,2700) if repeat_live else (14000,3300) if resume_live else (13700,3600)) if repaired_live else duration==min(900,14400-prior) and duration>=600
         assert json.loads((backup_run/'copyback-verified.json').read_text())['all_hashes_verified']
         assert digest(backup_run/'copyback/paced-candidate-v25/step-0054.pt')==p['trained_checkpoint_sha256']
         assert json.loads((backup_run/'copyback/paced-native-paired-v26/paired-native-report.json').read_text())['complete']
@@ -144,7 +145,7 @@ def main():
             if retry_live:
                 (c.R/'prior-microphone.log').write_text(c.ssh('sudo journalctl -u duplex-venus-recovery27-microphone --no-pager -o cat | tail -30'))
             from .live_trial import serve
-            serve(c,'/usr/bin/env '+env+' '+py,end,unit_prefix)
+            serve(c,'/usr/bin/env '+env+' '+py,end,unit_prefix,unused_timeout=live_plan.get('live_unused_grace_seconds',300),idle_timeout=live_plan.get('live_post_conversation_idle_seconds',90))
         else:
             if not prepared:execute('prefix','training.venus.prefix_cache --model '+c.MODEL+' --cache '+c.OUT+'/paced-native-cache-v22 --output '+c.OUT+'/paced-prefix-cache-v24 --source '+c.source+' --reuse-cache '+c.OUT+'/paced-prefix-cache-v22 --reuse-witness '+witness,4000)
             if not evaluation_only:
