@@ -33,7 +33,11 @@
     "cancel_obsolete_nonfinal_audio": true,
     "preserve_valid_final_speech": true,
     "session_generation_prevents_late_microphone_stream": true,
-    "visible_timing_and_reference_label": true
+    "visible_timing_and_reference_label": true,
+    "focused_tests_passed": 13,
+    "source": "da90d6592",
+    "deployed": false,
+    "deployment_blocker": "Actual Google reauthentication failure before first remote Git read; no remote source mutation happened."
   },
   "remaining": [
     "Measure nativeLLM/TTS/token-to-waveform substage costs before kernel/runtimechanges",
@@ -43,5 +47,34 @@
   "api_calls": 0,
   "optimizer_updates": 0,
   "new_gpu_allocations": 0,
-  "raw_receipts": "runs/venus-training-20261028/live-latency-repro-v1"
+  "raw_receipts": "runs/venus-training-20261028/live-latency-repro-v1",
+  "reference_diagnostic_prepared": {
+    "profile": "british-george",
+    "purpose": "Explicit English native-reference diagnostic, NOT voice adoption or training approval",
+    "source_path": "runs/venus-training-20261027/british-accent-sources-v2-repaired/british-george--voice-v1-reference/source.wav",
+    "source_sha256": "a023ff5e038c003477d4d8a5329a2d8203ba098c5c8bea4e2d4a47140edfa4a0",
+    "independent_original_word_audit": "runs/venus-training-20261027/paced-recovery-v31/copyback/voice-source-quality-v26/british-george--voice-v1-reference.json",
+    "independent_original_word_audit_sha256": "029461a48b39048a184ac368223a4a99c2c3dceaa64b248573e70d9b86e2cdbf",
+    "original_word_error_rate": 0,
+    "source_seconds": 13.04,
+    "source_peak": 0.7899169921875,
+    "derived_path": "runs/venus-training-20261028/british-george-native-reference-v1/reference-16k.wav",
+    "derived_sha256": "40159a59a35053c358d5192b3919a86453c8c6bf1b2019b289119ceca444f674",
+    "derived_seconds": 13.04,
+    "derived_peak": 0.7810307145118713,
+    "conversion": "ffmpeg default resample24k-to16k, full original waveform, pcm_f32le; no trim, gain, normalization or clipping",
+    "derived_independent_word_audit_done": false,
+    "native_output_quality_or_accent_qualified": false,
+    "full174_cohort_training_approved": false,
+    "owner_audio_used": false,
+    "api_calls": 0
+  },
+  "live_access_blocker": {
+    "at_utc": "2026-10-28T23:53:06.458966+00:00",
+    "reason": "Google current auth tokens require reauthentication",
+    "live_connection_closed_by_guard": true,
+    "actual_provider_stop_independently_verified": false,
+    "original_native_stop_utc": "2026-10-29T00:02:40.274Z",
+    "new_allocation_submitted": false
+  }
 }

@@ -1,6 +1,6 @@
 {
   "schema": "dl-native-experiment-ledger-v1",
-  "recorded_utc": "2026-10-28T23:37:48.440271+00:00",
+  "recorded_utc": "2026-10-28T23:53:06.516253+00:00",
   "scope": "All direct Venus controller events found under the two named local roots; not every historical Moshi/Slurm job",
   "roots": [
     "runs/venus-training-20261026",
@@ -1663,9 +1663,9 @@
     {
       "id": "paced-recovery-v32",
       "event_receipt": "runs/venus-training-20261027/paced-recovery-v32/events.json",
-      "event_receipt_sha256": "58703b790b2e2efcd90fb5e9b4d7cada0e918e7a750e0f28b88c1a17ab3b51c7",
+      "event_receipt_sha256": "e748f6a101db15e6ac39e3a9a8d74393b94491bd8c904e3014192a694d71f538",
       "first_recorded_utc": "2026-10-28T23:31:52.153898+00:00",
-      "last_recorded_utc": "2026-10-28T23:35:36.588650+00:00",
+      "last_recorded_utc": "2026-10-28T23:49:09.153209+00:00",
       "source_shas": [
         "484ed103bdf14d83244fa7889f91153c6e8cf8c5"
       ],
@@ -1687,7 +1687,18 @@
       ],
       "actual_training_records": [],
       "admitted_recipes": [],
-      "failures": [],
+      "failures": [
+        {
+          "at_utc": "2026-10-28T23:49:08.500322+00:00",
+          "event": "recovery_failure",
+          "error_type": "RuntimeError"
+        },
+        {
+          "at_utc": "2026-10-28T23:49:09.153209+00:00",
+          "event": "copyback_failure_disk_preserved",
+          "error_type": null
+        }
+      ],
       "provider_stop_records": [],
       "adoption_inferred": false,
       "lease": {
