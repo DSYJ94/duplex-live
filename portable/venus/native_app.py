@@ -14,6 +14,7 @@ from pathlib import Path
 import re
 import time
 import uuid
+from contextlib import ExitStack
 
 
 def ensure_guard():
@@ -250,7 +251,9 @@ class NativeEngine:
 
 
 def create_app(model_dir, system_prompt='Streaming Omni Conversation.', adapter_checkpoint=None,
-               voice_reference=None,voice_reference_sha256=None,nonspoken_actions=False):
+               voice_reference=None,voice_reference_sha256=None,nonspoken_actions=False,compare_foundation=False):
+    if compare_foundation and not adapter_checkpoint:
+        raise ValueError('A comparison requires the explicit trained checkpoint')
     from contextlib import asynccontextmanager
     from fastapi import FastAPI, WebSocket
     from fastapi.responses import FileResponse
@@ -271,7 +274,7 @@ def create_app(model_dir, system_prompt='Streaming Omni Conversation.', adapter_
 
     @app.get('/health')
     async def health():
-        return dict(ready=True, busy=slot.locked(), **app.state.engine.profile)
+        return dict(ready=True, busy=slot.locked(), comparison_available=compare_foundation, **app.state.engine.profile)
 
     @app.websocket('/ws')
     async def conversation(ws: WebSocket):
@@ -287,10 +290,16 @@ def create_app(model_dir, system_prompt='Streaming Omni Conversation.', adapter_
             return
         async with slot:
             worker, parser = ArithmeticWorker(), DelegateParser()
+            variants = ExitStack()
             try:
                 engine = app.state.engine
+                variant=ws.query_params.get('variant','candidate')
+                if variant!='candidate' and not compare_foundation:
+                    raise ValueError('Model comparison is not enabled on this server')
+                from .live_variant import variant_context,variant_profile
+                variants.enter_context(variant_context(engine.model.llm,variant))
                 await asyncio.to_thread(engine.prepare)
-                await ws.send_json({'ready':True, 'profile':engine.profile})
+                await ws.send_json({'ready':True, 'profile':variant_profile(engine.profile,variant)})
                 sequence = 0
                 while True:
                     pcm = await asyncio.wait_for(ws.receive_bytes(), timeout=45)
@@ -314,7 +323,8 @@ def create_app(model_dir, system_prompt='Streaming Omni Conversation.', adapter_
                 except RuntimeError:
                     pass
             finally:
-                await worker.close()
+                try:await worker.close()
+                finally:variants.close()
     return app
 
 
@@ -327,9 +337,10 @@ if __name__ == '__main__':
     parser.add_argument('--voice-reference', help='Approved original/synthetic mono16k reference for the native voice generator')
     parser.add_argument('--voice-reference-sha256', help='Exact SHA256 required for a custom reference')
     parser.add_argument('--nonspoken-actions',action='store_true',help='Experimental native protocol filter; full speech/behavior qualification still required')
+    parser.add_argument('--compare-foundation',action='store_true',help='Allow original/adapted comparison between isolated conversations')
     args = parser.parse_args()
     import uvicorn
     # Loopback and SSH tunnel only. No microphone or conversation recording.
     prompt=Path(args.system_prompt_file).read_text().strip() if args.system_prompt_file else 'Streaming Omni Conversation.'
     if not prompt or len(prompt)>4000:raise ValueError('Bounded nonempty system prompt required')
-    uvicorn.run(create_app(args.model_dir,prompt,args.adapter_checkpoint,args.voice_reference,args.voice_reference_sha256,args.nonspoken_actions), host='127.0.0.1', port=args.port)
+    uvicorn.run(create_app(args.model_dir,prompt,args.adapter_checkpoint,args.voice_reference,args.voice_reference_sha256,args.nonspoken_actions,args.compare_foundation), host='127.0.0.1', port=args.port)

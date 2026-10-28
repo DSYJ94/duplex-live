@@ -101,13 +101,17 @@ def test_agent_rate_and_clip_reach_actual_optimizer_step(tmp_path,monkeypatch):
     assert row['optimizer_updated'] and row['gradient_norm']>0
 
 
-@pytest.mark.parametrize('version,prior,duration',[('v25',9900,4500),('v26',10500,3900)])
-def test_prepared_lease_carries_all_prior_gpu_time_and_enforces_native_stop(version,prior,duration):
+@pytest.mark.parametrize('version,prior,duration',[('v25',9900,4500),('v26',10500,3900),('v27',12000,900)])
+def test_prepared_lease_carries_all_prior_gpu_time_and_enforces_native_stop(version,prior,duration,monkeypatch,tmp_path):
     import hashlib
     from pathlib import Path
-    from training.venus.paced_guard import AUTH,PLAN_V25,PLAN_V26,validate
+    from training.venus.paced_guard import AUTH,PLAN_V25,PLAN_V26,PLAN_V27,validate
     from portable.venus.guard import resource,stamp
     plan=PLAN_V26 if version=='v26' else PLAN_V25
+    if version=='v27':
+        import training.venus.paced_guard as guard
+        value=json.loads(PLAN_V27.read_text());value.update(status='WITHIN_APPROVED_FOCUSED_REPAIR',focused_gpu_seconds_upper_before_launch=12000,maximum_gpu_seconds=900,previous_provider_snapshot=dict(id='6750796068068004320',status='TERMINATED',lastStartTimestamp='2026-10-28T07:00:00Z',lastStopTimestamp='2026-10-28T07:25:00Z'))
+        plan=tmp_path/'live-plan.json';plan.write_text(json.dumps(value));monkeypatch.setattr(guard,'PLAN_V27',plan)
     p=json.loads(plan.read_text());a=json.loads(AUTH.read_text());r=a['resources']
     start=stamp('2026-10-28T08:00:00Z')
     lease=dict(resource_key='venus-paced-recovery-'+version,zone=r['zone'],disk_id=r['same_existing_disk_id'],

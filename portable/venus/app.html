@@ -3,17 +3,20 @@
 <style>body{font:17px/1.6 system-ui;background:#f3f4f6;color:#172133;max-width:760px;margin:60px auto;padding:24px}button{font:inherit;border:0;border-radius:12px;padding:14px 24px;background:#2454dc;color:white;cursor:pointer}button:disabled{opacity:.5}#stop{background:#596579}section{background:white;border-radius:20px;padding:28px;margin-top:24px}#words{white-space:pre-wrap}small{color:#596579}#state{font-weight:600}</style>
 <h1>Duplex Live</h1><p>Native voice prototype · Realtime-Venus Audio</p>
 <p>Use headphones. You can interrupt, ask it to wait, and continue speaking.</p>
+<p id="variants" hidden><label>Model: <select id="variant"><option value="released">Original Venus</option><option value="candidate" selected>Trained Venus · experimental244</option></select></label></p>
 <button id="start">Start conversation</button> <button id="stop" disabled>End</button>
 <section><div id="state">Ready to connect</div><p id="words"></p><small id="work">Background worker: arithmetic only. General reasoning backend is not connected yet.</small></section>
 <p><small>Microphone audio goes to your GCP GPU through the local tunnel. This prototype does not save microphone audio or conversation transcripts.</small></p>
 <script>
 let socket,ctx,input,processor,stream,nextPlay=0,queued=0,closing=false;
+const variant=document.querySelector('#variant');
+fetch('/health').then(r=>r.json()).then(p=>{if(p.comparison_available){document.querySelector('#variants').hidden=false;variant.value='released';}}).catch(()=>{});
 const start=document.querySelector('#start'),stop=document.querySelector('#stop'),state=document.querySelector('#state'),words=document.querySelector('#words'),work=document.querySelector('#work');
-async function end(){if(closing)return;closing=true;if(socket)socket.onclose=null;if(processor)processor.disconnect();if(input)input.disconnect();if(stream)stream.getTracks().forEach(t=>t.stop());if(socket)socket.close();if(ctx)await ctx.close();socket=ctx=input=processor=stream=null;queued=0;nextPlay=0;start.disabled=false;stop.disabled=true;state.textContent='Conversation ended';closing=false;}
-start.onclick=async()=>{start.disabled=true;words.textContent='';state.textContent='Connecting…';try{
+async function end(){if(closing)return;closing=true;if(socket)socket.onclose=null;if(processor)processor.disconnect();if(input)input.disconnect();if(stream)stream.getTracks().forEach(t=>t.stop());if(socket)socket.close();if(ctx)await ctx.close();socket=ctx=input=processor=stream=null;queued=0;nextPlay=0;start.disabled=false;variant.disabled=false;stop.disabled=true;state.textContent='Conversation ended';closing=false;}
+start.onclick=async()=>{start.disabled=true;variant.disabled=true;words.textContent='';state.textContent='Connecting…';try{
 ctx=new AudioContext({sampleRate:16000});await ctx.resume();
 if(ctx.sampleRate!==16000)throw Error('This browser did not provide16kHz audio. Try Chrome.');
-socket=new WebSocket(`${location.protocol==='https:'?'wss':'ws'}://${location.host}/ws`);
+socket=new WebSocket(`${location.protocol==='https:'?'wss':'ws'}://${location.host}/ws?variant=${encodeURIComponent(variant.value)}`);
 socket.onmessage=async event=>{const m=JSON.parse(event.data);if(m.error){await end();state.textContent=m.error;return;}
 if(m.ready){state.textContent='Listening';stop.disabled=false;stream=await navigator.mediaDevices.getUserMedia({audio:{channelCount:1,echoCancellation:true,noiseSuppression:true,autoGainControl:false}});input=ctx.createMediaStreamSource(stream);
 const code=`class Capture extends AudioWorkletProcessor{constructor(){super();this.b=new Float32Array(16000);this.n=0;}process(i,o){const a=i[0][0];if(a)for(const x of a){this.b[this.n++]=x;if(this.n===16000){const p=new Int16Array(16000);for(let j=0;j<16000;j++)p[j]=Math.round(Math.max(-1,Math.min(1,this.b[j]))*32767);this.port.postMessage(p.buffer,[p.buffer]);this.n=0;}}return true;}}registerProcessor('capture',Capture);`;

@@ -1,0 +1,95 @@
+{
+  "schema": "dl-native-paired64-review-v1",
+  "recorded_utc": "2026-10-28T08:54:48.102944+00:00",
+  "training_source": "6ea80a5d2512d981d8ddf1d64c4675684667429a",
+  "evaluation_source": "6557a27a5dfb3213097d6b637dd7ca4fab20c713",
+  "complete64": true,
+  "qualified": false,
+  "adopted": false,
+  "status": "NOT_QUALIFIED_FOR_ADOPTION",
+  "conditions": {
+    "parent190": {
+      "cases": 32,
+      "generated_word_audio_agreement_pass": 1,
+      "raw_peak_pass": 32
+    },
+    "paced-continuation": {
+      "cases": 32,
+      "generated_word_audio_agreement_pass": 7,
+      "raw_peak_pass": 32
+    }
+  },
+  "speech_agreement_is_not_task_accuracy": true,
+  "quiet_measurement": "Counts of native chunks with audio peak>.001 before the chunk containing the independently timed cue; not an independent intelligibility judgment",
+  "quiet": [
+    {
+      "id": "venus-repair-v2-holdout-quiet-0080",
+      "condition": "parent190",
+      "voiced_frames_before_cue_word": 2,
+      "voiced_frames_after_cue_word": 1
+    },
+    {
+      "id": "venus-repair-v2-holdout-quiet-0082",
+      "condition": "parent190",
+      "voiced_frames_before_cue_word": 2,
+      "voiced_frames_after_cue_word": 1
+    },
+    {
+      "id": "venus-repair-v2-holdout-quiet-0083",
+      "condition": "parent190",
+      "voiced_frames_before_cue_word": 0,
+      "voiced_frames_after_cue_word": 1
+    },
+    {
+      "id": "venus-repair-v2-holdout-quiet-0081",
+      "condition": "parent190",
+      "voiced_frames_before_cue_word": 0,
+      "voiced_frames_after_cue_word": 0
+    },
+    {
+      "id": "venus-repair-v2-holdout-quiet-0080",
+      "condition": "paced-continuation",
+      "voiced_frames_before_cue_word": 2,
+      "voiced_frames_after_cue_word": 0
+    },
+    {
+      "id": "venus-repair-v2-holdout-quiet-0082",
+      "condition": "paced-continuation",
+      "voiced_frames_before_cue_word": 7,
+      "voiced_frames_after_cue_word": 0
+    },
+    {
+      "id": "venus-repair-v2-holdout-quiet-0083",
+      "condition": "paced-continuation",
+      "voiced_frames_before_cue_word": 0,
+      "voiced_frames_after_cue_word": 1
+    },
+    {
+      "id": "venus-repair-v2-holdout-quiet-0081",
+      "condition": "paced-continuation",
+      "voiced_frames_before_cue_word": 0,
+      "voiced_frames_after_cue_word": 0
+    }
+  ],
+  "source_voice_audit": {
+    "complete": true,
+    "required": 174,
+    "passed": 169,
+    "all_passed": false,
+    "failed_ids": [
+      "british-alice--voice-v1-honest_uncertainty-02",
+      "british-alice--voice-v1-numbers_and_pronunciation-05",
+      "british-alice--voice-v1-pending_work-05",
+      "scottish-glasgow--voice-v1-allowed_backchannel-06",
+      "irish-rory--voice-v1-explanation_and_emphasis-01"
+    ],
+    "training_approved": false
+  },
+  "backup": {
+    "all_hashes_verified": true,
+    "files": 11519,
+    "bytes": 7774107232,
+    "source": "6557a27a5dfb3213097d6b637dd7ca4fab20c713"
+  },
+  "interpretation": "Full development CE improved but the full native speech gate still fails. Do not infer data-only cause, convergence or a successful foundation selection. Original Venus and trained244 should be tested distinctly. No optimizer repeat."
+}
