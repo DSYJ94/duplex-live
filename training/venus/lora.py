@@ -51,12 +51,19 @@ def disabled(model):
             m.enabled = enabled
 
 
+def adapter_parameters(model):
+    """Adapter identity is structural; inference freezes its gradients too."""
+    return {prefix+'.'+name if prefix else name: getattr(module,name)
+            for prefix,module in model.named_modules() if isinstance(module,LoRALinear)
+            for name in ('a','b')}
+
+
 def adapter_state(model):
-    return {n: p.detach().cpu().clone() for n, p in model.named_parameters() if p.requires_grad}
+    return {n: p.detach().cpu().clone() for n, p in adapter_parameters(model).items()}
 
 
 def load_adapter(model, state):
-    params = {n: p for n, p in model.named_parameters() if p.requires_grad}
+    params = adapter_parameters(model)
     if set(params) != set(state):
         raise ValueError('Adapter parameter names do not match the exact architecture')
     if any(not torch.is_tensor(state[n]) or state[n].shape != p.shape

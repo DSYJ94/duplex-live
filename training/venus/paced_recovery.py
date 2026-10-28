@@ -3,23 +3,31 @@ import hashlib,json,os,shlex,shutil,subprocess,sys,time
 from pathlib import Path
 from datetime import datetime
 from . import controller as c
-from .paced_guard import AUTH,PLAN_V24,PLAN_V25
+from .paced_guard import AUTH,PLAN_V24,PLAN_V25,PLAN_V26
 from portable.venus.guard import bounded_runpod_read
 
 def digest(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
 
 def main():
-    prepared='--prepared-reactive' in sys.argv;version='v25' if prepared else 'v24'
-    PLAN=PLAN_V25 if prepared else PLAN_V24
-    prior,duration=(9900,4500) if prepared else (6500,7200)
+    evaluation_only='--evaluation-only' in sys.argv
+    prepared='--prepared-reactive' in sys.argv or evaluation_only
+    version='v26' if evaluation_only else 'v25' if prepared else 'v24'
+    PLAN=PLAN_V26 if evaluation_only else PLAN_V25 if prepared else PLAN_V24
+    prior,duration=(10500,3900) if evaluation_only else (9900,4500) if prepared else (6500,7200)
     unit_prefix='duplex-venus-recovery'+version[1:]
     c.R=Path('runs/venus-training-20261027')/('paced-recovery-'+version);assert not c.R.exists(),'Observe actual recovery, never duplicate'
     assert not c.run(['git','status','--porcelain','--','training/venus','data/venus','portable/venus']).strip()
     p=json.loads(PLAN.read_text());a=json.loads(AUTH.read_text());r=a['resources'];zone=r['zone'];c.NAME=p['vm_name']
     assert p['status']=='WITHIN_APPROVED_FOCUSED_REPAIR' and p['parent_sha256']==digest(AUTH)
-    previous=Path('runs/venus-training-20261027')/('paced-recovery-v24' if prepared else 'paced-continuation-v23')
+    previous=Path('runs/venus-training-20261027')/('paced-recovery-v25' if evaluation_only else 'paced-recovery-v24' if prepared else 'paced-continuation-v23')
     events=json.loads((previous/'events.json').read_text());last=json.loads((previous/'provider-final.json').read_text())
-    if prepared:
+    if evaluation_only:
+        assert any(e['event']=='actual_training_complete' and e['result']['actual_updates']==54 and e['result']['total_optimizer_updates']==244 for e in events)
+        assert any(e['event']=='provider_stopped' and e['focused_seconds_upper']==10500 for e in events)
+        assert digest(previous/'copyback/paced-candidate-v25/step-0054.pt')==p['trained_checkpoint_sha256']
+        elapsed=datetime.fromisoformat(last['lastStopTimestamp']).timestamp()-datetime.fromisoformat(last['lastStartTimestamp']).timestamp()
+        assert 9900+elapsed<=10500
+    elif prepared:
         assert any(e['event']=='actual_unit_terminal' and e['unit']=='duplex-venus-recovery24-prefix' and e['state']['ExecMainStatus']=='0' for e in events)
         assert any(e['event']=='provider_stopped' and e['focused_seconds_upper']==9900 for e in events)
         candidate=previous/'copyback/paced-candidate-v24'
@@ -45,7 +53,7 @@ def main():
     for row in rows:
         path=seed/'copyback'/row['path'];assert path.stat().st_size==row['bytes'] and digest(path)==row['sha256']
     c.R.mkdir();c.source=c.run(['git','rev-parse','HEAD']).strip();c.remote=c.ROOT+'/duplex-venus-recovery-'+c.source[:12];c.run(['git','bundle','create',str(c.R/'source.bundle'),'HEAD'],120)
-    c.record('recovery_preflight',source=c.source,prior_focused_seconds=prior,next_max_seconds=duration,trained_state190_mac_hash_verified=True,no_optimizer_started_in_predecessor=True,same_disk=str(disk['id']))
+    c.record('recovery_preflight',source=c.source,prior_focused_seconds=prior,next_max_seconds=duration,trained_state190_mac_hash_verified=True,no_optimizer_started_in_predecessor=not evaluation_only,evaluation_only=evaluation_only,same_disk=str(disk['id']))
     awake=subprocess.Popen(['caffeinate','-i','-w',str(os.getpid())]);guard=None;created=False;vm=None
     try:
         c.cloud('compute','os-login','ssh-keys','add','--key-file=runs/local-migration-20261024/.private/gcp-native-ssh.pub','--ttl=4h')
@@ -112,11 +120,13 @@ def main():
         def execute(label,args,reserve):
             unit=unit_prefix+'-'+label;c.start_unit(unit,'/usr/bin/env '+env+' '+py+' -u -m '+args,max(1,int(end-time.time()-reserve)));c.wait_unit(unit,end-reserve)
         if not prepared:execute('prefix','training.venus.prefix_cache --model '+c.MODEL+' --cache '+c.OUT+'/paced-native-cache-v22 --output '+c.OUT+'/paced-prefix-cache-v24 --source '+c.source+' --reuse-cache '+c.OUT+'/paced-prefix-cache-v22 --reuse-witness '+witness,4000)
-        args=' --model '+c.MODEL+' --cache '+c.OUT+'/paced-prefix-cache-v24 --approval '+c.OUT+'/paced-data-approval-v22.json --output '+c.OUT+'/paced-candidate-'+version+' --source '+c.source+' --cache-producer '+(p['prepared_cache_producer'] if prepared else c.source)+' --lease '+lease_path+' --parent-checkpoint '+c.OUT+'/candidate-v13/step-0190.pt --parent-sha256 '+p['parent_checkpoint_sha256']
-        if prepared:args+=' --reactive'
-        execute('numerical-start','training.venus.train --stage start'+args,3600);recipe=json.loads(c.ssh('cat '+c.OUT+'/paced-candidate-'+version+'/recipe.json'));c.record('actual_recipe_admitted',recipe=recipe['recipe'],admission=recipe['admission'])
-        execute('restore-train','training.venus.train --stage restore-continue'+args,3400);terminal=json.loads(c.ssh('cat '+c.OUT+'/paced-candidate-'+version+'/training-terminal.json'));assert terminal['completed'] and not terminal['adopted'];c.record('actual_training_complete',result=terminal)
-        args='training.venus.paced_behavior --model '+c.MODEL+' --candidate '+c.OUT+'/paced-candidate-'+version+' --parent-checkpoint '+c.OUT+'/candidate-v13/step-0190.pt --parent-sha256 '+p['parent_checkpoint_sha256']+' --plan '+c.remote+'/evals/fixtures/venus-control-repair-source-v2-20261027.json --timelines '+c.OUT+'/paced-timelines-v22 --approval '+c.OUT+'/paced-data-approval-v22.json --word-quality '+c.OUT+'/paced-word-quality-v22.json --old-plan '+c.remote+'/evals/fixtures/venus-control-corpus-v4-20261026.json --old-timelines '+c.OUT+'/timelines-v7-repaired --old-approval '+c.OUT+'/data-approval-v7.json --output '+c.OUT+'/paced-native-paired-'+version+' --source '+c.source+' --lease '+lease_path
+        if not evaluation_only:
+            args=' --model '+c.MODEL+' --cache '+c.OUT+'/paced-prefix-cache-v24 --approval '+c.OUT+'/paced-data-approval-v22.json --output '+c.OUT+'/paced-candidate-'+version+' --source '+c.source+' --cache-producer '+(p['prepared_cache_producer'] if prepared else c.source)+' --lease '+lease_path+' --parent-checkpoint '+c.OUT+'/candidate-v13/step-0190.pt --parent-sha256 '+p['parent_checkpoint_sha256']
+            if prepared:args+=' --reactive'
+            execute('numerical-start','training.venus.train --stage start'+args,3600);recipe=json.loads(c.ssh('cat '+c.OUT+'/paced-candidate-'+version+'/recipe.json'));c.record('actual_recipe_admitted',recipe=recipe['recipe'],admission=recipe['admission'])
+            execute('restore-train','training.venus.train --stage restore-continue'+args,3400);terminal=json.loads(c.ssh('cat '+c.OUT+'/paced-candidate-'+version+'/training-terminal.json'));assert terminal['completed'] and not terminal['adopted'];c.record('actual_training_complete',result=terminal)
+        candidate_version='v25' if evaluation_only else version
+        args='training.venus.paced_behavior --model '+c.MODEL+' --candidate '+c.OUT+'/paced-candidate-'+candidate_version+' --parent-checkpoint '+c.OUT+'/candidate-v13/step-0190.pt --parent-sha256 '+p['parent_checkpoint_sha256']+' --plan '+c.remote+'/evals/fixtures/venus-control-repair-source-v2-20261027.json --timelines '+c.OUT+'/paced-timelines-v22 --approval '+c.OUT+'/paced-data-approval-v22.json --word-quality '+c.OUT+'/paced-word-quality-v22.json --old-plan '+c.remote+'/evals/fixtures/venus-control-corpus-v4-20261026.json --old-timelines '+c.OUT+'/timelines-v7-repaired --old-approval '+c.OUT+'/data-approval-v7.json --output '+c.OUT+'/paced-native-paired-'+version+' --source '+c.source+' --lease '+lease_path
         execute('paired-native',args,1500);c.record('complete64_paired_native_collected',adopted=False)
         execute('voice-words','data.venus.voice_source_quality --root '+c.OUT+'/voice-source-export-v1 --output '+c.OUT+'/voice-source-quality-'+version+' --lease '+lease_path+' --source '+c.source,600)
         quality=json.loads(c.ssh('cat '+c.OUT+'/voice-source-quality-'+version+'/quality.json'));assert quality['complete'];c.record('complete174_source_words',passed=quality['passed'],required=174,all_passed=quality['all_passed'],adopted=False)

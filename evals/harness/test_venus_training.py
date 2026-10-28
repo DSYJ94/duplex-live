@@ -99,6 +99,24 @@ def test_adapter_loader_rejects_broadcastable_shapes_and_nonfinite_values():
     with pytest.raises(ValueError,match='finite'):load_adapter(m,bad)
 
 
+def test_paired_inference_swaps_structural_adapters_after_all_weights_frozen():
+    from training.venus.lora import load_adapter
+    m=model();e=example(m);install(m,2,2,last_layers=1)
+    parent=adapter_state(m)
+    candidate={name:value.clone() for name,value in parent.items()}
+    for name in candidate:
+        if name.endswith('.b'):candidate[name].add_(.5)
+    m.requires_grad_(False)
+    frozen={name:value.clone() for name,value in m.named_parameters() if name not in parent}
+    load_adapter(m,parent);first=selected_forward(m,e,'cpu')[0].detach().clone()
+    load_adapter(m,candidate);second=selected_forward(m,e,'cpu')[0].detach().clone()
+    assert not torch.equal(first,second)
+    assert all(torch.equal(adapter_state(m)[name],value) for name,value in candidate.items())
+    load_adapter(m,parent);again=selected_forward(m,e,'cpu')[0].detach()
+    assert torch.equal(first,again) and not any(p.requires_grad for p in m.parameters())
+    assert all(torch.equal(dict(m.named_parameters())[name],value) for name,value in frozen.items())
+
+
 def test_native_segment_to_training_alignment_is_red_capable():
     from types import SimpleNamespace
     from training.venus.native_cache import training_input_proof

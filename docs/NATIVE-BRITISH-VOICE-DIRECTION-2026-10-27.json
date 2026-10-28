@@ -97,5 +97,17 @@
   ],
   "preferred_profile_numeric_ratings": 0,
   "source_primary_profile_historical": "british-alice; frozen acquisition plan, not owner adoption",
-  "voice_adoption_pending": true
+  "voice_adoption_pending": true,
+  "latest_model_followup": {
+    "owner_request": "We can tap into the latest realtime voices if needed",
+    "verified_utc": "2026-10-28T08:14:26.273038+00:00",
+    "official_source": "https://elevenlabs.io/docs/overview/models/",
+    "candidate_models": [
+      "eleven_v4",
+      "eleven_v4_turbo"
+    ],
+    "purpose": "Matched synthetic reference/training audio naturalness comparison, George first; source quality and native output remain separate evidence",
+    "new_synthesis_calls": 0,
+    "budget_note": "External API ceiling9.6476125/10; verify model access, voice compatibility and actual pricing before any further spend"
+  }
 }

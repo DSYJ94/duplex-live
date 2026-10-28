@@ -101,26 +101,28 @@ def test_agent_rate_and_clip_reach_actual_optimizer_step(tmp_path,monkeypatch):
     assert row['optimizer_updated'] and row['gradient_norm']>0
 
 
-def test_prepared_lease_carries_all_prior_gpu_time_and_enforces_native_stop():
+@pytest.mark.parametrize('version,prior,duration',[('v25',9900,4500),('v26',10500,3900)])
+def test_prepared_lease_carries_all_prior_gpu_time_and_enforces_native_stop(version,prior,duration):
     import hashlib
     from pathlib import Path
-    from training.venus.paced_guard import AUTH,PLAN_V25,validate
+    from training.venus.paced_guard import AUTH,PLAN_V25,PLAN_V26,validate
     from portable.venus.guard import resource,stamp
-    p=json.loads(PLAN_V25.read_text());a=json.loads(AUTH.read_text());r=a['resources']
+    plan=PLAN_V26 if version=='v26' else PLAN_V25
+    p=json.loads(plan.read_text());a=json.loads(AUTH.read_text());r=a['resources']
     start=stamp('2026-10-28T08:00:00Z')
-    lease=dict(resource_key='venus-paced-recovery-v25',zone=r['zone'],disk_id=r['same_existing_disk_id'],
-        disk_size_gib=100,vm_id='12345',creation_timestamp='2026-10-28T08:00:00Z',stop_unix=start+4500,
-        prior_new_gpu_seconds_upper=9900,prior_gpu_seconds=54451,prior_scope_usd=91.98448055555555,
+    lease=dict(resource_key='venus-paced-recovery-'+version,zone=r['zone'],disk_id=r['same_existing_disk_id'],
+        disk_size_gib=100,vm_id='12345',creation_timestamp='2026-10-28T08:00:00Z',stop_unix=start+duration,
+        prior_new_gpu_seconds_upper=prior,prior_gpu_seconds=54451,prior_scope_usd=91.98448055555555,
         verified_hourly_price_usd=3.687083630136986,authorization_sha256=hashlib.sha256(AUTH.read_bytes()).hexdigest(),
-        execution_plan_sha256=hashlib.sha256(PLAN_V25.read_bytes()).hexdigest())
+        execution_plan_sha256=hashlib.sha256(plan.read_bytes()).hexdigest())
     vm=dict(id='12345',name=p['vm_name'],status='RUNNING',machineType='/a2-highgpu-1g',zone='/'+r['zone'],
         creationTimestamp=lease['creation_timestamp'],lastStartTimestamp='2026-10-28T08:00:00Z',
         tags={'items':['duplex-venus-train-bounded']},
         disks=[dict(boot=True,autoDelete=False,source='/disks/'+r['same_existing_disk_name'])],
-        scheduling=dict(provisioningModel='FLEX_START',maxRunDuration={'seconds':'4500'},instanceTerminationAction='STOP',automaticRestart=False))
+        scheduling=dict(provisioningModel='FLEX_START',maxRunDuration={'seconds':str(duration)},instanceTerminationAction='STOP',automaticRestart=False))
     assert resource(lease)['ident']=='12345'
-    assert validate(vm,[vm],[],lease,start+10)==start+4500
-    for invalid in ({**lease,'prior_new_gpu_seconds_upper':0},{**lease,'prior_gpu_seconds':0},{**lease,'stop_unix':start+4600}):
+    assert validate(vm,[vm],[],lease,start+10)==start+duration
+    for invalid in ({**lease,'prior_new_gpu_seconds_upper':0},{**lease,'prior_gpu_seconds':0},{**lease,'stop_unix':start+duration+100}):
         with pytest.raises(AssertionError):validate(vm,[vm],[],invalid,start+10)
-    with pytest.raises(AssertionError):validate(vm,[vm],[],lease,start+4500)
+    with pytest.raises(AssertionError):validate(vm,[vm],[],lease,start+duration)
     with pytest.raises(AssertionError):validate(vm,[vm],[{'status':'RUNNING'}],lease,start+10)

@@ -1,0 +1,96 @@
+{
+  "recorded_utc": "2026-10-28T08:14:26.273038+00:00",
+  "producer_source": "6ea80a5d2512d981d8ddf1d64c4675684667429a",
+  "actual_new_updates": 54,
+  "total_updates": 244,
+  "train_scenes": 216,
+  "dev_scenes": 52,
+  "complete_epochs": 1,
+  "dev_family_counts": {
+    "ordinary": 12,
+    "delegate": 12,
+    "quiet": 12,
+    "cancel": 8,
+    "pause": 4,
+    "pending": 4
+  },
+  "baseline_dev": {
+    "ordinary": 1.0933418174584706,
+    "delegate": 0.6107506776849428,
+    "quiet": 0.8744415193796158,
+    "cancel": 1.4183621555566788,
+    "pause": 1.0430974066257477,
+    "pending": 0.9359048306941986
+  },
+  "after_dev": {
+    "ordinary": 1.0309107551972072,
+    "delegate": 0.47851962099472684,
+    "quiet": 0.8826943412423134,
+    "cancel": 1.1536185517907143,
+    "pause": 0.7694866061210632,
+    "pending": 0.6996399760246277
+  },
+  "relative_change_percent": {
+    "ordinary": -5.710113823908025,
+    "delegate": -21.65057879124085,
+    "quiet": 0.9437820231309013,
+    "cancel": -18.66544469822363,
+    "pause": -26.23060883544629,
+    "pending": -25.244538431789444
+  },
+  "weighted_dev_baseline": 0.9654868147694148,
+  "weighted_dev_after": 0.8425182952330663,
+  "independent_restore": {
+    "passed": true,
+    "adapter_error": 0,
+    "adam_error": 0,
+    "rng_equal": true,
+    "loss_equal": true,
+    "actual_new_process": true,
+    "independent_continuation": true
+  },
+  "reactive_decisions": [
+    {
+      "identity": "bfa8d3874c520054ab5d15ef4da23014ece2c94e9fdd77cca8e56d1232411787",
+      "sequence": 1,
+      "observation_sha256": "11a4fadad5b62ebcee525241d60e90df673323df5a79b7ba92fb6bb95d18217a",
+      "not_before_step": 16,
+      "expires_after_step": 40,
+      "lr_multiplier": 1.0,
+      "gradient_clip": 1.0,
+      "reason": "Independent restore passed. Finite early TRAIN losses/gradients during warmup do not establish divergence or overfitting. Preserve the admitted warmup/cosine rate and clipping while collecting the next observation; no dataset, loss, epoch or acceptance change.",
+      "applied_after_step": 18,
+      "decision_sha256": "710f440249dc60e4c537ff1b3509e798d03368672b42c90d70cb8612e672b509"
+    },
+    {
+      "identity": "bfa8d3874c520054ab5d15ef4da23014ece2c94e9fdd77cca8e56d1232411787",
+      "sequence": 2,
+      "observation_sha256": "4057538ebd71b258a5b4ba6ee21e1887a6d2a8ecad53b29faca772840b5628cc",
+      "not_before_step": 40,
+      "expires_after_step": 53,
+      "lr_multiplier": 1.0,
+      "gradient_clip": 1.0,
+      "reason": "Second review: finite later-window gradients and reduced ordinary retention penalties do not show divergence. Latest windows have different scene mixtures, so lower batch CE is not a controlled convergence estimate. Retain the admitted cosine cooldown/clipping; inspect full52 DEV and paired speech before any adoption.",
+      "applied_after_step": 47,
+      "decision_sha256": "6c211c0349cf9858ba98214339c8b7e0afb6ed6de6c6484aad4119008dae2d85"
+    }
+  ],
+  "learning_rate_changed_by_agent": false,
+  "behavioral_approval": false,
+  "voice_naturalness_approval": false,
+  "critical_backup": {
+    "at_utc": "2026-10-28T08:09:39.298142+00:00",
+    "scope": "Complete candidate-v25 folder only; full remote archive copyback still pending",
+    "files": 28,
+    "bytes": 41028991,
+    "all_hashes_verified": true,
+    "trained_state_sha256": "c634e6cf38831210be0165ce7f6dd09c5454226f62ff622477fd4d051abde270"
+  },
+  "full_unique_backup": {
+    "all_hashes_verified": true,
+    "files": 9709,
+    "bytes": 7508290609,
+    "source": "6ea80a5d2512d981d8ddf1d64c4675684667429a"
+  },
+  "paired_evaluation_status": "Failed before any native case because load_adapter selected requires_grad parameters after inference freezes them; structural selection fix independently tested; no behavioral approval"
+}
