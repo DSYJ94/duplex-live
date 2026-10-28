@@ -1,13 +1,13 @@
 {
   "schema": "dl-native-experiment-ledger-v1",
-  "recorded_utc": "2026-10-28T12:01:00.944951+00:00",
+  "recorded_utc": "2026-10-28T21:51:23.451170+00:00",
   "scope": "All direct Venus controller events found under the two named local roots; not every historical Moshi/Slurm job",
   "roots": [
     "runs/venus-training-20261026",
     "runs/venus-training-20261027"
   ],
-  "run_count": 26,
-  "stage_count": 31,
+  "run_count": 27,
+  "stage_count": 32,
   "source_of_status": "Saved receipts; not a live provider read",
   "historical_moshi_reviews": [
     "docs/PROJECT-RESET-2026-10-25.md",
@@ -1523,9 +1523,9 @@
     {
       "id": "paced-recovery-v30",
       "event_receipt": "runs/venus-training-20261027/paced-recovery-v30/events.json",
-      "event_receipt_sha256": "86249cc4981b9e921b4a61ec5ba332daa3cc03bdd4eb5542b8072f71e470b272",
+      "event_receipt_sha256": "777a170b6cda9d05d73f924031734d6ab028db0ff72c36087bd9c37b72dfe9ae",
       "first_recorded_utc": "2026-10-28T11:55:04.877864+00:00",
-      "last_recorded_utc": "2026-10-28T11:58:57.056082+00:00",
+      "last_recorded_utc": "2026-10-28T12:05:31.956840+00:00",
       "source_shas": [
         "72adb70c14dc879ae7f30c7cc55f258d7f7d811a"
       ],
@@ -1547,9 +1547,31 @@
       ],
       "actual_training_records": [],
       "admitted_recipes": [],
-      "failures": [],
-      "provider_stop_records": [],
+      "failures": [
+        {
+          "at_utc": "2026-10-28T12:04:00.617862+00:00",
+          "event": "copyback_failure_disk_preserved",
+          "error_type": null
+        }
+      ],
+      "provider_stop_records": [
+        {
+          "at_utc": "2026-10-28T12:05:31.956840+00:00",
+          "event": "provider_stopped",
+          "vm_id": "6625583112666242122",
+          "status": "TERMINATED",
+          "focused_seconds_upper": 14600,
+          "prior_gpu_seconds_upper": 54451
+        }
+      ],
       "adoption_inferred": false,
+      "provider_snapshot": {
+        "id": "6625583112666242122",
+        "status": "TERMINATED",
+        "lastStartTimestamp": "2026-10-28T04:55:43.250-07:00",
+        "lastStopTimestamp": "2026-10-28T05:05:25.259-07:00"
+      },
+      "provider_snapshot_receipt": "runs/venus-training-20261027/paced-recovery-v30/provider-final.json",
       "lease": {
         "resource_key": "venus-paced-recovery-v30",
         "vm_id": "6625583112666242122",
@@ -1563,6 +1585,57 @@
       },
       "lease_receipt": "runs/venus-training-20261027/paced-recovery-v30/lease.json",
       "lease_receipt_sha256": "3e95fb652ceb1c58b0bb7a1487b068f141127a68b23fa865204688195eecaa80"
+    },
+    {
+      "id": "paced-recovery-v31",
+      "event_receipt": "runs/venus-training-20261027/paced-recovery-v31/events.json",
+      "event_receipt_sha256": "4c37ddcca14b13203d6a1781d6b4875bb223b7f07982736c7f4e42c0b29d33be",
+      "first_recorded_utc": "2026-10-28T17:02:25.082794+00:00",
+      "last_recorded_utc": "2026-10-28T21:49:53.031588+00:00",
+      "source_shas": [
+        "41a2f8131d705d406dcd005f3b56c941e12f861d",
+        "8175fb98669a2db0fe41773a00c44018d22797c7"
+      ],
+      "stages": [
+        {
+          "unit": "duplex-venus-recovery31-microphone",
+          "started_utc": "2026-10-28T21:47:36.208551+00:00",
+          "launch_identity": {
+            "MainPID": "1298",
+            "Result": "success",
+            "ExecMainStatus": "0",
+            "ActiveState": "active",
+            "SubState": "running",
+            "InvocationID": "529a36923a2f42848c9ed34fe4eda35f"
+          },
+          "terminal_utc": null,
+          "terminal": null
+        }
+      ],
+      "actual_training_records": [],
+      "admitted_recipes": [],
+      "failures": [
+        {
+          "at_utc": "2026-10-28T17:02:56.129759+00:00",
+          "event": "recovery_failure",
+          "error_type": "RuntimeError"
+        }
+      ],
+      "provider_stop_records": [],
+      "adoption_inferred": false,
+      "lease": {
+        "resource_key": "venus-paced-recovery-v31",
+        "vm_id": "3132736512933745605",
+        "disk_id": "4375908109499109167",
+        "stop_unix": 1793226714.408,
+        "prior_new_gpu_seconds_upper": 14600,
+        "prior_gpu_seconds": 54451,
+        "verified_hourly_price_usd": 3.687083630136986,
+        "authorization_sha256": "092eea9deca41f8ff6ddf3979db0e4270bc70b6b716484a4f2c8207d3934c7e2",
+        "execution_plan_sha256": "9fcbd91aee7d66a6807e99029b87308687a5b7319edeba4757ba7edc49639e87"
+      },
+      "lease_receipt": "runs/venus-training-20261027/paced-recovery-v31/lease.json",
+      "lease_receipt_sha256": "2909808c7fd559d26120da4d53520840d46e8f14b03ae6f6d69798848eb1e41a"
     },
     {
       "id": "recovery-v13",
