@@ -1,0 +1,59 @@
+{
+  "schema": "dl-native-owner-live-reopen-proposal-v1",
+  "status": "AWAITING_GPU_TIME_EXTENSION",
+  "recorded_utc": "2026-10-28T23:28:51.888019+00:00",
+  "human_request": "make the test available again",
+  "purpose": "One usable live conversation window after prior session stopped unused; no training or data-generation work.",
+  "parent_authorization": "docs/NATIVE-VENUS-LIVE-TIME-EXTENSION-AUTHORIZATION-2026-10-28.json",
+  "previous_vm": {
+    "id": "3132736512933745605",
+    "name": "duplex-venus-owner-retry-20261028-v31",
+    "status": "TERMINATED",
+    "actual_start_utc": "2026-10-28T21:46:54.408Z",
+    "actual_stop_utc": "2026-10-28T22:22:05.469Z",
+    "actual_gpu_seconds": 2111.061,
+    "charged_upper_seconds": 2200
+  },
+  "prior_focused_gpu_seconds_upper": 16800,
+  "remaining_previously_approved_gpu_seconds": 500,
+  "maximum_next_gpu_seconds": 1800,
+  "maximum_focused_gpu_seconds_after": 18600,
+  "maximum_cumulative_gpu_seconds_after": 73051,
+  "unchanged_phase_cost_cap_usd": 70,
+  "unchanged_cumulative_cost_cap_usd": 175,
+  "conservative_phase_maximum_with_reserves_usd": 44.66666666666667,
+  "resources": {
+    "project": "aurium-duplex-live-20261024",
+    "gpu": "one A10040GB/a2-highgpu-1g",
+    "zone": "us-central1-a",
+    "same_non_auto_deleted_100gib_disk": "4375908109499109167",
+    "retire_only_stopped_vm_envelope": true,
+    "new_disks_or_purchases": false,
+    "new_network_iam_api_quota": false
+  },
+  "execution": {
+    "source_deployment": "Git commit/push/bundle/fetch",
+    "maximum_concurrent_gpu_jobs": 1,
+    "native_provider_stop_seconds": 1800,
+    "independent_mac_and_guest_guards": true,
+    "live_url": "http://127.0.0.1:8037/",
+    "models": [
+      "released original0",
+      "experimental244"
+    ],
+    "startup_requires_both_actual_native_websocket_pcm_proofs": true,
+    "unused_window": "Entire remaining session; no five-minute unused shutdown",
+    "idle_after_conversation_seconds": 300,
+    "backup_reserve_seconds": 180,
+    "owner_microphone_or_transcripts_saved": false,
+    "new_optimizer_updates": 0,
+    "new_external_model_or_synthesis_calls": 0
+  },
+  "backup": {
+    "receipt": "runs/venus-training-20261027/paced-recovery-v31/copyback-verified.json",
+    "files": 11521,
+    "bytes": 7774191833,
+    "all_hashes_verified": true
+  },
+  "restart_requires": "Explicit approval of the additional GPU-time limit; the $70 cap and all data/resource restrictions remain unchanged."
+}
