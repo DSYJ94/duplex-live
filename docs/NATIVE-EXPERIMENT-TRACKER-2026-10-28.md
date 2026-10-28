@@ -1,7 +1,7 @@
 # Native model experiment tracker
 
 The machine-readable [run index](NATIVE-EXPERIMENT-INDEX-2026-10-28.json) covers
-22 locally recorded Venus controller runs and their actual stage receipts as of
+Locally recorded Venus controller runs and their actual stage receipts as of
 its timestamp. It is not a live provider monitor or an exhaustive index of earlier
 Moshi Slurm jobs. Earlier Moshi outcomes are linked through the retained reviews.
 Refresh it after a run ends with `python -m training.venus.run_ledger`.
@@ -10,7 +10,7 @@ Refresh it after a run ends with `python -m training.venus.run_ledger`.
 | --- | --- | --- | --- |
 | PersonaPlex/Moshi saved528 | Earlier native training, including the final eight updates520→528 | 1,894,400 adapter parameters in that experiment; original data/objectives and full archive retained | Rejected; paired ordinary answers2/4→1/4. Not continued by Venus training. |
 | Venus190 | Five complete152-scene TRAIN epochs;190 updates | Final-layer q/v LoRA851,968 parameters; rank/alpha64; LR1e-4; AdamW; control/text CE and ordinary KL/hidden retention | Restore passed; native behavior rejected. |
-| Venus244 | One complete216-scene TRAIN epoch;54 additional updates | Same adapter architecture; corrected word-paced targets, LR5e-5; full52DEV; two logged agent hold decisions | DEV loss.96549→.84252; silence loss slightly worse; complete native comparison pending. |
+| Venus244 | One complete216-scene TRAIN epoch;54 additional updates | Same adapter architecture; corrected word-paced targets, LR5e-5; full52DEV; two logged agent hold decisions | DEV loss.96549→.84252; silence loss slightly worse; complete native speech agreement7/32 versus parent1901/32; not qualified for adoption. |
 
 Exact recipes, source/data/checkpoint hashes, actual terminals and backup receipts
 are stored in the index. The190 and244 development losses use different corpora
@@ -36,3 +36,8 @@ Owner voice ratings are preserved separately in the [feedback summary](NATIVE-OW
 They guide George-first voice trials; they were not a reward in the completed
 control training, and raw private feedback/live conversations are not exported
 into this index.
+
+The complete174-source ElevenLabs word audit passed169 and failed5. The entire
+cohort remains unapproved for training; this is separate from owner naturalness
+ratings. Live trials collect runtime/profile/guard metadata, not microphone audio
+or conversation transcripts. A diagnostic live trial is not model adoption.
