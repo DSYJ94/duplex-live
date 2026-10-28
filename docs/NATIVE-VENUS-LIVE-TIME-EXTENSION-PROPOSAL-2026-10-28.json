@@ -1,0 +1,44 @@
+{
+  "schema": "dl-native-live-time-extension-proposal-v1",
+  "status": "PROPOSED_NOT_AUTHORIZED",
+  "recorded_utc": "2026-10-28T10:09:08.871100+00:00",
+  "parent_authority": "docs/NATIVE-VENUS-FOCUSED-REPAIR-AUTHORIZATION-2026-10-27.json",
+  "parent_sha256": "869cfc14a7e31e5ee7459ff9248e38a318f7c80b42200134293689728f8c62a2",
+  "problem": "Actual focusedGPUtime13700s upper consumed;700s remains. Healthy HTTP was not enough: guard transientGoogle read failure shut down live transport. Browser recovery and the WebSocket route now have CPU regressions; actual native WebSocket proof must pass before publishing a live URL.",
+  "request": "One further A10040 live allocation of at most3600s, replacing the unused700s window; keep focusedtotalusage<=40USD and cumulativeprojectGPUtime<=72000s. No credit purchase.",
+  "resources": {
+    "project": "aurium-duplex-live-20261024",
+    "zone": "us-central1-a",
+    "gpu": "A10040GB/a2-highgpu-1g",
+    "same_existing_disk_id": "4375908109499109167",
+    "disk_gib": 100,
+    "maximum_concurrent_gpus": 1,
+    "maximum_next_gpu_seconds": 3600,
+    "focused_prior_gpu_seconds_upper": 13700,
+    "focused_maximum_gpu_seconds_after": 17300,
+    "original_focused_gpu_cap_seconds": 14400,
+    "prior_scopes_gpu_seconds_upper": 54451,
+    "cumulative_maximum_gpu_seconds": 71751,
+    "cumulative_cap_gpu_seconds": 72000,
+    "new_disk_region_iam_api_firewall": false
+  },
+  "cost": {
+    "focused_total_cap_usd": 40,
+    "gpu_hourly_ceiling_usd": 4,
+    "gpu_conservative_total_usd": 19.22222222222222,
+    "existing_external_api_cap_usd": 10,
+    "storage_network_reserve_usd": 6,
+    "contingency_reserve_usd": 4,
+    "total_conservative_usd": 39.22222222222222,
+    "new_purchase": false
+  },
+  "work": [
+    "Deploy tested transport/UI fixes through Git",
+    "Verify real native WebSocket acceptance, expected model profile and synthetic PCM roundtrip for originalVenus0 and trained244 before marking live-ready",
+    "Expose loopback-only microphone trial, no transcript/audio storage, no externalreasoning API call",
+    "Stop unused5min/disconnected90s; immutable providerSTOP and independent guards; preserve logs/inventory/hashbackup"
+  ],
+  "optimizer_updates": 0,
+  "new_synthesis_calls": 0,
+  "original_model_archives_preserved": true
+}
