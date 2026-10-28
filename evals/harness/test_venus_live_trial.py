@@ -16,6 +16,7 @@ def setup(monkeypatch,tmp_path,busy):
         return io.StringIO(json.dumps(dict(ready=True,busy=busy(clock.now),optimizer_updates=244,
             candidate={'checkpoint_sha256':'c634e6cf38831210be0165ce7f6dd09c5454226f62ff622477fd4d051abde270'})))
     monkeypatch.setattr(live_trial,'urlopen',health)
+    monkeypatch.setattr(live_trial,'websocket_probe',lambda url:dict(complete=True,fixture_only=True))
     c=SimpleNamespace(R=tmp_path,OUT='/approved-native',MODEL='/public-model',ssh_argv=['ssh','-o','StrictHostKeyChecking=yes','-o','ControlMaster=auto','-o','ControlPath=/old','owner@host'],
         guard=SimpleNamespace(poll=lambda:None),start_unit=lambda *args:calls.append(args),record=lambda event,**kwargs:events.append(event))
     return c,clock,calls,events

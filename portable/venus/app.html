@@ -24,6 +24,6 @@ const url=URL.createObjectURL(new Blob([code],{type:'application/javascript'}));
 queued=Math.max(0,queued-1);state.textContent=m.is_listen?'Listening':'Speaking';if(m.text)words.textContent+=m.text;
 if(m.audio){const b=Uint8Array.from(atob(m.audio),c=>c.charCodeAt(0));const samples=new Float32Array(b.buffer);if(samples.length){const buf=ctx.createBuffer(1,samples.length,m.audio_sample_rate);buf.copyToChannel(samples,0);const node=ctx.createBufferSource();node.buffer=buf;node.connect(ctx.destination);nextPlay=Math.max(ctx.currentTime+.02,nextPlay);node.start(nextPlay);nextPlay+=buf.duration;}}
 for(const e of m.events||[])if(e.type.startsWith('worker_')||e.type==='native_delegate'||e.type==='cancel_requested')work.textContent=`Background work: ${e.type.replaceAll('_',' ')}${e.result?' · '+e.result:''}`;
-};socket.onerror=()=>{state.textContent='Connection failed. Check the GPU and tunnel.';};socket.onclose=()=>{if(stream)end();};
+};socket.onerror=async()=>{await end();state.textContent='Connection lost. You can try Start conversation again.';};socket.onclose=async event=>{await end();if(event.code!==1000)state.textContent='Connection closed. You can try Start conversation again.';};
 }catch(e){await end();state.textContent=e.message;}};stop.onclick=end;
 </script></html>

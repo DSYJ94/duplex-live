@@ -12,6 +12,30 @@ from urllib.request import build_opener, ProxyHandler
 urlopen = build_opener(ProxyHandler({})).open
 
 
+def websocket_probe(url):
+    """Exercise the actual conversation route before publishing a live URL."""
+    from websockets.sync.client import connect
+    rows=[]
+    for variant,updates in (('released',0),('candidate',244)):
+        with connect(url.replace('http://','ws://')+'/ws?variant='+variant,
+                     origin=url, proxy=None, open_timeout=10, close_timeout=3) as ws:
+            ready=json.loads(ws.recv(timeout=40))
+            assert ready['ready'] and ready['profile']['optimizer_updates']==updates
+            # One second of synthetic silence, never the owner's microphone.
+            ws.send(bytes(32000));frame=json.loads(ws.recv(timeout=40))
+            assert frame['sequence']==0 and isinstance(frame['is_listen'],bool)
+            rows.append(dict(variant=variant,optimizer_updates=updates,
+                sequence=frame['sequence'],is_listen=frame['is_listen'],
+                audio_samples=frame.get('audio_samples'),actual_pcm_roundtrip=True))
+        for _ in range(50):
+            with urlopen(url+'/health',timeout=3) as response:health=json.load(response)
+            if not health['busy']:break
+            time.sleep(.1)
+        else:raise RuntimeError('Conversation slot did not reset after native probe')
+    return dict(complete=True,conditions=rows,owner_microphone_used=False,
+                behavioral_approval=False)
+
+
 def serve(controller, python_command, end, unit_prefix, *, port=8037):
     c = controller
     unit = unit_prefix + '-microphone'
@@ -32,6 +56,7 @@ def serve(controller, python_command, end, unit_prefix, *, port=8037):
     url = 'http://127.0.0.1:%d' % port
     ready = None
     started = time.time()
+    last_health = started
     first_conversation = False
     last_busy = None
     try:
@@ -44,12 +69,17 @@ def serve(controller, python_command, end, unit_prefix, *, port=8037):
                 with urlopen(url+'/health', timeout=5) as response:
                     health = json.load(response)
             except (OSError, ValueError):
-                if time.time()-started > 180:
+                if ready is None and time.time()-started > 180:
                     raise RuntimeError('Native microphone server did not become healthy')
+                if ready is not None and time.time()-last_health > 20:
+                    raise RuntimeError('Live transport lost health after startup')
                 time.sleep(2); continue
+            last_health=time.time()
             if ready is None:
                 assert health['ready'] and health['optimizer_updates']==244
                 assert health['candidate']['checkpoint_sha256']=='c634e6cf38831210be0165ce7f6dd09c5454226f62ff622477fd4d051abde270'
+                proof=websocket_probe(url)
+                (c.R/'native-websocket-proof.json').write_text(json.dumps(proof,indent=2)+'\n')
                 ready = time.time()
                 (c.R/'live-ready.json').write_text(json.dumps(dict(url=url, ready_unix=ready,
                     stop_unix=end, profile=health, experimental=True, microphone_recorded=False),indent=2)+'\n')
