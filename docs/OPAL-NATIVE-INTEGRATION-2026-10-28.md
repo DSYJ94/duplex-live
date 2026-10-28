@@ -1,7 +1,9 @@
 # Actual OPAL integration, without another paid training experiment
 
-Status: optional upstream seam and free CPU proof implemented; the native trainer
-has **not** yet been wrapped and no paid optimizer agent was started.
+Status: OPAL is now integrated into the native trainer as an explicit opt-in.
+Actual train-step keep equivalence and distinct-process full-state restoration
+pass on a tiny CPU Qwen fixture. No paid optimizer agent or native9B OPAL run has
+started; native GPU qualification is still required before adaptive adoption.
 
 Reviewed unmodified upstream commit
 `8b16759a3e9930916ed582e28068267859f935f8` (OPAL0.3.8), checked out at
@@ -56,22 +58,40 @@ enforce a USD ceiling.
 [Mailbox source](https://github.com/xingjian-bai/opal/blob/8b16759a3e9930916ed582e28068267859f935f8/opal/backends/mailbox.py),
 [checkpoint source](https://github.com/xingjian-bai/opal/blob/8b16759a3e9930916ed582e28068267859f935f8/opal/misc/checkpoint.py)
 
-## Small remaining native integration
+## Native integration completed; remaining GPU qualification
 
-1. Restore the original Adam state **before** wrapping. Replace the trainer's
- per-step manual LR assignments with an equivalent scheduler so they do not
- overwrite an agent-owned schedule. Move clipping into OPAL once, not twice.
-2. Pass the actual accumulated weighted loss to `step(loss=...)`. Preserve the
- full corpus, decision/text balancing and ordinary KL/hidden objectives.
-3. Save/load the full wrapped state, including code and analysis memory. The
- trainer's current Adam-only `state['state']` restore comparison must compare
- OPAL's underlying Adam states **and** program/version/observation state.
-4. Run native keep equivalence and a distinct-process native restore on the same
- cached inputs, before any paid adaptive extension. The existing pinned GPU
- runtime stays untouched until this path is checked.
-5. Expose full DEV losses plus small fixed native **DEV** behavior probes. Lower
- prediction loss alone missed our current speech failure. Final held-out
- evaluation stays separate; the agent never gets its answers.
+Implemented in `training/venus/train.py` and `training/venus/native_optimizer.py`:
+
+- Restore the exact saved Adam/RNG first; wrap only after complete-epoch throughput
+  admission. The next OPAL continuation accepts the exact saved244 checkpoint and
+  records total lineage244, so it need not repeat190→244.
+- Use the equivalent warmup/cosine scheduler. The driver stops writing LR on every
+  step; upstream OPAL can own its schedule. Gradient norm is observed without
+  mutation and clipping runs exactly once, inside the updater.
+- Pass the actual mean accumulated objective (control/text CE plus the unchanged
+  ordinary KL/hidden terms) to `step(loss=...)`. Dataset and loss stay unchanged.
+- Save the complete OPAL optimizer/program/observations/memory/scheduler state in
+  ordinary atomic native checkpoints. Independent continuation compares these
+  fields as well as weights, Adam, RNG and loss; replayed update indices fail.
+- Full DEV aggregate losses enter OPAL; no held-out answers or owner content.
+  Bounded reactive control and OPAL cannot both own the optimizer.
+- `--opal-source /exact/pinned/checkout` opts in; default backend is free `keep`.
+  A mailbox backend requires an explicit positive cost allowance. No broker or
+  external API agent was launched. Live/evaluation-only leases reject training.
+
+Actual proof: `runs/venus-training-20261028/opal-native-trainstep-v2/proof.json`.
+ParentPID97687 and childPID97705 used the real native `train_step`/checkpoint seam
+with a tiny CPU Qwen fixture; weights, Adam, scheduler, program, observations,
+RNG and continuation objective match. Six accumulated updates also match the
+plain trainer exactly, including inherited Adam moments and frozen weights.
+The v1 restricted child failed in OpenMP shared memory; v2 used normal shared
+memory with no CPU/thread throttling. Latest focused suite:58PASS.
+
+Remaining: repeat keep/restore on the actual native GPU/cache before allowing an
+adaptive run; add fixed native DEV behavior measurements because loss alone
+missed current speech failures. The frozen GPU runtime stays unchanged. No new
+native candidate updates, voice generation, GPU seconds or API calls were used
+for the CPU proof. This does not establish an OPAL voice-quality improvement.
 
 OPAL saves programs and pending observations in its optimizer state. Arbitrary
 generated optimizer code executes with training-process permissions; it is not

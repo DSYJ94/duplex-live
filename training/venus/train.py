@@ -59,13 +59,16 @@ def read_example(cache,row):
     return torch.load(path,map_location='cpu',weights_only=False)
 
 
-def train_step(llm,opt,cache,batch,step,update=True,control=None):
+def train_step(llm,opt,cache,batch,step,update=True,control=None,opal=None):
+    if opal and control:raise ValueError("OPAL and bounded LR control cannot own the same optimizer")
     torch.cuda.reset_peak_memory_stats()
     opt.zero_grad(set_to_none=True)
     multiplier=control.state['lr_multiplier'] if control else 1.
     clip=control.state['gradient_clip'] if control else RECIPE['gradient_clip']
-    for group in opt.param_groups:group['lr']=learning_rate(step)*multiplier
-    metrics=[];before=time.monotonic()
+    if not opal:
+        for group in opt.param_groups:group['lr']=learning_rate(step)*multiplier
+    rate_before=float(opt.param_groups[0]['lr'])
+    metrics=[];losses=[];before=time.monotonic()
     for row in batch:
         ex=read_example(cache,row)
         offload=ActivationOffload(llm,RECIPE['activation_offload_minimum_bytes'],RECIPE['activation_offload_cpu_limit_bytes'])
@@ -73,17 +76,27 @@ def train_step(llm,opt,cache,batch,step,update=True,control=None):
             loss,parts=scene_loss(llm,ex,'cuda')
             if not torch.isfinite(loss):raise ValueError('Nonfinite native loss')
             (loss/len(batch)).backward()
+        losses.append(loss.detach())
         parts.update(offloaded_bytes=offload.saved_bytes,offloaded_tensors=offload.tensors);metrics.append(parts)
     params=[p for p in llm.parameters() if p.requires_grad]
     if not all(p.grad is not None and torch.isfinite(p.grad).all() for p in params):raise ValueError('Missing/nonfinite adapter gradient')
-    norm=torch.nn.utils.clip_grad_norm_(params,clip)
+    if opal and update:
+        from .native_optimizer import gradient_norm
+        norm=gradient_norm(params)
+    else:norm=torch.nn.utils.clip_grad_norm_(params,clip)
     if not torch.isfinite(norm) or norm<=0:raise ValueError('No meaningful finite native gradient')
-    if update:opt.step()
+    program=None
+    if update:
+        if opal:program=opal.step(torch.stack(losses).mean(),step)
+        else:opt.step()
     torch.cuda.synchronize()
-    return dict(step=step+1,optimizer_updated=update,seconds=time.monotonic()-before,peak_gpu_bytes=torch.cuda.max_memory_allocated(),gradient_norm=float(norm),lr=learning_rate(step)*multiplier,
+    result=dict(step=step+1,optimizer_updated=update,seconds=time.monotonic()-before,peak_gpu_bytes=torch.cuda.max_memory_allocated(),gradient_norm=float(norm),lr=rate_before,
         lr_multiplier=multiplier,gradient_clip=clip,
         ce=sum(x['ce'] for x in metrics)/len(metrics),kl=sum(x['kl'] for x in metrics)/len(metrics),hidden=sum(x['hidden'] for x in metrics)/len(metrics),offloaded_bytes=sum(x['offloaded_bytes'] for x in metrics),
         ids=[r['id'] for r in batch],families=[r['family'] for r in batch])
+    if opal:
+        result.update(opal=program,optimizer_owner='upstream-opal',lr_after_scheduler=float(opt.param_groups[0]['lr']),lr_report_scope='before OPAL step; updater program is authoritative if it changes LR',objective=float(torch.stack(losses).mean()))
+    return result
 
 
 def dev_loss(llm,cache,rows):
@@ -118,14 +131,31 @@ def admit_epochs(step_seconds,dev_seconds,available_seconds):
 
 
 def main(a):
-    parent_checkpoint=getattr(a,'parent_checkpoint',None);parent_state=None
+    parent_checkpoint=getattr(a,'parent_checkpoint',None);parent_state=None;parent_steps=0
     reactive=bool(getattr(a,'reactive',False))
+    opal_source=getattr(a,'opal_source',None)
+    if opal_source and reactive:raise ValueError('Choose OPAL or bounded control, never both')
+    if opal_source:
+        from .opal_adapter import load_upstream,Options
+        Options(total_steps=1,goal='Native training',backend=getattr(a,'opal_backend','keep'),maximum_agent_cost_usd=getattr(a,'opal_agent_budget',0.)).validate()
+        load_upstream(opal_source)
+        lease=json.loads(Path(a.lease).read_text())
+        from .paced_guard import execution_plan
+        execution=json.loads(execution_plan(lease).read_text())
+        if execution.get('new_optimizer_updates_authorized_by_this_execution')==0:
+            raise ValueError('This execution is live/evaluation-only; native OPAL cannot start training')
     if reactive and not parent_checkpoint:raise ValueError('Reactive control is scoped to the approved step190 continuation')
     if parent_checkpoint:
-        assert a.parent_sha256=='10354f93ec2b5e224ae7298b2f3b8687f9dc74d2fbf87c1db62bd79763155b63' and digest(parent_checkpoint)==a.parent_sha256
+        from .native_optimizer import verified_parent
+        assert digest(parent_checkpoint)==a.parent_sha256
         parent_state=torch.load(parent_checkpoint,map_location='cpu',weights_only=False)
-        assert parent_state['step']==190 and parent_state['metadata']['source']=='2dcdf0f8b62400bda989fa68e88ebf291b967f62'
+        parent_steps=verified_parent(parent_state,a.parent_sha256,allow244=bool(opal_source))
+        if reactive and parent_steps!=190:raise ValueError('The older bounded control is scoped to190 only')
         RECIPE.update(train_count=216,dev_count=52,epochs=8,updates=432,learning_rate=.00005,seed=20261027,post_training_reserve_seconds=3600)
+        MAXIMUM_RECIPE.update(RECIPE)
+    if opal_source:
+        from .opal_adapter import UPSTREAM_COMMIT
+        RECIPE['opal']=dict(upstream_commit=UPSTREAM_COMMIT,backend=getattr(a,'opal_backend','keep'),agent_budget_usd=getattr(a,'opal_agent_budget',0.),nonblocking=True,goal='Improve native duplex control and ordinary retention; full native speech and behavior decide acceptance')
         MAXIMUM_RECIPE.update(RECIPE)
     if reactive:
         RECIPE['reactive_control']='bounded-agent-lr-clip-v1'
@@ -138,7 +168,7 @@ def main(a):
     if parent_checkpoint:assert manifest['native_speech_timing_schema']=='word-aligned-native-v1'
     out=Path(a.output);out.mkdir(parents=True,exist_ok=(a.stage=='restore-continue'))
     identity=dict(cache_sha256=digest(cache/'manifest.json'),approval_sha256=digest(a.approval),source=a.source,cache_producer_source=a.cache_producer,model_revision=manifest['model_revision'])
-    if parent_checkpoint:identity.update(parent_checkpoint_sha256=a.parent_sha256,parent_training_steps=190,parent_training_source=parent_state['metadata']['source'])
+    if parent_checkpoint:identity.update(parent_checkpoint_sha256=a.parent_sha256,parent_training_steps=parent_steps,parent_training_source=parent_state['metadata']['source'])
     metadata=None
     if a.stage=='restore-continue':
         metadata=json.loads((out/'recipe.json').read_text())
@@ -172,7 +202,7 @@ def main(a):
     if parent_checkpoint and a.stage=='start':
         from .state import restore_parent
         proof=restore_parent(parent_state,llm,opt)
-        (out/'parent-restore.json').write_text(json.dumps(dict(parent_step=190,parent_checkpoint_sha256=a.parent_sha256,**proof),indent=2)+'\n')
+        (out/'parent-restore.json').write_text(json.dumps(dict(parent_step=parent_steps,parent_checkpoint_sha256=a.parent_sha256,**proof),indent=2)+'\n')
     batches=order(manifest['scenes']);start=0
     control=None
     if reactive:
@@ -182,7 +212,16 @@ def main(a):
             saved=torch.load(out/'step-0001.pt',map_location='cpu',weights_only=False)
             restored=saved['reactive_control']
         control=ReactiveControl(out/'reactive',identity,restored)
+    opal=None
+    def attach_opal():
+        nonlocal opt,opal
+        from .native_optimizer import NativeOpal
+        opal=NativeOpal(opt,llm,source=opal_source,run_dir=out/('opal-start' if a.stage=='start' else 'opal-restored'),recipe=RECIPE,backend=RECIPE['opal']['backend'],agent_budget=RECIPE['opal']['agent_budget_usd'],goal=RECIPE['opal']['goal'])
+        opt=opal.optimizer
     def checkpoint(path,step):
+        if opal:
+            from .opal_adapter import checkpoint_manifest
+            assert checkpoint_manifest(opt)['update']==step
         return save(path,llm,opt,step,metadata,control.snapshot() if control else None)
     def frozen_ok():
         if any(p._version!=frozen_versions[n] for n,p in llm.named_parameters() if n in frozen_versions):raise ValueError('Frozen native weight mutated')
@@ -223,16 +262,21 @@ def main(a):
         RECIPE.update(epochs=admission['epochs'],updates=admission['updates']);batches=order(manifest['scenes'])
         metadata=dict(**identity,recipe=dict(RECIPE),maximum_recipe=MAXIMUM_RECIPE,admission=admission)
         (out/'recipe.json').write_text(json.dumps(metadata,indent=2)+'\n');print(json.dumps(dict(event='complete_epoch_schedule_admitted',**admission)),flush=True)
-        first=train_step(llm,opt,cache,batches[0],0,control=control);frozen_ok();checkpoint(out/'step-0001.pt',1)
+        if opal_source:
+            attach_opal();opal.development(baseline)
+        first=train_step(llm,opt,cache,batches[0],0,control=control,opal=opal);frozen_ok();checkpoint(out/'step-0001.pt',1)
         rng_probe=dict(python=random.random(),numpy=float(np.random.rand()),cuda=torch.rand(8,device='cuda').cpu().tolist())
-        second=train_step(llm,opt,cache,batches[1],1,control=control);frozen_ok();checkpoint(out/'expected-step-0002-proof-only.pt',2)
+        second=train_step(llm,opt,cache,batches[1],1,control=control,opal=opal);frozen_ok();checkpoint(out/'expected-step-0002-proof-only.pt',2)
         (out/'expected-step2.json').write_text(json.dumps(dict(first=first,second=second,rng_probe=rng_probe),indent=2)+'\n')
         # Process exits here. Next command loads model+Adam+RNG from step1 in a NEW process.
-        print(json.dumps(dict(stage='start',actual_updates=2,candidate_saved_at=1,next='fresh-process restore-continue')),flush=True);return
+        print(json.dumps(dict(stage='start',actual_updates=2,candidate_saved_at=1,next='fresh-process restore-continue')),flush=True)
+        if opal:opal.close()
+        return
+    if opal_source:attach_opal()
     start=load(out/'step-0001.pt',llm,opt,metadata);assert start==1
     rng_probe=dict(python=random.random(),numpy=float(np.random.rand()),cuda=torch.rand(8,device='cuda').cpu().tolist())
     expected=json.loads((out/'expected-step2.json').read_text());assert rng_probe==expected['rng_probe']
-    second=train_step(llm,opt,cache,batches[1],1,control=control);frozen_ok()
+    second=train_step(llm,opt,cache,batches[1],1,control=control,opal=opal);frozen_ok()
     reference=torch.load(out/'expected-step-0002-proof-only.pt',map_location='cpu',weights_only=False)
     actual=adapter_state(llm)
     assert all(torch.equal(v,actual[n]) for n,v in reference['adapter'].items()),'Fresh-process continuation differs'
@@ -240,10 +284,8 @@ def main(a):
     # Adam tensors must match as well as the adapter weights.
     state=opt.state_dict()
     if control:assert reference['reactive_control']==control.snapshot(),'Fresh-process reactive state differs'
-    for ident,old in reference['optimizer']['state'].items():
-        for key,value in old.items():
-            now=state['state'][ident][key]
-            assert torch.equal(value.cpu(),now.cpu()) if torch.is_tensor(value) else value==now
+    from .native_optimizer import assert_optimizer_equal
+    assert_optimizer_equal(reference['optimizer'],state)
     checkpoint(out/'step-0002.pt',2)
     (out/'fresh-process-restore.json').write_text(json.dumps(dict(passed=True,adapter_error=0,adam_error=0,rng_equal=True,loss_equal=True,actual_new_process=True,independent_continuation=True),indent=2)+'\n')
     log=(out/'training.jsonl').open('x');log.write(json.dumps(expected['first'])+'\n'+json.dumps(second)+'\n');log.flush()
@@ -254,26 +296,31 @@ def main(a):
         for step in range(2,RECIPE['updates']):
             assert_deadline(a.lease,max(seconds[-8:])*1.5+120)
             if control:control.boundary(step)
-            row=train_step(llm,opt,cache,batches[step],step,control=control);frozen_ok();seconds.append(row['seconds']);log.write(json.dumps(row)+'\n');log.flush();print(json.dumps(row),flush=True)
+            row=train_step(llm,opt,cache,batches[step],step,control=control,opal=opal);frozen_ok();seconds.append(row['seconds']);log.write(json.dumps(row)+'\n');log.flush();print(json.dumps(row),flush=True)
             recent.append(row);recent=recent[-8:]
             if control and (step+1)%8==0:control.observe(step+1,recent)
             if (step+1)%per_epoch==0 or step==RECIPE['updates']-1:
                 checkpoint(out/f'step-{step+1:04d}.pt',step+1)
             if (step+1)%(per_epoch*2)==0 or step==RECIPE['updates']-1:
-                result=dict(step=step+1,parent_training_steps=190 if parent_checkpoint else 0,dev_scenes=dev_count,full_dev_teacher_forced=dev_loss(llm,cache,manifest['scenes']),native_behavior_qualified=False)
+                result=dict(step=step+1,parent_training_steps=parent_steps,dev_scenes=dev_count,full_dev_teacher_forced=dev_loss(llm,cache,manifest['scenes']),native_behavior_qualified=False)
                 if not parent_checkpoint:result['full36_dev_teacher_forced']=result['full_dev_teacher_forced']
                 (out/f'dev-{step+1:04d}.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result),flush=True)
+                if opal:
+                    opal.development(result['full_dev_teacher_forced'])
+                    checkpoint(out/f'step-{step+1:04d}.pt',step+1)
                 if control:
                     control.observe(step+1,recent,result['full_dev_teacher_forced'])
                     checkpoint(out/f'step-{step+1:04d}.pt',step+1)
-        (out/'training-terminal.json').write_text(json.dumps(dict(actual_updates=RECIPE['updates'],parent_training_steps=190 if parent_checkpoint else 0,total_optimizer_updates=RECIPE['updates']+(190 if parent_checkpoint else 0),actual_complete_epochs=RECIPE['epochs'],maximum_authorized_updates=512 if parent_checkpoint else 304,completed=True,adopted=False,behavioral_evaluation_required=True),indent=2)+'\n')
+        (out/'training-terminal.json').write_text(json.dumps(dict(actual_updates=RECIPE['updates'],parent_training_steps=parent_steps,total_optimizer_updates=RECIPE['updates']+parent_steps,actual_complete_epochs=RECIPE['epochs'],maximum_authorized_updates=512 if parent_checkpoint else 304,completed=True,adopted=False,behavioral_evaluation_required=True),indent=2)+'\n')
     except BaseException:
         completed=locals().get('step',1)
         # Save actual current state on a budget/readiness stop, with honest completed count.
         checkpoint(out/'interrupted-state.pt',len(seconds))
         raise
-    finally:log.close()
+    finally:
+        log.close()
+        if opal:opal.close()
 
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('--stage',choices=['start','restore-continue'],required=True);p.add_argument('--model',required=True);p.add_argument('--cache',required=True);p.add_argument('--approval',required=True);p.add_argument('--output',required=True);p.add_argument('--source',required=True);p.add_argument('--cache-producer',required=True);p.add_argument('--lease',required=True);p.add_argument('--baseline-reference');p.add_argument('--parent-checkpoint');p.add_argument('--parent-sha256');p.add_argument('--reactive',action='store_true',help='Nonblocking bounded agent decisions; no external API or executable patches');main(p.parse_args())
+    p=argparse.ArgumentParser();p.add_argument('--stage',choices=['start','restore-continue'],required=True);p.add_argument('--model',required=True);p.add_argument('--cache',required=True);p.add_argument('--approval',required=True);p.add_argument('--output',required=True);p.add_argument('--source',required=True);p.add_argument('--cache-producer',required=True);p.add_argument('--lease',required=True);p.add_argument('--baseline-reference');p.add_argument('--parent-checkpoint');p.add_argument('--parent-sha256');p.add_argument('--reactive',action='store_true',help='Nonblocking bounded agent decisions; no external API or executable patches');p.add_argument('--opal-source',help='Exact clean pinned OPAL checkout; optional native optimizer owner');p.add_argument('--opal-backend',default='keep',help='keep by default; explicit bounded mailbox only');p.add_argument('--opal-agent-budget',type=float,default=0.);main(p.parse_args())

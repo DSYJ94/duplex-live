@@ -1,0 +1,82 @@
+"""Native OPAL ownership of updates, scheduling and complete resumable state.
+
+No service/model calls are made here. Keep mode is the default. The training
+recipe, data, loss, update admission and final evaluation stay with train.py.
+"""
+import math
+import torch
+from .opal_adapter import Options, wrap, checkpoint_manifest, log_development
+from .state import exact_state
+
+
+def lr_multiplier(step, *, warmup, updates):
+    if step < warmup:
+        return (step+1)/warmup
+    return .5*(1+math.cos(math.pi*(step-warmup)/(updates-warmup)))
+
+
+def gradient_norm(parameters):
+    # Observe only. Clipping is owned exactly once by the OPAL updater.
+    grads=[p.grad.detach() for p in parameters]
+    return torch.linalg.vector_norm(torch.stack([torch.linalg.vector_norm(g,2) for g in grads]),2)
+
+
+class NativeOpal:
+    def __init__(self, base, model, *, source, run_dir, recipe, backend='keep', agent_budget=0.,
+                 goal='Improve native duplex control and ordinary retention; full native speech and behavior decide acceptance'):
+        if recipe['updates'] <= recipe['warmup_updates']:
+            raise ValueError('Native OPAL requires the admitted full schedule beyond warmup')
+        self.base=base
+        for group in base.param_groups:
+            group['lr']=group['initial_lr']=recipe['learning_rate']
+        self.scheduler=torch.optim.lr_scheduler.LambdaLR(base,
+            lambda step:lr_multiplier(step,warmup=recipe['warmup_updates'],updates=recipe['updates']))
+        self.options=Options(total_steps=recipe['updates'],goal=goal,backend=backend,
+            maximum_agent_cost_usd=agent_budget,decision_updates=tuple(s for s in (16,32,64,128,256) if s<=recipe['updates']))
+        self.optimizer=wrap(base,model,source=source,run_dir=run_dir,options=self.options,
+            scheduler=self.scheduler,clip_grad_norm=recipe['gradient_clip'])
+        self._closed=False
+
+    def step(self,loss,step):
+        before=checkpoint_manifest(self.optimizer)
+        if before['update']!=step:
+            raise ValueError('OPAL progress and native update index differ; never repeat saved updates')
+        self.optimizer.step(loss=loss)
+        self.scheduler.step()
+        after=checkpoint_manifest(self.optimizer)
+        if after['update']!=step+1:
+            raise ValueError('Exactly one OPAL update is required per accumulated native batch')
+        return after
+
+    def development(self,values):
+        log_development(self.optimizer,{'dev_'+family+'_ce':value for family,value in values.items()},fold='DEV')
+
+    def close(self):
+        if not self._closed:
+            self.optimizer.close();self._closed=True
+
+
+def assert_optimizer_equal(expected,actual):
+    """Compare numerical/program/observation state, excluding run-folder/event offsets."""
+    if expected.get('opal')==1:
+        if actual.get('opal')!=1:raise ValueError('Wrapped OPAL checkpoint cannot resume as plain Adam')
+        required=('update','version','files','updater','memory','user_optimizers','user_schedulers',
+                  'observations','ledger','follows','next_analysis','decision_schedule','decisions','cost')
+        for key in required:
+            if key not in expected or key not in actual or not exact_state(expected[key],actual[key]):
+                raise ValueError('Fresh-process OPAL state differs: '+key)
+    elif not exact_state(expected,actual):
+        raise ValueError('Fresh-process Adam state differs')
+
+
+def verified_parent(state,sha256,*,allow244=False):
+    """Pin the two actual states; continuation244 must not replay190→244."""
+    meta=state['metadata']
+    if sha256=='10354f93ec2b5e224ae7298b2f3b8687f9dc74d2fbf87c1db62bd79763155b63':
+        assert state['step']==190 and meta['source']=='2dcdf0f8b62400bda989fa68e88ebf291b967f62'
+        return 190
+    if allow244 and sha256=='c634e6cf38831210be0165ce7f6dd09c5454226f62ff622477fd4d051abde270':
+        assert state['step']==54 and meta['parent_training_steps']==190
+        assert meta['source']=='6ea80a5d2512d981d8ddf1d64c4675684667429a'
+        return 244
+    raise ValueError('Unknown or unapproved native continuation parent')

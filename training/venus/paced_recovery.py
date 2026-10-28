@@ -9,7 +9,9 @@ from portable.venus.guard import bounded_runpod_read
 def digest(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
 
 def main():
+    resume_allocation='--resume-allocation' in sys.argv
     repeat_live='--repeat-live' in sys.argv
+    if resume_allocation and not repeat_live:raise ValueError('Resume only the exact missed owner allocation')
     resume_live='--resume-repaired-live' in sys.argv or repeat_live
     repaired_live='--repaired-live' in sys.argv or resume_live
     AUTH=LIVE_AUTH if repaired_live else ORIGINAL_AUTH
@@ -23,7 +25,12 @@ def main():
     live_plan=json.loads(PLAN.read_text()) if live_trial else None
     prior,duration=(live_plan['focused_gpu_seconds_upper_before_launch'],live_plan['maximum_gpu_seconds']) if live_trial else (10500,3900) if evaluation_only else (9900,4500) if prepared else (6500,7200)
     unit_prefix='duplex-venus-recovery'+version[1:]
-    c.R=Path('runs/venus-training-20261027')/('paced-recovery-'+version);assert not c.R.exists(),'Observe actual recovery, never duplicate'
+    c.R=Path('runs/venus-training-20261027')/('paced-recovery-'+version)
+    if resume_allocation:
+        c.events=json.loads((c.R/'events.json').read_text())
+        assert any(e['event']=='only_stopped_envelope_retired_same_disk_contents_preserved' for e in c.events)
+        assert not any(e['event'] in ('one_recovery_allocation','actual_recovery_running','both_guards_live','actual_unit_started') for e in c.events)
+    else:assert not c.R.exists(),'Observe actual recovery, never duplicate'
     assert not c.run(['git','status','--porcelain','--','training/venus','data/venus','portable/venus']).strip()
     p=json.loads(PLAN.read_text());a=json.loads(AUTH.read_text());r=a['resources'];zone=r['zone'];c.NAME=p['vm_name']
     assert p['status']=='WITHIN_APPROVED_FOCUSED_REPAIR' and p['parent_sha256']==digest(AUTH)
@@ -60,7 +67,14 @@ def main():
         elapsed=datetime.fromisoformat(last['lastStopTimestamp']).timestamp()-datetime.fromisoformat(last['lastStartTimestamp']).timestamp();assert 2600+elapsed<=6500
     for key in ('approval','manifest','source_audit','semantic_quality','prepared_semantic','word_quality'):assert digest(p[key])==p[key+'_sha256']
     vms=c.cloud('compute','instances','list');assert all(v['status']=='TERMINATED' for v in vms)
-    old=next(v for v in vms if str(v['id'])==p['retire_only_vm_id']);assert old['name']==p['retire_only_vm_name'] and old['lastStartTimestamp']==last['lastStartTimestamp'] and old['lastStopTimestamp']==last['lastStopTimestamp']
+    old=next((v for v in vms if str(v['id'])==p['retire_only_vm_id']),None)
+    if resume_allocation:
+        assert old is None and not any(v['name']==c.NAME for v in vms)
+        ops=c.cloud('compute','operations','list','--filter=targetLink~'+c.NAME)
+        assert not ops,'An actual allocation operation exists: observe it, never retry'
+        old=last
+        c.record('fresh_provider_absence_verified_before_single_allocation_resume',vm_name=c.NAME,matching_operations=0)
+    assert old['name']==p['retire_only_vm_name'] and old['lastStartTimestamp']==last['lastStartTimestamp'] and old['lastStopTimestamp']==last['lastStopTimestamp']
     disk=c.cloud('compute','disks','describe',r['same_existing_disk_name'],'--zone='+zone);assert str(disk['id'])==r['same_existing_disk_id'] and int(disk['sizeGb'])==100
     assert any(d.get('boot') and not d.get('autoDelete') and d['source'].endswith('/disks/'+r['same_existing_disk_name']) for d in old['disks'])
     pods=bounded_runpod_read(Path('runs/local-migration-20261021/.private/runpod-budget-api-key').read_text().strip());pods=pods.get('pods',[]) if isinstance(pods,dict) else pods;assert all(x['status'] in ('EXITED','STOPPED','TERMINATED') for x in pods)
@@ -71,7 +85,9 @@ def main():
     checkpoint=seed/'copyback/candidate-v13/step-0190.pt';assert digest(checkpoint)==p['parent_checkpoint_sha256']
     for row in rows:
         path=seed/'copyback'/row['path'];assert path.stat().st_size==row['bytes'] and digest(path)==row['sha256']
-    c.R.mkdir();c.source=c.run(['git','rev-parse','HEAD']).strip();c.remote=c.ROOT+'/duplex-venus-recovery-'+c.source[:12];c.run(['git','bundle','create',str(c.R/'source.bundle'),'HEAD'],120)
+    if resume_allocation:(c.R/'source.bundle').rename(c.R/'source-before-allocation-recovery.bundle')
+    else:c.R.mkdir()
+    c.source=c.run(['git','rev-parse','HEAD']).strip();c.remote=c.ROOT+'/duplex-venus-recovery-'+c.source[:12];c.run(['git','bundle','create',str(c.R/'source.bundle'),'HEAD'],120)
     c.record('recovery_preflight',source=c.source,prior_focused_seconds=prior,next_max_seconds=duration,trained_state190_mac_hash_verified=True,no_optimizer_started_in_predecessor=not (evaluation_only or live_trial),evaluation_only=evaluation_only,live_trial=live_trial,same_disk=str(disk['id']))
     awake=subprocess.Popen(['caffeinate','-i','-w',str(os.getpid())]);guard=None;created=False;vm=None
     try:
@@ -79,9 +95,9 @@ def main():
         if retry_live:
             op=c.cloud('compute','instances','start',c.NAME,'--zone='+zone,'--async');op=op[0] if isinstance(op,list) else op;created=True;c.record('one_warm_live_retry',operation=op['name'],same_vm_id=str(old['id']))
         else:
-            c.run(['gcloud','compute','instances','delete',old['name'],'--zone='+zone,'--project='+c.PROJECT,'--keep-disks=boot','--quiet'],150)
+            if not resume_allocation:c.run(['gcloud','compute','instances','delete',old['name'],'--zone='+zone,'--project='+c.PROJECT,'--keep-disks=boot','--quiet'],150)
             disk=c.cloud('compute','disks','describe',r['same_existing_disk_name'],'--zone='+zone);assert str(disk['id'])==r['same_existing_disk_id'] and not disk.get('users')
-            c.record('only_stopped_envelope_retired_same_disk_contents_preserved',old_id=str(old['id']),disk_id=str(disk['id']))
+            if not resume_allocation:c.record('only_stopped_envelope_retired_same_disk_contents_preserved',old_id=str(old['id']),disk_id=str(disk['id']))
             startup=c.R/'bootstrap.sh';startup.write_text('#!/bin/sh\nset -eu\nsystemd-run --unit='+unit_prefix+'-bootstrap-stop --on-active=600s /sbin/shutdown -h now || /sbin/shutdown -h now\n')
             op=c.cloud('compute','instances','create',c.NAME,'--zone='+zone,'--machine-type=a2-highgpu-1g','--provisioning-model=FLEX_START','--request-valid-for-duration=900s','--maintenance-policy=TERMINATE','--no-restart-on-failure','--no-service-account','--no-scopes','--tags=duplex-venus-train-bounded','--disk=name='+r['same_existing_disk_name']+',boot=yes,auto-delete=no,mode=rw','--metadata=enable-oslogin=TRUE,enable-guest-attributes=TRUE,block-project-ssh-keys=TRUE','--metadata-from-file=startup-script='+str(startup),'--max-run-duration='+str(duration)+'s','--instance-termination-action=STOP','--async');op=op[0] if isinstance(op,list) else op;created=True;c.record('one_recovery_allocation',operation=op['name'],source=c.source)
         until=time.time()+960
