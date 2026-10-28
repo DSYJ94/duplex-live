@@ -3,18 +3,19 @@ import hashlib,json,os,shlex,shutil,subprocess,sys,time
 from pathlib import Path
 from datetime import datetime
 from . import controller as c
-from .paced_guard import AUTH,PLAN_V24,PLAN_V25,PLAN_V26,PLAN_V27
+from .paced_guard import AUTH,PLAN_V24,PLAN_V25,PLAN_V26,PLAN_V27,PLAN_V28
 from portable.venus.guard import bounded_runpod_read
 
 def digest(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
 
 def main():
-    live_trial='--live-trial' in sys.argv
+    retry_live='--retry-live' in sys.argv
+    live_trial='--live-trial' in sys.argv or retry_live
     evaluation_only='--evaluation-only' in sys.argv
-    assert sum(flag in sys.argv for flag in ('--live-trial','--evaluation-only','--prepared-reactive'))<=1
+    assert sum(flag in sys.argv for flag in ('--live-trial','--retry-live','--evaluation-only','--prepared-reactive'))<=1
     prepared='--prepared-reactive' in sys.argv or evaluation_only or live_trial
-    version='v27' if live_trial else 'v26' if evaluation_only else 'v25' if prepared else 'v24'
-    PLAN=PLAN_V27 if live_trial else PLAN_V26 if evaluation_only else PLAN_V25 if prepared else PLAN_V24
+    version='v28' if retry_live else 'v27' if live_trial else 'v26' if evaluation_only else 'v25' if prepared else 'v24'
+    PLAN=PLAN_V28 if retry_live else PLAN_V27 if live_trial else PLAN_V26 if evaluation_only else PLAN_V25 if prepared else PLAN_V24
     live_plan=json.loads(PLAN.read_text()) if live_trial else None
     prior,duration=(live_plan['focused_gpu_seconds_upper_before_launch'],live_plan['maximum_gpu_seconds']) if live_trial else (10500,3900) if evaluation_only else (9900,4500) if prepared else (6500,7200)
     unit_prefix='duplex-venus-recovery'+version[1:]
@@ -22,21 +23,22 @@ def main():
     assert not c.run(['git','status','--porcelain','--','training/venus','data/venus','portable/venus']).strip()
     p=json.loads(PLAN.read_text());a=json.loads(AUTH.read_text());r=a['resources'];zone=r['zone'];c.NAME=p['vm_name']
     assert p['status']=='WITHIN_APPROVED_FOCUSED_REPAIR' and p['parent_sha256']==digest(AUTH)
-    previous=Path('runs/venus-training-20261027')/('paced-recovery-v26' if live_trial else 'paced-recovery-v25' if evaluation_only else 'paced-recovery-v24' if prepared else 'paced-continuation-v23')
+    previous=Path('runs/venus-training-20261027')/('paced-recovery-v27' if retry_live else 'paced-recovery-v26' if live_trial else 'paced-recovery-v25' if evaluation_only else 'paced-recovery-v24' if prepared else 'paced-continuation-v23')
     events=json.loads((previous/'events.json').read_text());last=json.loads((previous/'provider-final.json').read_text())
+    backup_run=Path('runs/venus-training-20261027/paced-recovery-v26') if retry_live else previous
     if live_trial:
         import socket
         with socket.socket() as probe:probe.bind(('127.0.0.1',8037))
         final=next(e for e in reversed(events) if e['event']=='provider_stopped')
         assert final['focused_seconds_upper']==prior and duration==min(900,14400-prior) and duration>=600
-        assert json.loads((previous/'copyback-verified.json').read_text())['all_hashes_verified']
-        assert digest(previous/'copyback/paced-candidate-v25/step-0054.pt')==p['trained_checkpoint_sha256']
-        assert json.loads((previous/'copyback/paced-native-paired-v26/paired-native-report.json').read_text())['complete']
-        assert json.loads((previous/'copyback/voice-source-quality-v26/quality.json').read_text())['complete']
+        assert json.loads((backup_run/'copyback-verified.json').read_text())['all_hashes_verified']
+        assert digest(backup_run/'copyback/paced-candidate-v25/step-0054.pt')==p['trained_checkpoint_sha256']
+        assert json.loads((backup_run/'copyback/paced-native-paired-v26/paired-native-report.json').read_text())['complete']
+        assert json.loads((backup_run/'copyback/voice-source-quality-v26/quality.json').read_text())['complete']
     elif evaluation_only:
         assert any(e['event']=='actual_training_complete' and e['result']['actual_updates']==54 and e['result']['total_optimizer_updates']==244 for e in events)
         assert any(e['event']=='provider_stopped' and e['focused_seconds_upper']==10500 for e in events)
-        assert digest(previous/'copyback/paced-candidate-v25/step-0054.pt')==p['trained_checkpoint_sha256']
+        assert digest(backup_run/'copyback/paced-candidate-v25/step-0054.pt')==p['trained_checkpoint_sha256']
         elapsed=datetime.fromisoformat(last['lastStopTimestamp']).timestamp()-datetime.fromisoformat(last['lastStartTimestamp']).timestamp()
         assert 9900+elapsed<=10500
     elif prepared:
@@ -58,7 +60,7 @@ def main():
     assert any(d.get('boot') and not d.get('autoDelete') and d['source'].endswith('/disks/'+r['same_existing_disk_name']) for d in old['disks'])
     pods=bounded_runpod_read(Path('runs/local-migration-20261021/.private/runpod-budget-api-key').read_text().strip());pods=pods.get('pods',[]) if isinstance(pods,dict) else pods;assert all(x['status'] in ('EXITED','STOPPED','TERMINATED') for x in pods)
     price=json.loads(Path('runs/venus-20261026/us-current-price40-v1.json').read_text());assert 0<price['hourly_estimate_usd']<=4 and time.time()-datetime.fromisoformat(price['at_utc']).timestamp()<3600
-    seed=previous if prepared else Path('runs/venus-training-20261027/cadence-qualify-v21');proof=json.loads((seed/'copyback-verified.json').read_text());assert proof['all_hashes_verified']
+    seed=backup_run if prepared else Path('runs/venus-training-20261027/cadence-qualify-v21');proof=json.loads((seed/'copyback-verified.json').read_text());assert proof['all_hashes_verified']
     rows=json.loads((seed/'unique-inventory.json').read_text());assert len(rows)==p['backup_before_retirement']['files'] and sum(x['bytes'] for x in rows)==p['backup_before_retirement']['bytes']
     # Critical trained state is independently saved on this Mac before replacing only the stopped VM envelope.
     checkpoint=seed/'copyback/candidate-v13/step-0190.pt';assert digest(checkpoint)==p['parent_checkpoint_sha256']
@@ -69,17 +71,20 @@ def main():
     awake=subprocess.Popen(['caffeinate','-i','-w',str(os.getpid())]);guard=None;created=False;vm=None
     try:
         c.cloud('compute','os-login','ssh-keys','add','--key-file=runs/local-migration-20261024/.private/gcp-native-ssh.pub','--ttl=4h')
-        c.run(['gcloud','compute','instances','delete',old['name'],'--zone='+zone,'--project='+c.PROJECT,'--keep-disks=boot','--quiet'],150)
-        disk=c.cloud('compute','disks','describe',r['same_existing_disk_name'],'--zone='+zone);assert str(disk['id'])==r['same_existing_disk_id'] and not disk.get('users')
-        c.record('only_stopped_envelope_retired_same_disk_contents_preserved',old_id=str(old['id']),disk_id=str(disk['id']))
-        startup=c.R/'bootstrap.sh';startup.write_text('#!/bin/sh\nset -eu\nsystemd-run --unit='+unit_prefix+'-bootstrap-stop --on-active=600s /sbin/shutdown -h now || /sbin/shutdown -h now\n')
-        op=c.cloud('compute','instances','create',c.NAME,'--zone='+zone,'--machine-type=a2-highgpu-1g','--provisioning-model=FLEX_START','--request-valid-for-duration=900s','--maintenance-policy=TERMINATE','--no-restart-on-failure','--no-service-account','--no-scopes','--tags=duplex-venus-train-bounded','--disk=name='+r['same_existing_disk_name']+',boot=yes,auto-delete=no,mode=rw','--metadata=enable-oslogin=TRUE,enable-guest-attributes=TRUE,block-project-ssh-keys=TRUE','--metadata-from-file=startup-script='+str(startup),'--max-run-duration='+str(duration)+'s','--instance-termination-action=STOP','--async');op=op[0] if isinstance(op,list) else op;created=True;c.record('one_recovery_allocation',operation=op['name'],source=c.source)
+        if retry_live:
+            op=c.cloud('compute','instances','start',c.NAME,'--zone='+zone,'--async');op=op[0] if isinstance(op,list) else op;created=True;c.record('one_warm_live_retry',operation=op['name'],same_vm_id=str(old['id']))
+        else:
+            c.run(['gcloud','compute','instances','delete',old['name'],'--zone='+zone,'--project='+c.PROJECT,'--keep-disks=boot','--quiet'],150)
+            disk=c.cloud('compute','disks','describe',r['same_existing_disk_name'],'--zone='+zone);assert str(disk['id'])==r['same_existing_disk_id'] and not disk.get('users')
+            c.record('only_stopped_envelope_retired_same_disk_contents_preserved',old_id=str(old['id']),disk_id=str(disk['id']))
+            startup=c.R/'bootstrap.sh';startup.write_text('#!/bin/sh\nset -eu\nsystemd-run --unit='+unit_prefix+'-bootstrap-stop --on-active=600s /sbin/shutdown -h now || /sbin/shutdown -h now\n')
+            op=c.cloud('compute','instances','create',c.NAME,'--zone='+zone,'--machine-type=a2-highgpu-1g','--provisioning-model=FLEX_START','--request-valid-for-duration=900s','--maintenance-policy=TERMINATE','--no-restart-on-failure','--no-service-account','--no-scopes','--tags=duplex-venus-train-bounded','--disk=name='+r['same_existing_disk_name']+',boot=yes,auto-delete=no,mode=rw','--metadata=enable-oslogin=TRUE,enable-guest-attributes=TRUE,block-project-ssh-keys=TRUE','--metadata-from-file=startup-script='+str(startup),'--max-run-duration='+str(duration)+'s','--instance-termination-action=STOP','--async');op=op[0] if isinstance(op,list) else op;created=True;c.record('one_recovery_allocation',operation=op['name'],source=c.source)
         until=time.time()+960
         while op['status']!='DONE':
             if time.time()>until:raise TimeoutError('Observe same pending operation; never resubmit')
             time.sleep(5);op=c.cloud('compute','operations','describe',op['name'],'--zone='+zone)
         if op.get('error'):raise RuntimeError(json.dumps(op['error']))
-        vm=c.cloud('compute','instances','describe',c.NAME,'--zone='+zone);assert vm['status']=='RUNNING' and str(vm['id'])!=str(old['id'])
+        vm=c.cloud('compute','instances','describe',c.NAME,'--zone='+zone);assert vm['status']=='RUNNING' and ((str(vm['id'])==str(old['id'])) if retry_live else (str(vm['id'])!=str(old['id'])))
         end=datetime.fromisoformat(vm['lastStartTimestamp']).timestamp()+duration;assert int(vm['scheduling']['maxRunDuration']['seconds'])==duration
         c.record('actual_recovery_running',vm_id=str(vm['id']),same_disk_id=str(disk['id']),last_start=vm['lastStartTimestamp'],native_stop_unix=end)
         for _ in range(30):
@@ -103,7 +108,7 @@ def main():
             if time.time()>until:raise TimeoutError('Guard readiness timeout')
             time.sleep(1)
         live=json.loads(c.ssh('cat '+c.ROOT+'/venus-live-guard-v1.json'));assert live['vm_id']==str(vm['id']) and time.time()<live['expires_unix'] and live['stop_unix']==end
-        guest=unit_prefix+'-guest-guard';c.ssh('sudo systemd-run --unit='+guest+' --property=RuntimeMaxSec='+str(duration+100)+' --working-directory='+c.remote+' /usr/bin/python3 -u -m portable.venus.guard --guest --guard '+c.ROOT+'/venus-live-guard-v1.json --lease '+lease_path);assert c.props(guest)['ActiveState']=='active';c.ssh('sudo systemctl stop '+unit_prefix+'-bootstrap-stop.timer');c.record('both_guards_live',mac_pid=guard.pid)
+        guest=unit_prefix+'-guest-guard';c.ssh('sudo systemd-run --unit='+guest+' --property=RuntimeMaxSec='+str(duration+100)+' --working-directory='+c.remote+' /usr/bin/python3 -u -m portable.venus.guard --guest --guard '+c.ROOT+'/venus-live-guard-v1.json --lease '+lease_path);assert c.props(guest)['ActiveState']=='active';c.ssh('sudo systemctl stop '+('duplex-venus-recovery27' if retry_live else unit_prefix)+'-bootstrap-stop.timer');c.record('both_guards_live',mac_pid=guard.pid)
         dest=c.R/'copyback';dest.mkdir()
         for row in rows:
             original=seed/'copyback'/row['path'];target=dest/row['path'];target.parent.mkdir(parents=True,exist_ok=True)
@@ -132,6 +137,8 @@ def main():
         def execute(label,args,reserve):
             unit=unit_prefix+'-'+label;c.start_unit(unit,'/usr/bin/env '+env+' '+py+' -u -m '+args,max(1,int(end-time.time()-reserve)));c.wait_unit(unit,end-reserve)
         if live_trial:
+            if retry_live:
+                (c.R/'prior-microphone.log').write_text(c.ssh('sudo journalctl -u duplex-venus-recovery27-microphone --no-pager -o cat | tail -30'))
             from .live_trial import serve
             serve(c,'/usr/bin/env '+env+' '+py,end,unit_prefix)
         else:

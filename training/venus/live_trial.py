@@ -6,7 +6,10 @@ guards remain mandatory; the trial also ends early when unused or disconnected.
 import json
 import subprocess
 import time
-from urllib.request import urlopen
+from urllib.request import build_opener, ProxyHandler
+
+# Local tunnel health must never travel through an inherited HTTP proxy.
+urlopen = build_opener(ProxyHandler({})).open
 
 
 def serve(controller, python_command, end, unit_prefix, *, port=8037):
