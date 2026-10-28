@@ -101,18 +101,18 @@ def test_agent_rate_and_clip_reach_actual_optimizer_step(tmp_path,monkeypatch):
     assert row['optimizer_updated'] and row['gradient_norm']>0
 
 
-@pytest.mark.parametrize('version,prior,duration',[('v25',9900,4500),('v26',10500,3900),('v27',12000,900),('v28',13200,900),('v29',13700,3600),('v30',14000,3300),('v31',14600,2700)])
+@pytest.mark.parametrize('version,prior,duration',[('v25',9900,4500),('v26',10500,3900),('v27',12000,900),('v28',13200,900),('v29',13700,3600),('v30',14000,3300),('v31',14600,2700),('v32',16800,1800)])
 def test_prepared_lease_carries_all_prior_gpu_time_and_enforces_native_stop(version,prior,duration,monkeypatch,tmp_path):
     import hashlib
     from pathlib import Path
-    from training.venus.paced_guard import AUTH,PLAN_V25,PLAN_V26,PLAN_V27,PLAN_V28,PLAN_V29,PLAN_V30,PLAN_V31,LIVE_AUTH,validate
+    from training.venus.paced_guard import AUTH,PLAN_V25,PLAN_V26,PLAN_V27,PLAN_V28,PLAN_V29,PLAN_V30,PLAN_V31,PLAN_V32,REOPEN_AUTH,LIVE_AUTH,validate
     from portable.venus.guard import resource,stamp
-    plan=PLAN_V31 if version=='v31' else PLAN_V30 if version=='v30' else PLAN_V29 if version=='v29' else PLAN_V28 if version=='v28' else PLAN_V26 if version=='v26' else PLAN_V25
+    plan=PLAN_V32 if version=='v32' else PLAN_V31 if version=='v31' else PLAN_V30 if version=='v30' else PLAN_V29 if version=='v29' else PLAN_V28 if version=='v28' else PLAN_V26 if version=='v26' else PLAN_V25
     if version=='v27':
         import training.venus.paced_guard as guard
         value=json.loads(PLAN_V27.read_text());value.update(status='WITHIN_APPROVED_FOCUSED_REPAIR',focused_gpu_seconds_upper_before_launch=12000,maximum_gpu_seconds=900,previous_provider_snapshot=dict(id='6750796068068004320',status='TERMINATED',lastStartTimestamp='2026-10-28T07:00:00Z',lastStopTimestamp='2026-10-28T07:25:00Z'))
         plan=tmp_path/'live-plan.json';plan.write_text(json.dumps(value));monkeypatch.setattr(guard,'PLAN_V27',plan)
-    authority=LIVE_AUTH if version in ('v29','v30','v31') else AUTH
+    authority=REOPEN_AUTH if version=='v32' else LIVE_AUTH if version in ('v29','v30','v31') else AUTH
     p=json.loads(plan.read_text());a=json.loads(authority.read_text());r=a['resources']
     start=stamp('2026-10-28T08:00:00Z')
     test_id='5521472841931556416' if version=='v28' else '12345'
