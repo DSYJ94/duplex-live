@@ -4,13 +4,17 @@ import subprocess
 import pytest
 
 
-def test_current_gcloud_remote_disconnect_gets_one_fresh_read(monkeypatch):
+@pytest.mark.parametrize('error',[
+    "ERROR: gcloud crashed (ConnectionError): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))",
+    "ERROR: gcloud crashed (SSLError): SSLEOFError UNEXPECTED_EOF_WHILE_READING",
+])
+def test_current_gcloud_remote_disconnect_gets_one_fresh_read(monkeypatch,error):
     from portable.venus import guard
     calls=[]
     def cloud(*args,**kwargs):
         calls.append(kwargs['timeout'])
         if len(calls)==1:
-            raise RuntimeError("ERROR: gcloud crashed (ConnectionError): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))")
+            raise RuntimeError(error)
         return {'fresh_provider_read':True}
     monkeypatch.setattr(guard,'cloud',cloud)
     assert guard.bounded_cloud_read('instances','list')=={'fresh_provider_read':True}
