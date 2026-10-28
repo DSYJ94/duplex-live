@@ -113,3 +113,28 @@ Compare our [scene_loss](../training/venus/lora.py#L133): CE averages decision-t
 **Supported implication:** q/v adaptation can alter speech through at least two channels: changed token/termination/pacing choices, and changed hidden-state conditioning **even with the same text tokens**. The existing source/teacher repairs address measured label/unit pacing defects. They do not establish that adapted hidden states remain in the distribution expected by the frozen speech generator. Missing conditioning/acoustic retention is therefore a concrete, plausible additional determinant, not a proven cause or a reason to disregard pacing and live transport.
 
 **Next discriminating check, proposed only:** on fixed approved TRAIN/DEV diagnostic token histories and a frozen native chunk schedule, compare base versus adapter normalized projected TTS conditions at their exact post-token positions, then compare speech with token IDs and timing held constant. Distinct native recordings remain necessary: a numerical hidden/condition difference alone does not prove audible damage. A separate schedule-controlled comparison can isolate pacing. Only after this diagnosis choose between all-family conditioning retention, a projected-condition loss, native acoustic supervision, or no objective change. Matching the base everywhere could also fight useful task learning; validate control and ordinary retention together. These are bounded candidate investigations, not implemented losses, additional training authorization, acoustic convergence claims or proof that more ElevenLabs audio is required.
+
+
+## Prepared conditioning probe (not yet a native GPU measurement)
+
+`training/venus/conditioning_probe.py` now implements the fixed-history numerical
+comparison. It requires the exact approved268-scene prefix cache and actual244
+checkpoint hashes, selects one TRAIN and one DEV scene from each of all six
+families by ID before seeing outputs, and rejects held-out data. Spoken target
+positions shift to the **post-token** single-token feeds, whose cached embeddings
+must exactly equal those target tokens' real native embeddings. This prevents
+accidentally measuring the older next-token prediction positions.
+
+It compares disabled-adapter versus244 language hidden states through the actual
+frozen TTS semantic projector and text embedding at identical tokens and segment
+schedules. Reports include condition MSE/max deviation and semantic cosine, with
+no quality threshold, adoption decision or claim that drift proves audible damage.
+Three tiny CPU tests pass: identity then measured adapter-induced conditioning
+drift, exact post-token alignment, and rejection of misalignment/held-out data.
+
+The command rejects an already occupied GPU, so it cannot load a second model
+beside the owner's live trial. It performs zero optimizer updates and reuses the
+complete existing prefix cache. It has **not yet run on native9B/GPU**. A matched
+waveform comparison remains necessary before attributing audible failures to
+conditioning and choosing a new retention objective. This diagnostic12 selection
+is not a passing subset or substitute for complete behavioral adoption tests.
