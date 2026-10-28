@@ -1,6 +1,6 @@
 {
   "schema": "dl-native-experiment-ledger-v1",
-  "recorded_utc": "2026-10-28T21:51:23.451170+00:00",
+  "recorded_utc": "2026-10-28T23:29:59.062530+00:00",
   "scope": "All direct Venus controller events found under the two named local roots; not every historical Moshi/Slurm job",
   "roots": [
     "runs/venus-training-20261026",
@@ -1589,9 +1589,9 @@
     {
       "id": "paced-recovery-v31",
       "event_receipt": "runs/venus-training-20261027/paced-recovery-v31/events.json",
-      "event_receipt_sha256": "4c37ddcca14b13203d6a1781d6b4875bb223b7f07982736c7f4e42c0b29d33be",
+      "event_receipt_sha256": "e0b155677b9042fd6e510613180fa7473a80ac4c62382f17c808085371c188b4",
       "first_recorded_utc": "2026-10-28T17:02:25.082794+00:00",
-      "last_recorded_utc": "2026-10-28T21:49:53.031588+00:00",
+      "last_recorded_utc": "2026-10-28T22:22:09.926957+00:00",
       "source_shas": [
         "41a2f8131d705d406dcd005f3b56c941e12f861d",
         "8175fb98669a2db0fe41773a00c44018d22797c7"
@@ -1621,8 +1621,31 @@
           "error_type": "RuntimeError"
         }
       ],
-      "provider_stop_records": [],
+      "provider_stop_records": [
+        {
+          "at_utc": "2026-10-28T22:22:09.926957+00:00",
+          "event": "provider_stopped",
+          "vm_id": "3132736512933745605",
+          "status": "TERMINATED",
+          "focused_seconds_upper": 16800,
+          "prior_gpu_seconds_upper": 54451
+        }
+      ],
       "adoption_inferred": false,
+      "backup": {
+        "all_hashes_verified": true,
+        "files": 11521,
+        "bytes": 7774191833,
+        "source": "8175fb98669a2db0fe41773a00c44018d22797c7"
+      },
+      "backup_receipt": "runs/venus-training-20261027/paced-recovery-v31/copyback-verified.json",
+      "provider_snapshot": {
+        "id": "3132736512933745605",
+        "status": "TERMINATED",
+        "lastStartTimestamp": "2026-10-28T14:46:54.408-07:00",
+        "lastStopTimestamp": "2026-10-28T15:22:05.469-07:00"
+      },
+      "provider_snapshot_receipt": "runs/venus-training-20261027/paced-recovery-v31/provider-final.json",
       "lease": {
         "resource_key": "venus-paced-recovery-v31",
         "vm_id": "3132736512933745605",

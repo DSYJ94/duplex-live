@@ -1,3 +1,13 @@
+# LOCAL — Live trial STOPPED; full backup PASS; usable reopen awaits time extension
+
+2026-10-28T23:29:58.996033+00:00. Latest human asks “make the test available again”. Actualv31 unusedwindow elapsed22:19:55.763UTC; fulluniquehashcopyback PASS22:20:55.600UTC:11521files7774191833bytes, allSHAverified. Provider3132736512933745605/duplex-venus-owner-retry-20261028-v31 actualTERMINATED lastStart21:46:54.408UTC,lastStop22:22:05.469UTC=2111.061s/2200upper. Focused14600→16800, original54451carried; currentremaining500s of17300, projecttotal71251/72000. Freshgcloudinstanceslist thisturn confirms ALLprojectVMsTERMINATED. SAME100GBdisk4375908109499109167 intact; no active liveURL/guard/controller/newtraining.
+
+$70cap stillhasroom, but500seconds includingstartup/backup is not a usable longertrial. Concrete one1800s GPU restart proposal committed71ed41691: docs/NATIVE-VENUS-OWNER-LIVE-REOPEN-PROPOSAL-2026-10-28.json. WouldextendfocusedGPUcap17300→18600/projectcap72000→73051, keepmoney70/project175, conservativephase44.666667USDinclreserves; SAMEA10040/disk/zone, strictkeys/nativeSTOP+bothguards/nooverlap, originalvs244nativePCMproof, ZEROtraining/API/synthesis/purchase/newdisk. Entire usablewindow available untilnativebackupreserve ratherthanfiveunusedminutes. Explicitquestionpending ownerapproval because priorproposalset timeaswellasmoney. No newallocation submitted inthisturn; do not launch untildecision. OfficialcurrentSKUrefresh successful, receipt price-refresh-owner-restart.log.
+
+NativeOPAL implementation/source8175fb98669a2db0fe41773a00c44018d22797c7 remainscommitted with58tests andactualdistinctCPUprocessfullstateproof; native9BGPUqualification/adaptivetrainingnotyetdone. Modelstill244andunqualified; actualreasoningbackend/George/nativeconditioningrepairunfinished. Main0c6f3fb5c previoushandoffnowhistorical, currentproposal71ed41691. PreserveunrelatedlocalPYC/probes/roadmap/Moshiproposals. OldMoshiarchives/Runpodvolume intact; broadMacsourcebackupPARTIAL. Goalunfinished, humaninputblocker for additionalGPUtime. Nootherchatmessages/newheartbeat/archive.
+
+---
+
 # LOCAL — Requested live restart READY; OPAL integrated into native trainer
 
 2026-10-28T21:51:23.379930+00:00. Human: “Didnt manage to test it, restart it again, at the same time in the background, continue with training/next repair”; then “Also proceed with integrating OPAL natively in a way that works best”. LOCAL sole executor/main. OPAL integration done in source8175fb98669a2db0fe41773a00c44018d22797c7, defaultOFF/freekeepoptin; no new native training or APIcalls. Actual savedmodel244 remainsunqualified. No inference of extra GPUtime from $70moneycap.
