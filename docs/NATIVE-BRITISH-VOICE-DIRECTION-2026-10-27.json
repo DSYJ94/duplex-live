@@ -109,5 +109,20 @@
     "purpose": "Matched synthetic reference/training audio naturalness comparison, George first; source quality and native output remain separate evidence",
     "new_synthesis_calls": 0,
     "budget_note": "External API ceiling9.6476125/10; verify model access, voice compatibility and actual pricing before any further spend"
+  },
+  "latest_realtime_followup": {
+    "owner_reference": "https://elevenlabs.io/realtime",
+    "verified_utc": "2026-10-28T08:20:15.415220+00:00",
+    "models": [
+      "eleven_realtime_v1_mini",
+      "eleven_realtime_v1_max"
+    ],
+    "model_family": "Integrated speech recognition, turn-taking, language model and voice; distinct from standalone v4/v4Turbo TTS",
+    "official_docs": "https://elevenlabs.io/docs/eleven-agents/customization/realtime-models",
+    "proposed_use": "Matched synthetic conversational teacher/reference examples and fixed behavior benchmark; George preference retained where compatible",
+    "account_availability": "Unverified; official docs describe gradual rollout",
+    "model_weights_or_self_hosting_verified": false,
+    "new_api_calls": 0,
+    "no_change_to_completed_native_training": true
   }
 }
