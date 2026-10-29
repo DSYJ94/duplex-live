@@ -24,7 +24,12 @@ TOOLS = {'lookup_record', 'cancel_lookup', 'replace_lookup', 'respond_to_user'}
 MAX_BODY = 128 * 1024
 
 
-def validate(payload):
+def validate(payload, profile='context-lookup'):
+    if profile == 'venus-reasoning':
+        from portable.venus.reasoning import validate_payload
+        return validate_payload(payload)
+    if profile != 'context-lookup':
+        raise ValueError('Unknown proxy request profile')
     if (not isinstance(payload, dict) or payload.get('model') != MODEL
             or type(payload.get('max_output_tokens')) is not int
             or not 0 < payload['max_output_tokens'] <= 2048
@@ -40,12 +45,15 @@ def validate(payload):
 class ProxyServer(ThreadingHTTPServer):
     daemon_threads = True
 
-    def __init__(self, port, key, run, out, maximum_requests, deadline, post=None):
+    def __init__(self, port, key, run, out, maximum_requests, deadline, post=None, profile='context-lookup'):
         import requests
         if not re.fullmatch(r'[a-zA-Z0-9_-]{1,96}', run):
             raise ValueError('Explicit bounded synthetic execution identifier required')
         if type(maximum_requests) is not int or not 1 <= maximum_requests <= 128:
             raise ValueError('At most128 actual provider calls per proxy execution')
+        if profile not in ('context-lookup', 'venus-reasoning'):
+            raise ValueError('Explicit supported proxy profile required')
+        self.profile = profile
         self.key, self.run, self.out = key, run, out
         self.post = requests.post if post is None else post
         self.lock = threading.RLock()
@@ -62,7 +70,8 @@ class ProxyServer(ThreadingHTTPServer):
             atomic_json(self.out / 'proxy.json', dict(schema='dl-local-responses-proxy-v1', pid=os.getpid(),
                 run_id=self.run, listen_host='127.0.0.1', port=self.server_address[1],
                 endpoint='http://127.0.0.1:' + str(self.server_address[1]) + '/v1/responses',
-                upstream_https_endpoint=ENDPOINT, model=MODEL, provider_credential_loaded_locally=True,
+                upstream_https_endpoint=ENDPOINT, model=MODEL if self.profile == 'context-lookup' else 'gpt-6-astra',
+                profile=self.profile, provider_credential_loaded_locally=True,
                 provider_credential_transferred=False, actual_requests=self.count, maximum_requests=self.maximum,
                 real_requests_transport=self.real_transport, deadline_utc=datetime.fromtimestamp(self.deadline, timezone.utc).isoformat(),
                 receipts=self.receipts, at_utc=datetime.now(timezone.utc).isoformat(),
@@ -78,6 +87,7 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header('Content-Type', 'application/json')
         self.send_header('Content-Length', str(len(body)))
         self.send_header('Cache-Control', 'no-store')
+        self.send_header('X-Duplex-Transport', 'provider' if self.server.real_transport else 'fixture')
         self.end_headers()
         try: self.wfile.write(body)
         except (BrokenPipeError, ConnectionResetError): pass
@@ -99,7 +109,7 @@ class Handler(BaseHTTPRequestHandler):
             body = self.rfile.read(length)
             if s.key.encode() in body: raise ValueError('credential must never be payload content')
             payload = json.loads(body)
-            validate(payload)
+            validate(payload, s.profile)
         except (ValueError, TypeError, json.JSONDecodeError):
             self.reply(400, b'{"error":"invalid_native_worker_payload"}'); return
         with s.lock:
@@ -118,7 +128,12 @@ class Handler(BaseHTTPRequestHandler):
                 row.update(status='provider_returned', http_status=response.status_code,
                            response_sha256=hashlib.sha256(data).hexdigest(), seconds=time.monotonic()-began,
                            request_id=response.headers.get('x-request-id'))
-                try: row['response_id'] = response.json().get('id')
+                try:
+                    value = response.json()
+                    row['response_id'] = value.get('id')
+                    if isinstance(value.get('usage'), dict):
+                        row['usage'] = {k:v for k,v in value['usage'].items()
+                                        if k in ('input_tokens', 'output_tokens', 'total_tokens') and type(v) is int and v >= 0}
                 except (ValueError, AttributeError): pass
                 s.record()
             self.reply(response.status_code, data)
@@ -136,6 +151,7 @@ def main():
     parser.add_argument('--run-id', required=True)
     parser.add_argument('--port', type=int, default=0)
     parser.add_argument('--maximum-requests', type=int, default=128)
+    parser.add_argument('--profile', choices=['context-lookup', 'venus-reasoning'], default='context-lookup')
     parser.add_argument('--deadline-utc', required=True)
     parser.add_argument('--lock', type=Path, default=Path('runs/local-migration-20261023/.private/native-responses-proxy.lock'))
     args = parser.parse_args()
@@ -144,7 +160,7 @@ def main():
     key = local_key(args.env_file)
     with collection_lock(args.lock):
         args.out.mkdir(parents=True, exist_ok=False)
-        server = ProxyServer(args.port, key, args.run_id, args.out, args.maximum_requests, deadline)
+        server = ProxyServer(args.port, key, args.run_id, args.out, args.maximum_requests, deadline, profile=args.profile)
         print(json.dumps(dict(pid=os.getpid(), run_id=args.run_id, port=server.server_address[1], credential_transferred=False)), flush=True)
         try:
             while time.time() < deadline: server.handle_request()

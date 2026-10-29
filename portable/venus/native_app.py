@@ -1,8 +1,8 @@
 """Native Venus microphone prototype and synthetic-only diagnostic endpoint.
 
 The released streaming model owns speech/listen decisions. No keyword mute, ASR
-controller, canned ordinary answers or forced speech. A bounded arithmetic worker
-handles ONLY model-emitted delegate requests; it is not a reasoning-model backend.
+controller, canned ordinary answers or forced speech. The default arithmetic
+diagnostic or opt-in Mac reasoning proxy handles ONLY model-emitted requests.
 """
 import argparse
 import asyncio
@@ -259,7 +259,7 @@ class NativeEngine:
 
 
 def create_app(model_dir, system_prompt='Streaming Omni Conversation.', adapter_checkpoint=None,
-               voice_reference=None,voice_reference_sha256=None,nonspoken_actions=False,compare_foundation=False,tts_attention='released'):
+               voice_reference=None,voice_reference_sha256=None,nonspoken_actions=False,compare_foundation=False,tts_attention='released',worker_factory=None):
     if compare_foundation and not adapter_checkpoint:
         raise ValueError('A comparison requires the explicit trained checkpoint')
     from contextlib import asynccontextmanager
@@ -275,6 +275,7 @@ def create_app(model_dir, system_prompt='Streaming Omni Conversation.', adapter_
 
     app = FastAPI(lifespan=lifespan, docs_url=None, redoc_url=None)
     slot = asyncio.Lock()
+    worker_backend = 'mac-reasoning-proxy' if worker_factory else 'arithmetic-diagnostic'
 
     @app.get('/')
     async def index():
@@ -282,7 +283,8 @@ def create_app(model_dir, system_prompt='Streaming Omni Conversation.', adapter_
 
     @app.get('/health')
     async def health():
-        return dict(ready=True, busy=slot.locked(), comparison_available=compare_foundation, **app.state.engine.profile)
+        return dict(ready=True, busy=slot.locked(), comparison_available=compare_foundation,
+                    worker_backend=worker_backend, **app.state.engine.profile)
 
     @app.websocket('/ws')
     async def conversation(ws: WebSocket):
@@ -297,7 +299,7 @@ def create_app(model_dir, system_prompt='Streaming Omni Conversation.', adapter_
             await ws.close()
             return
         async with slot:
-            worker, parser = ArithmeticWorker(), DelegateParser()
+            worker, parser = (worker_factory() if worker_factory else ArithmeticWorker()), DelegateParser()
             variants = ExitStack()
             try:
                 engine = app.state.engine
@@ -307,7 +309,7 @@ def create_app(model_dir, system_prompt='Streaming Omni Conversation.', adapter_
                 from .live_variant import variant_context,variant_profile
                 variants.enter_context(variant_context(engine.model.llm,variant))
                 await asyncio.to_thread(engine.prepare)
-                await ws.send_json({'ready':True, 'profile':variant_profile(engine.profile,variant)})
+                await ws.send_json({'ready':True, 'profile':dict(variant_profile(engine.profile,variant),worker_backend=worker_backend)})
                 sequence = 0
                 while True:
                     pcm = await asyncio.wait_for(ws.receive_bytes(), timeout=45)
@@ -347,9 +349,17 @@ if __name__ == '__main__':
     parser.add_argument('--nonspoken-actions',action='store_true',help='Experimental native protocol filter; full speech/behavior qualification still required')
     parser.add_argument('--compare-foundation',action='store_true',help='Allow original/adapted comparison between isolated conversations')
     parser.add_argument('--tts-attention',choices=['released','sdpa'],default='released',help='Experimental TTS-only backend; native speed and audio validation required')
+    parser.add_argument('--reasoning-proxy', help='Opt-in loopback Mac-only proxy URL over existing SSH; provider credentials never go on GPU')
+    parser.add_argument('--reasoning-run-id', help='Explicit matching bounded proxy execution identity')
     args = parser.parse_args()
     import uvicorn
     # Loopback and SSH tunnel only. No microphone or conversation recording.
     prompt=Path(args.system_prompt_file).read_text().strip() if args.system_prompt_file else 'Streaming Omni Conversation.'
     if not prompt or len(prompt)>4000:raise ValueError('Bounded nonempty system prompt required')
-    uvicorn.run(create_app(args.model_dir,prompt,args.adapter_checkpoint,args.voice_reference,args.voice_reference_sha256,args.nonspoken_actions,args.compare_foundation,args.tts_attention), host='127.0.0.1', port=args.port)
+    if bool(args.reasoning_proxy)!=bool(args.reasoning_run_id):parser.error('Both reasoning proxy and execution identity are required')
+    worker_factory=None
+    if args.reasoning_proxy:
+        from .reasoning import LocalProxy,ReasoningWorker
+        proxy=LocalProxy(args.reasoning_proxy,args.reasoning_run_id)
+        worker_factory=lambda:ReasoningWorker(proxy)
+    uvicorn.run(create_app(args.model_dir,prompt,args.adapter_checkpoint,args.voice_reference,args.voice_reference_sha256,args.nonspoken_actions,args.compare_foundation,args.tts_attention,worker_factory), host='127.0.0.1', port=args.port)

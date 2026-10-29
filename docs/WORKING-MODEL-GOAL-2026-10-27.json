@@ -73,18 +73,23 @@
     "provider_actual_stop_utc": "2026-10-29T00:16:08.965Z"
   },
   "reasoning_integration": {
-    "confirmed_gap": "portable/venus/native_app.py currently constructs ArithmeticWorker; full native qualification uses LookupWorker. Neither is the general reasoning backend.",
+    "confirmed_gap": "Previously ArithmeticWorker only. An opt-in general reasoning worker and Mac proxy profile are now implemented; no actual provider call or native GPU routing qualification has run.",
     "existing_reusable_components": [
-      "evals/native_reasoning_backend.py",
-      "evals/native_reasoning_lifecycle.py",
-      "evals/duplex_reasoning_worker.py"
+      "portable/context/local_responses_proxy.py",
+      "evals/native_reasoning_lifecycle.py"
     ],
-    "next_implementation": "Connect the Venus worker interface to the existing real reasoning lifecycle through a Mac-local credential boundary. Keep native selection, pending work and cancellation visible; do not add a second spoken controller.",
-    "cancellation_contract": "Existing foreground HTTP path suppresses cancelled or stale delivery; it does not prove upstream compute cancellation. Preserve this truthful distinction.",
+    "next_implementation": "Deploy source through Git, verify the existing SSH loopback path and admitted synthetic request budget before a real provider/native qualification. The pending four-hour proposal includes zero new API calls and does not authorize owner microphone payloads to a new external endpoint.",
+    "cancellation_contract": "Atomic delivery cancellation/replacement of selected still-pending task identities; late and disconnected results suppressed. No claim of upstream computation cancellation or recall of already-injected speech.",
     "cloud_credentials": false,
     "new_external_calls_this_followup": 0,
     "remaining_external_api_budget_upper_usd": 0.3523875,
-    "training_artifacts_changed_mid_run": false
+    "training_artifacts_changed_mid_run": false,
+    "implementation": "portable/venus/reasoning.py; native_app --reasoning-proxy/--reasoning-run-id; local_responses_proxy --profile venus-reasoning",
+    "request_provenance": "The native voice model emits a selected task description. It is explicitly not labelled as a verified user transcript; query faithfulness and completeness need full native evaluation.",
+    "local_content_persistence": false,
+    "external_calls_this_followup": 0,
+    "configured_in_running_gpu": false,
+    "fixture_evidence": "Real local WebSocket handler -> asynchronous worker -> loopback HTTP proxy -> fixture provider -> validated cancellation receipt -> native context injection. Not actual native inference or real provider quality."
   },
   "reactive_optimisation": {
     "supervisor": "current agent; no additional paid agent required",

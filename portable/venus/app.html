@@ -12,7 +12,8 @@
 let socket,ctx,input,processor,stream,nextPlay=0,queued=0,closing=false,generation=0,lastSpeechFinal=false;
 const players=new Set(),sentAt=[];
 const variant=document.querySelector('#variant');
-fetch('/health').then(r=>r.json()).then(p=>{if(p.comparison_available){document.querySelector('#variants').hidden=false;variant.value='released';}document.querySelector('#voice').textContent=p.voice_reference?.mode==='released-native-reference'?'Voice: released reference · British voice not configured':'Voice: custom reference · experimental';}).catch(()=>{});
+function workerLabel(profile){document.querySelector('#work').textContent=profile.worker_backend==='mac-reasoning-proxy'?'Reasoning backend configured for delegated tasks. Cancellation stops delivery; remote work may continue.':'Background worker: arithmetic only. General reasoning backend is not connected yet.';}
+fetch('/health').then(r=>r.json()).then(p=>{workerLabel(p);if(p.comparison_available){document.querySelector('#variants').hidden=false;variant.value='released';}document.querySelector('#voice').textContent=p.voice_reference?.mode==='released-native-reference'?'Voice: released reference · British voice not configured':'Voice: custom reference · experimental';}).catch(()=>{});
 const start=document.querySelector('#start'),stop=document.querySelector('#stop'),state=document.querySelector('#state'),words=document.querySelector('#words'),work=document.querySelector('#work'),timing=document.querySelector('#timing');
 function clearPlayback(){for(const node of players){try{node.stop();node.disconnect();}catch{}}players.clear();nextPlay=0;}
 async function end(){
@@ -35,7 +36,7 @@ start.onclick=async()=>{
   if(!current())return;
   try{
    const m=JSON.parse(event.data);if(m.error){await end();state.textContent=m.error;return;}
-   if(m.ready){
+   if(m.ready){workerLabel(m.profile||{});
     state.textContent='Listening';stop.disabled=false;
     const media=await navigator.mediaDevices.getUserMedia({audio:{channelCount:1,echoCancellation:true,noiseSuppression:true,autoGainControl:false}});
     if(!current()){media.getTracks().forEach(t=>t.stop());return;}
