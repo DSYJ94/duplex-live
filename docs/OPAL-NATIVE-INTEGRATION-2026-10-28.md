@@ -146,3 +146,56 @@ restricted shared-memory failure remains intact; v4 used normal shared memory,
 without CPU or thread limits. These are CPU integration proofs, not native9B
 GPU qualification. No paid broker/Jev agent, new API call, native adaptive update
 or OPAL performance gain is claimed.
+
+
+## Current-agent Git supervisor and actual mailbox proof, 29 October
+
+`training/venus/opal_supervisor.py` runs the unmodified upstream mailbox broker
+with a local Git supervisor. The current LOCAL agent reads its request and
+TRAIN/DEV evidence, then writes a request-bound keep decision or commits an
+optimizer/analysis program under `training/venus/opal_programs/`. No secondary
+agent, Jev process or provider API is launched by this backend.
+
+An adapt decision names the exact request ID/hash, rationale, Git commit and
+program paths. The broker reads committed bytes rather than the working tree.
+Only updater.py and analysis.py can change through this interface; data, loss,
+folds, update/time limits and adoption remain outside it. For a remote run,
+source must first be pushed/fetched through the normal Git deployment. The
+broker verifies the same program bytes in the training host's Git object before
+returning them through OPAL. A cancelled/expired decision cannot apply after
+that verification. Syntax checks do not make arbitrary Python safe: program
+review and upstream trials are still required, and this is trusted optimizer
+code, not a sandbox.
+
+The process-local SSH adapter reuses the controller's exact strict IAP argv.
+It requires strict host keys, identities-only and noninteractive authentication;
+it creates no SSH alias, credential or network resource. It restores the
+upstream Folder class on exit and leaves the pinned checkout unmodified. The
+caller still must verify the actual provider lease, cost guard and source
+before starting the remote broker. No live remote SSH/IAP test was performed
+while the GPU remained stopped.
+
+Actual local mailbox proof PASS: six tests, persistent receipt
+`runs/venus-training-20261029/opal-supervisor-proof-v4/proof.json`. The actual
+native train_step on tiny CPU Qwen requested a decision at update16, continued
+through18 while the request was unanswered, then applied a Git-committed updater
+at19. Upstream events ended at programv001, and the applied code SHA matches the
+committed proposal. This deterministic fixture changes weight decay; it is not
+an agent discovering a better recipe or evidence of voice improvement. Tests
+also reject stale attempts, uncommitted edits, missing remote Git deployment and
+cancellation during verification. GPU seconds0, provider calls0, charge0,
+real native candidate updates0. Earlier proof folders remain intact; v1 had a
+fixture-parent setup error and v3 used the wrong exception-class assertion.
+
+The wrapper's existing positive-budget admission uses a0.01USD metadata ceiling
+for this proof; the Git supervisor always reports actual cost0 and makes no
+service call. Upstream's generic Claude cost estimate is not an incurred charge
+or the backend used. Real deployment must retain a finite decision schedule and
+all existing project limits; this is not permission to substitute a paid broker.
+
+Observation cadence remains each batch, diagnostic review each8 updates, full52
+DEV each epoch. The current native54-update phase has optimizer decision
+boundaries16 and32; logging every8 does not mean code is rewritten every8.
+Keep is a valid decision when the evidence does not justify a change. Root
+supervision must make the actual data/recipe/objective/runtime judgement; the
+transport neither decides causality nor silently changes the corpus.
