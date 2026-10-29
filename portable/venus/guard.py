@@ -22,6 +22,9 @@ PRIOR_USD=91.98448055555555
 
 
 def resource(lease):
+    if lease.get('resource_key')=='venus-action-fidelity-v41':
+        from training.venus.action_guard import resource as action_resource
+        return action_resource(lease)
     if lease.get("resource_key") in ("venus-adaptive-v34","venus-adaptive-v35","venus-adaptive-v36","venus-adaptive-v37","venus-adaptive-v38","venus-terminal-render-v39","venus-terminal-render-v40"):
         from training.venus.adaptive_guard import resource as adaptive_resource
         return adaptive_resource(lease)
@@ -130,6 +133,9 @@ def provider_snapshot(binding,key):
 
 
 def validate(vm,instances,runpods,lease,now):
+    if lease.get('resource_key')=='venus-action-fidelity-v41':
+        from training.venus.action_guard import validate as action_validate
+        return action_validate(vm,instances,runpods,lease,now)
     if lease.get("resource_key") in ("venus-adaptive-v34","venus-adaptive-v35","venus-adaptive-v36","venus-adaptive-v37","venus-adaptive-v38","venus-terminal-render-v39","venus-terminal-render-v40"):
         from training.venus.adaptive_guard import validate as adaptive_validate
         return adaptive_validate(vm,instances,runpods,lease,now)

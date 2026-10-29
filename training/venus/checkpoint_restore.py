@@ -43,8 +43,16 @@ def restore(path, expected_sha256, model, base_optimizer, *, source, run_dir):
     actual_parameters = [parameter for group in base_optimizer.param_groups for parameter in group['params']]
     if not named or [id(p) for p in actual_parameters] != [id(p) for p in named.values()]:
         raise ValueError('Original named adapter parameter order required for Adam state binding')
+    initial_program = None
+    if state['metadata'].get('initial_programs'):
+        initial_program = run_dir.with_name(run_dir.name + '-initial-program')
+        initial_program.mkdir(parents=True, exist_ok=False)
+        for name, text in state['metadata']['initial_programs'].items():
+            if Path(name).name != name or not name.endswith('.py'):
+                raise ValueError('Only exact saved phase program files allowed')
+            (initial_program/name).write_text(text)
     runtime = NativeOpal(base_optimizer, model, source=source, run_dir=run_dir,
-                         recipe=recipe, backend='keep', agent_budget=0.)
+                         recipe=recipe, backend='keep', agent_budget=0., initial_program=initial_program)
     try:
         load_adapter(model, state['adapter'])
         runtime.optimizer.load_state_dict(wrapped)

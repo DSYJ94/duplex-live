@@ -62,7 +62,7 @@ class Options:
             raise ValueError('Decision updates must be positive integers')
 
 
-def wrap(optimizer, model, *, source, run_dir, options, scheduler=None, clip_grad_norm=None):
+def wrap(optimizer, model, *, source, run_dir, options, scheduler=None, clip_grad_norm=None, initial_program=None):
     """Wrap once after restoring original Adam and constructing its scheduler.
 
     Move existing clipping into this argument, do not also clip in the driver.
@@ -78,6 +78,8 @@ def wrap(optimizer, model, *, source, run_dir, options, scheduler=None, clip_gra
         schedule=schedule, every=options.every, max_decisions=len(schedule),
         backend=options.backend, blocking=False, summarize=False, share_code=False,
         run_dir=str(run_dir), clip_grad_norm=clip_grad_norm, snapshot_limit_gb=.25)
+    if initial_program is not None:
+        arguments['program'] = str(initial_program)
     if options.backend != 'keep':
         arguments.update(max_cost_usd=options.maximum_agent_cost_usd,
             backend_options=dict(timeout=options.decision_timeout_seconds,

@@ -25,14 +25,19 @@ async def main(a):
     quality=json.loads(Path(a.word_quality).read_text());assert quality['all_passed'] and quality['passed']==quality['requested']==218
     recognized={r['source_sha256']:r for r in quality['rows']}
     resume=getattr(a,'resume_collection',None)
+    reuse=getattr(a,'reuse_parent_collection',None)
+    if resume and reuse:raise ValueError('Choose interrupted collection resume or full baseline reuse')
     if not resume:assert stop-time.time()>2*sum(c['frames'] for c in cases)*1.15+450
     terminal=json.loads((Path(a.candidate)/'training-terminal.json').read_text());restore=json.loads((Path(a.candidate)/'fresh-process-restore.json').read_text());recipe=json.loads((Path(a.candidate)/'recipe.json').read_text())
     base_steps=terminal['parent_training_steps']
-    assert terminal['completed'] and restore['passed'] and base_steps in (190,244) and 0<terminal['actual_updates']<=(54 if base_steps==244 else 512)
+    assert terminal['completed'] and restore['passed'] and base_steps in (190,244,298) and 0<terminal['actual_updates']<=(108 if base_steps==298 else 54 if base_steps==244 else 512)
     checkpoint=Path(a.candidate)/('step-%04d.pt'%terminal['actual_updates']);assert sha(a.parent_checkpoint)==a.parent_sha256
     parent=torch.load(a.parent_checkpoint,map_location='cpu',weights_only=False)
     from .native_optimizer import verified_parent
-    assert verified_parent(parent,a.parent_sha256,allow244=True)==base_steps
+    if base_steps==298:
+        assert json.loads(Path(a.lease).read_text())['resource_key']=='venus-action-fidelity-v41'
+        assert reuse and json.loads((Path(a.candidate)/'final-native-restore.json').read_text())['total_training_steps']==terminal['total_optimizer_updates']
+    assert verified_parent(parent,a.parent_sha256,allow244=True,allow298=base_steps==298)==base_steps
     state=torch.load(checkpoint,map_location='cpu',weights_only=False)
     assert state['metadata']==recipe and state['step']==terminal['actual_updates'] and recipe['approval_sha256']==sha(a.approval)
     out=Path(a.output);parent_label='parent'+str(base_steps)
@@ -42,7 +47,10 @@ async def main(a):
         assert a.resume_from_source==recipe['source']=='dd767d65ac663e701142f2c882aeb5e1c2a2c6e5'
         clone_original_collection(resume,out)
     else:out.mkdir(exist_ok=False)
-    done=completed_cases(out,cases,[x[0] for x in conditions]) if resume else {}
+    if reuse:
+        from .collection_resume import reuse_parent
+        reuse_parent(reuse,out,cases,a.parent_sha256,parent_label)
+    done=completed_cases(out,cases,[x[0] for x in conditions]) if resume or reuse else {}
     remaining=sum(case['frames'] for label,_ in conditions for case in cases if (label,case['id']) not in done)
     assert stop-time.time()>remaining*1.5+600
     (out/'resume-provenance.json').write_text(json.dumps(dict(original_collection=resume,original_source=getattr(a,'resume_from_source',None),original_results_sha256=sha(Path(resume)/'results.json') if resume else None,completed_cases_verified=len(done),missing_cases=64-len(done),new_optimizer_updates=0,source=a.source),indent=2)+'\n')
@@ -51,7 +59,7 @@ async def main(a):
     profile_fields=('seed','torch','cuda','precision','attention','input_sample_rate','output_sample_rate','system_prompt','decode_mode','max_new_speak_tokens_per_chunk','temperature','top_k','top_p','listen_prob_scale','tts_attention','voice_reference','nonspoken_action_channel')
     for condition,adapter in conditions:
         if engine:load_adapter(engine.model.llm,adapter)
-        root=out/condition;root.mkdir(exist_ok=bool(resume))
+        root=out/condition;root.mkdir(exist_ok=bool(resume or reuse))
         profile=root/'profile.json';expected_hash=sha(a.parent_checkpoint if condition==parent_label else checkpoint)
         if profile.exists():
             previous=json.loads(profile.read_text());assert previous['checkpoint_sha256']==expected_hash
@@ -77,7 +85,7 @@ async def main(a):
             print(json.dumps(dict(event='paired_native_case_reused' if key in done else 'paired_native_case_complete',condition=condition,id=case['id'],completed=len(results),required=64)),flush=True)
     del engine;gc.collect();torch.cuda.empty_cache();audits=[]
     prior={}
-    if resume and (out/'speech-audit-progress.json').exists():
+    if (resume or reuse) and (out/'speech-audit-progress.json').exists():
         old=json.loads((out/'speech-audit-progress.json').read_text())
         prior={(x['condition'],x['id']):x for x in old['cases']}
         if len(prior)!=old['completed'] or old['required']!=64:raise ValueError('Invalid partial ASR identity')
@@ -101,7 +109,8 @@ async def main(a):
         audits.append(dict(id=result['id'],condition=result['condition'],evaluation_set=result['evaluation_set'],asr_text=transcript,references=ref,user_facing_text_wer=error,raw_peak=peak,raw_peak_pass=peak<=.995,word_pass=error<=.05,joined_wav_sha256=sha(wav),source_chunks=[dict(file=t['chunk_file'],sha256=sha(folder/t['chunk_file'])) for t in traces],qualified=False))
         (out/'speech-audit-progress.json').write_text(json.dumps(dict(completed=len(audits),required=64,cases=audits),indent=2)+'\n')
     report=dict(complete=len(results)==len(audits)==64,conditions=[parent_label,'paced-continuation'],fresh_cases_per_condition=24,old_ordinary_cases_per_condition=8,cases=audits,source=a.source,asr_revision=REVISION,optimizer_updates=0,seed=42,qualified=False,naturalness_requires_listening=True,semantic_and_all_control_gates_required=True,resumed_from=resume,original_completed_cases_reused=len(done),new_optimizer_updates=0,word_limit=.05,peak_limit=.995,normalizer='predeclared orthography plus cardinal0..100, no homophones')
+    report.update(baseline_reused_from=reuse,new_native_cases_generated=64-len(done))
     (out/'paired-native-report.json').write_text(json.dumps(report,indent=2)+'\n');assert report['complete']
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();[p.add_argument('--'+x,required=True) for x in ('model','candidate','parent-checkpoint','parent-sha256','plan','timelines','approval','word-quality','old-plan','old-timelines','old-approval','output','source','lease')];p.add_argument('--tts-attention',choices=['released','sdpa'],default='released');p.add_argument('--resume-collection');p.add_argument('--resume-from-source');p.add_argument('--voice-reference');p.add_argument('--voice-reference-sha256');asyncio.run(main(p.parse_args()))
+    p=argparse.ArgumentParser();[p.add_argument('--'+x,required=True) for x in ('model','candidate','parent-checkpoint','parent-sha256','plan','timelines','approval','word-quality','old-plan','old-timelines','old-approval','output','source','lease')];p.add_argument('--tts-attention',choices=['released','sdpa'],default='released');p.add_argument('--reuse-parent-collection');p.add_argument('--resume-collection');p.add_argument('--resume-from-source');p.add_argument('--voice-reference');p.add_argument('--voice-reference-sha256');asyncio.run(main(p.parse_args()))

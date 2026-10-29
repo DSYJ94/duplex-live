@@ -25,7 +25,7 @@ def gradient_norm(parameters):
 
 class NativeOpal:
     def __init__(self, base, model, *, source, run_dir, recipe, backend='keep', agent_budget=0.,
-                 goal='Improve native duplex control and ordinary retention; full native speech and behavior decide acceptance'):
+                 goal='Improve native duplex control and ordinary retention; full native speech and behavior decide acceptance', initial_program=None):
         if recipe['updates'] <= recipe['warmup_updates']:
             raise ValueError('Native OPAL requires the admitted full schedule beyond warmup')
         self.run_dir=Path(run_dir)
@@ -38,7 +38,7 @@ class NativeOpal:
         self.options=Options(total_steps=recipe['updates'],goal=goal,backend=backend,
             maximum_agent_cost_usd=agent_budget,decision_updates=tuple(s for s in (16,32,64,128,256) if s<=recipe['updates']))
         self.optimizer=wrap(base,model,source=source,run_dir=run_dir,options=self.options,
-            scheduler=self.scheduler,clip_grad_norm=recipe['gradient_clip'])
+            scheduler=self.scheduler,clip_grad_norm=recipe['gradient_clip'],initial_program=initial_program)
         self._closed=False
 
     def step(self,loss,step):
@@ -98,7 +98,7 @@ def assert_optimizer_equal(expected,actual):
         raise ValueError('Fresh-process Adam state differs')
 
 
-def verified_parent(state,sha256,*,allow244=False):
+def verified_parent(state,sha256,*,allow244=False,allow298=False):
     """Pin the two actual states; continuation244 must not replay190→244."""
     meta=state['metadata']
     if sha256=='10354f93ec2b5e224ae7298b2f3b8687f9dc74d2fbf87c1db62bd79763155b63':
@@ -108,4 +108,9 @@ def verified_parent(state,sha256,*,allow244=False):
         assert state['step']==54 and meta['parent_training_steps']==190
         assert meta['source']=='6ea80a5d2512d981d8ddf1d64c4675684667429a'
         return 244
+    if allow298 and sha256=='e7340edd15537523db78120a97902399faa0af9caa46e875ec92e56889d6edef':
+        assert state['step']==54 and meta['parent_training_steps']==244
+        assert meta['source']=='dd767d65ac663e701142f2c882aeb5e1c2a2c6e5'
+        assert state['optimizer']['opal']==1 and state['optimizer']['update']==54 and state['optimizer']['version']==1
+        return 298
     raise ValueError('Unknown or unapproved native continuation parent')
