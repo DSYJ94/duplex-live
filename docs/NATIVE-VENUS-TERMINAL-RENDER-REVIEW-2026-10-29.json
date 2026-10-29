@@ -1,0 +1,63 @@
+{
+  "recorded_utc": "2026-10-29T14:53:56.260882+00:00",
+  "status": "NO_DEMONSTRATED_BENEFIT_DO_NOT_ADOPT",
+  "source": "dc6b5075e800be45b4e636126b6cc14607fcd1ba",
+  "complete_all4": true,
+  "selected_before_outputs": true,
+  "pairs": [
+    {
+      "id": "venus-control-v1-train-ordinary-0126",
+      "same_native_generated_text": true,
+      "both_terminal": true,
+      "wer26": 0.125,
+      "wer128": 0.125,
+      "peak26": 0.634185791015625,
+      "peak128": 0.634185791015625,
+      "adopted": false,
+      "identical_waveform_sha256": false,
+      "terminal_returned_tokens_128": [
+        25
+      ],
+      "same_waveform_shape": true,
+      "waveform_max_abs_difference": 0.0,
+      "waveform_rmse": 0.0,
+      "decoded_pcm_bytes_identical": true
+    },
+    {
+      "id": "venus-control-v1-dev-ordinary-0183",
+      "same_native_generated_text": true,
+      "both_terminal": true,
+      "wer26": 0.0,
+      "wer128": 0.0,
+      "peak26": 0.741302490234375,
+      "peak128": 0.741302490234375,
+      "adopted": false,
+      "identical_waveform_sha256": false,
+      "terminal_returned_tokens_128": [
+        25
+      ],
+      "same_waveform_shape": true,
+      "waveform_max_abs_difference": 0.0,
+      "waveform_rmse": 0.0,
+      "decoded_pcm_bytes_identical": true
+    }
+  ],
+  "checkpoint_sha256": "c634e6cf38831210be0165ce7f6dd09c5454226f62ff622477fd4d051abde270",
+  "new_optimizer_updates": 0,
+  "external_api_calls": 0,
+  "probe_sha256": "29f850f82304e254aec250ba13b3f4cd343aa2edceeda03036dc020f7241bcd5",
+  "backup": {
+    "all_hashes_verified": true,
+    "files": 14874,
+    "bytes": 8307094332,
+    "source": "dc6b5075e800be45b4e636126b6cc14607fcd1ba"
+  },
+  "provider": {
+    "id": "49337671038724022",
+    "status": "TERMINATED",
+    "lastStartTimestamp": "2026-10-29T07:34:34.494-07:00",
+    "lastStopTimestamp": "2026-10-29T07:41:11.117-07:00"
+  },
+  "interpretation": "Both cases stopped naturally at25 returned final audio tokens with128 allowed. Generated text, decoded PCM bytes and word-error rates are identical; WAV container hashes differ. No demonstrated benefit: do not promote this experiment. Only1/2cases meets unchangedWER<=.05 in both conditions; no passing subset accepted. This does not establish the cause of every other speech failure.",
+  "adopted": false
+}

@@ -21,11 +21,14 @@
     }
   ],
   "code_finding": "Exact pinned streaming_generate sets max_new_token26 on BOTH nonfinal/final chunks, then clears TTS state at end_of_turn. generate_chunk discards its latest token at budget exhaustion. A terminal text longer than the allocated one-second speech budget can therefore be under-rendered. Token2wav already flushes its own existing buffer; increasing file tail silence does not generate missing TTS tokens.",
-  "hypothesis_not_yet_native_proven": "A finite128-token terminal-only budget may render the already-generated full text. Must compare actual full waveform/independent ASR with fixed inputs/voice/weights. It may increase terminal processing time; it does not claim realtime throughput, silence policy or delegation is fixed.",
+  "hypothesis_not_yet_native_proven": "Native4-condition probe complete: no decoded-PCM or fidelity benefit on prespecifiedTRAIN/DEVcases; naturalEOSat25tokens despite128budget. Hypothesis not supported on these cases. Do not adopt or claim all failures explained.",
   "implementation": "portable/venus/terminal_speech.py (opt-in, not installed in live app)",
   "fixture_tests": 6,
-  "gpu_model_runs_for_fix": 0,
+  "gpu_model_runs_for_fix": 1,
   "new_optimizer_updates": 0,
   "external_api_calls": 0,
-  "adopted": false
+  "adopted": false,
+  "native_probe_status": "COMPLETE4_NO_BENEFIT_REJECT_EXPERIMENT",
+  "native_review": "docs/NATIVE-VENUS-TERMINAL-RENDER-REVIEW-2026-10-29.json",
+  "failed_caller_attempt_preserved": true
 }
