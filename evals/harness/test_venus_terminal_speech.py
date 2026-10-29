@@ -36,3 +36,17 @@ def test_first_nonfinal_chunk_and_existing_nonstandard_budget_stay_unchanged():
 def test_budget_cannot_be_unbounded_or_inferred(budget):
     d,_,_=fixture()
     with pytest.raises(ValueError):install(d,budget)
+
+
+def test_probe_calls_the_actual_native_frame_interface_without_teacher_feedback():
+    import inspect
+    from portable.venus.native_app import NativeEngine
+    from training.venus.terminal_speech_probe import native_frame
+    calls=[]
+    class Engine:
+        def step(self,pcm,feedback):
+            inspect.signature(NativeEngine.step).bind(self,pcm,feedback)
+            calls.append((pcm,feedback))
+            return {'actual_interface':True}
+    assert native_frame(Engine(),b'one-native-frame')=={'actual_interface':True}
+    assert calls==[(b'one-native-frame',None)]

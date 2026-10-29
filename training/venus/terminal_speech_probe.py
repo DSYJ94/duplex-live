@@ -6,6 +6,10 @@ from pathlib import Path
 def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
 
 
+def native_frame(engine,pcm):
+    return engine.step(pcm,None)
+
+
 def main(a):
     import numpy as np,soundfile as sf,torch
     from scipy.signal import resample_poly
@@ -45,7 +49,7 @@ def main(a):
             with wave.open(str(timeline_root/scene['id']/'user.wav')) as w:pcm=w.readframes(w.getnframes())
             traces=[];audio=[];terminal=False;began=time.monotonic()
             for index in range(scene['frames']):
-                ensure_guard();result=engine.step(pcm[index*32000:(index+1)*32000]);encoded=result.pop('audio')
+                ensure_guard();result=native_frame(engine,pcm[index*32000:(index+1)*32000]);encoded=result.pop('audio')
                 samples=np.zeros(result['audio_samples'],dtype=np.float32) if result.get('wire_silence_omitted') else np.frombuffer(base64.b64decode(encoded),dtype='<f4')
                 assert np.isfinite(samples).all() and len(samples)==result['audio_samples']
                 sf.write(folder/f'chunk-{index:03d}.wav',samples,24000,subtype='FLOAT');audio.append(samples);traces.append(dict(result,sequence=index))

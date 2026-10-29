@@ -22,7 +22,7 @@ PRIOR_USD=91.98448055555555
 
 
 def resource(lease):
-    if lease.get("resource_key") in ("venus-adaptive-v34","venus-adaptive-v35","venus-adaptive-v36","venus-adaptive-v37","venus-adaptive-v38","venus-terminal-render-v39"):
+    if lease.get("resource_key") in ("venus-adaptive-v34","venus-adaptive-v35","venus-adaptive-v36","venus-adaptive-v37","venus-adaptive-v38","venus-terminal-render-v39","venus-terminal-render-v40"):
         from training.venus.adaptive_guard import resource as adaptive_resource
         return adaptive_resource(lease)
     if lease.get('resource_key') in ('venus-paced-continuation-v22','venus-paced-continuation-v23','venus-paced-recovery-v24','venus-paced-recovery-v25','venus-paced-recovery-v26','venus-paced-recovery-v27','venus-paced-recovery-v28','venus-paced-recovery-v29','venus-paced-recovery-v30','venus-paced-recovery-v31','venus-paced-recovery-v32','venus-paced-recovery-v33'):
@@ -130,7 +130,7 @@ def provider_snapshot(binding,key):
 
 
 def validate(vm,instances,runpods,lease,now):
-    if lease.get("resource_key") in ("venus-adaptive-v34","venus-adaptive-v35","venus-adaptive-v36","venus-adaptive-v37","venus-adaptive-v38","venus-terminal-render-v39"):
+    if lease.get("resource_key") in ("venus-adaptive-v34","venus-adaptive-v35","venus-adaptive-v36","venus-adaptive-v37","venus-adaptive-v38","venus-terminal-render-v39","venus-terminal-render-v40"):
         from training.venus.adaptive_guard import validate as adaptive_validate
         return adaptive_validate(vm,instances,runpods,lease,now)
     if lease.get('resource_key') in ('venus-paced-continuation-v22','venus-paced-continuation-v23','venus-paced-recovery-v24','venus-paced-recovery-v25','venus-paced-recovery-v26','venus-paced-recovery-v27','venus-paced-recovery-v28','venus-paced-recovery-v29','venus-paced-recovery-v30','venus-paced-recovery-v31','venus-paced-recovery-v32','venus-paced-recovery-v33'):
@@ -237,7 +237,7 @@ def mac(args):
     authority=b['authority'].read_bytes()
     a=json.loads(authority)
     expected='APPROVED_WITHIN_EXISTING_TRAINING_SCOPE' if lease.get('resource_key') in ('venus-memory-v11','venus-recovery-v13','venus-behavior-v14') else 'APPROVED'
-    maximum=70 if lease.get('resource_key') in ('venus-adaptive-v34','venus-adaptive-v35','venus-adaptive-v36','venus-adaptive-v37','venus-adaptive-v38','venus-terminal-render-v39','venus-paced-recovery-v29','venus-paced-recovery-v30','venus-paced-recovery-v31','venus-paced-recovery-v32','venus-paced-recovery-v33') else 40 if lease.get('resource_key') in ('venus-focused-audit-v15','venus-voice-reference-v16','venus-voice-reference-v17','venus-voice-reference-v18','venus-cadence-qualify-v19','venus-cadence-qualify-v20','venus-cadence-qualify-v21','venus-paced-continuation-v22','venus-paced-continuation-v23','venus-paced-recovery-v24','venus-paced-recovery-v25','venus-paced-recovery-v26','venus-paced-recovery-v27','venus-paced-recovery-v28','venus-paced-recovery-v29','venus-paced-recovery-v30','venus-paced-recovery-v31','venus-paced-recovery-v32','venus-paced-recovery-v33') else 35
+    maximum=70 if lease.get('resource_key') in ('venus-adaptive-v34','venus-adaptive-v35','venus-adaptive-v36','venus-adaptive-v37','venus-adaptive-v38','venus-terminal-render-v39','venus-terminal-render-v40','venus-paced-recovery-v29','venus-paced-recovery-v30','venus-paced-recovery-v31','venus-paced-recovery-v32','venus-paced-recovery-v33') else 40 if lease.get('resource_key') in ('venus-focused-audit-v15','venus-voice-reference-v16','venus-voice-reference-v17','venus-voice-reference-v18','venus-cadence-qualify-v19','venus-cadence-qualify-v20','venus-cadence-qualify-v21','venus-paced-continuation-v22','venus-paced-continuation-v23','venus-paced-recovery-v24','venus-paced-recovery-v25','venus-paced-recovery-v26','venus-paced-recovery-v27','venus-paced-recovery-v28','venus-paced-recovery-v29','venus-paced-recovery-v30','venus-paced-recovery-v31','venus-paced-recovery-v32','venus-paced-recovery-v33') else 35
     assert a['status']==expected and a['maximum_additional_gcp_usage_usd']==maximum
     assert lease['authorization_sha256']==hashlib.sha256(authority).hexdigest()
     ssh=json.loads(Path(args.ssh_argv).read_text())
@@ -254,7 +254,7 @@ def mac(args):
             vm,disk,instances,pods,snapshot_start=provider_snapshot(b,key)
             if vm['status']=='TERMINATED':return
             assert str(disk['id'])==b['disk']
-            if lease.get('resource_key') in ('venus-adaptive-v34','venus-adaptive-v35','venus-adaptive-v36','venus-adaptive-v37','venus-adaptive-v38','venus-terminal-render-v39','us-a10040','venus-training-v1','venus-native-gradient-v8','venus-memory-v11','venus-recovery-v13','venus-behavior-v14','venus-focused-audit-v15','venus-voice-reference-v16','venus-voice-reference-v17','venus-voice-reference-v18','venus-cadence-qualify-v19','venus-cadence-qualify-v20','venus-cadence-qualify-v21','venus-paced-continuation-v22','venus-paced-continuation-v23','venus-paced-recovery-v24','venus-paced-recovery-v25','venus-paced-recovery-v26','venus-paced-recovery-v27','venus-paced-recovery-v28','venus-paced-recovery-v29','venus-paced-recovery-v30','venus-paced-recovery-v31','venus-paced-recovery-v32','venus-paced-recovery-v33'):
+            if lease.get('resource_key') in ('venus-adaptive-v34','venus-adaptive-v35','venus-adaptive-v36','venus-adaptive-v37','venus-adaptive-v38','venus-terminal-render-v39','venus-terminal-render-v40','us-a10040','venus-training-v1','venus-native-gradient-v8','venus-memory-v11','venus-recovery-v13','venus-behavior-v14','venus-focused-audit-v15','venus-voice-reference-v16','venus-voice-reference-v17','venus-voice-reference-v18','venus-cadence-qualify-v19','venus-cadence-qualify-v20','venus-cadence-qualify-v21','venus-paced-continuation-v22','venus-paced-continuation-v23','venus-paced-recovery-v24','venus-paced-recovery-v25','venus-paced-recovery-v26','venus-paced-recovery-v27','venus-paced-recovery-v28','venus-paced-recovery-v29','venus-paced-recovery-v30','venus-paced-recovery-v31','venus-paced-recovery-v32','venus-paced-recovery-v33'):
                 assert int(disk['sizeGb'])==100
             pods=pods.get('pods',[]) if isinstance(pods,dict) else pods
             end=validate(vm,instances,pods,lease,time.time())
