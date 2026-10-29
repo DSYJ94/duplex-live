@@ -1,3 +1,13 @@
+# LOCAL — Native terminal-render probe39 RUNNING; ZERO training, observe same job
+
+2026-10-29T14:26:43.923484+00:00. Actualallocationproducer ae747d86ca4c842d0d84233f709a482c66e1f82e, launchd com.aurium.duplex.terminal39/controllerPID97941. Log runs/venus-training-20261029/terminal-render-v39-controller.log. Operation operation-1793283878716-65efb709282f2-0cea444e-a61e3c55; SAMEA10040/SAME100GBdisk4375908109499109167/us-central1-a; actualVM4626264501959715272/name duplex-venus-adaptive-20261029-v34 started14:25:13.110UTC, native1200sSTOP14:45:13.110UTC. Bothguardslive14:25:52.772UTC/Mac98617. Actualunitduplex-venus-terminal-render-v39 PID1289/invocation6e3c9f697ddf440d8a3161358c963ff6 started14:26:03UTC. No duplicate/restart afterobservationtimeout. Previous36/37/38completedone-shotMacregistrationsremoved, logsretained.
+
+ThisisONLY4-conditionfirst-utterancerenderdiagnostic: saved244/George/releasedTTS/samepreselectedTRAIN0126+DEV0183/26vs128finalaudiotokenbudget. Noowner/HOLDOUT, optimization/API/newdata/teacherforcedwords; defaultliveappunchanged. Model298full64REJECTED, backup14837files8302570216B allSHAalreadyverifiedv38, oldmodel/outcomespreserved. Runtimehypothesis notyetnativeproved/adopted. NativeASRfullwaves/latencyall4required, no subsetqualification. Atmost22300prior+1200=23500<32800focused, original54451carried,70USDphaseunchanged;10500remainingbeforeprobe/9300unreservedaftermaxreservation. No newoptimizerphaseauthorizedaftercompleted54updates.
+
+NextobserveSAMEactualunit; whencompleteprobe.json inspectallpairs/preservedwaveforms, requirematchinggeneratedtext beforecausalrenderclaim. ThenfullhashcopybackandactualSTOP; don'tclaimlivevoice/behavior/throughputfixfromthisdiagnostic. Guards/caps/exclusionsunchanged. Source/data/backupdetailsinpreviousentry. PreserveunrelatedPYC/probes/roadmap/proposals. No agents/otherchats/newheartbeat/archive. Fullproductgoalunfinished.
+
+---
+
 # LOCAL — Adaptive54/full64 COMPLETE and REJECTED; fullbackup verified/GPU STOP; finite rendering fix prepared
 
 2026-10-29T14:23:39.045508+00:00. Actualtraining244→298/54newupdates/one216TRAINepoch complete; checkpoint e7340edd15537523db78120a97902399faa0af9caa46e875ec92e56889d6edef, allfourAdamcounters298/program1 stored, critical53filebackupPASS. Full52DEVmean-5.8085percent butordinary+.6551/quiet+4.9737. Actualfull64generation hadalreadyfinishedbeforev36networkSTOP,38/64ASR preserved. v38source172e4be0ec56d54ef04463545facb15f6b542f05 reusedALL64 verifiedcases/38ASR, ranonly26missingASR, noNative9Bload/newoptimizer. Actualunit1303/invocation8166e8fccbdf4bcd84014692e0444f8d terminal0 at13:59:06.525UTC. NewderivedGPUadaptive-native-paired-v37; originalv34immutable. Word/peak/normalizers unchanged.
