@@ -21,3 +21,16 @@ def test_second_gpu_or_paid_runpod_is_rejected():
     vm,lease,start=fixture()
     with pytest.raises(AssertionError):validate(vm,[vm,dict(vm,id='other')],[],lease,start+1)
     with pytest.raises(AssertionError):validate(vm,[vm],[{'status':'RUNNING'}],lease,start+1)
+
+
+def test_recovery_carries_actual_closed_startup_and_only_uses_remaining_seconds():
+    from training.venus.adaptive_guard import RECOVERY_KEY,RECOVERY_PLAN
+    p=json.loads(RECOVERY_PLAN.read_text());vm,lease,_=fixture()
+    start=datetime.fromisoformat('2026-10-29T12:00:00+00:00').timestamp()
+    duration=p['maximum_gpu_seconds']
+    vm.update(lastStartTimestamp='2026-10-29T12:00:00Z',creationTimestamp='2026-10-29T11:59:55Z')
+    vm['scheduling']['maxRunDuration']['seconds']=str(duration)
+    lease.update(resource_key=RECOVERY_KEY,creation_timestamp=vm['creationTimestamp'],stop_unix=start+duration,
+                 prior_new_gpu_seconds_upper=p['focused_gpu_seconds_upper_before_launch'],execution_plan_sha256=hashlib.sha256(RECOVERY_PLAN.read_bytes()).hexdigest())
+    assert validate(vm,[vm],[],lease,start+1)==start+duration
+    with pytest.raises(AssertionError):validate(vm,[vm],[],dict(lease,prior_new_gpu_seconds_upper=18400),start+1)
