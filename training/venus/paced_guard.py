@@ -18,7 +18,11 @@ PLAN_V33=Path('docs/NATIVE-VENUS-REMAINING-PROFILE-EXECUTION-2026-10-29.json')
 REOPEN_AUTH=Path('docs/NATIVE-VENUS-OWNER-LIVE-REOPEN-AUTHORIZATION-2026-10-28.json')
 LIVE_AUTH=Path('docs/NATIVE-VENUS-LIVE-TIME-EXTENSION-AUTHORIZATION-2026-10-28.json')
 
-def execution_plan(lease):return PLAN_V33 if lease.get('resource_key')=='venus-paced-recovery-v33' else PLAN_V32 if lease.get('resource_key')=='venus-paced-recovery-v32' else PLAN_V31 if lease.get('resource_key')=='venus-paced-recovery-v31' else PLAN_V30 if lease.get('resource_key')=='venus-paced-recovery-v30' else PLAN_V29 if lease.get('resource_key')=='venus-paced-recovery-v29' else PLAN_V28 if lease.get('resource_key')=='venus-paced-recovery-v28' else PLAN_V27 if lease.get('resource_key')=='venus-paced-recovery-v27' else PLAN_V26 if lease.get('resource_key')=='venus-paced-recovery-v26' else PLAN_V25 if lease.get('resource_key')=='venus-paced-recovery-v25' else PLAN_V24 if lease.get('resource_key')=='venus-paced-recovery-v24' else PLAN_V23 if lease.get('resource_key')=='venus-paced-continuation-v23' else PLAN
+def execution_plan(lease):
+    if lease.get('resource_key')=='venus-adaptive-v34':
+        from .adaptive_guard import PLAN as adaptive_plan
+        return adaptive_plan
+    return PLAN_V33 if lease.get('resource_key')=='venus-paced-recovery-v33' else PLAN_V32 if lease.get('resource_key')=='venus-paced-recovery-v32' else PLAN_V31 if lease.get('resource_key')=='venus-paced-recovery-v31' else PLAN_V30 if lease.get('resource_key')=='venus-paced-recovery-v30' else PLAN_V29 if lease.get('resource_key')=='venus-paced-recovery-v29' else PLAN_V28 if lease.get('resource_key')=='venus-paced-recovery-v28' else PLAN_V27 if lease.get('resource_key')=='venus-paced-recovery-v27' else PLAN_V26 if lease.get('resource_key')=='venus-paced-recovery-v26' else PLAN_V25 if lease.get('resource_key')=='venus-paced-recovery-v25' else PLAN_V24 if lease.get('resource_key')=='venus-paced-recovery-v24' else PLAN_V23 if lease.get('resource_key')=='venus-paced-continuation-v23' else PLAN
 
 def resource(lease):
     path=execution_plan(lease);authority=REOPEN_AUTH if lease.get('resource_key') in ('venus-paced-recovery-v32','venus-paced-recovery-v33') else LIVE_AUTH if lease.get('resource_key') in ('venus-paced-recovery-v29','venus-paced-recovery-v30','venus-paced-recovery-v31','venus-paced-recovery-v32','venus-paced-recovery-v33') else AUTH

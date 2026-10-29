@@ -37,7 +37,7 @@ def websocket_probe(url):
                 behavioral_approval=False)
 
 
-def serve(controller, python_command, end, unit_prefix, *, port=8037,unused_timeout=300,idle_timeout=90,voice_reference=None,voice_reference_sha256=None,benchmark_only=False):
+def serve(controller, python_command, end, unit_prefix, *, port=8037,unused_timeout=300,idle_timeout=90,voice_reference=None,voice_reference_sha256=None,benchmark_only=False,tts_attention='released',benchmark_dir='latency-benchmark'):
     if not 90<=idle_timeout<=300 or not 300<=unused_timeout<=1800:
         raise ValueError("Bounded live waiting windows required")
     if bool(voice_reference)!=bool(voice_reference_sha256):raise ValueError('Exact custom reference hash required')
@@ -46,6 +46,7 @@ def serve(controller, python_command, end, unit_prefix, *, port=8037,unused_time
     checkpoint = c.OUT + '/paced-candidate-v25/step-0054.pt'
     command = python_command + ' -u -m portable.venus.native_app --model-dir ' + c.MODEL
     command += ' --adapter-checkpoint ' + checkpoint + ' --compare-foundation --port ' + str(port)
+    command+=' --tts-attention '+shlex.quote(tts_attention)
     if voice_reference:command+=' --voice-reference '+shlex.quote(voice_reference)+' --voice-reference-sha256 '+voice_reference_sha256
     c.start_unit(unit, command, max(1, int(end-time.time()-180)))
     # Options precede the host. Existing strict host keys/OSLogin/IAP are reused.
@@ -87,10 +88,10 @@ def serve(controller, python_command, end, unit_prefix, *, port=8037,unused_time
                 (c.R/'native-websocket-proof.json').write_text(json.dumps(proof,indent=2)+'\n')
                 if benchmark_only:
                     c.record('native_benchmark_service_ready',reference_sha256=health['voice_reference']['sha256'])
-                    target=c.R/'latency-benchmark'
-                    budget=min(120,int(end-time.time()-180))
+                    target=c.R/benchmark_dir
+                    budget=min(300,int(end-time.time()-180))
                     if budget<60:raise TimeoutError('Preserve complete benchmark and backup reserve')
-                    with (c.R/'latency-benchmark.log').open('x') as log:
+                    with (c.R/(benchmark_dir+'.log')).open('x') as log:
                         result=subprocess.run([sys.executable,'-u','-m','evals.venus_stream_benchmark','--url',url,'--output',str(target),'--save-synthetic-audio'],stdout=log,stderr=subprocess.STDOUT,timeout=budget)
                     if result.returncode:raise RuntimeError('Actual native latency benchmark failed; preserve logs')
                     measured=json.loads((target/'timings.json').read_text());assert measured['complete'] and len(measured['profiles'])==2 and len(measured['frames'])==22

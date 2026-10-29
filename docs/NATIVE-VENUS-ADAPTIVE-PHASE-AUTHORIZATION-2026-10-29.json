@@ -1,0 +1,142 @@
+{
+  "schema": "dl-native-adaptive-phase-authorization-v1",
+  "status": "APPROVED",
+  "recorded_utc": "2026-10-29T10:48:35.000876+00:00",
+  "human_approval": "Approve four hours; keep $70 cap",
+  "approval_source": "Direct human answer to the exact consolidated four-hour continuation question in this LOCAL chat",
+  "parent_proposal": "docs/NATIVE-VENUS-ADAPTIVE-PHASE-PROPOSAL-2026-10-29.json",
+  "parent_proposal_sha256": "fd50d289f7da591b3f66fce2532438eda5bf39104441512b3074edb69e2819d5",
+  "maximum_additional_gcp_usage_usd": 70,
+  "maximum_next_gpu_seconds": 14400,
+  "focused_gpu_seconds_upper_before_launch": 18400,
+  "maximum_focused_gpu_seconds": 32800,
+  "prior_scopes_gpu_seconds_upper": 54451,
+  "maximum_cumulative_gpu_seconds": 87251,
+  "prior_scope_cost_upper_usd": 91.98448055555555,
+  "maximum_cumulative_cost_usd": 175,
+  "new_external_api_calls": 0,
+  "new_synthesis_calls": 0,
+  "new_purchases": false,
+  "maximum_candidate_updates": 54,
+  "maximum_complete_epochs": 1,
+  "parent_checkpoint_sha256": "c634e6cf38831210be0165ce7f6dd09c5454226f62ff622477fd4d051abde270",
+  "resources": {
+    "provider": "GCP",
+    "project": "aurium-duplex-live-20261024",
+    "maximum_concurrent_gpus": 1,
+    "gpu": "A10040GB/a2-highgpu-1g",
+    "zone": "us-central1-a",
+    "same_existing_disk_id": "4375908109499109167",
+    "same_existing_disk_name": "duplex-venus-train-20261026-v1",
+    "same_disk_gib": 100,
+    "new_disk_or_region": false,
+    "new_quota_api_iam_firewall": false,
+    "existing_iap_and_strict_ssh": true,
+    "provider_stop_and_two_independent_guards": true,
+    "prior_intervals_never_reset": true,
+    "stop_billed_compute_during_access_or_human_blocker": true
+  },
+  "proposal_scope": {
+    "schema": "dl-native-adaptive-phase-proposal-v1",
+    "status": "AWAITING_EXPLICIT_GPU_TIME_EXTENSION",
+    "recorded_utc": "2026-10-29T00:45:14.800164+00:00",
+    "purpose": "Use the measured runtime diagnosis and continual OPAL data-versus-recipe reviews to complete one nonredundant native training phase and full evaluation from saved244.",
+    "authority_delta": "The current allowance caps focused GPU time at18600 seconds, with18400 consumed conservatively. This proposal increases time only, broadens the current live-only execution to the previously requested training work, and retains the existing70USD phase cap. It does not authorize purchases.",
+    "previous_state": {
+      "vm_id": "4165197048314802237",
+      "vm_status": "TERMINATED",
+      "actual_start_utc": "2026-10-29T00:10:24.763Z",
+      "actual_stop_utc": "2026-10-29T00:16:08.965Z",
+      "actual_gpu_seconds": 344.202,
+      "charged_upper_seconds": 400,
+      "focused_prior_seconds_upper": 18400,
+      "original_scope_seconds_carried": 54451,
+      "full_backup_files": 11526,
+      "full_backup_bytes": 7775057757,
+      "all_hashes_verified": true
+    },
+    "limits": {
+      "maximum_next_gpu_seconds": 14400,
+      "maximum_focused_gpu_seconds_after": 32800,
+      "maximum_cumulative_gpu_seconds_after": 87251,
+      "unchanged_phase_cost_cap_usd": 70,
+      "unchanged_cumulative_cost_cap_usd": 175,
+      "conservative_gpu_hourly_rate_usd": 4,
+      "conservative_phase_total_with_reserves_usd": 60.44444444444444,
+      "conservative_cumulative_total_with_reserves_usd": 152.428925,
+      "new_external_api_calls": 0,
+      "new_synthesis_calls": 0,
+      "new_purchases": false,
+      "maximum_concurrent_gpu_jobs": 1
+    },
+    "resources": {
+      "project": "aurium-duplex-live-20261024",
+      "zone": "us-central1-a",
+      "gpu": "one A10040GB/a2-highgpu-1g",
+      "same_non_auto_deleted_disk_id": "4375908109499109167",
+      "same_disk_gib": 100,
+      "new_disk_region_iam_api_quota_network": false,
+      "retire_only_stopped_vm_envelope": true
+    },
+    "execution": [
+      {
+        "phase": "native runtime repair",
+        "action": "Compare the explicit TTS-only SDPA path with the original eager path on fixed synthetic TRAIN/DEV inputs. Check actual words, speech and stage latency. Keep original weights/precision/reference/decoding fixed; do not adopt based on tiny CPU parity or speed alone."
+      },
+      {
+        "phase": "necessary native training check",
+        "action": "Run the prepared fixed-token conditioning probe, then actual OPAL keep and independent fresh-process Adam/program/RNG restore. The two-update independent proof is part of the new244 continuation, not a replay of190-to244."
+      },
+      {
+        "phase": "adaptive full-corpus training",
+        "action": "One complete216TRAIN epoch, maximum54 new candidate updates from244 (total298); full52DEV. Apply only justified recipe changes through OPAL with immutable program history, per-batch metrics, eight-update reviews and checkpointed diagnostic state. Preserve ordinaryKL.1/hidden.01, original histories, exact folds and frozen24HOLDOUT. No unchanged extension of a diagnosed failed recipe.",
+        "maximum_epochs": 1,
+        "maximum_candidate_updates": 54,
+        "parent_checkpoint_sha256": "c634e6cf38831210be0165ce7f6dd09c5454226f62ff622477fd4d051abde270",
+        "starting_recipe": {
+          "adapter_parameters": 851968,
+          "rank": 64,
+          "alpha": 64,
+          "last_layer": 35,
+          "projections": [
+            "q_proj",
+            "v_proj"
+          ],
+          "learning_rate": 5e-05,
+          "warmup_updates": 16,
+          "schedule": "cosine",
+          "microbatch": 1,
+          "accumulation": 4,
+          "optimizer": "AdamW",
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "epsilon": 1e-08,
+          "weight_decay": 0.01,
+          "gradient_clip": 1.0
+        }
+      },
+      {
+        "phase": "native assessment",
+        "action": "Complete fixed paired native speech/control evaluation, full ordinary retention and independent final generalization review. Compare timing, silence, interruptions, delegation protocol and naturalness. Preserve every failure; no passing subset or automatic adoption. This does not by itself prove real general reasoning-backend integration or GPT-live parity."
+      }
+    ],
+    "data_policy": "Use approved existing synthetic artifacts. If a target/coverage defect is diagnosed, prepare a new version from existing assets between phases with original words/audio/folds/receipts preserved and independently reapprove before admission. No new synthetic speech/API collection in this phase. HOLDOUT excluded from OPAL.",
+    "opal_policy": {
+      "upstream_commit": "8b16759a3e9930916ed582e28068267859f935f8",
+      "supervisor": "Current LOCAL agent; no extra paid model or Jev required",
+      "broker": "Complete actual request/reply verification before claiming adaptive changes; unconnected keep mode is not an adaptive run",
+      "causal_rule": "Distinguish data/recipe/objective/runtime; one-factor changes and matched evidence, no automatic causal label from loss.",
+      "optimizer_code_and_state_recorded": true
+    },
+    "stop_policy": [
+      "Provider-native14400s STOP plus independently live Mac and guest cost/time guards before model load. Carry all prior usage; verify current price and absence of any active GPU job.",
+      "Reserve at least3600s for native evaluation/copyback. Do not admit training unless one complete epoch plus full DEV fits measured throughput.",
+      "If prerequisite native verification fails or no complete training phase fits, stop paid compute early and preserve concrete failure evidence.",
+      "Full unique-artifact hash copyback before STOP; same disk retained. No owner conversations/credentials/private files/core dumps in transfers."
+    ],
+    "product_acceptance": "Close to GPT-live is the target, not an achieved result. Require user-relevant speech/behavior/latency and blinded voice comparisons; no paid GPT-live benchmarking API requests are included.",
+    "restart_requires": "Explicit approval of this consolidated GPU-time/training phase under the unchanged70USD cap. No new allocation has been submitted."
+  }
+}

@@ -1,23 +1,23 @@
 {
   "schema": "dl-working-model-goal-v1",
-  "status": "BLOCKED_PENDING_EXPLICIT_GPU_TIME_EXTENSION",
+  "status": "EXECUTION_RESUMED_BY_EXPLICIT_HUMAN_APPROVAL",
   "objective": "Deliver a useful native full-duplex voice product close to GPT-live as its benchmark: useful ordinary reasoning, silence/pause/interrupt behaviour, reliable asynchronous delegation and natural British speech.",
   "source_of_authority": "Owner requests continued model improvement and dynamic OPAL dataset-versus-recipe reviews. Existing $70 cap and explicit GPU-time limits remain binding; v33 used remaining previously approved time, with zero training or API calls.",
   "preferred_voice": "british-george",
   "voice_acceptance": "Source preferences guide the candidate; verify actual native speech, intelligibility, naturalness and stableaccent/identity on complete paired cases before adoption",
   "behaviour_acceptance": "No acknowledgements in required silence; pause/resume without losing content; real pending work, cancellation and receipt-grounded result use; retain ordinary reasoning",
   "training_acceptance": "Any next native OPAL continuation must restore actual244 adapter/Adam/RNG from SHA c634e6cf38831210be0165ce7f6dd09c5454226f62ff622477fd4d051abde270; preserve original190 parent, all216TRAIN/52DEV and frozen24HOLDOUT, ordinaryKL/hidden and all earlier artifacts. Do not repeat190\u2192244, extend a failed unchanged recipe, or adopt from a passing subset/loss alone.",
-  "current_blocker": "Only 200 GPU seconds remain in the explicit allowance; a consolidated time extension is required for native qualification and a complete training phase.",
+  "current_blocker": null,
   "budget": {
-    "maximum_focused_gpu_seconds": 18600,
+    "maximum_focused_gpu_seconds": 32800,
     "focused_consumed_upper_seconds": 18400,
-    "remaining_gpu_seconds": 200,
+    "remaining_gpu_seconds": 14400,
     "maximum_focused_usage_usd": 70,
     "external_api_cap_usd": 10,
     "external_api_usage_upper_usd": 9.6476125,
     "no_purchases": true,
     "no_overlap": true,
-    "cumulative_gpu_cap_seconds": 73051,
+    "cumulative_gpu_cap_seconds": 87251,
     "current_allocation_reserved_gpu_seconds": 0,
     "unreserved_gpu_seconds": 200
   },
@@ -29,7 +29,7 @@
     "Train one bounded complete-corpus continuation from244 with the diagnosed repair, preserved retention and full optimizer/code/RNG records; no repeated saved updates.",
     "Require complete paired native speech/behavior tests, independent final generalization and owner naturalness review before adopting a product model."
   ],
-  "tool_goal_note": "Goal tool returned status blocked on29Oct after the same pending GPU-time authorization persisted through three consecutive goal turns. The full GPT-live-level objective is unchanged and unfinished; this is not completion or a voluntary pause.",
+  "tool_goal_note": "Human explicitly resumed the blocked work by approving four GPU hours under the unchanged70USDcap. Goal objective is unchanged; goal API has no active/resume mutation, so execution resumes without replacing or completing the existing goal.",
   "pilot_success_evidence": {
     "behaviour": "Complete fixed native scenes: no pre-cueacknowledgement, pause/resumecontentretention, correctreceiptuse, genuinependingcancellation; unchangedfullpairedordinaryretention",
     "delegation": "Actual reasoningbackend requests/results: explicitANDimplicitcomplexityrouting, useful followupconversationwhilepending, cancellation/output-suppression and failurehandling; fixturelookup success alone insufficient",
@@ -171,5 +171,6 @@
     "paid_compute_state": "Fresh provider read confirms all5 GCP machines TERMINATED",
     "pending_proposal": "docs/NATIVE-VENUS-ADAPTIVE-PHASE-PROPOSAL-2026-10-29.json",
     "question_already_sent": true
-  }
+  },
+  "authorization": "docs/NATIVE-VENUS-ADAPTIVE-PHASE-AUTHORIZATION-2026-10-29.json"
 }

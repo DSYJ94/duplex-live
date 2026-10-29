@@ -26,15 +26,20 @@ async def main(a):
     recognized={r['source_sha256']:r for r in quality['rows']}
     assert stop-time.time()>2*sum(c['frames'] for c in cases)*1.15+450
     terminal=json.loads((Path(a.candidate)/'training-terminal.json').read_text());restore=json.loads((Path(a.candidate)/'fresh-process-restore.json').read_text());recipe=json.loads((Path(a.candidate)/'recipe.json').read_text())
-    assert terminal['completed'] and restore['passed'] and terminal['parent_training_steps']==190 and 0<terminal['actual_updates']<=512
+    base_steps=terminal['parent_training_steps']
+    assert terminal['completed'] and restore['passed'] and base_steps in (190,244) and 0<terminal['actual_updates']<=(54 if base_steps==244 else 512)
     checkpoint=Path(a.candidate)/('step-%04d.pt'%terminal['actual_updates']);assert sha(a.parent_checkpoint)==a.parent_sha256
-    parent=torch.load(a.parent_checkpoint,map_location='cpu',weights_only=False);state=torch.load(checkpoint,map_location='cpu',weights_only=False)
+    parent=torch.load(a.parent_checkpoint,map_location='cpu',weights_only=False)
+    from .native_optimizer import verified_parent
+    assert verified_parent(parent,a.parent_sha256,allow244=True)==base_steps
+    state=torch.load(checkpoint,map_location='cpu',weights_only=False)
     assert state['metadata']==recipe and state['step']==terminal['actual_updates'] and recipe['approval_sha256']==sha(a.approval)
-    out=Path(a.output);out.mkdir(exist_ok=False);engine=NativeEngine(a.model,adapter_checkpoint=checkpoint);results=[]
-    conditions=(('parent190',parent['adapter']),('paced-continuation',state['adapter']))
+    out=Path(a.output);out.mkdir(exist_ok=False);engine=NativeEngine(a.model,adapter_checkpoint=checkpoint,voice_reference=getattr(a,'voice_reference',None),voice_reference_sha256=getattr(a,'voice_reference_sha256',None),tts_attention=getattr(a,'tts_attention','released'));results=[]
+    parent_label='parent'+str(base_steps)
+    conditions=((parent_label,parent['adapter']),('paced-continuation',state['adapter']))
     for condition,adapter in conditions:
         load_adapter(engine.model.llm,adapter);root=out/condition;root.mkdir()
-        (root/'profile.json').write_text(json.dumps(dict(engine.profile,condition=condition,optimizer_updates=190 if condition=='parent190' else terminal['total_optimizer_updates'],checkpoint_sha256=sha(a.parent_checkpoint if condition=='parent190' else checkpoint),speech_weights_frozen=True,qualified=False),indent=2)+'\n')
+        (root/'profile.json').write_text(json.dumps(dict(engine.profile,condition=condition,optimizer_updates=base_steps if condition==parent_label else terminal['total_optimizer_updates'],checkpoint_sha256=sha(a.parent_checkpoint if condition==parent_label else checkpoint),speech_weights_frozen=True,qualified=False),indent=2)+'\n')
         for case in cases:
             ensure_guard();set_seed(42)
             result=await run_case(engine,case,root,stop);results.append(dict(condition=condition,evaluation_set=case['evaluation_set'],**result))
@@ -55,8 +60,8 @@ async def main(a):
         error=wer(' '.join(words(ref['intended_user_facing'])),' '.join(words(transcript)));peak=float(np.abs(audio).max()) if len(audio) else 0
         audits.append(dict(id=result['id'],condition=result['condition'],evaluation_set=result['evaluation_set'],asr_text=transcript,references=ref,user_facing_text_wer=error,raw_peak=peak,raw_peak_pass=peak<=.995,word_pass=error<=.05,joined_wav_sha256=sha(wav),source_chunks=[dict(file=t['chunk_file'],sha256=sha(folder/t['chunk_file'])) for t in traces],qualified=False))
         (out/'speech-audit-progress.json').write_text(json.dumps(dict(completed=len(audits),required=64,cases=audits),indent=2)+'\n')
-    report=dict(complete=len(results)==len(audits)==64,conditions=['parent190','paced-continuation'],fresh_cases_per_condition=24,old_ordinary_cases_per_condition=8,cases=audits,source=a.source,asr_revision=REVISION,optimizer_updates=0,seed=42,qualified=False,naturalness_requires_listening=True,semantic_and_all_control_gates_required=True,word_limit=.05,peak_limit=.995,normalizer='predeclared orthography plus cardinal0..100, no homophones')
+    report=dict(complete=len(results)==len(audits)==64,conditions=[parent_label,'paced-continuation'],fresh_cases_per_condition=24,old_ordinary_cases_per_condition=8,cases=audits,source=a.source,asr_revision=REVISION,optimizer_updates=0,seed=42,qualified=False,naturalness_requires_listening=True,semantic_and_all_control_gates_required=True,word_limit=.05,peak_limit=.995,normalizer='predeclared orthography plus cardinal0..100, no homophones')
     (out/'paired-native-report.json').write_text(json.dumps(report,indent=2)+'\n');assert report['complete']
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();[p.add_argument('--'+x,required=True) for x in ('model','candidate','parent-checkpoint','parent-sha256','plan','timelines','approval','word-quality','old-plan','old-timelines','old-approval','output','source','lease')];asyncio.run(main(p.parse_args()))
+    p=argparse.ArgumentParser();[p.add_argument('--'+x,required=True) for x in ('model','candidate','parent-checkpoint','parent-sha256','plan','timelines','approval','word-quality','old-plan','old-timelines','old-approval','output','source','lease')];p.add_argument('--tts-attention',choices=['released','sdpa'],default='released');p.add_argument('--voice-reference');p.add_argument('--voice-reference-sha256');asyncio.run(main(p.parse_args()))

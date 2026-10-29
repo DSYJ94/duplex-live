@@ -25,7 +25,8 @@ def load_candidate(llm, checkpoint):
     load_adapter(llm, state['adapter'])  # Exact parameter names and shapes.
     llm.requires_grad_(False)
     parent_steps=metadata.get('parent_training_steps',0)
-    if parent_steps and (parent_steps!=190 or metadata.get('parent_checkpoint_sha256')!='10354f93ec2b5e224ae7298b2f3b8687f9dc74d2fbf87c1db62bd79763155b63'):
+    parents={190:'10354f93ec2b5e224ae7298b2f3b8687f9dc74d2fbf87c1db62bd79763155b63',244:'c634e6cf38831210be0165ce7f6dd09c5454226f62ff622477fd4d051abde270'}
+    if parent_steps and (parent_steps not in parents or metadata.get('parent_checkpoint_sha256')!=parents[parent_steps]):
         raise ValueError('Unknown parent lineage')
     return dict(checkpoint_sha256=hashlib.sha256(path.read_bytes()).hexdigest(),
         optimizer_updates=parent_steps+step, current_round_updates=step, parent_training_steps=parent_steps,planned_updates=parent_steps+recipe['updates'], adapter=spec,

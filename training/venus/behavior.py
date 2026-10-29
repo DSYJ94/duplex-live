@@ -58,7 +58,9 @@ async def run_case(engine,case,out,stop_unix,pace=True):
                 await asyncio.sleep(0)  # Let actual workers begin/complete; no oracle dispatch.
                 new_events=list(worker.events);worker.events.clear();events.extend(new_events)
                 seen_started.update(e['work_id'] for e in new_events if e['type']=='worker_started')
-                audio=np.frombuffer(base64.b64decode(last.pop('audio')),dtype='<f4');assert np.isfinite(audio).all()
+                encoded=last.pop('audio')
+                audio=np.zeros(last['audio_samples'],dtype=np.float32) if last.get('wire_silence_omitted') else np.frombuffer(base64.b64decode(encoded),dtype='<f4')
+                assert len(audio)==last['audio_samples'] and np.isfinite(audio).all()
                 sf.write(folder/f'chunk-{frame:03d}.wav',audio,24000,subtype='FLOAT')
                 audio_frames.append(dict(frame=frame,samples=len(audio),peak=last['peak']))
                 trace.write(json.dumps(dict(last,sequence=frame,events=new_events,input_sha256=hashlib.sha256(raw).hexdigest(),wall_since_start=time.monotonic()-origin,chunk_file=f'chunk-{frame:03d}.wav'))+'\n');trace.flush()
