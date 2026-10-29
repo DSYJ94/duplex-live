@@ -53,3 +53,17 @@ def test_completed_orphan_is_reused_after_aggregate_write_interruption(tmp_path)
     root,case,folder=fixture(tmp_path);case['evaluation_set']='fresh24'
     (root/'results.json').write_text(json.dumps(dict(required_cases=64,cases=[])))
     assert list(completed_cases(root,[case],['parent244']))==[('parent244','case')]
+
+
+def test_provider_read_timing_tolerates_slow_fresh_read_without_extending_lease(monkeypatch):
+    import subprocess
+    from portable.venus import guard
+    limits=[]
+    def slow_read(*args,timeout):
+        limits.append(timeout)
+        if timeout<17:raise subprocess.TimeoutExpired('gcloud',timeout)
+        return {'fresh':True}
+    monkeypatch.setattr(guard,'cloud',slow_read)
+    with pytest.raises(subprocess.TimeoutExpired):guard.bounded_cloud_read('instances','list')
+    assert guard.bounded_cloud_read('instances','list',limits=(25,20))=={'fresh':True}
+    with pytest.raises(ValueError):guard.bounded_cloud_read('instances','list',limits=(60,60))

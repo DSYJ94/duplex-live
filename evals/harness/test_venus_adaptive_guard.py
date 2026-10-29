@@ -58,3 +58,14 @@ def test_evaluation_recovery_carries_all_intervals_and_allows_zero_new_updates()
     assert p['new_optimizer_updates_authorized_by_this_execution']==0
     assert validate(vm,[vm],[],lease,start+1)==start+11300
     with pytest.raises(AssertionError):validate(vm,[vm],[],dict(lease,prior_new_gpu_seconds_upper=19100),start+1)
+
+
+def test_transport_recovery_is_zero_update_and_keeps_total_gpu_cap():
+    from training.venus.adaptive_guard import EVAL_RETRY_KEY,EVAL_RETRY_PLAN
+    p=json.loads(EVAL_RETRY_PLAN.read_text());vm,lease,_=fixture()
+    start=datetime.fromisoformat('2026-10-29T14:00:00+00:00').timestamp()
+    vm.update(lastStartTimestamp='2026-10-29T14:00:00Z',creationTimestamp='2026-10-29T13:59:55Z')
+    vm['scheduling']['maxRunDuration']['seconds']='11000'
+    lease.update(resource_key=EVAL_RETRY_KEY,creation_timestamp=vm['creationTimestamp'],stop_unix=start+11000,prior_new_gpu_seconds_upper=21800,execution_plan_sha256=hashlib.sha256(EVAL_RETRY_PLAN.read_bytes()).hexdigest())
+    assert p['new_optimizer_updates_authorized_by_this_execution']==0 and 21800+11000==32800
+    assert validate(vm,[vm],[],lease,start+1)==start+11000
