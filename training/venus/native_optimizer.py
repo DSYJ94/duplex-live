@@ -4,8 +4,10 @@ No service/model calls are made here. Keep mode is the default. The training
 recipe, data, loss, update admission and final evaluation stay with train.py.
 """
 import math
+import json,copy
+from pathlib import Path
 import torch
-from .opal_adapter import Options, wrap, checkpoint_manifest, log_development
+from .opal_adapter import Options, wrap, checkpoint_manifest, log_development,log_observation
 from .state import exact_state
 
 
@@ -26,6 +28,8 @@ class NativeOpal:
                  goal='Improve native duplex control and ordinary retention; full native speech and behavior decide acceptance'):
         if recipe['updates'] <= recipe['warmup_updates']:
             raise ValueError('Native OPAL requires the admitted full schedule beyond warmup')
+        self.run_dir=Path(run_dir)
+        self.diagnostics_state=dict(train_ce=None,dev_ce=None,last_review_step=0)
         self.base=base
         for group in base.param_groups:
             group['lr']=group['initial_lr']=recipe['learning_rate']
@@ -50,6 +54,23 @@ class NativeOpal:
 
     def development(self,values):
         log_development(self.optimizer,{'dev_'+family+'_ce':value for family,value in values.items()},fold='DEV')
+
+    def training_batch(self,groups):
+        from .diagnostics import flatten
+        log_observation(self.optimizer,flatten(groups,'train_batch'),fold='TRAIN')
+
+    def diagnose(self,rows,step,*,dev=None,data_coverage=None):
+        from .diagnostics import review
+        packet,self.diagnostics_state=review(rows,step,self.diagnostics_state,dev=dev,data_coverage=data_coverage)
+        log_observation(self.optimizer,packet['agent_metrics'],fold='DEV' if dev else 'TRAIN')
+        folder=self.run_dir/'diagnostics';folder.mkdir(parents=True,exist_ok=True)
+        path=folder/(f"step-{step:04d}-"+('dev' if dev else 'train')+'.json')
+        with path.open('x') as stream:json.dump(packet,stream,indent=2)
+        return packet
+
+    def restore_diagnostics(self,state):
+        if set(state)!={'train_ce','dev_ce','last_review_step'}:raise ValueError('Exact diagnostic state required')
+        self.diagnostics_state=copy.deepcopy(state)
 
     def close(self):
         if not self._closed:

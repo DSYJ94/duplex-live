@@ -85,6 +85,9 @@ def train_step(llm,opt,cache,batch,step,update=True,control=None,opal=None):
         norm=gradient_norm(params)
     else:norm=torch.nn.utils.clip_grad_norm_(params,clip)
     if not torch.isfinite(norm) or norm<=0:raise ValueError('No meaningful finite native gradient')
+    from .diagnostics import aggregate
+    family_metrics=aggregate([(row['family'],parts,1) for row,parts in zip(batch,metrics)])
+    if opal and update:opal.training_batch(family_metrics)
     program=None
     if update:
         if opal:program=opal.step(torch.stack(losses).mean(),step)
@@ -93,20 +96,23 @@ def train_step(llm,opt,cache,batch,step,update=True,control=None,opal=None):
     result=dict(step=step+1,optimizer_updated=update,seconds=time.monotonic()-before,peak_gpu_bytes=torch.cuda.max_memory_allocated(),gradient_norm=float(norm),lr=rate_before,
         lr_multiplier=multiplier,gradient_clip=clip,
         ce=sum(x['ce'] for x in metrics)/len(metrics),kl=sum(x['kl'] for x in metrics)/len(metrics),hidden=sum(x['hidden'] for x in metrics)/len(metrics),offloaded_bytes=sum(x['offloaded_bytes'] for x in metrics),
-        ids=[r['id'] for r in batch],families=[r['family'] for r in batch])
+        ids=[r['id'] for r in batch],families=[r['family'] for r in batch],family_train_metrics=family_metrics)
     if opal:
+        if program and program['program_version']>0:result.update(gradient_clip=None,lr_multiplier=None,starting_recipe_gradient_clip=clip)
         result.update(opal=program,optimizer_owner='upstream-opal',lr_after_scheduler=float(opt.param_groups[0]['lr']),lr_report_scope='before OPAL step; updater program is authoritative if it changes LR',objective=float(torch.stack(losses).mean()))
     return result
 
 
-def dev_loss(llm,cache,rows):
-    groups=defaultdict(list)
+def dev_loss(llm,cache,rows,with_details=False):
+    from .diagnostics import aggregate
+    measured=[]
     with torch.no_grad():
         for row in rows:
             if row['fold']=='DEV':
-                _,parts=scene_loss(llm,read_example(cache,row),'cuda');groups[row['family']].append(parts['ce'])
-    assert sum(map(len,groups.values()))==RECIPE.get('dev_count',36)
-    return {k:sum(v)/len(v) for k,v in groups.items()}
+                _,parts=scene_loss(llm,read_example(cache,row),'cuda');measured.append((row['family'],parts,1))
+    assert len(measured)==RECIPE.get('dev_count',36)
+    details=aggregate(measured);values={k:v['ce'] for k,v in details.items()}
+    return dict(ce=values,per_family=details) if with_details else values
 
 
 def assert_deadline(path,seconds_needed=0):
@@ -120,12 +126,14 @@ def assert_deadline(path,seconds_needed=0):
 def admit_epochs(step_seconds,dev_seconds,available_seconds):
     """Throughput only: no loss/holdout selection, no omitted TRAIN scenes."""
     count=RECIPE.get('train_count',152);steps=count//4
-    for epochs in range(8,0,-1):
-        required=steps*epochs*step_seconds*1.35+((epochs+1)//2)*dev_seconds*1.25+RECIPE.get('post_training_reserve_seconds',600)
+    maximum=RECIPE.get('maximum_complete_epochs',8)
+    if type(maximum) is not int or not 1<=maximum<=8:raise ValueError('Explicit complete-epoch limit must be between one and eight')
+    for epochs in range(maximum,0,-1):
+        required=steps*epochs*step_seconds*1.35+(epochs if RECIPE.get('opal') else (epochs+1)//2)*dev_seconds*1.25+RECIPE.get('post_training_reserve_seconds',600)
         if required<available_seconds:
             return dict(epochs=epochs,updates=steps*epochs,benchmark_step_seconds=step_seconds,
                         baseline_dev_seconds=dev_seconds,available_seconds=available_seconds,
-                        conservative_required_seconds=required,minimum_complete_epochs=1,maximum_complete_epochs=8,
+                        conservative_required_seconds=required,minimum_complete_epochs=1,maximum_complete_epochs=maximum,
                         train_scenes_per_epoch=count,all152_train_scenes_every_epoch=count==152,all_train_scenes_every_epoch=True,selection_uses_loss_or_heldout=False)
     raise TimeoutError('No complete TRAIN epoch fits; no optimizer work admitted')
 
@@ -155,6 +163,9 @@ def main(a):
         MAXIMUM_RECIPE.update(RECIPE)
     if opal_source:
         from .opal_adapter import UPSTREAM_COMMIT
+        maximum_epochs=getattr(a,'maximum_epochs',8)
+        if type(maximum_epochs) is not int or not 1<=maximum_epochs<=8:raise ValueError('Explicit complete-epoch limit must be between one and eight')
+        RECIPE['maximum_complete_epochs']=maximum_epochs
         RECIPE['opal']=dict(upstream_commit=UPSTREAM_COMMIT,backend=getattr(a,'opal_backend','keep'),agent_budget_usd=getattr(a,'opal_agent_budget',0.),nonblocking=True,goal='Improve native duplex control and ordinary retention; full native speech and behavior decide acceptance')
         MAXIMUM_RECIPE.update(RECIPE)
     if reactive:
@@ -166,6 +177,13 @@ def main(a):
     assert len(manifest['scenes'])==train_count+dev_count and sum(r['fold']=='TRAIN' for r in manifest['scenes'])==train_count and sum(r['fold']=='DEV' for r in manifest['scenes'])==dev_count
     assert approval['train']==train_count and approval['dev']==dev_count
     if parent_checkpoint:assert manifest['native_speech_timing_schema']=='word-aligned-native-v1'
+    data_coverage=None
+    if opal_source:
+        if not getattr(a,'coverage_manifest',None):
+            raise ValueError('Native OPAL requires the exact approved coverage manifest before model loading')
+        assert digest(a.coverage_manifest)==manifest['source_manifest_sha256']
+        from .diagnostics import coverage
+        data_coverage=coverage(json.loads(Path(a.coverage_manifest).read_text()))
     out=Path(a.output);out.mkdir(parents=True,exist_ok=(a.stage=='restore-continue'))
     identity=dict(cache_sha256=digest(cache/'manifest.json'),approval_sha256=digest(a.approval),source=a.source,cache_producer_source=a.cache_producer,model_revision=manifest['model_revision'])
     if parent_checkpoint:identity.update(parent_checkpoint_sha256=a.parent_sha256,parent_training_steps=parent_steps,parent_training_source=parent_state['metadata']['source'])
@@ -222,7 +240,7 @@ def main(a):
         if opal:
             from .opal_adapter import checkpoint_manifest
             assert checkpoint_manifest(opt)['update']==step
-        return save(path,llm,opt,step,metadata,control.snapshot() if control else None)
+        return save(path,llm,opt,step,metadata,control.snapshot() if control else None,opal.diagnostics_state if opal else None)
     def frozen_ok():
         if any(p._version!=frozen_versions[n] for n,p in llm.named_parameters() if n in frozen_versions):raise ValueError('Frozen native weight mutated')
     if a.stage=='start':
@@ -238,7 +256,8 @@ def main(a):
             baseline=reference['full36_dev_baseline'];dev_seconds=reference['conservative_baseline_dev_seconds']
             (out/'baseline-reference.json').write_text(json.dumps(reference,indent=2)+'\n')
         else:
-            before_dev=time.monotonic();baseline=dev_loss(llm,cache,manifest['scenes']);dev_seconds=time.monotonic()-before_dev
+            before_dev=time.monotonic();baseline_report=dev_loss(llm,cache,manifest['scenes'],with_details=bool(opal_source));dev_seconds=time.monotonic()-before_dev
+            baseline=baseline_report['ce'] if opal_source else baseline_report
         (out/'dev-baseline.json').write_text(json.dumps(baseline,indent=2)+'\n')
         workload=[]
         for row in manifest['scenes']:
@@ -264,6 +283,7 @@ def main(a):
         (out/'recipe.json').write_text(json.dumps(metadata,indent=2)+'\n');print(json.dumps(dict(event='complete_epoch_schedule_admitted',**admission)),flush=True)
         if opal_source:
             attach_opal();opal.development(baseline)
+            if not a.baseline_reference:opal.diagnose([],0,dev=baseline_report['per_family'],data_coverage=data_coverage)
         first=train_step(llm,opt,cache,batches[0],0,control=control,opal=opal);frozen_ok();checkpoint(out/'step-0001.pt',1)
         rng_probe=dict(python=random.random(),numpy=float(np.random.rand()),cuda=torch.rand(8,device='cuda').cpu().tolist())
         second=train_step(llm,opt,cache,batches[1],1,control=control,opal=opal);frozen_ok();checkpoint(out/'expected-step-0002-proof-only.pt',2)
@@ -273,7 +293,7 @@ def main(a):
         if opal:opal.close()
         return
     if opal_source:attach_opal()
-    start=load(out/'step-0001.pt',llm,opt,metadata);assert start==1
+    start=load(out/'step-0001.pt',llm,opt,metadata,opal.restore_diagnostics if opal else None);assert start==1
     rng_probe=dict(python=random.random(),numpy=float(np.random.rand()),cuda=torch.rand(8,device='cuda').cpu().tolist())
     expected=json.loads((out/'expected-step2.json').read_text());assert rng_probe==expected['rng_probe']
     second=train_step(llm,opt,cache,batches[1],1,control=control,opal=opal);frozen_ok()
@@ -286,6 +306,7 @@ def main(a):
     if control:assert reference['reactive_control']==control.snapshot(),'Fresh-process reactive state differs'
     from .native_optimizer import assert_optimizer_equal
     assert_optimizer_equal(reference['optimizer'],state)
+    if opal:assert reference['training_diagnostics']==opal.diagnostics_state
     checkpoint(out/'step-0002.pt',2)
     (out/'fresh-process-restore.json').write_text(json.dumps(dict(passed=True,adapter_error=0,adam_error=0,rng_equal=True,loss_equal=True,actual_new_process=True,independent_continuation=True),indent=2)+'\n')
     log=(out/'training.jsonl').open('x');log.write(json.dumps(expected['first'])+'\n'+json.dumps(second)+'\n');log.flush()
@@ -299,14 +320,18 @@ def main(a):
             row=train_step(llm,opt,cache,batches[step],step,control=control,opal=opal);frozen_ok();seconds.append(row['seconds']);log.write(json.dumps(row)+'\n');log.flush();print(json.dumps(row),flush=True)
             recent.append(row);recent=recent[-8:]
             if control and (step+1)%8==0:control.observe(step+1,recent)
+            if opal and (step+1)%8==0:opal.diagnose(recent,step+1,data_coverage=data_coverage)
             if (step+1)%per_epoch==0 or step==RECIPE['updates']-1:
                 checkpoint(out/f'step-{step+1:04d}.pt',step+1)
-            if (step+1)%(per_epoch*2)==0 or step==RECIPE['updates']-1:
-                result=dict(step=step+1,parent_training_steps=parent_steps,dev_scenes=dev_count,full_dev_teacher_forced=dev_loss(llm,cache,manifest['scenes']),native_behavior_qualified=False)
+            if (step+1)%(per_epoch if opal else per_epoch*2)==0 or step==RECIPE['updates']-1:
+                dev_report=dev_loss(llm,cache,manifest['scenes'],with_details=bool(opal))
+                result=dict(step=step+1,parent_training_steps=parent_steps,dev_scenes=dev_count,full_dev_teacher_forced=dev_report['ce'] if opal else dev_report,native_behavior_qualified=False)
+                if opal:result['full_dev_group_metrics']=dev_report['per_family']
                 if not parent_checkpoint:result['full36_dev_teacher_forced']=result['full_dev_teacher_forced']
                 (out/f'dev-{step+1:04d}.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result),flush=True)
                 if opal:
                     opal.development(result['full_dev_teacher_forced'])
+                    opal.diagnose(recent,step+1,dev=dev_report['per_family'],data_coverage=data_coverage)
                     checkpoint(out/f'step-{step+1:04d}.pt',step+1)
                 if control:
                     control.observe(step+1,recent,result['full_dev_teacher_forced'])
@@ -323,4 +348,4 @@ def main(a):
 
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('--stage',choices=['start','restore-continue'],required=True);p.add_argument('--model',required=True);p.add_argument('--cache',required=True);p.add_argument('--approval',required=True);p.add_argument('--output',required=True);p.add_argument('--source',required=True);p.add_argument('--cache-producer',required=True);p.add_argument('--lease',required=True);p.add_argument('--baseline-reference');p.add_argument('--parent-checkpoint');p.add_argument('--parent-sha256');p.add_argument('--reactive',action='store_true',help='Nonblocking bounded agent decisions; no external API or executable patches');p.add_argument('--opal-source',help='Exact clean pinned OPAL checkout; optional native optimizer owner');p.add_argument('--opal-backend',default='keep',help='keep by default; explicit bounded mailbox only');p.add_argument('--opal-agent-budget',type=float,default=0.);main(p.parse_args())
+    p=argparse.ArgumentParser();p.add_argument('--stage',choices=['start','restore-continue'],required=True);p.add_argument('--model',required=True);p.add_argument('--cache',required=True);p.add_argument('--approval',required=True);p.add_argument('--output',required=True);p.add_argument('--source',required=True);p.add_argument('--cache-producer',required=True);p.add_argument('--lease',required=True);p.add_argument('--baseline-reference');p.add_argument('--parent-checkpoint');p.add_argument('--parent-sha256');p.add_argument('--reactive',action='store_true',help='Nonblocking bounded agent decisions; no external API or executable patches');p.add_argument('--opal-source',help='Exact clean pinned OPAL checkout; optional native optimizer owner');p.add_argument('--opal-backend',default='keep',help='keep by default; explicit bounded mailbox only');p.add_argument('--opal-agent-budget',type=float,default=0.);p.add_argument('--maximum-epochs',type=int,choices=range(1,9),default=8,help='Complete-epoch admission cap for OPAL; never truncate a corpus');p.add_argument('--coverage-manifest',help='Exact approved source manifest for TRAIN/DEV aggregate coverage only');main(p.parse_args())

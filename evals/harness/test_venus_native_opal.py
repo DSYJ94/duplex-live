@@ -59,13 +59,16 @@ def test_native_checkpoint_restores_full_opal_and_rejects_progress_replay(monkey
     recipe=setup(monkeypatch);m,opt,rows=make()
     runtime=NativeOpal(opt,m,source=SOURCE,run_dir=tmp_path/'first',recipe=recipe)
     runtime.development({'ordinary':1.2,'quiet':.8})
-    train.train_step(m,runtime.optimizer,None,rows,0,opal=runtime)
+    first=train.train_step(m,runtime.optimizer,None,rows,0,opal=runtime)
+    runtime.diagnose([first],1)
+    diagnostics=copy.deepcopy(runtime.diagnostics_state)
     meta=dict(source='tiny-native-seam-proof',recipe=recipe)
-    save(tmp_path/'step.pt',m,runtime.optimizer,1,meta)
+    save(tmp_path/'step.pt',m,runtime.optimizer,1,meta,diagnostics_state=diagnostics)
     expected=train.train_step(m,runtime.optimizer,None,rows,1,opal=runtime)
     state=copy.deepcopy(runtime.optimizer.state_dict());weights=adapter_state(m)
     fresh,base,fr=make();restored=NativeOpal(base,fresh,source=SOURCE,run_dir=tmp_path/'restored',recipe=recipe)
-    assert load(tmp_path/'step.pt',fresh,restored.optimizer,meta)==1
+    assert load(tmp_path/'step.pt',fresh,restored.optimizer,meta,restored.restore_diagnostics)==1
+    assert restored.diagnostics_state==diagnostics
     actual=train.train_step(fresh,restored.optimizer,None,fr,1,opal=restored)
     assert exact_state(weights,adapter_state(fresh))
     assert_optimizer_equal(state,restored.optimizer.state_dict())

@@ -38,20 +38,22 @@ def restore_parent(state, model, optimizer):
     return dict(adapter_exact=True,adam_exact=True,rng_exact=True,new_optimizer_updates=0)
 
 
-def save(path, model, optimizer, step, metadata, reactive_state=None):
+def save(path, model, optimizer, step, metadata, reactive_state=None,diagnostics_state=None):
     path = Path(path)
     state = dict(adapter=adapter_state(model), optimizer=optimizer.state_dict(), rng=rng_state(),
                  step=step, metadata=metadata)
     if reactive_state is not None:
         state['reactive_control'] = reactive_state
+    if diagnostics_state is not None:state['training_diagnostics']=diagnostics_state
     temp = path.with_suffix(path.suffix + '.tmp')
     torch.save(state, temp); os.replace(temp, path)
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def load(path, model, optimizer, expected):
+def load(path, model, optimizer, expected,diagnostics_consumer=None):
     state = torch.load(path, map_location='cpu', weights_only=False)
     if state['metadata'] != expected:
         raise ValueError('Checkpoint source/data/recipe identity mismatch')
     load_adapter(model, state['adapter']); optimizer.load_state_dict(state['optimizer']); restore_rng(state['rng'])
+    if diagnostics_consumer:diagnostics_consumer(state['training_diagnostics'])
     return state['step']

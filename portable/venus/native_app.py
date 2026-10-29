@@ -165,7 +165,7 @@ class DelegateParser:
 
 class NativeEngine:
     def __init__(self, model_dir, system_prompt='Streaming Omni Conversation.', adapter_checkpoint=None,
-                 voice_reference=None,voice_reference_sha256=None,nonspoken_actions=False):
+                 voice_reference=None,voice_reference_sha256=None,nonspoken_actions=False,tts_attention='released'):
         ensure_guard()
         import numpy as np
         import torch
@@ -183,6 +183,8 @@ class NativeEngine:
             init_vision=False, init_audio=True, init_tts=True,
         ).eval().cuda()
         self.model.requires_grad_(False)
+        from .tts_attention import configure_tts_attention
+        tts_backend=configure_tts_attention(self.model,tts_attention)
         candidate = None
         if adapter_checkpoint:
             from training.venus.inference import load_candidate
@@ -193,7 +195,7 @@ class NativeEngine:
             from .speech_channel import install
             self.action_channel=install(self.duplex)
         self.profile = dict(model='Realtime-Venus-Audio', seed=42,
-            torch=torch.__version__, cuda=torch.version.cuda,
+            torch=torch.__version__, cuda=torch.version.cuda,tts_attention=tts_backend,
             gpu=torch.cuda.get_device_name(), precision='bfloat16', attention='sdpa',
             input_sample_rate=16000, output_sample_rate=24000,
             system_prompt=system_prompt, decode_mode='sampling',
@@ -257,7 +259,7 @@ class NativeEngine:
 
 
 def create_app(model_dir, system_prompt='Streaming Omni Conversation.', adapter_checkpoint=None,
-               voice_reference=None,voice_reference_sha256=None,nonspoken_actions=False,compare_foundation=False):
+               voice_reference=None,voice_reference_sha256=None,nonspoken_actions=False,compare_foundation=False,tts_attention='released'):
     if compare_foundation and not adapter_checkpoint:
         raise ValueError('A comparison requires the explicit trained checkpoint')
     from contextlib import asynccontextmanager
@@ -268,7 +270,7 @@ def create_app(model_dir, system_prompt='Streaming Omni Conversation.', adapter_
     @asynccontextmanager
     async def lifespan(app):
         app.state.engine = await asyncio.to_thread(NativeEngine, model_dir, system_prompt, adapter_checkpoint,
-                                                  voice_reference,voice_reference_sha256,nonspoken_actions)
+                                                  voice_reference,voice_reference_sha256,nonspoken_actions,tts_attention)
         yield
 
     app = FastAPI(lifespan=lifespan, docs_url=None, redoc_url=None)
@@ -344,9 +346,10 @@ if __name__ == '__main__':
     parser.add_argument('--voice-reference-sha256', help='Exact SHA256 required for a custom reference')
     parser.add_argument('--nonspoken-actions',action='store_true',help='Experimental native protocol filter; full speech/behavior qualification still required')
     parser.add_argument('--compare-foundation',action='store_true',help='Allow original/adapted comparison between isolated conversations')
+    parser.add_argument('--tts-attention',choices=['released','sdpa'],default='released',help='Experimental TTS-only backend; native speed and audio validation required')
     args = parser.parse_args()
     import uvicorn
     # Loopback and SSH tunnel only. No microphone or conversation recording.
     prompt=Path(args.system_prompt_file).read_text().strip() if args.system_prompt_file else 'Streaming Omni Conversation.'
     if not prompt or len(prompt)>4000:raise ValueError('Bounded nonempty system prompt required')
-    uvicorn.run(create_app(args.model_dir,prompt,args.adapter_checkpoint,args.voice_reference,args.voice_reference_sha256,args.nonspoken_actions,args.compare_foundation), host='127.0.0.1', port=args.port)
+    uvicorn.run(create_app(args.model_dir,prompt,args.adapter_checkpoint,args.voice_reference,args.voice_reference_sha256,args.nonspoken_actions,args.compare_foundation,args.tts_attention), host='127.0.0.1', port=args.port)

@@ -23,14 +23,16 @@ def run(a):
         runtime=NativeOpal(base,m,source=SOURCE,run_dir=out/('child-opal' if a.child else 'parent-opal'),recipe=recipe)
         meta=dict(source='actual-native-train-step-tiny-CPU-proof',recipe=recipe)
         if a.child:
-            assert load(out/'step1.pt',m,runtime.optimizer,meta)==1
+            assert load(out/'step1.pt',m,runtime.optimizer,meta,runtime.restore_diagnostics)==1
             probe=dict(torch=torch.rand(4).tolist())
             result=train.train_step(m,runtime.optimizer,None,rows,1,opal=runtime)
-            torch.save(dict(weights=adapter_state(m),optimizer=runtime.optimizer.state_dict(),result=result,probe=probe,pid=os.getpid()),out/'child.pt')
+            torch.save(dict(weights=adapter_state(m),optimizer=runtime.optimizer.state_dict(),diagnostics=runtime.diagnostics_state,result=result,probe=probe,pid=os.getpid()),out/'child.pt')
             runtime.close();return
         runtime.development({'ordinary':1.2,'quiet':.8})
         first=train.train_step(m,runtime.optimizer,None,rows,0,opal=runtime)
-        save(out/'step1.pt',m,runtime.optimizer,1,meta)
+        runtime.diagnose([first],1)
+        diagnostics=copy.deepcopy(runtime.diagnostics_state)
+        save(out/'step1.pt',m,runtime.optimizer,1,meta,diagnostics_state=diagnostics)
         probe=dict(torch=torch.rand(4).tolist())
         second=train.train_step(m,runtime.optimizer,None,rows,1,opal=runtime)
         expected=copy.deepcopy(runtime.optimizer.state_dict());weights=adapter_state(m)
@@ -39,9 +41,10 @@ def run(a):
     child=torch.load(out/'child.pt',map_location='cpu',weights_only=False)
     assert child['pid']!=os.getpid() and probe==child['probe']
     assert exact_state(weights,child['weights'])
+    assert exact_state(diagnostics,child['diagnostics'])
     assert_optimizer_equal(expected,child['optimizer'])
     assert all(second[k]==child['result'][k] for k in ('ce','kl','hidden','gradient_norm','lr','objective'))
-    report=dict(passed=True,parent_pid=os.getpid(),child_pid=child['pid'],actual_native_train_step=True,device='cpu',model='tiny Qwen3 fixture',actual_fresh_process=True,adapter_adam_scheduler_program_observations_rng_equal=True,native9b_gpu_qualified=False,api_calls=0,gpu_seconds=0,candidate_updates=0)
+    report=dict(passed=True,parent_pid=os.getpid(),child_pid=child['pid'],actual_native_train_step=True,device='cpu',model='tiny Qwen3 fixture',actual_fresh_process=True,adapter_adam_scheduler_program_observations_rng_equal=True,diagnostics_state_equal=True,native9b_gpu_qualified=False,api_calls=0,gpu_seconds=0,candidate_updates=0)
     (out/'proof.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report))
 
 if __name__=='__main__':

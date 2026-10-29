@@ -96,10 +96,15 @@ def checkpoint_manifest(optimizer):
         complete_wrapped_state_required=True)
 
 
-def log_development(optimizer, values, *, fold):
-    """Only aggregate numeric DEV measurements may enter the optimizer agent."""
-    if fold != 'DEV' or not values or any(type(v) not in (int,float) or not math.isfinite(v) for v in values.values()):
-        raise ValueError('Finite aggregate DEV values only; no test/held-out rows')
+def log_observation(optimizer, values, *, fold):
+    """Finite TRAIN/DEV aggregates only, never sample text or held-out answers."""
+    if fold not in ('TRAIN','DEV') or not values or any(type(v) not in (int,float) or not math.isfinite(v) for v in values.values()):
+        raise ValueError('Finite aggregate TRAIN/DEV values only')
     if any(word in key.lower() for key in values for word in ('holdout','test','answer','transcript','owner')):
         raise ValueError('Evaluation answers and owner content cannot be agent metrics')
     optimizer.log({str(key):float(value) for key,value in values.items()},show_agent=True)
+
+
+def log_development(optimizer,values,*,fold):
+    if fold!='DEV':raise ValueError('Development metrics require DEV fold')
+    return log_observation(optimizer,values,fold=fold)

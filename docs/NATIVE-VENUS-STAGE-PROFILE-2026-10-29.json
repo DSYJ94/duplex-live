@@ -1,0 +1,133 @@
+{
+  "schema": "dl-native-stage-profile-v1",
+  "recorded_utc": "2026-10-29T00:44:07.939762+00:00",
+  "source": "0751490d1dbded2d342b4bfaf9a147791ba6ef50",
+  "run": "runs/venus-training-20261027/paced-recovery-v33",
+  "scene": "venus-control-v1-train-ordinary-0145",
+  "scene_fold": "TRAIN",
+  "input_sha256": "fdba8d9d6556b578981d69099d56cd36f9571542e0b3cc3d73e2760cdcf80732",
+  "paired_complete": true,
+  "summaries": {
+    "released": {
+      "listen": {
+        "frames": 8,
+        "processing_min": 0.3723211260000028,
+        "processing_max": 0.39494589500000643,
+        "processing_mean": 0.3820570673750048
+      },
+      "speak": {
+        "frames": 3,
+        "processing_min": 2.4342152579999947,
+        "processing_max": 2.8886958239999956,
+        "processing_mean": 2.6965815153333303
+      }
+    },
+    "candidate": {
+      "listen": {
+        "frames": 10,
+        "processing_min": 0.37759024999999724,
+        "processing_max": 0.3875599309999984,
+        "processing_mean": 0.382204831100006
+      },
+      "speak": {
+        "frames": 1,
+        "processing_min": 2.80791046600001,
+        "processing_max": 2.80791046600001,
+        "processing_mean": 2.80791046600001
+      }
+    }
+  },
+  "speaking_frames": [
+    {
+      "variant": "released",
+      "sequence": 2,
+      "processing_seconds": 2.8886958239999956,
+      "native_wall_costs": {
+        "cost_llm": 0.5976707935333252,
+        "cost_tts_prep": 0.002897024154663086,
+        "cost_tts": 1.2983317375183105,
+        "cost_token2wav": 0.7829444408416748,
+        "cost_all": 2.6789603233337402
+      },
+      "tts_plus_waveform_fraction": 0.7204899044988506
+    },
+    {
+      "variant": "released",
+      "sequence": 3,
+      "processing_seconds": 2.4342152579999947,
+      "native_wall_costs": {
+        "cost_llm": 0.5134170055389404,
+        "cost_tts_prep": 0.0015397071838378906,
+        "cost_tts": 1.1965298652648926,
+        "cost_token2wav": 0.5153858661651611,
+        "cost_all": 2.2253477573394775
+      },
+      "tts_plus_waveform_fraction": 0.7032721226292048
+    },
+    {
+      "variant": "released",
+      "sequence": 4,
+      "processing_seconds": 2.766833464000001,
+      "native_wall_costs": {
+        "cost_llm": 0.3459160327911377,
+        "cost_tts_prep": 0.0015621185302734375,
+        "cost_tts": 1.1951627731323242,
+        "cost_token2wav": 1.014967441558838,
+        "cost_all": 2.5562121868133545
+      },
+      "tts_plus_waveform_fraction": 0.7987940884219265
+    },
+    {
+      "variant": "candidate",
+      "sequence": 2,
+      "processing_seconds": 2.80791046600001,
+      "native_wall_costs": {
+        "cost_llm": 0.5144882202148438,
+        "cost_tts_prep": 0.0014140605926513672,
+        "cost_tts": 1.0924248695373535,
+        "cost_token2wav": 0.9903891086578369,
+        "cost_all": 2.5974836349487305
+      },
+      "tts_plus_waveform_fraction": 0.7417665211961866
+    }
+  ],
+  "conclusions": [
+    "TTS plus waveform generation consumed 70.3 to 79.9 percent of the observed speaking-frame wall time. This bottleneck exists in the original foundation too.",
+    "Pinned Venus forces its TTS Llama backbone to eager attention when the global backend is SDPA. A TTS-only SDPA opt-in is prepared and tiny CPU parity-tested, but has no native GPU speed or speech-quality proof.",
+    "Serial fixed-scene timing is not a concurrent backlog or end-of-utterance-to-first-audio measurement.",
+    "No new native optimizer updates or adoption. English reference word audit passes; native accent and naturalness remain unqualified."
+  ],
+  "voice_reference": {
+    "profile": "british-george",
+    "sha256": "40159a59a35053c358d5192b3919a86453c8c6bf1b2019b289119ceca444f674",
+    "full_waveform_word_error_rate": 0,
+    "native_quality_qualified": false,
+    "cohort174_training_approved": false
+  },
+  "outputs": {
+    "released-native.wav": {
+      "path": "runs/venus-training-20261027/paced-recovery-v33/latency-benchmark/released-native.wav",
+      "sha256": "e4e0c6e3eef6a63c2024bb43a11d75c69bc70f12c89bb28061b046d1bd7a40f9"
+    },
+    "candidate-native.wav": {
+      "path": "runs/venus-training-20261027/paced-recovery-v33/latency-benchmark/candidate-native.wav",
+      "sha256": "5bc77200adcadbed77956eff05c15881d79b4527f6c36d0ddd9194ba537a3fe6"
+    }
+  },
+  "provider": {
+    "id": "4165197048314802237",
+    "name": "duplex-venus-native-profile-20261029-v33",
+    "status": "TERMINATED",
+    "lastStartTimestamp": "2026-10-28T17:10:24.763-07:00",
+    "lastStopTimestamp": "2026-10-28T17:16:08.965-07:00"
+  },
+  "full_backup": {
+    "all_hashes_verified": true,
+    "files": 11526,
+    "bytes": 7775057757,
+    "source": "0751490d1dbded2d342b4bfaf9a147791ba6ef50"
+  },
+  "focused_gpu_seconds_upper_after": 18400,
+  "remaining_currently_authorized_gpu_seconds": 200,
+  "phase_money_cap_usd": 70
+}

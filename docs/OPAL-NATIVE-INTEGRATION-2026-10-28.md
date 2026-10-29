@@ -46,7 +46,7 @@ mailbox requires an explicit finite positive agent allowance. It uses
 `blocking=False`, finite decision/unavailable timeouts, an explicit short decision
 schedule, `share_code=False`, and no paid report summarizer. It records source
 hashes for the updater and analysis program, requires complete wrapped checkpoint
-state, and admits only finite numeric DEV summaries to agent-visible metrics.
+state, and admits only finite numeric TRAIN/DEV aggregates to agent-visible metrics.
 
 The official mailbox supplies run/attempt identities, exclusive request claims
 and atomic replies. Credentials/broker stay on the Mac; code proposals and
@@ -109,3 +109,40 @@ PYTHONDONTWRITEBYTECODE=1 /private/tmp/duplex-venus-proof-20261027/bin/python -m
 Choose a new output directory each time. `evals/harness/test_venus_opal_adapter.py`
 has8 fast configuration/metric/checkpoint-boundary checks; they do not replace
 the actual upstream parity/code-swap/process-restore proof.
+
+
+## Continual dataset-versus-recipe reviews, 29 October
+
+The native loop now logs per-family TRAIN decision/text cross-entropy, KL,
+hidden retention and gradient norm each accumulated batch. Every eight updates
+it writes an immutable diagnostic packet; each complete epoch runs all52 DEV
+scenes and records the same decomposed losses. The exact approved source manifest
+is required before model loading, so OPAL receives TRAIN/DEV scene and distinct
+input counts. Counterfactual input reuse is identified as intentional matching,
+not automatically classified as faulty data. No HOLDOUT answers enter the agent.
+
+The supervisor compares four separate causes: data/targets/coverage, optimizer
+and schedule dynamics, language-to-speech objective mismatch, and inference/UI
+runtime. Lower TRAIN loss with worse DEV loss raises a possible coverage or
+regularization issue; it does not establish causality. Native DEV speech and
+control tests at phase boundaries remain necessary. Change one justified factor
+at a time and retain the requested/applied optimizer program and hashes. A data
+or target repair creates a new version between phases; it never silently changes
+the currently hashed corpus. This is ongoing supervision, not continuous full
+speech evaluation during every update.
+
+`--maximum-epochs 1` can admit exactly one complete216-scene epoch (54 accumulated
+candidate updates), retaining the full development/evaluation reserve. This
+provides a native speech checkpoint before a further training phase rather than
+replaying the earlier190-to244 updates. Recipe admission still refuses a partial
+corpus. OPAL may adapt the optimizer within this schedule; it cannot extend the
+approved update/time limits.
+
+58 focused optimizer/training/diagnostic/TTS-attention tests passed, plus26
+native-app/browser/transport/conditioning tests. Distinct-process proof
+`runs/venus-training-20261029/opal-native-trainstep-v4/proof.json` now also proves
+exact restoration of diagnostic history (parent48415, child48426). The v3
+restricted shared-memory failure remains intact; v4 used normal shared memory,
+without CPU or thread limits. These are CPU integration proofs, not native9B
+GPU qualification. No paid broker/Jev agent, new API call, native adaptive update
+or OPAL performance gain is claimed.

@@ -136,7 +136,9 @@ def scene_loss(llm, example, device, kl_weight=.1, hidden_weight=.01):
     losses = torch.nn.functional.cross_entropy(logits, target, reduction='none')
     # Equal contribution per labelled decision/text group, then per scene.
     decision = example['decision_mask'].to(device)
-    groups = [losses[m].mean() for m in (decision, ~decision) if m.any()]
+    decision_ce=losses[decision].mean() if decision.any() else None
+    text_ce=losses[~decision].mean() if (~decision).any() else None
+    groups=[v for v in (decision_ce,text_ce) if v is not None]
     ce = torch.stack(groups).mean()
     kl, retention = ce.new_zeros(()), ce.new_zeros(())
     if example['family'] == 'ordinary':
@@ -145,4 +147,4 @@ def scene_loss(llm, example, device, kl_weight=.1, hidden_weight=.01):
         kl = torch.nn.functional.kl_div(logits.log_softmax(-1), base_logits.softmax(-1), reduction='batchmean')
         retention = (hidden - base_hidden).square().mean()
     loss = ce + kl_weight * kl + hidden_weight * retention
-    return loss, dict(ce=float(ce.detach()), kl=float(kl.detach()), hidden=float(retention.detach()))
+    return loss, dict(ce=float(ce.detach()), kl=float(kl.detach()), hidden=float(retention.detach()),decision_ce=float(decision_ce.detach()) if decision_ce is not None else None,text_ce=float(text_ce.detach()) if text_ce is not None else None)
