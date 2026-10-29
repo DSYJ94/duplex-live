@@ -1,0 +1,86 @@
+{
+  "recorded_utc": "2026-10-29T11:27:24.556558+00:00",
+  "training_source": "dd767d65ac663e701142f2c882aeb5e1c2a2c6e5",
+  "optimizer_program_source": "b3f5b6d8a9905409c6d856dbc52b4403640466a9",
+  "optimizer_program_sha256": "1e14fc4281bae3950ffabfbf010395eb352d0ed79a20ea134336f226b787990d",
+  "native_full_state_start_restore": {
+    "passed": true,
+    "adapter_error": 0,
+    "adam_error": 0,
+    "rng_equal": true,
+    "loss_equal": true,
+    "actual_new_process": true,
+    "independent_continuation": true
+  },
+  "live_decisions": [
+    {
+      "request_id": "c02c325a6a484fd9977b16ffb14d164b",
+      "request_sha256": "fdb476c24bc289895a87b08abb928f07b4b0a660503e30aac264aa2b1c0ba894",
+      "action": "keep",
+      "reason": "Observed: OPAL confirms the exact committed lower-rate program applied at update28, not16. Only four updates of it are represented at request32; all losses remain finite and recent objective windows0.62494,0.57858,0.54752,0.49072 decline, but batches differ and the last window mixes programs. Kept: continue the applied LR x0.5 updater and original Adam/scheduler/clipping/data/loss/retention; no second factor or source-data edit. Prediction: complete the remaining epoch with bounded displacement; no claim that this caused the loss decline or fixed silence. Rules: need full52DEV paired with baseline and complete64 native speech/control results, including all failures, before any extension/adoption; HOLDOUT never feeds this decision, no extra updates or external API calls.",
+      "source": null,
+      "program_hashes": {},
+      "cost_usd": 0,
+      "external_api_calls": 0,
+      "optimizer_application_proven": false
+    },
+    {
+      "request_id": "f5df7358b42f4772ad1c3e755dff6309",
+      "request_sha256": "28aa5be05b6e01069bf1d186af69c940866594af18cd0c64dd15929b5c5f3d7a",
+      "action": "adapt",
+      "reason": "Observed: native fresh-process restore passed with zero adapter/Adam error and equal RNG/loss. All16 losses finite; step9-16 gradients clipped at the unchanged1.0 reference each update, window TRAIN CE fell0.0478. Baseline quiet DEV decisionCE0.1302 versus textCE1.6352 shows aggregate quiet loss is not a direct silence score. Fixed-token speech-conditioning cosine changed after244 (numerical evidence, not audible damage). Changed: test ONLY effective LR x0.5 through the committed updater; preserve Adam moments, nominal warmup/cosine scheduler, clipping, all216TRAIN/52DEV, losses/retention and54-update limit. Prediction: smaller further adapter displacement while still learning; improvement is uncertain and this does not establish LR as the cause or repair data. Rules: compare later TRAIN diagnostics and full52DEV/full64 native speech/control; no HOLDOUT feedback, data mutation, subset acceptance, extra updates or loss-only adoption.",
+      "source": "b3f5b6d8a9905409c6d856dbc52b4403640466a9",
+      "program_hashes": {
+        "updater.py": "1e14fc4281bae3950ffabfbf010395eb352d0ed79a20ea134336f226b787990d"
+      },
+      "cost_usd": 0,
+      "external_api_calls": 0,
+      "optimizer_application_proven": false
+    }
+  ],
+  "actual_applied_at_update": 28,
+  "first_requested_at_update": 16,
+  "application_lag_updates": 12,
+  "program_version": 1,
+  "actual_native_update_evidence": [
+    {
+      "step": 37,
+      "gradient_norm": 1.344021201133728,
+      "gradient_clip": null,
+      "ce": 0.7779508680105209,
+      "opal": {
+        "upstream_commit": "8b16759a3e9930916ed582e28068267859f935f8",
+        "update": 37,
+        "program_version": 1,
+        "programs": {
+          "updater.py": "1e14fc4281bae3950ffabfbf010395eb352d0ed79a20ea134336f226b787990d",
+          "analysis.py": "39aab2354740c1d61f5eacf00720ce33940defe382833d998b2246235e0647af"
+        },
+        "complete_wrapped_state_required": true
+      },
+      "lr": 2.2935516363191693e-05
+    },
+    {
+      "step": 38,
+      "gradient_norm": 1.2294862270355225,
+      "gradient_clip": null,
+      "ce": 0.4281271733343601,
+      "opal": {
+        "upstream_commit": "8b16759a3e9930916ed582e28068267859f935f8",
+        "update": 38,
+        "program_version": 1,
+        "programs": {
+          "updater.py": "1e14fc4281bae3950ffabfbf010395eb352d0ed79a20ea134336f226b787990d",
+          "analysis.py": "39aab2354740c1d61f5eacf00720ce33940defe382833d998b2246235e0647af"
+        },
+        "complete_wrapped_state_required": true
+      },
+      "lr": 2.0885135242981653e-05
+    }
+  ],
+  "program_effect": "Exactly0.5 of the nominal scheduled learning rate during AdamW.step; restore nominal before outer scheduler. Original Adam moments, scheduler, clip1.0, data and losses preserved. Actual effective rates stored in updater state; scalar training lr is nominal and is not claimed as the effective program rate.",
+  "evidence_limits": "Different minibatches and changing nominal LR prevent causal attribution from falling TRAIN windows. Atrequest32 only4changed updates observed; keep the one factor. Full52DEV/full64native pending; no model adoption. No data/source defect established from conditioning or gradients.",
+  "external_api_calls": 0,
+  "api_cost_usd": 0,
+  "adopted": false
+}

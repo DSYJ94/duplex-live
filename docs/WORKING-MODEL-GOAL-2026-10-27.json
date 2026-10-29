@@ -2,7 +2,7 @@
   "schema": "dl-working-model-goal-v1",
   "status": "EXECUTION_RESUMED_BY_EXPLICIT_HUMAN_APPROVAL",
   "objective": "Deliver a useful native full-duplex voice product close to GPT-live as its benchmark: useful ordinary reasoning, silence/pause/interrupt behaviour, reliable asynchronous delegation and natural British speech.",
-  "source_of_authority": "Owner requests continued model improvement and dynamic OPAL dataset-versus-recipe reviews. Existing $70 cap and explicit GPU-time limits remain binding; v33 used remaining previously approved time, with zero training or API calls.",
+  "source_of_authority": "Direct human approval: Approve four hours; keep $70 cap. Exact authorization NATIVE-VENUS-ADAPTIVE-PHASE-AUTHORIZATION-2026-10-29.json; two failed starts carried, no purchases/new API calls.",
   "preferred_voice": "british-george",
   "voice_acceptance": "Source preferences guide the candidate; verify actual native speech, intelligibility, naturalness and stableaccent/identity on complete paired cases before adoption",
   "behaviour_acceptance": "No acknowledgements in required silence; pause/resume without losing content; real pending work, cancellation and receipt-grounded result use; retain ordinary reasoning",
@@ -10,16 +10,17 @@
   "current_blocker": null,
   "budget": {
     "maximum_focused_gpu_seconds": 32800,
-    "focused_consumed_upper_seconds": 18400,
-    "remaining_gpu_seconds": 14400,
+    "focused_consumed_upper_seconds": 19100,
+    "remaining_gpu_seconds": 13700,
     "maximum_focused_usage_usd": 70,
     "external_api_cap_usd": 10,
     "external_api_usage_upper_usd": 9.6476125,
     "no_purchases": true,
     "no_overlap": true,
     "cumulative_gpu_cap_seconds": 87251,
-    "current_allocation_reserved_gpu_seconds": 0,
-    "unreserved_gpu_seconds": 200
+    "current_allocation_reserved_gpu_seconds": 13700,
+    "unreserved_gpu_seconds": 0,
+    "accounting_note": "Consumed upper before currentliveinterval; final actual STOP will reconcile unused reserved time. Original54451seconds neverreset."
   },
   "steps": [
     "Completed v33 stage profile, independent full English-reference word audit, full output backup and fresh provider STOP verification; apply the measured findings in the next admitted phase.",
@@ -39,38 +40,20 @@
   },
   "initial_strategy": "Keep native9Bduplexfoundation and basicreasoning; offload heavierreasoning toactualbackend. Finishthisboundeddatarepairtraining/eval before deciding whethermoreadapters/fullweightoracoustictraining is necessary.",
   "current_execution": {
-    "recorded_utc": "2026-10-29T00:44:07.939762+00:00",
-    "phase": "v33 COMPLETE; full backup PASS; provider TERMINATED; no training running",
-    "training_producer_sha": "6ea80a5d2512d981d8ddf1d64c4675684667429a",
-    "evaluation_producer_sha": "6557a27a5dfb3213097d6b637dd7ca4fab20c713",
-    "live_producer_sha": "0751490d1dbded2d342b4bfaf9a147791ba6ef50",
-    "total_optimizer_updates": 244,
-    "vm_id": "4165197048314802237",
-    "controller_pid": 40251,
-    "guard_pid": 40894,
-    "native_stop_utc": "2026-10-29T00:20:24.763Z",
-    "new_optimizer_updates_in_current_execution": 0,
-    "full64_behavior_approved": false,
-    "live_url": null,
-    "foundation_choice": "OPEN; original PersonaPlex archives retained, Venus provisional experiment",
-    "full_native_results": "docs/NATIVE-VENUS-PAIRED64-REVIEW-2026-10-28.json",
-    "run_receipt": "runs/venus-training-20261027/paced-recovery-v33/events.json",
-    "allocation_operation": "operation-1793232593623-65eef7fbe191e-6c3a0c76-47a6c224",
-    "prior_attempts": "v32 actual1120.789s/1200upper reconciled after Google renewal; v33 actual344.202s/400upper, focused18000 to18400. Failed original v32 copyback/controller records preserved.",
-    "native_websocket_proof": "runs/venus-training-20261027/paced-recovery-v33/native-websocket-proof.json",
-    "microphone_main_pid": "1518",
-    "microphone_invocation": "5d40a95805c1405a9c423a20fa939ae2",
-    "backup_receipt": "runs/venus-training-20261027/paced-recovery-v33/copyback-verified.json",
-    "backup_files": 11526,
-    "backup_bytes": 7775057757,
-    "backup_all_hashes_verified": true,
-    "provider_stop_currently_verified": true,
-    "ui_fix_source": "da90d6592",
-    "ui_fix_deployed": true,
-    "latency_review": "docs/NATIVE-VENUS-STAGE-PROFILE-2026-10-29.json",
-    "source_reference_audit": "runs/venus-training-20261027/paced-recovery-v33/reference-audit.json",
-    "benchmark_only": true,
-    "provider_actual_stop_utc": "2026-10-29T00:16:08.965Z"
+    "recorded_utc": "2026-10-29T11:27:24.556558+00:00",
+    "phase": "NATIVE_OPAL_TRAINING_RUNNING",
+    "run": "runs/venus-training-20261029/adaptive-v36",
+    "controller": "launchd gui/501/com.aurium.duplex.adaptive36/PID68126",
+    "vm_id": "6929308962022921268",
+    "disk_id": "4375908109499109167",
+    "training_source": "dd767d65ac663e701142f2c882aeb5e1c2a2c6e5",
+    "native_stop_utc": "2026-10-29T15:04:37.857Z",
+    "native_restore_passed": true,
+    "optimizer_program_applied_update": 28,
+    "maximum_new_updates": 54,
+    "target_total_updates": 298,
+    "full_paired_native_required": true,
+    "adopted": false
   },
   "reasoning_integration": {
     "confirmed_gap": "Previously ArithmeticWorker only. An opt-in general reasoning worker and Mac proxy profile are now implemented; no actual provider call or native GPU routing qualification has run.",
@@ -94,10 +77,35 @@
   "reactive_optimisation": {
     "supervisor": "Current LOCAL agent through GitSupervisor; no extra agent or provider API required",
     "observations": "Per-batch per-family TRAIN CE/decision CE/text CE/KL/hidden and gradient norm, rolling8-update diagnostic reviews, full52DEV each epoch, exact TRAIN/DEV source coverage; no HOLDOUT/owner content.",
-    "controls": "Native upstream OPAL can rewrite optimizer/update program at boundaries; no native adaptive run has started. Dataset/loss changes require a diagnosed versioned phase; no silent mid-run corpus mutation.",
-    "not_claimed": "No native OPAL training or measured OPAL performance improvement",
+    "controls": "Actual native OPAL optimizer-program change applied at newupdate28 after request16; second request32 kept it. Dataset/loss/folds not mutated. Per-batch and eightupdate reviews/full52DEV retained.",
+    "not_claimed": "No causal OPAL performance gain, model adoption, speech naturalness or GPT-live parity",
     "Jev_SystemOne": "optional future typed sentinel; not optimizer code author",
-    "actual_decisions": "Two current-agent hold decisions applied after newupdates18 and47. No learning-rate/clipping change was justified; no optimization improvement attributed to agent.",
+    "actual_decisions": [
+      {
+        "request_id": "c02c325a6a484fd9977b16ffb14d164b",
+        "request_sha256": "fdb476c24bc289895a87b08abb928f07b4b0a660503e30aac264aa2b1c0ba894",
+        "action": "keep",
+        "reason": "Observed: OPAL confirms the exact committed lower-rate program applied at update28, not16. Only four updates of it are represented at request32; all losses remain finite and recent objective windows0.62494,0.57858,0.54752,0.49072 decline, but batches differ and the last window mixes programs. Kept: continue the applied LR x0.5 updater and original Adam/scheduler/clipping/data/loss/retention; no second factor or source-data edit. Prediction: complete the remaining epoch with bounded displacement; no claim that this caused the loss decline or fixed silence. Rules: need full52DEV paired with baseline and complete64 native speech/control results, including all failures, before any extension/adoption; HOLDOUT never feeds this decision, no extra updates or external API calls.",
+        "source": null,
+        "program_hashes": {},
+        "cost_usd": 0,
+        "external_api_calls": 0,
+        "optimizer_application_proven": false
+      },
+      {
+        "request_id": "f5df7358b42f4772ad1c3e755dff6309",
+        "request_sha256": "28aa5be05b6e01069bf1d186af69c940866594af18cd0c64dd15929b5c5f3d7a",
+        "action": "adapt",
+        "reason": "Observed: native fresh-process restore passed with zero adapter/Adam error and equal RNG/loss. All16 losses finite; step9-16 gradients clipped at the unchanged1.0 reference each update, window TRAIN CE fell0.0478. Baseline quiet DEV decisionCE0.1302 versus textCE1.6352 shows aggregate quiet loss is not a direct silence score. Fixed-token speech-conditioning cosine changed after244 (numerical evidence, not audible damage). Changed: test ONLY effective LR x0.5 through the committed updater; preserve Adam moments, nominal warmup/cosine scheduler, clipping, all216TRAIN/52DEV, losses/retention and54-update limit. Prediction: smaller further adapter displacement while still learning; improvement is uncertain and this does not establish LR as the cause or repair data. Rules: compare later TRAIN diagnostics and full52DEV/full64 native speech/control; no HOLDOUT feedback, data mutation, subset acceptance, extra updates or loss-only adoption.",
+        "source": "b3f5b6d8a9905409c6d856dbc52b4403640466a9",
+        "program_hashes": {
+          "updater.py": "1e14fc4281bae3950ffabfbf010395eb352d0ed79a20ea134336f226b787990d"
+        },
+        "cost_usd": 0,
+        "external_api_calls": 0,
+        "optimizer_application_proven": false
+      }
+    ],
     "actual_upstream": "OPAL0.3.8 commit8b16759a3e9930916ed582e28068267859f935f8: CPU keep parity, actual offline updater rewrite and distinct-process program/Adam/scheduler/RNG restore PASS; zero GPU/API/native training",
     "native_integration": "Implemented in train.py plus native_optimizer.py: optional upstream OPAL owns step/loss/clipping/scheduler, full-state save/restore comparison, fullDEV metrics, immutable recipe/data gates, exact244 parent support; free keep default, no broker/API agent started.",
     "native_proof": "Actual train_step seam with tiny CPU Qwen: six keep updates exact against plain/inherited Adam, one clipping call per update, distinct-process weights/Adam/scheduler/program/observations/RNG/loss restore PASS. Not native9B/GPU qualification.",
@@ -170,7 +178,8 @@
     "why_not_complete": "Native behavior still fails; source/CPU/fixture evidence cannot establish native9B speech quality, training convergence or GPT-live parity.",
     "paid_compute_state": "Fresh provider read confirms all5 GCP machines TERMINATED",
     "pending_proposal": "docs/NATIVE-VENUS-ADAPTIVE-PHASE-PROPOSAL-2026-10-29.json",
-    "question_already_sent": true
+    "question_already_sent": true,
+    "resolved_by": "Direct human four-hour approval; actual native OPAL restore passed and adaptive training underway. Prior audit preserved as history."
   },
   "authorization": "docs/NATIVE-VENUS-ADAPTIVE-PHASE-AUTHORIZATION-2026-10-29.json"
 }
