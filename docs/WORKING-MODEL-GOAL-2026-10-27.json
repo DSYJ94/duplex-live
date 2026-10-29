@@ -1,13 +1,13 @@
 {
   "schema": "dl-working-model-goal-v1",
-  "status": "EXECUTION_RESUMED_BY_EXPLICIT_HUMAN_APPROVAL",
+  "status": "ACTIVE_PREPARING_REVISED_ACTION_FIDELITY_PHASE",
   "objective": "Deliver a useful native full-duplex voice product close to GPT-live as its benchmark: useful ordinary reasoning, silence/pause/interrupt behaviour, reliable asynchronous delegation and natural British speech.",
   "source_of_authority": "Direct human approval: Approve four hours; keep $70 cap. Exact authorization NATIVE-VENUS-ADAPTIVE-PHASE-AUTHORIZATION-2026-10-29.json; two failed starts carried, no purchases/new API calls.",
   "preferred_voice": "british-george",
   "voice_acceptance": "Source preferences guide the candidate; verify actual native speech, intelligibility, naturalness and stableaccent/identity on complete paired cases before adoption",
   "behaviour_acceptance": "No acknowledgements in required silence; pause/resume without losing content; real pending work, cancellation and receipt-grounded result use; retain ordinary reasoning",
-  "training_acceptance": "Any next native OPAL continuation must restore actual244 adapter/Adam/RNG from SHA c634e6cf38831210be0165ce7f6dd09c5454226f62ff622477fd4d051abde270; preserve original190 parent, all216TRAIN/52DEV and frozen24HOLDOUT, ordinaryKL/hidden and all earlier artifacts. Do not repeat190\u2192244, extend a failed unchanged recipe, or adopt from a passing subset/loss alone.",
-  "current_blocker": null,
+  "training_acceptance": "Completed244-to298 is rejected and preserved. Any new optimizer phase must independently restore complete saved298 OPALprogram1/Adam/RNG/scheduler/diagnostics exactly, then explicitly admit a revised schedule/objective without replaying saved updates. Preserve original190/244 and298, all216TRAIN/52DEV/frozen24HOLDOUT and ordinaryKL.1/hidden.01. Final restoration and full native speech/behavior required before adoption or extension.",
+  "current_blocker": "Google Cloud SDK reauthentication required; completed54-update phase has zero further optimizer updates. New108-update proposal awaits explicit admission; no extra GPU time or spending requested.",
   "budget": {
     "maximum_focused_gpu_seconds": 32800,
     "focused_consumed_upper_seconds": 23100,
@@ -20,15 +20,15 @@
     "cumulative_gpu_cap_seconds": 87251,
     "current_allocation_reserved_gpu_seconds": 0,
     "unreserved_gpu_seconds": 9700,
-    "accounting_note": "Consumed upper before currentliveinterval; final actual STOP will reconcile unused reserved time. Original54451seconds neverreset."
+    "accounting_note": "All closed intervals reconciled conservatively:23100focused upper seconds; zero active reservations,9700remain, original54451carried. Consumed54-update allowance exhausted despite unused time."
   },
   "steps": [
-    "Completed v33 stage profile, independent full English-reference word audit, full output backup and fresh provider STOP verification; apply the measured findings in the next admitted phase.",
-    "Optimize the measured dominant inference stage; demonstrate sustained speaking throughput without growing queues or losing words.",
-    "Run exact post-token speech-conditioning comparison and native OPALkeep/fresh-process restore on saved244 before adaptive training.",
-    "Connect the actual asynchronous reasoning backend through Mac-local credentials; test pending conversation, result grounding and cancellation. Expand distinct data only for confirmed coverage gaps.",
-    "Train one bounded complete-corpus continuation from244 with the diagnosed repair, preserved retention and full optimizer/code/RNG records; no repeated saved updates.",
-    "Require complete paired native speech/behavior tests, independent final generalization and owner naturalness review before adopting a product model."
+    "Complete Google sign-in and verify actual provider state before any allocation; do not infer live status from historical STOP receipts.",
+    "All268TRAIN/DEV teacher-label/argument schedules audited exact. Use existing approved assets; no audio regeneration justified by this audit.",
+    "Review the prepared focused action-loss proposal for108newupdates/2completeepochs from298 within existing9700GPUseconds and unchanged70USDcap. Existing54-update allowance is exhausted.",
+    "After explicit new update admission, integrate full298 program/state restoration and newphase bridge offline, then native fresh-process proof, complete-corpus training and full evaluation. No duplicate saved updates or unchanged failed extension.",
+    "Qualify request-faithful asynchronous reasoning, silence/cancellation and native speech/latency independently; current zero-external-call phase does not authorize a real provider test.",
+    "Require complete paired native behavior/speech, ordinary retention and owner naturalness review before product adoption."
   ],
   "tool_goal_note": "Human explicitly resumed the blocked work by approving four GPU hours under the unchanged70USDcap. Goal objective is unchanged; goal API has no active/resume mutation, so execution resumes without replacing or completing the existing goal.",
   "pilot_success_evidence": {
@@ -201,5 +201,19 @@
     "question_already_sent": true,
     "resolved_by": "Direct human four-hour approval; actual native OPAL restore passed and adaptive training underway. Prior audit preserved as history."
   },
-  "authorization": "docs/NATIVE-VENUS-ADAPTIVE-PHASE-AUTHORIZATION-2026-10-29.json"
+  "authorization": "docs/NATIVE-VENUS-ADAPTIVE-PHASE-AUTHORIZATION-2026-10-29.json",
+  "next_prepared_phase": {
+    "recorded_utc": "2026-10-29T22:57:39.698814+00:00",
+    "proposal": "docs/NATIVE-VENUS-ACTION-FIDELITY-PROPOSAL-2026-10-29.json",
+    "status": "PROPOSED_NOT_AUTHORIZED",
+    "target_audit_complete": 268,
+    "new_optimizer_updates_executed": 0,
+    "optimizer_updates_requested": 108,
+    "gpu_seconds_from_existing_remaining_at_most": 7200,
+    "additional_gpu_time_requested": 0,
+    "additional_spending_requested": 0,
+    "new_external_calls_requested": 0,
+    "implementation": "Read-only target compiler and opt-in loss/metrics CPU-tested; future driver/state transition not enabled.",
+    "authentication": "Official Google Cloud SDK browser renewal opened; session28230 awaits user sign-in."
+  }
 }

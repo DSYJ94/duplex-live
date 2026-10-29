@@ -1,0 +1,149 @@
+{
+  "schema": "dl-native-action-target-audit-review-v1",
+  "recorded_utc": "2026-10-29T22:57:39.698814+00:00",
+  "status": "COMPLETE_TARGETS_NOT_A_BEHAVIOR_PASS",
+  "complete_scenes": 268,
+  "train": 216,
+  "dev": 52,
+  "heldout_inspected": 0,
+  "all_original_teacher_schedules_equal": true,
+  "all_complete_action_payloads_equal": true,
+  "all_lookup_keys_explicit_in_original_user_words": true,
+  "all_original_native_cache_hashes_recomputed": true,
+  "prefix_hashes_from_previously_verified_full_backup": true,
+  "index_path": "runs/venus-training-20261029/action-target-audit-v1/index-verified-v2.json",
+  "index_sha256": "e1ded570cb385b49bcd2e9560f9e4a8cf6c6286e66754f264f7282a6fd7ef541",
+  "groups": {
+    "TRAIN/pause": {
+      "scenes": 24,
+      "actions": 0,
+      "frame_decision_tokens": 549,
+      "action_tokens": 0,
+      "argument_tokens": 0,
+      "original_text_tokens": 336
+    },
+    "TRAIN/cancel": {
+      "scenes": 40,
+      "actions": 80,
+      "frame_decision_tokens": 942,
+      "action_tokens": 327,
+      "argument_tokens": 167,
+      "original_text_tokens": 623
+    },
+    "TRAIN/ordinary": {
+      "scenes": 32,
+      "actions": 0,
+      "frame_decision_tokens": 333,
+      "action_tokens": 0,
+      "argument_tokens": 0,
+      "original_text_tokens": 226
+    },
+    "DEV/ordinary": {
+      "scenes": 12,
+      "actions": 0,
+      "frame_decision_tokens": 121,
+      "action_tokens": 0,
+      "argument_tokens": 0,
+      "original_text_tokens": 55
+    },
+    "TRAIN/quiet": {
+      "scenes": 56,
+      "actions": 0,
+      "frame_decision_tokens": 1710,
+      "action_tokens": 0,
+      "argument_tokens": 0,
+      "original_text_tokens": 360
+    },
+    "DEV/delegate": {
+      "scenes": 12,
+      "actions": 12,
+      "frame_decision_tokens": 288,
+      "action_tokens": 50,
+      "argument_tokens": 26,
+      "original_text_tokens": 124
+    },
+    "TRAIN/pending": {
+      "scenes": 16,
+      "actions": 16,
+      "frame_decision_tokens": 452,
+      "action_tokens": 68,
+      "argument_tokens": 36,
+      "original_text_tokens": 352
+    },
+    "TRAIN/delegate": {
+      "scenes": 48,
+      "actions": 48,
+      "frame_decision_tokens": 1184,
+      "action_tokens": 196,
+      "argument_tokens": 100,
+      "original_text_tokens": 516
+    },
+    "DEV/quiet": {
+      "scenes": 12,
+      "actions": 0,
+      "frame_decision_tokens": 355,
+      "action_tokens": 0,
+      "argument_tokens": 0,
+      "original_text_tokens": 48
+    },
+    "DEV/cancel": {
+      "scenes": 8,
+      "actions": 16,
+      "frame_decision_tokens": 180,
+      "action_tokens": 66,
+      "argument_tokens": 34,
+      "original_text_tokens": 98
+    },
+    "DEV/pause": {
+      "scenes": 4,
+      "actions": 0,
+      "frame_decision_tokens": 92,
+      "action_tokens": 0,
+      "argument_tokens": 0,
+      "original_text_tokens": 60
+    },
+    "DEV/pending": {
+      "scenes": 4,
+      "actions": 4,
+      "frame_decision_tokens": 104,
+      "action_tokens": 16,
+      "argument_tokens": 8,
+      "original_text_tokens": 61
+    }
+  },
+  "tokenizer_revision": "4681004131ea1f1fb9aca9f0db76be322657cc79",
+  "tokenizer_sha256": "6d694bbb227bd59984fcad14c7d807ad74507019c9a1a8013d325c9d87977432",
+  "tokenizer_config_sha256": "b9e57d22d435cefddf37735dcd992cf27ce40f1a92ef14b187e0bf7650a5d99c",
+  "source_manifest_sha256": "4a5bdf4d9b79b788388baf71a93d7cf540eb27ec80a3f5902def61fe584fe701",
+  "native_manifest_sha256": "9090bffddf632773d40c19e5798fd9eb7a60b0551ee9db807ecb652f0e86cb5d",
+  "prefix_manifest_sha256": "e110215f8181be0a85c871e199c07c56274b513d4e6b71254c1aba7d0b37d51b",
+  "native_action_payloads": {
+    "TRAIN": 144,
+    "DEV": 32
+  },
+  "all_words_audio_folds_receipts_unchanged": true,
+  "new_optimizer_updates": 0,
+  "new_model_api_calls": 0,
+  "adopted": false,
+  "findings": [
+    "The existing teacher labels contain complete requests; this audit does not diagnose missing/corrupted request targets.",
+    "TRAIN action labels591 include288 delimiters and303 argument tokens. These share the text loss with spoken replies. DEV has132 action labels,68 argument tokens. This is sparse supervision, not proof of inadequate weighting.",
+    "Existing mean decision CE mixes listen/speak with turn/chunk endings. Separate frame-decision, complete-action and argument CE/token accuracy are now available to measure the failure directly.",
+    "Preparation adds opt-in auxiliary action CE. Default loss/gradients stay exact; no current training driver enables it, no new candidate or causal improvement claimed.",
+    "The full24 held-out regression has already been used. It remains frozen, never supplied to OPAL, and is not a new pristine generalization set."
+  ],
+  "tests": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 /private/tmp/duplex-venus-proof-20261027/bin/python -m pytest -q evals/harness/test_venus_action_targets.py evals/harness/test_venus_training_diagnostics.py evals/harness/test_venus_training.py evals/harness/test_venus_native_opal.py",
+    "passed": 42
+  },
+  "provider_verification": {
+    "attempted_utc": "2026-10-29T22:56:03.995188+00:00",
+    "status": "AUTHENTICATION_REFRESH_FAILED",
+    "last_verified_all_gpus_stopped_utc": "2026-10-29T14:41:17.363+00:00",
+    "fresh_live_status_claimed": false,
+    "reason": "Google requires interactive Cloud SDK reauthentication. No allocation or restart attempted."
+  },
+  "next": "Prepare an explicit new optimizer allowance; existing grant54updates consumed. Restore full saved298 OPAL/Adam/RNG in a distinct native process before changing phase schedule. Keep GPU off pending access/admission.",
+  "audit_source_file_sha256": "4dd97e0d5bc0b3b42549ebd007691c53002510bb228f8745d56c01a1f4775ea9",
+  "prefix_native_lineage_independently_checked": true
+}

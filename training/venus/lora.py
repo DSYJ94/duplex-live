@@ -130,7 +130,20 @@ def suffix_forward(llm,example,device):
     return torch.stack([logits[int(p)] for p in example['positions']]),torch.stack([hidden[int(p)] for p in example['positions']])
 
 
-def scene_loss(llm, example, device, kl_weight=.1, hidden_weight=.01):
+def scene_loss(llm, example, device, kl_weight=.1, hidden_weight=.01,
+               action_token_ids=None, action_aux_weight=0.):
+    # Opt-in preparation only: existing admitted training calls are unchanged.
+    # A future phase must explicitly admit the revised objective and exact index.
+    if type(action_aux_weight) not in (int,float) or not math.isfinite(action_aux_weight) or not 0 <= action_aux_weight <= .5:
+        raise ValueError('Finite explicitly bounded action auxiliary weight required')
+    if action_aux_weight and action_token_ids is None:
+        raise ValueError('Action objective requires audited native target identities')
+    selected = None
+    if action_token_ids is not None:
+        if example.get('fold') not in ('TRAIN','DEV'):
+            raise ValueError('Action training diagnostics exclude held-out targets')
+        from .action_targets import masks
+        selected, _ = masks(example['targets'], example['decision_mask'], action_token_ids)
     logits, hidden = selected_forward(llm, example, device)
     target = example['targets'].to(device)
     losses = torch.nn.functional.cross_entropy(logits, target, reduction='none')
@@ -147,4 +160,13 @@ def scene_loss(llm, example, device, kl_weight=.1, hidden_weight=.01):
         kl = torch.nn.functional.kl_div(logits.log_softmax(-1), base_logits.softmax(-1), reduction='batchmean')
         retention = (hidden - base_hidden).square().mean()
     loss = ce + kl_weight * kl + hidden_weight * retention
-    return loss, dict(ce=float(ce.detach()), kl=float(kl.detach()), hidden=float(retention.detach()),decision_ce=float(decision_ce.detach()) if decision_ce is not None else None,text_ce=float(text_ce.detach()) if text_ce is not None else None)
+    parts = dict(ce=float(ce.detach()), kl=float(kl.detach()), hidden=float(retention.detach()),decision_ce=float(decision_ce.detach()) if decision_ce is not None else None,text_ce=float(text_ce.detach()) if text_ce is not None else None)
+    if selected is not None:
+        from .action_targets import metrics
+        parts.update(metrics(logits, target, selected, losses))
+        action_mask = selected['action'].to(device)
+        auxiliary = losses[action_mask].mean() if action_mask.any() else loss.new_zeros(())
+        if action_aux_weight:
+            loss = loss + action_aux_weight * auxiliary
+        parts.update(action_aux_weight=action_aux_weight, action_auxiliary=float(auxiliary.detach()))
+    return loss, parts

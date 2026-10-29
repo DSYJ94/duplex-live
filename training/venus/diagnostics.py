@@ -7,7 +7,9 @@ from collections import defaultdict
 import math
 
 FAMILIES=('ordinary','delegate','quiet','cancel','pause','pending')
-FIELDS=('ce','decision_ce','text_ce','kl','hidden')
+FIELDS=('ce','decision_ce','text_ce','kl','hidden','frame_decision_ce','action_ce','argument_ce',
+        'frame_decision_token_accuracy','action_token_accuracy','argument_token_accuracy')
+TOKEN_COUNTS=('frame_decision_tokens','action_tokens','argument_tokens')
 
 
 def aggregate(rows):
@@ -24,6 +26,10 @@ def aggregate(rows):
             if any(type(v) not in (int,float) or not math.isfinite(v) for v,_ in measured):raise ValueError('Finite actual losses required')
             result[key+'_count']=sum(n for _,n in measured)
             result[key]=sum(v*n for v,n in measured)/sum(n for _,n in measured) if measured else None
+        for key in TOKEN_COUNTS:
+            counts=[p.get(key,0) for p,_ in items]
+            if any(type(n) is not int or n<0 for n in counts):raise ValueError('Actual nonnegative token counts required')
+            result[key]=sum(counts)
         out[family]=result
     return out
 

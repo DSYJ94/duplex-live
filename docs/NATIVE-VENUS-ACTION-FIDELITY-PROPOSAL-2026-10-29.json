@@ -1,0 +1,115 @@
+{
+  "schema": "dl-native-action-fidelity-phase-proposal-v1",
+  "status": "PROPOSED_NOT_AUTHORIZED_NOT_SUBMITTED",
+  "recorded_utc": "2026-10-29T22:56:03.995188+00:00",
+  "purpose": "Test whether extra supervision on complete native requests improves faithful delegation while retaining ordinary conversation. This is a focused continuation, not a claim that speech, silence or production quality are solved.",
+  "parent_checkpoint": {
+    "total_updates": 298,
+    "sha256": "e7340edd15537523db78120a97902399faa0af9caa46e875ec92e56889d6edef",
+    "producer": "dd767d65ac663e701142f2c882aeb5e1c2a2c6e5",
+    "rejected": true,
+    "preserved": true
+  },
+  "additional_optimizer_allowance_requested": 108,
+  "maximum_complete_epochs": 2,
+  "maximum_total_updates": 406,
+  "existing_authorization_new_updates_remaining": 0,
+  "compute": {
+    "additional_gpu_time_requested": 0,
+    "maximum_from_existing_remaining_seconds": 7200,
+    "remaining_existing_seconds_before_phase": 9700,
+    "focused_consumed_upper_before_phase": 23100,
+    "maximum_focused_after_phase": 30300,
+    "focused_cap_seconds": 32800,
+    "original_consumed_upper_seconds": 54451,
+    "maximum_cumulative_after_phase": 84751,
+    "cumulative_cap_seconds": 87251,
+    "unchanged_phase_cap_usd": 70,
+    "unchanged_cumulative_cap_usd": 175,
+    "conservative_hourly_usd": 4,
+    "conservative_phase_with_reserves_usd": 57.666666666666664,
+    "conservative_total_with_previous_scope_usd": 149.65114722222222,
+    "previous_scope_usd_not_reset": 91.98448055555555,
+    "maximum_concurrent_gpu_jobs": 1,
+    "same_a10040": true,
+    "same_disk_id": "4375908109499109167",
+    "same_disk_gib": 100,
+    "same_zone": "us-central1-a",
+    "new_purchases": 0,
+    "new_storage": 0,
+    "new_apis_or_network": 0,
+    "new_model_api_or_synthesis_calls": 0
+  },
+  "dataset": {
+    "train": 216,
+    "dev": 52,
+    "existing_frozen_holdout": 24,
+    "all_original_words_audio_receipts_folds_preserved": true,
+    "audit_review": "docs/NATIVE-VENUS-ACTION-TARGET-AUDIT-2026-10-29.json",
+    "target_index_sha256": "e1ded570cb385b49bcd2e9560f9e4a8cf6c6286e66754f264f7282a6fd7ef541",
+    "regenerate_audio": false,
+    "new_dataset_version": false,
+    "derived_mask_index_only": true
+  },
+  "objective": {
+    "base": "mean(present decisionCE,textCE) + 0.1 ordinaryKL + 0.01 ordinaryhiddenMSE",
+    "proposed": "base + 0.25 mean CE of all complete <delegate> payloads including their delimiters, excluding native listen/speak/chunk/turn framing",
+    "coefficient": 0.25,
+    "argument_ce_reported_separately": true,
+    "no_action_scenes_extra_loss": 0,
+    "all_existing_losses_and_retention_preserved": true,
+    "model_tts_audio_and_base_frozen": true,
+    "rank": 64,
+    "alpha": 64,
+    "adapter_parameters": 851968,
+    "projections": [
+      "layer35.q_proj",
+      "layer35.v_proj"
+    ],
+    "no_extra_layers_or_full_weights": true
+  },
+  "phase_transition": {
+    "prerequisite": "Distinct native process must restore full298 OPALprogram1, Adam counters/moments, scheduler, observations/decisions/diagnostics and all RNG exactly, ZERO updates. Do not load wrapped state as plain Adam or claim CPU tests satisfy this.",
+    "after_exact_restore": "Explicitly start a new108-update phase schedule with Adam time298 and moments preserved; archive parent program/clock/state. Nominal LR5e-5,16warmup,cosine108; preserve parent program1 effectiveLRx0.5 unless an actual recorded OPAL decision changes it. New phase clock is explicit, not an exact continuation of an ended zero-LR schedule.",
+    "initial_fresh_process_two_update_proof": "Part of the108new candidate updates, not repeated saved244-to298 or an extra candidate. Exact resumed next update/Adam/program/RNG/loss required.",
+    "final_restore": "Distinct native fresh-process restoration of full406 state required before extension/adoption."
+  },
+  "opal": {
+    "supervisor": "Current LOCAL agent, no paid secondary agent",
+    "upstream_commit": "8b16759a3e9930916ed582e28068267859f935f8",
+    "reviews_every_updates": 8,
+    "request_steps": [
+      16,
+      32,
+      64
+    ],
+    "dataset_and_objective_fixed_for_phase": true,
+    "observe": [
+      "complete-actionCE",
+      "argumentCE/tokenaccuracy",
+      "frame-decisionCE/tokenaccuracy",
+      "all six TRAIN/DEV families",
+      "ordinaryKL/hidden",
+      "gradient/clip/actualeffectiveLR",
+      "full native behavior/speech"
+    ],
+    "allowed": "Evidence-supported optimizer/LR/clip code revisions with all programs/state preserved; no extra updates, calls, pruning or weaker gates.",
+    "no_heldout_feedback": true
+  },
+  "runtime_and_evaluation": {
+    "no_simultaneous_runtime_change": true,
+    "george_reference_unchanged": true,
+    "speech_sampling_and_thresholds_unchanged": true,
+    "complete52dev_each_epoch": true,
+    "all_216_every_epoch": true,
+    "minimum_evaluation_and_backup_reserve_seconds": 2500,
+    "full_paired64_required": true,
+    "baseline298": "Reuse all32 existing validated parent298 cases/ASR only when exact input/profile/PCM/fulltrace/hash identity checks pass; preserve original244 comparison too. Record32reused+32new explicitly; never claim64new generations.",
+    "candidate": "All24fixed cases plus all8 old ordinary retention, all32waveforms/fullASR/nativebehavior. No missing or failed cases discarded.",
+    "adoption": "Strict behavior, word/peak, ordinary retention, latency and naturalness gates remain. No automatic adoption from CE or argument accuracy. This phase does not qualify real external reasoning or humanlike voice.",
+    "if_no_complete_phase_fits": "Stop early, preserve state; never drop scenes or consume evaluation reserve."
+  },
+  "causal_limit": "One focused objective revision plus a new training phase can be evaluated empirically against parent298. Without a matched optimizer-history control, improvement cannot be uniquely attributed to the auxiliary coefficient rather than further exposure or the new schedule.",
+  "implementation_status": "Audit and opt-in loss/diagnostics implemented/CPU-tested; not enabled in driver, no new state transition admitted. Complete source/state/admission integration and checks offline before any GPU allocation after approval.",
+  "approval_needed": "Approve only up to108 new optimizer updates over2wholeepochs within already approved remaining GPU time and unchanged70USDcap. No additional GPU time, purchase or external API allowance requested."
+}
