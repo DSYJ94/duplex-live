@@ -3,21 +3,25 @@ import json,os,shutil,subprocess,sys,time,shlex
 from pathlib import Path
 from datetime import datetime
 from . import controller as c
-from .action_guard import AUTH,PLAN,KEY,sha as digest
+from .action_guard import AUTH,PLAN,KEY,RETRY_PLAN,RETRY_KEY,sha as digest
 from portable.venus.guard import bounded_runpod_read
 
 
 def main():
-    c.R=Path('runs/venus-training-20261029/action-v41')
+    global PLAN,KEY
+    retry='--recover-guard' in sys.argv
+    if retry:PLAN,KEY=RETRY_PLAN,RETRY_KEY
+    version='v42' if retry else 'v41';unit_prefix='duplex-venus-action'+version[1:]
+    c.R=Path('runs/venus-training-20261029')/('action-'+version)
     assert not c.R.exists(),'Observe existing action-v41; never duplicate its allocation'
     a=json.loads(AUTH.read_text());p=json.loads(PLAN.read_text());zone='us-central1-a'
     assert a['status']=='APPROVED' and a['human_approval']=='Approve 108 updates within existing time/$70 cap'
     assert p['parent_sha256']==digest(AUTH) and a['maximum_candidate_new_updates']==108
-    c.NAME=p['vm_name'];duration=p['maximum_gpu_seconds'];prior=p['focused_gpu_seconds_upper_before_launch'];version='v41'
+    c.NAME=p['vm_name'];duration=p['maximum_gpu_seconds'];prior=p['focused_gpu_seconds_upper_before_launch']
     r=dict(same_existing_disk_name=p['same_disk_name'],same_existing_disk_id=a['same_disk_id'])
     assert not c.run(['git','status','--porcelain','--','training/venus','portable/venus','docs/NATIVE-VENUS-ACTION-FIDELITY-AUTHORIZATION-2026-10-29.json','docs/NATIVE-VENUS-ACTION-FIDELITY-EXECUTION-2026-10-29.json']).strip()
-    seed=Path('runs/venus-training-20261029/terminal-render-v40');before=seed
-    last=json.loads((seed/'provider-final.json').read_text());old=c.cloud('compute','instances','describe',last['name'],'--zone='+zone)
+    seed=Path('runs/venus-training-20261029/terminal-render-v40');before=Path('runs/venus-training-20261029/action-v41') if retry else seed
+    last=json.loads((before/'provider-final.json').read_text());old=c.cloud('compute','instances','describe',last['name'],'--zone='+zone)
     assert old['status']=='TERMINATED' and old['id']==last['id']==p['retire_only_vm_id'] and old['lastStopTimestamp']==last['lastStopTimestamp']
     assert all(v['status']=='TERMINATED' for v in c.cloud('compute','instances','list'))
     quotas={q['metric']:q for q in c.cloud('compute','regions','describe','us-central1')['quotas']}
@@ -43,7 +47,7 @@ def main():
         c.run(['gcloud','compute','instances','delete',old['name'],'--zone='+zone,'--project='+c.PROJECT,'--keep-disks=boot','--quiet'],150)
         c.record('only_stopped_envelope_retired_same_disk_contents_preserved',old_id=old['id'],disk_id=disk['id'])
         current_disk=c.cloud('compute','disks','describe',r['same_existing_disk_name'],'--zone='+zone);assert current_disk['id']==disk['id'] and not current_disk.get('users')
-        bootstrap=c.R/'bootstrap.sh';bootstrap.write_text('#!/bin/sh\nset -eu\nsystemd-run --unit=duplex-venus-action41-bootstrap-stop --on-active=600s /sbin/shutdown -h now || /sbin/shutdown -h now\n')
+        bootstrap=c.R/'bootstrap.sh';bootstrap.write_text('#!/bin/sh\nset -eu\nsystemd-run --unit='+unit_prefix+'-bootstrap-stop --on-active=600s /sbin/shutdown -h now || /sbin/shutdown -h now\n')
         op=c.cloud('compute','instances','create',c.NAME,'--zone='+zone,'--machine-type=a2-highgpu-1g','--provisioning-model=FLEX_START','--request-valid-for-duration=900s','--maintenance-policy=TERMINATE','--no-restart-on-failure','--no-service-account','--no-scopes','--tags=duplex-venus-train-bounded','--disk=name='+r['same_existing_disk_name']+',boot=yes,auto-delete=no,mode=rw','--metadata=enable-oslogin=TRUE,enable-guest-attributes=TRUE,block-project-ssh-keys=TRUE','--metadata-from-file=startup-script='+str(bootstrap),'--max-run-duration='+str(duration)+'s','--instance-termination-action=STOP','--async');op=op[0] if isinstance(op,list) else op;created=True
         c.record('one_adaptive_allocation',operation=op['name'],source=c.source)
         until=time.time()+960
@@ -68,7 +72,7 @@ def main():
             try:c.ssh('nvidia-smi',20);break
             except RuntimeError:time.sleep(3)
         else:raise RuntimeError('Strict SSH not ready')
-        bundle=c.ROOT+'/adaptive-v34-source.bundle';lease_path=c.ROOT+'/action-v41-lease.json';c.sync(c.R/'source.bundle',bundle)
+        bundle=c.ROOT+'/adaptive-v34-source.bundle';lease_path=c.ROOT+'/action-'+version+'-lease.json';c.sync(c.R/'source.bundle',bundle)
         c.ssh('git --git-dir='+c.ROOT+'/source.git fetch '+bundle+' HEAD && git --git-dir='+c.ROOT+'/source.git worktree add --detach '+c.remote+' '+c.source)
         opal_bundle=c.ROOT+'/adaptive-v34-opal.bundle';c.sync(c.R/'opal-source.bundle',opal_bundle)
         c.ssh('git init '+c.ROOT+'/opal-upstream-v34 && git -C '+c.ROOT+'/opal-upstream-v34 fetch '+opal_bundle+' HEAD && git -C '+c.ROOT+'/opal-upstream-v34 checkout --detach 8b16759a3e9930916ed582e28068267859f935f8')
@@ -82,8 +86,8 @@ def main():
             if time.time()>until:raise TimeoutError('Guard readiness timeout')
             time.sleep(1)
         live=json.loads(c.ssh('cat '+c.ROOT+'/venus-live-guard-v1.json'));assert live['vm_id']==vm['id'] and time.time()<live['expires_unix'] and live['stop_unix']==end
-        c.ssh('sudo systemd-run --unit=duplex-venus-action41-guest --property=RuntimeMaxSec=7300 --working-directory='+c.remote+' /usr/bin/python3 -u -m portable.venus.guard --guest --guard '+c.ROOT+'/venus-live-guard-v1.json --lease '+lease_path)
-        assert c.props('duplex-venus-action41-guest')['ActiveState']=='active';c.ssh('sudo systemctl stop duplex-venus-action41-bootstrap-stop.timer');c.record('both_guards_live',mac_pid=guard.pid)
+        c.ssh('sudo systemd-run --unit='+unit_prefix+'-guest --property=RuntimeMaxSec=7300 --working-directory='+c.remote+' /usr/bin/python3 -u -m portable.venus.guard --guest --guard '+c.ROOT+'/venus-live-guard-v1.json --lease '+lease_path)
+        assert c.props(unit_prefix+'-guest')['ActiveState']=='active';c.ssh('sudo systemctl stop '+unit_prefix+'-bootstrap-stop.timer');c.record('both_guards_live',mac_pid=guard.pid)
         dest=c.R/'copyback';dest.mkdir()
         for row in rows:
             original=seed/'copyback'/row['path'];target=dest/row['path'];target.parent.mkdir(parents=True,exist_ok=True)
@@ -95,13 +99,15 @@ def main():
         execute(c,env,end,lease_path)
     except BaseException as error:c.record('action_failure',error_type=type(error).__name__,error=str(error)[-2000:]);raise
     finally:
-        if c.ssh_argv:
+        if c.ssh_argv and c.UNITS:
             try:
                 for unit in c.UNITS:
                     state=c.props(unit)
                     if state['ActiveState']=='active' and state['SubState']!='exited':c.ssh('sudo systemctl stop '+unit,30)
                 c.copyback(600)
             except Exception as error:c.record('copyback_failure_disk_preserved',error_type=type(error).__name__,error=str(error)[-500:])
+        elif c.ssh_argv:
+            c.record('no_model_units_started_prior_complete_backup_retained',backup=str(seed/'copyback-verified.json'),new_optimizer_updates=0)
         if guard and guard.poll() is None:
             (c.R/'stop-requested').write_text('closing\n')
             try:guard.wait(timeout=150)

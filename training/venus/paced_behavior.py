@@ -35,7 +35,7 @@ async def main(a):
     parent=torch.load(a.parent_checkpoint,map_location='cpu',weights_only=False)
     from .native_optimizer import verified_parent
     if base_steps==298:
-        assert json.loads(Path(a.lease).read_text())['resource_key']=='venus-action-fidelity-v41'
+        assert json.loads(Path(a.lease).read_text())['resource_key'] in ('venus-action-fidelity-v41','venus-action-fidelity-v42')
         assert reuse and json.loads((Path(a.candidate)/'final-native-restore.json').read_text())['total_training_steps']==terminal['total_optimizer_updates']
     assert verified_parent(parent,a.parent_sha256,allow244=True,allow298=base_steps==298)==base_steps
     state=torch.load(checkpoint,map_location='cpu',weights_only=False)

@@ -180,7 +180,7 @@ def main(a):
     if action_phase:
         from .action_objective import ActionObjective
         ACTION_OBJECTIVE=ActionObjective(action_index,Path(a.cache)/'manifest.json')
-        if lease.get('resource_key')!='venus-action-fidelity-v41' or execution['new_optimizer_updates_authorized_by_this_execution']!=108:
+        if lease.get('resource_key') not in ('venus-action-fidelity-v41','venus-action-fidelity-v42') or execution['new_optimizer_updates_authorized_by_this_execution']!=108:
             raise ValueError('Exact approved action-phase execution required')
         RECIPE.update(epochs=2,updates=108,maximum_complete_epochs=2,post_training_reserve_seconds=2500,
                       action_aux_weight=.25,action_target_index_sha256=ACTION_OBJECTIVE.sha256)

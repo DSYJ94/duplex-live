@@ -5,18 +5,18 @@ from pathlib import Path
 
 import pytest
 
-from training.venus.action_guard import AUTH,PLAN,KEY,validate,sha
+from training.venus.action_guard import AUTH,PLAN,KEY,RETRY_KEY,execution_plan,validate,sha
 from evals.harness.test_venus_adaptive_guard import fixture as old_fixture
 
 
-def fixture():
+def fixture(key=KEY):
     vm,lease,_=old_fixture()
-    p=json.loads(PLAN.read_text())
-    start=datetime.fromisoformat('2026-10-29T23:30:00+00:00').timestamp()
-    vm.update(name=p['vm_name'],lastStartTimestamp='2026-10-29T23:30:00Z')
-    vm['scheduling']['maxRunDuration']['seconds']='7200'
-    lease.update(resource_key=KEY,stop_unix=start+7200,prior_new_gpu_seconds_upper=23100,
-                 authorization_sha256=sha(AUTH),execution_plan_sha256=sha(PLAN))
+    plan=execution_plan(dict(resource_key=key));p=json.loads(plan.read_text())
+    start=datetime.fromisoformat('2026-10-30T00:30:00+00:00').timestamp()
+    vm.update(name=p['vm_name'],lastStartTimestamp='2026-10-30T00:30:00Z')
+    vm['scheduling']['maxRunDuration']['seconds']=str(p['maximum_gpu_seconds'])
+    lease.update(resource_key=key,stop_unix=start+p['maximum_gpu_seconds'],prior_new_gpu_seconds_upper=p['focused_gpu_seconds_upper_before_launch'],
+                 authorization_sha256=sha(AUTH),execution_plan_sha256=sha(plan))
     return vm,lease,start
 
 
@@ -50,3 +50,39 @@ def test_new_parent_requires_explicit298_admission():
     digest='e7340edd15537523db78120a97902399faa0af9caa46e875ec92e56889d6edef'
     assert verified_parent(state,digest,allow298=True)==298
     with pytest.raises(ValueError):verified_parent(state,digest,allow244=True)
+
+
+@pytest.mark.parametrize('size',[100,200])
+@pytest.mark.parametrize('key',[KEY,RETRY_KEY])
+def test_actual_mac_guard_entrypoint_accepts_exact_authority_and_checks_disk(monkeypatch,tmp_path,size,key):
+    from types import SimpleNamespace
+    from portable.venus import guard
+    vm,lease,start=fixture(key)
+    lease.update(controller_pid=1,controller_birth='fixture-birth')
+    path=tmp_path/'lease.json';path.write_text(json.dumps(lease))
+    ssh=tmp_path/'ssh.json';ssh.write_text(json.dumps(['ssh','-o','StrictHostKeyChecking=yes','fixture']))
+    key=tmp_path/'fixture-key';key.write_text('fixture-only-not-a-credential')
+    stop=tmp_path/'stop';published=[]
+    monkeypatch.setattr(guard,'run',lambda *a,**kw:'fixture-birth')
+    monkeypatch.setattr(guard,'provider_snapshot',lambda *a:(vm,dict(id=lease['disk_id'],sizeGb=str(size)),[vm],[],start+1))
+    monkeypatch.setattr(guard,'cloud',lambda *a,**kw:dict(vm,status='TERMINATED'))
+    monkeypatch.setattr(guard.time,'time',lambda:start+1)
+    monkeypatch.setattr(guard.time,'sleep',lambda _:None)
+    def publish(*args):
+        published.append(json.loads(args[1]));stop.write_text('fixture-complete')
+    monkeypatch.setattr(guard,'publish_guard',publish)
+    args=SimpleNamespace(lease=path,ssh_argv=ssh,runpod_key=key,status=tmp_path/'status',stop_file=stop)
+    if size==100:
+        guard.mac(args)
+        assert len(published)==1 and published[0]['expires_unix']==start+91
+    else:
+        with pytest.raises(AssertionError):guard.mac(args)
+        assert not published
+
+
+def test_guard_recovery_carries_failed_startup_and_shortens_native_stop():
+    vm,lease,start=fixture(RETRY_KEY)
+    assert lease['prior_new_gpu_seconds_upper']==23400
+    assert validate(vm,[vm],[],lease,start+1)==start+6900
+    with pytest.raises(AssertionError):
+        validate(vm,[vm],[],dict(lease,prior_new_gpu_seconds_upper=23100),start+1)
