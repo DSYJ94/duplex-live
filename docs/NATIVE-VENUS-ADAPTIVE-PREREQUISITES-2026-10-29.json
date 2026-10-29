@@ -1,0 +1,306 @@
+{
+  "recorded_utc": "2026-10-29T11:21:57.939594+00:00",
+  "producer_source": "dd767d65ac663e701142f2c882aeb5e1c2a2c6e5",
+  "run": "runs/venus-training-20261029/adaptive-v36",
+  "runtime_summaries": {
+    "released": {
+      "released": {
+        "listen": {
+          "frames": 8,
+          "processing_min": 0.3761280349999936,
+          "processing_max": 0.3954019709999841,
+          "processing_mean": 0.3831729298749984
+        },
+        "speak": {
+          "frames": 3,
+          "processing_min": 2.4129033279999987,
+          "processing_max": 2.8862774739999963,
+          "processing_mean": 2.681543259666673
+        }
+      },
+      "candidate": {
+        "listen": {
+          "frames": 10,
+          "processing_min": 0.379009319000005,
+          "processing_max": 0.38859253000001104,
+          "processing_mean": 0.3831896342000022
+        },
+        "speak": {
+          "frames": 1,
+          "processing_min": 2.8150617020000084,
+          "processing_max": 2.8150617020000084,
+          "processing_mean": 2.8150617020000084
+        }
+      }
+    },
+    "sdpa": {
+      "released": {
+        "listen": {
+          "frames": 8,
+          "processing_min": 0.37130589699998495,
+          "processing_max": 0.3817397999999912,
+          "processing_mean": 0.3743271663749965
+        },
+        "speak": {
+          "frames": 3,
+          "processing_min": 2.2103911760000017,
+          "processing_max": 2.5115220159999865,
+          "processing_mean": 2.400143926999997
+        }
+      },
+      "candidate": {
+        "listen": {
+          "frames": 10,
+          "processing_min": 0.374238709999986,
+          "processing_max": 0.3823964900000192,
+          "processing_mean": 0.37782843869999566
+        },
+        "speak": {
+          "frames": 1,
+          "processing_min": 2.6294755050000163,
+          "processing_max": 2.6294755050000163,
+          "processing_mean": 2.6294755050000163
+        }
+      }
+    }
+  },
+  "speedup_percent": {
+    "released": 10.49393224040902,
+    "candidate": 6.5926156029950995
+  },
+  "runtime_backend_for_complete_native_comparison": "released",
+  "reason": "Small one-scene serial speedup does not meet realtime; original backend retained to isolate the training recipe. SDPA is not adopted. Both waveform variants are preserved; generated text is not independent ASR.",
+  "conditioning": {
+    "complete": true,
+    "source": "dd767d65ac663e701142f2c882aeb5e1c2a2c6e5",
+    "checkpoint_sha256": "c634e6cf38831210be0165ce7f6dd09c5454226f62ff622477fd4d051abde270",
+    "manifest_sha256": "e110215f8181be0a85c871e199c07c56274b513d4e6b71254c1aba7d0b37d51b",
+    "rows": [
+      {
+        "id": "venus-control-v1-train-ordinary-0120",
+        "fold": "TRAIN",
+        "family": "ordinary",
+        "spoken_tokens": 9,
+        "exact_target_embedding_alignment": true,
+        "fixed_token_history": true,
+        "fixed_native_segment_schedule": true,
+        "post_token_states": true,
+        "hidden_mse": 0.3605765700340271,
+        "condition_mse": 0.0002754227607510984,
+        "condition_max_abs": 0.0732421875,
+        "semantic_cosine_mean": 0.8960691094398499,
+        "semantic_cosine_min": 0.8103787302970886,
+        "optimizer_updates": 0,
+        "audible_quality_measured": false,
+        "model_adoption": false
+      },
+      {
+        "id": "venus-control-v1-train-delegate-0056",
+        "fold": "TRAIN",
+        "family": "delegate",
+        "spoken_tokens": 11,
+        "exact_target_embedding_alignment": true,
+        "fixed_token_history": true,
+        "fixed_native_segment_schedule": true,
+        "post_token_states": true,
+        "hidden_mse": 0.8189051747322083,
+        "condition_mse": 0.00027357679209671915,
+        "condition_max_abs": 0.0771484375,
+        "semantic_cosine_mean": 0.8965635299682617,
+        "semantic_cosine_min": 0.8000631332397461,
+        "optimizer_updates": 0,
+        "audible_quality_measured": false,
+        "model_adoption": false
+      },
+      {
+        "id": "venus-control-v1-train-quiet-0000",
+        "fold": "TRAIN",
+        "family": "quiet",
+        "spoken_tokens": 9,
+        "exact_target_embedding_alignment": true,
+        "fixed_token_history": true,
+        "fixed_native_segment_schedule": true,
+        "post_token_states": true,
+        "hidden_mse": 0.44915273785591125,
+        "condition_mse": 0.0002525269810575992,
+        "condition_max_abs": 0.0712890625,
+        "semantic_cosine_mean": 0.9049182534217834,
+        "semantic_cosine_min": 0.8237864971160889,
+        "optimizer_updates": 0,
+        "audible_quality_measured": false,
+        "model_adoption": false
+      },
+      {
+        "id": "venus-control-v1-train-cancel-0104",
+        "fold": "TRAIN",
+        "family": "cancel",
+        "spoken_tokens": 19,
+        "exact_target_embedding_alignment": true,
+        "fixed_token_history": true,
+        "fixed_native_segment_schedule": true,
+        "post_token_states": true,
+        "hidden_mse": 0.7843973636627197,
+        "condition_mse": 0.00029214442474767566,
+        "condition_max_abs": 0.09765625,
+        "semantic_cosine_mean": 0.8896005749702454,
+        "semantic_cosine_min": 0.7606213092803955,
+        "optimizer_updates": 0,
+        "audible_quality_measured": false,
+        "model_adoption": false
+      },
+      {
+        "id": "venus-control-v1-train-pause-0032",
+        "fold": "TRAIN",
+        "family": "pause",
+        "spoken_tokens": 14,
+        "exact_target_embedding_alignment": true,
+        "fixed_token_history": true,
+        "fixed_native_segment_schedule": true,
+        "post_token_states": true,
+        "hidden_mse": 0.4594586491584778,
+        "condition_mse": 0.00031900088652037084,
+        "condition_max_abs": 0.0859375,
+        "semantic_cosine_mean": 0.8794212341308594,
+        "semantic_cosine_min": 0.7236993312835693,
+        "optimizer_updates": 0,
+        "audible_quality_measured": false,
+        "model_adoption": false
+      },
+      {
+        "id": "venus-control-v1-train-pending-0088",
+        "fold": "TRAIN",
+        "family": "pending",
+        "spoken_tokens": 22,
+        "exact_target_embedding_alignment": true,
+        "fixed_token_history": true,
+        "fixed_native_segment_schedule": true,
+        "post_token_states": true,
+        "hidden_mse": 0.6804975867271423,
+        "condition_mse": 0.000248016876867041,
+        "condition_max_abs": 0.0751953125,
+        "semantic_cosine_mean": 0.9064223766326904,
+        "semantic_cosine_min": 0.7995165586471558,
+        "optimizer_updates": 0,
+        "audible_quality_measured": false,
+        "model_adoption": false
+      },
+      {
+        "id": "venus-control-v1-dev-ordinary-0180",
+        "fold": "DEV",
+        "family": "ordinary",
+        "spoken_tokens": 5,
+        "exact_target_embedding_alignment": true,
+        "fixed_token_history": true,
+        "fixed_native_segment_schedule": true,
+        "post_token_states": true,
+        "hidden_mse": 0.37278175354003906,
+        "condition_mse": 0.00018698304484132677,
+        "condition_max_abs": 0.05859375,
+        "semantic_cosine_mean": 0.9304920434951782,
+        "semantic_cosine_min": 0.8831313252449036,
+        "optimizer_updates": 0,
+        "audible_quality_measured": false,
+        "model_adoption": false
+      },
+      {
+        "id": "venus-control-v1-dev-delegate-0164",
+        "fold": "DEV",
+        "family": "delegate",
+        "spoken_tokens": 10,
+        "exact_target_embedding_alignment": true,
+        "fixed_token_history": true,
+        "fixed_native_segment_schedule": true,
+        "post_token_states": true,
+        "hidden_mse": 0.8277969360351562,
+        "condition_mse": 0.00029373716097325087,
+        "condition_max_abs": 0.0703125,
+        "semantic_cosine_mean": 0.8889423608779907,
+        "semantic_cosine_min": 0.8210258483886719,
+        "optimizer_updates": 0,
+        "audible_quality_measured": false,
+        "model_adoption": false
+      },
+      {
+        "id": "venus-control-v1-dev-quiet-0152",
+        "fold": "DEV",
+        "family": "quiet",
+        "spoken_tokens": 5,
+        "exact_target_embedding_alignment": true,
+        "fixed_token_history": true,
+        "fixed_native_segment_schedule": true,
+        "post_token_states": true,
+        "hidden_mse": 0.6835853457450867,
+        "condition_mse": 0.0003143703215755522,
+        "condition_max_abs": 0.083984375,
+        "semantic_cosine_mean": 0.8807260394096375,
+        "semantic_cosine_min": 0.7511578798294067,
+        "optimizer_updates": 0,
+        "audible_quality_measured": false,
+        "model_adoption": false
+      },
+      {
+        "id": "venus-control-v1-dev-cancel-0176",
+        "fold": "DEV",
+        "family": "cancel",
+        "spoken_tokens": 12,
+        "exact_target_embedding_alignment": true,
+        "fixed_token_history": true,
+        "fixed_native_segment_schedule": true,
+        "post_token_states": true,
+        "hidden_mse": 1.0024241209030151,
+        "condition_mse": 0.00039225927321240306,
+        "condition_max_abs": 0.082763671875,
+        "semantic_cosine_mean": 0.8517171144485474,
+        "semantic_cosine_min": 0.7845385670661926,
+        "optimizer_updates": 0,
+        "audible_quality_measured": false,
+        "model_adoption": false
+      },
+      {
+        "id": "venus-control-v1-dev-pause-0160",
+        "fold": "DEV",
+        "family": "pause",
+        "spoken_tokens": 14,
+        "exact_target_embedding_alignment": true,
+        "fixed_token_history": true,
+        "fixed_native_segment_schedule": true,
+        "post_token_states": true,
+        "hidden_mse": 0.4947904944419861,
+        "condition_mse": 0.0003500930906739086,
+        "condition_max_abs": 0.0810546875,
+        "semantic_cosine_mean": 0.8670210838317871,
+        "semantic_cosine_min": 0.7488021850585938,
+        "optimizer_updates": 0,
+        "audible_quality_measured": false,
+        "model_adoption": false
+      },
+      {
+        "id": "venus-control-v1-dev-pending-0172",
+        "fold": "DEV",
+        "family": "pending",
+        "spoken_tokens": 15,
+        "exact_target_embedding_alignment": true,
+        "fixed_token_history": true,
+        "fixed_native_segment_schedule": true,
+        "post_token_states": true,
+        "hidden_mse": 0.7589972615242004,
+        "condition_mse": 0.00031118144397623837,
+        "condition_max_abs": 0.0703125,
+        "semantic_cosine_mean": 0.8819528222084045,
+        "semantic_cosine_min": 0.818313479423523,
+        "optimizer_updates": 0,
+        "audible_quality_measured": false,
+        "model_adoption": false
+      }
+    ],
+    "optimizer_updates": 0,
+    "numerical_conditioning_only": true,
+    "audible_damage_established": false,
+    "adopted": false
+  },
+  "conditioning_interpretation": "Fixed identical text/history shows altered speech-conditioning vectors after244; numerical drift alone does not establish audible damage, pronunciation/accent cause, or a dataset defect.",
+  "dataset_diagnosis": "No new proven source/target defect from these measurements. Keep complete approved216TRAIN/52DEV and all folds/audio/history; no new or pruned data admitted. Quiet DEV stagnation and mixed task coverage remain hypotheses to test, not a causal verdict.",
+  "training_decision": "Run the authorized complete54-update244 continuation only after actual OPAL start and independent fresh-process full-state restore. Review family TRAIN/DEV, gradients, retention and actual optimizer programs at requests16/32; one-factor changes only if justified. Full64 native speech/control review still required; no loss-only adoption.",
+  "new_external_api_calls": 0,
+  "adopted": false
+}
