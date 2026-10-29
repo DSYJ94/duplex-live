@@ -226,10 +226,14 @@ class NativeEngine:
         with torch.inference_mode():
             prefill = self.duplex.streaming_prefill(audio_waveform=wave,
                 text_list=[feedback] if feedback else None)
+            prefilled_at=time.monotonic()
             if not prefill.get('success'):
                 raise RuntimeError('Native prefill failed: ' + str(prefill.get('reason')))
             result = self.duplex.streaming_generate(**{k:self.profile[k] for k in
                 ('decode_mode','max_new_speak_tokens_per_chunk','temperature','top_k','top_p','listen_prob_scale')})
+        generated_at=time.monotonic()
+        from .timing import stage_timings
+        timings=stage_timings(result,prefill_seconds=prefilled_at-started,generation_seconds=generated_at-prefilled_at)
         ids = self.duplex.total_ids[self.cursor:]
         self.cursor = len(self.duplex.total_ids)
         raw_text = self.duplex.tokenizer.decode(ids, skip_special_tokens=False)
@@ -241,12 +245,14 @@ class NativeEngine:
         audio = np.asarray(audio, dtype=np.float32).reshape(-1)
         if not np.isfinite(audio).all():
             raise RuntimeError('Nonfinite native waveform; no clipping/normalization repair')
+        omit_silence=bool(result.get('is_listen')) and not np.any(audio)
+        wire_audio=b'' if omit_silence else audio.astype('<f4').tobytes()
         return dict(text=result.get('text',''), raw_text=raw_text,
             token_ids=[int(x) for x in ids], is_listen=bool(result.get('is_listen')),
             end_of_turn=bool(result.get('end_of_turn')),
             elapsed=time.monotonic()-started, audio_samples=len(audio),
             peak=float(np.max(np.abs(audio))) if len(audio) else 0,
-            audio=base64.b64encode(audio.astype('<f4').tobytes()).decode(),
+            audio=base64.b64encode(wire_audio).decode(),wire_silence_omitted=omit_silence,wire_audio_bytes=len(wire_audio),timings=timings,
             audio_sample_rate=24000)
 
 
