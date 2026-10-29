@@ -1,0 +1,165 @@
+{
+  "schema": "dl-native-adaptive-phase-execution-v1",
+  "status": "WITHIN_APPROVED_ADAPTIVE_PHASE",
+  "parent_sha256": "e5c217fa0b795b300b9b24bc8aed221fcad84fd57c4cafb3d30ac4dcef6e2973",
+  "vm_name": "duplex-venus-adaptive-20261029-v34",
+  "retire_only_vm_id": "1283972191172335172",
+  "retire_only_vm_name": "duplex-venus-adaptive-20261029-v34",
+  "maximum_gpu_seconds": 13700,
+  "focused_gpu_seconds_upper_before_launch": 19100,
+  "new_optimizer_updates_authorized_by_this_execution": 54,
+  "maximum_complete_epochs": 1,
+  "parent_checkpoint_sha256": "c634e6cf38831210be0165ce7f6dd09c5454226f62ff622477fd4d051abde270",
+  "backup_before_retirement": {
+    "all_hashes_verified": true,
+    "files": 11526,
+    "bytes": 7775057757,
+    "source": "0751490d1dbded2d342b4bfaf9a147791ba6ef50"
+  },
+  "runtime_repair_is_opt_in": true,
+  "full_paired_native_required": true,
+  "no_new_external_api_calls": true,
+  "previous_provider_snapshot": {
+    "canIpForward": false,
+    "cpuPlatform": "Unknown CPU Platform",
+    "creationTimestamp": "2026-10-29T04:06:19.546-07:00",
+    "deletionProtection": false,
+    "disks": [
+      {
+        "autoDelete": false,
+        "boot": true,
+        "deviceName": "persistent-disk-0",
+        "diskSizeGb": "100",
+        "guestOsFeatures": [
+          {
+            "type": "VIRTIO_SCSI_MULTIQUEUE"
+          },
+          {
+            "type": "UEFI_COMPATIBLE"
+          },
+          {
+            "type": "GVNIC"
+          }
+        ],
+        "index": 0,
+        "interface": "SCSI",
+        "kind": "compute#attachedDisk",
+        "licenses": [
+          "https://www.googleapis.com/compute/v1/projects/click-to-deploy-images/global/licenses/c2d-dl-platform-dlvm",
+          "https://www.googleapis.com/compute/v1/projects/click-to-deploy-images/global/licenses/c2d-dl-platform-gvnic",
+          "https://www.googleapis.com/compute/v1/projects/click-to-deploy-images/global/licenses/c2d-dl-platform-py310",
+          "https://www.googleapis.com/compute/v1/projects/click-to-deploy-images/global/licenses/c2d-dl-platform-gpu-common-cu129",
+          "https://www.googleapis.com/compute/v1/projects/click-to-deploy-images/global/licenses/c2d-dl-platform-ubuntu-2204"
+        ],
+        "mode": "READ_WRITE",
+        "source": "https://www.googleapis.com/compute/v1/projects/aurium-duplex-live-20261024/zones/us-central1-a/disks/duplex-venus-train-20261026-v1",
+        "type": "PERSISTENT"
+      }
+    ],
+    "fingerprint": "ViO-xgaPGq4=",
+    "guestAccelerators": [
+      {
+        "acceleratorCount": 1,
+        "acceleratorType": "https://www.googleapis.com/compute/v1/projects/aurium-duplex-live-20261024/zones/us-central1-a/acceleratorTypes/nvidia-tesla-a100"
+      }
+    ],
+    "id": "1283972191172335172",
+    "kind": "compute#instance",
+    "labelFingerprint": "42WmSpB8rSM=",
+    "lastStartTimestamp": "2026-10-29T04:06:56.727-07:00",
+    "lastStopTimestamp": "2026-10-29T04:12:25.352-07:00",
+    "machineType": "https://www.googleapis.com/compute/v1/projects/aurium-duplex-live-20261024/zones/us-central1-a/machineTypes/a2-highgpu-1g",
+    "metadata": {
+      "fingerprint": "m9jrre-MAAg=",
+      "items": [
+        {
+          "key": "block-project-ssh-keys",
+          "value": "TRUE"
+        },
+        {
+          "key": "enable-guest-attributes",
+          "value": "TRUE"
+        },
+        {
+          "key": "enable-oslogin",
+          "value": "TRUE"
+        },
+        {
+          "key": "startup-script",
+          "value": "#!/bin/sh\nset -eu\nsystemd-run --unit=duplex-venus-adaptive34-bootstrap-stop --on-active=600s /sbin/shutdown -h now || /sbin/shutdown -h now\n"
+        }
+      ],
+      "kind": "compute#metadata"
+    },
+    "name": "duplex-venus-adaptive-20261029-v34",
+    "networkInterfaces": [
+      {
+        "accessConfigs": [
+          {
+            "kind": "compute#accessConfig",
+            "name": "external-nat",
+            "networkTier": "PREMIUM",
+            "type": "ONE_TO_ONE_NAT"
+          }
+        ],
+        "fingerprint": "ifnPhLPcoac=",
+        "kind": "compute#networkInterface",
+        "name": "nic0",
+        "network": "https://www.googleapis.com/compute/v1/projects/aurium-duplex-live-20261024/global/networks/default",
+        "networkIP": "10.128.0.20",
+        "stackType": "IPV4_ONLY",
+        "subnetwork": "https://www.googleapis.com/compute/v1/projects/aurium-duplex-live-20261024/regions/us-central1/subnetworks/default"
+      }
+    ],
+    "resourceStatus": {
+      "effectiveInstanceMetadata": {
+        "blockProjectSshKeysMetadataValue": true,
+        "enableGuestAttributesMetadataValue": true,
+        "enableOsloginMetadataValue": true,
+        "vmDnsSettingMetadataValue": "ZonalOnly"
+      },
+      "scheduling": {
+        "terminationTimestamp": "2026-10-29T15:01:42.562453Z"
+      }
+    },
+    "scheduling": {
+      "automaticRestart": false,
+      "instanceTerminationAction": "STOP",
+      "maxRunDuration": {
+        "nanos": 0,
+        "seconds": "14100"
+      },
+      "onHostMaintenance": "TERMINATE",
+      "preemptible": false,
+      "provisioningModel": "FLEX_START"
+    },
+    "selfLink": "https://www.googleapis.com/compute/v1/projects/aurium-duplex-live-20261024/zones/us-central1-a/instances/duplex-venus-adaptive-20261029-v34",
+    "shieldedInstanceConfig": {
+      "enableIntegrityMonitoring": true,
+      "enableSecureBoot": false,
+      "enableVtpm": true
+    },
+    "startRestricted": false,
+    "status": "TERMINATED",
+    "tags": {
+      "fingerprint": "IHEugHo3pFM=",
+      "items": [
+        "duplex-venus-train-bounded"
+      ]
+    },
+    "zone": "https://www.googleapis.com/compute/v1/projects/aurium-duplex-live-20261024/zones/us-central1-a"
+  },
+  "recovery_reason": "Mac controller and guard disappeared during interruption; guest lease failed closed. Provider reconciled actual328.625s conservatively400s. Durable launchd ownership replaces turn-bound execution; no completed benchmark or optimizer stage is repeated.",
+  "closed_intervals": [
+    {
+      "vm_id": "6583510368949016595",
+      "actual_seconds": 239.425,
+      "upper_seconds": 300
+    },
+    {
+      "vm_id": "1283972191172335172",
+      "actual_seconds": 328.625,
+      "upper_seconds": 400
+    }
+  ]
+}

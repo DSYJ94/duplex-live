@@ -3,20 +3,22 @@ import hashlib,json,os,shlex,shutil,subprocess,sys,time
 from pathlib import Path
 from datetime import datetime
 from . import controller as c
-from .adaptive_guard import AUTH,PLAN,KEY,RECOVERY_PLAN,RECOVERY_KEY
+from .adaptive_guard import AUTH,PLAN,KEY,RECOVERY_PLAN,RECOVERY_KEY,RETRY_PLAN,RETRY_KEY
 from portable.venus.guard import bounded_runpod_read
 
 def digest(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
 
 def main():
     global PLAN,KEY
-    recovery='--recover-source' in sys.argv
+    retry='--recover-controller' in sys.argv
+    recovery='--recover-source' in sys.argv or retry
     if recovery:PLAN,KEY=RECOVERY_PLAN,RECOVERY_KEY
-    c.R=Path('runs/venus-training-20261029')/('adaptive-v35' if recovery else 'adaptive-v34');assert not c.R.exists(),'Observe the same actual allocation; never duplicate'
-    a=json.loads(AUTH.read_text());p=json.loads(PLAN.read_text());r=a['resources'];zone=r['zone'];c.NAME=p['vm_name'];duration=p['maximum_gpu_seconds'];prior=p['focused_gpu_seconds_upper_before_launch'];version='v35' if recovery else 'v34'
+    if retry:PLAN,KEY=RETRY_PLAN,RETRY_KEY
+    c.R=Path('runs/venus-training-20261029')/('adaptive-v36' if retry else 'adaptive-v35' if recovery else 'adaptive-v34');assert not c.R.exists(),'Observe the same actual allocation; never duplicate'
+    a=json.loads(AUTH.read_text());p=json.loads(PLAN.read_text());r=a['resources'];zone=r['zone'];c.NAME=p['vm_name'];duration=p['maximum_gpu_seconds'];prior=p['focused_gpu_seconds_upper_before_launch'];version='v36' if retry else 'v35' if recovery else 'v34'
     assert a['status']=='APPROVED' and a['human_approval']=='Approve four hours; keep $70 cap' and p['parent_sha256']==digest(AUTH)
     assert not c.run(['git','status','--porcelain','--','training/venus','portable/venus','docs/NATIVE-VENUS-ADAPTIVE-PHASE-AUTHORIZATION-2026-10-29.json','docs/NATIVE-VENUS-ADAPTIVE-PHASE-EXECUTION-2026-10-29.json']).strip()
-    seed=Path('runs/venus-training-20261027/paced-recovery-v33');before=Path('runs/venus-training-20261029/adaptive-v34') if recovery else seed;last=json.loads((before/'provider-final.json').read_text());old=c.cloud('compute','instances','describe',last['name'],'--zone='+zone)
+    seed=Path('runs/venus-training-20261027/paced-recovery-v33');before=Path('runs/venus-training-20261029/adaptive-v35') if retry else Path('runs/venus-training-20261029/adaptive-v34') if recovery else seed;last=json.loads((before/('provider-final-reconciled.json' if retry else 'provider-final.json')).read_text());old=c.cloud('compute','instances','describe',last['name'],'--zone='+zone)
     assert old['status']=='TERMINATED' and old['id']==last['id']==p['retire_only_vm_id'] and old['lastStopTimestamp']==last['lastStopTimestamp']
     assert all(v['status']=='TERMINATED' for v in c.cloud('compute','instances','list'))
     disk=c.cloud('compute','disks','describe',r['same_existing_disk_name'],'--zone='+zone)

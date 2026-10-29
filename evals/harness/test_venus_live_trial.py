@@ -84,3 +84,12 @@ def test_owner_retry_has_time_to_connect_but_never_extends_native_deadline(monke
     c,clock,calls,events=setup(monkeypatch,second,lambda now:False)
     live_trial.serve(c,'python',1000,'trial',unused_timeout=1800,idle_timeout=300)
     assert 820<=clock.now<825 and calls[-1]=='terminated'
+
+
+def test_two_sequential_runtime_variants_keep_distinct_tunnel_logs(monkeypatch,tmp_path):
+    c,clock,calls,events=setup(monkeypatch,tmp_path,lambda now:False)
+    live_trial.serve(c,'python',2000,'released')
+    live_trial.serve(c,'python',2000,'sdpa')
+    assert (tmp_path/'released-tunnel.log').exists()
+    assert (tmp_path/'sdpa-tunnel.log').exists()
+    assert calls.count('terminated')==2

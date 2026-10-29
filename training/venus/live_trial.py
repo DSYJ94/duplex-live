@@ -56,7 +56,7 @@ def serve(controller, python_command, end, unit_prefix, *, port=8037,unused_time
     argv = separate + ['-o', 'ExitOnForwardFailure=yes', '-N', '-L',
         '127.0.0.1:%d:127.0.0.1:%d' % (port, port), c.ssh_argv[-1]]
     tunnel = subprocess.Popen(argv, stdin=subprocess.DEVNULL,
-        stdout=subprocess.DEVNULL, stderr=(c.R/'live-tunnel.log').open('x'))
+        stdout=subprocess.DEVNULL, stderr=(c.R/(unit_prefix+'-tunnel.log')).open('x'))
     (c.R/'live-tunnel.json').write_text(json.dumps(dict(pid=tunnel.pid, port=port,
         address='127.0.0.1', credentials_recorded=False))+'\n')
     url = 'http://127.0.0.1:%d' % port
