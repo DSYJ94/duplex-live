@@ -5,6 +5,7 @@ guards remain mandatory; the trial also ends early when unused or disconnected.
 """
 import json
 import subprocess
+import sys,shlex
 import time
 from urllib.request import build_opener, ProxyHandler
 
@@ -36,14 +37,16 @@ def websocket_probe(url):
                 behavioral_approval=False)
 
 
-def serve(controller, python_command, end, unit_prefix, *, port=8037,unused_timeout=300,idle_timeout=90):
+def serve(controller, python_command, end, unit_prefix, *, port=8037,unused_timeout=300,idle_timeout=90,voice_reference=None,voice_reference_sha256=None,benchmark_only=False):
     if not 90<=idle_timeout<=300 or not 300<=unused_timeout<=1800:
         raise ValueError("Bounded live waiting windows required")
+    if bool(voice_reference)!=bool(voice_reference_sha256):raise ValueError('Exact custom reference hash required')
     c = controller
     unit = unit_prefix + '-microphone'
     checkpoint = c.OUT + '/paced-candidate-v25/step-0054.pt'
     command = python_command + ' -u -m portable.venus.native_app --model-dir ' + c.MODEL
     command += ' --adapter-checkpoint ' + checkpoint + ' --compare-foundation --port ' + str(port)
+    if voice_reference:command+=' --voice-reference '+shlex.quote(voice_reference)+' --voice-reference-sha256 '+voice_reference_sha256
     c.start_unit(unit, command, max(1, int(end-time.time()-180)))
     # Options precede the host. Existing strict host keys/OSLogin/IAP are reused.
     separate = [('ControlMaster=no' if x.startswith('ControlMaster=') else
@@ -82,6 +85,18 @@ def serve(controller, python_command, end, unit_prefix, *, port=8037,unused_time
                 assert health['candidate']['checkpoint_sha256']=='c634e6cf38831210be0165ce7f6dd09c5454226f62ff622477fd4d051abde270'
                 proof=websocket_probe(url)
                 (c.R/'native-websocket-proof.json').write_text(json.dumps(proof,indent=2)+'\n')
+                if benchmark_only:
+                    c.record('native_benchmark_service_ready',reference_sha256=health['voice_reference']['sha256'])
+                    target=c.R/'latency-benchmark'
+                    budget=min(120,int(end-time.time()-180))
+                    if budget<60:raise TimeoutError('Preserve complete benchmark and backup reserve')
+                    with (c.R/'latency-benchmark.log').open('x') as log:
+                        result=subprocess.run([sys.executable,'-u','-m','evals.venus_stream_benchmark','--url',url,'--output',str(target),'--save-synthetic-audio'],stdout=log,stderr=subprocess.STDOUT,timeout=budget)
+                    if result.returncode:raise RuntimeError('Actual native latency benchmark failed; preserve logs')
+                    measured=json.loads((target/'timings.json').read_text());assert measured['complete'] and len(measured['profiles'])==2 and len(measured['frames'])==22
+                    assert all(p['profile']['voice_reference']['sha256']==voice_reference_sha256 for p in measured['profiles'])
+                    c.record('complete_native_synthetic_benchmark',summary=measured['summaries'],owner_audio_used=False,optimizer_updates=0)
+                    return
                 ready = time.time()
                 (c.R/'live-ready.json').write_text(json.dumps(dict(url=url, ready_unix=ready,
                     stop_unix=end, profile=health, experimental=True, microphone_recorded=False),indent=2)+'\n')
