@@ -78,13 +78,21 @@ class NativeOpal:
 
 
 def assert_optimizer_equal(expected,actual):
-    """Compare numerical/program/observation state, excluding run-folder/event offsets."""
+    """Compare every saved field except explicit run/transport bookkeeping."""
     if expected.get('opal')==1:
         if actual.get('opal')!=1:raise ValueError('Wrapped OPAL checkpoint cannot resume as plain Adam')
         required=('update','version','files','updater','memory','user_optimizers','user_schedulers',
                   'observations','ledger','follows','next_analysis','decision_schedule','decisions','cost')
         for key in required:
             if key not in expected or key not in actual or not exact_state(expected[key],actual[key]):
+                raise ValueError('Fresh-process OPAL state differs: '+key)
+        # Fresh transport/directory identities can differ. Everything else,
+        # including predecessor code, devices and development history, must not.
+        excluded={'run_dir','event_offset','backend'}
+        if set(expected)-excluded != set(actual)-excluded:
+            raise ValueError('Fresh-process OPAL field set differs')
+        for key in set(expected)-excluded:
+            if not exact_state(expected[key],actual[key]):
                 raise ValueError('Fresh-process OPAL state differs: '+key)
     elif not exact_state(expected,actual):
         raise ValueError('Fresh-process Adam state differs')

@@ -31,6 +31,8 @@ def exact_state(left, right):
 
 def restore_parent(state, model, optimizer):
     """Load actual saved adapter, Adam moments and all RNG streams without updates."""
+    if state['optimizer'].get('opal') == 1:
+        raise ValueError('Wrapped OPAL parent requires complete program/state restoration, not plain Adam')
     load_adapter(model,state['adapter']);optimizer.load_state_dict(state['optimizer']);restore_rng(state['rng'])
     assert exact_state(state['adapter'],adapter_state(model))
     assert exact_state(state['optimizer'],optimizer.state_dict())

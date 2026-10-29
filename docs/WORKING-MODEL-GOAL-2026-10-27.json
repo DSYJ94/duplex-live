@@ -213,7 +213,14 @@
     "additional_gpu_time_requested": 0,
     "additional_spending_requested": 0,
     "new_external_calls_requested": 0,
-    "implementation": "Read-only target compiler and opt-in loss/metrics CPU-tested; future driver/state transition not enabled.",
-    "authentication": "Official Google Cloud SDK browser renewal opened; session28230 awaits user sign-in."
+    "implementation": "Read-only268target audit, opt-in action loss/metrics and complete wrapped restore helper CPU-tested, including independent process. Newphase driver/clock/admission still not enabled.",
+    "authentication": "Official Google Cloud SDK browser renewal opened; session28230 awaits user sign-in.",
+    "restore_preparation": {
+      "recorded_utc": "2026-10-29T23:06:33.601520+00:00",
+      "report": "docs/NATIVE-VENUS-WRAPPED-RESTORE-BRIDGE-2026-10-29.json",
+      "cpu_distinct_process_program1_proof": true,
+      "native298_restore_complete": false,
+      "newphase_driver_enabled": false
+    }
   }
 }

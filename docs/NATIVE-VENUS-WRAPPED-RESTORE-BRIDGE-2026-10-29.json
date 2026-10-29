@@ -1,0 +1,61 @@
+{
+  "schema": "dl-native-wrapped-restore-bridge-v1",
+  "recorded_utc": "2026-10-29T23:06:33.601520+00:00",
+  "status": "CPU_FIXTURE_VERIFIED_NATIVE_RESTORE_STILL_REQUIRED",
+  "original_checkpoint": {
+    "path": "runs/venus-training-20261029/terminal-render-v40/copyback/adaptive-candidate-v34/step-0054.pt",
+    "sha256": "e7340edd15537523db78120a97902399faa0af9caa46e875ec92e56889d6edef",
+    "hash_reverified_this_turn": true,
+    "producer": "dd767d65ac663e701142f2c882aeb5e1c2a2c6e5",
+    "phase_updates": 54,
+    "parent_updates": 244,
+    "total_updates": 298,
+    "program_version": 1,
+    "actual_adam_counters": [
+      298,
+      298,
+      298,
+      298
+    ],
+    "cuda_rng_streams": 1,
+    "native_restoration_performed": false
+  },
+  "new_source_files": [
+    "training/venus/checkpoint_restore.py",
+    "evals/harness/test_venus_checkpoint_restore.py"
+  ],
+  "modified_source_files": [
+    "training/venus/state.py",
+    "training/venus/native_optimizer.py"
+  ],
+  "source_file_sha256": {
+    "training/venus/checkpoint_restore.py": "c073567dec76c99cd10ac28c0ac2e318bdf5376f543653bed1c0732f4ef3e1cf",
+    "training/venus/state.py": "7fad6cc43a048c671f609f38ea70952a37fc13aaadd6d4c132c4f4800ff8a2e3",
+    "training/venus/native_optimizer.py": "d63c84b61a2c1650ed25b0b75e1af244a4576520d76dd0b595e5fb863bf3d8a1",
+    "evals/harness/test_venus_checkpoint_restore.py": "503078b575c88f37ce772e52a5c8ed6585ccef13a52419536b126f3656e7c041"
+  },
+  "properties": [
+    "Restore adapter and complete wrapped numerical/program/observation/development/diagnostic/RNG state together; preserve original phase scheduler without advancing it.",
+    "Compare every serialized OPAL field except explicitly distinct run_dir,event_offset,backend transport bookkeeping; preserve original parent including transport state. No silent fallback program accepted.",
+    "Require fresh optimizer and original structural adapter parameter order before binding Adam moments; verify all4 native counters match298.",
+    "Reject native CUDA RNG proof on CPU. Returned proof cannot claim independent process or native behavior; caller must establish these.",
+    "Reject a wrapped parent at the plain-Adam entrypoint before adapter/optimizer mutation.",
+    "No training admission, no current driver298 allowance, no newphase schedule change, no GPU allocation or model/API call."
+  ],
+  "tests": {
+    "red": "Legacy plain-Adam entrypoint reproduced KeyError param_groups on synthetic OPALprogram1 state; new guard refuses before mutation.",
+    "combined": "48passed in7.36s across restore/nativeOPAL/lrhalf/actiontargets/diagnostics/training; after final parameter-binding check,4restore tests passed6.62s.",
+    "fresh_process": "Actual independent Python child, CPU tinyQwen fixture, pinned upstream OPAL response/swap path/program1, exact next adapter/Adam/program state matches uninterrupted fixture.",
+    "environment": "Restricted child OpenMP shared memory denied withSIGABRT179; same test passed with normal Mac shared-memory access. No thread-count/OMP/MKL limits or throttling added.",
+    "production_caveat": "These fixture optimizer updates are NOT native candidate updates. Saved9Bstate298 unchanged; native restoration is still unperformed."
+  },
+  "native_candidate_updates_this_turn": 0,
+  "external_model_calls": 0,
+  "gpu_seconds_consumed_this_turn": 0,
+  "caps_unchanged": true,
+  "pending_inputs": [
+    "GoogleSDKsign-in session28230 verified live waiting; no fresh provider status claim",
+    "Explicit108newupdate allowance for committed d0f8fa0 proposal; old54-update allowance exhausted"
+  ],
+  "next": "After inputs, implement/admit exact newphase driver/clock bridge offline, verify live provider/price/guards, perform distinct native298restore, then revised whole-corpus training/full evaluation within existing time/cost limits. No job submitted."
+}
