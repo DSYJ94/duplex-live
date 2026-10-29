@@ -1,0 +1,155 @@
+{
+  "recorded_utc": "2026-10-29T11:29:54.003469+00:00",
+  "producer_source": "dd767d65ac663e701142f2c882aeb5e1c2a2c6e5",
+  "actual_new_updates": 54,
+  "total_updates": 298,
+  "complete_epochs": 1,
+  "train_scenes": 216,
+  "dev_scenes": 52,
+  "checkpoint_sha256": "e7340edd15537523db78120a97902399faa0af9caa46e875ec92e56889d6edef",
+  "baseline_dev": {
+    "ordinary": 1.0309107551972072,
+    "delegate": 0.47851962099472684,
+    "quiet": 0.8826943412423134,
+    "cancel": 1.1536185517907143,
+    "pause": 0.7694866061210632,
+    "pending": 0.6996399760246277
+  },
+  "after_dev": {
+    "ordinary": 1.0376642992099125,
+    "delegate": 0.37641626472274464,
+    "quiet": 0.9265970016519228,
+    "cancel": 0.9908494427800179,
+    "pause": 0.6948860287666321,
+    "pending": 0.6179308593273163
+  },
+  "dev_family_counts": {
+    "ordinary": 12,
+    "delegate": 12,
+    "quiet": 12,
+    "cancel": 8,
+    "pause": 4,
+    "pending": 4
+  },
+  "relative_change_percent": {
+    "ordinary": 0.6551046226511925,
+    "delegate": -21.337339534737144,
+    "quiet": 4.973710418016308,
+    "cancel": -14.109439273322765,
+    "pause": -9.69485066549609,
+    "pending": -11.678737564652142
+  },
+  "weighted_dev_baseline": 0.8425182952330663,
+  "weighted_dev_after": 0.7935806515698249,
+  "weighted_relative_change_percent": -5.808496259384343,
+  "full_dev_group_metrics": {
+    "ordinary": {
+      "count": 12,
+      "ce_count": 12,
+      "ce": 1.0376642992099125,
+      "decision_ce_count": 12,
+      "decision_ce": 0.15484075248241425,
+      "text_ce_count": 12,
+      "text_ce": 1.920487845937411,
+      "kl_count": 12,
+      "kl": 0.398026538391908,
+      "hidden_count": 12,
+      "hidden": 1.564909189939499
+    },
+    "delegate": {
+      "count": 12,
+      "ce_count": 12,
+      "ce": 0.37641626472274464,
+      "decision_ce_count": 12,
+      "decision_ce": 0.1864671272536119,
+      "text_ce_count": 12,
+      "text_ce": 0.5663654021918774,
+      "kl_count": 12,
+      "kl": 0.0,
+      "hidden_count": 12,
+      "hidden": 0.0
+    },
+    "quiet": {
+      "count": 12,
+      "ce_count": 12,
+      "ce": 0.9265970016519228,
+      "decision_ce_count": 12,
+      "decision_ce": 0.12757917121052742,
+      "text_ce_count": 12,
+      "text_ce": 1.7256148234009743,
+      "kl_count": 12,
+      "kl": 0.0,
+      "hidden_count": 12,
+      "hidden": 0.0
+    },
+    "cancel": {
+      "count": 8,
+      "ce_count": 8,
+      "ce": 0.9908494427800179,
+      "decision_ce_count": 8,
+      "decision_ce": 0.18382901698350906,
+      "text_ce_count": 8,
+      "text_ce": 1.7978698909282684,
+      "kl_count": 8,
+      "kl": 0.0,
+      "hidden_count": 8,
+      "hidden": 0.0
+    },
+    "pause": {
+      "count": 4,
+      "ce_count": 4,
+      "ce": 0.6948860287666321,
+      "decision_ce_count": 4,
+      "decision_ce": 0.3973371386528015,
+      "text_ce_count": 4,
+      "text_ce": 0.9924349039793015,
+      "kl_count": 4,
+      "kl": 0.0,
+      "hidden_count": 4,
+      "hidden": 0.0
+    },
+    "pending": {
+      "count": 4,
+      "ce_count": 4,
+      "ce": 0.6179308593273163,
+      "decision_ce_count": 4,
+      "decision_ce": 0.2803530916571617,
+      "text_ce_count": 4,
+      "text_ce": 0.9555086344480515,
+      "kl_count": 4,
+      "kl": 0.0,
+      "hidden_count": 4,
+      "hidden": 0.0
+    }
+  },
+  "native_opal_start_restore": {
+    "passed": true,
+    "adapter_error": 0,
+    "adam_error": 0,
+    "rng_equal": true,
+    "loss_equal": true,
+    "actual_new_process": true,
+    "independent_continuation": true
+  },
+  "opal_program_source": "b3f5b6d8a9905409c6d856dbc52b4403640466a9",
+  "opal_changed_after_update": 28,
+  "opal_keep_after_update": 39,
+  "independent_final_program_restore_status": "Not yet native-qualified; pre-training fullstate restore passed at program0 and program1 CPU-state tests passed. Do not conflate these with final native program1 restore.",
+  "candidate_backup": {
+    "all_hashes_verified": true,
+    "files": 53,
+    "bytes": 46891636,
+    "scope": "completed adaptive candidate only; not full new archive",
+    "checkpoint_sha256": "e7340edd15537523db78120a97902399faa0af9caa46e875ec92e56889d6edef"
+  },
+  "data_recipe_diagnosis": [
+    "All52DEV decisionCE components can improve while quiet totalCE worsens: quiet baseline decision.1302137642/text1.6351749326 versus after.1275791712/1.7256148234. Need actual silence behavior; do not call aggregate quiet loss silence accuracy.",
+    "Ordinary totalCE worsens0.655percent; ordinary KL rises.3276658 to.3980265 and hiddenMSE1.2362876 to1.5649092. This is retention pressure despite frozen base and unchanged penalties; not proof of a specific learning-rate/data cause.",
+    "Complete TRAIN has32ordinary/184other scenes. Nonordinary matched-world reuse is intentional. More balanced ordinary rehearsal or all-family speech-conditioning retention are future one-factor hypotheses, not silently applied corpus/loss changes.",
+    "No same-data static-recipe control run: improvement cannot be attributed causally to OPAL/LR reduction. No additional optimizer run is authorized by this exact phase after54newupdates."
+  ],
+  "native_evaluation_status": "RUNNING: all64 paired native conditions plus independent ASR, no passing subset",
+  "adopted": false,
+  "convergence_established": false,
+  "api_calls": 0
+}

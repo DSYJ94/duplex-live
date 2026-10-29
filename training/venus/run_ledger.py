@@ -10,7 +10,8 @@ import hashlib
 import json
 from pathlib import Path
 
-ROOTS = ('runs/venus-training-20261026', 'runs/venus-training-20261027')
+ROOTS = ('runs/venus-training-20261026', 'runs/venus-training-20261027',
+         'runs/venus-training-20261029')
 
 
 def read(path):
@@ -40,7 +41,7 @@ def receipt_run(path):
                stages=stages,
                actual_training_records=[{k:v for k,v in e.items() if k != 'error'}
                    for e in events if 'training_complete' in e['event']],
-               admitted_recipes=[e for e in events if e['event'] == 'actual_recipe_admitted'],
+               admitted_recipes=[e for e in events if e['event'] in ('actual_recipe_admitted','actual_adaptive_recipe_admitted')],
                failures=[dict(at_utc=e['at_utc'], event=e['event'], error_type=e.get('error_type'))
                    for e in events if 'failure' in e['event'] or 'error' in e['event']],
                provider_stop_records=[e for e in events if e['event'] == 'provider_stopped'],
@@ -48,6 +49,8 @@ def receipt_run(path):
     # Raw exception strings may include command arguments; keep them out of Git.
     for name, key in (('copyback-verified.json', 'backup'), ('provider-final.json', 'provider_snapshot')):
         file = folder/name
+        if name=='provider-final.json' and not file.exists():
+            file=folder/'provider-final-reconciled.json'
         if file.exists():
             value = read(file)
             row[key] = ({k:value[k] for k in ('id','status','lastStartTimestamp','lastStopTimestamp') if k in value}
@@ -86,14 +89,17 @@ def build():
         checkpoint_record(Path('runs/venus-training-20261027/paced-recovery-v25/candidate-early-backup'),
                           'step-0054.pt', 'venus-paced244'),
     ]
+    adaptive=Path('runs/venus-training-20261029/adaptive-v36/copyback/adaptive-candidate-v34')
+    if (adaptive/'training-terminal.json').exists():
+        checkpoints.append(checkpoint_record(adaptive,'step-0054.pt','venus-adaptive298'))
     return dict(schema='dl-native-experiment-ledger-v1', recorded_utc=datetime.now(timezone.utc).isoformat(),
-                scope='All direct Venus controller events found under the two named local roots; not every historical Moshi/Slurm job',
+                scope='All direct Venus controller events found under the named local roots; not every historical Moshi/Slurm job',
                 roots=list(ROOTS), run_count=len(runs), stage_count=sum(len(r['stages']) for r in runs),
                 source_of_status='Saved receipts; not a live provider read',
                 historical_moshi_reviews=['docs/PROJECT-RESET-2026-10-25.md',
                     'docs/GCP-NATIVE-SAVED8-COMPLETE20-REVIEW-2026-10-25.json'],
                 runs=runs, unique_trained_checkpoints=checkpoints,
-                latest_learning_review='docs/NATIVE-VENUS-REACTIVE54-RESULTS-2026-10-28.json',
+                latest_learning_review='docs/NATIVE-VENUS-ADAPTIVE54-RESULTS-2026-10-29.json',
                 owner_voice_feedback='docs/NATIVE-OWNER-VOICE-FEEDBACK-2026-10-27.json',
                 raw_private_feedback_included=False, live_conversations_included=False)
 

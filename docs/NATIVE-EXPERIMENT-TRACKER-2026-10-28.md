@@ -12,6 +12,8 @@ Refresh it after a run ends with `python -m training.venus.run_ledger`.
 | Venus190 | Five complete152-scene TRAIN epochs;190 updates | Final-layer q/v LoRA851,968 parameters; rank/alpha64; LR1e-4; AdamW; control/text CE and ordinary KL/hidden retention | Restore passed; native behavior rejected. |
 | Venus244 | One complete216-scene TRAIN epoch;54 additional updates | Same adapter architecture; corrected word-paced targets, LR5e-5; full52DEV; two logged agent hold decisions | DEV loss.96549→.84252; silence loss slightly worse; complete native speech agreement7/32 versus parent1901/32; not qualified for adoption. |
 
+| Venus298 | One further complete216-scene TRAIN epoch;54 new updates from244 | Native upstream OPAL; current-agent Git program halves effective scheduled LR from newupdate28, keep at39; all data/losses/retention unchanged | Full52DEV mean loss.84252→.79358 (-5.81%); ordinary+.66%, quiet+4.97%. Native64+ASR running; no adoption. |
+
 Exact recipes, source/data/checkpoint hashes, actual terminals and backup receipts
 are stored in the index. The190 and244 development losses use different corpora
 from the earlier190 run: compare244 only with its matched parent190 baseline on

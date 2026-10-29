@@ -40,8 +40,8 @@
   },
   "initial_strategy": "Keep native9Bduplexfoundation and basicreasoning; offload heavierreasoning toactualbackend. Finishthisboundeddatarepairtraining/eval before deciding whethermoreadapters/fullweightoracoustictraining is necessary.",
   "current_execution": {
-    "recorded_utc": "2026-10-29T11:27:24.556558+00:00",
-    "phase": "NATIVE_OPAL_TRAINING_RUNNING",
+    "recorded_utc": "2026-10-29T11:32:09.119788+00:00",
+    "phase": "TRAINING_COMPLETE_NATIVE64_EVALUATION_RUNNING",
     "run": "runs/venus-training-20261029/adaptive-v36",
     "controller": "launchd gui/501/com.aurium.duplex.adaptive36/PID68126",
     "vm_id": "6929308962022921268",
@@ -53,7 +53,13 @@
     "maximum_new_updates": 54,
     "target_total_updates": 298,
     "full_paired_native_required": true,
-    "adopted": false
+    "adopted": false,
+    "actual_new_updates": 54,
+    "total_updates": 298,
+    "checkpoint_sha256": "e7340edd15537523db78120a97902399faa0af9caa46e875ec92e56889d6edef",
+    "paired_native_unit": "duplex-venus-adaptive34-paired-native",
+    "paired_native_pid": 2259,
+    "candidate_backup_verified": true
   },
   "reasoning_integration": {
     "confirmed_gap": "Previously ArithmeticWorker only. An opt-in general reasoning worker and Mac proxy profile are now implemented; no actual provider call or native GPU routing qualification has run.",
