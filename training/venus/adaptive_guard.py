@@ -8,10 +8,13 @@ PLAN=Path('docs/NATIVE-VENUS-ADAPTIVE-PHASE-EXECUTION-2026-10-29.json')
 KEY='venus-adaptive-v34'
 RECOVERY_KEY='venus-adaptive-v35'
 RETRY_KEY='venus-adaptive-v36'
+EVAL_KEY='venus-adaptive-v37'
+EVAL_PLAN=Path('docs/NATIVE-VENUS-ADAPTIVE-EVALUATION-RECOVERY-2026-10-29.json')
 RETRY_PLAN=Path('docs/NATIVE-VENUS-ADAPTIVE-CONTROLLER-RECOVERY-2026-10-29.json')
 RECOVERY_PLAN=Path('docs/NATIVE-VENUS-ADAPTIVE-RECOVERY-EXECUTION-2026-10-29.json')
 
 def execution_plan(lease):
+    if lease.get('resource_key')==EVAL_KEY:return EVAL_PLAN
     if lease.get('resource_key')==RETRY_KEY:return RETRY_PLAN
     return RECOVERY_PLAN if lease.get('resource_key')==RECOVERY_KEY else PLAN
 
@@ -23,7 +26,7 @@ def resource(lease):
     assert a['parent_proposal_sha256']==sha(Path(a['parent_proposal']))
     assert (a['maximum_next_gpu_seconds'],a['maximum_additional_gcp_usage_usd'],a['maximum_candidate_updates'])==(14400,70,54)
     assert p['parent_sha256']==sha(AUTH) and lease['authorization_sha256']==sha(AUTH) and lease['execution_plan_sha256']==sha(plan)
-    assert lease['resource_key'] in (KEY,RECOVERY_KEY,RETRY_KEY) and lease['zone']==r['zone'] and lease['disk_id']==r['same_existing_disk_id']=='4375908109499109167'
+    assert lease['resource_key'] in (KEY,RECOVERY_KEY,RETRY_KEY,EVAL_KEY) and lease['zone']==r['zone'] and lease['disk_id']==r['same_existing_disk_id']=='4375908109499109167'
     assert lease['disk_size_gib']==100 and str(lease['vm_id']).isdigit()
     return dict(name=p['vm_name'],zone=r['zone'],ident=str(lease['vm_id']),disk=r['same_existing_disk_id'],disk_name=r['same_existing_disk_name'],machine='a2-highgpu-1g',authority=AUTH)
 
@@ -37,15 +40,18 @@ def validate(vm,instances,pods,lease,now):
     assert s['instanceTerminationAction']=='STOP' and not s['automaticRestart'] and start<=now<end and lease['stop_unix']==end
     prior=p['focused_gpu_seconds_upper_before_launch']
     assert lease['prior_new_gpu_seconds_upper']==prior and prior>=18400 and 0<duration<=14400 and prior+duration==32800
-    if lease['resource_key'] in (RECOVERY_KEY,RETRY_KEY):
+    if lease['resource_key'] in (RECOVERY_KEY,RETRY_KEY,EVAL_KEY):
         last=p['previous_provider_snapshot'];assert last['status']=='TERMINATED' and start>=datetime.fromisoformat(last['lastStopTimestamp']).timestamp()
         elapsed=datetime.fromisoformat(last['lastStopTimestamp']).timestamp()-datetime.fromisoformat(last['lastStartTimestamp']).timestamp()
         if lease['resource_key']==RECOVERY_KEY:
             assert prior==18400+__import__('math').ceil(elapsed/100)*100
         else:
             intervals=p['closed_intervals']
-            assert [x['vm_id'] for x in intervals]==['6583510368949016595',last['id']]
-            assert intervals[-1]['actual_seconds']==elapsed
+            expected=['6583510368949016595','1283972191172335172']+(['6929308962022921268'] if lease['resource_key']==EVAL_KEY else [])
+            assert [x['vm_id'] for x in intervals]==expected and intervals[-1]['vm_id']==last['id']
+            assert abs(intervals[-1]['actual_seconds']-elapsed)<1e-6
+            if lease['resource_key']==EVAL_KEY:
+                assert p['new_optimizer_updates_authorized_by_this_execution']==0 and p['completed_candidate_updates']==54
             assert all(x['upper_seconds']==__import__('math').ceil(x['actual_seconds']/100)*100 for x in intervals)
             assert prior==18400+sum(x['upper_seconds'] for x in intervals)
     assert lease['prior_gpu_seconds']==54451 and lease['prior_scope_usd']==91.98448055555555

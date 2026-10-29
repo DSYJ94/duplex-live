@@ -46,3 +46,15 @@ def test_controller_recovery_carries_both_closed_intervals():
     lease.update(resource_key=RETRY_KEY,creation_timestamp=vm['creationTimestamp'],stop_unix=start+duration,prior_new_gpu_seconds_upper=19100,execution_plan_sha256=hashlib.sha256(RETRY_PLAN.read_bytes()).hexdigest())
     assert duration==13700 and validate(vm,[vm],[],lease,start+1)==start+duration
     with pytest.raises(AssertionError):validate(vm,[vm],[],dict(lease,prior_new_gpu_seconds_upper=18700),start+1)
+
+
+def test_evaluation_recovery_carries_all_intervals_and_allows_zero_new_updates():
+    from training.venus.adaptive_guard import EVAL_KEY,EVAL_PLAN
+    p=json.loads(EVAL_PLAN.read_text());vm,lease,_=fixture()
+    start=datetime.fromisoformat('2026-10-29T14:00:00+00:00').timestamp()
+    vm.update(lastStartTimestamp='2026-10-29T14:00:00Z',creationTimestamp='2026-10-29T13:59:55Z')
+    vm['scheduling']['maxRunDuration']['seconds']='11300'
+    lease.update(resource_key=EVAL_KEY,creation_timestamp=vm['creationTimestamp'],stop_unix=start+11300,prior_new_gpu_seconds_upper=21500,execution_plan_sha256=hashlib.sha256(EVAL_PLAN.read_bytes()).hexdigest())
+    assert p['new_optimizer_updates_authorized_by_this_execution']==0
+    assert validate(vm,[vm],[],lease,start+1)==start+11300
+    with pytest.raises(AssertionError):validate(vm,[vm],[],dict(lease,prior_new_gpu_seconds_upper=19100),start+1)

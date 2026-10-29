@@ -10,16 +10,16 @@
   "current_blocker": null,
   "budget": {
     "maximum_focused_gpu_seconds": 32800,
-    "focused_consumed_upper_seconds": 19100,
-    "remaining_gpu_seconds": 13700,
+    "focused_consumed_upper_seconds": 21500,
+    "remaining_gpu_seconds": 11300,
     "maximum_focused_usage_usd": 70,
     "external_api_cap_usd": 10,
     "external_api_usage_upper_usd": 9.6476125,
     "no_purchases": true,
     "no_overlap": true,
     "cumulative_gpu_cap_seconds": 87251,
-    "current_allocation_reserved_gpu_seconds": 13700,
-    "unreserved_gpu_seconds": 0,
+    "current_allocation_reserved_gpu_seconds": 0,
+    "unreserved_gpu_seconds": 11300,
     "accounting_note": "Consumed upper before currentliveinterval; final actual STOP will reconcile unused reserved time. Original54451seconds neverreset."
   },
   "steps": [
@@ -41,7 +41,7 @@
   "initial_strategy": "Keep native9Bduplexfoundation and basicreasoning; offload heavierreasoning toactualbackend. Finishthisboundeddatarepairtraining/eval before deciding whethermoreadapters/fullweightoracoustictraining is necessary.",
   "current_execution": {
     "recorded_utc": "2026-10-29T11:32:09.119788+00:00",
-    "phase": "TRAINING_COMPLETE_NATIVE64_EVALUATION_RUNNING",
+    "phase": "TRAINING_COMPLETE_NATIVE_EVALUATION_INTERRUPTED_SAFE_STOP",
     "run": "runs/venus-training-20261029/adaptive-v36",
     "controller": "launchd gui/501/com.aurium.duplex.adaptive36/PID68126",
     "vm_id": "6929308962022921268",
@@ -59,7 +59,10 @@
     "checkpoint_sha256": "e7340edd15537523db78120a97902399faa0af9caa46e875ec92e56889d6edef",
     "paired_native_unit": "duplex-venus-adaptive34-paired-native",
     "paired_native_pid": 2259,
-    "candidate_backup_verified": true
+    "candidate_backup_verified": true,
+    "provider_stopped_utc": "2026-10-29T11:54:42.723Z",
+    "last_observed_native_cases": 54,
+    "full_native_score_available": false
   },
   "reasoning_integration": {
     "confirmed_gap": "Previously ArithmeticWorker only. An opt-in general reasoning worker and Mac proxy profile are now implemented; no actual provider call or native GPU routing qualification has run.",

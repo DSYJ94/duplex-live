@@ -3,22 +3,24 @@ import hashlib,json,os,shlex,shutil,subprocess,sys,time
 from pathlib import Path
 from datetime import datetime
 from . import controller as c
-from .adaptive_guard import AUTH,PLAN,KEY,RECOVERY_PLAN,RECOVERY_KEY,RETRY_PLAN,RETRY_KEY
+from .adaptive_guard import AUTH,PLAN,KEY,RECOVERY_PLAN,RECOVERY_KEY,RETRY_PLAN,RETRY_KEY,EVAL_PLAN,EVAL_KEY
 from portable.venus.guard import bounded_runpod_read
 
 def digest(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
 
 def main():
     global PLAN,KEY
-    retry='--recover-controller' in sys.argv
+    evaluation='--resume-evaluation' in sys.argv
+    retry='--recover-controller' in sys.argv or evaluation
     recovery='--recover-source' in sys.argv or retry
     if recovery:PLAN,KEY=RECOVERY_PLAN,RECOVERY_KEY
     if retry:PLAN,KEY=RETRY_PLAN,RETRY_KEY
-    c.R=Path('runs/venus-training-20261029')/('adaptive-v36' if retry else 'adaptive-v35' if recovery else 'adaptive-v34');assert not c.R.exists(),'Observe the same actual allocation; never duplicate'
-    a=json.loads(AUTH.read_text());p=json.loads(PLAN.read_text());r=a['resources'];zone=r['zone'];c.NAME=p['vm_name'];duration=p['maximum_gpu_seconds'];prior=p['focused_gpu_seconds_upper_before_launch'];version='v36' if retry else 'v35' if recovery else 'v34'
+    if evaluation:PLAN,KEY=EVAL_PLAN,EVAL_KEY
+    c.R=Path('runs/venus-training-20261029')/('adaptive-v37' if evaluation else 'adaptive-v36' if retry else 'adaptive-v35' if recovery else 'adaptive-v34');assert not c.R.exists(),'Observe the same actual allocation; never duplicate'
+    a=json.loads(AUTH.read_text());p=json.loads(PLAN.read_text());r=a['resources'];zone=r['zone'];c.NAME=p['vm_name'];duration=p['maximum_gpu_seconds'];prior=p['focused_gpu_seconds_upper_before_launch'];version='v37' if evaluation else 'v36' if retry else 'v35' if recovery else 'v34'
     assert a['status']=='APPROVED' and a['human_approval']=='Approve four hours; keep $70 cap' and p['parent_sha256']==digest(AUTH)
     assert not c.run(['git','status','--porcelain','--','training/venus','portable/venus','docs/NATIVE-VENUS-ADAPTIVE-PHASE-AUTHORIZATION-2026-10-29.json','docs/NATIVE-VENUS-ADAPTIVE-PHASE-EXECUTION-2026-10-29.json']).strip()
-    seed=Path('runs/venus-training-20261027/paced-recovery-v33');before=Path('runs/venus-training-20261029/adaptive-v35') if retry else Path('runs/venus-training-20261029/adaptive-v34') if recovery else seed;last=json.loads((before/('provider-final-reconciled.json' if retry else 'provider-final.json')).read_text());old=c.cloud('compute','instances','describe',last['name'],'--zone='+zone)
+    seed=Path('runs/venus-training-20261027/paced-recovery-v33');before=Path('runs/venus-training-20261029/adaptive-v36') if evaluation else Path('runs/venus-training-20261029/adaptive-v35') if retry else Path('runs/venus-training-20261029/adaptive-v34') if recovery else seed;last=json.loads((before/('provider-reconciled-after-network-loss.json' if evaluation else 'provider-final-reconciled.json' if retry else 'provider-final.json')).read_text());old=c.cloud('compute','instances','describe',last['name'],'--zone='+zone)
     assert old['status']=='TERMINATED' and old['id']==last['id']==p['retire_only_vm_id'] and old['lastStopTimestamp']==last['lastStopTimestamp']
     assert all(v['status']=='TERMINATED' for v in c.cloud('compute','instances','list'))
     disk=c.cloud('compute','disks','describe',r['same_existing_disk_name'],'--zone='+zone)
@@ -35,7 +37,7 @@ def main():
     c.run(['git','bundle','create',str(c.R/'source.bundle'),'HEAD'],120)
     c.run(['git','-C','/private/tmp/duplex-opal-upstream-20261028','bundle','create',str((c.R/'opal-source.bundle').resolve()),'HEAD'],60)
     c.record('adaptive_preflight',source=c.source,prior_focused_seconds=prior,maximum_next_seconds=duration,backup=backup,price_usd_hour=price['hourly_estimate_usd'],external_calls=0)
-    guard=None;created=False;vm=None;awake=subprocess.Popen(['caffeinate','-i','-w',str(os.getpid())])
+    guard=None;created=False;vm=None;awake=subprocess.Popen(['caffeinate','-i','-s','-w',str(os.getpid())])
     try:
         c.cloud('compute','os-login','ssh-keys','add','--key-file=runs/local-migration-20261024/.private/gcp-native-ssh.pub','--ttl=4h')
         c.run(['gcloud','compute','instances','delete',old['name'],'--zone='+zone,'--project='+c.PROJECT,'--keep-disks=boot','--quiet'],150)
@@ -89,26 +91,30 @@ def main():
             except OSError:shutil.copy2(original,target)
         py=c.ROOT+'/venus-runtime-v1/venv/bin/python';env='/usr/bin/env CUBLAS_WORKSPACE_CONFIG=:4096:8 DUPLEX_LIVE_GUARD_FILE='+c.ROOT+'/venus-live-guard-v1.json DUPLEX_LIVE_LEASE_FILE='+lease_path+' HF_HOME='+c.ROOT+'/venus-runtime-v1/hf-cache '+py
         assert c.ssh('sha256sum '+c.OUT+'/paced-candidate-v25/step-0054.pt').split()[0]==a['parent_checkpoint_sha256']
-        from .live_trial import serve
-        for backend in ('released','sdpa'):
-            serve(c,env,end,'duplex-venus-adaptive34-'+backend,voice_reference=c.OUT+'/george-reference-v33/reference-16k.wav',voice_reference_sha256='40159a59a35053c358d5192b3919a86453c8c6bf1b2019b289119ceca444f674',benchmark_only=True,tts_attention=backend,benchmark_dir='runtime-'+backend)
-            c.ssh('sudo systemctl stop duplex-venus-adaptive34-'+backend+'-microphone');c.record('runtime_variant_complete',backend=backend,adopted=False)
-        unit='duplex-venus-adaptive34-conditioning'
-        args='training.venus.conditioning_probe --model '+c.MODEL+' --cache '+c.OUT+'/paced-prefix-cache-v24 --manifest-sha256 e110215f8181be0a85c871e199c07c56274b513d4e6b71254c1aba7d0b37d51b --checkpoint '+c.OUT+'/paced-candidate-v25/step-0054.pt --checkpoint-sha256 '+a['parent_checkpoint_sha256']+' --approval '+c.OUT+'/paced-data-approval-v22.json --lease '+lease_path+' --source '+c.source+' --output '+c.OUT+'/conditioning-v34'
-        c.start_unit(unit,env+' -u -m '+args,min(1200,int(end-time.time()-7200)));c.wait_unit(unit,end-7200)
-        (c.R/'conditioning.json').write_text(c.ssh('cat '+c.OUT+'/conditioning-v34/conditioning.json'));c.record('native_prerequisites_complete',optimizer_updates=0,awaiting_current_agent_stage=True)
-        # The same current agent chooses the measured repair and stages the
-        # Git-deployed training command. Stop rather than bill an abandoned wait.
-        until=min(end-7200,time.time()+300)
-        while not (c.R/'next-stage.json').exists():
-            if guard.poll() is not None:raise RuntimeError('Guard ended during stage review')
-            if time.time()>until:raise TimeoutError('No concrete next stage; stop billed compute early')
-            time.sleep(2)
-        stage=json.loads((c.R/'next-stage.json').read_text());assert stage['source']==c.source and stage['maximum_candidate_updates']==54
-        # Stage commands must already be committed and Git-deployed. This
-        # controller never interprets arbitrary locally supplied shell code.
-        from .adaptive_training_stage import execute
-        execute(c,env,end,lease_path,stage)
+        if evaluation:
+            from .adaptive_evaluation_stage import execute
+            execute(c,env,end,lease_path)
+        else:
+            from .live_trial import serve
+            for backend in ('released','sdpa'):
+                serve(c,env,end,'duplex-venus-adaptive34-'+backend,voice_reference=c.OUT+'/george-reference-v33/reference-16k.wav',voice_reference_sha256='40159a59a35053c358d5192b3919a86453c8c6bf1b2019b289119ceca444f674',benchmark_only=True,tts_attention=backend,benchmark_dir='runtime-'+backend)
+                c.ssh('sudo systemctl stop duplex-venus-adaptive34-'+backend+'-microphone');c.record('runtime_variant_complete',backend=backend,adopted=False)
+            unit='duplex-venus-adaptive34-conditioning'
+            args='training.venus.conditioning_probe --model '+c.MODEL+' --cache '+c.OUT+'/paced-prefix-cache-v24 --manifest-sha256 e110215f8181be0a85c871e199c07c56274b513d4e6b71254c1aba7d0b37d51b --checkpoint '+c.OUT+'/paced-candidate-v25/step-0054.pt --checkpoint-sha256 '+a['parent_checkpoint_sha256']+' --approval '+c.OUT+'/paced-data-approval-v22.json --lease '+lease_path+' --source '+c.source+' --output '+c.OUT+'/conditioning-v34'
+            c.start_unit(unit,env+' -u -m '+args,min(1200,int(end-time.time()-7200)));c.wait_unit(unit,end-7200)
+            (c.R/'conditioning.json').write_text(c.ssh('cat '+c.OUT+'/conditioning-v34/conditioning.json'));c.record('native_prerequisites_complete',optimizer_updates=0,awaiting_current_agent_stage=True)
+            # The same current agent chooses the measured repair and stages the
+            # Git-deployed training command. Stop rather than bill an abandoned wait.
+            until=min(end-7200,time.time()+300)
+            while not (c.R/'next-stage.json').exists():
+                if guard.poll() is not None:raise RuntimeError('Guard ended during stage review')
+                if time.time()>until:raise TimeoutError('No concrete next stage; stop billed compute early')
+                time.sleep(2)
+            stage=json.loads((c.R/'next-stage.json').read_text());assert stage['source']==c.source and stage['maximum_candidate_updates']==54
+            # Stage commands must already be committed and Git-deployed. This
+            # controller never interprets arbitrary locally supplied shell code.
+            from .adaptive_training_stage import execute
+            execute(c,env,end,lease_path,stage)
     except BaseException as error:c.record('adaptive_failure',error_type=type(error).__name__,error=str(error)[-2000:]);raise
     finally:
         if c.ssh_argv:
