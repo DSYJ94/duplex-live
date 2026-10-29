@@ -148,7 +148,7 @@
     "Complete TRAIN has32ordinary/184other scenes. Nonordinary matched-world reuse is intentional. More balanced ordinary rehearsal or all-family speech-conditioning retention are future one-factor hypotheses, not silently applied corpus/loss changes.",
     "No same-data static-recipe control run: improvement cannot be attributed causally to OPAL/LR reduction. No additional optimizer run is authorized by this exact phase after54newupdates."
   ],
-  "native_evaluation_status": "INTERRUPTED after last observed54/64; GPUSTOP confirmed11:54:42.723UTC; complete candidate/training-state backup verified. ZERO-update resume prepared within remaining original authority. No partial score/adoption.",
+  "native_evaluation_status": "COMPLETE64 native+ASR; REJECTED_NOT_ADOPTED. Speechagreement9/32parent244 to10/32candidate298 (not taskaccuracy), ordinary7/12both, only1/4necessaryquietconditionboth, correctlookup0/genuinecancel0/pendingatfollowup0. Fullbackup14837files8302570216B allSHA, GPUSTOP14:05:02.441UTC.",
   "adopted": false,
   "convergence_established": false,
   "api_calls": 0,

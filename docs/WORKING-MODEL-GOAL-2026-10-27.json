@@ -10,8 +10,8 @@
   "current_blocker": null,
   "budget": {
     "maximum_focused_gpu_seconds": 32800,
-    "focused_consumed_upper_seconds": 21500,
-    "remaining_gpu_seconds": 11300,
+    "focused_consumed_upper_seconds": 22300,
+    "remaining_gpu_seconds": 10500,
     "maximum_focused_usage_usd": 70,
     "external_api_cap_usd": 10,
     "external_api_usage_upper_usd": 9.6476125,
@@ -19,7 +19,7 @@
     "no_overlap": true,
     "cumulative_gpu_cap_seconds": 87251,
     "current_allocation_reserved_gpu_seconds": 0,
-    "unreserved_gpu_seconds": 11300,
+    "unreserved_gpu_seconds": 10500,
     "accounting_note": "Consumed upper before currentliveinterval; final actual STOP will reconcile unused reserved time. Original54451seconds neverreset."
   },
   "steps": [
@@ -41,10 +41,10 @@
   "initial_strategy": "Keep native9Bduplexfoundation and basicreasoning; offload heavierreasoning toactualbackend. Finishthisboundeddatarepairtraining/eval before deciding whethermoreadapters/fullweightoracoustictraining is necessary.",
   "current_execution": {
     "recorded_utc": "2026-10-29T11:32:09.119788+00:00",
-    "phase": "TRAINING_COMPLETE_NATIVE_EVALUATION_INTERRUPTED_SAFE_STOP",
+    "phase": "ADAPTIVE54_COMPLETE_REJECTED_RUNTIME_TERMINAL_REPAIR_PREPARED",
     "run": "runs/venus-training-20261029/adaptive-v36",
     "controller": "launchd gui/501/com.aurium.duplex.adaptive36/PID68126",
-    "vm_id": "6929308962022921268",
+    "vm_id": "2738075597351611996",
     "disk_id": "4375908109499109167",
     "training_source": "dd767d65ac663e701142f2c882aeb5e1c2a2c6e5",
     "native_stop_utc": "2026-10-29T15:04:37.857Z",
@@ -60,9 +60,15 @@
     "paired_native_unit": "duplex-venus-adaptive34-paired-native",
     "paired_native_pid": 2259,
     "candidate_backup_verified": true,
-    "provider_stopped_utc": "2026-10-29T11:54:42.723Z",
+    "provider_stopped_utc": "2026-10-29T14:05:02.441Z",
     "last_observed_native_cases": 54,
-    "full_native_score_available": false
+    "full_native_score_available": true,
+    "full_native_cases": 64,
+    "full_asr_cases": 64,
+    "full_backup_verified": true,
+    "backup_files": 14837,
+    "backup_bytes": 8302570216,
+    "next_probe": "Zero-update1200s terminalTTSbudget26vs128 on predeterminedTRAIN/DEV, sameA100/disk within original remaining time; not a new training authorization."
   },
   "reasoning_integration": {
     "confirmed_gap": "Previously ArithmeticWorker only. An opt-in general reasoning worker and Mac proxy profile are now implemented; no actual provider call or native GPU routing qualification has run.",

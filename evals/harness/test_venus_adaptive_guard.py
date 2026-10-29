@@ -69,3 +69,14 @@ def test_transport_recovery_is_zero_update_and_keeps_total_gpu_cap():
     lease.update(resource_key=EVAL_RETRY_KEY,creation_timestamp=vm['creationTimestamp'],stop_unix=start+11000,prior_new_gpu_seconds_upper=21800,execution_plan_sha256=hashlib.sha256(EVAL_RETRY_PLAN.read_bytes()).hexdigest())
     assert p['new_optimizer_updates_authorized_by_this_execution']==0 and 21800+11000==32800
     assert validate(vm,[vm],[],lease,start+1)==start+11000
+
+
+def test_small_terminal_probe_uses_only_part_of_remaining_time_with_zero_updates():
+    from training.venus.adaptive_guard import PROBE_KEY,PROBE_PLAN
+    p=json.loads(PROBE_PLAN.read_text());vm,lease,_=fixture()
+    start=datetime.fromisoformat('2026-10-29T15:00:00+00:00').timestamp()
+    vm.update(lastStartTimestamp='2026-10-29T15:00:00Z',creationTimestamp='2026-10-29T14:59:55Z')
+    vm['scheduling']['maxRunDuration']['seconds']='1200'
+    lease.update(resource_key=PROBE_KEY,creation_timestamp=vm['creationTimestamp'],stop_unix=start+1200,prior_new_gpu_seconds_upper=22300,execution_plan_sha256=hashlib.sha256(PROBE_PLAN.read_bytes()).hexdigest())
+    assert p['new_optimizer_updates_authorized_by_this_execution']==0 and 22300+1200<32800
+    assert validate(vm,[vm],[],lease,start+1)==start+1200

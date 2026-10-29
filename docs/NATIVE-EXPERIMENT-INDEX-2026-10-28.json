@@ -1,14 +1,14 @@
 {
   "schema": "dl-native-experiment-ledger-v1",
-  "recorded_utc": "2026-10-29T11:31:32.906715+00:00",
+  "recorded_utc": "2026-10-29T14:23:39.179742+00:00",
   "scope": "All direct Venus controller events found under the named local roots; not every historical Moshi/Slurm job",
   "roots": [
     "runs/venus-training-20261026",
     "runs/venus-training-20261027",
     "runs/venus-training-20261029"
   ],
-  "run_count": 32,
-  "stage_count": 42,
+  "run_count": 34,
+  "stage_count": 43,
   "source_of_status": "Saved receipts; not a live provider read",
   "historical_moshi_reviews": [
     "docs/PROJECT-RESET-2026-10-25.md",
@@ -2244,9 +2244,9 @@
     {
       "id": "adaptive-v36",
       "event_receipt": "runs/venus-training-20261029/adaptive-v36/events.json",
-      "event_receipt_sha256": "98a8436494d745038451e53a97d0cc5460bf7ef6e504effda1fa10007520baa9",
+      "event_receipt_sha256": "53301c3851a02c65bc88816d800f0c5aaed6a6fcba779f1083dca3a6884db5a9",
       "first_recorded_utc": "2026-10-29T11:15:29.755847+00:00",
-      "last_recorded_utc": "2026-10-29T11:27:37.656960+00:00",
+      "last_recorded_utc": "2026-10-29T12:15:18.185851+00:00",
       "source_shas": [
         "dd767d65ac663e701142f2c882aeb5e1c2a2c6e5"
       ],
@@ -2441,7 +2441,18 @@
           }
         }
       ],
-      "failures": [],
+      "failures": [
+        {
+          "at_utc": "2026-10-29T12:14:43.155213+00:00",
+          "event": "adaptive_failure",
+          "error_type": "RuntimeError"
+        },
+        {
+          "at_utc": "2026-10-29T12:15:18.185851+00:00",
+          "event": "copyback_failure_disk_preserved",
+          "error_type": "RuntimeError"
+        }
+      ],
       "provider_stop_records": [],
       "adoption_inferred": false,
       "lease": {
@@ -2457,6 +2468,136 @@
       },
       "lease_receipt": "runs/venus-training-20261029/adaptive-v36/lease.json",
       "lease_receipt_sha256": "e89bcd42610c4f2a2862d267fd45b15eb0426a3f7b34799ab757ab6b43db37ca"
+    },
+    {
+      "id": "adaptive-v37",
+      "event_receipt": "runs/venus-training-20261029/adaptive-v37/events.json",
+      "event_receipt_sha256": "1e62a9b4c2eb593a296e6c505e21f38f6c018f020d6d089fa4d80b6387b4ff24",
+      "first_recorded_utc": "2026-10-29T13:46:56.969487+00:00",
+      "last_recorded_utc": "2026-10-29T13:52:05.035284+00:00",
+      "source_shas": [
+        "63837da013628f47d6d0d9a8aedb55661d44ddd5"
+      ],
+      "stages": [],
+      "actual_training_records": [],
+      "admitted_recipes": [],
+      "failures": [
+        {
+          "at_utc": "2026-10-29T13:51:51.459486+00:00",
+          "event": "adaptive_failure",
+          "error_type": "RuntimeError"
+        },
+        {
+          "at_utc": "2026-10-29T13:52:01.539186+00:00",
+          "event": "copyback_failure_disk_preserved",
+          "error_type": "RuntimeError"
+        }
+      ],
+      "provider_stop_records": [
+        {
+          "at_utc": "2026-10-29T13:52:05.035284+00:00",
+          "event": "provider_stopped",
+          "status": "TERMINATED",
+          "actual_seconds": 253.51600003242493,
+          "focused_seconds_upper": 21800,
+          "prior_gpu_seconds": 54451
+        }
+      ],
+      "adoption_inferred": false,
+      "provider_snapshot": {
+        "id": "5559941523972223154",
+        "status": "TERMINATED",
+        "lastStartTimestamp": "2026-10-29T06:47:43.514-07:00",
+        "lastStopTimestamp": "2026-10-29T06:51:57.030-07:00"
+      },
+      "provider_snapshot_receipt": "runs/venus-training-20261029/adaptive-v37/provider-final.json",
+      "lease": {
+        "resource_key": "venus-adaptive-v37",
+        "vm_id": "5559941523972223154",
+        "disk_id": "4375908109499109167",
+        "stop_unix": 1793292963.514,
+        "prior_new_gpu_seconds_upper": 21500,
+        "prior_gpu_seconds": 54451,
+        "verified_hourly_price_usd": 3.687083630136986,
+        "authorization_sha256": "e5c217fa0b795b300b9b24bc8aed221fcad84fd57c4cafb3d30ac4dcef6e2973",
+        "execution_plan_sha256": "fa07bee689836ade91401420ba0143220c94a0485675a97ac0cf25ae5528345f"
+      },
+      "lease_receipt": "runs/venus-training-20261029/adaptive-v37/lease.json",
+      "lease_receipt_sha256": "492f94f9e6fde35e1000faa6693e6e4d507e70b2d4d647b56c36a23123c78c7b"
+    },
+    {
+      "id": "adaptive-v38",
+      "event_receipt": "runs/venus-training-20261029/adaptive-v38/events.json",
+      "event_receipt_sha256": "097293b2a32e06e4529898595f68e74851588beb40b3c849c72fe963b0299204",
+      "first_recorded_utc": "2026-10-29T13:56:55.506095+00:00",
+      "last_recorded_utc": "2026-10-29T14:05:08.101798+00:00",
+      "source_shas": [
+        "172e4be0ec56d54ef04463545facb15f6b542f05"
+      ],
+      "stages": [
+        {
+          "unit": "duplex-venus-adaptive37-paired-native",
+          "started_utc": "2026-10-29T13:58:33.678947+00:00",
+          "launch_identity": {
+            "MainPID": "1303",
+            "Result": "success",
+            "ExecMainStatus": "0",
+            "ActiveState": "active",
+            "SubState": "running",
+            "InvocationID": "8166e8fccbdf4bcd84014692e0444f8d"
+          },
+          "terminal_utc": "2026-10-29T13:59:06.524675+00:00",
+          "terminal": {
+            "MainPID": "0",
+            "Result": "success",
+            "ExecMainStatus": "0",
+            "ActiveState": "active",
+            "SubState": "exited",
+            "InvocationID": "8166e8fccbdf4bcd84014692e0444f8d"
+          }
+        }
+      ],
+      "actual_training_records": [],
+      "admitted_recipes": [],
+      "failures": [],
+      "provider_stop_records": [
+        {
+          "at_utc": "2026-10-29T14:05:08.101798+00:00",
+          "event": "provider_stopped",
+          "status": "TERMINATED",
+          "actual_seconds": 437.8050000667572,
+          "focused_seconds_upper": 22300,
+          "prior_gpu_seconds": 54451
+        }
+      ],
+      "adoption_inferred": false,
+      "backup": {
+        "all_hashes_verified": true,
+        "files": 14837,
+        "bytes": 8302570216,
+        "source": "172e4be0ec56d54ef04463545facb15f6b542f05"
+      },
+      "backup_receipt": "runs/venus-training-20261029/adaptive-v38/copyback-verified.json",
+      "provider_snapshot": {
+        "id": "2738075597351611996",
+        "status": "TERMINATED",
+        "lastStartTimestamp": "2026-10-29T06:57:44.636-07:00",
+        "lastStopTimestamp": "2026-10-29T07:05:02.441-07:00"
+      },
+      "provider_snapshot_receipt": "runs/venus-training-20261029/adaptive-v38/provider-final.json",
+      "lease": {
+        "resource_key": "venus-adaptive-v38",
+        "vm_id": "2738075597351611996",
+        "disk_id": "4375908109499109167",
+        "stop_unix": 1793293264.636,
+        "prior_new_gpu_seconds_upper": 21800,
+        "prior_gpu_seconds": 54451,
+        "verified_hourly_price_usd": 3.687083630136986,
+        "authorization_sha256": "e5c217fa0b795b300b9b24bc8aed221fcad84fd57c4cafb3d30ac4dcef6e2973",
+        "execution_plan_sha256": "1d8f03cee8b19e40b2e08fcc4d183cf0cd0371fd164edc8a24034a7cf7cc0ee2"
+      },
+      "lease_receipt": "runs/venus-training-20261029/adaptive-v38/lease.json",
+      "lease_receipt_sha256": "94a84b16c4a0240de62a0135afd759a3b58e38a1d2dc9aeadbed27b89842cf8c"
     }
   ],
   "unique_trained_checkpoints": [

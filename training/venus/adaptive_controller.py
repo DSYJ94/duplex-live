@@ -3,14 +3,15 @@ import hashlib,json,os,shlex,shutil,subprocess,sys,time
 from pathlib import Path
 from datetime import datetime
 from . import controller as c
-from .adaptive_guard import AUTH,PLAN,KEY,RECOVERY_PLAN,RECOVERY_KEY,RETRY_PLAN,RETRY_KEY,EVAL_PLAN,EVAL_KEY,EVAL_RETRY_PLAN,EVAL_RETRY_KEY
+from .adaptive_guard import AUTH,PLAN,KEY,RECOVERY_PLAN,RECOVERY_KEY,RETRY_PLAN,RETRY_KEY,EVAL_PLAN,EVAL_KEY,EVAL_RETRY_PLAN,EVAL_RETRY_KEY,PROBE_PLAN,PROBE_KEY
 from portable.venus.guard import bounded_runpod_read
 
 def digest(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
 
 def main():
     global PLAN,KEY
-    evaluation_retry='--resume-evaluation-retry' in sys.argv
+    diagnostic='--terminal-render-probe' in sys.argv
+    evaluation_retry='--resume-evaluation-retry' in sys.argv or diagnostic
     evaluation='--resume-evaluation' in sys.argv or evaluation_retry
     retry='--recover-controller' in sys.argv or evaluation
     recovery='--recover-source' in sys.argv or retry
@@ -18,11 +19,12 @@ def main():
     if retry:PLAN,KEY=RETRY_PLAN,RETRY_KEY
     if evaluation:PLAN,KEY=EVAL_PLAN,EVAL_KEY
     if evaluation_retry:PLAN,KEY=EVAL_RETRY_PLAN,EVAL_RETRY_KEY
-    c.R=Path('runs/venus-training-20261029')/('adaptive-v38' if evaluation_retry else 'adaptive-v37' if evaluation else 'adaptive-v36' if retry else 'adaptive-v35' if recovery else 'adaptive-v34');assert not c.R.exists(),'Observe the same actual allocation; never duplicate'
-    a=json.loads(AUTH.read_text());p=json.loads(PLAN.read_text());r=a['resources'];zone=r['zone'];c.NAME=p['vm_name'];duration=p['maximum_gpu_seconds'];prior=p['focused_gpu_seconds_upper_before_launch'];version='v38' if evaluation_retry else 'v37' if evaluation else 'v36' if retry else 'v35' if recovery else 'v34'
+    if diagnostic:PLAN,KEY=PROBE_PLAN,PROBE_KEY
+    c.R=Path('runs/venus-training-20261029')/('terminal-render-v39' if diagnostic else 'adaptive-v38' if evaluation_retry else 'adaptive-v37' if evaluation else 'adaptive-v36' if retry else 'adaptive-v35' if recovery else 'adaptive-v34');assert not c.R.exists(),'Observe the same actual allocation; never duplicate'
+    a=json.loads(AUTH.read_text());p=json.loads(PLAN.read_text());r=a['resources'];zone=r['zone'];c.NAME=p['vm_name'];duration=p['maximum_gpu_seconds'];prior=p['focused_gpu_seconds_upper_before_launch'];version='v39' if diagnostic else 'v38' if evaluation_retry else 'v37' if evaluation else 'v36' if retry else 'v35' if recovery else 'v34'
     assert a['status']=='APPROVED' and a['human_approval']=='Approve four hours; keep $70 cap' and p['parent_sha256']==digest(AUTH)
     assert not c.run(['git','status','--porcelain','--','training/venus','portable/venus','docs/NATIVE-VENUS-ADAPTIVE-PHASE-AUTHORIZATION-2026-10-29.json','docs/NATIVE-VENUS-ADAPTIVE-PHASE-EXECUTION-2026-10-29.json']).strip()
-    seed=Path('runs/venus-training-20261027/paced-recovery-v33');before=Path('runs/venus-training-20261029/adaptive-v37') if evaluation_retry else Path('runs/venus-training-20261029/adaptive-v36') if evaluation else Path('runs/venus-training-20261029/adaptive-v35') if retry else Path('runs/venus-training-20261029/adaptive-v34') if recovery else seed;last=json.loads((before/('provider-final.json' if evaluation_retry else 'provider-reconciled-after-network-loss.json' if evaluation else 'provider-final-reconciled.json' if retry else 'provider-final.json')).read_text());old=c.cloud('compute','instances','describe',last['name'],'--zone='+zone)
+    seed=Path('runs/venus-training-20261029/adaptive-v38') if diagnostic else Path('runs/venus-training-20261027/paced-recovery-v33');before=Path('runs/venus-training-20261029/adaptive-v38') if diagnostic else Path('runs/venus-training-20261029/adaptive-v37') if evaluation_retry else Path('runs/venus-training-20261029/adaptive-v36') if evaluation else Path('runs/venus-training-20261029/adaptive-v35') if retry else Path('runs/venus-training-20261029/adaptive-v34') if recovery else seed;last=json.loads((before/('provider-final.json' if evaluation_retry else 'provider-reconciled-after-network-loss.json' if evaluation else 'provider-final-reconciled.json' if retry else 'provider-final.json')).read_text());old=c.cloud('compute','instances','describe',last['name'],'--zone='+zone)
     assert old['status']=='TERMINATED' and old['id']==last['id']==p['retire_only_vm_id'] and old['lastStopTimestamp']==last['lastStopTimestamp']
     assert all(v['status']=='TERMINATED' for v in c.cloud('compute','instances','list'))
     disk=c.cloud('compute','disks','describe',r['same_existing_disk_name'],'--zone='+zone)
@@ -31,7 +33,8 @@ def main():
     assert all(x['status'] in ('EXITED','STOPPED','TERMINATED') for x in pods)
     price=json.loads(Path('runs/venus-20261026/us-current-price40-v1.json').read_text());assert 0<price['hourly_estimate_usd']<=4 and time.time()-datetime.fromisoformat(price['at_utc']).timestamp()<3600
     rows=json.loads((seed/'unique-inventory.json').read_text());backup=json.loads((seed/'copyback-verified.json').read_text())
-    assert backup['all_hashes_verified'] and len(rows)==11526 and sum(v['bytes'] for v in rows)==7775057757
+    expected=p['backup_before_retirement'] if diagnostic else dict(files=11526,bytes=7775057757)
+    assert backup['all_hashes_verified'] and len(rows)==expected['files'] and sum(v['bytes'] for v in rows)==expected['bytes']
     for row in rows:
         path=seed/'copyback'/row['path'];assert path.stat().st_size==row['bytes'] and digest(path)==row['sha256']
     assert digest(seed/'copyback/paced-candidate-v25/step-0054.pt')==a['parent_checkpoint_sha256']
@@ -93,7 +96,10 @@ def main():
             except OSError:shutil.copy2(original,target)
         py=c.ROOT+'/venus-runtime-v1/venv/bin/python';env='/usr/bin/env CUBLAS_WORKSPACE_CONFIG=:4096:8 DUPLEX_LIVE_GUARD_FILE='+c.ROOT+'/venus-live-guard-v1.json DUPLEX_LIVE_LEASE_FILE='+lease_path+' HF_HOME='+c.ROOT+'/venus-runtime-v1/hf-cache '+py
         assert c.ssh('sha256sum '+c.OUT+'/paced-candidate-v25/step-0054.pt').split()[0]==a['parent_checkpoint_sha256']
-        if evaluation:
+        if diagnostic:
+            from .terminal_render_stage import execute
+            execute(c,env,end,lease_path)
+        elif evaluation:
             from .adaptive_evaluation_stage import execute
             execute(c,env,end,lease_path)
         else:

@@ -1,0 +1,31 @@
+{
+  "recorded_utc": "2026-10-29T14:13:17.587023+00:00",
+  "upstream_url": "https://huggingface.co/inclusionAI/Realtime-Venus/blob/4681004131ea1f1fb9aca9f0db76be322657cc79/Realtime-Venus-Audio/modeling_minicpmo.py",
+  "upstream_sha256": "b7b4070cead9b88347f6e39d8333706ec007e2a832d6bcde5755063bf1453774",
+  "observations": [
+    {
+      "condition": "parent244",
+      "sequence": 2,
+      "generated_text": "There are sixty minutes in an hour.",
+      "audio_seconds": 1.28,
+      "all_later_frames_listen": true,
+      "native_chunk_sha256": "ab262e47c30c4ffb9852b9c681f0889072f95973b61c2a0cd47b910a1e968ff0"
+    },
+    {
+      "condition": "paced-continuation",
+      "sequence": 2,
+      "generated_text": "There are sixty minutes in an hour.",
+      "audio_seconds": 1.28,
+      "all_later_frames_listen": true,
+      "native_chunk_sha256": "687c434b083155363dea94de279428ccfaae0ab7876a77560b841749774ac823"
+    }
+  ],
+  "code_finding": "Exact pinned streaming_generate sets max_new_token26 on BOTH nonfinal/final chunks, then clears TTS state at end_of_turn. generate_chunk discards its latest token at budget exhaustion. A terminal text longer than the allocated one-second speech budget can therefore be under-rendered. Token2wav already flushes its own existing buffer; increasing file tail silence does not generate missing TTS tokens.",
+  "hypothesis_not_yet_native_proven": "A finite128-token terminal-only budget may render the already-generated full text. Must compare actual full waveform/independent ASR with fixed inputs/voice/weights. It may increase terminal processing time; it does not claim realtime throughput, silence policy or delegation is fixed.",
+  "implementation": "portable/venus/terminal_speech.py (opt-in, not installed in live app)",
+  "fixture_tests": 6,
+  "gpu_model_runs_for_fix": 0,
+  "new_optimizer_updates": 0,
+  "external_api_calls": 0,
+  "adopted": false
+}

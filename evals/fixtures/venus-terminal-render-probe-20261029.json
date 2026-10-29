@@ -1,0 +1,15 @@
+{
+  "schema": "dl-terminal-render-selection-v1",
+  "scene_ids": [
+    "venus-control-v1-train-ordinary-0126",
+    "venus-control-v1-dev-ordinary-0183"
+  ],
+  "selection": "Longest authored ordinary teacher response in each TRAIN/DEV fold; ties by ID, before probe outputs. No heldout inputs.",
+  "checkpoint_sha256": "c634e6cf38831210be0165ce7f6dd09c5454226f62ff622477fd4d051abde270",
+  "budgets": [
+    26,
+    128
+  ],
+  "new_optimizer_updates": 0,
+  "adopted": false
+}
