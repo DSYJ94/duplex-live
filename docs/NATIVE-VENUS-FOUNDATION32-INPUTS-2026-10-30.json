@@ -1,0 +1,318 @@
+{
+  "schema": "dl-native-foundation-comparison-inputs-v1",
+  "status": "INPUTS_PINNED_JOB_NOT_SUBMITTED",
+  "recorded_utc": "2026-10-30T18:07:38.973423+00:00",
+  "user_instruction": "Go ahead with recommended sequence",
+  "purpose": "Untouched released Venus versus saved406 on identical complete32; isolate adaptation under same runtime before intended-runtime attribution",
+  "new_optimizer_updates": 0,
+  "new_api_calls": 0,
+  "maximum_gpu_seconds_planned": 2400,
+  "existing_action_phase_seconds_remaining": 5000,
+  "unchanged_phase_cap_usd": 70,
+  "reference_collection": "runs/venus-training-20261029/action-v42/copyback/action-native-paired-v42",
+  "reference_collection_sha256": "6c2eb05250f4b0581d0058e4973102159b05ede85a089f2b0b63632d51770816",
+  "reference_speech_report_sha256": "ac5829fe3619321d5faea145bc8aaa8a08228ef47b8d816832e3d8b6760f6403",
+  "reference_profile_sha256": "b1bc319390fdc2b6442b9a7b8c33381a111e7f1a1d7e309b456e414139e1212e",
+  "reference_checkpoint_sha256": "a934ce7e05f4728a0973408eafedaed219f89dacfbf5dc6fcb2bbf536f4378b6",
+  "model_revision": "4681004131ea1f1fb9aca9f0db76be322657cc79",
+  "new_condition_adapter": null,
+  "required_cases": 32,
+  "reference_cases_all_chunk_hashes_verified": true,
+  "required_remaining_work": [
+    "zero-update collector and guarded execution deployment",
+    "fresh price/provider/guard verification before allocation",
+    "all32 original-release generations and speech audits",
+    "full copyback and actual STOP",
+    "compare all conditions; no automatic adoption"
+  ],
+  "cases": [
+    {
+      "id": "venus-repair-v2-holdout-pause-0097",
+      "family": "pause",
+      "evaluation_set": "fresh24",
+      "input_sha256": "e5cbf75dfe0186afb523174b6da1e4fcdcfcf9dba700c0984d910f5d04c4caa0",
+      "input_frames": 24,
+      "reference_trace_sha256": "48a24aabf8ea4d2538248bc53215343dc45c3b3aba1900f68fd683c8a7b78472",
+      "reference_wave_sha256": "6dd6b10fe949a2be299dafdcbe239619e9bee1a555e6ffe798e7cb85753fd8c2"
+    },
+    {
+      "id": "venus-repair-v2-holdout-ordinary-0093",
+      "family": "ordinary",
+      "evaluation_set": "fresh24",
+      "input_sha256": "4769e30e9865f54c098dc3ef236d4eab8d4677e5e1f81350af02a3e056024e85",
+      "input_frames": 10,
+      "reference_trace_sha256": "5b4ea27339a30aad2e9b453d5bae1f8e163cef351e43618c6bacf2be66b719b2",
+      "reference_wave_sha256": "84a6d3b44f5cbb5353374b19d64edadf7be1e521c2c707d598e071409d094d15"
+    },
+    {
+      "id": "venus-repair-v2-holdout-quiet-0080",
+      "family": "quiet",
+      "evaluation_set": "fresh24",
+      "input_sha256": "21c8b05413dc9378283c6835384162ead219d01fdae65e9ab4cab1370b6ad1cd",
+      "input_frames": 33,
+      "reference_trace_sha256": "68223a248bedff5e337a266daacb420ac64369ac2d7daaf1868b0759b4e427be",
+      "reference_wave_sha256": "6acd7b4988b3c751a63dfa75b8e75f875ae5dc9fcd860261ba0fa681cdf0f197"
+    },
+    {
+      "id": "venus-repair-v2-holdout-pending-0102",
+      "family": "pending",
+      "evaluation_set": "fresh24",
+      "input_sha256": "8511dda97f76e2ee256b0a281c3413ce233a2fd9600fcdc65a8da719724acb09",
+      "input_frames": 35,
+      "reference_trace_sha256": "4ff8b54b0dbc4d002c50201488c6e4cc08da4157f051019e598aabb437ee4408",
+      "reference_wave_sha256": "34efba4b6df334148dfb5b01fa1523a73c25f113cce357338efb2cdca66099dc"
+    },
+    {
+      "id": "venus-repair-v2-holdout-pending-0103",
+      "family": "pending",
+      "evaluation_set": "fresh24",
+      "input_sha256": "8511dda97f76e2ee256b0a281c3413ce233a2fd9600fcdc65a8da719724acb09",
+      "input_frames": 35,
+      "reference_trace_sha256": "fefd4022057d13bf457c58364bacaed2af709fcd0eca5090ccb4d40bf0b4df02",
+      "reference_wave_sha256": "ad77396515df131ddc4dfc19f1e7c137c3997654b0e8bb422c30f996044d990d"
+    },
+    {
+      "id": "venus-repair-v2-holdout-quiet-0082",
+      "family": "quiet",
+      "evaluation_set": "fresh24",
+      "input_sha256": "1c933e4e224d5a6fb81f1891c065e51409a966f273be9bfea6727217aa0a67af",
+      "input_frames": 33,
+      "reference_trace_sha256": "1fd1d2182e32486be472e2abf158142c26b9b140c83f0cf44d3917270c8793c9",
+      "reference_wave_sha256": "2bcca0d16b70443e3412a1fb329023f3cbcdcfe7078b5dfe960c4348d70a7c5d"
+    },
+    {
+      "id": "venus-repair-v2-holdout-delegate-0089",
+      "family": "delegate",
+      "evaluation_set": "fresh24",
+      "input_sha256": "af3c909d32c8c2143c3224cfe9393fb97a07119872d6c6c8563083bd808439ba",
+      "input_frames": 25,
+      "reference_trace_sha256": "1d3818ad74678db4563c5fbb1f8af253ee683fe8fcaf756f15c4d5c9da0735cc",
+      "reference_wave_sha256": "ff099a052208e8c8cdbdbe93b940ea4f6bf8d07d77a04da635768fe49de642a8"
+    },
+    {
+      "id": "venus-repair-v2-holdout-pending-0100",
+      "family": "pending",
+      "evaluation_set": "fresh24",
+      "input_sha256": "376ea24665a3032ab5254b3065169f1bbd6938406104f9abbe0c7063ba406058",
+      "input_frames": 35,
+      "reference_trace_sha256": "b7ba7da86336278f9da49cbd24cb8616b89135f26c8b3cdbe8b11d2605e7a428",
+      "reference_wave_sha256": "7be656903ffce11df51468dd68dcc54a0d99442203fc959b5a7dda144097ef53"
+    },
+    {
+      "id": "venus-repair-v2-holdout-delegate-0090",
+      "family": "delegate",
+      "evaluation_set": "fresh24",
+      "input_sha256": "f17fe31b3de6b10f9abd78ee8ec1419b618774160b0b0d554a02f7ce9421c128",
+      "input_frames": 25,
+      "reference_trace_sha256": "450d9b2efe6057554198f407d364550c1212d0f8d0eb438dc457ae2d43339d85",
+      "reference_wave_sha256": "c713e0b7dfe8ee5a98640802fd0c49b4cddea6f2b15548a11c7a442294edf7c0"
+    },
+    {
+      "id": "venus-repair-v2-holdout-ordinary-0095",
+      "family": "ordinary",
+      "evaluation_set": "fresh24",
+      "input_sha256": "ba9e78eb4341664fa1007819f582f0bb83260bfecb4cc90dfd9c50ccb3ae7217",
+      "input_frames": 10,
+      "reference_trace_sha256": "9a17bfa77b884d331169a964f90c9431495f10203f0c1b216a19de217e5b1e67",
+      "reference_wave_sha256": "7b2577c05f1afa3639849f7dbe17729a3a52f0dc532a66bc3ee70cf0cd339ac6"
+    },
+    {
+      "id": "venus-repair-v2-holdout-delegate-0091",
+      "family": "delegate",
+      "evaluation_set": "fresh24",
+      "input_sha256": "f17fe31b3de6b10f9abd78ee8ec1419b618774160b0b0d554a02f7ce9421c128",
+      "input_frames": 25,
+      "reference_trace_sha256": "fb5072743fcafbf7eab09a4a90d980a02b8982c68fa657784e14f276d76bfb8f",
+      "reference_wave_sha256": "c713e0b7dfe8ee5a98640802fd0c49b4cddea6f2b15548a11c7a442294edf7c0"
+    },
+    {
+      "id": "venus-repair-v2-holdout-cancel-0085",
+      "family": "cancel",
+      "evaluation_set": "fresh24",
+      "input_sha256": "0fdea5ce4f3bf7ab51e68c298e9df758b42932f77960d7092167f7ba7269a07e",
+      "input_frames": 24,
+      "reference_trace_sha256": "4dc0117b321030431a9e5cfeb2337136899c54ead72a3fc0b84bbfc77c865130",
+      "reference_wave_sha256": "127a2ec5e08c4c807b88605abed8248da9959bb38ea26e1db2364d7520708ec2"
+    },
+    {
+      "id": "venus-repair-v2-holdout-ordinary-0094",
+      "family": "ordinary",
+      "evaluation_set": "fresh24",
+      "input_sha256": "a1b1ca8599a056fa56678d7cb2e6cced5456147752883e621f530508e660b400",
+      "input_frames": 10,
+      "reference_trace_sha256": "5ded16c7686523c2e5f17c87a6804f7606ba5af9c471e77d8f544fd2320ddbde",
+      "reference_wave_sha256": "d1c36fe38cc2899161fa1a25d39eeefda0b84d298cc3fedd8345e59cc9fcd207"
+    },
+    {
+      "id": "venus-repair-v2-holdout-quiet-0083",
+      "family": "quiet",
+      "evaluation_set": "fresh24",
+      "input_sha256": "6c70cef13df2ec749211bd2aa7ea15da80c954745d9147a583d0b5b888ae98e0",
+      "input_frames": 32,
+      "reference_trace_sha256": "1e8e7cf8a8dd389a56ff68fd0b71e1bcd74f48746a6b002f9a82d43a5fd81daa",
+      "reference_wave_sha256": "68914665ea2ac6639aa00e227959b958a487956d006f4207c93e78280d8cae7a"
+    },
+    {
+      "id": "venus-repair-v2-holdout-delegate-0088",
+      "family": "delegate",
+      "evaluation_set": "fresh24",
+      "input_sha256": "af3c909d32c8c2143c3224cfe9393fb97a07119872d6c6c8563083bd808439ba",
+      "input_frames": 25,
+      "reference_trace_sha256": "64b1b8f12ef5edda0bd66a0185ffd5ce8b60ad9c7b21cb0a3eabe4a11d5c8f81",
+      "reference_wave_sha256": "11c4dcd6f382b5659e921d120344c82fcaa2f3e2dd3bdf46dd0690511b8d0b84"
+    },
+    {
+      "id": "venus-repair-v2-holdout-pause-0096",
+      "family": "pause",
+      "evaluation_set": "fresh24",
+      "input_sha256": "aee4ddba8e438ce2f3d351e84cd6c1b878c2cc0d02f1e4a2e418d23a7d3648ea",
+      "input_frames": 25,
+      "reference_trace_sha256": "3b190fbfb9f577609f858d97895a6284c396bb6b4cd589c698544c219d6d7855",
+      "reference_wave_sha256": "1e46f50779b9fbbc47e2b9e88b7ae4172c7f4ab869c0476f471a9784f6b153c1"
+    },
+    {
+      "id": "venus-repair-v2-holdout-pause-0098",
+      "family": "pause",
+      "evaluation_set": "fresh24",
+      "input_sha256": "2d712d56137bb340d05b6c498ef2fe741add61f4c33898164336595b53cc4c3c",
+      "input_frames": 25,
+      "reference_trace_sha256": "f428b6e552ab6d2398c7d1cba546012003d1d17259236b709a57788d1bbd5c4d",
+      "reference_wave_sha256": "91257c1e1de9d843e794f97def9723268adf9cfca5d150aff19ce1ab2d265b84"
+    },
+    {
+      "id": "venus-repair-v2-holdout-cancel-0084",
+      "family": "cancel",
+      "evaluation_set": "fresh24",
+      "input_sha256": "0fdea5ce4f3bf7ab51e68c298e9df758b42932f77960d7092167f7ba7269a07e",
+      "input_frames": 24,
+      "reference_trace_sha256": "5a4c9f5a520fbab50b32f064af353483c82ab70250b513f9ef49c7fb1164f73c",
+      "reference_wave_sha256": "9582ee82c1326fb738d0f9e0c21592281481fad22b29e85ae2384bfe62ed3cc1"
+    },
+    {
+      "id": "venus-repair-v2-holdout-quiet-0081",
+      "family": "quiet",
+      "evaluation_set": "fresh24",
+      "input_sha256": "6af15aa42bb3877c2643f0cb7b7b0f1052bdfa94d1f22d7ff9ac30062de17861",
+      "input_frames": 32,
+      "reference_trace_sha256": "777b2b76b43ead9ae1971cd74aaa1dfd48d4dd6ae3725ac71411969d8236b692",
+      "reference_wave_sha256": "e4327d8de0f0cbe837dae287a692842921aace439409a2490525071225e4fdfd"
+    },
+    {
+      "id": "venus-repair-v2-holdout-cancel-0086",
+      "family": "cancel",
+      "evaluation_set": "fresh24",
+      "input_sha256": "c82265e79ccac9526abc3699f3431ce39fb92b1957052eeb4a3c2aef6dd93924",
+      "input_frames": 24,
+      "reference_trace_sha256": "4df1065ac6e42604b2b1db0a9b9c1ff5de2d62f95d98026618d926f799527f78",
+      "reference_wave_sha256": "8b06760f2a1a43d53b3a06fdab6bd984a36e8135d0dafebebb8b39352af8d767"
+    },
+    {
+      "id": "venus-repair-v2-holdout-cancel-0087",
+      "family": "cancel",
+      "evaluation_set": "fresh24",
+      "input_sha256": "c82265e79ccac9526abc3699f3431ce39fb92b1957052eeb4a3c2aef6dd93924",
+      "input_frames": 24,
+      "reference_trace_sha256": "40a92b726fe38fdbb42291690b45c0fda05e9ebe4c269f6871906242a4e048c4",
+      "reference_wave_sha256": "92eed6f085ba526677a2e37e46a9d1e50500a041f3f9daed7bd5f2b97a2c0fa6"
+    },
+    {
+      "id": "venus-repair-v2-holdout-pause-0099",
+      "family": "pause",
+      "evaluation_set": "fresh24",
+      "input_sha256": "37ca5f0196bd20597f1d14dd65d7998694ce4989a6f3f88e12f8f65aae162626",
+      "input_frames": 24,
+      "reference_trace_sha256": "91beabfaac6779e3f70a1ef404166f9be2066e49142b5724d108eab339174de5",
+      "reference_wave_sha256": "b14b9435285f7c90b4a1ace04274e19021edce0082bcc560de521b335c6ab8e8"
+    },
+    {
+      "id": "venus-repair-v2-holdout-pending-0101",
+      "family": "pending",
+      "evaluation_set": "fresh24",
+      "input_sha256": "376ea24665a3032ab5254b3065169f1bbd6938406104f9abbe0c7063ba406058",
+      "input_frames": 35,
+      "reference_trace_sha256": "23fb8b21a59c0adeb778fade37daf3448ef5dc43fb0588279a119d7b94032ab7",
+      "reference_wave_sha256": "59e343963252c72d0a9ee9e955433fd9cca4664b7a6843118139b861fadc61cd"
+    },
+    {
+      "id": "venus-repair-v2-holdout-ordinary-0092",
+      "family": "ordinary",
+      "evaluation_set": "fresh24",
+      "input_sha256": "4daaa4ae1311223657fd064195455d3d996c9d7094e02f6db5a8a5e6531ed75a",
+      "input_frames": 11,
+      "reference_trace_sha256": "016f14c5554cc3dfb98302f725a87a6c09e10c16d1cf49fe8af846d33bb1852a",
+      "reference_wave_sha256": "e6fe50319ea9916f989b7b30fed7a6830e6b6807021010c2fbdd1bd3750eced4"
+    },
+    {
+      "id": "venus-control-v1-holdout-ordinary-0220",
+      "family": "ordinary",
+      "evaluation_set": "old8ordinary-retention",
+      "input_sha256": "473ffda18aa3e4c78f8f00f6f69b9fa8cd57987904a3dedd05db0412588b6cf1",
+      "input_frames": 10,
+      "reference_trace_sha256": "0e110ded18082db3e49aa36687379f5baa628b9303a97968dd6739de04380b70",
+      "reference_wave_sha256": "728684e5db938c9e012ab0d2900c0a133514bd36ea836930cd9acc37ba7964a9"
+    },
+    {
+      "id": "venus-control-v1-holdout-ordinary-0219",
+      "family": "ordinary",
+      "evaluation_set": "old8ordinary-retention",
+      "input_sha256": "f450675dc372985fc1f45664224cc37ab3f67b4898e1b4af19488c536c1355ae",
+      "input_frames": 10,
+      "reference_trace_sha256": "68868fe02d19773fc866b789a4892642edc2d39ae40bfe341174d761e0cbb9c9",
+      "reference_wave_sha256": "ca2934caaec7cd509663d74a8e62af8335020093db3b89daaf0eacbc1a18cb47"
+    },
+    {
+      "id": "venus-control-v1-holdout-ordinary-0223",
+      "family": "ordinary",
+      "evaluation_set": "old8ordinary-retention",
+      "input_sha256": "f6eb9acba6085901f1493787d6f8cb08896e1d31f9f7d1b5699972e51a642246",
+      "input_frames": 10,
+      "reference_trace_sha256": "8beaf0265566aff633b9f6022b29db14167212eda083442034f61e49fd98a377",
+      "reference_wave_sha256": "580effa8de9b97b180575b8be711989cde1a7faf071fb4b17670f933739b9ab0"
+    },
+    {
+      "id": "venus-control-v1-holdout-ordinary-0217",
+      "family": "ordinary",
+      "evaluation_set": "old8ordinary-retention",
+      "input_sha256": "89be07863c82f4144b75b733a97fac896467c46591e7bb7256e93dbccab1c203",
+      "input_frames": 10,
+      "reference_trace_sha256": "e8d5302f3697b0c285fbe0f919223487601ff9a877267218006521c9b21e2211",
+      "reference_wave_sha256": "6757d8df372b90013a5c82732a844467f28c42cb5a9f7c405223a64154fda925"
+    },
+    {
+      "id": "venus-control-v1-holdout-ordinary-0222",
+      "family": "ordinary",
+      "evaluation_set": "old8ordinary-retention",
+      "input_sha256": "420be19ea6f3ab3c53f023067e1ed52be8df50563809d674aecb96b1304c3094",
+      "input_frames": 10,
+      "reference_trace_sha256": "638cb185c9a34274fe303a207820b3ec45a97b745e711eab248e2440e862ceaa",
+      "reference_wave_sha256": "5f12e99c80c8b8df23b9d9dcd58fadd3e6555d5307ec22087714d6817a5d0c2f"
+    },
+    {
+      "id": "venus-control-v1-holdout-ordinary-0221",
+      "family": "ordinary",
+      "evaluation_set": "old8ordinary-retention",
+      "input_sha256": "902030cfc4e8636c7351f5544ba0a521a60fa7bf08c9ac51414c1cd19c693911",
+      "input_frames": 10,
+      "reference_trace_sha256": "8a9f10f91e714ef190a9bac5416cd2b479af696c58b557ef99bf4318104aa8fb",
+      "reference_wave_sha256": "662fec1df18efa497ff2e98f1e51e8b388834f170bafb8f15f81ea234f45e6d6"
+    },
+    {
+      "id": "venus-control-v1-holdout-ordinary-0216",
+      "family": "ordinary",
+      "evaluation_set": "old8ordinary-retention",
+      "input_sha256": "ce69068b83aeb3c632c178743c93668739d3ba0d6e248a25e30f0e28c1a8b158",
+      "input_frames": 11,
+      "reference_trace_sha256": "d1fb74c27d1680f4fcfa4f4ec616e848acbf26723a7f9149a812062597bbfba4",
+      "reference_wave_sha256": "28cc38bfe2079a9510135fcab27b37de41d04b37ff0c24e34317f7d3713f6783"
+    },
+    {
+      "id": "venus-control-v1-holdout-ordinary-0218",
+      "family": "ordinary",
+      "evaluation_set": "old8ordinary-retention",
+      "input_sha256": "56670b9920f7ece6d1ddfccb20955bc3f12e6364be412dc02dabb470c49ec501",
+      "input_frames": 10,
+      "reference_trace_sha256": "fb09e75a3abd9c14192d327ffe33534dbff4d01537385fad6b0a8d634e7120c2",
+      "reference_wave_sha256": "cc6a4db36e42dc736f0310a057ed0fb3decfb6691c62174f2b54f19b67b25812"
+    }
+  ]
+}

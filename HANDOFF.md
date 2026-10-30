@@ -1,3 +1,11 @@
+# LOCAL — foundation comparison approved; complete32 inputs pinned; no new GPU job
+
+30 October2026: Human says "Go ahead with recommended sequence" and asks about gradual model expansion. Prepared docs/NATIVE-VENUS-FOUNDATION32-INPUTS-2026-10-30.json: all32 saved406 references and every associated wave chunk SHA verified, exact input/profile/modelrevision/trace/report hashes pinned. Intended newcondition untouchedrelease/noadapter; ZEROoptimizer/API calls, planned2400seconds within5000remainingactionphase/unchanged70USDcap. Collector/guard execution still to implement/deploy; job NOT SUBMITTED. Do not mistake manifest for completed base evaluation. Previous complete406closure/budget/backups below remain authoritative.
+
+Expansion research: mathematically possible via function-preserving residual modules, depth/width growth or MoE upcycling, but preservation at initialization is not improved knowledge. New weights require suitable continued training and speech-alignment/latency validation. Primary transformer expansion https://arxiv.org/abs/2308.06103 and SOLAR https://arxiv.org/abs/2312.15166. TML official overview https://thinkingmachines.ai/blog/interaction-models/ specifies276B TOTAL/12B ACTIVE MoE; dense9B vs276Btotal is not proportional per-token compute comparison. No evidence yet establishes9Bcapacity as presentfailure cause. Prefer qualifiedduplex+strongasyncbackend, then data/adapter capacity evidence before structural growth. No modelexpansion/training submitted or authorized by this research. Activegoal unfinished; next implement and run approved full32base comparison with actual fresh provider/cost/guards and no overlap.
+
+---
+
 # LOCAL —406 full evaluation COMPLETE/REJECTED; full backup verified; ALL GCP compute STOPPED
 
 2026-10-30T00:32:10.711057+00:00. Sole execution remains LOCAL on main. Actual producer90dc9ecf98e464f1754c0fda7763024663f82844; action42 controller completed its original run, no duplicate/new allocation. VM4005521812200776727/SAME100GBdisk4375908109499109167 stopped at2026-10-30T00:17:51.955UTC after1807.588actual seconds/1900upper. Fresh authenticated provider read 2026-10-30T00:30:06.378080+00:00 confirms ALL5 GCP instances TERMINATED. No optimizer/model/API/synthesis work started during this review.
