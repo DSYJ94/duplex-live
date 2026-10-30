@@ -1,0 +1,53 @@
+{
+  "schema": "dl-native-foundation-lineage-review-v1",
+  "recorded_utc": "2026-10-30T00:12:34.404168+00:00",
+  "status": "FOUNDATION_FIT_PROVISIONAL_NOT_PROVEN",
+  "user_question": "Investigate whether the foundation, rather than data/recipe alone, is limiting the product.",
+  "lineage": {
+    "our_checkpoint": "inclusionAI/Realtime-Venus/Realtime-Venus-Audio@4681004131ea1f1fb9aca9f0db76be322657cc79",
+    "venus": "Ant Group/Tsinghua adaptation/post-training of pretrained MiniCPM-o4.5; audio and omni variants separately trained",
+    "minicpm": "Qwen3-8B language backbone, Whisper-Medium audio encoder, CosyVoice2/S3/streaming flow speech generation; approx9B total",
+    "personaplex": "NVIDIA7B based on Moshi/Moshiko with Mimi; separate model family, not Venus parent",
+    "our_training": "LoRA851968parameters on last-layerq/v; not training a9Bfoundation fromscratch or acoustic decoder."
+  },
+  "primary_sources": [
+    {
+      "url": "https://arxiv.org/html/2609.13814",
+      "sections": [
+        "4.1",
+        "4.3",
+        "4.6",
+        "5.1"
+      ],
+      "facts": "MiniCPM adaptation; one-second native control units; fixed acoustic decoder; private delegation with captured evidence."
+    },
+    {
+      "url": "https://huggingface.co/inclusionAI/Realtime-Venus",
+      "facts": "Audio/Omni9B; Qwen3-8B/Whisper-Medium architecture."
+    },
+    {
+      "url": "https://huggingface.co/openbmb/MiniCPM-o-4_5",
+      "facts": "Pretrained Qwen3/Whisper/CosyVoice2 components."
+    },
+    {
+      "url": "https://huggingface.co/nvidia/personaplex-7b-v1",
+      "facts": "Moshi/Moshiko7B architecture with Mimi."
+    }
+  ],
+  "local_evidence": {
+    "unadapted_release": "docs/NATIVE-VENUS-COMPLETE10-REVIEW-2026-10-26.json",
+    "unadapted_findings": "4/4simple ordinary generated-text answers matched core content; spoken accuracy unqualified, both silencecases acknowledged early; pending/cancel not exercised. Small diagnostic, not production qualification.",
+    "parent298": "docs/NATIVE-VENUS-ADAPTIVE64-REVIEW-2026-10-29.json",
+    "candidate406": "docs/NATIVE-VENUS-ACTION108-RESULTS-2026-10-30.json",
+    "missing": "Matched untouched-release0 versus298/406 on the same current audio/voice/runtime; published benchmarks do not replace this."
+  },
+  "causal_hypotheses": [
+    "Released foundation lacks required English speech/control quality or temporal resolution.",
+    "Our narrow adapter/recipe damages or cannot adequately adapt the existing capability.",
+    "Audio perception, native speech rendering or host protocol/runtime contributes separately from reasoning."
+  ],
+  "next_action": "After current full evaluation and verified STOP/copyback, prepare inference-only untouched-release baseline on exactly the same32cases/English-reference/profile and preserve all outcomes. No new optimizer updates, new external payloads or spending beyond existing allowance. Reconcile actual remaining time first; never overlap models/jobs.",
+  "decision_rule": "Basegood/adaptedbad points toward adaptation; shared failures require checking official-path/runtime before blaming foundation; correct generatedtext with wrong audio localizes a speech-path problem. If base fails product requirements after runtime verification, change foundation/architecture rather than blindly extending training.",
+  "architecture_risk": "Published one-second control units are relevant to latency targets; adapter loss reduction alone does not remove that scheduling constraint.",
+  "adopted": false
+}

@@ -1,6 +1,6 @@
 {
   "schema": "dl-working-model-goal-v1",
-  "status": "ACTIVE_ACTION_FIDELITY_GUARD_REPAIRED_RETRY_PREPARED",
+  "status": "ACTIVE108_TRAINING_COMPLETE_NATIVE_EVALUATION_RUNNING_FOUNDATION_CHECK_REQUIRED",
   "objective": "Deliver a useful native full-duplex voice product close to GPT-live as its benchmark: useful ordinary reasoning, silence/pause/interrupt behaviour, reliable asynchronous delegation and natural British speech.",
   "source_of_authority": "Direct human: Approve 108 updates within existing time/$70 cap; docs/NATIVE-VENUS-ACTION-FIDELITY-AUTHORIZATION-2026-10-29.json. Google SDK sign-in completed and live provider verified.",
   "preferred_voice": "british-george",
@@ -18,8 +18,8 @@
     "no_purchases": true,
     "no_overlap": true,
     "cumulative_gpu_cap_seconds": 87251,
-    "current_allocation_reserved_gpu_seconds": 0,
-    "unreserved_gpu_seconds": 9400,
+    "current_allocation_reserved_gpu_seconds": 6900,
+    "unreserved_gpu_seconds": 2500,
     "accounting_note": "All closed intervals reconciled conservatively:23100focused upper seconds; zero active reservations,9700remain, original54451carried. Consumed54-update allowance exhausted despite unused time."
   },
   "steps": [
@@ -40,22 +40,30 @@
   },
   "initial_strategy": "Keep native9Bduplexfoundation and basicreasoning; offload heavierreasoning toactualbackend. Finishthisboundeddatarepairtraining/eval before deciding whethermoreadapters/fullweightoracoustictraining is necessary.",
   "current_execution": {
-    "recorded_utc": "2026-10-29T23:34:38.529471+00:00",
-    "phase": "FAILED_BEFORE_MODEL_VM_STOPPED",
-    "source": "aa796a0107fc5ab54ca89791808b365f59bc15cb",
-    "run": "runs/venus-training-20261029/action-v41",
-    "controller": "launchdcom.aurium.duplex.action41/PID22163",
-    "vm_id": "4574352937354946887",
+    "recorded_utc": "2026-10-29T23:53:28.134841+00:00",
+    "phase": "108UPDATES_COMPLETE406_FINAL_NATIVE_RESTORE_PASS_PAIRED_EVALUATION_RUNNING",
+    "source": "90dc9ecf98e464f1754c0fda7763024663f82844",
+    "run": "runs/venus-training-20261029/action-v42",
+    "controller": "launchdcom.aurium.duplex.action42/PID26024",
+    "vm_id": "4005521812200776727",
     "disk_id": "4375908109499109167",
-    "native_stop_unix": 1793324015.006,
-    "candidate_training_updates_this_phase": 0,
+    "native_stop_unix": 1793324564.367,
+    "mac_guard_pid": 26764,
+    "parent_restore_native_pid": 1308,
+    "parent_restore_invocation": "fdfb1772abd2405fb0b7ed6e66e3fa3c",
+    "parent_restore_pass": true,
+    "current_native_unit": "duplex-venus-action42-paired-native",
+    "current_native_pid": "2873",
+    "current_native_invocation": "1a838bae4b0f47d68aa47cb0d39c022d",
+    "candidate_training_updates_confirmed": 108,
     "maximum_authorized_new_updates": 108,
     "parent_training_updates": 298,
     "adopted": false,
-    "actual_stop_utc": "2026-10-29T23:37:39.108+00:00",
-    "actual_seconds": 244.102,
-    "charged_upper_seconds": 300,
-    "full_copyback_this_attempt": "FAILED; unchanged original v40 fullbackup remains verified"
+    "total_updates": 406,
+    "checkpoint_sha256": "a934ce7e05f4728a0973408eafedaed219f89dacfbf5dc6fcb2bbf536f4378b6",
+    "native_final_restore_pass": true,
+    "critical_backup_files": 92,
+    "critical_backup_bytes": 265543038
   },
   "reasoning_integration": {
     "confirmed_gap": "Previously ArithmeticWorker only. An opt-in general reasoning worker and Mac proxy profile are now implemented; no actual provider call or native GPU routing qualification has run.",
@@ -206,5 +214,11 @@
     },
     "execution": "docs/NATIVE-VENUS-ACTION-GUARD-RECOVERY-EXECUTION-2026-10-29.json",
     "scope": "Same108-update approval,6900remainingof7200phase seconds, no new caps/resources/calls."
+  },
+  "foundation_review": {
+    "path": "docs/NATIVE-FOUNDATION-LINEAGE-REVIEW-2026-10-30.json",
+    "status": "PROVISIONAL_REQUIRE_MATCHED_UNTOUCHED_BASELINE",
+    "user_requested": true,
+    "no_further_optimizer_allowance": true
   }
 }
