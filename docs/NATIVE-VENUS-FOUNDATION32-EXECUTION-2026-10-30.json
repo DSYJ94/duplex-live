@@ -1,0 +1,207 @@
+{
+  "schema": "dl-native-action-guard-recovery-v1",
+  "status": "APPROVED_SCOPE_SOURCE_PREPARATION_NO_JOB_YET",
+  "parent_authorization": "docs/NATIVE-VENUS-ACTION-FIDELITY-AUTHORIZATION-2026-10-29.json",
+  "parent_sha256": "70eedbef3d6a22042221ad840b2ca62e7cef39754a382ce7e8fa2c473a039ac7",
+  "resource_key": "venus-foundation-v43",
+  "vm_name": "duplex-venus-foundation-20261030-v43",
+  "maximum_gpu_seconds": 2400,
+  "focused_gpu_seconds_upper_before_launch": 25300,
+  "original_gpu_seconds": 54451,
+  "new_optimizer_updates_authorized_by_this_execution": 0,
+  "maximum_candidate_total_updates": 406,
+  "parent_checkpoint_sha256": "e7340edd15537523db78120a97902399faa0af9caa46e875ec92e56889d6edef",
+  "retire_only_vm_id": "4005521812200776727",
+  "previous_provider_snapshot": {
+    "canIpForward": false,
+    "cpuPlatform": "Unknown CPU Platform",
+    "creationTimestamp": "2026-10-29T16:47:04.664-07:00",
+    "deletionProtection": false,
+    "disks": [
+      {
+        "autoDelete": false,
+        "boot": true,
+        "deviceName": "persistent-disk-0",
+        "diskSizeGb": "100",
+        "guestOsFeatures": [
+          {
+            "type": "VIRTIO_SCSI_MULTIQUEUE"
+          },
+          {
+            "type": "UEFI_COMPATIBLE"
+          },
+          {
+            "type": "GVNIC"
+          }
+        ],
+        "index": 0,
+        "interface": "SCSI",
+        "kind": "compute#attachedDisk",
+        "licenses": [
+          "https://www.googleapis.com/compute/v1/projects/click-to-deploy-images/global/licenses/c2d-dl-platform-dlvm",
+          "https://www.googleapis.com/compute/v1/projects/click-to-deploy-images/global/licenses/c2d-dl-platform-gvnic",
+          "https://www.googleapis.com/compute/v1/projects/click-to-deploy-images/global/licenses/c2d-dl-platform-py310",
+          "https://www.googleapis.com/compute/v1/projects/click-to-deploy-images/global/licenses/c2d-dl-platform-gpu-common-cu129",
+          "https://www.googleapis.com/compute/v1/projects/click-to-deploy-images/global/licenses/c2d-dl-platform-ubuntu-2204"
+        ],
+        "mode": "READ_WRITE",
+        "source": "https://www.googleapis.com/compute/v1/projects/aurium-duplex-live-20261024/zones/us-central1-a/disks/duplex-venus-train-20261026-v1",
+        "type": "PERSISTENT"
+      }
+    ],
+    "fingerprint": "DaKDT21cNbE=",
+    "guestAccelerators": [
+      {
+        "acceleratorCount": 1,
+        "acceleratorType": "https://www.googleapis.com/compute/v1/projects/aurium-duplex-live-20261024/zones/us-central1-a/acceleratorTypes/nvidia-tesla-a100"
+      }
+    ],
+    "id": "4005521812200776727",
+    "kind": "compute#instance",
+    "labelFingerprint": "42WmSpB8rSM=",
+    "lastStartTimestamp": "2026-10-29T16:47:44.367-07:00",
+    "lastStopTimestamp": "2026-10-29T17:17:51.955-07:00",
+    "machineType": "https://www.googleapis.com/compute/v1/projects/aurium-duplex-live-20261024/zones/us-central1-a/machineTypes/a2-highgpu-1g",
+    "metadata": {
+      "fingerprint": "jP_NZSMbK7o=",
+      "items": [
+        {
+          "key": "block-project-ssh-keys",
+          "value": "TRUE"
+        },
+        {
+          "key": "enable-guest-attributes",
+          "value": "TRUE"
+        },
+        {
+          "key": "enable-oslogin",
+          "value": "TRUE"
+        },
+        {
+          "key": "startup-script",
+          "value": "#!/bin/sh\nset -eu\nsystemd-run --unit=duplex-venus-action42-bootstrap-stop --on-active=600s /sbin/shutdown -h now || /sbin/shutdown -h now\n"
+        }
+      ],
+      "kind": "compute#metadata"
+    },
+    "name": "duplex-venus-action-20261029-v42",
+    "networkInterfaces": [
+      {
+        "accessConfigs": [
+          {
+            "kind": "compute#accessConfig",
+            "name": "external-nat",
+            "networkTier": "PREMIUM",
+            "type": "ONE_TO_ONE_NAT"
+          }
+        ],
+        "fingerprint": "wjvPBBtpJBc=",
+        "kind": "compute#networkInterface",
+        "name": "nic0",
+        "network": "https://www.googleapis.com/compute/v1/projects/aurium-duplex-live-20261024/global/networks/default",
+        "networkIP": "10.128.0.27",
+        "stackType": "IPV4_ONLY",
+        "subnetwork": "https://www.googleapis.com/compute/v1/projects/aurium-duplex-live-20261024/regions/us-central1/subnetworks/default"
+      }
+    ],
+    "resourceStatus": {
+      "effectiveInstanceMetadata": {
+        "blockProjectSshKeysMetadataValue": true,
+        "enableGuestAttributesMetadataValue": true,
+        "enableOsloginMetadataValue": true,
+        "vmDnsSettingMetadataValue": "ZonalOnly"
+      }
+    },
+    "scheduling": {
+      "automaticRestart": false,
+      "instanceTerminationAction": "STOP",
+      "maxRunDuration": {
+        "nanos": 0,
+        "seconds": "6900"
+      },
+      "onHostMaintenance": "TERMINATE",
+      "preemptible": false,
+      "provisioningModel": "FLEX_START"
+    },
+    "selfLink": "https://www.googleapis.com/compute/v1/projects/aurium-duplex-live-20261024/zones/us-central1-a/instances/duplex-venus-action-20261029-v42",
+    "shieldedInstanceConfig": {
+      "enableIntegrityMonitoring": true,
+      "enableSecureBoot": false,
+      "enableVtpm": true
+    },
+    "startRestricted": false,
+    "status": "TERMINATED",
+    "tags": {
+      "fingerprint": "IHEugHo3pFM=",
+      "items": [
+        "duplex-venus-train-bounded"
+      ]
+    },
+    "zone": "https://www.googleapis.com/compute/v1/projects/aurium-duplex-live-20261024/zones/us-central1-a"
+  },
+  "closed_intervals": [
+    {
+      "vm_id": "6583510368949016595",
+      "actual_seconds": 239.425,
+      "upper_seconds": 300
+    },
+    {
+      "vm_id": "1283972191172335172",
+      "actual_seconds": 328.625,
+      "upper_seconds": 400
+    },
+    {
+      "vm_id": "6929308962022921268",
+      "actual_seconds": 2304.866,
+      "upper_seconds": 2400
+    },
+    {
+      "vm_id": "5559941523972223154",
+      "actual_seconds": 253.516,
+      "upper_seconds": 300
+    },
+    {
+      "vm_id": "2738075597351611996",
+      "actual_seconds": 437.805,
+      "upper_seconds": 500
+    },
+    {
+      "vm_id": "4626264501959715272",
+      "actual_seconds": 313.655,
+      "upper_seconds": 400
+    },
+    {
+      "vm_id": "49337671038724022",
+      "actual_seconds": 396.6230001449585,
+      "upper_seconds": 400
+    },
+    {
+      "vm_id": "4574352937354946887",
+      "actual_seconds": 244.10199999809265,
+      "upper_seconds": 300
+    },
+    {
+      "vm_id": "4005521812200776727",
+      "actual_seconds": 1807.5879998207092,
+      "upper_seconds": 1900
+    }
+  ],
+  "backup_before_retirement": {
+    "files": 14874,
+    "bytes": 8307094332
+  },
+  "same_disk_id": "4375908109499109167",
+  "same_disk_name": "duplex-venus-train-20261026-v1",
+  "same_zone": "us-central1-a",
+  "external_model_api_calls": 0,
+  "minimum_evaluation_and_backup_reserve_seconds": 2500,
+  "maximum_concurrent_gpu_jobs": 1,
+  "previous_attempt_new_optimizer_updates": 0,
+  "previous_attempt_model_units_started": 0,
+  "prior_backup": "runs/venus-training-20261029/terminal-render-v40",
+  "failed_attempt_full_backup": "FAILED_BULK_COPY_INTERRUPTED_ON_INTENTIONAL_EARLY_STOP_NO_NEW_MODEL_STATE",
+  "repair": "Actual mac guard entrypoint now reads approved unchanged70/175 cap fields and checks real100GB disk; regression RED then GREEN. No threshold or safety lease changes.",
+  "parent_execution_sha256": "56bb8c4a7b2e9a1543b2c97ff9c60be4bd6df5e9610e7e22ec6de1b6ff141f52",
+  "user_instruction": "add recommendations As a plan, and then execute on the next step.",
+  "comparison_inputs_sha256": "1420db96700870ab43e942a3afa3fb2e69527818e23d0c9f3339e5ecc0af902b"
+}
