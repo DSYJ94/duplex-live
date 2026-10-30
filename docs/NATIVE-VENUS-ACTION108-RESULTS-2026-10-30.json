@@ -267,10 +267,50 @@
     "all_hashes_verified": true,
     "receipt": "runs/venus-training-20261029/action-v42/critical-candidate-verified.json"
   },
-  "native_behavior_status": "RUNNING_FULL_PAIRED64_NOT_YET_QUALIFIED",
+  "native_behavior_status": "FULL64_COMPLETE_REJECTED_NOT_ADOPTED",
   "adopted": false,
   "general_reasoning_backend_qualified": false,
   "ordinary_delegation_argmax_accuracy_unchanged_note": "DEV delegate argument token accuracy stays.6666667; CE improvement alone has not demonstrated complete request or task success.",
-  "opal_note": "Inherited half-LR program code unchanged. Request16 expired; request32 KEEP accepted/applied48; request64 KEEP accepted. No fabricated optimizer adaptation claim. All transport/code receipts preserved.",
-  "extra_optimizer_updates_authorized": 0
+  "opal_note": "Actual root KEEP decisions at32/64 applied48/74. Request16 timed out with no change. Inherited half-LR program retained; no new program edit. Generic unknown-cost decision1 marker preserved, no external model API calls.",
+  "extra_optimizer_updates_authorized": 0,
+  "native_behavior_review": "docs/NATIVE-VENUS-ACTION64-REVIEW-2026-10-30.json",
+  "native_behavior_summary": {
+    "parent298": {
+      "cases": 32,
+      "generated_word_audio_agreement_pass": 10,
+      "raw_peak_pass": 32,
+      "quiet_cases": 4,
+      "quiet_early_voiced_cases": 2,
+      "quiet_voiced_after_cue_cases": 2,
+      "quiet_no_early_and_voiced_after_cases": 1,
+      "correct_lookup_completions": {
+        "delegate": 0,
+        "pending": 0
+      },
+      "genuine_cancellation_cases": 0,
+      "genuine_pending_at_followup_cases": 0
+    },
+    "paced-continuation": {
+      "cases": 32,
+      "generated_word_audio_agreement_pass": 12,
+      "raw_peak_pass": 32,
+      "quiet_cases": 4,
+      "quiet_early_voiced_cases": 1,
+      "quiet_voiced_after_cue_cases": 2,
+      "quiet_no_early_and_voiced_after_cases": 2,
+      "correct_lookup_completions": {
+        "delegate": 2,
+        "pending": 2
+      },
+      "genuine_cancellation_cases": 0,
+      "genuine_pending_at_followup_cases": 2
+    }
+  },
+  "full_backup": {
+    "all_hashes_verified": true,
+    "files": 16654,
+    "bytes": 8839702400,
+    "source": "90dc9ecf98e464f1754c0fda7763024663f82844"
+  },
+  "provider_stop": "2026-10-29T17:17:51.955-07:00"
 }

@@ -1,5 +1,7 @@
 # 00 — Pretraining Decision: From Scratch vs. Open Source
 
+> **30 October 2026 review:** This is a historical exploratory design, not the current approved execution plan. Its cost/time estimates and proprietary-model implementation claims are not verified planning inputs. The absolute recommendation to train audio/video pathways from scratch is superseded: a qualified released native duplex model can reuse pretrained language and audio components. Foundation pretraining is not currently recommended. See the [current evidence-led foundation and cost review](NATIVE-DUPLEX-FOUNDATION-COST-REVIEW-2026-10-30.md) and its bounded base/runtime comparison before further investment. The original proposal below remains intact as history.
+
 ## The question
 
 Duplex Live is a proprietary model. Do we (a) pretrain the entire multimodal duplex model from scratch, or (b) adapt an open-source base and train the duplex/live capability on top?
