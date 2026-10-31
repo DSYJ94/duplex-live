@@ -29,3 +29,8 @@ def test_budget_and_overlap():
         with pytest.raises(AssertionError):validate(vm,[vm],[],dict(lease,**change),start+1)
     with pytest.raises(AssertionError):validate(vm,[vm,dict(vm,id='another')],[],lease,start+1)
     assert json.loads(PLAN.read_text())['new_optimizer_updates_authorized_by_this_execution']==0
+
+
+def test_placement_snapshot_and_retired_envelope_are_same():
+    p=json.loads(PLAN.read_text())
+    assert p['retire_only_vm_id']==p['previous_provider_snapshot']['id']=='456124662276463658'
