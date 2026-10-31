@@ -1,0 +1,30 @@
+{
+  "schema": "dl-context-delegation-integration-v1",
+  "recorded_utc": "2026-10-31T13:27:00.561787+00:00",
+  "status": "LOCAL_INTEGRATION_PASS_PROVIDER_NATIVE_UNQUALIFIED",
+  "changes": [
+    "Native delegate parser freezes causal audio when opening marker completes and retains it across later output frames",
+    "Context-aware WebSocket worker receives frozen in-memory evidence while subsequent input continues",
+    "Explicit contextual worker transport; legacy text-only proxy rejects audio rather than dropping it",
+    "Successful receipts bind description payload hash and audio provenance; disconnect releases retained raw audio and suppresses unstarted calls",
+    "Ready profile identifies whether causal task audio capture is actually configured"
+  ],
+  "tests": {
+    "affected_cases_passed": 31,
+    "final_ready_profile_cases_passed": 4,
+    "real_regression_cohort_cases": 32,
+    "all_actual_requests_bound": 21,
+    "exact_original_queries_and_audio_hashes": true
+  },
+  "test_classification": "Actual FastAPI WebSocket and loopback transport handlers; fixture native model and provider. No real model/API acceptance claim.",
+  "limitations": [
+    "Production contextual transcriber/reasoner transport not configured; current proxy remains description-only",
+    "No GCP deployment, GPU model inference, provider call or optimizer update",
+    "No baseline or candidate acceptance changed",
+    "Default arithmetic and legacy proxy behavior remain compatible"
+  ],
+  "pending_proposal": "docs/NATIVE-VENUS-CONTEXT-BACKEND21-PROPOSAL-2026-10-31.json",
+  "external_calls": 0,
+  "new_optimizer_updates": 0,
+  "new_gpu_jobs": 0
+}

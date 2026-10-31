@@ -137,12 +137,17 @@ class ArithmeticWorker:
 
 class DelegateParser:
     """Consume raw generated token text incrementally, without editing speech."""
-    def __init__(self):
+    def __init__(self, capture_opening=None):
         self.buffer = ''
         self.last_raw_queries = []
+        self.capture_opening = capture_opening
+        self.last_contexts = []
+        self._pending_start = None
+        self._pending_context = None
 
     def feed(self, delta):
         self.last_raw_queries = []
+        self.last_contexts = []
         self.buffer += delta
         if len(self.buffer) > 16384:
             raise ValueError('Native delegate stream exceeds bounded parser buffer')
@@ -157,9 +162,18 @@ class DelegateParser:
                 query=re.sub(r'</?unit>|<\|(?:speak|listen|turn_eos|chunk_eos|chunk_tts_eos|tts_bos|tts_eos)\|>','',raw)
                 self.last_raw_queries.append(raw)
                 queries.append(query)
+                context = (self._pending_context if start == self._pending_start
+                           else self.capture_opening() if self.capture_opening else None)
+                self.last_contexts.append(context)
             self.buffer = self.buffer[end + len('</delegate>'):]
+            self._pending_start = self._pending_context = None
         if '<delegate>' not in self.buffer:
             self.buffer = self.buffer[-len('<delegate>'):]
+            self._pending_start = self._pending_context = None
+        elif self.capture_opening:
+            start = self.buffer.rfind('<delegate>')
+            if self._pending_start != start:
+                self._pending_start, self._pending_context = start, self.capture_opening()
         return queries
 
 
@@ -299,7 +313,10 @@ def create_app(model_dir, system_prompt='Streaming Omni Conversation.', adapter_
             await ws.close()
             return
         async with slot:
-            worker, parser = (worker_factory() if worker_factory else ArithmeticWorker()), DelegateParser()
+            worker = worker_factory() if worker_factory else ArithmeticWorker()
+            from .task_context import CausalAudioBuffer
+            evidence = CausalAudioBuffer() if getattr(worker,'accepts_audio_evidence',False) else None
+            parser = DelegateParser(evidence.freeze_at_request_opening if evidence else None)
             variants = ExitStack()
             try:
                 engine = app.state.engine
@@ -309,17 +326,19 @@ def create_app(model_dir, system_prompt='Streaming Omni Conversation.', adapter_
                 from .live_variant import variant_context,variant_profile
                 variants.enter_context(variant_context(engine.model.llm,variant))
                 await asyncio.to_thread(engine.prepare)
-                await ws.send_json({'ready':True, 'profile':dict(variant_profile(engine.profile,variant),worker_backend=worker_backend)})
+                await ws.send_json({'ready':True, 'profile':dict(variant_profile(engine.profile,variant),worker_backend=worker_backend,causal_task_audio_context=bool(evidence))})
                 sequence = 0
                 while True:
                     pcm = await asyncio.wait_for(ws.receive_bytes(), timeout=45)
+                    if evidence: evidence.append(sequence,pcm)
                     feedback = worker.take_results()
                     if feedback:
                         worker.event('backend_injected', payload=feedback, sequence=sequence)
                     result = await asyncio.to_thread(engine.step, pcm, feedback)
                     queries=parser.feed(result['raw_text'])
-                    for query,raw_query in zip(queries,parser.last_raw_queries):
-                        worker.submit(query,raw_query=raw_query)
+                    for query,raw_query,context in zip(queries,parser.last_raw_queries,parser.last_contexts):
+                        if evidence: worker.submit(query,raw_query=raw_query,audio_evidence=context)
+                        else: worker.submit(query,raw_query=raw_query)
                     result.update(sequence=sequence, events=worker.events)
                     worker.events = []
                     sequence += 1

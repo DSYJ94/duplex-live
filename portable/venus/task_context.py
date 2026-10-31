@@ -14,6 +14,14 @@ class AudioEvidence:
     last_sequence: int
     pcm16: bytes = field(repr=False)
 
+    def __post_init__(self):
+        if (type(self.first_sequence) is not int or type(self.last_sequence) is not int
+                or not 0<=self.first_sequence<=self.last_sequence
+                or not 1<=self.last_sequence-self.first_sequence+1<=30
+                or type(self.pcm16) is not bytes
+                or len(self.pcm16)!=(self.last_sequence-self.first_sequence+1)*32000):
+            raise ValueError('Bounded immutable original audio with exact native sample clock required')
+
     def receipt(self):
         return dict(first_sequence=self.first_sequence,last_sequence=self.last_sequence,
                     start_sample=self.first_sequence*16000,end_sample=(self.last_sequence+1)*16000,

@@ -100,24 +100,37 @@ class LocalProxy:
 
 
 class ReasoningWorker:
-    def __init__(self, request, maximum_requests=6):
+    def __init__(self, request, maximum_requests=6, evidence_request=None):
         if type(maximum_requests) is not int or not 1 <= maximum_requests <= 6:
             raise ValueError('At most six requests per native conversation')
         self.request, self.maximum = request, maximum_requests
+        if evidence_request is not None and not callable(evidence_request):
+            raise ValueError('Explicit contextual transport required')
+        self.evidence_request = evidence_request
+        self.accepts_audio_evidence = evidence_request is not None
         self.tasks, self.states, self.events = {}, {}, []
         self.closed = False
 
     def event(self, kind, **details):
         self.events.append(dict(type=kind, monotonic=time.monotonic(), **details))
 
-    def submit(self, query, raw_query=None):
+    def submit(self, query, raw_query=None, audio_evidence=None):
         if self.closed or not isinstance(query, str) or not query.strip() or len(query) > 4000:
             raise ValueError('Open worker and bounded native-selected description required')
+        from .task_context import AudioEvidence
+        if self.accepts_audio_evidence:
+            if type(audio_evidence) is not AudioEvidence:
+                raise ValueError('Contextual worker requires original causal audio evidence')
+        elif audio_evidence is not None:
+            raise ValueError('Description-only transport cannot accept or silently drop audio evidence')
         if len(self.states) >= self.maximum:
             self.event('worker_request_limit', maximum_requests=self.maximum)
             return None
         ident = str(uuid.uuid4())
         self.states[ident] = dict(query=query, revision=1, phase='reserved', cancelled=False)
+        if self.accepts_audio_evidence:
+            self.states[ident]['audio_evidence'] = audio_evidence
+            self.states[ident]['audio_evidence_receipt'] = audio_evidence.receipt()
         self.event('native_delegate', work_id=ident, query=query,
                    raw_query=query if raw_query is None else raw_query)
         self.tasks[ident] = asyncio.create_task(self.execute(ident))
@@ -125,14 +138,24 @@ class ReasoningWorker:
 
     async def execute(self, ident):
         state = self.states[ident]
+        if self.closed or state['cancelled']:
+            state['phase']='retired_before_execution'
+            state.pop('audio_evidence',None)
+            return
         active = {k:dict(query=v['query'], revision=v['revision']) for k,v in self.states.items()
                   if k != ident and not v['cancelled'] and v['phase'] in ('executing', 'result_ready')}
         value = payload(state['query'], active)
         state.update(phase='executing', allowed_targets=set(active),
                      payload_sha256=hashlib.sha256(json.dumps(value, sort_keys=True).encode()).hexdigest())
+        if self.accepts_audio_evidence:
+            state['task_input_sha256']=hashlib.sha256(json.dumps(dict(
+                request_payload_sha256=state['payload_sha256'],
+                audio=state['audio_evidence_receipt']),sort_keys=True).encode()).hexdigest()
         self.event('worker_started', work_id=ident)
         try:
-            reply = await asyncio.wait_for(self.request(value), timeout=100)
+            call = (self.evidence_request(value,state['audio_evidence']) if self.accepts_audio_evidence
+                    else self.request(value))
+            reply = await asyncio.wait_for(call, timeout=100)
             response = reply['response']
             calls = [v for v in response.get('output', []) if v.get('type') == 'function_call']
             if (type(reply.get('actual_transport')) is not bool or response.get('status') != 'completed'
@@ -168,6 +191,8 @@ class ReasoningWorker:
                 operation=operation, retired_work_ids=targets, result=args['content'],
                 response_id=response['id'], model=MODEL, actual_transport=reply['actual_transport'],
                 request_payload_sha256=state['payload_sha256'], remote_execution_aborted=False)
+            if self.accepts_audio_evidence:
+                receipt['task_input_sha256']=state['task_input_sha256']
             receipt['sha256'] = hashlib.sha256(json.dumps(receipt, sort_keys=True).encode()).hexdigest()
             state.update(phase='result_ready', receipt=receipt)
             self.event('worker_completed', work_id=ident, operation=operation,
@@ -181,6 +206,8 @@ class ReasoningWorker:
                 receipt['sha256'] = hashlib.sha256(json.dumps(receipt, sort_keys=True).encode()).hexdigest()
                 state.update(phase='failure_ready', receipt=receipt)
             self.event('worker_failed', work_id=ident, error_type=type(error).__name__, automatic_retry=False)
+        finally:
+            state.pop('audio_evidence',None)
 
     def take_results(self):
         results = []
@@ -199,6 +226,7 @@ class ReasoningWorker:
         self.closed = True
         for state in self.states.values():
             state['cancelled'] = True
+            state.pop('audio_evidence',None)
         # Let bounded foreground transports finish; never block the voice slot
         # or cancel a Python await and pretend the remote work was aborted.
         # execute() catches failures and suppresses every disconnected result.
