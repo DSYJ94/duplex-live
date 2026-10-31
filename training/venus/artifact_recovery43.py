@@ -13,7 +13,7 @@ from . import controller as c
 NAME='duplex-venus-foundation-20261030-v43'
 IDENT='456124662276463658'
 ZONE='us-central1-a'
-R=Path('runs/venus-training-20261029/foundation43-artifact-recovery-v1')
+R=Path('runs/venus-training-20261029/foundation43-artifact-recovery-v2')
 PRIOR=Path('runs/venus-training-20261029/action-v43')
 
 
@@ -33,7 +33,7 @@ def main():
     assert disk['id']=='4375908109499109167' and int(disk['sizeGb'])==100
     elapsed=datetime.fromisoformat(vm['lastStopTimestamp']).timestamp()-datetime.fromisoformat(vm['lastStartTimestamp']).timestamp()
     prior=25300+math.ceil(elapsed/100)*100
-    assert prior==26600 and prior+600<=30300 and (prior+600)*4/3600+24<70
+    assert prior==26600 and prior+2400<=30300 and (prior+2400)*4/3600+24<70
     from portable.venus.guard import bounded_runpod_read
     pods=bounded_runpod_read(Path('runs/local-migration-20261021/.private/runpod-budget-api-key').read_text().strip())
     if isinstance(pods,dict):pods=pods.get('pods',[])
@@ -43,7 +43,7 @@ def main():
     assert len(missing)==77 and all(x.startswith(('foundation-native-v43/','journals/duplex-venus-foundation43-native.log')) for x in missing)
     R.mkdir();c.R=R
     (R/'files.txt').write_text('\n'.join(missing)+'\n')
-    c.record('artifact_only_preflight',vm_id=IDENT,missing_files=len(missing),prior_seconds_upper=prior,maximum_seconds=600,new_model_runs=0,new_optimizer_updates=0,source=c.run(['git','rev-parse','HEAD']).strip())
+    c.record('artifact_only_preflight',vm_id=IDENT,missing_files=len(missing),prior_seconds_upper=prior,maximum_seconds=2400,early_mac_guest_stop_seconds=600,new_model_runs=0,new_optimizer_updates=0,source=c.run(['git','rev-parse','HEAD']).strip())
     started=False;timer=None;watchdog_done=threading.Event()
     def stop():
         try:
@@ -53,7 +53,7 @@ def main():
         finally:watchdog_done.set()
     try:
         c.cloud('compute','os-login','ssh-keys','add','--key-file=runs/local-migration-20261024/.private/gcp-native-ssh.pub','--ttl=1h')
-        c.run(['gcloud','compute','instances','set-scheduling',NAME,'--zone='+ZONE,'--project='+c.PROJECT,'--max-run-duration=600s','--instance-termination-action=STOP','--quiet'],60)
+        assert int(vm['scheduling']['maxRunDuration']['seconds'])==2400  # Flex Start cannot change scheduling; native bound still fits the remaining3700 seconds.
         # Independent Mac timer is armed before the provider request; native STOP
         # and the existing600-second bootstrap timer provide guest-side bounds.
         timer=threading.Timer(600,stop);timer.daemon=True;timer.start()
@@ -66,8 +66,8 @@ def main():
             if live['status']=='RUNNING':break
             assert time.time()<until, 'Observe same operation; do not restart'
             time.sleep(5)
-        assert live['id']==IDENT and int(live['scheduling']['maxRunDuration']['seconds'])==600
-        c.record('artifact_vm_running',vm_id=IDENT,last_start=live['lastStartTimestamp'],native_stop_seconds=600)
+        assert live['id']==IDENT and int(live['scheduling']['maxRunDuration']['seconds'])==2400
+        c.record('artifact_vm_running',vm_id=IDENT,last_start=live['lastStartTimestamp'],native_stop_seconds=2400,early_stop_seconds=600)
         c.ssh_argv=json.loads((PRIOR/'ssh.json').read_text())
         c.ssh_argv[-1]=c.ssh_argv[-1].split('@',1)[0]+'@'+live['networkInterfaces'][0]['accessConfigs'][0]['natIP']
         for attempt in range(15):
