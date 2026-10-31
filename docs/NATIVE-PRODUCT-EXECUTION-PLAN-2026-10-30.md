@@ -1,5 +1,7 @@
 # Native duplex product execution plan
 
+Progress31October: complete original32 comparison reviewed; both conditions rejected; [measured results](NATIVE-VENUS-FOUNDATION64-REVIEW-2026-10-31.json). Full17473-file archive recovered and SHA-verified. Step2 native private-action speech handling comparison is running under the remaining existing allowance.
+
 Status: user approved the recommended sequence on 30 October 2026. Current candidate406 remains rejected. Existing time and spending limits apply; this plan adds no purchases, optimizer updates or external API calls.
 
 1. **Decide whether Venus is a viable foundation.** Generate the complete pinned32 cohort with untouched released Venus-Audio, using the same native English reference, input audio, sampling and host behavior as saved406. Reuse all32 verified406 records as comparison evidence. Preserve every failure. Measure generated answers, actual speech, listen/speak timing and real worker events separately. Current inputs: [immutable comparison manifest](NATIVE-VENUS-FOUNDATION32-INPUTS-2026-10-30.json). One A10040 and the existing100GB disk; at most2400 seconds from the remaining5000-second phase allowance, with unchanged70USD phase cap. Fresh provider/price checks and both guards precede loading; full output hash-copyback and actual STOP follow execution.
