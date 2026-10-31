@@ -1,4 +1,4 @@
-"""Untouched release on all pinned32 inputs; no adapters, updates or model APIs."""
+"""Pinned32 zero-update comparison: original release or explicit406 host repair."""
 import argparse
 import asyncio
 import gc
@@ -71,15 +71,22 @@ async def main(a):
     recognized = {x['source_sha256']: x for x in quality['rows']}
     out = Path(a.output); out.mkdir(exist_ok=False)
     voice = profile['voice_reference']
-    engine = NativeEngine(a.model, adapter_checkpoint=None, voice_reference=voice['path'], voice_reference_sha256=voice['sha256'], tts_attention='released')
+    repair = getattr(a, 'private_action_repair', False)
+    checkpoint = getattr(a, 'candidate_checkpoint', None)
+    assert bool(checkpoint) == repair, 'Only the declared406 runtime comparison may load an adapter'
+    if repair: assert sha(checkpoint) == manifest['reference_checkpoint_sha256']
+    engine = NativeEngine(a.model, adapter_checkpoint=checkpoint, voice_reference=voice['path'], voice_reference_sha256=voice['sha256'], tts_attention='released', nonspoken_actions=repair)
     fields = ('seed','torch','cuda','precision','attention','input_sample_rate','output_sample_rate','system_prompt','decode_mode','max_new_speak_tokens_per_chunk','temperature','top_k','top_p','listen_prob_scale','tts_attention','voice_reference','nonspoken_action_channel')
-    assert all(engine.profile[k] == profile[k] for k in fields), 'Comparison profile changed'
-    assert engine.profile['optimizer_updates'] == 0 and not any(type(m).__name__ == 'LoRALinear' for m in engine.model.modules())
-    (out/'profile.json').write_text(json.dumps(dict(engine.profile, condition='untouched-release', source=a.source, model_revision=manifest['model_revision'], qualified=False), indent=2)+'\n')
+    assert all(engine.profile[k] == profile[k] for k in fields if not (repair and k=='nonspoken_action_channel')), 'Comparison profile changed'
+    assert engine.profile['nonspoken_action_channel'] == repair
+    assert engine.profile['optimizer_updates'] == (406 if repair else 0)
+    if not repair: assert not any(type(m).__name__ == 'LoRALinear' for m in engine.model.modules())
+    condition='private-action-repair406' if repair else 'untouched-release'
+    (out/'profile.json').write_text(json.dumps(dict(engine.profile, condition=condition, source=a.source, model_revision=manifest['model_revision'], qualified=False), indent=2)+'\n')
     results = []
     for case in cases:
         ensure_guard(); set_seed(42)
-        row = dict(condition='untouched-release', evaluation_set=case['evaluation_set'], **await run_case(engine, case, out, stop))
+        row = dict(condition=condition, evaluation_set=case['evaluation_set'], **await run_case(engine, case, out, stop))
         if case['family'] == 'quiet':
             turn = case['user_turns'][-1]; eligible, end = cue_frame(turn, recognized[turn['sha256']])
             trace = [json.loads(x) for x in (out/case['id']/'trace.jsonl').read_text().splitlines()]
@@ -99,7 +106,7 @@ async def main(a):
         ref = references(trace); error = wer(' '.join(words(ref['intended_user_facing'])), ' '.join(words(text)))
         peak = float(np.abs(audio).max()) if len(audio) else 0
         wav = folder/'joined-emitted.wav'; sf.write(wav, audio, 24000, subtype='FLOAT')
-        audits.append(dict(id=result['id'], condition='untouched-release', references=ref, asr_text=text, user_facing_text_wer=error, word_pass=error<=.05, raw_peak=peak, raw_peak_pass=peak<=.995, joined_wav_sha256=sha(wav), source_chunks=[dict(file=t['chunk_file'],sha256=sha(folder/t['chunk_file'])) for t in trace], qualified=False))
+        audits.append(dict(id=result['id'], condition=condition, references=ref, asr_text=text, user_facing_text_wer=error, word_pass=error<=.05, raw_peak=peak, raw_peak_pass=peak<=.995, joined_wav_sha256=sha(wav), source_chunks=[dict(file=t['chunk_file'],sha256=sha(folder/t['chunk_file'])) for t in trace], qualified=False))
         (out/'speech-audit-progress.json').write_text(json.dumps(dict(completed=len(audits), required=32, cases=audits), indent=2)+'\n')
     assert len(results) == len(audits) == 32
     (out/'foundation-report.json').write_text(json.dumps(dict(complete=True, cases=audits, source=a.source, new_native_generations=32, reference_cases=32, reference_collection=a.reference_collection, reference_collection_sha256=manifest['reference_collection_sha256'], optimizer_updates=0, external_model_calls=0, asr_revision=REVISION, word_limit=.05, peak_limit=.995, qualified=False, adopted=False, semantic_and_naturalness_review_required=True), indent=2)+'\n')
@@ -109,4 +116,6 @@ if __name__ == '__main__':
     p = argparse.ArgumentParser()
     for name in ('model','manifest','reference-collection','plan','timelines','approval','old-plan','old-timelines','old-approval','word-quality','output','lease','source'):
         p.add_argument('--'+name, required=True)
+    p.add_argument('--private-action-repair',action='store_true')
+    p.add_argument('--candidate-checkpoint')
     asyncio.run(main(p.parse_args()))
