@@ -1,0 +1,151 @@
+{
+  "schema": "dl-context-backend21-v2-proposal",
+  "status": "PROPOSED_NOT_AUTHORIZED_NOT_SENT",
+  "purpose": "Correct the diagnosed planner/validator contract on the same full21; preserve firstpass, no extra audio upload",
+  "maximum_additional_reasoning_calls": 21,
+  "maximum_additional_transcription_calls": 0,
+  "maximum_total_post_attempts_including_v1": 63,
+  "unchanged_total_api_usd_cap": 5,
+  "unchanged_phase_usd_cap": 70,
+  "prior_cost_upper_usd": 0.44485,
+  "maximum_next_reservation_usd": 4.3008,
+  "maximum_combined_upper_usd": 4.7456499999999995,
+  "requests": [
+    {
+      "id": 0,
+      "request_file": "runs/venus-training-20261031/context-backend21-v2-prepared/request-00.json",
+      "sha256": "ae55031211ab9482f0b3f0ce6d3115b14e1f3dffc8a3a91f2f6509b503e9fe6f",
+      "original_transcription_sha256": "e00cf506253105ae038aba0f903b2508ae12be41ae7d0f5965201b5a81de907c"
+    },
+    {
+      "id": 1,
+      "request_file": "runs/venus-training-20261031/context-backend21-v2-prepared/request-01.json",
+      "sha256": "175ce34512b9ab4cd7f1da5ef126f64218a56023035b6b77ed317e0e13d44930",
+      "original_transcription_sha256": "efbcb93fa1cbfb2c1ae5e98dc3cef9d33a2785864443e02889e65531106299a2"
+    },
+    {
+      "id": 2,
+      "request_file": "runs/venus-training-20261031/context-backend21-v2-prepared/request-02.json",
+      "sha256": "690f4f3184150c22576193c70bdfb6ad8047c11f339f1d3d5896ff4bf66ff472",
+      "original_transcription_sha256": "2f677305ed37e4a0a20bdba50cd6cd0598b756e6b98db1af30884609d43dbb90"
+    },
+    {
+      "id": 3,
+      "request_file": "runs/venus-training-20261031/context-backend21-v2-prepared/request-03.json",
+      "sha256": "175ce34512b9ab4cd7f1da5ef126f64218a56023035b6b77ed317e0e13d44930",
+      "original_transcription_sha256": "efbcb93fa1cbfb2c1ae5e98dc3cef9d33a2785864443e02889e65531106299a2"
+    },
+    {
+      "id": 4,
+      "request_file": "runs/venus-training-20261031/context-backend21-v2-prepared/request-04.json",
+      "sha256": "5189182c840bcab4068babc31700a62203ceee432511c1667c786e8b7ff792be",
+      "original_transcription_sha256": "0ef2431d6fdcca48681c02e0145f3b3d710e3848255f7525b9bdc2ce3fbf14d5"
+    },
+    {
+      "id": 5,
+      "request_file": "runs/venus-training-20261031/context-backend21-v2-prepared/request-05.json",
+      "sha256": "5189182c840bcab4068babc31700a62203ceee432511c1667c786e8b7ff792be",
+      "original_transcription_sha256": "0ef2431d6fdcca48681c02e0145f3b3d710e3848255f7525b9bdc2ce3fbf14d5"
+    },
+    {
+      "id": 6,
+      "request_file": "runs/venus-training-20261031/context-backend21-v2-prepared/request-06.json",
+      "sha256": "175ce34512b9ab4cd7f1da5ef126f64218a56023035b6b77ed317e0e13d44930",
+      "original_transcription_sha256": "efbcb93fa1cbfb2c1ae5e98dc3cef9d33a2785864443e02889e65531106299a2"
+    },
+    {
+      "id": 7,
+      "request_file": "runs/venus-training-20261031/context-backend21-v2-prepared/request-07.json",
+      "sha256": "175ce34512b9ab4cd7f1da5ef126f64218a56023035b6b77ed317e0e13d44930",
+      "original_transcription_sha256": "efbcb93fa1cbfb2c1ae5e98dc3cef9d33a2785864443e02889e65531106299a2"
+    },
+    {
+      "id": 8,
+      "request_file": "runs/venus-training-20261031/context-backend21-v2-prepared/request-08.json",
+      "sha256": "d2bb6335aa9b6e309eaf52576b8a0d36f4a47940a08fb4962556d9a1433f46b4",
+      "original_transcription_sha256": "8fe22ca78f2f7641b311109fe137e6d23995a1f00eb3e0ba8094f52d46cbe022"
+    },
+    {
+      "id": 9,
+      "request_file": "runs/venus-training-20261031/context-backend21-v2-prepared/request-09.json",
+      "sha256": "5e93f58629cbc2ef0190822020c847bdfe77515f7d52403f49aa1cca7898ef5f",
+      "original_transcription_sha256": "aa966a3904460fdc044990f6d3630f4c6e8d5b467cf72e952f6a4448d19c9296"
+    },
+    {
+      "id": 10,
+      "request_file": "runs/venus-training-20261031/context-backend21-v2-prepared/request-10.json",
+      "sha256": "3b318187bf38d5626290eb6fd93bcb27d1b69bd8d1bff6e63e1b7a3ad6fc9156",
+      "original_transcription_sha256": "496c4e5c3d507b3b80a2f583c62b05b0a16e499b053c2c319797a5ee3d16fdda"
+    },
+    {
+      "id": 11,
+      "request_file": "runs/venus-training-20261031/context-backend21-v2-prepared/request-11.json",
+      "sha256": "5189182c840bcab4068babc31700a62203ceee432511c1667c786e8b7ff792be",
+      "original_transcription_sha256": "0ef2431d6fdcca48681c02e0145f3b3d710e3848255f7525b9bdc2ce3fbf14d5"
+    },
+    {
+      "id": 12,
+      "request_file": "runs/venus-training-20261031/context-backend21-v2-prepared/request-12.json",
+      "sha256": "a21dfd4a486d1750e505650f09711da9628353232375aedacbc1c8b59264aba2",
+      "original_transcription_sha256": "6f44617f570c2e8b37f7df1067d220fd372c46925af185c831c0ce6f6b02b4cd"
+    },
+    {
+      "id": 13,
+      "request_file": "runs/venus-training-20261031/context-backend21-v2-prepared/request-13.json",
+      "sha256": "d2bb6335aa9b6e309eaf52576b8a0d36f4a47940a08fb4962556d9a1433f46b4",
+      "original_transcription_sha256": "8fe22ca78f2f7641b311109fe137e6d23995a1f00eb3e0ba8094f52d46cbe022"
+    },
+    {
+      "id": 14,
+      "request_file": "runs/venus-training-20261031/context-backend21-v2-prepared/request-14.json",
+      "sha256": "5e93f58629cbc2ef0190822020c847bdfe77515f7d52403f49aa1cca7898ef5f",
+      "original_transcription_sha256": "aa966a3904460fdc044990f6d3630f4c6e8d5b467cf72e952f6a4448d19c9296"
+    },
+    {
+      "id": 15,
+      "request_file": "runs/venus-training-20261031/context-backend21-v2-prepared/request-15.json",
+      "sha256": "3b318187bf38d5626290eb6fd93bcb27d1b69bd8d1bff6e63e1b7a3ad6fc9156",
+      "original_transcription_sha256": "496c4e5c3d507b3b80a2f583c62b05b0a16e499b053c2c319797a5ee3d16fdda"
+    },
+    {
+      "id": 16,
+      "request_file": "runs/venus-training-20261031/context-backend21-v2-prepared/request-16.json",
+      "sha256": "c7f12eab21f24b7b8812dd650a3972e9fcb5c21269b7b8290b17d47673483ae2",
+      "original_transcription_sha256": "d73b9567ad9338a203181fceb90b9a673d1426c32e5ddca84c00c77ecb792fbe"
+    },
+    {
+      "id": 17,
+      "request_file": "runs/venus-training-20261031/context-backend21-v2-prepared/request-17.json",
+      "sha256": "347a66d0e585c5bd0d0ef017785b7fc2ae430da97ecf27679a9794b621935e01",
+      "original_transcription_sha256": "c97754890b1864c176fc3613b0380b4c628704300e93aa6f82465f0ff8447947"
+    },
+    {
+      "id": 18,
+      "request_file": "runs/venus-training-20261031/context-backend21-v2-prepared/request-18.json",
+      "sha256": "c7f12eab21f24b7b8812dd650a3972e9fcb5c21269b7b8290b17d47673483ae2",
+      "original_transcription_sha256": "d73b9567ad9338a203181fceb90b9a673d1426c32e5ddca84c00c77ecb792fbe"
+    },
+    {
+      "id": 19,
+      "request_file": "runs/venus-training-20261031/context-backend21-v2-prepared/request-19.json",
+      "sha256": "2fdb0322b77a9177e5ef2b68c032a4d0c855f0c808e45fd61cc8d868788852ef",
+      "original_transcription_sha256": "07850bc5f09b0db9a75b0a06d820fbffcf9c3bbe027d9fbd79c636f697bee5ed"
+    },
+    {
+      "id": 20,
+      "request_file": "runs/venus-training-20261031/context-backend21-v2-prepared/request-20.json",
+      "sha256": "5189182c840bcab4068babc31700a62203ceee432511c1667c786e8b7ff792be",
+      "original_transcription_sha256": "0ef2431d6fdcca48681c02e0145f3b3d710e3848255f7525b9bdc2ce3fbf14d5"
+    }
+  ],
+  "model": "gpt-6-astra",
+  "source_audio_and_transcripts_unchanged": true,
+  "new_owner_data": false,
+  "scoring_answers_or_world_values_included": false,
+  "maximum_gpu_seconds": 0,
+  "new_optimizer_updates": 0,
+  "new_purchase": false,
+  "all21_required": true,
+  "automatic_retries": false,
+  "previous_call_limit_exhausted": true
+}

@@ -1,0 +1,321 @@
+{
+  "schema": "dl-context-backend21-review-v1",
+  "recorded_utc": "2026-10-31T21:01:40.773556+00:00",
+  "required_cases": 21,
+  "transcription_http200": 21,
+  "reasoning_http200": 21,
+  "provider_completed_plans": 21,
+  "local_validation_passed": 14,
+  "local_validation_rejected": 7,
+  "provider_incomplete_or_timeout": 0,
+  "requests_consumed": 42,
+  "conservative_cost_upper_usd": 0.44485,
+  "invoice_not_verified": true,
+  "qualified": false,
+  "adopted": false,
+  "all_original_results_preserved": true,
+  "diagnosis": [
+    "Original local validator forbids lookup_key on cancellation/clarification but the tool schema did not state that restriction;7postvalidationrejections are an evaluator-contract defect",
+    "lookup_key is ambiguous between the object sought and the location indexing its record;4of5acceptedlookup plans chose marker rather than the indexing location",
+    "Prompt treated corrupted native paraphrases and recognized audio as competing sources, inducing clarification even where audio may resolve the task; no blanket semantic pass asserted"
+  ],
+  "cases": [
+    {
+      "id": 0,
+      "scene_id": "venus-repair-v2-holdout-pause-0097",
+      "native_selected_task": "",
+      "transcript": "Talk me through this gently, take the scarf, followed by hang it on the hook.",
+      "provider_plan": {
+        "intent": "respond",
+        "lookup_key": null,
+        "grounding": "audio",
+        "response": "Take your time. First, gently pick up the scarf. When you\u2019re ready, hang it on the hook."
+      },
+      "original_validation_status": "complete",
+      "response_sha256": "3ab31011e9daa7308f2872fa91e81971bfa91af82765a6a4aa39b584630326eb"
+    },
+    {
+      "id": 1,
+      "scene_id": "venus-repair-v2-holdout-pending-0102",
+      "native_selected_task": "lookup the landmark and bookcase",
+      "transcript": "Use the background worker to look up the marker in bookcase.",
+      "provider_plan": {
+        "intent": "clarify",
+        "lookup_key": null,
+        "grounding": "both",
+        "response": "Did you want to look up the marker in Bookcase, or the landmark and bookcase?"
+      },
+      "original_validation_status": "complete",
+      "response_sha256": "e0464f74f884f64b5ddd2f5abaa7907581b2751599d1a7b2552006a3dcf5b435"
+    },
+    {
+      "id": 2,
+      "scene_id": "venus-repair-v2-holdout-pending-0102",
+      "native_selected_task": "lookup landmarkand bookcase",
+      "transcript": "Use the background worker to look up the marker in bookcase. While you wait, what do a bird's wings help it do?",
+      "provider_plan": {
+        "intent": "clarify",
+        "lookup_key": null,
+        "grounding": "both",
+        "response": "A bird\u2019s wings help it fly. Did you want to look up \u201cmarker\u201d or \u201clandmark\u201d in \u201cbookcase\u201d?"
+      },
+      "original_validation_status": "complete",
+      "response_sha256": "565b66f2b9bba28abdc91512831195d51d023a1c60bb6e4c7e2117c421d2226a"
+    },
+    {
+      "id": 3,
+      "scene_id": "venus-repair-v2-holdout-pending-0103",
+      "native_selected_task": "lookup the landmark and bookcase",
+      "transcript": "Use the background worker to look up the marker in bookcase.",
+      "provider_plan": {
+        "intent": "clarify",
+        "lookup_key": null,
+        "grounding": "both",
+        "response": "Did you mean to look up the marker in Bookcase, or the landmark and bookcase?"
+      },
+      "original_validation_status": "complete",
+      "response_sha256": "70b107b06d92e96b6dfbbc44d50b20e887e5a1cdc93633c4c704c8660f63a066"
+    },
+    {
+      "id": 4,
+      "scene_id": "venus-repair-v2-holdout-delegate-0089",
+      "native_selected_task": "lookup cupboard",
+      "transcript": "Use the background worker to look up the marker in cupboard.",
+      "provider_plan": {
+        "intent": "lookup",
+        "lookup_key": "marker",
+        "grounding": "audio",
+        "response": "Look up the marker in cupboard. No lookup has been executed."
+      },
+      "original_validation_status": "complete",
+      "response_sha256": "00500d344c7c26d439c4e130439b6384a59add5c533b3f46dbf8e5626c7b0362"
+    },
+    {
+      "id": 5,
+      "scene_id": "venus-repair-v2-holdout-pending-0100",
+      "native_selected_task": "lookup cupboard",
+      "transcript": "Use the background worker to look up the marker in cupboard.",
+      "provider_plan": {
+        "intent": "lookup",
+        "lookup_key": "marker",
+        "grounding": "both",
+        "response": "You want to look up the marker in cupboard. I can identify the request, but I can\u2019t access cupboard or run a background worker."
+      },
+      "original_validation_status": "complete",
+      "response_sha256": "dbd41227ab9573a4d292d4e5004ae83f8c3fe74a32f7c78a2dbd67ea342b2aa0"
+    },
+    {
+      "id": 6,
+      "scene_id": "venus-repair-v2-holdout-delegate-0090",
+      "native_selected_task": "lookup the landmark and bookcase",
+      "transcript": "Use the background worker to look up the marker in bookcase.",
+      "provider_plan": {
+        "intent": "clarify",
+        "lookup_key": null,
+        "grounding": "both",
+        "response": "Did you want me to look up a marker in the bookcase, or a landmark and a bookcase?"
+      },
+      "original_validation_status": "complete",
+      "response_sha256": "6d0dc208bd00ba2f4c25dc17424192133a79f3f97e73b985819c0848a1745a91"
+    },
+    {
+      "id": 7,
+      "scene_id": "venus-repair-v2-holdout-delegate-0091",
+      "native_selected_task": "lookup the landmark and bookcase",
+      "transcript": "Use the background worker to look up the marker in bookcase.",
+      "provider_plan": {
+        "intent": "clarify",
+        "lookup_key": null,
+        "grounding": "both",
+        "response": "Do you want me to look up the marker in the bookcase, or the landmark and bookcase?"
+      },
+      "original_validation_status": "complete",
+      "response_sha256": "5739a536fd2ecaeae56662a8eddb2e657176595e443f1958c5dd9967609e3c6f"
+    },
+    {
+      "id": 8,
+      "scene_id": "venus-repair-v2-holdout-cancel-0085",
+      "native_selected_task": "lookup",
+      "transcript": "Please start the background look-up for the marker and cupboard.",
+      "provider_plan": {
+        "intent": "clarify",
+        "lookup_key": null,
+        "grounding": "audio",
+        "response": "What marker would you like me to look up, and did you say it\u2019s in a cupboard?"
+      },
+      "original_validation_status": "complete",
+      "response_sha256": "cd3b91db2cdadc2703ec0ea4f03dfc2b2cb6044b3a7971f89984af876b262cd9"
+    },
+    {
+      "id": 9,
+      "scene_id": "venus-repair-v2-holdout-cancel-0085",
+      "native_selected_task": "cancel pending",
+      "transcript": "Please start a background lookup for the marker in cupboard. Cancel that pending lookup now. Do not bring back its result.",
+      "provider_plan": {
+        "intent": "cancel",
+        "lookup_key": "marker in cupboard",
+        "grounding": "audio",
+        "response": "You want the pending lookup for the marker in cupboard canceled and its result withheld. I can\u2019t confirm that cancellation has been executed."
+      },
+      "original_validation_status": "failed",
+      "response_sha256": "5b3662a4aad128d92354637ce12ce6343d64e0ed0af913f201621f598b73af00"
+    },
+    {
+      "id": 10,
+      "scene_id": "venus-repair-v2-holdout-cancel-0085",
+      "native_selected_task": "lookup",
+      "transcript": "Please start a background lookup for the marker in cupboard. Cancel that pending lookup now. Do not bring back its result. What do a bird's wings help it do?",
+      "provider_plan": {
+        "intent": "cancel",
+        "lookup_key": "marker in cupboard",
+        "grounding": "audio",
+        "response": "I can\u2019t confirm that the pending lookup was canceled, and I won\u2019t provide its result. A bird\u2019s wings help it fly, steer, and balance."
+      },
+      "original_validation_status": "failed",
+      "response_sha256": "50e9928aad78b695f8ea6a86b007a4aba5c69904151813953b74ea534bd040b5"
+    },
+    {
+      "id": 11,
+      "scene_id": "venus-repair-v2-holdout-delegate-0088",
+      "native_selected_task": "lookup cupboard",
+      "transcript": "Use the background worker to look up the marker in cupboard.",
+      "provider_plan": {
+        "intent": "lookup",
+        "lookup_key": "marker",
+        "grounding": "both",
+        "response": "Look up the marker in cupboard using the background worker; no lookup has been executed."
+      },
+      "original_validation_status": "complete",
+      "response_sha256": "30185093f73d51c5fd0d947be67ab85bd8eb369ce200fb55e4583d3914e346b3"
+    },
+    {
+      "id": 12,
+      "scene_id": "venus-repair-v2-holdout-pause-0098",
+      "native_selected_task": "First, walk through the sequence.",
+      "transcript": "Walk through this sequence, pick up the empty glass, and after that set it on the coaster. Stop speaking for a moment. Wait until I say continue.",
+      "provider_plan": {
+        "intent": "pause",
+        "lookup_key": null,
+        "grounding": "audio",
+        "response": "I\u2019ll pause until you say \u201ccontinue.\u201d"
+      },
+      "original_validation_status": "complete",
+      "response_sha256": "34346bd2da0258ea04727b4964d5e8aade1d04679edbbebd42048e2e4a18d622"
+    },
+    {
+      "id": 13,
+      "scene_id": "venus-repair-v2-holdout-cancel-0084",
+      "native_selected_task": "lookup",
+      "transcript": "Please start the background look-up for the marker and cupboard.",
+      "provider_plan": {
+        "intent": "clarify",
+        "lookup_key": null,
+        "grounding": "audio",
+        "response": "What exactly should I look up? I heard \u201cthe marker and cupboard.\u201d"
+      },
+      "original_validation_status": "complete",
+      "response_sha256": "a23a90c41d9e9a9b4debd3169a7d4fadcad89468e067103a3b5b55ac645dcc9b"
+    },
+    {
+      "id": 14,
+      "scene_id": "venus-repair-v2-holdout-cancel-0084",
+      "native_selected_task": "cancel pending",
+      "transcript": "Please start a background lookup for the marker in cupboard. Cancel that pending lookup now. Do not bring back its result.",
+      "provider_plan": {
+        "intent": "cancel",
+        "lookup_key": "marker in cupboard",
+        "grounding": "audio",
+        "response": "You want to cancel the pending lookup for the marker in cupboard and not receive its result. I can\u2019t confirm that it has been canceled."
+      },
+      "original_validation_status": "failed",
+      "response_sha256": "ea86eca873973c9a84d47b377511825713fe28988948be102f5df8a1bcb70d8b"
+    },
+    {
+      "id": 15,
+      "scene_id": "venus-repair-v2-holdout-cancel-0084",
+      "native_selected_task": "lookup",
+      "transcript": "Please start a background lookup for the marker in cupboard. Cancel that pending lookup now. Do not bring back its result. What do a bird's wings help it do?",
+      "provider_plan": {
+        "intent": "cancel",
+        "lookup_key": "marker in cupboard",
+        "grounding": "audio",
+        "response": "I can\u2019t confirm cancellation of the pending lookup, and I won\u2019t provide its result. A bird\u2019s wings help it fly."
+      },
+      "original_validation_status": "failed",
+      "response_sha256": "4a511c16fa1278ca89188e17d054adaee1e4d7672994683e189250b86c2e37ef"
+    },
+    {
+      "id": 16,
+      "scene_id": "venus-repair-v2-holdout-cancel-0086",
+      "native_selected_task": "lookup",
+      "transcript": "Please start a background lookup for the marker in bookcase.",
+      "provider_plan": {
+        "intent": "clarify",
+        "lookup_key": "bookcase",
+        "grounding": "audio",
+        "response": "Do you want me to look up the marker in \u201cbookcase\u201d?"
+      },
+      "original_validation_status": "failed",
+      "response_sha256": "8242f3410257bfdb2b99daf7b75cde2eaed731fc00c2a48d2362815d54178785"
+    },
+    {
+      "id": 17,
+      "scene_id": "venus-repair-v2-holdout-cancel-0086",
+      "native_selected_task": "lookup",
+      "transcript": "Please start a background lookup for the marker in bookcase. Cancel that pending lookup now. Do not bring back its result. What do a bird's wings help it do?",
+      "provider_plan": {
+        "intent": "cancel",
+        "lookup_key": "marker in bookcase",
+        "grounding": "audio",
+        "response": "I can\u2019t confirm cancellation of the pending lookup, and I won\u2019t provide its result. A bird\u2019s wings help it fly."
+      },
+      "original_validation_status": "failed",
+      "response_sha256": "73b9e46eb048f3f5b817cd73ee3f82130eeb42218f458d830376180819d95d51"
+    },
+    {
+      "id": 18,
+      "scene_id": "venus-repair-v2-holdout-cancel-0087",
+      "native_selected_task": "lookup",
+      "transcript": "Please start a background lookup for the marker in bookcase.",
+      "provider_plan": {
+        "intent": "lookup",
+        "lookup_key": "bookcase",
+        "grounding": "audio",
+        "response": "I can plan a lookup for the marker in \u201cbookcase,\u201d but I haven\u2019t started a background lookup."
+      },
+      "original_validation_status": "complete",
+      "response_sha256": "c94f4add3a802166e8fd2f1f73487e2773a89f9d0b1f8fd7cd8e04411b172525"
+    },
+    {
+      "id": 19,
+      "scene_id": "venus-repair-v2-holdout-cancel-0087",
+      "native_selected_task": "cancel",
+      "transcript": "Please start a background lookup for the marker in bookcase. Cancel that pending lookup now. Do not bring back its result.",
+      "provider_plan": {
+        "intent": "cancel",
+        "lookup_key": "bookcase",
+        "grounding": "audio",
+        "response": "You want to cancel the pending marker lookup in bookcase and not receive its result. I can\u2019t confirm that it has been canceled."
+      },
+      "original_validation_status": "failed",
+      "response_sha256": "09ec8c15218f8e007eb4df6b3350142750f54707af07b1ad0f98a626f7f74730"
+    },
+    {
+      "id": 20,
+      "scene_id": "venus-repair-v2-holdout-pending-0101",
+      "native_selected_task": "lookup cupboard",
+      "transcript": "Use the background worker to look up the marker in cupboard.",
+      "provider_plan": {
+        "intent": "lookup",
+        "lookup_key": "marker",
+        "grounding": "both",
+        "response": "You\u2019d like to look up the marker in cupboard. I can identify the request, but I can\u2019t access cupboard or run a background lookup."
+      },
+      "original_validation_status": "complete",
+      "response_sha256": "cdfe3531f18826f00a7d3266d236a6efb423c2393097bd78413d37732267afba"
+    }
+  ],
+  "next_action": "Version2 declares record_location and aligns validation; exact21 reasoner-only request bodies prepared from existing transcripts. No paid retry unless additional21call approval.",
+  "native_voice_or_execution_evaluated": false,
+  "training_use_prohibited": true
+}

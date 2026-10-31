@@ -4,6 +4,8 @@ Progress31October, after runtime44: the complete32 private-action speech compari
 
 Current bounded execution sequence:
 
+Backend trial update31October: approved42 requests completed with HTTP200; all21 model plans returned, but7 were rejected by an unstated local validation rule and the lookup-key field was ambiguous. [Full preserved review](NATIVE-VENUS-CONTEXT-BACKEND21-REVIEW-2026-10-31.json). Corrected explicit record-location contract is implemented; [one21 reasoner-only follow-up](NATIVE-VENUS-CONTEXT-BACKEND21-V2-PROPOSAL-2026-10-31.json) is prepared within the SAME5USD cap, pending extra-call approval. No new audio upload or training.
+
 Context wiring update31October: local parser/WebSocket/contextual-worker integration passes31 affected tests and exactly reproduces all21 recorded opening snapshots. [Integration evidence](NATIVE-VENUS-CONTEXT-INTEGRATION-2026-10-31.json). An exact21 synthetic-audio backend evaluation is [prepared for approval](NATIVE-VENUS-CONTEXT-BACKEND21-PROPOSAL-2026-10-31.json); the prior phase permits zero API calls, so none were sent.
 
 - **Next:** connect native-selected tasks to causal user evidence and the asynchronous backend, using the21 actual failing/regression requests. The [evaluation-only replay](NATIVE-VENUS-CAUSAL-TASK-REPLAY-2026-10-31.json) binds each request to original audio at request opening; no scoring answers/world values or later audio are included. New in-memory evidence buffer passes immutability, time-fence and history-bound checks. This is not a deployed/provider-qualified backend. No paid API call was made.
