@@ -1,0 +1,882 @@
+{
+  "schema": "dl-context-execution-replay-v1",
+  "source_cohort_cases": 32,
+  "recorded_native_requests": 21,
+  "all21_requests_accounted_for": true,
+  "scene_cases": [
+    {
+      "id": "venus-repair-v2-holdout-pause-0097",
+      "requests": 1,
+      "accepted_requests": 0,
+      "actual_reads": [],
+      "cancelled_tasks": 0,
+      "cancellation_targets": [],
+      "feedback": null,
+      "events": [
+        {
+          "type": "native_delegate_rejected",
+          "monotonic": 227187.534927875,
+          "reason": "empty_or_unbounded_task"
+        }
+      ],
+      "qualified": false
+    },
+    {
+      "id": "venus-repair-v2-holdout-ordinary-0093",
+      "requests": 0,
+      "exercised": false,
+      "qualified": false
+    },
+    {
+      "id": "venus-repair-v2-holdout-quiet-0080",
+      "requests": 0,
+      "exercised": false,
+      "qualified": false
+    },
+    {
+      "id": "venus-repair-v2-holdout-pending-0102",
+      "requests": 2,
+      "accepted_requests": 2,
+      "actual_reads": [
+        {
+          "location": "bookcase",
+          "found": true
+        },
+        {
+          "location": "bookcase",
+          "found": true
+        }
+      ],
+      "cancelled_tasks": 0,
+      "cancellation_targets": [],
+      "feedback": "<backend>[{\"work_id\": \"a3f64dd6-a0d0-4f39-9032-95cd47284129\", \"query\": \"lookup the landmark and bookcase\", \"audio_context_sha256\": \"4fe5e71349cbf31cc89e9c625bd523f84abc6f4fa10c957b99b5b9283e4a2816\", \"result\": \"Lookup bookcase: green diamond\", \"operation\": \"lookup\", \"record_location\": \"bookcase\", \"lookup_executed\": true, \"planner_response_id\": \"resp_0665c2d204b34faa016ae67e20fdbc87d2a834e05271f207d0\", \"sha256\": \"6dc88720df4216ced7a2cd8aa048e4b1b06cbb65ec399681faa2b399d0e64c0e\"}, {\"work_id\": \"090914fe-d50f-4e29-b38d-db5f857d6955\", \"query\": \"lookup landmarkand bookcase\", \"audio_context_sha256\": \"bb2107175d7db226ae06932014069636a18575f049ec5f66a9167ae0b73f82be\", \"result\": \"Lookup bookcase: green diamond\", \"operation\": \"lookup\", \"record_location\": \"bookcase\", \"lookup_executed\": true, \"planner_response_id\": \"resp_05b946fbba147a7e016ae67e24d68087d299c54bf231b60bd0\", \"sha256\": \"f28715ae1d2aaae0b47caacf0f763840acc0b603f14df0e1a6ea1746417a7726\"}]</backend>",
+      "events": [
+        {
+          "type": "native_delegate",
+          "monotonic": 227187.543656791,
+          "work_id": "a3f64dd6-a0d0-4f39-9032-95cd47284129",
+          "query": "lookup the landmark and bookcase",
+          "raw_query": "lookup the landmark and bookcase"
+        },
+        {
+          "type": "worker_started",
+          "monotonic": 227187.543677333,
+          "work_id": "a3f64dd6-a0d0-4f39-9032-95cd47284129"
+        },
+        {
+          "type": "native_delegate",
+          "monotonic": 227187.55619625,
+          "work_id": "090914fe-d50f-4e29-b38d-db5f857d6955",
+          "query": "lookup landmarkand bookcase",
+          "raw_query": "lookup landmark<|chunk_eos|></unit><|speak|>and bookcase"
+        },
+        {
+          "type": "worker_started",
+          "monotonic": 227187.556219125,
+          "work_id": "090914fe-d50f-4e29-b38d-db5f857d6955"
+        },
+        {
+          "type": "worker_completed",
+          "monotonic": 227187.589915125,
+          "work_id": "a3f64dd6-a0d0-4f39-9032-95cd47284129",
+          "query": "lookup the landmark and bookcase",
+          "audio_context_sha256": "4fe5e71349cbf31cc89e9c625bd523f84abc6f4fa10c957b99b5b9283e4a2816",
+          "result": "Lookup bookcase: green diamond",
+          "operation": "lookup",
+          "record_location": "bookcase",
+          "lookup_executed": true,
+          "planner_response_id": "resp_0665c2d204b34faa016ae67e20fdbc87d2a834e05271f207d0",
+          "sha256": "6dc88720df4216ced7a2cd8aa048e4b1b06cbb65ec399681faa2b399d0e64c0e"
+        },
+        {
+          "type": "worker_completed",
+          "monotonic": 227187.602486916,
+          "work_id": "090914fe-d50f-4e29-b38d-db5f857d6955",
+          "query": "lookup landmarkand bookcase",
+          "audio_context_sha256": "bb2107175d7db226ae06932014069636a18575f049ec5f66a9167ae0b73f82be",
+          "result": "Lookup bookcase: green diamond",
+          "operation": "lookup",
+          "record_location": "bookcase",
+          "lookup_executed": true,
+          "planner_response_id": "resp_05b946fbba147a7e016ae67e24d68087d299c54bf231b60bd0",
+          "sha256": "f28715ae1d2aaae0b47caacf0f763840acc0b603f14df0e1a6ea1746417a7726"
+        }
+      ],
+      "qualified": false
+    },
+    {
+      "id": "venus-repair-v2-holdout-pending-0103",
+      "requests": 1,
+      "accepted_requests": 1,
+      "actual_reads": [
+        {
+          "location": "bookcase",
+          "found": true
+        }
+      ],
+      "cancelled_tasks": 0,
+      "cancellation_targets": [],
+      "feedback": "<backend>[{\"work_id\": \"7453b152-e7fe-42c1-a283-bed8fd26b9cf\", \"query\": \"lookup the landmark and bookcase\", \"audio_context_sha256\": \"4fe5e71349cbf31cc89e9c625bd523f84abc6f4fa10c957b99b5b9283e4a2816\", \"result\": \"Lookup bookcase: red crescent\", \"operation\": \"lookup\", \"record_location\": \"bookcase\", \"lookup_executed\": true, \"planner_response_id\": \"resp_096994ea320eab54016ae67e24a8c087d2928c75585cbece8a\", \"sha256\": \"cd4664b93cb26398ff1eecfbd871b4b6c392307e8cc2c4131bb152f600e08741\"}]</backend>",
+      "events": [
+        {
+          "type": "native_delegate",
+          "monotonic": 227187.610850333,
+          "work_id": "7453b152-e7fe-42c1-a283-bed8fd26b9cf",
+          "query": "lookup the landmark and bookcase",
+          "raw_query": "lookup the landmark and bookcase"
+        },
+        {
+          "type": "worker_started",
+          "monotonic": 227187.61087875,
+          "work_id": "7453b152-e7fe-42c1-a283-bed8fd26b9cf"
+        },
+        {
+          "type": "worker_completed",
+          "monotonic": 227187.657072125,
+          "work_id": "7453b152-e7fe-42c1-a283-bed8fd26b9cf",
+          "query": "lookup the landmark and bookcase",
+          "audio_context_sha256": "4fe5e71349cbf31cc89e9c625bd523f84abc6f4fa10c957b99b5b9283e4a2816",
+          "result": "Lookup bookcase: red crescent",
+          "operation": "lookup",
+          "record_location": "bookcase",
+          "lookup_executed": true,
+          "planner_response_id": "resp_096994ea320eab54016ae67e24a8c087d2928c75585cbece8a",
+          "sha256": "cd4664b93cb26398ff1eecfbd871b4b6c392307e8cc2c4131bb152f600e08741"
+        }
+      ],
+      "qualified": false
+    },
+    {
+      "id": "venus-repair-v2-holdout-quiet-0082",
+      "requests": 0,
+      "exercised": false,
+      "qualified": false
+    },
+    {
+      "id": "venus-repair-v2-holdout-delegate-0089",
+      "requests": 1,
+      "accepted_requests": 1,
+      "actual_reads": [
+        {
+          "location": "cupboard",
+          "found": true
+        }
+      ],
+      "cancelled_tasks": 0,
+      "cancellation_targets": [],
+      "feedback": "<backend>[{\"work_id\": \"12563968-33d6-42fa-87bb-11d8e4e4dae1\", \"query\": \"lookup cupboard\", \"audio_context_sha256\": \"0fd7f640a1bde83f2a04e07b6c8ac79bdc6b158223c4d3b852e8daeb9c60d7b4\", \"result\": \"Lookup cupboard: red crescent\", \"operation\": \"lookup\", \"record_location\": \"cupboard\", \"lookup_executed\": true, \"planner_response_id\": \"resp_07db61000caa9535016ae67e2715ec87d294732ced963324d2\", \"sha256\": \"6e5e0e68f32cf1dc20b8d61a2fd38a0af9f3f889ed29c8cc5addf6830cb89fbd\"}]</backend>",
+      "events": [
+        {
+          "type": "native_delegate",
+          "monotonic": 227187.665469916,
+          "work_id": "12563968-33d6-42fa-87bb-11d8e4e4dae1",
+          "query": "lookup cupboard",
+          "raw_query": "lookup cupboard"
+        },
+        {
+          "type": "worker_started",
+          "monotonic": 227187.665491916,
+          "work_id": "12563968-33d6-42fa-87bb-11d8e4e4dae1"
+        },
+        {
+          "type": "worker_completed",
+          "monotonic": 227187.691705708,
+          "work_id": "12563968-33d6-42fa-87bb-11d8e4e4dae1",
+          "query": "lookup cupboard",
+          "audio_context_sha256": "0fd7f640a1bde83f2a04e07b6c8ac79bdc6b158223c4d3b852e8daeb9c60d7b4",
+          "result": "Lookup cupboard: red crescent",
+          "operation": "lookup",
+          "record_location": "cupboard",
+          "lookup_executed": true,
+          "planner_response_id": "resp_07db61000caa9535016ae67e2715ec87d294732ced963324d2",
+          "sha256": "6e5e0e68f32cf1dc20b8d61a2fd38a0af9f3f889ed29c8cc5addf6830cb89fbd"
+        }
+      ],
+      "qualified": false
+    },
+    {
+      "id": "venus-repair-v2-holdout-pending-0100",
+      "requests": 1,
+      "accepted_requests": 1,
+      "actual_reads": [
+        {
+          "location": "cupboard",
+          "found": true
+        }
+      ],
+      "cancelled_tasks": 0,
+      "cancellation_targets": [],
+      "feedback": "<backend>[{\"work_id\": \"48461e10-8fde-4c09-b753-8e6bd68fd774\", \"query\": \"lookup cupboard\", \"audio_context_sha256\": \"0fd7f640a1bde83f2a04e07b6c8ac79bdc6b158223c4d3b852e8daeb9c60d7b4\", \"result\": \"Lookup cupboard: green diamond\", \"operation\": \"lookup\", \"record_location\": \"cupboard\", \"lookup_executed\": true, \"planner_response_id\": \"resp_06bbcac8780cf835016ae67e273a2c87d2980698bd62fcfa35\", \"sha256\": \"7eb55002a92d142e752bb4d6f71c2540840137834639d9699529c92f10be4e4f\"}]</backend>",
+      "events": [
+        {
+          "type": "native_delegate",
+          "monotonic": 227187.700146125,
+          "work_id": "48461e10-8fde-4c09-b753-8e6bd68fd774",
+          "query": "lookup cupboard",
+          "raw_query": "lookup cupboard"
+        },
+        {
+          "type": "worker_started",
+          "monotonic": 227187.700168958,
+          "work_id": "48461e10-8fde-4c09-b753-8e6bd68fd774"
+        },
+        {
+          "type": "worker_completed",
+          "monotonic": 227187.746358166,
+          "work_id": "48461e10-8fde-4c09-b753-8e6bd68fd774",
+          "query": "lookup cupboard",
+          "audio_context_sha256": "0fd7f640a1bde83f2a04e07b6c8ac79bdc6b158223c4d3b852e8daeb9c60d7b4",
+          "result": "Lookup cupboard: green diamond",
+          "operation": "lookup",
+          "record_location": "cupboard",
+          "lookup_executed": true,
+          "planner_response_id": "resp_06bbcac8780cf835016ae67e273a2c87d2980698bd62fcfa35",
+          "sha256": "7eb55002a92d142e752bb4d6f71c2540840137834639d9699529c92f10be4e4f"
+        }
+      ],
+      "qualified": false
+    },
+    {
+      "id": "venus-repair-v2-holdout-delegate-0090",
+      "requests": 1,
+      "accepted_requests": 1,
+      "actual_reads": [
+        {
+          "location": "bookcase",
+          "found": true
+        }
+      ],
+      "cancelled_tasks": 0,
+      "cancellation_targets": [],
+      "feedback": "<backend>[{\"work_id\": \"fd482bcd-0952-47d6-b90d-a11b209dbd52\", \"query\": \"lookup the landmark and bookcase\", \"audio_context_sha256\": \"4fe5e71349cbf31cc89e9c625bd523f84abc6f4fa10c957b99b5b9283e4a2816\", \"result\": \"Lookup bookcase: green diamond\", \"operation\": \"lookup\", \"record_location\": \"bookcase\", \"lookup_executed\": true, \"planner_response_id\": \"resp_0755a754ad9598eb016ae67e28c6f887d2895490405727011e\", \"sha256\": \"e206be127e50d68008217dd2e9881a4f8c09f58d6c0464f43150d6662b2de295\"}]</backend>",
+      "events": [
+        {
+          "type": "native_delegate",
+          "monotonic": 227187.754736625,
+          "work_id": "fd482bcd-0952-47d6-b90d-a11b209dbd52",
+          "query": "lookup the landmark and bookcase",
+          "raw_query": "lookup the landmark and bookcase"
+        },
+        {
+          "type": "worker_started",
+          "monotonic": 227187.754782291,
+          "work_id": "fd482bcd-0952-47d6-b90d-a11b209dbd52"
+        },
+        {
+          "type": "worker_completed",
+          "monotonic": 227187.779618041,
+          "work_id": "fd482bcd-0952-47d6-b90d-a11b209dbd52",
+          "query": "lookup the landmark and bookcase",
+          "audio_context_sha256": "4fe5e71349cbf31cc89e9c625bd523f84abc6f4fa10c957b99b5b9283e4a2816",
+          "result": "Lookup bookcase: green diamond",
+          "operation": "lookup",
+          "record_location": "bookcase",
+          "lookup_executed": true,
+          "planner_response_id": "resp_0755a754ad9598eb016ae67e28c6f887d2895490405727011e",
+          "sha256": "e206be127e50d68008217dd2e9881a4f8c09f58d6c0464f43150d6662b2de295"
+        }
+      ],
+      "qualified": false
+    },
+    {
+      "id": "venus-repair-v2-holdout-ordinary-0095",
+      "requests": 0,
+      "exercised": false,
+      "qualified": false
+    },
+    {
+      "id": "venus-repair-v2-holdout-delegate-0091",
+      "requests": 1,
+      "accepted_requests": 1,
+      "actual_reads": [
+        {
+          "location": "bookcase",
+          "found": true
+        }
+      ],
+      "cancelled_tasks": 0,
+      "cancellation_targets": [],
+      "feedback": "<backend>[{\"work_id\": \"a4158b3f-d4e5-46ba-af7f-4db1599688d5\", \"query\": \"lookup the landmark and bookcase\", \"audio_context_sha256\": \"4fe5e71349cbf31cc89e9c625bd523f84abc6f4fa10c957b99b5b9283e4a2816\", \"result\": \"Lookup bookcase: red crescent\", \"operation\": \"lookup\", \"record_location\": \"bookcase\", \"lookup_executed\": true, \"planner_response_id\": \"resp_0d2722b9af07cb34016ae67e291a0887d28d06c9fb28533891\", \"sha256\": \"2dbc9c18a352b07a9a2a008d1102c3accde194f9be762b6d1c90095f890e7e4b\"}]</backend>",
+      "events": [
+        {
+          "type": "native_delegate",
+          "monotonic": 227187.788204541,
+          "work_id": "a4158b3f-d4e5-46ba-af7f-4db1599688d5",
+          "query": "lookup the landmark and bookcase",
+          "raw_query": "lookup the landmark and bookcase"
+        },
+        {
+          "type": "worker_started",
+          "monotonic": 227187.788257291,
+          "work_id": "a4158b3f-d4e5-46ba-af7f-4db1599688d5"
+        },
+        {
+          "type": "worker_completed",
+          "monotonic": 227187.814658833,
+          "work_id": "a4158b3f-d4e5-46ba-af7f-4db1599688d5",
+          "query": "lookup the landmark and bookcase",
+          "audio_context_sha256": "4fe5e71349cbf31cc89e9c625bd523f84abc6f4fa10c957b99b5b9283e4a2816",
+          "result": "Lookup bookcase: red crescent",
+          "operation": "lookup",
+          "record_location": "bookcase",
+          "lookup_executed": true,
+          "planner_response_id": "resp_0d2722b9af07cb34016ae67e291a0887d28d06c9fb28533891",
+          "sha256": "2dbc9c18a352b07a9a2a008d1102c3accde194f9be762b6d1c90095f890e7e4b"
+        }
+      ],
+      "qualified": false
+    },
+    {
+      "id": "venus-repair-v2-holdout-cancel-0085",
+      "requests": 3,
+      "accepted_requests": 3,
+      "actual_reads": [],
+      "cancelled_tasks": 0,
+      "cancellation_targets": [
+        [],
+        []
+      ],
+      "feedback": "<backend>[{\"work_id\": \"62274372-aad2-4bba-b2d6-fe13c39cede7\", \"query\": \"lookup\", \"audio_context_sha256\": \"190908c84c5b61a05cd7dba29e7c9c565099e4c7c155d9243da33cf6b786d6d0\", \"result\": \"Do you mean to look up the marker in the cupboard, or are \u201cmarker\u201d and \u201ccupboard\u201d two separate items?\", \"operation\": \"clarify\", \"lookup_executed\": false, \"sha256\": \"5d1cf7811bc88767ffd3d64e4a2229d26be48ac61aa9285bdc2e835b9d20fa36\"}, {\"work_id\": \"e59b9dac-20e1-4007-813e-a26cfa203df5\", \"query\": \"cancel pending\", \"audio_context_sha256\": \"7eb4adab2497ab7f0f28117f5c9b6be189a190a89543f2fcbaf9871b22bdddfb\", \"result\": \"No matching lookup was pending.\", \"operation\": \"cancel\", \"cancelled_work_ids\": [], \"remote_execution_aborted\": false, \"sha256\": \"cc12d92d3e4ae5975660f914db436fbef63220a15d0ab3fc3a01b6ed6326686a\"}, {\"work_id\": \"e3813323-b6ab-4fd7-aa4c-3cad39238c98\", \"query\": \"lookup\", \"audio_context_sha256\": \"1e2c883385c278858620bdcae80189a63133e7e416373b7656a4b8c223f2cac2\", \"result\": \"No matching lookup was pending.\", \"operation\": \"cancel\", \"cancelled_work_ids\": [], \"remote_execution_aborted\": false, \"sha256\": \"2b26d187de88709b7e7d9a9690ce840088c0b0a244a55c69a98e34762a6e0827\"}]</backend>",
+      "events": [
+        {
+          "type": "native_delegate",
+          "monotonic": 227187.825360291,
+          "work_id": "62274372-aad2-4bba-b2d6-fe13c39cede7",
+          "query": "lookup",
+          "raw_query": "lookup"
+        },
+        {
+          "type": "worker_started",
+          "monotonic": 227187.825410291,
+          "work_id": "62274372-aad2-4bba-b2d6-fe13c39cede7"
+        },
+        {
+          "type": "worker_completed",
+          "monotonic": 227187.825624708,
+          "work_id": "62274372-aad2-4bba-b2d6-fe13c39cede7",
+          "query": "lookup",
+          "audio_context_sha256": "190908c84c5b61a05cd7dba29e7c9c565099e4c7c155d9243da33cf6b786d6d0",
+          "result": "Do you mean to look up the marker in the cupboard, or are \u201cmarker\u201d and \u201ccupboard\u201d two separate items?",
+          "operation": "clarify",
+          "lookup_executed": false,
+          "sha256": "5d1cf7811bc88767ffd3d64e4a2229d26be48ac61aa9285bdc2e835b9d20fa36"
+        },
+        {
+          "type": "native_delegate",
+          "monotonic": 227187.836407625,
+          "work_id": "e59b9dac-20e1-4007-813e-a26cfa203df5",
+          "query": "cancel pending",
+          "raw_query": "cancel pending"
+        },
+        {
+          "type": "worker_started",
+          "monotonic": 227187.836453708,
+          "work_id": "e59b9dac-20e1-4007-813e-a26cfa203df5"
+        },
+        {
+          "type": "cancellation_confirmed",
+          "monotonic": 227187.836777375,
+          "work_id": "e59b9dac-20e1-4007-813e-a26cfa203df5",
+          "targets": [],
+          "remote_execution_aborted": false
+        },
+        {
+          "type": "worker_completed",
+          "monotonic": 227187.836799708,
+          "work_id": "e59b9dac-20e1-4007-813e-a26cfa203df5",
+          "query": "cancel pending",
+          "audio_context_sha256": "7eb4adab2497ab7f0f28117f5c9b6be189a190a89543f2fcbaf9871b22bdddfb",
+          "result": "No matching lookup was pending.",
+          "operation": "cancel",
+          "cancelled_work_ids": [],
+          "remote_execution_aborted": false,
+          "sha256": "cc12d92d3e4ae5975660f914db436fbef63220a15d0ab3fc3a01b6ed6326686a"
+        },
+        {
+          "type": "native_delegate",
+          "monotonic": 227187.85242925,
+          "work_id": "e3813323-b6ab-4fd7-aa4c-3cad39238c98",
+          "query": "lookup",
+          "raw_query": "lookup<|chunk_eos|></unit><|speak|>"
+        },
+        {
+          "type": "worker_started",
+          "monotonic": 227187.852505666,
+          "work_id": "e3813323-b6ab-4fd7-aa4c-3cad39238c98"
+        },
+        {
+          "type": "cancellation_confirmed",
+          "monotonic": 227187.852963541,
+          "work_id": "e3813323-b6ab-4fd7-aa4c-3cad39238c98",
+          "targets": [],
+          "remote_execution_aborted": false
+        },
+        {
+          "type": "worker_completed",
+          "monotonic": 227187.852988541,
+          "work_id": "e3813323-b6ab-4fd7-aa4c-3cad39238c98",
+          "query": "lookup",
+          "audio_context_sha256": "1e2c883385c278858620bdcae80189a63133e7e416373b7656a4b8c223f2cac2",
+          "result": "No matching lookup was pending.",
+          "operation": "cancel",
+          "cancelled_work_ids": [],
+          "remote_execution_aborted": false,
+          "sha256": "2b26d187de88709b7e7d9a9690ce840088c0b0a244a55c69a98e34762a6e0827"
+        }
+      ],
+      "qualified": false
+    },
+    {
+      "id": "venus-repair-v2-holdout-ordinary-0094",
+      "requests": 0,
+      "exercised": false,
+      "qualified": false
+    },
+    {
+      "id": "venus-repair-v2-holdout-quiet-0083",
+      "requests": 0,
+      "exercised": false,
+      "qualified": false
+    },
+    {
+      "id": "venus-repair-v2-holdout-delegate-0088",
+      "requests": 1,
+      "accepted_requests": 1,
+      "actual_reads": [
+        {
+          "location": "cupboard",
+          "found": true
+        }
+      ],
+      "cancelled_tasks": 0,
+      "cancellation_targets": [],
+      "feedback": "<backend>[{\"work_id\": \"8264b5b9-3043-4bd8-86de-da5a4add2c9d\", \"query\": \"lookup cupboard\", \"audio_context_sha256\": \"0fd7f640a1bde83f2a04e07b6c8ac79bdc6b158223c4d3b852e8daeb9c60d7b4\", \"result\": \"Lookup cupboard: green diamond\", \"operation\": \"lookup\", \"record_location\": \"cupboard\", \"lookup_executed\": true, \"planner_response_id\": \"resp_05fb1315f24bd5b5016ae67e2d71a087d29b43240183309344\", \"sha256\": \"7588f35dbc1c547676364705ffa79516b0dd7fbe766a9674d632f30895ec6648\"}]</backend>",
+      "events": [
+        {
+          "type": "native_delegate",
+          "monotonic": 227187.861758458,
+          "work_id": "8264b5b9-3043-4bd8-86de-da5a4add2c9d",
+          "query": "lookup cupboard",
+          "raw_query": "lookup cupboard"
+        },
+        {
+          "type": "worker_started",
+          "monotonic": 227187.861808708,
+          "work_id": "8264b5b9-3043-4bd8-86de-da5a4add2c9d"
+        },
+        {
+          "type": "worker_completed",
+          "monotonic": 227187.887658833,
+          "work_id": "8264b5b9-3043-4bd8-86de-da5a4add2c9d",
+          "query": "lookup cupboard",
+          "audio_context_sha256": "0fd7f640a1bde83f2a04e07b6c8ac79bdc6b158223c4d3b852e8daeb9c60d7b4",
+          "result": "Lookup cupboard: green diamond",
+          "operation": "lookup",
+          "record_location": "cupboard",
+          "lookup_executed": true,
+          "planner_response_id": "resp_05fb1315f24bd5b5016ae67e2d71a087d29b43240183309344",
+          "sha256": "7588f35dbc1c547676364705ffa79516b0dd7fbe766a9674d632f30895ec6648"
+        }
+      ],
+      "qualified": false
+    },
+    {
+      "id": "venus-repair-v2-holdout-pause-0096",
+      "requests": 0,
+      "exercised": false,
+      "qualified": false
+    },
+    {
+      "id": "venus-repair-v2-holdout-pause-0098",
+      "requests": 1,
+      "accepted_requests": 1,
+      "actual_reads": [],
+      "cancelled_tasks": 0,
+      "cancellation_targets": [],
+      "feedback": "<backend>[{\"work_id\": \"6572c5d7-97d8-48fa-b5e6-5b1f83423c09\", \"query\": \"First, walk through the sequence.\", \"audio_context_sha256\": \"dbcab091609e1efc87206dd40fbe0a3a4bf0abf65f61f075628763a31d10d9cb\", \"result\": \"Pause speaking and wait until you say \u201ccontinue\u201d before walking through the sequence.\", \"operation\": \"pause\", \"lookup_executed\": false, \"sha256\": \"4f13796365c78b63a5168022f2696a16cb1a6413c38f8025f7ff3bcbf3b3ce82\"}]</backend>",
+      "events": [
+        {
+          "type": "native_delegate",
+          "monotonic": 227187.912915708,
+          "work_id": "6572c5d7-97d8-48fa-b5e6-5b1f83423c09",
+          "query": "First, walk through the sequence.",
+          "raw_query": "First, walk through the sequence."
+        },
+        {
+          "type": "worker_started",
+          "monotonic": 227187.912967625,
+          "work_id": "6572c5d7-97d8-48fa-b5e6-5b1f83423c09"
+        },
+        {
+          "type": "worker_completed",
+          "monotonic": 227187.913270541,
+          "work_id": "6572c5d7-97d8-48fa-b5e6-5b1f83423c09",
+          "query": "First, walk through the sequence.",
+          "audio_context_sha256": "dbcab091609e1efc87206dd40fbe0a3a4bf0abf65f61f075628763a31d10d9cb",
+          "result": "Pause speaking and wait until you say \u201ccontinue\u201d before walking through the sequence.",
+          "operation": "pause",
+          "lookup_executed": false,
+          "sha256": "4f13796365c78b63a5168022f2696a16cb1a6413c38f8025f7ff3bcbf3b3ce82"
+        }
+      ],
+      "qualified": false
+    },
+    {
+      "id": "venus-repair-v2-holdout-cancel-0084",
+      "requests": 3,
+      "accepted_requests": 3,
+      "actual_reads": [],
+      "cancelled_tasks": 0,
+      "cancellation_targets": [
+        [],
+        []
+      ],
+      "feedback": "<backend>[{\"work_id\": \"5840f840-ab69-441e-9e48-0ed2e329af95\", \"query\": \"lookup\", \"audio_context_sha256\": \"190908c84c5b61a05cd7dba29e7c9c565099e4c7c155d9243da33cf6b786d6d0\", \"result\": \"Did you mean to look up the marker in the cupboard, or is the record location called \u201cmarker and cupboard\u201d?\", \"operation\": \"clarify\", \"lookup_executed\": false, \"sha256\": \"87ead83395c600f0bc9fa0a151ae0e9227ab734be3dfc5a53bbfd6176af1716c\"}, {\"work_id\": \"9faf406e-c005-45ac-bae4-c36e3955916c\", \"query\": \"cancel pending\", \"audio_context_sha256\": \"7eb4adab2497ab7f0f28117f5c9b6be189a190a89543f2fcbaf9871b22bdddfb\", \"result\": \"No matching lookup was pending.\", \"operation\": \"cancel\", \"cancelled_work_ids\": [], \"remote_execution_aborted\": false, \"sha256\": \"a58808103612541dc96bc0d20f487889cea55458d76afd96421bae85e0ae0929\"}, {\"work_id\": \"29928b76-78c5-4037-ab3c-8ed84ef675a7\", \"query\": \"lookup\", \"audio_context_sha256\": \"1e2c883385c278858620bdcae80189a63133e7e416373b7656a4b8c223f2cac2\", \"result\": \"No matching lookup was pending.\", \"operation\": \"cancel\", \"cancelled_work_ids\": [], \"remote_execution_aborted\": false, \"sha256\": \"5e1222ea3c4b9560c0aafc4c698a80e3f9d533f6c358d46eeb1933a0686cd4d8\"}]</backend>",
+      "events": [
+        {
+          "type": "native_delegate",
+          "monotonic": 227187.923664333,
+          "work_id": "5840f840-ab69-441e-9e48-0ed2e329af95",
+          "query": "lookup",
+          "raw_query": "lookup"
+        },
+        {
+          "type": "worker_started",
+          "monotonic": 227187.923712166,
+          "work_id": "5840f840-ab69-441e-9e48-0ed2e329af95"
+        },
+        {
+          "type": "worker_completed",
+          "monotonic": 227187.923908875,
+          "work_id": "5840f840-ab69-441e-9e48-0ed2e329af95",
+          "query": "lookup",
+          "audio_context_sha256": "190908c84c5b61a05cd7dba29e7c9c565099e4c7c155d9243da33cf6b786d6d0",
+          "result": "Did you mean to look up the marker in the cupboard, or is the record location called \u201cmarker and cupboard\u201d?",
+          "operation": "clarify",
+          "lookup_executed": false,
+          "sha256": "87ead83395c600f0bc9fa0a151ae0e9227ab734be3dfc5a53bbfd6176af1716c"
+        },
+        {
+          "type": "native_delegate",
+          "monotonic": 227187.936766083,
+          "work_id": "9faf406e-c005-45ac-bae4-c36e3955916c",
+          "query": "cancel pending",
+          "raw_query": "cancel pending"
+        },
+        {
+          "type": "worker_started",
+          "monotonic": 227187.93681425,
+          "work_id": "9faf406e-c005-45ac-bae4-c36e3955916c"
+        },
+        {
+          "type": "cancellation_confirmed",
+          "monotonic": 227187.9371415,
+          "work_id": "9faf406e-c005-45ac-bae4-c36e3955916c",
+          "targets": [],
+          "remote_execution_aborted": false
+        },
+        {
+          "type": "worker_completed",
+          "monotonic": 227187.937166,
+          "work_id": "9faf406e-c005-45ac-bae4-c36e3955916c",
+          "query": "cancel pending",
+          "audio_context_sha256": "7eb4adab2497ab7f0f28117f5c9b6be189a190a89543f2fcbaf9871b22bdddfb",
+          "result": "No matching lookup was pending.",
+          "operation": "cancel",
+          "cancelled_work_ids": [],
+          "remote_execution_aborted": false,
+          "sha256": "a58808103612541dc96bc0d20f487889cea55458d76afd96421bae85e0ae0929"
+        },
+        {
+          "type": "native_delegate",
+          "monotonic": 227187.948855125,
+          "work_id": "29928b76-78c5-4037-ab3c-8ed84ef675a7",
+          "query": "lookup",
+          "raw_query": "lookup"
+        },
+        {
+          "type": "worker_started",
+          "monotonic": 227187.948912166,
+          "work_id": "29928b76-78c5-4037-ab3c-8ed84ef675a7"
+        },
+        {
+          "type": "cancellation_confirmed",
+          "monotonic": 227187.949436958,
+          "work_id": "29928b76-78c5-4037-ab3c-8ed84ef675a7",
+          "targets": [],
+          "remote_execution_aborted": false
+        },
+        {
+          "type": "worker_completed",
+          "monotonic": 227187.949459291,
+          "work_id": "29928b76-78c5-4037-ab3c-8ed84ef675a7",
+          "query": "lookup",
+          "audio_context_sha256": "1e2c883385c278858620bdcae80189a63133e7e416373b7656a4b8c223f2cac2",
+          "result": "No matching lookup was pending.",
+          "operation": "cancel",
+          "cancelled_work_ids": [],
+          "remote_execution_aborted": false,
+          "sha256": "5e1222ea3c4b9560c0aafc4c698a80e3f9d533f6c358d46eeb1933a0686cd4d8"
+        }
+      ],
+      "qualified": false
+    },
+    {
+      "id": "venus-repair-v2-holdout-quiet-0081",
+      "requests": 0,
+      "exercised": false,
+      "qualified": false
+    },
+    {
+      "id": "venus-repair-v2-holdout-cancel-0086",
+      "requests": 2,
+      "accepted_requests": 2,
+      "actual_reads": [],
+      "cancelled_tasks": 1,
+      "cancellation_targets": [
+        [
+          "6ca2cfe7-6c16-4cf8-be0b-9f4e7fd81522"
+        ]
+      ],
+      "feedback": "<backend>[{\"work_id\": \"8b5c0ce8-0a2c-46c1-b227-5bbb83339e3b\", \"query\": \"lookup\", \"audio_context_sha256\": \"7d3ee2b5968d5edf457c55b22fbce1d90bd1fafab3ec8440a729039da795f22e\", \"result\": \"Cancelled pending lookup delivery.\", \"operation\": \"cancel\", \"cancelled_work_ids\": [\"6ca2cfe7-6c16-4cf8-be0b-9f4e7fd81522\"], \"remote_execution_aborted\": false, \"sha256\": \"6eb48d2be3a86449712e00a10936cd85784e56483101537ae8d2fe18d9ff7bb3\"}]</backend>",
+      "events": [
+        {
+          "type": "native_delegate",
+          "monotonic": 227187.959438208,
+          "work_id": "6ca2cfe7-6c16-4cf8-be0b-9f4e7fd81522",
+          "query": "lookup",
+          "raw_query": "lookup"
+        },
+        {
+          "type": "worker_started",
+          "monotonic": 227187.959480375,
+          "work_id": "6ca2cfe7-6c16-4cf8-be0b-9f4e7fd81522"
+        },
+        {
+          "type": "native_delegate",
+          "monotonic": 227187.984112,
+          "work_id": "8b5c0ce8-0a2c-46c1-b227-5bbb83339e3b",
+          "query": "lookup",
+          "raw_query": "lookup"
+        },
+        {
+          "type": "worker_started",
+          "monotonic": 227187.984159708,
+          "work_id": "8b5c0ce8-0a2c-46c1-b227-5bbb83339e3b"
+        },
+        {
+          "type": "worker_cancelled",
+          "monotonic": 227187.984699125,
+          "work_id": "6ca2cfe7-6c16-4cf8-be0b-9f4e7fd81522",
+          "remote_execution_aborted": false
+        },
+        {
+          "type": "cancellation_confirmed",
+          "monotonic": 227187.984748166,
+          "work_id": "8b5c0ce8-0a2c-46c1-b227-5bbb83339e3b",
+          "targets": [
+            "6ca2cfe7-6c16-4cf8-be0b-9f4e7fd81522"
+          ],
+          "remote_execution_aborted": false
+        },
+        {
+          "type": "worker_completed",
+          "monotonic": 227187.984771375,
+          "work_id": "8b5c0ce8-0a2c-46c1-b227-5bbb83339e3b",
+          "query": "lookup",
+          "audio_context_sha256": "7d3ee2b5968d5edf457c55b22fbce1d90bd1fafab3ec8440a729039da795f22e",
+          "result": "Cancelled pending lookup delivery.",
+          "operation": "cancel",
+          "cancelled_work_ids": [
+            "6ca2cfe7-6c16-4cf8-be0b-9f4e7fd81522"
+          ],
+          "remote_execution_aborted": false,
+          "sha256": "6eb48d2be3a86449712e00a10936cd85784e56483101537ae8d2fe18d9ff7bb3"
+        }
+      ],
+      "qualified": false
+    },
+    {
+      "id": "venus-repair-v2-holdout-cancel-0087",
+      "requests": 2,
+      "accepted_requests": 2,
+      "actual_reads": [],
+      "cancelled_tasks": 1,
+      "cancellation_targets": [
+        [
+          "30ddc295-6819-4884-b7c0-f76c716d2784"
+        ]
+      ],
+      "feedback": "<backend>[{\"work_id\": \"1fb124a6-e4e6-476c-b90f-4234969162fc\", \"query\": \"cancel\", \"audio_context_sha256\": \"f0a139020cdc7ec65eab53aa90b0a3f73ecc7ecc6f55fc67529e7e1d0d844d1b\", \"result\": \"Cancelled pending lookup delivery.\", \"operation\": \"cancel\", \"cancelled_work_ids\": [\"30ddc295-6819-4884-b7c0-f76c716d2784\"], \"remote_execution_aborted\": false, \"sha256\": \"ca07c9f3343db7c267b2b80162fd3d41d9040aebba85145bd9fb3b9c5599c185\"}]</backend>",
+      "events": [
+        {
+          "type": "native_delegate",
+          "monotonic": 227187.994536583,
+          "work_id": "30ddc295-6819-4884-b7c0-f76c716d2784",
+          "query": "lookup",
+          "raw_query": "lookup"
+        },
+        {
+          "type": "worker_started",
+          "monotonic": 227187.994579083,
+          "work_id": "30ddc295-6819-4884-b7c0-f76c716d2784"
+        },
+        {
+          "type": "native_delegate",
+          "monotonic": 227188.00914475,
+          "work_id": "1fb124a6-e4e6-476c-b90f-4234969162fc",
+          "query": "cancel",
+          "raw_query": "cancel"
+        },
+        {
+          "type": "worker_started",
+          "monotonic": 227188.00920075,
+          "work_id": "1fb124a6-e4e6-476c-b90f-4234969162fc"
+        },
+        {
+          "type": "worker_cancelled",
+          "monotonic": 227188.0096835,
+          "work_id": "30ddc295-6819-4884-b7c0-f76c716d2784",
+          "remote_execution_aborted": false
+        },
+        {
+          "type": "cancellation_confirmed",
+          "monotonic": 227188.009732291,
+          "work_id": "1fb124a6-e4e6-476c-b90f-4234969162fc",
+          "targets": [
+            "30ddc295-6819-4884-b7c0-f76c716d2784"
+          ],
+          "remote_execution_aborted": false
+        },
+        {
+          "type": "worker_completed",
+          "monotonic": 227188.0097575,
+          "work_id": "1fb124a6-e4e6-476c-b90f-4234969162fc",
+          "query": "cancel",
+          "audio_context_sha256": "f0a139020cdc7ec65eab53aa90b0a3f73ecc7ecc6f55fc67529e7e1d0d844d1b",
+          "result": "Cancelled pending lookup delivery.",
+          "operation": "cancel",
+          "cancelled_work_ids": [
+            "30ddc295-6819-4884-b7c0-f76c716d2784"
+          ],
+          "remote_execution_aborted": false,
+          "sha256": "ca07c9f3343db7c267b2b80162fd3d41d9040aebba85145bd9fb3b9c5599c185"
+        }
+      ],
+      "qualified": false
+    },
+    {
+      "id": "venus-repair-v2-holdout-pause-0099",
+      "requests": 0,
+      "exercised": false,
+      "qualified": false
+    },
+    {
+      "id": "venus-repair-v2-holdout-pending-0101",
+      "requests": 1,
+      "accepted_requests": 1,
+      "actual_reads": [
+        {
+          "location": "cupboard",
+          "found": true
+        }
+      ],
+      "cancelled_tasks": 0,
+      "cancellation_targets": [],
+      "feedback": "<backend>[{\"work_id\": \"8920711d-e77c-48ad-958b-3ce524e17c88\", \"query\": \"lookup cupboard\", \"audio_context_sha256\": \"0fd7f640a1bde83f2a04e07b6c8ac79bdc6b158223c4d3b852e8daeb9c60d7b4\", \"result\": \"Lookup cupboard: red crescent\", \"operation\": \"lookup\", \"record_location\": \"cupboard\", \"lookup_executed\": true, \"planner_response_id\": \"resp_019e082fc0635069016ae67e3757d087d2813262c35cb5a6d3\", \"sha256\": \"5bd1b44d8d7edf6093d096ec6c98eee09bc35b60c92bd572346d33ed95ce18b7\"}]</backend>",
+      "events": [
+        {
+          "type": "native_delegate",
+          "monotonic": 227188.018336666,
+          "work_id": "8920711d-e77c-48ad-958b-3ce524e17c88",
+          "query": "lookup cupboard",
+          "raw_query": "lookup cupboard"
+        },
+        {
+          "type": "worker_started",
+          "monotonic": 227188.018377791,
+          "work_id": "8920711d-e77c-48ad-958b-3ce524e17c88"
+        },
+        {
+          "type": "worker_completed",
+          "monotonic": 227188.06475125,
+          "work_id": "8920711d-e77c-48ad-958b-3ce524e17c88",
+          "query": "lookup cupboard",
+          "audio_context_sha256": "0fd7f640a1bde83f2a04e07b6c8ac79bdc6b158223c4d3b852e8daeb9c60d7b4",
+          "result": "Lookup cupboard: red crescent",
+          "operation": "lookup",
+          "record_location": "cupboard",
+          "lookup_executed": true,
+          "planner_response_id": "resp_019e082fc0635069016ae67e3757d087d2813262c35cb5a6d3",
+          "sha256": "5bd1b44d8d7edf6093d096ec6c98eee09bc35b60c92bd572346d33ed95ce18b7"
+        }
+      ],
+      "qualified": false
+    },
+    {
+      "id": "venus-repair-v2-holdout-ordinary-0092",
+      "requests": 0,
+      "exercised": false,
+      "qualified": false
+    },
+    {
+      "id": "venus-control-v1-holdout-ordinary-0220",
+      "requests": 0,
+      "exercised": false,
+      "qualified": false
+    },
+    {
+      "id": "venus-control-v1-holdout-ordinary-0219",
+      "requests": 0,
+      "exercised": false,
+      "qualified": false
+    },
+    {
+      "id": "venus-control-v1-holdout-ordinary-0223",
+      "requests": 0,
+      "exercised": false,
+      "qualified": false
+    },
+    {
+      "id": "venus-control-v1-holdout-ordinary-0217",
+      "requests": 0,
+      "exercised": false,
+      "qualified": false
+    },
+    {
+      "id": "venus-control-v1-holdout-ordinary-0222",
+      "requests": 0,
+      "exercised": false,
+      "qualified": false
+    },
+    {
+      "id": "venus-control-v1-holdout-ordinary-0221",
+      "requests": 0,
+      "exercised": false,
+      "qualified": false
+    },
+    {
+      "id": "venus-control-v1-holdout-ordinary-0216",
+      "requests": 0,
+      "exercised": false,
+      "qualified": false
+    },
+    {
+      "id": "venus-control-v1-holdout-ordinary-0218",
+      "requests": 0,
+      "exercised": false,
+      "qualified": false
+    }
+  ],
+  "external_calls": 0,
+  "new_native_inference": false,
+  "cached_real_provider_decisions": true,
+  "artificial_timing_scale": 0.002,
+  "cancelled_tasks": 2,
+  "actual_record_reads": 9,
+  "rejected_empty_native_requests": 1,
+  "actual_provider_latency_replayed": false,
+  "qualified": false,
+  "adopted": false,
+  "causal_limit": "Recorded native request sequence is fixed. Correct backend feedback could change subsequent native generation; this replay does not establish fresh end-to-end behavior."
+}

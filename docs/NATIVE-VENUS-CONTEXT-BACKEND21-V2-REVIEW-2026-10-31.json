@@ -1,0 +1,975 @@
+{
+  "schema": "dl-context-backend21-v2-review-v1",
+  "recorded_utc": "2026-10-31T23:58:40.562057+00:00",
+  "producer": "16a745890e5530a27fe738cd455acd5213cb5afa",
+  "actual_runner_session": 46087,
+  "actual_runner_exit": 0,
+  "revision": 2,
+  "complete_requests": 21,
+  "distinct_source_scenes": 14,
+  "full_native_source_cohort": 32,
+  "all21_validated": true,
+  "additional_audio_uploads": 0,
+  "actual_additional_calls": 21,
+  "combined_calls": 63,
+  "remaining_authorized_calls": 0,
+  "qualified": false,
+  "adopted": false,
+  "native_voice_evaluated": false,
+  "training_use_prohibited": true,
+  "combined_conservative_cost_upper_usd": 0.789,
+  "actual_billed_cost_not_verified": true,
+  "combined_worst_case_reservation_usd": 4.74565,
+  "cap_usd": 5,
+  "all_cases": [
+    {
+      "id": 0,
+      "scene_id": "venus-repair-v2-holdout-pause-0097",
+      "audio_sha256": "3ef7ad55229f5bc646661a441c07eda54c509383656837a4c531a7a794e21af2",
+      "qualified": false,
+      "status": "complete",
+      "transcript": "Talk me through this gently, take the scarf, followed by hang it on the hook.",
+      "native_selected_task": "",
+      "plan": {
+        "intent": "respond",
+        "grounding": "audio",
+        "response": "Take your time. First, gently pick up the scarf. When you\u2019re ready, place it over the hook so it hangs securely. There\u2019s no rush.",
+        "record_location": null
+      },
+      "response_id": "resp_07c7811b0484fec9016ae67e2111a087d2a03069efefe2b9ee",
+      "usage": {
+        "input_tokens": 543,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0
+        },
+        "output_tokens": 82,
+        "output_tokens_details": {
+          "reasoning_tokens": 15
+        },
+        "total_tokens": 625
+      }
+    },
+    {
+      "id": 1,
+      "scene_id": "venus-repair-v2-holdout-pending-0102",
+      "audio_sha256": "d589499688886eff5c8b18ecf834124f4fea99ad1f76dbfcbc37c69943794bb5",
+      "qualified": false,
+      "status": "complete",
+      "transcript": "Use the background worker to look up the marker in bookcase.",
+      "native_selected_task": "lookup the landmark and bookcase",
+      "plan": {
+        "intent": "lookup",
+        "grounding": "audio",
+        "response": "Plan: look up the marker in the record indexed by bookcase using the background worker.",
+        "record_location": "bookcase"
+      },
+      "response_id": "resp_0665c2d204b34faa016ae67e20fdbc87d2a834e05271f207d0",
+      "usage": {
+        "input_tokens": 546,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0
+        },
+        "output_tokens": 52,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 598
+      }
+    },
+    {
+      "id": 2,
+      "scene_id": "venus-repair-v2-holdout-pending-0102",
+      "audio_sha256": "d35627c8c8497b9f92cc92a04e089eb5d457732616e23e4e7a00c9b3473ae906",
+      "qualified": false,
+      "status": "complete",
+      "transcript": "Use the background worker to look up the marker in bookcase. While you wait, what do a bird's wings help it do?",
+      "native_selected_task": "lookup landmarkand bookcase",
+      "plan": {
+        "intent": "lookup",
+        "grounding": "audio",
+        "response": "Plan: look up the marker in the bookcase record. A bird\u2019s wings help it fly.",
+        "record_location": "bookcase"
+      },
+      "response_id": "resp_05b946fbba147a7e016ae67e24d68087d299c54bf231b60bd0",
+      "usage": {
+        "input_tokens": 553,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0
+        },
+        "output_tokens": 54,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 607
+      }
+    },
+    {
+      "id": 3,
+      "scene_id": "venus-repair-v2-holdout-pending-0103",
+      "audio_sha256": "d589499688886eff5c8b18ecf834124f4fea99ad1f76dbfcbc37c69943794bb5",
+      "qualified": false,
+      "status": "complete",
+      "transcript": "Use the background worker to look up the marker in bookcase.",
+      "native_selected_task": "lookup the landmark and bookcase",
+      "plan": {
+        "intent": "lookup",
+        "grounding": "audio",
+        "response": "Plan: use the background worker to look up the marker in the record indexed by bookcase.",
+        "record_location": "bookcase"
+      },
+      "response_id": "resp_096994ea320eab54016ae67e24a8c087d2928c75585cbece8a",
+      "usage": {
+        "input_tokens": 546,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0
+        },
+        "output_tokens": 53,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 599
+      }
+    },
+    {
+      "id": 4,
+      "scene_id": "venus-repair-v2-holdout-delegate-0089",
+      "audio_sha256": "38af8659e88a83d0bc46d096a40f2eb4788c5d08e80aab2793c3b72e562bd11f",
+      "qualified": false,
+      "status": "complete",
+      "transcript": "Use the background worker to look up the marker in cupboard.",
+      "native_selected_task": "lookup cupboard",
+      "plan": {
+        "intent": "lookup",
+        "grounding": "audio",
+        "response": "Plan to look up the marker in the cupboard record using the background worker.",
+        "record_location": "cupboard"
+      },
+      "response_id": "resp_07db61000caa9535016ae67e2715ec87d294732ced963324d2",
+      "usage": {
+        "input_tokens": 547,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0
+        },
+        "output_tokens": 49,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 596
+      }
+    },
+    {
+      "id": 5,
+      "scene_id": "venus-repair-v2-holdout-pending-0100",
+      "audio_sha256": "38af8659e88a83d0bc46d096a40f2eb4788c5d08e80aab2793c3b72e562bd11f",
+      "qualified": false,
+      "status": "complete",
+      "transcript": "Use the background worker to look up the marker in cupboard.",
+      "native_selected_task": "lookup cupboard",
+      "plan": {
+        "intent": "lookup",
+        "grounding": "audio",
+        "response": "Look up the marker in the cupboard record using the background worker.",
+        "record_location": "cupboard"
+      },
+      "response_id": "resp_06bbcac8780cf835016ae67e273a2c87d2980698bd62fcfa35",
+      "usage": {
+        "input_tokens": 547,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0
+        },
+        "output_tokens": 47,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 594
+      }
+    },
+    {
+      "id": 6,
+      "scene_id": "venus-repair-v2-holdout-delegate-0090",
+      "audio_sha256": "d589499688886eff5c8b18ecf834124f4fea99ad1f76dbfcbc37c69943794bb5",
+      "qualified": false,
+      "status": "complete",
+      "transcript": "Use the background worker to look up the marker in bookcase.",
+      "native_selected_task": "lookup the landmark and bookcase",
+      "plan": {
+        "intent": "lookup",
+        "grounding": "audio",
+        "response": "Plan: use the background worker to look up the marker in the bookcase record.",
+        "record_location": "bookcase"
+      },
+      "response_id": "resp_0755a754ad9598eb016ae67e28c6f887d2895490405727011e",
+      "usage": {
+        "input_tokens": 546,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0
+        },
+        "output_tokens": 51,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 597
+      }
+    },
+    {
+      "id": 7,
+      "scene_id": "venus-repair-v2-holdout-delegate-0091",
+      "audio_sha256": "d589499688886eff5c8b18ecf834124f4fea99ad1f76dbfcbc37c69943794bb5",
+      "qualified": false,
+      "status": "complete",
+      "transcript": "Use the background worker to look up the marker in bookcase.",
+      "native_selected_task": "lookup the landmark and bookcase",
+      "plan": {
+        "intent": "lookup",
+        "grounding": "audio",
+        "response": "Plan to use the background worker to look up the marker in the record indexed by bookcase.",
+        "record_location": "bookcase"
+      },
+      "response_id": "resp_0d2722b9af07cb34016ae67e291a0887d28d06c9fb28533891",
+      "usage": {
+        "input_tokens": 546,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0
+        },
+        "output_tokens": 53,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 599
+      }
+    },
+    {
+      "id": 8,
+      "scene_id": "venus-repair-v2-holdout-cancel-0085",
+      "audio_sha256": "a75feacf69d97f585108b1626cea455cdb62306651053ea0f2fbacda8ae6a836",
+      "qualified": false,
+      "status": "complete",
+      "transcript": "Please start the background look-up for the marker and cupboard.",
+      "native_selected_task": "lookup",
+      "plan": {
+        "intent": "clarify",
+        "grounding": "audio",
+        "response": "Do you mean to look up the marker in the cupboard, or are \u201cmarker\u201d and \u201ccupboard\u201d two separate items?",
+        "record_location": null
+      },
+      "response_id": "resp_0075397015ff18b2016ae67e2b72cc87d29da0b2ceb9e9aa1b",
+      "usage": {
+        "input_tokens": 542,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0
+        },
+        "output_tokens": 61,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 603
+      }
+    },
+    {
+      "id": 9,
+      "scene_id": "venus-repair-v2-holdout-cancel-0085",
+      "audio_sha256": "efece80f03a9dc4d9c293a7ef0b70c51d50377b305b6702d0d48ffb35a962de5",
+      "qualified": false,
+      "status": "complete",
+      "transcript": "Please start a background lookup for the marker in cupboard. Cancel that pending lookup now. Do not bring back its result.",
+      "native_selected_task": "cancel pending",
+      "plan": {
+        "intent": "cancel",
+        "grounding": "audio",
+        "response": "Cancel the pending lookup for the marker in the cupboard and do not return its result.",
+        "record_location": "cupboard"
+      },
+      "response_id": "resp_012aa13d47a7d0a2016ae67e2b7ce487d2ac5d8ae1d4c5d3d0",
+      "usage": {
+        "input_tokens": 553,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0
+        },
+        "output_tokens": 51,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 604
+      }
+    },
+    {
+      "id": 10,
+      "scene_id": "venus-repair-v2-holdout-cancel-0085",
+      "audio_sha256": "8c4cd31aba1a05c5b7fbd47b608a6cf6a2fba8b64a338bc43549c3c42c835867",
+      "qualified": false,
+      "status": "complete",
+      "transcript": "Please start a background lookup for the marker in cupboard. Cancel that pending lookup now. Do not bring back its result. What do a bird's wings help it do?",
+      "native_selected_task": "lookup",
+      "plan": {
+        "intent": "cancel",
+        "grounding": "audio",
+        "response": "Cancel the pending cupboard lookup and suppress its result. A bird\u2019s wings help it fly.",
+        "record_location": "cupboard"
+      },
+      "response_id": "resp_02f4d1f8a32493ca016ae67e2d06d887d2a0fc9af2ae9a3823",
+      "usage": {
+        "input_tokens": 559,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0
+        },
+        "output_tokens": 52,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 611
+      }
+    },
+    {
+      "id": 11,
+      "scene_id": "venus-repair-v2-holdout-delegate-0088",
+      "audio_sha256": "38af8659e88a83d0bc46d096a40f2eb4788c5d08e80aab2793c3b72e562bd11f",
+      "qualified": false,
+      "status": "complete",
+      "transcript": "Use the background worker to look up the marker in cupboard.",
+      "native_selected_task": "lookup cupboard",
+      "plan": {
+        "intent": "lookup",
+        "grounding": "audio",
+        "response": "Plan to look up the marker in the cupboard record using the background worker.",
+        "record_location": "cupboard"
+      },
+      "response_id": "resp_05fb1315f24bd5b5016ae67e2d71a087d29b43240183309344",
+      "usage": {
+        "input_tokens": 547,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0
+        },
+        "output_tokens": 49,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 596
+      }
+    },
+    {
+      "id": 12,
+      "scene_id": "venus-repair-v2-holdout-pause-0098",
+      "audio_sha256": "7629df8e2ee9903e69cd472ee9be140bf8f486e3796a94edc7da1bfb4dc4d9e5",
+      "qualified": false,
+      "status": "complete",
+      "transcript": "Walk through this sequence, pick up the empty glass, and after that set it on the coaster. Stop speaking for a moment. Wait until I say continue.",
+      "native_selected_task": "First, walk through the sequence.",
+      "plan": {
+        "intent": "pause",
+        "grounding": "audio",
+        "response": "Pause speaking and wait until you say \u201ccontinue\u201d before walking through the sequence.",
+        "record_location": null
+      },
+      "response_id": "resp_0c03954eff02795c016ae67e2f0d9887d28edc9b389f620c9b",
+      "usage": {
+        "input_tokens": 563,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0
+        },
+        "output_tokens": 49,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 612
+      }
+    },
+    {
+      "id": 13,
+      "scene_id": "venus-repair-v2-holdout-cancel-0084",
+      "audio_sha256": "a75feacf69d97f585108b1626cea455cdb62306651053ea0f2fbacda8ae6a836",
+      "qualified": false,
+      "status": "complete",
+      "transcript": "Please start the background look-up for the marker and cupboard.",
+      "native_selected_task": "lookup",
+      "plan": {
+        "intent": "clarify",
+        "grounding": "audio",
+        "response": "Did you mean to look up the marker in the cupboard, or is the record location called \u201cmarker and cupboard\u201d?",
+        "record_location": null
+      },
+      "response_id": "resp_0d5d3f816679ac0c016ae67e2fa29087d29e6561cd8f355650",
+      "usage": {
+        "input_tokens": 542,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0
+        },
+        "output_tokens": 58,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 600
+      }
+    },
+    {
+      "id": 14,
+      "scene_id": "venus-repair-v2-holdout-cancel-0084",
+      "audio_sha256": "efece80f03a9dc4d9c293a7ef0b70c51d50377b305b6702d0d48ffb35a962de5",
+      "qualified": false,
+      "status": "complete",
+      "transcript": "Please start a background lookup for the marker in cupboard. Cancel that pending lookup now. Do not bring back its result.",
+      "native_selected_task": "cancel pending",
+      "plan": {
+        "intent": "cancel",
+        "grounding": "audio",
+        "response": "Cancel the pending lookup for the marker in the cupboard and do not return its result.",
+        "record_location": "cupboard"
+      },
+      "response_id": "resp_0285c85a90258a99016ae67e30df0c87d2b6f32978cc7df410",
+      "usage": {
+        "input_tokens": 553,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0
+        },
+        "output_tokens": 51,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 604
+      }
+    },
+    {
+      "id": 15,
+      "scene_id": "venus-repair-v2-holdout-cancel-0084",
+      "audio_sha256": "8c4cd31aba1a05c5b7fbd47b608a6cf6a2fba8b64a338bc43549c3c42c835867",
+      "qualified": false,
+      "status": "complete",
+      "transcript": "Please start a background lookup for the marker in cupboard. Cancel that pending lookup now. Do not bring back its result. What do a bird's wings help it do?",
+      "native_selected_task": "lookup",
+      "plan": {
+        "intent": "cancel",
+        "grounding": "audio",
+        "response": "Cancel the pending cupboard lookup and suppress its result. A bird\u2019s wings help it fly.",
+        "record_location": "cupboard"
+      },
+      "response_id": "resp_089a0284e8c58018016ae67e31ce5487d2995851810deabc50",
+      "usage": {
+        "input_tokens": 559,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0
+        },
+        "output_tokens": 52,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 611
+      }
+    },
+    {
+      "id": 16,
+      "scene_id": "venus-repair-v2-holdout-cancel-0086",
+      "audio_sha256": "a642c9a305db83cf88b165b7677f6227159e608315a195d8d6b7b462af84b624",
+      "qualified": false,
+      "status": "complete",
+      "transcript": "Please start a background lookup for the marker in bookcase.",
+      "native_selected_task": "lookup",
+      "plan": {
+        "intent": "lookup",
+        "grounding": "audio",
+        "response": "Plan to start a background lookup for the marker in the bookcase record.",
+        "record_location": "bookcase"
+      },
+      "response_id": "resp_0d913f04e01e610f016ae67e33b74c87d2bc2346c5a43cae8b",
+      "usage": {
+        "input_tokens": 537,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0
+        },
+        "output_tokens": 49,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 586
+      }
+    },
+    {
+      "id": 17,
+      "scene_id": "venus-repair-v2-holdout-cancel-0086",
+      "audio_sha256": "13d4a3611e6e1059f980cd007bc3dec080c7b0a1badea58af0653f324f355159",
+      "qualified": false,
+      "status": "complete",
+      "transcript": "Please start a background lookup for the marker in bookcase. Cancel that pending lookup now. Do not bring back its result. What do a bird's wings help it do?",
+      "native_selected_task": "lookup",
+      "plan": {
+        "intent": "cancel",
+        "grounding": "audio",
+        "response": "Cancel the pending lookup in bookcase and do not return its result. A bird\u2019s wings help it fly.",
+        "record_location": "bookcase"
+      },
+      "response_id": "resp_01208457a482c853016ae67e33d26487d2a5b9d510aae5acaa",
+      "usage": {
+        "input_tokens": 561,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0
+        },
+        "output_tokens": 56,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 617
+      }
+    },
+    {
+      "id": 18,
+      "scene_id": "venus-repair-v2-holdout-cancel-0087",
+      "audio_sha256": "a642c9a305db83cf88b165b7677f6227159e608315a195d8d6b7b462af84b624",
+      "qualified": false,
+      "status": "complete",
+      "transcript": "Please start a background lookup for the marker in bookcase.",
+      "native_selected_task": "lookup",
+      "plan": {
+        "intent": "lookup",
+        "grounding": "audio",
+        "response": "Plan to start a background lookup for the marker in the bookcase record.",
+        "record_location": "bookcase"
+      },
+      "response_id": "resp_0bd2c9e9e6da9253016ae67e35398487d2b877f055a995d0a1",
+      "usage": {
+        "input_tokens": 537,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0
+        },
+        "output_tokens": 49,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 586
+      }
+    },
+    {
+      "id": 19,
+      "scene_id": "venus-repair-v2-holdout-cancel-0087",
+      "audio_sha256": "bb6350a0c8ec7d06ec89887aabf7d2ab44a87deebba63822127b55641eabfed8",
+      "qualified": false,
+      "status": "complete",
+      "transcript": "Please start a background lookup for the marker in bookcase. Cancel that pending lookup now. Do not bring back its result.",
+      "native_selected_task": "cancel",
+      "plan": {
+        "intent": "cancel",
+        "grounding": "audio",
+        "response": "Cancel the pending lookup for the marker in bookcase, and do not return its result.",
+        "record_location": "bookcase"
+      },
+      "response_id": "resp_0b83c41b0baf1ba3016ae67e35b60887d28209259a67cc4e5c",
+      "usage": {
+        "input_tokens": 554,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0
+        },
+        "output_tokens": 52,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 606
+      }
+    },
+    {
+      "id": 20,
+      "scene_id": "venus-repair-v2-holdout-pending-0101",
+      "audio_sha256": "38af8659e88a83d0bc46d096a40f2eb4788c5d08e80aab2793c3b72e562bd11f",
+      "qualified": false,
+      "status": "complete",
+      "transcript": "Use the background worker to look up the marker in cupboard.",
+      "native_selected_task": "lookup cupboard",
+      "plan": {
+        "intent": "lookup",
+        "grounding": "audio",
+        "response": "Plan to look up the marker in the cupboard record using the background worker.",
+        "record_location": "cupboard"
+      },
+      "response_id": "resp_019e082fc0635069016ae67e3757d087d2813262c35cb5a6d3",
+      "usage": {
+        "input_tokens": 547,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0
+        },
+        "output_tokens": 49,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 596
+      }
+    }
+  ],
+  "artifact_inventory": [
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/case-00.json",
+      "bytes": 908,
+      "sha256": "3522fd699bb53a027136af445978150d74fdfb7045a089ab6aae16bf3ee2ee0e"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/case-01.json",
+      "bytes": 877,
+      "sha256": "b9e855b1eef4d511171f17fe9425a4a8fef9cd3863d79dde40ca6581d7c92cdd"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/case-02.json",
+      "bytes": 917,
+      "sha256": "00ab16eb1dc5d29df811c2204f3e07aaf0a73f6b3d737d9584c4b1d65515e7b9"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/case-03.json",
+      "bytes": 878,
+      "sha256": "b7744b0c0157d700cdc4e02a26e7017b3973bff557006d66144e037d4d1e0c02"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/case-04.json",
+      "bytes": 852,
+      "sha256": "04ca6193ee8c7f6df923b4853df334055f231c106d62a33812a1acb4daade702"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/case-05.json",
+      "bytes": 843,
+      "sha256": "061a6648551e36c9639ab6adafa39121e5bd48fe13a809fa5a0fe99be23bec01"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/case-06.json",
+      "bytes": 868,
+      "sha256": "ae51619d24d2cb01acd9b07f3ecc3bf6dab699f9e4b7baecaa224357468d7663"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/case-07.json",
+      "bytes": 881,
+      "sha256": "2606d836d7e1eb5375d898726ffa433bcbb726c65999e8ca549bf5b32924837c"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/case-08.json",
+      "bytes": 883,
+      "sha256": "8893fd4479182bf2484a3d223f51933a1b10a6aa338177c89e8d3b360460b7e5"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/case-09.json",
+      "bytes": 919,
+      "sha256": "fc985e97219fb565fe01b34fe943a1f45504786f661de57895b364448d5a565f"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/case-10.json",
+      "bytes": 953,
+      "sha256": "4ad7dabde9ec1d3bb54b9fb5c338ece6969222aadda33ee0fcb02bd72a52012d"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/case-11.json",
+      "bytes": 853,
+      "sha256": "985bbd04d2e1ba4c4b06bc42330f1ee68076b1d4ddd7fd86f1c0cd2a29a5b322"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/case-12.json",
+      "bytes": 963,
+      "sha256": "3ca0e7e27678315030de689071c18416dfd890c8e9880b3b8e9ac46ec6a22100"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/case-13.json",
+      "bytes": 880,
+      "sha256": "62fa67a51c3278c632c5a628640b9c9af9be504fbd57786e52b67fdadb5f4447"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/case-14.json",
+      "bytes": 920,
+      "sha256": "a32e915b5a67a7f04e15eeacdcd44d4944a64ba4b178394f598c7a5f08e2ba27"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/case-15.json",
+      "bytes": 953,
+      "sha256": "e64db79ef60e1443b397dddd871bc7f8a31a7e50c8ee1417cc4ce6439908e471"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/case-16.json",
+      "bytes": 836,
+      "sha256": "5ba822c758898bd2ebaacb7439567c9f2b48d4b21390ed64d62039089e45c5ae"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/case-17.json",
+      "bytes": 961,
+      "sha256": "fd21410a0d6c948762a57ab2f0432135548b583bf74b9430f1758a1741855541"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/case-18.json",
+      "bytes": 836,
+      "sha256": "37ee3748993e2fe3226d45718a2fc06bb248f0b2aa2f3b96fd1f878163229d5d"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/case-19.json",
+      "bytes": 909,
+      "sha256": "b29bdaf13648b11f220151dd9962d4a51241d77613d9870289c1fd5334618e92"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/case-20.json",
+      "bytes": 852,
+      "sha256": "98d1d23cefab7fb49d85577809df399e305b959ecb4a4cc3376783cfcd82b3b9"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/ledger.json",
+      "bytes": 19450,
+      "sha256": "3b35891ff9c1984aa442fae92100297931f4a1cc232b933ea7bd89616f54a988"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/model-access.json",
+      "bytes": 63,
+      "sha256": "5130dc8438bc278bf5115a44d30f094c4e19b7beaea058596021df236c47b4e8"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/reasoning-00.json",
+      "bytes": 6064,
+      "sha256": "794a7ceb54ed2fc9f29dd0cabed109d7e9151556a9a369247a6afc333f10ca38"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/reasoning-01.json",
+      "bytes": 4201,
+      "sha256": "9d79a2103fe49ed5a4683682017204224bda4b76356508fac93816e5eae4855c"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/reasoning-02.json",
+      "bytes": 4195,
+      "sha256": "67f0a79f610fa7eba0ffbcd366506e05bbecdadf84ccc0757bba3c4621fc46a9"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/reasoning-03.json",
+      "bytes": 4202,
+      "sha256": "7a9e806ff03a805735241924567339a321c401ea4af741772b040be7d9b09de2"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/reasoning-04.json",
+      "bytes": 4192,
+      "sha256": "8fa3b7955fe5b1a2b1edec75592c17d624530cb4387e5c099eb3c645496b4d7e"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/reasoning-05.json",
+      "bytes": 4184,
+      "sha256": "c3f3cce183fa54efdc423393002afa6c6e499aadc5aab67ac687c8feaae2c78b"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/reasoning-06.json",
+      "bytes": 4191,
+      "sha256": "dd67e7f4ddd4d5954a3ec1f9c8b217d46bf08a0960c9dfbd2949609b8b43dcab"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/reasoning-07.json",
+      "bytes": 4204,
+      "sha256": "822f32a9725cb058af9e835659d87b3439978c582bc5cacf00c58727658f9db6"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/reasoning-08.json",
+      "bytes": 4228,
+      "sha256": "f01d59e67b578f3a9687004394a11b9581579f2b47683926e6f5622ee19b84ec"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/reasoning-09.json",
+      "bytes": 4200,
+      "sha256": "14e525fd307dd24f9527972e4ae956ece4fff6e655351002305e4e1e487dc768"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/reasoning-10.json",
+      "bytes": 4206,
+      "sha256": "ccae08f772229f35d870d57a468f0ff8bb62d2ebb15598c8b759c0119b395593"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/reasoning-11.json",
+      "bytes": 4192,
+      "sha256": "6177179cbdc3b22f92c5f1311595747d7c0df3781c66b8f0e1e8c20df83fc81c"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/reasoning-12.json",
+      "bytes": 4200,
+      "sha256": "ef975f9cab3306f4dd5e3834686099828dc803349dd6a6eb219bf18b434e11a8"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/reasoning-13.json",
+      "bytes": 4224,
+      "sha256": "783184253fd432160c23bdcc53f65556a366a7515ce1e78ac0de1749b106920c"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/reasoning-14.json",
+      "bytes": 4200,
+      "sha256": "3ac55be99463eb73df6f614e09898c875c9142c30d18a46003f179ff48f5508f"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/reasoning-15.json",
+      "bytes": 4206,
+      "sha256": "9d2f3511258f7d8b8c998d68b43995d49925c2e6f560869ef3e2b21e70537150"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/reasoning-16.json",
+      "bytes": 4186,
+      "sha256": "b83652677654a818723991ff2b7be53cd16182092a5af3dcdc5a055705fc81c9"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/reasoning-17.json",
+      "bytes": 4214,
+      "sha256": "0015a1e5af68c37f1f94da70d2a3e413e6de63afeabbc538071ed45e687814f5"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/reasoning-18.json",
+      "bytes": 4186,
+      "sha256": "3db844dc347324570bd6447b8fb7a1f0323915e41016e039e923a7aba7d8855a"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/reasoning-19.json",
+      "bytes": 4197,
+      "sha256": "39c2e42a8446fb4e8f8d77a0f72cb2353559794f4fa7c3f5d3690797e7fdc851"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/reasoning-20.json",
+      "bytes": 4192,
+      "sha256": "56544bab6694262537b51c8ed274a3cd55e5e7d3cb8fc74218bb1a76ab9741fb"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/reasoning-input-00.json",
+      "bytes": 2934,
+      "sha256": "ae55031211ab9482f0b3f0ce6d3115b14e1f3dffc8a3a91f2f6509b503e9fe6f"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/reasoning-input-01.json",
+      "bytes": 2949,
+      "sha256": "175ce34512b9ab4cd7f1da5ef126f64218a56023035b6b77ed317e0e13d44930"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/reasoning-input-02.json",
+      "bytes": 2996,
+      "sha256": "690f4f3184150c22576193c70bdfb6ad8047c11f339f1d3d5896ff4bf66ff472"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/reasoning-input-03.json",
+      "bytes": 2949,
+      "sha256": "175ce34512b9ab4cd7f1da5ef126f64218a56023035b6b77ed317e0e13d44930"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/reasoning-input-04.json",
+      "bytes": 2932,
+      "sha256": "5189182c840bcab4068babc31700a62203ceee432511c1667c786e8b7ff792be"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/reasoning-input-05.json",
+      "bytes": 2932,
+      "sha256": "5189182c840bcab4068babc31700a62203ceee432511c1667c786e8b7ff792be"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/reasoning-input-06.json",
+      "bytes": 2949,
+      "sha256": "175ce34512b9ab4cd7f1da5ef126f64218a56023035b6b77ed317e0e13d44930"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/reasoning-input-07.json",
+      "bytes": 2949,
+      "sha256": "175ce34512b9ab4cd7f1da5ef126f64218a56023035b6b77ed317e0e13d44930"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/reasoning-input-08.json",
+      "bytes": 2927,
+      "sha256": "d2bb6335aa9b6e309eaf52576b8a0d36f4a47940a08fb4962556d9a1433f46b4"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/reasoning-input-09.json",
+      "bytes": 2994,
+      "sha256": "5e93f58629cbc2ef0190822020c847bdfe77515f7d52403f49aa1cca7898ef5f"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/reasoning-input-10.json",
+      "bytes": 3022,
+      "sha256": "3b318187bf38d5626290eb6fd93bcb27d1b69bd8d1bff6e63e1b7a3ad6fc9156"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/reasoning-input-11.json",
+      "bytes": 2932,
+      "sha256": "5189182c840bcab4068babc31700a62203ceee432511c1667c786e8b7ff792be"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/reasoning-input-12.json",
+      "bytes": 3037,
+      "sha256": "a21dfd4a486d1750e505650f09711da9628353232375aedacbc1c8b59264aba2"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/reasoning-input-13.json",
+      "bytes": 2927,
+      "sha256": "d2bb6335aa9b6e309eaf52576b8a0d36f4a47940a08fb4962556d9a1433f46b4"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/reasoning-input-14.json",
+      "bytes": 2994,
+      "sha256": "5e93f58629cbc2ef0190822020c847bdfe77515f7d52403f49aa1cca7898ef5f"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/reasoning-input-15.json",
+      "bytes": 3022,
+      "sha256": "3b318187bf38d5626290eb6fd93bcb27d1b69bd8d1bff6e63e1b7a3ad6fc9156"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/reasoning-input-16.json",
+      "bytes": 2923,
+      "sha256": "c7f12eab21f24b7b8812dd650a3972e9fcb5c21269b7b8290b17d47673483ae2"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/reasoning-input-17.json",
+      "bytes": 3022,
+      "sha256": "347a66d0e585c5bd0d0ef017785b7fc2ae430da97ecf27679a9794b621935e01"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/reasoning-input-18.json",
+      "bytes": 2923,
+      "sha256": "c7f12eab21f24b7b8812dd650a3972e9fcb5c21269b7b8290b17d47673483ae2"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/reasoning-input-19.json",
+      "bytes": 2987,
+      "sha256": "2fdb0322b77a9177e5ef2b68c032a4d0c855f0c808e45fd61cc8d868788852ef"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/reasoning-input-20.json",
+      "bytes": 2932,
+      "sha256": "5189182c840bcab4068babc31700a62203ceee432511c1667c786e8b7ff792be"
+    },
+    {
+      "path": "runs/venus-training-20261031/context-backend21-v2/report.json",
+      "bytes": 21794,
+      "sha256": "f0e6d9be8fc86bf21cb019cc57630b4a143402f01df63a1a16d1f001504487d5"
+    }
+  ],
+  "original_pass_preserved": true,
+  "original_pass_validated": 14,
+  "original_pass_validation_failures": 7,
+  "diagnosis": [
+    "The corrected explicit record_location field and declared validation contract resolve the previous schema failures without retraining the voice model.",
+    "All eleven lookup plans identify the expected location; nine arise from delegate/pending scenes, two from initial cancellation-scene requests. This is plan inspection, not full task or spoken-delivery success.",
+    "Two initial cupboard requests clarify because unchanged Whisper transcription says marker and cupboard. Original source lasts 3.2726875 seconds and causal capture ends at 4 seconds: complete utterance was available; missing audio is not the demonstrated cause.",
+    "One empty native delegation request is rejected by the execution worker, even though the backend could answer from source audio."
+  ],
+  "execution_replay": {
+    "path": "docs/NATIVE-VENUS-CONTEXT-EXECUTION-REPLAY-2026-10-31.json",
+    "sha256": "070d4c2355a701651eaa84c79d80ff3e7ea94d74c0261d90c3864b64fa46eb2c",
+    "actual_reads": 9,
+    "cancelled_local_tasks": 2,
+    "rejected_empty_native_requests": 1,
+    "new_native_inference": false,
+    "actual_provider_latency_replayed": false,
+    "artificial_timing_scale": 0.002,
+    "limitations": "Recorded native request sequence is fixed. Correct backend feedback could change subsequent native generation; this replay does not establish fresh end-to-end behavior."
+  },
+  "next_step": "Prepare one separate TRAIN repair package for native listen/speak decisions, request fidelity and result use, retaining ordinary speech. Do not train on these regression requests or infer additional optimizer/API allowance from remaining dollars.",
+  "local_verification": {
+    "passed": 17,
+    "failed": 0,
+    "worker_sha256": "f44077ad0382025b9468bd111ab3eb798a588d42a1688b8cadbbf9a6e713083b",
+    "replay_sha256": "ad6d84c4837273cb0da9dac0d380a9d5db826b8fd4c6a68b0043858d6bf9e396",
+    "cancellation_overtakes_older_planner_test": true,
+    "initial_replay_preserved": "runs/venus-training-20261031/context-execution-initial-replay.json"
+  }
+}
