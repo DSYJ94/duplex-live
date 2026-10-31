@@ -1,0 +1,17 @@
+{
+  "schema": "dl-context-backend21-v2-authorization-v1",
+  "status": "APPROVED",
+  "recorded_utc": "2026-10-31T23:47:12.391542+00:00",
+  "human_approval": "Approve corrected21 within same $5",
+  "proposal_path": "docs/NATIVE-VENUS-CONTEXT-BACKEND21-V2-PROPOSAL-2026-10-31.json",
+  "proposal_sha256": "0cc1c8db746eb70cbdad20f71f975570369afbe779e86b003f79472d00b1d680",
+  "proposal_source": "3cd92f7",
+  "maximum_additional_reasoning_calls": 21,
+  "maximum_additional_transcription_calls": 0,
+  "maximum_total_calls": 63,
+  "maximum_combined_usd": 5,
+  "phase_cap_usd": 70,
+  "maximum_gpu_seconds": 0,
+  "new_optimizer_updates": 0,
+  "purchase": false
+}
