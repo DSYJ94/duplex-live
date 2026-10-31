@@ -1,5 +1,15 @@
 # Native duplex product execution plan
 
+Progress31October, after runtime44: the complete32 private-action speech comparison is terminal, full18292-file/9097912555-byte archive SHA-verified, all GCP compute stopped. Aggregate speech/control scores remain unchanged; some private-action audio is removed, but neither runtime is accepted. This completes the planned foundation/runtime comparison stage. Do not repeat it unchanged.
+
+Current bounded execution sequence:
+
+- **Next:** connect native-selected tasks to causal user evidence and the asynchronous backend, using the21 actual failing/regression requests. The [evaluation-only replay](NATIVE-VENUS-CAUSAL-TASK-REPLAY-2026-10-31.json) binds each request to original audio at request opening; no scoring answers/world values or later audio are included. New in-memory evidence buffer passes immutability, time-fence and history-bound checks. This is not a deployed/provider-qualified backend. No paid API call was made.
+- **Then:** prepare one focused training package from diagnosed failures and separate TRAIN examples. Keep this repeatedly used regression cohort out of training. Preserve ordinary conversation, exact words/audio/folds, state restoration and native speech/control acceptance. No parameter-growth experiment or foundation-pretraining project at this stage. Existing108-update allowance is consumed; new training must have its own concrete admitted scope.
+- **Run once on verified compute:** prefer the new AIRR Homunculus award once its project/account and usable allocation are visible; otherwise use GCP within its existing limits. Current screenshot shows20000GPUh pending/on hold, dates30October2026–28January2027. Renewed local SSH works, but only the oldu6si/brics.u6si association is visible and no jobs were submitted. See [access evidence](AIRR-HOMUNCULUS-LOCAL-ACCESS-2026-10-31.json).
+
+Loop limit: one context-backed delegation integration experiment, followed by one explicitly scoped training cycle and complete evaluation. Further diagnostics require a specific new failure that changes the chosen repair. Stop paid compute while access or scope is blocked. This plan does not infer extra GCP spend, API calls, training updates or model readiness from the pending allocation.
+
 Progress31October: complete original32 comparison reviewed; both conditions rejected; [measured results](NATIVE-VENUS-FOUNDATION64-REVIEW-2026-10-31.json). Full17473-file archive recovered and SHA-verified. Step2 native private-action speech handling comparison is running under the remaining existing allowance.
 
 Status: user approved the recommended sequence on 30 October 2026. Current candidate406 remains rejected. Existing time and spending limits apply; this plan adds no purchases, optimizer updates or external API calls.

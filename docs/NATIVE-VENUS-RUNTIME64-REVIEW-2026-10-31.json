@@ -1,0 +1,1265 @@
+{
+  "schema": "dl-native-foundation64-review-v1",
+  "recorded_utc": "2026-10-31T12:51:51.968586+00:00",
+  "complete64": true,
+  "new_generations": 32,
+  "reused_candidate406_cases": 32,
+  "all_referenced_audio_hashes_verified": true,
+  "conditions": {
+    "private-action-repair406": {
+      "cases": 32,
+      "word_audio_agreement": 12,
+      "peak_pass": 32,
+      "quiet_early_cases": 1,
+      "quiet_necessary_noearly_plus_resume": 2,
+      "correct_lookup_completions": {
+        "delegate": 2,
+        "pending": 2
+      },
+      "genuine_cancellations": 0,
+      "genuine_pending_cases": 2,
+      "native_delegation_requests": 21
+    },
+    "candidate406": {
+      "cases": 32,
+      "word_audio_agreement": 12,
+      "peak_pass": 32,
+      "quiet_early_cases": 1,
+      "quiet_necessary_noearly_plus_resume": 2,
+      "correct_lookup_completions": {
+        "delegate": 2,
+        "pending": 2
+      },
+      "genuine_cancellations": 0,
+      "genuine_pending_cases": 2,
+      "native_delegation_requests": 21
+    }
+  },
+  "cases": [
+    {
+      "condition": "private-action-repair406",
+      "id": "venus-repair-v2-holdout-pause-0097",
+      "family": "pause",
+      "evaluation_set": "fresh24",
+      "generated_text": "",
+      "asr_text": " you",
+      "word_pass": false,
+      "word_error_rate": 1.0,
+      "peak_pass": true,
+      "queries": [
+        ""
+      ],
+      "worker_results": [
+        "This diagnostic worker only computes sums of explicitly supplied numbers."
+      ],
+      "genuine_pending_at_followup": false,
+      "genuine_cancel": false,
+      "qualified": false
+    },
+    {
+      "condition": "private-action-repair406",
+      "id": "venus-repair-v2-holdout-ordinary-0093",
+      "family": "ordinary",
+      "evaluation_set": "fresh24",
+      "generated_text": "Tight.",
+      "asr_text": " Tight. Mm.",
+      "word_pass": false,
+      "word_error_rate": 1.0,
+      "peak_pass": true,
+      "queries": [],
+      "worker_results": [],
+      "genuine_pending_at_followup": null,
+      "genuine_cancel": false,
+      "qualified": false
+    },
+    {
+      "condition": "private-action-repair406",
+      "id": "venus-repair-v2-holdout-quiet-0080",
+      "family": "quiet",
+      "evaluation_set": "fresh24",
+      "generated_text": "Understood. I will wait for the lavender message.",
+      "asr_text": " Understood I will wait for the lavender message you",
+      "word_pass": false,
+      "word_error_rate": 0.125,
+      "peak_pass": true,
+      "queries": [],
+      "worker_results": [],
+      "genuine_pending_at_followup": false,
+      "genuine_cancel": false,
+      "qualified": false,
+      "early_voiced_frames": 5,
+      "postcue_voiced_frames": 0
+    },
+    {
+      "condition": "private-action-repair406",
+      "id": "venus-repair-v2-holdout-pending-0102",
+      "family": "pending",
+      "evaluation_set": "fresh24",
+      "generated_text": "",
+      "asr_text": " you you",
+      "word_pass": false,
+      "word_error_rate": 2.0,
+      "peak_pass": true,
+      "queries": [
+        "lookup the landmark and bookcase",
+        "lookup landmarkand bookcase"
+      ],
+      "worker_results": [
+        "Lookup requires one explicit alphabetic key.",
+        "Lookup requires one explicit alphabetic key."
+      ],
+      "genuine_pending_at_followup": false,
+      "genuine_cancel": false,
+      "qualified": false,
+      "correct_lookup_completed": false
+    },
+    {
+      "condition": "private-action-repair406",
+      "id": "venus-repair-v2-holdout-pending-0103",
+      "family": "pending",
+      "evaluation_set": "fresh24",
+      "generated_text": "A bird's wings help it fly.",
+      "asr_text": " A bird's wings help it flop. you",
+      "word_pass": false,
+      "word_error_rate": 0.3333333333333333,
+      "peak_pass": true,
+      "queries": [
+        "lookup the landmark and bookcase"
+      ],
+      "worker_results": [
+        "Lookup requires one explicit alphabetic key."
+      ],
+      "genuine_pending_at_followup": false,
+      "genuine_cancel": false,
+      "qualified": false,
+      "correct_lookup_completed": false
+    },
+    {
+      "condition": "private-action-repair406",
+      "id": "venus-repair-v2-holdout-quiet-0082",
+      "family": "quiet",
+      "evaluation_set": "fresh24",
+      "generated_text": "A bird's wings help it fly.",
+      "asr_text": " A bird's wing",
+      "word_pass": false,
+      "word_error_rate": 0.6666666666666666,
+      "peak_pass": true,
+      "queries": [],
+      "worker_results": [],
+      "genuine_pending_at_followup": false,
+      "genuine_cancel": false,
+      "qualified": false,
+      "early_voiced_frames": 0,
+      "postcue_voiced_frames": 1
+    },
+    {
+      "condition": "private-action-repair406",
+      "id": "venus-repair-v2-holdout-delegate-0089",
+      "family": "delegate",
+      "evaluation_set": "fresh24",
+      "generated_text": "The marker is in the cupboard.",
+      "asr_text": " The marker is in the cupboard.",
+      "word_pass": true,
+      "word_error_rate": 0.0,
+      "peak_pass": true,
+      "queries": [
+        "lookup cupboard"
+      ],
+      "worker_results": [
+        "Lookup cupboard: red crescent"
+      ],
+      "genuine_pending_at_followup": null,
+      "genuine_cancel": false,
+      "qualified": false,
+      "correct_lookup_completed": true
+    },
+    {
+      "condition": "private-action-repair406",
+      "id": "venus-repair-v2-holdout-pending-0100",
+      "family": "pending",
+      "evaluation_set": "fresh24",
+      "generated_text": "A bird's wings help it fly. The marker is in the cupboard.",
+      "asr_text": " A bird's wings help it fl- The marker is in the cupboard.",
+      "word_pass": false,
+      "word_error_rate": 0.08333333333333333,
+      "peak_pass": true,
+      "queries": [
+        "lookup cupboard"
+      ],
+      "worker_results": [
+        "Lookup cupboard: green diamond"
+      ],
+      "genuine_pending_at_followup": true,
+      "genuine_cancel": false,
+      "qualified": false,
+      "correct_lookup_completed": true
+    },
+    {
+      "condition": "private-action-repair406",
+      "id": "venus-repair-v2-holdout-delegate-0090",
+      "family": "delegate",
+      "evaluation_set": "fresh24",
+      "generated_text": "The lookup requires one explicit alphabetic key.",
+      "asr_text": " The lookup requires one explicit",
+      "word_pass": false,
+      "word_error_rate": 0.25,
+      "peak_pass": true,
+      "queries": [
+        "lookup the landmark and bookcase"
+      ],
+      "worker_results": [
+        "Lookup requires one explicit alphabetic key."
+      ],
+      "genuine_pending_at_followup": null,
+      "genuine_cancel": false,
+      "qualified": false,
+      "correct_lookup_completed": false
+    },
+    {
+      "condition": "private-action-repair406",
+      "id": "venus-repair-v2-holdout-ordinary-0095",
+      "family": "ordinary",
+      "evaluation_set": "fresh24",
+      "generated_text": "It is used to measure length",
+      "asr_text": " It is used to measure month.",
+      "word_pass": false,
+      "word_error_rate": 0.16666666666666666,
+      "peak_pass": true,
+      "queries": [],
+      "worker_results": [],
+      "genuine_pending_at_followup": null,
+      "genuine_cancel": false,
+      "qualified": false
+    },
+    {
+      "condition": "private-action-repair406",
+      "id": "venus-repair-v2-holdout-delegate-0091",
+      "family": "delegate",
+      "evaluation_set": "fresh24",
+      "generated_text": "",
+      "asr_text": " you",
+      "word_pass": false,
+      "word_error_rate": 1.0,
+      "peak_pass": true,
+      "queries": [
+        "lookup the landmark and bookcase"
+      ],
+      "worker_results": [
+        "Lookup requires one explicit alphabetic key."
+      ],
+      "genuine_pending_at_followup": null,
+      "genuine_cancel": false,
+      "qualified": false,
+      "correct_lookup_completed": false
+    },
+    {
+      "condition": "private-action-repair406",
+      "id": "venus-repair-v2-holdout-cancel-0085",
+      "family": "cancel",
+      "evaluation_set": "fresh24",
+      "generated_text": "{\"work_id\":",
+      "asr_text": " Iquam's work, Ralph Nick. I see. What? Yeep.",
+      "word_pass": false,
+      "word_error_rate": 3.5,
+      "peak_pass": true,
+      "queries": [
+        "lookup",
+        "cancel pending",
+        "lookup"
+      ],
+      "worker_results": [
+        "Lookup requires one explicit alphabetic key.",
+        "Lookup requires one explicit alphabetic key."
+      ],
+      "genuine_pending_at_followup": false,
+      "genuine_cancel": false,
+      "qualified": false,
+      "correct_lookup_completed": false
+    },
+    {
+      "condition": "private-action-repair406",
+      "id": "venus-repair-v2-holdout-ordinary-0094",
+      "family": "ordinary",
+      "evaluation_set": "fresh24",
+      "generated_text": "There are sixty minutes in an hour.",
+      "asr_text": " There are six",
+      "word_pass": false,
+      "word_error_rate": 0.7142857142857143,
+      "peak_pass": true,
+      "queries": [],
+      "worker_results": [],
+      "genuine_pending_at_followup": null,
+      "genuine_cancel": false,
+      "qualified": false
+    },
+    {
+      "condition": "private-action-repair406",
+      "id": "venus-repair-v2-holdout-quiet-0083",
+      "family": "quiet",
+      "evaluation_set": "fresh24",
+      "generated_text": "The opposite of loose is tight.",
+      "asr_text": " The opposite of loose is",
+      "word_pass": false,
+      "word_error_rate": 0.16666666666666666,
+      "peak_pass": true,
+      "queries": [],
+      "worker_results": [],
+      "genuine_pending_at_followup": false,
+      "genuine_cancel": false,
+      "qualified": false,
+      "early_voiced_frames": 0,
+      "postcue_voiced_frames": 2
+    },
+    {
+      "condition": "private-action-repair406",
+      "id": "venus-repair-v2-holdout-delegate-0088",
+      "family": "delegate",
+      "evaluation_set": "fresh24",
+      "generated_text": "The marker is in the cupboard.",
+      "asr_text": " The marker is in the cupboard.",
+      "word_pass": true,
+      "word_error_rate": 0.0,
+      "peak_pass": true,
+      "queries": [
+        "lookup cupboard"
+      ],
+      "worker_results": [
+        "Lookup cupboard: green diamond"
+      ],
+      "genuine_pending_at_followup": null,
+      "genuine_cancel": false,
+      "qualified": false,
+      "correct_lookup_completed": true
+    },
+    {
+      "condition": "private-action-repair406",
+      "id": "venus-repair-v2-holdout-pause-0096",
+      "family": "pause",
+      "evaluation_set": "fresh24",
+      "generated_text": "First, locate the",
+      "asr_text": " First, locate the",
+      "word_pass": true,
+      "word_error_rate": 0.0,
+      "peak_pass": true,
+      "queries": [],
+      "worker_results": [],
+      "genuine_pending_at_followup": false,
+      "genuine_cancel": false,
+      "qualified": false
+    },
+    {
+      "condition": "private-action-repair406",
+      "id": "venus-repair-v2-holdout-pause-0098",
+      "family": "pause",
+      "evaluation_set": "fresh24",
+      "generated_text": "First, walk through the sequence. This diagnostic worker only computes",
+      "asr_text": " First, walk through the sequence. This diagnostic",
+      "word_pass": false,
+      "word_error_rate": 0.3,
+      "peak_pass": true,
+      "queries": [
+        "First, walk through the sequence."
+      ],
+      "worker_results": [
+        "This diagnostic worker only computes sums of explicitly supplied numbers."
+      ],
+      "genuine_pending_at_followup": false,
+      "genuine_cancel": false,
+      "qualified": false
+    },
+    {
+      "condition": "private-action-repair406",
+      "id": "venus-repair-v2-holdout-cancel-0084",
+      "family": "cancel",
+      "evaluation_set": "fresh24",
+      "generated_text": "{\"work_id\":",
+      "asr_text": " iQAMS WorkRabMed ATS R. Aishir",
+      "word_pass": false,
+      "word_error_rate": 2.5,
+      "peak_pass": true,
+      "queries": [
+        "lookup",
+        "cancel pending",
+        "lookup"
+      ],
+      "worker_results": [
+        "Lookup requires one explicit alphabetic key.",
+        "Lookup requires one explicit alphabetic key."
+      ],
+      "genuine_pending_at_followup": false,
+      "genuine_cancel": false,
+      "qualified": false,
+      "correct_lookup_completed": false
+    },
+    {
+      "condition": "private-action-repair406",
+      "id": "venus-repair-v2-holdout-quiet-0081",
+      "family": "quiet",
+      "evaluation_set": "fresh24",
+      "generated_text": "",
+      "asr_text": "",
+      "word_pass": true,
+      "word_error_rate": 0.0,
+      "peak_pass": true,
+      "queries": [],
+      "worker_results": [],
+      "genuine_pending_at_followup": false,
+      "genuine_cancel": false,
+      "qualified": false,
+      "early_voiced_frames": 0,
+      "postcue_voiced_frames": 0
+    },
+    {
+      "condition": "private-action-repair406",
+      "id": "venus-repair-v2-holdout-cancel-0086",
+      "family": "cancel",
+      "evaluation_set": "fresh24",
+      "generated_text": "The user needs cancel pending lookup cancel pending lookup cancel pending lookup cancel pending lookup cancel pending lookup cancel pending lookup",
+      "asr_text": " The user needs this. Castle pending lookup.",
+      "word_pass": false,
+      "word_error_rate": 0.7777777777777778,
+      "peak_pass": true,
+      "queries": [
+        "lookup",
+        "lookup"
+      ],
+      "worker_results": [
+        "Lookup requires one explicit alphabetic key.",
+        "Lookup requires one explicit alphabetic key."
+      ],
+      "genuine_pending_at_followup": false,
+      "genuine_cancel": false,
+      "qualified": false,
+      "correct_lookup_completed": false
+    },
+    {
+      "condition": "private-action-repair406",
+      "id": "venus-repair-v2-holdout-cancel-0087",
+      "family": "cancel",
+      "evaluation_set": "fresh24",
+      "generated_text": "The user needs to Cancelled. No pending lookup exists.",
+      "asr_text": " The user needs to parse off. No pending look exists.",
+      "word_pass": false,
+      "word_error_rate": 0.3,
+      "peak_pass": true,
+      "queries": [
+        "lookup",
+        "cancel"
+      ],
+      "worker_results": [
+        "Lookup requires one explicit alphabetic key."
+      ],
+      "genuine_pending_at_followup": false,
+      "genuine_cancel": false,
+      "qualified": false,
+      "correct_lookup_completed": false
+    },
+    {
+      "condition": "private-action-repair406",
+      "id": "venus-repair-v2-holdout-pause-0099",
+      "family": "pause",
+      "evaluation_set": "fresh24",
+      "generated_text": "First,",
+      "asr_text": " First",
+      "word_pass": true,
+      "word_error_rate": 0.0,
+      "peak_pass": true,
+      "queries": [],
+      "worker_results": [],
+      "genuine_pending_at_followup": false,
+      "genuine_cancel": false,
+      "qualified": false
+    },
+    {
+      "condition": "private-action-repair406",
+      "id": "venus-repair-v2-holdout-pending-0101",
+      "family": "pending",
+      "evaluation_set": "fresh24",
+      "generated_text": "A bird's wings help it fly. The marker is red crescent.",
+      "asr_text": " A bird's wings help it fl- The marker is red crescent.",
+      "word_pass": false,
+      "word_error_rate": 0.09090909090909091,
+      "peak_pass": true,
+      "queries": [
+        "lookup cupboard"
+      ],
+      "worker_results": [
+        "Lookup cupboard: red crescent"
+      ],
+      "genuine_pending_at_followup": true,
+      "genuine_cancel": false,
+      "qualified": false,
+      "correct_lookup_completed": true
+    },
+    {
+      "condition": "private-action-repair406",
+      "id": "venus-repair-v2-holdout-ordinary-0092",
+      "family": "ordinary",
+      "evaluation_set": "fresh24",
+      "generated_text": "Birds use their wings to fly.",
+      "asr_text": " Birds use their wings to fly.",
+      "word_pass": true,
+      "word_error_rate": 0.0,
+      "peak_pass": true,
+      "queries": [],
+      "worker_results": [],
+      "genuine_pending_at_followup": null,
+      "genuine_cancel": false,
+      "qualified": false
+    },
+    {
+      "condition": "private-action-repair406",
+      "id": "venus-control-v1-holdout-ordinary-0220",
+      "family": "ordinary",
+      "evaluation_set": "old8ordinary-retention",
+      "generated_text": "Deep.",
+      "asr_text": " Deep. Hmm.",
+      "word_pass": false,
+      "word_error_rate": 1.0,
+      "peak_pass": true,
+      "queries": [],
+      "worker_results": [],
+      "genuine_pending_at_followup": null,
+      "genuine_cancel": false,
+      "qualified": false
+    },
+    {
+      "condition": "private-action-repair406",
+      "id": "venus-control-v1-holdout-ordinary-0219",
+      "family": "ordinary",
+      "evaluation_set": "old8ordinary-retention",
+      "generated_text": "Glass allows light to pass through while keeping the inside warm.",
+      "asr_text": " Glass allows light to pass through while keeping the inside warm.",
+      "word_pass": true,
+      "word_error_rate": 0.0,
+      "peak_pass": true,
+      "queries": [],
+      "worker_results": [],
+      "genuine_pending_at_followup": null,
+      "genuine_cancel": false,
+      "qualified": false
+    },
+    {
+      "condition": "private-action-repair406",
+      "id": "venus-control-v1-holdout-ordinary-0223",
+      "family": "ordinary",
+      "evaluation_set": "old8ordinary-retention",
+      "generated_text": "It creates a loop",
+      "asr_text": " It creates a loop.",
+      "word_pass": true,
+      "word_error_rate": 0.0,
+      "peak_pass": true,
+      "queries": [],
+      "worker_results": [],
+      "genuine_pending_at_followup": null,
+      "genuine_cancel": false,
+      "qualified": false
+    },
+    {
+      "condition": "private-action-repair406",
+      "id": "venus-control-v1-holdout-ordinary-0217",
+      "family": "ordinary",
+      "evaluation_set": "old8ordinary-retention",
+      "generated_text": "There are twelve months.",
+      "asr_text": " There are 12",
+      "word_pass": false,
+      "word_error_rate": 0.25,
+      "peak_pass": true,
+      "queries": [],
+      "worker_results": [],
+      "genuine_pending_at_followup": null,
+      "genuine_cancel": false,
+      "qualified": false
+    },
+    {
+      "condition": "private-action-repair406",
+      "id": "venus-control-v1-holdout-ordinary-0222",
+      "family": "ordinary",
+      "evaluation_set": "old8ordinary-retention",
+      "generated_text": "It is used for filtering liquids.",
+      "asr_text": " It is used for filtering liquids.",
+      "word_pass": true,
+      "word_error_rate": 0.0,
+      "peak_pass": true,
+      "queries": [],
+      "worker_results": [],
+      "genuine_pending_at_followup": null,
+      "genuine_cancel": false,
+      "qualified": false
+    },
+    {
+      "condition": "private-action-repair406",
+      "id": "venus-control-v1-holdout-ordinary-0221",
+      "family": "ordinary",
+      "evaluation_set": "old8ordinary-retention",
+      "generated_text": "Five minus two is three.",
+      "asr_text": " 5 minus 2 is 3",
+      "word_pass": true,
+      "word_error_rate": 0.0,
+      "peak_pass": true,
+      "queries": [],
+      "worker_results": [],
+      "genuine_pending_at_followup": null,
+      "genuine_cancel": false,
+      "qualified": false
+    },
+    {
+      "condition": "private-action-repair406",
+      "id": "venus-control-v1-holdout-ordinary-0216",
+      "family": "ordinary",
+      "evaluation_set": "old8ordinary-retention",
+      "generated_text": "It helps us see stars and planets",
+      "asr_text": " It helps us see stars and planets.",
+      "word_pass": true,
+      "word_error_rate": 0.0,
+      "peak_pass": true,
+      "queries": [],
+      "worker_results": [],
+      "genuine_pending_at_followup": null,
+      "genuine_cancel": false,
+      "qualified": false
+    },
+    {
+      "condition": "private-action-repair406",
+      "id": "venus-control-v1-holdout-ordinary-0218",
+      "family": "ordinary",
+      "evaluation_set": "old8ordinary-retention",
+      "generated_text": "It helps us move things and change forces.",
+      "asr_text": " It helps us move things and change forces.",
+      "word_pass": true,
+      "word_error_rate": 0.0,
+      "peak_pass": true,
+      "queries": [],
+      "worker_results": [],
+      "genuine_pending_at_followup": null,
+      "genuine_cancel": false,
+      "qualified": false
+    },
+    {
+      "condition": "candidate406",
+      "id": "venus-repair-v2-holdout-pause-0097",
+      "family": "pause",
+      "evaluation_set": "fresh24",
+      "generated_text": "",
+      "asr_text": " dein C",
+      "word_pass": false,
+      "word_error_rate": 2.0,
+      "peak_pass": true,
+      "queries": [],
+      "worker_results": [],
+      "genuine_pending_at_followup": false,
+      "genuine_cancel": false,
+      "qualified": false
+    },
+    {
+      "condition": "candidate406",
+      "id": "venus-repair-v2-holdout-ordinary-0093",
+      "family": "ordinary",
+      "evaluation_set": "fresh24",
+      "generated_text": "Tight.",
+      "asr_text": " Tight. Mm.",
+      "word_pass": false,
+      "word_error_rate": 1.0,
+      "peak_pass": true,
+      "queries": [],
+      "worker_results": [],
+      "genuine_pending_at_followup": null,
+      "genuine_cancel": false,
+      "qualified": false
+    },
+    {
+      "condition": "candidate406",
+      "id": "venus-repair-v2-holdout-quiet-0080",
+      "family": "quiet",
+      "evaluation_set": "fresh24",
+      "generated_text": "Understood. I will wait for the lavender message.",
+      "asr_text": " Understood I will wait for the lavender message you",
+      "word_pass": false,
+      "word_error_rate": 0.125,
+      "peak_pass": true,
+      "queries": [],
+      "worker_results": [],
+      "genuine_pending_at_followup": false,
+      "genuine_cancel": false,
+      "qualified": false,
+      "early_voiced_frames": 5,
+      "postcue_voiced_frames": 0
+    },
+    {
+      "condition": "candidate406",
+      "id": "venus-repair-v2-holdout-pending-0102",
+      "family": "pending",
+      "evaluation_set": "fresh24",
+      "generated_text": "A bird's wings help it fly.",
+      "asr_text": " to kill the a bird's wink you",
+      "word_pass": false,
+      "word_error_rate": 1.1666666666666667,
+      "peak_pass": true,
+      "queries": [
+        "lookup the landmark and bookcase"
+      ],
+      "worker_results": [
+        "Lookup requires one explicit alphabetic key."
+      ],
+      "genuine_pending_at_followup": false,
+      "genuine_cancel": false,
+      "qualified": false,
+      "correct_lookup_completed": false
+    },
+    {
+      "condition": "candidate406",
+      "id": "venus-repair-v2-holdout-pending-0103",
+      "family": "pending",
+      "evaluation_set": "fresh24",
+      "generated_text": "A bird's wings help it fly.",
+      "asr_text": " to kill the a bird's wings help it flow you",
+      "word_pass": false,
+      "word_error_rate": 0.8333333333333334,
+      "peak_pass": true,
+      "queries": [
+        "lookup the landmark and bookcase"
+      ],
+      "worker_results": [
+        "Lookup requires one explicit alphabetic key."
+      ],
+      "genuine_pending_at_followup": false,
+      "genuine_cancel": false,
+      "qualified": false,
+      "correct_lookup_completed": false
+    },
+    {
+      "condition": "candidate406",
+      "id": "venus-repair-v2-holdout-quiet-0082",
+      "family": "quiet",
+      "evaluation_set": "fresh24",
+      "generated_text": "A bird's wings help it fly.",
+      "asr_text": " A bird's wing",
+      "word_pass": false,
+      "word_error_rate": 0.6666666666666666,
+      "peak_pass": true,
+      "queries": [],
+      "worker_results": [],
+      "genuine_pending_at_followup": false,
+      "genuine_cancel": false,
+      "qualified": false,
+      "early_voiced_frames": 0,
+      "postcue_voiced_frames": 1
+    },
+    {
+      "condition": "candidate406",
+      "id": "venus-repair-v2-holdout-delegate-0089",
+      "family": "delegate",
+      "evaluation_set": "fresh24",
+      "generated_text": "The marker is in the cupboard.",
+      "asr_text": " Do you call it? The marker isn't",
+      "word_pass": false,
+      "word_error_rate": 1.0,
+      "peak_pass": true,
+      "queries": [
+        "lookup cupboard"
+      ],
+      "worker_results": [
+        "Lookup cupboard: red crescent"
+      ],
+      "genuine_pending_at_followup": null,
+      "genuine_cancel": false,
+      "qualified": false,
+      "correct_lookup_completed": true
+    },
+    {
+      "condition": "candidate406",
+      "id": "venus-repair-v2-holdout-pending-0100",
+      "family": "pending",
+      "evaluation_set": "fresh24",
+      "generated_text": "Birds use wings to fly. The marker is green diamond.",
+      "asr_text": " Birds use wings to fly. The marker is green diamond.",
+      "word_pass": true,
+      "word_error_rate": 0.0,
+      "peak_pass": true,
+      "queries": [
+        "lookup cupboard"
+      ],
+      "worker_results": [
+        "Lookup cupboard: green diamond"
+      ],
+      "genuine_pending_at_followup": true,
+      "genuine_cancel": false,
+      "qualified": false,
+      "correct_lookup_completed": true
+    },
+    {
+      "condition": "candidate406",
+      "id": "venus-repair-v2-holdout-delegate-0090",
+      "family": "delegate",
+      "evaluation_set": "fresh24",
+      "generated_text": "",
+      "asr_text": " to kill the",
+      "word_pass": false,
+      "word_error_rate": 3.0,
+      "peak_pass": true,
+      "queries": [
+        "lookup the landmark and bookcase"
+      ],
+      "worker_results": [
+        "Lookup requires one explicit alphabetic key."
+      ],
+      "genuine_pending_at_followup": null,
+      "genuine_cancel": false,
+      "qualified": false,
+      "correct_lookup_completed": false
+    },
+    {
+      "condition": "candidate406",
+      "id": "venus-repair-v2-holdout-ordinary-0095",
+      "family": "ordinary",
+      "evaluation_set": "fresh24",
+      "generated_text": "It is used to measure length",
+      "asr_text": " It is used to measure month.",
+      "word_pass": false,
+      "word_error_rate": 0.16666666666666666,
+      "peak_pass": true,
+      "queries": [],
+      "worker_results": [],
+      "genuine_pending_at_followup": null,
+      "genuine_cancel": false,
+      "qualified": false
+    },
+    {
+      "condition": "candidate406",
+      "id": "venus-repair-v2-holdout-delegate-0091",
+      "family": "delegate",
+      "evaluation_set": "fresh24",
+      "generated_text": "",
+      "asr_text": " to kill the",
+      "word_pass": false,
+      "word_error_rate": 3.0,
+      "peak_pass": true,
+      "queries": [
+        "lookup the landmark and bookcase"
+      ],
+      "worker_results": [
+        "Lookup requires one explicit alphabetic key."
+      ],
+      "genuine_pending_at_followup": null,
+      "genuine_cancel": false,
+      "qualified": false,
+      "correct_lookup_completed": false
+    },
+    {
+      "condition": "candidate406",
+      "id": "venus-repair-v2-holdout-cancel-0085",
+      "family": "cancel",
+      "evaluation_set": "fresh24",
+      "generated_text": "",
+      "asr_text": " Cancel All ship",
+      "word_pass": false,
+      "word_error_rate": 3.0,
+      "peak_pass": true,
+      "queries": [
+        "lookup",
+        "cancel",
+        "lookup"
+      ],
+      "worker_results": [
+        "Lookup requires one explicit alphabetic key.",
+        "Lookup requires one explicit alphabetic key."
+      ],
+      "genuine_pending_at_followup": false,
+      "genuine_cancel": false,
+      "qualified": false,
+      "correct_lookup_completed": false
+    },
+    {
+      "condition": "candidate406",
+      "id": "venus-repair-v2-holdout-ordinary-0094",
+      "family": "ordinary",
+      "evaluation_set": "fresh24",
+      "generated_text": "There are sixty minutes in an hour.",
+      "asr_text": " There are six",
+      "word_pass": false,
+      "word_error_rate": 0.7142857142857143,
+      "peak_pass": true,
+      "queries": [],
+      "worker_results": [],
+      "genuine_pending_at_followup": null,
+      "genuine_cancel": false,
+      "qualified": false
+    },
+    {
+      "condition": "candidate406",
+      "id": "venus-repair-v2-holdout-quiet-0083",
+      "family": "quiet",
+      "evaluation_set": "fresh24",
+      "generated_text": "The opposite of loose is tight.",
+      "asr_text": " The opposite of loose is",
+      "word_pass": false,
+      "word_error_rate": 0.16666666666666666,
+      "peak_pass": true,
+      "queries": [],
+      "worker_results": [],
+      "genuine_pending_at_followup": false,
+      "genuine_cancel": false,
+      "qualified": false,
+      "early_voiced_frames": 0,
+      "postcue_voiced_frames": 2
+    },
+    {
+      "condition": "candidate406",
+      "id": "venus-repair-v2-holdout-delegate-0088",
+      "family": "delegate",
+      "evaluation_set": "fresh24",
+      "generated_text": "The marker is in the cupboard.",
+      "asr_text": " Do you copy it? The marker is in",
+      "word_pass": false,
+      "word_error_rate": 1.0,
+      "peak_pass": true,
+      "queries": [
+        "lookup cupboard"
+      ],
+      "worker_results": [
+        "Lookup cupboard: green diamond"
+      ],
+      "genuine_pending_at_followup": null,
+      "genuine_cancel": false,
+      "qualified": false,
+      "correct_lookup_completed": true
+    },
+    {
+      "condition": "candidate406",
+      "id": "venus-repair-v2-holdout-pause-0096",
+      "family": "pause",
+      "evaluation_set": "fresh24",
+      "generated_text": "First, locate the",
+      "asr_text": " First, locate the",
+      "word_pass": true,
+      "word_error_rate": 0.0,
+      "peak_pass": true,
+      "queries": [],
+      "worker_results": [],
+      "genuine_pending_at_followup": false,
+      "genuine_cancel": false,
+      "qualified": false
+    },
+    {
+      "condition": "candidate406",
+      "id": "venus-repair-v2-holdout-pause-0098",
+      "family": "pause",
+      "evaluation_set": "fresh24",
+      "generated_text": "First, walk through the sequence. This diagnostic",
+      "asr_text": " First, walk through the sequence. A first walkthrough",
+      "word_pass": false,
+      "word_error_rate": 0.42857142857142855,
+      "peak_pass": true,
+      "queries": [
+        "First, walk through the sequence."
+      ],
+      "worker_results": [
+        "This diagnostic worker only computes sums of explicitly supplied numbers."
+      ],
+      "genuine_pending_at_followup": false,
+      "genuine_cancel": false,
+      "qualified": false
+    },
+    {
+      "condition": "candidate406",
+      "id": "venus-repair-v2-holdout-cancel-0084",
+      "family": "cancel",
+      "evaluation_set": "fresh24",
+      "generated_text": "",
+      "asr_text": " Cancel a session of Dengdouf",
+      "word_pass": false,
+      "word_error_rate": 5.0,
+      "peak_pass": true,
+      "queries": [
+        "lookup",
+        "cancel",
+        "lookup"
+      ],
+      "worker_results": [
+        "Lookup requires one explicit alphabetic key.",
+        "Lookup requires one explicit alphabetic key."
+      ],
+      "genuine_pending_at_followup": false,
+      "genuine_cancel": false,
+      "qualified": false,
+      "correct_lookup_completed": false
+    },
+    {
+      "condition": "candidate406",
+      "id": "venus-repair-v2-holdout-quiet-0081",
+      "family": "quiet",
+      "evaluation_set": "fresh24",
+      "generated_text": "",
+      "asr_text": "",
+      "word_pass": true,
+      "word_error_rate": 0.0,
+      "peak_pass": true,
+      "queries": [],
+      "worker_results": [],
+      "genuine_pending_at_followup": false,
+      "genuine_cancel": false,
+      "qualified": false,
+      "early_voiced_frames": 0,
+      "postcue_voiced_frames": 0
+    },
+    {
+      "condition": "candidate406",
+      "id": "venus-repair-v2-holdout-cancel-0086",
+      "family": "cancel",
+      "evaluation_set": "fresh24",
+      "generated_text": "",
+      "asr_text": " Cancel Holding be",
+      "word_pass": false,
+      "word_error_rate": 3.0,
+      "peak_pass": true,
+      "queries": [
+        "lookup",
+        "cancel pending",
+        "lookup"
+      ],
+      "worker_results": [
+        "Lookup requires one explicit alphabetic key.",
+        "Lookup requires one explicit alphabetic key."
+      ],
+      "genuine_pending_at_followup": false,
+      "genuine_cancel": false,
+      "qualified": false,
+      "correct_lookup_completed": false
+    },
+    {
+      "condition": "candidate406",
+      "id": "venus-repair-v2-holdout-cancel-0087",
+      "family": "cancel",
+      "evaluation_set": "fresh24",
+      "generated_text": "",
+      "asr_text": " Cancel Holding B",
+      "word_pass": false,
+      "word_error_rate": 3.0,
+      "peak_pass": true,
+      "queries": [
+        "lookup",
+        "cancel pending",
+        "lookup"
+      ],
+      "worker_results": [
+        "Lookup requires one explicit alphabetic key.",
+        "Lookup requires one explicit alphabetic key."
+      ],
+      "genuine_pending_at_followup": false,
+      "genuine_cancel": false,
+      "qualified": false,
+      "correct_lookup_completed": false
+    },
+    {
+      "condition": "candidate406",
+      "id": "venus-repair-v2-holdout-pause-0099",
+      "family": "pause",
+      "evaluation_set": "fresh24",
+      "generated_text": "First,",
+      "asr_text": " First",
+      "word_pass": true,
+      "word_error_rate": 0.0,
+      "peak_pass": true,
+      "queries": [],
+      "worker_results": [],
+      "genuine_pending_at_followup": false,
+      "genuine_cancel": false,
+      "qualified": false
+    },
+    {
+      "condition": "candidate406",
+      "id": "venus-repair-v2-holdout-pending-0101",
+      "family": "pending",
+      "evaluation_set": "fresh24",
+      "generated_text": "Birds use wings to fly. The marker is in the red crescent cupboard.",
+      "asr_text": " Birds use wings to fly. The marker is in the red crescent cupboard.",
+      "word_pass": true,
+      "word_error_rate": 0.0,
+      "peak_pass": true,
+      "queries": [
+        "lookup cupboard"
+      ],
+      "worker_results": [
+        "Lookup cupboard: red crescent"
+      ],
+      "genuine_pending_at_followup": true,
+      "genuine_cancel": false,
+      "qualified": false,
+      "correct_lookup_completed": true
+    },
+    {
+      "condition": "candidate406",
+      "id": "venus-repair-v2-holdout-ordinary-0092",
+      "family": "ordinary",
+      "evaluation_set": "fresh24",
+      "generated_text": "Birds use their wings to fly.",
+      "asr_text": " Birds use their wings to fly.",
+      "word_pass": true,
+      "word_error_rate": 0.0,
+      "peak_pass": true,
+      "queries": [],
+      "worker_results": [],
+      "genuine_pending_at_followup": null,
+      "genuine_cancel": false,
+      "qualified": false
+    },
+    {
+      "condition": "candidate406",
+      "id": "venus-control-v1-holdout-ordinary-0220",
+      "family": "ordinary",
+      "evaluation_set": "old8ordinary-retention",
+      "generated_text": "Deep.",
+      "asr_text": " Deep. Hmm.",
+      "word_pass": false,
+      "word_error_rate": 1.0,
+      "peak_pass": true,
+      "queries": [],
+      "worker_results": [],
+      "genuine_pending_at_followup": null,
+      "genuine_cancel": false,
+      "qualified": false
+    },
+    {
+      "condition": "candidate406",
+      "id": "venus-control-v1-holdout-ordinary-0219",
+      "family": "ordinary",
+      "evaluation_set": "old8ordinary-retention",
+      "generated_text": "Glass allows light to pass through while keeping the inside warm.",
+      "asr_text": " Glass allows light to pass through while keeping the inside warm.",
+      "word_pass": true,
+      "word_error_rate": 0.0,
+      "peak_pass": true,
+      "queries": [],
+      "worker_results": [],
+      "genuine_pending_at_followup": null,
+      "genuine_cancel": false,
+      "qualified": false
+    },
+    {
+      "condition": "candidate406",
+      "id": "venus-control-v1-holdout-ordinary-0223",
+      "family": "ordinary",
+      "evaluation_set": "old8ordinary-retention",
+      "generated_text": "It creates a loop",
+      "asr_text": " It creates a loop.",
+      "word_pass": true,
+      "word_error_rate": 0.0,
+      "peak_pass": true,
+      "queries": [],
+      "worker_results": [],
+      "genuine_pending_at_followup": null,
+      "genuine_cancel": false,
+      "qualified": false
+    },
+    {
+      "condition": "candidate406",
+      "id": "venus-control-v1-holdout-ordinary-0217",
+      "family": "ordinary",
+      "evaluation_set": "old8ordinary-retention",
+      "generated_text": "There are twelve months.",
+      "asr_text": " There are 12",
+      "word_pass": false,
+      "word_error_rate": 0.25,
+      "peak_pass": true,
+      "queries": [],
+      "worker_results": [],
+      "genuine_pending_at_followup": null,
+      "genuine_cancel": false,
+      "qualified": false
+    },
+    {
+      "condition": "candidate406",
+      "id": "venus-control-v1-holdout-ordinary-0222",
+      "family": "ordinary",
+      "evaluation_set": "old8ordinary-retention",
+      "generated_text": "It is used for filtering liquids.",
+      "asr_text": " It is used for filtering liquids.",
+      "word_pass": true,
+      "word_error_rate": 0.0,
+      "peak_pass": true,
+      "queries": [],
+      "worker_results": [],
+      "genuine_pending_at_followup": null,
+      "genuine_cancel": false,
+      "qualified": false
+    },
+    {
+      "condition": "candidate406",
+      "id": "venus-control-v1-holdout-ordinary-0221",
+      "family": "ordinary",
+      "evaluation_set": "old8ordinary-retention",
+      "generated_text": "Five minus two is three.",
+      "asr_text": " 5 minus 2 is 3",
+      "word_pass": true,
+      "word_error_rate": 0.0,
+      "peak_pass": true,
+      "queries": [],
+      "worker_results": [],
+      "genuine_pending_at_followup": null,
+      "genuine_cancel": false,
+      "qualified": false
+    },
+    {
+      "condition": "candidate406",
+      "id": "venus-control-v1-holdout-ordinary-0216",
+      "family": "ordinary",
+      "evaluation_set": "old8ordinary-retention",
+      "generated_text": "It helps us see stars and planets",
+      "asr_text": " It helps us see stars and planets.",
+      "word_pass": true,
+      "word_error_rate": 0.0,
+      "peak_pass": true,
+      "queries": [],
+      "worker_results": [],
+      "genuine_pending_at_followup": null,
+      "genuine_cancel": false,
+      "qualified": false
+    },
+    {
+      "condition": "candidate406",
+      "id": "venus-control-v1-holdout-ordinary-0218",
+      "family": "ordinary",
+      "evaluation_set": "old8ordinary-retention",
+      "generated_text": "It helps us move things and change forces.",
+      "asr_text": " It helps us move things and change forces.",
+      "word_pass": true,
+      "word_error_rate": 0.0,
+      "peak_pass": true,
+      "queries": [],
+      "worker_results": [],
+      "genuine_pending_at_followup": null,
+      "genuine_cancel": false,
+      "qualified": false
+    }
+  ],
+  "qualified": false,
+  "adopted": false,
+  "ordinary_semantics_and_naturalness_not_independently_approved": true,
+  "interpretation": "Runtime repair leaves aggregate pass counts unchanged. Native speech and behavior remain rejected; sample-level audio changes must be reviewed separately. Shared RNG consumption changes, so identical subsequent model trajectories are not claimed.",
+  "causal_limits": "Same reference/sampling; fixed regression cohort, one seed. No causal proof of9Bcapacity limit, generalization, accent quality or backend reasoning capability.",
+  "speech_agreement_is_not_task_accuracy": true,
+  "quiet_necessary_condition_is_not_semantic_success": true,
+  "backup": {
+    "all_hashes_verified": true,
+    "files": 18292,
+    "bytes": 9097912555,
+    "source": "0209cb29b8f8f91b5113bc2713cfb836aaa86c54"
+  },
+  "provider_stop": "2026-10-31T05:27:16.492-07:00",
+  "focused_seconds_upper": 28000,
+  "original_gpu_seconds_upper": 54451,
+  "remaining_action_phase_seconds": 2300,
+  "remaining_broad_gpu_seconds": 4800,
+  "extra_optimizer_updates_authorized_by_prior_grant": 0,
+  "private_only_chunk_diagnostic": {
+    "original": {
+      "chunks": 19,
+      "voiced": 19
+    },
+    "repair": {
+      "chunks": 18,
+      "voiced": 6
+    },
+    "necessary_caveat": "Voiced private-only chunks may include legitimate earlier speech tails; not a semantic leakage classifier. Changed RNG/control histories prevent exact matched-frame attribution."
+  }
+}

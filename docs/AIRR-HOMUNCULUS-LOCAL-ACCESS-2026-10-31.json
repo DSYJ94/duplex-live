@@ -1,0 +1,40 @@
+{
+  "schema": "dl-airr-local-access-check-v1",
+  "checked_utc": "2026-10-31T12:51:52.048332+00:00",
+  "award": {
+    "name": "Homunculus",
+    "id": "0261-8264-3465-1",
+    "reported_gpu_hours": 20000,
+    "start": "2026-10-30",
+    "end": "2027-01-28",
+    "status": "Pending/on hold in user-supplied screenshot; not proof of usable Slurm credits"
+  },
+  "certificate": {
+    "initial_expired": "2026-10-21T18:27:59Z",
+    "renewed": true,
+    "valid_from": "2026-10-31T12:45:54Z",
+    "valid_until": "2026-11-01T00:45:54Z"
+  },
+  "actual_ssh": {
+    "alias": "u6si.aip2.isambard",
+    "exit_code": 0,
+    "host": "login44",
+    "user": "dsyj94.u6si",
+    "jobs": []
+  },
+  "visible_associations": [
+    "brics.u6si"
+  ],
+  "clifton_visible_projects": [
+    "u6si"
+  ],
+  "partition": "workq up",
+  "new_award_mapping": "NOT_VISIBLE_NOT_VERIFIED",
+  "new_jobs_submitted": 0,
+  "gcp": "all5instancesTERMINATED fresh read; fallback within existing limits",
+  "official_sources": [
+    "https://docs.isambard.ac.uk/user-documentation/guides/login/",
+    "https://docs.isambard.ac.uk/user-documentation/faqs/",
+    "https://docs.isambard.ac.uk/user-documentation/guides/using_ai_agents/"
+  ]
+}
