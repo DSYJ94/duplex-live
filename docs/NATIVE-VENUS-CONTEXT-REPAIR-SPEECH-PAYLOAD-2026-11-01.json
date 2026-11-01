@@ -1,0 +1,1930 @@
+{
+  "schema": "dl-context-repair-speech-payload-v1",
+  "status": "PREPARED_NOT_SENT",
+  "plan_path": "evals/fixtures/venus-context-repair-authoring-v2-20261101.json",
+  "plan_sha256": "c19f3dfd2760a9e6679f46fadf0440dae38c716dcc21eed3990a64a4afcfeba8",
+  "requests": [
+    {
+      "id": "1708a9f74224e3d876eae1a760bed48068261c02c05baac6315edceb41499002-train",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "Keep completely silent until I say cobalt sunrise. This instruction itself does not release you.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-quiet_scope-00",
+          "fold": "TRAIN",
+          "turn": 0
+        }
+      ],
+      "payload_sha256": "c5d104a97b59b51d7d546f97630be3362087140e567c5b9838e61abf31e5be85"
+    },
+    {
+      "id": "44a6fb4b4456f9dcaf83e604f0fa317586695eff31b76db550df30593af91931-dev",
+      "fold": "DEV",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "I am still deciding. Please keep waiting.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261102,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-dev-quiet_scope-04",
+          "fold": "DEV",
+          "turn": 1
+        },
+        {
+          "scene_id": "venus-context-repair-draft-dev-quiet_scope-05",
+          "fold": "DEV",
+          "turn": 1
+        }
+      ],
+      "payload_sha256": "63ce5a3ab8e51f05981964903060a3598f930a8a43ac751ce2be85e09e211f99"
+    },
+    {
+      "id": "44a6fb4b4456f9dcaf83e604f0fa317586695eff31b76db550df30593af91931-train",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "I am still deciding. Please keep waiting.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-quiet_scope-00",
+          "fold": "TRAIN",
+          "turn": 1
+        },
+        {
+          "scene_id": "venus-context-repair-draft-train-quiet_scope-01",
+          "fold": "TRAIN",
+          "turn": 1
+        },
+        {
+          "scene_id": "venus-context-repair-draft-train-quiet_scope-02",
+          "fold": "TRAIN",
+          "turn": 1
+        },
+        {
+          "scene_id": "venus-context-repair-draft-train-quiet_scope-03",
+          "fold": "TRAIN",
+          "turn": 1
+        }
+      ],
+      "payload_sha256": "f84ffe4e49687cbdfa59da3888f5b8b58709fee98907bc607d2bbbbfdffc4439"
+    },
+    {
+      "id": "1dcf4755e7e92a72f2aeda1525f5d4593b4e001324c3f690db7c56c368c387c2-train",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "cobalt sunrise. What does a lid do?",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-quiet_scope-00",
+          "fold": "TRAIN",
+          "turn": 2
+        }
+      ],
+      "payload_sha256": "519f4082a007f01e52e2137d9141e09e1e821218496d403b0b49b5e7e214016b"
+    },
+    {
+      "id": "f4ebe9f93f271ee3a3ce9770ba2c8bdc1d9137fbdc48a3e3f5fc148fa7ba9b54-train",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "What is 3 plus two?",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-simple_or_delegate-00",
+          "fold": "TRAIN",
+          "turn": 0
+        }
+      ],
+      "payload_sha256": "6fe1189c433610eac3af539ef200ef196c715ebce2aee17ff3538608a8760d19"
+    },
+    {
+      "id": "d774d2cbd65bedc2694b664ce8438268b56eeedb2529929f4de666f1fd999427-train",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "Ask the background reasoner to compare a synthetic loan of 17000 pounds at eight percent nominal annual interest, compounded monthly, over thirty-six, forty-eight and sixty months. Assume fixed rates, equal monthly payments and no fees or early repayment penalties. Compare monthly payments and total interest.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-simple_or_delegate-00",
+          "fold": "TRAIN",
+          "turn": 1
+        }
+      ],
+      "payload_sha256": "d8ca51247e4f06c04009e4dc9c0043773c9439ee3d638c90e389ea851903f210"
+    },
+    {
+      "id": "a6ecbde961f56842ed99d0b727b06e98a6addc68f1208efdf1778d8ff0e9c423-train",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "Ask the worker to compare two synthetic routes to venue 1: rail takes ninety minutes and costs twenty-eight pounds; coach takes one hundred and forty minutes and costs sixteen pounds. Separately compare a vegetarian pasta meal at three pounds per person with soup at two pounds per person for six guests, under a thirty-six pound budget.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-selective_cancel-00",
+          "fold": "TRAIN",
+          "turn": 0
+        }
+      ],
+      "payload_sha256": "414c390fdf08f8c8e4cf2c8156fccd197a44e4bf3d973da97434b322da978610"
+    },
+    {
+      "id": "18083e09afd279cbb87a77ef6ca7ccf901f9765ed80ec3217bc45dc81911a07d-dev",
+      "fold": "DEV",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "Cancel only the travel comparison. Keep the meal-plan work going.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261102,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-dev-selective_cancel-04",
+          "fold": "DEV",
+          "turn": 1
+        },
+        {
+          "scene_id": "venus-context-repair-draft-dev-selective_cancel-05",
+          "fold": "DEV",
+          "turn": 1
+        }
+      ],
+      "payload_sha256": "d33364b79197df9a14c0623d640f3cb554d6ba729040b81562be461f4c9fae27"
+    },
+    {
+      "id": "18083e09afd279cbb87a77ef6ca7ccf901f9765ed80ec3217bc45dc81911a07d-train",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "Cancel only the travel comparison. Keep the meal-plan work going.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-selective_cancel-00",
+          "fold": "TRAIN",
+          "turn": 1
+        },
+        {
+          "scene_id": "venus-context-repair-draft-train-selective_cancel-01",
+          "fold": "TRAIN",
+          "turn": 1
+        },
+        {
+          "scene_id": "venus-context-repair-draft-train-selective_cancel-02",
+          "fold": "TRAIN",
+          "turn": 1
+        },
+        {
+          "scene_id": "venus-context-repair-draft-train-selective_cancel-03",
+          "fold": "TRAIN",
+          "turn": 1
+        }
+      ],
+      "payload_sha256": "7b690b4467472b23f4d275c412f338f8d4b31f1155136f01ee5582cf065c3a2f"
+    },
+    {
+      "id": "dcbdbe18b38abedc9b434bf368180d7fcd4637de27aa382e86758a758c3e368b-dev",
+      "fold": "DEV",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "What can we discuss while that finishes?",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261102,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-dev-selective_cancel-04",
+          "fold": "DEV",
+          "turn": 2
+        },
+        {
+          "scene_id": "venus-context-repair-draft-dev-selective_cancel-05",
+          "fold": "DEV",
+          "turn": 2
+        }
+      ],
+      "payload_sha256": "045e3f73f3244faef3945eaa315bf7b5f67065202d75e5d48218da3d50d476a9"
+    },
+    {
+      "id": "dcbdbe18b38abedc9b434bf368180d7fcd4637de27aa382e86758a758c3e368b-train",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "What can we discuss while that finishes?",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-selective_cancel-00",
+          "fold": "TRAIN",
+          "turn": 2
+        },
+        {
+          "scene_id": "venus-context-repair-draft-train-selective_cancel-01",
+          "fold": "TRAIN",
+          "turn": 2
+        },
+        {
+          "scene_id": "venus-context-repair-draft-train-selective_cancel-02",
+          "fold": "TRAIN",
+          "turn": 2
+        },
+        {
+          "scene_id": "venus-context-repair-draft-train-selective_cancel-03",
+          "fold": "TRAIN",
+          "turn": 2
+        }
+      ],
+      "payload_sha256": "38cc00a49a9334ea2f83ef6c8d5fdc09657800f448ddedccdae458111236fa6e"
+    },
+    {
+      "id": "7ccea4903cf57444be4bdf01097decdf9b841abb86ed3edea8362be4d2ad64b4-train",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "Ask the worker to calculate paint for four walls in a room 4 metres long, five metres wide and two point four metres high. Apply two coats at ten square metres per litre. Ignore doors and windows, exclude the ceiling, and round litres up to the next whole litre.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-correction-00",
+          "fold": "TRAIN",
+          "turn": 0
+        }
+      ],
+      "payload_sha256": "25ee4603e78067a7de95a87628907c133e5922e57756e08aa9d5d418639c3894"
+    },
+    {
+      "id": "db1958297cdc8e7e145d385e600a6dd3342bbb992378b2034f125f961d183ffe-train",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "Correction: the room is 6 metres long. Replace the earlier request.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-correction-00",
+          "fold": "TRAIN",
+          "turn": 1
+        }
+      ],
+      "payload_sha256": "fdf20bf77d90dd5ce8e73aeafca7a6b3b2f4c41dad5cd5d1d8c65c18ba9c1153"
+    },
+    {
+      "id": "75c213124f069107d2b24f39b9a114960969bc8a1d268e34b52cf532bec121af-dev",
+      "fold": "DEV",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "Have you got the corrected estimate yet?",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261102,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-dev-correction-04",
+          "fold": "DEV",
+          "turn": 2
+        },
+        {
+          "scene_id": "venus-context-repair-draft-dev-correction-05",
+          "fold": "DEV",
+          "turn": 2
+        }
+      ],
+      "payload_sha256": "2e364745ccd903ebc4dec2bb7426b3c01d8aac7478b39598c4a5f315991e67bb"
+    },
+    {
+      "id": "75c213124f069107d2b24f39b9a114960969bc8a1d268e34b52cf532bec121af-train",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "Have you got the corrected estimate yet?",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-correction-00",
+          "fold": "TRAIN",
+          "turn": 2
+        },
+        {
+          "scene_id": "venus-context-repair-draft-train-correction-01",
+          "fold": "TRAIN",
+          "turn": 2
+        },
+        {
+          "scene_id": "venus-context-repair-draft-train-correction-02",
+          "fold": "TRAIN",
+          "turn": 2
+        },
+        {
+          "scene_id": "venus-context-repair-draft-train-correction-03",
+          "fold": "TRAIN",
+          "turn": 2
+        }
+      ],
+      "payload_sha256": "d78312865aec0a3a503ffcfc9afb4f3e4f070b39fa9c48ca8f0f08a3fec27f5d"
+    },
+    {
+      "id": "949c3ea0319071500817399281ebc48e96e58893b9704e80161b486c41492f7c-train",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "Explain three steps for preparing the studio for painting.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-pause_resume-00",
+          "fold": "TRAIN",
+          "turn": 0
+        }
+      ],
+      "payload_sha256": "dfc4f265ea6e75c89fa9abbb7ba0359941d62f45b93448456e6f72747b6393c8"
+    },
+    {
+      "id": "e45410fc37a6a345edda915ebbac13618aec2adbf80a2f63befc8dd829e9e7c5-dev",
+      "fold": "DEV",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "Pause speaking now. Continue listening.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261102,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-dev-pause_resume-04",
+          "fold": "DEV",
+          "turn": 1
+        },
+        {
+          "scene_id": "venus-context-repair-draft-dev-pause_resume-05",
+          "fold": "DEV",
+          "turn": 1
+        }
+      ],
+      "payload_sha256": "72dc1f70da70ab79ff5d3f354f0d43f788fb5f5f925497ee46778703e317f5a3"
+    },
+    {
+      "id": "e45410fc37a6a345edda915ebbac13618aec2adbf80a2f63befc8dd829e9e7c5-train",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "Pause speaking now. Continue listening.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-pause_resume-00",
+          "fold": "TRAIN",
+          "turn": 1
+        },
+        {
+          "scene_id": "venus-context-repair-draft-train-pause_resume-01",
+          "fold": "TRAIN",
+          "turn": 1
+        },
+        {
+          "scene_id": "venus-context-repair-draft-train-pause_resume-02",
+          "fold": "TRAIN",
+          "turn": 1
+        },
+        {
+          "scene_id": "venus-context-repair-draft-train-pause_resume-03",
+          "fold": "TRAIN",
+          "turn": 1
+        }
+      ],
+      "payload_sha256": "6067ee0ee1cf3b534179faaa5e8fae35a24034e887a58a6e687b91b378e51434"
+    },
+    {
+      "id": "0d49a64227bb5a965da082fa279a864b2658f31c7b7277e68bbe95c86e3c66c4-dev",
+      "fold": "DEV",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "I need to move something first.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261102,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-dev-pause_resume-04",
+          "fold": "DEV",
+          "turn": 2
+        },
+        {
+          "scene_id": "venus-context-repair-draft-dev-pause_resume-05",
+          "fold": "DEV",
+          "turn": 2
+        }
+      ],
+      "payload_sha256": "27f4f255c92245e6e2fc8790a9e83fd8b16ea4dd61aa13b050f1d23c1d8fa413"
+    },
+    {
+      "id": "0d49a64227bb5a965da082fa279a864b2658f31c7b7277e68bbe95c86e3c66c4-train",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "I need to move something first.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-pause_resume-00",
+          "fold": "TRAIN",
+          "turn": 2
+        },
+        {
+          "scene_id": "venus-context-repair-draft-train-pause_resume-01",
+          "fold": "TRAIN",
+          "turn": 2
+        },
+        {
+          "scene_id": "venus-context-repair-draft-train-pause_resume-02",
+          "fold": "TRAIN",
+          "turn": 2
+        },
+        {
+          "scene_id": "venus-context-repair-draft-train-pause_resume-03",
+          "fold": "TRAIN",
+          "turn": 2
+        }
+      ],
+      "payload_sha256": "a3dc95d052d58d41d95126802dd5b1d56f5830d9d74caa50109fd7b55979e289"
+    },
+    {
+      "id": "dc9c751e7db9b078934a3a979caa4a18c84794e7c3381b3551e0d2d2f068fba3-dev",
+      "fold": "DEV",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "Continue from where you stopped.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261102,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-dev-pause_resume-04",
+          "fold": "DEV",
+          "turn": 3
+        },
+        {
+          "scene_id": "venus-context-repair-draft-dev-pause_resume-05",
+          "fold": "DEV",
+          "turn": 3
+        }
+      ],
+      "payload_sha256": "6a7e3f3587b1c1af7d8ea7931ec546f7ad4708058c883fe20e91640d090e60e8"
+    },
+    {
+      "id": "dc9c751e7db9b078934a3a979caa4a18c84794e7c3381b3551e0d2d2f068fba3-train",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "Continue from where you stopped.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-pause_resume-00",
+          "fold": "TRAIN",
+          "turn": 3
+        },
+        {
+          "scene_id": "venus-context-repair-draft-train-pause_resume-01",
+          "fold": "TRAIN",
+          "turn": 3
+        },
+        {
+          "scene_id": "venus-context-repair-draft-train-pause_resume-02",
+          "fold": "TRAIN",
+          "turn": 3
+        },
+        {
+          "scene_id": "venus-context-repair-draft-train-pause_resume-03",
+          "fold": "TRAIN",
+          "turn": 3
+        }
+      ],
+      "payload_sha256": "8575f78e8864e009d84c49d6bf9dd1782ea281c57c5172f8efcec8f85990e16b"
+    },
+    {
+      "id": "d4ff9304a2ce446aae643fd99e38076ed6bed5fa79885ae8f24495b2fd651156-train",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "Ask the worker to compare two fictional insulation panels for the room: panel A costs 210 pounds and must stay dry; panel B costs 270 pounds and tolerates damp conditions. The room is occasionally damp. Explain the cost and moisture tradeoff using only those facts.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-result_delivery-00",
+          "fold": "TRAIN",
+          "turn": 0
+        }
+      ],
+      "payload_sha256": "f1c10da45293894b8737ff8f4cf7433675bcfc6091a9d1ef1d27e20fbf42a3ad"
+    },
+    {
+      "id": "0e21d3f58239af8504ed73db7598a95d68d6c37750a382783b35a677bdad48bd-dev",
+      "fold": "DEV",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "While that runs, what is insulation for?",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261102,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-dev-result_delivery-04",
+          "fold": "DEV",
+          "turn": 1
+        },
+        {
+          "scene_id": "venus-context-repair-draft-dev-result_delivery-05",
+          "fold": "DEV",
+          "turn": 1
+        }
+      ],
+      "payload_sha256": "f4126a57b4c04b223e898fd2ab996f8ec8319a0ad56830d9427695a865d27223"
+    },
+    {
+      "id": "0e21d3f58239af8504ed73db7598a95d68d6c37750a382783b35a677bdad48bd-train",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "While that runs, what is insulation for?",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-result_delivery-00",
+          "fold": "TRAIN",
+          "turn": 1
+        },
+        {
+          "scene_id": "venus-context-repair-draft-train-result_delivery-01",
+          "fold": "TRAIN",
+          "turn": 1
+        },
+        {
+          "scene_id": "venus-context-repair-draft-train-result_delivery-02",
+          "fold": "TRAIN",
+          "turn": 1
+        },
+        {
+          "scene_id": "venus-context-repair-draft-train-result_delivery-03",
+          "fold": "TRAIN",
+          "turn": 1
+        }
+      ],
+      "payload_sha256": "b04f65134aab76d9c6edf0d4a802b6d035bb2e18760d8c904360a17b03e3fe5d"
+    },
+    {
+      "id": "771069a71aa34abc7df2cf00b29c2c2a956b3102db13863e6506fb9def133c6d-dev",
+      "fold": "DEV",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "When the comparison is ready, explain its main tradeoff briefly.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261102,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-dev-result_delivery-04",
+          "fold": "DEV",
+          "turn": 2
+        },
+        {
+          "scene_id": "venus-context-repair-draft-dev-result_delivery-05",
+          "fold": "DEV",
+          "turn": 2
+        }
+      ],
+      "payload_sha256": "fd1d6fe48a11bf83a1b9988629a73972e10c08d4869200cc25ee0923be76cdc3"
+    },
+    {
+      "id": "771069a71aa34abc7df2cf00b29c2c2a956b3102db13863e6506fb9def133c6d-train",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "When the comparison is ready, explain its main tradeoff briefly.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-result_delivery-00",
+          "fold": "TRAIN",
+          "turn": 2
+        },
+        {
+          "scene_id": "venus-context-repair-draft-train-result_delivery-01",
+          "fold": "TRAIN",
+          "turn": 2
+        },
+        {
+          "scene_id": "venus-context-repair-draft-train-result_delivery-02",
+          "fold": "TRAIN",
+          "turn": 2
+        },
+        {
+          "scene_id": "venus-context-repair-draft-train-result_delivery-03",
+          "fold": "TRAIN",
+          "turn": 2
+        }
+      ],
+      "payload_sha256": "1c278dee4bd5aa9e4b5dfb5fdb588cd5572357f75d6cef661111c5c82083fd24"
+    },
+    {
+      "id": "0a9c8b9713c216aa517782a838dad1db7fd6e6067531ea27f0d0b7da2595268b-train",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "Keep completely silent until I say amber river. This instruction itself does not release you.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-quiet_scope-01",
+          "fold": "TRAIN",
+          "turn": 0
+        }
+      ],
+      "payload_sha256": "a3e99c61b2aa2223269e70b7f553176d83d4d2b19b3659928c4baab52d192b72"
+    },
+    {
+      "id": "ad34e78f5d587b0dd37c6d0d588864e4b8a9a4ccff61a43ef2c357af3aa35187-train",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "amber river. What does a lid do?",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-quiet_scope-01",
+          "fold": "TRAIN",
+          "turn": 2
+        }
+      ],
+      "payload_sha256": "8d6f1bdc45a99e41e50d4ba0d25ce1e589ef4b580c4e5578b90a39e6212c5e59"
+    },
+    {
+      "id": "01329dd16e54e654dd654d6764957b060f7be41f068ef8e3face4d4913997141-train",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "What is 4 plus two?",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-simple_or_delegate-01",
+          "fold": "TRAIN",
+          "turn": 0
+        }
+      ],
+      "payload_sha256": "ebc4fc29e1ad0df8d90bf306bd7b2768ef9dbafc50065fe48183f780da09789f"
+    },
+    {
+      "id": "ca18f6b9e87f6fa71e30af3eead6e7617e2b4d451c44ebb9e0dae5d957c6f691-train",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "Ask the background reasoner to compare a synthetic loan of 18300 pounds at eight percent nominal annual interest, compounded monthly, over thirty-six, forty-eight and sixty months. Assume fixed rates, equal monthly payments and no fees or early repayment penalties. Compare monthly payments and total interest.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-simple_or_delegate-01",
+          "fold": "TRAIN",
+          "turn": 1
+        }
+      ],
+      "payload_sha256": "9d20bd4fc24a15bff9ea9e8126772c79622c032bad56d8650ae23808a3de10e5"
+    },
+    {
+      "id": "bee6580e775dfd0dc624dd6d17d29b9dc858547000796aae4635978be733fa30-train",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "Ask the worker to compare two synthetic routes to venue 2: rail takes ninety minutes and costs twenty-eight pounds; coach takes one hundred and forty minutes and costs sixteen pounds. Separately compare a vegetarian pasta meal at three pounds per person with soup at two pounds per person for six guests, under a thirty-six pound budget.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-selective_cancel-01",
+          "fold": "TRAIN",
+          "turn": 0
+        }
+      ],
+      "payload_sha256": "b9e5dd85686a506f5106356ccd686fdd498dc0dbc885942a8a584dd94e26f7eb"
+    },
+    {
+      "id": "d4768eaf3f56e38a2e713b172ed2938a90ad94a03b29daa99a577744359adf53-train",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "Ask the worker to calculate paint for four walls in a room 5 metres long, five metres wide and two point four metres high. Apply two coats at ten square metres per litre. Ignore doors and windows, exclude the ceiling, and round litres up to the next whole litre.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-correction-01",
+          "fold": "TRAIN",
+          "turn": 0
+        }
+      ],
+      "payload_sha256": "ff7ac1ed5809a1efa8d4ab08be7257cf1a57facb25bc709d3da2fd8980f6f5d4"
+    },
+    {
+      "id": "e3580877b17fc2c46654324bab85372a4a3d728e15159261bb458611e60dd45a-train",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "Correction: the room is 7 metres long. Replace the earlier request.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-correction-01",
+          "fold": "TRAIN",
+          "turn": 1
+        }
+      ],
+      "payload_sha256": "c7c51e8b8cbde8d949da3977060d9cf46eddca08f02f3333bdac266ecb69d043"
+    },
+    {
+      "id": "bcf8e33224646067a12bce8faabd92f1591f8c83d90131405be8f04b740a91c2-train",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "Explain three steps for preparing the attic for painting.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-pause_resume-01",
+          "fold": "TRAIN",
+          "turn": 0
+        }
+      ],
+      "payload_sha256": "691d875432d9c90ad1702443259569cf038b2f29cf57259f5d09608ea6609c0c"
+    },
+    {
+      "id": "9957c9f3e336cc943a3261aed45ad1a41ece7f018c87558d8e9c9b4f2cdf7e96-train",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "Ask the worker to compare two fictional insulation panels for the room: panel A costs 220 pounds and must stay dry; panel B costs 280 pounds and tolerates damp conditions. The room is occasionally damp. Explain the cost and moisture tradeoff using only those facts.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-result_delivery-01",
+          "fold": "TRAIN",
+          "turn": 0
+        }
+      ],
+      "payload_sha256": "b7b4a41d1ee2965e8cc309fff18bacd59825671acdc270b517e28726b696e5c6"
+    },
+    {
+      "id": "9e476aa226aaa94c47cdfa9f50c7f2e0c37579a39ece82d822bc79918005a67d-train",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "Keep completely silent until I say silver orchard. This instruction itself does not release you.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-quiet_scope-02",
+          "fold": "TRAIN",
+          "turn": 0
+        }
+      ],
+      "payload_sha256": "cbba61c1df43afca447cdad4286e02eabad37e13ee26bc5209520f2667926dac"
+    },
+    {
+      "id": "681c5e37730c03820d7b2eb32f0f97046d4a54ae89365c8e1ef8f83bfc25c79f-train",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "silver orchard. What does a lid do?",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-quiet_scope-02",
+          "fold": "TRAIN",
+          "turn": 2
+        }
+      ],
+      "payload_sha256": "57f6a1d1d2f08d0636214e8b447342cbf57779f73464efef03b0faf310baaccd"
+    },
+    {
+      "id": "87789ca036c0e473a8ba3d358aa7cf43625ca5cf71719da27e198031e49bb0ff-train",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "What is 5 plus two?",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-simple_or_delegate-02",
+          "fold": "TRAIN",
+          "turn": 0
+        }
+      ],
+      "payload_sha256": "1212f336a6680c0a1a7ac32372a30ccccfd0447a7641b97be8abeaad2adea1b3"
+    },
+    {
+      "id": "edc718c8c0ebf0cf34188eaf6c5e342ef69cf2dc5b4d3cbaae85d404066c526d-train",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "Ask the background reasoner to compare a synthetic loan of 19600 pounds at eight percent nominal annual interest, compounded monthly, over thirty-six, forty-eight and sixty months. Assume fixed rates, equal monthly payments and no fees or early repayment penalties. Compare monthly payments and total interest.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-simple_or_delegate-02",
+          "fold": "TRAIN",
+          "turn": 1
+        }
+      ],
+      "payload_sha256": "8119604d6c4c5a2e6db86e19fdd7066f20e8b7cd066cf6ccb3dcd66ab65305b6"
+    },
+    {
+      "id": "db59d10b11bb9b0c713745652a18f91a8f4f5b9b8bb1718a0929b88bbab1964f-train",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "Ask the worker to compare two synthetic routes to venue 3: rail takes ninety minutes and costs twenty-eight pounds; coach takes one hundred and forty minutes and costs sixteen pounds. Separately compare a vegetarian pasta meal at three pounds per person with soup at two pounds per person for six guests, under a thirty-six pound budget.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-selective_cancel-02",
+          "fold": "TRAIN",
+          "turn": 0
+        }
+      ],
+      "payload_sha256": "72bdccfe42df0c9b48167e6fad8b3927ef0d7415a4ef9a37aef2419dd7d5e441"
+    },
+    {
+      "id": "e016915ac0be72002c28b3e6f10f78b059d35ff069eebc5af913aa02c48e434d-train",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "Ask the worker to calculate paint for four walls in a room 6 metres long, five metres wide and two point four metres high. Apply two coats at ten square metres per litre. Ignore doors and windows, exclude the ceiling, and round litres up to the next whole litre.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-correction-02",
+          "fold": "TRAIN",
+          "turn": 0
+        }
+      ],
+      "payload_sha256": "8555dfdb22c961d6a55dd153f181e3615c18727a747fe4713be2a4bf5c95478d"
+    },
+    {
+      "id": "151fcb925687865dbad9886c8d2029cfd80b089df8a93b7cc189f84c8c92c33b-train",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "Correction: the room is 8 metres long. Replace the earlier request.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-correction-02",
+          "fold": "TRAIN",
+          "turn": 1
+        }
+      ],
+      "payload_sha256": "73f4b39c0bab40befa9a266e00c013efd6f2e791781414d6cb376dde6cb45448"
+    },
+    {
+      "id": "1e2c176c23d99e1dcb8ff4af9d490b79f0be1d2aa9b706a9ff5a73c45a445f6b-train",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "Explain three steps for preparing the pantry for painting.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-pause_resume-02",
+          "fold": "TRAIN",
+          "turn": 0
+        }
+      ],
+      "payload_sha256": "8b7cc4b8fa4aed29644723e7c67a7ad2c041a89805aeb4a573da1125b863b322"
+    },
+    {
+      "id": "ae88e52b34086b1fc9a71d6c08e8c4fd7ba977659d1889266dba56e03260d092-train",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "Ask the worker to compare two fictional insulation panels for the room: panel A costs 230 pounds and must stay dry; panel B costs 290 pounds and tolerates damp conditions. The room is occasionally damp. Explain the cost and moisture tradeoff using only those facts.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-result_delivery-02",
+          "fold": "TRAIN",
+          "turn": 0
+        }
+      ],
+      "payload_sha256": "7f39c5f5ed9990f25605d333ed5c6159b954b78d36ddd179a5c10ac74cce1648"
+    },
+    {
+      "id": "0c15f2f051d7294faa363fc781e3f74dc2326c6ffefdc8e880a840f77d660086-train",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "Keep completely silent until I say violet harbour. This instruction itself does not release you.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-quiet_scope-03",
+          "fold": "TRAIN",
+          "turn": 0
+        }
+      ],
+      "payload_sha256": "2bcfd25e10d3b0b4f0d2317bc41a5e7f05f0c3d4dde050367d1280cc9b32c52a"
+    },
+    {
+      "id": "5d3c64bbbf6a8329bdb79766483d2e390cdb75b5b9a4703a93ae76c8b0dff686-train",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "violet harbour. What does a lid do?",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-quiet_scope-03",
+          "fold": "TRAIN",
+          "turn": 2
+        }
+      ],
+      "payload_sha256": "7c979612a0e355bb6c4a85b92a99b39712c00bd19f1f2db019bed1ff158c7c68"
+    },
+    {
+      "id": "b752a2c0c88e2544d2eae7bb6492905da36afa79274afcafdfa68e48adc98e87-train",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "What is 6 plus two?",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-simple_or_delegate-03",
+          "fold": "TRAIN",
+          "turn": 0
+        }
+      ],
+      "payload_sha256": "917d6ec4b3215c6bcb537a47a825c17614bbe1b06571d9fad1e48857781ab187"
+    },
+    {
+      "id": "a349a47f4bf8e9480bd71dfe4699f6174b38e435d09b05aaa1367dccb70c6cea-train",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "Ask the background reasoner to compare a synthetic loan of 20900 pounds at eight percent nominal annual interest, compounded monthly, over thirty-six, forty-eight and sixty months. Assume fixed rates, equal monthly payments and no fees or early repayment penalties. Compare monthly payments and total interest.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-simple_or_delegate-03",
+          "fold": "TRAIN",
+          "turn": 1
+        }
+      ],
+      "payload_sha256": "4bbc48cba790c33b9cedbdd1307ef93d55b3d97d75ad30e20a5ad82215f8864c"
+    },
+    {
+      "id": "2c525775b3f9be65178ee38fa607f6a04724a0284411fd4ab77c20ef7b016198-train",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "Ask the worker to compare two synthetic routes to venue 4: rail takes ninety minutes and costs twenty-eight pounds; coach takes one hundred and forty minutes and costs sixteen pounds. Separately compare a vegetarian pasta meal at three pounds per person with soup at two pounds per person for six guests, under a thirty-six pound budget.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-selective_cancel-03",
+          "fold": "TRAIN",
+          "turn": 0
+        }
+      ],
+      "payload_sha256": "e1d328259283749ca3dddbf33e4f2a8336680c5f8f7e3d1e14131af57fe44313"
+    },
+    {
+      "id": "bffc7984e5a6bdfce9918ac066177d995dd19c206722d73f2ed4af6875442757-train",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "Ask the worker to calculate paint for four walls in a room 7 metres long, five metres wide and two point four metres high. Apply two coats at ten square metres per litre. Ignore doors and windows, exclude the ceiling, and round litres up to the next whole litre.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-correction-03",
+          "fold": "TRAIN",
+          "turn": 0
+        }
+      ],
+      "payload_sha256": "4c2d21e4a99eea710b40e32955dabe2c174c88354e0db5f78ed14c30ff524b27"
+    },
+    {
+      "id": "b41fadbdec7b069ec28c9efb75425fac9b58c7391e03a4b6d43e1802effc3c3c-train",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "Correction: the room is 9 metres long. Replace the earlier request.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-correction-03",
+          "fold": "TRAIN",
+          "turn": 1
+        }
+      ],
+      "payload_sha256": "3a70a2d47b8028b229e28065f5549f89bca8ed978ffb9751f98aad5fe3ef8f1f"
+    },
+    {
+      "id": "35ddfc5d9acbebeb3daeab6a4f065ffa1f7b5981d4d313efbc7a2326c09d398a-train",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "Explain three steps for preparing the garage for painting.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-pause_resume-03",
+          "fold": "TRAIN",
+          "turn": 0
+        }
+      ],
+      "payload_sha256": "0ca034afc6710f068b365eaedda787868f702678615ceb5239985855300e0949"
+    },
+    {
+      "id": "ada6a526c6b319950da6298093ac517a507968b44c1bca607b6c7857b5ee09e5-train",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "Ask the worker to compare two fictional insulation panels for the room: panel A costs 240 pounds and must stay dry; panel B costs 300 pounds and tolerates damp conditions. The room is occasionally damp. Explain the cost and moisture tradeoff using only those facts.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-result_delivery-03",
+          "fold": "TRAIN",
+          "turn": 0
+        }
+      ],
+      "payload_sha256": "f61d44a85071e80e87cb9183b393133f912090179aba8134030008695765acbb"
+    },
+    {
+      "id": "968693af9097166600179536b70b8d669fa54942c795bfd91d1e08591498caf8-dev",
+      "fold": "DEV",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "Keep completely silent until I say copper meadow. This instruction itself does not release you.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261102,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-dev-quiet_scope-04",
+          "fold": "DEV",
+          "turn": 0
+        }
+      ],
+      "payload_sha256": "b48d4a8a8f0619b02e36f97f079ed9ec0b3831e0b1e7e36c9b4e8edb38081062"
+    },
+    {
+      "id": "5f014bac39c99658b9ec77d741ca99aedae00ee7576588c951fd63561ed87a4d-dev",
+      "fold": "DEV",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "copper meadow. What does a lid do?",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261102,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-dev-quiet_scope-04",
+          "fold": "DEV",
+          "turn": 2
+        }
+      ],
+      "payload_sha256": "00857b38fbed8b49ed2e66829238307b9ca4448ae0397f140020199cbdeb5422"
+    },
+    {
+      "id": "c7f7d76660206116255036ad805510f39bfbf3f095af81c652316c1ab5d10a48-dev",
+      "fold": "DEV",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "What is 7 plus two?",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261102,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-dev-simple_or_delegate-04",
+          "fold": "DEV",
+          "turn": 0
+        }
+      ],
+      "payload_sha256": "bd1f8ba2bb0fded0f3cb6c265d81571f7de3858761e88d8d161c5c98e6cdf599"
+    },
+    {
+      "id": "a65679448aa6191eddf7b28f5749ab6827a2a434351789494944cc91d232931a-dev",
+      "fold": "DEV",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "Ask the background reasoner to compare a synthetic loan of 22200 pounds at eight percent nominal annual interest, compounded monthly, over thirty-six, forty-eight and sixty months. Assume fixed rates, equal monthly payments and no fees or early repayment penalties. Compare monthly payments and total interest.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261102,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-dev-simple_or_delegate-04",
+          "fold": "DEV",
+          "turn": 1
+        }
+      ],
+      "payload_sha256": "dff1499289900fd397765cc7e9a7b5bd23f42e58774adfc4daaab3c72b2e4f0c"
+    },
+    {
+      "id": "7bbb2d9c4f259db0bffc27c33c57a5b7b0de0e00f330c0bda4a35adcf399cd32-dev",
+      "fold": "DEV",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "Ask the worker to compare two synthetic routes to venue 5: rail takes ninety minutes and costs twenty-eight pounds; coach takes one hundred and forty minutes and costs sixteen pounds. Separately compare a vegetarian pasta meal at three pounds per person with soup at two pounds per person for six guests, under a thirty-six pound budget.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261102,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-dev-selective_cancel-04",
+          "fold": "DEV",
+          "turn": 0
+        }
+      ],
+      "payload_sha256": "4f81e0749f27595585d014bbd995b30176c696000afb314d79c417ec4354e663"
+    },
+    {
+      "id": "f7b43b1b728f3935f6c431675c6f68413fb76abd12d47bf4047aa229b0e7c16b-dev",
+      "fold": "DEV",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "Ask the worker to calculate paint for four walls in a room 8 metres long, five metres wide and two point four metres high. Apply two coats at ten square metres per litre. Ignore doors and windows, exclude the ceiling, and round litres up to the next whole litre.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261102,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-dev-correction-04",
+          "fold": "DEV",
+          "turn": 0
+        }
+      ],
+      "payload_sha256": "efe8ef64d2900d57c65a71c0232a481de331c101e952f5c9ee41cf6616cd65e8"
+    },
+    {
+      "id": "adf4ec9724e9bf5d56b1ee0f366d51777ee24c43602d5dadd38a829588cc561f-dev",
+      "fold": "DEV",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "Correction: the room is 10 metres long. Replace the earlier request.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261102,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-dev-correction-04",
+          "fold": "DEV",
+          "turn": 1
+        }
+      ],
+      "payload_sha256": "93a41fa3dedb420b185ca71aa643e82322b7bec0655a5449aac569c6b8af0ace"
+    },
+    {
+      "id": "512a17ca3d2ff27468fc43c46cfea8531561c86786cd6f3d90962d65e146c802-dev",
+      "fold": "DEV",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "Explain three steps for preparing the workshop for painting.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261102,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-dev-pause_resume-04",
+          "fold": "DEV",
+          "turn": 0
+        }
+      ],
+      "payload_sha256": "6b4a79190141ffc10404d11fee7851df73e3e19ae04e311eaca9e0edf72dfa61"
+    },
+    {
+      "id": "d85db8bd6deffef2179211e2f49f5ddb9593b544f0afd18a5d6ccd85a7d997ca-dev",
+      "fold": "DEV",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "Ask the worker to compare two fictional insulation panels for the room: panel A costs 250 pounds and must stay dry; panel B costs 310 pounds and tolerates damp conditions. The room is occasionally damp. Explain the cost and moisture tradeoff using only those facts.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261102,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-dev-result_delivery-04",
+          "fold": "DEV",
+          "turn": 0
+        }
+      ],
+      "payload_sha256": "c9852f7c0db30b513ad3a9e3751753d0aed6439037430f988fbc84340fd88c10"
+    },
+    {
+      "id": "08c493145104690ce2b230128c15544db2597cf446af2c17f8f1096eaa567ac7-dev",
+      "fold": "DEV",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "Keep completely silent until I say indigo lantern. This instruction itself does not release you.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261102,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-dev-quiet_scope-05",
+          "fold": "DEV",
+          "turn": 0
+        }
+      ],
+      "payload_sha256": "30d0d280989e774f64b0e180c7fb50db2b719133222f7c1b1e406426d58ff7c1"
+    },
+    {
+      "id": "309eb2c857cf51e6001f36067a694938db2256053ebfe2a366bbfb14e001bf51-dev",
+      "fold": "DEV",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "indigo lantern. What does a lid do?",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261102,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-dev-quiet_scope-05",
+          "fold": "DEV",
+          "turn": 2
+        }
+      ],
+      "payload_sha256": "daa227242f6d52faa207ff3cebd53af9a7e2e1bda9e7889ca9b877785e333956"
+    },
+    {
+      "id": "955280dedea698075640f9f30598bd6a3cc191fed8caae68c30d19008b8f0204-dev",
+      "fold": "DEV",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "What is 8 plus two?",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261102,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-dev-simple_or_delegate-05",
+          "fold": "DEV",
+          "turn": 0
+        }
+      ],
+      "payload_sha256": "7812ec7e8b0d81c71e5e8305c926d0dbf6d25de02e5a53af678519e5191eb89e"
+    },
+    {
+      "id": "4ff367858fcac3a6f59906c2eef9996bc8906af2d8d2d69c7fe386c2faec8873-dev",
+      "fold": "DEV",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "Ask the background reasoner to compare a synthetic loan of 23500 pounds at eight percent nominal annual interest, compounded monthly, over thirty-six, forty-eight and sixty months. Assume fixed rates, equal monthly payments and no fees or early repayment penalties. Compare monthly payments and total interest.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261102,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-dev-simple_or_delegate-05",
+          "fold": "DEV",
+          "turn": 1
+        }
+      ],
+      "payload_sha256": "afb225703195528439d3c23ff03dfc35bd1787598fb7a4d3754b59c6091356b9"
+    },
+    {
+      "id": "5b20a5547c25ffeea2785ceed2db3d0e69083b8cfecf3f678f1250cb75fe802a-dev",
+      "fold": "DEV",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "Ask the worker to compare two synthetic routes to venue 6: rail takes ninety minutes and costs twenty-eight pounds; coach takes one hundred and forty minutes and costs sixteen pounds. Separately compare a vegetarian pasta meal at three pounds per person with soup at two pounds per person for six guests, under a thirty-six pound budget.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261102,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-dev-selective_cancel-05",
+          "fold": "DEV",
+          "turn": 0
+        }
+      ],
+      "payload_sha256": "f1e43959e999a5b1d92dd8d704d5fdbc8a66465d82542e9277d258a9be071fb9"
+    },
+    {
+      "id": "0d24b56f96c07fd9a2a2b4c649904ba96e6b04ded6b062524d6226a1c7a420b8-dev",
+      "fold": "DEV",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "Ask the worker to calculate paint for four walls in a room 9 metres long, five metres wide and two point four metres high. Apply two coats at ten square metres per litre. Ignore doors and windows, exclude the ceiling, and round litres up to the next whole litre.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261102,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-dev-correction-05",
+          "fold": "DEV",
+          "turn": 0
+        }
+      ],
+      "payload_sha256": "8e8fb5f1c95011cc598c391080b6e840d06c964d96d27276fed5215517f63b88"
+    },
+    {
+      "id": "0409b75ab635fbe4580a1bafe8b6c503a3851f689b4bb08fad10c96a2e613cc4-dev",
+      "fold": "DEV",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "Correction: the room is 11 metres long. Replace the earlier request.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261102,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-dev-correction-05",
+          "fold": "DEV",
+          "turn": 1
+        }
+      ],
+      "payload_sha256": "a488dabbff6eed10491fadc422ec9fbb5b085cfb64bfe8cf51d709962f68ec48"
+    },
+    {
+      "id": "5a4cb5c4f40c52f398d8b70509cd9b3a9cfb8b679b8d2d379b93a9324e263955-dev",
+      "fold": "DEV",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "Explain three steps for preparing the cellar for painting.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261102,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-dev-pause_resume-05",
+          "fold": "DEV",
+          "turn": 0
+        }
+      ],
+      "payload_sha256": "860ad2de7813e4fd5c528f76c6ed9fc441a82a89f1edaea81a12af8e3927b207"
+    },
+    {
+      "id": "2a3dddcaec9f9e8fb062291f7153a958bf83cab228da6dd63df130e607678e20-dev",
+      "fold": "DEV",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "voice_profile": "british-george",
+      "body": {
+        "text": "Ask the worker to compare two fictional insulation panels for the room: panel A costs 260 pounds and must stay dry; panel B costs 320 pounds and tolerates damp conditions. The room is occasionally damp. Explain the cost and moisture tradeoff using only those facts.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261102,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-dev-result_delivery-05",
+          "fold": "DEV",
+          "turn": 0
+        }
+      ],
+      "payload_sha256": "f13854a6df5be38d2d3b30a18f0e1ac91516a4d1f019c2f1b8093c6bd54704ed"
+    }
+  ],
+  "request_count": 72,
+  "characters": 9473,
+  "conservative_usd_per_1000_characters": 0.5,
+  "conservative_cost_upper_usd": 4.7365,
+  "published_v3_usd_per_1000_characters": 0.08,
+  "pricing_source": "https://elevenlabs.io/pricing/api",
+  "pricing_verified_date": "2026-11-01",
+  "authority": "decisions/0003-provenance-classes.md Amendment A",
+  "voice_preferences": "docs/NATIVE-OWNER-VOICE-FEEDBACK-2026-10-27.json",
+  "no_owner_audio": true,
+  "no_scoring_answers": true,
+  "no_automatic_retries": true,
+  "external_calls": 0,
+  "training_approved": false
+}

@@ -1,0 +1,28 @@
+{
+  "schema": "dl-context-repair-source-speech-proposal-v1",
+  "status": "PROPOSED_NOT_AUTHORIZED_NOT_SENT",
+  "payload_path": "docs/NATIVE-VENUS-CONTEXT-REPAIR-SPEECH-PAYLOAD-2026-11-01.json",
+  "payload_sha256": "83e857f14a04fc18501ad048d2706c5e8655ddbb5143cdeed9c3e080ec4a15a4",
+  "maximum_paid_calls": 72,
+  "maximum_additional_api_usd": 5,
+  "unchanged_phase_cap_usd": 70,
+  "conservative_full_cohort_upper_usd": 4.7365,
+  "voice": "Existing owner-preferred British George",
+  "model": "eleven_v3",
+  "purpose": "Source user audio for all36 newly authored scenarios, not assistant acoustic adaptation or native qualification.",
+  "no_purchase": true,
+  "new_gpu_seconds": 0,
+  "new_optimizer_updates": 0,
+  "automatic_retries": 0,
+  "owner_conversations": false,
+  "credentials_transferred": false,
+  "scope_reason": "Previous voice API allowance almost consumed and corrected21/backend63 call allowance exhausted; unused compute or dollars do not create a new source-generation grant.",
+  "after_approval": [
+    "Record exact approval and payload hash before calls.",
+    "Check existing account/model/voice access and whole-cohort quota before any paid call; use existing Mac-only credential, never log it.",
+    "Generate all72 once into a new versioned directory with durable pre-attempt ledger and source hashes. No automatic retry or passing-subset acceptance.",
+    "Retain original peaks/words/folds; independently audit all72 before new teacher/native caches.",
+    "Prepare actual teacher histories and complete-epoch recipe with full restore/evaluation reserve before requesting an optimizer scope."
+  ],
+  "training_approval_not_requested_by_this_proposal": true
+}

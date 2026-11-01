@@ -1,0 +1,1120 @@
+{
+  "schema": "dl-native-context-repair-authoring-v2",
+  "status": "DRAFT_TEXT_ONLY_NOT_TRAINING_READY",
+  "counts": {
+    "TRAIN": 24,
+    "DEV": 12
+  },
+  "purpose": "Fill diagnosed coverage gaps without copying backend regression audio, transcripts or outputs.",
+  "scenes": [
+    {
+      "id": "venus-context-repair-draft-train-quiet_scope-00",
+      "fold": "TRAIN",
+      "family": "quiet_scope",
+      "user_turns": [
+        "Keep completely silent until I say cobalt sunrise. This instruction itself does not release you.",
+        "I am still deciding. Please keep waiting.",
+        "cobalt sunrise. What does a lid do?"
+      ],
+      "teacher_requirements": [
+        "No acknowledgement, filler or request for the cue before release.",
+        "After release answer the simple question directly."
+      ],
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "audio": null,
+      "teacher_targets": null,
+      "training_approved": false
+    },
+    {
+      "id": "venus-context-repair-draft-train-simple_or_delegate-00",
+      "fold": "TRAIN",
+      "family": "simple_or_delegate",
+      "user_turns": [
+        "What is 3 plus two?",
+        "Ask the background reasoner to compare a synthetic loan of 17000 pounds at eight percent nominal annual interest, compounded monthly, over thirty-six, forty-eight and sixty months. Assume fixed rates, equal monthly payments and no fees or early repayment penalties. Compare monthly payments and total interest."
+      ],
+      "teacher_requirements": [
+        "Answer simple addition directly.",
+        "Delegate the full harder task with numbers, assumptions and requested comparison; do not fabricate a result."
+      ],
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "audio": null,
+      "teacher_targets": null,
+      "training_approved": false,
+      "worker_contract": {
+        "operation": "amortization_comparison",
+        "principal": 17000,
+        "nominal_annual_rate": 0.08,
+        "months": [
+          36,
+          48,
+          60
+        ],
+        "fees": 0,
+        "early_repayment_penalty": 0,
+        "currency": "GBP",
+        "synthetic": true
+      }
+    },
+    {
+      "id": "venus-context-repair-draft-train-selective_cancel-00",
+      "fold": "TRAIN",
+      "family": "selective_cancel",
+      "user_turns": [
+        "Ask the worker to compare two synthetic routes to venue 1: rail takes ninety minutes and costs twenty-eight pounds; coach takes one hundred and forty minutes and costs sixteen pounds. Separately compare a vegetarian pasta meal at three pounds per person with soup at two pounds per person for six guests, under a thirty-six pound budget.",
+        "Cancel only the travel comparison. Keep the meal-plan work going.",
+        "What can we discuss while that finishes?"
+      ],
+      "teacher_requirements": [
+        "Two distinct task identities.",
+        "Cancel only travel, confirm after actual cancellation receipt.",
+        "Keep listening and converse while meal planning remains pending. Never deliver cancelled travel results."
+      ],
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "audio": null,
+      "teacher_targets": null,
+      "training_approved": false,
+      "worker_contract": {
+        "jobs": [
+          "travel",
+          "meal"
+        ],
+        "travel": {
+          "rail": {
+            "minutes": 90,
+            "GBP": 28
+          },
+          "coach": {
+            "minutes": 140,
+            "GBP": 16
+          }
+        },
+        "meal": {
+          "guests": 6,
+          "budget_GBP": 36,
+          "vegetarian": true,
+          "per_person_GBP": {
+            "pasta": 3,
+            "soup": 2
+          }
+        },
+        "cancel_only": "travel",
+        "retain": "meal",
+        "synthetic": true
+      }
+    },
+    {
+      "id": "venus-context-repair-draft-train-correction-00",
+      "fold": "TRAIN",
+      "family": "correction",
+      "user_turns": [
+        "Ask the worker to calculate paint for four walls in a room 4 metres long, five metres wide and two point four metres high. Apply two coats at ten square metres per litre. Ignore doors and windows, exclude the ceiling, and round litres up to the next whole litre.",
+        "Correction: the room is 6 metres long. Replace the earlier request.",
+        "Have you got the corrected estimate yet?"
+      ],
+      "teacher_requirements": [
+        "Delegate complete original request.",
+        "Supersede old revision and preserve all unchanged constraints.",
+        "Only the current revision may be spoken; admit still pending if no result."
+      ],
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "audio": null,
+      "teacher_targets": null,
+      "training_approved": false,
+      "worker_contract": {
+        "operation": "paint_litres",
+        "length": 4,
+        "revised_length": 6,
+        "width": 5,
+        "height": 2.4,
+        "coats": 2,
+        "coverage_m2_per_litre": 10,
+        "round": "ceil",
+        "exclude_ceiling": true,
+        "subtract_openings": false,
+        "synthetic": true
+      }
+    },
+    {
+      "id": "venus-context-repair-draft-train-pause_resume-00",
+      "fold": "TRAIN",
+      "family": "pause_resume",
+      "user_turns": [
+        "Explain three steps for preparing the studio for painting.",
+        "Pause speaking now. Continue listening.",
+        "I need to move something first.",
+        "Continue from where you stopped."
+      ],
+      "teacher_requirements": [
+        "Pause immediately without another spoken acknowledgement.",
+        "Retain progress through an unrelated user turn.",
+        "Resume remaining explanation without restarting."
+      ],
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "audio": null,
+      "teacher_targets": null,
+      "training_approved": false
+    },
+    {
+      "id": "venus-context-repair-draft-train-result_delivery-00",
+      "fold": "TRAIN",
+      "family": "result_delivery",
+      "user_turns": [
+        "Ask the worker to compare two fictional insulation panels for the room: panel A costs 210 pounds and must stay dry; panel B costs 270 pounds and tolerates damp conditions. The room is occasionally damp. Explain the cost and moisture tradeoff using only those facts.",
+        "While that runs, what is insulation for?",
+        "When the comparison is ready, explain its main tradeoff briefly."
+      ],
+      "teacher_requirements": [
+        "Direct basic answer while a distinct harder task remains pending.",
+        "Use an actual matching backend result, not a guessed comparison.",
+        "Summarize faithfully in natural speech; never read task markup or receipts aloud."
+      ],
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "audio": null,
+      "teacher_targets": null,
+      "training_approved": false,
+      "worker_contract": {
+        "operation": "given_fact_comparison",
+        "panel_A_GBP": 210,
+        "panel_B_GBP": 270,
+        "A_must_stay_dry": true,
+        "B_damp_tolerant": true,
+        "room_occasionally_damp": true,
+        "synthetic": true
+      }
+    },
+    {
+      "id": "venus-context-repair-draft-train-quiet_scope-01",
+      "fold": "TRAIN",
+      "family": "quiet_scope",
+      "user_turns": [
+        "Keep completely silent until I say amber river. This instruction itself does not release you.",
+        "I am still deciding. Please keep waiting.",
+        "amber river. What does a lid do?"
+      ],
+      "teacher_requirements": [
+        "No acknowledgement, filler or request for the cue before release.",
+        "After release answer the simple question directly."
+      ],
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "audio": null,
+      "teacher_targets": null,
+      "training_approved": false
+    },
+    {
+      "id": "venus-context-repair-draft-train-simple_or_delegate-01",
+      "fold": "TRAIN",
+      "family": "simple_or_delegate",
+      "user_turns": [
+        "What is 4 plus two?",
+        "Ask the background reasoner to compare a synthetic loan of 18300 pounds at eight percent nominal annual interest, compounded monthly, over thirty-six, forty-eight and sixty months. Assume fixed rates, equal monthly payments and no fees or early repayment penalties. Compare monthly payments and total interest."
+      ],
+      "teacher_requirements": [
+        "Answer simple addition directly.",
+        "Delegate the full harder task with numbers, assumptions and requested comparison; do not fabricate a result."
+      ],
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "audio": null,
+      "teacher_targets": null,
+      "training_approved": false,
+      "worker_contract": {
+        "operation": "amortization_comparison",
+        "principal": 18300,
+        "nominal_annual_rate": 0.08,
+        "months": [
+          36,
+          48,
+          60
+        ],
+        "fees": 0,
+        "early_repayment_penalty": 0,
+        "currency": "GBP",
+        "synthetic": true
+      }
+    },
+    {
+      "id": "venus-context-repair-draft-train-selective_cancel-01",
+      "fold": "TRAIN",
+      "family": "selective_cancel",
+      "user_turns": [
+        "Ask the worker to compare two synthetic routes to venue 2: rail takes ninety minutes and costs twenty-eight pounds; coach takes one hundred and forty minutes and costs sixteen pounds. Separately compare a vegetarian pasta meal at three pounds per person with soup at two pounds per person for six guests, under a thirty-six pound budget.",
+        "Cancel only the travel comparison. Keep the meal-plan work going.",
+        "What can we discuss while that finishes?"
+      ],
+      "teacher_requirements": [
+        "Two distinct task identities.",
+        "Cancel only travel, confirm after actual cancellation receipt.",
+        "Keep listening and converse while meal planning remains pending. Never deliver cancelled travel results."
+      ],
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "audio": null,
+      "teacher_targets": null,
+      "training_approved": false,
+      "worker_contract": {
+        "jobs": [
+          "travel",
+          "meal"
+        ],
+        "travel": {
+          "rail": {
+            "minutes": 90,
+            "GBP": 28
+          },
+          "coach": {
+            "minutes": 140,
+            "GBP": 16
+          }
+        },
+        "meal": {
+          "guests": 6,
+          "budget_GBP": 36,
+          "vegetarian": true,
+          "per_person_GBP": {
+            "pasta": 3,
+            "soup": 2
+          }
+        },
+        "cancel_only": "travel",
+        "retain": "meal",
+        "synthetic": true
+      }
+    },
+    {
+      "id": "venus-context-repair-draft-train-correction-01",
+      "fold": "TRAIN",
+      "family": "correction",
+      "user_turns": [
+        "Ask the worker to calculate paint for four walls in a room 5 metres long, five metres wide and two point four metres high. Apply two coats at ten square metres per litre. Ignore doors and windows, exclude the ceiling, and round litres up to the next whole litre.",
+        "Correction: the room is 7 metres long. Replace the earlier request.",
+        "Have you got the corrected estimate yet?"
+      ],
+      "teacher_requirements": [
+        "Delegate complete original request.",
+        "Supersede old revision and preserve all unchanged constraints.",
+        "Only the current revision may be spoken; admit still pending if no result."
+      ],
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "audio": null,
+      "teacher_targets": null,
+      "training_approved": false,
+      "worker_contract": {
+        "operation": "paint_litres",
+        "length": 5,
+        "revised_length": 7,
+        "width": 5,
+        "height": 2.4,
+        "coats": 2,
+        "coverage_m2_per_litre": 10,
+        "round": "ceil",
+        "exclude_ceiling": true,
+        "subtract_openings": false,
+        "synthetic": true
+      }
+    },
+    {
+      "id": "venus-context-repair-draft-train-pause_resume-01",
+      "fold": "TRAIN",
+      "family": "pause_resume",
+      "user_turns": [
+        "Explain three steps for preparing the attic for painting.",
+        "Pause speaking now. Continue listening.",
+        "I need to move something first.",
+        "Continue from where you stopped."
+      ],
+      "teacher_requirements": [
+        "Pause immediately without another spoken acknowledgement.",
+        "Retain progress through an unrelated user turn.",
+        "Resume remaining explanation without restarting."
+      ],
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "audio": null,
+      "teacher_targets": null,
+      "training_approved": false
+    },
+    {
+      "id": "venus-context-repair-draft-train-result_delivery-01",
+      "fold": "TRAIN",
+      "family": "result_delivery",
+      "user_turns": [
+        "Ask the worker to compare two fictional insulation panels for the room: panel A costs 220 pounds and must stay dry; panel B costs 280 pounds and tolerates damp conditions. The room is occasionally damp. Explain the cost and moisture tradeoff using only those facts.",
+        "While that runs, what is insulation for?",
+        "When the comparison is ready, explain its main tradeoff briefly."
+      ],
+      "teacher_requirements": [
+        "Direct basic answer while a distinct harder task remains pending.",
+        "Use an actual matching backend result, not a guessed comparison.",
+        "Summarize faithfully in natural speech; never read task markup or receipts aloud."
+      ],
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "audio": null,
+      "teacher_targets": null,
+      "training_approved": false,
+      "worker_contract": {
+        "operation": "given_fact_comparison",
+        "panel_A_GBP": 220,
+        "panel_B_GBP": 280,
+        "A_must_stay_dry": true,
+        "B_damp_tolerant": true,
+        "room_occasionally_damp": true,
+        "synthetic": true
+      }
+    },
+    {
+      "id": "venus-context-repair-draft-train-quiet_scope-02",
+      "fold": "TRAIN",
+      "family": "quiet_scope",
+      "user_turns": [
+        "Keep completely silent until I say silver orchard. This instruction itself does not release you.",
+        "I am still deciding. Please keep waiting.",
+        "silver orchard. What does a lid do?"
+      ],
+      "teacher_requirements": [
+        "No acknowledgement, filler or request for the cue before release.",
+        "After release answer the simple question directly."
+      ],
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "audio": null,
+      "teacher_targets": null,
+      "training_approved": false
+    },
+    {
+      "id": "venus-context-repair-draft-train-simple_or_delegate-02",
+      "fold": "TRAIN",
+      "family": "simple_or_delegate",
+      "user_turns": [
+        "What is 5 plus two?",
+        "Ask the background reasoner to compare a synthetic loan of 19600 pounds at eight percent nominal annual interest, compounded monthly, over thirty-six, forty-eight and sixty months. Assume fixed rates, equal monthly payments and no fees or early repayment penalties. Compare monthly payments and total interest."
+      ],
+      "teacher_requirements": [
+        "Answer simple addition directly.",
+        "Delegate the full harder task with numbers, assumptions and requested comparison; do not fabricate a result."
+      ],
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "audio": null,
+      "teacher_targets": null,
+      "training_approved": false,
+      "worker_contract": {
+        "operation": "amortization_comparison",
+        "principal": 19600,
+        "nominal_annual_rate": 0.08,
+        "months": [
+          36,
+          48,
+          60
+        ],
+        "fees": 0,
+        "early_repayment_penalty": 0,
+        "currency": "GBP",
+        "synthetic": true
+      }
+    },
+    {
+      "id": "venus-context-repair-draft-train-selective_cancel-02",
+      "fold": "TRAIN",
+      "family": "selective_cancel",
+      "user_turns": [
+        "Ask the worker to compare two synthetic routes to venue 3: rail takes ninety minutes and costs twenty-eight pounds; coach takes one hundred and forty minutes and costs sixteen pounds. Separately compare a vegetarian pasta meal at three pounds per person with soup at two pounds per person for six guests, under a thirty-six pound budget.",
+        "Cancel only the travel comparison. Keep the meal-plan work going.",
+        "What can we discuss while that finishes?"
+      ],
+      "teacher_requirements": [
+        "Two distinct task identities.",
+        "Cancel only travel, confirm after actual cancellation receipt.",
+        "Keep listening and converse while meal planning remains pending. Never deliver cancelled travel results."
+      ],
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "audio": null,
+      "teacher_targets": null,
+      "training_approved": false,
+      "worker_contract": {
+        "jobs": [
+          "travel",
+          "meal"
+        ],
+        "travel": {
+          "rail": {
+            "minutes": 90,
+            "GBP": 28
+          },
+          "coach": {
+            "minutes": 140,
+            "GBP": 16
+          }
+        },
+        "meal": {
+          "guests": 6,
+          "budget_GBP": 36,
+          "vegetarian": true,
+          "per_person_GBP": {
+            "pasta": 3,
+            "soup": 2
+          }
+        },
+        "cancel_only": "travel",
+        "retain": "meal",
+        "synthetic": true
+      }
+    },
+    {
+      "id": "venus-context-repair-draft-train-correction-02",
+      "fold": "TRAIN",
+      "family": "correction",
+      "user_turns": [
+        "Ask the worker to calculate paint for four walls in a room 6 metres long, five metres wide and two point four metres high. Apply two coats at ten square metres per litre. Ignore doors and windows, exclude the ceiling, and round litres up to the next whole litre.",
+        "Correction: the room is 8 metres long. Replace the earlier request.",
+        "Have you got the corrected estimate yet?"
+      ],
+      "teacher_requirements": [
+        "Delegate complete original request.",
+        "Supersede old revision and preserve all unchanged constraints.",
+        "Only the current revision may be spoken; admit still pending if no result."
+      ],
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "audio": null,
+      "teacher_targets": null,
+      "training_approved": false,
+      "worker_contract": {
+        "operation": "paint_litres",
+        "length": 6,
+        "revised_length": 8,
+        "width": 5,
+        "height": 2.4,
+        "coats": 2,
+        "coverage_m2_per_litre": 10,
+        "round": "ceil",
+        "exclude_ceiling": true,
+        "subtract_openings": false,
+        "synthetic": true
+      }
+    },
+    {
+      "id": "venus-context-repair-draft-train-pause_resume-02",
+      "fold": "TRAIN",
+      "family": "pause_resume",
+      "user_turns": [
+        "Explain three steps for preparing the pantry for painting.",
+        "Pause speaking now. Continue listening.",
+        "I need to move something first.",
+        "Continue from where you stopped."
+      ],
+      "teacher_requirements": [
+        "Pause immediately without another spoken acknowledgement.",
+        "Retain progress through an unrelated user turn.",
+        "Resume remaining explanation without restarting."
+      ],
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "audio": null,
+      "teacher_targets": null,
+      "training_approved": false
+    },
+    {
+      "id": "venus-context-repair-draft-train-result_delivery-02",
+      "fold": "TRAIN",
+      "family": "result_delivery",
+      "user_turns": [
+        "Ask the worker to compare two fictional insulation panels for the room: panel A costs 230 pounds and must stay dry; panel B costs 290 pounds and tolerates damp conditions. The room is occasionally damp. Explain the cost and moisture tradeoff using only those facts.",
+        "While that runs, what is insulation for?",
+        "When the comparison is ready, explain its main tradeoff briefly."
+      ],
+      "teacher_requirements": [
+        "Direct basic answer while a distinct harder task remains pending.",
+        "Use an actual matching backend result, not a guessed comparison.",
+        "Summarize faithfully in natural speech; never read task markup or receipts aloud."
+      ],
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "audio": null,
+      "teacher_targets": null,
+      "training_approved": false,
+      "worker_contract": {
+        "operation": "given_fact_comparison",
+        "panel_A_GBP": 230,
+        "panel_B_GBP": 290,
+        "A_must_stay_dry": true,
+        "B_damp_tolerant": true,
+        "room_occasionally_damp": true,
+        "synthetic": true
+      }
+    },
+    {
+      "id": "venus-context-repair-draft-train-quiet_scope-03",
+      "fold": "TRAIN",
+      "family": "quiet_scope",
+      "user_turns": [
+        "Keep completely silent until I say violet harbour. This instruction itself does not release you.",
+        "I am still deciding. Please keep waiting.",
+        "violet harbour. What does a lid do?"
+      ],
+      "teacher_requirements": [
+        "No acknowledgement, filler or request for the cue before release.",
+        "After release answer the simple question directly."
+      ],
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "audio": null,
+      "teacher_targets": null,
+      "training_approved": false
+    },
+    {
+      "id": "venus-context-repair-draft-train-simple_or_delegate-03",
+      "fold": "TRAIN",
+      "family": "simple_or_delegate",
+      "user_turns": [
+        "What is 6 plus two?",
+        "Ask the background reasoner to compare a synthetic loan of 20900 pounds at eight percent nominal annual interest, compounded monthly, over thirty-six, forty-eight and sixty months. Assume fixed rates, equal monthly payments and no fees or early repayment penalties. Compare monthly payments and total interest."
+      ],
+      "teacher_requirements": [
+        "Answer simple addition directly.",
+        "Delegate the full harder task with numbers, assumptions and requested comparison; do not fabricate a result."
+      ],
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "audio": null,
+      "teacher_targets": null,
+      "training_approved": false,
+      "worker_contract": {
+        "operation": "amortization_comparison",
+        "principal": 20900,
+        "nominal_annual_rate": 0.08,
+        "months": [
+          36,
+          48,
+          60
+        ],
+        "fees": 0,
+        "early_repayment_penalty": 0,
+        "currency": "GBP",
+        "synthetic": true
+      }
+    },
+    {
+      "id": "venus-context-repair-draft-train-selective_cancel-03",
+      "fold": "TRAIN",
+      "family": "selective_cancel",
+      "user_turns": [
+        "Ask the worker to compare two synthetic routes to venue 4: rail takes ninety minutes and costs twenty-eight pounds; coach takes one hundred and forty minutes and costs sixteen pounds. Separately compare a vegetarian pasta meal at three pounds per person with soup at two pounds per person for six guests, under a thirty-six pound budget.",
+        "Cancel only the travel comparison. Keep the meal-plan work going.",
+        "What can we discuss while that finishes?"
+      ],
+      "teacher_requirements": [
+        "Two distinct task identities.",
+        "Cancel only travel, confirm after actual cancellation receipt.",
+        "Keep listening and converse while meal planning remains pending. Never deliver cancelled travel results."
+      ],
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "audio": null,
+      "teacher_targets": null,
+      "training_approved": false,
+      "worker_contract": {
+        "jobs": [
+          "travel",
+          "meal"
+        ],
+        "travel": {
+          "rail": {
+            "minutes": 90,
+            "GBP": 28
+          },
+          "coach": {
+            "minutes": 140,
+            "GBP": 16
+          }
+        },
+        "meal": {
+          "guests": 6,
+          "budget_GBP": 36,
+          "vegetarian": true,
+          "per_person_GBP": {
+            "pasta": 3,
+            "soup": 2
+          }
+        },
+        "cancel_only": "travel",
+        "retain": "meal",
+        "synthetic": true
+      }
+    },
+    {
+      "id": "venus-context-repair-draft-train-correction-03",
+      "fold": "TRAIN",
+      "family": "correction",
+      "user_turns": [
+        "Ask the worker to calculate paint for four walls in a room 7 metres long, five metres wide and two point four metres high. Apply two coats at ten square metres per litre. Ignore doors and windows, exclude the ceiling, and round litres up to the next whole litre.",
+        "Correction: the room is 9 metres long. Replace the earlier request.",
+        "Have you got the corrected estimate yet?"
+      ],
+      "teacher_requirements": [
+        "Delegate complete original request.",
+        "Supersede old revision and preserve all unchanged constraints.",
+        "Only the current revision may be spoken; admit still pending if no result."
+      ],
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "audio": null,
+      "teacher_targets": null,
+      "training_approved": false,
+      "worker_contract": {
+        "operation": "paint_litres",
+        "length": 7,
+        "revised_length": 9,
+        "width": 5,
+        "height": 2.4,
+        "coats": 2,
+        "coverage_m2_per_litre": 10,
+        "round": "ceil",
+        "exclude_ceiling": true,
+        "subtract_openings": false,
+        "synthetic": true
+      }
+    },
+    {
+      "id": "venus-context-repair-draft-train-pause_resume-03",
+      "fold": "TRAIN",
+      "family": "pause_resume",
+      "user_turns": [
+        "Explain three steps for preparing the garage for painting.",
+        "Pause speaking now. Continue listening.",
+        "I need to move something first.",
+        "Continue from where you stopped."
+      ],
+      "teacher_requirements": [
+        "Pause immediately without another spoken acknowledgement.",
+        "Retain progress through an unrelated user turn.",
+        "Resume remaining explanation without restarting."
+      ],
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "audio": null,
+      "teacher_targets": null,
+      "training_approved": false
+    },
+    {
+      "id": "venus-context-repair-draft-train-result_delivery-03",
+      "fold": "TRAIN",
+      "family": "result_delivery",
+      "user_turns": [
+        "Ask the worker to compare two fictional insulation panels for the room: panel A costs 240 pounds and must stay dry; panel B costs 300 pounds and tolerates damp conditions. The room is occasionally damp. Explain the cost and moisture tradeoff using only those facts.",
+        "While that runs, what is insulation for?",
+        "When the comparison is ready, explain its main tradeoff briefly."
+      ],
+      "teacher_requirements": [
+        "Direct basic answer while a distinct harder task remains pending.",
+        "Use an actual matching backend result, not a guessed comparison.",
+        "Summarize faithfully in natural speech; never read task markup or receipts aloud."
+      ],
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "audio": null,
+      "teacher_targets": null,
+      "training_approved": false,
+      "worker_contract": {
+        "operation": "given_fact_comparison",
+        "panel_A_GBP": 240,
+        "panel_B_GBP": 300,
+        "A_must_stay_dry": true,
+        "B_damp_tolerant": true,
+        "room_occasionally_damp": true,
+        "synthetic": true
+      }
+    },
+    {
+      "id": "venus-context-repair-draft-dev-quiet_scope-04",
+      "fold": "DEV",
+      "family": "quiet_scope",
+      "user_turns": [
+        "Keep completely silent until I say copper meadow. This instruction itself does not release you.",
+        "I am still deciding. Please keep waiting.",
+        "copper meadow. What does a lid do?"
+      ],
+      "teacher_requirements": [
+        "No acknowledgement, filler or request for the cue before release.",
+        "After release answer the simple question directly."
+      ],
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "audio": null,
+      "teacher_targets": null,
+      "training_approved": false
+    },
+    {
+      "id": "venus-context-repair-draft-dev-simple_or_delegate-04",
+      "fold": "DEV",
+      "family": "simple_or_delegate",
+      "user_turns": [
+        "What is 7 plus two?",
+        "Ask the background reasoner to compare a synthetic loan of 22200 pounds at eight percent nominal annual interest, compounded monthly, over thirty-six, forty-eight and sixty months. Assume fixed rates, equal monthly payments and no fees or early repayment penalties. Compare monthly payments and total interest."
+      ],
+      "teacher_requirements": [
+        "Answer simple addition directly.",
+        "Delegate the full harder task with numbers, assumptions and requested comparison; do not fabricate a result."
+      ],
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "audio": null,
+      "teacher_targets": null,
+      "training_approved": false,
+      "worker_contract": {
+        "operation": "amortization_comparison",
+        "principal": 22200,
+        "nominal_annual_rate": 0.08,
+        "months": [
+          36,
+          48,
+          60
+        ],
+        "fees": 0,
+        "early_repayment_penalty": 0,
+        "currency": "GBP",
+        "synthetic": true
+      }
+    },
+    {
+      "id": "venus-context-repair-draft-dev-selective_cancel-04",
+      "fold": "DEV",
+      "family": "selective_cancel",
+      "user_turns": [
+        "Ask the worker to compare two synthetic routes to venue 5: rail takes ninety minutes and costs twenty-eight pounds; coach takes one hundred and forty minutes and costs sixteen pounds. Separately compare a vegetarian pasta meal at three pounds per person with soup at two pounds per person for six guests, under a thirty-six pound budget.",
+        "Cancel only the travel comparison. Keep the meal-plan work going.",
+        "What can we discuss while that finishes?"
+      ],
+      "teacher_requirements": [
+        "Two distinct task identities.",
+        "Cancel only travel, confirm after actual cancellation receipt.",
+        "Keep listening and converse while meal planning remains pending. Never deliver cancelled travel results."
+      ],
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "audio": null,
+      "teacher_targets": null,
+      "training_approved": false,
+      "worker_contract": {
+        "jobs": [
+          "travel",
+          "meal"
+        ],
+        "travel": {
+          "rail": {
+            "minutes": 90,
+            "GBP": 28
+          },
+          "coach": {
+            "minutes": 140,
+            "GBP": 16
+          }
+        },
+        "meal": {
+          "guests": 6,
+          "budget_GBP": 36,
+          "vegetarian": true,
+          "per_person_GBP": {
+            "pasta": 3,
+            "soup": 2
+          }
+        },
+        "cancel_only": "travel",
+        "retain": "meal",
+        "synthetic": true
+      }
+    },
+    {
+      "id": "venus-context-repair-draft-dev-correction-04",
+      "fold": "DEV",
+      "family": "correction",
+      "user_turns": [
+        "Ask the worker to calculate paint for four walls in a room 8 metres long, five metres wide and two point four metres high. Apply two coats at ten square metres per litre. Ignore doors and windows, exclude the ceiling, and round litres up to the next whole litre.",
+        "Correction: the room is 10 metres long. Replace the earlier request.",
+        "Have you got the corrected estimate yet?"
+      ],
+      "teacher_requirements": [
+        "Delegate complete original request.",
+        "Supersede old revision and preserve all unchanged constraints.",
+        "Only the current revision may be spoken; admit still pending if no result."
+      ],
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "audio": null,
+      "teacher_targets": null,
+      "training_approved": false,
+      "worker_contract": {
+        "operation": "paint_litres",
+        "length": 8,
+        "revised_length": 10,
+        "width": 5,
+        "height": 2.4,
+        "coats": 2,
+        "coverage_m2_per_litre": 10,
+        "round": "ceil",
+        "exclude_ceiling": true,
+        "subtract_openings": false,
+        "synthetic": true
+      }
+    },
+    {
+      "id": "venus-context-repair-draft-dev-pause_resume-04",
+      "fold": "DEV",
+      "family": "pause_resume",
+      "user_turns": [
+        "Explain three steps for preparing the workshop for painting.",
+        "Pause speaking now. Continue listening.",
+        "I need to move something first.",
+        "Continue from where you stopped."
+      ],
+      "teacher_requirements": [
+        "Pause immediately without another spoken acknowledgement.",
+        "Retain progress through an unrelated user turn.",
+        "Resume remaining explanation without restarting."
+      ],
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "audio": null,
+      "teacher_targets": null,
+      "training_approved": false
+    },
+    {
+      "id": "venus-context-repair-draft-dev-result_delivery-04",
+      "fold": "DEV",
+      "family": "result_delivery",
+      "user_turns": [
+        "Ask the worker to compare two fictional insulation panels for the room: panel A costs 250 pounds and must stay dry; panel B costs 310 pounds and tolerates damp conditions. The room is occasionally damp. Explain the cost and moisture tradeoff using only those facts.",
+        "While that runs, what is insulation for?",
+        "When the comparison is ready, explain its main tradeoff briefly."
+      ],
+      "teacher_requirements": [
+        "Direct basic answer while a distinct harder task remains pending.",
+        "Use an actual matching backend result, not a guessed comparison.",
+        "Summarize faithfully in natural speech; never read task markup or receipts aloud."
+      ],
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "audio": null,
+      "teacher_targets": null,
+      "training_approved": false,
+      "worker_contract": {
+        "operation": "given_fact_comparison",
+        "panel_A_GBP": 250,
+        "panel_B_GBP": 310,
+        "A_must_stay_dry": true,
+        "B_damp_tolerant": true,
+        "room_occasionally_damp": true,
+        "synthetic": true
+      }
+    },
+    {
+      "id": "venus-context-repair-draft-dev-quiet_scope-05",
+      "fold": "DEV",
+      "family": "quiet_scope",
+      "user_turns": [
+        "Keep completely silent until I say indigo lantern. This instruction itself does not release you.",
+        "I am still deciding. Please keep waiting.",
+        "indigo lantern. What does a lid do?"
+      ],
+      "teacher_requirements": [
+        "No acknowledgement, filler or request for the cue before release.",
+        "After release answer the simple question directly."
+      ],
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "audio": null,
+      "teacher_targets": null,
+      "training_approved": false
+    },
+    {
+      "id": "venus-context-repair-draft-dev-simple_or_delegate-05",
+      "fold": "DEV",
+      "family": "simple_or_delegate",
+      "user_turns": [
+        "What is 8 plus two?",
+        "Ask the background reasoner to compare a synthetic loan of 23500 pounds at eight percent nominal annual interest, compounded monthly, over thirty-six, forty-eight and sixty months. Assume fixed rates, equal monthly payments and no fees or early repayment penalties. Compare monthly payments and total interest."
+      ],
+      "teacher_requirements": [
+        "Answer simple addition directly.",
+        "Delegate the full harder task with numbers, assumptions and requested comparison; do not fabricate a result."
+      ],
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "audio": null,
+      "teacher_targets": null,
+      "training_approved": false,
+      "worker_contract": {
+        "operation": "amortization_comparison",
+        "principal": 23500,
+        "nominal_annual_rate": 0.08,
+        "months": [
+          36,
+          48,
+          60
+        ],
+        "fees": 0,
+        "early_repayment_penalty": 0,
+        "currency": "GBP",
+        "synthetic": true
+      }
+    },
+    {
+      "id": "venus-context-repair-draft-dev-selective_cancel-05",
+      "fold": "DEV",
+      "family": "selective_cancel",
+      "user_turns": [
+        "Ask the worker to compare two synthetic routes to venue 6: rail takes ninety minutes and costs twenty-eight pounds; coach takes one hundred and forty minutes and costs sixteen pounds. Separately compare a vegetarian pasta meal at three pounds per person with soup at two pounds per person for six guests, under a thirty-six pound budget.",
+        "Cancel only the travel comparison. Keep the meal-plan work going.",
+        "What can we discuss while that finishes?"
+      ],
+      "teacher_requirements": [
+        "Two distinct task identities.",
+        "Cancel only travel, confirm after actual cancellation receipt.",
+        "Keep listening and converse while meal planning remains pending. Never deliver cancelled travel results."
+      ],
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "audio": null,
+      "teacher_targets": null,
+      "training_approved": false,
+      "worker_contract": {
+        "jobs": [
+          "travel",
+          "meal"
+        ],
+        "travel": {
+          "rail": {
+            "minutes": 90,
+            "GBP": 28
+          },
+          "coach": {
+            "minutes": 140,
+            "GBP": 16
+          }
+        },
+        "meal": {
+          "guests": 6,
+          "budget_GBP": 36,
+          "vegetarian": true,
+          "per_person_GBP": {
+            "pasta": 3,
+            "soup": 2
+          }
+        },
+        "cancel_only": "travel",
+        "retain": "meal",
+        "synthetic": true
+      }
+    },
+    {
+      "id": "venus-context-repair-draft-dev-correction-05",
+      "fold": "DEV",
+      "family": "correction",
+      "user_turns": [
+        "Ask the worker to calculate paint for four walls in a room 9 metres long, five metres wide and two point four metres high. Apply two coats at ten square metres per litre. Ignore doors and windows, exclude the ceiling, and round litres up to the next whole litre.",
+        "Correction: the room is 11 metres long. Replace the earlier request.",
+        "Have you got the corrected estimate yet?"
+      ],
+      "teacher_requirements": [
+        "Delegate complete original request.",
+        "Supersede old revision and preserve all unchanged constraints.",
+        "Only the current revision may be spoken; admit still pending if no result."
+      ],
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "audio": null,
+      "teacher_targets": null,
+      "training_approved": false,
+      "worker_contract": {
+        "operation": "paint_litres",
+        "length": 9,
+        "revised_length": 11,
+        "width": 5,
+        "height": 2.4,
+        "coats": 2,
+        "coverage_m2_per_litre": 10,
+        "round": "ceil",
+        "exclude_ceiling": true,
+        "subtract_openings": false,
+        "synthetic": true
+      }
+    },
+    {
+      "id": "venus-context-repair-draft-dev-pause_resume-05",
+      "fold": "DEV",
+      "family": "pause_resume",
+      "user_turns": [
+        "Explain three steps for preparing the cellar for painting.",
+        "Pause speaking now. Continue listening.",
+        "I need to move something first.",
+        "Continue from where you stopped."
+      ],
+      "teacher_requirements": [
+        "Pause immediately without another spoken acknowledgement.",
+        "Retain progress through an unrelated user turn.",
+        "Resume remaining explanation without restarting."
+      ],
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "audio": null,
+      "teacher_targets": null,
+      "training_approved": false
+    },
+    {
+      "id": "venus-context-repair-draft-dev-result_delivery-05",
+      "fold": "DEV",
+      "family": "result_delivery",
+      "user_turns": [
+        "Ask the worker to compare two fictional insulation panels for the room: panel A costs 260 pounds and must stay dry; panel B costs 320 pounds and tolerates damp conditions. The room is occasionally damp. Explain the cost and moisture tradeoff using only those facts.",
+        "While that runs, what is insulation for?",
+        "When the comparison is ready, explain its main tradeoff briefly."
+      ],
+      "teacher_requirements": [
+        "Direct basic answer while a distinct harder task remains pending.",
+        "Use an actual matching backend result, not a guessed comparison.",
+        "Summarize faithfully in natural speech; never read task markup or receipts aloud."
+      ],
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "audio": null,
+      "teacher_targets": null,
+      "training_approved": false,
+      "worker_contract": {
+        "operation": "given_fact_comparison",
+        "panel_A_GBP": 260,
+        "panel_B_GBP": 320,
+        "A_must_stay_dry": true,
+        "B_damp_tolerant": true,
+        "room_occasionally_damp": true,
+        "synthetic": true
+      }
+    }
+  ],
+  "external_calls": 0,
+  "optimizer_updates": 0,
+  "admission": [
+    "Check phrase/task separation from existing folds before audio generation.",
+    "Reuse approved saved voice listening preferences; preserve British/RP choices. Voice preference is not a speech quality approval.",
+    "Obtain applicable speech payload allowance before external generation; no remaining calls inferred from prior grants.",
+    "Generate causally grounded teacher histories with real task identity/revision/cancellation receipts and independent word/audio/semantic review.",
+    "Build exact native caches; retain all original216 TRAIN/52 DEV examples, objectives and state; fix complete-epoch recipe and native evaluation reserve before optimizer work."
+  ],
+  "not_claimed": [
+    "Newly qualified audio or teachers",
+    "A production-ready model",
+    "Permission for new GPU updates or API calls",
+    "Evidence that dataset expansion alone fixes speech alignment"
+  ],
+  "parent_sha256": "6d85f5e0028e7937449ce2cba520b5d74d6d98f2d6441ff8d6e1f4f2f111781b",
+  "generation_boundary": "User utterance payloads only; worker contracts, teacher requirements, expected results, owner feedback and credentials are excluded."
+}
