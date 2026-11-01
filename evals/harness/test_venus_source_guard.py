@@ -25,6 +25,12 @@ class SourceGuardTests(unittest.TestCase):
    if bad=='duration':v['scheduling']['maxRunDuration']['seconds']=2400
    if bad=='overlap':instances.append(dict(v,id='124'))
    with self.assertRaises(AssertionError):s.validate(v,instances,[],self.lease,self.now)
+ def test_standard_retry_still_requires_exact_deadline_disk_and_budget(self):
+  l=dict(self.lease,resource_key=s.RETRY_KEY,execution_plan_sha256=s.sha(s.RETRY_PLAN))
+  v=copy.deepcopy(self.vm);v['name']=json.loads(s.RETRY_PLAN.read_text())['vm_name'];v['scheduling']['provisioningModel']='STANDARD'
+  self.assertEqual(guard.validate(v,[v],[],l,self.now),l['stop_unix'])
+  v['scheduling']['provisioningModel']='FLEX_START'
+  with self.assertRaises(AssertionError):guard.validate(v,[v],[],l,self.now)
  def test_actual_mac_entrypoint_accepts_new_authority_fields(self):
   class ReachedLiveRead(Exception):pass
   with tempfile.TemporaryDirectory() as directory:
